@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMIncidentProblemManagement.sopm,v 1.106 2013-06-18 10:01:55 ub Exp $</CVS>
+    <CVS>$Id: ITSMIncidentProblemManagement.sopm,v 1.106 2013/06/18 10:01:55 ub Exp $</CVS>
     <Name>ITSMIncidentProblemManagement</Name>
     <Version>0.0.0</Version>
     <Framework>3.3.x</Framework>
@@ -188,6 +188,14 @@
         }
 
     ]]></CodeReinstall>
+    <CodeUpgrade Type="pre"><![CDATA[
+        
+        # uninstall Feature AddOn OTRSServiceIncidentState that has been integrated in ITSM 3.3.x
+        my $Success = $Self->_PackageUninstallMerged(
+            Name => 'OTRSServiceIncidentState',
+        );
+
+    ]]></CodeUpgrade>
     <CodeUpgrade Type="post"><![CDATA[
 
         # define function name

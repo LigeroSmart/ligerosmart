@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTicketEmail.pm - to compose initial email to customer
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketEmail.pm,v 1.49 2013-06-18 14:30:03 ub Exp $
+# $Id: AgentTicketEmail.pm,v 1.49 2013/06/18 14:30:03 ub Exp $
 # $OldId: AgentTicketEmail.pm,v 1.220 2013/01/30 00:00:42 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -396,8 +396,9 @@ sub Run {
 
         # get service
         %Service = $Self->{ServiceObject}->ServiceGet(
-            ServiceID => $GetParam{ServiceID},
-            UserID    => $Self->{UserID},
+            ServiceID     => $GetParam{ServiceID},
+            IncidentState => $Self->{Config}->{ShowIncidentState} || 0,
+            UserID        => $Self->{UserID},
         );
 
         # get impact list
@@ -775,9 +776,15 @@ sub Run {
         }
 
         # attachment delete
-        for my $Count ( 1 .. 32 ) {
+        my @AttachmentIDs = map{
+            my ($ID) = $_ =~ m{ \A AttachmentDelete (\d+) \z }xms;
+            $ID ? $ID : ();
+        }$Self->{ParamObject}->GetParamNames();
+
+        COUNT:
+        for my $Count ( reverse sort @AttachmentIDs ) {
             my $Delete = $Self->{ParamObject}->GetParam( Param => "AttachmentDelete$Count" );
-            next if !$Delete;
+            next COUNT if !$Delete;
             $Error{AttachmentDelete} = 1;
             $Self->{UploadCacheObject}->FormIDRemoveFile(
                 FormID => $Self->{FormID},
@@ -826,11 +833,12 @@ sub Run {
                 my $ACL = $Self->{TicketObject}->TicketAcl(
                     %GetParam,
                     %ACLCompatGetParam,
-                    Action        => $Self->{Action},
-                    ReturnType    => 'Ticket',
-                    ReturnSubType => 'DynamicField_' . $DynamicFieldConfig->{Name},
-                    Data          => \%AclData,
-                    UserID        => $Self->{UserID},
+                    CustomerUserID => $CustomerUser || '',
+                    Action         => $Self->{Action},
+                    ReturnType     => 'Ticket',
+                    ReturnSubType  => 'DynamicField_' . $DynamicFieldConfig->{Name},
+                    Data           => \%AclData,
+                    UserID         => $Self->{UserID},
                 );
                 if ($ACL) {
                     my %Filter = $Self->{TicketObject}->TicketAclData();
@@ -1489,6 +1497,50 @@ sub Run {
             OP => "Action=$NextScreen;Subaction=Created;TicketID=$TicketID",
         );
     }
+# ---
+# ITSM
+# ---
+    elsif ( $Self->{Subaction} eq 'GetServiceIncidentState' ) {
+
+        # get the selected service id
+        my $ServiceID = $Self->{ParamObject}->GetParam( Param => 'ServiceID' ) || '';
+
+        # build empty response hash
+        my %Response = (
+            CurInciSignal => '',
+            CurInciState  => '&nbsp',
+        );
+
+        # only if service id is selected
+        if ( $ServiceID && $Self->{Config}->{ShowIncidentState} ) {
+
+            # set incident signal
+            my %InciSignals = (
+                operational => 'greenled',
+                warning     => 'yellowled',
+                incident    => 'redled',
+            );
+
+            # build the response
+            %Response = (
+                CurInciSignal => $InciSignals{ $Service{CurInciStateType} },
+                CurInciState  => $Service{CurInciState},
+            );
+        }
+
+        # encode response to JSON
+        my $JSON = $Self->{LayoutObject}->JSONEncode(
+            Data => \%Response,
+        );
+
+        return $Self->{LayoutObject}->Attachment(
+            ContentType => 'application/json; charset=' . $Self->{LayoutObject}->{Charset},
+            Content     => $JSON,
+            Type        => 'inline',
+            NoCache     => 1,
+        );
+    }
+# ---
     elsif ( $Self->{Subaction} eq 'AJAXUpdate' ) {
         my $Dest = $Self->{ParamObject}->GetParam( Param => 'Dest' ) || '';
         my $CustomerUser = $Self->{ParamObject}->GetParam( Param => 'SelectedCustomerUser' );
@@ -1587,13 +1639,14 @@ sub Run {
             my $ACL = $Self->{TicketObject}->TicketAcl(
                 %GetParam,
                 %ACLCompatGetParam,
-                Action        => $Self->{Action},
-                TicketID      => $Self->{TicketID},
-                QueueID       => $QueueID || 0,
-                ReturnType    => 'Ticket',
-                ReturnSubType => 'DynamicField_' . $DynamicFieldConfig->{Name},
-                Data          => \%AclData,
-                UserID        => $Self->{UserID},
+                CustomerUserID => $CustomerUser || '',
+                Action         => $Self->{Action},
+                TicketID       => $Self->{TicketID},
+                QueueID        => $QueueID || 0,
+                ReturnType     => 'Ticket',
+                ReturnSubType  => 'DynamicField_' . $DynamicFieldConfig->{Name},
+                Data           => \%AclData,
+                UserID         => $Self->{UserID},
             );
             if ($ACL) {
                 my %Filter = $Self->{TicketObject}->TicketAclData();

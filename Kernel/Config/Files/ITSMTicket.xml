@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMTicket.xml,v 1.15 2012-10-24 08:27:32 mb Exp $</CVS>
+    <CVS>$Id: ITSMTicket.xml,v 1.15 2012/10/24 08:27:32 mb Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AgentTicketAddtlITSMField" Required="0" Valid="1">
         <Description Translatable="1">Frontend module registration for the agent interface.</Description>
         <Group>Ticket</Group>
@@ -285,6 +285,17 @@
             <String Regex="">%%FreeText</String>
         </Setting>
     </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketAddtlITSMField###ShowIncidentState" Required="1" Valid="1">
+        <Description Translatable="1">Defines if the service incident state should be shown during service selection in the agent interface.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewAddtlITSMField</SubGroup>
+        <Setting>
+            <Option SelectedID="1">
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
     <ConfigItem Name="Ticket::Frontend::AgentTicketDecision###Permission" Required="1" Valid="1">
         <Description Translatable="1">Required permissions to use the decision screen in the agent interface.</Description>
         <Group>Ticket</Group>
@@ -506,6 +517,17 @@
             <String Regex="">%%Note</String>
         </Setting>
     </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketDecision###ShowIncidentState" Required="1" Valid="1">
+        <Description Translatable="1">Defines if the service incident state should be shown during service selection in the agent interface.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewDecision</SubGroup>
+        <Setting>
+            <Option SelectedID="1">
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
     <ConfigItem Name="Stats::DynamicObjectRegistration###ITSMTicketFirstLevelSolutionRate" Required="0" Valid="1">
         <Description Translatable="1">Enables the stats module to generate statistics about the average of ITSM ticket first level solution rate.</Description>
         <Group>Framework</Group>
@@ -524,6 +546,105 @@
             <Hash>
                 <Item Key="Module">Kernel::System::Stats::Dynamic::ITSMTicketSolutionTimeAverage</Item>
             </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketPhone###ShowIncidentState" Required="1" Valid="1">
+        <Description Translatable="1">Defines if the service incident state should be shown during service selection in the agent interface.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewPhoneNew</SubGroup>
+        <Setting>
+            <Option SelectedID="1">
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketEmail###ShowIncidentState" Required="1" Valid="1">
+        <Description Translatable="1">Defines if the service incident state should be shown during service selection in the agent interface.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewEmailNew</SubGroup>
+        <Setting>
+            <Option SelectedID="1">
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketClose###ShowIncidentState" Required="1" Valid="1">
+        <Description Translatable="1">Defines if the service incident state should be shown during service selection in the agent interface.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewClose</SubGroup>
+        <Setting>
+            <Option SelectedID="1">
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketFreeText###ShowIncidentState" Required="1" Valid="1">
+        <Description Translatable="1">Defines if the service incident state should be shown during service selection in the agent interface.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewFreeText</SubGroup>
+        <Setting>
+            <Option SelectedID="1">
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketNote###ShowIncidentState" Required="1" Valid="1">
+        <Description Translatable="1">Defines if the service incident state should be shown during service selection in the agent interface.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewNote</SubGroup>
+        <Setting>
+            <Option SelectedID="1">
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketOwner###ShowIncidentState" Required="1" Valid="1">
+        <Description Translatable="1">Defines if the service incident state should be shown during service selection in the agent interface.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewOwner</SubGroup>
+        <Setting>
+            <Option SelectedID="1">
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketPending###ShowIncidentState" Required="1" Valid="1">
+        <Description Translatable="1">Defines if the service incident state should be shown during service selection in the agent interface.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewPending</SubGroup>
+        <Setting>
+            <Option SelectedID="1">
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketPriority###ShowIncidentState" Required="1" Valid="1">
+        <Description Translatable="1">Defines if the service incident state should be shown during service selection in the agent interface.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewPriority</SubGroup>
+        <Setting>
+            <Option SelectedID="1">
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketResponsible###ShowIncidentState" Required="1" Valid="1">
+        <Description Translatable="1">Defines if the service incident state should be shown during service selection in the agent interface.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewResponsible</SubGroup>
+        <Setting>
+            <Option SelectedID="1">
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Option>
         </Setting>
     </ConfigItem>
 </otrs_config>

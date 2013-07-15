@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTicketActionCommon.pm - common file for several modules
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketActionCommon.pm,v 1.39 2013-06-18 14:30:03 ub Exp $
+# $Id: AgentTicketActionCommon.pm,v 1.39 2013/06/18 14:30:03 ub Exp $
 # $OldId: AgentTicketActionCommon.pm,v 1.105 2013/01/30 00:00:42 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -301,8 +301,9 @@ sub Run {
 
         # get service
         %Service = $Self->{ServiceObject}->ServiceGet(
-            ServiceID => $GetParam{ServiceID},
-            UserID    => $Self->{UserID},
+            ServiceID     => $GetParam{ServiceID},
+            IncidentState => $Self->{Config}->{ShowIncidentState} || 0,
+            UserID        => $Self->{UserID},
         );
 
         # get impact list
@@ -395,8 +396,13 @@ sub Run {
         my $IsUpload = 0;
 
         # attachment delete
+        my @AttachmentIDs = map{
+            my ($ID) = $_ =~ m{ \A AttachmentDelete (\d+) \z }xms;
+            $ID ? $ID : ();
+        }$Self->{ParamObject}->GetParamNames();
+
         COUNT:
-        for my $Count ( 1 .. 32 ) {
+        for my $Count ( reverse sort @AttachmentIDs ) {
             my $Delete = $Self->{ParamObject}->GetParam( Param => "AttachmentDelete$Count" );
             next COUNT if !$Delete;
             %Error = ();
@@ -960,6 +966,50 @@ sub Run {
             URL => "Action=AgentTicketZoom;TicketID=$Self->{TicketID};ArticleID=$ArticleID",
         );
     }
+# ---
+# ITSM
+# ---
+    elsif ( $Self->{Subaction} eq 'GetServiceIncidentState' ) {
+
+        # get the selected service id
+        my $ServiceID = $Self->{ParamObject}->GetParam( Param => 'ServiceID' ) || '';
+
+        # build empty response hash
+        my %Response = (
+            CurInciSignal => '',
+            CurInciState  => '&nbsp',
+        );
+
+        # only if service id is selected and incident state should be shown in this screen
+        if ( $ServiceID && $Self->{Config}->{ShowIncidentState} ) {
+
+            # set incident signal
+            my %InciSignals = (
+                operational => 'greenled',
+                warning     => 'yellowled',
+                incident    => 'redled',
+            );
+
+            # build the response
+            %Response = (
+                CurInciSignal => $InciSignals{ $Service{CurInciStateType} },
+                CurInciState  => $Service{CurInciState},
+            );
+        }
+
+        # encode response to JSON
+        my $JSON = $Self->{LayoutObject}->JSONEncode(
+            Data => \%Response,
+        );
+
+        return $Self->{LayoutObject}->Attachment(
+            ContentType => 'application/json; charset=' . $Self->{LayoutObject}->{Charset},
+            Content     => $JSON,
+            Type        => 'inline',
+            NoCache     => 1,
+        );
+    }
+# ---
     elsif ( $Self->{Subaction} eq 'AJAXUpdate' ) {
         my %Ticket = $Self->{TicketObject}->TicketGet( TicketID => $Self->{TicketID} );
         my $CustomerUser = $Ticket{CustomerUserID};
@@ -1060,6 +1110,7 @@ sub Run {
             my $ACL = $Self->{TicketObject}->TicketAcl(
                 %GetParam,
                 Action        => $Self->{Action},
+                TicketID      => $Self->{TicketID},
                 QueueID       => $QueueID,
                 ReturnType    => 'Ticket',
                 ReturnSubType => 'DynamicField_' . $DynamicFieldConfig->{Name},

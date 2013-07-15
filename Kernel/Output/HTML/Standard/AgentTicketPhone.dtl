@@ -2,7 +2,7 @@
 # AgentTicketPhone.dtl - provides HTML form for phone
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketPhone.dtl,v 1.40 2013-06-18 14:30:03 ub Exp $
+# $Id: AgentTicketPhone.dtl,v 1.40 2013/06/18 14:30:03 ub Exp $
 # $OldId: AgentTicketPhone.dtl,v 1.154 2013/02/06 12:20:30 mab Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -98,7 +98,7 @@ $Include{"AgentCustomerSearch"}
                             <div class="SpacingTopSmall ">
                                 <input name="CustomerSelected" title="$Text{"Select this customer as the main customer."}" id="CustomerSelected" class="CustomerTicketRadio" type="radio" value="$QData{"Count"}" $QData{"CustomerSelected"}  $QData{"CustomerDisabled"} />
                                 <input name="CustomerKey_$QData{"Count"}" id="CustomerKey_$QData{"Count"}" class="CustomerKey" type="hidden" value="$QData{"CustomerKey"}"/>
-                                <input class="CustomerTicketText $QData{"CustomerError"}" title="$Text{"From customer"}" name="CustomerTicketText_$Data{"Count"}" id="CustomerTicketText_$Data{"Count"}" type="text" value="$QData{"CustomerElement"}" readonly="readonly" />
+                                <input class="CustomerTicketText Radio $QData{"CustomerError"}" title="$Text{"From customer"}" name="CustomerTicketText_$Data{"Count"}" id="CustomerTicketText_$Data{"Count"}" type="text" value="$QData{"CustomerElement"}" readonly="readonly" />
                                 <button type="button" id="RemoveCustomerTicket_$Data{"Count"}" class="Remove CustomerTicketRemove" value="$Text{"Remove Ticket Customer"}">$Text{"Remove Ticket Customer"}</button>
 
 <!-- dtl:block:CustomerErrorExplantion -->
@@ -186,16 +186,56 @@ $Include{"AgentCustomerSearch"}
 <script type="text/javascript">//<![CDATA[
     $('#ServiceID').bind('change', function (Event) {
         Core.AJAX.FormUpdate($('#NewPhoneTicket'), 'AJAXUpdate', 'ServiceID', ['TypeID', 'Dest', 'NewUserID', 'NewResponsibleID', 'NextStateID', 'PriorityID', 'SLAID', 'SignKeyID', 'CryptKeyID', $Data{"DynamicFieldNamesStrg"}, 'To', 'Cc', 'Bcc']);
-    });
 # ---
 # ITSM
 # ---
-    $('#ServiceID').trigger('change');
+#    });
+
+        // define data for ajax function call to get the service incident state and signal
+        var Data = {
+            Action: '$Env{"Action"}',
+            Subaction: 'GetServiceIncidentState',
+            ServiceID: $('#ServiceID').val()
+        };
+        Core.AJAX.FunctionCall(Core.Config.Get('Baselink'), Data, function (Response) {
+
+            // if a service was selected and an incident state was found
+            if (Response.CurInciSignal) {
+
+                // set incident signal
+                $('#ServiceIncidentStateSignal').attr('class', Response.CurInciSignal);
+                $('#ServiceIncidentStateSignal').attr('title', Response.CurInciState);
+
+                // set incident state
+                $('#ServiceIncidentState').html(Response.CurInciState);
+
+                // show service incident signal and state
+                $('#ServiceIncidentStateContainer').show();
+                $('#ServiceIncidentStateContainer').prev().show();
+            }
+            else {
+                // hide service incident signal and state
+                $('#ServiceIncidentStateContainer').hide();
+                $('#ServiceIncidentStateContainer').prev().hide();
+            }
+        });
+    }).trigger('change');
 # ---
 //]]></script>
 <!--dtl:js_on_document_complete-->
                     </div>
                     <div class="Clear"></div>
+# ---
+# ITSM
+# ---
+                    <label for="ServiceIncidentStateContainer" style="display:none;">$Text{"Service Incident State"}:</label>
+                    <div id="ServiceIncidentStateContainer" class="Value" style="display:none;">
+                        <div class="Flag Small">
+                            <span id="ServiceIncidentStateSignal" class="" title=""></span>
+                        </div>
+                        <span id="ServiceIncidentState">&nbsp;</span>
+                    </div>
+# ---
 <!-- dtl:block:TicketService -->
 
 <!-- dtl:block:TicketSLA -->

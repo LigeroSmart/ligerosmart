@@ -2,7 +2,7 @@
 # Kernel/Modules/CustomerTicketZoom.pm - to get a closer view
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerTicketZoom.pm,v 1.26 2013-06-18 14:30:03 ub Exp $
+# $Id: CustomerTicketZoom.pm,v 1.26 2013/06/18 14:30:03 ub Exp $
 # $OldId: CustomerTicketZoom.pm,v 1.108 2013/01/15 18:36:41 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -121,7 +121,7 @@ sub Run {
     if ( !$Self->{TicketID} && $Self->{ParamObject}->GetParam( Param => 'TicketNumber' ) ) {
         $Self->{TicketID} = $Self->{TicketObject}->TicketIDLookup(
             TicketNumber => $Self->{ParamObject}->GetParam( Param => 'TicketNumber' ),
-            UserID       => $Self->{UserID},
+            UserID => $Self->{UserID},
         );
     }
 
@@ -388,9 +388,15 @@ sub Run {
         my $IsUpload = 0;
 
         # attachment delete
-        for my $Count ( 1 .. 32 ) {
+        my @AttachmentIDs = map{
+            my ($ID) = $_ =~ m{ \A AttachmentDelete (\d+) \z }xms;
+            $ID ? $ID : ();
+        }$Self->{ParamObject}->GetParamNames();
+
+        COUNT:
+        for my $Count ( reverse sort @AttachmentIDs ) {
             my $Delete = $Self->{ParamObject}->GetParam( Param => "AttachmentDelete$Count" );
-            next if !$Delete;
+            next COUNT if !$Delete;
             $GetParam{FollowUpVisible} = 'Visible';
             $Error{AttachmentDelete}   = 1;
             $Self->{UploadCacheObject}->FormIDRemoveFile(
@@ -437,10 +443,10 @@ sub Run {
             );
 
             # check if field has PossibleValues property in its configuration
-            if ( IsHashRefWithData( $PossibleValues ) ) {
+            if ( IsHashRefWithData($PossibleValues) ) {
 
                 # convert possible values key => value to key => key for ACLs usign a Hash slice
-                my %AclData = %{ $PossibleValues };
+                my %AclData = %{$PossibleValues};
                 @AclData{ keys %AclData } = keys %AclData;
 
                 # set possible values filter from ACLs
@@ -602,13 +608,17 @@ sub Run {
             return $Output;
         }
 
-        if ( $Self->{Config}->{State} ) {
-
-            # set state
+        # set state
+        my $NextState = $Self->{Config}->{StateDefault} || 'open';
+        if ( $GetParam{StateID} && $Self->{Config}->{State} ) {
             my %NextStateData = $Self->{StateObject}->StateGet( ID => $GetParam{StateID} );
-            my $NextState = $NextStateData{Name}
-                || $Self->{Config}->{StateDefault}
-                || 'open';
+            $NextState = $NextStateData{Name};
+        }
+
+        # change state if
+        # customer set another state
+        # or the ticket is not new
+        if ( $Ticket{StateType} !~ /^new/ || $GetParam{StateID} ) {
             $Self->{TicketObject}->StateSet(
                 TicketID  => $Self->{TicketID},
                 ArticleID => $ArticleID,
@@ -644,8 +654,8 @@ sub Run {
 
             # skip deleted inline images
             next if $Attachment->{ContentID}
-                && $Attachment->{ContentID} =~ /^inline/
-                && $GetParam{Body} !~ /$Attachment->{ContentID}/;
+                    && $Attachment->{ContentID} =~ /^inline/
+                    && $GetParam{Body} !~ /$Attachment->{ContentID}/;
             $Self->{TicketObject}->ArticleWriteAttachment(
                 %{$Attachment},
                 ArticleID => $ArticleID,
@@ -718,10 +728,10 @@ sub Run {
         );
 
         # check if field has PossibleValues property in its configuration
-        if ( IsHashRefWithData( $PossibleValues ) ) {
+        if ( IsHashRefWithData($PossibleValues) ) {
 
             # convert possible values key => value to key => key for ACLs usign a Hash slice
-            my %AclData = %{ $PossibleValues };
+            my %AclData = %{$PossibleValues};
             @AclData{ keys %AclData } = keys %AclData;
 
             # set possible values filter from ACLs
@@ -1193,8 +1203,8 @@ sub _Mask {
     }
 
     # Expand option
-    my $ExpandOption = ( $Self->{ZoomExpand}    ? 'One' : 'All' );
-    my $ExpandPlural = ( $ExpandOption eq 'All' ? 's'   : '' );
+    my $ExpandOption = ( $Self->{ZoomExpand} ? 'One' : 'All' );
+    my $ExpandPlural = ( $ExpandOption eq 'All' ? 's' : '' );
     $Self->{LayoutObject}->Block(
         Name => 'Expand',
         Data => {

@@ -2,7 +2,7 @@
 # AgentTicketActionCommon.dtl - provides common HTML form for several masks
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketActionCommon.dtl,v 1.29 2012-11-22 13:07:46 ub Exp $
+# $Id: AgentTicketActionCommon.dtl,v 1.29 2012/11/22 13:07:46 ub Exp $
 # $OldId: AgentTicketActionCommon.dtl,v 1.70 2012/11/20 15:19:46 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -125,11 +125,57 @@ $('#TypeID').bind('change', function (Event) {
 <script type="text/javascript">//<![CDATA[
     $('#ServiceID').bind('change', function (Event) {
         Core.AJAX.FormUpdate($('#Compose'), 'AJAXUpdate', 'ServiceID', [ 'TypeID', 'SLAID', 'NewOwnerID', 'OldOwnerID', 'NewResponsibleID', 'NewStateID', 'NewPriorityID', $Data{"DynamicFieldNamesStrg"} ]);
+# ---
+# ITSM
+# ---
+#    });
+
+    // define data for ajax function call to get the service incident state and signal
+    var Data = {
+        Action: '$Env{"Action"}',
+        Subaction: 'GetServiceIncidentState',
+        TicketID: $QData{"TicketID"},
+        ServiceID: $('#ServiceID').val()
+    };
+    Core.AJAX.FunctionCall(Core.Config.Get('Baselink'), Data, function (Response) {
+
+        // if a service was selected and an incident state was found
+        if (Response.CurInciSignal) {
+
+            // set incident signal
+            $('#ServiceIncidentStateSignal').attr('class', Response.CurInciSignal);
+            $('#ServiceIncidentStateSignal').attr('title', Response.CurInciState);
+
+            // set incident state
+            $('#ServiceIncidentState').html(Response.CurInciState);
+
+            // show service incident signal and state
+            $('#ServiceIncidentStateContainer').show();
+            $('#ServiceIncidentStateContainer').prev().show();
+        }
+        else {
+            // hide service incident signal and state
+            $('#ServiceIncidentStateContainer').hide();
+            $('#ServiceIncidentStateContainer').prev().hide();
+        }
     });
+}).trigger('change');
+# ---
 //]]></script>
 <!--dtl:js_on_document_complete-->
                 </div>
                 <div class="Clear"></div>
+# ---
+# ITSM
+# ---
+                <label for="ServiceIncidentStateContainer" style="display:none;">$Text{"Service Incident State"}:</label>
+                <div id="ServiceIncidentStateContainer" class="Value" style="display:none;">
+                    <div class="Flag Small">
+                        <span id="ServiceIncidentStateSignal" class="" title=""></span>
+                    </div>
+                    <span id="ServiceIncidentState">&nbsp;</span>
+                </div>
+# ---
 <!-- dtl:block:Service -->
 
 <!-- dtl:block:SLA -->
@@ -175,7 +221,7 @@ $('#TypeID').bind('change', function (Event) {
     $('#NewOwnerID').bind('change', function (Event) {
         Core.AJAX.FormUpdate($('#Compose'), 'AJAXUpdate', 'NewOwnerID', [ 'TypeID', 'ServiceID', 'SLAID', 'OldOwnerID', 'NewResponsibleID', 'NewStateID', 'NewPriorityID', $Data{"DynamicFieldNamesStrg"} ]);
     });
-    $('#NewOwnerID').bind('click', function () {
+    $('#NewOwnerID').bind('focus', function () {
         Core.Agent.TicketAction.SelectRadioButton('New','NewOwnerType');
     });
 //]]></script>
@@ -193,7 +239,7 @@ $('#TypeID').bind('change', function (Event) {
     $('#OldOwnerID').bind('change', function (Event) {
         Core.AJAX.FormUpdate($('#Compose'), 'AJAXUpdate', 'OldOwnerID', [ 'TypeID', 'ServiceID', 'SLAID', 'NewOwnerID', 'NewResponsibleID', 'NewStateID', 'NewPriorityID', $Data{"DynamicFieldNamesStrg"} ]);
     });
-    $('#OldOwnerID').bind('click', function () {
+    $('#OldOwnerID').bind('focus', function () {
         Core.Agent.TicketAction.SelectRadioButton('Old','NewOwnerType');
     });
 //]]></script>

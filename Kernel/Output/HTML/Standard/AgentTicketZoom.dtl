@@ -2,7 +2,7 @@
 # AgentTicketZoom.dtl - provides HTML for AgentTicketZoom.pm
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketZoom.dtl,v 1.61 2013-06-18 14:30:03 ub Exp $
+# $Id: AgentTicketZoom.dtl,v 1.61 2013/06/18 14:30:03 ub Exp $
 # $OldId: AgentTicketZoom.dtl,v 1.232 2013/02/11 14:45:28 mn Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -152,6 +152,13 @@
                         <p class="Value" title="$QData{"Service"}">
                             <a href="$Env{"Baselink"}Action=AgentITSMServiceZoom;ServiceID=$LQData{"ServiceID"};" target="_blank">$QData{"Service","18"}</a>
                         </p>
+                        <label>$Text{"Service Incident State"}:</label>
+                        <div class="Value">
+                            <div class="Flag Small">
+                                <span class="$QData{"CurInciSignal"}" title="$Data{"State"}"></span>
+                            </div>
+                            <span>$QData{"CurInciState"}</span>
+                        </div>
 # ---
                         <div class="Clear"></div>
 <!-- dtl:block:Service -->
@@ -360,7 +367,7 @@
                         <div class="Clear"></div>
 
                         <label>$Text{"Activity"}:</label>
-                        <p class="Value" title="$QData{"Activity"}">$QData{"Activity","18"}</p>
+                        <p class="Value" title="$Text{"$Data{"Activity"}"}">$Text{"$Data{"Activity"}"}</p>
                         <div class="Clear"></div>
                     </fieldset>
 <!-- dtl:block:ProcessData -->
@@ -622,7 +629,7 @@ $Data{"ArticleItems"}
 <!-- dtl:block:Header -->
 
 <!-- dtl:block:Tree -->
-<div id="ArticleTable"  class="FixedHeader">
+<div class="TicketList">
     <div class="ControlRow">
 <!-- dtl:block:ArticleFilterDialogLink -->
         <div class="ArticleFilter Icons">
@@ -651,7 +658,7 @@ $Data{"ArticleItems"}
     </div>
     <div id="ArticleTableBody" class="ActionRow">
         <div class="Scroller">
-            <table id="FixedTable" class="TableSmall NoCellspacing $QData{"TableClasses"}">
+            <table id="ArticleTable" class="TableSmall NoCellspacing $QData{"TableClasses"}">
                 <thead>
                     <tr>
                         <th class="UnreadArticles"><a class="UnreadArticles" href="#" title="$Text{"Unread articles"}"><span class="UnreadArticles"></span></a></th>
@@ -668,6 +675,9 @@ $Data{"ArticleItems"}
 <!-- dtl:block:TreeItem -->
                     <tr class="$QData{"SenderType"}-$QData{"ArticleType"} $QData{"ClassRow"}" id="Row$LQData{"Count"}">
                         <td class="$QData{"Class"} UnreadArticles Fixed NonTextContent">
+<!-- dtl:block:TreeItemImportantArticle -->
+                            <span class="ImportantArticles" title="$Text{"Important"}">$Text{"Important"}</span>
+<!-- dtl:block:TreeItemImportantArticle -->
 <!-- dtl:block:TreeItemNewArticle -->
                             <span class="$QData{"Class"}" title="$Text{"Unread Article!"}">$Text{"Unread Article!"}</span>
 <!-- dtl:block:TreeItemNewArticle -->

@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTicketZoom.pm - to get a closer view
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketZoom.pm,v 1.44 2013-06-18 14:30:03 ub Exp $
+# $Id: AgentTicketZoom.pm,v 1.44 2013/06/18 14:30:03 ub Exp $
 # $OldId: AgentTicketZoom.pm,v 1.198 2013/01/15 18:36:41 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -29,6 +29,7 @@ use Kernel::System::SystemAddress;
 # ---
 # ITSM
 # ---
+use Kernel::System::Service;
 use Kernel::System::GeneralCatalog;
 # ---
 
@@ -110,6 +111,7 @@ sub new {
 # ITSM
 # ---
     $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new(%Param);
+    $Self->{ServiceObject}        = Kernel::System::Service->new(%Param);
 # ---
 
     # create additional objects for process management
@@ -201,6 +203,50 @@ sub Run {
         );
     }
 
+    if ( $Self->{Subaction} eq 'MarkAsImportant' ) {
+
+        # Owner and Responsible can mark articles as important or remove mark
+        if (
+            $Self->{UserID} == $Ticket{OwnerID}
+            || (
+                $Self->{ConfigObject}->Get('Ticket::Responsible')
+                && $Self->{UserID} == $Ticket{ResponsibleID}
+            )
+            )
+        {
+            # Always use user id 1 because other users also have to see the important flag
+            my %ArticleFlag = $Self->{TicketObject}->ArticleFlagGet(
+                ArticleID => $Self->{ArticleID},
+                UserID    => 1,
+            );
+
+            my $ArticleIsImportant = $ArticleFlag{Important};
+            if ($ArticleIsImportant) {
+
+                # Always use user id 1 because other users also have to see the important flag
+                $Self->{TicketObject}->ArticleFlagDelete(
+                    ArticleID => $Self->{ArticleID},
+                    Key       => 'Important',
+                    UserID    => 1,
+                );
+            }
+            else {
+
+                # Always use user id 1 because other users also have to see the important flag
+                $Self->{TicketObject}->ArticleFlagSet(
+                    ArticleID => $Self->{ArticleID},
+                    Key       => 'Important',
+                    Value     => 1,
+                    UserID    => 1,
+                );
+            }
+        }
+
+        return $Self->{LayoutObject}->Redirect(
+            OP => "Action=AgentTicketZoom;TicketID=$Self->{TicketID};ArticleID=$Self->{ArticleID}",
+        );
+    }
+
     # mark shown article as seen
     if ( $Self->{Subaction} eq 'MarkAsSeen' ) {
         my $Success = 1;
@@ -250,7 +296,7 @@ sub Run {
         );
         my $Content = $Self->{LayoutObject}->Output(
             TemplateFile => 'AgentTicketZoom',
-            Data => {%Ticket, %Article, %AclAction},
+            Data => { %Ticket, %Article, %AclAction },
         );
         if ( !$Content ) {
             $Self->{LayoutObject}->FatalError(
@@ -665,7 +711,7 @@ sub MaskAgentZoom {
     }
     $Param{ArticleItems} .= $Self->{LayoutObject}->Output(
         TemplateFile => 'AgentTicketZoom',
-        Data => {%Ticket, %AclAction},
+        Data => { %Ticket, %AclAction },
     );
 
     # always show archived tickets as seen
@@ -786,10 +832,40 @@ sub MaskAgentZoom {
 
     # ticket service
     if ( $Self->{ConfigObject}->Get('Ticket::Service') && $Ticket{Service} ) {
+# ---
+# ITSM
+# ---
+#        $Self->{LayoutObject}->Block(
+#            Name => 'Service',
+#            Data => { %Ticket, %AclAction },
+#        );
+
+        # set incident signal
+        my %InciSignals = (
+            operational => 'greenled',
+            warning     => 'yellowled',
+            incident    => 'redled',
+        );
+
+        # get service data
+        my %Service = $Self->{ServiceObject}->ServiceGet(
+            IncidentState => 1,
+            ServiceID     => $Ticket{ServiceID},
+            UserID        => $Self->{UserID},
+        );
+
         $Self->{LayoutObject}->Block(
             Name => 'Service',
-            Data => { %Ticket, %AclAction },
+            Data => {
+                %Ticket,
+                %Service,
+                Name          => $Service{Name},
+                CurInciSignal => $InciSignals{ $Service{CurInciStateType} },
+                State         => $Service{CurInciState},
+                %AclAction,
+            },
         );
+# ---
         if ( $Ticket{SLA} ) {
             $Self->{LayoutObject}->Block(
                 Name => 'SLA',
@@ -1158,7 +1234,8 @@ sub MaskAgentZoom {
             DynamicFieldConfig => $DynamicFieldConfig,
             Value              => $Ticket{ 'DynamicField_' . $DynamicFieldConfig->{Name} },
             LayoutObject       => $Self->{LayoutObject},
-            ValueMaxChars => 18,    # limit for sidebar display
+            ValueMaxChars      => $Self->{ConfigObject}->
+                                    Get('Ticket::Frontend::DynamicFieldsZoomMaxSizeSidebar')||18,    # limit for sidebar display
         );
 
         if (
@@ -1694,10 +1771,10 @@ sub _ArticleTree {
 
             # show ticket flags
             if ($ShowMeta) {
-                $Class .= ' Important';
+                $Class .= ' Remarkable';
             }
             else {
-                $Class .= ' Unimportant';
+                $Class .= ' Ordinary';
             }
         }
 
@@ -1723,6 +1800,21 @@ sub _ArticleTree {
                 ZoomExpandSort => $Self->{ZoomExpandSort},
             },
         );
+
+        # get article flags
+        # Always use user id 1 because other users also have to see the important flag
+        my %ArticleImportantFlags = $Self->{TicketObject}->ArticleFlagGet(
+            ArticleID => $Article{ArticleID},
+            UserID    => 1,
+        );
+
+        # show important flag
+        if ( $ArticleImportantFlags{Important} ) {
+            $Self->{LayoutObject}->Block(
+                Name => 'TreeItemImportantArticle',
+                Data => {},
+            );
+        }
 
         # always show archived tickets as seen
         if ( $NewArticle && $Ticket{ArchiveFlag} ne 'y' ) {
@@ -2228,6 +2320,43 @@ sub _ArticleItem {
         }
     }
 
+    # Owner and Responsible can mark articles as important or remove mark
+    if (
+        $Self->{UserID} == $Ticket{OwnerID}
+        || (
+            $Self->{ConfigObject}->Get('Ticket::Responsible')
+            && $Self->{UserID} == $Ticket{ResponsibleID}
+        )
+        )
+    {
+
+        # Always use user id 1 because other users also have to see the important flag
+        my %ArticleFlags = $Self->{TicketObject}->ArticleFlagGet(
+            ArticleID => $Article{ArticleID},
+            UserID    => 1,
+        );
+
+        my $ArticleIsImportant = $ArticleFlags{Important};
+
+        my $Link
+            = 'Action=AgentTicketZoom;Subaction=MarkAsImportant;TicketID=$Data{"TicketID"};ArticleID=$Data{"ArticleID"}';
+        my $Description = 'Mark article as important';
+        if ($ArticleIsImportant) {
+            $Description = 'Remove important mark';
+        }
+
+        # set important menu item
+        $Self->{LayoutObject}->Block(
+            Name => 'ArticleMenu',
+            Data => {
+                %Ticket, %Article, %AclAction,
+                Description => $Description,
+                Name        => $Description,
+                Link        => $Link,
+            },
+        );
+    }
+
     # do some strips && quoting
     KEY:
     for my $Key (qw(From To Cc)) {
@@ -2284,7 +2413,8 @@ sub _ArticleItem {
         my $ValueStrg = $Self->{BackendObject}->DisplayValueRender(
             DynamicFieldConfig => $DynamicFieldConfig,
             Value              => $Value,
-            ValueMaxChars      => 160,
+            ValueMaxChars      => $Self->{ConfigObject}->
+                                    Get('Ticket::Frontend::DynamicFieldsZoomMaxSizeArticle')||160,    # limit for article display
             LayoutObject       => $Self->{LayoutObject},
         );
 
