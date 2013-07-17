@@ -67,6 +67,7 @@
         <File Permission="644" Location="scripts/test/Service.t"/>
         <File Permission="644" Location="scripts/test/SLA.t"/>
         <File Permission="644" Location="var/httpd/htdocs/js/ITSM.Agent.CustomerSearch.js"/>
+        <File Permission="644" Location="var/httpd/htdocs/js/ITSM.Agent.IncidentState.js"/>
         <File Permission="644" Location="var/httpd/htdocs/js/ITSM.Agent.Zoom.js"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/ITSM.Agent.Default.css"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/ITSM.Agent.Detail.css"/>
