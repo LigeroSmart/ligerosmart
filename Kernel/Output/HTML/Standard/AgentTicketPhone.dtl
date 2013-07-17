@@ -191,35 +191,13 @@ $Include{"AgentCustomerSearch"}
 # ---
 #    });
 
-        // define data for ajax function call to get the service incident state and signal
-        var Data = {
+/*global ITSM: true */
+        // show service incident state and signal for the selected service
+        ITSM.Agent.IncidentState.ShowIncidentState({
             Action: '$Env{"Action"}',
-            Subaction: 'GetServiceIncidentState',
             ServiceID: $('#ServiceID').val()
-        };
-        Core.AJAX.FunctionCall(Core.Config.Get('Baselink'), Data, function (Response) {
-
-            // if a service was selected and an incident state was found
-            if (Response.CurInciSignal) {
-
-                // set incident signal
-                $('#ServiceIncidentStateSignal').attr('class', Response.CurInciSignal);
-                $('#ServiceIncidentStateSignal').attr('title', Response.CurInciState);
-
-                // set incident state
-                $('#ServiceIncidentState').html(Response.CurInciState);
-
-                // show service incident signal and state
-                $('#ServiceIncidentStateContainer').show();
-                $('#ServiceIncidentStateContainer').prev().show();
-            }
-            else {
-                // hide service incident signal and state
-                $('#ServiceIncidentStateContainer').hide();
-                $('#ServiceIncidentStateContainer').prev().hide();
-            }
         });
-    }).trigger('change');
+}).trigger('change');
 # ---
 //]]></script>
 <!--dtl:js_on_document_complete-->
@@ -231,7 +209,7 @@ $Include{"AgentCustomerSearch"}
                     <label for="ServiceIncidentStateContainer" style="display:none;">$Text{"Service Incident State"}:</label>
                     <div id="ServiceIncidentStateContainer" class="Value" style="display:none;">
                         <div class="Flag Small">
-                            <span id="ServiceIncidentStateSignal" class="" title=""></span>
+                            <span id="ServiceIncidentStateSignal"></span>
                         </div>
                         <span id="ServiceIncidentState">&nbsp;</span>
                     </div>

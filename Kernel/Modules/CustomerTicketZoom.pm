@@ -1517,6 +1517,9 @@ sub _Mask {
                 $Param{DynamicFieldNamesStrg} .= "'" . $Field . "'";
             }
         }
+        else {
+            $Param{DynamicFieldNamesStrg} = "''";
+        }
 
         # check subject
         if ( !$Param{Subject} ) {
