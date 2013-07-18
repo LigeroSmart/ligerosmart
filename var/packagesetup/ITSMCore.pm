@@ -18,7 +18,7 @@ use Kernel::System::ITSMCIPAllocate;
 use Kernel::System::Priority;
 use Kernel::System::Valid;
 
-use vars qw(@ISA $VERSION);
+use vars qw(@ISA);
 
 =head1 NAME
 
