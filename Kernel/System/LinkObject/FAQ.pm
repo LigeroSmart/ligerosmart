@@ -2,8 +2,6 @@
 # Kernel/System/LinkObject/FAQ.pm - to link faq objects
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.22 2013-03-25 17:50:43 ub Exp $
-# --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
@@ -17,8 +15,66 @@ use warnings;
 use Kernel::System::Group;
 use Kernel::System::FAQ;
 
-use vars qw($VERSION);
-$VERSION = qw($Revision: 1.22 $) [1];
+
+=head1 NAME
+
+Kernel::System::LinkObject::FAQ
+
+=head1 SYNOPSIS
+
+FAQ backend for the link object.
+
+=head1 PUBLIC INTERFACE
+
+=over 4
+
+=cut
+
+=item new()
+
+create an object
+
+    use Kernel::Config;
+    use Kernel::System::Encode;
+    use Kernel::System::Log;
+    use Kernel::System::Time;
+    use Kernel::System::Main;
+    use Kernel::System::DB;
+    use Kernel::System::LinkObject::FAQ;
+
+    my $ConfigObject = Kernel::Config->new();
+    my $EncodeObject = Kernel::System::Encode->new(
+        ConfigObject => $ConfigObject,
+    );
+    my $LogObject = Kernel::System::Log->new(
+        ConfigObject => $ConfigObject,
+        EncodeObject => $EncodeObject,
+    );
+    my $TimeObject = Kernel::System::Time->new(
+        ConfigObject => $ConfigObject,
+        LogObject    => $LogObject,
+    );
+    my $MainObject = Kernel::System::Main->new(
+        ConfigObject => $ConfigObject,
+        EncodeObject => $EncodeObject,
+        LogObject    => $LogObject,
+    );
+    my $DBObject = Kernel::System::DB->new(
+        ConfigObject => $ConfigObject,
+        EncodeObject => $EncodeObject,
+        LogObject    => $LogObject,
+        MainObject   => $MainObject,
+    );
+    my $FAQObjectBackend = Kernel::System::LinkObject::FAQ->new(
+        ConfigObject       => $ConfigObject,
+        LogObject          => $LogObject,
+        DBObject           => $DBObject,
+        MainObject         => $MainObject,
+        TimeObject         => $TimeObject,
+        EncodeObject       => $EncodeObject,
+    );
+
+=cut
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -43,7 +99,7 @@ sub new {
 
 fill up the link list with data
 
-    $Success = $LinkObjectBackend->LinkListWithData(
+    $Success = $FAQLinkObject->LinkListWithData(
         LinkList => $HashRef,
         UserID   => 1,
     );
@@ -106,7 +162,7 @@ sub LinkListWithData {
 
 checks read permission for a given object and UserID.
 
-    $Permission = $LinkObject->ObjectPermission(
+    $Permission = $FAQLinkObject->ObjectPermission(
         Object  => 'FAQ',
         Key     => 123,
         UserID  => 1,
@@ -317,7 +373,7 @@ sub ObjectSearch {
 
 link add pre event module
 
-    $True = $LinkObject->LinkAddPre(
+    $True = $FAQLinkObject->LinkAddPre(
         Key          => 123,
         SourceObject => 'FAQ',
         SourceKey    => 321,
@@ -328,7 +384,7 @@ link add pre event module
 
     or
 
-    $True = $LinkObject->LinkAddPre(
+    $True = $FAQLinkObject->LinkAddPre(
         Key          => 123,
         TargetObject => 'FAQ',
         TargetKey    => 321,
@@ -362,7 +418,7 @@ sub LinkAddPre {
 
 link add pre event module
 
-    $True = $LinkObject->LinkAddPost(
+    $True = $FAQLinkObject->LinkAddPost(
         Key          => 123,
         SourceObject => 'FAQ',
         SourceKey    => 321,
@@ -373,7 +429,7 @@ link add pre event module
 
     or
 
-    $True = $LinkObject->LinkAddPost(
+    $True = $FAQLinkObject->LinkAddPost(
         Key          => 123,
         TargetObject => 'FAQ',
         TargetKey    => 321,
@@ -407,7 +463,7 @@ sub LinkAddPost {
 
 link delete pre event module
 
-    $True = $LinkObject->LinkDeletePre(
+    $True = $FAQLinkObject->LinkDeletePre(
         Key          => 123,
         SourceObject => 'FAQ',
         SourceKey    => 321,
@@ -418,7 +474,7 @@ link delete pre event module
 
     or
 
-    $True = $LinkObject->LinkDeletePre(
+    $True = $FAQLinkObject->LinkDeletePre(
         Key          => 123,
         TargetObject => 'FAQ',
         TargetKey    => 321,
@@ -452,7 +508,7 @@ sub LinkDeletePre {
 
 link delete post event module
 
-    $True = $LinkObject->LinkDeletePost(
+    $True = $FAQLinkObject->LinkDeletePost(
         Key          => 123,
         SourceObject => 'FAQ',
         SourceKey    => 321,
@@ -463,7 +519,7 @@ link delete post event module
 
     or
 
-    $True = $LinkObject->LinkDeletePost(
+    $True = $FAQLinkObject->LinkDeletePost(
         Key          => 123,
         TargetObject => 'FAQ',
         TargetKey    => 321,
@@ -494,3 +550,15 @@ sub LinkDeletePost {
 }
 
 1;
+
+=back
+
+=head1 TERMS AND CONDITIONS
+
+This software is part of the OTRS project (L<http://otrs.org/>).
+
+This software comes with ABSOLUTELY NO WARRANTY. For details, see
+the enclosed file COPYING for license information (AGPL). If you
+did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
+
+=cut
