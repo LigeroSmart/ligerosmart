@@ -2,8 +2,6 @@
 # FAQ.pm - code to excecute during package installation
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.19 2012-10-26 19:54:25 cr Exp $
-# --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
@@ -26,7 +24,6 @@ use Kernel::System::LinkObject;
 use Kernel::System::FAQ;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.19 $) [1];
 
 =head1 NAME
 
@@ -707,9 +704,5 @@ the enclosed file COPYING for license information (GPL). If you
 did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =cut
-
-=head1 VERSION
-
-$Revision: 1.19 $ $Date: 2012-10-26 19:54:25 $
 
 =cut

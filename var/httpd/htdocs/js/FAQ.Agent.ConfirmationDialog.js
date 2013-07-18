@@ -3,8 +3,6 @@
 // confirmation dialogs
 // Copyright (C) 2001-2010 OTRS AG, http://otrs.org/\n";
 // --
-// $Id: FAQ.Agent.ConfirmationDialog.js,v 1.2 2010-12-07 17:25:52 ub Exp $
-// --
 // This software comes with ABSOLUTELY NO WARRANTY. For details, see
 // the enclosed file COPYING for license information (AGPL). If you
 // did not receive this file, see http://www.gnu.org/licenses/agpl.txt.

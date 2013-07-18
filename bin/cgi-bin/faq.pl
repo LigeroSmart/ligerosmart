@@ -3,8 +3,6 @@
 # faq.pl - the global CGI handle file for OTRS
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: faq.pl,v 1.6 2012-11-20 13:18:25 mh Exp $
-# --
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU AFFERO General Public License as published by
 # the Free Software Foundation; either version 3 of the License, or
@@ -31,7 +29,6 @@ use lib "$Bin/../../Kernel/cpan-lib";
 use lib "$Bin/../../Custom";
 
 use vars qw($VERSION @INC);
-$VERSION = qw($Revision: 1.6 $) [1];
 
 # 0=off;1=on;
 my $Debug = 0;

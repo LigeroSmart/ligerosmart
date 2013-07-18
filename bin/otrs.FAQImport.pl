@@ -3,8 +3,6 @@
 # otrs.FAQImport.pl - FAQ import script
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: otrs.FAQImport.pl,v 1.2 2013-03-19 15:34:04 ub Exp $
-# --
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU AFFERO General Public License as published by
 # the Free Software Foundation; either version 3 of the License, or
@@ -41,7 +39,6 @@ use Kernel::System::Group;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION $RealBin);
-$VERSION = qw($Revision: 1.2 $) [1];
 
 # create common objects
 my %CommonObject;
@@ -232,9 +229,5 @@ the enclosed file COPYING for license information (GPL). If you
 did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =cut
-
-=head1 VERSION
-
-$Revision: 1.2 $ $Date: 2013-03-19 15:34:04 $
 
 =cut
