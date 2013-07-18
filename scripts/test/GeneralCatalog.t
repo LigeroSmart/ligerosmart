@@ -2,8 +2,6 @@
 # GeneralCatalog.t - general catalog tests
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: GeneralCatalog.t,v 1.23 2011-05-16 11:53:43 ub Exp $
-# --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.

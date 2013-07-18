@@ -2,8 +2,6 @@
 # Kernel/Modules/AdminGeneralCatalog.pm - admin frontend of general catalog management
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminGeneralCatalog.pm,v 1.27 2013-06-05 10:58:29 ub Exp $
-# --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
@@ -16,9 +14,6 @@ use warnings;
 
 use Kernel::System::GeneralCatalog;
 use Kernel::System::Valid;
-
-use vars qw($VERSION);
-$VERSION = qw($Revision: 1.27 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;

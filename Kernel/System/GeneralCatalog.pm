@@ -2,8 +2,6 @@
 # Kernel/System/GeneralCatalog.pm - all general catalog functions
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: GeneralCatalog.pm,v 1.58 2012-11-20 19:01:38 mh Exp $
-# --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
@@ -17,9 +15,6 @@ use warnings;
 use Kernel::System::Valid;
 use Kernel::System::CheckItem;
 use Kernel::System::CacheInternal;
-
-use vars qw($VERSION);
-$VERSION = qw($Revision: 1.58 $) [1];
 
 =head1 NAME
 
@@ -713,9 +708,5 @@ the enclosed file COPYING for license information (GPL). If you
 did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =cut
-
-=head1 VERSION
-
-$Revision: 1.58 $ $Date: 2012-11-20 19:01:38 $
 
 =cut

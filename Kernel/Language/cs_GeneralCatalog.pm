@@ -2,8 +2,6 @@
 # Kernel/Language/cs_GeneralCatalog.pm - translation file
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: cs_GeneralCatalog.pm,v 1.3 2012-01-21 21:04:11 sb Exp $
-# --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
