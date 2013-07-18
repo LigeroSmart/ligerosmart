@@ -2,8 +2,6 @@
 # Kernel/System/ImportExport.pm - all import and export functions
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: ImportExport.pm,v 1.44 2012-11-30 17:22:43 ub Exp $
-# --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
@@ -15,9 +13,6 @@ use strict;
 use warnings;
 
 use Kernel::System::CheckItem;
-
-use vars qw($VERSION);
-$VERSION = qw($Revision: 1.44 $) [1];
 
 =head1 NAME
 
@@ -2328,9 +2323,5 @@ the enclosed file COPYING for license information (GPL). If you
 did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =cut
-
-=head1 VERSION
-
-$Revision: 1.44 $ $Date: 2012-11-30 17:22:43 $
 
 =cut

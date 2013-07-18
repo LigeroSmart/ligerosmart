@@ -2,8 +2,6 @@
 # Kernel/Output/HTML/ImportExportLayoutCheckbox.pm - layout backend module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ImportExportLayoutCheckbox.pm,v 1.6 2010-09-14 20:58:20 dz Exp $
-# --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
@@ -13,9 +11,6 @@ package Kernel::Output::HTML::ImportExportLayoutCheckbox;
 
 use strict;
 use warnings;
-
-use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
 
 =head1 NAME
 
@@ -132,9 +127,5 @@ the enclosed file COPYING for license information (AGPL). If you
 did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =cut
-
-=head1 VERSION
-
-$Revision: 1.6 $ $Date: 2010-09-14 20:58:20 $
 
 =cut

@@ -3,8 +3,6 @@
 # otrs.ImportExport.pl - import/export script
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: otrs.ImportExport.pl,v 1.4 2013-03-19 16:12:49 ub Exp $
-# --
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU AFFERO General Public License as published by
 # the Free Software Foundation; either version 3 of the License, or
@@ -37,8 +35,7 @@ use Kernel::System::ImportExport;
 use Kernel::System::Log;
 use Kernel::System::Main;
 
-use vars qw($VERSION $RealBin);
-$VERSION = qw($Revision: 1.4 $) [1];
+use vars qw($RealBin);
 
 # create common objects
 my %CommonObject;
@@ -58,7 +55,7 @@ getopts( 'hn:a:i:o:', \%Opts );
 
 if ( $Opts{h} ) {
 
-    print STDOUT "otrs.ImportExport.pl <Revision $VERSION> - an import/export tool\n";
+    print STDOUT "otrs.ImportExport.pl - an import/export tool\n";
     print STDOUT "Copyright (C) 2001-2013 OTRS AG, http://otrs.org/\n";
     print STDOUT "\n";
     print STDOUT "usage: otrs.ImportExport.pl -n <TemplateNumber> -a import|export ";
@@ -197,9 +194,5 @@ the enclosed file COPYING for license information (GPL). If you
 did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =cut
-
-=head1 VERSION
-
-$Revision: 1.4 $ $Date: 2013-03-19 16:12:49 $
 
 =cut

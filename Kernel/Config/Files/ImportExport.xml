@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Framework">
-    <CVS>$Id: ImportExport.xml,v 1.8 2010-09-14 20:58:21 dz Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminImportExport" Required="0" Valid="1">
         <Description Translatable="1">Frontend module registration for the agent interface.</Description>
         <Group>ImportExport</Group>

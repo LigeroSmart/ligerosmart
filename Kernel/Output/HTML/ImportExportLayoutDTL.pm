@@ -2,8 +2,6 @@
 # Kernel/Output/HTML/ImportExportLayoutDTL.pm - layout backend module
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: ImportExportLayoutDTL.pm,v 1.4 2012-11-20 19:09:29 mh Exp $
-# --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
@@ -13,9 +11,6 @@ package Kernel::Output::HTML::ImportExportLayoutDTL;
 
 use strict;
 use warnings;
-
-use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
 
 =head1 NAME
 
@@ -103,9 +98,5 @@ the enclosed file COPYING for license information (AGPL). If you
 did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =cut
-
-=head1 VERSION
-
-$Revision: 1.4 $ $Date: 2012-11-20 19:09:29 $
 
 =cut

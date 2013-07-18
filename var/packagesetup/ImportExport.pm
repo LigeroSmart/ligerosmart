@@ -2,8 +2,6 @@
 # ImportExport.pm - code to excecute during package installation
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ImportExport.pm,v 1.3 2010-05-20 19:24:00 ub Exp $
-# --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
@@ -14,8 +12,7 @@ package var::packagesetup::ImportExport;
 use strict;
 use warnings;
 
-use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+use vars qw(@ISA);
 
 =head1 NAME
 
@@ -213,9 +210,5 @@ the enclosed file COPYING for license information (GPL). If you
 did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =cut
-
-=head1 VERSION
-
-$Revision: 1.3 $ $Date: 2010-05-20 19:24:00 $
 
 =cut
