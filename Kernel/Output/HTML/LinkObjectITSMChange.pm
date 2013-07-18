@@ -2,8 +2,6 @@
 # Kernel/Output/HTML/LinkObjectITSMChange.pm - layout backend module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: LinkObjectITSMChange.pm,v 1.12 2010-12-09 02:30:22 ub Exp $
-# --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
@@ -16,9 +14,6 @@ use warnings;
 
 use Kernel::Output::HTML::Layout;
 use Kernel::System::GeneralCatalog;
-
-use vars qw($VERSION);
-$VERSION = qw($Revision: 1.12 $) [1];
 
 =head1 NAME
 
@@ -551,9 +546,5 @@ the enclosed file COPYING for license information (AGPL). If you
 did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =cut
-
-=head1 VERSION
-
-$Revision: 1.12 $ $Date: 2010-12-09 02:30:22 $
 
 =cut

@@ -2,8 +2,6 @@
 # Kernel/System/ITSMChange/History.pm - all change and workorder history functions
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: History.pm,v 1.33 2012-10-24 11:27:59 ub Exp $
-# --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
@@ -15,9 +13,6 @@ use strict;
 use warnings;
 
 use Kernel::System::CacheInternal;
-
-use vars qw($VERSION);
-$VERSION = qw($Revision: 1.33 $) [1];
 
 =head1 NAME
 
@@ -1151,9 +1146,5 @@ the enclosed file COPYING for license information (AGPL). If you
 did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =cut
-
-=head1 VERSION
-
-$Revision: 1.33 $ $Date: 2012-10-24 11:27:59 $
 
 =cut

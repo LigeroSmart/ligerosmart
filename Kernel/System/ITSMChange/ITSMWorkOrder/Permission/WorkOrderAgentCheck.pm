@@ -2,8 +2,6 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder/Permission/WorkOrderAgentCheck.pm - workorder agent based permission check
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: WorkOrderAgentCheck.pm,v 1.14 2010-10-21 16:11:31 ub Exp $
-# --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
@@ -13,9 +11,6 @@ package Kernel::System::ITSMChange::ITSMWorkOrder::Permission::WorkOrderAgentChe
 
 use strict;
 use warnings;
-
-use vars qw($VERSION);
-$VERSION = qw($Revision: 1.14 $) [1];
 
 =head1 NAME
 

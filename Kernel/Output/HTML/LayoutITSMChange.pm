@@ -2,8 +2,6 @@
 # Kernel/Output/HTML/LayoutITSMChange.pm - provides generic HTML output for ITSMChange
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: LayoutITSMChange.pm,v 1.62 2012-02-16 15:34:58 ub Exp $
-# --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
@@ -15,9 +13,6 @@ use strict;
 use warnings;
 
 use Kernel::Output::HTML::Layout;
-
-use vars qw($VERSION);
-$VERSION = qw($Revision: 1.62 $) [1];
 
 =over 4
 

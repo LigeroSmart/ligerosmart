@@ -2,8 +2,6 @@
 # Kernel/Modules/AgentITSMChangeSearch.pm - module for change search
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeSearch.pm,v 1.82 2013-05-31 08:32:58 ub Exp $
-# --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
@@ -21,9 +19,6 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::CSV;
 use Kernel::System::LinkObject;
 use Kernel::System::Service;
-
-use vars qw($VERSION);
-$VERSION = qw($Revision: 1.82 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;

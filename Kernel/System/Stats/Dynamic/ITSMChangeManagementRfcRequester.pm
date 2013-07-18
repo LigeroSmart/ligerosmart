@@ -2,8 +2,6 @@
 # Kernel/System/Stats/Dynamic/ITSMChangeManagementRfcRequester.pm - all advice functions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChangeManagementRfcRequester.pm,v 1.6 2010-10-28 12:31:07 ub Exp $
-# --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
@@ -18,9 +16,6 @@ use Kernel::System::CustomerUser;
 use Kernel::System::ITSMChange;
 use Kernel::System::Ticket;
 use Kernel::System::User;
-
-use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;

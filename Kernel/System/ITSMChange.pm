@@ -2,8 +2,6 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChange.pm,v 1.286 2013-06-28 13:02:29 ub Exp $
-# --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
@@ -27,7 +25,6 @@ use Kernel::System::VirtualFS;
 use Kernel::System::Cache;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.286 $) [1];
 
 @ISA = (
     'Kernel::System::EventHandler',
@@ -3833,9 +3830,5 @@ the enclosed file COPYING for license information (AGPL). If you
 did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =cut
-
-=head1 VERSION
-
-$Revision: 1.286 $ $Date: 2013-06-28 13:02:29 $
 
 =cut

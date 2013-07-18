@@ -2,8 +2,6 @@
 # Kernel/System/ITSMChange/Permission/ChangeBuilderCheck.pm - change builder based permission check
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ChangeBuilderCheck.pm,v 1.18 2010-11-21 12:16:55 bes Exp $
-# --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
@@ -13,9 +11,6 @@ package Kernel::System::ITSMChange::Permission::ChangeBuilderCheck;
 
 use strict;
 use warnings;
-
-use vars qw($VERSION);
-$VERSION = qw($Revision: 1.18 $) [1];
 
 =head1 NAME
 

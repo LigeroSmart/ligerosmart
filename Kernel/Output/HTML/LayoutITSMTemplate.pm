@@ -2,8 +2,6 @@
 # Kernel/Output/HTML/LayoutITSMTemplate.pm - provides generic HTML output for templates
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: LayoutITSMTemplate.pm,v 1.4 2010-10-27 22:35:00 ub Exp $
-# --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
@@ -17,9 +15,6 @@ use warnings;
 use POSIX qw(ceil);
 
 use Kernel::Output::HTML::Layout;
-
-use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
 
 =over 4
 

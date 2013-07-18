@@ -2,8 +2,6 @@
 # Kernel/Modules/AgentITSMWorkOrderAdd.pm - the OTRS ITSM ChangeManagement workorder add module
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMWorkOrderAdd.pm,v 1.70 2013-03-26 14:35:31 ub Exp $
-# --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
@@ -18,9 +16,6 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::ITSMChange::Template;
 use Kernel::System::Web::UploadCache;
-
-use vars qw($VERSION);
-$VERSION = qw($Revision: 1.70 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;

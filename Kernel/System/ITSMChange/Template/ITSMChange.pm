@@ -2,8 +2,6 @@
 # Kernel/System/ITSMChange/Template/ITSMChange.pm - all template functions for changes
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChange.pm,v 1.11 2013-04-22 20:31:34 ub Exp $
-# --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
@@ -21,9 +19,6 @@ use Kernel::System::ITSMChange::ITSMStateMachine;
 use Kernel::System::LinkObject;
 use Kernel::System::Valid;
 use Data::Dumper;
-
-use vars qw($VERSION);
-$VERSION = qw($Revision: 1.11 $) [1];
 
 =head1 NAME
 
@@ -608,9 +603,5 @@ the enclosed file COPYING for license information (AGPL). If you
 did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =cut
-
-=head1 VERSION
-
-$Revision: 1.11 $ $Date: 2013-04-22 20:31:34 $
 
 =cut

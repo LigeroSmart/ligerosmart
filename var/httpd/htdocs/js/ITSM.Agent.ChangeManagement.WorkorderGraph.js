@@ -3,8 +3,6 @@
 // workorder graph
 // Copyright (C) 2001-2010 OTRS AG, http://otrs.org/\n";
 // --
-// $Id: ITSM.Agent.ChangeManagement.WorkorderGraph.js,v 1.3 2010-12-10 13:42:41 ub Exp $
-// --
 // This software comes with ABSOLUTELY NO WARRANTY. For details, see
 // the enclosed file COPYING for license information (AGPL). If you
 // did not receive this file, see http://www.gnu.org/licenses/agpl.txt.

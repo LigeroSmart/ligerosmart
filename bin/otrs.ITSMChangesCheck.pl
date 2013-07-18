@@ -3,8 +3,6 @@
 # bin/otrs.ITSMChangesCheck.pl - check itsm changes
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: otrs.ITSMChangesCheck.pl,v 1.17 2013-06-27 21:12:53 ub Exp $
-# --
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU AFFERO General Public License as published by
 # the Free Software Foundation; either version 3 of the License, or
@@ -31,7 +29,6 @@ use lib dirname($RealBin);
 use lib dirname($RealBin) . '/Kernel/cpan-lib';
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.17 $) [1];
 
 use Getopt::Std;
 use Kernel::Config;

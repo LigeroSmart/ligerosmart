@@ -2,7 +2,6 @@
 # Kernel/System/ITSMChange/ITSMChangeCIPAllocate.pm - all criticality, impact and priority allocation functions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChangeCIPAllocate.pm,v 1.4 2010-12-22 08:48:57 ub Exp $
 # $OldId: ITSMCIPAllocate.pm,v 1.16 2010/12/22 08:42:49 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -19,9 +18,6 @@ package Kernel::System::ITSMChange::ITSMChangeCIPAllocate;
 
 use strict;
 use warnings;
-
-use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
 
 =head1 NAME
 
@@ -355,9 +351,5 @@ the enclosed file COPYING for license information (GPL). If you
 did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =cut
-
-=head1 VERSION
-
-$Revision: 1.4 $ $Date: 2010-12-22 08:48:57 $
 
 =cut

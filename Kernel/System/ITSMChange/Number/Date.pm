@@ -2,8 +2,6 @@
 # ITSMChange/Number/Date.pm - a date based change number generator
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: Date.pm,v 1.2 2013-04-09 12:56:10 ub Exp $
-# --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
@@ -15,9 +13,6 @@ package Kernel::System::ITSMChange::Number::Date;
 
 use strict;
 use warnings;
-
-use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
 
 sub ChangeNumberCreate {
     my ( $Self, %Param ) = @_;
@@ -132,9 +127,5 @@ This software is part of the OTRS project (L<http://otrs.org/>).
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
 the enclosed file COPYING for license information (AGPL). If you
 did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
-
-=head1 VERSION
-
-$Revision: 1.2 $ $Date: 2013-04-09 12:56:10 $
 
 =cut

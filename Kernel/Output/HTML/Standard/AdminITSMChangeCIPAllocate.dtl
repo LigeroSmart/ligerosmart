@@ -2,7 +2,6 @@
 # AdminITSMChangeCIPAllocate.dtl - provides HTML form for AdminITSMChangeCIPAllocate
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminITSMChangeCIPAllocate.dtl,v 1.16 2010-12-22 08:48:57 ub Exp $
 # $OldId: AdminITSMCIPAllocate.dtl,v 1.13 2010/12/22 08:42:17 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see

@@ -2,7 +2,6 @@
 # Kernel/Modules/AdminITSMChangeCIPAllocate.pm - admin frontend of criticality, impact and priority
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminITSMChangeCIPAllocate.pm,v 1.9 2010-12-22 08:48:57 ub Exp $
 # $OldId: AdminITSMCIPAllocate.pm,v 1.13 2010/12/22 08:41:45 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -29,9 +28,6 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::ITSMChange::ITSMChangeCIPAllocate;
 # ---
 use Kernel::System::Valid;
-
-use vars qw($VERSION);
-$VERSION = qw($Revision: 1.9 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;

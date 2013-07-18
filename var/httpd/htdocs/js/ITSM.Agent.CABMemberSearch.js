@@ -2,8 +2,6 @@
 // ITSM.Agent.CABMemberSearch.js - provides the special module functions for the user search
 // Copyright (C) 2001-2010 OTRS AG, http://otrs.org/\n";
 // --
-// $Id: ITSM.Agent.CABMemberSearch.js,v 1.2 2010-12-21 17:45:53 dz Exp $
-// --
 // This software comes with ABSOLUTELY NO WARRANTY. For details, see
 // the enclosed file COPYING for license information (AGPL). If you
 // did not receive this file, see http://www.gnu.org/licenses/agpl.txt.

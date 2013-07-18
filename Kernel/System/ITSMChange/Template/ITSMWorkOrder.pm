@@ -2,8 +2,6 @@
 # Kernel/System/ITSMChange/Template/ITSMWorkOrder.pm - all template functions for workorders
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.15 2012-10-30 14:28:34 ub Exp $
-# --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
@@ -19,9 +17,6 @@ use Kernel::System::ITSMChange::ITSMStateMachine;
 use Kernel::System::LinkObject;
 use Kernel::System::Valid;
 use Data::Dumper;
-
-use vars qw($VERSION);
-$VERSION = qw($Revision: 1.15 $) [1];
 
 =head1 NAME
 
@@ -641,9 +636,5 @@ the enclosed file COPYING for license information (AGPL). If you
 did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =cut
-
-=head1 VERSION
-
-$Revision: 1.15 $ $Date: 2012-10-30 14:28:34 $
 
 =cut

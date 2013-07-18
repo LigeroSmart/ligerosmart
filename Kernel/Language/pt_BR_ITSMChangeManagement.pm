@@ -2,8 +2,6 @@
 # Kernel/Language/pt_BR_ITSMChangeManagement.pm - the Brazilian Portuguese translation of ITSMChangeManagement
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: pt_BR_ITSMChangeManagement.pm,v 1.2 2011-11-24 16:19:49 ub Exp $
-# --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.

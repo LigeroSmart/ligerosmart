@@ -2,8 +2,6 @@
 # Kernel/Language/pl_ITSMChangeManagement.pm - translation file
 # Copyright (C) 2011-2012 Informatyka Boguslawski sp. z o.o. sp.k., http://www.ib.pl/
 # --
-# $Id: pl_ITSMChangeManagement.pm,v 1.3 2013-05-31 09:27:04 ub Exp $
-# --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.

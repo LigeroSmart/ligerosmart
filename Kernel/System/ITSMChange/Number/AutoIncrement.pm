@@ -2,8 +2,6 @@
 # ITSMChange/Number/AutoIncrement.pm - a change number auto increment generator
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: AutoIncrement.pm,v 1.1 2013-04-09 16:59:05 ub Exp $
-# --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
@@ -18,9 +16,6 @@ package Kernel::System::ITSMChange::Number::AutoIncrement;
 
 use strict;
 use warnings;
-
-use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
 
 sub ChangeNumberCreate {
     my ( $Self, %Param ) = @_;
@@ -127,9 +122,5 @@ This software is part of the OTRS project (L<http://otrs.org/>).
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
 the enclosed file COPYING for license information (AGPL). If you
 did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
-
-=head1 VERSION
-
-$Revision: 1.1 $ $Date: 2013-04-09 16:59:05 $
 
 =cut

@@ -3,8 +3,6 @@
 # bin/otrs.ITSMChangeDelete.pl - to delete changes
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: otrs.ITSMChangeDelete.pl,v 1.5 2013-06-27 21:25:42 ub Exp $
-# --
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU AFFERO General Public License as published by
 # the Free Software Foundation; either version 3 of the License, or
@@ -28,9 +26,6 @@ use warnings;
 use File::Basename;
 use FindBin qw($RealBin);
 use lib dirname($RealBin);
-
-use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
 
 use Getopt::Long;
 use Kernel::Config;

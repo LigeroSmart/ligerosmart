@@ -3,8 +3,6 @@
 # event module for ITSMWorkOrder
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: WorkOrderNumberCalc.pm,v 1.17 2012-11-22 08:47:47 ub Exp $
-# --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
@@ -14,9 +12,6 @@ package Kernel::System::ITSMChange::ITSMWorkOrder::Event::WorkOrderNumberCalc;
 
 use strict;
 use warnings;
-
-use vars qw($VERSION);
-$VERSION = qw($Revision: 1.17 $) [1];
 
 =head1 NAME
 
@@ -284,9 +279,5 @@ the enclosed file COPYING for license information (AGPL). If you
 did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =cut
-
-=head1 VERSION
-
-$Revision: 1.17 $ $Date: 2012-11-22 08:47:47 $
 
 =cut
