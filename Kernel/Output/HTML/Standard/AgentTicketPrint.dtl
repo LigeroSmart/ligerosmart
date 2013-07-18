@@ -2,7 +2,6 @@
 # AgentTicketPrint.dtl - provides HTML print view
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketPrint.dtl,v 1.8 2012-11-21 20:46:18 ub Exp $
 # $OldId: AgentTicketPrint.dtl,v 1.38 2012/11/20 15:22:59 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see

@@ -2,7 +2,6 @@
 # CustomerTicketPrint.dtl - provides HTML print view
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerTicketPrint.dtl,v 1.9 2012-11-21 20:46:18 ub Exp $
 # $OldId: CustomerTicketPrint.dtl,v 1.24 2012/11/20 15:25:20 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see

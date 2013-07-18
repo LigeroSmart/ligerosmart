@@ -2,7 +2,6 @@
 # Kernel/Modules/AgentTicketEmail.pm - to compose initial email to customer
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketEmail.pm,v 1.49 2013/06/18 14:30:03 ub Exp $
 # $OldId: AgentTicketEmail.pm,v 1.220 2013/01/30 00:00:42 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -34,9 +33,6 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::ITSMCIPAllocate;
 use Kernel::System::LinkObject;
 # ---
-
-use vars qw($VERSION);
-$VERSION = qw($Revision: 1.49 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;

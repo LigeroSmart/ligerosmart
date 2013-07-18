@@ -2,8 +2,6 @@
 # ITSMIncidentProblemManagement.pm - code to excecute during package installation
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMIncidentProblemManagement.pm,v 1.20 2012-09-10 07:33:57 mb Exp $
-# --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
@@ -26,7 +24,6 @@ use Kernel::System::Valid;
 use Kernel::System::DynamicField;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.20 $) [1];
 
 =head1 NAME
 
@@ -752,9 +749,5 @@ the enclosed file COPYING for license information (GPL). If you
 did not receive this file, see L<http://www.gnu.org/licenses/gpl-2.0.txt>.
 
 =cut
-
-=head1 VERSION
-
-$Revision: 1.20 $ $Date: 2012-09-10 07:33:57 $
 
 =cut
