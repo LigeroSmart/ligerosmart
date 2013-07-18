@@ -2,8 +2,6 @@
 # Kernel/Modules/AgentITSMSLA.pm - the OTRS ITSM SLA module
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMSLA.pm,v 1.7 2013-03-26 14:35:41 ub Exp $
-# --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
@@ -15,9 +13,6 @@ use strict;
 use warnings;
 
 use Kernel::System::SLA;
-
-use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;

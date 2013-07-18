@@ -2,7 +2,6 @@
 # Kernel/Modules/AdminSLA.pm - admin frontend to manage slas
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminSLA.pm,v 1.12 2013-07-09 17:29:42 ub Exp $
 # $OldId: AdminSLA.pm,v 1.38 2012/11/20 14:44:02 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -23,9 +22,6 @@ use Kernel::System::Valid;
 # ---
 use Kernel::System::GeneralCatalog;
 # ---
-
-use vars qw($VERSION);
-$VERSION = qw($Revision: 1.12 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;

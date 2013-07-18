@@ -2,7 +2,6 @@
 # Kernel/System/Service.pm - all service function
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: Service.pm,v 1.40 2013-07-09 17:29:42 ub Exp $
 # $OldId: Service.pm,v 1.60 2012/11/20 15:38:02 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see

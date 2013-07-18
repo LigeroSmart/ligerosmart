@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: TicketITSMService.xml,v 1.16 2012-10-24 08:22:56 mb Exp $</CVS>
     <CVS>$OldId:Ticket.xml,v 1.425 2011/01/28 15:56:21 mb Exp $</CVS>
     <ConfigItem Name="Ticket::Service" Required="1" Valid="1">
         <Description Translatable="1">Allows defining services and SLAs for tickets (e. g. email, desktop, network, ...), and escalation attributes for SLAs (if ticket service/SLA feature is enabled).</Description>

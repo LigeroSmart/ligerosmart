@@ -2,7 +2,6 @@
 # Service.t - Service tests
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: Service.t,v 1.10 2013-06-13 08:47:57 ub Exp $
 # $OldId: Service.t,v 1.21 2012/11/20 16:07:51 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see

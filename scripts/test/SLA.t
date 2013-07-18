@@ -2,7 +2,6 @@
 # SLA.t - SLA tests
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: SLA.t,v 1.7 2013-03-19 16:44:24 ub Exp $
 # $OldId: SLA.t,v 1.15 2012/11/20 16:07:37 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see

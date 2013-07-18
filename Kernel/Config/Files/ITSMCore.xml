@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMCore.xml,v 1.36 2012-10-24 08:22:56 mb Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMCIPAllocate" Required="0" Valid="1">
         <Description Translatable="1">Frontend module registration for the AdminITSMCIPAllocate configuration in the admin area.</Description>
         <Group>ITSM Core</Group>

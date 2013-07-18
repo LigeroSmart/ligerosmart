@@ -2,7 +2,6 @@
 # Kernel/System/SLA.pm - all sla functions
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: SLA.pm,v 1.11 2013-03-26 14:14:12 ub Exp $
 # $OldId: SLA.pm,v 1.43 2012/11/20 15:37:41 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see

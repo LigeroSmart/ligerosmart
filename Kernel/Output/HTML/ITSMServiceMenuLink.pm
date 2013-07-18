@@ -2,8 +2,6 @@
 # Kernel/Output/HTML/ITSMServiceMenuLink.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMServiceMenuLink.pm,v 1.5 2010-08-18 17:23:04 en Exp $
-# --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
@@ -13,9 +11,6 @@ package Kernel::Output::HTML::ITSMServiceMenuLink;
 
 use strict;
 use warnings;
-
-use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;

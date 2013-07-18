@@ -2,8 +2,6 @@
 # Kernel/Modules/AdminITSMCIPAllocate.pm - admin frontend of criticality, impact and priority
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminITSMCIPAllocate.pm,v 1.14 2012-10-01 14:21:14 mb Exp $
-# --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
@@ -18,9 +16,6 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::ITSMCIPAllocate;
 use Kernel::System::Priority;
 use Kernel::System::Valid;
-
-use vars qw($VERSION);
-$VERSION = qw($Revision: 1.14 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
