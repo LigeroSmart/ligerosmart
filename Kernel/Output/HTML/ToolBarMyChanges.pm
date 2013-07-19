@@ -46,6 +46,7 @@ sub Run {
     # define action, group, label, image and prio
     my $Action = 'AgentITSMChangeMyChanges';
     my $Group  = 'itsm-change-builder';
+    my $Icon   = $Param{Config}->{Icon};
 
     # do not show icon if frontend module is not registered
     return if !$Self->{ConfigObject}->Get('Frontend::Module')->{$Action};
@@ -128,6 +129,7 @@ sub Run {
             Description => $Text,
             Count       => $Count,
             Class       => $Class,
+            Icon        => $Icon,
             Link        => $URL . 'Action=' . $Action,
             AccessKey   => '',
         };

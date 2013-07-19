@@ -191,11 +191,9 @@
         <File Permission="644" Location="var/httpd/htdocs/js/ITSM.Agent.ConfirmationDialog.js"/>
         <File Permission="644" Location="var/httpd/htdocs/js/ITSM.Agent.CABMemberSearch.js"/>
         <File Permission="644" Location="var/httpd/htdocs/js/ITSM.Agent.UserSearch.js"/>
-        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/ITSM.ChangeManagement.Header.css"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/ITSM.ChangeManagement.Default.css"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/ITSM.ChangeManagement.RTEContent.css"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/ITSM.ChangeManagement.WorkorderGraph.css"/>
-        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/img/ITSMChangeManagement_toolbar_sprite.png"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/css/ITSM.ChangeManagement.Table.css"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/css/ITSM.ChangeManagement.Default.css"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/img/flag_shadow.png"/>

@@ -46,6 +46,7 @@ sub Run {
     # define action
     my $Action = 'AgentITSMChangeMyWorkOrders';
     my $Group  = 'itsm-change';
+    my $Icon   = $Param{Config}->{Icon};
 
     # do not show icon if frontend module is not registered
     return if !$Self->{ConfigObject}->Get('Frontend::Module')->{$Action};
@@ -129,6 +130,7 @@ sub Run {
             Description => $Text,
             Count       => $Count,
             Class       => $Class,
+            Icon        => $Icon,
             Link        => $URL . 'Action=' . $Action,
             AccessKey   => '',
         };
