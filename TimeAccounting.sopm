@@ -42,9 +42,7 @@
         <File Permission="644" Location="var/httpd/htdocs/js/test/TimeAccounting.Agent.EditTimeRecords.UnitTest.js"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/TimeAccounting.Defaults.css"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/TimeAccounting.Table.css"/>
-        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/TimeAccounting.Agent.Toolbar.IncompleteWorkingDays.css"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/img/arrow_leftright.png"/>
-        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/img/timeaccounting_toolbar.png"/>
         <File Permission="644" Location="var/packagesetup/TimeAccounting.pm"/>
     </Filelist>
     <DatabaseInstall Type="post">

@@ -117,6 +117,7 @@ sub Run {
     my $Class = $Param{Config}->{CssClass};
     my $Text  = $Self->{LayoutObject}->{LanguageObject}->Get('Incomplete working days');
     my $URL   = $Self->{LayoutObject}->{Baselink};
+    my $Icon  = $Param{Config}->{Icon};
 
     return () if !$Count;
 
@@ -126,6 +127,7 @@ sub Run {
             Description => $Text,
             Count       => $Count,
             Class       => $Class,
+            Icon        => $Icon,
             Link        => $URL . 'Action=' . $Action . ';Subaction=' . $Subaction,
             AccessKey   => '',
             }

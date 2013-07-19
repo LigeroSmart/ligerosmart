@@ -295,7 +295,7 @@
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::ToolBarIncompleteWorkingDays</Item>
                 <Item Key="CssClass">IncompleteWorkingDays</Item>
-                <Item Key="CSS">TimeAccounting.Agent.Toolbar.IncompleteWorkingDays.css</Item>
+                <Item Key="Icon">icon-time</Item>
             </Hash>
         </Setting>
     </ConfigItem>
