@@ -2,8 +2,6 @@
 # Kernel/Language/pl_TimeAccounting.pm - translation file
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: pl_TimeAccounting.pm,v 1.2 2012-09-10 10:30:18 mb Exp $
-# --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.

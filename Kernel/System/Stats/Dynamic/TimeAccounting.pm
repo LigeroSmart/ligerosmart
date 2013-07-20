@@ -2,8 +2,6 @@
 # Kernel/System/Stats/Dynamic/TimeAccounting.pm - all advice functions
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: TimeAccounting.pm,v 1.3 2012-11-30 15:56:52 mh Exp $
-# --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
@@ -13,9 +11,6 @@ package Kernel::System::Stats::Dynamic::TimeAccounting;
 
 use strict;
 use warnings;
-
-use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
 
 use Kernel::System::TimeAccounting;
 use Date::Pcalc qw( Add_Delta_Days Add_Delta_YMD );

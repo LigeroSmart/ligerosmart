@@ -2,8 +2,6 @@
 // TimeAccounting.Agent.Datepickers.js - provides the special datepicker functions for TA
 // Copyright (C) 2001-2011 OTRS AG, http://otrs.org/\n";
 // --
-// $Id: TimeAccounting.Agent.Datepicker.js,v 1.1 2011-01-31 11:30:49 mn Exp $
-// --
 // This software comes with ABSOLUTELY NO WARRANTY. For details, see
 // the enclosed file COPYING for license information (AGPL). If you
 // did not receive this file, see http://www.gnu.org/licenses/agpl.txt.

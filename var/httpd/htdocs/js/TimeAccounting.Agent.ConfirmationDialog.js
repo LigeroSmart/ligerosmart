@@ -3,8 +3,6 @@
 // confirmation dialogs
 // Copyright (C) 2001-2010 OTRS AG, http://otrs.org/\n";
 // --
-// $Id: TimeAccounting.Agent.ConfirmationDialog.js,v 1.2 2010-12-29 23:00:29 en Exp $
-// --
 // This software comes with ABSOLUTELY NO WARRANTY. For details, see
 // the enclosed file COPYING for license information (AGPL). If you
 // did not receive this file, see http://www.gnu.org/licenses/agpl.txt.

@@ -2,8 +2,6 @@
 # AgentTimeAccountingView.dtl - provides HTML for view inserts of one day
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccountingView.dtl,v 1.15 2011-02-11 18:10:06 en Exp $
-# --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
