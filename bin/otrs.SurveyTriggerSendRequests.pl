@@ -1,9 +1,7 @@
-#!/usr/bin/perl -w
+#!/usr/bin/perl
 # --
 # bin/otrs.SurveyTriggerSendRequests.pl - trigger sending delayed survey requests
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
-# --
-# $Id: otrs.SurveyTriggerSendRequests.pl,v 1.5 2013-06-25 11:43:40 jh Exp $
 # --
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU AFFERO General Public License as published by
@@ -30,9 +28,6 @@ use FindBin qw($RealBin);
 use lib dirname($RealBin);
 use lib dirname($RealBin) . "/Kernel/cpan-lib";
 
-use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
-
 use Kernel::Config;
 use Kernel::System::SysConfig;
 use Kernel::System::Time;
@@ -57,7 +52,6 @@ if (
     )
 {
     print STDERR "Usage: bin/$0 [-h] [-d] [-e]\n";
-    print STDERR "$0 <Revision $VERSION>\n";
     print STDERR "Trigger sending delayed survey requests.\n";
     print STDERR "Usage: $0 -h (Display this help text)\n";
     print STDERR "Usage: $0 -d (Do a dry run, implies -v)\n";
