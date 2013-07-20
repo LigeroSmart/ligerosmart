@@ -2,8 +2,6 @@
 # TimeAccounting.pm - code to excecute during package installation
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: TimeAccounting.pm,v 1.10 2011-10-13 16:53:24 en Exp $
-# --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
@@ -19,8 +17,7 @@ use Kernel::System::CacheInternal;
 use Kernel::System::Group;
 use Kernel::System::Valid;
 
-use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.10 $) [1];
+use vars qw(@ISA);
 
 =head1 NAME
 
@@ -324,16 +321,10 @@ sub _GroupDeactivate {
 
 =head1 TERMS AND CONDITIONS
 
-This Software is part of the OTRS project (http://otrs.org/).
+This software is part of the OTRS project (L<http://otrs.org/>).
 
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
-the enclosed file COPYING for license information (GPL). If you
-did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
-
-=cut
-
-=head1 VERSION
-
-$Revision: 1.10 $ $Date: 2011-10-13 16:53:24 $
+the enclosed file COPYING for license information (AGPL). If you
+did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =cut
