@@ -1,4 +1,4 @@
-#!/usr/bin/perl -w
+#!/usr/bin/perl
 # --
 # faq.pl - the global CGI handle file for OTRS
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
@@ -28,7 +28,7 @@ use lib "$Bin/../..";
 use lib "$Bin/../../Kernel/cpan-lib";
 use lib "$Bin/../../Custom";
 
-use vars qw($VERSION @INC);
+use vars qw(@INC);
 
 # 0=off;1=on;
 my $Debug = 0;

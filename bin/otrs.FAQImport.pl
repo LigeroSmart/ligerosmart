@@ -1,4 +1,4 @@
-#!/usr/bin/perl -w
+#!/usr/bin/perl
 # --
 # otrs.FAQImport.pl - FAQ import script
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
@@ -38,7 +38,7 @@ use Kernel::System::Time;
 use Kernel::System::Group;
 use Kernel::System::FAQ;
 
-use vars qw($VERSION $RealBin);
+use vars qw($RealBin);
 
 # create common objects
 my %CommonObject;
@@ -62,7 +62,7 @@ getopt( 'hisq', \%Opts );
 
 if ( exists $Opts{h} ) {
     print STDOUT "\n";
-    print STDOUT "otrs.FAQImport.pl <Revision $VERSION> - a FAQ import tool\n";
+    print STDOUT "otrs.FAQImport.pl - a FAQ import tool\n";
     print STDOUT "Copyright (C) 2001-2013 OTRS AG, http://otrs.org/\n";
     print STDOUT "   usage: \n";
     print STDOUT "      otrs.FAQImport.pl -i <ImportFile> [-s <separator>] [-q <quote>]\n";
@@ -227,7 +227,5 @@ This Software is part of the OTRS project (http://otrs.org/).
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
 the enclosed file COPYING for license information (GPL). If you
 did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
-
-=cut
 
 =cut
