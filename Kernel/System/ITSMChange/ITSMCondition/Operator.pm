@@ -1265,7 +1265,7 @@ sub _OperatorSet {
     return $Result;
 }
 
-=begin Internal:
+=begin Internal
 
 =item _OperatorLoadBackend()
 
@@ -1318,6 +1318,8 @@ sub _OperatorLoadBackend {
     return $BackendObject;
 }
 
+=end Internal
+
 1;
 
 =back
@@ -1329,7 +1331,5 @@ This software is part of the OTRS project (L<http://otrs.org/>).
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
 the enclosed file COPYING for license information (AGPL). If you
 did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
-
-=cut
 
 =cut
