@@ -269,16 +269,10 @@ sub _Prefill_AnswerRequiredFromSurveyQuestion_2_1_5 {
 
 =head1 TERMS AND CONDITIONS
 
-This Software is part of the OTRS project (http://otrs.org/).
+This software is part of the OTRS project (L<http://otrs.org/>).
 
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
-the enclosed file COPYING for license information (GPL). If you
-did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
-
-=cut
-
-=head1 VERSION
-
-$Revision: 1.4 $ $Date: 2012-11-21 10:59:54 $
+the enclosed file COPYING for license information (AGPL). If you
+did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =cut
