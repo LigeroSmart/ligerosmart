@@ -623,12 +623,6 @@
         You are about to install the OTRS package FAQ.<br/>
         <br/>
         <br/>
-        <strong>ATTENTION</strong>
-        <br/>
-        <br/>
-        Make sure your database accepts packages over 5 MB in size. A MySQL database for example accepts packages up to 1 MB by default. In this case, the value for max_allowed_packet must be increased. The recommended maximum size accepted is 20 MB.<br/>
-        <br/>
-        <br/>
         ((enjoy))<br/>
         <br/>
     ]]></IntroInstall>
@@ -640,12 +634,6 @@
         Sie sind im Begriff das OTRS-Paket FAQ zu installieren.<br/>
         <br/>
         <br/>
-        <strong>ACHTUNG</strong>
-        <br/>
-        <br/>
-        Vergewissern Sie sich, dass ihre Datenbank Pakete mit einer Größe von mehr als 5 MB akzeptiert. Eine MySQL Datenbank akzeptiert beispielsweise standardmäßig Pakete mit einer Größe von maximal 1 MB. In diesem Fall muss der Wert für max_allowed_packet erhöht werden. Empfohlen werden 20 MB.<br/>
-        <br/>
-        <br/>
         ((enjoy))<br/>
         <br/>
     ]]></IntroInstall>
@@ -655,12 +643,6 @@
         <br/>
         <br/>
         Usted est&aacute; a punto de instalar el paquete FAQ de OTRS.<br/>
-        <br/>
-        <br/>
-        <strong>ATENCI&Oacute;N</strong>
-        <br/>
-        <br/>
-        Por favor aseg&uacute;rese que su base de datos acepte paquetes de m&aacute;s de 5 MB de tama&ntilde;o. Por ejemplo una base de datos de MySQL acepta paquetes de m&aacute;s de 1 MB predefinido. En este caso la configuraci&oacute;n max_allowed_packet debe ser incrementada. El tama&ntilde;o recomendado es 20 MB.
         <br/>
         <br/>
         ((enjoy))<br/>
