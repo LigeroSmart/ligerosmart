@@ -228,12 +228,6 @@
         You are about to install the OTRS package TimeAccounting.<br>
         <br>
         <br>
-        <b>ATTENTION</b>
-        <br>
-        <br>
-        Make sure your database accepts packages over 5 MB in size. A MySQL database for example accepts packages up to 1 MB by default. In this case, the value for max_allowed_packet must be increased. The recommended maximum size accepted is 20 MB.<br>
-        <br>
-        <br>
         ((enjoy))<br>
         <br>
 
@@ -247,12 +241,6 @@
         Sie sind im Begriff das OTRS-Paket TimeAccounting zu installieren.<br>
         <br>
         <br>
-        <b>ACHTUNG</b>
-        <br>
-        <br>
-        Vergewissern Sie sich, dass ihre Datenbank Pakete mit einer Größe von mehr als 5 MB akzeptiert. Eine MySQL Datenbank akzeptiert beispielsweise standardmäßig Pakete mit einer Größe von maximal 1 MB. In diesem Fall muss der Wert für max_allowed_packet erhöht werden. Empfohlen werden 20 MB.<br>
-        <br>
-        <br>
         ((enjoy))<br>
         <br>
 
@@ -264,12 +252,6 @@
         <br>
         <br>
         Ud. está a punto de instalar el paquete Contabilidad de Tiempo de OTRS.<br>
-        <br>
-        <br>
-        <b>NOTA</b>
-        <br>
-        <br>
-        Asegúrese de que su base de datos acepte paquetes de tamaño superior a 5 MB. Una base de datos MySQL, por ejemplo, acepta por defecto paquetes de 1 MB, como máximo. En este caso, el valor de max_allowed_packet debe incrementarse. El tamaño que se recomienda es de 20 MB.<br>
         <br>
         <br>
         ((enjoy))<br>
@@ -333,12 +315,6 @@
         You are about to upgrade the OTRS package TimeAccounting.<br>
         <br>
         <br>
-        </b>ATTENTION</b>
-        <br>
-        <br>
-        Make sure your database accepts packages over 5 MB in size. A MySQL database for example accepts packages up to 1 MB by default. In this case, the value for max_allowed_packet must be increased. The recommended maximum size accepted is 20 MB.<br>
-        <br>
-        <br>
         ((enjoy))<br>
         <br>
 
@@ -352,12 +328,6 @@
         Sie sind im Begriff das OTRS-Paket TimeAccounting zu aktualisieren.<br>
         <br>
         <br>
-        <b>ACHTUNG</b>
-        <br>
-        <br>
-        Vergewissern Sie sich, dass ihre Datenbank Pakete mit einer Größe von mehr als 5 MB akzeptiert. Eine MySQL Datenbank akzeptiert beispielsweise standardmäßig Pakete mit einer Größe von maximal 1 MB. In diesem Fall muss der Wert für max_allowed_packet erhöht werden. Empfohlen werden 20 MB.<br>
-        <br>
-        <br>
         ((enjoy))<br>
         <br>
 
@@ -369,12 +339,6 @@
         <br>
         <br>
         Ud. está a punto de actualizar el paquete Contabilidad de Tiempo de OTRS.<br>
-        <br>
-        <br>
-        <b>NOTA</b>
-        <br>
-        <br>
-        Asegúrese de que su base de datos acepte paquetes de tamaño superior a 5 MB. Una base de datos MySQL, por ejemplo, acepta por defecto paquetes de 1 MB, como máximo. En este caso, el valor de max_allowed_packet debe incrementarse. El tamaño que se recomienda es de 20 MB.<br>
         <br>
         <br>
         ((enjoy))<br>
