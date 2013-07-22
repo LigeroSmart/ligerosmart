@@ -562,11 +562,6 @@
         <li>GeneralCatalog 3.2.91</li>
         </ul>
         <br/>
-        <strong>ATTENTION</strong>
-        <br/>
-        <br/>
-        Make sure your database accepts packages over 5 MB in size. A MySQL database for example accepts packages up to 1 MB by default. In this case, the value for max_allowed_packet must be increased. The recommended maximum size accepted is 20 MB.<br/>
-        <br/>
         <br/>
         ((enjoy))<br/>
         <br/>
@@ -586,11 +581,6 @@
         <li>GeneralCatalog 3.2.91</li>
         </ul>
         <br/>
-        <strong>ACHTUNG</strong>
-        <br/>
-        <br/>
-        Vergewissern Sie sich, dass ihre Datenbank Pakete mit einer Größe von mehr als 5 MB akzeptiert. Eine MySQL Datenbank akzeptiert beispielsweise standardmäßig Pakete mit einer Größe von maximal 1 MB. In diesem Fall muss der Wert für max_allowed_packet erhöht werden. Empfohlen werden 20 MB.<br/>
-        <br/>
         <br/>
         ((enjoy))<br/>
         <br/>
@@ -609,11 +599,6 @@
         <ul>
         <li>GeneralCatalog 3.2.91</li>
         </ul>
-        <br/>
-        <strong>ATENCIÓN</strong>
-        <br/>
-        <br/>
-        Por favor asegúrese que su base de datos acepte paquetes de mas de 5 MB de tamaño. Por ejemplo una base de datos de MySQL acepta paquetes de mas de 1 MB predefinido. En este caso la configuración max_allowed_packet debe ser incrementada. El tamaño recomendado es 20 MB.<br/>
         <br/>
         <br/>
         ((enjoy))<br/>
@@ -682,11 +667,6 @@
         <li>GeneralCatalog 3.2.91</li>
         </ul>
         <br/>
-        </strong>ATTENTION</strong>
-        <br/>
-        <br/>
-        Make sure your database accepts packages over 5 MB in size. A MySQL database for example accepts packages up to 1 MB by default. In this case, the value for max_allowed_packet must be increased. The recommended maximum size accepted is 20 MB.<br/>
-        <br/>
         <br/>
         ((enjoy))<br/>
         <br/>
@@ -706,11 +686,6 @@
         <li>GeneralCatalog 3.2.91</li>
         </ul>
         <br/>
-        <strong>ACHTUNG</strong>
-        <br/>
-        <br/>
-        Vergewissern Sie sich, dass ihre Datenbank Pakete mit einer Größe von mehr als 5 MB akzeptiert. Eine MySQL Datenbank akzeptiert beispielsweise standardmäßig Pakete mit einer Größe von maximal 1 MB. In diesem Fall muss der Wert für max_allowed_packet erhöht werden. Empfohlen werden 20 MB.<br/>
-        <br/>
         <br/>
         ((enjoy))<br/>
         <br/>
@@ -729,11 +704,6 @@
         <ul>
         <li>GeneralCatalog 3.2.91</li>
         </ul>
-        <br/>
-        <strong>ATENCIÓN</strong>
-        <br/>
-        <br/>
-        Por favor asegúrese que su base de datos acepte paquetes de mas de 5 MB de tamaño. Por ejemplo una base de datos de MySQL acepta paquetes de mas de 1 MB predefinido. En este caso la configuración max_allowed_packet debe ser incrementada. El tamaño recomendado es 20 MB.<br/>
         <br/>
         <br/>
         ((enjoy))<br/>
