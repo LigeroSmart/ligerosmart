@@ -1,6 +1,6 @@
 # --
 # Kernel/Modules/AdminSLA.pm - admin frontend to manage slas
-# Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
 # --
 # $origin: https://github.com/OTRS/otrs/blob/1fc7d8e1d8371c0d67b41970ec7d6a600e4a32e6/Kernel/Modules/AdminSLA.pm
 # --
@@ -362,7 +362,7 @@ sub _MaskNew {
         Multiple    => 1,
         Size        => 5,
         Translation => 0,
-        TreeView    => ($ListType eq 'tree') ? 1 : 0,
+        TreeView    => ( $ListType eq 'tree' ) ? 1 : 0,
         Max         => 200,
     );
 # ---
