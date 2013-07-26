@@ -1,5 +1,5 @@
 // --
-// Core.Agent.TicketZoom.js - provides the special module functions for TicketZoom
+// ITSM.Agent.Zoom.js - provides the special module functions for TicketZoom
 // Copyright (C) 2001-2011 OTRS AG, http://otrs.org/\n";
 // --
 // $origin: https://github.com/OTRS/otrs/blob/1fc7d8e1d8371c0d67b41970ec7d6a600e4a32e6/var/httpd/htdocs/js/Core.Agent.TicketZoom.js
