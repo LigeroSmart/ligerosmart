@@ -2,7 +2,7 @@
 # AgentTicketOverviewMedium.dtl - provides HTML Ticket Overview
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
 # --
-# $OldId: AgentTicketOverviewMedium.dtl,v 1.74 2013/01/11 12:35:19 mn Exp $
+# $origin: https://github.com/OTRS/otrs/blob/9be8fb8ac1ceec0fc3398e78942f8773af85a9dc/Kernel/Output/HTML/Standard/AgentTicketOverviewMedium.dtl
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
