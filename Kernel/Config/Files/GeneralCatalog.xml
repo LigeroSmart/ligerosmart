@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <otrs_config version="1.0" init="Framework">
     <ConfigItem Name="Frontend::Module###AdminGeneralCatalog" Required="0" Valid="1">
         <Description Translatable="1">Frontend module registration for the AdminGeneralCatalog configuration in the admin area.</Description>
