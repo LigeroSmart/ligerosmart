@@ -1318,9 +1318,9 @@ sub _OperatorLoadBackend {
     return $BackendObject;
 }
 
-=end Internal
-
 1;
+
+=end Internal
 
 =back
 
