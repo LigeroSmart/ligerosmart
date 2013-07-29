@@ -1,8 +1,8 @@
 # --
 # AgentTicketZoom.dtl - provides HTML for AgentTicketZoom.pm
-# Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
 # --
-# $OldId: AgentTicketZoom.dtl,v 1.232 2013/02/11 14:45:28 mn Exp $
+# $origin: https://github.com/OTRS/otrs/blob/9be8fb8ac1ceec0fc3398e78942f8773af85a9dc/Kernel/Output/HTML/Standard/AgentTicketZoom.dtl
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -77,7 +77,7 @@
     <div class="Headline">
         <div class="Flag" title="$Text{"$Data{"Priority"}"}"><span class="PriorityID-$QData{"PriorityID"}">$Text{"$Data{"Priority"}"}</span></div>
         <h1 title="$Text{"Zoom"} $Data{"Hook"}$Data{"TicketNumber"} &ndash; $QData{"Title"}">
-            $Data{"Hook"}$Data{"TicketNumber"} <span>&mdash;</span> $QData{"Title", "60"}
+            $Data{"Hook"}$Data{"TicketNumber"} <span>&mdash;</span> $QData{"Title"}
         </h1>
     </div>
 
@@ -103,7 +103,7 @@
 <!-- dtl:block:ArchiveFlag -->
 <!-- dtl:block:Type -->
                         <label>$Text{"Type"}:</label>
-                        <p class="Value" title="$QData{"Type"}">$QData{"Type","18"}</p>
+                        <p class="Value" title="$QData{"Type"}">$QData{"Type"}</p>
                         <div class="Clear"></div>
 <!-- dtl:block:Type -->
                         <label>$Text{"State"}:</label>
@@ -123,19 +123,19 @@
 # ---
 
                         <label>$Text{"Queue"}:</label>
-                        <p class="Value" title="$QData{"Queue"}">$QData{"Queue","18"}</p>
+                        <p class="Value" title="$QData{"Queue"}">$QData{"Queue"}</p>
                         <div class="Clear"></div>
 # ---
 # ITSM
 # ---
 <!-- dtl:block:Owner -->
                         <label>$Text{"Owner"}:</label>
-                        <p class="Value" title="$QData{"UserFirstname"} $QData{"UserLastname"} ($QData{"UserLogin"})">$Quote{"$Data{"UserFirstname"} $Data{"UserLastname"}","18"}</p>
+                        <p class="Value" title="$QData{"UserFirstname"} $QData{"UserLastname"} ($QData{"UserLogin"})">$Quote{"$Data{"UserFirstname"} $Data{"UserLastname"}"}</p>
                         <div class="Clear"></div>
 <!-- dtl:block:Owner -->
 <!-- dtl:block:Responsible -->
                         <label>$Text{"Responsible"}:</label>
-                        <p class="Value" title="$QData{"UserFirstname"} $QData{"UserLastname"} ($QData{"UserLogin"})">$Quote{"$Data{"UserFirstname"} $Data{"UserLastname"}","18"}</p>
+                        <p class="Value" title="$QData{"UserFirstname"} $QData{"UserLastname"} ($QData{"UserLogin"})">$Quote{"$Data{"UserFirstname"} $Data{"UserLastname"}"}</p>
                         <div class="Clear"></div>
 <!-- dtl:block:Responsible -->
                     </fieldset>
@@ -147,9 +147,9 @@
 # ---
 # ITSM
 # ---
-#                        <p class="Value" title="$QData{"Service"}">$QData{"Service","18"}</p>
+#                        <p class="Value" title="$QData{"Service"}">$QData{"Service"}</p>
                         <p class="Value" title="$QData{"Service"}">
-                            <a href="$Env{"Baselink"}Action=AgentITSMServiceZoom;ServiceID=$LQData{"ServiceID"};" target="_blank">$QData{"Service","18"}</a>
+                            <a href="$Env{"Baselink"}Action=AgentITSMServiceZoom;ServiceID=$LQData{"ServiceID"};" target="_blank">$QData{"Service"}</a>
                         </p>
                         <label>$Text{"Service Incident State"}:</label>
                         <div class="Value">
@@ -166,9 +166,9 @@
 # ---
 # ITSM
 # ---
-#                        <p class="Value" title="$QData{"SLA"}">$QData{"SLA","18"}</p>
+#                        <p class="Value" title="$QData{"SLA"}">$QData{"SLA"}</p>
                         <p class="Value" title="$QData{"SLA"}">
-                            <a href="$Env{"Baselink"}Action=AgentITSMSLAZoom;SLAID=$LQData{"SLAID"};" target="_blank">$QData{"SLA","18"}</a>
+                            <a href="$Env{"Baselink"}Action=AgentITSMSLAZoom;SLAID=$LQData{"SLAID"};" target="_blank">$QData{"SLA"}</a>
                         </p>
 # ---
                         <div class="Clear"></div>
@@ -318,10 +318,10 @@
                         <label>$Text{"CustomerID"}:</label>
                         <p class="Value">
 <!-- dtl:block:CustomerIDRW -->
-                            <a href="$Config{"CustomerDBLink"}" class="$Config{"CustomerDBLinkClass"}" $Config{"CustomerDBLinkTarget"}>$QData{"CustomerID", "18"}</a>
+                            <a href="$Config{"CustomerDBLink"}" class="$Config{"CustomerDBLinkClass"}" $Config{"CustomerDBLinkTarget"}>$QData{"CustomerID"}</a>
 <!-- dtl:block:CustomerIDRW -->
 <!-- dtl:block:CustomerIDRO -->
-                            $QData{"CustomerID", "18"}
+                            $QData{"CustomerID"}
 <!-- dtl:block:CustomerIDRO -->
                         </p>
                         <div class="Clear"></div>
@@ -345,13 +345,13 @@
 # ---
 #<!-- dtl:block:Owner -->
 #                        <label>$Text{"Owner"}:</label>
-#                        <p class="Value" title="$QData{"UserFirstname"} $QData{"UserLastname"} ($QData{"UserLogin"})">$Quote{"$Data{"UserFirstname"} $Data{"UserLastname"}","18"}</p>
+#                        <p class="Value" title="$QData{"UserFirstname"} $QData{"UserLastname"} ($QData{"UserLogin"})">$Quote{"$Data{"UserFullname"}"}</p>
 #                        <div class="Clear"></div>
 #
 #<!-- dtl:block:Owner -->
 #<!-- dtl:block:Responsible -->
 #                        <label>$Text{"Responsible"}:</label>
-#                        <p class="Value" title="$QData{"UserFirstname"} $QData{"UserLastname"} ($QData{"UserLogin"})">$Quote{"$Data{"UserFirstname"} $Data{"UserLastname"}","18"}</p>
+#                        <p class="Value" title="$QData{"UserFirstname"} $QData{"UserLastname"} ($QData{"UserLogin"})">$Quote{"$Data{"UserFullname"}"}</p>
 #                        <div class="Clear"></div>
 #
 #<!-- dtl:block:Responsible -->
@@ -362,7 +362,7 @@
                     <fieldset class="TableLike FixedLabelSmall Narrow">
 
                         <label>$Text{"Process"}:</label>
-                        <p class="Value" title="$QData{"Process"}">$QData{"Process","18"}</p>
+                        <p class="Value" title="$QData{"Process"}">$QData{"Process"}</p>
                         <div class="Clear"></div>
 
                         <label>$Text{"Activity"}:</label>
@@ -565,7 +565,7 @@ $('.ShowFieldInfoOverlay').bind('click', function() {
 <!-- dtl:block:ProcessWidgetDynamicField -->
                         <div class="FieldContainer DynamicFieldAutoResize">
                             <label title="$QData{"Label"}">
-                                $QData{"Label", "30"}
+                                $QData{"Label"}
 <!-- dtl:block:ProcessWidgetDynamicFieldValueOverlayTrigger -->
                                 <a href="#" class="ShowFieldInfoOverlay">+</a>
 <!-- dtl:block:ProcessWidgetDynamicFieldValueOverlayTrigger -->
@@ -771,7 +771,7 @@ $Data{"ArticleItems"}
             <div class="WidgetAction Toggle">
                 <a href="$Env{"Baselink"}Action=AgentTicketZoom;TicketID=$QData{"TicketID"};ArticleID=$QData{"ArticleID"}" title="$Text{"Show or hide the content"}"><span></span></a>
             </div>
-            <h2>#$QData{"Count"} &ndash; $QData{"Subject","60"}</h2>
+            <h2>#$QData{"Count"} &ndash; $QData{"Subject"}</h2>
             <div class="AdditionalInformation SpacingLoader">
                 $Text{"Created"}: $TimeShort{"$Data{"Created"}"}
 <!-- dtl:block:ArticleCreatedBy -->
@@ -842,12 +842,12 @@ $('#$QData{"FormID"} select[name=ResponseID]').bind('change', function (Event) {
                 <fieldset class="TableLike FixedLabelSmall">
 <!-- dtl:block:RowRecipient -->
                     <label>$Text{"$Data{"Key"}"}:</label>
-                    <p class="Value" title="$QData{"Value"}">$QData{"Realname","200"}</p>
+                    <p class="Value" title="$QData{"Value"}">$QData{"Realname"}</p>
                     <div class="Clear"></div>
 <!-- dtl:block:RowRecipient -->
 <!-- dtl:block:RowData -->
                     <label>$Text{"$Data{"Key"}"}:</label>
-                    <p class="Value" title="$QData{"Value"}">$QData{"Value","200"}</p>
+                    <p class="Value" title="$QData{"Value"}">$QData{"Value"}</p>
                     <div class="Clear"></div>
 <!-- dtl:block:RowData -->
 
@@ -890,7 +890,7 @@ $('#$QData{"FormID"} select[name=ResponseID]').bind('change', function (Event) {
 # show article options like signed, crypted, ...
 <!-- dtl:block:ArticleOption -->
                     <label>$Text{"$Data{"Key"}"}:</label>
-                    <div title="$QData{"Value"}" class="$QData{"Result"} Value">$QData{"Value","160"}</div>
+                    <div title="$QData{"Value"}" class="$QData{"Result"} Value">$QData{"Value"}</div>
                     <div class="Clear"></div>
 <!-- dtl:block:ArticleOption -->
 

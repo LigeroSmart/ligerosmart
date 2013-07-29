@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AgentTicketZoom.pm - to get a closer view
-# Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
 # --
-# $OldId: AgentTicketZoom.pm,v 1.198 2013/01/15 18:36:41 cr Exp $
+# $origin: https://github.com/OTRS/otrs/blob/9be8fb8ac1ceec0fc3398e78942f8773af85a9dc/Kernel/Modules/AgentTicketZoom.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1231,7 +1231,8 @@ sub MaskAgentZoom {
             Value              => $Ticket{ 'DynamicField_' . $DynamicFieldConfig->{Name} },
             LayoutObject       => $Self->{LayoutObject},
             ValueMaxChars      => $Self->{ConfigObject}->
-                                    Get('Ticket::Frontend::DynamicFieldsZoomMaxSizeSidebar')||18,    # limit for sidebar display
+                Get('Ticket::Frontend::DynamicFieldsZoomMaxSizeSidebar')
+                || 18,    # limit for sidebar display
         );
 
         if (
@@ -1966,6 +1967,7 @@ sub _ArticleItem {
     $Article{Subject} = $Self->{TicketObject}->TicketSubjectClean(
         TicketNumber => $Article{TicketNumber},
         Subject => $Article{Subject} || '',
+        Size => 0,
     );
 
     $Self->{LayoutObject}->Block(
@@ -2410,8 +2412,9 @@ sub _ArticleItem {
             DynamicFieldConfig => $DynamicFieldConfig,
             Value              => $Value,
             ValueMaxChars      => $Self->{ConfigObject}->
-                                    Get('Ticket::Frontend::DynamicFieldsZoomMaxSizeArticle')||160,    # limit for article display
-            LayoutObject       => $Self->{LayoutObject},
+                Get('Ticket::Frontend::DynamicFieldsZoomMaxSizeArticle')
+                || 160,    # limit for article display
+            LayoutObject => $Self->{LayoutObject},
         );
 
         my $Label = $DynamicFieldConfig->{Label};

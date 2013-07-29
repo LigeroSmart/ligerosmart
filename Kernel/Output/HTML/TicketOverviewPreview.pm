@@ -1,8 +1,8 @@
 # --
 # Kernel/Output/HTML/TicketOverviewPreview.pm
-# Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
 # --
-# $OldId: TicketOverviewPreview.pm,v 1.77 2013/01/17 12:29:39 cr Exp $
+# $origin: https://github.com/OTRS/otrs/blob/9be8fb8ac1ceec0fc3398e78942f8773af85a9dc/Kernel/Output/HTML/TicketOverviewPreview.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -102,13 +102,14 @@ sub ActionRow {
     if (
         $Param{Config}->{OverviewMenuModules}
         && ref $Self->{ConfigObject}->Get('Ticket::Frontend::OverviewMenuModule') eq 'HASH'
-    ) {
+        )
+    {
 
         my %Menus = %{ $Self->{ConfigObject}->Get('Ticket::Frontend::OverviewMenuModule') };
         MENUMODULE:
         for my $Menu ( sort keys %Menus ) {
 
-            next MENUMODULE if !IsHashRefWithData($Menus{$Menu});
+            next MENUMODULE if !IsHashRefWithData( $Menus{$Menu} );
             next MENUMODULE if ( $Menus{$Menu}->{View} && $Menus{$Menu}->{View} ne $Param{View} );
 
             # load module
@@ -151,9 +152,9 @@ sub ActionRow {
                 $Self->{LayoutObject}->Block(
                     Name => $Item->{Block},
                     Data => {
-                        ID          => $Item->{ID},
-                        Name        => $Self->{LayoutObject}->{LanguageObject}->Get( $Item->{Name} ),
-                        Link        => $Self->{LayoutObject}->{Baselink} . $Item->{Link},
+                        ID   => $Item->{ID},
+                        Name => $Self->{LayoutObject}->{LanguageObject}->Get( $Item->{Name} ),
+                        Link => $Self->{LayoutObject}->{Baselink} . $Item->{Link},
                         Description => $Item->{Description},
                         Block       => $Item->{Block},
                         Class       => $Class,
@@ -324,7 +325,7 @@ sub _Show {
         UserID        => $Self->{UserID},
         DynamicFields => 0,
         Order         => 'DESC',
-        Limit         => 5,
+        Limit         => $Self->{ConfigObject}->Get('Ticket::Frontend::Overview::PreviewArticleLimit') || 5,
     );
 
     # check if certain article sender types should be excluded from preview
