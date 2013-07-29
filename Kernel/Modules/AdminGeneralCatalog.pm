@@ -293,9 +293,12 @@ sub Run {
         my %ItemData;
 
         # get params
-        for my $Param (qw(Class ItemID Name ValidID Comment)) {
+        for my $Param (qw(Class ItemID ValidID Comment)) {
             $ItemData{$Param} = $Self->{ParamObject}->GetParam( Param => $Param ) || '';
         }
+
+        # get name param, name must be not empty, but number zero (0) is allowed
+        $ItemData{Name} = $Self->{ParamObject}->GetParam( Param => 'Name' );
 
         # check class
         if ( $ItemData{Class} eq 'NEW' ) {

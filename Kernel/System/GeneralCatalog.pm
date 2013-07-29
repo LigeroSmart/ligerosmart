@@ -351,7 +351,7 @@ sub ItemGet {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    if ( !$Param{ItemID} && ( !$Param{Class} || !$Param{Name} ) ) {
+    if ( !$Param{ItemID} && ( !$Param{Class} || $Param{Name} eq '' ) ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
             Message  => 'Need ItemID OR Class and Name!'
@@ -365,7 +365,7 @@ sub ItemGet {
     my @BIND;
 
     # add options to sql string
-    if ( $Param{Class} && $Param{Name} ) {
+    if ( $Param{Class} && $Param{Name} ne '' ) {
 
         # check if result is already cached
         my $CacheKey = 'ItemGet::Class::' . $Param{Class} . '::' . $Param{Name};
@@ -457,7 +457,7 @@ sub ItemAdd {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Argument (qw(Class Name ValidID UserID)) {
+    for my $Argument (qw(Class ValidID UserID)) {
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
@@ -465,6 +465,15 @@ sub ItemAdd {
             );
             return;
         }
+    }
+
+    # name must be not empty, but number zero (0) is allowed
+    if ( $Param{Name} eq '' ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "Need Name!",
+        );
+        return;
     }
 
     # set default values
@@ -565,7 +574,7 @@ sub ItemUpdate {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Argument (qw(ItemID Name ValidID UserID)) {
+    for my $Argument (qw(ItemID ValidID UserID)) {
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
@@ -573,6 +582,15 @@ sub ItemUpdate {
             );
             return;
         }
+    }
+
+    # name must be not empty, but number zero (0) is allowed
+    if ( $Param{Name} eq '' ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "Need Name!",
+        );
+        return;
     }
 
     # set default values
