@@ -22,7 +22,7 @@ use Kernel::System::ITSMChange::ITSMCondition::Operator;
 use Kernel::System::ITSMChange::ITSMCondition::Expression;
 use Kernel::System::ITSMChange::ITSMCondition::Action;
 
-use vars qw(@ISA $VERSION);
+use vars qw(@ISA);
 
 @ISA = (
     'Kernel::System::EventHandler',
