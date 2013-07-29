@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AdminITSMChangeCIPAllocate.pm - admin frontend of criticality, impact and priority
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
 # --
-# $OldId: AdminITSMCIPAllocate.pm,v 1.13 2010/12/22 08:41:45 ub Exp $
+# $origin: https://github.com/OTRS/otrs/blob/1fc7d8e1d8371c0d67b41970ec7d6a600e4a32e6/Kernel/Modules/AdminITSMCIPAllocate.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -174,13 +174,16 @@ sub Run {
         );
 
         my $AllocateMatrix;
+
+        $AllocateMatrix->[0]->[0]->{ObjectType} =
+            $Self->{LayoutObject}->{LanguageObject}->Get('Impact') . ' / '
 # ---
 # ITSM
 # ---
-#        $AllocateMatrix->[0]->[0]->{ObjectType} = 'Impact \ Criticality';
-        $AllocateMatrix->[0]->[0]->{ObjectType} = 'Impact \ Category';
+#            . $Self->{LayoutObject}->{LanguageObject}->Get('Criticality');
+            . $Self->{LayoutObject}->{LanguageObject}->Get('Category');
 # ---
-        $AllocateMatrix->[0]->[0]->{Class}      = 'HeaderColumnDescription';
+        $AllocateMatrix->[0]->[0]->{Class} = 'HeaderColumnDescription';
 
         # generate table description (Impact)
         my $Counter1 = 1;
