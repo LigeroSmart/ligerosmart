@@ -558,6 +558,8 @@ sub OperatorExecute {
     return 1;
 }
 
+=begin Internal
+
 =item _OperatorExecute()
 
 Returns true or false (1/undef).
@@ -1264,8 +1266,6 @@ sub _OperatorSet {
 
     return $Result;
 }
-
-=begin Internal
 
 =item _OperatorLoadBackend()
 
