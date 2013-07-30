@@ -7,35 +7,13 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-<!-- dtl:block:CustomerSearchAutoComplete -->
-<!-- dtl:js_on_document_complete -->
-<script type="text/javascript">//<![CDATA[
-    Core.Config.Set('CustomerAutocomplete.QueryDelay', "$QData{"queryDelay"}");
-    Core.Config.Set('CustomerAutocomplete.MaxResultsDisplayed', "$QData{"maxResultsDisplayed"}");
-    Core.Config.Set('CustomerAutocomplete.MinQueryLength', "$QData{"minQueryLength"}");
-    Core.Config.Set('CustomerAutocomplete.DynamicWidth', "$QData{"dynamicWidth"}");
-    Core.Config.Set('CustomerAutocomplete.SearchButtonText', "$JSText{"Search Customer"}");
-//]]></script>
-
 <!-- dtl:block:CustomerSearchInit -->
+<!-- dtl:js_on_document_complete -->
 <script type="text/javascript">//<![CDATA[
 /*global ITSM: true */
 
     // escape possible colons (:) in element id because jQuery can not handle it in id attribute selectors
-    ITSM.Agent.CustomerSearch.Init($("#" + Core.App.EscapeSelector("$QData{"ItemID"}"), $QData{"ActiveAutoComplete"});
+    ITSM.Agent.CustomerSearch.Init( $("#" + Core.App.EscapeSelector("$QData{"ItemID"}") ) );
 //]]></script>
-<!-- dtl:block:CustomerSearchInit -->
-
 <!-- dtl:js_on_document_complete -->
-<!-- dtl:block:CustomerSearchAutoComplete -->
-
-<!-- dtl:block:CustomerSearchITSMSearchAutocomplete -->
-<script type="text/javascript">//<![CDATA[
-    Core.Config.Set('CustomerAutocomplete.Active', "$QData{"active"}");
-    Core.Config.Set('CustomerAutocomplete.QueryDelay', "$QData{"queryDelay"}");
-    Core.Config.Set('CustomerAutocomplete.MaxResultsDisplayed', "$QData{"maxResultsDisplayed"}");
-    Core.Config.Set('CustomerAutocomplete.MinQueryLength', "$QData{"minQueryLength"}");
-    Core.Config.Set('CustomerAutocomplete.DynamicWidth', "$QData{"dynamicWidth"}");
-    Core.Config.Set('CustomerAutocomplete.SearchButtonText', "$JSText{"Search Customer"}");
-//]]></script>
-<!-- dtl:block:CustomerSearchITSMSearchAutocomplete -->
+<!-- dtl:block:CustomerSearchInit -->
