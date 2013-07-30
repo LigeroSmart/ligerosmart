@@ -28,12 +28,12 @@
             <thead>
                 <tr>
 <!-- dtl:block:RecordChangeStateSignalHeader -->
-                    <th class="Fixed">
+                    <th>
                         <span>$Text{"State"}</span>
                     </th>
 <!-- dtl:block:RecordChangeStateSignalHeader -->
 <!-- dtl:block:RecordWorkOrderStateSignalHeader -->
-                    <th class="Fixed">
+                    <th>
                         <span>$Text{"Services"}</span>
                     </th>
 <!-- dtl:block:RecordWorkOrderStateSignalHeader -->
