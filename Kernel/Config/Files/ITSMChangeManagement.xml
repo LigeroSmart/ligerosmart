@@ -9555,7 +9555,7 @@
     </ConfigItem>
     <ConfigItem Name="GenericInterface::Invoker::Event###ITSMChange" Required="0" Valid="1">
         <Description Translatable="1">Event list to be displayed on GUI to trigger generic interface invokers.</Description>
-        <Group>ITSMChangeManagement</Group>
+        <Group>ITSM Change Management</Group>
         <SubGroup>GenericInterface::Invoker</SubGroup>
         <Setting>
             <Hash>
@@ -9576,7 +9576,7 @@
     </ConfigItem>
     <ConfigItem Name="GenericInterface::Invoker::Event###ITSMWorkOrder" Required="0" Valid="1">
         <Description Translatable="1">Event list to be displayed on GUI to trigger generic interface invokers.</Description>
-        <Group>ITSMChangeManagement</Group>
+        <Group>ITSM Change Management</Group>
         <SubGroup>GenericInterface::Invoker</SubGroup>
         <Setting>
             <Hash>
