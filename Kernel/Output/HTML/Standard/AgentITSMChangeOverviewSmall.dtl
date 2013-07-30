@@ -12,21 +12,21 @@
 //]]></script>
 <!-- dtl:js_on_document_complete -->
 
-<div id="OverviewBody" class="Overview FixedHeader">
+<div id="OverviewBody" class="Overview TicketList">
     <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="matrix">
         <input type="hidden" name="Action" value="AgentTicketBulk"/>
         <input type="hidden" name="TicketID" value=""/>
 
-        <table id="FixedTable" class="TableSmall" summary="A generic ITSM Change table">
+        <table class="TableSmall" summary="A generic ITSM Change table">
             <thead>
                 <tr>
 <!-- dtl:block:RecordChangeStateSignalHeader -->
-                    <th class="Fixed">
+                    <th>
                         <span>$Text{"State"}</span>
                     </th>
 <!-- dtl:block:RecordChangeStateSignalHeader -->
 <!-- dtl:block:RecordWorkOrderStateSignalHeader -->
-                    <th class="Fixed">
+                    <th>
                         <span>$Text{"State"}</span>
                     </th>
 <!-- dtl:block:RecordWorkOrderStateSignalHeader -->
