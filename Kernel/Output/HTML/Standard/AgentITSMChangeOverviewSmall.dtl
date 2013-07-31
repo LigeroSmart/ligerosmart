@@ -148,14 +148,14 @@
 <!-- dtl:block:RecordChangeStateSignal -->
                     <td>
                         <div class="Flag Small">
-                            <span class="$QData{"ChangeStateSignal"}">"$QData{"ChangeState"}"</span>
+                            <span class="$QData{"ChangeStateSignal"}" title="$QData{"ChangeState"}">$QData{"ChangeState"}</span>
                         </div>
                     </td>
 <!-- dtl:block:RecordChangeStateSignal -->
 <!-- dtl:block:RecordWorkOrderStateSignal -->
                     <td>
                         <div class="Flag Small">
-                            <span class="$QData{"WorkOrderStateSignal"}">"$QData{"WorkOrderState"}"</span>
+                            <span class="$QData{"WorkOrderStateSignal"}" title="$QData{"WorkOrderState"}">$QData{"WorkOrderState"}</span>
                         </div>
                     </td>
 <!-- dtl:block:RecordWorkOrderStateSignal -->
