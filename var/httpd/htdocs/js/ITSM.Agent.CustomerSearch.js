@@ -36,38 +36,38 @@ ITSM.Agent.CustomerSearch = (function (TargetNS) {
         if (isJQueryObject($Element)) {
 
             Core.UI.Autocomplete.Init(
-                    $Element,
-                    function (Request, Response) {
-                        var URL = Core.Config.Get('Baselink'), Data = {
-                            Action: 'AgentCustomerSearch',
-                            Term: Request.term,
-                            MaxResults: Core.UI.Autocomplete.GetConfig('MaxResultsDisplayed')
-                        };
+                $Element,
+                function (Request, Response) {
+                    var URL = Core.Config.Get('Baselink'), Data = {
+                        Action: 'AgentCustomerSearch',
+                        Term: Request.term,
+                        MaxResults: Core.UI.Autocomplete.GetConfig('MaxResultsDisplayed')
+                    };
 
-                        $Element.data('AutoCompleteXHR', Core.AJAX.FunctionCall(URL, Data, function (Result) {
-                            var Data = [];
-                            $.each(Result, function () {
-                                Data.push({
-                                    label: this.CustomerValue + " (" + this.CustomerKey + ")",
-                                    value: this.CustomerValue
-                                });
+                    $Element.data('AutoCompleteXHR', Core.AJAX.FunctionCall(URL, Data, function (Result) {
+                        var Data = [];
+                        $.each(Result, function () {
+                            Data.push({
+                                label: this.CustomerValue + " (" + this.CustomerKey + ")",
+                                value: this.CustomerValue
                             });
-                            Response(Data);
-                        }));
-                    },
-                    function (Event, UI) {
+                        });
+                        Response(Data);
+                    }));
+                },
+                function (Event, UI) {
 
-                        var CustomerKey = UI.item.label.replace(/.*\((.*)\)$/, '$1');
+                    var CustomerKey = UI.item.label.replace(/.*\((.*)\)$/, '$1');
 
-                        $Element.val(UI.item.value);
+                    $Element.val(UI.item.value);
 
-                        // set hidden field SelectedCustomerUser
-                        // escape possible colons (:) in element id because jQuery can not handle it in id attribute selectors
-                        $('#' + Core.App.EscapeSelector($Element.attr('id')) + 'Selected').val(CustomerKey);
+                    // set hidden field SelectedCustomerUser
+                    // escape possible colons (:) in element id because jQuery can not handle it in id attribute selectors
+                    $('#' + Core.App.EscapeSelector($Element.attr('id')) + 'Selected').val(CustomerKey);
 
-                        return false;
-                    },
-                    'CustomerSearch'
+                    return false;
+                },
+                'CustomerSearch'
             );
         }
 
