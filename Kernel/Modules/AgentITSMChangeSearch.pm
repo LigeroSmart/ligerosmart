@@ -498,36 +498,20 @@ sub Run {
                     for my $Object ( keys %{$LinkListWithDataWorkOrder} ) {
 
                         # only show linked services of workorder
-                        if ( $Object ne 'Service' ) {
-                            next OBJECT;
-                        }
+                        next OBJECT if $Object ne 'Service';
 
                         LINKTYPE:
-                        for my $LinkType (
-                            keys %{ $LinkListWithDataWorkOrder->{$Object} }
-                            )
-                        {
+                        for my $LinkType ( keys %{ $LinkListWithDataWorkOrder->{$Object} } ) {
 
                             DIRECTION:
-                            for my $Direction (
-                                keys %{ $LinkListWithDataWorkOrder->{$Object}->{$LinkType} }
-                                )
-                            {
+                            for my $Direction ( keys %{ $LinkListWithDataWorkOrder->{$Object}->{$LinkType} } ) {
 
                                 ID:
-                                for my $ID (
-                                    keys %{
-                                        $LinkListWithDataWorkOrder->{$Object}->{$LinkType}
-                                            ->{$Direction}
-                                    }
-                                    )
-                                {
+                                for my $ID ( keys %{ $LinkListWithDataWorkOrder->{$Object}->{$LinkType}->{$Direction} } ) {
 
                                     # combine the linked object data from all workorders
-                                    $LinkListWithData->{$Object}->{$LinkType}
-                                        ->{$Direction}->{$ID}
-                                        = $LinkListWithDataWorkOrder->{$Object}->{$LinkType}
-                                        ->{$Direction}->{$ID};
+                                    $LinkListWithData->{$Object}->{$LinkType}->{$Direction}->{$ID}
+                                        = $LinkListWithDataWorkOrder->{$Object}->{$LinkType}->{$Direction}->{$ID};
                                 }
                             }
                         }
