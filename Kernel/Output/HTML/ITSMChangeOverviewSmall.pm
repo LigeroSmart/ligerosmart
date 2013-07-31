@@ -353,8 +353,9 @@ sub Run {
 
                         # get service data
                         my %ServiceData = $Self->{ServiceObject}->ServiceGet(
-                            ServiceID => $ServiceID,
-                            UserID    => $Self->{UserID},
+                            ServiceID     => $ServiceID,
+                            IncidentState => 1,
+                            UserID        => $Self->{UserID},
                         );
 
                         # add current incident signal
