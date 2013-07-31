@@ -2589,21 +2589,13 @@ sub _AddSystemNotifications {
 
     );
 
-    # When UTF-8 is enabled, the notification texts are stored as UTF-8
-    my $EncodeInternalUsed = $Self->{EncodeObject}->EncodeInternalUsed();
-    my $NotificationCharset = $EncodeInternalUsed ? 'utf-8' : 'iso-8859-1';
+    my $NotificationCharset = 'utf-8';
 
     # insert the entries
     for my $Notification ( @AgentNotifications, @CustomerNotifications ) {
         my @Binds;
 
         for my $Value ( @{$Notification} ) {
-
-            # Ensure that the strings are utf-8 if the system is in utf-8,
-            # otherwise leave it in latin-1
-            if ($EncodeInternalUsed) {
-                utf8::upgrade($Value);
-            }
 
             # Bind requires scalar references
             push @Binds, \$Value;
@@ -2678,21 +2670,13 @@ sub _AddSystemNotificationsNewIn_2_0_3 {
         ],
     );
 
-    # When UTF-8 is enabled, the notification texts are stored as UTF-8
-    my $EncodeInternalUsed = $Self->{EncodeObject}->EncodeInternalUsed();
-    my $NotificationCharset = $EncodeInternalUsed ? 'utf-8' : 'iso-8859-1';
+    my $NotificationCharset = 'utf-8';
 
     # insert the entries
     for my $Notification (@AgentNotifications) {
         my @Binds;
 
         for my $Value ( @{$Notification} ) {
-
-            # Ensure that the strings are utf-8 if the system is in utf-8,
-            # otherwise leave it in latin-1
-            if ($EncodeInternalUsed) {
-                utf8::upgrade($Value);
-            }
 
             # Bind requires scalar references
             push @Binds, \$Value;
