@@ -388,11 +388,9 @@
 <!-- dtl:js_on_document_complete -->
 <script type="text/javascript">//<![CDATA[
 
-    // find the next button
-    var $NextButton = $("button.Primary[name='SubmitNext']").first();
-
-    // get the first column dropdown
-    var $FirstColumn = $('#Object\\:\\:0\\:\\:Key');
+    // find the next button and get the first column dropdown
+    var $NextButton = $("button.Primary[name='SubmitNext']").first(),
+        $FirstColumn = $('#Object\\:\\:0\\:\\:Key');
 
     // handle changes to the first column selector
     $FirstColumn.bind('change', function (Event) {
