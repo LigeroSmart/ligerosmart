@@ -1464,47 +1464,6 @@ sub _MaskForm {
         );
     }
 
-    # build customer search autocomplete field for CABCustomer
-    my $CustomerAutoCompleteConfig
-        = $Self->{ConfigObject}->Get('ITSMChange::Frontend::CustomerSearchAutoComplete');
-
-    $CustomerAutoCompleteConfig->{DynamicWidth}
-        = $Self->{ConfigObject}
-        ->Get('ITSMChange::Frontend::CustomerSearchAutoComplete::DynamicWidth');
-
-    # set autocomplete parameters
-    $Self->{LayoutObject}->Block(
-        Name => 'CustomerSearchITSMSearchAutocomplete',
-        Data => {
-            active              => $CustomerAutoCompleteConfig->{Active},
-            minQueryLength      => $CustomerAutoCompleteConfig->{MinQueryLength} || 2,
-            queryDelay          => $CustomerAutoCompleteConfig->{QueryDelay} || 100,
-            typeAhead           => $CustomerAutoCompleteConfig->{TypeAhead} || 'false',
-            maxResultsDisplayed => $CustomerAutoCompleteConfig->{MaxResultsDisplayed} || 20,
-            dynamicWidth        => $CustomerAutoCompleteConfig->{DynamicWidth} || 1,
-        },
-    );
-
-    # build user search autocomplete field for CABAgent
-    my $UserAutoCompleteConfig
-        = $Self->{ConfigObject}->Get('ITSMChange::Frontend::UserSearchAutoComplete');
-
-    $CustomerAutoCompleteConfig->{DynamicWidth}
-        = $Self->{ConfigObject}->Get('ITSMChange::Frontend::UserSearchAutoComplete::DynamicWidth');
-
-    # set autocomplete parameters
-    $Self->{LayoutObject}->Block(
-        Name => 'UserSearchITSMSearchAutocomplete',
-        Data => {
-            active              => $UserAutoCompleteConfig->{Active},
-            minQueryLength      => $UserAutoCompleteConfig->{MinQueryLength} || 2,
-            queryDelay          => $UserAutoCompleteConfig->{QueryDelay} || 100,
-            typeAhead           => $UserAutoCompleteConfig->{TypeAhead} || 'false',
-            maxResultsDisplayed => $UserAutoCompleteConfig->{MaxResultsDisplayed} || 20,
-            dynamicWidth        => $UserAutoCompleteConfig->{DynamicWidth} || 1,
-        },
-    );
-
     # get the change freetext config
     my %ChangeFreeTextConfig;
     NUMBER:

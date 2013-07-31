@@ -49,7 +49,7 @@ sub Run {
     if ( !$Self->{Subaction} ) {
 
         # get needed params
-        my $Search = $Self->{ParamObject}->GetParam( Param => 'Search' ) || '';
+        my $Search = $Self->{ParamObject}->GetParam( Param => 'Term' )   || '';
         my $Groups = $Self->{ParamObject}->GetParam( Param => 'Groups' ) || '';
 
         # get all members of the groups
@@ -73,16 +73,6 @@ sub Run {
                 my @UserIDs = keys %Users;
                 @GroupUsers{@UserIDs} = @UserIDs;
             }
-        }
-
-        # workaround, all auto completion requests get posted by utf8 anyway
-        # convert any to 8bit string if application is not running in utf8
-        if ( !$Self->{EncodeObject}->EncodeInternalUsed() ) {
-            $Search = $Self->{EncodeObject}->Convert(
-                Text => $Search,
-                From => 'utf-8',
-                To   => $Self->{LayoutObject}->{UserCharset},
-            );
         }
 
         # get agent list

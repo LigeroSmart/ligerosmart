@@ -78,16 +78,6 @@ sub Run {
             }
         }
 
-        # workaround, all auto completion requests get posted by utf8 anyway
-        # convert any to 8bit string if application is not running in utf8
-        if ( !$Self->{EncodeObject}->EncodeInternalUsed() ) {
-            $Search = $Self->{EncodeObject}->Convert(
-                Text => $Search,
-                From => 'utf-8',
-                To   => $Self->{LayoutObject}->{UserCharset},
-            );
-        }
-
         # get user list
         my %UserList = $Self->{UserObject}->UserSearch(
             Search => $Search,

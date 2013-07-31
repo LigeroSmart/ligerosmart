@@ -7,34 +7,12 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-<!-- dtl:block:UserSearchAutoComplete -->
-<!-- dtl:js_on_document_complete -->
-<script type="text/javascript">//<![CDATA[
-    Core.Config.Set('UserAutocomplete.MinQueryLength', "$QData{"minQueryLength"}");
-    Core.Config.Set('UserAutocomplete.QueryDelay', "$QData{"queryDelay"}");
-    Core.Config.Set('UserAutocomplete.MaxResultsDisplayed', "$QData{"maxResultsDisplayed"}");
-    Core.Config.Set('UserAutocomplete.DynamicWidth', "$QData{"dynamicWidth"}");
-    Core.Config.Set('UserAutocomplete.SearchButtonText', "$JSText{"Search Agent"}");
-    Core.Config.Set('UserAutocomplete.Groups', "$QData{"groups"}");
-//]]></script>
-
 <!-- dtl:block:UserSearchInit -->
+<!-- dtl:js_on_document_complete -->
 <script type="text/javascript">//<![CDATA[
 /*global ITSM: true */
-    ITSM.Agent.UserSearch.Init($("#$QData{"ItemID"}"), $QData{"ActiveAutoComplete"});
+    ITSM.Agent.UserSearch.Init( $("#" + Core.App.EscapeSelector("$QData{"ItemID"}") ) );
 //]]></script>
+<!-- dtl:js_on_document_complete -->
 <!-- dtl:block:UserSearchInit -->
 
-<!-- dtl:js_on_document_complete -->
-<!-- dtl:block:UserSearchAutoComplete -->
-
-<!-- dtl:block:UserSearchITSMSearchAutocomplete -->
-<script type="text/javascript">//<![CDATA[
-    Core.Config.Set('UserAutocomplete.Active', "$QData{"active"}");
-    Core.Config.Set('UserAutocomplete.QueryDelay', "$QData{"queryDelay"}");
-    Core.Config.Set('UserAutocomplete.MaxResultsDisplayed', "$QData{"maxResultsDisplayed"}");
-    Core.Config.Set('UserAutocomplete.MinQueryLength', "$QData{"minQueryLength"}");
-    Core.Config.Set('UserAutocomplete.DynamicWidth', "$QData{"dynamicWidth"}");
-    Core.Config.Set('UserAutocomplete.SearchButtonText', "$JSText{"Search Agent"}");
-//]]></script>
-<!-- dtl:block:UserSearchITSMSearchAutocomplete -->

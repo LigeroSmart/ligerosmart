@@ -380,32 +380,12 @@ sub Run {
         );
     }
 
-    # build changebuilder and changemanager search autocomplete field
-    my $UserAutoCompleteConfig
-        = $Self->{ConfigObject}->Get('ITSMChange::Frontend::UserSearchAutoComplete');
-
-    my $AutoComplete = 'true';
-    if ( !$UserAutoCompleteConfig->{Active} ) {
-        $AutoComplete = 'false';
-    }
-
-    $Self->{LayoutObject}->Block(
-        Name => 'UserSearchAutoComplete',
-        Data => {
-            minQueryLength      => $UserAutoCompleteConfig->{MinQueryLength}      || 2,
-            queryDelay          => $UserAutoCompleteConfig->{QueryDelay}          || 100,
-            maxResultsDisplayed => $UserAutoCompleteConfig->{MaxResultsDisplayed} || 20,
-            dynamicWidth        => $UserAutoCompleteConfig->{DynamicWidth}        || 'false',
-        },
-    );
-
     # code and return blocks for change builder and change manager (AgentITSMUserSearch.dtl)
-    for my $ItemID (qw( ChangeManager ChangeBuilder )) {
+    for my $ItemID (qw(ChangeManager ChangeBuilder)) {
         $Self->{LayoutObject}->Block(
             Name => 'UserSearchInit',
             Data => {
-                ItemID             => $ItemID,
-                ActiveAutoComplete => $AutoComplete,
+                ItemID => $ItemID,
             },
         );
 
@@ -449,34 +429,12 @@ sub Run {
         $Self->{LayoutObject}->Block( Name => 'NewTemplateButton' );
     }
 
-    # build CAB member search autocomplete field
-    my $CABMemberAutoCompleteConfig
-        = $Self->{ConfigObject}->Get('ITSMChange::Frontend::CABMemberSearchAutoComplete');
-
-    # CABMember
-    $Self->{LayoutObject}->Block(
-        Name => 'CABMemberSearchAutoComplete',
-        Data => {
-            minQueryLength      => $CABMemberAutoCompleteConfig->{MinQueryLength}      || 2,
-            queryDelay          => $CABMemberAutoCompleteConfig->{QueryDelay}          || 100,
-            typeAhead           => $CABMemberAutoCompleteConfig->{TypeAhead}           || 'false',
-            maxResultsDisplayed => $CABMemberAutoCompleteConfig->{MaxResultsDisplayed} || 20,
-            dynamicWidth        => $CABMemberAutoCompleteConfig->{DynamicWidth}        || 1,
-        },
-    );
-
-    my $ActiveAutoComplete = 'true';
-    if ( !$CABMemberAutoCompleteConfig->{Active} ) {
-        $ActiveAutoComplete = 'false';
-    }
-
     # search init
     $Self->{LayoutObject}->Block(
         Name => 'CABMemberSearchInit',
         Data => {
-            ActiveAutoComplete => $ActiveAutoComplete,
-            ItemID             => 'NewCABMember',
-            }
+            ItemID => 'NewCABMember',
+        },
     );
 
     # output header and navigation

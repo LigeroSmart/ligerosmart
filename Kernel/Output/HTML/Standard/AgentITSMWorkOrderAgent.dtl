@@ -11,9 +11,15 @@ $Include{"AgentITSMUserSearch"}
 
 <!--dtl:js_on_document_complete-->
     <script type="text/javascript">//<![CDATA[
+
+        $('#User').bind('focus', function( Event ) {
+            Core.Config.Set('UserAutocomplete.Groups', 'itsm-change');
+        });
+
         $('#User').bind('click', function( Event ) {
             $('#User').val('');
         });
+
     //]]></script>
 <!--dtl:js_on_document_complete-->
 

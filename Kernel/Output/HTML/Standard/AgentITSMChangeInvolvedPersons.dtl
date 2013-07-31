@@ -12,8 +12,6 @@ $Include{"AgentITSMCABMemberSearch"}
 
 <!--dtl:js_on_document_complete-->
     <script type="text/javascript">//<![CDATA[
-        // enable login form
-        Core.Form.EnableForm($('#LoginBox form, #PasswordBox form'));
 
         $('#ChangeManager').bind('focus', function( Event ) {
             Core.Config.Set('UserAutocomplete.Groups', 'itsm-change-manager');
@@ -23,7 +21,7 @@ $Include{"AgentITSMCABMemberSearch"}
             Core.Config.Set('UserAutocomplete.Groups', 'itsm-change-builder');
         });
 
-       $('#AddCABMember').bind('click', function (Event) {
+        $('#AddCABMember').bind('click', function (Event) {
             var $Form = $('#AddCABMember').closest('form');
             Core.Form.Validate.DisableValidation($Form);
         });

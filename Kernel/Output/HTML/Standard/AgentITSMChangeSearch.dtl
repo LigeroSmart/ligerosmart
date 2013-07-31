@@ -7,8 +7,6 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-$Include{"AgentITSMCustomerSearch"}
-$Include{"AgentITSMUserSearch"}
 <!-- dtl:block:SearchAJAX -->
 <div class="InnerContent">
     <form action="$Env{"CGIHandle"}" method="post" id="SearchForm" class="">

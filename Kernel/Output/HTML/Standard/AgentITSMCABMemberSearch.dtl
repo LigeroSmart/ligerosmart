@@ -7,34 +7,11 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-<!-- dtl:block:CABMemberSearchAutoComplete -->
-<!-- dtl:js_on_document_complete -->
-<script type="text/javascript">//<![CDATA[
-    Core.Config.Set('CABAutocomplete.MinQueryLength', "$QData{"minQueryLength"}");
-    Core.Config.Set('CABAutocomplete.QueryDelay', "$QData{"queryDelay"}");
-    Core.Config.Set('CABAutocomplete.MaxResultsDisplayed', "$QData{"maxResultsDisplayed"}");
-    Core.Config.Set('CABAutocomplete.DynamicWidth', "$QData{"dynamicWidth"}");
-    Core.Config.Set('CABAutocomplete.SearchButtonText', "$JSText{"Search Agent"}");
-    Core.Config.Set('CABAutocomplete.Groups', "$QData{"groups"}");
-//]]></script>
-
 <!-- dtl:block:CABMemberSearchInit -->
+<!-- dtl:js_on_document_complete -->
 <script type="text/javascript">//<![CDATA[
 /*global ITSM: true */
-    ITSM.Agent.CABMemberSearch.Init($("#$QData{"ItemID"}"), $QData{"ActiveAutoComplete"});
+    ITSM.Agent.CABMemberSearch.Init( $("#" + Core.App.EscapeSelector("$QData{"ItemID"}") ) );
 //]]></script>
-<!-- dtl:block:CABMemberSearchInit -->
-
 <!-- dtl:js_on_document_complete -->
-<!-- dtl:block:CABMemberSearchAutoComplete -->
-
-<!-- dtl:block:CABMemberSearchITSMSearchAutocomplete -->
-<script type="text/javascript">//<![CDATA[
-    Core.Config.Set('CABAutocomplete.Active', "$QData{"active"}");
-    Core.Config.Set('CABAutocomplete.QueryDelay', "$QData{"queryDelay"}");
-    Core.Config.Set('CABAutocomplete.MaxResultsDisplayed', "$QData{"maxResultsDisplayed"}");
-    Core.Config.Set('CABAutocomplete.MinQueryLength', "$QData{"minQueryLength"}");
-    Core.Config.Set('CABAutocomplete.DynamicWidth', "$QData{"dynamicWidth"}");
-    Core.Config.Set('CABAutocomplete.SearchButtonText', "$JSText{"Search Agent"}");
-//]]></script>
-<!-- dtl:block:CABMemberSearchITSMSearchAutocomplete -->
+<!-- dtl:block:CABMemberSearchInit -->

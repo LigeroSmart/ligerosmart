@@ -197,31 +197,10 @@ sub Run {
         );
     }
 
-    # build user search autocomplete field
-    my $AutoCompleteConfig
-        = $Self->{ConfigObject}->Get('ITSMChange::Frontend::UserSearchAutoComplete');
-
-    # show javascript parts for autocompletion
-    $Self->{LayoutObject}->Block(
-        Name => 'UserSearchAutoComplete',
-        Data => {
-            minQueryLength      => $AutoCompleteConfig->{MinQueryLength}      || 2,
-            queryDelay          => $AutoCompleteConfig->{QueryDelay}          || 100,
-            maxResultsDisplayed => $AutoCompleteConfig->{MaxResultsDisplayed} || 20,
-            groups              => 'itsm-change',
-        },
-    );
-
-    my $ActiveAutoComplete = 'false';
-    if ( $AutoCompleteConfig->{Active} ) {
-        $ActiveAutoComplete = 'true';
-    }
-
     $Self->{LayoutObject}->Block(
         Name => 'UserSearchInit',
         Data => {
             ItemID             => 'User',
-            ActiveAutoComplete => $ActiveAutoComplete,
         },
     );
 
