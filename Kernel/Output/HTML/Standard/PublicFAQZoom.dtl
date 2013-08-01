@@ -21,8 +21,7 @@
     <div class="Content">
         <div class="FAQHeader">
             <h2 title="$QData{"Title"}">
-                $QData{"Title","40"}
-                <span class="FAQHook">$QData{"Number"}</span>
+                $QData{"Title"}
             </h2>
             <ul id="FAQOptions">
                 <li><a href="$Env{"Baselink"}Action=PublicFAQPrint;ItemID=$LQData{"ItemID"}" class="Print AsPopup" title="$Text{"Print"}">$Text{"Print"}</a></li>
@@ -114,6 +113,7 @@
                         <div class="Clear"></div>
                     </div>
                 </li>
+                <li><span class="Key">$Text{"Article Number"}:</span> <span>$QData{"Number"}</span></li>
                 <li><span class="Key">$Text{"Category"}:</span> <span title="$Text{"$Data{"CategoryName"}"}">$Text{"$Data{"CategoryName"}"}</span></li>
 
                 <li class="KeywordsContainer">
