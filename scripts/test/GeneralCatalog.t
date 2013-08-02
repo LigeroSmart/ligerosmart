@@ -427,6 +427,61 @@ my $ItemData = [
             Size => 38,
         },
     },
+
+    # this item has an empty name and must not be added
+    {
+        Add => {
+            Class   => 'UnitTest::TestClass' . $ClassRand[0],
+            Name    => '',
+            ValidID => 1,
+            UserID  => 1,
+        },
+    },
+
+    # this item must be added, the number zero (0) is allowed as name
+    {
+        Add => {
+            Class   => 'UnitTest::TestClass' . $ClassRand[0],
+            Name    => '0',
+            ValidID => 1,
+            UserID  => 1,
+        },
+        AddGet => {
+            Class    => 'UnitTest::TestClass' . $ClassRand[0],
+            Name     => '0',
+            ValidID  => 1,
+            Comment  => '',
+            CreateBy => 1,
+            ChangeBy => 1,
+        },
+    },
+
+    # the item one add-test before must be updated sucessfully (updating name to number zero (0) )
+    {
+        Update => {
+            Name    => '0',
+            ValidID => 1,
+            Comment => '',
+            UserID  => 1,
+        },
+        UpdateGet => {
+            Name     => '0',
+            ValidID  => 1,
+            Comment  => '',
+            CreateBy => 1,
+            ChangeBy => 1,
+        },
+    },
+
+    # the item one add-test before must not be updated sucessfully (empty string as name is not allowed )
+    {
+        Update => {
+            Name    => '',
+            ValidID => 1,
+            Comment => '',
+            UserID  => 1,
+        },
+    },
 ];
 
 # ------------------------------------------------------------ #
