@@ -188,8 +188,8 @@
 
     ]]></CodeReinstall>
     <CodeUpgrade Type="pre"><![CDATA[
-        
-        # uninstall Feature AddOn OTRSServiceIncidentState that has been integrated in ITSM 3.3.x
+
+        # uninstall Feature AddOn OTRSServiceIncidentState that has been integrated in OTRS ITSM 3.2.91 (OTRS 3.3.0 Beta 1)
         my $Success = $Self->_PackageUninstallMerged(
             Name => 'OTRSServiceIncidentState',
         );
