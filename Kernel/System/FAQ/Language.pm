@@ -133,26 +133,22 @@ sub LanguageDuplicateCheck {
         return;
     }
 
-    # db quote
-    $Param{Name} = $Self->{DBObject}->Quote( $Param{Name} ) || '';
-    $Param{LanguageID} = $Self->{DBObject}->Quote( $Param{LanguageID}, 'Integer' );
-
     # build sql
+    my @Bind = ( \$Param{Name} );
     my $SQL = '
         SELECT id
         FROM faq_language
-        WHERE';
-    if ( defined $Param{Name} ) {
-        $SQL .= " name = '$Param{Name}'";
-    }
+        WHERE name = ?';
     if ( defined $Param{LanguageID} ) {
-        $SQL .= " AND id != '$Param{LanguageID}'";
+        push @Bind, \$Param{LanguageID};
+        $SQL .= " AND id != ?";
     }
 
     # prepare sql statement
     return if !$Self->{DBObject}->Prepare(
         SQL   => $SQL,
         Limit => 1,
+        Bind  => \@Bind,
     );
 
     # fetch the result
