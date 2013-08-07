@@ -61,7 +61,7 @@ sub new {
 # ---
 # ITSM
 # ---
-    $Self->{ServiceObject}      = Kernel::System::Service->new(%Param);
+    $Self->{ServiceObject}        = Kernel::System::Service->new(%Param);
     $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new(%Param);
     $Self->{CIPAllocateObject}    = Kernel::System::ITSMCIPAllocate->new(%Param);
 # ---
@@ -2251,18 +2251,10 @@ sub _MaskPhoneNew {
         OnlyDynamicFields => 1
     );
 
-    # create a string with the quoted dynamic field names separated by a commas
+    # create a string with the quoted dynamic field names separated by commas
     if ( IsArrayRefWithData($DynamicFieldNames) ) {
-        my $FirstItem = 1;
-        FIELD:
         for my $Field ( @{$DynamicFieldNames} ) {
-            if ($FirstItem) {
-                $FirstItem = 0;
-            }
-            else {
-                $Param{DynamicFieldNamesStrg} .= ', ';
-            }
-            $Param{DynamicFieldNamesStrg} .= "'" . $Field . "'";
+            $Param{DynamicFieldNamesStrg} .= ",'" . $Field . "'";
         }
     }
 
@@ -2290,7 +2282,7 @@ sub _MaskPhoneNew {
             $Param{ServiceStrg} = $Self->{LayoutObject}->BuildSelection(
                 Data         => $Param{Services},
                 Name         => 'ServiceID',
-                Class        => 'Validate_Required '  . ($Param{Errors}->{ServiceInvalid} || ' '),
+                Class        => 'Validate_Required ' . ( $Param{Errors}->{ServiceInvalid} || ' ' ),
                 SelectedID   => $Param{ServiceID},
                 PossibleNone => 1,
                 TreeView     => $TreeView,
@@ -2326,7 +2318,7 @@ sub _MaskPhoneNew {
                 Data         => $Param{SLAs},
                 Name         => 'SLAID',
                 SelectedID   => $Param{SLAID},
-                Class        => 'Validate_Required '  . ($Param{Errors}->{SLAInvalid} || ' '),
+                Class        => 'Validate_Required ' . ( $Param{Errors}->{SLAInvalid} || ' ' ),
                 PossibleNone => 1,
                 Sort         => 'AlphanumericValue',
                 Translation  => 0,
