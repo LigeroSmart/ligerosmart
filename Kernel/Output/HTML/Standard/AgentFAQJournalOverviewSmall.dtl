@@ -13,14 +13,14 @@
 //]]></script>
 <!-- dtl:js_on_document_complete -->
 
-<div id="OverviewBody" class="Overview FixedHeader">
+<div id="OverviewBody" class="Overview TicketList">
 <!-- dtl:block:NoFAQFound -->
     <div id="EmptyMessageSmall">
         $Text{"No FAQ Journal data found."}
     </div>
 <!-- dtl:block:NoFAQFound -->
 <!-- dtl:block:RecordForm -->
-    <table id="FixedTable" class="TableSmall" summary="A generic FAQ table">
+    <table class="TableSmall" summary="A generic FAQ table">
         <thead>
             <tr>
 <!-- dtl:block:RecordNumberHeader -->
@@ -92,8 +92,6 @@
 </div>
 <!-- dtl:js_on_document_complete -->
 <script type="text/javascript">//<![CDATA[
-    Core.UI.InitTableHead($('#FixedTable thead'), $('#FixedTable tbody'));
-    Core.UI.StaticTableControl($('#OverviewControl').add($('#OverviewBody')));
     $('.MasterAction').bind('click', function (Event) {
         var $MasterActionLink = $(this).find('.MasterActionLink');
         // only act if the link was not clicked directly
@@ -101,9 +99,6 @@
             window.location = $MasterActionLink.attr('href');
             return false;
         }
-    });
-    $(window).resize(function() {
-        Core.UI.AdjustTableHead($('#OverviewHeader thead'), $('#OverviewBody tbody'));
     });
 //]]></script>
 <!-- dtl:js_on_document_complete -->
