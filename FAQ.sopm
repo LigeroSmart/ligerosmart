@@ -475,6 +475,14 @@
         }
 
     </CodeInstall>
+    <CodeUpgrade Type="pre"><![CDATA[
+
+        # uninstall Feature AddOn OTRSKeepFAQAttachments that has been integrated in FAQ 2.2.91 (FAQ 2.3.0 Beta 1) (for OTRS 3.3.x)
+        my $Success = $Self->_PackageUninstallMerged(
+            Name => 'OTRSKeepFAQAttachments',
+        );
+
+    ]]></CodeUpgrade>
     <CodeUpgrade Type="post">
 
         # define function name
