@@ -54,7 +54,7 @@ $CommonObject{UserObject}   = Kernel::System::User->new(%CommonObject);
 $CommonObject{GroupObject}  = Kernel::System::Group->new(%CommonObject);
 $CommonObject{ChangeObject} = Kernel::System::ITSMChange->new(%CommonObject);
 
-print "otrs.ITSMChangeDelete.pl <Revision $VERSION> - ";
+print "otrs.ITSMChangeDelete.pl - ";
 print "delete changes (all or by number).\n";
 print "Copyright (C) 2001-2013 OTRS AG, http://otrs.org/\n";
 

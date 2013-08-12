@@ -21,7 +21,7 @@ use Kernel::System::Valid;
 use Kernel::System::VirtualFS;
 use Data::Dumper;
 
-use vars qw(@ISA $VERSION);
+use vars qw(@ISA);
 
 @ISA = (
     'Kernel::System::EventHandler',

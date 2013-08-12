@@ -23,7 +23,7 @@ use Kernel::System::Notification;
 use Kernel::System::Valid;
 use Kernel::Language;
 
-use vars qw(@ISA $VERSION);
+use vars qw(@ISA);
 
 @ISA = (
     'Kernel::System::EventHandler',

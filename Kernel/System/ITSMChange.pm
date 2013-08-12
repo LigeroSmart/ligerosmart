@@ -24,7 +24,7 @@ use Kernel::System::HTMLUtils;
 use Kernel::System::VirtualFS;
 use Kernel::System::Cache;
 
-use vars qw(@ISA $VERSION);
+use vars qw(@ISA);
 
 @ISA = (
     'Kernel::System::EventHandler',

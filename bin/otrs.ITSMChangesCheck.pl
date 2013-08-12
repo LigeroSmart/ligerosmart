@@ -28,7 +28,7 @@ use FindBin qw($RealBin);
 use lib dirname($RealBin);
 use lib dirname($RealBin) . '/Kernel/cpan-lib';
 
-use vars qw(@ISA $VERSION);
+use vars qw(@ISA);
 
 use Getopt::Std;
 use Kernel::Config;
@@ -103,7 +103,7 @@ getopt( 'hf', \%Opts );
 
 # show help
 if ( exists $Opts{h} ) {
-    print "otrs.ITSMChangesCheck.pl <Revision $VERSION> - check itsm changes\n";
+    print "otrs.ITSMChangesCheck.pl - check itsm changes\n";
     print "Copyright (C) 2001-2013 OTRS AG, http://otrs.org/\n";
     print "usage: otrs.ITSMChangesCheck.pl [-f force]\n\n";
     exit 1;
