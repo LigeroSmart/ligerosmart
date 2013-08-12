@@ -85,7 +85,7 @@ sub new {
     if ( !$Self->{TicketID} && $Self->{ParamObject}->GetParam( Param => 'TicketNumber' ) ) {
         $Self->{TicketID} = $Self->{TicketObject}->TicketIDLookup(
             TicketNumber => $Self->{ParamObject}->GetParam( Param => 'TicketNumber' ),
-            UserID       => $Self->{UserID},
+            UserID => $Self->{UserID},
         );
     }
     $Self->{CustomerUserObject} = Kernel::System::CustomerUser->new(%Param);
@@ -278,16 +278,19 @@ sub Run {
         );
         $Article{Atms} = \%AtmIndex;
 
-        # fetch all std. responses
-        my %StandardResponses = $Self->{QueueObject}->GetStandardResponses(
-            QueueID => $Ticket{QueueID},
+        # fetch all std. templates
+        my %StandardTemplates = $Self->{QueueObject}->QueueStandardTemplateMemberList(
+            QueueID       => $Ticket{QueueID},
+            TemplateTypes => 1,
+            Valid         => 1,
         );
 
         $Self->_ArticleItem(
             Ticket            => \%Ticket,
             Article           => \%Article,
             AclAction         => \%AclAction,
-            StandardResponses => \%StandardResponses,
+            StandardResponses => $StandardTemplates{Answer},
+            StandardForwards  => $StandardTemplates{Forward},
             Type              => 'OnLoad',
         );
         my $Content = $Self->{LayoutObject}->Output(
@@ -491,9 +494,11 @@ sub MaskAgentZoom {
         Type     => 'move_into',
     );
 
-    # fetch all std. responses
-    my %StandardResponses
-        = $Self->{QueueObject}->GetStandardResponses( QueueID => $Ticket{QueueID} );
+    # fetch all std. templates
+    my %StandardTemplates = $Self->{QueueObject}->QueueStandardTemplateMemberList(
+        QueueID       => $Ticket{QueueID},
+        TemplateTypes => 1,
+    );
 
     # owner info
     my %OwnerInfo = $Self->{UserObject}->GetUserData(
@@ -700,7 +705,8 @@ sub MaskAgentZoom {
             Ticket            => \%Ticket,
             Article           => \%Article,
             AclAction         => \%AclAction,
-            StandardResponses => \%StandardResponses,
+            StandardResponses => $StandardTemplates{Answer},
+            StandardForwards  => $StandardTemplates{Forward},
             ActualArticleID   => $ArticleID,
             Type              => 'Static',
         );
@@ -2047,6 +2053,7 @@ sub _ArticleItem {
                     }
                 }
             }
+
             if ($Access) {
 
                 # get StandardResponsesStrg
@@ -2176,17 +2183,53 @@ sub _ArticleItem {
                 }
             }
             if ($Access) {
-                $Self->{LayoutObject}->Block(
-                    Name => 'ArticleMenu',
-                    Data => {
-                        %Ticket, %Article, %AclAction,
-                        Description => 'Forward article via mail',
-                        Name        => 'Forward',
-                        Class       => 'AsPopup PopupType_TicketAction',
-                        Link =>
-                            'Action=AgentTicketForward;TicketID=$Data{"TicketID"};ArticleID=$Data{"ArticleID"}'
-                    },
-                );
+                if ( IsHashRefWithData( $Param{StandardForwards} ) ) {
+
+                    # get StandarForwardsStrg
+                    $Param{StandardForwards}->{0}
+                        = '- ' . $Self->{LayoutObject}->{LanguageObject}->Get('Forward') . ' -';
+
+                    # build html string
+                    my $StandarForwardsStrg = $Self->{LayoutObject}->BuildSelection(
+                        Name => 'ForwardTemplateID',
+                        ID   => 'ForwardTemplateID',
+                        Data => $Param{StandardForwards},
+                    );
+
+                    $Self->{LayoutObject}->Block(
+                        Name => 'ArticleForwardAsDropdown',
+                        Data => {
+                            %Ticket, %Article, %AclAction,
+                            StandarForwardsStrg => $StandarForwardsStrg,
+                            Name                => 'Forward',
+                            Class               => 'AsPopup PopupType_TicketAction',
+                            Action              => 'AgentTicketForward',
+                            FormID              => 'Forward' . $Article{ArticleID},
+                            ForwardElementID    => 'ForwardTemplateID',
+                        },
+                    );
+
+                    $Self->{LayoutObject}->Block(
+                        Name => 'ArticleForwardAsDropdownJS' . $Param{Type},
+                        Data => {
+                            %Ticket, %Article, %AclAction,
+                            FormID => 'Forward' . $Article{ArticleID},
+                        },
+                    );
+                }
+                else {
+                    $Self->{LayoutObject}->Block(
+                        Name => 'ArticleMenu',
+                        Data => {
+                            %Ticket, %Article, %AclAction,
+                            Description => 'Forward article via mail',
+                            Name        => 'Forward',
+                            Class       => 'AsPopup PopupType_TicketAction',
+                            Link =>
+                                'Action=AgentTicketForward;TicketID=$Data{"TicketID"};ArticleID=$Data{"ArticleID"}'
+                        },
+                    );
+                }
             }
         }
 
@@ -2338,9 +2381,9 @@ sub _ArticleItem {
 
         my $Link
             = 'Action=AgentTicketZoom;Subaction=MarkAsImportant;TicketID=$Data{"TicketID"};ArticleID=$Data{"ArticleID"}';
-        my $Description = 'Mark article as important';
+        my $Description = 'Mark';
         if ($ArticleIsImportant) {
-            $Description = 'Remove important mark';
+            $Description = 'Unmark';
         }
 
         # set important menu item

@@ -401,13 +401,15 @@ sub _Show {
     # create human age
     $Article{Age} = $Self->{LayoutObject}->CustomerAge( Age => $Article{Age}, Space => ' ' );
 
-    # fetch all std. responses ...
-    my %StandardResponses
-        = $Self->{QueueObject}->GetStandardResponses( QueueID => $Article{QueueID} );
+    # fetch all std. templates ...
+    my %StandardTemplates = $Self->{QueueObject}->QueueStandardTemplateMemberList(
+        QueueID       => $Article{QueueID},
+        TemplateTypes => 1,
+    );
 
     $Param{StandardResponsesStrg} = $Self->{LayoutObject}->BuildSelection(
         Name => 'ResponseID',
-        Data => \%StandardResponses,
+        Data => $StandardTemplates{Answer} || {},
     );
 
     # customer info
@@ -1085,9 +1087,12 @@ sub _Show {
                     );
 
                     # fetch all std. responses
-                    my %StandardResponses = $Self->{QueueObject}->GetStandardResponses(
-                        QueueID => $Article{QueueID},
+                    my %StandardTemplates = $Self->{QueueObject}->QueueStandardTemplateMemberList(
+                        QueueID       => $Article{QueueID},
+                        TemplateTypes => 1,
                     );
+
+                    my %StandardResponses = %{ $StandardTemplates{Answer} };
 
                     # get StandardResponsesStrg
                     $StandardResponses{0}
