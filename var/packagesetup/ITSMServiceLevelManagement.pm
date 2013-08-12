@@ -19,7 +19,7 @@ use Kernel::System::Group;
 use Kernel::System::Stats;
 use Kernel::System::User;
 
-use vars qw(@ISA $VERSION);
+use vars qw(@ISA);
 
 =head1 NAME
 
