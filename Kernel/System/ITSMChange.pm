@@ -2416,11 +2416,15 @@ sub ChangeStateLookup {
     }
 
     # get the change states from the general catalog
-    my %StateID2Name = %{
-        $Self->{GeneralCatalogObject}->ItemList(
-            Class => 'ITSM::ChangeManagement::Change::State',
-            )
-    };
+    my $StateList = $Self->{GeneralCatalogObject}->ItemList(
+        Class => 'ITSM::ChangeManagement::Change::State',
+    );
+
+    # convert state list into a lookup hash
+    my %StateID2Name;
+    if ( $StateList && ref $StateList eq 'HASH' && %{$StateList} ) {
+        %StateID2Name = %{$StateList};
+    }
 
     # check the state hash
     if ( !%StateID2Name ) {

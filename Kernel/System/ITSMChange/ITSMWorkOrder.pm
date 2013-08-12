@@ -1873,11 +1873,15 @@ sub WorkOrderStateLookup {
     }
 
     # get the workorder states from the general catalog
-    my %StateID2Name = %{
-        $Self->{GeneralCatalogObject}->ItemList(
-            Class => 'ITSM::ChangeManagement::WorkOrder::State',
-            )
-    };
+    my $StateList = $Self->{GeneralCatalogObject}->ItemList(
+        Class => 'ITSM::ChangeManagement::WorkOrder::State',
+    );
+
+    # convert state list into a lookup hash
+    my %StateID2Name;
+    if ( $StateList && ref $StateList eq 'HASH' && %{$StateList} ) {
+        %StateID2Name = %{$StateList};
+    }
 
     # check the state hash
     if ( !%StateID2Name ) {
