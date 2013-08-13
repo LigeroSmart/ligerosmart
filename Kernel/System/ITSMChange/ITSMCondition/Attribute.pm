@@ -12,6 +12,8 @@ package Kernel::System::ITSMChange::ITSMCondition::Attribute;
 use strict;
 use warnings;
 
+use vars qw($VERSION);
+
 =head1 NAME
 
 Kernel::System::ITSMChange::ITSMCondition::Attribute - condition attribute lib
