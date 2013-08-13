@@ -1,6 +1,6 @@
 # --
 # Kernel/Modules/AgentITSMWorkOrderReport.pm - the OTRS ITSM ChangeManagement workorder report module
-# Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
+# Copyright (C) 2003-2013 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -14,6 +14,7 @@ use warnings;
 
 use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
+use Kernel::System::Web::UploadCache;
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -33,11 +34,20 @@ sub new {
     }
 
     # create needed objects
-    $Self->{ChangeObject}    = Kernel::System::ITSMChange->new(%Param);
-    $Self->{WorkOrderObject} = Kernel::System::ITSMChange::ITSMWorkOrder->new(%Param);
+    $Self->{ChangeObject}      = Kernel::System::ITSMChange->new(%Param);
+    $Self->{WorkOrderObject}   = Kernel::System::ITSMChange::ITSMWorkOrder->new(%Param);
+    $Self->{UploadCacheObject} = Kernel::System::Web::UploadCache->new(%Param);
 
     # get config of frontend module
     $Self->{Config} = $Self->{ConfigObject}->Get("ITSMWorkOrder::Frontend::$Self->{Action}");
+
+    # get form id
+    $Self->{FormID} = $Self->{ParamObject}->GetParam( Param => 'FormID' );
+
+    # create form id
+    if ( !$Self->{FormID} ) {
+        $Self->{FormID} = $Self->{UploadCacheObject}->FormIDCreate();
+    }
 
     return $Self;
 }
@@ -88,7 +98,7 @@ sub Run {
 
     # store needed parameters in %GetParam to make this page reloadable
     my %GetParam;
-    for my $ParamName (qw(Report WorkOrderStateID AccountedTime)) {
+    for my $ParamName (qw(Report WorkOrderStateID AccountedTime AttachmentUpload FileID)) {
         $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
     }
 
@@ -124,6 +134,50 @@ sub Run {
     # Remember the reason why perfoming the subaction was not attempted.
     # The entries are the names of the dtl validation error blocks.
     my %ValidationError;
+
+    # check if an attachment should be deleted
+    ATTACHMENT:
+    for my $Number ( 1 .. 32 ) {
+
+        # check if the delete button was pressed for this attachment
+        my $Delete = $Self->{ParamObject}->GetParam( Param => "AttachmentDelete$Number" );
+
+        # check next attachment if it was not pressed
+        next ATTACHMENT if !$Delete;
+
+        # remember that we need to show the page again
+        $ValidationError{Attachment} = 1;
+
+        # remove the attachment from the upload cache
+        $Self->{UploadCacheObject}->FormIDRemoveFile(
+            FormID => $Self->{FormID},
+            FileID => $Number,
+        );
+    }
+
+    # check if there was an attachment upload
+    if ( $GetParam{AttachmentUpload} ) {
+
+        # remember that we need to show the page again
+        $ValidationError{Attachment} = 1;
+
+        # get the uploaded attachment
+        my %UploadStuff = $Self->{ParamObject}->GetUploadAll(
+            Param  => 'FileUpload',
+            Source => 'string',
+        );
+
+        # add attachment to the upload cache
+        $Self->{UploadCacheObject}->FormIDAddFile(
+            FormID => $Self->{FormID},
+            %UploadStuff,
+        );
+    }
+
+    # get meta data for all already uploaded files
+    my @Attachments = $Self->{UploadCacheObject}->FormIDGetAllFilesMeta(
+        FormID => $Self->{FormID},
+    );
 
     # update workorder
     if ( $Self->{Subaction} eq 'Save' ) {
@@ -232,7 +286,7 @@ sub Run {
 
             # update the workorder
             my $CouldUpdateWorkOrder = $Self->{WorkOrderObject}->WorkOrderUpdate(
-                WorkOrderID      => $WorkOrder->{WorkOrderID},
+                WorkOrderID      => $WorkOrderID,
                 Report           => $GetParam{Report},
                 WorkOrderStateID => $GetParam{WorkOrderStateID},
                 UserID           => $Self->{UserID},
@@ -244,22 +298,112 @@ sub Run {
             # if workorder update was successful
             if ($CouldUpdateWorkOrder) {
 
+                # get all attachments from upload cache
+                my @Attachments = $Self->{UploadCacheObject}->FormIDGetAllFilesData(
+                    FormID => $Self->{FormID},
+                );
+
+                # build a lookup lookup hash of the new attachments
+                my %NewAttachment;
+                for my $Attachment (@Attachments) {
+
+                    # the key is the filename + filesize + content type
+                    my $Key = $Attachment->{Filename}
+                        . $Attachment->{Filesize}
+                        . $Attachment->{ContentType};
+
+                    # append content id if available (for new inline images)
+                    if ( $Attachment->{ContentID} ) {
+                        $Key .= $Attachment->{ContentID};
+                    }
+
+                    # store all of the new attachment data
+                    $NewAttachment{$Key} = $Attachment;
+                }
+
+                # write the new attachments
+                ATTACHMENT:
+                for my $Attachment ( values %NewAttachment ) {
+
+                    # check if attachment is an inline attachment
+                    my $Inline = 0;
+                    if ( $Attachment->{ContentID} ) {
+
+                        # check workorder report for content id
+                        # we do not want to keep this attachment,
+                        # if it was deleted in the rich text editor
+                        next ATTACHMENT if $GetParam{Report} !~ m{ $Attachment->{ContentID} }xms;
+
+                        # remember that it is inline
+                        $Inline = 1;
+                    }
+
+                    # add attachment
+                    my $Success = $Self->{WorkOrderObject}->WorkOrderAttachmentAdd(
+                        %{$Attachment},
+                        WorkOrderID    => $WorkOrderID,
+                        ChangeID       => $WorkOrder->{ChangeID},
+                        UserID         => $Self->{UserID},
+                        AttachmentType => 'WorkOrderReport',
+                    );
+
+                    # check error
+                    return $Self->{LayoutObject}->FatalError() if !$Success;
+
+                    next ATTACHMENT if !$Inline;
+                    next ATTACHMENT if !$Self->{LayoutObject}->{BrowserRichText};
+
+                    # picture url in upload cache
+                    my $Search = "Action=PictureUpload .+ FormID=$Self->{FormID} .+ "
+                        . "ContentID=$Attachment->{ContentID}";
+
+                    # picture url in workorder report attachment
+                    my $Replace
+                        = "Action=AgentITSMWorkOrderZoom;Subaction=DownloadAttachment;"
+                        . "Filename=$Attachment->{Filename};WorkOrderID=$WorkOrderID;Type=WorkOrderReport";
+
+                    # replace url
+                    $GetParam{Report} =~ s{$Search}{$Replace}xms;
+
+                    # update workorder
+                    $Success = $Self->{WorkOrderObject}->WorkOrderUpdate(
+                        WorkOrderID => $WorkOrderID,
+                        Report      => $GetParam{Report},
+                        UserID      => $Self->{UserID},
+                    );
+
+                    # check error
+                    if ( !$Success ) {
+                        $Self->{LogObject}->Log(
+                            Priority => 'error',
+                            Message  => "Could not update the inline image URLs "
+                                . "for WorkOrderID '$WorkOrderID'!!",
+                        );
+                    }
+                }
+
+                # delete the upload cache
+                $Self->{UploadCacheObject}->FormIDRemove( FormID => $Self->{FormID} );
+
                 # load new URL in parent window and close popup
                 return $Self->{LayoutObject}->PopupClose(
-                    URL => "Action=AgentITSMWorkOrderZoom;WorkOrderID=$WorkOrder->{WorkOrderID}",
+                    URL => "Action=AgentITSMWorkOrderZoom;WorkOrderID=$WorkOrderID",
                 );
             }
             else {
 
                 # show error message
                 return $Self->{LayoutObject}->ErrorScreen(
-                    Message => "Was not able to update WorkOrder $WorkOrder->{WorkOrderID}!",
+                    Message => "Was not able to update WorkOrder $WorkOrderID!",
                     Comment => 'Please contact the admin.',
                 );
             }
         }
     }
     else {
+
+        # delete all keys from GetParam when it is no Subaction
+        %GetParam = ();
 
         # initialize the actual time related fields
         if ( $Self->{Config}->{ActualTimeSpan} ) {
@@ -299,6 +443,13 @@ sub Run {
             Message => "Could not find Change for WorkOrder $WorkOrderID!",
             Comment => 'Please contact the admin.',
         );
+    }
+
+    # if there was an attachment delete or upload
+    # we do not want to show validation errors for other fields
+    if ( $ValidationError{Attachment} ) {
+        %ValidationError = ();
+        $WorkOrderFreeTextParam{Error} = {};
     }
 
     # get workorder state list
@@ -455,6 +606,58 @@ sub Run {
         $AccountedTime = $GetParam{AccountedTime};
     }
 
+    # show attachments
+    my @WorkOrderAttachments = $Self->{WorkOrderObject}->WorkOrderReportAttachmentList(
+        WorkOrderID => $WorkOrderID,
+    );
+
+    # show attachments (report)
+    ATTACHMENT:
+    for my $Filename ( @WorkOrderAttachments ) {
+
+        # get info about file
+        my $AttachmentData = $Self->{WorkOrderObject}->WorkOrderAttachmentGet(
+            WorkOrderID    => $WorkOrderID,
+            Filename       => $Filename,
+            AttachmentType => 'WorkOrderReport',
+        );
+
+        # check for attachment information
+        next ATTACHMENT if !$AttachmentData;
+
+        # do not show inline attachments in attachments list (they have a content id)
+        next ATTACHMENT if $AttachmentData->{Preferences}->{ContentID};
+
+        # show block
+        $Self->{LayoutObject}->Block(
+            Name => 'ReportAttachmentRow',
+            Data => {
+                %{$WorkOrder},
+                %{$AttachmentData},
+            },
+        );
+    }
+
+    # get all temporary attachments meta data
+    my @TempAttachments = $Self->{UploadCacheObject}->FormIDGetAllFilesMeta(
+        FormID => $Self->{FormID},
+    );
+
+    # show attachments (report)
+    for my $Attachment ( @TempAttachments ) {
+
+        # do not show inline images as attachments
+        # (they have a content id)
+        if ( $Attachment->{ContentID} && $Self->{LayoutObject}->{BrowserRichText} ) {
+            next ATTACHMENT;
+        }
+
+        $Self->{LayoutObject}->Block(
+            Name => 'ReportAttachmentRow',
+            Data => $Attachment,
+        );
+    }
+
     # start template output
     $Output .= $Self->{LayoutObject}->Output(
         TemplateFile => 'AgentITSMWorkOrderReport',
@@ -462,8 +665,10 @@ sub Run {
             %Param,
             %{$Change},
             %{$WorkOrder},
+            %GetParam,
             %ValidationError,
             AccountedTime => $AccountedTime,
+            FormID        => $Self->{FormID},
         },
     );
 

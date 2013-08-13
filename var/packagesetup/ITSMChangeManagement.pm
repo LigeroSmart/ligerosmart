@@ -311,6 +311,23 @@ sub CodeUpgrade {
     return 1;
 }
 
+=item CodeUpgradeFromLowerThan_3_2_91()
+
+This function is only executed if the installed module version is smaller than 3.2.91 (3.3.0 Beta 1).
+
+my $Result = $CodeObject->CodeUpgradeFromLowerThan_3_2_91();
+
+=cut
+
+sub CodeUpgradeFromLowerThan_3_2_91 {
+    my ( $Self, %Param ) = @_;
+
+    # add new notifications that were added in version 3.2.91
+    $Self->_AddSystemNotificationsNewIn_3_2_91();
+
+    return 1;
+}
+
 =item CodeUpgradeFromLowerThan_2_0_3()
 
 This function is only executed if the installed module version is smaller than 2.0.3.
@@ -1366,6 +1383,7 @@ sub _AddSystemNotifications {
         . "\n"
         . "Your OTRS Notification Master\n";
 
+    # Workorder info for agents (en)
     my $WorkOrderInfoAgentEn = "\n"
         . "\n"
         . "Change title: <OTRS_CHANGE_ChangeTitle>\n"
@@ -1775,8 +1793,52 @@ sub _AddSystemNotifications {
         [
             'Agent::WorkOrder::WorkOrderAttachmentDelete',
             'nl',
-            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] attachment verwijderd',
+            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] bijlage verwijderd',
             '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> bijlage is verwijderd.'
+                . $WorkOrderInfoAgentNl,
+        ],
+
+        [
+            'Agent::WorkOrder::WorkOrderReportAttachmentAdd',
+            'de',
+            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] neuer Report-Anhang',
+            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> hat einen neuen Report-Anhang.'
+                . $WorkOrderInfoAgentDe,
+        ],
+        [
+            'Agent::WorkOrder::WorkOrderReportAttachmentAdd',
+            'en',
+            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] new report attachment',
+            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> has a new report attachment.'
+                . $WorkOrderInfoAgentEn,
+        ],
+        [
+            'Agent::WorkOrder::WorkOrderReportAttachmentAdd',
+            'nl',
+            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] nieuwe bericht bijlage',
+            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> heeft een nieuwe bericht bijlage.'
+                . $WorkOrderInfoAgentNl,
+        ],
+
+        [
+            'Agent::WorkOrder::WorkOrderReportAttachmentDelete',
+            'de',
+            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Report-Anhang gelöscht',
+            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> mit gelöschtem Report-Anhang.'
+                . $WorkOrderInfoAgentDe,
+        ],
+        [
+            'Agent::WorkOrder::WorkOrderReportAttachmentDelete',
+            'en',
+            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] report attachment deleted',
+            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> with deleted report attachment.'
+                . $WorkOrderInfoAgentEn,
+        ],
+        [
+            'Agent::WorkOrder::WorkOrderReportAttachmentDelete',
+            'nl',
+            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] bericht bijlage verwijderd',
+            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> bericht bijlage is verwijderd.'
                 . $WorkOrderInfoAgentNl,
         ],
 
@@ -2390,6 +2452,50 @@ sub _AddSystemNotifications {
         ],
 
         [
+            'Customer::WorkOrder::WorkOrderReportAttachmentAdd',
+            'de',
+            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] neuer Report-Anhang',
+            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> hat einen neuen Report-Anhang.'
+                . $WorkOrderInfoCustomerDe,
+        ],
+        [
+            'Customer::WorkOrder::WorkOrderReportAttachmentAdd',
+            'en',
+            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] new report attachment',
+            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> has a new report attachment.'
+                . $WorkOrderInfoCustomerEn,
+        ],
+        [
+            'Customer::WorkOrder::WorkOrderReportAttachmentAdd',
+            'nl',
+            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] bericht bijlage toegevoegd',
+            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> heeft een nieuwe bericht bijlage.'
+                . $WorkOrderInfoCustomerNl,
+        ],
+
+        [
+            'Customer::WorkOrder::WorkOrderReportAttachmentDelete',
+            'de',
+            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Report-Anhang gelöscht',
+            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> mit gelöschtem Report-Anhang.'
+                . $WorkOrderInfoCustomerDe,
+        ],
+        [
+            'Customer::WorkOrder::WorkOrderReportAttachmentDelete',
+            'en',
+            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] report attachment deleted',
+            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> with deleted report attachment.'
+                . $WorkOrderInfoCustomerEn,
+        ],
+        [
+            'Customer::WorkOrder::WorkOrderReportAttachmentDelete',
+            'nl',
+            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] bericht bijlage verwijderd',
+            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> met een verwijderde bericht bijlage.'
+                . $WorkOrderInfoCustomerNl,
+        ],
+
+        [
             'Customer::Change::ChangePlannedStartTimeReached',
             'de',
             '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] geplante Startzeit erreicht',
@@ -2667,6 +2773,214 @@ sub _AddSystemNotificationsNewIn_2_0_3 {
                 . "<OTRS_CONFIG_HttpType>://<OTRS_CONFIG_FQDN>/<OTRS_CONFIG_ScriptAlias>index.pl?Action=AgentITSMChangeZoom;ChangeID=<OTRS_CHANGE_ChangeID>\n"
                 . "\n"
                 . "Your OTRS Notification Master\n",
+        ],
+    );
+
+    my $NotificationCharset = 'utf-8';
+
+    # insert the entries
+    for my $Notification (@AgentNotifications) {
+        my @Binds;
+
+        for my $Value ( @{$Notification} ) {
+
+            # Bind requires scalar references
+            push @Binds, \$Value;
+        }
+
+        # do the insertion
+        $Self->{DBObject}->Do(
+            SQL => 'INSERT INTO notifications (notification_type, notification_language, '
+                . 'subject, text, notification_charset, content_type, '
+                . 'create_time, create_by, change_time, change_by) '
+                . 'VALUES( ?, ?, ?, ?, ?, \'text/plain\', '
+                . 'current_timestamp, 1, current_timestamp, 1 )',
+            Bind => [ @Binds, \$NotificationCharset ],
+        );
+    }
+
+    return 1;
+}
+
+=item _AddSystemNotificationsNewIn_3_2_91()
+
+Adds the new notifications to systems notification table that were added in version 3.2.91. (3.3.0 Beta 1)
+
+    my $Success = $PackageSetup->_AddSystemNotificationsNewIn_3_2_91();
+
+=cut
+
+sub _AddSystemNotificationsNewIn_3_2_91 {
+    my ($Self) = @_;
+
+    # Workorder info for customers (en)
+    my $WorkOrderInfoCustomerEn = "\n"
+        . "\n"
+        . "Change title: <OTRS_CHANGE_ChangeTitle>\n"
+        . "Current change state: <OTRS_CHANGE_ChangeState>\n"
+        . "\n"
+        . "Workorder title: <OTRS_WORKORDER_WorkOrderTitle>\n"
+        . "Workorder type: <OTRS_WORKORDER_WorkOrderType>\n"
+        . "Workorder agent: <OTRS_WORKORDER_WorkOrderAgent>\n"
+        . "Current workorder state: <OTRS_WORKORDER_WorkOrderState>\n"
+        . "\n"
+        . "Your OTRS Notification Master\n";
+
+    # Workorder info for agents (en)
+    my $WorkOrderInfoAgentEn = "\n"
+        . "\n"
+        . "Change title: <OTRS_CHANGE_ChangeTitle>\n"
+        . "Current change state: <OTRS_CHANGE_ChangeState>\n"
+        . "\n"
+        . "Workorder title: <OTRS_WORKORDER_WorkOrderTitle>\n"
+        . "Workorder type: <OTRS_WORKORDER_WorkOrderType>\n"
+        . "Current workorder state: <OTRS_WORKORDER_WorkOrderState>\n"
+        . "\n"
+        . "<OTRS_CONFIG_HttpType>://<OTRS_CONFIG_FQDN>/<OTRS_CONFIG_ScriptAlias>index.pl?Action=AgentITSMWorkOrderZoom;WorkOrderID=<OTRS_WORKORDER_WorkOrderID>\n"
+        . "\n"
+        . "Your OTRS Notification Master\n";
+
+    # Workorder info for agents (de)
+    my $WorkOrderInfoAgentDe = "\n"
+        . "\n"
+        . "Change Titel: <OTRS_CHANGE_ChangeTitle>\n"
+        . "Aktueller Change Status: <OTRS_CHANGE_ChangeState>\n"
+        . "\n"
+        . "Workorder Titel: <OTRS_WORKORDER_WorkOrderTitle>\n"
+        . "Workorder Typ: <OTRS_WORKORDER_WorkOrderType>\n"
+        . "Workorder Agent: <OTRS_WORKORDER_WorkOrderAgent>\n"
+        . "Aktueller Workorder Status: <OTRS_WORKORDER_WorkOrderState>\n"
+        . "\n"
+        . "<OTRS_CONFIG_HttpType>://<OTRS_CONFIG_FQDN>/<OTRS_CONFIG_ScriptAlias>index.pl?Action=AgentITSMWorkOrderZoom;WorkOrderID=<OTRS_WORKORDER_WorkOrderID>\n"
+        . "\n"
+        . "Ihr OTRS Notification Master\n";
+
+    # Workorder info for customers (de)
+    my $WorkOrderInfoCustomerDe = "\n"
+        . "\n"
+        . "Change Titel: <OTRS_CHANGE_ChangeTitle>\n"
+        . "Aktueller Change Status: <OTRS_CHANGE_ChangeState>\n"
+        . "\n"
+        . "Workorder Titel: <OTRS_WORKORDER_WorkOrderTitle>\n"
+        . "Workorder Typ: <OTRS_WORKORDER_WorkOrderType>\n"
+        . "Aktueller Workorder Status: <OTRS_WORKORDER_WorkOrderState>\n"
+        . "\n"
+        . "Ihr OTRS Notification Master\n";
+
+    # Workorder info for agents (nl)
+    my $WorkOrderInfoAgentNl = "\n"
+        . "\n"
+        . "Change-titel: <OTRS_CHANGE_ChangeTitle>\n"
+        . "Actuele change-status: <OTRS_CHANGE_ChangeState>\n"
+        . "\n"
+        . "Work Order-titel: <OTRS_WORKORDER_WorkOrderTitle>\n"
+        . "Work Order-type: <OTRS_WORKORDER_WorkOrderType>\n"
+        . "Work Order-agent: <OTRS_WORKORDER_WorkOrderAgent>\n"
+        . "Actuele Work Order-status: <OTRS_WORKORDER_WorkOrderState>\n"
+        . "\n"
+        . "<OTRS_CONFIG_HttpType>://<OTRS_CONFIG_FQDN>/<OTRS_CONFIG_ScriptAlias>index.pl?Action=AgentITSMWorkOrderZoom;WorkOrderID=<OTRS_WORKORDER_WorkOrderID>\n"
+        . "\n";
+
+    # Workorder info for customers (nl)
+    my $WorkOrderInfoCustomerNl = "\n"
+        . "\n"
+        . "Change-titel: <OTRS_CHANGE_ChangeTitle>\n"
+        . "Actuele change-status: <OTRS_CHANGE_ChangeState>\n"
+        . "\n"
+        . "Work Order-titel: <OTRS_WORKORDER_WorkOrderTitle>\n"
+        . "Work Order-type: <OTRS_WORKORDER_WorkOrderType>\n"
+        . "Actuele Work Order-status: <OTRS_WORKORDER_WorkOrderState>\n"
+        . "\n";
+
+    # define agent notifications
+    my @AgentNotifications = (
+
+        [
+            'Agent::WorkOrder::WorkOrderReportAttachmentAdd',
+            'de',
+            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] neuer Report-Anhang',
+            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> hat einen neuen Report-Anhang.'
+                . $WorkOrderInfoAgentDe,
+        ],
+        [
+            'Agent::WorkOrder::WorkOrderReportAttachmentAdd',
+            'en',
+            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] new report attachment',
+            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> has a new report attachment.'
+                . $WorkOrderInfoAgentEn,
+        ],
+        [
+            'Agent::WorkOrder::WorkOrderReportAttachmentAdd',
+            'nl',
+            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] nieuwe bericht bijlage',
+            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> heeft een nieuwe bericht bijlage.'
+                . $WorkOrderInfoAgentNl,
+        ],
+
+        [
+            'Agent::WorkOrder::WorkOrderReportAttachmentDelete',
+            'de',
+            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Report-Anhang gelöscht',
+            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> mit gelöschtem Report-Anhang.'
+                . $WorkOrderInfoAgentDe,
+        ],
+        [
+            'Agent::WorkOrder::WorkOrderReportAttachmentDelete',
+            'en',
+            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] report attachment deleted',
+            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> with deleted report attachment.'
+                . $WorkOrderInfoAgentEn,
+        ],
+        [
+            'Agent::WorkOrder::WorkOrderReportAttachmentDelete',
+            'nl',
+            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] bericht bijlage verwijderd',
+            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> bericht bijlage is verwijderd.'
+                . $WorkOrderInfoAgentNl,
+        ],
+
+        [
+            'Customer::WorkOrder::WorkOrderReportAttachmentAdd',
+            'de',
+            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] neuer Report-Anhang',
+            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> hat einen neuen Report-Anhang.'
+                . $WorkOrderInfoCustomerDe,
+        ],
+        [
+            'Customer::WorkOrder::WorkOrderReportAttachmentAdd',
+            'en',
+            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] new report attachment',
+            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> has a new report attachment.'
+                . $WorkOrderInfoCustomerEn,
+        ],
+        [
+            'Customer::WorkOrder::WorkOrderReportAttachmentAdd',
+            'nl',
+            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] bericht bijlage toegevoegd',
+            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> heeft een nieuwe bericht bijlage.'
+                . $WorkOrderInfoCustomerNl,
+        ],
+
+        [
+            'Customer::WorkOrder::WorkOrderReportAttachmentDelete',
+            'de',
+            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Report-Anhang gelöscht',
+            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> mit gelöschtem Report-Anhang.'
+                . $WorkOrderInfoCustomerDe,
+        ],
+        [
+            'Customer::WorkOrder::WorkOrderReportAttachmentDelete',
+            'en',
+            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] report attachment deleted',
+            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> with deleted report attachment.'
+                . $WorkOrderInfoCustomerEn,
+        ],
+        [
+            'Customer::WorkOrder::WorkOrderReportAttachmentDelete',
+            'nl',
+            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] bericht bijlage verwijderd',
+            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> met een verwijderde bericht bijlage.'
+                . $WorkOrderInfoCustomerNl,
         ],
     );
 

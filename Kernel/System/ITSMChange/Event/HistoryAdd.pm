@@ -1,6 +1,6 @@
 # --
 # Kernel/System/ITSMChange/Event/HistoryAdd.pm - HistoryAdd event module for ITSMChange
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2003-2012 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -364,6 +364,8 @@ sub Run {
         || $Event eq 'ChangeAttachmentDelete'
         || $Event eq 'WorkOrderAttachmentAdd'
         || $Event eq 'WorkOrderAttachmentDelete'
+        || $Event eq 'WorkOrderReportAttachmentAdd'
+        || $Event eq 'WorkOrderReportAttachmentDelete'
         )
     {
 

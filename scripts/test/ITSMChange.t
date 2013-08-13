@@ -313,6 +313,8 @@ my @DefaultHistoryTypes = qw(
     WorkOrderLinkDelete
     WorkOrderAttachmentAdd
     WorkOrderAttachmentDelete
+    WorkOrderReportAttachmentAdd
+    WorkOrderReportAttachmentDelete
     ChangePlannedStartTimeReached
     ChangePlannedEndTimeReached
     ChangeActualStartTimeReached

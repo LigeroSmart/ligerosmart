@@ -1,6 +1,6 @@
 # --
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
-# Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
+# Copyright (C) 2003-2013 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1633,16 +1633,31 @@ sub WorkOrderDelete {
         UserID => 1,
     );
 
-    # get the list of attachments and delete them
+    # get the list of workorder attachments and delete them
     my @Attachments = $Self->WorkOrderAttachmentList(
         WorkOrderID => $Param{WorkOrderID},
     );
     for my $Filename (@Attachments) {
         return if !$Self->WorkOrderAttachmentDelete(
-            ChangeID    => $WorkOrderData->{ChangeID},
-            WorkOrderID => $Param{WorkOrderID},
-            Filename    => $Filename,
-            UserID      => $Param{UserID},
+            ChangeID       => $WorkOrderData->{ChangeID},
+            WorkOrderID    => $Param{WorkOrderID},
+            Filename       => $Filename,
+            AttachmentType => 'WorkOrder',
+            UserID         => $Param{UserID},
+        );
+    }
+
+    # get the list of report attachments and delete them
+    my @ReportAttachments = $Self->WorkOrderReportAttachmentList(
+        WorkOrderID => $Param{WorkOrderID},
+    );
+    for my $Filename (@ReportAttachments) {
+        return if !$Self->WorkOrderAttachmentDelete(
+            ChangeID       => $WorkOrderData->{ChangeID},
+            WorkOrderID    => $Param{WorkOrderID},
+            Filename       => $Filename,
+            AttachmentType => 'WorkOrderReport',
+            UserID         => $Param{UserID},
         );
     }
 
@@ -2378,12 +2393,13 @@ sub WorkOrderStateIDsCheck {
 Add an attachment to the given change.
 
     my $Success = $WorkOrderObject->WorkOrderAttachmentAdd(
-        ChangeID    => 123,
-        WorkOrderID => 456,         # the WorkOrderID becomes part of the file path
-        Filename    => 'filename',
-        Content     => 'content',
-        ContentType => 'text/plain',
-        UserID      => 1,
+        ChangeID       => 123,
+        WorkOrderID    => 456,            # the WorkOrderID becomes part of the file path
+        AttachmentType => 'WorkOrder',    # ( 'WorkOrder' || 'WorkOrderReport')  (optional, default 'WorkOrder' )
+        Filename       => 'filename',
+        Content        => 'content',
+        ContentType    => 'text/plain',
+        UserID         => 1,
     );
 
 =cut
@@ -2403,9 +2419,22 @@ sub WorkOrderAttachmentAdd {
         }
     }
 
+    # Set attachment type to distinguish between attachments of workorders
+    # and those from reports of workorders
+    my $AttachmentType = $Param{AttachmentType} || 'WorkOrder';
+
+    # set event name based on the attachment type
+    my $Event;
+    if ( $AttachmentType eq 'WorkOrder' ) {
+        $Event = 'WorkOrderAttachmentAddPost';
+    }
+    elsif ( $AttachmentType eq 'WorkOrderReport' ) {
+        $Event = 'WorkOrderReportAttachmentAddPost';
+    }
+
     # write to virtual fs
     my $Success = $Self->{VirtualFSObject}->Write(
-        Filename    => "WorkOrder/$Param{WorkOrderID}/$Param{Filename}",
+        Filename    => "$AttachmentType/$Param{WorkOrderID}/$Param{Filename}",
         Mode        => 'binary',
         Content     => \$Param{Content},
         Preferences => {
@@ -2421,7 +2450,7 @@ sub WorkOrderAttachmentAdd {
 
         # trigger AttachmentAdd-Event
         $Self->EventHandler(
-            Event => 'WorkOrderAttachmentAddPost',
+            Event => $Event,
             Data  => {
                 %Param,
             },
@@ -2445,10 +2474,11 @@ sub WorkOrderAttachmentAdd {
 Delete the given file from the virtual filesystem.
 
     my $Success = $WorkOrderObject->WorkOrderAttachmentDelete(
-        ChangeID    => 12345,
-        WorkOrderID => 5123,
-        Filename    => 'Projectplan.pdf',     # identifies the attachment (together with the WorkOrderID)
-        UserID      => 1,
+        ChangeID       => 12345,
+        WorkOrderID    => 5123,
+        AttachmentType => 'WorkOrder',           # ( 'WorkOrder' || 'WorkOrderReport')  (optional, default 'WorkOrder' )
+        Filename       => 'Projectplan.pdf',     # identifies the attachment (together with the WorkOrderID)
+        UserID         => 1,
     );
 
 =cut
@@ -2467,8 +2497,21 @@ sub WorkOrderAttachmentDelete {
         }
     }
 
+    # Set attachment type to distinguish between attachments of workorders
+    # and those from reports of workorders
+    my $AttachmentType = $Param{AttachmentType} || 'WorkOrder';
+
+    # set event name based on the attachment type
+    my $Event;
+    if ( $AttachmentType eq 'WorkOrder' ) {
+        $Event = 'WorkOrderAttachmentDeletePost';
+    }
+    elsif ( $AttachmentType eq 'WorkOrderReport' ) {
+        $Event = 'WorkOrderReportAttachmentDeletePost';
+    }
+
     # add prefix
-    my $Filename = 'WorkOrder/' . $Param{WorkOrderID} . '/' . $Param{Filename};
+    my $Filename = "$AttachmentType/$Param{WorkOrderID}/$Param{Filename}";
 
     # delete file
     my $Success = $Self->{VirtualFSObject}->Delete(
@@ -2480,7 +2523,7 @@ sub WorkOrderAttachmentDelete {
 
         # trigger AttachmentDeletePost-Event
         $Self->EventHandler(
-            Event => 'WorkOrderAttachmentDeletePost',
+            Event => $Event,
             Data  => {
                 %Param,
             },
@@ -2504,8 +2547,9 @@ sub WorkOrderAttachmentDelete {
 This method returns information about one specific attachment.
 
     my $Attachment = $WorkOrderObject->WorkOrderAttachmentGet(
-        WorkOrderID => 4,
-        Filename    => 'test.txt',
+        WorkOrderID    => 4,
+        AttachmentType => 'WorkOrder',    # ( 'WorkOrder' || 'WorkOrderReport')  (optional, default 'WorkOrder' )
+        Filename       => 'test.txt',
     );
 
 returns
@@ -2514,11 +2558,12 @@ returns
         Preferences => {
             AllPreferences => 'test',
         },
-        Filename    => 'test.txt',
-        Content     => 'hallo',
-        ContentType => 'text/plain',
-        Filesize    => '123 KBytes',
-        Type        => 'attachment',
+        Filename       => 'test.txt',
+        Content        => 'hallo',
+        ContentType    => 'text/plain',
+        Filesize       => '123 KBytes',
+        Type           => 'attachment',
+        AttachmentType => 'WorkOrder',
     };
 
 =cut
@@ -2537,8 +2582,12 @@ sub WorkOrderAttachmentGet {
         }
     }
 
+    # Set attachment type to distinguish between attachments of workorders
+    # and those from reports of workorders
+    my $AttachmentType = $Param{AttachmentType} || 'WorkOrder';
+
     # add prefix
-    my $Filename = 'WorkOrder/' . $Param{WorkOrderID} . '/' . $Param{Filename};
+    my $Filename = $AttachmentType . '/' . $Param{WorkOrderID} . '/' . $Param{Filename};
 
     # find all attachments of this workorder
     my @Attachments = $Self->{VirtualFSObject}->Find(
@@ -2565,11 +2614,12 @@ sub WorkOrderAttachmentGet {
 
     my $AttachmentInfo = {
         %AttachmentData,
-        Filename    => $Param{Filename},
-        Content     => ${ $AttachmentData{Content} },
-        ContentType => $AttachmentData{Preferences}->{ContentType},
-        Type        => 'attachment',
-        Filesize    => $AttachmentData{Preferences}->{Filesize},
+        Filename       => $Param{Filename},
+        Content        => ${ $AttachmentData{Content} },
+        ContentType    => $AttachmentData{Preferences}->{ContentType},
+        Type           => 'attachment',
+        Filesize       => $AttachmentData{Preferences}->{Filesize},
+        AttachmentType => $AttachmentType,
     };
 
     return $AttachmentInfo;
@@ -2577,7 +2627,7 @@ sub WorkOrderAttachmentGet {
 
 =item WorkOrderAttachmentList()
 
-Returns an array with all attachments of the given workorder.
+Returns an array with all workorder attachments (not the report attachments) of the given workorder.
 
     my @Attachments = $WorkOrderObject->WorkOrderAttachmentList(
         WorkOrderID => 123,
@@ -2612,13 +2662,74 @@ sub WorkOrderAttachmentList {
         },
     );
 
+    # extract only the workorder attachments
+    my @WorkOrderAttachments;
+    FILENAME:
     for my $Filename (@Attachments) {
+
+        next FILENAME if $Filename !~ m{ \A WorkOrder / \d+ / }xms;
 
         # remove extra information from filename
         $Filename =~ s{ \A WorkOrder / \d+ / }{}xms;
+
+        push @WorkOrderAttachments, $Filename;
     }
 
-    return @Attachments;
+    return @WorkOrderAttachments;
+}
+
+=item WorkOrderReportAttachmentList()
+
+Returns an array with all report attachments of the given workorder.
+
+    my @Attachments = $WorkOrderObject->WorkOrderReportAttachmentList(
+        WorkOrderID => 123,
+    );
+
+returns
+
+    @Attachments = (
+        'filename.txt',
+        'other_file.pdf',
+    );
+
+=cut
+
+sub WorkOrderReportAttachmentList {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    if ( !$Param{WorkOrderID} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need WorkOrderID!',
+        );
+
+        return;
+    }
+
+    # find all attachments of this workorder
+    my @Attachments = $Self->{VirtualFSObject}->Find(
+        Preferences => {
+            WorkOrderID => $Param{WorkOrderID},
+        },
+    );
+
+    # extract only the report attachments
+    my @ReportAttachments;
+    FILENAME:
+    for my $Filename (@Attachments) {
+
+        next FILENAME if $Filename !~ m{ \A WorkOrderReport / \d+ / }xms;
+
+        # remove extra information from filename
+        $Filename =~ s{ \A WorkOrderReport / \d+ / }{}xms;
+
+        push @ReportAttachments, $Filename;
+
+    }
+
+    return @ReportAttachments;
 }
 
 =item WorkOrderAttachmentExists()
@@ -2626,9 +2737,10 @@ sub WorkOrderAttachmentList {
 Checks if a file with a given filename exists.
 
     my $Exists = $WorkOrderObject->WorkOrderAttachmentExists(
-        Filename    => 'test.txt',
-        WorkOrderID => 123,
-        UserID      => 1,
+        Filename       => 'test.txt',
+        WorkOrderID    => 123,
+        AttachmentType => 'WorkOrder',    # ( 'WorkOrder' || 'WorkOrderReport')  (optional, default 'WorkOrder' )
+        UserID         => 1,
     );
 
 =cut
@@ -2648,8 +2760,12 @@ sub WorkOrderAttachmentExists {
         }
     }
 
+    # Set attachment type to distinguish between attachments of workorders
+    # and those from reports of workorders
+    my $AttachmentType = $Param{AttachmentType} || 'WorkOrder';
+
     return if !$Self->{VirtualFSObject}->Find(
-        Filename => 'WorkOrder/' . $Param{WorkOrderID} . '/' . $Param{Filename},
+        Filename => $AttachmentType . '/' . $Param{WorkOrderID} . '/' . $Param{Filename},
     );
 
     return 1;

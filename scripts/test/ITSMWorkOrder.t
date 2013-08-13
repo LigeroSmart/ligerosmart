@@ -4521,21 +4521,35 @@ $Self->Is(
 # define list of test attachments
 my @TestFileList = (
     {
-        Filename    => 'first attachment',
-        Content     => 'First attachment from ITSMWorkOrder.t',
-        ContentType => 'text/plain',
+        Filename       => 'first attachment',
+        Content        => 'First attachment from ITSMWorkOrder.t',
+        ContentType    => 'text/plain',
+        AttachmentType => 'WorkOrder',
     },
     {
-        Filename    => 'second attachment',
-        Content     => 'Second attachment from ITSMWorkOrder.t',
-        ContentType => 'text/plain',
+        Filename       => 'second attachment',
+        Content        => 'Second attachment from ITSMWorkOrder.t',
+        ContentType    => 'text/plain',
+        AttachmentType => 'WorkOrder',
+    },
+    {
+        Filename       => 'first report attachment',
+        Content        => 'First report attachment from ITSMWorkOrder.t',
+        ContentType    => 'text/plain',
+        AttachmentType => 'WorkOrderReport',
+    },
+    {
+        Filename       => 'second report attachment',
+        Content        => 'Second report attachment from ITSMWorkOrder.t',
+        ContentType    => 'text/plain',
+        AttachmentType => 'WorkOrderReport',
     },
 );
 
-my $FileCount;
+my %FileCount;
 for my $TestFile (@TestFileList) {
 
-    $FileCount++;
+    $FileCount{ $TestFile->{AttachmentType} }++;
 
     # add the attachment
     my $AddOk = $Self->{WorkOrderObject}->WorkOrderAttachmentAdd(
@@ -4546,18 +4560,31 @@ for my $TestFile (@TestFileList) {
     );
     $Self->True(
         $AddOk,
-        "Attachment $FileCount: attachment added",
+        "Attachment ($TestFile->{AttachmentType}) $FileCount{ $TestFile->{AttachmentType} }: attachment added",
     );
 
-    # get attachment list
-    my @AttachmentList = $Self->{WorkOrderObject}->WorkOrderAttachmentList(
-        WorkOrderID => $WorkOrderIDForAttachmentTest,
-        UserID      => 1,
-    );
+    my @AttachmentList;
+    if ( $TestFile->{AttachmentType} eq 'WorkOrder' ) {
+
+        # get attachment list
+        @AttachmentList = $Self->{WorkOrderObject}->WorkOrderAttachmentList(
+            WorkOrderID => $WorkOrderIDForAttachmentTest,
+            UserID      => 1,
+        );
+    }
+    elsif ( $TestFile->{AttachmentType} eq 'WorkOrderReport' ) {
+
+        # get attachment list
+        @AttachmentList = $Self->{WorkOrderObject}->WorkOrderReportAttachmentList(
+            WorkOrderID => $WorkOrderIDForAttachmentTest,
+            UserID      => 1,
+        );
+    }
+
     $Self->Is(
         scalar @AttachmentList,
-        $FileCount,
-        "Attachment $FileCount: number of attachments after adding",
+        $FileCount{ $TestFile->{AttachmentType} },
+        "Attachment ($TestFile->{AttachmentType}) $FileCount{ $TestFile->{AttachmentType} }: number of attachments after adding",
     );
 
     # get the last added attachment file name
@@ -4565,68 +4592,84 @@ for my $TestFile (@TestFileList) {
 
     $Self->True(
         $AttachmentLookup{ $TestFile->{Filename} },
-        "Attachment $FileCount: filename from WorkOrderAttachmentList()",
+        "Attachment ($TestFile->{AttachmentType}) $FileCount{ $TestFile->{AttachmentType} }: filename from WorkOrderAttachmentList() / WorkOrderReportAttachmentList()",
     );
 
     # get the attachment
     my $Attachment = $Self->{WorkOrderObject}->WorkOrderAttachmentGet(
-        WorkOrderID => $WorkOrderIDForAttachmentTest,
-        Filename    => $TestFile->{Filename},
+        WorkOrderID    => $WorkOrderIDForAttachmentTest,
+        Filename       => $TestFile->{Filename},
+        AttachmentType => $TestFile->{AttachmentType},
     );
     $Self->True(
         $Attachment,
-        "Attachment $FileCount: WorkOrderAttachmentGet() returned true",
+        "Attachment ($TestFile->{AttachmentType}) $FileCount{ $TestFile->{AttachmentType} }: WorkOrderAttachmentGet() returned true",
     );
 
     # check attachment file attributes
-    for my $Attribute (qw(Filename Content ContentType)) {
+    for my $Attribute (qw(Filename Content ContentType AttachmentType)) {
         $Self->Is(
             $Attachment->{$Attribute},
             $TestFile->{$Attribute},
-            "Attachment $FileCount: $Attribute from WorkOrderAttachmentGet",
+            "Attachment ($TestFile->{AttachmentType}) $FileCount{ $TestFile->{AttachmentType} }: $Attribute from WorkOrderAttachmentGet",
         );
     }
 
     # check existence of attachment
     my $AttachmentExists = $Self->{WorkOrderObject}->WorkOrderAttachmentExists(
-        ChangeID    => $ChangeIDForAttachmentTest,
-        WorkOrderID => $WorkOrderIDForAttachmentTest,
-        Filename    => $TestFile->{Filename},
-        UserID      => 1,
+        ChangeID       => $ChangeIDForAttachmentTest,
+        WorkOrderID    => $WorkOrderIDForAttachmentTest,
+        AttachmentType => $TestFile->{AttachmentType},
+        Filename       => $TestFile->{Filename},
+        UserID         => 1,
     );
     $Self->True(
         $AttachmentExists,
-        "Attachment $FileCount: attachment exists",
+        "Attachment ($TestFile->{AttachmentType}) $FileCount{ $TestFile->{AttachmentType} }: attachment exists",
     );
 }
 
 # now delete the attachments
-$FileCount = 0;
-my $MaxTestFiles = scalar @TestFileList;
+my %MaxTestFiles = %FileCount;
+%FileCount = ();
 for my $TestFile (@TestFileList) {
 
-    $FileCount++;
+    $FileCount{ $TestFile->{AttachmentType} }++;
 
     my $DeleteOk = $Self->{WorkOrderObject}->WorkOrderAttachmentDelete(
-        ChangeID    => $ChangeIDForAttachmentTest,
-        WorkOrderID => $WorkOrderIDForAttachmentTest,
-        Filename    => $TestFile->{Filename},
-        UserID      => 1,
+        ChangeID       => $ChangeIDForAttachmentTest,
+        WorkOrderID    => $WorkOrderIDForAttachmentTest,
+        AttachmentType => $TestFile->{AttachmentType},
+        Filename       => $TestFile->{Filename},
+        UserID         => 1,
     );
     $Self->True(
         $DeleteOk,
-        "Attachment $FileCount: attachment deleted",
+        "Attachment ($TestFile->{AttachmentType}) $FileCount{ $TestFile->{AttachmentType} }: attachment deleted",
     );
 
-    my @AttachmentList = $Self->{WorkOrderObject}->WorkOrderAttachmentList(
-        WorkOrderID => $WorkOrderIDForAttachmentTest,
-        UserID      => 1,
-    );
+    my @AttachmentList;
+    if ( $TestFile->{AttachmentType} eq 'WorkOrder' ) {
+
+        # get attachment list
+        @AttachmentList = $Self->{WorkOrderObject}->WorkOrderAttachmentList(
+            WorkOrderID => $WorkOrderIDForAttachmentTest,
+            UserID      => 1,
+        );
+    }
+    elsif ( $TestFile->{AttachmentType} eq 'WorkOrderReport' ) {
+
+        # get attachment list
+        @AttachmentList = $Self->{WorkOrderObject}->WorkOrderReportAttachmentList(
+            WorkOrderID => $WorkOrderIDForAttachmentTest,
+            UserID      => 1,
+        );
+    }
 
     $Self->Is(
         scalar @AttachmentList,
-        $MaxTestFiles - $FileCount,
-        "Attachment $FileCount: number of attachments after deletion",
+        $MaxTestFiles{ $TestFile->{AttachmentType} } - $FileCount{ $TestFile->{AttachmentType} },
+        "Attachment ($TestFile->{AttachmentType}) $FileCount{ $TestFile->{AttachmentType} }: number of attachments after deletion",
     );
 
     my $AttachmentExists = $Self->{WorkOrderObject}->WorkOrderAttachmentExists(
@@ -4637,7 +4680,7 @@ for my $TestFile (@TestFileList) {
     );
     $Self->False(
         $AttachmentExists,
-        "Attachment $FileCount: attachment is gone",
+        "Attachment ($TestFile->{AttachmentType}) $FileCount{ $TestFile->{AttachmentType} }: attachment is gone",
     );
 }
 

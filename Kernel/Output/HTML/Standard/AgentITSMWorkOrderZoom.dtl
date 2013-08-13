@@ -288,7 +288,7 @@
                         </div>
                         <div class="Clear"></div>
 
-                        <label>$Text{"Attachment"}:</label>
+                        <label>$Text{"Attachment"} ($Text{"Workorder"}):</label>
                         <div class="Field">
 <!-- dtl:block:AttachmentRow -->
                             <span class="DownloadAttachment" title="$Text{"Download Attachment"}">
@@ -301,6 +301,21 @@
 <!-- dtl:block:AttachmentRow -->
                         </div>
                         <div class="Clear"></div>
+
+                        <label>$Text{"Attachment"} ($Text{"Report"}):</label>
+                        <div class="Field">
+<!-- dtl:block:ReportAttachmentRow -->
+                            <span class="DownloadAttachment" title="$Text{"Download Attachment"}">
+                                <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=DownloadAttachment;Filename=$LQData{"Filename"};Type=WorkOrderReport;WorkOrderID=$LQData{"WorkOrderID"}">
+                                    $QData{"Filename"}
+                                </a>
+                                , $QData{"Filesize"}
+                            </span>
+                            <br/>
+<!-- dtl:block:ReportAttachmentRow -->
+                        </div>
+                        <div class="Clear"></div>
+
                     </fieldset>
                 </div>
             </div>

@@ -8,10 +8,11 @@
 # --
 
 # TODO. Add validation for the actual start and end times in the client side.
-<form action="$Env{"CGIHandle"}" method="post" name="compose" class="Validate PreventMultipleSubmits">
-    <input type="hidden" name="Action"    value="$Env{"Action"}"/>
+<form action="$Env{"CGIHandle"}" method="post" name="compose" enctype="multipart/form-data" class="Validate PreventMultipleSubmits">
+    <input type="hidden" name="Action" value="$Env{"Action"}"/>
     <input type="hidden" name="Subaction" value="Save"/>
     <input type="hidden" name="WorkOrderID" value="$QData{"WorkOrderID"}"/>
+    <input type="hidden" name="FormID" value="$QData{"FormID"}"/>
 
     <div class="LayoutPopup ARIARoleMain">
         <div class="Header">
@@ -114,6 +115,52 @@ $Include{"RichTextEditor"}
                 </div>
                 <div class="Clear"></div>
 <!-- dtl:block:ShowAccountedTime -->
+
+                <label title="$Text{"Existing attachments"}">$Text{"Existing attachments"}:</label>
+                <div class="Field">
+<!-- dtl:block:ReportAttachmentRow -->
+                    <span class="DownloadAttachment" title="$Text{"Download Attachment"}">
+                        <a href="$Env{"Baselink"}Action=AgentITSMWorkOrderZoom;Subaction=DownloadAttachment;Type=WorkOrderReport;Filename=$LQData{"Filename"};WorkOrderID=$LQData{"WorkOrderID"}">$QData{"Filename"}</a>, $QData{"Filesize"}
+                    </span>
+                    <br/>
+<!-- dtl:block:ReportAttachmentRow -->
+                </div>
+                <div class="Clear"></div>
+
+                <label>$Text{"Add attachment"}:</label>
+                <div class="Field">
+                    <ul>
+<!-- dtl:block:AttachmentRow -->
+                        <li>
+                            $QData{"Filename"} ($QData{"Filesize"})
+                            <button type="submit" id="AttachmentDelete$QData{"FileID"}" name="AttachmentDelete$QData{"FileID"}" value="$Text{"Delete"}">$Text{"Delete"}</button>
+<!--dtl:js_on_document_complete-->
+<script type="text/javascript">//<![CDATA[
+    $('#AttachmentDelete$QData{"FileID"}').bind('click', function () {
+        Core.Form.Validate.DisableValidation($('#AttachmentDelete$QData{"FileID"}').closest('form'));
+    });
+//]]></script>
+<!--dtl:js_on_document_complete-->
+                        </li>
+<!-- dtl:block:AttachmentRow -->
+                        <li>
+                            <input name="FileUpload" id="FileUpload" type="file" size="40"/>
+                            <input type="hidden" id="AttachmentUpload" name="AttachmentUpload" value="0" />
+                        </li>
+                    </ul>
+                </div>
+                <div class="Clear"></div>
+
+<!--dtl:js_on_document_complete-->
+<script type="text/javascript">//<![CDATA[
+    $('#FileUpload').bind('change', function (Event) {
+        var $Form = $('#FileUpload').closest('form');
+        Core.Form.Validate.DisableValidation($Form);
+        $Form.find('#AttachmentUpload').val('1').end().submit();
+    });
+//]]></script>
+<!--dtl:js_on_document_complete-->
+
             </fieldset>
         </div>
         <div class="Footer">

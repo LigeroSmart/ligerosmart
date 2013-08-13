@@ -119,6 +119,10 @@ sub Data {
     $Self->{Translation}->{'WorkOrderHistory::WorkOrderAttachmentAddWithWorkOrderID'} = '(ID=%s) Nieuwe bijlage bij Work Order: %s';
     $Self->{Translation}->{'WorkOrderHistory::WorkOrderAttachmentDelete'} = 'Bijlage van Work Order verwijderd: %s';
     $Self->{Translation}->{'WorkOrderHistory::WorkOrderAttachmentDeleteWithWorkOrderID'} = '(ID=%s) Bijlage van Work Order verwijderd: %s';
+    $Self->{Translation}->{'WorkOrderHistory::WorkOrderReportAttachmentAdd'} = 'Nieuwe bericht bijlage bij Work Order: %s';
+    $Self->{Translation}->{'WorkOrderHistory::WorkOrderReportAttachmentAddWithWorkOrderID'} = '(ID=%s) Nieuwe bericht bijlage bij Work Order: %s';
+    $Self->{Translation}->{'WorkOrderHistory::WorkOrderReportAttachmentDelete'} = 'Bericht bijlage van Work Order verwijderd: %s';
+    $Self->{Translation}->{'WorkOrderHistory::WorkOrderReportAttachmentDeleteWithWorkOrderID'} = '(ID=%s) Bericht bijlage van Work Order verwijderd: %s';
     $Self->{Translation}->{'WorkOrderHistory::WorkOrderDelete'} = 'Work Order (ID=%s) verwijderd';
     $Self->{Translation}->{'WorkOrderHistory::WorkOrderDeleteWithWorkOrderID'} = 'Workorder (ID=%s) verwijderd';
     $Self->{Translation}->{'WorkOrderHistory::WorkOrderLinkAdd'} = 'Link naar %s (ID=%s) toegevoegd';

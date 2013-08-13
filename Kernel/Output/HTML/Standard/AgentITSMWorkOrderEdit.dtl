@@ -20,10 +20,10 @@
 
         <div class="Content">
             <form action="$Env{"CGIHandle"}" method="post" name="compose" enctype="multipart/form-data" class="Validate PreventMultipleSubmits">
-                <input type="hidden" name="Action"    value="$Env{"Action"}"/>
+                <input type="hidden" name="Action" value="$Env{"Action"}"/>
                 <input type="hidden" name="Subaction" value="Save"/>
                 <input type="hidden" name="WorkOrderID" value="$QData{"WorkOrderID"}"/>
-                <input type="hidden" name="FormID"    value="$QData{"FormID"}"/>
+                <input type="hidden" name="FormID" value="$QData{"FormID"}"/>
 
                 <fieldset class="TableLike FixedLabelSmall">
 

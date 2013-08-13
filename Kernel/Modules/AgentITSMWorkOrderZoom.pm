@@ -1,6 +1,6 @@
 # --
 # Kernel/Modules/AgentITSMWorkOrderZoom.pm - the OTRS ITSM ChangeManagement workorder zoom module
-# Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
+# Copyright (C) 2003-2013 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -118,9 +118,11 @@ sub Run {
 
         # get data for attachment
         my $Filename = $Self->{ParamObject}->GetParam( Param => 'Filename' );
+        my $Type     = $Self->{ParamObject}->GetParam( Param => 'Type' );
         my $AttachmentData = $Self->{WorkOrderObject}->WorkOrderAttachmentGet(
-            WorkOrderID => $WorkOrderID,
-            Filename    => $Filename,
+            WorkOrderID    => $WorkOrderID,
+            Filename       => $Filename,
+            AttachmentType => $Type,
         );
 
         # return error if file does not exist
@@ -516,6 +518,38 @@ sub Run {
         # show block
         $Self->{LayoutObject}->Block(
             Name => 'AttachmentRow',
+            Data => {
+                %{$WorkOrder},
+                %{$AttachmentData},
+            },
+        );
+    }
+
+    # get report attachments
+    my @ReportAttachments = $Self->{WorkOrderObject}->WorkOrderReportAttachmentList(
+        WorkOrderID => $WorkOrderID,
+    );
+
+    # show report attachments
+    ATTACHMENT:
+    for my $Filename (@ReportAttachments) {
+
+        # get info about file
+        my $AttachmentData = $Self->{WorkOrderObject}->WorkOrderAttachmentGet(
+            WorkOrderID    => $WorkOrderID,
+            Filename       => $Filename,
+            AttachmentType => 'WorkOrderReport',
+        );
+
+        # check for attachment information
+        next ATTACHMENT if !$AttachmentData;
+
+        # do not show inline attachments in attachments list (they have a content id)
+        next ATTACHMENT if $AttachmentData->{Preferences}->{ContentID};
+
+        # show block
+        $Self->{LayoutObject}->Block(
+            Name => 'ReportAttachmentRow',
             Data => {
                 %{$WorkOrder},
                 %{$AttachmentData},

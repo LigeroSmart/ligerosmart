@@ -1247,6 +1247,22 @@
             <Data Key="change_by">1</Data>
         </Insert>
         <Insert Table="change_history_type">
+            <Data Key="name" Type="Quote">WorkOrderReportAttachmentAdd</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="change_history_type">
+            <Data Key="name" Type="Quote">WorkOrderReportAttachmentDelete</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="change_history_type">
             <Data Key="name" Type="Quote">ChangePlannedStartTimeReached</Data>
             <Data Key="valid_id">1</Data>
             <Data Key="create_time">current_timestamp</Data>
@@ -2972,6 +2988,22 @@
             <ColumnChange NameOld="content_new" NameNew="content_new" Required="false" Size="1800000" Type="VARCHAR"/>
             <ColumnChange NameOld="content_old" NameNew="content_old" Required="false" Size="1800000" Type="VARCHAR"/>
         </TableAlter>
+        <Insert Table="change_history_type" Version="3.2.91">
+            <Data Key="name" Type="Quote">WorkOrderReportAttachmentAdd</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="change_history_type" Version="3.2.91">
+            <Data Key="name" Type="Quote">WorkOrderReportAttachmentDelete</Data>
+            <Data Key="valid_id">1</Data>
+            <Data Key="create_time">current_timestamp</Data>
+            <Data Key="create_by">1</Data>
+            <Data Key="change_time">current_timestamp</Data>
+            <Data Key="change_by">1</Data>
+        </Insert>
     </DatabaseUpgrade>
     <DatabaseUninstall Type="pre">
         <TableDrop Name="change_freekey"/>
@@ -3048,7 +3080,7 @@
 
             if ($CodeObject) {
 
-                # start methode
+                # start method
                 if ( !$CodeObject->$FunctionName(%{$Self}) ) {
                     $Self->{LogObject}->Log(
                         Priority => 'error',
@@ -3094,7 +3126,7 @@
 
             if ($CodeObject) {
 
-                # start methode
+                # start method
                 if ( !$CodeObject->$FunctionName(%{$Self}) ) {
                     $Self->{LogObject}->Log(
                         Priority => 'error',
@@ -3108,41 +3140,6 @@
                 $Self->{LogObject}->Log(
                     Priority => 'error',
                     Message  => "Could not call method new() on $CodeModule.pm.",
-                );
-            }
-        }
-
-    ]]></CodeUpgrade>
-    <CodeUpgrade Type="post" Version="2.0.3"><![CDATA[
-
-        # define function name
-        my $FunctionName = 'CodeUpgradeFromLowerThan_2_0_3';
-
-        # create the package name
-        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
-
-        # load the module
-        if ( $Self->{MainObject}->Require($CodeModule) ) {
-
-            # create new instance
-            my $CodeObject = $CodeModule->new( %{$Self} );
-
-            if ($CodeObject) {
-
-                # start methode
-                if ( !$CodeObject->$FunctionName(%{$Self}) ) {
-                    $Self->{LogObject}->Log(
-                        Priority => 'error',
-                        Message  => "Could not call method $FunctionName() on $CodeModule.pm."
-                    );
-                }
-            }
-
-            # error handling
-            else {
-                $Self->{LogObject}->Log(
-                    Priority => 'error',
-                    Message  => "Could not call method new() on $CodeModule.pm."
                 );
             }
         }
@@ -3199,7 +3196,77 @@
 
             if ($CodeObject) {
 
-                # start methode
+                # start method
+                if ( !$CodeObject->$FunctionName(%{$Self}) ) {
+                    $Self->{LogObject}->Log(
+                        Priority => 'error',
+                        Message  => "Could not call method $FunctionName() on $CodeModule.pm."
+                    );
+                }
+            }
+
+            # error handling
+            else {
+                $Self->{LogObject}->Log(
+                    Priority => 'error',
+                    Message  => "Could not call method new() on $CodeModule.pm."
+                );
+            }
+        }
+
+    ]]></CodeUpgrade>
+    <CodeUpgrade Type="post" Version="2.0.3"><![CDATA[
+
+        # define function name
+        my $FunctionName = 'CodeUpgradeFromLowerThan_2_0_3';
+
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
+
+        # load the module
+        if ( $Self->{MainObject}->Require($CodeModule) ) {
+
+            # create new instance
+            my $CodeObject = $CodeModule->new( %{$Self} );
+
+            if ($CodeObject) {
+
+                # start method
+                if ( !$CodeObject->$FunctionName(%{$Self}) ) {
+                    $Self->{LogObject}->Log(
+                        Priority => 'error',
+                        Message  => "Could not call method $FunctionName() on $CodeModule.pm."
+                    );
+                }
+            }
+
+            # error handling
+            else {
+                $Self->{LogObject}->Log(
+                    Priority => 'error',
+                    Message  => "Could not call method new() on $CodeModule.pm."
+                );
+            }
+        }
+
+    ]]></CodeUpgrade>
+    <CodeUpgrade Type="post" Version="3.2.91"><![CDATA[
+
+        # define function name
+        my $FunctionName = 'CodeUpgradeFromLowerThan_3_2_91';
+
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
+
+        # load the module
+        if ( $Self->{MainObject}->Require($CodeModule) ) {
+
+            # create new instance
+            my $CodeObject = $CodeModule->new( %{$Self} );
+
+            if ($CodeObject) {
+
+                # start method
                 if ( !$CodeObject->$FunctionName(%{$Self}) ) {
                     $Self->{LogObject}->Log(
                         Priority => 'error',
@@ -3234,7 +3301,7 @@
 
             if ($CodeObject) {
 
-                # start methode
+                # start method
                 if ( !$CodeObject->$FunctionName(%{$Self}) ) {
                     $Self->{LogObject}->Log(
                         Priority => 'error',

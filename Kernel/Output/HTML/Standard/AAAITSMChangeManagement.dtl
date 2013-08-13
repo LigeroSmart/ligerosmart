@@ -111,6 +111,10 @@ $Text{"WorkOrderHistory::WorkOrderAttachmentAdd"}
 $Text{"WorkOrderHistory::WorkOrderAttachmentAddWithWorkOrderID"}
 $Text{"WorkOrderHistory::WorkOrderAttachmentDelete"}
 $Text{"WorkOrderHistory::WorkOrderAttachmentDeleteWithWorkOrderID"}
+$Text{"WorkOrderHistory::WorkOrderReportAttachmentAdd"}
+$Text{"WorkOrderHistory::WorkOrderReportAttachmentAddWithWorkOrderID"}
+$Text{"WorkOrderHistory::WorkOrderReportAttachmentDelete"}
+$Text{"WorkOrderHistory::WorkOrderReportAttachmentDeleteWithWorkOrderID"}
 $Text{"WorkOrderHistory::WorkOrderDelete"}
 $Text{"WorkOrderHistory::WorkOrderDeleteWithWorkOrderID"}
 $Text{"WorkOrderHistory::WorkOrderLinkAdd"}
