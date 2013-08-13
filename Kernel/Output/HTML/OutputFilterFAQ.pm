@@ -20,7 +20,7 @@ sub new {
     bless( $Self, $Type );
 
     # get needed objects
-    for my $Object (qw(ConfigObject MainObject LogObject LayoutObject)) {
+    for my $Object (qw(ConfigObject MainObject LogObject LayoutObject SessionID)) {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
     }
 
@@ -46,6 +46,12 @@ sub Run {
     # check template name
     return if !$ValidTemplates->{ $Param{TemplateFile} };
 
+    # if no session cookies are used we attach the session as URL parameter
+    my $SessionString = '';
+    if ( !$Self->{ConfigObject}->Get('SessionUseCookie') ) {
+        $SessionString = $Self->{ConfigObject}->Get('SessionName') . '=' . $Self->{SessionID} . ';';
+    }
+
     my $StartPattern    = '<!-- [ ] OutputFilterHook_TicketOptionsEnd [ ] --> .+?';
     my $FAQTranslatable = $Self->{LayoutObject}->{LanguageObject}->Get('FAQ');
 
@@ -62,7 +68,7 @@ sub Run {
 /*global FAQ: true */
 FAQ.Agent.TicketCompose.InitFAQTicketCompose(\$('#RichText'));
 \$('#OptionFAQ').bind('click', function (event) {
-    var FAQIFrame = '<iframe class=\"TextOption FAQ\" src=\"' + Core.Config.Get('CGIHandle') + '?Action=AgentFAQExplorer;Nav=None;Subject=;What=\"></iframe>';
+    var FAQIFrame = '<iframe class=\"TextOption FAQ\" src=\"' + Core.Config.Get('CGIHandle') + '?' + '$SessionString' + 'Action=AgentFAQExplorer;Nav=None;Subject=;What=\"></iframe>';
     Core.UI.Dialog.ShowContentDialog(FAQIFrame, '', '10px', 'Center', true);
     return false;
 });
@@ -89,7 +95,7 @@ END
 /*global FAQ: true */
 FAQ.Agent.TicketCompose.InitFAQTicketCompose(\$('#RichText'));
 \$('#OptionFAQ').bind('click', function (event) {
-    var FAQIFrame = '<iframe class="TextOption FAQ" src="' + Core.Config.Get('CGIHandle') + '?Action=AgentFAQExplorer;Nav=None;Subject=;What="></iframe>';
+    var FAQIFrame = '<iframe class="TextOption FAQ" src="' + Core.Config.Get('CGIHandle') + '?' + '$SessionString' + 'Action=AgentFAQExplorer;Nav=None;Subject=;What="></iframe>';
     Core.UI.Dialog.ShowContentDialog(FAQIFrame, '', '10px', 'Center', true);
     return false;
 });
