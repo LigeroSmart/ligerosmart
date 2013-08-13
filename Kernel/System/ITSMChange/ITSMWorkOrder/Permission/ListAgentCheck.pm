@@ -201,10 +201,6 @@ This software comes with ABSOLUTELY NO WARRANTY. For details, see
 the enclosed file COPYING for license information (AGPL). If you
 did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
-=head1 VERSION
-
-$Id: ListAgentCheck.pm,v 1.4 2010-10-21 16:11:31 ub Exp $
-
 =cut
 
 1;

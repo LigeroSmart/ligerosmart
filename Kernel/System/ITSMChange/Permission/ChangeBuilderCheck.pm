@@ -189,10 +189,6 @@ This software comes with ABSOLUTELY NO WARRANTY. For details, see
 the enclosed file COPYING for license information (AGPL). If you
 did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
-=head1 VERSION
-
-$Id: ChangeBuilderCheck.pm,v 1.18 2010-11-21 12:16:55 bes Exp $
-
 =cut
 
 1;

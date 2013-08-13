@@ -176,10 +176,6 @@ This software comes with ABSOLUTELY NO WARRANTY. For details, see
 the enclosed file COPYING for license information (AGPL). If you
 did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
-=head1 VERSION
-
-$Id: ChangeAgentCheck.pm,v 1.16 2010-10-27 22:27:30 ub Exp $
-
 =cut
 
 1;
