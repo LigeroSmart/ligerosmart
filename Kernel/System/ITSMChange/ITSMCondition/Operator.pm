@@ -558,7 +558,7 @@ sub OperatorExecute {
     return 1;
 }
 
-=begin Internal
+=begin Internal:
 
 =item _OperatorExecute()
 
@@ -1320,7 +1320,7 @@ sub _OperatorLoadBackend {
 
 1;
 
-=end Internal
+=end Internal:
 
 =back
 
