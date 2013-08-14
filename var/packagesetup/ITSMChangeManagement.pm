@@ -874,10 +874,28 @@ sub _AttachmentDelete {
             for my $Filename (@WorkOrderAttachments) {
 
                 $Self->{WorkOrderObject}->WorkOrderAttachmentDelete(
-                    ChangeID    => $ChangeID,
-                    WorkOrderID => $WorkOrderID,
-                    Filename    => $Filename,
-                    UserID      => 1,
+                    ChangeID       => $ChangeID,
+                    WorkOrderID    => $WorkOrderID,
+                    Filename       => $Filename,
+                    AttachmentType => 'WorkOrder',
+                    UserID         => 1,
+                );
+            }
+
+            # get the list of all workorder report attachments
+            my @ReportAttachments = $Self->{WorkOrderObject}->WorkOrderReportAttachmentList(
+                WorkOrderID => $WorkOrderID,
+            );
+
+            # delete all workorder report attachments
+            for my $Filename (@ReportAttachments) {
+
+                $Self->{WorkOrderObject}->WorkOrderAttachmentDelete(
+                    ChangeID       => $ChangeID,
+                    WorkOrderID    => $WorkOrderID,
+                    Filename       => $Filename,
+                    AttachmentType => 'WorkOrderReport',
+                    UserID         => 1,
                 );
             }
         }
