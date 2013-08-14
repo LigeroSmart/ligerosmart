@@ -20,7 +20,7 @@ sub new {
     bless( $Self, $Type );
 
     # get needed objects
-    for my $Object (qw(ConfigObject MainObject LogObject LayoutObject SessionID)) {
+    for my $Object (qw(ParamObject ConfigObject MainObject LogObject LayoutObject)) {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
     }
 
@@ -49,7 +49,8 @@ sub Run {
     # if no session cookies are used we attach the session as URL parameter
     my $SessionString = '';
     if ( !$Self->{ConfigObject}->Get('SessionUseCookie') ) {
-        $SessionString = $Self->{ConfigObject}->Get('SessionName') . '=' . $Self->{SessionID} . ';';
+        my $SessionID = $Param{SessionID} || $Self->{ParamObject}->GetParam( Param => $Self->{ConfigObject}->Get('SessionName') ) || '';
+        $SessionString = $Self->{ConfigObject}->Get('SessionName') . '=' . $SessionID . ';';
     }
 
     my $StartPattern    = '<!-- [ ] OutputFilterHook_TicketOptionsEnd [ ] --> .+?';
