@@ -230,6 +230,10 @@ sub CodeInstall {
         Type => 'ITSMChangeManagement',
     );
 
+    # cleanup cache internal
+    $Self->{CacheInternalObject}->CleanUp( OtherType => 'ITSMChangeManagement' );
+    $Self->{CacheInternalObject}->CleanUp( OtherType => 'ITSMStateMachine' );
+
     return 1;
 }
 
@@ -273,10 +277,17 @@ sub CodeReinstall {
     # set default StateMachine settings
     $Self->_StateMachineDefaultSet();
 
+    # delete the group cache to avoid permission problems
+    $Self->{CacheInternalObject}->CleanUp( OtherType => 'Group' );
+
     # cleanup cache
     $Self->{CacheObject}->CleanUp(
         Type => 'ITSMChangeManagement',
     );
+
+    # cleanup cache internal
+    $Self->{CacheInternalObject}->CleanUp( OtherType => 'ITSMChangeManagement' );
+    $Self->{CacheInternalObject}->CleanUp( OtherType => 'ITSMStateMachine' );
 
     return 1;
 }
@@ -307,6 +318,10 @@ sub CodeUpgrade {
     $Self->{CacheObject}->CleanUp(
         Type => 'ITSMChangeManagement',
     );
+
+    # cleanup cache internal
+    $Self->{CacheInternalObject}->CleanUp( OtherType => 'ITSMChangeManagement' );
+    $Self->{CacheInternalObject}->CleanUp( OtherType => 'ITSMStateMachine' );
 
     return 1;
 }
@@ -430,10 +445,17 @@ sub CodeUninstall {
     # delete system notifications
     $Self->_DeleteSystemNotifications();
 
+    # delete the group cache to avoid permission problems
+    $Self->{CacheInternalObject}->CleanUp( OtherType => 'Group' );
+
     # cleanup cache
     $Self->{CacheObject}->CleanUp(
         Type => 'ITSMChangeManagement',
     );
+
+    # cleanup cache internal
+    $Self->{CacheInternalObject}->CleanUp( OtherType => 'ITSMChangeManagement' );
+    $Self->{CacheInternalObject}->CleanUp( OtherType => 'ITSMStateMachine' );
 
     return 1;
 }
