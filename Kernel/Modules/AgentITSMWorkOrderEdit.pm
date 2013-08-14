@@ -1,6 +1,6 @@
 # --
 # Kernel/Modules/AgentITSMWorkOrderEdit.pm - the OTRS ITSM ChangeManagement workorder edit module
-# Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -101,6 +101,34 @@ sub Run {
     my %GetParam;
     for my $ParamName (qw(WorkOrderTitle Instruction PlannedEffort AttachmentUpload FileID)) {
         $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
+    }
+
+    # get the checkbox value and store it in %GetParam to make it reloadable
+    $GetParam{MoveFollowingWorkOrders} = $Self->{ParamObject}->GetParam( Param => 'MoveFollowingWorkOrders' );
+
+    # get all workorder ids for this change
+    my $WorkOrderIDsRef = $Self->{WorkOrderObject}->WorkOrderList(
+        ChangeID => $WorkOrder->{ChangeID},
+        UserID   => $Self->{UserID},
+    );
+
+    # find out the following workorder ids
+    my @FollowingWorkOrderIDs;
+    my $OwnWorkOrderIDFound;
+    WORKORDERID:
+    for my $OtherWorkOrderID ( @{ $WorkOrderIDsRef } ) {
+
+        # check if the other workorder id is the own workorder id
+        if ( $OtherWorkOrderID eq $WorkOrderID ) {
+            $OwnWorkOrderIDFound = 1;
+            next WORKORDERID;
+        }
+
+        # we are only interested in the following workorder ids
+        next WORKORDERID if !$OwnWorkOrderIDFound;
+
+        # collect the following workorder ids
+        push @FollowingWorkOrderIDs, $OtherWorkOrderID;
     }
 
     # get configured workorder freetext field numbers
@@ -421,6 +449,66 @@ sub Run {
                     }
                 }
 
+                # if there are any following workorders
+                # and if the following workorders should be moved, that means we want to keep the difference
+                # between the planned end date of this workorder and the the planned start dates of ALL LATER workorders
+                if ( @FollowingWorkOrderIDs && $GetParam{MoveFollowingWorkOrders} ) {
+
+                    # convert the OLD planned end time of this workorder into system time (epoch seconds)
+                    my $OldPlannedEndTimeSystemTime = $Self->{TimeObject}->TimeStamp2SystemTime(
+                        String => $WorkOrder->{PlannedEndTime},
+                    );
+
+                    # convert the NEW planned end time of this workorder into system time (epoch seconds)
+                    my $NewPlannedEndTimeSystemTime = $Self->{TimeObject}->TimeStamp2SystemTime(
+                        String => $GetParam{PlannedEndTime},
+                    );
+
+                    # calculate the difference time
+                    my $DiffTime = $NewPlannedEndTimeSystemTime - $OldPlannedEndTimeSystemTime;
+
+                    # modify all following workorders
+                    WORKORDERID:
+                    for my $WorkOrderID ( @FollowingWorkOrderIDs ) {
+
+                        # get workorder data
+                        my $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
+                            WorkOrderID => $WorkOrderID,
+                            UserID      => $Self->{UserID},
+                        );
+
+                        # calculate the new planned start and end time for this following workorder
+                        my %TimeData;
+                        for my $TimeType (qw(PlannedStartTime PlannedEndTime)) {
+
+                            # convert the old planned times of the workorder into system time (epoch seconds)
+                            $TimeData{$TimeType} = $Self->{TimeObject}->TimeStamp2SystemTime(
+                                String => $WorkOrder->{$TimeType},
+                            );
+
+                            # add the difference and convert time to timestamp
+                            $TimeData{$TimeType} = $Self->{TimeObject}->SystemTime2TimeStamp(
+                                SystemTime => $TimeData{$TimeType} + $DiffTime,
+                            );
+                        }
+
+                        # update the workorder with the new times
+                        my $Success = $Self->{WorkOrderObject}->WorkOrderUpdate(
+                            WorkOrderID => $WorkOrderID,
+                            UserID      => $Self->{UserID},
+                            %TimeData,
+                        );
+
+                        # show error message, if update failed
+                        if ( !$Success ) {
+                            return $Self->{LayoutObject}->ErrorScreen(
+                                Message => "Was not able to update WorkOrder $WorkOrderID!",
+                                Comment => 'Please contact the admin.',
+                            );
+                        }
+                    }
+                }
+
                 # delete the upload cache
                 $Self->{UploadCacheObject}->FormIDRemove( FormID => $Self->{FormID} );
 
@@ -630,6 +718,22 @@ sub Run {
                 %{$WorkOrder},
                 %GetParam,
                 %ValidationError,
+            },
+        );
+    }
+
+    # show the checkbox for MoveFollowingWorkOrders if it is configured
+    if ( $Self->{Config}->{MoveFollowingWorkOrders} ) {
+
+        # set checkbox for MoveFollowingWorkOrders
+        if ( $GetParam{MoveFollowingWorkOrders} ) {
+            $GetParam{MoveFollowingWorkOrders} = 'checked="checked"';
+        }
+
+        $Self->{LayoutObject}->Block(
+            Name => 'MoveFollowingWorkOrders',
+            Data => {
+                %GetParam,
             },
         );
     }

@@ -374,6 +374,9 @@ sub Data {
     $Self->{Translation}->{'Do you really want to delete this change?'} = 'Möchten Sie diesen Change wirklich löschen?';
 
     # Template: AgentITSMWorkOrderEdit
+    $Self->{Translation}->{'Move following workorders accordingly'} = 'Nachfolgende Workorders entsprechend verschieben';
+    $Self->{Translation}->{'If the planned end time of this workorder is changed, the planned start times of all following workorders will be changed accordingly'}
+        = 'Wenn die gepplante Endzeit einer Workorder geändert wird, dann werden die nachfolgenden Workorders entsprechend verschoben';
 
     # Template: AgentITSMWorkOrderHistory
 

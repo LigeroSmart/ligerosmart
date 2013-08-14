@@ -8815,6 +8815,17 @@
             </Option>
         </Setting>
     </ConfigItem>
+    <ConfigItem Name="ITSMWorkOrder::Frontend::AgentITSMWorkOrderEdit###MoveFollowingWorkOrders" Required="1" Valid="1">
+        <Description Translatable="1">Shows a checkbox in the AgentITSMWorkOrderEdit screen that defines if the the following workorders should also be moved if a workorder is modified and the planned end time has changed.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ViewWorkOrderEdit</SubGroup>
+        <Setting>
+            <Option SelectedID="1">
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
     <ConfigItem Name="ITSMWorkOrder::Frontend::AgentITSMWorkOrderHistory###Permission" Required="1" Valid="1">
         <Description Translatable="1">Required privileges to view the history of a workorder.</Description>
         <Group>ITSM Change Management</Group>

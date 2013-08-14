@@ -112,6 +112,14 @@ $Include{"RichTextEditor"}
                     </div>
                     <div class="Clear"></div>
 
+<!-- dtl:block:MoveFollowingWorkOrders -->
+                    <label for="MoveFollowingWorkOrders">$Text{"Move following workorders accordingly"}:</label>
+                    <div class="Field" title="$Text{"If the planned end time of this workorder is changed, the planned start times of all following workorders will be changed accordingly"}">
+                        <input type="checkbox" id="MoveFollowingWorkOrders" name="MoveFollowingWorkOrders" value="1" $QData{"MoveFollowingWorkOrders"}/>
+                    </div>
+                    <div class="Clear"></div>
+<!-- dtl:block:MoveFollowingWorkOrders -->
+
 <!-- dtl:block:ShowPlannedEffort -->
                     <label for="PlannedEffort">$Text{"PlannedEffort"}:</label>
                     <div class="Field">
