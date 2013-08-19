@@ -2,31 +2,18 @@
 # Kernel/Modules/AdminITSMChangeCIPAllocate.pm - admin frontend of criticality, impact and priority
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/1fc7d8e1d8371c0d67b41970ec7d6a600e4a32e6/Kernel/Modules/AdminITSMCIPAllocate.pm
-# --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-# ---
-# ITSM
-# ---
-#package Kernel::Modules::AdminITSMCIPAllocate;
 package Kernel::Modules::AdminITSMChangeCIPAllocate;
-# ---
 
 use strict;
 use warnings;
 
 use Kernel::System::GeneralCatalog;
-# ---
-# ITSM
-# ---
-#use Kernel::System::ITSMCIPAllocate;
-#use Kernel::System::Priority;
 use Kernel::System::ITSMChange::ITSMChangeCIPAllocate;
-# ---
 use Kernel::System::Valid;
 
 sub new {
@@ -43,13 +30,7 @@ sub new {
         }
     }
     $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new(%Param);
-# ---
-# ITSM
-# ---
-#    $Self->{CIPAllocateObject}    = Kernel::System::ITSMCIPAllocate->new(%Param);
-#    $Self->{PriorityObject}       = Kernel::System::Priority->new(%Param);
     $Self->{CIPAllocateObject}    = Kernel::System::ITSMChange::ITSMChangeCIPAllocate->new(%Param);
-# ---
     $Self->{ValidObject}          = Kernel::System::Valid->new(%Param);
 
     return $Self;
@@ -59,30 +40,12 @@ sub Run {
     my ( $Self, %Param ) = @_;
 
     # ------------------------------------------------------------ #
-# ---
-# ITSM
-# ---
-#    # criticality, impact and priority allocation
     # category, impact and priority allocation
-# ---
     # ------------------------------------------------------------ #
     if ( $Self->{Subaction} eq 'CIPAllocate' ) {
 
         # get option lists
         my %ObjectOption;
-# ---
-# ITSM
-# ---
-#        $ObjectOption{CriticalityList} = $Self->{GeneralCatalogObject}->ItemList(
-#            Class => 'ITSM::Core::Criticality',
-#        );
-#        $ObjectOption{ImpactList} = $Self->{GeneralCatalogObject}->ItemList(
-#            Class => 'ITSM::Core::Impact',
-#        );
-#        my %OptionPriorityList = $Self->{PriorityObject}->PriorityList(
-#            UserID => 1,
-#        );
-#        $ObjectOption{PriorityList} = \%OptionPriorityList;
         $ObjectOption{CategoryList} = $Self->{GeneralCatalogObject}->ItemList(
             Class => 'ITSM::ChangeManagement::Category',
         );
@@ -92,27 +55,11 @@ sub Run {
         $ObjectOption{PriorityList} = $Self->{GeneralCatalogObject}->ItemList(
             Class => 'ITSM::ChangeManagement::Priority',
         );
-# ---
 
         # get all PriorityIDs of the matrix
         my $AllocateData;
         for my $ImpactID ( keys %{ $ObjectOption{ImpactList} } ) {
 
-# ---
-# ITSM
-# ---
-#            CRITICALITYID:
-#            for my $CriticalityID ( keys %{ $ObjectOption{CriticalityList} } ) {
-#
-#                # get form param
-#                my $PriorityID = $Self->{ParamObject}->GetParam(
-#                    Param => "PriorityID" . $ImpactID . '-' . $CriticalityID
-#                ) || '';
-#
-#                next CRITICALITYID if !$PriorityID;
-#
-#                $AllocateData->{$ImpactID}->{$CriticalityID} = $PriorityID;
-#            }
             CATEGORYID:
             for my $CategoryID ( keys %{ $ObjectOption{CategoryList} } ) {
 
@@ -125,7 +72,6 @@ sub Run {
 
                 $AllocateData->{$ImpactID}->{$CategoryID} = $PriorityID;
             }
-# ---
         }
 
         # update allocations
@@ -144,19 +90,6 @@ sub Run {
 
         # get option lists
         my %ObjectOption;
-# ---
-# ITSM
-# ---
-#        $ObjectOption{CriticalityList} = $Self->{GeneralCatalogObject}->ItemList(
-#            Class => 'ITSM::Core::Criticality',
-#        );
-#        $ObjectOption{ImpactList} = $Self->{GeneralCatalogObject}->ItemList(
-#            Class => 'ITSM::Core::Impact',
-#        );
-#        my %OptionPriorityList = $Self->{PriorityObject}->PriorityList(
-#            UserID => 1,
-#        );
-#        $ObjectOption{PriorityList} = \%OptionPriorityList;
         $ObjectOption{CategoryList} = $Self->{GeneralCatalogObject}->ItemList(
             Class => 'ITSM::ChangeManagement::Category',
         );
@@ -166,7 +99,6 @@ sub Run {
         $ObjectOption{PriorityList} = $Self->{GeneralCatalogObject}->ItemList(
             Class => 'ITSM::ChangeManagement::Priority',
         );
-# ---
 
         # get allocation data
         my $AllocateData = $Self->{CIPAllocateObject}->AllocateList(
@@ -177,12 +109,7 @@ sub Run {
 
         $AllocateMatrix->[0]->[0]->{ObjectType} =
             $Self->{LayoutObject}->{LanguageObject}->Get('Impact') . ' / '
-# ---
-# ITSM
-# ---
-#            . $Self->{LayoutObject}->{LanguageObject}->Get('Criticality');
             . $Self->{LayoutObject}->{LanguageObject}->Get('Category');
-# ---
         $AllocateMatrix->[0]->[0]->{Class} = 'HeaderColumnDescription';
 
         # generate table description (Impact)
@@ -198,22 +125,6 @@ sub Run {
             $Counter1++;
         }
 
-# ---
-# ITSM
-# ---
-#        # generate table description (Criticality)
-#        my $Counter2 = 1;
-#        for my $Criticality (
-#            sort { $ObjectOption{CriticalityList}->{$a} cmp $ObjectOption{CriticalityList}->{$b} }
-#            keys %{ $ObjectOption{CriticalityList} }
-#            )
-#        {
-#            $AllocateMatrix->[0]->[$Counter2]->{ObjectType}     = 'Criticality';
-#            $AllocateMatrix->[0]->[$Counter2]->{CriticalityKey} = $Criticality;
-#            $AllocateMatrix->[0]->[$Counter2]->{ObjectOption}
-#                = $ObjectOption{CriticalityList}{$Criticality};
-#            $Counter2++;
-#        }
         # generate table description (Category)
         my $Counter2 = 1;
         for my $Category (
@@ -227,7 +138,6 @@ sub Run {
                 = $ObjectOption{CategoryList}{$Category};
             $Counter2++;
         }
-# ---
 
         # generate content
         for my $Row ( 1 .. ( $Counter1 - 1 ) ) {
@@ -235,17 +145,6 @@ sub Run {
 
                 # extract keys
                 my $ImpactKey      = $AllocateMatrix->[$Row]->[0]->{ImpactKey};
-# ---
-# ITSM
-# ---
-#                my $CriticalityKey = $AllocateMatrix->[0]->[$Column]->{CriticalityKey};
-#
-#                # create option string
-#                my $OptionStrg = $Self->{LayoutObject}->BuildSelection(
-#                    Name       => 'PriorityID' . $ImpactKey . '-' . $CriticalityKey,
-#                    Data       => $ObjectOption{PriorityList},
-#                    SelectedID => $AllocateData->{$ImpactKey}{$CriticalityKey} || '',
-#                );
                 my $CategoryKey = $AllocateMatrix->[0]->[$Column]->{CategoryKey};
 
                 # create option string
@@ -254,7 +153,6 @@ sub Run {
                     Data       => $ObjectOption{PriorityList},
                     SelectedID => $AllocateData->{$ImpactKey}{$CategoryKey} || '',
                 );
-# ---
 
                 $AllocateMatrix->[$Row]->[$Column]->{OptionStrg} = $OptionStrg;
                 $AllocateMatrix->[$Row]->[$Column]->{Class}      = 'Content';
@@ -307,18 +205,10 @@ sub Run {
         $Output .= $Self->{LayoutObject}->NavigationBar();
 
         # generate output
-# ---
-# ITSM
-# ---
-#        $Output .= $Self->{LayoutObject}->Output(
-#            TemplateFile => 'AdminITSMCIPAllocate',
-#            Data         => \%Param,
-#        );
         $Output .= $Self->{LayoutObject}->Output(
             TemplateFile => 'AdminITSMChangeCIPAllocate',
             Data         => \%Param,
         );
-# ---
         $Output .= $Self->{LayoutObject}->Footer();
 
         return $Output;
