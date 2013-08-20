@@ -192,7 +192,7 @@ sub _MigrateFunctionality {
         );
     }
 
-    # drop column in
+    # drop column functionality
     my ($Drop) = $Self->{DBObject}->SQLProcessor(
         Database => [
             {
