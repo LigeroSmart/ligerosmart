@@ -18,7 +18,6 @@ use Kernel::System::SLA;
 use Kernel::System::State;
 use Kernel::System::Ticket;
 use Kernel::System::Type;
-use Kernel::System::GeneralCatalog;
 use Kernel::System::DynamicField;
 use Kernel::System::DynamicField::Backend;
 use Kernel::System::VariableCheck qw(:all);
@@ -46,7 +45,6 @@ sub new {
     $Self->{ServiceObject}        = Kernel::System::Service->new( %{$Self} );
     $Self->{SLAObject}            = Kernel::System::SLA->new( %{$Self} );
     $Self->{TypeObject}           = Kernel::System::Type->new( %{$Self} );
-    $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new( %{$Self} );
     $Self->{DynamicFieldObject}   = Kernel::System::DynamicField->new( %{$Self} );
     $Self->{BackendObject}        = Kernel::System::DynamicField::Backend->new( %{$Self} );
 
@@ -388,22 +386,6 @@ sub GetObjectAttributes {
             DynamicFieldConfig   => $DynamicFieldConfig,
             PossibleValuesFilter => $PossibleValuesFilter,
         );
-
-        # if it is the impact field
-        if (
-            IsHashRefWithData($DynamicFieldStatsParameter)
-            && $DynamicFieldStatsParameter->{Element} eq 'DynamicField_TicketFreeText14'
-            )
-        {
-
-            # get the list of impacts as a hash reference
-            my $Impacts = $Self->{GeneralCatalogObject}->ItemList(
-                Class => 'ITSM::Core::Impact',
-                Valid => 0,
-            );
-
-            $DynamicFieldStatsParameter->{Values} = $Impacts;
-        }
 
         if ( IsHashRefWithData($DynamicFieldStatsParameter) ) {
             if ( IsHashRefWithData( $DynamicFieldStatsParameter->{Values} ) ) {

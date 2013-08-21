@@ -20,11 +20,6 @@ use Kernel::System::PDF;
 use Kernel::System::DynamicField;
 use Kernel::System::DynamicField::Backend;
 use Kernel::System::VariableCheck qw(:all);
-# ---
-# ITSM
-# ---
-use Kernel::System::GeneralCatalog;
-# ---
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -51,11 +46,6 @@ sub new {
     $Self->{PDFObject}          = Kernel::System::PDF->new(%Param);
     $Self->{DynamicFieldObject} = Kernel::System::DynamicField->new(%Param);
     $Self->{BackendObject}      = Kernel::System::DynamicField::Backend->new(%Param);
-# ---
-# ITSM
-# ---
-    $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new(%Param);
-# ---
 
     # get dynamic field config for frontend module
     $Self->{DynamicFieldFilter}
@@ -139,24 +129,9 @@ sub Run {
 # ---
 # ITSM
 # ---
-    # lookup criticality
-    $Ticket{Criticality} = '-';
-    if ( $Ticket{DynamicField_TicketFreeText13} ) {
-        # get criticality list
-        my $CriticalityList = $Self->{GeneralCatalogObject}->ItemList(
-            Class => 'ITSM::Core::Criticality',
-        );
-        $Ticket{Criticality} = $CriticalityList->{ $Ticket{DynamicField_TicketFreeText13} };
-    }
-    # lookup impact
-    $Ticket{Impact} = '-';
-    if ( $Ticket{DynamicField_TicketFreeText14} ) {
-        # get impact list
-        my $ImpactList = $Self->{GeneralCatalogObject}->ItemList(
-            Class => 'ITSM::Core::Impact',
-        );
-        $Ticket{Impact} = $ImpactList->{ $Ticket{DynamicField_TicketFreeText14} };
-    }
+    # set criticality and impact
+    $Ticket{Criticality} = $Ticket{DynamicField_ITSMCriticality} || '-';
+    $Ticket{Impact}      = $Ticket{DynamicField_ITSMImpact}      || '-';
 # ---
     my @ArticleBox = $Self->{TicketObject}->ArticleContentIndex(
         TicketID                   => $Self->{TicketID},
@@ -226,7 +201,7 @@ sub Run {
     # generate pdf output
     if ( $Self->{PDFObject} ) {
         my $PrintedBy = $Self->{LayoutObject}->{LanguageObject}->Get('printed by');
-        my $Time      = $Self->{LayoutObject}->Output( Template => '$Env{"Time"}' );
+        my $Time = $Self->{LayoutObject}->Output( Template => '$Env{"Time"}' );
         my %Page;
 
         # get maximum number of pages

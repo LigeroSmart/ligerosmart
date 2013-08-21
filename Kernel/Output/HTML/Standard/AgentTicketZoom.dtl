@@ -215,11 +215,11 @@
 # ---
                     <fieldset class="TableLike FixedLabelSmall">
                         <label>$Text{"Criticality"}:</label>
-                        <p class="Value" title="$Text{"$Data{"Criticality"}"}">$Text{"$Data{"Criticality"}","18"}</p>
+                        <p class="Value" title="$Text{"$Data{"Criticality"}"}">$Text{"$Data{"Criticality"}"}</p>
                         <div class="Clear"></div>
 
                         <label>$Text{"Impact"}:</label>
-                        <p class="Value" title="$Text{"$Data{"Impact"}"}">$Text{"$Data{"Impact"}","18"}</p>
+                        <p class="Value" title="$Text{"$Data{"Impact"}"}">$Text{"$Data{"Impact"}"}</p>
                         <div class="Clear"></div>
 
                         <label>$Text{"Priority"}:</label>
@@ -229,87 +229,87 @@
 
                     <fieldset class="TableLike FixedLabelSmall Tight">
 
-<!-- dtl:block:TicketDynamicField_TicketFreeText15 -->
+<!-- dtl:block:TicketDynamicField_ITSMReviewRequired -->
                         <label>$Text{"$Data{"Label"}"}:</label>
                         <p class="Value">
-<!-- dtl:block:TicketDynamicField_TicketFreeText15_Link -->
+<!-- dtl:block:TicketDynamicField_ITSMReviewRequired_Link -->
                             <span title="$QData{"Title"}"><a href="$Data{"Link"}" target="_blank">$Data{"Value"}</a></span>
-<!-- dtl:block:TicketDynamicField_TicketFreeText15_Link -->
-<!-- dtl:block:TicketDynamicField_TicketFreeText15_Plain -->
+<!-- dtl:block:TicketDynamicField_ITSMReviewRequired_Link -->
+<!-- dtl:block:TicketDynamicField_ITSMReviewRequired_Plain -->
                             <span title="$QData{"Title"}">$Data{"Value"}</span>
-<!-- dtl:block:TicketDynamicField_TicketFreeText15_Plain -->
+<!-- dtl:block:TicketDynamicField_ITSMReviewRequired_Plain -->
                         </p>
                         <div class="Clear"></div>
-<!-- dtl:block:TicketDynamicField_TicketFreeText15 -->
+<!-- dtl:block:TicketDynamicField_ITSMReviewRequired -->
 
-<!-- dtl:block:TicketDynamicField_TicketFreeText16 -->
+<!-- dtl:block:TicketDynamicField_ITSMDecisionResult -->
                         <label>$Text{"$Data{"Label"}"}:</label>
                         <p class="Value">
-<!-- dtl:block:TicketDynamicField_TicketFreeText16_Link -->
+<!-- dtl:block:TicketDynamicField_ITSMDecisionResult_Link -->
                             <span title="$QData{"Title"}"><a href="$Data{"Link"}" target="_blank">$Data{"Value"}</a></span>
-<!-- dtl:block:TicketDynamicField_TicketFreeText16_Link -->
-<!-- dtl:block:TicketDynamicField_TicketFreeText16_Plain -->
+<!-- dtl:block:TicketDynamicField_ITSMDecisionResult_Link -->
+<!-- dtl:block:TicketDynamicField_ITSMDecisionResult_Plain -->
                             <span title="$QData{"Title"}">$Data{"Value"}</span>
-<!-- dtl:block:TicketDynamicField_TicketFreeText16_Plain -->
+<!-- dtl:block:TicketDynamicField_ITSMDecisionResult_Plain -->
                         </p>
                         <div class="Clear"></div>
-<!-- dtl:block:TicketDynamicField_TicketFreeText16 -->
+<!-- dtl:block:TicketDynamicField_ITSMDecisionResult -->
 
 
-<!-- dtl:block:TicketDynamicField_TicketFreeTime5 -->
+<!-- dtl:block:TicketDynamicField_ITSMDecisionDate -->
                         <label>$Text{"$Data{"Label"}"}:</label>
                         <p class="Value">
-<!-- dtl:block:TicketDynamicField_TicketFreeTime5_Link -->
+<!-- dtl:block:TicketDynamicField_ITSMDecisionDate_Link -->
                             <span title="$QData{"Title"}"><a href="$Data{"Link"}" target="_blank">$Data{"Value"}</a></span>
-<!-- dtl:block:TicketDynamicField_TicketFreeTime5_Link -->
-<!-- dtl:block:TicketDynamicField_TicketFreeTime5_Plain -->
+<!-- dtl:block:TicketDynamicField_ITSMDecisionDate_Link -->
+<!-- dtl:block:TicketDynamicField_ITSMDecisionDate_Plain -->
                             <span title="$QData{"Title"}">$Data{"Value"}</span>
-<!-- dtl:block:TicketDynamicField_TicketFreeTime5_Plain -->
+<!-- dtl:block:TicketDynamicField_ITSMDecisionDate_Plain -->
                         </p>
                         <div class="Clear"></div>
-<!-- dtl:block:TicketDynamicField_TicketFreeTime5 -->
+<!-- dtl:block:TicketDynamicField_ITSMDecisionDate -->
 
 
-<!-- dtl:block:TicketDynamicField_TicketFreeTime3 -->
+<!-- dtl:block:TicketDynamicField_ITSMRepairStartTime -->
                         <label>$Text{"$Data{"Label"}"}:</label>
                         <p class="Value">
-<!-- dtl:block:TicketDynamicField_TicketFreeTime3_Link -->
+<!-- dtl:block:TicketDynamicField_ITSMRepairStartTime_Link -->
                             <span title="$QData{"Title"}"><a href="$Data{"Link"}" target="_blank">$Data{"Value"}</a></span>
-<!-- dtl:block:TicketDynamicField_TicketFreeTime3_Link -->
-<!-- dtl:block:TicketDynamicField_TicketFreeTime3_Plain -->
+<!-- dtl:block:TicketDynamicField_ITSMRepairStartTime_Link -->
+<!-- dtl:block:TicketDynamicField_ITSMRepairStartTime_Plain -->
                             <span title="$QData{"Title"}">$Data{"Value"}</span>
-<!-- dtl:block:TicketDynamicField_TicketFreeTime3_Plain -->
+<!-- dtl:block:TicketDynamicField_ITSMRepairStartTime_Plain -->
                         </p>
                         <div class="Clear"></div>
-<!-- dtl:block:TicketDynamicField_TicketFreeTime3 -->
+<!-- dtl:block:TicketDynamicField_ITSMRepairStartTime -->
 
 
-<!-- dtl:block:TicketDynamicField_TicketFreeTime4 -->
+<!-- dtl:block:TicketDynamicField_ITSMRecoveryStartTime -->
                         <label>$Text{"$Data{"Label"}"}:</label>
                         <p class="Value">
-<!-- dtl:block:TicketDynamicField_TicketFreeTime4_Link -->
+<!-- dtl:block:TicketDynamicField_ITSMRecoveryStartTime_Link -->
                             <span title="$QData{"Title"}"><a href="$Data{"Link"}" target="_blank">$Data{"Value"}</a></span>
-<!-- dtl:block:TicketDynamicField_TicketFreeTime4_Link -->
-<!-- dtl:block:TicketDynamicField_TicketFreeTime4_Plain -->
+<!-- dtl:block:TicketDynamicField_ITSMRecoveryStartTime_Link -->
+<!-- dtl:block:TicketDynamicField_ITSMRecoveryStartTime_Plain -->
                             <span title="$QData{"Title"}">$Data{"Value"}</span>
-<!-- dtl:block:TicketDynamicField_TicketFreeTime4_Plain -->
+<!-- dtl:block:TicketDynamicField_ITSMRecoveryStartTime_Plain -->
                         </p>
                         <div class="Clear"></div>
-<!-- dtl:block:TicketDynamicField_TicketFreeTime4 -->
+<!-- dtl:block:TicketDynamicField_ITSMRecoveryStartTime -->
 
 
-<!-- dtl:block:TicketDynamicField_TicketFreeTime6 -->
+<!-- dtl:block:TicketDynamicField_ITSMDueDate -->
                         <label>$Text{"$Data{"Label"}"}:</label>
                         <p class="Value">
-<!-- dtl:block:TicketDynamicField_TicketFreeTime6_Link -->
+<!-- dtl:block:TicketDynamicField_ITSMDueDate_Link -->
                             <span title="$QData{"Title"}"><a href="$Data{"Link"}" target="_blank">$Data{"Value"}</a></span>
-<!-- dtl:block:TicketDynamicField_TicketFreeTime6_Link -->
-<!-- dtl:block:TicketDynamicField_TicketFreeTime6_Plain -->
+<!-- dtl:block:TicketDynamicField_ITSMDueDate_Link -->
+<!-- dtl:block:TicketDynamicField_ITSMDueDate_Plain -->
                             <span title="$QData{"Title"}">$Data{"Value"}</span>
-<!-- dtl:block:TicketDynamicField_TicketFreeTime6_Plain -->
+<!-- dtl:block:TicketDynamicField_ITSMDueDate_Plain -->
                         </p>
                         <div class="Clear"></div>
-<!-- dtl:block:TicketDynamicField_TicketFreeTime6 -->
+<!-- dtl:block:TicketDynamicField_ITSMDueDate -->
 
                     </fieldset>
 # ---

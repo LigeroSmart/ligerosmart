@@ -29,7 +29,6 @@ use Kernel::System::SystemAddress;
 # ITSM
 # ---
 use Kernel::System::Service;
-use Kernel::System::GeneralCatalog;
 # ---
 
 use Kernel::System::VariableCheck qw(:all);
@@ -85,7 +84,7 @@ sub new {
     if ( !$Self->{TicketID} && $Self->{ParamObject}->GetParam( Param => 'TicketNumber' ) ) {
         $Self->{TicketID} = $Self->{TicketObject}->TicketIDLookup(
             TicketNumber => $Self->{ParamObject}->GetParam( Param => 'TicketNumber' ),
-            UserID => $Self->{UserID},
+            UserID       => $Self->{UserID},
         );
     }
     $Self->{CustomerUserObject} = Kernel::System::CustomerUser->new(%Param);
@@ -106,8 +105,7 @@ sub new {
 # ---
 # ITSM
 # ---
-    $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new(%Param);
-    $Self->{ServiceObject}        = Kernel::System::Service->new(%Param);
+    $Self->{ServiceObject} = Kernel::System::Service->new(%Param);
 # ---
 
     # create additional objects for process management
@@ -421,25 +419,9 @@ sub Run {
 # ITSM
 # ---
 
-    # lookup criticality
-    $Ticket{Criticality} = '-';
-    if ($Ticket{DynamicField_TicketFreeText13}) {
-        # get criticality list
-        my $CriticalityList = $Self->{GeneralCatalogObject}->ItemList(
-            Class => 'ITSM::Core::Criticality',
-        );
-        $Ticket{Criticality} = $CriticalityList->{$Ticket{DynamicField_TicketFreeText13}};
-    }
-
-    # lookup impact
-    $Ticket{Impact} = '-';
-    if ($Ticket{DynamicField_TicketFreeText14}) {
-        # get impact list
-        my $ImpactList = $Self->{GeneralCatalogObject}->ItemList(
-            Class => 'ITSM::Core::Impact',
-        );
-        $Ticket{Impact} = $ImpactList->{$Ticket{DynamicField_TicketFreeText14}};
-    }
+    # set criticality and impact
+    $Ticket{Criticality} = $Ticket{DynamicField_ITSMCriticality} || '-';
+    $Ticket{Impact}      = $Ticket{DynamicField_ITSMImpact}      || '-';
 # ---
 
     # return if HTML email
@@ -1183,6 +1165,18 @@ sub MaskAgentZoom {
 # ITSM
 # ---
     my @IndividualDynamicFields;
+
+    # lookup hash for all ITSM dynamic fields
+    my %ITSMDynamicFields = (
+        ITSMCriticality       => 1,
+        ITSMImpact            => 1,
+        ITSMReviewRequired    => 1,
+        ITSMDecisionResult    => 1,
+        ITSMRepairStartTime   => 1,
+        ITSMRecoveryStartTime => 1,
+        ITSMDecisionDate      => 1,
+        ITSMDueDate           => 1,
+    );
 # ---
 
     # to store dynamic fields to be displayed in the process widget and in the sidebar
@@ -1198,7 +1192,7 @@ sub MaskAgentZoom {
 # ITSM
 # ---
         # remember dynamic fields that should be displayed individually
-        if ( $DynamicFieldConfig->{Name} =~ m{ \A (TicketFreeText (13|14|15|16)) | (TicketFreeTime (3|4|5|6)) \z }xms ) {
+        if ( $ITSMDynamicFields{ $DynamicFieldConfig->{Name} } ) {
             push @IndividualDynamicFields, $DynamicFieldConfig;
             next DYNAMICFIELD;
         }

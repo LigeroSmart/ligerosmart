@@ -225,6 +225,26 @@ sub CodeReinstall {
     return 1;
 }
 
+=item CodeUpgradeFromLowerThan_3_2_91()
+
+This function is only executed if the installed module version is smaller than 3.2.91 (3.3.0 Beta 1).
+
+my $Result = $CodeObject->CodeUpgradeFromLowerThan_3_2_91();
+
+=cut
+
+sub CodeUpgradeFromLowerThan_3_2_91 {
+    my ( $Self, %Param ) = @_;
+
+    # rename the dynamic fields for ITSMIncidentProblemManagement
+    $Self->_RenameDynamicFields();
+
+    # set the screen dynamic field config
+    $Self->_SetScreenDynamicFieldConfig();
+
+    return 1;
+}
+
 =item CodeUpgrade()
 
 run the code upgrade part
@@ -235,119 +255,6 @@ run the code upgrade part
 
 sub CodeUpgrade {
     my ( $Self, %Param ) = @_;
-
-    # install stats
-    $Self->{StatsObject}->StatsInstall(
-        FilePrefix => $Self->{FilePrefix},
-    );
-
-    return 1;
-}
-
-=item CodeUpgradeFromLowerThan_3_0_93()
-
-This function is only executed if the installed module version is smaller than 3.0.93.
-
-my $Result = $CodeObject->CodeUpgradeFromLowerThan_3_0_93();
-
-=cut
-
-sub CodeUpgradeFromLowerThan_3_0_93 {
-    my ( $Self, %Param ) = @_;
-
-    # get the definition for all dynamic fields for ITSM
-    my @DynamicFields = $Self->_GetITSMDynamicFieldsDefinition();
-
-    # clean up the migrated freetext and freetime fields
-    # e.g. delete the possible values for fields that use the general catalog
-    DYNAMICFIELD:
-    for my $DynamicFieldNew (@DynamicFields) {
-
-        # get existing dynamic field data
-        my $DynamicFieldOld = $Self->{DynamicFieldObject}->DynamicFieldGet(
-            Name => $DynamicFieldNew->{Name},
-        );
-
-        # update the dynamic field
-        my $Success = $Self->{DynamicFieldObject}->DynamicFieldUpdate(
-            ID         => $DynamicFieldOld->{ID},
-            FieldOrder => $DynamicFieldOld->{FieldOrder},
-            Name       => $DynamicFieldNew->{Name},
-            Label      => $DynamicFieldNew->{Label},
-            FieldType  => $DynamicFieldNew->{FieldType},
-            ObjectType => $DynamicFieldNew->{ObjectType},
-            Config     => $DynamicFieldNew->{Config},
-            ValidID    => 1,
-            Reorder    => 0,
-            UserID     => 1,
-        );
-    }
-
-    # define the enabled dynamic fields for each screen
-    # (taken from sysconfig of ITSMIncidentProblemManagement)
-    my %ScreenDynamicFieldConfig = (
-        AgentTicketAddtlITSMField => {
-            TicketFreeTime3 => 1,
-            TicketFreeTime4 => 1,
-            TicketFreeTime6 => 1,
-        },
-        AgentTicketDecision => {
-            TicketFreeText16 => 1,
-            TicketFreeTime5  => 1,
-        },
-        AgentTicketPhone => {
-            TicketFreeText14 => 1,
-            TicketFreeTime6  => 1,
-        },
-        AgentTicketEmail => {
-            TicketFreeText14 => 1,
-            TicketFreeTime6  => 1,
-        },
-        AgentTicketSearch => {
-            TicketFreeText15 => 1,
-            TicketFreeText16 => 1,
-            TicketFreeTime3  => 1,
-            TicketFreeTime4  => 1,
-            TicketFreeTime5  => 1,
-            TicketFreeTime6  => 1,
-        },
-        AgentTicketZoom => {
-            TicketFreeText15 => 1,
-            TicketFreeText16 => 1,
-            TicketFreeTime3  => 1,
-            TicketFreeTime4  => 1,
-            TicketFreeTime5  => 1,
-            TicketFreeTime6  => 1,
-        },
-        AgentTicketPriority => {
-            TicketFreeText14 => 1,
-        },
-        AgentTicketClose => {
-            TicketFreeText15 => 1,
-        },
-        AgentTicketCompose => {
-            TicketFreeText15 => 1,
-        },
-    );
-
-    for my $Screen ( keys %ScreenDynamicFieldConfig ) {
-
-        # get existing config for each screen
-        my $Config = $Self->{ConfigObject}->Get("Ticket::Frontend::$Screen");
-
-        # get existing dynamic field config
-        my %ExistingSetting = %{ $Config->{DynamicField} || {} };
-
-        # add the new settings
-        my %NewSetting = ( %ExistingSetting, %{ $ScreenDynamicFieldConfig{$Screen} } );
-
-        # update the sysconfig
-        my $Success = $Self->{SysConfigObject}->ConfigItemUpdate(
-            Valid => 1,
-            Key   => 'Ticket::Frontend::' . $Screen . '###DynamicField',
-            Value => \%NewSetting,
-        );
-    }
 
     # install stats
     $Self->{StatsObject}->StatsInstall(
@@ -396,6 +303,117 @@ sub CodeUninstall {
         $Self->_SetTypeValid(
             TypeNames => \@TypeNames,
             Valid     => 0,
+        );
+    }
+
+    return 1;
+}
+
+=begin Internal:
+
+=item _SetScreenDynamicFieldConfig()
+
+This function sets the screen dynamic screen config
+
+my $Result = $CodeObject->_SetScreenDynamicFieldConfig();
+
+=cut
+
+sub _SetScreenDynamicFieldConfig {
+    my ( $Self, %Param ) = @_;
+
+    # mapping old name to new name of dynamic fields
+    my %Old2New = (
+        TicketFreeText13 => 'ITSMCriticality',
+        TicketFreeText14 => 'ITSMImpact',
+        TicketFreeText15 => 'ITSMReviewRequired',
+        TicketFreeText16 => 'ITSMDecisionResult',
+        TicketFreeTime3  => 'ITSMRepairStartTime',
+        TicketFreeTime4  => 'ITSMRecoveryStartTime',
+        TicketFreeTime5  => 'ITSMDecisionDate',
+        TicketFreeTime6  => 'ITSMDueDate',
+    );
+
+    # define the enabled dynamic fields for each screen
+    # (taken from sysconfig of ITSMIncidentProblemManagement)
+    my %ScreenDynamicFieldConfig = (
+        AgentTicketAddtlITSMField => {
+            ITSMRepairStartTime   => 1,
+            ITSMRecoveryStartTime => 1,
+            ITSMDueDate           => 1,
+        },
+        AgentTicketDecision => {
+            ITSMDecisionResult => 1,
+            ITSMDecisionDate   => 1,
+        },
+        AgentTicketPhone => {
+            ITSMImpact  => 1,
+            ITSMDueDate => 1,
+        },
+        AgentTicketEmail => {
+            ITSMImpact  => 1,
+            ITSMDueDate => 1,
+        },
+        AgentTicketSearch => {
+            ITSMImpact            => 1,
+            ITSMReviewRequired    => 1,
+            ITSMDecisionResult    => 1,
+            ITSMRepairStartTime   => 1,
+            ITSMRecoveryStartTime => 1,
+            ITSMDecisionDate      => 1,
+            ITSMDueDate           => 1,
+        },
+        AgentTicketZoom => {
+            ITSMImpact            => 1,
+            ITSMCriticality       => 1,
+            ITSMReviewRequired    => 1,
+            ITSMDecisionResult    => 1,
+            ITSMRepairStartTime   => 1,
+            ITSMRecoveryStartTime => 1,
+            ITSMDecisionDate      => 1,
+            ITSMDueDate           => 1,
+        },
+        AgentTicketPriority => {
+            ITSMImpact => 1,
+        },
+        AgentTicketClose => {
+            ITSMReviewRequired => 1,
+        },
+        AgentTicketCompose => {
+            ITSMReviewRequired => 1,
+        },
+    );
+
+    for my $Screen ( sort keys %ScreenDynamicFieldConfig ) {
+
+        # get existing config for each screen
+        my $Config = $Self->{ConfigObject}->Get("Ticket::Frontend::$Screen");
+
+        # get existing dynamic field config
+        my %ExistingSetting = %{ $Config->{DynamicField} || {} };
+
+        # add the new settings
+        my %NewSetting = ( %ExistingSetting, %{ $ScreenDynamicFieldConfig{$Screen} } );
+
+        # delete no longer used dynamic field names from each config
+        for my $OldDynamicField ( sort keys %Old2New ) {
+
+            # an old setting exists
+            if ( exists $NewSetting{$OldDynamicField} ) {
+
+                # copy the old setting to the new setting
+                $NewSetting{ $Old2New{$OldDynamicField} } = $NewSetting{$OldDynamicField};
+
+                # delete the old setting
+                delete $NewSetting{$OldDynamicField};
+            }
+        }
+
+        # update the sysconfig
+        my $Success = $Self->{SysConfigObject}->ConfigItemUpdate(
+            Valid => 1,
+            Key   => 'Ticket::Frontend::' . $Screen . '###DynamicField',
+            Value => \%NewSetting,
         );
     }
 
@@ -606,7 +624,63 @@ sub _CreateITSMDynamicFields {
             # increase the order number
             $NextOrderNumber++;
         }
+    }
 
+    return 1;
+}
+
+=item _RenameDynamicFields()
+
+This function renames the dynamic fields for ITSMIncidentProblemManagement.
+
+my $Result = $CodeObject->_RenameDynamicFields();
+
+=cut
+
+sub _RenameDynamicFields {
+    my ( $Self, %Param ) = @_;
+
+    # get the definition for the dynamic fields for ITSMIncidentProblemManagement
+    my @DynamicFields = $Self->_GetITSMDynamicFieldsDefinition();
+
+    my $SuccessCounter;
+
+    # rename the dynamic fields for ITSMIncidentProblemManagement
+    DYNAMICFIELD:
+    for my $DynamicFieldNew (@DynamicFields) {
+
+        # get existing dynamic field data
+        my $DynamicFieldOld = $Self->{DynamicFieldObject}->DynamicFieldGet(
+            Name => $DynamicFieldNew->{OldName},
+        );
+
+        # update the dynamic field
+        my $Success = $Self->{DynamicFieldObject}->DynamicFieldUpdate(
+            ID         => $DynamicFieldOld->{ID},
+            FieldOrder => $DynamicFieldOld->{FieldOrder},
+            Name       => $DynamicFieldNew->{Name},
+            Label      => $DynamicFieldNew->{Label},
+            FieldType  => $DynamicFieldNew->{FieldType},
+            ObjectType => $DynamicFieldNew->{ObjectType},
+            Config     => $DynamicFieldNew->{Config},
+            ValidID    => 1,
+            Reorder    => 0,
+            UserID     => 1,
+        );
+
+        if ( $Success ) {
+            $SuccessCounter++;
+        }
+    }
+
+    # error handling if not all dynamic fields could be updated successfully
+    if ( scalar @DynamicFields != $SuccessCounter ) {
+
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "Could not rename all dynamic fields for ITSMIncidentProblemManagement!",
+        );
+        return;
     }
 
     return 1;
@@ -626,26 +700,8 @@ sub _GetITSMDynamicFieldsDefinition {
     # define all dynamic fields for ITSM
     my @DynamicFields = (
         {
-            Name       => 'TicketFreeText13',
-            Label      => 'Criticality',
-            FieldType  => 'Text',
-            ObjectType => 'Ticket',
-            Config     => {
-                TranslatableValues => 1,
-            },
-        },
-        {
-            Name       => 'TicketFreeText14',
-            Label      => 'Impact',
-            FieldType  => 'Dropdown',
-            ObjectType => 'Ticket',
-            Config     => {
-                DefaultValue       => '3 normal',
-                TranslatableValues => 1,
-            },
-        },
-        {
-            Name       => 'TicketFreeText15',
+            OldName    => 'TicketFreeText15',
+            Name       => 'ITSMReviewRequired',
             Label      => 'Review Required',
             FieldType  => 'Dropdown',
             ObjectType => 'Ticket',
@@ -661,7 +717,8 @@ sub _GetITSMDynamicFieldsDefinition {
             },
         },
         {
-            Name       => 'TicketFreeText16',
+            OldName    => 'TicketFreeText16',
+            Name       => 'ITSMDecisionResult',
             Label      => 'Decision Result',
             FieldType  => 'Dropdown',
             ObjectType => 'Ticket',
@@ -680,7 +737,8 @@ sub _GetITSMDynamicFieldsDefinition {
             },
         },
         {
-            Name       => 'TicketFreeTime3',
+            OldName    => 'TicketFreeTime3',
+            Name       => 'ITSMRepairStartTime',
             Label      => 'Repair Start Time',
             FieldType  => 'DateTime',
             ObjectType => 'Ticket',
@@ -693,7 +751,8 @@ sub _GetITSMDynamicFieldsDefinition {
             },
         },
         {
-            Name       => 'TicketFreeTime4',
+            OldName    => 'TicketFreeTime4',
+            Name       => 'ITSMRecoveryStartTime',
             Label      => 'Recovery Start Time',
             FieldType  => 'DateTime',
             ObjectType => 'Ticket',
@@ -706,7 +765,8 @@ sub _GetITSMDynamicFieldsDefinition {
             },
         },
         {
-            Name       => 'TicketFreeTime5',
+            OldName    => 'TicketFreeTime5',
+            Name       => 'ITSMDecisionDate',
             Label      => 'Decision Date',
             FieldType  => 'DateTime',
             ObjectType => 'Ticket',
@@ -719,7 +779,8 @@ sub _GetITSMDynamicFieldsDefinition {
             },
         },
         {
-            Name       => 'TicketFreeTime6',
+            OldName    => 'TicketFreeTime6',
+            Name       => 'ITSMDueDate',
             Label      => 'Due Date',
             FieldType  => 'DateTime',
             ObjectType => 'Ticket',
@@ -737,6 +798,8 @@ sub _GetITSMDynamicFieldsDefinition {
 }
 
 1;
+
+=end Internal:
 
 =back
 

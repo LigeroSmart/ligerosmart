@@ -25,11 +25,6 @@ use Kernel::System::ProcessManagement::Process;
 use Kernel::System::ProcessManagement::Transition;
 use Kernel::System::ProcessManagement::TransitionAction;
 use Kernel::System::VariableCheck qw(:all);
-# ---
-# ITSM
-# ---
-use Kernel::System::GeneralCatalog;
-# ---
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -62,11 +57,6 @@ sub new {
     $Self->{UploadCacheObject}  = Kernel::System::Web::UploadCache->new(%Param);
     $Self->{DynamicFieldObject} = Kernel::System::DynamicField->new(%Param);
     $Self->{BackendObject}      = Kernel::System::DynamicField::Backend->new(%Param);
-# ---
-# ITSM
-# ---
-    $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new(%Param);
-# ---
 
     # get form id
     $Self->{FormID} = $Self->{ParamObject}->GetParam( Param => 'FormID' );
@@ -189,31 +179,9 @@ sub Run {
 # ---
 # ITSM
 # ---
-    # lookup criticality
-    $Ticket{Criticality} = '-';
-
-    if ( $Ticket{DynamicField_TicketFreeText13} ) {
-
-        # get criticality list
-        my $CriticalityList = $Self->{GeneralCatalogObject}->ItemList(
-            Class => 'ITSM::Core::Criticality',
-        );
-
-        $Ticket{Criticality} = $CriticalityList->{ $Ticket{DynamicField_TicketFreeText13} };
-    }
-
-    # lookup impact
-    $Ticket{Impact} = '-';
-
-    if ( $Ticket{DynamicField_TicketFreeText14} ) {
-
-        # get impact list
-        my $ImpactList = $Self->{GeneralCatalogObject}->ItemList(
-            Class => 'ITSM::Core::Impact',
-        );
-
-        $Ticket{Impact} = $ImpactList->{ $Ticket{DynamicField_TicketFreeText14} };
-    }
+    # set criticality and impact
+    $Ticket{Criticality} = $Ticket{DynamicField_ITSMCriticality} || '-';
+    $Ticket{Impact}      = $Ticket{DynamicField_ITSMImpact}      || '-';
 # ---
 
     # ACL compatibility translation

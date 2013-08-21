@@ -18,11 +18,6 @@ use Kernel::System::CustomerUser;
 use Kernel::System::DynamicField;
 use Kernel::System::DynamicField::Backend;
 use Kernel::System::VariableCheck qw(:all);
-# ---
-# ITSM
-# ---
-use Kernel::System::GeneralCatalog;
-# ---
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -53,11 +48,6 @@ sub new {
         ObjectType  => ['Ticket'],
         FieldFilter => $Self->{DynamicFieldFilter} || {},
     );
-# ---
-# ITSM
-# ---
-    $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new(%Param);
-# ---
 
     return $Self;
 }
@@ -351,29 +341,14 @@ sub _Show {
         }
         $Article{Subject} = $Article{Title};
     }
-
 # ---
 # ITSM
 # ---
-    # lookup criticality
-    $Article{Criticality} = '-';
-    if ( $Article{DynamicField_TicketFreeText13} ) {
-        # get criticality list
-        my $CriticalityList = $Self->{GeneralCatalogObject}->ItemList(
-            Class => 'ITSM::Core::Criticality',
-        );
-        $Article{Criticality} = $CriticalityList->{ $Article{DynamicField_TicketFreeText13} };
-    }
-    # lookup impact
-    $Article{Impact} = '-';
-    if ( $Article{DynamicField_TicketFreeText14} ) {
-        # get impact list
-        my $ImpactList = $Self->{GeneralCatalogObject}->ItemList(
-            Class => 'ITSM::Core::Impact',
-        );
-        $Article{Impact} = $ImpactList->{ $Article{DynamicField_TicketFreeText14} };
-    }
+    # set criticality and impact
+    $Article{Criticality} = $Article{DynamicField_ITSMCriticality} || '-';
+    $Article{Impact}      = $Article{DynamicField_ITSMImpact}      || '-';
 # ---
+
     # user info
     my %UserInfo = $Self->{UserObject}->GetUserData(
         UserID => $Article{OwnerID},

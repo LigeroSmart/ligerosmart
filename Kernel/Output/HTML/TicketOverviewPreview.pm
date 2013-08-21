@@ -50,11 +50,6 @@ sub new {
         ObjectType  => ['Ticket'],
         FieldFilter => $Self->{DynamicFieldFilter} || {},
     );
-# ---
-# ITSM
-# ---
-    $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new(%Param);
-# ---
 
     return $Self;
 }
@@ -378,24 +373,9 @@ sub _Show {
 # ---
 # ITSM
 # ---
-    # lookup criticality
-    $Ticket{Criticality} = '-';
-    if ( $Ticket{DynamicField_TicketFreeText13} ) {
-        # get criticality list
-        my $CriticalityList = $Self->{GeneralCatalogObject}->ItemList(
-            Class => 'ITSM::Core::Criticality',
-        );
-        $Ticket{Criticality} = $CriticalityList->{ $Ticket{DynamicField_TicketFreeText13} };
-    }
-    # lookup impact
-    $Ticket{Impact} = '-';
-    if ( $Ticket{DynamicField_TicketFreeText14} ) {
-        # get impact list
-        my $ImpactList = $Self->{GeneralCatalogObject}->ItemList(
-            Class => 'ITSM::Core::Impact',
-        );
-        $Ticket{Impact} = $ImpactList->{ $Ticket{DynamicField_TicketFreeText14} };
-    }
+    # set criticality and impact
+    $Ticket{Criticality} = $Ticket{DynamicField_ITSMCriticality} || '-';
+    $Ticket{Impact}      = $Ticket{DynamicField_ITSMImpact}      || '-';
 # ---
 
     # create human age

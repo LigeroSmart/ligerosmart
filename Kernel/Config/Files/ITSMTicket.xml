@@ -262,9 +262,9 @@
         <SubGroup>Frontend::Agent::Ticket::ViewAddtlITSMField</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="TicketFreeTime3">1</Item>
-                <Item Key="TicketFreeTime4">1</Item>
-                <Item Key="TicketFreeTime6">1</Item>
+                <Item Key="ITSMRepairStartTime">1</Item>
+                <Item Key="ITSMRecoveryStartTime">1</Item>
+                <Item Key="ITSMDueDate">1</Item>
             </Hash>
         </Setting>
     </ConfigItem>
@@ -495,8 +495,8 @@
         <SubGroup>Frontend::Agent::Ticket::ViewDecision</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="TicketFreeText16">1</Item>
-                <Item Key="TicketFreeTime5">1</Item>
+                <Item Key="ITSMDecisionResult">1</Item>
+                <Item Key="ITSMDecisionDate">1</Item>
             </Hash>
         </Setting>
     </ConfigItem>

@@ -32,7 +32,6 @@ use Kernel::System::Web::UploadCache;
 # ITSM
 # ---
 use Kernel::System::Service;
-use Kernel::System::GeneralCatalog;
 use Kernel::System::ITSMCIPAllocate;
 use Kernel::System::LinkObject;
 # ---
@@ -70,7 +69,6 @@ sub new {
 # ITSM
 # ---
     $Self->{ServiceObject}          = Kernel::System::Service->new(%Param);
-    $Self->{GeneralCatalogObject}   = Kernel::System::GeneralCatalog->new(%Param);
     $Self->{CIPAllocateObject}      = Kernel::System::ITSMCIPAllocate->new(%Param);
     $Self->{LinkObject}             = Kernel::System::LinkObject->new(%Param);
 # ---
@@ -354,13 +352,10 @@ sub Run {
 # ITSM
 # ---
         # impact field was found
-        if ( $DynamicFieldConfig->{Name} eq 'TicketFreeText14' ) {
+        if ( $DynamicFieldConfig->{Name} eq 'ITSMImpact' ) {
 
             # store the reference to the impact field
             $ImpactDynamicFieldConfig = $DynamicFieldConfig;
-
-            # allow empty selection as long as it contains no data yet
-            $ImpactDynamicFieldConfig->{Config}->{PossibleNone} = 1;
         }
 # ---
     }
@@ -380,17 +375,16 @@ sub Run {
 # ITSM
 # ---
     # get needed stuff
-    $GetParam{DynamicField_TicketFreeText14} = $Self->{ParamObject}->GetParam(Param => 'DynamicField_TicketFreeText14');
+    $GetParam{DynamicField_ITSMImpact} = $Self->{ParamObject}->GetParam(Param => 'DynamicField_ITSMImpact');
     $GetParam{PriorityRC}                    = $Self->{ParamObject}->GetParam(Param => 'PriorityRC');
     $GetParam{ElementChanged}                = $Self->{ParamObject}->GetParam(Param => 'ElementChanged') || '';
 
     # check if priority needs to be recalculated
-    if ( $GetParam{ElementChanged} eq 'ServiceID' || $GetParam{ElementChanged} eq 'DynamicField_TicketFreeText14' ) {
+    if ( $GetParam{ElementChanged} eq 'ServiceID' || $GetParam{ElementChanged} eq 'DynamicField_ITSMImpact' ) {
         $GetParam{PriorityRC} = 1;
     }
 
     my %Service;
-    my $ImpactList = {};
     if ( $GetParam{ServiceID} ) {
 
         # get service
@@ -400,23 +394,17 @@ sub Run {
             UserID        => $Self->{UserID},
         );
 
-        # get impact list
-        $ImpactList = $Self->{GeneralCatalogObject}->ItemList(
-            Class => 'ITSM::Core::Impact',
-        );
-
         # do not allow empty values as the field contains possible values now
         $ImpactDynamicFieldConfig->{Config}->{PossibleNone} = 0;
 
         # recalculate impact if impact is not set until now
-        if ( !$GetParam{DynamicField_TicketFreeText14} ) {
+        if ( !$GetParam{DynamicField_ITSMImpact} ) {
 
             # get default selection
             my $DefaultSelection = $ImpactDynamicFieldConfig->{Config}->{DefaultValue} || '3 normal';
 
-            # get default impact id
-            my %ImpactListReverse = reverse %{$ImpactList};
-            $GetParam{DynamicField_TicketFreeText14} = $ImpactListReverse{$DefaultSelection};
+            # get default impact
+            $GetParam{DynamicField_ITSMImpact} = $DefaultSelection;
             $GetParam{PriorityRC} = 1;
         }
 
@@ -425,8 +413,8 @@ sub Run {
 
             # get priority
             $GetParam{PriorityIDFromImpact} = $Self->{CIPAllocateObject}->PriorityAllocationGet(
-                CriticalityID => $Service{CriticalityID},
-                ImpactID      => $GetParam{DynamicField_TicketFreeText14},
+                Criticality => $Service{Criticality},
+                Impact      => $GetParam{DynamicField_ITSMImpact},
             );
         }
         if ( $GetParam{PriorityIDFromImpact} ) {
@@ -434,11 +422,19 @@ sub Run {
         }
     }
 
-    # set the impact list as possible values
-    $ImpactDynamicFieldConfig->{Config}->{PossibleValues} = $ImpactList;
+    # no service was selected
+    else {
 
-    # set the selected impact id
-    $DynamicFieldValues{TicketFreeText14} = $GetParam{DynamicField_TicketFreeText14};
+        # do not show the default selection
+        $ImpactDynamicFieldConfig->{Config}->{DefaultValue} = '';
+
+        # show only the empty selection
+        $ImpactDynamicFieldConfig->{Config}->{PossibleValues} = {};
+        $GetParam{DynamicField_ITSMImpact} = '';
+    }
+
+    # set the selected impact
+    $DynamicFieldValues{ITSMImpact} = $GetParam{DynamicField_ITSMImpact};
 # ---
 
     # transform pending time, time stamp based on user time zone
@@ -736,7 +732,7 @@ sub Run {
         my $Dest             = $Self->{ParamObject}->GetParam( Param => 'Dest' ) || '';
 
         # see if only a name has been passed
-        if ( $Dest && $Dest !~ m{\A \d+ \| \| .+ \z}msx ) {
+        if ( $Dest && $Dest !~ m{ \A (\d+)? \| \| .+ \z }xms ) {
 
             # see if we can get an ID for this queue name
             my $DestID = $Self->{QueueObject}->QueueLookup(
@@ -1290,18 +1286,18 @@ sub Run {
 # ---
 # ITSM
 # ---
-        if ( $GetParam{ServiceID} && $Service{CriticalityID} ) {
+        if ( $GetParam{ServiceID} && $Service{Criticality} ) {
 
             # get config for criticality dynamic field
-            my $ImpactDynamicFieldConfig = $Self->{DynamicFieldObject}->DynamicFieldGet(
-                Name => 'TicketFreeText13',
+            my $CriticalityDynamicFieldConfig = $Self->{DynamicFieldObject}->DynamicFieldGet(
+                Name => 'ITSMCriticality',
             );
 
             # set the criticality
             $Self->{BackendObject}->ValueSet(
-                DynamicFieldConfig => $ImpactDynamicFieldConfig,
+                DynamicFieldConfig => $CriticalityDynamicFieldConfig,
                 ObjectID           => $TicketID,
-                Value              => $Service{CriticalityID},
+                Value              => $Service{Criticality},
                 UserID             => $Self->{UserID},
             );
         }
@@ -2728,7 +2724,7 @@ sub _MaskEmailNew {
 # ITSM
 # ---
         # remember dynamic fields that should be displayed individually
-        if ( $DynamicFieldConfig->{Name} eq 'TicketFreeText14' ) {
+        if ( $DynamicFieldConfig->{Name} eq 'ITSMImpact' ) {
             push @IndividualDynamicFields, $DynamicFieldConfig;
             next DYNAMICFIELD;
         }

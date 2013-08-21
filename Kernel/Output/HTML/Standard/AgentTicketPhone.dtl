@@ -452,7 +452,7 @@ $Include{"RichTextEditor"}
 # ---
 
 # show the impact
-<!-- dtl:block:DynamicField_TicketFreeText14 -->
+<!-- dtl:block:DynamicField_ITSMImpact -->
                     <div class="Row Row_DynamicField_$QData{"Name"}">
                         $Data{"Label"}
                         <div class="Field">
@@ -460,7 +460,7 @@ $Include{"RichTextEditor"}
                         </div>
                         <div class="Clear"></div>
                     </div>
-<!-- dtl:block:DynamicField_TicketFreeText14 -->
+<!-- dtl:block:DynamicField_ITSMImpact -->
 # ---
 
                     <label for="PriorityID">$Text{"Priority"}:</label>

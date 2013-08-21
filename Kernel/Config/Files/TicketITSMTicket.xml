@@ -17,8 +17,8 @@
         <SubGroup>Frontend::Agent::Ticket::ViewPhoneNew</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="TicketFreeText14">1</Item>
-                <Item Key="TicketFreeTime6">1</Item>
+                <Item Key="ITSMImpact">1</Item>
+                <Item Key="ITSMDueDate">1</Item>
             </Hash>
         </Setting>
     </ConfigItem>
@@ -28,8 +28,8 @@
         <SubGroup>Frontend::Agent::Ticket::ViewEmailNew</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="TicketFreeText14">1</Item>
-                <Item Key="TicketFreeTime6">1</Item>
+                <Item Key="ITSMImpact">1</Item>
+                <Item Key="ITSMDueDate">1</Item>
             </Hash>
         </Setting>
     </ConfigItem>
@@ -39,12 +39,13 @@
         <SubGroup>Frontend::Agent::Ticket::ViewSearch</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="TicketFreeText15">1</Item>
-                <Item Key="TicketFreeText16">1</Item>
-                <Item Key="TicketFreeTime3">1</Item>
-                <Item Key="TicketFreeTime4">1</Item>
-                <Item Key="TicketFreeTime5">1</Item>
-                <Item Key="TicketFreeTime6">1</Item>
+                <Item Key="ITSMImpact">1</Item>
+                <Item Key="ITSMReviewRequired">1</Item>
+                <Item Key="ITSMDecisionResult">1</Item>
+                <Item Key="ITSMRepairStartTime">1</Item>
+                <Item Key="ITSMRecoveryStartTime">1</Item>
+                <Item Key="ITSMDecisionDate">1</Item>
+                <Item Key="ITSMDueDate">1</Item>
             </Hash>
         </Setting>
     </ConfigItem>
@@ -54,12 +55,14 @@
         <SubGroup>Frontend::Agent::Ticket::ViewZoom</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="TicketFreeText15">1</Item>
-                <Item Key="TicketFreeText16">1</Item>
-                <Item Key="TicketFreeTime3">1</Item>
-                <Item Key="TicketFreeTime4">1</Item>
-                <Item Key="TicketFreeTime5">1</Item>
-                <Item Key="TicketFreeTime6">1</Item>
+                <Item Key="ITSMImpact">1</Item>
+                <Item Key="ITSMCriticality">1</Item>
+                <Item Key="ITSMReviewRequired">1</Item>
+                <Item Key="ITSMDecisionResult">1</Item>
+                <Item Key="ITSMRepairStartTime">1</Item>
+                <Item Key="ITSMRecoveryStartTime">1</Item>
+                <Item Key="ITSMDecisionDate">1</Item>
+                <Item Key="ITSMDueDate">1</Item>
             </Hash>
         </Setting>
     </ConfigItem>
@@ -69,7 +72,7 @@
         <SubGroup>Frontend::Agent::Ticket::ViewPriority</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="TicketFreeText14">1</Item>
+                <Item Key="ITSMImpact">1</Item>
             </Hash>
         </Setting>
     </ConfigItem>
@@ -79,7 +82,7 @@
         <SubGroup>Frontend::Agent::Ticket::ViewClose</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="TicketFreeText15">1</Item>
+                <Item Key="ITSMReviewRequired">1</Item>
             </Hash>
         </Setting>
     </ConfigItem>
@@ -89,7 +92,7 @@
         <SubGroup>Frontend::Agent::Ticket::ViewCompose</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="TicketFreeText15">1</Item>
+                <Item Key="ITSMReviewRequired">1</Item>
             </Hash>
         </Setting>
     </ConfigItem>
