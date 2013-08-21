@@ -77,7 +77,7 @@
             <Data Key="change_by">1</Data>
         </Insert>
         <Insert Table="ticket_type">
-            <Data Key="name" Type="Quote">Incident::ServiceRequest</Data>
+            <Data Key="name" Type="Quote">Incident::Major</Data>
             <Data Key="valid_id">1</Data>
             <Data Key="create_time">current_timestamp</Data>
             <Data Key="create_by">1</Data>
@@ -85,7 +85,7 @@
             <Data Key="change_by">1</Data>
         </Insert>
         <Insert Table="ticket_type">
-            <Data Key="name" Type="Quote">Incident::Disaster</Data>
+            <Data Key="name" Type="Quote">ServiceRequest</Data>
             <Data Key="valid_id">1</Data>
             <Data Key="create_time">current_timestamp</Data>
             <Data Key="create_by">1</Data>
@@ -94,22 +94,6 @@
         </Insert>
         <Insert Table="ticket_type">
             <Data Key="name" Type="Quote">Problem</Data>
-            <Data Key="valid_id">1</Data>
-            <Data Key="create_time">current_timestamp</Data>
-            <Data Key="create_by">1</Data>
-            <Data Key="change_time">current_timestamp</Data>
-            <Data Key="change_by">1</Data>
-        </Insert>
-        <Insert Table="ticket_type">
-            <Data Key="name" Type="Quote">Problem::KnownError</Data>
-            <Data Key="valid_id">1</Data>
-            <Data Key="create_time">current_timestamp</Data>
-            <Data Key="create_by">1</Data>
-            <Data Key="change_time">current_timestamp</Data>
-            <Data Key="change_by">1</Data>
-        </Insert>
-        <Insert Table="ticket_type">
-            <Data Key="name" Type="Quote">Problem::PendingRfC</Data>
             <Data Key="valid_id">1</Data>
             <Data Key="create_time">current_timestamp</Data>
             <Data Key="create_by">1</Data>

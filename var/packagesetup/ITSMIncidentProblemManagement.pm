@@ -181,11 +181,9 @@ sub CodeInstall {
     {
         my @TypeNames = (
             'Incident',
-            'Incident::ServiceRequest',
-            'Incident::Disaster',
+            'Incident::Major',
+            'ServiceRequest',
             'Problem',
-            'Problem::KnownError',
-            'Problem::PendingRfC',
         );
 
         # set types to valid
@@ -292,9 +290,13 @@ sub CodeUninstall {
     {
         my @TypeNames = (
             'Incident',
+            'Incident::Major',
+            'ServiceRequest',
+            'Problem',
+
+            # old types from ITSM before version 3.2.91
             'Incident::ServiceRequest',
             'Incident::Disaster',
-            'Problem',
             'Problem::KnownError',
             'Problem::PendingRfC',
         );
