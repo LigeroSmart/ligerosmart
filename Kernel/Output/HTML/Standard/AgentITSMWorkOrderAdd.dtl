@@ -18,48 +18,6 @@
 
     <div class="Content">
 
-<!-- dtl:block:WorkOrderTemplate -->
-        <div class="WidgetSimple">
-            <div class="Header">
-                <h2>$Text{"Select Workorder Template"}</h2>
-            </div>
-
-            <div class="Content">
-                <form action="$Env{"CGIHandle"}" method="post" name="template" enctype="multipart/form-data" class="Validate PreventMultipleSubmits">
-                    <input type="hidden" name="Action"    value="$Env{"Action"}"/>
-                    <input type="hidden" name="Subaction" value="CreateFromTemplate"/>
-                    <input type="hidden" name="ChangeID"  value="$QData{"ChangeID"}"/>
-
-                    <fieldset class="TableLike FixedLabelSmall">
-
-                        <label class="Mandatory" for="TemplateID"><span class="Marker">* </span>$Text{"Template"}:</label>
-                        <div class="Field">
-                            $Data{"TemplateSelectionString"}
-                            <div id="TemplateIDError" class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>
-                            <div id="TemplateIDServerError" class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>
-                        </div>
-
-                        <label for="MoveTimeType">$Text{"Time type"}:</label>
-                        <div class="Field">
-                            $Data{"MoveTimeTypeSelectionString"}
-                            <div id="MoveTimeTypeServerError" class="TooltipErrorMessage"><p>$Text{"Invalid time type."}</p></div>
-                        </div>
-
-                        <label>$Text{"New time"}:</label>
-                        <div class="Field">
-                            $Data{"MoveTimeSelectionString"}
-                        </div>
-
-                        <div class="Field SpacingTop">
-                            <button class="Primary" id="SubmitTemplate" name="SubmitTemplate" title="$Text{"Create"}" type="submit" value="$Text{"Create"}">$Text{"Create"}</button>
-                        </div>
-
-                    </fieldset>
-                </form>
-            </div>
-        </div>
-<!-- dtl:block:WorkOrderTemplate -->
-
         <div class="WidgetSimple">
             <div class="Header">
                 <h2>$Text{"Workorder"}</h2>

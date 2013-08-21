@@ -14,7 +14,6 @@ use warnings;
 
 use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
-use Kernel::System::ITSMChange::Template;
 use Kernel::System::Web::UploadCache;
 
 sub new {
@@ -38,7 +37,6 @@ sub new {
     $Self->{ChangeObject}      = Kernel::System::ITSMChange->new(%Param);
     $Self->{WorkOrderObject}   = Kernel::System::ITSMChange::ITSMWorkOrder->new(%Param);
     $Self->{UploadCacheObject} = Kernel::System::Web::UploadCache->new(%Param);
-    $Self->{TemplateObject}    = Kernel::System::ITSMChange::Template->new(%Param);
 
     # get config of frontend module (WorkorderAdd is a change action!)
     $Self->{Config} = $Self->{ConfigObject}->Get("ITSMChange::Frontend::$Self->{Action}");
@@ -100,16 +98,7 @@ sub Run {
 
     # store needed parameters in %GetParam to make it reloadable
     my %GetParam;
-    for my $ParamName (
-        qw(
-        WorkOrderTitle Instruction WorkOrderTypeID
-        PlannedEffort
-        AttachmentUpload FileID
-        MoveTimeType MoveTimeYear MoveTimeMonth MoveTimeDay MoveTimeHour
-        MoveTimeMinute TemplateID
-        )
-        )
-    {
+    for my $ParamName (qw(WorkOrderTitle Instruction WorkOrderTypeID PlannedEffort AttachmentUpload FileID)) {
         $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
     }
 
@@ -133,7 +122,7 @@ sub Run {
     }
 
     # store time related fields in %GetParam
-    for my $TimeType (qw(PlannedStartTime PlannedEndTime MoveTime)) {
+    for my $TimeType (qw(PlannedStartTime PlannedEndTime)) {
         for my $TimePart (qw(Year Month Day Hour Minute)) {
             my $ParamName = $TimeType . $TimePart;
             $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
@@ -382,96 +371,6 @@ sub Run {
         }
     }
 
-    # create workorder from template
-    elsif ( $Self->{Subaction} eq 'CreateFromTemplate' ) {
-
-        my $NewTime;
-
-        # check validity of the time type
-        if (
-            !defined $GetParam{MoveTimeType}
-            || (
-                $GetParam{MoveTimeType} ne 'PlannedStartTime'
-                && $GetParam{MoveTimeType} ne 'PlannedEndTime'
-            )
-            )
-        {
-            $ValidationError{MoveTimeTypeInvalid} = 'ServerError';
-        }
-
-        # check the completeness of the time parameter list,
-        # only hour and minute are allowed to be '0'
-        if (
-            !$GetParam{MoveTimeYear}
-            || !$GetParam{MoveTimeMonth}
-            || !$GetParam{MoveTimeDay}
-            || !defined $GetParam{MoveTimeHour}
-            || !defined $GetParam{MoveTimeMinute}
-            )
-        {
-            $ValidationError{MoveTimeInvalid} = 'ServerError';
-        }
-
-        # get the system time from the input, if it can't be determined we have a validation error
-        if ( !%ValidationError ) {
-
-            # transform work order planned time, time stamp based on user time zone
-            %GetParam = $Self->{LayoutObject}->TransformDateSelection(
-                %GetParam,
-                Prefix => 'MoveTime',
-            );
-
-            # format as timestamp
-            my $PlannedTime = sprintf '%04d-%02d-%02d %02d:%02d:00',
-                $GetParam{MoveTimeYear},
-                $GetParam{MoveTimeMonth},
-                $GetParam{MoveTimeDay},
-                $GetParam{MoveTimeHour},
-                $GetParam{MoveTimeMinute};
-
-            # sanity check of the assembled timestamp
-            $NewTime = $Self->{TimeObject}->TimeStamp2SystemTime(
-                String => $PlannedTime,
-            );
-
-            if ( !$NewTime ) {
-                $ValidationError{MoveTimeInvalid} = 'ServerError';
-            }
-        }
-
-        # check whether a template was selected
-        if ( !$GetParam{TemplateID} ) {
-            $ValidationError{TemplateIDServerError} = 'ServerError';
-        }
-
-        if ( !%ValidationError ) {
-
-            # create workorder based on the template
-            my $WorkOrderID = $Self->{TemplateObject}->TemplateDeSerialize(
-                ChangeID        => $ChangeID,
-                TemplateID      => $Self->{ParamObject}->GetParam( Param => 'TemplateID' ),
-                UserID          => $Self->{UserID},
-                NewTimeInEpoche => $NewTime,
-                MoveTimeType    => $GetParam{MoveTimeType},
-            );
-
-            # workorder could not be created
-            if ( !$WorkOrderID ) {
-
-                # show error message, when adding failed
-                return $Self->{LayoutObject}->ErrorScreen(
-                    Message => 'Was not able to create workorder from template!',
-                    Comment => 'Please contact the admin.',
-                );
-            }
-
-            # load new URL in parent window and close popup
-            return $Self->{LayoutObject}->PopupClose(
-                URL => "Action=AgentITSMWorkOrderZoom;WorkOrderID=$WorkOrderID",
-            );
-        }
-    }
-
     # if there was an attachment delete or upload
     # we do not want to show validation errors for other fields
     if ( $ValidationError{Attachment} ) {
@@ -482,54 +381,6 @@ sub Run {
     # get all attachments meta data
     my @Attachments = $Self->{UploadCacheObject}->FormIDGetAllFilesMeta(
         FormID => $Self->{FormID},
-    );
-
-    # build template dropdown
-    my $TemplateList = $Self->{TemplateObject}->TemplateList(
-        UserID        => $Self->{UserID},
-        CommentLength => 15,
-        TemplateType  => 'ITSMWorkOrder',
-    );
-    my $TemplateSelectionString = $Self->{LayoutObject}->BuildSelection(
-        Name         => 'TemplateID',
-        Data         => $TemplateList,
-        Class        => 'Validate_Required ' . ( $ValidationError{TemplateIDServerError} || '' ),
-        PossibleNone => 1,
-    );
-
-    # build drop-down with time types
-    my $MoveTimeTypeSelectionString = $Self->{LayoutObject}->BuildSelection(
-        Name => 'MoveTimeType',
-        Data => [
-            { Key => 'PlannedStartTime', Value => 'PlannedStartTime' },
-            { Key => 'PlannedEndTime',   Value => 'PlannedEndTime' },
-        ],
-        SelectedID => $GetParam{MoveTimeType} || 'PlannedStartTime',
-        Class => 'Validate_Required ' . ( $ValidationError{MoveTimeTypeInvalid} || '' ),
-    );
-
-    # time period that can be selected from the GUI
-    my %TimePeriod = %{ $Self->{ConfigObject}->Get('ITSMWorkOrder::TimePeriod') };
-
-    # add selection for the time
-    my $MoveTimeSelectionString = $Self->{LayoutObject}->BuildDateSelection(
-        %GetParam,
-        Format        => 'DateInputFormatLong',
-        Prefix        => 'MoveTime',
-        MoveTimeClass => 'Validate_Required ' . ( $ValidationError{MoveTimeInvalid} || '' ),
-        Validate      => 1,
-        %TimePeriod,
-    );
-
-    # show block with template dropdown
-    $Self->{LayoutObject}->Block(
-        Name => 'WorkOrderTemplate',
-        Data => {
-            ChangeID                    => $ChangeID,
-            TemplateSelectionString     => $TemplateSelectionString,
-            MoveTimeTypeSelectionString => $MoveTimeTypeSelectionString,
-            MoveTimeSelectionString     => $MoveTimeSelectionString,
-        },
     );
 
     # output header
@@ -628,6 +479,9 @@ sub Run {
             );
         }
     }
+
+    # time period that can be selected from the GUI
+    my %TimePeriod = %{ $Self->{ConfigObject}->Get('ITSMWorkOrder::TimePeriod') };
 
     # set the time selections
     for my $TimeType (qw(PlannedStartTime PlannedEndTime)) {

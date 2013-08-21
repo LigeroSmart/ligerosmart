@@ -114,7 +114,6 @@
         <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
         <Setting>
             <FrontendModuleReg>
-                <GroupRo>itsm-change-builder</GroupRo>
                 <GroupRo>itsm-change-manager</GroupRo>
                 <Description>Add a change</Description>
                 <Title>Add</Title>
@@ -128,6 +127,30 @@
                     <NavBar>ITSM Change</NavBar>
                     <AccessKey></AccessKey>
                     <Prio>200</Prio>
+                </NavBar>
+            </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Frontend::Module###AgentITSMChangeAddFromTemplate" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
+        <Setting>
+            <FrontendModuleReg>
+                <GroupRo>itsm-change-builder</GroupRo>
+                <GroupRo>itsm-change-manager</GroupRo>
+                <Description>Add a change from template</Description>
+                <Title>Add from template</Title>
+                <NavBarName>ITSM Change</NavBarName>
+                <NavBar>
+                    <Description>New (from template)</Description>
+                    <Name>New (from template)</Name>
+                    <Link>Action=AgentITSMChangeAddFromTemplate</Link>
+                    <Type></Type>
+                    <Block></Block>
+                    <NavBar>ITSM Change</NavBar>
+                    <AccessKey></AccessKey>
+                    <Prio>250</Prio>
                 </NavBar>
             </FrontendModuleReg>
         </Setting>
@@ -554,6 +577,20 @@
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
+    <ConfigItem Name="Frontend::Module###AgentITSMWorkOrderAddFromTemplate" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
+        <Setting>
+            <FrontendModuleReg>
+                <GroupRo>itsm-change</GroupRo>
+                <GroupRo>itsm-change</GroupRo>
+                <Description>Workorder Add (from template)</Description>
+                <Title>Add</Title>
+                <NavBarName>ITSM Change</NavBarName>
+            </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
     <ConfigItem Name="Frontend::Module###AgentITSMWorkOrderAgent" Required="0" Valid="1">
         <Description Translatable="1">Frontend module registration for the agent interface.</Description>
         <Group>ITSM Change Management</Group>
@@ -797,6 +834,20 @@
             </Hash>
         </Setting>
     </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::MenuModule###318-ITSMChangeAddFromTemplate" Required="0" Valid="0">
+        <Description Translatable="1">Module to show a link to create a change from this ticket. The ticket will be automatically linked with the new change.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Frontend::Agent::Ticket::MenuModule</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::TicketMenuITSMChange</Item>
+                <Item Key="Name">Create Change (from template)</Item>
+                <Item Key="Description">Create a change (from template) from this ticket!</Item>
+                <Item Key="Action">AgentITSMChangeAddFromTemplate</Item>
+                <Item Key="Link">Action=AgentITSMChangeAddFromTemplate;TicketID=$QData{"TicketID"}</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::MenuModule###000-Back" Required="0" Valid="1">
         <Description Translatable="1">Shows a link in the menu to go back in the change zoom view of the agent interface.</Description>
         <Group>ITSM Change Management</Group>
@@ -879,11 +930,26 @@
         <SubGroup>Frontend::Agent::ITSMChange::MenuModule</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::Output::HTML::ITSMChangeMenuGeneric</Item>
+                <Item Key="Module">Kernel::Output::HTML::ITSMChangeMenuAddWorkOrder</Item>
                 <Item Key="Name">Add Workorder</Item>
                 <Item Key="Description">Add a workorder to the change</Item>
                 <Item Key="Action">AgentITSMWorkOrderAdd</Item>
                 <Item Key="Link">Action=AgentITSMWorkOrderAdd;ChangeID=$QData{"ChangeID"}</Item>
+                <Item Key="Target">PopUp</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::MenuModule###055-WorkOrderAddFromTemplate" Required="0" Valid="1">
+        <Description Translatable="1">Shows a link in the menu to add a work order in the change zoom view of the agent interface.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ITSMChange::MenuModule</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ITSMChangeMenuAddWorkOrder</Item>
+                <Item Key="Name">Add Workorder (from template)</Item>
+                <Item Key="Description">Add a workorder (from template) to the change</Item>
+                <Item Key="Action">AgentITSMWorkOrderAddFromTemplate</Item>
+                <Item Key="Link">Action=AgentITSMWorkOrderAddFromTemplate;ChangeID=$QData{"ChangeID"}</Item>
                 <Item Key="Target">PopUp</Item>
             </Hash>
         </Setting>
@@ -7503,6 +7569,14 @@
             </Hash>
         </Setting>
     </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeAddFromTemplate###Permission" Required="1" Valid="1">
+        <Description Translatable="1">Required privileges to create changes from templates.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ViewChangeAddFromTemplate</SubGroup>
+        <Setting>
+            <String Regex="^(rw|ro)$">rw</String>
+        </Setting>
+    </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeCABTemplate###Permission" Required="1" Valid="1">
         <Description Translatable="1">Required privileges to create a template from a changes' CAB.</Description>
         <Group>ITSM Change Management</Group>
@@ -8723,6 +8797,14 @@
                 <Item Key="0">No</Item>
                 <Item Key="1">Yes</Item>
             </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMWorkOrderAddFromTemplate###Permission" Required="1" Valid="1">
+        <Description Translatable="1">Required privileges to add a workorder.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ViewWorkOrderAddFromTemplate</SubGroup>
+        <Setting>
+            <String Regex="^(rw|ro)$">rw</String>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMWorkOrder::Frontend::AgentITSMWorkOrderAgent###Permission" Required="1" Valid="1">

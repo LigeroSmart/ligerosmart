@@ -34,6 +34,7 @@
         <File Permission="644" Location="Kernel/Modules/AgentITSMCABMemberSearch.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentITSMChange.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentITSMChangeAdd.pm"/>
+        <File Permission="644" Location="Kernel/Modules/AgentITSMChangeAddFromTemplate.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentITSMChangeCABTemplate.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentITSMChangeCondition.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentITSMChangeConditionEdit.pm"/>
@@ -60,6 +61,7 @@
         <File Permission="644" Location="Kernel/Modules/AgentITSMTemplateOverview.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentITSMUserSearch.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentITSMWorkOrderAdd.pm"/>
+        <File Permission="644" Location="Kernel/Modules/AgentITSMWorkOrderAddFromTemplate.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentITSMWorkOrderAgent.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentITSMWorkOrderDelete.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentITSMWorkOrderEdit.pm"/>
@@ -70,6 +72,7 @@
         <File Permission="644" Location="Kernel/Modules/AgentITSMWorkOrderTemplate.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentITSMWorkOrderZoom.pm"/>
         <File Permission="644" Location="Kernel/Modules/CustomerITSMChangeSchedule.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/ITSMChangeMenuAddWorkOrder.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/ITSMChangeMenuChangeDelete.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/ITSMChangeMenuGeneric.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/ITSMChangeMenuTimeSlot.pm"/>
@@ -93,6 +96,7 @@
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AdminITSMStateMachine.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMCABMemberSearch.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMChangeAdd.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMChangeAddFromTemplate.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMChangeCABTemplate.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMChangeCondition.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMChangeConditionEdit.dtl"/>
@@ -116,6 +120,7 @@
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMTemplateOverviewSmall.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMUserSearch.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMWorkOrderAdd.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMWorkOrderAddFromTemplate.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMWorkOrderAgent.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMWorkOrderDelete.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMWorkOrderEdit.dtl"/>

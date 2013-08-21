@@ -14,7 +14,6 @@ use warnings;
 
 use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMChangeCIPAllocate;
-use Kernel::System::ITSMChange::Template;
 use Kernel::System::LinkObject;
 use Kernel::System::Web::UploadCache;
 
@@ -40,7 +39,6 @@ sub new {
     $Self->{LinkObject}        = Kernel::System::LinkObject->new(%Param);
     $Self->{CIPAllocateObject} = Kernel::System::ITSMChange::ITSMChangeCIPAllocate->new(%Param);
     $Self->{UploadCacheObject} = Kernel::System::Web::UploadCache->new(%Param);
-    $Self->{TemplateObject}    = Kernel::System::ITSMChange::Template->new(%Param);
 
     # get config of frontend module
     $Self->{Config} = $Self->{ConfigObject}->Get("ITSMChange::Frontend::$Self->{Action}");
@@ -76,16 +74,7 @@ sub Run {
 
     # store needed parameters in %GetParam to make it reloadable
     my %GetParam;
-    for my $ParamName (
-        qw(
-        ChangeTitle Description Justification TicketID
-        CategoryID ImpactID PriorityID
-        AttachmentUpload FileID
-        MoveTimeType MoveTimeYear MoveTimeMonth MoveTimeDay MoveTimeHour
-        MoveTimeMinute TemplateID
-        )
-        )
-    {
+    for my $ParamName (qw(ChangeTitle Description Justification TicketID CategoryID ImpactID PriorityID AttachmentUpload FileID)) {
         $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
     }
 
@@ -108,14 +97,9 @@ sub Run {
     }
 
     # store time related fields in %GetParam
-    TIMETYPE:
-    for my $TimeType (qw(RequestedTime MoveTime)) {
-
-        # skip the requested time if not configured
-        next TIMETYPE if ( $TimeType eq 'RequestedTime' && !$Self->{Config}->{RequestedTime} );
-
+    if ( $Self->{Config}->{RequestedTime} ) {
         for my $TimePart (qw(Used Year Month Day Hour Minute)) {
-            my $ParamName = $TimeType . $TimePart;
+            my $ParamName = 'RequestedTime' . $TimePart;
             $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
         }
     }
@@ -488,128 +472,6 @@ sub Run {
         }
     }
 
-    # create change from template
-    elsif ( $Self->{Subaction} eq 'CreateFromTemplate' ) {
-
-        my $NewTime;
-
-        # check validity of the time type
-        my $MoveTimeType = $GetParam{MoveTimeType};
-        if (
-            !defined $MoveTimeType
-            || ( $MoveTimeType ne 'PlannedStartTime' && $MoveTimeType ne 'PlannedEndTime' )
-            )
-        {
-            $ValidationError{MoveTimeTypeInvalid} = 'ServerError';
-        }
-
-        # check the completeness of the time parameter list,
-        # only hour and minute are allowed to be '0'
-        if (
-            !$GetParam{MoveTimeYear}
-            || !$GetParam{MoveTimeMonth}
-            || !$GetParam{MoveTimeDay}
-            || !defined $GetParam{MoveTimeHour}
-            || !defined $GetParam{MoveTimeMinute}
-            )
-        {
-            $ValidationError{MoveTimeInvalid} = 'ServerError';
-        }
-
-        # get the system time from the input, if it can't be determined we have a validation error
-        if ( !%ValidationError ) {
-
-            # transform change planned time, time stamp based on user time zone
-            %GetParam = $Self->{LayoutObject}->TransformDateSelection(
-                %GetParam,
-                Prefix => 'MoveTime',
-            );
-
-            # format as timestamp
-            my $PlannedTime = sprintf '%04d-%02d-%02d %02d:%02d:00',
-                $GetParam{MoveTimeYear},
-                $GetParam{MoveTimeMonth},
-                $GetParam{MoveTimeDay},
-                $GetParam{MoveTimeHour},
-                $GetParam{MoveTimeMinute};
-
-            # sanity check of the assembled timestamp
-            $NewTime = $Self->{TimeObject}->TimeStamp2SystemTime(
-                String => $PlannedTime,
-            );
-
-            if ( !$NewTime ) {
-                $ValidationError{MoveTimeInvalid} = 'ServerError';
-            }
-        }
-
-        # check whether a template was selected
-        if ( !$GetParam{TemplateID} ) {
-            $ValidationError{TemplateIDServerError} = 'ServerError';
-        }
-
-        if ( !%ValidationError ) {
-
-            # create change based on the template
-            my $ChangeID = $Self->{TemplateObject}->TemplateDeSerialize(
-                TemplateID => $Self->{ParamObject}->GetParam( Param => 'TemplateID' ),
-                UserID => $Self->{UserID},
-                NewTimeInEpoche => $NewTime,
-                MoveTimeType    => $GetParam{MoveTimeType},
-            );
-
-            # change could not be created
-            if ( !$ChangeID ) {
-
-                # show error message, when adding failed
-                return $Self->{LayoutObject}->ErrorScreen(
-                    Message => 'Was not able to create change from template!',
-                    Comment => 'Please contact the admin.',
-                );
-            }
-
-            # if the change add mask was called from the ticket zoom
-            if ( $GetParam{TicketID} ) {
-
-                # link ticket with newly created change
-                my $LinkSuccess = $Self->{LinkObject}->LinkAdd(
-                    SourceObject => 'Ticket',
-                    SourceKey    => $GetParam{TicketID},
-                    TargetObject => 'ITSMChange',
-                    TargetKey    => $ChangeID,
-                    Type         => 'Normal',
-                    State        => 'Valid',
-                    UserID       => $Self->{UserID},
-                );
-
-                # link could not be added
-                if ( !$LinkSuccess ) {
-
-                    # set error message
-                    my $Message = "Change with ChangeID $ChangeID was successfully added, "
-                        . "but a link to Ticket with TicketID $GetParam{TicketID} could not be created!";
-
-                    # log error
-                    $Self->{LogObject}->Log(
-                        Priority => 'error',
-                        Message  => $Message,
-                    );
-
-                    # show error message
-                    return $Self->{LayoutObject}->ErrorScreen(
-                        Message => $Message,
-                        Comment => 'Please contact the admin.',
-                    );
-                }
-            }
-
-            # redirect to zoom mask, when adding was successful
-            return $Self->{LayoutObject}->Redirect(
-                OP => "Action=AgentITSMChangeZoom;ChangeID=$ChangeID",
-            );
-        }
-    }
-
     # handle AJAXUpdate
     elsif ( $Self->{Subaction} eq 'AJAXUpdate' ) {
 
@@ -657,54 +519,6 @@ sub Run {
     # get all attachments meta data
     my @Attachments = $Self->{UploadCacheObject}->FormIDGetAllFilesMeta(
         FormID => $Self->{FormID},
-    );
-
-    # build template dropdown
-    my $TemplateList = $Self->{TemplateObject}->TemplateList(
-        UserID        => $Self->{UserID},
-        CommentLength => 15,
-        TemplateType  => 'ITSMChange',
-    );
-    my $TemplateSelectionString = $Self->{LayoutObject}->BuildSelection(
-        Name         => 'TemplateID',
-        Data         => $TemplateList,
-        Class        => 'Validate_Required ' . ( $ValidationError{TemplateIDServerError} || '' ),
-        PossibleNone => 1,
-    );
-
-    # build drop-down with time types
-    my $MoveTimeTypeSelectionString = $Self->{LayoutObject}->BuildSelection(
-        Name => 'MoveTimeType',
-        Data => [
-            { Key => 'PlannedStartTime', Value => 'PlannedStartTime' },
-            { Key => 'PlannedEndTime',   Value => 'PlannedEndTime' },
-        ],
-        SelectedID => $GetParam{MoveTimeType} || 'PlannedStartTime',
-        Class => 'Validate_Required ' . ( $ValidationError{MoveTimeTypeInvalid} || '' ),
-    );
-
-    # time period that can be selected from the GUI
-    my %TimePeriod = %{ $Self->{ConfigObject}->Get('ITSMWorkOrder::TimePeriod') };
-
-    # add selection for the time
-    my $MoveTimeSelectionString = $Self->{LayoutObject}->BuildDateSelection(
-        %GetParam,
-        Format        => 'DateInputFormatLong',
-        Prefix        => 'MoveTime',
-        MoveTimeClass => 'Validate_Required ' . ( $ValidationError{MoveTimeInvalid} || '' ),
-        Validate      => 1,
-        %TimePeriod,
-    );
-
-    # show block with template dropdown
-    $Self->{LayoutObject}->Block(
-        Name => 'ChangeTemplate',
-        Data => {
-            %GetParam,
-            TemplateSelectionString     => $TemplateSelectionString,
-            MoveTimeTypeSelectionString => $MoveTimeTypeSelectionString,
-            MoveTimeSelectionString     => $MoveTimeSelectionString,
-        },
     );
 
     # output header
