@@ -2627,7 +2627,7 @@ sub ChangePossibleCIPGet {
 
     # assemble an array of hash refs
     my @ArrayHashRef;
-    for my $ID ( sort keys %{$CIPList} ) {
+    for my $ID ( sort { $CIPList->{$a} cmp $CIPList->{$b} } keys %{$CIPList} ) {
         push @ArrayHashRef, {
             Key   => $ID,
             Value => $CIPList->{$ID},
