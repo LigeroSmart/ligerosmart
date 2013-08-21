@@ -21,9 +21,11 @@ use Kernel::System::VariableCheck qw(:all);
 # ---
 # ITSM
 # ---
-use Kernel::System::GeneralCatalog;
 use Kernel::System::LinkObject;
 use Kernel::System::Time;
+use Kernel::System::DynamicField;
+use Kernel::System::GeneralCatalog;
+use Kernel::System::VariableCheck qw(:all);
 # ---
 
 use vars qw(@ISA);
@@ -106,7 +108,30 @@ sub new {
 # ---
     $Self->{TimeObject}           = Kernel::System::Time->new( %{$Self} );
     $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new( %{$Self} );
+    $Self->{DynamicFieldObject}   = Kernel::System::DynamicField->new( %{$Self} );
     $Self->{LinkObject}           = Kernel::System::LinkObject->new( %{$Self} );
+
+    # get the dynamic field for ITSMCriticality
+    my $DynamicFieldConfigArrayRef = $Self->{DynamicFieldObject}->DynamicFieldListGet(
+        Valid       => 1,
+        ObjectType  => [ 'Ticket' ],
+        FieldFilter => {
+            ITSMCriticality => 1,
+        },
+    );
+
+    # get the dynamic field value for ITSMCriticality
+    my %PossibleValues;
+    DYNAMICFIELD:
+    for my $DynamicFieldConfig ( @{ $DynamicFieldConfigArrayRef } ) {
+        next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
+
+        # get PossibleValues
+        $PossibleValues{ $DynamicFieldConfig->{Name} } = $DynamicFieldConfig->{Config}->{PossibleValues} || {};
+    }
+
+    # set the criticality list
+    $Self->{CriticalityList} = $PossibleValues{ITSMCriticality};
 # ---
 
     # load generator preferences module
@@ -248,7 +273,6 @@ return a list of services with the complete list of attributes for each service
 # ---
             TypeID           => 16,
             Type             => 'Backend',
-            CriticalityID    => 3,
             Criticality      => '3 normal',
             CurInciStateID   => 1,
             CurInciState     => 'Operational',
@@ -271,7 +295,6 @@ return a list of services with the complete list of attributes for each service
 # ---
             TypeID           => 16,
             Type             => 'Backend',
-            CriticalityID    => 3,
             Criticality      => '3 normal',
             CurInciStateID   => 1,
             CurInciState     => 'Operational',
@@ -310,7 +333,7 @@ sub ServiceListGet {
 # ---
 # ITSM
 # ---
-        . ", type_id, criticality_id "
+        . ", type_id, criticality "
 # ---
         . 'FROM service';
 
@@ -341,8 +364,8 @@ sub ServiceListGet {
 # ---
 # ITSM
 # ---
-        $ServiceData{TypeID}        = $Row[8];
-        $ServiceData{CriticalityID} = $Row[9];
+        $ServiceData{TypeID}      = $Row[8];
+        $ServiceData{Criticality} = $Row[9] || '';
 # ---
 
         # add service data to service list
@@ -416,7 +439,6 @@ Return
 # ---
     $ServiceData{TypeID}
     $ServiceData{Type}
-    $ServiceData{CriticalityID}
     $ServiceData{Criticality}
     $ServiceData{CurInciStateID}    # Only if IncidentState is 1
     $ServiceData{CurInciState}      # Only if IncidentState is 1
@@ -497,7 +519,7 @@ sub ServiceGet {
 # ---
 # ITSM
 # ---
-            . ", type_id, criticality_id "
+            . ", type_id, criticality "
 # ---
             . 'FROM service WHERE id = ?',
         Bind  => [ \$Param{ServiceID} ],
@@ -518,8 +540,8 @@ sub ServiceGet {
 # ---
 # ITSM
 # ---
-        $ServiceData{TypeID}        = $Row[8];
-        $ServiceData{CriticalityID} = $Row[9];
+        $ServiceData{TypeID}      = $Row[8];
+        $ServiceData{Criticality} = $Row[9] || '';
 # ---
     }
 
@@ -670,8 +692,8 @@ add a service
 # ---
 # ITSM
 # ---
-        TypeID        => 2,
-        CriticalityID => 1,
+        TypeID      => 2,
+        Criticality => '3 normal',
 # ---
     );
 
@@ -685,7 +707,7 @@ sub ServiceAdd {
 # ITSM
 # ---
 #    for my $Argument (qw(Name ValidID UserID)) {
-    for my $Argument (qw(Name ValidID UserID TypeID CriticalityID)) {
+    for my $Argument (qw(Name ValidID UserID TypeID Criticality)) {
 # ---
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
@@ -761,11 +783,11 @@ sub ServiceAdd {
 #        ],
         SQL => 'INSERT INTO service '
             . '(name, valid_id, comments, create_time, create_by, change_time, change_by, '
-            . 'type_id, criticality_id) '
+            . 'type_id, criticality) '
             . 'VALUES (?, ?, ?, current_timestamp, ?, current_timestamp, ?, ?, ?)',
         Bind => [
             \$Param{FullName}, \$Param{ValidID}, \$Param{Comment},
-            \$Param{UserID}, \$Param{UserID}, \$Param{TypeID}, \$Param{CriticalityID},
+            \$Param{UserID}, \$Param{UserID}, \$Param{TypeID}, \$Param{Criticality},
         ],
 # ---
     );
@@ -801,8 +823,8 @@ update an existing service
 # ---
 # ITSM
 # ---
-        TypeID        => 2,
-        CriticalityID => 1,
+        TypeID      => 2,
+        Criticality => '3 normal',
 # ---
     );
 
@@ -816,7 +838,7 @@ sub ServiceUpdate {
 # ITSM
 # ---
 #    for my $Argument (qw(ServiceID Name ValidID UserID)) {
-    for my $Argument (qw(ServiceID Name ValidID UserID TypeID CriticalityID)) {
+    for my $Argument (qw(ServiceID Name ValidID UserID TypeID Criticality)) {
 # ---
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
@@ -919,11 +941,11 @@ sub ServiceUpdate {
 #            \$Param{UserID}, \$Param{ServiceID},
 #        ],
         SQL => 'UPDATE service SET name = ?, valid_id = ?, comments = ?, '
-            . ' change_time = current_timestamp, change_by = ?, type_id = ?, criticality_id = ?'
+            . ' change_time = current_timestamp, change_by = ?, type_id = ?, criticality = ?'
             . ' WHERE id = ?',
         Bind => [
             \$Param{FullName}, \$Param{ValidID}, \$Param{Comment},
-            \$Param{UserID}, \$Param{TypeID}, \$Param{CriticalityID}, \$Param{ServiceID},
+            \$Param{UserID}, \$Param{TypeID}, \$Param{Criticality}, \$Param{ServiceID},
         ],
 # ---
     );
@@ -968,8 +990,8 @@ return service ids as an array
 # ---
 # ITSM
 # ---
-        TypeIDs        => 2,
-        CriticalityIDs => 1,
+        TypeIDs       => 2,
+        Criticalities => [ '2 low', '3 normal' ],
 # ---
     );
 
@@ -1010,11 +1032,24 @@ sub ServiceSearch {
 # ---
     # add type ids
     if ( $Param{TypeIDs} && ref $Param{TypeIDs} eq 'ARRAY' && @{ $Param{TypeIDs} } ) {
+
+        # quote as integer
+        for my $TypeID ( @{ $Param{TypeIDs} } ) {
+            $TypeID = $Self->{DBObject}->Quote( $TypeID, 'Integer' );
+        }
+
         $SQL .= "AND type_id IN (" . join(', ', @{ $Param{TypeIDs} }) . ") ";
     }
-    # add criticality ids
-    if ($Param{CriticalityIDs} && ref $Param{CriticalityIDs} eq 'ARRAY' && @{ $Param{CriticalityIDs} } ) {
-        $SQL .= "AND criticality_id IN (" . join(', ', @{ $Param{CriticalityIDs} }) . ") ";
+
+    # add criticalities
+    if ($Param{Criticalities} && ref $Param{Criticalities} eq 'ARRAY' && @{ $Param{Criticalities} } ) {
+
+        # quote and wrap in single quotes
+        for my $Criticality ( @{ $Param{Criticalities} } ) {
+            $Criticality = "'" . $Self->{DBObject}->Quote( $Criticality ) . "'";
+        }
+
+        $SQL .= "AND criticality IN (" . join(', ', @{ $Param{Criticalities} }) . ") ";
     }
 # ---
 
@@ -1412,11 +1447,8 @@ sub _ServiceGetCurrentIncidentState {
     );
     $ServiceData{Type} = $ServiceTypeList->{ $ServiceData{TypeID} } || '';
 
-    # get criticality list
-    my $CriticalityList = $Self->{GeneralCatalogObject}->ItemList(
-        Class => 'ITSM::Core::Criticality',
-    );
-    $ServiceData{Criticality} = $CriticalityList->{ $ServiceData{CriticalityID} } || '';
+#    # get the criticality
+#    $ServiceData{Criticality} = $Self->{CriticalityList}->{ $ServiceData{CriticalityID} } || '';
 
     # set default incident state type
     $ServiceData{CurInciStateType} = 'operational';

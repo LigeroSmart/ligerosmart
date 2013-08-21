@@ -41,7 +41,9 @@ use Kernel::System::Service;
 # ---
 # ITSM
 # ---
+use Kernel::System::DynamicField;
 use Kernel::System::GeneralCatalog;
+use Kernel::System::VariableCheck qw(:all);
 # ---
 
 my %Param;
@@ -59,7 +61,9 @@ $CommonObject{ServiceObject} = Kernel::System::Service->new(%CommonObject);
 # ---
 # ITSM
 # ---
-$CommonObject{CatalogObject} = Kernel::System::GeneralCatalog->new(%CommonObject);
+$CommonObject{TimeObject}           = Kernel::System::Time->new(%CommonObject);
+$CommonObject{DynamicFieldObject}   = Kernel::System::DynamicField->new(%CommonObject);
+$CommonObject{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new(%CommonObject);
 # ---
 my $NoOptions = $ARGV[0] ? 0 : 1;
 
@@ -73,11 +77,11 @@ getopts( 'hn:p:c:C:t:', \%Opts );
 # ---
 
 if ( $Opts{h} || $NoOptions ) {
-    print STDERR "Usage: $FindBin::Script -n <Name> -p <Parent> -c <Comment>\n";
 # ---
 # ITSM
 # ---
-    print STDERR "-C Criticality -t <Type>\n";
+#    print STDERR "Usage: $FindBin::Script -n <Name> -p <Parent> -c <Comment>\n";
+    print STDERR "Usage: $FindBin::Script -n <Name> -p <Parent> -c <Comment> -C <Criticality> -t <Type>\n\n";
 # ---
     exit;
 }
@@ -118,17 +122,33 @@ if ( $Reverse{$ServiceName} ) {
 # ITSM
 # ---
 
-# get criticality list
-my $CriticalityList = $CommonObject{CatalogObject}->ItemList(
-    Class => 'ITSM::Core::Criticality',
+# get the dynamic field config for ITSMCriticality
+my $DynamicFieldConfigArrayRef = $CommonObject{DynamicFieldObject}->DynamicFieldListGet(
+    Valid       => 1,
+    ObjectType  => [ 'Ticket' ],
+    FieldFilter => {
+        ITSMCriticality => 1,
+    },
 );
-my %Criticality = reverse %{$CriticalityList};
-$Param{CriticalityID} = $Criticality{ $Opts{C} || '' };
-if ( !defined $Param{CriticalityID} ) {
+
+# get the dynamic field values for ITSMCriticality
+my %PossibleValues;
+DYNAMICFIELD:
+for my $DynamicFieldConfig ( @{ $DynamicFieldConfigArrayRef } ) {
+    next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
+
+    # get PossibleValues
+    $PossibleValues{ $DynamicFieldConfig->{Name} } =  $DynamicFieldConfig->{Config}->{PossibleValues} || {};
+}
+
+my %Criticality = %{ $PossibleValues{ITSMCriticality} };
+
+$Param{Criticality} = $Criticality{ $Opts{C} || '' };
+if ( !defined $Param{Criticality} ) {
     if ( !$Opts{C} ) {
         print STDERR "Error: Can't add Service: No criticality given via -C option!\n";
     }
-    elsif ( !defined $Param{CriticalityID} ) {
+    elsif ( !defined $Param{Criticality} ) {
         print STDERR "Error: Can't add Service: Criticality '$Opts{C}' unknown!\n";
     }
     print "\nAvailable options are:\n\n";
@@ -139,7 +159,7 @@ if ( !defined $Param{CriticalityID} ) {
 }
 
 # get service type list
-my $ServiceTypeList = $CommonObject{CatalogObject}->ItemList(
+my $ServiceTypeList = $CommonObject{GeneralCatalogObject}->ItemList(
     Class => 'ITSM::Service::Type',
 );
 

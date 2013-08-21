@@ -117,7 +117,7 @@
                         </div>
                         <div class="Clear"></div>
 
-                        <label for="CriticalityID">$Text{"Criticality"}: </label>
+                        <label for="Criticality">$Text{"Criticality"}: </label>
                         <div class="Field">
                             $Data{"CriticalityOptionStrg"}
                         </div>

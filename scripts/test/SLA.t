@@ -92,8 +92,8 @@ for my $Counter ( 1 .. 3 ) {
 # ---
 # ITSM
 # ---
-        TypeID        => 1,
-        CriticalityID => 1,
+        TypeID      => 1,
+        Criticality => '3 normal',
 # ---
     );
 

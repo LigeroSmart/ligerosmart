@@ -39,20 +39,20 @@ if ( ref $AllocateData2 ne 'HASH' ) {
 # check the allocation 2d hash
 if ($HashOK) {
 
-    IMPACTID:
-    for my $ImpactID ( keys %{$AllocateData2} ) {
+    IMPACT:
+    for my $Impact ( sort keys %{$AllocateData2} ) {
 
-        if ( ref $AllocateData2->{$ImpactID} ne 'HASH' ) {
+        if ( ref $AllocateData2->{$Impact} ne 'HASH' ) {
             $HashOK = 0;
-            last IMPACTID;
+            last IMPACT;
         }
 
-        CRITICALITYID:
-        for my $CriticalityID ( keys %{ $AllocateData2->{$ImpactID} } ) {
+        CRITICALITY:
+        for my $Criticality ( keys %{ $AllocateData2->{$Impact} } ) {
 
-            if ( !$CriticalityID || !$AllocateData2->{$ImpactID}->{$CriticalityID} ) {
+            if ( !$Criticality || !$AllocateData2->{$Impact}->{$Criticality} ) {
                 $HashOK = 0;
-                last IMPACTID;
+                last IMPACT;
             }
         }
     }
@@ -64,15 +64,15 @@ $Self->True( $HashOK, 'AllocateList()' );
 # call PriorityAllocationGet() for one Criticality/Impact pair
 if ($HashOK) {
 
-    my ($ImpactID) = keys %{$AllocateData2};
+    my ($Impact) = sort keys %{$AllocateData2};
 
-    if ( $AllocateData2->{$ImpactID} ) {
-        my ($CriticalityID) = keys %{ $AllocateData2->{$ImpactID} };
+    if ( $AllocateData2->{$Impact} ) {
+        my ($Criticality) = sort keys %{ $AllocateData2->{$Impact} };
 
-        my $ExpectedPriorityID = $AllocateData2->{$ImpactID}->{$CriticalityID};
+        my $ExpectedPriorityID = $AllocateData2->{$Impact}->{$Criticality};
         my $PriorityID         = $Self->{CIPAllocateObject}->PriorityAllocationGet(
-            CriticalityID => $CriticalityID,
-            ImpactID      => $ImpactID,
+            Criticality => $Criticality,
+            Impact      => $Impact,
         );
         $Self->Is(
             $PriorityID,

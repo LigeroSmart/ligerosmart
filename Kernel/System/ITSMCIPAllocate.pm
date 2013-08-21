@@ -90,19 +90,19 @@ return a 2d hash reference of allocations
 C<$ListRef> is something like
 
     $ListRet = {
-        '6' => {
-            '4' => 2,
-            '1' => 1,
-            '3' => 2,
+        '3 normal' => {
+            '1 very low' => 1,
+            '3 normal'   => 2,
+            '4 high'     => 3,
         },
-        '8' => {
-            '4' => 4,
-            '1' => 2,
-            '3' => 3,
+        '5 very high' => {
+            '2 low'    => 3,
+            '3 normal' => 4,
+            '4 high'   => 5,
         },
     };
 
-meaning that the CriticalityID '6' and the IncidentID '4' suggest the PriorityID '2'.
+meaning that the Criticality '3 normal' and the Impact '1 very low' suggest the PriorityID '1'.
 
 =cut
 
@@ -120,7 +120,7 @@ sub AllocateList {
 
     # ask database
     $Self->{DBObject}->Prepare(
-        SQL => 'SELECT criticality_id, impact_id, priority_id FROM cip_allocate',
+        SQL => 'SELECT criticality, impact, priority_id FROM cip_allocate',
     );
 
     # result list
@@ -167,10 +167,10 @@ sub AllocateUpdate {
     }
 
     # check if allocate data is a 2D hash reference
-    IMPACTID:
-    for my $ImpactID ( keys %{ $Param{AllocateData} } ) {
+    IMPACT:
+    for my $Impact ( keys %{ $Param{AllocateData} } ) {
 
-        next IMPACTID if ref $Param{AllocateData}->{$ImpactID} eq 'HASH';
+        next IMPACT if ref $Param{AllocateData}->{$Impact} eq 'HASH';
 
         $Self->{LogObject}->Log(
             Priority => 'error',
@@ -183,21 +183,21 @@ sub AllocateUpdate {
     $Self->{DBObject}->Do( SQL => 'DELETE FROM cip_allocate' );
 
     # insert new allocations
-    for my $ImpactID ( keys %{ $Param{AllocateData} } ) {
+    for my $Impact ( sort keys %{ $Param{AllocateData} } ) {
 
-        for my $CriticalityID ( keys %{ $Param{AllocateData}->{$ImpactID} } ) {
+        for my $Criticality ( sort keys %{ $Param{AllocateData}->{$Impact} } ) {
 
             # extract priority
-            my $PriorityID = $Param{AllocateData}->{$ImpactID}->{$CriticalityID};
+            my $PriorityID = $Param{AllocateData}->{$Impact}->{$Criticality};
 
             # insert new allocation
             $Self->{DBObject}->Do(
                 SQL => 'INSERT INTO cip_allocate '
-                    . '(criticality_id, impact_id, priority_id, '
+                    . '(criticality, impact, priority_id, '
                     . 'create_time, create_by, change_time, change_by) VALUES '
                     . '(?, ?, ?, current_timestamp, ?, current_timestamp, ?)',
                 Bind => [
-                    \$CriticalityID, \$ImpactID, \$PriorityID,
+                    \$Criticality, \$Impact, \$PriorityID,
                     \$Param{UserID}, \$Param{UserID},
                 ],
             );
@@ -212,8 +212,8 @@ sub AllocateUpdate {
 return the priority id of a criticality and an impact
 
     my $PriorityID = $CIPAllocateObject->PriorityAllocationGet(
-        CriticalityID => 321,
-        ImpactID      => 123,
+        Criticality => '1 very low',
+        Impact      => '3 normal',
     );
 
 =cut
@@ -222,7 +222,7 @@ sub PriorityAllocationGet {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Argument (qw(CriticalityID ImpactID)) {
+    for my $Argument (qw(Criticality Impact)) {
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
@@ -235,8 +235,8 @@ sub PriorityAllocationGet {
     # get priority id from db
     $Self->{DBObject}->Prepare(
         SQL => 'SELECT priority_id FROM cip_allocate '
-            . 'WHERE criticality_id = ? AND impact_id = ?',
-        Bind => [ \$Param{CriticalityID}, \$Param{ImpactID} ],
+            . 'WHERE criticality = ? AND impact = ?',
+        Bind => [ \$Param{Criticality}, \$Param{Impact} ],
         Limit => 1,
     );
 

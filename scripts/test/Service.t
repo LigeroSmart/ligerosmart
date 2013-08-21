@@ -136,10 +136,10 @@ my $ItemData = [
     # this service is NOT complete and must not be added
     {
         Add => {
-            Name          => $ServiceName[0],
-            ValidID       => 1,
-            UserID        => 1,
-            CriticalityID => 1,
+            Name        => $ServiceName[0],
+            ValidID     => 1,
+            UserID      => 1,
+            Criticality => '3 normal',
         },
     },
 # ---
@@ -153,8 +153,8 @@ my $ItemData = [
 # ---
 # ITSM
 # ---
-            TypeID        => 1,
-            CriticalityID => 1,
+            TypeID      => 1,
+            Criticality => '3 normal',
 # ---
         },
         AddGet => {
@@ -168,8 +168,8 @@ my $ItemData = [
 # ---
 # ITSM
 # ---
-            TypeID        => 1,
-            CriticalityID => 1,
+            TypeID      => 1,
+            Criticality => '3 normal',
 # ---
         },
     },
@@ -223,10 +223,10 @@ my $ItemData = [
     # the service one add-test before must be NOT updated (service is NOT complete)
     {
         Update => {
-            Name          => $ServiceName[0] . 'UPDATE1',
-            ValidID       => 1,
-            UserID        => 1,
-            CriticalityID => 1,
+            Name        => $ServiceName[0] . 'UPDATE1',
+            ValidID     => 1,
+            UserID      => 1,
+            Criticality => '3 normal',
         },
     },
 # ---
@@ -241,8 +241,8 @@ my $ItemData = [
 # ---
 # ITSM
 # ---
-            TypeID        => 2,
-            CriticalityID => 3,
+            TypeID      => 2,
+            Criticality => '3 normal',
 # ---
         },
         AddGet => {
@@ -256,8 +256,8 @@ my $ItemData = [
 # ---
 # ITSM
 # ---
-            TypeID        => 2,
-            CriticalityID => 3,
+            TypeID      => 2,
+            Criticality => '3 normal',
 # ---
         },
     },
@@ -296,8 +296,8 @@ my $ItemData = [
 # ---
 # ITSM
 # ---
-            TypeID        => 4,
-            CriticalityID => 5,
+            TypeID      => 4,
+            Criticality => '3 normal',
 # ---
         },
         UpdateGet => {
@@ -311,8 +311,8 @@ my $ItemData = [
 # ---
 # ITSM
 # ---
-            TypeID        => 4,
-            CriticalityID => 5,
+            TypeID      => 4,
+            Criticality => '3 normal',,
 # ---
         },
     },
@@ -327,8 +327,8 @@ my $ItemData = [
 # ---
 # ITSM
 # ---
-            TypeID        => 1,
-            CriticalityID => 1,
+            TypeID      => 1,
+            Criticality => '3 normal',
 # ---
         },
         UpdateGet => {
@@ -342,8 +342,8 @@ my $ItemData = [
 # ---
 # ITSM
 # ---
-            TypeID        => 1,
-            CriticalityID => 1,
+            TypeID      => 1,
+            Criticality => '3 normal',
 # ---
         },
     },
@@ -412,8 +412,8 @@ my $ItemData = [
 # ---
 # ITSM
 # ---
-            TypeID        => 2,
-            CriticalityID => 2,
+            TypeID      => 2,
+            Criticality => '3 normal',
 # ---
         },
         AddGet => {
@@ -427,8 +427,8 @@ my $ItemData = [
 # ---
 # ITSM
 # ---
-            TypeID        => 2,
-            CriticalityID => 2,
+            TypeID      => 2,
+            Criticality => '3 normal',
 # ---
         },
     },
@@ -443,8 +443,8 @@ my $ItemData = [
 # ---
 # ITSM
 # ---
-            TypeID        => 1,
-            CriticalityID => 1,
+            TypeID      => 1,
+            Criticality => '3 normal',
 # ---
         },
         UpdateGet => {
@@ -458,8 +458,8 @@ my $ItemData = [
 # ---
 # ITSM
 # ---
-            TypeID        => 1,
-            CriticalityID => 1,
+            TypeID      => 1,
+            Criticality => '3 normal',
 # ---
         },
     },
@@ -474,8 +474,8 @@ my $ItemData = [
 # ---
 # ITSM
 # ---
-            TypeID        => 1,
-            CriticalityID => 1,
+            TypeID      => 1,
+            Criticality => '3 normal',
 # ---
         },
         AddGet => {
@@ -489,8 +489,8 @@ my $ItemData = [
 # ---
 # ITSM
 # ---
-            TypeID        => 1,
-            CriticalityID => 1,
+            TypeID      => 1,
+            Criticality => '3 normal',
 # ---
         },
     },
@@ -505,8 +505,8 @@ my $ItemData = [
 # ---
 # ITSM
 # ---
-            TypeID        => 1,
-            CriticalityID => 1,
+            TypeID      => 1,
+            Criticality => '3 normal',
 # ---
         },
         UpdateGet => {
@@ -520,8 +520,8 @@ my $ItemData = [
 # ---
 # ITSM
 # ---
-            TypeID        => 1,
-            CriticalityID => 1,
+            TypeID      => 1,
+            Criticality => '3 normal',
 # ---
         },
     },
@@ -536,8 +536,8 @@ my $ItemData = [
 # ---
 # ITSM
 # ---
-            TypeID        => 1,
-            CriticalityID => 1,
+            TypeID      => 1,
+            Criticality => '3 normal',
 # ---
         },
         AddGet => {
@@ -551,8 +551,8 @@ my $ItemData = [
 # ---
 # ITSM
 # ---
-            TypeID        => 1,
-            CriticalityID => 1,
+            TypeID      => 1,
+            Criticality => '3 normal',
 # ---
         },
     },
@@ -567,8 +567,8 @@ my $ItemData = [
 # ---
 # ITSM
 # ---
-            TypeID        => 1,
-            CriticalityID => 1,
+            TypeID      => 1,
+            Criticality => '3 normal',
 # ---
         },
         UpdateGet => {
@@ -582,8 +582,8 @@ my $ItemData = [
 # ---
 # ITSM
 # ---
-            TypeID        => 1,
-            CriticalityID => 1,
+            TypeID      => 1,
+            Criticality => '3 normal',
 # ---
         },
     },
@@ -597,8 +597,8 @@ my $ItemData = [
 # ---
 # ITSM
 # ---
-            TypeID        => 1,
-            CriticalityID => 1,
+            TypeID      => 1,
+            Criticality => '3 normal',
 # ---
         },
         AddGet => {
@@ -611,8 +611,8 @@ my $ItemData = [
 # ---
 # ITSM
 # ---
-            TypeID        => 1,
-            CriticalityID => 1,
+            TypeID      => 1,
+            Criticality => '3 normal',
 # ---
         },
     },
@@ -627,8 +627,8 @@ my $ItemData = [
 # ---
 # ITSM
 # ---
-            TypeID        => 1,
-            CriticalityID => 1,
+            TypeID      => 1,
+            Criticality => '3 normal',
 # ---
         },
         AddGet => {
@@ -641,8 +641,8 @@ my $ItemData = [
 # ---
 # ITSM
 # ---
-            TypeID        => 1,
-            CriticalityID => 1,
+            TypeID      => 1,
+            Criticality => '3 normal',
 # ---
         },
     },
@@ -657,8 +657,8 @@ my $ItemData = [
 # ---
 # ITSM
 # ---
-            TypeID        => 1,
-            CriticalityID => 1,
+            TypeID      => 1,
+            Criticality => '3 normal',
 # ---
         },
         AddGet => {
@@ -671,8 +671,8 @@ my $ItemData = [
 # ---
 # ITSM
 # ---
-            TypeID        => 1,
-            CriticalityID => 1,
+            TypeID      => 1,
+            Criticality => '3 normal',
 # ---
         },
     },
@@ -697,8 +697,8 @@ my $ItemData = [
 # ---
 # ITSM
 # ---
-            TypeID        => 1,
-            CriticalityID => 1,
+            TypeID      => 1,
+            Criticality => '3 normal',
 # ---
         },
         UpdateGet => {
@@ -711,8 +711,8 @@ my $ItemData = [
 # ---
 # ITSM
 # ---
-            TypeID        => 1,
-            CriticalityID => 1,
+            TypeID      => 1,
+            Criticality => '3 normal',
 # ---
         },
     },
@@ -727,8 +727,8 @@ my $ItemData = [
 # ---
 # ITSM
 # ---
-            TypeID        => 1,
-            CriticalityID => 1,
+            TypeID      => 1,
+            Criticality => '3 normal',
 # ---
         },
         UpdateGet => {
@@ -744,8 +744,8 @@ my $ItemData = [
 # ---
 # ITSM
 # ---
-            TypeID        => 1,
-            CriticalityID => 1,
+            TypeID      => 1,
+            Criticality => '3 normal',
 # ---
         },
     },
@@ -1032,8 +1032,8 @@ my $ServiceList2ServiceID = $ServiceObject->ServiceAdd(
 # ---
 # ITSM
 # ---
-    TypeID        => 1,
-    CriticalityID => 1,
+    TypeID      => 1,
+    Criticality => '3 normal',
 # ---
 );
 
@@ -1117,8 +1117,8 @@ for my $ServiceName (@ServiceNames) {
 # ---
 # ITSM
 # ---
-        TypeID        => 1,
-        CriticalityID => 1,
+        TypeID      => 1,
+        Criticality => '3 normal',
 # ---
     );
 
@@ -1225,8 +1225,8 @@ my $ServiceGrandFatherID = $ServiceObject->ServiceAdd(
 # ---
 # ITSM
 # ---
-    TypeID        => 1,
-    CriticalityID => 1,
+    TypeID      => 1,
+    Criticality => '3 normal',
 # ---
     Comment  => 'Testing service',
     UserID   => 1,
@@ -1247,8 +1247,8 @@ my $ServiceFatherID = $ServiceObject->ServiceAdd(
 # ---
 # ITSM
 # ---
-    TypeID        => 1,
-    CriticalityID => 1,
+    TypeID      => 1,
+    Criticality => '3 normal',
 # ---
     Comment  => 'Testing service',
     UserID   => 1,
@@ -1269,8 +1269,8 @@ my $ServiceSonID = $ServiceObject->ServiceAdd(
 # ---
 # ITSM
 # ---
-    TypeID        => 1,
-    CriticalityID => 1,
+    TypeID      => 1,
+    Criticality => '3 normal',
 # ---
     Comment  => 'Testing service',
     UserID   => 1,
@@ -1386,8 +1386,8 @@ for my $ServiceID (@AddedParentServices) {
 # ---
 # ITSM
 # ---
-        TypeID        => $Service{TypeID},
-        CriticalityID => $Service{CriticalityID},
+        TypeID      => $Service{TypeID},
+        Criticality => $Service{Criticality},
 # ---
         UserID    => 1,
     );

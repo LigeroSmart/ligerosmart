@@ -19,7 +19,9 @@ use Kernel::System::Valid;
 # ---
 # ITSM
 # ---
+use Kernel::System::DynamicField;
 use Kernel::System::GeneralCatalog;
+use Kernel::System::VariableCheck qw(:all);
 # ---
 
 sub new {
@@ -40,7 +42,30 @@ sub new {
 # ---
 # ITSM
 # ---
+    $Self->{DynamicFieldObject}   = Kernel::System::DynamicField->new(%Param);
     $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new(%Param);
+
+    # get the dynamic field for ITSMCriticality
+    my $DynamicFieldConfigArrayRef = $Self->{DynamicFieldObject}->DynamicFieldListGet(
+        Valid       => 1,
+        ObjectType  => [ 'Ticket' ],
+        FieldFilter => {
+            ITSMCriticality => 1,
+        },
+    );
+
+    # get the dynamic field value for ITSMCriticality
+    my %PossibleValues;
+    DYNAMICFIELD:
+    for my $DynamicFieldConfig ( @{ $DynamicFieldConfigArrayRef } ) {
+        next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
+
+        # get PossibleValues
+        $PossibleValues{ $DynamicFieldConfig->{Name} } = $DynamicFieldConfig->{Config}->{PossibleValues} || {};
+    }
+
+    # set the criticality list
+    $Self->{CriticalityList} = $PossibleValues{ITSMCriticality};
 # ---
 
     return $Self;
@@ -81,7 +106,7 @@ sub Run {
 # ITSM
 # ---
 #        for (qw(ServiceID ParentID Name ValidID Comment)) {
-        for (qw(ServiceID ParentID Name ValidID Comment TypeID CriticalityID)) {
+        for (qw(ServiceID ParentID Name ValidID Comment TypeID Criticality)) {
 # ---
             $GetParam{$_} = $Self->{ParamObject}->GetParam( Param => $_ ) || '';
         }
@@ -308,7 +333,6 @@ sub _MaskNew {
         DisabledBranch => $ServiceData{Name},
         Translation    => 0,
     );
-
 # ---
 # ITSM
 # ---
@@ -316,21 +340,22 @@ sub _MaskNew {
     my $TypeList = $Self->{GeneralCatalogObject}->ItemList(
         Class => 'ITSM::Service::Type',
     );
+
+    # build the type dropdown
     $ServiceData{TypeOptionStrg} = $Self->{LayoutObject}->BuildSelection(
         Data => $TypeList,
         Name => 'TypeID',
         SelectedID => $Param{TypeID} || $ServiceData{TypeID},
     );
-    # generate CriticalityOptionStrg
-    my $CriticalityList = $Self->{GeneralCatalogObject}->ItemList(
-        Class => 'ITSM::Core::Criticality',
-    );
+
+    # build the criticality dropdown
     $ServiceData{CriticalityOptionStrg} = $Self->{LayoutObject}->BuildSelection(
-        Data => $CriticalityList,
-        Name => 'CriticalityID',
-        SelectedID => $Param{CriticalityID} || $ServiceData{CriticalityID},
+        Data       => $Self->{CriticalityList},
+        Name       => 'Criticality',
+        SelectedID => $Param{Criticality} || $ServiceData{Criticality},
     );
 # ---
+
     # get valid list
     my %ValidList        = $Self->{ValidObject}->ValidList();
     my %ValidListReverse = reverse %ValidList;
