@@ -152,6 +152,7 @@ sub Run {
                     Name       => 'PriorityID' . $ImpactKey . '-' . $CategoryKey,
                     Data       => $ObjectOption{PriorityList},
                     SelectedID => $AllocateData->{$ImpactKey}{$CategoryKey} || '',
+                    Title      => 'Priority',
                 );
 
                 $AllocateMatrix->[$Row]->[$Column]->{OptionStrg} = $OptionStrg;
