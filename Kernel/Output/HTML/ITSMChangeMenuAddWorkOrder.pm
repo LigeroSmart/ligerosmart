@@ -33,8 +33,6 @@ sub new {
 sub Run {
     my ( $Self, %Param ) = @_;
 
-    $Self->{LogObject}->Dumper( '', '%Param', \%Param );
-
     # check needed stuff
     if ( !$Param{Change} ) {
         $Self->{LogObject}->Log(
