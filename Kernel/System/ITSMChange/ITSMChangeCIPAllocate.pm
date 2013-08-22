@@ -2,40 +2,23 @@
 # Kernel/System/ITSMChange/ITSMChangeCIPAllocate.pm - all criticality, impact and priority allocation functions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/1fc7d8e1d8371c0d67b41970ec7d6a600e4a32e6/Kernel/System/ITSMChange/ITSMChangeCIPAllocate.pm
-# --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-# ---
-# ITSM
-# ---
-#package Kernel::System::ITSMCIPAllocate;
 package Kernel::System::ITSMChange::ITSMChangeCIPAllocate;
-# ---
 
 use strict;
 use warnings;
 
 =head1 NAME
 
-# ---
-# ITSM
-# ---
-#Kernel::System::ITSMCIPAllocate - criticality, impact and priority allocation lib
 Kernel::System::ITSMChange::ITSMChangeCIPAllocate - category, impact and priority allocation lib
-# ---
 
 =head1 SYNOPSIS
 
-# ---
-# ITSM
-# ---
-#All criticality, impact and priority allocation functions.
 All category, impact and priority allocation functions.
-# ---
 
 =head1 PUBLIC INTERFACE
 
@@ -50,12 +33,7 @@ create an object
     use Kernel::Config;
     use Kernel::System::Encode;
     use Kernel::System::Log;
-# ---
-# ITSM
-# ---
-#    use Kernel::System::ITSMCIPAllocate;
     use Kernel::System::ITSMChange::ITSMChangeCIPAllocate;
-# ---
     use Kernel::System::DB;
     use Kernel::System::Main;
 
@@ -78,12 +56,7 @@ create an object
         LogObject    => $LogObject,
         MainObject   => $MainObject,
     );
-# ---
-# ITSM
-# ---
-#    my $CIPAllocateObject = Kernel::System::ITSMCIPAllocate->new(
     my $CIPAllocateObject = Kernel::System::ITSMChange::ITSMChangeCIPAllocate->new(
-# ---
         ConfigObject => $ConfigObject,
         LogObject    => $LogObject,
         DBObject     => $DBObject,
@@ -146,14 +119,8 @@ sub AllocateList {
     }
 
     # ask database
-# ---
-# ITSM
-# ---
-#    $Self->{DBObject}->Prepare(
-#        SQL => 'SELECT criticality_id, impact_id, priority_id FROM cip_allocate',
     return if !$Self->{DBObject}->Prepare(
         SQL => 'SELECT category_id, impact_id, priority_id FROM change_cip_allocate',
-# ---
     );
 
     # result list
@@ -167,12 +134,7 @@ sub AllocateList {
 
 =item AllocateUpdate()
 
-# ---
-# ITSM
-# ---
-#update the allocation of criticality, impact and priority
 update the allocation of category, impact and priority
-# ---
 
     my $True = $CIPAllocateObject->AllocateUpdate(
         AllocateData => $DataRef,  # 2D hash reference
@@ -218,51 +180,24 @@ sub AllocateUpdate {
     }
 
     # delete old allocations
-# ---
-# ITSM
-# ---
-#    $Self->{DBObject}->Do( SQL => 'DELETE FROM cip_allocate' );
     return if !$Self->{DBObject}->Do( SQL => 'DELETE FROM change_cip_allocate' );
-# ---
 
     # insert new allocations
     for my $ImpactID ( keys %{ $Param{AllocateData} } ) {
 
-# ---
-# ITSM
-# ---
-#        for my $CriticalityID ( keys %{ $Param{AllocateData}->{$ImpactID} } ) {
         for my $CategoryID ( keys %{ $Param{AllocateData}->{$ImpactID} } ) {
-# ---
 
             # extract priority
-# ---
-# ITSM
-# ---
-#            my $PriorityID = $Param{AllocateData}->{$ImpactID}->{$CriticalityID};
             my $PriorityID = $Param{AllocateData}->{$ImpactID}->{$CategoryID};
-# ---
 
             # insert new allocation
-# ---
-# ITSM
-# ---
-#            $Self->{DBObject}->Do(
-#                SQL => 'INSERT INTO cip_allocate '
-#                    . '(criticality_id, impact_id, priority_id, '
             return if !$Self->{DBObject}->Do(
                 SQL => 'INSERT INTO change_cip_allocate '
                     . '(category_id, impact_id, priority_id, '
-# ---
                     . 'create_time, create_by, change_time, change_by) VALUES '
                     . '(?, ?, ?, current_timestamp, ?, current_timestamp, ?)',
                 Bind => [
-# ---
-# ITSM
-# ---
-#                    \$CriticalityID, \$ImpactID, \$PriorityID,
                     \$CategoryID, \$ImpactID, \$PriorityID,
-# ---
                     \$Param{UserID}, \$Param{UserID},
                 ],
             );
@@ -274,22 +209,11 @@ sub AllocateUpdate {
 
 =item PriorityAllocationGet()
 
-# ---
-# ITSM
-# ---
-#return the priority id of a criticality and an impact
 return the priority id for given category and impact
-# ---
 
     my $PriorityID = $CIPAllocateObject->PriorityAllocationGet(
-# ---
-# ITSM
-# ---
-#        CriticalityID => 321,
-#        ImpactID      => 123,
         CategoryID => 321,
         ImpactID   => 123,
-# ---
     );
 
 =cut
@@ -298,12 +222,7 @@ sub PriorityAllocationGet {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-# ---
-# ITSM
-# ---
-#    for my $Argument (qw(CriticalityID ImpactID)) {
     for my $Argument (qw(CategoryID ImpactID)) {
-# ---
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
@@ -314,18 +233,10 @@ sub PriorityAllocationGet {
     }
 
     # get priority id from db
-# ---
-# ITSM
-# ---
-#    $Self->{DBObject}->Prepare(
-#        SQL => 'SELECT priority_id FROM cip_allocate '
-#            . 'WHERE criticality_id = ? AND impact_id = ?',
-#        Bind => [ \$Param{CriticalityID}, \$Param{ImpactID} ],
     return if !$Self->{DBObject}->Prepare(
         SQL => 'SELECT priority_id FROM change_cip_allocate '
             . 'WHERE category_id = ? AND impact_id = ?',
         Bind => [ \$Param{CategoryID}, \$Param{ImpactID} ],
-# ---
         Limit => 1,
     );
 
