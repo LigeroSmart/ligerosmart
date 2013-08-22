@@ -85,9 +85,15 @@ sub Run {
             CRITICALITY:
             for my $Criticality ( sort keys %{ $Self->{CriticalityList} } ) {
 
-                # get form param
+                # build field name for priority id
+                my $FieldName = "PriorityID" . $Impact . '-' . $Criticality;
+
+                # clean up all whitespaces because they are not allowed in HTML ID-Attributes
+                $FieldName =~ s{ \s+ }{}gxms;
+
+                # get form param for priority id
                 my $PriorityID = $Self->{ParamObject}->GetParam(
-                    Param => "PriorityID" . $Impact . '-' . $Criticality
+                    Param => $FieldName,
                 ) || '';
 
                 next CRITICALITY if !$PriorityID;
@@ -155,11 +161,18 @@ sub Run {
                 my $ImpactKey      = $AllocateMatrix->[$Row]->[0]->{ImpactKey};
                 my $CriticalityKey = $AllocateMatrix->[0]->[$Column]->{CriticalityKey};
 
+                # build field name for priority id
+                my $FieldName = "PriorityID" . $ImpactKey . '-' . $CriticalityKey;
+
+                # clean up all whitespaces because they are not allowed in HTML ID-Attributes
+                $FieldName =~ s{ \s+ }{}gxms;
+
                 # create option string
                 my $OptionStrg = $Self->{LayoutObject}->BuildSelection(
-                    Name       => 'PriorityID' . $ImpactKey . '-' . $CriticalityKey,
+                    Name       => $FieldName,
                     Data       => \%PriorityList,
                     SelectedID => $AllocateData->{$ImpactKey}->{$CriticalityKey} || '',
+                    Title      => 'Priority',
                 );
 
                 $AllocateMatrix->[$Row]->[$Column]->{OptionStrg} = $OptionStrg;
