@@ -1,6 +1,6 @@
 # --
 # ImportExportFormatCSV.t - all import export tests for the CSV format backend
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -127,11 +127,11 @@ my $FormatAttributesGet1Reference = [
 # turn off all pretty print
 $Data::Dumper::Indent = 0;
 
-# dump the list from FormatAttributesGet()
+# dump the list from FormatAttributesGet() and the reference table
+## no critic
 my $FormatAttributesGetDump1 = Data::Dumper::Dumper($FormatAttributesGet1);
-
-# dump the reference table
 my $FormatAttributesRefDump1 = Data::Dumper::Dumper($FormatAttributesGet1Reference);
+## use critic
 
 $Self->True(
     $FormatAttributesGetDump1 eq $FormatAttributesRefDump1,
@@ -190,11 +190,11 @@ my $MappingFormatAttributesGet1Reference = [
 # turn off all pretty print
 $Data::Dumper::Indent = 0;
 
-# dump the list from MappingFormatAttributesGet()
+# dump the list from MappingFormatAttributesGet() and the reference table
+## no critic
 my $MappingFormatAttributesGetDump1 = Data::Dumper::Dumper($MappingFormatAttributesGet1);
-
-# dump the reference table
 my $MappingFormatAttributesRefDump1 = Data::Dumper::Dumper($MappingFormatAttributesGet1Reference);
+## use critic
 
 $Self->True(
     $MappingFormatAttributesGetDump1 eq $MappingFormatAttributesRefDump1,

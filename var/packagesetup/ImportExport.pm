@@ -1,13 +1,13 @@
 # --
 # ImportExport.pm - code to excecute during package installation
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package var::packagesetup::ImportExport;
+package var::packagesetup::ImportExport;    ## no critic
 
 use strict;
 use warnings;
@@ -151,7 +151,7 @@ This function is only executed if the installed module version is smaller than 2
 
 =cut
 
-sub CodeUpgradeFromBefore_2_0_3 {
+sub CodeUpgradeFromBefore_2_0_3 {    ## no critic
     my ( $Self, %Param ) = @_;
 
     # fix a typo in the database
@@ -206,7 +206,7 @@ sub _FixDatabaseTypo {
 This Software is part of the OTRS project (http://otrs.org/).
 
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
-the enclosed file COPYING for license information (GPL). If you
-did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
+the enclosed file COPYING for license information (AGPL). If you
+did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =cut

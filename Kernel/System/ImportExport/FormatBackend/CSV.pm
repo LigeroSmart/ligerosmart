@@ -1,6 +1,6 @@
 # --
 # Kernel/System/ImportExport/FormatBackend/CSV.pm - import/export backend for CSV
-# Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -299,7 +299,7 @@ sub ImportDataGet {
 
     # create an in memory temp file and open it
     my $FileContent = '';
-    open my $FH, '+<', \$FileContent;
+    open my $FH, '+<', \$FileContent;    ## no critic
 
     # write source content
     print $FH ${ $Param{SourceContent} };
@@ -452,7 +452,7 @@ sub ExportDataSave {
     }
 
     # create the CSV string
-    my $String = $ParseObject->string;
+    my $String = $ParseObject->string();
 
     return $String if $Charset ne 'UTF-8';
 
