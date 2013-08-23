@@ -15,6 +15,7 @@ use warnings;
 # IMPORTANT!
 # Do not delete this line! This prevents the "Frontend/Basic" UnitTest from failing
 # on opensuse 11.3 and 11.4 (64bit) if mod_perl is used!
+use vars qw($VERSION);
 
 =head1 NAME
 
