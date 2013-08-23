@@ -1,13 +1,13 @@
 # --
 # ITSMCore.pm - code to excecute during package installation
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package var::packagesetup::ITSMCore;
+package var::packagesetup::ITSMCore;    ## no critic
 
 use strict;
 use warnings;
@@ -203,7 +203,7 @@ my $Result = $CodeObject->CodeUpgradeFromLowerThan_3_2_91();
 
 =cut
 
-sub CodeUpgradeFromLowerThan_3_2_91 {
+sub CodeUpgradeFromLowerThan_3_2_91 {    ## no critic
     my ( $Self, %Param ) = @_;
 
     # migrate the values for Criticality and the Impact from GeneralCatalog to DynamicFields
@@ -448,10 +448,10 @@ sub _MigrateCriticalityAndImpactToDynamicFields {
     );
 
     # convert in a hash reference where key is the same as the value
-    $CriticalityList = { map { $_ => $_ } sort values %{ $CriticalityList } };
-    $ImpactList      = { map { $_ => $_ } sort values %{ $ImpactList } };
+    $CriticalityList = { map { $_ => $_ } sort values %{$CriticalityList} };
+    $ImpactList      = { map { $_ => $_ } sort values %{$ImpactList} };
 
-    # get the definition for all dynamic fields for ITSMCore (this is only ITSMCriticality and ITSMImpact)
+# get the definition for all dynamic fields for ITSMCore (this is only ITSMCriticality and ITSMImpact)
     my @DynamicFields = $Self->_GetITSMDynamicFieldsDefinition();
 
     my $SuccessCounter;
@@ -491,7 +491,7 @@ sub _MigrateCriticalityAndImpactToDynamicFields {
             UserID     => 1,
         );
 
-        if ( $Success ) {
+        if ($Success) {
             $SuccessCounter++;
         }
     }
@@ -501,7 +501,8 @@ sub _MigrateCriticalityAndImpactToDynamicFields {
 
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => "Could not migrate Criticality and Impact from General Catalog to Dynamic Fields!",
+            Message =>
+                "Could not migrate Criticality and Impact from General Catalog to Dynamic Fields!",
         );
         return;
     }
@@ -524,7 +525,7 @@ sub _MigrateCriticalityAndImpactToDynamicFields {
     # which have been stored as ids and replace them with values
     for my $DynamicFieldName ( sort keys %GeneralCatalogList ) {
 
-        for my $ID ( sort keys %{ $GeneralCatalogList{ $DynamicFieldName } } ) {
+        for my $ID ( sort keys %{ $GeneralCatalogList{$DynamicFieldName} } ) {
 
             $Self->{DBObject}->Do(
                 SQL => 'UPDATE dynamic_field_value
@@ -532,8 +533,8 @@ sub _MigrateCriticalityAndImpactToDynamicFields {
                     WHERE field_id = ?
                     AND value_text = ?',
                 Bind => [
-                    \$GeneralCatalogList{ $DynamicFieldName }->{$ID},
-                    \$DynamicFieldName2ID{ $DynamicFieldName },
+                    \$GeneralCatalogList{$DynamicFieldName}->{$ID},
+                    \$DynamicFieldName2ID{$DynamicFieldName},
                     \$ID,
                 ],
             );
@@ -543,7 +544,7 @@ sub _MigrateCriticalityAndImpactToDynamicFields {
     # delete the entries for criticality and impact from general catalog
     for my $Class (qw(ITSM::Core::Criticality ITSM::Core::Impact)) {
         $Self->{DBObject}->Do(
-            SQL => 'DELETE FROM general_catalog WHERE general_catalog_class = ?',
+            SQL  => 'DELETE FROM general_catalog WHERE general_catalog_class = ?',
             Bind => [ \$Class ],
         );
     }
@@ -739,7 +740,7 @@ sub _CIPDefaultMatrixSet {
     # get the dynamic fields for ITSMCriticality and ITSMImpact
     my $DynamicFieldConfigArrayRef = $Self->{DynamicFieldObject}->DynamicFieldListGet(
         Valid       => 1,
-        ObjectType  => [ 'Ticket' ],
+        ObjectType  => ['Ticket'],
         FieldFilter => {
             ITSMCriticality => 1,
             ITSMImpact      => 1,
@@ -749,11 +750,12 @@ sub _CIPDefaultMatrixSet {
     # get the dynamic field value for ITSMCriticality and ITSMImpact
     my %PossibleValues;
     DYNAMICFIELD:
-    for my $DynamicFieldConfig ( @{ $DynamicFieldConfigArrayRef } ) {
+    for my $DynamicFieldConfig ( @{$DynamicFieldConfigArrayRef} ) {
         next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
 
         # get PossibleValues
-        $PossibleValues{ $DynamicFieldConfig->{Name} } = $DynamicFieldConfig->{Config}->{PossibleValues} || {};
+        $PossibleValues{ $DynamicFieldConfig->{Name} }
+            = $DynamicFieldConfig->{Config}->{PossibleValues} || {};
     }
 
     # get the criticality list
@@ -997,7 +999,7 @@ sub _FillupEmptyServiceCriticality {
     # get the dynamic fields for ITSMCriticality
     my $DynamicFieldConfigArrayRef = $Self->{DynamicFieldObject}->DynamicFieldListGet(
         Valid       => 1,
-        ObjectType  => [ 'Ticket' ],
+        ObjectType  => ['Ticket'],
         FieldFilter => {
             ITSMCriticality => 1,
         },
@@ -1006,11 +1008,12 @@ sub _FillupEmptyServiceCriticality {
     # get the dynamic field value for ITSMCriticality and ITSMImpact
     my %PossibleValues;
     DYNAMICFIELD:
-    for my $DynamicFieldConfig ( @{ $DynamicFieldConfigArrayRef } ) {
+    for my $DynamicFieldConfig ( @{$DynamicFieldConfigArrayRef} ) {
         next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
 
         # get PossibleValues
-        $PossibleValues{ $DynamicFieldConfig->{Name} } = $DynamicFieldConfig->{Config}->{PossibleValues} || {};
+        $PossibleValues{ $DynamicFieldConfig->{Name} }
+            = $DynamicFieldConfig->{Config}->{PossibleValues} || {};
     }
 
     # get the criticality list
@@ -1020,7 +1023,8 @@ sub _FillupEmptyServiceCriticality {
     if ( !@CriticalityKeyList ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => "Can't find any possible values for ITSMCriticality in dynamic field configuration!",
+            Message =>
+                "Can't find any possible values for ITSMCriticality in dynamic field configuration!",
         );
         return;
     }

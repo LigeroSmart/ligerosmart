@@ -31,15 +31,15 @@ sub new {
             $Self->{LayoutObject}->FatalError( Message => "Got no $Object!" );
         }
     }
-    $Self->{CIPAllocateObject}    = Kernel::System::ITSMCIPAllocate->new(%Param);
-    $Self->{DynamicFieldObject}   = Kernel::System::DynamicField->new(%Param);
-    $Self->{PriorityObject}       = Kernel::System::Priority->new(%Param);
-    $Self->{ValidObject}          = Kernel::System::Valid->new(%Param);
+    $Self->{CIPAllocateObject}  = Kernel::System::ITSMCIPAllocate->new(%Param);
+    $Self->{DynamicFieldObject} = Kernel::System::DynamicField->new(%Param);
+    $Self->{PriorityObject}     = Kernel::System::Priority->new(%Param);
+    $Self->{ValidObject}        = Kernel::System::Valid->new(%Param);
 
     # get the dynamic fields for ITSMCriticality and ITSMImpact
     my $DynamicFieldConfigArrayRef = $Self->{DynamicFieldObject}->DynamicFieldListGet(
         Valid       => 1,
-        ObjectType  => [ 'Ticket' ],
+        ObjectType  => ['Ticket'],
         FieldFilter => {
             ITSMCriticality => 1,
             ITSMImpact      => 1,
@@ -49,11 +49,12 @@ sub new {
     # get the dynamic field value for ITSMCriticality and ITSMImpact
     my %PossibleValues;
     DYNAMICFIELD:
-    for my $DynamicFieldConfig ( @{ $DynamicFieldConfigArrayRef } ) {
+    for my $DynamicFieldConfig ( @{$DynamicFieldConfigArrayRef} ) {
         next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
 
         # get PossibleValues
-        $PossibleValues{ $DynamicFieldConfig->{Name} } = $DynamicFieldConfig->{Config}->{PossibleValues} || {};
+        $PossibleValues{ $DynamicFieldConfig->{Name} }
+            = $DynamicFieldConfig->{Config}->{PossibleValues} || {};
     }
 
     # set the criticality list
@@ -149,7 +150,8 @@ sub Run {
         {
             $AllocateMatrix->[0]->[$Counter2]->{ObjectType}     = 'Criticality';
             $AllocateMatrix->[0]->[$Counter2]->{CriticalityKey} = $Criticality;
-            $AllocateMatrix->[0]->[$Counter2]->{ObjectOption}   = $Self->{CriticalityList}->{$Criticality};
+            $AllocateMatrix->[0]->[$Counter2]->{ObjectOption}
+                = $Self->{CriticalityList}->{$Criticality};
             $Counter2++;
         }
 

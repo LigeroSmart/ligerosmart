@@ -1,6 +1,6 @@
 # --
 # Kernel/Language/nb_NO_ITSMCore.pm - translation file
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
 # Copyright (C) 2011 Eirik Wulff <eirik at epledoktor.no>
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see

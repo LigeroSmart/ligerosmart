@@ -1398,6 +1398,7 @@ sub ServiceParentsGet {
 # ---
 # ITSM
 # ---
+
 =item _ServiceGetCurrentIncidentState()
 
 Returns a hash with the original service data,
@@ -1605,6 +1606,7 @@ sub _ServiceGetCurrentIncidentState {
 
     return %ServiceData;
 }
+
 # ---
 
 1;
