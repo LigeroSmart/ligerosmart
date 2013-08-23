@@ -1014,7 +1014,7 @@ sub RecipientList {
 
     # fetch recipients
     my @Recipients;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray ) {
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         my $Recipient = {
             Key   => $Row[0],
             Value => $Row[1],

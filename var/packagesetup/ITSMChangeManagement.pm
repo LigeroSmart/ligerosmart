@@ -7,7 +7,7 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package var::packagesetup::ITSMChangeManagement;
+package var::packagesetup::ITSMChangeManagement;    ## no critic
 
 use strict;
 use warnings;
@@ -334,7 +334,7 @@ my $Result = $CodeObject->CodeUpgradeFromLowerThan_3_2_91();
 
 =cut
 
-sub CodeUpgradeFromLowerThan_3_2_91 {
+sub CodeUpgradeFromLowerThan_3_2_91 {    ## no critic
     my ( $Self, %Param ) = @_;
 
     # add new notifications that were added in version 3.2.91
@@ -351,7 +351,7 @@ my $Result = $CodeObject->CodeUpgradeFromLowerThan_2_0_3();
 
 =cut
 
-sub CodeUpgradeFromLowerThan_2_0_3 {
+sub CodeUpgradeFromLowerThan_2_0_3 {    ## no critic
     my ( $Self, %Param ) = @_;
 
     # add new notifications that were added in version 2.0.3
@@ -728,14 +728,14 @@ sub _StateMachineDefaultSet {
         $Self->{GeneralCatalogObject}->ItemList(
             Class => 'ITSM::ChangeManagement::Change::State',
             )
-        };
+    };
 
     # get the workorder states from the general catalog
     my %Name2WorkOrderStateID = reverse %{
         $Self->{GeneralCatalogObject}->ItemList(
             Class => 'ITSM::ChangeManagement::WorkOrder::State',
             )
-        };
+    };
 
     # define ChangeState transitions
     my %ChangeStateTransitions = (
@@ -1272,7 +1272,7 @@ Add ChangeManagement specific notifications that were added in version 2.0.3.
 
 =cut
 
-sub _AddNotificationsNewIn_2_0_3 {
+sub _AddNotificationsNewIn_2_0_3 {    ## no critic
     my ($Self) = @_;
 
     # define notifications and recipients
@@ -2769,7 +2769,7 @@ Adds the new notifications to systems notification table that were added in vers
 
 =cut
 
-sub _AddSystemNotificationsNewIn_2_0_3 {
+sub _AddSystemNotificationsNewIn_2_0_3 {    ## no critic
     my ($Self) = @_;
 
     # define agent notifications
@@ -2850,7 +2850,7 @@ Adds the new notifications to systems notification table that were added in vers
 
 =cut
 
-sub _AddSystemNotificationsNewIn_3_2_91 {
+sub _AddSystemNotificationsNewIn_3_2_91 {    ## no critic
     my ($Self) = @_;
 
     # Workorder info for customers (en)

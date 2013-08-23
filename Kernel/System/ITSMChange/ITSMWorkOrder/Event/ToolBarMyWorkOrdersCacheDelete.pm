@@ -159,7 +159,7 @@ sub Run {
         # do nothing if the WorkOrderAgentID did not change
         return 1
             if $Param{Data}->{WorkOrderAgentID} eq
-                $Param{Data}->{OldWorkOrderData}->{WorkOrderAgentID};
+            $Param{Data}->{OldWorkOrderData}->{WorkOrderAgentID};
 
         # set the cache type postfix
         my @CacheTypePostfixes = (

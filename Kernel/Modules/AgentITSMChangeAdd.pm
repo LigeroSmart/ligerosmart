@@ -1,6 +1,6 @@
 # --
 # Kernel/Modules/AgentITSMChangeAdd.pm - the OTRS ITSM ChangeManagement change add module
-# Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -74,7 +74,10 @@ sub Run {
 
     # store needed parameters in %GetParam to make it reloadable
     my %GetParam;
-    for my $ParamName (qw(ChangeTitle Description Justification TicketID CategoryID ImpactID PriorityID AttachmentUpload FileID)) {
+    for my $ParamName (
+        qw(ChangeTitle Description Justification TicketID CategoryID ImpactID PriorityID AttachmentUpload FileID)
+        )
+    {
         $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
     }
 
@@ -421,7 +424,7 @@ sub Run {
                                 . "Filename=$CachedAttachment->{Filename};ChangeID=$ChangeID";
 
                             # replace urls
-                            $ChangeData->{Description}   =~ s{$Search}{$Replace}xms;
+                            $ChangeData->{Description} =~ s{$Search}{$Replace}xms;
                             $ChangeData->{Justification} =~ s{$Search}{$Replace}xms;
 
                             # update change

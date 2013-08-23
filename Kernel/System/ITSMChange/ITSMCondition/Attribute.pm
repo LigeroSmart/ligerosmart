@@ -1,6 +1,6 @@
 # --
 # Kernel/System/ITSMChange/ITSMCondition/Attribute.pm - all condition attribute functions
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,6 @@ use warnings;
 # IMPORTANT!
 # Do not delete this line! This prevents the "Frontend/Basic" UnitTest from failing
 # on opensuse 11.3 and 11.4 (64bit) if mod_perl is used!
-use vars qw($VERSION);
 
 =head1 NAME
 

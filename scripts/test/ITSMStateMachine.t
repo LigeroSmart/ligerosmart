@@ -1,6 +1,6 @@
 # --
 # ITSMStateMachine.t - StateMachine tests
-# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -73,7 +73,7 @@ my %Name2ChangeStateID = reverse %{
     $Self->{GeneralCatalogObject}->ItemList(
         Class => 'ITSM::ChangeManagement::Change::State',
         )
-    };
+};
 
 # add zero entry for the initial state
 $Name2ChangeStateID{0} = 0;
@@ -105,7 +105,7 @@ my %Name2WorkOrderStateID = reverse %{
     $Self->{GeneralCatalogObject}->ItemList(
         Class => 'ITSM::ChangeManagement::WorkOrder::State',
         )
-    };
+};
 
 # add zero entry for the initial state
 $Name2WorkOrderStateID{0} = 0;

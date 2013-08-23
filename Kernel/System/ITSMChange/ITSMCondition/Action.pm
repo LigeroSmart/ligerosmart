@@ -1,6 +1,6 @@
 # --
 # Kernel/System/ITSMChange/ITSMCondition/Action.pm - all condition action functions
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -853,7 +853,7 @@ sub _CreateNewActionNumber {
 
     # fetch the result, default to 0 when there are no actions yet
     my $ActionNumber;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray ) {
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         $ActionNumber = $Row[0];
     }
     $ActionNumber ||= 0;

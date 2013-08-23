@@ -1,6 +1,6 @@
 # --
 # Kernel/Modules/AgentITSMChangeAddFromTemplate.pm - the OTRS ITSM ChangeManagement change add module (from template)
-# Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -74,7 +74,10 @@ sub Run {
 
     # store needed parameters in %GetParam to make it reloadable
     my %GetParam;
-    for my $ParamName (qw(MoveTimeType MoveTimeYear MoveTimeMonth MoveTimeDay MoveTimeHour MoveTimeMinute TicketID TemplateID)) {
+    for my $ParamName (
+        qw(MoveTimeType MoveTimeYear MoveTimeMonth MoveTimeDay MoveTimeHour MoveTimeMinute TicketID TemplateID)
+        )
+    {
         $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
     }
 
@@ -225,7 +228,7 @@ sub Run {
             # create change based on the template
             my $ChangeID = $Self->{TemplateObject}->TemplateDeSerialize(
                 TemplateID => $Self->{ParamObject}->GetParam( Param => 'TemplateID' ),
-                UserID => $Self->{UserID},
+                UserID     => $Self->{UserID},
                 NewTimeInEpoche => $NewTime,
                 MoveTimeType    => $GetParam{MoveTimeType},
             );
@@ -332,7 +335,7 @@ sub Run {
             %Param,
             %GetParam,
             %ValidationError,
-            FormID => $Self->{FormID},
+            FormID                      => $Self->{FormID},
             TemplateSelectionString     => $TemplateSelectionString,
             MoveTimeTypeSelectionString => $MoveTimeTypeSelectionString,
             MoveTimeSelectionString     => $MoveTimeSelectionString,

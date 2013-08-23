@@ -565,12 +565,14 @@ for my $Test (@ChangeTests) {
             local $Data::Dumper::Indent = 0;
             local $Data::Dumper::Useqq  = 1;
 
-            # dump the attribute from ChangeGet()
-            my $ChangeAttribute = Data::Dumper::Dumper( $ChangeData->{$RequestedAttribute} );
-
-            # dump the reference attribute
+            # dump the attribute from ChangeGet() and the reference attribute
+            ## no critic
+            my $ChangeAttribute
+                = Data::Dumper::Dumper( $ChangeData->{$RequestedAttribute} );    ## no critic
             my $ReferenceAttribute
-                = Data::Dumper::Dumper( $ReferenceData->{ChangeGet}->{$RequestedAttribute} );
+                = Data::Dumper::Dumper( $ReferenceData->{ChangeGet}->{$RequestedAttribute} )
+                ;                                                                ## no critic
+                                                                                 # use critic
 
             $Self->Is(
                 $ChangeAttribute,
@@ -2071,12 +2073,14 @@ for my $Test (@WorkOrderTests) {
             local $Data::Dumper::Indent = 0;
             local $Data::Dumper::Useqq  = 1;
 
-            # dump the attribute from WorkOrderGet()
-            my $WorkOrderAttribute = Data::Dumper::Dumper( $WorkOrderData->{$RequestedAttribute} );
-
-            # dump the reference attribute
+            # dump the attribute from WorkOrderGet() and the reference attribute
+            ## no critic
+            my $WorkOrderAttribute
+                = Data::Dumper::Dumper( $WorkOrderData->{$RequestedAttribute} );    ## no critic
             my $ReferenceAttribute
-                = Data::Dumper::Dumper( $ReferenceData->{WorkOrderGet}->{$RequestedAttribute} );
+                = Data::Dumper::Dumper( $ReferenceData->{WorkOrderGet}->{$RequestedAttribute} )
+                ;                                                                   ## no critic
+            ## use critic
 
             $Self->Is(
                 $WorkOrderAttribute,
@@ -2834,7 +2838,7 @@ for my $OrderByColumn (@OrderByColumns) {
     my @SortedIDs = map { $_->{WorkOrderID} } @SortedWorkOrders;
 
     # dump the reference attribute
-    my $ReferenceList = Data::Dumper::Dumper( \@SortedIDs );
+    my $ReferenceList = Data::Dumper::Dumper( \@SortedIDs );    ## no critic
 
     my $SearchResult = $Self->{WorkOrderObject}->WorkOrderSearch(
         ChangeIDs        => [$OrderByTestID],
@@ -2844,7 +2848,7 @@ for my $OrderByColumn (@OrderByColumns) {
     );
 
     # dump the attribute from WorkOrderGet()
-    my $SearchList = Data::Dumper::Dumper($SearchResult);
+    my $SearchList = Data::Dumper::Dumper($SearchResult);       ## no critic
 
     $Self->Is(
         $SearchList,
@@ -2871,7 +2875,7 @@ for my $OrderByColumn (@OrderByColumns) {
     my @SortedIDsDown = map { $_->{WorkOrderID} } @SortedWorkOrders;
 
     # dump the reference attribute
-    my $ReferenceListDown = Data::Dumper::Dumper( \@SortedIDsDown );
+    my $ReferenceListDown = Data::Dumper::Dumper( \@SortedIDsDown );    ## no critic
 
     my $SearchResultDown = $Self->{WorkOrderObject}->WorkOrderSearch(
         ChangeIDs => [$OrderByTestID],
@@ -2880,7 +2884,7 @@ for my $OrderByColumn (@OrderByColumns) {
     );
 
     # dump the attribute from WorkOrderGet()
-    my $SearchListDown = Data::Dumper::Dumper($SearchResultDown);
+    my $SearchListDown = Data::Dumper::Dumper($SearchResultDown);       ## no critic
 
     $Self->Is(
         $SearchListDown,
@@ -3065,30 +3069,30 @@ for my $OrderByColumn (qw(PlannedStartTime PlannedEndTime ActualStartTime Actual
     );
 
     if (
-        Data::Dumper::Dumper($SearchResult)
-        eq Data::Dumper::Dumper( \@ResultReference )
+        Data::Dumper::Dumper($SearchResult)             ## no critic
+        eq Data::Dumper::Dumper( \@ResultReference )    ## no critic
         )
     {
         $Self->Is(
-            Data::Dumper::Dumper($SearchResult),
-            Data::Dumper::Dumper( \@ResultReference ),
+            Data::Dumper::Dumper($SearchResult),          ## no critic
+            Data::Dumper::Dumper( \@ResultReference ),    ## no critic
             "Test $TestCount: ChangeSearch OrderBy $OrderByColumn (Down)",
         );
     }
     elsif (
-        Data::Dumper::Dumper($SearchResult)
-        eq Data::Dumper::Dumper( \@ResultReferenceAlternative )
+        Data::Dumper::Dumper($SearchResult)                        ## no critic
+        eq Data::Dumper::Dumper( \@ResultReferenceAlternative )    ## no critic
         )
     {
         $Self->Is(
-            Data::Dumper::Dumper($SearchResult),
-            Data::Dumper::Dumper( \@ResultReferenceAlternative ),
+            Data::Dumper::Dumper($SearchResult),                     ## no critic
+            Data::Dumper::Dumper( \@ResultReferenceAlternative ),    ## no critic
             "Test $TestCount: ChangeSearch OrderBy $OrderByColumn (Down)",
         );
     }
     else {
         $Self->Is(
-            Data::Dumper::Dumper($SearchResult),
+            Data::Dumper::Dumper($SearchResult),                     ## no critic
             undef,
             "Test $TestCount: ChangeSearch OrderBy $OrderByColumn (Down)",
         );
@@ -3103,30 +3107,30 @@ for my $OrderByColumn (qw(PlannedStartTime PlannedEndTime ActualStartTime Actual
     );
 
     if (
-        Data::Dumper::Dumper($SearchResultUp)
-        eq Data::Dumper::Dumper( [ reverse @ResultReference ] )
+        Data::Dumper::Dumper($SearchResultUp)    ## no critic
+        eq Data::Dumper::Dumper( [ reverse @ResultReference ] )    ## no critic
         )
     {
         $Self->Is(
-            Data::Dumper::Dumper($SearchResultUp),
-            Data::Dumper::Dumper( [ reverse @ResultReference ] ),
+            Data::Dumper::Dumper($SearchResultUp),                 ## no critic
+            Data::Dumper::Dumper( [ reverse @ResultReference ] ),  ## no critic
             "Test $TestCount: ChangeSearch OrderBy $OrderByColumn (Up)",
         );
     }
     elsif (
-        Data::Dumper::Dumper($SearchResultUp)
-        eq Data::Dumper::Dumper( [ reverse @ResultReferenceAlternative ] )
+        Data::Dumper::Dumper($SearchResultUp)                      ## no critic
+        eq Data::Dumper::Dumper( [ reverse @ResultReferenceAlternative ] )    ## no critic
         )
     {
         $Self->Is(
-            Data::Dumper::Dumper($SearchResultUp),
-            Data::Dumper::Dumper( [ reverse @ResultReferenceAlternative ] ),
+            Data::Dumper::Dumper($SearchResultUp),                            ## no critic
+            Data::Dumper::Dumper( [ reverse @ResultReferenceAlternative ] ),  ## no critic
             "Test $TestCount: ChangeSearch OrderBy $OrderByColumn (Up)",
         );
     }
     else {
         $Self->Is(
-            Data::Dumper::Dumper($SearchResultUp),
+            Data::Dumper::Dumper($SearchResultUp),                            ## no critic
             undef,
             "Test $TestCount: ChangeSearch OrderBy $OrderByColumn (Up)",
         );
@@ -3578,17 +3582,16 @@ for my $TSTest (@TimeSearchTests) {
         local $Data::Dumper::Useqq  = 1;
 
         # dump the attribute from WorkOrderSearch()
-        my $SearchResultDump = Data::Dumper::Dumper( sort @{$SearchResult} );
+        my $SearchResultDump = Data::Dumper::Dumper( sort @{$SearchResult} );    ## no critic
 
         # dump the reference attribute
-        my $ReferenceDump
-            = Data::Dumper::Dumper( sort @ResultWorkOrderIDs );
+        my $ReferenceDump = Data::Dumper::Dumper( sort @ResultWorkOrderIDs );    ## no critic
 
         $Self->Is(
             $SearchResultDump,
             $ReferenceDump,
             "Test $TestCount: |- WorkOrderSearch(): "
-                . Data::Dumper::Dumper( $SourceData->{WorkOrderSearch} )
+                . Data::Dumper::Dumper( $SourceData->{WorkOrderSearch} )         ## no critic
                 . $SearchResultDump,
         );
     }

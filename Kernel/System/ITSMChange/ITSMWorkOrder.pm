@@ -1,6 +1,6 @@
 # --
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
-# Copyright (C) 2003-2013 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1342,7 +1342,7 @@ sub WorkOrderSearch {
         if (
             $Self->{DBType} eq 'oracle'
             && (
-                $StringParam    eq 'Instruction'
+                $StringParam eq 'Instruction'
                 || $StringParam eq 'Report'
                 || $StringParam eq 'ChangeDescription'
                 || $StringParam eq 'ChangeJustification'
@@ -3008,7 +3008,7 @@ sub _GetWorkOrderNumber {
 
     # fetch the result, default to 0 when there are no workorders yet
     my $WorkOrderNumber;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray ) {
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         $WorkOrderNumber = $Row[0];
     }
     $WorkOrderNumber ||= 0;
@@ -3116,7 +3116,7 @@ sub _CheckWorkOrderParams {
 
         # check the maximum length of description and justification
         if (
-            $Argument    eq 'Instruction'
+            $Argument eq 'Instruction'
             || $Argument eq 'InstructionPlain'
             || $Argument eq 'Report'
             || $Argument eq 'ReportPlain'
@@ -3337,7 +3337,7 @@ sub _CheckTimestamps {
 
             # remove all non-digit characters
             $StartTime =~ s{ \D }{}xmsg;
-            $EndTime   =~ s{ \D }{}xmsg;
+            $EndTime =~ s{ \D }{}xmsg;
 
             # start time must be smaller than end time
             if ( $StartTime >= $EndTime ) {

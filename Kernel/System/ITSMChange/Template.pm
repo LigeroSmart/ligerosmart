@@ -1,6 +1,6 @@
 # --
 # Kernel/System/ITSMChange/Template.pm - all template functions
-# Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1168,7 +1168,7 @@ sub TemplateDeSerialize {
     my $TemplateContent = $Template->{Content};
     my $VAR1;
 
-    eval "\$VAR1 = $TemplateContent; 1;" or return;
+    return if !eval "\$VAR1 = $TemplateContent; 1;";    ## no critic
 
     return if !$VAR1;
     return if ref $VAR1 ne 'HASH';

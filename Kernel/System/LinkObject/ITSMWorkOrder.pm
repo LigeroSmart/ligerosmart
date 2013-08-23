@@ -1,6 +1,6 @@
 # --
 # Kernel/System/LinkObject/ITSMWorkOrder.pm - to link workorder objects
-# Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you

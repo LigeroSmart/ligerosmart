@@ -144,7 +144,7 @@ sub Run {
             for my $Column ( 1 .. ( $Counter2 - 1 ) ) {
 
                 # extract keys
-                my $ImpactKey      = $AllocateMatrix->[$Row]->[0]->{ImpactKey};
+                my $ImpactKey   = $AllocateMatrix->[$Row]->[0]->{ImpactKey};
                 my $CategoryKey = $AllocateMatrix->[0]->[$Column]->{CategoryKey};
 
                 # create option string

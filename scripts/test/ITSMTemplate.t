@@ -1,6 +1,6 @@
 # --
 # ITSMTemplate.t - change tests
-# Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -92,7 +92,7 @@ for my $Counter ( 1 .. 3 ) {
             . int( rand 1_000_000 )
             . '@localhost',
         ValidID => $Self->{ValidObject}->ValidLookup( Valid => 'valid' ),
-        UserID => 1,
+        UserID  => 1,
     );
     push @CustomerUserIDs, $CustomerUserID;
 }
@@ -300,12 +300,12 @@ for my $ChangeName ( keys %CreatedChangeID ) {
         local $Data::Dumper::Indent = 0;
         local $Data::Dumper::Useqq  = 1;
 
-        # dump the attribute from ChangeGet()
+        # dump the attribute from ChangeGet() and the reference attribute
+        ## no critic
         my $ChangeAttribute = Data::Dumper::Dumper( $Change->{$RequestedAttribute} );
-
-        # dump the reference attribute
         my $ReferenceAttribute
             = Data::Dumper::Dumper( $ChangeDefinitions{$ChangeName}->{$RequestedAttribute} );
+        ## use critic
 
         $Self->Is(
             $ChangeAttribute,
@@ -358,12 +358,12 @@ for my $WorkOrderName ( keys %WorkOrderDefinitions ) {
         local $Data::Dumper::Indent = 0;
         local $Data::Dumper::Useqq  = 1;
 
-        # dump the attribute from ChangeGet()
+        # dump the attribute from ChangeGet() and the reference attribute
+        ## no critic
         my $WorkOrderAttribute = Data::Dumper::Dumper( $WorkOrder->{$RequestedAttribute} );
-
-        # dump the reference attribute
         my $ReferenceAttribute
             = Data::Dumper::Dumper( $WorkOrderDefinitions{$WorkOrderName}->{$RequestedAttribute} );
+        ## use critic
 
         $Self->Is(
             $WorkOrderAttribute,
@@ -613,14 +613,13 @@ for my $ChangeTemplateName ( keys %CreatedChangeID ) {
         local $Data::Dumper::Indent = 0;
         local $Data::Dumper::Useqq  = 1;
 
-        # dump the attribute from ChangeGet()
-        my $ChangeAttribute = Data::Dumper::Dumper( $Change->{$RequestedAttribute} );
-
-        # dump the reference attribute
-        my $ReferenceAttribute
-            = Data::Dumper::Dumper(
+        # dump the attribute from ChangeGet() and the reference attribute
+        ## no critic
+        my $ChangeAttribute    = Data::Dumper::Dumper( $Change->{$RequestedAttribute} );
+        my $ReferenceAttribute = Data::Dumper::Dumper(
             $ChangeDefinitions{$ChangeTemplateName}->{$RequestedAttribute}
-            );
+        );
+        ## use critic
 
         $Self->Is(
             $ChangeAttribute,
@@ -689,14 +688,13 @@ for my $WorkOrderTemplateName ( keys %CreatedWorkOrderID ) {
         local $Data::Dumper::Indent = 0;
         local $Data::Dumper::Useqq  = 1;
 
-        # dump the attribute from ChangeGet()
+        # dump the attribute from ChangeGet() and the reference attribute
+        ## no critic
         my $WorkOrderAttribute = Data::Dumper::Dumper( $WorkOrder->{$RequestedAttribute} );
-
-        # dump the reference attribute
-        my $ReferenceAttribute
-            = Data::Dumper::Dumper(
+        my $ReferenceAttribute = Data::Dumper::Dumper(
             $WorkOrderDefinitions{$WorkOrderTemplateName}->{$RequestedAttribute}
-            );
+        );
+        ## use critic
 
         $Self->Is(
             $WorkOrderAttribute,
@@ -778,15 +776,12 @@ for my $CABTemplateName (@CABTemplateNames) {
     local $Data::Dumper::Indent = 0;
     local $Data::Dumper::Useqq  = 1;
 
-    # dump the attribute from ChangeGet()
-    my $ChangeAttribute = Data::Dumper::Dumper(
-        [ $Change->{CABAgents}, $Change->{CABCustomers}, ]
-    );
-
-    # dump the reference attribute
-    my $ReferenceAttribute = Data::Dumper::Dumper(
-        [ $OrigChange->{CABAgents}, $OrigChange->{CABCustomers}, ]
-    );
+    # dump the attribute from ChangeGet() and the reference attribute
+    ## no critic
+    my $ChangeAttribute = Data::Dumper::Dumper( [ $Change->{CABAgents}, $Change->{CABCustomers} ] );
+    my $ReferenceAttribute
+        = Data::Dumper::Dumper( [ $OrigChange->{CABAgents}, $OrigChange->{CABCustomers} ] );
+    ## use critic
 
     $Self->Is(
         $ChangeAttribute,

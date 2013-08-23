@@ -104,7 +104,8 @@ sub Run {
     }
 
     # get the checkbox value and store it in %GetParam to make it reloadable
-    $GetParam{MoveFollowingWorkOrders} = $Self->{ParamObject}->GetParam( Param => 'MoveFollowingWorkOrders' );
+    $GetParam{MoveFollowingWorkOrders}
+        = $Self->{ParamObject}->GetParam( Param => 'MoveFollowingWorkOrders' );
 
     # get all workorder ids for this change
     my $WorkOrderIDsRef = $Self->{WorkOrderObject}->WorkOrderList(
@@ -116,7 +117,7 @@ sub Run {
     my @FollowingWorkOrderIDs;
     my $OwnWorkOrderIDFound;
     WORKORDERID:
-    for my $OtherWorkOrderID ( @{ $WorkOrderIDsRef } ) {
+    for my $OtherWorkOrderID ( @{$WorkOrderIDsRef} ) {
 
         # check if the other workorder id is the own workorder id
         if ( $OtherWorkOrderID eq $WorkOrderID ) {
@@ -449,17 +450,17 @@ sub Run {
                     }
                 }
 
-                # if there are any following workorders
-                # and if the following workorders should be moved, that means we want to keep the difference
-                # between the planned end date of this workorder and the the planned start dates of ALL LATER workorders
+# if there are any following workorders
+# and if the following workorders should be moved, that means we want to keep the difference
+# between the planned end date of this workorder and the the planned start dates of ALL LATER workorders
                 if ( @FollowingWorkOrderIDs && $GetParam{MoveFollowingWorkOrders} ) {
 
-                    # convert the OLD planned end time of this workorder into system time (epoch seconds)
+               # convert the OLD planned end time of this workorder into system time (epoch seconds)
                     my $OldPlannedEndTimeSystemTime = $Self->{TimeObject}->TimeStamp2SystemTime(
                         String => $WorkOrder->{PlannedEndTime},
                     );
 
-                    # convert the NEW planned end time of this workorder into system time (epoch seconds)
+               # convert the NEW planned end time of this workorder into system time (epoch seconds)
                     my $NewPlannedEndTimeSystemTime = $Self->{TimeObject}->TimeStamp2SystemTime(
                         String => $GetParam{PlannedEndTime},
                     );
@@ -469,7 +470,7 @@ sub Run {
 
                     # modify all following workorders
                     WORKORDERID:
-                    for my $WorkOrderID ( @FollowingWorkOrderIDs ) {
+                    for my $WorkOrderID (@FollowingWorkOrderIDs) {
 
                         # get workorder data
                         my $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
@@ -481,7 +482,7 @@ sub Run {
                         my %TimeData;
                         for my $TimeType (qw(PlannedStartTime PlannedEndTime)) {
 
-                            # convert the old planned times of the workorder into system time (epoch seconds)
+                   # convert the old planned times of the workorder into system time (epoch seconds)
                             $TimeData{$TimeType} = $Self->{TimeObject}->TimeStamp2SystemTime(
                                 String => $WorkOrder->{$TimeType},
                             );

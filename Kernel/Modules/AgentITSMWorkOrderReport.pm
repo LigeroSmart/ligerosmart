@@ -1,6 +1,6 @@
 # --
 # Kernel/Modules/AgentITSMWorkOrderReport.pm - the OTRS ITSM ChangeManagement workorder report module
-# Copyright (C) 2003-2013 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -613,7 +613,7 @@ sub Run {
 
     # show attachments (report)
     ATTACHMENT:
-    for my $Filename ( @WorkOrderAttachments ) {
+    for my $Filename (@WorkOrderAttachments) {
 
         # get info about file
         my $AttachmentData = $Self->{WorkOrderObject}->WorkOrderAttachmentGet(
@@ -644,7 +644,7 @@ sub Run {
     );
 
     # show attachments (report)
-    for my $Attachment ( @TempAttachments ) {
+    for my $Attachment (@TempAttachments) {
 
         # do not show inline images as attachments
         # (they have a content id)

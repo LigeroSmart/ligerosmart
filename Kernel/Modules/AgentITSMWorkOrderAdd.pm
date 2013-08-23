@@ -1,6 +1,6 @@
 # --
 # Kernel/Modules/AgentITSMWorkOrderAdd.pm - the OTRS ITSM ChangeManagement workorder add module
-# Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -98,7 +98,10 @@ sub Run {
 
     # store needed parameters in %GetParam to make it reloadable
     my %GetParam;
-    for my $ParamName (qw(WorkOrderTitle Instruction WorkOrderTypeID PlannedEffort AttachmentUpload FileID)) {
+    for my $ParamName (
+        qw(WorkOrderTitle Instruction WorkOrderTypeID PlannedEffort AttachmentUpload FileID)
+        )
+    {
         $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
     }
 

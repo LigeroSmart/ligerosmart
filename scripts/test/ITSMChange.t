@@ -1,6 +1,6 @@
 # --
 # ITSMChange.t - change tests
-# Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -101,7 +101,7 @@ for my $Counter ( 1 .. 3 ) {
             . int( rand 1_000_000 )
             . '@localhost',
         ValidID => $Self->{ValidObject}->ValidLookup( Valid => 'valid' ),
-        UserID => 1,
+        UserID  => 1,
     );
     push @CustomerUserIDs, $CustomerUserID;
 }
@@ -2704,12 +2704,12 @@ for my $Test (@ChangeTests) {
             local $Data::Dumper::Indent = 0;
             local $Data::Dumper::Useqq  = 1;
 
-            # dump the attribute from ChangeGet()
+            # dump the attribute from ChangeGet() and the reference attribute
+            ## no critic
             my $ChangeAttribute = Data::Dumper::Dumper( $ChangeData->{$RequestedAttribute} );
-
-            # dump the reference attribute
             my $ReferenceAttribute
                 = Data::Dumper::Dumper( $ReferenceData->{ChangeGet}->{$RequestedAttribute} );
+            ## use critic
 
             $Self->Is(
                 $ChangeAttribute,
@@ -2732,12 +2732,12 @@ for my $Test (@ChangeTests) {
             local $Data::Dumper::Indent = 0;
             local $Data::Dumper::Useqq  = 1;
 
-            # dump the attribute from ChangeGet()
+            # dump the attribute from ChangeGet() and the reference attribute
+            ## no critic
             my $ChangeAttribute = Data::Dumper::Dumper( $CABData->{$RequestedAttribute} );
-
-            # dump the reference attribute
             my $ReferenceAttribute
                 = Data::Dumper::Dumper( $ReferenceData->{ChangeCABGet}->{$RequestedAttribute} );
+            ## use critic
 
             $Self->Is(
                 $ChangeAttribute,
@@ -4264,7 +4264,7 @@ for my $OrderByColumn (@OrderByColumns) {
     my @SortedIDs = map { $_->{ChangeID} } @SortedChanges;
 
     # dump the reference attribute
-    my $ReferenceList = Data::Dumper::Dumper( \@SortedIDs );
+    my $ReferenceList = Data::Dumper::Dumper( \@SortedIDs );    ## no critic
 
     my $SearchResult = $ChangeObject->ChangeSearch(
         ChangeTitle      => 'OrderByChange - Title - ' . $UniqueSignature,
@@ -4274,7 +4274,7 @@ for my $OrderByColumn (@OrderByColumns) {
     );
 
     # dump the attribute from ChangeGet()
-    my $SearchList = Data::Dumper::Dumper($SearchResult);
+    my $SearchList = Data::Dumper::Dumper($SearchResult);       ## no critic
 
     $Self->Is(
         $SearchList,
@@ -4300,7 +4300,7 @@ for my $OrderByColumn (@OrderByColumns) {
     my @SortedIDsDown = map { $_->{ChangeID} } @SortedChangesDown;
 
     # dump the reference attribute
-    my $ReferenceListDown = Data::Dumper::Dumper( \@SortedIDsDown );
+    my $ReferenceListDown = Data::Dumper::Dumper( \@SortedIDsDown );    ## no critic
 
     my $SearchResultDown = $ChangeObject->ChangeSearch(
         ChangeTitle => 'OrderByChange - Title - ' . $UniqueSignature,
@@ -4309,7 +4309,7 @@ for my $OrderByColumn (@OrderByColumns) {
     );
 
     # dump the attribute from ChangeGet()
-    my $SearchListDown = Data::Dumper::Dumper($SearchResultDown);
+    my $SearchListDown = Data::Dumper::Dumper($SearchResultDown);       ## no critic
 
     $Self->Is(
         $SearchListDown,
@@ -4419,10 +4419,10 @@ for my $ChangeIDForSecondOrderByTests (@OrderBySearchTestChangeIDs) {
     );
 
     # dump the attribute from ChangeGet()
-    my $SearchList = Data::Dumper::Dumper($SearchResult);
+    my $SearchList = Data::Dumper::Dumper($SearchResult);    ## no critic
 
     # dump the reference attribute
-    my $ReferenceList = Data::Dumper::Dumper( \@SortedIDs );
+    my $ReferenceList = Data::Dumper::Dumper( \@SortedIDs );    ## no critic
 
     $Self->Is(
         $SearchList,
@@ -4923,18 +4923,17 @@ for my $Test (@TimeSearchTests) {
         local $Data::Dumper::Indent = 0;
         local $Data::Dumper::Useqq  = 1;
 
-        # dump the attribute from ChangeSearch()
+        # dump the attribute from ChangeSearch() and the reference attribute
+        ## no critic
         my $SearchResultDump = Data::Dumper::Dumper( sort @{$SearchResult} );
-
-        # dump the reference attribute
-        my $ReferenceDump
-            = Data::Dumper::Dumper( sort @ResultChangeIDs );
+        my $ReferenceDump    = Data::Dumper::Dumper( sort @ResultChangeIDs );
+        ## use critic
 
         $Self->Is(
             $SearchResultDump,
             $ReferenceDump,
             "Test $TestCount: |- ChangeSearch(): "
-                . Data::Dumper::Dumper( $SourceData->{ChangeSearch} )
+                . Data::Dumper::Dumper( $SourceData->{ChangeSearch} )    ## no critic
                 . $SearchResultDump,
         );
     }
@@ -4981,7 +4980,7 @@ for my $CIPColumn (@OrderByCIPColumns) {
     my @SortedIDs = map { $_->{ChangeID} } @SortedChanges;
 
     # dump the reference attribute
-    my $ReferenceList = Data::Dumper::Dumper( \@SortedIDs );
+    my $ReferenceList = Data::Dumper::Dumper( \@SortedIDs );    ## no critic
 
     my $SearchResult = $ChangeObject->ChangeSearch(
         ChangeTitle      => '%CIP%' . $UniqueSignature,
@@ -4991,7 +4990,7 @@ for my $CIPColumn (@OrderByCIPColumns) {
     );
 
     # dump the attribute from ChangeGet()
-    my $SearchList = Data::Dumper::Dumper($SearchResult);
+    my $SearchList = Data::Dumper::Dumper($SearchResult);       ## no critic
 
     $Self->Is(
         $SearchList,
@@ -5008,7 +5007,7 @@ for my $CIPColumn (@OrderByCIPColumns) {
     my @SortedIDsDown = map { $_->{ChangeID} } @SortedChangesDown;
 
     # dump the reference attribute
-    my $ReferenceListDown = Data::Dumper::Dumper( \@SortedIDsDown );
+    my $ReferenceListDown = Data::Dumper::Dumper( \@SortedIDsDown );    ## no critic
 
     my $SearchResultDown = $ChangeObject->ChangeSearch(
         ChangeTitle => '%CIP%' . $UniqueSignature,
@@ -5017,7 +5016,7 @@ for my $CIPColumn (@OrderByCIPColumns) {
     );
 
     # dump the attribute from ChangeGet()
-    my $SearchListDown = Data::Dumper::Dumper($SearchResultDown);
+    my $SearchListDown = Data::Dumper::Dumper($SearchResultDown);       ## no critic
 
     $Self->Is(
         $SearchListDown,
@@ -5239,17 +5238,16 @@ for my $Test (@WOStringAndAgentSearchTests) {
         local $Data::Dumper::Useqq  = 1;
 
         # dump the attribute from ChangeSearch()
-        my $SearchResultDump = Data::Dumper::Dumper( sort @{$SearchResult} );
+        my $SearchResultDump = Data::Dumper::Dumper( sort @{$SearchResult} );    ## no critic
 
         # dump the reference attribute
-        my $ReferenceDump
-            = Data::Dumper::Dumper( sort @ResultChangeIDs );
+        my $ReferenceDump = Data::Dumper::Dumper( sort @ResultChangeIDs );       ## no critic
 
         $Self->Is(
             $SearchResultDump,
             $ReferenceDump,
             "Test $TestCount: |- ChangeSearch(): "
-                . Data::Dumper::Dumper( $SourceData->{ChangeSearch} )
+                . Data::Dumper::Dumper( $SourceData->{ChangeSearch} )            ## no critic
                 . $SearchResultDump,
         );
     }
