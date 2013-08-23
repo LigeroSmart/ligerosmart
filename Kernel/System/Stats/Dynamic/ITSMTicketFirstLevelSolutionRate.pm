@@ -1,6 +1,6 @@
 # --
 # Kernel/System/Stats/Dynamic/ITSMTicketFirstLevelSolutionRate.pm - stats functions for the first level solution rate
-# Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -37,16 +37,16 @@ sub new {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
     }
 
-    $Self->{StateObject}          = Kernel::System::State->new( %{$Self} );
-    $Self->{QueueObject}          = Kernel::System::Queue->new( %{$Self} );
-    $Self->{TicketObject}         = Kernel::System::Ticket->new( %{$Self} );
-    $Self->{PriorityObject}       = Kernel::System::Priority->new( %{$Self} );
-    $Self->{CustomerUser}         = Kernel::System::CustomerUser->new( %{$Self} );
-    $Self->{ServiceObject}        = Kernel::System::Service->new( %{$Self} );
-    $Self->{SLAObject}            = Kernel::System::SLA->new( %{$Self} );
-    $Self->{TypeObject}           = Kernel::System::Type->new( %{$Self} );
-    $Self->{DynamicFieldObject}   = Kernel::System::DynamicField->new( %{$Self} );
-    $Self->{BackendObject}        = Kernel::System::DynamicField::Backend->new( %{$Self} );
+    $Self->{StateObject}        = Kernel::System::State->new( %{$Self} );
+    $Self->{QueueObject}        = Kernel::System::Queue->new( %{$Self} );
+    $Self->{TicketObject}       = Kernel::System::Ticket->new( %{$Self} );
+    $Self->{PriorityObject}     = Kernel::System::Priority->new( %{$Self} );
+    $Self->{CustomerUser}       = Kernel::System::CustomerUser->new( %{$Self} );
+    $Self->{ServiceObject}      = Kernel::System::Service->new( %{$Self} );
+    $Self->{SLAObject}          = Kernel::System::SLA->new( %{$Self} );
+    $Self->{TypeObject}         = Kernel::System::Type->new( %{$Self} );
+    $Self->{DynamicFieldObject} = Kernel::System::DynamicField->new( %{$Self} );
+    $Self->{BackendObject}      = Kernel::System::DynamicField::Backend->new( %{$Self} );
 
     # get the dynamic fields for ticket object
     $Self->{DynamicField} = $Self->{DynamicFieldObject}->DynamicFieldListGet(

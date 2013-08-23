@@ -7,7 +7,7 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package var::packagesetup::ITSMIncidentProblemManagement;
+package var::packagesetup::ITSMIncidentProblemManagement;    ## no critic
 
 use strict;
 use warnings;
@@ -231,7 +231,7 @@ my $Result = $CodeObject->CodeUpgradeFromLowerThan_3_2_91();
 
 =cut
 
-sub CodeUpgradeFromLowerThan_3_2_91 {
+sub CodeUpgradeFromLowerThan_3_2_91 {    ## no critic
     my ( $Self, %Param ) = @_;
 
     # rename the dynamic fields for ITSMIncidentProblemManagement
@@ -670,7 +670,7 @@ sub _RenameDynamicFields {
             UserID     => 1,
         );
 
-        if ( $Success ) {
+        if ($Success) {
             $SuccessCounter++;
         }
     }
