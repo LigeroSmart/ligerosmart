@@ -1,0 +1,19 @@
+# --
+# AAAITSMIncidentProblemManagement.dtl - $Text variable file
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+
+# Common
+$Text{"Add decision to ticket"}
+$Text{"Decision Date"}
+$Text{"Decision Result"}
+$Text{"Due Date"}
+$Text{"Reason"}
+$Text{"Recovery Start Time"}
+$Text{"Repair Start Time"}
+$Text{"Review Required"}
+$Text{"closed with workaround"}
