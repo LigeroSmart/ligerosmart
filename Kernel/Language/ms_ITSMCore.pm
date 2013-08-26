@@ -49,7 +49,8 @@ sub Data {
 
     # Template: AdminITSMCIPAllocate
     $Self->{Translation}->{'Criticality <-> Impact <-> Priority'} = 'Kritikal <-> Kesan <-> Keutamaan';
-    $Self->{Translation}->{'Manage the priority result of combinating Criticality <-> Impact.'} = 'Menguruskan hasil keutamaan kritikal gabungan <-> Kesan.';
+    $Self->{Translation}->{'Manage the priority result of combinating Criticality <-> Impact.'} =
+        'Menguruskan hasil keutamaan kritikal gabungan <-> Kesan.';
     $Self->{Translation}->{'Priority allocation'} = 'Berikan keutamaan';
 
     # Template: AdminSLA
@@ -69,7 +70,6 @@ sub Data {
 
     # Template: AgentITSMSLAZoom
     $Self->{Translation}->{'SLA Information'} = 'SLA-Informasi';
-    $Self->{Translation}->{'Show or hide the content.'} = 'Menunjukkan atau menyembunyikan kandungan.';
     $Self->{Translation}->{'Associated Services'} = 'Perkhidmatan Bersekutu';
 
     # Template: AgentITSMService
@@ -84,13 +84,20 @@ sub Data {
     $Self->{Translation}->{'Current incident state'} = 'Kejadian keadaan semasa';
 
     # SysConfig
-    $Self->{Translation}->{'Frontend module registration for the AdminITSMCIPAllocate configuration in the admin area.'} = 'Frontend pendaftaran modul untuk konfigurasi AdminITSMCIPAllocate di kawasan admin.';
-    $Self->{Translation}->{'Frontend module registration for the AgentITSMSLA object in the agent interface.'} = 'Frontend pendaftaran modul bagi objek AgentITSMSLA dalam antara muka ejen.';
-    $Self->{Translation}->{'Frontend module registration for the AgentITSMSLAPrint object in the agent interface.'} = 'Frontend pendaftaran modul untuk objek AgentITSMSLAPrint dalam antara muka ejen.';
-    $Self->{Translation}->{'Frontend module registration for the AgentITSMSLAZoom object in the agent interface.'} = 'Frontend pendaftaran modul untuk objek AgentITSMSLAZoom dalam antara muka ejen.';
-    $Self->{Translation}->{'Frontend module registration for the AgentITSMService object in the agent interface.'} = 'Frontend pendaftaran modul bagi objek AgentITSMService dalam antara muka ejen.';
-    $Self->{Translation}->{'Frontend module registration for the AgentITSMServicePrint object in the agent interface.'} = 'Frontend pendaftaran modul untuk objek AgentITSMServicePrint dalam antara muka ejen.';
-    $Self->{Translation}->{'Frontend module registration for the AgentITSMServiceZoom object in the agent interface.'} = 'Frontend pendaftaran modul untuk objek AgentITSMServiceZoom dalam antara muka ejen.';
+    $Self->{Translation}->{'Frontend module registration for the AdminITSMCIPAllocate configuration in the admin area.'} =
+        'Frontend pendaftaran modul untuk konfigurasi AdminITSMCIPAllocate di kawasan admin.';
+    $Self->{Translation}->{'Frontend module registration for the AgentITSMSLA object in the agent interface.'} =
+        'Frontend pendaftaran modul bagi objek AgentITSMSLA dalam antara muka ejen.';
+    $Self->{Translation}->{'Frontend module registration for the AgentITSMSLAPrint object in the agent interface.'} =
+        'Frontend pendaftaran modul untuk objek AgentITSMSLAPrint dalam antara muka ejen.';
+    $Self->{Translation}->{'Frontend module registration for the AgentITSMSLAZoom object in the agent interface.'} =
+        'Frontend pendaftaran modul untuk objek AgentITSMSLAZoom dalam antara muka ejen.';
+    $Self->{Translation}->{'Frontend module registration for the AgentITSMService object in the agent interface.'} =
+        'Frontend pendaftaran modul bagi objek AgentITSMService dalam antara muka ejen.';
+    $Self->{Translation}->{'Frontend module registration for the AgentITSMServicePrint object in the agent interface.'} =
+        'Frontend pendaftaran modul untuk objek AgentITSMServicePrint dalam antara muka ejen.';
+    $Self->{Translation}->{'Frontend module registration for the AgentITSMServiceZoom object in the agent interface.'} =
+        'Frontend pendaftaran modul untuk objek AgentITSMServiceZoom dalam antara muka ejen.';
     $Self->{Translation}->{'Manage priority matrix.'} = 'Mengurus matriks keutamaan.';
     $Self->{Translation}->{'Module to show back link in service menu.'} = 'Modul untuk menunjukkan kembali pautan dalam menu perkhidmatan.';
     $Self->{Translation}->{'Module to show back link in sla menu.'} = 'Modul untuk menunjukkan kembali pautan dalam menu SLA.';
@@ -98,35 +105,64 @@ sub Data {
     $Self->{Translation}->{'Module to show print link in sla menu.'} = 'Modul untuk menunjukkan pautan cetak dalam menu SLA.';
     $Self->{Translation}->{'Module to show the link link in service menu.'} = 'Modul untuk menunjukkan pautan pautan dalam menu perkhidmatan.';
     $Self->{Translation}->{'Parameters for the incident states in the preference view.'} = 'Parameter untuk keadaan insiden memandangkan keutamaan.';
-    $Self->{Translation}->{'Set the type of link to be used to calculate the incident state.'} = 'Tetapkan jenis link yang boleh digunakan untuk mengira keadaan insiden.';
-    $Self->{Translation}->{'This setting defines that a \'ITSMChange\' object can be linked with \'Ticket\' objects using the \'Normal\' link type.'} = 'Tetapan ini mentakrifkan bahawa \'Ubah ITSM\' objek boleh dikaitkan dengan \'Tiket \' objek menggunakan \'Normal\'  jenis pautan.';
-    $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with \'FAQ\' objects using the \'Normal\' link type.'} = 'Tetapan ini mentakrifkan bahawa \'ConfigItem ITSM \' objek boleh dikaitkan dengan \'FAQ\' objek menggunakan \'Normal\' jenis pautan.';
-    $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with \'FAQ\' objects using the \'ParentChild\' link type.'} = 'Tetapan ini mentakrifkan bahawa \'ConfigItem ITSM \' objek boleh dikaitkan dengan \'FAQ\' objek menggunakan \'Ibu Bapa Anak Anak\' jenis pautan.';
-    $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with \'FAQ\' objects using the \'RelevantTo\' link type.'} = 'Tetapan ini mentakrifkan bahawa \'ConfigItem ITSM \' objek boleh dikaitkan dengan \'FAQ\' objek menggunakan \'Relevan Untuk\' jenis pautan.';
-    $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with \'Service\' objects using the \'AlternativeTo\' link type.'} = 'Tetapan ini mentakrifkan bahawa \'ConfigItem ITSM \' objek boleh dikaitkan dengan \'Perkhidmatan\' objek menggunakan \'AlternativeTo\' jenis pautan.';
-    $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with \'Service\' objects using the \'DependsOn\' link type.'} = 'Tetapan ini mentakrifkan bahawa \'ConfigItem ITSM \' objek boleh dikaitkan dengan \'Perkhidmatan\' objek menggunakan \'Bergantung Pada\' jenis pautan.';
-    $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with \'Service\' objects using the \'RelevantTo\' link type.'} = 'Tetapan ini mentakrifkan bahawa \'ConfigItem ITSM\' objek boleh dikaitkan dengan \'Perkhidmatan\' objek menggunakan \'Relevan Untuk\' jenis pautan.';
-    $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with \'Ticket\' objects using the \'AlternativeTo\' link type.'} = 'Tetapan ini mentakrifkan bahawa \'ConfigItem ITSM\' objek boleh dikaitkan dengan \'Tiket\' objek menggunakan \'Alternatif Untuk\' jenis pautan.';
-    $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with \'Ticket\' objects using the \'DependsOn\' link type.'} = 'Tetapan ini mentakrifkan bahawa \'ConfigItem ITSM\' objek boleh dikaitkan dengan \'Tiket \' objek menggunakan \'Bergantung Pada\' jenis pautan.';
-    $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with \'Ticket\' objects using the \'RelevantTo\' link type.'} = 'Tetapan ini mentakrifkan bahawa \'ConfigItem ITSM\' objek boleh dikaitkan dengan \'Tiket\' objek menggunakan \'Relevan Untuk\' jenis pautan.';
-    $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with other \'ITSMConfigItem\' objects using the \'AlternativeTo\' link type.'} = 'Tetapan ini mentakrifkan bahawa \'ConfigItem ITSM\' objek boleh dikaitkan dengan lain \'ITSMConfigItem\' objek menggunakan \'AlternativeTo\' pautan jenis.';
-    $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with other \'ITSMConfigItem\' objects using the \'ConnectedTo\' link type.'} = 'Tetapan ini mentakrifkan bahawa \'ConfigItem ITSM\' objek boleh dikaitkan dengan lain \'ITSMConfigItem\' objek menggunakan \'ConnectedTo\' pautan jenis.';
-    $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with other \'ITSMConfigItem\' objects using the \'DependsOn\' link type.'} = 'Tetapan ini mentakrifkan bahawa \'ConfigItem ITSM\' objek boleh dikaitkan dengan lain \'ConfigItem ITSM\' objek menggunakan \'Bergantung Pada\' jenis pautan.';
-    $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with other \'ITSMConfigItem\' objects using the \'Includes\' link type.'} = 'Tetapan ini mentakrifkan bahawa \'ConfigItem ITSM\' objek boleh dikaitkan dengan lain-lain \'ITSMConfigItem\' objek menggunakan \'Termasuk\' jenis pautan.';
-    $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with other \'ITSMConfigItem\' objects using the \'RelevantTo\' link type.'} = 'Tetapan ini mentakrifkan bahawa \'ITSM ConfigItem\' objek boleh dikaitkan dengan objek \'ConfigItem ITSM\'lain yang menggunakan \'Relevan Untuk\' yang jenis pautan.';
-    $Self->{Translation}->{'This setting defines that a \'ITSMWorkOrder\' object can be linked with \'ITSMConfigItem\' objects using the \'DependsOn\' link type.'} = 'Tetapan ini mentakrifkan bahawa \'Perintah Kerja ITSM \' objek boleh dikaitkan dengan \'ConfigItem ITSM\'objek menggunakan \'Bergantung Pada\' jenis pautan.';
-    $Self->{Translation}->{'This setting defines that a \'ITSMWorkOrder\' object can be linked with \'ITSMConfigItem\' objects using the \'Normal\' link type.'} = 'Tetapan ini mentakrifkan bahawa \'Perintah Kerja ITSM \' objek boleh dikaitkan dengan \'ConfigItem ITSM\' objek menggunakan \'Normal\' jenis pautan.';
-    $Self->{Translation}->{'This setting defines that a \'ITSMWorkOrder\' object can be linked with \'Service\' objects using the \'DependsOn\' link type.'} = 'Tetapan ini mentakrifkan bahawa \'Perintah Kerja ITSM \' objek boleh dikaitkan dengan \'Perkhidmatan\' objek menggunakan \'Bergantung Pada\' jenis pautan.';
-    $Self->{Translation}->{'This setting defines that a \'ITSMWorkOrder\' object can be linked with \'Service\' objects using the \'Normal\' link type.'} = 'Tetapan ini mentakrifkan bahawa \'Perintah Kerja ITSM \' objek boleh dikaitkan dengan \'Perkhidmatan \' objek menggunakan \'Normal \' jenis pautan.';
-    $Self->{Translation}->{'This setting defines that a \'ITSMWorkOrder\' object can be linked with \'Ticket\' objects using the \'Normal\' link type.'} = 'Tetapan ini mentakrifkan bahawa \'Perintah Kerja ITSM \' objek boleh dikaitkan dengan \'Tiket\' objek menggunakan \'Normal\' jenis pautan.';
-    $Self->{Translation}->{'This setting defines that a \'Service\' object can be linked with \'FAQ\' objects using the \'Normal\' link type.'} = 'Tetapan ini mentakrifkan bahawa objek \'Perkhidmatan \' boleh dikaitkan dengan \'FAQ\' objek menggunakan \'Normal\' jenis pautan.';
-    $Self->{Translation}->{'This setting defines that a \'Service\' object can be linked with \'FAQ\' objects using the \'ParentChild\' link type.'} = 'Tetapan ini mentakrifkan bahawa objek \'Perkhidmatan \' boleh dikaitkan dengan \'FAQ\' objek menggunakan \'Ibu Bapa Kanak-kanak\' jenis pautan.';
-    $Self->{Translation}->{'This setting defines that a \'Service\' object can be linked with \'FAQ\' objects using the \'RelevantTo\' link type.'} = 'Tetapan ini mentakrifkan bahawa objek \'Perkhidmatan \' boleh dikaitkan dengan \'FAQ\' objek menggunakan \'Relevan Untuk\' jenis pautan.';
-    $Self->{Translation}->{'This setting defines the link type \'AlternativeTo\'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link.'} = 'Tetapan ini mentakrifkan jenis pautan \'AlternativeTo\'. Jika nama sumber dan nama sasaran mengandungi nilai yang sama, pautan yang terhasil adalah bukan satu arah. Jika nilai berbeza, pautan yang terhasil adalah pautan berarah.';
-    $Self->{Translation}->{'This setting defines the link type \'ConnectedTo\'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link.'} = 'Tetapan ini mentakrifkan jenis pautan \'ConnectedTo\'. Jika nama sumber dan nama sasaran mengandungi nilai yang sama, pautan yang terhasil adalah bukan satu arah. Jika nilai berbeza, pautan yang terhasil adalah pautan berarah.';
-    $Self->{Translation}->{'This setting defines the link type \'DependsOn\'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link.'} = 'Tetapan ini mentakrifkan jenis pautan \'Bergantung Pada\'. Jika nama sumber dan nama sasaran mengandungi nilai yang sama, pautan yang terhasil adalah bukan satu arah. Jika nilai berbeza, pautan yang terhasil adalah pautan berarah.';
-    $Self->{Translation}->{'This setting defines the link type \'Includes\'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link.'} = 'Tetapan ini mentakrifkan jenis pautan \'Termasuk\'. Jika nama sumber dan nama sasaran mengandungi nilai yang sama, pautan yang terhasil adalah bukan satu arah. Jika nilai berbeza, pautan yang terhasil adalah pautan berarah.';
-    $Self->{Translation}->{'This setting defines the link type \'RelevantTo\'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link.'} = 'Tetapan ini mentakrifkan jenis pautan \'RelevantTo\'. Jika nama sumber dan nama sasaran mengandungi nilai yang sama, pautan yang terhasil adalah bukan satu arah. Jika nilai berbeza, pautan yang terhasil adalah pautan berarah.';
+    $Self->{Translation}->{'Set the type of link to be used to calculate the incident state.'} =
+        'Tetapkan jenis link yang boleh digunakan untuk mengira keadaan insiden.';
+    $Self->{Translation}->{'This setting defines that a \'ITSMChange\' object can be linked with \'Ticket\' objects using the \'Normal\' link type.'} =
+        'Tetapan ini mentakrifkan bahawa \'Ubah ITSM\' objek boleh dikaitkan dengan \'Tiket \' objek menggunakan \'Normal\'  jenis pautan.';
+    $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with \'FAQ\' objects using the \'Normal\' link type.'} =
+        'Tetapan ini mentakrifkan bahawa \'ConfigItem ITSM \' objek boleh dikaitkan dengan \'FAQ\' objek menggunakan \'Normal\' jenis pautan.';
+    $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with \'FAQ\' objects using the \'ParentChild\' link type.'} =
+        'Tetapan ini mentakrifkan bahawa \'ConfigItem ITSM \' objek boleh dikaitkan dengan \'FAQ\' objek menggunakan \'Ibu Bapa Anak Anak\' jenis pautan.';
+    $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with \'FAQ\' objects using the \'RelevantTo\' link type.'} =
+        'Tetapan ini mentakrifkan bahawa \'ConfigItem ITSM \' objek boleh dikaitkan dengan \'FAQ\' objek menggunakan \'Relevan Untuk\' jenis pautan.';
+    $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with \'Service\' objects using the \'AlternativeTo\' link type.'} =
+        'Tetapan ini mentakrifkan bahawa \'ConfigItem ITSM \' objek boleh dikaitkan dengan \'Perkhidmatan\' objek menggunakan \'AlternativeTo\' jenis pautan.';
+    $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with \'Service\' objects using the \'DependsOn\' link type.'} =
+        'Tetapan ini mentakrifkan bahawa \'ConfigItem ITSM \' objek boleh dikaitkan dengan \'Perkhidmatan\' objek menggunakan \'Bergantung Pada\' jenis pautan.';
+    $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with \'Service\' objects using the \'RelevantTo\' link type.'} =
+        'Tetapan ini mentakrifkan bahawa \'ConfigItem ITSM\' objek boleh dikaitkan dengan \'Perkhidmatan\' objek menggunakan \'Relevan Untuk\' jenis pautan.';
+    $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with \'Ticket\' objects using the \'AlternativeTo\' link type.'} =
+        'Tetapan ini mentakrifkan bahawa \'ConfigItem ITSM\' objek boleh dikaitkan dengan \'Tiket\' objek menggunakan \'Alternatif Untuk\' jenis pautan.';
+    $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with \'Ticket\' objects using the \'DependsOn\' link type.'} =
+        'Tetapan ini mentakrifkan bahawa \'ConfigItem ITSM\' objek boleh dikaitkan dengan \'Tiket \' objek menggunakan \'Bergantung Pada\' jenis pautan.';
+    $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with \'Ticket\' objects using the \'RelevantTo\' link type.'} =
+        'Tetapan ini mentakrifkan bahawa \'ConfigItem ITSM\' objek boleh dikaitkan dengan \'Tiket\' objek menggunakan \'Relevan Untuk\' jenis pautan.';
+    $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with other \'ITSMConfigItem\' objects using the \'AlternativeTo\' link type.'} =
+        'Tetapan ini mentakrifkan bahawa \'ConfigItem ITSM\' objek boleh dikaitkan dengan lain \'ITSMConfigItem\' objek menggunakan \'AlternativeTo\' pautan jenis.';
+    $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with other \'ITSMConfigItem\' objects using the \'ConnectedTo\' link type.'} =
+        'Tetapan ini mentakrifkan bahawa \'ConfigItem ITSM\' objek boleh dikaitkan dengan lain \'ITSMConfigItem\' objek menggunakan \'ConnectedTo\' pautan jenis.';
+    $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with other \'ITSMConfigItem\' objects using the \'DependsOn\' link type.'} =
+        'Tetapan ini mentakrifkan bahawa \'ConfigItem ITSM\' objek boleh dikaitkan dengan lain \'ConfigItem ITSM\' objek menggunakan \'Bergantung Pada\' jenis pautan.';
+    $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with other \'ITSMConfigItem\' objects using the \'Includes\' link type.'} =
+        'Tetapan ini mentakrifkan bahawa \'ConfigItem ITSM\' objek boleh dikaitkan dengan lain-lain \'ITSMConfigItem\' objek menggunakan \'Termasuk\' jenis pautan.';
+    $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with other \'ITSMConfigItem\' objects using the \'RelevantTo\' link type.'} =
+        'Tetapan ini mentakrifkan bahawa \'ITSM ConfigItem\' objek boleh dikaitkan dengan objek \'ConfigItem ITSM\'lain yang menggunakan \'Relevan Untuk\' yang jenis pautan.';
+    $Self->{Translation}->{'This setting defines that a \'ITSMWorkOrder\' object can be linked with \'ITSMConfigItem\' objects using the \'DependsOn\' link type.'} =
+        'Tetapan ini mentakrifkan bahawa \'Perintah Kerja ITSM \' objek boleh dikaitkan dengan \'ConfigItem ITSM\'objek menggunakan \'Bergantung Pada\' jenis pautan.';
+    $Self->{Translation}->{'This setting defines that a \'ITSMWorkOrder\' object can be linked with \'ITSMConfigItem\' objects using the \'Normal\' link type.'} =
+        'Tetapan ini mentakrifkan bahawa \'Perintah Kerja ITSM \' objek boleh dikaitkan dengan \'ConfigItem ITSM\' objek menggunakan \'Normal\' jenis pautan.';
+    $Self->{Translation}->{'This setting defines that a \'ITSMWorkOrder\' object can be linked with \'Service\' objects using the \'DependsOn\' link type.'} =
+        'Tetapan ini mentakrifkan bahawa \'Perintah Kerja ITSM \' objek boleh dikaitkan dengan \'Perkhidmatan\' objek menggunakan \'Bergantung Pada\' jenis pautan.';
+    $Self->{Translation}->{'This setting defines that a \'ITSMWorkOrder\' object can be linked with \'Service\' objects using the \'Normal\' link type.'} =
+        'Tetapan ini mentakrifkan bahawa \'Perintah Kerja ITSM \' objek boleh dikaitkan dengan \'Perkhidmatan \' objek menggunakan \'Normal \' jenis pautan.';
+    $Self->{Translation}->{'This setting defines that a \'ITSMWorkOrder\' object can be linked with \'Ticket\' objects using the \'Normal\' link type.'} =
+        'Tetapan ini mentakrifkan bahawa \'Perintah Kerja ITSM \' objek boleh dikaitkan dengan \'Tiket\' objek menggunakan \'Normal\' jenis pautan.';
+    $Self->{Translation}->{'This setting defines that a \'Service\' object can be linked with \'FAQ\' objects using the \'Normal\' link type.'} =
+        'Tetapan ini mentakrifkan bahawa objek \'Perkhidmatan \' boleh dikaitkan dengan \'FAQ\' objek menggunakan \'Normal\' jenis pautan.';
+    $Self->{Translation}->{'This setting defines that a \'Service\' object can be linked with \'FAQ\' objects using the \'ParentChild\' link type.'} =
+        'Tetapan ini mentakrifkan bahawa objek \'Perkhidmatan \' boleh dikaitkan dengan \'FAQ\' objek menggunakan \'Ibu Bapa Kanak-kanak\' jenis pautan.';
+    $Self->{Translation}->{'This setting defines that a \'Service\' object can be linked with \'FAQ\' objects using the \'RelevantTo\' link type.'} =
+        'Tetapan ini mentakrifkan bahawa objek \'Perkhidmatan \' boleh dikaitkan dengan \'FAQ\' objek menggunakan \'Relevan Untuk\' jenis pautan.';
+    $Self->{Translation}->{'This setting defines the link type \'AlternativeTo\'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link.'} =
+        'Tetapan ini mentakrifkan jenis pautan \'AlternativeTo\'. Jika nama sumber dan nama sasaran mengandungi nilai yang sama, pautan yang terhasil adalah bukan satu arah. Jika nilai berbeza, pautan yang terhasil adalah pautan berarah.';
+    $Self->{Translation}->{'This setting defines the link type \'ConnectedTo\'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link.'} =
+        'Tetapan ini mentakrifkan jenis pautan \'ConnectedTo\'. Jika nama sumber dan nama sasaran mengandungi nilai yang sama, pautan yang terhasil adalah bukan satu arah. Jika nilai berbeza, pautan yang terhasil adalah pautan berarah.';
+    $Self->{Translation}->{'This setting defines the link type \'DependsOn\'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link.'} =
+        'Tetapan ini mentakrifkan jenis pautan \'Bergantung Pada\'. Jika nama sumber dan nama sasaran mengandungi nilai yang sama, pautan yang terhasil adalah bukan satu arah. Jika nilai berbeza, pautan yang terhasil adalah pautan berarah.';
+    $Self->{Translation}->{'This setting defines the link type \'Includes\'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link.'} =
+        'Tetapan ini mentakrifkan jenis pautan \'Termasuk\'. Jika nama sumber dan nama sasaran mengandungi nilai yang sama, pautan yang terhasil adalah bukan satu arah. Jika nilai berbeza, pautan yang terhasil adalah pautan berarah.';
+    $Self->{Translation}->{'This setting defines the link type \'RelevantTo\'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link.'} =
+        'Tetapan ini mentakrifkan jenis pautan \'RelevantTo\'. Jika nama sumber dan nama sasaran mengandungi nilai yang sama, pautan yang terhasil adalah bukan satu arah. Jika nilai berbeza, pautan yang terhasil adalah pautan berarah.';
     $Self->{Translation}->{'Width of ITSM textareas.'} = 'Lebar kawasan teks ITSM.';
 
     #
