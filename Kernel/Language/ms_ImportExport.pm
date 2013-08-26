@@ -24,16 +24,21 @@ sub Data {
     $Self->{Translation}->{'Semicolon (;)'} = 'Semikolon (;)';
     $Self->{Translation}->{'Tabulator (TAB)'} = 'Tabulator (TAB)';
     $Self->{Translation}->{'Include Column Headers'} = 'Termasuk Kolum Kepala';
+    $Self->{Translation}->{'Import summary for'} = '';
+    $Self->{Translation}->{'Imported records'} = '';
+    $Self->{Translation}->{'Exported records'} = '';
+    $Self->{Translation}->{'Records'} = '';
+    $Self->{Translation}->{'Skipped'} = '';
 
     # Template: AdminImportExport
     $Self->{Translation}->{'Import/Export Management'} = 'Pengurusan Import/Eksport';
-    $Self->{Translation}->{'Add template'} = 'Tambah templat';
     $Self->{Translation}->{'Create a template to import and export object information.'} = 'Cipta templat untuk import dan eksport informasi objek.';
     $Self->{Translation}->{'Start Import'} = 'Mula import';
     $Self->{Translation}->{'Start Export'} = 'Mula eksport';
     $Self->{Translation}->{'Delete Template'} = 'Padam templat';
     $Self->{Translation}->{'Step'} = 'Langkah';
     $Self->{Translation}->{'Edit common information'} = 'Audit informasi biasa';
+    $Self->{Translation}->{'Name is required!'} = '';
     $Self->{Translation}->{'Object is required!'} = 'Objek adalah diperlukan!';
     $Self->{Translation}->{'Format is required!'} = 'Format adalah diperlukan!';
     $Self->{Translation}->{'Edit object information'} = 'Audit informasi objek';
@@ -46,9 +51,15 @@ sub Data {
     $Self->{Translation}->{'Restrict export per search'} = 'Dilarang eksport per carian';
     $Self->{Translation}->{'Import information'} = 'Informasi import';
     $Self->{Translation}->{'Source File'} = 'Sumber fail';
+    $Self->{Translation}->{'Success'} = '';
+    $Self->{Translation}->{'Failed'} = '';
+    $Self->{Translation}->{'Duplicate names'} = '';
+    $Self->{Translation}->{'Last processed line number of import file'} = '';
+    $Self->{Translation}->{'Ok'} = '';
 
     # SysConfig
-    $Self->{Translation}->{'Format backend module registration for the import/export module.'} = 'Format backend modul pendaftaran untuk modul import/eksport.';
+    $Self->{Translation}->{'Format backend module registration for the import/export module.'} =
+        'Format backend modul pendaftaran untuk modul import/eksport.';
     $Self->{Translation}->{'Import and export object information.'} = 'Informasi objek import dan eksport.';
     $Self->{Translation}->{'Import/Export'} = 'Import/Eksport';
 

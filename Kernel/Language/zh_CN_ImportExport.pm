@@ -32,13 +32,13 @@ sub Data {
 
     # Template: AdminImportExport
     $Self->{Translation}->{'Import/Export Management'} = '导入/导出管理';
-    $Self->{Translation}->{'Add template'} = '';
     $Self->{Translation}->{'Create a template to import and export object information.'} = '';
     $Self->{Translation}->{'Start Import'} = '开始导入';
     $Self->{Translation}->{'Start Export'} = '开始导出';
     $Self->{Translation}->{'Delete Template'} = '';
     $Self->{Translation}->{'Step'} = '步骤';
     $Self->{Translation}->{'Edit common information'} = '编辑共用信息';
+    $Self->{Translation}->{'Name is required!'} = '';
     $Self->{Translation}->{'Object is required!'} = '';
     $Self->{Translation}->{'Format is required!'} = '';
     $Self->{Translation}->{'Edit object information'} = '编辑对像信息';
@@ -66,7 +66,6 @@ sub Data {
     #
     # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
     #
-    $Self->{Translation}->{'Template'} = '模版';
 
 }
 

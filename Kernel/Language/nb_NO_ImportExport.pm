@@ -32,13 +32,13 @@ sub Data {
 
     # Template: AdminImportExport
     $Self->{Translation}->{'Import/Export Management'} = 'Administrasjon av Import/Eksport';
-    $Self->{Translation}->{'Add template'} = 'Legg til mal';
     $Self->{Translation}->{'Create a template to import and export object information.'} = 'Opprett en mal for å eksportere og importere informasjon';
     $Self->{Translation}->{'Start Import'} = 'Start import';
     $Self->{Translation}->{'Start Export'} = 'Start eksport';
     $Self->{Translation}->{'Delete Template'} = 'Slett mal';
     $Self->{Translation}->{'Step'} = 'Steg';
     $Self->{Translation}->{'Edit common information'} = 'Endre fellesinformasjon';
+    $Self->{Translation}->{'Name is required!'} = '';
     $Self->{Translation}->{'Object is required!'} = 'Objekt er påkrevd!';
     $Self->{Translation}->{'Format is required!'} = 'Format er påkrevd!';
     $Self->{Translation}->{'Edit object information'} = 'Endre objektet';

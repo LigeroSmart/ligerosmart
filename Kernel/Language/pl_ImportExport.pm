@@ -1,7 +1,6 @@
 # --
 # Kernel/Language/pl_ImportExport.pm - translation file
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
-# Copyright (C) 2011-2012 Informatyka Boguslawski sp. z o.o. sp.k., http://www.ib.pl/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -33,13 +32,13 @@ sub Data {
 
     # Template: AdminImportExport
     $Self->{Translation}->{'Import/Export Management'} = 'Zarządzanie Importem/Exportem';
-    $Self->{Translation}->{'Add template'} = 'Dodaj szablon';
     $Self->{Translation}->{'Create a template to import and export object information.'} = 'Utwórz szablon do importu i eksportu danych obiektów.';
     $Self->{Translation}->{'Start Import'} = 'Rozpocznij import';
     $Self->{Translation}->{'Start Export'} = 'Rozpocznij eksport';
     $Self->{Translation}->{'Delete Template'} = 'Usuń szablon';
     $Self->{Translation}->{'Step'} = 'Krok';
     $Self->{Translation}->{'Edit common information'} = 'Edytuj informacje wspólne';
+    $Self->{Translation}->{'Name is required!'} = '';
     $Self->{Translation}->{'Object is required!'} = 'Obiekt jest wymagany!';
     $Self->{Translation}->{'Format is required!'} = 'Format jest wymagany!';
     $Self->{Translation}->{'Edit object information'} = 'Edytuj informacje obiektu';
@@ -67,16 +66,12 @@ sub Data {
     #
     # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
     #
-    $Self->{Translation}->{'Template List'} = 'Lista szablonów';
     $Self->{Translation}->{'Class'} = 'Klasa';
     $Self->{Translation}->{'Config Item'} = 'CI';
     $Self->{Translation}->{'Element required, please insert data'} = 'Element wymagany, podaj wartość';
     $Self->{Translation}->{'Empty fields indicate that the current values are kept'} = 'Puste pola oznaczają zachowanie bieżącej wartości';
     $Self->{Translation}->{'Maximum number of one element'} = 'Maksymalna liczba wystąpień pojedynczego elementu';
-    $Self->{Translation}->{'Empty fields indicate that the current values are kept'} = 'Puste pola oznaczają zachowanie bieżącej wartości';
-    $Self->{Translation}->{'Element required, please insert data'} = 'Element wymagany, podaj wartość';
-    $Self->{Translation}->{'Config Item'} = 'CI';
-    $Self->{Translation}->{'Delete Template'} = 'Usuń szablon';
+    $Self->{Translation}->{'Template List'} = 'Lista szablonów';
 
 }
 
