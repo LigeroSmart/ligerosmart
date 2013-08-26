@@ -25,10 +25,13 @@ sub Data {
 
     # SysConfig
     $Self->{Translation}->{'Create and manage the General Catalog.'} = '';
-    $Self->{Translation}->{'Frontend module registration for the AdminGeneralCatalog configuration in the admin area.'} = '';
+    $Self->{Translation}->{'Frontend module registration for the AdminGeneralCatalog configuration in the admin area.'} =
+        '';
     $Self->{Translation}->{'General Catalog'} = 'Catálogo General';
-    $Self->{Translation}->{'Parameters for the example comment 2 of the general catalog attributes.'} = 'Parámetros para el ejemplo comentario 2 de los atributos del catálogo general.';
-    $Self->{Translation}->{'Parameters for the example permission groups of the general catalog attributes.'} = 'Parámetros para los permisos de ejemplo de los atributos del catálogo general.';
+    $Self->{Translation}->{'Parameters for the example comment 2 of the general catalog attributes.'} =
+        'Parámetros para el ejemplo comentario 2 de los atributos del catálogo general.';
+    $Self->{Translation}->{'Parameters for the example permission groups of the general catalog attributes.'} =
+        'Parámetros para los permisos de ejemplo de los atributos del catálogo general.';
 
     #
     # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
