@@ -49,35 +49,35 @@ TimeAccounting.Agent.EditTimeRecords = (function (Namespace) {
             // Test: time calculation on time period field
             $('#Period1').val('2');
             $('#Period1').trigger('change');
-            equals($('#Period1').val(), '2.00', 'Normal number entry');
+            equal($('#Period1').val(), '2.00', 'Normal number entry');
 
             $('#Period1').val('foobar');
             $('#Period1').trigger('change');
-            equals($('#Period1').val(), '', 'Not a number (="foobar")');
+            equal($('#Period1').val(), '', 'Not a number (="foobar")');
 
             $('#Period1').val('2 + 3');
             $('#Period1').trigger('change');
-            equals($('#Period1').val(), '5.00', 'Easy calculation');
+            equal($('#Period1').val(), '5.00', 'Easy calculation');
 
             $('#Period1').val('alert("huhu");');
             $('#Period1').trigger('change');
-            equals($('#Period1').val(), '', 'Evil javascript code');
+            equal($('#Period1').val(), '', 'Evil javascript code');
 
             $('#Period1').val('2.23 + 1.09');
             $('#Period1').trigger('change');
-            equals($('#Period1').val(), '3.32', 'Calculation with non-integers');
+            equal($('#Period1').val(), '3.32', 'Calculation with non-integers');
 
             $('#Period1').val('2.0001 + 1.5');
             $('#Period1').trigger('change');
-            equals($('#Period1').val(), '3.50', 'Calculation with a number with more than 2 decimals');
+            equal($('#Period1').val(), '3.50', 'Calculation with a number with more than 2 decimals');
 
             $('#Period1').val('1,2 + 1,3');
             $('#Period1').trigger('change');
-            equals($('#Period1').val(), '2.50', 'Numbers with , instead of .');
+            equal($('#Period1').val(), '2.50', 'Numbers with , instead of .');
 
             $('#Period1').val('5.8 - 1.2');
             $('#Period1').trigger('change');
-            equals($('#Period1').val(), '4.60', 'Substraction');
+            equal($('#Period1').val(), '4.60', 'Substraction');
 
             $('#Period1').val('');
 
@@ -86,68 +86,68 @@ TimeAccounting.Agent.EditTimeRecords = (function (Namespace) {
             $('#StartTime1').trigger('change');
             $('#EndTime1').val('');
             $('#EndTime1').trigger('change');
-            equals($('#Period1').val(), '', 'Only start time entered');
+            equal($('#Period1').val(), '', 'Only start time entered');
 
             $('#StartTime1').val('');
             $('#StartTime1').trigger('change');
             $('#EndTime1').val('2');
             $('#EndTime1').trigger('change');
-            equals($('#Period1').val(), '', 'Only end time entered');
+            equal($('#Period1').val(), '', 'Only end time entered');
 
             $('#StartTime1').val('1');
             $('#StartTime1').trigger('change');
             $('#EndTime1').val('2');
             $('#EndTime1').trigger('change');
-            equals($('#Period1').val(), '1.00', 'Both times entered');
+            equal($('#Period1').val(), '1.00', 'Both times entered');
 
             $('#StartTime1').val('9:06');
             $('#StartTime1').trigger('change');
             $('#EndTime1').val('10:00');
             $('#EndTime1').trigger('change');
-            equals($('#Period1').val(), '0.90', 'Easy calculation with two times of the format HH:MM');
+            equal($('#Period1').val(), '0.90', 'Easy calculation with two times of the format HH:MM');
 
             $('#StartTime1').val('9:00');
             $('#StartTime1').trigger('change');
             $('#EndTime1').val('11:30');
             $('#EndTime1').trigger('change');
-            equals($('#Period1').val(), '2.50', 'Easy calculation with two times of the format HH:MM');
+            equal($('#Period1').val(), '2.50', 'Easy calculation with two times of the format HH:MM');
 
             $('#StartTime1').val('9,5');
             $('#StartTime1').trigger('change');
             $('#EndTime1').val('10,5');
             $('#EndTime1').trigger('change');
-            equals($('#Period1').val(), '', 'StartTime and EndTime format are wrong');
+            equal($('#Period1').val(), '', 'StartTime and EndTime format are wrong');
 
             $('#StartTime1').val('9:5');
             $('#StartTime1').trigger('change');
             $('#EndTime1').val('10:5');
             $('#EndTime1').trigger('change');
-            equals($('#Period1').val(), '1.00', 'StartTime and EndTime format are slightly wrong');
+            equal($('#Period1').val(), '1.00', 'StartTime and EndTime format are slightly wrong');
 
             // Test: Calculation of total hours
             $('#StartTime1').val('9:5');
             $('#StartTime1').trigger('change');
             $('#EndTime1').val('10:5');
             $('#EndTime1').trigger('change');
-            equals($('#TotalHours').text(), '1.00', 'Easy start');
+            equal($('#TotalHours').text(), '1.00', 'Easy start');
 
             $('#Period2').val('2.5');
             $('#Period2').trigger('change');
-            equals($('#TotalHours').text(), '3.50', 'Second period field');
+            equal($('#TotalHours').text(), '3.50', 'Second period field');
 
             $('#Period2').val('1.5 + 9,5');
             $('#Period2').trigger('change');
-            equals($('#TotalHours').text(), '12.00', 'Second period field gets an additional calculation with one wrong comma');
+            equal($('#TotalHours').text(), '12.00', 'Second period field gets an additional calculation with one wrong comma');
 
             $('#Period3').val('4.35');
             $('#Period3').trigger('change');
-            equals($('#TotalHours').text(), '16.35', 'Third field');
+            equal($('#TotalHours').text(), '16.35', 'Third field');
 
             $('#StartTime1').val('14:00');
             $('#StartTime1').trigger('change');
             $('#EndTime1').val('openend');
             $('#EndTime1').trigger('change');
-            equals($('#TotalHours').text(), '15.35', 'First row: starttime and endtime fields have wrong input');
+            equal($('#TotalHours').text(), '15.35', 'First row: starttime and endtime fields have wrong input');
 
 
             /*
