@@ -1496,22 +1496,26 @@ sub ProjectActionReporting {
         }
     }
 
-    my $IDSelect = '';
-    if ( $Param{UserID} ) {
-        $Param{UserID} = $Self->{DBObject}->Quote( $Param{UserID} ) || '';
-        $IDSelect = " AND user_id = '$Param{UserID}'";
-    }
-
     # hours per month
     my $DaysInMonth = Days_in_Month( $Param{Year}, $Param{Month} );
     my $DateString = $Param{Year} . "-" . sprintf( "%02d", $Param{Month} );
+    my $SQLDate = "$DateString-$DaysInMonth 23:59:59";
 
-    my $SQLQueryTimeStart = "time_start <= '$DateString-$DaysInMonth 23:59:59'$IDSelect";
+    my $SQL = 'SELECT project_id, action_id, period
+        FROM time_accounting_table
+        WHERE project_id != -1
+        AND time_start <= ?';
+    my @Bind = ( \$SQLDate );
+
+    if ( $Param{UserID} ) {
+        $SQL .= ' AND user_id = ?';
+        push @Bind, \$Param{UserID};
+    }
 
     # total hours
     $Self->{DBObject}->Prepare(
-        SQL => "SELECT project_id, action_id, period FROM time_accounting_table"
-            . " WHERE project_id != -1 AND $SQLQueryTimeStart",
+        SQL  => $SQL,
+        Bind => \@Bind,
     );
 
     # fetch the data
@@ -1520,14 +1524,20 @@ sub ProjectActionReporting {
 
         next if !$Row[2];
 
-        $Data{ $Row[0] }{Actions}{ $Row[1] }{Total} += $Row[2];
+        $Data{ $Row[0] }->{Actions}->{ $Row[1] }->{Total} += $Row[2];
     }
 
+    my $SQLDateStart = "$DateString-01 00:00:00";
+
+    $SQL = 'SELECT project_id, action_id, period
+        FROM time_accounting_table
+        WHERE project_id != -1
+        AND time_start >= ?
+        AND time_start <= ?';
+
     $Self->{DBObject}->Prepare(
-        SQL => "SELECT project_id, action_id, period FROM time_accounting_table"
-            . " WHERE project_id != -1 "
-            . " AND time_start >= '$DateString-01 00:00:00' "
-            . " AND $SQLQueryTimeStart",
+        SQL  => $SQL,
+        Bind => [ \$SQLDateStart, \$SQLDate ],
     );
 
     # fetch the data
