@@ -17,7 +17,6 @@
 
 .NoHover tbody tr:hover td {
     background: transparent;
-    -moz-box-shadow: none;
     -webkit-box-shadow: none;
     box-shadow: none;
 }
@@ -86,17 +85,27 @@
  */
 
 .DataTable thead.TwoRows {
-    background-image: none;
+    background: none;
 }
 
 .DataTable thead.TwoRows tr:first-child {
-    background: #EEE url("../img/SmallDarkGradient.png") repeat-x;
-    background-position: 0px 0px;
+    background: #eeeeee;
+    background: -moz-linear-gradient(top,  #eeeeee 0%, #ececec 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#eeeeee), color-stop(100%,#ececec));
+    background: -webkit-linear-gradient(top,  #eeeeee 0%,#ececec 100%);
+    background: -o-linear-gradient(top,  #eeeeee 0%,#ececec 100%);
+    background: -ms-linear-gradient(top,  #eeeeee 0%,#ececec 100%);
+    background: linear-gradient(to bottom,  #eeeeee 0%,#ececec 100%);
 }
 
 .DataTable thead.TwoRows tr {
-    background: #EEE url("../img/SmallDarkGradient.png") repeat-x;
-    background-position: 0px -16px;
+    background: #eeeeee;
+    background: -moz-linear-gradient(top,  #ebebeb 0%, #e0e0e0 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ebebeb), color-stop(100%,#e0e0e0));
+    background: -webkit-linear-gradient(top,  #ebebeb 0%,#e0e0e0 100%);
+    background: -o-linear-gradient(top,  #ebebeb 0%,#e0e0e0 100%);
+    background: -ms-linear-gradient(top,  #ebebeb 0%,#e0e0e0 100%);
+    background: linear-gradient(to bottom,  #ebebeb 0%,#e0e0e0 100%);
 }
 
 .DataTable thead.TwoRows tr:first-child th {

@@ -81,7 +81,7 @@
                                 // remove invalid value, as it didn't match anything
                                 $(this).val("");
                                 $Select.val("");
-                                $Input.data("autocomplete").term = "";
+                                $Input.data("uiAutocomplete").term = "";
                                 return false;
                             }
                         }
@@ -90,7 +90,7 @@
                 .addClass("ui-widget ui-widget-content ui-corner-left")
                 .after(this.options.ValidationTooltip);
 
-            $Input.data("autocomplete")._renderItem = function(UL, Item) {
+            $Input.data("uiAutocomplete")._renderItem = function(UL, Item) {
                 return $("<li></li>")
                     .data("item.autocomplete", Item)
                     .append("<a>" + Item.label + "</a>")

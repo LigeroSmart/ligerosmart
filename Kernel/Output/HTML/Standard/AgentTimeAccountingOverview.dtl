@@ -19,28 +19,16 @@
                 </div>
                 <div class="Content">
                     <fieldset class="TableLike FixedLabel">
-                        <label>
-                            $Text{"Overtime (this month)"}:
-                        </label>
-                        <div class="Right">
-                            <p>$QData{"Overtime"}</p>
-                        </div>
+                        <label>$Text{"Overtime (this month)"}:</label>
+                        <p class="Value">$QData{"Overtime"}</p>
                         <div class="Clear"></div>
 
-                        <label>
-                            $Text{"Overtime (total)"}:
-                        </label>
-                        <div class="Right">
-                            <p>$QData{"OvertimeUntil"}</p>
-                        </div>
+                        <label>$Text{"Overtime (total)"}:</label>
+                        <p class="Value">$QData{"OvertimeUntil"}</p>
                         <div class="Clear"></div>
 
-                        <label>
-                            $Text{"Remaining overtime leave"}:
-                        </label>
-                        <div class="Right">
-                            <p>$QData{"OvertimeTotal"}</p>
-                        </div>
+                        <label>$Text{"Remaining overtime leave"}:</label>
+                        <p class="Value">$QData{"OvertimeTotal"}</p>
                         <div class="Clear"></div>
                     </fieldset>
                 </div>
@@ -53,28 +41,16 @@
                 </div>
                 <div class="Content">
                     <fieldset class="TableLike FixedLabel">
-                        <label>
-                            $Text{"Vacation taken (this month)"}:
-                        </label>
-                        <div class="Right">
-                            <p>$QData{"LeaveDay"}</p>
-                        </div>
+                        <label>$Text{"Vacation taken (this month)"}:</label>
+                        <p class="Value">$QData{"LeaveDay"}</p>
                         <div class="Clear"></div>
 
-                        <label>
-                            $Text{"Vacation taken (total)"}:
-                        </label>
-                        <div class="Right">
-                            <p>$QData{"LeaveDayTotal"}</p>
-                        </div>
+                        <label>$Text{"Vacation taken (total)"}:</label>
+                        <p class="Value">$QData{"LeaveDayTotal"}</p>
                         <div class="Clear"></div>
 
-                        <label>
-                            $Text{"Remaining vacation"}:
-                        </label>
-                        <div class="Right">
-                            <p>$QData{"LeaveDayRemaining"}</p>
-                        </div>
+                        <label>$Text{"Remaining vacation"}:</label>
+                        <p class="Value">$QData{"LeaveDayRemaining"}</p>
                         <div class="Clear"></div>
                     </fieldset>
                 </div>
@@ -86,20 +62,12 @@
                 </div>
                 <div class="Content">
                     <fieldset class="TableLike FixedLabel">
-                        <label>
-                            $Text{"Sick leave taken (this month)"}:
-                        </label>
-                        <div class="Right">
-                            <p>$QData{"Sick"}</p>
-                        </div>
+                        <label>$Text{"Sick leave taken (this month)"}:</label>
+                        <p class="Value">$QData{"Sick"}</p>
                         <div class="Clear"></div>
 
-                        <label>
-                            $Text{"Sick leave taken (total)"}:
-                        </label>
-                        <div class="Right">
-                            <p>$QData{"SickTotal"}</p>
-                        </div>
+                        <label>$Text{"Sick leave taken (total)"}:</label>
+                        <p class="Value">$QData{"SickTotal"}</p>
                         <div class="Clear"></div>
                     </fieldset>
                 </div>

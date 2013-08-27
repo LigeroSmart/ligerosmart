@@ -68,7 +68,7 @@
                 <Loader>
                     <CSS>TimeAccounting.Defaults.css</CSS>
                     <CSS>TimeAccounting.Table.css</CSS>
-                    <JavaScript>thirdparty/jquery-ui-button-1.8.16/jquery-ui-button.js</JavaScript>
+                    <JavaScript>thirdparty/jquery-ui-button-1.10.3/jquery-ui-button.js</JavaScript>
                     <JavaScript>thirdparty/jquery-combobox/jquery-combobox.js</JavaScript>
                     <JavaScript>Core.UI.ComboBox.js</JavaScript>
                     <JavaScript>TimeAccounting.Agent.ConfirmationDialog.js</JavaScript>
@@ -184,7 +184,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="TimeAccounting::MaxIntervalOfIncompleteDaysBeforeWarning" Required="1" Valid="1">
-        <Description Translatable="1">Maximum number of working days withouth working units entry after which a warning will be shown.</Description>
+        <Description Translatable="1">Maximum number of working days without working units entry after which a warning will be shown.</Description>
         <Group>TimeAccounting</Group>
         <SubGroup>Frontend::Agent</SubGroup>
         <Setting>

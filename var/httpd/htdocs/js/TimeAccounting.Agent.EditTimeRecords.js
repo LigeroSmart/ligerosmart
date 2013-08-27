@@ -76,7 +76,7 @@ TimeAccounting.Agent.EditTimeRecords = (function (TargetNS) {
         var $Option = $('<option value="' + OptionValue + '">' + OptionText + '</option>');
 
         if (OptionValue == SelectedOption) {
-            $Option.attr('selected', 'selected');
+            $Option.prop('selected', true);
         }
 
         $SelectionElement.append($Option);
@@ -107,8 +107,8 @@ TimeAccounting.Agent.EditTimeRecords = (function (TargetNS) {
         $('.ActionSelection').removeClass('Validate_DependingRequiredAND');
 
         // Copy ServerError classes to according comboboxes
-        $('.ProjectSelection.ServerError').next('input[id^=Combo_').addClass('ServerError');
-        $('.ActionSelection.ServerError').next('input[id^=Combo_').addClass('ServerError');
+        $('.ProjectSelection.ServerError').next('input[id^=Combo_]').addClass('ServerError');
+        $('.ActionSelection.ServerError').next('input[id^=Combo_]').addClass('ServerError');
 
         Core.Form.Validate.Init();
     }
@@ -141,7 +141,7 @@ TimeAccounting.Agent.EditTimeRecords = (function (TargetNS) {
             // If last row contained values, these must be removed
             $NewRow
                 .find('input:text').val('').end()
-                .find('select option').removeAttr('selected');
+                .find('select option').prop('selected', false);
 
             // Remove autocompletion from this row (will be re-initiated later)
             $NewRow
@@ -160,7 +160,9 @@ TimeAccounting.Agent.EditTimeRecords = (function (TargetNS) {
                 .filter(':odd').addClass('Even');
 
             // Re-initiate autocompletion combobox
-            InitAutoCompletion(Language);
+            if (TargetNS.Autocompletion) {
+                InitAutoCompletion(Language);
+            }
         });
     }
 
@@ -256,6 +258,8 @@ TimeAccounting.Agent.EditTimeRecords = (function (TargetNS) {
         });
     }
 
+    TargetNS.Autocompletion = true;
+
     /**
      * @function
      * @param {Object} Options thedifferent possible options:
@@ -284,7 +288,7 @@ TimeAccounting.Agent.EditTimeRecords = (function (TargetNS) {
                 ID = $(Element).attr('id').replace('ProjectID', '');
             }
             else {
-                ID = $(Element).prev('select').attr('id').replace('ProjectID', '');
+                ID = $(Element).prevAll('select').attr('id').replace('ProjectID', '');
             }
 
             if (!Value) {
@@ -346,6 +350,7 @@ TimeAccounting.Agent.EditTimeRecords = (function (TargetNS) {
         Core.Form.Validate.AddRule('Validate_TimeAccounting_Period', { Validate_TimeAccounting_Period: true });
 
         // Enable autocompletion, if configured
+        TargetNS.Autocompletion = Options.Autocompletion;
         if (Options.Autocompletion) {
             InitAutoCompletion(Language);
         }
@@ -365,8 +370,8 @@ TimeAccounting.Agent.EditTimeRecords = (function (TargetNS) {
      */
     TargetNS.MassEntryInit = function(Language) {
         $('#IncompleteWorkingDay-All').unbind('click.SelectAllDays').bind('click.SelectAllDays', function (Event) {
-            var State = $(this).attr('checked');
-            $('ul.IncompleteWorkingDays li input:checkbox').attr('checked', State);
+            var State = $(this).prop('checked');
+            $('ul.IncompleteWorkingDays li input:checkbox').prop('checked', State);
         });
         $('#MassEntrySubmit').unbind('click.MassEntrySubmit').bind('click.MassEntrySubmit', function () {
             var $WorkingDayCheckboxes = $('ul.IncompleteWorkingDays li input:checkbox:checked').filter('[name!=IncompleteWorkingDay-All]');
