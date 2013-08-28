@@ -107,6 +107,10 @@ sub Data {
     $Self->{Translation}->{'The planned start time is invalid!'} = 'Die geplante Startzeit ist ungültig!';
     $Self->{Translation}->{'The planned time is invalid!'} = 'Der geplante Zeitraum ist ungültig!';
     $Self->{Translation}->{'The requested time is invalid!'} = 'Die angegebene Zeit ist ungültig!';
+    $Self->{Translation}->{'New (from template)'} = 'Neu (von Template)';
+    $Self->{Translation}->{'Add from template'} = 'Von Template hinzufügen';
+    $Self->{Translation}->{'Add Workorder (from template)'} = 'Workorder hinzufügen (von Template)';
+    $Self->{Translation}->{'Add a workorder (from template) to the change'} = 'Füge eine Workorder (von Template) zu diesem Change hinzu';
     $Self->{Translation}->{'WorkOrderHistory::WorkOrderActualEndTimeReached'} = 'Workorder (ID=%s) wurde beendet.';
     $Self->{Translation}->{'WorkOrderHistory::WorkOrderActualEndTimeReachedWithWorkOrderID'} =
         'Workorder (ID=%s) wurde beendet.';

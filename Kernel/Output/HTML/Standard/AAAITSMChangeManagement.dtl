@@ -101,6 +101,10 @@ $Text{"The planned end time is invalid!"}
 $Text{"The planned start time is invalid!"}
 $Text{"The planned time is invalid!"}
 $Text{"The requested time is invalid!"}
+$Text{"New (from template)"}
+$Text{"Add from template"}
+$Text{"Add Workorder (from template)"}
+$Text{"Add a workorder (from template) to the change"}
 $Text{"WorkOrderHistory::WorkOrderActualEndTimeReached"}
 $Text{"WorkOrderHistory::WorkOrderActualEndTimeReachedWithWorkOrderID"}
 $Text{"WorkOrderHistory::WorkOrderActualStartTimeReached"}

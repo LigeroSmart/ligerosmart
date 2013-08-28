@@ -107,6 +107,10 @@ sub Data {
     $Self->{Translation}->{'The planned start time is invalid!'} = 'Planowany czas rozpoczęcia jest niepoprawny!';
     $Self->{Translation}->{'The planned time is invalid!'} = 'Planowany czas jest niepoprawny!';
     $Self->{Translation}->{'The requested time is invalid!'} = 'Żądany czas jest niepoprawny!';
+    $Self->{Translation}->{'New (from template)'} = '';
+    $Self->{Translation}->{'Add from template'} = '';
+    $Self->{Translation}->{'Add Workorder (from template)'} = '';
+    $Self->{Translation}->{'Add a workorder (from template) to the change'} = '';
     $Self->{Translation}->{'WorkOrderHistory::WorkOrderActualEndTimeReached'} = 'Zadanie (ID=%s) osiągnęło rzeczywisty czas końca.';
     $Self->{Translation}->{'WorkOrderHistory::WorkOrderActualEndTimeReachedWithWorkOrderID'} =
         'Zadanie (ID=%s) osiągnęło rzeczywisty czas końca.';
@@ -1631,6 +1635,8 @@ sub Data {
     $Self->{Translation}->{'ITSM event module updates the history of conditions.'} = '';
     $Self->{Translation}->{'ITSM event module updates the history of workorders.'} = '';
     $Self->{Translation}->{'If frequency is \'regularly\', you can configure how often the notications are sent (every X hours).'} =
+        '';
+    $Self->{Translation}->{'If this option is enabled, then the decrypted data will be stored in the database if they are displayed in AgentTicketZoom.'} =
         '';
     $Self->{Translation}->{'Logfile for the ITSM change counter. This file is used for creating the change numbers.'} =
         '';

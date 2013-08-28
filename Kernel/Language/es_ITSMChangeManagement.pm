@@ -107,6 +107,10 @@ sub Data {
     $Self->{Translation}->{'The planned start time is invalid!'} = '¡La fecha de inicio planeada es inválida!';
     $Self->{Translation}->{'The planned time is invalid!'} = '¡El periodo de tiempo planeado es inválido!';
     $Self->{Translation}->{'The requested time is invalid!'} = '¡La fecha solicitada es inválida!';
+    $Self->{Translation}->{'New (from template)'} = '';
+    $Self->{Translation}->{'Add from template'} = '';
+    $Self->{Translation}->{'Add Workorder (from template)'} = '';
+    $Self->{Translation}->{'Add a workorder (from template) to the change'} = '';
     $Self->{Translation}->{'WorkOrderHistory::WorkOrderActualEndTimeReached'} = 'La Orden de Trabajo (ID=%s) ha alcanzado su fecha de finalización real.';
     $Self->{Translation}->{'WorkOrderHistory::WorkOrderActualEndTimeReachedWithWorkOrderID'} =
         'La Orden de Trabajo (ID=%s) ha alcanzado su fecha de finalización real.';
@@ -1632,6 +1636,8 @@ sub Data {
     $Self->{Translation}->{'ITSM event module updates the history of workorders.'} = '';
     $Self->{Translation}->{'If frequency is \'regularly\', you can configure how often the notications are sent (every X hours).'} =
         'Si la frecuencia de envío de notificaciones es \'regularmente\', es posible configurar un número de horas para el mismo fin.';
+    $Self->{Translation}->{'If this option is enabled, then the decrypted data will be stored in the database if they are displayed in AgentTicketZoom.'} =
+        '';
     $Self->{Translation}->{'Logfile for the ITSM change counter. This file is used for creating the change numbers.'} =
         'Log para el contador de los cambios ITSM. Este archivo se usa para crear los números de cambios.';
     $Self->{Translation}->{'Module to check the CAB members.'} = 'Módulo para verificar los miembros del CAB.';

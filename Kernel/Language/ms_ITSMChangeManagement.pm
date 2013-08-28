@@ -107,6 +107,10 @@ sub Data {
     $Self->{Translation}->{'The planned start time is invalid!'} = 'Perancangan masa mula adalah tidak sah!';
     $Self->{Translation}->{'The planned time is invalid!'} = 'Masa dirancang tidak sah!';
     $Self->{Translation}->{'The requested time is invalid!'} = 'Masa yang diminta tidak sah!';
+    $Self->{Translation}->{'New (from template)'} = '';
+    $Self->{Translation}->{'Add from template'} = '';
+    $Self->{Translation}->{'Add Workorder (from template)'} = '';
+    $Self->{Translation}->{'Add a workorder (from template) to the change'} = '';
     $Self->{Translation}->{'WorkOrderHistory::WorkOrderActualEndTimeReached'} = 'Perintah Kerja (ID=%s​​) telah siap.';
     $Self->{Translation}->{'WorkOrderHistory::WorkOrderActualEndTimeReachedWithWorkOrderID'} =
         'Perintah Kerja (ID=%s) berakhir.';
@@ -1630,6 +1634,8 @@ sub Data {
     $Self->{Translation}->{'ITSM event module updates the history of workorders.'} = 'kemaskini modul acara ITSM sejarah pesanan kerja.';
     $Self->{Translation}->{'If frequency is \'regularly\', you can configure how often the notications are sent (every X hours).'} =
         'Jika frekuensi \'kerap \', anda boleh menatarajah berapa kerap pemberitahuan dihantar (setiap jam X).';
+    $Self->{Translation}->{'If this option is enabled, then the decrypted data will be stored in the database if they are displayed in AgentTicketZoom.'} =
+        '';
     $Self->{Translation}->{'Logfile for the ITSM change counter. This file is used for creating the change numbers.'} =
         'Fail Log untuk kaunter perubahan ITSM. Fail ini digunakan untuk mewujudkan nombor perubahan.';
     $Self->{Translation}->{'Module to check the CAB members.'} = 'Modul untuk memeriksa ahli CAB.';
