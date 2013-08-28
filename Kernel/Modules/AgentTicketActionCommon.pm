@@ -1969,7 +1969,7 @@ sub _Mask {
 # ITSM
 # ---
         # remember dynamic fields that should be displayed individually
-        if ( $DynamicFieldConfig->{Name} eq 'ITSMImpact' && $Self->{Config}->{Priority} ) {
+        if ( $DynamicFieldConfig->{Name} eq 'ITSMImpact' ) {
             push @IndividualDynamicFields, $DynamicFieldConfig;
             next DYNAMICFIELD;
         }
