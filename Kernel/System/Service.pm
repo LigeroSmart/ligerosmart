@@ -1448,9 +1448,6 @@ sub _ServiceGetCurrentIncidentState {
     );
     $ServiceData{Type} = $ServiceTypeList->{ $ServiceData{TypeID} } || '';
 
-#    # get the criticality
-#    $ServiceData{Criticality} = $Self->{CriticalityList}->{ $ServiceData{CriticalityID} } || '';
-
     # set default incident state type
     $ServiceData{CurInciStateType} = 'operational';
 
