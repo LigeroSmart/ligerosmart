@@ -1191,7 +1191,7 @@ sub WorkingUnitsCompletnessCheck {
                     = $Self->{TimeObject}->TimeStamp2SystemTime( String => $Date . ' 23:59:59' );
 
                 # add time zone to calculation
-                my $Zone = $Self->{ConfigObject}->Get( "TimeZone::Calendar" . $Calendar || '' );
+                my $Zone = $Self->{ConfigObject}->Get( "TimeZone::Calendar" . ( $Calendar || '' ) );
                 if ($Zone) {
                     my $ZoneSeconds = $Zone * 60 * 60;
                     $DayStartTime = $DayStartTime - $ZoneSeconds;
