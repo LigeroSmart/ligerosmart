@@ -1,9 +1,7 @@
 #!/usr/bin/perl -w
 # --
 # otrs.NagiosCheck.pl - OTRS Nagios checker
-# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
-# --
-# $Id: otrs.NagiosCheck.pl,v 1.10 2012-11-20 19:12:52 mh Exp $
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
 # --
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU AFFERO General Public License as published by
@@ -24,42 +22,39 @@
 use strict;
 use warnings;
 
-use vars qw($VERSION);
-$VERSION = qw($Revision: 1.10 $) [1];
-
 use File::Basename;
 use FindBin qw($RealBin);
 use lib dirname($RealBin);
 use lib dirname($RealBin) . '/Kernel/cpan-lib';
 
 use Getopt::Std;
-my %opts;
-getopts( 'hNvc:', \%opts );
-if ( $opts{h} ) {
+my %Options;
+getopts( 'hNvc:', \%Options );
+if ( $Options{h} ) {
     print
         "Usage: $FindBin::Script [-N (runs as Nagioschecker)] [-v (verbose)] [-c /path/to/config_file]\n";
     print "\n";
     exit;
 }
 
-if ( !$opts{c} ) {
+if ( !$Options{c} ) {
     print STDERR "ERROR: Need -c CONFIGFILE\n";
     exit 1;
 }
-elsif ( !-e $opts{c} ) {
-    print STDERR "ERROR: No such file $opts{c}\n";
+elsif ( !-e $Options{c} ) {
+    print STDERR "ERROR: No such file $Options{c}\n";
     exit 1;
 }
 
 # read config file
 my %Config;
-open( my $IN, '<', $opts{c} ) || die "ERROR: Can't open $opts{c}: $!\n";
+open( my $IN, '<', $Options{c} ) || die "ERROR: Can't open $Options{c}: $!\n";    ## no critic
 my $Content = '';
 while (<$IN>) {
     $Content .= $_;
 }
-if ( !eval $Content ) {
-    print STDERR "ERROR: Invalid config file $opts{c}: $@\n";
+if ( !eval $Content ) {                                                           ## no critic
+    print STDERR "ERROR: Invalid config file $Options{c}: $@\n";
     exit 1;
 }
 
@@ -94,7 +89,7 @@ my @TicketIDs = $CommonObject{TicketObject}->TicketSearch(
 my $TicketCount = scalar @TicketIDs;
 
 # verbose mode
-if ( $opts{v} ) {
+if ( $Options{v} ) {
     for my $TicketID (@TicketIDs) {
         my %Ticket = $CommonObject{TicketObject}->TicketGet( TicketID => $TicketID );
         print STDERR "$Ticket{TicketID}:$Ticket{TicketNumber}\n";
@@ -102,7 +97,7 @@ if ( $opts{v} ) {
 }
 
 # no checker mode
-if ( !$opts{N} ) {
+if ( !$Options{N} ) {
     print "$TicketCount\n";
     exit 0;
 }
