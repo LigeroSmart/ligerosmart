@@ -1,6 +1,6 @@
 # --
 # Kernel/Config/NagiosCheck.pm.example - Example Configfile for otrs.NagiosCheck - OTRS Nagios checker
-# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
 # --
 # $Id: NagiosCheck.pm.example,v 1.4 2012-11-20 19:12:49 mh Exp $
 # --
@@ -20,7 +20,7 @@
 # or see http://www.gnu.org/licenses/agpl.txt.
 # --
 # For possible search options see:
-# http://dev.otrs.org/cvs/Kernel/System/Ticket.html -> TicketSearch()
+# http://dev.otrs.com/cvs/Kernel/System/Ticket.html -> TicketSearch()
 # Examples see below
 # --
 

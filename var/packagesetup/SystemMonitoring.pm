@@ -1,6 +1,6 @@
 # --
 # SystemMonitoring.pm - code to excecute during package installation
-# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
 # --
 # $Id: SystemMonitoring.pm,v 1.6 2012-02-02 15:59:27 mh Exp $
 # --

@@ -1,6 +1,6 @@
 # --
 # SystemMonitoring.t - SystemMonitoring tests
-# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -9,6 +9,77 @@
 
 use Kernel::System::Ticket;
 use Kernel::System::PostMaster;
+use Kernel::System::DynamicField;
+
+# add or update dynamic fields if needed
+my $DynamicFieldObject = Kernel::System::DynamicField->new( %{$Self} );
+
+my @DynamicfieldIDs;
+my @DynamicFieldUpdate;
+my %NeededDynamicfields = (
+    TicketFreeText1 => 1,
+    TicketFreeText2 => 1,
+    ArticleFreeText1 => 1,
+);
+
+# list available dynamic fields
+my $DynamicFields = $DynamicFieldObject->DynamicFieldList(
+    Valid      => 0,
+    ResultType => 'HASH',
+);
+$DynamicFields = ( ref $DynamicFields eq 'HASH' ? $DynamicFields : {} );
+$DynamicFields = { reverse %{$DynamicFields} };
+
+for my $FieldName ( sort keys %NeededDynamicfields ) {
+    if ( !$DynamicFields->{$FieldName} ) {
+
+        # create a dynamic field
+        my $FieldID = $DynamicFieldObject->DynamicFieldAdd(
+            Name       => $FieldName,
+            Label      => $FieldName . "_test",
+            FieldOrder => 9991,
+            FieldType  => 'Text',
+            ObjectType => 'Ticket',
+            Config     => {
+                DefaultValue => 'a value',
+            },
+            ValidID => 1,
+            UserID  => 1,
+        );
+
+        # verify dynamic field creation
+        $Self->True(
+            $FieldID,
+            "DynamicFieldAdd() successful for Field $FieldName",
+        );
+
+        push @DynamicfieldIDs, $FieldID;
+    }
+    else {
+        my $DynamicField
+            = $DynamicFieldObject->DynamicFieldGet( ID => $DynamicFields->{$FieldName} );
+
+        if ( $DynamicField->{ValidID} > 1 ) {
+            push @DynamicFieldUpdate, $DynamicField;
+            $DynamicField->{ValidID} = 1;
+            my $SuccessUpdate = $DynamicFieldObject->DynamicFieldUpdate(
+                %{$DynamicField},
+                Reorder => 0,
+                UserID  => 1,
+                ValidID => 1,
+            );
+
+            # verify dynamic field creation
+            $Self->True(
+                $SuccessUpdate,
+                "DynamicFieldUpdate() successful update for Field $DynamicField->{Name}",
+            );
+        }
+    }
+}
+
+
+
 
 my $FileArray = $Self->{MainObject}->FileRead(
     Location => $Self->{ConfigObject}->Get('Home') . '/scripts/test/sample/SystemMonitoring1.box',
@@ -94,5 +165,32 @@ $Self->True(
     $Delete || 0,
     "TicketDelete()",
 );
+
+
+# revert changes to dynamic fields
+for my $DynamicField (@DynamicFieldUpdate) {
+    my $SuccessUpdate = $DynamicFieldObject->DynamicFieldUpdate(
+        Reorder => 0,
+        UserID  => 1,
+        %{$DynamicField},
+    );
+    $Self->True(
+        $SuccessUpdate,
+        "Reverted changes on ValidID for $DynamicField->{Name} field.",
+    );
+}
+
+for my $DynamicFieldID (@DynamicfieldIDs) {
+
+    # delete the dynamic field
+    my $FieldDelete = $DynamicFieldObject->DynamicFieldDelete(
+        ID     => $DynamicFieldID,
+        UserID => 1,
+    );
+    $Self->True(
+        $FieldDelete,
+        "Deleted dynamic field with id $DynamicFieldID.",
+    );
+}
 
 1;
