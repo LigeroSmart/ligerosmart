@@ -92,7 +92,13 @@
 .WidgetSimple .Header {
     padding: 5px 8px 3px;
     color: #222;
-    background: #A7AAAA url("../img/GradientSmall.png") repeat-x 0 0;
+    background: #e5e6e6;
+    background: -moz-linear-gradient(top,  #f4f5f5 0%, #e5e6e6 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f4f5f5), color-stop(100%,#e5e6e6));
+    background: -webkit-linear-gradient(top,  #f4f5f5 0%,#e5e6e6 100%);
+    background: -o-linear-gradient(top,  #f4f5f5 0%,#e5e6e6 100%);
+    background: -ms-linear-gradient(top,  #f4f5f5 0%,#e5e6e6 100%);
+    background: linear-gradient(to bottom,  #f4f5f5 0%,#e5e6e6 100%);
     border-bottom: 1px solid #D6D6D6;
     text-shadow: 0 1px 0 #FFF;
     position: relative;
@@ -147,8 +153,26 @@
  */
 
 .Overview thead {
-    background: #A7AAAA url("../img/GradientSmall.png") repeat-x 0 -31px;
+    background: #eeeeee;
+    background: -moz-linear-gradient(top,  #eeeeee 0%, #e0e0e0 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#eeeeee), color-stop(100%,#e0e0e0));
+    background: -webkit-linear-gradient(top,  #eeeeee 0%,#e0e0e0 100%);
+    background: -o-linear-gradient(top,  #eeeeee 0%,#e0e0e0 100%);
+    background: -ms-linear-gradient(top,  #eeeeee 0%,#e0e0e0 100%);
+    background: linear-gradient(to bottom,  #eeeeee 0%,#e0e0e0 100%);
     display: table-header-group;
+}
+
+.Overview thead th {
+    color: #4B4B4B;
+    font-size: 11px;
+    text-transform: uppercase;
+    background: none;
+    border-top: 1px solid #FFF;
+    border-bottom: 1px solid #BBB;
+    border-right: 1px solid #CCC;
+    vertical-align: bottom;
+    white-space: nowrap;
 }
 
 /**
@@ -166,7 +190,13 @@ ul.FAQMiniList span {
 .FAQPathCategory {
     padding: 4px 8px 4px;
     color: #6A6A6A;
-    background: #A7AAAA url("../img/GradientSmall.png") repeat-x 0 0;
+    background: #e5e6e6;
+    background: -moz-linear-gradient(top,  #f4f5f5 0%, #e5e6e6 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f4f5f5), color-stop(100%,#e5e6e6));
+    background: -webkit-linear-gradient(top,  #f4f5f5 0%,#e5e6e6 100%);
+    background: -o-linear-gradient(top,  #f4f5f5 0%,#e5e6e6 100%);
+    background: -ms-linear-gradient(top,  #f4f5f5 0%,#e5e6e6 100%);
+    background: linear-gradient(to bottom,  #f4f5f5 0%,#e5e6e6 100%);
     -moz-border-bottom-colors: none;
     -moz-border-left-colors: none;
     -moz-border-right-colors: none;

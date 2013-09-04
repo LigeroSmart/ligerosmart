@@ -17,20 +17,38 @@
  */
 
 .WidgetBox > .FAQContent {
-    background: url(../img/gradient_lightdark.png) repeat-x;
+    background: #ffffff;
+    background: -moz-linear-gradient(top,  #ebebeb 0%, #ffffff 50%, #ffffff 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ebebeb), color-stop(50%,#ffffff), color-stop(100%,#ffffff));
+    background: -webkit-linear-gradient(top,  #ebebeb 0%,#ffffff 50%,#ffffff 100%);
+    background: -o-linear-gradient(top,  #ebebeb 0%,#ffffff 50%,#ffffff 100%);
+    background: -ms-linear-gradient(top,  #ebebeb 0%,#ffffff 50%,#ffffff 100%);
+    background: linear-gradient(to bottom,  #ebebeb 0%,#ffffff 50%,#ffffff 100%);
     min-height: 100px;
     border-bottom: 1px solid #C6C5C4;
 }
 
 .WidgetBox > .FAQContentSmall {
-    background: url(../img/gradient_lightdark.png) repeat-x;
+    background: #ffffff;
+    background: -moz-linear-gradient(top,  #ebebeb 0%, #ffffff 50%, #ffffff 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ebebeb), color-stop(50%,#ffffff), color-stop(100%,#ffffff));
+    background: -webkit-linear-gradient(top,  #ebebeb 0%,#ffffff 50%,#ffffff 100%);
+    background: -o-linear-gradient(top,  #ebebeb 0%,#ffffff 50%,#ffffff 100%);
+    background: -ms-linear-gradient(top,  #ebebeb 0%,#ffffff 50%,#ffffff 100%);
+    background: linear-gradient(to bottom,  #ebebeb 0%,#ffffff 50%,#ffffff 100%);
     min-height: 100px;
     border-bottom: 1px solid #C6C5C4;
     border-top: 1px solid #C6C5C4;
 }
 
 .WidgetBox > .FAQVoting {
-    background: url(../img/gradient_lightdark.png) repeat-x;
+    background: #ffffff;
+    background: -moz-linear-gradient(top,  #ebebeb 0%, #ffffff 50%, #ffffff 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ebebeb), color-stop(50%,#ffffff), color-stop(100%,#ffffff));
+    background: -webkit-linear-gradient(top,  #ebebeb 0%,#ffffff 50%,#ffffff 100%);
+    background: -o-linear-gradient(top,  #ebebeb 0%,#ffffff 50%,#ffffff 100%);
+    background: -ms-linear-gradient(top,  #ebebeb 0%,#ffffff 50%,#ffffff 100%);
+    background: linear-gradient(to bottom,  #ebebeb 0%,#ffffff 50%,#ffffff 100%);
     min-height: 100px;
 }
 
