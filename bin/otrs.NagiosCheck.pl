@@ -109,7 +109,7 @@ my %Map = (
     min_crit_treshhold => 'min_crit_treshold',
     min_warn_treshhold => 'min_warn_treshold',
 );
-for my $Type ( keys %Map ) {
+for my $Type ( sort keys %Map ) {
     if ( defined $Config{$Type} ) {
         print STDERR "NOTICE: Typo in config name, use $Map{$Type} instead of $Type\n";
         $Config{ $Map{$Type} } = $Config{$Type};

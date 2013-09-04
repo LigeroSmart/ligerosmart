@@ -1,8 +1,6 @@
 # --
 # Kernel/System/PostMaster/Filter/SystemMonitoring.pm - Basic System Monitoring Interface
-# Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
-# --
-# $Id: SystemMonitoring.pm,v 1.19 2013-05-28 12:10:59 rs Exp $
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,9 +17,6 @@ use warnings;
 use Kernel::System::LinkObject;
 use Kernel::System::DynamicField;
 use Kernel::System::VariableCheck qw(:all);
-
-use vars qw($VERSION);
-$VERSION = qw($Revision: 1.19 $) [1];
 
 #the base name for dynamic fields
 
@@ -131,9 +126,8 @@ sub _GetDynamicFieldDefinition {
 }
 
 sub GetDynamicFieldsDefinition {
-    my $class  = shift;
-    my $Self   = shift;
-    my %Param  = @_;
+    my ( $Self, %Param ) = @_;
+
     my $Config = $Param{Config};
 
     push @{ $Param{NewFields} },
@@ -414,8 +408,7 @@ sub _TicketUpdate {
 
 # the sub takes the param as a hashref not as a copy, because it is updated
 
-sub _TicketCreate
-{
+sub _TicketCreate {
     my $Self  = shift || die "missing self";
     my $Param = shift || die "missing param hashref";
 
@@ -678,9 +671,5 @@ the enclosed file COPYING for license information (AGPL). If you
 did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =cut
-
-=head1 VERSION
-
-$Revision: 1.19 $ $Date: 2013-05-28 12:10:59 $
 
 =cut
