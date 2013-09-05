@@ -158,7 +158,7 @@
                 </div>
                 <div id="Messenger">
                     <div class="SpacingTop"></div>
-                    <span class="VotingQuestion">$Text{"$Config{"FAQ::Item::Voting::QuestionLangKey"}"}</span>
+                    <span class="VotingQuestion">$Text{"How helpful was this article? Please give us your rating and help to improve the FAQ Database. Thank You!"}</span>
                     <div class="SpacingTop"></div>
                     <div>
                         <span class="RateLabelBefore">$Text{"not helpful"}</span>
