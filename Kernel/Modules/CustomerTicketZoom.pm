@@ -258,7 +258,7 @@ sub Run {
                 DynamicFieldConfig => $DynamicFieldConfig,
             );
 
-            # convert possible values key => value to key => key for ACLs usign a Hash slice
+            # convert possible values key => value to key => key for ACLs using a Hash slice
             my %AclData = %{$PossibleValues};
             @AclData{ keys %AclData } = keys %AclData;
 
@@ -438,7 +438,7 @@ sub Run {
                 # check if field has PossibleValues property in its configuration
                 if ( IsHashRefWithData($PossibleValues) ) {
 
-                    # convert possible values key => value to key => key for ACLs usign a Hash slice
+                    # convert possible values key => value to key => key for ACLs using a Hash slice
                     my %AclData = %{$PossibleValues};
                     @AclData{ keys %AclData } = keys %AclData;
 
@@ -731,7 +731,7 @@ sub Run {
             # check if field has PossibleValues property in its configuration
             if ( IsHashRefWithData($PossibleValues) ) {
 
-                # convert possible values key => value to key => key for ACLs usign a Hash slice
+                # convert possible values key => value to key => key for ACLs using a Hash slice
                 my %AclData = %{$PossibleValues};
                 @AclData{ keys %AclData } = keys %AclData;
 
