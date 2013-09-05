@@ -22,8 +22,6 @@ use Kernel::System::Valid;
 use Kernel::System::GeneralCatalog;
 # ---
 
-use vars qw(@ISA);
-
 =head1 NAME
 
 Kernel::System::SLA - sla lib
