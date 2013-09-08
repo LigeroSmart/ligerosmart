@@ -36,7 +36,7 @@
 <!-- dtl:block:RecordLanguage -->
                     <td class="contentvalue">$QData{"Language"}</td>
 <!-- dtl:block:RecordLanguage -->
-                    <td class="contentvalue">$QData{"State","30"}</td>
+                    <td class="contentvalue">$Text{"$Data{"State"}"}</td>
                     <td class="contentvalue">$TimeLong{"$Data{"Changed"}"}</td>
                 </tr>
 <!-- dtl:block:Record -->

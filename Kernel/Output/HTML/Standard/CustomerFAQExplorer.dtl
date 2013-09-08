@@ -1,6 +1,6 @@
 # --
 # CustomerFAQExplorer.dtl - provides HTML for CustomerFAQExplorer.pm
-# Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -75,11 +75,11 @@
 <!-- dtl:block:InfoBoxFAQMiniListItemRowPositionNumber -->
                                 $QData{"Number"}.
 <!-- dtl:block:InfoBoxFAQMiniListItemRowPositionNumber -->
-                                <a href="$Env{"Baselink"}Action=CustomerFAQZoom;ItemID=$QData{"ItemID"}" title="$QData{"Title"} ($QData{"CategoryName"})">
+                                <a href="$Env{"Baselink"}Action=CustomerFAQZoom;ItemID=$LQData{"ItemID"}" title="$QData{"Title"} ($QData{"CategoryName"})">
                                     $QData{"Title","50"}
                                 </a>
                                 <span>
-                                    $QData{"CategoryShortName","15"} $QData{"Language"} $QData{"State"} $TimeShort{"$Data{"Created"}"}
+                                    $QData{"CategoryShortName","15"} $QData{"Language"} $Text{"$Data{"State"}"} $TimeShort{"$Data{"Created"}"}
                                 </span>
                             </li>
 <!-- dtl:block:InfoBoxFAQMiniListItemRow -->
@@ -143,7 +143,7 @@
                         <h3>$Text{"FAQ Articles"}</h3>
 <!-- dtl:block:Pagination -->
                         <div class="Pagination">
-                            <strong>$Data{"Result"}</strong> $Text{"of"} <strong>$Data{"TotalHits"}</strong> - $Text{"Page"}: $Data{"SiteNavBar"}
+                            <strong>$QData{"Result"}</strong> $Text{"of"} <strong>$QData{"TotalHits"}</strong> - $Text{"Page"}: $Data{"SiteNavBar"}
                         </div>
 <!-- dtl:block:Pagination -->
                         <div class="Clear"></div>
@@ -192,20 +192,20 @@
 <!-- dtl:block:NoFAQDataFoundMsg -->
 <!-- dtl:block:Record -->
                                 <tr>
-                                    <td class="FAQNumber" title="$QData{"Number"}"><a href="$Env{"Baselink"}Action=CustomerFAQZoom;ItemID=$Data{"FAQID"}">$Data{"Number"}</a></td>
+                                    <td class="FAQNumber" title="$QData{"Number"}"><a href="$Env{"Baselink"}Action=CustomerFAQZoom;ItemID=$LQData{"FAQID"}">$QData{"Number"}</a></td>
                                     <td class="Title" title="$QData{"Title"}">$QData{"Title","60"}</td>
                                     <td class="Category" title="$QData{"CategoryName"}">$QData{"CategoryName","45"}</td>
 <!-- dtl:block:RecordLanguage -->
                                     <td class="Language" title="$QData{"Language"}">$QData{"Language","5"}</td>
 <!-- dtl:block:RecordLanguage -->
-                                    <td class="State" title="$QData{"State"}">$QData{"State","21"}</td>
+                                    <td class="State">$Text{"$QData{"State"}"}</td>
                                 </tr>
 <!-- dtl:block:Record -->
                             </tbody>
                         </table>
 <!-- dtl:block:BottomSubNavigation -->
                         <div class="Pagination">
-                            <strong>$Data{"Result"}</strong> $Text{"of"} <strong>$Data{"TotalHits"}</strong> - $Text{"Page"}: $Data{"SiteNavBar"}
+                            <strong>$QData{"Result"}</strong> $Text{"of"} <strong>$QData{"TotalHits"}</strong> - $Text{"Page"}: $Data{"SiteNavBar"}
                         </div>
                         <div class="Clear"></div>
 <!-- dtl:block:BottomSubNavigation -->

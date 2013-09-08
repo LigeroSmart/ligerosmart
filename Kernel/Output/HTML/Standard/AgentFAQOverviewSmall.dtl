@@ -101,7 +101,7 @@
 <!-- dtl:block:RecordValid -->
 <!-- dtl:block:RecordChanged -->
                 <td>
-                    <div>$TimeShort{"$QData{"Changed"}"}</div>
+                    <div>$TimeShort{"$Data{"Changed"}"}</div>
                 </td>
 <!-- dtl:block:RecordChanged -->
             </tr>

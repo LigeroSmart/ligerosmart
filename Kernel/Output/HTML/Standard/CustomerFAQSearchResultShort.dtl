@@ -18,7 +18,7 @@
         </ul>
 <!-- dtl:block:Pagination -->
         <div class="Tabs Pagination">
-            <strong>$Data{"Result"}</strong> $Text{"of"} <strong>$Data{"TotalHits"}</strong> - $Text{"Page"}: $Data{"SiteNavBar"}
+            <strong>$QData{"Result"}</strong> $Text{"of"} <strong>$QData{"TotalHits"}</strong> - $Text{"Page"}: $Data{"SiteNavBar"}
         </div>
 <!-- dtl:block:Pagination -->
         <div class="Clear"></div>
@@ -76,13 +76,13 @@
 <!-- dtl:block:NoDataFoundMsg -->
 <!-- dtl:block:Record -->
                 <tr title="$QData{"TicketNumber"}">
-                    <td class="FAQNumber"><a href="$Env{"Baselink"}Action=CustomerFAQZoom;ItemID=$Data{"FAQID"}">$Data{"Number"}</a></td>
+                    <td class="FAQNumber"><a href="$Env{"Baselink"}Action=CustomerFAQZoom;ItemID=$LQData{"FAQID"}">$QData{"Number"}</a></td>
                     <td class="Title">$QData{"Title","60"}</td>
                     <td class="Category">$QData{"CategoryName","60"}</td>
 <!-- dtl:block:RecordLanguage -->
                     <td class="Language">$QData{"Language","5"}</td>
 <!-- dtl:block:RecordLanguage -->
-                    <td class="Changed" title="$TimeShort{"$Data{"Changed"}"}">$QData{"Changed","20"}</td>
+                    <td class="Changed">$TimeShort{"$Data{"Changed"}"}</td>
                 </tr>
 <!-- dtl:block:Record -->
             </tbody>
@@ -98,7 +98,7 @@
             </li>
         </ul>
         <div class="Tabs Pagination">
-            <strong>$Data{"Result"}</strong> $Text{"of"} <strong>$Data{"TotalHits"}</strong> - $Text{"Page"}: $Data{"SiteNavBar"}
+            <strong>$QData{"Result"}</strong> $Text{"of"} <strong>$QData{"TotalHits"}</strong> - $Text{"Page"}: $Data{"SiteNavBar"}
         </div>
         <div class="Clear"></div>
     </div>

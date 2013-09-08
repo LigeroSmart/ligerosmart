@@ -1,6 +1,6 @@
 # --
 # PublicFAQSearchResultShort.dtl - html for FAQ search results
-# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@
         </ul>
 <!-- dtl:block:Pagination -->
         <div class="Tabs Pagination">
-            <strong>$Data{"Result"}</strong> $Text{"of"} <strong>$Data{"TotalHits"}</strong> - $Text{"Page"}: $Data{"SiteNavBar"}
+            <strong>$QData{"Result"}</strong> $Text{"of"} <strong>$QData{"TotalHits"}</strong> - $Text{"Page"}: $Data{"SiteNavBar"}
         </div>
 <!-- dtl:block:Pagination -->
         <div class="Clear"></div>
@@ -76,7 +76,7 @@
 <!-- dtl:block:NoDataFoundMsg -->
 <!-- dtl:block:Record -->
                 <tr title="$QData{"TicketNumber"}">
-                    <td class="FAQNumber"><a href="$Env{"Baselink"}Action=PublicFAQZoom;ItemID=$Data{"FAQID"};ZoomBackLink=$QData{"ZoomBackLink"};">$Data{"Number"}</a></td>
+                    <td class="FAQNumber"><a href="$Env{"Baselink"}Action=PublicFAQZoom;ItemID=$LQData{"FAQID"};ZoomBackLink=$LQData{"ZoomBackLink"};">$QData{"Number"}</a></td>
                     <td class="Title">$QData{"Title","60"}</td>
                     <td class="Category">$QData{"CategoryName","60"}</td>
 <!-- dtl:block:RecordLanguage -->
@@ -98,7 +98,7 @@
             </li>
         </ul>
         <div class="Tabs Pagination">
-            <strong>$Data{"Result"}</strong> $Text{"of"} <strong>$Data{"TotalHits"}</strong> - $Text{"Page"}: $Data{"SiteNavBar"}
+            <strong>$QData{"Result"}</strong> $Text{"of"} <strong>$QData{"TotalHits"}</strong> - $Text{"Page"}: $Data{"SiteNavBar"}
         </div>
         <div class="Clear"></div>
     </div>
