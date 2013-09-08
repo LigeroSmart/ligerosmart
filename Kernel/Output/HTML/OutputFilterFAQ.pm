@@ -1,6 +1,6 @@
 # --
 # Kernel/Output/HTML/OutputFilterFAQ.pm - Output filter for FAQ module
-# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -49,7 +49,10 @@ sub Run {
     # if no session cookies are used we attach the session as URL parameter
     my $SessionString = '';
     if ( !$Self->{ConfigObject}->Get('SessionUseCookie') ) {
-        my $SessionID = $Param{SessionID} || $Self->{ParamObject}->GetParam( Param => $Self->{ConfigObject}->Get('SessionName') ) || '';
+        my $SessionID
+            = $Param{SessionID}
+            || $Self->{ParamObject}->GetParam( Param => $Self->{ConfigObject}->Get('SessionName') )
+            || '';
         $SessionString = $Self->{ConfigObject}->Get('SessionName') . '=' . $SessionID . ';';
     }
 

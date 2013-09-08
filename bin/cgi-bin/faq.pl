@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 # --
 # faq.pl - the global CGI handle file for OTRS
-# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
 # --
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU AFFERO General Public License as published by
@@ -28,13 +28,8 @@ use lib "$Bin/../..";
 use lib "$Bin/../../Kernel/cpan-lib";
 use lib "$Bin/../../Custom";
 
-use vars qw(@INC);
-
 # 0=off;1=on;
 my $Debug = 0;
-
-# check @INC for mod_perl (add lib path for "require module"!)
-push( @INC, "$Bin/../..", "$Bin/../../Kernel/cpan-lib" );
 
 print "location: public.pl?Action=PublicFAQExplorer\n";
 print "\n";

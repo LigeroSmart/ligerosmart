@@ -1,6 +1,6 @@
 # --
 # Kernel/GenericInterface/Operation/FAQ/LanguageList.pm - GenericInterface FAQ LanguageList operation backend
-# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,8 +15,6 @@ use warnings;
 use Kernel::System::FAQ;
 use Kernel::GenericInterface::Operation::Common;
 use Kernel::System::VariableCheck qw(IsArrayRefWithData IsHashRefWithData IsStringWithData);
-
-use vars qw(@ISA);
 
 =head1 NAME
 

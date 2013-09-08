@@ -1,6 +1,6 @@
 # --
 # Kernel/System/FAQ/Language.pm - faq language functions
-# Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -135,7 +135,7 @@ sub LanguageDuplicateCheck {
 
     # build sql
     my @Bind = ( \$Param{Name} );
-    my $SQL = '
+    my $SQL  = '
         SELECT id
         FROM faq_language
         WHERE name = ?';
