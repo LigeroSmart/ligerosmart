@@ -796,6 +796,80 @@ for my $StateID ( sort keys %States ) {
     );
 }
 
+my $StateTypeList = $FAQObject->StateTypeList(
+    UserID => 1,
+);
+
+$Self->Is(
+    ref $StateTypeList,
+    'HASH',
+    "StateTypeList() returns hashref",
+);
+
+$Self->Is(
+    scalar keys %{$StateTypeList},
+    3,
+    "StateTypeList() has 3 keys",
+);
+
+$Self->Is(
+    $StateTypeList->{1},
+    'internal',
+    "StateTypeList() 1 is internal",
+);
+
+$Self->Is(
+    $StateTypeList->{2},
+    'external',
+    "StateTypeList() 2 is external",
+);
+
+$Self->Is(
+    $StateTypeList->{3},
+    'public',
+    "StateTypeList() 3 is public",
+);
+
+$StateTypeList = $FAQObject->StateTypeList(
+    Types => [ 'public', 'external' ],
+    UserID => 1,
+);
+
+$Self->Is(
+    scalar keys %{$StateTypeList},
+    2,
+    "StateTypeList() has 2 keys",
+);
+
+$Self->Is(
+    $StateTypeList->{2},
+    'external',
+    "StateTypeList() 2 is external",
+);
+
+$Self->Is(
+    $StateTypeList->{3},
+    'public',
+    "StateTypeList() 3 is public",
+);
+
+$StateTypeList = $FAQObject->StateTypeList(
+    Types  => ['internal'],
+    UserID => 1,
+);
+
+$Self->Is(
+    scalar keys %{$StateTypeList},
+    1,
+    "StateTypeList() has 1 key",
+);
+
+$Self->Is(
+    $StateTypeList->{1},
+    'internal',
+    "StateTypeList() 1 is internal",
+);
+
 # -------------------------
 
 # clean the system

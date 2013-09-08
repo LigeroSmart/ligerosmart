@@ -303,6 +303,13 @@ get the state type list as hashref
         UserID => 1,
     );
 
+optional, get state type list for some states:
+
+    my $StateTypeHashRef = $FAQObject->StateTypeList(
+        Types  => [ 'public', 'internal'],
+        UserID => 1,
+    );
+
 Returns:
 
     $StateTypeHashRef = {
@@ -333,18 +340,29 @@ sub StateTypeList {
     # types are given
     if ( $Param{Types} ) {
 
-        # copy $Param{Types} to a local value since it will be changed, if the reference value is
-        # changed it will bring side effects
-        my @Types = @{ $Param{Types} };
+        if ( ref $Param{Types} ne 'ARRAY' ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => 'Types should be an array reference!',
+            );
+        }
 
-        # quote the types and add single quotes around them
-        for my $Type (@Types) {
-            $Type = "'" . $Self->{DBObject}->Quote($Type) . "'";
+        # call StateTypeList without parameters to validate Types
+        my $StateTypeList = $Self->StateTypeList( UserID => $Param{UserID} );
+        my %StateTypes = reverse %{$StateTypeList};
+        my @Types;
+
+        # only add types to list that exist
+        TYPE:
+        for my $Type ( @{ $Param{Types} } ) {
+            next $Type if !$StateTypes{$Type};
+            push @Types, "'$Type'";
         }
 
         # create string
-        my $InString = join ', ', @Types;
-        $SQL .= ' WHERE name IN (' . $InString . ')';
+        if (@Types) {
+            $SQL .= ' WHERE name IN ( ' . join( ', ', @Types ) . ' )';
+        }
     }
 
     # prepare SQL
