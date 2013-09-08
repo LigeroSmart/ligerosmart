@@ -264,31 +264,32 @@ sub CategoryDuplicateCheck {
     }
 
     # set defaults
-    $Param{CategoryID} ||= 0;
-    $Param{ParentID}   ||= 0;
+    $Param{Name} //= '';
+    $Param{ParentID} ||= 0;
+    my @Values;
+    push @Values, \$Param{Name};
+    push @Values, \$Param{ParentID};
 
     # db quote
-    $Param{Name} = $Self->{DBObject}->Quote( $Param{Name} ) || '';
-    $Param{CategoryID} = $Self->{DBObject}->Quote( $Param{CategoryID}, 'Integer' );
-    $Param{ParentID}   = $Self->{DBObject}->Quote( $Param{ParentID},   'Integer' );
+    $Param{ParentID} = $Self->{DBObject}->Quote( $Param{ParentID}, 'Integer' );
 
     # build sql
     my $SQL = '
         SELECT id
         FROM faq_category
-        WHERE';
-    if ( defined $Param{Name} ) {
-        $SQL .= "
-            name = '$Param{Name}'
-            AND parent_id = $Param{ParentID}";
-        if ( defined $Param{CategoryID} ) {
-            $SQL .= " AND id != $Param{CategoryID}";
-        }
+        WHERE name = ?
+            AND parent_id = ?
+        ';
+    if ( defined $Param{CategoryID} ) {
+        $SQL .= " AND id != ?";
+        push @Values, \$Param{CategoryID};
+
     }
 
     # prepare sql statement
     return if !$Self->{DBObject}->Prepare(
         SQL   => $SQL,
+        Bind  => \@Values,
         Limit => 1,
     );
 
