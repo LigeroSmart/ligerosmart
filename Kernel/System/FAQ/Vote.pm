@@ -157,13 +157,7 @@ sub VoteGet {
         }
     }
 
-    # db quote
-    for my $Argument (qw(CreatedBy Interface IP)) {
-        $Param{$Argument} = $Self->{DBObject}->Quote( $Param{$Argument} );
-    }
-    $Param{ItemID} = $Self->{DBObject}->Quote( $Param{ItemID}, 'Integer' );
-
-    my $Ext = "";
+    my @Values;
     my $SQL = '
         SELECT created_by, item_id, interface, ip, created, rate
         FROM faq_voting
@@ -171,28 +165,23 @@ sub VoteGet {
 
     # public
     if ( $Param{Interface} eq '3' ) {
-        $Ext .= "
-            ip = '$Param{IP}'
-            AND item_id = $Param{ItemID}";
+        $SQL .= "
+            ip = ?
+            AND item_id = ?";
+        push @Values, ( \$Param{IP}, \$Param{ItemID} );
     }
 
     # customer
-    elsif ( $Param{Interface} eq '2' ) {
-        $Ext .= "
-            created_by = '$Param{CreateBy}'
-            AND item_id = $Param{ItemID}";
+    elsif ( $Param{Interface} eq '2' || $Param{Interface} eq '1' ) {
+        $SQL .= "
+            created_by = ?
+            AND item_id = ?";
+        push @Values, ( \$Param{CreateBy}, \$Param{ItemID} );
     }
-
-    # internal
-    elsif ( $Param{Interface} eq '1' ) {
-        $Ext .= "
-            created_by = '$Param{CreateBy}'
-            AND item_id = $Param{ItemID}";
-    }
-    $SQL .= $Ext;
 
     return if !$Self->{DBObject}->Prepare(
         SQL   => $SQL,
+        Bind  => \@Values,
         Limit => 1,
     );
 
