@@ -102,6 +102,29 @@
         </div>
 
         <div class="Clear"></div>
+        <label for="StateIDs" id="LabelStateIDs">$Text{"State"}:</label>
+        <div class="Field">
+            $Data{"StateSelectionString"}
+            <button type="button" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
+        </div>
+
+        <div class="Clear"></div>
+        <label for="VoteSearchType" id="LabelVoteSearchType">$Text{"Vote (e. g. Equals 10 or GreaterThan 60)"}:</label>
+        <div class="Field">
+            $Data{"VoteSearchTypeSelectionString"}
+            <input type="text" name="VoteSearch" value="$QData{"VoteSearch"}" class="W25pc"/>
+            <button type="button" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
+        </div>
+
+        <div class="Clear"></div>
+        <label for="RateSearchType" id="LabelRateSearchType">$Text{"Rate (e. g. Equals 25 or GreaterThan 75)"}:</label>
+        <div class="Field">
+            $Data{"RateSearchTypeSelectionString"}
+            $Data{"RateSearchSelectionString"}
+            <button type="button" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
+        </div>
+
+        <div class="Clear"></div>
         $Data{"AttributesOrigStrg"}
 
     </fieldset>
