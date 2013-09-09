@@ -16,6 +16,7 @@ use Kernel::System::FAQ;
 use Kernel::System::SearchProfile;
 use Kernel::System::CSV;
 use Kernel::System::Valid;
+use Kernel::System::VariableCheck qw(:all);
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -130,7 +131,7 @@ sub Run {
     else {
 
         # get scalar search params
-        for my $ParamName (qw(Number Title Keyword Fulltext ResultForm)) {
+        for my $ParamName (qw(Number Title Keyword Fulltext ResultForm VoteSearch VoteSearchType RateSearch RateSearchType)) {
             $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
 
             # remove whitespace on the start and end
@@ -144,7 +145,7 @@ sub Run {
         }
 
         # get array search params
-        for my $SearchParam (qw(CategoryIDs LanguageIDs ValidIDs)) {
+        for my $SearchParam (qw(CategoryIDs LanguageIDs ValidIDs StateIDs)) {
             my @Array = $Self->{ParamObject}->GetArray( Param => $SearchParam );
             if (@Array) {
                 $GetParam{$SearchParam} = \@Array;
@@ -217,6 +218,32 @@ sub Run {
         my %ValidList   = $Self->{ValidObject}->ValidList();
         my @AllValidIDs = keys %ValidList;
 
+        # prepare search states
+        my $SearchStates;
+        if ( !IsArrayRefWithData($GetParam{StateIDs}) ) {
+            $SearchStates = $Self->{InterfaceStates};
+        }
+        else {
+            STATETYPEID:
+            for my $StateTypeID ( @{$GetParam{StateIDs}} ) {
+                next STATETYPEID if !$StateTypeID;
+                next STATETYPEID if !$Self->{InterfaceStates}->{$StateTypeID};
+                $SearchStates->{$StateTypeID} = $Self->{InterfaceStates}->{$StateTypeID};
+            }
+        }
+
+        if ( IsNumber($GetParam{VoteSearch}) ) {
+            $GetParam{Votes} = {
+                $GetParam{VoteSearchType} => $GetParam{VoteSearch}
+            };
+        }
+
+        if ( IsNumber($GetParam{RateSearch}) ) {
+            $GetParam{Rate} = {
+                $GetParam{RateSearchType} => $GetParam{RateSearch}
+            };
+        }
+
         # perform FAQ search
         # default search on all valid ids, this can be overwritten by %GetParam
         my @ViewableFAQIDs = $Self->{FAQObject}->FAQSearch(
@@ -224,7 +251,7 @@ sub Run {
             OrderByDirection    => [ $Self->{OrderBy} ],
             Limit               => $Self->{SearchLimit},
             UserID              => $Self->{UserID},
-            States              => $Self->{InterfaceStates},
+            States              => $SearchStates,
             Interface           => $Self->{Interface},
             ContentSearchPrefix => '*',
             ContentSearchSuffix => '*',
@@ -753,6 +780,19 @@ sub _MaskForm {
             Key   => 'ValidIDs',
             Value => 'Validity',
         },
+        {
+            Key   => 'StateIDs',
+            Value => 'State',
+        },
+        {
+            Key   => 'VoteSearchType',
+            Value => 'Vote',
+        },
+        {
+            Key   => 'RateSearchType',
+            Value => 'Rate',
+        },
+
     );
 
     # dropdown menu for 'attributes'
@@ -791,7 +831,7 @@ sub _MaskForm {
     $Param{CategoriesSelectionString} = $Self->{LayoutObject}->BuildSelection(
         Data        => $UserCategoriesLongNames,
         Name        => 'CategoryIDs',
-        SelectedIDs => $GetParam{CategoryIDs} || [],
+        SelectedID => $GetParam{CategoryIDs} || [],
         Size        => 5,
         Translation => 0,
         Multiple    => 1,
@@ -804,10 +844,75 @@ sub _MaskForm {
     $Param{ValidSelectionString} = $Self->{LayoutObject}->BuildSelection(
         Data        => \%ValidList,
         Name        => 'ValidIDs',
-        SelectedIDs => $GetParam{ValidIDs} || [],
+        SelectedID => $GetParam{ValidIDs} || [],
         Size        => 5,
         Translation => 0,
         Multiple    => 1,
+    );
+
+    # create a mix of state and state types hash in order to have the state type IDs with state
+    # names
+    my %StateList = $Self->{FAQObject}->StateList(
+        UserID => $Self->{UserID},
+    );
+
+    my %States;
+    for my $StateID (sort keys %StateList) {
+        my %StateData = $Self->{FAQObject}->StateGet(
+            StateID => $StateID,
+            UserID  => $Self->{UserID},
+        );
+        $States{ $StateData{TypeID} } = $StateData{Name}
+    }
+
+    $Param{StateSelectionString} = $Self->{LayoutObject}->BuildSelection(
+        Data        => \%States,
+        Name        => 'StateIDs',
+        SelectedID => $GetParam{StateIDs} || [],
+        Size        => 3,
+        Translation => 1,
+        Multiple    => 1,
+    );
+
+    my %VotingOperators = (
+        Equals            => 'Equals',
+        GreaterThan       => 'GreaterThan',
+        GreaterThanEquals => 'GreaterThanEquals',
+        SmallerThan       => 'SmallerThan',
+        SmallerThanEquals => 'SmallerThanEquals',
+    );
+
+    $Param{VoteSearchTypeSelectionString} = $Self->{LayoutObject}->BuildSelection(
+        Data        => \%VotingOperators,
+        Name        => 'VoteSearchType',
+        SelectedID => $GetParam{VoteSearchType} || '',
+        Size        => 1,
+        Translation => 1,
+        Multiple    => 0,
+    );
+
+    $Param{RateSearchTypeSelectionString} = $Self->{LayoutObject}->BuildSelection(
+        Data        => \%VotingOperators,
+        Name        => 'RateSearchType',
+        SelectedID => $GetParam{RateSearchType} || '',
+        Size        => 1,
+        Translation => 1,
+        Multiple    => 0,
+    );
+    $Param{RateSearchSelectionString} = $Self->{LayoutObject}->BuildSelection(
+        Data        => {
+            0   => '0 %',
+            25  => '25 %',
+            50  => '50 %',
+            75  => '75 %',
+            100 => '100 %',
+        },
+        Sort        => 'NumericKey',
+        Name        => 'RateSearch',
+        SelectedID  => $GetParam{RateSearch} || '',
+        Size        => 1,
+        Translation => 0,
+        Multiple    => 0,
     );
 
     my %Profiles = $Self->{SearchProfileObject}->SearchProfileList(

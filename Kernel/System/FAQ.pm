@@ -1,6 +1,6 @@
 # --
 # Kernel/System/FAQ.pm - all faq functions
-# Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -377,7 +377,7 @@ sub FAQGet {
     return %Data;
 }
 
-sub ItemFieldGet() {
+sub ItemFieldGet {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
@@ -1581,6 +1581,30 @@ search in FAQ articles
         CategoryIDs => [ 7, 8, 9 ],                                   # (optional)
         ValidIDs    => [ 1, 2, 3 ],                                   # (optional) (default 1)
 
+        # Votes
+        #   At least one operator must be specified. Operators will be connected with AND,
+        #       values in an operator with OR.
+        #   You can also pass more than one argument to an operator: [123, 654]
+        Votes => {
+            Equals            => 123,
+            GreaterThan       => 123,
+            GreaterThanEquals => 123,
+            SmallerThan       => 123,
+            SmallerThanEquals => 123,
+        }
+
+        # Rate
+        #   At least one operator must be specified. Operators will be connected with AND,
+        #       values in an operator with OR.
+        #   You can also pass more than one argument to an operator: [50, 75]
+        Rate => {
+            Equals            => 75,
+            GreaterThan       => 75,
+            GreaterThanEquals => 75,
+            SmallerThan       => 75,
+            SmallerThanEquals => 75,
+        }
+
         OrderBy => [ 'FAQID', 'Title' ],                              # (optional)
         # default: [ 'FAQID' ],
         # (FAQID, Number, Title, Language, Category, Valid, Created,
@@ -1954,6 +1978,87 @@ sub FAQSearch {
     # add GROUP BY
     $Ext
         .= ' GROUP BY i.id, i.f_subject, i.f_language_id, i.created, i.changed, s.name, v.item_id ';
+
+    # add HAVING clause ( Votes and Rate are agreggated columns, they can't be in the WHERE clause)
+    # defined voting parameters (for Votes and Rate)
+    my %VotingOperators = (
+        Equals            => '=',
+        GreaterThan       => '>',
+        GreaterThanEquals => '>=',
+        SmallerThan       => '<',
+        SmallerThanEquals => '<=',
+    );
+
+    my $HavingPrint;
+    my $AddedCondition;
+
+    HAVING_PARAM:
+    for my $HavingParam (qw(Votes Rate)) {
+        my $SearchParam = $Param{$HavingParam};
+
+        next HAVING_PARAM if ( !$SearchParam );
+        next HAVING_PARAM if ( ref $SearchParam ne 'HASH' );
+
+        OPERATOR:
+        for my $Operator ( sort keys %{$SearchParam} ) {
+
+            next OPERATOR if !( $VotingOperators{$Operator} );
+
+            # print HAVING clause just once if and just if the operator is valid
+            if ( !$HavingPrint ) {
+                $Ext .= ' HAVING ';
+                $HavingPrint = 1;
+            }
+
+            my $SQLExtSub;
+
+            my @SearchParams
+                = ( ref $SearchParam->{$Operator} eq 'ARRAY' )
+                ? @{ $SearchParam->{$Operator} }
+                : ( $SearchParam->{$Operator} );
+
+            # do not use AND on the first condition
+            if ($AddedCondition) {
+                $SQLExtSub .= ' AND (';
+            }
+            else {
+                $SQLExtSub .= ' (';
+            }
+            my $Counter = 0;
+            TEXT:
+            for my $Text (@SearchParams) {
+                next TEXT if ( !defined $Text || $Text eq '' );
+
+                $Text =~ s/\*/%/gi;
+
+                # check search attribute, we do not need to search for *
+                next if $Text =~ /^\%{1,3}$/;
+
+                $SQLExtSub .= ' OR ' if ($Counter);
+
+                # define agregation column
+                my $AgreggteColumn = 'count( v.item_id )';
+                if ( $HavingParam eq 'Rate' ) {
+                    $AgreggteColumn = 'avg( v.rate )';
+                }
+
+                # set condition
+                $SQLExtSub .= " $AgreggteColumn $VotingOperators{$Operator} '";
+                $SQLExtSub .= $Self->{DBObject}->Quote( $Text, 'Number' ) . "' ";
+
+                $Counter++;
+            }
+
+            # close condition
+            $SQLExtSub .= ') ';
+
+            # add condition to the final SQL statement
+            if ($Counter) {
+                $Ext .= $SQLExtSub;
+                $AddedCondition = 1;
+            }
+        }
+    }
 
     # add the ORDER BY clause
     if (@SQLOrderBy) {
