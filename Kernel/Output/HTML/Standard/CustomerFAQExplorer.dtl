@@ -198,7 +198,7 @@
 <!-- dtl:block:RecordLanguage -->
                                     <td class="Language" title="$QData{"Language"}">$QData{"Language","5"}</td>
 <!-- dtl:block:RecordLanguage -->
-                                    <td class="State">$Text{"$QData{"State"}"}</td>
+                                    <td class="State">$Text{"$Data{"State"}"}</td>
                                 </tr>
 <!-- dtl:block:Record -->
                             </tbody>
