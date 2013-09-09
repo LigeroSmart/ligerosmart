@@ -2037,13 +2037,13 @@ sub FAQSearch {
                 $SQLExtSub .= ' OR ' if ($Counter);
 
                 # define aggregation column
-                my $AggregteColumn = 'count( v.item_id )';
+                my $AggregateColumn = 'count( v.item_id )';
                 if ( $HavingParam eq 'Rate' ) {
-                    $AggregteColumn = 'avg( v.rate )';
+                    $AggregateColumn = 'avg( v.rate )';
                 }
 
                 # set condition
-                $SQLExtSub .= " $AggregteColumn $VotingOperators{$Operator} ";
+                $SQLExtSub .= " $AggregateColumn $VotingOperators{$Operator} ";
                 $SQLExtSub .= $Self->{DBObject}->Quote( $Text, 'Number' ) . " ";
 
                 $Counter++;
