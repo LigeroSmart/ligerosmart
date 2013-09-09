@@ -1605,6 +1605,26 @@ search in FAQ articles
             SmallerThanEquals => 75,
         }
 
+        # FAQ items created more than 60 minutes ago (item older than 60 minutes)  (optional)
+        ItemCreateTimeOlderMinutes => 60,
+        # FAQ item created less than 120 minutes ago (item newer than 120 minutes) (optional)
+        ItemCreateTimeNewerMinutes => 120,
+
+        # FAQ items with create time after ... (item newer than this date) (optional)
+        ItemCreateTimeNewerDate => '2006-01-09 00:00:01',
+        # FAQ items with created time before ... (item older than this date) (optional)
+        ItemCreateTimeOlderDate => '2006-01-19 23:59:59',
+
+        # FAQ items changed more than 60 minutes ago (optional)
+        ItemChangeTimeOlderMinutes => 60,
+        # FAQ items changed less than 120 minutes ago (optional)
+        ItemChangeTimeNewerMinutes => 120,
+
+        # FAQ item with changed time after ... (item changed newer than this date) (optional)
+        ItemChangeTimeNewerDate => '2006-01-09 00:00:01',
+        # FAQ item with changed time before ... (item changed older than this date) (optional)
+        ItemChangeTimeOlderDate => '2006-01-19 23:59:59',
+
         OrderBy => [ 'FAQID', 'Title' ],                              # (optional)
         # default: [ 'FAQID' ],
         # (FAQID, Number, Title, Language, Category, Valid, Created,
