@@ -1,6 +1,6 @@
 # --
 # Kernel/Modules/CustomerFAQSearch.pm - customer FAQ search
-# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,6 +15,7 @@ use warnings;
 use Kernel::System::FAQ;
 use Kernel::System::SearchProfile;
 use Kernel::System::CSV;
+use Kernel::System::VariableCheck qw(:all);
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -128,7 +129,18 @@ sub Run {
 
     # get search string params (get submitted params)
     else {
-        for my $ParamName (qw(Number Title Keyword Fulltext ResultForm)) {
+        for my $ParamName (
+            qw(Number Title Keyword Fulltext ResultForm TimeSearchType VoteSearch VoteSearchType
+            VoteSearchOption RateSearch RateSearchType RateSearchOption
+            ItemCreateTimePointFormat ItemCreateTimePoint
+            ItemCreateTimePointStart
+            ItemCreateTimeStart ItemCreateTimeStartDay ItemCreateTimeStartMonth
+            ItemCreateTimeStartYear
+            ItemCreateTimeStop ItemCreateTimeStopDay ItemCreateTimeStopMonth
+            ItemCreateTimeStopYear
+            )
+            )
+        {
 
             # get search string params (get submitted params)
             $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
@@ -138,10 +150,6 @@ sub Run {
                 $GetParam{$ParamName} =~ s{ \A \s+ }{}xms;
                 $GetParam{$ParamName} =~ s{ \s+ \z }{}xms;
             }
-
-            # db quote to prevent SQL injection
-            $GetParam{$ParamName} = $Self->{DBObject}->Quote( $GetParam{$ParamName} );
-
         }
 
         # get array params
@@ -160,6 +168,33 @@ sub Run {
         if ( $GetParam{$Exclude} ) {
             delete $GetParam{$Exclude};
         }
+    }
+
+    # get vote option
+    if ( !$GetParam{VoteSearchOption} ) {
+        $GetParam{'VoteSearchOption::None'} = 'checked="checked"';
+    }
+    elsif ( $GetParam{VoteSearchOption} eq 'VotePoint' ) {
+        $GetParam{'VoteSearchOption::VotePoint'} = 'checked="checked"';
+    }
+
+    # get rate option
+    if ( !$GetParam{RateSearchOption} ) {
+        $GetParam{'RateSearchOption::None'} = 'checked="checked"';
+    }
+    elsif ( $GetParam{RateSearchOption} eq 'RatePoint' ) {
+        $GetParam{'RateSearchOption::RatePoint'} = 'checked="checked"';
+    }
+
+    # get time option
+    if ( !$GetParam{TimeSearchType} ) {
+        $GetParam{'TimeSearchType::None'} = 'checked="checked"';
+    }
+    elsif ( $GetParam{TimeSearchType} eq 'TimePoint' ) {
+        $GetParam{'TimeSearchType::TimePoint'} = 'checked="checked"';
+    }
+    elsif ( $GetParam{TimeSearchType} eq 'TimeSlot' ) {
+        $GetParam{'TimeSearchType::TimeSlot'} = 'checked="checked"';
     }
 
     # set result form env
@@ -241,6 +276,109 @@ sub Run {
         if ( $GetParam{Fulltext} ) {
             $GetParam{ContentSearch} = 'OR';
             $GetParam{What}          = $GetParam{Fulltext};
+        }
+
+        # prepare votes search
+        if ( IsNumber( $GetParam{VoteSearch} ) && $GetParam{VoteSearchOption} ) {
+            $GetParam{Votes} = {
+                $GetParam{VoteSearchType} => $GetParam{VoteSearch}
+            };
+        }
+
+        # prepare rate search
+        if ( IsNumber( $GetParam{RateSearch} ) && $GetParam{RateSearchOption} ) {
+            $GetParam{Rate} = {
+                $GetParam{RateSearchType} => $GetParam{RateSearch}
+            };
+        }
+
+        my %TimeMap = (
+            ItemCreate => 'Time',
+        );
+
+        for my $TimeType ( sort keys %TimeMap ) {
+
+            # get create time settings
+            if ( !$GetParam{ $TimeMap{$TimeType} . 'SearchType' } ) {
+
+                # do nothing with time stuff
+            }
+            elsif ( $GetParam{ $TimeMap{$TimeType} . 'SearchType' } eq 'TimeSlot' ) {
+                for my $Key (qw(Month Day)) {
+                    $GetParam{ $TimeType . 'TimeStart' . $Key }
+                        = sprintf( "%02d", $GetParam{ $TimeType . 'TimeStart' . $Key } );
+                    $GetParam{ $TimeType . 'TimeStop' . $Key }
+                        = sprintf( "%02d", $GetParam{ $TimeType . 'TimeStop' . $Key } );
+                }
+                if (
+                    $GetParam{ $TimeType . 'TimeStartDay' }
+                    && $GetParam{ $TimeType . 'TimeStartMonth' }
+                    && $GetParam{ $TimeType . 'TimeStartYear' }
+                    )
+                {
+                    $GetParam{ $TimeType . 'TimeNewerDate' }
+                        = $GetParam{ $TimeType . 'TimeStartYear' } . '-'
+                        . $GetParam{ $TimeType . 'TimeStartMonth' } . '-'
+                        . $GetParam{ $TimeType . 'TimeStartDay' }
+                        . ' 00:00:00';
+                }
+                if (
+                    $GetParam{ $TimeType . 'TimeStopDay' }
+                    && $GetParam{ $TimeType . 'TimeStopMonth' }
+                    && $GetParam{ $TimeType . 'TimeStopYear' }
+                    )
+                {
+                    $GetParam{ $TimeType . 'TimeOlderDate' }
+                        = $GetParam{ $TimeType . 'TimeStopYear' } . '-'
+                        . $GetParam{ $TimeType . 'TimeStopMonth' } . '-'
+                        . $GetParam{ $TimeType . 'TimeStopDay' }
+                        . ' 23:59:59';
+                }
+            }
+            elsif ( $GetParam{ $TimeMap{$TimeType} . 'SearchType' } eq 'TimePoint' ) {
+                if (
+                    $GetParam{ $TimeType . 'TimePoint' }
+                    && $GetParam{ $TimeType . 'TimePointStart' }
+                    && $GetParam{ $TimeType . 'TimePointFormat' }
+                    )
+                {
+                    my $Time = 0;
+                    if ( $GetParam{ $TimeType . 'TimePointFormat' } eq 'minute' ) {
+                        $Time = $GetParam{ $TimeType . 'TimePoint' };
+                    }
+                    elsif ( $GetParam{ $TimeType . 'TimePointFormat' } eq 'hour' ) {
+                        $Time = $GetParam{ $TimeType . 'TimePoint' } * 60;
+                    }
+                    elsif ( $GetParam{ $TimeType . 'TimePointFormat' } eq 'day' ) {
+                        $Time = $GetParam{ $TimeType . 'TimePoint' } * 60 * 24;
+                    }
+                    elsif ( $GetParam{ $TimeType . 'TimePointFormat' } eq 'week' ) {
+                        $Time = $GetParam{ $TimeType . 'TimePoint' } * 60 * 24 * 7;
+                    }
+                    elsif ( $GetParam{ $TimeType . 'TimePointFormat' } eq 'month' ) {
+                        $Time = $GetParam{ $TimeType . 'TimePoint' } * 60 * 24 * 30;
+                    }
+                    elsif ( $GetParam{ $TimeType . 'TimePointFormat' } eq 'year' ) {
+                        $Time = $GetParam{ $TimeType . 'TimePoint' } * 60 * 24 * 365;
+                    }
+                    if ( $GetParam{ $TimeType . 'TimePointStart' } eq 'Before' ) {
+
+                        # more than ... ago
+                        $GetParam{ $TimeType . 'TimeOlderMinutes' } = $Time;
+                    }
+                    elsif ( $GetParam{ $TimeType . 'TimePointStart' } eq 'Next' ) {
+
+                        # within next
+                        $GetParam{ $TimeType . 'TimeNewerMinutes' } = 0;
+                        $GetParam{ $TimeType . 'TimeOlderMinutes' } = -$Time;
+                    }
+                    else {
+                        # within last ...
+                        $GetParam{ $TimeType . 'TimeOlderMinutes' } = 0;
+                        $GetParam{ $TimeType . 'TimeNewerMinutes' } = $Time;
+                    }
+                }
+            }
         }
 
         # perform FAQ search
@@ -476,7 +614,18 @@ sub Run {
                 Name         => 'Language',
                 Translatable => 1,
             },
-
+            TimeSearchType => {
+                Name         => 'Create Time',
+                Translatable => 1,
+            },
+            VoteSearchType => {
+                Name         => 'Votes',
+                Translatable => 1,
+            },
+            RateSearchType => {
+                Name         => 'Rate',
+                Translatable => 1,
+            },
         );
 
         # print each attribute in search results area.
@@ -540,6 +689,54 @@ sub Run {
                 # otherwise is an scalar and can be set directly
                 else {
                     $AttributeValue = $GetParam{$Attribute}
+                }
+                if ( $Attribute eq 'TimeSearchType' ) {
+
+                    if ( $GetParam{TimeSearchType} eq 'TimeSlot' ) {
+
+                        my $StartDate = $Self->{LayoutObject}->{LanguageObject}->FormatTimeString(
+                            $GetParam{ItemCreateTimeStartYear}
+                                . '-' . $GetParam{ItemCreateTimeStartMonth}
+                                . '-' . $GetParam{ItemCreateTimeStartDay}
+                                . ' 00:00:00', 'DateFormatShort'
+                        );
+
+                        my $StopDate = $Self->{LayoutObject}->{LanguageObject}->FormatTimeString(
+                            $GetParam{ItemCreateTimeStopYear}
+                                . '-' . $GetParam{ItemCreateTimeStopMonth}
+                                . '-' . $GetParam{ItemCreateTimeStopDay}
+                                . ' 00:00:00', 'DateFormatShort'
+                        );
+
+                        $Attribute = 'Created between';
+                        $AttributeValue
+                            = $StartDate . ' '
+                            . $Self->{LayoutObject}->{LanguageObject}->Get('and') . ' '
+                            . $StopDate;
+                    }
+                    else {
+
+                        my $Mapping = {
+                            'Last'   => 'Created within the last',
+                            'Before' => 'Created more than ... ago',
+                        };
+
+                        $Attribute = $Mapping->{ $GetParam{ItemCreateTimePointStart} };
+                        $AttributeValue
+                            = $GetParam{ItemCreateTimePoint} . ' '
+                            . $Self->{LayoutObject}->{LanguageObject}
+                            ->Get( $GetParam{ItemCreateTimePointFormat} . '(s)' );
+                    }
+                }
+                elsif ( $Attribute eq 'VoteSearchType' ) {
+                    $AttributeValue
+                        = $Self->{LayoutObject}->{LanguageObject}
+                        ->Get( $GetParam{VoteSearchType} ) . ' ' . $GetParam{VoteSearch};
+                }
+                elsif ( $Attribute eq 'RateSearchType' ) {
+                    $AttributeValue
+                        = $Self->{LayoutObject}->{LanguageObject}
+                        ->Get( $GetParam{RateSearchType} ) . ' ' . $GetParam{RateSearch} . '%';
                 }
 
                 $Self->{LayoutObject}->Block(
@@ -720,6 +917,147 @@ sub MaskForm {
         Multiple   => 1,
         Size       => 5,
         SelectedID => $Param{CategoryIDs},
+    );
+
+    my %VotingOperators = (
+        Equals            => 'Equals',
+        GreaterThan       => 'GreaterThan',
+        GreaterThanEquals => 'GreaterThanEquals',
+        SmallerThan       => 'SmallerThan',
+        SmallerThanEquals => 'SmallerThanEquals',
+    );
+
+    $Param{VoteSearchTypeSelectionString} = $Self->{LayoutObject}->BuildSelection(
+        Data        => \%VotingOperators,
+        Name        => 'VoteSearchType',
+        SelectedID  => $Param{VoteSearchType} || '',
+        Size        => 1,
+        Translation => 1,
+        Multiple    => 0,
+    );
+
+    $Param{RateSearchTypeSelectionString} = $Self->{LayoutObject}->BuildSelection(
+        Data        => \%VotingOperators,
+        Name        => 'RateSearchType',
+        SelectedID  => $Param{RateSearchType} || '',
+        Size        => 1,
+        Translation => 1,
+        Multiple    => 0,
+    );
+    $Param{RateSearchSelectionString} = $Self->{LayoutObject}->BuildSelection(
+        Data => {
+            0   => '0%',
+            25  => '25%',
+            50  => '50%',
+            75  => '75%',
+            100 => '100%',
+        },
+        Sort        => 'NumericKey',
+        Name        => 'RateSearch',
+        SelectedID  => $Param{RateSearch} || '',
+        Size        => 1,
+        Translation => 0,
+        Multiple    => 0,
+    );
+
+    $Param{ItemCreateTimePoint} = $Self->{LayoutObject}->BuildSelection(
+        Data => {
+            1  => ' 1',
+            2  => ' 2',
+            3  => ' 3',
+            4  => ' 4',
+            5  => ' 5',
+            6  => ' 6',
+            7  => ' 7',
+            8  => ' 8',
+            9  => ' 9',
+            10 => '10',
+            11 => '11',
+            12 => '12',
+            13 => '13',
+            14 => '14',
+            15 => '15',
+            16 => '16',
+            17 => '17',
+            18 => '18',
+            19 => '19',
+            20 => '20',
+            21 => '21',
+            22 => '22',
+            23 => '23',
+            24 => '24',
+            25 => '25',
+            26 => '26',
+            27 => '27',
+            28 => '28',
+            29 => '29',
+            30 => '30',
+            31 => '31',
+            32 => '32',
+            33 => '33',
+            34 => '34',
+            35 => '35',
+            36 => '36',
+            37 => '37',
+            38 => '38',
+            39 => '39',
+            40 => '40',
+            41 => '41',
+            42 => '42',
+            43 => '43',
+            44 => '44',
+            45 => '45',
+            46 => '46',
+            47 => '47',
+            48 => '48',
+            49 => '49',
+            50 => '50',
+            51 => '51',
+            52 => '52',
+            53 => '53',
+            54 => '54',
+            55 => '55',
+            56 => '56',
+            57 => '57',
+            58 => '58',
+            59 => '59',
+        },
+        Translation => 0,
+        Name        => 'ItemCreateTimePoint',
+        SelectedID  => $Param{ItemCreateTimePoint},
+    );
+    $Param{ItemCreateTimePointStart} = $Self->{LayoutObject}->BuildSelection(
+        Data => {
+            Last   => 'within the last ...',
+            Before => 'more than ... ago',
+        },
+        Translation => 1,
+        Name        => 'ItemCreateTimePointStart',
+        SelectedID  => $Param{ItemCreateTimePointStart} || 'Last',
+    );
+    $Param{ItemCreateTimePointFormat} = $Self->{LayoutObject}->BuildSelection(
+        Data => {
+            minute => 'minute(s)',
+            hour   => 'hour(s)',
+            day    => 'day(s)',
+            week   => 'week(s)',
+            month  => 'month(s)',
+            year   => 'year(s)',
+        },
+        Translation => 1,
+        Name        => 'ItemCreateTimePointFormat',
+        SelectedID  => $Param{ItemCreateTimePointFormat},
+    );
+    $Param{ItemCreateTimeStart} = $Self->{LayoutObject}->BuildDateSelection(
+        %Param,
+        Prefix   => 'ItemCreateTimeStart',
+        Format   => 'DateInputFormat',
+        DiffTime => -( ( 60 * 60 * 24 ) * 30 ),
+    );
+    $Param{ItemCreateTimeStop} = $Self->{LayoutObject}->BuildDateSelection(
+        %Param,
+        Prefix => 'ItemCreateTimeStop',
+        Format => 'DateInputFormat',
     );
 
     # html search mask output
