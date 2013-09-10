@@ -1059,11 +1059,11 @@ sub _MaskForm {
     );
     $Param{RateSearchSelectionString} = $Self->{LayoutObject}->BuildSelection(
         Data => {
-            0   => '0 %',
-            25  => '25 %',
-            50  => '50 %',
-            75  => '75 %',
-            100 => '100 %',
+            0   => '0%',
+            25  => '25%',
+            50  => '50%',
+            75  => '75%',
+            100 => '100%',
         },
         Sort        => 'NumericKey',
         Name        => 'RateSearch',

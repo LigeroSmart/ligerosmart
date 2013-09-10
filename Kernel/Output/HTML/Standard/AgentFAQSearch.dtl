@@ -117,7 +117,7 @@
         </div>
 
         <div class="Clear"></div>
-        <label for="RateSearchType" id="LabelRateSearchType">$Text{"Rate (e. g. Equals 25 or GreaterThan 75)"}:</label>
+        <label for="RateSearchType" id="LabelRateSearchType">$Text{"Rate (e. g. Equals 25% or GreaterThan 75%)"}:</label>
         <div class="Field">
             $Data{"RateSearchTypeSelectionString"}
             $Data{"RateSearchSelectionString"}
@@ -139,7 +139,7 @@
         </div>
 
         <div class="Clear"></div>
-        <label for="ItemCreateTimePoint" id="LabelItemCreateTimePoint">$Text{"FAQ Item Create Time (before/after)"}:</label>
+        <label for="ItemCreateTimePoint" id="LabelItemCreateTimePoint">$Text{"FAQ Article Create Time (before/after)"}:</label>
         <div class="Field">
             <input type="hidden" name="TimeSearchType" value="TimePoint" $Data{"TimeSearchType::TimePoint"}/>
             $Data{"ItemCreateTimePointStartStrg"} $Data{"ItemCreateTimePointStrg"} $Data{"ItemCreateTimePointFormatStrg"}
@@ -147,7 +147,7 @@
         </div>
 
         <div class="Clear"></div>
-        <label for="ItemCreateTimeSlot" id="LabelItemCreateTimeSlot">$Text{"FAQ Item Create Time (between)"}:</label>
+        <label for="ItemCreateTimeSlot" id="LabelItemCreateTimeSlot">$Text{"FAQ Article Create Time (between)"}:</label>
         <div class="Field">
             <input type="hidden" name="TimeSearchType" value="TimeSlot" $Data{"TimeSearchType::TimeSlot"}/>
             $Data{"ItemCreateTimeStartStrg"} $Text{"and"} $Data{"ItemCreateTimeStopStrg"}
@@ -155,7 +155,7 @@
         </div>
 
         <div class="Clear"></div>
-        <label for="ItemChangeTimePoint" id="LabelItemChangeTimePoint">$Text{"FAQ Item Change Time (before/after)"}:</label>
+        <label for="ItemChangeTimePoint" id="LabelItemChangeTimePoint">$Text{"FAQ Article Change Time (before/after)"}:</label>
         <div class="Field">
             <input type="hidden" name="ChangeTimeSearchType" value="TimePoint" $Data{"ChangeTimeSearchType::TimePoint"}/>
             $Data{"ItemChangeTimePointStartStrg"} $Data{"ItemChangeTimePointStrg"} $Data{"ItemChangeTimePointFormatStrg"}
@@ -163,7 +163,7 @@
         </div>
 
         <div class="Clear"></div>
-        <label for="ItemChangeTimeSlot" id="LabelItemChangeTimeSlot">$Text{"Item Change Time (between)"}:</label>
+        <label for="ItemChangeTimeSlot" id="LabelItemChangeTimeSlot">$Text{"FAQ Article Change Time (between)"}:</label>
         <div class="Field">
             <input type="hidden" name="ChangeTimeSearchType" value="TimeSlot" $Data{"ChangeTimeSearchType::TimeSlot"}/>
             $Data{"ItemChangeTimeStartStrg"} $Text{"and"} $Data{"ItemChangeTimeStopStrg"}
