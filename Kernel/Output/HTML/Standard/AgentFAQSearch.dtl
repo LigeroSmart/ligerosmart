@@ -125,6 +125,38 @@
         </div>
 
         <div class="Clear"></div>
+        <label for="ItemCreateTimePoint" id="LabelItemCreateTimePoint">$Text{"FAQ Item Create Time (before/after)"}:</label>
+        <div class="Field">
+            <input type="hidden" name="TimeSearchType" value="TimePoint" $Data{"TimeSearchType::TimePoint"}/>
+            $Data{"ItemCreateTimePointStart"} $Data{"ItemCreateTimePoint"} $Data{"ItemCreateTimePointFormat"}
+            <button type="button" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
+        </div>
+
+        <div class="Clear"></div>
+        <label for="ItemCreateTimeSlot" id="LabelItemCreateTimeSlot">$Text{"FAQ Item Create Time (between)"}:</label>
+        <div class="Field">
+            <input type="hidden" name="TimeSearchType" value="TimeSlot" $Data{"TimeSearchType::TimeSlot"}/>
+            $Data{"ItemCreateTimeStart"} $Text{"and"} $Data{"ItemCreateTimeStop"}
+            <button type="button" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
+        </div>
+
+        <div class="Clear"></div>
+        <label for="ItemChangeTimePoint" id="LabelItemChangeTimePoint">$Text{"FAQ Item Change Time (before/after)"}:</label>
+        <div class="Field">
+            <input type="hidden" name="ChangeTimeSearchType" value="TimePoint" $Data{"ChangeTimeSearchType::TimePoint"}/>
+            $Data{"ItemChangeTimePointStart"} $Data{"ItemChangeTimePoint"} $Data{"ItemChangeTimePointFormat"}
+            <button type="button" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
+        </div>
+
+        <div class="Clear"></div>
+        <label for="ItemChangeTimeSlot" id="LabelItemChangeTimeSlot">$Text{"Item Change Time (between)"}:</label>
+        <div class="Field">
+            <input type="hidden" name="ChangeTimeSearchType" value="TimeSlot" $Data{"ChangeTimeSearchType::TimeSlot"}/>
+            $Data{"ItemChangeTimeStart"} $Text{"and"} $Data{"ItemChangeTimeStop"}
+            <button type="button" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
+        </div>
+
+        <div class="Clear"></div>
         $Data{"AttributesOrigStrg"}
 
     </fieldset>

@@ -1,6 +1,6 @@
 # --
 # Kernel/Modules/AgentFAQSearch.pm - module for FAQ search
-# Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -131,7 +131,25 @@ sub Run {
     else {
 
         # get scalar search params
-        for my $ParamName (qw(Number Title Keyword Fulltext ResultForm VoteSearch VoteSearchType RateSearch RateSearchType)) {
+        for my $ParamName (
+            qw(Number Title Keyword Fulltext ResultForm VoteSearch VoteSearchType RateSearch
+            RateSearchType
+            TimeSearchType ChangeTimeSearchType
+            ItemCreateTimePointFormat ItemCreateTimePoint
+            ItemCreateTimePointStart
+            ItemCreateTimeStart ItemCreateTimeStartDay ItemCreateTimeStartMonth
+            ItemCreateTimeStartYear
+            ItemCreateTimeStop ItemCreateTimeStopDay ItemCreateTimeStopMonth
+            ItemCreateTimeStopYear
+            ItemChangeTimePointFormat ItemChangeTimePoint
+            ItemChangeTimePointStart
+            ItemChangeTimeStart ItemChangeTimeStartDay ItemChangeTimeStartMonth
+            ItemChangeTimeStartYear
+            ItemChangeTimeStop ItemChangeTimeStopDay ItemChangeTimeStopMonth
+            ItemChangeTimeStopYear
+            )
+            )
+        {
             $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
 
             # remove whitespace on the start and end
@@ -139,9 +157,6 @@ sub Run {
                 $GetParam{$ParamName} =~ s{ \A \s+ }{}xms;
                 $GetParam{$ParamName} =~ s{ \s+ \z }{}xms;
             }
-
-            # db quote to prevent SQL injection
-            $GetParam{$ParamName} = $Self->{DBObject}->Quote( $GetParam{$ParamName} );
         }
 
         # get array search params
@@ -151,6 +166,28 @@ sub Run {
                 $GetParam{$SearchParam} = \@Array;
             }
         }
+    }
+
+    # get create time option
+    if ( !$GetParam{TimeSearchType} ) {
+        $GetParam{'TimeSearchType::None'} = 1;
+    }
+    elsif ( $GetParam{TimeSearchType} eq 'TimePoint' ) {
+        $GetParam{'TimeSearchType::TimePoint'} = 1;
+    }
+    elsif ( $GetParam{TimeSearchType} eq 'TimeSlot' ) {
+        $GetParam{'TimeSearchType::TimeSlot'} = 1;
+    }
+
+    # get change time option
+    if ( !$GetParam{ChangeTimeSearchType} ) {
+        $GetParam{'ChangeTimeSearchType::None'} = 1;
+    }
+    elsif ( $GetParam{ChangeTimeSearchType} eq 'TimePoint' ) {
+        $GetParam{'ChangeTimeSearchType::TimePoint'} = 1;
+    }
+    elsif ( $GetParam{ChangeTimeSearchType} eq 'TimeSlot' ) {
+        $GetParam{'ChangeTimeSearchType::TimeSlot'} = 1;
     }
 
     # set result form env
@@ -208,6 +245,96 @@ sub Run {
             }
         }
 
+        my %TimeMap = (
+            ItemCreate => 'Time',
+            ItemChange => 'ChangeTime',
+        );
+
+        for my $TimeType ( sort keys %TimeMap ) {
+
+            # get create time settings
+            if ( !$GetParam{ $TimeMap{$TimeType} . 'SearchType' } ) {
+
+                # do nothing with time stuff
+            }
+            elsif ( $GetParam{ $TimeMap{$TimeType} . 'SearchType' } eq 'TimeSlot' ) {
+                for my $Key (qw(Month Day)) {
+                    $GetParam{ $TimeType . 'TimeStart' . $Key }
+                        = sprintf( "%02d", $GetParam{ $TimeType . 'TimeStart' . $Key } );
+                    $GetParam{ $TimeType . 'TimeStop' . $Key }
+                        = sprintf( "%02d", $GetParam{ $TimeType . 'TimeStop' . $Key } );
+                }
+                if (
+                    $GetParam{ $TimeType . 'TimeStartDay' }
+                    && $GetParam{ $TimeType . 'TimeStartMonth' }
+                    && $GetParam{ $TimeType . 'TimeStartYear' }
+                    )
+                {
+                    $GetParam{ $TimeType . 'TimeNewerDate' }
+                        = $GetParam{ $TimeType . 'TimeStartYear' } . '-'
+                        . $GetParam{ $TimeType . 'TimeStartMonth' } . '-'
+                        . $GetParam{ $TimeType . 'TimeStartDay' }
+                        . ' 00:00:00';
+                }
+                if (
+                    $GetParam{ $TimeType . 'TimeStopDay' }
+                    && $GetParam{ $TimeType . 'TimeStopMonth' }
+                    && $GetParam{ $TimeType . 'TimeStopYear' }
+                    )
+                {
+                    $GetParam{ $TimeType . 'TimeOlderDate' }
+                        = $GetParam{ $TimeType . 'TimeStopYear' } . '-'
+                        . $GetParam{ $TimeType . 'TimeStopMonth' } . '-'
+                        . $GetParam{ $TimeType . 'TimeStopDay' }
+                        . ' 23:59:59';
+                }
+            }
+            elsif ( $GetParam{ $TimeMap{$TimeType} . 'SearchType' } eq 'TimePoint' ) {
+                if (
+                    $GetParam{ $TimeType . 'TimePoint' }
+                    && $GetParam{ $TimeType . 'TimePointStart' }
+                    && $GetParam{ $TimeType . 'TimePointFormat' }
+                    )
+                {
+                    my $Time = 0;
+                    if ( $GetParam{ $TimeType . 'TimePointFormat' } eq 'minute' ) {
+                        $Time = $GetParam{ $TimeType . 'TimePoint' };
+                    }
+                    elsif ( $GetParam{ $TimeType . 'TimePointFormat' } eq 'hour' ) {
+                        $Time = $GetParam{ $TimeType . 'TimePoint' } * 60;
+                    }
+                    elsif ( $GetParam{ $TimeType . 'TimePointFormat' } eq 'day' ) {
+                        $Time = $GetParam{ $TimeType . 'TimePoint' } * 60 * 24;
+                    }
+                    elsif ( $GetParam{ $TimeType . 'TimePointFormat' } eq 'week' ) {
+                        $Time = $GetParam{ $TimeType . 'TimePoint' } * 60 * 24 * 7;
+                    }
+                    elsif ( $GetParam{ $TimeType . 'TimePointFormat' } eq 'month' ) {
+                        $Time = $GetParam{ $TimeType . 'TimePoint' } * 60 * 24 * 30;
+                    }
+                    elsif ( $GetParam{ $TimeType . 'TimePointFormat' } eq 'year' ) {
+                        $Time = $GetParam{ $TimeType . 'TimePoint' } * 60 * 24 * 365;
+                    }
+                    if ( $GetParam{ $TimeType . 'TimePointStart' } eq 'Before' ) {
+
+                        # more than ... ago
+                        $GetParam{ $TimeType . 'TimeOlderMinutes' } = $Time;
+                    }
+                    elsif ( $GetParam{ $TimeType . 'TimePointStart' } eq 'Next' ) {
+
+                        # within next
+                        $GetParam{ $TimeType . 'TimeNewerMinutes' } = 0;
+                        $GetParam{ $TimeType . 'TimeOlderMinutes' } = -$Time;
+                    }
+                    else {
+                        # within last ...
+                        $GetParam{ $TimeType . 'TimeOlderMinutes' } = 0;
+                        $GetParam{ $TimeType . 'TimeNewerMinutes' } = $Time;
+                    }
+                }
+            }
+        }
+
         # prepare fulltext search
         if ( $GetParam{Fulltext} ) {
             $GetParam{ContentSearch} = 'OR';
@@ -220,25 +347,25 @@ sub Run {
 
         # prepare search states
         my $SearchStates;
-        if ( !IsArrayRefWithData($GetParam{StateIDs}) ) {
+        if ( !IsArrayRefWithData( $GetParam{StateIDs} ) ) {
             $SearchStates = $Self->{InterfaceStates};
         }
         else {
             STATETYPEID:
-            for my $StateTypeID ( @{$GetParam{StateIDs}} ) {
+            for my $StateTypeID ( @{ $GetParam{StateIDs} } ) {
                 next STATETYPEID if !$StateTypeID;
                 next STATETYPEID if !$Self->{InterfaceStates}->{$StateTypeID};
                 $SearchStates->{$StateTypeID} = $Self->{InterfaceStates}->{$StateTypeID};
             }
         }
 
-        if ( IsNumber($GetParam{VoteSearch}) ) {
+        if ( IsNumber( $GetParam{VoteSearch} ) ) {
             $GetParam{Votes} = {
                 $GetParam{VoteSearchType} => $GetParam{VoteSearch}
             };
         }
 
-        if ( IsNumber($GetParam{RateSearch}) ) {
+        if ( IsNumber( $GetParam{RateSearch} ) ) {
             $GetParam{Rate} = {
                 $GetParam{RateSearchType} => $GetParam{RateSearch}
             };
@@ -792,7 +919,22 @@ sub _MaskForm {
             Key   => 'RateSearchType',
             Value => 'Rate',
         },
-
+        {
+            Key   => 'ItemCreateTimePoint',
+            Value => 'FAQ Item Create Time (before/after)',
+        },
+        {
+            Key   => 'ItemCreateTimeSlot',
+            Value => 'FAQ Item Create Time (between)',
+        },
+        {
+            Key   => 'ItemChangeTimePoint',
+            Value => 'FAQ Item Change Time (before/after)',
+        },
+        {
+            Key   => 'ItemChangeTimeSlot',
+            Value => 'FAQ Item Change Time (between)',
+        },
     );
 
     # dropdown menu for 'attributes'
@@ -831,7 +973,7 @@ sub _MaskForm {
     $Param{CategoriesSelectionString} = $Self->{LayoutObject}->BuildSelection(
         Data        => $UserCategoriesLongNames,
         Name        => 'CategoryIDs',
-        SelectedID => $GetParam{CategoryIDs} || [],
+        SelectedID  => $GetParam{CategoryIDs} || [],
         Size        => 5,
         Translation => 0,
         Multiple    => 1,
@@ -844,7 +986,7 @@ sub _MaskForm {
     $Param{ValidSelectionString} = $Self->{LayoutObject}->BuildSelection(
         Data        => \%ValidList,
         Name        => 'ValidIDs',
-        SelectedID => $GetParam{ValidIDs} || [],
+        SelectedID  => $GetParam{ValidIDs} || [],
         Size        => 5,
         Translation => 0,
         Multiple    => 1,
@@ -857,7 +999,7 @@ sub _MaskForm {
     );
 
     my %States;
-    for my $StateID (sort keys %StateList) {
+    for my $StateID ( sort keys %StateList ) {
         my %StateData = $Self->{FAQObject}->StateGet(
             StateID => $StateID,
             UserID  => $Self->{UserID},
@@ -868,7 +1010,7 @@ sub _MaskForm {
     $Param{StateSelectionString} = $Self->{LayoutObject}->BuildSelection(
         Data        => \%States,
         Name        => 'StateIDs',
-        SelectedID => $GetParam{StateIDs} || [],
+        SelectedID  => $GetParam{StateIDs} || [],
         Size        => 3,
         Translation => 1,
         Multiple    => 1,
@@ -885,7 +1027,7 @@ sub _MaskForm {
     $Param{VoteSearchTypeSelectionString} = $Self->{LayoutObject}->BuildSelection(
         Data        => \%VotingOperators,
         Name        => 'VoteSearchType',
-        SelectedID => $GetParam{VoteSearchType} || '',
+        SelectedID  => $GetParam{VoteSearchType} || '',
         Size        => 1,
         Translation => 1,
         Multiple    => 0,
@@ -894,13 +1036,13 @@ sub _MaskForm {
     $Param{RateSearchTypeSelectionString} = $Self->{LayoutObject}->BuildSelection(
         Data        => \%VotingOperators,
         Name        => 'RateSearchType',
-        SelectedID => $GetParam{RateSearchType} || '',
+        SelectedID  => $GetParam{RateSearchType} || '',
         Size        => 1,
         Translation => 1,
         Multiple    => 0,
     );
     $Param{RateSearchSelectionString} = $Self->{LayoutObject}->BuildSelection(
-        Data        => {
+        Data => {
             0   => '0 %',
             25  => '25 %',
             50  => '50 %',
@@ -913,6 +1055,80 @@ sub _MaskForm {
         Size        => 1,
         Translation => 0,
         Multiple    => 0,
+    );
+
+    $Param{ItemCreateTimePoint} = $Self->{LayoutObject}->BuildSelection(
+        Data       => [ 1 .. 59 ],
+        Name       => 'ItemCreateTimePoint',
+        SelectedID => $GetParam{ItemCreateTimePoint},
+    );
+    $Param{ItemCreateTimePointStart} = $Self->{LayoutObject}->BuildSelection(
+        Data => {
+            'Last'   => 'within the last ...',
+            'Before' => 'more than ... ago',
+        },
+        Name => 'ItemCreateTimePointStart',
+        SelectedID => $GetParam{ItemCreateTimePointStart} || 'Last',
+    );
+    $Param{ItemCreateTimePointFormat} = $Self->{LayoutObject}->BuildSelection(
+        Data => {
+            minute => 'minute(s)',
+            hour   => 'hour(s)',
+            day    => 'day(s)',
+            week   => 'week(s)',
+            month  => 'month(s)',
+            year   => 'year(s)',
+        },
+        Name       => 'ItemCreateTimePointFormat',
+        SelectedID => $GetParam{ItemCreateTimePointFormat},
+    );
+    $Param{ItemCreateTimeStart} = $Self->{LayoutObject}->BuildDateSelection(
+        %GetParam,
+        Prefix   => 'ItemCreateTimeStart',
+        Format   => 'DateInputFormat',
+        DiffTime => -( ( 60 * 60 * 24 ) * 30 ),
+    );
+    $Param{ItemCreateTimeStop} = $Self->{LayoutObject}->BuildDateSelection(
+        %GetParam,
+        Prefix => 'ItemCreateTimeStop',
+        Format => 'DateInputFormat',
+    );
+
+    $Param{ItemChangeTimePoint} = $Self->{LayoutObject}->BuildSelection(
+        Data       => [ 1 .. 59 ],
+        Name       => 'ItemChangeTimePoint',
+        SelectedID => $GetParam{ItemChangeTimePoint},
+    );
+    $Param{ItemChangeTimePointStart} = $Self->{LayoutObject}->BuildSelection(
+        Data => {
+            'Last'   => 'within the last ...',
+            'Before' => 'more than ... ago',
+        },
+        Name => 'ItemChangeTimePointStart',
+        SelectedID => $GetParam{ItemChangeTimePointStart} || 'Last',
+    );
+    $Param{ItemChangeTimePointFormat} = $Self->{LayoutObject}->BuildSelection(
+        Data => {
+            minute => 'minute(s)',
+            hour   => 'hour(s)',
+            day    => 'day(s)',
+            week   => 'week(s)',
+            month  => 'month(s)',
+            year   => 'year(s)',
+        },
+        Name       => 'ItemChangeTimePointFormat',
+        SelectedID => $GetParam{ItemChangeTimePointFormat},
+    );
+    $Param{ItemChangeTimeStart} = $Self->{LayoutObject}->BuildDateSelection(
+        %GetParam,
+        Prefix   => 'ItemChangeTimeStart',
+        Format   => 'DateInputFormat',
+        DiffTime => -( ( 60 * 60 * 24 ) * 30 ),
+    );
+    $Param{ItemChangeTimeStop} = $Self->{LayoutObject}->BuildDateSelection(
+        %GetParam,
+        Prefix => 'ItemChangeTimeStop',
+        Format => 'DateInputFormat',
     );
 
     my %Profiles = $Self->{SearchProfileObject}->SearchProfileList(
@@ -949,7 +1165,9 @@ sub _MaskForm {
         Name => 'SearchAJAX',
         Data => {
             %Param,
-            %GetParam,
+
+            # TODO: Verify the need of the following line
+            # %GetParam,
             EmptySearch => $EmptySearch,
         },
     );
