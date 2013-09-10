@@ -1581,6 +1581,10 @@ search in FAQ articles
         CategoryIDs => [ 7, 8, 9 ],                                   # (optional)
         ValidIDs    => [ 1, 2, 3 ],                                   # (optional) (default 1)
 
+        # Approved
+        #    Only available in internal interface (agent interface)
+        Approved    => 1,                                             # (optional) 1 or 0,
+
         # Votes
         #   At least one operator must be specified. Operators will be connected with AND,
         #       values in an operator with OR.
@@ -1604,6 +1608,9 @@ search in FAQ articles
             SmallerThan       => 75,
             SmallerThanEquals => 75,
         }
+
+        # create FAQ item properties (optional)
+        CreatedUserIDs     => [1, 12, 455, 32]
 
         # FAQ items created more than 60 minutes ago (item older than 60 minutes)  (optional)
         ItemCreateTimeOlderMinutes => 60,
@@ -1639,7 +1646,11 @@ search in FAQ articles
         # (Down | Up)
 
         Limit     => 150,
-        Interface => 'public',      # public|external|internal (default internal)
+
+        Interface => {              # (default internal)
+            StateID => 3,
+            Name    => 'public',    # public|external|internal
+        },
         UserID    => 1,
     );
 
@@ -1990,6 +2001,36 @@ sub FAQSearch {
         $Ext .= ' i.approved = 1';
     }
 
+    # otherwise check if need to search for approved status
+    elsif ( defined $Param{Approved} ) {
+        my $ApprovedValue = $Param{Approved} ? 1 : 0;
+        if ($Ext) {
+            $Ext .= ' AND';
+        }
+        $Ext .= " i.approved = $ApprovedValue";
+    }
+
+    # search for create users
+    if (   $Param{CreatedUserIDs}
+        && ref $Param{CreatedUserIDs} eq 'ARRAY'
+        && @{ $Param{CreatedUserIDs} } )
+    {
+
+        # integer quote the CreatedUserIDs
+        for my $CreatedUserID ( @{ $Param{CreatedUserIDs} } ) {
+            $CreatedUserID = $Self->{DBObject}->Quote( $CreatedUserID, 'Integer' );
+        }
+
+        # create string
+        my $InString = join ', ', @{ $Param{CreatedUserIDs} };
+
+        if ($Ext) {
+            $Ext .= ' AND';
+        }
+        $Ext .= ' i.created_by IN (' . $InString . ')';
+    }
+
+    # search for create and change times
     # remember current time to prevent searches for future timestamps
     my $CurrentSystemTime = $Self->{TimeObject}->SystemTime();
 

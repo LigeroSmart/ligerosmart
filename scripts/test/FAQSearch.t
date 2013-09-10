@@ -15,6 +15,7 @@ use vars qw($Self);
 use Kernel::System::FAQ;
 use Kernel::System::Time;
 use Kernel::System::UnitTest::Helper;
+use Kernel::System::User;
 use Kernel::Config;
 
 my $ConfigObject = Kernel::Config->new( %{$Self} );
@@ -42,7 +43,26 @@ my $TimeObject = Kernel::System::Time->new(
     ConfigObject => $ConfigObject,
 );
 
+my $UserObject = Kernel::System::User->new(
+    %$Self,
+    ConfigObject => $ConfigObject,
+);
+
+# generate a random string to help searches
 my $RandomID = $HelperObject->GetRandomID();
+
+# create different users for CreatedUserIDs search
+my @AddedUsers;
+for my $Counter ( 1 .. 2 ) {
+    my $TestUserLogin = $HelperObject->TestUserCreate(
+        Groups => [ 'admin', 'users', 'faq', 'faq_admin', 'faq_approval' ],
+    );
+    my $UserID = $UserObject->UserLookup(
+        UserLogin => $TestUserLogin,
+    );
+    push @AddedUsers, $UserID;
+}
+
 my @AddedFAQs;
 
 # add some FAQs
@@ -61,7 +81,10 @@ my %FAQAddTemplate = (
 $HelperObject->FixedTimeSet();
 
 for my $Counter ( 1 .. 2 ) {
-    my $FAQID = $FAQObject->FAQAdd(%FAQAddTemplate);
+    my $FAQID = $FAQObject->FAQAdd(
+        %FAQAddTemplate,
+        UserID => $AddedUsers[ $Counter - 1 ],
+    );
 
     $Self->IsNot(
         undef,
@@ -545,7 +568,6 @@ my $DateMinus6Mins = $TimeObject->SystemTime2TimeStamp(
             $AddedFAQs[0],
             $AddedFAQs[1],
         ],
-        Success => 1,
     },
     {
         Name   => 'CreateTimeOlderMinutes 6 min',
@@ -556,7 +578,6 @@ my $DateMinus6Mins = $TimeObject->SystemTime2TimeStamp(
         ExpectedResults => [
             $AddedFAQs[0],
         ],
-        Success => 1,
     },
     {
         Name   => 'CreateTimeNewerMinutes 6 min',
@@ -568,7 +589,6 @@ my $DateMinus6Mins = $TimeObject->SystemTime2TimeStamp(
             $AddedFAQs[0],
             $AddedFAQs[1],
         ],
-        Success => 1,
     },
     {
         Name   => 'CreateTimeNewerMinutes 5 min',
@@ -579,7 +599,6 @@ my $DateMinus6Mins = $TimeObject->SystemTime2TimeStamp(
         ExpectedResults => [
             $AddedFAQs[1],
         ],
-        Success => 1,
     },
     {
         Name   => 'CreateTimeOlderDate 5 min',
@@ -590,7 +609,6 @@ my $DateMinus6Mins = $TimeObject->SystemTime2TimeStamp(
         ExpectedResults => [
             $AddedFAQs[0],
         ],
-        Success => 1,
     },
     {
         Name   => 'CreateTimeNewerDate 5 min',
@@ -601,7 +619,6 @@ my $DateMinus6Mins = $TimeObject->SystemTime2TimeStamp(
         ExpectedResults => [
             $AddedFAQs[1],
         ],
-        Success => 1,
     },
     {
         Name   => 'CreateTimeOlderDate CreateTimeNewerDate',
@@ -613,7 +630,6 @@ my $DateMinus6Mins = $TimeObject->SystemTime2TimeStamp(
         ExpectedResults => [
             $AddedFAQs[0],
         ],
-        Success => 1,
     },
     {
         Name   => 'ChangeTimeOlderMinutes 3 min',
@@ -624,7 +640,6 @@ my $DateMinus6Mins = $TimeObject->SystemTime2TimeStamp(
         ExpectedResults => [
             $AddedFAQs[0],
         ],
-        Success => 1,
     },
     {
         Name   => 'ChangeTimeNewerMinutes 2 min',
@@ -635,7 +650,6 @@ my $DateMinus6Mins = $TimeObject->SystemTime2TimeStamp(
         ExpectedResults => [
             $AddedFAQs[1],
         ],
-        Success => 1,
     },
     {
         Name   => 'ChangeTimeOlderDate 2 Mins',
@@ -646,7 +660,6 @@ my $DateMinus6Mins = $TimeObject->SystemTime2TimeStamp(
         ExpectedResults => [
             $AddedFAQs[0],
         ],
-        Success => 1,
     },
     {
         Name   => 'ChangeTimeNewerDate 2 Min',
@@ -657,9 +670,113 @@ my $DateMinus6Mins = $TimeObject->SystemTime2TimeStamp(
         ExpectedResults => [
             $AddedFAQs[1],
         ],
-        Success => 1,
     }
+);
 
+# execute the tests
+for my $Test (@Tests) {
+
+    my @FAQIDs = $FAQObject->FAQSearch( %{ $Test->{Config} } );
+
+    $Self->IsDeeply(
+        \@FAQIDs,
+        $Test->{ExpectedResults},
+        "$Test->{Name} FAQSearch()",
+    );
+}
+
+# created user tests
+@Tests = (
+    {
+        Name   => 'CreatedUserIDs 1',
+        Config => {
+            %SearchConfigTemplate,
+            CreatedUserIDs => [ $AddedUsers[0] ],
+        },
+        ExpectedResults => [
+            $AddedFAQs[0],
+        ],
+    },
+    {
+        Name   => 'CreatedUserIDs 2',
+        Config => {
+            %SearchConfigTemplate,
+            CreatedUserIDs => [ $AddedUsers[1] ],
+        },
+        ExpectedResults => [
+            $AddedFAQs[1],
+        ],
+    },
+    {
+        Name   => 'CreatedUserIDs 1 and 2',
+        Config => {
+            %SearchConfigTemplate,
+            CreatedUserIDs => [ $AddedUsers[0], $AddedUsers[1] ],
+        },
+        ExpectedResults => [
+            $AddedFAQs[0],
+            $AddedFAQs[1],
+        ],
+    },
+    {
+        Name   => 'Wrong CreatedUserIDs Format',
+        Config => {
+            %SearchConfigTemplate,
+            CreatedUserIDs => $AddedUsers[0],
+        },
+        ExpectedResults => [
+            $AddedFAQs[0],
+            $AddedFAQs[1],
+        ],
+    },
+);
+
+# execute the tests
+for my $Test (@Tests) {
+
+    my @FAQIDs = $FAQObject->FAQSearch( %{ $Test->{Config} } );
+
+    $Self->IsDeeply(
+        \@FAQIDs,
+        $Test->{ExpectedResults},
+        "$Test->{Name} FAQSearch()",
+    );
+}
+
+# approval tests
+# update database to prevent generation of approval ticket
+return if !$Self->{DBObject}->Do(
+    SQL => '
+        UPDATE faq_item
+        SET approved = ?
+        WHERE id = ?',
+    Bind => [
+        \0,
+        \$AddedFAQs[1],
+    ],
+);
+
+@Tests = (
+    {
+        Name   => 'Approved 1',
+        Config => {
+            %SearchConfigTemplate,
+            Approved => 1,
+        },
+        ExpectedResults => [
+            $AddedFAQs[0],
+        ],
+    },
+    {
+        Name   => 'Approved 0',
+        Config => {
+            %SearchConfigTemplate,
+            Approved => 0,
+        },
+        ExpectedResults => [
+            $AddedFAQs[1],
+        ],
+    },
 );
 
 # execute the tests
