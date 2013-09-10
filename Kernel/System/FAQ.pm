@@ -1990,6 +1990,201 @@ sub FAQSearch {
         $Ext .= ' i.approved = 1';
     }
 
+    # remember current time to prevent searches for future timestamps
+    my $CurrentSystemTime = $Self->{TimeObject}->SystemTime();
+
+    # get FAQ items created older than x minutes
+    if ( defined $Param{ItemCreateTimeOlderMinutes} ) {
+
+        $Param{ItemCreateTimeOlderMinutes} ||= 0;
+
+        my $TimeStamp = $Self->{TimeObject}->SystemTime();
+        $TimeStamp -= ( $Param{ItemCreateTimeOlderMinutes} * 60 );
+
+        $Param{ItemCreateTimeOlderDate} = $Self->{TimeObject}->SystemTime2TimeStamp(
+            SystemTime => $TimeStamp,
+        );
+    }
+
+    # get FAQ items created newer than x minutes
+    if ( defined $Param{ItemCreateTimeNewerMinutes} ) {
+
+        $Param{ItemCreateTimeNewerMinutes} ||= 0;
+
+        my $TimeStamp = $Self->{TimeObject}->SystemTime();
+        $TimeStamp -= ( $Param{ItemCreateTimeNewerMinutes} * 60 );
+
+        $Param{ItemCreateTimeNewerDate} = $Self->{TimeObject}->SystemTime2TimeStamp(
+            SystemTime => $TimeStamp,
+        );
+    }
+
+    # get FAQ items created older than xxxx-xx-xx xx:xx date
+    my $CompareCreateTimeOlderNewerDate;
+    if ( $Param{ItemCreateTimeOlderDate} ) {
+
+        # check time format
+        if (
+            $Param{ItemCreateTimeOlderDate}
+            !~ /\d\d\d\d-(\d\d|\d)-(\d\d|\d) (\d\d|\d):(\d\d|\d):(\d\d|\d)/
+            )
+        {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Invalid time format '$Param{ItemCreateTimeOlderDate}'!",
+            );
+            return;
+        }
+        my $Time = $Self->{TimeObject}->TimeStamp2SystemTime(
+            String => $Param{ItemCreateTimeOlderDate},
+        );
+        if ( !$Time ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message =>
+                    "Search not executed due to invalid time '"
+                    . $Param{ItemCreateTimeOlderDate} . "'!",
+            );
+            return;
+        }
+        $CompareCreateTimeOlderNewerDate = $Time;
+
+        $Ext .= " AND i.created <= '"
+            . $Self->{DBObject}->Quote( $Param{ItemCreateTimeOlderDate} ) . "'";
+    }
+
+    # get Items changed newer than xxxx-xx-xx xx:xx date
+    if ( $Param{ItemCreateTimeNewerDate} ) {
+        if (
+            $Param{ItemCreateTimeNewerDate}
+            !~ /\d\d\d\d-(\d\d|\d)-(\d\d|\d) (\d\d|\d):(\d\d|\d):(\d\d|\d)/
+            )
+        {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Invalid time format '$Param{ItemCreateTimeNewerDate}'!",
+            );
+            return;
+        }
+        my $Time = $Self->{TimeObject}->TimeStamp2SystemTime(
+            String => $Param{ItemCreateTimeNewerDate},
+        );
+        if ( !$Time ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message =>
+                    "Search not executed due to invalid time '"
+                    . $Param{ItemCreateTimeNewerDate} . "'!",
+            );
+            return;
+        }
+
+        # don't execute queries if newer date is after current date
+        return if $Time > $CurrentSystemTime;
+
+        # don't execute queries if older/newer date restriction show now valid timeframe
+        return if $CompareCreateTimeOlderNewerDate && $Time > $CompareCreateTimeOlderNewerDate;
+
+        $Ext .= " AND i.created >= '"
+            . $Self->{DBObject}->Quote( $Param{ItemCreateTimeNewerDate} ) . "'";
+    }
+
+    # get FAQ items changed older than x minutes
+    if ( defined $Param{ItemChangeTimeOlderMinutes} ) {
+
+        $Param{ItemChangeTimeOlderMinutes} ||= 0;
+
+        my $TimeStamp = $Self->{TimeObject}->SystemTime();
+        $TimeStamp -= ( $Param{ItemChangeTimeOlderMinutes} * 60 );
+
+        $Param{ItemChangeTimeOlderDate} = $Self->{TimeObject}->SystemTime2TimeStamp(
+            SystemTime => $TimeStamp,
+        );
+    }
+
+    # get FAQ items changed newer than x minutes
+    if ( defined $Param{ItemChangeTimeNewerMinutes} ) {
+
+        $Param{ItemChangeTimeNewerMinutes} ||= 0;
+
+        my $TimeStamp = $Self->{TimeObject}->SystemTime();
+        $TimeStamp -= ( $Param{ItemChangeTimeNewerMinutes} * 60 );
+
+        $Param{ItemChangeTimeNewerDate} = $Self->{TimeObject}->SystemTime2TimeStamp(
+            SystemTime => $TimeStamp,
+        );
+    }
+
+    # get FAQ items changed older than xxxx-xx-xx xx:xx date
+    my $CompareChangeTimeOlderNewerDate;
+    if ( $Param{ItemChangeTimeOlderDate} ) {
+
+        # check time format
+        if (
+            $Param{ItemChangeTimeOlderDate}
+            !~ /\d\d\d\d-(\d\d|\d)-(\d\d|\d) (\d\d|\d):(\d\d|\d):(\d\d|\d)/
+            )
+        {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Invalid time format '$Param{ItemChangeTimeOlderDate}'!",
+            );
+            return;
+        }
+        my $Time = $Self->{TimeObject}->TimeStamp2SystemTime(
+            String => $Param{ItemChangeTimeOlderDate},
+        );
+        if ( !$Time ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message =>
+                    "Search not executed due to invalid time '"
+                    . $Param{ItemChangeTimeOlderDate} . "'!",
+            );
+            return;
+        }
+        $CompareChangeTimeOlderNewerDate = $Time;
+
+        $Ext .= " AND i.changed <= '"
+            . $Self->{DBObject}->Quote( $Param{ItemChangeTimeOlderDate} ) . "'";
+    }
+
+    # get Items changed newer than xxxx-xx-xx xx:xx date
+    if ( $Param{ItemChangeTimeNewerDate} ) {
+        if (
+            $Param{ItemChangeTimeNewerDate}
+            !~ /\d\d\d\d-(\d\d|\d)-(\d\d|\d) (\d\d|\d):(\d\d|\d):(\d\d|\d)/
+            )
+        {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Invalid time format '$Param{ItemChangeTimeNewerDate}'!",
+            );
+            return;
+        }
+        my $Time = $Self->{TimeObject}->TimeStamp2SystemTime(
+            String => $Param{ItemChangeTimeNewerDate},
+        );
+        if ( !$Time ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message =>
+                    "Search not executed due to invalid time '"
+                    . $Param{ItemChangeTimeNewerDate} . "'!",
+            );
+            return;
+        }
+
+        # don't execute queries if newer date is after current date
+        return if $Time > $CurrentSystemTime;
+
+        # don't execute queries if older/newer date restriction show now valid timeframe
+        return if $CompareChangeTimeOlderNewerDate && $Time > $CompareChangeTimeOlderNewerDate;
+
+        $Ext .= " AND i.changed >= '"
+            . $Self->{DBObject}->Quote( $Param{ItemChangeTimeNewerDate} ) . "'";
+    }
+
     # add WHERE statement
     if ($Ext) {
         $Ext = ' WHERE ' . $Ext;

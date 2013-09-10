@@ -13,6 +13,7 @@ use warnings;
 use vars qw($Self);
 
 use Kernel::System::FAQ;
+use Kernel::System::Time;
 use Kernel::System::UnitTest::Helper;
 use Kernel::Config;
 
@@ -36,6 +37,11 @@ my $HelperObject = Kernel::System::UnitTest::Helper->new(
     UnitTestObject => $Self,
 );
 
+my $TimeObject = Kernel::System::Time->new(
+    %$Self,
+    ConfigObject => $ConfigObject,
+);
+
 my $RandomID = $HelperObject->GetRandomID();
 my @AddedFAQs;
 
@@ -50,6 +56,10 @@ my %FAQAddTemplate = (
     Field2     => 'Solution...',
     UserID     => 1,
 );
+
+# freeze time
+$HelperObject->FixedTimeSet();
+
 for my $Counter ( 1 .. 2 ) {
     my $FAQID = $FAQObject->FAQAdd(%FAQAddTemplate);
 
@@ -60,6 +70,9 @@ for my $Counter ( 1 .. 2 ) {
     );
 
     push @AddedFAQs, $FAQID;
+
+    # add 1 minute to freezed time
+    $HelperObject->FixedTimeAddSeconds(60);
 }
 
 # add some votes
@@ -467,6 +480,200 @@ for my $Test (@Tests) {
     );
 }
 
+# time based tests
+
+# update FAQs
+my %FAQUpdateTemplate = (
+    Title      => "New Text $RandomID",
+    CategoryID => 1,
+    StateID    => 1,
+    LanguageID => 1,
+    Keywords   => $RandomID,
+    Field1     => 'Problem...',
+    Field2     => 'Solution...',
+    UserID     => 1,
+);
+
+# add 1 minute to freezed time
+$HelperObject->FixedTimeAddSeconds(60);
+
+my $Success = $FAQObject->FAQUpdate(
+    %FAQUpdateTemplate,
+    ItemID => $AddedFAQs[0],
+);
+
+$Self->True(
+    $Success,
+    "FAQUpdate() FAQID:'$AddedFAQs[0]' for FAQSearch()",
+);
+
+$HelperObject->FixedTimeAddSeconds(60);
+
+$Success = $FAQObject->FAQUpdate(
+    %FAQUpdateTemplate,
+    ItemID => $AddedFAQs[1],
+);
+
+$Self->True(
+    $Success,
+    "FAQUpdate() FAQID:'$AddedFAQs[1]' for FAQSearch()",
+);
+
+# add 2 minutes to freezed time
+$HelperObject->FixedTimeAddSeconds(120);
+
+my $SystemTime = $TimeObject->SystemTime();
+
+my $DateMinus2Mins = $TimeObject->SystemTime2TimeStamp(
+    SystemTime => ( $SystemTime - 120 - 1 ),
+);
+my $DateMinus5Mins = $TimeObject->SystemTime2TimeStamp(
+    SystemTime => ( $SystemTime - 300 - 1 ),
+);
+my $DateMinus6Mins = $TimeObject->SystemTime2TimeStamp(
+    SystemTime => ( $SystemTime - 360 - 1 ),
+);
+
+@Tests = (
+    {
+        Name   => 'CreateTimeOlderMinutes 3 min',
+        Config => {
+            %SearchConfigTemplate,
+            ItemCreateTimeOlderMinutes => 3,
+        },
+        ExpectedResults => [
+            $AddedFAQs[0],
+            $AddedFAQs[1],
+        ],
+        Success => 1,
+    },
+    {
+        Name   => 'CreateTimeOlderMinutes 6 min',
+        Config => {
+            %SearchConfigTemplate,
+            ItemCreateTimeOlderMinutes => 6,
+        },
+        ExpectedResults => [
+            $AddedFAQs[0],
+        ],
+        Success => 1,
+    },
+    {
+        Name   => 'CreateTimeNewerMinutes 6 min',
+        Config => {
+            %SearchConfigTemplate,
+            ItemCreateTimeNewerMinutes => 6,
+        },
+        ExpectedResults => [
+            $AddedFAQs[0],
+            $AddedFAQs[1],
+        ],
+        Success => 1,
+    },
+    {
+        Name   => 'CreateTimeNewerMinutes 5 min',
+        Config => {
+            %SearchConfigTemplate,
+            ItemCreateTimeNewerMinutes => 5,
+        },
+        ExpectedResults => [
+            $AddedFAQs[1],
+        ],
+        Success => 1,
+    },
+    {
+        Name   => 'CreateTimeOlderDate 5 min',
+        Config => {
+            %SearchConfigTemplate,
+            ItemCreateTimeOlderDate => $DateMinus5Mins,
+        },
+        ExpectedResults => [
+            $AddedFAQs[0],
+        ],
+        Success => 1,
+    },
+    {
+        Name   => 'CreateTimeNewerDate 5 min',
+        Config => {
+            %SearchConfigTemplate,
+            ItemCreateTimeNewerDate => $DateMinus5Mins,
+        },
+        ExpectedResults => [
+            $AddedFAQs[1],
+        ],
+        Success => 1,
+    },
+    {
+        Name   => 'CreateTimeOlderDate CreateTimeNewerDate',
+        Config => {
+            %SearchConfigTemplate,
+            ItemCreateTimeNewerDate => $DateMinus6Mins,
+            ItemCreateTimeOlderDate => $DateMinus5Mins,
+        },
+        ExpectedResults => [
+            $AddedFAQs[0],
+        ],
+        Success => 1,
+    },
+    {
+        Name   => 'ChangeTimeOlderMinutes 3 min',
+        Config => {
+            %SearchConfigTemplate,
+            ItemChangeTimeOlderMinutes => 3,
+        },
+        ExpectedResults => [
+            $AddedFAQs[0],
+        ],
+        Success => 1,
+    },
+    {
+        Name   => 'ChangeTimeNewerMinutes 2 min',
+        Config => {
+            %SearchConfigTemplate,
+            ItemChangeTimeNewerMinutes => 2,
+        },
+        ExpectedResults => [
+            $AddedFAQs[1],
+        ],
+        Success => 1,
+    },
+    {
+        Name   => 'ChangeTimeOlderDate 2 Mins',
+        Config => {
+            %SearchConfigTemplate,
+            ItemChangeTimeOlderDate => $DateMinus2Mins,
+        },
+        ExpectedResults => [
+            $AddedFAQs[0],
+        ],
+        Success => 1,
+    },
+    {
+        Name   => 'ChangeTimeNewerDate 2 Min',
+        Config => {
+            %SearchConfigTemplate,
+            ItemChangeTimeNewerDate => $DateMinus2Mins,
+        },
+        ExpectedResults => [
+            $AddedFAQs[1],
+        ],
+        Success => 1,
+    }
+
+);
+
+# execute the tests
+for my $Test (@Tests) {
+
+    my @FAQIDs = $FAQObject->FAQSearch( %{ $Test->{Config} } );
+
+    $Self->IsDeeply(
+        \@FAQIDs,
+        $Test->{ExpectedResults},
+        "$Test->{Name} FAQSearch()",
+    );
+}
+
 # clean the system
 for my $FAQID (@AddedFAQs) {
     my $Success = $FAQObject->FAQDelete(
@@ -480,4 +687,6 @@ for my $FAQID (@AddedFAQs) {
     );
 }
 
+# restore time
+$HelperObject->FixedTimeUnset();
 1;
