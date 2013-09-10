@@ -1057,12 +1057,12 @@ sub _MaskForm {
         Multiple    => 0,
     );
 
-    $Param{ItemCreateTimePoint} = $Self->{LayoutObject}->BuildSelection(
+    $Param{ItemCreateTimePointStrg} = $Self->{LayoutObject}->BuildSelection(
         Data       => [ 1 .. 59 ],
         Name       => 'ItemCreateTimePoint',
         SelectedID => $GetParam{ItemCreateTimePoint},
     );
-    $Param{ItemCreateTimePointStart} = $Self->{LayoutObject}->BuildSelection(
+    $Param{ItemCreateTimePointStartStrg} = $Self->{LayoutObject}->BuildSelection(
         Data => {
             'Last'   => 'within the last ...',
             'Before' => 'more than ... ago',
@@ -1070,7 +1070,7 @@ sub _MaskForm {
         Name => 'ItemCreateTimePointStart',
         SelectedID => $GetParam{ItemCreateTimePointStart} || 'Last',
     );
-    $Param{ItemCreateTimePointFormat} = $Self->{LayoutObject}->BuildSelection(
+    $Param{ItemCreateTimePointFormatStrg} = $Self->{LayoutObject}->BuildSelection(
         Data => {
             minute => 'minute(s)',
             hour   => 'hour(s)',
@@ -1082,24 +1082,24 @@ sub _MaskForm {
         Name       => 'ItemCreateTimePointFormat',
         SelectedID => $GetParam{ItemCreateTimePointFormat},
     );
-    $Param{ItemCreateTimeStart} = $Self->{LayoutObject}->BuildDateSelection(
+    $Param{ItemCreateTimeStartStrg} = $Self->{LayoutObject}->BuildDateSelection(
         %GetParam,
         Prefix   => 'ItemCreateTimeStart',
         Format   => 'DateInputFormat',
         DiffTime => -( ( 60 * 60 * 24 ) * 30 ),
     );
-    $Param{ItemCreateTimeStop} = $Self->{LayoutObject}->BuildDateSelection(
+    $Param{ItemCreateTimeStopStrg} = $Self->{LayoutObject}->BuildDateSelection(
         %GetParam,
         Prefix => 'ItemCreateTimeStop',
         Format => 'DateInputFormat',
     );
 
-    $Param{ItemChangeTimePoint} = $Self->{LayoutObject}->BuildSelection(
+    $Param{ItemChangeTimePointStrg} = $Self->{LayoutObject}->BuildSelection(
         Data       => [ 1 .. 59 ],
         Name       => 'ItemChangeTimePoint',
         SelectedID => $GetParam{ItemChangeTimePoint},
     );
-    $Param{ItemChangeTimePointStart} = $Self->{LayoutObject}->BuildSelection(
+    $Param{ItemChangeTimePointStartStrg} = $Self->{LayoutObject}->BuildSelection(
         Data => {
             'Last'   => 'within the last ...',
             'Before' => 'more than ... ago',
@@ -1107,7 +1107,7 @@ sub _MaskForm {
         Name => 'ItemChangeTimePointStart',
         SelectedID => $GetParam{ItemChangeTimePointStart} || 'Last',
     );
-    $Param{ItemChangeTimePointFormat} = $Self->{LayoutObject}->BuildSelection(
+    $Param{ItemChangeTimePointFormatStrg} = $Self->{LayoutObject}->BuildSelection(
         Data => {
             minute => 'minute(s)',
             hour   => 'hour(s)',
@@ -1119,13 +1119,13 @@ sub _MaskForm {
         Name       => 'ItemChangeTimePointFormat',
         SelectedID => $GetParam{ItemChangeTimePointFormat},
     );
-    $Param{ItemChangeTimeStart} = $Self->{LayoutObject}->BuildDateSelection(
+    $Param{ItemChangeTimeStartStrg} = $Self->{LayoutObject}->BuildDateSelection(
         %GetParam,
         Prefix   => 'ItemChangeTimeStart',
         Format   => 'DateInputFormat',
         DiffTime => -( ( 60 * 60 * 24 ) * 30 ),
     );
-    $Param{ItemChangeTimeStop} = $Self->{LayoutObject}->BuildDateSelection(
+    $Param{ItemChangeTimeStopStrg} = $Self->{LayoutObject}->BuildDateSelection(
         %GetParam,
         Prefix => 'ItemChangeTimeStop',
         Format => 'DateInputFormat',
@@ -1165,9 +1165,7 @@ sub _MaskForm {
         Name => 'SearchAJAX',
         Data => {
             %Param,
-
-            # TODO: Verify the need of the following line
-            # %GetParam,
+            %GetParam,
             EmptySearch => $EmptySearch,
         },
     );
