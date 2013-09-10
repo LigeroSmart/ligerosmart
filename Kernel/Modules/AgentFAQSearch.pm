@@ -133,7 +133,7 @@ sub Run {
         # get scalar search params
         for my $ParamName (
             qw(Number Title Keyword Fulltext ResultForm VoteSearch VoteSearchType RateSearch
-            RateSearchType
+            RateSearchType ApprovedSearch
             TimeSearchType ChangeTimeSearchType
             ItemCreateTimePointFormat ItemCreateTimePoint
             ItemCreateTimePointStart
@@ -160,12 +160,20 @@ sub Run {
         }
 
         # get array search params
-        for my $SearchParam (qw(CategoryIDs LanguageIDs ValidIDs StateIDs)) {
+        for my $SearchParam (qw(CategoryIDs LanguageIDs ValidIDs StateIDs CreatedUserIDs)) {
             my @Array = $Self->{ParamObject}->GetArray( Param => $SearchParam );
             if (@Array) {
                 $GetParam{$SearchParam} = \@Array;
             }
         }
+    }
+
+    # get approved option
+    if ( $GetParam{ApprovedSearch} && $GetParam{ApprovedSearch} eq 'Yes' ) {
+        $GetParam{Approved} = 1;
+    }
+    elsif ( $GetParam{ApprovedSearch} && $GetParam{ApprovedSearch} eq 'No' ) {
+        $GetParam{Approved} = 0;
     }
 
     # get create time option
@@ -913,11 +921,19 @@ sub _MaskForm {
         },
         {
             Key   => 'VoteSearchType',
-            Value => 'Vote',
+            Value => 'Votes',
         },
         {
             Key   => 'RateSearchType',
             Value => 'Rate',
+        },
+        {
+            Key   => 'ApprovedSearch',
+            Value => 'Approved',
+        },
+        {
+            Key   => 'CreatedUserIDs',
+            Value => 'Created by',
         },
         {
             Key   => 'ItemCreateTimePoint',
@@ -1055,6 +1071,49 @@ sub _MaskForm {
         Size        => 1,
         Translation => 0,
         Multiple    => 0,
+    );
+
+    $Param{ApprovedStrg} = $Self->{LayoutObject}->BuildSelection(
+        Data => {
+            No  => 'No',
+            Yes => 'Yes',
+        },
+        Name        => 'ApprovedSearch',
+        SelectedID  => $GetParam{ApprovedSearch} || 'Yes',
+        Multiple    => 0,
+        Translation => 1,
+    );
+
+    # get a list of all users to display
+    my %ShownUsers = $Self->{UserObject}->UserList(
+        Type  => 'Long',
+        Valid => 1,
+    );
+
+    # get the UserIDs from faq and faq_admin members
+    my %GroupUsers;
+    for my $Group qw(faq faq_admin) {
+        my $GroupID = $Self->{GroupObject}->GroupLookup( Group => $Group );
+        my %Users = $Self->{GroupObject}->GroupMemberList(
+            GroupID => $GroupID,
+            Type    => 'rw',
+            Result  => 'HASH',
+        );
+        %GroupUsers = ( %GroupUsers, %Users );
+    }
+
+    # remove all users that are not in the faq or faq_admin groups
+    for my $UserID ( sort keys %ShownUsers ) {
+        if ( !$GroupUsers{$UserID} ) {
+            delete $ShownUsers{$UserID};
+        }
+    }
+    $Param{CreatedUserStrg} = $Self->{LayoutObject}->BuildSelection(
+        Data       => \%ShownUsers,
+        Name       => 'CreatedUserIDs',
+        Multiple   => 1,
+        Size       => 5,
+        SelectedID => $GetParam{CreatedUserIDs},
     );
 
     $Param{ItemCreateTimePointStrg} = $Self->{LayoutObject}->BuildSelection(

@@ -125,6 +125,20 @@
         </div>
 
         <div class="Clear"></div>
+        <label for="ApprovedSearch" id="LabelApprovedSearch">$Text{"Approved"}:</label>
+        <div class="Field">
+            $Data{"ApprovedStrg"}
+            <button type="button" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
+        </div>
+
+        <div class="Clear"></div>
+        <label for="CreatedUserIDs" id="LabelCreatedUserIDs">$Text{"Created by"} $Text{"Agent"}:</label>
+        <div class="Field">
+            $Data{"CreatedUserStrg"}
+            <button type="button" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
+        </div>
+
+        <div class="Clear"></div>
         <label for="ItemCreateTimePoint" id="LabelItemCreateTimePoint">$Text{"FAQ Item Create Time (before/after)"}:</label>
         <div class="Field">
             <input type="hidden" name="TimeSearchType" value="TimePoint" $Data{"TimeSearchType::TimePoint"}/>
