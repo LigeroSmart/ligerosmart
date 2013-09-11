@@ -51,6 +51,65 @@
                     $Data{"CategoriesStrg"}
                 </div>
             </fieldset>
+            <fieldset class="TimeSearchType">
+                <h2>$Text{"Vote restrictions"}</h2>
+                <div>
+                    <input title="$Text{"No vote settings"}" type="radio"  id="NoVoteSet" name="VoteSearchOption" value="" $Data{"VoteSearchOption::None"} />
+                    <label for="NoTVoteSet">$Text{"All"}</label>
+                </div>
+                <div>
+                    <input title=$Text{"Specific votes"} type="radio" id="VotePoint" name="VoteSearchOption"  value="VotePoint" $Data{"VoteSearchOption::VotePoint"} />
+                    <label for="VotePoint">$Text{"Only FAQ articles with votes..."}</label>
+                    $Data{"VoteSearchTypeSelectionString"}
+                    <input type="text" name="VoteSearch" value="$QData{"VoteSearch"}" class="W25pc"/>
+                    <p>$Text{"e. g. Equals 10 or GreaterThan 60"}</p>
+                </div>
+            </fieldset>
+
+            <fieldset class="TimeSearchType">
+                <h2>$Text{"Rate restrictions"}</h2>
+                <div>
+                    <input title="$Text{"No rate settings"}" type="radio"  id="NoRateSet" name="RateSearchOption" value="" $Data{"RateSearchOption::None"} />
+                    <label for="NoRateSet">$Text{"All"}</label>
+                </div>
+                <div>
+                    <input title=$Text{"Specific rate"} type="radio" id="RatePoint" name="RateSearchOption" value="RatePoint" $Data{"RateSearchOption::RatePoint"} />
+                    <label for="RatePoint">$Text{"Only FAQ articles with rate..."}</label>
+                    $Data{"RateSearchTypeSelectionString"}
+                    $Data{"RateSearchSelectionString"}
+                    <p>$Text{"e. g. Equals 25 or GreaterThan 75%"}</p>
+                </div>
+            </fieldset>
+
+            <fieldset class="TimeSearchType">
+                <h2>$Text{"Time restrictions"}</h2>
+                <div>
+                    <input title="$Text{"No time settings"}" type="radio"  id="NoTimeSet" name="TimeSearchType" value="" $Data{"TimeSearchType::None"} />
+                    <label for="NoTimeSet">$Text{"All"}</label>
+                </div>
+                <div>
+                    <input title=$Text{"Specific date"} type="radio" id="Date" name="TimeSearchType"  value="TimePoint" $Data{"TimeSearchType::TimePoint"} />
+                    <label for="Date">$Text{"Only FAQ articles created"}</label>
+                    $Data{"ItemCreateTimePointStart"} $Data{"ItemCreateTimePoint"} $Data{"ItemCreateTimePointFormat"}
+                </div>
+                <div>
+                    <input title="Date range" type="radio" id="DateRange" name="TimeSearchType" value="TimeSlot" $Data{"TimeSearchType::TimeSlot"} />
+                    <label for="DateRange">$Text{"Only FAQ articles created between"}</label>
+                    $Data{"ItemCreateTimeStart"} $Text{"and"} $Data{"ItemCreateTimeStop"}
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <h2>$Text{"Search-Profile as Template?"}</h2>
+                <div>
+                    <label for="SaveProfile">$Text{"Save as Template?"}</label>
+                    <input title="Save as Template" type="checkbox" id="SaveProfile" name="SaveProfile" />
+                </div>
+                <div>
+                    <label for="Profil">$Text{"Template Name"}</label>
+                    <input title="Pick a profil name" type="text" id="Profil" name="Profile" size="30" value="$QData{"Profile"}" />
+                </div>
+            </fieldset>
             <div id="BottomActionRow" class="ActionRow">
                 <button id="Submit" type="submit" value="$Text{"Search"}">$Text{"Search"}</button>
                 <span>$Text{"Output to"}</span>
