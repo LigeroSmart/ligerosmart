@@ -284,7 +284,7 @@
     $('.RateButton').bind('click', function (Event) {
         var RateNumber = parseInt($(this).closest('div').attr('id').replace(/RateButton/, ''), 10);
         $('#RateValue').val(RateNumber);
-        $('#RateSubmitButton').removeClass('Hidden');
+        $('#RateSubmitButton').fadeIn(250);
         $('#FAQVoting').find('.RateButton').each(function() {
             var ItemRateNumber = parseInt($(this).closest('div').attr('id').replace(/RateButton/, ''), 10);
             if ( ItemRateNumber <= RateNumber ) {
