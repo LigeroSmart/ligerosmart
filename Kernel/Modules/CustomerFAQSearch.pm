@@ -629,6 +629,7 @@ sub Run {
         );
 
         # print each attribute in search results area.
+        ATTRIBUTE:
         for my $Attribute ( sort keys %AttributeMap ) {
 
             # check if the attribute was defined by the user
@@ -729,11 +730,13 @@ sub Run {
                     }
                 }
                 elsif ( $Attribute eq 'VoteSearchType' ) {
+                    next ATTRIBUTE if !$GetParam{VoteSearchOption};
                     $AttributeValue
                         = $Self->{LayoutObject}->{LanguageObject}
                         ->Get( $GetParam{VoteSearchType} ) . ' ' . $GetParam{VoteSearch};
                 }
                 elsif ( $Attribute eq 'RateSearchType' ) {
+                    next ATTRIBUTE if !$GetParam{RateSearchOption};
                     $AttributeValue
                         = $Self->{LayoutObject}->{LanguageObject}
                         ->Get( $GetParam{RateSearchType} ) . ' ' . $GetParam{RateSearch} . '%';
@@ -783,7 +786,7 @@ sub Run {
         # Set the SortBy Class
         my $SortClass;
 
-        # this sets the opposit to the OrderBy parameter
+        # this sets the opposite to the OrderBy parameter
         if ( $Self->{OrderBy} eq 'Down' ) {
             $SortClass = 'SortAscending';
         }
