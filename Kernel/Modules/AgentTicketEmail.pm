@@ -1502,19 +1502,19 @@ sub Run {
 
             if ( $TempLinkList && ref $TempLinkList eq 'HASH' && %{$TempLinkList} ) {
 
-                for my $TargetObjectOrg ( keys %{$TempLinkList} ) {
+                for my $TargetObjectOrg ( sort keys %{$TempLinkList} ) {
 
                     # extract typelist
                     my $TypeList = $TempLinkList->{$TargetObjectOrg};
 
-                    for my $Type ( keys %{$TypeList} ) {
+                    for my $Type ( sort keys %{$TypeList} ) {
 
                         # extract direction list
                         my $DirectionList = $TypeList->{$Type};
 
-                        for my $Direction ( keys %{$DirectionList} ) {
+                        for my $Direction ( sort keys %{$DirectionList} ) {
 
-                            for my $TargetKeyOrg ( keys %{ $DirectionList->{$Direction} } ) {
+                            for my $TargetKeyOrg ( sort keys %{ $DirectionList->{$Direction} } ) {
 
                                 # delete the temp link
                                 $Self->{LinkObject}->LinkDelete(

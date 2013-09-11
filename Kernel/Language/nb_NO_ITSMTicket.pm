@@ -10,6 +10,7 @@
 package Kernel::Language::nb_NO_ITSMTicket;
 
 use strict;
+use warnings;
 
 sub Data {
     my $Self = shift;
