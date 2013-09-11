@@ -978,7 +978,7 @@ sub _MaskForm {
     );
 
     # dropdown menu for 'languages'
-    $Param{LanguagesSelectionString} = $Self->{LayoutObject}->BuildSelection(
+    $Param{LanguagesSelectionStrg} = $Self->{LayoutObject}->BuildSelection(
         Data       => \%Languages,
         Name       => 'LanguageIDs',
         Size       => 5,
@@ -993,7 +993,7 @@ sub _MaskForm {
     );
 
     # build the category selection
-    $Param{CategoriesSelectionString} = $Self->{LayoutObject}->BuildSelection(
+    $Param{CategoriesSelectionStrg} = $Self->{LayoutObject}->BuildSelection(
         Data        => $UserCategoriesLongNames,
         Name        => 'CategoryIDs',
         SelectedID  => $GetParam{CategoryIDs} || [],
@@ -1006,7 +1006,7 @@ sub _MaskForm {
     my %ValidList = $Self->{ValidObject}->ValidList();
 
     # build the valid selection
-    $Param{ValidSelectionString} = $Self->{LayoutObject}->BuildSelection(
+    $Param{ValidSelectionStrg} = $Self->{LayoutObject}->BuildSelection(
         Data        => \%ValidList,
         Name        => 'ValidIDs',
         SelectedID  => $GetParam{ValidIDs} || [],
@@ -1030,7 +1030,7 @@ sub _MaskForm {
         $States{ $StateData{TypeID} } = $StateData{Name}
     }
 
-    $Param{StateSelectionString} = $Self->{LayoutObject}->BuildSelection(
+    $Param{StateSelectionStrg} = $Self->{LayoutObject}->BuildSelection(
         Data        => \%States,
         Name        => 'StateIDs',
         SelectedID  => $GetParam{StateIDs} || [],
@@ -1047,7 +1047,7 @@ sub _MaskForm {
         SmallerThanEquals => 'SmallerThanEquals',
     );
 
-    $Param{VoteSearchTypeSelectionString} = $Self->{LayoutObject}->BuildSelection(
+    $Param{VoteSearchTypeSelectionStrg} = $Self->{LayoutObject}->BuildSelection(
         Data        => \%VotingOperators,
         Name        => 'VoteSearchType',
         SelectedID  => $GetParam{VoteSearchType} || '',
@@ -1056,7 +1056,7 @@ sub _MaskForm {
         Multiple    => 0,
     );
 
-    $Param{RateSearchTypeSelectionString} = $Self->{LayoutObject}->BuildSelection(
+    $Param{RateSearchTypeSelectionStrg} = $Self->{LayoutObject}->BuildSelection(
         Data        => \%VotingOperators,
         Name        => 'RateSearchType',
         SelectedID  => $GetParam{RateSearchType} || '',
@@ -1064,7 +1064,7 @@ sub _MaskForm {
         Translation => 1,
         Multiple    => 0,
     );
-    $Param{RateSearchSelectionString} = $Self->{LayoutObject}->BuildSelection(
+    $Param{RateSearchSelectionStrg} = $Self->{LayoutObject}->BuildSelection(
         Data => {
             0   => '0%',
             25  => '25%',

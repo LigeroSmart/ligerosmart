@@ -83,35 +83,35 @@
         <div class="Clear"></div>
         <label for="ValidIDs" id="LabelValidIDs">$Text{"Validity"}:</label>
         <div class="Field">
-            $Data{"ValidSelectionString"}
+            $Data{"ValidSelectionStrg"}
             <button type="button" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
         </div>
 
         <div class="Clear"></div>
         <label for="LanguageIDs" id="LabelLanguageIDs">$Text{"Language"}:</label>
         <div class="Field">
-            $Data{"LanguagesSelectionString"}
+            $Data{"LanguagesSelectionStrg"}
             <button type="button" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
         </div>
 
         <div class="Clear"></div>
         <label for="CategoryIDs" id="LabelCategoryIDs">$Text{"Category"}:</label>
         <div class="Field">
-            $Data{"CategoriesSelectionString"}
+            $Data{"CategoriesSelectionStrg"}
             <button type="button" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
         </div>
 
         <div class="Clear"></div>
         <label for="StateIDs" id="LabelStateIDs">$Text{"State"}:</label>
         <div class="Field">
-            $Data{"StateSelectionString"}
+            $Data{"StateSelectionStrg"}
             <button type="button" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
         </div>
 
         <div class="Clear"></div>
         <label for="VoteSearchType" id="LabelVoteSearchType">$Text{"Vote (e. g. Equals 10 or GreaterThan 60)"}:</label>
         <div class="Field">
-            $Data{"VoteSearchTypeSelectionString"}
+            $Data{"VoteSearchTypeSelectionStrg"}
             <input type="text" name="VoteSearch" value="$QData{"VoteSearch"}" class="W25pc"/>
             <button type="button" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
         </div>
@@ -119,8 +119,8 @@
         <div class="Clear"></div>
         <label for="RateSearchType" id="LabelRateSearchType">$Text{"Rate (e. g. Equals 25% or GreaterThan 75%)"}:</label>
         <div class="Field">
-            $Data{"RateSearchTypeSelectionString"}
-            $Data{"RateSearchSelectionString"}
+            $Data{"RateSearchTypeSelectionStrg"}
+            $Data{"RateSearchSelectionStrg"}
             <button type="button" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
         </div>
 
