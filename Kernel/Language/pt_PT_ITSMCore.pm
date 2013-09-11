@@ -28,7 +28,7 @@ sub Data {
     $Self->{Translation}->{'Front End'} = '';
     $Self->{Translation}->{'IT Management'} = 'Gestão de TI';
     $Self->{Translation}->{'IT Operational'} = 'Operações de TI';
-    $Self->{Translation}->{'Impact'} = 'Impato';
+    $Self->{Translation}->{'Impact'} = 'Impacto';
     $Self->{Translation}->{'Incident State'} = 'Estado de Incidente';
     $Self->{Translation}->{'Includes'} = 'Inclui';
     $Self->{Translation}->{'Other'} = 'Outro';
@@ -49,8 +49,8 @@ sub Data {
     $Self->{Translation}->{'allocation'} = 'atribuição';
 
     # Template: AdminITSMCIPAllocate
-    $Self->{Translation}->{'Criticality <-> Impact <-> Priority'} = 'Criticidade <-> Impato <-> Prioridade';
-    $Self->{Translation}->{'Manage the priority result of combinating Criticality <-> Impact.'} = 'Gerir a Prioridade resultante da combinação Criticidade <-> Impato.';
+    $Self->{Translation}->{'Criticality <-> Impact <-> Priority'} = 'Criticidade <-> Impacto <-> Prioridade';
+    $Self->{Translation}->{'Manage the priority result of combinating Criticality <-> Impact.'} = 'Gerir a Prioridade resultante da combinação Criticidade <-> Impacto.';
     $Self->{Translation}->{'Priority allocation'} = 'Atribuição de Prioridade';
 
     # Template: AdminSLA
