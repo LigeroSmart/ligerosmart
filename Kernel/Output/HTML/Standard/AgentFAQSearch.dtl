@@ -139,6 +139,13 @@
         </div>
 
         <div class="Clear"></div>
+        <label for="LastChangedUserIDs" id="LabelLastChangedUserIDs">$Text{"Last changed by"} $Text{"Agent"}:</label>
+        <div class="Field">
+            $Data{"LastChangedUserStrg"}
+            <button type="button" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
+        </div>
+
+        <div class="Clear"></div>
         <label for="ItemCreateTimePoint" id="LabelItemCreateTimePoint">$Text{"FAQ Article Create Time (before/after)"}:</label>
         <div class="Field">
             <input type="hidden" name="TimeSearchType" value="TimePoint" $Data{"TimeSearchType::TimePoint"}/>

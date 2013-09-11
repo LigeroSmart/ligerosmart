@@ -53,7 +53,7 @@ my $RandomID = $HelperObject->GetRandomID();
 
 # create different users for CreatedUserIDs search
 my @AddedUsers;
-for my $Counter ( 1 .. 2 ) {
+for my $Counter ( 1 .. 4 ) {
     my $TestUserLogin = $HelperObject->TestUserCreate(
         Groups => [ 'admin', 'users', 'faq', 'faq_admin', 'faq_approval' ],
     );
@@ -523,6 +523,7 @@ $HelperObject->FixedTimeAddSeconds(60);
 my $Success = $FAQObject->FAQUpdate(
     %FAQUpdateTemplate,
     ItemID => $AddedFAQs[0],
+    UserID => $AddedUsers[2],
 );
 
 $Self->True(
@@ -535,6 +536,7 @@ $HelperObject->FixedTimeAddSeconds(60);
 $Success = $FAQObject->FAQUpdate(
     %FAQUpdateTemplate,
     ItemID => $AddedFAQs[1],
+    UserID => $AddedUsers[3],
 );
 
 $Self->True(
@@ -723,6 +725,52 @@ for my $Test (@Tests) {
         Config => {
             %SearchConfigTemplate,
             CreatedUserIDs => $AddedUsers[0],
+        },
+        ExpectedResults => [
+            $AddedFAQs[0],
+            $AddedFAQs[1],
+        ],
+    },
+);
+
+# last changed user tests
+@Tests = (
+    {
+        Name   => 'LastChangedUserIDs 3',
+        Config => {
+            %SearchConfigTemplate,
+            LastChangedUserIDs => [ $AddedUsers[2] ],
+        },
+        ExpectedResults => [
+            $AddedFAQs[0],
+        ],
+    },
+    {
+        Name   => 'LastChangedUserIDs 4',
+        Config => {
+            %SearchConfigTemplate,
+            LastChangedUserIDs => [ $AddedUsers[3] ],
+        },
+        ExpectedResults => [
+            $AddedFAQs[1],
+        ],
+    },
+    {
+        Name   => 'LastChangedUserIDs 3 and 4',
+        Config => {
+            %SearchConfigTemplate,
+            LastChangedUserIDs => [ $AddedUsers[2], $AddedUsers[3] ],
+        },
+        ExpectedResults => [
+            $AddedFAQs[0],
+            $AddedFAQs[1],
+        ],
+    },
+    {
+        Name   => 'Wrong LastChangedUserIDs Format',
+        Config => {
+            %SearchConfigTemplate,
+            CreatedUserIDs => $AddedUsers[2],
         },
         ExpectedResults => [
             $AddedFAQs[0],

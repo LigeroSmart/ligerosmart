@@ -1610,7 +1610,10 @@ search in FAQ articles
         }
 
         # create FAQ item properties (optional)
-        CreatedUserIDs     => [1, 12, 455, 32]
+        CreatedUserIDs => [1, 12, 455, 32]
+
+        # change FAQ item properties (optional)
+        LastChangedUserIDs => [1, 12, 455, 32]
 
         # FAQ items created more than 60 minutes ago (item older than 60 minutes)  (optional)
         ItemCreateTimeOlderMinutes => 60,
@@ -2011,9 +2014,11 @@ sub FAQSearch {
     }
 
     # search for create users
-    if (   $Param{CreatedUserIDs}
+    if (
+        $Param{CreatedUserIDs}
         && ref $Param{CreatedUserIDs} eq 'ARRAY'
-        && @{ $Param{CreatedUserIDs} } )
+        && @{ $Param{CreatedUserIDs} }
+        )
     {
 
         # integer quote the CreatedUserIDs
@@ -2028,6 +2033,28 @@ sub FAQSearch {
             $Ext .= ' AND';
         }
         $Ext .= ' i.created_by IN (' . $InString . ')';
+    }
+
+    # search for last change users
+    if (
+        $Param{LastChangedUserIDs}
+        && ref $Param{LastChangedUserIDs} eq 'ARRAY'
+        && @{ $Param{LastChangedUserIDs} }
+        )
+    {
+
+        # integer quote the LastChangedIDs
+        for my $LastChangedUserID ( @{ $Param{LastChangedUserIDs} } ) {
+            $LastChangedUserID = $Self->{DBObject}->Quote( $LastChangedUserID, 'Integer' );
+        }
+
+        # create string
+        my $InString = join ', ', @{ $Param{LastChangedUserIDs} };
+
+        if ($Ext) {
+            $Ext .= ' AND';
+        }
+        $Ext .= ' i.changed_by IN (' . $InString . ')';
     }
 
     # search for create and change times

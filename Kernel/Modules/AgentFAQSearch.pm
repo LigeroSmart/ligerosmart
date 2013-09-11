@@ -160,7 +160,10 @@ sub Run {
         }
 
         # get array search params
-        for my $SearchParam (qw(CategoryIDs LanguageIDs ValidIDs StateIDs CreatedUserIDs)) {
+        for my $SearchParam (
+            qw(CategoryIDs LanguageIDs ValidIDs StateIDs CreatedUserIDs LastChangedUserIDs)
+            )
+        {
             my @Array = $Self->{ParamObject}->GetArray( Param => $SearchParam );
             if (@Array) {
                 $GetParam{$SearchParam} = \@Array;
@@ -936,6 +939,10 @@ sub _MaskForm {
             Value => 'Created by',
         },
         {
+            Key   => 'LastChangedUserIDs',
+            Value => 'Last Changed by',
+        },
+        {
             Key   => 'ItemCreateTimePoint',
             Value => 'FAQ Item Create Time (before/after)',
         },
@@ -1092,7 +1099,7 @@ sub _MaskForm {
 
     # get the UserIDs from faq and faq_admin members
     my %GroupUsers;
-    for my $Group qw(faq faq_admin) {
+    for my $Group (qw(faq faq_admin)) {
         my $GroupID = $Self->{GroupObject}->GroupLookup( Group => $Group );
         my %Users = $Self->{GroupObject}->GroupMemberList(
             GroupID => $GroupID,
@@ -1114,6 +1121,13 @@ sub _MaskForm {
         Multiple   => 1,
         Size       => 5,
         SelectedID => $GetParam{CreatedUserIDs},
+    );
+    $Param{LastChangedUserStrg} = $Self->{LayoutObject}->BuildSelection(
+        Data       => \%ShownUsers,
+        Name       => 'LastChangedUserIDs',
+        Multiple   => 1,
+        Size       => 5,
+        SelectedID => $GetParam{LastChangedUserIDs},
     );
 
     $Param{ItemCreateTimePointStrg} = $Self->{LayoutObject}->BuildSelection(
