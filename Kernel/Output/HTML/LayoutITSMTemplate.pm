@@ -162,7 +162,7 @@ sub ITSMTemplateListShow {
     }
 
     # loop over configured backends, when there is more than a single backend
-    for my $Backend ( keys %{$Backends} ) {
+    for my $Backend ( sort keys %{$Backends} ) {
 
         # build navbar view mode
         $Env->{LayoutObject}->Block(

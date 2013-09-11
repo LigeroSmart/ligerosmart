@@ -604,7 +604,7 @@ sub WorkOrderUpdate {
     my $DefaultTimeStamp = '9999-01-01 00:00:00';
 
     ATTRIBUTE:
-    for my $Attribute ( keys %Attribute ) {
+    for my $Attribute ( sort keys %Attribute ) {
 
         # preserve the old value, when the column isn't in function parameters
         next ATTRIBUTE if !exists $Param{$Attribute};
@@ -1326,7 +1326,7 @@ sub WorkOrderSearch {
 
     # add string params to sql-where-array
     STRINGPARAM:
-    for my $StringParam ( keys %StringParams ) {
+    for my $StringParam ( sort keys %StringParams ) {
 
         # check string params for useful values, the string '0' is allowed
         next STRINGPARAM if !exists $Param{$StringParam};
@@ -1409,7 +1409,7 @@ sub WorkOrderSearch {
 
     # add array params to sql-where-array
     ARRAYPARAM:
-    for my $ArrayParam ( keys %ArrayParams ) {
+    for my $ArrayParam ( sort keys %ArrayParams ) {
 
         # ignore empty lists
         next ARRAYPARAM if !@{ $Param{$ArrayParam} };
@@ -1441,7 +1441,7 @@ sub WorkOrderSearch {
         ActualEndTimeOlderDate    => 'wo.actual_end_time <=',
     );
     TIMEPARAM:
-    for my $TimeParam ( keys %TimeParams ) {
+    for my $TimeParam ( sort keys %TimeParams ) {
 
         next TIMEPARAM if !$Param{$TimeParam};
 
@@ -1797,7 +1797,7 @@ sub WorkOrderChangeTimeGet {
         }
 
         TIMEFIELD:
-        for my $Time ( keys %TimeReturn ) {
+        for my $Time ( sort keys %TimeReturn ) {
 
             next TIMEFIELD if !$TimeReturn{$Time};
 

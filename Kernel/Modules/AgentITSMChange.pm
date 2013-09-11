@@ -180,7 +180,7 @@ sub Run {
 
     # display all navbar filters
     my %NavBarFilter;
-    for my $Filter ( keys %Filters ) {
+    for my $Filter ( sort keys %Filters ) {
 
         # count the number of items for each filter
         my $Count = $Self->{ChangeObject}->ChangeSearch(

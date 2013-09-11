@@ -251,7 +251,7 @@ sub Run {
             );
 
             OBJECT:
-            for my $Object ( keys %{$LinkListWithDataWorkOrder} ) {
+            for my $Object ( sort keys %{$LinkListWithDataWorkOrder} ) {
 
                 # only show linked services and config items of workorder
                 if ( $Object ne 'Service' && $Object ne 'ITSMConfigItem' ) {
@@ -259,16 +259,16 @@ sub Run {
                 }
 
                 LINKTYPE:
-                for my $LinkType ( keys %{ $LinkListWithDataWorkOrder->{$Object} } ) {
+                for my $LinkType ( sort keys %{ $LinkListWithDataWorkOrder->{$Object} } ) {
 
                     DIRECTION:
                     for my $Direction (
-                        keys %{ $LinkListWithDataWorkOrder->{$Object}->{$LinkType} }
+                        sort keys %{ $LinkListWithDataWorkOrder->{$Object}->{$LinkType} }
                         )
                     {
                         ID:
                         for my $ID (
-                            keys %{
+                            sort keys %{
                                 $LinkListWithDataWorkOrder->{$Object}->{$LinkType}->{$Direction}
                             }
                             )
@@ -749,7 +749,7 @@ sub _OutputChangeInfo {
     # get all change freekey and freetext numbers from change
     my %ChangeFreeTextFields;
     ATTRIBUTE:
-    for my $Attribute ( keys %{$Change} ) {
+    for my $Attribute ( sort keys %{$Change} ) {
 
         # get the freetext number, only look at the freetext field,
         # as we do not want to show empty fields in the zoom view
@@ -1008,7 +1008,7 @@ sub _OutputWorkOrderInfo {
     # get all workorder freekey and freetext numbers from workorder
     my %WorkOrderFreeTextFields;
     ATTRIBUTE:
-    for my $Attribute ( keys %{$WorkOrder} ) {
+    for my $Attribute ( sort keys %{$WorkOrder} ) {
 
         # get the freetext number, only look at the freetext field,
         # as we do not want to show empty fields in the zoom view

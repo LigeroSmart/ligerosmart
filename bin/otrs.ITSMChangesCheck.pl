@@ -1,4 +1,4 @@
-#!/usr/bin/perl -w
+#!/usr/bin/perl
 # --
 # bin/otrs.ITSMChangesCheck.pl - check itsm changes
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
@@ -60,7 +60,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 
         my $Self = bless {}, $Class;
 
-        for my $Object ( keys %Objects ) {
+        for my $Object ( sort keys %Objects ) {
             $Self->{$Object} = $Objects{$Object};
         }
 

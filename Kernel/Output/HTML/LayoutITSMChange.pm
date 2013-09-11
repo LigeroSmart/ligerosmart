@@ -186,7 +186,7 @@ sub ITSMChangeBuildWorkOrderGraph {
 
     # check validity of graph settings
     my $WorkOrderGraphConfig = $ChangeZoomConfig->{WorkOrderGraph};
-    for my $GraphSetting ( keys %WorkOrderGraphCheck ) {
+    for my $GraphSetting ( sort keys %WorkOrderGraphCheck ) {
 
         # check existense of config setting
         if ( !$WorkOrderGraphConfig->{$GraphSetting} ) {
@@ -529,7 +529,7 @@ sub ITSMChangeListShow {
     }
 
     # loop over configured backends
-    for my $Backend ( keys %{$Backends} ) {
+    for my $Backend ( sort keys %{$Backends} ) {
 
         # build navbar view mode
         $Env->{LayoutObject}->Block(

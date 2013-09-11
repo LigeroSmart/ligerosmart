@@ -127,12 +127,12 @@ sub LinkListWithData {
         return;
     }
 
-    for my $LinkType ( keys %{ $Param{LinkList} } ) {
+    for my $LinkType ( sort keys %{ $Param{LinkList} } ) {
 
-        for my $Direction ( keys %{ $Param{LinkList}->{$LinkType} } ) {
+        for my $Direction ( sort keys %{ $Param{LinkList}->{$LinkType} } ) {
 
             CHANGEID:
-            for my $ChangeID ( keys %{ $Param{LinkList}->{$LinkType}->{$Direction} } ) {
+            for my $ChangeID ( sort keys %{ $Param{LinkList}->{$LinkType}->{$Direction} } ) {
 
                 # get change data
                 my $ChangeData = $Self->{ChangeObject}->ChangeGet(

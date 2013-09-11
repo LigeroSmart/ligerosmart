@@ -58,10 +58,10 @@ sub Run {
 
         # get all PriorityIDs of the matrix
         my $AllocateData;
-        for my $ImpactID ( keys %{ $ObjectOption{ImpactList} } ) {
+        for my $ImpactID ( sort keys %{ $ObjectOption{ImpactList} } ) {
 
             CATEGORYID:
-            for my $CategoryID ( keys %{ $ObjectOption{CategoryList} } ) {
+            for my $CategoryID ( sort keys %{ $ObjectOption{CategoryList} } ) {
 
                 # get form param
                 my $PriorityID = $Self->{ParamObject}->GetParam(

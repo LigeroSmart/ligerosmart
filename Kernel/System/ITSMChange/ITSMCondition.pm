@@ -315,7 +315,7 @@ sub ConditionUpdate {
     my @Bind;
 
     ATTRIBUTE:
-    for my $Attribute ( keys %Attribute ) {
+    for my $Attribute ( sort keys %Attribute ) {
 
         # preserve the old value, when the column isn't in function parameters
         next ATTRIBUTE if !exists $Param{$Attribute};
@@ -1215,7 +1215,7 @@ sub ConditionListByObjectType {
     # get only affected unique condition id
     my @AffectedConditionIDs;
     CONDITIONID:
-    for my $ConditionID ( keys %ConditionExpression ) {
+    for my $ConditionID ( sort keys %ConditionExpression ) {
 
         # check expression for this workorder
         EXPRESSIONID:
@@ -1249,7 +1249,7 @@ sub ConditionListByObjectType {
     }
 
     CONDITIONID:
-    for my $ConditionID ( keys %ConditionAction ) {
+    for my $ConditionID ( sort keys %ConditionAction ) {
 
         # check action for this workorder
         ACTIONID:

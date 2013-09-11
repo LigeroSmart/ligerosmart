@@ -168,7 +168,7 @@ sub AllocateUpdate {
 
     # check if allocate data is a 2D hash reference
     IMPACTID:
-    for my $ImpactID ( keys %{ $Param{AllocateData} } ) {
+    for my $ImpactID ( sort keys %{ $Param{AllocateData} } ) {
 
         next IMPACTID if ref $Param{AllocateData}->{$ImpactID} eq 'HASH';
 
@@ -183,9 +183,9 @@ sub AllocateUpdate {
     return if !$Self->{DBObject}->Do( SQL => 'DELETE FROM change_cip_allocate' );
 
     # insert new allocations
-    for my $ImpactID ( keys %{ $Param{AllocateData} } ) {
+    for my $ImpactID ( sort keys %{ $Param{AllocateData} } ) {
 
-        for my $CategoryID ( keys %{ $Param{AllocateData}->{$ImpactID} } ) {
+        for my $CategoryID ( sort keys %{ $Param{AllocateData}->{$ImpactID} } ) {
 
             # extract priority
             my $PriorityID = $Param{AllocateData}->{$ImpactID}->{$CategoryID};

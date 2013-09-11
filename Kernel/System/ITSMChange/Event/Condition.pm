@@ -181,7 +181,7 @@ sub Run {
         my $OldData = $Param{Data}->{OldChangeData};
 
         FIELD:
-        for my $Field ( keys %{ $Param{Data} } ) {
+        for my $Field ( sort keys %{ $Param{Data} } ) {
 
             # avoid recursion
             next FIELD if $Field eq 'OldChangeData';
@@ -209,7 +209,7 @@ sub Run {
         my $OldData = $Param{Data}->{OldWorkOrderData};
 
         FIELD:
-        for my $Field ( keys %{ $Param{Data} } ) {
+        for my $Field ( sort keys %{ $Param{Data} } ) {
 
             # avoid recursion
             next FIELD if $Field eq 'OldWorkOrderData';
@@ -311,7 +311,7 @@ sub _HasFieldChanged {
         return 1 if scalar keys %{ $Param{New} } != scalar keys %{ $Param{Old} };
 
         # check the values for each key
-        for my $Key ( keys %{ $Param{New} } ) {
+        for my $Key ( sort keys %{ $Param{New} } ) {
             return 1 if $Param{New}->{$Key} ne $Param{Old}->{$Key};
         }
     }

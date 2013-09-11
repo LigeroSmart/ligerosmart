@@ -423,7 +423,7 @@ sub Run {
         # create history for all condition fields
         my @ConditionStatic = qw(ConditionID UserID ChangeID);
         CONDITIONFIELD:
-        for my $ConditionField ( keys %{ $Param{Data} } ) {
+        for my $ConditionField ( sort keys %{ $Param{Data} } ) {
 
             # check for static fields
             next CONDITIONFIELD if grep { $_ eq $ConditionField } @ConditionStatic;
@@ -450,7 +450,7 @@ sub Run {
         # create history for all condition fields
         my @ConditionStatic = qw(ConditionID UserID ChangeID OldConditionData);
         CONDITIONFIELD:
-        for my $ConditionField ( keys %{ $Param{Data} } ) {
+        for my $ConditionField ( sort keys %{ $Param{Data} } ) {
 
             # check for static fields
             next CONDITIONFIELD if grep { $_ eq $ConditionField } @ConditionStatic;
@@ -517,7 +517,7 @@ sub Run {
         # create history for all expression fields
         my @ExpressionStatic = qw( ExpressionID UserID ChangeID);
         EXPRESSIONFIELD:
-        for my $ExpressionField ( keys %{ $Param{Data} } ) {
+        for my $ExpressionField ( sort keys %{ $Param{Data} } ) {
 
             # check for static fields
             next EXPRESSIONFIELD if grep { $_ eq $ExpressionField } @ExpressionStatic;
@@ -544,7 +544,7 @@ sub Run {
         # create history for all expression fields
         my @ExpressionStatic = qw( ExpressionID UserID ChangeID OldExpressionData );
         EXPRESSIONFIELD:
-        for my $ExpressionField ( keys %{ $Param{Data} } ) {
+        for my $ExpressionField ( sort keys %{ $Param{Data} } ) {
 
             # check for static fields
             next EXPRESSIONFIELD if grep { $_ eq $ExpressionField } @ExpressionStatic;
@@ -609,7 +609,7 @@ sub Run {
         # create history for all action fields
         my @ActionStatic = qw( ActionID UserID ChangeID);
         ACTIONFIELD:
-        for my $ActionField ( keys %{ $Param{Data} } ) {
+        for my $ActionField ( sort keys %{ $Param{Data} } ) {
 
             # check for static fields
             next ACTIONFIELD if grep { $_ eq $ActionField } @ActionStatic;
@@ -636,7 +636,7 @@ sub Run {
         # create history for all expression fields
         my @ActionStatic = qw( ActionID UserID ChangeID OldActionData );
         ACTIONFIELD:
-        for my $ActionField ( keys %{ $Param{Data} } ) {
+        for my $ActionField ( sort keys %{ $Param{Data} } ) {
 
             # check for static fields
             next ACTIONFIELD if grep { $_ eq $ActionField } @ActionStatic;
@@ -768,7 +768,7 @@ sub _HasFieldChanged {
         return 1 if scalar keys %{ $Param{New} } != scalar keys %{ $Param{Old} };
 
         # check the values for each key
-        for my $Key ( keys %{ $Param{New} } ) {
+        for my $Key ( sort keys %{ $Param{New} } ) {
             return 1 if $Param{New}->{$Key} ne $Param{Old}->{$Key};
         }
     }

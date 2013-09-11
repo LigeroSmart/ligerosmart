@@ -678,7 +678,7 @@ sub _CIPDefaultMatrixSet {
     # create the allocation matrix
     my %AllocationMatrix;
     IMPACT:
-    for my $Impact ( keys %Allocation ) {
+    for my $Impact ( sort keys %Allocation ) {
 
         next IMPACT if !$ImpactListReverse{$Impact};
 
@@ -686,7 +686,7 @@ sub _CIPDefaultMatrixSet {
         my $ImpactID = $ImpactListReverse{$Impact};
 
         CATEGORY:
-        for my $Category ( keys %{ $Allocation{$Impact} } ) {
+        for my $Category ( sort keys %{ $Allocation{$Impact} } ) {
 
             next CATEGORY if !$CategoryListReverse{$Category};
 
@@ -3068,7 +3068,7 @@ sub _DeleteTemplates {
     );
 
     # delete all templates
-    for my $TemplateID ( keys %{$Templates} ) {
+    for my $TemplateID ( sort keys %{$Templates} ) {
 
         my $Success = $Self->{TemplateObject}->TemplateDelete(
             TemplateID => $TemplateID,

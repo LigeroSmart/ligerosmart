@@ -250,7 +250,7 @@ sub _WorkOrderNumberCalc {
     }
 
     # update the workorders that need a new WorkOrderNumber
-    for my $WorkOrderID ( keys %NewWorkOrderNumber ) {
+    for my $WorkOrderID ( sort keys %NewWorkOrderNumber ) {
 
         # update each workorder, prevent recalculation of the WorkOrderNumber again
         my $CouldUpdateWorkOrder = $Self->{WorkOrderObject}->WorkOrderUpdate(

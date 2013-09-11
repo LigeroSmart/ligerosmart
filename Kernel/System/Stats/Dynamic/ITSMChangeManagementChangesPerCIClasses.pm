@@ -310,7 +310,7 @@ sub ImportWrapper {
                     next ID if !$ID;
 
                     KEY:
-                    for my $Key ( keys %{$InciStateList} ) {
+                    for my $Key ( sort keys %{$InciStateList} ) {
                         if ( $ID->{Content} eq $InciStateList->{$Key} ) {
                             $ID->{Content} = $Key;
                             last KEY;
@@ -323,7 +323,7 @@ sub ImportWrapper {
                 for my $ID ( @{$Values} ) {
                     next ID if !$ID;
 
-                    for my $Key ( keys %{$ClassList} ) {
+                    for my $Key ( sort keys %{$ClassList} ) {
                         if ( $ID->{Content} eq $ClassList->{$Key} ) {
                             $ID->{Content} = $Key;
                         }

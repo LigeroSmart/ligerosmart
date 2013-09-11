@@ -1489,7 +1489,7 @@ sub _GetAttributeSelection {
 
         # get the valid attributes for the given object
         ATTRIBUTEID:
-        for my $AttributeID ( keys %{$AllAttributes} ) {
+        for my $AttributeID ( sort keys %{$AllAttributes} ) {
 
             # check if attribute is in the mapping
             if ( $ObjectAttributeMapping->{ $AllAttributes->{$AttributeID} } ) {
@@ -1603,7 +1603,7 @@ sub _GetOperatorSelection {
 
         # get allowed operators for the given attribute
         OPERATORID:
-        for my $OperatorID ( keys %{$AllOperators} ) {
+        for my $OperatorID ( sort keys %{$AllOperators} ) {
 
             # get operator name
             my $OperatorName = $AllOperators->{$OperatorID};

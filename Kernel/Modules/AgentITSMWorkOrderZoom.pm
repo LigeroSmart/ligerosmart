@@ -317,7 +317,7 @@ sub Run {
     # get all workorder freekey and freetext numbers from workorder
     my %WorkOrderFreeTextFields;
     ATTRIBUTE:
-    for my $Attribute ( keys %{$WorkOrder} ) {
+    for my $Attribute ( sort keys %{$WorkOrder} ) {
 
         # get the freetext number, only look at the freetext field,
         # as we do not want to show empty fields in the zoom view

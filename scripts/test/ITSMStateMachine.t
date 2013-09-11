@@ -335,7 +335,7 @@ $Self->Is(
         . ": StateTransitionList() - number of default start states for change states.",
 );
 
-for my $DefaultState ( keys %DefaultChangeStateTransitions ) {
+for my $DefaultState ( sort keys %DefaultChangeStateTransitions ) {
 
     # convert the default state to a stateID
     my $DefaultStateID = $Name2ChangeStateID{$DefaultState};
@@ -408,7 +408,7 @@ $Self->Is(
         . ": StateTransitionList() - Number of default start states for workorder states.",
 );
 
-for my $DefaultState ( keys %DefaultWorkOrderStateTransitions ) {
+for my $DefaultState ( sort keys %DefaultWorkOrderStateTransitions ) {
 
     # convert the default state to a stateID
     my $DefaultStateID = $Name2WorkOrderStateID{$DefaultState};
@@ -468,7 +468,7 @@ for my $DefaultState ( keys %DefaultWorkOrderStateTransitions ) {
 # ------------------------------------------------------------ #
 
 # compare the results from StateTransitionList() and StateTransitionGet()
-for my $StateID ( keys %{$ChangeStateTransitions} ) {
+for my $StateID ( sort keys %{$ChangeStateTransitions} ) {
 
     # get the next state ids from StateTransitionList()
     my @NextStateIDsFromList = sort @{ $ChangeStateTransitions->{$StateID} };
@@ -522,7 +522,7 @@ for my $StateID ( keys %{$ChangeStateTransitions} ) {
 
     # check whether the default states are in the StateList
     DEFAULT_STATE:
-    for my $DefaultState ( keys %DefaultChangeStateTransitions ) {
+    for my $DefaultState ( sort keys %DefaultChangeStateTransitions ) {
 
         # skip the default state '0'
         next DEFAULT_STATE if !$DefaultState;
@@ -555,7 +555,7 @@ for my $StateID ( keys %{$ChangeStateTransitions} ) {
 
     # check whether the default states are in the StateList
     DEFAULT_STATE:
-    for my $DefaultState ( keys %DefaultWorkOrderStateTransitions ) {
+    for my $DefaultState ( sort keys %DefaultWorkOrderStateTransitions ) {
 
         # skip the default state '0'
         next DEFAULT_STATE if !$DefaultState;

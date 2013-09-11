@@ -2698,7 +2698,7 @@ for my $Test (@ChangeTests) {
             );
         }
 
-        for my $RequestedAttribute ( keys %{ $ReferenceData->{ChangeGet} } ) {
+        for my $RequestedAttribute ( sort keys %{ $ReferenceData->{ChangeGet} } ) {
 
             # turn off all pretty print
             local $Data::Dumper::Indent = 0;
@@ -2726,7 +2726,7 @@ for my $Test (@ChangeTests) {
             ChangeID => $ChangeID,
         );
 
-        for my $RequestedAttribute ( keys %{ $ReferenceData->{ChangeCABGet} } ) {
+        for my $RequestedAttribute ( sort keys %{ $ReferenceData->{ChangeCABGet} } ) {
 
             # turn off all pretty print
             local $Data::Dumper::Indent = 0;
@@ -2948,7 +2948,7 @@ my $ChangeList = $ChangeObject->ChangeList( UserID => 1 ) || [];
 my %ChangeListMap = map { $_ => 1 } @{$ChangeList};
 
 # check whether the created changes were found by ChangeList()
-for my $KeyTestedChangeID ( keys %TestedChangeID ) {
+for my $KeyTestedChangeID ( sort keys %TestedChangeID ) {
     $Self->True(
         $ChangeListMap{$KeyTestedChangeID},
         'Test ' . $TestCount++ . ": ChangeList() - ChangeID $KeyTestedChangeID in list.",
@@ -5716,7 +5716,7 @@ for my $Test (@PermissionTests) {
     if ( $ReferenceData->{Permissions} ) {
         for my $UserIndex ( sort keys %{ $ReferenceData->{Permissions} } ) {
             my $Privs = $ReferenceData->{Permissions}->{$UserIndex};
-            for my $Type ( keys %{$Privs} ) {
+            for my $Type ( sort keys %{$Privs} ) {
                 $ChangeObject->{Debug} = 10;
                 my $Access = $ChangeObject->Permission(
                     Type     => $Type,
@@ -5966,7 +5966,7 @@ if ( ref $CurrentAllocateData ne 'HASH' ) {
 if ($HashIsOK) {
 
     IMPACTID:
-    for my $ImpactID ( keys %{$CurrentAllocateData} ) {
+    for my $ImpactID ( sort keys %{$CurrentAllocateData} ) {
 
         if ( ref $CurrentAllocateData->{$ImpactID} ne 'HASH' ) {
             $HashIsOK = 0;
@@ -5974,7 +5974,7 @@ if ($HashIsOK) {
         }
 
         CATEGORYID:
-        for my $CategoryID ( keys %{ $CurrentAllocateData->{$ImpactID} } ) {
+        for my $CategoryID ( sort keys %{ $CurrentAllocateData->{$ImpactID} } ) {
 
             if ( !$CategoryID || !$CurrentAllocateData->{$ImpactID}->{$CategoryID} ) {
                 $HashIsOK = 0;
@@ -6308,7 +6308,7 @@ for my $TestFile (@TestFileList) {
     # key is the fieldname, value is the complete history data of that line
     my %HistoryLookupByFieldname = map { $_->{Fieldname} => $_ } @ReverseHistory[ 0, 1, 2 ];
 
-    for my $Fieldname ( keys %NewValues ) {
+    for my $Fieldname ( sort keys %NewValues ) {
 
         $Self->Is(
             $HistoryLookupByFieldname{$Fieldname}->{ContentOld},
@@ -6362,7 +6362,7 @@ $Self->{ConfigObject}->Set(
 
 # delete the test changes
 my $DeleteTestCount = 1;
-for my $ChangeID ( keys %TestedChangeID ) {
+for my $ChangeID ( sort keys %TestedChangeID ) {
 
     my $DeleteOk = $ChangeObject->ChangeDelete(
         ChangeID => $ChangeID,

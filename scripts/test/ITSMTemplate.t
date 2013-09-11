@@ -268,7 +268,7 @@ my %ChangeDefinitions = (
 # create change that should act as the base for the template test
 my %CreatedChangeID;
 
-for my $ChangeName ( keys %ChangeDefinitions ) {
+for my $ChangeName ( sort keys %ChangeDefinitions ) {
     $CreatedChangeID{$ChangeName} = $ChangeObject->ChangeAdd(
         %{ $ChangeDefinitions{$ChangeName} },
         UserID => 1,
@@ -280,7 +280,7 @@ for my $ChangeName ( keys %ChangeDefinitions ) {
     );
 }
 
-for my $ChangeName ( keys %CreatedChangeID ) {
+for my $ChangeName ( sort keys %CreatedChangeID ) {
     my $ChangeID = $CreatedChangeID{$ChangeName};
 
     $Self->True(
@@ -294,7 +294,7 @@ for my $ChangeName ( keys %CreatedChangeID ) {
     );
 
     # check change attributes
-    for my $RequestedAttribute ( keys %{ $ChangeDefinitions{$ChangeName} } ) {
+    for my $RequestedAttribute ( sort keys %{ $ChangeDefinitions{$ChangeName} } ) {
 
         # turn off all pretty print
         local $Data::Dumper::Indent = 0;
@@ -335,7 +335,7 @@ my %WorkOrderDefinitions = (
 );
 
 my %CreatedWorkOrderID;
-for my $WorkOrderName ( keys %WorkOrderDefinitions ) {
+for my $WorkOrderName ( sort keys %WorkOrderDefinitions ) {
 
     # add workorder
     $CreatedWorkOrderID{$WorkOrderName} = $WorkOrderObject->WorkOrderAdd(
@@ -352,7 +352,7 @@ for my $WorkOrderName ( keys %WorkOrderDefinitions ) {
     );
 
     # check workorder attributes
-    for my $RequestedAttribute ( keys %{ $WorkOrderDefinitions{$WorkOrderName} } ) {
+    for my $RequestedAttribute ( sort keys %{ $WorkOrderDefinitions{$WorkOrderName} } ) {
 
         # turn off all pretty print
         local $Data::Dumper::Indent = 0;
@@ -440,7 +440,7 @@ my %ConditionDefinitions = (
 my %CreatedConditionID;
 
 CONDITIONNAME:
-for my $ConditionName ( keys %ConditionDefinitions ) {
+for my $ConditionName ( sort keys %ConditionDefinitions ) {
     my $ConditionData = $ConditionDefinitions{$ConditionName}->{ConditionAdd};
     my $ConditionID   = $ConditionObject->ConditionAdd(
         %{$ConditionData},
@@ -530,7 +530,7 @@ my %TemplateDefinitions = (
     },
 );
 
-for my $TemplateDefinitionName ( keys %TemplateDefinitions ) {
+for my $TemplateDefinitionName ( sort keys %TemplateDefinitions ) {
 
     # create simple change template
     $TemplateDefinitions{$TemplateDefinitionName}->{Content} =
@@ -581,7 +581,7 @@ for my $TemplateDefinitionName ( keys %TemplateDefinitions ) {
 my @ChangeIDs;
 
 CHANGETEMPLATENAME:
-for my $ChangeTemplateName ( keys %CreatedChangeID ) {
+for my $ChangeTemplateName ( sort keys %CreatedChangeID ) {
 
     # get template id
     my $TemplateID = $TestedTemplateID{$ChangeTemplateName};
@@ -607,7 +607,7 @@ for my $ChangeTemplateName ( keys %CreatedChangeID ) {
     );
 
     # check change attributes
-    for my $RequestedAttribute ( keys %{ $ChangeDefinitions{$ChangeTemplateName} } ) {
+    for my $RequestedAttribute ( sort keys %{ $ChangeDefinitions{$ChangeTemplateName} } ) {
 
         # turn off all pretty print
         local $Data::Dumper::Indent = 0;
@@ -652,7 +652,7 @@ for my $ChangeTemplateName ( keys %CreatedChangeID ) {
 }
 
 WORKORDERTEMPLATENAME:
-for my $WorkOrderTemplateName ( keys %CreatedWorkOrderID ) {
+for my $WorkOrderTemplateName ( sort keys %CreatedWorkOrderID ) {
 
     # get template id
     my $TemplateID = $TestedTemplateID{$WorkOrderTemplateName};
@@ -680,7 +680,7 @@ for my $WorkOrderTemplateName ( keys %CreatedWorkOrderID ) {
 
     # check workorder attributes
     REQUESTEDATTRIBUTE:
-    for my $RequestedAttribute ( keys %{ $WorkOrderDefinitions{$WorkOrderTemplateName} } ) {
+    for my $RequestedAttribute ( sort keys %{ $WorkOrderDefinitions{$WorkOrderTemplateName} } ) {
 
         next REQUESTEDATTRIBUTE if $RequestedAttribute eq 'ChangeID';
 
@@ -713,7 +713,7 @@ for my $WorkOrderTemplateName ( keys %CreatedWorkOrderID ) {
 }
 
 CONDITIONTEMPLATENAME:
-for my $ConditionTemplateName ( keys %CreatedConditionID ) {
+for my $ConditionTemplateName ( sort keys %CreatedConditionID ) {
 
     # get template id
     my $TemplateID = $TestedTemplateID{$ConditionTemplateName};
@@ -889,7 +889,7 @@ $Self->{ConfigObject}->Set(
 );
 
 # delete the test templates
-for my $TemplateName ( keys %TestedTemplateID ) {
+for my $TemplateName ( sort keys %TestedTemplateID ) {
     my $TemplateID = $TestedTemplateID{$TemplateName};
 
     my $DeleteOk = $TemplateObject->TemplateDelete(
@@ -966,13 +966,13 @@ sub _ActionAdd {
     }
 
     # get all fields for ActionAdd
-    for my $ActionAddValue ( keys %{$ActionData} ) {
+    for my $ActionAddValue ( sort keys %{$ActionData} ) {
 
         # ommit static fields
         next if grep { $_ eq $ActionAddValue } @StaticFields;
 
         # get values for fields
-        for my $FieldValue ( keys %{ $ActionData->{$ActionAddValue} } ) {
+        for my $FieldValue ( sort keys %{ $ActionData->{$ActionAddValue} } ) {
 
             # store gathered information in hash for adding
             $ActionAdd{$ActionAddValue}
@@ -1010,7 +1010,7 @@ sub _ActionAdd {
     delete $ActionAdd{UserID};
 
     # test values
-    for my $TestValue ( keys %ActionAdd ) {
+    for my $TestValue ( sort keys %ActionAdd ) {
         $Self->Is(
             $ActionGet->{$TestValue},
             $ActionAdd{$TestValue},
@@ -1042,13 +1042,13 @@ sub _ExpressionAdd {
     }
 
     # get all fields for ExpressionAdd
-    for my $ExpressionAddValue ( keys %ExpressionAddSourceData ) {
+    for my $ExpressionAddValue ( sort keys %ExpressionAddSourceData ) {
 
         # ommit static fields
         next if grep { $_ eq $ExpressionAddValue } @StaticFields;
 
         # get values for fields
-        for my $FieldValue ( keys %{ $ExpressionAddSourceData{$ExpressionAddValue} } ) {
+        for my $FieldValue ( sort keys %{ $ExpressionAddSourceData{$ExpressionAddValue} } ) {
 
             # store gathered information in hash for adding
             $ExpressionAddData{$ExpressionAddValue} =
@@ -1083,7 +1083,7 @@ sub _ExpressionAdd {
 
     # test values
     delete $ExpressionAddData{UserID};
-    for my $TestValue ( keys %ExpressionAddData ) {
+    for my $TestValue ( sort keys %ExpressionAddData ) {
         $Self->Is(
             $ExpressionGetData->{$TestValue},
             $ExpressionAddData{$TestValue},

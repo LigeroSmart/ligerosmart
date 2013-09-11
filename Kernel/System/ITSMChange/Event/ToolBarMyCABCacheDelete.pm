@@ -154,7 +154,7 @@ sub Run {
 
      # find the CABAgents which have been changed, which are only agents with a count of exactly one
         my @ChangedCABAgents;
-        for my $CABAgent ( keys %ChangedCABAgentsLookup ) {
+        for my $CABAgent ( sort keys %ChangedCABAgentsLookup ) {
             if ( $ChangedCABAgentsLookup{$CABAgent} == 1 ) {
                 push @ChangedCABAgents, $CABAgent;
             }

@@ -108,7 +108,7 @@ sub Run {
 
         # get the column names that should be shown
         COLUMNNAME:
-        for my $Name ( keys %PossibleColumn ) {
+        for my $Name ( sort keys %PossibleColumn ) {
             next COLUMNNAME if !$PossibleColumn{$Name};
             push @ShowColumns, $Name;
         }
@@ -195,7 +195,7 @@ sub Run {
 
     # display all navbar filters
     my %NavBarFilter;
-    for my $Filter ( keys %Filters ) {
+    for my $Filter ( sort keys %Filters ) {
 
         # count the number of workorders for each filter
         my $Count = $Self->{WorkOrderObject}->WorkOrderSearch(

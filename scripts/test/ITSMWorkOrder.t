@@ -559,7 +559,7 @@ for my $Test (@ChangeTests) {
             );
         }
 
-        for my $RequestedAttribute ( keys %{ $ReferenceData->{ChangeGet} } ) {
+        for my $RequestedAttribute ( sort keys %{ $ReferenceData->{ChangeGet} } ) {
 
             # turn off all pretty print
             local $Data::Dumper::Indent = 0;
@@ -2067,7 +2067,7 @@ for my $Test (@WorkOrderTests) {
             );
         }
 
-        for my $RequestedAttribute ( keys %{ $ReferenceData->{WorkOrderGet} } ) {
+        for my $RequestedAttribute ( sort keys %{ $ReferenceData->{WorkOrderGet} } ) {
 
             # turn off all pretty print
             local $Data::Dumper::Indent = 0;
@@ -4088,7 +4088,7 @@ for my $WOCTGTest (@WOCTGTests) {
 
             # Test for right values in result
             TIMEVALUE:
-            for my $TimeType ( keys %{$Time} ) {
+            for my $TimeType ( sort keys %{$Time} ) {
                 $Self->Is(
                     $Time->{$TimeType},
                     $ReferenceData->{WorkOrderChangeTimeGet}->{ResultData}->{$TimeType},
@@ -4402,7 +4402,7 @@ for my $Test (@PermissionTests) {
     if ( $ReferenceData->{Permissions} ) {
         for my $UserIndex ( sort keys %{ $ReferenceData->{Permissions} } ) {
             my $Privs = $ReferenceData->{Permissions}->{$UserIndex};
-            for my $Type ( keys %{$Privs} ) {
+            for my $Type ( sort keys %{$Privs} ) {
                 $Self->{WorkOrderObject}->{Debug} = 10;
                 my $Access = $Self->{WorkOrderObject}->Permission(
                     Type        => $Type,

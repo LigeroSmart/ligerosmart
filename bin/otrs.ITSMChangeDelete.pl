@@ -1,4 +1,4 @@
-#!/usr/bin/perl -w
+#!/usr/bin/perl
 # --
 # bin/otrs.ITSMChangeDelete.pl - to delete changes
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.com/

@@ -313,7 +313,7 @@ sub _HasFieldChanged {
         return 1 if scalar keys %{ $Param{New} } != scalar keys %{ $Param{Old} };
 
         # check the values for each key
-        for my $Key ( keys %{ $Param{New} } ) {
+        for my $Key ( sort keys %{ $Param{New} } ) {
             return 1 if $Param{New}->{$Key} ne $Param{Old}->{$Key};
         }
     }
@@ -477,7 +477,7 @@ sub _AgentAndCustomerIDsGet {
             # get change initiators (customer users of linked tickets)
             # This should be the same list a displayed in ChangeZoom.
             my $LinkList = $LinkListWithData->{Ticket} || {};
-            for my $LinkType ( keys %{$LinkList} ) {
+            for my $LinkType ( sort keys %{$LinkList} ) {
 
                 # the linked tickets are always the 'Source'.
                 for my $TicketData ( values %{ $LinkList->{$LinkType}->{Source} } ) {

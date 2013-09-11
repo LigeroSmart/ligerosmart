@@ -229,7 +229,7 @@ sub NotificationSend {
         # WorkOrderGet() must still be called, as it provides translation
         # for some IDs that were set in WorkOrderAdd().
         if ( $Event eq 'WorkOrderAdd' ) {
-            for my $Attribute ( keys %{$WorkOrder} ) {
+            for my $Attribute ( sort keys %{$WorkOrder} ) {
                 $WorkOrder->{$Attribute} ||= $Param{Data}->{$Attribute};
             }
         }
@@ -264,7 +264,7 @@ sub NotificationSend {
         # ChangeGet() must still be called, as it provides translation
         # for some IDs that were set in ChangeAdd().
         if ( $Event eq 'ChangeAdd' ) {
-            for my $Attribute ( keys %{$Change} ) {
+            for my $Attribute ( sort keys %{$Change} ) {
                 $Change->{$Attribute} ||= $Param{Data}->{$Attribute};
             }
         }
@@ -1180,7 +1180,7 @@ sub _NotificationReplaceMacros {
     # html quoting of content
     if ( $Param{RichText} ) {
         KEY:
-        for my $Key ( keys %CurrentUser ) {
+        for my $Key ( sort keys %CurrentUser ) {
             next KEY if !$CurrentUser{$Key};
             $CurrentUser{$Key} = $Self->{HTMLUtilsObject}->ToHTML(
                 String => $CurrentUser{$Key},
@@ -1190,7 +1190,7 @@ sub _NotificationReplaceMacros {
 
     # replace it
     KEY:
-    for my $Key ( keys %CurrentUser ) {
+    for my $Key ( sort keys %CurrentUser ) {
         next KEY if !defined $CurrentUser{$Key};
         $Text =~ s{ $Tag $Key $End }{$CurrentUser{$Key}}gxmsi;
         $Text =~ s{ $Tag2 $Key $End }{$CurrentUser{$Key}}gxmsi;
@@ -1223,7 +1223,7 @@ sub _NotificationReplaceMacros {
         # html quoting of content
         if ( $Param{RichText} ) {
             KEY:
-            for my $Key ( keys %ChangeData ) {
+            for my $Key ( sort keys %ChangeData ) {
                 next KEY if !$ChangeData{$Key};
                 $ChangeData{$Key} = $Self->{HTMLUtilsObject}->ToHTML(
                     String => $ChangeData{$Key},
@@ -1254,7 +1254,7 @@ sub _NotificationReplaceMacros {
 
         # replace it
         KEY:
-        for my $Key ( keys %ChangeData ) {
+        for my $Key ( sort keys %ChangeData ) {
             next KEY if !defined $ChangeData{$Key};
             $Text =~ s{ $Tag $Key $End }{$ChangeData{$Key}}gxmsi;
         }
@@ -1270,7 +1270,7 @@ sub _NotificationReplaceMacros {
         # html quoting of content
         if ( $Param{RichText} ) {
             KEY:
-            for my $Key ( keys %WorkOrderData ) {
+            for my $Key ( sort keys %WorkOrderData ) {
                 next KEY if !$WorkOrderData{$Key};
                 $WorkOrderData{$Key} = $Self->{HTMLUtilsObject}->ToHTML(
                     String => $WorkOrderData{$Key},
@@ -1295,7 +1295,7 @@ sub _NotificationReplaceMacros {
 
         # replace it
         KEY:
-        for my $Key ( keys %WorkOrderData ) {
+        for my $Key ( sort keys %WorkOrderData ) {
             next KEY if !defined $WorkOrderData{$Key};
             $Text =~ s{ $Tag $Key $End }{$WorkOrderData{$Key}}gxmsi;
         }
@@ -1312,7 +1312,7 @@ sub _NotificationReplaceMacros {
         # html quoting of content
         if ( $Param{RichText} ) {
             KEY:
-            for my $Key ( keys %Data ) {
+            for my $Key ( sort keys %Data ) {
                 next KEY if !$Data{$Key};
                 $Data{$Key} = $Self->{HTMLUtilsObject}->ToHTML(
                     String => $Data{$Key},
@@ -1322,7 +1322,7 @@ sub _NotificationReplaceMacros {
 
         # replace it
         KEY:
-        for my $Key ( keys %Data ) {
+        for my $Key ( sort keys %Data ) {
             next KEY if !defined $Data{$Key};
             $Text =~ s{ $Tag $Key $End }{$Data{$Key}}gxmsi;
         }
@@ -1339,7 +1339,7 @@ sub _NotificationReplaceMacros {
         # html quoting of content
         if ( $Param{RichText} ) {
             KEY:
-            for my $Key ( keys %LinkData ) {
+            for my $Key ( sort keys %LinkData ) {
                 next KEY if !$LinkData{$Key};
                 $LinkData{$Key} = $Self->{HTMLUtilsObject}->ToHTML(
                     String => $LinkData{$Key},
@@ -1349,7 +1349,7 @@ sub _NotificationReplaceMacros {
 
         # replace it
         KEY:
-        for my $Key ( keys %LinkData ) {
+        for my $Key ( sort keys %LinkData ) {
             next KEY if !defined $LinkData{$Key};
             $Text =~ s{ $Tag $Key $End }{$LinkData{$Key}}gxmsi;
         }
@@ -1370,7 +1370,7 @@ sub _NotificationReplaceMacros {
             if ( $Param{RichText} ) {
 
                 KEY:
-                for my $Key ( keys %{ $InfoHash{$Object} } ) {
+                for my $Key ( sort keys %{ $InfoHash{$Object} } ) {
                     next KEY if !$InfoHash{$Object}->{$Key};
                     $InfoHash{$Object}->{$Key} = $Self->{HTMLUtilsObject}->ToHTML(
                         String => $InfoHash{$Object}->{$Key},
@@ -1380,7 +1380,7 @@ sub _NotificationReplaceMacros {
 
             # replace it
             KEY:
-            for my $Key ( keys %{ $InfoHash{$Object} } ) {
+            for my $Key ( sort keys %{ $InfoHash{$Object} } ) {
                 next KEY if !defined $InfoHash{$Object}->{$Key};
                 $Text =~ s{ $Tag $Key $End }{$InfoHash{$Object}->{$Key}}gxmsi;
             }
@@ -1397,7 +1397,7 @@ sub _NotificationReplaceMacros {
         # html quoting of content
         if ( $Param{RichText} ) {
             KEY:
-            for my $Key ( keys %{ $Param{Recipient} } ) {
+            for my $Key ( sort keys %{ $Param{Recipient} } ) {
                 next KEY if !$Param{Recipient}->{$Key};
                 $Param{Recipient}->{$Key} = $Self->{HTMLUtilsObject}->ToHTML(
                     String => $Param{Recipient}->{$Key},
@@ -1407,7 +1407,7 @@ sub _NotificationReplaceMacros {
 
         # replace it
         KEY:
-        for my $Key ( keys %{ $Param{Recipient} } ) {
+        for my $Key ( sort keys %{ $Param{Recipient} } ) {
             next KEY if !defined $Param{Recipient}->{$Key};
             my $Value = $Param{Recipient}->{$Key};
             $Text =~ s{ $Tag $Key $End }{$Value}gxmsi;

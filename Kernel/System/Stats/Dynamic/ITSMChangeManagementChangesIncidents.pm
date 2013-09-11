@@ -178,7 +178,7 @@ sub ImportWrapper {
                 for my $ID ( @{$Values} ) {
                     next ID if !$ID;
 
-                    for my $Key ( keys %Objects ) {
+                    for my $Key ( sort keys %Objects ) {
                         $ID->{Content} = $Key if $Objects{$Key} eq $ID->{Content};
                     }
                 }

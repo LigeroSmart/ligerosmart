@@ -277,7 +277,7 @@ for my $ChangeID (@ChangeIDs) {
 
 # condition list test
 CHANGEID:
-for my $ChangeID ( keys %ConditionCount ) {
+for my $ChangeID ( sort keys %ConditionCount ) {
 
     # get condition list
     my $ConditionIDsRef = $Self->{ConditionObject}->ConditionList(
@@ -1607,7 +1607,7 @@ for my $ExpressionTest (@ExpressionTests) {
     next EXPRESSIONTEST if !%SourceData;
 
     CREATEDATA:
-    for my $CreateData ( keys %SourceData ) {
+    for my $CreateData ( sort keys %SourceData ) {
 
         # add expression
         if ( $CreateData eq 'ExpressionAdd' ) {
@@ -1630,13 +1630,13 @@ for my $ExpressionTest (@ExpressionTests) {
             }
 
             # get all fields for ExpressionAdd
-            for my $ExpressionAddValue ( keys %ExpressionAddSourceData ) {
+            for my $ExpressionAddValue ( sort keys %ExpressionAddSourceData ) {
 
                 # ommit static fields
                 next if grep { $_ eq $ExpressionAddValue } @StaticFields;
 
                 # get values for fields
-                for my $FieldValue ( keys %{ $ExpressionAddSourceData{$ExpressionAddValue} } ) {
+                for my $FieldValue ( sort keys %{ $ExpressionAddSourceData{$ExpressionAddValue} } ) {
 
                     # store gathered information in hash for adding
                     $ExpressionAddData{$ExpressionAddValue} =
@@ -1673,7 +1673,7 @@ for my $ExpressionTest (@ExpressionTests) {
 
             # test values
             delete $ExpressionAddData{UserID};
-            for my $TestValue ( keys %ExpressionAddData ) {
+            for my $TestValue ( sort keys %ExpressionAddData ) {
                 $Self->Is(
                     $ExpressionGetData->{$TestValue},
                     $ExpressionAddData{$TestValue},
@@ -1703,13 +1703,13 @@ for my $ExpressionTest (@ExpressionTests) {
             }
 
             # get all fields for ExpressionUpdate
-            for my $ExpressionUpdateValue ( keys %ExpressionUpdateSourceData ) {
+            for my $ExpressionUpdateValue ( sort keys %ExpressionUpdateSourceData ) {
 
                 # ommit static fields
                 next if grep { $_ eq $ExpressionUpdateValue } @StaticFields;
 
                 # get values for fields
-                for my $FieldValue ( keys %{ $ExpressionUpdateSourceData{$ExpressionUpdateValue} } )
+                for my $FieldValue ( sort keys %{ $ExpressionUpdateSourceData{$ExpressionUpdateValue} } )
                 {
 
                     # store gathered information in hash for updating
@@ -1748,7 +1748,7 @@ for my $ExpressionTest (@ExpressionTests) {
 
             # test values
             delete $ExpressionUpdateData{UserID};
-            for my $TestValue ( keys %ExpressionUpdateData ) {
+            for my $TestValue ( sort keys %ExpressionUpdateData ) {
                 $Self->Is(
                     $ExpressionGetData->{$TestValue},
                     $ExpressionUpdateData{$TestValue},
@@ -2069,7 +2069,7 @@ for my $ActionTest (@ActionTests) {
     next ACTIONTEST if !%SourceData;
 
     CREATEDATA:
-    for my $CreateData ( keys %SourceData ) {
+    for my $CreateData ( sort keys %SourceData ) {
 
         # add action
         if ( $CreateData eq 'ActionAdd' ) {
@@ -2317,13 +2317,13 @@ sub _ActionAdd {
     }
 
     # get all fields for ActionAdd
-    for my $ActionAddValue ( keys %{$ActionData} ) {
+    for my $ActionAddValue ( sort keys %{$ActionData} ) {
 
         # ommit static fields
         next if grep { $_ eq $ActionAddValue } @StaticFields;
 
         # get values for fields
-        for my $FieldValue ( keys %{ $ActionData->{$ActionAddValue} } ) {
+        for my $FieldValue ( sort keys %{ $ActionData->{$ActionAddValue} } ) {
 
             # store gathered information in hash for adding
             $ActionAdd{$ActionAddValue}
@@ -2360,7 +2360,7 @@ sub _ActionAdd {
     delete $ActionAdd{UserID};
 
     # test values
-    for my $TestValue ( keys %ActionAdd ) {
+    for my $TestValue ( sort keys %ActionAdd ) {
         $Self->Is(
             $ActionGet->{$TestValue},
             $ActionAdd{$TestValue},

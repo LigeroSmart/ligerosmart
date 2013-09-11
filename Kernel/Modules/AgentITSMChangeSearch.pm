@@ -244,7 +244,7 @@ sub Run {
             );
 
             # insert new profile params
-            for my $Key ( keys %GetParam ) {
+            for my $Key ( sort keys %GetParam ) {
                 if ( $GetParam{$Key} ) {
                     $Self->{SearchProfileObject}->SearchProfileAdd(
                         Base      => 'ITSMChangeSearch',
@@ -495,23 +495,23 @@ sub Run {
                     );
 
                     OBJECT:
-                    for my $Object ( keys %{$LinkListWithDataWorkOrder} ) {
+                    for my $Object ( sort keys %{$LinkListWithDataWorkOrder} ) {
 
                         # only show linked services of workorder
                         next OBJECT if $Object ne 'Service';
 
                         LINKTYPE:
-                        for my $LinkType ( keys %{ $LinkListWithDataWorkOrder->{$Object} } ) {
+                        for my $LinkType ( sort keys %{ $LinkListWithDataWorkOrder->{$Object} } ) {
 
                             DIRECTION:
                             for my $Direction (
-                                keys %{ $LinkListWithDataWorkOrder->{$Object}->{$LinkType} }
+                                sort keys %{ $LinkListWithDataWorkOrder->{$Object}->{$LinkType} }
                                 )
                             {
 
                                 ID:
                                 for my $ID (
-                                    keys %{
+                                    sort keys %{
                                         $LinkListWithDataWorkOrder->{$Object}->{$LinkType}
                                             ->{$Direction}
                                     }
@@ -531,18 +531,18 @@ sub Run {
                 # get unique service ids
                 my %UniqueServiceIDs;
                 my $ServicesRef = $LinkListWithData->{Service} || {};
-                for my $LinkType ( keys %{$ServicesRef} ) {
+                for my $LinkType ( sort keys %{$ServicesRef} ) {
 
                     # extract link type List
                     my $LinkTypeList = $ServicesRef->{$LinkType};
 
-                    for my $Direction ( keys %{$LinkTypeList} ) {
+                    for my $Direction ( sort keys %{$LinkTypeList} ) {
 
                         # extract direction list
                         my $DirectionList = $ServicesRef->{$LinkType}->{$Direction};
 
                         # collect unique service ids
-                        for my $ServiceID ( keys %{$DirectionList} ) {
+                        for my $ServiceID ( sort keys %{$DirectionList} ) {
                             $UniqueServiceIDs{$ServiceID}++;
                         }
                     }
@@ -551,7 +551,7 @@ sub Run {
                 # get the data for each service
                 my @ServicesData;
                 SERVICEID:
-                for my $ServiceID ( keys %UniqueServiceIDs ) {
+                for my $ServiceID ( sort keys %UniqueServiceIDs ) {
 
                     # get service data
                     my %ServiceData = $Self->{ServiceObject}->ServiceGet(
@@ -913,7 +913,7 @@ sub Run {
 
                 # get the column names that should be shown
                 COLUMNNAME:
-                for my $Name ( keys %PossibleColumn ) {
+                for my $Name ( sort keys %PossibleColumn ) {
                     next COLUMNNAME if !$PossibleColumn{$Name};
                     push @ShowColumns, $Name;
                 }
