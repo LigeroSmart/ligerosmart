@@ -206,7 +206,7 @@ sub Data {
     $Self->{Translation}->{'ITSM Change'} = 'Alteração';
     $Self->{Translation}->{'Justification'} = 'Justificação';
     $Self->{Translation}->{'Input invalid.'} = 'Entrada inválida.';
-    $Self->{Translation}->{'Impact'} = 'Impato';
+    $Self->{Translation}->{'Impact'} = 'Impacto';
     $Self->{Translation}->{'Requested Date'} = 'Data Solicitada';
 
     # Template: AgentITSMChangeCABTemplate
@@ -641,7 +641,7 @@ sub Data {
     $Self->{Translation}->{'Defines the default sort order in the customer change schedule overview.'} = 'Define a ordem de classificação por omissão na vista global do cliente programar a Alteração.';
     $Self->{Translation}->{'Defines the default sort order in the template overview.'} = 'Define a ordem de classificação por omissão na vista global de modelo.';
     $Self->{Translation}->{'Defines the default value for the category of a change.'} = 'Define o valor por omissão para a categoria de uma alteração.';
-    $Self->{Translation}->{'Defines the default value for the impact of a change.'} = 'Define o valor por omissão para o Impato de uma alteração.';
+    $Self->{Translation}->{'Defines the default value for the impact of a change.'} = 'Define o valor por omissão para o Impacto de uma alteração.';
     $Self->{Translation}->{'Defines the field type of CompareValue fields for change attributes used in AgentITSMChangeConditionEdit. Valid values are Selection, Text and Date. If a type is not defined, the field will not be shown.'} = 'Define o tipo de campo para comparar os campos de valor para o agente de Alteração, atributos em ITSM Editar Condição de Alteração. Os valores válidos são de Seleção, texto e data. Se nenhum tipo for definido, o campo não é exibido.';
     $Self->{Translation}->{'Defines the field type of CompareValue fields for workorder attributes used in AgentITSMChangeConditionEdit. Valid values are Selection, Text and Date. If a type is not defined, the field will not be shown.'} = 'Define o tipo de campo para comparar os campos de valor para a Ordem de Serviço, atributos em ITSM Editar Condição de Alteração. Os valores válidos são de Seleção, texto e data. Se nenhum tipo for definido, o campo não é exibido.';
     $Self->{Translation}->{'Defines the free key field number 1 for changes to add a new change attribute.'} = 'Define o campo livre nº 1 de Alterações para adicionar um novo atributo de Alteração.';
@@ -958,7 +958,7 @@ sub Data {
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute ChangeManagerID in AgentITSMChangeConditionEdit.'} = 'Define os operadores que são selecionáveis para o atributo Alterar gestor ID em Editar a Condição de Alteração do ITSM.';
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute ChangeStateID in AgentITSMChangeConditionEdit.'} = 'Define os operadores que são selecionáveis para o atributo Alterar Estado ID em Editar a Condição de Alteração do ITSM.';
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute ChangeTitle in AgentITSMChangeConditionEdit.'} = 'Define os operadores que são selecionáveis para o atributo Alterar Título ID em Editar a Condição de Alteração do ITSM.';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute ImpactID in AgentITSMChangeConditionEdit.'} = 'Define os operadores que são selecionáveis para o atributo Impato ID em Editar a Condição de Alteração do ITSM.';
+    $Self->{Translation}->{'Defines the operators that are selectable for the attribute ImpactID in AgentITSMChangeConditionEdit.'} = 'Define os operadores que são selecionáveis para o atributo Impacto ID em Editar a Condição de Alteração do ITSM.';
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute PlannedEffort in AgentITSMChangeConditionEdit.'} = 'Define os operadores que são selecionáveis para o atributo Esforço planeado em Editar a Condição de Alteração do ITSM.';
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute PlannedEndTime in AgentITSMChangeConditionEdit.'} = 'Define os operadores que são selecionáveis para o atributo Hora Final Planejada em Editar a Condição de Alteração do ITSM.';
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute PlannedStartTime in AgentITSMChangeConditionEdit.'} = 'Define os operadores que são selecionáveis para o atributo Hora Ínicio Planejada em Editar a Condição de Alteração do ITSM.';
