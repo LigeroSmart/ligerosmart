@@ -148,47 +148,5 @@
 <!-- dtl:block:ViewVotes -->
             </ul>
         </div>
-
-<!-- dtl:block:FAQVoting -->
-        <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="FAQVote" class="PreventMultipleSubmits">
-            <div class="VotingBox Visible">
-                <div class="MessageHeader">
-                    <h3>$Text{"Rating"}:</h3>
-                    <div class="Clear"></div>
-                </div>
-                <div id="Messenger">
-                    <div class="SpacingTop"></div>
-                    <span class="VotingQuestion">$Text{"How helpful was this article? Please give us your rating and help to improve the FAQ Database. Thank You!"}</span>
-                    <div class="SpacingTop"></div>
-                    <div>
-                        <span class="RateLabelBefore">$Text{"not helpful"}</span>
-                    </div>
-
-<!-- dtl:block:FAQVotingRateRow -->
-                    <div id="RateButton$Data{"Value"}">
-                        <a class="RateButton $LQData{"RateClass"}" href="$Env{"Baselink"}Action=$Env{"Action"};ItemID=$LQData{"ItemID"};SelectedRate=$LQData{"Value"}">$QData{"Title"}</a>
-                    </div>
-<!-- dtl:block:FAQVotingRateRow -->
-
-                    <div>
-                        <span class="RateLabelAfter">$Text{"very helpful"}</span>
-                    </div>
-                    <input type="hidden" name="Action" value="CustomerFAQZoom"/>
-                    <input type="hidden" name="Subaction" value="Vote"/>
-                    <input type="hidden" name="CategoryID" value="$QData{"CategoryID"}"/>
-                    <input type="hidden" name="ItemID" value="$QData{"ItemID"}"/>
-                    <div class="ActionRow">
-
-<!-- dtl:block:FAQVotingSubmit -->
-                        <button type="submit" value="$Text{"Submit"}">$Text{"Submit"}</button>
-                        <input type="hidden" name="Rate" value="$QData{"SelectedRate"}"id="RateValue"/>
-<!-- dtl:block:FAQVotingSubmit -->
-
-                    </div>
-                </div>
-            </div>
-        </form>
-<!-- dtl:block:FAQVoting -->
-
     </div>
 </div>
