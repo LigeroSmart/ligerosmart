@@ -22,8 +22,13 @@ use Kernel::System::Ticket;
 use Kernel::System::Valid;
 use Kernel::System::Web::UploadCache;
 
-use base
-    qw(  Kernel::System::FAQSearch Kernel::System::FAQ::Language Kernel::System::FAQ::Category Kernel::System::FAQ::State Kernel::System::FAQ::Vote );
+use base qw(
+    Kernel::System::FAQSearch
+    Kernel::System::FAQ::Language
+    Kernel::System::FAQ::Category
+    Kernel::System::FAQ::State
+    Kernel::System::FAQ::Vote
+);
 
 =head1 NAME
 
