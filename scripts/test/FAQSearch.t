@@ -854,4 +854,177 @@ for my $FAQID (@AddedFAQs) {
 
 # restore time
 $HelperObject->FixedTimeUnset();
+
+# execute old tests
+$Self->True(
+    1,
+    "--Execute Former Tests--",
+);
+{
+    my $FAQID1 = $FAQObject->FAQAdd(
+        CategoryID => 1,
+        StateID    => 2,
+        LanguageID => 2,
+        Approved   => 1,
+        Title      => 'Some Text2',
+        Keywords   => 'some keywords2',
+        Field1     => 'Problem...2',
+        Field2     => 'Solution found...2',
+        UserID     => 1,
+    );
+
+    $Self->True(
+        $FAQID1,
+        "FAQAdd() - 1",
+    );
+
+    my $FAQID2 = $FAQObject->FAQAdd(
+        Title      => 'Title',
+        CategoryID => 1,
+        StateID    => 1,
+        LanguageID => 1,
+        Keywords   => '',
+        Field1     => 'Problem Description 1...',
+        Field2     => 'Solution not found1...',
+        UserID     => 1,
+    );
+
+    $Self->True(
+        $FAQID2,
+        "FAQAdd() - 2",
+    );
+
+    my @FAQIDs = $FAQObject->FAQSearch(
+        Number           => '*',
+        What             => '*s*',
+        Keyword          => 'some*',
+        States           => [ 'public', 'internal' ],
+        OrderBy          => ['Votes'],
+        OrderByDirection => ['Up'],
+        Limit            => 150,
+        UserID           => 1,
+    );
+
+    my $FAQSearchFound  = 0;
+    my $FAQSearchFound2 = 0;
+    for my $FAQIDSearch (@FAQIDs) {
+        if ( $FAQIDSearch eq $FAQID1 ) {
+            $FAQSearchFound = 1;
+        }
+        if ( $FAQIDSearch eq $FAQID2 ) {
+            $FAQSearchFound2 = 1;
+        }
+    }
+    $Self->True(
+        $FAQSearchFound,
+        "FAQSearch() - $FAQID1",
+    );
+    $Self->False(
+        $FAQSearchFound2,
+        "FAQSearch() - $FAQID2",
+    );
+
+    @FAQIDs = $FAQObject->FAQSearch(
+        Number           => '*',
+        Title            => 'tITLe',
+        What             => 'l',
+        States           => [ 'public', 'internal' ],
+        OrderBy          => ['Created'],
+        OrderByDirection => ['Up'],
+        Limit            => 150,
+        UserID           => 1,
+    );
+
+    $FAQSearchFound  = 0;
+    $FAQSearchFound2 = 0;
+    for my $FAQIDSearch (@FAQIDs) {
+        if ( $FAQIDSearch eq $FAQID1 ) {
+            $FAQSearchFound = 1;
+        }
+        if ( $FAQIDSearch eq $FAQID2 ) {
+            $FAQSearchFound2 = 1;
+        }
+    }
+    $Self->False(
+        $FAQSearchFound,
+        "FAQSearch() - $FAQID1",
+    );
+    $Self->True(
+        $FAQSearchFound2,
+        "FAQSearch() - $FAQID2",
+    );
+
+    @FAQIDs = $FAQObject->FAQSearch(
+        Number           => '*',
+        Title            => '',
+        What             => 'solution found',
+        States           => [ 'public', 'internal' ],
+        OrderBy          => ['Created'],
+        OrderByDirection => ['Up'],
+        Limit            => 150,
+        UserID           => 1,
+    );
+
+    $FAQSearchFound  = 0;
+    $FAQSearchFound2 = 0;
+    for my $FAQIDSearch (@FAQIDs) {
+        if ( $FAQIDSearch eq $FAQID1 ) {
+            $FAQSearchFound = 1;
+        }
+        if ( $FAQIDSearch eq $FAQID2 ) {
+            $FAQSearchFound2 = 1;
+        }
+    }
+    $Self->True(
+        $FAQSearchFound,
+        "FAQSearch() literal text - $FAQID1",
+    );
+    $Self->False(
+        $FAQSearchFound2,
+        "FAQSearch() literal text - $FAQID2",
+    );
+
+    @FAQIDs = $FAQObject->FAQSearch(
+        Number           => '*',
+        Title            => '',
+        What             => 'solution+found',
+        States           => [ 'public', 'internal' ],
+        OrderBy          => ['Created'],
+        OrderByDirection => ['Up'],
+        Limit            => 150,
+        UserID           => 1,
+    );
+
+    $FAQSearchFound  = 0;
+    $FAQSearchFound2 = 0;
+    for my $FAQIDSearch (@FAQIDs) {
+        if ( $FAQIDSearch eq $FAQID1 ) {
+            $FAQSearchFound = 1;
+        }
+        if ( $FAQIDSearch eq $FAQID2 ) {
+            $FAQSearchFound2 = 1;
+        }
+    }
+    $Self->True(
+        $FAQSearchFound,
+        "FAQSearch() AND - $FAQID1",
+    );
+    $Self->True(
+        $FAQSearchFound2,
+        "FAQSearch() AND - $FAQID2",
+    );
+
+    # cleanup the system
+    for my $FAQID ( $FAQID1, $FAQID2 ) {
+        my $Success = $FAQObject->FAQDelete(
+            ItemID => $FAQID,
+            UserID => 1,
+        );
+
+        $Self->True(
+            $Success,
+            "FAQDelete() for FAQID:'$FAQID' with True",
+        );
+    }
+}
 1;
