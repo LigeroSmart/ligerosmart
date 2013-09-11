@@ -48,7 +48,7 @@ if ($HashOK) {
         }
 
         CRITICALITY:
-        for my $Criticality ( keys %{ $AllocateData2->{$Impact} } ) {
+        for my $Criticality ( sort keys %{ $AllocateData2->{$Impact} } ) {
 
             if ( !$Criticality || !$AllocateData2->{$Impact}->{$Criticality} ) {
                 $HashOK = 0;

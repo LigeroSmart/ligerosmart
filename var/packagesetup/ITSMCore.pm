@@ -21,8 +21,6 @@ use Kernel::System::Valid;
 use Kernel::System::DynamicField;
 use Kernel::System::VariableCheck qw(:all);
 
-use vars qw(@ISA);
-
 =head1 NAME
 
 ITSMCore.pm - code to excecute during package installation

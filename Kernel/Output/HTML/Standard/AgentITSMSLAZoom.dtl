@@ -133,7 +133,7 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <a href="$Env{"Baselink"}Action=AgentITSMServiceZoom;ServiceID=$QData{"ServiceID"}">
+                                    <a href="$Env{"Baselink"}Action=AgentITSMServiceZoom;ServiceID=$LQData{"ServiceID"}">
                                         $QData{"Name"}
                                     </a>
                                 </td>

@@ -1480,7 +1480,7 @@ sub _ServiceGetCurrentIncidentState {
 
             # investigate the current incident state of each config item
             CONFIGITEMID:
-            for my $ConfigItemID ( keys %LinkedConfigItemIDs ) {
+            for my $ConfigItemID ( sort keys %LinkedConfigItemIDs ) {
 
                 # extract config item data
                 my $ConfigItemData = $LinkedConfigItemIDs{$ConfigItemID};

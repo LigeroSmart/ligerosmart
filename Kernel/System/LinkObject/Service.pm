@@ -128,12 +128,12 @@ sub LinkListWithData {
         return;
     }
 
-    for my $LinkType ( keys %{ $Param{LinkList} } ) {
+    for my $LinkType ( sort keys %{ $Param{LinkList} } ) {
 
-        for my $Direction ( keys %{ $Param{LinkList}->{$LinkType} } ) {
+        for my $Direction ( sort keys %{ $Param{LinkList}->{$LinkType} } ) {
 
             SERVICEID:
-            for my $ServiceID ( keys %{ $Param{LinkList}->{$LinkType}->{$Direction} } ) {
+            for my $ServiceID ( sort keys %{ $Param{LinkList}->{$LinkType}->{$Direction} } ) {
 
                 # get service data
                 my %ServiceData = $Self->{ServiceObject}->ServiceGet(

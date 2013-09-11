@@ -35,7 +35,7 @@
                             </td>
                             <td>
                                 $Data{"LevelSpace"}
-                                <a class="MasterActionLink" href="$Env{"Baselink"}Action=AgentITSMServiceZoom;ServiceID=$QData{"ServiceID"}">
+                                <a class="MasterActionLink" href="$Env{"Baselink"}Action=AgentITSMServiceZoom;ServiceID=$LQData{"ServiceID"}">
                                     $QData{"Name"}
                                 </a>
                             </td>

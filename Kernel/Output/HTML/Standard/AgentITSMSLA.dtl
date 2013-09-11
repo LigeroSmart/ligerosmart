@@ -27,7 +27,7 @@
 <!-- dtl:block:OverviewRow -->
                         <tr class="MasterAction">
                             <td>
-                                <a class="MasterActionLink" href="$Env{"Baselink"}Action=AgentITSMSLAZoom;SLAID=$QData{"SLAID"}">
+                                <a class="MasterActionLink" href="$Env{"Baselink"}Action=AgentITSMSLAZoom;SLAID=$LQData{"SLAID"}">
                                     $QData{"Name"}
                                 </a>
                             </td>

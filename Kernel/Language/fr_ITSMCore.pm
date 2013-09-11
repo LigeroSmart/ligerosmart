@@ -10,6 +10,7 @@
 package Kernel::Language::fr_ITSMCore;
 
 use strict;
+use warnings;
 
 sub Data {
     my $Self = shift;

@@ -168,7 +168,7 @@ sub AllocateUpdate {
 
     # check if allocate data is a 2D hash reference
     IMPACT:
-    for my $Impact ( keys %{ $Param{AllocateData} } ) {
+    for my $Impact ( sort keys %{ $Param{AllocateData} } ) {
 
         next IMPACT if ref $Param{AllocateData}->{$Impact} eq 'HASH';
 
