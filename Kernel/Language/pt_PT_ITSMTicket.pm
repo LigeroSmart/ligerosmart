@@ -18,7 +18,7 @@ sub Data {
     # Template: AgentTicketActionCommon
     $Self->{Translation}->{'Change Decision of Ticket'} = 'Alterar decisão do ticket';
     $Self->{Translation}->{'Change ITSM fields of ticket'} = 'Alterar os campos ITSM do ticket';
-    $Self->{Translation}->{'Impact'} = 'Impato';
+    $Self->{Translation}->{'Impact'} = 'Impacto';
 
     # Template: AgentTicketAddtlITSMField
 
