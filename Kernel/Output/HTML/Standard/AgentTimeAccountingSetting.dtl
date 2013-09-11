@@ -220,7 +220,7 @@
 <!-- dtl:block:OverviewResultProject -->
         <div class="WidgetSimple">
             <div class="Header">
-                <div class="WidgetAction Toggle"><a href="#" title="$Text{"Show or hide the content"}"><span></span></a></div>
+                <div class="WidgetAction Toggle"><a href="#" title="$Text{"Show or hide the content"}"><i class="icon-caret-right"></i><i class="icon-caret-down"></i></a></div>
                 <h2>$Text{"Project List"}</h2>
             </div>
             <div class="Content">
@@ -269,7 +269,7 @@
 <!-- dtl:block:OverviewResultSetting -->
         <div class="WidgetSimple">
             <div class="Header">
-                <div class="WidgetAction Toggle"><a href="#" title="$Text{"Show or hide the content"}"><span></span></a></div>
+                <div class="WidgetAction Toggle"><a href="#" title="$Text{"Show or hide the content"}"><i class="icon-caret-right"></i><i class="icon-caret-down"></i></a></div>
                 <h2>$Text{"Task List"}</h2>
             </div>
             <div class="Content">
@@ -371,7 +371,7 @@
 <!-- dtl:block:OverviewResultUser -->
         <div class="WidgetSimple">
             <div class="Header">
-                <div class="WidgetAction Toggle"><a href="#" title="$Text{"Show or hide the content"}"><span></span></a></div>
+                <div class="WidgetAction Toggle"><a href="#" title="$Text{"Show or hide the content"}"><i class="icon-caret-right"></i><i class="icon-caret-down"></i></a></div>
                 <h2>$Text{"User List"}</h2>
             </div>
             <div class="Content">
