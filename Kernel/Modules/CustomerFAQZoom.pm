@@ -476,10 +476,6 @@ sub _FAQVoting {
 
     my %FAQData = %{ $Param{FAQData} };
 
-    my $SelectedRate = $Self->{ParamObject}->GetParam( Param => "SelectedRate" );
-
-    my $RateClass = 'RateUnChecked';
-
     # ouput voting block
     $Self->{LayoutObject}->Block(
         Name => 'FAQVoting',
@@ -490,14 +486,6 @@ sub _FAQVoting {
     my $VotingRates = $Self->{ConfigObject}->Get('FAQ::Item::Voting::Rates');
     for my $RateValue ( sort { $a <=> $b } keys %{$VotingRates} ) {
 
-        # set css rate class Checked or UnChecked
-        if ( defined $SelectedRate && int($SelectedRate) >= $RateValue ) {
-            $RateClass = 'RateChecked';
-        }
-        else {
-            $RateClass = 'RateUnChecked';
-        }
-
         # create data strucure for output
         my %Data = (
             Value => $RateValue,
@@ -507,19 +495,7 @@ sub _FAQVoting {
         # output vote rating row block
         $Self->{LayoutObject}->Block(
             Name => 'FAQVotingRateRow',
-            Data => {
-                %Data,
-                ItemID    => $FAQData{ItemID},
-                RateClass => $RateClass,
-            },
-        );
-    }
-
-    # output the submit button
-    if ( defined $SelectedRate ) {
-        $Self->{LayoutObject}->Block(
-            Name => "FAQVotingSubmit",
-            Data => { SelectedRate => $SelectedRate },
+            Data => {%Data},
         );
     }
 }

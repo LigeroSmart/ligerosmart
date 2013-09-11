@@ -152,38 +152,36 @@
 <!-- dtl:block:FAQVoting -->
         <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="FAQVote" class="PreventMultipleSubmits">
             <div class="VotingBox Visible">
-                <div class="MessageHeader">
-                    <h3>$Text{"Rating"}:</h3>
-                    <div class="Clear"></div>
-                </div>
-                <div id="Messenger">
-                    <div class="SpacingTop"></div>
-                    <span class="VotingQuestion">$Text{"How helpful was this article? Please give us your rating and help to improve the FAQ Database. Thank You!"}</span>
-                    <div class="SpacingTop"></div>
-                    <div>
-                        <span class="RateLabelBefore">$Text{"not helpful"}</span>
+                <div id="FAQVoting" class="FAQVoting">
+                    <div class="MessageHeader">
+                        <h3>$Text{"Rating"}:</h3>
+                        <div class="Clear"></div>
                     </div>
+                    <div id="Messenger">
+                        <div class="SpacingTop"></div>
+                        <span class="VotingQuestion">$Text{"How helpful was this article? Please give us your rating and help to improve the FAQ Database. Thank You!"}</span>
+                        <div class="SpacingTop"></div>
+                        <div>
+                            <span class="RateLabelBefore">$Text{"not helpful"}</span>
+                        </div>
 
 <!-- dtl:block:FAQVotingRateRow -->
-                    <div id="RateButton$Data{"Value"}">
-                        <a class="RateButton $LQData{"RateClass"}" href="$Env{"Baselink"}Action=$Env{"Action"};ItemID=$LQData{"ItemID"};SelectedRate=$LQData{"Value"}">$QData{"Title"}</a>
-                    </div>
+                        <div id="RateButton$Data{"Value"}">
+                            <span class="RateButton RateUnChecked">$QData{"Title"}</span>
+                        </div>
 <!-- dtl:block:FAQVotingRateRow -->
 
-                    <div>
-                        <span class="RateLabelAfter">$Text{"very helpful"}</span>
-                    </div>
-                    <input type="hidden" name="Action" value="CustomerFAQZoom"/>
-                    <input type="hidden" name="Subaction" value="Vote"/>
-                    <input type="hidden" name="CategoryID" value="$QData{"CategoryID"}"/>
-                    <input type="hidden" name="ItemID" value="$QData{"ItemID"}"/>
-                    <div class="ActionRow">
-
-<!-- dtl:block:FAQVotingSubmit -->
-                        <button type="submit" value="$Text{"Submit"}">$Text{"Submit"}</button>
-                        <input type="hidden" name="Rate" value="$QData{"SelectedRate"}"id="RateValue"/>
-<!-- dtl:block:FAQVotingSubmit -->
-
+                        <div>
+                            <span class="RateLabelAfter">$Text{"very helpful"}</span>
+                        </div>
+                        <input type="hidden" name="Action" value="CustomerFAQZoom"/>
+                        <input type="hidden" name="Subaction" value="Vote"/>
+                        <input type="hidden" name="CategoryID" value="$QData{"CategoryID"}"/>
+                        <input type="hidden" name="ItemID" value="$QData{"ItemID"}"/>
+                        <div class="ActionRow VotingActionRow">
+                            <button type="submit"  id="RateSubmitButton" class="Hidden" value="$Text{"Submit"}">$Text{"Submit"}</button>
+                            <input type="hidden" name="Rate" value="$QData{"SelectedRate"}"id="RateValue"/>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -199,5 +197,23 @@
         Core.UI.Popup.OpenPopup($(this).attr('href'), 'TicketAction');
         return false;
     });
+
+    $('.RateButton').bind('click', function (Event) {
+        var RateNumber = parseInt($(this).closest('div').attr('id').replace(/RateButton/, ''), 10);
+        $('#RateValue').val(RateNumber);
+        $('#RateSubmitButton').fadeIn(250);
+        $('#FAQVoting').find('.RateButton').each(function() {
+            var ItemRateNumber = parseInt($(this).closest('div').attr('id').replace(/RateButton/, ''), 10);
+            if ( ItemRateNumber <= RateNumber ) {
+                $(this).addClass('RateChecked');
+                $(this).removeClass('RateUnChecked');
+            }
+            else {
+                $(this).addClass('RateUnChecked');
+                $(this).removeClass('RateChecked');
+            }
+        });
+    });
+
 </script>
 <!-- dtl:js_on_document_complete -->
