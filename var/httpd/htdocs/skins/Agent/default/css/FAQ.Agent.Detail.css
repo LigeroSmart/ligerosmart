@@ -61,14 +61,12 @@
 }
 
 .RateStar {
-    background: transparent url(../img/rate-indicator.png) no-repeat scroll 0 0;
     display: block;
     height: 16px;
     cursor: pointer;
-    text-indent: -9999px;
     float: left;
-    padding-left: 6px;
-    padding-right: 6px;
+    padding-left: 1px;
+    font-size: 10px;
 }
 
 .RateStarText {

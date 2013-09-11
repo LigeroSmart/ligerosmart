@@ -73,7 +73,7 @@
 
 <!-- dtl:block:RateStars -->
                             <div>
-                                <span class="RateStar">Star</span>
+                                <span class="RateStar"><i class="icon-star"></i></span>
                             </div>
 <!-- dtl:block:RateStars -->
 <!-- dtl:block:RateStarsCount -->

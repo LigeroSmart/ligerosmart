@@ -123,7 +123,6 @@
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/FAQ.Widget.css"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/img/rate-button-checked.png"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/img/rate-button-unchecked.png"/>
-        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/img/rate-indicator.png"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/css/FAQ.Customer.Default.css"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/css/FAQ.Customer.Detail.css"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/css/FAQ.Widget.css"/>
