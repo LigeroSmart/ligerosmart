@@ -129,7 +129,7 @@ sub Run {
         if ( $Self->{ScreenType} eq 'Popup' ) {
 
             # show the small popup screen header
-            $Output = $Self->{LayoutObject}->Header( 
+            $Output = $Self->{LayoutObject}->Header(
                 Type      => 'Small',
                 BodyClass => 'Popup',
             );
@@ -252,9 +252,9 @@ sub Run {
         if ( $Self->{ScreenType} eq 'Popup' ) {
 
             # show the small popup screen header
-            $Output = $Self->{LayoutObject}->Header( 
+            $Output = $Self->{LayoutObject}->Header(
                 Type      => 'Small',
-                BodyClass => 'Popup', 
+                BodyClass => 'Popup',
             );
 
             $Self->{LayoutObject}->Block(
@@ -645,7 +645,7 @@ sub _MaskNew {
     );
 
     my $FieldsetClass = '';
-    if ($Self->{ScreenType} eq 'Popup') {
+    if ( $Self->{ScreenType} eq 'Popup' ) {
         $FieldsetClass = 'FixedLabel';
     }
 
@@ -750,13 +750,13 @@ sub _MaskNew {
         UserID          => $Self->{UserID},
     );
 
-    if ($Self->{ScreenType} ne 'Popup') {
+    if ( $Self->{ScreenType} ne 'Popup' ) {
         $Self->{LayoutObject}->Block(
             Name => 'EndNormal',
         );
     }
 
-    if ($Self->{ScreenType} eq 'Popup') {
+    if ( $Self->{ScreenType} eq 'Popup' ) {
         $Self->{LayoutObject}->Block(
             Name => 'EndSmall',
         );

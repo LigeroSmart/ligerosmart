@@ -7,7 +7,7 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-<form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" class="Validate PreventMultipleSubmits">       
+<form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" class="Validate PreventMultipleSubmits">
 
 <!--dtl:block:StartNormal-->
     <div class="MainBox ARIARoleMain FormScreen NoSidebar">
@@ -18,93 +18,93 @@
 <!--dtl:block:StartNormal-->
 
 <!--dtl:block:StartSmall-->
-    <div class="LayoutPopup ARIARoleMain">
+            <div class="LayoutPopup ARIARoleMain">
 
-        <div class="Header">
-            <h1>$Text{"Edit"}: $Text{"FAQ"}: $QData{"Number"}</h1>
-            <p class="AsteriskExplanation">$Text{"All fields marked with an asterisk (*) are mandatory."}</p>
-            <p>
-                <a href="#" class="CancelClosePopup">$Text{"Cancel & close window"}</a>
-            </p>
-        </div>  
-        <div class="Content">   
+                <div class="Header">
+                    <h1>$Text{"Edit"}: $Text{"FAQ"}: $QData{"Number"}</h1>
+                    <p class="AsteriskExplanation">$Text{"All fields marked with an asterisk (*) are mandatory."}</p>
+                    <p>
+                        <a href="#" class="CancelClosePopup">$Text{"Cancel & close window"}</a>
+                    </p>
+                </div>
+                <div class="Content">
 <!--dtl:block:StartSmall-->
 
 <!-- dtl:block:FAQEdit -->
-            <input type="hidden" name="Action" value="$Env{"Action"}"/>
-            <input type="hidden" name="Subaction" value="Save"/>
-            <input type="hidden" name="FormID" value="$QData{"FormID"}"/>
-            <input type="hidden" name="ItemID" value="$QData{"ItemID"}"/>
-            <input type="hidden" name="ScreenType" value="$QData{"ScreenType"}"/>
+                    <input type="hidden" name="Action" value="$Env{"Action"}"/>
+                    <input type="hidden" name="Subaction" value="Save"/>
+                    <input type="hidden" name="FormID" value="$QData{"FormID"}"/>
+                    <input type="hidden" name="ItemID" value="$QData{"ItemID"}"/>
+                    <input type="hidden" name="ScreenType" value="$QData{"ScreenType"}"/>
 
-            <fieldset class="TableLike $QData{"FieldsetClass"}">
+                    <fieldset class="TableLike $QData{"FieldsetClass"}">
 
-                <label class="Mandatory" for="Title"><span class="Marker">* </span>$Text{"Title"}:</label>
-                <div class="Field">
-                    <input type="text" name="Title" id="Title" value="$QData{"Title"}" class="W50pc Validate_Required $QData{"TitleServerError"}" maxlength="200"/>
-                    <div id="TitleError" class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>
-                    <div id="TitleServerError" class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>
-                </div>
-                <div class="Clear"></div>
+                        <label class="Mandatory" for="Title"><span class="Marker">* </span>$Text{"Title"}:</label>
+                        <div class="Field">
+                            <input type="text" name="Title" id="Title" value="$QData{"Title"}" class="W50pc Validate_Required $QData{"TitleServerError"}" maxlength="200"/>
+                            <div id="TitleError" class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>
+                            <div id="TitleServerError" class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>
+                        </div>
+                        <div class="Clear"></div>
 
-                <label for="Keywords">$Text{"Keywords"}:</label>
-                <div class="Field">
-                    <input type="text" name="Keywords" id="Keywords" value="$QData{"Keywords"}" class="W50pc" maxlength="200"/>
-                </div>
-                <div class="Clear"></div>
+                        <label for="Keywords">$Text{"Keywords"}:</label>
+                        <div class="Field">
+                            <input type="text" name="Keywords" id="Keywords" value="$QData{"Keywords"}" class="W50pc" maxlength="200"/>
+                        </div>
+                        <div class="Clear"></div>
 
-                <label class="Mandatory" for="CategoryID"><span class="Marker">* </span>$Text{"Category"}:</label>
-                <div class="Field">
-                    $Data{"CategoryOption"}
-                    <div id="CategoryIDError" class="TooltipErrorMessage">
-                        <p>$Text{"A category is required."}</p>
-                    </div>
-                    <div id="CategoryIDServerError" class="TooltipErrorMessage">
-                        <p>$Text{"A category is required."}</p>
-                    </div>
-                </div>
-                <div class="Clear"></div>
+                        <label class="Mandatory" for="CategoryID"><span class="Marker">* </span>$Text{"Category"}:</label>
+                        <div class="Field">
+                            $Data{"CategoryOption"}
+                            <div id="CategoryIDError" class="TooltipErrorMessage">
+                                <p>$Text{"A category is required."}</p>
+                            </div>
+                            <div id="CategoryIDServerError" class="TooltipErrorMessage">
+                                <p>$Text{"A category is required."}</p>
+                            </div>
+                        </div>
+                        <div class="Clear"></div>
 
-                <label for="StateID">$Text{"State"}:</label>
-                <div class="Field">
-                    $Data{"StateOption"}
-                </div>
-                <div class="Clear"></div>
+                        <label for="StateID">$Text{"State"}:</label>
+                        <div class="Field">
+                            $Data{"StateOption"}
+                        </div>
+                        <div class="Clear"></div>
 
-                <label for="ValidID">$Text{"Validity"}:</label>
-                <div class="Field">
-                    $Data{"ValidOption"}
-                </div>
-                <div class="Clear"></div>
+                        <label for="ValidID">$Text{"Validity"}:</label>
+                        <div class="Field">
+                            $Data{"ValidOption"}
+                        </div>
+                        <div class="Clear"></div>
 
 <!-- dtl:block:Language -->
-                <label for="LanguageID">$Text{"Language"}:</label>
-                <div class="Field">
-                    $Data{"LanguageOption"}
-                </div>
-                <div class="Clear"></div>
+                        <label for="LanguageID">$Text{"Language"}:</label>
+                        <div class="Field">
+                            $Data{"LanguageOption"}
+                        </div>
+                        <div class="Clear"></div>
 <!-- dtl:block:Language -->
 
 <!-- dtl:block:NoLanguage -->
-                <input type="hidden" name="LanguageID" value="$QData{"LanguageID"}"/>
+                        <input type="hidden" name="LanguageID" value="$QData{"LanguageID"}"/>
 <!-- dtl:block:NoLanguage -->
 
 <!-- dtl:block:Approval -->
-                <label for="Approved">$Text{"Approval"}:</label>
-                <div class="Field">
-                    $Data{"ApprovalOption"}
-                </div>
-                <div class="Clear"></div>
+                        <label for="Approved">$Text{"Approval"}:</label>
+                        <div class="Field">
+                            $Data{"ApprovalOption"}
+                        </div>
+                        <div class="Clear"></div>
 <!-- dtl:block:Approval -->
 
 <!-- dtl:block:AttachmentUpload -->
-                <label>$Text{"Attachment"}:</label>
-                <div class="Field">
-                    <ul>
+                        <label>$Text{"Attachment"}:</label>
+                        <div class="Field">
+                            <ul>
 <!-- dtl:block:Attachment -->
-                        <li>
-                            $QData{"Filename"} ($QData{"Filesize"})
-                            <button type="submit" id="AttachmentDelete$QData{"FileID"}" name="AttachmentDelete$QData{"FileID"}" value="$Text{"Delete"}">$Text{"Delete"}</button>
+                                <li>
+                                    $QData{"Filename"} ($QData{"Filesize"})
+                                    <button type="submit" id="AttachmentDelete$QData{"FileID"}" name="AttachmentDelete$QData{"FileID"}" value="$Text{"Delete"}">$Text{"Delete"}</button>
 <!--dtl:js_on_document_complete-->
 <script type="text/javascript">//<![CDATA[
 $('#AttachmentDelete$QData{"FileID"}').bind('click', function () {
@@ -112,15 +112,15 @@ Core.Form.Validate.DisableValidation($('#AttachmentDelete$QData{"FileID"}').clos
 });
 //]]></script>
 <!--dtl:js_on_document_complete-->
-                        </li>
+                                </li>
 <!-- dtl:block:Attachment -->
-                        <li>
-                            <input name="FileUpload" id="FileUpload" type="file" size="40"/>
-                            <input type="hidden" id="AttachmentUpload" name="AttachmentUpload" value="0" />
-                        </li>
-                    </ul>
-                </div>
-                <div class="Clear"></div>
+                                <li>
+                                    <input name="FileUpload" id="FileUpload" type="file" size="40"/>
+                                    <input type="hidden" id="AttachmentUpload" name="AttachmentUpload" value="0" />
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="Clear"></div>
 
 <!--dtl:js_on_document_complete-->
 <script type="text/javascript">//<![CDATA[
@@ -139,28 +139,28 @@ $Include{"RichTextEditor"}
 <!-- dtl:block:RichText -->
 
 <!-- dtl:block:FAQContent -->
-                <label for="$QData{"Field"}">$Text{"$Data{"Caption"}"}:<br/><span class="FAQStateName">($Text{"$Data{"StateName"}"})</span></label>
-                <div class="RichTextField">
-                    <textarea id="$QData{"Field"}" class="RichText" name="$QData{"Field"}" rows="15" cols="70">$QData{"Content"}</textarea>
-                </div>
-                <div class="Clear"></div>
+                        <label for="$QData{"Field"}">$Text{"$Data{"Caption"}"}:<br/><span class="FAQStateName">($Text{"$Data{"StateName"}"})</span></label>
+                        <div class="RichTextField">
+                            <textarea id="$QData{"Field"}" class="RichText" name="$QData{"Field"}" rows="15" cols="70">$QData{"Content"}</textarea>
+                        </div>
+                        <div class="Clear"></div>
 <!-- dtl:block:FAQContent -->
 
 <!-- dtl:block:EndNormal -->
-                <div class="Field SpacingTop">
-                    <button class="Primary CallForAction" type="submit" value="$Text{"Submit"}"><span>$Text{"Submit"}</span></button>
-                </div>
+                        <div class="Field SpacingTop">
+                            <button class="Primary CallForAction" type="submit" value="$Text{"Submit"}"><span>$Text{"Submit"}</span></button>
+                        </div>
 <!-- dtl:block:EndNormal -->
 
-            </fieldset>
+                    </fieldset>
 <!-- dtl:block:FAQEdit -->
-        </div>
+                </div>
 
 <!-- dtl:block:EndSmall -->
-        <div class="Footer">
-            <button class="Primary CallForAction" type="submit" value="$Text{"Submit"}"><span>$Text{"Submit"}</span></button>
-        </div>
+                <div class="Footer">
+                    <button class="Primary CallForAction" type="submit" value="$Text{"Submit"}"><span>$Text{"Submit"}</span></button>
+                </div>
 <!-- dtl:block:EndSmall -->
 
-    </div>
-</form>     
+            </div>
+        </form>

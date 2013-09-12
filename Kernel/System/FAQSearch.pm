@@ -285,7 +285,7 @@ sub FAQSearch {
 
                 # add all internal, external and public fields
                 if (
-                    $FieldState    eq 'internal'
+                    $FieldState eq 'internal'
                     || $FieldState eq 'external'
                     || $FieldState eq 'public'
                     )

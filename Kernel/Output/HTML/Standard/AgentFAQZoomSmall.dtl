@@ -118,7 +118,7 @@
                     </div>
                     <div class="Content">
 <!-- dtl:block:FAQContentHTML -->
-                        <div>   
+                        <div>
 # Use the HTML5 sandbox attribute to prevent plugins and scripts from being executed in the browser.
 # Use IE's (non-standard) security attribute to achieve something similar in older IE browsers. Append session info to URL because IE will not send cookies.
 # Set 'allow-popups' to allow IE10+ to open links. ref: http://www.w3.org/html/wg/wiki/ChangeProposals/sandbox_allow_popups
