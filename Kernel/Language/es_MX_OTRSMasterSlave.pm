@@ -1,8 +1,6 @@
 # --
 # Kernel/Language/es_MX_OTRSMasterSlave.pm - translation file
-# Copyright (C) 2003-2012 OTRS AG, http://otrs.com/
-# --
-# $Id: es_MX_OTRSMasterSlave.pm,v 1.4 2012-11-23 13:34:35 cr Exp $
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you

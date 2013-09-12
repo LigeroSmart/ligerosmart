@@ -1,8 +1,6 @@
 # --
 # Kernel/System/MasterSlave.pm - to handle ticket master slave tasks
-# Copyright (C) 2003-2013 OTRS AG, http://otrs.com/
-# --
-# $Id: MasterSlave.pm,v 1.8 2013-01-30 15:31:50 cr Exp $
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +17,6 @@ use Kernel::System::DynamicField;
 use Kernel::System::DynamicField::Backend;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
 
 =head1 NAME
 
@@ -407,11 +404,5 @@ This software is part of the OTRS project (L<http://otrs.org/>).
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
 the enclosed file COPYING for license information (AGPL). If you
 did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
-
-=cut
-
-=head1 VERSION
-
-$Revision: 1.8 $ $Date: 2013-01-30 15:31:50 $
 
 =cut

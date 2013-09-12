@@ -1,8 +1,6 @@
 # --
 # OTRSMasterSlave.pm - code to excecute during package installation
-# Copyright (C) 2003-2013 OTRS AG, http://otrs.com/
-# --
-# $Id: OTRSMasterSlave.pm,v 1.28 2013-01-14 21:19:20 cr Exp $
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,9 +22,6 @@ use Kernel::System::SysConfig;
 use Kernel::System::Ticket;
 use Kernel::System::Valid;
 use Kernel::System::VariableCheck qw(:all);
-
-use vars qw($VERSION);
-$VERSION = qw($Revision: 1.28 $) [1];
 
 =head1 NAME
 
@@ -291,7 +286,7 @@ sub _SetDynamicFields {
         }
     }
 
-    for my $NewFieldName ( keys %NewDynamicFields ) {
+    for my $NewFieldName ( sort keys %NewDynamicFields ) {
 
         # check if dynamic field already exists
         if ( IsHashRefWithData( $Self->{DynamicFieldLookup}->{$NewFieldName} ) ) {
@@ -695,11 +690,5 @@ This software is part of the OTRS project (L<http://otrs.org/>).
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
 the enclosed file COPYING for license information (AGPL). If you
 did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
-
-=cut
-
-=head1 VERSION
-
-$Revision: 1.28 $ $Date: 2013-01-14 21:19:20 $
 
 =cut

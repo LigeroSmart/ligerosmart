@@ -1,9 +1,8 @@
 # --
 # Kernel/Modules/AgentTicketBulk.pm - to do bulk actions on tickets
-# Copyright (C) 2003-2012 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentTicketBulk.pm,v 1.6 2012-11-22 00:04:33 cr Exp $
-# $OldId: AgentTicketBulk.pm,v 1.100 2012/11/20 14:47:57 mh Exp $
+# $origin: https://github.com/OTRS/otrs/blob/fa2159290ffa2f0b94b2d8333a6875c00f9d8d32/Kernel/Modules/AgentTicketBulk.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,9 +25,6 @@ use Kernel::System::TemplateGenerator;
 # ---
 use Kernel::System::MasterSlave;
 # ---
-
-use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -414,8 +410,7 @@ sub Run {
                         User => $Ticket{CustomerUserID}
                     );
                     if ( $Customer{UserEmail} ) {
-                        $Customer
-                            = "$Customer{UserFirstname} $Customer{UserLastname} <$Customer{UserEmail}>";
+                        $Customer = $Customer{UserEmail};
                     }
                 }
 
@@ -426,13 +421,16 @@ sub Run {
                         DynamicFields => 0,
                     );
 
+                    # use ReplyTo if set, otherwise use From
+                    $Customer = $Data{ReplyTo} ? $Data{ReplyTo} : $Data{From};
+
                     # check article type and replace To with From (in case)
                     if ( $Data{SenderType} !~ /customer/ ) {
 
                         # replace From/To, To/From because sender is agent
-                        $Data{From} = $Data{To};
+                        $Customer = $Data{To};
                     }
-                    $Customer = $Data{From};
+
                 }
 
                 # generate sender name
@@ -650,7 +648,7 @@ sub Run {
                 }
             }
 
-            # link togehter
+            # link together
             if ( $GetParam{'LinkTogether'} ) {
                 for my $TicketIDPartner (@TicketIDs) {
                     if ( $TicketID ne $TicketIDPartner ) {
@@ -1101,6 +1099,9 @@ sub _Mask {
     if ( $Param{TicketsWereLocked} ) {
         $Self->{LayoutObject}->Block(
             Name => 'ParentReload',
+            Data => {
+                URL => $Self->{LastScreenOverview},
+                }
         );
     }
 
