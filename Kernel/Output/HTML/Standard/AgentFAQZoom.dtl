@@ -158,7 +158,7 @@
                 </ul>
                 <div class="Clear"></div>
             </div>
-            <br />
+            <div class="SpacingTop"></div>
 
             <div id="FAQBody">
 
@@ -262,9 +262,9 @@
                                     <span class="RateLabelAfter">$Text{"very helpful"}</span>
                                 </div>
 
-                                <br class="Clear" />
+                                <div class="Clear"></div>
 
-                                <button type="submit" class="Primary CallForAction Hidden" id="RateSubmitButton" name="btn" value="$Text{"Submit"}"><span>$Text{"Submit"}</span></button>
+                                <button type="submit" class="Primary CallForAction Hidden" id="RateSubmitButton" name="btn" value="$Text{"Vote"}"><span><i class="icon-check"></i> $Text{"Vote"}</span></button>
                                 <input type="hidden" name="Action" value="AgentFAQZoom"/>
                                 <input type="hidden" name="Subaction" value="Vote"/>
                                 <input type="hidden" name="CategoryID" value="$QData{"CategoryID"}"/>
