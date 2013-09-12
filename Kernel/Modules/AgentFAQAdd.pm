@@ -13,6 +13,7 @@ use strict;
 use warnings;
 
 use Kernel::System::FAQ;
+use Kernel::System::Queue;
 use Kernel::System::Web::UploadCache;
 use Kernel::System::Valid;
 
@@ -34,6 +35,7 @@ sub new {
     $Self->{FAQObject}         = Kernel::System::FAQ->new(%Param);
     $Self->{UploadCacheObject} = Kernel::System::Web::UploadCache->new(%Param);
     $Self->{ValidObject}       = Kernel::System::Valid->new(%Param);
+    $Self->{QueueObject}       = Kernel::System::Queue->new(%Param);
 
     # get config of frontend module
     $Self->{Config} = $Self->{ConfigObject}->Get("FAQ::Frontend::$Self->{Action}") || '';
@@ -108,6 +110,25 @@ sub Run {
         # header
         my $Output = $Self->{LayoutObject}->Header();
         $Output .= $Self->{LayoutObject}->NavigationBar();
+
+        if ( $Self->{ConfigObject}->Get('FAQ::ApprovalRequired') ) {
+
+            # get Approval queue name
+            my $ApprovalQueue = $Self->{ConfigObject}->Get('FAQ::ApprovalQueue') || '';
+
+            # check if Approval queue exists
+            my $ApprovalQueueID = $Self->{QueueObject}->QueueLookup( Queue => $ApprovalQueue );
+
+            # show notification if Approval queue does not exists
+            if ( !$ApprovalQueueID ) {
+                $Output .= $Self->{LayoutObject}->Notify(
+                    Priority => 'Error',
+                    Info => "FAQ Approval is enabled but queue '$ApprovalQueue' does not exists",
+                    Link => '$Env{"Baselink"}Action=AdminSysConfig;Subaction=Edit;'
+                        . 'SysConfigSubGroup=Core%3A%3AApproval;SysConfigGroup=FAQ',
+                );
+            }
+        }
 
         # html output
         $Output .= $Self->_MaskNew(
@@ -199,6 +220,26 @@ sub Run {
             my @Attachments = $Self->{UploadCacheObject}->FormIDGetAllFilesMeta(
                 FormID => $Self->{FormID},
             );
+
+            if ( $Self->{ConfigObject}->Get('FAQ::ApprovalRequired') ) {
+
+                # get Approval queue name
+                my $ApprovalQueue = $Self->{ConfigObject}->Get('FAQ::ApprovalQueue') || '';
+
+                # check if Approval queue exists
+                my $ApprovalQueueID = $Self->{QueueObject}->QueueLookup( Queue => $ApprovalQueue );
+
+                # show notification if Approval queue does not exists
+                if ( !$ApprovalQueueID ) {
+                    $Output .= $Self->{LayoutObject}->Notify(
+                        Priority => 'Error',
+                        Info =>
+                            "FAQ Approval is enabled but queue '$ApprovalQueue' does not exists",
+                        Link => '$Env{"Baselink"}Action=AdminSysConfig;Subaction=Edit;'
+                            . 'SysConfigSubGroup=Core%3A%3AApproval;SysConfigGroup=FAQ',
+                    );
+                }
+            }
 
             # html output
             $Output .= $Self->_MaskNew(
