@@ -1,6 +1,6 @@
 # --
 # Kernel/Modules/AgentSurveyZoom.pm - a survey module
-# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -242,7 +242,7 @@ sub Run {
 
     # display stats if status Master, Valid or Invalid
     if (
-        $Survey{Status}    eq 'Master'
+        $Survey{Status} eq 'Master'
         || $Survey{Status} eq 'Valid'
         || $Survey{Status} eq 'Invalid'
         )
@@ -265,7 +265,7 @@ sub Run {
 
             # generate the answers of the question
             if (
-                $Question->{Type}    eq 'YesNo'
+                $Question->{Type} eq 'YesNo'
                 || $Question->{Type} eq 'Radio'
                 || $Question->{Type} eq 'Checkbox'
                 )

@@ -1,6 +1,6 @@
 # --
 # AgentSurvey.dtl - provides HTML form for AgentSurvey
-# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -240,7 +240,7 @@ $Include{"RichTextEditor"}
                                 </a>
                             </td>
                             <td>
-                                <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=StatsDetail;SurveyID=$QData{"SurveyID"};RequestID=$QData{"RequestID"};TicketNumber=$QData{"TicketNumber"}" class="SeeDetails">
+                                <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=StatsDetail;SurveyID=$LQData{"SurveyID"};RequestID=$LQData{"RequestID"};TicketNumber=$LQData{"TicketNumber"}" class="SeeDetails">
                                     <span>See Details</span>
                                 </a>
                             </td>

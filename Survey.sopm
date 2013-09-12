@@ -10,6 +10,7 @@
     <Description Lang="de">Ein Kundenumfragen Werkzeug.</Description>
     <Description Lang="es">Una herramienta de encuestas a clientes.</Description>
     <Filelist>
+        <File Permission="644" Location="doc/en/Survey.xml"/>
         <File Permission="644" Location="Kernel/Config/Files/Survey.xml"/>
         <File Permission="644" Location="doc/survey-database.png"/>
         <File Permission="644" Location="Kernel/Language/cs_Survey.pm"/>

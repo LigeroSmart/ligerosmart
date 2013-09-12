@@ -1,6 +1,6 @@
 # --
 # Kernel/System/Survey.pm - all survey funtions
-# Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1852,7 +1852,7 @@ sub RequestSend {
     if ( !$Param{PublicSurveyKey} ) {
         my $md5 = Digest::MD5->new();
         $md5->add( $Self->{TimeObject}->SystemTime() . int( rand(999999999) ) );
-        $PublicSurveyKey = $md5->hexdigest;
+        $PublicSurveyKey = $md5->hexdigest();
     }
     else {
         $PublicSurveyKey = $Param{PublicSurveyKey};
@@ -1905,7 +1905,7 @@ sub RequestSend {
     for my $Data ( sort keys %Ticket ) {
         if ( defined $Ticket{$Data} ) {
             $Subject =~ s/<OTRS_TICKET_$Data>/$Ticket{$Data}/gi;
-            $Body    =~ s/<OTRS_TICKET_$Data>/$Ticket{$Data}/gi;
+            $Body =~ s/<OTRS_TICKET_$Data>/$Ticket{$Data}/gi;
 
             # filter for new rich text content
             $Body =~ s/&lt;OTRS_TICKET_$Data&gt;/$Ticket{$Data}/g;
@@ -1914,18 +1914,18 @@ sub RequestSend {
 
     # cleanup
     $Subject =~ s/<OTRS_TICKET_.+?>/-/gi;
-    $Body    =~ s/<OTRS_TICKET_.+?>/-/gi;
+    $Body =~ s/<OTRS_TICKET_.+?>/-/gi;
 
     # replace config options
     $Subject =~ s{<OTRS_CONFIG_(.+?)>}{$Self->{ConfigObject}->Get($1)}egx;
-    $Body    =~ s{<OTRS_CONFIG_(.+?)>}{$Self->{ConfigObject}->Get($1)}egx;
+    $Body =~ s{<OTRS_CONFIG_(.+?)>}{$Self->{ConfigObject}->Get($1)}egx;
 
     # filter for new rich text content
     $Body =~ s{&lt;OTRS_CONFIG_(.+?)&gt;}{$Self->{ConfigObject}->Get($1)}egx;
 
     # cleanup
     $Subject =~ s/<OTRS_CONFIG_.+?>/-/gi;
-    $Body    =~ s/<OTRS_CONFIG_.+?>/-/gi;
+    $Body =~ s/<OTRS_CONFIG_.+?>/-/gi;
 
     # filter for new rich text content
     $Body =~ s/&lt;OTRS_CONFIG_.+?&gt;/-/gi;
@@ -1942,7 +1942,7 @@ sub RequestSend {
             next if !$CustomerUser{$Data};
 
             $Subject =~ s/<OTRS_CUSTOMER_DATA_$Data>/$CustomerUser{$Data}/gi;
-            $Body    =~ s/<OTRS_CUSTOMER_DATA_$Data>/$CustomerUser{$Data}/gi;
+            $Body =~ s/<OTRS_CUSTOMER_DATA_$Data>/$CustomerUser{$Data}/gi;
 
             # filter for new rich text content
             $Body =~ s/&lt;OTRS_CUSTOMER_DATA_$Data&gt;/$CustomerUser{$Data}/gi;
@@ -1951,14 +1951,14 @@ sub RequestSend {
 
     # cleanup all not needed <OTRS_CUSTOMER_DATA_ tags
     $Subject =~ s/<OTRS_CUSTOMER_DATA_.+?>/-/gi;
-    $Body    =~ s/<OTRS_CUSTOMER_DATA_.+?>/-/gi;
+    $Body =~ s/<OTRS_CUSTOMER_DATA_.+?>/-/gi;
 
     # filter for new rich text content
     $Body =~ s/&lt;OTRS_CUSTOMER_DATA_.+?&gt;/-/gi;
 
     # replace key
     $Subject =~ s/<OTRS_PublicSurveyKey>/$PublicSurveyKey/gi;
-    $Body    =~ s/<OTRS_PublicSurveyKey>/$PublicSurveyKey/gi;
+    $Body =~ s/<OTRS_PublicSurveyKey>/$PublicSurveyKey/gi;
 
     # filter for new rich text content
     $Body =~ s/&lt;OTRS_PublicSurveyKey&gt;/$PublicSurveyKey/gi;
