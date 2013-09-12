@@ -148,7 +148,7 @@ $Include{"RichTextEditor"}
 
 <!-- dtl:block:EndNormal -->
                         <div class="Field SpacingTop">
-                            <button class="Primary CallForAction" type="submit" value="$Text{"Submit"}"><span>$Text{"Submit"}</span></button>
+                            <button class="Primary CallForAction" id="FAQSubmit" type="button" value="$Text{"Update"}"><span><i class="icon-check"></i> $Text{"Update"}</span></button>
                         </div>
 <!-- dtl:block:EndNormal -->
 
@@ -158,9 +158,21 @@ $Include{"RichTextEditor"}
 
 <!-- dtl:block:EndSmall -->
                 <div class="Footer">
-                    <button class="Primary CallForAction" type="submit" value="$Text{"Submit"}"><span>$Text{"Submit"}</span></button>
+                    <button class="Primary CallForAction" id="FAQSubmit" type="button" value="$Text{"Update"}"><span><i class="icon-check"></i> $Text{"Update"}</span></button>
                 </div>
 <!-- dtl:block:EndSmall -->
 
             </div>
         </form>
+<!--dtl:js_on_document_complete-->
+<script type="text/javascript">//<![CDATA[
+$('#FAQSubmit').bind('click', function (Event) {
+    // prevent too fast submitions that could lead into no changes sent to server, due to RTE to
+    // textarea data transfer
+    window.setTimeout(function () {
+        $('#FAQSubmit').closest('form').submit();
+    }, 150);
+});
+//]]></script>
+<!--dtl:js_on_document_complete-->
+

@@ -133,7 +133,7 @@ $Include{"RichTextEditor"}
 <!-- dtl:block:FAQContent -->
 
                     <div class="Field SpacingTop">
-                        <button class="Primary CallForAction" type="submit" value="$Text{"Add FAQ Article"}"><span>$Text{"Add FAQ Article"}</span></button>
+                        <button class="Primary CallForAction" id="FAQSubmit" type="button" value="$Text{"Create"}"><span><i class="icon-check"></i> $Text{"Create"}</span></button>
                         $Text{"or"}
                         <a href="$Env{"Baselink"}Action=AgentFAQExplorer;CategoryID=$QData{"CategoryID"}">$Text{"Cancel"}</a>
                     </div>
@@ -146,3 +146,14 @@ $Include{"RichTextEditor"}
     </div>
     <div class="Clear"></div>
 </div>
+<!--dtl:js_on_document_complete-->
+<script type="text/javascript">//<![CDATA[
+$('#FAQSubmit').bind('click', function (Event) {
+    // prevent too fast submitions that could lead into no changes sent to server, due to RTE to
+    // textarea data transfer
+    window.setTimeout(function () {
+        $('#FAQSubmit').closest('form').submit();
+    }, 150);
+});
+//]]></script>
+<!--dtl:js_on_document_complete-->
