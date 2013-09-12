@@ -19,10 +19,10 @@
         <h3>
 
 <!-- dtl:block:FAQPathCategoryElement -->
-            $Config{"FAQ::Explorer::Path::Separator"}
             <a href="$Env{"Baselink"}Action=AgentFAQExplorer;CategoryID=$LQData{"CategoryID"};Nav=$LQData{"Nav"}">
                 $QData{"Name"}
             </a>
+            <span>$Config{"FAQ::Explorer::Path::Separator"}</span>
 <!-- dtl:block:FAQPathCategoryElement -->
 
         </h3>
@@ -111,14 +111,14 @@
         </div>
         <div class="ContentColumn">
             <div>
-                <div class="WidgetBox">
-                    <div class="FAQContentSmall">
 <!-- dtl:block:FAQContent -->
-                        <div class="ArticleFAQHeader">
-                            <label>$Text{"$Data{"Caption"}"}:</label>
-                        </div>
+                <div class="WidgetSimple">
+                    <div class="Header">
+                        <h2>$Text{"$Data{"Caption"}"}</h2>
+                    </div>
+                    <div class="Content">
 <!-- dtl:block:FAQContentHTML -->
-                        <div>
+                        <div>   
 # Use the HTML5 sandbox attribute to prevent plugins and scripts from being executed in the browser.
 # Use IE's (non-standard) security attribute to achieve something similar in older IE browsers. Append session info to URL because IE will not send cookies.
 # Set 'allow-popups' to allow IE10+ to open links. ref: http://www.w3.org/html/wg/wiki/ChangeProposals/sandbox_allow_popups
@@ -144,9 +144,9 @@
                             </div>
                         </div>
 <!-- dtl:block:FAQContentPlain -->
-<!-- dtl:block:FAQContent -->
                     </div>
                 </div>
+<!-- dtl:block:FAQContent -->
             </div>
             <div class="Clear"></div>
         </div>
@@ -161,23 +161,23 @@
 
 <div class="ZoomSmallFooter">
 <!-- dtl:block:InsertText -->
-    <button id="InsertText" class="Primary ZoomSmallButton">$Text{"Insert FAQ Text"}</button>
+    <button id="InsertText" class="Primary CallForAction ZoomSmallButton"><span>$Text{"Insert FAQ Text"}</span></button>
 <!-- dtl:block:InsertText -->
 
 <!-- dtl:block:InsertFull -->
-    <button id="InsertFull" class="Primary ZoomSmallButton">$Text{"Insert Full FAQ"}</button>
+    <button id="InsertFull" class="Primary CallForAction ZoomSmallButton"><span>$Text{"Insert Full FAQ"}</span></button>
 <!-- dtl:block:InsertFull -->
 
 <!-- dtl:block:InsertLink -->
-    <button id="InsertLink" class="Primary ZoomSmallButton">$Text{"Insert FAQ Link"}</button>
+    <button id="InsertLink" class="Primary CallForAction ZoomSmallButton"><span>$Text{"Insert FAQ Link"}</span></button>
 <!-- dtl:block:InsertLink -->
 
 <!-- dtl:block:InsertTextAndLink -->
-    <button id="InsertTextAndLink" class="Primary ZoomSmallButton">$Text{"Insert FAQ Text & Link"}</button>
+    <button id="InsertTextAndLink" class="Primary CallForAction ZoomSmallButton"><span>$Text{"Insert FAQ Text & Link"}</span></button>
 <!-- dtl:block:InsertTextAndLink -->
 
 <!-- dtl:block:InsertFullAndLink -->
-    <button id="InsertFullAndLink" class="Primary ZoomSmallButton">$Text{"Insert Full FAQ & Link"}</button>
+    <button id="InsertFullAndLink" class="Primary CallForAction ZoomSmallButton"><span>$Text{"Insert Full FAQ & Link"}</span></button>
 <!-- dtl:block:InsertFullAndLink -->
 
 <!-- dtl:block:Or -->
@@ -185,6 +185,9 @@
 <!-- dtl:block:Or -->
 
     <a id="Cancel" class="$QData{"CancelButtonClass"}" href="#">$Text{"Cancel & close window"}</a>
+
+    <div class="Clear"></div>
+    <br />
 
 </div>
 

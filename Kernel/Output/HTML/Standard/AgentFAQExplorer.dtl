@@ -14,10 +14,10 @@
     <div class="FAQPathCategory">
         <h3>
 <!-- dtl:block:FAQPathCategoryElement -->
-            $Config{"FAQ::Explorer::Path::Separator"}
             <a href="$Env{"Baselink"}Action=AgentFAQExplorer;CategoryID=$LQData{"CategoryID"};Nav=$LQData{"Nav"}">
                 $QData{"Name"}
             </a>
+            <span>$Config{"FAQ::Explorer::Path::Separator"}</span>
 <!-- dtl:block:FAQPathCategoryElement -->
         </h3>
     </div>

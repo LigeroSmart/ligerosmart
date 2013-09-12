@@ -81,6 +81,10 @@ ul.FAQMiniList span {
     padding-top: 7px;
 }
 
+.FAQPathCategory h3 > span:last-child {
+    display: none;
+}
+
 iframe.TextOption.FAQ {
     width: 900px;
     min-height: 600px;

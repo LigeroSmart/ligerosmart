@@ -129,7 +129,10 @@ sub Run {
         if ( $Self->{ScreenType} eq 'Popup' ) {
 
             # show the small popup screen header
-            $Output = $Self->{LayoutObject}->Header( Type => 'Small' );
+            $Output = $Self->{LayoutObject}->Header( 
+                Type      => 'Small',
+                BodyClass => 'Popup',
+            );
 
             $Self->{LayoutObject}->Block(
                 Name => 'StartSmall',
@@ -249,7 +252,10 @@ sub Run {
         if ( $Self->{ScreenType} eq 'Popup' ) {
 
             # show the small popup screen header
-            $Output = $Self->{LayoutObject}->Header( Type => 'Small' );
+            $Output = $Self->{LayoutObject}->Header( 
+                Type      => 'Small',
+                BodyClass => 'Popup', 
+            );
 
             $Self->{LayoutObject}->Block(
                 Name => 'StartSmall',
@@ -638,12 +644,18 @@ sub _MaskNew {
         Translation   => 1,
     );
 
+    my $FieldsetClass = '';
+    if ($Self->{ScreenType} eq 'Popup') {
+        $FieldsetClass = 'FixedLabel';
+    }
+
     # show faq edit screen
     $Self->{LayoutObject}->Block(
         Name => 'FAQEdit',
         Data => {
             %Param,
             %Data,
+            FieldsetClass => $FieldsetClass,
         },
     );
 
@@ -737,6 +749,18 @@ sub _MaskNew {
         FAQData         => {%Param},
         UserID          => $Self->{UserID},
     );
+
+    if ($Self->{ScreenType} ne 'Popup') {
+        $Self->{LayoutObject}->Block(
+            Name => 'EndNormal',
+        );
+    }
+
+    if ($Self->{ScreenType} eq 'Popup') {
+        $Self->{LayoutObject}->Block(
+            Name => 'EndSmall',
+        );
+    }
 
     # generate output
     return $Self->{LayoutObject}->Output(

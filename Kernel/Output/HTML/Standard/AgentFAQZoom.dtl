@@ -18,10 +18,10 @@
     <div class="FAQPathCategory">
         <h3>
 <!-- dtl:block:FAQPathCategoryElement -->
-            $Config{"FAQ::Explorer::Path::Separator"}
             <a href="$Env{"Baselink"}Action=AgentFAQExplorer;CategoryID=$LQData{"CategoryID"};Nav=$LQData{"Nav"}">
                 $QData{"Name"}
             </a>
+            <span>$Config{"FAQ::Explorer::Path::Separator"}</span>
 <!-- dtl:block:FAQPathCategoryElement -->
         </h3>
     </div>
@@ -158,6 +158,8 @@
                 </ul>
                 <div class="Clear"></div>
             </div>
+            <br />
+
             <div id="FAQBody">
 
 <!-- dtl:block:AttachmentHeader -->
@@ -187,13 +189,17 @@
 <!-- dtl:block:AttachmentHeader -->
 
 <!-- dtl:block:FAQContent -->
-                <div class="WidgetBox">
-                    <div class="FAQContent">
-                        <div class="ArticleFAQHeader">
-                            <label>$Text{"$Data{"Caption"}"}:</label>
-                            <span class="FAQStateName">($Text{"$Data{"StateName"}"})</span>
-                            <div class="Clear"></div>
+                <div class="WidgetSimple">
+                    <div class="Header">
+                        <div class="WidgetAction Toggle">
+                            <a href="$Env{"Baselink"}Action=AgentTicketZoom;TicketID=$LQData{"TicketID"};ArticleID=$LQData{"ArticleID"}" title="$Text{"Show or hide the content"}"><i class="icon-caret-right"></i><i class="icon-caret-down"></i></a>
                         </div>
+                        <h2>
+                            $Text{"$Data{"Caption"}"}
+                            <span class="FAQStateName">($Text{"$Data{"StateName"}"})</span>
+                        </h2>
+                    </div>
+                    <div class="Content">
 <!-- dtl:block:FAQContentHTML -->
                         <div>
 # Use the HTML5 sandbox attribute to prevent plugins and scripts from being executed in the browser.
@@ -224,38 +230,47 @@
                     </div>
                 </div>
 <!-- dtl:block:FAQContent -->
+
 <!-- dtl:block:FAQVoting -->
-                <div class="WidgetBox">
-                    <div class="FAQVoting" id="FAQVoting">
-                        <div class="ArticleFAQHeader">
-                            <label>$Text{"Rating"}:</label>
-                            <div class="Clear"></div>
+                <div class="WidgetSimple">
+                    <div class="Header">
+                        <div class="WidgetAction Toggle">
+                            <a href="$Env{"Baselink"}Action=AgentTicketZoom;TicketID=$LQData{"TicketID"};ArticleID=$LQData{"ArticleID"}" title="$Text{"Show or hide the content"}"><i class="icon-caret-right"></i><i class="icon-caret-down"></i></a>
                         </div>
+                        <h2>$Text{"Rating"}</h2>
+                    </div>
+                    <div class="FAQVoting Content" id="FAQVoting">
                         <div class="ArticleFAQContent">
-                            <h3>$Text{"How helpful was this article? Please give us your rating and help to improve the FAQ Database. Thank You!"}</h3>
-                            <div class="SpacingTop">
-                                <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="FAQVote">
-                                    <div>
-                                        <span class="RateLabelBefore">$Text{"not helpful"}</span>
-                                    </div>
+                            <p class="Center">$Text{"How helpful was this article? Please give us your rating and help to improve the FAQ Database. Thank You!"}</p>
+
+                            <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="FAQVote" class="FAQVoteForm">
+                                <div>
+                                    <span class="RateLabelBefore">$Text{"not helpful"}</span>
+                                </div>
 
 <!-- dtl:block:FAQVotingRateRow -->
-                                    <div id="RateButton$Data{"Value"}">
-                                        <span class="RateButton RateUnChecked">$QData{"Title"}</span>
-                                    </div>
+                                <div id="RateButton$Data{"Value"}">
+                                    <span class="RateButton RateUnChecked">
+                                        <i class="icon-star-empty"></i>
+                                        <i class="icon-star"></i>
+                                        $QData{"Title"}
+                                    </span>
+                                </div>
 <!-- dtl:block:FAQVotingRateRow -->
 
-                                    <div>
-                                        <span class="RateLabelAfter">$Text{"very helpful"}</span>
-                                    </div>
-                                    <button type="submit" class="Hidden" id="RateSubmitButton" name="btn" value="$Text{"Submit"}">$Text{"Submit"}</button>
-                                    <input type="hidden" name="Action" value="AgentFAQZoom"/>
-                                    <input type="hidden" name="Subaction" value="Vote"/>
-                                    <input type="hidden" name="CategoryID" value="$QData{"CategoryID"}"/>
-                                    <input type="hidden" name="ItemID" value="$QData{"ItemID"}"/>
-                                    <input type="hidden" name="Rate" value="" id="RateValue"/>
-                                </form>
-                            </div>
+                                <div>
+                                    <span class="RateLabelAfter">$Text{"very helpful"}</span>
+                                </div>
+
+                                <br class="Clear" />
+
+                                <button type="submit" class="Primary CallForAction Hidden" id="RateSubmitButton" name="btn" value="$Text{"Submit"}"><span>$Text{"Submit"}</span></button>
+                                <input type="hidden" name="Action" value="AgentFAQZoom"/>
+                                <input type="hidden" name="Subaction" value="Vote"/>
+                                <input type="hidden" name="CategoryID" value="$QData{"CategoryID"}"/>
+                                <input type="hidden" name="ItemID" value="$QData{"ItemID"}"/>
+                                <input type="hidden" name="Rate" value="" id="RateValue"/>
+                            </form>
                         </div>
                     </div>
                 </div>
