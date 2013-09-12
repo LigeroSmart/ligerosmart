@@ -427,9 +427,6 @@
         The survey_queue table holds a record for each queue a survey is added.
     </para>
     <para>
-        The survey_queue table holds a record for each queue a survey is added.
-    </para>
-    <para>
         The survey_request table holds a record for each request sent to a customer,
         as well as the time, a customer has submitted the survey he was invited to.
     </para>
