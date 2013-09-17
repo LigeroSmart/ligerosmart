@@ -104,10 +104,6 @@
     position: relative;
 }
 
-.WidgetSimple .Header a {
-    color: #222;
-}
-
 .WidgetSimple .Header h3 {
     font-weight: bold;
     float: left;

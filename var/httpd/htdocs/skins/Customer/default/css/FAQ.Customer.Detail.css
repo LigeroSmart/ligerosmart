@@ -16,44 +16,54 @@
     line-height: 1.3;
 }
 
-.RateChecked {
-    background: transparent url(../img/rate-button-checked.png) no-repeat scroll 0 0;
+.RateButton {
+    position: relative;
+    text-align: center;
     display: block;
-    height: 16px;
-    margin-right: 2px;
+    height: 30px;
+    width: 25px;
     cursor: pointer;
     float: left;
-    padding-top: 15px;
-    padding-left: 4px;
-    padding-right: 15px;
     color: #000000;
-
+    text-align: center;
 }
 
-.RateUnChecked {
-    background: transparent url(../img/rate-button-unchecked.png) no-repeat scroll 0 0;
-    display: block;
-    height: 16px;
-    margin-right: 2px;
-    cursor: pointer;
-    float: left;
-    padding-top: 15px;
-    padding-left: 4px;
-    padding-right: 15px;
-    color: #000000;
+.RTL .RateButton {
+    float: right;
+}
 
+.RateButton i {
+    display: block;
+    font-size: 16px;
+    width: 100%;
+    text-align: center;
+    color: #999;
+}
+
+.RateButton i.icon-star {
+    display: none;
+}
+
+.RateButton.RateChecked i.icon-star {
+    display: block;
+    color: #E97D34;
+}
+
+.RateButton.RateChecked i.icon-star-empty {
+    display: none;
+}
+
+.RateButton:hover i.icon-star-empty {
+    color: #000;
 }
 
 .RateStar {
-    background: transparent url(../img/rate-indicator.png) no-repeat scroll 0 0;
     display: block;
     height: 16px;
     cursor: pointer;
-    text-indent: -9999px;
     float: left;
-    padding-left: 6px;
-    padding-right: 6px;
-    margin-top: 2px;
+    padding-left: 1px;
+    font-size: 10px;
 }
 
 .RTL .RateStar {
@@ -76,11 +86,21 @@
     color: Gray;
 }
 
+.RTL .RateLabelBefore {
+    float: right;
+}
+
 .RateLabelAfter {
     float: left;
     margin-left: 5px;
     margin-right: 25px;
     color: Gray;
+}
+
+.RTL .RateLabelAfter {
+    float: left;
+    margin-right: 5px;
+    margin-left: 65px;
 }
 
 .RatingLabel {
@@ -97,6 +117,10 @@
 
 .SpacingTopLarge {
     margin-top: 26px;
+}
+
+.RTL .VotingContainer {
+    text-align: center;
 }
 
 .VotingQuestion {
@@ -131,9 +155,7 @@
 }
 
 .RSSIcon {
-    background: url(../img/rss.png) no-repeat;
     float: right;
-    text-indent: -9999px;
     height: 16px;
     width: 28px;
 }

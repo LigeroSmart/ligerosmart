@@ -121,16 +121,10 @@
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/FAQ.Agent.Default.css"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/FAQ.Agent.Detail.css"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/FAQ.Widget.css"/>
-        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/img/rate-button-checked.png"/>
-        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/img/rate-button-unchecked.png"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/css/FAQ.Customer.Default.css"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/css/FAQ.Customer.Detail.css"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/css/FAQ.Widget.css"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/css/FAQ.FAQZoom.css"/>
-        <File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/img/rate-button-checked.png"/>
-        <File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/img/rate-button-unchecked.png"/>
-        <File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/img/rate-indicator.png"/>
-        <File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/img/rss.png"/>
         <File Permission="644" Location="var/packagesetup/FAQ.pm"/>
         <File Permission="644" Location="var/stats/FAQ-FAQAccess.xml"/>
         <File Permission="644" Location="Kernel/GenericInterface/Operation/FAQ/PublicCategoryList.pm"/>

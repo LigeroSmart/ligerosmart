@@ -133,7 +133,7 @@
                 <li>
                     <span class="Key RatingLabel">$Text{"Rating"}:</span>
 <!-- dtl:block:RateStars -->
-                    <span class="RateStar">Star</span>
+                    <span class="RateStar"><i class="icon-star"></i></span>
 <!-- dtl:block:RateStars -->
 <!-- dtl:block:RateStarsCount -->
                     <span class="RateStarText" title="$QData{"Stars"} $Text{"out of 5"}">
@@ -151,36 +151,42 @@
 
 <!-- dtl:block:FAQVoting -->
         <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="FAQVote" class="PreventMultipleSubmits">
-            <div class="VotingBox Visible">
-                <div id="FAQVoting" class="FAQVoting">
-                    <div class="MessageHeader">
-                        <h3>$Text{"Rating"}:</h3>
-                        <div class="Clear"></div>
-                    </div>
-                    <div id="Messenger">
-                        <div class="SpacingTop"></div>
-                        <span class="VotingQuestion">$Text{"How helpful was this article? Please give us your rating and help to improve the FAQ Database. Thank You!"}</span>
-                        <div class="SpacingTop"></div>
-                        <div>
-                            <span class="RateLabelBefore">$Text{"not helpful"}</span>
+            <div class="VotingContainer">
+                <div class="VotingBox Visible">
+                    <div id="FAQVoting" class="FAQVoting">
+                        <div class="MessageHeader">
+                            <h3>$Text{"Rating"}:</h3>
+                            <div class="Clear"></div>
                         </div>
+                        <div id="Messenger">
+                            <div class="SpacingTop"></div>
+                            <span class="VotingQuestion">$Text{"How helpful was this article? Please give us your rating and help to improve the FAQ Database. Thank You!"}</span>
+                            <div class="SpacingTop"></div>
+                            <div>
+                                <span class="RateLabelBefore">$Text{"not helpful"}</span>
+                            </div>
 
 <!-- dtl:block:FAQVotingRateRow -->
-                        <div id="RateButton$Data{"Value"}">
-                            <span class="RateButton RateUnChecked">$QData{"Title"}</span>
-                        </div>
+                            <div id="RateButton$Data{"Value"}">
+                                <span class="RateButton RateUnChecked">
+                                    <i class="icon-star-empty"></i>
+                                    <i class="icon-star"></i>
+                                    $QData{"Title"}
+                                </span>
+                            </div>
 <!-- dtl:block:FAQVotingRateRow -->
 
-                        <div>
-                            <span class="RateLabelAfter">$Text{"very helpful"}</span>
-                        </div>
-                        <input type="hidden" name="Action" value="CustomerFAQZoom"/>
-                        <input type="hidden" name="Subaction" value="Vote"/>
-                        <input type="hidden" name="CategoryID" value="$QData{"CategoryID"}"/>
-                        <input type="hidden" name="ItemID" value="$QData{"ItemID"}"/>
-                        <div class="ActionRow VotingActionRow">
-                            <button type="submit"  id="RateSubmitButton" class="Hidden" value="$Text{"Submit"}">$Text{"Submit"}</button>
-                            <input type="hidden" name="Rate" value="$QData{"SelectedRate"}"id="RateValue"/>
+                            <div>
+                                <span class="RateLabelAfter">$Text{"very helpful"}</span>
+                            </div>
+                            <input type="hidden" name="Action" value="CustomerFAQZoom"/>
+                            <input type="hidden" name="Subaction" value="Vote"/>
+                            <input type="hidden" name="CategoryID" value="$QData{"CategoryID"}"/>
+                            <input type="hidden" name="ItemID" value="$QData{"ItemID"}"/>
+                            <div class="ActionRow VotingActionRow">
+                                <button type="submit"  id="RateSubmitButton" class="Hidden" value="$Text{"Submit"}">$Text{"Submit"}</button>
+                                <input type="hidden" name="Rate" value="$QData{"SelectedRate"}"id="RateValue"/>
+                            </div>
                         </div>
                     </div>
                 </div>

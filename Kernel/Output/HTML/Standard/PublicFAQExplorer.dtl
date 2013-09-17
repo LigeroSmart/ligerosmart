@@ -66,7 +66,7 @@
                     <div class="Header">
                         <h3>$Text{"$Data{"Header"}"}</h3>
 <!-- dtl:block:InfoBoxFAQMiniListNewsRSS -->
-                        <a href="$Env{"Baselink"}Action=PublicFAQRSS;Type=$LQData{"Type"}" title="$Text{"$Data{"Title"}"}" class="RSSIcon AsBlock">RSS</a>
+                        <a href="$Env{"Baselink"}Action=PublicFAQRSS;Type=$LQData{"Type"}" title="$Text{"$Data{"Title"}"}" class="RSSIcon AsBlock"><i class="icon-rss"></i></a>
 <!-- dtl:block:InfoBoxFAQMiniListNewsRSS -->
                         <div class="Clear"></div>
                     </div>

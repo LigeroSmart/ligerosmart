@@ -133,7 +133,7 @@
                 <li>
                     <span class="Key RatingLabel">$Text{"Rating"}:</span>
 <!-- dtl:block:RateStars -->
-                    <span class="RateStar">Star</span>
+                    <span class="RateStar"><i class="icon-star"></i></span>
 <!-- dtl:block:RateStars -->
 <!-- dtl:block:RateStarsCount -->
                     <span class="RateStarText" title="$QData{"Stars"} $Text{"out of 5"}">
