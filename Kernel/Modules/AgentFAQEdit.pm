@@ -13,7 +13,7 @@ use strict;
 use warnings;
 
 use Kernel::System::FAQ;
-use Kernel::system::Queue;
+use Kernel::System::Queue;
 use Kernel::System::Web::UploadCache;
 use Kernel::System::Valid;
 
