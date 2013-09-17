@@ -125,10 +125,9 @@ sub new {
     # load change number generator
     my $GeneratorModule = $Self->{ConfigObject}->Get('ITSMChange::NumberGenerator')
         || 'Kernel::System::ITSMChange::Number::DateChecksum';
-    if ( !$Self->{MainObject}->Require($GeneratorModule) ) {
+    if ( !$Self->{MainObject}->RequireBaseClass($GeneratorModule) ) {
         die "Can't load change number generator backend module $GeneratorModule! $@";
     }
-    push @ISA, $GeneratorModule;
 
     # get the cache TTL (in seconds)
     $Self->{CacheTTL} = $Self->{ConfigObject}->Get('ITSMChange::CacheTTL') * 60;
@@ -522,7 +521,7 @@ sub ChangeUpdate {
     my @Bind;
 
     ATTRIBUTE:
-    for my $Attribute ( keys %Attribute ) {
+    for my $Attribute ( sort keys %Attribute ) {
 
         # preserve the old value, when the column isn't in function parameters
         next ATTRIBUTE if !exists $Param{$Attribute};
@@ -888,7 +887,7 @@ sub ChangeCABUpdate {
         my %UniqueUsers = map { $_ => 1 } @{ $Param{CABAgents} };
 
         # add user to cab table
-        for my $UserID ( keys %UniqueUsers ) {
+        for my $UserID ( sort keys %UniqueUsers ) {
             return if !$Self->{DBObject}->Do(
                 SQL => 'INSERT INTO change_cab ( change_id, user_id ) VALUES ( ?, ? )',
                 Bind => [ \$Param{ChangeID}, \$UserID ],
@@ -911,7 +910,7 @@ sub ChangeCABUpdate {
         my %UniqueCustomerUsers = map { $_ => 1 } @{ $Param{CABCustomers} };
 
         # add user to cab table
-        for my $CustomerUserID ( keys %UniqueCustomerUsers ) {
+        for my $CustomerUserID ( sort keys %UniqueCustomerUsers ) {
             return if !$Self->{DBObject}->Do(
                 SQL => 'INSERT INTO change_cab ( change_id, customer_user_id ) VALUES ( ?, ? )',
                 Bind => [ \$Param{ChangeID}, \$CustomerUserID ],
@@ -1624,7 +1623,7 @@ sub ChangeSearch {
         Priority => 'Priorities',
     );
 
-    for my $CIPSingular ( keys %CIPSingular2Plural ) {
+    for my $CIPSingular ( sort keys %CIPSingular2Plural ) {
         for my $CIP ( @{ $Param{ $CIPSingular2Plural{$CIPSingular} } } ) {
 
             # look up the ID for the name
@@ -1771,7 +1770,7 @@ sub ChangeSearch {
 
     # add string params to sql-where-array
     STRINGPARAM:
-    for my $StringParam ( keys %StringParams ) {
+    for my $StringParam ( sort keys %StringParams ) {
 
         # check string params for useful values, the string '0' is allowed
         next STRINGPARAM if !exists $Param{$StringParam};
@@ -1866,7 +1865,7 @@ sub ChangeSearch {
 
     # add array params to sql-where-array
     ARRAYPARAM:
-    for my $ArrayParam ( keys %ArrayParams ) {
+    for my $ArrayParam ( sort keys %ArrayParams ) {
 
         # ignore empty lists
         next ARRAYPARAM if !@{ $Param{$ArrayParam} };
@@ -1906,7 +1905,7 @@ sub ChangeSearch {
 
     # check and add time params to WHERE or HAVING clause
     TIMEPARAM:
-    for my $TimeParam ( keys %TimeParams ) {
+    for my $TimeParam ( sort keys %TimeParams ) {
 
         next TIMEPARAM if !$Param{$TimeParam};
 
@@ -1942,7 +1941,7 @@ sub ChangeSearch {
 
     # add cab params to sql-where-array
     CABPARAM:
-    for my $CABParam ( keys %CABParams ) {
+    for my $CABParam ( sort keys %CABParams ) {
         next CABPARAM if !@{ $Param{$CABParam} };
 
         # quote
@@ -1974,7 +1973,7 @@ sub ChangeSearch {
 
     # add workorder params to sql-where-array
     WORKORDERPARAM:
-    for my $WorkOrderParam ( keys %WorkOrderArrayParams ) {
+    for my $WorkOrderParam ( sort keys %WorkOrderArrayParams ) {
 
         next WORKORDERPARAM if !@{ $Param{$WorkOrderParam} };
 

@@ -14,6 +14,8 @@ use warnings;
 
 use Kernel::System::ITSMChange;
 use Kernel::System::Valid;
+
+## nofilter(TidyAll::Plugin::OTRS::Perl::Dumper)
 use Data::Dumper;
 
 =head1 NAME

@@ -19,6 +19,8 @@ use Kernel::System::ITSMChange::ITSMCondition;
 use Kernel::System::LinkObject;
 use Kernel::System::Valid;
 use Kernel::System::VirtualFS;
+
+## nofilter(TidyAll::Plugin::OTRS::Perl::Dumper)
 use Data::Dumper;
 
 use vars qw(@ISA);
@@ -313,7 +315,7 @@ sub TemplateUpdate {
     my @Bind;
 
     ATTRIBUTE:
-    for my $Attribute ( keys %Attribute ) {
+    for my $Attribute ( sort keys %Attribute ) {
 
         # preserve the old value, when the column isn't in function parameters
         next ATTRIBUTE if !exists $Param{$Attribute};
@@ -540,7 +542,7 @@ sub TemplateList {
         $Templates{ $Row[0] } = [ $Row[1], $Row[2] ];
     }
 
-    for my $Key ( keys %Templates ) {
+    for my $Key ( sort keys %Templates ) {
         my ( $Name, $Comment ) = @{ $Templates{$Key} };
 
         my $CommentAppend = '';
@@ -754,7 +756,7 @@ sub TemplateSearch {
 
     # add string params to sql-where-array
     STRINGPARAM:
-    for my $StringParam ( keys %StringParams ) {
+    for my $StringParam ( sort keys %StringParams ) {
 
         # check string params for useful values, the string '0' is allowed
         next STRINGPARAM if !exists $Param{$StringParam};
@@ -799,7 +801,7 @@ sub TemplateSearch {
 
     # add array params to sql-where-array
     ARRAYPARAM:
-    for my $ArrayParam ( keys %ArrayParams ) {
+    for my $ArrayParam ( sort keys %ArrayParams ) {
 
         # ignore empty lists
         next ARRAYPARAM if !@{ $Param{$ArrayParam} };
@@ -823,7 +825,7 @@ sub TemplateSearch {
         ChangeTimeOlderDate => 't.change_time <=',
     );
     TIMEPARAM:
-    for my $TimeParam ( keys %TimeParams ) {
+    for my $TimeParam ( sort keys %TimeParams ) {
 
         next TIMEPARAM if !$Param{$TimeParam};
 
@@ -1287,7 +1289,7 @@ sub _CreateTemplateElements {
         );
 
         # save info for next sibling
-        for my $Key ( keys %ChildInfo ) {
+        for my $Key ( sort keys %ChildInfo ) {
             $SiblingsInfo{$Key} = $ChildInfo{$Key};
         }
     }

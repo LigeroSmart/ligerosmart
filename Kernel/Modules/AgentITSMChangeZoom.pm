@@ -622,11 +622,15 @@ sub Run {
             for my $LinkType ( sort keys %{ $LinkListWithDataWorkOrder->{$Object} } ) {
 
                 DIRECTION:
-                for my $Direction ( sort keys %{ $LinkListWithDataWorkOrder->{$Object}->{$LinkType} } ) {
+                for my $Direction (
+                    sort keys %{ $LinkListWithDataWorkOrder->{$Object}->{$LinkType} }
+                    )
+                {
 
                     ID:
                     for my $ID (
-                        sort keys %{ $LinkListWithDataWorkOrder->{$Object}->{$LinkType}->{$Direction} }
+                        sort
+                        keys %{ $LinkListWithDataWorkOrder->{$Object}->{$LinkType}->{$Direction} }
                         )
                     {
 

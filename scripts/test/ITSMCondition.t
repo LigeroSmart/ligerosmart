@@ -1636,7 +1636,8 @@ for my $ExpressionTest (@ExpressionTests) {
                 next if grep { $_ eq $ExpressionAddValue } @StaticFields;
 
                 # get values for fields
-                for my $FieldValue ( sort keys %{ $ExpressionAddSourceData{$ExpressionAddValue} } ) {
+                for my $FieldValue ( sort keys %{ $ExpressionAddSourceData{$ExpressionAddValue} } )
+                {
 
                     # store gathered information in hash for adding
                     $ExpressionAddData{$ExpressionAddValue} =
@@ -1709,7 +1710,9 @@ for my $ExpressionTest (@ExpressionTests) {
                 next if grep { $_ eq $ExpressionUpdateValue } @StaticFields;
 
                 # get values for fields
-                for my $FieldValue ( sort keys %{ $ExpressionUpdateSourceData{$ExpressionUpdateValue} } )
+                for my $FieldValue (
+                    sort keys %{ $ExpressionUpdateSourceData{$ExpressionUpdateValue} }
+                    )
                 {
 
                     # store gathered information in hash for updating

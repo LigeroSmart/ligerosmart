@@ -21,7 +21,7 @@
                 $Text{"Edit"} $Text{"Condition"}: $Config{"ITSMChange::Hook"}: $QData{"ChangeNumber"} $QData{"ChangeTitle","70"}
             </h1>
             <p>
-                <a href="$Env{"Baselink"}Action=AgentITSMChangeCondition;ChangeID=$QData{"ChangeID"}">$Text{"Back"}</a>
+                <a href="$Env{"Baselink"}Action=AgentITSMChangeCondition;ChangeID=$LQData{"ChangeID"}">$Text{"Back"}</a>
                 $Text{"or"}
                 <a class="CancelClosePopup" href="#">$Text{"Cancel & close window"}</a>
             </p>

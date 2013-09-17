@@ -16,6 +16,8 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::ITSMChange::ITSMStateMachine;
 use Kernel::System::LinkObject;
 use Kernel::System::Valid;
+
+## nofilter(TidyAll::Plugin::OTRS::Perl::Dumper)
 use Data::Dumper;
 
 =head1 NAME
@@ -187,7 +189,7 @@ sub Serialize {
 
     # add workorder freekey and freetext fields to list of wanted attributes
     ATTRIBUTE:
-    for my $Attribute ( keys %{$WorkOrder} ) {
+    for my $Attribute ( sort keys %{$WorkOrder} ) {
 
         # find the workorder freekey and freetext attributes
         if ( $Attribute =~ m{ \A ( WorkOrderFreeKey | WorkOrderFreeText ) }xms ) {
@@ -218,10 +220,13 @@ sub Serialize {
         UserID => $Param{UserID},
     );
 
-    for my $TargetObject ( keys %{$LinkListWithData} ) {
-        for my $Type ( keys %{ $LinkListWithData->{$TargetObject} } ) {
-            for my $Key ( keys %{ $LinkListWithData->{$TargetObject}->{$Type} } ) {
-                for my $TargetID ( keys %{ $LinkListWithData->{$TargetObject}->{$Type}->{$Key} } ) {
+    for my $TargetObject ( sort keys %{$LinkListWithData} ) {
+        for my $Type ( sort keys %{ $LinkListWithData->{$TargetObject} } ) {
+            for my $Key ( sort keys %{ $LinkListWithData->{$TargetObject}->{$Type} } ) {
+                for my $TargetID (
+                    sort keys %{ $LinkListWithData->{$TargetObject}->{$Type}->{$Key} }
+                    )
+                {
                     my $LinkInfo = {
                         SourceObject => 'ITSMWorkOrder',
                         SourceKey    => $WorkOrder->{WorkOrderID},
@@ -343,7 +348,7 @@ sub _WorkOrderAdd {
 
     # delete all parameters whose values are 'undef'
     # _CheckWorkOrderParams throws an error otherwise
-    for my $Parameter ( keys %Data ) {
+    for my $Parameter ( sort keys %Data ) {
         delete $Data{$Parameter} if !defined $Data{$Parameter};
     }
 
