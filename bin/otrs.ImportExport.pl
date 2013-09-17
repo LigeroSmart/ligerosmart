@@ -1,4 +1,4 @@
-#!/usr/bin/perl -w
+#!/usr/bin/perl
 # --
 # otrs.ImportExport.pl - import/export script
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.com/

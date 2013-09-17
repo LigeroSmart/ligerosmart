@@ -10,6 +10,7 @@
 package Kernel::Language::zh_CN_ImportExport;
 
 use strict;
+use warnings;
 
 sub Data {
     my $Self = shift;

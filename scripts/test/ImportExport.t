@@ -350,7 +350,7 @@ for my $Item ( @{$ItemData} ) {
         );
 
         # check template data after creation of template
-        for my $TemplateAttribute ( keys %{ $Item->{AddGet} } ) {
+        for my $TemplateAttribute ( sort keys %{ $Item->{AddGet} } ) {
             $Self->Is(
                 $TemplateGet->{$TemplateAttribute} || '',
                 $Item->{AddGet}->{$TemplateAttribute} || '',
@@ -400,7 +400,7 @@ for my $Item ( @{$ItemData} ) {
         );
 
         # check template data after update
-        for my $TemplateAttribute ( keys %{ $Item->{UpdateGet} } ) {
+        for my $TemplateAttribute ( sort keys %{ $Item->{UpdateGet} } ) {
             $Self->Is(
                 $TemplateGet->{$TemplateAttribute} || '',
                 $Item->{UpdateGet}->{$TemplateAttribute} || '',
@@ -578,7 +578,7 @@ $Self->True(
 
 # check the list
 KEY:
-for my $Key ( keys %{$ObjectList1} ) {
+for my $Key ( sort keys %{$ObjectList1} ) {
 
     if ( !$ObjectList1TestList->{$Key} ) {
         $ObjectList1TestList->{Dummy} = 1;
@@ -638,7 +638,7 @@ $Self->True(
 
 # check the list
 KEY:
-for my $Key ( keys %{$FormatList1} ) {
+for my $Key ( sort keys %{$FormatList1} ) {
 
     if ( !$FormatList1TestList->{$Key} ) {
         $FormatList1TestList->{Dummy} = 1;

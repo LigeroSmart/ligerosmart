@@ -10,6 +10,7 @@
 package Kernel::Language::da_ImportExport;
 
 use strict;
+use warnings;
 
 sub Data {
     my $Self = shift;

@@ -621,7 +621,7 @@ sub Run {
         my $SubmitButton = '';
 
         PARAM:
-        for my $SubmitKey ( keys %Submit ) {
+        for my $SubmitKey ( sort keys %Submit ) {
             next PARAM if !$Self->{ParamObject}->GetParam( Param => $SubmitKey );
 
             $Subaction    = $Submit{$SubmitKey};
@@ -893,7 +893,7 @@ sub Run {
         my $Subaction = $Submit{Reload};
 
         PARAM:
-        for my $SubmitKey ( keys %Submit ) {
+        for my $SubmitKey ( sort keys %Submit ) {
             next PARAM if !$Self->{ParamObject}->GetParam( Param => $SubmitKey );
 
             $Subaction = $Submit{$SubmitKey};
