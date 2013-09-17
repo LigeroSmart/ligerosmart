@@ -10,6 +10,7 @@
 package Kernel::Language::de_GeneralCatalog;
 
 use strict;
+use warnings;
 
 sub Data {
     my $Self = shift;

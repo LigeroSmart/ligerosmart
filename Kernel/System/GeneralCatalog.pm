@@ -246,7 +246,7 @@ sub ItemList {
         my @Wheres;
 
         # add all preferences given to where-clause
-        for my $Key ( keys %{ $Param{Preferences} } ) {
+        for my $Key ( sort keys %{ $Param{Preferences} } ) {
 
             if ( ref( $Param{Preferences}->{$Key} ) ne 'ARRAY' ) {
                 $Param{Preferences}->{$Key} = [ $Param{Preferences}->{$Key} ];

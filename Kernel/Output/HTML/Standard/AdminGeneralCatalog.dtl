@@ -97,7 +97,7 @@
 <!-- dtl:block:OverviewItemList -->
                         <tr>
                             <td>
-                                <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=ItemEdit;ItemID=$QData{"ItemID"}">$QData{"Name"}</a>
+                                <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=ItemEdit;ItemID=$LQData{"ItemID"}">$QData{"Name"}</a>
                             </td>
                             <td class="Center">$Text{"$Data{"Valid"}"}</td>
                         </tr>

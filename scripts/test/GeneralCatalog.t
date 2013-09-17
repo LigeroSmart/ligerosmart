@@ -533,7 +533,7 @@ for my $Item ( @{$ItemData} ) {
         );
 
         # check item data after creation of item
-        for my $ItemAttribute ( keys %{ $Item->{AddGet} } ) {
+        for my $ItemAttribute ( sort keys %{ $Item->{AddGet} } ) {
             $Self->Is(
                 $ItemGet->{$ItemAttribute},
                 $Item->{AddGet}->{$ItemAttribute},
@@ -548,7 +548,7 @@ for my $Item ( @{$ItemData} ) {
         );
 
         # check item data after creation of item
-        for my $ItemAttribute ( keys %{ $Item->{AddGet} } ) {
+        for my $ItemAttribute ( sort keys %{ $Item->{AddGet} } ) {
             $Self->Is(
                 $ItemGet->{$ItemAttribute},
                 $Item->{AddGet}->{$ItemAttribute},
@@ -594,7 +594,7 @@ for my $Item ( @{$ItemData} ) {
         );
 
         # check item data after update
-        for my $ItemAttribute ( keys %{ $Item->{UpdateGet} } ) {
+        for my $ItemAttribute ( sort keys %{ $Item->{UpdateGet} } ) {
             $Self->Is(
                 $ItemGet2->{$ItemAttribute},
                 $Item->{UpdateGet}->{$ItemAttribute},
@@ -605,7 +605,7 @@ for my $Item ( @{$ItemData} ) {
 
     if ( $Item->{PreferencesSet} ) {
 
-        for my $Key ( keys %{ $Item->{PreferencesSet} } ) {
+        for my $Key ( sort keys %{ $Item->{PreferencesSet} } ) {
 
             # set preferences
             my $Success = $Self->{GeneralCatalogObject}->GeneralCatalogPreferencesSet(
@@ -627,7 +627,7 @@ for my $Item ( @{$ItemData} ) {
             ItemID => $LastAddedItemID,
         );
 
-        for my $Key ( keys %{ $Item->{PreferencesGet} } ) {
+        for my $Key ( sort keys %{ $Item->{PreferencesGet} } ) {
             if ( $Item->{PreferencesGet}->{$Key} eq $Preferences{$Key} ) {
                 $Self->True(
                     1,
@@ -933,7 +933,7 @@ for my $Class (@ExistingClasses) {
     }
 
     OLDKEY:
-    for my $OldKey ( keys %{$OldItemList} ) {
+    for my $OldKey ( sort keys %{$OldItemList} ) {
 
         if ( !exists $NewItemList->{$OldKey} ) {
             $NewItemList->{FailedDummy} = 1;
@@ -998,7 +998,7 @@ for my $Class (@ExistingClasses) {
     }
 
     OLDKEY:
-    for my $OldKey ( keys %{$OldItemList} ) {
+    for my $OldKey ( sort keys %{$OldItemList} ) {
 
         if ( !exists $NewItemList->{$OldKey} ) {
             $NewItemList->{FailedDummy} = 1;

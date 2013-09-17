@@ -331,7 +331,7 @@ sub Run {
             %Preferences = %{ $Self->{ConfigObject}->Get('GeneralCatalogPreferences') };
         }
 
-        for my $Item ( keys %Preferences ) {
+        for my $Item ( sort keys %Preferences ) {
             my $Module = $Preferences{$Item}->{Module}
                 || 'Kernel::Output::HTML::GeneralCatalogPreferencesGeneric';
 

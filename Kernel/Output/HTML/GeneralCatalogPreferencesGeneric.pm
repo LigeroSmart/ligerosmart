@@ -73,7 +73,7 @@ sub Param {
 sub Run {
     my ( $Self, %Param ) = @_;
 
-    for my $Key ( keys %{ $Param{GetParam} } ) {
+    for my $Key ( sort keys %{ $Param{GetParam} } ) {
         my @Array = @{ $Param{GetParam}->{$Key} };
         for my $Value (@Array) {
 

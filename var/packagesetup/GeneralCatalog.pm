@@ -12,8 +12,6 @@ package var::packagesetup::GeneralCatalog;    ## no critic
 use strict;
 use warnings;
 
-use vars qw(@ISA);
-
 =head1 NAME
 
 GeneralCatalog.pm - code to excecute during package installation

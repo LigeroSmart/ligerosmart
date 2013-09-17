@@ -12,8 +12,6 @@ package Kernel::System::GeneralCatalog::PreferencesDB;
 use strict;
 use warnings;
 
-use vars qw(@ISA);
-
 =head1 NAME
 
 Kernel::System::GeneralCatalog::PreferencesDB - some preferences functions for general catalog
