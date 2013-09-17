@@ -19,8 +19,6 @@ use Kernel::System::Group;
 use Kernel::System::Stats;
 use Kernel::System::User;
 
-use vars qw(@ISA);
-
 =head1 NAME
 
 ITSMServiceLevelManagement.pm - code to excecute during package installation
