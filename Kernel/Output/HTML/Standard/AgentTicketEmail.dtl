@@ -10,9 +10,10 @@
 # --
 
 $Include{"AgentCustomerSearch"}
-<div class="MainBox ARIARoleMain">
+<div class="MainBox ARIARoleMain FormScreen">
 
     <h1>$Text{"Create New Email Ticket"}</h1>
+    <p class="AsteriskExplanation">$Text{"All fields marked with an asterisk (*) are mandatory."}</p>
 
     <div class="LayoutFixedSidebar SidebarLast">
 
@@ -653,7 +654,7 @@ $('#FileUpload').bind('change', function () {
 <!-- dtl:block:TimeUnits -->
 
                     <div class="Field SpacingTop">
-                        <button class="Primary" id="submitRichText" accesskey="g" title="$Text{"Send mail!"} (g)" type="submit" value="$Text{"Send mail!"}" >$Text{"Send mail!"}</button>
+                        <button class="Primary CallForAction" id="submitRichText" accesskey="g" title="$Text{"Send mail"} (g)" type="submit" value="$Text{"Send mail"}" ><span><i class="icon-envelope-alt"></i> $Text{"Send mail"}</span></button>
                     </div>
                 </fieldset>
             </form>
