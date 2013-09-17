@@ -59,30 +59,40 @@ sub Run {
 
     # get params
     my %GetParam;
-    for my $Key (qw(FAQID)) {
-        if ( !$Self->{ParamObject}->GetParam( Param => $Key ) ) {
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message  => "Need param $Key!",
-            );
-            return;
-        }
+    for my $Key (qw(ItemID)) {
         $GetParam{$Key} = $Self->{ParamObject}->GetParam( Param => $Key );
+        if ( !$GetParam{$Key} ) {
+            return $Self->{LayoutObject}->ErrorScreen(
+                Message => "No $Key is given!",
+                Comment => 'Please contact the admin.',
+            );
+        }
     }
 
     # get the requested FAQ item
     my %FAQItem = $Self->{FAQObject}->FAQGet(
-        ItemID     => $GetParam{FAQID},
+        ItemID     => $GetParam{ItemID},
         ItemFields => 1,
         UserID     => $Self->{UserID},
     );
 
     my $ScriptAlias = $Self->{ConfigObject}->Get('ScriptAlias') || 'otrs/';
     my $URLRegex = '/' . $ScriptAlias . 'index.pl\?Action=AgentFAQZoom;'
-        . 'Subaction=DownloadAttachment;ItemID=' . $GetParam{FAQID} . ';FileID=[0-9]+';
+        . 'Subaction=DownloadAttachment;ItemID=' . $GetParam{ItemID} . ';FileID=[0-9]+';
     my $ElemRegex = 'src="(' . $URLRegex . ')"';
 
     my @Fields;
+
+    my $Loaded = $Self->{MainObject}->Require(
+        'Kernel::Language',
+    );
+
+    if ( !$Loaded ) {
+        return $Self->{LayoutObject}->ErrorScreen(
+            Message => 'Can not load LanguageObject!',
+            Comment => 'Please contact the admin.',
+        );
+    }
 
     my $FAQLanguageObject = Kernel::Language->new(
         %{$Self},
@@ -150,7 +160,7 @@ sub Run {
 
             # get the attachment to which the current URL points
             my %Attachment = $Self->{FAQObject}->AttachmentGet(
-                ItemID => $GetParam{FAQID},
+                ItemID => $GetParam{ItemID},
                 FileID => $FileID,
                 UserID => $Self->{UserID},
             );
@@ -199,10 +209,10 @@ sub Run {
             else {
                 $Self->{LogObject}->Log(
                     Priority => 'error',
-                    Message  => 'Couldn\'t get attachment '
-                        . "(FAQID: $GetParam{FAQID}, FileID: $FileID)!",
+                    Message  => 'Couldn\'t get FAQ attachment '
+                        . "(ItemID: $GetParam{ItemID}, FileID: $FileID)!",
                 );
-                return;
+                return $Self->{LayoutObject}->ErrorScreen();
             }
 
             # get new content id
@@ -222,7 +232,7 @@ sub Run {
                     Priority => 'error',
                     Message  => "Couldn't determine a new ContentID!",
                 );
-                return;
+                return $Self->{LayoutObject}->ErrorScreen();
             }
 
             # extract the actual MIME type from the contenttype, which also contains the filename
@@ -258,7 +268,7 @@ sub Run {
 
     # get all non-inline attachments of the FAQ item
     my @Attachments = $Self->{FAQObject}->AttachmentIndex(
-        ItemID     => $GetParam{FAQID},
+        ItemID     => $GetParam{ItemID},
         ShowInline => 0,
         UserID     => $Self->{UserID},
     );
@@ -267,7 +277,7 @@ sub Run {
 
         # get the attachment
         my %Attachment = $Self->{FAQObject}->AttachmentGet(
-            ItemID => $GetParam{FAQID},
+            ItemID => $GetParam{ItemID},
             FileID => $AttachmentData->{FileID},
             UserID => $Self->{UserID},
         );
@@ -283,10 +293,10 @@ sub Run {
         else {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => 'Couldn\'t get attachment '
-                    . "(FAQID: $GetParam{FAQID}, FileID: $AttachmentData->{FileID})!",
+                Message  => 'Couldn\'t get FAQ attachment '
+                    . "(ItemID: $GetParam{ItemID}, FileID: $AttachmentData->{FileID})!",
             );
-            return;
+            return $Self->{LayoutObject}->ErrorScreen();
         }
     }
 
