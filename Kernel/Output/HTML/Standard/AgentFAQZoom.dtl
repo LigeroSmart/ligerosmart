@@ -244,25 +244,20 @@
                             <p class="Center">$Text{"How helpful was this article? Please give us your rating and help to improve the FAQ Database. Thank You!"}</p>
 
                             <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="FAQVote" class="FAQVoteForm">
-                                <div>
-                                    <span class="RateLabelBefore">$Text{"not helpful"}</span>
-                                </div>
-
+                                <ul class="RateButtons">
+                                    <li>$Text{"not helpful"}</li>
 <!-- dtl:block:FAQVotingRateRow -->
-                                <div id="RateButton$Data{"Value"}">
-                                    <span class="RateButton RateUnChecked">
-                                        <i class="icon-star-empty"></i>
-                                        <i class="icon-star"></i>
-                                        $QData{"Title"}
-                                    </span>
-                                </div>
+                                    <li id="RateButton$Data{"Value"}">
+                                        <span class="RateButton RateUnChecked">
+                                            <i class="icon-star-empty"></i>
+                                            <i class="icon-star"></i>
+                                            $QData{"Title"}
+                                        </span>
+                                    </li>
 <!-- dtl:block:FAQVotingRateRow -->
-
-                                <div>
-                                    <span class="RateLabelAfter">$Text{"very helpful"}</span>
-                                </div>
-
-                                <div class="Clear"></div>
+                                    <li>$Text{"very helpful"}</li>
+                                </ul>
+                                <br class="Clear" />
 
                                 <button type="submit" class="Primary CallForAction Hidden" id="RateSubmitButton" name="btn" value="$Text{"Vote"}"><span><i class="icon-check"></i> $Text{"Vote"}</span></button>
                                 <input type="hidden" name="Action" value="AgentFAQZoom"/>
@@ -297,11 +292,11 @@
     });
 
     $('.RateButton').bind('click', function (Event) {
-        var RateNumber = parseInt($(this).closest('div').attr('id').replace(/RateButton/, ''), 10);
+        var RateNumber = parseInt($(this).closest('li').attr('id').replace(/RateButton/, ''), 10);
         $('#RateValue').val(RateNumber);
         $('#RateSubmitButton').fadeIn(250);
         $('#FAQVoting').find('.RateButton').each(function() {
-            var ItemRateNumber = parseInt($(this).closest('div').attr('id').replace(/RateButton/, ''), 10);
+            var ItemRateNumber = parseInt($(this).closest('li').attr('id').replace(/RateButton/, ''), 10);
             if ( ItemRateNumber <= RateNumber ) {
                 $(this).addClass('RateChecked');
                 $(this).removeClass('RateUnChecked');

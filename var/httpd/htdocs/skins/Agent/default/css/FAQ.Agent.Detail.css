@@ -30,9 +30,8 @@
 
 .ArticleFAQContent .FAQVoteForm {
     display: block;
-    width: 290px;
-    margin: 10px auto 0px auto;
-    white-space: nowrap;
+    margin-top: 10px;
+    text-align: center;
 }
 
 .ArticleFAQContent p.Center {
@@ -46,6 +45,10 @@
     margin: 10px auto 0px auto;
 }
 
+.ArticleFAQContent .FAQVoteForm .CallForAction.Hidden {
+    display: none;
+}
+
 .FAQStateName {
     position: absolute;
     right: 10px;
@@ -56,6 +59,22 @@
 
 fieldset .FAQStateName {
     position: static;
+}
+
+.RateButtons {
+    text-align: center;
+    display: inline-block;
+}
+
+.RateButtons > li {
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.RateButtons > li:first-child,
+.RateButtons > li:last-child {
+    font-weight: bold;
 }
 
 .RateButton {
