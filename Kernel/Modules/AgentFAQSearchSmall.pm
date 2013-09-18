@@ -306,6 +306,12 @@ sub Run {
 sub _MaskForm {
     my ( $Self, %Param ) = @_;
 
+    # get list type
+    my $TreeView = 0;
+    if ( $Self->{ConfigObject}->Get('Ticket::Frontend::ListType') eq 'tree' ) {
+        $TreeView = 1;
+    }
+
     # get profiles list
     my %Profiles = $Self->{SearchProfileObject}->SearchProfileList(
         Base      => 'FAQSearch',
@@ -339,6 +345,7 @@ sub _MaskForm {
         CustomerUser => $Self->{UserLogin},
         Type         => 'rw',
         UserID       => $Self->{UserID},
+        TreeView     => $TreeView,
     );
 
     # build categories output list
