@@ -922,6 +922,12 @@ sub Data {
         'Definiert den Feld-Typ für CompareValue Felder für Change-Attribute in AgentITSMChangeConditionEdit. Gültige Werte sind Selection, Text und Date. Wenn kein Typ definiert ist, dann wird das feld nicht angezeigt.';
     $Self->{Translation}->{'Defines the field type of CompareValue fields for workorder attributes used in AgentITSMChangeConditionEdit. Valid values are Selection, Text and Date. If a type is not defined, the field will not be shown.'} =
         'Definiert den Feld-Typ für CompareValue Felder für Workorder-Attribute in AgentITSMChangeConditionEdit. Gültige Werte sind Selection, Text und Date. Wenn kein Typ definiert ist, dann wird das feld nicht angezeigt.';
+
+    $Self->{Translation}->{'Screen after creating a workorder'}
+        = 'Ansicht nach Workorder-Erstellung';
+    $Self->{Translation}->{'Show this screen after I created a new workorder'}
+        = 'Diese Ansicht nach dem Erstellen einer Workorder anzeigen';
+
     $Self->{Translation}->{'Defines the free key field number 1 for changes to add a new change attribute.'} =
         '';
     $Self->{Translation}->{'Defines the free key field number 1 for workorders to add a new workorder attribute.'} =
