@@ -856,6 +856,12 @@ sub Run {
 sub _MaskForm {
     my ( $Self, %Param ) = @_;
 
+    # get list type
+    my $TreeView = 0;
+    if ( $Self->{ConfigObject}->Get('Ticket::Frontend::ListType') eq 'tree' ) {
+        $TreeView = 1;
+    }
+
     my $Profile = $Self->{Profile};
     my $EmptySearch = $Self->{ParamObject}->GetParam( Param => 'EmptySearch' );
     if ( !$Profile ) {
@@ -1000,6 +1006,7 @@ sub _MaskForm {
         Size        => 5,
         Translation => 0,
         Multiple    => 1,
+        TreeView    => $TreeView,
     );
 
     # get valid list

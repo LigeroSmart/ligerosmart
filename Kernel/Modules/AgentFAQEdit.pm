@@ -587,6 +587,12 @@ sub Run {
 sub _MaskNew {
     my ( $Self, %Param ) = @_;
 
+    # get list type
+    my $TreeView = 0;
+    if ( $Self->{ConfigObject}->Get('Ticket::Frontend::ListType') eq 'tree' ) {
+        $TreeView = 1;
+    }
+
     # get valid list
     my %ValidList        = $Self->{ValidObject}->ValidList();
     my %ValidListReverse = reverse %ValidList;
@@ -617,6 +623,7 @@ sub _MaskNew {
         PossibleNone => 1,
         Class        => 'Validate_Required ' . $Param{CategoryIDServerError},
         Translation  => 0,
+        TreeView     => $TreeView,
     );
 
     # get the language list

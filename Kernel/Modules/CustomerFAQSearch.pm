@@ -864,6 +864,12 @@ sub Run {
 sub MaskForm {
     my ( $Self, %Param ) = @_;
 
+    # get list type
+    my $TreeView = 0;
+    if ( $Self->{ConfigObject}->Get('Ticket::Frontend::ListType') eq 'tree' ) {
+        $TreeView = 1;
+    }
+
     # set output formats list
     my %ResultForm = (
         Normal => 'Normal',
@@ -920,6 +926,7 @@ sub MaskForm {
         Multiple   => 1,
         Size       => 5,
         SelectedID => $Param{CategoryIDs},
+        TreeView   => $TreeView,
     );
 
     my %VotingOperators = (
