@@ -94,6 +94,14 @@ iframe.FAQField {
     width: 100%;
     frameborder: 0;
 }
+
+fieldset.TableSmall > div.Field {
+    margin-left: 24% !important;
+}
+fieldset.TableSmall > label {
+    width: 24% !important;
+}
+
 }
 
 

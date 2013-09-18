@@ -60,8 +60,8 @@
             </div>
         </div>
         <div class="ContentColumn">
-            <fieldset class="TableLike">
-                <label for="Fulltext"id="LabelFulltext">$Text{"Fulltext"}:</label>
+            <fieldset class="TableLike TableSmall">
+                <label for="Fulltext" id="LabelFulltext">$Text{"Fulltext"}:</label>
                 <div class="Field">
                     <input type="text" name="Fulltext" value="$QData{"Fulltext"}" class="W50pc" />
                 </div>
@@ -77,7 +77,7 @@
                 </div>
                 <div class="SpacingTopSmall Clear"></div>
                 <label for="Keyword">$Text{"Keyword"}</label>
-                <div class= "Field">
+                <div class="Field">
                     <input title="$Text{"Keyword"}" type="text" id="Keyword" name="Keyword" value="$QData{"Keyword"}" class="W50pc" />
                 </div>
 
@@ -85,28 +85,114 @@
                 <div class='SpacingTopSmall Clear'></div>
                 <label for="LanguageIDs">$Text{"Language"}</label>
                 <div class="Field">
-                    $Data{"LanguagesStrg"}
+                    $Data{"LanguagesSelectionStrg"}
                 </div>
 <!-- dtl:block:Language -->
 
                 <div class='SpacingTopSmall Clear'></div>
                 <label for="CategoryIDs">$Text{"Category"}:</label>
                 <div class="Field">
-                    $Data{"CategoriesStrg"}
+                    $Data{"CategoriesSelectionStrg"}
                 </div>
                 <div class='Clear'></div>
 
                 <div class='SpacingTopSmall Clear'></div>
                 <label for="ValidIDs">$Text{"Validity"}:</label>
                 <div class="Field">
-                    $Data{"ValidSelectionString"}
+                    $Data{"ValidSelectionStrg"}
                 </div>
                 <div class='Clear'></div>
-            </fieldset>
-            <div id="BottomActionRow" class="Center SpacingTopSmall">
-                <button id="Submit" type="submit" value="$Text{"Search"}">$Text{"Search"}</button>
+
+
+                <div class='SpacingTopSmall Clear'></div>
+                <label for="StateIDs">$Text{"State"}:</label>
+                <div class="Field">
+                    $Data{"StateSelectionStrg"}
+                </div>
+                <div class='Clear'></div>
+
+                <div class='SpacingTopSmall Clear'></div>
+                <label for="ApprovedSearch" >$Text{"Approved"}:</label>
+                <div class="Field">
+                    $Data{"ApprovedStrg"}
+                </div>
+                <div class="Clear"></div>
+
+
+                <div class='SpacingTopSmall Clear'></div>
+                <label for="NoVoteSet">$Text{"Vote (e. g. Equals 10 or GreaterThan 60)"}:</label>
+                <div class="Field">
+                    <input title="$Text{"No vote settings"}" type="radio"  id="NoVoteSet" name="VoteSearchOption" value="" $Data{"VoteSearchOption::None"} />
+                    $Text{"All"}
+                </div>
+                <div class="Field">
+                    <input title=$Text{"Specific votes"} type="radio" id="VotePoint" name="VoteSearchOption"  value="VotePoint" $Data{"VoteSearchOption::VotePoint"} />
+                    $Data{"VoteSearchTypeSelectionStrg"}
+                    <input type="text" name="VoteSearch" value="$QData{"VoteSearch"}" class="W25pc"/>
+                </div>
+
+                <div class='SpacingTopSmall Clear'></div>
+                <label for="NoRateSet">$Text{"Rate (e. g. Equals 25% or GreaterThan 75%)"}:</label>
+                <div class="Field">
+                    <input title="$Text{"No rate settings"}" type="radio"  id="NoRateSet" name="RateSearchOption" value="" $Data{"RateSearchOption::None"} />
+                    $Text{"All"}
+                </div>
+                <div class="Field">
+                    <input title=$Text{"Specific rate"} type="radio" id="RatePoint" name="RateSearchOption"  value="RatePoint" $Data{"RateSearchOption::VotePoint"} />
+                    $Data{"RateSearchTypeSelectionStrg"}
+                    $Data{"RateSearchSelectionStrg"}
+                </div>
+
+                <div class='SpacingTopSmall Clear'></div>
+                <label for="CreatedUserIDs">$Text{"Created by"} $Text{"Agent"}:</label>
+                <div class="Field">
+                    $Data{"CreatedUserStrg"}
+                </div>
+                <div class="Clear"></div>
+
+                <div class='SpacingTopSmall Clear'></div>
+                <label for="LastChangedUserIDs">$Text{"Last changed by"} $Text{"Agent"}:</label>
+                <div class="Field">
+                    $Data{"LastChangedUserStrg"}
+                </div>
+                <div class="Clear"></div>
+
+                <div class='SpacingTopSmall Clear'></div>
+                <label for="TimeSearchType">$Text{"FAQ Article Create Time"}:</label>
+                <div class="Field">
+                    <input title="$Text{"No time settings"}" type="radio" id="NoTimeSet" name="TimeSearchType" value="" $Data{"TimeSearchType::None"} />
+                    $Text{"All"}
+                </div>
+                <div class="Field">
+                    <input title="$Text{"Specific date"}" type="radio" id="DatePoint" name="TimeSearchType"  value="TimePoint" $Data{"TimeSearchType::TimePoint"} />
+                    $Data{"ItemCreateTimePointStartStrg"} $Data{"ItemCreateTimePointStrg"} $Data{"ItemCreateTimePointFormatStrg"}
+                </div>
+                <div class="Field">
+                    <input title="$Text{"Date range"}" type="radio" id="DateRange" name="TimeSearchType" value="TimeSlot" $Data{"TimeSearchType::TimeSlot"} />
+                    $Data{"ItemCreateTimeStartStrg"} $Text{"and"} $Data{"ItemCreateTimeStopStrg"}
+                </div>
+                <div class="Clear"></div>
+
+                <div class='SpacingTopSmall Clear'></div>
+                <label for="ChangeTimeSearchType">$Text{"FAQ Article Change Time"}:</label>
+                <div class="Field">
+                    <input title="$Text{"No time settings"}" type="radio" id="NoChangeTimeSet" name="ChangeTimeSearchType" value="" $Data{"ChangeTimeSearchType::None"} />
+                    $Text{"All"}
+                </div>
+                <div class="Field">
+                    <input title="$Text{"Specific date"}" type="radio" id="ChangeDatePoint" name="ChangeTimeSearchType" value="TimePoint" $Data{"ChangeTimeSearchType::TimePoint"} />
+                    $Data{"ItemChangeTimePointStartStrg"} $Data{"ItemChangeTimePointStrg"} $Data{"ItemChangeTimePointFormatStrg"}
+                </div>
+                <div class="Field">
+                    <input title="$Text{"Date range"}" type="radio" id="ChangeDateRange" name="ChangeTimeSearchType" value="TimeSlot" $Data{"ChangeTimeSearchType::TimeSlot"} />
+                    $Data{"ItemChangeTimeStartStrg"} $Text{"and"} $Data{"ItemChangeTimeStopStrg"}
+                </div>
+                <div class="Clear"></div>
+
+                <div id="BottomActionRow" class="Center SpacingTopSmall">
+                    <button id="Submit" type="submit" value="$Text{"Search"}">$Text{"Search"}</button>
+                </div>
             </div>
-        </div>
-    </form>
-</div>
+        </form>
+    </div>
 <!-- dtl:block:Search -->
