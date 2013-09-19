@@ -1143,7 +1143,7 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
 <!-- 8. Filelist -->
 <!-- *********** -->
 <chapter>
-    <title>FileList</title>
+    <title>File List</title>
     <para>This list shows all included files and the referring permissions.</para>
     <para>$Filelist</para>
 </chapter>
@@ -1154,7 +1154,7 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
 <chapter>
     <title>Tests</title>
     <section>
-        <title>Unit tests</title>
+        <title>Unit Tests</title>
         <para>
             To ensure the quality of the module, several so-called unit tests were created, to test
             the functionalities of this module. These unit tests can be run via command line.
