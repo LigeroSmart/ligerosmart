@@ -265,7 +265,10 @@ sub _FAQJournalShow {
     # build html content
     my $OutputNavBar = $Self->{LayoutObject}->Output(
         TemplateFile => 'AgentFAQOverviewNavBar',
-        Data         => {%Param},
+        Data         => {
+            View => $View,
+            %Param,
+        },
     );
 
     # create output

@@ -312,7 +312,10 @@ sub FAQListShow {
     # build html content
     my $OutputNavBar = $Env->{LayoutObject}->Output(
         TemplateFile => 'AgentFAQOverviewNavBar',
-        Data         => {%Param},
+        Data         => {
+            View => $View,
+            %Param,
+        },
     );
 
     # create output
