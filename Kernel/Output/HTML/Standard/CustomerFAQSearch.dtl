@@ -104,12 +104,12 @@
                     <label for="NoTimeSet">$Text{"All"}</label>
                 </div>
                 <div>
-                    <input title=$Text{"Specific date"} type="radio" id="Date" name="TimeSearchType"  value="TimePoint" $Data{"TimeSearchType::TimePoint"} />
+                    <input title="$Text{"Specific date"}" type="radio" id="Date" name="TimeSearchType" value="TimePoint" $Data{"TimeSearchType::TimePoint"} />
                     <label for="Date">$Text{"Only FAQ articles created"}</label>
                     $Data{"ItemCreateTimePointStart"} $Data{"ItemCreateTimePoint"} $Data{"ItemCreateTimePointFormat"}
                 </div>
                 <div>
-                    <input title="Date range" type="radio" id="DateRange" name="TimeSearchType" value="TimeSlot" $Data{"TimeSearchType::TimeSlot"} />
+                    <input title="$Test"{Date range"}" type="radio" id="DateRange" name="TimeSearchType" value="TimeSlot" $Data{"TimeSearchType::TimeSlot"} />
                     <label for="DateRange">$Text{"Only FAQ articles created between"}</label>
                     $Data{"ItemCreateTimeStart"} $Text{"and"} $Data{"ItemCreateTimeStop"}
                 </div>

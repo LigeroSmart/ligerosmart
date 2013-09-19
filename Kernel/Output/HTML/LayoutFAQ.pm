@@ -1,6 +1,6 @@
 # --
 # Kernel/Output/HTML/LayoutFAQ.pm - provides generic agent HTML output
-# Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,8 +24,19 @@ All FAQ-related HTML functions
 
 =over 4
 
-=item GetFAQItemVotingRateColor
-   ...
+=cut
+
+=item GetFAQItemVotingRateColor()
+Returns a color depenting on the FAQ rate
+
+    my $VotingResultColor = $LayoutObject->GetFAQItemVotingRateColor(
+        Rate => '20',
+    );
+
+Returns:
+
+    $VotingResultColor = 'red'          # or 'orange' or 'green'
+
 =cut
 
 sub GetFAQItemVotingRateColor {
