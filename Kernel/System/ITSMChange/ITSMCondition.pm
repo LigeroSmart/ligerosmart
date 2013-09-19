@@ -365,6 +365,91 @@ sub ConditionUpdate {
     return 1;
 }
 
+=item ConditionLookup()
+
+Return the condition id when the condition name is passed.
+Return the condition name when the condition id is passed.
+When no condition id or condition name is found, then the undefined value is returned.
+
+    my $ConditionID = $ConditionObject->ConditionLookup(
+        Name => 'ABC',
+    );
+
+    my $Name = $ConditionObject->ConditionLookup(
+        ConditionID => 42,
+    );
+
+=cut
+
+sub ConditionLookup {
+    my ( $Self, %Param ) = @_;
+
+    # the condition id or the condition name must be passed
+    if ( !$Param{ConditionID} && !$Param{Name} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need the ConditionID or the Name!',
+        );
+        return;
+    }
+
+    # only one of condition id and condition name can be passed
+    if ( $Param{ConditionID} && $Param{Name} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need either the ConditionID or the Name, not both!',
+        );
+        return;
+    }
+
+    # check if ConditionID is a number
+    if ( $Param{ConditionID} && $Param{ConditionID} !~ m{ \A \d+ \z }xms ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "ConditionID must be a number! (ConditionID: $Param{ConditionID})",
+        );
+        return;
+    }
+
+    # get condition id
+    if ( $Param{Name} ) {
+
+        my $ConditionID;
+
+        return if !$Self->{DBObject}->Prepare(
+            SQL   => 'SELECT id FROM change_condition WHERE name = ?',
+            Bind  => [ \$Param{Name} ],
+            Limit => 1,
+        );
+
+        while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+            $ConditionID = $Row[0];
+        }
+
+        return $ConditionID;
+    }
+
+    # get condition name
+    elsif ( $Param{ConditionID} ) {
+
+        my $Name;
+
+        return if !$Self->{DBObject}->Prepare(
+            SQL   => 'SELECT name FROM change_condition WHERE id = ?',
+            Bind  => [ \$Param{ConditionID} ],
+            Limit => 1,
+        );
+
+        while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+            $Name = $Row[0];
+        }
+
+        return $Name;
+    }
+
+    return;
+}
+
 =item ConditionGet()
 
 Returns a hash reference of the condition data for a given ConditionID.

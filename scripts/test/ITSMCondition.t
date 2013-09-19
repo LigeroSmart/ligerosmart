@@ -79,6 +79,7 @@ my @ObjectMethods = qw(
     ConditionDeleteAll
     ConditionGet
     ConditionList
+    ConditionLookup
     ConditionMatchExecute
     ConditionMatchExecuteAll
     ConditionUpdate
@@ -210,6 +211,26 @@ for my $ChangeID (@ChangeIDs) {
         );
 
         next CONDITIONCOUNTER if !$ConditionID;
+
+        # test condition lookup by name
+        my $LookupConditionID = $Self->{ConditionObject}->ConditionLookup(
+            Name => $ConditionName,
+        );
+        $Self->Is(
+            $LookupConditionID,
+            $ConditionID,
+            'Test ' . $TestCount++ . " - ConditionLookup -> Name: $ConditionName",
+        );
+
+        # test condition lookup by id
+        my $LookupConditionName = $Self->{ConditionObject}->ConditionLookup(
+            ConditionID => $ConditionID,
+        );
+        $Self->Is(
+            $LookupConditionName,
+            $ConditionName,
+            'Test ' . $TestCount++ . " - ConditionLookup -> ConditionID: $ConditionID",
+        );
 
         # remember change id for later tests
         $ConditionCount{$ChangeID}++;

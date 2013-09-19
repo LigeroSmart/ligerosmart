@@ -927,6 +927,10 @@ sub Data {
         = 'Ansicht nach Workorder-Erstellung';
     $Self->{Translation}->{'Show this screen after I created a new workorder'}
         = 'Diese Ansicht nach dem Erstellen einer Workorder anzeigen';
+    $Self->{Translation}->{'Duplicate name:'}
+        = 'Doppelter Name:';
+    $Self->{Translation}->{'This name is already used by another condition.'}
+        = 'Dieser Name wird bereits von einer anderen Bedingung verwendet.';
 
     $Self->{Translation}->{'Defines the free key field number 1 for changes to add a new change attribute.'} =
         '';

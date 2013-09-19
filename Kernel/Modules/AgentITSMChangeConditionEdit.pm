@@ -132,8 +132,24 @@ sub Run {
 
         # update only if ConditionName is given
         if ( !$GetParam{Name} ) {
-            $Param{InvalidName} = "ServerError";
+            $Param{InvalidName} = 'ServerError';
             push @ValidationErrors, 'InvalidName';
+        }
+
+        # check if condition name is already used
+        else {
+
+            # check if name exists
+            my $ConditionID = $Self->{ConditionObject}->ConditionLookup(
+                Name => $GetParam{Name},
+            );
+
+            # it is only an error if another condition uses this name
+            # changing the name of a condition is still possible
+            if ( $ConditionID && ( $GetParam{ConditionID} ne $ConditionID ) ) {
+                $Param{DuplicateName} = 'ServerError';
+                push @ValidationErrors, 'DuplicateName';
+            }
         }
 
         # if all passed data is valid
@@ -778,7 +794,12 @@ sub Run {
 
     # add the validation error messages
     for my $BlockName (@ValidationErrors) {
-        $Self->{LayoutObject}->Block( Name => $BlockName );
+        $Self->{LayoutObject}->Block(
+            Name => $BlockName,
+            Data => {
+                %GetParam,
+            },
+         );
     }
 
     # generate output
