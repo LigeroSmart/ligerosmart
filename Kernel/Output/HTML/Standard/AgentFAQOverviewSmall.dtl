@@ -20,7 +20,7 @@
     </div>
 <!-- dtl:block:NoFAQFound -->
 <!-- dtl:block:RecordForm -->
-    <table class="TableSmall" summary="$Text{"A generic FAQ table"}">
+    <table class="TableSmall NoCellspacing" summary="$Text{"A generic FAQ table"}">
         <thead>
             <tr>
 <!-- dtl:block:RecordNumberHeader -->

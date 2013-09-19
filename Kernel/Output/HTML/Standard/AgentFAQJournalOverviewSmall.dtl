@@ -20,31 +20,31 @@
     </div>
 <!-- dtl:block:NoFAQFound -->
 <!-- dtl:block:RecordForm -->
-    <table class="TableSmall" summary="A generic FAQ table">
+    <table class="TableSmall NoCellspacing" summary="A generic FAQ table">
         <thead>
             <tr>
 <!-- dtl:block:RecordNumberHeader -->
-                <th class="FAQNumber">
+                <th class="FAQNumber OverviewHeader">
                     <span>$Config{"FAQ::FAQHook"}</span>
                 </th>
 <!-- dtl:block:RecordNumberHeader -->
 <!-- dtl:block:RecordTitleHeader -->
-                <th class="Title">
+                <th class="Title OverviewHeader">
                     <span>$Text{"Title"}</span>
                 </th>
 <!-- dtl:block:RecordTitleHeader -->
 <!-- dtl:block:RecordCategoryHeader -->
-                <th class="Category">
+                <th class="Category OverviewHeader">
                     <span>$Text{"Category"}</span>
                 </th>
 <!-- dtl:block:RecordCategoryHeader -->
 <!-- dtl:block:RecordNameHeader -->
-                <th class="Action">
+                <th class="Action OverviewHeader">
                     <span>$Text{"Action"}</span>
                 </th>
 <!-- dtl:block:RecordNameHeader -->
 <!-- dtl:block:RecordTimeHeader -->
-                <th class="Time">
+                <th class="Time OverviewHeader">
                     <span>$Text{"Time"}</span>
                 </th>
 <!-- dtl:block:RecordTimeHeader -->

@@ -83,7 +83,7 @@ sub Run {
                 next COLUMN if ( $Column eq 'Language' && !$Self->{MultiLanguage} );
 
                 # create needed variables
-                my $CSS = '';
+                my $CSS = 'OverviewHeader';
                 my $OrderBy;
 
                 # remove ID if necesary
@@ -102,11 +102,11 @@ sub Run {
                 if ( $Param{SortBy} && ( $Param{SortBy} eq $Column ) ) {
                     if ( $Param{OrderBy} && ( $Param{OrderBy} eq 'Up' ) ) {
                         $OrderBy = 'Down';
-                        $CSS .= ' SortDescending';
+                        $CSS .= ' SortDescendingLarge';
                     }
                     else {
                         $OrderBy = 'Up';
-                        $CSS .= ' SortAscending';
+                        $CSS .= ' SortAscendingLarge';
                     }
                 }
                 else {
