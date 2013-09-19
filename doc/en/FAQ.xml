@@ -214,7 +214,7 @@
         </para>
     </section>
     <section>
-        <title>Generic Interface FAQ connector for public interface</title>
+        <title>Generic Interface FAQ Connector For Public Interface</title>
         <para>
             Allow you to use the functions for FAQ public interface via OTRS Generic Interface by
             adding the following operations.
@@ -257,9 +257,9 @@
         </itemizedlist>
         <note>
             <para>
-                Please take a look into the appendix
+                Please take a look into the appendix:
                 <link linkend="GIFAQCC">Generic Interface FAQ Connector Configuration</link> below
-                to learn more about how to activate this feature, as well as the appendix
+                to learn more about how to activate this feature, as well as the appendix:
                 <link linkend="GIFAQCA">Generic Interface FAQ Connector API</link>
                 for details on using the above functions.
             </para>
@@ -1169,7 +1169,7 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
             command on the command line:
         </para>
         <screen>
-            shell> perl bin/otrs.UnitTest.pl -n FAQ:FAQSearch:GenericInterface/FAQConnector
+shell> perl bin/otrs.UnitTest.pl -n FAQ:FAQSearch:GenericInterface/FAQConnector
         </screen>
         <para>Run all available unit tests</para>
         <para>
