@@ -105,10 +105,12 @@
 
 .RatingLabel {
     float: left;
+    padding-right: 2px;
 }
 
 .RTL .RatingLabel {
     float: right;
+    padding-left: 2px
 }
 
 .SpacingTop {
