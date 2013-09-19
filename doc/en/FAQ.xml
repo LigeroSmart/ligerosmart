@@ -120,7 +120,8 @@
     <sect1>
         <title>Inserting FAQ articles in OTRS replies</title>
         <para>
-            You can insert FAQ articles (without images) in replies you generate in OTRS.
+            You can insert FAQ articles (including images and attachments) in new tickets or replies
+            you generate in OTRS.
          </para>
     </sect1>
     <sect1>
