@@ -12,8 +12,6 @@ package var::packagesetup::Survey;
 use strict;
 use warnings;
 
-use vars qw(@ISA);
-
 =head1 NAME
 
 Survey.pm - code to excecute during package installation
@@ -165,7 +163,7 @@ my $Result = $CodeObject->CodeUpgradeFromLowerThan_2_0_92();
 
 =cut
 
-sub CodeUpgradeFromLowerThan_2_0_92 {
+sub CodeUpgradeFromLowerThan_2_0_92 {    ## no critic
     my ( $Self, %Param ) = @_;
 
     # SELECT all functionality values
@@ -201,7 +199,7 @@ my $Result = $CodeObject->CodeUpgradeFromLowerThan_2_1_5();
 
 =cut
 
-sub CodeUpgradeFromLowerThan_2_1_5 {
+sub CodeUpgradeFromLowerThan_2_1_5 {    ## no critic
     my ( $Self, %Param ) = @_;
 
     # set all survey_question records
@@ -221,7 +219,7 @@ where there is no entry present.
 
 =cut
 
-sub _Prefill_AnswerRequiredFromSurveyQuestion_2_1_5 {
+sub _Prefill_AnswerRequiredFromSurveyQuestion_2_1_5 {    ## no critic
     my ($Self) = @_;
 
     return if !$Self->{DBObject}->Prepare(

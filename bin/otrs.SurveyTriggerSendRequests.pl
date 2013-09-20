@@ -40,15 +40,15 @@ use Kernel::System::User;
 use Kernel::System::Survey;
 use Getopt::Std;
 
-my %opts;
-getopts( 'afhdev', \%opts );
+my %Opts;
+getopts( 'afhdev', \%Opts );
 
-my $OptsCount = scalar( keys %opts );
+my $OptsCount = scalar( keys %Opts );
 
 if (
-    $opts{h}
+    $Opts{h}
     || ( $OptsCount < 1 )
-    || ( $opts{v} && $OptsCount != 2 )
+    || ( $Opts{v} && $OptsCount != 2 )
     )
 {
     print STDERR "Usage: bin/$0 [-h] [-d] [-e]\n";
@@ -71,8 +71,8 @@ if (
 }
 
 # a dry run implies verbosity
-if ( $opts{d} ) {
-    $opts{v} = 1;
+if ( $Opts{d} ) {
+    $Opts{v} = 1;
 }
 
 # common objects
@@ -94,7 +94,7 @@ $CommonObject{SurveyObject}    = Kernel::System::Survey->new(%CommonObject);
 
 my $SendInHoursAfterClose = $CommonObject{ConfigObject}->Get('Survey::SendInHoursAfterClose');
 if ( !$SendInHoursAfterClose ) {
-    if ( $opts{v} ) {
+    if ( $Opts{v} ) {
         print "No days configured in Survey::SendInHoursAfterClose.\n";
     }
     exit 1;
@@ -124,7 +124,7 @@ SURVEYREQUEST:
 for my $Line (@Rows) {
     for my $Val (qw(ID TicketID CreateTime)) {
         if ( !$Line->{$Val} ) {
-            if ( $opts{v} ) {
+            if ( $Opts{v} ) {
                 print "$Val missing in service_request row.\n";
             }
             next SURVEYREQUEST;
@@ -137,18 +137,18 @@ for my $Line (@Rows) {
 
     # don't send for survey_requests that are younger than CreateTime + $SendINHoursAfterClose
     if ( $SendInHoursAfterClose * 3600 + $CreateTime > $Now ) {
-        if ( $opts{v} ) {
+        if ( $Opts{v} ) {
             print
                 "Did not send for survey_request with id $Line->{ID} becaue send time was't reached yet.\n";
         }
         next SURVEYREQUEST;
     }
 
-    if ( $opts{v} ) {
+    if ( $Opts{v} ) {
         print
             "Sending survey for survey_request with id $Line->{ID} that belongs to TicketID $Line->{TicketID}.\n";
     }
-    if ( !$opts{d} && $Line->{ID} && $Line->{TicketID} ) {
+    if ( !$Opts{d} && $Line->{ID} && $Line->{TicketID} ) {
         $CommonObject{SurveyObject}->RequestSend(
             TriggerSendRequests => 1,
             SurveyRequestID     => $Line->{ID},

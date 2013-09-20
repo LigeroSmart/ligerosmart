@@ -242,7 +242,7 @@ sub Run {
 
     # display stats if status Master, Valid or Invalid
     if (
-        $Survey{Status} eq 'Master'
+        $Survey{Status}    eq 'Master'
         || $Survey{Status} eq 'Valid'
         || $Survey{Status} eq 'Invalid'
         )
@@ -265,7 +265,7 @@ sub Run {
 
             # generate the answers of the question
             if (
-                $Question->{Type} eq 'YesNo'
+                $Question->{Type}    eq 'YesNo'
                 || $Question->{Type} eq 'Radio'
                 || $Question->{Type} eq 'Checkbox'
                 )
