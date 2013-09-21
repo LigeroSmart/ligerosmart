@@ -248,8 +248,9 @@ sub Run {
             return $Self->{LayoutObject}->Redirect( OP => "Action=$Self->{Action}" );
         }
         $Output = $Self->{LayoutObject}->Header(
-            Title => 'Stats Overview',
-            Type  => 'Small',
+            Title     => 'Stats Overview',
+            Type      => 'Small',
+            BodyClass => 'Popup',
         );
 
         my %Survey = $Self->{SurveyObject}->SurveyGet( SurveyID => $SurveyID );
@@ -297,8 +298,9 @@ sub Run {
             return $Self->{LayoutObject}->Redirect( OP => "Action=$Self->{Action}" );
         }
         $Output = $Self->{LayoutObject}->Header(
-            Title => 'Stats Detail',
-            Type  => 'Small',
+            Title     => 'Stats Detail',
+            Type      => 'Small',
+            BodyClass => 'Popup',
         );
 
         my %Survey = $Self->{SurveyObject}->SurveyGet( SurveyID => $SurveyID );
@@ -496,19 +498,22 @@ sub _SurveyAddMask {
     # if SurveyID the SurveyEdit should be loaded (popup)
     my $Title;
     my $Type;
+    my $BodyClass;
     if ( $Param{SurveyID} ) {
         $Title = 'Survey Edit';
 
         # for header and footer
-        $Type = 'Small';
+        $Type      = 'Small';
+        $BodyClass = 'Popup'
     }
     else {
         $Title = 'Add New Survey';
     }
 
     $Output .= $Self->{LayoutObject}->Header(
-        Title => $Title,
-        Type  => $Type,
+        Title     => $Title,
+        Type      => $Type,
+        BodyClass => $BodyClass,
     );
 
     my $SelectedQueues;

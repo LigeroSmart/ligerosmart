@@ -88,9 +88,9 @@ a.ArrowDownDisabled {
     margin-top: 0;
     margin-bottom: 1px;
     border-style: none;
-    display: inline-block;
     vertical-align: middle;
     cursor: pointer;
+    text-align: center;
 }
 
 a.ArrowUp:active,
@@ -105,21 +105,19 @@ a.ArrowDownDisabled:active {
     margin-bottom: 1px;
 }
 
-a.ArrowUp {
-    background: url(../img/icons/survey_arrow_up.png);
+a.ArrowUp i,
+a.ArrowDown i {
+    color: #3399FF;
 }
 
-a.ArrowUpDisabled {
-    background: url(../img/icons/survey_arrow_up_disabled.png);
-    cursor: default;
+a.ArrowUp:hover i,
+a.ArrowDown:hover i {
+    color: #339900 !important;
 }
 
-a.ArrowDown {
-    background: url(../img/icons/survey_arrow_down.png) no-repeat 0 0;
-}
-
-a.ArrowDownDisabled {
-    background: url(../img/icons/survey_arrow_down_disabled.png);
+a.ArrowUpDisabled i,
+a.ArrowDownDisabled i {
+    color: #909090;
     cursor: default;
 }
 
@@ -139,10 +137,8 @@ a.SeeDetails {
     margin-top: 0;
     margin-bottom: 1px;
     border-style: none;
-    display: inline-block;
     vertical-align: middle;
     cursor: pointer;
-    background: url(../img/icons/survey_see_details.png);
 }
 
 label.Textarea,

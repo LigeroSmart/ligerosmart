@@ -115,9 +115,11 @@
             </div>
 
 <!-- dtl:block:SurveyBlock -->
-            <div class="WidgetSimple SpacingTop Toggle" id="$Data{"SurveyField"}Block">
+            <div class="WidgetSimple SpacingTop" id="$Data{"SurveyField"}Block">
                 <div class="Header">
-                    <div class="WidgetAction Toggle"><a href="#" title="$Text{"Show or hide the content"}"><span></span></a></div>
+                    <div class="WidgetAction Toggle">
+                        <a href="$Env{"Baselink"}Action=AgentSurveyZoom;SurveyID=$LQData{"SurveyID"}" title="$Text{"Show or hide the content"}"><i class="icon-caret-right"></i><i class="icon-caret-down"></i></a>
+                    </div>
                     <h2>$Text{"$Data{"Title"}"}</h2>
                 </div>
                 <div class="Content">

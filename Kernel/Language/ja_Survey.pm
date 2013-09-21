@@ -55,7 +55,7 @@ sub Data {
     $Self->{Translation}->{'Vote Time'} = '返信日時';
     $Self->{Translation}->{'Survey Stat Details'} = '調査統計の詳細';
     $Self->{Translation}->{'go back to stats overview'} = '統計一覧に戻る';
-    $Self->{Translation}->{'Go Back'} = '戻る';
+    $Self->{Translation}->{'Go back'} = '戻る';
 
     # Template: AgentSurveyEditQuestions
     $Self->{Translation}->{'Edit Questions'} = '質問の編集';

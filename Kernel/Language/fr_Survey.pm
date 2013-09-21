@@ -55,7 +55,7 @@ sub Data {
     $Self->{Translation}->{'Vote Time'} = '';
     $Self->{Translation}->{'Survey Stat Details'} = '';
     $Self->{Translation}->{'go back to stats overview'} = '';
-    $Self->{Translation}->{'Go Back'} = '';
+    $Self->{Translation}->{'Go back'} = '';
 
     # Template: AgentSurveyEditQuestions
     $Self->{Translation}->{'Edit Questions'} = '';

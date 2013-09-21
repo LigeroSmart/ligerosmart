@@ -32,7 +32,7 @@ sub Data {
     $Self->{Translation}->{'No questions saved for this survey.'} = 'Não existem perguntas no inquérito';
     $Self->{Translation}->{'Survey Stat Details'} = 'Estatística detalha do inquérito';
     $Self->{Translation}->{'go back to stats overview'} = 'voltar à vista de estatísticas';
-    $Self->{Translation}->{'Go Back'} = 'voltar';
+    $Self->{Translation}->{'Go back'} = 'voltar';
 
     # Template: AgentSurveyEditQuestions
     $Self->{Translation}->{'Survey Edit Questions'} = 'Editar perguntas';

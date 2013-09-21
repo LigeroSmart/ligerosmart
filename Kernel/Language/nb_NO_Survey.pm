@@ -55,7 +55,7 @@ sub Data {
     $Self->{Translation}->{'Vote Time'} = 'Tid svart';
     $Self->{Translation}->{'Survey Stat Details'} = 'Detaljstatistikk for spørreundersøkelse';
     $Self->{Translation}->{'go back to stats overview'} = 'gå tilbake til statistikkoversikten';
-    $Self->{Translation}->{'Go Back'} = 'Gå tilbake';
+    $Self->{Translation}->{'Go back'} = 'Gå tilbake';
 
     # Template: AgentSurveyEditQuestions
     $Self->{Translation}->{'Edit Questions'} = 'Rediger spørsmål';

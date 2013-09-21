@@ -510,8 +510,9 @@ sub _MaskQuestionOverview {
 
     # output header
     $Output = $Self->{LayoutObject}->Header(
-        Title => 'Survey Edit Questions',
-        Type  => 'Small',
+        Title     => 'Survey Edit Questions',
+        Type      => 'Small',
+        BodyClass => 'Popup',
     );
 
     # get all attributes of the survey
@@ -693,8 +694,9 @@ sub _MaskQuestionEdit {
 
     # output header
     $Output = $Self->{LayoutObject}->Header(
-        Title => 'Question Edit',
-        Type  => 'Small',
+        Title     => 'Question Edit',
+        Type      => 'Small',
+        BodyClass => 'Popup',
     );
     my %Survey = $Self->{SurveyObject}->SurveyGet( SurveyID => $Param{SurveyID} );
     my %Question = $Self->{SurveyObject}->QuestionGet( QuestionID => $Param{QuestionID} );
@@ -853,8 +855,9 @@ sub _MaskAnswerEdit {
 
     my $Output;
     $Output = $Self->{LayoutObject}->Header(
-        Title => 'Answer Edit',
-        Type  => 'Small',
+        Title     => 'Answer Edit',
+        Type      => 'Small',
+        BodyClass => 'Popup',
     );
     my %Answer = $Self->{SurveyObject}->AnswerGet( AnswerID => $Param{AnswerID} );
     $Answer{SurveyID} = $Param{SurveyID};

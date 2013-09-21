@@ -73,18 +73,18 @@ sub Run {
             for my $Column (@ShowColumns) {
 
                 # create needed variables
-                my $CSS = '';
+                my $CSS = 'OverviewHeader';
                 my $OrderBy;
 
                 # set the correct Set CSS class and order by link
                 if ( $Param{SortBy} && ( $Param{SortBy} eq $Column ) ) {
                     if ( $Param{OrderBy} && ( $Param{OrderBy} eq 'Up' ) ) {
                         $OrderBy = 'Down';
-                        $CSS .= ' SortDescending';
+                        $CSS .= ' SortDescendingLarge';
                     }
                     else {
                         $OrderBy = 'Up';
-                        $CSS .= ' SortAscending';
+                        $CSS .= ' SortAscendingLarge';
                     }
                 }
                 else {

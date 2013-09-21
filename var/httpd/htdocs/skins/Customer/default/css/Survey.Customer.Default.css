@@ -9,26 +9,29 @@
  * @section     Customer
  */
 
+@media screen,projection,tv,handheld {
+
 div.SurveyBlock {
     margin: 8px 0 13px;
     padding-bottom: 5px;
-    background: #F8F9F9;
-    background: -moz-linear-gradient(center top , #FFF, #F8F9F9);
-    background: -webkit-gradient(linear, left top, left bottom, from(#FFF), to(#F8F9F9));
+    background: linear-gradient(to bottom, #FFFFFF 0%, #F8F9F9 100%) repeat scroll 0 0 transparent;
     border: 1px solid #EAEEEE;
     border-radius: 5px;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
     width: 738px;
 }
 
+.SurveyBlock div.Content {
+    border: 0px;
+}
+
 .SurveyBlockHeader {
-    background: -moz-linear-gradient(center top , #F9F9F9, #ECEEEE) repeat scroll 0 0 transparent;
-    border-bottom: 1px solid #CCCCCC;
-    color: #333333;
+    border-bottom: 1px solid #E8E9E9;
+    border-radius: 5px 5px 0 0;
+    border-top: 1px solid #FFFFFF;
     font-size: 12px;
+    font-weight: bold;
     margin: 0;
-    padding: 4px 9px 3px 9px;
+    padding: 5px 8px 4px;
     text-shadow: 0 1px 0 #FFFFFF;
 }
 
@@ -56,10 +59,10 @@ div.Question{
     font-weight: bold;
     display: block;
 }
+
 div.Mandatory {
     color: black;
 }
-
 
 div.Error {
     color: #ff505e !important;
@@ -119,4 +122,5 @@ div.Answer {
     margin:0 13px;
     padding:4px 8px 7px 24px;
     position:absolute;
+}
 }

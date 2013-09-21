@@ -10,6 +10,7 @@
 <div class="LayoutPopup ARIARoleMain">
     <div class="Header">
         <h1>$Text{"Edit Questions"}: $Text{"$Config{"Survey::Hook"}"}$QData{"SurveyNumber"} - $QData{"Title"}</h1>
+        <p class="AsteriskExplanation">$Text{"All fields marked with an asterisk (*) are mandatory."}</p>
         <p>
             <a class="CancelClosePopup" href="#">$Text{"Cancel & close window"}</a>
         </p>
@@ -108,13 +109,15 @@
                             <td>
                                 $Text{"$Data{"Type"}"}
                             </td>
-                            <td>
+                            <td class="Center">
                                 <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=QuestionUp;SurveyID=$LQData{"SurveyID"};QuestionID=$LQData{"QuestionID"}" class="ArrowUp$QData{"ClassUp"}">
+                                    <i class="icon-chevron-up"></i>
                                     <span>$Text{"Up"}</span>
                                 </a>
                             </td>
-                            <td>
+                            <td class="Center">
                                 <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=QuestionDown;SurveyID=$LQData{"SurveyID"};QuestionID=$LQData{"QuestionID"}" class="ArrowDown$QData{"ClassDown"}">
+                                    <i class="icon-chevron-down"></i>
                                     <span>$Text{"Down"}</span>
                                 </a>
                             </td>
@@ -132,18 +135,20 @@
                             <td>
                                 $Text{"$Data{"Status"}"}
                             </td>
-                            <td>
+                            <td class="Center">
                                 <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=QuestionUp;SurveyID=$LQData{"SurveyID"};QuestionID=$LQData{"QuestionID"}" class="ArrowUp$QData{"ClassUp"}">
+                                    <i class="icon-chevron-up"></i>
                                     <span>$Text{"Up"}</span>
                                 </a>
                             </td>
-                            <td>
+                            <td class="Center">
                                 <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=QuestionDown;SurveyID=$LQData{"SurveyID"};QuestionID=$LQData{"QuestionID"}" class="ArrowDown$QData{"ClassDown"}">
+                                    <i class="icon-chevron-down"></i>
                                     <span>$Text{"Down"}</span>
                                 </a>
                             </td>
 <!-- dtl:block:SurveyQuestionsDeleteButton -->
-                            <td>
+                            <td class="Center">
                                 <form action="$Env{"CGIHandle"}" method="post">
                                     <input type="hidden" name="Action" value="$Env{"Action"}" />
                                     <input type="hidden" name="Subaction" value="QuestionDelete" />
@@ -162,7 +167,7 @@
 
     </div>
     <div class="Footer">
-        <button type="submit" class="CancelClosePopup Primary" value="$Text{"Close window"}">$Text{"Close window"}</button>
+        <button type="submit" class="CancelClosePopup Primary CallForAction" value="$Text{"Close window"}"><span><i class="icon-remove"></i> $Text{"Close window"}</span></button>
     </div>
 </div>
 <!-- dtl:js_on_document_complete -->
@@ -181,11 +186,11 @@
 <!-- dtl:js_on_document_complete -->
 <!-- dtl:block:SurveyEditQuestions -->
 
-
 <!-- dtl:block:QuestionEdit -->
 <div class="LayoutPopup ARIARoleMain">
     <div class="Header">
         <h1>$Text{"Edit Question"}: $Text{"$Data{"Question"}"}</h1>
+        <p class="AsteriskExplanation">$Text{"All fields marked with an asterisk (*) are mandatory."}</p>
         <p>
             <a class="CancelClosePopup" href="#">$Text{"Cancel & close window"}</a>
             $Text{"or"}
@@ -289,18 +294,20 @@
                             <td>
                                 <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=AnswerEdit;SurveyID=$LQData{"SurveyID"};QuestionID=$LQData{"QuestionID"};AnswerID=$LQData{"AnswerID"}"> $QData{"Answer","90"} </a>
                             </td>
-                            <td>
+                            <td class="Center">
                                 <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=AnswerUp;SurveyID=$LQData{"SurveyID"};QuestionID=$LQData{"QuestionID"};AnswerID=$LQData{"AnswerID"}" class="ArrowUp$QData{"ClassUp"}">
+                                    <i class="icon-chevron-up"></i>
                                     <span>$Text{"Up"}</span>
                                 </a>
                             </td>
-                            <td>
+                            <td class="Center">
                                 <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=AnswerDown;SurveyID=$LQData{"SurveyID"};QuestionID=$LQData{"QuestionID"};AnswerID=$LQData{"AnswerID"}" class="ArrowDown$QData{"ClassDown"}">
+                                    <i class="icon-chevron-down"></i>
                                     <span>$Text{"Down"}</span>
                                 </a>
                             </td>
 <!-- dtl:block:QuestionEditRadioDelete -->
-                            <td>
+                            <td class="Center">
                                 <form action="$Env{"CGIHandle"}" method="post">
                                     <input type="hidden" name="Action" value="$Env{"Action"}" />
                                     <input type="hidden" name="Subaction" value="AnswerDelete" />
@@ -319,18 +326,20 @@
                             <td>
                                 <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=AnswerEdit;SurveyID=$LQData{"SurveyID"};QuestionID=$LQData{"QuestionID"};AnswerID=$LQData{"AnswerID"}">$QData{"Answer"}</a>
                             </td>
-                            <td>
+                            <td class="Center">
                                 <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=AnswerUp;SurveyID=$LQData{"SurveyID"};QuestionID=$LQData{"QuestionID"};AnswerID=$LQData{"AnswerID"}" class="ArrowUp$QData{"ClassUp"}">
+                                    <i class="icon-chevron-up"></i>
                                     <span>$Text{"Up"}</span>
                                 </a>
                             </td>
-                            <td>
+                            <td class="Center">
                                 <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=AnswerDown;SurveyID=$LQData{"SurveyID"};QuestionID=$LQData{"QuestionID"};AnswerID=$LQData{"AnswerID"}" class="ArrowDown$QData{"ClassDown"}">
+                                    <i class="icon-chevron-down"></i>
                                     <span>$Text{"Down"}</span>
                                 </a>
                             </td>
 <!-- dtl:block:QuestionEditCheckboxDelete -->
-                            <td>
+                            <td class="Center">
                                 <form action="$Env{"CGIHandle"}" method="post">
                                     <input type="hidden" name="Action" value="$Env{"Action"}" />
                                     <input type="hidden" name="Subaction" value="AnswerDelete" />
@@ -347,13 +356,33 @@
 <!-- dtl:block:QuestionEditYesno -->
                         <tr>
                             <td> $Text{"Yes"} </td>
-                            <td><a href="" class="ArrowUpDisabled"><span>$Text{"Up"}</span></a></td>
-                            <td><a href="" class="ArrowDownDisabled"><span>$Text{"Down"}</span></a></td>
+                            <td class="Center">
+                                <a href="" class="ArrowUpDisabled">
+                                    <i class="icon-chevron-up"></i>
+                                    <span>$Text{"Up"}</span>
+                                </a>
+                            </td>
+                            <td class="Center">
+                                <a href="" class="ArrowDownDisabled">
+                                    <i class="icon-chevron-down"></i>
+                                    <span>$Text{"Down"}</span>
+                                </a>
+                            </td>
                         </tr>
                         <tr>
                             <td> $Text{"No"} </td>
-                            <td><a href="" class="ArrowUpDisabled" ><span>$Text{"Up"}</span></a></td>
-                            <td><a href="" class="ArrowDownDisabled" ><span>$Text{"Down"}</span></a></td>
+                            <td class="Center">
+                                <a href="" class="ArrowUpDisabled" >
+                                    <i class="icon-chevron-up"></i>
+                                    <span>$Text{"Up"}</span>
+                                </a>
+                            </td>
+                            <td class="Center">
+                                <a href="" class="ArrowDownDisabled" >
+                                    <i class="icon-chevron-down"></i>
+                                    <span>$Text{"Down"}</span>
+                                </a>
+                            </td>
                         </tr>
 <!-- dtl:block:QuestionEditYesno -->
 
@@ -376,7 +405,7 @@
         <form action="$Env{"CGIHandle"}" method="post">
             <input type="hidden" name="Action" value="$Env{"Action"}" />
             <input type="hidden" name="SurveyID" value="$QData{"SurveyID"}" />
-            <button type="submit" class="Primary" value="$Text{"Go Back"}">$Text{"Go Back"}</button>
+            <button type="submit" class="Primary CallForAction" value="$Text{"Go back"}"><span><i class="icon-arrow-left"></i> $Text{"Go back"}</span></button>
         </form>
     </div>
 </div>
@@ -393,6 +422,7 @@
 
         <div class="Header">
             <h1>$Text{"Edit Answer"}: $QData{"Answer"} </h1>
+            <p class="AsteriskExplanation">$Text{"All fields marked with an asterisk (*) are mandatory."}</p>
             <p>
                 <a class="CancelClosePopup" href="#">$Text{"Cancel & close window"}</a>
                 $Text{"or"}
@@ -428,7 +458,7 @@
             </div>
         </div>
         <div class="Footer">
-            <button type="submit" class="Primary" value="$Text{"Save"}">$Text{"Save"}</button>
+            <button type="submit" class="Primary CallForAction" value="$Text{"Save"}"><span><i class="icon-check"></i> $Text{"Save"}</span></button>
         </div>
     </div>
 </form>
