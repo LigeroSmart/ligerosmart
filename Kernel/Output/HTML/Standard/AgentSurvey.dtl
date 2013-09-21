@@ -209,6 +209,9 @@ $Include{"RichTextEditor"}
                     <thead>
                         <tr>
                             <th>
+                                $Text{"Details"}
+                            </th>
+                            <th>
                                 $Text{"Send Time"}
                             </th>
                             <th>
@@ -217,14 +220,17 @@ $Include{"RichTextEditor"}
                             <th>
                                 $Text{"Ticket"}
                             </th>
-                            <th>
-                                $Text{"Details"}
-                            </th>
                         </tr>
                     </thead>
                     <tbody>
 <!-- dtl:block:StatsVote -->
                         <tr>
+                            <td class="Center">
+                                <a class="SeeDetails" href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=StatsDetail;SurveyID=$LQData{"SurveyID"};RequestID=$LQData{"RequestID"};TicketNumber=$LQData{"TicketNumber"}">
+                                    <i class="icon-zoom-in"></i>
+                                    <span>See Details</span>
+                                </a>
+                            </td>
                             <td>
                                 $TimeLong{"$Data{"SendTime"}"}
                             </td>
@@ -234,12 +240,6 @@ $Include{"RichTextEditor"}
                             <td>
                                 <a class="LinkZoomView AsBlock" href="$Env{"Baselink"}Action=AgentTicketZoom;TicketID=$LQData{"TicketID"}">
                                     $QData{"TicketNumber"}
-                                </a>
-                            </td>
-                            <td class="Center">
-                                <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=StatsDetail;SurveyID=$LQData{"SurveyID"};RequestID=$LQData{"RequestID"};TicketNumber=$LQData{"TicketNumber"}" class="SeeDetails">
-                                    <i class="icon-zoom-in"></i>
-                                    <span>See Details</span>
                                 </a>
                             </td>
                         </tr>
