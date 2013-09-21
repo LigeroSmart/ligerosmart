@@ -41,7 +41,6 @@
                 </NavBar>
                 <Loader>
                     <CSS>Survey.Agent.Default.css</CSS>
-                    <CSS_IE7>Survey.Agent.Default.IE7.css</CSS_IE7>
                 </Loader>
             </FrontendModuleReg>
         </Setting>
@@ -56,7 +55,6 @@
                 <NavBarName>Survey</NavBarName>
                 <Loader>
                     <CSS>Survey.Agent.Default.css</CSS>
-                    <CSS_IE7>Survey.Agent.Default.IE7.css</CSS_IE7>
                     <JavaScript>Survey.Agent.SurveyZoom.js</JavaScript>
                 </Loader>
             </FrontendModuleReg>
@@ -71,7 +69,6 @@
                 <Description Translatable="1">A module to edit survey questions.</Description>
                 <Loader>
                     <CSS>Survey.Agent.Default.css</CSS>
-                    <CSS_IE7>Survey.Agent.Default.IE7.css</CSS_IE7>
                 </Loader>
             </FrontendModuleReg>
         </Setting>
@@ -87,7 +84,6 @@
                 <Title>Survey</Title>
                 <Loader>
                     <CSS>Survey.Customer.Default.css</CSS>
-                    <CSS_IE7>Survey.Customer.Default.IE7.css</CSS_IE7>
                 </Loader>
             </FrontendModuleReg>
         </Setting>
