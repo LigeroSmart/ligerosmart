@@ -234,7 +234,7 @@
             and choosing "New".
         </para>
         <para>
-            New Surveys require a title, an introduction text, a sender mailaddress, a mail subject,
+            New Surveys require a title, an introduction text, a sender mail address, a mail subject,
             a mail body and an internal description of the Survey.
         </para>
         <para>
@@ -252,7 +252,7 @@
             A new window will pop up. In there the user can add questions.
         </para>
         <para>
-            Four types of quesions are selectable. These are:
+            Four types of questions are selectable. These are:
         </para>
         <para>
             "YesNo" questions a user can answer by selecting "Yes" or "No" of a drop down select.
