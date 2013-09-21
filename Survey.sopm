@@ -55,11 +55,6 @@
         <File Permission="644" Location="var/httpd/htdocs/js/Survey.Agent.SurveyZoom.js" />
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/Survey.Agent.Default.css"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/css/Survey.Customer.Default.css"/>
-        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/img/icons/survey_arrow_up.png"/>
-        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/img/icons/survey_arrow_up_disabled.png"/>
-        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/img/icons/survey_arrow_down.png"/>
-        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/img/icons/survey_arrow_down_disabled.png"/>
-        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/img/icons/survey_see_details.png"/>
         <File Permission="644" Location="var/packagesetup/Survey.pm"/>
         <File Permission="644" Location="var/cron/survey_trigger_send_requests.dist"/>
         <File Permission="755" Location="bin/otrs.SurveyTriggerSendRequests.pl"/>
