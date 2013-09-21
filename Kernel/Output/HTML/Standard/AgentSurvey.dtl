@@ -226,7 +226,7 @@ $Include{"RichTextEditor"}
 <!-- dtl:block:StatsVote -->
                         <tr>
                             <td class="Center">
-                                <a class="SeeDetails" href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=StatsDetail;SurveyID=$LQData{"SurveyID"};RequestID=$LQData{"RequestID"};TicketNumber=$LQData{"TicketNumber"}">
+                                <a class="SeeDetails AsBlock" href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=StatsDetail;SurveyID=$LQData{"SurveyID"};RequestID=$LQData{"RequestID"};TicketNumber=$LQData{"TicketNumber"}">
                                     <i class="icon-zoom-in"></i>
                                     <span>See Details</span>
                                 </a>

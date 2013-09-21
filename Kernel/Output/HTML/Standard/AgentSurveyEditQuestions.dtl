@@ -104,19 +104,19 @@
 <!-- dtl:block:SurveyQuestionsSaved -->
                         <tr>
                             <td>
-                                <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=QuestionEdit;SurveyID=$LQData{"SurveyID"};QuestionID=$LQData{"QuestionID"}" >$QData{"Question","90"}</a>
+                                <a class="AsBlock" href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=QuestionEdit;SurveyID=$LQData{"SurveyID"};QuestionID=$LQData{"QuestionID"}" >$QData{"Question","90"}</a>
                             </td>
                             <td>
                                 $Text{"$Data{"Type"}"}
                             </td>
                             <td class="Center">
-                                <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=QuestionUp;SurveyID=$LQData{"SurveyID"};QuestionID=$LQData{"QuestionID"}" class="ArrowUp$QData{"ClassUp"}">
+                                <a class="AsBlock ArrowUp$QData{"ClassUp"}" href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=QuestionUp;SurveyID=$LQData{"SurveyID"};QuestionID=$LQData{"QuestionID"}">
                                     <i class="icon-chevron-up"></i>
                                     <span>$Text{"Up"}</span>
                                 </a>
                             </td>
                             <td class="Center">
-                                <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=QuestionDown;SurveyID=$LQData{"SurveyID"};QuestionID=$LQData{"QuestionID"}" class="ArrowDown$QData{"ClassDown"}">
+                                <a class="AsBlock ArrowDown$QData{"ClassDown"}" href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=QuestionDown;SurveyID=$LQData{"SurveyID"};QuestionID=$LQData{"QuestionID"}">
                                     <i class="icon-chevron-down"></i>
                                     <span>$Text{"Down"}</span>
                                 </a>
@@ -127,7 +127,7 @@
 <!-- dtl:block:SurveyQuestionsRow -->
                         <tr>
                             <td>
-                                <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=QuestionEdit;SurveyID=$LQData{"SurveyID"};QuestionID=$LQData{"QuestionID"}" class="$QData{"Class"}">$QData{"Question","70"}</a>
+                                <a class="AsBlock" href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=QuestionEdit;SurveyID=$LQData{"SurveyID"};QuestionID=$LQData{"QuestionID"}" class="$QData{"Class"}">$QData{"Question","70"}</a>
                             </td>
                             <td>
                                 $Text{"$Data{"Type"}"}
@@ -136,13 +136,13 @@
                                 $Text{"$Data{"Status"}"}
                             </td>
                             <td class="Center">
-                                <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=QuestionUp;SurveyID=$LQData{"SurveyID"};QuestionID=$LQData{"QuestionID"}" class="ArrowUp$QData{"ClassUp"}">
+                                <a class="AsBlock ArrowUp$QData{"ClassUp"}" href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=QuestionUp;SurveyID=$LQData{"SurveyID"};QuestionID=$LQData{"QuestionID"}">
                                     <i class="icon-chevron-up"></i>
                                     <span>$Text{"Up"}</span>
                                 </a>
                             </td>
                             <td class="Center">
-                                <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=QuestionDown;SurveyID=$LQData{"SurveyID"};QuestionID=$LQData{"QuestionID"}" class="ArrowDown$QData{"ClassDown"}">
+                                <a class="AsBlock ArrowDown$QData{"ClassDown"}" href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=QuestionDown;SurveyID=$LQData{"SurveyID"};QuestionID=$LQData{"QuestionID"}">
                                     <i class="icon-chevron-down"></i>
                                     <span>$Text{"Down"}</span>
                                 </a>
@@ -292,16 +292,16 @@
 <!-- dtl:block:QuestionEditRadio -->
                         <tr>
                             <td>
-                                <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=AnswerEdit;SurveyID=$LQData{"SurveyID"};QuestionID=$LQData{"QuestionID"};AnswerID=$LQData{"AnswerID"}"> $QData{"Answer","90"} </a>
+                                <a class="AsBlock" href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=AnswerEdit;SurveyID=$LQData{"SurveyID"};QuestionID=$LQData{"QuestionID"};AnswerID=$LQData{"AnswerID"}"> $QData{"Answer","90"} </a>
                             </td>
                             <td class="Center">
-                                <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=AnswerUp;SurveyID=$LQData{"SurveyID"};QuestionID=$LQData{"QuestionID"};AnswerID=$LQData{"AnswerID"}" class="ArrowUp$QData{"ClassUp"}">
+                                <a class="AsBlock ArrowUp$QData{"ClassUp"}" href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=AnswerUp;SurveyID=$LQData{"SurveyID"};QuestionID=$LQData{"QuestionID"};AnswerID=$LQData{"AnswerID"}">
                                     <i class="icon-chevron-up"></i>
                                     <span>$Text{"Up"}</span>
                                 </a>
                             </td>
                             <td class="Center">
-                                <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=AnswerDown;SurveyID=$LQData{"SurveyID"};QuestionID=$LQData{"QuestionID"};AnswerID=$LQData{"AnswerID"}" class="ArrowDown$QData{"ClassDown"}">
+                                <a class="AsBlock ArrowDown$QData{"ClassDown"}" href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=AnswerDown;SurveyID=$LQData{"SurveyID"};QuestionID=$LQData{"QuestionID"};AnswerID=$LQData{"AnswerID"}">
                                     <i class="icon-chevron-down"></i>
                                     <span>$Text{"Down"}</span>
                                 </a>
@@ -324,16 +324,16 @@
 <!-- dtl:block:QuestionEditCheckbox -->
                         <tr>
                             <td>
-                                <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=AnswerEdit;SurveyID=$LQData{"SurveyID"};QuestionID=$LQData{"QuestionID"};AnswerID=$LQData{"AnswerID"}">$QData{"Answer"}</a>
+                                <a class="AsBlock" href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=AnswerEdit;SurveyID=$LQData{"SurveyID"};QuestionID=$LQData{"QuestionID"};AnswerID=$LQData{"AnswerID"}">$QData{"Answer"}</a>
                             </td>
                             <td class="Center">
-                                <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=AnswerUp;SurveyID=$LQData{"SurveyID"};QuestionID=$LQData{"QuestionID"};AnswerID=$LQData{"AnswerID"}" class="ArrowUp$QData{"ClassUp"}">
+                                <a class="AsBlock ArrowUp$QData{"ClassUp"}" href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=AnswerUp;SurveyID=$LQData{"SurveyID"};QuestionID=$LQData{"QuestionID"};AnswerID=$LQData{"AnswerID"}">
                                     <i class="icon-chevron-up"></i>
                                     <span>$Text{"Up"}</span>
                                 </a>
                             </td>
                             <td class="Center">
-                                <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=AnswerDown;SurveyID=$LQData{"SurveyID"};QuestionID=$LQData{"QuestionID"};AnswerID=$LQData{"AnswerID"}" class="ArrowDown$QData{"ClassDown"}">
+                                <a class="AsBlock ArrowDown$QData{"ClassDown"}" href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=AnswerDown;SurveyID=$LQData{"SurveyID"};QuestionID=$LQData{"QuestionID"};AnswerID=$LQData{"AnswerID"}">
                                     <i class="icon-chevron-down"></i>
                                     <span>$Text{"Down"}</span>
                                 </a>
@@ -357,13 +357,13 @@
                         <tr>
                             <td> $Text{"Yes"} </td>
                             <td class="Center">
-                                <a href="" class="ArrowUpDisabled">
+                                <a class="AsBlock ArrowUpDisabled" href="#">
                                     <i class="icon-chevron-up"></i>
                                     <span>$Text{"Up"}</span>
                                 </a>
                             </td>
                             <td class="Center">
-                                <a href="" class="ArrowDownDisabled">
+                                <a class="AsBlock ArrowDownDisabled" href="#">
                                     <i class="icon-chevron-down"></i>
                                     <span>$Text{"Down"}</span>
                                 </a>
@@ -372,13 +372,13 @@
                         <tr>
                             <td> $Text{"No"} </td>
                             <td class="Center">
-                                <a href="" class="ArrowUpDisabled" >
+                                <a class="AsBlock ArrowUpDisabled" href="#">
                                     <i class="icon-chevron-up"></i>
                                     <span>$Text{"Up"}</span>
                                 </a>
                             </td>
                             <td class="Center">
-                                <a href="" class="ArrowDownDisabled" >
+                                <a class="AsBlock ArrowDownDisabled" href="#">
                                     <i class="icon-chevron-down"></i>
                                     <span>$Text{"Down"}</span>
                                 </a>

@@ -83,7 +83,6 @@ a.ArrowUpDisabled,
 a.ArrowDown,
 a.ArrowDownDisabled {
     height: 16px;
-    width: 16px;
     padding: 1px;
     margin-top: 0;
     margin-bottom: 1px;
@@ -115,6 +114,11 @@ a.ArrowDown:hover i {
     color: #339900 !important;
 }
 
+a.ArrowUpDisabled,
+a.ArrowDownDisabled {
+    display: inline !Important;
+}
+
 a.ArrowUpDisabled i,
 a.ArrowDownDisabled i {
     color: #909090;
@@ -132,7 +136,6 @@ a.SeeDetails span {
 
 a.SeeDetails {
     height: 15px;
-    width: 15px;
     padding: 1px;
     margin-top: 0;
     margin-bottom: 1px;
