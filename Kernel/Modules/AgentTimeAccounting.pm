@@ -2997,9 +2997,14 @@ sub _ProjectSettingsEdit {
         0 => 'invalid',
     );
 
+    my $ProjectStatus = 1;
+    if (defined $Param{ProjectStatus}) {
+        $ProjectStatus = $Param{ProjectStatus}
+    }
+
     $Param{StatusOption} = $Self->{LayoutObject}->BuildSelection(
         Data       => \%StatusList,
-        SelectedID => $Param{SelectedStatus} || 1,
+        SelectedID => $ProjectStatus,
         Name       => 'ProjectStatus',
     );
 
@@ -3204,9 +3209,14 @@ sub _TaskSettingsEdit {
         0 => 'invalid',
     );
 
+    my $TaskStatus = 1;
+    if (defined $Param{TaskStatus}) {
+        $TaskStatus = $Param{TaskStatus}
+    }
+
     $Param{StatusOption} = $Self->{LayoutObject}->BuildSelection(
         Data       => \%StatusList,
-        SelectedID => $Param{SelectedStatus} || 1,
+        SelectedID => $TaskStatus,
         Name       => 'TaskStatus',
     );
 
