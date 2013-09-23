@@ -68,28 +68,28 @@
     <!-- 3. System Reqirement -->
     <!-- ******************** -->
     <title>System Requirement</title>
-    <sect1>
+    <section>
         <title>Framework</title>
         <para>The following OTRS framework is required:</para>
         <para>
         $Framework
         </para>
-    </sect1>
-    <sect1>
+    </section>
+    <section>
         <title>Packages</title>
         <para>The following package are required:</para>
         <para>
         $PackageRequired
         </para>
-    </sect1>
-    <sect1>
+    </section>
+    <section>
         <title>Operating System</title>
         <para>This package requires one of the following operating systems:</para>
         <para>
         $OS
         </para>
-    </sect1>
-    <sect1>
+    </section>
+    <section>
         <title>Third Party Software</title>
         <para>This third party software is required to use this package:</para>
         <para>
@@ -97,7 +97,7 @@
                 <listitem><para>None.</para></listitem>
             </itemizedlist>
         </para>
-    </sect1>
+    </section>
 </chapter>
 
 <chapter>
@@ -106,7 +106,7 @@
     <!-- *************** -->
     <title>Installation</title>
     <para>The following instructions explain how to install the package.</para>
-    <sect1>
+    <section>
         <title>Admin Interface</title>
         <para>
             Please use the following URL to install the package utilizing the admin
@@ -117,8 +117,8 @@
                 http://localhost/otrs/index.pl?Action=AdminPackageManager
             </ulink>
         </para>
-    </sect1>
-    <sect1>
+    </section>
+    <section>
         <title>Command Line</title>
         <para>
             Whenever you cannot use the Admin Interface for whatever reason,
@@ -130,7 +130,7 @@
             shell> bin/otrs.PackageManager.pl  -a install -p /path/to/$Name-$Version.opm
         </screen>
         </para>
-    </sect1>
+    </section>
 </chapter>
 
 <chapter>
@@ -146,14 +146,14 @@
         e.g.: Frontend::Module###AgentTicketWorkflow Group: Ticket, Subgroup: Frontend::Agent::ModuleRegistration)
         Description text must be identical with sysconfig description and clearly explained to customers.
     -->
-    <sect1>
+    <section>
         <title>Survey::ShowVoteData</title>
         <para>Group: Survey, Subgroup: Core</para>
         <para>
             Shows vote results to customers if set to Yes.
         </para>
-    </sect1>
-    <sect1>
+    </section>
+    <section>
         <title>Survey::SendPeriod</title>
         <para>Group: Survey, Subgroup: Core</para>
         <para>
@@ -165,53 +165,53 @@
             can be closed without triggering new
             Survey requests.
         </para>
-    </sect1>
-    <sect1>
+    </section>
+    <section>
         <title>Survey::NotificationSender</title>
         <para>Group: Survey, Subgroup: Core</para>
         <para>
             The sender adress that is proposed
             on creation of new Surveys.
         </para>
-    </sect1>
-    <sect1>
+    </section>
+    <section>
         <title>Survey::NotificationRecipientBlacklist</title>
         <para>Group: Survey, Subgroup: Core</para>
         <para>
             Mailadresses that will never get Survey requests.
         </para>
-    </sect1>
-    <sect1>
+    </section>
+    <section>
         <title>Survey::NotificationSubject</title>
         <para>Group: Survey, Subgroup: Core</para>
         <para>
             The NotificationSubject that is proposed
             on creation of new Surveys.
         </para>
-    </sect1>
-    <sect1>
+    </section>
+    <section>
         <title>Survey::NotificationBody</title>
         <para>Group: Survey, Subgroup: Core</para>
         <para>
             The NotificationBody that is proposed
             on creation of new Surveys.
         </para>
-    </sect1>
-    <sect1>
+    </section>
+    <section>
         <title>Survey::SendNoSurveyRegExp</title>
         <para>Group: Survey, Subgroup: Core</para>
         <para>
             If this regex matches, no customer Survey will be sent.
         </para>
-    </sect1>
-    <sect1>
+    </section>
+    <section>
         <title>Survey::Frontend::AgentSurvey###ShowColumns</title>
         <para>Group: Survey, Subgroup: Frontend::Agent::SurveyOverview</para>
         <para>
             Defines the shown columns in the Survey overview.
             This option has no effect on the position of the column.
         </para>
-    </sect1>
+    </section>
 </chapter>
 
 <chapter>
@@ -227,7 +227,7 @@
         3.  Submit the data (have a look at screenshot)
         ...
     -->
-    <sect1>
+    <section>
         <title>Create new Survey</title>
         <para>
             This feature lets OTRS users create new Survey by selecting the menu "SURVEY"
@@ -241,8 +241,8 @@
             Additionally the new Survey can be created for just some queues.
             If none are selected, it will be valid for every Queue.
         </para>
-    </sect1>
-    <sect1>
+    </section>
+    <section>
         <title>Add Questions</title>
         <para>
             As soon as a new Survey is created, the user can add questions to this Survey by clicking
@@ -281,8 +281,8 @@
             Questions of type "Radio (List)" or "Checkbox (List)"
             need to have at least two answers to be valid.
         </para>
-    </sect1>
-    <sect1>
+    </section>
+    <section>
         <title>Start sending Survey requests</title>
         <para>
             When the OTRS user has finished adding or modifying questions and possible answers,
@@ -302,8 +302,8 @@
             If a Ticket got closed, the customer gets an E-Mail invitation to fill the Survey
             by clicking a link inside the invitation E-Mail.
         </para>
-    </sect1>
-    <sect1>
+    </section>
+    <section>
         <title>Survey Results Graph</title>
         <para>
             By selecting "SURVEY" from the menu, choosing "Overview", clicking on a
@@ -338,8 +338,8 @@
             Statistics for not required questions may have
             less votes than the total amount of submitted Surveys (answer is optional).
         </para>
-    </sect1>
-    <sect1>
+    </section>
+    <section>
         <title>Stats Details</title>
         <para>
             By selecting "SURVEY" from the menu, choosing "Overview", clicking on a
@@ -354,8 +354,8 @@
         <para>
             Especially Textarea answers are of interest in here.
         </para>
-    </sect1>
-    <sect1>
+    </section>
+    <section>
         <title>Modifying Survey</title>
         <para>
             As soon as a Survey had the Status "Master" the possible modifications are limited.
@@ -388,7 +388,7 @@
             this question, but will not add votes for already submitted
             Surveys. So statistics will render rather usless too.
         </para>
-    </sect1>
+    </section>
 </chapter>
 
 <!-- ***************************************** Technical part ************************************ -->
@@ -482,15 +482,15 @@
     <!-- ******* -->
     <title>Tests</title>
     <para>This module has been tested on the current state of the art in quality.</para>
-    <sect1>
+    <section>
         <title>Testcases</title>
         <para>
             <!-- Reference to point 6.x and document the results -->
             To tests this package please follow the examples described in the Usage section, all the
             tests cases should return the expected results defined at the beginning of each example.
         </para>
-    </sect1>
-    <sect1>
+    </section>
+    <section>
         <title>Unitest</title>
         <!-- If core files included in this package, there must be covered by unit tests and will be tested.
              If the packet contains no "core files", this point 9.2 can be removed.
@@ -526,7 +526,7 @@
                 shell> perl bin/otrs.UnitTest.pl
             </screen>
         </para>
-    </sect1>
+    </section>
 </chapter>
 
 <chapter>
@@ -545,7 +545,7 @@
     <!-- *********** -->
     <title>Contacts</title>
     <para>People who are involved in this implementation.</para>
-    <sect1>
+    <section>
         <title>OTRS AG</title>
         <para>
             Accounting: xxxx xxxxx &lt;sales@otrs.com&gt;, Phone +49 (0)6172 681988 0
@@ -553,7 +553,7 @@
         <para>
             Technical: xxxxxxxxx xxxxxxxxx &lt;dev-support@otrs.com&gt;, Phone +49 (0)6172 681988 0
         </para>
-    </sect1>
+    </section>
 </chapter>
 
 
