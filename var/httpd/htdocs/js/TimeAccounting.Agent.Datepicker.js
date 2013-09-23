@@ -1,5 +1,5 @@
 // --
-// TimeAccounting.Agent.Datepickers.js - provides the special datepicker functions for TA
+// TimeAccounting.Agent.Datepicker.js - provides the special datepicker functions for TA
 // Copyright (C) 2001-2011 OTRS AG, http://otrs.org/\n";
 // --
 // This software comes with ABSOLUTELY NO WARRANTY. For details, see

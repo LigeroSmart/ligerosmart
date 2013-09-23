@@ -1,6 +1,6 @@
 # --
 # Kernel/Modules/AgentTimeAccounting.pm - time accounting module
-# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1679,7 +1679,7 @@ sub Run {
         );
 
         # permission check
-        if ( $UserData{CreateProject} or $Self->{AccessRw} ) {
+        if ( $UserData{CreateProject} || $Self->{AccessRw} ) {
 
             # get the user action to show a msg if an user was updated or added
             my $Note = $Self->{ParamObject}->GetParam( Param => 'User' );
@@ -2794,7 +2794,7 @@ sub _ActionListConstraints {
                 for my $ProjectNameRegExp ( sort keys %{ $Param{ActionListConstraints} } ) {
                     my $ActionNameRegExp = $Param{ActionListConstraints}->{$ProjectNameRegExp};
                     if (
-                        $ProjectName   =~ m{$ProjectNameRegExp}smx
+                        $ProjectName =~ m{$ProjectNameRegExp}smx
                         && $ActionName =~ m{$ActionNameRegExp}smx
                         )
                     {
@@ -2998,7 +2998,7 @@ sub _ProjectSettingsEdit {
     );
 
     my $ProjectStatus = 1;
-    if (defined $Param{ProjectStatus}) {
+    if ( defined $Param{ProjectStatus} ) {
         $ProjectStatus = $Param{ProjectStatus}
     }
 
@@ -3210,7 +3210,7 @@ sub _TaskSettingsEdit {
     );
 
     my $TaskStatus = 1;
-    if (defined $Param{TaskStatus}) {
+    if ( defined $Param{TaskStatus} ) {
         $TaskStatus = $Param{TaskStatus}
     }
 

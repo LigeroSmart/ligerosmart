@@ -1,6 +1,6 @@
 # --
 # scripts/test/TimeAccounting.t - TimeAccounting testscript
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -336,7 +336,7 @@ my %WorkingUnitsCheck = $TimeAccountingObject->WorkingUnitsCompletnessCheck(
 
 # verify that Jan 15th, 2011 is not in the list of days without entry
 $Self->False(
-    defined $WorkingUnitsCheck{Incomplete}{2011}{01}{15},
+    defined $WorkingUnitsCheck{'Incomplete'}{'2011'}{'01'}{'15'},
     'Verify completion of working units'
 );
 

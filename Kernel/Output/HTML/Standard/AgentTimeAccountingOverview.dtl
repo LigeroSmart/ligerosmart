@@ -1,6 +1,6 @@
 # --
 # AgentTimeAccountingOverview.dtl - provides HTML form for time accounting overview
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -146,7 +146,7 @@
                                     $Data{"Project"}
 <!-- dtl:block:ProjectNoLink -->
 <!-- dtl:block:ProjectLink -->
-                                    <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=ProjectReporting;ProjectID=$QData{"ProjectID"}">
+                                    <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=ProjectReporting;ProjectID=$LQData{"ProjectID"}">
                                         $Data{"Project"}
                                     </a>
 <!-- dtl:block:ProjectLink -->
