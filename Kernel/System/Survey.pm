@@ -126,32 +126,97 @@ sub new {
     return $Self;
 }
 
-=item SurveyList()
+=item SurveyNew()
 
-to get a array list of all survey items
+to add a new survey
 
-    my @List = $SurveyObject->SurveyList();
+    my $SurveyID = $SurveyObject->SurveyNew(
+        UserID              => 1,
+        Title               => 'A Title',
+        Introduction        => 'The introduction of the survey',
+        Description         => 'The internal description of the survey',
+        NotificationSender  => 'quality@example.com',
+        NotificationSubject => 'Help us with your feedback!',
+        NotificationBody    => 'Dear customer...',
+        Queues              => [2, 5, 9],  # (optional) survey is valid for these queues
+    );
 
 =cut
 
-sub SurveyList {
+sub SurveyNew {
     my ( $Self, %Param ) = @_;
 
-    # get survey list
+    # check needed stuff
+    for my $Argument (
+        qw(
+        UserID Title Introduction Description
+        NotificationSender NotificationSubject NotificationBody
+        )
+        )
+    {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
+
+    # insert a new survey
+    my $Status = 'New';
+    $Self->{DBObject}->Do(
+        SQL => '
+            INSERT INTO survey (title, introduction, description, notification_sender,
+                notification_subject, notification_body, status, create_time, create_by,
+                change_time, change_by )
+            VALUES ( ?, ?, ?, ?, ?, ?, ?, current_timestamp, ?, current_timestamp, ?)',
+        Bind => [
+            \$Param{Title},              \$Param{Introduction},        \$Param{Description},
+            \$Param{NotificationSender}, \$Param{NotificationSubject}, \$Param{NotificationBody},
+            \$Status, \$Param{UserID}, \$Param{UserID},
+        ],
+    );
+
+    # get the id of the survey
     $Self->{DBObject}->Prepare(
         SQL => '
             SELECT id
             FROM survey
-            ORDER BY create_time DESC',
+            WHERE title = ?
+                AND introduction = ?
+                AND description = ?
+            ORDER BY id DESC',
+        Bind => [ \$Param{Title}, \$Param{Introduction}, \$Param{Description}, ],
+        Limit => 1,
     );
 
-    # fetch the results
-    my @List;
+    # fetch the result
+    my $SurveyID;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        push @List, $Row[0];
+        $SurveyID = $Row[0];
     }
 
-    return @List;
+    # set the survey number
+    my $SurveyNumber = $SurveyID + 10000;
+    $Self->{DBObject}->Do(
+        SQL => '
+            UPDATE survey
+            SET surveynumber = ?
+            WHERE id = ?',
+        Bind => [ \$SurveyNumber, \$SurveyID, ],
+    );
+
+    return $SurveyID if !$Param{Queues};
+    return $SurveyID if ref $Param{Queues} ne 'ARRAY';
+
+    # insert new survey-queue relations
+    $Self->SurveyQueueSave(
+        SurveyID => $SurveyID,
+        QueueIDs => $Param{Queues},
+    );
+
+    return $SurveyID;
 }
 
 =item SurveyGet()
@@ -247,184 +312,6 @@ sub SurveyGet {
     return %Data;
 }
 
-=item SurveyStatusSet()
-
-to set a new survey status (Valid, Invalid, Master)
-
-    $StatusSet = $SurveyObject->SurveyStatusSet(
-        SurveyID  => 123,
-        NewStatus => 'Master'
-    );
-
-=cut
-
-sub SurveyStatusSet {
-    my ( $Self, %Param ) = @_;
-
-    # check needed stuff
-    for my $Argument (qw(SurveyID NewStatus)) {
-        if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message  => "Need $Argument!",
-            );
-            return;
-        }
-    }
-
-    # get current status
-    $Self->{DBObject}->Prepare(
-        SQL => '
-            SELECT status
-            FROM survey
-            WHERE id = ?',
-        Bind  => [ \$Param{SurveyID} ],
-        Limit => 1,
-    );
-
-    # fetch the result
-    my $Status = '';
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        $Status = $Row[0];
-    }
-
-    # the curent status
-    if ( $Status eq 'New' || $Status eq 'Invalid' ) {
-
-        # get the question ids
-        $Self->{DBObject}->Prepare(
-            SQL => '
-                SELECT id
-                FROM survey_question
-                WHERE survey_id = ?',
-            Bind  => [ \$Param{SurveyID} ],
-            Limit => 1,
-        );
-
-        # fetch the result
-        my $Quest;
-        while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-            $Quest = $Row[0];
-        }
-
-        return 'NoQuestion' if !$Quest;
-
-        my %QuestionType = (
-            Radio    => 'Radio',
-            Checkbox => 'Checkbox',
-        );
-
-        # get all questions (type radio and checkbox)
-        $Self->{DBObject}->Prepare(
-            SQL => '
-                SELECT id
-                FROM survey_question
-                WHERE survey_id = ?
-                    AND (question_type = ? OR question_type = ?)',
-            Bind => [ \$Param{SurveyID}, \$QuestionType{Radio}, \$QuestionType{Checkbox}, ],
-        );
-
-        # fetch the result
-        my @QuestionIDs;
-        while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-            push( @QuestionIDs, $Row[0] );
-        }
-        for my $OneID (@QuestionIDs) {
-
-            # get all answer ids of a question
-            $Self->{DBObject}->Prepare(
-                SQL => '
-                    SELECT COUNT(id)
-                    FROM survey_answer
-                    WHERE question_id = ?',
-                Bind  => [ \$OneID ],
-                Limit => 1,
-            );
-
-            # fetch the result
-            my $Counter;
-            while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-                $Counter = $Row[0];
-            }
-
-            return 'IncompleteQuestion' if $Counter < 2;
-        }
-
-        # set new status
-        if ( $Param{NewStatus} eq 'Master' ) {
-            my $ValidStatus = 'Valid';
-            $Self->{DBObject}->Do(
-                SQL => '
-                    UPDATE survey
-                    SET status = ?
-                    WHERE status = ?',
-                Bind => [ \$ValidStatus, \$Param{NewStatus}, ],
-            );
-
-        }
-        if ( $Param{NewStatus} eq 'Valid' || $Param{NewStatus} eq 'Master' ) {
-            $Self->{DBObject}->Do(
-                SQL => '
-                    UPDATE survey SET status = ?
-                    WHERE id = ?',
-                Bind => [ \$Param{NewStatus}, \$Param{SurveyID}, ],
-            );
-            return 'StatusSet';
-        }
-    }
-    elsif ( $Status eq 'Valid' ) {
-
-        # set status Master
-        if ( $Param{NewStatus} eq 'Master' ) {
-
-            # set any 'Master' survey to 'Valid'
-            $Self->{DBObject}->Do(
-                SQL => '
-                    UPDATE survey
-                    SET status = ?
-                    WHERE status = ?',
-                Bind => [ \$Status, \$Param{NewStatus}, ],
-            );
-
-            # set 'Master' to given survey
-            $Self->{DBObject}->Do(
-                SQL => '
-                    UPDATE survey
-                    SET status = ?
-                    WHERE id = ?',
-                Bind => [ \$Param{NewStatus}, \$Param{SurveyID}, ],
-            );
-            return 'StatusSet';
-        }
-
-        # set status Invalid
-        elsif ( $Param{NewStatus} eq 'Invalid' ) {
-            $Self->{DBObject}->Do(
-                SQL => '
-                    UPDATE survey
-                    SET status = ?
-                    WHERE id = ?',
-                Bind => [ \$Param{NewStatus}, \$Param{SurveyID}, ],
-            );
-            return 'StatusSet';
-        }
-    }
-    elsif ( $Status eq 'Master' ) {
-
-        # set status Valid
-        if ( $Param{NewStatus} eq 'Valid' || $Param{NewStatus} eq 'Invalid' ) {
-            $Self->{DBObject}->Do(
-                SQL => '
-                    UPDATE survey
-                    SET status = ?
-                    WHERE id = ?',
-                Bind => [ \$Param{NewStatus}, \$Param{SurveyID}, ],
-            );
-            return 'StatusSet';
-        }
-    }
-}
-
 =item SurveySave()
 
 to update an existing survey
@@ -497,377 +384,32 @@ sub SurveySave {
     );
 }
 
-=item SurveyNew()
+=item SurveyList()
 
-to add a new survey
+to get a array list of all survey items
 
-    my $SurveyID = $SurveyObject->SurveyNew(
-        UserID              => 1,
-        Title               => 'A Title',
-        Introduction        => 'The introduction of the survey',
-        Description         => 'The internal description of the survey',
-        NotificationSender  => 'quality@example.com',
-        NotificationSubject => 'Help us with your feedback!',
-        NotificationBody    => 'Dear customer...',
-        Queues              => [2, 5, 9],  # (optional) survey is valid for these queues
-    );
+    my @List = $SurveyObject->SurveyList();
 
 =cut
 
-sub SurveyNew {
+sub SurveyList {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
-    for my $Argument (
-        qw(
-        UserID Title Introduction Description
-        NotificationSender NotificationSubject NotificationBody
-        )
-        )
-    {
-        if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message  => "Need $Argument!",
-            );
-            return;
-        }
-    }
-
-    # insert a new survey
-    my $Status = 'New';
-    $Self->{DBObject}->Do(
-        SQL => '
-            INSERT INTO survey (title, introduction, description, notification_sender,
-                notification_subject, notification_body, status, create_time, create_by,
-                change_time, change_by )
-            VALUES ( ?, ?, ?, ?, ?, ?, ?, current_timestamp, ?, current_timestamp, ?)',
-        Bind => [
-            \$Param{Title},              \$Param{Introduction},        \$Param{Description},
-            \$Param{NotificationSender}, \$Param{NotificationSubject}, \$Param{NotificationBody},
-            \$Status, \$Param{UserID}, \$Param{UserID},
-        ],
-    );
-
-    # get the id of the survey
+    # get survey list
     $Self->{DBObject}->Prepare(
         SQL => '
             SELECT id
             FROM survey
-            WHERE title = ?
-                AND introduction = ?
-                AND description = ?
-            ORDER BY id DESC',
-        Bind => [ \$Param{Title}, \$Param{Introduction}, \$Param{Description}, ],
-        Limit => 1,
+            ORDER BY create_time DESC',
     );
 
-    # fetch the result
-    my $SurveyID;
+    # fetch the results
+    my @List;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        $SurveyID = $Row[0];
+        push @List, $Row[0];
     }
 
-    # set the survey number
-    my $SurveyNumber = $SurveyID + 10000;
-    $Self->{DBObject}->Do(
-        SQL => '
-            UPDATE survey
-            SET surveynumber = ?
-            WHERE id = ?',
-        Bind => [ \$SurveyNumber, \$SurveyID, ],
-    );
-
-    return $SurveyID if !$Param{Queues};
-    return $SurveyID if ref $Param{Queues} ne 'ARRAY';
-
-    # insert new survey-queue relations
-    $Self->SurveyQueueSave(
-        SurveyID => $SurveyID,
-        QueueIDs => $Param{Queues},
-    );
-
-    return $SurveyID;
-}
-
-=item ElementExists()
-
-exists an survey-, question-, answer- or request-element
-
-    my $CountRequest = $SurveyObject->ElementExists(
-        ID => 123,           # SurveyID, QuestionID, AnswerID, RequestID
-        Element => 'Survey'  # Survey, Question, Answer, Request
-    );
-
-=cut
-
-sub ElementExists {
-    my ( $Self, %Param ) = @_;
-
-    # check needed stuff
-    for my $Argument (qw(ElementID Element)) {
-        if ( !defined $Param{$Argument} ) {
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message  => "Need $Argument!",
-            );
-            return;
-        }
-    }
-
-    my %LookupTable = (
-        Survey   => 'survey',
-        Question => 'survey_question',
-        Answer   => 'survey_answer',
-        Request  => 'survey_request',
-    );
-
-    my $Table = $LookupTable{ $Param{Element} };
-    if ( !$Table ) {
-        $Self->{LogObject}->Log(
-            Priority => 'error',
-            Message  => "Element: '$Param{Element}' is not valid!",
-        );
-        return;
-    }
-
-    my $SQL = '
-            SELECT COUNT(id)
-            FROM ';
-    $SQL .= $Table;
-    $SQL .= ' WHERE id = ?';
-
-    # count element
-    $Self->{DBObject}->Prepare(
-        SQL   => $SQL,
-        Bind  => [ \$Param{ElementID} ],
-        Limit => 1,
-    );
-
-    # fetch the result
-    my $ElementExists = 'No';
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        if ( $Row[0] ) {
-            $ElementExists = 'Yes';
-        }
-    }
-
-    return $ElementExists;
-}
-
-=item PublicSurveyGet()
-
-to get all public attributes of a survey
-
-    my %PublicSurvey = $SurveyObject->PublicSurveyGet(
-            PublicSurveyKey => 'Aw5de3Xf5qA',
-            Invalid         => 1, # optional to know if one key was already used.
-    );
-
-=cut
-
-sub PublicSurveyGet {
-    my ( $Self, %Param ) = @_;
-
-    # check needed stuff
-    if ( !defined $Param{PublicSurveyKey} ) {
-        $Self->{LogObject}->Log(
-            Priority => 'error',
-            Message  => 'Need SurveyID!',
-        );
-        return;
-    }
-
-    my $SQL = '
-        SELECT survey_id
-        FROM survey_request
-        WHERE public_survey_key = ?';
-
-    my $ValidStrg = ' AND valid_id = 1';
-
-    # if not invalid show just valid keys
-    if ( $Param{Invalid} ) {
-        $ValidStrg = ' AND valid_id = 0';
-    }
-    $SQL .= $ValidStrg;
-
-    # get request
-    $Self->{DBObject}->Prepare(
-        SQL   => $SQL,
-        Bind  => [ \$Param{PublicSurveyKey} ],
-        Limit => 1,
-    );
-
-    # fetch the result
-    my $SurveyID;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        $SurveyID = $Row[0];
-    }
-
-    return () if !$SurveyID;
-
-    # get survey
-    my $MasterStatus = 'Master';
-    my $ValidStatus  = 'Valid';
-    $Self->{DBObject}->Prepare(
-        SQL => '
-            SELECT id, surveynumber, title, introduction
-            FROM survey
-            WHERE id = ?
-                AND (status = ? OR status = ?)',
-        Bind => [ \$SurveyID, \$MasterStatus, \$ValidStatus, ],
-        Limit => 1,
-    );
-
-    # fetch the result
-    my %Data;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        $Data{SurveyID}     = $Row[0];
-        $Data{SurveyNumber} = $Row[1];
-        $Data{Title}        = $Row[2];
-        $Data{Introduction} = $Row[3];
-    }
-
-    return %Data;
-}
-
-=item PublicSurveyInvalidSet()
-
-to set a request invalid
-
-    $SurveyObject->PublicSurveyInvalidSet(
-        PublicSurveyKey => 'aVkdE82Dw2qw6erCda',
-    );
-
-=cut
-
-sub PublicSurveyInvalidSet {
-    my ( $Self, %Param ) = @_;
-
-    # check needed stuff
-    if ( !$Param{PublicSurveyKey} ) {
-        $Self->{LogObject}->Log(
-            Priority => 'error',
-            Message  => 'Need SurveyID!'
-        );
-        return;
-    }
-
-    # get request
-    $Self->{DBObject}->Prepare(
-        SQL => '
-            SELECT id
-            FROM survey_request
-            WHERE public_survey_key = ?',
-        Bind  => [ \$Param{PublicSurveyKey} ],
-        Limit => 1,
-    );
-
-    # fetch the result
-    my $RequestID;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        $RequestID = $Row[0];
-    }
-
-    return if !$RequestID;
-
-    # update request
-    return $Self->{DBObject}->Do(
-        SQL => '
-            UPDATE survey_request
-            SET valid_id = 0, vote_time = current_timestamp
-            WHERE id = ?',
-        Bind => [ \$RequestID ],
-    );
-}
-
-=item SurveyQueueSave()
-
-add a survey_queue relation
-
-my $Result = $SurveyObject->SurveyQueueSave(
-    SurveyID => 3,
-    QueueIDs => [1, 7],
-);
-
-=cut
-
-sub SurveyQueueSave {
-    my ( $Self, %Param ) = @_;
-
-    # check needed stuff
-    for my $Argument (qw(SurveyID QueueIDs)) {
-        if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message  => "Need $Argument!"
-            );
-            return;
-        }
-    }
-
-    # remove all existing relations
-    $Self->{DBObject}->Do(
-        SQL => '
-            DELETE FROM survey_queue
-            WHERE survey_id = ?',
-        Bind => [ \$Param{SurveyID} ],
-    );
-
-    # add all survey_queue relations to database
-    for my $QueueID ( @{ $Param{QueueIDs} } ) {
-
-        # add survey_queue relation to database
-        return if !$Self->{DBObject}->Do(
-            SQL => '
-                INSERT INTO survey_queue (survey_id, queue_id)
-                VALUES (?, ?)',
-            Bind => [ \$Param{SurveyID}, \$QueueID, ],
-        );
-    }
-
-    return 1;
-}
-
-=item SurveyQueueGet()
-
-get a survey_queue relation as an array reference
-
-my $QueuesRef = $SurveyObject->SurveyQueueGet(
-    SurveyID => 3,
-);
-
-=cut
-
-sub SurveyQueueGet {
-    my ( $Self, %Param ) = @_;
-
-    # check needed stuff
-    if ( !$Param{SurveyID} ) {
-        $Self->{LogObject}->Log(
-            Priority => 'error',
-            Message  => 'Need SurveyID!',
-        );
-        return;
-    }
-
-    # get queue ids from database
-    $Self->{DBObject}->Prepare(
-        SQL => '
-            SELECT queue_id
-            FROM survey_queue
-            WHERE survey_id = ?
-            ORDER BY queue_id ASC',
-        Bind => [ \$Param{SurveyID} ],
-    );
-
-    # fetch the result
-    my @QueueList;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        push @QueueList, $Row[0];
-    }
-
-    return \@QueueList;
+    return @List;
 }
 
 =item SurveySearch()
@@ -1259,6 +801,464 @@ sub SurveySearch {
         push @List, $Row[0];
     }
     return @List;
+}
+
+=item SurveyStatusSet()
+
+to set a new survey status (Valid, Invalid, Master)
+
+    $StatusSet = $SurveyObject->SurveyStatusSet(
+        SurveyID  => 123,
+        NewStatus => 'Master'
+    );
+
+=cut
+
+sub SurveyStatusSet {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(SurveyID NewStatus)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
+
+    # get current status
+    $Self->{DBObject}->Prepare(
+        SQL => '
+            SELECT status
+            FROM survey
+            WHERE id = ?',
+        Bind  => [ \$Param{SurveyID} ],
+        Limit => 1,
+    );
+
+    # fetch the result
+    my $Status = '';
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        $Status = $Row[0];
+    }
+
+    # the curent status
+    if ( $Status eq 'New' || $Status eq 'Invalid' ) {
+
+        # get the question ids
+        $Self->{DBObject}->Prepare(
+            SQL => '
+                SELECT id
+                FROM survey_question
+                WHERE survey_id = ?',
+            Bind  => [ \$Param{SurveyID} ],
+            Limit => 1,
+        );
+
+        # fetch the result
+        my $Quest;
+        while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+            $Quest = $Row[0];
+        }
+
+        return 'NoQuestion' if !$Quest;
+
+        my %QuestionType = (
+            Radio    => 'Radio',
+            Checkbox => 'Checkbox',
+        );
+
+        # get all questions (type radio and checkbox)
+        $Self->{DBObject}->Prepare(
+            SQL => '
+                SELECT id
+                FROM survey_question
+                WHERE survey_id = ?
+                    AND (question_type = ? OR question_type = ?)',
+            Bind => [ \$Param{SurveyID}, \$QuestionType{Radio}, \$QuestionType{Checkbox}, ],
+        );
+
+        # fetch the result
+        my @QuestionIDs;
+        while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+            push( @QuestionIDs, $Row[0] );
+        }
+        for my $OneID (@QuestionIDs) {
+
+            # get all answer ids of a question
+            $Self->{DBObject}->Prepare(
+                SQL => '
+                    SELECT COUNT(id)
+                    FROM survey_answer
+                    WHERE question_id = ?',
+                Bind  => [ \$OneID ],
+                Limit => 1,
+            );
+
+            # fetch the result
+            my $Counter;
+            while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+                $Counter = $Row[0];
+            }
+
+            return 'IncompleteQuestion' if $Counter < 2;
+        }
+
+        # set new status
+        if ( $Param{NewStatus} eq 'Master' ) {
+            my $ValidStatus = 'Valid';
+            $Self->{DBObject}->Do(
+                SQL => '
+                    UPDATE survey
+                    SET status = ?
+                    WHERE status = ?',
+                Bind => [ \$ValidStatus, \$Param{NewStatus}, ],
+            );
+
+        }
+        if ( $Param{NewStatus} eq 'Valid' || $Param{NewStatus} eq 'Master' ) {
+            $Self->{DBObject}->Do(
+                SQL => '
+                    UPDATE survey SET status = ?
+                    WHERE id = ?',
+                Bind => [ \$Param{NewStatus}, \$Param{SurveyID}, ],
+            );
+            return 'StatusSet';
+        }
+    }
+    elsif ( $Status eq 'Valid' ) {
+
+        # set status Master
+        if ( $Param{NewStatus} eq 'Master' ) {
+
+            # set any 'Master' survey to 'Valid'
+            $Self->{DBObject}->Do(
+                SQL => '
+                    UPDATE survey
+                    SET status = ?
+                    WHERE status = ?',
+                Bind => [ \$Status, \$Param{NewStatus}, ],
+            );
+
+            # set 'Master' to given survey
+            $Self->{DBObject}->Do(
+                SQL => '
+                    UPDATE survey
+                    SET status = ?
+                    WHERE id = ?',
+                Bind => [ \$Param{NewStatus}, \$Param{SurveyID}, ],
+            );
+            return 'StatusSet';
+        }
+
+        # set status Invalid
+        elsif ( $Param{NewStatus} eq 'Invalid' ) {
+            $Self->{DBObject}->Do(
+                SQL => '
+                    UPDATE survey
+                    SET status = ?
+                    WHERE id = ?',
+                Bind => [ \$Param{NewStatus}, \$Param{SurveyID}, ],
+            );
+            return 'StatusSet';
+        }
+    }
+    elsif ( $Status eq 'Master' ) {
+
+        # set status Valid
+        if ( $Param{NewStatus} eq 'Valid' || $Param{NewStatus} eq 'Invalid' ) {
+            $Self->{DBObject}->Do(
+                SQL => '
+                    UPDATE survey
+                    SET status = ?
+                    WHERE id = ?',
+                Bind => [ \$Param{NewStatus}, \$Param{SurveyID}, ],
+            );
+            return 'StatusSet';
+        }
+    }
+}
+
+=item SurveyQueueGet()
+
+get a survey_queue relation as an array reference
+
+my $QueuesRef = $SurveyObject->SurveyQueueGet(
+    SurveyID => 3,
+);
+
+=cut
+
+sub SurveyQueueGet {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    if ( !$Param{SurveyID} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need SurveyID!',
+        );
+        return;
+    }
+
+    # get queue ids from database
+    $Self->{DBObject}->Prepare(
+        SQL => '
+            SELECT queue_id
+            FROM survey_queue
+            WHERE survey_id = ?
+            ORDER BY queue_id ASC',
+        Bind => [ \$Param{SurveyID} ],
+    );
+
+    # fetch the result
+    my @QueueList;
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        push @QueueList, $Row[0];
+    }
+
+    return \@QueueList;
+}
+
+=item SurveyQueueSave()
+
+add a survey_queue relation
+
+my $Result = $SurveyObject->SurveyQueueSave(
+    SurveyID => 3,
+    QueueIDs => [1, 7],
+);
+
+=cut
+
+sub SurveyQueueSave {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(SurveyID QueueIDs)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!"
+            );
+            return;
+        }
+    }
+
+    # remove all existing relations
+    $Self->{DBObject}->Do(
+        SQL => '
+            DELETE FROM survey_queue
+            WHERE survey_id = ?',
+        Bind => [ \$Param{SurveyID} ],
+    );
+
+    # add all survey_queue relations to database
+    for my $QueueID ( @{ $Param{QueueIDs} } ) {
+
+        # add survey_queue relation to database
+        return if !$Self->{DBObject}->Do(
+            SQL => '
+                INSERT INTO survey_queue (survey_id, queue_id)
+                VALUES (?, ?)',
+            Bind => [ \$Param{SurveyID}, \$QueueID, ],
+        );
+    }
+
+    return 1;
+}
+
+=item PublicSurveyGet()
+
+to get all public attributes of a survey
+
+    my %PublicSurvey = $SurveyObject->PublicSurveyGet(
+            PublicSurveyKey => 'Aw5de3Xf5qA',
+            Invalid         => 1, # optional to know if one key was already used.
+    );
+
+=cut
+
+sub PublicSurveyGet {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    if ( !defined $Param{PublicSurveyKey} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need SurveyID!',
+        );
+        return;
+    }
+
+    my $SQL = '
+        SELECT survey_id
+        FROM survey_request
+        WHERE public_survey_key = ?';
+
+    my $ValidStrg = ' AND valid_id = 1';
+
+    # if not invalid show just valid keys
+    if ( $Param{Invalid} ) {
+        $ValidStrg = ' AND valid_id = 0';
+    }
+    $SQL .= $ValidStrg;
+
+    # get request
+    $Self->{DBObject}->Prepare(
+        SQL   => $SQL,
+        Bind  => [ \$Param{PublicSurveyKey} ],
+        Limit => 1,
+    );
+
+    # fetch the result
+    my $SurveyID;
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        $SurveyID = $Row[0];
+    }
+
+    return () if !$SurveyID;
+
+    # get survey
+    my $MasterStatus = 'Master';
+    my $ValidStatus  = 'Valid';
+    $Self->{DBObject}->Prepare(
+        SQL => '
+            SELECT id, surveynumber, title, introduction
+            FROM survey
+            WHERE id = ?
+                AND (status = ? OR status = ?)',
+        Bind => [ \$SurveyID, \$MasterStatus, \$ValidStatus, ],
+        Limit => 1,
+    );
+
+    # fetch the result
+    my %Data;
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        $Data{SurveyID}     = $Row[0];
+        $Data{SurveyNumber} = $Row[1];
+        $Data{Title}        = $Row[2];
+        $Data{Introduction} = $Row[3];
+    }
+
+    return %Data;
+}
+
+=item PublicSurveyInvalidSet()
+
+to set a request invalid
+
+    $SurveyObject->PublicSurveyInvalidSet(
+        PublicSurveyKey => 'aVkdE82Dw2qw6erCda',
+    );
+
+=cut
+
+sub PublicSurveyInvalidSet {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    if ( !$Param{PublicSurveyKey} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need SurveyID!'
+        );
+        return;
+    }
+
+    # get request
+    $Self->{DBObject}->Prepare(
+        SQL => '
+            SELECT id
+            FROM survey_request
+            WHERE public_survey_key = ?',
+        Bind  => [ \$Param{PublicSurveyKey} ],
+        Limit => 1,
+    );
+
+    # fetch the result
+    my $RequestID;
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        $RequestID = $Row[0];
+    }
+
+    return if !$RequestID;
+
+    # update request
+    return $Self->{DBObject}->Do(
+        SQL => '
+            UPDATE survey_request
+            SET valid_id = 0, vote_time = current_timestamp
+            WHERE id = ?',
+        Bind => [ \$RequestID ],
+    );
+}
+
+=item ElementExists()
+
+exists an survey-, question-, answer- or request-element
+
+    my $CountRequest = $SurveyObject->ElementExists(
+        ID => 123,           # SurveyID, QuestionID, AnswerID, RequestID
+        Element => 'Survey'  # Survey, Question, Answer, Request
+    );
+
+=cut
+
+sub ElementExists {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(ElementID Element)) {
+        if ( !defined $Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
+
+    my %LookupTable = (
+        Survey   => 'survey',
+        Question => 'survey_question',
+        Answer   => 'survey_answer',
+        Request  => 'survey_request',
+    );
+
+    my $Table = $LookupTable{ $Param{Element} };
+    if ( !$Table ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "Element: '$Param{Element}' is not valid!",
+        );
+        return;
+    }
+
+    my $SQL = '
+            SELECT COUNT(id)
+            FROM ';
+    $SQL .= $Table;
+    $SQL .= ' WHERE id = ?';
+
+    # count element
+    $Self->{DBObject}->Prepare(
+        SQL   => $SQL,
+        Bind  => [ \$Param{ElementID} ],
+        Limit => 1,
+    );
+
+    # fetch the result
+    my $ElementExists = 'No';
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        if ( $Row[0] ) {
+            $ElementExists = 'Yes';
+        }
+    }
+
+    return $ElementExists;
 }
 
 =item GetRichTextDocumentComplete()
