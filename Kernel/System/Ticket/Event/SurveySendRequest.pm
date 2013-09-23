@@ -78,7 +78,7 @@ sub Run {
 
     # send request
     $Self->{SurveyObject}->RequestSend(
-        TicketID => $Param{Data}{TicketID},
+        TicketID => $Param{Data}->{TicketID},
     );
 
     return 1;
