@@ -130,74 +130,106 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
 <!-- **************** -->
 <chapter>
     <title>Configuration</title>
-    <para>
-        The following list of configuration options can be changed for this package.
-    </para>
+    <para>The package can be configured via the SysConfig in the Admin Interface. The following configuration options are available:</para>
     <section>
-        <title>Survey::ShowVoteData</title>
-        <para>Group: Survey, Subgroup: Core</para>
-        <para>
-            Shows vote results to customers if set to Yes.
-        </para>
+        <title>Frontend::Module###AgentSurvey.</title>
+        <para>Group: Survey, Subgroup: Frontend::Agent::ModuleRegistration.</para>
+        <para>All parameters for the Survey object in the agent interface.</para>
     </section>
     <section>
-        <title>Survey::SendPeriod</title>
-        <para>Group: Survey, Subgroup: Core</para>
-        <para>
-            Avoids spamming customers with Survey requests.
-            The number given here is the amount of days,
-            a customer won't get a second Survey request
-            after having received a request. In this
-            time period tickets for this customer
-            can be closed without triggering new
-            Survey requests.
-        </para>
+        <title>Frontend::Module###AgentSurveyZoom.</title>
+        <para>Group: Survey, Subgroup: Frontend::Agent::ModuleRegistration.</para>
+        <para>Frontend module registration for survey zoom in the agent interface.</para>
     </section>
     <section>
-        <title>Survey::NotificationSender</title>
-        <para>Group: Survey, Subgroup: Core</para>
-        <para>
-            The sender address that is proposed
-            on creation of new Surveys.
-        </para>
+        <title>Frontend::Module###AgentSurveyEditQuestions.</title>
+        <para>Group: Survey, Subgroup: Frontend::Agent::ModuleRegistration.</para>
+        <para>Frontend module registration for survey zoom in the agent interface.</para>
     </section>
     <section>
-        <title>Survey::NotificationRecipientBlacklist</title>
-        <para>Group: Survey, Subgroup: Core</para>
-        <para>
-            Mail addresses that will never get Survey requests.
-        </para>
+        <title>PublicFrontend::Module###PublicSurvey.</title>
+        <para>Group: Survey, Subgroup: Frontend::Public::ModuleRegistration.</para>
+        <para>Frontend module registration for the PublicSurvey object in the public Survey area.</para>
     </section>
     <section>
-        <title>Survey::NotificationSubject</title>
-        <para>Group: Survey, Subgroup: Core</para>
-        <para>
-            The NotificationSubject that is proposed
-            on creation of new Surveys.
-        </para>
+        <title>Survey::ShowVoteData.</title>
+        <para>Group: Survey, Subgroup: Core::Survey.</para>
+        <para>Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time.</para>
     </section>
     <section>
-        <title>Survey::NotificationBody</title>
-        <para>Group: Survey, Subgroup: Core</para>
-        <para>
-            The NotificationBody that is proposed
-            on creation of new Surveys.
-        </para>
+        <title>Survey::SendPeriod.</title>
+        <para>Group: Survey, Subgroup: Core::Survey.</para>
+        <para>Amount of days after sending a survey mail in which no new survey requests are sent to the same customer. Selecting 0 will always send the survey mail.</para>
     </section>
     <section>
-        <title>Survey::SendNoSurveyRegExp</title>
-        <para>Group: Survey, Subgroup: Core</para>
-        <para>
-            If this regex matches, no customer Survey will be sent.
-        </para>
+        <title>Survey::NotificationSender.</title>
+        <para>Group: Survey, Subgroup: Core::Survey.</para>
+        <para>Default sender for the notification email to customers about new survey.</para>
     </section>
     <section>
-        <title>Survey::Frontend::AgentSurvey###ShowColumns</title>
-        <para>Group: Survey, Subgroup: Frontend::Agent::SurveyOverview</para>
-        <para>
-            Defines the shown columns in the Survey overview.
-            This option has no effect on the position of the column.
-        </para>
+        <title>Survey::NotificationRecipientBlacklist.</title>
+        <para>Group: Survey, Subgroup: Core.</para>
+        <para>Surveys will not be sent to the configured email addresses.</para>
+    </section>
+    <section>
+        <title>Survey::NotificationSubject.</title>
+        <para>Group: Survey, Subgroup: Core::Survey.</para>
+        <para>Default subject for the notification email to customers about new survey.</para>
+    </section>
+    <section>
+        <title>Survey::NotificationBody.</title>
+        <para>Group: Survey, Subgroup: Core::Survey.</para>
+        <para>Default body for the notification email to customers about new survey.</para>
+    </section>
+    <section>
+        <title>Survey::SendNoSurveyRegExp.</title>
+        <para>Group: Survey, Subgroup: Core::Survey.</para>
+        <para>If this regex matches, no customer survey will be sent.</para>
+    </section>
+    <section>
+        <title>Ticket::EventModulePost###99-SurveySendRequest.</title>
+        <para>Group: Survey, Subgroup: Core::Survey.</para>
+        <para>Ticket event module to send automatically survey email requests to customers if a ticket is closed.</para>
+    </section>
+    <section>
+        <title>Survey::Frontend::Overview###Small.</title>
+        <para>Group: Survey, Subgroup: Frontend::Agent::SurveyOverview.</para>
+        <para>Defines an overview module to show the small view of a survey list.</para>
+    </section>
+    <section>
+        <title>Survey::Frontend::AgentSurvey###ShowColumns.</title>
+        <para>Group: Survey, Subgroup: Frontend::Agent::ViewSurveyOverview.</para>
+        <para>Defines the shown columns in the survey overview. This option has no effect on the position of the columns.</para>
+    </section>
+    <section>
+        <title>Survey::Frontend::HTMLRichTextHeightDefault.</title>
+        <para>Group: Survey, Subgroup: Frontend::Agent::SurveyZoom.</para>
+        <para>Defines the default height for Richtext views for SurveyZoom elements.</para>
+    </section>
+    <section>
+        <title>Survey::Frontend::HTMLRichTextHeightMax.</title>
+        <para>Group: Survey, Subgroup: Frontend::Agent::SurveyZoom.</para>
+        <para>Defines the default height for Richtext views for SurveyZoom elements.</para>
+    </section>
+    <section>
+        <title>Survey::SendInHoursAfterClose.</title>
+        <para>Group: Survey, Subgroup: Core::Survey.</para>
+        <para>Defines the amount in hours a ticket has to be closed to trigger the sending of a survey, ( 0 means send immediately after close ).</para>
+    </section>
+    <section>
+        <title>Survey::AmountOfSurveysPer30Days.</title>
+        <para>Group: Survey, Subgroup: Core::Survey.</para>
+        <para>Defines maximum amount of surveys that get sent to a customer per 30 days. ( 0 means no maximum, all survey requests will be sent).</para>
+    </section>
+    <section>
+        <title>Survey::Hook.</title>
+        <para>Group: Survey, Subgroup: Core::Survey.</para>
+        <para>The identifier for a survey, e.g. Survey#, MySurvey#. The default is Survey#.</para>
+    </section>
+    <section>
+        <title>PreferencesGroups###SurveyOverviewSmallPageShown.</title>
+        <para>Group: Survey, Subgroup: Frontend::Agent::Preferences.</para>
+        <para>Parameters for the pages (in which the surveys are shown) of the small survey overview.</para>
     </section>
 </chapter>
 
