@@ -175,11 +175,11 @@ sub QuestionGet {
     return %Data;
 }
 
-=item QuestionSave()
+=item QuestionUpdate()
 
 to update an existing question
 
-    $SurveyObject->QuestionSave(
+    $SurveyObject->QuestionUpdate(
         UserID => 1,
         QuestionID => 4,
         SurveyID => 3,
@@ -189,7 +189,7 @@ to update an existing question
 
 =cut
 
-sub QuestionSave {
+sub QuestionUpdate {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff

@@ -119,7 +119,7 @@ sub Run {
 
         # save if no errors
         if ( !%ServerError ) {
-            my $SaveResult = $Self->{SurveyObject}->SurveySave(
+            my $SaveResult = $Self->{SurveyObject}->SurveyUpdate(
                 %FormElements,
                 SurveyID => $SurveyID,
                 UserID   => $Self->{UserID},
@@ -179,7 +179,7 @@ sub Run {
 
         # save if no errors
         if ( !%ServerError ) {
-            my $SurveyID = $Self->{SurveyObject}->SurveyNew(
+            my $SurveyID = $Self->{SurveyObject}->SurveyAdd(
                 %FormElements,
                 UserID => $Self->{UserID},
             );

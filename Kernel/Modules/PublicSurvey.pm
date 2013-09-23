@@ -142,14 +142,14 @@ sub Run {
             if ( !scalar keys %Errors ) {
                 for my $Question (@QuestionList) {
                     if ( $Question->{Type} eq 'YesNo' ) {
-                        $Self->{SurveyObject}->PublicAnswerSave(
+                        $Self->{SurveyObject}->PublicAnswerSet(
                             PublicSurveyKey => $PublicSurveyKey,
                             QuestionID      => $Question->{QuestionID},
                             VoteValue       => $Answers{ $Question->{QuestionID} },
                         );
                     }
                     elsif ( $Question->{Type} eq 'Radio' ) {
-                        $Self->{SurveyObject}->PublicAnswerSave(
+                        $Self->{SurveyObject}->PublicAnswerSet(
                             PublicSurveyKey => $PublicSurveyKey,
                             QuestionID      => $Question->{QuestionID},
                             VoteValue       => $Answers{ $Question->{QuestionID} },
@@ -166,7 +166,7 @@ sub Run {
                             )
                         {
                             for my $Answer ( @{ $Answers{ $Question->{QuestionID} } } ) {
-                                $Self->{SurveyObject}->PublicAnswerSave(
+                                $Self->{SurveyObject}->PublicAnswerSet(
                                     PublicSurveyKey => $PublicSurveyKey,
                                     QuestionID      => $Question->{QuestionID},
                                     VoteValue       => $Answer,
@@ -175,7 +175,7 @@ sub Run {
                         }
                     }
                     elsif ( $Question->{Type} eq 'Textarea' ) {
-                        $Self->{SurveyObject}->PublicAnswerSave(
+                        $Self->{SurveyObject}->PublicAnswerSet(
                             PublicSurveyKey => $PublicSurveyKey,
                             QuestionID      => $Question->{QuestionID},
                             VoteValue       => $Answers{ $Question->{QuestionID} },

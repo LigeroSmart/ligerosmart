@@ -161,18 +161,18 @@ sub VoteAttributeGet {
     return $VoteAttributeContent;
 }
 
-=item CountVote()
+=item VoteCount()
 
 to count all votes of a survey
 
-    my $CountVote = $SurveyObject->CountVote(
+    my $VoteCount = $SurveyObject->VoteCount(
         QuestionID => 123,
         VoteValue => 'The Value',
     );
 
 =cut
 
-sub CountVote {
+sub VoteCount {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
@@ -197,12 +197,12 @@ sub CountVote {
     );
 
     # fetch the result
-    my $CountVote;
+    my $VoteCount;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        $CountVote = $Row[0];
+        $VoteCount = $Row[0];
     }
 
-    return $CountVote;
+    return $VoteCount;
 }
 
 1;

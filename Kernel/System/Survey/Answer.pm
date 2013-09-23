@@ -145,11 +145,11 @@ sub AnswerGet {
     return %Data;
 }
 
-=item AnswerSave()
+=item AnswerUpdate()
 
 to update an existing answer
 
-    $SurveyObject->AnswerSave(
+    $SurveyObject->AnswerUpdate(
         UserID => 1,
         AnswerID => 6,
         QuestionID => 4,
@@ -158,7 +158,7 @@ to update an existing answer
 
 =cut
 
-sub AnswerSave {
+sub AnswerUpdate {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
@@ -494,11 +494,11 @@ sub AnswerCount {
     return $CountAnswer;
 }
 
-=item PublicAnswerSave()
+=item PublicAnswerSet()
 
 to save a public vote
 
-    $SurveyObject->PublicAnswerSave(
+    $SurveyObject->PublicAnswerSet(
         PublicSurveyKey => 'aVkdE82Dw2qw6erCda',
         QuestionID => 4,
         VoteValue => 'The Value',
@@ -506,7 +506,7 @@ to save a public vote
 
 =cut
 
-sub PublicAnswerSave {
+sub PublicAnswerSet {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff

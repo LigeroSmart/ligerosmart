@@ -233,7 +233,7 @@ sub Run {
 
         my %ServerError;
         if ($Question) {
-            $Self->{SurveyObject}->QuestionSave(
+            $Self->{SurveyObject}->QuestionUpdate(
                 QuestionID     => $QuestionID,
                 SurveyID       => $SurveyID,
                 Question       => $Question,
@@ -459,7 +459,7 @@ sub Run {
 
         my %ServerError;
         if ($Answer) {
-            $Self->{SurveyObject}->AnswerSave(
+            $Self->{SurveyObject}->AnswerUpdate(
                 AnswerID   => $AnswerID,
                 QuestionID => $QuestionID,
                 Answer     => $Answer,

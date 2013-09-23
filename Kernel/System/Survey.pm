@@ -126,11 +126,11 @@ sub new {
     return $Self;
 }
 
-=item SurveyNew()
+=item SurveyAdd()
 
 to add a new survey
 
-    my $SurveyID = $SurveyObject->SurveyNew(
+    my $SurveyID = $SurveyObject->SurveyAdd(
         UserID              => 1,
         Title               => 'A Title',
         Introduction        => 'The introduction of the survey',
@@ -143,7 +143,7 @@ to add a new survey
 
 =cut
 
-sub SurveyNew {
+sub SurveyAdd {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
@@ -211,7 +211,7 @@ sub SurveyNew {
     return $SurveyID if ref $Param{Queues} ne 'ARRAY';
 
     # insert new survey-queue relations
-    $Self->SurveyQueueSave(
+    $Self->SurveyQueueSet(
         SurveyID => $SurveyID,
         QueueIDs => $Param{Queues},
     );
@@ -312,11 +312,11 @@ sub SurveyGet {
     return %Data;
 }
 
-=item SurveySave()
+=item SurveyUpdate()
 
 to update an existing survey
 
-    $SurveyObject->SurveySave(
+    $SurveyObject->SurveyUpdate(
         UserID              => 1,
         SurveyID            => 4,
         Title               => 'A Title',
@@ -330,7 +330,7 @@ to update an existing survey
 
 =cut
 
-sub SurveySave {
+sub SurveyUpdate {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
@@ -378,7 +378,7 @@ sub SurveySave {
     );
 
     # insert new survey-queue relations
-    return $Self->SurveyQueueSave(
+    return $Self->SurveyQueueSet(
         SurveyID => $Param{SurveyID},
         QueueIDs => $Param{Queues},
     );
@@ -1022,18 +1022,18 @@ sub SurveyQueueGet {
     return \@QueueList;
 }
 
-=item SurveyQueueSave()
+=item SurveyQueueSet()
 
 add a survey_queue relation
 
-my $Result = $SurveyObject->SurveyQueueSave(
+my $Result = $SurveyObject->SurveyQueueSet(
     SurveyID => 3,
     QueueIDs => [1, 7],
 );
 
 =cut
 
-sub SurveyQueueSave {
+sub SurveyQueueSet {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
@@ -1200,7 +1200,7 @@ sub PublicSurveyInvalidSet {
 
 exists an survey-, question-, answer- or request-element
 
-    my $CountRequest = $SurveyObject->ElementExists(
+    my $ElementExists = $SurveyObject->ElementExists(
         ID => 123,           # SurveyID, QuestionID, AnswerID, RequestID
         Element => 'Survey'  # Survey, Question, Answer, Request
     );

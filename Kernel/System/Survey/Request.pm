@@ -437,18 +437,18 @@ sub RequestSend {
     ) if ( !$SendInHoursAfterClose || $Param{TriggerSendRequests} );
 }
 
-=item CountRequest()
+=item RequestCount()
 
 to count all requests of a survey
 
-    my $CountRequest = $SurveyObject->CountRequest(
+    my $RequestCount = $SurveyObject->RequestCount(
         QuestionID => 123,
         ValidID => 0,       # (0|1|all)
     );
 
 =cut
 
-sub CountRequest {
+sub RequestCount {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
@@ -484,12 +484,12 @@ sub CountRequest {
     );
 
     # fetch the result
-    my $CountRequest;
+    my $RequestCount;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        $CountRequest = $Row[0];
+        $RequestCount = $Row[0];
     }
 
-    return $CountRequest;
+    return $RequestCount;
 }
 
 1;

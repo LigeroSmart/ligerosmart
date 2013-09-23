@@ -76,13 +76,13 @@ my %SurveyData = (
     NotificationBody =>
         'Dear customer... äöü',
 );
-my $SurveyID = $SurveyObject->SurveyNew(
+my $SurveyID = $SurveyObject->SurveyAdd(
     UserID => 1,
     %SurveyData,
 );
 $Self->True(
     $SurveyID,
-    "SurveyNew()",
+    "SurveyAdd()",
 );
 
 for ( 1 .. 3 ) {

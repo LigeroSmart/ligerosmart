@@ -177,11 +177,11 @@ sub Run {
     }
 
     # get numbers of requests and votes
-    my $SendRequest = $Self->{SurveyObject}->CountRequest(
+    my $SendRequest = $Self->{SurveyObject}->RequestCount(
         SurveyID => $SurveyID,
         ValidID  => 'all',
     );
-    my $RequestComplete = $Self->{SurveyObject}->CountRequest(
+    my $RequestComplete = $Self->{SurveyObject}->RequestCount(
         SurveyID => $SurveyID,
         ValidID  => 0,
     );
@@ -291,7 +291,7 @@ sub Run {
                     );
                 }
                 for my $Row (@AnswerList) {
-                    my $CountVote = $Self->{SurveyObject}->CountVote(
+                    my $VoteCount = $Self->{SurveyObject}->VoteCount(
                         QuestionID => $Question->{QuestionID},
                         VoteValue  => $Row->{AnswerID},
                     );
@@ -299,7 +299,7 @@ sub Run {
 
                     # calculate the percents
                     if ($RequestComplete) {
-                        $Percent = 100 / $RequestComplete * $CountVote;
+                        $Percent = 100 / $RequestComplete * $VoteCount;
                         $Percent = sprintf( "%.0f", $Percent );
                     }
                     my %Data;
@@ -309,7 +309,7 @@ sub Run {
                 }
             }
             elsif ( $Question->{Type} eq 'Textarea' ) {
-                my $AnswerNo = $Self->{SurveyObject}->CountVote(
+                my $AnswerNo = $Self->{SurveyObject}->VoteCount(
                     QuestionID => $Question->{QuestionID},
                     VoteValue  => '',
                 );
