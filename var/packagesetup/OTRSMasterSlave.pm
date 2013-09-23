@@ -180,6 +180,9 @@ sub CodeInstall {
         $Self->_SetDynamicFields();
     }
 
+    # set dashboard config if needed
+    $Self->_SetDashboardConfig();
+
     return 1;
 }
 
@@ -209,6 +212,9 @@ sub CodeUpgrade {
     my ( $Self, %Param ) = @_;
 
     $Self->_SetDynamicFields();
+
+    # set dashboard config if needed
+    $Self->_SetDashboardConfig();
 
     return 1;
 }
@@ -674,6 +680,65 @@ sub _RemoveDynamicFields {
         Valid => 1,
         Key   => 'Ticket::Frontend::AgentTicketZoom###DynamicField',
         Value => \%DynamicFields,
+    );
+
+    return 1;
+}
+
+sub _SetDashboardConfig {
+    my ( $Self, %Param ) = @_;
+
+    # get dynamic field names from sysconfig
+    my $MasterSlaveDynamicField
+        = $Self->{ConfigObject}->Get('MasterSlave::DynamicField') || 'MasterSlave';
+
+    # if MasterSlave dynamic field is 'MasterSlave' the config is already set, nothing else to do
+    return 1 if ( $MasterSlaveDynamicField eq 'MasterSlave' );
+
+    # otherwise set the new config
+    # attributes common for both Master and Slave widgets
+    my %CommonConfig = (
+        Module        => 'Kernel::Output::HTML::DashboardTicketGeneric',
+        Filter        => 'All',
+        Time          => 'Age',
+        Limit         => 10,
+        Permission    => 'rw',
+        Block         => 'ContentLarge',
+        Group         => '',
+        Default       => 1,
+        CacheTTLLocal => 0.5,
+    );
+
+    # attributes for Master widget
+    my %MasterConfig = (
+        Title       => 'Master Tickets',
+        Description => 'All master tickets',
+        Attributes  => 'DynamicField_' . $MasterSlaveDynamicField . '_Equals=Master;',
+    );
+
+    # attributes for Slave widget
+    my %SlaveConfig = (
+        Title       => 'Slave Tickets',
+        Description => 'All slave tickets',
+        Attributes  => 'DynamicField_' . $MasterSlaveDynamicField . '_Like=Slave*;',
+    );
+
+    # write configurations
+    $Self->{SysConfigObject}->ConfigItemUpdate(
+        Valid => 1,
+        Key   => 'DashboardBackend###0900-TicketMaster',
+        Value => {
+            %CommonConfig,
+            %MasterConfig,
+        },
+    );
+    $Self->{SysConfigObject}->ConfigItemUpdate(
+        Valid => 1,
+        Key   => 'DashboardBackend###0910-TicketSlave',
+        Value => {
+            %CommonConfig,
+            %SlaveConfig,
+        },
     );
 
     return 1;
