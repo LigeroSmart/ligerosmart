@@ -2,35 +2,36 @@
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
     "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd">
 
-<book lang='en'>
+<book lang="en">
 
-<!-- ************************************** Head *********************************************** -->
-
+<!--
+************************************** Head ***********************************************
+-->
 <bookinfo>
-<title>$Name</title>
-<edition>$Description Version $Version</edition>
-
-<copyright>
-<year>$YearStamp</year>
-<holder>$Vendor, $URL</holder>
-</copyright>
-
-<date>$DateStamp</date>
-
-<legalnotice>
-    <para>$License</para>
-    <para>This work is copyrighted by $Vendor, Norsk-Data-Str. 1, 61352 Bad Homburg, Germany.</para>
-    <para>Build Date: $DateStamp</para>
-</legalnotice>
-
+    <title>$Name</title>
+    <edition>$Description Version $Version</edition>
+    <copyright>
+        <year>$YearStamp</year>
+        <holder>$Vendor, $URL</holder>
+    </copyright>
+    <date>$DateStamp</date>
+    <legalnotice>
+        <para>$License</para>
+        <para>
+            This work is copyrighted by $Vendor, Norsk-Data-Str. 1, 61352 Bad Homburg, Germany.
+        </para>
+        <para>Build Date: $DateStamp</para>
+    </legalnotice>
 </bookinfo>
 
-<!-- ************************************ Customer part ****************************************** -->
+<!--
+************************************ Customer part ******************************************
+-->
 
-<preface id="preface" >
-    <!-- ********** -->
-    <!-- 1. Preface -->
-    <!-- ********** -->
+<!-- ********** -->
+<!-- 1. Preface -->
+<!-- ********** -->
+<preface id="preface">
     <title>Preface</title>
     <para>
         Adds the functionality to create Surveys that customers of closed tickets are invited to take part.
@@ -38,12 +39,18 @@
     <para>
         Shows graphical statistics of completed Surveys.
     </para>
+    <para>
+        If you have questions regarding this package, please contact your support team
+        <ulink url="mailto:support@otrs.com?subject=$Name">
+            &lt;support@otrs.com&gt;
+        </ulink> for more information.
+    </para>
 </preface>
 
+<!-- *************** -->
+<!-- 2. Feature List -->
+<!-- *************** -->
 <chapter>
-    <!-- *************** -->
-    <!-- 2. Feature List -->
-    <!-- *************** -->
     <title>Feature List</title>
     <para>This Module enables you to create new Surveys,
         add questions to a created Survey, set a Survey live in order to send
@@ -52,54 +59,51 @@
         themselves.
     </para>
 </chapter>
+
+<!-- ********************** -->
+<!-- 3. System Requirements -->
+<!-- ********************** -->
 <chapter>
-    <!-- ******************** -->
-    <!-- 3. System Reqirement -->
-    <!-- ******************** -->
-    <title>System Requirement</title>
+    <title>System Requirements</title>
     <section>
         <title>Framework</title>
         <para>The following OTRS framework is required:</para>
-        <para>
-        $Framework
-        </para>
+        <para>$Framework</para>
     </section>
     <section>
         <title>Packages</title>
-        <para>The following package are required:</para>
-        <para>
-        $PackageRequired
-        </para>
+        <para>The following packages are required:</para>
+        <para>$PackageRequired</para>
     </section>
     <section>
         <title>Operating System</title>
         <para>This package requires one of the following operating systems:</para>
-        <para>
-        $OS
-        </para>
+        <para>$OS</para>
     </section>
     <section>
         <title>Third Party Software</title>
         <para>This third party software is required to use this package:</para>
-        <para>
-            <itemizedlist>
-                <listitem><para>None.</para></listitem>
-            </itemizedlist>
-        </para>
+        <itemizedlist>
+            <listitem>
+                <para>None.</para>
+            </listitem>
+        </itemizedlist>
     </section>
 </chapter>
 
+<!-- *************** -->
+<!-- 4. Installation -->
+<!-- *************** -->
 <chapter>
-    <!-- *************** -->
-    <!-- 4. Installation -->
-    <!-- *************** -->
     <title>Installation</title>
-    <para>The following instructions explain how to install the package.</para>
+    <para>
+        The following instructions explain how to install the package.
+    </para>
     <section>
         <title>Admin Interface</title>
         <para>
-            Please use the following URL to install the package utilizing the admin
-            interface (please note that you need to be in the admin group).
+            Please use the following URL to install the package utilizing the Admin Interface
+            (please note that you need to be in the "admin" group).
         </para>
         <para>
             <ulink url="http://localhost/otrs/index.pl?Action=AdminPackageManager">
@@ -110,22 +114,21 @@
     <section>
         <title>Command Line</title>
         <para>
-            Whenever you cannot use the Admin Interface for whatever reason,
-            you may use the following command line tool (&quot;bin/otrs.PackageManager.pl&quot;)
-            instead.
+            Whenever you cannot use the Admin Interface for whatever reason, you may use the
+            following command line tool ("bin/otrs.PackageManager.pl") instead.
         </para>
         <para>
-        <screen>
-            shell> bin/otrs.PackageManager.pl  -a install -p /path/to/$Name-$Version.opm
-        </screen>
+            <screen>
+shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
+            </screen>
         </para>
     </section>
 </chapter>
 
+<!-- **************** -->
+<!-- 5. Configuration -->
+<!-- **************** -->
 <chapter>
-    <!-- **************** -->
-    <!-- 5. Configuration -->
-    <!-- **************** -->
     <title>Configuration</title>
     <para>
         The following list of configuration options can be changed for this package.
@@ -198,10 +201,10 @@
     </section>
 </chapter>
 
+<!-- ******** -->
+<!-- 6. Usage -->
+<!-- ******** -->
 <chapter>
-    <!-- ******** -->
-    <!-- 6. Usage -->
-    <!-- ******** -->
     <title>Usage</title>
     <section>
         <title>Create new Survey</title>
@@ -367,12 +370,14 @@
     </section>
 </chapter>
 
-<!-- ***************************************** Technical part ************************************ -->
+<!--
+***************************************** Technical part ************************************
+-->
 
+<!-- ********************************* -->
+<!-- 7. Technical Implementation Detail -->
+<!-- ********************************* -->
 <chapter>
-    <!-- ********************************* -->
-    <!-- 7. Technical Implematation Detail -->
-    <!-- ********************************* -->
     <title>Technical Implementation Details</title>
     <para>
         This module adds the following database tables:
@@ -405,22 +410,19 @@
     </para>
 </chapter>
 
+<!-- *********** -->
+<!-- 8. Filelist -->
+<!-- *********** -->
 <chapter>
-    <!-- *********** -->
-    <!-- 8. Filelist -->
-    <!-- *********** -->
-    <title>Filelist</title>
-    <!-- Standard text. Don't change this -->
+    <title>File list</title>
     <para>This list shows all included files and the referring permissions.</para>
-    <para>
-       $Filelist
-    </para>
+    <para>$Filelist</para>
 </chapter>
 
+<!-- ******* -->
+<!-- 9. Test -->
+<!-- ******* -->
 <chapter>
-    <!-- ******* -->
-    <!-- 9. Test -->
-    <!-- ******* -->
     <title>Tests</title>
     <para>This module has been tested on the current state of the art in quality.</para>
     <section>
@@ -437,58 +439,44 @@
             the functionalities of this module. These unit tests can be run via command line.
         </para>
         <para>
-            ATTENTION: Please never run unit tests on a productive system, since the added test
-            data to the system will no longer be removed. Always use a test system.
+            ATTENTION: Please never run unit tests on a productive system, since the added test data
+            to the system will no longer be removed. Always use a test system.
         </para>
-        <para>
-            Run the package specific unit tests
-        </para>
+        <para>Run the package specific unit tests</para>
         <para>
             To run only the unit test which will be delivered with this package, use the following
             command on the command line:
         </para>
-        <para>
-            <screen>
-                shell> perl bin/otrs.UnitTest.pl -n Survey
-            </screen>
-        </para>
-        <para>
-            Run all available unit tests
-        </para>
+        <screen>shell> perl bin/otrs.UnitTest.pl -n Survey</screen>
+        <para>Run all available unit tests</para>
         <para>
             To run all available unit tests, use the following command on the command line:
         </para>
-        <para>
-            <screen>
-                shell> perl bin/otrs.UnitTest.pl
-            </screen>
-        </para>
+        <screen>shell> perl bin/otrs.UnitTest.pl</screen>
     </section>
 </chapter>
 
+<!-- ************* -->
+<!-- 10. Changelog -->
+<!-- ************* -->
 <chapter>
-    <!-- ************* -->
-    <!-- 10. Changelog -->
-    <!-- ************* -->
-    <title>ChangeLog</title>
-    <para>
-    $ChangeLog
-    </para>
+    <title>Change Log</title>
+    <para>$ChangeLog</para>
 </chapter>
 
+<!-- ************ -->
+<!-- 11. Contacts -->
+<!-- ************ -->
 <chapter>
-    <!-- *********** -->
-    <!-- 11. Contact -->
-    <!-- *********** -->
     <title>Contacts</title>
     <para>People who are involved in this implementation.</para>
     <section>
         <title>OTRS AG</title>
         <para>
-            Accounting: xxxx xxxxx &lt;sales@otrs.com&gt;, Phone +49 (0)6172 681988 0
-        </para>
-        <para>
-            Technical: xxxxxxxxx xxxxxxxxx &lt;dev-support@otrs.com&gt;, Phone +49 (0)6172 681988 0
+            Technical: Manuel Hecht
+            <ulink url="mailto:dev-support@otrs.com?subject=$Name">
+                &lt;dev-support@otrs.com&gt;
+            </ulink>, Phone +49 (0)6172 681988 0
         </para>
     </section>
 </chapter>
