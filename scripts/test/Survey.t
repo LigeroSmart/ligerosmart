@@ -17,6 +17,7 @@ use Kernel::System::CustomerUser;
 use Kernel::System::Email;
 use Kernel::System::Survey;
 use Kernel::System::Ticket;
+use Kernel::System::UnitTest::Helper;
 use Kernel::System::User;
 
 # create local config object
@@ -26,6 +27,12 @@ my $ConfigObject = Kernel::Config->new();
 $ConfigObject->Set(
     Key   => 'SendmailModule',
     Value => 'Kernel::System::Email::DoNotSendEmail',
+);
+
+my $HelperObject = Kernel::System::UnitTest::Helper->new(
+    %$Self,
+    UnitTestObject => $Self,
+    ConfigObject   => $ConfigObject,
 );
 
 # create local objects
@@ -38,18 +45,25 @@ my $TicketObject = Kernel::System::Ticket->new(
     ConfigObject => $ConfigObject,
 );
 my $SurveyObject = Kernel::System::Survey->new(
-    ConfigObject => $ConfigObject,
     LogObject    => $Self->{LogObject},
     TimeObject   => $Self->{TimeObject},
     DBObject     => $Self->{DBObject},
     MainObject   => $Self->{MainObject},
     EncodeObject => $Self->{EncodeObject},
+    ConfigObject => $ConfigObject,
     UserObject   => $UserObject,
 );
 
 # cleanup system
 $Self->{DBObject}->Do(
     SQL => "DELETE FROM survey_request WHERE send_to LIKE '\%\@unittest.com\%'",
+);
+
+# Freeze Time
+$HelperObject->FixedTimeSet();
+$Self->True(
+    1,
+    '-- Set Fixed Time --',
 );
 
 # create survey
@@ -328,7 +342,11 @@ for my $Test (@Tests) {
     }
 
     if ( $Test->{Sleep} ) {
-        sleep $Test->{Sleep};
+        $HelperObject->FixedTimeAddSeconds( $Test->{Sleep} );
+        $Self->True(
+            1,
+            "-- Added $Test->{Sleep} Second(s) to Fixed Time --",
+        );
     }
 
     my $TicketID = $TicketObject->TicketCreate(
@@ -540,6 +558,12 @@ $Self->True(
 # cleanup system
 $Self->{DBObject}->Do(
     SQL => "DELETE FROM survey_request WHERE send_to LIKE '\%\@unittest.com\%'",
+);
+
+$HelperObject->FixedTimeUnset();
+$Self->True(
+    1,
+    '-- Unset Fixed Time --',
 );
 
 1;
