@@ -14,6 +14,14 @@
  - Fixed bug#9544 thanx to Daniel Santos!
  - Extended unittests to check for Survey link mangling during sending process.
  - Improved graphical columns usability
+ - Changed API:
+     SurveyNew()       => SurveyAdd()
+     SurveySave()      => SurveyUpdate()
+     SurveyQueueSave() => SurveyQueueSet()
+     AnswerSave        => AnswerUpdate()
+     PublicAnswerSave  => PublicAnswerSet()
+     CountRequest      => RequestCount()
+     CountVote         => VoteCount()
 
 2.2.2 - 2013-01-31
  - Added Finish translation, thanks to Niklas Lampén.
