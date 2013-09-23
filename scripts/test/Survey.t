@@ -560,10 +560,4 @@ $Self->{DBObject}->Do(
     SQL => "DELETE FROM survey_request WHERE send_to LIKE '\%\@unittest.com\%'",
 );
 
-$HelperObject->FixedTimeUnset();
-$Self->True(
-    1,
-    '-- Unset Fixed Time --',
-);
-
 1;
