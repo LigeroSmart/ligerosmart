@@ -134,6 +134,46 @@ sub GetObjectAttributes {
     return @Attributes;
 }
 
+sub GetHeaderLine {
+    my ( $Self, %Param ) = @_;
+    my @HeaderLine = ("");
+
+    # Users as X-value
+    if ( $Param{XValue}{Element} && $Param{XValue}{Element} eq 'User' ) {
+
+        # user have been selected as x-value
+        my @UserIDs = @{ $Param{XValue}{SelectedValues} };
+
+        # iterate over selected users
+        USERID:
+        for my $UserID (@UserIDs) {
+            my $UserName = $Self->{UserObject}->UserName(
+                UserID => $UserID,
+            );
+
+            push @HeaderLine, $UserName;
+        }
+    }
+
+    # Projects as X-value
+    else {
+        # projects have been selevted as x-value
+        my @ProjectIDs = @{ $Param{XValue}{SelectedValues} };
+
+        # iterate over selected projects
+        PROJECTID:
+        for my $ProjectID (@ProjectIDs) {
+            my %ProjectData = $Self->{TimeAccountingObject}->ProjectGet(
+                ID => $ProjectID,
+            );
+
+            push @HeaderLine, $ProjectData{Project};
+        }
+    }
+
+    return \@HeaderLine;
+}
+
 sub GetStatTable {
     my ( $Self, %Param ) = @_;
     my @StatArray;
