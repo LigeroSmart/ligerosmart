@@ -253,6 +253,8 @@ sub UserReporting {
             TargetStateTotal => 0,
         );
 
+        my $Calendar = { $Self->UserGet( UserID => $UserID ) }->{Calendar};
+
         YEAR:
         for my $Year ( $YearStart .. $YearEnd ) {
 
@@ -304,9 +306,10 @@ sub UserReporting {
 
                     $CurrentUserData{WorkingHoursTotal} += $WorkingUnit{Total};
                     my $VacationCheck = $Self->{TimeObject}->VacationCheck(
-                        Year  => $Year,
-                        Month => $Month,
-                        Day   => $Day,
+                        Year     => $Year,
+                        Month    => $Month,
+                        Day      => $Day,
+                        Calendar => $Calendar || '',
                     );
                     my $Weekday = Day_of_Week( $Year, $Month, $Day );
                     if (
