@@ -7,11 +7,13 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-2.2.3 - 2013-xx-xx
+2.2.91 - 2013-xx-xx
+ - First stable release for OTRS 3.3.x series.
  - Added Malaysia translation, thanks to Kenny Cheah.
  - Added Japanese translation, thanks to Norihiro Tanaka.
  - Fixed bug#9544 thanx to Daniel Santos!
  - Extended unittests to check for Survey link mangling during sending process.
+ - Improved graphical columns usability
 
 2.2.2 - 2013-01-31
  - Added Finish translation, thanks to Niklas Lampén.
