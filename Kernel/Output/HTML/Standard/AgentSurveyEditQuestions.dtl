@@ -127,7 +127,7 @@
 <!-- dtl:block:SurveyQuestionsRow -->
                         <tr>
                             <td>
-                                <a class="AsBlock" href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=QuestionEdit;SurveyID=$LQData{"SurveyID"};QuestionID=$LQData{"QuestionID"}" class="$QData{"Class"}">$QData{"Question","70"}</a>
+                                <a class="AsBlock $QData{"Class"}" href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=QuestionEdit;SurveyID=$LQData{"SurveyID"};QuestionID=$LQData{"QuestionID"}">$QData{"Question","70"}</a>
                             </td>
                             <td>
                                 $Text{"$Data{"Type"}"}
