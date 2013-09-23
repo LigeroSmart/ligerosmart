@@ -145,7 +145,7 @@
             The number given here is the amount of days,
             a customer won't get a second Survey request
             after having received a request. In this
-            time periode tickets for this customer
+            time period tickets for this customer
             can be closed without triggering new
             Survey requests.
         </para>
@@ -154,7 +154,7 @@
         <title>Survey::NotificationSender</title>
         <para>Group: Survey, Subgroup: Core</para>
         <para>
-            The sender adress that is proposed
+            The sender address that is proposed
             on creation of new Surveys.
         </para>
     </section>
@@ -162,7 +162,7 @@
         <title>Survey::NotificationRecipientBlacklist</title>
         <para>Group: Survey, Subgroup: Core</para>
         <para>
-            Mailadresses that will never get Survey requests.
+            Mail addresses that will never get Survey requests.
         </para>
     </section>
     <section>
@@ -287,7 +287,7 @@
             you can see the "Survey Results Graph".
         </para>
         <para>
-            This displays the statistically summarizeable questions (e.g. YesNo, Radio and Checkbox).
+            This displays the statistically a summary of questions (e.g. YesNo, Radio and Checkbox).
         </para>
         <para>
             As soon as the Survey has the state "Master" the Survey is set live.
@@ -305,9 +305,9 @@
         </para>
         <para>
             Statistics for required Checkbox (List) questions will have at least one
-            checked value for every submitted Survey but due to it's nature of beeing
+            checked value for every submitted Survey but due to it's nature of been
             multiple clickable there may be more answers than the total amount of submitted
-            Surveys. Examlpe: 200 Surveys submitted by customers, 350 answers on one
+            Surveys. Example: 200 Surveys submitted by customers, 350 answers on one
             Checkbox (List) question.
         </para>
         <para>
@@ -362,7 +362,7 @@
             Changing a "Answer not Required" Question to answer required
             will require future Survey customers to give a vote for
             this question, but will not add votes for already submitted
-            Surveys. So statistics will render rather usless too.
+            Surveys. So statistics will render rather useless too.
         </para>
     </section>
 </chapter>
@@ -424,14 +424,14 @@
     <title>Tests</title>
     <para>This module has been tested on the current state of the art in quality.</para>
     <section>
-        <title>Testcases</title>
+        <title>Test Cases</title>
         <para>
             To tests this package please follow the examples described in the Usage section, all the
             tests cases should return the expected results defined at the beginning of each example.
         </para>
     </section>
     <section>
-        <title>Unitest</title>
+        <title>Unit Tests</title>
         <para>
             To ensure the quality of the module, several so-called unit tests were created, to test
             the functionalities of this module. These unit tests can be run via command line.
@@ -449,7 +449,7 @@
         </para>
         <para>
             <screen>
-                shell> perl bin/otrs.UnitTest.pl -n DynamicTicketTemplate
+                shell> perl bin/otrs.UnitTest.pl -n Survey
             </screen>
         </para>
         <para>
