@@ -35,6 +35,10 @@
         <File Permission="644" Location="Kernel/Language/pt_BR_Survey.pm"/>
         <File Permission="644" Location="Kernel/Language/pt_PT_Survey.pm"/>
         <File Permission="644" Location="Kernel/System/Survey.pm"/>
+        <File Permission="644" Location="Kernel/System/Survey/Answer.pm"/>
+        <File Permission="644" Location="Kernel/System/Survey/Question.pm"/>
+        <File Permission="644" Location="Kernel/System/Survey/Request.pm"/>
+        <File Permission="644" Location="Kernel/System/Survey/Vote.pm"/>
         <File Permission="644" Location="Kernel/System/Ticket/Event/SurveySendRequest.pm"/>
         <File Permission="644" Location="scripts/test/Survey.t"/>
         <File Permission="644" Location="Kernel/Output/HTML/LayoutSurvey.pm"/>
