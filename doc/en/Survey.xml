@@ -32,10 +32,6 @@
     <!-- 1. Preface -->
     <!-- ********** -->
     <title>Preface</title>
-    <!--
-         A short overview for this modul clearly explained to customers!!!
-         e.g. Provides an additional button to also insert FAQ richtext incl. inlines + attachments into tickets.
-    -->
     <para>
         Adds the functionality to create Surveys that customers of closed tickets are invited to take part.
     </para>
@@ -49,13 +45,6 @@
     <!-- 2. Feature List -->
     <!-- *************** -->
     <title>Feature List</title>
-    <!--
-        List of all functions declared at the functional level
-         -   minimum in 4 sentences
-         -   customer-specific
-         -   possible screenshots
-         -   no OTRS terminology like TicketEventModul, PreApplicationModul
-    -->
     <para>This Module enables you to create new Surveys,
         add questions to a created Survey, set a Survey live in order to send
         requests, modify existing Surveys to a certain extent,
@@ -141,11 +130,6 @@
     <para>
         The following list of configuration options can be changed for this package.
     </para>
-    <!--
-        List of all added, modified or removed config options in the package.
-        e.g.: Frontend::Module###AgentTicketWorkflow Group: Ticket, Subgroup: Frontend::Agent::ModuleRegistration)
-        Description text must be identical with sysconfig description and clearly explained to customers.
-    -->
     <section>
         <title>Survey::ShowVoteData</title>
         <para>Group: Survey, Subgroup: Core</para>
@@ -219,14 +203,6 @@
     <!-- 6. Usage -->
     <!-- ******** -->
     <title>Usage</title>
-    <!--
-        Create for every "possible" use case a step by step list clearly explained to customers. Screenshots desirable-
-        e.g.
-        1.  Choose new phone ticket frontend ?
-        2.  Fillup required data (subject)
-        3.  Submit the data (have a look at screenshot)
-        ...
-    -->
     <section>
         <title>Create new Survey</title>
         <para>
@@ -398,13 +374,6 @@
     <!-- 7. Technical Implematation Detail -->
     <!-- ********************************* -->
     <title>Technical Implementation Details</title>
-    <!--
-        Describe the technical structure of the module and the technical functioning out of a developer's perspective.
-            -   Which module layers are used where/as?
-            -   What are the technical features of it?
-        You can split the technical part into a customer part shown in the doku
-        and a hidden part shown in the code.
-    -->
     <para>
         This module adds the following database tables:
         survey,
@@ -434,34 +403,6 @@
         The survey_vote table holds a reference to the corresponding request and question
         as well as the chosen answers.
     </para>
-    <!--
-            OK, so far for the users and now for the developers underneath us:
-            Functionality:
-            3 Main Parts:
-        1. Extension for Ticket.pm's TicketAcl sub (Kernel/System/Ticket/OTRSTIcketMaskExtensions.pm):
-            Here the ObjectVariable "TicketAclFormData" gets populated after an ACL check, holding the 1 and 0 configs as configured in the ACL rule that was triggered.
-        2. Custom/Kernel/Modules/AgentTicket ActionCommon/Email/Phone/PhoneCommon .pm
-            In every .pm where we do the acl checks on dynamic fields, fetch Ticket.pm's new "TicketAclFormData" result and render dynamic field's HTML.
-            For Invisible DynamicFields, they get rendered too but as empty div's.
-        3. var/httpd/htdocs/js/Core.AJAX.OTRSTIcketMaskExtensions.js
-            Here the main work happens. After changing Ajax updateable fields,
-            the Perl backend gets called, returns a list of to be displayed dynamicfields as well as their html code.
-            A loop through the DynamicFields populates the empty divs that should get shown by newly triggered ACL rules
-            as well as now to be hidden DynamicFields's divs content gets deleted.
-
-            1 small side Part:
-        To get emptyDiv's we need the Kernel/Output/HTML/OutputFilterPreOTRSTicketMaskExtensions.pm to regex in the following new dtl block:
-        dtl:block:ContentDynamicField
-        inside the standard otrs 3.1 block:
-        dtl:block:DynamicField
-
-        this way the Custom/kernel/Module/Agent....pm's can render the dtl:block:ContentDynamicField only if they concerning DynamicField
-        should be visible.
-
-            Big thx to:
-            - Martin Gruner for thinking through the whole thing with me
-            - Carlos Rodriguez for the implementation of the huge framework side necessities to make this module possible
-        -->
 </chapter>
 
 <chapter>
@@ -485,16 +426,12 @@
     <section>
         <title>Testcases</title>
         <para>
-            <!-- Reference to point 6.x and document the results -->
             To tests this package please follow the examples described in the Usage section, all the
             tests cases should return the expected results defined at the beginning of each example.
         </para>
     </section>
     <section>
         <title>Unitest</title>
-        <!-- If core files included in this package, there must be covered by unit tests and will be tested.
-             If the packet contains no "core files", this point 9.2 can be removed.
-        -->
         <para>
             To ensure the quality of the module, several so-called unit tests were created, to test
             the functionalities of this module. These unit tests can be run via command line.
@@ -555,6 +492,5 @@
         </para>
     </section>
 </chapter>
-
 
 </book>
