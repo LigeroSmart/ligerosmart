@@ -34,7 +34,8 @@
 <preface id="preface">
     <title>Preface</title>
     <para>
-        Adds the functionality to create Surveys that customers of closed tickets are invited to take part.
+        Adds the functionality to create Surveys that customers of closed tickets are invited to
+        take part.
     </para>
     <para>
         Shows graphical statistics of completed Surveys.
@@ -52,11 +53,10 @@
 <!-- *************** -->
 <chapter>
     <title>Feature List</title>
-    <para>This Module enables you to create new Surveys,
-        add questions to a created Survey, set a Survey live in order to send
-        requests, modify existing Surveys to a certain extent,
-        and view statistics of submitted Survey answers as well as the answers
-        themselves.
+    <para>
+        This Module enables you to create new Surveys, add questions to a created Survey, set a
+        Survey live in order to send requests, modify existing Surveys to a certain extent,
+        and view statistics of submitted Survey answers as well as the answers themselves.
     </para>
 </chapter>
 
@@ -245,8 +245,8 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
             and choosing "New".
         </para>
         <para>
-            New Surveys require a title, an introduction text, a sender mail address, a mail subject,
-            a mail body and an internal description of the Survey.
+            New Surveys require a title, an introduction text, a sender mail address, a mail
+            subject, a mail body and an internal description of the Survey.
         </para>
         <para>
             Additionally the new Survey can be created for just some queues.
@@ -256,8 +256,8 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
     <section>
         <title>Add Questions</title>
         <para>
-            As soon as a new Survey is created, the user can add questions to this Survey by clicking
-            "Edit Questions" in the displayed Survey.
+            As soon as a new Survey is created, the user can add questions to this Survey by
+            clicking "Edit Questions" in the displayed Survey.
         </para>
         <para>
             A new window will pop up. In there the user can add questions.
@@ -269,7 +269,8 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
             "YesNo" questions a user can answer by selecting "Yes" or "No" of a drop down select.
         </para>
         <para>
-            "Radio (List)" questions a user can answer by selecting exactly one and just one of the possible answers.
+            "Radio (List)" questions a user can answer by selecting exactly one and just one of the
+            possible answers.
         </para>
         <para>
             "Checkbox (List)" questions a user can answer by selecting none to all listed answers.
@@ -279,18 +280,18 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
         </para>
         <para>
             For each answer type the OTRS user can choose
-            if he wants a customer to be required to answer this question or if a customer can ignore the question.
+            if he wants a customer to be required to answer this question or if a customer can
+            ignore the question.
         </para>
         <para>
-            As soon as questions of type "Radio (List)" or "Checkbox (List)" got added,
-            the question will be shown in the "Survey Questions"-List.
-            By clicking on the question the user can add answers,
-            change the answer order by clicking the "UP" or "DOWN" icon,
-            or delete the answer by clicking the "DELETE" icon.
+            As soon as questions of type "Radio (List)" or "Checkbox (List)" got added, the question
+            will be shown in the "Survey Questions"-List. By clicking on the question the user can
+            add answers, change the answer order by clicking the "UP" or "DOWN" icon, or delete the
+            answer by clicking the "DELETE" icon.
         </para>
         <para>
-            Questions of type "Radio (List)" or "Checkbox (List)"
-            need to have at least two answers to be valid.
+            Questions of type "Radio (List)" or "Checkbox (List)" needs to have at least two answers
+            to be valid.
         </para>
     </section>
     <section>
@@ -317,9 +318,8 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
     <section>
         <title>Survey Results Graph</title>
         <para>
-            By selecting "SURVEY" from the menu, choosing "Overview", clicking on a
-            a Survey that customers already submitted and scrolling down,
-            you can see the "Survey Results Graph".
+            By selecting "SURVEY" from the menu, choosing "Overview", clicking on a a Survey that
+            customers already submitted and scrolling down, you can see the "Survey Results Graph".
         </para>
         <para>
             This displays the statistically a summary of questions (e.g. YesNo, Radio and Checkbox).
@@ -328,36 +328,34 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
             As soon as the Survey has the state "Master" the Survey is set live.
         </para>
         <para>
-            Questions where answers were configured as "required" will have
-            one vote for each customer submitted Survey.
+            Questions where answers were configured as "required" will have one vote for each
+            customer submitted Survey.
         </para>
         <para>
-            Questions where answers were not configured as "required"
-            are optional for the customer. This means that for example 200 customers submitted
-            the Survey but in the statistic in total only 10 or 20 answers may occur, if
-            customers did not select any of the Radio (List), YesNo or checkbox answers
-            or haven't put anything in a textarea answer.
+            Questions where answers were not configured as "required" are optional for the customer.
+            This means that for example 200 customers submitted the Survey but in the statistic in
+            total only 10 or 20 answers may occur, if customers did not select any of the Radio
+            (List), YesNo or checkbox answers or haven't put anything in a textarea answer.
         </para>
         <para>
-            Statistics for required Checkbox (List) questions will have at least one
-            checked value for every submitted Survey but due to it's nature of been
-            multiple clickable there may be more answers than the total amount of submitted
-            Surveys. Example: 200 Surveys submitted by customers, 350 answers on one
-            Checkbox (List) question.
+            Statistics for required Checkbox (List) questions will have at least one checked value
+            for every submitted Survey but due to it's nature of been multiple clickable there may
+            be more answers than the total amount of submitted Surveys. Example: 200 Surveys
+            submitted by customers, 350 answers on one Checkbox (List) question.
         </para>
         <para>
-            Statistics for not required questions may have
-            less votes than the total amount of submitted Surveys (answer is optional).
+            Statistics for not required questions may have less votes than the total amount of
+            submitted Surveys (answer is optional).
         </para>
     </section>
     <section>
-        <title>Stats Details</title>
+        <title>Statistics Details</title>
         <para>
-            By selecting "SURVEY" from the menu, choosing "Overview", clicking on a
-            Survey that customers already submitted and choosing "Stats Details"
-            you can see a list containing the time the Survey invitation was sent to the customer,
-            the time the customer submitted his filled Survey, the Ticket (clickable)
-            and a magnifying glass that shows the selected votes for this customer.
+            By selecting "SURVEY" from the menu, choosing "Overview", clicking on a Survey that
+            customers already submitted and choosing "Stats Details" you can see a list containing
+            the time the Survey invitation was sent to the customer, the time the customer submitted
+            his filled Survey, the Ticket (clickable) and a magnifying glass that shows the selected
+            votes for this customer.
         </para>
         <para>
             In there you can find the answers the customer chose or typed in question by question.
@@ -369,34 +367,31 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
     <section>
         <title>Modifying Survey</title>
         <para>
-            As soon as a Survey had the Status "Master" the possible modifications are limited.
-            So please make sure to have especially the amount of questions as well as
-            the amount of answers correctly configured before changing it's status
-            to Master.
+            As soon as a Survey had the Status "Master" the possible modifications are limited. So
+            please make sure to have especially the amount of questions as well as the amount of
+            answers correctly configured before changing it's status to Master.
+        </para>
+        <warning>
+            <para>
+                In a Survey of type "Master" you can not add or delete questions any more.
+            </para>
+        </warning>
+        <para>
+            In a Survey of type Master you can change the general info (e.g. Title, Introduction,
+            Sender,...), the question text, the answer text, as well as the order of the answers.
         </para>
         <para>
-            WARNING: In a Survey of type "Master" you can not add or delete questions any more.
+            You can change the "Answer Required" part of a question too, but this may just make
+            sense as long as there are no submitted customer Surveys.
         </para>
         <para>
-            In a Survey of type Master you can change the general info
-            (e.g. Title, Introduction, Sender,...), the question text,
-            the answer text, as well as the order of the answers.
+            Changing a "Answer Required" Question to answer not required makes the answer optional,
+            so the statistic for this question may not have an answer for each submitted customer
+            Survey any more.
         </para>
         <para>
-            You can change the "Answer Required" part of a question too,
-            but this may just make sense as long as there are no
-            submitted customer Surveys.
-        </para>
-        <para>
-            Changing a "Answer Required" Question to answer not required
-            makes the answer optional, so the statistic for this question may
-            not have an answer for each submitted customer Survey
-            any more.
-        </para>
-        <para>
-            Changing a "Answer not Required" Question to answer required
-            will require future Survey customers to give a vote for
-            this question, but will not add votes for already submitted
+            Changing a "Answer not Required" Question to answer required will require future Survey
+            customers to give a vote for this question, but will not add votes for already submitted
             Surveys. So statistics will render rather useless too.
         </para>
     </section>
@@ -427,7 +422,8 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
         The survey_answer holds the answers for a survey questions.
     </para>
     <para>
-        The survey_question holds all question related information as well as if an answer is required or not.
+        The survey_question holds all question related information as well as if an answer is
+        required or not.
     </para>
     <para>
         The survey_queue table holds a record for each queue a survey is added.
