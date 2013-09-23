@@ -113,6 +113,9 @@ sub new {
         || Kernel::System::CustomerUser->new( %{$Self} );
     $Self->{TicketObject} = $Param{TicketObject} || Kernel::System::Ticket->new( %{$Self} );
 
+    # get like escape string needed for some databases (e.g. oracle)
+    $Self->{LikeEscapeString} = $Self->{DBObject}->GetDatabaseFunction('LikeEscapeString');
+
     return $Self;
 }
 
@@ -129,7 +132,10 @@ sub SurveyList {
 
     # get survey list
     $Self->{DBObject}->Prepare(
-        SQL => 'SELECT id FROM survey ORDER BY create_time DESC',
+        SQL => '
+            SELECT id
+            FROM survey
+            ORDER BY create_time DESC',
     );
 
     # fetch the results
@@ -163,15 +169,15 @@ sub SurveyGet {
         return;
     }
 
-    # quote
-    $Param{SurveyID} = $Self->{DBObject}->Quote( $Param{SurveyID}, 'Integer' );
-
     # get all attributes of a survey
     $Self->{DBObject}->Prepare(
-        SQL => "SELECT id, surveynumber, title, introduction, description,"
-            . " notification_sender, notification_subject, notification_body, "
-            . " status, create_time, create_by, change_time, change_by "
-            . " FROM survey WHERE id = $Param{SurveyID}",
+        SQL => '
+            SELECT id, surveynumber, title, introduction, description, notification_sender,
+                notification_subject, notification_body, status, create_time, create_by,
+                change_time, change_by
+            FROM survey
+            WHERE id = ?',
+        Bind  => [ \$Param{SurveyID} ],
         Limit => 1,
     );
 
@@ -259,13 +265,13 @@ sub SurveyStatusSet {
         }
     }
 
-    # quote
-    $Param{NewStatus} = $Self->{DBObject}->Quote( $Param{NewStatus} );
-    $Param{SurveyID} = $Self->{DBObject}->Quote( $Param{SurveyID}, 'Integer' );
-
     # get current status
     $Self->{DBObject}->Prepare(
-        SQL   => "SELECT status FROM survey WHERE id = $Param{SurveyID}",
+        SQL => '
+            SELECT status
+            FROM survey
+            WHERE id = ?',
+        Bind  => [ \$Param{SurveyID} ],
         Limit => 1,
     );
 
@@ -280,7 +286,11 @@ sub SurveyStatusSet {
 
         # get the question ids
         $Self->{DBObject}->Prepare(
-            SQL   => "SELECT id FROM survey_question WHERE survey_id = $Param{SurveyID}",
+            SQL => '
+                SELECT id
+                FROM survey_question
+                WHERE survey_id = ?',
+            Bind  => [ \$Param{SurveyID} ],
             Limit => 1,
         );
 
@@ -292,11 +302,19 @@ sub SurveyStatusSet {
 
         return 'NoQuestion' if !$Quest;
 
+        my %QuestionType = (
+            Radio    => 'Radio',
+            Checkbox => 'Checkbox',
+        );
+
         # get all questions (type radio and checkbox)
         $Self->{DBObject}->Prepare(
-            SQL => "SELECT id FROM survey_question"
-                . " WHERE survey_id = $Param{SurveyID} AND "
-                . "(question_type = 'Radio' OR question_type = 'Checkbox')",
+            SQL => '
+                SELECT id
+                FROM survey_question
+                WHERE survey_id = ?
+                    AND (question_type = ? OR question_type = ?)',
+            Bind => [ \$Param{SurveyID}, \$QuestionType{Radio}, \$QuestionType{Checkbox}, ],
         );
 
         # fetch the result
@@ -308,7 +326,11 @@ sub SurveyStatusSet {
 
             # get all answer ids of a question
             $Self->{DBObject}->Prepare(
-                SQL   => "SELECT COUNT(id) FROM survey_answer WHERE question_id = $OneID",
+                SQL => '
+                    SELECT COUNT(id)
+                    FROM survey_answer
+                    WHERE question_id = ?',
+                Bind  => [ \$OneID ],
                 Limit => 1,
             );
 
@@ -323,14 +345,22 @@ sub SurveyStatusSet {
 
         # set new status
         if ( $Param{NewStatus} eq 'Master' ) {
+            my $ValidStatus = 'Valid';
             $Self->{DBObject}->Do(
-                SQL => "UPDATE survey SET status = 'Valid' WHERE status = 'Master'",
+                SQL => '
+                    UPDATE survey
+                    SET status = ?
+                    WHERE status = ?',
+                Bind => [ \$ValidStatus, \$Param{NewStatus}, ],
             );
+
         }
         if ( $Param{NewStatus} eq 'Valid' || $Param{NewStatus} eq 'Master' ) {
             $Self->{DBObject}->Do(
-                SQL => "UPDATE survey SET status = '$Param{NewStatus}' "
-                    . "WHERE id = $Param{SurveyID}",
+                SQL => '
+                    UPDATE survey SET status = ?
+                    WHERE id = ?',
+                Bind => [ \$Param{NewStatus}, \$Param{SurveyID}, ],
             );
             return 'StatusSet';
         }
@@ -339,11 +369,23 @@ sub SurveyStatusSet {
 
         # set status Master
         if ( $Param{NewStatus} eq 'Master' ) {
+
+            # set any 'Master' survey to 'Valid'
             $Self->{DBObject}->Do(
-                SQL => "UPDATE survey SET status = 'Valid' WHERE status = 'Master'",
+                SQL => '
+                    UPDATE survey
+                    SET status = ?
+                    WHERE status = ?',
+                Bind => [ \$Status, \$Param{NewStatus}, ],
             );
+
+            # set 'Master' to given survey
             $Self->{DBObject}->Do(
-                SQL => "UPDATE survey SET status = 'Master' WHERE id = $Param{SurveyID}",
+                SQL => '
+                    UPDATE survey
+                    SET status = ?
+                    WHERE id = ?',
+                Bind => [ \$Param{NewStatus}, \$Param{SurveyID}, ],
             );
             return 'StatusSet';
         }
@@ -351,7 +393,11 @@ sub SurveyStatusSet {
         # set status Invalid
         elsif ( $Param{NewStatus} eq 'Invalid' ) {
             $Self->{DBObject}->Do(
-                SQL => "UPDATE survey SET status = 'Invalid' WHERE id = $Param{SurveyID}",
+                SQL => '
+                    UPDATE survey
+                    SET status = ?
+                    WHERE id = ?',
+                Bind => [ \$Param{NewStatus}, \$Param{SurveyID}, ],
             );
             return 'StatusSet';
         }
@@ -361,8 +407,11 @@ sub SurveyStatusSet {
         # set status Valid
         if ( $Param{NewStatus} eq 'Valid' || $Param{NewStatus} eq 'Invalid' ) {
             $Self->{DBObject}->Do(
-                SQL => "UPDATE survey SET status = '$Param{NewStatus}' "
-                    . "WHERE id = $Param{SurveyID}",
+                SQL => '
+                    UPDATE survey
+                    SET status = ?
+                    WHERE id = ?',
+                Bind => [ \$Param{NewStatus}, \$Param{SurveyID}, ],
             );
             return 'StatusSet';
         }
@@ -419,32 +468,19 @@ sub SurveySave {
     # set default value
     $Param{Queues} ||= [];
 
-    # quote
-    for my $Argument (
-        qw(
-        Title Introduction Description
-        NotificationSender NotificationSubject NotificationBody
-        )
-        )
-    {
-        $Param{$Argument} = $Self->{DBObject}->Quote( $Param{$Argument} );
-    }
-    for my $Argument (qw(UserID SurveyID)) {
-        $Param{$Argument} = $Self->{DBObject}->Quote( $Param{$Argument}, 'Integer' );
-    }
-
     # update the survey
     return if !$Self->{DBObject}->Do(
-        SQL => "UPDATE survey SET "
-            . "title = '$Param{Title}', "
-            . "introduction = '$Param{Introduction}', "
-            . "description = '$Param{Description}', "
-            . "notification_sender = '$Param{NotificationSender}', "
-            . "notification_subject = '$Param{NotificationSubject}', "
-            . "notification_body = '$Param{NotificationBody}', "
-            . "change_time = current_timestamp, "
-            . "change_by = $Param{UserID} "
-            . "WHERE id = $Param{SurveyID}",
+        SQL => '
+            UPDATE survey
+            SET title = ?, introduction = ?, description = ?, notification_sender = ?,
+                notification_subject = ?, notification_body = ?, change_time = current_timestamp,
+                change_by = ?
+            WHERE id = ?',
+        Bind => [
+            \$Param{Title},              \$Param{Introduction},        \$Param{Description},
+            \$Param{NotificationSender}, \$Param{NotificationSubject}, \$Param{NotificationBody},
+            \$Param{UserID},             \$Param{SurveyID},
+        ],
     );
 
     # insert new survey-queue relations
@@ -491,44 +527,31 @@ sub SurveyNew {
         }
     }
 
-    # quote
-    for my $Argument (
-        qw(
-        Title Introduction Description
-        NotificationSender NotificationSubject NotificationBody
-        )
-        )
-    {
-        $Param{$Argument} = $Self->{DBObject}->Quote( $Param{$Argument} );
-    }
-    $Param{UserID} = $Self->{DBObject}->Quote( $Param{UserID}, 'Integer' );
-
     # insert a new survey
+    my $Status = 'New';
     $Self->{DBObject}->Do(
-        SQL => "INSERT INTO survey (title, introduction, description,"
-            . " notification_sender, notification_subject, notification_body,"
-            . " status, create_time, create_by, change_time, change_by"
-            . ") VALUES ("
-            . "'$Param{Title}', "
-            . "'$Param{Introduction}', "
-            . "'$Param{Description}', "
-            . "'$Param{NotificationSender}', "
-            . "'$Param{NotificationSubject}', "
-            . "'$Param{NotificationBody}', "
-            . "'New', "
-            . "current_timestamp, "
-            . "$Param{UserID}, "
-            . "current_timestamp, "
-            . "$Param{UserID})",
+        SQL => '
+            INSERT INTO survey (title, introduction, description, notification_sender,
+                notification_subject, notification_body, status, create_time, create_by,
+                change_time, change_by )
+            VALUES ( ?, ?, ?, ?, ?, ?, ?, current_timestamp, ?, current_timestamp, ?)',
+        Bind => [
+            \$Param{Title},              \$Param{Introduction},        \$Param{Description},
+            \$Param{NotificationSender}, \$Param{NotificationSubject}, \$Param{NotificationBody},
+            \$Status, \$Param{UserID}, \$Param{UserID},
+        ],
     );
 
     # get the id of the survey
     $Self->{DBObject}->Prepare(
-        SQL => "SELECT id FROM survey WHERE "
-            . "title = '$Param{Title}' AND "
-            . "introduction = '$Param{Introduction}' AND "
-            . "description = '$Param{Description}' "
-            . "ORDER BY id DESC",
+        SQL => '
+            SELECT id
+            FROM survey
+            WHERE title = ?
+                AND introduction = ?
+                AND description = ?
+            ORDER BY id DESC',
+        Bind => [ \$Param{Title}, \$Param{Introduction}, \$Param{Description}, ],
         Limit => 1,
     );
 
@@ -539,11 +562,13 @@ sub SurveyNew {
     }
 
     # set the survey number
+    my $SurveyNumber = $SurveyID + 10000;
     $Self->{DBObject}->Do(
-        SQL => "UPDATE survey SET "
-            . "surveynumber = '"
-            . ( $SurveyID + 10000 ) . "' "
-            . "WHERE id = $SurveyID"
+        SQL => '
+            UPDATE survey
+            SET surveynumber = ?
+            WHERE id = ?',
+        Bind => [ \$SurveyNumber, \$SurveyID, ],
     );
 
     return $SurveyID if !$Param{Queues};
@@ -580,13 +605,14 @@ sub QuestionList {
         return;
     }
 
-    # quote
-    $Param{SurveyID} = $Self->{DBObject}->Quote( $Param{SurveyID}, 'Integer' );
-
     # get all questions of a survey
     $Self->{DBObject}->Prepare(
-        SQL => "SELECT id, survey_id, question, question_type, answer_required"
-            . " FROM survey_question WHERE survey_id = $Param{SurveyID} ORDER BY position",
+        SQL => '
+            SELECT id, survey_id, question, question_type, answer_required
+            FROM survey_question
+            WHERE survey_id = ?
+            ORDER BY position',
+        Bind => [ \$Param{SurveyID} ],
     );
 
     # fetch the result
@@ -633,14 +659,6 @@ sub QuestionAdd {
         }
     }
 
-    # quote
-    for my $Argument (qw(Question Type)) {
-        $Param{$Argument} = $Self->{DBObject}->Quote( $Param{$Argument} );
-    }
-    for my $Argument (qw(UserID SurveyID)) {
-        $Param{$Argument} = $Self->{DBObject}->Quote( $Param{$Argument}, 'Integer' );
-    }
-
     return if !$Param{Question};
 
     # insert a new question
@@ -656,16 +674,14 @@ sub QuestionAdd {
         $Param{AnswerRequired} = 1;
     }
     return $Self->{DBObject}->Do(
-        SQL => "INSERT INTO survey_question (survey_id, question, question_type, "
-            . "position, answer_required, create_time, create_by, change_time, change_by) VALUES ("
-            . "$Param{SurveyID}, "
-            . "'$Param{Question}', "
-            . "'$Param{Type}', 255, "
-            . "'$Param{AnswerRequired}',"
-            . "current_timestamp, "
-            . "$Param{UserID}, "
-            . "current_timestamp, "
-            . "$Param{UserID})",
+        SQL => '
+            INSERT INTO survey_question (survey_id, question, question_type, position,
+                answer_required, create_time, create_by, change_time, change_by)
+            VALUES (?, ?, ?, 255, ?, current_timestamp, ?, current_timestamp, ?)',
+        Bind => [
+            \$Param{SurveyID}, \$Param{Question}, \$Param{Type}, \$Param{AnswerRequired},
+            \$Param{UserID}, \$Param{UserID},
+        ],
     );
 }
 
@@ -694,21 +710,21 @@ sub QuestionDelete {
         }
     }
 
-    # quote
-    for my $Argument (qw(SurveyID QuestionID)) {
-        $Param{$Argument} = $Self->{DBObject}->Quote( $Param{$Argument}, 'Integer' );
-    }
-
     # delete all answers of a question
     $Self->{DBObject}->Do(
-        SQL => "DELETE FROM survey_answer WHERE question_id = $Param{QuestionID}",
+        SQL => '
+            DELETE FROM survey_answer
+            WHERE question_id = ?',
+        Bind => [ \$Param{QuestionID} ],
     );
 
     # delete the question
     return $Self->{DBObject}->Do(
-        SQL => "DELETE FROM survey_question WHERE "
-            . "id = $Param{QuestionID} AND "
-            . "survey_id = $Param{SurveyID}",
+        SQL => '
+            DELETE FROM survey_question
+            WHERE id = ?
+                AND survey_id = ?',
+        Bind => [ \$Param{QuestionID}, \$Param{SurveyID}, ],
     );
 }
 
@@ -734,13 +750,13 @@ sub QuestionSort {
         return;
     }
 
-    # quote
-    $Param{SurveyID} = $Self->{DBObject}->Quote( $Param{SurveyID}, 'Integer' );
-
     # get all question of a survey (sorted by position)
     $Self->{DBObject}->Prepare(
-        SQL => "SELECT id FROM survey_question"
-            . " WHERE survey_id = $Param{SurveyID} ORDER BY position",
+        SQL => '
+            SELECT id FROM survey_question
+            WHERE survey_id = ?
+            ORDER BY position',
+        Bind => [ \$Param{SurveyID} ],
     );
 
     my @List;
@@ -751,7 +767,11 @@ sub QuestionSort {
     my $Counter = 1;
     for my $QuestionID (@List) {
         $Self->{DBObject}->Do(
-            SQL => "UPDATE survey_question SET position = $Counter WHERE id = $QuestionID",
+            SQL => '
+                UPDATE survey_question
+                SET position = ?
+                WHERE id = ?',
+            Bind => [ \$Counter, \$QuestionID ],
         );
     }
     continue {
@@ -786,15 +806,14 @@ sub QuestionUp {
         }
     }
 
-    # quote
-    for my $Argument (qw(SurveyID QuestionID)) {
-        $Param{$Argument} = $Self->{DBObject}->Quote( $Param{$Argument}, 'Integer' );
-    }
-
     # get position
     $Self->{DBObject}->Prepare(
-        SQL => "SELECT position FROM survey_question"
-            . " WHERE id = $Param{QuestionID} AND survey_id = $Param{SurveyID}",
+        SQL => '
+            SELECT position
+            FROM survey_question
+            WHERE id = ?
+                AND survey_id = ?',
+        Bind => [ \$Param{QuestionID}, \$Param{SurveyID}, ],
         Limit => 1,
     );
 
@@ -810,8 +829,12 @@ sub QuestionUp {
 
     # get question
     $Self->{DBObject}->Prepare(
-        SQL => "SELECT id FROM survey_question"
-            . " WHERE survey_id = $Param{SurveyID} AND position = $PositionUp",
+        SQL => '
+            SELECT id
+            FROM survey_question
+            WHERE survey_id = ?
+                AND position = ?',
+        Bind => [ \$Param{SurveyID}, \$PositionUp ],
         Limit => 1,
     );
 
@@ -825,16 +848,20 @@ sub QuestionUp {
 
     # update position
     $Self->{DBObject}->Do(
-        SQL => "UPDATE survey_question SET "
-            . "position = $Position "
-            . "WHERE id = $QuestionIDDown",
+        SQL => '
+            UPDATE survey_question
+            SET position = ?
+            WHERE id = ?',
+        Bind => [ \$Position, \$QuestionIDDown, ],
     );
 
     # update position
     return $Self->{DBObject}->Do(
-        SQL => "UPDATE survey_question SET "
-            . "position = $PositionUp "
-            . "WHERE id = $Param{QuestionID}",
+        SQL => '
+            UPDATE survey_question
+            SET position = ?
+            WHERE id = ?',
+        Bind => [ \$PositionUp, \$Param{QuestionID}, ],
     );
 }
 
@@ -863,15 +890,14 @@ sub QuestionDown {
         }
     }
 
-    # quote
-    for my $Argument (qw(SurveyID QuestionID)) {
-        $Param{$Argument} = $Self->{DBObject}->Quote( $Param{$Argument}, 'Integer' );
-    }
-
     # get position
     $Self->{DBObject}->Prepare(
-        SQL => "SELECT position FROM survey_question"
-            . " WHERE id = $Param{QuestionID} AND survey_id = $Param{SurveyID}",
+        SQL => '
+            SELECT position
+            FROM survey_question
+            WHERE id = ?
+                AND survey_id = ?',
+        Bind => [ \$Param{QuestionID}, \$Param{SurveyID}, ],
         Limit => 1,
     );
 
@@ -887,8 +913,12 @@ sub QuestionDown {
 
     # get question
     $Self->{DBObject}->Prepare(
-        SQL => "SELECT id FROM survey_question"
-            . " WHERE survey_id = $Param{SurveyID} AND position = $PositionDown",
+        SQL => '
+            SELECT id
+            FROM survey_question
+            WHERE survey_id = ?
+                AND position = ?',
+        Bind => [ \$Param{SurveyID}, \$PositionDown, ],
         Limit => 1,
     );
 
@@ -902,16 +932,20 @@ sub QuestionDown {
 
     # update position
     $Self->{DBObject}->Do(
-        SQL => "UPDATE survey_question SET "
-            . "position = $Position "
-            . "WHERE id = $QuestionIDUp",
+        SQL => '
+            UPDATE survey_question
+            SET position = ?
+            WHERE id = ?',
+        Bind => [ \$Position, \$QuestionIDUp, ],
     );
 
     # update position
     return $Self->{DBObject}->Do(
-        SQL => "UPDATE survey_question SET "
-            . "position = $PositionDown "
-            . "WHERE id = $Param{QuestionID}",
+        SQL => '
+            UPDATE survey_question
+            SET position = ?
+            WHERE id = ?',
+        Bind => [ \$PositionDown, \$Param{QuestionID}, ],
     );
 }
 
@@ -937,14 +971,14 @@ sub QuestionGet {
         return;
     }
 
-    # quote
-    $Param{QuestionID} = $Self->{DBObject}->Quote( $Param{QuestionID}, 'Integer' );
-
     # get question
     $Self->{DBObject}->Prepare(
-        SQL => "SELECT id, survey_id, question, question_type, position, answer_required, "
-            . "create_time, create_by, change_time, change_by "
-            . "FROM survey_question WHERE id = $Param{QuestionID}",
+        SQL => '
+            SELECT id, survey_id, question, question_type, position, answer_required, create_time,
+                create_by, change_time, change_by
+            FROM survey_question
+            WHERE id = ?',
+        Bind  => [ \$Param{QuestionID} ],
         Limit => 1,
     );
 
@@ -1004,23 +1038,18 @@ sub QuestionSave {
         $AnswerRequired = $Param{AnswerRequired};
     }
 
-    # quote
-    for my $Argument (qw(Question)) {
-        $Param{$Argument} = $Self->{DBObject}->Quote( $Param{$Argument} );
-    }
-    for my $Argument (qw(UserID QuestionID SurveyID)) {
-        $Param{$Argument} = $Self->{DBObject}->Quote( $Param{$Argument}, 'Integer' );
-    }
-
     # update question
     return $Self->{DBObject}->Do(
-        SQL => "UPDATE survey_question SET "
-            . "question = '$Param{Question}', "
-            . "answer_required = $AnswerRequired, "
-            . "change_time = current_timestamp, "
-            . "change_by = $Param{UserID} "
-            . "WHERE id = $Param{QuestionID} "
-            . "AND survey_id = $Param{SurveyID}",
+        SQL => '
+            UPDATE survey_question
+            SET question = ?, answer_required = ?, change_time = current_timestamp,
+                change_by = ?
+            WHERE id = ?
+                AND survey_id = ?',
+        Bind => [
+            \$Param{Question}, \$AnswerRequired, \$Param{UserID}, \$Param{QuestionID},
+            \$Param{SurveyID},
+        ],
     );
 }
 
@@ -1046,12 +1075,13 @@ sub QuestionCount {
         return;
     }
 
-    # quote
-    $Param{SurveyID} = $Self->{DBObject}->Quote( $Param{SurveyID}, 'Integer' );
-
     # count questions
     $Self->{DBObject}->Prepare(
-        SQL   => "SELECT COUNT(id) FROM survey_question WHERE survey_id = $Param{SurveyID}",
+        SQL => '
+            SELECT COUNT(id)
+            FROM survey_question
+            WHERE survey_id = ?',
+        Bind  => [ \$Param{SurveyID} ],
         Limit => 1,
     );
 
@@ -1086,13 +1116,14 @@ sub AnswerList {
         return;
     }
 
-    # quote
-    $Param{QuestionID} = $Self->{DBObject}->Quote( $Param{QuestionID}, 'Integer' );
-
     # get answer list
     $Self->{DBObject}->Prepare(
-        SQL => "SELECT id, question_id, answer "
-            . " FROM survey_answer WHERE question_id = $Param{QuestionID} ORDER BY position",
+        SQL => '
+            SELECT id, question_id, answer
+            FROM survey_answer
+            WHERE question_id = ?
+            ORDER BY position',
+        Bind => [ \$Param{QuestionID} ],
     );
 
     # fetcht the result
@@ -1135,26 +1166,13 @@ sub AnswerAdd {
         }
     }
 
-    # quote
-    for my $Argument (qw(Answer)) {
-        $Param{$Argument} = $Self->{DBObject}->Quote( $Param{$Argument} );
-    }
-    for my $Argument (qw(UserID QuestionID)) {
-        $Param{$Argument} = $Self->{DBObject}->Quote( $Param{$Argument}, 'Integer' );
-    }
-
-    return if !$Param{Answer};
-
     # insert answer
     return $Self->{DBObject}->Do(
-        SQL => "INSERT INTO survey_answer (question_id, answer, position, "
-            . "create_time, create_by, change_time, change_by) VALUES ("
-            . "$Param{QuestionID}, "
-            . "'$Param{Answer}', 255, "
-            . "current_timestamp, "
-            . "$Param{UserID}, "
-            . "current_timestamp, "
-            . "$Param{UserID})",
+        SQL => '
+            INSERT INTO survey_answer (question_id, answer, position, create_time, create_by,
+                change_time, change_by)
+            VALUES ( ?, ?, 255, current_timestamp, ?, current_timestamp, ?)',
+        Bind => [ \$Param{QuestionID}, \$Param{Answer}, \$Param{UserID}, \$Param{UserID}, ],
     );
 }
 
@@ -1183,15 +1201,13 @@ sub AnswerDelete {
         }
     }
 
-    # quote
-    for my $Argument (qw(QuestionID AnswerID)) {
-        $Param{$Argument} = $Self->{DBObject}->Quote( $Param{$Argument}, 'Integer' );
-    }
-
     # delete answer
     return $Self->{DBObject}->Do(
-        SQL => "DELETE FROM survey_answer WHERE "
-            . "id = $Param{AnswerID} AND question_id = $Param{QuestionID}",
+        SQL => '
+            DELETE FROM survey_answer
+            WHERE id = ?
+                AND question_id = ?',
+        Bind => [ \$Param{AnswerID}, \$Param{QuestionID}, ],
     );
 }
 
@@ -1217,13 +1233,14 @@ sub AnswerSort {
         return;
     }
 
-    # quote
-    $Param{QuestionID} = $Self->{DBObject}->Quote( $Param{QuestionID}, 'Integer' );
-
     # get answer list
     $Self->{DBObject}->Prepare(
-        SQL => "SELECT id FROM survey_answer"
-            . " WHERE question_id = $Param{QuestionID} ORDER BY position",
+        SQL => '
+            SELECT id
+            FROM survey_answer
+            WHERE question_id = ?
+            ORDER BY position',
+        Bind => [ \$Param{QuestionID} ],
     );
 
     # fetch the result
@@ -1237,7 +1254,11 @@ sub AnswerSort {
 
         # update position
         $Self->{DBObject}->Do(
-            SQL => "UPDATE survey_answer SET position = $Counter WHERE id = $AnswerID",
+            SQL => '
+                UPDATE survey_answer
+                SET position = ?
+                WHERE id = ?',
+            Bind => [ \$Counter, \$AnswerID ],
         );
     }
     continue {
@@ -1272,15 +1293,14 @@ sub AnswerUp {
         }
     }
 
-    # quote
-    for my $Argument (qw(QuestionID AnswerID)) {
-        $Param{$Argument} = $Self->{DBObject}->Quote( $Param{$Argument}, 'Integer' );
-    }
-
     # get position
     $Self->{DBObject}->Prepare(
-        SQL => "SELECT position FROM survey_answer"
-            . " WHERE id = $Param{AnswerID} AND question_id = $Param{QuestionID}",
+        SQL => '
+            SELECT position
+            FROM survey_answer
+            WHERE id = ?
+                AND question_id = ?',
+        Bind => [ \$Param{AnswerID}, \$Param{QuestionID}, ],
         Limit => 1,
     );
 
@@ -1296,8 +1316,11 @@ sub AnswerUp {
 
     # get answer
     $Self->{DBObject}->Prepare(
-        SQL => "SELECT id FROM survey_answer"
-            . " WHERE question_id = $Param{QuestionID} AND position = $PositionUp",
+        SQL => '
+            SELECT id
+            FROM survey_answer
+            WHERE question_id = ? AND position = ?',
+        Bind => [ \$Param{QuestionID}, \$PositionUp, ],
         Limit => 1,
     );
 
@@ -1311,14 +1334,20 @@ sub AnswerUp {
 
     # update position
     $Self->{DBObject}->Do(
-        SQL => "UPDATE survey_answer SET position = $Position WHERE id = $AnswerIDDown",
+        SQL => '
+            UPDATE survey_answer
+            SET position = ?
+            WHERE id = ?',
+        Bind => [ \$Position, \$AnswerIDDown, ],
     );
 
     # update position
     return $Self->{DBObject}->Do(
-        SQL => "UPDATE survey_answer SET "
-            . "position = $PositionUp "
-            . "WHERE id = $Param{AnswerID}",
+        SQL => '
+            UPDATE survey_answer
+            SET position = ?
+            WHERE id = ?',
+        Bind => [ \$PositionUp, \$Param{AnswerID}, ],
     );
 }
 
@@ -1347,15 +1376,14 @@ sub AnswerDown {
         }
     }
 
-    # quote
-    for my $Argument (qw(QuestionID AnswerID)) {
-        $Param{$Argument} = $Self->{DBObject}->Quote( $Param{$Argument}, 'Integer' );
-    }
-
     # get position
     $Self->{DBObject}->Prepare(
-        SQL => "SELECT position FROM survey_answer"
-            . " WHERE id = $Param{AnswerID} AND question_id = $Param{QuestionID}",
+        SQL => '
+            SELECT position
+            FROM survey_answer
+            WHERE id = ?
+                AND question_id = ?',
+        Bind => [ \$Param{AnswerID}, \$Param{QuestionID}, ],
         Limit => 1,
     );
 
@@ -1371,8 +1399,12 @@ sub AnswerDown {
 
     # get answer
     $Self->{DBObject}->Prepare(
-        SQL => "SELECT id FROM survey_answer"
-            . " WHERE question_id = $Param{QuestionID} AND position = $PositionDown",
+        SQL => '
+            SELECT id
+            FROM survey_answer
+            WHERE question_id = ?
+                AND position = ?',
+        Bind => [ \$Param{QuestionID}, \$PositionDown, ],
         Limit => 1,
     );
 
@@ -1386,14 +1418,20 @@ sub AnswerDown {
 
     # update position
     $Self->{DBObject}->Do(
-        SQL => "UPDATE survey_answer SET position = $Position WHERE id = $AnswerIDUp",
+        SQL => '
+            UPDATE survey_answer
+            SET position = ?
+            WHERE id = ?',
+        Bind => [ \$Position, \$AnswerIDUp, ],
     );
 
     # update position
     return $Self->{DBObject}->Do(
-        SQL => "UPDATE survey_answer SET "
-            . "position = $PositionDown "
-            . "WHERE id = $Param{AnswerID}",
+        SQL => '
+            UPDATE survey_answer
+            SET position = ?
+            WHERE id = ?',
+        Bind => [ \$PositionDown, \$Param{AnswerID}, ],
     );
 }
 
@@ -1419,14 +1457,13 @@ sub AnswerGet {
         return;
     }
 
-    # quote
-    $Param{AnswerID} = $Self->{DBObject}->Quote( $Param{AnswerID}, 'Integer' );
-
     # get answer
     $Self->{DBObject}->Prepare(
-        SQL =>
-            "SELECT id, question_id, answer, position, create_time, create_by, change_time, change_by "
-            . "FROM survey_answer WHERE id = $Param{AnswerID}",
+        SQL => '
+            SELECT id, question_id, answer, position, create_time, create_by, change_time, change_by
+            FROM survey_answer
+            WHERE id = ?',
+        Bind  => [ \$Param{AnswerID} ],
         Limit => 1,
     );
 
@@ -1473,24 +1510,14 @@ sub AnswerSave {
         }
     }
 
-    # quote
-    for my $Argument (qw(Answer)) {
-        $Param{$Argument} = $Self->{DBObject}->Quote( $Param{$Argument} );
-    }
-    for my $Argument (qw(UserID AnswerID QuestionID)) {
-        $Param{$Argument} = $Self->{DBObject}->Quote( $Param{$Argument}, 'Integer' );
-    }
-
-    return if !$Param{Answer};
-
     # update answer
     return $Self->{DBObject}->Do(
-        SQL => "UPDATE survey_answer SET "
-            . "answer = '$Param{Answer}', "
-            . "change_time = current_timestamp, "
-            . "change_by = $Param{UserID} "
-            . "WHERE id = $Param{AnswerID} "
-            . "AND question_id = $Param{QuestionID}",
+        SQL => '
+            UPDATE survey_answer
+            SET answer = ?, change_time = current_timestamp, change_by = ?
+            WHERE id = ?
+                AND question_id = ?',
+        Bind => [ \$Param{Answer}, \$Param{UserID}, \$Param{AnswerID}, \$Param{QuestionID}, ],
     );
 }
 
@@ -1516,12 +1543,13 @@ sub AnswerCount {
         return;
     }
 
-    # quote
-    $Param{QuestionID} = $Self->{DBObject}->Quote( $Param{QuestionID}, 'Integer' );
-
     # count answers
     $Self->{DBObject}->Prepare(
-        SQL   => "SELECT COUNT(id) FROM survey_answer WHERE question_id = $Param{QuestionID}",
+        SQL => '
+            SELECT COUNT(id)
+            FROM survey_answer
+            WHERE question_id = ?',
+        Bind  => [ \$Param{QuestionID} ],
         Limit => 1,
     );
 
@@ -1556,14 +1584,15 @@ sub VoteList {
         return;
     }
 
-    # quote
-    $Param{SurveyID} = $Self->{DBObject}->Quote( $Param{SurveyID}, 'Integer' );
-
     # get vote list
     $Self->{DBObject}->Prepare(
-        SQL => "SELECT id, ticket_id, send_time, vote_time "
-            . "FROM survey_request WHERE survey_id = $Param{SurveyID} "
-            . "AND valid_id = 0 ORDER BY vote_time DESC",
+        SQL => '
+            SELECT id, ticket_id, send_time, vote_time
+            FROM survey_request
+            WHERE survey_id = ?
+                AND valid_id = 0
+            ORDER BY vote_time DESC',
+        Bind => [ \$Param{SurveyID} ],
     );
 
     # fetch the result
@@ -1606,15 +1635,14 @@ sub VoteGet {
         }
     }
 
-    # quote
-    for my $Argument (qw(RequestID QuestionID)) {
-        $Param{$Argument} = $Self->{DBObject}->Quote( $Param{$Argument}, 'Integer' );
-    }
-
     # get vote
     $Self->{DBObject}->Prepare(
-        SQL => "SELECT id, vote_value FROM survey_vote"
-            . " WHERE request_id = $Param{RequestID} AND question_id = $Param{QuestionID}",
+        SQL => '
+            SELECT id, vote_value
+            FROM survey_vote
+            WHERE request_id = ?
+                AND question_id = ?',
+        Bind => [ \$Param{RequestID}, \$Param{QuestionID}, ],
     );
 
     # fetch the result
@@ -1654,15 +1682,13 @@ sub VoteAttributeGet {
         }
     }
 
-    # quote
-    for my $Argument (qw(VoteID)) {
-        $Param{$Argument} = $Self->{DBObject}->Quote( $Param{$Argument}, 'Integer' );
-    }
-
     # get vote attribute
     $Self->{DBObject}->Prepare(
-        SQL => "SELECT vote_value FROM survey_vote"
-            . " WHERE id = $Param{VoteID}",
+        SQL => '
+            SELECT vote_value
+            FROM survey_vote
+            WHERE id = ?',
+        Bind  => [ \$Param{VoteID} ],
         Limit => 1,
     );
 
@@ -1696,14 +1722,13 @@ sub CountVote {
         }
     }
 
-    # quote
-    $Param{VoteValue} = $Self->{DBObject}->Quote( $Param{VoteValue} );
-    $Param{QuestionID} = $Self->{DBObject}->Quote( $Param{QuestionID}, 'Integer' );
-
     # count votes
     $Self->{DBObject}->Prepare(
-        SQL => "SELECT COUNT(vote_value) FROM survey_vote WHERE "
-            . "question_id = $Param{QuestionID} AND vote_value = '$Param{VoteValue}'",
+        SQL => '
+            SELECT COUNT(vote_value)
+            FROM survey_vote
+            WHERE question_id = ? AND vote_value = ?',
+        Bind => [ \$Param{QuestionID}, \$Param{VoteValue}, ],
         Limit => 1,
     );
 
@@ -1741,11 +1766,11 @@ sub CountRequest {
         }
     }
 
-    # quote
-    $Param{SurveyID} = $Self->{DBObject}->Quote( $Param{SurveyID}, 'Integer' );
-
     # count requests
-    my $SQL = "SELECT COUNT(id) FROM survey_request WHERE survey_id = $Param{SurveyID}";
+    my $SQL = '
+        SELECT COUNT(id)
+        FROM survey_request
+        WHERE survey_id = ?';
 
     # add valid part
     if ( !$Param{ValidID} ) {
@@ -1758,6 +1783,7 @@ sub CountRequest {
     # ask database
     $Self->{DBObject}->Prepare(
         SQL   => $SQL,
+        Bind  => [ \$Param{SurveyID} ],
         Limit => 1,
     );
 
@@ -1795,10 +1821,6 @@ sub ElementExists {
         }
     }
 
-    # quote
-    $Param{Element} = $Self->{DBObject}->Quote( $Param{Element} );
-    $Param{ElementID} = $Self->{DBObject}->Quote( $Param{ElementID}, 'Integer' );
-
     my %LookupTable = (
         Survey   => 'survey',
         Question => 'survey_question',
@@ -1806,9 +1828,25 @@ sub ElementExists {
         Request  => 'survey_request',
     );
 
+    my $Table = $LookupTable{ $Param{Element} };
+    if ( !$Table ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "Element: '$Param{Element}' is not valid!",
+        );
+        return;
+    }
+
+    my $SQL = '
+            SELECT COUNT(id)
+            FROM ';
+    $SQL .= $Table;
+    $SQL .= ' WHERE id = ?';
+
     # count element
     $Self->{DBObject}->Prepare(
-        SQL   => "SELECT COUNT(id) FROM $LookupTable{$Param{Element}} WHERE id = $Param{ElementID}",
+        SQL   => $SQL,
+        Bind  => [ \$Param{ElementID} ],
         Limit => 1,
     );
 
@@ -1857,8 +1895,13 @@ sub RequestSend {
     }
 
     # find master survey
+    my $Status = 'Master';
     $Self->{DBObject}->Prepare(
-        SQL   => "SELECT id FROM survey WHERE status = 'Master'",
+        SQL => '
+            SELECT id
+            FROM survey
+            WHERE status = ?',
+        Bind  => [ \$Status ],
         Limit => 1,
     );
 
@@ -2008,9 +2051,6 @@ sub RequestSend {
 
     return if $SendNoSurveyRegExp && $To =~ /$SendNoSurveyRegExp/i;
 
-    # quote
-    $To = $Self->{DBObject}->Quote($To);
-
     # Only if we haven't been called by cron
     if ( !$Param{TriggerSendRequests} ) {
         my $AmountOfSurveysPer30Days
@@ -2027,8 +2067,13 @@ sub RequestSend {
             my $LastSentTime = 0;
 
             $Self->{DBObject}->Prepare(
-                SQL => "SELECT create_time FROM survey_request WHERE LOWER(send_to) = '$To' "
-                    . "AND create_time >= '$ThirtyDaysAgo' ORDER BY create_time DESC"
+                SQL => '
+                    SELECT create_time
+                    FROM survey_request
+                    WHERE LOWER(send_to) = ?
+                        AND create_time >= ?
+                    ORDER BY create_time DESC',
+                Bind => [ \$To, \$ThirtyDaysAgo, ],
             );
 
             # fetch the result
@@ -2051,8 +2096,12 @@ sub RequestSend {
 
         # get send time
         $Self->{DBObject}->Prepare(
-            SQL => "SELECT send_time FROM survey_request WHERE LOWER(send_to) = '$To' "
-                . "ORDER BY send_time DESC",
+            SQL => '
+                SELECT send_time
+                FROM survey_request
+                WHERE LOWER(send_to) = ?
+                ORDER BY send_time DESC',
+            Bind  => [ \$To ],
             Limit => 1,
         );
 
@@ -2069,7 +2118,6 @@ sub RequestSend {
         }
     }
     my $SendInHoursAfterClose = $Self->{ConfigObject}->Get('Survey::SendInHoursAfterClose');
-    $Param{TicketID} = $Self->{DBObject}->Quote( $Param{TicketID}, 'Integer' );
 
     # If no Delayed Sending is configured
     # send immediately, log it to Ticket History and insert it to survey_requests
@@ -2078,11 +2126,11 @@ sub RequestSend {
 
         # insert request
         $Self->{DBObject}->Do(
-            SQL => "INSERT INTO survey_request "
-                . " (ticket_id, survey_id, valid_id, public_survey_key, send_to, send_time, create_time) "
-                . " VALUES ($Param{TicketID}, $SurveyID, 1, '"
-                . $Self->{DBObject}->Quote($PublicSurveyKey) . "', "
-                . "'$To', current_timestamp, current_timestamp)",
+            SQL => '
+                INSERT INTO survey_request (ticket_id, survey_id, valid_id, public_survey_key,
+                    send_to, send_time, create_time)
+                VALUES (?, ?, 1, ?, ?, current_timestamp, current_timestamp)',
+            Bind => [ \$Param{TicketID}, \$SurveyID, \$PublicSurveyKey, \$To ],
         );
 
         # log action on ticket
@@ -2103,11 +2151,11 @@ sub RequestSend {
 
         # insert request
         $Self->{DBObject}->Do(
-            SQL => "INSERT INTO survey_request "
-                . " (ticket_id, survey_id, valid_id, public_survey_key, send_to, create_time) "
-                . " VALUES ($Param{TicketID}, $SurveyID, 1, '"
-                . $Self->{DBObject}->Quote($PublicSurveyKey) . "', "
-                . "'$To', current_timestamp)",
+            SQL => '
+                INSERT INTO survey_request (ticket_id, survey_id, valid_id, public_survey_key,
+                    send_to, create_time)
+                VALUES (?, ?, 1, ?, ?, current_timestamp)',
+            Bind => [ \$Param{TicketID}, \$SurveyID, \$PublicSurveyKey, \$To, ],
         );
 
     }
@@ -2123,8 +2171,11 @@ sub RequestSend {
         )
     {
         $Self->{DBObject}->Do(
-            SQL => "UPDATE survey_request "
-                . "SET send_time = current_timestamp WHERE id = $Param{SurveyRequestID}",
+            SQL => '
+                UPDATE survey_request
+                SET send_time = current_timestamp
+                WHERE id = ?',
+            Bind => [ \$Param{SurveyRequestID} ],
         );
 
         # log action on ticket
@@ -2193,14 +2244,14 @@ sub RequestGet {
         return;
     }
 
-    # quote
-    $Param{PublicSurveyKey} = $Self->{DBObject}->Quote( $Param{PublicSurveyKey} );
-
     # get vote list
     $Self->{DBObject}->Prepare(
-        SQL =>
-            "SELECT id, ticket_id, survey_id, valid_id, public_survey_key, send_to, send_time, vote_time "
-            . "FROM survey_request WHERE public_survey_key = '$Param{PublicSurveyKey}' ",
+        SQL => '
+            SELECT id, ticket_id, survey_id, valid_id, public_survey_key, send_to, send_time,
+                vote_time
+            FROM survey_request
+            WHERE public_survey_key = ?',
+        Bind  => [ \$Param{PublicSurveyKey} ],
         Limit => 1,
     );
 
@@ -2244,20 +2295,23 @@ sub PublicSurveyGet {
         return;
     }
 
-    # quote
-    $Param{PublicSurveyKey} = $Self->{DBObject}->Quote( $Param{PublicSurveyKey} );
+    my $SQL = '
+        SELECT survey_id
+        FROM survey_request
+        WHERE public_survey_key = ?';
 
-    my $ValidID = 'AND valid_id = 1';
+    my $ValidStrg = ' AND valid_id = 1';
 
     # if not invalid show just valid keys
     if ( $Param{Invalid} ) {
-        $ValidID = 'AND valid_id = 0';
+        $ValidStrg = ' AND valid_id = 0';
     }
+    $SQL .= $ValidStrg;
 
     # get request
     $Self->{DBObject}->Prepare(
-        SQL => "SELECT survey_id FROM survey_request "
-            . "WHERE public_survey_key = '$Param{PublicSurveyKey}' $ValidID ",
+        SQL   => $SQL,
+        Bind  => [ \$Param{PublicSurveyKey} ],
         Limit => 1,
     );
 
@@ -2270,9 +2324,15 @@ sub PublicSurveyGet {
     return () if !$SurveyID;
 
     # get survey
+    my $MasterStatus = 'Master';
+    my $ValidStatus  = 'Valid';
     $Self->{DBObject}->Prepare(
-        SQL => "SELECT id, surveynumber, title, introduction "
-            . "FROM survey WHERE id = $SurveyID AND (status = 'Master' OR status = 'Valid')",
+        SQL => '
+            SELECT id, surveynumber, title, introduction
+            FROM survey
+            WHERE id = ?
+                AND (status = ? OR status = ?)',
+        Bind => [ \$SurveyID, \$MasterStatus, \$ValidStatus ],
         Limit => 1,
     );
 
@@ -2314,16 +2374,14 @@ sub PublicAnswerSave {
         }
     }
 
-    # quote
-    for my $Argument (qw(PublicSurveyKey VoteValue)) {
-        $Param{$Argument} = $Self->{DBObject}->Quote( $Param{$Argument} );
-    }
-    $Param{QuestionID} = $Self->{DBObject}->Quote( $Param{QuestionID}, 'Integer' );
-
     # get request
     $Self->{DBObject}->Prepare(
-        SQL => "SELECT id "
-            . " FROM survey_request WHERE public_survey_key = '$Param{PublicSurveyKey}' AND valid_id = 1",
+        SQL => '
+            SELECT id
+            FROM survey_request
+            WHERE public_survey_key = ?
+                AND valid_id = 1',
+        Bind  => [ \$Param{PublicSurveyKey} ],
         Limit => 1,
     );
 
@@ -2337,11 +2395,10 @@ sub PublicAnswerSave {
 
     # insert vote
     return $Self->{DBObject}->Do(
-        SQL => "INSERT INTO survey_vote (request_id, question_id, vote_value, create_time) VALUES ("
-            . "$RequestID, "
-            . "$Param{QuestionID}, "
-            . "'$Param{VoteValue}', "
-            . "current_timestamp)",
+        SQL => '
+            INSERT INTO survey_vote (request_id, question_id, vote_value, create_time)
+            VALUES ( ?, ?, ?, current_timestamp)',
+        Bind => [ \$RequestID, \$Param{QuestionID}, \$Param{VoteValue}, ],
     );
 }
 
@@ -2367,13 +2424,13 @@ sub PublicSurveyInvalidSet {
         return;
     }
 
-    # quote
-    $Param{PublicSurveyKey} = $Self->{DBObject}->Quote( $Param{PublicSurveyKey} );
-
     # get request
     $Self->{DBObject}->Prepare(
-        SQL => "SELECT id "
-            . " FROM survey_request WHERE public_survey_key = '$Param{PublicSurveyKey}'",
+        SQL => '
+            SELECT id
+            FROM survey_request
+            WHERE public_survey_key = ?',
+        Bind  => [ \$Param{PublicSurveyKey} ],
         Limit => 1,
     );
 
@@ -2387,10 +2444,11 @@ sub PublicSurveyInvalidSet {
 
     # update request
     return $Self->{DBObject}->Do(
-        SQL => "UPDATE survey_request SET "
-            . "valid_id = 0, "
-            . "vote_time = current_timestamp "
-            . "WHERE id = $RequestID",
+        SQL => '
+            UPDATE survey_request
+            SET valid_id = 0, vote_time = current_timestamp
+            WHERE id = ?',
+        Bind => [ \$RequestID ],
     );
 }
 
@@ -2411,20 +2469,20 @@ sub SurveyQueueSave {
     # check needed stuff
     for my $Argument (qw(SurveyID QueueIDs)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $Argument!" );
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!"
+            );
             return;
         }
     }
 
-    # quote
-    for my $QueueID ( @{ $Param{QueueIDs} } ) {
-        $QueueID = $Self->{DBObject}->Quote( $QueueID, 'Integer' );
-    }
-    $Param{SurveyID} = $Self->{DBObject}->Quote( $Param{SurveyID}, 'Integer' );
-
     # remove all existing relations
     $Self->{DBObject}->Do(
-        SQL => "DELETE FROM survey_queue WHERE survey_id = $Param{SurveyID}",
+        SQL => '
+            DELETE FROM survey_queue
+            WHERE survey_id = ?',
+        Bind => [ \$Param{SurveyID} ],
     );
 
     # add all survey_queue relations to database
@@ -2432,9 +2490,10 @@ sub SurveyQueueSave {
 
         # add survey_queue relation to database
         return if !$Self->{DBObject}->Do(
-            SQL => "INSERT INTO survey_queue"
-                . " (survey_id, queue_id) VALUES"
-                . " ($Param{SurveyID}, $QueueID)",
+            SQL => '
+                INSERT INTO survey_queue (survey_id, queue_id)
+                VALUES (?, ?)',
+            Bind => [ \$Param{SurveyID}, \$QueueID, ],
         );
     }
 
@@ -2463,13 +2522,14 @@ sub SurveyQueueGet {
         return;
     }
 
-    # quote
-    $Param{SurveyID} = $Self->{DBObject}->Quote( $Param{SurveyID}, 'Integer' );
-
     # get queue ids from database
     $Self->{DBObject}->Prepare(
-        SQL => "SELECT queue_id FROM survey_queue"
-            . " WHERE survey_id = $Param{SurveyID} ORDER BY queue_id ASC",
+        SQL => '
+            SELECT queue_id
+            FROM survey_queue
+            WHERE survey_id = ?
+            ORDER BY queue_id ASC',
+        Bind => [ \$Param{SurveyID} ],
     );
 
     # fetch the result
