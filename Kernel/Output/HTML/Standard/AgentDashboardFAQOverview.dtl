@@ -17,7 +17,7 @@
                     $QData{"Title","50"}
                 </a>
                 <span>
-                    $QData{"CategoryShortName"} $TimeShort{"$Data{"Changed"}"}
+                    $QData{"CategoryShortName"} - $TimeShort{"$Data{"Changed"}"}
                 </span>
             </td>
         </tr>

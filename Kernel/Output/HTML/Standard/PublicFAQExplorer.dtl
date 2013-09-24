@@ -82,7 +82,7 @@
                                     $QData{"Title","50"}
                                 </a>
                                 <span>
-                                    $QData{"CategoryShortName","15"} $QData{"Language"} $Text{"$Data{"State"}"} $TimeShort{"$Data{"Created"}"}
+                                    $QData{"CategoryShortName","15"} - $QData{"Language"} - $Text{"$Data{"State"}"} - $TimeShort{"$Data{"Created"}"}
                                 </span>
                             </li>
 <!-- dtl:block:InfoBoxFAQMiniListItemRow -->
