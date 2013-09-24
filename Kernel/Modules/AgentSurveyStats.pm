@@ -57,7 +57,10 @@ sub Run {
             'Yes'
             )
         {
-            return $Self->{LayoutObject}->Redirect( OP => "Action=$Self->{Action}" );
+            return $Self->{LayoutObject}->NoPermission(
+                Message    => 'You have no permission for this survey!',
+                WithHeader => 'yes',
+            );
         }
         $Output = $Self->{LayoutObject}->Header(
             Title     => 'Stats Overview',
@@ -107,7 +110,10 @@ sub Run {
             ne 'Yes'
             )
         {
-            return $Self->{LayoutObject}->Redirect( OP => "Action=$Self->{Action}" );
+            return $Self->{LayoutObject}->NoPermission(
+                Message    => 'You have no permission for this survey or stats detail!',
+                WithHeader => 'yes',
+            );
         }
         $Output = $Self->{LayoutObject}->Header(
             Title     => 'Stats Detail',

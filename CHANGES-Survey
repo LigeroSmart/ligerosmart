@@ -22,6 +22,8 @@
      PublicAnswerSave  => PublicAnswerSet()
      CountRequest      => RequestCount()
      CountVote         => VoteCount()
+ - Split Frontend module AgentSurvey.pm
+ - Improved error screens
 
 2.2.2 - 2013-01-31
  - Added Finish translation, thanks to Niklas Lampén.

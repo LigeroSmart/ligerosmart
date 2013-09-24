@@ -126,7 +126,10 @@ sub Run {
             'Yes'
             )
         {
-            return $Self->{LayoutObject}->Redirect( OP => "Action=$Self->{Action}" );
+            return $Self->{LayoutObject}->NoPermission(
+                Message    => 'You have no permission for this survey!',
+                WithHeader => 'yes',
+            );
         }
 
         # set a new status
@@ -432,7 +435,6 @@ sub Run {
     );
     $Output .= $Self->{LayoutObject}->Footer();
     return $Output;
-
 }
 
 1;

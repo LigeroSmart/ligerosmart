@@ -55,8 +55,9 @@ sub Run {
             'Yes'
             )
         {
-            return $Self->{LayoutObject}->Redirect(
-                OP => "Action=AgentSurvey"
+            return $Self->{LayoutObject}->NoPermission(
+                Message    => 'You have no permission for this survey!',
+                WithHeader => 'yes',
             );
         }
 
@@ -77,7 +78,10 @@ sub Run {
         my $SurveyID = $Self->{ParamObject}->GetParam( Param => "SurveyID" );
 
         if ( !$SurveyID ) {
-            return $Self->{LayoutObject}->Redirect( OP => "Action=$Self->{Action}" );
+            return $Self->{LayoutObject}->ErrorScreen(
+                Message => 'No SurveyID is given!',
+                Comment => 'Please contact the admin.',
+            );
         }
 
         # get requiered form elements and errors

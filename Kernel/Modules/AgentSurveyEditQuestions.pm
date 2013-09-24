@@ -62,7 +62,10 @@ sub Run {
             'Yes'
             )
         {
-            return $Self->{LayoutObject}->Redirect( OP => "Action=$Self->{Action}" );
+            return $Self->{LayoutObject}->NoPermission(
+                Message    => 'You have no permission for this survey!',
+                WithHeader => 'yes',
+            );
         }
 
         my %ServerError;
@@ -84,7 +87,6 @@ sub Run {
             SurveyID    => $SurveyID,
             ServerError => \%ServerError,
         );
-
     }
 
     # ------------------------------------------------------------ #
@@ -104,7 +106,10 @@ sub Run {
             ) ne 'Yes'
             )
         {
-            return $Self->{LayoutObject}->Redirect( OP => "Action=$Self->{Action}" );
+            return $Self->{LayoutObject}->NoPermission(
+                Message    => 'You have no permission for this survey or question!',
+                WithHeader => 'yes',
+            );
         }
         $Self->{SurveyObject}->QuestionDelete(
             SurveyID   => $SurveyID,
@@ -133,7 +138,10 @@ sub Run {
             ) ne 'Yes'
             )
         {
-            return $Self->{LayoutObject}->Redirect( OP => "Action=$Self->{Action}" );
+            return $Self->{LayoutObject}->NoPermission(
+                Message    => 'You have no permission for this survey or question!',
+                WithHeader => 'yes',
+            );
         }
         $Self->{SurveyObject}->QuestionSort( SurveyID => $SurveyID );
         $Self->{SurveyObject}->QuestionUp(
@@ -163,7 +171,10 @@ sub Run {
             ) ne 'Yes'
             )
         {
-            return $Self->{LayoutObject}->Redirect( OP => "Action=$Self->{Action}" );
+            return $Self->{LayoutObject}->NoPermission(
+                Message    => 'You have no permission for this survey or question!',
+                WithHeader => 'yes',
+            );
         }
         $Self->{SurveyObject}->QuestionSort( SurveyID => $SurveyID );
         $Self->{SurveyObject}->QuestionDown(
@@ -192,14 +203,16 @@ sub Run {
             ) ne 'Yes'
             )
         {
-            return $Self->{LayoutObject}->Redirect( OP => "Action=$Self->{Action}" );
+            return $Self->{LayoutObject}->NoPermission(
+                Message    => 'You have no permission for this survey or question!',
+                WithHeader => 'yes',
+            );
         }
 
         return $Self->_MaskQuestionEdit(
             SurveyID   => $SurveyID,
             QuestionID => $QuestionID,
         );
-
     }
 
     # ------------------------------------------------------------ #
@@ -228,7 +241,10 @@ sub Run {
             ) ne 'Yes'
             )
         {
-            return $Self->{LayoutObject}->Redirect( OP => "Action=$Self->{Action}" );
+            return $Self->{LayoutObject}->NoPermission(
+                Message    => 'You have no permission for this survey or question!',
+                WithHeader => 'yes',
+            );
         }
 
         my %ServerError;
@@ -275,7 +291,10 @@ sub Run {
             ) ne 'Yes'
             )
         {
-            return $Self->{LayoutObject}->Redirect( OP => "Action=$Self->{Action}" );
+            return $Self->{LayoutObject}->NoPermission(
+                Message    => 'You have no permission for this survey or question!',
+                WithHeader => 'yes',
+            );
         }
 
         my %ServerError;
@@ -323,7 +342,10 @@ sub Run {
             ne 'Yes'
             )
         {
-            return $Self->{LayoutObject}->Redirect( OP => "Action=$Self->{Action}" );
+            return $Self->{LayoutObject}->NoPermission(
+                Message    => 'You have no permission for this survey, question or answer!',
+                WithHeader => 'yes',
+            );
         }
         $Self->{SurveyObject}->AnswerDelete(
             QuestionID => $QuestionID,
@@ -356,7 +378,10 @@ sub Run {
             ne 'Yes'
             )
         {
-            return $Self->{LayoutObject}->Redirect( OP => "Action=$Self->{Action}" );
+            return $Self->{LayoutObject}->NoPermission(
+                Message    => 'You have no permission for this survey, question or answer!',
+                WithHeader => 'yes',
+            );
         }
         $Self->{SurveyObject}->AnswerSort( QuestionID => $QuestionID );
         $Self->{SurveyObject}->AnswerUp(
@@ -389,7 +414,10 @@ sub Run {
             ne 'Yes'
             )
         {
-            return $Self->{LayoutObject}->Redirect( OP => "Action=$Self->{Action}" );
+            return $Self->{LayoutObject}->NoPermission(
+                Message    => 'You have no permission for this survey, question or answer!',
+                WithHeader => 'yes',
+            );
         }
         $Self->{SurveyObject}->AnswerSort( QuestionID => $QuestionID );
         $Self->{SurveyObject}->AnswerDown(
@@ -422,7 +450,10 @@ sub Run {
             ne 'Yes'
             )
         {
-            return $Self->{LayoutObject}->Redirect( OP => "Action=$Self->{Action}" );
+            return $Self->{LayoutObject}->NoPermission(
+                Message    => 'You have no permission for this survey, question or answer!',
+                WithHeader => 'yes',
+            );
         }
 
         return $Self->_MaskAnswerEdit(
@@ -430,7 +461,6 @@ sub Run {
             QuestionID => $QuestionID,
             AnswerID   => $AnswerID,
         );
-
     }
 
     # ------------------------------------------------------------ #
@@ -454,7 +484,10 @@ sub Run {
             ne 'Yes'
             )
         {
-            return $Self->{LayoutObject}->Redirect( OP => "Action=$Self->{Action}" );
+            return $Self->{LayoutObject}->NoPermission(
+                Message    => 'You have no permission for this survey, question or answer!',
+                WithHeader => 'yes',
+            );
         }
 
         my %ServerError;
@@ -479,7 +512,7 @@ sub Run {
             QuestionID  => $QuestionID,
             AnswerID    => $AnswerID,
             ServerError => \%ServerError,
-            )
+        ),
     }
 
     # ------------------------------------------------------------ #
@@ -488,7 +521,22 @@ sub Run {
     my $SurveyID = $Self->{ParamObject}->GetParam( Param => 'SurveyID' );
 
     if ( !$SurveyID ) {
-        return $Self->{LayoutObject}->Redirect( OP => "Action=AgentSurvey" );
+        return $Self->{LayoutObject}->ErrorScreen(
+            Message => 'No SurveyID is given!',
+            Comment => 'Please contact the admin.',
+        );
+    }
+
+    # check if survey exists
+    if (
+        $Self->{SurveyObject}->ElementExists( ElementID => $SurveyID, Element => 'Survey' ) ne
+        'Yes'
+        )
+    {
+        return $Self->{LayoutObject}->NoPermission(
+            Message    => 'You have no permission for this survey!',
+            WithHeader => 'yes',
+        );
     }
 
     return $Self->_MaskQuestionOverview( SurveyID => $SurveyID );
@@ -505,7 +553,10 @@ sub _MaskQuestionOverview {
     my $Output;
 
     if ( !$Param{SurveyID} ) {
-        return $Self->{LayoutObject}->Redirect( OP => "Action=AgentSurvey" );
+        return $Self->{LayoutObject}->ErrorScreen(
+            Message => 'No SurveyID is given!',
+            Comment => 'Please contact the admin.',
+        );
     }
 
     # output header
@@ -879,7 +930,6 @@ sub _MaskAnswerEdit {
 
     $Output .= $Self->{LayoutObject}->Footer( Type => 'Small' );
     return $Output;
-
 }
 
 1;
