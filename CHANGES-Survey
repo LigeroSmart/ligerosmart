@@ -8,7 +8,7 @@
 # --
 
 2.2.91 - 2013-xx-xx
- - First stable release for OTRS 3.3.x series.
+ - Initial release for OTRS 3.3.x series.
  - Added Malaysia translation, thanks to Kenny Cheah.
  - Added Japanese translation, thanks to Norihiro Tanaka.
  - Fixed bug#9544 thanx to Daniel Santos!
