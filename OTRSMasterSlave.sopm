@@ -23,7 +23,7 @@
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTicketMasterSlave.dtl"/>
         <File Permission="644" Location="Kernel/System/Ticket/Event/MasterSlave.pm"/>
         <File Permission="644" Location="Kernel/System/MasterSlave.pm"/>
-        <File Permission="644" Location="var/packagesetup/OTRSMasterSlave.pm"></File>
+        <File Permission="644" Location="var/packagesetup/OTRSMasterSlave.pm"/>
     </Filelist>
     <CodeInstall Type="post"><![CDATA[
 
