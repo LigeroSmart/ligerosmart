@@ -41,7 +41,47 @@ FAQ.Customer.FAQZoom = (function (TargetNS) {
         }
     };
 
+    /**
+     * @function
+     * @description
+     *      This function checks the value of a hidden input field containing the state of the article:
+     *      untouched (= not yet loaded), true or false. If the article is already loaded (-> true), and
+     *      user calls this function by clicking on the message head, the article gets hidden by removing
+     *      the class 'Visible' and the status changes to false. If the message head is clicked while the
+     *      status is false (e.g. the article is hidden), the article gets the class 'Visible' again and
+     *      the status gets changed to true.
+     */
 
+    function ToggleMessage($Message){
+        var $Status = $('> input[name=FieldState]', $Message);
+        switch ($Status.val()){
+            case "true":
+                $Message.removeClass('Visible');
+                $Status.val("false");
+            break;
+            case "false":
+                $Message.addClass('Visible');
+                $Status.val("true");
+            break;
+        }
+    }
+
+    /**
+     * @function
+     * @description
+     *      This function binds functions to the 'MessageHeader'
+     *      to toggle the visibility of the MessageBody and the reply form.
+     */
+    TargetNS.Init = function(){
+        var $Messages = $('#Messages > li'),
+            $VisibleMessage = $Messages.last(),
+            $MessageHeaders = $('.MessageHeader', $Messages);
+
+        $MessageHeaders.click(function(Event){
+            ToggleMessage($(this).parent());
+            Event.preventDefault();
+        });
+    };
 
     return TargetNS;
 }(FAQ.Customer.FAQZoom || {}));

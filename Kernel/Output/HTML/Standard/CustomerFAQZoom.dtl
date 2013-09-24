@@ -76,7 +76,7 @@
                     <div class="Clear"></div>
                 </div>
 <!-- dtl:block:FAQContentHTML -->
-                <div>
+                <div class="MessageBody">
 # Use the HTML5 sandbox attribute to prevent plugins and scripts from being executed in the browser.
 # Use IE's (non-standard) security attribute to achieve something similar in older IE browsers. Append session info to URL because IE will not send cookies.
 # Set 'allow-popups' to allow IE10+ to open links. ref: http://www.w3.org/html/wg/wiki/ChangeProposals/sandbox_allow_popups
@@ -199,27 +199,29 @@
 
 <!-- dtl:js_on_document_complete -->
 <script type="text/javascript">
-    $('a.AsPopup').bind('click', function (Event) {
-        Core.UI.Popup.OpenPopup($(this).attr('href'), 'TicketAction');
-        return false;
-    });
+/*global FAQ: true */
+FAQ.Customer.FAQZoom.Init();
 
-    $('.RateButton').bind('click', function (Event) {
-        var RateNumber = parseInt($(this).closest('div').attr('id').replace(/RateButton/, ''), 10);
-        $('#RateValue').val(RateNumber);
-        $('#RateSubmitButton').fadeIn(250);
-        $('#FAQVoting').find('.RateButton').each(function() {
-            var ItemRateNumber = parseInt($(this).closest('div').attr('id').replace(/RateButton/, ''), 10);
-            if ( ItemRateNumber <= RateNumber ) {
-                $(this).addClass('RateChecked');
-                $(this).removeClass('RateUnChecked');
-            }
-            else {
-                $(this).addClass('RateUnChecked');
-                $(this).removeClass('RateChecked');
-            }
-        });
-    });
+$('a.AsPopup').bind('click', function (Event) {
+    Core.UI.Popup.OpenPopup($(this).attr('href'), 'TicketAction');
+    return false;
+});
 
+$('.RateButton').bind('click', function (Event) {
+    var RateNumber = parseInt($(this).closest('div').attr('id').replace(/RateButton/, ''), 10);
+    $('#RateValue').val(RateNumber);
+    $('#RateSubmitButton').fadeIn(250);
+    $('#FAQVoting').find('.RateButton').each(function() {
+        var ItemRateNumber = parseInt($(this).closest('div').attr('id').replace(/RateButton/, ''), 10);
+        if ( ItemRateNumber <= RateNumber ) {
+            $(this).addClass('RateChecked');
+            $(this).removeClass('RateUnChecked');
+        }
+        else {
+            $(this).addClass('RateUnChecked');
+            $(this).removeClass('RateChecked');
+        }
+    });
+});
 </script>
 <!-- dtl:js_on_document_complete -->
