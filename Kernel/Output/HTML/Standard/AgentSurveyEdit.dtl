@@ -1,0 +1,96 @@
+# --
+# AgentSurveyEdit.dtl - provides HTML form for AgentSurveyEdit
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+
+<form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="Survey" id="Survey" class="Validate PreventMultipleSubmits">
+    <input type="hidden" name="Action" value="$Env{"Action"}" />
+    <input type="hidden" name="Subaction" value="SurveySave" />
+    <input type="hidden" name="SurveyID" value="$QData{"SurveyID"}" />
+
+    <div class="LayoutPopup ARIARoleMain">
+        <div class="Header">
+            <h1>$Text{"Edit General Info"}: $Text{"$Config{"Survey::Hook"}"}$QData{"SurveyNumber"} - $QData{"Title"}</h1>
+            <p class="AsteriskExplanation">$Text{"All fields marked with an asterisk (*) are mandatory."}</p>
+            <p>
+                <a class="CancelClosePopup" href="#">$Text{"Cancel & close window"}</a>
+            </p>
+        </div>
+        <div class="Content">
+
+            <fieldset class="TableLike">
+
+                <label class="Mandatory" for="Title"><span class="Marker">*</span> $Text{"Title"}:</label>
+                <div class="Field">
+                    <input id="Title" name="Title" type="text" class="W75pc Validate_Required $QData{"TitleServerError"}" value="$QData{"Title"}" />
+                </div>
+
+<!-- dtl:block:RichText -->
+$Include{"RichTextEditor"}
+<!-- dtl:block:RichText -->
+
+<!-- dtl:block:Introduction -->
+                <label class="Mandatory" for="Introduction"><span class="Marker">*</span> $Text{"Introduction"}:</label>
+                <div class="RichTextField">
+                    <textarea id="Introduction" name="Introduction" name="Introduction" class="RichText Validate_Required $QData{"IntroductionServerError"}" title="Survey Introduction" rows="15" cols="$Config{"Ticket::Frontend::TextAreaNote"}">$Data{"Introduction"}</textarea>
+                </div>
+                <div class="Clear"></div>
+<!-- dtl:block:Introduction -->
+
+                <label class="Mandatory" for="NotificationSender"><span class="Marker">*</span> $Text{"Sender"}:</label>
+                <div class="Field">
+                    <input id="NotificationSender" name="NotificationSender" type="text" class="W75pc Validate_Required $QData{"NotificationSenderServerError"}" value="$QData{"NotificationSender"}" />
+                </div>
+                <div class="Clear"></div>
+
+                <label class="Mandatory" for="NotificationSubject"><span class="Marker">*</span> $Text{"Subject"}:</label>
+                <div class="Field">
+                    <input id="NotificationSubject" name="NotificationSubject" type="text" class="W75pc Validate_Required $QData{"NotificationSubjectServerError"}" value="$QData{"NotificationSubject"}" />
+                </div>
+                <div class="Clear"></div>
+
+<!-- dtl:block:NotificationBody -->
+                <label class="Mandatory" for="NotificationBody"><span class="Marker">*</span> $Text{"Body"}:</label>
+                <div class="RichTextField">
+                    <textarea id="NotificationBody" name="NotificationBody" class="RichText Validate_Required $QData{"NotificationBodyServerError"}" title="Notification Body" rows="15" cols="$Config{"Ticket::Frontend::TextAreaNote"}">$QData{"NotificationBody"}</textarea>
+                </div>
+                <div class="Clear"></div>
+<!-- dtl:block:NotificationBody -->
+
+                <label for="Queues">$Text{"Queues"}:</label>
+                <div class="Field">
+                    $Data{"QueueString"}
+                </div>
+                <div class="Clear"></div>
+
+<!-- dtl:block:InternalDescription -->
+                <label class="Mandatory" for="Description"><span class="Marker">*</span> $Text{"Internal Description"}:</label>
+                <div class="RichTextField">
+                    <textarea id="Description" name="Description" class="RichText Validate_Required $QData{"DescriptionServerError"}" title="Internal Description" rows="15" cols="$Config{"Ticket::Frontend::TextAreaNote"}">$QData{"Description"}</textarea>
+                </div>
+                <div class="Clear"></div>
+<!-- dtl:block:InternalDescription -->
+
+<!-- dtl:block:GenericError -->
+                <div id="$QData{"ItemName"}" class="TooltipErrorMessage">
+                    <p>$Text{"This field is required."}</p>
+                </div>
+<!-- dtl:block:GenericError -->
+
+<!-- dtl:block:ServerError -->
+                <div id="$QData{"ItemName"}" class="TooltipErrorMessage">
+                    <p>$Text{"This field is required."}</p>
+                </div>
+<!-- dtl:block:ServerError -->
+
+            </fieldset>
+        </div>
+        <div class="Footer">
+            <button class="Primary CallForAction" type="submit" value="$Text{"Update"}"><span><i class="icon-check"></i> $Text{"Update"}</span></button>
+        </div>
+    </div>
+</form>

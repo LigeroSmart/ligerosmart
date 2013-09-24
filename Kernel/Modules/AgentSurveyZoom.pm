@@ -114,6 +114,42 @@ sub Run {
     }
 
     # ------------------------------------------------------------ #
+    # survey status
+    # ------------------------------------------------------------ #
+    elsif ( $Self->{Subaction} eq 'SurveyStatus' ) {
+        my $SurveyID  = $Self->{ParamObject}->GetParam( Param => "SurveyID" );
+        my $NewStatus = $Self->{ParamObject}->GetParam( Param => "NewStatus" );
+
+        # check if survey exists
+        if (
+            $Self->{SurveyObject}->ElementExists( ElementID => $SurveyID, Element => 'Survey' ) ne
+            'Yes'
+            )
+        {
+            return $Self->{LayoutObject}->Redirect( OP => "Action=$Self->{Action}" );
+        }
+
+        # set a new status
+        my $StatusSet = $Self->{SurveyObject}->SurveyStatusSet(
+            SurveyID  => $SurveyID,
+            NewStatus => $NewStatus,
+        );
+        my $Message = '';
+        if ( defined($StatusSet) && $StatusSet eq 'NoQuestion' ) {
+            $Message = ';Message=NoQuestion';
+        }
+        elsif ( defined($StatusSet) && $StatusSet eq 'IncompleteQuestion' ) {
+            $Message = ';Message=IncompleteQuestion';
+        }
+        elsif ( defined($StatusSet) && $StatusSet eq 'StatusSet' ) {
+            $Message = ';Message=StatusSet';
+        }
+        return $Self->{LayoutObject}->Redirect(
+            OP => "Action=AgentSurveyZoom;SurveyID=$SurveyID$Message",
+        );
+    }
+
+    # ------------------------------------------------------------ #
     # survey zoom
     # ------------------------------------------------------------ #
 

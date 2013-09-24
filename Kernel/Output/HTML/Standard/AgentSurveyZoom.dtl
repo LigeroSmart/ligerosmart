@@ -67,20 +67,20 @@
                         <a href="" class="HistoryBack">$Text{"Back"}</a>
                     </li>
                     <li>
-                        <a href="$Env{"Baselink"}Action=AgentSurvey;Subaction=SurveyEdit;SurveyID=$LQData{"SurveyID"}" class="AsPopup">$Text{"Edit General Info"}</a>
+                        <a href="$Env{"Baselink"}Action=AgentSurveyEdit;SurveyID=$LQData{"SurveyID"}" class="AsPopup">$Text{"Edit General Info"}</a>
                     </li>
                     <li>
                         <a href="$Env{"Baselink"}Action=AgentSurveyEditQuestions;SurveyID=$LQData{"SurveyID"}" class="AsPopup">$Text{"Edit Questions"}</a>
                     </li>
 <!-- dtl:block:SurveyEditStatsDetails -->
                     <li>
-                        <a href="$Env{"Baselink"}Action=AgentSurvey;Subaction=Stats;SurveyID=$LQData{"SurveyID"}" class="AsPopup">$Text{"Stats Details"}</a>
+                        <a href="$Env{"Baselink"}Action=AgentSurveyStats;SurveyID=$LQData{"SurveyID"}" class="AsPopup">$Text{"Stats Details"}</a>
                     </li>
 <!-- dtl:block:SurveyEditStatsDetails -->
 <!-- dtl:block:SurveyStatus -->
                     <li>
                         <form action="$Env{"CGIHandle"}" method="post" class="ActionForm">
-                            <input type="hidden" name="Action" value="AgentSurvey" />
+                            <input type="hidden" name="Action" value="$Env{"Action"}" />
                             <input type="hidden" name="Subaction" value="SurveyStatus" />
                             <input type="hidden" name="SurveyID" value="$QData{"SurveyID"}" />
                             $Data{"NewStatusStr"}

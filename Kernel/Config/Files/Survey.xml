@@ -29,10 +29,22 @@
                     <AccessKey>o</AccessKey>
                     <Prio>100</Prio>
                 </NavBar>
+                <Loader>
+                    <CSS>Survey.Agent.Default.css</CSS>
+                </Loader>
+            </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Frontend::Module###AgentSurveyAdd" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for survey add in the agent interface.</Description>
+        <Group>Survey</Group>
+        <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
+        <Setting>
+            <FrontendModuleReg>
                 <NavBar>
                     <Description Translatable="1">New</Description>
                     <Name Translatable="1">New</Name>
-                    <Link>Action=AgentSurvey;Subaction=SurveyAdd</Link>
+                    <Link>Action=AgentSurveyAdd</Link>
                     <Type></Type>
                     <Block></Block>
                     <NavBar>Survey</NavBar>
@@ -45,6 +57,35 @@
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
+    <ConfigItem Name="Frontend::Module###AgentSurveyEdit" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for survey edit in the agent interface.</Description>
+        <Group>Survey</Group>
+        <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
+        <Setting>
+            <FrontendModuleReg>
+                <Description Translatable="1">Survey Edit Module.</Description>
+                <NavBarName>Survey</NavBarName>
+                <Loader>
+                    <CSS>Survey.Agent.Default.css</CSS>
+                </Loader>
+            </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Frontend::Module###AgentSurveyStats" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for survey stats in the agent interface.</Description>
+        <Group>Survey</Group>
+        <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
+        <Setting>
+            <FrontendModuleReg>
+                <Description Translatable="1">Survey Stats Module.</Description>
+                <NavBarName>Survey</NavBarName>
+                <Loader>
+                    <CSS>Survey.Agent.Default.css</CSS>
+                </Loader>
+            </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
+
     <ConfigItem Name="Frontend::Module###AgentSurveyZoom" Required="0" Valid="1">
         <Description Translatable="1">Frontend module registration for survey zoom in the agent interface.</Description>
         <Group>Survey</Group>

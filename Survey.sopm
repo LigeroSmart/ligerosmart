@@ -43,19 +43,24 @@
         <File Permission="644" Location="scripts/test/Survey.t"/>
         <File Permission="644" Location="Kernel/Output/HTML/LayoutSurvey.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentSurvey.pm"/>
+        <File Permission="644" Location="Kernel/Modules/AgentSurveyAdd.pm"/>
+        <File Permission="644" Location="Kernel/Modules/AgentSurveyEdit.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentSurveyEditQuestions.pm"/>
+        <File Permission="644" Location="Kernel/Modules/AgentSurveyStats.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentSurveyZoom.pm"/>
         <File Permission="644" Location="Kernel/Modules/PublicSurvey.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/SurveyOverviewSmall.pm"/>
         <!-- this file is not needed, but added to pass OTRSCodePolicy
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AAASurvey.dtl"/>
         -->
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentSurvey.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentSurveyZoom.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentSurveyAdd.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentSurveyEdit.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentSurveyEditQuestions.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/PublicSurvey.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentSurveyOverviewSmall.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentSurveyOverviewNavBar.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentSurveyOverviewSmall.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentSurveyStats.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentSurveyZoom.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/PublicSurvey.dtl"/>
         <File Permission="644" Location="var/httpd/htdocs/js/Survey.Agent.SurveyZoom.js" />
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/Survey.Agent.Default.css"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/css/Survey.Customer.Default.css"/>

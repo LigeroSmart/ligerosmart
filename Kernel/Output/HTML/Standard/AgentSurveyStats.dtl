@@ -1,0 +1,149 @@
+# --
+# AgentSurveyStats.dtl - provides HTML form for AgentSurveyStats
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+
+<!-- dtl:block:Stats -->
+<div class="LayoutPopup ARIARoleMain">
+    <div class="Header">
+        <h1>$Text{"Stats Overview of"} : $Text{"$Config{"Survey::Hook"}"}$Data{"SurveyNumber"} - $Data{"Title"} </h1>
+        <p>
+            <a class="CancelClosePopup" href="#">$Text{"Cancel & close window"}</a>
+        </p>
+    </div>
+    <div class="Content">
+
+        <div class="Header">
+            <h2></h2>
+        </div>
+        <div class="WidgetSimple SpacingTop SpacingBottomMedium">
+            <div class="Header">
+                <h2>$Text{"Requests Table"}</h2>
+            </div>
+            <div class="Content">
+                <table class="DataTable">
+                    <thead>
+                        <tr>
+                            <th>
+                                $Text{"Details"}
+                            </th>
+                            <th>
+                                $Text{"Send Time"}
+                            </th>
+                            <th>
+                                $Text{"Vote Time"}
+                            </th>
+                            <th>
+                                $Text{"Ticket"}
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+<!-- dtl:block:StatsVote -->
+                        <tr>
+                            <td class="Center">
+                                <a class="SeeDetails AsBlock" href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=StatsDetail;SurveyID=$LQData{"SurveyID"};RequestID=$LQData{"RequestID"};TicketNumber=$LQData{"TicketNumber"}">
+                                    <i class="icon-zoom-in"></i>
+                                    <span>See Details</span>
+                                </a>
+                            </td>
+                            <td>
+                                $TimeLong{"$Data{"SendTime"}"}
+                            </td>
+                            <td>
+                                $TimeLong{"$Data{"VoteTime"}"}
+                            </td>
+                            <td>
+                                <a class="LinkZoomView AsBlock" href="$Env{"Baselink"}Action=AgentTicketZoom;TicketID=$LQData{"TicketID"}">
+                                    $QData{"TicketNumber"}
+                                </a>
+                            </td>
+                        </tr>
+<!-- dtl:block:StatsVote -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+    <div class="Footer">
+        <button type="submit" class="CancelClosePopup Primary CallForAction" value="$Text{"Close window"}"><span><i class="icon-remove"></i> $Text{"Close window"}</span></button>
+    </div>
+</div>
+<!-- dtl:js_on_document_complete -->
+<script type="text/javascript">//<![CDATA[
+    $('a.LinkZoomView').bind('click', function () {
+        window.opener.Core.UI.Popup.FirePopupEvent('URL', { URL: $(this).attr('href')});
+        window.close();
+    });
+
+    $('a.HistoryBack').bind('click', function (Event) {
+        history.back();
+        return false;
+    });
+    $('button.HistoryBack').bind('click', function (Event) {
+        history.back();
+        return false;
+    });
+
+//]]></script>
+<!-- dtl:js_on_document_complete -->
+
+<!-- dtl:block:Stats -->
+
+<!-- dtl:block:StatsDetail -->
+<div class="LayoutPopup ARIARoleMain">
+    <div class="Header">
+        <h1>$Text{"Survey Stat Details"} : $Text{"Ticket"}#$Data{"TicketNumber"} : $Config{"Survey::Hook"}$Data{"SurveyNumber"} - $Data{"Title"} :  </h1>
+        <p>
+            <a class="CancelClosePopup" href="#">$Text{"Cancel & close window"}</a>
+            $Text{"or"}
+            <a class="HistoryBack" href="#">$Text{"go back to stats overview"}</a>
+        </p>
+    </div>
+    <div class="Content">
+
+        <div class="Header">
+            <h2></h2>
+        </div>
+        <div class="WidgetSimple SpacingTop SpacingBottomMedium">
+            <div class="Header">
+                <h2>$Text{"Details"}</h2>
+            </div>
+            <div class="Content">
+                <fieldset class="TableLike">
+<!-- dtl:block:StatsDetailQuestion -->
+                    <label class="$Data{"Class"}">$QData{"RequiredText"}$QData{"Question"}:</label>
+<!-- dtl:block:StatsDetailAnswer -->
+                    <div class="Field $Data{"Class"}">
+                        $Data{"Answer"}
+                    </div>
+                    <div class="Clear"></div>
+<!-- dtl:block:StatsDetailAnswer -->
+                    <div class="Clear"></div>
+<!-- dtl:block:StatsDetailQuestion -->
+                </fieldset>
+            </div>
+        </div>
+    </div>
+    <div class="Footer">
+        <form action="$Env{"CGIHandle"}" method="post">
+            <input type="hidden" name="Action" value="$Env{"Action"}" />
+            <input type="hidden" name="SurveyID" value="$QData{"SurveyID"}" />
+            <button type="submit" class="Primary CallForAction" value="$Text{"Go back"}"><span><i class="icon-arrow-left"></i> $Text{"Go back"}</span></button>
+        </form>
+    </div>
+</div>
+<!-- dtl:js_on_document_complete -->
+<script type="text/javascript">//<![CDATA[
+    $('a.HistoryBack').bind('click', function (Event) {
+        history.back();
+        return false;
+    });
+//]]></script>
+<!-- dtl:js_on_document_complete -->
+<!-- dtl:block:StatsDetail -->
