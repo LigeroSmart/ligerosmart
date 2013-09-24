@@ -53,6 +53,9 @@
     <section>
         <title>Basic Mode</title>
         <para>
+            It's the default mode for this package.
+        </para>
+        <para>
             In basic mode it is possible to define a master ticket and some slaves tickets that
             follows master tickets updates:
         </para>
@@ -95,7 +98,7 @@
         </itemizedlist>
         <warning>
             <para>
-                In basic mode Master Slave status cna't be changed.
+                In basic mode Master Slave status can't be changed.
             </para>
         </warning>
     </section>
@@ -112,21 +115,21 @@
             </listitem>
             <listitem>
                 <para>Slave of Ticket# *****</para>
-                <para>Master tickets can be turned into slaves tickets of other master.</para>
+                <para>Master tickets can be turned into slaves tickets of other master ticket.</para>
             </listitem>
             <listitem>
                 <para>Unset Master</para>
-                <para>Master tickets can become normal tickets</para>
+                <para>Master tickets can become normal tickets.</para>
             </listitem>
             <listitem>
                 <para>Unset Slave</para>
-                <para>Slave tickets can become normal tickets</para>
+                <para>Slave tickets can become normal tickets.</para>
             </listitem>
         </itemizedlist>
         <note>
             <para>
-                Above features can be enabled or disabled, for more information take a look in the
-                "Configuration chapter"
+                Above features can be enabled or disabled on sysconfig, for more information take a look in the
+                "Configuration" chapter.
             </para>
         </note>
         <section>
@@ -146,7 +149,7 @@
             <title>Bulk Action</title>
             <para>
                 If Advanced mode is enabled, bulk action screen enables the "Master Ticket"" field
-                to allow the change the Master Slave status.
+                to allow the change of the MasterSlave status.
             </para>
         </section>
     </section>
@@ -402,7 +405,7 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
         </para>
     </note>
     <section>
-        <title>Create A Master Ticket</title>
+        <title>Create a Master Ticket</title>
         <para>At the end of this example a new master ticket will be created.</para>
         <orderedlist>
             <listitem>
@@ -426,6 +429,9 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
         <title>Create A Slave Ticket</title>
         <para>At the end of this example a new slave ticket will be created.</para>
         <orderedlist>
+            <listitem>
+                <para>Be sure you have at least one Master ticket on the system</para>
+            </listitem>
             <listitem>
                 <para>Open "New phone Ticket" screen</para>
             </listitem>
@@ -458,7 +464,7 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
         </note>
         <para>For this example the two tickets created in the above examples will be used.</para>
         <para>
-            Make sure that both tickets have a different priority than the one to be set foe this
+            Make sure that both tickets have a different priority than the one to be set for this
             example we will set priority "1 very low", so the tickets should be in a priority
             greater than "1 very low".
          </para>
@@ -475,7 +481,7 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
             </listitem>
             <listitem>
                 <para>
-                    Fill any mandatory field and set the priority to "1 very low" and submit.
+                    Fill any mandatory field and set the priority to "1 very low" and submit
                 </para>
             </listitem>
             <listitem>
@@ -550,7 +556,7 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
                 </note>
             </listitem>
             <listitem>
-                <para>Choose "New Master Ticket" and submit</para>
+                <para>Choose "Unset Slave Ticket" and submit</para>
             </listitem>
             <listitem>
                 <para>Take a look to the new Master status in the "Ticket Information" box</para>
@@ -584,8 +590,8 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
         of the field.
     </para>
     <para>
-        Master Slave information is stored in the dyanimic_field_value table as any other dynamic
-        field
+        Master Slave information is stored in the dynamic_field_value table as any other dynamic
+        field.
     </para>
     <para>
         To make slave tickets to follow master updates there is ticket event module
