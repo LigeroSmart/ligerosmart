@@ -137,6 +137,21 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
         <para>All parameters for the Survey object in the agent interface.</para>
     </section>
     <section>
+        <title>Frontend::Module###AgentSurveyAdd.</title>
+        <para>Group: Survey, Subgroup: Frontend::Agent::ModuleRegistration.</para>
+        <para>Frontend module registration for survey add in the agent interface.</para>
+    </section>
+    <section>
+        <title>Frontend::Module###AgentSurveyEdit.</title>
+        <para>Group: Survey, Subgroup: Frontend::Agent::ModuleRegistration.</para>
+        <para>Frontend module registration for survey edit in the agent interface.</para>
+    </section>
+    <section>
+        <title>Frontend::Module###AgentSurveyStats.</title>
+        <para>Group: Survey, Subgroup: Frontend::Agent::ModuleRegistration.</para>
+        <para>Frontend module registration for survey stats in the agent interface.</para>
+    </section>
+    <section>
         <title>Frontend::Module###AgentSurveyZoom.</title>
         <para>Group: Survey, Subgroup: Frontend::Agent::ModuleRegistration.</para>
         <para>Frontend module registration for survey zoom in the agent interface.</para>
