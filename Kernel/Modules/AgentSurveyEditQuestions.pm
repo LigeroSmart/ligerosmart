@@ -512,7 +512,7 @@ sub Run {
             QuestionID  => $QuestionID,
             AnswerID    => $AnswerID,
             ServerError => \%ServerError,
-        ),
+        );
     }
 
     # ------------------------------------------------------------ #
