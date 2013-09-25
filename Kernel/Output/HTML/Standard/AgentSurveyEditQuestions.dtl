@@ -80,6 +80,9 @@
                             </th>
 <!-- dtl:block:SurveyStatusColumn -->
                             <th>
+                                $Text{"Answer Required"}
+                            </th>
+                            <th>
                                 $Text{"Up"}
                             </th>
                             <th>
@@ -109,6 +112,9 @@
                             <td>
                                 $Text{"$Data{"Type"}"}
                             </td>
+                            <td>
+                                $Text{"$Data{"AnswerRequired"}"}
+                            </td>
                             <td class="Center">
                                 <a class="AsBlock ArrowUp$QData{"ClassUp"}" href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=QuestionUp;SurveyID=$LQData{"SurveyID"};QuestionID=$LQData{"QuestionID"}">
                                     <i class="icon-chevron-up"></i>
@@ -134,6 +140,9 @@
                             </td>
                             <td>
                                 $Text{"$Data{"Status"}"}
+                            </td>
+                            <td>
+                                $Text{"$Data{"AnswerRequired"}"}
                             </td>
                             <td class="Center">
                                 <a class="AsBlock ArrowUp$QData{"ClassUp"}" href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=QuestionUp;SurveyID=$LQData{"SurveyID"};QuestionID=$LQData{"QuestionID"}">

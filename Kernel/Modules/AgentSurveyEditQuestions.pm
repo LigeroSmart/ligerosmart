@@ -671,14 +671,17 @@ sub _MaskQuestionOverview {
                     }
                 }
 
+                my $AnswerRequired = $Question->{AnswerRequired} ? 'Yes' : 'No';
+
                 $Self->{LayoutObject}->Block(
                     Name => 'SurveyQuestionsRow',
                     Data => {
                         %{$Question},
-                        Status    => $Status,
-                        Class     => $Class,
-                        ClassUp   => $ClassUp,
-                        ClassDown => $ClassDown,
+                        Status         => $Status,
+                        AnswerRequired => $AnswerRequired,
+                        Class          => $Class,
+                        ClassUp        => $ClassUp,
+                        ClassDown      => $ClassDown,
                     },
                 );
                 $Self->{LayoutObject}->Block(
@@ -711,12 +714,15 @@ sub _MaskQuestionOverview {
                 $ClassDown = 'Disabled',
             }
 
+            my $AnswerRequired = $Question->{AnswerRequired} ? 'Yes' : 'No';
+
             $Self->{LayoutObject}->Block(
                 Name => 'SurveyQuestionsSaved',
                 Data => {
                     %{$Question},
-                    ClassUp   => $ClassUp,
-                    ClassDown => $ClassDown,
+                    AnswerRequired => $AnswerRequired,
+                    ClassUp        => $ClassUp,
+                    ClassDown      => $ClassDown,
                 },
             );
 
