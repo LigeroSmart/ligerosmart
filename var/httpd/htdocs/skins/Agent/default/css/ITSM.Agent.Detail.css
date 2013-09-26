@@ -50,9 +50,6 @@
     float: left;
 }
 
-.ControlRow .ITSMItemView.Icons a span {
-    background: transparent url(../img/articleview.png) no-repeat;
-}
 
 .ControlRow .ITSMItemView.Icons .OneITSMItem.Active span,
 .ControlRow .ITSMItemView.Icons .OneITSMItem.Active:hover span {
@@ -67,10 +64,6 @@
 .ControlRow .ITSMItemView.Icons .AllITSMItems.Active span,
 .ControlRow .ITSMItemView.Icons .AllITSMItems.Active:hover span {
     background-position: -16px -16px;
-}
-
-.ControlRow .ITSMFilter.Icons a span {
-    background: url(../img/articlefilter.png) no-repeat;
 }
 
 .ControlRow .ITSMFilter.Icons .Active span {
