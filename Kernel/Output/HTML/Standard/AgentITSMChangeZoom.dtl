@@ -309,7 +309,7 @@
 
             <div class="WidgetBox SpacingTop Expanded">
                 <div class="LightRow Header">
-                    <div class="WidgetAction Toggle"><a href="#" title="$Text{"Show or hide the content."}"><span></span></a></div>
+                    <div class="WidgetAction Toggle"><a href="#" title="$Text{"Show or hide the content."}"><i class="icon-caret-right"></i><i class="icon-caret-down"></i></a></div>
                     <h2>$Text{"ITSMChange"} - $QData{"ChangeTitle","70"}</h2>
                 </div>
                 <div class="Content">
