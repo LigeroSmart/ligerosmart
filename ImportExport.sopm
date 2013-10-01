@@ -12,6 +12,7 @@
     <Description Lang="es">El paquete ImportExport.</Description>
     <Filelist>
         <File Permission="755" Location="bin/otrs.ImportExport.pl"/>
+        <File Permission="644" Location="doc/import-export-database.dia"/>
         <File Permission="644" Location="doc/import-export-database.png"/>
         <File Permission="644" Location="Kernel/Config/Files/ImportExport.xml"/>
         <File Permission="644" Location="Kernel/Language/bg_ImportExport.pm"/>
@@ -38,6 +39,7 @@
         <File Permission="644" Location="Kernel/Output/HTML/ImportExportLayoutSelection.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/ImportExportLayoutText.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/LayoutImportExport.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AAAImportExport.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AdminImportExport.dtl"/>
         <File Permission="644" Location="Kernel/System/ImportExport.pm"/>
         <File Permission="644" Location="Kernel/System/ImportExport/FormatBackend/CSV.pm"/>
