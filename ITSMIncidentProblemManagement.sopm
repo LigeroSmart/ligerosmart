@@ -4,7 +4,7 @@
 <!-- nofilter(TidyAll::Plugin::OTRS::SOPM::DocumentationPresent) -->
     <Version>0.0.0</Version>
     <Framework>3.3.x</Framework>
-    <PackageRequired Version="3.2.93">ITSMCore</PackageRequired>
+    <PackageRequired Version="3.2.94">ITSMCore</PackageRequired>
     <Vendor>OTRS AG</Vendor>
     <URL>http://otrs.org/</URL>
     <License>GNU AFFERO GENERAL PUBLIC LICENSE Version 3, November 2007</License>
@@ -32,6 +32,7 @@
         <File Permission="644" Location="Kernel/Language/pt_PT_ITSMTicket.pm"/>
         <File Permission="644" Location="Kernel/Language/ru_ITSMTicket.pm"/>
         <File Permission="644" Location="Kernel/Language/zh_CN_ITSMTicket.pm"/>
+        <File Permission="644" Location="Kernel/Modules/AgentTicketActionCommon.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentTicketAddtlITSMField.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentTicketDecision.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentTicketEmail.pm"/>
@@ -40,7 +41,8 @@
         <File Permission="644" Location="Kernel/Modules/AgentTicketZoom.pm"/>
         <File Permission="644" Location="Kernel/Modules/CustomerTicketPrint.pm"/>
         <File Permission="644" Location="Kernel/Modules/CustomerTicketZoom.pm"/>
-        <File Permission="644" Location="Kernel/Modules/AgentTicketActionCommon.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AAAITSMIncidentProblemManagement.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTicketActionCommon.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTicketAddtlITSMField.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTicketDecision.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTicketEmail.dtl"/>
@@ -53,7 +55,6 @@
         <File Permission="644" Location="Kernel/Output/HTML/Standard/CustomerTicketZoom.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/TicketOverviewMedium.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/TicketOverviewPreview.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTicketActionCommon.dtl"/>
         <File Permission="644" Location="Kernel/System/Stats/Dynamic/ITSMTicketFirstLevelSolutionRate.pm"/>
         <File Permission="644" Location="Kernel/System/Stats/Dynamic/ITSMTicketSolutionTimeAverage.pm"/>
         <File Permission="644" Location="var/packagesetup/ITSMIncidentProblemManagement.pm"/>
@@ -344,7 +345,7 @@
         <br/>
         <strong>REQUIRED OTRS PACKAGES</strong>
         <ul>
-        <li>ITSMCore 3.2.93</li>
+        <li>ITSMCore 3.2.94</li>
         </ul>
         <br/>
         ((enjoy))<br/>
@@ -362,7 +363,7 @@
         <br/>
         <strong>BENÖTIGTE OTRS-PAKETE</strong>
         <ul>
-        <li>ITSMCore 3.2.93</li>
+        <li>ITSMCore 3.2.94</li>
         </ul>
         <br/>
         ((enjoy))<br/>
@@ -380,7 +381,7 @@
         <br/>
         <strong>PAQUETES OTRS REQUERIDOS</strong>
         <ul>
-        <li>ITSMCore 3.2.93</li>
+        <li>ITSMCore 3.2.94</li>
         </ul>
         <br/>
         ((enjoy))<br/>
@@ -398,7 +399,7 @@
         <br/>
         <strong>REQUIRED OTRS PACKAGES</strong>
         <ul>
-        <li>ITSMCore 3.2.93</li>
+        <li>ITSMCore 3.2.94</li>
         </ul>
         <br/>
         ((enjoy))<br/>
@@ -416,7 +417,7 @@
         <br/>
         <strong>BENÖTIGTE OTRS-PAKETE</strong>
         <ul>
-        <li>ITSMCore 3.2.93</li>
+        <li>ITSMCore 3.2.94</li>
         </ul>
         <br/>
         ((enjoy))<br/>
@@ -434,7 +435,7 @@
         <br/>
         <strong>PAQUETES OTRS REQUERIDOS</strong>
         <ul>
-        <li>ITSMCore 3.2.93</li>
+        <li>ITSMCore 3.2.94</li>
         </ul>
         <br/>
         ((enjoy))<br/>
