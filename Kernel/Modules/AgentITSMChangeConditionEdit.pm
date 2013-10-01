@@ -799,7 +799,7 @@ sub Run {
             Data => {
                 %GetParam,
             },
-         );
+        );
     }
 
     # generate output
