@@ -12,6 +12,7 @@
     <Description Lang="de">Das OTRS ITSM Core Paket.</Description>
     <Filelist>
         <File Permission="755" Location="bin/otrs.AddService.pl"/>
+        <File Permission="644" Location="doc/itsm-core-database.dia"/>
         <File Permission="644" Location="doc/itsm-core-database.png"/>
         <File Permission="644" Location="Kernel/Config/Files/FrameworkITSMCore.xml"/>
         <File Permission="644" Location="Kernel/Config/Files/ITSMCore.xml"/>
@@ -48,6 +49,7 @@
         <File Permission="644" Location="Kernel/Output/HTML/ITSMServiceMenuLink.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/ITSMSLAMenuGeneric.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/LinkObjectService.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AAAITSMCore.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AdminITSMCIPAllocate.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AdminService.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AdminSLA.dtl"/>
