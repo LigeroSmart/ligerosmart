@@ -14,6 +14,7 @@
     <Filelist>
         <File Permission="755" Location="bin/otrs.ITSMChangesCheck.pl"/>
         <File Permission="755" Location="bin/otrs.ITSMChangeDelete.pl"/>
+        <File Permission="644" Location="doc/itsm-change-management-database.dia"/>
         <File Permission="644" Location="doc/itsm-change-management-database.png"/>
         <File Permission="644" Location="Kernel/Config/Files/ITSMChangeManagement.xml"/>
         <File Permission="644" Location="Kernel/Language/de_ITSMChangeManagement.pm"/>
@@ -92,6 +93,7 @@
         <File Permission="644" Location="Kernel/Output/HTML/ToolBarMyCAB.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/ToolBarMyChanges.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/ToolBarMyWorkOrders.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AAAITSMChangeManagement.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AdminITSMChangeCIPAllocate.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AdminITSMChangeNotification.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AdminITSMStateMachine.dtl"/>
