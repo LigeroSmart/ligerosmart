@@ -11,6 +11,7 @@
     <Description Lang="de">Das General Catalog Paket.</Description>
     <Description Lang="es">El paquete General Catalog.</Description>
     <Filelist>
+        <File Permission="644" Location="doc/general-catalog-database.dia"/>
         <File Permission="644" Location="doc/general-catalog-database.png"/>
         <File Permission="644" Location="Kernel/Config/Files/GeneralCatalog.xml"/>
         <File Permission="644" Location="Kernel/Language/bg_GeneralCatalog.pm"/>
@@ -33,6 +34,7 @@
         <File Permission="644" Location="Kernel/Language/zh_CN_GeneralCatalog.pm"/>
         <File Permission="644" Location="Kernel/Modules/AdminGeneralCatalog.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/GeneralCatalogPreferencesGeneric.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AAAGeneralCatalog.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AdminGeneralCatalog.dtl"/>
         <File Permission="644" Location="Kernel/System/GeneralCatalog.pm"/>
         <File Permission="644" Location="Kernel/System/GeneralCatalog/PreferencesDB.pm"/>
