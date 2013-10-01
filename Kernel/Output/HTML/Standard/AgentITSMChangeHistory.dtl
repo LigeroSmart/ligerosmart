@@ -52,7 +52,7 @@
                                 -
 <!-- dtl:block:NoHistoryZoom -->
 <!-- dtl:block:ShowHistoryZoom -->
-                                <a class="AsBlock" href="$Env{"Baselink"}Action=AgentITSM$Data{"ZoomType"}HistoryZoom;HistoryEntryID=$Data{"HistoryEntryID"}">$Text{"Show details"}</a>
+                                <a class="AsBlock" href="$Env{"Baselink"}Action=AgentITSM$Data{"ZoomType"}HistoryZoom;HistoryEntryID=$LQData{"HistoryEntryID"}">$Text{"Show details"}</a>
 <!-- dtl:block:ShowHistoryZoom -->
                             </td>
                             <td>
@@ -60,7 +60,7 @@
                                 -
 <!-- dtl:block:NoWorkOrderZoom -->
 <!-- dtl:block:ShowWorkOrderZoom -->
-                                <a class="AsBlock" href="$Env{"Baselink"}Action=AgentITSMWorkOrderZoom;WorkOrderID=$Data{"WorkOrderID"}">$Text{"Show workorder"}</a>
+                                <a class="AsBlock" href="$Env{"Baselink"}Action=AgentITSMWorkOrderZoom;WorkOrderID=$LQData{"WorkOrderID"}">$Text{"Show workorder"}</a>
 <!-- dtl:block:ShowWorkOrderZoom -->
                             </td>
                             <td>
