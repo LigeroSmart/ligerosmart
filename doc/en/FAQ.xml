@@ -1109,8 +1109,8 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
                 <listitem>
                     <para>Add, Edit, Delete, Zoom, Print and Link FAQ Articles.</para>
                </listitem>
-               <listitem><para>Use FAQ Journal</para></listitem>
-               <listitem><para>Use FAQ Search</para></listitem>
+               <listitem><para>Use FAQ Journal.</para></listitem>
+               <listitem><para>Use FAQ Search.</para></listitem>
             </itemizedlist>
         </listitem>
         <listitem>
@@ -1148,7 +1148,7 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
         <note>
             <para>Be sure that the logged user is a member of "faq" group.</para>
         </note>
-        <itemizedlist mark="round">
+        <orderedlist>
             <listitem>
                 <para>
                     From the Navigation Bar, click on "FAQ" and then on "New" (from the opened FAQ
@@ -1179,7 +1179,7 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
                     This will create a new FAQ article that can be accessed from the FAQ Explorer
                 </para>
             </listitem>
-        </itemizedlist>
+        </orderedlist>
         <note>
             <para>
                 By default the FAQ article does not need an approval procedure, if this
@@ -1194,7 +1194,7 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
         <note>
             <para>Be sure that the logged user is a member of "faq" and "faq_admin" groups.</para>
         </note>
-        <itemizedlist mark="round">
+        <orderedlist>
             <listitem>
                 <para>From FAQ menu click on "Category Management".</para>
                 <para>
@@ -1216,7 +1216,7 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
             <listitem>
                 <para>Click on "Create" button, and the new category will be ready to use.</para>
             </listitem>
-        </itemizedlist>
+        </orderedlist>
     </section>
     <section>
         <title>Create a New Language</title>
@@ -1224,7 +1224,7 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
         <note>
             <para>Be sure that the logged user is a member of "faq" and "faq_admin" groups.</para>
         </note>
-        <itemizedlist mark="round">
+        <orderedlist>
             <listitem>
                 <para>From FAQ menu click on "Language Management".</para>
                 <para>
@@ -1241,7 +1241,7 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
             <listitem>
                 <para>Click on "Create" button, and the new language will be ready to use.</para>
             </listitem>
-        </itemizedlist>
+        </orderedlist>
     </section>
 </chapter>
 
