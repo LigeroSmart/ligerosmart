@@ -157,7 +157,7 @@
     <section>
         <title>Create Links Using The Category Name</title>
         <para>
-            Since FAQ 2.2.x it is possible to refer to FAQ items by creating a link for web browser
+            From FAQ 2.2.x it is possible to refer to FAQ items by creating a link for web browser
             using the category name instead of just the category ID
         </para>
         <para>
@@ -333,31 +333,6 @@
 shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
             </screen>
         </para>
-    </section>
-</chapter>
-
-<chapter>
-    <title>First Steps</title>
-    <para>
-        As soon as the FAQ Module has been installed, a group &quot;faq&quot; is automatically
-        generated. Access to the FAQ Module is restricted to users with &quot;rw&quot; permission
-        in this group.
-    </para>
-    <section>
-        <title>Assigning The FAQ Authorization</title>
-        <para>
-            Users with admin rights can add existing agents to the FAQ Group. For the change to be
-            implemented, agents have to re-login after they have been added to the group.
-            Afterwards, an &quot;FAQ&quot; symbol is displayed in their navigation area.
-        </para>
-    </section>
-    <section>
-        <title>Creating Categories</title>
-        <para>First of all, you have to create FAQ categories.</para>
-    </section>
-    <section>
-        <title>Creating FAQ Articles</title>
-        <para>Then you can start creating new FAQ articles.</para>
     </section>
 </chapter>
 
@@ -1121,12 +1096,155 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
 <!-- ******** -->
 <!-- 6. Usage -->
 <!-- ******** -->
-<!--
+
 <chapter>
     <title>Usage</title>
-    <para></para>
+    <para>This package adds tree new groups to the system:</para>
+    <itemizedlist mark="round">
+        <listitem>
+            <para>faq.</para>
+            <para>Users in this group are able to:</para>
+            <itemizedlist mark="round">
+                <listitem><para>Use FAQ Explorer.</para></listitem>
+                <listitem>
+                    <para>Add, Edit, Delete, Zoom, Print and Link FAQ Articles.</para>
+               </listitem>
+               <listitem><para>Use FAQ Journal</para></listitem>
+               <listitem><para>Use FAQ Search</para></listitem>
+            </itemizedlist>
+        </listitem>
+        <listitem>
+            <para>faq_admin.</para>
+            <para>Users in this group are able to:</para>
+            <itemizedlist mark="round">
+                <listitem><para>Add, Edit and Delete FAQ Categories.</para></listitem>
+                <listitem><para>Add, Edit and Delete FAQ Languages.</para></listitem>
+            </itemizedlist>
+        </listitem>
+        <listitem>
+            <para>faq_approval.</para>
+            <para>Users in this group are able to:</para>
+            <itemizedlist mark="round">
+                <listitem><para>Approve FAQ Articles.</para></listitem>
+            </itemizedlist>
+            <note>
+                <para>The group to approve FAQ Articles can be changed using SysConfig.</para>
+            </note>
+        </listitem>
+    </itemizedlist>
+    <para>
+        Users in "faq_admin" and "faq_approval" groups (or custom approval group) need also to be
+        in the "faq" group to perform the actions. Any change in the users groups will take effect
+        on FAQ after the user logout and login again.
+    </para>
+    <para>
+        Users that are members of the "faq" group will have a new menu called "FAQ" in the
+        navigation bar that is in the top of the screen (after re-login), similar to the "Ticket"
+        menu.
+    </para>
+    <section>
+        <title>Create A New FAQ Article</title>
+        <para>This example shows how to create a new FAQ article.</para>
+        <note>
+            <para>Be sure that the logged user is a member of "faq" group.</para>
+        </note>
+        <itemizedlist mark="round">
+            <listitem>
+                <para>
+                    From the Navigation Bar, click on "FAQ" and then on "New" (from the opened FAQ
+                    menu option).
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Fill the required information.
+                </para>
+                <para>
+                    There are tree possible FAQ states: "internal": only agents can see the FAQ
+                    article, "external": agents and registered customer can see the FAQ article and
+                    "public": this FAQ articles are accessible from the OTRS public interface.
+                </para>
+                <para>
+                    By default the system has the Category "Misc" and the Languages "en" for English
+                    and "de" for German. (more Categories and Languages can be added to the system).
+                </para>
+                <para>
+                    On a clean system there are 4 multiple line fields, with other 2 more than can
+                    be added if needed, their names an visibility can be changed in the SysConfig.
+                </para>
+            </listitem>
+            <listitem>
+                <para>Click on the "Create" button.</para>
+                <para>
+                    This will create a new FAQ article that can be accessed from the FAQ Explorer
+                </para>
+            </listitem>
+        </itemizedlist>
+        <note>
+            <para>
+                By default the FAQ article does not need an approval procedure, if this
+                functionality is enabled and the user is also a member of the FAQ Approval group,
+                a selection to set the approval state is also shown in this screen.
+            </para>
+        </note>
+    </section>
+    <section>
+        <title>Create a New Category</title>
+        <para>This example shows how to create a new FAQ category.</para>
+        <note>
+            <para>Be sure that the logged user is a member of "faq" and "faq_admin" groups.</para>
+        </note>
+        <itemizedlist mark="round">
+            <listitem>
+                <para>From FAQ menu click on "Category Management".</para>
+                <para>
+                    A list of available categories is shown (from there is also possible to edit or
+                    delete them)
+                </para>
+            </listitem>
+            <listitem>
+                <para>Click on "Add Category" from the Actions side bar.</para>
+            </listitem>
+            <listitem>
+                <para>Fill the required information.</para>
+                <para>
+                    Notice that a category can be a sub item from a wider category, this is helpful
+                    to organize FAQ articles in a hierarchical way (this hierarchies can be drilled
+                    drown from the FAQ Explorer).
+                </para>
+            </listitem>
+            <listitem>
+                <para>Click on "Create" button, and the new category will be ready to use.</para>
+            </listitem>
+        </itemizedlist>
+    </section>
+    <section>
+        <title>Create a New Language</title>
+        <para>This example shows how to create a new FAQ language.</para>
+        <note>
+            <para>Be sure that the logged user is a member of "faq" and "faq_admin" groups.</para>
+        </note>
+        <itemizedlist mark="round">
+            <listitem>
+                <para>From FAQ menu click on "Language Management".</para>
+                <para>
+                    A list of available languages is shown (from there is also possible to edit or
+                    delete them)
+                </para>
+            </listitem>
+            <listitem>
+                <para>Click on "Add Language" from the Actions side bar.</para>
+            </listitem>
+            <listitem>
+                <para>Fill the required information.</para>
+            </listitem>
+            <listitem>
+                <para>Click on "Create" button, and the new language will be ready to use.</para>
+            </listitem>
+        </itemizedlist>
+    </section>
 </chapter>
- -->
+
 <!--
 ***************************************** Technical part ************************************
 -->
@@ -1153,6 +1271,14 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
 <!-- ******* -->
 <chapter>
     <title>Tests</title>
+    <para>This module has been tested on the current state of the art in quality.</para>
+    <section>
+        <title>Test Cases</title>
+        <para>
+            To test this package please follow the examples described in the Usage section, all the
+            tests cases should return the expected results defined at the beginning of each example.
+        </para>
+    </section>
     <section>
         <title>Unit Tests</title>
         <para>
