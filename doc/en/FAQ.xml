@@ -1169,8 +1169,9 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
                     and "de" for German. (more Categories and Languages can be added to the system).
                 </para>
                 <para>
-                    On a clean system there are 4 multiple line fields, with other 2 more than can
-                    be added if needed, their names an visibility can be changed in the SysConfig.
+                    On a clean system there are four multiple line fields (with other two more than
+                    can be added if needed(), their names an visibility can be changed in the
+                    SysConfig.
                 </para>
             </listitem>
             <listitem>
@@ -1214,7 +1215,7 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
                 </para>
             </listitem>
             <listitem>
-                <para>Click on "Create" button, and the new category will be ready to use.</para>
+                <para>Click on "Submit" button, and the new category will be ready to use.</para>
             </listitem>
         </orderedlist>
     </section>
@@ -1239,7 +1240,7 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
                 <para>Fill the required information.</para>
             </listitem>
             <listitem>
-                <para>Click on "Create" button, and the new language will be ready to use.</para>
+                <para>Click on "Submit" button, and the new language will be ready to use.</para>
             </listitem>
         </orderedlist>
     </section>
