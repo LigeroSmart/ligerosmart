@@ -12,10 +12,10 @@ $Text{"internal"}
 $Text{"public"}
 $Text{"external"}
 $Text{"FAQ Number"}
-$Text{"LatestChangedItems"}
-$Text{"LatestCreatedItems"}
-$Text{"Top10Items"}
-$Text{"SubCategoryOf"}
+$Text{"Latest updated FAQ articles"}
+$Text{"Latest created FAQ articles"}
+$Text{"Top 10 FAQ articles"}
+$Text{"Subcategory of"}
 $Text{"No rate selected!"}
 $Text{"Explorer"}
 
@@ -25,12 +25,12 @@ $Text{"external (customer)"}
 $Text{"internal (agent)"}
 
 # Stats
-$Text{"StartDay"}
-$Text{"StartMonth"}
-$Text{"StartYear"}
-$Text{"EndDay"}
-$Text{"EndMonth"}
-$Text{"EndYear"}
+$Text{"Start day"}
+$Text{"Start month"}
+$Text{"Start year"}
+$Text{"End day"}
+$Text{"End month"}
+$Text{"End year"}
 
 # AgentFAQZoom Menu-Modules
 $Text{"Thanks for your vote!"}
