@@ -1170,7 +1170,7 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
                 </para>
                 <para>
                     On a clean system there are four multiple line fields (with other two more than
-                    can be added if needed(), their names an visibility can be changed in the
+                    can be added if needed), their names an visibility can be changed in the
                     SysConfig.
                 </para>
             </listitem>
