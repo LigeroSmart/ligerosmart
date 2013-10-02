@@ -75,6 +75,7 @@
                     <h3>$Text{"$Data{"Caption"}"}:</h3>
                     <div class="Clear"></div>
                 </div>
+                <input type="hidden" value="true" name="FieldState">
 <!-- dtl:block:FAQContentHTML -->
                 <div class="MessageBody">
 # Use the HTML5 sandbox attribute to prevent plugins and scripts from being executed in the browser.
