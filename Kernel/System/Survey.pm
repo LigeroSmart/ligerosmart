@@ -298,6 +298,7 @@ sub SurveyGet {
         $Data{CreateUserLogin}     = $CreateUserInfo{UserLogin};
         $Data{CreateUserFirstname} = $CreateUserInfo{UserFirstname};
         $Data{CreateUserLastname}  = $CreateUserInfo{UserLastname};
+        $Data{CreateUserFullname}  = $CreateUserInfo{UserFullname};
 
         # added ChangeBy
         my %ChangeUserInfo = $Self->{UserObject}->GetUserData(
@@ -307,6 +308,7 @@ sub SurveyGet {
         $Data{ChangeUserLogin}     = $ChangeUserInfo{UserLogin};
         $Data{ChangeUserFirstname} = $ChangeUserInfo{UserFirstname};
         $Data{ChangeUserLastname}  = $ChangeUserInfo{UserLastname};
+        $Data{ChangeUserFullname}  = $ChangeUserInfo{UserFullname};
     }
 
     return %Data;

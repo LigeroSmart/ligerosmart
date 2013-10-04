@@ -28,14 +28,14 @@
                         <div class="Clear"></div>
 
                         <label>$Text{"Created by"}:</label>
-                        <p class="Value">$QData{"CreateUserFirstname"} $QData{"CreateUserLastname"}</p>
+                        <p class="Value">$QData{"CreateUserFullname"}</p>
                         <div class="Clear"></div>
 
                         <label>$Text{"Changed"}:</label>
                         <p class="Value" >$TimeShort{"$QData{"ChangeTime"}"}</p>
 
                         <label>$Text{"Changed by"}:</label>
-                        <p class="Value">$QData{"ChangeUserFirstname"} $QData{"ChangeUserLastname"}</p>
+                        <p class="Value">$QData{"ChangeUserFullname"}</p>
                         <div class="Clear"></div>
 
                         <label>$Text{"Status"}:</label>

@@ -141,7 +141,7 @@
 <!-- dtl:block:RecordCreateTime -->
 <!-- dtl:block:RecordCreateBy -->
                     <td>
-                        <div>$QData{"CreateUserFirstname"} $QData{"CreateUserLastname"}</div>
+                        <div>$QData{"CreateUserFullname"}</div>
                     </td>
 <!-- dtl:block:RecordCreateBy -->
 <!-- dtl:block:RecordChangeTime -->
@@ -151,7 +151,7 @@
 <!-- dtl:block:RecordChangeTime -->
 <!-- dtl:block:RecordChangeBy -->
                     <td>
-                        <div>$QData{"ChangeUserFirstname"} $QData{"ChangeUserLastname"}</div>
+                        <div>$QData{"ChangeUserFullname"}</div>
                     </td>
 <!-- dtl:block:RecordChangeBy -->
                 </tr>
