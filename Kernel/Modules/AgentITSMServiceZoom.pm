@@ -165,22 +165,14 @@ sub Run {
     );
 
     # get create user data
-    my %CreateUser = $Self->{UserObject}->GetUserData(
+    $Service{CreateByName} = $Self->{UserObject}->UserName(
         UserID => $Service{CreateBy},
-        Cached => 1,
     );
-    for my $Postfix (qw(UserLogin UserFirstname UserLastname)) {
-        $Service{ 'Create' . $Postfix } = $CreateUser{$Postfix};
-    }
 
     # get change user data
-    my %ChangeUser = $Self->{UserObject}->GetUserData(
+    $Service{ChangeByName} = $Self->{UserObject}->UserName(
         UserID => $Service{ChangeBy},
-        Cached => 1,
     );
-    for my $Postfix (qw(UserLogin UserFirstname UserLastname)) {
-        $Service{ 'Change' . $Postfix } = $ChangeUser{$Postfix};
-    }
 
     # store last screen
     $Self->{SessionObject}->UpdateSessionID(

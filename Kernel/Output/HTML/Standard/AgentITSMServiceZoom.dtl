@@ -41,7 +41,7 @@
 
                         <label>$Text{"Created by"}:</label>
                         <p class="Value">
-                            $QData{"CreateUserFirstname"} $QData{"CreateUserLastname"}
+                            $QData{"CreateByName"}
                         </p>
                         <div class="Clear"></div>
 
@@ -53,7 +53,7 @@
 
                         <label>$Text{"Last changed by"}:</label>
                         <p class="Value">
-                            $QData{"ChangeUserFirstname"} $Data{"ChangeUserLastname"}
+                            $QData{"ChangeByName"}
                         </p>
                         <div class="Clear"></div>
                     </fieldset>

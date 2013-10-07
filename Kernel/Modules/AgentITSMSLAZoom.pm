@@ -158,22 +158,14 @@ sub Run {
     }
 
     # get create user data
-    my %CreateUser = $Self->{UserObject}->GetUserData(
+    $SLA{CreateByName} = $Self->{UserObject}->UserName(
         UserID => $SLA{CreateBy},
-        Cached => 1,
     );
-    for my $Postfix (qw(UserLogin UserFirstname UserLastname)) {
-        $SLA{ 'Create' . $Postfix } = $CreateUser{$Postfix};
-    }
 
     # get change user data
-    my %ChangeUser = $Self->{UserObject}->GetUserData(
+    $SLA{ChangeByName} = $Self->{UserObject}->UserName(
         UserID => $SLA{ChangeBy},
-        Cached => 1,
     );
-    for my $Postfix (qw(UserLogin UserFirstname UserLastname)) {
-        $SLA{ 'Change' . $Postfix } = $ChangeUser{$Postfix};
-    }
 
     # output header
     my $Output = $Self->{LayoutObject}->Header();

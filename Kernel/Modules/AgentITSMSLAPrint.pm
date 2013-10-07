@@ -70,27 +70,18 @@ sub Run {
     }
 
     # get user data (create by)
-    my %CreateBy = $Self->{UserObject}->GetUserData(
+    $SLA{CreateByName} = $Self->{UserObject}->UserName(
         UserID => $SLA{CreateBy},
-        Cached => 1,
     );
 
     # get user data (change by)
-    my %ChangeBy = $Self->{UserObject}->GetUserData(
+    $SLA{ChangeByName} = $Self->{UserObject}->UserName(
         UserID => $SLA{ChangeBy},
-        Cached => 1,
     );
 
     # generate pdf output
     if ( $Self->{PDFObject} ) {
         my %Page;
-        my $Url = ' ';
-        if ( $ENV{REQUEST_URI} ) {
-            $Url
-                = $Self->{ConfigObject}->Get('HttpType') . '://'
-                . $Self->{ConfigObject}->Get('FQDN')
-                . $ENV{REQUEST_URI};
-        }
 
         # get maximum number of pages
         $Page{MaxPages} = $Self->{ConfigObject}->Get('PDF::MaxPages');
@@ -105,11 +96,9 @@ sub Run {
         $Page{HeadlineLeft} = $SLA{Name};
         $Page{HeadlineRight}
             = $Self->{LayoutObject}->{LanguageObject}->Get('printed by') . ' '
-            . $Self->{UserFirstname} . ' '
-            . $Self->{UserLastname} . ' ('
-            . $Self->{UserEmail} . ') '
+            . $Self->{UserFullname} . ' '
             . $Self->{LayoutObject}->Output( Template => '$Env{"Time"}' );
-        $Page{FooterLeft} = $Url;
+        $Page{FooterLeft} = '';
         $Page{PageText}   = $Self->{LayoutObject}->{LanguageObject}->Get('Page');
         $Page{PageCount}  = 1;
 
@@ -128,10 +117,8 @@ sub Run {
 
         # output general infos
         $Self->_PDFOutputGeneralInfos(
-            Page     => \%Page,
-            SLA      => \%SLA,
-            CreateBy => \%CreateBy,
-            ChangeBy => \%ChangeBy,
+            Page => \%Page,
+            SLA  => \%SLA,
         );
 
         # output detailed infos
@@ -171,15 +158,7 @@ sub Run {
         # generate output
         $Output .= $Self->{LayoutObject}->Output(
             TemplateFile => 'AgentITSMSLAPrint',
-            Data         => {
-                CreateByUserLogin     => $CreateBy{UserLogin},
-                CreateByUserFirstname => $CreateBy{UserFirstname},
-                CreateByUserLastname  => $CreateBy{UserLastname},
-                ChangeByUserLogin     => $ChangeBy{UserLogin},
-                ChangeByUserFirstname => $ChangeBy{UserFirstname},
-                ChangeByUserLastname  => $ChangeBy{UserLastname},
-                %SLA,
-            },
+            Data         => \%SLA,
         );
 
         # add footer
@@ -194,7 +173,7 @@ sub _PDFOutputGeneralInfos {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Argument (qw(Page SLA CreateBy ChangeBy)) {
+    for my $Argument (qw(Page SLA)) {
         if ( !defined $Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
@@ -223,9 +202,7 @@ sub _PDFOutputGeneralInfos {
         },
         {
             Key   => $Self->{LayoutObject}->{LanguageObject}->Get('Created by') . ':',
-            Value => $Param{CreateBy}->{UserLogin} . ' ('
-                . $Param{CreateBy}->{UserFirstname} . ' '
-                . $Param{CreateBy}->{UserLastname} . ')',
+            Value => $Param{SLA}->{ChangeByName},
         },
         {
             Key   => $Self->{LayoutObject}->{LanguageObject}->Get('Last changed') . ':',
@@ -236,9 +213,7 @@ sub _PDFOutputGeneralInfos {
         },
         {
             Key   => $Self->{LayoutObject}->{LanguageObject}->Get('Last changed by') . ':',
-            Value => $Param{ChangeBy}->{UserLogin} . ' ('
-                . $Param{ChangeBy}->{UserFirstname} . ' '
-                . $Param{ChangeBy}->{UserLastname} . ')',
+            Value => $Param{SLA}->{ChangeByName},
         },
     ];
 
