@@ -532,11 +532,10 @@ sub _OutputHeadline {
     if ( $Self->{PDFObject} ) {
         my $PrintedBy = $Self->{LayoutObject}->{LanguageObject}->Get('printed by');
         my $Time = $Self->{LayoutObject}->Output( Template => '$Env{"Time"}' );
-        my $Url
-            = $Self->{ConfigObject}->Get('HttpType') . '://'
-            . $Self->{ConfigObject}->Get('FQDN')
-            . $Self->{LayoutObject}->{Baselink}
-            . $Self->{RequestedURL};
+
+        my $UserFullName = $Self->{UserObject}->UserName(
+            UserID => $Self->{UserID},
+        );
 
         # page headers and footer
         my $Page = $Self->{Page};
@@ -544,11 +543,9 @@ sub _OutputHeadline {
         $Page->{HeadlineLeft} = $Param{Title};
         $Page->{HeadlineRight}
             = $PrintedBy . ' '
-            . $Self->{UserFirstname} . ' '
-            . $Self->{UserLastname} . ' ('
-            . $Self->{UserEmail} . ') '
+            . $UserFullName . ' '
             . $Time;
-        $Page->{FooterLeft} = $Url;
+        $Page->{FooterLeft} = '';
         $Page->{PageText}   = $Self->{LayoutObject}->{LanguageObject}->Get('Page');
         $Page->{PageCount}  = 1;
 
@@ -619,17 +616,16 @@ sub _PrepareAndAddInfoRow {
 
         # format the user id
         if ( $Data->{ $Attribute . 'ID' } ) {
-            my %UserData = $Self->{UserObject}->GetUserData(
+
+            my $UserFullName = $Self->{UserObject}->UserName(
                 UserID => $Data->{ $Attribute . 'ID' },
             );
-            if (%UserData) {
-                $Value = sprintf '%s (%s %s)',
-                    $UserData{UserLogin},
-                    $UserData{UserFirstname},
-                    $UserData{UserLastname};
+
+            if ($UserFullName) {
+                $Value = $UserFullName;
             }
             else {
-                $Value = "ID=$Data->{$Attribute}";
+                $Value = 'ID=' . $Data->{$Attribute};
             }
         }
     }
@@ -683,22 +679,25 @@ sub _OutputChangeInfo {
     for my $Attribute (qw(CABAgents CABCustomers)) {
         my @LongNames;
         if ( $Attribute eq 'CABAgents' && $Change->{$Attribute} ) {
+
             for my $CABAgent ( @{ $Change->{$Attribute} } ) {
-                my %UserData = $Self->{UserObject}->GetUserData(
+
+                my $UserFullName = $Self->{UserObject}->UserName(
                     UserID => $CABAgent,
-                    Cache  => 1,
                 );
-                if (%UserData) {
-                    push @LongNames, sprintf '%s (%s %s)',
-                        @UserData{qw(UserLogin UserFirstname UserLastname)};
+
+                if ($UserFullName) {
+                    push @LongNames, $UserFullName;
                 }
                 else {
-                    push @LongNames, "ID=$CABAgent";
+                    push @LongNames, 'ID=' . $CABAgent;
                 }
             }
         }
         elsif ( $Attribute eq 'CABCustomers' && $Change->{$Attribute} ) {
+
             for my $CABCustomer ( @{ $Change->{$Attribute} } ) {
+
                 my %UserData = $Self->{CustomerUserObject}->CustomerUserDataGet(
                     User  => $CABCustomer,
                     Cache => 1,
@@ -708,7 +707,7 @@ sub _OutputChangeInfo {
                         @UserData{qw(UserLogin UserFirstname UserLastname)};
                 }
                 else {
-                    push @LongNames, "ID=$CABCustomer";
+                    push @LongNames, 'ID=' . $CABCustomer;
                 }
             }
         }

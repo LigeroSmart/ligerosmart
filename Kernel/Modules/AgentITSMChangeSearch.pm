@@ -723,13 +723,6 @@ sub Run {
                 my $PrintedBy = $Self->{LayoutObject}->{LanguageObject}->Get('printed by');
                 my $Page      = $Self->{LayoutObject}->{LanguageObject}->Get('Page');
                 my $Time      = $Self->{LayoutObject}->Output( Template => '$Env{"Time"}' );
-                my $Url       = '';
-                if ( $ENV{REQUEST_URI} ) {
-                    $Url
-                        = $Self->{ConfigObject}->Get('HttpType') . '://'
-                        . $Self->{ConfigObject}->Get('FQDN')
-                        . $ENV{REQUEST_URI};
-                }
 
                 # get maximum number of pages
                 my $MaxPages = $Self->{ConfigObject}->Get('PDF::MaxPages');
@@ -778,8 +771,7 @@ sub Run {
                 # output 'No ticket data found', if no content was given
                 if ( !$CellData->[0]->[0] ) {
                     $CellData->[0]->[0]->{Content}
-                        = $Self->{LayoutObject}->{LanguageObject}
-                        ->Get('No ticket data found.');
+                        = $Self->{LayoutObject}->{LanguageObject}->Get('No ticket data found.');
                 }
 
                 # page params
@@ -790,7 +782,7 @@ sub Run {
                 $PageParam{MarginBottom}    = 40;
                 $PageParam{MarginLeft}      = 40;
                 $PageParam{HeaderRight}     = $Title;
-                $PageParam{FooterLeft}      = $Url;
+                $PageParam{FooterLeft}      = '';
                 $PageParam{HeadlineLeft}    = $Title;
                 $PageParam{HeadlineRight}   = $PrintedBy . ' '
                     . $Self->{UserFirstname} . ' '
