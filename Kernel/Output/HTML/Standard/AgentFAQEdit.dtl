@@ -171,7 +171,7 @@ $('#FAQSubmit').bind('click', function (Event) {
     // textarea data transfer
     window.setTimeout(function () {
         $('#FAQSubmit').closest('form').submit();
-    }, 150);
+    }, 250);
 });
 //]]></script>
 <!--dtl:js_on_document_complete-->
