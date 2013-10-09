@@ -41,13 +41,13 @@
                                 <input type="hidden" name="Subaction" value="Search"/>
                                 <input type="hidden" name="Nav" value="$QData{"Nav"}"/>
                                 <input type="text" name="Fulltext" value="$QData{"Search"}" id="Search" title="$Text{"Search"}"/>
-                                <button type="submit" value="$Text{"Search"}">$Text{"Quick Search"}</button>
+                                <button type="submit" value="$Text{"Search"}"><span><i class="icon-bolt"></i> $Text{"Quick Search"}<span></button>
                             </form>
                             <p class="FieldExplanation">
                                 $Text{"Wildcards are allowed."}
                             </p>
                             <a  class="CallForAction FAQSearchButton SpacingTop" id="$LQData{"Action"}" href="$Env{"Baselink"}Action=$LQData{"Action"};Nav=$LQData{"Nav"}">
-                                <span>$Text{"Advanced Search"}</span>
+                                <span><i class="icon-search"></i> $Text{"Advanced Search"}</span>
                             </a>
                         </li>
                     </ul>

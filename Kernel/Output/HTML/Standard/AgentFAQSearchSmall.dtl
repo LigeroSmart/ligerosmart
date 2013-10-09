@@ -190,7 +190,7 @@
                 <div class="Clear"></div>
 
                 <div id="BottomActionRow" class="Center SpacingTopSmall">
-                    <button id="Submit" type="submit" value="$Text{"Search"}">$Text{"Search"}</button>
+                    <button id="Submit" type="submit" class="Primary CallForAction" value="$Text{"Search"}"><span><i class="icon-search"></i> $Text{"Search"}</span></button>
                 </div>
             </div>
         </form>
