@@ -784,6 +784,11 @@ sub _MaskNew {
     # only if activated and the browser can handle it
     # otherwise just a textarea is shown
     if ( $Self->{LayoutObject}->{BrowserRichText} ) {
+
+        # use height/width defined for this screen
+        $Param{RichTextHeight} = $Self->{Config}->{RichTextHeight} || 0;
+        $Param{RichTextWidth}  = $Self->{Config}->{RichTextWidth}  || 0;
+
         $Self->{LayoutObject}->Block(
             Name => 'RichText',
             Data => {%Param},
