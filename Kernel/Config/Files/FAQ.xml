@@ -306,6 +306,14 @@ Your OTRS Notification Master
             <String>new</String>
         </Setting>
     </ConfigItem>
+    <ConfigItem Name="FAQ::ApprovalTicketType" Required="1" Valid="1">
+        <Description Translatable="1">Default type of tickets for the approval of FAQ articles.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Core::Approval</SubGroup>
+        <Setting>
+            <String>Unclassified</String>
+        </Setting>
+    </ConfigItem>
     <ConfigItem Name="FAQ::Item::Field1" Required="1" Valid="1">
         <Description Translatable="1">Definition of FAQ item free text field.</Description>
         <Group>FAQ</Group>

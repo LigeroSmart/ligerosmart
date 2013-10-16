@@ -19,6 +19,7 @@ use Kernel::System::Group;
 use Kernel::System::CustomerGroup;
 use Kernel::System::LinkObject;
 use Kernel::System::Ticket;
+use Kernel::System::Type;
 use Kernel::System::Valid;
 use Kernel::System::Web::UploadCache;
 
@@ -108,6 +109,7 @@ sub new {
     $Self->{CustomerGroupObject} = Kernel::System::CustomerGroup->new( %{$Self} );
     $Self->{UserObject}          = Kernel::System::User->new( %{$Self} );
     $Self->{TicketObject}        = Kernel::System::Ticket->new( %{$Self} );
+    $Self->{TypeObject}          = Kernel::System::Type->new( %{$Self} );
     $Self->{LinkObject}          = Kernel::System::LinkObject->new( %{$Self} );
     $Self->{ValidObject}         = Kernel::System::Valid->new( %{$Self} );
     $Self->{UploadCacheObject}   = Kernel::System::Web::UploadCache->new( %{$Self} );
@@ -2079,6 +2081,21 @@ sub _FAQApprovalTicketCreate {
     # for this FAQ article
     return 1 if @TicketIDs;
 
+    # get ticket type from SysConfig
+    my $TicketType = $Self->{ConfigObject}->Get('FAQ::ApprovalTicketType') || '';
+
+    # validate ticket type if any
+    if ($TicketType) {
+
+        # get a ticket type lookup table
+        my %TypeList   = $Self->{TypeObject}->TypeList();
+        my %TypeLookup = reverse %TypeList;
+
+        # set $TicketType to empty if TickeyType does not appear in the lookup table. If set to
+        #    emoty TicketCreate() will use as default TypeID = 1, no matter if it is valid or not.
+        $TicketType = $TypeLookup{$TicketType} ? $TicketType : '';
+    }
+
     # create ticket
     my $TicketID = $Self->{TicketObject}->TicketCreate(
         Title    => $Subject,
@@ -2086,6 +2103,7 @@ sub _FAQApprovalTicketCreate {
         Lock     => 'unlock',
         Priority => $Self->{ConfigObject}->Get('FAQ::ApprovalTicketPriority') || '3 normal',
         State    => $Self->{ConfigObject}->Get('FAQ::ApprovalTicketDefaultState') || 'new',
+        Type     => $TicketType,
         OwnerID  => 1,
         UserID   => 1,
     );
