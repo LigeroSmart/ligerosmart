@@ -495,6 +495,11 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
             <para>Default state of tickets for the approval of FAQ articles.</para>
         </section>
         <section>
+            <title>FAQ::ApprovalTicketType.</title>
+            <para>Group: FAQ, Subgroup: Core::Approval.</para>
+            <para>Default type of tickets for the approval of FAQ articles.</para>
+        </section>
+        <section>
             <title>FAQ::Item::Field1.</title>
             <para>Group: FAQ, Subgroup: Core::Item.</para>
             <para>Definition of FAQ item free text field.</para>
@@ -556,22 +561,22 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
         </section>
         <section>
             <title>FAQ::Frontend::CustomerFAQExplorer###SearchLimit.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Customer::ViewFAQExplorer.</para>
+            <para>Group: FAQ, Subgroup: Frontend::Customer::FAQ::ViewExplorer.</para>
             <para>Maximum number of FAQ articles to be displayed in the FAQ Explorer result of the customer interface.</para>
         </section>
         <section>
             <title>FAQ::Frontend::CustomerFAQExplorer###SearchPageShown.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Customer::ViewFAQExplorer.</para>
+            <para>Group: FAQ, Subgroup: Frontend::Customer::FAQ::ViewExplorer.</para>
             <para>Number of FAQ articles to be displayed in the FAQ Explorer of the customer interface.</para>
         </section>
         <section>
             <title>FAQ::Frontend::CustomerFAQExplorer###SortBy::Default.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Customer::ViewFAQExplorer.</para>
+            <para>Group: FAQ, Subgroup: Frontend::Customer::FAQ::ViewExplorer.</para>
             <para>Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the customer interface.</para>
         </section>
         <section>
             <title>FAQ::Frontend::CustomerFAQExplorer###Order::Default.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Customer::ViewFAQExplorer.</para>
+            <para>Group: FAQ, Subgroup: Frontend::Customer::FAQ::ViewExplorer.</para>
             <para>Defines the default FAQ order in the FAQ Explorer result of the customer interface. Up: oldest on top. Down: latest on top.</para>
         </section>
         <section>
@@ -586,22 +591,22 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
         </section>
         <section>
             <title>FAQ::Frontend::PublicFAQExplorer###SearchLimit.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Public::ViewFAQExplorer.</para>
+            <para>Group: FAQ, Subgroup: Frontend::Public::FAQ::ViewExplorer.</para>
             <para>Maximum number of FAQ articles to be displayed in the FAQ Explorer result of the public interface.</para>
         </section>
         <section>
             <title>FAQ::Frontend::PublicFAQExplorer###SearchPageShown.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Public::ViewFAQExplorer.</para>
+            <para>Group: FAQ, Subgroup: Frontend::Public::FAQ::ViewExplorer.</para>
             <para>Number of FAQ articles to be displayed in the FAQ Explorer of the public interface.</para>
         </section>
         <section>
             <title>FAQ::Frontend::PublicFAQExplorer###SortBy::Default.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Public::ViewFAQExplorer.</para>
+            <para>Group: FAQ, Subgroup: Frontend::Public::FAQ::ViewExplorer.</para>
             <para>Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the public interface.</para>
         </section>
         <section>
             <title>FAQ::Frontend::PublicFAQExplorer###Order::Default.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Public::ViewFAQExplorer.</para>
+            <para>Group: FAQ, Subgroup: Frontend::Public::FAQ::ViewExplorer.</para>
             <para>Defines the default FAQ order in the FAQ Explorer result of the public interface. Up: oldest on top. Down: latest on top.</para>
         </section>
         <section>
@@ -681,42 +686,42 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
         </section>
         <section>
             <title>FAQ::Frontend::AgentFAQSearch###ShowColumns.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Agent::ViewFAQSearch.</para>
+            <para>Group: FAQ, Subgroup: Frontend::Agent::FAQ::ViewSearch.</para>
             <para>Defines the shown columns in the FAQ search. This option has no effect on the position of the column.</para>
         </section>
         <section>
             <title>FAQ::Frontend::AgentFAQSearch###SortBy::Default.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Agent::ViewFAQSearch.</para>
+            <para>Group: FAQ, Subgroup: Frontend::Agent::FAQ::ViewSearch.</para>
             <para>Defines the default FAQ attribute for FAQ sorting in a FAQ search of the agent interface.</para>
         </section>
         <section>
             <title>FAQ::Frontend::AgentFAQSearch###Order::Default.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Agent::ViewFAQSearch.</para>
+            <para>Group: FAQ, Subgroup: Frontend::Agent::FAQ::ViewSearch.</para>
             <para>Defines the default FAQ order of a search result in the agent interface. Up: oldest on top. Down: latest on top.</para>
         </section>
         <section>
             <title>FAQ::Frontend::AgentFAQSearch###SearchLimit.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Agent::ViewFAQSearch.</para>
+            <para>Group: FAQ, Subgroup: Frontend::Agent::FAQ::ViewSearch.</para>
             <para>Maximum number of FAQ articles to be displayed in the result of a search in the agent interface.</para>
         </section>
         <section>
             <title>FAQ::Frontend::AgentFAQExplorer###ShowColumns.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Agent::ViewFAQExplorer.</para>
+            <para>Group: FAQ, Subgroup: Frontend::Agent::FAQ::ViewExplorer.</para>
             <para>Defines the shown columns in the FAQ Explorer. This option has no effect on the position of the column.</para>
         </section>
         <section>
             <title>FAQ::Frontend::AgentFAQExplorer###SortBy::Default.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Agent::ViewFAQExplorer.</para>
+            <para>Group: FAQ, Subgroup: Frontend::Agent::FAQ::ViewExplorer.</para>
             <para>Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the agent interface.</para>
         </section>
         <section>
             <title>FAQ::Frontend::AgentFAQExplorer###Order::Default.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Agent::ViewFAQExplorer.</para>
+            <para>Group: FAQ, Subgroup: Frontend::Agent::FAQ::ViewExplorer.</para>
             <para>Defines the default FAQ order in the FAQ Explorer result of the agent interface. Up: oldest on top. Down: latest on top.</para>
         </section>
         <section>
             <title>FAQ::Frontend::AgentFAQExplorer###SearchLimit.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Agent::ViewFAQExplorer.</para>
+            <para>Group: FAQ, Subgroup: Frontend::Agent::FAQ::ViewExplorer.</para>
             <para>Maximum number of FAQ articles to be displayed in the FAQ Explorer result of the agent interface.</para>
         </section>
         <section>
@@ -776,22 +781,22 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
         </section>
         <section>
             <title>FAQ::Frontend::CustomerFAQSearch###SearchLimit.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Customer::ViewFAQSearch.</para>
+            <para>Group: FAQ, Subgroup: Frontend::Customer::FAQ::ViewSearch.</para>
             <para>Maximum number of FAQ articles to be displayed in the result of a search in the customer interface.</para>
         </section>
         <section>
             <title>FAQ::Frontend::CustomerFAQSearch###SearchPageShown.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Customer::ViewFAQSearch.</para>
+            <para>Group: FAQ, Subgroup: Frontend::Customer::FAQ::ViewSearch.</para>
             <para>Number of FAQ articles to be displayed on each page of a search result in the customer interface.</para>
         </section>
         <section>
             <title>FAQ::Frontend::CustomerFAQSearch###SortBy::Default.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Customer::ViewFAQSearch.</para>
+            <para>Group: FAQ, Subgroup: Frontend::Customer::FAQ::ViewSearch.</para>
             <para>Defines the default FAQ attribute for FAQ sorting in a FAQ search of the customer interface.</para>
         </section>
         <section>
             <title>FAQ::Frontend::CustomerFAQSearch###Order::Default.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Customer::ViewFAQSearch.</para>
+            <para>Group: FAQ, Subgroup: Frontend::Customer::FAQ::ViewSearch.</para>
             <para>Defines the default FAQ order of a search result in the customer interface. Up: oldest on top. Down: latest on top.</para>
         </section>
         <section>
@@ -811,7 +816,7 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
         </section>
         <section>
             <title>FAQ::Frontend::PublicFAQSearch###SearchLimit.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Public::ViewFAQSearch.</para>
+            <para>Group: FAQ, Subgroup: Frontend::Public::FAQ::ViewSearch.</para>
             <para>Maximum number of FAQ articles to be displayed in the result of a search in the public interface.</para>
         </section>
         <section>
@@ -821,12 +826,12 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
         </section>
         <section>
             <title>FAQ::Frontend::PublicFAQSearch###SortBy::Default.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Public::ViewFAQSearch.</para>
+            <para>Group: FAQ, Subgroup: Frontend::Public::FAQ::ViewSearch.</para>
             <para>Defines the default FAQ attribute for FAQ sorting in a FAQ search of the public interface.</para>
         </section>
         <section>
             <title>FAQ::Frontend::PublicFAQSearch###Order::Default.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Public::ViewFAQSearch.</para>
+            <para>Group: FAQ, Subgroup: Frontend::Public::FAQ::ViewSearch.</para>
             <para>Defines the default FAQ order of a search result in the public interface. Up: oldest on top. Down: latest on top.</para>
         </section>
         <section>
@@ -851,12 +856,12 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
         </section>
         <section>
             <title>FAQ::Frontend::AgentFAQJournal###ShowColumns.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Agent::ViewFAQJournal.</para>
+            <para>Group: FAQ, Subgroup: Frontend::Agent::FAQ::ViewJournal.</para>
             <para>Defines the shown columns in the FAQ journal. This option has no effect on the position of the column.</para>
         </section>
         <section>
             <title>FAQ::Frontend::AgentFAQJournal###JournalLimit.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Agent::ViewFAQJournal.</para>
+            <para>Group: FAQ, Subgroup: Frontend::Agent::FAQ::ViewJournal.</para>
             <para>Maximum number of FAQ articles to be displayed in the FAQ journal in the agent interface.</para>
         </section>
         <section>
@@ -988,6 +993,26 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
             <title>FAQ::Frontend::CustomerHTMLFieldHeightMax.</title>
             <para>Group: FAQ, Subgroup: Frontend::Customer::FAQ::ViewZoom.</para>
             <para>Set the maximum height (in pixels) of inline HTML fields in CustomerFAQZoom (and PublicFAQZoom).</para>
+        </section>
+        <section>
+            <title>FAQ::Frontend::AgentFAQAdd###RichTextWidth.</title>
+            <para>Group: FAQ, Subgroup: Frontend::Agent::FAQ::ViewAdd.</para>
+            <para>Defines the width for the rich text editor component for this screen. Enter number (pixels) or percent value (relative).</para>
+        </section>
+        <section>
+            <title>FAQ::Frontend::AgentFAQAdd###RichTextHeight.</title>
+            <para>Group: FAQ, Subgroup: Frontend::Agent::FAQ::ViewAdd.</para>
+            <para>Defines the height for the rich text editor component for this screen. Enter number (pixels) or percent value (relative).</para>
+        </section>
+        <section>
+            <title>FAQ::Frontend::AgentFAQEdit###RichTextWidth.</title>
+            <para>Group: FAQ, Subgroup: Frontend::Agent::FAQ::ViewEdit.</para>
+            <para>Defines the width for the rich text editor component for this screen. Enter number (pixels) or percent value (relative).</para>
+        </section>
+        <section>
+            <title>FAQ::Frontend::AgentFAQEdit###RichTextHeight.</title>
+            <para>Group: FAQ, Subgroup: Frontend::Agent::FAQ::ViewEdit.</para>
+            <para>Defines the height for the rich text editor component for this screen. Enter number (pixels) or percent value (relative).</para>
         </section>
     </section>
     <section>
