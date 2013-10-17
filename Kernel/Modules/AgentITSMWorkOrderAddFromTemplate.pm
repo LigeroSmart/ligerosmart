@@ -199,9 +199,20 @@ sub Run {
                 );
             }
 
+            # get redirect screen
+            my $NextScreen = $Self->{UserCreateWorkOrderNextMask} || 'AgentITSMWorkOrderZoom';
+
+            # add the correct id
+            if ( $NextScreen eq 'AgentITSMWorkOrderZoom' ) {
+                $NextScreen .= ";WorkOrderID=$WorkOrderID";
+            }
+            elsif ( $NextScreen eq 'AgentITSMChangeZoom' ) {
+                $NextScreen .= ";ChangeID=$ChangeID";
+            }
+
             # load new URL in parent window and close popup
             return $Self->{LayoutObject}->PopupClose(
-                URL => "Action=AgentITSMWorkOrderZoom;WorkOrderID=$WorkOrderID",
+                URL => "Action=$NextScreen",
             );
         }
     }
