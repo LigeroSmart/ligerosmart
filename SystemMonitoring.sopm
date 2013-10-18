@@ -11,6 +11,7 @@
     <Filelist>
         <File Permission="644" Location="doc/en/SystemMonitoring.xml"/>
         <File Permission="755" Location="bin/otrs.NagiosCheck.pl"/>
+        <File Permission="755" Location="bin/otrs.NagiosCheckTicketCount.pl"/>
         <File Permission="644" Location="Kernel/Config/Files/SystemMonitoring.xml"/>
         <File Permission="644" Location="Kernel/Config/NagiosCheck.pm.example"/>
         <File Permission="644" Location="Kernel/System/PostMaster/Filter/SystemMonitoring.pm"/>
