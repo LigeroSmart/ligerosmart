@@ -20,8 +20,8 @@
         <File Permission="644" Location="scripts/test/sample/SystemMonitoring2.box"/>
         <File Permission="644" Location="var/packagesetup/SystemMonitoring.pm"/>
     </Filelist>
-    <IntroInstallPost Title="Using the SystemMonitoring Module" Lang="en">For configuration instructions please refer to the enclosed PDF documentation.</IntroInstallPost>
-    <IntroInstallPost Title="Konfiguration des SystemMonitoring Moduls" Lang="de">Eine Anleitung zur Konfiguration des SystemMonitoring Moduls findet sich in der Datei doc/SystemMonitoring.txt.</IntroInstallPost>
+    <IntroInstall Type="post" Title="Using the SystemMonitoring Module" Lang="en">For configuration instructions please refer to the enclosed PDF documentation.</IntroInstall>
+    <IntroInstall Type="post" Title="Konfiguration des SystemMonitoring Moduls" Lang="de">Eine Anleitung zur Konfiguration des SystemMonitoring Moduls findet sich in der Datei doc/SystemMonitoring.txt.</IntroInstall>
     <CodeUpgrade Type="pre">
 
     # check if config option exists
