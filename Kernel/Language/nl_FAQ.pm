@@ -10,6 +10,7 @@
 package Kernel::Language::nl_FAQ;
 
 use strict;
+use warnings;
 
 sub Data {
     my $Self = shift;
