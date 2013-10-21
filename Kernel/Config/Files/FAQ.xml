@@ -460,7 +460,6 @@ Your OTRS Notification Master
                     <GroupRo>faq</GroupRo>
                     <Description Translatable="1">FAQ Explorer</Description>
                     <Name>Explorer</Name>
-                    <Image>list.png</Image>
                     <Link>Action=AgentFAQExplorer</Link>
                     <Type></Type>
                     <Block></Block>
