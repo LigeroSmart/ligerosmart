@@ -154,9 +154,9 @@
                         <label>$Text{"Service Incident State"}:</label>
                         <div class="Value">
                             <div class="Flag Small">
-                                <span class="$QData{"CurInciSignal"}" title="$Data{"State"}"></span>
+                                <span class="$QData{"CurInciSignal"}" title="$Text{"$Data{"State"}"}"></span>
                             </div>
-                            <span>$QData{"CurInciState"}</span>
+                            <span>$Text{"$Data{"State"}"}</span>
                         </div>
 # ---
                         <div class="Clear"></div>
