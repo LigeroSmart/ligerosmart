@@ -245,22 +245,22 @@ sub Run {
             UserID        => $Self->{UserID},
         );
 
-        # do not allow empty values as the field contains possible values now
-        $ImpactDynamicFieldConfig->{Config}->{PossibleNone} = 0;
-
         # recalculate impact if impact is not set until now
-        if ( !$GetParam{DynamicField_ITSMImpact} ) {
+        if ( !$GetParam{DynamicField_ITSMImpact} && $GetParam{ElementChanged} ne 'DynamicField_ITSMImpact' ) {
 
             # get default selection
-            my $DefaultSelection = $ImpactDynamicFieldConfig->{Config}->{DefaultValue} || '3 normal';
+            my $DefaultSelection = $ImpactDynamicFieldConfig->{Config}->{DefaultValue};
 
-            # get default impact
-            $GetParam{DynamicField_ITSMImpact} = $DefaultSelection;
-            $GetParam{PriorityRC} = 1;
+            if ($DefaultSelection) {
+
+                # get default impact
+                $GetParam{DynamicField_ITSMImpact} = $DefaultSelection;
+                $GetParam{PriorityRC} = 1;
+            }
         }
 
         # recalculate priority
-        if ( $GetParam{PriorityRC} ) {
+        if ( $GetParam{PriorityRC} && $GetParam{DynamicField_ITSMImpact} ) {
 
             # get priority
             $GetParam{PriorityIDFromImpact} = $Self->{CIPAllocateObject}->PriorityAllocationGet(
