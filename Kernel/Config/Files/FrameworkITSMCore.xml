@@ -5,7 +5,7 @@
         <Group>Framework</Group>
         <SubGroup>Core</SubGroup>
         <Setting>
-            <String Regex="">OTRS ITSM 3.3 Beta 5</String>
+            <String Regex="">OTRS ITSM 3.3 RC1</String>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="LinkObject::ViewMode" Required="1" Valid="1">
