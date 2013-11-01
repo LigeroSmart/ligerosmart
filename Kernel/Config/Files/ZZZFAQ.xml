@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<otrs_config version="1.0" init="Application">
+    <ConfigItem Name="PublicFrontend::CommonParam###Action" Required="1" Valid="1">
+        <Description Translatable="1">Default value for the Action parameter for the public frontend. The Action parameter is used in the scripts of the system.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Public</SubGroup>
+        <Setting>
+            <String>PublicFAQExplorer</String>
+        </Setting>
+    </ConfigItem>
+</otrs_config>

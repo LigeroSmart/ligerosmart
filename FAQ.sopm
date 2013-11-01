@@ -18,6 +18,7 @@
         -->
         <File Permission="644" Location="doc/faq-database.png"/>
         <File Permission="644" Location="Kernel/Config/Files/FAQ.xml"/>
+        <File Permission="644" Location="Kernel/Config/Files/ZZZFAQ.xml"/>
         <File Permission="644" Location="Kernel/cpan-lib/XML/RSS/SimpleGen.pm"/>
         <File Permission="644" Location="Kernel/Language/da_FAQ.pm"/>
         <File Permission="644" Location="Kernel/Language/de_FAQ.pm"/>
