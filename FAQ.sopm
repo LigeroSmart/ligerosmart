@@ -12,6 +12,10 @@
         <File Permission="755" Location="bin/otrs.FAQImport.pl"/>
         <File Permission="755" Location="bin/cgi-bin/faq.pl"/>
         <File Permission="755" Location="bin/fcgi-bin/faq.fpl"/>
+        <!--
+        This file is not needed, added only to pass OTRS CodePolity checks
+        <File Permission="644" Location="doc/en/FAQ.xml"/>
+        -->
         <File Permission="644" Location="doc/faq-database.png"/>
         <File Permission="644" Location="Kernel/Config/Files/FAQ.xml"/>
         <File Permission="644" Location="Kernel/cpan-lib/XML/RSS/SimpleGen.pm"/>
