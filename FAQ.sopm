@@ -33,6 +33,7 @@
         <File Permission="644" Location="Kernel/Language/ru_FAQ.pm"/>
         <File Permission="644" Location="Kernel/Language/uk_FAQ.pm"/>
         <File Permission="644" Location="Kernel/Language/zh_CN_FAQ.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AAAFAQ.dtl"/>
         <File Permission="644" Location="Kernel/Modules/AgentFAQAdd.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentFAQCategory.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentFAQDelete.pm"/>
