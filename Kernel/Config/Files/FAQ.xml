@@ -1747,5 +1747,21 @@ Your OTRS Notification Master
             <String Regex="^\d+%?$">320</String>
         </Setting>
     </ConfigItem>
-
+    <ConfigItem Name="Frontend::ToolBarModule###90-FAQ::AgentFAQAdd" Required="0" Valid="0">
+        <Description Translatable="1">Toolbar Item for a shortcut.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Agent::ToolBarModule</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ToolBarLink</Item>
+                <Item Key="Name">Add FAQ article</Item>
+                <Item Key="Link">Action=AgentFAQAdd</Item>
+                <Item Key="Action">AgentFAQAdd</Item>
+                <Item Key="AccessKey">n</Item>
+                <Item Key="CssClass">EmailTicket</Item>
+                <Item Key="Icon">icon-question</Item>
+                <Item Key="Priority">1020090</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
 </otrs_config>
