@@ -1014,6 +1014,11 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
             <para>Group: FAQ, Subgroup: Frontend::Agent::FAQ::ViewEdit.</para>
             <para>Defines the height for the rich text editor component for this screen. Enter number (pixels) or percent value (relative).</para>
         </section>
+        <section>
+            <title>Frontend::ToolBarModule###90-FAQ::AgentFAQAdd.</title>
+            <para>Group: FAQ, Subgroup: Frontend::Agent::ToolBarModule.</para>
+            <para>Toolbar Item for a shortcut.</para>
+        </section>
     </section>
     <section>
         <title>Approval function</title>
