@@ -553,9 +553,6 @@ Your OTRS Notification Master
             </Option>
         </Setting>
     </ConfigItem>
-<!--
-    This setting is temporary moved to ZZZFAQ.xml as in OTRS 3.3.x currently there is an issue that
-    prevents this setting to override the framework one
     <ConfigItem Name="PublicFrontend::CommonParam###Action" Required="1" Valid="1">
         <Description Translatable="1">Default value for the Action parameter for the public frontend. The Action parameter is used in the scripts of the system.</Description>
         <Group>FAQ</Group>
@@ -564,7 +561,6 @@ Your OTRS Notification Master
             <String>PublicFAQExplorer</String>
         </Setting>
     </ConfigItem>
--->
     <ConfigItem Name="PublicFrontend::Module###PublicFAQExplorer" Required="0" Valid="1">
         <Description Translatable="1">Frontend module registration for the public interface.</Description>
         <Group>FAQ</Group>
