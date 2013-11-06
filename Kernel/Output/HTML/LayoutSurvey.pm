@@ -130,7 +130,8 @@ sub SurveyListShow {
         Data        => \%Data,
     );
 
-    # build navbar content
+    # nav bar at the beginning of a overview
+    $Param{View} = $View;
     $Env->{LayoutObject}->Block(
         Name => 'OverviewNavBar',
         Data => \%Param,

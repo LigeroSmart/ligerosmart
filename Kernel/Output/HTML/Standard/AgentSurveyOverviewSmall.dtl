@@ -12,7 +12,7 @@
 //]]></script>
 <!-- dtl:js_on_document_complete -->
 
-<div id="OverviewBody" class="Overview FixedHeader">
+<div id="OverviewBody" class="Overview TicketList">
 <!-- dtl:block:NoDataFoundMsg -->
     <div id="EmptyMessageSmall">
         $Text{"No data found."}
