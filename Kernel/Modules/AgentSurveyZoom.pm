@@ -252,6 +252,89 @@ sub Run {
         },
     );
 
+    # run survey menu modules
+    if ( ref $Self->{ConfigObject}->Get('Survey::Frontend::MenuModule') eq 'HASH' ) {
+        my %Menus   = %{ $Self->{ConfigObject}->Get('Survey::Frontend::MenuModule') };
+        my $Counter = 0;
+        MENU:
+        for my $Menu ( sort keys %Menus ) {
+
+            # load module
+            if ( $Self->{MainObject}->Require( $Menus{$Menu}->{Module} ) ) {
+                my $Object = $Menus{$Menu}->{Module}->new(
+                    %{$Self},
+                    SurveyID => $Survey{SurveyID},
+                );
+
+                # menu SatsDetails needs to have a complete request
+                if (
+                    defined $Menus{$Menu}->{Action}
+                    && $Menus{$Menu}->{Action} eq 'AgentSurveyStats'
+                    && !$RequestComplete
+                    )
+                {
+                    next MENU;
+                }
+
+                # set classes
+                if ( $Menus{$Menu}->{Target} ) {
+
+                    if ( $Menus{$Menu}->{Target} eq 'PopUp' ) {
+                        $Menus{$Menu}->{Class} = 'AsPopup';
+                    }
+                    elsif ( $Menus{$Menu}->{Target} eq 'Back' ) {
+                        $Menus{$Menu}->{Class} = 'HistoryBack';
+                    }
+                }
+
+                # run module
+                $Counter = $Object->Run(
+                    %Param,
+                    Survey  => {%Survey},
+                    Counter => $Counter,
+                    Config  => $Menus{$Menu},
+                    MenuID  => 'Menu' . $Menu,
+                );
+            }
+            else {
+                return $Self->{LayoutObject}->FatalError();
+            }
+        }
+    }
+
+    # output the possible status menu
+    my %NewStatus;
+    $NewStatus{ChangeStatus} = '- Change Status -';
+
+    if ( $Survey{Status} eq 'New' || $Survey{Status} eq 'Invalid' ) {
+        $NewStatus{Master} = 'Master';
+        $NewStatus{Valid}  = 'Valid';
+    }
+    elsif ( $Survey{Status} eq 'Valid' ) {
+        $NewStatus{Master}  = 'Master';
+        $NewStatus{Invalid} = 'Invalid';
+    }
+    elsif ( $Survey{Status} eq 'Master' ) {
+        $NewStatus{Valid}   = 'Valid';
+        $NewStatus{Invalid} = 'Invalid';
+    }
+
+    my $NewStatusStr = $Self->{LayoutObject}->BuildSelection(
+        Name       => 'NewStatus',
+        ID         => 'NewStatus',
+        Data       => \%NewStatus,
+        SelectedID => 'ChangeStatus',
+    );
+
+    $Self->{LayoutObject}->Block(
+        Name => 'SurveyStatus',
+        Data => {
+            NewStatusStr => $NewStatusStr,
+            SurveyID     => $SurveyID,
+        },
+    );
+
+    # output the survey common blocks
     for my $Field (qw( Introduction Description)) {
         $Self->{LayoutObject}->Block(
             Name => 'SurveyBlock',
@@ -280,8 +363,11 @@ sub Run {
     }
 
     # display stats if status Master, Valid or Invalid
-    if (
-        $Survey{Status}    eq 'Master'
+    if ( $Survey{Status} eq 'New' ) {
+        $Self->{LayoutObject}->Block( Name => 'NoStatResults' );
+    }
+    elsif (
+        $Survey{Status} eq 'Master'
         || $Survey{Status} eq 'Valid'
         || $Survey{Status} eq 'Invalid'
         )
@@ -304,7 +390,7 @@ sub Run {
 
             # generate the answers of the question
             if (
-                $Question->{Type}    eq 'YesNo'
+                $Question->{Type} eq 'YesNo'
                 || $Question->{Type} eq 'Radio'
                 || $Question->{Type} eq 'Checkbox'
                 )
@@ -386,49 +472,8 @@ sub Run {
                 );
             }
         }
-        if ($RequestComplete) {
-            $Self->{LayoutObject}->Block(
-                Name => 'SurveyEditStatsDetails',
-                Data => { SurveyID => $SurveyID },
-            );
-        }
     }
 
-    if ( $Survey{Status} eq 'New' ) {
-        $Self->{LayoutObject}->Block( Name => 'NoStatResults' );
-    }
-
-    # output the possible status
-    my %NewStatus;
-    $NewStatus{ChangeStatus} = '- Change Status -';
-
-    if ( $Survey{Status} eq 'New' || $Survey{Status} eq 'Invalid' ) {
-        $NewStatus{Master} = 'Master';
-        $NewStatus{Valid}  = 'Valid';
-    }
-    elsif ( $Survey{Status} eq 'Valid' ) {
-        $NewStatus{Master}  = 'Master';
-        $NewStatus{Invalid} = 'Invalid';
-    }
-    elsif ( $Survey{Status} eq 'Master' ) {
-        $NewStatus{Valid}   = 'Valid';
-        $NewStatus{Invalid} = 'Invalid';
-    }
-
-    my $NewStatusStr = $Self->{LayoutObject}->BuildSelection(
-        Name       => 'NewStatus',
-        ID         => 'NewStatus',
-        Data       => \%NewStatus,
-        SelectedID => 'ChangeStatus',
-    );
-
-    $Self->{LayoutObject}->Block(
-        Name => 'SurveyStatus',
-        Data => {
-            NewStatusStr => $NewStatusStr,
-            SurveyID     => $SurveyID,
-        },
-    );
     $Output .= $Self->{LayoutObject}->Output(
         TemplateFile => 'AgentSurveyZoom',
         Data         => {%Param},

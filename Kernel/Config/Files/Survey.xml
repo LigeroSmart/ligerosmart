@@ -312,4 +312,64 @@ Your OTRS-Team
             </Hash>
         </Setting>
     </ConfigItem>
+    <ConfigItem Name="Survey::Frontend::MenuModule###000-Back" Required="0" Valid="1">
+        <Description Translatable="1">Shows a link in the menu to go back in the survey zoom view of the agent interface.</Description>
+        <Group>Survey</Group>
+        <SubGroup>Frontend::Agent::Survey::MenuModule</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::SurveyMenuGeneric</Item>
+                <Item Key="Name">Back</Item>
+                <Item Key="Description" Translatable="1">Back</Item>
+                <Item Key="Action"></Item>
+                <Item Key="Link">$Env{"LastScreenOverview"}</Item>
+                <Item Key="Target">Back</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Survey::Frontend::MenuModule###010-EditGeneralInfo" Required="0" Valid="1">
+        <Description Translatable="1">Shows a link in the menu to edit a survey in its zoom view of the agent interface.</Description>
+        <Group>Survey</Group>
+        <SubGroup>Frontend::Agent::Survey::MenuModule</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::SurveyMenuGeneric</Item>
+                <Item Key="Name">Edit General Info</Item>
+                <Item Key="Description" Translatable="1">Edit Survey General Information</Item>
+                <Item Key="Action">AgentSurveyEdit</Item>
+                <Item Key="Link">Action=AgentSurveyEdit;SurveyID=$QData{"SurveyID"}</Item>
+                <Item Key="Target">PopUp</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Survey::Frontend::MenuModule###020-EditQuestions" Required="0" Valid="1">
+        <Description Translatable="1">Shows a link in the menu to edit survey questions in its zoom view of the agent interface.</Description>
+        <Group>Survey</Group>
+        <SubGroup>Frontend::Agent::Survey::MenuModule</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::SurveyMenuGeneric</Item>
+                <Item Key="Name">Edit Questions</Item>
+                <Item Key="Description" Translatable="1">Edit Survey Questions</Item>
+                <Item Key="Action">AgentSurveyEditQuestions</Item>
+                <Item Key="Link">Action=AgentSurveyEditQuestions;SurveyID=$QData{"SurveyID"}</Item>
+                <Item Key="Target">PopUp</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Survey::Frontend::MenuModule###030-StatsDetails" Required="0" Valid="1">
+        <Description Translatable="1">Shows a link in the menu to zoom into the survey statistics details in its zoom view of the agent interface.</Description>
+        <Group>Survey</Group>
+        <SubGroup>Frontend::Agent::Survey::MenuModule</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::SurveyMenuGeneric</Item>
+                <Item Key="Name">Stats Details</Item>
+                <Item Key="Description" Translatable="1">Zoom Into Statistics Details</Item>
+                <Item Key="Action">AgentSurveyStats</Item>
+                <Item Key="Link">Action=AgentSurveyStats;SurveyID=$QData{"SurveyID"}</Item>
+                <Item Key="Target">PopUp</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
 </otrs_config>

@@ -63,20 +63,11 @@
             </div>
             <div class="ActionRow">
                 <ul class="Actions">
+<!-- dtl:block:MenuItem -->
                     <li>
-                        <a href="" class="HistoryBack">$Text{"Back"}</a>
+                        <a href="$Env{"Baselink"}$Data{"Link"}" id="$QData{"MenuID"}" class="$QData{"Class"}" $Data{"LinkParam"} title="$Text{"$Data{"Description"}"}">$Text{"$Data{"Name"}"}</a>
                     </li>
-                    <li>
-                        <a href="$Env{"Baselink"}Action=AgentSurveyEdit;SurveyID=$LQData{"SurveyID"}" class="AsPopup">$Text{"Edit General Info"}</a>
-                    </li>
-                    <li>
-                        <a href="$Env{"Baselink"}Action=AgentSurveyEditQuestions;SurveyID=$LQData{"SurveyID"}" class="AsPopup">$Text{"Edit Questions"}</a>
-                    </li>
-<!-- dtl:block:SurveyEditStatsDetails -->
-                    <li>
-                        <a href="$Env{"Baselink"}Action=AgentSurveyStats;SurveyID=$LQData{"SurveyID"}" class="AsPopup">$Text{"Stats Details"}</a>
-                    </li>
-<!-- dtl:block:SurveyEditStatsDetails -->
+<!-- dtl:block:MenuItem -->
 <!-- dtl:block:SurveyStatus -->
                     <li>
                         <form action="$Env{"CGIHandle"}" method="post" class="ActionForm">
