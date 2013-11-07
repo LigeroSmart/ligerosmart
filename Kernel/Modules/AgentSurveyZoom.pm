@@ -14,6 +14,7 @@ use warnings;
 
 use Kernel::System::Survey;
 use Kernel::System::HTMLUtils;
+use Kernel::System::VariableCheck qw(:all);
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -253,11 +254,22 @@ sub Run {
     );
 
     # run survey menu modules
-    if ( ref $Self->{ConfigObject}->Get('Survey::Frontend::MenuModule') eq 'HASH' ) {
-        my %Menus   = %{ $Self->{ConfigObject}->Get('Survey::Frontend::MenuModule') };
+    my $MenuModuleConfig = $Self->{ConfigObject}->Get('Survey::Frontend::MenuModule');
+    if ( IsHashRefWithData($MenuModuleConfig) ) {
+        my %Menus   = %{$MenuModuleConfig};
         my $Counter = 0;
         MENU:
         for my $Menu ( sort keys %Menus ) {
+
+            # menu SatsDetails needs to have a complete request
+            if (
+                defined $Menus{$Menu}->{Action}
+                && $Menus{$Menu}->{Action} eq 'AgentSurveyStats'
+                && !$RequestComplete
+                )
+            {
+                next MENU;
+            }
 
             # load module
             if ( $Self->{MainObject}->Require( $Menus{$Menu}->{Module} ) ) {
@@ -265,16 +277,6 @@ sub Run {
                     %{$Self},
                     SurveyID => $Survey{SurveyID},
                 );
-
-                # menu SatsDetails needs to have a complete request
-                if (
-                    defined $Menus{$Menu}->{Action}
-                    && $Menus{$Menu}->{Action} eq 'AgentSurveyStats'
-                    && !$RequestComplete
-                    )
-                {
-                    next MENU;
-                }
 
                 # set classes
                 if ( $Menus{$Menu}->{Target} ) {
@@ -303,20 +305,19 @@ sub Run {
     }
 
     # output the possible status menu
-    my %NewStatus;
-    $NewStatus{ChangeStatus} = '- Change Status -';
+    my %NewStatus = (
+        ChangeStatus => '- Change Status -',
+        Master       => 'Master',
+        Valid        => 'Valid',
+        Invalid      => 'Invalid',
 
-    if ( $Survey{Status} eq 'New' || $Survey{Status} eq 'Invalid' ) {
-        $NewStatus{Master} = 'Master';
-        $NewStatus{Valid}  = 'Valid';
+    );
+
+    if ( $Survey{Status} eq 'New' ) {
+        delete $NewStatus{Invalid};
     }
-    elsif ( $Survey{Status} eq 'Valid' ) {
-        $NewStatus{Master}  = 'Master';
-        $NewStatus{Invalid} = 'Invalid';
-    }
-    elsif ( $Survey{Status} eq 'Master' ) {
-        $NewStatus{Valid}   = 'Valid';
-        $NewStatus{Invalid} = 'Invalid';
+    else {
+        delete $NewStatus{ $Survey{Status} };
     }
 
     my $NewStatusStr = $Self->{LayoutObject}->BuildSelection(
