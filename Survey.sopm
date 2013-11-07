@@ -11,9 +11,6 @@
     <Description Lang="es">Una herramienta de encuestas a clientes.</Description>
     <Filelist>
         <File Permission="755" Location="bin/otrs.SurveyTriggerSendRequests.pl"/>
-        <!-- this file is not needed, but added to pass OTRSCodePolicy
-        <File Permission="644" Location="doc/survey-database.dia"/>
-        -->
         <File Permission="644" Location="doc/survey-database.png"/>
         <!-- this file is not needed, but added to pass OTRSCodePolicy
         <File Permission="644" Location="doc/en/Survey.xml"/>
