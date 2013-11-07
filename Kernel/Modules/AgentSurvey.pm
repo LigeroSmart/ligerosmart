@@ -56,6 +56,13 @@ sub Run {
         Value     => $Self->{RequestedURL},
     );
 
+    # store last screen overview
+    $Self->{SessionObject}->UpdateSessionID(
+        SessionID => $Self->{SessionID},
+        Key       => 'LastScreenOverview',
+        Value     => $Self->{RequestedURL},
+    );
+
     # get sorting parameters
     my $SortBy = $Self->{ParamObject}->GetParam( Param => 'SortBy' )
         || $Self->{Config}->{'SortBy::Default'}

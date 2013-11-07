@@ -179,20 +179,6 @@
         <button type="submit" class="CancelClosePopup Primary CallForAction" value="$Text{"Close window"}"><span><i class="icon-remove"></i> $Text{"Close window"}</span></button>
     </div>
 </div>
-<!-- dtl:js_on_document_complete -->
-<script type="text/javascript">//<![CDATA[
-    $('a.HistoryBack').bind('click', function (Event) {
-        history.back();
-        return false;
-    });
-
-    $('button.CancelClosePopup').bind('click', function (Event) {
-        history.back();
-        return false;
-    });
-
-//]]></script>
-<!-- dtl:js_on_document_complete -->
 <!-- dtl:block:SurveyEditQuestions -->
 
 <!-- dtl:block:QuestionEdit -->

@@ -80,16 +80,6 @@
         window.opener.Core.UI.Popup.FirePopupEvent('URL', { URL: $(this).attr('href')});
         window.close();
     });
-
-    $('a.HistoryBack').bind('click', function (Event) {
-        history.back();
-        return false;
-    });
-    $('button.HistoryBack').bind('click', function (Event) {
-        history.back();
-        return false;
-    });
-
 //]]></script>
 <!-- dtl:js_on_document_complete -->
 
@@ -102,7 +92,7 @@
         <p>
             <a class="CancelClosePopup" href="#">$Text{"Cancel & close window"}</a>
             $Text{"or"}
-            <a class="HistoryBack" href="#">$Text{"go back to stats overview"}</a>
+            <a class="HistoryBack" href="$Env{"Baselink"}Action=$Env{"Action"};SurveyID=$LQData{"SurveyID"}">$Text{"go back to stats overview"}</a>
         </p>
     </div>
     <div class="Content">
@@ -138,12 +128,4 @@
         </form>
     </div>
 </div>
-<!-- dtl:js_on_document_complete -->
-<script type="text/javascript">//<![CDATA[
-    $('a.HistoryBack').bind('click', function (Event) {
-        history.back();
-        return false;
-    });
-//]]></script>
-<!-- dtl:js_on_document_complete -->
 <!-- dtl:block:StatsDetail -->

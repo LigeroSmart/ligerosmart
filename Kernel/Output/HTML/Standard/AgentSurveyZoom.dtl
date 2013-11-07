@@ -173,11 +173,6 @@
         return false;
     });
 
-    $('ul.Actions a.HistoryBack').bind('click', function (Event) {
-        history.back();
-        return false;
-    });
-
     $('#NewStatus').bind('change', function (Event) {
         $(this).closest('form').submit();
     });
