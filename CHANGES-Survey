@@ -8,8 +8,11 @@
 # --
 
 2.3.1 - 2013-??-??
- - Added Answer Required column to questions overview.
+ - Fixed Bug#9757 - Back buttons should to lead to last used screen and not browser history back.
+ - Made survey zoom menu flexible (by SysConfig settings)
  - Improved Survey Overview visuals
+ - Added Answer Required column to questions overview.
+
 
 2.2.91 - 2013-09-24
  - Initial release for OTRS 3.3.x series.
