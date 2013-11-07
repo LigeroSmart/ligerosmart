@@ -12,7 +12,7 @@
  - Made survey zoom menu flexible (by SysConfig settings)
  - Improved Survey Overview visuals
  - Added Answer Required column to questions overview.
-
+ - Added Simplified Chinese translation thanx to Michael Shi!
 
 2.2.91 - 2013-09-24
  - Initial release for OTRS 3.3.x series.
