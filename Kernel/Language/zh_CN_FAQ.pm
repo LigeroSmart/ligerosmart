@@ -127,10 +127,10 @@ sub Data {
     $Self->{Translation}->{'Rate (e. g. Equals 25% or GreaterThan 75%)'} = '评分 (例如，= 10% 或 >= 75%)';
     $Self->{Translation}->{'Approved'} = '通过审批';
     $Self->{Translation}->{'Last changed by'} = '上次修改人';
-    $Self->{Translation}->{'FAQ Item Create Time (before/after)'} = 'FAQ文章创建时间（之前/之后）';
-    $Self->{Translation}->{'FAQ Item Create Time (between)'} = 'FAQ文章创建时间（之间）';
-    $Self->{Translation}->{'FAQ Item Change Time (before/after)'} = 'FAQ文章创建时间（之前/之后）';
-    $Self->{Translation}->{'FAQ Item Change Time (between)'} = 'FAQ文章创建时间（之间）';
+    $Self->{Translation}->{'FAQ Article Create Time (before/after)'} = '';
+    $Self->{Translation}->{'FAQ Article Create Time (between)'} = '';
+    $Self->{Translation}->{'FAQ Article Change Time (before/after)'} = '';
+    $Self->{Translation}->{'FAQ Article Change Time (between)'} = '';
     $Self->{Translation}->{'Run Search'} = '搜索';
 
     # Template: AgentFAQSearchOpenSearchDescriptionFAQNumber
@@ -142,11 +142,15 @@ sub Data {
 
     # Template: AgentFAQSearchSmall
     $Self->{Translation}->{'FAQ Search'} = '';
-    $Self->{Translation}->{'Search-Profile as Template?'} = '搜索配置作为模板？';
+    $Self->{Translation}->{'Profile Selection'} = '';
+    $Self->{Translation}->{'Vote'} = '投票';
     $Self->{Translation}->{'No vote settings'} = '';
     $Self->{Translation}->{'Specific votes'} = '';
+    $Self->{Translation}->{'e. g. Equals 10 or GreaterThan 60'} = '';
+    $Self->{Translation}->{'Rate'} = '评分';
     $Self->{Translation}->{'No rate settings'} = '';
     $Self->{Translation}->{'Specific rate'} = '';
+    $Self->{Translation}->{'e. g. Equals 25% or GreaterThan 75%'} = '';
     $Self->{Translation}->{'FAQ Article Create Time'} = 'FAQ文章创建时间';
     $Self->{Translation}->{'Specific date'} = '';
     $Self->{Translation}->{'Date range'} = '';
@@ -166,7 +170,6 @@ sub Data {
         '此文档对您有帮助吗？请给出您的评价，谢谢！';
     $Self->{Translation}->{'not helpful'} = '没有帮助';
     $Self->{Translation}->{'very helpful'} = '很有帮助';
-    $Self->{Translation}->{'Vote'} = '投票';
 
     # Template: AgentFAQZoomSmall
     $Self->{Translation}->{'Insert FAQ Text'} = '插入FAQ文本';
@@ -184,12 +187,11 @@ sub Data {
     $Self->{Translation}->{'Fulltext search in FAQ articles (e. g. "John*n" or "Will*")'} = '';
     $Self->{Translation}->{'Vote restrictions'} = '';
     $Self->{Translation}->{'Only FAQ articles with votes...'} = '';
-    $Self->{Translation}->{'e. g. Equals 10 or GreaterThan 60'} = '';
     $Self->{Translation}->{'Rate restrictions'} = '';
     $Self->{Translation}->{'Only FAQ articles with rate...'} = '';
-    $Self->{Translation}->{'e. g. Equals 25% or GreaterThan 75%'} = '';
     $Self->{Translation}->{'Only FAQ articles created'} = '';
     $Self->{Translation}->{'Only FAQ articles created between'} = '';
+    $Self->{Translation}->{'Search-Profile as Template?'} = '搜索配置作为模板？';
 
     # Template: CustomerFAQSearchOpenSearchDescriptionFAQNumber
 
@@ -233,6 +235,7 @@ sub Data {
         'FAQ 文章批准请求的 Ticket 的优先级.';
     $Self->{Translation}->{'Default state for FAQ entry.'} = '默认的 FAQ 统计条目.';
     $Self->{Translation}->{'Default state of tickets for the approval of FAQ articles.'} = 'FAQ 文章批准请求的 Ticket 的默认状态.';
+    $Self->{Translation}->{'Default type of tickets for the approval of FAQ articles.'} = '';
     $Self->{Translation}->{'Default value for the Action parameter for the public frontend. The Action parameter is used in the scripts of the system.'} =
         '';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ journal.'} =
@@ -400,10 +403,20 @@ sub Data {
     $Self->{Translation}->{'DetailSearch'} = '高级搜索';
     $Self->{Translation}->{'Do you really want to delete this Category?'} = '真的要删除该类别吗?';
     $Self->{Translation}->{'Do you really want to delete this Language?'} = '真的要删除该语言吗?';
+    $Self->{Translation}->{'Equals'} = ' = ';
     $Self->{Translation}->{'FAQ Category'} = 'FAQ类别';
+    $Self->{Translation}->{'FAQ Item Change Time (before/after)'} = 'FAQ文章创建时间（之前/之后）';
+    $Self->{Translation}->{'FAQ Item Change Time (between)'} = 'FAQ文章创建时间（之间）';
+    $Self->{Translation}->{'FAQ Item Create Time (before/after)'} = 'FAQ文章创建时间（之前/之后）';
+    $Self->{Translation}->{'FAQ Item Create Time (between)'} = 'FAQ文章创建时间（之间）';
+    $Self->{Translation}->{'GreaterThan'} = ' > ';
+    $Self->{Translation}->{'GreaterThanEquals'} = ' >= ';
+    $Self->{Translation}->{'Last Changed by'} = '最后修改人';
     $Self->{Translation}->{'No category accessible. To create an article you need access to at least one category. Please check your group/category permission under -category menu-!'} =
         '没有归类到类别. 要创建一篇文章需要归类到类别里, 请在 -类别菜单- 里选择您有权限创建文章的类别';
     $Self->{Translation}->{'Show WYSIWYG editor in agent interface.'} = '在服务人员介面显示 WYSIWYG(所见即所得)编辑器.';
+    $Self->{Translation}->{'SmallerThan'} = '< ';
+    $Self->{Translation}->{'SmallerThanEquals'} = ' <= ';
     $Self->{Translation}->{'SubCategories'} = '子类别';
     $Self->{Translation}->{'The title is required.'} = '标题是必须的.';
     $Self->{Translation}->{'This Category is parent of the following SubCategories'} = '该类别是以下子类别的父类别';
@@ -415,13 +428,7 @@ sub Data {
         '不能删除该类别. 它至少还被一篇FAQ文章所使用 并/或 它是其中类别的父类别!';
     $Self->{Translation}->{'You can not delete this Language. It is used in at least one FAQ Article!'} =
         '不能删除该语言. 它至少还被一篇FAQ文章所使用!';
-    $Self->{Translation}->{'Rate'} = '评分';
-    $Self->{Translation}->{'Last Changed by'} = '最后修改人';
-    $Self->{Translation}->{'Equals'} = ' = ';
-    $Self->{Translation}->{'GreaterThan'} = ' > ';
-    $Self->{Translation}->{'GreaterThanEquals'} = ' >= ';
-    $Self->{Translation}->{'SmallerThan'} = '< ';
-    $Self->{Translation}->{'SmallerThanEquals'} = ' <= ';
+
 }
 
 1;

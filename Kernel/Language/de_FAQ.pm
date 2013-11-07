@@ -142,11 +142,15 @@ sub Data {
 
     # Template: AgentFAQSearchSmall
     $Self->{Translation}->{'FAQ Search'} = 'FAQ Suche';
-    $Self->{Translation}->{'Search-Profile as Template?'} = '';
+    $Self->{Translation}->{'Profile Selection'} = '';
+    $Self->{Translation}->{'Vote'} = '';
     $Self->{Translation}->{'No vote settings'} = '';
     $Self->{Translation}->{'Specific votes'} = '';
+    $Self->{Translation}->{'e. g. Equals 10 or GreaterThan 60'} = '';
+    $Self->{Translation}->{'Rate'} = '';
     $Self->{Translation}->{'No rate settings'} = '';
     $Self->{Translation}->{'Specific rate'} = '';
+    $Self->{Translation}->{'e. g. Equals 25% or GreaterThan 75%'} = '';
     $Self->{Translation}->{'FAQ Article Create Time'} = '';
     $Self->{Translation}->{'Specific date'} = '';
     $Self->{Translation}->{'Date range'} = '';
@@ -166,7 +170,6 @@ sub Data {
         'Wie hilfreich war dieser Artikel? Bitte geben Sie Ihre Bewertung ab und helfen Sie mit die Qualität der FAQ-Datenbank zu verbessern. Vielen Dank!';
     $Self->{Translation}->{'not helpful'} = 'nicht hilfreich';
     $Self->{Translation}->{'very helpful'} = 'sehr hilfreich';
-    $Self->{Translation}->{'Vote'} = '';
 
     # Template: AgentFAQZoomSmall
     $Self->{Translation}->{'Insert FAQ Text'} = 'FAQ-Text einfügen';
@@ -184,12 +187,11 @@ sub Data {
     $Self->{Translation}->{'Fulltext search in FAQ articles (e. g. "John*n" or "Will*")'} = 'Volltext-Suche in FAQ-Artikeln (z. B. "John*n" or "Will*")';
     $Self->{Translation}->{'Vote restrictions'} = '';
     $Self->{Translation}->{'Only FAQ articles with votes...'} = '';
-    $Self->{Translation}->{'e. g. Equals 10 or GreaterThan 60'} = '';
     $Self->{Translation}->{'Rate restrictions'} = '';
     $Self->{Translation}->{'Only FAQ articles with rate...'} = '';
-    $Self->{Translation}->{'e. g. Equals 25% or GreaterThan 75%'} = '';
     $Self->{Translation}->{'Only FAQ articles created'} = '';
     $Self->{Translation}->{'Only FAQ articles created between'} = '';
+    $Self->{Translation}->{'Search-Profile as Template?'} = '';
 
     # Template: CustomerFAQSearchOpenSearchDescriptionFAQNumber
 
@@ -233,6 +235,7 @@ sub Data {
         'Standard-Priorität von Tickets für die Freigabe von FAQ-Artikeln.';
     $Self->{Translation}->{'Default state for FAQ entry.'} = 'Standard Status eines FAQ-Eintrags.';
     $Self->{Translation}->{'Default state of tickets for the approval of FAQ articles.'} = 'Standard-Status von Tickets für die Freigabe von FAQ-Artikeln.';
+    $Self->{Translation}->{'Default type of tickets for the approval of FAQ articles.'} = '';
     $Self->{Translation}->{'Default value for the Action parameter for the public frontend. The Action parameter is used in the scripts of the system.'} =
         'Standardwert des Action-Parameters für den öffentlichen FAQ-Bereich. Der Action-Parameter wird von den Skripten des Systems benutzt.';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ journal.'} =

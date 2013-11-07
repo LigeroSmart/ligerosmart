@@ -142,11 +142,15 @@ sub Data {
 
     # Template: AgentFAQSearchSmall
     $Self->{Translation}->{'FAQ Search'} = '';
-    $Self->{Translation}->{'Search-Profile as Template?'} = '';
+    $Self->{Translation}->{'Profile Selection'} = '';
+    $Self->{Translation}->{'Vote'} = '';
     $Self->{Translation}->{'No vote settings'} = '';
     $Self->{Translation}->{'Specific votes'} = '';
+    $Self->{Translation}->{'e. g. Equals 10 or GreaterThan 60'} = '';
+    $Self->{Translation}->{'Rate'} = '';
     $Self->{Translation}->{'No rate settings'} = '';
     $Self->{Translation}->{'Specific rate'} = '';
+    $Self->{Translation}->{'e. g. Equals 25% or GreaterThan 75%'} = '';
     $Self->{Translation}->{'FAQ Article Create Time'} = '';
     $Self->{Translation}->{'Specific date'} = '';
     $Self->{Translation}->{'Date range'} = '';
@@ -166,7 +170,6 @@ sub Data {
         '';
     $Self->{Translation}->{'not helpful'} = 'あまり役に立たなかった';
     $Self->{Translation}->{'very helpful'} = 'とても役に立った';
-    $Self->{Translation}->{'Vote'} = '';
 
     # Template: AgentFAQZoomSmall
     $Self->{Translation}->{'Insert FAQ Text'} = '記事を挿入する';
@@ -184,12 +187,11 @@ sub Data {
     $Self->{Translation}->{'Fulltext search in FAQ articles (e. g. "John*n" or "Will*")'} = 'FAQ全文検索（例："John*n"、"Will*"）';
     $Self->{Translation}->{'Vote restrictions'} = '';
     $Self->{Translation}->{'Only FAQ articles with votes...'} = '';
-    $Self->{Translation}->{'e. g. Equals 10 or GreaterThan 60'} = '';
     $Self->{Translation}->{'Rate restrictions'} = '';
     $Self->{Translation}->{'Only FAQ articles with rate...'} = '';
-    $Self->{Translation}->{'e. g. Equals 25% or GreaterThan 75%'} = '';
     $Self->{Translation}->{'Only FAQ articles created'} = '';
     $Self->{Translation}->{'Only FAQ articles created between'} = '';
+    $Self->{Translation}->{'Search-Profile as Template?'} = '';
 
     # Template: CustomerFAQSearchOpenSearchDescriptionFAQNumber
 
@@ -233,6 +235,7 @@ sub Data {
         'FAQへの取り込みを行うチケットの優先順位の既定値';
     $Self->{Translation}->{'Default state for FAQ entry.'} = '記事エントリー時の規定のステータス';
     $Self->{Translation}->{'Default state of tickets for the approval of FAQ articles.'} = 'FAQへの取り込みを行うチケットの優先順位の既定値';
+    $Self->{Translation}->{'Default type of tickets for the approval of FAQ articles.'} = '';
     $Self->{Translation}->{'Default value for the Action parameter for the public frontend. The Action parameter is used in the scripts of the system.'} =
         '公開画面用パラメータのデフォルト値。パラメータ（Action=XXXXXX）は、スクリプトで使用されています。';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ journal.'} =

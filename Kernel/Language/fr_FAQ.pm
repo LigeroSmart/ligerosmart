@@ -142,11 +142,15 @@ sub Data {
 
     # Template: AgentFAQSearchSmall
     $Self->{Translation}->{'FAQ Search'} = '';
-    $Self->{Translation}->{'Search-Profile as Template?'} = '';
+    $Self->{Translation}->{'Profile Selection'} = '';
+    $Self->{Translation}->{'Vote'} = '';
     $Self->{Translation}->{'No vote settings'} = '';
     $Self->{Translation}->{'Specific votes'} = '';
+    $Self->{Translation}->{'e. g. Equals 10 or GreaterThan 60'} = '';
+    $Self->{Translation}->{'Rate'} = '';
     $Self->{Translation}->{'No rate settings'} = '';
     $Self->{Translation}->{'Specific rate'} = '';
+    $Self->{Translation}->{'e. g. Equals 25% or GreaterThan 75%'} = '';
     $Self->{Translation}->{'FAQ Article Create Time'} = '';
     $Self->{Translation}->{'Specific date'} = '';
     $Self->{Translation}->{'Date range'} = '';
@@ -166,7 +170,6 @@ sub Data {
         'Cet Article était-il utile? Merci de donner une note et de participer à l\'amélioration de la base de données. Merci!';
     $Self->{Translation}->{'not helpful'} = 'peu utile';
     $Self->{Translation}->{'very helpful'} = 'très utile';
-    $Self->{Translation}->{'Vote'} = '';
 
     # Template: AgentFAQZoomSmall
     $Self->{Translation}->{'Insert FAQ Text'} = 'Insérer Texte dans la FAQ';
@@ -184,12 +187,11 @@ sub Data {
     $Self->{Translation}->{'Fulltext search in FAQ articles (e. g. "John*n" or "Will*")'} = 'Recherche texte intégrale dans les articles FAQ (ex. "Emilie*")';
     $Self->{Translation}->{'Vote restrictions'} = '';
     $Self->{Translation}->{'Only FAQ articles with votes...'} = '';
-    $Self->{Translation}->{'e. g. Equals 10 or GreaterThan 60'} = '';
     $Self->{Translation}->{'Rate restrictions'} = '';
     $Self->{Translation}->{'Only FAQ articles with rate...'} = '';
-    $Self->{Translation}->{'e. g. Equals 25% or GreaterThan 75%'} = '';
     $Self->{Translation}->{'Only FAQ articles created'} = '';
     $Self->{Translation}->{'Only FAQ articles created between'} = '';
+    $Self->{Translation}->{'Search-Profile as Template?'} = '';
 
     # Template: CustomerFAQSearchOpenSearchDescriptionFAQNumber
 
@@ -233,6 +235,7 @@ sub Data {
         '';
     $Self->{Translation}->{'Default state for FAQ entry.'} = '';
     $Self->{Translation}->{'Default state of tickets for the approval of FAQ articles.'} = '';
+    $Self->{Translation}->{'Default type of tickets for the approval of FAQ articles.'} = '';
     $Self->{Translation}->{'Default value for the Action parameter for the public frontend. The Action parameter is used in the scripts of the system.'} =
         '';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ journal.'} =
