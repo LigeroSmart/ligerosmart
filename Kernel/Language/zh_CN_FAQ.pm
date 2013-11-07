@@ -19,161 +19,161 @@ sub Data {
     $Self->{Translation}->{'internal'} = '内部';
     $Self->{Translation}->{'public'} = '公开';
     $Self->{Translation}->{'external'} = '外部';
-    $Self->{Translation}->{'FAQ Number'} = '';
-    $Self->{Translation}->{'Latest updated FAQ articles'} = '最近修改的文章';
-    $Self->{Translation}->{'Latest created FAQ articles'} = '最新创建的文章';
+    $Self->{Translation}->{'FAQ Number'} = 'FAQ编号';
+    $Self->{Translation}->{'Latest updated FAQ articles'} = '最近修改的FAQ文章';
+    $Self->{Translation}->{'Latest created FAQ articles'} = '最近创建的FAQ文章';
     $Self->{Translation}->{'Top 10 FAQ articles'} = '最常用的文章';
-    $Self->{Translation}->{'Subcategory of'} = '子目录于';
-    $Self->{Translation}->{'No rate selected!'} = '没有选择评分!';
+    $Self->{Translation}->{'Subcategory of'} = '子类别于';
+    $Self->{Translation}->{'No rate selected!'} = '没有选择投票!';
     $Self->{Translation}->{'Explorer'} = '浏览';
-    $Self->{Translation}->{'public (all)'} = '';
-    $Self->{Translation}->{'external (customer)'} = '';
-    $Self->{Translation}->{'internal (agent)'} = '';
+    $Self->{Translation}->{'public (all)'} = '公开(内外)';
+    $Self->{Translation}->{'external (customer)'} = '外部(用户)';
+    $Self->{Translation}->{'internal (agent)'} = '内部(服务人员)';
     $Self->{Translation}->{'Start day'} = '开始日期';
     $Self->{Translation}->{'Start month'} = '开始月份';
     $Self->{Translation}->{'Start year'} = '开始年份';
     $Self->{Translation}->{'End day'} = '结束日期';
     $Self->{Translation}->{'End month'} = '开始月份';
     $Self->{Translation}->{'End year'} = '结束年份';
-    $Self->{Translation}->{'Thanks for your vote!'} = '感谢您的评分';
-    $Self->{Translation}->{'You have already voted!'} = '您已经评分!';
-    $Self->{Translation}->{'FAQ Article Print'} = '';
-    $Self->{Translation}->{'FAQ Articles (Top 10)'} = 'FAQ 更新';
-    $Self->{Translation}->{'FAQ Articles (new created)'} = 'FAQ 更新(新创建)';
-    $Self->{Translation}->{'FAQ Articles (recently changed)'} = 'FAQ 更新(最近更改)';
-    $Self->{Translation}->{'FAQ category updated!'} = 'FAQ 目录已更新!';
-    $Self->{Translation}->{'FAQ category added!'} = 'FAQ 目录已增加!';
-    $Self->{Translation}->{'A category should have a name!'} = '目录应该要有一个名称!';
-    $Self->{Translation}->{'This category already exists'} = '';
-    $Self->{Translation}->{'FAQ language added!'} = 'FAQ 语言已经增加!';
-    $Self->{Translation}->{'FAQ language updated!'} = 'FAQ 语言已经更新!';
-    $Self->{Translation}->{'The name is required!'} = '必须要有一个语言名称!';
+    $Self->{Translation}->{'Thanks for your vote!'} = '感谢您的投票!';
+    $Self->{Translation}->{'You have already voted!'} = '您已经投票!';
+    $Self->{Translation}->{'FAQ Article Print'} = 'FAQ文章打印';
+    $Self->{Translation}->{'FAQ Articles (Top 10)'} = 'FAQ文章(前10名)';
+    $Self->{Translation}->{'FAQ Articles (new created)'} = 'FAQ文章(新创建的)';
+    $Self->{Translation}->{'FAQ Articles (recently changed)'} = 'FAQ文章(最近修改的)';
+    $Self->{Translation}->{'FAQ category updated!'} = 'FAQ类别已更新!';
+    $Self->{Translation}->{'FAQ category added!'} = 'FAQ类别已添加!';
+    $Self->{Translation}->{'A category should have a name!'} = '必需输入类别名称!';
+    $Self->{Translation}->{'This category already exists'} = '类别已存在';
+    $Self->{Translation}->{'FAQ language added!'} = 'FAQ语言已添加!';
+    $Self->{Translation}->{'FAQ language updated!'} = 'FAQ语言已更新!';
+    $Self->{Translation}->{'The name is required!'} = '名称是必需的!';
     $Self->{Translation}->{'This language already exists!'} = '该语言已经存在!';
 
     # Template: AgentDashboardFAQOverview
 
     # Template: AgentFAQAdd
-    $Self->{Translation}->{'Add FAQ Article'} = '增加 FAQ 文章';
-    $Self->{Translation}->{'Keywords'} = '';
-    $Self->{Translation}->{'A category is required.'} = '目录是必须的.';
-    $Self->{Translation}->{'Approval'} = '认可度';
+    $Self->{Translation}->{'Add FAQ Article'} = '添加FAQ文章';
+    $Self->{Translation}->{'Keywords'} = '关键字';
+    $Self->{Translation}->{'A category is required.'} = '类别是必需的.';
+    $Self->{Translation}->{'Approval'} = '审批';
 
     # Template: AgentFAQCategory
-    $Self->{Translation}->{'FAQ Category Management'} = 'FAQ 目录管理';
-    $Self->{Translation}->{'Add category'} = '';
-    $Self->{Translation}->{'Delete Category'} = '删除目录';
+    $Self->{Translation}->{'FAQ Category Management'} = 'FAQ类别管理';
+    $Self->{Translation}->{'Add category'} = '添加类别';
+    $Self->{Translation}->{'Delete Category'} = '删除类别';
     $Self->{Translation}->{'Ok'} = '';
-    $Self->{Translation}->{'Add Category'} = '增加目录';
-    $Self->{Translation}->{'Edit Category'} = '编辑目录';
-    $Self->{Translation}->{'Will be shown as comment in Explorer.'} = '注释将浏览时显示.';
-    $Self->{Translation}->{'Please select at least one permission group.'} = '';
-    $Self->{Translation}->{'Agent groups that can access articles in this category.'} = '';
-    $Self->{Translation}->{'Do you really want to delete this category?'} = '';
+    $Self->{Translation}->{'Add Category'} = '添加类别';
+    $Self->{Translation}->{'Edit Category'} = '编辑类别';
+    $Self->{Translation}->{'Will be shown as comment in Explorer.'} = '将作为注释在浏览时显示.';
+    $Self->{Translation}->{'Please select at least one permission group.'} = '请至少选择一个组权限.';
+    $Self->{Translation}->{'Agent groups that can access articles in this category.'} = '能访问此类别文章的服务人员组';
+    $Self->{Translation}->{'Do you really want to delete this category?'} = '你确定要删除这个类别吗?';
     $Self->{Translation}->{'You can not delete this category. It is used in at least one FAQ article and/or is parent of at least one other category'} =
-        '';
-    $Self->{Translation}->{'This category is used in the following FAQ article(s)'} = '';
-    $Self->{Translation}->{'This category is parent of the following subcategories'} = '';
+        '你不能删除这个类别. 该类别至少包含一篇FAQ文章，或者至少包含一个子类别。';
+    $Self->{Translation}->{'This category is used in the following FAQ article(s)'} = '下列FAQ文章使用该类别';
+    $Self->{Translation}->{'This category is parent of the following subcategories'} = '该类别是下列子类别的父类别';
 
     # Template: AgentFAQDelete
-    $Self->{Translation}->{'Do you really want to delete this FAQ article?'} = '真的要删除该 FAQ 文章吗?';
+    $Self->{Translation}->{'Do you really want to delete this FAQ article?'} = '你确定要删除该FAQ文章吗?';
 
     # Template: AgentFAQEdit
     $Self->{Translation}->{'FAQ'} = '';
 
     # Template: AgentFAQExplorer
-    $Self->{Translation}->{'FAQ Explorer'} = 'FAQ 浏览器';
-    $Self->{Translation}->{'Quick Search'} = '';
-    $Self->{Translation}->{'Wildcards are allowed.'} = '';
-    $Self->{Translation}->{'Advanced Search'} = '';
-    $Self->{Translation}->{'Subcategories'} = '子目录';
-    $Self->{Translation}->{'FAQ Articles'} = '';
-    $Self->{Translation}->{'No subcategories found.'} = '没有找到子目录.';
+    $Self->{Translation}->{'FAQ Explorer'} = 'FAQ浏览器';
+    $Self->{Translation}->{'Quick Search'} = '快速搜索';
+    $Self->{Translation}->{'Wildcards are allowed.'} = '允许使用通配符。';
+    $Self->{Translation}->{'Advanced Search'} = '高级搜索';
+    $Self->{Translation}->{'Subcategories'} = '子类别';
+    $Self->{Translation}->{'FAQ Articles'} = 'FAQ文章';
+    $Self->{Translation}->{'No subcategories found.'} = '没有找到子类别.';
 
     # Template: AgentFAQHistory
 
     # Template: AgentFAQJournalOverviewSmall
-    $Self->{Translation}->{'No FAQ Journal data found.'} = '';
+    $Self->{Translation}->{'No FAQ Journal data found.'} = '没有找到FAQ日志数据.';
 
     # Template: AgentFAQLanguage
-    $Self->{Translation}->{'FAQ Language Management'} = 'FAQ 语言管理';
+    $Self->{Translation}->{'FAQ Language Management'} = 'FAQ语言管理';
     $Self->{Translation}->{'Use this feature if you want to work with multiple languges.'} =
-        '';
-    $Self->{Translation}->{'Add language'} = '';
+        '如果需要支持多种语言，请使用此功能.';
+    $Self->{Translation}->{'Add language'} = '添加语言';
     $Self->{Translation}->{'Delete Language'} = '删除语言';
-    $Self->{Translation}->{'Add Language'} = '增加语言';
+    $Self->{Translation}->{'Add Language'} = '添加语言';
     $Self->{Translation}->{'Edit Language'} = '编辑语言';
-    $Self->{Translation}->{'Do you really want to delete this language?'} = '';
+    $Self->{Translation}->{'Do you really want to delete this language?'} = '你确定要删除这个语言吗?';
     $Self->{Translation}->{'You can not delete this language. It is used in at least one FAQ article!'} =
-        '';
-    $Self->{Translation}->{'This language is used in the following FAQ Article(s)'} = '';
+        '你不能删除这个语言. 至少有一篇FAQ文章使用该语言!';
+    $Self->{Translation}->{'This language is used in the following FAQ Article(s)'} = '下列FAQ文章使用该语言';
 
     # Template: AgentFAQOverviewNavBar
-    $Self->{Translation}->{'Context Settings'} = '';
-    $Self->{Translation}->{'FAQ articles per page'} = '';
+    $Self->{Translation}->{'Context Settings'} = '上下文设置';
+    $Self->{Translation}->{'FAQ articles per page'} = '每页显示的FAQ文章个数';
 
     # Template: AgentFAQOverviewSmall
-    $Self->{Translation}->{'No FAQ data found.'} = '没有找到 FAQ 数据.';
-    $Self->{Translation}->{'A generic FAQ table'} = '';
+    $Self->{Translation}->{'No FAQ data found.'} = '没有找到FAQ数据.';
+    $Self->{Translation}->{'A generic FAQ table'} = '通用的FAQ表';
     $Self->{Translation}->{'","50'} = '';
 
     # Template: AgentFAQPrint
-    $Self->{Translation}->{'FAQ-Info'} = '';
-    $Self->{Translation}->{'Votes'} = '评分';
-    $Self->{Translation}->{'Last update'} = '';
+    $Self->{Translation}->{'FAQ-Info'} = 'FAQ信息';
+    $Self->{Translation}->{'Votes'} = '投票次数';
+    $Self->{Translation}->{'Last update'} = '上次更新';
 
     # Template: AgentFAQSearch
-    $Self->{Translation}->{'Keyword'} = '';
-    $Self->{Translation}->{'Vote (e. g. Equals 10 or GreaterThan 60)'} = '';
-    $Self->{Translation}->{'Rate (e. g. Equals 25% or GreaterThan 75%)'} = '';
-    $Self->{Translation}->{'Approved'} = '';
-    $Self->{Translation}->{'Last changed by'} = '';
-    $Self->{Translation}->{'FAQ Article Create Time (before/after)'} = '';
-    $Self->{Translation}->{'FAQ Article Create Time (between)'} = '';
-    $Self->{Translation}->{'FAQ Article Change Time (before/after)'} = '';
-    $Self->{Translation}->{'FAQ Article Change Time (between)'} = '';
-    $Self->{Translation}->{'Run Search'} = '';
+    $Self->{Translation}->{'Keyword'} = '关键字';
+    $Self->{Translation}->{'Vote (e. g. Equals 10 or GreaterThan 60)'} = '投票次数 (例如，= 10 或 >= 60)';
+    $Self->{Translation}->{'Rate (e. g. Equals 25% or GreaterThan 75%)'} = '评分 (例如，= 10% 或 >= 75%)';
+    $Self->{Translation}->{'Approved'} = '通过审批';
+    $Self->{Translation}->{'Last changed by'} = '上次修改人';
+    $Self->{Translation}->{'FAQ Item Create Time (before/after)'} = 'FAQ文章创建时间（之前/之后）';
+    $Self->{Translation}->{'FAQ Item Create Time (between)'} = 'FAQ文章创建时间（之间）';
+    $Self->{Translation}->{'FAQ Item Change Time (before/after)'} = 'FAQ文章创建时间（之前/之后）';
+    $Self->{Translation}->{'FAQ Item Change Time (between)'} = 'FAQ文章创建时间（之间）';
+    $Self->{Translation}->{'Run Search'} = '搜索';
 
     # Template: AgentFAQSearchOpenSearchDescriptionFAQNumber
 
     # Template: AgentFAQSearchOpenSearchDescriptionFulltext
-    $Self->{Translation}->{'FAQFulltext'} = '';
+    $Self->{Translation}->{'FAQFulltext'} = 'FAQ全文';
 
     # Template: AgentFAQSearchResultPrint
 
     # Template: AgentFAQSearchSmall
     $Self->{Translation}->{'FAQ Search'} = '';
-    $Self->{Translation}->{'Search-Profile as Template?'} = '';
+    $Self->{Translation}->{'Search-Profile as Template?'} = '搜索配置作为模板？';
     $Self->{Translation}->{'No vote settings'} = '';
     $Self->{Translation}->{'Specific votes'} = '';
     $Self->{Translation}->{'No rate settings'} = '';
     $Self->{Translation}->{'Specific rate'} = '';
-    $Self->{Translation}->{'FAQ Article Create Time'} = '';
+    $Self->{Translation}->{'FAQ Article Create Time'} = 'FAQ文章创建时间';
     $Self->{Translation}->{'Specific date'} = '';
     $Self->{Translation}->{'Date range'} = '';
-    $Self->{Translation}->{'FAQ Article Change Time'} = '';
+    $Self->{Translation}->{'FAQ Article Change Time'} = 'FAQ文章修改时间';
 
     # Template: AgentFAQZoom
-    $Self->{Translation}->{'FAQ Information'} = 'FAQ 详细信息';
+    $Self->{Translation}->{'FAQ Information'} = 'FAQ详细信息';
     $Self->{Translation}->{'","18'} = '';
     $Self->{Translation}->{'","25'} = '';
-    $Self->{Translation}->{'Rating'} = '评分';
-    $Self->{Translation}->{'Rating %'} = '';
-    $Self->{Translation}->{'out of 5'} = '超过五星';
-    $Self->{Translation}->{'No votes found!'} = '没有找到评分!';
-    $Self->{Translation}->{'No votes found! Be the first one to rate this FAQ article.'} = '没有找到评分! 这将是该 FAQ 文章的第一个评分.';
-    $Self->{Translation}->{'Download Attachment'} = '';
+    $Self->{Translation}->{'Rating'} = '投票';
+    $Self->{Translation}->{'Rating %'} = '评价 %';
+    $Self->{Translation}->{'out of 5'} = '(5分制)';
+    $Self->{Translation}->{'No votes found!'} = '没有找到投票!';
+    $Self->{Translation}->{'No votes found! Be the first one to rate this FAQ article.'} = '没有找到投票! 这将是该 FAQ 文章的第一个投票.';
+    $Self->{Translation}->{'Download Attachment'} = '下载附件';
     $Self->{Translation}->{'How helpful was this article? Please give us your rating and help to improve the FAQ Database. Thank You!'} =
-        '';
+        '此文档对您有帮助吗？请给出您的评价，谢谢！';
     $Self->{Translation}->{'not helpful'} = '没有帮助';
     $Self->{Translation}->{'very helpful'} = '很有帮助';
-    $Self->{Translation}->{'Vote'} = '';
+    $Self->{Translation}->{'Vote'} = '投票';
 
     # Template: AgentFAQZoomSmall
-    $Self->{Translation}->{'Insert FAQ Text'} = '';
-    $Self->{Translation}->{'Insert Full FAQ'} = '';
-    $Self->{Translation}->{'Insert FAQ Link'} = '';
-    $Self->{Translation}->{'Insert FAQ Text & Link'} = '';
-    $Self->{Translation}->{'Insert Full FAQ & Link'} = '';
+    $Self->{Translation}->{'Insert FAQ Text'} = '插入FAQ文本';
+    $Self->{Translation}->{'Insert Full FAQ'} = '插入FAQ';
+    $Self->{Translation}->{'Insert FAQ Link'} = '插入FAQ链接';
+    $Self->{Translation}->{'Insert FAQ Text & Link'} = '插入FAQ正文和链接';
+    $Self->{Translation}->{'Insert Full FAQ & Link'} = '插入FAQ和链接';
 
     # Template: CustomerFAQExplorer
     $Self->{Translation}->{'No FAQ articles found.'} = '';
@@ -225,7 +225,7 @@ sub Data {
         '';
     $Self->{Translation}->{'CSS color for the voting result.'} = '';
     $Self->{Translation}->{'Cache Time To Leave for FAQ items.'} = '';
-    $Self->{Translation}->{'Category Management'} = '';
+    $Self->{Translation}->{'Category Management'} = '管理类别';
     $Self->{Translation}->{'Decimal places of the voting result.'} = '以十分制显示评分结果.';
     $Self->{Translation}->{'Default category name.'} = '默认的目录名.';
     $Self->{Translation}->{'Default language for FAQ articles on single language mode.'} = '';
@@ -274,11 +274,11 @@ sub Data {
     $Self->{Translation}->{'Defines where the \'Insert FAQ\' link will be displayed. Note: AgentTicketActionCommon includes AgentTicketNote, AgentTicketClose, AgentTicketFreeText, AgentTicketOwner, AgentTicketPending, AgentTicketPriority and AgentTicketResponsible.'} =
         '';
     $Self->{Translation}->{'Definition of FAQ item free text field.'} = '定义 FAQ 项目的不受限文字字段.';
-    $Self->{Translation}->{'Delete this FAQ'} = '删除';
-    $Self->{Translation}->{'Edit this FAQ'} = '编辑';
+    $Self->{Translation}->{'Delete this FAQ'} = '删除FAQ';
+    $Self->{Translation}->{'Edit this FAQ'} = '编辑FAQ';
     $Self->{Translation}->{'Enable multiple languages on FAQ module.'} = '';
     $Self->{Translation}->{'Enable voting mechanism on FAQ module.'} = '';
-    $Self->{Translation}->{'FAQ Journal'} = 'FAQ 日志';
+    $Self->{Translation}->{'FAQ Journal'} = 'FAQ日志';
     $Self->{Translation}->{'FAQ Journal Overview "Small" Limit'} = '';
     $Self->{Translation}->{'FAQ Overview "Small" Limit'} = '';
     $Self->{Translation}->{'FAQ limit per page for FAQ Journal Overview "Small"'} = '';
@@ -288,13 +288,13 @@ sub Data {
     $Self->{Translation}->{'FAQ-Area'} = '';
     $Self->{Translation}->{'Frontend module registration for the public interface.'} = '';
     $Self->{Translation}->{'Group for the approval of FAQ articles.'} = '批准 FAQ 文章请求的群组.';
-    $Self->{Translation}->{'History of this FAQ'} = '历史';
+    $Self->{Translation}->{'History of this FAQ'} = 'FAQ文章历史信息';
     $Self->{Translation}->{'Include internal fields on a FAQ based Ticket.'} = '';
     $Self->{Translation}->{'Include the name of each field in a FAQ based Ticket.'} = '';
     $Self->{Translation}->{'Interfaces where the quicksearch should be shown.'} = '在介面的那里显示快速搜索.';
-    $Self->{Translation}->{'Journal'} = '';
-    $Self->{Translation}->{'Language Management'} = '';
-    $Self->{Translation}->{'Link another object to this FAQ item'} = '链接';
+    $Self->{Translation}->{'Journal'} = '日志';
+    $Self->{Translation}->{'Language Management'} = '管理语言';
+    $Self->{Translation}->{'Link another object to this FAQ item'} = '链接对象至FAQ';
     $Self->{Translation}->{'List of state types which can be used in the agent interface.'} =
         '';
     $Self->{Translation}->{'List of state types which can be used in the customer interface.'} =
@@ -321,8 +321,8 @@ sub Data {
         '';
     $Self->{Translation}->{'Module to generate html OpenSearch profile for short faq search.'} =
         '';
-    $Self->{Translation}->{'New FAQ Article'} = '添加新文章';
-    $Self->{Translation}->{'New FAQ articles need approval before they get published.'} = '新的 FAQ 文章在发布前需要批准.';
+    $Self->{Translation}->{'New FAQ Article'} = '创建FAQ文章';
+    $Self->{Translation}->{'New FAQ articles need approval before they get published.'} = '';
     $Self->{Translation}->{'Number of FAQ articles to be displayed in the FAQ Explorer of the customer interface.'} =
         '';
     $Self->{Translation}->{'Number of FAQ articles to be displayed in the FAQ Explorer of the public interface.'} =
@@ -338,10 +338,10 @@ sub Data {
         '';
     $Self->{Translation}->{'Parameters for the pages (in which the FAQ items are shown) of the small FAQ overview.'} =
         '';
-    $Self->{Translation}->{'Print this FAQ'} = '打印';
+    $Self->{Translation}->{'Print this FAQ'} = '打印FAQ';
     $Self->{Translation}->{'Queue for the approval of FAQ articles.'} = '批准 FAQ 文章请求的队列.';
     $Self->{Translation}->{'Rates for voting. Key must be in percent.'} = '好评率, 键值必须在百分比以内.';
-    $Self->{Translation}->{'Search FAQ'} = '';
+    $Self->{Translation}->{'Search FAQ'} = '搜索FAQ';
     $Self->{Translation}->{'Set the default height (in pixels) of inline HTML fields in AgentFAQZoom.'} =
         '';
     $Self->{Translation}->{'Set the default height (in pixels) of inline HTML fields in CustomerFAQZoom (and PublicFAQZoom).'} =
@@ -391,31 +391,37 @@ sub Data {
     #
     # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
     #
-    $Self->{Translation}->{'A category needs at least one permission group!'} = '至少要指定一个群组对该目录拥有权限!';
-    $Self->{Translation}->{'A category should have a comment!'} = '目录应该要有一个注释!';
-    $Self->{Translation}->{'Agent groups which can access this category.'} = '哪一个群组可以访问此目录.';
+    $Self->{Translation}->{'A category needs at least one permission group!'} = '至少要指定一个群组对该类别拥有权限!';
+    $Self->{Translation}->{'A category should have a comment!'} = '类别应该要有一个注释!';
+    $Self->{Translation}->{'Agent groups which can access this category.'} = '哪一个群组可以访问此类别.';
     $Self->{Translation}->{'Articles'} = '文章';
-    $Self->{Translation}->{'CSS color for the voting flag.'} = '评分标记的 CSS 颜色.';
-    $Self->{Translation}->{'Categories'} = '目录';
+    $Self->{Translation}->{'CSS color for the voting flag.'} = '投票标记的 CSS 颜色.';
+    $Self->{Translation}->{'Categories'} = '类别';
     $Self->{Translation}->{'DetailSearch'} = '高级搜索';
-    $Self->{Translation}->{'Do you really want to delete this Category?'} = '真的要删除该目录吗?';
+    $Self->{Translation}->{'Do you really want to delete this Category?'} = '真的要删除该类别吗?';
     $Self->{Translation}->{'Do you really want to delete this Language?'} = '真的要删除该语言吗?';
-    $Self->{Translation}->{'FAQ Category'} = 'FAQ 目录';
+    $Self->{Translation}->{'FAQ Category'} = 'FAQ类别';
     $Self->{Translation}->{'No category accessible. To create an article you need access to at least one category. Please check your group/category permission under -category menu-!'} =
-        '没有归类到目录. 要创建一篇文章需要归类到目录里, 请在 -目录菜单- 里选择您有权限创建文章的目录';
+        '没有归类到类别. 要创建一篇文章需要归类到类别里, 请在 -类别菜单- 里选择您有权限创建文章的类别';
     $Self->{Translation}->{'Show WYSIWYG editor in agent interface.'} = '在服务人员介面显示 WYSIWYG(所见即所得)编辑器.';
-    $Self->{Translation}->{'SubCategories'} = '子目录';
+    $Self->{Translation}->{'SubCategories'} = '子类别';
     $Self->{Translation}->{'The title is required.'} = '标题是必须的.';
-    $Self->{Translation}->{'This Category is parent of the following SubCategories'} = '该目录是以下子目录的父目录';
-    $Self->{Translation}->{'This Category is used in the following FAQ Artice(s)'} = '该目录正被以下的 FAQ 文章所使用';
+    $Self->{Translation}->{'This Category is parent of the following SubCategories'} = '该类别是以下子类别的父类别';
+    $Self->{Translation}->{'This Category is used in the following FAQ Artice(s)'} = '该类别正被以下的 FAQ 文章所使用';
     $Self->{Translation}->{'This Language is used in the following FAQ Article(s)'} = '该语言正被以下的 FAQ 文章所使用';
-    $Self->{Translation}->{'This category already exists!'} = '该目录已经在存在!';
+    $Self->{Translation}->{'This category already exists!'} = '该类别已经在存在!';
     $Self->{Translation}->{'Updated'} = '更新';
     $Self->{Translation}->{'You can not delete this Category. It is used in at least one FAQ Article! and/or is parent of at least another Category'} =
-        '不能删除该目录. 它至少还被一篇 FAQ 文章所使用 并/或 它是其中目录的父目录!';
+        '不能删除该类别. 它至少还被一篇FAQ文章所使用 并/或 它是其中类别的父类别!';
     $Self->{Translation}->{'You can not delete this Language. It is used in at least one FAQ Article!'} =
-        '不能删除该语言. 它至少还被一篇 FAQ 文章所使用!';
-
+        '不能删除该语言. 它至少还被一篇FAQ文章所使用!';
+    $Self->{Translation}->{'Rate'} = '评分';
+    $Self->{Translation}->{'Last Changed by'} = '最后修改人';
+    $Self->{Translation}->{'Equals'} = ' = ';
+    $Self->{Translation}->{'GreaterThan'} = ' > ';
+    $Self->{Translation}->{'GreaterThanEquals'} = ' >= ';
+    $Self->{Translation}->{'SmallerThan'} = '< ';
+    $Self->{Translation}->{'SmallerThanEquals'} = ' <= ';
 }
 
 1;
