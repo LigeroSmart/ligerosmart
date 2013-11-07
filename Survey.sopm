@@ -49,7 +49,9 @@
         <File Permission="644" Location="Kernel/Modules/AgentSurveyStats.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentSurveyZoom.pm"/>
         <File Permission="644" Location="Kernel/Modules/PublicSurvey.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/SurveyMenuGeneric.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/SurveyOverviewSmall.pm"/>
+
         <!-- this file is not needed, but added to pass OTRSCodePolicy
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AAASurvey.dtl"/>
         -->
