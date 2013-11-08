@@ -9,8 +9,6 @@
 
 package Kernel::Language::nb_NO_Survey;
 
-use utf8;
-
 use strict;
 use warnings;
 
@@ -43,26 +41,23 @@ sub Data {
     $Self->{Translation}->{'Stats Detail'} = '';
     $Self->{Translation}->{'You have already answered the survey.'} = '';
 
-    # Template: AgentSurvey
+    # Template: AgentSurveyAdd
     $Self->{Translation}->{'Create New Survey'} = 'Lag ny spørreundersøkelse';
     $Self->{Translation}->{'Introduction'} = 'Introduksjon';
     $Self->{Translation}->{'Internal Description'} = 'Intern beskrivelse';
+
+    # Template: AgentSurveyEdit
     $Self->{Translation}->{'Edit General Info'} = 'Rediger generell informasjon';
-    $Self->{Translation}->{'General Info'} = 'Generell informasjon';
-    $Self->{Translation}->{'Stats Overview of'} = '';
-    $Self->{Translation}->{'Requests Table'} = 'Tabellforespørsel';
-    $Self->{Translation}->{'Send Time'} = 'Tid sendt';
-    $Self->{Translation}->{'Vote Time'} = 'Tid svart';
-    $Self->{Translation}->{'Survey Stat Details'} = 'Detaljstatistikk for spørreundersøkelse';
-    $Self->{Translation}->{'go back to stats overview'} = 'gå tilbake til statistikkoversikten';
-    $Self->{Translation}->{'Go back'} = 'Gå tilbake';
+    $Self->{Translation}->{'Survey#'} = '';
 
     # Template: AgentSurveyEditQuestions
     $Self->{Translation}->{'Edit Questions'} = 'Rediger spørsmål';
     $Self->{Translation}->{'Add Question'} = 'Legg til spørsmål';
     $Self->{Translation}->{'Type the question'} = 'Skriv inn spørsmålet';
+    $Self->{Translation}->{'Answer required'} = '';
     $Self->{Translation}->{'Survey Questions'} = 'Spørsmål til spørreundersøkelsen';
     $Self->{Translation}->{'Question'} = 'Spørsmål';
+    $Self->{Translation}->{'Answer Required'} = '';
     $Self->{Translation}->{'No questions saved for this survey.'} = 'Ingen spørsmål lagret for denne spørreundersøkelsen.';
     $Self->{Translation}->{'Edit Question'} = 'Rediger spørsmål';
     $Self->{Translation}->{'go back to questions'} = 'tilbake til spørsmålene';
@@ -70,6 +65,7 @@ sub Data {
     $Self->{Translation}->{'Add Answer'} = 'Legg til svaralternativer';
     $Self->{Translation}->{'This doesn\'t have several answers, a textarea will be displayed.'} =
         'Dette spørsmålet har ikke mulighet for svaralternativer. Her vil det kun bli vist en tekstboks.';
+    $Self->{Translation}->{'Go back'} = 'Gå tilbake';
     $Self->{Translation}->{'Edit Answer'} = 'Rediger svar';
     $Self->{Translation}->{'go back to edit question'} = 'gå tilbake for å redigere spørsmål';
 
@@ -83,11 +79,18 @@ sub Data {
     $Self->{Translation}->{'Notification Body'} = 'Melding i varsel-e-post';
     $Self->{Translation}->{'Changed By'} = 'Endret av';
 
+    # Template: AgentSurveyStats
+    $Self->{Translation}->{'Stats Overview of'} = '';
+    $Self->{Translation}->{'Requests Table'} = 'Tabellforespørsel';
+    $Self->{Translation}->{'Send Time'} = 'Tid sendt';
+    $Self->{Translation}->{'Vote Time'} = 'Tid svart';
+    $Self->{Translation}->{'Survey Stat Details'} = 'Detaljstatistikk for spørreundersøkelse';
+    $Self->{Translation}->{'go back to stats overview'} = 'gå tilbake til statistikkoversikten';
+
     # Template: AgentSurveyZoom
     $Self->{Translation}->{'Survey Information'} = 'Informasjon om spørreundersøkelsen';
     $Self->{Translation}->{'Sent requests'} = 'Sendte forespørsler';
     $Self->{Translation}->{'Received surveys'} = 'Mottatte spørreundersøkelser';
-    $Self->{Translation}->{'Stats Details'} = 'Detaljer om statistikken';
     $Self->{Translation}->{'Survey Details'} = 'Detaljer om spørreundersøkelsen';
     $Self->{Translation}->{'Survey Results Graph'} = 'Grafisk fremstilling av svarene i spørreundersøkelsen';
     $Self->{Translation}->{'No stat results.'} = 'Ingen resultater';
@@ -110,8 +113,6 @@ sub Data {
         'Standard melding i varsel-e-post til kunder om en ny spørreundersøkelse.';
     $Self->{Translation}->{'Default sender for the notification email to customers about new survey.'} =
         'Standard avsender i varsel-e-post til kunder om en ny spørreundersøkelse.';
-    $Self->{Translation}->{'Surveys will not be sent to the configured email addresses.'} =
-        '';
     $Self->{Translation}->{'Default subject for the notification email to customers about new survey.'} =
         'Standard overskrift i varsel-e-post til kunder om en ny spørreundersøkelse.';
     $Self->{Translation}->{'Defines an overview module to show the small view of a survey list.'} =
@@ -124,7 +125,15 @@ sub Data {
         '';
     $Self->{Translation}->{'Defines the shown columns in the survey overview. This option has no effect on the position of the columns.'} =
         '';
+    $Self->{Translation}->{'Edit Survey General Information'} = '';
+    $Self->{Translation}->{'Edit Survey Questions'} = '';
     $Self->{Translation}->{'Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time.'} =
+        '';
+    $Self->{Translation}->{'Frontend module registration for survey add in the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Frontend module registration for survey edit in the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Frontend module registration for survey stats in the agent interface.'} =
         '';
     $Self->{Translation}->{'Frontend module registration for survey zoom in the agent interface.'} =
         '';
@@ -134,13 +143,25 @@ sub Data {
     $Self->{Translation}->{'Parameters for the pages (in which the surveys are shown) of the small survey overview.'} =
         '';
     $Self->{Translation}->{'Public Survey.'} = '';
+    $Self->{Translation}->{'Shows a link in the menu to edit a survey in its zoom view of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Shows a link in the menu to edit survey questions in its zoom view of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Shows a link in the menu to go back in the survey zoom view of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Shows a link in the menu to zoom into the survey statistics details in its zoom view of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Survey Edit Module.'} = '';
     $Self->{Translation}->{'Survey Overview "Small" Limit'} = '';
+    $Self->{Translation}->{'Survey Stats Module.'} = '';
     $Self->{Translation}->{'Survey Zoom Module.'} = '';
     $Self->{Translation}->{'Survey limit per page for Survey Overview "Small"'} = '';
+    $Self->{Translation}->{'Surveys will not be sent to the configured email addresses.'} = '';
     $Self->{Translation}->{'The identifier for a survey, e.g. Survey#, MySurvey#. The default is Survey#.'} =
         'Standard identifikator for en undersøklse, f.eks. Spørreundersøkelse#, MinSpørreundersøkelse#. Standard er Survey#.';
     $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket is closed.'} =
         '';
+    $Self->{Translation}->{'Zoom Into Statistics Details'} = '';
 
     #
     # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
@@ -148,7 +169,9 @@ sub Data {
     $Self->{Translation}->{'Changed Time'} = 'Tid endret';
     $Self->{Translation}->{'Created By'} = 'Opprettet av';
     $Self->{Translation}->{'Created Time'} = 'Tid opprettet';
+    $Self->{Translation}->{'General Info'} = 'Generell informasjon';
     $Self->{Translation}->{'Please answer the next questions'} = 'Vennligst svar på de neste spørsmålene';
+    $Self->{Translation}->{'Stats Details'} = 'Detaljer om statistikken';
 
 }
 

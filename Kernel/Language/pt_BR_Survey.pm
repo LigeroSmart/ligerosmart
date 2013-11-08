@@ -9,8 +9,6 @@
 
 package Kernel::Language::pt_BR_Survey;
 
-use utf8;
-
 use strict;
 use warnings;
 
@@ -43,26 +41,23 @@ sub Data {
     $Self->{Translation}->{'Stats Detail'} = '';
     $Self->{Translation}->{'You have already answered the survey.'} = '';
 
-    # Template: AgentSurvey
+    # Template: AgentSurveyAdd
     $Self->{Translation}->{'Create New Survey'} = 'Criar Nova Pesquisa';
     $Self->{Translation}->{'Introduction'} = 'Introdução';
     $Self->{Translation}->{'Internal Description'} = 'Descrição Interna';
+
+    # Template: AgentSurveyEdit
     $Self->{Translation}->{'Edit General Info'} = 'Editar Informações Gerais';
-    $Self->{Translation}->{'General Info'} = 'Informação Geral';
-    $Self->{Translation}->{'Stats Overview of'} = '';
-    $Self->{Translation}->{'Requests Table'} = 'Tabela de Requisições';
-    $Self->{Translation}->{'Send Time'} = 'Hora de Envio';
-    $Self->{Translation}->{'Vote Time'} = 'Hora do Voto';
-    $Self->{Translation}->{'Survey Stat Details'} = 'Detalhes de Estatísticas da Pesquisa';
-    $Self->{Translation}->{'go back to stats overview'} = 'voltar ao resumo de estatísticas';
-    $Self->{Translation}->{'Go back'} = 'Voltar';
+    $Self->{Translation}->{'Survey#'} = 'Pesquisa#';
 
     # Template: AgentSurveyEditQuestions
     $Self->{Translation}->{'Edit Questions'} = 'Editar Preguntas';
     $Self->{Translation}->{'Add Question'} = 'Adicionar Pregunta';
     $Self->{Translation}->{'Type the question'} = 'Escreva a pergunta';
+    $Self->{Translation}->{'Answer required'} = '';
     $Self->{Translation}->{'Survey Questions'} = 'Perguntas da Pesquisa';
     $Self->{Translation}->{'Question'} = 'Pregunta';
+    $Self->{Translation}->{'Answer Required'} = '';
     $Self->{Translation}->{'No questions saved for this survey.'} = 'Nenhuma questão salva para esta pesquisa.';
     $Self->{Translation}->{'Edit Question'} = 'Editar Pregunta';
     $Self->{Translation}->{'go back to questions'} = 'voltar às preguntas';
@@ -70,6 +65,7 @@ sub Data {
     $Self->{Translation}->{'Add Answer'} = 'Adicionar Resposta';
     $Self->{Translation}->{'This doesn\'t have several answers, a textarea will be displayed.'} =
         'Esta pergunta não possui várias respostas, uma área de texto será mostrada';
+    $Self->{Translation}->{'Go back'} = 'Voltar';
     $Self->{Translation}->{'Edit Answer'} = 'Editar Resposta';
     $Self->{Translation}->{'go back to edit question'} = 'voltar para editar pergunta';
 
@@ -82,6 +78,14 @@ sub Data {
     $Self->{Translation}->{'Notification Subject'} = 'Assunto da Notificação';
     $Self->{Translation}->{'Notification Body'} = 'Corpo da Notificação';
     $Self->{Translation}->{'Changed By'} = 'Modificado por';
+
+    # Template: AgentSurveyStats
+    $Self->{Translation}->{'Stats Overview of'} = '';
+    $Self->{Translation}->{'Requests Table'} = 'Tabela de Requisições';
+    $Self->{Translation}->{'Send Time'} = 'Hora de Envio';
+    $Self->{Translation}->{'Vote Time'} = 'Hora do Voto';
+    $Self->{Translation}->{'Survey Stat Details'} = 'Detalhes de Estatísticas da Pesquisa';
+    $Self->{Translation}->{'go back to stats overview'} = 'voltar ao resumo de estatísticas';
 
     # Template: AgentSurveyZoom
     $Self->{Translation}->{'Survey Information'} = 'Informação da Pesquisa';
@@ -110,8 +114,6 @@ sub Data {
         '';
     $Self->{Translation}->{'Default sender for the notification email to customers about new survey.'} =
         '';
-    $Self->{Translation}->{'Surveys will not be sent to the configured email addresses.'} =
-        '';
     $Self->{Translation}->{'Default subject for the notification email to customers about new survey.'} =
         '';
     $Self->{Translation}->{'Defines an overview module to show the small view of a survey list.'} =
@@ -124,7 +126,15 @@ sub Data {
         '';
     $Self->{Translation}->{'Defines the shown columns in the survey overview. This option has no effect on the position of the columns.'} =
         '';
+    $Self->{Translation}->{'Edit Survey General Information'} = '';
+    $Self->{Translation}->{'Edit Survey Questions'} = '';
     $Self->{Translation}->{'Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time.'} =
+        '';
+    $Self->{Translation}->{'Frontend module registration for survey add in the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Frontend module registration for survey edit in the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Frontend module registration for survey stats in the agent interface.'} =
         '';
     $Self->{Translation}->{'Frontend module registration for survey zoom in the agent interface.'} =
         '';
@@ -134,13 +144,25 @@ sub Data {
     $Self->{Translation}->{'Parameters for the pages (in which the surveys are shown) of the small survey overview.'} =
         '';
     $Self->{Translation}->{'Public Survey.'} = '';
+    $Self->{Translation}->{'Shows a link in the menu to edit a survey in its zoom view of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Shows a link in the menu to edit survey questions in its zoom view of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Shows a link in the menu to go back in the survey zoom view of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Shows a link in the menu to zoom into the survey statistics details in its zoom view of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Survey Edit Module.'} = '';
     $Self->{Translation}->{'Survey Overview "Small" Limit'} = '';
+    $Self->{Translation}->{'Survey Stats Module.'} = '';
     $Self->{Translation}->{'Survey Zoom Module.'} = '';
     $Self->{Translation}->{'Survey limit per page for Survey Overview "Small"'} = '';
+    $Self->{Translation}->{'Surveys will not be sent to the configured email addresses.'} = '';
     $Self->{Translation}->{'The identifier for a survey, e.g. Survey#, MySurvey#. The default is Survey#.'} =
         '';
     $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket is closed.'} =
         '';
+    $Self->{Translation}->{'Zoom Into Statistics Details'} = '';
 
     #
     # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
@@ -149,7 +171,7 @@ sub Data {
     $Self->{Translation}->{'Created By'} = 'Criado por';
     $Self->{Translation}->{'Created Time'} = 'Hora de Crição';
     $Self->{Translation}->{'Please answer the next questions'} = 'Por favor, responda as seguintes perguntas';
-    $Self->{Translation}->{'Survey#'} = 'Pesquisa#';
+    $Self->{Translation}->{'Stats Details'} = 'Detalhes de Estatísticas';
 
 }
 

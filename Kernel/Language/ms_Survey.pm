@@ -9,8 +9,6 @@
 
 package Kernel::Language::ms_Survey;
 
-use utf8;
-
 use strict;
 use warnings;
 
@@ -43,26 +41,23 @@ sub Data {
     $Self->{Translation}->{'Stats Detail'} = 'Statistik Terperinchi';
     $Self->{Translation}->{'You have already answered the survey.'} = 'Anda telah menjawab kaji selidik.';
 
-    # Template: AgentSurvey
+    # Template: AgentSurveyAdd
     $Self->{Translation}->{'Create New Survey'} = 'Buat Survey Baru';
     $Self->{Translation}->{'Introduction'} = 'Pengenalan';
     $Self->{Translation}->{'Internal Description'} = 'Description dalaman';
+
+    # Template: AgentSurveyEdit
     $Self->{Translation}->{'Edit General Info'} = 'Edit Maklumat Umum';
-    $Self->{Translation}->{'General Info'} = 'Maklumat Umum';
-    $Self->{Translation}->{'Stats Overview of'} = 'Gambaran Keseluruhan Statistik daripada';
-    $Self->{Translation}->{'Requests Table'} = 'Jadual permintaan';
-    $Self->{Translation}->{'Send Time'} = 'Masa Hantar';
-    $Self->{Translation}->{'Vote Time'} = 'Masa Undi';
-    $Self->{Translation}->{'Survey Stat Details'} = 'Penyiasatan Details Stat';
-    $Self->{Translation}->{'go back to stats overview'} = 'kembali ke Statistik gambaran keseluruhan';
-    $Self->{Translation}->{'Go back'} = 'Kembali';
+    $Self->{Translation}->{'Survey#'} = 'Penyiasatan#';
 
     # Template: AgentSurveyEditQuestions
     $Self->{Translation}->{'Edit Questions'} = 'Edit Soalan';
     $Self->{Translation}->{'Add Question'} = 'Tambah Soalan';
     $Self->{Translation}->{'Type the question'} = 'Taip soalan';
+    $Self->{Translation}->{'Answer required'} = 'Jawapan diperlukan';
     $Self->{Translation}->{'Survey Questions'} = 'Penyiasatan Soalan';
     $Self->{Translation}->{'Question'} = 'Soalan';
+    $Self->{Translation}->{'Answer Required'} = '';
     $Self->{Translation}->{'No questions saved for this survey.'} = 'Tiada soalan yang disimpan untuk kajian ini.';
     $Self->{Translation}->{'Edit Question'} = 'Edit Soalan';
     $Self->{Translation}->{'go back to questions'} = 'kembali kepada soalan-soalan';
@@ -70,9 +65,9 @@ sub Data {
     $Self->{Translation}->{'Add Answer'} = 'Tambah Jawab';
     $Self->{Translation}->{'This doesn\'t have several answers, a textarea will be displayed.'} =
         'Ini tidak mempunyai beberapa jawapan, textarea akan dipaparkan.';
+    $Self->{Translation}->{'Go back'} = 'Kembali';
     $Self->{Translation}->{'Edit Answer'} = 'Edit Jawapan';
     $Self->{Translation}->{'go back to edit question'} = 'kembali untuk mengedit soalan';
-    $Self->{Translation}->{'Answer required'} = 'Jawapan diperlukan';
 
     # Template: AgentSurveyOverviewNavBar
     $Self->{Translation}->{'Context Settings'} = 'konteks Tetapan';
@@ -84,11 +79,18 @@ sub Data {
     $Self->{Translation}->{'Notification Body'} = 'Badan Pemberitahuan';
     $Self->{Translation}->{'Changed By'} = 'Ditukar dengan';
 
+    # Template: AgentSurveyStats
+    $Self->{Translation}->{'Stats Overview of'} = 'Gambaran Keseluruhan Statistik daripada';
+    $Self->{Translation}->{'Requests Table'} = 'Jadual permintaan';
+    $Self->{Translation}->{'Send Time'} = 'Masa Hantar';
+    $Self->{Translation}->{'Vote Time'} = 'Masa Undi';
+    $Self->{Translation}->{'Survey Stat Details'} = 'Penyiasatan Details Stat';
+    $Self->{Translation}->{'go back to stats overview'} = 'kembali ke Statistik gambaran keseluruhan';
+
     # Template: AgentSurveyZoom
     $Self->{Translation}->{'Survey Information'} = 'Maklumat Ukur';
     $Self->{Translation}->{'Sent requests'} = 'menghantar permintaan';
     $Self->{Translation}->{'Received surveys'} = 'diterima kaji selidik';
-    $Self->{Translation}->{'Stats Details'} = 'Statistik terperinchi';
     $Self->{Translation}->{'Survey Details'} = 'Penyiasatan terperinchi';
     $Self->{Translation}->{'Survey Results Graph'} = 'Ukur Keputusan Graf';
     $Self->{Translation}->{'No stat results.'} = 'Tiada stat keputusan.';
@@ -111,8 +113,6 @@ sub Data {
         'Default badan untuk pemberitahuan e-mel kepada pelanggan tentang kaji selidik baru.';
     $Self->{Translation}->{'Default sender for the notification email to customers about new survey.'} =
         'Penghantar lalai untuk pemberitahuan e-mel kepada pelanggan tentang kaji selidik baru.';
-    $Self->{Translation}->{'Surveys will not be sent to the configured email addresses.'} =
-        'Ukur tidak akan dihantar ke alamat e-mel yang dikonfigurasi.';
     $Self->{Translation}->{'Default subject for the notification email to customers about new survey.'} =
         'Tertakluk lalai untuk pemberitahuan e-mel kepada pelanggan tentang kaji selidik baru.';
     $Self->{Translation}->{'Defines an overview module to show the small view of a survey list.'} =
@@ -125,8 +125,16 @@ sub Data {
         'Mentakrifkan ketinggian lalai untuk penonton Teks Kaya untuk elemen Zoom Ukur.';
     $Self->{Translation}->{'Defines the shown columns in the survey overview. This option has no effect on the position of the columns.'} =
         'Mentakrifkan ruangan menunjukkan dalam gambaran kajian.Pilihan ini tidak mempunyai kesan ke atas kedudukan tiang.';
+    $Self->{Translation}->{'Edit Survey General Information'} = '';
+    $Self->{Translation}->{'Edit Survey Questions'} = '';
     $Self->{Translation}->{'Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time.'} =
         'Dayakan atau nyahdayakan Undi Papar Data skrin dalam antara muka awam untuk menunjukkan data hasil kajian tertentu apabila pelanggan cuba untuk menjawab kaji selidik kali kedua.';
+    $Self->{Translation}->{'Frontend module registration for survey add in the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Frontend module registration for survey edit in the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Frontend module registration for survey stats in the agent interface.'} =
+        '';
     $Self->{Translation}->{'Frontend module registration for survey zoom in the agent interface.'} =
         'Frontend pendaftaran modul untuk zoom kaji selidik dalam antara muka ejen.';
     $Self->{Translation}->{'Frontend module registration for the PublicSurvey object in the public Survey area.'} =
@@ -135,13 +143,25 @@ sub Data {
     $Self->{Translation}->{'Parameters for the pages (in which the surveys are shown) of the small survey overview.'} =
         'Parameter untuk halaman (di mana kaji selidik ditunjukkan) gambaran kajian kecil.';
     $Self->{Translation}->{'Public Survey.'} = 'Penyiasatan awam.';
+    $Self->{Translation}->{'Shows a link in the menu to edit a survey in its zoom view of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Shows a link in the menu to edit survey questions in its zoom view of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Shows a link in the menu to go back in the survey zoom view of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Shows a link in the menu to zoom into the survey statistics details in its zoom view of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Survey Edit Module.'} = '';
     $Self->{Translation}->{'Survey Overview "Small" Limit'} = 'Ukur Tinjauan Had "Kecil"';
+    $Self->{Translation}->{'Survey Stats Module.'} = '';
     $Self->{Translation}->{'Survey Zoom Module.'} = 'Penyiasatan Zoom Modul';
     $Self->{Translation}->{'Survey limit per page for Survey Overview "Small"'} = 'Had Penyiasatan setiap halaman untuk Tinjauan Survey "Kecil"';
+    $Self->{Translation}->{'Surveys will not be sent to the configured email addresses.'} = 'Ukur tidak akan dihantar ke alamat e-mel yang dikonfigurasi.';
     $Self->{Translation}->{'The identifier for a survey, e.g. Survey#, MySurvey#. The default is Survey#.'} =
         'Pengecam untuk kaji selidik, misalnya Penyiasatan # MySurvey #. Lalai adalah Penyiasatan#.';
     $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket is closed.'} =
         'Tiket modul acara untuk menghantar permintaan e-mel secara automatik kaji selidik kepada pelanggan jika tiket ditutup.';
+    $Self->{Translation}->{'Zoom Into Statistics Details'} = '';
 
     #
     # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
@@ -157,8 +177,9 @@ sub Data {
         'Mentakrifkan ruangan menunjukkan dalam gambaran kajian. Pilihan ini tidak mempunyai kesan ke atas kedudukan tiang.';
     $Self->{Translation}->{'Enable or disable the ShowVoteData screen on public interface to show data of an specific votation when customer tries to answer a survey by second time.'} =
         'Dayakan atau nyahdayakan Undi Papar Data skrin pada antara muka awam untuk menunjukkan data putaran tertentu apabila pelanggan cuba untuk menjawab kaji selidik oleh kali kedua.';
+    $Self->{Translation}->{'General Info'} = 'Maklumat Umum';
     $Self->{Translation}->{'Please answer the next questions'} = 'Sila jawab soalan seterusnya';
-    $Self->{Translation}->{'Survey#'} = 'Penyiasatan#';
+    $Self->{Translation}->{'Stats Details'} = 'Statistik terperinchi';
     $Self->{Translation}->{'This field is required'} = 'Bidang ini diperlukan';
     $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket gets closed.'} =
         'Tiket modul acara untuk menghantar permintaan e-mel secara automatik kaji selidik kepada pelanggan jika tiket mendapat ditutup.';

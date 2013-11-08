@@ -9,8 +9,6 @@
 
 package Kernel::Language::es_Survey;
 
-use utf8;
-
 use strict;
 use warnings;
 
@@ -33,7 +31,7 @@ sub Data {
     $Self->{Translation}->{'Checkbox (List)'} = '';
     $Self->{Translation}->{'Radio'} = '';
     $Self->{Translation}->{'Radio (List)'} = '';
-    $Self->{Translation}->{'Stats Overview'} = 'resúmen Estadisticas';
+    $Self->{Translation}->{'Stats Overview'} = 'Resumen de Estadisticas';
     $Self->{Translation}->{'Survey Description'} = 'Descripción de la Encuesta';
     $Self->{Translation}->{'Survey Introduction'} = 'Introducción de la Encuesta';
     $Self->{Translation}->{'Yes/No'} = '';
@@ -43,26 +41,23 @@ sub Data {
     $Self->{Translation}->{'Stats Detail'} = '';
     $Self->{Translation}->{'You have already answered the survey.'} = '';
 
-    # Template: AgentSurvey
+    # Template: AgentSurveyAdd
     $Self->{Translation}->{'Create New Survey'} = 'Crear Nueva Encuesta';
     $Self->{Translation}->{'Introduction'} = 'Introducción';
     $Self->{Translation}->{'Internal Description'} = 'Descripción Interna';
+
+    # Template: AgentSurveyEdit
     $Self->{Translation}->{'Edit General Info'} = 'Editar información General';
-    $Self->{Translation}->{'General Info'} = 'Información General';
-    $Self->{Translation}->{'Stats Overview of'} = '';
-    $Self->{Translation}->{'Requests Table'} = 'Tabla de Solicitudes';
-    $Self->{Translation}->{'Send Time'} = 'Tiempo de Envío';
-    $Self->{Translation}->{'Vote Time'} = 'Tiempo de Voto';
-    $Self->{Translation}->{'Survey Stat Details'} = 'Detalles de Estadisticas de Encuesta';
-    $Self->{Translation}->{'go back to stats overview'} = 'regresar a resúmen de estadisticas';
-    $Self->{Translation}->{'Go back'} = 'Regresar';
+    $Self->{Translation}->{'Survey#'} = 'Encuesta#';
 
     # Template: AgentSurveyEditQuestions
     $Self->{Translation}->{'Edit Questions'} = 'Editar Preguntas';
     $Self->{Translation}->{'Add Question'} = 'Agregar Pregunta';
     $Self->{Translation}->{'Type the question'} = 'Escriba la pregunta';
+    $Self->{Translation}->{'Answer required'} = '';
     $Self->{Translation}->{'Survey Questions'} = 'Preguntas de Estadistica';
     $Self->{Translation}->{'Question'} = 'Pregunta';
+    $Self->{Translation}->{'Answer Required'} = '';
     $Self->{Translation}->{'No questions saved for this survey.'} = 'No hay preguntas almacenadas para esta encuesta.';
     $Self->{Translation}->{'Edit Question'} = 'Editar Pregunta';
     $Self->{Translation}->{'go back to questions'} = 'regresar a preguntas';
@@ -70,6 +65,7 @@ sub Data {
     $Self->{Translation}->{'Add Answer'} = 'Agregar Respuesta';
     $Self->{Translation}->{'This doesn\'t have several answers, a textarea will be displayed.'} =
         'Esta pregunta no tiene varias respuestas, un area de texto será mostrada';
+    $Self->{Translation}->{'Go back'} = 'Regresar';
     $Self->{Translation}->{'Edit Answer'} = 'Editar Respuesta';
     $Self->{Translation}->{'go back to edit question'} = 'volver a editar pregunta';
 
@@ -83,11 +79,18 @@ sub Data {
     $Self->{Translation}->{'Notification Body'} = 'Cuerpo de Notificación';
     $Self->{Translation}->{'Changed By'} = 'Modificaco por';
 
+    # Template: AgentSurveyStats
+    $Self->{Translation}->{'Stats Overview of'} = '';
+    $Self->{Translation}->{'Requests Table'} = 'Tabla de Solicitudes';
+    $Self->{Translation}->{'Send Time'} = 'Tiempo de Envío';
+    $Self->{Translation}->{'Vote Time'} = 'Tiempo de Voto';
+    $Self->{Translation}->{'Survey Stat Details'} = 'Detalles de Estadisticas de Encuesta';
+    $Self->{Translation}->{'go back to stats overview'} = 'regresar a resúmen de estadisticas';
+
     # Template: AgentSurveyZoom
     $Self->{Translation}->{'Survey Information'} = 'Información de Encuesta';
     $Self->{Translation}->{'Sent requests'} = 'Solicitudes enviadas';
     $Self->{Translation}->{'Received surveys'} = 'Solicitudes recibidas';
-    $Self->{Translation}->{'Stats Details'} = 'Detalle de Estadísticas';
     $Self->{Translation}->{'Survey Details'} = 'Detalles de Encuesta';
     $Self->{Translation}->{'Survey Results Graph'} = 'Grafica de Resultados de Encuesta';
     $Self->{Translation}->{'No stat results.'} = 'No hay graficas de resultados.';
@@ -110,8 +113,6 @@ sub Data {
         'Cuerpo default para el email de notificación a los clientes sobre la encuesta.';
     $Self->{Translation}->{'Default sender for the notification email to customers about new survey.'} =
         'Remitente default para el email de notificación a los clientes sobre la encuesta.';
-    $Self->{Translation}->{'Surveys will not be sent to the configured email addresses.'} =
-        '';
     $Self->{Translation}->{'Default subject for the notification email to customers about new survey.'} =
         'Asunto default para el email de notificación a los clientes sobre la encuesta.';
     $Self->{Translation}->{'Defines an overview module to show the small view of a survey list.'} =
@@ -124,7 +125,15 @@ sub Data {
         'Define la altura predefinida para la vista de texto enriquecido para los elementos de la pantall de detalle de estadisticas.';
     $Self->{Translation}->{'Defines the shown columns in the survey overview. This option has no effect on the position of the columns.'} =
         '';
+    $Self->{Translation}->{'Edit Survey General Information'} = '';
+    $Self->{Translation}->{'Edit Survey Questions'} = '';
     $Self->{Translation}->{'Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time.'} =
+        '';
+    $Self->{Translation}->{'Frontend module registration for survey add in the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Frontend module registration for survey edit in the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Frontend module registration for survey stats in the agent interface.'} =
         '';
     $Self->{Translation}->{'Frontend module registration for survey zoom in the agent interface.'} =
         'Registro de módulo frontend SurveyZoom en la interface del agente.';
@@ -134,13 +143,25 @@ sub Data {
     $Self->{Translation}->{'Parameters for the pages (in which the surveys are shown) of the small survey overview.'} =
         'Parametros para las páginas (en que las encuestas son mostradas) de la vista de resumen pequeña.';
     $Self->{Translation}->{'Public Survey.'} = 'Encuesta Pública.';
+    $Self->{Translation}->{'Shows a link in the menu to edit a survey in its zoom view of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Shows a link in the menu to edit survey questions in its zoom view of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Shows a link in the menu to go back in the survey zoom view of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Shows a link in the menu to zoom into the survey statistics details in its zoom view of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Survey Edit Module.'} = '';
     $Self->{Translation}->{'Survey Overview "Small" Limit'} = 'Limite de la vista de resumen pequeña.';
+    $Self->{Translation}->{'Survey Stats Module.'} = '';
     $Self->{Translation}->{'Survey Zoom Module.'} = 'Modulo de Detalle de Encuesta.';
     $Self->{Translation}->{'Survey limit per page for Survey Overview "Small"'} = '';
+    $Self->{Translation}->{'Surveys will not be sent to the configured email addresses.'} = '';
     $Self->{Translation}->{'The identifier for a survey, e.g. Survey#, MySurvey#. The default is Survey#.'} =
         'El identificador para una encuesta, ejemplo Survey#, MySurvey#. Por defecto es Survey#.';
     $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket is closed.'} =
         '';
+    $Self->{Translation}->{'Zoom Into Statistics Details'} = '';
 
     #
     # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
@@ -154,9 +175,10 @@ sub Data {
         'Define las columnas mostradas en la vista \'Resumen de Estadisticas\'.';
     $Self->{Translation}->{'Enable or disable the ShowVoteData screen on public interface to show data of an specific votation when customer tries to answer a survey by second time.'} =
         'Habilitar o deshabilitar la pantalla de ShowVoteData screen en la interfase publica para mostrar los datos de un voteo cuando el cliente intenta contestar la encuesta por segunda vez.';
+    $Self->{Translation}->{'General Info'} = 'Información General';
     $Self->{Translation}->{'Please answer the next questions'} = 'Por favor conteste las siguientes preguntas';
+    $Self->{Translation}->{'Stats Details'} = 'Detalle de Estadísticas';
     $Self->{Translation}->{'Survey limit per page for Survey Overview "Small".'} = 'Limite de encuestas por página para la vista de resumen pequeña.';
-    $Self->{Translation}->{'Survey#'} = 'Encuesta#';
     $Self->{Translation}->{'This field is required'} = 'Este campo es requerido';
     $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket gets closed.'} =
         'Modulo de evento de Ticket para enviar automaticamente correos de solicitudes de encuesta a clientes si el ticket se ha cerrado.';

@@ -9,8 +9,6 @@
 
 package Kernel::Language::zh_CN_Survey;
 
-use utf8;
-
 use strict;
 use warnings;
 
@@ -43,26 +41,23 @@ sub Data {
     $Self->{Translation}->{'Stats Detail'} = '统计详情';
     $Self->{Translation}->{'You have already answered the survey.'} = '你已经回答了调查。';
 
-    # Template: AgentSurvey
+    # Template: AgentSurveyAdd
     $Self->{Translation}->{'Create New Survey'} = '创建新的调查';
     $Self->{Translation}->{'Introduction'} = '介绍';
     $Self->{Translation}->{'Internal Description'} = '内部描述';
+
+    # Template: AgentSurveyEdit
     $Self->{Translation}->{'Edit General Info'} = '编辑一般信息';
-    $Self->{Translation}->{'General Info'} = '一般信息';
-    $Self->{Translation}->{'Stats Overview of'} = '统计概况';
-    $Self->{Translation}->{'Requests Table'} = '请求表';
-    $Self->{Translation}->{'Send Time'} = '发送时间';
-    $Self->{Translation}->{'Vote Time'} = '投票时间';
-    $Self->{Translation}->{'Survey Stat Details'} = '调查统计详情';
-    $Self->{Translation}->{'go back to stats overview'} = '返回统计概况';
-    $Self->{Translation}->{'Go back'} = '返回';
+    $Self->{Translation}->{'Survey#'} = '调查#';
 
     # Template: AgentSurveyEditQuestions
     $Self->{Translation}->{'Edit Questions'} = '编辑问题';
     $Self->{Translation}->{'Add Question'} = '添加问题';
     $Self->{Translation}->{'Type the question'} = '问题类型';
+    $Self->{Translation}->{'Answer required'} = '需要回答';
     $Self->{Translation}->{'Survey Questions'} = '调查问题';
     $Self->{Translation}->{'Question'} = '问题';
+    $Self->{Translation}->{'Answer Required'} = '';
     $Self->{Translation}->{'No questions saved for this survey.'} = '这个调查没有保存的问题。';
     $Self->{Translation}->{'Edit Question'} = '编辑问题';
     $Self->{Translation}->{'go back to questions'} = '返回问题';
@@ -70,9 +65,9 @@ sub Data {
     $Self->{Translation}->{'Add Answer'} = '添加回答';
     $Self->{Translation}->{'This doesn\'t have several answers, a textarea will be displayed.'} =
         '';
+    $Self->{Translation}->{'Go back'} = '返回';
     $Self->{Translation}->{'Edit Answer'} = '编辑回答';
     $Self->{Translation}->{'go back to edit question'} = '返回到编辑问题';
-    $Self->{Translation}->{'Answer required'} = '需要回答';
 
     # Template: AgentSurveyOverviewNavBar
     $Self->{Translation}->{'Context Settings'} = '上下文设置';
@@ -84,11 +79,18 @@ sub Data {
     $Self->{Translation}->{'Notification Body'} = '通知正文';
     $Self->{Translation}->{'Changed By'} = '修改人';
 
+    # Template: AgentSurveyStats
+    $Self->{Translation}->{'Stats Overview of'} = '统计概况';
+    $Self->{Translation}->{'Requests Table'} = '请求表';
+    $Self->{Translation}->{'Send Time'} = '发送时间';
+    $Self->{Translation}->{'Vote Time'} = '投票时间';
+    $Self->{Translation}->{'Survey Stat Details'} = '调查统计详情';
+    $Self->{Translation}->{'go back to stats overview'} = '返回统计概况';
+
     # Template: AgentSurveyZoom
     $Self->{Translation}->{'Survey Information'} = '调查信息';
     $Self->{Translation}->{'Sent requests'} = '己发送的请求';
     $Self->{Translation}->{'Received surveys'} = '已接收的调查';
-    $Self->{Translation}->{'Stats Details'} = '统计详情';
     $Self->{Translation}->{'Survey Details'} = '调查详情';
     $Self->{Translation}->{'Survey Results Graph'} = '调查结果图';
     $Self->{Translation}->{'No stat results.'} = '没有统计结果。';
@@ -111,8 +113,6 @@ sub Data {
         '';
     $Self->{Translation}->{'Default sender for the notification email to customers about new survey.'} =
         '';
-    $Self->{Translation}->{'Surveys will not be sent to the configured email addresses.'} =
-        '';
     $Self->{Translation}->{'Default subject for the notification email to customers about new survey.'} =
         '';
     $Self->{Translation}->{'Defines an overview module to show the small view of a survey list.'} =
@@ -125,7 +125,15 @@ sub Data {
         '';
     $Self->{Translation}->{'Defines the shown columns in the survey overview. This option has no effect on the position of the columns.'} =
         '';
+    $Self->{Translation}->{'Edit Survey General Information'} = '';
+    $Self->{Translation}->{'Edit Survey Questions'} = '';
     $Self->{Translation}->{'Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time.'} =
+        '';
+    $Self->{Translation}->{'Frontend module registration for survey add in the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Frontend module registration for survey edit in the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Frontend module registration for survey stats in the agent interface.'} =
         '';
     $Self->{Translation}->{'Frontend module registration for survey zoom in the agent interface.'} =
         '';
@@ -135,36 +143,39 @@ sub Data {
     $Self->{Translation}->{'Parameters for the pages (in which the surveys are shown) of the small survey overview.'} =
         '';
     $Self->{Translation}->{'Public Survey.'} = '';
+    $Self->{Translation}->{'Shows a link in the menu to edit a survey in its zoom view of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Shows a link in the menu to edit survey questions in its zoom view of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Shows a link in the menu to go back in the survey zoom view of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Shows a link in the menu to zoom into the survey statistics details in its zoom view of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Survey Edit Module.'} = '';
     $Self->{Translation}->{'Survey Overview "Small" Limit'} = '';
+    $Self->{Translation}->{'Survey Stats Module.'} = '';
     $Self->{Translation}->{'Survey Zoom Module.'} = 'Modul Umfrage-Detailansicht';
     $Self->{Translation}->{'Survey limit per page for Survey Overview "Small"'} = '';
+    $Self->{Translation}->{'Surveys will not be sent to the configured email addresses.'} = '';
     $Self->{Translation}->{'The identifier for a survey, e.g. Survey#, MySurvey#. The default is Survey#.'} =
         '';
     $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket is closed.'} =
         '';
+    $Self->{Translation}->{'Zoom Into Statistics Details'} = '';
 
     #
     # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
     #
+    $Self->{Translation}->{'- No queue selected -'} = '没有选择队列';
     $Self->{Translation}->{'Changed Time'} = '修改时间';
     $Self->{Translation}->{'Created By'} = '创建人';
     $Self->{Translation}->{'Created Time'} = '创建时间';
-    $Self->{Translation}->{'Days starting from the latest customer survey email between no customer survey email is sent, ( 0 means Always send it ) .'} =
-        '';
-    $Self->{Translation}->{'Defines maximum amount of surveys that get sent to a customer per 30 days, ( 0 means send immediately after close ).'} =
-        '';
-    $Self->{Translation}->{'Defines the shown columns in the survey overview. This option has no effect on the position of the column.'} =
-        '';
-    $Self->{Translation}->{'Enable or disable the ShowVoteData screen on public interface to show data of an specific votation when customer tries to answer a survey by second time.'} =
-        '';
-    $Self->{Translation}->{'Please answer the next questions'} = '请回答下一个问题';
-    $Self->{Translation}->{'Survey#'} = '调查#';
-    $Self->{Translation}->{'This field is required'} = '这个字段是必需的';
-    $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket gets closed.'} =
-        '';
-#Missed Translation items
+    $Self->{Translation}->{'General Info'} = '一般信息';
     $Self->{Translation}->{'No queue selected'} = '没有选择队列';
-    $Self->{Translation}->{'- No queue selected -'} = '没有选择队列';
+    $Self->{Translation}->{'Please answer the next questions'} = '请回答下一个问题';
+    $Self->{Translation}->{'Stats Details'} = '统计详情';
+    $Self->{Translation}->{'This field is required'} = '这个字段是必需的';
+
 }
 
 1;
