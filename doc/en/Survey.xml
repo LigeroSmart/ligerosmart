@@ -246,6 +246,26 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
         <para>Group: Survey, Subgroup: Frontend::Agent::Preferences.</para>
         <para>Parameters for the pages (in which the surveys are shown) of the small survey overview.</para>
     </section>
+    <section>
+        <title>Survey::Frontend::MenuModule###000-Back.</title>
+        <para>Group: Survey, Subgroup: Frontend::Agent::Survey::MenuModule.</para>
+        <para>Shows a link in the menu to go back in the survey zoom view of the agent interface.</para>
+    </section>
+    <section>
+        <title>Survey::Frontend::MenuModule###010-EditGeneralInfo.</title>
+        <para>Group: Survey, Subgroup: Frontend::Agent::Survey::MenuModule.</para>
+        <para>Shows a link in the menu to edit a survey in its zoom view of the agent interface.</para>
+    </section>
+    <section>
+        <title>Survey::Frontend::MenuModule###020-EditQuestions.</title>
+        <para>Group: Survey, Subgroup: Frontend::Agent::Survey::MenuModule.</para>
+        <para>Shows a link in the menu to edit survey questions in its zoom view of the agent interface.</para>
+    </section>
+    <section>
+        <title>Survey::Frontend::MenuModule###030-StatsDetails.</title>
+        <para>Group: Survey, Subgroup: Frontend::Agent::Survey::MenuModule.</para>
+        <para>Shows a link in the menu to zoom into the survey statistics details in its zoom view of the agent interface.</para>
+    </section>
 </chapter>
 
 <!-- ******** -->
