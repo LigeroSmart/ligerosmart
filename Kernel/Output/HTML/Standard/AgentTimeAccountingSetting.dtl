@@ -96,7 +96,7 @@
                         <div class="Clear"></div>
 
                         <div class="Field SpacingTop">
-                            <button class="Primary" type="submit" id="Submit" value="$Text{"Submit"}">$Text{"Submit"}</button>
+                            <button class="Primary CallForAction" type="submit" id="Submit" value="$Text{"Submit"}"><span><i class="icon-check"></i> $Text{"Submit"}</span></button>
                             $Text{"or"}
                             <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=Setting">$Text{"Cancel"}</a>
                         </div>
@@ -357,7 +357,7 @@
                         <div class="Clear"></div>
 
                         <div class="Field SpacingTop">
-                            <button class="Primary" type="submit" id="Submit" value="$Text{"Submit"}">$Text{"Submit"}</button>
+                            <button class="Primary CallForAction" type="submit" id="Submit" value="$Text{"Submit"}"><span><i class="icon-check"></i> $Text{"Submit"}</span></button>
                             $Text{"or"}
                             <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=Setting">$Text{"Cancel"}</a>
                         </div>
@@ -533,11 +533,13 @@
                         <button type="submit" title="$Text{"Add time period"}" value="$Text{"Add time period"}" name="AddPeriod" class="CallForAction Plus"><span>$Text{"Add time period"}</span></button>
                     </div>
 
-                    <div class="Center SpacingTop">
-                        <button class="Primary" type="submit" value="$Text{"Submit"}" name="SubmitUserData">$Text{"Submit"}</button>
-                        $Text{"or"}
-                        <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=Setting">$Text{"Cancel"}</a>
-                    </div>
+                    <fieldset class="TableLike">
+                        <div class="Field SpacingTop">
+                            <button class="Primary CallForAction" type="submit" value="$Text{"Submit"}" name="SubmitUserData"><span><i class="icon-check"></i> $Text{"Submit"}</span></button>
+                            $Text{"or"}
+                            <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=Setting">$Text{"Cancel"}</a>
+                        </div>
+                    </fieldset>
                 </form>
             </div>
         </div>

@@ -284,7 +284,7 @@
                     </div>
 <!-- dtl:block:OtherTimes -->
                     <div class="Center SpacingTop">
-                        <button class="Primary" type="submit" name="InsertWorkingUnits" value="$Text{"Submit"}">$Text{"Submit"}</button>
+                        <button class="Primary CallForAction" type="submit" name="InsertWorkingUnits" value="$Text{"Submit"}"><span><i class="icon-check"></i> $Text{"Submit"}</span></button>
                         <a id="DeleteTimeAccountingEntry" href="#">
                             $Text{"Delete"}
                         </a>
