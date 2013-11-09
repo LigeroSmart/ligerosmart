@@ -19,6 +19,7 @@
         <File Permission="644" Location="Kernel/Language/pl_TimeAccounting.pm"/>
         <File Permission="644" Location="Kernel/Language/pt_BR_TimeAccounting.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentTimeAccounting.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AAATimeAccounting.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTimeAccountingDelete.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTimeAccountingEdit.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTimeAccountingOverview.dtl"/>
