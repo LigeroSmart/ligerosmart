@@ -15,6 +15,9 @@ use warnings;
 sub Data {
     my $Self = shift;
 
+    # Template: AAATimeAccounting
+    $Self->{Translation}->{'Time Accounting'} = '';
+
     # Template: AgentTimeAccountingDelete
     $Self->{Translation}->{'Do you really want to delete the Time Accounting of this day?'} =
         'Czy na pewno chcesz usunąć zaraportowany czas pracy dla tego dnia?';
