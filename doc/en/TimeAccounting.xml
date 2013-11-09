@@ -53,16 +53,17 @@
     <section>
         <title>Time Accounting Overview</title>
         <para>
-            Display for the current logged user a summary of its own working hours per day (month
-            based), vacation days summary, sick leave days, and the distribution of its working ours
-            on each project and tasks.
+            It Displays for the current logged user, a summary of its own working hours per day
+            (month based), vacation days summary, sick leave days, and the distribution of its
+            working ours on each project and tasks.
         </para>
     </section>
     <section>
         <title>Time Accounting Edit</title>
         <para>
             Allows to set working hours, vacation, sick leaves and overtime leaves on a day basis,
-            the working ours can be set by defining the start and the end date or a period of time.
+            the working ours can be set by defining the start and the end dates, or a period of
+            time.
         </para>
         <para>
             The working hours can be registered per project and task, pre-filled selection lists are
@@ -72,16 +73,16 @@
     <section>
         <title>Time Accounting Reporting</title>
         <para>
-            Designed for administrators and managers shows an monthly based timing information
+            Designed for administrators and managers, shows an monthly based timing information
             summary for each registered user (working hours, overtime leave, sick leave and
-            vacations). As well timing information summary for each project and tasks. (hours spend
-            on).
+            vacations). As well timing information summary for each project and tasks (the time
+            spend on each).
         </para>
     </section>
     <section>
         <title>Time Accounting Settings</title>
         <para>
-            Also designed for administrators and managers it allows the creation of multiple
+            Also designed for administrators and managers, it allows the creation of multiple
             projects and tasks. It also enable the assignment of the users defining their working
             calendar, working periods (begin date, end date, number of vacation days, hours per week
             and allowed overtime hours).
@@ -90,13 +91,13 @@
     <section>
         <title>Time Accounting Statistics</title>
         <para>
-            Defined a new statistics type to show working hours based on projects or users.
+            A new statistics type has been added to show working hours based on projects or users.
         </para>
     </section>
     <section>
         <title>Time Accounting Notification</title>
         <para>
-            A notification reminder for agents to insert working hours. (can be configured in
+            A notification reminder for agents to insert their working hours (can be configured in
             SysConfig to define the maximum days without entry to display the notification).
         </para>
     </section>
@@ -104,25 +105,26 @@
         <title>Toolbar Shortcut For Days Without Time Accounting Entry</title>
         <para>
             A counter displaying the number of days without registering the working hours can be set
-            (similar to Locked tickets counter or Responsible tickets counter) when clicking on the
-            icon, agent is redirected to to the Time Accounting Edit screen to fill the missing
-            records.
+            in the upper part of the screen (similar to Locked tickets counter or Responsible
+            tickets counter), when clicking on the icon, agents are redirected to the Time
+            Accounting Edit screen, to fill the missing records.
         </para>
     </section>
     <section>
         <title>Time Accounting Registration Enforcement</title>
         <para>
-            Configurable by a SysConfig setting, the system can be blocked not allowing to perform
-            any action, if a certain number of days without time accounting registers has been
-            passed (agents are redirected to Time Accounting Edit screen to fill the missing days).
+            Configurable by a SysConfig setting, the system can be blocked, not allowing to perform
+            any actions, if a certain number of days without time accounting registers has been
+            passed (agents are redirected to Time Accounting Edit screen to fill the missing
+            records).
         </para>
     </section>
     <section>
         <title>Mass Entries</title>
         <para>
             Disabled by default, this feature allows agents to set special time accounting
-            information (such as: on vacation, overtime leaves and sick leave) to multiple days with
-            missing entries.
+            information (such as: on vacation, overtime leaves and sick leave) to multiple days at
+            the same time.
         </para>
     </section>
 </chapter>
@@ -340,8 +342,8 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
 <chapter>
     <title>Usage</title>
     <para>
-        This package add a new group called "time_accouting", depending on the permission over this
-        group, agents are allowed to execute certain actions, in general,having "rw" permission
+        This package adds a new group called "time_accouting", depending on the permission over this
+        group, agents are allowed to execute certain actions, in general having "rw" permission
         allows agents to use all screens while "ro" permissions only allows access to personal
         overview (Time Accounting Overview) and working hours registration (Time Accounting Edit)
         screens.
@@ -351,7 +353,7 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
         <para>This example shows how to create a new project to register working hours on.</para>
         <note>
             <para>
-                For This and following examples a user with "rw" in "time_accouting" group is
+                For this and following examples a user with "rw" in "time_accouting" group is
                 needed.
             </para>
         </note>
@@ -359,14 +361,14 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
             <listitem><para>From Time Accounting menu choose "Settings".</para></listitem>
             <listitem>
                 <para>
-                    Click on "Add Project" from the Actions list in the sidebar located in the left
-                    part of the screens.
+                    Click on "Add Project" from the Actions list in the sidebar, located in the left
+                    part of the screen.
                 </para>
             </listitem>
             <listitem>
                 <para>
                     In the new screen fill the name of the project and a description if needed
-                    (make sure that status is set to valid).
+                    (make sure that status is set to "valid").
                 </para>
             </listitem>
             <listitem>
@@ -393,14 +395,14 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
             <listitem><para>From Time Accounting menu choose "Settings".</para></listitem>
             <listitem>
                 <para>
-                    Click on "Add Task" from the Actions list in the sidebar located in the left
-                    part of the screens.
+                    Click on "Add Task" from the Actions list in the sidebar, located in the left
+                    part of the screen.
                 </para>
             </listitem>
             <listitem>
                 <para>
                     In the new screen fill the name of the task (make sure that status is set to
-                    valid).
+                    "valid").
                 </para>
             </listitem>
             <listitem>
@@ -424,11 +426,11 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
             <listitem><para>From Time Accounting menu choose "Settings".</para></listitem>
             <listitem>
                 <para>
-                    Select a user from the Actions list in the sidebar located in the left part of
-                    the screens.
+                    Select a user from the Actions list in the sidebar, located in the left part of
+                    the screen.
                 </para>
             </listitem>
-            <listitem><para>Click on "New User".</para></listitem>
+            <listitem><para>Click on "New user".</para></listitem>
             <listitem><para>In the new screen fill the comments if needed.</para></listitem>
             <listitem>
                 <para>
@@ -464,7 +466,7 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
     </section>
     <section>
         <title>Register Your Working Hours</title>
-        <para>This example shows how to register the working hours in time accounting</para>
+        <para>This example shows how to register the working hours in time accounting.</para>
         <note>
             <para>
                 A previously added user to time accounting is needed for this example, this user
@@ -500,7 +502,7 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
                     in "HH:MM" format or register the period of time in the proper column.
                 </para>
                 <example>
-                    <title>Setting Working Hours For Two And A Half Hour</title>
+                    <title>Setting Working Hours For Two And A Half Hours</title>
                     <para>
                         Lets think that the working hours took place from 11:00 AM to 01:30 PM,
                         Set 11:00 for the "Start" column and 13:30 for the "End" column, or
@@ -511,8 +513,9 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
             </listitem>
             <listitem>
                 <para>
-                    After setting working hours in one or more rows make sue the "Total" sum
-                    (at the end of the table) has the expected value and Click on submit.
+                    After setting working hours in one or more rows make sue the "Total" (in the
+                    table footer) has the expected value, the sum of all working hours. Then click
+                    on "Submit" button on the lower part of the screen.
                 </para>
             </listitem>
         </orderedlist>
