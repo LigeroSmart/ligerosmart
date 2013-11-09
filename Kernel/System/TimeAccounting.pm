@@ -1156,7 +1156,11 @@ sub WorkingUnitsCompletnessCheck {
     my $MonthEnd    = $Month;
     my $DayEnd      = $Day;
 
-    if ( $UserCurrentPeriod{$UserID}{DateStart} =~ /^(\d+)-(\d+)-(\d+)/ ) {
+    if (
+        $UserCurrentPeriod{$UserID}->{DateStart}
+        && $UserCurrentPeriod{$UserID}->{DateStart} =~ /^(\d+)-(\d+)-(\d+)/
+        )
+    {
         $YearStart  = $1;
         $MonthStart = $2;
         $DayStart   = $3;
