@@ -28,7 +28,21 @@ FAQ.Customer.FAQZoom = (function (TargetNS) {
      */
     TargetNS.IframeAutoHeight = function ($Iframe) {
         if (isJQueryObject($Iframe)) {
-            var NewHeight = $Iframe.contents().height();
+
+            var NewHeight = $Iframe
+                .contents()
+                .find('body')
+                .css({
+                    'margin': '0px', // we remove margins and paddings from the body in order to get the real height
+                    'padding': '0px'
+                })
+                .height();
+
+            // IE8 needs some more space due to incorrect height calculation
+            if (NewHeight > 0 && $.browser.msie && $.browser.version === '8.0') {
+                NewHeight = NewHeight + 4;
+            }
+
             if (!NewHeight || isNaN(NewHeight)) {
                 NewHeight = Core.Config.Get('FAQ::Frontend::CustomerHTMLFieldHeightDefault');
             }

@@ -218,7 +218,8 @@ ul.FAQMiniList span {
 
 iframe.FAQField {
     width: 100%;
-    frameborder: 0;
+    border: 0px;
+    margin: 7px;
 }
 
 }
