@@ -8,6 +8,7 @@
 # --
 
 2.3.1 - 2013-??-??
+ - Added new functionality to add ticket types and services as send conditions for the survey.
  - Fixed Bug#9757 - Back buttons should to lead to last used screen and not browser history back.
  - Made survey zoom menu flexible (by SysConfig settings)
  - Improved Survey Overview visuals

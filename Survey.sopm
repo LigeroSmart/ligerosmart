@@ -73,6 +73,7 @@
             <Column Name="notification_subject" Required="false" Size="250" Type="VARCHAR"/>
             <Column Name="notification_body" Required="false" Size="2000" Type="VARCHAR"/>
             <Column Name="status" Required="false" Size="50" Type="VARCHAR"/>
+            <Column Name="send_conditions" Required="false" Size="2000" Type="VARCHAR"/>
             <Column Name="create_time" Required="false" Type="DATE"/>
             <Column Name="create_by" Required="false" Type="INTEGER"/>
             <Column Name="change_time" Required="false" Type="DATE"/>
@@ -172,6 +173,9 @@
         </TableAlter>
         <TableAlter Name="survey_question" Version="2.1.5">
             <ColumnAdd Name="answer_required" Required="false" Type="SMALLINT"/>
+        </TableAlter>
+        <TableAlter Name="survey" Version="2.3.2">
+            <ColumnAdd Name="send_conditions" Required="false" Size="2000" Type="VARCHAR"/>
         </TableAlter>
     </DatabaseUpgrade>
     <DatabaseUninstall Type="pre">

@@ -14,6 +14,8 @@ use warnings;
 
 use Kernel::System::Survey;
 use Kernel::System::HTMLUtils;
+use Kernel::System::Type;
+use Kernel::System::Service;
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -31,8 +33,10 @@ sub new {
             $Self->{LayoutObject}->FatalError( Message => "Got no $Object!" );
         }
     }
-    $Self->{SurveyObject}    = Kernel::System::Survey->new(%Param);
-    $Self->{HTMLUtilsObject} = Kernel::System::HTMLUtils->new(%Param);
+    $Self->{SurveyObject}    = Kernel::System::Survey->new( %{$Self} );
+    $Self->{HTMLUtilsObject} = Kernel::System::HTMLUtils->new( %{$Self} );
+    $Self->{TypeObject}      = Kernel::System::Type->new( %{$Self} );
+    $Self->{ServiceObject}   = Kernel::System::Service->new( %{$Self} );
 
     # get config of frontend module
     $Self->{Config} = $Self->{ConfigObject}->Get("Survey::Frontend::$Self->{Action}");
@@ -73,6 +77,11 @@ sub Run {
         }
 
         @{ $FormElements{Queues} } = $Self->{ParamObject}->GetArray( Param => "Queues" );
+
+        @{ $FormElements{TicketTypeIDs} }
+            = $Self->{ParamObject}->GetArray( Param => "TicketTypeIDs" );
+
+        @{ $FormElements{ServiceIDs} } = $Self->{ParamObject}->GetArray( Param => "ServiceIDs" );
 
         if ( $Self->{ConfigObject}->Get('Frontend::RichText') ) {
             $FormElements{Introduction}     = "\$html/text\$ $FormElements{Introduction}";
@@ -140,6 +149,69 @@ sub _SurveyAddMask {
         Translation  => 0,
         SelectedID   => $FormElements{Queues} || $SelectedQueues,
     );
+
+    # check if the for send condition ticket type check is enabled
+    if ( $Self->{ConfigObject}->Get('Survey::CheckSendConditionTicketType') )
+    {
+
+        # get the valid ticket type list
+        my %TicketTypes = $Self->{TypeObject}->TypeList();
+
+        # check if a ticket type is available
+        if (%TicketTypes) {
+
+            # build ticket type selection
+            my $TicketTypeStrg = $Self->{LayoutObject}->BuildSelection(
+                Data         => \%TicketTypes,
+                Name         => 'TicketTypeIDs',
+                Size         => 6,
+                Multiple     => 1,
+                PossibleNone => 0,
+                Sort         => 'AlphanumericValue',
+                Translation  => 0,
+                SelectedID   => $FormElements{TicketTypeIDs},
+            );
+
+            $Self->{LayoutObject}->Block(
+                Name => 'TicketTypes',
+                Data => {
+                    TicketTypeStrg => $TicketTypeStrg,
+                },
+            );
+        }
+    }
+
+    # check if the send condition service check is enabled
+    if ( $Self->{ConfigObject}->Get('Survey::CheckSendConditionService') ) {
+
+        # get the valid service list
+        my %Services = $Self->{ServiceObject}->ServiceList(
+            UserID => $Self->{UserID},
+        );
+
+        # check if a service is available
+        if (%Services) {
+
+            # build service selection
+            my $ServiceStrg = $Self->{LayoutObject}->BuildSelection(
+                Data         => \%Services,
+                Name         => 'ServiceIDs',
+                Size         => 6,
+                Multiple     => 1,
+                PossibleNone => 0,
+                Sort         => 'AlphanumericValue',
+                Translation  => 0,
+                SelectedID   => $FormElements{ServiceIDs},
+            );
+
+            $Self->{LayoutObject}->Block(
+                Name => 'TicketServices',
+                Data => {
+                    ServiceStrg => $ServiceStrg,
+                },
+            );
+        }
+    }
 
     # rich text elements
     my %SurveyElements;

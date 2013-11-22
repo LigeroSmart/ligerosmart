@@ -12,6 +12,8 @@ package Kernel::System::Survey::Request;
 use strict;
 use warnings;
 
+use Kernel::System::VariableCheck qw(:all);
+
 =head1 NAME
 
 Kernel::System::Survey::Request - sub module of Kernel::System::Survey
@@ -156,6 +158,48 @@ sub RequestSend {
         }
 
         return if !$Found;
+    }
+
+    # check if the for send condition ticket type check is enabled
+    if ( $Self->{ConfigObject}->Get('Survey::CheckSendConditionTicketType') ) {
+
+        # check if ticket is in a send ticket type id
+        if ( IsArrayRefWithData( $Survey{TicketTypeIDs} ) ) {
+
+            return if !$Ticket{TypeID};
+
+            my $Found;
+
+            TICKETTYPE:
+            for my $TicketTypeID ( @{ $Survey{TicketTypeIDs} } ) {
+                next TICKETTYPE if $Ticket{TypeID} != $TicketTypeID;
+                $Found = 1;
+                last TICKETTYPE;
+            }
+
+            return if !$Found;
+        }
+    }
+
+    # check if the send condition service check is enabled
+    if ( $Self->{ConfigObject}->Get('Survey::CheckSendConditionService') ) {
+
+        # check if ticket is in a send service
+        if ( IsArrayRefWithData( $Survey{ServiceIDs} ) ) {
+
+            return if !$Ticket{ServiceID};
+
+            my $Found;
+
+            SERVICE:
+            for my $ServiceID ( @{ $Survey{ServiceIDs} } ) {
+                next SERVICE if $Ticket{ServiceID} != $ServiceID;
+                $Found = 1;
+                last SERVICE;
+            }
+
+            return if !$Found;
+        }
     }
 
     for my $Data ( sort keys %Ticket ) {

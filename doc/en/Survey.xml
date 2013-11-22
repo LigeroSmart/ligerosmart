@@ -177,6 +177,16 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
         <para>Amount of days after sending a survey mail in which no new survey requests are sent to the same customer. Selecting 0 will always send the survey mail.</para>
     </section>
     <section>
+        <title>Survey::CheckSendConditionTicketType.</title>
+        <para>Group: Survey, Subgroup: Core::Survey.</para>
+        <para>Enable or disable the send condition check for the ticket type.</para>
+    </section>
+    <section>
+        <title>Survey::CheckSendConditionService.</title>
+        <para>Group: Survey, Subgroup: Core::Survey.</para>
+        <para>Enable or disable the send condition check for the service.</para>
+    </section>
+    <section>
         <title>Survey::NotificationSender.</title>
         <para>Group: Survey, Subgroup: Core::Survey.</para>
         <para>Default sender for the notification email to customers about new survey.</para>
@@ -284,8 +294,9 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
             subject, a mail body and an internal description of the Survey.
         </para>
         <para>
-            Additionally the new Survey can be created for just some queues.
-            If none are selected, it will be valid for every Queue.
+            Additionally the new Survey can be created for just some queues, ticket types or services.
+            If none are selected, it will be valid for every queue, ticket type annd service.
+            As default the send condition check for ticket types or services are disabled. So the fields aren't displayed in the mask (new and edit mask for a survey).
         </para>
     </section>
     <section>
@@ -451,7 +462,7 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
         survey_vote.
     </para>
     <para>
-        The survey table holds the general information of a survey.
+        The survey table holds the general information of a survey and the send condition information for a survey.
     </para>
     <para>
         The survey_answer holds the answers for a survey questions.
@@ -471,6 +482,22 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
         The survey_vote table holds a reference to the corresponding request and question
         as well as the chosen answers.
     </para>
+    <!--
+            OK, so far for the users and now for the developers underneath us:
+
+            Add a new send condition:
+
+            - The send condition are stored in a yaml structure.
+            - In the Survey.pm the function "_BuildSendConditionStrg" generate the yaml structur.
+            The function is used in the two functions "SurveyAdd" and "SurveyUpdate". So these two functions
+            need a new optional parameter for the new send condition (similar the ticket type or service).
+            - The function "SurveyGet" in the Survey.pm return the new send condition as a own parameter.
+            - Now the check for the new send condition must be added in the function "RequestSend" from the
+            Request.pm (similar the ticket type or service).
+            - Optional you can add a Config-Item for the send condition.
+            - The last step is to add the new send condition in the new and edit mask for the survey. Also it can be
+            added in the detail survey view.
+    -->
 </chapter>
 
 <!-- *********** -->

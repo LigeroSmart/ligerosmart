@@ -17,6 +17,8 @@ use Kernel::System::CustomerUser;
 use Kernel::System::Email;
 use Kernel::System::Survey;
 use Kernel::System::Ticket;
+use Kernel::System::Type;
+use Kernel::System::Service;
 use Kernel::System::UnitTest::Helper;
 use Kernel::System::User;
 
@@ -44,7 +46,9 @@ my $TicketObject = Kernel::System::Ticket->new(
     %{$Self},
     ConfigObject => $ConfigObject,
 );
-my $SurveyObject = Kernel::System::Survey->new(
+my $TypeObject    = Kernel::System::Type->new( %{$Self} );
+my $ServiceObject = Kernel::System::Service->new( %{$Self} );
+my $SurveyObject  = Kernel::System::Survey->new(
     LogObject    => $Self->{LogObject},
     TimeObject   => $Self->{TimeObject},
     DBObject     => $Self->{DBObject},
@@ -66,6 +70,21 @@ $Self->True(
     '-- Set Fixed Time --',
 );
 
+# create a test type
+my $TicketTypeID = $TypeObject->TypeAdd(
+    Name    => 'Unit Test New Type' . int rand 1_000_000,
+    ValidID => 1,
+    UserID  => 1,
+);
+
+# create a test service
+my $ServiceID = $ServiceObject->ServiceAdd(
+    Name    => 'Unit Test New Service' . int rand 1_000_000,
+    ValidID => 1,
+    Comment => 'Unit Test Comment',
+    UserID  => 1,
+);
+
 # create survey
 my %SurveyData = (
     Title               => 'A Title',
@@ -75,6 +94,8 @@ my %SurveyData = (
     NotificationSubject => 'Help us with your feedback! ÄÖÜ',
     NotificationBody =>
         'Dear customer... äöü',
+    TicketTypeIDs => [$TicketTypeID],
+    ServiceIDs    => [$ServiceID],
 );
 my $SurveyID = $SurveyObject->SurveyAdd(
     UserID => 1,
@@ -121,11 +142,31 @@ my %SurveyGet = $SurveyObject->SurveyGet(
     SurveyID => $SurveyID,
 );
 
-for my $Key ( sort keys %SurveyGet ) {
-    next if !defined $SurveyData{$Key};
+# for my $Key ( sort keys %SurveyGet ) {
+#     next if !defined $SurveyData{$Key};
+#     $Self->Is(
+#         $SurveyGet{$Key},
+#         $SurveyData{$Key},
+#         "SurveyGet()",
+#     );
+# }
+
+for my $Attribute ( sort keys %SurveyData ) {
+
+    # turn off all pretty print
+    local $Data::Dumper::Indent = 0;
+    local $Data::Dumper::Useqq  = 1;
+
+    # dump the attribute from ChangeGet() and the reference attribute
+    ## no critic
+    my $SurveyGetAttribute = Data::Dumper::Dumper( $SurveyGet{$Attribute} );
+    my $SurveyDataAttribute
+        = Data::Dumper::Dumper( $SurveyData{$Attribute} );
+    ## use critic
+
     $Self->Is(
-        $SurveyGet{$Key},
-        $SurveyData{$Key},
+        $SurveyGetAttribute,
+        $SurveyDataAttribute,
         "SurveyGet()",
     );
 }
@@ -341,6 +382,16 @@ for my $Test (@Tests) {
         );
     }
 
+    # no send condition check in normal tests
+    $ConfigObject->Set(
+        Key   => 'Survey::CheckSendConditionTicketType',
+        Value => 0,
+    );
+    $ConfigObject->Set(
+        Key   => 'Survey::CheckSendConditionService',
+        Value => 0,
+    );
+
     if ( $Test->{Sleep} ) {
         $HelperObject->FixedTimeAddSeconds( $Test->{Sleep} );
         $Self->True(
@@ -437,6 +488,355 @@ END
         $Self->False(
             ${$HeaderRef},
             "$Test->{Name} 2 RequestSend() - no survey got sent",
+        );
+    }
+
+    my $Delete = $TicketObject->TicketDelete(
+        TicketID => $TicketID,
+        UserID   => 1,
+    );
+}
+
+my @SendConditionTests = (
+    {
+        Name => 'SendCondition#1 without send condition check (ticket type and service)',
+        'Survey::CheckSendConditionTicketType' => 0,
+        'Survey::CheckSendConditionService'    => 0,
+        Ticket                                 => {
+            Title        => 'Some Ticket Title',
+            Queue        => 'Raw',
+            Lock         => 'unlock',
+            Priority     => '3 normal',
+            State        => 'open',
+            CustomerNo   => '123465',
+            CustomerUser => 'customer@unittest.com',
+            OwnerID      => 1,
+            UserID       => 1,
+            TypeID       => 0,
+            ServiceID    => 0,
+        },
+        Article => {
+            ArticleType    => 'email-external',
+            SenderType     => 'customer',
+            From           => 'Some Customer <some@unittest.com>',
+            To             => 'Some To <to@unittest.com>',
+            Subject        => 'Some Subject',
+            Body           => 'the message text',
+            MessageID      => '<asdasdasd.123@unittest.com>',
+            ContentType    => 'text/plain; charset=ISO-8859-15',
+            HistoryType    => 'OwnerUpdate',
+            HistoryComment => 'Some free text!',
+            UserID         => 1,
+            NoAgentNotify => 1,    # if you don't want to send agent notifications
+        },
+        Success => 1,
+    },
+    {
+        Name                                   => 'SendCondition#2 try with check for ticket type',
+        'Survey::CheckSendConditionTicketType' => 1,
+        'Survey::CheckSendConditionService'    => 0,
+        Ticket                                 => {
+            Title        => 'Some Ticket Title',
+            Queue        => 'Raw',
+            Lock         => 'unlock',
+            Priority     => '3 normal',
+            State        => 'open',
+            CustomerNo   => '123465',
+            CustomerUser => 'customer@unittest.com',
+            OwnerID      => 1,
+            UserID       => 1,
+            TypeID       => $TicketTypeID,
+        },
+        Article => {
+            ArticleType    => 'email-external',
+            SenderType     => 'customer',
+            From           => 'Some Customer <some@unittest.com>',
+            To             => 'Some To <to@unittest.com>',
+            Subject        => 'Some Subject',
+            Body           => 'the message text',
+            MessageID      => '<asdasdasd.123@unittest.com>',
+            ContentType    => 'text/plain; charset=ISO-8859-15',
+            HistoryType    => 'OwnerUpdate',
+            HistoryComment => 'Some free text!',
+            UserID         => 1,
+            NoAgentNotify => 1,    # if you don't want to send agent notifications
+        },
+        Success => 1,
+    },
+    {
+        Name => 'SendCondition#3 try with check for ticket type (value false)',
+        'Survey::CheckSendConditionTicketType' => 1,
+        'Survey::CheckSendConditionService'    => 0,
+        Ticket                                 => {
+            Title        => 'Some Ticket Title',
+            Queue        => 'Raw',
+            Lock         => 'unlock',
+            Priority     => '3 normal',
+            State        => 'open',
+            CustomerNo   => '123465',
+            CustomerUser => 'customer@unittest.com',
+            OwnerID      => 1,
+            UserID       => 1,
+            TypeID       => 0,
+        },
+        Article => {
+            ArticleType    => 'email-external',
+            SenderType     => 'customer',
+            From           => 'Some Customer <some@unittest.com>',
+            To             => 'Some To <to@unittest.com>',
+            Subject        => 'Some Subject',
+            Body           => 'the message text',
+            MessageID      => '<asdasdasd.123@unittest.com>',
+            ContentType    => 'text/plain; charset=ISO-8859-15',
+            HistoryType    => 'OwnerUpdate',
+            HistoryComment => 'Some free text!',
+            UserID         => 1,
+            NoAgentNotify => 1,    # if you don't want to send agent notifications
+        },
+        Success => 0,
+    },
+    {
+        Name                                   => 'SendCondition#4 try with check for service',
+        'Survey::CheckSendConditionTicketType' => 0,
+        'Survey::CheckSendConditionService'    => 1,
+        Ticket                                 => {
+            Title        => 'Some Ticket Title',
+            Queue        => 'Raw',
+            Lock         => 'unlock',
+            Priority     => '3 normal',
+            State        => 'open',
+            CustomerNo   => '123465',
+            CustomerUser => 'customer@unittest.com',
+            OwnerID      => 1,
+            UserID       => 1,
+            ServiceID    => $ServiceID,
+        },
+        Article => {
+            ArticleType    => 'email-external',
+            SenderType     => 'customer',
+            From           => 'Some Customer <some@unittest.com>',
+            To             => 'Some To <to@unittest.com>',
+            Subject        => 'Some Subject',
+            Body           => 'the message text',
+            MessageID      => '<asdasdasd.123@unittest.com>',
+            ContentType    => 'text/plain; charset=ISO-8859-15',
+            HistoryType    => 'OwnerUpdate',
+            HistoryComment => 'Some free text!',
+            UserID         => 1,
+            NoAgentNotify => 1,    # if you don't want to send agent notifications
+        },
+        Success => 1,
+    },
+    {
+        Name => 'SendCondition#5 try with check for service (value false)',
+        'Survey::CheckSendConditionTicketType' => 0,
+        'Survey::CheckSendConditionService'    => 1,
+        Ticket                                 => {
+            Title        => 'Some Ticket Title',
+            Queue        => 'Raw',
+            Lock         => 'unlock',
+            Priority     => '3 normal',
+            State        => 'open',
+            CustomerNo   => '123465',
+            CustomerUser => 'customer@unittest.com',
+            OwnerID      => 1,
+            UserID       => 1,
+            ServiceID    => 0,
+        },
+        Article => {
+            ArticleType    => 'email-external',
+            SenderType     => 'customer',
+            From           => 'Some Customer <some@unittest.com>',
+            To             => 'Some To <to@unittest.com>',
+            Subject        => 'Some Subject',
+            Body           => 'the message text',
+            MessageID      => '<asdasdasd.123@unittest.com>',
+            ContentType    => 'text/plain; charset=ISO-8859-15',
+            HistoryType    => 'OwnerUpdate',
+            HistoryComment => 'Some free text!',
+            UserID         => 1,
+            NoAgentNotify => 1,    # if you don't want to send agent notifications
+        },
+        Success => 0,
+    },
+    {
+        Name => 'SendCondition#6 try with check for ticket type and service',
+        'Survey::CheckSendConditionTicketType' => 1,
+        'Survey::CheckSendConditionService'    => 1,
+        Ticket                                 => {
+            Title        => 'Some Ticket Title',
+            Queue        => 'Raw',
+            Lock         => 'unlock',
+            Priority     => '3 normal',
+            State        => 'open',
+            CustomerNo   => '123465',
+            CustomerUser => 'customer@unittest.com',
+            OwnerID      => 1,
+            UserID       => 1,
+            TypeID       => $TicketTypeID,
+            ServiceID    => $ServiceID,
+        },
+        Article => {
+            ArticleType    => 'email-external',
+            SenderType     => 'customer',
+            From           => 'Some Customer <some@unittest.com>',
+            To             => 'Some To <to@unittest.com>',
+            Subject        => 'Some Subject',
+            Body           => 'the message text',
+            MessageID      => '<asdasdasd.123@unittest.com>',
+            ContentType    => 'text/plain; charset=ISO-8859-15',
+            HistoryType    => 'OwnerUpdate',
+            HistoryComment => 'Some free text!',
+            UserID         => 1,
+            NoAgentNotify => 1,    # if you don't want to send agent notifications
+        },
+        Success => 1,
+    },
+    {
+        Name => 'SendCondition#7 try with check for ticket type id (value false) and service',
+        'Survey::CheckSendConditionTicketType' => 1,
+        'Survey::CheckSendConditionService'    => 1,
+        Ticket                                 => {
+            Title        => 'Some Ticket Title',
+            Queue        => 'Raw',
+            Lock         => 'unlock',
+            Priority     => '3 normal',
+            State        => 'open',
+            CustomerNo   => '123465',
+            CustomerUser => 'customer@unittest.com',
+            OwnerID      => 1,
+            UserID       => 1,
+            TypeID       => 0,
+            ServiceID    => $ServiceID,
+        },
+        Article => {
+            ArticleType    => 'email-external',
+            SenderType     => 'customer',
+            From           => 'Some Customer <some@unittest.com>',
+            To             => 'Some To <to@unittest.com>',
+            Subject        => 'Some Subject',
+            Body           => 'the message text',
+            MessageID      => '<asdasdasd.123@unittest.com>',
+            ContentType    => 'text/plain; charset=ISO-8859-15',
+            HistoryType    => 'OwnerUpdate',
+            HistoryComment => 'Some free text!',
+            UserID         => 1,
+            NoAgentNotify => 1,    # if you don't want to send agent notifications
+        },
+        Success => 0,
+    },
+    {
+        Name => 'SendCondition#8 try with check for ticket type and service (value false)',
+        'Survey::CheckSendConditionTicketType' => 1,
+        'Survey::CheckSendConditionService'    => 1,
+        Ticket                                 => {
+            Title        => 'Some Ticket Title',
+            Queue        => 'Raw',
+            Lock         => 'unlock',
+            Priority     => '3 normal',
+            State        => 'open',
+            CustomerNo   => '123465',
+            CustomerUser => 'customer@unittest.com',
+            OwnerID      => 1,
+            UserID       => 1,
+            TypeID       => $TicketTypeID,
+            ServiceID    => 0,
+        },
+        Article => {
+            ArticleType    => 'email-external',
+            SenderType     => 'customer',
+            From           => 'Some Customer <some@unittest.com>',
+            To             => 'Some To <to@unittest.com>',
+            Subject        => 'Some Subject',
+            Body           => 'the message text',
+            MessageID      => '<asdasdasd.123@unittest.com>',
+            ContentType    => 'text/plain; charset=ISO-8859-15',
+            HistoryType    => 'OwnerUpdate',
+            HistoryComment => 'Some free text!',
+            UserID         => 1,
+            NoAgentNotify => 1,    # if you don't want to send agent notifications
+        },
+        Success => 0,
+    },
+    {
+        Name =>
+            'SendCondition#9 try with check for ticket type (value false) and service (value false)',
+        'Survey::CheckSendConditionTicketType' => 1,
+        'Survey::CheckSendConditionService'    => 1,
+        Ticket                                 => {
+            Title        => 'Some Ticket Title',
+            Queue        => 'Raw',
+            Lock         => 'unlock',
+            Priority     => '3 normal',
+            State        => 'open',
+            CustomerNo   => '123465',
+            CustomerUser => 'customer@unittest.com',
+            OwnerID      => 1,
+            UserID       => 1,
+            TypeID       => 0,
+            ServiceID    => 0,
+        },
+        Article => {
+            ArticleType    => 'email-external',
+            SenderType     => 'customer',
+            From           => 'Some Customer <some@unittest.com>',
+            To             => 'Some To <to@unittest.com>',
+            Subject        => 'Some Subject',
+            Body           => 'the message text',
+            MessageID      => '<asdasdasd.123@unittest.com>',
+            ContentType    => 'text/plain; charset=ISO-8859-15',
+            HistoryType    => 'OwnerUpdate',
+            HistoryComment => 'Some free text!',
+            UserID         => 1,
+            NoAgentNotify => 1,    # if you don't want to send agent notifications
+        },
+        Success => 0,
+    },
+);
+
+for my $Test (@SendConditionTests) {
+
+    $ConfigObject->Set(
+        Key   => 'Survey::SendPeriod',
+        Value => '0',
+    );
+
+    $ConfigObject->Set(
+        Key   => 'Survey::CheckSendConditionTicketType',
+        Value => $Test->{'Survey::CheckSendConditionTicketType'},
+    );
+
+    $ConfigObject->Set(
+        Key   => 'Survey::CheckSendConditionService',
+        Value => $Test->{'Survey::CheckSendConditionService'},
+    );
+
+    my $TicketID = $TicketObject->TicketCreate(
+        %{ $Test->{Ticket} },
+    );
+    my $ArticleID = $TicketObject->ArticleCreate(
+        TicketID => $TicketID,
+        %{ $Test->{Article} },
+    );
+
+    # send survey first time
+    my ( $HeaderRef, $BodyRef ) = $SurveyObject->RequestSend(
+        TicketID => $TicketID,
+    );
+
+    # check if survey got sent
+    if ( $Test->{Success} ) {
+
+        $Self->True(
+            ${$HeaderRef},
+            "$Test->{Name} RequestSend() - survey got sent",
+        );
+    }
+    else {
+
+        $Self->False(
+            ${$HeaderRef},
+            "$Test->{Name} RequestSend() - no survey got sent",
         );
     }
 
@@ -558,6 +958,22 @@ $Self->True(
 # cleanup system
 $Self->{DBObject}->Do(
     SQL => "DELETE FROM survey_request WHERE send_to LIKE '\%\@unittest.com\%'",
+);
+
+# set as invalid the test type
+$TypeObject->TypeUpdate(
+    ID      => $TicketTypeID,
+    Name    => 'Unit Test New Type' . int rand 10000,
+    ValidID => 2,
+    UserID  => 1,
+);
+
+# set as invalid the test service
+$ServiceObject->ServiceUpdate(
+    ServiceID => $ServiceID,
+    Name      => 'Unit Test New Service' . int rand 10000,
+    ValidID   => 2,
+    UserID    => 1,
 );
 
 1;

@@ -15,6 +15,8 @@ use warnings;
 use Kernel::System::Survey;
 use Kernel::System::HTMLUtils;
 use Kernel::System::VariableCheck qw(:all);
+use Kernel::System::Type;
+use Kernel::System::Service;
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -32,8 +34,10 @@ sub new {
             $Self->{LayoutObject}->FatalError( Message => "Got no $Object!" );
         }
     }
-    $Self->{SurveyObject}    = Kernel::System::Survey->new(%Param);
-    $Self->{HTMLUtilsObject} = Kernel::System::HTMLUtils->new(%Param);
+    $Self->{SurveyObject}    = Kernel::System::Survey->new( %{$Self} );
+    $Self->{HTMLUtilsObject} = Kernel::System::HTMLUtils->new( %{$Self} );
+    $Self->{TypeObject}      = Kernel::System::Type->new( %{$Self} );
+    $Self->{ServiceObject}   = Kernel::System::Service->new( %{$Self} );
 
     return $Self;
 }
@@ -252,6 +256,51 @@ sub Run {
                 $Self->{ConfigObject}->Get('Survey::Frontend::HTMLRichTextHeightMax') || 2500,
         },
     );
+
+    # check if the send condition ticket type check is enabled
+    if ( $Self->{ConfigObject}->Get('Survey::CheckSendConditionTicketType') ) {
+
+        # get selected ticket types
+        my %TicketTypes = $Self->{TypeObject}->TypeList();
+        my @TicketTypeList
+            = map { $TicketTypes{$_} ? $TicketTypes{$_} : () } @{ $Survey{TicketTypeIDs} };
+        @TicketTypeList = sort { lc $a cmp lc $b } @TicketTypeList;
+        my $TicketTypeListString = join q{, }, @TicketTypeList;
+
+        if ( !$TicketTypeListString ) {
+            $TicketTypeListString = '- No ticket type selected -';
+        }
+
+        $Self->{LayoutObject}->Block(
+            Name => 'TicketTypes',
+            Data => {
+                TicketTypeListString => $TicketTypeListString,
+            },
+        );
+    }
+
+    # check if the send condition service check is enabled
+    if ( $Self->{ConfigObject}->Get('Survey::CheckSendConditionService') ) {
+
+        # get selected ticket types
+        my %Services = $Self->{ServiceObject}->ServiceList(
+            UserID => $Self->{UserID},
+        );
+        my @ServiceList = map { $Services{$_} ? $Services{$_} : () } @{ $Survey{ServiceIDs} };
+        @ServiceList = sort { lc $a cmp lc $b } @ServiceList;
+        my $ServiceListString = join q{, }, @ServiceList;
+
+        if ( !$ServiceListString ) {
+            $ServiceListString = '- No ticket service selected -';
+        }
+
+        $Self->{LayoutObject}->Block(
+            Name => 'TicketServices',
+            Data => {
+                ServiceListString => $ServiceListString,
+            },
+        );
+    }
 
     # run survey menu modules
     my $MenuModuleConfig = $Self->{ConfigObject}->Get('Survey::Frontend::MenuModule');

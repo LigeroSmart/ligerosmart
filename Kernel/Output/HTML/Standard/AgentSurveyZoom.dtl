@@ -101,6 +101,18 @@
                         <div class="Field" title="$QData{"QueueListString"}">$QData{"QueueListString","80"} $QData{"NoQueueMessage"}</div>
                         <div class="Clear"></div>
 
+<!-- dtl:block:TicketTypes -->
+                        <label>$Text{"Ticket Types"}:</label>
+                        <div class="Field" title="$QData{"TicketTypeListString"}">$QData{"TicketTypeListString","80"}</div>
+                        <div class="Clear"></div>
+<!-- dtl:block:TicketTypes -->
+
+<!-- dtl:block:TicketServices -->
+                        <label>$Text{"Ticket Services"}:</label>
+                        <div class="Field" title="$QData{"ServiceListString"}">$QData{"ServiceListString","80"}</div>
+                        <div class="Clear"></div>
+<!-- dtl:block:TicketServices -->
+
                     </fieldset>
                 </div>
             </div>
