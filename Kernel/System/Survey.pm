@@ -272,11 +272,12 @@ sub SurveyGet {
         my $SendConditions = $Self->{YAMLObject}->Load( Data => $Row[9] ) || {};
 
         # set data fields for send conditions
-        if ( IsArrayRefWithData( $SendConditions->{TicketTypeIDs} ) ) {
-            $Data{TicketTypeIDs} = $SendConditions->{TicketTypeIDs};
-        }
-        if ( IsArrayRefWithData( $SendConditions->{ServiceIDs} ) ) {
-            $Data{ServiceIDs} = $SendConditions->{ServiceIDs};
+        ITEM:
+        for my $Item (qw(TicketTypeIDs ServiceIDs)) {
+
+            next ITEM if !IsArrayRefWithData( $SendConditions->{$Item} );
+
+            $Data{$Item} = $SendConditions->{$Item};
         }
 
         $Data{SurveyID}            = $Row[0];
@@ -1333,8 +1334,8 @@ sub GetRichTextDocumentComplete {
 build send condition string with the single items
 
     my %SendConditions = $SurveyObject->_BuildSendConditionStrg(
-        'TicketTypeIDs' => [1, 2, 3], # (optional)
-        'ServiceIDs'    => [1, 2, 3], # (optional)
+        TicketTypeIDs => [1, 2, 3], # (optional)
+        ServiceIDs    => [1, 2, 3], # (optional)
     );
 
 =cut
@@ -1345,12 +1346,12 @@ sub _BuildSendConditionStrg {
     # build send condition hash
     my %SendConditions;
 
-    if ( IsArrayRefWithData( $Param{TicketTypeIDs} ) ) {
-        $SendConditions{TicketTypeIDs} = $Param{TicketTypeIDs};
-    }
+    ITEM:
+    for my $Item (qw(TicketTypeIDs ServiceIDs)) {
 
-    if ( IsArrayRefWithData( $Param{ServiceIDs} ) ) {
-        $SendConditions{ServiceIDs} = $Param{ServiceIDs};
+        next ITEM if !IsArrayRefWithData( $Param{$Item} );
+
+        $SendConditions{$Item} = $Param{$Item};
     }
 
     # dump send conditions as string

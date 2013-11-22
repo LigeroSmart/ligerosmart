@@ -76,12 +76,10 @@ sub Run {
             }
         }
 
-        @{ $FormElements{Queues} } = $Self->{ParamObject}->GetArray( Param => "Queues" );
-
-        @{ $FormElements{TicketTypeIDs} }
-            = $Self->{ParamObject}->GetArray( Param => "TicketTypeIDs" );
-
-        @{ $FormElements{ServiceIDs} } = $Self->{ParamObject}->GetArray( Param => "ServiceIDs" );
+        # get array params
+        for my $Item (qw(Queues TicketTypeIDs ServiceIDs)) {
+            @{ $FormElements{$Item} } = $Self->{ParamObject}->GetArray( Param => $Item );
+        }
 
         if ( $Self->{ConfigObject}->Get('Frontend::RichText') ) {
             $FormElements{Introduction}     = "\$html/text\$ $FormElements{Introduction}";
@@ -126,17 +124,7 @@ sub _SurveyAddMask {
         Title => 'Add New Survey',
     );
 
-    my $SelectedQueues;
-    if ( !$Param{SurveyID} ) {
-        $Output .= $Self->{LayoutObject}->NavigationBar();
-
-    }
-    else {
-        my %Survey = $Self->{SurveyObject}->SurveyGet( SurveyID => $Param{SurveyID} );
-
-        # get selected queues
-        $SelectedQueues = $Survey{Queues};
-    }
+    $Output .= $Self->{LayoutObject}->NavigationBar();
 
     my %Queues      = $Self->{QueueObject}->GetAllQueues();
     my $QueueString = $Self->{LayoutObject}->BuildSelection(
@@ -147,7 +135,7 @@ sub _SurveyAddMask {
         PossibleNone => 0,
         Sort         => 'AlphanumericValue',
         Translation  => 0,
-        SelectedID   => $FormElements{Queues} || $SelectedQueues,
+        SelectedID   => $FormElements{Queues},
     );
 
     # check if the for send condition ticket type check is enabled
