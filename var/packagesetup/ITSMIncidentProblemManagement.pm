@@ -662,7 +662,7 @@ sub _RenameDynamicFields {
             Label      => $DynamicFieldNew->{Label},
             FieldType  => $DynamicFieldNew->{FieldType},
             ObjectType => $DynamicFieldNew->{ObjectType},
-            Config     => $DynamicFieldNew->{Config},
+            Config     => $DynamicFieldOld->{Config},     # use the old config settings
             ValidID    => 1,
             Reorder    => 0,
             UserID     => 1,
