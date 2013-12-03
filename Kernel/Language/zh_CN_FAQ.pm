@@ -2,6 +2,8 @@
 # Kernel/Language/zh_CN_FAQ.pm - translation file
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
 # --
+# Copyright (C) 2013 Michael Shi <micshi at 163.com>
+# --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
@@ -127,10 +129,10 @@ sub Data {
     $Self->{Translation}->{'Rate (e. g. Equals 25% or GreaterThan 75%)'} = '评分 (例如，= 10% 或 >= 75%)';
     $Self->{Translation}->{'Approved'} = '通过审批';
     $Self->{Translation}->{'Last changed by'} = '上次修改人';
-    $Self->{Translation}->{'FAQ Article Create Time (before/after)'} = '';
-    $Self->{Translation}->{'FAQ Article Create Time (between)'} = '';
-    $Self->{Translation}->{'FAQ Article Change Time (before/after)'} = '';
-    $Self->{Translation}->{'FAQ Article Change Time (between)'} = '';
+    $Self->{Translation}->{'FAQ Article Create Time (before/after)'} = 'FAQ文章创建时间(相对)';
+    $Self->{Translation}->{'FAQ Article Create Time (between)'} = 'FAQ文章创建时间(绝对)';
+    $Self->{Translation}->{'FAQ Article Change Time (before/after)'} = 'FAQ文章创建时间(相对)';
+    $Self->{Translation}->{'FAQ Article Change Time (between)'} = 'FAQ文章创建时间(绝对)';
     $Self->{Translation}->{'Run Search'} = '搜索';
 
     # Template: AgentFAQSearchOpenSearchDescriptionFAQNumber
@@ -141,7 +143,7 @@ sub Data {
     # Template: AgentFAQSearchResultPrint
 
     # Template: AgentFAQSearchSmall
-    $Self->{Translation}->{'FAQ Search'} = '';
+    $Self->{Translation}->{'FAQ Search'} = 'FAQ搜索';
     $Self->{Translation}->{'Profile Selection'} = '';
     $Self->{Translation}->{'Vote'} = '投票';
     $Self->{Translation}->{'No vote settings'} = '';
@@ -153,7 +155,7 @@ sub Data {
     $Self->{Translation}->{'e. g. Equals 25% or GreaterThan 75%'} = '';
     $Self->{Translation}->{'FAQ Article Create Time'} = 'FAQ文章创建时间';
     $Self->{Translation}->{'Specific date'} = '';
-    $Self->{Translation}->{'Date range'} = '';
+    $Self->{Translation}->{'Date range'} = '日期范围';
     $Self->{Translation}->{'FAQ Article Change Time'} = 'FAQ文章修改时间';
 
     # Template: AgentFAQZoom
@@ -405,10 +407,10 @@ sub Data {
     $Self->{Translation}->{'Do you really want to delete this Language?'} = '真的要删除该语言吗?';
     $Self->{Translation}->{'Equals'} = ' = ';
     $Self->{Translation}->{'FAQ Category'} = 'FAQ类别';
-    $Self->{Translation}->{'FAQ Item Change Time (before/after)'} = 'FAQ文章创建时间（之前/之后）';
-    $Self->{Translation}->{'FAQ Item Change Time (between)'} = 'FAQ文章创建时间（之间）';
-    $Self->{Translation}->{'FAQ Item Create Time (before/after)'} = 'FAQ文章创建时间（之前/之后）';
-    $Self->{Translation}->{'FAQ Item Create Time (between)'} = 'FAQ文章创建时间（之间）';
+    $Self->{Translation}->{'FAQ Item Change Time (before/after)'} = 'FAQ文章创建时间（相对）';
+    $Self->{Translation}->{'FAQ Item Change Time (between)'} = 'FAQ文章创建时间（绝对）';
+    $Self->{Translation}->{'FAQ Item Create Time (before/after)'} = 'FAQ文章创建时间（相对）';
+    $Self->{Translation}->{'FAQ Item Create Time (between)'} = 'FAQ文章创建时间（绝对）';
     $Self->{Translation}->{'GreaterThan'} = ' > ';
     $Self->{Translation}->{'GreaterThanEquals'} = ' >= ';
     $Self->{Translation}->{'Last Changed by'} = '最后修改人';
@@ -424,6 +426,7 @@ sub Data {
     $Self->{Translation}->{'This Language is used in the following FAQ Article(s)'} = '该语言正被以下的 FAQ 文章所使用';
     $Self->{Translation}->{'This category already exists!'} = '该类别已经在存在!';
     $Self->{Translation}->{'Updated'} = '更新';
+    $Self->{Translation}->{'FAQAccess'} = 'FAQ访问';
     $Self->{Translation}->{'You can not delete this Category. It is used in at least one FAQ Article! and/or is parent of at least another Category'} =
         '不能删除该类别. 它至少还被一篇FAQ文章所使用 并/或 它是其中类别的父类别!';
     $Self->{Translation}->{'You can not delete this Language. It is used in at least one FAQ Article!'} =
