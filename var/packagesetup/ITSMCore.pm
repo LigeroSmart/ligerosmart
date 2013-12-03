@@ -449,7 +449,8 @@ sub _MigrateCriticalityAndImpactToDynamicFields {
     $CriticalityList = { map { $_ => $_ } sort values %{$CriticalityList} };
     $ImpactList      = { map { $_ => $_ } sort values %{$ImpactList} };
 
-# get the definition for all dynamic fields for ITSMCore (this is only ITSMCriticality and ITSMImpact)
+    # get the definition for all dynamic fields for ITSMCore
+    # (this is only ITSMCriticality and ITSMImpact)
     my @DynamicFields = $Self->_GetITSMDynamicFieldsDefinition();
 
     my $SuccessCounter;
