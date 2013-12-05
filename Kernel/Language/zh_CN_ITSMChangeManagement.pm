@@ -2,6 +2,8 @@
 # Kernel/Language/zh_CN_ITSMChangeManagement.pm - translation file
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
 # --
+# Copyright (C) 2013 Michael Shi <micshi at 163.com>
+# --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
@@ -308,8 +310,6 @@ sub Data {
     $Self->{Translation}->{'Instruction'} = '指示';
     $Self->{Translation}->{'Report'} = '报告';
     $Self->{Translation}->{'Change Category'} = '变更类别';
-    $Self->{Translation}->{'(之前/之后)'} = '';
-    $Self->{Translation}->{'(之间)'} = '';
     $Self->{Translation}->{'Run Search'} = '搜索';
 
     # Template: AgentITSMChangeSearchResultPrint
