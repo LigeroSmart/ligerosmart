@@ -373,6 +373,16 @@ sub Run {
             # save article from for addresses list
             $ArticleFrom = $Article{From};
 
+            # if To is present and is no a queue
+            # set To as article from
+            if ( IsStringWithData( $Article{To} ) ) {
+                my %Queues = $Self->{QueueObject}->QueueList();
+                my %QueueLookup = reverse %Queues;
+                if ( !defined $QueueLookup{ $Article{To} } ) {
+                    $ArticleFrom = $Article{To};
+                }
+            }
+
             # body preparation for plain text processing
             $Article{Body} = $Self->{LayoutObject}->ArticleQuote(
                 TicketID           => $Article{TicketID},
