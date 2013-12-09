@@ -43,6 +43,11 @@ FAQ.Customer.FAQZoom = (function (TargetNS) {
                 NewHeight = NewHeight + 4;
             }
 
+            // if the iFrames height is 0, we collapse the widget
+            if (NewHeight === 0) {
+                $Iframe.closest('li.Customer').removeClass('Visible');
+            }
+
             if (!NewHeight || isNaN(NewHeight)) {
                 NewHeight = Core.Config.Get('FAQ::Frontend::CustomerHTMLFieldHeightDefault');
             }
@@ -58,25 +63,17 @@ FAQ.Customer.FAQZoom = (function (TargetNS) {
     /**
      * @function
      * @description
-     *      This function checks the value of a hidden input field containing the state of the article:
-     *      untouched (= not yet loaded), true or false. If the article is already loaded (-> true), and
-     *      user calls this function by clicking on the message head, the article gets hidden by removing
-     *      the class 'Visible' and the status changes to false. If the message head is clicked while the
-     *      status is false (e.g. the article is hidden), the article gets the class 'Visible' again and
-     *      the status gets changed to true.
+     *      This function checks the class of a FAQ field:
+     *      user calls this function by clicking on the field head, field gets hidden by removing
+     *      the class 'Visible'. If the field head is clicked while it does not contain the class
+     *      'Visible', the field gets the class 'Visible' again and it will be shown.
      */
-
     function ToggleMessage($Message){
-        var $Status = $('> input[name=FieldState]', $Message);
-        switch ($Status.val()){
-            case "true":
-                $Message.removeClass('Visible');
-                $Status.val("false");
-            break;
-            case "false":
-                $Message.addClass('Visible');
-                $Status.val("true");
-            break;
+        if ($Message.hasClass('Visible')) {
+            $Message.removeClass('Visible');
+        }
+        else {
+            $Message.addClass('Visible');
         }
     }
 
