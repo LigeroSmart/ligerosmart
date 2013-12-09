@@ -1,6 +1,7 @@
 # --
 # Kernel/Language/ru_FAQ.pm - translation file
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
+# Copyright (C) 2013 Andrey N. Burdin <BurdinAN at it-sakh.net>
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +26,7 @@ sub Data {
     $Self->{Translation}->{'Top 10 FAQ articles'} = 'Top 10 статей FAQ';
     $Self->{Translation}->{'Subcategory of'} = 'Подраздел';
     $Self->{Translation}->{'No rate selected!'} = 'Оценка отсутствует!';
-    $Self->{Translation}->{'Explorer'} = '';
+    $Self->{Translation}->{'Explorer'} = 'Обзор';
     $Self->{Translation}->{'public (all)'} = 'общедоступное (всем)';
     $Self->{Translation}->{'external (customer)'} = 'открытое (клиентам)';
     $Self->{Translation}->{'internal (agent)'} = 'служебное (агентам)';
@@ -80,7 +81,7 @@ sub Data {
     $Self->{Translation}->{'FAQ'} = 'FAQ';
 
     # Template: AgentFAQExplorer
-    $Self->{Translation}->{'FAQ Explorer'} = 'FAQ Explorer';
+    $Self->{Translation}->{'FAQ Explorer'} = 'FAQ Обзор';
     $Self->{Translation}->{'Quick Search'} = 'Быстрый поиск';
     $Self->{Translation}->{'Advanced Search'} = 'Расширенный поиск';
     $Self->{Translation}->{'Subcategories'} = 'Подразделы';
@@ -167,10 +168,10 @@ sub Data {
 
     # Template: AgentFAQZoomSmall
     $Self->{Translation}->{'Insert FAQ Text'} = 'Вставить текст FAQ';
-    $Self->{Translation}->{'Insert Full FAQ'} = '';
+    $Self->{Translation}->{'Insert Full FAQ'} = 'Вставить полностью FAQ';
     $Self->{Translation}->{'Insert FAQ Link'} = 'Вставить ссылку на FAQ';
     $Self->{Translation}->{'Insert FAQ Text & Link'} = 'Вставить текст FAQ и ссылку';
-    $Self->{Translation}->{'Insert Full FAQ & Link'} = '';
+    $Self->{Translation}->{'Insert Full FAQ & Link'} = 'Вставить полностью FAQ и ссылку';
 
     # Template: CustomerFAQExplorer
     $Self->{Translation}->{'No FAQ articles found.'} = 'Статьи FAQ не найдены.';
