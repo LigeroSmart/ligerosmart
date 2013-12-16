@@ -465,11 +465,11 @@ sub GetStatElement {
         # first article is an external email article
         if ( $ArticleDataList->[0]->{ArticleTypeID} eq $Self->{EmailExternalTypeID} ) {
 
-            # first artilce comes from an agent (Email-Ticket)
+            # first article comes from an agent (Email-Ticket)
             if (
-                $ArticleDataList->[0]->{AgentSenderTypeID}
+                $ArticleDataList->[0]->{ArticleSenderTypeID}
                 &&
-                $ArticleDataList->[0]->{AgentSenderTypeID} eq $Self->{AgentSenderTypeID}
+                $ArticleDataList->[0]->{ArticleSenderTypeID} eq $Self->{AgentSenderTypeID}
                 && !$ArticleDataList->[1]
                 )
             {
@@ -479,11 +479,11 @@ sub GetStatElement {
 
             # first article comes from customer and the second one from an agent
             if (
-                $ArticleDataList->[0]->{AgentSenderTypeID}
+                $ArticleDataList->[0]->{ArticleSenderTypeID}
                 &&
-                $ArticleDataList->[0]->{AgentSenderTypeID} eq $Self->{CustomerSenderTypeID}
+                $ArticleDataList->[0]->{ArticleSenderTypeID} eq $Self->{CustomerSenderTypeID}
                 && $ArticleDataList->[1]
-                && $ArticleDataList->[1]->{AgentSenderTypeID} eq $Self->{AgentSenderTypeID}
+                && $ArticleDataList->[1]->{ArticleSenderTypeID} eq $Self->{AgentSenderTypeID}
                 )
             {
                 $FirstLevelSolutionTickets++;
