@@ -429,13 +429,13 @@ sub ConditionLookup {
         my $ConditionID;
 
         return if !$Self->{DBObject}->Prepare(
-            SQL   => '
+            SQL => '
                 SELECT id
                 FROM change_condition
                 WHERE change_id = ?
                 AND name = ?
             ',
-            Bind  => [
+            Bind => [
                 \$Param{ChangeID},
                 \$Param{Name},
             ],
@@ -455,13 +455,13 @@ sub ConditionLookup {
         my $Name;
 
         return if !$Self->{DBObject}->Prepare(
-            SQL   => '
+            SQL => '
                 SELECT name
                 FROM change_condition
                 WHERE change_id = ?
                 AND id = ?
             ',
-            Bind  => [
+            Bind => [
                 \$Param{ChangeID},
                 \$Param{ConditionID},
             ],
