@@ -139,12 +139,13 @@ sub Run {
         # check if condition name is already used
         else {
 
-            # check if name exists
+            # check if condition name exists already for this change
             my $ConditionID = $Self->{ConditionObject}->ConditionLookup(
-                Name => $GetParam{Name},
+                Name     => $GetParam{Name},
+                ChangeID => $GetParam{ChangeID},
             );
 
-            # it is only an error if another condition uses this name
+            # it is only an error if another condition of this change uses this name
             # changing the name of a condition is still possible
             if ( $ConditionID && ( $GetParam{ConditionID} ne $ConditionID ) ) {
                 $Param{DuplicateName} = 'ServerError';

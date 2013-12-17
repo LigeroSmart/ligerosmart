@@ -370,19 +370,31 @@ sub ConditionUpdate {
 Return the condition id when the condition name is passed.
 Return the condition name when the condition id is passed.
 When no condition id or condition name is found, then the undefined value is returned.
+The ChangeID is always required as condition names are only unique within the same change.
 
     my $ConditionID = $ConditionObject->ConditionLookup(
-        Name => 'ABC',
+        Name     => 'ABC',
+        ChangeID => 2,
     );
 
     my $Name = $ConditionObject->ConditionLookup(
         ConditionID => 42,
+        ChangeID    => 2,
     );
 
 =cut
 
 sub ConditionLookup {
     my ( $Self, %Param ) = @_;
+
+    # the change id must be passed
+    if ( !$Param{ChangeID} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need the ChangeID!',
+        );
+        return;
+    }
 
     # the condition id or the condition name must be passed
     if ( !$Param{ConditionID} && !$Param{Name} ) {
@@ -417,8 +429,16 @@ sub ConditionLookup {
         my $ConditionID;
 
         return if !$Self->{DBObject}->Prepare(
-            SQL   => 'SELECT id FROM change_condition WHERE name = ?',
-            Bind  => [ \$Param{Name} ],
+            SQL   => '
+                SELECT id
+                FROM change_condition
+                WHERE change_id = ?
+                AND name = ?
+            ',
+            Bind  => [
+                \$Param{ChangeID},
+                \$Param{Name},
+            ],
             Limit => 1,
         );
 
@@ -435,8 +455,16 @@ sub ConditionLookup {
         my $Name;
 
         return if !$Self->{DBObject}->Prepare(
-            SQL   => 'SELECT name FROM change_condition WHERE id = ?',
-            Bind  => [ \$Param{ConditionID} ],
+            SQL   => '
+                SELECT name
+                FROM change_condition
+                WHERE change_id = ?
+                AND id = ?
+            ',
+            Bind  => [
+                \$Param{ChangeID},
+                \$Param{ConditionID},
+            ],
             Limit => 1,
         );
 
@@ -551,7 +579,7 @@ sub ConditionGet {
 
 =item ConditionList()
 
-return a list of all conditions ids of a given change id as array reference.
+return a list of all condition ids of a given change id as array reference.
 The ids are sorted by the name of the condition.
 
     my $ConditionIDsRef = $ConditionObject->ConditionList(

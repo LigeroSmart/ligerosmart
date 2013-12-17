@@ -214,7 +214,8 @@ for my $ChangeID (@ChangeIDs) {
 
         # test condition lookup by name
         my $LookupConditionID = $Self->{ConditionObject}->ConditionLookup(
-            Name => $ConditionName,
+            Name     => $ConditionName,
+            ChangeID => $ChangeID,
         );
         $Self->Is(
             $LookupConditionID,
@@ -225,6 +226,7 @@ for my $ChangeID (@ChangeIDs) {
         # test condition lookup by id
         my $LookupConditionName = $Self->{ConditionObject}->ConditionLookup(
             ConditionID => $ConditionID,
+            ChangeID    => $ChangeID,
         );
         $Self->Is(
             $LookupConditionName,
