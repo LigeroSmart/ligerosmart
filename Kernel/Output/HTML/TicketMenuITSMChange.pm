@@ -47,10 +47,45 @@ sub Run {
         return;
     }
 
-    # check if frontend module is registered, if not, do not show action
+    # if an action parameter was given
     if ( $Param{Config}->{Action} ) {
+
+        # check if frontend module is registered, if not, do not show action
         my $Module = $Self->{ConfigObject}->Get('Frontend::Module')->{ $Param{Config}->{Action} };
         return if !$Module;
+
+        # check if current user has the permission for the given action
+        if ( $Module->{GroupRo} && ref $Module->{GroupRo} eq 'ARRAY' && @{ $Module->{GroupRo} } ) {
+
+            my $Access;
+
+            GROUP:
+            for my $Group ( @{ $Module->{GroupRo} } ) {
+
+                # lookup the group id
+                my $GroupID = $Self->{GroupObject}->GroupLookup(
+                    Group => $Group,
+                );
+
+                # do not grant access, when the group is not found
+                next GROUP if !$GroupID;
+
+                # get user groups, where the user has the 'ro' privilege
+                my %Groups = $Self->{GroupObject}->GroupMemberList(
+                    UserID => $Self->{UserID},
+                    Type   => 'ro',
+                    Result => 'HASH',
+                );
+
+                # remember that the user has access
+                if ( $Groups{$GroupID} ) {
+                    $Access = 1;
+                }
+            }
+
+            # do not grant access if the agent doesn't have the 'ro' rights in the group
+            return if !$Access;
+        }
     }
 
     # the link is shown only for the configured ticket types,
@@ -73,7 +108,9 @@ sub Run {
     # check permission
     my $FrontendConfig
         = $Self->{ConfigObject}->Get("ITSMChange::Frontend::$Param{Config}->{Action}");
+
     if ( $FrontendConfig && $FrontendConfig->{Permission} ) {
+
         my $Access = $Self->{ChangeObject}->Permission(
             Type   => $FrontendConfig->{Permission},
             Action => $Param{Config}->{Action},
