@@ -74,7 +74,9 @@ sub Data {
     $Self->{Translation}->{'ChangeNumber'} = 'Change Nummer';
     $Self->{Translation}->{'Condition Edit'} = 'Bedingung bearbeiten';
     $Self->{Translation}->{'Create Change'} = 'Change erstellen';
+    $Self->{Translation}->{'Create Change (from template)'} = 'Change aus Template erstellen';
     $Self->{Translation}->{'Create a change from this ticket!'} = 'Einen Change aus diesem Ticket erstellen!';
+    $Self->{Translation}->{'Create a change (from template) from this ticket!'} = 'Einen Change (aus einem Template) aus diesem Ticket erstellen!';
     $Self->{Translation}->{'Delete Workorder'} = 'Diese Workorder löschen';
     $Self->{Translation}->{'Edit the change'} = 'Diesen Change bearbeiten';
     $Self->{Translation}->{'Edit the conditions of the change'} = 'Bearbeite die Bedingungen dieses Changes';
