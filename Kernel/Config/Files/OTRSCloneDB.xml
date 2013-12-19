@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<otrs_config version="1.0" init="Config">
+    <ConfigItem Name="CloneDB::TargetDBSettings" Required="0" Valid="1">
+        <Description Translatable="1">Settings for connecting with the target database.</Description>
+        <Group>OTRSCloneDB</Group>
+        <SubGroup>TargetDatabase</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="TargetDatabaseHost">localhost</Item>
+                <Item Key="TargetDatabase">otrs</Item>
+                <Item Key="TargetDatabaseUser">user</Item>
+                <Item Key="TargetDatabasePw">pwd</Item>
+                <Item Key="TargetDatabaseType">mysql</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+
+    <ConfigItem Name="CloneDB::Driver###mysql" Required="0" Valid="1">
+        <Description Translatable="1">CloneDB backend registration.</Description>
+        <Group>OTRSCloneDB</Group>
+        <SubGroup>OTRSCloneDB::Driver::Registration</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="DisplayName">MySQL</Item>
+                <Item Key="Module">Kernel::System::CloneDB::Driver::mysql</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="CloneDB::Driver###postgresql" Required="0" Valid="1">
+        <Description Translatable="1">CloneDB backend registration.</Description>
+        <Group>OTRSCloneDB</Group>
+        <SubGroup>OTRSCloneDB::Driver::Registration</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="DisplayName">PostgreSQL</Item>
+                <Item Key="Module">Kernel::System::CloneDB::Driver::postgresql</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+</otrs_config>

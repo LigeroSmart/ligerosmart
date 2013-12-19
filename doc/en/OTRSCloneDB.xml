@@ -1,0 +1,212 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
+    "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd">
+
+<book lang='en'>
+
+<bookinfo>
+<title>$Name</title>
+<edition>$Description Version $Version</edition>
+
+<copyright>
+<year>$YearStamp</year>
+<holder>$Vendor, $URL</holder>
+</copyright>
+
+<date>$DateStamp</date>
+
+<legalnotice>
+    <para>$License</para>
+    <para>This work is copyrighted by $Vendor, Norsk-Data-Str. 1, 61352 Bad Homburg, Germany.</para>
+    <para>Build Date: $DateStamp</para>
+</legalnotice>
+
+</bookinfo>
+
+<preface id="preface" >
+    <title>Preface</title>
+    <para>
+        This package provides the 'OTRSCloneDB' feature.
+    </para>
+    <para>
+        It clones an OTRS database into a target database.
+    </para>
+    <para>If you have questions regarding this package, please contact your support team (support@otrs.com) for more information.</para>
+</preface>
+
+<chapter>
+    <title>Feature List</title>
+    <sect1>
+        <title>Clone DB</title>
+        <para>
+            This little script clones an OTRS database into a target database, even
+            on another database platform. It will dynamically get the list of tables in the
+            source DB, and copy the data of each table to the target DB.
+        </para>
+    </sect1>
+</chapter>
+
+<chapter>
+    <title>Prerequisites</title>
+    <sect1>
+        <title>Framework</title>
+        <para>The following OTRS framework is required:</para>
+        <para>
+        $Framework
+        </para>
+    </sect1>
+    <sect1>
+        <title>Packages</title>
+        <para>The following package are required:</para>
+        <para>
+        $PackageRequired
+        </para>
+    </sect1>
+    <sect1>
+        <title>Operating System</title>
+        <para>This package requires one of the following operating systems:</para>
+        <para>
+        $OS
+        </para>
+    </sect1>
+    <sect1>
+        <title>Third Party Software</title>
+        <para>This third party software is required to use this package:</para>
+        <para>
+            <itemizedlist>
+                <listitem><para>None.</para></listitem>
+            </itemizedlist>
+        </para>
+    </sect1>
+</chapter>
+
+<chapter>
+    <title>Installation</title>
+    <para>The following instructions explain how to install the package.</para>
+    <sect1>
+        <title>Admin Interface</title>
+        <para>
+Please use the following URL to install the package utilizing the admin
+interface (please note that you need to be in the admin group).
+        </para>
+        <para>
+<ulink url="http://localhost/otrs/index.pl?Action=AdminPackageManager">http://localhost/otrs/index.pl?Action=AdminPackageManager</ulink>
+        </para>
+    </sect1>
+    <sect1>
+        <title>Command Line</title>
+        <para>
+If you don't want to use the Admin Interface, you can use the following
+OPM command to install the package with "bin/otrs.PackageManager.pl".
+        </para>
+        <para>
+        <screen>
+shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
+        </screen>
+        </para>
+    </sect1>
+</chapter>
+
+<chapter>
+    <title>Configuration</title>
+    <para>The package can be configured via the SysConfig in the Admin Interface. The following configuration options are available:</para>
+    <section>
+        <title>CloneDB::TargetDBSettings.</title>
+        <para>Group: OTRSCloneDB, Subgroup: TargetDatabase.</para>
+        <para>Settings for connecting with the target database.</para>
+    </section>
+    <section>
+        <title>CloneDB::Driver###mysql.</title>
+        <para>Group: OTRSCloneDB, Subgroup: OTRSCloneDB::Driver::Registration.</para>
+        <para>CloneDB backend registration.</para>
+    </section>
+    <section>
+        <title>CloneDB::Driver###postgresql.</title>
+        <para>Group: OTRSCloneDB, Subgroup: OTRSCloneDB::Driver::Registration.</para>
+        <para>CloneDB backend registration.</para>
+    </section>
+</chapter>
+
+<chapter>
+    <title>Usage</title>
+        <para>
+            Please have a look at the feature descriptions to see how the new features can be used.
+        </para>
+
+        <para>
+            <itemizedlist>
+                <listitem>
+                    <para>Configure target database settings in this script.</para>
+                </listitem>
+                <listitem>
+                    <para>Create the needed data structures of OTRS (first part) and installed packages in the target database.</para>
+                    <itemizedlist mark="round">
+                        <listitem>
+                            <para>Only the the otrs-schema.\$DB.sql files should be used, not the otrs-schema-post.\$DB.sql files.</para>
+                        </listitem>
+                        <listitem>
+                            <para>Also for installed packages, the SQL (first part only) must be generated and executed.</para>
+                        </listitem>
+                    </itemizedlist>
+                </listitem>
+                <listitem>
+                    <para>Run otrs.CloneDB.pl script.</para>
+                </listitem>
+                <listitem>
+                    <para>Apply the second part of the data structure definitions (foreign key constraints etc.).</para>
+                    <itemizedlist mark="round">
+                        <listitem>
+                            <para>Now the otrs-schema-post.\$DB.sql files should be used.</para>
+                        </listitem>
+                        <listitem>
+                            <para>Also for the installed packages.</para>
+                        </listitem>
+                    </itemizedlist>
+                </listitem>
+                <listitem>
+                    <para>Verify the result.</para>
+                </listitem>
+            </itemizedlist>
+        </para>
+</chapter>
+
+<chapter>
+    <title>Test</title>
+    <para>
+        This module has been tested on the current state of the art in quality.
+    </para>
+</chapter>
+
+<chapter>
+    <title>Contacts</title>
+    <para>People who are involved in this implementation.</para>
+    <sect1>
+        <title>OTRS AG</title>
+        <para>
+            Accounting: Rene Bakker &lt;sales@otrs.com&gt;, Phone +49 (0)6172 681988 0
+        </para>
+        <para>
+            Technical: Manuel Hecht &lt;dev-support@otrs.com&gt;, Phone +49 (0)6172 681988 0
+        </para>
+    </sect1>
+</chapter>
+
+<chapter>
+    <title>Manifest</title>
+    <para>The manifest lists all included files and the referring permissions.</para>
+    <sect1>
+        <title>Filelist</title>
+        <para>
+        $Filelist
+        </para>
+    </sect1>
+</chapter>
+
+<chapter>
+    <title>ChangeLog</title>
+    <para>
+    $ChangeLog
+    </para>
+</chapter>
+
+</book>

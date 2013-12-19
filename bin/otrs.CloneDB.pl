@@ -1,9 +1,7 @@
-#!/usr/bin/perl -w
+#!/usr/bin/perl
 # --
 # bin/otrs.CloneDB.pl - migrate OTRS databases
-# Copyright (C) 2003-2012 OTRS AG, http://otrs.com/
-# --
-# $Id: otrs.CloneDB.pl,v 1.2 2012-01-06 10:42:09 mg Exp $
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
 # --
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU AFFERO General Public License as published by
@@ -17,7 +15,7 @@
 #
 # You should have received a copy of the GNU Affero General Public License
 # along with this program; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+# Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 # or see http://www.gnu.org/licenses/agpl.txt.
 # --
 
@@ -32,37 +30,12 @@ use lib dirname($RealBin);
 use Getopt::Std;
 use MIME::Base64;
 
-use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
-
 use Kernel::Config;
 use Kernel::System::Encode;
 use Kernel::System::Log;
 use Kernel::System::Main;
 use Kernel::System::DB;
-
-#
-# Target DB settings
-#
-my $TargetDatabaseHost = 'localhost';
-my $TargetDatabase     = 'otrs31_dev';
-my $TargetDatabaseUser = 'otrs31_dev';
-my $TargetDatabasePw   = 'otrs31_dev';
-my $TargetDatabaseDSN  = "DBI:mysql:database=$TargetDatabase;host=$TargetDatabaseHost;";
-my $TargetDatabaseType = "mysql";
-
-#
-# OTRS stores binary data in some columns. On some database systems,
-#   these are handled differently (data is converted to base64-encoding before
-#   it is stored. Here is the list of these columns which need special treatment.
-#
-my %BlobColumns = (
-    'article_plain.body'          => 1,
-    'article_attachment.content'  => 1,
-    'virtual_fs_db.content'       => 1,
-    'web_upload_cache.content'    => 1,
-    'standard_attachment.content' => 1,
-);
+use Kernel::System::CloneDB::Backend;
 
 # create common objects
 my %CommonObject = ();
@@ -75,13 +48,20 @@ $CommonObject{LogObject}    = Kernel::System::Log->new(
 $CommonObject{MainObject}     = Kernel::System::Main->new(%CommonObject);
 $CommonObject{SourceDBObject} = Kernel::System::DB->new(%CommonObject)
     || die "Could not connect to source DB";
-$CommonObject{TargetDBObject} = Kernel::System::DB->new(
-    %CommonObject,
-    DatabaseDSN  => $TargetDatabaseDSN,
-    DatabaseUser => $TargetDatabaseUser,
-    DatabasePw   => $TargetDatabasePw,
-    Type         => $TargetDatabaseType,
-) || die "Could not connect to target DB";
+
+# create CloneDB backend object
+$CommonObject{CloneDBBackendObject} = Kernel::System::CloneDB::Backend->new(%CommonObject)
+    || die "Could not create clone db object.";
+
+# get the target DB settings
+my $TargetDBSettings
+    = $CommonObject{ConfigObject}->Get('CloneDB::TargetDBSettings');
+
+# create DB connections
+my $TargetDBObject = $CommonObject{CloneDBBackendObject}->CreateTargetDBConnection(
+    TargetDBSettings => $TargetDBSettings,
+);
+die "Could not create target DB connection." if !$TargetDBObject;
 
 my %Options = ();
 getopt( 'rh', \%Options );
@@ -92,8 +72,13 @@ if ( exists $Options{h} ) {
 }
 
 if ( exists $Options{r} ) {
-    if ( SanityChecks() ) {
-        DataTransfer();
+    my $SanityResult = $CommonObject{CloneDBBackendObject}->SanityChecks(
+        TargetDBObject => $TargetDBObject,
+    );
+    if ($SanityResult) {
+        $CommonObject{CloneDBBackendObject}->DataTransfer(
+            TargetDBObject => $TargetDBObject,
+        );
         exit 0;
     }
     exit 1;
@@ -104,7 +89,7 @@ exit 1;
 
 sub _Help {
     print STDERR <<EOF;
-$0 <Revision $VERSION> - migrate OTRS databases
+$0 migrate OTRS databases
 Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 
 Usage: $0 -r
@@ -129,191 +114,4 @@ Instructions:
 
 EOF
     exit 1;
-}
-
-#
-# Some up-front sanity checks
-#
-sub SanityChecks {
-    if ( $CommonObject{ConfigObject}->{DatabaseDSN} eq $TargetDatabaseDSN ) {
-        die "Error: Source and target database DSN are the same!";
-    }
-
-    my @Tables = _TablesList(
-        DBObject => $CommonObject{SourceDBObject},
-    );
-
-    for my $Table (@Tables) {
-        my $Target_RowCount = _RowCount(
-            DBObject => $CommonObject{TargetDBObject},
-            Table    => $Table,
-        );
-
-        if ( !defined $Target_RowCount ) {
-            die "Error: required table '$Table' does not seem to exist in the target database!";
-        }
-
-        if ( $Target_RowCount > 0 ) {
-            die "Error: table '$Table' in the target database already contains data!";
-        }
-    }
-
-    return 1;
-}
-
-#
-# Transfer the actual table data
-#
-
-sub DataTransfer {
-    my @Tables = _TablesList(
-        DBObject => $CommonObject{SourceDBObject},
-    );
-
-    for my $Table (@Tables) {
-        print "Converting table $Table...\n";
-
-        # Get the list of columns of this table to be able to
-        #   generate correct INSERT statements.
-        my @Columns = _ColumnsList(
-            Table    => $Table,
-            DBObject => $CommonObject{SourceDBObject},
-        );
-        my $ColumnsString = join( ', ', @Columns );
-        my $BindString = join ', ', map {'?'} @Columns;
-        my $SQL = "INSERT INTO $Table ($ColumnsString) VALUES ($BindString)";
-
-        my $_RowCount = _RowCount(
-            DBObject => $CommonObject{SourceDBObject},
-            Table    => $Table,
-        );
-        my $Counter = 1;
-
-        # Now fetch all the data and insert it to the target DB.
-        $CommonObject{SourceDBObject}->Prepare(
-            SQL => "
-                SELECT *
-                FROM $Table",
-            Limit => 4_000_000_000,
-        ) || die @!;
-
-        while ( my @Row = $CommonObject{SourceDBObject}->FetchrowArray() ) {
-
-            # If the two databases have different blob handling (base64), convert
-            #   columns that need it.
-            if (
-                $CommonObject{SourceDBObject}->GetDatabaseFunction('DirectBlob')
-                != $CommonObject{TargetDBObject}->GetDatabaseFunction('DirectBlob')
-                )
-            {
-                for my $ColumnCounter ( 1 .. $#Columns ) {
-                    my $Column = $Columns[$ColumnCounter];
-
-                    next if ( !$BlobColumns{"$Table.$Column"} );
-
-                    if ( !$CommonObject{SourceDBObject}->GetDatabaseFunction('DirectBlob') ) {
-                        $Row[$ColumnCounter] = decode_base64( $Row[$ColumnCounter] );
-                    }
-
-                    if ( !$CommonObject{TargetDBObject}->GetDatabaseFunction('DirectBlob') ) {
-                        $CommonObject{EncodeObject}->EncodeOutput( \$Row[$ColumnCounter] );
-                        $Row[$ColumnCounter] = encode_base64( $Row[$ColumnCounter] );
-                    }
-
-                }
-
-            }
-            my @Bind = map { \$_ } @Row;
-
-            print "    Inserting $Counter of $_RowCount\n" if $Counter % 1000 == 0;
-
-            $CommonObject{TargetDBObject}->Do(
-                SQL  => $SQL,
-                Bind => \@Bind,
-            ) || die @!;
-
-            $Counter++;
-        }
-
-        print "Finished converting table $Table.\n";
-    }
-}
-
-#
-# List all tables in the source database in alphabetical order.
-#
-sub _TablesList {
-    my %Param = @_;
-
-    if ( $Param{DBObject}->{'DB::Type'} eq 'postgresql' ) {
-
-        $Param{DBObject}->Prepare(
-            SQL => "
-                SELECT table_name
-                FROM information_schema.tables
-                WHERE table_name !~ '^pg_+'
-                    AND table_schema != 'information_schema'
-                ORDER BY table_name ASC"
-        ) || die @!;
-    }
-    else {
-        die
-            "_TablesList() is not yet implemented for database type $Param{DBObject}->{'DB::Type'}!";
-    }
-
-    my @Result;
-    while ( my @Row = $Param{DBObject}->FetchrowArray() ) {
-        push @Result, $Row[0];
-    }
-    return @Result;
-}
-
-#
-# List all columns of a table in the order of their position.
-#
-sub _ColumnsList {
-    my %Param = @_;
-
-    if ( $Param{DBObject}->{'DB::Type'} eq 'postgresql' ) {
-
-        $Param{DBObject}->Prepare(
-            SQL => "
-                SELECT column_name
-                FROM information_schema.columns
-                WHERE table_name = ?
-                ORDER BY ordinal_position ASC",
-            Bind => [
-                \$Param{Table},
-            ],
-        ) || die @!;
-
-    }
-    else {
-        die
-            "_ColumnsList() is not yet implemented for database type $Param{DBObject}->{'DB::Type'}!";
-    }
-
-    my @Result;
-    while ( my @Row = $Param{DBObject}->FetchrowArray() ) {
-        push @Result, $Row[0];
-    }
-    return @Result;
-}
-
-#
-# Get row count of a table.
-#
-sub _RowCount {
-    my %Param = @_;
-
-    $Param{DBObject}->Prepare(
-        SQL => "
-            SELECT COUNT(*)
-            FROM $Param{Table}",
-    ) || die @!;
-    my $Result;
-    while ( my @Row = $Param{DBObject}->FetchrowArray() ) {
-        $Result = $Row[0];
-    }
-    return $Result;
 }
