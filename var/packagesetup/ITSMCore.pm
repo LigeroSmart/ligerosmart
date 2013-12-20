@@ -236,6 +236,9 @@ sub CodeUpgrade {
     # fillup empty type_id rows in sla table
     $Self->_FillupEmptySLATypeID();
 
+    # make dynamic fields internal
+    $Self->_MakeDynamicFieldsInternal();
+
     return 1;
 }
 
@@ -403,14 +406,15 @@ sub _CreateITSMDynamicFields {
 
             # create a new field
             my $FieldID = $Self->{DynamicFieldObject}->DynamicFieldAdd(
-                Name       => $DynamicField->{Name},
-                Label      => $DynamicField->{Label},
-                FieldOrder => $NextOrderNumber,
-                FieldType  => $DynamicField->{FieldType},
-                ObjectType => $DynamicField->{ObjectType},
-                Config     => $DynamicField->{Config},
-                ValidID    => $ValidID,
-                UserID     => 1,
+                InternalField => 1,
+                Name          => $DynamicField->{Name},
+                Label         => $DynamicField->{Label},
+                FieldOrder    => $NextOrderNumber,
+                FieldType     => $DynamicField->{FieldType},
+                ObjectType    => $DynamicField->{ObjectType},
+                Config        => $DynamicField->{Config},
+                ValidID       => $ValidID,
+                UserID        => 1,
             );
             next DYNAMICFIELD if !$FieldID;
 
@@ -418,6 +422,9 @@ sub _CreateITSMDynamicFields {
             $NextOrderNumber++;
         }
     }
+
+    # make dynamic fields internal
+    $Self->_MakeDynamicFieldsInternal();
 
     return 1;
 }
@@ -1074,6 +1081,36 @@ sub _FillupEmptySLATypeID {
             OR type_id IS NULL",
         Bind => [ \$SLATypeKeyList[0] ],
     );
+}
+
+
+=item _MakeDynamicFieldsInternal()
+
+Converts the dynamic fields to internal fields, which means that they can not be deleted in the admin interface.
+
+    my $Result = $CodeObject->_MakeDynamicFieldsInternal();
+
+=cut
+
+sub _MakeDynamicFieldsInternal {
+    my ( $Self, %Param ) = @_;
+
+    # get the definition for all dynamic fields for ITSM
+    my @DynamicFields = $Self->_GetITSMDynamicFieldsDefinition();
+
+    for my $DynamicField ( @DynamicFields ) {
+
+        # set as internal field
+        $Self->{DBObject}->Do(
+            SQL => 'UPDATE dynamic_field
+                SET internal_field = 1
+                WHERE name = ?',
+            Bind => [
+                \$DynamicField->{Name},
+            ],
+        );
+    }
+    return 1;
 }
 
 1;
