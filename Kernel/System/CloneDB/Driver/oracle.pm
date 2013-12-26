@@ -75,9 +75,15 @@ sub CreateTargetDBConnection {
         }
     }
 
+    # set default sid
+    $Param{TargetDatabaseSID} = 'XE' if !defined $Param{TargetDatabaseSID};
+
+    # set default sid
+    $Param{TargetDatabasePort} = '1521' if !defined $Param{TargetDatabasePort};
+
     # include DSN for target DB
     $Param{TargetDatabaseDSN} =
-        "DBI:Oracle:sid=XE;host=$Param{TargetDatabaseHost};port=1521;";
+        "DBI:Oracle:sid=$Param{TargetDatabaseSID};host=$Param{TargetDatabaseHost};port=$Param{TargetDatabasePort};";
 
     # create target DB object
     my $TargetDBObject = Kernel::System::DB->new(
@@ -134,7 +140,7 @@ sub ColumnsList {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Needed (qw(DBObject)) {
+    for my $Needed (qw(DBObject Table)) {
         if ( !$Param{$Needed} ) {
             $Self->{LogObject}->Log( Priority => 'error', Message => "Need $Needed!" );
             return;

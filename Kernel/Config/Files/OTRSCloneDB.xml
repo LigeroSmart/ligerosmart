@@ -37,4 +37,15 @@
             </Hash>
         </Setting>
     </ConfigItem>
+    <ConfigItem Name="CloneDB::Driver###oracle" Required="0" Valid="1">
+        <Description Translatable="1">CloneDB backend registration.</Description>
+        <Group>OTRSCloneDB</Group>
+        <SubGroup>OTRSCloneDB::Driver::Registration</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="DisplayName">Oracle</Item>
+                <Item Key="Module">Kernel::System::CloneDB::Driver::oracle</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
 </otrs_config>

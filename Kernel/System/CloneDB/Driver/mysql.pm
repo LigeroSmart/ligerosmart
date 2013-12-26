@@ -80,8 +80,7 @@ sub CreateTargetDBConnection {
         "DBI:mysql:database=$Param{TargetDatabase};host=$Param{TargetDatabaseHost};";
 
     # create target DB object
-    my $TargetDBObject;
-    $TargetDBObject = Kernel::System::DB->new(
+    my $TargetDBObject = Kernel::System::DB->new(
         %{$Self},
         DatabaseDSN  => $Param{TargetDatabaseDSN},
         DatabaseUser => $Param{TargetDatabaseUser},
@@ -133,7 +132,7 @@ sub ColumnsList {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Needed (qw(DBObject)) {
+    for my $Needed (qw(DBObject Table)) {
         if ( !$Param{$Needed} ) {
             $Self->{LogObject}->Log( Priority => 'error', Message => "Need $Needed!" );
             return;

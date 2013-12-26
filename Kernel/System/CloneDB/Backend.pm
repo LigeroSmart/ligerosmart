@@ -78,8 +78,10 @@ sub new {
 
     # get needed objects
     for my $Needed (qw(ConfigObject EncodeObject LogObject MainObject SourceDBObject)) {
-        die "Got no $Needed!" if !$Param{$Needed};
-
+        if ( !$Param{$Needed} ) {
+            $Self->{LogObject}->Log( Priority => 'error', Message => "Got no $Needed!" );
+            return;
+        }
         $Self->{$Needed} = $Param{$Needed};
     }
 
@@ -98,7 +100,7 @@ sub new {
     # create all registered backend modules
     for my $DBType ( sort keys %{$CloneDBConfig} ) {
 
-        # check if the registration for each field type is valid
+        # check if the registration for each database type is valid
         if ( !$CloneDBConfig->{$DBType}->{Module} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
@@ -110,7 +112,7 @@ sub new {
         # set the backend file
         my $BackendModule = $CloneDBConfig->{$DBType}->{Module};
 
-        # check if backend field exists
+        # check if database backend exists
         if ( !$Self->{MainObject}->Require($BackendModule) ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
@@ -233,7 +235,7 @@ sub DataTransfer {
         }
     }
 
-    # set the clone db specific backend
+    # set the source db specific backend
     my $CloneDBBackend = 'CloneDB' . $Self->{SourceDBObject}->{'DB::Type'} . 'Object';
 
     if ( !$Self->{$CloneDBBackend} ) {
@@ -244,7 +246,7 @@ sub DataTransfer {
         return;
     }
 
-    # call CreateTargetDBConnection on the specific backend
+    # call DataTransfer on the specific backend
     my $DataTransfer = $Self->{$CloneDBBackend}->DataTransfer(
         TargetDBObject => $Param{TargetDBObject},
     );

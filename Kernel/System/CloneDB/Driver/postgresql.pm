@@ -136,7 +136,7 @@ sub ColumnsList {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Needed (qw(DBObject)) {
+    for my $Needed (qw(DBObject Table)) {
         if ( !$Param{$Needed} ) {
             $Self->{LogObject}->Log( Priority => 'error', Message => "Need $Needed!" );
             return;

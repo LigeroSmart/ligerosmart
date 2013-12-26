@@ -92,7 +92,7 @@ sub RowCount {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Needed (qw(Table)) {
+    for my $Needed (qw(DBObject Table)) {
         if ( !$Param{$Needed} ) {
             $Self->{LogObject}->Log( Priority => 'error', Message => "Need $Needed!" );
             return;
@@ -199,6 +199,9 @@ sub DataTransfer {
 
         print "Finished converting table $Table.\n";
     }
+
+    return 1;
+
 }
 
 1;

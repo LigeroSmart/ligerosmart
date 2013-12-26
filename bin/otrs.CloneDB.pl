@@ -76,10 +76,10 @@ if ( exists $Options{r} ) {
         TargetDBObject => $TargetDBObject,
     );
     if ($SanityResult) {
-        $CommonObject{CloneDBBackendObject}->DataTransfer(
+        my $DataTransferResult = $CommonObject{CloneDBBackendObject}->DataTransfer(
             TargetDBObject => $TargetDBObject,
         );
-        exit 0;
+        die "Was not possible to complete the data transfer." if !$DataTransferResult;
     }
     exit 1;
 }
