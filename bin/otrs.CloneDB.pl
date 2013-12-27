@@ -28,7 +28,6 @@ use FindBin qw($RealBin);
 use lib dirname($RealBin);
 
 use Getopt::Std;
-use MIME::Base64;
 
 use Kernel::Config;
 use Kernel::System::Encode;

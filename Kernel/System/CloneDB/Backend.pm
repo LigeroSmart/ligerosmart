@@ -85,6 +85,19 @@ sub new {
         $Self->{$Needed} = $Param{$Needed};
     }
 
+    #
+    # OTRS stores binary data in some columns. On some database systems,
+    #   these are handled differently (data is converted to base64-encoding before
+    #   it is stored. Here is the list of these columns which need special treatment.
+    #
+    $Self->{BlobColumns} = {
+        'article_plain.body'          => 1,
+        'article_attachment.content'  => 1,
+        'virtual_fs_db.content'       => 1,
+        'web_upload_cache.content'    => 1,
+        'standard_attachment.content' => 1,
+    };
+
     # get the Clone DB Backends configuration
     my $CloneDBConfig = $Self->{ConfigObject}->Get('CloneDB::Driver');
 
@@ -143,19 +156,6 @@ sub new {
         # remember the backend object
         $Self->{ 'CloneDB' . $DBType . 'Object' } = $BackendObject;
     }
-
-    #
-    # OTRS stores binary data in some columns. On some database systems,
-    #   these are handled differently (data is converted to base64-encoding before
-    #   it is stored. Here is the list of these columns which need special treatment.
-    #
-    $Self->{BlobColumns} = {
-        'article_plain.body'          => 1,
-        'article_attachment.content'  => 1,
-        'virtual_fs_db.content'       => 1,
-        'web_upload_cache.content'    => 1,
-        'standard_attachment.content' => 1,
-    };
 
     return $Self;
 }

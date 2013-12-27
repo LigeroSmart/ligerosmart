@@ -12,6 +12,7 @@ package Kernel::System::CloneDB::Driver::Base;
 use strict;
 use warnings;
 
+use MIME::Base64;
 use Kernel::System::VariableCheck qw(:all);
 
 =head1 NAME
