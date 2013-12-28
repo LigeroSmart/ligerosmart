@@ -121,7 +121,7 @@ sub DataTransfer {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Needed (qw(TargetDBObject)) {
+    for my $Needed (qw(TargetDBObject TargetDBBackend)) {
         if ( !$Param{$Needed} ) {
             $Self->{LogObject}->Log( Priority => 'error', Message => "Need $Needed!" );
             return;
@@ -196,6 +196,19 @@ sub DataTransfer {
             ) || die @!;
 
             $Counter++;
+        }
+
+        # if needed, reset the autoincremental field
+        if (
+            $Param{TargetDBBackend}->can('ResetAutoIncrementField')
+            && grep { $_ eq 'id' } @Columns
+            )
+        {
+
+            $Param{TargetDBBackend}->ResetAutoIncrementField(
+                DBObject => $Param{TargetDBObject},
+                Table    => $Table,
+            );
         }
 
         print "Finished converting table $Table.\n";

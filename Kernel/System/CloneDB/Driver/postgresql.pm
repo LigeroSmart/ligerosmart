@@ -161,6 +161,47 @@ sub ColumnsList {
     return @Result;
 }
 
+#
+# Reset the 'id' auto-increment field to the last one in the table.
+#
+sub ResetAutoIncrementField {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Needed (qw(DBObject Table)) {
+        if ( !$Param{$Needed} ) {
+            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $Needed!" );
+            return;
+        }
+    }
+
+    $Param{DBObject}->Prepare(
+        SQL => "
+            SELECT id
+            FROM $Param{Table}
+            ORDER BY id DESC",
+        Limit => 1,
+    ) || die @!;
+
+    my $LastID;
+    while ( my @Row = $Param{DBObject}->FetchrowArray() ) {
+        $LastID = $Row[0];
+    }
+
+    # add one more to the last ID
+    $LastID++;
+
+    my $SQL = "
+        ALTER SEQUENCE IF EXISTS $Param{Table}_id_seq RESTART WITH $LastID;
+    ";
+
+    $Param{DBObject}->Do(
+        SQL => $SQL,
+    ) || die @!;
+
+    return 1;
+}
+
 1;
 
 =back

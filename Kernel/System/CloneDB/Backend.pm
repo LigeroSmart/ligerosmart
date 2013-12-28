@@ -236,9 +236,9 @@ sub DataTransfer {
     }
 
     # set the source db specific backend
-    my $CloneDBBackend = 'CloneDB' . $Self->{SourceDBObject}->{'DB::Type'} . 'Object';
+    my $SourceDBBackend = 'CloneDB' . $Self->{SourceDBObject}->{'DB::Type'} . 'Object';
 
-    if ( !$Self->{$CloneDBBackend} ) {
+    if ( !$Self->{$SourceDBBackend} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
             Message  => "Backend $Self->{SourceDBObject}->{'DB::Type'} is invalid!"
@@ -246,9 +246,21 @@ sub DataTransfer {
         return;
     }
 
+    # set the target db specific backend
+    my $TargetDBBackend = 'CloneDB' . $Param{TargetDBObject}->{'DB::Type'} . 'Object';
+
+    if ( !$Self->{$TargetDBBackend} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "Backend $Param{TargetDBObject}->{'DB::Type'} is invalid!"
+        );
+        return;
+    }
+
     # call DataTransfer on the specific backend
-    my $DataTransfer = $Self->{$CloneDBBackend}->DataTransfer(
-        TargetDBObject => $Param{TargetDBObject},
+    my $DataTransfer = $Self->{$SourceDBBackend}->DataTransfer(
+        TargetDBObject  => $Param{TargetDBObject},
+        TargetDBBackend => $Self->{$TargetDBBackend},
     );
 
     return $DataTransfer;
