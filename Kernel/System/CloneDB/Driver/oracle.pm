@@ -122,7 +122,7 @@ sub TablesList {
     $Param{DBObject}->Prepare(
         SQL => "
             SELECT table_name
-            FROM all_tables
+            FROM user_tables
             ORDER BY table_name ASC"
     ) || die @!;
 
@@ -148,8 +148,9 @@ sub ColumnsList {
     }
 
     $Param{DBObject}->Prepare(
-        SQL => "
-            DESC ?",
+        SQL => "SELECT column_name
+                FROM all_tab_columns
+                WHERE table_name = ?",
         Bind => [
             \$Param{Table},
         ],

@@ -50,12 +50,22 @@ sub SanityChecks {
         return;
     }
 
+    # get skip tables settings
+    my $SkipTables
+        = $Self->{ConfigObject}->Get('CloneDB::SkipTables');
+
     # get a list of tables on Source DB
     my @Tables = $Self->TablesList(
         DBObject => $Self->{SourceDBObject},
     );
 
+    TABLES:
     for my $Table (@Tables) {
+
+        if ( defined $SkipTables->{ lc $Table } && $SkipTables->{ lc $Table } ) {
+            print "Skipping table $Table on SanityChecks\n";
+            next TABLES;
+        }
 
         # check how many rows exists on
         # Target DB for an specific table
@@ -128,12 +138,23 @@ sub DataTransfer {
         }
     }
 
+    # get skip tables settings
+    my $SkipTables
+        = $Self->{ConfigObject}->Get('CloneDB::SkipTables');
+
     # get a list of tables on Source DB
     my @Tables = $Self->TablesList(
         DBObject => $Self->{SourceDBObject},
     );
 
+    TABLES:
     for my $Table (@Tables) {
+
+        if ( defined $SkipTables->{ lc $Table } && $SkipTables->{ lc $Table } ) {
+            print "Skipping table $Table...\n";
+            next TABLES;
+        }
+
         print "Converting table $Table...\n";
 
         # Get the list of columns of this table to be able to
@@ -155,7 +176,7 @@ sub DataTransfer {
         # Now fetch all the data and insert it to the target DB.
         $Self->{SourceDBObject}->Prepare(
             SQL => "
-               SELECT *
+               SELECT $ColumnsString
                FROM $Table",
             Limit => 4_000_000_000,
         ) || die @!;
@@ -172,7 +193,7 @@ sub DataTransfer {
                 for my $ColumnCounter ( 1 .. $#Columns ) {
                     my $Column = $Columns[$ColumnCounter];
 
-                    next if ( !$Self->{BlobColumns}->{"$Table.$Column"} );
+                    next if ( !$Self->{BlobColumns}->{ lc "$Table.$Column" } );
 
                     if ( !$Self->{SourceDBObject}->GetDatabaseFunction('DirectBlob') ) {
                         $Row[$ColumnCounter] = decode_base64( $Row[$ColumnCounter] );
