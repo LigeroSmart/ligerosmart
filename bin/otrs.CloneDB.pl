@@ -93,15 +93,15 @@ Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 
 Usage: $0 -r
 
-This little script clones an OTRS database into a target database, even
+This script clones an OTRS database into a target database, even
 on another database platform. It will dynamically get the list of tables in the
 source DB, and copy the data of each table to the target DB.
 
-Currently, only PostgreSQL is supported as a source platform, but this will
+Currently, only MySQL, PostgreSQL and Oracle are supported as a source platform, but this will
 be extended in future.
 
 Instructions:
-    - Configure target database settings in this script.
+    - Configure target database settings on SysConfig for this package (OTRSCloneDB).
     - Create the needed data structures of OTRS (first part) and installed packages in the target database.
         - Only the the otrs-schema.\$DB.sql files should be used, not the otrs-schema-post.\$DB.sql files.
         - Also for installed packages, the SQL (first part only) must be generated and executed.

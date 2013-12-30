@@ -163,6 +163,91 @@ sub ColumnsList {
     return @Result;
 }
 
+#
+# Reset the 'id' auto-increment field to the last one in the table.
+#
+sub ResetAutoIncrementField {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Needed (qw(DBObject Table)) {
+        if ( !$Param{$Needed} ) {
+            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $Needed!" );
+            return;
+        }
+    }
+
+    $Param{DBObject}->Prepare(
+        SQL => "
+            SELECT id
+            FROM $Param{Table}
+            ORDER BY id DESC",
+        Limit => 1,
+    ) || die @!;
+
+    my $LastID;
+    while ( my @Row = $Param{DBObject}->FetchrowArray() ) {
+        $LastID = $Row[0];
+    }
+
+    # add one more to the last ID
+    $LastID++;
+
+    my $SEName = 'SE_' . uc $Param{Table};
+
+    # we assump the sequence have a minimum value (0)
+    # we will to increase it till the last enrty on
+    # if field we have
+
+    # verify if the sequence exists
+    $Param{DBObject}->Prepare(
+        SQL => "
+            SELECT COUNT(*)
+            FROM user_sequences
+            WHERE sequence_name = ?",
+        Limit => 1,
+        Bind  => [
+            \$SEName,
+        ],
+    ) || die @!;
+
+    my $SequenceCount;
+    while ( my @Row = $Param{DBObject}->FetchrowArray() ) {
+        $SequenceCount = $Row[0];
+    }
+
+    if ($SequenceCount) {
+
+        # set increment as last number on the id field, plus one
+        my $SQL = "ALTER SEQUENCE $SEName INCREMENT BY $LastID";
+
+        $Param{DBObject}->Do(
+            SQL => $SQL,
+        ) || die @!;
+
+        # get next value for sequence
+        $SQL = "SELECT $SEName.nextval FROM dual";
+
+        $Param{DBObject}->Prepare(
+            SQL => $SQL,
+        ) || die @!;
+
+        my $ResultNextVal;
+        while ( my @Row = $Param{DBObject}->FetchrowArray() ) {
+            $ResultNextVal = $Row[0];
+        }
+
+        # reset sequence to increment by 1 to 1
+        $SQL = "ALTER SEQUENCE $SEName INCREMENT BY 1";
+
+        $Param{DBObject}->Do(
+            SQL => $SQL,
+        ) || die @!;
+    }
+
+    return 1;
+}
+
 1;
 
 =back
