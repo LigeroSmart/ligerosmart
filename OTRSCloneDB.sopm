@@ -6,8 +6,8 @@
     <Vendor>OTRS AG</Vendor>
     <URL>http://otrs.org/</URL>
     <License>GNU AFFERO GENERAL PUBLIC LICENSE Version 3, November 2007</License>
-    <Description Lang="en">The OTRS MyServices package.</Description>
-    <Description Lang="de">Das OTRS MyServices Paket.</Description>
+    <Description Lang="en">The OTRS CloneDB package.</Description>
+    <Description Lang="de">Das OTRS CloneDB Paket.</Description>
     <Filelist>
         <File Permission="755" Location="bin/otrs.CloneDB.pl"/>
         <File Permission="644" Location="Kernel/System/CloneDB/Backend.pm"/>
