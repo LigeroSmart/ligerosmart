@@ -90,7 +90,7 @@ sub Run {
         );
     }
 
-    # clean the richt text fields from active HTML content
+    # clean the rich text fields from active HTML content
     ATTRIBUTE:
     for my $Attribute (qw(Instruction Report)) {
 
