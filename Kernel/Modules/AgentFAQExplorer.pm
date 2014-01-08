@@ -1,6 +1,6 @@
 # --
 # Kernel/Modules/AgentFAQExplorer.pm - show the faq explorer
-# Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -390,9 +390,9 @@ sub Run {
 
     # check if all InfoBoxes are empty and hide the Sidebar
     if (
-        $InfoBoxResults{LastCreate}    eq -1
+        $InfoBoxResults{LastCreate} eq -1
         && $InfoBoxResults{LastChange} eq -1
-        && $InfoBoxResults{Top10}      eq -1
+        && $InfoBoxResults{Top10} eq -1
         )
     {
         $SidebarClass = 'Hidden';
