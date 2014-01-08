@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <otrs_config version="1.0" init="Framework">
     <ConfigItem Name="Frontend::Module###AdminImportExport" Required="0" Valid="1">
         <Description Translatable="1">Frontend module registration for the agent interface.</Description>
@@ -24,7 +24,6 @@
     </ConfigItem>
     <ConfigItem Name="ImportExport::FormatBackendRegistration###CSV" Required="0" Valid="1">
         <Description Translatable="1">Format backend module registration for the import/export module.</Description>
-        <Description Lang="de"></Description>
         <Group>ImportExport</Group>
         <SubGroup>FormatBackend::ModuleRegistration</SubGroup>
         <Setting>
