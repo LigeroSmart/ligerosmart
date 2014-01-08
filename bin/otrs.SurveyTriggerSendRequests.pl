@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 # --
 # bin/otrs.SurveyTriggerSendRequests.pl - trigger sending delayed survey requests
-# Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU AFFERO General Public License as published by
@@ -66,7 +66,7 @@ if (
     print STDERR "4. Wait the necessary amount of hours you've configured\n";
     print STDERR "5. You can do a dry run to get a list of surveys that would be sent (-d)\n";
     print STDERR "6. If you're fine with it, activate var/cron/generic_agent_survey.dist\n";
-    print STDERR "Copyright (C) 2001-2013 OTRS AG, http://otrs.com/\n";
+    print STDERR "Copyright (C) 2001-2014 OTRS AG, http://otrs.com/\n";
     exit;
 }
 
