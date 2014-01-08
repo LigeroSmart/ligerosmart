@@ -1,6 +1,6 @@
 # --
 # ITSMIncidentProblemManagement.pm - code to excecute during package installation
-# Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -669,7 +669,7 @@ sub _RenameDynamicFields {
             Label      => $DynamicFieldNew->{Label},
             FieldType  => $DynamicFieldNew->{FieldType},
             ObjectType => $DynamicFieldNew->{ObjectType},
-            Config     => $DynamicFieldOld->{Config},     # use the old config settings
+            Config     => $DynamicFieldOld->{Config},       # use the old config settings
             ValidID    => 1,
             Reorder    => 0,
             UserID     => 1,
@@ -818,7 +818,7 @@ sub _MakeDynamicFieldsInternal {
     # get the definition for all dynamic fields for ITSM
     my @DynamicFields = $Self->_GetITSMDynamicFieldsDefinition();
 
-    for my $DynamicField ( @DynamicFields ) {
+    for my $DynamicField (@DynamicFields) {
 
         # set as internal field
         $Self->{DBObject}->Do(
