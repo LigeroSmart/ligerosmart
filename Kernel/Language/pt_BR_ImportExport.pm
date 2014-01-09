@@ -24,12 +24,12 @@ sub Data {
     $Self->{Translation}->{'Dot (.)'} = 'Ponto (.)';
     $Self->{Translation}->{'Semicolon (;)'} = 'Ponto e Vírgula (;)';
     $Self->{Translation}->{'Tabulator (TAB)'} = 'Tabulação (TAB)';
-    $Self->{Translation}->{'Include Column Headers'} = '';
-    $Self->{Translation}->{'Import summary for'} = '';
-    $Self->{Translation}->{'Imported records'} = '';
-    $Self->{Translation}->{'Exported records'} = '';
-    $Self->{Translation}->{'Records'} = '';
-    $Self->{Translation}->{'Skipped'} = '';
+    $Self->{Translation}->{'Include Column Headers'} = 'Incluir Cabeçalhos de Colunas';
+    $Self->{Translation}->{'Import summary for'} = 'Resumo de importação para';
+    $Self->{Translation}->{'Imported records'} = 'Registros importados';
+    $Self->{Translation}->{'Exported records'} = 'Registros exportados';
+    $Self->{Translation}->{'Records'} = 'Registros';
+    $Self->{Translation}->{'Skipped'} = 'Desconsiderados';
 
     # Template: AdminImportExport
     $Self->{Translation}->{'Import/Export Management'} = 'Gerenciamento de Importação/Exportação';
@@ -39,12 +39,12 @@ sub Data {
     $Self->{Translation}->{'Delete Template'} = 'Excluir Modelo';
     $Self->{Translation}->{'Step'} = 'Passo';
     $Self->{Translation}->{'Edit common information'} = 'Editar informações comuns';
-    $Self->{Translation}->{'Name is required!'} = '';
-    $Self->{Translation}->{'Object is required!'} = 'Objeto é necessário!';
-    $Self->{Translation}->{'Format is required!'} = 'O formato é necessário!';
+    $Self->{Translation}->{'Name is required!'} = 'Nome é obrigatório!';
+    $Self->{Translation}->{'Object is required!'} = 'Objeto é obrigatório!';
+    $Self->{Translation}->{'Format is required!'} = 'O formato é obrigatório!';
     $Self->{Translation}->{'Edit object information'} = 'Editar informações do objeto';
     $Self->{Translation}->{'Edit format information'} = 'Editar informações do formato';
-    $Self->{Translation}->{' is required!'} = ' é necessário!';
+    $Self->{Translation}->{' is required!'} = ' é obrigatório!';
     $Self->{Translation}->{'Edit mapping information'} = 'Editar informações do mapeamento';
     $Self->{Translation}->{'No map elements found.'} = 'Não há elementos mapa encontrado.';
     $Self->{Translation}->{'Add Mapping Element'} = 'Adicionar elemento de mapeamento';
@@ -52,10 +52,10 @@ sub Data {
     $Self->{Translation}->{'Restrict export per search'} = 'Restringir exportação por pesquisa';
     $Self->{Translation}->{'Import information'} = 'Informações de importação';
     $Self->{Translation}->{'Source File'} = 'Arquivo de Origem';
-    $Self->{Translation}->{'Success'} = '';
-    $Self->{Translation}->{'Failed'} = '';
-    $Self->{Translation}->{'Duplicate names'} = '';
-    $Self->{Translation}->{'Last processed line number of import file'} = '';
+    $Self->{Translation}->{'Success'} = 'Sucesso';
+    $Self->{Translation}->{'Failed'} = 'Falhou';
+    $Self->{Translation}->{'Duplicate names'} = 'Nomes duplicados';
+    $Self->{Translation}->{'Last processed line number of import file'} = 'Último número de linha processada do arquivo de imporatação';
     $Self->{Translation}->{'Ok'} = '';
 
     # SysConfig
