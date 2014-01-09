@@ -1,6 +1,6 @@
 # --
 # Kernel/Language/pt_BR_ITSMCore.pm - translation file
-# Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -99,7 +99,7 @@ sub Data {
         'Registro de módulo de interface para o objeto AgentITSMServicePrint na interface de atendente.';
     $Self->{Translation}->{'Frontend module registration for the AgentITSMServiceZoom object in the agent interface.'} =
         'Registro de módulo de interface para o objeto AgentITSMServiceZoom na interface de atendente.';
-    $Self->{Translation}->{'Manage priority matrix.'} = 'Gerenciar matriz de prioridade';
+    $Self->{Translation}->{'Manage priority matrix.'} = 'Gerenciar matriz de prioridade.';
     $Self->{Translation}->{'Module to show back link in service menu.'} = 'Módulo para mostrar o link voltar no menu serviço.';
     $Self->{Translation}->{'Module to show back link in sla menu.'} = 'Módulo para mostrar o link voltar no menu SLA.';
     $Self->{Translation}->{'Module to show print link in service menu.'} = 'Módulo para mostrar o link imprimir no menu serviço.';
