@@ -39,7 +39,7 @@ sub Data {
     $Self->{Translation}->{'CABAgents'} = 'Atendentes CCM';
     $Self->{Translation}->{'CABCustomers'} = 'Clientes CCM';
     $Self->{Translation}->{'Change Overview'} = 'Visão Geral de Mudanças';
-    $Self->{Translation}->{'Change Schedule'} = 'Agenda da Mudança';
+    $Self->{Translation}->{'Change Schedule'} = 'Agenda de Mudanças';
     $Self->{Translation}->{'Change involved persons of the change'} = 'Alterar pessoas envolvidas na mudança';
     $Self->{Translation}->{'ChangeHistory::ActionAdd'} = '%s: %s';
     $Self->{Translation}->{'ChangeHistory::ActionAddID'} = 'Nova Ação (ID=%s)';
@@ -88,10 +88,13 @@ sub Data {
     $Self->{Translation}->{'Move all workorders in time'} = 'Mover todas as ordens de serviço no tempo';
     $Self->{Translation}->{'My CABs'} = 'Meus CCMs';
     $Self->{Translation}->{'My Changes'} = 'Minhas Mudanças';
-    $Self->{Translation}->{'My Workorders'} = 'Minhas Ordens';
+    $Self->{Translation}->{'My Work Orders'} = 'Minhas Ordens de Serviço';
     $Self->{Translation}->{'No XXX settings'} = 'Nenhuma \'%s\' configuração';
+    $Self->{Translation}->{'Schedule'} = 'Calendário de Mudanças';
     $Self->{Translation}->{'PIR (Post Implementation Review)'} = 'RPI (Revisão Pós-Implementação)';
-    $Self->{Translation}->{'PSA (Projected Service Availability)'} = 'DPS (Disponibilidade Projetada de Serviço)';
+    $Self->{Translation}->{'PIR'} = 'Revisão Pós-Implementação';
+    $Self->{Translation}->{'Projected Service Availability (PSA)'} = 'DPS (Disponibilidade Projetada de Serviço)';
+    $Self->{Translation}->{'Projected Service Availability'} = 'Disponibilidade Projetada de Serviço';
     $Self->{Translation}->{'Please select first a catalog class!'} = 'Por favor, selecione primeiro uma classe de catálogo!';
     $Self->{Translation}->{'Print the change'} = 'Imprimir a mudança';
     $Self->{Translation}->{'Print the workorder'} = 'Imprimir a ordem de serviço';
@@ -108,10 +111,10 @@ sub Data {
     $Self->{Translation}->{'The planned start time is invalid!'} = 'O horário de início planejado é inválido!';
     $Self->{Translation}->{'The planned time is invalid!'} = 'O horário planejado é inválido!';
     $Self->{Translation}->{'The requested time is invalid!'} = 'O tempo especificado é inválido!';
-    $Self->{Translation}->{'New (from template)'} = '';
-    $Self->{Translation}->{'Add from template'} = '';
-    $Self->{Translation}->{'Add Workorder (from template)'} = '';
-    $Self->{Translation}->{'Add a workorder (from template) to the change'} = '';
+    $Self->{Translation}->{'New (from template)'} = 'Nova (utilizando modelo)';
+    $Self->{Translation}->{'Add from template'} = 'Adicionar utilizando modelo';
+    $Self->{Translation}->{'Add Workorder (from template)'} = 'Adicionar ordem (com modelo)';
+    $Self->{Translation}->{'Add a workorder (from template) to the change'} = 'Adicionar uma ordem (com modelo) à mudança';
     $Self->{Translation}->{'WorkOrderHistory::WorkOrderActualEndTimeReached'} = 'Ordem de Serviço (ID=%s) atingiu o tempo real de fim.';
     $Self->{Translation}->{'WorkOrderHistory::WorkOrderActualEndTimeReachedWithWorkOrderID'} =
         'Ordem de Serviço (ID=%s) atingiu o tempo real de fim.';
@@ -188,9 +191,9 @@ sub Data {
     # Template: AdminITSMChangeNotification
     $Self->{Translation}->{'ITSM ChangeManagement Notification Management'} = 'Gerenciamento de Notificações de Gerência de Mudança ITSM';
     $Self->{Translation}->{'Add Notification Rule'} = 'Adicionar Regra de Notificação';
-    $Self->{Translation}->{'Attribute'} = '';
+    $Self->{Translation}->{'Attribute'} = 'Atributo';
     $Self->{Translation}->{'Rule'} = 'Regra';
-    $Self->{Translation}->{'Recipients'} = '';
+    $Self->{Translation}->{'Recipients'} = 'Destinatários';
     $Self->{Translation}->{'A notification should have a name!'} = 'A notificação precisa de um nome!';
     $Self->{Translation}->{'Name is required.'} = 'Nome é obrigatório.';
 
@@ -202,7 +205,7 @@ sub Data {
     $Self->{Translation}->{'Catalog Class'} = 'Classe de Catálogo';
     $Self->{Translation}->{'Object Name'} = 'Nome do Objeto';
     $Self->{Translation}->{'Overview over state transitions for'} = 'Revisão de uma transição de estado para';
-    $Self->{Translation}->{'Delete this state transition'} = '';
+    $Self->{Translation}->{'Delete this state transition'} = 'Excluir esta transição de estado';
     $Self->{Translation}->{'Add a new state transition for'} = 'Adicionar uma nova transição de estado para';
     $Self->{Translation}->{'Please select a state!'} = 'Por favor selecione um estado!';
     $Self->{Translation}->{'Please select a next state!'} = 'Por favor, escolha o próximo estado!';
@@ -246,15 +249,15 @@ sub Data {
     $Self->{Translation}->{'Expressions'} = 'Expressões';
     $Self->{Translation}->{'Selector'} = 'Seletor';
     $Self->{Translation}->{'Operator'} = 'Operador';
-    $Self->{Translation}->{'Delete Expression'} = '';
+    $Self->{Translation}->{'Delete Expression'} = 'Excluir Expressão';
     $Self->{Translation}->{'No Expressions found.'} = 'Nenhuma expressão lógica encontrada.';
     $Self->{Translation}->{'Add new expression'} = 'Adicionar nova expressão';
-    $Self->{Translation}->{'Delete Action'} = '';
+    $Self->{Translation}->{'Delete Action'} = 'Excluir Ação';
     $Self->{Translation}->{'No Actions found.'} = 'Nenhuma ação encontrada.';
     $Self->{Translation}->{'Add new action'} = 'Adicionar nova ação';
 
     # Template: AgentITSMChangeDelete
-    $Self->{Translation}->{'Do you really want to delete this change?'} = '';
+    $Self->{Translation}->{'Do you really want to delete this change?'} = 'Você quer realmente excluir esta mudança?';
 
     # Template: AgentITSMChangeEdit
 
@@ -265,7 +268,7 @@ sub Data {
 
     # Template: AgentITSMChangeHistoryZoom
     $Self->{Translation}->{'Detailed history information of'} = 'Informações detalhadas sobre o histórico  de';
-    $Self->{Translation}->{'Modified'} = '';
+    $Self->{Translation}->{'Modified'} = 'Modificado';
     $Self->{Translation}->{'Old Value'} = 'Antigo Valor';
     $Self->{Translation}->{'New Value'} = 'Novo valor';
 
@@ -305,7 +308,7 @@ sub Data {
     $Self->{Translation}->{'ITSM Workorder'} = 'Ordem de Serviço ITSM';
 
     # Template: AgentITSMChangeReset
-    $Self->{Translation}->{'Do you really want to reset this change?'} = '';
+    $Self->{Translation}->{'Do you really want to reset this change?'} = 'Você quer realmente redefinir esta mudança?';
 
     # Template: AgentITSMChangeSearch
     $Self->{Translation}->{'(e.g. 10*5155 or 105658*)'} = '(ex. 10*5155 ou 105658*)';
@@ -317,7 +320,7 @@ sub Data {
     $Self->{Translation}->{'Change Category'} = 'Categoria da Mudança';
     $Self->{Translation}->{'(before/after)'} = '(antes/depois)';
     $Self->{Translation}->{'(between)'} = '(entre)';
-    $Self->{Translation}->{'Run Search'} = '';
+    $Self->{Translation}->{'Run Search'} = 'Executar Pesquisa';
 
     # Template: AgentITSMChangeSearchResultPrint
     $Self->{Translation}->{'WorkOrders'} = 'Ordens de Serviço';
@@ -365,7 +368,7 @@ sub Data {
     $Self->{Translation}->{'Add Workorder to'} = 'Adicionar ordem de serviço a';
     $Self->{Translation}->{'Invalid workorder type.'} = 'Tipo de ordem de serviço inválido';
     $Self->{Translation}->{'The planned start time must be before the planned end time!'} = 'O horário de início planejado deve ser anterior ao horário de término planejado!';
-    $Self->{Translation}->{'Invalid format.'} = 'Formato Inválido.';
+    $Self->{Translation}->{'Invalid format.'} = 'Formato inválido.';
 
     # Template: AgentITSMWorkOrderAddFromTemplate
     $Self->{Translation}->{'Select Workorder Template'} = 'Selecione modelo de ordem de serviço';
@@ -379,9 +382,9 @@ sub Data {
     $Self->{Translation}->{'This Workorder is used in the following Condition(s)'} = 'Esta ordem de serviço está sendo usada pela(s) condição(ões)';
 
     # Template: AgentITSMWorkOrderEdit
-    $Self->{Translation}->{'Move following workorders accordingly'} = '';
+    $Self->{Translation}->{'Move following workorders accordingly'} = 'Mover as seguintes ordens de acordo';
     $Self->{Translation}->{'If the planned end time of this workorder is changed, the planned start times of all following workorders will be changed accordingly'} =
-        '';
+        'Se o término planejado desta ordem de serviço for alterado, o horário planejado de início de todas as seguintes ordens também serão alterados';
 
     # Template: AgentITSMWorkOrderHistory
 
@@ -391,7 +394,7 @@ sub Data {
     $Self->{Translation}->{'The actual start time must be before the actual end time!'} = 'O horário de início real deve ser antes do tempo final real !';
     $Self->{Translation}->{'The actual start time must be set, when the actual end time is set!'} =
         'O horário de início real deve ser definido, quando o tempo de término real é configurado!';
-    $Self->{Translation}->{'Existing attachments'} = '';
+    $Self->{Translation}->{'Existing attachments'} = 'Anexos existentes';
 
     # Template: AgentITSMWorkOrderTake
     $Self->{Translation}->{'Current Agent'} = 'Atendente atual';
@@ -891,22 +894,22 @@ sub Data {
     $Self->{Translation}->{'Defines the default sort criteria in the change schedule overview.'} =
         'Define os critérios de classificação padrão na visão global de programar mudanças.';
     $Self->{Translation}->{'Defines the default sort criteria of the changes in the MyCAB overview.'} =
-        'Define os critérios de classificação padrão na visão global de mudanças da Meu CCM.';
+        'Define os critérios de classificação padrão de mudanças na visão global Meu CCM.';
     $Self->{Translation}->{'Defines the default sort criteria of the changes in the MyChanges overview.'} =
-        'Define os critérios de classificação padrão na visão global de mudanças da Minha Mudança.';
+        'Define os critérios de classificação padrão de mudanças na visão global MinhaS MudançaS.';
     $Self->{Translation}->{'Defines the default sort criteria of the changes in the MyWorkorders overview.'} =
-        'Define os critérios de classificação padrão na visão global de mudanças da Minha Ordem de Serviço.';
+        'Define os critérios de classificação padrão de mudanças na visão global Minha Ordem de Serviço.';
     $Self->{Translation}->{'Defines the default sort criteria of the changes in the PIR overview.'} =
-        'Define os critérios de classificação padrão na visão global de mudanças PIR.';
+        'Define os critérios de classificação padrão de mudanças na visão global RPI.';
     $Self->{Translation}->{'Defines the default sort criteria of the changes in the customer change schedule overview.'} =
-        'Define os critérios de classificação padrão na visão global dos clientes programarem a mudança.';
+        'Define os critérios de classificação padrão de mudanças na visão global Calendário de Mudanças.';
     $Self->{Translation}->{'Defines the default sort criteria of the changes in the template overview.'} =
-        'Define os critérios de classificação padrão na visão global do modelo de mudanças.';
+        'Define os critérios de classificação padrão de mudanças na visão global Modelos.';
     $Self->{Translation}->{'Defines the default sort order in the MyCAB overview.'} = 'Define a ordem de classificação padrão na visão global de Meu CCM.';
     $Self->{Translation}->{'Defines the default sort order in the MyChanges overview.'} = 'Define a ordem de classificação padrão na visão global de Minha Mudança.';
     $Self->{Translation}->{'Defines the default sort order in the MyWorkorders overview.'} =
         'Define a ordem de classificação padrão na visão global de Minha Ordem de Serviço.';
-    $Self->{Translation}->{'Defines the default sort order in the PIR overview.'} = 'Define a ordem de classificação padrão na visão global de PIR.';
+    $Self->{Translation}->{'Defines the default sort order in the PIR overview.'} = 'Define a ordem de classificação padrão na visão global de RPI.';
     $Self->{Translation}->{'Defines the default sort order in the change PSA overview.'} = 'Define a ordem de classificação padrão na visão global de Mudança PSA.';
     $Self->{Translation}->{'Defines the default sort order in the change manager overview.'} =
         'Define a ordem de classificação padrão na visão global da gestão de mudança.';
@@ -1587,7 +1590,7 @@ sub Data {
     $Self->{Translation}->{'Defines the shown columns in the MyWorkorders overview. This option has no effect on the position of the column.'} =
         'Define as colunas mostrando a visão geral das Minhas Ordens de Serviço. Esta opção não tem efeito sobre a posição da coluna.';
     $Self->{Translation}->{'Defines the shown columns in the PIR overview. This option has no effect on the position of the column.'} =
-        'Define as colunas mostrando a visão geral da PIR. Esta opção não tem efeito sobre a posição da coluna.';
+        'Define as colunas mostrando a visão geral da RPI. Esta opção não tem efeito sobre a posição da coluna.';
     $Self->{Translation}->{'Defines the shown columns in the change manager overview. This option has no effect on the position of the column.'} =
         'Define as colunas mostrando a visão geral do gerente de mudança. Esta opção não tem efeito sobre a posição da coluna.';
     $Self->{Translation}->{'Defines the shown columns in the change overview. This option has no effect on the position of the column.'} =
@@ -1604,9 +1607,9 @@ sub Data {
     $Self->{Translation}->{'Defines the workorder states that will be used as filters in the MyWorkorders overview.'} =
         'Define os estados de ordem de serviço que será usado como filtros na visão global das Minhas Ordens de Serviço.';
     $Self->{Translation}->{'Defines the workorder states that will be used as filters in the PIR overview.'} =
-        'Define os estados de ordem de serviço que será usado como filtros na visão global da PIR.';
+        'Define os estados de ordem de serviço que será usado como filtros na visão global da RPI.';
     $Self->{Translation}->{'Defines the workorder types that will be used to show the PIR overview.'} =
-        'Define os tipos de ordem de serviço que será usado como filtros para mostrar na visão global da PIR.';
+        'Define os tipos de ordem de serviço que será usado como filtros para mostrar na visão global da RPI.';
     $Self->{Translation}->{'Defines whether notifications should be sent.'} = 'Define se as notificações devem ser enviadas.';
     $Self->{Translation}->{'Determines if an agent can exchange the X-axis of a stat if he generates one.'} =
         'Determina se um atendente pode trocar o eixo X de uma estatística se ele gere um.';
@@ -1671,7 +1674,7 @@ sub Data {
     $Self->{Translation}->{'Required privileges to create changes.'} = 'Privilégios necessários para criar mudanças.';
     $Self->{Translation}->{'Required privileges to delete a template.'} = 'Privilégios necessários para criar um modelo.';
     $Self->{Translation}->{'Required privileges to delete a workorder.'} = 'Privilégios necessários para criar uma ordem de serviço.';
-    $Self->{Translation}->{'Required privileges to delete changes.'} = '';
+    $Self->{Translation}->{'Required privileges to delete changes.'} = 'Privilégios necessários para excluir mudanças.';
     $Self->{Translation}->{'Required privileges to edit a template.'} = 'Privilégios necessários para editar um modelo.';
     $Self->{Translation}->{'Required privileges to edit a workorder.'} = 'Privilégios necessários para editar uma ordem de serviço.';
     $Self->{Translation}->{'Required privileges to edit changes.'} = 'Privilégios necessários para editar uma mudança.';
@@ -1679,8 +1682,8 @@ sub Data {
     $Self->{Translation}->{'Required privileges to edit the involved persons of a change.'} =
         'Privilégios necessários para editar pessoas envolvidas na mudança.';
     $Self->{Translation}->{'Required privileges to move changes in time.'} = 'Privilégios necessários para mover as mudanças no tempo.';
-    $Self->{Translation}->{'Required privileges to print a change.'} = 'Privilégios necessários para imprimir uma mudança';
-    $Self->{Translation}->{'Required privileges to reset changes.'} = '';
+    $Self->{Translation}->{'Required privileges to print a change.'} = 'Privilégios necessários para imprimir uma mudança.';
+    $Self->{Translation}->{'Required privileges to reset changes.'} = 'Privilégios necessários para redefinir mudanças.';
     $Self->{Translation}->{'Required privileges to view a workorder.'} = 'Privilégios necessários para visualizar uma ordem de serviço.';
     $Self->{Translation}->{'Required privileges to view changes.'} = 'Privilégios necessários para visualizar mudanças.';
     $Self->{Translation}->{'Required privileges to view list of changes where the user is a CAB member.'} =
@@ -1697,7 +1700,7 @@ sub Data {
     $Self->{Translation}->{'Required privileges to view the list of Change Schedule.'} = 'Privilégios necessários para visualizar a lista da Agenda Mudança.';
     $Self->{Translation}->{'Required privileges to view the list of change PSA.'} = 'Privilégios necessários para visualizar o lista de mudanças PSA.';
     $Self->{Translation}->{'Required privileges to view the list of changes with an upcoming PIR (Post Implementation Review).'} =
-        'Privilégios necessários para visualizar a lista de mudanças com um próximo PIR (Postar Revisão da Implementação).';
+        'Privilégios necessários para visualizar a lista de mudanças com um próximo RPI (Postar Revisão da Implementação).';
     $Self->{Translation}->{'Required privileges to view the list of own changes.'} = 'Privilégios necessários para visualizar a lista de mudanças próprias.';
     $Self->{Translation}->{'Required privileges to view the list of own workorders.'} = 'Privilégios necessários para visualizar a lista de ordem de serviço própria.';
     $Self->{Translation}->{'Required privileges to write a report for the workorder.'} = 'Privilégios necessários para escrever um relatório para a ordem de serviço.';
@@ -1770,6 +1773,10 @@ sub Data {
         'Ordem de Serviço a fim de opções de texto livre mostrado na ordem de serviço de edição da interface do atendente. Configurações possíveis: 0 = desativado, 1 = ativado, 2 = Habilitado e necessária.';
     $Self->{Translation}->{'Workorder free text options shown in the workorder report of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
         'Ordem de Serviço a fim de opções de texto livre indicado no relatório de ordem de serviço do agente de interface. Configurações possíveis: 0 = desativado, 1 = ativado, 2 = Habilitado e necessária.';
+    $Self->{Translation}->{'Screen after creating a workorder'}
+        = 'Tela Após Criar Ordem de Serviço';
+    $Self->{Translation}->{'Show this screen after I created a new workorder'}
+        = 'Mostra esta tela após a criação de uma nova ordem';
 
     #
     # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
