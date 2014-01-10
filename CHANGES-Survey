@@ -6,6 +6,8 @@
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
+2.3.3 - 2014-XX-XX
+ - Improved brazilian portuguese translation, thanks to Murilo Moreira de Oliveira.
 
 2.3.2 - 2013-12-03
  - Added new functionality to add ticket types and services as send conditions for the survey.

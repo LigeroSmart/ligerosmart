@@ -1,6 +1,6 @@
 # --
 # Kernel/Language/pt_BR_Survey.pm - translation file
-# Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,30 +16,30 @@ sub Data {
     my $Self = shift;
 
     # Template: AAASurvey
-    $Self->{Translation}->{'- Change Status -'} = '- Alterar Status -';
-    $Self->{Translation}->{'Add New Survey'} = '';
+    $Self->{Translation}->{'- Change Status -'} = '- Alterar Estado -';
+    $Self->{Translation}->{'Add New Survey'} = 'Adicionar Nova Pesquisa';
     $Self->{Translation}->{'Survey Edit'} = 'Editar Pesquisa';
     $Self->{Translation}->{'Survey Edit Questions'} = 'Editar Preguntas da Pesquisa';
-    $Self->{Translation}->{'Question Edit'} = '';
-    $Self->{Translation}->{'Answer Edit'} = '';
-    $Self->{Translation}->{'Can\'t set new status! No questions defined.'} = '';
-    $Self->{Translation}->{'Status changed.'} = '';
+    $Self->{Translation}->{'Question Edit'} = 'Edição de Pergunta';
+    $Self->{Translation}->{'Answer Edit'} = 'Edição de Resposta';
+    $Self->{Translation}->{'Can\'t set new status! No questions defined.'} = 'Não é possível configurar o novo estado. Nenhuma questão definida.';
+    $Self->{Translation}->{'Status changed.'} = 'Estado alterado.';
     $Self->{Translation}->{'Thank you for your feedback.'} = 'Obrigado pela sua participação.';
     $Self->{Translation}->{'The survey is finished.'} = 'A pesquisa está finalizada.';
-    $Self->{Translation}->{'Complete'} = '';
-    $Self->{Translation}->{'Incomplete'} = '';
-    $Self->{Translation}->{'Checkbox (List)'} = '';
+    $Self->{Translation}->{'Complete'} = 'Completo';
+    $Self->{Translation}->{'Incomplete'} = 'Incompleto';
+    $Self->{Translation}->{'Checkbox (List)'} = 'Checkbox (Lista)';
     $Self->{Translation}->{'Radio'} = '';
-    $Self->{Translation}->{'Radio (List)'} = '';
+    $Self->{Translation}->{'Radio (List)'} = 'Radio (Lista)';
     $Self->{Translation}->{'Stats Overview'} = 'Resumo de Estatísticas';
     $Self->{Translation}->{'Survey Description'} = 'Descrição da Pesquisa';
     $Self->{Translation}->{'Survey Introduction'} = 'Introdução da Pesquisa';
-    $Self->{Translation}->{'Yes/No'} = '';
-    $Self->{Translation}->{'YesNo'} = '';
+    $Self->{Translation}->{'Yes/No'} = 'Sim/Não';
+    $Self->{Translation}->{'YesNo'} = 'SimNão';
     $Self->{Translation}->{'answered'} = 'Respondido';
     $Self->{Translation}->{'not answered'} = 'Não respondido';
-    $Self->{Translation}->{'Stats Detail'} = '';
-    $Self->{Translation}->{'You have already answered the survey.'} = '';
+    $Self->{Translation}->{'Stats Detail'} = 'Detalhe da estatística';
+    $Self->{Translation}->{'You have already answered the survey.'} = 'Você já respondeu a pesquisa.';
 
     # Template: AgentSurveyAdd
     $Self->{Translation}->{'Create New Survey'} = 'Criar Nova Pesquisa';
@@ -54,10 +54,10 @@ sub Data {
     $Self->{Translation}->{'Edit Questions'} = 'Editar Preguntas';
     $Self->{Translation}->{'Add Question'} = 'Adicionar Pregunta';
     $Self->{Translation}->{'Type the question'} = 'Escreva a pergunta';
-    $Self->{Translation}->{'Answer required'} = '';
+    $Self->{Translation}->{'Answer required'} = 'Resposta requerida';
     $Self->{Translation}->{'Survey Questions'} = 'Perguntas da Pesquisa';
     $Self->{Translation}->{'Question'} = 'Pregunta';
-    $Self->{Translation}->{'Answer Required'} = '';
+    $Self->{Translation}->{'Answer Required'} = 'Resposta Requerida';
     $Self->{Translation}->{'No questions saved for this survey.'} = 'Nenhuma questão salva para esta pesquisa.';
     $Self->{Translation}->{'Edit Question'} = 'Editar Pregunta';
     $Self->{Translation}->{'go back to questions'} = 'voltar às preguntas';
@@ -80,7 +80,7 @@ sub Data {
     $Self->{Translation}->{'Changed By'} = 'Modificado por';
 
     # Template: AgentSurveyStats
-    $Self->{Translation}->{'Stats Overview of'} = '';
+    $Self->{Translation}->{'Stats Overview of'} = 'Resumo de Estatísticas de';
     $Self->{Translation}->{'Requests Table'} = 'Tabela de Requisições';
     $Self->{Translation}->{'Send Time'} = 'Hora de Envio';
     $Self->{Translation}->{'Vote Time'} = 'Hora do Voto';
@@ -98,14 +98,17 @@ sub Data {
 
     # Template: PublicSurvey
     $Self->{Translation}->{'Survey'} = 'Pesquisa';
-    $Self->{Translation}->{'Please answer these questions'} = '';
-    $Self->{Translation}->{'Show my answers'} = '';
-    $Self->{Translation}->{'These are your answers'} = '';
-    $Self->{Translation}->{'Survey Title'} = '';
+    $Self->{Translation}->{'Please answer these questions'} = 'Por favor, responda estas questões';
+    $Self->{Translation}->{'Show my answers'} = 'Mostrar minhas respostas';
+    $Self->{Translation}->{'These are your answers'} = 'Estas são suas respostas';
+    $Self->{Translation}->{'Survey Title'} = 'Título da Pesquisa';
+    $Self->{Translation}->{'Survey Error!'} = 'Erro de Pesquisa!';
+    $Self->{Translation}->{'Invalid survey key.'} = 'Chave de pesquisa inválida.';
+    $Self->{Translation}->{'The inserted survey key is invalid, if you followed a link maybe this is obsolete or broken.'} = 'A chave de pesquisa inserida é inválida. Se você seguiu um link, talvez ele esteja obsoleto ou truncado.';
 
     # SysConfig
-    $Self->{Translation}->{'A Survey Module.'} = '';
-    $Self->{Translation}->{'A module to edit survey questions.'} = '';
+    $Self->{Translation}->{'A Survey Module.'} = 'Um Módulo de Pesquisa.';
+    $Self->{Translation}->{'A module to edit survey questions.'} = 'Um módulo para editar perguntas de pesquisa.';
     $Self->{Translation}->{'All parameters for the Survey object in the agent interface.'} =
         '';
     $Self->{Translation}->{'Amount of days after sending a survey mail in which no new survey requests are sent to the same customer. Selecting 0 will always send the survey mail.'} =
@@ -126,8 +129,8 @@ sub Data {
         '';
     $Self->{Translation}->{'Defines the shown columns in the survey overview. This option has no effect on the position of the columns.'} =
         '';
-    $Self->{Translation}->{'Edit Survey General Information'} = '';
-    $Self->{Translation}->{'Edit Survey Questions'} = '';
+    $Self->{Translation}->{'Edit Survey General Information'} = 'Editar Informações Gerais da Pesquisa';
+    $Self->{Translation}->{'Edit Survey Questions'} = 'Editar Perguntas de Pesquisa';
     $Self->{Translation}->{'Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time.'} =
         '';
     $Self->{Translation}->{'Frontend module registration for survey add in the agent interface.'} =
@@ -143,7 +146,7 @@ sub Data {
     $Self->{Translation}->{'If this regex matches, no customer survey will be sent.'} = '';
     $Self->{Translation}->{'Parameters for the pages (in which the surveys are shown) of the small survey overview.'} =
         '';
-    $Self->{Translation}->{'Public Survey.'} = '';
+    $Self->{Translation}->{'Public Survey.'} = 'Pesquisa Pública';
     $Self->{Translation}->{'Shows a link in the menu to edit a survey in its zoom view of the agent interface.'} =
         '';
     $Self->{Translation}->{'Shows a link in the menu to edit survey questions in its zoom view of the agent interface.'} =
