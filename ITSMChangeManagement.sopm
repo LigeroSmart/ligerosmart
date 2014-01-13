@@ -31,6 +31,7 @@
         <File Permission="644" Location="Kernel/Language/pt_BR_ITSMChangeManagement.pm"/>
         <File Permission="644" Location="Kernel/Language/pt_PT_ITSMChangeManagement.pm"/>
         <File Permission="644" Location="Kernel/Language/zh_CN_ITSMChangeManagement.pm"/>
+        <File Permission="644" Location="Kernel/Language/zh_TW_ITSMChangeManagement.pm"/>
         <File Permission="644" Location="Kernel/Modules/AdminITSMChangeCIPAllocate.pm"/>
         <File Permission="644" Location="Kernel/Modules/AdminITSMChangeNotification.pm"/>
         <File Permission="644" Location="Kernel/Modules/AdminITSMStateMachine.pm"/>
