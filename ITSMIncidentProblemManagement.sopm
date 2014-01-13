@@ -32,6 +32,7 @@
         <File Permission="644" Location="Kernel/Language/pt_PT_ITSMTicket.pm"/>
         <File Permission="644" Location="Kernel/Language/ru_ITSMTicket.pm"/>
         <File Permission="644" Location="Kernel/Language/zh_CN_ITSMTicket.pm"/>
+        <File Permission="644" Location="Kernel/Language/zh_TW_ITSMTicket.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentTicketActionCommon.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentTicketAddtlITSMField.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentTicketDecision.pm"/>
