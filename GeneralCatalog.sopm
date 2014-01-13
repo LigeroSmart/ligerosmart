@@ -32,6 +32,7 @@
         <File Permission="644" Location="Kernel/Language/pt_PT_GeneralCatalog.pm"/>
         <File Permission="644" Location="Kernel/Language/ru_GeneralCatalog.pm"/>
         <File Permission="644" Location="Kernel/Language/zh_CN_GeneralCatalog.pm"/>
+        <File Permission="644" Location="Kernel/Language/zh_TW_GeneralCatalog.pm"/>
         <File Permission="644" Location="Kernel/Modules/AdminGeneralCatalog.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/GeneralCatalogPreferencesGeneric.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AAAGeneralCatalog.dtl"/>
