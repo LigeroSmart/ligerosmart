@@ -33,6 +33,7 @@
         <File Permission="644" Location="Kernel/Language/pt_PT_ImportExport.pm"/>
         <File Permission="644" Location="Kernel/Language/ru_ImportExport.pm"/>
         <File Permission="644" Location="Kernel/Language/zh_CN_ImportExport.pm"/>
+        <File Permission="644" Location="Kernel/Language/zh_TW_ImportExport.pm"/>
         <File Permission="644" Location="Kernel/Modules/AdminImportExport.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/ImportExportLayoutCheckbox.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/ImportExportLayoutDTL.pm"/>
