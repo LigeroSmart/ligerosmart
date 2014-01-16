@@ -376,7 +376,7 @@ sub Run {
             # if To is present and is no a queue
             # set To as article from
             if ( IsStringWithData( $Article{To} ) ) {
-                my %Queues = $Self->{QueueObject}->QueueList();
+                my %Queues      = $Self->{QueueObject}->QueueList();
                 my %QueueLookup = reverse %Queues;
                 if ( !defined $QueueLookup{ $Article{To} } ) {
                     $ArticleFrom = $Article{To};
@@ -1796,7 +1796,7 @@ sub Run {
             if ( !$RemoveSuccess ) {
                 $Self->{LogObject}->Log(
                     Priority => 'error',
-                    Message  => "Form attachments coud not be deleted!",
+                    Message  => "Form attachments could not be deleted!",
                 );
             }
 
