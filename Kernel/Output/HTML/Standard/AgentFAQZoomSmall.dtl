@@ -10,7 +10,7 @@
 <div class="MainBox ARIARoleMain">
     <div class="ClearLeft"></div>
     <div class="Headline">
-        <h1 title="$Text{"Zoom"} $Config{"FAQ::FAQHook"}: $QData{"Number"} &ndash; $QData{"Title", "40"}">
+        <h1 title="$Text{"Zoom"} $Config{"FAQ::FAQHook"}: $QData{"Number"} &ndash; $QData{"Title"}">
             $Config{"FAQ::FAQHook"}: $Data{"Number"} <span>&mdash;</span> $QData{"Title", "60"}
         </h1>
     </div>
