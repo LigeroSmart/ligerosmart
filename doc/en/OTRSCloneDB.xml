@@ -44,7 +44,7 @@
             source DB, and copy the data of each table to the target DB.
         </para>
         <para>
-            Currently, only MySQL, PostgreSQL and Oracle are supported as a source and target platforms,
+            Currently, only MySQL, PostgreSQL, Oracle and MSSQL are supported as a source and target platforms,
             but this will be extended in future.
         </para>
     </sect1>
@@ -166,7 +166,7 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
                     <para>
                         On 'CloneDB::TargetDBSettings' for Oracle you might want to configure extra
                         params like 'TargetDatabaseSID' and 'TargetDatabasePort', please just include
-                        them using the SysConfig GUI.
+                        them using the SysConfig GUI, if not defaul values will be included(XE, 1521).
                     </para>
                     <para>
                         And please be aware to include the needed setting on the Config.pm file:
@@ -176,6 +176,15 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
                             <listitem><para>$ENV{NLS_DATE_FORMAT}</para></listitem>
                             <listitem><para>$ENV{NLS_LANG}</para></listitem>
                         </itemizedlist>
+                </listitem>
+                <listitem>
+                    <para>
+                        If MSSQL is going to be used, a bd param for 'Driver' should be
+                        configured:
+                        <itemizedlist>
+                            <listitem><para>TargetDatabaseDriver</para></listitem>
+                        </itemizedlist>
+                    </para>
                 </listitem>
                 <listitem>
                     <para>

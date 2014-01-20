@@ -1,5 +1,5 @@
 # --
-# Kernel/System/CloneDB/Driver/mysql.pm - Delegate for CloneDB mysql Driver
+# Kernel/System/CloneDB/Driver/mssql.pm - Delegate for CloneDB mssql Driver
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -7,7 +7,7 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package Kernel::System::CloneDB::Driver::mysql;
+package Kernel::System::CloneDB::Driver::mssql;
 
 use strict;
 use warnings;
@@ -18,11 +18,11 @@ use base qw(Kernel::System::CloneDB::Driver::Base);
 
 =head1 NAME
 
-Kernel::System::CloneDB::Driver::mysql
+Kernel::System::CloneDB::Driver::mssql
 
 =head1 SYNOPSIS
 
-CloneDBs mysql Driver delegate
+CloneDBs mssql Driver delegate
 
 =head1 PUBLIC INTERFACE
 
@@ -75,9 +75,12 @@ sub CreateTargetDBConnection {
         }
     }
 
+    # set default driver
+    $Param{TargetDatabaseDriver} = 'SQL Server' if !defined $Param{TargetDatabaseDriver};
+
     # include DSN for target DB
     $Param{TargetDatabaseDSN} =
-        "DBI:mysql:database=$Param{TargetDatabase};host=$Param{TargetDatabaseHost};";
+        "DBI:ODBC:driver={$Param{TargetDatabaseDriver}};Database=$Self->{Database};Server=$Self->{DatabaseHost};";
 
     # create target DB object
     my $TargetDBObject = Kernel::System::DB->new(
@@ -115,7 +118,10 @@ sub TablesList {
 
     $Param{DBObject}->Prepare(
         SQL => "
-            SHOW TABLES"
+            SELECT TABLE_NAME
+            FROM INFORMATION_SCHEMA.TABLES
+            WHERE TABLE_TYPE = 'BASE TABLE'
+            ORDER BY TABLE_NAME ASC"
     ) || die @!;
 
     my @Result;
@@ -142,13 +148,10 @@ sub ColumnsList {
     $Param{DBObject}->Prepare(
         SQL => "
             SELECT column_name
-            FROM information_schema.columns
-            WHERE table_name = ? AND table_schema = ?
-            ORDER BY ordinal_position ASC",
-
-        # SQL => "DESCRIBE ?",
+            FROM INFORMATION_SCHEMA.COLUMNS
+            WHERE TABLE_NAME = ?",
         Bind => [
-            \$Param{Table}, \$Self->{ConfigObject}->{Database},
+            \$Param{Table},
         ],
     ) || die @!;
 
@@ -157,6 +160,50 @@ sub ColumnsList {
         push @Result, $Row[0];
     }
     return @Result;
+}
+
+#
+# Reset the 'id' auto-increment field to the last one in the table.
+#
+sub ResetAutoIncrementField {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Needed (qw(DBObject Table)) {
+        if ( !$Param{$Needed} ) {
+            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $Needed!" );
+            return;
+        }
+    }
+
+    $Param{DBObject}->Prepare(
+        SQL => "
+            SELECT id
+            FROM $Param{Table}
+            ORDER BY id DESC",
+        Limit => 1,
+    ) || die @!;
+
+    my $LastID;
+    while ( my @Row = $Param{DBObject}->FetchrowArray() ) {
+        $LastID = $Row[0];
+    }
+
+    if ($LastID) {
+
+        # add one more to the last ID
+        $LastID++;
+
+        # set increment as last number on the id field, plus one
+        my $SQL = "DBCC CHECKIDENT('$Param{Table}', RESEED, $LastID)";
+
+        $Param{DBObject}->Do(
+            SQL => $SQL,
+        ) || die @!;
+
+    }
+
+    return 1;
 }
 
 1;

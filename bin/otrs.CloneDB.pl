@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 # --
 # bin/otrs.CloneDB.pl - migrate OTRS databases
-# Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU AFFERO General Public License as published by
@@ -97,7 +97,7 @@ This script clones an OTRS database into a target database, even
 on another database platform. It will dynamically get the list of tables in the
 source DB, and copy the data of each table to the target DB.
 
-Currently, only MySQL, PostgreSQL and Oracle are supported as a source platform, but this will
+Currently, only MySQL, PostgreSQL, Oracle and MSSQL are supported as a source platform, but this will
 be extended in future.
 
 Instructions:
