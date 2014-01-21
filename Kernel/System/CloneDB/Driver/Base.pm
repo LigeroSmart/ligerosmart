@@ -181,6 +181,19 @@ sub DataTransfer {
             Limit => 4_000_000_000,
         ) || die @!;
 
+        # if needed, set pre-requisites
+        if (
+            $Param{TargetDBBackend}->can('SetPreRequisites')
+            && grep { $_ eq 'id' } @Columns
+            )
+        {
+
+            $Param{TargetDBBackend}->SetPreRequisites(
+                DBObject => $Param{TargetDBObject},
+                Table    => $Table,
+            );
+        }
+
         while ( my @Row = $Self->{SourceDBObject}->FetchrowArray() ) {
 
             # If the two databases have different blob handling (base64), convert

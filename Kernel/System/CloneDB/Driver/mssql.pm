@@ -80,7 +80,7 @@ sub CreateTargetDBConnection {
 
     # include DSN for target DB
     $Param{TargetDatabaseDSN} =
-        "DBI:ODBC:driver={$Param{TargetDatabaseDriver}};Database=$Self->{Database};Server=$Self->{DatabaseHost};";
+        "DBI:ODBC:driver={$Param{TargetDatabaseDriver}};Database=$Param{TargetDatabase};Server=$Param{TargetDatabaseHost};";
 
     # create target DB object
     my $TargetDBObject = Kernel::System::DB->new(
@@ -196,6 +196,65 @@ sub ResetAutoIncrementField {
 
         # set increment as last number on the id field, plus one
         my $SQL = "DBCC CHECKIDENT('$Param{Table}', RESEED, $LastID)";
+
+        $Param{DBObject}->Do(
+            SQL => $SQL,
+        ) || die @!;
+
+    }
+
+    $Param{DBObject}->Prepare(
+        SQL   => "select OBJECTPROPERTY(object_id('$Param{Table}'), 'TableHasIdentity')",
+        Limit => 1,
+    ) || die @!;
+
+    my $TableHasIdentity = 0;
+    while ( my @Row = $Param{DBObject}->FetchrowArray() ) {
+        $TableHasIdentity = $Row[0];
+    }
+
+    if ( $TableHasIdentity eq '1' ) {
+
+        # set IDENTITY_INSERT to OFF
+        my $SQL = "SET IDENTITY_INSERT $Param{Table} OFF";
+
+        $Param{DBObject}->Do(
+            SQL => $SQL,
+        ) || die @!;
+
+    }
+
+    return 1;
+}
+
+#
+# Set pre-requisites in the table.
+#
+sub SetPreRequisites {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Needed (qw(DBObject Table)) {
+        if ( !$Param{$Needed} ) {
+            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $Needed!" );
+            return;
+        }
+    }
+
+    $Param{DBObject}->Prepare(
+        SQL   => "select OBJECTPROPERTY(object_id('$Param{Table}'), 'TableHasIdentity')",
+        Limit => 1,
+    ) || die @!;
+
+    my $TableHasIdentity = 0;
+    while ( my @Row = $Param{DBObject}->FetchrowArray() ) {
+        $TableHasIdentity = $Row[0];
+    }
+
+    if ( $TableHasIdentity eq '1' ) {
+
+        # set IDENTITY_INSERT to ON
+        my $SQL = "SET IDENTITY_INSERT $Param{Table} ON";
 
         $Param{DBObject}->Do(
             SQL => $SQL,
