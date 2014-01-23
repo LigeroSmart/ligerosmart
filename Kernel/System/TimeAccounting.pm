@@ -1411,8 +1411,8 @@ sub WorkingUnitsInsert {
     UNITREF:
     for my $UnitRef ( @{ $Param{WorkingUnits} } ) {
 
-        my $StartTime = $Date . ' ' . $UnitRef->{StartTime};
-        my $EndTime   = $Date . ' ' . $UnitRef->{EndTime};
+        my $StartTime = $Date . ' ' . $UnitRef->{StartTime} . ':00';
+        my $EndTime   = $Date . ' ' . $UnitRef->{EndTime} . ':00';
 
         # '' does not work in integer field of postgres
         $UnitRef->{ProjectID} ||= 0;
