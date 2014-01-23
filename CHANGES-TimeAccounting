@@ -8,6 +8,7 @@
 # --
 2.3.2 - 2014-??-??
 - 2014-01-22 Fixed bug#10127 - Entries starting 00:00 will loose start time.
+- 2014-01-22 Fixed bug#8571 - Not well description for Backend-Error while trying to add an entry outside of time period.
 
 2.3.1 - 2013-11-09
 - 2013-11-09 Added visual improvements to buttons.

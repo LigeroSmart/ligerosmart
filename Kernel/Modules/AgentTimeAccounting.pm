@@ -2730,8 +2730,8 @@ sub _FirstUserRedirect {
         }
     }
     return $Self->{LayoutObject}->ErrorScreen(
-        Message =>
-            "No UserPeriod available, please contact the time accounting admin to insert your UserPeriod!"
+        Message => "No time period configured, or the specified date is outside of the defined "
+            . "time periods. Please contact the time accounting admin to update your time periods!"
     );
 }
 
