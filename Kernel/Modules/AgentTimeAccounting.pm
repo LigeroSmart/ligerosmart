@@ -821,24 +821,10 @@ sub Run {
 
             for my $TimePeriod (qw(StartTime EndTime)) {
                 if ($ShowError) {
-                    if ( defined $ServerErrorData{$ErrorIndex}{$TimePeriod} ) {
-                        $Param{$TimePeriod}
-                            = $ServerErrorData{$ErrorIndex}{$TimePeriod} eq '00:00'
-                            ? ''
-                            : $ServerErrorData{$ErrorIndex}{$TimePeriod};
-                    }
-                    else {
-                        $Param{$TimePeriod} = '';
-                    }
+                    $Param{$TimePeriod} = $ServerErrorData{$ErrorIndex}{$TimePeriod} // '';
                 }
                 else {
-                    if ( $UnitRef->{$TimePeriod} ) {
-                        $Param{$TimePeriod}
-                            = $UnitRef->{$TimePeriod} eq '00:00' ? '' : $UnitRef->{$TimePeriod};
-                    }
-                    else {
-                        $Param{$TimePeriod} = '';
-                    }
+                    $Param{$TimePeriod} = $UnitRef->{$TimePeriod} // '';
                 }
             }
 

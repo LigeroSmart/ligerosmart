@@ -6,6 +6,8 @@
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
+2.3.2 - 2014-??-??
+- 2014-01-22 Fixed bug#10127 - Entries starting 00:00 will loose start time.
 
 2.3.1 - 2013-11-09
 - 2013-11-09 Added visual improvements to buttons.
