@@ -4,26 +4,38 @@
 
 <book lang='en'>
 
+<!--
+************************************** Head ***********************************************
+-->
+
 <bookinfo>
-<title>$Name</title>
-<edition>$Description Version $Version</edition>
+    <title>$Name</title>
+    <edition>$Description Version $Version</edition>
 
-<copyright>
-<year>$YearStamp</year>
-<holder>$Vendor, $URL</holder>
-</copyright>
+    <copyright>
+        <year>$YearStamp</year>
+        <holder>$Vendor, $URL</holder>
+    </copyright>
 
-<date>$DateStamp</date>
+    <date>$DateStamp</date>
 
-<legalnotice>
-    <para>$License</para>
-    <para>This work is copyrighted by $Vendor, Norsk-Data-Str. 1, 61352 Bad Homburg, Germany.</para>
-    <para>Build Date: $DateStamp</para>
-</legalnotice>
-
+    <legalnotice>
+        <para>$License</para>
+        <para>
+            This work is copyrighted by $Vendor, Norsk-Data-Str. 1, 61352 Bad Homburg, Germany.
+        </para>
+        <para>Build Date: $DateStamp</para>
+    </legalnotice>
 </bookinfo>
 
-<preface id="preface" >
+<!--
+************************************ Customer part ******************************************
+-->
+
+<!-- ********** -->
+<!-- 1. Preface -->
+<!-- ********** -->
+<preface id="preface">
     <title>Preface</title>
     <para>
         This package provides the 'OTRSCloneDB' feature.
@@ -31,86 +43,105 @@
     <para>
         It clones an OTRS source database into a target database.
     </para>
-    <para>If you have questions regarding this package, please contact your support team (support@otrs.com) for more information.</para>
+    <para>
+        If you have questions regarding this package, please contact your support team
+        <ulink url="mailto:support@otrs.com?subject=$Name">
+            &lt;support@otrs.com&gt;
+        </ulink> for more information.
+    </para>
 </preface>
 
+<!-- *************** -->
+<!-- 2. Feature List -->
+<!-- *************** -->
 <chapter>
     <title>Feature List</title>
-    <sect1>
+    <section>
         <title>Clone DB</title>
         <para>
-            This script clones an OTRS database into a target database, even
-            on another database platform. It will dynamically get the list of tables in the
-            source DB, and copy the data of each table to the target DB.
+            This script clones an OTRS database into a target database, even on another database
+            platform. It will dynamically get the list of tables in the source DB, and copy the
+            data of each table to the target DB.
         </para>
         <para>
-            Currently, only MySQL, PostgreSQL, Oracle and MSSQL are supported as a source and target platforms,
-            but this will be extended in future.
+            Currently, only MySQL, PostgreSQL, Oracle and MSSQL are supported as a source and
+            target platforms, but this could be extended in future.
         </para>
-    </sect1>
+    </section>
 </chapter>
 
+<!-- ********************** -->
+<!-- 3. System Requirements -->
+<!-- **********************-->
 <chapter>
-    <title>Prerequisites</title>
-    <sect1>
+    <title>System Requirements</title>
+    <section>
         <title>Framework</title>
-        <para>The following OTRS framework is required:</para>
-        <para>
-        $Framework
-        </para>
-    </sect1>
-    <sect1>
+        <para>The following OTRS Framework is required:</para>
+        <para>$Framework</para>
+    </section>
+    <section>
         <title>Packages</title>
-        <para>The following package are required:</para>
-        <para>
-        $PackageRequired
-        </para>
-    </sect1>
-    <sect1>
+        <para>The following packages are required:</para>
+        <para>$PackageRequired</para>
+    </section>
+    <section>
         <title>Operating System</title>
-        <para>This package requires one of the following operating systems:</para>
         <para>
-        $OS
+            This package requires one of the following operating systems:
         </para>
-    </sect1>
-    <sect1>
+        <para>$OS</para>
+    </section>
+    <section>
         <title>Third Party Software</title>
-        <para>This third party software is required to use this package:</para>
         <para>
-            <itemizedlist>
-                <listitem><para>None.</para></listitem>
-            </itemizedlist>
+            This third party software is required to use this package:
         </para>
-    </sect1>
+        <itemizedlist>
+            <listitem>
+                <para>None.</para>
+            </listitem>
+        </itemizedlist>
+    </section>
 </chapter>
 
+<!-- *************** -->
+<!-- 4. Installation -->
+<!-- *************** -->
 <chapter>
     <title>Installation</title>
-    <para>The following instructions explain how to install the package.</para>
-    <sect1>
+    <para>
+        The following instructions explain how to install the package.
+    </para>
+    <section>
         <title>Admin Interface</title>
         <para>
-Please use the following URL to install the package utilizing the admin
-interface (please note that you need to be in the admin group).
+            Please use the following URL to install the package utilizing the admin interface
+            (please note that you need to be in the admin group).
         </para>
         <para>
-<ulink url="http://localhost/otrs/index.pl?Action=AdminPackageManager">http://localhost/otrs/index.pl?Action=AdminPackageManager</ulink>
+            <ulink url="http://localhost/otrs/index.pl?Action=AdminPackageManager">
+                http://localhost/otrs/index.pl?Action=AdminPackageManager
+            </ulink>
         </para>
-    </sect1>
-    <sect1>
+    </section>
+    <section>
         <title>Command Line</title>
         <para>
-If you don't want to use the Admin Interface, you can use the following
-OPM command to install the package with "bin/otrs.PackageManager.pl".
+            Whenever you cannot use the Admin Interface for whatever reason, you may use the
+            following command line tool ("bin/otrs.PackageManager.pl") instead.
         </para>
         <para>
-        <screen>
+            <screen>
 shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
-        </screen>
+            </screen>
         </para>
-    </sect1>
+    </section>
 </chapter>
 
+<!-- **************** -->
+<!-- 5. Configuration -->
+<!-- **************** -->
 <chapter>
     <title>Configuration</title>
     <para>The package can be configured via the SysConfig in the Admin Interface. The following configuration options are available:</para>
@@ -141,50 +172,69 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
     </section>
 </chapter>
 
+<!-- ******** -->
+<!-- 6. Usage -->
+<!-- ******** -->
 <chapter>
     <title>Usage</title>
-        <para>
-            Next is described the clone db procedure.
-        </para>
-
-        <para>
-            <itemizedlist>
+        <section>
+            <title>Clone A Database</title>
+            <para>
+                The goal of this example is to clone current database into another database engine.
+            </para>
+            <orderedlist>
                 <listitem>
                     <para>
                         Configure target database settings for this package (OTRSCloneDB).
                     </para>
+                    <itemizedlist mark="round">
+                        <para>The following parameters should be configured:</para>
+                        <listitem><para>TargetDatabaseHost</para></listitem>
+                        <listitem><para>TargetDatabase</para></listitem>
+                        <listitem><para>TargetDatabaseUser</para></listitem>
+                        <listitem><para>TargetDatabasePw</para></listitem>
+                        <listitem><para>TargetDatabaseType</para></listitem>
+                    </itemizedlist>
                     <para>
-                        <para>Next params should be configured:</para>
-                        <itemizedlist>
-                            <listitem><para>TargetDatabaseHost</para></listitem>
-                            <listitem><para>TargetDatabase</para></listitem>
-                            <listitem><para>TargetDatabaseUser</para></listitem>
-                            <listitem><para>TargetDatabasePw</para></listitem>
-                            <listitem><para>TargetDatabaseType</para></listitem>
+                        Where "TargetDatabaseHost" is the host name or ip address of the target
+                        system, "TargetDatabase" is the name if the target database,
+                        "TargetDatabaseUser" is the name of the user that connects to the target
+                        database, "TargetDatabasePw" is the password of the user, be aware that
+                        the field is not masked and it is stored in plain text,
+                        "TargetDatabaseType" is the type of the target database (mysql, mssql,
+                        postgresql or oracle).
+                    </para>
+                    <note>
+                        <para>
+                            On 'CloneDB::TargetDBSettings' for Oracle you might want to configure
+                            extra parameters like:
+                         </para>
+                        <itemizedlist mark="round">
+                            <listitem><para>TargetDatabaseSID</para></listitem>
+                            <listitem><para>TargetDatabasePort</para></listitem>
                         </itemizedlist>
-                    </para>
-                    <para>
-                        On 'CloneDB::TargetDBSettings' for Oracle you might want to configure extra
-                        params like 'TargetDatabaseSID' and 'TargetDatabasePort', please just include
-                        them using the SysConfig GUI, if not defaul values will be included(XE, 1521).
-                    </para>
-                    <para>
-                        And please be aware to include the needed setting on the Config.pm file:
-                    </para>
-                        <itemizedlist>
+                        <para>
+                            If they are not set, the default values (XE and 1521 respectively) will
+                            be used.
+                        </para>
+                        <para>
+                            And please be aware to include the needed settings on the Config.pm
+                            file:
+                        </para>
+                        <itemizedlist mark="round">
                             <listitem><para>$ENV{ORACLE_HOME}</para></listitem>
                             <listitem><para>$ENV{NLS_DATE_FORMAT}</para></listitem>
                             <listitem><para>$ENV{NLS_LANG}</para></listitem>
                         </itemizedlist>
-                </listitem>
-                <listitem>
-                    <para>
-                        If MSSQL is going to be used, a bd param for 'Driver' should be
-                        configured:
+                        <para>
+                            If MSSQL is going to be used, a database parameter for 'Driver' should
+                            be configured:
+                        </para>
                         <itemizedlist>
                             <listitem><para>TargetDatabaseDriver</para></listitem>
                         </itemizedlist>
-                    </para>
+                        <para>If not set, the default value "SQL Server" will be used.</para>
+                    </note>
                 </listitem>
                 <listitem>
                     <para>
@@ -193,29 +243,42 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
                         allows you to set a list of tables should be skipped on the clone DB
                         process, this feature is useful for internal use tables like for example
                         in Oracle with the 'htmldb_plan_table' that is generated when you click
-                        on the 'Explain' Tab on the Oracle Web interface. Please use just lowercase
-                        for this setting.
+                        on the 'Explain' Tab on the Oracle Web interface. Please use just lower
+                        case for this setting.
                     </para>
                 </listitem>
                 <listitem>
-                    <para>Create the needed data structures of OTRS (first part) and installed packages in the target database.</para>
+                    <para>
+                        Create the needed data structures of OTRS (first part) and installed
+                        packages in the target database.
+                    </para>
                     <itemizedlist mark="round">
                         <listitem>
-                            <para>Only the the otrs-schema.\$DB.sql files should be used, not the otrs-schema-post.\$DB.sql files.</para>
+                            <para>
+                                Only the the otrs-schema.&lt;DB&gt;.sql files should be used, not
+                                the otrs-schema-post.&lt;DB&gt;.sql files.</para>
                         </listitem>
                         <listitem>
-                            <para>Also for installed packages, the SQL (first part only) must be generated and executed.</para>
+                            <para>
+                                Also for installed packages, the SQL (first part only) must be
+                                generated and executed.
+                            </para>
                         </listitem>
                     </itemizedlist>
                 </listitem>
                 <listitem>
-                    <para>Run otrs.CloneDB.pl script.</para>
+                    <para>Run bin/otrs.CloneDB.pl script.</para>
                 </listitem>
                 <listitem>
-                    <para>Apply the second part of the data structure definitions (foreign key constraints etc.).</para>
+                    <para>
+                        Apply the second part of the data structure definitions (foreign key
+                        constraints etc.).
+                    </para>
                     <itemizedlist mark="round">
                         <listitem>
-                            <para>Now the otrs-schema-post.\$DB.sql files should be used.</para>
+                            <para>
+                                Now the otrs-schema-post.&lt;DB&gt;.sql files should be used.
+                            </para>
                         </listitem>
                         <listitem>
                             <para>Also for the installed packages.</para>
@@ -225,47 +288,138 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
                 <listitem>
                     <para>Verify the result.</para>
                 </listitem>
-            </itemizedlist>
-        </para>
+            </orderedlist>
+        </section>
 </chapter>
 
+<!--
+***************************************** Technical part ************************************
+-->
+
+<!-- ********************************* -->
+<!-- 7. Technical Implementation Detail -->
+<!-- ********************************* -->
 <chapter>
-    <title>Test</title>
+    <title>Technical Implementation Details</title>
+    <section>
+        <title>OTRS Clone DB</title>
+        <para>
+            bin/otrs.CloneDB.pl: This is the script that triggers the cloning of the databases.
+        </para>
+        <para>
+            Kernel/Config/Files/OTRSCloneDB.xml: Holds all the needed settings for this package.
+        </para>
+        <para>
+            Kernel/System/CloneDB/Backend.pm: Is the common interface regardless the type of the
+            database that is used.
+        </para>
+        <para>
+            Kernel/System/CloneDB/Driver/Base: Holds shared function for all database types.
+        </para>
+        <para>
+            Kernel/System/CloneDB/Driver/msssql: Implement Backend functions for mssql database.
+        </para>
+        <para>
+            Kernel/System/CloneDB/Driver/myssql: Implement Backend functions for mysql database.
+        </para>
+        <para>
+            Kernel/System/CloneDB/Driver/oracle: Implement Backend functions for oracle database.
+        </para>
+        <para>
+            Kernel/System/CloneDB/Driver/postgresql: Implement Backend functions for postgresql
+            database.
+        </para>
+
+    </section>
+</chapter>
+
+<!-- *********** -->
+<!-- 8. Filelist -->
+<!-- *********** -->
+<chapter>
+    <title>File List</title>
+    <para>
+        This list shows all included files and the referring permissions.
+    </para>
+    <para>$Filelist</para>
+</chapter>
+
+<!-- ******* -->
+<!-- 9. Test -->
+<!-- ******* -->
+<chapter>
+    <title>Tests</title>
     <para>
         This module has been tested on the current state of the art in quality.
     </para>
+    <section>
+        <title>Test Cases</title>
+        <para>
+            To tests this package please follow the examples described in the Usage section,
+            all the tests cases should return the expected results defined at the beginning of
+            each example.
+        </para>
+    </section>
+<!-- No Unit Tests
+   <section>
+        <title>Unit Test</title>
+        <para>
+            To ensure the quality of the module, several so-called unit tests were created, to test
+            the functionalities of this module. These unit tests can be run via command line.
+        </para>
+        <para>
+            ATTENTION: Please never run unit tests on a productive system, since the added test
+            data to the system will no longer be removed. Always use a test system.
+        </para>
+        <para>Run the package specific unit tests</para>
+        <para>
+            To run only the unit test which will be delivered with this package, use the following
+            command on the command line:
+        </para>
+        <para>
+            <screen>
+shell> perl bin/otrs.UnitTest.pl -n OTRSCloneDB
+            </screen>
+        </para>
+        <para>Run all available unit tests</para>
+        <para>
+            To run all available unit tests, use the following command on the command line:
+        </para>
+        <para>
+            <screen>shell> perl bin/otrs.UnitTest.pl</screen>
+        </para>
+    </section>
+-->
 </chapter>
 
+<!-- ************* -->
+<!-- 10. Changelog -->
+<!-- ************* -->
+<chapter>
+    <title>Change Log</title>
+    <para>$ChangeLog</para>
+</chapter>
+
+<!-- *********** -->
+<!-- 11. Contact -->
+<!-- *********** -->
 <chapter>
     <title>Contacts</title>
     <para>People who are involved in this implementation.</para>
-    <sect1>
+    <section>
         <title>OTRS AG</title>
         <para>
-            Accounting: Rene Bakker &lt;sales@otrs.com&gt;, Phone +49 (0)6172 681988 0
+            Accounting: Rene Bakker
+            <ulink url="mailto:sales@otrs.com?subject=$Name">
+                &lt;sales@otrs.com&gt;
+            </ulink>, Phone +49 (0)6172 681988 0
         </para>
         <para>
-            Technical: Manuel Hecht &lt;dev-support@otrs.com&gt;, Phone +49 (0)6172 681988 0
+            Technical: Manuel Hecht
+            <ulink url="mailto:dev-support@otrs.com?subject=$Name">
+                &lt;dev-support@otrs.com&gt;
+            </ulink>, Phone +49 (0)6172 681988 0
         </para>
-    </sect1>
+    </section>
 </chapter>
-
-<chapter>
-    <title>Manifest</title>
-    <para>The manifest lists all included files and the referring permissions.</para>
-    <sect1>
-        <title>Filelist</title>
-        <para>
-        $Filelist
-        </para>
-    </sect1>
-</chapter>
-
-<chapter>
-    <title>ChangeLog</title>
-    <para>
-    $ChangeLog
-    </para>
-</chapter>
-
 </book>
