@@ -103,11 +103,11 @@ be extended in future.
 Instructions:
     - Configure target database settings on SysConfig for this package (OTRSCloneDB).
     - Create the needed data structures of OTRS (first part) and installed packages in the target database.
-        - Only the the otrs-schema.\$DB.sql files should be used, not the otrs-schema-post.\$DB.sql files.
+        - Only the the otrs-schema.<DB>.sql files should be used, not the otrs-schema-post.\$DB.sql files.
         - Also for installed packages, the SQL (first part only) must be generated and executed.
     - Run this script.
     - Apply the second part of the data structure definitions (foreign key constraints etc.).
-        - Now the otrs-schema-post.\$DB.sql files should be used.
+        - Now the otrs-schema-post.<DB>.sql files should be used.
         - Also for the installed packages
     - Verify the result.
 
