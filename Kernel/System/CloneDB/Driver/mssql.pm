@@ -187,6 +187,7 @@ sub ResetAutoIncrementField {
     my $LastID;
     while ( my @Row = $Param{DBObject}->FetchrowArray() ) {
         $LastID = $Row[0];
+        last;
     }
 
     if ($LastID) {
@@ -197,7 +198,7 @@ sub ResetAutoIncrementField {
         # set increment as last number on the id field, plus one
         my $SQL = "DBCC CHECKIDENT('$Param{Table}', RESEED, $LastID)";
 
-        $Param{DBObject}->Do(
+        $Param{DBObject}->Prepare(
             SQL => $SQL,
         ) || die @!;
 
