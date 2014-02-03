@@ -153,17 +153,22 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
     <section>
         <title>CloneDB::Driver###mysql.</title>
         <para>Group: OTRSCloneDB, Subgroup: OTRSCloneDB::Driver::Registration.</para>
-        <para>CloneDB backend registration.</para>
+        <para>CloneDB backend registration for MySQL.</para>
     </section>
     <section>
         <title>CloneDB::Driver###postgresql.</title>
         <para>Group: OTRSCloneDB, Subgroup: OTRSCloneDB::Driver::Registration.</para>
-        <para>CloneDB backend registration.</para>
+        <para>CloneDB backend registration for PostgreSQL.</para>
     </section>
     <section>
         <title>CloneDB::Driver###oracle.</title>
         <para>Group: OTRSCloneDB, Subgroup: OTRSCloneDB::Driver::Registration.</para>
-        <para>CloneDB backend registration.</para>
+        <para>CloneDB backend registration for Oracle.</para>
+    </section>
+    <section>
+        <title>CloneDB::Driver###mssql.</title>
+        <para>Group: OTRSCloneDB, Subgroup: OTRSCloneDB::Driver::Registration.</para>
+        <para>CloneDB backend registration for MSSQL.</para>
     </section>
     <section>
         <title>CloneDB::SkipTables.</title>
@@ -317,7 +322,7 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
             Kernel/System/CloneDB/Driver/Base: Holds shared function for all database types.
         </para>
         <para>
-            Kernel/System/CloneDB/Driver/msssql: Implement Backend functions for mssql database.
+            Kernel/System/CloneDB/Driver/mssql: Implement Backend functions for mssql database.
         </para>
         <para>
             Kernel/System/CloneDB/Driver/myssql: Implement Backend functions for mysql database.
