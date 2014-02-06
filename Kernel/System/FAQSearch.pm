@@ -12,6 +12,9 @@ package Kernel::System::FAQSearch;
 use strict;
 use warnings;
 
+use Kernel::System::DynamicField;
+use Kernel::System::DynamicField::Backend;
+
 =head1 NAME
 
 Kernel::System::FAQSearch - FAQ search lib
@@ -78,6 +81,19 @@ search in FAQ articles
 
         # change FAQ item properties (optional)
         LastChangedUserIDs => [1, 12, 455, 32]
+
+        # DynamicFields
+        #   At least one operator must be specified. Operators will be connected with AND,
+        #       values in an operator with OR.
+        #   You can also pass more than one argument to an operator: ['value1', 'value2']
+        DynamicField_FieldNameX => {
+            Equals            => 123,
+            Like              => 'value*',                # "equals" operator with wildcard support
+            GreaterThan       => '2001-01-01 01:01:01',
+            GreaterThanEquals => '2001-01-01 01:01:01',
+            SmallerThan       => '2002-02-02 02:02:02',
+            SmallerThanEquals => '2002-02-02 02:02:02',
+        }
 
         # FAQ items created more than 60 minutes ago (item older than 60 minutes)  (optional)
         ItemCreateTimeOlderMinutes => 60,
@@ -193,11 +209,47 @@ sub FAQSearch {
         Result => 'vrate',
     );
 
+    $Self->{DynamicFieldObject} ||= Kernel::System::DynamicField->new( %{$Self} );
+    $Self->{DynamicFieldBackendObject}
+        ||= Kernel::System::DynamicField::Backend->new( %{$Self} );
+
+    my $FAQDynamicFields = [];
+    my %ValidDynamicFieldParams;
+    my %FAQDynamicFieldName2Config;
+
+    # Only fetch DynamicField data if a field was requested for searching or sorting
+    my $ParamCheckString = ( join '', keys %Param ) || '';
+
+    if ( ref $Param{OrderBy} eq 'ARRAY' ) {
+        $ParamCheckString .= ( join '', @{ $Param{OrderBy} } );
+    }
+    elsif ( ref $Param{OrderBy} ne 'HASH' ) {
+        $ParamCheckString .= $Param{OrderBy} || '';
+    }
+
+    if ( $ParamCheckString =~ m/DynamicField_/smx ) {
+
+        # Check all configured faq dynamic fields
+        $FAQDynamicFields = $Self->{DynamicFieldObject}->DynamicFieldListGet(
+            ObjectType => 'FAQ',
+        );
+
+        for my $DynamicField ( @{$FAQDynamicFields} ) {
+            $ValidDynamicFieldParams{ "DynamicField_" . $DynamicField->{Name} } = 1;
+            $FAQDynamicFieldName2Config{ $DynamicField->{Name} } = $DynamicField;
+        }
+    }
+
     # check if OrderBy contains only unique valid values
     my %OrderBySeen;
     for my $OrderBy ( @{ $Param{OrderBy} } ) {
 
-        if ( !$OrderBy || !$OrderByTable{$OrderBy} || $OrderBySeen{$OrderBy} ) {
+        if (
+            !$OrderBy
+            || ( !$OrderByTable{$OrderBy} && !$ValidDynamicFieldParams{$OrderBy} )
+            || $OrderBySeen{$OrderBy}
+            )
+        {
 
             # found an error
             $Self->{LogObject}->Log(
@@ -227,37 +279,6 @@ sub FAQSearch {
             Message  => "OrderByDirection can only contain 'Up' or 'Down'!",
         );
         return;
-    }
-
-    # assemble the ORDER BY clause
-    my @SQLOrderBy;
-    my $Count = 0;
-    for my $OrderBy ( @{ $Param{OrderBy} } ) {
-
-        # set the default order direction
-        my $Direction = 'DESC';
-
-        # add the given order direction
-        if ( $Param{OrderByDirection}->[$Count] ) {
-            if ( $Param{OrderByDirection}->[$Count] eq 'Up' ) {
-                $Direction = 'ASC';
-            }
-            elsif ( $Param{OrderByDirection}->[$Count] eq 'Down' ) {
-                $Direction = 'DESC';
-            }
-        }
-
-        # add SQL
-        push @SQLOrderBy, "$OrderByTable{$OrderBy} $Direction";
-    }
-    continue {
-        $Count++;
-    }
-
-    # if there is a possibility that the ordering is not determined
-    # we add an descending ordering by id
-    if ( !grep { $_ eq 'FAQID' } ( @{ $Param{OrderBy} } ) ) {
-        push @SQLOrderBy, "$OrderByTable{FAQID} DESC";
     }
 
     # sql
@@ -706,6 +727,89 @@ sub FAQSearch {
         $Ext = ' WHERE ' . $Ext;
     }
 
+    # Remember already joined tables for sorting.
+    my %DynamicFieldJoinTables;
+    my $DynamicFieldJoinCounter = 1;
+
+    DYNAMIC_FIELD:
+    for my $DynamicField ( @{$FAQDynamicFields} ) {
+        my $SearchParam = $Param{ "DynamicField_" . $DynamicField->{Name} };
+
+        next DYNAMIC_FIELD if ( !$SearchParam );
+        next DYNAMIC_FIELD if ( ref $SearchParam ne 'HASH' );
+
+        my $NeedJoin;
+
+        for my $Operator ( sort keys %{$SearchParam} ) {
+
+            my @SearchParams
+                = ( ref $SearchParam->{$Operator} eq 'ARRAY' )
+                ? @{ $SearchParam->{$Operator} }
+                : ( $SearchParam->{$Operator} );
+
+            my $SQLExtSub = ' AND (';
+            my $Counter   = 0;
+            TEXT:
+            for my $Text (@SearchParams) {
+                next TEXT if ( !defined $Text || $Text eq '' );
+
+                $Text =~ s/\*/%/gi;
+
+                # check search attribute, we do not need to search for *
+                next if $Text =~ /^\%{1,3}$/;
+
+                # validate data type
+                my $ValidateSuccess = $Self->{DynamicFieldBackendObject}->ValueValidate(
+                    DynamicFieldConfig => $DynamicField,
+                    Value              => $Text,
+                    UserID             => $Param{UserID},
+                );
+                if ( !$ValidateSuccess ) {
+                    $Self->{LogObject}->Log(
+                        Priority => 'error',
+                        Message =>
+                            "Search not executed due to invalid value '"
+                            . $Text
+                            . "' on field '"
+                            . $DynamicField->{Name}
+                            . "'!",
+                    );
+                    return;
+                }
+
+                if ($Counter) {
+                    $SQLExtSub .= ' OR ';
+                }
+                $SQLExtSub .= $Self->{DynamicFieldBackendObject}->SearchSQLGet(
+                    DynamicFieldConfig => $DynamicField,
+                    TableAlias         => "dfv$DynamicFieldJoinCounter",
+                    Operator           => $Operator,
+                    SearchTerm         => $Text,
+                );
+
+                $Counter++;
+            }
+            $SQLExtSub .= ')';
+            if ($Counter) {
+                $Ext .= $SQLExtSub;
+                $NeedJoin = 1;
+            }
+        }
+
+        if ($NeedJoin) {
+
+            # Join the table for this dynamic field
+            $SQL .= " INNER JOIN dynamic_field_value dfv$DynamicFieldJoinCounter
+                ON (i.id = dfv$DynamicFieldJoinCounter.object_id
+                    AND dfv$DynamicFieldJoinCounter.field_id = " .
+                $Self->{DBObject}->Quote( $DynamicField->{ID}, 'Integer' ) . ") ";
+
+            $DynamicFieldJoinTables{ $DynamicField->{Name} } = "dfv$DynamicFieldJoinCounter";
+
+            $DynamicFieldJoinCounter++;
+        }
+    }
+
     # add GROUP BY
     $Ext
         .= ' GROUP BY i.id, i.f_subject, i.f_language_id, i.created, i.changed, s.name, v.item_id ';
@@ -791,11 +895,65 @@ sub FAQSearch {
         }
     }
 
-    # add the ORDER BY clause
-    if (@SQLOrderBy) {
-        $Ext .= 'ORDER BY ';
-        $Ext .= join ', ', @SQLOrderBy;
-        $Ext .= ' ';
+    # database query for sort/order by option
+    $Ext .= ' ORDER BY';
+    for my $Count ( 0 .. $#{ $Param{OrderBy} } ) {
+        if ( $Count > 0 ) {
+            $Ext .= ',';
+        }
+
+        # sort by dynamic field
+        if ( $ValidDynamicFieldParams{ $Param{OrderBy}->[$Count] } ) {
+            my ($DynamicFieldName) = $Param{OrderBy}->[$Count] =~ m/^DynamicField_(.*)$/smx;
+
+            my $DynamicField = $FAQDynamicFieldName2Config{$DynamicFieldName};
+
+            # If the table was already joined for searching, we reuse it.
+            if ( !$DynamicFieldJoinTables{$DynamicFieldName} ) {
+
+                # Join the table for this dynamic field; use a left outer join in this case.
+                # With an INNER JOIN we'd limit the result set to tickets which have an entry
+                #   for the DF which is used for sorting.
+                $SQL
+                    .= " LEFT OUTER JOIN dynamic_field_value dfv$DynamicFieldJoinCounter
+                    ON (i.item_id = dfv$DynamicFieldJoinCounter.object_id
+                        AND dfv$DynamicFieldJoinCounter.field_id = " .
+                    $Self->{DBObject}->Quote( $DynamicField->{ID}, 'Integer' ) . ") ";
+
+                $DynamicFieldJoinTables{ $DynamicField->{Name} }
+                    = "dfv$DynamicFieldJoinCounter";
+
+                $DynamicFieldJoinCounter++;
+            }
+
+            my $SQLOrderField = $Self->{DynamicFieldBackendObject}->SearchSQLOrderFieldGet(
+                DynamicFieldConfig => $DynamicField,
+                TableAlias         => $DynamicFieldJoinTables{$DynamicFieldName},
+            );
+
+            $Ext .= " $SQLOrderField ";
+        }
+        else {
+
+            # regular sort
+            $Ext .= ' ' . $OrderByTable{ $Param{OrderBy}->[$Count] };
+        }
+
+        if ( $Param{OrderByDirection}->[$Count] eq 'Up' ) {
+            $Ext .= ' ASC';
+        }
+        else {
+            $Ext .= ' DESC';
+        }
+    }
+
+    # if there is a possibility that the ordering is not determined
+    # we add an descending ordering by id
+    if ( !grep { $_ eq 'FAQID' } ( @{ $Param{OrderBy} } ) ) {
+        if ( $#{ $Param{OrderBy} } >= 0 ) {
+            $Ext .= ',';
+        }
+        $Ext .= ' ' . $OrderByTable{FAQID} . ' DESC';
     }
 
     # add extended SQL

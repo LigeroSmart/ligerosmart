@@ -171,6 +171,13 @@
                     $Data{"ItemChangeTimeStartStrg"} $Text{"and"} $Data{"ItemChangeTimeStopStrg"}
                 </div>
                 <div class="Clear"></div>
+<!-- dtl:block:DynamicField -->
+                $Data{"Label"}
+                <div class="Field">
+                    $Data{"Field"}
+                </div>
+                <div class="Clear"></div>
+<!-- dtl:block:DynamicField -->
             </fieldset>
             <fieldset class="TableLike TableSmall">
                 <div class="W75pc SpacingTop FAQDivider"></div>

@@ -58,6 +58,39 @@
                     <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=Changed;OrderBy=$LQData{"OrderBy"}">$Text{"Changed"}</a>
                 </th>
 <!-- dtl:block:RecordChangedHeader -->
+<!-- dtl:block:RecordDynamicFieldHeader -->
+                <th class="DynamicField $QData{"CSS"}">
+<!-- dtl:block:RecordDynamicFieldHeaderSortable -->
+                    <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=DynamicField_$LQData{"DynamicFieldName"};OrderBy=$LQData{"OrderBy"}">$Text{"$Data{"Label"}"}</a>
+<!-- dtl:block:RecordDynamicFieldHeaderSortable -->
+<!-- dtl:block:RecordDynamicFieldHeaderNotSortable -->
+                    <span>$Text{"$Data{"Label"}"}</span>
+<!-- dtl:block:RecordDynamicFieldHeaderNotSortable -->
+                </th>
+<!-- dtl:block:RecordDynamicFieldHeader -->
+# example of how to use fixed dynamic field blocks for customizations
+# Note: Field1 and Field2 are the names of the fields and had to be replaced with the actual
+# field names
+#<!-- dtl:block:RecordDynamicField_Field1Header -->
+#                <th class="DynamicField $QData{"CSS"}">
+#<!-- dtl:block:RecordDynamicField_Field1HeaderSortable -->
+#                    <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=DynamicField_$LQData{"DynamicFieldName"};OrderBy=$LQData{"OrderBy"}">$Text{"$Data{"Label"}"}</a>
+#<!-- dtl:block:RecordDynamicField_Field1HeaderSortable -->
+#<!-- dtl:block:RecordDynamicField_Field1HeaderNotSortable -->
+#                    <span>$Text{"$Data{"Label"}"}</span>
+#<!-- dtl:block:RecordDynamicField_Field1HeaderNotSortable -->
+#                </th>
+#<!-- dtl:block:RecordDynamicField_Field1Header -->
+#<!-- dtl:block:RecordDynamicField_Field2Header -->
+#                <th class="DynamicField $QData{"CSS"}">
+#<!-- dtl:block:RecordDynamicField_Field2HeaderSortable -->
+#                    <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=DynamicField_$LQData{"DynamicFieldName"};OrderBy=$LQData{"OrderBy"}">$Text{"$Data{"Label"}"}</a>
+#<!-- dtl:block:RecordDynamicField_Field2HeaderSortable -->
+#<!-- dtl:block:RecordDynamicField_Field2HeaderNotSortable -->
+#                    <span>$Text{"$Data{"Label"}"}</span>
+#<!-- dtl:block:RecordDynamicField_Field2HeaderNotSortable -->
+#                </th>
+#<!-- dtl:block:RecordDynamicField_Field2Header -->
             </tr>
         </thead>
         <tbody>
@@ -104,6 +137,45 @@
                     <div>$TimeShort{"$Data{"Changed"}"}</div>
                 </td>
 <!-- dtl:block:RecordChanged -->
+<!-- dtl:block:RecordDynamicField -->
+                <td>
+                    <div title="$QData{"Title"}">
+<!-- dtl:block:RecordDynamicFieldLink -->
+                        <a href="$Data{"Link"}" class="DynamicFieldLink">$Data{"Value"}</a>
+<!-- dtl:block:RecordDynamicFieldLink -->
+<!-- dtl:block:RecordDynamicFieldPlain -->
+                        $Data{"Value"}
+<!-- dtl:block:RecordDynamicFieldPlain -->
+                    </div>
+                </td>
+<!-- dtl:block:RecordDynamicField -->
+# example of how to use fixed dynamic field blocks for customizations
+# Note: Field1 and Field2 are the names of the fields and had to be replaced with the actual
+# field names
+#<!-- dtl:block:RecordDynamicField_Field1 -->
+#                <td>
+#                    <div title="$QData{"Title"}">
+#<!-- dtl:block:RecordDynamicField_Field1_Link -->
+#                        <a href="$Data{"Link"}" class="DynamicFieldLink">$Data{"Value"}</a>
+#<!-- dtl:block:RecordDynamicField_Field1_Link -->
+#<!-- dtl:block:RecordDynamicField_Field1_Plain -->
+#                        $Data{"Value"}
+#<!-- dtl:block:RecordDynamicField_Field1_Plain -->
+#                    </div>
+#                </td>
+#<!-- dtl:block:RecordDynamicField_Field1 -->
+#<!-- dtl:block:RecordDynamicField_Field2 -->
+#                <td>
+#                    <div title="$QData{"Title"}">
+#<!-- dtl:block:RecordDynamicField_Field2_Link -->
+#                        <a href="$Data{"Link"}" class="DynamicFieldLink">$Data{"Value"}</a>
+#<!-- dtl:block:RecordDynamicField_Field2_Link -->
+#<!-- dtl:block:RecordDynamicField_Field2_Plain -->
+#                        $Data{"Value"}
+#<!-- dtl:block:RecordDynamicField_Field2_Plain -->
+#                    </div>
+#                </td>
+#<!-- dtl:block:RecordDynamicField_Field2 -->
             </tr>
 <!-- dtl:block:Record -->
         </tbody>

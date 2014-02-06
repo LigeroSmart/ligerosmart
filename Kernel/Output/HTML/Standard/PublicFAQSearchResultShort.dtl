@@ -64,6 +64,18 @@
                             $Text{"Changed"}
                         </a>
                     </th>
+<!-- dtl:block:HeaderDynamicField -->
+                    <th class="DynamicField $Data{"CSS"}">
+<!-- dtl:block:HeaderDynamicFieldSortable -->
+                        <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=Search;SortBy=DynamicField_$LQData{"DynamicFieldName"};Order=$LQData{"Order"};Filter=$LQData{"Filter"};Limit=$LQData{"Limit"};ShowClosedTickets=$LQData{"ShowClosed"};Type=$LQData{"Type"};Profile=$LQData{"Profile"};TakeLastSearch=1">
+                            $Text{"$Data{"Label"}"}
+                        </a>
+<!-- dtl:block:HeaderDynamicFieldSortable -->
+<!-- dtl:block:HeaderDynamicFieldNotSortable -->
+                        <span>$Text{"$Data{"Label"}"}</span>
+<!-- dtl:block:HeaderDynamicFieldNotSortable -->
+                    </th>
+<!-- dtl:block:HeaderDynamicField -->
                 </tr>
             </thead>
             <tbody>
@@ -83,6 +95,9 @@
                     <td class="Language">$QData{"Language","5"}</td>
 <!-- dtl:block:RecordLanguage -->
                     <td class="Changed" title="$TimeShort{"$Data{"Changed"}"}">$QData{"Changed","20"}</td>
+<!-- dtl:block:RecordDynamicField -->
+                    <td class="DynamicField" title="$QData{"Title"}">$Data{"Value"}</td>
+<!-- dtl:block:RecordDynamicField -->
                 </tr>
 <!-- dtl:block:Record -->
             </tbody>

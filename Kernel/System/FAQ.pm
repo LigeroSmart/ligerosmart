@@ -22,6 +22,9 @@ use Kernel::System::Ticket;
 use Kernel::System::Type;
 use Kernel::System::Valid;
 use Kernel::System::Web::UploadCache;
+use Kernel::System::DynamicField;
+use Kernel::System::DynamicField::Backend;
+use Kernel::System::VariableCheck qw(:all);
 
 use base qw(
     Kernel::System::FAQSearch
@@ -29,6 +32,7 @@ use base qw(
     Kernel::System::FAQ::Category
     Kernel::System::FAQ::State
     Kernel::System::FAQ::Vote
+    Kernel::System::EventHandler
 );
 
 =head1 NAME
@@ -108,11 +112,18 @@ sub new {
     $Self->{CacheObject}         = Kernel::System::Cache->new( %{$Self} );
     $Self->{CustomerGroupObject} = Kernel::System::CustomerGroup->new( %{$Self} );
     $Self->{UserObject}          = Kernel::System::User->new( %{$Self} );
-    $Self->{TicketObject}        = Kernel::System::Ticket->new( %{$Self} );
     $Self->{TypeObject}          = Kernel::System::Type->new( %{$Self} );
     $Self->{LinkObject}          = Kernel::System::LinkObject->new( %{$Self} );
     $Self->{ValidObject}         = Kernel::System::Valid->new( %{$Self} );
     $Self->{UploadCacheObject}   = Kernel::System::Web::UploadCache->new( %{$Self} );
+    $Self->{DynamicFieldObject}  = Kernel::System::DynamicField->new(%Param);
+
+    # create the DynamicFieldBackendObject passing $Self as FAQObject, this is needed to
+    # add history and delete cache
+    $Self->{DynamicFieldBackendObject} = Kernel::System::DynamicField::Backend->new(
+        %{$Self},
+        FAQObject => $Self,
+    );
 
     # get like escape string needed for some databases (e.g. oracle)
     $Self->{LikeEscapeString} = $Self->{DBObject}->GetDatabaseFunction('LikeEscapeString');
@@ -380,6 +391,34 @@ sub FAQGet {
     # add voting information to FAQ item
     $Data{VoteResult} = $VoteResult;
     $Data{Votes} = $VoteData->{Votes} || 0;
+
+    # check if need to return DynamicFields
+    if ( $Param{DynamicFields} ) {
+
+        # get all dynamic fields for the object type FAQ
+        my $DynamicFieldList = $Self->{DynamicFieldObject}->DynamicFieldListGet(
+            ObjectType => 'FAQ'
+        );
+
+        DYNAMICFIELD:
+        for my $DynamicFieldConfig ( @{$DynamicFieldList} ) {
+
+            # validate each dynamic field
+            next DYNAMICFIELD if !$DynamicFieldConfig;
+            next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
+            next DYNAMICFIELD if !$DynamicFieldConfig->{Name};
+            next DYNAMICFIELD if !IsHashRefWithData( $DynamicFieldConfig->{Config} );
+
+            # get the current value for each dynamic field
+            my $Value = $Self->{DynamicFieldBackendObject}->ValueGet(
+                DynamicFieldConfig => $DynamicFieldConfig,
+                ObjectID           => $Param{ItemID},
+            );
+
+            # set the dynamic field name and value into the data hash
+            $Data{ 'DynamicField_' . $DynamicFieldConfig->{Name} } = $Value;
+        }
+    }
 
     return %Data;
 }
@@ -2065,12 +2104,15 @@ sub _FAQApprovalTicketCreate {
         }
     }
 
+    # create ticket object
+    my $TicketObject = Kernel::System::Ticket->new( %{$Self} );
+
     # get subject
     my $Subject = $Self->{ConfigObject}->Get('FAQ::ApprovalTicketSubject');
     $Subject =~ s{ <OTRS_FAQ_NUMBER> }{$Param{FAQNumber}}xms;
 
     # check if we can find existing open approval tickets for this FAQ article
-    my @TicketIDs = $Self->{TicketObject}->TicketSearch(
+    my @TicketIDs = $TicketObject->TicketSearch(
         Result    => 'ARRAY',
         Title     => $Subject,
         StateType => 'Open',
@@ -2097,7 +2139,7 @@ sub _FAQApprovalTicketCreate {
     }
 
     # create ticket
-    my $TicketID = $Self->{TicketObject}->TicketCreate(
+    my $TicketID = $TicketObject->TicketCreate(
         Title    => $Subject,
         Queue    => $Self->{ConfigObject}->Get('FAQ::ApprovalQueue') || 'Raw',
         Lock     => 'unlock',
@@ -2158,7 +2200,7 @@ sub _FAQApprovalTicketCreate {
         $Body =~ s{ <OTRS_FAQ_STATE>      }{$State{Name}}xms;
 
         # create article
-        my $ArticleID = $Self->{TicketObject}->ArticleCreate(
+        my $ArticleID = $TicketObject->ArticleCreate(
             TicketID    => $TicketID,
             ArticleType => 'note-internal',
             SenderType  => 'system',

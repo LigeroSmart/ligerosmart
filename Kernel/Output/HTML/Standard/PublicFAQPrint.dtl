@@ -61,6 +61,50 @@
                     <td width="90%" class="contentvalue">$QData{"Keywords"}</td>
                 </tr>
             </table>
+            <br/>
+            <table border="0" cellspacing="3" cellpadding="0" width="100%">
+                <tr>
+                    <td width="20%"></td>
+                    <td width="30%"></td>
+                    <td width="20%"></td>
+                    <td width="30%"></td>
+                </tr>
+
+<!-- dtl:block:FAQDynamicFieldHeader -->
+                <tr>
+                    <td colspan="4"><b><i>FAQ Dynamic Fields</i></b></td>
+                </tr>
+<!-- dtl:block:FAQDynamicFieldHeader -->
+
+<!-- dtl:block:FAQDynamicField -->
+                <tr>
+                    <td class="contentkey">$Text{"$Data{"Label"}"}:</td>
+                    <td class="contentvalue">
+                        <div title="$QData{"Title"}">$Data{"Value"}</div>
+                    </td>
+                </tr>
+<!-- dtl:block:FAQDynamicField -->
+
+# example of how to use fixed dynamic field blocks for customizations
+# Note: Field1 and Field2 are the names of the fields and had to be replaced with the actual
+# field names
+#<!-- dtl:block:FAQDynamicField_Field1 -->
+#               <tr>
+#                   <td class="contentkey">$Text{"$Data{"Label"}"}:</td>
+#                   <td class="contentvalue">
+#                       <div title="$QData{"Title"}">$Data{"Value"}</div>
+#                   </td>
+#               </tr>
+#<!-- dtl:block:FAQDynamicField_Field1 -->
+#<!-- dtl:block:FAQDynamicField_Field2 -->
+#               <tr>
+#                   <td class="contentkey">$Text{"$Data{"Label"}"}:</td>
+#                   <td class="contentvalue">
+#                       <div title="$QData{"Title"}">$Data{"Value"}</div>
+#                   </td>
+#               </tr>
+#<!-- dtl:block:FAQDynamicField_Field2 -->
+            </table>
         </td>
     </tr>
     <tr>

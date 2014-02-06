@@ -1760,4 +1760,168 @@ Your OTRS Notification Master
             </Hash>
         </Setting>
     </ConfigItem>
+    <ConfigItem Name="DynamicFields::ObjectType###FAQ" Required="0" Valid="1">
+        <Description Translatable="1">DynamicField object registration.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>DynamicFields::ObjectType::Registration</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="DisplayName" Translatable="1">FAQ</Item>
+                <Item Key="Module">Kernel::System::DynamicField::ObjectType::FAQ</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="FAQ::Frontend::OverviewSmall###DynamicField" Required="0" Valid="1">
+        <Description Translatable="1">Dynamic fields shown in the FAQ small format overview screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Agent::FAQOverview</SubGroup>
+        <Setting>
+            <Hash>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="FAQ::Frontend::AgentFAQAdd###DynamicField" Required="0" Valid="1">
+        <Description Translatable="1">Dynamic fields shown in the FAQ add screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Agent::FAQ::ViewAdd</SubGroup>
+        <Setting>
+            <Hash>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="FAQ::Frontend::AgentFAQEdit###DynamicField" Required="0" Valid="1">
+        <Description Translatable="1">Dynamic fields shown in the FAQ edit screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Agent::FAQ::ViewEdit</SubGroup>
+        <Setting>
+            <Hash>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="FAQ::Frontend::AgentFAQZoom###DynamicField" Required="0" Valid="1">
+        <Description Translatable="1">Dynamic fields shown in the FAQ zoom screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Agent::FAQ::ViewZoom</SubGroup>
+        <Setting>
+            <Hash>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="FAQ::Frontend::CustomerFAQZoom###DynamicField" Required="0" Valid="1">
+        <Description Translatable="1">Dynamic fields shown in the FAQ zoom screen of the customer interface. Possible settings: 0 = Disabled, 1 = Enabled.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Customer::FAQ::ViewZoom</SubGroup>
+        <Setting>
+            <Hash>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="FAQ::Frontend::PublicFAQZoom###DynamicField" Required="0" Valid="1">
+        <Description Translatable="1">Dynamic fields shown in the FAQ zoom screen of the public interface. Possible settings: 0 = Disabled, 1 = Enabled.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Public::FAQ::ViewZoom</SubGroup>
+        <Setting>
+            <Hash>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="FAQ::Frontend::AgentFAQPrint###DynamicField" Required="0" Valid="1">
+        <Description Translatable="1">Dynamic fields shown in the FAQ print screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Agent::FAQ::ViewPrint</SubGroup>
+        <Setting>
+            <Hash>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="FAQ::Frontend::CustomerFAQPrint###DynamicField" Required="0" Valid="1">
+        <Description Translatable="1">Dynamic fields shown in the FAQ print screen of the customer interface. Possible settings: 0 = Disabled, 1 = Enabled.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Customer::FAQ::ViewPrint</SubGroup>
+        <Setting>
+            <Hash>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="FAQ::Frontend::PublicFAQPrint###DynamicField" Required="0" Valid="1">
+        <Description Translatable="1">Dynamic fields shown in the FAQ print screen of the public interface. Possible settings: 0 = Disabled, 1 = Enabled.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Public::FAQ::ViewPrint</SubGroup>
+        <Setting>
+            <Hash>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="FAQ::Frontend::AgentFAQSearch###DynamicField" Required="0" Valid="1">
+        <Description Translatable="1">Dynamic fields shown in the FAQ search screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and shown by default.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Agent::FAQ::ViewSearch</SubGroup>
+        <Setting>
+            <Hash>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="FAQ::Frontend::AgentFAQSearch###SearchCSVDynamicField" Required="0" Valid="1">
+        <Description Translatable="1">Dynamic Fields used to export the search result in CSV format.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Agent::FAQ::ViewSearch</SubGroup>
+        <Setting>
+            <Hash>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="FAQ::Frontend::CustomerFAQSearch###DynamicField" Required="0" Valid="1">
+        <Description Translatable="1">Dynamic fields shown in the FAQ search screen of the customer interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and shown by default.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Customer::FAQ::ViewSearch</SubGroup>
+        <Setting>
+            <Hash>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="FAQ::Frontend::CustomerFAQOverview###DynamicField" Required="0" Valid="1">
+        <Description Translatable="1">Dynamic fields shown in the faq overview screen of the customer interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Customer::FAQOverview</SubGroup>
+        <Setting>
+            <Hash>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="FAQ::Frontend::CustomerFAQSearch###SearchCSVDynamicField" Required="0" Valid="1">
+        <Description Translatable="1">Dynamic Fields used to export the search result in CSV format.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Customer::FAQ::ViewSearch</SubGroup>
+        <Setting>
+            <Hash>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="FAQ::Frontend::PublicFAQSearch###DynamicField" Required="0" Valid="1">
+        <Description Translatable="1">Dynamic fields shown in the FAQ search screen of the public interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and shown by default.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Public::FAQ::ViewSearch</SubGroup>
+        <Setting>
+            <Hash>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="FAQ::Frontend::PublicFAQOverview###DynamicField" Required="0" Valid="1">
+        <Description Translatable="1">Dynamic fields shown in the faq overview screen of the public interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Public::FAQOverview</SubGroup>
+        <Setting>
+            <Hash>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="FAQ::Frontend::PublicFAQSearch###SearchCSVDynamicField" Required="0" Valid="1">
+        <Description Translatable="1">Dynamic Fields used to export the search result in CSV format.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Public::FAQ::ViewSearch</SubGroup>
+        <Setting>
+            <Hash>
+            </Hash>
+        </Setting>
+    </ConfigItem>
 </otrs_config>

@@ -178,6 +178,15 @@
         </div>
 
         <div class="Clear"></div>
+<!-- dtl:block:DynamicField -->
+        $Data{"Label"}
+        <div class="Field">
+            $Data{"Field"}
+            <button type="button" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
+        </div>
+
+        <div class="Clear"></div>
+<!-- dtl:block:DynamicField -->
         $Data{"AttributesOrigStrg"}
 
     </fieldset>

@@ -107,6 +107,7 @@
         <File Permission="644" Location="Kernel/Output/HTML/Standard/PublicFAQSearchResultPrint.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/PublicFAQSearchResultShort.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/PublicFAQZoom.dtl"/>
+        <File Permission="644" Location="Kernel/System/DynamicField/ObjectType/FAQ.pm"/>
         <File Permission="644" Location="Kernel/System/FAQ/Category.pm"/>
         <File Permission="644" Location="Kernel/System/FAQ/Language.pm"/>
         <File Permission="644" Location="Kernel/System/FAQ/State.pm"/>

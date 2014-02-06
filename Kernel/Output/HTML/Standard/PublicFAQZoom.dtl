@@ -130,6 +130,30 @@
                 <li><span class="Key">$Text{"Language"}:</span> <span title="$Text{"$Data{"Language"}"}">$Text{"$Data{"Language"}"}</span></li>
 <!-- dtl:block:Language -->
 
+# show faq dynamic fields
+<!-- dtl:block:FAQDynamicField -->
+                <li>
+                    <span class="Key">$Text{"$Data{"Label"}"}:</span>
+                    <span title="$QData{"Title"}">$Data{"Value"}</span>
+                </li>
+<!-- dtl:block:FAQDynamicField -->
+# example of how to use fixed dynamic field blocks for customizations
+# Note: Field1 and Field2 are the names of the fields and had to be replaced with the actual
+# field names
+#<!-- dtl:block:FAQDynamicField_Field1 -->
+#                <li>
+#                    <span class="Key">$Text{"$Data{"Label"}"}:</span>
+#                    <span title="$QData{"Title1"}">$Data{"Value"}</span>
+#                </li>
+#<!-- dtl:block:FAQDynamicField_Field1 -->
+#<!-- dtl:block:FAQDynamicField_Field2 -->
+#                <li>
+#                    <span class="Key">$Text{"$Data{"Label"}"}:</span>
+#                    <span title="$QData{"Title2"}">$Data{"Value"}</span>
+#                </li>
+#<!-- dtl:block:FAQDynamicField_Field2 -->
+
+
 <!-- dtl:block:ViewRating -->
                 <li>
                     <span class="Key RatingLabel">$Text{"Rating"}:</span>

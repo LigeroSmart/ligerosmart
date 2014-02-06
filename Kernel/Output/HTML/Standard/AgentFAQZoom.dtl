@@ -67,6 +67,46 @@
                         <div class="Clear"></div>
 <!-- dtl:block:ViewApproval -->
 
+# show faq dynamic fields
+<!-- dtl:block:FAQDynamicField -->
+                        <label>$Text{"$Data{"Label"}"}:</label>
+                        <p class="Value">
+<!-- dtl:block:FAQDynamicFieldLink -->
+                            <span title="$QData{"Title"}"><a href="$Data{"Link"}" target="_blank" class="DynamicFieldLink">$Data{"Value"}</a></span>
+<!-- dtl:block:FAQDynamicFieldLink -->
+<!-- dtl:block:FAQDynamicFieldPlain -->
+                            <span title="$QData{"Title"}">$Data{"Value"}</span>
+<!-- dtl:block:FAQDynamicFieldPlain -->
+                        </p>
+                        <div class="Clear"></div>
+<!-- dtl:block:FAQDynamicField -->
+
+# example of how to use fixed dynamic field blocks for customizations
+# Note: Field1 and Field2 are the names of the fields and had to be replaced with the actual
+# field names
+#<!-- dtl:block:FAQDynamicField_Field1 -->
+#                        <label>$Text{"$Data{"Label"}"}:</label>
+#                        <p class="Value">
+#<!-- dtl:block:FAQDynamicField_Field1_Link -->
+#                            <span title="$QData{"Title"}"><a href="$Data{"Link"}" target="_blank">$Data{"Value"}</a></span>
+#<!-- dtl:block:FAQDynamicField_Field1_Link -->
+#<!-- dtl:block:FAQDynamicField_Field1_Plain -->
+#                            <span title="$QData{"Title"}">$Data{"Value"}</span>
+#<!-- dtl:block:FAQDynamicField_Field1_Plain -->
+#                        </p>
+#<!-- dtl:block:FAQDynamicField_Field1 -->
+#<!-- dtl:block:FAQDynamicField_Field2 -->
+#                        <label>$Text{"$Data{"Label"}"}:</label>
+#                        <p class="Value">
+#<!-- dtl:block:FAQDynamicField_Field2_Link -->
+#                            <span title="$QData{"Title"}"><a href="$Data{"Link"}" target="_blank">$Data{"Value"}</a></span>
+#<!-- dtl:block:FAQDynamicField_Field2_Link -->
+#<!-- dtl:block:FAQDynamicField_Field2_Plain -->
+#                            <span title="$QData{"Title"}">$Data{"Value"}</span>
+#<!-- dtl:block:FAQDynamicField_Field2_Plain -->
+#                        </p>
+#<!-- dtl:block:FAQDynamicField_Field2 -->
+
 <!-- dtl:block:ViewRating -->
                         <label>$Text{"Rating"}:</label>
                         <div class="Value" title="$Text{"Rating $Data{"VoteResult"}%"}">

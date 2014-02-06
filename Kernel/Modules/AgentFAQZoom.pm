@@ -14,6 +14,9 @@ use warnings;
 
 use Kernel::System::LinkObject;
 use Kernel::System::FAQ;
+use Kernel::System::DynamicField;
+use Kernel::System::DynamicField::Backend;
+use Kernel::System::VariableCheck qw(:all);
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -33,8 +36,10 @@ sub new {
     }
 
     # create needed objects
-    $Self->{LinkObject} = Kernel::System::LinkObject->new(%Param);
-    $Self->{FAQObject}  = Kernel::System::FAQ->new(%Param);
+    $Self->{LinkObject}         = Kernel::System::LinkObject->new(%Param);
+    $Self->{FAQObject}          = Kernel::System::FAQ->new(%Param);
+    $Self->{DynamicFieldObject} = Kernel::System::DynamicField->new(%Param);
+    $Self->{BackendObject}      = Kernel::System::DynamicField::Backend->new(%Param);
 
     # get config of frontend module
     $Self->{Config} = $Self->{ConfigObject}->Get("FAQ::Frontend::$Self->{Action}");
@@ -52,6 +57,13 @@ sub new {
     # get default options
     $Self->{MultiLanguage} = $Self->{ConfigObject}->Get('FAQ::MultiLanguage');
     $Self->{Voting}        = $Self->{ConfigObject}->Get('FAQ::Voting');
+
+    # get the dynamic fields for this screen
+    $Self->{DynamicField} = $Self->{DynamicFieldObject}->DynamicFieldListGet(
+        Valid       => 1,
+        ObjectType  => 'FAQ',
+        FieldFilter => $Self->{Config}->{DynamicField} || {},
+    );
 
     return $Self;
 }
@@ -85,9 +97,10 @@ sub Run {
 
     # get FAQ item data
     my %FAQData = $Self->{FAQObject}->FAQGet(
-        ItemID     => $GetParam{ItemID},
-        ItemFields => 1,
-        UserID     => $Self->{UserID},
+        ItemID        => $GetParam{ItemID},
+        ItemFields    => 1,
+        UserID        => $Self->{UserID},
+        DynamicFields => 1,
     );
     if ( !%FAQData ) {
         return $Self->{LayoutObject}->ErrorScreen();
@@ -512,6 +525,66 @@ sub Run {
         UserID          => $Self->{UserID},
         ReturnContent   => 1,
     );
+
+    # cycle trough the activated Dynamic Fields for ticket object
+    DYNAMICFIELD:
+    for my $DynamicFieldConfig ( @{ $Self->{DynamicField} } ) {
+        next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
+
+        # get print string for this dynamic field
+        my $ValueStrg = $Self->{BackendObject}->DisplayValueRender(
+            DynamicFieldConfig => $DynamicFieldConfig,
+            Value              => $FAQData{ 'DynamicField_' . $DynamicFieldConfig->{Name} },
+            ValueMaxChars      => 250,
+            LayoutObject       => $Self->{LayoutObject},
+        );
+
+        my $Label = $DynamicFieldConfig->{Label};
+
+        $Self->{LayoutObject}->Block(
+            Name => 'FAQDynamicField',
+            Data => {
+                Label => $Label,
+            },
+        );
+
+        if ( $ValueStrg->{Link} ) {
+            $Self->{LayoutObject}->Block(
+                Name => 'FAQDynamicFieldLink',
+                Data => {
+                    Value                       => $ValueStrg->{Value},
+                    Title                       => $ValueStrg->{Title},
+                    Link                        => $ValueStrg->{Link},
+                    $DynamicFieldConfig->{Name} => $ValueStrg->{Title},
+                },
+            );
+        }
+        else {
+            $Self->{LayoutObject}->Block(
+                Name => 'FAQDynamicFieldPlain',
+                Data => {
+                    Value => $ValueStrg->{Value},
+                    Title => $ValueStrg->{Title},
+                },
+            );
+        }
+
+        # example of dynamic fields order customization
+        $Self->{LayoutObject}->Block(
+            Name => 'FAQDynamicField_' . $DynamicFieldConfig->{Name},
+            Data => {
+                Label => $Label,
+            },
+        );
+
+        $Self->{LayoutObject}->Block(
+            Name => 'FAQDynamicField_' . $DynamicFieldConfig->{Name} . '_Plain',
+            Data => {
+                Value => $ValueStrg->{Value},
+                Title => $ValueStrg->{Title},
+            },
+        );
+    }
 
     if ( $Nav ne 'None' ) {
 

@@ -15,6 +15,9 @@ use warnings;
 use Kernel::System::HTMLUtils;
 use Kernel::System::PDF;
 use Kernel::System::FAQ;
+use Kernel::System::DynamicField;
+use Kernel::System::DynamicField::Backend;
+use Kernel::System::VariableCheck qw(:all);
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -37,9 +40,15 @@ sub new {
     $Self->{UserID} = 1;
 
     # create aditional objects
-    $Self->{HTMLUtilsObject} = Kernel::System::HTMLUtils->new(%Param);
-    $Self->{PDFObject}       = Kernel::System::PDF->new(%Param);
-    $Self->{FAQObject}       = Kernel::System::FAQ->new(%Param);
+    $Self->{HTMLUtilsObject}    = Kernel::System::HTMLUtils->new(%Param);
+    $Self->{PDFObject}          = Kernel::System::PDF->new(%Param);
+    $Self->{FAQObject}          = Kernel::System::FAQ->new(%Param);
+    $Self->{DynamicFieldObject} = Kernel::System::DynamicField->new(%Param);
+    $Self->{BackendObject}      = Kernel::System::DynamicField::Backend->new(%Param);
+
+    # get dynamic field config for frontend module
+    $Self->{DynamicFieldFilter}
+        = $Self->{ConfigObject}->Get("FAQ::Frontend::PublicTicketPrint")->{DynamicField};
 
     # set default interface settings
     $Self->{Interface} = $Self->{FAQObject}->StateTypeGet(
@@ -196,6 +205,12 @@ sub Run {
                 FAQData  => \%FAQData,
             );
         }
+
+        # output faq dynamic fields
+        $Self->_PDFOutputFAQDynamicFields(
+            PageData => \%Page,
+            FAQData  => \%FAQData,
+        );
 
         $Self->_PDFOuputFAQContent(
             PageData        => \%Page,
@@ -426,6 +441,126 @@ sub _PDFOutputKeywords {
                 %Page, FooterRight => $Page{PageText} . ' ' . $Page{PageCount},
             );
             $Page{PageCount}++;
+        }
+    }
+    return 1;
+}
+
+sub _PDFOutputFAQDynamicFields {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Needed (qw(PageData FAQData)) {
+        if ( !defined( $Param{$Needed} ) ) {
+            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $Needed!" );
+            return;
+        }
+    }
+    my $Output = 0;
+    my %FAQ    = %{ $Param{FAQData} };
+    my %Page   = %{ $Param{PageData} };
+
+    my %TableParam;
+    my $Row = 0;
+
+    # get the dynamic fields for faq object
+    my $DynamicField = $Self->{DynamicFieldObject}->DynamicFieldListGet(
+        Valid       => 1,
+        ObjectType  => ['FAQ'],
+        FieldFilter => $Self->{DynamicFieldFilter} || {},
+    );
+
+    # generate table
+    # cycle trough the activated Dynamic Fields for faq object
+    DYNAMICFIELD:
+    for my $DynamicFieldConfig ( @{$DynamicField} ) {
+        next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
+
+        # skip dynamic field if is not desinged for customer interface
+        my $IsCustomerInterfaceCapable = $Self->{BackendObject}->HasBehavior(
+            DynamicFieldConfig => $DynamicFieldConfig,
+            Behavior           => 'IsCustomerInterfaceCapable',
+        );
+        next DYNAMICFIELD if !$IsCustomerInterfaceCapable;
+
+        my $Value = $Self->{BackendObject}->ValueGet(
+            DynamicFieldConfig => $DynamicFieldConfig,
+            ObjectID           => $FAQ{FAQID},
+        );
+
+        next DYNAMICFIELD if !$Value;
+        next DYNAMICFIELD if $Value eq "";
+
+        # get print string for this dynamic field
+        my $ValueStrg = $Self->{BackendObject}->DisplayValueRender(
+            DynamicFieldConfig => $DynamicFieldConfig,
+            Value              => $Value,
+            HTMLOutput         => 0,
+            LayoutObject       => $Self->{LayoutObject},
+        );
+        $TableParam{CellData}[$Row][0]{Content}
+            = $Self->{LayoutObject}->{LanguageObject}->Get( $DynamicFieldConfig->{Label} ) . ':';
+        $TableParam{CellData}[$Row][0]{Font}    = 'ProportionalBold';
+        $TableParam{CellData}[$Row][1]{Content} = $ValueStrg->{Value};
+
+        $Row++;
+        $Output = 1;
+    }
+
+    $TableParam{ColumnData}[0]{Width} = 80;
+    $TableParam{ColumnData}[1]{Width} = 431;
+
+    # output faq dynamic fields
+    if ($Output) {
+
+        # set new position
+        $Self->{PDFObject}->PositionSet(
+            Move => 'relativ',
+            Y    => -15,
+        );
+
+        # output headline
+        $Self->{PDFObject}->Text(
+            Text     => $Self->{LayoutObject}->{LanguageObject}->Get('FAQ Dynamic Fields'),
+            Height   => 7,
+            Type     => 'Cut',
+            Font     => 'ProportionalBoldItalic',
+            FontSize => 7,
+            Color    => '#666666',
+        );
+
+        # set new position
+        $Self->{PDFObject}->PositionSet(
+            Move => 'relativ',
+            Y    => -4,
+        );
+
+        # table params
+        $TableParam{Type}            = 'Cut';
+        $TableParam{Border}          = 0;
+        $TableParam{FontSize}        = 6;
+        $TableParam{BackgroundColor} = '#DDDDDD';
+        $TableParam{Padding}         = 1;
+        $TableParam{PaddingTop}      = 3;
+        $TableParam{PaddingBottom}   = 3;
+
+        # output table
+        PAGE:
+        for ( $Page{PageCount} .. $Page{MaxPages} ) {
+
+            # output table (or a fragment of it)
+            %TableParam = $Self->{PDFObject}->Table( %TableParam, );
+
+            # stop output or output next page
+            if ( $TableParam{State} ) {
+                last PAGE;
+            }
+            else {
+                $Self->{PDFObject}->PageNew(
+                    %Page, FooterRight => $Page{PageText} . ' ' . $Page{PageCount},
+                );
+                $Page{PageCount}++;
+            }
         }
     }
     return 1;

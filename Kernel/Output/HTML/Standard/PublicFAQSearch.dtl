@@ -36,6 +36,13 @@
                     <label for="Keyword">$Text{"Keyword"}</label>
                     <input title="$Text{"Keyword"}" type="text" id="Keyword" name="Keyword" value="$QData{"Keyword"}" size="20" />
                 </div>
+<!-- dtl:block:DynamicField -->
+                <div>
+                    $Data{"Label"}
+                    $Data{"Field"}
+                </div>
+                <div class="Clear"></div>
+<!-- dtl:block:DynamicField -->
             </fieldset>
 <!-- dtl:block:Language -->
             <fieldset>

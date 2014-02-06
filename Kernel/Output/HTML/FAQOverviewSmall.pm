@@ -12,6 +12,10 @@ package Kernel::Output::HTML::FAQOverviewSmall;
 use strict;
 use warnings;
 
+use Kernel::System::DynamicField;
+use Kernel::System::DynamicField::Backend;
+use Kernel::System::VariableCheck qw(:all);
+
 sub new {
     my ( $Type, %Param ) = @_;
 
@@ -27,7 +31,21 @@ sub new {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
     }
 
+    $Self->{DynamicFieldObject} = Kernel::System::DynamicField->new(%Param);
+    $Self->{BackendObject}      = Kernel::System::DynamicField::Backend->new(%Param);
+
     $Self->{MultiLanguage} = $Self->{ConfigObject}->Get('FAQ::MultiLanguage');
+
+    # get dynamic field config for frontend module
+    $Self->{DynamicFieldFilter}
+        = $Self->{ConfigObject}->Get("FAQ::Frontend::OverviewSmall")->{DynamicField};
+
+    # get the dynamic fields for this screen
+    $Self->{DynamicField} = $Self->{DynamicFieldObject}->DynamicFieldListGet(
+        Valid       => 1,
+        ObjectType  => ['FAQ'],
+        FieldFilter => $Self->{DynamicFieldFilter} || {},
+    );
 
     return $Self;
 }
@@ -122,6 +140,114 @@ sub Run {
                     },
                 );
             }
+
+            # Dynamic fields
+            # cycle trough the activated Dynamic Fields for this screen
+            DYNAMICFIELD:
+            for my $DynamicFieldConfig ( @{ $Self->{DynamicField} } ) {
+                next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
+
+                my $Label = $DynamicFieldConfig->{Label};
+
+                # get field sortable condition
+                my $IsSortable = $Self->{BackendObject}->HasBehavior(
+                    DynamicFieldConfig => $DynamicFieldConfig,
+                    Behavior           => 'IsSortable',
+                );
+
+                if ($IsSortable) {
+                    my $CSS = '';
+                    my $OrderBy;
+                    if (
+                        $Param{SortBy}
+                        && ( $Param{SortBy} eq ( 'DynamicField_' . $DynamicFieldConfig->{Name} ) )
+                        )
+                    {
+                        if ( $Param{OrderBy} && ( $Param{OrderBy} eq 'Up' ) ) {
+                            $OrderBy = 'Down';
+                            $CSS .= ' SortDescending';
+                        }
+                        else {
+                            $OrderBy = 'Up';
+                            $CSS .= ' SortAscending';
+                        }
+                    }
+
+                    $Self->{LayoutObject}->Block(
+                        Name => 'RecordDynamicFieldHeader',
+                        Data => {
+                            %Param,
+                            CSS => $CSS,
+                        },
+                    );
+
+                    $Self->{LayoutObject}->Block(
+                        Name => 'RecordDynamicFieldHeaderSortable',
+                        Data => {
+                            %Param,
+                            OrderBy          => $OrderBy,
+                            Label            => $Label,
+                            DynamicFieldName => $DynamicFieldConfig->{Name},
+                        },
+                    );
+
+                    # example of dynamic fields order customization
+                    $Self->{LayoutObject}->Block(
+                        Name => 'RecordDynamicField_' . $DynamicFieldConfig->{Name} . 'Header',
+                        Data => {
+                            %Param,
+                            CSS => $CSS,
+                        },
+                    );
+
+                    $Self->{LayoutObject}->Block(
+                        Name => 'RecordDynamicField_'
+                            . $DynamicFieldConfig->{Name}
+                            . 'HeaderSortable',
+                        Data => {
+                            %Param,
+                            OrderBy          => $OrderBy,
+                            Label            => $Label,
+                            DynamicFieldName => $DynamicFieldConfig->{Name},
+                        },
+                    );
+                }
+                else {
+
+                    $Self->{LayoutObject}->Block(
+                        Name => 'RecordDynamicFieldHeader',
+                        Data => {
+                            %Param,
+                        },
+                    );
+
+                    $Self->{LayoutObject}->Block(
+                        Name => 'RecordDynamicFieldHeaderNotSortable',
+                        Data => {
+                            %Param,
+                            Label => $Label,
+                        },
+                    );
+
+                    # example of dynamic fields order customization
+                    $Self->{LayoutObject}->Block(
+                        Name => 'RecordDynamicField_' . $DynamicFieldConfig->{Name} . 'Header',
+                        Data => {
+                            %Param,
+                        },
+                    );
+
+                    $Self->{LayoutObject}->Block(
+                        Name => 'RecordDynamicField_'
+                            . $DynamicFieldConfig->{Name}
+                            . 'HeaderNotSortable',
+                        Data => {
+                            %Param,
+                            Label => $Label,
+                        },
+                    );
+                }
+            }
         }
 
         my $Counter = 0;
@@ -189,6 +315,85 @@ sub Run {
                             Data => {
                                 %Param,
                                 %Data,
+                            },
+                        );
+                    }
+                }
+
+                # Dynamic fields
+                # cycle trough the activated Dynamic Fields for this screen
+                DYNAMICFIELD:
+                for my $DynamicFieldConfig ( @{ $Self->{DynamicField} } ) {
+                    next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
+
+                    # get field value
+                    my $Value = $Self->{BackendObject}->ValueGet(
+                        DynamicFieldConfig => $DynamicFieldConfig,
+                        ObjectID           => $ID,
+                    );
+
+                    my $ValueStrg = $Self->{BackendObject}->DisplayValueRender(
+                        DynamicFieldConfig => $DynamicFieldConfig,
+                        Value              => $Value,
+                        ValueMaxChars      => 20,
+                        LayoutObject       => $Self->{LayoutObject},
+                    );
+
+                    $Self->{LayoutObject}->Block(
+                        Name => 'RecordDynamicField',
+                        Data => {
+                            Value => $ValueStrg->{Value},
+                            Title => $ValueStrg->{Title},
+                        },
+                    );
+
+                    if ( $ValueStrg->{Link} ) {
+                        $Self->{LayoutObject}->Block(
+                            Name => 'RecordDynamicFieldLink',
+                            Data => {
+                                Value                       => $ValueStrg->{Value},
+                                Title                       => $ValueStrg->{Title},
+                                Link                        => $ValueStrg->{Link},
+                                $DynamicFieldConfig->{Name} => $ValueStrg->{Title},
+                            },
+                        );
+                    }
+                    else {
+                        $Self->{LayoutObject}->Block(
+                            Name => 'RecordDynamicFieldPlain',
+                            Data => {
+                                Value => $ValueStrg->{Value},
+                                Title => $ValueStrg->{Title},
+                            },
+                        );
+                    }
+
+                    # example of dynamic fields order customization
+                    $Self->{LayoutObject}->Block(
+                        Name => 'RecordDynamicField_' . $DynamicFieldConfig->{Name},
+                        Data => {
+                            Value => $ValueStrg->{Value},
+                            Title => $ValueStrg->{Title},
+                        },
+                    );
+
+                    if ( $ValueStrg->{Link} ) {
+                        $Self->{LayoutObject}->Block(
+                            Name => 'RecordDynamicField_' . $DynamicFieldConfig->{Name} . '_Link',
+                            Data => {
+                                Value                       => $ValueStrg->{Value},
+                                Title                       => $ValueStrg->{Title},
+                                Link                        => $ValueStrg->{Link},
+                                $DynamicFieldConfig->{Name} => $ValueStrg->{Title},
+                            },
+                        );
+                    }
+                    else {
+                        $Self->{LayoutObject}->Block(
+                            Name => 'RecordDynamicField_' . $DynamicFieldConfig->{Name} . '_Plain',
+                            Data => {
+                                Value => $ValueStrg->{Value},
+                                Title => $ValueStrg->{Title},
                             },
                         );
                     }

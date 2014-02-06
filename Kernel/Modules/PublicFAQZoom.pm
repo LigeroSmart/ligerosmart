@@ -15,6 +15,9 @@ use warnings;
 use MIME::Base64 qw();
 use Kernel::System::FAQ;
 use Kernel::System::Valid;
+use Kernel::System::DynamicField;
+use Kernel::System::DynamicField::Backend;
+use Kernel::System::VariableCheck qw(:all);
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -37,8 +40,10 @@ sub new {
     $Self->{UserID} = 1;
 
     # create needed objects
-    $Self->{FAQObject}   = Kernel::System::FAQ->new(%Param);
-    $Self->{ValidObject} = Kernel::System::Valid->new(%Param);
+    $Self->{FAQObject}          = Kernel::System::FAQ->new(%Param);
+    $Self->{ValidObject}        = Kernel::System::Valid->new(%Param);
+    $Self->{DynamicFieldObject} = Kernel::System::DynamicField->new(%Param);
+    $Self->{BackendObject}      = Kernel::System::DynamicField::Backend->new(%Param);
 
     # get config of frontend module
     $Self->{Config} = $Self->{ConfigObject}->Get("FAQ::Frontend::$Self->{Action}");
@@ -56,6 +61,13 @@ sub new {
     # get default options
     $Self->{MultiLanguage} = $Self->{ConfigObject}->Get('FAQ::MultiLanguage');
     $Self->{Voting}        = $Self->{ConfigObject}->Get('FAQ::Voting');
+
+    # get the dynamic fields for this screen
+    $Self->{DynamicField} = $Self->{DynamicFieldObject}->DynamicFieldListGet(
+        Valid       => 1,
+        ObjectType  => 'FAQ',
+        FieldFilter => $Self->{Config}->{DynamicField} || {},
+    );
 
     return $Self;
 }
@@ -332,6 +344,46 @@ sub Run {
         FAQData         => {%FAQData},
         UserID          => $Self->{UserID},
     );
+
+    # cycle trough the activated Dynamic Fields for ticket object
+    DYNAMICFIELD:
+    for my $DynamicFieldConfig ( @{ $Self->{DynamicField} } ) {
+        next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
+
+        my $Value = $Self->{BackendObject}->ValueGet(
+            DynamicFieldConfig => $DynamicFieldConfig,
+            ObjectID           => $GetParam{ItemID},
+        );
+
+        # get print string for this dynamic field
+        my $ValueStrg = $Self->{BackendObject}->DisplayValueRender(
+            DynamicFieldConfig => $DynamicFieldConfig,
+            Value              => $Value,
+            ValueMaxChars      => 250,
+            LayoutObject       => $Self->{LayoutObject},
+        );
+
+        my $Label = $DynamicFieldConfig->{Label};
+
+        $Self->{LayoutObject}->Block(
+            Name => 'FAQDynamicField',
+            Data => {
+                Label => $Label,
+                Value => $ValueStrg->{Value},
+                Title => $ValueStrg->{Title},
+            },
+        );
+
+        # example of dynamic fields order customization
+        $Self->{LayoutObject}->Block(
+            Name => 'FAQDynamicField_' . $DynamicFieldConfig->{Name},
+            Data => {
+                Label => $Label,
+                Value => $ValueStrg->{Value},
+                Title => $ValueStrg->{Title},
+            },
+        );
+    }
 
     # log access to this FAQ item
     $Self->{FAQObject}->FAQLogAdd(
