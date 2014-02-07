@@ -158,11 +158,35 @@ $('#TypeID').bind('change', function (Event) {
 <script type="text/javascript">//<![CDATA[
     $('#ServiceID').bind('change', function (Event) {
         Core.AJAX.FormUpdate($('#Compose'), 'AJAXUpdate', 'ServiceID', [ 'TypeID', 'SLAID', 'NewOwnerID', 'OldOwnerID', 'NewResponsibleID', 'NewStateID', 'NewPriorityID' $Data{"DynamicFieldNamesStrg"} ]);
-    });
+# ---
+# ITSM
+# ---
+#    });
+
+/*global ITSM: true */
+        // show service incident state and signal for the selected service
+        ITSM.Agent.IncidentState.ShowIncidentState({
+            Action: '$Env{"Action"}',
+            TicketID: $QData{"TicketID"},
+            ServiceID: $('#ServiceID').val()
+        });
+}).trigger('change');
+# ---
 //]]></script>
 <!--dtl:js_on_document_complete-->
                 </div>
                 <div class="Clear"></div>
+# ---
+# ITSM
+# ---
+                <label for="ServiceIncidentStateContainer" style="display: none;">$Text{"Service Incident State"}:</label>
+                <div id="ServiceIncidentStateContainer" class="Value" style="display: none;">
+                    <div class="Flag Small">
+                        <span id="ServiceIncidentStateSignal"></span>
+                    </div>
+                    <span id="ServiceIncidentState">&nbsp;</span>
+                </div>
+# ---
 <!-- dtl:block:ServiceMandatory -->
 
 <!-- dtl:block:SLA -->
