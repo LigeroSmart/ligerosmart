@@ -143,6 +143,25 @@ ITSM.Agent.ChangeManagement.Search = (function (TargetNS) {
         return true;
     };
 
+    /**
+     * @function
+     * @private
+     * @param {String} Profile The profile name that will be delete.
+     * @return nothing
+     * @description Delete a profile via an ajax requests.
+     */
+    function SearchProfileDelete(Profile) {
+        var Data = {
+            Action: 'AgentTicketSearch',
+            Subaction: 'AJAXProfileDelete',
+            Profile: Profile
+        };
+        Core.AJAX.FunctionCall(
+            Core.Config.Get('CGIHandle'),
+            Data,
+            function () {}
+        );
+    }
 
     /**
      * @function
@@ -182,27 +201,6 @@ ITSM.Agent.ChangeManagement.Search = (function (TargetNS) {
            alert(Core.Config.Get('EmptySearchMsg'));
         }
         return SearchValueFlag;
-    }
-
-
-    /**
-     * @function
-     * @private
-     * @param {String} Profile The profile name that will be delete.
-     * @return nothing
-     * @description Delete a profile via an ajax requests.
-     */
-    function SearchProfileDelete(Profile) {
-        var Data = {
-            Action: 'AgentITSMChangeSearch',
-            Subaction: 'AJAXProfileDelete',
-            Profile: Profile
-        };
-        Core.AJAX.FunctionCall(
-            Core.Config.Get('CGIHandle'),
-            Data,
-            function () {}
-        );
     }
 
     /**
@@ -252,7 +250,7 @@ ITSM.Agent.ChangeManagement.Search = (function (TargetNS) {
                     return;
                 }
 
-                Core.UI.Dialog.ShowContentDialog(HTML, Core.Config.Get('SearchMsg'), '10px', 'Center', true);
+                Core.UI.Dialog.ShowContentDialog(HTML, Core.Config.Get('SearchMsg'), '10px', 'Center', true, undefined, true);
 
                 // hide add template block
                 $('#SearchProfileAddBlock').hide();
@@ -266,11 +264,14 @@ ITSM.Agent.ChangeManagement.Search = (function (TargetNS) {
                     // show delete button
                     $('#SearchProfileDelete').show();
 
+                    // show profile link
+                    $('#SearchProfileAsLink').show();
+
                     // show save changes in template block
                     $('#SaveProfile').parent().show().prev().show().prev().show();
 
                     // set SaveProfile to 0
-                    $('#SaveProfile').attr('checked', false);
+                    $('#SaveProfile').prop('checked', false);
                 }
 
                 // register add of attribute
@@ -278,7 +279,6 @@ ITSM.Agent.ChangeManagement.Search = (function (TargetNS) {
                     var Attribute = $('#Attribute').val();
                     TargetNS.SearchAttributeAdd(Attribute);
                     TargetNS.AdditionalAttributeSelectionRebuild();
-
                     return false;
                 });
 
@@ -289,7 +289,7 @@ ITSM.Agent.ChangeManagement.Search = (function (TargetNS) {
                             return false;
                         }
                         else {
-                           $('#SearchForm').submit();
+                            $('#SearchFormSubmit').trigger('click');
                         }
                         return false;
                     }
@@ -297,6 +297,16 @@ ITSM.Agent.ChangeManagement.Search = (function (TargetNS) {
 
                 // register submit
                 $('#SearchFormSubmit').bind('click', function () {
+                    var ShownAttributes = '';
+
+                    // remember shown attributes
+                    $('#SearchInsert label').each(function () {
+                        if ( $(this).attr('id') ) {
+                            ShownAttributes = ShownAttributes + ';' + $(this).attr('id');
+                        }
+                    });
+                    $('#SearchForm #ShownAttributes').val(ShownAttributes);
+
                     // Normal results mode will return HTML in the same window
                     if ($('#SearchForm #ResultForm').val() === 'Normal') {
                         if (!CheckForSearchedValues()) {
@@ -333,6 +343,7 @@ ITSM.Agent.ChangeManagement.Search = (function (TargetNS) {
                 // show add profile block or not
                 $('#SearchProfileNew').bind('click', function (Event) {
                     $('#SearchProfileAddBlock').toggle();
+                    $('#SearchProfileAddName').focus();
                     Event.preventDefault();
                     return false;
                 });
@@ -351,7 +362,7 @@ ITSM.Agent.ChangeManagement.Search = (function (TargetNS) {
                     $Element1 = $('#SearchProfile').children().first().clone();
                     $Element1.text(Name);
                     $Element1.attr('value', Name);
-                    $Element1.attr('selected', 'selected');
+                    $Element1.prop('selected', true);
                     $('#SearchProfile').append($Element1);
 
                     // set input box to empty
@@ -364,10 +375,24 @@ ITSM.Agent.ChangeManagement.Search = (function (TargetNS) {
                     $('#SaveProfile').parent().hide().prev().hide().prev().hide();
 
                     // set SaveProfile to 1
-                    $('#SaveProfile').attr('checked', true);
+                    $('#SaveProfile').prop('checked', true);
 
+                    // show delete button
                     $('#SearchProfileDelete').show();
 
+                    // show profile link
+                    $('#SearchProfileAsLink').show();
+
+                    return false;
+                });
+
+                // direct link to profile
+                $('#SearchProfileAsLink').bind('click', function (Event) {
+                    var Profile = $('#SearchProfile').val(),
+                        Action = $('#SearchAction').val();
+
+                    window.location.href = Core.Config.Get('Baselink') + 'Action=' + Action +
+                    ';Subaction=Search;TakeLastSearch=1;SaveProfile=1;Profile=' + encodeURIComponent(Profile);
                     return false;
                 });
 
@@ -396,7 +421,13 @@ ITSM.Agent.ChangeManagement.Search = (function (TargetNS) {
                     });
 
                     if ($('#SearchProfile').val() && $('#SearchProfile').val() === 'last-search') {
+
+                        // hide delete link
                         $('#SearchProfileDelete').hide();
+
+                        // hide profile link
+                        $('#SearchProfileAsLink').hide();
+
                     }
 
                     Event.preventDefault();

@@ -72,6 +72,7 @@ sub Run {
 
     # check request
     if ( $Self->{ParamObject}->GetParam( Param => 'SearchTemplate' ) && $Self->{Profile} ) {
+
         return $Self->{LayoutObject}->Redirect(
             OP =>
                 "Action=AgentITSMChangeSearch;Subaction=Search;TakeLastSearch=1;SaveProfile=1;Profile=$Self->{Profile}"
@@ -600,7 +601,7 @@ sub Run {
             # translate headers
             for my $Header (@CSVHead) {
 
-                # replace FAQNumber header with the current FAQHook from config
+                # replace ChangeNumber header with the current ChangeHook from config
                 if ( $Header eq 'ChangeNumber' ) {
                     $Header = $Self->{ConfigObject}->Get('ITSMChange::Hook');
                 }
@@ -912,19 +913,20 @@ sub Run {
             }
 
             $Output .= $Self->{LayoutObject}->ITSMChangeListShow(
-                ChangeIDs   => $ViewableChangeIDs,
-                Total       => scalar @{$ViewableChangeIDs},
-                View        => $Self->{View},
-                Env         => $Self,
-                LinkPage    => $LinkPage,
-                LinkSort    => $LinkSort,
-                LinkFilter  => $LinkFilter,
-                LinkBack    => $LinkBack,
-                Profile     => $Self->{Profile},
-                TitleName   => 'Change Search Result',
-                ShowColumns => \@ShowColumns,
-                SortBy      => $Self->{LayoutObject}->Ascii2Html( Text => $Self->{SortBy} ),
-                OrderBy     => $Self->{LayoutObject}->Ascii2Html( Text => $Self->{OrderBy} ),
+                ChangeIDs    => $ViewableChangeIDs,
+                Total        => scalar @{$ViewableChangeIDs},
+                View         => $Self->{View},
+                Env          => $Self,
+                LinkPage     => $LinkPage,
+                LinkSort     => $LinkSort,
+                LinkFilter   => $LinkFilter,
+                LinkBack     => $LinkBack,
+                Profile      => $Self->{Profile},
+                TitleName    => 'Change Search Result',
+                ShowColumns  => \@ShowColumns,
+                SortBy       => $Self->{LayoutObject}->Ascii2Html( Text => $Self->{SortBy} ),
+                OrderBy      => $Self->{LayoutObject}->Ascii2Html( Text => $Self->{OrderBy} ),
+                RequestedURL => 'Action=' . $Self->{Action} . ';' . $LinkPage,
             );
 
             # build footer
