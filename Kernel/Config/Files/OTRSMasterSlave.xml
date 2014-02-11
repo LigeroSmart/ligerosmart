@@ -419,4 +419,24 @@
             </Hash>
         </Setting>
     </ConfigItem>
+    <ConfigItem Name="ReplaceCustomerRealNameOnSlaveArticleTypes" Required="0" Valid="1">
+        <Description Translatable="1">Specifies the different article types where the real name from Master ticket will be replaced with the one in the Slave ticket.</Description>
+        <Group>OTRSMasterSlave</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewMasterSlave</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="email-external">0</Item>
+                <Item Key="email-internal">0</Item>
+                <Item Key="email-notification-ext">0</Item>
+                <Item Key="email-notification-int">0</Item>
+                <Item Key="phone">0</Item>
+                <Item Key="fax">0</Item>
+                <Item Key="sms">0</Item>
+                <Item Key="webrequest">0</Item>
+                <Item Key="note-internal">0</Item>
+                <Item Key="note-external">0</Item>
+                <Item Key="note-report">0</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
 </otrs_config>

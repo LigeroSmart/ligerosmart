@@ -153,6 +153,19 @@
             </para>
         </section>
     </section>
+    <section>
+        <title>Replace customer's from Master ticket</title>
+        <para>
+            The sysconfig option 'ReplaceCustomerRealNameOnSlaveArticleTypes' enables
+            the posibility to replace the customer's real name from a Master ticket
+            with the one for the current Slave ticket into the articles added to a
+            Slave ticket due the MasterSlave feature.
+        </para>
+        <para>
+            For do it possible just enable the posible ArticleTypes on the mentioned
+            sysconfig setting.
+        </para>
+    </section>
 </chapter>
 
 <!-- ********************** -->

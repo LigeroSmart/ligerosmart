@@ -1,6 +1,6 @@
 # --
 # Kernel/Modules/AgentTicketBulk.pm - to do bulk actions on tickets
-# Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
 # $origin: https://github.com/OTRS/otrs/blob/fa2159290ffa2f0b94b2d8333a6875c00f9d8d32/Kernel/Modules/AgentTicketBulk.pm
 # --

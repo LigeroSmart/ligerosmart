@@ -1,6 +1,6 @@
 # --
 # Kernel/System/Ticket/Event/MasterSlave.pm - master slave ticket
-# Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -155,6 +155,10 @@ sub Run {
             Name         => 'MasterTicketAction: ArticleSend',
         );
 
+        # just a flag for know when the first slave ticket is present
+        my $FirstSlaveTicket = 1;
+        my $TmpArticleBody;
+
         # perform action on linked tickets
         for my $TicketID (@TicketIDs) {
             next if !$Self->_LoopCheck(
@@ -211,6 +215,35 @@ sub Run {
                 TicketNumber => $TicketSlave{TicketNumber},
                 Subject => $Article{Subject} || '',
             );
+
+            # exchange Customer from MasterTicket for the one into the SlaveTicket
+            my $ReplaceOnNoteTypes
+                = $Self->{ConfigObject}->Get('ReplaceCustomerRealNameOnSlaveArticleTypes');
+            if (
+                defined $ReplaceOnNoteTypes->{ $Article{ArticleType} } &&
+                $ReplaceOnNoteTypes->{ $Article{ArticleType} } eq '1'
+                )
+            {
+                if ($FirstSlaveTicket) {
+                    $FirstSlaveTicket = 0;
+                    $TmpArticleBody   = $Article{Body};
+                }
+                else {
+                    # get body from tmp in oder to get it
+                    # without changes from prev slave tickets
+                    $Article{Body} = $TmpArticleBody;
+                }
+
+                my $Search = $Self->{CustomerUserObject}->CustomerName(
+                    UserLogin => $Article{CustomerUserID},
+                ) || '';
+                my $Replace = $Self->{CustomerUserObject}->CustomerName(
+                    UserLogin => $TicketSlave{CustomerUserID},
+                ) || '';
+                if ( $Search && $Replace ) {
+                    $Article{Body} =~ s{ \Q$Search\E }{$Replace}xmsg;
+                }
+            }
 
             # send article again
             $Self->{TicketObject}->ArticleSend(
