@@ -48,7 +48,7 @@ sub new {
 
     # get dynamic field config for frontend module
     $Self->{DynamicFieldFilter}
-        = $Self->{ConfigObject}->Get("FAQ::Frontend::PublicTicketPrint")->{DynamicField};
+        = $Self->{ConfigObject}->Get("FAQ::Frontend::PublicFAQPrint")->{DynamicField};
 
     # set default interface settings
     $Self->{Interface} = $Self->{FAQObject}->StateTypeGet(
