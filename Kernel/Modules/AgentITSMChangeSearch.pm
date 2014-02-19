@@ -128,7 +128,7 @@ sub Run {
             ChangeManagerIDs ChangeBuilderIDs
             PriorityIDs CategoryIDs ImpactIDs
             CreateBy
-            WorkOrderStateIDs WorkOrderAgentIDs
+            WorkOrderStateIDs WorkOrderTypeIDs WorkOrderAgentIDs
             )
             )
         {
@@ -1176,6 +1176,10 @@ sub _MaskForm {
             Value => 'WorkOrder State',
         },
         {
+            Key   => 'WorkOrderTypeIDs',
+            Value => 'WorkOrder Type',
+        },
+        {
             Key   => 'WorkOrderAgentIDs',
             Value => 'WorkOrder Agent',
         },
@@ -1342,6 +1346,18 @@ sub _MaskForm {
         Multiple   => 1,
         Size       => 5,
         SelectedID => $Param{WorkOrderStateIDs},
+    );
+
+    # get workorder types
+    my $WorkOrderTypes = $Self->{WorkOrderObject}->WorkOrderTypeList(
+        UserID => 1,
+    );
+    $Param{'WorkOrderTypeSelectionString'} = $Self->{LayoutObject}->BuildSelection(
+        Data       => $WorkOrderTypes,
+        Name       => 'WorkOrderTypeIDs',
+        Multiple   => 1,
+        Size       => 5,
+        SelectedID => $Param{WorkOrderTypeIDs},
     );
 
     # set result output formats

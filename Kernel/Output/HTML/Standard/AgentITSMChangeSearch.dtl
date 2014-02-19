@@ -183,6 +183,12 @@
             <button type="button" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
         </div>
         <div class="Clear"></div>
+        <label for="WorkOrderTypeIDs" id="LabelWorkOrderTypeIDs">$Text{"WorkOrderType"}:</label>
+        <div class="Field">
+            $Data{"WorkOrderTypeSelectionString"}
+            <button type="button" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
+        </div>
+        <div class="Clear"></div>
         <label for="WorkOrderAgentIDs" id="LabelWorkOrderAgentIDs">$Text{"WorkOrderAgent"}:</label>
         <div class="Field">
             $Data{"WorkOrderAgentIDSelectionString"}

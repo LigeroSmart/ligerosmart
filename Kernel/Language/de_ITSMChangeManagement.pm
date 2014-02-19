@@ -1814,6 +1814,7 @@ sub Data {
     $Self->{Translation}->{'WorkOrder Instruction'} = 'Workorder Anweisung';
     $Self->{Translation}->{'WorkOrder Report'} = 'Workorder Bericht';
     $Self->{Translation}->{'WorkOrder State'} = 'Workorder-Status';
+    $Self->{Translation}->{'WorkOrder Type'} = 'Workorder-Typ';
 
 }
 
