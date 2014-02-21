@@ -1354,6 +1354,8 @@ is ignored.
         # search in workorder (array params)
         WorkOrderStates   => [ 'accepted', 'ready' ],                  # (optional)
         WorkOrderStateIDs => [ 1, 2, 3 ],                              # (optional)
+        WorkOrderTypes    => [ 'workorder', 'backout', 'approval' ],   # (optional)
+        WorkOrderTypeIDs  => [ 5, 6, 7 ],                              # (optional)
 
         # changes with planned start time after ...
         PlannedStartTimeNewerDate => '2006-01-09 00:00:01',            # (optional)
@@ -1458,6 +1460,8 @@ sub ChangeSearch {
         WorkOrderAgentIDs
         WorkOrderStates
         WorkOrderStateIDs
+        WorkOrderTypes
+        WorkOrderTypeIDs
         CreateBy
         ChangeBy
         Categories
@@ -1670,6 +1674,27 @@ sub ChangeSearch {
         }
 
         push @{ $Param{WorkOrderStateIDs} }, $WorkOrderStateID;
+    }
+
+    # look up and thus check the workorder types
+    for my $WorkOrderType ( @{ $Param{WorkOrderTypes} } ) {
+
+        # look up the ID for the name
+        my $WorkOrderTypeID = $Self->{WorkOrderObject}->WorkOrderTypeLookup(
+            WorkOrderType => $WorkOrderType,
+        );
+
+        # check whether the ID was found, whether the name exists
+        if ( !$WorkOrderTypeID ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "The workorder type $WorkOrderType is not known!",
+            );
+
+            return;
+        }
+
+        push @{ $Param{WorkOrderTypeIDs} }, $WorkOrderTypeID;
     }
 
     my @SQLWhere;           # assemble the conditions used in the WHERE clause
@@ -1969,6 +1994,7 @@ sub ChangeSearch {
     my %WorkOrderArrayParams = (
         WorkOrderAgentIDs => 'workorder_agent_id',
         WorkOrderStateIDs => 'workorder_state_id',
+        WorkOrderTypeIDs  => 'workorder_type_id',
     );
 
     # add workorder params to sql-where-array
