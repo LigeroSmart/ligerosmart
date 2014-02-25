@@ -492,8 +492,9 @@ sub Run {
                 Attachments => \@Attachments,
                 %GetParam,
                 %Error,
-                ScreenType => $Self->{ScreenType},
-                FormID     => $Self->{FormID},
+                ScreenType       => $Self->{ScreenType},
+                FormID           => $Self->{FormID},
+                DynamicFieldHTML => \%DynamicFieldHTML,
             );
 
             # show a popup screen footer
