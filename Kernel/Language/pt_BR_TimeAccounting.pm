@@ -29,16 +29,16 @@ sub Data {
     $Self->{Translation}->{'Previous day'} = 'Dia anterior';
     $Self->{Translation}->{'Next day'} = 'Próximo Dia';
     $Self->{Translation}->{'Days without entries'} = 'Dias sem entradas';
-    $Self->{Translation}->{'Select all days'} = '';
-    $Self->{Translation}->{'Mass entry'} = '';
+    $Self->{Translation}->{'Select all days'} = 'Selecionar todos os dias';
+    $Self->{Translation}->{'Mass entry'} = 'Entrada em massa';
     $Self->{Translation}->{'Please choose the reason for your absence for the selected days'} =
-        '';
+        'Por favor, escolha a razão da sua ausência nos dias selecionados';
     $Self->{Translation}->{'On vacation'} = 'Em férias';
     $Self->{Translation}->{'On sick leave'} = 'Em licença médica';
     $Self->{Translation}->{'On overtime leave'} = 'Em sobrehora';
-    $Self->{Translation}->{'Please choose at least one day!'} = '';
-    $Self->{Translation}->{'Please choose a reason for absence!'} = '';
-    $Self->{Translation}->{'Mass Entry'} = '';
+    $Self->{Translation}->{'Please choose at least one day!'} = 'Por favor, escolha ao menos um dia!';
+    $Self->{Translation}->{'Please choose a reason for absence!'} = 'Por favor, escolha uma razão para a ausência!';
+    $Self->{Translation}->{'Mass Entry'} = 'Entrada em Massa';
     $Self->{Translation}->{'Required fields are marked with a "*".'} = 'Os campos que são obrigatórios são marcados com um asterisco "*"';
     $Self->{Translation}->{'You have to fill in start and end time or a time period.'} = 'Você tem que preencher o tempo de início e final ou um período de tempo.';
     $Self->{Translation}->{'Project'} = 'Projeto';
