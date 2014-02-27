@@ -217,14 +217,19 @@ sub Run {
         }
 
         # check if an attachment must be deleted
-        ATTACHMENT:
-        for my $Number ( 1 .. 32 ) {
+        my @AttachmentIDs = map {
+            my ($ID) = $_ =~ m{ \A AttachmentDelete (\d+) \z }xms;
+            $ID ? $ID : ();
+        } $Self->{ParamObject}->GetParamNames();
+
+        COUNT:
+        for my $Count ( reverse sort @AttachmentIDs ) {
 
             # check if the delete button was pressed for this attachment
-            my $Delete = $Self->{ParamObject}->GetParam( Param => "AttachmentDelete$Number" );
+            my $Delete = $Self->{ParamObject}->GetParam( Param => "AttachmentDelete$Count" );
 
             # check next attachment if it was not pressed
-            next ATTACHMENT if !$Delete;
+            next COUNT if !$Delete;
 
             # remember that we need to show the page again
             $Error{Attachment} = 1;
@@ -232,7 +237,7 @@ sub Run {
             # remove the attachment from the upload cache
             $Self->{UploadCacheObject}->FormIDRemoveFile(
                 FormID => $Self->{FormID},
-                FileID => $Number,
+                FileID => $Count,
             );
         }
 
