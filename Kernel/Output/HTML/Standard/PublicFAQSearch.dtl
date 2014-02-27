@@ -106,17 +106,6 @@
                 </div>
             </fieldset>
 
-            <fieldset>
-                <h2>$Text{"Search-Profile as Template?"}</h2>
-                <div>
-                    <label for="SaveProfile">$Text{"Save as Template?"}</label>
-                    <input title="Save as Template" type="checkbox" id="SaveProfile" name="SaveProfile" />
-                </div>
-                <div>
-                    <label for="Profil">$Text{"Template Name"}</label>
-                    <input title="Pick a profil name" type="text" id="Profil" name="Profile" size="30" value="$QData{"Profile"}" />
-                </div>
-            </fieldset>
             <div id="BottomActionRow" class="ActionRow">
                 <button id="Submit" type="submit" value="$Text{"Search"}">$Text{"Search"}</button>
                 <span>$Text{"Output to"}</span>
