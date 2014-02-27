@@ -978,11 +978,9 @@ sub CategoryUpdate {
             . "ID: '$Param{CategoryID}' updated successfully ($Param{UserID})!",
     );
 
-    # delete cache
-    my $CacheKey = 'CategoryGet::' . $Param{CategoryID};
-    $Self->{CacheObject}->Delete(
+    # delete all cache, as FAQGet() will be also affected.
+    $Self->{CacheObject}->CleanUp(
         Type => 'FAQ',
-        Key  => $CacheKey,
     );
 
     return 1;

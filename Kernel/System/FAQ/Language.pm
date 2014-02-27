@@ -381,6 +381,11 @@ sub LanguageUpdate {
         Bind => [ \$Param{Name}, \$Param{LanguageID} ],
     );
 
+    # delete all cache, as FAQGet() will be also affected.
+    $Self->{CacheObject}->CleanUp(
+        Type => 'FAQ',
+    );
+
     return 1;
 }
 
