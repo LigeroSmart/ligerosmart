@@ -482,12 +482,21 @@ sub FAQContentShow {
             },
         );
 
+        # security="restricted" may break SSO - disable this feature if requested
+        if ( $Self->{ConfigObject}->Get('DisableMSIFrameSecurityRestricted') ) {
+            $Param{MSSecurityRestricted} = '';
+        }
+        else {
+            $Param{MSSecurityRestricted} = 'security="restricted"';
+        }
+
         if ( $Self->{ConfigObject}->Get('FAQ::Item::HTML') ) {
             $Self->Block(
                 Name => 'FAQContentHTML',
                 Data => {
-                    ItemID => $Param{FAQData}->{ItemID},
-                    Field  => $Field,
+                    ItemID               => $Param{FAQData}->{ItemID},
+                    Field                => $Field,
+                    MSSecurityRestricted => $Param{MSSecurityRestricted},
                 },
             );
         }

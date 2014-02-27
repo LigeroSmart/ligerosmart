@@ -81,7 +81,7 @@
 # Use the HTML5 sandbox attribute to prevent plugins and scripts from being executed in the browser.
 # Use IE's (non-standard) security attribute to achieve something similar in older IE browsers. Append session info to URL because IE will not send cookies.
 # Set 'allow-popups' to allow IE10+ to open links. ref: http://www.w3.org/html/wg/wiki/ChangeProposals/sandbox_allow_popups
-                    <iframe sandbox="allow-same-origin allow-popups" security="restricted" class="FAQField" id="IframeFAQ$QData{"Field"}" onload="if (typeof FAQ === 'object' && typeof FAQ.Customer === 'object' && typeof FAQ.Customer.FAQZoom === 'object') { FAQ.Customer.FAQZoom.IframeAutoHeight($('#IframeFAQ$QData{"Field"}')); };" src="#" data-src="$Env{"Baselink"}Action=CustomerFAQZoom;Subaction=HTMLView;ItemID=$QData{"ItemID"};Field=$QData{"Field"};$QEnv{"SessionName"}=$QEnv{"SessionID"}"></iframe>
+                    <iframe sandbox="allow-same-origin allow-popups" $Data{"MSSecurityRestricted"} class="FAQField" id="IframeFAQ$QData{"Field"}" onload="if (typeof FAQ === 'object' && typeof FAQ.Customer === 'object' && typeof FAQ.Customer.FAQZoom === 'object') { FAQ.Customer.FAQZoom.IframeAutoHeight($('#IframeFAQ$QData{"Field"}')); };" src="#" data-src="$Env{"Baselink"}Action=CustomerFAQZoom;Subaction=HTMLView;ItemID=$QData{"ItemID"};Field=$QData{"Field"};$QEnv{"SessionName"}=$QEnv{"SessionID"}"></iframe>
                 </div>
 <!-- dtl:block:FAQContentHTML -->
 <!-- dtl:js_on_document_complete -->
