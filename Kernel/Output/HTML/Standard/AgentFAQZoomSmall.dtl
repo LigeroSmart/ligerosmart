@@ -194,6 +194,8 @@
 <!--dtl:js_on_document_complete-->
 <script type="text/javascript">//<![CDATA[
 /*global FAQ: true */
+Core.Config.Set('TicketCompose.UpdateArticleSubject', "$QData{"UpdateArticleSubject"}");
+
 $('#Cancel').bind('click', function (event) {
     parent.Core.UI.Dialog.CloseDialog($('.Dialog', parent.document));
 });

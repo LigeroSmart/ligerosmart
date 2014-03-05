@@ -126,12 +126,14 @@ FAQ.Agent.TicketCompose = (function (TargetNS) {
                 NewPosition = 0,
                 NewHTML;
 
-            // copy subject
-            if ($ParentSubject.val() === '') {
-                $ParentSubject.val(FAQTitle);
-            }
-            else {
-                $ParentSubject.val($ParentSubject.val() + ' - ' + FAQTitle);
+            if (Core.Config.Get('TicketCompose.UpdateArticleSubject') === '1') {
+                // copy subject
+                if ($ParentSubject.val() === '') {
+                    $ParentSubject.val(FAQTitle);
+                }
+                else {
+                    $ParentSubject.val($ParentSubject.val() + ' - ' + FAQTitle);
+                }
             }
 
             // add FAQ text and/or link to WYSIWYG editor in parent window

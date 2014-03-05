@@ -685,6 +685,7 @@ sub Run {
             }
 
             $ShowOrBlock = 1;
+            $Param{UpdateArticleSubject} = $TicketComposeConfig->{UpdateArticleSubject} || 0;
         }
 
         # check if FAQ article is public
