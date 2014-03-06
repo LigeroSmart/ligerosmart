@@ -259,15 +259,24 @@ sub Run {
                 }
 
                 # add dynamic fields to profile to include them in the backlink
+                KEYITEM:
                 for my $KeyItem ( sort keys %{$DynamicFieldValue} ) {
 
                     # convert scalar values to array to use same code base
-                    if ( ref $DynamicFieldValue->{$KeyItem} eq '' ) {
+                    if (
+                        defined $DynamicFieldValue->{$KeyItem}
+                        && ref $DynamicFieldValue->{$KeyItem} eq ''
+                        )
+                    {
                         $DynamicFieldValue->{$KeyItem} = [ $DynamicFieldValue->{$KeyItem} ];
                     }
 
+                    next KEYITEM if !IsArrayRefWithData( $DynamicFieldValue->{$KeyItem} );
+
                     # concatenate dynamic fields values into the profile
+                    VALUEITEM:
                     for my $ValueItem ( @{ $DynamicFieldValue->{$KeyItem} } ) {
+                        next VALUEITEM if !$ValueItem;
                         $Self->{Profile} .= "$KeyItem=$ValueItem;";
                     }
                 }
