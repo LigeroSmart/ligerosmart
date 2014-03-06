@@ -580,7 +580,15 @@ sub Run {
 
                     # otherwise retreive data from faq item
                     else {
-                        push @Data, $CSVInfo{$Header};
+                        if ( $Header eq 'FAQNumber' ) {
+                            push @Data, $CSVInfo{'Number'};
+                        }
+                        elsif ( $Header eq 'Category' ) {
+                            push @Data, $CSVInfo{'CategoryName'};
+                        }
+                        else {
+                            push @Data, $CSVInfo{$Header};
+                        }
                     }
                 }
                 push @CSVData, \@Data;
