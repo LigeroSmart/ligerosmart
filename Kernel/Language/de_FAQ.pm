@@ -25,7 +25,7 @@ sub Data {
     $Self->{Translation}->{'Top 10 FAQ articles'} = 'Top 10 FAQ-Artikel';
     $Self->{Translation}->{'Subcategory of'} = 'Unterkategorie von';
     $Self->{Translation}->{'No rate selected!'} = 'Keine Bewertung ausgewählt!';
-    $Self->{Translation}->{'Explorer'} = '';
+    $Self->{Translation}->{'Explorer'} = 'Ansicht nach Kategorien';
     $Self->{Translation}->{'public (all)'} = 'öffentlich (Alle)';
     $Self->{Translation}->{'external (customer)'} = 'extern (Kunde)';
     $Self->{Translation}->{'internal (agent)'} = 'intern (Agent)';
