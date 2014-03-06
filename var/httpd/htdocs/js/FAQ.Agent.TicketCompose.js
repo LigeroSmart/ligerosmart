@@ -126,7 +126,7 @@ FAQ.Agent.TicketCompose = (function (TargetNS) {
                 NewPosition = 0,
                 NewHTML;
 
-            if (Core.Config.Get('TicketCompose.UpdateArticleSubject') === '1') {
+            if (Core.Config.Get('TicketCompose.UpdateArticleSubject') === '1' && $('#UpdateArticleSubjectOption').prop('checked')) {
                 // copy subject
                 if ($ParentSubject.val() === '') {
                     $ParentSubject.val(FAQTitle);

@@ -663,6 +663,14 @@ sub Run {
         # get configuration options for Ticket Compose
         my $TicketComposeConfig = $Self->{ConfigObject}->Get('FAQ::TicketCompose');
 
+        $Param{UpdateArticleSubject} = $TicketComposeConfig->{UpdateArticleSubject} || 0;
+        if ( $Param{UpdateArticleSubject} ) {
+            $Self->{LayoutObject}->Block(
+                Name => 'UpdateArticleSubject',
+                Data => {},
+            );
+        }
+
         my $ShowOrBlock;
 
         # show "Insert Text" button
@@ -685,7 +693,6 @@ sub Run {
             }
 
             $ShowOrBlock = 1;
-            $Param{UpdateArticleSubject} = $TicketComposeConfig->{UpdateArticleSubject} || 0;
         }
 
         # check if FAQ article is public

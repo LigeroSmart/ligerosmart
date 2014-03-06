@@ -160,6 +160,11 @@
 </div>
 
 <div class="ZoomSmallFooter">
+<!-- dtl:block:UpdateArticleSubject -->
+    <input id="UpdateArticleSubjectOption" type="checkbox" class="ZoomSmallButton" name="UpdateArticleSubjectOption" checked="checked" value"1"/>
+    <label for="UpdateArticleSubjectOption">$Text{"Update Article Subject"}</label>
+    <div class="SpacingTop Clear"></div>
+<!-- dtl:block:UpdateArticleSubject -->
 <!-- dtl:block:InsertText -->
     <button id="InsertText" class="Primary CallForAction ZoomSmallButton"><span>$Text{"Insert FAQ Text"}</span></button>
 <!-- dtl:block:InsertText -->
