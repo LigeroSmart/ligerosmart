@@ -190,11 +190,23 @@ for my $RowRef ( @{$DataRef} ) {
         next ROW;
     }
 
+    # convert StateType to State
+    my %StateLookup = reverse $CommonObject{FAQObject}->StateList( UserID => 1 );
+    my $StateID;
+
+    STATENAME:
+    for my $StateName ( sort keys %StateLookup ) {
+        if ( $StateName =~ m{\A $StateType }msxi ) {
+            $StateID = $StateLookup{$StateName};
+            last STATENAME;
+        }
+    }
+
     # add FAQ article
     my $FAQID = $CommonObject{FAQObject}->FAQAdd(
         Title      => $Title,
         CategoryID => $CategoryID,
-        StateID    => $StateTypeID{$StateType},
+        StateID    => $StateID,
         LanguageID => $LanguageID{$Language},
         Field1     => $Field1,
         Field2     => $Field2,
