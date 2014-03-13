@@ -72,7 +72,7 @@
 
 <!-- dtl:block:ViewRating -->
                         <label>$Text{"Rating"}:</label>
-                        <div class="Value" title="$Text{"Rating $Data{"VoteResult"}%"}">
+                        <div class="Value" title="$Text{"Rating"} $Data{"VoteResult"}%">
 <!-- dtl:block:RateStars -->
                             <div>
                                 <span class="RateStar">Star</span>
