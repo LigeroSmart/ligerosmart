@@ -2199,19 +2199,30 @@ sub _FAQApprovalTicketCreate {
         $Body =~ s{ <OTRS_FAQ_AUTHOR>     }{$UserName}xms;
         $Body =~ s{ <OTRS_FAQ_STATE>      }{$State{Name}}xms;
 
+        #  gather user data
+        my %User = $Self->{UserObject}->GetUserData(
+            UserID => $Param{UserID},
+        );
+
+        # create from string
+        my $From = "\"$User{UserFirstname} $User{UserLastname}\" <$User{UserEmail}>";
+
         # create article
         my $ArticleID = $TicketObject->ArticleCreate(
             TicketID    => $TicketID,
             ArticleType => 'note-internal',
-            SenderType  => 'system',
+            SenderType  => 'agent',
+            From        => $From,
             Subject     => $Subject,
             Body        => $Body,
             ContentType => 'text/plain; charset=utf-8',
-            UserID      => 1,
-            HistoryType => 'SystemRequest',
+            UserID      => $Param{UserID},
+            HistoryType =>
+                $Self->{ConfigObject}->Get('Ticket::Frontend::AgentTicketNote')->{HistoryType}
+                || 'AddNote',
             HistoryComment =>
                 $Self->{ConfigObject}->Get('Ticket::Frontend::AgentTicketNote')->{HistoryComment}
-                || '',
+                || '%%Note',
         );
 
         return $ArticleID;
@@ -2249,6 +2260,7 @@ sub _DeleteFromFAQCache {
         Type => 'FAQ',
         Key  => 'ItemFieldGet::ItemID::' . $Param{ItemID},
     );
+    return 1;
 }
 
 1;
