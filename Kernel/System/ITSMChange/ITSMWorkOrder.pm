@@ -2390,7 +2390,7 @@ sub WorkOrderStateIDsCheck {
 
 =item WorkOrderAttachmentAdd()
 
-Add an attachment to the given change.
+Add an attachment to the given workorder.
 
     my $Success = $WorkOrderObject->WorkOrderAttachmentAdd(
         ChangeID       => 123,
