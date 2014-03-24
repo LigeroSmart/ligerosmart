@@ -173,10 +173,10 @@ sub Data {
 
     # Template: AgentFAQZoomSmall
     $Self->{Translation}->{'Insert FAQ Text'} = 'FAQ-Text einfügen';
-    $Self->{Translation}->{'Insert Full FAQ'} = '';
+    $Self->{Translation}->{'Insert Full FAQ'} = 'Vollständige FAQ einfügen';
     $Self->{Translation}->{'Insert FAQ Link'} = 'FAQ-Link einfügen';
     $Self->{Translation}->{'Insert FAQ Text & Link'} = 'FAQ-Text & Link einfügen';
-    $Self->{Translation}->{'Insert Full FAQ & Link'} = '';
+    $Self->{Translation}->{'Insert Full FAQ & Link'} = 'Vollständige FAQ & Link einfügen';
 
     # Template: CustomerFAQExplorer
     $Self->{Translation}->{'No FAQ articles found.'} = 'Keine FAQ-Artikel gefunden.';
