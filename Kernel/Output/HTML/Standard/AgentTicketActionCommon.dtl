@@ -2,7 +2,7 @@
 # AgentTicketActionCommon.dtl - provides common HTML form for several masks
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/9be8fb8ac1ceec0fc3398e78942f8773af85a9dc/Kernel/Output/HTML/Standard/AgentTicketActionCommon.dtl
+# $origin: https://github.com/OTRS/otrs/blob/f01d21d6301791e8e668d396a607f0628e369889//Kernel/Output/HTML/Standard/AgentTicketActionCommon.dtl
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -225,12 +225,12 @@ $('#TypeID').bind('change', function (Event) {
                 <label for="NewQueueID">$Text{"Queue"}:</label>
                 <div class="Field">
                     $Data{"QueuesStrg"}
-                    <div id="QueueIDError" class="TooltipErrorMessage" ><p>$Text{"This field is required."}</p></div>
-                    <div id="QueueIDServerError" class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>
+                    <div id="NewQueueIDError" class="TooltipErrorMessage" ><p>$Text{"This field is required."}</p></div>
+                    <div id="NewQueueIDServerError" class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>
 <!--dtl:js_on_document_complete-->
 <script type="text/javascript">//<![CDATA[
     $('#NewQueueID').bind('change', function (Event) {
-        Core.AJAX.FormUpdate($('#Compose'), 'AJAXUpdate', 'QueueID', [ 'TypeID', 'ServiceID', 'NewOwnerID', 'OldOwnerID', 'NewResponsibleID', 'NewStateID', 'NewPriorityID' $Data{"DynamicFieldNamesStrg"} ]);
+        Core.AJAX.FormUpdate($('#Compose'), 'AJAXUpdate', 'NewQueueID', [ 'TypeID', 'ServiceID', 'NewOwnerID', 'OldOwnerID', 'NewResponsibleID', 'NewStateID', 'NewPriorityID' $Data{"DynamicFieldNamesStrg"} ]);
     });
 //]]></script>
 <!--dtl:js_on_document_complete-->
