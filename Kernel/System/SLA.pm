@@ -2,7 +2,7 @@
 # Kernel/System/SLA.pm - all sla functions
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/1fc7d8e1d8371c0d67b41970ec7d6a600e4a32e6/Kernel/System/SLA.pm
+# $origin: https://github.com/OTRS/otrs/blob/f01d21d6301791e8e668d396a607f0628e369889//Kernel/System/SLA.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
