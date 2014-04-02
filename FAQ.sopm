@@ -2,7 +2,7 @@
 <otrs_package version="1.0">
     <Name>FAQ</Name>
     <Version>0.0.0</Version>
-    <Framework>3.3.x</Framework>
+    <Framework>3.4.x</Framework>
     <Vendor>OTRS AG</Vendor>
     <URL>http://otrs.org/</URL>
     <License>GNU AFFERO GENERAL PUBLIC LICENSE Version 3, November 2007</License>
@@ -37,7 +37,6 @@
         <File Permission="644" Location="Kernel/Language/ru_FAQ.pm"/>
         <File Permission="644" Location="Kernel/Language/uk_FAQ.pm"/>
         <File Permission="644" Location="Kernel/Language/zh_CN_FAQ.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AAAFAQ.dtl"/>
         <File Permission="644" Location="Kernel/Modules/AgentFAQAdd.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentFAQCategory.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentFAQDelete.pm"/>
@@ -71,42 +70,43 @@
         <File Permission="644" Location="Kernel/Output/HTML/LinkObjectFAQ.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/OutputFilterFAQ.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/PublicHeaderMetaFAQSearch.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQAdd.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentDashboardFAQOverview.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQCategory.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQDelete.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQEdit.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQExplorer.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQHistory.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQJournalOverviewSmall.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQLanguage.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQLanguage.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQOverviewNavBar.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQOverviewSmall.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQPrint.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQSearch.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQSearchOpenSearchDescriptionFAQNumber.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQSearchOpenSearchDescriptionFulltext.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQSearchResultPrint.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQSearchSmall.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQZoom.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQZoomSmall.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/CustomerFAQExplorer.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/CustomerFAQPrint.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/CustomerFAQSearch.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/CustomerFAQSearchOpenSearchDescriptionFAQNumber.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/CustomerFAQSearchOpenSearchDescriptionFullText.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/CustomerFAQSearchResultPrint.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/CustomerFAQSearchResultShort.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/CustomerFAQZoom.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/PublicFAQExplorer.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/PublicFAQPrint.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/PublicFAQSearch.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/PublicFAQSearchOpenSearchDescriptionFAQNumber.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/PublicFAQSearchOpenSearchDescriptionFullText.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/PublicFAQSearchResultPrint.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/PublicFAQSearchResultShort.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/PublicFAQZoom.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AAAFAQ.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQAdd.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentDashboardFAQOverview.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQCategory.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQDelete.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQEdit.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQExplorer.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQHistory.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQJournalOverviewSmall.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQLanguage.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQLanguage.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQOverviewNavBar.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQOverviewSmall.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQPrint.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQSearch.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQSearchOpenSearchDescriptionFAQNumber.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQSearchOpenSearchDescriptionFulltext.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQSearchResultPrint.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQSearchSmall.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQZoom.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQZoomSmall.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/CustomerFAQExplorer.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/CustomerFAQPrint.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/CustomerFAQSearch.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/CustomerFAQSearchOpenSearchDescriptionFAQNumber.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/CustomerFAQSearchOpenSearchDescriptionFullText.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/CustomerFAQSearchResultPrint.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/CustomerFAQSearchResultShort.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/CustomerFAQZoom.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/PublicFAQExplorer.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/PublicFAQPrint.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/PublicFAQSearch.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/PublicFAQSearchOpenSearchDescriptionFAQNumber.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/PublicFAQSearchOpenSearchDescriptionFullText.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/PublicFAQSearchResultPrint.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/PublicFAQSearchResultShort.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/PublicFAQZoom.tt"/>
         <File Permission="644" Location="Kernel/System/DynamicField/ObjectType/FAQ.pm"/>
         <File Permission="644" Location="Kernel/System/FAQ/Category.pm"/>
         <File Permission="644" Location="Kernel/System/FAQ/Language.pm"/>
