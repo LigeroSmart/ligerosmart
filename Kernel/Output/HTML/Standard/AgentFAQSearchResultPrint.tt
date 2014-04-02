@@ -1,0 +1,51 @@
+# --
+# AgentFAQSearchResultPrint.tt - html for printing FAQ search results
+# Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+
+<!-- start form -->
+<i>[% Data.Warning %]</i>
+<table border="0" cellspacing="1" cellpadding="0" width="100%">
+    <tr>
+        <td class="mainhead">[% Translate("Search") | html %]</td>
+    </tr>
+</table>
+<table border="0" width="100%" cellspacing="0" cellpadding="4">
+    <tr>
+        <td class="contentbody">
+            <table border="0" width="100%" cellspacing="0" cellpadding="3">
+                <tr>
+                    <td width="10%" class="contentkey">[% Config("FAQ::FAQHook") %]</td>
+                    <td width="35%" class="contentkey">[% Translate("Title") | html %]</td>
+                    <td width="10%" class="contentkey">[% Translate("Category") | html %]</td>
+
+[% RenderBlockStart("HeaderLanguage") %]
+                    <td width="10%" class="contentkey">[% Translate("Language") | html %]</td>
+[% RenderBlockEnd("HeaderLanguage") %]
+
+                    <td width="15%" class="contentkey">[% Translate("State") | html %]</td>
+                    <td width="20%" class="contentkey">[% Translate("Changed") | html %]</td>
+                </tr>
+[% RenderBlockStart("Record") %]
+                <tr>
+                    <td class="contentvalue">[% Data.Number | html %]</td>
+                    <td class="contentvalue">[% Data.Title | truncate(40) | html %]</td>
+                    <td class="contentvalue">[% Data.CategoryName | truncate(30) | html %]</td>
+
+[% RenderBlockStart("RecordLanguage") %]
+                    <td class="contentvalue">[% Data.Language | html %]</td>
+[% RenderBlockEnd("RecordLanguage") %]
+
+                    <td class="contentvalue">[% Translate(Data.State) | html %]</td>
+                    <td class="contentvalue">[% Data.Changed | Localize("TimeLong") %]</td>
+                </tr>
+[% RenderBlockEnd("Record") %]
+            </table>
+        </td>
+    </tr>
+</table>
+<!-- end form -->

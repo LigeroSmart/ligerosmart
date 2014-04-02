@@ -1,0 +1,218 @@
+# --
+# AgentFAQSearch.tt - provides HTML form for AgentFAQSearch
+# Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+
+[% RenderBlockStart("SearchAJAX") %]
+<div class="InnerContent">
+    <form action="[% Env("CGIHandle") %]" method="post" id="SearchForm">
+        <input type="hidden" name="Action" value="[% Env("Action") %]" id="SearchAction"/>
+        <input type="hidden" name="Subaction" value="Search"/>
+        <input type="hidden" name="EmptySearch" value="[% Data.EmptySearch | html %]" id="EmptySearch"/>
+        <input type="hidden" name="Nav" value="[% Data.Nav | html %]"/>
+        <fieldset class="TableLike">
+            <div class="Clear"></div>
+            <label>[% Translate("Search template") | html %]:</label>
+            <div class="Field">
+                [% Data.ProfilesStrg %]
+
+                <button id="SearchProfileNew" value="[% Translate("Create New") | html %]">[% Translate("Create New") | html %]</button>
+
+                <button id="SearchProfileDelete" class="Hidden" value="[% Translate("Delete") | html %]">[% Translate("Delete") | html %]</button>
+                <div id="SearchProfileAddBlock">
+                    <input type="text" name="Name" id="SearchProfileAddName"/>
+                    <button type="button" title="[% Translate("Create Template") | html %]" id="SearchProfileAddAction">[% Translate("Add") | html %]</button>
+                </div>
+            </div>
+            <div class="Clear"></div>
+            <label>[% Translate("Save changes in template") | html %]:</label>
+            <div class="Field">
+                <input type="checkbox" name="SaveProfile" id="SaveProfile" value="1"/>
+            </div>
+        </fieldset>
+        <fieldset class="TableLike" id="SearchInsert"></fieldset>
+        <fieldset class="TableLike">
+            <div class="Clear"></div>
+            <label>[% Translate("Add another attribute") | html %]:</label>
+            <div class="Field">
+                [% Data.AttributesStrg %]
+                <button type="button" class="Add" value="Add" title="Add entry">[% Translate("Add") | html %]</button>
+            </div>
+            <div class="Clear"></div>
+            <label>[% Translate("Output") | html %]:</label>
+            <div class="Field">
+                [% Data.ResultFormStrg %]
+            </div>
+        </fieldset>
+    </form>
+
+    <fieldset class="TableLike Hidden" id="SearchAttributesHidden">
+
+        <div class="Clear"></div>
+        <label for="Fulltext"id="LabelFulltext">[% Translate("Fulltext") | html %]:</label>
+        <div class="Field">
+            <input type="text" name="Fulltext" value="[% Data.Fulltext | html %]" class="W50pc" />
+            <button type="button" class="Remove" value="Remove" title="[% Translate("Remove this entry") | html %]">[% Translate("Remove") | html %]</button>
+        </div>
+
+        <div class="Clear"></div>
+        <label for="Number" id="LabelNumber">[% Config("FAQ::FAQHook") %] [% Translate("(e. g. 10*5155 or 105658*)") | html %]:</label>
+        <div class="Field">
+            <input type="text" name="Number" value="[% Data.Number | html %]" class="W50pc"/>
+            <button type="button" class="Remove" value="Remove" title="[% Translate("Remove this entry") | html %]">[% Translate("Remove") | html %]</button>
+        </div>
+
+        <div class="Clear"></div>
+        <label for="Title" id="LabelTitle">[% Translate("Title") | html %]:</label>
+        <div class="Field">
+            <input type="text" name="Title" value="[% Data.Title | html %]" class="W50pc"/>
+            <button type="button" class="Remove" value="Remove" title="[% Translate("Remove this entry") | html %]">[% Translate("Remove") | html %]</button>
+        </div>
+
+        <div class="Clear"></div>
+        <label for="Keyword" id="LabelKeyword">[% Translate("Keyword") | html %]:</label>
+        <div class="Field">
+            <input type="text" name="Keyword" value="[% Data.Keyword | html %]" class="W50pc"/>
+            <button type="button" class="Remove" value="Remove" title="[% Translate("Remove this entry") | html %]">[% Translate("Remove") | html %]</button>
+        </div>
+
+        <div class="Clear"></div>
+        <label for="ValidIDs" id="LabelValidIDs">[% Translate("Validity") | html %]:</label>
+        <div class="Field">
+            [% Data.ValidSelectionStrg %]
+            <button type="button" class="Remove" value="Remove" title="[% Translate("Remove this entry") | html %]">[% Translate("Remove") | html %]</button>
+        </div>
+
+        <div class="Clear"></div>
+        <label for="LanguageIDs" id="LabelLanguageIDs">[% Translate("Language") | html %]:</label>
+        <div class="Field">
+            [% Data.LanguagesSelectionStrg %]
+            <button type="button" class="Remove" value="Remove" title="[% Translate("Remove this entry") | html %]">[% Translate("Remove") | html %]</button>
+        </div>
+
+        <div class="Clear"></div>
+        <label for="CategoryIDs" id="LabelCategoryIDs">[% Translate("Category") | html %]:</label>
+        <div class="Field">
+            [% Data.CategoriesSelectionStrg %]
+            <button type="button" class="Remove" value="Remove" title="[% Translate("Remove this entry") | html %]">[% Translate("Remove") | html %]</button>
+        </div>
+
+        <div class="Clear"></div>
+        <label for="StateIDs" id="LabelStateIDs">[% Translate("State") | html %]:</label>
+        <div class="Field">
+            [% Data.StateSelectionStrg %]
+            <button type="button" class="Remove" value="Remove" title="[% Translate("Remove this entry") | html %]">[% Translate("Remove") | html %]</button>
+        </div>
+
+        <div class="Clear"></div>
+        <label for="VoteSearchType" id="LabelVoteSearchType">[% Translate("Vote (e. g. Equals 10 or GreaterThan 60)") | html %]:</label>
+        <div class="Field">
+            [% Data.VoteSearchTypeSelectionStrg %]
+            <input type="text" name="VoteSearch" value="[% Data.VoteSearch | html %]" class="W25pc"/>
+            <button type="button" class="Remove" value="Remove" title="[% Translate("Remove this entry") | html %]">[% Translate("Remove") | html %]</button>
+        </div>
+
+        <div class="Clear"></div>
+        <label for="RateSearchType" id="LabelRateSearchType">[% Translate("Rate (e. g. Equals 25% or GreaterThan 75%)") | html %]:</label>
+        <div class="Field">
+            [% Data.RateSearchTypeSelectionStrg %]
+            [% Data.RateSearchSelectionStrg %]
+            <button type="button" class="Remove" value="Remove" title="[% Translate("Remove this entry") | html %]">[% Translate("Remove") | html %]</button>
+        </div>
+
+        <div class="Clear"></div>
+        <label for="ApprovedSearch" id="LabelApprovedSearch">[% Translate("Approved") | html %]:</label>
+        <div class="Field">
+            [% Data.ApprovedStrg %]
+            <button type="button" class="Remove" value="Remove" title="[% Translate("Remove this entry") | html %]">[% Translate("Remove") | html %]</button>
+        </div>
+
+        <div class="Clear"></div>
+        <label for="CreatedUserIDs" id="LabelCreatedUserIDs">[% Translate("Created by") | html %] [% Translate("Agent") | html %]:</label>
+        <div class="Field">
+            [% Data.CreatedUserStrg %]
+            <button type="button" class="Remove" value="Remove" title="[% Translate("Remove this entry") | html %]">[% Translate("Remove") | html %]</button>
+        </div>
+
+        <div class="Clear"></div>
+        <label for="LastChangedUserIDs" id="LabelLastChangedUserIDs">[% Translate("Last changed by") | html %] [% Translate("Agent") | html %]:</label>
+        <div class="Field">
+            [% Data.LastChangedUserStrg %]
+            <button type="button" class="Remove" value="Remove" title="[% Translate("Remove this entry") | html %]">[% Translate("Remove") | html %]</button>
+        </div>
+
+        <div class="Clear"></div>
+        <label for="ItemCreateTimePoint" id="LabelItemCreateTimePoint">[% Translate("FAQ Article Create Time (before/after)") | html %]:</label>
+        <div class="Field">
+            <input type="hidden" name="TimeSearchType" value="TimePoint" [% Data.item("TimeSearchType::TimePoint") %]/>
+            [% Data.ItemCreateTimePointStartStrg %] [% Data.ItemCreateTimePointStrg %] [% Data.ItemCreateTimePointFormatStrg %]
+            <button type="button" class="Remove" value="Remove" title="[% Translate("Remove this entry") | html %]">[% Translate("Remove") | html %]</button>
+        </div>
+
+        <div class="Clear"></div>
+        <label for="ItemCreateTimeSlot" id="LabelItemCreateTimeSlot">[% Translate("FAQ Article Create Time (between)") | html %]:</label>
+        <div class="Field">
+            <input type="hidden" name="TimeSearchType" value="TimeSlot" [% Data.item("TimeSearchType::TimeSlot") %]/>
+            [% Data.ItemCreateTimeStartStrg %] [% Translate("and") | html %] [% Data.ItemCreateTimeStopStrg %]
+            <button type="button" class="Remove" value="Remove" title="[% Translate("Remove this entry") | html %]">[% Translate("Remove") | html %]</button>
+        </div>
+
+        <div class="Clear"></div>
+        <label for="ItemChangeTimePoint" id="LabelItemChangeTimePoint">[% Translate("FAQ Article Change Time (before/after)") | html %]:</label>
+        <div class="Field">
+            <input type="hidden" name="ChangeTimeSearchType" value="TimePoint" [% Data.item("ChangeTimeSearchType::TimePoint") %]/>
+            [% Data.ItemChangeTimePointStartStrg %] [% Data.ItemChangeTimePointStrg %] [% Data.ItemChangeTimePointFormatStrg %]
+            <button type="button" class="Remove" value="Remove" title="[% Translate("Remove this entry") | html %]">[% Translate("Remove") | html %]</button>
+        </div>
+
+        <div class="Clear"></div>
+        <label for="ItemChangeTimeSlot" id="LabelItemChangeTimeSlot">[% Translate("FAQ Article Change Time (between)") | html %]:</label>
+        <div class="Field">
+            <input type="hidden" name="ChangeTimeSearchType" value="TimeSlot" [% Data.item("ChangeTimeSearchType::TimeSlot") %]/>
+            [% Data.ItemChangeTimeStartStrg %] [% Translate("and") | html %] [% Data.ItemChangeTimeStopStrg %]
+            <button type="button" class="Remove" value="Remove" title="[% Translate("Remove this entry") | html %]">[% Translate("Remove") | html %]</button>
+        </div>
+
+        <div class="Clear"></div>
+[% RenderBlockStart("DynamicField") %]
+        [% Data.Label %]
+        <div class="Field">
+            [% Data.Field %]
+            <button type="button" class="Remove" value="Remove" title="[% Translate("Remove this entry") | html %]">[% Translate("Remove") | html %]</button>
+        </div>
+
+        <div class="Clear"></div>
+[% RenderBlockEnd("DynamicField") %]
+        [% Data.AttributesOrigStrg %]
+
+    </fieldset>
+</div>
+
+<div class="ContentFooter Center">
+    <button id="SearchFormSubmit" class="Primary CallForAction" value="Run Search"><span><i class="icon-search"></i> [% Translate("Run Search") | html %]</span></button>
+</div>
+
+<script type="text/javascript">//<![CDATA[
+    window.setTimeout(function (){
+[% RenderBlockStart("SearchAJAXShow") %]
+        Core.Agent.Search.SearchAttributeAdd("[% Data.Attribute | html %]");
+[% RenderBlockEnd("SearchAJAXShow") %]
+        Core.Agent.Search.AdditionalAttributeSelectionRebuild();
+    }, 0);
+//]]></script>
+
+[% RenderBlockEnd("SearchAJAX") %]
+
+[% RenderBlockStart("Search") %]
+
+[% WRAPPER JSOnDocumentComplete %]
+<script type="text/javascript">//<![CDATA[
+    Core.Agent.Search.OpenSearchDialog( '[% Env("Action") %]' );
+//]]></script>
+[% END %]
+
+[% RenderBlockEnd("Search") %]

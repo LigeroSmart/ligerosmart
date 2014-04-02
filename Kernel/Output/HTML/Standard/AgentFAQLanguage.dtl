@@ -105,7 +105,7 @@
         ElementSelector:            '#DeleteLanguageID$QData{"LanguageID"}',
         DialogContentQueryString:   'Action=AgentFAQLanguage;Subaction=Delete;LanguageID=$LQData{"LanguageID"}',
         ConfirmedActionQueryString: 'Action=AgentFAQLanguage;Subaction=DeleteAction;LanguageID=$LQData{"LanguageID"}',
-        DialogTitle:                '$JSText{"Delete Language"} $QData{"Name"}',
+        DialogTitle:                '$JSText{"Delete Language %s", "$QData{"Name"}"}',
         TranslatedText:             {
             Yes: '$JSText{"Yes"}',
             No:  '$JSText{"No"}',

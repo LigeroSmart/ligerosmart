@@ -99,7 +99,7 @@ sub Data {
     $Self->{Translation}->{'Use this feature if you want to work with multiple languges.'} =
         'Használja ezt a szolgáltatást, ha több nyelvvel szeretne dolgozni.';
     $Self->{Translation}->{'Add language'} = 'Nyelv hozzáadása';
-    $Self->{Translation}->{'Delete Language'} = 'Nyelv törlése';
+    $Self->{Translation}->{'Delete Language %s'} = 'Nyelv törlése %s';
     $Self->{Translation}->{'Add Language'} = 'Nyelv hozzáadása';
     $Self->{Translation}->{'Edit Language'} = 'Nyelv szerkesztése';
     $Self->{Translation}->{'Do you really want to delete this language?'} = 'Valóban törölni szeretné ezt a nyelvet?';

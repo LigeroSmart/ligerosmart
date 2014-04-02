@@ -99,7 +99,7 @@ sub Data {
     $Self->{Translation}->{'Use this feature if you want to work with multiple languges.'} =
         '多言語で作業をしたい場合、この項目を設定してください。';
     $Self->{Translation}->{'Add language'} = '言語を追加';
-    $Self->{Translation}->{'Delete Language'} = '言語を削除';
+    $Self->{Translation}->{'Delete Language %s'} = '言語を削除 %s';
     $Self->{Translation}->{'Add Language'} = '言語を追加';
     $Self->{Translation}->{'Edit Language'} = '言語を編集';
     $Self->{Translation}->{'Do you really want to delete this language?'} = 'この言語を削除してよろしいですか？';

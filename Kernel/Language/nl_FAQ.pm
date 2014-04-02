@@ -99,7 +99,7 @@ sub Data {
     $Self->{Translation}->{'Use this feature if you want to work with multiple languges.'} =
         'Gebruik deze feature als u met meerdere talen wilt werken.';
     $Self->{Translation}->{'Add language'} = 'Taal toevoegen';
-    $Self->{Translation}->{'Delete Language'} = 'Taal verwijderen';
+    $Self->{Translation}->{'Delete Language %s'} = 'Taal verwijderen %s';
     $Self->{Translation}->{'Add Language'} = 'Taal toevoegen';
     $Self->{Translation}->{'Edit Language'} = 'Taal bewerken';
     $Self->{Translation}->{'Do you really want to delete this language?'} = 'Wilt u deze taal verwijderen?';

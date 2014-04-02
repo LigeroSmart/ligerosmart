@@ -101,7 +101,7 @@ sub Data {
     $Self->{Translation}->{'Use this feature if you want to work with multiple languges.'} =
         '如果需要支持多种语言，请使用此功能.';
     $Self->{Translation}->{'Add language'} = '添加语言';
-    $Self->{Translation}->{'Delete Language'} = '删除语言';
+    $Self->{Translation}->{'Delete Language %s'} = '删除语言 %s';
     $Self->{Translation}->{'Add Language'} = '添加语言';
     $Self->{Translation}->{'Edit Language'} = '编辑语言';
     $Self->{Translation}->{'Do you really want to delete this language?'} = '你确定要删除这个语言吗?';

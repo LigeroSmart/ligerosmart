@@ -93,7 +93,7 @@ sub Data {
     $Self->{Translation}->{'FAQ Language Management'} = 'Gestão de Idiomas FAQ';
     $Self->{Translation}->{'Use this feature if you want to work with multiple languges.'} = 'Utilize esta funcionalAntiguidade caseo deseja trabalhar com múltiplos idiomas.';
     $Self->{Translation}->{'Add language'} = 'Adicionar idioma';
-    $Self->{Translation}->{'Delete Language'} = 'Apagar idioma';
+    $Self->{Translation}->{'Delete Language %s'} = 'Apagar idioma %s';
     $Self->{Translation}->{'Add Language'} = 'Adicionar idioma';
     $Self->{Translation}->{'Edit Language'} = 'Editar idioma';
     $Self->{Translation}->{'Do you really want to delete this language?'} = 'Deseja apagar este idioma?';
