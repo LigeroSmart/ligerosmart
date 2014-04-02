@@ -359,6 +359,7 @@ sub _PDFOutputFAQHeaderInfo {
     $TableParam{PaddingBottom}       = 3;
 
     # output table
+    PAGE:
     for ( $Page{PageCount} .. $Page{MaxPages} ) {
 
         # output table (or a fragment of it)
@@ -366,7 +367,7 @@ sub _PDFOutputFAQHeaderInfo {
 
         # stop output or output next page
         if ( $TableParam{State} ) {
-            last;
+            last PAGE;
         }
         else {
             $Self->{PDFObject}->PageNew(
@@ -427,6 +428,7 @@ sub _PDFOutputKeywords {
     $TableParam{PaddingBottom}   = 3;
 
     # output table
+    PAGE:
     for ( $Page{PageCount} .. $Page{MaxPages} ) {
 
         # output table (or a fragment of it)
@@ -434,7 +436,7 @@ sub _PDFOutputKeywords {
 
         # stop output or output next page
         if ( $TableParam{State} ) {
-            last;
+            last PAGE;
         }
         else {
             $Self->{PDFObject}->PageNew(
@@ -657,6 +659,7 @@ sub _PDFOuputFAQContent {
         $TableParam{PaddingBottom}   = 3;
 
         # output table
+        PAGE:
         for ( $Page{PageCount} .. $Page{MaxPages} ) {
 
             # output table (or a fragment of it)
@@ -664,7 +667,7 @@ sub _PDFOuputFAQContent {
 
             # stop output or output next page
             if ( $TableParam{State} ) {
-                last;
+                last PAGE;
             }
             else {
                 $Self->{PDFObject}->PageNew(

@@ -756,7 +756,7 @@ sub FAQSearch {
                 $Text =~ s/\*/%/gi;
 
                 # check search attribute, we do not need to search for *
-                next if $Text =~ /^\%{1,3}$/;
+                next TEXT if $Text =~ /^\%{1,3}$/;
 
                 # validate data type
                 my $ValidateSuccess = $Self->{DynamicFieldBackendObject}->ValueValidate(
@@ -867,7 +867,7 @@ sub FAQSearch {
                 $Text =~ s/\*/%/gi;
 
                 # check search attribute, we do not need to search for *
-                next if $Text =~ /^\%{1,3}$/;
+                next TEXT if $Text =~ /^\%{1,3}$/;
 
                 $SQLExtSub .= ' OR ' if ($Counter);
 

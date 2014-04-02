@@ -355,7 +355,7 @@ sub StateTypeList {
         # only add types to list that exist
         TYPE:
         for my $Type ( @{ $Param{Types} } ) {
-            next $Type if !$StateTypes{$Type};
+            next TYPE if !$StateTypes{$Type};
             push @Types, "'$Type'";
         }
 

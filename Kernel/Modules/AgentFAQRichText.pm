@@ -221,10 +221,11 @@ sub Run {
                 FormID => $Self->{FormID},
             );
 
+            ATTACHMENT:
             for my $Attachment (@AttachmentMeta) {
-                next if $FilenameTmp ne $Attachment->{Filename};
+                next ATTACHMENT if $FilenameTmp ne $Attachment->{Filename};
                 $ContentIDNew = $Attachment->{ContentID};
-                last;
+                last ATTACHMENT;
             }
 
             if ( $ContentIDNew eq '' ) {

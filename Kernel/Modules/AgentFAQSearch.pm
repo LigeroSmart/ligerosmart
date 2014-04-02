@@ -913,6 +913,7 @@ sub Run {
 
                 # start table output
                 $Self->{PDFObject}->PageNew( %PageParam, FooterRight => $Page . ' 1', );
+                PAGE:
                 for ( 2 .. $MaxPages ) {
 
                     # output table (or a fragment of it)
@@ -920,7 +921,7 @@ sub Run {
 
                     # stop output or another page
                     if ( $TableParam{State} ) {
-                        last;
+                        last PAGE;
                     }
                     else {
                         $Self->{PDFObject}->PageNew( %PageParam, FooterRight => $Page . ' ' . $_, );
@@ -1084,7 +1085,7 @@ sub Run {
     elsif ( $Self->{Subaction} eq 'AJAX' ) {
 
         # create output
-        my $Output .= $Self->_MaskForm(
+        my $Output = $Self->_MaskForm(
             %GetParam,
         );
 
@@ -1140,7 +1141,7 @@ sub _MaskForm {
             ATTRIBUTE:
             for my $Attribute ( sort keys %{ $Self->{Config}->{Defaults} } ) {
                 next ATTRIBUTE if !$Self->{Config}->{Defaults}->{$Attribute};
-                next if $Attribute eq 'DynamicField';
+                next ATTRIBUTE if $Attribute eq 'DynamicField';
                 $GetParam{$Attribute} = $Self->{Config}->{Defaults}->{$Attribute};
             }
         }

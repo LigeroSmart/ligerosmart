@@ -11,6 +11,7 @@ package Kernel::Language::fi_FAQ;
 
 use strict;
 use warnings;
+use utf8;
 
 sub Data {
     my $Self = shift;
