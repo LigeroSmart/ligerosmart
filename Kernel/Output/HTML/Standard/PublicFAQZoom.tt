@@ -157,7 +157,7 @@
                 <li>
                     <span class="Key RatingLabel">[% Translate("Rating") | html %]:</span>
 [% RenderBlockStart("RateStars") %]
-                    <span class="RateStar"><i class="icon-star"></i></span>
+                    <span class="RateStar"><i class="fa fa-star"></i></span>
 [% RenderBlockEnd("RateStars") %]
 [% RenderBlockStart("RateStarsCount") %]
                     <span class="RateStarText" title="[% Data.Stars | html %] [% Translate("out of 5") | html %]">

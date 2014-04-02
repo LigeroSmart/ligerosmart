@@ -97,20 +97,20 @@ fieldset .FAQStateName {
     color: #999;
 }
 
-.RateButton i.icon-star {
+.RateButton i.fa-star {
     display: none;
 }
 
-.RateButton.RateChecked i.icon-star {
+.RateButton.RateChecked i.fa-star {
     display: block;
     color: #E97D34;
 }
 
-.RateButton.RateChecked i.icon-star-empty {
+.RateButton.RateChecked i.fa-star-o {
     display: none;
 }
 
-.RateButton:hover i.icon-star-empty {
+.RateButton:hover i.fa-star-o {
     color: #000;
 }
 

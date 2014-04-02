@@ -193,7 +193,7 @@
 </div>
 
 <div class="ContentFooter Center">
-    <button id="SearchFormSubmit" class="Primary CallForAction" value="Run Search"><span><i class="icon-search"></i> [% Translate("Run Search") | html %]</span></button>
+    <button id="SearchFormSubmit" class="Primary CallForAction" value="Run Search"><span><i class="fa fa-search"></i> [% Translate("Run Search") | html %]</span></button>
 </div>
 
 <script type="text/javascript">//<![CDATA[

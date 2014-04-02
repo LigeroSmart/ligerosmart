@@ -113,7 +113,7 @@
 
 [% RenderBlockStart("RateStars") %]
                             <div>
-                                <span class="RateStar"><i class="icon-star"></i></span>
+                                <span class="RateStar"><i class="fa fa-star"></i></span>
                             </div>
 [% RenderBlockEnd("RateStars") %]
 [% RenderBlockStart("RateStarsCount") %]
@@ -170,7 +170,7 @@
 
 [% RenderBlockStart("MenuItem") %]
                     <li>
-                        <a href="[% Env("Baselink") %][% Data.Link %]" id="[% Data.MenuID | html %]" class="[% Data.Class | html %]" [% Data.LinkParam %] title="[% Translate(Data.Description) | html %]">[% Translate(Data.Name) | html %]</a>
+                        <a href="[% Env("Baselink") %][% Data.Link | Interpolate %]" id="[% Data.MenuID | html %]" class="[% Data.Class | html %]" [% Data.LinkParam %] title="[% Translate(Data.Description) | html %]">[% Translate(Data.Name) | html %]</a>
                     </li>
 
 [% RenderBlockStart("ShowConfirmationDialog") %]
@@ -179,10 +179,10 @@
 /*global FAQ: true */
     FAQ.Agent.ConfirmationDialog.BindConfirmationDialog({
         ElementID:                  '[% Data.MenuID %]',
-        ElementSelector:            '[% Data.ElementSelector %]',
-        DialogContentQueryString:   '[% Data.DialogContentQueryString %]',
-        ConfirmedActionQueryString: '[% Data.ConfirmedActionQueryString %]',
-        DialogTitle:                '[% Data.DialogTitle %]',
+        ElementSelector:            '[% Data.ElementSelector | Interpolate %]',
+        DialogContentQueryString:   '[% Data.DialogContentQueryString | Interpolate %]',
+        ConfirmedActionQueryString: '[% Data.ConfirmedActionQueryString | Interpolate %]',
+        DialogTitle:                '[% Data.DialogTitle | Interpolate %]',
         TranslatedText:             {
             Yes: [% Translate("Yes") | JSON %],
             No:  [% Translate("No") | JSON %],
@@ -232,7 +232,7 @@
                 <div class="WidgetSimple">
                     <div class="Header">
                         <div class="WidgetAction Toggle">
-                            <a href="[% Env("Baselink") %]Action=AgentTicketZoom;TicketID=[% Data.TicketID | uri %];ArticleID=[% Data.ArticleID | uri %]" title="[% Translate("Show or hide the content") | html %]"><i class="icon-caret-right"></i><i class="icon-caret-down"></i></a>
+                            <a href="[% Env("Baselink") %]Action=AgentTicketZoom;TicketID=[% Data.TicketID | uri %];ArticleID=[% Data.ArticleID | uri %]" title="[% Translate("Show or hide the content") | html %]"><i class="fa fa-caret-right"></i><i class="fa fa-caret-down"></i></a>
                         </div>
                         <h2>
                             [% Translate(Data.Caption) | html %]
@@ -275,7 +275,7 @@
                 <div class="WidgetSimple">
                     <div class="Header">
                         <div class="WidgetAction Toggle">
-                            <a href="[% Env("Baselink") %]Action=AgentTicketZoom;TicketID=[% Data.TicketID | uri %];ArticleID=[% Data.ArticleID | uri %]" title="[% Translate("Show or hide the content") | html %]"><i class="icon-caret-right"></i><i class="icon-caret-down"></i></a>
+                            <a href="[% Env("Baselink") %]Action=AgentTicketZoom;TicketID=[% Data.TicketID | uri %];ArticleID=[% Data.ArticleID | uri %]" title="[% Translate("Show or hide the content") | html %]"><i class="fa fa-caret-right"></i><i class="fa fa-caret-down"></i></a>
                         </div>
                         <h2>[% Translate("Rating") | html %]</h2>
                     </div>
@@ -289,8 +289,8 @@
 [% RenderBlockStart("FAQVotingRateRow") %]
                                     <li id="RateButton[% Data.Value %]">
                                         <span class="RateButton RateUnChecked">
-                                            <i class="icon-star-empty"></i>
-                                            <i class="icon-star"></i>
+                                            <i class="fa fa-star-o"></i>
+                                            <i class="fa fa-star"></i>
                                             [% Data.Title | html %]
                                         </span>
                                     </li>
@@ -299,7 +299,7 @@
                                 </ul>
                                 <br class="Clear" />
 
-                                <button type="submit" class="Primary CallForAction Hidden" id="RateSubmitButton" name="btn" value="[% Translate("Vote") | html %]"><span><i class="icon-check"></i> [% Translate("Vote") | html %]</span></button>
+                                <button type="submit" class="Primary CallForAction Hidden" id="RateSubmitButton" name="btn" value="[% Translate("Vote") | html %]"><span><i class="fa fa-check"></i> [% Translate("Vote") | html %]</span></button>
                                 <input type="hidden" name="Action" value="AgentFAQZoom"/>
                                 <input type="hidden" name="Subaction" value="Vote"/>
                                 <input type="hidden" name="CategoryID" value="[% Data.CategoryID | html %]"/>

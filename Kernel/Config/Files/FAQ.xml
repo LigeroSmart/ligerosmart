@@ -1765,8 +1765,8 @@ Your OTRS Notification Master
                 <Item Key="Link">Action=AgentFAQAdd</Item>
                 <Item Key="Action">AgentFAQAdd</Item>
                 <Item Key="AccessKey">n</Item>
-                <Item Key="CssClass">EmailTicket</Item>
-                <Item Key="Icon">icon-question</Item>
+                <Item Key="CssClass">FAQ</Item>
+                <Item Key="Icon">fa fa-question</Item>
                 <Item Key="Priority">1020090</Item>
             </Hash>
         </Setting>

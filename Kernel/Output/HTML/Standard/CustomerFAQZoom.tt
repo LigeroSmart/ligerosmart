@@ -157,7 +157,7 @@
                 <li>
                     <span class="Key RatingLabel">[% Translate("Rating") | html %]:</span>
 [% RenderBlockStart("RateStars") %]
-                    <span class="RateStar"><i class="icon-star"></i></span>
+                    <span class="RateStar"><i class="fa fa-star"></i></span>
 [% RenderBlockEnd("RateStars") %]
 [% RenderBlockStart("RateStarsCount") %]
                     <span class="RateStarText" title="[% Data.Stars | html %] [% Translate("out of 5") | html %]">
@@ -193,8 +193,8 @@
 [% RenderBlockStart("FAQVotingRateRow") %]
                             <div id="RateButton[% Data.Value %]">
                                 <span class="RateButton RateUnChecked">
-                                    <i class="icon-star-empty"></i>
-                                    <i class="icon-star"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star"></i>
                                     [% Data.Title | html %]
                                 </span>
                             </div>

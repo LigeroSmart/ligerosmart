@@ -13,7 +13,7 @@
     <div class="WidgetSimple Collapsed">
         <div class="Header">
             <div class="WidgetAction Toggle">
-                <a href="#" title="[% Translate("Show or hide the content") | html %]"><i class="icon-caret-right"></i><i class="icon-caret-down"></i></a>
+                <a href="#" title="[% Translate("Show or hide the content") | html %]"><i class="fa fa-caret-right"></i><i class="fa fa-caret-down"></i></a>
             </div>
             <h2>[% Translate("Profile Selection") | html %]</h2>
         </div>
@@ -27,13 +27,13 @@
                         <label for="Profile">[% Translate("Search template") | html %]</label>
                         [% Data.ProfilesStrg %]
                         <button class="CallForAction SpacingTop" name="SelectTemplate" type="submit" value="[% Translate("Select") | html %]">
-                            <span><i class="icon-check"></i> [% Translate("Select") | html %]</span>
+                            <span><i class="fa fa-check"></i> [% Translate("Select") | html %]</span>
                         </button>
                         <button class="CallForAction SpacingTop" name="EraseTemplate" type="submit" value="[% Translate("Delete") | html %]">
-                            <span><i class="icon-trash"></i> [% Translate("Delete") | html %]</span>
+                            <span><i class="fa fa-trash-o"></i> [% Translate("Delete") | html %]</span>
                         </button>
                         <button class="CallForAction SpacingTop" name="SearchTemplate" type="submit" value="[% Translate("Search") | html %]">
-                            <span><i class="icon-search"></i> [% Translate("Search") | html %]</span>
+                            <span><i class="fa fa-search"></i> [% Translate("Search") | html %]</span>
                         </button>
                         <div class="Clear"></div>
                     </form>
@@ -191,7 +191,7 @@
                 </div>
             </fieldset>
             <div id="BottomActionRow" class="Center SpacingTop">
-                <button id="Submit" type="submit" class="Primary CallForAction" value="[% Translate("Search") | html %]"><span><i class="icon-search"></i> [% Translate("Search") | html %]</span></button>
+                <button id="Submit" type="submit" class="Primary CallForAction" value="[% Translate("Search") | html %]"><span><i class="fa fa-search"></i> [% Translate("Search") | html %]</span></button>
             </div>
         </form>
     </div>
