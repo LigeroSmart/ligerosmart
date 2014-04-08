@@ -1465,8 +1465,20 @@ sub _ServiceGetCurrentIncidentState {
         # set the preferences setting for CurInciStateTypeFromCIs
         else {
 
-            # get the incident link type
+            # get the incident link type from config
             my $LinkType = $Self->{ConfigObject}->Get('ITSM::Core::IncidentLinkType');
+
+            # get incident link direction from config
+            my $LinkDirection = $Self->{ConfigObject}->Get('ITSM::Core::IncidentLinkType::Direction');
+
+            # reverse the link direction, as this is the perspective from the service
+            # no need to reverse if direction is 'Both'
+            if ( $LinkDirection eq 'Source' ) {
+                $LinkDirection = 'Target';
+            }
+            elsif ( $LinkDirection eq 'Target' ) {
+                $LinkDirection = 'Source';
+            }
 
             # find all linked config items
             my %LinkedConfigItemIDs = $Self->{LinkObject}->LinkKeyListWithData(
@@ -1475,6 +1487,7 @@ sub _ServiceGetCurrentIncidentState {
                 Object2   => 'ITSMConfigItem',
                 State     => 'Valid',
                 Type      => $LinkType,
+                Direction => $LinkDirection,
                 UserID    => 1,
             );
 

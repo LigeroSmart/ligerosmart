@@ -30,6 +30,18 @@
             <String Regex="">DependsOn</String>
         </Setting>
     </ConfigItem>
+    <ConfigItem Name="ITSM::Core::IncidentLinkType::Direction" Required="1" Valid="1">
+        <Description Translatable="1">Sets the direction of the IncidentLinkType that should be followed to calculate the incident state. For example, if the IncidentLinkType is set to "DependsOn", and the Direction is "Source", only "Depends on"-Links will be followed (and not the opposite link "Required for") to calculate the incident state.</Description>
+        <Group>ITSM Core</Group>
+        <SubGroup>Core::ITSMCore</SubGroup>
+        <Setting>
+            <Option SelectedID="Source">
+                <Item Key="Both">Both</Item>
+                <Item Key="Source">Source</Item>
+                <Item Key="Target">Target</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
     <ConfigItem Name="LinkObject::Type###AlternativeTo" Required="1" Valid="1">
         <Description Translatable="1">This setting defines the link type 'AlternativeTo'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link.</Description>
         <Group>Framework</Group>
