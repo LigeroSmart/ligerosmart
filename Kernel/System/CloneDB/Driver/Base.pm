@@ -12,7 +12,7 @@ package Kernel::System::CloneDB::Driver::Base;
 use strict;
 use warnings;
 
-use utf8;
+use Encode;
 use MIME::Base64;
 use Kernel::System::VariableCheck qw(:all);
 
@@ -212,8 +212,8 @@ sub DataTransfer {
                     next if ( !$Self->{CheckEncodingColumns}->{ lc "$Table.$Column" } );
 
                     # check enconding for column value
-                    my $IsUTF8 = utf8::is_utf8( $Row[$ColumnCounter] );
-                    if ( !$IsUTF8 ) {
+                    if ( !eval { Encode::is_utf8( $Row[$ColumnCounter], 1 ) } ) {
+                        Encode::_utf8_off( $Row[$ColumnCounter] );
                         print STDERR
                             "On table $Table.$Column - id: $Columns[0] - have an invalid utf8 value: $Row[$ColumnCounter] \n";
                     }
