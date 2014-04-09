@@ -12,6 +12,7 @@ package Kernel::System::CloneDB::Driver::Base;
 use strict;
 use warnings;
 
+use utf8;
 use MIME::Base64;
 use Kernel::System::VariableCheck qw(:all);
 
@@ -32,6 +33,9 @@ Kernel::System::CloneDB::Driver::Base - common backend functions
 #
 sub SanityChecks {
     my ( $Self, %Param ) = @_;
+
+    # return is dry run
+    return 1 if $Param{DryRun};
 
     # check needed stuff
     for my $Needed (qw(TargetDBObject)) {
@@ -155,7 +159,10 @@ sub DataTransfer {
             next TABLES;
         }
 
-        print "Converting table $Table...\n";
+        print "Converting table $Table...\n" if !$Param{DryRun};
+
+        # on dry run just check tables
+        print "Checking table $Table...\n" if $Param{DryRun};
 
         # Get the list of columns of this table to be able to
         #   generate correct INSERT statements.
@@ -185,6 +192,7 @@ sub DataTransfer {
         if (
             $Param{TargetDBBackend}->can('SetPreRequisites')
             && grep { $_ eq 'id' } @Columns
+            && !$Param{DryRun}
             )
         {
 
@@ -194,7 +202,26 @@ sub DataTransfer {
             );
         }
 
+        TABLEROW:
         while ( my @Row = $Self->{SourceDBObject}->FetchrowArray() ) {
+
+            if ( $Param{DryRun} ) {
+                for my $ColumnCounter ( 1 .. $#Columns ) {
+                    my $Column = $Columns[$ColumnCounter];
+
+                    next if ( !$Self->{CheckEncodingColumns}->{ lc "$Table.$Column" } );
+
+                    # check enconding for column value
+                    my $IsUTF8 = utf8::is_utf8( $Row[$ColumnCounter] );
+                    if ( !$IsUTF8 ) {
+                        print STDERR
+                            "On table $Table.$Column - id: $Columns[0] - have an invalid utf8 value: $Row[$ColumnCounter] \n";
+                    }
+
+                }
+
+                next TABLEROW;
+            }
 
             # If the two databases have different blob handling (base64), convert
             #   columns that need it.
@@ -206,7 +233,7 @@ sub DataTransfer {
                 for my $ColumnCounter ( 1 .. $#Columns ) {
                     my $Column = $Columns[$ColumnCounter];
 
-                    next if ( !$Self->{BlobColumns}->{ lc "$Table.$Column" } );
+                    next if ( !$Self->{CheckEncodingColumns}->{ lc "$Table.$Column" } );
 
                     if ( !$Self->{SourceDBObject}->GetDatabaseFunction('DirectBlob') ) {
                         $Row[$ColumnCounter] = decode_base64( $Row[$ColumnCounter] );
@@ -232,6 +259,9 @@ sub DataTransfer {
             $Counter++;
         }
 
+        # in case dry run do nothing more
+        next TABLES if $Param{DryRun};
+
         # if needed, reset the autoincremental field
         if (
             $Param{TargetDBBackend}->can('ResetAutoIncrementField')
@@ -247,6 +277,9 @@ sub DataTransfer {
 
         print "Finished converting table $Table.\n";
     }
+
+    # if DryRun mode is activate, return a diferent value
+    return 2 if $Param{DryRun};
 
     return 1;
 

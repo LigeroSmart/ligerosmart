@@ -63,7 +63,7 @@ my $TargetDBObject = $CommonObject{CloneDBBackendObject}->CreateTargetDBConnecti
 die "Could not create target DB connection." if !$TargetDBObject;
 
 my %Options = ();
-getopt( 'rh', \%Options );
+getopt( 'h', \%Options );
 
 if ( exists $Options{h} ) {
     _Help();
@@ -73,12 +73,21 @@ if ( exists $Options{h} ) {
 if ( exists $Options{r} ) {
     my $SanityResult = $CommonObject{CloneDBBackendObject}->SanityChecks(
         TargetDBObject => $TargetDBObject,
+        DryRun         => $Options{n}
     );
     if ($SanityResult) {
         my $DataTransferResult = $CommonObject{CloneDBBackendObject}->DataTransfer(
             TargetDBObject => $TargetDBObject,
+            DryRun         => $Options{n}
         );
+
         die "Was not possible to complete the data transfer." if !$DataTransferResult;
+
+        if ( $DataTransferResult eq 2 ) {
+
+            # dry run was succesfull
+            print STDERR "Dry run was succesfully finished!";
+        }
     }
     exit 1;
 }
@@ -92,6 +101,12 @@ $0 migrate OTRS databases
 Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 
 Usage: $0 -r
+
+-r
+    Run the clone function.
+
+-n
+    Don't actually copy anything, just show if something could be wrong.
 
 This script clones an OTRS database into a target database, even
 on another database platform. It will dynamically get the list of tables in the

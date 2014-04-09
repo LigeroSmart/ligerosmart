@@ -89,14 +89,9 @@ sub new {
     # OTRS stores binary data in some columns. On some database systems,
     #   these are handled differently (data is converted to base64-encoding before
     #   it is stored. Here is the list of these columns which need special treatment.
-    #
-    $Self->{BlobColumns} = {
-        'article_plain.body'          => 1,
-        'article_attachment.content'  => 1,
-        'virtual_fs_db.content'       => 1,
-        'web_upload_cache.content'    => 1,
-        'standard_attachment.content' => 1,
-    };
+    $Self->{BlobColumns} = $Self->{ConfigObject}->Get('CloneDB::BlobColumns');
+
+    $Self->{CheckEncodingColumns} = $Self->{ConfigObject}->Get('CloneDB::CheckEncodingColumns');
 
     # get the Clone DB Backends configuration
     my $CloneDBConfig = $Self->{ConfigObject}->Get('CloneDB::Driver');
@@ -261,6 +256,7 @@ sub DataTransfer {
     my $DataTransfer = $Self->{$SourceDBBackend}->DataTransfer(
         TargetDBObject  => $Param{TargetDBObject},
         TargetDBBackend => $Self->{$TargetDBBackend},
+        DryRun          => $Param{DryRun},
     );
 
     return $DataTransfer;
@@ -301,6 +297,7 @@ sub SanityChecks {
     # perform sanity checks
     my $SanityChecks = $Self->{$CloneDBBackend}->SanityChecks(
         TargetDBObject => $Param{TargetDBObject},
+        DryRun         => $Param{DryRun},
     );
 
     return $SanityChecks;
