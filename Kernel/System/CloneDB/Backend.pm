@@ -257,6 +257,7 @@ sub DataTransfer {
         TargetDBObject  => $Param{TargetDBObject},
         TargetDBBackend => $Self->{$TargetDBBackend},
         DryRun          => $Param{DryRun},
+        Force           => $Param{Force},
     );
 
     return $DataTransfer;
@@ -298,6 +299,7 @@ sub SanityChecks {
     my $SanityChecks = $Self->{$CloneDBBackend}->SanityChecks(
         TargetDBObject => $Param{TargetDBObject},
         DryRun         => $Param{DryRun},
+        Force          => $Param{Force},
     );
 
     return $SanityChecks;

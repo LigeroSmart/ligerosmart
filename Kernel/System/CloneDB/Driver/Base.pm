@@ -211,11 +211,14 @@ sub DataTransfer {
 
                     next if ( !$Self->{CheckEncodingColumns}->{ lc "$Table.$Column" } );
 
+                    # get column value
+                    my $ColumnValue = $Row[$ColumnCounter];
+
                     # check enconding for column value
-                    if ( !eval { Encode::is_utf8( $Row[$ColumnCounter], 1 ) } ) {
-                        Encode::_utf8_off( $Row[$ColumnCounter] );
+                    if ( !eval { Encode::is_utf8( $ColumnValue, 1 ) } ) {
+
                         print STDERR
-                            "On table $Table.$Column - id: $Columns[0] - have an invalid utf8 value: $Row[$ColumnCounter] \n";
+                            "On table: $Table, column: $Column, id: $Row[0] - exists an invalid utf8 value. \n";
                     }
 
                 }
@@ -233,7 +236,7 @@ sub DataTransfer {
                 for my $ColumnCounter ( 1 .. $#Columns ) {
                     my $Column = $Columns[$ColumnCounter];
 
-                    next if ( !$Self->{CheckEncodingColumns}->{ lc "$Table.$Column" } );
+                    next if ( !$Self->{BlobColumns}->{ lc "$Table.$Column" } );
 
                     if ( !$Self->{SourceDBObject}->GetDatabaseFunction('DirectBlob') ) {
                         $Row[$ColumnCounter] = decode_base64( $Row[$ColumnCounter] );
@@ -251,10 +254,15 @@ sub DataTransfer {
 
             print "    Inserting $Counter of $RowCount\n" if $Counter % 1000 == 0;
 
-            $Param{TargetDBObject}->Do(
+            my $Success = $Param{TargetDBObject}->Do(
                 SQL  => $SQL,
                 Bind => \@Bind,
-            ) || die @!;
+            );
+
+            if ( !$Success ) {
+                print STDERR "Could not insert data: Table: $Table - id:$Row[0]. \n";
+                die @! if !$Param{Force};
+            }
 
             $Counter++;
         }

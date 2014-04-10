@@ -46,7 +46,10 @@ sub new {
     bless( $Self, $Type );
 
     # get needed objects
-    for my $Needed (qw(ConfigObject EncodeObject LogObject MainObject SourceDBObject BlobColumns)) {
+    for my $Needed (
+        qw(ConfigObject EncodeObject LogObject MainObject SourceDBObject BlobColumns CheckEncodingColumns)
+        )
+    {
         die "Got no $Needed!" if !$Param{$Needed};
 
         $Self->{$Needed} = $Param{$Needed};
