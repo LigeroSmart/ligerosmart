@@ -109,6 +109,9 @@ Usage: $0 -r
 -n
     Don't actually copy anything, just show if something could be wrong.
 
+-f
+    Continue if and error on inserting data ocurrs, use together wiht -r option.
+
 This script clones an OTRS database into a target database, even
 on another database platform. It will dynamically get the list of tables in the
 source DB, and copy the data of each table to the target DB.
