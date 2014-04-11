@@ -1465,38 +1465,48 @@ sub _ServiceGetCurrentIncidentState {
         # set the preferences setting for CurInciStateTypeFromCIs
         else {
 
-            # get the incident link type from config
-            my $LinkType = $Self->{ConfigObject}->Get('ITSM::Core::IncidentLinkType');
+            # get incident link types and directions from config
+            my $IncidentLinkTypeDirection = $Self->{ConfigObject}->Get('ITSM::Core::IncidentLinkTypeDirection');
 
-            # get incident link direction from config
-            my $LinkDirection = $Self->{ConfigObject}->Get('ITSM::Core::IncidentLinkType::Direction');
+            # to store all linked config item ids of this service (for all configured link types)
+            my %AllLinkedConfigItemIDs;
 
-            # reverse the link direction, as this is the perspective from the service
-            # no need to reverse if direction is 'Both'
-            if ( $LinkDirection eq 'Source' ) {
-                $LinkDirection = 'Target';
+            LINKTYPE:
+            for my $LinkType ( sort keys %{ $IncidentLinkTypeDirection } ) {
+
+                # get the direction
+                my $LinkDirection = $IncidentLinkTypeDirection->{$LinkType};
+
+                # reverse the link direction, as this is the perspective from the service
+                # no need to reverse if direction is 'Both'
+                if ( $LinkDirection eq 'Source' ) {
+                    $LinkDirection = 'Target';
+                }
+                elsif ( $LinkDirection eq 'Target' ) {
+                    $LinkDirection = 'Source';
+                }
+
+                # find all linked config items with this linktype and direction
+                my %LinkedConfigItemIDs = $Self->{LinkObject}->LinkKeyListWithData(
+                    Object1   => 'Service',
+                    Key1      => $ServiceData{ServiceID},
+                    Object2   => 'ITSMConfigItem',
+                    State     => 'Valid',
+                    Type      => $LinkType,
+                    Direction => $LinkDirection,
+                    UserID    => 1,
+                );
+
+                # remember the linked config items
+                %AllLinkedConfigItemIDs = ( %AllLinkedConfigItemIDs, %LinkedConfigItemIDs);
             }
-            elsif ( $LinkDirection eq 'Target' ) {
-                $LinkDirection = 'Source';
-            }
-
-            # find all linked config items
-            my %LinkedConfigItemIDs = $Self->{LinkObject}->LinkKeyListWithData(
-                Object1   => 'Service',
-                Key1      => $ServiceData{ServiceID},
-                Object2   => 'ITSMConfigItem',
-                State     => 'Valid',
-                Type      => $LinkType,
-                Direction => $LinkDirection,
-                UserID    => 1,
-            );
 
             # investigate the current incident state of each config item
             CONFIGITEMID:
-            for my $ConfigItemID ( sort keys %LinkedConfigItemIDs ) {
+            for my $ConfigItemID ( sort keys %AllLinkedConfigItemIDs ) {
 
                 # extract config item data
-                my $ConfigItemData = $LinkedConfigItemIDs{$ConfigItemID};
+                my $ConfigItemData = $AllLinkedConfigItemIDs{$ConfigItemID};
 
                 next CONFIGITEMID if $ConfigItemData->{CurDeplStateType} ne 'productive';
                 next CONFIGITEMID if $ConfigItemData->{CurInciStateType} eq 'operational';

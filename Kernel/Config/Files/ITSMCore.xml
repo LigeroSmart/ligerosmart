@@ -22,24 +22,16 @@
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="ITSM::Core::IncidentLinkType" Required="1" Valid="1">
-        <Description Translatable="1">Set the type of link to be used to calculate the incident state.</Description>
+    <ConfigItem Name="ITSM::Core::IncidentLinkTypeDirection" Required="1" Valid="1">
+        <Description Translatable="1">Set the type and direction of links to be used to calculate the incident state. The key is the name of the link type (as defined in LinkObject::Type), and the value is the direction of the IncidentLinkType that should be followed to calculate the incident state. For example if the IncidentLinkType is set to "DependsOn", and the Direction is "Source", only "Depends on" links will be followed (and not the opposite link "Required for") to calculate the incident state. You can add more link types ad directions as you like, e.g. "Includes" with the direction "Target". All linkt ypes defined in the sysconfig options LinkObject::Type are possible and the direction can be "Source", "Target", or "Both".  After you make changes to this sysconfig option you need to run the script TODO! bin/TODO-ADD-SCRIPTNAME-HERE so that all incident states will be recalculated based on the new settings!</Description>
         <Group>ITSM Core</Group>
         <SubGroup>Core::ITSMCore</SubGroup>
         <Setting>
-            <String Regex="">DependsOn</String>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="ITSM::Core::IncidentLinkType::Direction" Required="1" Valid="1">
-        <Description Translatable="1">Sets the direction of the IncidentLinkType that should be followed to calculate the incident state. For example, if the IncidentLinkType is set to "DependsOn", and the Direction is "Source", only "Depends on"-Links will be followed (and not the opposite link "Required for") to calculate the incident state.</Description>
-        <Group>ITSM Core</Group>
-        <SubGroup>Core::ITSMCore</SubGroup>
-        <Setting>
-            <Option SelectedID="Source">
-                <Item Key="Both">Both</Item>
-                <Item Key="Source">Source</Item>
-                <Item Key="Target">Target</Item>
-            </Option>
+            <Hash>
+                <!-- <Item Key="DependsOn">Both</Item> -->
+                <Item Key="DependsOn">Source</Item>
+                <Item Key="Includes">Source</Item>
+            </Hash>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="LinkObject::Type###AlternativeTo" Required="1" Valid="1">
