@@ -78,8 +78,8 @@ if ( exists $Options{r} || exists $Options{n} ) {
     if ($SanityResult) {
         my $DataTransferResult = $CommonObject{CloneDBBackendObject}->DataTransfer(
             TargetDBObject => $TargetDBObject,
-            DryRun => $Options{n} || '',
-            Force  => $Options{f} || '',
+            DryRun         => $Options{n} || '',
+            Force          => $Options{f} || '',
         );
 
         die "Was not possible to complete the data transfer." if !$DataTransferResult;
