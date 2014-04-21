@@ -93,4 +93,12 @@
             </Hash>
         </Setting>
     </ConfigItem>
+    <ConfigItem Name="CloneDB::LogFile" Required="1" Valid="1">
+        <Description Translatable="1">Log file for replacement of malformed utf8 column values.</Description>
+        <Group>OTRSCloneDB</Group>
+        <SubGroup>Core::Log</SubGroup>
+        <Setting>
+            <String Regex="">/tmp/CloneDB.log</String>
+        </Setting>
+    </ConfigItem>
 </otrs_config>

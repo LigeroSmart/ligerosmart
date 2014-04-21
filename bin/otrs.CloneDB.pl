@@ -82,12 +82,12 @@ if ( exists $Options{r} || exists $Options{n} ) {
             Force          => $Options{f} || '',
         );
 
-        die "Was not possible to complete the data transfer." if !$DataTransferResult;
+        die "Was not possible to complete the data transfer. \n" if !$DataTransferResult;
 
         if ( $DataTransferResult eq 2 ) {
 
             # dry run was succesfull
-            print STDERR "Dry run was succesfully finished!";
+            print STDERR "Dry run was succesfully finished! \n";
         }
     }
     exit 1;

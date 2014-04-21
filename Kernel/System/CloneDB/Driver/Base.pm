@@ -142,6 +142,12 @@ sub DataTransfer {
         }
     }
 
+    # get logfile location
+    my $LogFile = $Self->{ConfigObject}->Get('CloneDB::LogFile');
+
+    # file handle
+    my $FH;
+
     # get skip tables settings
     my $SkipTables
         = $Self->{ConfigObject}->Get('CloneDB::SkipTables');
@@ -205,26 +211,58 @@ sub DataTransfer {
         TABLEROW:
         while ( my @Row = $Self->{SourceDBObject}->FetchrowArray() ) {
 
-            if ( $Param{DryRun} ) {
-                for my $ColumnCounter ( 1 .. $#Columns ) {
-                    my $Column = $Columns[$ColumnCounter];
+            # open logfile
+            if ( !open $FH, '>>', $LogFile ) {    ## no critic
 
-                    next if ( !$Self->{CheckEncodingColumns}->{ lc "$Table.$Column" } );
+                # print error screen
+                print STDERR "\n Can't write $LogFile: $! \n";
+                return;
+            }
 
-                    # get column value
-                    my $ColumnValue = $Row[$ColumnCounter];
+            # switch filehandle to utf8 mode if utf-8 is used
+            binmode $FH, ':utf8';                 ## no critic
 
-                    # check enconding for column value
-                    if ( !eval { Encode::is_utf8( $ColumnValue, 1 ) } ) {
+            COLUMNVALUES:
+            for my $ColumnCounter ( 1 .. $#Columns ) {
+                my $Column = $Columns[$ColumnCounter];
 
-                        print STDERR
-                            "On table: $Table, column: $Column, id: $Row[0] - exists an invalid utf8 value. \n";
+                # get column value
+                my $ColumnValue = $Row[$ColumnCounter];
+
+                # verify if the string value have the utf8 flag enabled
+                next COLUMNVALUES if !utf8::is_utf8($ColumnValue);
+
+                # check enconding for column value
+                if ( !eval { Encode::is_utf8( $ColumnValue, 1 ) } ) {
+
+                    # replace invalid characters with � (U+FFFD, Unicode replacement character)
+                    # If it runs on good UTF-8 input, output should be identical to input
+                    my $TmpResult = eval {
+                        Encode::decode( 'UTF-8', $ColumnValue );
+                    };
+
+                    # remove wrong characters
+                    if ( $TmpResult =~ m{[\x{FFFD}]}xms ) {
+                        $TmpResult =~ s{[\x{FFFD}]}{}xms;
                     }
 
+                    # generate a log message with full info about error and replacement
+                    my $ReplacementMessage =
+                        "On table: $Table, column: $Column, id: $Row[0] - exists an invalid utf8 value. \n"
+                        .
+                        " $ColumnValue is replaced by : $TmpResult . \n\n";
+
+                    # write on log file
+                    print $FH $ReplacementMessage;
+
+                    # set new vale on Row result from DB
+                    $Row[$ColumnCounter] = $TmpResult;
                 }
 
-                next TABLEROW;
             }
+
+            # in case dry run do nothing more
+            next TABLEROW if $Param{DryRun};
 
             # If the two databases have different blob handling (base64), convert
             #   columns that need it.
