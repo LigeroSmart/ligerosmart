@@ -211,17 +211,6 @@ sub DataTransfer {
         TABLEROW:
         while ( my @Row = $Self->{SourceDBObject}->FetchrowArray() ) {
 
-            # open logfile
-            if ( !open $FH, '>>', $LogFile ) {    ## no critic
-
-                # print error screen
-                print STDERR "\n Can't write $LogFile: $! \n";
-                return;
-            }
-
-            # switch filehandle to utf8 mode if utf-8 is used
-            binmode $FH, ':utf8';                 ## no critic
-
             COLUMNVALUES:
             for my $ColumnCounter ( 1 .. $#Columns ) {
                 my $Column = $Columns[$ColumnCounter];
@@ -252,11 +241,26 @@ sub DataTransfer {
                         .
                         " $ColumnValue is replaced by : $TmpResult . \n\n";
 
+                    # open logfile
+                    if ( !open $FH, '>>', $LogFile ) {    ## no critic
+
+                        # print write error
+                        print STDERR "\n Can't write $LogFile: $! \n";
+                        return;
+                    }
+
+                    # switch filehandle to utf8 mode if utf-8 is used
+                    binmode $FH, ':utf8';                 ## no critic
+
                     # write on log file
                     print $FH $ReplacementMessage;
 
+                    # close the filehandle
+                    close $FH;
+
                     # set new vale on Row result from DB
                     $Row[$ColumnCounter] = $TmpResult;
+
                 }
 
             }
