@@ -482,12 +482,12 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
         The survey_vote table holds a reference to the corresponding request and question
         as well as the chosen answers.
     </para>
-    <!--
-            OK, so far for the users and now for the developers underneath us:
+    <!--
+            OK, so far for the users and now for the developers underneath us:
 
             Add a new send condition:
 
-            - The send condition are stored in a yaml structure.
+            - The send condition are stored in a yaml structure.
             - In the Survey.pm the function "_BuildSendConditionStrg" generate the yaml structur.
             The function is used in the two functions "SurveyAdd" and "SurveyUpdate". So these two functions
             need a new optional parameter for the new send condition (similar the ticket type or service).
@@ -497,7 +497,7 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
             - Optional you can add a Config-Item for the send condition.
             - The last step is to add the new send condition in the new and edit mask for the survey. Also it can be
             added in the detail survey view.
-    -->
+    -->
 </chapter>
 
 <!-- *********** -->
