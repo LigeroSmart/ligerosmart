@@ -75,7 +75,7 @@
                         <div class="Value" title="[% Translate("Rating") | html %] [% Data.VoteResult %]%">
 [% RenderBlockStart("RateStars") %]
                             <div>
-                                <span class="RateStar">Star</span>
+                                <span class="RateStar"><i class="fa fa-star"></i></span>
                             </div>
 [% RenderBlockEnd("RateStars") %]
 [% RenderBlockStart("RateStarsCount") %]
