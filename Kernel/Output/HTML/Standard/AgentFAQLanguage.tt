@@ -31,7 +31,7 @@
                             [% Translate("Use this feature if you want to work with multiple languges.") | html %]
                         </p>
                         <div class="Field SpacingTop">
-                            <button class="CallForAction" type="submit" value="[% Translate("Enable it here!") | html %]">
+                            <button class="CallForAction FullSize Center" type="submit" value="[% Translate("Enable it here!") | html %]">
                                 <span>[% Translate("Enable it here!") | html %]</span>
                             </button>
                         </div>
@@ -52,13 +52,17 @@
                 <ul class="ActionList">
 [% RenderBlockStart("ActionOverview") %]
                     <li>
-                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %]" class="CallForAction"><span>[% Translate("Go to overview") | html %]</span></a>
+                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %]" class="CallForAction Fullsize Center">
+                            <span><i class="fa fa-caret-left"></i>[% Translate("Go to overview") | html %]</span>
+                        </a>
                     </li>
 [% RenderBlockEnd("ActionOverview") %]
 
 [% RenderBlockStart("ActionAdd") %]
                     <li>
-                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Add" class="CallForAction Plus"><span>[% Translate("Add language") | html %]</span></a>
+                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Add" class="CallForAction Fullsize Center">
+                            <span><i class="fa fa-plus-square"></i>[% Translate("Add language") | html %]</span>
+                        </a>
                     </li>
 [% RenderBlockEnd("ActionAdd") %]
                 </ul>
