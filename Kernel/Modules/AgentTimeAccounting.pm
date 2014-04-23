@@ -466,8 +466,9 @@ sub Run {
                 }
 
                 # repeated hours are not allowed
+                POSITION:
                 for ( my $Position = $ID - 1; $Position >= 1; $Position-- ) {
-                    next if !defined $StartTimes[$Position] || !defined $StartTimes[$ID];
+                    next POSITION if !defined $StartTimes[$Position] || !defined $StartTimes[$ID];
 
                     if (
                         $StartTimes[$Position] > $StartTimes[$ID]
@@ -828,13 +829,23 @@ sub Run {
                 }
             }
 
+            if (
+                $Period
+                && $Param{StartTime} eq '00:00'
+                && $Param{EndTime} eq '00:00'
+                )
+            {
+                $Param{StartTime} = '';
+                $Param{EndTime}   = '';
+            }
+
             $Self->{LayoutObject}->Block(
                 Name => 'Unit',
                 Data => {
                     %Param,
                     %Frontend,
                     %{ $Errors{$ErrorIndex} },
-                    }
+                },
             );
 
             # add proper server error msg for the start and end times
@@ -1888,9 +1899,9 @@ sub Run {
         $Param{TotalHoursTotal} = sprintf( "%.2f", $Param{TotalHoursTotal} );
 
         # build output
-        my $Output .= $Self->{LayoutObject}->Header( Title => 'Reporting' );
-        $Output    .= $Self->{LayoutObject}->NavigationBar();
-        $Output    .= $Self->{LayoutObject}->Output(
+        my $Output = $Self->{LayoutObject}->Header( Title => 'Reporting' );
+        $Output .= $Self->{LayoutObject}->NavigationBar();
+        $Output .= $Self->{LayoutObject}->Output(
             Data => { %Param, %Frontend },
             TemplateFile => 'AgentTimeAccountingReporting'
         );

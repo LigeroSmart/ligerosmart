@@ -6,27 +6,30 @@
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
-2.3.2 - 2014-??-??
-- 2014-01-22 Fixed bug#10127 - Entries starting 00:00 will loose start time.
-- 2014-01-22 Fixed bug#8571 - Not well description for Backend-Error while trying to add an entry outside of time period.
-- 2014-01-22 Fixed bug#10126 - Unable to create a new entry
+2.3.3 - 2014-??-??
+ - 2014-04-23 Fixed bug#[10484](http://bugs.otrs.org/show_bug.cgi?id=10484) - Added period without Start/Stop time shows 00:00 in both times after summit.
+
+2.3.2 - 2014-04-01
+ - 2014-01-22 Fixed bug#10127 - Entries starting 00:00 will loose start time.
+ - 2014-01-22 Fixed bug#8571 - Not well description for Backend-Error while trying to add an entry outside of time period.
+ - 2014-01-22 Fixed bug#10126 - Unable to create a new entry
 
 2.3.1 - 2013-11-09
-- 2013-11-09 Added visual improvements to buttons.
-- 2013-11-09 Added documentation.
+ - 2013-11-09 Added visual improvements to buttons.
+ - 2013-11-09 Added documentation.
 
 2.2.91 - 2013-09-25
-- 2013-09-23 Fixed bug#9340 - Column title not matching in TimeAccounting statistics.
-- 2013-09-23 Fixed bug#9424 - Overtime calculation does not use VacationDaysOneTime from users calendar.
-- 2013-09-23 Fixed bug#9740 - Status of invalid project reverts to valid.
-- 2013-08-27 First beta release for TimeAccounting 2.3 for OTRS 3.3.x.
+ - 2013-09-23 Fixed bug#9340 - Column title not matching in TimeAccounting statistics.
+ - 2013-09-23 Fixed bug#9424 - Overtime calculation does not use VacationDaysOneTime from users calendar.
+ - 2013-09-23 Fixed bug#9740 - Status of invalid project reverts to valid.
+ - 2013-08-27 First beta release for TimeAccounting 2.3 for OTRS 3.3.x.
 
 2.1.2 - 2012-07-10
-- 2012-04-17 Added Italian translation, thanks to Massimo Bianchi.
-- 2012-02-14 Added Hungarian translation, thanks to Béla Csábi.
+ - 2012-04-17 Added Italian translation, thanks to Massimo Bianchi.
+ - 2012-02-14 Added Hungarian translation, thanks to Béla Csábi.
 
 2.1.1 - 2012-02-14
-- First stable release for OTRS 3.1.x.
+ - First stable release for OTRS 3.1.x.
 
 2.1.0 RC1 - 2012-02-07
  - 2012-02-15 Fixed problem with onchange handler on dropdown of incomplete working days selection.
