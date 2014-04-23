@@ -66,9 +66,12 @@ sub Run {
         my $FinishPattern = '</div>';
         my $Replace       = <<"END";
                         <a  href=\"#\" id=\"OptionFAQ\">[ $FAQTranslatable ]</a>
+                    </div>
+END
+        ${ $Param{Data} } =~ s{ ($StartPattern) $FinishPattern }{$1$Replace}ixms;
 
-<!--dtl:js_on_document_complete-->
-<script type=\"text/javascript\">//<![CDATA[
+        # inject the necessary JS into the template
+        $Self->{LayoutObject}->AddJSOnDocumentComplete( Code => <<"EOF");
 /*global FAQ: true */
 FAQ.Agent.TicketCompose.InitFAQTicketCompose(\$('#RichText'));
 \$('#OptionFAQ').bind('click', function (event) {
@@ -76,12 +79,8 @@ FAQ.Agent.TicketCompose.InitFAQTicketCompose(\$('#RichText'));
     Core.UI.Dialog.ShowContentDialog(FAQIFrame, '', '10px', 'Center', true);
     return false;
 });
-//]]></script>
-<!--dtl:js_on_document_complete-->
+EOF
 
-                    </div>
-END
-        ${ $Param{Data} } =~ s{ ($StartPattern) $FinishPattern }{$1$Replace}ixms;
         return 1;
     }
 
@@ -93,9 +92,12 @@ END
                     <label>$OptionsTranslatable:</label>
                     <div class="Field">
                         <a  href=\"#\" id=\"OptionFAQ\">[ $FAQTranslatable ]</a>
+                    </div>
+                    <div class=\"Clear\"></div>
+END
+    ${ $Param{Data} } =~ s{ ($StartPattern) }{$Replace}ixms;
 
-<!--dtl:js_on_document_complete-->
-<script type="text/javascript">//<![CDATA[
+    $Self->{LayoutObject}->AddJSOnDocumentComplete( Code => <<"EOF");
 /*global FAQ: true */
 FAQ.Agent.TicketCompose.InitFAQTicketCompose(\$('#RichText'));
 \$('#OptionFAQ').bind('click', function (event) {
@@ -103,13 +105,8 @@ FAQ.Agent.TicketCompose.InitFAQTicketCompose(\$('#RichText'));
     Core.UI.Dialog.ShowContentDialog(FAQIFrame, '', '10px', 'Center', true);
     return false;
 });
-//]]></script>
-<!--dtl:js_on_document_complete-->
+EOF
 
-                    </div>
-                    <div class=\"Clear\"></div>
-END
-    ${ $Param{Data} } =~ s{ ($StartPattern) }{$Replace}ixms;
     return 1;
 }
 
