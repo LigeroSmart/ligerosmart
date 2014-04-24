@@ -1411,8 +1411,8 @@ sub WorkingUnitsInsert {
     UNITREF:
     for my $UnitRef ( @{ $Param{WorkingUnits} } ) {
 
-        my $StartTime = $Date . ' ' . $UnitRef->{StartTime} . ':00';
-        my $EndTime   = $Date . ' ' . $UnitRef->{EndTime} . ':00';
+        my $StartTime = $Date . ' ' . ( $UnitRef->{StartTime} || '00:00' ) . ':00';
+        my $EndTime   = $Date . ' ' . ( $UnitRef->{EndTime}   || '00:00' ) . ':00';
 
         # '' does not work in integer field of postgres
         $UnitRef->{ProjectID} ||= 0;
@@ -1525,9 +1525,10 @@ sub ProjectActionReporting {
 
     # fetch the data
     my %Data;
+    ROW:
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
 
-        next if !$Row[2];
+        next ROW if !$Row[2];
 
         $Data{ $Row[0] }->{Actions}->{ $Row[1] }->{Total} += $Row[2];
     }
@@ -1546,9 +1547,10 @@ sub ProjectActionReporting {
     );
 
     # fetch the data
+    ROW:
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
 
-        next if !$Row[2];
+        next ROW if !$Row[2];
 
         $Data{ $Row[0] }->{Actions}->{ $Row[1] }->{PerMonth} += $Row[2];
     }

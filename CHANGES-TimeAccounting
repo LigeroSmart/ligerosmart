@@ -7,6 +7,7 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 2.3.3 - 2014-??-??
+ - 2014-04-23 Fixed bug#10486 - Can not insert a new entry with just using period.
  - 2014-04-23 Fixed bug#10484 - Added period without Start/Stop time shows 00:00 in both times after summit.
 
 2.3.2 - 2014-04-01
