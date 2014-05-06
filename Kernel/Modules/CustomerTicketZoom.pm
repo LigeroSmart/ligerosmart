@@ -2,7 +2,7 @@
 # Kernel/Modules/CustomerTicketZoom.pm - to get a closer view
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/f01d21d6301791e8e668d396a607f0628e369889//Kernel/Modules/CustomerTicketZoom.pm
+# $origin: https://github.com/OTRS/otrs/blob/430e91d1bf9a5396fad9df71641dd5d0f54592b0/Kernel/Modules/CustomerTicketZoom.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -173,7 +173,7 @@ sub Run {
 
     # get params
     my %GetParam;
-    for my $Key (qw( Subject Body StateID PriorityID)) {
+    for my $Key (qw(Subject Body StateID PriorityID)) {
         $GetParam{$Key} = $Self->{ParamObject}->GetParam( Param => $Key );
     }
 # ---
@@ -232,11 +232,13 @@ sub Run {
             %GetParam,
             %ACLCompatGetParam,
             CustomerUserID => $CustomerUser || '',
+            TicketID => $Self->{TicketID},
         );
         my $NextStates = $Self->_GetNextStates(
             %GetParam,
             %ACLCompatGetParam,
             CustomerUserID => $CustomerUser || '',
+            TicketID => $Self->{TicketID},
         );
 
         # update Dynamic Fields Possible Values via AJAX
@@ -531,6 +533,7 @@ sub Run {
                 TicketState   => $Ticket{State},
                 TicketStateID => $Ticket{StateID},
                 %GetParam,
+                %ACLCompatGetParam,
                 DynamicFieldHTML => \%DynamicFieldHTML,
             );
             $Output .= $Self->{LayoutObject}->CustomerFooter();
@@ -803,6 +806,7 @@ sub Run {
         TicketState   => $Ticket{State},
         TicketStateID => $Ticket{StateID},
         %GetParam,
+        %ACLCompatGetParam,
         DynamicFieldHTML => \%DynamicFieldHTML,
     );
 
@@ -827,6 +831,9 @@ sub _GetNextStates {
             %Param,
             Action         => $Self->{Action},
             CustomerUserID => $Self->{UserID},
+
+            # %Param could contain Ticket Type as only Type, it should not be sent
+            Type => undef,
         );
     }
     return \%NextStates;
@@ -1009,8 +1016,6 @@ sub _Mask {
         'TicketID' => $Self->{TicketID}
     );
 
-    #    my $ProcessData;
-    #    my $ActivityData;
     # show process widget  and activity dialogs on process tickets
     if ($IsProcessTicket) {
 
@@ -1553,7 +1558,7 @@ sub _Mask {
 
         # check subject
         if ( !$Param{Subject} ) {
-            $Param{Subject} = "Re: $Param{Title}";
+            $Param{Subject} = "Re: " . ( $Param{Title} // '' );
         }
         $Self->{LayoutObject}->Block(
             Name => 'FollowUp',
@@ -1575,10 +1580,9 @@ sub _Mask {
 
         # build next states string
         if ( $Self->{Config}->{State} ) {
-            my %NextStates = $Self->{TicketObject}->TicketStateList(
-                TicketID       => $Self->{TicketID},
-                Action         => $Self->{Action},
-                CustomerUserID => $Self->{UserID},
+            my $NextStates = $Self->_GetNextStates(
+                %Param,
+                TicketID => $Self->{TicketID},
             );
             my %StateSelected;
             if ( $Param{StateID} ) {
@@ -1588,7 +1592,7 @@ sub _Mask {
                 $StateSelected{SelectedValue} = $Self->{Config}->{StateDefault};
             }
             $Param{NextStatesStrg} = $Self->{LayoutObject}->BuildSelection(
-                Data => \%NextStates,
+                Data => $NextStates,
                 Name => 'StateID',
                 %StateSelected,
             );
@@ -1600,9 +1604,9 @@ sub _Mask {
 
         # get priority
         if ( $Self->{Config}->{Priority} ) {
-            my %Priorities = $Self->{TicketObject}->TicketPriorityList(
-                CustomerUserID => $Self->{UserID},
-                Action         => $Self->{Action},
+            my $Priorities = $Self->_GetPriorities(
+                %Param,
+                TicketID => $Self->{TicketID},
             );
             my %PrioritySelected;
             if ( $Param{PriorityID} ) {
@@ -1613,7 +1617,7 @@ sub _Mask {
                     || '3 normal';
             }
             $Param{PriorityStrg} = $Self->{LayoutObject}->BuildSelection(
-                Data => \%Priorities,
+                Data => $Priorities,
                 Name => 'PriorityID',
                 %PrioritySelected,
             );

@@ -2,7 +2,7 @@
 # AgentTicketZoom.dtl - provides HTML for AgentTicketZoom.pm
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/f01d21d6301791e8e668d396a607f0628e369889//Kernel/Output/HTML/Standard/AgentTicketZoom.dtl
+# $origin: https://github.com/OTRS/otrs/blob/430e91d1bf9a5396fad9df71641dd5d0f54592b0/Kernel/Output/HTML/Standard/AgentTicketZoom.dtl
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -418,17 +418,17 @@
 #                    </fieldset>
                 </div>
             </div>
+# show customer info table
+<!-- dtl:block:CustomerTable -->
             <div class="WidgetSimple">
                 <div class="Header">
                     <h2>$Text{"Customer Information"}</h2>
                 </div>
                 <div class="Content">
-# show customer info table
-<!-- dtl:block:CustomerTable -->
                     $Data{"CustomerTable"}
-<!-- dtl:block:CustomerTable -->
                 </div>
             </div>
+<!-- dtl:block:CustomerTable -->
 <!-- dtl:block:LinkTableSimple -->
             <div class="WidgetSimple DontPrint">
                 <div class="Header">
@@ -957,22 +957,22 @@ $('#$QData{"FormID"} select[name=ResponseID]').bind('change', function (Event) {
 # field names
 #<!-- dtl:block:ArticleDynamicFieldField1 -->
 #                        <label>$Text{"$Data{"Label"}"}:</label>
-#<!-- dtl:block:ArticleDynamicField1Link -->
+#<!-- dtl:block:ArticleDynamicFieldField1Link -->
 #                    <p class="Value" title="$QData{"Title"}"><a href="$Data{"Link"}" target="_blank" class="DynamicFieldLink">$Data{"Value"}</a></p>
-#<!-- dtl:block:ArticleDynamicField1Link -->
-#<!-- dtl:block:ArticleDynamicField1Plain -->
+#<!-- dtl:block:ArticleDynamicFieldField1Link -->
+#<!-- dtl:block:ArticleDynamicFieldField1Plain -->
 #                    <p class="Value" title="$QData{"Title"}">$Data{"Value"}</p>
-#<!-- dtl:block:ArticleDynamicField1Plain -->
+#<!-- dtl:block:ArticleDynamicFieldField1Plain -->
 #                        <div class="Clear"></div>
 #<!-- dtl:block:ArticleDynamicFieldField1 -->
 #<!-- dtl:block:ArticleDynamicFieldField2 -->
 #                        <label>$Text{"$Data{"Label"}"}:</label>
-#<!-- dtl:block:ArticleDynamicField2Link -->
+#<!-- dtl:block:ArticleDynamicFieldField2Link -->
 #                    <p class="Value" title="$QData{"Title"}"><a href="$Data{"Link"}" target="_blank" class="DynamicFieldLink">$Data{"Value"}</a></p>
-#<!-- dtl:block:ArticleDynamicField2Link -->
-#<!-- dtl:block:ArticleDynamicField2Plain -->
+#<!-- dtl:block:ArticleDynamicFieldField2Link -->
+#<!-- dtl:block:ArticleDynamicFieldField2Plain -->
 #                    <p class="Value" title="$QData{"Title"}">$Data{"Value"}</p>
-#<!-- dtl:block:ArticleDynamicField2Plain -->
+#<!-- dtl:block:ArticleDynamicFieldField2Plain -->
 #                        <div class="Clear"></div>
 #<!-- dtl:block:ArticleDynamicFieldField2 -->
 

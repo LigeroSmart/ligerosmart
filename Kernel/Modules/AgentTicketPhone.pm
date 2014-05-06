@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTicketPhone.pm - to handle phone calls
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/f01d21d6301791e8e668d396a607f0628e369889//Kernel/Modules/AgentTicketPhone.pm
+# $origin: https://github.com/OTRS/otrs/blob/430e91d1bf9a5396fad9df71641dd5d0f54592b0/Kernel/Modules/AgentTicketPhone.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1944,7 +1944,7 @@ sub Run {
                     Data         => $StandardTemplates,
                     SelectedID   => $GetParam{StandardTemplateID},
                     PossibleNone => 1,
-                    Translation  => 0,
+                    Translation  => 1,
                     Max          => 100,
                 },
                 @DynamicFieldAJAX,
@@ -2540,7 +2540,7 @@ sub _MaskPhoneNew {
             SelectedID => $Param{StandardTemplateID} || '',
             PossibleNone => 1,
             Sort         => 'AlphanumericValue',
-            Translation  => 0,
+            Translation  => 1,
             Max          => 200,
         );
         $Self->{LayoutObject}->Block(
