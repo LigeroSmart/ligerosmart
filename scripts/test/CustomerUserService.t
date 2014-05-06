@@ -2,7 +2,7 @@
 # CustomerUserService.t - CustomerUserService tests
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/f01d21d6301791e8e668d396a607f0628e369889//scripts/test/CustomerUserService.t
+# $origin: https://github.com/OTRS/otrs/blob/430e91d1bf9a5396fad9df71641dd5d0f54592b0/scripts/test/CustomerUserService.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
