@@ -140,8 +140,8 @@ $Include{"AgentITSMCABMemberSearch"}
                                 <td>
                                     $Text{"$Data{"UserType"}"}
                                 </td>
-                                <td title="$QData{"UserLogin"} ($Quote{"$Data{"UserFirstname"} $Data{"UserLastname"}"})">
-                                    $QData{"UserLogin","25"} ($Quote{"$Data{"UserFirstname"} $Data{"UserLastname"}","25"})
+                                <td title="$QData{"UserLogin"} ($QData{"UserFirstname"} $QData{"UserLastname"})">
+                                    $QData{"UserLogin","25"} ($QData{"UserFirstname"} $QData{"UserLastname"})
                                 </td>
                                 <td>
                                     <button type="submit" class="TrashCan" name="Delete$Data{"InternalUserType"}$QData{"UserID"}" value="$Text{"Delete"}">$Text{"Delete"}</button>

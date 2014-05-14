@@ -64,7 +64,7 @@
 <!-- dtl:block:ShowWorkOrderZoom -->
                             </td>
                             <td>
-                                $QData{"UserLogin"} ($Quote{"$Data{"UserFirstname"} $Data{"UserLastname"}","20"})
+                                $QData{"UserLogin","25"} ($QData{"UserFirstname"} $QData{"UserLastname"})
                             </td>
                             <td>
                                 $TimeLong{"$Data{"CreateTime"}"}

@@ -47,8 +47,8 @@
             <div class="Clear"></div>
 
             <label>$Text{"Changed by"}:</label>
-            <div class="Field" title="$Quote{"$Data{"UserLogin"} ($Data{"UserFirstname"} $Data{"UserLastname"})"}">
-                $Quote{"$Data{"UserLogin"}"} ($Quote{"$Data{"UserFirstname"} $Data{"UserLastname"}","40"})
+            <div class="Field" title="$QData{"UserLogin"} ($QData{"UserFirstname"} $QData{"UserLastname"})">
+                $QData{"UserLogin"} ($QData{"UserFirstname"} $QData{"UserLastname"})
             </div>
             <div class="Clear"></div>
 

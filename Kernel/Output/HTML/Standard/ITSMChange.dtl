@@ -118,7 +118,7 @@
 <!-- dtl:block:EmptyWorkOrderAgent -->
 <!-- dtl:block:WorkOrderAgent -->
                     <p class="Value">
-                        $QData{"WorkOrderAgentUserLogin","20"} ($Quote{"$Data{"WorkOrderAgentUserFirstname"} $Data{"WorkOrderAgentUserLastname"}","20"})
+                        $QData{"WorkOrderAgentUserLogin","20"} ($QData{"WorkOrderAgentUserFirstname"} $QData{"WorkOrderAgentUserLastname"})
                     </p>
 <!-- dtl:block:WorkOrderAgent -->
                     <div class="Clear"></div>

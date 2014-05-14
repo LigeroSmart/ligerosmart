@@ -200,21 +200,21 @@
 <!-- dtl:block:RecordWorkOrderAgent -->
                     <td>
                         <div title="$QData{"WorkOrderAgentUserLogin"} $QData{"WorkOrderAgentLeftParenthesis"}$QData{"WorkOrderAgentUserFirstname"} $QData{"WorkOrderAgentUserLastname"}$QData{"WorkOrderAgentRightParenthesis"}">
-                            $QData{"WorkOrderAgentUserLogin","15"} $QData{"WorkOrderAgentLeftParenthesis"}$Quote{"$Data{"WorkOrderAgentUserFirstname"}", "15"} $Quote{"$Data{"WorkOrderAgentUserLastname"}","15"}$QData{"WorkOrderAgentRightParenthesis"}
+                            $QData{"WorkOrderAgentUserLogin","15"} $QData{"WorkOrderAgentLeftParenthesis"}$QData{"WorkOrderAgentUserFirstname","15"} $QData{"WorkOrderAgentUserLastname","15"}$QData{"WorkOrderAgentRightParenthesis"}
                         </div>
                     </td>
 <!-- dtl:block:RecordWorkOrderAgent -->
 <!-- dtl:block:RecordChangeBuilder -->
                     <td>
                         <div title="$QData{"ChangeBuilderUserLogin"} $QData{"ChangeBuilderLeftParenthesis"}$QData{"ChangeBuilderUserFirstname"} $QData{"ChangeBuilderUserLastname"}$QData{"ChangeBuilderRightParenthesis"}">
-                            $QData{"ChangeBuilderUserLogin","15"} $QData{"ChangeBuilderLeftParenthesis"}$Quote{"$Data{"ChangeBuilderUserFirstname"}", "15"} $Quote{"$Data{"ChangeBuilderUserLastname"}","15"}$QData{"ChangeBuilderRightParenthesis"}
+                            $QData{"ChangeBuilderUserLogin","15"} $QData{"ChangeBuilderLeftParenthesis"}$QData{"ChangeBuilderUserFirstname","15"} $QData{"ChangeBuilderUserLastname","15"}$QData{"ChangeBuilderRightParenthesis"}
                         </div>
                     </td>
 <!-- dtl:block:RecordChangeBuilder -->
 <!-- dtl:block:RecordChangeManager -->
                     <td>
                         <div title="$QData{"ChangeManagerUserLogin"} $QData{"ChangeManagerLeftParenthesis"}$QData{"ChangeManagerUserFirstname"} $QData{"ChangeManagerUserLastname"}$QData{"ChangeManagerRightParenthesis"}">
-                            $QData{"ChangeManagerUserLogin","15"} $QData{"ChangeManagerLeftParenthesis"}$Quote{"$Data{"ChangeManagerUserFirstname"}", "15"} $Quote{"$Data{"ChangeManagerUserLastname"}","15"}$QData{"ChangeManagerRightParenthesis"}
+                            $QData{"ChangeManagerUserLogin","15"} $QData{"ChangeManagerLeftParenthesis"}$QData{"ChangeManagerUserFirstname","15"} $QData{"ChangeManagerUserLastname","15"}$QData{"ChangeManagerRightParenthesis"}
                         </div>
                     </td>
 <!-- dtl:block:RecordChangeManager -->

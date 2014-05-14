@@ -185,8 +185,8 @@
 <!-- dtl:block:EmptyChangeInitiators -->
 <!-- dtl:block:ChangeInitiatorExists -->
 <!-- dtl:block:ChangeInitiator -->
-                        <p class="Value" title="$QData{"UserLogin"} ($Quote{"$Data{"UserFirstname"} $Data{"UserLastname"}"})">
-                            $QData{"UserLogin","15"} ($Quote{"$Data{"UserFirstname"} $Data{"UserLastname"}","15"})
+                        <p class="Value" title="$QData{"UserLogin"} ($QData{"UserFirstname"} $QData{"UserLastname"})">
+                            $QData{"UserLogin","15"} ($QData{"UserFirstname"} $QData{"UserLastname"})
                         </p>
 <!-- dtl:block:ChangeInitiator -->
 <!-- dtl:block:ChangeInitiatorExists -->
@@ -199,8 +199,8 @@
                         <p class="Value" title="-">-</p>
 <!-- dtl:block:EmptyChangeManager -->
 <!-- dtl:block:ChangeManager -->
-                        <p class="Value" title="$QData{"ChangeManagerUserLogin"} ($Quote{"$Data{"ChangeManagerUserFirstname"} $Data{"ChangeManagerUserLastname"}"})">
-                            $QData{"ChangeManagerUserLogin","15"} ($Quote{"$Data{"ChangeManagerUserFirstname"} $Data{"ChangeManagerUserLastname"}","15"})
+                        <p class="Value" title="$QData{"ChangeManagerUserLogin"} ($QData{"ChangeManagerUserFirstname"} $QData{"ChangeManagerUserLastname"})">
+                            $QData{"ChangeManagerUserLogin","15"} ($QData{"ChangeManagerUserFirstname"} $QData{"ChangeManagerUserLastname"})
                         </p>
 <!-- dtl:block:ChangeManager -->
                         <div class="Clear"></div>
@@ -208,8 +208,8 @@
 
                     <fieldset class="TableLike FixedLabelSmall">
                         <label>$Text{"Change Builder"}:</label>
-                        <p class="Value" title="$QData{"ChangeBuilderUserLogin"} ($Quote{"$Data{"ChangeBuilderUserFirstname"} $Data{"ChangeBuilderUserLastname"}"})">
-                            $QData{"ChangeBuilderUserLogin","15"} ($Quote{"$Data{"ChangeBuilderUserFirstname"} $Data{"ChangeBuilderUserLastname"}","15"})
+                        <p class="Value" title="$QData{"ChangeBuilderUserLogin"} ($QData{"ChangeBuilderUserFirstname"} $QData{"ChangeBuilderUserLastname"})">
+                            $QData{"ChangeBuilderUserLogin","15"} ($QData{"ChangeBuilderUserFirstname"} $QData{"ChangeBuilderUserLastname"})
                         </p>
                         <div class="Clear"></div>
                     </fieldset>
@@ -221,13 +221,13 @@
 <!-- dtl:block:EmptyCAB -->
 <!-- dtl:block:CAB -->
 <!-- dtl:block:CABAgent -->
-                        <p class="Value" title="$QData{"CABAgentUserLogin"} ($Quote{"$Data{"CABAgentUserFirstname"} $Data{"CABAgentUserLastname"}"})">
-                            $QData{"CABAgentUserLogin","15"} ($Quote{"$Data{"CABAgentUserFirstname"} $Data{"CABAgentUserLastname"}","15"})
+                        <p class="Value" title="$QData{"CABAgentUserLogin"} ($QData{"CABAgentUserFirstname"} $QData{"CABAgentUserLastname"})">
+                            $QData{"CABAgentUserLogin","15"} ($QData{"CABAgentUserFirstname"} $QData{"CABAgentUserLastname"})
                         </p>
 <!-- dtl:block:CABAgent -->
 <!-- dtl:block:CABCustomer -->
-                        <p class="Value" title="$QData{"CABCustomerUserLogin"} ($Quote{"$Data{"CABCustomerUserFirstname"} $Data{"CABCustomerUserLastname"}"})">
-                            $QData{"CABCustomerUserLogin","15"} ($Quote{"$Data{"CABCustomerUserFirstname"} $Data{"CABCustomerUserLastname"}","15"})
+                        <p class="Value" title="$QData{"CABCustomerUserLogin"} ($QData{"CABCustomerUserFirstname"} $QData{"CABCustomerUserLastname"})">
+                            $QData{"CABCustomerUserLogin","15"} ($QData{"CABCustomerUserFirstname"} $QData{"CABCustomerUserLastname"})
                         </p>
 <!-- dtl:block:CABCustomer -->
 <!-- dtl:block:CAB -->
@@ -240,8 +240,8 @@
                         <div class="Clear"></div>
 
                         <label>$Text{"Created by"}:</label>
-                        <p class="Value" title="$QData{"CreateUserLogin"} ($Quote{"$Data{"CreateUserFirstname"} $Data{"CreateUserLastname"}"})">
-                            $QData{"CreateUserLogin","15"} ($Quote{"$Data{"CreateUserFirstname"} $Data{"CreateUserLastname"}","15"})
+                        <p class="Value" title="$QData{"CreateUserLogin"} ($QData{"CreateUserFirstname"} $QData{"CreateUserLastname"})">
+                            $QData{"CreateUserLogin","15"} ($QData{"CreateUserFirstname"} $QData{"CreateUserLastname"})
                         </p>
                         <div class="Clear"></div>
                     </fieldset>
@@ -252,8 +252,8 @@
                         <div class="Clear"></div>
 
                         <label>$Text{"Last changed by"}:</label>
-                        <p class="Value" title="$QData{"ChangeUserLogin"} ($Quote{"$Data{"ChangeUserFirstname"} $Data{"ChangeUserLastname"}"})">
-                            $QData{"ChangeUserLogin","15"} ($Quote{"$Data{"ChangeUserFirstname"} $Data{"ChangeUserLastname"}","15"})
+                        <p class="Value" title="$QData{"ChangeUserLogin"} ($QData{"ChangeUserFirstname"} $QData{"ChangeUserLastname"})">
+                            $QData{"ChangeUserLogin","15"} ($QData{"ChangeUserFirstname"} $QData{"ChangeUserLastname"})
                         </p>
                         <div class="Clear"></div>
 

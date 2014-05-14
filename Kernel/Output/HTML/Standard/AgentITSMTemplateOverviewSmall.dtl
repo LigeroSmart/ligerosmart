@@ -95,7 +95,7 @@
 <!-- dtl:block:RecordDelete -->
                 <td class="Center Last">
                     <a id="DeleteTemplateID$QData{"TemplateID"}" class="TrashCan" href="#">
-                        $Text{"Delete: $QData{"Name"}"}
+                        $Text{"Delete"}
                     </a>
                 </td>
 
@@ -120,7 +120,7 @@
 <!-- dtl:block:RecordCreateBy -->
                 <td>
                     <div title="$QData{"CreateByUserLogin"} $QData{"CreateByLeftParenthesis"}$QData{"CreateByUserFirstname"} $QData{"CreateByUserLastname"}$QData{"CreateByRightParenthesis"}">
-                        $QData{"CreateByUserLogin","15"} $QData{"CreateByLeftParenthesis"}$Quote{"$Data{"CreateByUserFirstname"}", "15"} $Quote{"$Data{"CreateByUserLastname"}","15"}$QData{"CreateByRightParenthesis"}
+                        $QData{"CreateByUserLogin","15"} $QData{"CreateByLeftParenthesis"}$QData{"CreateByUserFirstname"} $QData{"CreateByUserLastname"}$QData{"CreateByRightParenthesis"}
                     </div>
                 </td>
 <!-- dtl:block:RecordCreateBy -->
@@ -134,7 +134,7 @@
 <!-- dtl:block:RecordChangeBy -->
                 <td>
                     <div title="$QData{"ChangeByUserLogin"} $QData{"ChangeByLeftParenthesis"}$QData{"ChangeByUserFirstname"} $QData{"ChangeByUserLastname"}$QData{"ChangeByRightParenthesis"}">
-                        $QData{"ChangeByUserLogin","15"} $QData{"ChangeByLeftParenthesis"}$Quote{"$Data{"ChangeByUserFirstname"}", "15"} $Quote{"$Data{"ChangeByUserLastname"}","15"}$QData{"ChangeByRightParenthesis"}
+                        $QData{"ChangeByUserLogin","15"} $QData{"ChangeByLeftParenthesis"}$QData{"ChangeByUserFirstname"} $QData{"ChangeByUserLastname"}$QData{"ChangeByRightParenthesis"}
                     </div>
                 </td>
 <!-- dtl:block:RecordChangeBy -->
