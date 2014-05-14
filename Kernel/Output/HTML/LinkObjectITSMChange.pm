@@ -203,7 +203,7 @@ sub TableCreateComplex {
     {
 
         # extract change data
-        my $Change = $LinkList{$ChangeID}{Data};
+        my $Change = $LinkList{$ChangeID}->{Data};
 
         my @ItemColumns = (
             {
@@ -216,6 +216,7 @@ sub TableCreateComplex {
                 Type    => 'Link',
                 Content => $Change->{ChangeNumber},
                 Link    => '$Env{"Baselink"}Action=AgentITSMChangeZoom;ChangeID=' . $ChangeID,
+                Title   => "Change# $Change->{ChangeNumber}: $Change->{ChangeTitle}",
             },
             {
                 Type      => 'Text',

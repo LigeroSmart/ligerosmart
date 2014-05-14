@@ -219,7 +219,7 @@ sub TableCreateComplex {
     {
 
         # extract workorder data
-        my $WorkOrder = $LinkList{$WorkOrderID}{Data};
+        my $WorkOrder = $LinkList{$WorkOrderID}->{Data};
 
         my @ItemColumns = (
             {
@@ -232,7 +232,11 @@ sub TableCreateComplex {
                 Type    => 'Link',
                 Content => $WorkOrder->{ChangeData}->{ChangeNumber}
                     . '-' . $WorkOrder->{WorkOrderNumber},
-                Link => '$Env{"Baselink"}Action=AgentITSMWorkOrderZoom;WorkOrderID=' . $WorkOrderID,
+                Link    => '$Env{"Baselink"}Action=AgentITSMWorkOrderZoom;WorkOrderID=' . $WorkOrderID,
+                Title   => $Self->{ChangeHook} . $WorkOrder->{ChangeData}->{ChangeNumber} . '-'
+                        . $Self->{WorkOrderHook}
+                        . $WorkOrder->{WorkOrderNumber} . ': '
+                        . $WorkOrder->{WorkOrderTitle},
             },
             {
                 Type      => 'Text',
