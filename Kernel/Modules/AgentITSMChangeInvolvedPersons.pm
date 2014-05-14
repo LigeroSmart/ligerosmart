@@ -288,17 +288,17 @@ sub Run {
         if ( $Change->{ChangeManagerID} ) {
 
             # get changemanager data
-            my %ChangeManager = $Self->{UserObject}->GetUserData(
+            my %ChangeManagerData = $Self->{UserObject}->GetUserData(
                 UserID => $Change->{ChangeManagerID},
             );
 
-            if (%ChangeManager) {
+            if (%ChangeManagerData) {
 
                 # build string to display
                 $ChangeManager = sprintf '"%s %s" <%s>',
-                    $ChangeManager{UserFirstname},
-                    $ChangeManager{UserLastname},
-                    $ChangeManager{UserEmail};
+                    $ChangeManagerData{UserFirstname},
+                    $ChangeManagerData{UserLastname},
+                    $ChangeManagerData{UserEmail};
             }
         }
 
@@ -306,17 +306,17 @@ sub Run {
         if ( $Change->{ChangeBuilderID} ) {
 
             # get changebuilder data
-            my %ChangeBuilder = $Self->{UserObject}->GetUserData(
+            my %ChangeBuilderData = $Self->{UserObject}->GetUserData(
                 UserID => $Change->{ChangeBuilderID},
             );
 
-            if (%ChangeBuilder) {
+            if (%ChangeBuilderData) {
 
                 # build string to display
                 $ChangeBuilder = sprintf '"%s %s" <%s>',
-                    $ChangeBuilder{UserFirstname},
-                    $ChangeBuilder{UserLastname},
-                    $ChangeBuilder{UserEmail};
+                    $ChangeBuilderData{UserFirstname},
+                    $ChangeBuilderData{UserLastname},
+                    $ChangeBuilderData{UserEmail};
             }
         }
 
@@ -338,12 +338,12 @@ sub Run {
     for my $UserID ( @{ $Change->{CABAgents} } ) {
 
         # get user data
-        my %User = $Self->{UserObject}->GetUserData(
+        my %UserData = $Self->{UserObject}->GetUserData(
             UserID => $UserID,
         );
 
         # next if no user data can be found
-        next USERID if !%User;
+        next USERID if !%UserData;
 
         # display cab member info
         $Self->{LayoutObject}->Block(
@@ -351,7 +351,7 @@ sub Run {
             Data => {
                 UserType         => 'Agent',
                 InternalUserType => 'CABAgents',
-                %User,
+                %UserData,
             },
         );
     }
@@ -361,13 +361,13 @@ sub Run {
     for my $CustomerLogin ( @{ $Change->{CABCustomers} } ) {
 
         # get user data
-        my %CustomerUser = $Self->{CustomerUserObject}->CustomerUserDataGet(
+        my %CustomerUserData = $Self->{CustomerUserObject}->CustomerUserDataGet(
             User  => $CustomerLogin,
             Valid => 1,
         );
 
         # next if no user data can be found
-        next CUSTOMERLOGIN if !%CustomerUser;
+        next CUSTOMERLOGIN if !%CustomerUserData;
 
         # display cab member info
         $Self->{LayoutObject}->Block(
@@ -375,7 +375,7 @@ sub Run {
             Data => {
                 UserType         => 'Customer',
                 InternalUserType => 'CABCustomers',
-                %CustomerUser,
+                %CustomerUserData,
             },
         );
     }
