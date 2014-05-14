@@ -199,7 +199,7 @@ sub TableCreateComplex {
     {
 
         # extract service data
-        my $Service = $LinkList{$ServiceID}{Data};
+        my $Service = $LinkList{$ServiceID}->{Data};
 
         my @ItemColumns = (
             {
@@ -212,6 +212,7 @@ sub TableCreateComplex {
                 Type      => 'Link',
                 Content   => $Service->{Name},
                 Link      => '$Env{"Baselink"}Action=AgentITSMServiceZoom;ServiceID=' . $ServiceID,
+                Title     => "Service: $Service->{Name}",
                 MaxLength => 70,
             },
             {
@@ -338,10 +339,10 @@ sub TableCreateSimple {
 
                 # define item data
                 my %Item = (
-                    Type    => 'Link',
-                    Content => "S:$Service->{NameShort}",
-                    Title   => "Service: $Service->{Name}",
-                    Link => '$Env{"Baselink"}Action=AgentITSMServiceZoom;ServiceID=' . $ServiceID,
+                    Type      => 'Link',
+                    Content   => "S:$Service->{NameShort}",
+                    Title     => "Service: $Service->{Name}",
+                    Link      => '$Env{"Baselink"}Action=AgentITSMServiceZoom;ServiceID=' . $ServiceID,
                     MaxLength => 20,
                 );
 
