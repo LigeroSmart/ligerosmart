@@ -232,11 +232,11 @@ sub TableCreateComplex {
                 Type    => 'Link',
                 Content => $WorkOrder->{ChangeData}->{ChangeNumber}
                     . '-' . $WorkOrder->{WorkOrderNumber},
-                Link    => '$Env{"Baselink"}Action=AgentITSMWorkOrderZoom;WorkOrderID=' . $WorkOrderID,
-                Title   => $Self->{ChangeHook} . $WorkOrder->{ChangeData}->{ChangeNumber} . '-'
-                        . $Self->{WorkOrderHook}
-                        . $WorkOrder->{WorkOrderNumber} . ': '
-                        . $WorkOrder->{WorkOrderTitle},
+                Link => '$Env{"Baselink"}Action=AgentITSMWorkOrderZoom;WorkOrderID=' . $WorkOrderID,
+                Title => $Self->{ChangeHook} . $WorkOrder->{ChangeData}->{ChangeNumber} . '-'
+                    . $Self->{WorkOrderHook}
+                    . $WorkOrder->{WorkOrderNumber} . ': '
+                    . $WorkOrder->{WorkOrderTitle},
             },
             {
                 Type      => 'Text',

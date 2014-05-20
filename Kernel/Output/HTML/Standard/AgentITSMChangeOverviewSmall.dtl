@@ -13,297 +13,297 @@
 <!-- dtl:js_on_document_complete -->
 
 <div id="OverviewBody" class="Overview TicketList">
-        <table class="TableSmall" summary="A generic ITSM Change table">
-            <thead>
-                <tr>
+    <table class="TableSmall" summary="A generic ITSM Change table">
+        <thead>
+            <tr>
 <!-- dtl:block:RecordChangeStateSignalHeader -->
-                    <th>
-                        <span>$Text{"State"}</span>
-                    </th>
+                <th>
+                    <span>$Text{"State"}</span>
+                </th>
 <!-- dtl:block:RecordChangeStateSignalHeader -->
 <!-- dtl:block:RecordWorkOrderStateSignalHeader -->
-                    <th>
-                        <span>$Text{"State"}</span>
-                    </th>
+                <th>
+                    <span>$Text{"State"}</span>
+                </th>
 <!-- dtl:block:RecordWorkOrderStateSignalHeader -->
 <!-- dtl:block:RecordChangeNumberHeader -->
-                    <th class="ChangeNumber $QData{"CSS"}">
-                        <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=ChangeNumber;OrderBy=$LQData{"OrderBy"}">$Config{"ITSMChange::Hook"}</a>
-                    </th>
+                <th class="ChangeNumber $QData{"CSS"}">
+                    <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=ChangeNumber;OrderBy=$LQData{"OrderBy"}">$Config{"ITSMChange::Hook"}</a>
+                </th>
 <!-- dtl:block:RecordChangeNumberHeader -->
 <!-- dtl:block:RecordWorkOrderNumberHeader -->
-                    <th class="WorkOrderNumber $QData{"CSS"}">
-                        <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=WorkOrderNumber;OrderBy=$LQData{"OrderBy"}">$Config{"ITSMWorkOrder::Hook"}</a>
-                    </th>
+                <th class="WorkOrderNumber $QData{"CSS"}">
+                    <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=WorkOrderNumber;OrderBy=$LQData{"OrderBy"}">$Config{"ITSMWorkOrder::Hook"}</a>
+                </th>
 <!-- dtl:block:RecordWorkOrderNumberHeader -->
 <!-- dtl:block:RecordWorkOrderTitleHeader -->
-                    <th class="WorkOrderTitle $QData{"CSS"}">
-                        <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=WorkOrderTitle;OrderBy=$LQData{"OrderBy"}">$Text{"WorkOrderTitle"}</a>
-                    </th>
+                <th class="WorkOrderTitle $QData{"CSS"}">
+                    <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=WorkOrderTitle;OrderBy=$LQData{"OrderBy"}">$Text{"WorkOrderTitle"}</a>
+                </th>
 <!-- dtl:block:RecordWorkOrderTitleHeader -->
 <!-- dtl:block:RecordChangeTitleHeader -->
-                    <th class="ChangeTitle $QData{"CSS"}">
-                        <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=ChangeTitle;OrderBy=$LQData{"OrderBy"}">$Text{"ChangeTitle"}</a>
-                    </th>
+                <th class="ChangeTitle $QData{"CSS"}">
+                    <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=ChangeTitle;OrderBy=$LQData{"OrderBy"}">$Text{"ChangeTitle"}</a>
+                </th>
 <!-- dtl:block:RecordChangeTitleHeader -->
 <!-- dtl:block:RecordWorkOrderAgentHeader -->
-                    <th class="WorkOrderAgentID $QData{"CSS"}">
-                        <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=WorkOrderAgentID;OrderBy=$LQData{"OrderBy"}">$Text{"WorkOrderAgent"}</a>
-                    </th>
+                <th class="WorkOrderAgentID $QData{"CSS"}">
+                    <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=WorkOrderAgentID;OrderBy=$LQData{"OrderBy"}">$Text{"WorkOrderAgent"}</a>
+                </th>
 <!-- dtl:block:RecordWorkOrderAgentHeader -->
 <!-- dtl:block:RecordChangeBuilderHeader -->
-                    <th class="ChangeBuilderID $QData{"CSS"}">
-                        <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=ChangeBuilderID;OrderBy=$LQData{"OrderBy"}">$Text{"ChangeBuilder"}</a>
-                    </th>
+                <th class="ChangeBuilderID $QData{"CSS"}">
+                    <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=ChangeBuilderID;OrderBy=$LQData{"OrderBy"}">$Text{"ChangeBuilder"}</a>
+                </th>
 <!-- dtl:block:RecordChangeBuilderHeader -->
 <!-- dtl:block:RecordChangeManagerHeader -->
-                    <th class="ChangeBuilderID $QData{"CSS"}">
-                        <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=ChangeManagerID;OrderBy=$LQData{"OrderBy"}">$Text{"ChangeManager"}</a>
-                    </th>
+                <th class="ChangeBuilderID $QData{"CSS"}">
+                    <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=ChangeManagerID;OrderBy=$LQData{"OrderBy"}">$Text{"ChangeManager"}</a>
+                </th>
 <!-- dtl:block:RecordChangeManagerHeader -->
 <!-- dtl:block:RecordWorkOrderCountHeader -->
-                    <th><span>$Text{"Workorders"}</span></th>
+                <th><span>$Text{"Workorders"}</span></th>
 <!-- dtl:block:RecordWorkOrderCountHeader -->
 <!-- dtl:block:RecordChangeStateHeader -->
-                    <th class="ChangeStateID $QData{"CSS"}">
-                        <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=ChangeStateID;OrderBy=$LQData{"OrderBy"}">$Text{"ChangeState"}</a>
-                    </th>
+                <th class="ChangeStateID $QData{"CSS"}">
+                    <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=ChangeStateID;OrderBy=$LQData{"OrderBy"}">$Text{"ChangeState"}</a>
+                </th>
 <!-- dtl:block:RecordChangeStateHeader -->
 <!-- dtl:block:RecordWorkOrderStateHeader -->
-                    <th class="WorkOrderStateID $QData{"CSS"}">
-                        <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=WorkOrderStateID;OrderBy=$LQData{"OrderBy"}">$Text{"WorkOrderState"}</a>
-                    </th>
+                <th class="WorkOrderStateID $QData{"CSS"}">
+                    <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=WorkOrderStateID;OrderBy=$LQData{"OrderBy"}">$Text{"WorkOrderState"}</a>
+                </th>
 <!-- dtl:block:RecordWorkOrderStateHeader -->
 <!-- dtl:block:RecordWorkOrderTypeHeader -->
-                    <th class="WorkOrderTypeID $QData{"CSS"}">
-                        <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=WorkOrderTypeID;OrderBy=$LQData{"OrderBy"}">$Text{"WorkOrderType"}</a>
-                    </th>
+                <th class="WorkOrderTypeID $QData{"CSS"}">
+                    <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=WorkOrderTypeID;OrderBy=$LQData{"OrderBy"}">$Text{"WorkOrderType"}</a>
+                </th>
 <!-- dtl:block:RecordWorkOrderTypeHeader -->
 <!-- dtl:block:RecordCategoryHeader -->
-                    <th class="CategoryID $QData{"CSS"}">
-                        <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=CategoryID;OrderBy=$LQData{"OrderBy"}">$Text{"Category"}</a>
-                    </th>
+                <th class="CategoryID $QData{"CSS"}">
+                    <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=CategoryID;OrderBy=$LQData{"OrderBy"}">$Text{"Category"}</a>
+                </th>
 <!-- dtl:block:RecordCategoryHeader -->
 <!-- dtl:block:RecordImpactHeader -->
-                    <th class="ImpactID $QData{"CSS"}">
-                        <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=ImpactID;OrderBy=$LQData{"OrderBy"}">$Text{"Impact"}</a>
-                    </th>
+                <th class="ImpactID $QData{"CSS"}">
+                    <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=ImpactID;OrderBy=$LQData{"OrderBy"}">$Text{"Impact"}</a>
+                </th>
 <!-- dtl:block:RecordImpactHeader -->
 <!-- dtl:block:RecordPriorityHeader -->
-                    <th class="PriorityID $QData{"CSS"}">
-                        <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=PriorityID;OrderBy=$LQData{"OrderBy"}">$Text{"Priority"}</a>
-                    </th>
+                <th class="PriorityID $QData{"CSS"}">
+                    <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=PriorityID;OrderBy=$LQData{"OrderBy"}">$Text{"Priority"}</a>
+                </th>
 <!-- dtl:block:RecordPriorityHeader -->
 
 <!-- dtl:block:RecordServicesHeader -->
-                    <th><span>$Text{"Services"}</span></th>
+                <th><span>$Text{"Services"}</span></th>
 <!-- dtl:block:RecordServicesHeader -->
 
 <!-- dtl:block:RecordRequestedTimeHeader -->
-                    <th class="RequestedTime $QData{"CSS"}">
-                        <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=RequestedTime;OrderBy=$LQData{"OrderBy"}">$Text{"Requested Time"}</a>
-                    </th>
+                <th class="RequestedTime $QData{"CSS"}">
+                    <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=RequestedTime;OrderBy=$LQData{"OrderBy"}">$Text{"Requested Time"}</a>
+                </th>
 <!-- dtl:block:RecordRequestedTimeHeader -->
 <!-- dtl:block:RecordPlannedStartTimeHeader -->
-                    <th class="PlannedStartTime $QData{"CSS"}">
-                        <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=PlannedStartTime;OrderBy=$LQData{"OrderBy"}">$Text{"PlannedStartTime"}</a>
-                    </th>
+                <th class="PlannedStartTime $QData{"CSS"}">
+                    <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=PlannedStartTime;OrderBy=$LQData{"OrderBy"}">$Text{"PlannedStartTime"}</a>
+                </th>
 <!-- dtl:block:RecordPlannedStartTimeHeader -->
 <!-- dtl:block:RecordPlannedEndTimeHeader -->
-                    <th class="PlannedEndTime $QData{"CSS"}">
-                        <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=PlannedEndTime;OrderBy=$LQData{"OrderBy"}">$Text{"PlannedEndTime"}</a>
-                    </th>
+                <th class="PlannedEndTime $QData{"CSS"}">
+                    <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=PlannedEndTime;OrderBy=$LQData{"OrderBy"}">$Text{"PlannedEndTime"}</a>
+                </th>
 <!-- dtl:block:RecordPlannedEndTimeHeader -->
 <!-- dtl:block:RecordActualStartTimeHeader -->
-                    <th class="ActualStartTime $QData{"CSS"}">
-                        <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=ActualStartTime;OrderBy=$LQData{"OrderBy"}">$Text{"ActualStartTime"}</a>
-                    </th>
+                <th class="ActualStartTime $QData{"CSS"}">
+                    <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=ActualStartTime;OrderBy=$LQData{"OrderBy"}">$Text{"ActualStartTime"}</a>
+                </th>
 <!-- dtl:block:RecordActualStartTimeHeader -->
 <!-- dtl:block:RecordActualEndTimeHeader -->
-                    <th class="ActualEndTime $QData{"CSS"}">
-                        <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=ActualEndTime;OrderBy=$LQData{"OrderBy"}">$Text{"ActualEndTime"}</a>
-                    </th>
+                <th class="ActualEndTime $QData{"CSS"}">
+                    <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=ActualEndTime;OrderBy=$LQData{"OrderBy"}">$Text{"ActualEndTime"}</a>
+                </th>
 <!-- dtl:block:RecordActualEndTimeHeader -->
 <!-- dtl:block:RecordCreateTimeHeader -->
-                    <th class="CreateTime $QData{"CSS"}">
-                        <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=CreateTime;OrderBy=$LQData{"OrderBy"}">$Text{"Created"}</a>
-                    </th>
+                <th class="CreateTime $QData{"CSS"}">
+                    <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=CreateTime;OrderBy=$LQData{"OrderBy"}">$Text{"Created"}</a>
+                </th>
 <!-- dtl:block:RecordCreateTimeHeader -->
-                </tr>
-            </thead>
-            <tbody>
+            </tr>
+        </thead>
+        <tbody>
 <!-- dtl:block:NoDataFoundMsg -->
-                <tr>
-                    <td colspan="$QData{"TotalColumns"}">
-                        $Text{"No data found."}
-                    </td>
-                </tr>
+            <tr>
+                <td colspan="$QData{"TotalColumns"}">
+                    $Text{"No data found."}
+                </td>
+            </tr>
 <!-- dtl:block:NoDataFoundMsg -->
 <!-- dtl:block:Record -->
-                <tr class="MasterAction">
+            <tr class="MasterAction">
 <!-- dtl:block:RecordChangeStateSignal -->
-                    <td>
-                        <div class="Flag Small">
-                            <span class="$QData{"ChangeStateSignal"}" title="$QData{"ChangeState"}">$QData{"ChangeState"}</span>
-                        </div>
-                    </td>
+                <td>
+                    <div class="Flag Small">
+                        <span class="$QData{"ChangeStateSignal"}" title="$QData{"ChangeState"}">$QData{"ChangeState"}</span>
+                    </div>
+                </td>
 <!-- dtl:block:RecordChangeStateSignal -->
 <!-- dtl:block:RecordWorkOrderStateSignal -->
-                    <td>
-                        <div class="Flag Small">
-                            <span class="$QData{"WorkOrderStateSignal"}" title="$QData{"WorkOrderState"}">$QData{"WorkOrderState"}</span>
-                        </div>
-                    </td>
+                <td>
+                    <div class="Flag Small">
+                        <span class="$QData{"WorkOrderStateSignal"}" title="$QData{"WorkOrderState"}">$QData{"WorkOrderState"}</span>
+                    </div>
+                </td>
 <!-- dtl:block:RecordWorkOrderStateSignal -->
 <!-- dtl:block:RecordChangeNumber -->
-                    <td>
+                <td>
 <!-- dtl:block:RecordChangeNumberLinkStart -->
-                        <a href="$Env{"Baselink"}Action=AgentITSMChangeZoom;ChangeID=$LQData{"ChangeID"}" class="MasterActionLink">
+                    <a href="$Env{"Baselink"}Action=AgentITSMChangeZoom;ChangeID=$LQData{"ChangeID"}" class="MasterActionLink">
 <!-- dtl:block:RecordChangeNumberLinkStart -->
-                            $QData{"ChangeNumber"}
+                        $QData{"ChangeNumber"}
 <!-- dtl:block:RecordChangeNumberLinkEnd -->
-                        </a>
+                    </a>
 <!-- dtl:block:RecordChangeNumberLinkEnd -->
-                    </td>
+                </td>
 <!-- dtl:block:RecordChangeNumber -->
 <!-- dtl:block:RecordWorkOrderNumber -->
-                    <td>
+                <td>
 <!-- dtl:block:RecordWorkOrderNumberLinkStart -->
-                        <a href="$Env{"Baselink"}Action=AgentITSMWorkOrderZoom;WorkOrderID=$LQData{"WorkOrderID"}" class="MasterActionLink">
+                    <a href="$Env{"Baselink"}Action=AgentITSMWorkOrderZoom;WorkOrderID=$LQData{"WorkOrderID"}" class="MasterActionLink">
 <!-- dtl:block:RecordWorkOrderNumberLinkStart -->
-                            $QData{"ChangeNumber"}-$QData{"WorkOrderNumber"}
+                        $QData{"ChangeNumber"}-$QData{"WorkOrderNumber"}
 <!-- dtl:block:RecordWorkOrderNumberLinkEnd -->
-                        </a>
+                    </a>
 <!-- dtl:block:RecordWorkOrderNumberLinkEnd -->
-                    </td>
+                </td>
 <!-- dtl:block:RecordWorkOrderNumber -->
 <!-- dtl:block:RecordWorkOrderTitle -->
-                    <td>
-                        <div title="$QData{"WorkOrderTitle"}">$QData{"WorkOrderTitle","40"}</div>
-                    </td>
+                <td>
+                    <div title="$QData{"WorkOrderTitle"}">$QData{"WorkOrderTitle","40"}</div>
+                </td>
 <!-- dtl:block:RecordWorkOrderTitle -->
 <!-- dtl:block:RecordChangeTitle -->
-                    <td>
+                <td>
 <!-- dtl:block:RecordChangeTitleLinkStart -->
-                        <a href="$Env{"Baselink"}Action=AgentITSMChangeZoom;ChangeID=$LQData{"ChangeID"}" title="$QData{"ChangeTitle"}">
+                    <a href="$Env{"Baselink"}Action=AgentITSMChangeZoom;ChangeID=$LQData{"ChangeID"}" title="$QData{"ChangeTitle"}">
 <!-- dtl:block:RecordChangeTitleLinkStart -->
-                            $QData{"ChangeTitle","40"}
+                        $QData{"ChangeTitle","40"}
 <!-- dtl:block:RecordChangeTitleLinkEnd -->
-                        </a>
+                    </a>
 <!-- dtl:block:RecordChangeTitleLinkEnd -->
-                    </td>
+                </td>
 <!-- dtl:block:RecordChangeTitle -->
 <!-- dtl:block:RecordWorkOrderAgent -->
-                    <td>
-                        <div title="$QData{"WorkOrderAgentUserLogin"} $QData{"WorkOrderAgentLeftParenthesis"}$QData{"WorkOrderAgentUserFirstname"} $QData{"WorkOrderAgentUserLastname"}$QData{"WorkOrderAgentRightParenthesis"}">
-                            $QData{"WorkOrderAgentUserLogin","15"} $QData{"WorkOrderAgentLeftParenthesis"}$QData{"WorkOrderAgentUserFirstname","15"} $QData{"WorkOrderAgentUserLastname","15"}$QData{"WorkOrderAgentRightParenthesis"}
-                        </div>
-                    </td>
+                <td>
+                    <div title="$QData{"WorkOrderAgentUserLogin"} $QData{"WorkOrderAgentLeftParenthesis"}$QData{"WorkOrderAgentUserFirstname"} $QData{"WorkOrderAgentUserLastname"}$QData{"WorkOrderAgentRightParenthesis"}">
+                        $QData{"WorkOrderAgentUserLogin","15"} $QData{"WorkOrderAgentLeftParenthesis"}$QData{"WorkOrderAgentUserFirstname","15"} $QData{"WorkOrderAgentUserLastname","15"}$QData{"WorkOrderAgentRightParenthesis"}
+                    </div>
+                </td>
 <!-- dtl:block:RecordWorkOrderAgent -->
 <!-- dtl:block:RecordChangeBuilder -->
-                    <td>
-                        <div title="$QData{"ChangeBuilderUserLogin"} $QData{"ChangeBuilderLeftParenthesis"}$QData{"ChangeBuilderUserFirstname"} $QData{"ChangeBuilderUserLastname"}$QData{"ChangeBuilderRightParenthesis"}">
-                            $QData{"ChangeBuilderUserLogin","15"} $QData{"ChangeBuilderLeftParenthesis"}$QData{"ChangeBuilderUserFirstname","15"} $QData{"ChangeBuilderUserLastname","15"}$QData{"ChangeBuilderRightParenthesis"}
-                        </div>
-                    </td>
+                <td>
+                    <div title="$QData{"ChangeBuilderUserLogin"} $QData{"ChangeBuilderLeftParenthesis"}$QData{"ChangeBuilderUserFirstname"} $QData{"ChangeBuilderUserLastname"}$QData{"ChangeBuilderRightParenthesis"}">
+                        $QData{"ChangeBuilderUserLogin","15"} $QData{"ChangeBuilderLeftParenthesis"}$QData{"ChangeBuilderUserFirstname","15"} $QData{"ChangeBuilderUserLastname","15"}$QData{"ChangeBuilderRightParenthesis"}
+                    </div>
+                </td>
 <!-- dtl:block:RecordChangeBuilder -->
 <!-- dtl:block:RecordChangeManager -->
-                    <td>
-                        <div title="$QData{"ChangeManagerUserLogin"} $QData{"ChangeManagerLeftParenthesis"}$QData{"ChangeManagerUserFirstname"} $QData{"ChangeManagerUserLastname"}$QData{"ChangeManagerRightParenthesis"}">
-                            $QData{"ChangeManagerUserLogin","15"} $QData{"ChangeManagerLeftParenthesis"}$QData{"ChangeManagerUserFirstname","15"} $QData{"ChangeManagerUserLastname","15"}$QData{"ChangeManagerRightParenthesis"}
-                        </div>
-                    </td>
+                <td>
+                    <div title="$QData{"ChangeManagerUserLogin"} $QData{"ChangeManagerLeftParenthesis"}$QData{"ChangeManagerUserFirstname"} $QData{"ChangeManagerUserLastname"}$QData{"ChangeManagerRightParenthesis"}">
+                        $QData{"ChangeManagerUserLogin","15"} $QData{"ChangeManagerLeftParenthesis"}$QData{"ChangeManagerUserFirstname","15"} $QData{"ChangeManagerUserLastname","15"}$QData{"ChangeManagerRightParenthesis"}
+                    </div>
+                </td>
 <!-- dtl:block:RecordChangeManager -->
 <!-- dtl:block:RecordWorkOrderCount -->
-                    <td>
-                        <div class="Center">$QData{"WorkOrderCount"}</div>
-                    </td>
+                <td>
+                    <div class="Center">$QData{"WorkOrderCount"}</div>
+                </td>
 <!-- dtl:block:RecordWorkOrderCount -->
 <!-- dtl:block:RecordChangeState -->
-                    <td>
-                        <div>$Text{"$Data{"ChangeState"}"}</div>
-                    </td>
+                <td>
+                    <div>$Text{"$Data{"ChangeState"}"}</div>
+                </td>
 <!-- dtl:block:RecordChangeState -->
 <!-- dtl:block:RecordWorkOrderState -->
-                    <td>
-                        <div>$Text{"$Data{"WorkOrderState"}"}</div>
-                    </td>
+                <td>
+                    <div>$Text{"$Data{"WorkOrderState"}"}</div>
+                </td>
 <!-- dtl:block:RecordWorkOrderState -->
 <!-- dtl:block:RecordWorkOrderType -->
-                    <td>
-                        <div>$Text{"$Data{"WorkOrderType"}"}</div>
-                    </td>
+                <td>
+                    <div>$Text{"$Data{"WorkOrderType"}"}</div>
+                </td>
 <!-- dtl:block:RecordWorkOrderType -->
 <!-- dtl:block:RecordCategory -->
-                    <td>
-                        <div>$Text{"$Data{"Category"}"}</div>
-                    </td>
+                <td>
+                    <div>$Text{"$Data{"Category"}"}</div>
+                </td>
 <!-- dtl:block:RecordCategory -->
 <!-- dtl:block:RecordImpact -->
-                    <td>
-                        <div>$Text{"$Data{"Impact"}"}</div>
-                    </td>
+                <td>
+                    <div>$Text{"$Data{"Impact"}"}</div>
+                </td>
 <!-- dtl:block:RecordImpact -->
 <!-- dtl:block:RecordPriority -->
-                    <td>
-                        <div>$Text{"$Data{"Priority"}"}</div>
-                    </td>
+                <td>
+                    <div>$Text{"$Data{"Priority"}"}</div>
+                </td>
 <!-- dtl:block:RecordPriority -->
 <!-- dtl:block:RecordServices -->
-                    <td>
-                        <ul class="ITSMFlag">
+                <td>
+                    <ul class="ITSMFlag">
 <!-- dtl:block:RecordServicesSubElement -->
-                            <li>
-                                <div title="$Text{"$Data{"Name"}"}">
-                                    <div class="Value">
-                                        <div class="Flag Small">
-                                            <span class="$QData{"CurInciSignal"}">"$QData{"CurrInciState"}"</span>
-                                        </div>
+                        <li>
+                            <div title="$Text{"$Data{"Name"}"}">
+                                <div class="Value">
+                                    <div class="Flag Small">
+                                        <span class="$QData{"CurInciSignal"}">"$QData{"CurrInciState"}"</span>
                                     </div>
-                                    $QData{"Name"}
                                 </div>
-                            </li>
+                                $QData{"Name"}
+                            </div>
+                        </li>
 <!-- dtl:block:RecordServicesSubElement -->
 <!-- dtl:block:RecordServicesSubElementEmpty -->
-                            <li>&nbsp;</li>
+                        <li>&nbsp;</li>
 <!-- dtl:block:RecordServicesSubElementEmpty -->
-                        </ul>
-                    </td>
+                    </ul>
+                </td>
 <!-- dtl:block:RecordServices -->
 <!-- dtl:block:RecordRequestedTime -->
-                    <td>
-                        <div>$TimeLong{"$QData{"RequestedTime"}"}</div>
-                    </td>
+                <td>
+                    <div>$TimeLong{"$QData{"RequestedTime"}"}</div>
+                </td>
 <!-- dtl:block:RecordRequestedTime -->
 <!-- dtl:block:RecordPlannedStartTime -->
-                    <td>
-                        <div>$TimeLong{"$QData{"PlannedStartTime"}"}</div>
-                    </td>
+                <td>
+                    <div>$TimeLong{"$QData{"PlannedStartTime"}"}</div>
+                </td>
 <!-- dtl:block:RecordPlannedStartTime -->
 <!-- dtl:block:RecordPlannedEndTime -->
-                    <td>
-                        <div>$TimeLong{"$QData{"PlannedEndTime"}"}</div>
-                    </td>
+                <td>
+                    <div>$TimeLong{"$QData{"PlannedEndTime"}"}</div>
+                </td>
 <!-- dtl:block:RecordPlannedEndTime -->
 <!-- dtl:block:RecordActualStartTime -->
-                    <td>
-                        <div>$TimeLong{"$QData{"ActualStartTime"}"}</div>
-                    </td>
+                <td>
+                    <div>$TimeLong{"$QData{"ActualStartTime"}"}</div>
+                </td>
 <!-- dtl:block:RecordActualStartTime -->
 <!-- dtl:block:RecordActualEndTime -->
-                    <td>
-                        <div>$TimeLong{"$QData{"ActualEndTime"}"}</div>
-                    </td>
+                <td>
+                    <div>$TimeLong{"$QData{"ActualEndTime"}"}</div>
+                </td>
 <!-- dtl:block:RecordActualEndTime -->
 <!-- dtl:block:RecordCreateTime -->
-                    <td>
-                        <div>$TimeLong{"$QData{"CreateTime"}"}</div>
-                    </td>
+                <td>
+                    <div>$TimeLong{"$QData{"CreateTime"}"}</div>
+                </td>
 <!-- dtl:block:RecordCreateTime -->
-                </tr>
+            </tr>
 <!-- dtl:block:Record -->
-            </tbody>
-        </table>
+        </tbody>
+    </table>
 </div>
 <!-- dtl:js_on_document_complete -->
 <script type="text/javascript">//<![CDATA[
