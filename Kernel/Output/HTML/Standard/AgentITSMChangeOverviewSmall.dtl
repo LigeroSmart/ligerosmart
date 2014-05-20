@@ -13,10 +13,6 @@
 <!-- dtl:js_on_document_complete -->
 
 <div id="OverviewBody" class="Overview TicketList">
-    <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="matrix">
-        <input type="hidden" name="Action" value="AgentTicketBulk"/>
-        <input type="hidden" name="TicketID" value=""/>
-
         <table class="TableSmall" summary="A generic ITSM Change table">
             <thead>
                 <tr>
@@ -308,7 +304,6 @@
 <!-- dtl:block:Record -->
             </tbody>
         </table>
-    </form>
 </div>
 <!-- dtl:js_on_document_complete -->
 <script type="text/javascript">//<![CDATA[
