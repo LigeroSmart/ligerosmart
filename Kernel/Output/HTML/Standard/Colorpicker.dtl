@@ -1,0 +1,19 @@
+# --
+# Colorpicker.dtl - provides the data needed for the JS colorpicker
+# Copyright (C) 2003-2013 OTRS AG, http://otrs.com/
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+
+<!--dtl:js_on_document_complete-->
+<script type="text/javascript">//<![CDATA[
+
+    /*global jscolor: true */
+    jscolor.dir = '$Config{"Frontend::JavaScriptPath"}' + 'thirdparty/jscolor_1.4.1/';
+    jscolor.bindClass = 'JSColorPicker';
+    jscolor.install();
+
+//]]></script>
+<!--dtl:js_on_document_complete-->

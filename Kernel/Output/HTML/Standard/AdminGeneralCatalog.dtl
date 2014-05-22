@@ -7,6 +7,8 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
+$Include{"Colorpicker"}
+
 <!-- dtl:block:Overview -->
 <div class="MainBox ARIARoleMain LayoutFixedSidebar SidebarFirst">
     <h1>$Text{"General Catalog Management"}</h1>
@@ -185,6 +187,13 @@
                         </div>
                         <div class="Clear"></div>
 <!-- dtl:block:Password -->
+<!-- dtl:block:ColorPicker -->
+                        <label for="$QData{"Name"}">$Text{"$Data{"Label"}"}:<br/><em>($Text{"$Data{"Desc"}"})</em></label>
+                        <div class="Field">
+                            <input type="text" name="$QData{"Name"}" id="$QData{"Name"}" value="$QData{"SelectedID"}" class="W50pc JSColorPicker {pickerBorderColor:'#BBB #BBB #BBB #BBB', pickerInsetColor:'#BBB #BBB #BBB #BBB'}"/>
+                        </div>
+                        <div class="Clear"></div>
+<!-- dtl:block:ColorPicker -->
                         <label for="ValidID">$Text{"Valid"}: </label>
                         <div class="Field">
                             $Data{"ValidOptionStrg"}
