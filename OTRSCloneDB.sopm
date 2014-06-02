@@ -2,6 +2,7 @@
 <otrs_package version="1.0">
     <Name>OTRSCloneDB</Name>
     <Version>0.0.0</Version>
+    <Framework>3.2.x</Framework>
     <Framework>3.3.x</Framework>
     <Vendor>OTRS AG</Vendor>
     <URL>http://otrs.org/</URL>
