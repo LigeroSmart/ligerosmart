@@ -263,6 +263,16 @@ sub DataTransfer {
 
                 }
 
+                # Only for mysql
+                if ( $Row[$ColumnCounter] && $Param{TargetDBObject}->{'DB::Type'} eq 'mysql' ) {
+                    # Replace any unicode characters that need more then three bytes in UTF8
+                    #   with the unicode replacement character. MySQL's utf8 encoding only
+                    #   supports three bytes. In future we might want to use utf8mb4 (supported
+                    #   since 5.5.3+).
+                    # See also http://mathiasbynens.be/notes/mysql-utf8mb4.
+                    $Row[$ColumnCounter] =~ s/([\x{10000}-\x{10FFFF}])/"\x{FFFD}"/eg;
+                }
+
             }
 
             # in case dry run do nothing more
