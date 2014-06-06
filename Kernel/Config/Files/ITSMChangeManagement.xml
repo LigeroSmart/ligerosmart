@@ -584,7 +584,6 @@
         <Setting>
             <FrontendModuleReg>
                 <GroupRo>itsm-change</GroupRo>
-                <GroupRo>itsm-change</GroupRo>
                 <Description>Workorder Add (from template)</Description>
                 <Title>Add</Title>
                 <NavBarName>ITSM Change</NavBarName>
@@ -930,7 +929,7 @@
         <SubGroup>Frontend::Agent::ITSMChange::MenuModule</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::Output::HTML::ITSMChangeMenuAddWorkOrder</Item>
+                <Item Key="Module">Kernel::Output::HTML::ITSMChangeMenuGeneric</Item>
                 <Item Key="Name">Add Workorder</Item>
                 <Item Key="Description">Add a workorder to the change</Item>
                 <Item Key="Action">AgentITSMWorkOrderAdd</Item>
@@ -945,7 +944,7 @@
         <SubGroup>Frontend::Agent::ITSMChange::MenuModule</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::Output::HTML::ITSMChangeMenuAddWorkOrder</Item>
+                <Item Key="Module">Kernel::Output::HTML::ITSMChangeMenuGeneric</Item>
                 <Item Key="Name">Add Workorder (from template)</Item>
                 <Item Key="Description">Add a workorder (from template) to the change</Item>
                 <Item Key="Action">AgentITSMWorkOrderAddFromTemplate</Item>
@@ -9142,6 +9141,18 @@
                 <Item Key="Priority">Priority</Item>
                 <Item Key="CreateTime">CreateTime</Item>
             </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Permission###06-AddWorkOrderCheck" Required="0" Valid="1">
+        <Description Translatable="1">Module to check if WorkOrderAdd or WorkOrderAddFromTemplate should be permitted.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Module">Kernel::System::ITSMChange::Permission::AddWorkOrderCheck</Item>
+                <Item Key="Required">1</Item>
+                <Item Key="Granted">0</Item>
+            </Hash>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMChange::Permission###10-ChangeManagerCheck" Required="0" Valid="1">

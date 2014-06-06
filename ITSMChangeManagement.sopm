@@ -76,7 +76,6 @@
         <File Permission="644" Location="Kernel/Modules/AgentITSMWorkOrderTemplate.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentITSMWorkOrderZoom.pm"/>
         <File Permission="644" Location="Kernel/Modules/CustomerITSMChangeSchedule.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/ITSMChangeMenuAddWorkOrder.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/ITSMChangeMenuChangeDelete.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/ITSMChangeMenuGeneric.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/ITSMChangeMenuTimeSlot.pm"/>
@@ -174,6 +173,7 @@
         <File Permission="644" Location="Kernel/System/ITSMChange/Number/AutoIncrement.pm"/>
         <File Permission="644" Location="Kernel/System/ITSMChange/Number/Date.pm"/>
         <File Permission="644" Location="Kernel/System/ITSMChange/Number/DateChecksum.pm"/>
+        <File Permission="644" Location="Kernel/System/ITSMChange/Permission/AddWorkOrderCheck.pm"/>
         <File Permission="644" Location="Kernel/System/ITSMChange/Permission/CABCheck.pm"/>
         <File Permission="644" Location="Kernel/System/ITSMChange/Permission/ChangeAgentCheck.pm"/>
         <File Permission="644" Location="Kernel/System/ITSMChange/Permission/ChangeBuilderCheck.pm"/>
