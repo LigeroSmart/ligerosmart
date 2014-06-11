@@ -303,6 +303,15 @@ sub Data {
     $Self->{Translation}->{'PlannedEndTime'} = 'Término Planejado';
     $Self->{Translation}->{'ActualStartTime'} = 'Início Real';
     $Self->{Translation}->{'ActualEndTime'} = 'Término Real';
+    $Self->{Translation}->{'ChangeInitiators'} = 'Iniciadores da Mudança';
+    $Self->{Translation}->{'GroupITSMChange'} = 'Grupo de Mudança ITSM';
+    $Self->{Translation}->{'GroupITSMChangeBuilder'} = 'Grupo de Construtores de Mudança';
+    $Self->{Translation}->{'GroupITSMChangeManager'} = 'Grupo de Gerentes de Mudança';
+    $Self->{Translation}->{'OldChangeBuilder'} = 'Ex-construtor da mudança';
+    $Self->{Translation}->{'OldChangeManager'} = 'Ex-gerente da mudança';
+    $Self->{Translation}->{'OldWorkOrderAgent'} = 'Ex-atendente da ordem de serviço';
+    $Self->{Translation}->{'WorkOrderAgents'} = 'Atendentes das ordens de serviço';
+    $Self->{Translation}->{'Change Overview'} = 'Visão Geral de Mudanças';
 
     # Template: AgentITSMChangePrint
     $Self->{Translation}->{'ITSM Workorder'} = 'Ordem de Serviço ITSM';
