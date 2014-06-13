@@ -152,7 +152,7 @@ ITSM.Agent.ChangeManagement.Search = (function (TargetNS) {
      */
     function SearchProfileDelete(Profile) {
         var Data = {
-            Action: 'AgentTicketSearch',
+            Action: 'AgentITSMChangeSearch',
             Subaction: 'AJAXProfileDelete',
             Profile: Profile
         };
