@@ -28,10 +28,10 @@
         <SubGroup>Core::ITSMCore</SubGroup>
         <Setting>
             <Hash>
-                <!-- TODO : Change this back to (DependsOn / Both) to be compatible to be backward compatible! -->
-                <!-- <Item Key="DependsOn">Both</Item> -->
-                <Item Key="DependsOn">Source</Item>
-                <Item Key="Includes">Source</Item>
+                <Item Key="DependsOn">Both</Item>
+                <!-- TODO: Example for alternative configuration using two directional link types -->
+                <!-- <Item Key="DependsOn">Source</Item> -->
+                <!-- <Item Key="Includes">Source</Item> -->
             </Hash>
         </Setting>
     </ConfigItem>
