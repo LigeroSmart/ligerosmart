@@ -2,7 +2,7 @@
 # SLA.t - SLA tests
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/10b16f8bd0aa3b4b94f43e01e1a9fdb77522fb41/scripts/test/SLA.t
+# $origin: https://github.com/OTRS/otrs/blob/9a271a4619cfa1e42e525166e76ce803cabf0fd5/scripts/test/SLA.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
