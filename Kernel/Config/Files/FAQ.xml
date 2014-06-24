@@ -537,7 +537,7 @@ Your OTRS Notification Master
                 <Item Key="Title">Title</Item>
                 <Item Key="FAQID">Number</Item>
                 <Item Key="Category">Category</Item>
-                <Item Key="Language">Laguage</Item>
+                <Item Key="Language">Language</Item>
                 <Item Key="State">State</Item>
             </Option>
         </Setting>
@@ -615,7 +615,7 @@ Your OTRS Notification Master
                 <Item Key="Title">Title</Item>
                 <Item Key="FAQID">Number</Item>
                 <Item Key="Category">Category</Item>
-                <Item Key="Language">Laguage</Item>
+                <Item Key="Language">Language</Item>
                 <Item Key="State">State</Item>
             </Option>
         </Setting>
@@ -913,7 +913,7 @@ Your OTRS Notification Master
                 <Item Key="Title">Title</Item>
                 <Item Key="FAQID">Number</Item>
                 <Item Key="Category">Category</Item>
-                <Item Key="Language">Laguage</Item>
+                <Item Key="Language">Language</Item>
                 <Item Key="State">State</Item>
             </Option>
         </Setting>
@@ -961,7 +961,7 @@ Your OTRS Notification Master
                 <Item Key="Title">Title</Item>
                 <Item Key="FAQID">Number</Item>
                 <Item Key="Category">Category</Item>
-                <Item Key="Language">Laguage</Item>
+                <Item Key="Language">Language</Item>
                 <Item Key="State">State</Item>
             </Option>
         </Setting>
@@ -1209,7 +1209,7 @@ Your OTRS Notification Master
                 <Item Key="Title">Title</Item>
                 <Item Key="FAQID">Number</Item>
                 <Item Key="Category">Category</Item>
-                <Item Key="Language">Laguage</Item>
+                <Item Key="Language">Language</Item>
                 <Item Key="State">State</Item>
             </Option>
         </Setting>
@@ -1301,7 +1301,7 @@ Your OTRS Notification Master
                 <Item Key="Title">Title</Item>
                 <Item Key="FAQID">Number</Item>
                 <Item Key="Category">Category</Item>
-                <Item Key="Language">Laguage</Item>
+                <Item Key="Language">Language</Item>
                 <Item Key="State">State</Item>
             </Option>
         </Setting>
