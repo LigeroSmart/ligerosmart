@@ -79,6 +79,61 @@ sub new {
 sub Run {
     my ( $Self, %Param ) = @_;
 
+    if ( $Self->{Subaction} eq 'CancelAndUnlockTickets' ) {
+
+        my @TicketIDs
+            = grep {$_}
+            $Self->{ParamObject}->GetArray( Param => 'LockedTicketID' );
+
+        # challenge token check for write action
+        $Self->{LayoutObject}->ChallengeTokenCheck();
+
+        # check needed stuff
+        if ( !@TicketIDs ) {
+            return $Self->{LayoutObject}->ErrorScreen(
+                Message => 'Can\'t lock Tickets, no TicketIDs are given!',
+                Comment => 'Please contact the admin.',
+            );
+        }
+
+        my $Message = '';
+
+        TICKET_ID:
+        for my $TicketID (@TicketIDs) {
+
+            my $Access = $Self->{TicketObject}->TicketPermission(
+                Type     => 'lock',
+                TicketID => $TicketID,
+                UserID   => $Self->{UserID}
+            );
+
+            # error screen, don't show ticket
+            if ( !$Access ) {
+                return $Self->{LayoutObject}->NoPermission( WithHeader => 'yes' );
+            }
+
+            # set unlock
+            my $Lock = $Self->{TicketObject}->TicketLockSet(
+                TicketID => $TicketID,
+                Lock     => 'unlock',
+                UserID   => $Self->{UserID},
+            );
+            if ( !$Lock ) {
+                $Message .= "$TicketID,";
+            }
+        }
+
+        if ( $Message ne '' ) {
+            return $Self->{LayoutObject}
+                ->ErrorScreen( Message => "Ticket ($Message) is not unlocked!", );
+        }
+
+        return $Self->{LayoutObject}->Redirect(
+            OP => $Self->{LastScreenOverview},
+        );
+
+    }
+
     # check if bulk feature is enabled
     if ( !$Self->{ConfigObject}->Get('Ticket::Frontend::BulkFeature') ) {
         return $Self->{LayoutObject}->ErrorScreen(
@@ -118,10 +173,14 @@ sub Run {
             qw(OwnerID Owner ResponsibleID Responsible PriorityID Priority QueueID Queue Subject
             Body ArticleTypeID ArticleType TypeID StateID State MergeToSelection MergeTo LinkTogether
             EmailSubject EmailBody EmailTimeUnits
-            LinkTogetherParent Unlock MergeToChecked MergeToOldestChecked TimeUnits)
+            LinkTogetherParent Unlock MergeToChecked MergeToOldestChecked)
             )
         {
             $GetParam{$Key} = $Self->{ParamObject}->GetParam( Param => $Key ) || '';
+        }
+
+        for my $Key (qw(TimeUnits)) {
+            $GetParam{$Key} = $Self->{ParamObject}->GetParam( Param => $Key );
         }
 
         # get time stamp based on user time zone
@@ -235,8 +294,10 @@ sub Run {
 
     # process tickets
     my @TicketIDSelected;
-    my $ActionFlag = 0;
-    my $Counter    = 1;
+    my $LockedTickets = '';
+    my $ActionFlag    = 0;
+    my $Counter       = 1;
+    $Param{TicketsWereLocked} = 0;
 
 # ---
 # MasterSlave
@@ -273,8 +334,6 @@ sub Run {
             next TICKET_ID;
         }
 
-        $Param{TicketsWereLocked} = 0;
-
         # check if it's already locked by somebody else
         if ( !$Self->{Config}->{RequiredLock} ) {
             $Output .= $Self->{LayoutObject}->Notify(
@@ -297,6 +356,7 @@ sub Run {
             }
             else {
                 $Param{TicketsWereLocked} = 1;
+                $LockedTickets .= "LockedTicketID=" . $TicketID . ';';
             }
 
             # set lock
@@ -706,8 +766,9 @@ sub Run {
         %Param,
         %GetParam,
         %Time,
-        TicketIDs => \@TicketIDSelected,
-        Errors    => \%Error,
+        TicketIDs     => \@TicketIDSelected,
+        LockedTickets => $LockedTickets,
+        Errors        => \%Error,
     );
     $Output .= $Self->{LayoutObject}->Footer(
         Type => 'Small',
@@ -1103,6 +1164,20 @@ sub _Mask {
                 URL => $Self->{LastScreenOverview},
                 }
         );
+
+        # show undo link
+        $Self->{LayoutObject}->Block(
+            Name => 'UndoClosePopup',
+            Data => { %Param, TicketID => $Param{"LockedTickets"} },
+        );
+    }
+    else {
+        # show back link
+        $Self->{LayoutObject}->Block(
+            Name => 'CancelClosePopup',
+            Data => %Param
+        );
+
     }
 
     # get output back
