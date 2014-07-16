@@ -251,7 +251,7 @@ my $Top10IDsRef = $FAQObject->FAQTop10Get(
     Interface => 'internal',
     Limit     => 10,
     UserID    => 1,
-);
+) || [];
 $Self->True(
     scalar @{$Top10IDsRef},
     "FAQTop10Get()",

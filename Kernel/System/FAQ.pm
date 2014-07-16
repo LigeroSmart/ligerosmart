@@ -1823,7 +1823,7 @@ sub FAQTop10Get {
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
-            return;
+            return [];
         }
     }
 
@@ -1880,7 +1880,7 @@ sub FAQTop10Get {
         . 'ORDER BY itemcount DESC';
 
     # get the top 10 article ids from database
-    return if !$Self->{DBObject}->Prepare(
+    return [] if !$Self->{DBObject}->Prepare(
         SQL   => $SQL,
         Bind  => \@Bind,
         Limit => $Param{Limit} || 10,

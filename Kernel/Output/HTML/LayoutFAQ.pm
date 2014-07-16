@@ -960,10 +960,10 @@ sub FAQShowTop10 {
             Limit     => $Self->{ConfigObject}->Get('FAQ::Explorer::Top10::Limit') || 10,
             UserID    => $Param{UserID},
             %CategorySearchParam,
-        );
+        ) || [];
 
         # there is something to show
-        if ( @{$Top10ItemIDsRef} ) {
+        if ( $Top10ItemIDsRef && ref $Top10ItemIDsRef eq 'ARRAY' && @{$Top10ItemIDsRef} ) {
 
             $Result = 1;
 

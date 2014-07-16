@@ -151,7 +151,7 @@ sub Run {
         StartDate => $StartDate,
         EndDate   => $EndDate,
         UserID    => $Self->{UserID},
-    );
+    ) || [];
 
     # build result table
     my @Data;

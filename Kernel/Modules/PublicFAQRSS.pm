@@ -89,7 +89,7 @@ sub Run {
             Interface => $Self->{Interface}->{Name},
             Limit     => $Self->{ConfigObject}->Get('FAQ::Explorer::Top10::Limit') || 10,
             UserID    => $Self->{UserID},
-        );
+        ) || [];
 
         @ItemIDs = map { $_->{ItemID} } @{$Top10ItemIDsRef};
 
