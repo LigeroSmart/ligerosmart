@@ -35,6 +35,7 @@
         <File Permission="644" Location="Kernel/Language/pt_BR_FAQ.pm"/>
         <File Permission="644" Location="Kernel/Language/pt_PT_FAQ.pm"/>
         <File Permission="644" Location="Kernel/Language/ru_FAQ.pm"/>
+        <File Permission="644" Location="Kernel/Language/sv_FAQ.pm"/>
         <File Permission="644" Location="Kernel/Language/uk_FAQ.pm"/>
         <File Permission="644" Location="Kernel/Language/zh_CN_FAQ.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentFAQAdd.pm"/>
