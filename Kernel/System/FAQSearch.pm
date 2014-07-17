@@ -1019,9 +1019,7 @@ sub _InConditionGet {
     # because Oracle doesn't support more than 1000 elements in one IN statement.
     my @SQLStrings;
     LOOP:
-    for ( 1 .. 100 ) {
-
-        last LOOP if !scalar @SortedIDs;
+    while ( scalar @SortedIDs ) {
 
         my @SortedIDsPart = splice @SortedIDs, 0, 900;
 
