@@ -1461,6 +1461,29 @@
         </Setting>
     </ConfigItem>
 
+    <ConfigItem Name="DynamicFields::ObjectType###ITSMChange" Required="0" Valid="1">
+        <Description Translatable="1">DynamicField object registration.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>DynamicFields::ObjectType::Registration</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="DisplayName" Translatable="1">ITSMChange</Item>
+                <Item Key="Module">Kernel::System::DynamicField::ObjectType::ITSMChange</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="DynamicFields::ObjectType###ITSMWorkOrder" Required="0" Valid="1">
+        <Description Translatable="1">DynamicField object registration.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>DynamicFields::ObjectType::Registration</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="DisplayName" Translatable="1">ITSMWorkOrder</Item>
+                <Item Key="Module">Kernel::System::DynamicField::ObjectType::ITSMWorkOrder</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+
     <ConfigItem Name="ITSMChange::FreeText::MaxNumber" Required="1" Valid="1">
         <Description Translatable="1">Defines the maximum number of change freetext fields.</Description>
         <Group>ITSM Change Management</Group>

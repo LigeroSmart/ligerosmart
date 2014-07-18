@@ -137,6 +137,8 @@
         <File Permission="644" Location="Kernel/Output/HTML/Standard/CustomerITSMChangeOverview.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/ITSMChange.dtl"/>
         <File Permission="644" Location="Kernel/System/ITSMChange.pm"/>
+        <File Permission="644" Location="Kernel/System/DynamicField/ObjectType/ITSMChange.pm"/>
+        <File Permission="644" Location="Kernel/System/DynamicField/ObjectType/ITSMWorkOrder.pm"/>
         <File Permission="644" Location="Kernel/System/ITSMChange/ITSMChangeCIPAllocate.pm"/>
         <File Permission="644" Location="Kernel/System/ITSMChange/ITSMCondition.pm"/>
         <File Permission="644" Location="Kernel/System/ITSMChange/History.pm"/>
