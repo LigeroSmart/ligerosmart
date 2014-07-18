@@ -18,7 +18,7 @@ sub Data {
     # Template: AAAITSMChangeManagement
     $Self->{Translation}->{'ITSMChange'} = 'Cambio';
     $Self->{Translation}->{'ITSMChanges'} = 'Cambios';
-    $Self->{Translation}->{'ITSM Changes'} = 'Changes';
+    $Self->{Translation}->{'ITSM Changes'} = 'Cambios';
     $Self->{Translation}->{'workorder'} = 'Orden de Trabajo';
     $Self->{Translation}->{'A change must have a title!'} = '¡Cada cambio debe tener un título!';
     $Self->{Translation}->{'A condition must have a name!'} = '¡Cada condición debe tener un nombre!';
