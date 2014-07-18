@@ -29,9 +29,6 @@
         <Setting>
             <Hash>
                 <Item Key="DependsOn">Both</Item>
-                <!-- TODO: Example for alternative configuration using two directional link types -->
-                <!-- <Item Key="DependsOn">Source</Item> -->
-                <!-- <Item Key="Includes">Source</Item> -->
             </Hash>
         </Setting>
     </ConfigItem>
