@@ -12,6 +12,8 @@ package Kernel::System::ITSMChange;
 use strict;
 use warnings;
 
+use Kernel::System::DynamicField;
+use Kernel::System::DynamicField::Backend;
 use Kernel::System::EventHandler;
 use Kernel::System::GeneralCatalog;
 use Kernel::System::LinkObject;
@@ -23,6 +25,7 @@ use Kernel::System::ITSMChange::ITSMCondition;
 use Kernel::System::HTMLUtils;
 use Kernel::System::VirtualFS;
 use Kernel::System::Cache;
+use Kernel::System::VariableCheck qw(:all);
 
 use vars qw(@ISA);
 
@@ -109,16 +112,18 @@ sub new {
     $Self->{Debug} = $Param{Debug} || 0;
 
     # create additional objects
-    $Self->{CacheObject}          = Kernel::System::Cache->new( %{$Self} );
-    $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new( %{$Self} );
-    $Self->{LinkObject}           = Kernel::System::LinkObject->new( %{$Self} );
-    $Self->{CustomerUserObject}   = Kernel::System::CustomerUser->new( %{$Self} );
-    $Self->{HTMLUtilsObject}      = Kernel::System::HTMLUtils->new( %{$Self} );
-    $Self->{StateMachineObject}   = Kernel::System::ITSMChange::ITSMStateMachine->new( %{$Self} );
-    $Self->{VirtualFSObject}      = Kernel::System::VirtualFS->new( %{$Self} );
-    $Self->{WorkOrderObject}      = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
-    $Self->{ConditionObject}      = Kernel::System::ITSMChange::ITSMCondition->new( %{$Self} );
-    $Self->{CIPAllocateObject}    = Kernel::System::ITSMChange::ITSMChangeCIPAllocate->new(
+    $Self->{CacheObject}               = Kernel::System::Cache->new( %{$Self} );
+    $Self->{DynamicFieldObject}        = Kernel::System::DynamicField->new( %{$Self} );
+    $Self->{DynamicFieldBackendObject} = Kernel::System::DynamicField::Backend->new( %{$Self} );
+    $Self->{GeneralCatalogObject}      = Kernel::System::GeneralCatalog->new( %{$Self} );
+    $Self->{LinkObject}                = Kernel::System::LinkObject->new( %{$Self} );
+    $Self->{CustomerUserObject}        = Kernel::System::CustomerUser->new( %{$Self} );
+    $Self->{HTMLUtilsObject}           = Kernel::System::HTMLUtils->new( %{$Self} );
+    $Self->{StateMachineObject}        = Kernel::System::ITSMChange::ITSMStateMachine->new( %{$Self} );
+    $Self->{VirtualFSObject}           = Kernel::System::VirtualFS->new( %{$Self} );
+    $Self->{WorkOrderObject}           = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
+    $Self->{ConditionObject}           = Kernel::System::ITSMChange::ITSMCondition->new( %{$Self} );
+    $Self->{CIPAllocateObject}         = Kernel::System::ITSMChange::ITSMChangeCIPAllocate->new(
         %{$Self},
     );
 
@@ -176,8 +181,8 @@ or
         CABAgents       => [ 1, 2, 4 ],     # UserIDs          # (optional)
         CABCustomers    => [ 'tt', 'mm' ],  # CustomerUserIDs  # (optional)
         RequestedTime   => '2006-01-19 23:59:59',              # (optional)
-        ChangeFreeKey1  => 'Sun',                              # (optional) change freekey fields from 1 to ITSMChange::FreeText::MaxNumber
-        ChangeFreeText1 => 'Earth',                            # (optional) change freetext fields from 1 to ITSMChange::FreeText::MaxNumber
+        DynamicField_X  => 'Sun',                              # (optional)
+        DynamicField_Y  => 'Earth',                            # (optional)
         UserID          => 1,
     );
 
@@ -371,8 +376,8 @@ indicates that requested time of the change should be cleared.
         CABAgents          => [ 1, 2, 4 ],                        # (optional) UserIDs
         CABCustomers       => [ 'tt', 'mm' ],                     # (optional) CustomerUserIDs
         RequestedTime      => '2006-01-19 23:59:59',              # (optional) or 'undef', which clears the time
-        ChangeFreeKey1     => 'Sun',                              # (optional) change freekey fields from 1 to ITSMChange::FreeText::MaxNumber
-        ChangeFreeText1    => 'Earth',                            # (optional) change freetext fields from 1 to ITSMChange::FreeText::MaxNumber
+        DynamicField_X     => 'Sun',                              # (optional)
+        DynamicField_Y     => 'Earth',                            # (optional)
         BypassStateMachine => 1,                                  # (optional) default 0, if 1 the state machine will be bypassed
         UserID             => 1,
     );
@@ -497,8 +502,28 @@ sub ChangeUpdate {
         return if !$Self->ChangeCABUpdate(%Param);
     }
 
-    # update change freekey and freetext fields
-    return if !$Self->_ChangeFreeTextUpdate(%Param);
+    # set the change dynamic fields
+    KEY:
+    for my $Key ( sort keys %Param ) {
+
+        next KEY if $Key !~ m{ \A DynamicField_(.*) \z }xms;
+
+        # save the real name of the dynamic field (without prefix)
+        my $DynamicFieldName = $1;
+
+        # get the dynamic field config
+        my $DynamicFieldConfig = $Self->{DynamicFieldObject}->DynamicFieldGet(
+            Name => $DynamicFieldName,
+        );
+
+        # write value to dynamic field
+        my $Success = $Self->{DynamicFieldBackendObject}->ValueSet(
+            DynamicFieldConfig => $DynamicFieldConfig,
+            ObjectID           => $Param{ChangeID},
+            Value              => $Param{$Key},
+            UserID             => $Param{UserID},
+        );
+    }
 
     # map update attributes to column names
     my %Attribute = (
@@ -613,8 +638,8 @@ The returned hash reference contains the following elements:
     $Change{PlannedEffort}          # determined from the workorders
     $Change{AccountedTime}          # determined from the workorders
     $Change{RequestedTime}
-    $Change{ChangeFreeKey1}         # change freekey fields from 1 to ITSMChange::FreeText::MaxNumber
-    $Change{ChangeFreeText1}        # change freetext fields from 1 to ITSMChange::FreeText::MaxNumber
+    $Change{DynamicField_X}
+    $Change{DynamicField_Y}
     $Change{CreateTime}
     $Change{CreateBy}
     $Change{ChangeTime}
@@ -706,14 +731,29 @@ sub ChangeGet {
                 =~ s{ \A ( \d\d\d\d - \d\d - \d\d \s \d\d:\d\d:\d\d ) \. .+? \z }{$1}xms;
         }
 
-        # get change freekey and freetext data
-        my $ChangeFreeText = $Self->_ChangeFreeTextGet(
-            ChangeID => $Param{ChangeID},
-            UserID   => $Param{UserID},
+        # get all dynamic fields for the object type ITSMChange
+        my $DynamicFieldList = $Self->{DynamicFieldObject}->DynamicFieldListGet(
+            ObjectType => 'ITSMChange',
         );
 
-        # add result to change data
-        %ChangeData = ( %ChangeData, %{$ChangeFreeText} );
+        DYNAMICFIELD:
+        for my $DynamicFieldConfig ( @{$DynamicFieldList} ) {
+
+            # validate each dynamic field
+            next DYNAMICFIELD if !$DynamicFieldConfig;
+            next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
+            next DYNAMICFIELD if !$DynamicFieldConfig->{Name};
+            next DYNAMICFIELD if !IsHashRefWithData( $DynamicFieldConfig->{Config} );
+
+            # get the current value for each dynamic field
+            my $Value = $Self->{DynamicFieldBackendObject}->ValueGet(
+                DynamicFieldConfig => $DynamicFieldConfig,
+                ObjectID           => $Param{ChangeID},
+            );
+
+            # set the dynamic field name and value into the change data hash
+            $ChangeData{ 'DynamicField_' . $DynamicFieldConfig->{Name} } = $Value;
+        }
 
         # set cache (change data exists at this point, it was checked before)
         $Self->{CacheObject}->Set(
@@ -1337,6 +1377,8 @@ is ignored.
         ImpactIDs          => [ 136, 174 ],                             # (optional)
         Priorities         => [ '1 very low', '2 low' ],                # (optional)
         PriorityIDs        => [ 137, 175 ],                             # (optional)
+
+        # TODO: Convert freetext to dynamic fields
 
         # search in change freetext and freekey fields
         ChangeFreeKey1     => 'Sun',                                    # (optional) change freekey fields from 1 to ITSMChange::FreeText::MaxNumber
@@ -2362,11 +2404,27 @@ sub ChangeDelete {
         UserID   => $Param{UserID},
     );
 
-    # delete the change freetext fields
-    return if !$Self->_ChangeFreeTextDelete(
-        ChangeID => $Param{ChangeID},
-        UserID   => $Param{UserID},
+    # get all dynamic fields for the object type ITSMChange
+    my $DynamicFieldListTicket = $Self->{DynamicFieldObject}->DynamicFieldListGet(
+        ObjectType => 'ITSMChange',
+        Valid      => 0,
     );
+
+    # delete dynamicfield values for this change
+    DYNAMICFIELD:
+    for my $DynamicFieldConfig ( @{$DynamicFieldListTicket} ) {
+
+        next DYNAMICFIELD if !$DynamicFieldConfig;
+        next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
+        next DYNAMICFIELD if !$DynamicFieldConfig->{Name};
+        next DYNAMICFIELD if !IsHashRefWithData( $DynamicFieldConfig->{Config} );
+
+        $Self->{DynamicFieldBackendObject}->ValueDelete(
+            DynamicFieldConfig => $DynamicFieldConfig,
+            ObjectID           => $Param{ChangeID},
+            UserID             => $Param{UserID},
+        );
+    }
 
     # delete cache
     for my $Key (
@@ -3140,54 +3198,6 @@ sub ChangeAttachmentExists {
     return 1;
 }
 
-=item ChangeGetConfiguredFreeTextFields()
-
-Returns an array with the numbers of all configured change freekey and freetext fields
-
-    my @ConfiguredChangeFreeTextFields = $ChangeObject->ChangeGetConfiguredFreeTextFields();
-
-=cut
-
-sub ChangeGetConfiguredFreeTextFields {
-    my ( $Self, %Param ) = @_;
-
-    # lookup cached result
-    if (
-        $Self->{ConfiguredChangeFreeTextFields}
-        && ref $Self->{ConfiguredChangeFreeTextFields} eq 'ARRAY'
-        && @{ $Self->{ConfiguredChangeFreeTextFields} }
-        )
-    {
-        return @{ $Self->{ConfiguredChangeFreeTextFields} };
-    }
-
-    # get maximum number of change freetext fields
-    my $MaxNumber = $Self->{ConfigObject}->Get('ITSMChange::FreeText::MaxNumber');
-
-    # get all configured change freekey and freetext numbers
-    my @ConfiguredChangeFreeTextFields = ();
-    FREETEXTNUMBER:
-    for my $Number ( 1 .. $MaxNumber ) {
-
-        # check change freekey config
-        if ( $Self->{ConfigObject}->Get( 'ChangeFreeKey' . $Number ) ) {
-            push @ConfiguredChangeFreeTextFields, $Number;
-            next FREETEXTNUMBER;
-        }
-
-        # check change freetext config
-        if ( $Self->{ConfigObject}->Get( 'ChangeFreeText' . $Number ) ) {
-            push @ConfiguredChangeFreeTextFields, $Number;
-            next FREETEXTNUMBER;
-        }
-    }
-
-    # cache result
-    $Self->{ConfiguredChangeFreeTextFields} = \@ConfiguredChangeFreeTextFields;
-
-    return @ConfiguredChangeFreeTextFields;
-}
-
 sub DESTROY {
     my $Self = shift;
 
@@ -3335,8 +3345,8 @@ There are no required parameters.
         RequestedTime        => '2009-10-23 08:57:12',              # (optional)
         CABAgents            => [ 1, 2, 4 ],     # UserIDs          # (optional)
         CABCustomers         => [ 'tt', 'mm' ],  # CustomerUserIDs  # (optional)
-        ChangeFreeKey1       => 'Sun',                              # (optional) change freekey fields from 1 to ITSMChange::FreeText::MaxNumber
-        ChangeFreeText1      => 'Earth',                            # (optional) change freetext fields from 1 to ITSMChange::FreeText::MaxNumber
+        DynamicField_X       => 'Sun',                               # (optional)
+        DynamicField_Y       => 'Earth',                             # (optional)
     );
 
 The ChangeStateID is checked for existence in the general catalog.
@@ -3349,8 +3359,8 @@ These string parameters have length constraints:
     DescriptionPlain    | 1800000 characters
     Justification       | 1800000 characters
     JustificationPlain  | 1800000 characters
-    ChangeFreeKeyXX     |  250 characters
-    ChangeFreeTextXX    |  250 characters
+    DynamicField_X      | 3800 characters
+    DynamicField_Y      | 3800 characters
 
 =cut
 
@@ -3421,45 +3431,40 @@ sub _CheckChangeParams {
         }
     }
 
-    # check the freekey and freetext parameters
-    for my $Type ( 'ChangeFreeKey', 'ChangeFreeText' ) {
+    # check the change dynamic fields
+    KEY:
+    for my $Key ( sort keys %Param ) {
 
-        # check all possible freetext fields
-        NUMBER:
-        for my $Number ( 1 .. $Self->{ConfigObject}->Get('ITSMChange::FreeText::MaxNumber') ) {
+        next KEY if $Key !~ m{ \A DynamicField_(.*) \z }xms;
 
-            # build argument, e.g. ChangeFreeKey1
-            my $Argument = $Type . $Number;
+        # params are not required
+        next KEY if !exists $Param{$Key};
 
-            # params are not required
-            next NUMBER if !exists $Param{$Argument};
+        # check if param is not defined
+        if ( !defined $Param{$Key} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "The parameter '$Key' must be defined!",
+            );
+            return;
+        }
 
-            # check if param is not defined
-            if ( !defined $Param{$Argument} ) {
-                $Self->{LogObject}->Log(
-                    Priority => 'error',
-                    Message  => "The parameter '$Argument' must be defined!",
-                );
-                return;
-            }
+        # check if param is not a reference
+        if ( ref $Param{$Key} ne '' ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "The parameter '$Key' mustn't be a reference!",
+            );
+            return;
+        }
 
-            # check if param is not a reference
-            if ( ref $Param{$Argument} ne '' ) {
-                $Self->{LogObject}->Log(
-                    Priority => 'error',
-                    Message  => "The parameter '$Argument' mustn't be a reference!",
-                );
-                return;
-            }
-
-            # check the maximum length of freetext fields
-            if ( length( $Param{$Argument} ) > 250 ) {
-                $Self->{LogObject}->Log(
-                    Priority => 'error',
-                    Message  => "The parameter '$Argument' must be shorter than 250 characters!",
-                );
-                return;
-            }
+        # check the maximum length of dynamic fields
+        if ( length( $Param{$Key} ) > 3800 ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "The parameter '$Key' must be shorter than 3800 characters!",
+            );
+            return;
         }
     }
 
@@ -3579,267 +3584,6 @@ sub _CheckChangeParams {
             }
         }
     }
-
-    return 1;
-}
-
-=item _ChangeFreeTextGet()
-
-Gets the freetext and freekey fields of a change as a hash reference.
-
-    my $ChangeFreeText = $ChangeObject->_ChangeFreeTextGet(
-        ChangeID => 123,
-        UserID   => 1,
-    );
-
-Returns:
-
-    $ChangeFreeText = {
-        ChangeFreeKey1  => 'Sun',   # change freekey fields from 1 to ITSMChange::FreeText::MaxNumber
-        ChangeFreeText1 => 'Earth', # change freetext fields from 1 to ITSMChange::FreeText::MaxNumber
-    }
-
-=cut
-
-sub _ChangeFreeTextGet {
-    my ( $Self, %Param ) = @_;
-
-    # check needed stuff
-    for my $Attribute (qw(ChangeID UserID)) {
-        if ( !$Param{$Attribute} ) {
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message  => "Need $Attribute!",
-            );
-            return;
-        }
-    }
-
-    # to store change freekey and freetext data
-    my %Data;
-
-    # get change freekey and freetext data
-    for my $Type ( 'ChangeFreeKey', 'ChangeFreeText' ) {
-
-        # preset every freetext field with empty string
-        for my $Number ( 1 .. $Self->{ConfigObject}->Get('ITSMChange::FreeText::MaxNumber') ) {
-            $Data{ $Type . $Number } = '';
-        }
-
-        # set table name
-        my $TableName = '';
-        if ( $Type eq 'ChangeFreeText' ) {
-            $TableName = 'change_freetext';
-        }
-        elsif ( $Type eq 'ChangeFreeKey' ) {
-            $TableName = 'change_freekey';
-        }
-
-        # get change freetext fields
-        return if !$Self->{DBObject}->Prepare(
-            SQL => 'SELECT field_id, field_value'
-                . ' FROM ' . $TableName
-                . ' WHERE change_id = ?',
-            Bind => [ \$Param{ChangeID} ],
-        );
-        while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-            my $Field = $Type . $Row[0];
-            my $Value = $Row[1];
-            $Data{$Field} = defined $Value ? $Value : '';
-        }
-    }
-
-    return \%Data;
-}
-
-=item _ChangeFreeTextUpdate()
-
-Updates the freetext and freekey fields of a change.
-Passing an empty string deletes the freetext field.
-
-    my $Success = $ChangeObject->_ChangeFreeTextUpdate(
-        ChangeID        => 123,
-        ChangeFreeKey1  => 'Sun',   # (optional) change freekey fields from 1 to ITSMChange::FreeText::MaxNumber
-        ChangeFreeText1 => 'Earth', # (optional) change freetext fields from 1 to ITSMChange::FreeText::MaxNumber
-        UserID          => 1,
-    );
-
-=cut
-
-sub _ChangeFreeTextUpdate {
-    my ( $Self, %Param ) = @_;
-
-    # check needed stuff
-    for my $Attribute (qw(ChangeID UserID)) {
-        if ( !$Param{$Attribute} ) {
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message  => "Need $Attribute!",
-            );
-            return;
-        }
-    }
-
-    # check the given parameters
-    return if !$Self->_CheckChangeParams(%Param);
-
-    # store the given freekey and freetext ids
-    my @FreeKeyFieldIDs;
-    my @FreeTextFieldIDs;
-    for my $Type ( 'ChangeFreeKey', 'ChangeFreeText' ) {
-
-        # check all possible freetext fields
-        NUMBER:
-        for my $Number ( 1 .. $Self->{ConfigObject}->Get('ITSMChange::FreeText::MaxNumber') ) {
-
-            # build argument, e.g. ChangeFreeKey1
-            my $Argument = $Type . $Number;
-
-            # params are not required
-            next NUMBER if !exists $Param{$Argument};
-
-            # all checks were done before, so here we are safe and store the ids
-            if ( $Type eq 'ChangeFreeKey' ) {
-                push @FreeKeyFieldIDs, $Number;
-            }
-            elsif ( $Type eq 'ChangeFreeText' ) {
-                push @FreeTextFieldIDs, $Number;
-            }
-        }
-    }
-
-    for my $Type ( 'ChangeFreeKey', 'ChangeFreeText' ) {
-
-        # set table name and arrays of field ids
-        my $TableName;
-        my @FieldIDs;
-        if ( $Type eq 'ChangeFreeKey' ) {
-            $TableName = 'change_freekey';
-            @FieldIDs  = @FreeKeyFieldIDs;
-        }
-        elsif ( $Type eq 'ChangeFreeText' ) {
-            $TableName = 'change_freetext';
-            @FieldIDs  = @FreeTextFieldIDs;
-        }
-
-        # get all existing entries for this change_id
-        # and type (ChangeFreeKey or ChangeFreeText)
-        $Self->{DBObject}->Prepare(
-            SQL => 'SELECT id, field_id '
-                . 'FROM ' . $TableName
-                . ' WHERE change_id = ?',
-            Bind => [ \$Param{ChangeID} ],
-        );
-        my %FieldData;
-        while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-            my $ID      = $Row[0];
-            my $FieldID = $Row[1];
-
-            $FieldData{$FieldID} = {
-                ID => $ID,
-            };
-        }
-
-        # update all given change freekey and freetext fields
-        for my $FieldID (@FieldIDs) {
-
-            # get new value from parameter
-            my $Value = $Param{ $Type . $FieldID };
-
-            # freetext/freekey field exists in database
-            if ( $FieldData{$FieldID} ) {
-
-                # new value is not en empty string, the field needs an update
-                if ( $Value ne '' ) {
-                    return if !$Self->{DBObject}->Do(
-                        SQL => 'UPDATE ' . $TableName
-                            . ' SET field_value = ?'
-                            . ' WHERE id = ?',
-                        Bind => [ \$Value, \$FieldData{$FieldID}->{ID} ],
-                    );
-                }
-
-                # new value is an empty string, the field must be deleted
-                else {
-                    return if !$Self->{DBObject}->Do(
-                        SQL => 'DELETE FROM ' . $TableName
-                            . ' WHERE id = ?',
-                        Bind => [ \$FieldData{$FieldID}->{ID} ],
-                    );
-                }
-            }
-
-            # freetext/freekey field does not exist in database
-            # and new value is not an empty string
-            elsif ( $Value ne '' ) {
-                return if !$Self->{DBObject}->Do(
-                    SQL => 'INSERT INTO ' . $TableName
-                        . ' (change_id, field_id, field_value)'
-                        . ' VALUES (?, ?, ?)',
-                    Bind => [ \$Param{ChangeID}, \$FieldID, \$Value ],
-                );
-            }
-        }
-    }
-
-    # delete cache
-    $Self->{CacheObject}->Delete(
-        Type => 'ITSMChangeManagement',
-        Key  => 'ChangeGet::ID::' . $Param{ChangeID},
-    );
-
-    return 1;
-}
-
-=item _ChangeFreeTextDelete()
-
-Deletes all freetext and freekey fields of a change.
-
-    my $Success = $ChangeObject->_ChangeFreeTextDelete(
-        ChangeID => 123,
-        UserID   => 1,
-    );
-
-=cut
-
-sub _ChangeFreeTextDelete {
-    my ( $Self, %Param ) = @_;
-
-    # check needed stuff
-    for my $Attribute (qw(ChangeID UserID)) {
-        if ( !$Param{$Attribute} ) {
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message  => "Need $Attribute!",
-            );
-            return;
-        }
-    }
-
-    for my $Type ( 'ChangeFreeKey', 'ChangeFreeText' ) {
-
-        # set table name
-        my $TableName;
-        if ( $Type eq 'ChangeFreeKey' ) {
-            $TableName = 'change_freekey';
-        }
-        elsif ( $Type eq 'ChangeFreeText' ) {
-            $TableName = 'change_freetext';
-        }
-
-        # delete entries from database
-        return if !$Self->{DBObject}->Do(
-            SQL => 'DELETE FROM ' . $TableName
-                . ' WHERE change_id = ?',
-            Bind => [ \$Param{ChangeID} ],
-        );
-    }
-
-    # delete cache
-    $Self->{CacheObject}->Delete(
-        Type => 'ITSMChangeManagement',
-        Key  => 'ChangeGet::ID::' . $Param{ChangeID},
-    );
 
     return 1;
 }

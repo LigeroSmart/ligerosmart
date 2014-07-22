@@ -12,6 +12,8 @@ package Kernel::System::ITSMChange::ITSMWorkOrder;
 use strict;
 use warnings;
 
+use Kernel::System::DynamicField;
+use Kernel::System::DynamicField::Backend;
 use Kernel::System::EventHandler;
 use Kernel::System::GeneralCatalog;
 use Kernel::System::LinkObject;
@@ -20,6 +22,7 @@ use Kernel::System::ITSMChange::ITSMCondition;
 use Kernel::System::VirtualFS;
 use Kernel::System::HTMLUtils;
 use Kernel::System::Cache;
+use Kernel::System::VariableCheck qw(:all);
 
 use vars qw(@ISA);
 
@@ -123,13 +126,15 @@ sub new {
     $Self->{Debug} = $Param{Debug} || 0;
 
     # create additional objects
-    $Self->{CacheObject}          = Kernel::System::Cache->new( %{$Self} );
-    $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new( %{$Self} );
-    $Self->{LinkObject}           = Kernel::System::LinkObject->new( %{$Self} );
-    $Self->{StateMachineObject}   = Kernel::System::ITSMChange::ITSMStateMachine->new( %{$Self} );
-    $Self->{ConditionObject}      = Kernel::System::ITSMChange::ITSMCondition->new( %{$Self} );
-    $Self->{HTMLUtilsObject}      = Kernel::System::HTMLUtils->new( %{$Self} );
-    $Self->{VirtualFSObject}      = Kernel::System::VirtualFS->new( %{$Self} );
+    $Self->{CacheObject}               = Kernel::System::Cache->new( %{$Self} );
+    $Self->{DynamicFieldObject}        = Kernel::System::DynamicField->new( %{$Self} );
+    $Self->{DynamicFieldBackendObject} = Kernel::System::DynamicField::Backend->new( %{$Self} );
+    $Self->{GeneralCatalogObject}      = Kernel::System::GeneralCatalog->new( %{$Self} );
+    $Self->{LinkObject}                = Kernel::System::LinkObject->new( %{$Self} );
+    $Self->{StateMachineObject}        = Kernel::System::ITSMChange::ITSMStateMachine->new( %{$Self} );
+    $Self->{ConditionObject}           = Kernel::System::ITSMChange::ITSMCondition->new( %{$Self} );
+    $Self->{HTMLUtilsObject}           = Kernel::System::HTMLUtils->new( %{$Self} );
+    $Self->{VirtualFSObject}           = Kernel::System::VirtualFS->new( %{$Self} );
 
     # get the cache TTL (in seconds)
     $Self->{CacheTTL} = $Self->{ConfigObject}->Get('ITSMChange::CacheTTL') * 60;
@@ -178,8 +183,8 @@ or
         ActualStartTime    => '2009-10-14 00:00:01',                     # (optional)
         ActualEndTime      => '2009-01-20 00:00:01',                     # (optional)
         PlannedEffort      => 123,                                       # (optional)
-        WorkOrderFreeKey1  => 'Sun',                                     # (optional) workorder freekey fields from 1 to ITSMWorkOrder::FreeText::MaxNumber
-        WorkOrderFreeText1 => 'Earth',                                   # (optional) workorder freetext fields from 1 to ITSMWorkOrder::FreeText::MaxNumber
+        DynamicField_X     => 'Sun',                                     # (optional)
+        DynamicField_Y     => 'Earth',                                   # (optional)
         UserID             => 1,
     );
 
@@ -426,8 +431,8 @@ Another exception is the WorkOrderAgentID. Pass undef for removing the workorder
         ActualEndTime      => '2009-01-20 00:00:01',                     # (optional) 'undef' indicates clearing
         PlannedEffort      => 123,                                       # (optional)
         AccountedTime      => 13,                                        # (optional) the value is added to the value in the database
-        WorkOrderFreeKey1  => 'Sun',                                     # (optional) workorder freekey fields from 1 to ITSMWorkOrder::FreeText::MaxNumber
-        WorkOrderFreeText1 => 'Earth',                                   # (optional) workorder freetext fields from 1 to ITSMWorkOrder::FreeText::MaxNumber
+        DynamicField_X     => 'Sun',                                     # (optional)
+        DynamicField_Y     => 'Earth',                                   # (optional)
         NoNumberCalc       => 1,                                         # (optional) default 0, if 1 it prevents a recalculation of the workorder numbers
         BypassStateMachine => 1,                                         # (optional) default 0, if 1 the state machine will be bypassed
         UserID             => 1,
@@ -576,8 +581,28 @@ sub WorkOrderUpdate {
         UserID => $Param{UserID},
     );
 
-    # update workorder freekey and freetext fields
-    return if !$Self->_WorkOrderFreeTextUpdate(%Param);
+    # set the workorder dynamic fields
+    KEY:
+    for my $Key ( sort keys %Param ) {
+
+        next KEY if $Key !~ m{ \A DynamicField_(.*) \z }xms;
+
+        # save the real name of the dynamic field (without prefix)
+        my $DynamicFieldName = $1;
+
+        # get the dynamic field config
+        my $DynamicFieldConfig = $Self->{DynamicFieldObject}->DynamicFieldGet(
+            Name => $DynamicFieldName,
+        );
+
+        # write value to dynamic field
+        my $Success = $Self->{DynamicFieldBackendObject}->ValueSet(
+            DynamicFieldConfig => $DynamicFieldConfig,
+            ObjectID           => $Param{WorkOrderID},
+            Value              => $Param{$Key},
+            UserID             => $Param{UserID},
+        );
+    }
 
     # map update attributes to column names
     my %Attribute = (
@@ -727,8 +752,8 @@ The returned hash reference contains following elements:
     $WorkOrder{ActualEndTime}
     $WorkOrder{AccountedTime}
     $WorkOrder{PlannedEffort}
-    $WorkOrder{WorkOrderFreeKey1}           # workorder freekey fields from 1 to ITSMWorkOrder::FreeText::MaxNumber
-    $WorkOrder{WorkOrderFreeText1}          # workorder freetext fields from 1 to ITSMWorkOrder::FreeText::MaxNumber
+    $WorkOrder{DynamicField_X}
+    $WorkOrder{DynamicField_Y}
     $WorkOrder{CreateTime}
     $WorkOrder{CreateBy}
     $WorkOrder{ChangeTime}
@@ -852,14 +877,30 @@ sub WorkOrderGet {
             $WorkOrderData{$Attribute} = sprintf '%.2f', $WorkOrderData{$Attribute};
         }
 
-        # get workorder freekey and freetext data
-        my $WorkOrderFreeText = $Self->_WorkOrderFreeTextGet(
-            WorkOrderID => $Param{WorkOrderID},
-            UserID      => $Param{UserID},
+        # get all dynamic fields for the object type ITSMWorkOrder
+        my $DynamicFieldList = $Self->{DynamicFieldObject}->DynamicFieldListGet(
+            ObjectType => 'ITSMWorkOrder',
         );
 
-        # add result to workorder data
-        %WorkOrderData = ( %WorkOrderData, %{$WorkOrderFreeText} );
+        DYNAMICFIELD:
+        for my $DynamicFieldConfig ( @{$DynamicFieldList} ) {
+
+            # validate each dynamic field
+            next DYNAMICFIELD if !$DynamicFieldConfig;
+            next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
+            next DYNAMICFIELD if !$DynamicFieldConfig->{Name};
+            next DYNAMICFIELD if !IsHashRefWithData( $DynamicFieldConfig->{Config} );
+
+            # get the current value for each dynamic field
+            my $Value = $Self->{DynamicFieldBackendObject}->ValueGet(
+                DynamicFieldConfig => $DynamicFieldConfig,
+                ObjectID           => $Param{WorkOrderID},
+            );
+
+            # set the dynamic field name and value into the workorder data hash
+            $WorkOrderData{ 'DynamicField_' . $DynamicFieldConfig->{Name} } = $Value;
+        }
+
 
         # set cache (workorder data exists at this point, it was checked before)
         $Self->{CacheObject}->Set(
@@ -983,6 +1024,8 @@ is ignored.
         WorkOrderTitle    => 'Replacement of mail server',             # (optional)
         Instruction       => 'Install the the new server',             # (optional)
         Report            => 'Installed new server without problems',  # (optional)
+
+        # TODO: Convert freetext to dynamic fields
 
         # search in workorder freetext and freekey fields
         WorkOrderFreeKey1  => 'Sun',                                   # (optional) workorder freekey fields from 1 to ITSMWorkOrder::FreeText::MaxNumber
@@ -1661,11 +1704,27 @@ sub WorkOrderDelete {
         );
     }
 
-    # delete the workorder freetext fields
-    return if !$Self->_WorkOrderFreeTextDelete(
-        WorkOrderID => $Param{WorkOrderID},
-        UserID      => $Param{UserID},
+    # get all dynamic fields for the object type ITSMWorkOrder
+    my $DynamicFieldListTicket = $Self->{DynamicFieldObject}->DynamicFieldListGet(
+        ObjectType => 'ITSMWorkOrder',
+        Valid      => 0,
     );
+
+    # delete dynamicfield values for this workorder
+    DYNAMICFIELD:
+    for my $DynamicFieldConfig ( @{$DynamicFieldListTicket} ) {
+
+        next DYNAMICFIELD if !$DynamicFieldConfig;
+        next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
+        next DYNAMICFIELD if !$DynamicFieldConfig->{Name};
+        next DYNAMICFIELD if !IsHashRefWithData( $DynamicFieldConfig->{Config} );
+
+        $Self->{DynamicFieldBackendObject}->ValueDelete(
+            DynamicFieldConfig => $DynamicFieldConfig,
+            ObjectID           => $Param{WorkOrderID},
+            UserID             => $Param{UserID},
+        );
+    }
 
     # delete the workorder
     return if !$Self->{DBObject}->Do(
@@ -2863,54 +2922,6 @@ sub WorkOrderChangeEffortsGet {
     return \%ChangeEfforts;
 }
 
-=item WorkOrderGetConfiguredFreeTextFields()
-
-Returns an array with the numbers of all configured workorder freekey and freetext fields
-
-    my @ConfiguredWorkOrderFreeTextFields = $WorkOrderObject->WorkOrderGetConfiguredFreeTextFields();
-
-=cut
-
-sub WorkOrderGetConfiguredFreeTextFields {
-    my ( $Self, %Param ) = @_;
-
-    # lookup cached result
-    if (
-        $Self->{ConfiguredWorkOrderFreeTextFields}
-        && ref $Self->{ConfiguredWorkOrderFreeTextFields} eq 'ARRAY'
-        && @{ $Self->{ConfiguredWorkOrderFreeTextFields} }
-        )
-    {
-        return @{ $Self->{ConfiguredWorkOrderFreeTextFields} };
-    }
-
-    # get maximum number of workorder freetext fields
-    my $MaxNumber = $Self->{ConfigObject}->Get('ITSMWorkOrder::FreeText::MaxNumber');
-
-    # get all configured workorder freekey and freetext numbers
-    my @ConfiguredWorkOrderFreeTextFields = ();
-    FREETEXTNUMBER:
-    for my $Number ( 1 .. $MaxNumber ) {
-
-        # check workorder freekey config
-        if ( $Self->{ConfigObject}->Get( 'WorkOrderFreeKey' . $Number ) ) {
-            push @ConfiguredWorkOrderFreeTextFields, $Number;
-            next FREETEXTNUMBER;
-        }
-
-        # check workorder freetext config
-        if ( $Self->{ConfigObject}->Get( 'WorkOrderFreeText' . $Number ) ) {
-            push @ConfiguredWorkOrderFreeTextFields, $Number;
-            next FREETEXTNUMBER;
-        }
-    }
-
-    # cache result
-    $Self->{ConfiguredWorkOrderFreeTextFields} = \@ConfiguredWorkOrderFreeTextFields;
-
-    return @ConfiguredWorkOrderFreeTextFields;
-}
-
 sub DESTROY {
     my $Self = shift;
 
@@ -3040,8 +3051,8 @@ The value for C<WorkOrderAgentID> can be undefined.
         ActualStartTime    => '2009-10-01 10:33:00',                           # (optional)
         PlannedEndTime     => '2009-10-01 10:33:00',                           # (optional)
         ActualEndTime      => '2009-10-01 10:33:00',                           # (optional)
-        WorkOrderFreeKey1  => 'Sun',                                           # (optional) workorder freekey fields from 1 to ITSMWorkOrder::FreeText::MaxNumber
-        WorkOrderFreeText1 => 'Earth',                                         # (optional) workorder freetext fields from 1 to ITSMWorkOrder::FreeText::MaxNumber
+        DynamicField_X     => 'Sun',                                           # (optional)
+        DynamicField_Y     => 'Earth',                                         # (optional)
 
     );
 
@@ -3054,8 +3065,8 @@ These string parameters have length constraints:
     InstructionPlain    | 1800000 characters
     Report              | 1800000 characters
     ReportPlain         | 1800000 characters
-    WorkOrderFreeKeyXX  |  250 characters
-    WorkOrderFreeTextXX |  250 characters
+    DynamicField_X      | 3800 characters
+    DynamicField_Y      | 3800 characters
 
 =cut
 
@@ -3158,45 +3169,40 @@ sub _CheckWorkOrderParams {
         }
     }
 
-    # check the freekey and freetext parameters
-    for my $Type ( 'WorkOrderFreeKey', 'WorkOrderFreeText' ) {
+    # check the workorder dynamic fields
+    KEY:
+    for my $Key ( sort keys %Param ) {
 
-        # check all possible freetext fields
-        NUMBER:
-        for my $Number ( 1 .. $Self->{ConfigObject}->Get('ITSMWorkOrder::FreeText::MaxNumber') ) {
+        next KEY if $Key !~ m{ \A DynamicField_(.*) \z }xms;
 
-            # build argument, e.g. WorkOrderFreeKey1
-            my $Argument = $Type . $Number;
+        # params are not required
+        next KEY if !exists $Param{$Key};
 
-            # params are not required
-            next NUMBER if !exists $Param{$Argument};
+        # check if param is not defined
+        if ( !defined $Param{$Key} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "The parameter '$Key' must be defined!",
+            );
+            return;
+        }
 
-            # check if param is not defined
-            if ( !defined $Param{$Argument} ) {
-                $Self->{LogObject}->Log(
-                    Priority => 'error',
-                    Message  => "The parameter '$Argument' must be defined!",
-                );
-                return;
-            }
+        # check if param is not a reference
+        if ( ref $Param{$Key} ne '' ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "The parameter '$Key' mustn't be a reference!",
+            );
+            return;
+        }
 
-            # check if param is not a reference
-            if ( ref $Param{$Argument} ne '' ) {
-                $Self->{LogObject}->Log(
-                    Priority => 'error',
-                    Message  => "The parameter '$Argument' mustn't be a reference!",
-                );
-                return;
-            }
-
-            # check the maximum length of freetext fields
-            if ( length( $Param{$Argument} ) > 250 ) {
-                $Self->{LogObject}->Log(
-                    Priority => 'error',
-                    Message  => "The parameter '$Argument' must be shorter than 250 characters!",
-                );
-                return;
-            }
+        # check the maximum length of dynamic fields
+        if ( length( $Param{$Key} ) > 3800 ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "The parameter '$Key' must be shorter than 3800 characters!",
+            );
+            return;
         }
     }
 
@@ -3350,267 +3356,6 @@ sub _CheckTimestamps {
             }
         }
     }
-
-    return 1;
-}
-
-=item _WorkOrderFreeTextGet()
-
-Gets the freetext and freekey fields of a workorder as a hash reference.
-
-    my $WorkOrderFreeText = $WorkOrderObject->_WorkOrderFreeTextGet(
-        WorkOrderID => 123,
-        UserID      => 1,
-    );
-
-Returns:
-
-    $WorkOrderFreeText = {
-        WorkOrderFreeKey1  => 'Sun',   # workorder freekey fields from 1 to ITSMWorkOrder::FreeText::MaxNumber
-        WorkOrderFreeText1 => 'Earth', # workorder freetext fields from 1 to ITSMWorkOrder::FreeText::MaxNumber
-    }
-
-=cut
-
-sub _WorkOrderFreeTextGet {
-    my ( $Self, %Param ) = @_;
-
-    # check needed stuff
-    for my $Attribute (qw(WorkOrderID UserID)) {
-        if ( !$Param{$Attribute} ) {
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message  => "Need $Attribute!",
-            );
-            return;
-        }
-    }
-
-    # to store workorder freekey and freetext data
-    my %Data;
-
-    # get workorder freekey and freetext data
-    for my $Type ( 'WorkOrderFreeKey', 'WorkOrderFreeText' ) {
-
-        # preset every freetext field with empty string
-        for my $Number ( 1 .. $Self->{ConfigObject}->Get('ITSMWorkOrder::FreeText::MaxNumber') ) {
-            $Data{ $Type . $Number } = '';
-        }
-
-        # set table name
-        my $TableName = '';
-        if ( $Type eq 'WorkOrderFreeText' ) {
-            $TableName = 'change_wo_freetext';
-        }
-        elsif ( $Type eq 'WorkOrderFreeKey' ) {
-            $TableName = 'change_wo_freekey';
-        }
-
-        # get workorder freetext fields
-        return if !$Self->{DBObject}->Prepare(
-            SQL => 'SELECT field_id, field_value'
-                . ' FROM ' . $TableName
-                . ' WHERE workorder_id = ?',
-            Bind => [ \$Param{WorkOrderID} ],
-        );
-        while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-            my $Field = $Type . $Row[0];
-            my $Value = $Row[1];
-            $Data{$Field} = defined $Value ? $Value : '';
-        }
-    }
-
-    return \%Data;
-}
-
-=item _WorkOrderFreeTextUpdate()
-
-Updates the freetext and freekey fields of a workorder.
-Passing an empty string deletes the freetext field.
-
-    my $Success = $WorkOrderObject->_WorkOrderFreeTextUpdate(
-        WorkOrderID        => 123,
-        WorkOrderFreeKey1  => 'Sun',   # (optional) workorder freekey fields from 1 to ITSMWorkOrder::FreeText::MaxNumber
-        WorkOrderFreeText1 => 'Earth', # (optional) workorder freetext fields from 1 to ITSMWorkOrder::FreeText::MaxNumber
-        UserID             => 1,
-    );
-
-=cut
-
-sub _WorkOrderFreeTextUpdate {
-    my ( $Self, %Param ) = @_;
-
-    # check needed stuff
-    for my $Attribute (qw(WorkOrderID UserID)) {
-        if ( !$Param{$Attribute} ) {
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message  => "Need $Attribute!",
-            );
-            return;
-        }
-    }
-
-    # check the given parameters
-    return if !$Self->_CheckWorkOrderParams(%Param);
-
-    # store the given freekey and freetext ids
-    my @FreeKeyFieldIDs;
-    my @FreeTextFieldIDs;
-    for my $Type ( 'WorkOrderFreeKey', 'WorkOrderFreeText' ) {
-
-        # check all possible freetext fields
-        NUMBER:
-        for my $Number ( 1 .. $Self->{ConfigObject}->Get('ITSMWorkOrder::FreeText::MaxNumber') ) {
-
-            # build argument, e.g. WorkOrderFreeKey1
-            my $Argument = $Type . $Number;
-
-            # params are not required
-            next NUMBER if !exists $Param{$Argument};
-
-            # all checks were done before, so here we are safe and store the ids
-            if ( $Type eq 'WorkOrderFreeKey' ) {
-                push @FreeKeyFieldIDs, $Number;
-            }
-            elsif ( $Type eq 'WorkOrderFreeText' ) {
-                push @FreeTextFieldIDs, $Number;
-            }
-        }
-    }
-
-    for my $Type ( 'WorkOrderFreeKey', 'WorkOrderFreeText' ) {
-
-        # set table name and arrays of field ids
-        my $TableName;
-        my @FieldIDs;
-        if ( $Type eq 'WorkOrderFreeKey' ) {
-            $TableName = 'change_wo_freekey';
-            @FieldIDs  = @FreeKeyFieldIDs;
-        }
-        elsif ( $Type eq 'WorkOrderFreeText' ) {
-            $TableName = 'change_wo_freetext';
-            @FieldIDs  = @FreeTextFieldIDs;
-        }
-
-        # get all existing entries for this workorder_id
-        # and type (WorkOrderFreeKey or WorkOrderFreeText)
-        $Self->{DBObject}->Prepare(
-            SQL => 'SELECT id, field_id '
-                . 'FROM ' . $TableName
-                . ' WHERE workorder_id = ?',
-            Bind => [ \$Param{WorkOrderID} ],
-        );
-        my %FieldData;
-        while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-            my $ID      = $Row[0];
-            my $FieldID = $Row[1];
-
-            $FieldData{$FieldID} = {
-                ID => $ID,
-            };
-        }
-
-        # update all given workorder freekey and freetext fields
-        for my $FieldID (@FieldIDs) {
-
-            # get new value from parameter
-            my $Value = $Param{ $Type . $FieldID };
-
-            # freetext/freekey field exists in database
-            if ( $FieldData{$FieldID} ) {
-
-                # new value is not en empty string, the field needs an update
-                if ( $Value ne '' ) {
-                    return if !$Self->{DBObject}->Do(
-                        SQL => 'UPDATE ' . $TableName
-                            . ' SET field_value = ?'
-                            . ' WHERE id = ?',
-                        Bind => [ \$Value, \$FieldData{$FieldID}->{ID} ],
-                    );
-                }
-
-                # new value is an empty string, the field must be deleted
-                else {
-                    return if !$Self->{DBObject}->Do(
-                        SQL => 'DELETE FROM ' . $TableName
-                            . ' WHERE id = ?',
-                        Bind => [ \$FieldData{$FieldID}->{ID} ],
-                    );
-                }
-            }
-
-            # freetext/freekey field does not exist in database
-            # and new value is not an empty string
-            elsif ( $Value ne '' ) {
-                return if !$Self->{DBObject}->Do(
-                    SQL => 'INSERT INTO ' . $TableName
-                        . ' (workorder_id, field_id, field_value)'
-                        . ' VALUES (?, ?, ?)',
-                    Bind => [ \$Param{WorkOrderID}, \$FieldID, \$Value ],
-                );
-            }
-        }
-    }
-
-    # delete cache
-    $Self->{CacheObject}->Delete(
-        Type => 'ITSMChangeManagement',
-        Key  => 'WorkOrderGet::ID::' . $Param{WorkOrderID},
-    );
-
-    return 1;
-}
-
-=item _WorkOrderFreeTextDelete()
-
-Deletes all freetext and freekey fields of a workorder.
-
-    my $Success = $WorkOrderObject->_WorkOrderFreeTextDelete(
-        WorkOrderID => 123,
-        UserID      => 1,
-    );
-
-=cut
-
-sub _WorkOrderFreeTextDelete {
-    my ( $Self, %Param ) = @_;
-
-    # check needed stuff
-    for my $Attribute (qw(WorkOrderID UserID)) {
-        if ( !$Param{$Attribute} ) {
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message  => "Need $Attribute!",
-            );
-            return;
-        }
-    }
-
-    for my $Type ( 'WorkOrderFreeKey', 'WorkOrderFreeText' ) {
-
-        # set table name
-        my $TableName;
-        if ( $Type eq 'WorkOrderFreeKey' ) {
-            $TableName = 'change_wo_freekey';
-        }
-        elsif ( $Type eq 'WorkOrderFreeText' ) {
-            $TableName = 'change_wo_freetext';
-        }
-
-        # delete entries from database
-        return if !$Self->{DBObject}->Do(
-            SQL => 'DELETE FROM ' . $TableName
-                . ' WHERE workorder_id = ?',
-            Bind => [ \$Param{WorkOrderID} ],
-        );
-    }
-
-    # delete cache
-    $Self->{CacheObject}->Delete(
-        Type => 'ITSMChangeManagement',
-        Key  => 'WorkOrderGet::ID::' . $Param{WorkOrderID},
-    );
 
     return 1;
 }

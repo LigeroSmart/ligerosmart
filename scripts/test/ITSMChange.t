@@ -16,6 +16,7 @@ use vars qw($Self);
 use Data::Dumper;
 use List::Util qw(max);
 
+use Kernel::System::DynamicField;
 use Kernel::System::User;
 use Kernel::System::Group;
 use Kernel::System::CustomerUser;
@@ -33,6 +34,7 @@ use Kernel::System::Cache;
 my $TestCount = 1;
 
 # create common objects
+$Self->{DynamicFieldObject}   = Kernel::System::DynamicField->new( %{$Self} );
 $Self->{UserObject}           = Kernel::System::User->new( %{$Self} );
 $Self->{GroupObject}          = Kernel::System::Group->new( %{$Self} );
 $Self->{CustomerUserObject}   = Kernel::System::CustomerUser->new( %{$Self} );
@@ -171,7 +173,6 @@ my @ObjectMethods = qw(
     ChangeCIPLookup
     ChangeDelete
     ChangeGet
-    ChangeGetConfiguredFreeTextFields
     ChangeList
     ChangeLookup
     ChangePossibleCIPGet
