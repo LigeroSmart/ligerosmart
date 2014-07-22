@@ -2742,7 +2742,7 @@ my @WorkOrderSearchTests = (
 );
 
 # TODO: Remove this!
-@WorkOrderSearchTests = ();
+#@WorkOrderSearchTests = ();
 
 my $SearchTestCount = 1;
 
@@ -2890,95 +2890,95 @@ my @OrderByColumns = qw(
 
 for my $OrderByColumn (@OrderByColumns) {
 
-    # # turn off all pretty print
-    # local $Data::Dumper::Indent = 0;
-    # local $Data::Dumper::Useqq  = 1;
+    # turn off all pretty print
+    local $Data::Dumper::Indent = 0;
+    local $Data::Dumper::Useqq  = 1;
 
-    # # WorkOrderSearch() sorts the ID-Fields numerically, the string fields alphabetically.
-    # # the sorting is completely determined by the second comparison
-    # my @SortedWorkOrders;
-    # if ( $OrderByColumn eq 'WorkOrderTitle' ) {
-    #     @SortedWorkOrders = sort {
-    #         $a->{$OrderByColumn} cmp $b->{$OrderByColumn}
-    #             || $b->{WorkOrderID} <=> $a->{WorkOrderID}
-    #     } @WorkOrdersForOrderByTests;
-    # }
-    # else {
-    #     @SortedWorkOrders = sort {
-    #         $a->{$OrderByColumn} <=> $b->{$OrderByColumn}
-    #             || $b->{WorkOrderID} <=> $a->{WorkOrderID}
-    #     } @WorkOrdersForOrderByTests;
-    # }
-    # my @SortedIDs = map { $_->{WorkOrderID} } @SortedWorkOrders;
+    # WorkOrderSearch() sorts the ID-Fields numerically, the string fields alphabetically.
+    # the sorting is completely determined by the second comparison
+    my @SortedWorkOrders;
+    if ( $OrderByColumn eq 'WorkOrderTitle' ) {
+        @SortedWorkOrders = sort {
+            $a->{$OrderByColumn} cmp $b->{$OrderByColumn}
+                || $b->{WorkOrderID} <=> $a->{WorkOrderID}
+        } @WorkOrdersForOrderByTests;
+    }
+    else {
+        @SortedWorkOrders = sort {
+            $a->{$OrderByColumn} <=> $b->{$OrderByColumn}
+                || $b->{WorkOrderID} <=> $a->{WorkOrderID}
+        } @WorkOrdersForOrderByTests;
+    }
+    my @SortedIDs = map { $_->{WorkOrderID} } @SortedWorkOrders;
 
-    # # dump the reference attribute
-    # my $ReferenceList = Data::Dumper::Dumper( \@SortedIDs );    ## no critic
+    # dump the reference attribute
+    my $ReferenceList = Data::Dumper::Dumper( \@SortedIDs );    ## no critic
 
-    # my $SearchResult = $Self->{WorkOrderObject}->WorkOrderSearch(
-    #     ChangeIDs        => [$OrderByTestID],
-    #     OrderBy          => [$OrderByColumn],
-    #     OrderByDirection => ['Up'],
-    #     UserID           => 1,
-    # );
+    my $SearchResult = $Self->{WorkOrderObject}->WorkOrderSearch(
+        ChangeIDs        => [$OrderByTestID],
+        OrderBy          => [$OrderByColumn],
+        OrderByDirection => ['Up'],
+        UserID           => 1,
+    );
 
-    # # dump the attribute from WorkOrderGet()
-    # my $SearchList = Data::Dumper::Dumper($SearchResult);       ## no critic
+    # dump the attribute from WorkOrderGet()
+    my $SearchList = Data::Dumper::Dumper($SearchResult);       ## no critic
 
-    # $Self->Is(
-    #     $SearchList,
-    #     $ReferenceList,
-    #     'Test ' . $TestCount++ . ": WorkOrderSearch() OrderBy $OrderByColumn (Up)."
-    # );
+    $Self->Is(
+        $SearchList,
+        $ReferenceList,
+        'Test ' . $TestCount++ . ": WorkOrderSearch() OrderBy $OrderByColumn (Up)."
+    );
 
-    # # sort in the other direction
+    # sort in the other direction
 
-    # # WorkOrderSearch() sorts the ID-Fields numerically, the string fields alphabetically.
-    # # the sorting is completely determined by the second comparison
-    # if ( $OrderByColumn eq 'WorkOrderTitle' ) {
-    #     @SortedWorkOrders = sort {
-    #         $b->{$OrderByColumn} cmp $a->{$OrderByColumn}
-    #             || $b->{WorkOrderID} <=> $a->{WorkOrderID}
-    #     } @WorkOrdersForOrderByTests;
-    # }
-    # else {
-    #     @SortedWorkOrders = sort {
-    #         $b->{$OrderByColumn} <=> $a->{$OrderByColumn}
-    #             || $b->{WorkOrderID} <=> $a->{WorkOrderID}
-    #     } @WorkOrdersForOrderByTests;
-    # }
-    # my @SortedIDsDown = map { $_->{WorkOrderID} } @SortedWorkOrders;
+    # WorkOrderSearch() sorts the ID-Fields numerically, the string fields alphabetically.
+    # the sorting is completely determined by the second comparison
+    if ( $OrderByColumn eq 'WorkOrderTitle' ) {
+        @SortedWorkOrders = sort {
+            $b->{$OrderByColumn} cmp $a->{$OrderByColumn}
+                || $b->{WorkOrderID} <=> $a->{WorkOrderID}
+        } @WorkOrdersForOrderByTests;
+    }
+    else {
+        @SortedWorkOrders = sort {
+            $b->{$OrderByColumn} <=> $a->{$OrderByColumn}
+                || $b->{WorkOrderID} <=> $a->{WorkOrderID}
+        } @WorkOrdersForOrderByTests;
+    }
+    my @SortedIDsDown = map { $_->{WorkOrderID} } @SortedWorkOrders;
 
-    # # dump the reference attribute
-    # my $ReferenceListDown = Data::Dumper::Dumper( \@SortedIDsDown );    ## no critic
+    # dump the reference attribute
+    my $ReferenceListDown = Data::Dumper::Dumper( \@SortedIDsDown );    ## no critic
 
-    # my $SearchResultDown = $Self->{WorkOrderObject}->WorkOrderSearch(
-    #     ChangeIDs => [$OrderByTestID],
-    #     OrderBy   => [$OrderByColumn],
-    #     UserID    => 1,
-    # );
+    my $SearchResultDown = $Self->{WorkOrderObject}->WorkOrderSearch(
+        ChangeIDs => [$OrderByTestID],
+        OrderBy   => [$OrderByColumn],
+        UserID    => 1,
+    );
 
-    # # dump the attribute from WorkOrderGet()
-    # my $SearchListDown = Data::Dumper::Dumper($SearchResultDown);       ## no critic
+    # dump the attribute from WorkOrderGet()
+    my $SearchListDown = Data::Dumper::Dumper($SearchResultDown);       ## no critic
 
-    # $Self->Is(
-    #     $SearchListDown,
-    #     $ReferenceListDown,
-    #     'Test ' . $TestCount++ . ": WorkOrderSearch() OrderBy $OrderByColumn (Down)."
-    # );
+    $Self->Is(
+        $SearchListDown,
+        $ReferenceListDown,
+        'Test ' . $TestCount++ . ": WorkOrderSearch() OrderBy $OrderByColumn (Down)."
+    );
 
-    # # check if WorkOrder.pm handles non-existent OrderByDirection criteria correct
-    # my $SearchResultSideways = $Self->{WorkOrderObject}->WorkOrderSearch(
-    #     WorkOrderTitle   => 'WorkOrderAdd() for OrderBy - Title - ' . $UniqueSignature,
-    #     OrderBy          => [$OrderByColumn],
-    #     OrderByDirection => ['Sideways'],
-    #     UserID           => 1,
-    # );
+    # check if WorkOrder.pm handles non-existent OrderByDirection criteria correct
+    my $SearchResultSideways = $Self->{WorkOrderObject}->WorkOrderSearch(
+        WorkOrderTitle   => 'WorkOrderAdd() for OrderBy - Title - ' . $UniqueSignature,
+        OrderBy          => [$OrderByColumn],
+        OrderByDirection => ['Sideways'],
+        UserID           => 1,
+    );
 
-    # $Self->Is(
-    #     $SearchResultSideways,
-    #     undef,
-    #     'Test ' . $TestCount++ . ": WorkOrderSearch() OrderBy $OrderByColumn (Sideways)."
-    # );
+    $Self->Is(
+        $SearchResultSideways,
+        undef,
+        'Test ' . $TestCount++ . ": WorkOrderSearch() OrderBy $OrderByColumn (Sideways)."
+    );
 }
 
 # --------------------------------------------------------------------------------------- #
@@ -3062,46 +3062,46 @@ my @ChangesForSortTest = (
 my @ChangeIDsForSortTest;
 for my $Change (@ChangesForSortTest) {
 
-    # # create change
-    # my $ChangeID = $Self->{ChangeObject}->ChangeAdd( %{ $Change->{Change} } );
+    # create change
+    my $ChangeID = $Self->{ChangeObject}->ChangeAdd( %{ $Change->{Change} } );
 
-    # $Self->True(
-    #     $ChangeID,
-    #     "Test $TestCount: Change for sort test created",
-    # );
+    $Self->True(
+        $ChangeID,
+        "Test $TestCount: Change for sort test created",
+    );
 
-    # # store ChangeID
-    # push @ChangeIDsForSortTest, $ChangeID;
-    # push @{ $IDsToDelete{Change} }, $ChangeID;
+    # store ChangeID
+    push @ChangeIDsForSortTest, $ChangeID;
+    push @{ $IDsToDelete{Change} }, $ChangeID;
 
-    # # add the workorders for the change
-    # my $WorkOrderCount = 1;
-    # for my $WorkOrder ( @{ $Change->{Workorders} } ) {
-    #     my $WorkOrderID = $Self->{WorkOrderObject}->WorkOrderAdd(
-    #         ChangeID => $ChangeID,
-    #         %{$WorkOrder},
-    #     );
+    # add the workorders for the change
+    my $WorkOrderCount = 1;
+    for my $WorkOrder ( @{ $Change->{Workorders} } ) {
+        my $WorkOrderID = $Self->{WorkOrderObject}->WorkOrderAdd(
+            ChangeID => $ChangeID,
+            %{$WorkOrder},
+        );
 
-    #     $Self->True(
-    #         $WorkOrderID,
-    #         "Test $TestCount: WorkOrder $WorkOrderCount for Change created",
-    #     );
+        $Self->True(
+            $WorkOrderID,
+            "Test $TestCount: WorkOrder $WorkOrderCount for Change created",
+        );
 
-    #     push @{ $IDsToDelete{WorkOrder} }, $WorkOrderID;
+        push @{ $IDsToDelete{WorkOrder} }, $WorkOrderID;
 
-    #     $WorkOrderCount++;
-    # }
+        $WorkOrderCount++;
+    }
 
-    # # check whether the workorders were added
-    # my $ChangeData = $Self->{ChangeObject}->ChangeGet(
-    #     ChangeID => $ChangeID,
-    #     UserID   => 1,
-    # );
-    # $Self->Is(
-    #     $ChangeData->{WorkOrderCount},
-    #     scalar @{ $Change->{Workorders} },
-    #     "Test $TestCount: |- ChangeGet(): workorders were added"
-    # );
+    # check whether the workorders were added
+    my $ChangeData = $Self->{ChangeObject}->ChangeGet(
+        ChangeID => $ChangeID,
+        UserID   => 1,
+    );
+    $Self->Is(
+        $ChangeData->{WorkOrderCount},
+        scalar @{ $Change->{Workorders} },
+        "Test $TestCount: |- ChangeGet(): workorders were added"
+    );
 }
 continue {
     $TestCount++;
@@ -3118,100 +3118,100 @@ my @Testplan = (
 my $OrderByTestCount = 0;
 for my $OrderByColumn (qw(PlannedStartTime PlannedEndTime ActualStartTime ActualEndTime)) {
 
-    # # turn off all pretty print
-    # local $Data::Dumper::Indent = 0;
-    # local $Data::Dumper::Useqq  = 1;
+    # turn off all pretty print
+    local $Data::Dumper::Indent = 0;
+    local $Data::Dumper::Useqq  = 1;
 
-    # # get the current reference array
-    # my @TestplanAlternative = @{ $Testplan[$OrderByTestCount] };
+    # get the current reference array
+    my @TestplanAlternative = @{ $Testplan[$OrderByTestCount] };
 
-    # # place the last element at front of the array
-    # # some DBs sort the NULLs values at front of the result set
-    # my $Last = pop @TestplanAlternative;
-    # unshift @TestplanAlternative, $Last;
+    # place the last element at front of the array
+    # some DBs sort the NULLs values at front of the result set
+    my $Last = pop @TestplanAlternative;
+    unshift @TestplanAlternative, $Last;
 
-    # # result what we expect
-    # my @ResultReference = map { $ChangeIDsForSortTest[$_] } @{ $Testplan[$OrderByTestCount] };
-    # my @ResultReferenceAlternative = map { $ChangeIDsForSortTest[$_] } @TestplanAlternative;
+    # result what we expect
+    my @ResultReference = map { $ChangeIDsForSortTest[$_] } @{ $Testplan[$OrderByTestCount] };
+    my @ResultReferenceAlternative = map { $ChangeIDsForSortTest[$_] } @TestplanAlternative;
 
-    # # search with direction 'DOWN'
-    # my $SearchResult = $Self->{ChangeObject}->ChangeSearch(
-    #     ChangeTitle      => $ChangesTitle,
-    #     OrderBy          => [ $OrderByColumn, 'ChangeID' ],
-    #     OrderByDirection => [ 'Down', 'Up' ],
-    #     UserID           => 1,
-    # );
+    # search with direction 'DOWN'
+    my $SearchResult = $Self->{ChangeObject}->ChangeSearch(
+        ChangeTitle      => $ChangesTitle,
+        OrderBy          => [ $OrderByColumn, 'ChangeID' ],
+        OrderByDirection => [ 'Down', 'Up' ],
+        UserID           => 1,
+    );
 
-    # if (
-    #     Data::Dumper::Dumper($SearchResult)             ## no critic
-    #     eq Data::Dumper::Dumper( \@ResultReference )    ## no critic
-    #     )
-    # {
-    #     $Self->Is(
-    #         Data::Dumper::Dumper($SearchResult),          ## no critic
-    #         Data::Dumper::Dumper( \@ResultReference ),    ## no critic
-    #         "Test $TestCount: ChangeSearch OrderBy $OrderByColumn (Down)",
-    #     );
-    # }
-    # elsif (
-    #     Data::Dumper::Dumper($SearchResult)                        ## no critic
-    #     eq Data::Dumper::Dumper( \@ResultReferenceAlternative )    ## no critic
-    #     )
-    # {
-    #     $Self->Is(
-    #         Data::Dumper::Dumper($SearchResult),                     ## no critic
-    #         Data::Dumper::Dumper( \@ResultReferenceAlternative ),    ## no critic
-    #         "Test $TestCount: ChangeSearch OrderBy $OrderByColumn (Down)",
-    #     );
-    # }
-    # else {
-    #     $Self->Is(
-    #         Data::Dumper::Dumper($SearchResult),                     ## no critic
-    #         undef,
-    #         "Test $TestCount: ChangeSearch OrderBy $OrderByColumn (Down)",
-    #     );
-    # }
+    if (
+        Data::Dumper::Dumper($SearchResult)             ## no critic
+        eq Data::Dumper::Dumper( \@ResultReference )    ## no critic
+        )
+    {
+        $Self->Is(
+            Data::Dumper::Dumper($SearchResult),          ## no critic
+            Data::Dumper::Dumper( \@ResultReference ),    ## no critic
+            "Test $TestCount: ChangeSearch OrderBy $OrderByColumn (Down)",
+        );
+    }
+    elsif (
+        Data::Dumper::Dumper($SearchResult)                        ## no critic
+        eq Data::Dumper::Dumper( \@ResultReferenceAlternative )    ## no critic
+        )
+    {
+        $Self->Is(
+            Data::Dumper::Dumper($SearchResult),                     ## no critic
+            Data::Dumper::Dumper( \@ResultReferenceAlternative ),    ## no critic
+            "Test $TestCount: ChangeSearch OrderBy $OrderByColumn (Down)",
+        );
+    }
+    else {
+        $Self->Is(
+            Data::Dumper::Dumper($SearchResult),                     ## no critic
+            undef,
+            "Test $TestCount: ChangeSearch OrderBy $OrderByColumn (Down)",
+        );
+    }
 
-    # # search with direction 'UP'
-    # my $SearchResultUp = $Self->{ChangeObject}->ChangeSearch(
-    #     ChangeTitle      => $ChangesTitle,
-    #     OrderBy          => [ $OrderByColumn, 'ChangeID' ],
-    #     OrderByDirection => [ 'Up', 'Down' ],
-    #     UserID           => 1,
-    # );
+    # search with direction 'UP'
+    my $SearchResultUp = $Self->{ChangeObject}->ChangeSearch(
+        ChangeTitle      => $ChangesTitle,
+        OrderBy          => [ $OrderByColumn, 'ChangeID' ],
+        OrderByDirection => [ 'Up', 'Down' ],
+        UserID           => 1,
+    );
 
-    # if (
-    #     Data::Dumper::Dumper($SearchResultUp)    ## no critic
-    #     eq Data::Dumper::Dumper( [ reverse @ResultReference ] )    ## no critic
-    #     )
-    # {
-    #     $Self->Is(
-    #         Data::Dumper::Dumper($SearchResultUp),                 ## no critic
-    #         Data::Dumper::Dumper( [ reverse @ResultReference ] ),  ## no critic
-    #         "Test $TestCount: ChangeSearch OrderBy $OrderByColumn (Up)",
-    #     );
-    # }
-    # elsif (
-    #     Data::Dumper::Dumper($SearchResultUp)                      ## no critic
-    #     eq Data::Dumper::Dumper( [ reverse @ResultReferenceAlternative ] )    ## no critic
-    #     )
-    # {
-    #     $Self->Is(
-    #         Data::Dumper::Dumper($SearchResultUp),                            ## no critic
-    #         Data::Dumper::Dumper( [ reverse @ResultReferenceAlternative ] ),  ## no critic
-    #         "Test $TestCount: ChangeSearch OrderBy $OrderByColumn (Up)",
-    #     );
-    # }
-    # else {
-    #     $Self->Is(
-    #         Data::Dumper::Dumper($SearchResultUp),                            ## no critic
-    #         undef,
-    #         "Test $TestCount: ChangeSearch OrderBy $OrderByColumn (Up)",
-    #     );
-    # }
+    if (
+        Data::Dumper::Dumper($SearchResultUp)    ## no critic
+        eq Data::Dumper::Dumper( [ reverse @ResultReference ] )    ## no critic
+        )
+    {
+        $Self->Is(
+            Data::Dumper::Dumper($SearchResultUp),                 ## no critic
+            Data::Dumper::Dumper( [ reverse @ResultReference ] ),  ## no critic
+            "Test $TestCount: ChangeSearch OrderBy $OrderByColumn (Up)",
+        );
+    }
+    elsif (
+        Data::Dumper::Dumper($SearchResultUp)                      ## no critic
+        eq Data::Dumper::Dumper( [ reverse @ResultReferenceAlternative ] )    ## no critic
+        )
+    {
+        $Self->Is(
+            Data::Dumper::Dumper($SearchResultUp),                            ## no critic
+            Data::Dumper::Dumper( [ reverse @ResultReferenceAlternative ] ),  ## no critic
+            "Test $TestCount: ChangeSearch OrderBy $OrderByColumn (Up)",
+        );
+    }
+    else {
+        $Self->Is(
+            Data::Dumper::Dumper($SearchResultUp),                            ## no critic
+            undef,
+            "Test $TestCount: ChangeSearch OrderBy $OrderByColumn (Up)",
+        );
+    }
 
-    # $OrderByTestCount++;
-    # $TestCount++;
+    $OrderByTestCount++;
+    $TestCount++;
 }
 
 # ------------------------------------------------------------ #
@@ -3599,79 +3599,79 @@ my $TSTCounter = 1;
 my @TSTWorkOrderIDs;
 TSTEST:
 for my $TSTest (@TimeSearchTests) {
-    # my $SourceData    = $TSTest->{SourceData};
-    # my $ReferenceData = $TSTest->{ReferenceData};
+    my $SourceData    = $TSTest->{SourceData};
+    my $ReferenceData = $TSTest->{ReferenceData};
 
-    # my $WorkOrderID;
+    my $WorkOrderID;
 
-    # $Self->True(
-    #     1,
-    #     "Test $TestCount: $TSTest->{Description} (TSTest case: $TSTCounter)",
-    # );
+    $Self->True(
+        1,
+        "Test $TestCount: $TSTest->{Description} (TSTest case: $TSTCounter)",
+    );
 
-    # if ( $SourceData->{WorkOrderAdd} ) {
-    #     $WorkOrderID = $Self->{WorkOrderObject}->WorkOrderAdd(
-    #         %{ $SourceData->{WorkOrderAdd} },
-    #         ChangeID => $TimeSearchTestID,
-    #     );
+    if ( $SourceData->{WorkOrderAdd} ) {
+        $WorkOrderID = $Self->{WorkOrderObject}->WorkOrderAdd(
+            %{ $SourceData->{WorkOrderAdd} },
+            ChangeID => $TimeSearchTestID,
+        );
 
-    #     $Self->True(
-    #         $WorkOrderID,
-    #         "Test $TestCount: |- WorkOrderAdd",
-    #     );
+        $Self->True(
+            $WorkOrderID,
+            "Test $TestCount: |- WorkOrderAdd",
+        );
 
-    #     push @TSTWorkOrderIDs, $WorkOrderID;
-    #     push @{ $IDsToDelete{WorkOrder} }, $WorkOrderID;
-    # }
+        push @TSTWorkOrderIDs, $WorkOrderID;
+        push @{ $IDsToDelete{WorkOrder} }, $WorkOrderID;
+    }
 
-    # my $SearchResult;
-    # if ( $SourceData->{WorkOrderSearch} ) {
-    #     $SearchResult = $Self->{WorkOrderObject}->WorkOrderSearch(
-    #         %{ $SourceData->{WorkOrderSearch} },
-    #         ChangeIDs => [$TimeSearchTestID],
-    #     );
+    my $SearchResult;
+    if ( $SourceData->{WorkOrderSearch} ) {
+        $SearchResult = $Self->{WorkOrderObject}->WorkOrderSearch(
+            %{ $SourceData->{WorkOrderSearch} },
+            ChangeIDs => [$TimeSearchTestID],
+        );
 
-    #     $Self->True(
-    #         $SearchResult && ref $SearchResult eq 'ARRAY',
-    #         "Test $TestCount: WorkOrderSearch() - List is an array reference.",
-    #     );
+        $Self->True(
+            $SearchResult && ref $SearchResult eq 'ARRAY',
+            "Test $TestCount: WorkOrderSearch() - List is an array reference.",
+        );
 
-    #     next TSTEST if !$SearchResult;
+        next TSTEST if !$SearchResult;
 
-    #     # check number of founded change
-    #     $Self->Is(
-    #         scalar @{$SearchResult},
-    #         scalar @{$ReferenceData},
-    #         "Test $TestCount: WorkOrderSearch() - correct number of found changes",
-    #     );
+        # check number of founded change
+        $Self->Is(
+            scalar @{$SearchResult},
+            scalar @{$ReferenceData},
+            "Test $TestCount: WorkOrderSearch() - correct number of found changes",
+        );
 
-    #     # map array index to WorkOrderID
-    #     my @ResultWorkOrderIDs;
-    #     for my $ResultWorkOrderID ( @{$ReferenceData} ) {
-    #         push @ResultWorkOrderIDs, $TSTWorkOrderIDs[$ResultWorkOrderID];
-    #     }
+        # map array index to WorkOrderID
+        my @ResultWorkOrderIDs;
+        for my $ResultWorkOrderID ( @{$ReferenceData} ) {
+            push @ResultWorkOrderIDs, $TSTWorkOrderIDs[$ResultWorkOrderID];
+        }
 
-    #     # turn off all pretty print
-    #     local $Data::Dumper::Indent = 0;
-    #     local $Data::Dumper::Useqq  = 1;
+        # turn off all pretty print
+        local $Data::Dumper::Indent = 0;
+        local $Data::Dumper::Useqq  = 1;
 
-    #     # dump the attribute from WorkOrderSearch()
-    #     my $SearchResultDump = Data::Dumper::Dumper( sort @{$SearchResult} );    ## no critic
+        # dump the attribute from WorkOrderSearch()
+        my $SearchResultDump = Data::Dumper::Dumper( sort @{$SearchResult} );    ## no critic
 
-    #     # dump the reference attribute
-    #     my $ReferenceDump = Data::Dumper::Dumper( sort @ResultWorkOrderIDs );    ## no critic
+        # dump the reference attribute
+        my $ReferenceDump = Data::Dumper::Dumper( sort @ResultWorkOrderIDs );    ## no critic
 
-    #     $Self->Is(
-    #         $SearchResultDump,
-    #         $ReferenceDump,
-    #         "Test $TestCount: |- WorkOrderSearch(): "
-    #             . Data::Dumper::Dumper( $SourceData->{WorkOrderSearch} )         ## no critic
-    #             . $SearchResultDump,
-    #     );
-    # }
+        $Self->Is(
+            $SearchResultDump,
+            $ReferenceDump,
+            "Test $TestCount: |- WorkOrderSearch(): "
+                . Data::Dumper::Dumper( $SourceData->{WorkOrderSearch} )         ## no critic
+                . $SearchResultDump,
+        );
+    }
 
-    # $TestCount++;
-    # $TSTCounter++;
+    $TestCount++;
+    $TSTCounter++;
 }
 
 # ------------------------------------------------------------ #
@@ -4056,7 +4056,7 @@ my @WOCTGTests = (
     },
     {
         Description =>
-            'test for WorkOrderChangeTimeGet with all times (with reserved time ActualEndTime)',
+            'est for WorkOrderChangeTimeGet with all times (with reserved time ActualEndTime)',
         SourceData => {
             ChangeAdd => {
                 UserID => 1,
@@ -4086,94 +4086,94 @@ my @WOCTGTests = (
 
 my $WOCTGTestCount = 1;
 for my $WOCTGTest (@WOCTGTests) {
-    # my $SourceData    = $WOCTGTest->{SourceData};
-    # my $ReferenceData = $WOCTGTest->{ReferenceData};
+    my $SourceData    = $WOCTGTest->{SourceData};
+    my $ReferenceData = $WOCTGTest->{ReferenceData};
 
-    # my $ChangeID;
-    # my $WorkOrderID;
+    my $ChangeID;
+    my $WorkOrderID;
 
-    # $Self->True(
-    #     1,
-    #     "Test $TestCount: $WOCTGTest->{Description} (WOCTGTest case: $WOCTGTestCount)",
-    # );
+    $Self->True(
+        1,
+        "Test $TestCount: $WOCTGTest->{Description} (WOCTGTest case: $WOCTGTestCount)",
+    );
 
-    # if ( $SourceData->{ChangeAdd} ) {
-    #     $ChangeID = $Self->{ChangeObject}->ChangeAdd(
-    #         %{ $SourceData->{ChangeAdd} },
-    #     );
+    if ( $SourceData->{ChangeAdd} ) {
+        $ChangeID = $Self->{ChangeObject}->ChangeAdd(
+            %{ $SourceData->{ChangeAdd} },
+        );
 
-    #     $Self->True(
-    #         $ChangeID,
-    #         "Test $TestCount: |- ChangeAdd",
-    #     );
+        $Self->True(
+            $ChangeID,
+            "Test $TestCount: |- ChangeAdd",
+        );
 
-    #     if ($ChangeID) {
-    #         $TestedChangeID{$ChangeID} = 1;
-    #     }
-    # }
+        if ($ChangeID) {
+            $TestedChangeID{$ChangeID} = 1;
+        }
+    }
 
-    # if ( $SourceData->{WorkOrderAdd} ) {
-    #     $WorkOrderID = $Self->{WorkOrderObject}->WorkOrderAdd(
-    #         %{ $SourceData->{WorkOrderAdd} },
-    #         ChangeID => $ChangeID,
-    #     );
+    if ( $SourceData->{WorkOrderAdd} ) {
+        $WorkOrderID = $Self->{WorkOrderObject}->WorkOrderAdd(
+            %{ $SourceData->{WorkOrderAdd} },
+            ChangeID => $ChangeID,
+        );
 
-    #     if ( $SourceData->{WorkOrderAddFails} ) {
-    #         $Self->False(
-    #             $WorkOrderID,
-    #             "Test $TestCount: |- WorkOrderAdd",
-    #         );
-    #     }
-    #     else {
-    #         $Self->True(
-    #             $WorkOrderID,
-    #             "Test $TestCount: |- WorkOrderAdd",
-    #         );
-    #         push @{ $IDsToDelete{WorkOrder} }, $WorkOrderID;
-    #     }
-    # }
+        if ( $SourceData->{WorkOrderAddFails} ) {
+            $Self->False(
+                $WorkOrderID,
+                "Test $TestCount: |- WorkOrderAdd",
+            );
+        }
+        else {
+            $Self->True(
+                $WorkOrderID,
+                "Test $TestCount: |- WorkOrderAdd",
+            );
+            push @{ $IDsToDelete{WorkOrder} }, $WorkOrderID;
+        }
+    }
 
-    # if ( $ReferenceData->{WorkOrderChangeTimeGet} ) {
-    #     my $Time = $Self->{WorkOrderObject}->WorkOrderChangeTimeGet(
-    #         %{ $ReferenceData->{WorkOrderChangeTimeGet} },
-    #         ChangeID => $ChangeID,
-    #     );
+    if ( $ReferenceData->{WorkOrderChangeTimeGet} ) {
+        my $Time = $Self->{WorkOrderObject}->WorkOrderChangeTimeGet(
+            %{ $ReferenceData->{WorkOrderChangeTimeGet} },
+            ChangeID => $ChangeID,
+        );
 
-    #     $Self->Is(
-    #         ref $Time,
-    #         'HASH',
-    #         "Test $TestCount: |- WorkOrderChangeTimeGet()",
-    #     );
+        $Self->Is(
+            ref $Time,
+            'HASH',
+            "Test $TestCount: |- WorkOrderChangeTimeGet()",
+        );
 
-    #     $Self->True(
-    #         (
-    #             ref $Time eq 'HASH'
-    #                 && %{$Time}
-    #         )
-    #             || 0,
-    #         "Test $TestCount: |- WorkOrderChangeTimeGet() - HashRef with content",
-    #     );
+        $Self->True(
+            (
+                ref $Time eq 'HASH'
+                    && %{$Time}
+            )
+                || 0,
+            "Test $TestCount: |- WorkOrderChangeTimeGet() - HashRef with content",
+        );
 
-    #     if (
-    #         ref $Time eq 'HASH'
-    #         && %{$Time}
-    #         )
-    #     {
+        if (
+            ref $Time eq 'HASH'
+            && %{$Time}
+            )
+        {
 
-    #         # Test for right values in result
-    #         TIMEVALUE:
-    #         for my $TimeType ( sort keys %{$Time} ) {
-    #             $Self->Is(
-    #                 $Time->{$TimeType},
-    #                 $ReferenceData->{WorkOrderChangeTimeGet}->{ResultData}->{$TimeType},
-    #                 "Test $TestCount: |- check TimeResult ($TimeType)",
-    #             );
-    #         }
-    #     }
-    # }
+            # Test for right values in result
+            TIMEVALUE:
+            for my $TimeType ( sort keys %{$Time} ) {
+                $Self->Is(
+                    $Time->{$TimeType},
+                    $ReferenceData->{WorkOrderChangeTimeGet}->{ResultData}->{$TimeType},
+                    "Test $TestCount: |- check TimeResult ($TimeType)",
+                );
+            }
+        }
+    }
 
-    # $TestCount++;
-    # $WOCTGTestCount++;
+    $TestCount++;
+    $WOCTGTestCount++;
 }
 
 # ------------------------------------------------------------ #
@@ -4853,7 +4853,7 @@ continue {
     $DeleteTestCount++;
 }
 
-# delete dynamic fields
+# delete dynamic fields that have been created for this test
 for my $DynamicFieldID (@DynamicFieldIDs) {
 
     my $Success = $Self->{DynamicFieldObject}->DynamicFieldDelete(
