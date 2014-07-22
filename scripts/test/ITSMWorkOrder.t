@@ -142,10 +142,10 @@ my $OriginalDynamicFields = $Self->{DynamicFieldObject}->DynamicFieldListGet(
     Valid => 0,
 );
 
-my $UniqueNamePrefix = 'UnitTest' . int rand 1_000_000;
+my $UniqueNamePrefix = 'UnitTestWorkorder' . int rand 1_000_000;
 
-# create some dynamic fields for changes
-my @DynamicFieldsITSMChange = (
+# create some dynamic fields for workorders
+my @DynamicFields = (
     {
         Name       => $UniqueNamePrefix . 'Test1',
         Label      => $UniqueNamePrefix . 'Test1',
@@ -201,7 +201,7 @@ my @DynamicFieldsITSMChange = (
 );
 
 my @DynamicFieldIDs;
-for my $Test (@DynamicFieldsITSMChange) {
+for my $Test (@DynamicFields) {
 
     # add dynamic field
     my $DynamicFieldID = $Self->{DynamicFieldObject}->DynamicFieldAdd(
@@ -1739,6 +1739,7 @@ push @WorkOrderTests, (
                 'DynamicField_' . $UniqueNamePrefix . 'Test4'  => 'HHHH',
             },
         },
+        # TODO: Enable this again later!
         # SearchTest => [ 8, 35 ],
     },
 
@@ -1765,6 +1766,7 @@ push @WorkOrderTests, (
                 'DynamicField_' . $UniqueNamePrefix . 'Test4' => 'YYYY',
             },
         },
+        # TODO: Enable this again later!
         # SearchTest => [ 8, 35, 36 ],
     },
 
@@ -1787,6 +1789,7 @@ push @WorkOrderTests, (
                 'DynamicField_' . $UniqueNamePrefix . 'Test2' => 'B' x 3800,
             },
         },
+        # TODO: Enable this again later!
         # SearchTest => [8],
     },
 
@@ -1833,6 +1836,7 @@ push @WorkOrderTests, (
                 'DynamicField_' . $UniqueNamePrefix . 'Test2' => 'B' x 3800,
             },
         },
+        # TODO: Enable this again later!
         # SearchTest => [8],
     },
 
@@ -1861,111 +1865,112 @@ push @WorkOrderTests, (
                 'DynamicField_' . $UniqueNamePrefix . 'Test2' => '',
             },
         },
+        # TODO: Enable this again later!
         # SearchTest => [8],
     },
 
 );
 
 # workorders tests for WorkOrderSearch() with OrderBy
-# push @WorkOrderTests, (
+push @WorkOrderTests, (
 
-#     {
-#         Description =>
-#             'WorkOrderAdd() for OrderBy with WorkOrderTypeID and WorkOrderStateID.',
-#         SourceData => {
-#             WorkOrderAdd => {
-#                 UserID           => 1,
-#                 ChangeID         => $OrderByTestID,
-#                 WorkOrderTypeID  => $SortedTypeIDs[2],
-#                 WorkOrderStateID => $SortedWorkOrderStateIDs[0],
-#                 WorkOrderTitle   => 'AAA WorkOrderAdd() for OrderBy - Title - ' . $UniqueSignature,
-#             },
-#         },
-#         ReferenceData => {
-#             WorkOrderGet => {
-#                 ChangeID         => $OrderByTestID,
-#                 WorkOrderTypeID  => $SortedTypeIDs[2],
-#                 WorkOrderStateID => $SortedWorkOrderStateIDs[0],
-#                 WorkOrderTitle   => 'AAA WorkOrderAdd() for OrderBy - Title - ' . $UniqueSignature,
-#             },
-#         },
+    {
+        Description =>
+            'WorkOrderAdd() for OrderBy with WorkOrderTypeID and WorkOrderStateID.',
+        SourceData => {
+            WorkOrderAdd => {
+                UserID           => 1,
+                ChangeID         => $OrderByTestID,
+                WorkOrderTypeID  => $SortedTypeIDs[2],
+                WorkOrderStateID => $SortedWorkOrderStateIDs[0],
+                WorkOrderTitle   => 'AAA WorkOrderAdd() for OrderBy - Title - ' . $UniqueSignature,
+            },
+        },
+        ReferenceData => {
+            WorkOrderGet => {
+                ChangeID         => $OrderByTestID,
+                WorkOrderTypeID  => $SortedTypeIDs[2],
+                WorkOrderStateID => $SortedWorkOrderStateIDs[0],
+                WorkOrderTitle   => 'AAA WorkOrderAdd() for OrderBy - Title - ' . $UniqueSignature,
+            },
+        },
 
-#         # 999999 is a special test case.
-#         # Workorders with searchtest 999999 are used in 'OrderBy' search tests.
-#         SearchTest => [999999],
-#     },
+        # 999999 is a special test case.
+        # Workorders with searchtest 999999 are used in 'OrderBy' search tests.
+        SearchTest => [999999],
+    },
 
-#     {
-#         Description =>
-#             'WorkOrderAdd() for OrderBy with WorkOrderTypeID and WorkOrderStateID.',
-#         SourceData => {
-#             WorkOrderAdd => {
-#                 UserID           => 1,
-#                 ChangeID         => $OrderByTestID,
-#                 WorkOrderTypeID  => $SortedTypeIDs[1],
-#                 WorkOrderStateID => $SortedWorkOrderStateIDs[1],
-#                 WorkOrderTitle   => 'BBB WorkOrderAdd() for OrderBy - Title - ' . $UniqueSignature,
-#             },
-#         },
-#         ReferenceData => {
-#             WorkOrderGet => {
-#                 ChangeID         => $OrderByTestID,
-#                 WorkOrderTypeID  => $SortedTypeIDs[1],
-#                 WorkOrderStateID => $SortedWorkOrderStateIDs[1],
-#                 WorkOrderTitle   => 'BBB WorkOrderAdd() for OrderBy - Title - ' . $UniqueSignature,
-#             },
-#         },
-#         SearchTest => [999999],
-#     },
+    {
+        Description =>
+            'WorkOrderAdd() for OrderBy with WorkOrderTypeID and WorkOrderStateID.',
+        SourceData => {
+            WorkOrderAdd => {
+                UserID           => 1,
+                ChangeID         => $OrderByTestID,
+                WorkOrderTypeID  => $SortedTypeIDs[1],
+                WorkOrderStateID => $SortedWorkOrderStateIDs[1],
+                WorkOrderTitle   => 'BBB WorkOrderAdd() for OrderBy - Title - ' . $UniqueSignature,
+            },
+        },
+        ReferenceData => {
+            WorkOrderGet => {
+                ChangeID         => $OrderByTestID,
+                WorkOrderTypeID  => $SortedTypeIDs[1],
+                WorkOrderStateID => $SortedWorkOrderStateIDs[1],
+                WorkOrderTitle   => 'BBB WorkOrderAdd() for OrderBy - Title - ' . $UniqueSignature,
+            },
+        },
+        SearchTest => [999999],
+    },
 
-#     {
-#         Description =>
-#             'WorkOrderAdd() for OrderBy with WorkOrderTypeID and WorkOrderStateID.',
-#         SourceData => {
-#             WorkOrderAdd => {
-#                 UserID           => 1,
-#                 ChangeID         => $OrderByTestID,
-#                 WorkOrderTypeID  => $SortedTypeIDs[0],
-#                 WorkOrderStateID => $SortedWorkOrderStateIDs[2],
-#                 WorkOrderTitle   => 'CCC WorkOrderAdd() for OrderBy - Title - ' . $UniqueSignature,
-#             },
-#         },
-#         ReferenceData => {
-#             WorkOrderGet => {
-#                 ChangeID         => $OrderByTestID,
-#                 WorkOrderTypeID  => $SortedTypeIDs[0],
-#                 WorkOrderStateID => $SortedWorkOrderStateIDs[2],
-#                 WorkOrderTitle   => 'CCC WorkOrderAdd() for OrderBy - Title - ' . $UniqueSignature,
-#             },
-#         },
-#         SearchTest => [999999],
-#     },
-# );
+    {
+        Description =>
+            'WorkOrderAdd() for OrderBy with WorkOrderTypeID and WorkOrderStateID.',
+        SourceData => {
+            WorkOrderAdd => {
+                UserID           => 1,
+                ChangeID         => $OrderByTestID,
+                WorkOrderTypeID  => $SortedTypeIDs[0],
+                WorkOrderStateID => $SortedWorkOrderStateIDs[2],
+                WorkOrderTitle   => 'CCC WorkOrderAdd() for OrderBy - Title - ' . $UniqueSignature,
+            },
+        },
+        ReferenceData => {
+            WorkOrderGet => {
+                ChangeID         => $OrderByTestID,
+                WorkOrderTypeID  => $SortedTypeIDs[0],
+                WorkOrderStateID => $SortedWorkOrderStateIDs[2],
+                WorkOrderTitle   => 'CCC WorkOrderAdd() for OrderBy - Title - ' . $UniqueSignature,
+            },
+        },
+        SearchTest => [999999],
+    },
+);
 
 # workorders tests for WorkOrderSearch() with string searches in change
-# push @WorkOrderTests, (
+push @WorkOrderTests, (
 
-#     {
-#         Description =>
-#             'WorkOrderAdd() for string search in change.',
-#         SourceData => {
-#             WorkOrderAdd => {
-#                 UserID         => 1,
-#                 ChangeID       => $StringSearchTestID,
-#                 WorkOrderTitle => 'WorkOrderAdd() for string search in change - Title - '
-#                     . $UniqueSignature,
-#             },
-#         },
-#         ReferenceData => {
-#             WorkOrderGet => {
-#                 ChangeID       => $StringSearchTestID,
-#                 WorkOrderTitle => 'WorkOrderAdd() for string search in change - Title - '
-#                     . $UniqueSignature,
-#             },
-#         },
-#         SearchTest => [ 15, 17, 19, 21, 22 ],
-#     },
-# );
+    {
+        Description =>
+            'WorkOrderAdd() for string search in change.',
+        SourceData => {
+            WorkOrderAdd => {
+                UserID         => 1,
+                ChangeID       => $StringSearchTestID,
+                WorkOrderTitle => 'WorkOrderAdd() for string search in change - Title - '
+                    . $UniqueSignature,
+            },
+        },
+        ReferenceData => {
+            WorkOrderGet => {
+                ChangeID       => $StringSearchTestID,
+                WorkOrderTitle => 'WorkOrderAdd() for string search in change - Title - '
+                    . $UniqueSignature,
+            },
+        },
+        SearchTest => [ 15, 17, 19, 21, 22 ],
+    },
+);
 
 # workorders tests for testing the Permission() method
 push @WorkOrderTests, (
@@ -2740,9 +2745,6 @@ my @WorkOrderSearchTests = (
     },
 
 );
-
-# TODO: Remove this!
-#@WorkOrderSearchTests = ();
 
 my $SearchTestCount = 1;
 
@@ -4879,7 +4881,7 @@ for my $DynamicField ( @{$OriginalDynamicFields} ) {
     # check if update (restore) was successful
     $Self->True(
         $Success,
-        "Restored Original Dynamic Field  - for FieldID $DynamicField->{ID} ",
+        "Restored Original Dynamic Field  - for FieldID $DynamicField->{ID}",
     );
 }
 
