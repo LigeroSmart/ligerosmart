@@ -79,7 +79,8 @@ perform PublicFAQGet Operation. This will return a Public FAQ entry.
 
     my $Result = $OperationObject->Run(
         Data => {
-            ItemID = '32,33';
+            ItemID = '32,33',
+            GetAttachmentContents = 1,                    # 0|1, defaults to 1
         },
     );
 
@@ -185,12 +186,16 @@ sub Run {
             ErrorMessage => "PublicFAQGet: Got no ItemID!",
         );
     }
+    if ( !defined( $Param{Data}->{GetAttachmentContents} ) ) {
+        $Param{Data}->{GetAttachmentContents} = 1;
+    }
 
     my $ErrorMessage = '';
 
     my $ReturnData = {
         Success => 1,
     };
+
     my @ItemIDs = split( /,/, $Param{Data}->{ItemID} );
     my @Item;
 
@@ -242,17 +247,30 @@ sub Run {
             UserID     => $Self->{UserID},
         );
 
+        my %File;
         if ( IsArrayRefWithData( \@Index ) ) {
+
             my @Attachments;
             for my $Attachment (@Index) {
-                my %File = $Self->{FAQObject}->AttachmentGet(
-                    ItemID => $ItemID,
-                    FileID => $Attachment->{FileID},
-                    UserID => $Self->{UserID},
-                );
 
-                # convert content to base64
-                $File{Content} = encode_base64( $File{Content} );
+                if ( $Param{Data}->{GetAttachmentContents} ) {
+                    %File = $Self->{FAQObject}->AttachmentGet(
+                        ItemID => $ItemID,
+                        FileID => $Attachment->{FileID},
+                        UserID => $Self->{UserID},
+                    );
+
+                    # convert content to base64
+                    $File{Content} = encode_base64( $File{Content} );
+                }
+                else {
+                    %File = (
+                        Filename    => $Attachment->{Filename},
+                        ContentType => $Attachment->{ContentType},
+                        Filesize    => $Attachment->{Filesize},
+                        Content     => ''
+                    );
+                }
                 push @Attachments, {%File};
             }
 

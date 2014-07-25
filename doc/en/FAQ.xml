@@ -1605,8 +1605,13 @@ shell> $OTRS_HOME/bin/otrs.WebserviceConfig.pl -a list
         <para>
             To be able to get one or more FAQ entries, you should send the ItemID(s) as a parameter
             for the FAQ entry you want to get. You will receive the entire FAQ record with all
-            attachments included if any. Note that attachments will be transferred as base64-encoded
-            strings.
+            attachments included. Note that attachment contents will be transferred as
+            base64-encoded strings.
+        </para>
+        <para>
+            Setting GetAttachmentContents to 0 will prevent to fetch the content of the attachment
+            this will increase the performance of the operation when the attachment contents are not
+            really needed.
         </para>
         <para>
             Request format:
@@ -1616,6 +1621,8 @@ shell> $OTRS_HOME/bin/otrs.WebserviceConfig.pl -a list
                 <![CDATA[
       <PublicFAQGet>
          <ItemID>?</ItemID>
+         <!-- optional, defaults to 1 -->
+         <GetAttachmentContents>?</GetAttachmentContents>
       </PublicFAQGet>
                 ]]>
             </screen>

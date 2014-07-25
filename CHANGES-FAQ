@@ -7,7 +7,8 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 2.4.0 Beta1 - 2014-XX-XX
-- Added Swedish translation thanks to Andreas Berger
+- Added GI PublicFAQGet option to fetch or not attachment contents, thanks to Esteban Marin.
+- Added Swedish translation, thanks to Andreas Berger.
 - Added Dynamic Fields support.
 - Added support to do not change article subject on FAQ insert. (configurable via SysConfig globally and per FAQ item if enabled globally ).
 - Fixed Bug# 9494 - The originator for a FAQ article approval ticket is unknown.
