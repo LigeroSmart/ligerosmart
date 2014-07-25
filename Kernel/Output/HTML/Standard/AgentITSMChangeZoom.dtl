@@ -134,49 +134,51 @@
 <!-- dtl:block:Priority -->
                     </fieldset>
 
-# show ChangeFreeKey and ChangeFreeText fields
-<!-- dtl:block:ChangeFreeTextFields -->
-                    <fieldset class="TableLike FixedLabelSmall">
-<!-- dtl:block:ChangeFreeText -->
-                        <label>$QData{"ChangeFreeKey","25"}: </label>
-<!-- dtl:block:ChangeFreeTextPlain -->
-                        <p class="Value" title="$QData{"ChangeFreeText"}">$QData{"ChangeFreeText","25"}</p>
-<!-- dtl:block:ChangeFreeTextPlain -->
-<!-- dtl:block:ChangeFreeTextLink -->
-                        <p class="Value" title="$QData{"ChangeFreeText"}"><a href="$Data{"ChangeFreeTextLink"}" target="_blank">$QData{"ChangeFreeText","25"}</a></p>
-<!-- dtl:block:ChangeFreeTextLink -->
+# show change dynamic fields
+                    <fieldset class="TableLike FixedLabelSmall Narrow">
+<!-- dtl:block:DynamicField -->
+                        <label>$Text{"$Data{"Label"}"}:</label>
+                        <p class="Value">
+<!-- dtl:block:DynamicFieldLink -->
+                            <span title="$QData{"Title"}"><a href="$Data{"Link"}" target="_blank" class="DynamicFieldLink">$Data{"Value"}</a></span>
+<!-- dtl:block:DynamicFieldLink -->
+<!-- dtl:block:DynamicFieldPlain -->
+                            <span title="$QData{"Title"}">$Data{"Value"}</span>
+<!-- dtl:block:DynamicFieldPlain -->
+                        </p>
                         <div class="Clear"></div>
-<!-- dtl:block:ChangeFreeText -->
+<!-- dtl:block:DynamicField -->
                     </fieldset>
-<!-- dtl:block:ChangeFreeTextFields -->
 
-# #############################################################
-# example for customization of single change freetext fields
-# #############################################################
-#                    <fieldset class="TableLike FixedLabelSmall">
-#<!-- dtl:block:ChangeFreeText1 -->
-#                        <label>$QData{"ChangeFreeKey1","25"}:  </label>
-#<!-- dtl:block:ChangeFreeTextPlain1 -->
-#                        <p class="Value" title="$QData{"ChangeFreeText1"}">$QData{"ChangeFreeText1","25"}</p>
-#<!-- dtl:block:ChangeFreeTextPlain1 -->
-#<!-- dtl:block:ChangeFreeTextLink1 -->
-#                        <p class="Value" title="$QData{"ChangeFreeText1"}"><a href="$Data{"ChangeFreeTextLink1"}" target="_blank">$QData{"ChangeFreeText1","25"}</a></p>
-#<!-- dtl:block:ChangeFreeTextLink1 -->
-#                        <div class="Clear"></div>
-#<!-- dtl:block:ChangeFreeText1 -->
-#
-#<!-- dtl:block:ChangeFreeText2 -->
-#                        <label>$QData{"ChangeFreeKey2","25"}:  </label>
-#<!-- dtl:block:ChangeFreeTextPlain2 -->
-#                        <p class="Value" title="$QData{"ChangeFreeText2"}">$QData{"ChangeFreeText2","25"}</p>
-#<!-- dtl:block:ChangeFreeTextPlain2 -->
-#<!-- dtl:block:ChangeFreeTextLink2 -->
-#                        <p class="Value" title="$QData{"ChangeFreeText2"}"><a href="$Data{"ChangeFreeTextLink2"}" target="_blank">$QData{"ChangeFreeText2","25"}</a></p>
-#<!-- dtl:block:ChangeFreeTextLink2 -->
-#                        <div class="Clear"></div>
-#<!-- dtl:block:ChangeFreeText2 -->
+# example of how to use fixed dynamic field blocks for customizations
+# Note: Field1 and Field2 are the names of the fields and had to be replaced with the actual
+# field names
+#                    <fieldset class="TableLike FixedLabelSmall Narrow">
+#<!-- dtl:block:DynamicField_Field1 -->
+#                        <label>$Text{"$Data{"Label"}"}:</label>
+#                        <p class="Value">
+#<!-- dtl:block:DynamicField_Field1_Link -->
+#                            <span title="$QData{"Title"}"><a href="$Data{"Link"}" target="_blank">$Data{"Value"}</a></span>
+#<!-- dtl:block:DynamicField_Field1_Link -->
+#<!-- dtl:block:DynamicField_Field1_Plain -->
+#                            <span title="$QData{"Title"}">$Data{"Value"}</span>
+#<!-- dtl:block:DynamicField_Field1_Plain -->
+#                        </p>
+#<!-- dtl:block:DynamicField_Field1 -->
 #                    </fieldset>
-# ###########################################################
+#                    <fieldset class="TableLike FixedLabelSmall Narrow">
+#<!-- dtl:block:DynamicField_Field2 -->
+#                        <label>$Text{"$Data{"Label"}"}:</label>
+#                        <p class="Value">
+#<!-- dtl:block:DynamicField_Field2_Link -->
+#                            <span title="$QData{"Title"}"><a href="$Data{"Link"}" target="_blank">$Data{"Value"}</a></span>
+#<!-- dtl:block:DynamicField_Field2_Link -->
+#<!-- dtl:block:DynamicField_Field2_Plain -->
+#                            <span title="$QData{"Title"}">$Data{"Value"}</span>
+#<!-- dtl:block:DynamicField_Field2_Plain -->
+#                        </p>
+#<!-- dtl:block:DynamicField_Field2 -->
+#                    </fieldset>
 
                     <fieldset class="TableLike FixedLabelSmall">
                         <label>$Text{"Change Initiator(s)"}:</label>

@@ -14,9 +14,12 @@ use warnings;
 
 use Kernel::System::HTMLUtils;
 use Kernel::System::LinkObject;
+use Kernel::System::DynamicField;
+use Kernel::System::DynamicField::Backend;
 use Kernel::System::CustomerUser;
 use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
+use Kernel::System::VariableCheck qw(:all);
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -38,12 +41,21 @@ sub new {
     # create needed objects
     $Self->{HTMLUtilsObject}    = Kernel::System::HTMLUtils->new(%Param);
     $Self->{LinkObject}         = Kernel::System::LinkObject->new(%Param);
+    $Self->{DynamicFieldObject} = Kernel::System::DynamicField->new(%Param);
+    $Self->{BackendObject}      = Kernel::System::DynamicField::Backend->new(%Param);
     $Self->{CustomerUserObject} = Kernel::System::CustomerUser->new(%Param);
     $Self->{ChangeObject}       = Kernel::System::ITSMChange->new(%Param);
     $Self->{WorkOrderObject}    = Kernel::System::ITSMChange::ITSMWorkOrder->new(%Param);
 
     # get config of frontend module
     $Self->{Config} = $Self->{ConfigObject}->Get("ITSMChange::Frontend::$Self->{Action}");
+
+    # get the dynamic fields for this screen
+    $Self->{DynamicField} = $Self->{DynamicFieldObject}->DynamicFieldListGet(
+        Valid       => 1,
+        ObjectType  => 'ITSMChange',
+        FieldFilter => $Self->{Config}->{DynamicField} || {},
+    );
 
     return $Self;
 }
@@ -320,91 +332,72 @@ sub Run {
         );
     }
 
-    # get all change freekey and freetext numbers from change
-    my %ChangeFreeTextFields;
-    ATTRIBUTE:
-    for my $Attribute ( sort keys %{$Change} ) {
+    # cycle trough the activated Dynamic Fields
+    DYNAMICFIELD:
+    for my $DynamicFieldConfig ( @{ $Self->{DynamicField} } ) {
+        next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
 
-        # get the freetext number, only look at the freetext field,
-        # as we do not want to show empty fields in the zoom view
-        if ( $Attribute =~ m{ \A ChangeFreeText ( \d+ ) }xms ) {
+        my $Value = $Self->{BackendObject}->ValueGet(
+            DynamicFieldConfig => $DynamicFieldConfig,
+            ObjectID           => $ChangeID,
+        );
 
-            # do not show empty freetext values (number zero is allowed)
-            next ATTRIBUTE if $Change->{$Attribute} eq '';
+        # get print string for this dynamic field
+        my $ValueStrg = $Self->{BackendObject}->DisplayValueRender(
+            DynamicFieldConfig => $DynamicFieldConfig,
+            Value              => $Value,
+            ValueMaxChars      => 1000,
+            LayoutObject       => $Self->{LayoutObject},
+        );
 
-            # get the freetext number
-            my $Number = $1;
-
-            # remember the freetext number
-            $ChangeFreeTextFields{$Number}++;
+        # for empty values
+        if ( !$ValueStrg->{Value} ) {
+            $ValueStrg->{Value} = '-';
         }
-    }
 
-    # show change freetext fields block
-    if (%ChangeFreeTextFields) {
+        my $Label = $DynamicFieldConfig->{Label};
 
         $Self->{LayoutObject}->Block(
-            Name => 'ChangeFreeTextFields',
-            Data => {},
-        );
-    }
-
-    # show the change freetext fields
-    for my $Number ( sort { $a <=> $b } keys %ChangeFreeTextFields ) {
-
-        $Self->{LayoutObject}->Block(
-            Name => 'ChangeFreeText' . $Number,
+            Name => 'DynamicField',
             Data => {
-                %{$Change},
-            },
-        );
-        $Self->{LayoutObject}->Block(
-            Name => 'ChangeFreeText',
-            Data => {
-                ChangeFreeKey  => $Change->{ 'ChangeFreeKey' . $Number },
-                ChangeFreeText => $Change->{ 'ChangeFreeText' . $Number },
+                Label => $Label,
             },
         );
 
-        # show freetext field as link
-        if ( $Self->{ConfigObject}->Get( 'ChangeFreeText' . $Number . '::Link' ) ) {
+        if ( $ValueStrg->{Link} ) {
 
+            # output link element
             $Self->{LayoutObject}->Block(
-                Name => 'ChangeFreeTextLink' . $Number,
+                Name => 'DynamicFieldLink',
                 Data => {
-                    %{$Change},
-                },
-            );
-            $Self->{LayoutObject}->Block(
-                Name => 'ChangeFreeTextLink',
-                Data => {
-                    %{$Change},
-                    ChangeFreeTextLink => $Self->{ConfigObject}->Get(
-                        'ChangeFreeText' . $Number . '::Link'
-                    ),
-                    ChangeFreeKey  => $Change->{ 'ChangeFreeKey' . $Number },
-                    ChangeFreeText => $Change->{ 'ChangeFreeText' . $Number },
+                    Value                       => $ValueStrg->{Value},
+                    Title                       => $ValueStrg->{Title},
+                    Link                        => $ValueStrg->{Link},
+                    $DynamicFieldConfig->{Name} => $ValueStrg->{Title}
                 },
             );
         }
-
-        # show freetext field as plain text
         else {
+
+            # output non link element
             $Self->{LayoutObject}->Block(
-                Name => 'ChangeFreeTextPlain' . $Number,
+                Name => 'DynamicFieldPlain',
                 Data => {
-                    %{$Change},
-                },
-            );
-            $Self->{LayoutObject}->Block(
-                Name => 'ChangeFreeTextPlain',
-                Data => {
-                    %{$Change},
-                    ChangeFreeKey  => $Change->{ 'ChangeFreeKey' . $Number },
-                    ChangeFreeText => $Change->{ 'ChangeFreeText' . $Number },
+                    Value => $ValueStrg->{Value},
+                    Title => $ValueStrg->{Title},
                 },
             );
         }
+
+        # example of dynamic fields order customization
+        $Self->{LayoutObject}->Block(
+            Name => 'DynamicField' . $DynamicFieldConfig->{Name},
+            Data => {
+                Label => $Label,
+                Value => $ValueStrg->{Value},
+                Title => $ValueStrg->{Title},
+            },
+        );
     }
 
     # get change manager data
