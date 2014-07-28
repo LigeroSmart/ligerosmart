@@ -14,7 +14,10 @@ use warnings;
 
 use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
+use Kernel::System::DynamicField;
+use Kernel::System::DynamicField::Backend;
 use Kernel::System::Web::UploadCache;
+use Kernel::System::VariableCheck qw(:all);
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -34,12 +37,21 @@ sub new {
     }
 
     # create needed objects
-    $Self->{ChangeObject}      = Kernel::System::ITSMChange->new(%Param);
-    $Self->{WorkOrderObject}   = Kernel::System::ITSMChange::ITSMWorkOrder->new(%Param);
-    $Self->{UploadCacheObject} = Kernel::System::Web::UploadCache->new(%Param);
+    $Self->{ChangeObject}       = Kernel::System::ITSMChange->new(%Param);
+    $Self->{WorkOrderObject}    = Kernel::System::ITSMChange::ITSMWorkOrder->new(%Param);
+    $Self->{DynamicFieldObject} = Kernel::System::DynamicField->new(%Param);
+    $Self->{BackendObject}      = Kernel::System::DynamicField::Backend->new(%Param);
+    $Self->{UploadCacheObject}  = Kernel::System::Web::UploadCache->new(%Param);
 
     # get config of frontend module
     $Self->{Config} = $Self->{ConfigObject}->Get("ITSMWorkOrder::Frontend::$Self->{Action}");
+
+    # get the dynamic fields for this screen
+    $Self->{DynamicField} = $Self->{DynamicFieldObject}->DynamicFieldListGet(
+        Valid       => 1,
+        ObjectType  => 'ITSMWorkOrder',
+        FieldFilter => $Self->{Config}->{DynamicField} || {},
+    );
 
     # get form id
     $Self->{FormID} = $Self->{ParamObject}->GetParam( Param => 'FormID' );
@@ -102,23 +114,20 @@ sub Run {
         $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
     }
 
-    # get configured workorder freetext field numbers
-    my @ConfiguredWorkOrderFreeTextFields
-        = $Self->{WorkOrderObject}->WorkOrderGetConfiguredFreeTextFields();
+    # get Dynamic fields from ParamObject
+    my %DynamicFieldValues;
 
-    # get workorder freetext params
-    my %WorkOrderFreeTextParam;
-    NUMBER:
-    for my $Number (@ConfiguredWorkOrderFreeTextFields) {
+    # cycle trough the activated Dynamic Fields for this screen
+    DYNAMICFIELD:
+    for my $DynamicFieldConfig ( @{ $Self->{DynamicField} } ) {
+        next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
 
-        # consider only freetext fields which are activated in this frontend
-        next NUMBER if !$Self->{Config}->{WorkOrderFreeText}->{$Number};
-
-        my $Key   = 'WorkOrderFreeKey' . $Number;
-        my $Value = 'WorkOrderFreeText' . $Number;
-
-        $WorkOrderFreeTextParam{$Key}   = $Self->{ParamObject}->GetParam( Param => $Key );
-        $WorkOrderFreeTextParam{$Value} = $Self->{ParamObject}->GetParam( Param => $Value );
+        # extract the dynamic field value from the web request and add the prefix
+        $DynamicFieldValues{ 'DynamicField_' . $DynamicFieldConfig->{Name} } = $Self->{BackendObject}->EditFieldValueGet(
+            DynamicFieldConfig => $DynamicFieldConfig,
+            ParamObject        => $Self->{ParamObject},
+            LayoutObject       => $Self->{LayoutObject},
+        );
     }
 
     # store actual time related fields in %GetParam
@@ -258,16 +267,27 @@ sub Run {
             $ValidationError{'AccountedTimeInvalid'} = 'ServerError';
         }
 
-        # check for required workorder freetext fields (if configured)
-        for my $Number (@ConfiguredWorkOrderFreeTextFields) {
-            if (
-                $Self->{Config}->{WorkOrderFreeText}->{$Number}
-                && $Self->{Config}->{WorkOrderFreeText}->{$Number} == 2
-                && $WorkOrderFreeTextParam{ 'WorkOrderFreeText' . $Number } eq ''
-                )
-            {
-                $WorkOrderFreeTextParam{Error}->{$Number} = 1;
-                $ValidationError{ 'WorkOrderFreeText' . $Number } = 'ServerError';
+        # cycle trough the activated Dynamic Fields for this screen
+        DYNAMICFIELD:
+        for my $DynamicFieldConfig ( @{ $Self->{DynamicField} } ) {
+            next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
+
+            my $ValidationResult = $Self->{BackendObject}->EditFieldValueValidate(
+                DynamicFieldConfig => $DynamicFieldConfig,
+                ParamObject        => $Self->{ParamObject},
+                Mandatory          => $Self->{Config}->{DynamicField}->{ $DynamicFieldConfig->{Name} } == 2,
+            );
+
+            if ( !IsHashRefWithData($ValidationResult) ) {
+                return $Self->{LayoutObject}->ErrorScreen(
+                    Message => "Could not perform validation on field $DynamicFieldConfig->{Label}!",
+                    Comment => 'Please contact the admin.',
+                );
+            }
+
+            # propagate validation error to the Error variable to be detected by the frontend
+            if ( $ValidationResult->{ServerError} ) {
+                $ValidationError{ $DynamicFieldConfig->{Name} } = ' ServerError';
             }
         }
 
@@ -292,7 +312,7 @@ sub Run {
                 UserID           => $Self->{UserID},
                 AccountedTime    => $GetParam{AccountedTime},
                 %AdditionalParam,
-                %WorkOrderFreeTextParam,
+                %DynamicFieldValues,
             );
 
             # if workorder update was successful
@@ -449,7 +469,6 @@ sub Run {
     # we do not want to show validation errors for other fields
     if ( $ValidationError{Attachment} ) {
         %ValidationError = ();
-        $WorkOrderFreeTextParam{Error} = {};
     }
 
     # get workorder state list
@@ -486,72 +505,49 @@ sub Run {
         );
     }
 
-    # get the workorder freetext config and fillup workorder freetext fields from workorder data
-    my %WorkOrderFreeTextConfig;
-    NUMBER:
-    for my $Number (@ConfiguredWorkOrderFreeTextFields) {
+    # cycle trough the activated Dynamic Fields for this screen
+    DYNAMICFIELD:
+    for my $DynamicFieldConfig ( @{ $Self->{DynamicField} } ) {
 
-        TYPE:
-        for my $Type (qw(WorkOrderFreeKey WorkOrderFreeText)) {
+        next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
 
-            # get workorder freetext fields from workorder if page is loaded the first time
-            if ( !$Self->{Subaction} ) {
-
-                $WorkOrderFreeTextParam{ $Type . $Number } ||= $WorkOrder->{ $Type . $Number };
-            }
-
-            # get config
-            my $Config = $Self->{ConfigObject}->Get( $Type . $Number );
-
-            next TYPE if !$Config;
-            next TYPE if ref $Config ne 'HASH';
-
-            # store the workorder freetext config
-            $WorkOrderFreeTextConfig{ $Type . $Number } = $Config;
+        # get workorder dynamic fields from workorder if page is loaded the first time
+        if ( !$Self->{Subaction} ) {
+            $DynamicFieldValues{ 'DynamicField_' . $DynamicFieldConfig->{Name} } = $WorkOrder->{ 'DynamicField_' . $DynamicFieldConfig->{Name} };
         }
 
-        # add required entry in the hash (if configured for this free text field)
-        if (
-            $Self->{Config}->{WorkOrderFreeText}->{$Number}
-            && $Self->{Config}->{WorkOrderFreeText}->{$Number} == 2
-            )
-        {
-            $WorkOrderFreeTextConfig{Required}->{$Number} = 1;
-        }
-    }
+        # get field html
+        my $DynamicFieldHTML = $Self->{BackendObject}->EditFieldRender(
+            DynamicFieldConfig => $DynamicFieldConfig,
+            Value              => $DynamicFieldValues{ 'DynamicField_' . $DynamicFieldConfig->{Name} },
+            ServerError        => $ValidationError{ $DynamicFieldConfig->{Name} } || '',
+            Mandatory          => $Self->{Config}->{DynamicField}->{ $DynamicFieldConfig->{Name} } == 2,
+            LayoutObject       => $Self->{LayoutObject},
+            ParamObject        => $Self->{ParamObject},
+            AJAXUpdate         => 0,
+        );
 
-    # build the workorder freetext HTML
-    my %WorkOrderFreeTextHTML = $Self->{LayoutObject}->BuildFreeTextHTML(
-        Config                   => \%WorkOrderFreeTextConfig,
-        WorkOrderData            => \%WorkOrderFreeTextParam,
-        ConfiguredFreeTextFields => \@ConfiguredWorkOrderFreeTextFields,
-    );
+        # skip fields that HTML could not be retrieved
+        next DYNAMICFIELD if !IsHashRefWithData( $DynamicFieldHTML );
 
-    # show workorder freetext fields
-    for my $Number (@ConfiguredWorkOrderFreeTextFields) {
+        $Self->{LayoutObject}->Block(
+            Name => 'DynamicField',
+            Data => {
+                Name  => $DynamicFieldConfig->{Name},
+                Label => $DynamicFieldHTML->{Label},
+                Field => $DynamicFieldHTML->{Field},
+            },
+        );
 
-        # check if this freetext field should be shown in this frontend
-        if ( $Self->{Config}->{WorkOrderFreeText}->{$Number} ) {
-
-            # show single workorder freetext fields
-            $Self->{LayoutObject}->Block(
-                Name => 'WorkOrderFreeText' . $Number,
-                Data => {
-                    %WorkOrderFreeTextHTML,
-                },
-            );
-
-            # show all workorder freetext fields
-            $Self->{LayoutObject}->Block(
-                Name => 'WorkOrderFreeText',
-                Data => {
-                    WorkOrderFreeKeyField =>
-                        $WorkOrderFreeTextHTML{ 'WorkOrderFreeKeyField' . $Number },
-                    WorkOrderFreeTextField =>
-                        $WorkOrderFreeTextHTML{ 'WorkOrderFreeTextField' . $Number },
-                },
-            );
-        }
+        # example of dynamic fields order customization
+        $Self->{LayoutObject}->Block(
+            Name => 'DynamicField_' . $DynamicFieldConfig->{Name},
+            Data => {
+                Name  => $DynamicFieldConfig->{Name},
+                Label => $DynamicFieldHTML->{Label},
+                Field => $DynamicFieldHTML->{Field},
+            },
+        );
     }
 
     # check if actual times should be shown
