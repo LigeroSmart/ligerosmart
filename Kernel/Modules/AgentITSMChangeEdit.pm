@@ -14,7 +14,10 @@ use warnings;
 
 use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMChangeCIPAllocate;
+use Kernel::System::DynamicField;
+use Kernel::System::DynamicField::Backend;
 use Kernel::System::Web::UploadCache;
+use Kernel::System::VariableCheck qw(:all);
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -34,12 +37,21 @@ sub new {
     }
 
     # create needed objects
-    $Self->{ChangeObject}      = Kernel::System::ITSMChange->new(%Param);
-    $Self->{CIPAllocateObject} = Kernel::System::ITSMChange::ITSMChangeCIPAllocate->new(%Param);
-    $Self->{UploadCacheObject} = Kernel::System::Web::UploadCache->new(%Param);
+    $Self->{ChangeObject}       = Kernel::System::ITSMChange->new(%Param);
+    $Self->{CIPAllocateObject}  = Kernel::System::ITSMChange::ITSMChangeCIPAllocate->new(%Param);
+    $Self->{DynamicFieldObject} = Kernel::System::DynamicField->new(%Param);
+    $Self->{BackendObject}      = Kernel::System::DynamicField::Backend->new(%Param);
+    $Self->{UploadCacheObject}  = Kernel::System::Web::UploadCache->new(%Param);
 
     # get config of frontend module
     $Self->{Config} = $Self->{ConfigObject}->Get("ITSMChange::Frontend::$Self->{Action}");
+
+    # get the dynamic fields for this screen
+    $Self->{DynamicField} = $Self->{DynamicFieldObject}->DynamicFieldListGet(
+        Valid       => 1,
+        ObjectType  => 'ITSMChange',
+        FieldFilter => $Self->{Config}->{DynamicField} || {},
+    );
 
     # get form id
     $Self->{FormID} = $Self->{ParamObject}->GetParam( Param => 'FormID' );
@@ -109,22 +121,20 @@ sub Run {
         $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
     }
 
-    # get configured change freetext field numbers
-    my @ConfiguredChangeFreeTextFields = $Self->{ChangeObject}->ChangeGetConfiguredFreeTextFields();
+    # get Dynamic fields from ParamObject
+    my %DynamicFieldValues;
 
-    # get change freetext params
-    my %ChangeFreeTextParam;
-    NUMBER:
-    for my $Number (@ConfiguredChangeFreeTextFields) {
+    # cycle trough the activated Dynamic Fields for this screen
+    DYNAMICFIELD:
+    for my $DynamicFieldConfig ( @{ $Self->{DynamicField} } ) {
+        next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
 
-        # consider only freetext fields which are activated in this frontend
-        next NUMBER if !$Self->{Config}->{ChangeFreeText}->{$Number};
-
-        my $Key   = 'ChangeFreeKey' . $Number;
-        my $Value = 'ChangeFreeText' . $Number;
-
-        $ChangeFreeTextParam{$Key}   = $Self->{ParamObject}->GetParam( Param => $Key );
-        $ChangeFreeTextParam{$Value} = $Self->{ParamObject}->GetParam( Param => $Value );
+        # extract the dynamic field value from the web request and add the prefix
+        $DynamicFieldValues{ 'DynamicField_' . $DynamicFieldConfig->{Name} } = $Self->{BackendObject}->EditFieldValueGet(
+            DynamicFieldConfig => $DynamicFieldConfig,
+            ParamObject        => $Self->{ParamObject},
+            LayoutObject       => $Self->{LayoutObject},
+        );
     }
 
     # store time related fields in %GetParam
@@ -212,18 +222,28 @@ sub Run {
             }
         }
 
-        # check for required change freetext fields (if configured)
-        for my $Number (@ConfiguredChangeFreeTextFields) {
-            if (
-                $Self->{Config}->{ChangeFreeText}->{$Number}
-                && $Self->{Config}->{ChangeFreeText}->{$Number} == 2
-                && $ChangeFreeTextParam{ 'ChangeFreeText' . $Number } eq ''
-                )
-            {
+        # cycle trough the activated Dynamic Fields for this screen
+        DYNAMICFIELD:
+        for my $DynamicFieldConfig ( @{ $Self->{DynamicField} } ) {
+            next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
 
-                # remember the change freetext field number with validation errors
-                $ChangeFreeTextParam{Error}->{$Number} = 1;
-                $ValidationError{ 'ChangeFreeText' . $Number } = 'ServerError';
+            my $ValidationResult = $Self->{BackendObject}->EditFieldValueValidate(
+                DynamicFieldConfig => $DynamicFieldConfig,
+                ParamObject        => $Self->{ParamObject},
+                Mandatory => $Self->{Config}->{DynamicField}->{ $DynamicFieldConfig->{Name} } == 2,
+            );
+
+            if ( !IsHashRefWithData($ValidationResult) ) {
+                return $Self->{LayoutObject}->ErrorScreen(
+                    Message =>
+                        "Could not perform validation on field $DynamicFieldConfig->{Label}!",
+                    Comment => 'Please contact the admin.',
+                );
+            }
+
+            # propagate validation error to the Error variable to be detected by the frontend
+            if ( $ValidationResult->{ServerError} ) {
+                $ValidationError{ $DynamicFieldConfig->{Name} } = ' ServerError';
             }
         }
 
@@ -289,7 +309,7 @@ sub Run {
                 PriorityID    => $GetParam{PriorityID},
                 UserID        => $Self->{UserID},
                 %AdditionalParam,
-                %ChangeFreeTextParam,
+                %DynamicFieldValues,
             );
 
             # update was successful
@@ -562,7 +582,6 @@ sub Run {
     # we do not want to show validation errors for other fields
     if ( $ValidationError{Attachment} ) {
         %ValidationError = ();
-        $ChangeFreeTextParam{Error} = {};
     }
 
     # check if change state is configured
@@ -660,70 +679,51 @@ sub Run {
         SelectedID => $GetParam{PriorityID} || $Change->{PriorityID},
     );
 
-    # get the change freetext config and fillup change freetext fields from change data
-    my %ChangeFreeTextConfig;
-    NUMBER:
-    for my $Number (@ConfiguredChangeFreeTextFields) {
+    # cycle trough the activated Dynamic Fields for this screen
+    DYNAMICFIELD:
+    for my $DynamicFieldConfig ( @{ $Self->{DynamicField} } ) {
 
-        TYPE:
-        for my $Type (qw(ChangeFreeKey ChangeFreeText)) {
+        next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
 
-            # get change freetext fields from change if page is loaded the first time
-            if ( !$Self->{Subaction} ) {
+        # get change dynamic fields from change if page is loaded the first time
+        if ( !$Self->{Subaction} ) {
 
-                $ChangeFreeTextParam{ $Type . $Number } ||= $Change->{ $Type . $Number };
-            }
-
-            # get config
-            my $Config = $Self->{ConfigObject}->Get( $Type . $Number );
-
-            next TYPE if !$Config;
-            next TYPE if ref $Config ne 'HASH';
-
-            # store the change freetext config
-            $ChangeFreeTextConfig{ $Type . $Number } = $Config;
+            # TODO: Check if reloading works as well as default values
+            $DynamicFieldValues{ 'DynamicField_' . $DynamicFieldConfig->{Name} } ||= $Change->{ 'DynamicField_' . $DynamicFieldConfig->{Name} };
         }
 
-        # add required entry in the hash (if configured for this free text field)
-        if (
-            $Self->{Config}->{ChangeFreeText}->{$Number}
-            && $Self->{Config}->{ChangeFreeText}->{$Number} == 2
-            )
-        {
-            $ChangeFreeTextConfig{Required}->{$Number} = 1;
-        }
-    }
+        # get field html
+        my $DynamicFieldHTML = $Self->{BackendObject}->EditFieldRender(
+            DynamicFieldConfig => $DynamicFieldConfig,
+            Value              => $DynamicFieldValues{ 'DynamicField_' . $DynamicFieldConfig->{Name} },
+            ServerError        => $ValidationError{ $DynamicFieldConfig->{Name} } || '',
+            Mandatory          => $Self->{Config}->{DynamicField}->{ $DynamicFieldConfig->{Name} } == 2,
+            LayoutObject       => $Self->{LayoutObject},
+            ParamObject        => $Self->{ParamObject},
+            AJAXUpdate         => 0,
+        );
 
-    # build the change freetext HTML
-    my %ChangeFreeTextHTML = $Self->{LayoutObject}->BuildFreeTextHTML(
-        Config                   => \%ChangeFreeTextConfig,
-        ChangeData               => \%ChangeFreeTextParam,
-        ConfiguredFreeTextFields => \@ConfiguredChangeFreeTextFields,
-    );
+        # skip fields that HTML could not be retrieved
+        next DYNAMICFIELD if !IsHashRefWithData( $DynamicFieldHTML );
 
-    # show change freetext fields
-    for my $Number (@ConfiguredChangeFreeTextFields) {
+        $Self->{LayoutObject}->Block(
+            Name => 'DynamicField',
+            Data => {
+                Name  => $DynamicFieldConfig->{Name},
+                Label => $DynamicFieldHTML->{Label},
+                Field => $DynamicFieldHTML->{Field},
+            },
+        );
 
-        # check if this freetext field should be shown in this frontend
-        if ( $Self->{Config}->{ChangeFreeText}->{$Number} ) {
-
-            # show single change freetext fields
-            $Self->{LayoutObject}->Block(
-                Name => 'ChangeFreeText' . $Number,
-                Data => {
-                    %ChangeFreeTextHTML,
-                },
-            );
-
-            # show all change freetext fields
-            $Self->{LayoutObject}->Block(
-                Name => 'ChangeFreeText',
-                Data => {
-                    ChangeFreeKeyField  => $ChangeFreeTextHTML{ 'ChangeFreeKeyField' . $Number },
-                    ChangeFreeTextField => $ChangeFreeTextHTML{ 'ChangeFreeTextField' . $Number },
-                },
-            );
-        }
+        # example of dynamic fields order customization
+        $Self->{LayoutObject}->Block(
+            Name => 'DynamicField_' . $DynamicFieldConfig->{Name},
+            Data => {
+                Name  => $DynamicFieldConfig->{Name},
+                Label => $DynamicFieldHTML->{Label},
+                Field => $DynamicFieldHTML->{Field},
+            },
+        );
     }
 
     # show the attachment upload button

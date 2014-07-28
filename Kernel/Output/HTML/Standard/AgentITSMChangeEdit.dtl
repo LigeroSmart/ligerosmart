@@ -86,33 +86,37 @@ $Include{"RichTextEditor"}
 //]]></script>
 <!--dtl:js_on_document_complete-->
 
-<!-- dtl:block:ChangeFreeText -->
-                    $Data{"ChangeFreeKeyField"}
-                    <div class="Field">
-                        $Data{"ChangeFreeTextField"}
+<!-- dtl:block:DynamicField -->
+                    <div class="Row Row_DynamicField_$QData{"Name"}">
+                        $Data{"Label"}
+                        <div class="Field">
+                            $Data{"Field"}
+                        </div>
+                        <div class="Clear"></div>
                     </div>
-                    <div class="Clear"></div>
-<!-- dtl:block:ChangeFreeText -->
+<!-- dtl:block:DynamicField -->
 
-# #############################################################
-# example for customization of single change freetext fields
-# #############################################################
-#<!-- dtl:block:ChangeFreeText1 -->
-#                    $Data{"ChangeFreeKeyField1"}
-#                    <div class="Field">
-#                        $Data{"ChangeFreeTextField1"}
+# example of how to use fixed dynamic field blocks for customizations
+# Note: Field1 and Field2 are the names of the fields and had to be replaced with the actual
+# field names
+#<!-- dtl:block:DynamicField_Field1 -->
+#                    <div class="Row Row_DynamicField_$QData{"Name"}">
+#                        $Data{"Label"}
+#                        <div class="Field">
+#                            $Data{"Field"}
+#                        </div>
+#                        <div class="Clear"></div>
 #                    </div>
-#                    <div class="Clear"></div>
-#<!-- dtl:block:ChangeFreeText1 -->
-#
-#<!-- dtl:block:ChangeFreeText2 -->
-#                    $Data{"ChangeFreeKeyField2"}
-#                    <div class="Field">
-#                        $Data{"ChangeFreeTextField2"}
+#<!-- dtl:block:DynamicField_Field1 -->
+#<!-- dtl:block:DynamicField_Field2 -->
+#                    <div class="Row Row_DynamicField_$QData{"Name"}">
+#                        $Data{"Label"}
+#                        <div class="Field">
+#                            $Data{"Field"}
+#                        </div>
+#                        <div class="Clear"></div>
 #                    </div>
-#                    <div class="Clear"></div>
-#<!-- dtl:block:ChangeFreeText2 -->
-# ####################################################
+#<!-- dtl:block:DynamicField_Field2 -->
 
 <!-- dtl:block:ChangeState -->
                     <label for="ChangeStateID">$Text{"State"}:</label>

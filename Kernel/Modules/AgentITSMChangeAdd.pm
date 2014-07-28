@@ -630,7 +630,6 @@ sub Run {
             DynamicFieldConfig => $DynamicFieldConfig,
             Value              => $DynamicFieldValues{ 'DynamicField_' . $DynamicFieldConfig->{Name} },
             ServerError        => $ValidationError{ $DynamicFieldConfig->{Name} } || '',
-            # ErrorMessage       => '',
             Mandatory          => $Self->{Config}->{DynamicField}->{ $DynamicFieldConfig->{Name} } == 2,
             LayoutObject       => $Self->{LayoutObject},
             ParamObject        => $Self->{ParamObject},
