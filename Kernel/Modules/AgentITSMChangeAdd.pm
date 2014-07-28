@@ -624,13 +624,9 @@ sub Run {
 
         next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
 
-        # get change dynamic fields defaults if page is loaded the first time
+        # get dynamic fields defaults if page is loaded the first time
         if ( !$Self->{Subaction} ) {
-
-            # add default value for multiselect fields
-            if ( ref $DynamicFieldValues{ 'DynamicField_' . $DynamicFieldConfig->{Name} } eq 'ARRAY' && !IsArrayRefWithData( $DynamicFieldValues{ 'DynamicField_' . $DynamicFieldConfig->{Name} } )) {
-                $DynamicFieldValues{ 'DynamicField_' . $DynamicFieldConfig->{Name} } = $DynamicFieldConfig->{Config}->{DefaultValue};
-            }
+            $DynamicFieldValues{ 'DynamicField_' . $DynamicFieldConfig->{Name} } = $DynamicFieldConfig->{Config}->{DefaultValue} || '';
         }
 
         # get field html

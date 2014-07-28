@@ -3345,8 +3345,8 @@ There are no required parameters.
         RequestedTime        => '2009-10-23 08:57:12',              # (optional)
         CABAgents            => [ 1, 2, 4 ],     # UserIDs          # (optional)
         CABCustomers         => [ 'tt', 'mm' ],  # CustomerUserIDs  # (optional)
-        DynamicField_X       => 'Sun',                               # (optional)
-        DynamicField_Y       => 'Earth',                             # (optional)
+        DynamicField_X       => 'Sun',                              # (optional)
+        DynamicField_Y       => 'Earth',                            # (optional)
     );
 
 The ChangeStateID is checked for existence in the general catalog.
@@ -3445,15 +3445,6 @@ sub _CheckChangeParams {
             $Self->{LogObject}->Log(
                 Priority => 'error',
                 Message  => "The parameter '$Key' must be defined!",
-            );
-            return;
-        }
-
-        # check if param is not a reference
-        if ( ref $Param{$Key} ne '' ) {
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message  => "The parameter '$Key' mustn't be a reference!",
             );
             return;
         }

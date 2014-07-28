@@ -108,11 +108,11 @@ sub new {
 Adds a single history entry to the history. Returns 1 on success, C<undef> otherwise.
 
     my $Success = $HistoryObject->HistoryAdd(
-        ChangeID      => 1234,            # either ChangeID or WorkOrderID is needed
-        WorkOrderID   => 123,             # either ChangeID or WorkOrderID is needed
-        HistoryType   => 'WorkOrderAdd',  # either HistoryType or HistoryTypeID is needed
-        HistoryTypeID => 1,               # either HistoryType or HistoryTypeID is needed
-        Fieldname     => 'Justification', # optional
+        ChangeID      => 1234,                     # either ChangeID or WorkOrderID is needed
+        WorkOrderID   => 123,                      # either ChangeID or WorkOrderID is needed
+        HistoryType   => 'WorkOrderAdd',           # either HistoryType or HistoryTypeID is needed
+        HistoryTypeID => 1,                        # either HistoryType or HistoryTypeID is needed
+        Fieldname     => 'Justification',          # optional
         ContentNew    => 'Any useful information', # optional
         ContentOld    => 'Old value of field',     # optional
         UserID        => 1,
@@ -162,6 +162,13 @@ sub HistoryAdd {
         }
 
         $Param{HistoryTypeID} = $ID;
+    }
+
+    # convert array params
+    CONTENT:
+    for my $Content (qw(ContentNew ContentOld)) {
+        next CONTENT if ref $Param{$Content} ne 'ARRAY';
+        $Param{$Content} = join ', ', @{ $Param{$Content} };
     }
 
     # insert history entry
@@ -310,6 +317,14 @@ sub HistoryAddMultiple {
             else {
                 $SQL .= $DatabaseSQL{$DBType}->{NextLine};
             }
+
+            # convert array params
+            CONTENT:
+            for my $Content (qw(ContentNew ContentOld)) {
+                next CONTENT if ref $HistoryEntry->{$Content} ne 'ARRAY';
+                $HistoryEntry->{$Content} = join ', ', @{ $HistoryEntry->{$Content} };
+            }
+
             push @Bind, (
                 \$HistoryEntry->{ChangeID},
                 \$HistoryEntry->{WorkOrderID},

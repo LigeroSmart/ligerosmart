@@ -687,9 +687,7 @@ sub Run {
 
         # get change dynamic fields from change if page is loaded the first time
         if ( !$Self->{Subaction} ) {
-
-            # TODO: Check if reloading works as well as default values
-            $DynamicFieldValues{ 'DynamicField_' . $DynamicFieldConfig->{Name} } ||= $Change->{ 'DynamicField_' . $DynamicFieldConfig->{Name} };
+            $DynamicFieldValues{ 'DynamicField_' . $DynamicFieldConfig->{Name} } = $Change->{ 'DynamicField_' . $DynamicFieldConfig->{Name} };
         }
 
         # get field html

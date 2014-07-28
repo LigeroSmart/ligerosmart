@@ -3187,15 +3187,6 @@ sub _CheckWorkOrderParams {
             return;
         }
 
-        # check if param is not a reference
-        if ( ref $Param{$Key} ne '' ) {
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message  => "The parameter '$Key' mustn't be a reference!",
-            );
-            return;
-        }
-
         # check the maximum length of dynamic fields
         if ( length( $Param{$Key} ) > 3800 ) {
             $Self->{LogObject}->Log(
