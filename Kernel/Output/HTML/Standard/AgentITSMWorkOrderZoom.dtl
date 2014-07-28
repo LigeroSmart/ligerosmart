@@ -109,50 +109,51 @@
 <!-- dtl:block:ShowAccountedTime -->
                     </fieldset>
 
-# show WorkOrderFreeKey and WorkOrderFreeText fields
-<!-- dtl:block:WorkOrderFreeTextFields -->
-                    <fieldset class="TableLike FixedLabelSmall">
-<!-- dtl:block:WorkOrderFreeText -->
-                        <label>$QData{"WorkOrderFreeKey","25"}: </label>
-<!-- dtl:block:WorkOrderFreeTextPlain -->
-                        <p class="Value" title="$QData{"WorkOrderFreeText"}">$QData{"WorkOrderFreeText","25"}</p>
-<!-- dtl:block:WorkOrderFreeTextPlain -->
-<!-- dtl:block:WorkOrderFreeTextLink -->
-                        <p class="Value" title="$QData{"WorkOrderFreeText"}"><a href="$Data{"WorkOrderFreeTextLink"}" target="_blank">$QData{"WorkOrderFreeText","25"}</a></p>
-<!-- dtl:block:WorkOrderFreeTextLink -->
+# show dynamic fields
+                    <fieldset class="TableLike FixedLabelSmall Narrow">
+<!-- dtl:block:DynamicField -->
+                        <label>$Text{"$Data{"Label"}"}:</label>
+                        <p class="Value">
+<!-- dtl:block:DynamicFieldLink -->
+                            <span title="$QData{"Title"}"><a href="$Data{"Link"}" target="_blank" class="DynamicFieldLink">$Data{"Value"}</a></span>
+<!-- dtl:block:DynamicFieldLink -->
+<!-- dtl:block:DynamicFieldPlain -->
+                            <span title="$QData{"Title"}">$Data{"Value"}</span>
+<!-- dtl:block:DynamicFieldPlain -->
+                        </p>
                         <div class="Clear"></div>
-<!-- dtl:block:WorkOrderFreeText -->
+<!-- dtl:block:DynamicField -->
                     </fieldset>
-<!-- dtl:block:WorkOrderFreeTextFields -->
 
-
-# #############################################################
-# example for customization of single workorder freetext fields
-# #############################################################
-#                    <fieldset class="TableLike FixedLabelSmall">
-#<!-- dtl:block:WorkOrderFreeText1 -->
-#                        <label>$QData{"WorkOrderFreeKey1","25"}:  </label>
-#<!-- dtl:block:WorkOrderFreeTextPlain1 -->
-#                        <p class="Value" title="$QData{"WorkOrderFreeText1"}">$QData{"WorkOrderFreeText1","25"}</p>
-#<!-- dtl:block:WorkOrderFreeTextPlain1 -->
-#<!-- dtl:block:WorkOrderFreeTextLink1 -->
-#                        <p class="Value" title="$QData{"WorkOrderFreeText1"}"><a href="$Data{"WorkOrderFreeTextLink1"}" target="_blank">$QData{"WorkOrderFreeText1","25"}</a></p>
-#<!-- dtl:block:WorkOrderFreeTextLink1 -->
-#                        <div class="Clear"></div>
-#<!-- dtl:block:WorkOrderFreeText1 -->
-#
-#<!-- dtl:block:WorkOrderFreeText2 -->
-#                        <label>$QData{"WorkOrderFreeKey2","25"}:  </label>
-#<!-- dtl:block:WorkOrderFreeTextPlain2 -->
-#                        <p class="Value" title="$QData{"WorkOrderFreeText2"}">$QData{"WorkOrderFreeText2","25"}</p>
-#<!-- dtl:block:WorkOrderFreeTextPlain2 -->
-#<!-- dtl:block:WorkOrderFreeTextLink2 -->
-#                        <p class="Value" title="$QData{"WorkOrderFreeText2"}"><a href="$Data{"WorkOrderFreeTextLink2"}" target="_blank">$QData{"WorkOrderFreeText2","25"}</a></p>
-#<!-- dtl:block:WorkOrderFreeTextLink2 -->
-#                        <div class="Clear"></div>
-#<!-- dtl:block:WorkOrderFreeText2 -->
+# example of how to use fixed dynamic field blocks for customizations
+# Note: Field1 and Field2 are the names of the fields and had to be replaced with the actual
+# field names
+#                    <fieldset class="TableLike FixedLabelSmall Narrow">
+#<!-- dtl:block:DynamicField_Field1 -->
+#                        <label>$Text{"$Data{"Label"}"}:</label>
+#                        <p class="Value">
+#<!-- dtl:block:DynamicField_Field1_Link -->
+#                            <span title="$QData{"Title"}"><a href="$Data{"Link"}" target="_blank">$Data{"Value"}</a></span>
+#<!-- dtl:block:DynamicField_Field1_Link -->
+#<!-- dtl:block:DynamicField_Field1_Plain -->
+#                            <span title="$QData{"Title"}">$Data{"Value"}</span>
+#<!-- dtl:block:DynamicField_Field1_Plain -->
+#                        </p>
+#<!-- dtl:block:DynamicField_Field1 -->
 #                    </fieldset>
-# ###########################################################
+#                    <fieldset class="TableLike FixedLabelSmall Narrow">
+#<!-- dtl:block:DynamicField_Field2 -->
+#                        <label>$Text{"$Data{"Label"}"}:</label>
+#                        <p class="Value">
+#<!-- dtl:block:DynamicField_Field2_Link -->
+#                            <span title="$QData{"Title"}"><a href="$Data{"Link"}" target="_blank">$Data{"Value"}</a></span>
+#<!-- dtl:block:DynamicField_Field2_Link -->
+#<!-- dtl:block:DynamicField_Field2_Plain -->
+#                            <span title="$QData{"Title"}">$Data{"Value"}</span>
+#<!-- dtl:block:DynamicField_Field2_Plain -->
+#                        </p>
+#<!-- dtl:block:DynamicField_Field2 -->
+#                    </fieldset>
 
                     <fieldset class="TableLike FixedLabelSmall">
                         <label>$Text{"Change Builder"}:</label>

@@ -9129,6 +9129,16 @@
             </Option>
         </Setting>
     </ConfigItem>
+    <ConfigItem Name="ITSMWorkOrder::Frontend::AgentITSMWorkOrderZoom###DynamicField" Required="0" Valid="1">
+        <Description Translatable="1">Dynamic fields shown in the workorder zoom screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ViewWorkOrderZoom</SubGroup>
+        <Setting>
+            <Hash>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+
     <ConfigItem Name="ITSMChange::Frontend::CustomerITSMChangeSchedule###Filter::ChangeStates" Required="1" Valid="1">
         <Description Translatable="1">Defines the change states that will be used as filters in the customer change schedule overview.</Description>
         <Group>ITSM Change Management</Group>

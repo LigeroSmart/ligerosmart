@@ -16,6 +16,9 @@ use Kernel::System::HTMLUtils;
 use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::LinkObject;
+use Kernel::System::DynamicField;
+use Kernel::System::DynamicField::Backend;
+use Kernel::System::VariableCheck qw(:all);
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -35,13 +38,22 @@ sub new {
     }
 
     # create needed objects
-    $Self->{HTMLUtilsObject} = Kernel::System::HTMLUtils->new(%Param);
-    $Self->{ChangeObject}    = Kernel::System::ITSMChange->new(%Param);
-    $Self->{WorkOrderObject} = Kernel::System::ITSMChange::ITSMWorkOrder->new(%Param);
-    $Self->{LinkObject}      = Kernel::System::LinkObject->new(%Param);
+    $Self->{HTMLUtilsObject}    = Kernel::System::HTMLUtils->new(%Param);
+    $Self->{ChangeObject}       = Kernel::System::ITSMChange->new(%Param);
+    $Self->{WorkOrderObject}    = Kernel::System::ITSMChange::ITSMWorkOrder->new(%Param);
+    $Self->{LinkObject}         = Kernel::System::LinkObject->new(%Param);
+    $Self->{DynamicFieldObject} = Kernel::System::DynamicField->new(%Param);
+    $Self->{BackendObject}      = Kernel::System::DynamicField::Backend->new(%Param);
 
     # get config of frontend module
     $Self->{Config} = $Self->{ConfigObject}->Get("ITSMWorkOrder::Frontend::$Self->{Action}");
+
+    # get the dynamic fields for this screen
+    $Self->{DynamicField} = $Self->{DynamicFieldObject}->DynamicFieldListGet(
+        Valid       => 1,
+        ObjectType  => 'ITSMWorkOrder',
+        FieldFilter => $Self->{Config}->{DynamicField} || {},
+    );
 
     return $Self;
 }
@@ -314,91 +326,72 @@ sub Run {
         }
     }
 
-    # get all workorder freekey and freetext numbers from workorder
-    my %WorkOrderFreeTextFields;
-    ATTRIBUTE:
-    for my $Attribute ( sort keys %{$WorkOrder} ) {
+    # cycle trough the activated Dynamic Fields
+    DYNAMICFIELD:
+    for my $DynamicFieldConfig ( @{ $Self->{DynamicField} } ) {
+        next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
 
-        # get the freetext number, only look at the freetext field,
-        # as we do not want to show empty fields in the zoom view
-        if ( $Attribute =~ m{ \A WorkOrderFreeText ( \d+ ) }xms ) {
+        my $Value = $Self->{BackendObject}->ValueGet(
+            DynamicFieldConfig => $DynamicFieldConfig,
+            ObjectID           => $WorkOrderID,
+        );
 
-            # do not show empty freetext values
-            next ATTRIBUTE if $WorkOrder->{$Attribute} eq '';
+        # get print string for this dynamic field
+        my $ValueStrg = $Self->{BackendObject}->DisplayValueRender(
+            DynamicFieldConfig => $DynamicFieldConfig,
+            Value              => $Value,
+            ValueMaxChars      => 1000,
+            LayoutObject       => $Self->{LayoutObject},
+        );
 
-            # get the freetext number
-            my $Number = $1;
-
-            # remember the freetext number
-            $WorkOrderFreeTextFields{$Number}++;
+        # for empty values
+        if ( !$ValueStrg->{Value} ) {
+            $ValueStrg->{Value} = '-';
         }
-    }
 
-    # show workorder freetext fields block
-    if (%WorkOrderFreeTextFields) {
+        my $Label = $DynamicFieldConfig->{Label};
 
         $Self->{LayoutObject}->Block(
-            Name => 'WorkOrderFreeTextFields',
-            Data => {},
-        );
-    }
-
-    # show the workorder freetext fields
-    for my $Number ( sort { $a <=> $b } keys %WorkOrderFreeTextFields ) {
-
-        $Self->{LayoutObject}->Block(
-            Name => 'WorkOrderFreeText' . $Number,
+            Name => 'DynamicField',
             Data => {
-                %{$WorkOrder},
-            },
-        );
-        $Self->{LayoutObject}->Block(
-            Name => 'WorkOrderFreeText',
-            Data => {
-                WorkOrderFreeKey  => $WorkOrder->{ 'WorkOrderFreeKey' . $Number },
-                WorkOrderFreeText => $WorkOrder->{ 'WorkOrderFreeText' . $Number },
+                Label => $Label,
             },
         );
 
-        # show freetext field as link
-        if ( $Self->{ConfigObject}->Get( 'WorkOrderFreeText' . $Number . '::Link' ) ) {
+        if ( $ValueStrg->{Link} ) {
 
+            # output link element
             $Self->{LayoutObject}->Block(
-                Name => 'WorkOrderFreeTextLink' . $Number,
+                Name => 'DynamicFieldLink',
                 Data => {
-                    %{$WorkOrder},
-                },
-            );
-            $Self->{LayoutObject}->Block(
-                Name => 'WorkOrderFreeTextLink',
-                Data => {
-                    %{$WorkOrder},
-                    WorkOrderFreeTextLink => $Self->{ConfigObject}->Get(
-                        'WorkOrderFreeText' . $Number . '::Link'
-                    ),
-                    WorkOrderFreeKey  => $WorkOrder->{ 'WorkOrderFreeKey' . $Number },
-                    WorkOrderFreeText => $WorkOrder->{ 'WorkOrderFreeText' . $Number },
+                    Value                       => $ValueStrg->{Value},
+                    Title                       => $ValueStrg->{Title},
+                    Link                        => $ValueStrg->{Link},
+                    $DynamicFieldConfig->{Name} => $ValueStrg->{Title}
                 },
             );
         }
-
-        # show freetext field as plain text
         else {
+
+            # output non link element
             $Self->{LayoutObject}->Block(
-                Name => 'WorkOrderFreeTextPlain' . $Number,
+                Name => 'DynamicFieldPlain',
                 Data => {
-                    %{$WorkOrder},
-                },
-            );
-            $Self->{LayoutObject}->Block(
-                Name => 'WorkOrderFreeTextPlain',
-                Data => {
-                    %{$WorkOrder},
-                    WorkOrderFreeKey  => $WorkOrder->{ 'WorkOrderFreeKey' . $Number },
-                    WorkOrderFreeText => $WorkOrder->{ 'WorkOrderFreeText' . $Number },
+                    Value => $ValueStrg->{Value},
+                    Title => $ValueStrg->{Title},
                 },
             );
         }
+
+        # example of dynamic fields order customization
+        $Self->{LayoutObject}->Block(
+            Name => 'DynamicField' . $DynamicFieldConfig->{Name},
+            Data => {
+                Label => $Label,
+                Value => $ValueStrg->{Value},
+                Title => $ValueStrg->{Title},
+            },
+        );
     }
 
     # get change builder user
