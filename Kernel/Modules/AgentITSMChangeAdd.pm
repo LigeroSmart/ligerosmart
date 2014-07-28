@@ -293,13 +293,12 @@ sub Run {
             my $ValidationResult = $Self->{BackendObject}->EditFieldValueValidate(
                 DynamicFieldConfig => $DynamicFieldConfig,
                 ParamObject        => $Self->{ParamObject},
-                Mandatory => $Self->{Config}->{DynamicField}->{ $DynamicFieldConfig->{Name} } == 2,
+                Mandatory          => $Self->{Config}->{DynamicField}->{ $DynamicFieldConfig->{Name} } == 2,
             );
 
             if ( !IsHashRefWithData($ValidationResult) ) {
                 return $Self->{LayoutObject}->ErrorScreen(
-                    Message =>
-                        "Could not perform validation on field $DynamicFieldConfig->{Label}!",
+                    Message => "Could not perform validation on field $DynamicFieldConfig->{Label}!",
                     Comment => 'Please contact the admin.',
                 );
             }
@@ -624,6 +623,15 @@ sub Run {
     for my $DynamicFieldConfig ( @{ $Self->{DynamicField} } ) {
 
         next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
+
+        # get change dynamic fields defaults if page is loaded the first time
+        if ( !$Self->{Subaction} ) {
+
+            # add default value for multiselect fields
+            if ( ref $DynamicFieldValues{ 'DynamicField_' . $DynamicFieldConfig->{Name} } eq 'ARRAY' && !IsArrayRefWithData( $DynamicFieldValues{ 'DynamicField_' . $DynamicFieldConfig->{Name} } )) {
+                $DynamicFieldValues{ 'DynamicField_' . $DynamicFieldConfig->{Name} } = $DynamicFieldConfig->{Config}->{DefaultValue};
+            }
+        }
 
         # get field html
         my $DynamicFieldHTML = $Self->{BackendObject}->EditFieldRender(
