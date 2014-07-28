@@ -134,7 +134,7 @@
 <!-- dtl:block:Priority -->
                     </fieldset>
 
-# show change dynamic fields
+# show dynamic fields
                     <fieldset class="TableLike FixedLabelSmall Narrow">
 <!-- dtl:block:DynamicField -->
                         <label>$Text{"$Data{"Label"}"}:</label>
