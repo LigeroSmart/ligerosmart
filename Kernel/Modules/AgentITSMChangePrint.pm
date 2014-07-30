@@ -16,9 +16,12 @@ use List::Util qw(max);
 
 use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
+use Kernel::System::DynamicField;
+use Kernel::System::DynamicField::Backend;
 use Kernel::System::LinkObject;
 use Kernel::System::PDF;
 use Kernel::System::CustomerUser;
+use Kernel::System::VariableCheck qw(:all);
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -41,6 +44,8 @@ sub new {
     $Self->{ChangeObject}       = Kernel::System::ITSMChange->new(%Param);
     $Self->{WorkOrderObject}    = Kernel::System::ITSMChange::ITSMWorkOrder->new(%Param);
     $Self->{CustomerUserObject} = Kernel::System::CustomerUser->new(%Param);
+    $Self->{DynamicFieldObject} = Kernel::System::DynamicField->new(%Param);
+    $Self->{BackendObject}      = Kernel::System::DynamicField::Backend->new(%Param);
     $Self->{LinkObject}         = Kernel::System::LinkObject->new(%Param);
 
     # when there is no PDF-Support, $Self->{PDFObject} will be undefined
@@ -48,6 +53,13 @@ sub new {
 
     # get config of frontend module
     $Self->{Config} = $Self->{ConfigObject}->Get("ITSMChange::Frontend::$Self->{Action}");
+
+    # get the dynamic fields for this screen
+    $Self->{DynamicField} = $Self->{DynamicFieldObject}->DynamicFieldListGet(
+        Valid       => 1,
+        ObjectType  => [ 'ITSMChange', 'ITSMWorkOrder' ],
+        FieldFilter => $Self->{Config}->{DynamicField} || {},
+    );
 
     # Page controls the PDF-generation
     # it won't be used when there is no PDF-Support
@@ -629,6 +641,9 @@ sub _PrepareAndAddInfoRow {
             }
         }
     }
+    elsif ( $RowSpec->{ValueIsDynamicField} ) {
+        $Value = $RowSpec->{Value},
+    }
     else {
 
         # take value from the passed in data
@@ -745,33 +760,41 @@ sub _OutputChangeInfo {
         $ComplicatedValue{Attachments} = join( "\n", @Values ) || '-';
     }
 
-    # get all change freekey and freetext numbers from change
-    my %ChangeFreeTextFields;
-    ATTRIBUTE:
-    for my $Attribute ( sort keys %{$Change} ) {
+    # cycle trough the activated Dynamic Fields
+    my @DynamicFieldRowSpec;
+    DYNAMICFIELD:
+    for my $DynamicFieldConfig ( @{ $Self->{DynamicField} } ) {
+        next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
 
-        # get the freetext number, only look at the freetext field,
-        # as we do not want to show empty fields in the zoom view
-        if ( $Attribute =~ m{ \A ChangeFreeText ( \d+ ) }xms ) {
+        # show only change dynamic fields here
+        next DYNAMICFIELD if $DynamicFieldConfig->{ObjectType} ne 'ITSMChange';
 
-            # do not show empty freetext values
-            next ATTRIBUTE if $Change->{$Attribute} eq '';
+        my $Value = $Self->{BackendObject}->ValueGet(
+            DynamicFieldConfig => $DynamicFieldConfig,
+            ObjectID           => $Change->{ChangeID},
+        );
 
-            # get the freetext number
-            my $Number = $1;
+        # get print string for this dynamic field
+        my $ValueStrg = $Self->{BackendObject}->DisplayValueRender(
+            DynamicFieldConfig => $DynamicFieldConfig,
+            Value              => $Value,
+            ValueMaxChars      => 1000,
+            LayoutObject       => $Self->{LayoutObject},
+        );
 
-            # remember the freetext number
-            $ChangeFreeTextFields{$Number}++;
+        # for empty values
+        if ( !$ValueStrg->{Value} ) {
+            $ValueStrg->{Value} = '-';
         }
-    }
 
-    # show the change freetext fields
-    my @FreeTextRowSpec;
-    for my $Number ( sort { $a <=> $b } keys %ChangeFreeTextFields ) {
-        push @FreeTextRowSpec, {
-            Attribute => 'ChangeFreeText' . $Number,
-            Key       => $Change->{ 'ChangeFreeKey' . $Number },
-            Table     => \@TableLeft,
+        my $Label = $DynamicFieldConfig->{Label};
+
+        push @DynamicFieldRowSpec, {
+            Attribute           => $Label,
+            Key                 => $Label,
+            ValueIsDynamicField => 1,
+            Value               => $ValueStrg->{Value},
+            Table               => \@TableLeft,
         };
     }
 
@@ -809,7 +832,7 @@ sub _OutputChangeInfo {
             Table               => \@TableLeft,
             ValueIsTranslatable => 1,
         },
-        @FreeTextRowSpec,
+        @DynamicFieldRowSpec,
         {
             Attribute   => 'ChangeManager',
             Table       => \@TableLeft,
@@ -1004,33 +1027,40 @@ sub _OutputWorkOrderInfo {
     ( $ComplicatedValue{WrappableChangeTitle} = $Change->{ChangeTitle} )
         =~ s{ ( \S{25} ) }{$1 }xmsg;
 
-    # get all workorder freekey and freetext numbers from workorder
-    my %WorkOrderFreeTextFields;
-    ATTRIBUTE:
-    for my $Attribute ( sort keys %{$WorkOrder} ) {
+    my @DynamicFieldRowSpec;
+    DYNAMICFIELD:
+    for my $DynamicFieldConfig ( @{ $Self->{DynamicField} } ) {
+        next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
 
-        # get the freetext number, only look at the freetext field,
-        # as we do not want to show empty fields in the zoom view
-        if ( $Attribute =~ m{ \A WorkOrderFreeText ( \d+ ) }xms ) {
+        # show only workorder dynamic fields here
+        next DYNAMICFIELD if $DynamicFieldConfig->{ObjectType} ne 'ITSMWorkOrder';
 
-            # do not show empty freetext values
-            next ATTRIBUTE if $WorkOrder->{$Attribute} eq '';
+        my $Value = $Self->{BackendObject}->ValueGet(
+            DynamicFieldConfig => $DynamicFieldConfig,
+            ObjectID           => $WorkOrder->{WorkOrderID},
+        );
 
-            # get the freetext number
-            my $Number = $1;
+        # get print string for this dynamic field
+        my $ValueStrg = $Self->{BackendObject}->DisplayValueRender(
+            DynamicFieldConfig => $DynamicFieldConfig,
+            Value              => $Value,
+            ValueMaxChars      => 1000,
+            LayoutObject       => $Self->{LayoutObject},
+        );
 
-            # remember the freetext number
-            $WorkOrderFreeTextFields{$Number}++;
+        # for empty values
+        if ( !$ValueStrg->{Value} ) {
+            $ValueStrg->{Value} = '-';
         }
-    }
 
-    # show the workorder freetext fields
-    my @FreeTextRowSpec;
-    for my $Number ( sort { $a <=> $b } keys %WorkOrderFreeTextFields ) {
-        push @FreeTextRowSpec, {
-            Attribute => 'WorkOrderFreeText' . $Number,
-            Key       => $WorkOrder->{ 'WorkOrderFreeKey' . $Number },
-            Table     => \@TableLeft,
+        my $Label = $DynamicFieldConfig->{Label};
+
+        push @DynamicFieldRowSpec, {
+            Attribute           => $Label,
+            Key                 => $Label,
+            ValueIsDynamicField => 1,
+            Value               => $ValueStrg->{Value},
+            Table               => \@TableLeft,
         };
     }
 
@@ -1072,7 +1102,7 @@ sub _OutputWorkOrderInfo {
             Table      => \@TableLeft,
             Key        => 'AccountedTime',
         },
-        @FreeTextRowSpec,
+        @DynamicFieldRowSpec,
         {
             Attribute => 'Attachments',
             Key       => 'Attachments',
