@@ -21,8 +21,10 @@ use Kernel::Output::HTML::Layout;
 returns a output string for WorkOrder graph
 
     my $String = $LayoutObject->ITSMChangeBuildWorkOrderGraph(
-        Change => $ChangeRef,
-        WorkOrderObject => $WorkOrderObject,
+        Change             => $ChangeRef,
+        WorkOrderObject    => $WorkOrderObject,
+        DynamicFieldObject => $DynamicFieldObject,
+        BackendObject      => $BackendObject,
     );
 
 =cut
@@ -321,10 +323,12 @@ sub ITSMChangeBuildWorkOrderGraph {
         next WORKORDER if !$WorkOrder;
 
         $Self->_ITSMChangeGetWorkOrderGraph(
-            WorkOrder => $WorkOrder,
-            StartTime => $Time{StartTime},
-            EndTime   => $Time{EndTime},
-            Ticks     => $ChangeTicks,
+            WorkOrder          => $WorkOrder,
+            DynamicFieldObject => $Param{DynamicFieldObject},
+            BackendObject      => $Param{BackendObject},
+            StartTime          => $Time{StartTime},
+            EndTime            => $Time{EndTime},
+            Ticks              => $ChangeTicks,
         );
     }
 
@@ -1231,17 +1235,34 @@ sub _ITSMChangeGetWorkOrderGraph {
             }
 
             # handle workorder freetext fields
-            elsif ( $Attribute =~ m{ \A WorkOrderFreeText (\d+) }xms ) {
+            # elsif ( $Attribute =~ m{ \A WorkOrderFreeText (\d+) }xms ) {
+            elsif ( $Attribute =~ m{ \A DynamicField_ (.+) }xms ) {
 
-                # only if the workorder freetext field contains something
-                next ATTRIBUTE if !$WorkOrderInformation{ 'WorkOrderFreeKey' . $1 };
-                next ATTRIBUTE if !$WorkOrderInformation{ 'WorkOrderFreeText' . $1 };
+                my $DynamicFieldName = $1;
+
+                # only if the workorder dynamic field contains something
+                next ATTRIBUTE if !$WorkOrderInformation{ 'DynamicField_' . $DynamicFieldName };
+
+                # get config for this dynamic field
+                my $DynamicFieldConfig = $Param{DynamicFieldObject}->DynamicFieldGet(
+                    Name => $DynamicFieldName,
+                );
+
+                next ATTRIBUTE if !$DynamicFieldConfig;
+
+                # get print string for this dynamic field
+                my $ValueStrg  = $Param{BackendObject}->DisplayValueRender(
+                    DynamicFieldConfig => $DynamicFieldConfig,
+                    Value              => $WorkOrderInformation{ 'DynamicField_' . $DynamicFieldName },
+                    ValueMaxChars      => 50,
+                    LayoutObject       => $Self,
+                );
 
                 $Self->Block(
-                    Name => 'WorkOrderFreeText',
+                    Name => 'DynamicField',
                     Data => {
-                        WorkOrderFreeKey  => $WorkOrderInformation{ 'WorkOrderFreeKey' . $1 },
-                        WorkOrderFreeText => $WorkOrderInformation{ 'WorkOrderFreeText' . $1 },
+                        Label => $DynamicFieldConfig->{Label},
+                        Value => $ValueStrg->{Value},
                     },
                 );
             }

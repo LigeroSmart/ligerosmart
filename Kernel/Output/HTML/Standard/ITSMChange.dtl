@@ -18,7 +18,6 @@
         margin-right: $QData{"LabelMargin"}px;
     }
 
-
     div.WorkorderLabel {
         width: $QData{"LabelWidth"}px;
     }
@@ -105,11 +104,11 @@
                     <div class="Clear"></div>
 <!-- dtl:block:WorkOrderType -->
 
-<!-- dtl:block:WorkOrderFreeText -->
-                    <label>$Text{"$Data{"WorkOrderFreeKey"}"}:</label>
-                    <p class="Value">$Text{"$Data{"WorkOrderFreeText"}"}</p>
+<!-- dtl:block:DynamicField -->
+                    <label>$Text{"$Data{"Label"}"}:</label>
+                    <p class="Value">$Data{"Value"}</p>
                     <div class="Clear"></div>
-<!-- dtl:block:WorkOrderFreeText -->
+<!-- dtl:block:DynamicField -->
 
 <!-- dtl:block:WorkOrderAgentBlock -->
                     <label>$Text{"WorkOrderAgent"}:</label>

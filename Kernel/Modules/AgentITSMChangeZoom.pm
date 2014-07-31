@@ -231,8 +231,10 @@ sub Run {
 
     # build workorder graph in layout object
     my $WorkOrderGraph = $Self->{LayoutObject}->ITSMChangeBuildWorkOrderGraph(
-        Change          => $Change,
-        WorkOrderObject => $Self->{WorkOrderObject},
+        Change             => $Change,
+        WorkOrderObject    => $Self->{WorkOrderObject},
+        DynamicFieldObject => $Self->{DynamicFieldObject},
+        BackendObject      => $Self->{BackendObject},
     );
 
     # display graph within an own block
