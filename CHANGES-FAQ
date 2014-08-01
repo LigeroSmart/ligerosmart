@@ -6,9 +6,11 @@
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
-2.4.0 Beta1 - 2014-XX-XX
-- Added GI PublicFAQGet option to fetch or not attachment contents, thanks to Esteban Marin.
-- Added Swedish translation, thanks to Andreas Berger.
-- Added Dynamic Fields support.
-- Added support to do not change article subject on FAQ insert. (configurable via SysConfig globally and per FAQ item if enabled globally ).
-- Fixed Bug# 9494 - The originator for a FAQ article approval ticket is unknown.
+2.4.0.beta1 - 2014-XX-XX
+ - 2014-07-31 Fixed bug#10452 - FAQ history isn't sorted by created.
+ - 2014-07-25 Added GI PublicFAQGet option to fetch or not attachment contents, thanks to Esteban Marin.
+ - 2014-07-17 Fixed bug# 10583: ORA-1795 by faq explorer.
+ - 2014-06-24 Added Swedish translation, thanks to Andreas Berger.
+ - 2014-03-12 Fixed Bug# 9494 - The originator for a FAQ article approval ticket is unknown.
+ - 2014-03-05 Added support to do not change article subject on FAQ insert. (configurable via SysConfig globally and per FAQ item if enabled globally ).
+ - 2014-02-26 Added Dynamic Fields support.
