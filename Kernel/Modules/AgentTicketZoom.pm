@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTicketZoom.pm - to get a closer view
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/9a271a4619cfa1e42e525166e76ce803cabf0fd5/Kernel/Modules/AgentTicketZoom.pm
+# $origin: https://github.com/OTRS/otrs/blob/72ee17c5fb32c7f225e319f77f4dbf4913613855/Kernel/Modules/AgentTicketZoom.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -291,7 +291,6 @@ sub Run {
             TemplateTypes => 1,
             Valid         => 1,
         );
-
         $Self->_ArticleItem(
             Ticket            => \%Ticket,
             Article           => \%Article,
@@ -1235,7 +1234,6 @@ sub MaskAgentZoom {
             },
         );
     }
-
 # ---
 # ITSM
 # ---
@@ -2022,14 +2020,35 @@ sub _ArticleItem {
             if ($Access) {
 
                 # get StandardResponsesStrg
-                $Param{StandardResponses}->{0}
-                    = '- ' . $Self->{LayoutObject}->{LanguageObject}->Get('Reply') . ' -';
+                my %StandardResponseHash = %{ $Param{StandardResponses} || {} };
+
+              # get revers StandardResponseHash because we need to sort by Values
+              # from %ReverseStandardResponseHash we get value of Key by %StandardResponseHash Value
+              # and @StandardResponseArray is created as array of hashes with elements Key and Value
+
+                my %ReverseStandardResponseHash = reverse %StandardResponseHash;
+                my @StandardResponseArray       = map {
+                    {
+                        Key   => $ReverseStandardResponseHash{$_},
+                        Value => $_
+                    }
+                } sort values %StandardResponseHash;
+
+                unshift(
+                    @StandardResponseArray,
+                    {
+                        Key   => '0',
+                        Value => '- '
+                            . $Self->{LayoutObject}->{LanguageObject}->Get('Reply') . ' -',
+                        Selected => 1,
+                    }
+                );
 
                 # build html string
                 my $StandardResponsesStrg = $Self->{LayoutObject}->BuildSelection(
                     Name => 'ResponseID',
                     ID   => 'ResponseID',
-                    Data => $Param{StandardResponses},
+                    Data => \@StandardResponseArray,
                 );
 
                 $Self->{LayoutObject}->Block(
@@ -2081,13 +2100,21 @@ sub _ArticleItem {
                     }
                 }
                 if ( $RecipientCount > 1 ) {
-                    $Param{StandardResponses}->{0}
-                        = '- ' . $Self->{LayoutObject}->{LanguageObject}->Get('Reply All') . ' -';
+                    shift(@StandardResponseArray);
+                    unshift(
+                        @StandardResponseArray,
+                        {
+                            Key   => '0',
+                            Value => '- '
+                                . $Self->{LayoutObject}->{LanguageObject}->Get('Reply All') . ' -',
+                            Selected => 1,
+                        }
+                    );
 
                     $StandardResponsesStrg = $Self->{LayoutObject}->BuildSelection(
                         Name => 'ResponseID',
                         ID   => 'ResponseIDAll',
-                        Data => $Param{StandardResponses},
+                        Data => \@StandardResponseArray,
                     );
 
                     $Self->{LayoutObject}->Block(
@@ -2150,15 +2177,35 @@ sub _ArticleItem {
             if ($Access) {
                 if ( IsHashRefWithData( $Param{StandardForwards} ) ) {
 
-                    # get StandarForwardsStrg
-                    $Param{StandardForwards}->{0}
-                        = '- ' . $Self->{LayoutObject}->{LanguageObject}->Get('Forward') . ' -';
+                    # get StandardForwardsStrg
+                    my %StandardForwardHash = %{ $Param{StandardForwards} };
+
+               # get revers @StandardForwardHash because we need to sort by Values
+               # from %ReverseStandarForward we get value of Key by %StandardForwardHash Value
+               # and @StandardForwardArray is created as array of hashes with elements Key and Value
+                    my %ReverseStandarForward = reverse %StandardForwardHash;
+                    my @StandardForwardArray  = map {
+                        {
+                            Key   => $ReverseStandarForward{$_},
+                            Value => $_
+                        }
+                    } sort values %StandardForwardHash;
+
+                    unshift(
+                        @StandardForwardArray,
+                        {
+                            Key   => '0',
+                            Value => '- '
+                                . $Self->{LayoutObject}->{LanguageObject}->Get('Forward') . ' -',
+                            Selected => 1,
+                        }
+                    );
 
                     # build html string
                     my $StandarForwardsStrg = $Self->{LayoutObject}->BuildSelection(
                         Name => 'ForwardTemplateID',
                         ID   => 'ForwardTemplateID',
-                        Data => $Param{StandardForwards},
+                        Data => \@StandardForwardArray,
                     );
 
                     $Self->{LayoutObject}->Block(

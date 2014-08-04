@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTicketActionCommon.pm - common file for several modules
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/9a271a4619cfa1e42e525166e76ce803cabf0fd5/Kernel/Modules/AgentTicketActionCommon.pm
+# $origin: https://github.com/OTRS/otrs/blob/72ee17c5fb32c7f225e319f77f4dbf4913613855/Kernel/Modules/AgentTicketActionCommon.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -63,6 +63,9 @@ sub new {
     # get involved user list
     my @InvolvedUserID = $Self->{ParamObject}->GetArray( Param => 'InvolvedUserID' );
     $Self->{InvolvedUserID} = \@InvolvedUserID;
+
+    # get return module base64 string
+    $Self->{ReturnModule} = $Self->{ParamObject}->GetParam( Param => 'ReturnModule' ) || '';
 
     # create form id
     if ( !$Self->{FormID} ) {
@@ -142,7 +145,8 @@ sub Run {
     $Self->{LayoutObject}->Block(
         Name => 'Properties',
         Data => {
-            FormID => $Self->{FormID},
+            FormID       => $Self->{FormID},
+            ReturnModule => $Self->{ReturnModule},
             %Ticket,
             %Param,
         },
@@ -227,7 +231,7 @@ sub Run {
         qw(
         NewStateID NewPriorityID TimeUnits ArticleTypeID Title Body Subject NewQueueID
         Year Month Day Hour Minute NewOwnerID NewOwnerType OldOwnerID NewResponsibleID
-        TypeID ServiceID SLAID Expand
+        TypeID ServiceID SLAID Expand ReturnModule
         )
         )
     {
@@ -988,6 +992,11 @@ sub Run {
                 UserID             => $Self->{UserID},
             );
         }
+
+        # decode the url if present and set it as return url
+        if ( IsStringWithData( $GetParam{ReturnModule} ) ) {
+            $ReturnURL = $GetParam{ReturnModule};
+        }
 # ---
 # ITSM
 # ---
@@ -998,11 +1007,19 @@ sub Run {
                 Name => 'ITSMCriticality',
             );
 
+            # get possible values for criticality
+            my $CriticalityPossibleValues = $Self->{BackendObject}->PossibleValuesGet(
+                DynamicFieldConfig => $CriticalityDynamicFieldConfig,
+            );
+
+            # reverse the list to find out the key
+            my %ReverseCriticalityPossibleValues = reverse %{ $CriticalityPossibleValues };
+
             # set the criticality
             $Self->{BackendObject}->ValueSet(
                 DynamicFieldConfig => $CriticalityDynamicFieldConfig,
                 ObjectID           => $Self->{TicketID},
-                Value              => $Service{Criticality},
+                Value              => $ReverseCriticalityPossibleValues{ $Service{Criticality} },
                 UserID             => $Self->{UserID},
             );
         }
@@ -1605,8 +1622,7 @@ sub _Mask {
                 $SeenOldOwner{ $User->{UserID} } = 1;
                 push @OldOwners, {
                     Key   => $User->{UserID},
-                    Value => "$Counter: $User->{UserLastname} "
-                        . "$User->{UserFirstname} ($User->{UserLogin})"
+                    Value => "$Counter: $User->{UserFullname}"
                 };
                 $Counter++;
             }
@@ -2142,9 +2158,7 @@ sub _GetOldOwners {
             next USER if $UserHash{ $User->{UserID} };
 
             $UserHash{ $User->{UserID} }
-                = "$Counter: $User->{UserLastname} $User->{UserFirstname} ($User->{UserLogin})";
-        }
-        continue {
+                = "$Counter: $User->{UserFullname}";
             $Counter++;
         }
     }
