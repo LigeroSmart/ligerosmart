@@ -412,10 +412,15 @@ sub Run {
         # recalculate priority
         if ( $GetParam{PriorityRC} && $GetParam{DynamicField_ITSMImpact} ) {
 
+            # get possible values for impact
+            my $ImpactPossibleValues = $Self->{BackendObject}->PossibleValuesGet(
+                DynamicFieldConfig => $ImpactDynamicFieldConfig,
+            );
+
             # get priority
             $GetParam{PriorityIDFromImpact} = $Self->{CIPAllocateObject}->PriorityAllocationGet(
                 Criticality => $Service{Criticality},
-                Impact      => $GetParam{DynamicField_ITSMImpact},
+                Impact      => $ImpactPossibleValues->{ $GetParam{DynamicField_ITSMImpact} } || $GetParam{DynamicField_ITSMImpact},
             );
         }
         if ( $GetParam{PriorityIDFromImpact} ) {
@@ -1324,11 +1329,19 @@ sub Run {
                 Name => 'ITSMCriticality',
             );
 
+            # get possible values for criticality
+            my $CriticalityPossibleValues = $Self->{BackendObject}->PossibleValuesGet(
+                DynamicFieldConfig => $CriticalityDynamicFieldConfig,
+            );
+
+            # reverse the list to find out the key
+            my %ReverseCriticalityPossibleValues = reverse %{ $CriticalityPossibleValues };
+
             # set the criticality
             $Self->{BackendObject}->ValueSet(
                 DynamicFieldConfig => $CriticalityDynamicFieldConfig,
                 ObjectID           => $TicketID,
-                Value              => $Service{Criticality},
+                Value              => $ReverseCriticalityPossibleValues{ $Service{Criticality} },
                 UserID             => $Self->{UserID},
             );
         }

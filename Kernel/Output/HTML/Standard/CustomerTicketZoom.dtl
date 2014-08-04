@@ -169,15 +169,19 @@
 <!-- dtl:block:SLA -->
                     <li><span class="Key">$Text{"SLA"}:</span> <span title="$Text{"$Data{"SLA"}"}">$Text{"$Data{"SLA"}"}</span></li>
 <!-- dtl:block:SLA -->
-# ---
-# ITSM
-# ---
-                    <li><span class="Key">$Text{"Criticality"}:</span> <span title="$Text{"$Data{"Criticality"}"}">$Text{"$Data{"Criticality"}"}</span></li>
-                    <li><span class="Key">$Text{"Impact"}:</span> <span title="$Text{"$Data{"Impact"}"}">$Text{"$Data{"Impact"}"}</span></li>
-# ---
 <!-- dtl:block:State -->
                     <li><span class="Key">$Text{"State"}:</span> <span title="$Text{"$Data{"State"}"}">$Text{"$Data{"State"}"}</span></li>
 <!-- dtl:block:State -->
+# ---
+# ITSM
+# ---
+<!-- dtl:block:TicketDynamicField -->
+                    <li>
+                        <span class="Key">$Text{"$Data{"Label"}"}:</span>
+                        <span title="$QData{"Title"}">$Data{"Value"}</span>
+                    </li>
+<!-- dtl:block:TicketDynamicField -->
+# ---
 <!-- dtl:block:Priority -->
                     <li><span class="Key">$Text{"Priority"}:</span> <span title="$Text{"$Data{"Priority"}"}">$Text{"$Data{"Priority"}"}</span></li>
 <!-- dtl:block:Priority -->
@@ -195,13 +199,17 @@
                     <li><span class="Key">$Text{"Activity"}:</span> <span title="$QData{"Activity"}">$QData{"Activity"}</span></li>
 <!-- dtl:block:ProcessData -->
 
-# show ticket dynamic fields
-<!-- dtl:block:TicketDynamicField -->
-                    <li>
-                        <span class="Key">$Text{"$Data{"Label"}"}:</span>
-                        <span title="$QData{"Title"}">$Data{"Value"}</span>
-                    </li>
-<!-- dtl:block:TicketDynamicField -->
+# ---
+# ITSM
+# ---
+## show ticket dynamic fields
+#<!-- dtl:block:TicketDynamicField -->
+#                    <li>
+#                        <span class="Key">$Text{"$Data{"Label"}"}:</span>
+#                        <span title="$QData{"Title"}">$Data{"Value"}</span>
+#                    </li>
+#<!-- dtl:block:TicketDynamicField -->
+# ---
 # example of how to use fixed dynamic field blocks for customizations
 # Note: Field1 and Field2 are the names of the fields and had to be replaced with the actual
 # field names

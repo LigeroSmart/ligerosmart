@@ -214,13 +214,34 @@
 # ITSM
 # ---
                     <fieldset class="TableLike FixedLabelSmall">
-                        <label>$Text{"Criticality"}:</label>
-                        <p class="Value" title="$Text{"$Data{"Criticality"}"}">$Text{"$Data{"Criticality"}"}</p>
-                        <div class="Clear"></div>
 
-                        <label>$Text{"Impact"}:</label>
-                        <p class="Value" title="$Text{"$Data{"Impact"}"}">$Text{"$Data{"Impact"}"}</p>
+<!-- dtl:block:TicketDynamicField_ITSMCriticality -->
+                        <label>$Text{"$Data{"Label"}"}:</label>
+                        <p class="Value">
+<!-- dtl:block:TicketDynamicField_ITSMCriticality_Link -->
+                            <span title="$QData{"Title"}"><a href="$Data{"Link"}" target="_blank">$Data{"Value"}</a></span>
+<!-- dtl:block:TicketDynamicField_ITSMCriticality_Link -->
+<!-- dtl:block:TicketDynamicField_ITSMCriticality_Plain -->
+                            <span title="$QData{"Title"}">$Data{"Value"}</span>
+<!-- dtl:block:TicketDynamicField_ITSMCriticality_Plain -->
+                        </p>
                         <div class="Clear"></div>
+<!-- dtl:block:TicketDynamicField_ITSMCriticality -->
+
+
+<!-- dtl:block:TicketDynamicField_ITSMImpact -->
+                        <label>$Text{"$Data{"Label"}"}:</label>
+                        <p class="Value">
+<!-- dtl:block:TicketDynamicField_ITSMImpact_Link -->
+                            <span title="$QData{"Title"}"><a href="$Data{"Link"}" target="_blank">$Data{"Value"}</a></span>
+<!-- dtl:block:TicketDynamicField_ITSMImpact_Link -->
+<!-- dtl:block:TicketDynamicField_ITSMImpact_Plain -->
+                            <span title="$QData{"Title"}">$Data{"Value"}</span>
+<!-- dtl:block:TicketDynamicField_ITSMImpact_Plain -->
+                        </p>
+                        <div class="Clear"></div>
+<!-- dtl:block:TicketDynamicField_ITSMImpact -->
+
 
                         <label>$Text{"Priority"}:</label>
                         <p class="Value" title="$Text{"$Data{"Priority"}"}">$Text{"$Data{"Priority"}"}</p>
