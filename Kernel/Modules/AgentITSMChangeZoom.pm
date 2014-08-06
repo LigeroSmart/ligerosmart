@@ -348,7 +348,7 @@ sub Run {
         my $ValueStrg = $Self->{BackendObject}->DisplayValueRender(
             DynamicFieldConfig => $DynamicFieldConfig,
             Value              => $Value,
-            ValueMaxChars      => 1000,
+            ValueMaxChars      => 100,
             LayoutObject       => $Self->{LayoutObject},
         );
 
