@@ -1209,6 +1209,20 @@
             </Hash>
         </Setting>
     </ConfigItem>
+
+    <ConfigItem Name="DynamicField::EventModulePost###100-UpdateITSMChangeConditions" Required="0" Valid="1">
+        <Description Translatable="1">DynamicField event module to handle the update of conditions if dynamic fields are added, updated or deleted.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::DynamicField</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Module">Kernel::System::DynamicField::Event::UpdateITSMChangeConditions</Item>
+                <Item Key="Event">(DynamicFieldAdd|DynamicFieldUpdate|DynamicFieldDelete)</Item>
+                <Item Key="Transaction">0</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+
     <ConfigItem Name="ITSMChange::EventModule###01-HistoryAdd" Required="0" Valid="1">
         <Description Translatable="1">ITSM event module that updates the history of changes.</Description>
         <Group>ITSM Change Management</Group>
