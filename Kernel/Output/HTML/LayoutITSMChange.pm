@@ -647,6 +647,8 @@ sub ITSMChangeListShow {
     return $OutputRaw;
 }
 
+# TODO: Remove this function
+
 =item BuildFreeTextHTML()
 
 Returns the a hash with HTML code for all defined change or workorder freetext fields.
