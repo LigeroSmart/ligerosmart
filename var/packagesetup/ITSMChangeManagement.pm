@@ -363,53 +363,6 @@ sub CodeUpgradeFromLowerThan_2_0_3 {    ## no critic
     return 1;
 }
 
-=item CodeUpgradeFromBeta1()
-
-This function is only executed if the installed module version is smaller than 1.3.92 (beta2).
-
-Also the template structure changed from (beta1) to 1.3.92 (beta2),
-so the old templates must be deleted.
-
-    my $Result = $CodeObject->CodeUpgradeFromBeta1();
-
-=cut
-
-sub CodeUpgradeFromBeta1 {
-    my ( $Self, %Param ) = @_;
-
-    # Delete all templates, as the template structure has changed prior to Beta 1.
-    $Self->_DeleteTemplates();
-
-    return 1;
-}
-
-=item CodeUpgradeFromBeta2()
-
-This function is only executed if the installed module version is smaller than 1.3.93 (beta3).
-
-There have been many changes in the sytem notification texts
-from 1.3.91 (beta1) to 1.3.92 (beta2) so we need to delete
-the old notifications and add the new ones.
-
-Furthermore, in the installation and upgrade process for 1.3.92 (Beta 2) there has been an error in
-the creation of the notification messages. The English message for 'WorkOrderActualEndTimeReached'
-ended up in the slot of the English message for 'WorkOrderPlannedStartTimeReached'.
-This is rectified by reinserting the notifications for upgrades from Beta 2 or earlier.
-
-=cut
-
-sub CodeUpgradeFromBeta2 {
-    my ( $Self, %Param ) = @_;
-
-    # delete system notifications
-    $Self->_DeleteSystemNotifications();
-
-    # add system notifications
-    $Self->_AddSystemNotifications();
-
-    return 1;
-}
-
 =item CodeUninstall()
 
 run the code uninstall part
