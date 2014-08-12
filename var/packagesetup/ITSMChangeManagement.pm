@@ -17,6 +17,7 @@ use Kernel::System::SysConfig;
 use Kernel::System::CSV;
 use Kernel::System::Cache;
 use Kernel::System::CacheInternal;
+use Kernel::System::DynamicField;
 use Kernel::System::GeneralCatalog;
 use Kernel::System::Group;
 use Kernel::System::ITSMChange;
@@ -142,17 +143,17 @@ sub new {
     }
 
     # create additional objects
-    $Self->{ConfigObject} = Kernel::Config->new();
-    $Self->{CSVObject}    = Kernel::System::CSV->new( %{$Self} );
-    $Self->{GroupObject}  = Kernel::System::Group->new( %{$Self} );
-    $Self->{UserObject}   = Kernel::System::User->new( %{$Self} );
-    $Self->{StateObject}  = Kernel::System::State->new( %{$Self} );
-    $Self->{TypeObject}   = Kernel::System::Type->new( %{$Self} );
-    $Self->{ValidObject}  = Kernel::System::Valid->new( %{$Self} );
-    $Self->{LinkObject}   = Kernel::System::LinkObject->new( %{$Self} );
-    $Self->{ChangeObject} = Kernel::System::ITSMChange->new( %{$Self} );
-    $Self->{CIPAllocateObject}
-        = Kernel::System::ITSMChange::ITSMChangeCIPAllocate->new( %{$Self} );
+    $Self->{ConfigObject}         = Kernel::Config->new();
+    $Self->{CSVObject}            = Kernel::System::CSV->new( %{$Self} );
+    $Self->{DynamicFieldObject}   = Kernel::System::DynamicField->new( %{$Self} );
+    $Self->{GroupObject}          = Kernel::System::Group->new( %{$Self} );
+    $Self->{UserObject}           = Kernel::System::User->new( %{$Self} );
+    $Self->{StateObject}          = Kernel::System::State->new( %{$Self} );
+    $Self->{TypeObject}           = Kernel::System::Type->new( %{$Self} );
+    $Self->{ValidObject}          = Kernel::System::Valid->new( %{$Self} );
+    $Self->{LinkObject}           = Kernel::System::LinkObject->new( %{$Self} );
+    $Self->{ChangeObject}         = Kernel::System::ITSMChange->new( %{$Self} );
+    $Self->{CIPAllocateObject}    = Kernel::System::ITSMChange::ITSMChangeCIPAllocate->new( %{$Self} );
     $Self->{StateMachineObject}   = Kernel::System::ITSMChange::ITSMStateMachine->new( %{$Self} );
     $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new( %{$Self} );
     $Self->{WorkOrderObject}      = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
@@ -323,6 +324,9 @@ sub CodeUpgrade {
     $Self->{CacheInternalObject}->CleanUp( OtherType => 'ITSMChangeManagement' );
     $Self->{CacheInternalObject}->CleanUp( OtherType => 'ITSMStateMachine' );
 
+    # TODO: Move this to special upgrade block with correct version number ( < 3.3.91)
+    $Self->_MigrateFreeTextToDynamicFields();
+
     return 1;
 }
 
@@ -414,6 +418,163 @@ sub CodeUninstall {
 }
 
 =begin Internal:
+
+=item _MigrateFreeTextToDynamicFields()
+
+Migrates the change and workorder freetext fields to dynamic fields.
+
+    my $Success = $PackageSetup->_MigrateFreeTextToDynamicFields();
+
+=cut
+
+sub _MigrateFreeTextToDynamicFields {
+    my ($Self) = @_;
+
+    # get all configured change and workorder freekey and freetext numbers from sysconfig
+    my %ConfiguredFreeTextFields;
+    my @DynamicFields;
+    for my $Type (qw(Change WorkOrder)) {
+
+        FREETEXTNUMBER:
+        for my $Number ( 1 .. 500 ) {
+
+            my $FreeKeyConfig  = $Self->{ConfigObject}->Get( $Type . 'FreeKey'  . $Number);
+            my $FreeTextConfig = $Self->{ConfigObject}->Get( $Type . 'FreeText' . $Number);
+
+            # only if a key config exists
+            next FREETEXTNUMBER if !$FreeKeyConfig;
+
+            # remember the number of the field
+            push @{ $ConfiguredFreeTextFields{$Type} }, $Number;
+
+            # default label, like the name
+            my $Label = $Type . 'FreeText'  . $Number;
+
+            # the freekey has more than one entry, then we want to create it as it's own dynamic field
+            if ( ref $FreeKeyConfig eq 'HASH' && scalar keys %{$FreeKeyConfig} > 1 ) {
+
+                my $PossibleNone = 0;
+                if ($FreeKeyConfig->{''} && $FreeKeyConfig->{''} eq '-' ) {
+                    delete $FreeKeyConfig->{''};
+                    $PossibleNone = 1;
+                }
+
+                push @DynamicFields, {
+                    Name       => $Type . 'FreeKey'  . $Number,
+                    Label      => $Type . 'FreeKey'  . $Number,
+                    FieldType  => 'Dropdown',
+                    ObjectType => 'ITSM' . $Type,
+                    Config     => {
+                        DefaultValue       => $Self->{ConfigObject}->Get( $Type . 'FreeKey'  . $Number . '::DefaultSelection') || '',
+                        Link               => '',
+                        PossibleNone       => $PossibleNone,
+                        PossibleValues     => $FreeKeyConfig,
+                        TranslatableValues => 1,
+                    },
+                };
+            }
+
+            # if the key has only one possible value for this entry we use it as the label
+            # and we do NOT create an own FreeKEY field, only the FreeTEXT field!
+            elsif ( ref $FreeKeyConfig eq 'HASH' && scalar keys %{$FreeKeyConfig} == 1 ) {
+
+                # but we try to take the only entry of the KEY as label!
+                for my $Key ( sort keys %{$FreeKeyConfig} ) {
+                    if ( $FreeKeyConfig->{$Key} ) {
+                        $Label = $FreeKeyConfig->{$Key} ;
+                    }
+                }
+            }
+
+            # freetext config is a hash -> we need a dropdown
+            if ( $FreeTextConfig && ref $FreeTextConfig eq 'HASH' && %{$FreeTextConfig} ) {
+
+                my $PossibleNone = 0;
+                if ($FreeTextConfig->{''} && $FreeTextConfig->{''} eq '-' ) {
+                    delete $FreeTextConfig->{''};
+                    $PossibleNone = 1;
+                }
+
+                push @DynamicFields, {
+                    Name       => $Type . 'FreeText' . $Number,
+                    Label      => $Label,
+                    FieldType  => 'Dropdown',
+                    ObjectType => 'ITSM' . $Type,
+                    Config     => {
+                        DefaultValue       => $Self->{ConfigObject}->Get( $Type . 'FreeText' . $Number . '::DefaultSelection') || '',
+                        Link               => $Self->{ConfigObject}->Get( $Type . 'FreeText' . $Number . '::Link' ) || '',
+                        PossibleNone       => $PossibleNone,
+                        PossibleValues     => $FreeTextConfig,
+                        TranslatableValues => 1,
+                    },
+                };
+            }
+
+            # no freetext config -> we need a text field
+            else {
+
+                push @DynamicFields, {
+                    Name       => $Type . 'FreeText' . $Number,
+                    Label      => $Label,
+                    FieldType  => 'Text',
+                    ObjectType => 'ITSM' . $Type,
+                    Config     => {
+                        DefaultValue => $Self->{ConfigObject}->Get( $Type . 'FreeText' . $Number . '::DefaultSelection') || '',
+                        Link         => $Self->{ConfigObject}->Get( $Type . 'FreeText' . $Number . '::Link' ) || '',
+                    },
+                };
+            }
+        }
+    }
+
+    # $Self->{LogObject}->Dum_per( '', '@DynamicFields', \@DynamicFields );
+    # $Self->{LogObject}->Dum_per( '', '%ConfiguredFreeTextFields', \%ConfiguredFreeTextFields );
+
+    # get all current dynamic fields
+    my $DynamicFieldList = $Self->{DynamicFieldObject}->DynamicFieldListGet(
+        Valid => 0,
+    );
+
+    # get the list of order numbers (is already sorted).
+    my @DynamicfieldOrderList;
+    for my $Dynamicfield ( @{$DynamicFieldList} ) {
+        push @DynamicfieldOrderList, $Dynamicfield->{FieldOrder};
+    }
+
+    # get the last element from the order list and add 1
+    my $NextOrderNumber = 1;
+    if (@DynamicfieldOrderList) {
+        $NextOrderNumber = $DynamicfieldOrderList[-1] + 1;
+    }
+
+    my $ValidID = $Self->{ValidObject}->ValidLookup(
+        Valid => 'valid',
+    );
+
+    DYNAMICFIELD:
+    for my $DynamicField (@DynamicFields) {
+
+            # create a new field
+            my $FieldID = $Self->{DynamicFieldObject}->DynamicFieldAdd(
+                Name          => $DynamicField->{Name},
+                Label         => $DynamicField->{Label},
+                FieldOrder    => $NextOrderNumber,
+                FieldType     => $DynamicField->{FieldType},
+                ObjectType    => $DynamicField->{ObjectType},
+                Config        => $DynamicField->{Config},
+                ValidID       => $ValidID,
+                UserID        => 1,
+            );
+            next DYNAMICFIELD if !$FieldID;
+
+            # increase the order number
+            $NextOrderNumber++;
+    }
+
+    return 1;
+}
+
+
 
 =item _GroupAdd()
 
