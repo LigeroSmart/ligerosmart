@@ -131,10 +131,10 @@ sub new {
     $Self->{DynamicFieldBackendObject} = Kernel::System::DynamicField::Backend->new( %{$Self} );
     $Self->{GeneralCatalogObject}      = Kernel::System::GeneralCatalog->new( %{$Self} );
     $Self->{LinkObject}                = Kernel::System::LinkObject->new( %{$Self} );
-    $Self->{StateMachineObject}        = Kernel::System::ITSMChange::ITSMStateMachine->new( %{$Self} );
-    $Self->{ConditionObject}           = Kernel::System::ITSMChange::ITSMCondition->new( %{$Self} );
-    $Self->{HTMLUtilsObject}           = Kernel::System::HTMLUtils->new( %{$Self} );
-    $Self->{VirtualFSObject}           = Kernel::System::VirtualFS->new( %{$Self} );
+    $Self->{StateMachineObject} = Kernel::System::ITSMChange::ITSMStateMachine->new( %{$Self} );
+    $Self->{ConditionObject}    = Kernel::System::ITSMChange::ITSMCondition->new( %{$Self} );
+    $Self->{HTMLUtilsObject}    = Kernel::System::HTMLUtils->new( %{$Self} );
+    $Self->{VirtualFSObject}    = Kernel::System::VirtualFS->new( %{$Self} );
 
     # get the cache TTL (in seconds)
     $Self->{CacheTTL} = $Self->{ConfigObject}->Get('ITSMChange::CacheTTL') * 60;
@@ -900,7 +900,6 @@ sub WorkOrderGet {
             # set the dynamic field name and value into the workorder data hash
             $WorkOrderData{ 'DynamicField_' . $DynamicFieldConfig->{Name} } = $Value;
         }
-
 
         # set cache (workorder data exists at this point, it was checked before)
         $Self->{CacheObject}->Set(

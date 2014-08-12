@@ -119,11 +119,11 @@ sub new {
     $Self->{LinkObject}                = Kernel::System::LinkObject->new( %{$Self} );
     $Self->{CustomerUserObject}        = Kernel::System::CustomerUser->new( %{$Self} );
     $Self->{HTMLUtilsObject}           = Kernel::System::HTMLUtils->new( %{$Self} );
-    $Self->{StateMachineObject}        = Kernel::System::ITSMChange::ITSMStateMachine->new( %{$Self} );
-    $Self->{VirtualFSObject}           = Kernel::System::VirtualFS->new( %{$Self} );
-    $Self->{WorkOrderObject}           = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
-    $Self->{ConditionObject}           = Kernel::System::ITSMChange::ITSMCondition->new( %{$Self} );
-    $Self->{CIPAllocateObject}         = Kernel::System::ITSMChange::ITSMChangeCIPAllocate->new(
+    $Self->{StateMachineObject} = Kernel::System::ITSMChange::ITSMStateMachine->new( %{$Self} );
+    $Self->{VirtualFSObject}    = Kernel::System::VirtualFS->new( %{$Self} );
+    $Self->{WorkOrderObject}    = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
+    $Self->{ConditionObject}    = Kernel::System::ITSMChange::ITSMCondition->new( %{$Self} );
+    $Self->{CIPAllocateObject}  = Kernel::System::ITSMChange::ITSMChangeCIPAllocate->new(
         %{$Self},
     );
 

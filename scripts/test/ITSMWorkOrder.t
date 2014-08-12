@@ -1716,29 +1716,30 @@ push @WorkOrderTests, (
         Description => 'Test WorkOrderAdd and WorkOrderUpdate with workorder dynamic fields.',
         SourceData  => {
             WorkOrderAdd => {
-                WorkOrderTitle                                => 'Test add workorder with dynamic fields - ' . $UniqueSignature,
+                WorkOrderTitle => 'Test add workorder with dynamic fields - ' . $UniqueSignature,
                 'DynamicField_' . $UniqueNamePrefix . 'Test1' => 'AAAA',
                 'DynamicField_' . $UniqueNamePrefix . 'Test2' => 'BBBB',
                 'DynamicField_' . $UniqueNamePrefix . 'Test3' => 'CCCC',
                 'DynamicField_' . $UniqueNamePrefix . 'Test4' => 'DDDD',
-                ChangeID                                       => $WorkOrderAddTestID,
-                UserID                                         => 1,
+                ChangeID                                      => $WorkOrderAddTestID,
+                UserID                                        => 1,
             },
             WorkOrderUpdate => {
                 'DynamicField_' . $UniqueNamePrefix . 'Test3' => 'GGGG',
                 'DynamicField_' . $UniqueNamePrefix . 'Test4' => 'HHHH',
-                UserID             => 1,
+                UserID                                        => 1,
             },
         },
         ReferenceData => {
             WorkOrderGet => {
                 WorkOrderTitle => 'Test add workorder with dynamic fields - ' . $UniqueSignature,
-                'DynamicField_' . $UniqueNamePrefix . 'Test1'  => 'AAAA',
-                'DynamicField_' . $UniqueNamePrefix . 'Test2'  => 'BBBB',
-                'DynamicField_' . $UniqueNamePrefix . 'Test3'  => 'GGGG',
-                'DynamicField_' . $UniqueNamePrefix . 'Test4'  => 'HHHH',
+                'DynamicField_' . $UniqueNamePrefix . 'Test1' => 'AAAA',
+                'DynamicField_' . $UniqueNamePrefix . 'Test2' => 'BBBB',
+                'DynamicField_' . $UniqueNamePrefix . 'Test3' => 'GGGG',
+                'DynamicField_' . $UniqueNamePrefix . 'Test4' => 'HHHH',
             },
         },
+
         # TODO: Enable this again later!
         # SearchTest => [ 8, 35 ],
     },
@@ -1753,8 +1754,8 @@ push @WorkOrderTests, (
                 'DynamicField_' . $UniqueNamePrefix . 'Test2' => 'BBBB',
                 'DynamicField_' . $UniqueNamePrefix . 'Test3' => 'XXXX',
                 'DynamicField_' . $UniqueNamePrefix . 'Test4' => 'YYYY',
-                ChangeID           => $WorkOrderAddTestID,
-                UserID             => 1,
+                ChangeID                                      => $WorkOrderAddTestID,
+                UserID                                        => 1,
             },
         },
         ReferenceData => {
@@ -1766,6 +1767,7 @@ push @WorkOrderTests, (
                 'DynamicField_' . $UniqueNamePrefix . 'Test4' => 'YYYY',
             },
         },
+
         # TODO: Enable this again later!
         # SearchTest => [ 8, 35, 36 ],
     },
@@ -1779,8 +1781,8 @@ push @WorkOrderTests, (
                     . $UniqueSignature,
                 'DynamicField_' . $UniqueNamePrefix . 'Test1' => 'A' x 3800,
                 'DynamicField_' . $UniqueNamePrefix . 'Test2' => 'B' x 3800,
-                ChangeID            => $WorkOrderAddTestID,
-                UserID              => 1,
+                ChangeID                                      => $WorkOrderAddTestID,
+                UserID                                        => 1,
             },
         },
         ReferenceData => {
@@ -1789,6 +1791,7 @@ push @WorkOrderTests, (
                 'DynamicField_' . $UniqueNamePrefix . 'Test2' => 'B' x 3800,
             },
         },
+
         # TODO: Enable this again later!
         # SearchTest => [8],
     },
@@ -1803,8 +1806,8 @@ push @WorkOrderTests, (
                     . $UniqueSignature,
                 'DynamicField_' . $UniqueNamePrefix . 'Test1' => 'A' x 3801,
                 'DynamicField_' . $UniqueNamePrefix . 'Test2' => 'B' x 3801,
-                ChangeID            => $WorkOrderAddTestID,
-                UserID              => $UserIDs[0],
+                ChangeID                                      => $WorkOrderAddTestID,
+                UserID                                        => $UserIDs[0],
             },
         },
         ReferenceData => {
@@ -1822,12 +1825,12 @@ push @WorkOrderTests, (
                     . $UniqueSignature,
                 'DynamicField_' . $UniqueNamePrefix . 'Test1' => 'A' x 3800,
                 'DynamicField_' . $UniqueNamePrefix . 'Test2' => 'B' x 3800,
-                ChangeID            => $WorkOrderAddTestID,
-                UserID              => 1,
+                ChangeID                                      => $WorkOrderAddTestID,
+                UserID                                        => 1,
             },
             WorkOrderUpdate => {
                 'DynamicField_' . $UniqueNamePrefix . 'Test3' => 'C' x 3801,
-                UserID              => 1,
+                UserID                                        => 1,
             },
         },
         ReferenceData => {
@@ -1836,6 +1839,7 @@ push @WorkOrderTests, (
                 'DynamicField_' . $UniqueNamePrefix . 'Test2' => 'B' x 3800,
             },
         },
+
         # TODO: Enable this again later!
         # SearchTest => [8],
     },
@@ -1850,21 +1854,22 @@ push @WorkOrderTests, (
                     . $UniqueSignature,
                 'DynamicField_' . $UniqueNamePrefix . 'Test1' => 'AAAA',
                 'DynamicField_' . $UniqueNamePrefix . 'Test2' => 'BBBB',
-                ChangeID            => $WorkOrderAddTestID,
-                UserID              => 1,
+                ChangeID                                      => $WorkOrderAddTestID,
+                UserID                                        => 1,
             },
             WorkOrderUpdate => {
-                'DynamicField_' . $UniqueNamePrefix . 'Test1'  => 0,
+                'DynamicField_' . $UniqueNamePrefix . 'Test1' => 0,
                 'DynamicField_' . $UniqueNamePrefix . 'Test2' => '',
-                UserID              => 1,
+                UserID                                        => 1,
             },
         },
         ReferenceData => {
             WorkOrderGet => {
-                'DynamicField_' . $UniqueNamePrefix . 'Test1'  => 0,
+                'DynamicField_' . $UniqueNamePrefix . 'Test1' => 0,
                 'DynamicField_' . $UniqueNamePrefix . 'Test2' => '',
             },
         },
+
         # TODO: Enable this again later!
         # SearchTest => [8],
     },

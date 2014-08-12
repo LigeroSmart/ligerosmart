@@ -130,11 +130,12 @@ sub Run {
         next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
 
         # extract the dynamic field value from the web request and add the prefix
-        $DynamicFieldValues{ 'DynamicField_' . $DynamicFieldConfig->{Name} } = $Self->{BackendObject}->EditFieldValueGet(
+        $DynamicFieldValues{ 'DynamicField_' . $DynamicFieldConfig->{Name} }
+            = $Self->{BackendObject}->EditFieldValueGet(
             DynamicFieldConfig => $DynamicFieldConfig,
             ParamObject        => $Self->{ParamObject},
             LayoutObject       => $Self->{LayoutObject},
-        );
+            );
     }
 
     # store time related fields in %GetParam
@@ -687,22 +688,23 @@ sub Run {
 
         # get change dynamic fields from change if page is loaded the first time
         if ( !$Self->{Subaction} ) {
-            $DynamicFieldValues{ 'DynamicField_' . $DynamicFieldConfig->{Name} } = $Change->{ 'DynamicField_' . $DynamicFieldConfig->{Name} };
+            $DynamicFieldValues{ 'DynamicField_' . $DynamicFieldConfig->{Name} }
+                = $Change->{ 'DynamicField_' . $DynamicFieldConfig->{Name} };
         }
 
         # get field html
         my $DynamicFieldHTML = $Self->{BackendObject}->EditFieldRender(
             DynamicFieldConfig => $DynamicFieldConfig,
-            Value              => $DynamicFieldValues{ 'DynamicField_' . $DynamicFieldConfig->{Name} },
-            ServerError        => $ValidationError{ $DynamicFieldConfig->{Name} } || '',
-            Mandatory          => $Self->{Config}->{DynamicField}->{ $DynamicFieldConfig->{Name} } == 2,
-            LayoutObject       => $Self->{LayoutObject},
-            ParamObject        => $Self->{ParamObject},
-            AJAXUpdate         => 0,
+            Value        => $DynamicFieldValues{ 'DynamicField_' . $DynamicFieldConfig->{Name} },
+            ServerError  => $ValidationError{ $DynamicFieldConfig->{Name} } || '',
+            Mandatory    => $Self->{Config}->{DynamicField}->{ $DynamicFieldConfig->{Name} } == 2,
+            LayoutObject => $Self->{LayoutObject},
+            ParamObject  => $Self->{ParamObject},
+            AJAXUpdate   => 0,
         );
 
         # skip fields that HTML could not be retrieved
-        next DYNAMICFIELD if !IsHashRefWithData( $DynamicFieldHTML );
+        next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldHTML);
 
         $Self->{LayoutObject}->Block(
             Name => 'DynamicField',

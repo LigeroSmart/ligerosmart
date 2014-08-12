@@ -261,7 +261,6 @@ for my $Test (@DynamicFields) {
     push @DynamicFieldIDs, $DynamicFieldID;
 }
 
-
 # ------------------------------------------------------------ #
 # test ITSMChange API
 # ------------------------------------------------------------ #
@@ -1944,20 +1943,20 @@ my @ChangeTests = (
         Description => 'Test ChangeAdd and ChangeUpdate with change dynamic fields.',
         SourceData  => {
             ChangeAdd => {
-                UserID          => $UserIDs[0],
-                ChangeTitle     => 'Test add change with dynamic fields - ' . $UniqueSignature,
+                UserID      => $UserIDs[0],
+                ChangeTitle => 'Test add change with dynamic fields - ' . $UniqueSignature,
                 'DynamicField_' . $UniqueNamePrefix . 'Test1' => 'AAAA',
                 'DynamicField_' . $UniqueNamePrefix . 'Test2' => 'BBBB',
                 'DynamicField_' . $UniqueNamePrefix . 'Test3' => 'CCCC',
                 'DynamicField_' . $UniqueNamePrefix . 'Test4' => 'DDDD',
             },
             ChangeUpdate => {
-                UserID          => 1,
+                UserID                                        => 1,
                 'DynamicField_' . $UniqueNamePrefix . 'Test3' => 'GGGG',
                 'DynamicField_' . $UniqueNamePrefix . 'Test4' => 'HHHH',
             },
             WorkOrderAdd => {
-                UserID             => $UserIDs[0],
+                UserID                                                 => $UserIDs[0],
                 'DynamicField_' . $UniqueNamePrefix . 'WorkorderTest1' => 'W-AAAA',
                 'DynamicField_' . $UniqueNamePrefix . 'WorkorderTest2' => 'W-BBBB',
             },
@@ -1966,13 +1965,14 @@ my @ChangeTests = (
             ChangeGet => {
                 ChangeTitle     => 'Test add change with dynamic fields - ' . $UniqueSignature,
                 ChangeBuilderID => $UserIDs[0],
-                'DynamicField_' . $UniqueNamePrefix . 'Test1'  => 'AAAA',
-                'DynamicField_' . $UniqueNamePrefix . 'Test2'  => 'BBBB',
-                'DynamicField_' . $UniqueNamePrefix . 'Test3'  => 'GGGG',
-                'DynamicField_' . $UniqueNamePrefix . 'Test4'  => 'HHHH',
-                CreateBy        => $UserIDs[0],
+                'DynamicField_' . $UniqueNamePrefix . 'Test1' => 'AAAA',
+                'DynamicField_' . $UniqueNamePrefix . 'Test2' => 'BBBB',
+                'DynamicField_' . $UniqueNamePrefix . 'Test3' => 'GGGG',
+                'DynamicField_' . $UniqueNamePrefix . 'Test4' => 'HHHH',
+                CreateBy                                      => $UserIDs[0],
             },
         },
+
         # TODO: Enable this again later!
         # SearchTest => [ 6, 69, 70, 71, 72 ],
     },
@@ -1995,6 +1995,7 @@ my @ChangeTests = (
                 'DynamicField_' . $UniqueNamePrefix . 'Test2' => 'B' x 3800,
             },
         },
+
         # TODO: Enable this again later!
         # SearchTest => [6],
     },
@@ -2030,7 +2031,7 @@ my @ChangeTests = (
                 'DynamicField_' . $UniqueNamePrefix . 'Test2' => 'B' x 3800,
             },
             ChangeUpdate => {
-                UserID           => 1,
+                UserID                                        => 1,
                 'DynamicField_' . $UniqueNamePrefix . 'Test3' => 'C' x 3801,
             },
         },
@@ -2040,6 +2041,7 @@ my @ChangeTests = (
                 'DynamicField_' . $UniqueNamePrefix . 'Test2' => 'B' x 3800,
             },
         },
+
         # TODO: Enable this again later!
         # SearchTest => [6],
     },
@@ -2056,17 +2058,18 @@ my @ChangeTests = (
                 'DynamicField_' . $UniqueNamePrefix . 'Test2' => 'BBBB',
             },
             ChangeUpdate => {
-                UserID           => 1,
-                'DynamicField_' . $UniqueNamePrefix . 'Test1'  => 0,
+                UserID                                        => 1,
+                'DynamicField_' . $UniqueNamePrefix . 'Test1' => 0,
                 'DynamicField_' . $UniqueNamePrefix . 'Test2' => '',
             },
         },
         ReferenceData => {
             ChangeGet => {
-                'DynamicField_' . $UniqueNamePrefix . 'Test1'  => 0,
+                'DynamicField_' . $UniqueNamePrefix . 'Test1' => 0,
                 'DynamicField_' . $UniqueNamePrefix . 'Test2' => '',
             },
         },
+
         # TODO: Enable this again later!
         # SearchTest => [ 6, 69 ],
     },

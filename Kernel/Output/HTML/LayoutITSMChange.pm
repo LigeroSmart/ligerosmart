@@ -1253,11 +1253,11 @@ sub _ITSMChangeGetWorkOrderGraph {
                 next ATTRIBUTE if !$DynamicFieldConfig;
 
                 # get print string for this dynamic field
-                my $ValueStrg  = $Param{BackendObject}->DisplayValueRender(
+                my $ValueStrg = $Param{BackendObject}->DisplayValueRender(
                     DynamicFieldConfig => $DynamicFieldConfig,
-                    Value              => $WorkOrderInformation{ 'DynamicField_' . $DynamicFieldName },
-                    ValueMaxChars      => 50,
-                    LayoutObject       => $Self,
+                    Value         => $WorkOrderInformation{ 'DynamicField_' . $DynamicFieldName },
+                    ValueMaxChars => 50,
+                    LayoutObject  => $Self,
                 );
 
                 $Self->Block(

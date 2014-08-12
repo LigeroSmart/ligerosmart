@@ -18,6 +18,7 @@ our @ObjectDependencies = (
     'Kernel::System::Cache',
     'Kernel::System::Log',
 );
+
 # our $ObjectManagerAware = 1;
 
 sub new {
@@ -38,7 +39,7 @@ sub Run {
         if ( !$Param{$_} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
-                Message => "Need $_!",
+                Message  => "Need $_!",
             );
             return;
         }
