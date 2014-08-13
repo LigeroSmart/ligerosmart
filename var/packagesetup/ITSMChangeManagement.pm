@@ -562,6 +562,10 @@ sub _MigrateFreeTextToDynamicFields {
         Valid => 'valid',
     );
 
+    # TODO:
+    # The sysconfig for the dynamic field event module must be temporarily deactivated
+    # so that the condition table update is not triggered on DynamicFieldAdd
+
     DYNAMICFIELD:
     for my $DynamicField (@DynamicFields) {
 
@@ -580,6 +584,73 @@ sub _MigrateFreeTextToDynamicFields {
 
         # increase the order number
         $NextOrderNumber++;
+    }
+
+    # get the list of change and workorder dynamic fields
+    $DynamicFieldList = $Self->{DynamicFieldObject}->DynamicFieldListGet(
+        Valid       => 1,
+        ObjectType  => [ 'ITSMChange', 'ITSMWorkOrder' ],
+    );
+
+    # migrate the freekey and freetext data
+    DYNAMICFIELD:
+    for my $DynamicField ( @{$DynamicFieldList} ) {
+
+        # get the table prefix and column name based on change or workorder
+        my $TablePrefix;
+        my $ColumnName;
+        if ( $DynamicField->{ObjectType} eq 'ITSMChange' ) {
+            $TablePrefix = 'change_free';
+            $ColumnName = 'change_id';
+        }
+        elsif ( $DynamicField->{ObjectType} eq 'ITSMWorkOrder' ) {
+            $TablePrefix = 'change_wo_free';
+            $ColumnName = 'workorder_id';
+        }
+
+        # get the type (key or text) and the number from the name
+        my $Number;
+        my $TableName;
+        if ( $DynamicField->{Name} =~ m{ \A (Change|WorkOrder)Free(Key|Text)(\d+) \z }xms ) {
+            $TableName = $TablePrefix . lc($2);
+            $Number = $3;
+        }
+        else {
+            next DYNAMICFIELD;
+        }
+
+        # get the old data
+        next DYNAMICFIELD if !$Self->{DBObject}->Prepare(
+            SQL => "SELECT $ColumnName, field_value
+                    FROM $TableName
+                    WHERE field_id = ?",
+            Bind  => [ \$Number ],
+        );
+
+        # fetch the result
+        my @Data;
+        while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+            push @Data, {
+                ObjectID => $Row[0],
+                Value    => $Row[1],
+            };
+        }
+
+        # insert data into dynamic_field_value table
+        RECORD:
+        for my $Record (@Data) {
+
+            next RECORD if !$Self->{DBObject}->Do(
+                SQL => 'INSERT INTO dynamic_field_value
+                        (field_id, object_id, value_text)
+                        VALUES (?, ?, ?)',
+                Bind => [
+                    \$DynamicField->{ID},
+                    \$Record->{ObjectID},
+                    \$Record->{Value},
+                ],
+            );
+        }
     }
 
     return 1;
