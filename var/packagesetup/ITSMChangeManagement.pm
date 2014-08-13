@@ -450,9 +450,11 @@ sub _MigrateFreeTextToDynamicFields {
             # default label, like the name
             my $Label = $Type . 'FreeText' . $Number;
 
-          # the freekey has more than one entry, then we want to create it as it's own dynamic field
+            # the freekey has more than one entry, then we want to create
+            # it as it's own dynamic field
             if ( ref $FreeKeyConfig eq 'HASH' && scalar keys %{$FreeKeyConfig} > 1 ) {
 
+                # find out if possible none must be set or not
                 my $PossibleNone = 0;
                 if ( $FreeKeyConfig->{''} && $FreeKeyConfig->{''} eq '-' ) {
                     delete $FreeKeyConfig->{''};
@@ -490,6 +492,7 @@ sub _MigrateFreeTextToDynamicFields {
             # freetext config is a hash -> we need a dropdown
             if ( $FreeTextConfig && ref $FreeTextConfig eq 'HASH' && %{$FreeTextConfig} ) {
 
+                # find out if possible none must be set or not
                 my $PossibleNone = 0;
                 if ( $FreeTextConfig->{''} && $FreeTextConfig->{''} eq '-' ) {
                     delete $FreeTextConfig->{''};
@@ -554,6 +557,7 @@ sub _MigrateFreeTextToDynamicFields {
         $NextOrderNumber = $DynamicfieldOrderList[-1] + 1;
     }
 
+    # get the valid id for "valid"
     my $ValidID = $Self->{ValidObject}->ValidLookup(
         Valid => 'valid',
     );
