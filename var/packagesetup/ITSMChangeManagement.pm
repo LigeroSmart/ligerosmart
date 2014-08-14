@@ -719,6 +719,70 @@ sub _MigrateFreeTextToDynamicFields {
         }
     }
 
+
+    # ---------------------------------------------------------------------------------------------
+    # Migrate screen config (and condition config, etc... TODO: Maybe this must be done before the condition deletion?)
+    # ---------------------------------------------------------------------------------------------
+
+
+    # ---------------------------------------------------------------------------------------------
+    # Delete change and workorder freekey and freetext tables
+    # ---------------------------------------------------------------------------------------------
+    my @Drop = $Self->{DBObject}->SQLProcessor(
+        Database => [
+
+            # drop table change_freekey
+            {
+                Tag     => 'TableDrop',
+                Name    => 'change_freekey',
+                TagType => 'Start',
+            },
+            {
+                Tag     => 'TableDrop',
+                TagType => 'End',
+            },
+
+            # drop table change_freetext
+            {
+                Tag     => 'TableDrop',
+                Name    => 'change_freetext',
+                TagType => 'Start',
+            },
+            {
+                Tag     => 'TableDrop',
+                TagType => 'End',
+            },
+
+            # drop table change_wo_freekey
+            {
+                Tag     => 'TableDrop',
+                Name    => 'change_wo_freekey',
+                TagType => 'Start',
+            },
+            {
+                Tag     => 'TableDrop',
+                TagType => 'End',
+            },
+
+            # drop table change_wo_freetext
+            {
+                Tag     => 'TableDrop',
+                Name    => 'change_wo_freetext',
+                TagType => 'Start',
+            },
+            {
+                Tag     => 'TableDrop',
+                TagType => 'End',
+            },
+        ],
+    );
+
+    for my $SQL (@Drop) {
+        $Self->{DBObject}->Do(
+            SQL => $SQL,
+        );
+    }
+
     return 1;
 }
 
