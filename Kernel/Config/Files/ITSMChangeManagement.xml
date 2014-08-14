@@ -3977,8 +3977,11 @@
                 <Item Key="ActualEndTime">Date</Item>
                 <Item Key="PlannedEffort">Text</Item>
                 <Item Key="AccountedTime">Text</Item>
+<!--
                 <Item Key="ChangeFreeKey">Text</Item>
                 <Item Key="ChangeFreeText">Text</Item>
+ -->
+                <Item Key="DynamicField">Text</Item>
             </Hash>
         </Setting>
     </ConfigItem>
@@ -4002,8 +4005,11 @@
                 <Item Key="ActualEndTime">1</Item>
                 <Item Key="PlannedEffort">1</Item>
                 <Item Key="AccountedTime">1</Item>
+<!--
                 <Item Key="ChangeFreeKey">1</Item>
                 <Item Key="ChangeFreeText">1</Item>
+ -->
+                <Item Key="DynamicField">1</Item>
             </Hash>
         </Setting>
     </ConfigItem>
@@ -4301,6 +4307,7 @@
             </Hash>
         </Setting>
     </ConfigItem>
+<!--
     <ConfigItem Name="ITSMChange::Mapping::Expression::Attribute::Operator###ChangeFreeKey" Required="1" Valid="1">
         <Description Translatable="1">Defines the operators that are selectable for the attribute ChangeFreeKey in AgentITSMChangeConditionEdit.</Description>
         <Group>ITSM Change Management</Group>
@@ -4343,6 +4350,29 @@
             </Hash>
         </Setting>
     </ConfigItem>
+ -->
+    <ConfigItem Name="ITSMChange::Mapping::Expression::Attribute::Operator###DynamicField" Required="1" Valid="1">
+        <Description Translatable="1">Defines the operators that are selectable for the attribute DynamicField in AgentITSMChangeConditionEdit.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMCondition::Expression::ITSMChange</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="is">1</Item>
+                <Item Key="is not">1</Item>
+                <Item Key="is empty">1</Item>
+                <Item Key="is not empty">1</Item>
+                <Item Key="is greater than">1</Item>
+                <Item Key="is less than">1</Item>
+                <Item Key="is before">0</Item>
+                <Item Key="is after">0</Item>
+                <Item Key="contains">1</Item>
+                <Item Key="not contains">1</Item>
+                <Item Key="begins with">1</Item>
+                <Item Key="ends with">1</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+
     <ConfigItem Name="ITSMChange::Mapping::Action::Object::Attribute" Required="1" Valid="1">
         <Description Translatable="1">Defines the object attributes that are selectable for change objects in AgentITSMChangeConditionEdit.</Description>
         <Group>ITSM Change Management</Group>
@@ -4363,8 +4393,11 @@
                 <Item Key="ActualEndTime">0</Item>
                 <Item Key="PlannedEffort">0</Item>
                 <Item Key="AccountedTime">0</Item>
+<!--
                 <Item Key="ChangeFreeKey">1</Item>
                 <Item Key="ChangeFreeText">1</Item>
+ -->
+                <Item Key="DynamicField">1</Item>
             </Hash>
         </Setting>
     </ConfigItem>
@@ -4509,6 +4542,7 @@
             </Hash>
         </Setting>
     </ConfigItem>
+<!--
     <ConfigItem Name="ITSMChange::Mapping::Action::Attribute::Operator###ChangeFreeKey" Required="1" Valid="1">
         <Description Translatable="1">Defines the operators that are selectable for the attribute ChangeFreeKey in AgentITSMChangeConditionEdit.</Description>
         <Group>ITSM Change Management</Group>
@@ -4529,6 +4563,19 @@
             </Hash>
         </Setting>
     </ConfigItem>
+ -->
+
+    <ConfigItem Name="ITSMChange::Mapping::Action::Attribute::Operator###DynamicField" Required="1" Valid="1">
+        <Description Translatable="1">Defines the operators that are selectable for the attribute DynamicField in AgentITSMChangeConditionEdit.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMCondition::Action::ITSMChange</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="set">1</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+
     <ConfigItem Name="ITSMWorkOrder::Attribute::CompareValue::FieldType" Required="1" Valid="1">
         <Description Translatable="1">Defines the field type of CompareValue fields for workorder attributes used in AgentITSMChangeConditionEdit. Valid values are Selection, Text and Date. If a type is not defined, the field will not be shown.</Description>
         <Group>ITSM Change Management</Group>
@@ -4546,8 +4593,11 @@
                 <Item Key="ActualEndTime">Date</Item>
                 <Item Key="PlannedEffort">Text</Item>
                 <Item Key="AccountedTime">Text</Item>
+<!--
                 <Item Key="WorkOrderFreeKey">Text</Item>
                 <Item Key="WorkOrderFreeText">Text</Item>
+ -->
+                <Item Key="DynamicField">Text</Item>
             </Hash>
         </Setting>
     </ConfigItem>
@@ -4568,8 +4618,11 @@
                 <Item Key="ActualEndTime">1</Item>
                 <Item Key="PlannedEffort">1</Item>
                 <Item Key="AccountedTime">1</Item>
+<!--
                 <Item Key="WorkOrderFreeKey">1</Item>
                 <Item Key="WorkOrderFreeText">1</Item>
+-->
+                <Item Key="DynamicField">1</Item>
             </Hash>
         </Setting>
     </ConfigItem>
@@ -4804,6 +4857,7 @@
             </Hash>
         </Setting>
     </ConfigItem>
+<!--
     <ConfigItem Name="ITSMWorkOrder::Mapping::Expression::Attribute::Operator###WorkOrderFreeKey" Required="1" Valid="1">
         <Description Translatable="1">Defines the operators that are selectable for the attribute WorkOrderFreeKey in AgentITSMChangeConditionEdit.</Description>
         <Group>ITSM Change Management</Group>
@@ -4846,6 +4900,29 @@
             </Hash>
         </Setting>
     </ConfigItem>
+ -->
+    <ConfigItem Name="ITSMWorkOrder::Mapping::Expression::Attribute::Operator###DynamicField" Required="1" Valid="1">
+        <Description Translatable="1">Defines the operators that are selectable for the attribute DynamicField in AgentITSMChangeConditionEdit.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMCondition::Expression::ITSMWorkOrder</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="is">1</Item>
+                <Item Key="is not">1</Item>
+                <Item Key="is empty">1</Item>
+                <Item Key="is not empty">1</Item>
+                <Item Key="is greater than">1</Item>
+                <Item Key="is less than">1</Item>
+                <Item Key="is before">0</Item>
+                <Item Key="is after">0</Item>
+                <Item Key="contains">1</Item>
+                <Item Key="not contains">1</Item>
+                <Item Key="begins with">1</Item>
+                <Item Key="ends with">1</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+
     <ConfigItem Name="ITSMWorkOrder::Mapping::Action::Object::Attribute" Required="1" Valid="1">
         <Description Translatable="1">Defines the object attributes that are selectable for workorder objects in AgentITSMChangeConditionEdit.</Description>
         <Group>ITSM Change Management</Group>
@@ -4863,8 +4940,11 @@
                 <Item Key="ActualEndTime">0</Item>
                 <Item Key="PlannedEffort">0</Item>
                 <Item Key="AccountedTime">0</Item>
+<!--
                 <Item Key="WorkOrderFreeKey">1</Item>
                 <Item Key="WorkOrderFreeText">1</Item>
+ -->
+                <Item Key="DynamicField">1</Item>
             </Hash>
         </Setting>
     </ConfigItem>
@@ -4979,6 +5059,7 @@
             </Hash>
         </Setting>
     </ConfigItem>
+<!--
     <ConfigItem Name="ITSMWorkOrder::Mapping::Action::Attribute::Operator###WorkOrderFreeKey" Required="1" Valid="1">
         <Description Translatable="1">Defines the operators that are selectable for the attribute WorkOrderFreeKey in AgentITSMChangeConditionEdit.</Description>
         <Group>ITSM Change Management</Group>
@@ -4999,6 +5080,18 @@
             </Hash>
         </Setting>
     </ConfigItem>
+ -->
+    <ConfigItem Name="ITSMWorkOrder::Mapping::Action::Attribute::Operator###DynamicField" Required="1" Valid="1">
+        <Description Translatable="1">Defines the operators that are selectable for the attribute DynamicField in AgentITSMChangeConditionEdit.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMCondition::Action::ITSMWorkOrder</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="set">1</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+
     <ConfigItem Name="ITSMWorkOrder::FreeText::MaxNumber" Required="1" Valid="1">
         <Description Translatable="1">Defines the maximum number of workorder freetext fields.</Description>
         <Group>ITSM Change Management</Group>
