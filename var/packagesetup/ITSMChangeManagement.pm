@@ -21,6 +21,7 @@ use Kernel::System::DynamicField;
 use Kernel::System::GeneralCatalog;
 use Kernel::System::Group;
 use Kernel::System::ITSMChange;
+use Kernel::System::ITSMChange::ITSMCondition;
 use Kernel::System::ITSMChange::History;
 use Kernel::System::ITSMChange::ITSMChangeCIPAllocate;
 use Kernel::System::ITSMChange::ITSMStateMachine;
@@ -143,17 +144,18 @@ sub new {
     }
 
     # create additional objects
-    $Self->{ConfigObject}       = Kernel::Config->new();
-    $Self->{CSVObject}          = Kernel::System::CSV->new( %{$Self} );
-    $Self->{DynamicFieldObject} = Kernel::System::DynamicField->new( %{$Self} );
-    $Self->{GroupObject}        = Kernel::System::Group->new( %{$Self} );
-    $Self->{UserObject}         = Kernel::System::User->new( %{$Self} );
-    $Self->{StateObject}        = Kernel::System::State->new( %{$Self} );
-    $Self->{TypeObject}         = Kernel::System::Type->new( %{$Self} );
-    $Self->{ValidObject}        = Kernel::System::Valid->new( %{$Self} );
-    $Self->{LinkObject}         = Kernel::System::LinkObject->new( %{$Self} );
-    $Self->{ChangeObject}       = Kernel::System::ITSMChange->new( %{$Self} );
-    $Self->{CIPAllocateObject} = Kernel::System::ITSMChange::ITSMChangeCIPAllocate->new( %{$Self} );
+    $Self->{ConfigObject}         = Kernel::Config->new();
+    $Self->{CSVObject}            = Kernel::System::CSV->new( %{$Self} );
+    $Self->{DynamicFieldObject}   = Kernel::System::DynamicField->new( %{$Self} );
+    $Self->{GroupObject}          = Kernel::System::Group->new( %{$Self} );
+    $Self->{UserObject}           = Kernel::System::User->new( %{$Self} );
+    $Self->{StateObject}          = Kernel::System::State->new( %{$Self} );
+    $Self->{TypeObject}           = Kernel::System::Type->new( %{$Self} );
+    $Self->{ValidObject}          = Kernel::System::Valid->new( %{$Self} );
+    $Self->{LinkObject}           = Kernel::System::LinkObject->new( %{$Self} );
+    $Self->{ChangeObject}         = Kernel::System::ITSMChange->new( %{$Self} );
+    $Self->{ConditionObject}      = Kernel::System::ITSMChange::ITSMCondition->new( %{$Self} );
+    $Self->{CIPAllocateObject}    = Kernel::System::ITSMChange::ITSMChangeCIPAllocate->new( %{$Self} );
     $Self->{StateMachineObject}   = Kernel::System::ITSMChange::ITSMStateMachine->new( %{$Self} );
     $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new( %{$Self} );
     $Self->{WorkOrderObject}      = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
@@ -430,6 +432,10 @@ Migrates the change and workorder freetext fields to dynamic fields.
 sub _MigrateFreeTextToDynamicFields {
     my ($Self) = @_;
 
+    # ---------------------------------------------------------------------------------------------
+    # Migrate freekey and freetext fields to dynamic fields (just the fields data comes later)
+    # ---------------------------------------------------------------------------------------------
+
     # get all configured change and workorder freekey and freetext numbers from sysconfig
     my %ConfiguredFreeTextFields;
     my @DynamicFields;
@@ -586,6 +592,10 @@ sub _MigrateFreeTextToDynamicFields {
         $NextOrderNumber++;
     }
 
+    # ---------------------------------------------------------------------------------------------
+    # Migrate the change and workorder data from freekey and freetext fields to dynamic fields
+    # ---------------------------------------------------------------------------------------------
+
     # get the list of change and workorder dynamic fields
     $DynamicFieldList = $Self->{DynamicFieldObject}->DynamicFieldListGet(
         Valid       => 1,
@@ -648,6 +658,62 @@ sub _MigrateFreeTextToDynamicFields {
                     \$DynamicField->{ID},
                     \$Record->{ObjectID},
                     \$Record->{Value},
+                ],
+            );
+        }
+    }
+
+    # ---------------------------------------------------------------------------------------------
+    # Delete obsolete freekey and freetext field attributes from conditions
+    # ---------------------------------------------------------------------------------------------
+
+    # build a lookup hash for all new created change and workorder dynamic fields
+    my %DynamicFieldName;
+    for my $DynamicField (@DynamicFields) {
+        $DynamicFieldName{ $DynamicField->{Name} } = 1;
+    }
+
+    # get all condition attributes
+    my $ConditionAttributes = $Self->{ConditionObject}->AttributeList(
+        UserID => 1,
+    );
+
+    # reverse the list to lookup attribute names
+    my %Attribute2ID = reverse %{$ConditionAttributes};
+
+    ATTRIBUTE:
+    for my $Attribute ( sort keys %Attribute2ID ) {
+
+        # we are only interested in old change and workorder freekey and freetext attributes
+        next ATTRIBUTE if $Attribute !~ m{ \A (Change|WorkOrder)Free(Key|Text)(\d+) \z }xms;
+
+        # find attributes that do not exist as dynamic fields
+        if ( !$DynamicFieldName{$Attribute} ) {
+
+            # delete this attribute from all expression table
+            next ATTRIBUTE if !$Self->{DBObject}->Do(
+                SQL => 'DELETE FROM condition_expression
+                        WHERE attribute_id = ?',
+                Bind => [
+                    \$Attribute2ID{$Attribute},
+                ],
+            );
+
+            # delete this attribute from all action table
+            next ATTRIBUTE if !$Self->{DBObject}->Do(
+                SQL => 'DELETE FROM condition_action
+                        WHERE attribute_id = ?',
+                Bind => [
+                    \$Attribute2ID{$Attribute},
+                ],
+            );
+
+            # delete this attribute from attribute table
+            next ATTRIBUTE if !$Self->{DBObject}->Do(
+                SQL => 'DELETE FROM condition_attribute
+                        WHERE id = ?',
+                Bind => [
+                    \$Attribute2ID{$Attribute},
                 ],
             );
         }
