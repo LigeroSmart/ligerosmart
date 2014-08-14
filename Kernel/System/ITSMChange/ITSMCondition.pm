@@ -1253,8 +1253,8 @@ sub ConditionCompareValueFieldType {
     # check error
     return if !$Config;
 
-    # remove the ID from change or workorder freetext fields
-    $AttributeName =~ s{ \A (( Change | WorkOrder ) Free ( Key | Text )) ( \d+ ) }{$1}xms;
+    # remove the name part of the dynamic field and replace only with the string "DynamicField"
+    $AttributeName =~ s{ \A DynamicField_ (\w+) }{DynamicField}xms;
 
     # get the field type for the given attribute or return the default field type 'Selection'
     my $FieldType = $Config->{$AttributeName} || 'Selection';

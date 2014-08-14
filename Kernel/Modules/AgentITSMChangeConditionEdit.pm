@@ -14,6 +14,7 @@ use warnings;
 
 use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMCondition;
+use Kernel::System::DynamicField;
 use Kernel::System::Valid;
 
 sub new {
@@ -34,9 +35,10 @@ sub new {
     }
 
     # create needed objects
-    $Self->{ChangeObject}    = Kernel::System::ITSMChange->new(%Param);
-    $Self->{ConditionObject} = Kernel::System::ITSMChange::ITSMCondition->new(%Param);
-    $Self->{ValidObject}     = Kernel::System::Valid->new(%Param);
+    $Self->{ChangeObject}       = Kernel::System::ITSMChange->new(%Param);
+    $Self->{ConditionObject}    = Kernel::System::ITSMChange::ITSMCondition->new(%Param);
+    $Self->{DynamicFieldObject} = Kernel::System::DynamicField->new( %{$Self} );
+    $Self->{ValidObject}        = Kernel::System::Valid->new(%Param);
 
     # get config of frontend module
     $Self->{Config} = $Self->{ConfigObject}->Get("ITSMChange::Frontend::$Self->{Action}");
@@ -1470,7 +1472,7 @@ sub _GetAttributeSelection {
     # if a selector is set
     if ( $Param{Selector} ) {
 
-        # get list of all attribute
+        # get list of all attributes
         my $AllAttributes = $Self->{ConditionObject}->AttributeList(
             UserID => $Self->{UserID},
         );
@@ -1504,10 +1506,17 @@ sub _GetAttributeSelection {
             );
         }
 
-        # get maximum number of change and workorder freetext fields
-        my $ChangeFreeTextMaxNumber = $Self->{ConfigObject}->Get('ITSMChange::FreeText::MaxNumber');
-        my $WorkOrderFreeTextMaxNumber
-            = $Self->{ConfigObject}->Get('ITSMWorkOrder::FreeText::MaxNumber');
+        # get the list of dynamic fields (change or workorder)
+        my $DynamicFields = $Self->{DynamicFieldObject}->DynamicFieldListGet(
+            Valid       => 0,
+            ObjectType  => $ObjectName,
+        );
+
+        # build a lookup hash for all dynamic fields for this object (change or workorder)
+        my %DynamicFieldName;
+        for my $DynamicField ( @{$DynamicFields} ) {
+            $DynamicFieldName{ $DynamicField->{Name} } = 1;
+        }
 
         # get the valid attributes for the given object
         ATTRIBUTEID:
@@ -1522,28 +1531,18 @@ sub _GetAttributeSelection {
                 # get attribute name
                 my $AttributeName = $AllAttributes->{$AttributeID};
 
-                # check if it is a change or workorder freetext field
-                if ( $AttributeName =~ m{ \A ( (Change|WorkOrder) Free (?: Key|Text) ) (\d+) }xms )
-                {
+                # check if the attribute is a dynamic field and dynamic fields should be used as attributes
+                next ATTRIBUTEID if !$ObjectAttributeMapping->{DynamicField};
+                next ATTRIBUTEID if $AttributeName !~ m{ \A DynamicField_ (\w+) }xms;
 
-                    # remove the ID from the attribute name to check the mapping
-                    my $AttributeWithoutNumber = $1;
-                    my $Type                   = $2;
-                    my $FieldNumber            = $3;
+                # remove the prefix 'DynamicField_' from dynamic fields for nicer display
+                my $AttributeWithoutPrefix = $1;
 
-                    # do not use fields with a higher number than the max number
-                    if ( $Type eq 'Change' ) {
-                        next ATTRIBUTEID if $FieldNumber > $ChangeFreeTextMaxNumber;
-                    }
-                    elsif ( $Type eq 'WorkOrder' ) {
-                        next ATTRIBUTEID if $FieldNumber > $WorkOrderFreeTextMaxNumber;
-                    }
+                # check if it is a dynamic field for the correct object
+                next ATTRIBUTEID if !$DynamicFieldName{$AttributeWithoutPrefix};
 
-                    # check the mapping without ID, but add the the field with ID
-                    if ( $ObjectAttributeMapping->{$AttributeWithoutNumber} ) {
-                        $Attributes{$AttributeID} = $AllAttributes->{$AttributeID};
-                    }
-                }
+                # add the dynamic field to attribute list
+                $Attributes{$AttributeID} = $AttributeWithoutPrefix;
             }
         }
 
@@ -1615,8 +1614,8 @@ sub _GetOperatorSelection {
             );
         }
 
-        # remove the ID from change or workorder freetext fields
-        $AttributeName =~ s{ \A (( Change | WorkOrder ) Free ( Key | Text )) ( \d+ ) }{$1}xms;
+        # remove the name part of the dynamic field and replace only with the string "DynamicField"
+        $AttributeName =~ s{ \A DynamicField_ (\w+) }{DynamicField}xms;
 
         my $AttributeOperatorMapping;
         if ($MappingConfig) {
