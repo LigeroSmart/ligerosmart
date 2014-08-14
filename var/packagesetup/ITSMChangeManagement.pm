@@ -687,10 +687,20 @@ sub _MigrateFreeTextToDynamicFields {
         # we are only interested in old change and workorder freekey and freetext attributes
         next ATTRIBUTE if $Attribute !~ m{ \A (Change|WorkOrder)Free(Key|Text)(\d+) \z }xms;
 
-        # find attributes that do not exist as dynamic fields
-        if ( !$DynamicFieldName{$Attribute} ) {
+        # rename the attribute (add a prefix to the attribute)
+        if ( $DynamicFieldName{$Attribute} ) {
 
-            # delete this attribute from all expression table
+            my $Success = $Self->{ConditionObject}->AttributeUpdate(
+                AttributeID => $Attribute2ID{$Attribute},
+                Name        => 'DynamicField_' . $Attribute,
+                UserID      => 1,
+            );
+        }
+
+        # this attribute does not exist as dynamic field
+        else {
+
+            # delete this attribute from expression table
             next ATTRIBUTE if !$Self->{DBObject}->Do(
                 SQL => 'DELETE FROM condition_expression
                         WHERE attribute_id = ?',
@@ -699,7 +709,7 @@ sub _MigrateFreeTextToDynamicFields {
                 ],
             );
 
-            # delete this attribute from all action table
+            # delete this attribute from action table
             next ATTRIBUTE if !$Self->{DBObject}->Do(
                 SQL => 'DELETE FROM condition_action
                         WHERE attribute_id = ?',
@@ -718,7 +728,6 @@ sub _MigrateFreeTextToDynamicFields {
             );
         }
     }
-
 
     # ---------------------------------------------------------------------------------------------
     # Migrate screen config (and condition config, etc... TODO: Maybe this must be done before the condition deletion?)
