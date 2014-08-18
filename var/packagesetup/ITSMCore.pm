@@ -12,7 +12,6 @@ package var::packagesetup::ITSMCore;    ## no critic
 use strict;
 use warnings;
 
-use Kernel::System::Cache;
 use Kernel::System::GeneralCatalog;
 use Kernel::System::Group;
 use Kernel::System::ITSMCIPAllocate;
@@ -110,7 +109,6 @@ sub new {
     $Self->{PriorityObject}       = Kernel::System::Priority->new( %{$Self} );
     $Self->{ValidObject}          = Kernel::System::Valid->new( %{$Self} );
     $Self->{DynamicFieldObject}   = Kernel::System::DynamicField->new( %{$Self} );
-    $Self->{CacheObject}          = Kernel::System::Cache->new( %{$Self} );
 
     return $Self;
 }
@@ -125,9 +123,6 @@ run the code install part
 
 sub CodeInstall {
     my ( $Self, %Param ) = @_;
-
-    # delete cache
-    $Self->{CacheObject}->CleanUp();
 
     # create dynamic fields for ITSMCore
     $Self->_CreateITSMDynamicFields();
@@ -168,9 +163,6 @@ run the code reinstall part
 
 sub CodeReinstall {
     my ( $Self, %Param ) = @_;
-
-    # delete cache
-    $Self->{CacheObject}->CleanUp();
 
     # set default CIP matrix
     $Self->_CIPDefaultMatrixSet();
@@ -220,9 +212,6 @@ run the code upgrade part
 
 sub CodeUpgrade {
     my ( $Self, %Param ) = @_;
-
-    # delete cache
-    $Self->{CacheObject}->CleanUp();
 
     # set default CIP matrix
     $Self->_CIPDefaultMatrixSet();
