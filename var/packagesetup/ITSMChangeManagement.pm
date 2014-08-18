@@ -15,8 +15,6 @@ use warnings;
 use Kernel::Config;
 use Kernel::System::SysConfig;
 use Kernel::System::CSV;
-use Kernel::System::Cache;
-use Kernel::System::CacheInternal;
 use Kernel::System::DynamicField;
 use Kernel::System::GeneralCatalog;
 use Kernel::System::Group;
@@ -166,12 +164,6 @@ sub new {
         %{$Self},
         UserID => 1,
     );
-    $Self->{CacheObject}         = Kernel::System::Cache->new( %{$Self} );
-    $Self->{CacheInternalObject} = Kernel::System::CacheInternal->new(
-        %{$Self},
-        Type => 'Group',
-        TTL  => 60 * 60 * 3,
-    );
 
     # define file prefix for stats
     $Self->{FilePrefix} = 'ITSMStats';
@@ -225,18 +217,6 @@ sub CodeInstall {
     # add system notifications
     $Self->_AddSystemNotifications();
 
-    # delete the group cache to avoid permission problems
-    $Self->{CacheInternalObject}->CleanUp( OtherType => 'Group' );
-
-    # cleanup cache
-    $Self->{CacheObject}->CleanUp(
-        Type => 'ITSMChangeManagement',
-    );
-
-    # cleanup cache internal
-    $Self->{CacheInternalObject}->CleanUp( OtherType => 'ITSMChangeManagement' );
-    $Self->{CacheInternalObject}->CleanUp( OtherType => 'ITSMStateMachine' );
-
     return 1;
 }
 
@@ -280,18 +260,6 @@ sub CodeReinstall {
     # set default StateMachine settings
     $Self->_StateMachineDefaultSet();
 
-    # delete the group cache to avoid permission problems
-    $Self->{CacheInternalObject}->CleanUp( OtherType => 'Group' );
-
-    # cleanup cache
-    $Self->{CacheObject}->CleanUp(
-        Type => 'ITSMChangeManagement',
-    );
-
-    # cleanup cache internal
-    $Self->{CacheInternalObject}->CleanUp( OtherType => 'ITSMChangeManagement' );
-    $Self->{CacheInternalObject}->CleanUp( OtherType => 'ITSMStateMachine' );
-
     return 1;
 }
 
@@ -313,18 +281,6 @@ sub CodeUpgrade {
 
     # set default CIP matrix (this is only done if no matrix exists)
     $Self->_CIPDefaultMatrixSet();
-
-    # delete the group cache to avoid problems with CI permissions
-    $Self->{CacheInternalObject}->CleanUp( OtherType => 'Group' );
-
-    # cleanup cache
-    $Self->{CacheObject}->CleanUp(
-        Type => 'ITSMChangeManagement',
-    );
-
-    # cleanup cache internal
-    $Self->{CacheInternalObject}->CleanUp( OtherType => 'ITSMChangeManagement' );
-    $Self->{CacheInternalObject}->CleanUp( OtherType => 'ITSMStateMachine' );
 
     # TODO: Move this to special upgrade block with correct version number ( < 3.3.91)
     $Self->_MigrateFreeTextToDynamicFields();
@@ -403,18 +359,6 @@ sub CodeUninstall {
 
     # delete system notifications
     $Self->_DeleteSystemNotifications();
-
-    # delete the group cache to avoid permission problems
-    $Self->{CacheInternalObject}->CleanUp( OtherType => 'Group' );
-
-    # cleanup cache
-    $Self->{CacheObject}->CleanUp(
-        Type => 'ITSMChangeManagement',
-    );
-
-    # cleanup cache internal
-    $Self->{CacheInternalObject}->CleanUp( OtherType => 'ITSMChangeManagement' );
-    $Self->{CacheInternalObject}->CleanUp( OtherType => 'ITSMStateMachine' );
 
     return 1;
 }
