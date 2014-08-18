@@ -381,7 +381,6 @@ sub _MigrateFreeTextToDynamicFields {
     # ---------------------------------------------------------------------------------------------
 
     # get all configured change and workorder freekey and freetext numbers from sysconfig
-    my %ConfiguredFreeTextFields;
     my @DynamicFields;
     for my $Type (qw(Change WorkOrder)) {
 
@@ -393,9 +392,6 @@ sub _MigrateFreeTextToDynamicFields {
 
             # only if a key config exists
             next FREETEXTNUMBER if !$FreeKeyConfig;
-
-            # remember the number of the field
-            push @{ $ConfiguredFreeTextFields{$Type} }, $Number;
 
             # default label, like the name
             my $Label = $Type . 'FreeText' . $Number;
@@ -486,9 +482,6 @@ sub _MigrateFreeTextToDynamicFields {
             }
         }
     }
-
-    # $Self->{LogObject}->Dum_per( '', '@DynamicFields', \@DynamicFields );
-    # $Self->{LogObject}->Dum_per( '', '%ConfiguredFreeTextFields', \%ConfiguredFreeTextFields );
 
     # get all current dynamic fields
     my $DynamicFieldList = $Self->{DynamicFieldObject}->DynamicFieldListGet(
@@ -674,9 +667,78 @@ sub _MigrateFreeTextToDynamicFields {
     }
 
     # ---------------------------------------------------------------------------------------------
-    # Migrate screen config (and condition config, etc... TODO: Maybe this must be done before the condition deletion?)
+    # Migrate freetext screen config
     # ---------------------------------------------------------------------------------------------
 
+    # migrate change freetext frontend config
+    CONFIGNAME:
+    for my $ConfigName (qw(
+        ITSMChange::Frontend::AgentITSMChangeAdd
+        ITSMChange::Frontend::AgentITSMChangeEdit
+        ITSMChange::Frontend::AgentITSMChangeSearch
+        ITSMChange::Frontend::AgentITSMWorkOrderAdd
+        ITSMWorkOrder::Frontend::AgentITSMWorkOrderEdit
+        ITSMWorkOrder::Frontend::AgentITSMWorkOrderReport
+    )) {
+
+        my $FieldType;
+        my $Config = $Self->{ConfigObject}->Get($ConfigName);
+        if ($ConfigName =~ m{ AgentITSMWorkOrder }xms ) {
+           $FieldType = 'WorkOrderFreeText';
+        }
+        else {
+            $FieldType = 'ChangeFreeText';
+        }
+        $Config = $Config->{$FieldType};
+
+        my %NewSetting;
+        NUMBER:
+        for my $Number (sort keys %{$Config} ) {
+
+            my $Value = $Config->{$Number};
+
+            next NUMBER if !$Value;
+
+            $NewSetting{ $FieldType . $Number} = $Value;
+        }
+
+        next CONFIGNAME if !%NewSetting;
+
+        # update the sysconfig
+        my $Success = $Self->{SysConfigObject}->ConfigItemUpdate(
+            Valid => 1,
+            Key   => $ConfigName . '###DynamicField',
+            Value => \%NewSetting,
+        );
+    }
+
+    my %ChangeDynamicFieldConfig;
+    my %WorkorderDynamicFieldConfig;
+
+    DYNAMICFIELD:
+    for my $DynamicField (@{$DynamicFieldList}) {
+
+        if ( $DynamicField->{ObjectType} eq 'ITSMChange' ) {
+            $ChangeDynamicFieldConfig{ $DynamicField->{Name} } = 1;
+        }
+        elsif ( $DynamicField->{ObjectType} eq 'ITSMWorkOrder' ) {
+            $WorkorderDynamicFieldConfig{ $DynamicField->{Name} } = 1;
+        }
+    }
+
+    # show all change dynamic fields in the change zoom
+    $Self->{SysConfigObject}->ConfigItemUpdate(
+        Valid => 1,
+        Key   => 'ITSMChange::Frontend::AgentITSMChangeZoom###DynamicField',
+        Value => \%ChangeDynamicFieldConfig,
+    );
+
+    # show all workorder dynamic fields in the workorder zoom
+    $Self->{SysConfigObject}->ConfigItemUpdate(
+        Valid => 1,
+        Key   => 'ITSMWorkOrder::Frontend::AgentITSMWorkOrderZoom###DynamicField',
+        Value => \%WorkorderDynamicFieldConfig,
+    );
 
     # ---------------------------------------------------------------------------------------------
     # Delete change and workorder freekey and freetext tables
