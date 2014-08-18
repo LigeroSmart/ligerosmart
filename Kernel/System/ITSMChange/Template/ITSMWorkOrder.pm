@@ -187,12 +187,12 @@ sub Serialize {
         $CleanWorkOrder->{ActualEndTime}   = undef;
     }
 
-    # add workorder freekey and freetext fields to list of wanted attributes
+    # add workorder fields to list of wanted attribute
     ATTRIBUTE:
     for my $Attribute ( sort keys %{$WorkOrder} ) {
 
-        # find the workorder freekey and freetext attributes
-        if ( $Attribute =~ m{ \A ( WorkOrderFreeKey | WorkOrderFreeText ) }xms ) {
+        # find the workorder dynamic field attributes
+        if ( $Attribute =~ m{ \A DynamicField_.* \z }xms ) {
 
             $CleanWorkOrder->{$Attribute} = $WorkOrder->{$Attribute};
         }

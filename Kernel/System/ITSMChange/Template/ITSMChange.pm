@@ -200,12 +200,12 @@ sub Serialize {
         $CleanChange->{ChangeStateID} = $NextStateIDs->[0];
     }
 
-    # add change freekey and freetext fields to list of wanted attributes
+    # add change dynamic fields to list of wanted attributes
     ATTRIBUTE:
     for my $Attribute ( sort keys %{$Change} ) {
 
-        # find the change freekey and freetext attributes
-        if ( $Attribute =~ m{ \A ( ChangeFreeKey | ChangeFreeText ) }xms ) {
+        # find the change dynamic field attributes
+        if ( $Attribute =~ m{ \A DynamicField_.* \z }xms ) {
 
             $CleanChange->{$Attribute} = $Change->{$Attribute};
         }
