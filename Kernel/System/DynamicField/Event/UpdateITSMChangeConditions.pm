@@ -19,8 +19,6 @@ our @ObjectDependencies = (
     'Kernel::System::Log',
 );
 
-# our $ObjectManagerAware = 1;
-
 sub new {
     my ( $Type, %Param ) = @_;
 
@@ -35,15 +33,31 @@ sub Run {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for (qw(Data Event Config)) {
-        if ( !$Param{$_} ) {
+    for my $Argument (qw(Data Event Config)) {
+        if ( !$Param{$Argument} ) {
+
             $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
-                Message  => "Need $_!",
+                Message  => "Need $Argument!",
             );
+
             return;
         }
     }
+
+    # TODO: Implement event handler (like described below)
+
+    # return if DynamicField ObjectType is not ITSMChange or ITSMWorkOrder
+
+    # handle DynamicFieldAdd:
+    #  - add new attribute to condition attribute table
+
+    # handle DynamicFieldUpdate:
+    #  - search for old name in attribute table and update the name
+
+    # handle DynamicFieldDelete:
+    #  - first, delete all expressions and actions where this attribute is used
+    #  - second, delete this attribute from attribute table
 
     return 1;
 }
