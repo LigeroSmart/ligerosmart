@@ -15,7 +15,7 @@
         <input type="hidden" name="EmptySearch" value="$QData{"EmptySearch"}" id="EmptySearch"/>
         <input type="hidden" name="ShownAttributes" value="" id="ShownAttributes">
         <fieldset class="TableLike">
-            <div class="Clear"></div>
+            <legend>$Text{"Templates"}</legend>
             <label>$Text{"Search template"}:</label>
             <div class="Field">
                 $Data{"ProfilesStrg"}
@@ -35,9 +35,11 @@
                 <input type="checkbox" name="SaveProfile" id="SaveProfile" value="1"/>
             </div>
         </fieldset>
-        <fieldset class="TableLike" id="SearchInsert"></fieldset>
+        <fieldset class="TableLike" id="SearchInsert">
+            <legend>$Text{"Filters in use"}</legend>
+        </fieldset>
         <fieldset class="TableLike">
-            <div class="Clear"></div>
+            <legend>$Text{"Additional filters"}</legend>
             <label>$Text{"Add another attribute"}:</label>
             <div class="Field">
                 $Data{"AttributesStrg"}
@@ -116,23 +118,15 @@
             <button type="button" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
         </div>
 
-<!-- dtl:block:ChangeFreeText -->
+<!-- dtl:block:DynamicField -->
         <div class="Clear"></div>
-        $Data{"ChangeFreeKeyField"}
+        $Data{"Label"}
         <div class="Field">
-            $Data{"ChangeFreeTextField"}
+            $Data{"Field"}
             <button type="button" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
         </div>
-<!-- dtl:block:ChangeFreeText -->
-
-<!-- dtl:block:WorkOrderFreeText -->
         <div class="Clear"></div>
-        $Data{"WorkOrderFreeKeyField"}
-        <div class="Field">
-            $Data{"WorkOrderFreeTextField"}
-            <button type="button" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
-        </div>
-<!-- dtl:block:WorkOrderFreeText -->
+<!-- dtl:block:DynamicField -->
 
         <div class="Clear"></div>
         <label for="PriorityIDs" id="LabelPriorityIDs">$Text{"ITSM Change"} $Text{"Priority"}:</label>

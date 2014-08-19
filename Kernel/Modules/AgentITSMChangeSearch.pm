@@ -13,12 +13,15 @@ use strict;
 use warnings;
 
 use Kernel::System::CustomerUser;
+use Kernel::System::DynamicField;
+use Kernel::System::DynamicField::Backend;
 use Kernel::System::SearchProfile;
 use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::CSV;
 use Kernel::System::LinkObject;
 use Kernel::System::Service;
+use Kernel::System::VariableCheck qw(:all);
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -39,6 +42,8 @@ sub new {
 
     # create needed objects
     $Self->{CustomerUserObject}  = Kernel::System::CustomerUser->new(%Param);
+    $Self->{DynamicFieldObject}  = Kernel::System::DynamicField->new(%Param);
+    $Self->{BackendObject}       = Kernel::System::DynamicField::Backend->new(%Param);
     $Self->{SearchProfileObject} = Kernel::System::SearchProfile->new(%Param);
     $Self->{ChangeObject}        = Kernel::System::ITSMChange->new(%Param);
     $Self->{WorkOrderObject}     = Kernel::System::ITSMChange::ITSMWorkOrder->new(%Param);
@@ -48,6 +53,13 @@ sub new {
 
     # get config for frontend
     $Self->{Config} = $Self->{ConfigObject}->Get("ITSMChange::Frontend::$Self->{Action}");
+
+    # get the dynamic fields for this screen (change and workorder fields)
+    $Self->{DynamicField} = $Self->{DynamicFieldObject}->DynamicFieldListGet(
+        Valid       => 1,
+        ObjectType  => [ 'ITSMChange', 'ITSMWorkOrder' ],
+        FieldFilter => $Self->{Config}->{DynamicField} || {},
+    );
 
     return $Self;
 }
@@ -81,13 +93,6 @@ sub Run {
 
     # get single params
     my %GetParam;
-
-    # get configured change freetext field numbers
-    my @ConfiguredChangeFreeTextFields = $Self->{ChangeObject}->ChangeGetConfiguredFreeTextFields();
-
-    # get configured workorder freetext field numbers
-    my @ConfiguredWorkOrderFreeTextFields
-        = $Self->{WorkOrderObject}->WorkOrderGetConfiguredFreeTextFields();
 
     # load parameters from search profile,
     # this happens when the next result page should be shown, or when the results are reordered
@@ -175,45 +180,35 @@ sub Run {
             }
         }
 
-        # get change freetext params
-        NUMBER:
-        for my $Number (@ConfiguredChangeFreeTextFields) {
+        # get Dynamic fields from param object
+        # cycle trough the activated Dynamic Fields for this screen
+        DYNAMICFIELD:
+        for my $DynamicFieldConfig ( @{ $Self->{DynamicField} } ) {
+            next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
 
-            # consider only freetext fields which are activated in this frontend
-            next NUMBER if !$Self->{Config}->{ChangeFreeText}->{$Number};
+            # get search field preferences
+            my $SearchFieldPreferences = $Self->{BackendObject}->SearchFieldPreferences(
+                DynamicFieldConfig => $DynamicFieldConfig,
+            );
 
-            my $Key   = 'ChangeFreeKey' . $Number;
-            my $Value = 'ChangeFreeText' . $Number;
+            next DYNAMICFIELD if !IsArrayRefWithData($SearchFieldPreferences);
 
-            my @KeyArray = $Self->{ParamObject}->GetArray( Param => $Key );
-            if (@KeyArray) {
-                $GetParam{$Key} = \@KeyArray;
-            }
+            PREFERENCE:
+            for my $Preference ( @{$SearchFieldPreferences} ) {
 
-            my @ValueArray = $Self->{ParamObject}->GetArray( Param => $Value );
-            if (@ValueArray) {
-                $GetParam{$Value} = \@ValueArray;
-            }
-        }
+                # extract the dynamic field value from the web request
+                my $DynamicFieldValue = $Self->{BackendObject}->SearchFieldValueGet(
+                    DynamicFieldConfig     => $DynamicFieldConfig,
+                    ParamObject            => $Self->{ParamObject},
+                    ReturnProfileStructure => 1,
+                    LayoutObject           => $Self->{LayoutObject},
+                    Type                   => $Preference->{Type},
+                );
 
-        # get workorder freetext params
-        NUMBER:
-        for my $Number (@ConfiguredWorkOrderFreeTextFields) {
-
-            # consider only freetext fields which are activated in this frontend
-            next NUMBER if !$Self->{Config}->{WorkOrderFreeText}->{$Number};
-
-            my $Key   = 'WorkOrderFreeKey' . $Number;
-            my $Value = 'WorkOrderFreeText' . $Number;
-
-            my @KeyArray = $Self->{ParamObject}->GetArray( Param => $Key );
-            if (@KeyArray) {
-                $GetParam{$Key} = \@KeyArray;
-            }
-
-            my @ValueArray = $Self->{ParamObject}->GetArray( Param => $Value );
-            if (@ValueArray) {
-                $GetParam{$Value} = \@ValueArray;
+              # set the complete value structure in GetParam to store it later in the search profile
+                if ( IsHashRefWithData($DynamicFieldValue) ) {
+                    %GetParam = ( %GetParam, %{$DynamicFieldValue} );
+                }
             }
         }
     }
@@ -410,6 +405,40 @@ sub Run {
             }
         }
 
+        # dynamic fields search parameters for ticket search
+        my %DynamicFieldSearchParameters;
+
+        # cycle trough the activated Dynamic Fields for this screen
+        DYNAMICFIELD:
+        for my $DynamicFieldConfig ( @{ $Self->{DynamicField} } ) {
+            next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
+
+            # get search field preferences
+            my $SearchFieldPreferences = $Self->{BackendObject}->SearchFieldPreferences(
+                DynamicFieldConfig => $DynamicFieldConfig,
+            );
+
+            next DYNAMICFIELD if !IsArrayRefWithData($SearchFieldPreferences);
+
+            PREFERENCE:
+            for my $Preference ( @{$SearchFieldPreferences} ) {
+
+                # extract the dynamic field value from the profile
+                my $SearchParameter = $Self->{BackendObject}->SearchFieldParameterBuild(
+                    DynamicFieldConfig => $DynamicFieldConfig,
+                    Profile            => \%GetParam,
+                    LayoutObject       => $Self->{LayoutObject},
+                    Type               => $Preference->{Type},
+                );
+
+                # set search parameter
+                if ( defined $SearchParameter ) {
+                    $DynamicFieldSearchParameters{ 'DynamicField_' . $DynamicFieldConfig->{Name} }
+                        = $SearchParameter->{Parameter};
+                }
+            }
+        }
+
         # perform change search
         my $ViewableChangeIDs = $Self->{ChangeObject}->ChangeSearch(
             Result           => 'ARRAY',
@@ -419,6 +448,7 @@ sub Run {
             MirrorDB         => 1,
             UserID           => $Self->{UserID},
             %GetParam,
+            %DynamicFieldSearchParameters,
         );
 
         # CSV output
@@ -958,8 +988,6 @@ sub Run {
 
         my $Output .= $Self->_MaskForm(
             %GetParam,
-            ConfiguredChangeFreeTextFields    => \@ConfiguredChangeFreeTextFields,
-            ConfiguredWorkOrderFreeTextFields => \@ConfiguredWorkOrderFreeTextFields,
         );
 
         $Output .= $Self->{LayoutObject}->Output(
@@ -1013,7 +1041,7 @@ sub _MaskForm {
         %GetParam,
     );
 
-    # set user frendly CABAgent field
+    # set user friendly CABAgent field
     if ( $Param{CABAgent} && $Param{CABAgent} ne '' ) {
 
         # get user data
@@ -1083,64 +1111,115 @@ sub _MaskForm {
             Key   => 'WorkOrderReport',
             Value => 'WorkOrder Report',
         },
-        {
-            Key      => '',
-            Value    => '-',
-            Disabled => 1,
-        },
     );
 
-    # get configured change and workorder freetext field numbers
-    my @ConfiguredChangeFreeTextFields    = @{ $Param{ConfiguredChangeFreeTextFields} };
-    my @ConfiguredWorkOrderFreeTextFields = @{ $Param{ConfiguredWorkOrderFreeTextFields} };
+    my $DynamicFieldSeparator = 1;
 
-    # get change FreeTextKeys
-    for my $Number (@ConfiguredChangeFreeTextFields) {
+    # create dynamic fields search options for attribute select
+    # cycle trough the activated Dynamic Fields for this screen
+    DYNAMICFIELD:
+    for my $DynamicFieldConfig ( @{ $Self->{DynamicField} } ) {
+        next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
+        next DYNAMICFIELD if !$DynamicFieldConfig->{Name};
+        next DYNAMICFIELD if $DynamicFieldConfig->{Name} eq '';
 
-        # check if this freetext field should be available in this frontend
-        next if !$Self->{Config}->{ChangeFreeText}->{$Number};
+        # create a separator for dynamic fields attributes
+        if ($DynamicFieldSeparator) {
+            push @Attributes, (
+                {
+                    Key      => '',
+                    Value    => '-',
+                    Disabled => 1,
+                },
+            );
 
-        my $Config            = $Self->{ConfigObject}->Get( 'ChangeFreeKey' . $Number );
-        my $FreeTextKeyString = $Self->_GetFreeTextKeyString(
-            Number => $Number,
-            Type   => 'Change',
-            Config => $Config,
+            $DynamicFieldSeparator = 0;
+        }
+
+        # get search field preferences
+        my $SearchFieldPreferences = $Self->{BackendObject}->SearchFieldPreferences(
+            DynamicFieldConfig => $DynamicFieldConfig,
         );
+
+        next DYNAMICFIELD if !IsArrayRefWithData($SearchFieldPreferences);
+
+        # translate the dynamic field label
+        my $TranslatedDynamicFieldLabel = $Self->{LayoutObject}->{LanguageObject}->Get(
+            $DynamicFieldConfig->{Label},
+        );
+
+        PREFERENCE:
+        for my $Preference ( @{$SearchFieldPreferences} ) {
+
+            # translate the suffix
+            my $TranslatedSuffix = $Self->{LayoutObject}->{LanguageObject}->Get(
+                $Preference->{LabelSuffix},
+            ) || '';
+
+            if ($TranslatedSuffix) {
+                $TranslatedSuffix = ' (' . $TranslatedSuffix . ')';
+            }
+
+            push @Attributes, (
+                {
+                    Key => 'Search_DynamicField_'
+                        . $DynamicFieldConfig->{Name}
+                        . $Preference->{Type},
+                    Value => $TranslatedDynamicFieldLabel . $TranslatedSuffix,
+                },
+            );
+        }
+    }
+
+    # create a separator if a dynamic field attribute was pushed
+    if ( !$DynamicFieldSeparator ) {
         push @Attributes, (
             {
-                Key   => 'ChangeFreeText' . $Number,
-                Value => $FreeTextKeyString,
+                Key      => '',
+                Value    => '-',
+                Disabled => 1,
             },
         );
     }
 
-    # get workorder FreeTextKeys
-    for my $Number (@ConfiguredWorkOrderFreeTextFields) {
+    # create HTML strings for all dynamic fields
+    my %DynamicFieldHTML;
 
-        # check if this freetext field should be available in this frontend
-        next if !$Self->{Config}->{WorkOrderFreeText}->{$Number};
+    # cycle trough the activated Dynamic Fields for this screen
+    DYNAMICFIELD:
+    for my $DynamicFieldConfig ( @{ $Self->{DynamicField} } ) {
+        next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
 
-        my $Config            = $Self->{ConfigObject}->Get( 'WorkOrderFreeKey' . $Number );
-        my $FreeTextKeyString = $Self->_GetFreeTextKeyString(
-            Number => $Number,
-            Type   => 'WorkOrder',
-            Config => $Config,
+        # get search field preferences
+        my $SearchFieldPreferences = $Self->{BackendObject}->SearchFieldPreferences(
+            DynamicFieldConfig => $DynamicFieldConfig,
         );
-        push @Attributes, (
-            {
-                Key   => 'WorkOrderFreeText' . $Number,
-                Value => $FreeTextKeyString,
-            },
+
+        next DYNAMICFIELD if !IsArrayRefWithData($SearchFieldPreferences);
+
+        # get PossibleValues
+        my $PossibleValues = $Self->{BackendObject}->PossibleValuesGet(
+            DynamicFieldConfig   => $DynamicFieldConfig,
+            OverridePossibleNone => 0,
         );
+
+        PREFERENCE:
+        for my $Preference ( @{$SearchFieldPreferences} ) {
+
+            # get field html
+            $DynamicFieldHTML{ $DynamicFieldConfig->{Name} . $Preference->{Type} }
+                = $Self->{BackendObject}->SearchFieldRender(
+                DynamicFieldConfig   => $DynamicFieldConfig,
+                Profile              => \%GetParam,
+                PossibleValuesFilter => $PossibleValues,
+                DefaultValue =>
+                    $Self->{Config}->{Defaults}->{DynamicField}
+                    ->{ $DynamicFieldConfig->{Name} },
+                LayoutObject => $Self->{LayoutObject},
+                Type         => $Preference->{Type},
+                );
+        }
     }
-
-    push @Attributes, (
-        {
-            Key      => '',
-            Value    => '-',
-            Disabled => 1,
-        },
-    );
 
     push @Attributes, (
         {
@@ -1468,94 +1547,36 @@ sub _MaskForm {
         );
     }
 
-    # get the change freetext config
-    my %ChangeFreeTextConfig;
-    NUMBER:
-    for my $Number (@ConfiguredChangeFreeTextFields) {
+    # output Dynamic fields blocks
+    # cycle trough the activated Dynamic Fields for this screen
+    DYNAMICFIELD:
+    for my $DynamicFieldConfig ( @{ $Self->{DynamicField} } ) {
+        next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
 
-        TYPE:
-        for my $Type (qw(ChangeFreeKey ChangeFreeText)) {
+        # get search field preferences
+        my $SearchFieldPreferences = $Self->{BackendObject}->SearchFieldPreferences(
+            DynamicFieldConfig => $DynamicFieldConfig,
+        );
 
-            # get config
-            my $Config = $Self->{ConfigObject}->Get( $Type . $Number );
+        next DYNAMICFIELD if !IsArrayRefWithData($SearchFieldPreferences);
 
-            next TYPE if !$Config;
-            next TYPE if ref $Config ne 'HASH';
+        PREFERENCE:
+        for my $Preference ( @{$SearchFieldPreferences} ) {
 
-            # store the change freetext config
-            $ChangeFreeTextConfig{ $Type . $Number } = $Config;
-        }
-    }
-
-    # build the change freetext HTML
-    my %ChangeFreeTextHTML = $Self->{LayoutObject}->BuildFreeTextHTML(
-        Config                   => \%ChangeFreeTextConfig,
-        ChangeData               => \%Param,
-        ConfiguredFreeTextFields => \@ConfiguredChangeFreeTextFields,
-        NullOption               => 1,
-        Multiple                 => 1,
-    );
-
-    # show change freetext fields
-    for my $Number (@ConfiguredChangeFreeTextFields) {
-
-        # check if this freetext field should be shown in this frontend
-        if ( $Self->{Config}->{ChangeFreeText}->{$Number} ) {
-
-            # show all change freetext fields
-            $Self->{LayoutObject}->Block(
-                Name => 'ChangeFreeText',
-                Data => {
-                    Number              => $Number,
-                    ChangeFreeKeyField  => $ChangeFreeTextHTML{ 'ChangeFreeKeyField' . $Number },
-                    ChangeFreeTextField => $ChangeFreeTextHTML{ 'ChangeFreeTextField' . $Number },
-                },
+            # skip fields that HTML could not be retrieved
+            next PREFERENCE if !IsHashRefWithData(
+                $DynamicFieldHTML{ $DynamicFieldConfig->{Name} . $Preference->{Type} }
             );
-        }
-    }
 
-    # get the workorder freetext config
-    my %WorkOrderFreeTextConfig;
-    NUMBER:
-    for my $Number (@ConfiguredWorkOrderFreeTextFields) {
-
-        TYPE:
-        for my $Type (qw(WorkOrderFreeKey WorkOrderFreeText)) {
-
-            # get config
-            my $Config = $Self->{ConfigObject}->Get( $Type . $Number );
-
-            next TYPE if !$Config;
-            next TYPE if ref $Config ne 'HASH';
-
-            # store the workorder freetext config
-            $WorkOrderFreeTextConfig{ $Type . $Number } = $Config;
-        }
-    }
-
-    # build the workorder freetext HTML
-    my %WorkOrderFreeTextHTML = $Self->{LayoutObject}->BuildFreeTextHTML(
-        Config                   => \%WorkOrderFreeTextConfig,
-        WorkOrderData            => \%Param,
-        ConfiguredFreeTextFields => \@ConfiguredWorkOrderFreeTextFields,
-        NullOption               => 1,
-    );
-
-    # show workorder freetext fields
-    for my $Number (@ConfiguredWorkOrderFreeTextFields) {
-
-        # check if this freetext field should be shown in this frontend
-        if ( $Self->{Config}->{WorkOrderFreeText}->{$Number} ) {
-
-            # show all workorder freetext fields
             $Self->{LayoutObject}->Block(
-                Name => 'WorkOrderFreeText',
+                Name => 'DynamicField',
                 Data => {
-                    Number => $Number,
-                    WorkOrderFreeKeyField =>
-                        $WorkOrderFreeTextHTML{ 'WorkOrderFreeKeyField' . $Number },
-                    WorkOrderFreeTextField =>
-                        $WorkOrderFreeTextHTML{ 'WorkOrderFreeTextField' . $Number },
+                    Label =>
+                        $DynamicFieldHTML{ $DynamicFieldConfig->{Name} . $Preference->{Type} }
+                        ->{Label},
+                    Field =>
+                        $DynamicFieldHTML{ $DynamicFieldConfig->{Name} . $Preference->{Type} }
+                        ->{Field},
                 },
             );
         }
@@ -1569,13 +1590,27 @@ sub _MaskForm {
         next ITEM if !$Key;
         next ITEM if !defined $Param{$Key};
         next ITEM if $Param{$Key} eq '';
-
         next ITEM if $AlreadyShown{$Key};
+        if ( ref $Param{$Key} eq 'ARRAY' && !@{ $Param{$Key} } ) {
+            next ITEM;
+        }
         $AlreadyShown{$Key} = 1;
+
         $Self->{LayoutObject}->Block(
             Name => 'SearchAJAXShow',
             Data => {
                 Attribute => $Key,
+            },
+        );
+    }
+
+    # if no attribute is shown, show change number
+    if ( !$Profile ) {
+
+        $Self->{LayoutObject}->Block(
+            Name => 'SearchAJAXShow',
+            Data => {
+                Attribute => 'ChangeNumber',
             },
         );
     }
@@ -1587,39 +1622,6 @@ sub _MaskForm {
     );
 
     return $Output;
-}
-
-sub _GetFreeTextKeyString {
-    my ( $Self, %Param ) = @_;
-
-    # get the config data
-    my %Config;
-    if ( $Param{Config} ) {
-        %Config = %{ $Param{Config} };
-    }
-    return '' if !%Config;
-
-    # to store the result HTML data
-    my $FreeTextKeyString;
-
-    # get all config keys for this field
-    my @ConfigKeys = keys %Config;
-
-    # more than one config option exists
-    if ( scalar @ConfigKeys > 1 ) {
-
-        # build dropdown list
-        $FreeTextKeyString = join " // ", @ConfigKeys;
-    }
-
-    # just one config option exists and the only key is not an empty string
-    elsif ( $ConfigKeys[0] ) {
-
-        # build just a text string
-        $FreeTextKeyString = $Config{ $ConfigKeys[0] };
-    }
-
-    return $FreeTextKeyString;
 }
 
 1;
