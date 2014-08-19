@@ -377,7 +377,7 @@ sub _MigrateFreeTextToDynamicFields {
     my ($Self) = @_;
 
     # ---------------------------------------------------------------------------------------------
-    # Migrate freekey and freetext fields to dynamic fields (just the fields data comes later)
+    # Migrate freekey and freetext fields to dynamic fields (just the fields, the data comes later)
     # ---------------------------------------------------------------------------------------------
 
     # get all configured change and workorder freekey and freetext numbers from sysconfig
@@ -387,13 +387,14 @@ sub _MigrateFreeTextToDynamicFields {
         FREETEXTNUMBER:
         for my $Number ( 1 .. 500 ) {
 
+            # get freekey and freetext config
             my $FreeKeyConfig  = $Self->{ConfigObject}->Get( $Type . 'FreeKey' . $Number );
             my $FreeTextConfig = $Self->{ConfigObject}->Get( $Type . 'FreeText' . $Number );
 
-            # only if a key config exists
+            # only if a KEY config exists
             next FREETEXTNUMBER if !$FreeKeyConfig;
 
-            # default label, like the name
+            # default label, same like the name
             my $Label = $Type . 'FreeText' . $Number;
 
             # the freekey has more than one entry, then we want to create
