@@ -54,12 +54,20 @@ sub new {
     # get config for frontend
     $Self->{Config} = $Self->{ConfigObject}->Get("ITSMChange::Frontend::$Self->{Action}");
 
-    # get the dynamic fields for this screen (change and workorder fields)
-    $Self->{DynamicField} = $Self->{DynamicFieldObject}->DynamicFieldListGet(
+    # get the dynamic fields for this screen (change dynamic fields)
+    $Self->{DynamicFieldChange} = $Self->{DynamicFieldObject}->DynamicFieldListGet(
         Valid       => 1,
-        ObjectType  => [ 'ITSMChange', 'ITSMWorkOrder' ],
+        ObjectType  => 'ITSMChange',
         FieldFilter => $Self->{Config}->{DynamicField} || {},
     );
+
+    # get the dynamic fields for this screen (workorder dynamic fields)
+    $Self->{DynamicFieldWorkOrder} = $Self->{DynamicFieldObject}->DynamicFieldListGet(
+        Valid       => 1,
+        ObjectType  => 'ITSMWorkOrder',
+        FieldFilter => $Self->{Config}->{DynamicField} || {},
+    );
+
 
     return $Self;
 }
@@ -183,7 +191,7 @@ sub Run {
         # get Dynamic fields from param object
         # cycle trough the activated Dynamic Fields for this screen
         DYNAMICFIELD:
-        for my $DynamicFieldConfig ( @{ $Self->{DynamicField} } ) {
+        for my $DynamicFieldConfig ( @{ $Self->{DynamicFieldChange} }, @{ $Self->{DynamicFieldWorkOrder} } ) {
             next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
 
             # get search field preferences
@@ -410,7 +418,7 @@ sub Run {
 
         # cycle trough the activated Dynamic Fields for this screen
         DYNAMICFIELD:
-        for my $DynamicFieldConfig ( @{ $Self->{DynamicField} } ) {
+        for my $DynamicFieldConfig ( @{ $Self->{DynamicFieldChange} }, @{ $Self->{DynamicFieldWorkOrder} } ) {
             next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
 
             # get search field preferences
@@ -1114,14 +1122,22 @@ sub _MaskForm {
     );
 
     my $DynamicFieldSeparator = 1;
+    my $LastObjectType;
 
     # create dynamic fields search options for attribute select
     # cycle trough the activated Dynamic Fields for this screen
     DYNAMICFIELD:
-    for my $DynamicFieldConfig ( @{ $Self->{DynamicField} } ) {
+    for my $DynamicFieldConfig ( @{ $Self->{DynamicFieldChange} }, @{ $Self->{DynamicFieldWorkOrder} } ) {
         next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
         next DYNAMICFIELD if !$DynamicFieldConfig->{Name};
         next DYNAMICFIELD if $DynamicFieldConfig->{Name} eq '';
+
+        if ( $LastObjectType eq 'ITSMChange' && $DynamicFieldConfig->{ObjectType} eq 'ITSMWorkOrder' ) {
+            $DynamicFieldSeparator = 1;
+        }
+
+        # save the last object type (needed for separator between change and workorder fields)
+        $LastObjectType = $DynamicFieldConfig->{ObjectType};
 
         # create a separator for dynamic fields attributes
         if ($DynamicFieldSeparator) {
@@ -1187,7 +1203,7 @@ sub _MaskForm {
 
     # cycle trough the activated Dynamic Fields for this screen
     DYNAMICFIELD:
-    for my $DynamicFieldConfig ( @{ $Self->{DynamicField} } ) {
+    for my $DynamicFieldConfig ( @{ $Self->{DynamicFieldChange} }, @{ $Self->{DynamicFieldWorkOrder} } ) {
         next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
 
         # get search field preferences
@@ -1550,7 +1566,7 @@ sub _MaskForm {
     # output Dynamic fields blocks
     # cycle trough the activated Dynamic Fields for this screen
     DYNAMICFIELD:
-    for my $DynamicFieldConfig ( @{ $Self->{DynamicField} } ) {
+    for my $DynamicFieldConfig ( @{ $Self->{DynamicFieldChange} }, @{ $Self->{DynamicFieldWorkOrder} } ) {
         next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
 
         # get search field preferences
