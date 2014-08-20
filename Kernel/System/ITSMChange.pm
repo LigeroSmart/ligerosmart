@@ -1380,13 +1380,26 @@ is ignored.
 
         # TODO: Convert freetext to dynamic fields
 
-        # search in change freetext and freekey fields
-        ChangeFreeKey1     => 'Sun',                                    # (optional) change freekey fields from 1 to ITSMChange::FreeText::MaxNumber
-        ChangeFreeText1    => 'Earth',                                  # (optional) change freetext fields from 1 to ITSMChange::FreeText::MaxNumber
+#        # search in change freetext and freekey fields
+#        ChangeFreeKey1     => 'Sun',                                    # (optional) change freekey fields from 1 to ITSMChange::FreeText::MaxNumber
+#        ChangeFreeText1    => 'Earth',                                  # (optional) change freetext fields from 1 to ITSMChange::FreeText::MaxNumber
+#
+#        # search in workorder freetext and freekey fields
+#        WorkOrderFreeKey1  => 'Moon',                                   # (optional) workorder freekey fields from 1 to ITSMWorkOrder::FreeText::MaxNumber
+#        WorkOrderFreeText1 => 'Mars',                                   # (optional) workorder freetext fields from 1 to ITSMWorkOrder::FreeText::MaxNumber
 
-        # search in workorder freetext and freekey fields
-        WorkOrderFreeKey1  => 'Moon',                                   # (optional) workorder freekey fields from 1 to ITSMWorkOrder::FreeText::MaxNumber
-        WorkOrderFreeText1 => 'Mars',                                   # (optional) workorder freetext fields from 1 to ITSMWorkOrder::FreeText::MaxNumber
+        # DynamicFields (both change and workorder dynamic fields are possible)
+        #   At least one operator must be specified. Operators will be connected with AND,
+        #       values in an operator with OR.
+        #   You can also pass more than one argument to an operator: ['value1', 'value2']
+        DynamicField_FieldNameX => {
+            Equals            => 123,
+            Like              => 'value*',                # "equals" operator with wildcard support
+            GreaterThan       => '2001-01-01 01:01:01',
+            GreaterThanEquals => '2001-01-01 01:01:01',
+            SmallerThan       => '2002-02-02 02:02:02',
+            SmallerThanEquals => '2002-02-02 02:02:02',
+        }
 
         # search in text fields of workorder object
         WorkOrderTitle            => 'Boot Mailserver',                # (optional)
@@ -1744,11 +1757,32 @@ sub ChangeSearch {
     my @InnerJoinTables;    # keep track of the tables that need to be inner joined
     my @OuterJoinTables;    # keep track of the tables that need to be outer joined
 
-    # keep track of the tables that need to be inner joined for change freetext fields
-    my @InnerJoinTablesChangeFreeText;
+    # # keep track of the tables that need to be inner joined for change freetext fields
+    # my @InnerJoinTablesChangeFreeText;
 
-    # keep track of the tables that need to be inner joined for workorder freetext fields
-    my @InnerJoinTablesWorkOrderFreeText;
+    # # keep track of the tables that need to be inner joined for workorder freetext fields
+    # my @InnerJoinTablesWorkOrderFreeText;
+
+    # check all configured change dynamic fields, build lookup hash by name
+    my %ChangeDynamicFieldName2Config;
+    my $ChangeDynamicFields = $Self->{DynamicFieldObject}->DynamicFieldListGet(
+        ObjectType => 'ITSMChange',
+    );
+    for my $DynamicField ( @{$ChangeDynamicFields} ) {
+        $ChangeDynamicFieldName2Config{ $DynamicField->{Name} } = $DynamicField;
+    }
+
+    # check all configured workorder dynamic fields, build lookup hash by name
+    my %WorkOrderDynamicFieldName2Config;
+    my $WorkOrderDynamicFields = $Self->{DynamicFieldObject}->DynamicFieldListGet(
+        ObjectType => 'ITSMWorkOrder',
+    );
+    for my $DynamicField ( @{$WorkOrderDynamicFields} ) {
+        $WorkOrderDynamicFieldName2Config{ $DynamicField->{Name} } = $DynamicField;
+    }
+
+    # $Self->{LogObject}->Dum_per( '', '%ChangeDynamicFieldName2Config', \%ChangeDynamicFieldName2Config );
+    # $Self->{LogObject}->Dum_per( '', '%WorkOrderDynamicFieldName2Config', \%WorkOrderDynamicFieldName2Config );
 
     # add string params to the WHERE clause
     my %StringParams = (
@@ -1765,75 +1799,75 @@ sub ChangeSearch {
         WorkOrderReport      => 'wo2.report_plain',
     );
 
-    # map free key/text params to alias
-    my %FreeParams = (
-        ChangeFreeText    => 'cft',
-        ChangeFreeKey     => 'cfk',
-        WorkOrderFreeText => 'wft',
-        WorkOrderFreeKey  => 'wfk',
-    );
+    # # map free key/text params to alias
+    # my %FreeParams = (
+    #     ChangeFreeText    => 'cft',
+    #     ChangeFreeKey     => 'cfk',
+    #     WorkOrderFreeText => 'wft',
+    #     WorkOrderFreeKey  => 'wfk',
+    # );
 
-    # add change and workorder freetext fields to %StringParams
-    ARGUMENT:
-    for my $Argument ( sort keys %Param ) {
+    # # add change and workorder freetext fields to %StringParams
+    # ARGUMENT:
+    # for my $Argument ( sort keys %Param ) {
 
-        next ARGUMENT
-            if $Argument !~ m{ \A (( Change | WorkOrder ) Free ( Text | Key )) ( \d+ ) \z }xms;
+    #     next ARGUMENT
+    #         if $Argument !~ m{ \A (( Change | WorkOrder ) Free ( Text | Key )) ( \d+ ) \z }xms;
 
-        my $Type   = $1;
-        my $Number = $4;
+    #     my $Type   = $1;
+    #     my $Number = $4;
 
-        # set the table alias and column for string parameter
-        if ( ref $Param{$Argument} eq '' ) {
-            $StringParams{$Argument} = $FreeParams{$Type} . $Number . '.field_value';
-        }
+    #     # set the table alias and column for string parameter
+    #     if ( ref $Param{$Argument} eq '' ) {
+    #         $StringParams{$Argument} = $FreeParams{$Type} . $Number . '.field_value';
+    #     }
 
-        # check if the given array contains only one element (with a possible wildcard)
-        elsif (
-            ref $Param{$Argument} eq 'ARRAY'
-            && @{ $Param{$Argument} }
-            && scalar @{ $Param{$Argument} } == 1
-            )
-        {
+    #     # check if the given array contains only one element (with a possible wildcard)
+    #     elsif (
+    #         ref $Param{$Argument} eq 'ARRAY'
+    #         && @{ $Param{$Argument} }
+    #         && scalar @{ $Param{$Argument} } == 1
+    #         )
+    #     {
 
-            # replace $Param{$Argument} for the STRINGPARAM loop, to handle it like an string
-            $Param{$Argument} = ${ $Param{$Argument} }[0];
+    #         # replace $Param{$Argument} for the STRINGPARAM loop, to handle it like an string
+    #         $Param{$Argument} = ${ $Param{$Argument} }[0];
 
-            # set the table alias and column for string parameter
-            $StringParams{$Argument} = $FreeParams{$Type} . $Number . '.field_value';
-        }
+    #         # set the table alias and column for string parameter
+    #         $StringParams{$Argument} = $FreeParams{$Type} . $Number . '.field_value';
+    #     }
 
-        # add table alias and column for array parameter
-        elsif ( ref $Param{$Argument} eq 'ARRAY' && @{ $Param{$Argument} } ) {
+    #     # add table alias and column for array parameter
+    #     elsif ( ref $Param{$Argument} eq 'ARRAY' && @{ $Param{$Argument} } ) {
 
-            # quote
-            for my $OneParam ( @{ $Param{$Argument} } ) {
-                $OneParam = "'" . $DBObject->Quote($OneParam) . "'";
-            }
+    #         # quote
+    #         for my $OneParam ( @{ $Param{$Argument} } ) {
+    #             $OneParam = "'" . $DBObject->Quote($OneParam) . "'";
+    #         }
 
-            # create string
-            my $InString = join ', ', @{ $Param{$Argument} };
+    #         # create string
+    #         my $InString = join ', ', @{ $Param{$Argument} };
 
-            # add params to sql-where-array
-            push @SQLWhere, $FreeParams{$Type} . $Number . '.field_value' . " IN ($InString)";
+    #         # add params to sql-where-array
+    #         push @SQLWhere, $FreeParams{$Type} . $Number . '.field_value' . " IN ($InString)";
 
-            # add the field id to the where clause
-            push @SQLWhere, $FreeParams{$Type} . $Number . '.field_id = ' . $Number;
+    #         # add the field id to the where clause
+    #         push @SQLWhere, $FreeParams{$Type} . $Number . '.field_id = ' . $Number;
 
-            if ( $Type =~ m{ \A ChangeFree }xms ) {
+    #         if ( $Type =~ m{ \A ChangeFree }xms ) {
 
-                # the change_freetext and change_freekey tables need to be joined,
-                # when they occur in the WHERE clause
-                push @InnerJoinTablesChangeFreeText, $FreeParams{$Type} . $Number;
-            }
-            elsif ( $Type =~ m{ \A WorkOrderFree }xms ) {
+    #             # the change_freetext and change_freekey tables need to be joined,
+    #             # when they occur in the WHERE clause
+    #             push @InnerJoinTablesChangeFreeText, $FreeParams{$Type} . $Number;
+    #         }
+    #         elsif ( $Type =~ m{ \A WorkOrderFree }xms ) {
 
-                # the change_wo_freetext and change_wo_freekey tables need to be joined,
-                # when they occur in the WHERE clause
-                push @InnerJoinTablesWorkOrderFreeText, $FreeParams{$Type} . $Number;
-            }
-        }
-    }
+    #             # the change_wo_freetext and change_wo_freekey tables need to be joined,
+    #             # when they occur in the WHERE clause
+    #             push @InnerJoinTablesWorkOrderFreeText, $FreeParams{$Type} . $Number;
+    #         }
+    #     }
+    # }
 
     # add string params to sql-where-array
     STRINGPARAM:
@@ -1889,34 +1923,149 @@ sub ChangeSearch {
             push @InnerJoinTables, 'wo2';
         }
 
-        # add field_id to where clause for change freetext fields
-        if ( $StringParams{$StringParam} =~ m{ \A ( ( cft | cfk ) ( \d+ ) ) }xms ) {
+        # # add field_id to where clause for change freetext fields
+        # if ( $StringParams{$StringParam} =~ m{ \A ( ( cft | cfk ) ( \d+ ) ) }xms ) {
 
-            my $TableAlias = $1;
-            my $Number     = $3;
+        #     my $TableAlias = $1;
+        #     my $Number     = $3;
 
-            # add the field id to the where clause
-            push @SQLWhere, $TableAlias . '.field_id = ' . $Number;
+        #     # add the field id to the where clause
+        #     push @SQLWhere, $TableAlias . '.field_id = ' . $Number;
 
-            # the change_freetext and change_freekey tables need to be joined,
-            # when they occur in the WHERE clause
-            push @InnerJoinTablesChangeFreeText, $TableAlias;
+        #     # the change_freetext and change_freekey tables need to be joined,
+        #     # when they occur in the WHERE clause
+        #     push @InnerJoinTablesChangeFreeText, $TableAlias;
+        # }
+
+        # # add field_id to where clause for workorder freetext fields
+        # elsif ( $StringParams{$StringParam} =~ m{ \A ( ( wft | wfk ) ( \d+ ) ) }xms ) {
+
+        #     my $TableAlias = $1;
+        #     my $Number     = $3;
+
+        #     # add the field id to the where clause
+        #     push @SQLWhere, $TableAlias . '.field_id = ' . $Number;
+
+        #     # the change_wo_freetext and change_wo_freekey tables need to be joined,
+        #     # when they occur in the WHERE clause
+        #     push @InnerJoinTablesWorkOrderFreeText, $TableAlias;
+        # }
+    }
+
+
+
+
+    # build sql for dynamic fields
+    my $SQLDynamicFieldInnerJoins = '';     # join-statements
+    my $SQLDynamicFieldWhere      = '';     # where-clause
+    my $DynamicFieldJoinCounter = 1;
+
+    DYNAMICFIELD:
+    for my $DynamicField ( @{$ChangeDynamicFields}, @{$WorkOrderDynamicFields} ) {
+
+        my $SearchParam = $Param{ "DynamicField_" . $DynamicField->{Name} };
+
+        next DYNAMICFIELD if ( !$SearchParam );
+        next DYNAMICFIELD if ( ref $SearchParam ne 'HASH' );
+
+        my $NeedJoin;
+
+        for my $Operator ( sort keys %{$SearchParam} ) {
+
+            my @SearchParams
+                = ( ref $SearchParam->{$Operator} eq 'ARRAY' )
+                ? @{ $SearchParam->{$Operator} }
+                : ( $SearchParam->{$Operator} );
+
+            # my $SQLDynamicFieldWhereSub = ' AND (';
+            # my $SQLDynamicFieldWhereSub = ' (';
+
+            my $SQLDynamicFieldWhereSub = '';
+            if ( $SQLDynamicFieldWhere ) {
+                $SQLDynamicFieldWhereSub = ' AND (';
+            }
+            else {
+                $SQLDynamicFieldWhereSub = ' (';
+            }
+
+            my $Counter   = 0;
+            TEXT:
+            for my $Text (@SearchParams) {
+                next TEXT if ( !defined $Text || $Text eq '' );
+
+                $Text =~ s/\*/%/gi;
+
+                # check search attribute, we do not need to search for *
+                next if $Text =~ /^\%{1,3}$/;
+
+                # validate data type
+                my $ValidateSuccess = $Self->{DynamicFieldBackendObject}->ValueValidate(
+                    DynamicFieldConfig => $DynamicField,
+                    Value              => $Text,
+                    UserID             => $Param{UserID} || 1,
+                );
+                if ( !$ValidateSuccess ) {
+                    $Self->{LogObject}->Log(
+                        Priority => 'error',
+                        Message =>
+                            "Search not executed due to invalid value '"
+                            . $Text
+                            . "' on field '"
+                            . $DynamicField->{Name}
+                            . "'!",
+                    );
+                    return;
+                }
+
+                if ($Counter) {
+                    $SQLDynamicFieldWhereSub .= ' OR ';
+                }
+                $SQLDynamicFieldWhereSub .= $Self->{DynamicFieldBackendObject}->SearchSQLGet(
+                    DynamicFieldConfig => $DynamicField,
+                    TableAlias         => "dfv$DynamicFieldJoinCounter",
+                    Operator           => $Operator,
+                    SearchTerm         => $Text,
+                );
+
+                $Counter++;
+            }
+            $SQLDynamicFieldWhereSub .= ') ';
+            if ($Counter) {
+                $SQLDynamicFieldWhere .= $SQLDynamicFieldWhereSub;
+                $NeedJoin = 1;
+            }
         }
 
-        # add field_id to where clause for workorder freetext fields
-        elsif ( $StringParams{$StringParam} =~ m{ \A ( ( wft | wfk ) ( \d+ ) ) }xms ) {
+        if ($NeedJoin) {
 
-            my $TableAlias = $1;
-            my $Number     = $3;
+            if ( $DynamicField->{ObjectType} eq 'ITSMChange' ) {
 
-            # add the field id to the where clause
-            push @SQLWhere, $TableAlias . '.field_id = ' . $Number;
+                # join the table for this dynamic field
+                $SQLDynamicFieldInnerJoins .= "INNER JOIN dynamic_field_value dfv$DynamicFieldJoinCounter
+                    ON (c.id = dfv$DynamicFieldJoinCounter.object_id
+                        AND dfv$DynamicFieldJoinCounter.field_id = " .
+                    $Self->{DBObject}->Quote( $DynamicField->{ID}, 'Integer' ) . ") ";
+            }
 
-            # the change_wo_freetext and change_wo_freekey tables need to be joined,
-            # when they occur in the WHERE clause
-            push @InnerJoinTablesWorkOrderFreeText, $TableAlias;
+            elsif ( $DynamicField->{ObjectType} eq 'ITSMWorkOrder' ) {
+
+                # always join the workorder table for inner joins with the change table
+                # it does not matter if already contained in @InnerJoinTables
+                # as double entries are filtered out later
+                push @InnerJoinTables, 'wo2';
+
+                $SQLDynamicFieldInnerJoins .= "INNER JOIN dynamic_field_value dfv$DynamicFieldJoinCounter
+                    ON (wo2.id = dfv$DynamicFieldJoinCounter.object_id
+                        AND dfv$DynamicFieldJoinCounter.field_id = " .
+                    $Self->{DBObject}->Quote( $DynamicField->{ID}, 'Integer' ) . ") ";
+            }
+
+            $DynamicFieldJoinCounter++;
         }
     }
+
+    # $Self->{LogObject}->Dum_per( '', '$SQLDynamicFieldInnerJoins', $SQLDynamicFieldInnerJoins );
+    # $Self->{LogObject}->Dum_per( '', '$SQLDynamicFieldWhere', $SQLDynamicFieldWhere );
 
     # set array params
     my %ArrayParams = (
@@ -2132,6 +2281,7 @@ sub ChangeSearch {
     );
     my %TableSeen;
 
+    # TODO: Look here for inner join
     INNER_JOIN_TABLE:
     for my $Table (@InnerJoinTables) {
 
@@ -2151,42 +2301,46 @@ sub ChangeSearch {
         $SQL .= "INNER JOIN $LongTableName{$Table} $Table ON $Table.change_id = c.id ";
     }
 
-    INNER_JOIN_TABLE_CHANGE_FREETEXT:
-    for my $Table (@InnerJoinTablesChangeFreeText) {
+    # add the dynamic field join statements
+    $SQL .= $SQLDynamicFieldInnerJoins;
 
-        # change freetext
-        if ( $Table =~ m{ \A cft }xms ) {
-            $SQL .= "INNER JOIN change_freetext $Table ON $Table.change_id = c.id ";
-        }
 
-        # change freekey
-        elsif ( $Table =~ m{ \A cfk }xms ) {
-            $SQL .= "INNER JOIN change_freekey $Table ON $Table.change_id = c.id ";
-        }
-    }
+    # INNER_JOIN_TABLE_CHANGE_FREETEXT:
+    # for my $Table (@InnerJoinTablesChangeFreeText) {
 
-    # check if we need have to join workorder freetext tables
-    if (@InnerJoinTablesWorkOrderFreeText) {
+    #     # change freetext
+    #     if ( $Table =~ m{ \A cft }xms ) {
+    #         $SQL .= "INNER JOIN change_freetext $Table ON $Table.change_id = c.id ";
+    #     }
 
-        # we also need to join the workorder table
-        $SQL .= 'INNER JOIN change_workorder ON change_workorder.change_id = c.id ';
+    #     # change freekey
+    #     elsif ( $Table =~ m{ \A cfk }xms ) {
+    #         $SQL .= "INNER JOIN change_freekey $Table ON $Table.change_id = c.id ";
+    #     }
+    # }
 
-        INNER_JOIN_TABLE_WORKORDER_FREETEXT:
-        for my $Table (@InnerJoinTablesWorkOrderFreeText) {
+    # # check if we need have to join workorder freetext tables
+    # if (@InnerJoinTablesWorkOrderFreeText) {
 
-            # workorder freetext
-            if ( $Table =~ m{ \A wft }xms ) {
-                $SQL .= "INNER JOIN change_wo_freetext $Table "
-                    . "ON $Table.workorder_id = change_workorder.id ";
-            }
+    #     # we also need to join the workorder table
+    #     $SQL .= 'INNER JOIN change_workorder ON change_workorder.change_id = c.id ';
 
-            # workorder freekey
-            elsif ( $Table =~ m{ \A wfk }xms ) {
-                $SQL .= "INNER JOIN change_wo_freekey $Table ON "
-                    . "$Table.workorder_id = change_workorder.id ";
-            }
-        }
-    }
+    #     INNER_JOIN_TABLE_WORKORDER_FREETEXT:
+    #     for my $Table (@InnerJoinTablesWorkOrderFreeText) {
+
+    #         # workorder freetext
+    #         if ( $Table =~ m{ \A wft }xms ) {
+    #             $SQL .= "INNER JOIN change_wo_freetext $Table "
+    #                 . "ON $Table.workorder_id = change_workorder.id ";
+    #         }
+
+    #         # workorder freekey
+    #         elsif ( $Table =~ m{ \A wfk }xms ) {
+    #             $SQL .= "INNER JOIN change_wo_freekey $Table ON "
+    #                 . "$Table.workorder_id = change_workorder.id ";
+    #         }
+    #     }
+    # }
 
     OUTER_JOIN_TABLE:
     for my $Table (@OuterJoinTables) {
@@ -2214,13 +2368,22 @@ sub ChangeSearch {
         $SQL .= 'WHERE ';
         $SQL .= join ' AND ', map {"( $_ )"} @SQLWhere;
         $SQL .= ' ';
+        if ($SQLDynamicFieldWhere) {
+            $SQL .= ' AND ' . $SQLDynamicFieldWhere;
+        }
+    }
+    else {
+        if ($SQLDynamicFieldWhere) {
+            $SQL .= ' WHERE ' . $SQLDynamicFieldWhere;
+        }
     }
 
     # we need to group whenever there is a join
     if (
         scalar @InnerJoinTables
-        || scalar @InnerJoinTablesChangeFreeText
-        || scalar @InnerJoinTablesWorkOrderFreeText
+        # || scalar @InnerJoinTablesChangeFreeText
+        # || scalar @InnerJoinTablesWorkOrderFreeText
+        || $SQLDynamicFieldWhere
         || scalar @OuterJoinTables
         )
     {
@@ -2272,6 +2435,8 @@ sub ChangeSearch {
         delete $Param{Limit};
     }
 
+    # $Self->{LogObject}->Dum_per( '', '$SQL', $SQL );
+
     # ask database
     return if !$DBObject->Prepare(
         SQL   => $SQL,
@@ -2287,8 +2452,9 @@ sub ChangeSearch {
     if (
         $Result eq 'COUNT'
         && !@InnerJoinTables
-        && !@InnerJoinTablesChangeFreeText
-        && !@InnerJoinTablesWorkOrderFreeText
+        # && !@InnerJoinTablesChangeFreeText
+        # && !@InnerJoinTablesWorkOrderFreeText
+        && !$SQLDynamicFieldWhere
         && !@OuterJoinTables
         )
     {
