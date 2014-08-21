@@ -1740,8 +1740,7 @@ push @WorkOrderTests, (
             },
         },
 
-        # TODO: Enable this again later!
-        # SearchTest => [ 8, 35 ],
+        SearchTest => [ 8, 35 ],
     },
 
     # test some workorder dynamic fields WorkOrderAdd
@@ -1768,8 +1767,7 @@ push @WorkOrderTests, (
             },
         },
 
-        # TODO: Enable this again later!
-        # SearchTest => [ 8, 35, 36 ],
+        SearchTest => [ 8, 35, 36 ],
     },
 
     # test workorder dynamic fields with maximum length
@@ -1792,8 +1790,7 @@ push @WorkOrderTests, (
             },
         },
 
-        # TODO: Enable this again later!
-        # SearchTest => [8],
+        SearchTest => [8],
     },
 
     # test workorder dynamic fields larger than maximum length in WorkOrderAdd
@@ -1840,8 +1837,7 @@ push @WorkOrderTests, (
             },
         },
 
-        # TODO: Enable this again later!
-        # SearchTest => [8],
+        SearchTest => [8],
     },
 
     # test workorder dynamic fields with zero and empty strings
@@ -1870,8 +1866,7 @@ push @WorkOrderTests, (
             },
         },
 
-        # TODO: Enable this again later!
-        # SearchTest => [8],
+        SearchTest => [8],
     },
 
 );
@@ -2714,34 +2709,42 @@ my @WorkOrderSearchTests = (
         },
     },
 
-    # Nr 35 - Search for workorder freetext fields
+    # Nr 35 - Search for workorder dynamic fields
     {
-        Description => 'Search for workorder freetext fields',
+        Description => 'Search for workorder dynamic fields',
         SearchData  => {
-            WorkOrderFreeKey1  => 'AAAA',
-            WorkOrderFreeText1 => 'BBBB',
-            WorkOrderFreeKey2  => 'CCCC',
-            WorkOrderFreeText2 => 'DDDD',
+                'DynamicField_' . $UniqueNamePrefix . 'Test1' => {
+                    Equals => 'AAAA',
+                },
+                'DynamicField_' . $UniqueNamePrefix . 'Test2' => {
+                    Equals => 'BBBB',
+                },
             UsingWildcards     => 0,
         },
         ResultData => {
             TestExistence => 1,
-            TestCount     => 1,
+            TestCount     => 2,
         },
     },
 
-    # Nr 36 - Search for workorder freetext fields
+    # Nr 36 - Search for workorder dynamic fields
     {
-        Description => 'Search for workorder freetext fields',
+        Description => 'Search for workorder dynamic fields',
         SearchData  => {
-            WorkOrderTitle     => 'Test add workorder with freetext fields - ' . $UniqueSignature,
-            WorkOrderFreeKey1  => 'AAAA',
-            WorkOrderFreeText1 => 'BBBB',
-            WorkOrderFreeKey2  => 'CCCC',
-            WorkOrderFreeText2 => 'DDDD',
-            WorkOrderFreeKey3  => 'XXXX',
-            WorkOrderFreeText3 => 'YYYY',
-            UsingWildcards     => 1,
+            WorkOrderTitle     => 'Test add workorder with dynamic fields - ' . $UniqueSignature,
+                'DynamicField_' . $UniqueNamePrefix . 'Test1' => {
+                    Equals => 'AAAA',
+                },
+                'DynamicField_' . $UniqueNamePrefix . 'Test2' => {
+                    Equals => 'BBBB',
+                },
+                'DynamicField_' . $UniqueNamePrefix . 'Test3' => {
+                    Equals => 'XXXX',
+                },
+                'DynamicField_' . $UniqueNamePrefix . 'Test4' => {
+                    Equals => 'YYYY',
+                },
+            UsingWildcards => 1,
         },
         ResultData => {
             TestExistence => 1,
