@@ -934,8 +934,7 @@ sub _ITSMChangeGetWorkOrderGraph {
                 }
             }
 
-            # handle workorder freetext fields
-            # elsif ( $Attribute =~ m{ \A WorkOrderFreeText (\d+) }xms ) {
+            # handle workorder dynamic fields
             elsif ( $Attribute =~ m{ \A DynamicField_ (.+) }xms ) {
 
                 my $DynamicFieldName = $1;
