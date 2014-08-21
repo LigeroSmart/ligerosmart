@@ -1122,7 +1122,7 @@ sub _MaskForm {
     );
 
     my $DynamicFieldSeparator = 1;
-    my $LastObjectType;
+    my $LastObjectType = '';
 
     # create dynamic fields search options for attribute select
     # cycle trough the activated Dynamic Fields for this screen
