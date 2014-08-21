@@ -1973,8 +1973,7 @@ my @ChangeTests = (
             },
         },
 
-        # TODO: Enable this again later!
-        # SearchTest => [ 6, 69, 70, 71, 72 ],
+        SearchTest => [ 6, 69, 70, 71, 72 ],
     },
 
     # test change dynamic fields with maximum length
@@ -1996,8 +1995,7 @@ my @ChangeTests = (
             },
         },
 
-        # TODO: Enable this again later!
-        # SearchTest => [6],
+        SearchTest => [6],
     },
 
     # test change dynamic fields larger than maximum length
@@ -2042,8 +2040,7 @@ my @ChangeTests = (
             },
         },
 
-        # TODO: Enable this again later!
-        # SearchTest => [6],
+        SearchTest => [6],
     },
 
     # test change dynamic fields with zero and empty strings
@@ -2070,8 +2067,7 @@ my @ChangeTests = (
             },
         },
 
-        # TODO: Enable this again later!
-        # SearchTest => [ 6, 69 ],
+        SearchTest => [ 6 ],
     },
 
     #------------------------------#
@@ -3931,12 +3927,16 @@ my @ChangeSearchTests = (
         SearchFails => 1,
     },
 
-    # Nr 69 - Search for change freetext fields
+    # Nr 69 - Search for change dynamic fields
     {
-        Description => 'Search for change freetext fields',
+        Description => 'Search for change dynamic fields',
         SearchData  => {
-            ChangeFreeKey1  => 'AAA',
-            ChangeFreeText1 => 'BBB',
+            'DynamicField_' . $UniqueNamePrefix . 'Test1' => {
+                Equals => 'AAAA',
+            },
+            'DynamicField_' . $UniqueNamePrefix . 'Test2' => {
+                Equals => 'BBBB',
+            },
             UsingWildcards  => 0,
         },
         ResultData => {
@@ -3945,14 +3945,16 @@ my @ChangeSearchTests = (
         },
     },
 
-    # Nr 70 - Search for change freetext fields
+    # Nr 70 - Search for change dynamic fields
     {
-        Description => 'Search for change freetext fields',
+        Description => 'Search for change dynamic fields',
         SearchData  => {
-            ChangeFreeKey1  => 'AAA',
-            ChangeFreeText1 => 'BBB',
-            ChangeFreeKey3  => 'EEE',
-            ChangeFreeText4 => 'HHH',
+                'DynamicField_' . $UniqueNamePrefix . 'Test3' => {
+                    Equals => 'GGGG',
+                },
+                'DynamicField_' . $UniqueNamePrefix . 'Test4' => {
+                    Equals => 'HHHH',
+                },
             UsingWildcards  => 1,
         },
         ResultData => {
@@ -3961,13 +3963,17 @@ my @ChangeSearchTests = (
         },
     },
 
-    # Nr 71 - Search for change freetext fields
+    # Nr 71 - Search for change dynamic fields
     {
-        Description => 'Search for change freetext fields',
+        Description => 'Search for change dynamic fields',
         SearchData  => {
-            ChangeTitle     => 'Test add change with freetext fields - ' . $UniqueSignature,
-            ChangeFreeKey1  => 'AAA',
-            ChangeFreeText1 => 'BBB',
+            ChangeTitle     => 'Test add change with dynamic fields - ' . $UniqueSignature,
+            'DynamicField_' . $UniqueNamePrefix . 'Test1' => {
+                Equals => 'AAAA',
+            },
+            'DynamicField_' . $UniqueNamePrefix . 'Test2' => {
+                Equals => 'BBBB',
+            },
             UsingWildcards  => 1,
         },
         ResultData => {
@@ -3976,15 +3982,22 @@ my @ChangeSearchTests = (
         },
     },
 
-    # Nr 72 - Search for change and workorder freetext fields
+    # Nr 72 - Search for change and workorder dynamic fields
     {
-        Description => 'Search for change and workorder freetext fields',
+        Description => 'Search for change and workorder dynamic fields',
         SearchData  => {
-            ChangeFreeKey1     => 'AAA',
-            ChangeFreeText1    => 'BBB',
-            WorkOrderFreeKey1  => 'W-AAA',
-            WorkOrderFreeText1 => 'W-BBB',
-            WorkOrderFreeKey2  => 'W-CCC',
+            'DynamicField_' . $UniqueNamePrefix . 'Test1' => {
+                Equals => 'AAAA',
+            },
+            'DynamicField_' . $UniqueNamePrefix . 'Test2' => {
+                Equals => 'BBBB',
+            },
+            'DynamicField_' . $UniqueNamePrefix . 'WorkorderTest1' => {
+                Equals => 'W-AAAA',
+            },
+            'DynamicField_' . $UniqueNamePrefix . 'WorkorderTest2' => {
+                Equals => 'W-BBBB',
+            },
         },
         ResultData => {
             TestExistence => 1,
