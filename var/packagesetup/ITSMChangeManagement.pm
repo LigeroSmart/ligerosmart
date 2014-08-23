@@ -282,26 +282,6 @@ sub CodeUpgrade {
     # set default CIP matrix (this is only done if no matrix exists)
     $Self->_CIPDefaultMatrixSet();
 
-    # TODO: Move this to special upgrade block with correct version number ( < 3.3.91)
-    $Self->_MigrateFreeTextToDynamicFields();
-
-    return 1;
-}
-
-=item CodeUpgradeFromLowerThan_3_2_91()
-
-This function is only executed if the installed module version is smaller than 3.2.91 (3.3.0 Beta 1).
-
-my $Result = $CodeObject->CodeUpgradeFromLowerThan_3_2_91();
-
-=cut
-
-sub CodeUpgradeFromLowerThan_3_2_91 {    ## no critic
-    my ( $Self, %Param ) = @_;
-
-    # add new notifications that were added in version 3.2.91
-    $Self->_AddSystemNotificationsNewIn_3_2_91();
-
     return 1;
 }
 
@@ -325,6 +305,40 @@ sub CodeUpgradeFromLowerThan_2_0_3 {    ## no critic
     return 1;
 }
 
+=item CodeUpgradeFromLowerThan_3_2_91()
+
+This function is only executed if the installed module version is smaller than 3.2.91 (3.3.0 Beta 1).
+
+my $Result = $CodeObject->CodeUpgradeFromLowerThan_3_2_91();
+
+=cut
+
+sub CodeUpgradeFromLowerThan_3_2_91 {    ## no critic
+    my ( $Self, %Param ) = @_;
+
+    # add new notifications that were added in version 3.2.91
+    $Self->_AddSystemNotificationsNewIn_3_2_91();
+
+    return 1;
+}
+
+=item CodeUpgradeFromLowerThan_3_3_91()
+
+This function is only executed if the installed module version is smaller than 3.3.91 (4.0.0 Beta 1).
+
+my $Result = $CodeObject->CodeUpgradeFromLowerThan_3_3_91();
+
+=cut
+
+sub CodeUpgradeFromLowerThan_3_3_91 {    ## no critic
+    my ( $Self, %Param ) = @_;
+
+    # Migrate change and workorder freetext fields to dynamic fields.
+    $Self->_MigrateFreeTextToDynamicFields();
+
+    return 1;
+}
+
 =item CodeUninstall()
 
 run the code uninstall part
@@ -341,6 +355,9 @@ sub CodeUninstall {
 
     # delete all existing attachments for changes and workorders
     $Self->_AttachmentDelete();
+
+    # delete all dynamic fields for changes and workorders
+    $Self->_DynamicFieldsDelete();
 
     # deactivate the group itsm-change
     $Self->_GroupDeactivate(
@@ -1261,6 +1278,36 @@ sub _AttachmentDelete {
                 );
             }
         }
+    }
+
+    return 1;
+}
+
+=item _DynamicFieldsDelete()
+
+delete all existing dynamic fields for changes and workorders
+
+    my $Result = $CodeObject->_DynamicFieldsDelete();
+
+=cut
+
+sub _DynamicFieldsDelete {
+    my ( $Self, %Param ) = @_;
+
+    # get the list of change and workorder dynamic fields (valid an invalid ones)
+    my $DynamicFieldList = $Self->{DynamicFieldObject}->DynamicFieldListGet(
+        Valid       => 0,
+        ObjectType  => [ 'ITSMChange', 'ITSMWorkOrder' ],
+    );
+
+    # delete the dynamic fields
+    DYNAMICFIELD:
+    for my $DynamicField ( @{$DynamicFieldList} ) {
+
+        $Self->{DynamicFieldObject}->DynamicFieldDelete(
+            ID      => $DynamicField->{ID},
+            UserID  => 1,
+        );
     }
 
     return 1;

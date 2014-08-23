@@ -1820,6 +1820,41 @@
         }
 
     ]]></CodeUpgrade>
+    <CodeUpgrade Type="post" Version="3.3.91"><![CDATA[
+
+        # define function name
+        my $FunctionName = 'CodeUpgradeFromLowerThan_3_3_91';
+
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
+
+        # load the module
+        if ( $Self->{MainObject}->Require($CodeModule) ) {
+
+            # create new instance
+            my $CodeObject = $CodeModule->new( %{$Self} );
+
+            if ($CodeObject) {
+
+                # start method
+                if ( !$CodeObject->$FunctionName(%{$Self}) ) {
+                    $Self->{LogObject}->Log(
+                        Priority => 'error',
+                        Message  => "Could not call method $FunctionName() on $CodeModule.pm."
+                    );
+                }
+            }
+
+            # error handling
+            else {
+                $Self->{LogObject}->Log(
+                    Priority => 'error',
+                    Message  => "Could not call method new() on $CodeModule.pm."
+                );
+            }
+        }
+
+    ]]></CodeUpgrade>
     <CodeUninstall Type="pre"><![CDATA[
 
         # define function name
