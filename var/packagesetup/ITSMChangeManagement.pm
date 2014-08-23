@@ -523,9 +523,21 @@ sub _MigrateFreeTextToDynamicFields {
         Valid => 'valid',
     );
 
-    # TODO:
-    # The sysconfig for the dynamic field event module must be temporarily deactivated
-    # so that the condition table update is not triggered on DynamicFieldAdd
+    # set the name for the sysconfig setting for the event module
+    my $EventModuleSysconfigSetting = 'DynamicField::EventModulePost###100-UpdateITSMChangeConditions';
+
+    # get the original sysconfig setting for the event module registration
+    my %EventModuleConfig = $Self->{SysConfigObject}->ConfigItemGet(
+        Name => $EventModuleSysconfigSetting,
+    );
+
+    # deactivate the sysconfig setting to prevent event module to react on
+    # adding of dynamic fields during the migration
+    $Self->{SysConfigObject}->ConfigItemUpdate(
+        Valid => 0,
+        Key   => $EventModuleSysconfigSetting,
+        Value => \%EventModuleConfig,
+    );
 
     DYNAMICFIELD:
     for my $DynamicField (@DynamicFields) {
@@ -546,6 +558,13 @@ sub _MigrateFreeTextToDynamicFields {
         # increase the order number
         $NextOrderNumber++;
     }
+
+    # re-activate the sysconfig setting again
+    $Self->{SysConfigObject}->ConfigItemUpdate(
+        Valid => 1,
+        Key   => $EventModuleSysconfigSetting,
+        Value => \%EventModuleConfig,
+    );
 
     # ---------------------------------------------------------------------------------------------
     # Migrate the change and workorder data from freekey and freetext fields to dynamic fields
