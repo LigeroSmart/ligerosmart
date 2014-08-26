@@ -156,13 +156,24 @@ sub Run {
                 # build column record blocks
                 if (@ShowColumns) {
                     for my $Column (@ShowColumns) {
-                        $Self->{LayoutObject}->Block(
-                            Name => 'Record' . $Column,
-                            Data => {
-                                %Param,
-                                %Data,
-                            },
-                        );
+                        if ( $Column eq 'EditContent' && $Data{Type} eq 'CAB' ) {
+                            $Self->{LayoutObject}->Block(
+                                Name => 'RecordEditContentCAB',
+                                Data => {
+                                    %Param,
+                                    %Data,
+                                },
+                            );
+                        }
+                        else {
+                            $Self->{LayoutObject}->Block(
+                                Name => 'Record' . $Column,
+                                Data => {
+                                    %Param,
+                                    %Data,
+                                },
+                            );
+                        }
                     }
                 }
             }

@@ -38,9 +38,25 @@
 
                 <label for="StateReset">$Text{"Reset States"}:</label>
                 <div class="Field">
-                    <input type="checkbox" id="StateReset" name="StateReset" value="1" $QData{"StateReset"}/>
+                    $Data{"StateResetSelectionString"}
                 </div>
                 <div class="Clear"></div>
+
+<!-- dtl:block:OverwriteTemplate -->
+                <label for="OverwriteTemplate">$Text{"Overwrite original template"}:</label>
+                <div class="Field">
+                    $Data{"OverwriteTemplateSelectionString"}
+                </div>
+                <div class="Clear"></div>
+<!-- dtl:block:OverwriteTemplate -->
+
+<!-- dtl:block:DeleteChange -->
+                <label for="DeleteChange">$Text{"Delete original change"}:</label>
+                <div class="Field">
+                    $Data{"DeleteChangeSelectionString"}
+                </div>
+                <div class="Clear"></div>
+<!-- dtl:block:DeleteChange -->
 
                 <label for="ValidID">$Text{"Validity"}:</label>
                 <div class="Field">
@@ -51,7 +67,7 @@
             </fieldset>
         </div>
         <div class="Footer">
-            <button class="Primary" id="submitAddTemplate" accesskey="g" type="submit" name="AddTemplate" value="$Text{"Add"}">$Text{"Add"}</button>
+            <button class="Primary" id="SubmitAddTemplate" accesskey="g" type="submit" name="AddTemplate" value="$Text{"Add"}">$Text{"Add"}</button>
         </div>
     </div>
 </form>

@@ -94,7 +94,7 @@ sub Run {
 
         if ($CouldDeleteTemplate) {
 
-            # redirect to change zoom mask, when update was successful
+            # redirect to template overview mask, when update was successful
             return $Self->{LayoutObject}->Redirect(
                 OP => "Action=AgentITSMTemplateOverview",
             );

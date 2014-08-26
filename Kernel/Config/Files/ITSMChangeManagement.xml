@@ -505,7 +505,8 @@
         <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
         <Setting>
             <FrontendModuleReg>
-                <GroupRo>itsm-change</GroupRo>
+                <GroupRo>itsm-change-builder</GroupRo>
+                <GroupRo>itsm-change-manager</GroupRo>
                 <Description>ITSM Template Delete</Description>
                 <Title>ITSM Change</Title>
             </FrontendModuleReg>
@@ -517,8 +518,35 @@
         <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
         <Setting>
             <FrontendModuleReg>
-                <GroupRo>itsm-change</GroupRo>
+                <GroupRo>itsm-change-builder</GroupRo>
+                <GroupRo>itsm-change-manager</GroupRo>
                 <Description>ITSM Template Edit</Description>
+                <Title>ITSM Change</Title>
+            </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Frontend::Module###AgentITSMTemplateEditCAB" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
+        <Setting>
+            <FrontendModuleReg>
+                <GroupRo>itsm-change-builder</GroupRo>
+                <GroupRo>itsm-change-manager</GroupRo>
+                <Description>ITSM Template Edit CAB</Description>
+                <Title>ITSM Change</Title>
+            </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Frontend::Module###AgentITSMTemplateEditContent" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
+        <Setting>
+            <FrontendModuleReg>
+                <GroupRo>itsm-change-builder</GroupRo>
+                <GroupRo>itsm-change-manager</GroupRo>
+                <Description>ITSM Template Edit Content</Description>
                 <Title>ITSM Change</Title>
             </FrontendModuleReg>
         </Setting>
@@ -3717,6 +3745,30 @@
             <String Regex="^(rw|ro)$">rw</String>
         </Setting>
     </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMTemplateEditContent###Permission" Required="1" Valid="1">
+        <Description Translatable="1">Required privileges to edit the content of a template.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ViewTemplateEditContent</SubGroup>
+        <Setting>
+            <String Regex="^(rw|ro)$">rw</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMTemplateEditContent###DefaultChangeTitle" Required="1" Valid="1">
+        <Description Translatable="1">Defines the default change title for a dummy change which is needed to edit a workorder template.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ViewTemplateEditContent</SubGroup>
+        <Setting>
+            <String Regex="">Helper dummy change needed for editing a workorder template</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMTemplateEditCAB###Permission" Required="1" Valid="1">
+        <Description Translatable="1">Required privileges to edit the content of a template.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ViewTemplateEditCAB</SubGroup>
+        <Setting>
+            <String Regex="^(rw|ro)$">rw</String>
+        </Setting>
+    </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::AgentITSMTemplateOverview###Filter::TemplateTypes" Required="1" Valid="1">
         <Description Translatable="1">Defines the template types that will be used as filters in the template overview.</Description>
         <Group>ITSM Change Management</Group>
@@ -3758,6 +3810,7 @@
                 <Item Key="Comment">1</Item>
                 <Item Key="Type">1</Item>
                 <Item Key="Valid">1</Item>
+                <Item Key="EditContent">1</Item>
                 <Item Key="Delete">1</Item>
                 <Item Key="CreateBy">1</Item>
                 <Item Key="CreateTime">1</Item>
@@ -4390,6 +4443,24 @@
                 <Item Key="DataSelected">25</Item>
                 <Item Key="PrefKey">UserChangeOverviewSmallPageShown</Item>
                 <Item Key="Prio">8000</Item>
+                <Item Key="Active">0</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="PreferencesGroups###UserITSMChangeManagementTemplateEdit" Required="0" Valid="1">
+        <Description Translatable="1">Stores change and workorder ids and their corresponding template id, while a user is editing a template.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::Preferences</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::PreferencesGeneric</Item>
+                <Item Key="Column">Other Settings</Item>
+                <Item Key="Label" Translatable="1">Change and WorkOrder templates edited by this user.</Item>
+                <Item Key="Key" Translatable="1">Change and WorkOrder templates edited by this user.</Item>
+                <Item Key="Block">Input</Item>
+                <Item Key="Data"></Item>
+                <Item Key="PrefKey">UserITSMChangeManagementTemplateEdit</Item>
+                <Item Key="Prio">9000</Item>
                 <Item Key="Active">0</Item>
             </Hash>
         </Setting>

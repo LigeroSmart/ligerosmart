@@ -53,7 +53,7 @@
         </div>
 
         <div class="Footer">
-            <button class="Primary" type="submit" id="submitAddTemplate" name="AddTemplate" value="$Text{"Add"}">$Text{"Save"}</button>
+            <button class="Primary" type="submit" id="SubmitAddTemplate" name="AddTemplate" value="$Text{"Add"}">$Text{"Save"}</button>
         </div>
     </div>
 </form>

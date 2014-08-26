@@ -32,6 +32,9 @@
                     <a name="OverviewControl" href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=ValidID;OrderBy=$LQData{"OrderByValidID"}">$Text{"Validity"}</a>
                 </th>
 <!-- dtl:block:RecordValidHeader -->
+<!-- dtl:block:RecordEditContentHeader -->
+                <th><span>$Text{"Edit Content"}</span></th>
+<!-- dtl:block:RecordEditContentHeader -->
 <!-- dtl:block:RecordDeleteHeader -->
                 <th><span>$Text{"Delete"}</span></th>
 <!-- dtl:block:RecordDeleteHeader -->
@@ -92,6 +95,42 @@
                     </div>
                 </td>
 <!-- dtl:block:RecordValid -->
+
+<!-- dtl:block:RecordEditContent -->
+                <td class="Center Last">
+                    <a class="" href="#" title="$Text{"Edit Content"}">
+                        <i id="EditContentTemplateID$QData{"TemplateID"}" class="icon-pencil"></i>
+                        <span class="InvisibleText">$Text{"Edit Content"}</span>
+                    </a>
+                </td>
+
+<!--dtl:js_on_document_complete-->
+<script type="text/javascript">//<![CDATA[
+/*global ITSM: true */
+    ITSM.Agent.ConfirmationDialog.BindConfirmationDialog({
+        ElementID:                  'EditContentTemplateID$QData{"TemplateID"}',
+        ElementSelector:            '#EditContentTemplateID$QData{"TemplateID"}',
+        DialogContentQueryString:   'Action=AgentITSMTemplateEditContent;Subaction=TemplateEditContentShowDialog;TemplateID=$LQData{"TemplateID"}',
+        ConfirmedActionQueryString: 'Action=AgentITSMTemplateEditContent;Subaction=TemplateEditContent;TemplateID=$LQData{"TemplateID"}',
+        DialogTitle:                '$JSText{"Edit Template Content"}',
+        TranslatedText:             {
+            Yes: '$JSText{"Yes"}',
+            No:  '$JSText{"No"}'
+        }
+    });
+//]]></script>
+<!--dtl:js_on_document_complete-->
+<!-- dtl:block:RecordEditContent -->
+
+<!-- dtl:block:RecordEditContentCAB -->
+                <td class="Center">
+                    <a href="$Env{"Baselink"}Action=AgentITSMTemplateEditCAB;TemplateID=$LQData{"TemplateID"}" title="$Text{"Edit Content"}" class="AsBlock AsPopup">
+                        <i class="icon-pencil"></i>
+                        <span class="InvisibleText">$Text{"Edit Content"}</span>
+                    </a>
+                </td>
+<!-- dtl:block:RecordEditContentCAB -->
+
 <!-- dtl:block:RecordDelete -->
                 <td class="Center Last">
                     <a id="DeleteTemplateID$QData{"TemplateID"}" class="TrashCan" href="#">

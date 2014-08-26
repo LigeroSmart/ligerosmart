@@ -90,8 +90,48 @@ sub Run {
 
     # store needed parameters in %GetParam to make it reloadable
     my %GetParam;
-    for my $ParamName (qw(TemplateName Comment ValidID StateReset)) {
+    for my $ParamName (qw(TemplateName Comment ValidID StateReset OverwriteTemplate DeleteChange )) {
         $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
+    }
+
+    # get existing user preferences
+    my %UserPreferences = $Self->{UserObject}->GetPreferences(
+        UserID => $Self->{UserID},
+    );
+
+    # get preference to see which templates are in edit by the user
+    my $TemplateEditPreferenceString = $UserPreferences{UserITSMChangeManagementTemplateEdit} || '';
+
+    # convert to lookup hash
+    my @EditedTemplates = split m/;/, $TemplateEditPreferenceString;
+    my %Object2Template;
+    for my $String (@EditedTemplates) {
+        my ($Object, $Template ) = split m/::/, $String;
+        $Object2Template{$Object} = $Template;
+    }
+
+    # get template id from user preferences
+    my $TemplateID = $Object2Template{ 'ChangeID' . $ChangeID };
+
+    # check if this change was created by this user using a template
+    if ( $TemplateID ) {
+
+        # get template data
+        my $TemplateData = $Self->{TemplateObject}->TemplateGet(
+            TemplateID => $TemplateID,
+            UserID      => 1,
+        );
+
+        if ($TemplateData) {
+
+            # overwrite empty values with template data
+            $GetParam{TemplateName} ||= $TemplateData->{Name};
+            $GetParam{Comment}      ||= $TemplateData->{Comment};
+            $GetParam{ValidID}      ||= $TemplateData->{ValidID};
+        }
+        else {
+            $TemplateID = '';
+        }
     }
 
     # Check required fields to look for errors.
@@ -123,33 +163,96 @@ sub Run {
                 );
             }
 
-            # store the serialized change
-            my $TemplateID = $Self->{TemplateObject}->TemplateAdd(
-                Name         => $GetParam{TemplateName},
-                Comment      => $GetParam{Comment},
-                ValidID      => $GetParam{ValidID},
-                TemplateType => 'ITSMChange',
-                Content      => $TemplateContent,
-                UserID       => $Self->{UserID},
-            );
+            # if this change was created from a template and should be saved back
+            if ( $TemplateID && $GetParam{OverwriteTemplate} ) {
 
-            # show error message
-            if ( !$TemplateID ) {
-                return $Self->{LayoutObject}->ErrorScreen(
-                    Message => "Could not add the template.",
-                    Comment => 'Please contact the administrator.',
+                my $UpdateSuccess = $Self->{TemplateObject}->TemplateUpdate(
+                    TemplateID => $TemplateID,
+                    Name       => $GetParam{TemplateName},
+                    Comment    => $GetParam{Comment},
+                    ValidID    => $GetParam{ValidID},
+                    Content    => $TemplateContent,
+                    UserID     => $Self->{UserID},
                 );
+
+                # show error message
+                if ( !$UpdateSuccess ) {
+                    return $Self->{LayoutObject}->ErrorScreen(
+                        Message => "Could not update the template '$TemplateID'.",
+                        Comment => 'Please contact the administrator.',
+                    );
+                }
             }
+            else {
+                # store the serialized change as a new template
+                $TemplateID = $Self->{TemplateObject}->TemplateAdd(
+                    Name         => $GetParam{TemplateName},
+                    Comment      => $GetParam{Comment},
+                    ValidID      => $GetParam{ValidID},
+                    TemplateType => 'ITSMChange',
+                    Content      => $TemplateContent,
+                    UserID       => $Self->{UserID},
+                );
+
+                # show error message
+                if ( !$TemplateID ) {
+                    return $Self->{LayoutObject}->ErrorScreen(
+                        Message => "Could not add the template.",
+                        Comment => 'Please contact the administrator.',
+                    );
+                }
+            }
+
+            # define redirect URL
+            my $RedirectURL = "Action=AgentITSMChangeZoom;ChangeID=$ChangeID";
+
+            # if the original change should be deleted
+            if ( $GetParam{DeleteChange} ) {
+
+                # delete the change
+                my $DeleteSuccess = $Self->{ChangeObject}->ChangeDelete(
+                    ChangeID => $ChangeID,
+                    UserID   => $Self->{UserID},
+                );
+
+                # show error message
+                if ( !$DeleteSuccess ) {
+                    return $Self->{LayoutObject}->ErrorScreen(
+                        Message => "Could not delete change '$ChangeID'.",
+                        Comment => 'Please contact the administrator.',
+                    );
+                }
+
+                # delete the user preference entry
+                delete $Object2Template{ 'ChangeID' . $ChangeID };
+
+                # redirect to template overview
+                $RedirectURL = 'Action=AgentITSMTemplateOverview';
+            }
+
+            # update the user preference with the new template id
+            elsif ( $Object2Template{ 'ChangeID' . $ChangeID } ) {
+                $Object2Template{ 'ChangeID' . $ChangeID } = $TemplateID;
+            }
+
+            # convert to string
+            $TemplateEditPreferenceString = '';
+            for my $Object (sort keys %Object2Template) {
+                $TemplateEditPreferenceString .= $Object . '::' . $Object2Template{$Object} . ';';
+            }
+
+            # save preferences
+            $Self->{UserObject}->SetPreferences(
+                Key    => 'UserITSMChangeManagementTemplateEdit',
+                Value  => $TemplateEditPreferenceString,
+                UserID => $Self->{UserID},
+            );
 
             # load new URL in parent window and close popup
             return $Self->{LayoutObject}->PopupClose(
-                URL => "Action=AgentITSMChangeZoom;ChangeID=$ChangeID",
+                URL => $RedirectURL,
             );
         }
-    }
-    else {
-
-        # no subaction
     }
 
     # output header
@@ -158,6 +261,7 @@ sub Run {
         Title => 'Template',
     );
 
+    # build valid selection
     my $ValidSelectionString = $Self->{LayoutObject}->BuildSelection(
         Data => {
             $Self->{ValidObject}->ValidList(),
@@ -167,9 +271,56 @@ sub Run {
         Sort       => 'NumericKey',
     );
 
-    # set checkbox for state reset
-    if ( $GetParam{StateReset} ) {
-        $GetParam{StateReset} = 'checked="checked"';
+    # build selection string for state reset
+    my $StateResetSelectionString = $Self->{LayoutObject}->BuildSelection(
+        Data => {
+            0 => 'No',
+            1 => 'Yes',
+        },
+        Name  => 'StateReset',
+        SelectedID => $GetParam{StateReset} // 1,
+    );
+
+    # show dropdowns only if this change was created from a template
+    if ($TemplateID) {
+
+        # build selection string for template overwrite, default is yes
+        my $OverwriteTemplateSelectionString = $Self->{LayoutObject}->BuildSelection(
+            Data => {
+                0 => 'No',
+                1 => 'Yes',
+            },
+            Name  => 'OverwriteTemplate',
+            SelectedID => $GetParam{OverwriteTemplate} // 1,
+        );
+
+        # show overwrite original template dropdown
+        $Self->{LayoutObject}->Block(
+            Name => 'OverwriteTemplate',
+            Data => {
+                %GetParam,
+                OverwriteTemplateSelectionString => $OverwriteTemplateSelectionString,
+            },
+        );
+
+        # build selection string for delete change
+        my $DeleteChangeSelectionString = $Self->{LayoutObject}->BuildSelection(
+            Data => {
+                0 => 'No',
+                1 => 'Yes',
+            },
+            Name  => 'DeleteChange',
+            SelectedID => $GetParam{DeleteChange} // 1,
+        );
+
+        # show delete change dropdown
+        $Self->{LayoutObject}->Block(
+            Name => 'DeleteChange',
+            Data => {
+                %GetParam,
+                DeleteChangeSelectionString => $DeleteChangeSelectionString,
+            },
+        );
     }
 
     # start template output
@@ -177,10 +328,11 @@ sub Run {
         TemplateFile => 'AgentITSMChangeTemplate',
         Data         => {
             %GetParam,
-            ChangeID             => $ChangeID,
-            ValidSelectionString => $ValidSelectionString,
-            ChangeNumber         => $Change->{ChangeNumber},
-            ChangeTitle          => $Change->{ChangeTitle},
+            ChangeID                  => $ChangeID,
+            ValidSelectionString      => $ValidSelectionString,
+            StateResetSelectionString => $StateResetSelectionString,
+            ChangeNumber              => $Change->{ChangeNumber},
+            ChangeTitle               => $Change->{ChangeTitle},
             %Error,
         },
     );

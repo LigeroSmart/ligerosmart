@@ -1,0 +1,48 @@
+# --
+# AgentITSMTemplateEditContent.dtl - provides HTML form for AgentITSMTemplateEditContent
+# Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+
+<!-- dtl:block:EditContentDialog -->
+<fieldset class="TableLike W300px">
+    <label>$Text{"Name"}:</label>
+    <p class="Value">
+        $QData{"Name"}
+    </p>
+    <div class="Clear"></div>
+
+    <label>$Text{"Type"}:</label>
+    <p class="Value">
+        $Text{"$Data{"Type"}"}
+    </p>
+    <div class="Clear"></div>
+
+    <label>$Text{"Comment"}:</label>
+    <p class="Value">
+        $QData{"Comment", "40"}
+    </p>
+    <div class="Clear"></div>
+</fieldset>
+
+<!-- dtl:block:ChangeTemplate -->
+<p class="SpacingTop">
+    $Text{"You can create a new change from this template, edit it and then save it again under the same name."}<br/>
+    $Text{"The new change will then be deleted automatically after it has been saved."}
+</p>
+<!-- dtl:block:ChangeTemplate -->
+<!-- dtl:block:WorkOrderTemplate -->
+<p class="SpacingTop">
+    $Text{"You can create a new workorder from this template, edit it and then save it again as under the same name."}<br/>
+    $Text{"In order to do this, a new dummy change will be created that contains the workorder from the template."}<br/>
+    $Text{"The new change and the new workorder will then be deleted automatically after the workorder has been saved."}<br/>
+</p>
+<!-- dtl:block:WorkOrderTemplate -->
+
+<p class="SpacingTop Center">
+    $Text{"Do you really want to do this?"}
+</p>
+<!-- dtl:block:EditContentDialog -->

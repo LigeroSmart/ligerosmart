@@ -62,6 +62,8 @@
         <File Permission="644" Location="Kernel/Modules/AgentITSMChangeZoom.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentITSMTemplateDelete.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentITSMTemplateEdit.pm"/>
+        <File Permission="644" Location="Kernel/Modules/AgentITSMTemplateEditCAB.pm"/>
+        <File Permission="644" Location="Kernel/Modules/AgentITSMTemplateEditContent.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentITSMTemplateOverview.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentITSMUserSearch.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentITSMWorkOrderAdd.pm"/>
@@ -120,6 +122,8 @@
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMChangeZoom.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMTemplateDelete.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMTemplateEdit.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMTemplateEditCAB.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMTemplateEditContent.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMTemplateOverviewNavBar.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMTemplateOverviewSmall.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMUserSearch.dtl"/>
