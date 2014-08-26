@@ -378,7 +378,7 @@ sub ItemGet {
 
         # check if result is already cached
         my $CacheKey = 'ItemGet::Class::' . $Param{Class} . '::' . $Param{Name};
-        my $Cache = $Self->{CacheObject}->Get(
+        my $Cache    = $Self->{CacheObject}->Get(
             Type => $Self->{CacheType},
             Key  => $CacheKey,
         );
@@ -392,7 +392,7 @@ sub ItemGet {
 
         # check if result is already cached
         my $CacheKey = 'ItemGet::ItemID::' . $Param{ItemID};
-        my $Cache = $Self->{CacheObject}->Get(
+        my $Cache    = $Self->{CacheObject}->Get(
             Type => $Self->{CacheType},
             Key  => $CacheKey,
         );
