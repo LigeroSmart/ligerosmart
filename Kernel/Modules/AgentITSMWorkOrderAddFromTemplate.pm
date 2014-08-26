@@ -227,6 +227,7 @@ sub Run {
         Name         => 'TemplateID',
         Data         => $TemplateList,
         Class        => 'Validate_Required ' . ( $ValidationError{TemplateIDServerError} || '' ),
+        TreeView     => 1,
         PossibleNone => 1,
     );
 
