@@ -14,7 +14,7 @@ use warnings;
 
 use Kernel::System::Valid;
 use Kernel::System::CheckItem;
-use Kernel::System::CacheInternal;
+use Kernel::System::Cache;
 
 =head1 NAME
 
@@ -91,12 +91,12 @@ sub new {
         $Self->{PreferencesObject} = $GeneratorModule->new(%Param);
     }
 
-    # create CacheInternal object
-    $Self->{CacheInternalObject} = Kernel::System::CacheInternal->new(
-        %{$Self},
-        Type => 'GeneralCatalog',
-        TTL  => 60 * 60 * 3,
-    );
+    # define cache settings
+    $Self->{CacheType} = 'GeneralCatalog';
+    $Self->{CacheTTL}  = 60 * 60 * 3;
+
+    # get cache object from object manager
+    $Self->{CacheObject} = $Kernel::OM->Get('Kernel::System::Cache');
 
     return $Self;
 }
@@ -126,7 +126,9 @@ sub ClassList {
 
     # cache the result
     my $CacheKey = 'ClassList';
-    $Self->{CacheInternalObject}->Set(
+    $Self->{CacheObject}->Set(
+        Type  => $Self->{CacheType},
+        TTL   => $Self->{CacheTTL},
         Key   => $CacheKey,
         Value => \@ClassList,
     );
@@ -193,7 +195,9 @@ sub ClassRename {
     }
 
     # reset cache
-    $Self->{CacheInternalObject}->CleanUp();
+    $Self->{CacheObject}->CleanUp(
+        Type => $Self->{CacheType},
+    );
 
     # rename general catalog class
     return $Self->{DBObject}->Do(
@@ -283,7 +287,10 @@ sub ItemList {
         = 'ItemList::' . $Param{Class} . '####' . $Param{Valid} . '####' . $PreferencesCacheKey;
 
     # check if result is already cached
-    my $Cache = $Self->{CacheInternalObject}->Get( Key => $CacheKey );
+    my $Cache = $Self->{CacheObject}->Get(
+        Type => $Self->{CacheType},
+        Key  => $CacheKey,
+    );
     return $Cache if $Cache;
 
     # ask database
@@ -308,7 +315,9 @@ sub ItemList {
     }
 
     # cache the result
-    $Self->{CacheInternalObject}->Set(
+    $Self->{CacheObject}->Set(
+        Type  => $Self->{CacheType},
+        TTL   => $Self->{CacheTTL},
         Key   => $CacheKey,
         Value => \%Data,
     );
@@ -369,7 +378,10 @@ sub ItemGet {
 
         # check if result is already cached
         my $CacheKey = 'ItemGet::Class::' . $Param{Class} . '::' . $Param{Name};
-        my $Cache = $Self->{CacheInternalObject}->Get( Key => $CacheKey );
+        my $Cache = $Self->{CacheObject}->Get(
+            Type => $Self->{CacheType},
+            Key  => $CacheKey,
+        );
         return $Cache if $Cache;
 
         # add class and name to sql string
@@ -380,7 +392,10 @@ sub ItemGet {
 
         # check if result is already cached
         my $CacheKey = 'ItemGet::ItemID::' . $Param{ItemID};
-        my $Cache = $Self->{CacheInternalObject}->Get( Key => $CacheKey );
+        my $Cache = $Self->{CacheObject}->Get(
+            Type => $Self->{CacheType},
+            Key  => $CacheKey,
+        );
         return $Cache if $Cache;
 
         # add item id to sql string
@@ -427,11 +442,15 @@ sub ItemGet {
     }
 
     # cache the result
-    $Self->{CacheInternalObject}->Set(
+    $Self->{CacheObject}->Set(
+        Type  => $Self->{CacheType},
+        TTL   => $Self->{CacheTTL},
         Key   => 'ItemGet::Class::' . $ItemData{Class} . '::' . $ItemData{Name},
         Value => \%ItemData,
     );
-    $Self->{CacheInternalObject}->Set(
+    $Self->{CacheObject}->Set(
+        Type  => $Self->{CacheType},
+        TTL   => $Self->{CacheTTL},
         Key   => 'ItemGet::ItemID::' . $ItemData{ItemID},
         Value => \%ItemData,
     );
@@ -523,7 +542,9 @@ sub ItemAdd {
     }
 
     # reset cache
-    $Self->{CacheInternalObject}->CleanUp();
+    $Self->{CacheObject}->CleanUp(
+        Type => $Self->{CacheType},
+    );
 
     # insert new item
     return if !$Self->{DBObject}->Do(
@@ -661,7 +682,9 @@ sub ItemUpdate {
     }
 
     # reset cache
-    $Self->{CacheInternalObject}->CleanUp();
+    $Self->{CacheObject}->CleanUp(
+        Type => $Self->{CacheType},
+    );
 
     return $Self->{DBObject}->Do(
         SQL => 'UPDATE general_catalog SET '
@@ -692,7 +715,9 @@ sub GeneralCatalogPreferencesSet {
     my $Self = shift;
 
     # delete cache
-    $Self->{CacheInternalObject}->CleanUp();
+    $Self->{CacheObject}->CleanUp(
+        Type => $Self->{CacheType},
+    );
 
     return $Self->{PreferencesObject}->GeneralCatalogPreferencesSet(@_);
 }
