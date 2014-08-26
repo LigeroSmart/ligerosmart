@@ -44,8 +44,8 @@ sub new {
     bless( $Self, $Type );
 
     # check needed objects
-    $Self->{DBObject}  = $Kernel::OM->Get('Kernel::System::DB');
-    $Self->{Logbject}  = $Kernel::OM->Get('Kernel::System::Log');
+    $Self->{DBObject} = $Kernel::OM->Get('Kernel::System::DB');
+    $Self->{Logbject} = $Kernel::OM->Get('Kernel::System::Log');
 
     # preferences table data
     $Self->{PreferencesTable}      = 'general_catalog_preferences';

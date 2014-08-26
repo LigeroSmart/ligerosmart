@@ -17,7 +17,7 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::User;
 
 # create local objects
-my $ConfigObject  = $Kernel::OM->Get('Kernel::Config');
+my $ConfigObject         = $Kernel::OM->Get('Kernel::Config');
 my $GeneralCatalogObject = Kernel::System::GeneralCatalog->new(
     %{$Self},
     ConfigObject => $ConfigObject,
