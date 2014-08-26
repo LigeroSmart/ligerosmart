@@ -2,7 +2,7 @@
 # Service.t - Service tests
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/72ee17c5fb32c7f225e319f77f4dbf4913613855/scripts/test/Service.t
+# $origin: https://github.com/OTRS/otrs/blob/e16e7ee21bdae64e293f347032856ceac59ac9bb/scripts/test/Service.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -14,15 +14,13 @@ use warnings;
 use vars (qw($Self));
 use utf8;
 
-use vars qw($Self);
-
 use Kernel::System::Service;
 use Kernel::System::User;
 use Kernel::Config;
 use Kernel::System::UnitTest::Helper;
 
 # create local objects
-my $ConfigObject  = Kernel::Config->new();
+my $ConfigObject  = $Kernel::OM->Get('Kernel::Config');
 my $ServiceObject = Kernel::System::Service->new(
     %{$Self},
     ConfigObject => $ConfigObject,
@@ -38,8 +36,6 @@ my $HelperObject = Kernel::System::UnitTest::Helper->new(
 );
 
 my $RandomID = $HelperObject->GetRandomID();
-
-$RandomID =~ s/\-//g;
 
 # ------------------------------------------------------------ #
 # make preparations

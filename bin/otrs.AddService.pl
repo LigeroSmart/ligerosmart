@@ -3,7 +3,7 @@
 # bin/otrs.AddService.pl - add new Services
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/72ee17c5fb32c7f225e319f77f4dbf4913613855/bin/otrs.AddService.pl
+# $origin: https://github.com/OTRS/otrs/blob/e16e7ee21bdae64e293f347032856ceac59ac9bb/bin/otrs.AddService.pl
 # --
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU AFFERO General Public License as published by
@@ -32,39 +32,22 @@ use lib dirname($RealBin) . '/Custom';
 
 use Getopt::Std;
 
-use Kernel::Config;
-use Kernel::System::Encode;
-use Kernel::System::Log;
-use Kernel::System::DB;
-use Kernel::System::Main;
-use Kernel::System::Service;
+use Kernel::System::ObjectManager;
 # ---
 # ITSM
 # ---
-use Kernel::System::DynamicField;
-use Kernel::System::GeneralCatalog;
 use Kernel::System::VariableCheck qw(:all);
 # ---
 
 my %Param;
-my %CommonObject;
 
 # create common objects
-$CommonObject{ConfigObject} = Kernel::Config->new();
-$CommonObject{EncodeObject} = Kernel::System::Encode->new(%CommonObject);
-$CommonObject{LogObject}
-    = Kernel::System::Log->new( %CommonObject, LogPrefix => 'OTRS-otrs.AddService' );
-$CommonObject{MainObject}    = Kernel::System::Main->new(%CommonObject);
-$CommonObject{DBObject}      = Kernel::System::DB->new(%CommonObject);
-$CommonObject{ServiceObject} = Kernel::System::Service->new(%CommonObject);
+local $Kernel::OM = Kernel::System::ObjectManager->new(
+    'Kernel::System::Log' => {
+        LogPrefix => 'OTRS-otrs.AddService',
+    },
+);
 
-# ---
-# ITSM
-# ---
-$CommonObject{TimeObject}           = Kernel::System::Time->new(%CommonObject);
-$CommonObject{DynamicFieldObject}   = Kernel::System::DynamicField->new(%CommonObject);
-$CommonObject{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new(%CommonObject);
-# ---
 my $NoOptions = $ARGV[0] ? 0 : 1;
 
 # get options
@@ -95,7 +78,7 @@ my $ServiceName;
 
 # lookup parent service if given
 if ( $Opts{p} ) {
-    $Param{ParentID} = $CommonObject{ServiceObject}->ServiceLookup(
+    $Param{ParentID} = $Kernel::OM->Get('Kernel::System::Service')->ServiceLookup(
         Name   => $Opts{p},
         UserID => 1,
     );
@@ -109,7 +92,7 @@ if ( $Opts{p} ) {
 $ServiceName .= $Opts{n};
 
 # check if service already exists
-my %ServiceList = $CommonObject{ServiceObject}->ServiceList(
+my %ServiceList = $Kernel::OM->Get('Kernel::System::Service')->ServiceList(
     Valid  => 0,
     UserID => 1,
 );
@@ -123,7 +106,7 @@ if ( $Reverse{$ServiceName} ) {
 # ---
 
 # get the dynamic field config for ITSMCriticality
-my $DynamicFieldConfigArrayRef = $CommonObject{DynamicFieldObject}->DynamicFieldListGet(
+my $DynamicFieldConfigArrayRef = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldListGet(
     Valid       => 1,
     ObjectType  => [ 'Ticket' ],
     FieldFilter => {
@@ -159,7 +142,7 @@ if ( !defined $Param{Criticality} ) {
 }
 
 # get service type list
-my $ServiceTypeList = $CommonObject{GeneralCatalogObject}->ItemList(
+my $ServiceTypeList = $Kernel::OM->Get('Kernel::System::GeneralCatalogObject')->ItemList(
     Class => 'ITSM::Service::Type',
 );
 
@@ -189,7 +172,7 @@ $Param{ValidID} = '1';
 $Param{Name}    = $Opts{n} || '';
 $Param{Comment} = $Opts{c};
 
-if ( my $ID = $CommonObject{ServiceObject}->ServiceAdd(%Param) ) {
+if ( my $ID = $Kernel::OM->Get('Kernel::System::Service')->ServiceAdd(%Param) ) {
     print "Service '$ServiceName' added. ID is '$ID'\n";
 }
 else {

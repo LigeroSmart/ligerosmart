@@ -12,12 +12,17 @@ package var::packagesetup::ITSMCore;    ## no critic
 use strict;
 use warnings;
 
+use Kernel::System::Encode;
+use Kernel::System::DB;
 use Kernel::System::GeneralCatalog;
+use Kernel::System::Time;
+use Kernel::System::Log;
 use Kernel::System::Group;
 use Kernel::System::ITSMCIPAllocate;
 use Kernel::System::Priority;
 use Kernel::System::Valid;
 use Kernel::System::DynamicField;
+use Kernel::System::XML;
 use Kernel::System::VariableCheck qw(:all);
 
 =head1 NAME
@@ -98,17 +103,22 @@ sub new {
 
     # check needed objects
     for my $Object (
-        qw(ConfigObject LogObject EncodeObject MainObject TimeObject DBObject XMLObject)
+        qw(ConfigObject MainObject)
         )
     {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
     }
+    $Self->{LogObject}            = Kernel::System::Log->new( %{$Self} );
+    $Self->{EncodeObject}         = Kernel::System::Encode->new( %{$Self} );
+    $Self->{DBObject}             = Kernel::System::DB->new( %{$Self} );
+    $Self->{TimeObject}           = Kernel::System::Time->new( %{$Self} );
     $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new( %{$Self} );
     $Self->{GroupObject}          = Kernel::System::Group->new( %{$Self} );
     $Self->{CIPAllocateObject}    = Kernel::System::ITSMCIPAllocate->new( %{$Self} );
     $Self->{PriorityObject}       = Kernel::System::Priority->new( %{$Self} );
     $Self->{ValidObject}          = Kernel::System::Valid->new( %{$Self} );
     $Self->{DynamicFieldObject}   = Kernel::System::DynamicField->new( %{$Self} );
+    $Self->{XMLObject}            = Kernel::System::XML->new( %{$Self} );
 
     return $Self;
 }
