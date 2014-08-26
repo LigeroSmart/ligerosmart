@@ -2713,13 +2713,13 @@ my @WorkOrderSearchTests = (
     {
         Description => 'Search for workorder dynamic fields',
         SearchData  => {
-                'DynamicField_' . $UniqueNamePrefix . 'Test1' => {
-                    Equals => 'AAAA',
-                },
-                'DynamicField_' . $UniqueNamePrefix . 'Test2' => {
-                    Equals => 'BBBB',
-                },
-            UsingWildcards     => 0,
+            'DynamicField_' . $UniqueNamePrefix . 'Test1' => {
+                Equals => 'AAAA',
+            },
+            'DynamicField_' . $UniqueNamePrefix . 'Test2' => {
+                Equals => 'BBBB',
+            },
+            UsingWildcards => 0,
         },
         ResultData => {
             TestExistence => 1,
@@ -2731,19 +2731,19 @@ my @WorkOrderSearchTests = (
     {
         Description => 'Search for workorder dynamic fields',
         SearchData  => {
-            WorkOrderTitle     => 'Test add workorder with dynamic fields - ' . $UniqueSignature,
-                'DynamicField_' . $UniqueNamePrefix . 'Test1' => {
-                    Equals => 'AAAA',
-                },
-                'DynamicField_' . $UniqueNamePrefix . 'Test2' => {
-                    Equals => 'BBBB',
-                },
-                'DynamicField_' . $UniqueNamePrefix . 'Test3' => {
-                    Equals => 'XXXX',
-                },
-                'DynamicField_' . $UniqueNamePrefix . 'Test4' => {
-                    Equals => 'YYYY',
-                },
+            WorkOrderTitle => 'Test add workorder with dynamic fields - ' . $UniqueSignature,
+            'DynamicField_' . $UniqueNamePrefix . 'Test1' => {
+                Equals => 'AAAA',
+            },
+            'DynamicField_' . $UniqueNamePrefix . 'Test2' => {
+                Equals => 'BBBB',
+            },
+            'DynamicField_' . $UniqueNamePrefix . 'Test3' => {
+                Equals => 'XXXX',
+            },
+            'DynamicField_' . $UniqueNamePrefix . 'Test4' => {
+                Equals => 'YYYY',
+            },
             UsingWildcards => 1,
         },
         ResultData => {

@@ -102,7 +102,9 @@ sub Run {
 
     # store needed parameters in %GetParam to make it reloadable
     my %GetParam;
-    for my $ParamName (qw(TemplateName Comment ValidID StateReset OverwriteTemplate DeleteWorkOrder)) {
+    for my $ParamName (
+        qw(TemplateName Comment ValidID StateReset OverwriteTemplate DeleteWorkOrder))
+    {
         $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
     }
 
@@ -118,7 +120,7 @@ sub Run {
     my @EditedTemplates = split m/;/, $TemplateEditPreferenceString;
     my %Object2Template;
     for my $String (@EditedTemplates) {
-        my ($Object, $Template ) = split m/::/, $String;
+        my ( $Object, $Template ) = split m/::/, $String;
         $Object2Template{$Object} = $Template;
     }
 
@@ -126,12 +128,12 @@ sub Run {
     my $TemplateID = $Object2Template{ 'WorkOrderID' . $WorkOrderID };
 
     # check if this workorder was created by this user using a template
-    if ( $TemplateID ) {
+    if ($TemplateID) {
 
         # get template data
         my $TemplateData = $Self->{TemplateObject}->TemplateGet(
             TemplateID => $TemplateID,
-            UserID      => 1,
+            UserID     => 1,
         );
 
         if ($TemplateData) {
@@ -250,7 +252,7 @@ sub Run {
 
             # convert to string
             $TemplateEditPreferenceString = '';
-            for my $Object (sort keys %Object2Template) {
+            for my $Object ( sort keys %Object2Template ) {
                 $TemplateEditPreferenceString .= $Object . '::' . $Object2Template{$Object} . ';';
             }
 
@@ -298,14 +300,13 @@ sub Run {
         Sort       => 'NumericKey',
     );
 
-
     # build selection string for state reset
     my $StateResetSelectionString = $Self->{LayoutObject}->BuildSelection(
         Data => {
             0 => 'No',
             1 => 'Yes',
         },
-        Name  => 'StateReset',
+        Name => 'StateReset',
         SelectedID => $GetParam{StateReset} // 1,
     );
 
@@ -318,7 +319,7 @@ sub Run {
                 0 => 'No',
                 1 => 'Yes',
             },
-            Name  => 'OverwriteTemplate',
+            Name => 'OverwriteTemplate',
             SelectedID => $GetParam{OverwriteTemplate} // 1,
         );
 
@@ -337,7 +338,7 @@ sub Run {
                 0 => 'No',
                 1 => 'Yes',
             },
-            Name  => 'DeleteWorkOrder',
+            Name => 'DeleteWorkOrder',
             SelectedID => $GetParam{DeleteWorkOrder} // 1,
         );
 

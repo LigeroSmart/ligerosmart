@@ -1508,8 +1508,8 @@ sub _GetAttributeSelection {
 
         # get the list of dynamic fields (change or workorder)
         my $DynamicFields = $Self->{DynamicFieldObject}->DynamicFieldListGet(
-            Valid       => 0,
-            ObjectType  => $ObjectName,
+            Valid      => 0,
+            ObjectType => $ObjectName,
         );
 
         # build a lookup hash for all dynamic fields for this object (change or workorder)
@@ -1531,7 +1531,7 @@ sub _GetAttributeSelection {
                 # get attribute name
                 my $AttributeName = $AllAttributes->{$AttributeID};
 
-                # check if the attribute is a dynamic field and dynamic fields should be used as attributes
+         # check if the attribute is a dynamic field and dynamic fields should be used as attributes
                 next ATTRIBUTEID if !$ObjectAttributeMapping->{DynamicField};
                 next ATTRIBUTEID if $AttributeName !~ m{ \A DynamicField_ (\w+) }xms;
 

@@ -144,13 +144,15 @@ sub Run {
         if (%CABUpdateInfo) {
 
             # add new member
-            $CABReference->{CABAdd}->{ $GetParam{NewCABMemberType} } = $CABUpdateInfo{ $GetParam{NewCABMemberType} };
+            $CABReference->{CABAdd}->{ $GetParam{NewCABMemberType} }
+                = $CABUpdateInfo{ $GetParam{NewCABMemberType} };
 
             # do not display a name in autocomplete field
             # and do not set values in hidden fields as the
             # user was already added
             delete @GetParam{qw(NewCABMember NewCABMemberSelected NewCABMemberType)};
         }
+
         # if member is invalid
         else {
             $ServerError{NewCABMemberError} = 'ServerError';
@@ -189,7 +191,8 @@ sub Run {
     }
 
     # check if CAB contains anyone
-    if ( @{ $CABReference->{CABAdd}->{CABAgents} } || @{ $CABReference->{CABAdd}->{CABCustomers} } ) {
+    if ( @{ $CABReference->{CABAdd}->{CABAgents} } || @{ $CABReference->{CABAdd}->{CABCustomers} } )
+    {
         $Self->{LayoutObject}->Block( Name => 'CABMemberTable' );
     }
 

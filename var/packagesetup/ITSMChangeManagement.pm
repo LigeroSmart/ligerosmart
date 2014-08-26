@@ -142,18 +142,18 @@ sub new {
     }
 
     # create additional objects
-    $Self->{ConfigObject}         = Kernel::Config->new();
-    $Self->{CSVObject}            = Kernel::System::CSV->new( %{$Self} );
-    $Self->{DynamicFieldObject}   = Kernel::System::DynamicField->new( %{$Self} );
-    $Self->{GroupObject}          = Kernel::System::Group->new( %{$Self} );
-    $Self->{UserObject}           = Kernel::System::User->new( %{$Self} );
-    $Self->{StateObject}          = Kernel::System::State->new( %{$Self} );
-    $Self->{TypeObject}           = Kernel::System::Type->new( %{$Self} );
-    $Self->{ValidObject}          = Kernel::System::Valid->new( %{$Self} );
-    $Self->{LinkObject}           = Kernel::System::LinkObject->new( %{$Self} );
-    $Self->{ChangeObject}         = Kernel::System::ITSMChange->new( %{$Self} );
-    $Self->{ConditionObject}      = Kernel::System::ITSMChange::ITSMCondition->new( %{$Self} );
-    $Self->{CIPAllocateObject}    = Kernel::System::ITSMChange::ITSMChangeCIPAllocate->new( %{$Self} );
+    $Self->{ConfigObject}       = Kernel::Config->new();
+    $Self->{CSVObject}          = Kernel::System::CSV->new( %{$Self} );
+    $Self->{DynamicFieldObject} = Kernel::System::DynamicField->new( %{$Self} );
+    $Self->{GroupObject}        = Kernel::System::Group->new( %{$Self} );
+    $Self->{UserObject}         = Kernel::System::User->new( %{$Self} );
+    $Self->{StateObject}        = Kernel::System::State->new( %{$Self} );
+    $Self->{TypeObject}         = Kernel::System::Type->new( %{$Self} );
+    $Self->{ValidObject}        = Kernel::System::Valid->new( %{$Self} );
+    $Self->{LinkObject}         = Kernel::System::LinkObject->new( %{$Self} );
+    $Self->{ChangeObject}       = Kernel::System::ITSMChange->new( %{$Self} );
+    $Self->{ConditionObject}    = Kernel::System::ITSMChange::ITSMCondition->new( %{$Self} );
+    $Self->{CIPAllocateObject} = Kernel::System::ITSMChange::ITSMChangeCIPAllocate->new( %{$Self} );
     $Self->{StateMachineObject}   = Kernel::System::ITSMChange::ITSMStateMachine->new( %{$Self} );
     $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new( %{$Self} );
     $Self->{WorkOrderObject}      = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
@@ -524,7 +524,8 @@ sub _MigrateFreeTextToDynamicFields {
     );
 
     # set the name for the sysconfig setting for the event module
-    my $EventModuleSysconfigSetting = 'DynamicField::EventModulePost###100-UpdateITSMChangeConditions';
+    my $EventModuleSysconfigSetting
+        = 'DynamicField::EventModulePost###100-UpdateITSMChangeConditions';
 
     # get the original sysconfig setting for the event module registration
     my %EventModuleConfig = $Self->{SysConfigObject}->ConfigItemGet(
@@ -572,8 +573,8 @@ sub _MigrateFreeTextToDynamicFields {
 
     # get the list of change and workorder dynamic fields
     $DynamicFieldList = $Self->{DynamicFieldObject}->DynamicFieldListGet(
-        Valid       => 1,
-        ObjectType  => [ 'ITSMChange', 'ITSMWorkOrder' ],
+        Valid => 1,
+        ObjectType => [ 'ITSMChange', 'ITSMWorkOrder' ],
     );
 
     # migrate the freekey and freetext data
@@ -585,11 +586,11 @@ sub _MigrateFreeTextToDynamicFields {
         my $ColumnName;
         if ( $DynamicField->{ObjectType} eq 'ITSMChange' ) {
             $TablePrefix = 'change_free';
-            $ColumnName = 'change_id';
+            $ColumnName  = 'change_id';
         }
         elsif ( $DynamicField->{ObjectType} eq 'ITSMWorkOrder' ) {
             $TablePrefix = 'change_wo_free';
-            $ColumnName = 'workorder_id';
+            $ColumnName  = 'workorder_id';
         }
 
         # get the type (key or text) and the number from the name
@@ -597,7 +598,7 @@ sub _MigrateFreeTextToDynamicFields {
         my $TableName;
         if ( $DynamicField->{Name} =~ m{ \A (Change|WorkOrder)Free(Key|Text)(\d+) \z }xms ) {
             $TableName = $TablePrefix . lc($2);
-            $Number = $3;
+            $Number    = $3;
         }
         else {
             next DYNAMICFIELD;
@@ -608,7 +609,7 @@ sub _MigrateFreeTextToDynamicFields {
             SQL => "SELECT $ColumnName, field_value
                     FROM $TableName
                     WHERE field_id = ?",
-            Bind  => [ \$Number ],
+            Bind => [ \$Number ],
         );
 
         # fetch the result
@@ -709,19 +710,22 @@ sub _MigrateFreeTextToDynamicFields {
 
     # migrate change freetext frontend config
     CONFIGNAME:
-    for my $ConfigName (qw(
+    for my $ConfigName (
+        qw(
         ITSMChange::Frontend::AgentITSMChangeAdd
         ITSMChange::Frontend::AgentITSMChangeEdit
         ITSMChange::Frontend::AgentITSMChangeSearch
         ITSMChange::Frontend::AgentITSMWorkOrderAdd
         ITSMWorkOrder::Frontend::AgentITSMWorkOrderEdit
         ITSMWorkOrder::Frontend::AgentITSMWorkOrderReport
-    )) {
+        )
+        )
+    {
 
         my $FieldType;
         my $Config = $Self->{ConfigObject}->Get($ConfigName);
-        if ($ConfigName =~ m{ AgentITSMWorkOrder }xms ) {
-           $FieldType = 'WorkOrderFreeText';
+        if ( $ConfigName =~ m{ AgentITSMWorkOrder }xms ) {
+            $FieldType = 'WorkOrderFreeText';
         }
         else {
             $FieldType = 'ChangeFreeText';
@@ -730,13 +734,13 @@ sub _MigrateFreeTextToDynamicFields {
 
         my %NewSetting;
         NUMBER:
-        for my $Number (sort keys %{$Config} ) {
+        for my $Number ( sort keys %{$Config} ) {
 
             my $Value = $Config->{$Number};
 
             next NUMBER if !$Value;
 
-            $NewSetting{ $FieldType . $Number} = $Value;
+            $NewSetting{ $FieldType . $Number } = $Value;
         }
 
         next CONFIGNAME if !%NewSetting;
@@ -753,7 +757,7 @@ sub _MigrateFreeTextToDynamicFields {
     my %WorkorderDynamicFieldConfig;
 
     DYNAMICFIELD:
-    for my $DynamicField (@{$DynamicFieldList}) {
+    for my $DynamicField ( @{$DynamicFieldList} ) {
 
         if ( $DynamicField->{ObjectType} eq 'ITSMChange' ) {
             $ChangeDynamicFieldConfig{ $DynamicField->{Name} } = 1;
@@ -1315,8 +1319,8 @@ sub _DynamicFieldsDelete {
 
     # get the list of change and workorder dynamic fields (valid an invalid ones)
     my $DynamicFieldList = $Self->{DynamicFieldObject}->DynamicFieldListGet(
-        Valid       => 0,
-        ObjectType  => [ 'ITSMChange', 'ITSMWorkOrder' ],
+        Valid => 0,
+        ObjectType => [ 'ITSMChange', 'ITSMWorkOrder' ],
     );
 
     # delete the dynamic fields
@@ -1324,8 +1328,8 @@ sub _DynamicFieldsDelete {
     for my $DynamicField ( @{$DynamicFieldList} ) {
 
         $Self->{DynamicFieldObject}->DynamicFieldDelete(
-            ID      => $DynamicField->{ID},
-            UserID  => 1,
+            ID     => $DynamicField->{ID},
+            UserID => 1,
         );
     }
 

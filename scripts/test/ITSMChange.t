@@ -2067,7 +2067,7 @@ my @ChangeTests = (
             },
         },
 
-        SearchTest => [ 6 ],
+        SearchTest => [6],
     },
 
     #------------------------------#
@@ -3937,7 +3937,7 @@ my @ChangeSearchTests = (
             'DynamicField_' . $UniqueNamePrefix . 'Test2' => {
                 Equals => 'BBBB',
             },
-            UsingWildcards  => 0,
+            UsingWildcards => 0,
         },
         ResultData => {
             TestExistence => 1,
@@ -3949,13 +3949,13 @@ my @ChangeSearchTests = (
     {
         Description => 'Search for change dynamic fields',
         SearchData  => {
-                'DynamicField_' . $UniqueNamePrefix . 'Test3' => {
-                    Equals => 'GGGG',
-                },
-                'DynamicField_' . $UniqueNamePrefix . 'Test4' => {
-                    Equals => 'HHHH',
-                },
-            UsingWildcards  => 1,
+            'DynamicField_' . $UniqueNamePrefix . 'Test3' => {
+                Equals => 'GGGG',
+            },
+            'DynamicField_' . $UniqueNamePrefix . 'Test4' => {
+                Equals => 'HHHH',
+            },
+            UsingWildcards => 1,
         },
         ResultData => {
             TestExistence => 1,
@@ -3967,14 +3967,14 @@ my @ChangeSearchTests = (
     {
         Description => 'Search for change dynamic fields',
         SearchData  => {
-            ChangeTitle     => 'Test add change with dynamic fields - ' . $UniqueSignature,
+            ChangeTitle => 'Test add change with dynamic fields - ' . $UniqueSignature,
             'DynamicField_' . $UniqueNamePrefix . 'Test1' => {
                 Equals => 'AAAA',
             },
             'DynamicField_' . $UniqueNamePrefix . 'Test2' => {
                 Equals => 'BBBB',
             },
-            UsingWildcards  => 1,
+            UsingWildcards => 1,
         },
         ResultData => {
             TestExistence => 1,

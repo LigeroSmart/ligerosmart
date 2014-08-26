@@ -1417,9 +1417,9 @@ sub WorkOrderSearch {
     }
 
     # build sql for dynamic fields
-    my $SQLDynamicFieldInnerJoins = '';     # join-statements
-    my $SQLDynamicFieldWhere      = '';     # where-clause
-    my $DynamicFieldJoinCounter = 1;
+    my $SQLDynamicFieldInnerJoins = '';    # join-statements
+    my $SQLDynamicFieldWhere      = '';    # where-clause
+    my $DynamicFieldJoinCounter   = 1;
 
     DYNAMICFIELD:
     for my $DynamicField ( @{$WorkOrderDynamicFields} ) {
@@ -1439,14 +1439,14 @@ sub WorkOrderSearch {
                 : ( $SearchParam->{$Operator} );
 
             my $SQLDynamicFieldWhereSub = '';
-            if ( $SQLDynamicFieldWhere ) {
+            if ($SQLDynamicFieldWhere) {
                 $SQLDynamicFieldWhereSub = ' AND (';
             }
             else {
                 $SQLDynamicFieldWhereSub = ' (';
             }
 
-            my $Counter   = 0;
+            my $Counter = 0;
             TEXT:
             for my $Text (@SearchParams) {
                 next TEXT if ( !defined $Text || $Text eq '' );
@@ -1498,7 +1498,8 @@ sub WorkOrderSearch {
 
             if ( $DynamicField->{ObjectType} eq 'ITSMWorkOrder' ) {
 
-                $SQLDynamicFieldInnerJoins .= "INNER JOIN dynamic_field_value dfv$DynamicFieldJoinCounter
+                $SQLDynamicFieldInnerJoins
+                    .= "INNER JOIN dynamic_field_value dfv$DynamicFieldJoinCounter
                     ON (wo.id = dfv$DynamicFieldJoinCounter.object_id
                         AND dfv$DynamicFieldJoinCounter.field_id = " .
                     $Self->{DBObject}->Quote( $DynamicField->{ID}, 'Integer' ) . ") ";

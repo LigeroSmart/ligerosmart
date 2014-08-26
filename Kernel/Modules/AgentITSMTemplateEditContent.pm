@@ -97,13 +97,14 @@ sub Run {
         );
 
         # get preference to see which templates are in edit by the user
-        my $TemplateEditPreferenceString = $UserPreferences{UserITSMChangeManagementTemplateEdit} || '';
+        my $TemplateEditPreferenceString
+            = $UserPreferences{UserITSMChangeManagementTemplateEdit} || '';
 
         # convert to lookup hash
         my @EditedTemplates = split m/;/, $TemplateEditPreferenceString;
         my %Object2Template;
         for my $String (@EditedTemplates) {
-            my ($Object, $Template ) = split m/::/, $String;
+            my ( $Object, $Template ) = split m/::/, $String;
             $Object2Template{$Object} = $Template;
         }
 
@@ -132,7 +133,7 @@ sub Run {
 
             # convert to string
             $TemplateEditPreferenceString = '';
-            for my $Object (sort keys %Object2Template) {
+            for my $Object ( sort keys %Object2Template ) {
                 $TemplateEditPreferenceString .= $Object . '::' . $Object2Template{$Object} . ';';
             }
 
@@ -154,8 +155,8 @@ sub Run {
 
             # add a dummy change, needed to contain the workorder
             my $ChangeID = $Self->{ChangeObject}->ChangeAdd(
-                ChangeTitle  => $Self->{Config}->{DefaultChangeTitle},
-                UserID       => $Self->{UserID},
+                ChangeTitle => $Self->{Config}->{DefaultChangeTitle},
+                UserID      => $Self->{UserID},
             );
 
             # show error message, when adding failed
@@ -190,7 +191,7 @@ sub Run {
 
             # convert to string
             $TemplateEditPreferenceString = '';
-            for my $Object (sort keys %Object2Template) {
+            for my $Object ( sort keys %Object2Template ) {
                 $TemplateEditPreferenceString .= $Object . '::' . $Object2Template{$Object} . ';';
             }
 
@@ -215,7 +216,7 @@ sub Run {
         $Self->{LayoutObject}->Block(
             Name => 'EditContentDialog',
             Data => {
-                 %{$Template},
+                %{$Template},
             },
         );
 
@@ -224,7 +225,7 @@ sub Run {
             $Self->{LayoutObject}->Block(
                 Name => 'ChangeTemplate',
                 Data => {
-                     %{$Template},
+                    %{$Template},
                 },
             );
         }
@@ -232,7 +233,7 @@ sub Run {
             $Self->{LayoutObject}->Block(
                 Name => 'WorkOrderTemplate',
                 Data => {
-                     %{$Template},
+                    %{$Template},
                 },
             );
         }

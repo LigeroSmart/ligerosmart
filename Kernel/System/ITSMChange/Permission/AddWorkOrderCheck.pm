@@ -151,8 +151,10 @@ sub Run {
     return 1 if !$Param{ChangeID};
 
     # access is passed to other permission modules if the action is none of the below
-    if (   $Param{Action} ne 'AgentITSMWorkOrderAdd'
-        && $Param{Action} ne 'AgentITSMWorkOrderAddFromTemplate' )
+    if (
+        $Param{Action} ne 'AgentITSMWorkOrderAdd'
+        && $Param{Action} ne 'AgentITSMWorkOrderAddFromTemplate'
+        )
     {
         return 1;
     }
