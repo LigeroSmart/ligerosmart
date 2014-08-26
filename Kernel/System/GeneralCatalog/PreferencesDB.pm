@@ -30,37 +30,9 @@ some preferences functions for general catalog
 
 create an object
 
-    use Kernel::Config;
-    use Kernel::System::Encode;
-    use Kernel::System::Log;
-    use Kernel::System::Main;
-    use Kernel::System::DB;
-    use Kernel::System::GeneralCatalog::PreferencesDB;
-
-    my $ConfigObject = Kernel::Config->new();
-    my $EncodeObject = Kernel::System::Encode->new(
-        ConfigObject => $ConfigObject,
-    );
-    my $LogObject = Kernel::System::Log->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-    );
-    my $MainObject = Kernel::System::Main->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-    );
-    my $DBObject = Kernel::System::DB->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-        MainObject   => $MainObject,
-    );
-    my $GroupObject = Kernel::System::GeneralCatalog::PreferencesDB->new(
-        ConfigObject => $ConfigObject,
-        LogObject    => $LogObject,
-        DBObject     => $DBObject,
-    );
+    use Kernel::System::ObjectManager;
+    local $Kernel::OM = Kernel::System::ObjectManager->new();
+    my $GeneralCatalogPreferencesDBObject = $Kernel::OM->Get('Kernel::System::GeneralCatalog::PreferencesDB');
 
 =cut
 
@@ -72,9 +44,8 @@ sub new {
     bless( $Self, $Type );
 
     # check needed objects
-    for (qw(DBObject ConfigObject LogObject)) {
-        $Self->{$_} = $Param{$_} || die "Got no $_!";
-    }
+    $Self->{DBObject}  = $Kernel::OM->Get('Kernel::System::DB');
+    $Self->{Logbject}  = $Kernel::OM->Get('Kernel::System::Log');
 
     # preferences table data
     $Self->{PreferencesTable}      = 'general_catalog_preferences';
@@ -159,7 +130,7 @@ sub GeneralCatalogPreferencesGet {
     }
 
     # check if queue preferences are available
-    if ( !$Self->{ConfigObject}->Get('GeneralCatalogPreferences') ) {
+    if ( !$Kernel::OM->Get('Kernel::Config')->Get('GeneralCatalogPreferences') ) {
         return;
     }
 

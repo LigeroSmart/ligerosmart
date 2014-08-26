@@ -12,9 +12,7 @@ package Kernel::System::GeneralCatalog;
 use strict;
 use warnings;
 
-use Kernel::System::Valid;
-use Kernel::System::CheckItem;
-use Kernel::System::Cache;
+our @ObjectDependencies = ();
 
 =head1 NAME
 
@@ -34,39 +32,9 @@ All general catalog functions.
 
 create an object
 
-    use Kernel::Config;
-    use Kernel::System::Encode;
-    use Kernel::System::Log;
-    use Kernel::System::Main;
-    use Kernel::System::DB;
-    use Kernel::System::GeneralCatalog;
-
-    my $ConfigObject = Kernel::Config->new();
-    my $EncodeObject = Kernel::System::Encode->new(
-        ConfigObject => $ConfigObject,
-    );
-    my $LogObject = Kernel::System::Log->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-    );
-    my $MainObject = Kernel::System::Main->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-    );
-    my $DBObject = Kernel::System::DB->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-        MainObject   => $MainObject,
-    );
-    my $GeneralCatalogObject = Kernel::System::GeneralCatalog->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-        DBObject     => $DBObject,
-        MainObject   => $MainObject,
-    );
+    use Kernel::System::ObjectManager;
+    local $Kernel::OM = Kernel::System::ObjectManager->new();
+    my $GeneralCatalogObject = $Kernel::OM->Get('Kernel::System::GeneralCatalog');
 
 =cut
 
@@ -77,17 +45,11 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    # check needed objects
-    for my $Object (qw(DBObject ConfigObject EncodeObject LogObject MainObject)) {
-        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
-    }
-    $Self->{ValidObject}     = Kernel::System::Valid->new( %{$Self} );
-    $Self->{CheckItemObject} = Kernel::System::CheckItem->new( %{$Self} );
-
     # load generator preferences module
-    my $GeneratorModule = $Self->{ConfigObject}->Get('GeneralCatalog::PreferencesModule')
+    my $GeneratorModule
+        = $Kernel::OM->Get('Kernel::Config')->Get('GeneralCatalog::PreferencesModule')
         || 'Kernel::System::GeneralCatalog::PreferencesDB';
-    if ( $Self->{MainObject}->Require($GeneratorModule) ) {
+    if ( $Kernel::OM->Get('Kernel::System::Main')->Require($GeneratorModule) ) {
         $Self->{PreferencesObject} = $GeneratorModule->new(%Param);
     }
 
@@ -95,8 +57,10 @@ sub new {
     $Self->{CacheType} = 'GeneralCatalog';
     $Self->{CacheTTL}  = 60 * 60 * 3;
 
-    # get cache object from object manager
+    # get sonme objects from object manager
     $Self->{CacheObject} = $Kernel::OM->Get('Kernel::System::Cache');
+    $Self->{DBObject}    = $Kernel::OM->Get('Kernel::System::DB');
+    $Self->{LogObject}   = $Kernel::OM->Get('Kernel::System::Log');
 
     return $Self;
 }
@@ -163,7 +127,7 @@ sub ClassRename {
 
     # cleanup given params
     for my $Argument (qw(ClassOld ClassNew)) {
-        $Self->{CheckItemObject}->StringClean(
+        $Kernel::OM->Get('Kernel::System::CheckItem')->StringClean(
             StringRef         => \$Param{$Argument},
             RemoveAllNewlines => 1,
             RemoveAllTabs     => 1,
@@ -502,7 +466,7 @@ sub ItemAdd {
 
     # cleanup given params
     for my $Argument (qw(Class)) {
-        $Self->{CheckItemObject}->StringClean(
+        $Kernel::OM->Get('Kernel::System::CheckItem')->StringClean(
             StringRef         => \$Param{$Argument},
             RemoveAllNewlines => 1,
             RemoveAllTabs     => 1,
@@ -510,7 +474,7 @@ sub ItemAdd {
         );
     }
     for my $Argument (qw(Name Comment)) {
-        $Self->{CheckItemObject}->StringClean(
+        $Kernel::OM->Get('Kernel::System::CheckItem')->StringClean(
             StringRef         => \$Param{$Argument},
             RemoveAllNewlines => 1,
             RemoveAllTabs     => 1,
@@ -621,7 +585,7 @@ sub ItemUpdate {
 
     # cleanup given params
     for my $Argument (qw(Class)) {
-        $Self->{CheckItemObject}->StringClean(
+        $Kernel::OM->Get('Kernel::System::CheckItem')->StringClean(
             StringRef         => \$Param{$Argument},
             RemoveAllNewlines => 1,
             RemoveAllTabs     => 1,
@@ -629,7 +593,7 @@ sub ItemUpdate {
         );
     }
     for my $Argument (qw(Name Comment)) {
-        $Self->{CheckItemObject}->StringClean(
+        $Kernel::OM->Get('Kernel::System::CheckItem')->StringClean(
             StringRef         => \$Param{$Argument},
             RemoveAllNewlines => 1,
             RemoveAllTabs     => 1,

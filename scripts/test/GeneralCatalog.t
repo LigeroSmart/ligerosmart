@@ -16,8 +16,16 @@ use vars qw($Self);
 use Kernel::System::GeneralCatalog;
 use Kernel::System::User;
 
-$Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new( %{$Self} );
-$Self->{UserObject}           = Kernel::System::User->new( %{$Self} );
+# create local objects
+my $ConfigObject  = $Kernel::OM->Get('Kernel::Config');
+my $GeneralCatalogObject = Kernel::System::GeneralCatalog->new(
+    %{$Self},
+    ConfigObject => $ConfigObject,
+);
+my $UserObject = Kernel::System::User->new(
+    %{$Self},
+    ConfigObject => $ConfigObject,
+);
 
 # ------------------------------------------------------------ #
 # make preparations
@@ -28,8 +36,8 @@ my @UserIDs;
 {
 
     # disable email checks to create new user
-    my $CheckEmailAddressesOrg = $Self->{ConfigObject}->Get('CheckEmailAddresses') || 1;
-    $Self->{ConfigObject}->Set(
+    my $CheckEmailAddressesOrg = $ConfigObject->Get('CheckEmailAddresses') || 1;
+    $ConfigObject->Set(
         Key   => 'CheckEmailAddresses',
         Value => 0,
     );
@@ -37,7 +45,7 @@ my @UserIDs;
     for my $Counter ( 1 .. 2 ) {
 
         # create new users for the tests
-        my $UserID = $Self->{UserObject}->UserAdd(
+        my $UserID = $UserObject->UserAdd(
             UserFirstname => 'GeneralCatalog' . $Counter,
             UserLastname  => 'UnitTest',
             UserLogin     => 'UnitTest-GeneralCatalog-' . $Counter . int rand 1_000_000,
@@ -50,7 +58,7 @@ my @UserIDs;
     }
 
     # restore original email check param
-    $Self->{ConfigObject}->Set(
+    $ConfigObject->Set(
         Key   => 'CheckEmailAddresses',
         Value => $CheckEmailAddressesOrg,
     );
@@ -66,13 +74,13 @@ for my $Counter ( 1 .. 3 ) {
 
 # store original general catalog permission preferences setting
 my $GeneralCatalogPreferencesPermissionsOrg;
-if ( $Self->{ConfigObject}->Get('GeneralCatalogPreferences') ) {
+if ( $ConfigObject->Get('GeneralCatalogPreferences') ) {
     $GeneralCatalogPreferencesPermissionsOrg
-        = $Self->{ConfigObject}->Get('GeneralCatalogPreferences')->{Permissions};
+        = $ConfigObject->Get('GeneralCatalogPreferences')->{Permissions};
 }
 
 # enable general catalog permission preferences setting with a dummy true value
-$Self->{ConfigObject}->Set(
+$ConfigObject->Set(
     Key   => 'GeneralCatalogPreferences###Permissions',
     Value => 1,
 );
@@ -498,7 +506,7 @@ for my $Item ( @{$ItemData} ) {
     if ( $Item->{Add} ) {
 
         # add new item
-        my $ItemID = $Self->{GeneralCatalogObject}->ItemAdd(
+        my $ItemID = $GeneralCatalogObject->ItemAdd(
             %{ $Item->{Add} },
         );
 
@@ -527,7 +535,7 @@ for my $Item ( @{$ItemData} ) {
         }
 
         # get item data to check the values after creation of item using ItemId and UserID
-        my $ItemGet = $Self->{GeneralCatalogObject}->ItemGet(
+        my $ItemGet = $GeneralCatalogObject->ItemGet(
             ItemID => $ItemID,
             UserID => $Item->{Add}->{UserID},
         );
@@ -542,7 +550,7 @@ for my $Item ( @{$ItemData} ) {
         }
 
         # get item data to check the values after creation of item using Class and Name
-        $ItemGet = $Self->{GeneralCatalogObject}->ItemGet(
+        $ItemGet = $GeneralCatalogObject->ItemGet(
             Class => $Item->{AddGet}->{Class},
             Name  => $Item->{AddGet}->{Name},
         );
@@ -568,7 +576,7 @@ for my $Item ( @{$ItemData} ) {
         }
 
         # update the item
-        my $UpdateSucess = $Self->{GeneralCatalogObject}->ItemUpdate(
+        my $UpdateSucess = $GeneralCatalogObject->ItemUpdate(
             %{ $Item->{Update} },
             ItemID => $LastAddedItemID,
         );
@@ -588,7 +596,7 @@ for my $Item ( @{$ItemData} ) {
         }
 
         # get item data to check the values after the update
-        my $ItemGet2 = $Self->{GeneralCatalogObject}->ItemGet(
+        my $ItemGet2 = $GeneralCatalogObject->ItemGet(
             ItemID => $LastAddedItemID,
             UserID => $Item->{Update}->{UserID},
         );
@@ -608,7 +616,7 @@ for my $Item ( @{$ItemData} ) {
         for my $Key ( sort keys %{ $Item->{PreferencesSet} } ) {
 
             # set preferences
-            my $Success = $Self->{GeneralCatalogObject}->GeneralCatalogPreferencesSet(
+            my $Success = $GeneralCatalogObject->GeneralCatalogPreferencesSet(
                 Key    => $Key,
                 Value  => $Item->{PreferencesSet}->{$Key},
                 ItemID => $LastAddedItemID,
@@ -623,7 +631,7 @@ for my $Item ( @{$ItemData} ) {
 
     # check preferences
     if ( $Item->{PreferencesGet} ) {
-        my %Preferences = $Self->{GeneralCatalogObject}->GeneralCatalogPreferencesGet(
+        my %Preferences = $GeneralCatalogObject->GeneralCatalogPreferencesGet(
             ItemID => $LastAddedItemID,
         );
 
@@ -673,7 +681,7 @@ my @NonExistingClasses = ( 'UnitTest::NoExistingClass1', 'UnitTest::NoExistingCl
 # ClassList test 1
 # ------------------------------------------------------------ #
 
-my $ClassList1 = $Self->{GeneralCatalogObject}->ClassList();
+my $ClassList1 = $GeneralCatalogObject->ClassList();
 
 for my $Class (@ExistingClasses) {
 
@@ -697,7 +705,7 @@ for my $Class (@ExistingClasses) {
 
 for my $Class (@NonExistingClasses) {
 
-    my $ItemList = $Self->{GeneralCatalogObject}->ItemList(
+    my $ItemList = $GeneralCatalogObject->ItemList(
         Class => $Class,
         Valid => 0,
     );
@@ -716,7 +724,7 @@ for my $Class (@NonExistingClasses) {
 
 for my $Class (@ExistingClasses) {
 
-    my $ItemList = $Self->{GeneralCatalogObject}->ItemList(
+    my $ItemList = $GeneralCatalogObject->ItemList(
         Class => $Class,
         Valid => 0,
     );
@@ -742,7 +750,7 @@ for my $Class (@ExistingClasses) {
 {
 
     my $Class    = 'UnitTest::TestClass' . $ClassRand[0];
-    my $ItemList = $Self->{GeneralCatalogObject}->ItemList(
+    my $ItemList = $GeneralCatalogObject->ItemList(
         Class       => $Class,
         Valid       => 1,
         Preferences => {
@@ -771,7 +779,7 @@ for my $Class (@ExistingClasses) {
 {
 
     my $Class    = 'UnitTest::TestClass' . $ClassRand[0];
-    my $ItemList = $Self->{GeneralCatalogObject}->ItemList(
+    my $ItemList = $GeneralCatalogObject->ItemList(
         Class       => $Class,
         Valid       => 1,
         Preferences => {
@@ -798,20 +806,20 @@ for my $Class (@ExistingClasses) {
 # ------------------------------------------------------------ #
 for my $Class (@ExistingClasses) {
 
-    my $ItemID = $Self->{GeneralCatalogObject}->ItemAdd(
+    my $ItemID = $GeneralCatalogObject->ItemAdd(
         Class   => $Class,
         Name    => 'Item Preferences',
         ValidID => 1,
         UserID  => 1,
     );
 
-    $Self->{GeneralCatalogObject}->GeneralCatalogPreferencesSet(
+    $GeneralCatalogObject->GeneralCatalogPreferencesSet(
         ItemID => $ItemID,
         Key    => 'UnitTestPref',
         Value  => '1',
     );
 
-    my $ItemList = $Self->{GeneralCatalogObject}->ItemList(
+    my $ItemList = $GeneralCatalogObject->ItemList(
         Class       => $Class,
         Preferences => {
             UnitTestPref => 1,
@@ -824,13 +832,13 @@ for my $Class (@ExistingClasses) {
         "Test $TestCount: ItemList() - Class $Class Preferences match",
     );
 
-    $Self->{GeneralCatalogObject}->GeneralCatalogPreferencesSet(
+    $GeneralCatalogObject->GeneralCatalogPreferencesSet(
         ItemID => $ItemID,
         Key    => 'UnitTestPref',
         Value  => '2',
     );
 
-    $ItemList = $Self->{GeneralCatalogObject}->ItemList(
+    $ItemList = $GeneralCatalogObject->ItemList(
         Class       => $Class,
         Preferences => {
             UnitTestPref => 1,
@@ -842,7 +850,7 @@ for my $Class (@ExistingClasses) {
         "Test $TestCount: ItemList() - Class $Class Preferences not match after PreferencesSet Change"
     );
 
-    $Self->{GeneralCatalogObject}->ItemUpdate(
+    $GeneralCatalogObject->ItemUpdate(
         ItemID  => $ItemID,
         Name    => 'Item Preferences',
         ValidID => 2,
@@ -863,7 +871,7 @@ map { $FunctionalityList1{$_} = 1 } @ExistingFunctionalities;
 
 for my $Class (@ExistingClasses) {
 
-    my $FunctionalityList = $Self->{GeneralCatalogObject}->FunctionalityList(
+    my $FunctionalityList = $GeneralCatalogObject->FunctionalityList(
         Class => $Class,
     );
 
@@ -895,12 +903,12 @@ $TestCount++;
 CLASS:
 for my $Class (@ExistingClasses) {
 
-    my $OldItemList = $Self->{GeneralCatalogObject}->ItemList(
+    my $OldItemList = $GeneralCatalogObject->ItemList(
         Class => $Class,
         Valid => 0,
     );
 
-    my $Success = $Self->{GeneralCatalogObject}->ClassRename(
+    my $Success = $GeneralCatalogObject->ClassRename(
         ClassOld => $Class,
         ClassNew => $Class . 'RENAME1',
     );
@@ -913,7 +921,7 @@ for my $Class (@ExistingClasses) {
         next CLASS;
     }
 
-    my $NewItemList = $Self->{GeneralCatalogObject}->ItemList(
+    my $NewItemList = $GeneralCatalogObject->ItemList(
         Class => $Class . 'RENAME1',
         Valid => 0,
     );
@@ -960,12 +968,12 @@ for my $Class (@ExistingClasses) {
 CLASS:
 for my $Class (@ExistingClasses) {
 
-    my $OldItemList = $Self->{GeneralCatalogObject}->ItemList(
+    my $OldItemList = $GeneralCatalogObject->ItemList(
         Class => $Class . 'RENAME1',
         Valid => 0,
     );
 
-    my $Success = $Self->{GeneralCatalogObject}->ClassRename(
+    my $Success = $GeneralCatalogObject->ClassRename(
         ClassOld => $Class . 'RENAME1',
         ClassNew => ' ' . $Class . "RE NA ME 2 \n \r \t ",
     );
@@ -978,7 +986,7 @@ for my $Class (@ExistingClasses) {
         next CLASS;
     }
 
-    my $NewItemList = $Self->{GeneralCatalogObject}->ItemList(
+    my $NewItemList = $GeneralCatalogObject->ItemList(
         Class => $Class . 'RENAME2',
         Valid => 0,
     );
@@ -1024,7 +1032,7 @@ for my $Class (@ExistingClasses) {
 
 for my $Class (@ExistingClasses) {
 
-    my $Success = $Self->{GeneralCatalogObject}->ClassRename(
+    my $Success = $GeneralCatalogObject->ClassRename(
         ClassOld => $Class . 'RENAME2',
         ClassNew => $Class . 'RENAME2',
     );
@@ -1041,7 +1049,7 @@ for my $Class (@ExistingClasses) {
 # ClassRename test 3 (new class name already exists)
 # ------------------------------------------------------------ #
 
-$Self->{GeneralCatalogObject}->ItemAdd(
+$GeneralCatalogObject->ItemAdd(
     Class         => 'UnitTest::TestClass' . $ClassRand[2],
     Name          => 'Dummy',
     Functionality => '',
@@ -1051,7 +1059,7 @@ $Self->{GeneralCatalogObject}->ItemAdd(
 
 for my $Class (@ExistingClasses) {
 
-    my $Success = $Self->{GeneralCatalogObject}->ClassRename(
+    my $Success = $GeneralCatalogObject->ClassRename(
         ClassOld => $Class . 'RENAME2',
         ClassNew => 'UnitTest::TestClass' . $ClassRand[2],
     );
@@ -1069,7 +1077,7 @@ for my $Class (@ExistingClasses) {
 # ------------------------------------------------------------ #
 
 # restore original general catalog permission preferences setting
-$Self->{ConfigObject}->Set(
+$ConfigObject->Set(
     Key   => 'GeneralCatalogPreferences###Permissions',
     Value => $GeneralCatalogPreferencesPermissionsOrg,
 );
