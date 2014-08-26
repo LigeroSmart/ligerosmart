@@ -220,7 +220,7 @@ sub _PDFOutputGeneralInfos {
         {
             Key   => $Self->{LayoutObject}->{LanguageObject}->Get('Created') . ':',
             Value => $Self->{LayoutObject}->Output(
-                Template => '$TimeLong{"$Data{"CreateTime"}"}',
+                Template => '[% Data.CreateTime | Localize("TimeLong") %]',
                 Data     => \%{ $Param{Service} },
             ),
         },
@@ -231,7 +231,7 @@ sub _PDFOutputGeneralInfos {
         {
             Key   => $Self->{LayoutObject}->{LanguageObject}->Get('Last changed') . ':',
             Value => $Self->{LayoutObject}->Output(
-                Template => '$TimeLong{"$Data{"ChangeTime"}"}',
+                Template => '[% Data.ChangeTime | Localize("TimeLong") %]',
                 Data     => \%{ $Param{Service} },
             ),
         },

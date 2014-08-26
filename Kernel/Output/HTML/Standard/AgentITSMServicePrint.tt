@@ -1,5 +1,5 @@
 # --
-# AgentITSMServicePrint.dtl - provides HTML print view
+# AgentITSMServicePrint.tt - provides HTML print view
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -9,37 +9,37 @@
 
 <table border="0" cellspacing="1" cellpadding="0" width="100%">
     <tr>
-        <td class="mainhead">$Text{"Service"}</td>
+        <td class="mainhead">[% Translate("Service") | html %]</td>
     </tr>
 </table>
 <table border="0" cellspacing="1" cellpadding="10" width="100%">
     <tr>
         <td class="contentkey">
-            $Text{"Service-Info"}:
+            [% Translate("Service-Info") | html %]:
             <table border="0" cellspacing="3" cellpadding="0" width="100%">
                 <tr>
-                    <td class="contentkey" width="10%">$Text{"Service"}:</td>
-                    <td class="contentvalue" width="40%">$QData{"NameShort"}</td>
-                    <td class="contentkey" width="20%">$Text{"Created"}:</td>
-                    <td class="contentvalue" width="30%">$TimeLong{"$Data{"CreateTime"}"}</td>
+                    <td class="contentkey" width="10%">[% Translate("Service") | html %]:</td>
+                    <td class="contentvalue" width="40%">[% Data.NameShort | html %]</td>
+                    <td class="contentkey" width="20%">[% Translate("Created") | html %]:</td>
+                    <td class="contentvalue" width="30%">[% Data.CreateTime | Localize("TimeLong") %]</td>
                 </tr>
                 <tr>
-                    <td class="contentkey">$Text{"Current Incident State"}:</td>
-                    <td class="contentvalue">$Text{"$Data{"CurInciState"}"}</td>
-                    <td class="contentkey">$Text{"Created by"}:</td>
-                    <td class="contentvalue">$QData{"CreateByName"}</td>
-                </tr>
-                <tr>
-                    <td class="contentkey"></td>
-                    <td class="contentvalue"></td>
-                    <td class="contentkey">$Text{"Last changed"}:</td>
-                    <td class="contentvalue">$TimeLong{"$Data{"ChangeTime"}"}</td>
+                    <td class="contentkey">[% Translate("Current Incident State") | html %]:</td>
+                    <td class="contentvalue">[% Translate(Data.CurInciState) | html %]</td>
+                    <td class="contentkey">[% Translate("Created by") | html %]:</td>
+                    <td class="contentvalue">[% Data.CreateByName | html %]</td>
                 </tr>
                 <tr>
                     <td class="contentkey"></td>
                     <td class="contentvalue"></td>
-                    <td class="contentkey">$Text{"Last changed by"}:</td>
-                    <td class="contentvalue">$QData{"ChangeByName"}</td>
+                    <td class="contentkey">[% Translate("Last changed") | html %]:</td>
+                    <td class="contentvalue">[% Data.ChangeTime | Localize("TimeLong") %]</td>
+                </tr>
+                <tr>
+                    <td class="contentkey"></td>
+                    <td class="contentvalue"></td>
+                    <td class="contentkey">[% Translate("Last changed by") | html %]:</td>
+                    <td class="contentvalue">[% Data.ChangeByName | html %]</td>
                 </tr>
                 <tr>
                     <td class="contentkey">&nbsp;</td>
@@ -48,22 +48,22 @@
             </table>
         </td>
     </tr>
-<!-- dtl:block:AssociatedSLAs -->
+[% RenderBlockStart("AssociatedSLAs") %]
     <tr>
         <td class="contentkey">
-            $Text{"Associated SLAs"}:
+            [% Translate("Associated SLAs") | html %]:
             <table border="0" cellspacing="3" cellpadding="0" width="100%">
-<!-- dtl:block:AssociatedSLAsRow -->
+[% RenderBlockStart("AssociatedSLAsRow") %]
                 <tr>
-                    <td class="contentkey" width="20%">$Text{"SLA"}:</td>
-                    <td colspan="3" class="contentvalue">$QData{"Name"}</td>
+                    <td class="contentkey" width="20%">[% Translate("SLA") | html %]:</td>
+                    <td colspan="3" class="contentvalue">[% Data.Name | html %]</td>
                 </tr>
-<!-- dtl:block:AssociatedSLAsRow -->
+[% RenderBlockEnd("AssociatedSLAsRow") %]
             </table>
         </td>
     </tr>
 </table>
-<!-- dtl:block:AssociatedSLAs -->
+[% RenderBlockEnd("AssociatedSLAs") %]
 <table border="0" width="640" cellpadding="0" cellspacing="0" bgcolor="#000000" class="container">
     <tr>
         <td>
@@ -75,16 +75,16 @@
                                 <td valign="top" width="100%" class="small">
                                     <table border="0" width="100%" cellspacing="0" cellpadding="1">
                                         <tr>
-                                            <td class="contentkey" width="20%">$Text{"Service"}:</td>
-                                            <td class="contentvalue">$QData{"Name"}</td>
+                                            <td class="contentkey" width="20%">[% Translate("Service") | html %]:</td>
+                                            <td class="contentvalue">[% Data.Name | html %]</td>
                                         </tr>
                                         <tr>
-                                            <td class="contentkey">$Text{"Type"}:</td>
-                                            <td class="contentvalue">$Text{"$Data{"Type"}"}</td>
+                                            <td class="contentkey">[% Translate("Type") | html %]:</td>
+                                            <td class="contentvalue">[% Translate(Data.Type) | html %]</td>
                                         </tr>
                                         <tr>
-                                            <td class="contentkey">$Text{"Criticality"}:</td>
-                                            <td class="contentvalue">$Text{"$Data{"Criticality"}"}</td>
+                                            <td class="contentkey">[% Translate("Criticality") | html %]:</td>
+                                            <td class="contentvalue">[% Translate(Data.Criticality) | html %]</td>
                                         </tr>
                                     </table>
                                 </td>

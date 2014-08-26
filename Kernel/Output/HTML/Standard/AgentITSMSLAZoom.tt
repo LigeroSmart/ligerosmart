@@ -1,5 +1,5 @@
 # --
-# AgentITSMSLAZoom.dtl - provides HTML form for AgentITSMSLAZoom
+# AgentITSMSLAZoom.tt - provides HTML form for AgentITSMSLAZoom
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -11,36 +11,36 @@
 <div class="MainBox ARIARoleMain">
     <div class="ClearLeft"></div>
     <div class="Headline">
-        <h1>$Text{"SLA"}: $QData{"Name"}</h1>
+        <h1>[% Translate("SLA") | html %]: [% Data.Name | html %]</h1>
     </div>
 
     <div class="LayoutFixedSidebar SidebarLast">
         <div class="SidebarColumn">
             <div class="WidgetSimple">
                 <div class="Header">
-                    <h2>$Text{"SLA Information"}</h2>
+                    <h2>[% Translate("SLA Information") | html %]</h2>
                 </div>
                 <div class="Content">
                     <fieldset class="TableLike FixedLabelSmall Tight">
-                        <label>$Text{"Created"}:</label>
-                        <p class="Value">$TimeLong{"$Data{"CreateTime"}"}</p>
+                        <label>[% Translate("Created") | html %]:</label>
+                        <p class="Value">[% Data.CreateTime | Localize("TimeLong") %]</p>
                         <div class="Clear"></div>
 
-                        <label>$Text{"Created by"}:</label>
+                        <label>[% Translate("Created by") | html %]:</label>
                         <p class="Value">
-                            $QData{"CreateByName"}
+                            [% Data.CreateByName | html %]
                         </p>
                         <div class="Clear"></div>
 
-                        <label>$Text{"Last changed"}:</label>
+                        <label>[% Translate("Last changed") | html %]:</label>
                         <p class="Value">
-                            $TimeLong{"$Data{"ChangeTime"}"}
+                            [% Data.ChangeTime | Localize("TimeLong") %]
                         </p>
                         <div class="Clear"></div>
 
-                        <label>$Text{"Last changed by"}:</label>
+                        <label>[% Translate("Last changed by") | html %]:</label>
                         <p class="Value">
-                            $QData{"CreateByName"}
+                            [% Data.CreateByName | html %]
                         </p>
                         <div class="Clear"></div>
                     </fieldset>
@@ -54,105 +54,105 @@
             </div>
             <div class="ActionRow">
                 <ul class="Actions">
-<!-- dtl:block:MenuItem -->
+[% RenderBlockStart("MenuItem") %]
                     <li>
-                        <a href="$Env{"Baselink"}$Data{"Link"}" class="$QData{"MenuClass"}" title="$Text{"$Data{"Description"}"}">$Text{"$Data{"Name"}"}</a>
+                        <a href="[% Env("Baselink") %][% Data.Link | Interpolate %]" class="[% Data.MenuClass | html %]" title="[% Translate(Data.Description) | html %]">[% Translate(Data.Name) | html %]</a>
                     </li>
-<!-- dtl:block:MenuItem -->
+[% RenderBlockEnd("MenuItem") %]
                 </ul>
             </div>
 
             <div class="WidgetBox SpacingTop Expanded">
                 <div class="LightRow Header">
-                    <div class="WidgetAction Toggle"><a href="#" title="$Text{"Show or hide the content."}"><i class="icon-caret-right"></i><i class="icon-caret-down"></i></a></div>
-                    <h2>$Text{"SLA"}: $QData{"Name"}</h2>
+                    <div class="WidgetAction Toggle"><a href="#" title="[% Translate("Show or hide the content.") | html %]"><i class="icon-caret-right"></i><i class="icon-caret-down"></i></a></div>
+                    <h2>[% Translate("SLA") | html %]: [% Data.Name | html %]</h2>
                 </div>
                 <div class="Content AutoHeight">
                     <fieldset class="TableLike FixedLabel">
-                        <label>$Text{"Type"}: </label>
+                        <label>[% Translate("Type") | html %]: </label>
                         <div class="Field">
-                            $Text{"$Data{"Type"}"}
+                            [% Translate(Data.Type) | html %]
                         </div>
                         <div class="Clear"></div>
 
-                        <label>$Text{"Calendar"}: </label>
+                        <label>[% Translate("Calendar") | html %]: </label>
                         <div class="Field">
-                            $QData{"CalendarName"}
+                            [% Data.CalendarName | html %]
                         </div>
                         <div class="Clear"></div>
 
-                        <label>$Text{"First Response Time"}: </label>
+                        <label>[% Translate("First Response Time") | html %]: </label>
                         <div class="Field">
-                            $QData{"FirstResponseTime"} $Text{"minutes"}
+                            [% Data.FirstResponseTime | html %] [% Translate("minutes") | html %]
                         </div>
                         <div class="Clear"></div>
 
-                        <label>$Text{"Update Time"}: </label>
+                        <label>[% Translate("Update Time") | html %]: </label>
                         <div class="Field">
-                            $QData{"UpdateTime"} $Text{"minutes"}
+                            [% Data.UpdateTime | html %] [% Translate("minutes") | html %]
                         </div>
                         <div class="Clear"></div>
 
-                        <label>$Text{"Solution Time"}: </label>
+                        <label>[% Translate("Solution Time") | html %]: </label>
                         <div class="Field">
-                            $QData{"SolutionTime"} $Text{"minutes"}
+                            [% Data.SolutionTime | html %] [% Translate("minutes") | html %]
                         </div>
                         <div class="Clear"></div>
 
-                        <label>$Text{"Minimum Time Between Incidents"}: </label>
+                        <label>[% Translate("Minimum Time Between Incidents") | html %]: </label>
                         <div class="Field">
-                            $QData{"MinTimeBetweenIncidents"} $Text{"minutes"}
+                            [% Data.MinTimeBetweenIncidents | html %] [% Translate("minutes") | html %]
                         </div>
                         <div class="Clear"></div>
                     </fieldset>
                 </div>
             </div>
 
-<!-- dtl:block:Service -->
+[% RenderBlockStart("Service") %]
             <div class="WidgetSimple SpacingTop SpacingBottomMedium">
                 <div class="Header">
-                    <h2>$Text{"Associated Services"}</h2>
+                    <h2>[% Translate("Associated Services") | html %]</h2>
                 </div>
                 <div class="Content">
                     <table class="DataTable">
                         <thead>
                             <tr>
-                                <th>$Text{"State"}</th>
-                                <th>$Text{"Service"}</th>
-                                <th>$Text{"Type"}</th>
-                                <th>$Text{"Criticality"}</th>
-                                <th>$Text{"Changed"}</th>
+                                <th>[% Translate("State") | html %]</th>
+                                <th>[% Translate("Service") | html %]</th>
+                                <th>[% Translate("Type") | html %]</th>
+                                <th>[% Translate("Criticality") | html %]</th>
+                                <th>[% Translate("Changed") | html %]</th>
                             </tr>
                         </thead>
                         <tbody>
-<!-- dtl:block:ServiceRow -->
+[% RenderBlockStart("ServiceRow") %]
                             <tr>
                                 <td>
                                     <div class="Flag Small">
-                                        <span class="$QData{"CurInciSignal"}" title="$Text{"$Data{"CurInciState"}"}"></span>
+                                        <span class="[% Data.CurInciSignal | html %]" title="[% Translate(Data.CurInciState) | html %]"></span>
                                     </div>
                                 </td>
                                 <td>
-                                    <a href="$Env{"Baselink"}Action=AgentITSMServiceZoom;ServiceID=$LQData{"ServiceID"}">
-                                        $QData{"Name"}
+                                    <a href="[% Env("Baselink") %]Action=AgentITSMServiceZoom;ServiceID=[% Data.ServiceID | uri %]">
+                                        [% Data.Name | html %]
                                     </a>
                                 </td>
-                                <td>$Text{"$Data{"Type"}"}</td>
-                                <td>$Text{"$Data{"Criticality"}"}</td>
-                                <td>$TimeLong{"$QData{"ChangeTime"}"}</td>
+                                <td>[% Translate(Data.Type) | html %]</td>
+                                <td>[% Translate(Data.Criticality) | html %]</td>
+                                <td>[% Data.ChangeTime | Localize("TimeLong") %]</td>
                             </tr>
-<!-- dtl:block:ServiceRow -->
+[% RenderBlockEnd("ServiceRow") %]
                         </tbody>
                     </table>
                 </div>
             </div>
-<!-- dtl:block:Service -->
+[% RenderBlockEnd("Service") %]
 
         </div>
     </div>
 </div>
 
-<!-- dtl:js_on_document_complete -->
+[% WRAPPER JSOnDocumentComplete %]
 <script type="text/javascript">//<![CDATA[
 
     $('ul.Actions a.AsPopup').bind('click', function (Event) {
@@ -165,4 +165,4 @@
         return false;
     });
 //]]></script>
-<!-- dtl:js_on_document_complete -->
+[% END %]

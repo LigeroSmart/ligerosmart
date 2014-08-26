@@ -1,5 +1,5 @@
 # --
-# AgentITSMService.dtl - provides HTML form for AgentITSMService
+# AgentITSMService.tt - provides HTML form for AgentITSMService
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -7,59 +7,59 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-<!-- dtl:block:Overview -->
+[% RenderBlockStart("Overview") %]
 <div class="MainBox AriaRoleMain SpacingTop">
     <div class="W75pc SpacingBottom CenterBox">
         <div class="WidgetSimple">
             <div class="Header">
-                <h2>$Text{"Overview"}: $Text{"Service"}</h2>
+                <h2>[% Translate("Overview") | html %]: [% Translate("Service") | html %]</h2>
             </div>
             <div class="Content SpacingBottom">
                 <table class="DataTable SpacingTop">
                     <thead>
                         <tr>
-                            <th>$Text{"State"}</th>
-                            <th>$Text{"Service"}</th>
-                            <th>$Text{"Type"}</th>
-                            <th>$Text{"Criticality"}</th>
-                            <th>$Text{"Changed"}</th>
+                            <th>[% Translate("State") | html %]</th>
+                            <th>[% Translate("Service") | html %]</th>
+                            <th>[% Translate("Type") | html %]</th>
+                            <th>[% Translate("Criticality") | html %]</th>
+                            <th>[% Translate("Changed") | html %]</th>
                         </tr>
                     </thead>
                     <tbody>
-<!-- dtl:block:OverviewRow -->
+[% RenderBlockStart("OverviewRow") %]
                         <tr class="MasterAction">
                             <td>
                                 <div class="Flag Small">
-                                    <span class="$Data{"CurInciSignal"}" title="$Data{"State"}"></span>
+                                    <span class="[% Data.CurInciSignal %]" title="[% Data.State %]"></span>
                                 </div>
                             </td>
                             <td>
-                                $Data{"LevelSpace"}
-                                <a class="MasterActionLink" href="$Env{"Baselink"}Action=AgentITSMServiceZoom;ServiceID=$LQData{"ServiceID"}">
-                                    $QData{"Name"}
+                                [% Data.LevelSpace %]
+                                <a class="MasterActionLink" href="[% Env("Baselink") %]Action=AgentITSMServiceZoom;ServiceID=[% Data.ServiceID | uri %]">
+                                    [% Data.Name | html %]
                                 </a>
                             </td>
-                            <td>$Text{"$Data{"Type"}"}</td>
-                            <td>$Text{"$Data{"Criticality"}"}</td>
-                            <td>$TimeLong{"$QData{"ChangeTime"}"}</td>
+                            <td>[% Translate(Data.Type) | html %]</td>
+                            <td>[% Translate(Data.Criticality) | html %]</td>
+                            <td>[% Data.ChangeTime | Localize("TimeLong") %]</td>
                         </tr>
-<!-- dtl:block:OverviewRow -->
-<!-- dtl:block:NoDataFoundMsg -->
+[% RenderBlockEnd("OverviewRow") %]
+[% RenderBlockStart("NoDataFoundMsg") %]
                         <tr>
                             <td colspan="5">
-                                $Text{"No data found."}
+                                [% Translate("No data found.") | html %]
                             </td>
                         </tr>
-<!-- dtl:block:NoDataFoundMsg -->
+[% RenderBlockEnd("NoDataFoundMsg") %]
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
 </div>
-<!-- dtl:block:Overview -->
+[% RenderBlockEnd("Overview") %]
 
-<!-- dtl:js_on_document_complete -->
+[% WRAPPER JSOnDocumentComplete %]
 <script type="text/javascript">//<![CDATA[
     $('.MasterAction').bind('click', function (Event) {
         var $MasterActionLink = $(this).find('.MasterActionLink');
@@ -70,4 +70,4 @@
         }
     });
 //]]></script>
-<!-- dtl:js_on_document_complete -->
+[% END %]

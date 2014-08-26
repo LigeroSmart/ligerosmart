@@ -2,7 +2,7 @@
 # Kernel/Modules/AdminSLA.pm - admin frontend to manage slas
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/72ee17c5fb32c7f225e319f77f4dbf4913613855/Kernel/Modules/AdminSLA.pm
+# $origin: https://github.com/OTRS/otrs/blob/e16e7ee21bdae64e293f347032856ceac59ac9bb/Kernel/Modules/AdminSLA.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -215,9 +215,11 @@ sub Run {
         if ( !$Self->{ConfigObject}->Get('Ticket::Service') ) {
             $Output .= $Self->{LayoutObject}->Notify(
                 Priority => 'Error',
-                Data     => '$Text{"Please activate %s first!", "Service"}',
+                Data     => $Self->{LayoutObject}->{LanguageObject}
+                    ->Translate( "Please activate %s first!", "Service" ),
                 Link =>
-                    '$Env{"Baselink"}Action=AdminSysConfig;Subaction=Edit;SysConfigGroup=Ticket;SysConfigSubGroup=Core::Ticket#Ticket::Service',
+                    $Self->{LayoutObject}->{Baselink}
+                    . 'Action=AdminSysConfig;Subaction=Edit;SysConfigGroup=Ticket;SysConfigSubGroup=Core::Ticket#Ticket::Service',
             );
         }
 

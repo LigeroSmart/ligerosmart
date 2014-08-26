@@ -50,17 +50,17 @@
         <File Permission="644" Location="Kernel/Output/HTML/ITSMServiceMenuLink.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/ITSMSLAMenuGeneric.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/LinkObjectService.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AAAITSMCore.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AdminITSMCIPAllocate.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AdminService.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AdminSLA.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMCustomerSearch.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMService.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMServicePrint.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMServiceZoom.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMSLA.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMSLAPrint.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMSLAZoom.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AAAITSMCore.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AdminITSMCIPAllocate.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AdminService.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AdminSLA.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMCustomerSearch.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMService.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMServicePrint.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMServiceZoom.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMSLA.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMSLAPrint.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMSLAZoom.tt"/>
         <File Permission="644" Location="Kernel/System/LinkObject/Service.pm"/>
         <File Permission="644" Location="Kernel/System/ITSMCIPAllocate.pm"/>
         <File Permission="644" Location="Kernel/System/Service.pm"/>
