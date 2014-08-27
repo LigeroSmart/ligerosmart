@@ -12,12 +12,10 @@ package var::packagesetup::ITSMServiceLevelManagement;    ## no critic
 use strict;
 use warnings;
 
-use Kernel::Config;
-use Kernel::System::SysConfig;
-use Kernel::System::CSV;
-use Kernel::System::Group;
-use Kernel::System::Stats;
-use Kernel::System::User;
+our @ObjectDependencies = (
+    'Kernel::System::Stats',
+    'Kernel::System::SysConfig',
+);
 
 =head1 NAME
 
@@ -37,54 +35,9 @@ All functions
 
 create an object
 
-    use Kernel::Config;
-    use Kernel::System::Encode;
-    use Kernel::System::Log;
-    use Kernel::System::Main;
-    use Kernel::System::Time;
-    use Kernel::System::DB;
-    use Kernel::System::XML;
-    use var::packagesetup::ITSMServiceLevelManagement;
-
-    my $ConfigObject = Kernel::Config->new();
-    my $EncodeObject = Kernel::System::Encode->new(
-        ConfigObject => $ConfigObject,
-    );
-    my $LogObject    = Kernel::System::Log->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-    );
-    my $MainObject = Kernel::System::Main->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-    );
-    my $TimeObject = Kernel::System::Time->new(
-        ConfigObject => $ConfigObject,
-        LogObject    => $LogObject,
-    );
-    my $DBObject = Kernel::System::DB->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-        MainObject   => $MainObject,
-    );
-    my $XMLObject = Kernel::System::XML->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-        DBObject     => $DBObject,
-        MainObject   => $MainObject,
-    );
-    my $CodeObject = var::packagesetup::ITSMServiceLevelManagement->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-        MainObject   => $MainObject,
-        TimeObject   => $TimeObject,
-        DBObject     => $DBObject,
-        XMLObject    => $XMLObject,
-    );
+    use Kernel::System::ObjectManager;
+    local $Kernel::OM = Kernel::System::ObjectManager->new();
+    my $CodeObject = $Kernel::OM->Get('var::packagesetup::ITSMServiceLevelManagement');
 
 =cut
 
@@ -95,16 +48,8 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    # check needed objects
-    for my $Object (
-        qw(ConfigObject EncodeObject LogObject MainObject TimeObject DBObject XMLObject)
-        )
-    {
-        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
-    }
-
     # create needed sysconfig object
-    $Self->{SysConfigObject} = Kernel::System::SysConfig->new( %{$Self} );
+    $Self->{SysConfigObject} = $Kernel::OM->Get('Kernel::System::SysConfig');
 
     # rebuild ZZZ* files
     $Self->{SysConfigObject}->WriteDefault();
@@ -127,15 +72,19 @@ sub new {
         }
     }
 
-    # create needed objects
-    $Self->{ConfigObject} = Kernel::Config->new();
-    $Self->{CSVObject}    = Kernel::System::CSV->new( %{$Self} );
-    $Self->{GroupObject}  = Kernel::System::Group->new( %{$Self} );
-    $Self->{UserObject}   = Kernel::System::User->new( %{$Self} );
-    $Self->{StatsObject}  = Kernel::System::Stats->new(
-        %{$Self},
-        UserID => 1,
+    # the stats object needs a UserID parameter for the constructor
+    # we need to discard any existing stats object before
+    $Kernel::OM->ObjectsDiscard(
+        Objects => ['Kernel::System::Stats'],
     );
+
+    # define UserID parameter for the constructor of the stats object
+    $Kernel::OM->ObjectParamAdd(
+        'Kernel::System::Stats' => {
+            UserID => 1,
+        },
+    );
+    $Self->{StatsObject} = $Kernel::OM->Get('Kernel::System::Stats');
 
     # define file prefix
     $Self->{FilePrefix} = 'ITSMStats';
