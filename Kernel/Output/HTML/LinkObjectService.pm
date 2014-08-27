@@ -339,10 +339,10 @@ sub TableCreateSimple {
 
                 # define item data
                 my %Item = (
-                    Type      => 'Link',
-                    Content   => "S:$Service->{NameShort}",
-                    Title     => "Service: $Service->{Name}",
-                    Link      => '$Env{"Baselink"}Action=AgentITSMServiceZoom;ServiceID=' . $ServiceID,
+                    Type    => 'Link',
+                    Content => "S:$Service->{NameShort}",
+                    Title   => "Service: $Service->{Name}",
+                    Link => '$Env{"Baselink"}Action=AgentITSMServiceZoom;ServiceID=' . $ServiceID,
                     MaxLength => 20,
                 );
 

@@ -12,8 +12,10 @@ package Kernel::System::LinkObject::Service;
 use strict;
 use warnings;
 
-use Kernel::System::Group;
-use Kernel::System::Service;
+our @ObjectDependencies = (
+    'Kernel::System::Group',
+    'Kernel::System::Service',
+);
 
 =head1 NAME
 
@@ -21,7 +23,7 @@ Kernel::System::LinkObject::Service
 
 =head1 SYNOPSIS
 
-Ticket backend for the ticket link object.
+Service backend for the service link object.
 
 =head1 PUBLIC INTERFACE
 
@@ -33,45 +35,9 @@ Ticket backend for the ticket link object.
 
 create an object
 
-    use Kernel::Config;
-    use Kernel::System::Encode;
-    use Kernel::System::Log;
-    use Kernel::System::Time;
-    use Kernel::System::Main;
-    use Kernel::System::DB;
-    use Kernel::System::LinkObject::Service;
-
-    my $ConfigObject = Kernel::Config->new();
-    my $EncodeObject = Kernel::System::Encode->new(
-        ConfigObject => $ConfigObject,
-    );
-    my $LogObject = Kernel::System::Log->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-    );
-    my $TimeObject = Kernel::System::Time->new(
-        ConfigObject => $ConfigObject,
-        LogObject    => $LogObject,
-    );
-    my $MainObject = Kernel::System::Main->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-    );
-    my $DBObject = Kernel::System::DB->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-        MainObject   => $MainObject,
-    );
-    my $LinkBackendObject = Kernel::System::LinkObject::Service->new(
-        ConfigObject       => $ConfigObject,
-        LogObject          => $LogObject,
-        DBObject           => $DBObject,
-        MainObject         => $MainObject,
-        TimeObject         => $TimeObject,
-        EncodeObject       => $EncodeObject,
-    );
+    use Kernel::System::ObjectManager;
+    local $Kernel::OM = Kernel::System::ObjectManager->new();
+    my $LinkObjectServiceObject = $Kernel::OM->Get('Kernel::System::LinkObject::Service');
 
 =cut
 
@@ -82,14 +48,9 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    # check needed objects
-    for my $Object (qw(DBObject ConfigObject LogObject MainObject EncodeObject TimeObject)) {
-        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
-    }
-
     # create additional objects
-    $Self->{GroupObject}   = Kernel::System::Group->new( %{$Self} );
-    $Self->{ServiceObject} = Kernel::System::Service->new( %{$Self} );
+    $Self->{GroupObject}   = $Kernel::OM->Get('Kernel::System::Group');
+    $Self->{ServiceObject} = $Kernel::OM->Get('Kernel::System::Service');
 
     return $Self;
 }

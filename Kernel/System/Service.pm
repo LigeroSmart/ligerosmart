@@ -27,10 +27,9 @@ our @ObjectDependencies = (
 # ---
 # ITSM
 # ---
-    'Kernel::System::LinkObject',
-    'Kernel::System::Time',
     'Kernel::System::DynamicField',
     'Kernel::System::GeneralCatalog',
+    'Kernel::System::LinkObject',
 # ---
 );
 
@@ -1578,7 +1577,7 @@ sub _ServiceGetCurrentIncidentState {
                 }
 
                 # find all linked config items with this linktype and direction
-                my %LinkedConfigItemIDs = $Self->{LinkObject}->LinkKeyListWithData(
+                my %LinkedConfigItemIDs = $Kernel::OM->Get('Kernel::System::LinkObject')->LinkKeyListWithData(
                     Object1   => 'Service',
                     Key1      => $ServiceData{ServiceID},
                     Object2   => 'ITSMConfigItem',

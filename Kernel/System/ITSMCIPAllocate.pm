@@ -12,6 +12,11 @@ package Kernel::System::ITSMCIPAllocate;
 use strict;
 use warnings;
 
+our @ObjectDependencies = (
+    'Kernel::System::DB',
+    'Kernel::System::Log',
+);
+
 =head1 NAME
 
 Kernel::System::ITSMCIPAllocate - criticality, impact and priority allocation lib
@@ -30,37 +35,9 @@ All criticality, impact and priority allocation functions.
 
 create an object
 
-    use Kernel::Config;
-    use Kernel::System::Encode;
-    use Kernel::System::Log;
-    use Kernel::System::ITSMCIPAllocate;
-    use Kernel::System::DB;
-    use Kernel::System::Main;
-
-    my $ConfigObject = Kernel::Config->new();
-    my $EncodeObject = Kernel::System::Encode->new(
-        ConfigObject => $ConfigObject,
-    );
-    my $LogObject = Kernel::System::Log->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-    );
-    my $MainObject = Kernel::System::Main->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-    );
-    my $DBObject = Kernel::System::DB->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-        MainObject   => $MainObject,
-    );
-    my $CIPAllocateObject = Kernel::System::ITSMCIPAllocate->new(
-        ConfigObject => $ConfigObject,
-        LogObject    => $LogObject,
-        DBObject     => $DBObject,
-    );
+    use Kernel::System::ObjectManager;
+    local $Kernel::OM = Kernel::System::ObjectManager->new();
+    my $ITSMCIPAllocateObject = $Kernel::OM->Get('Kernel::System::ITSMCIPAllocate');
 
 =cut
 
@@ -71,10 +48,9 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    # check needed objects
-    for my $Object (qw(DBObject ConfigObject LogObject)) {
-        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
-    }
+    # get needed objects from object manager
+    $Self->{LogObject} = $Kernel::OM->Get('Kernel::System::Log');
+    $Self->{DBObject}  = $Kernel::OM->Get('Kernel::System::DB');
 
     return $Self;
 }

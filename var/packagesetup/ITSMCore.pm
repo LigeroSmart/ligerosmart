@@ -12,17 +12,18 @@ package var::packagesetup::ITSMCore;    ## no critic
 use strict;
 use warnings;
 
-use Kernel::System::Encode;
-use Kernel::System::DB;
-use Kernel::System::GeneralCatalog;
-use Kernel::System::Time;
-use Kernel::System::Log;
-use Kernel::System::Group;
-use Kernel::System::ITSMCIPAllocate;
-use Kernel::System::Priority;
-use Kernel::System::Valid;
-use Kernel::System::DynamicField;
 use Kernel::System::VariableCheck qw(:all);
+
+our @ObjectDependencies = (
+    'Kernel::System::DB',
+    'Kernel::System::DynamicField',
+    'Kernel::System::GeneralCatalog',
+    'Kernel::System::Group',
+    'Kernel::System::ITSMCIPAllocate',
+    'Kernel::System::Log',
+    'Kernel::System::Priority',
+    'Kernel::System::Valid',
+);
 
 =head1 NAME
 
@@ -42,45 +43,9 @@ All functions
 
 create an object
 
-    use Kernel::Config;
-    use Kernel::System::Encode;
-    use Kernel::System::Log;
-    use Kernel::System::Main;
-    use Kernel::System::Time;
-    use Kernel::System::DB;
-    use var::packagesetup::ITSMCore;
-
-    my $ConfigObject = Kernel::Config->new();
-    my $EncodeObject = Kernel::System::Encode->new(
-        ConfigObject => $ConfigObject,
-    );
-    my $LogObject    = Kernel::System::Log->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-    );
-    my $MainObject = Kernel::System::Main->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-    );
-    my $TimeObject = Kernel::System::Time->new(
-        ConfigObject => $ConfigObject,
-        LogObject    => $LogObject,
-    );
-    my $DBObject = Kernel::System::DB->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-        MainObject   => $MainObject,
-    );
-    my $CodeObject = var::packagesetup::ITSMCore->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-        MainObject   => $MainObject,
-        TimeObject   => $TimeObject,
-        DBObject     => $DBObject,
-    );
+    use Kernel::System::ObjectManager;
+    local $Kernel::OM = Kernel::System::ObjectManager->new();
+    my $CodeObject = $Kernel::OM->Get('var::packagesetup::ITSMCore');
 
 =cut
 
@@ -91,23 +56,15 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    # check needed objects
-    for my $Object (
-        qw(ConfigObject MainObject)
-        )
-    {
-        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
-    }
-    $Self->{LogObject}            = Kernel::System::Log->new( %{$Self} );
-    $Self->{EncodeObject}         = Kernel::System::Encode->new( %{$Self} );
-    $Self->{DBObject}             = Kernel::System::DB->new( %{$Self} );
-    $Self->{TimeObject}           = Kernel::System::Time->new( %{$Self} );
-    $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new( %{$Self} );
-    $Self->{GroupObject}          = Kernel::System::Group->new( %{$Self} );
-    $Self->{CIPAllocateObject}    = Kernel::System::ITSMCIPAllocate->new( %{$Self} );
-    $Self->{PriorityObject}       = Kernel::System::Priority->new( %{$Self} );
-    $Self->{ValidObject}          = Kernel::System::Valid->new( %{$Self} );
-    $Self->{DynamicFieldObject}   = Kernel::System::DynamicField->new( %{$Self} );
+    # get needed objects from object manager
+    $Self->{LogObject}            = $Kernel::OM->Get('Kernel::System::Log');
+    $Self->{DBObject}             = $Kernel::OM->Get('Kernel::System::DB');
+    $Self->{GeneralCatalogObject} = $Kernel::OM->Get('Kernel::System::GeneralCatalog');
+    $Self->{GroupObject}          = $Kernel::OM->Get('Kernel::System::Group');
+    $Self->{CIPAllocateObject}    = $Kernel::OM->Get('Kernel::System::ITSMCIPAllocate');
+    $Self->{PriorityObject}       = $Kernel::OM->Get('Kernel::System::Priority');
+    $Self->{ValidObject}          = $Kernel::OM->Get('Kernel::System::Valid');
+    $Self->{DynamicFieldObject}   = $Kernel::OM->Get('Kernel::System::DynamicField');
 
     return $Self;
 }
@@ -344,8 +301,9 @@ sub _CreateITSMDynamicFields {
 
     # create a dynamic fields lookup table
     my %DynamicFieldLookup;
+    DYNAMICFIELD:
     for my $DynamicField ( @{$DynamicFieldList} ) {
-        next if ref $DynamicField ne 'HASH';
+        next DYNAMICFIELD if ref $DynamicField ne 'HASH';
         $DynamicFieldLookup{ $DynamicField->{Name} } = $DynamicField;
     }
 
