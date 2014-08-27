@@ -12,7 +12,9 @@ package var::packagesetup::ITSMIncidentProblemManagement;    ## no critic
 use strict;
 use warnings;
 
-use Kernel::Config;
+use Kernel::System::Encode;
+use Kernel::System::DB;
+use Kernel::System::Time;
 use Kernel::System::SysConfig;
 use Kernel::System::CSV;
 use Kernel::System::Group;
@@ -47,7 +49,6 @@ create an object
     use Kernel::System::Main;
     use Kernel::System::Time;
     use Kernel::System::DB;
-    use Kernel::System::XML;
     use var::packagesetup::ITSMIncidentProblemManagement;
 
     my $ConfigObject = Kernel::Config->new();
@@ -73,13 +74,7 @@ create an object
         LogObject    => $LogObject,
         MainObject   => $MainObject,
     );
-    my $XMLObject = Kernel::System::XML->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-        DBObject     => $DBObject,
-        MainObject   => $MainObject,
-    );
+
     my $CodeObject = var::packagesetup::ITSMIncidentProblemManagement->new(
         ConfigObject => $ConfigObject,
         EncodeObject => $EncodeObject,
@@ -87,7 +82,6 @@ create an object
         MainObject   => $MainObject,
         TimeObject   => $TimeObject,
         DBObject     => $DBObject,
-        XMLObject    => $XMLObject,
     );
 
 =cut
@@ -101,7 +95,7 @@ sub new {
 
     # check needed objects
     for my $Object (
-        qw(ConfigObject EncodeObject LogObject MainObject TimeObject DBObject XMLObject)
+        qw(ConfigObject MainObject)
         )
     {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
@@ -132,7 +126,10 @@ sub new {
     }
 
     # create needed objects
-    $Self->{ConfigObject}       = Kernel::Config->new();
+    $Self->{LogObject}          = Kernel::System::Log->new( %{$Self} );
+    $Self->{EncodeObject}       = Kernel::System::Encode->new( %{$Self} );
+    $Self->{DBObject}           = Kernel::System::DB->new( %{$Self} );
+    $Self->{TimeObject}         = Kernel::System::Time->new( %{$Self} );
     $Self->{CSVObject}          = Kernel::System::CSV->new( %{$Self} );
     $Self->{GroupObject}        = Kernel::System::Group->new( %{$Self} );
     $Self->{UserObject}         = Kernel::System::User->new( %{$Self} );
