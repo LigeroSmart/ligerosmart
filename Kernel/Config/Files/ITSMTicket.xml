@@ -40,7 +40,7 @@
                 <Item Key="Name" Translatable="1">Additional ITSM Fields</Item>
                 <Item Key="Description" Translatable="1">Change the ITSM fields!</Item>
                 <Item Key="Action">AgentTicketAddtlITSMField</Item>
-                <Item Key="Link">Action=AgentTicketAddtlITSMField;TicketID=$QData{"TicketID"}</Item>
+                <Item Key="Link">Action=AgentTicketAddtlITSMField;TicketID=[% Data.TicketID | html %]</Item>
                 <Item Key="Target"></Item>
                 <Item Key="PopupType">TicketAction</Item>
             </Hash>
@@ -56,7 +56,7 @@
                 <Item Key="Name" Translatable="1">Decision</Item>
                 <Item Key="Description" Translatable="1">Add a decision!</Item>
                 <Item Key="Action">AgentTicketDecision</Item>
-                <Item Key="Link">Action=AgentTicketDecision;TicketID=$QData{"TicketID"}</Item>
+                <Item Key="Link">Action=AgentTicketDecision;TicketID=[% Data.TicketID | html %]</Item>
                 <Item Key="Target"></Item>
                 <Item Key="PopupType">TicketAction</Item>
             </Hash>
@@ -173,7 +173,7 @@
         <Group>Ticket</Group>
         <SubGroup>Frontend::Agent::Ticket::ViewAddtlITSMField</SubGroup>
         <Setting>
-            <String Regex="">$Text{"Note"}</String>
+            <String Regex="">[% Translate("Note") | html %]</String>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Ticket::Frontend::AgentTicketAddtlITSMField###Body" Required="0" Valid="1">
@@ -406,7 +406,7 @@
         <Group>Ticket</Group>
         <SubGroup>Frontend::Agent::Ticket::ViewDecision</SubGroup>
         <Setting>
-            <String Regex="">$Text{"Decision"}</String>
+            <String Regex="">[% Translate("Decision") | html %]</String>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Ticket::Frontend::AgentTicketDecision###Body" Required="0" Valid="1">
@@ -414,7 +414,7 @@
         <Group>Ticket</Group>
         <SubGroup>Frontend::Agent::Ticket::ViewDecision</SubGroup>
         <Setting>
-            <TextArea>$Text{"Reason"}:</TextArea>
+            <TextArea>[% Translate("Reason") | html %]:</TextArea>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Ticket::Frontend::AgentTicketDecision###InvolvedAgent" Required="0" Valid="0">

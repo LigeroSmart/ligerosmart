@@ -1,10 +1,12 @@
 # --
-# AgentTicketAddtlITSMField.dtl - provides HTML form for free text mask
+# AgentTicketDecision.tt - provides HTML form for decision mask
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
+# --
+# $origin: https://github.com/OTRS/otrs/blob/72ee17c5fb32c7f225e319f77f4dbf4913613855/Kernel/Output/HTML/Standard/AgentTicketNote.dtl
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-$Include{"AgentTicketActionCommon"}
+[% InsertTemplate("AgentTicketActionCommon.tt") %]
