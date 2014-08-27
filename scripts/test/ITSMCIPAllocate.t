@@ -9,7 +9,6 @@
 
 use strict;
 use warnings;
-
 use vars qw($Self);
 
 use Kernel::System::ITSMCIPAllocate;
