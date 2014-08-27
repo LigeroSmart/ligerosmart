@@ -33,6 +33,7 @@ All functions
 =item new()
 
 create an object
+
     use Kernel::System::ObjectManager;
     local $Kernel::OM = Kernel::System::ObjectManager->new();
     my $CodeObject = $Kernel::OM->Get('var::packagesetup::GeneralCatalog');

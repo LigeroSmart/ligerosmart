@@ -114,7 +114,7 @@
         $CodeModulePath .= '.pm';
         delete $INC{$CodeModulePath};
 
-        # discards internally stored objects, so that the next access to objects creates them newly
+        # discard internally stored objects, so that the next access to objects creates them newly
         $Kernel::OM->ObjectsDiscard();
 
         $Kernel::OM->Get($CodeModule)->CodeUpgrade();

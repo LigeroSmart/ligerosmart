@@ -15,7 +15,6 @@ use warnings;
 our @ObjectDependencies = (
     'Kernel::Config',
     'Kernel::System::DB',
-    'Kernel::System::Log',
 );
 
 =head1 NAME
@@ -49,9 +48,8 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    # check needed objects
+    # get needed objects from object manager
     $Self->{DBObject} = $Kernel::OM->Get('Kernel::System::DB');
-    $Self->{Logbject} = $Kernel::OM->Get('Kernel::System::Log');
 
     # preferences table data
     $Self->{PreferencesTable}      = 'general_catalog_preferences';
