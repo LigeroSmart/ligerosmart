@@ -40,8 +40,8 @@
         <File Permission="644" Location="Kernel/Output/HTML/ImportExportLayoutSelection.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/ImportExportLayoutText.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/LayoutImportExport.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AAAImportExport.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AdminImportExport.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AAAImportExport.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AdminImportExport.tt"/>
         <File Permission="644" Location="Kernel/System/ImportExport.pm"/>
         <File Permission="644" Location="Kernel/System/ImportExport/FormatBackend/CSV.pm"/>
         <File Permission="644" Location="scripts/test/ImportExport.t"/>
