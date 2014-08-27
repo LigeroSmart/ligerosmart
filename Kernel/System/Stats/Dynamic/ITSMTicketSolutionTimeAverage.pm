@@ -27,6 +27,7 @@ our @ObjectDependencies = (
     'Kernel::System::Ticket',
     'Kernel::System::Time',
     'Kernel::System::Type',
+    'Kernel::System::User',
 );
 
 sub new {
@@ -39,6 +40,7 @@ sub new {
     # get some objects from object manager
     $Self->{DBSlaveObject}      = $Param{DBSlaveObject} || $Kernel::OM->Get('Kernel::System::DB');
     $Self->{ConfigObject}       = $Kernel::OM->Get('Kernel::Config');
+    $Self->{UserObject}         = $Kernel::OM->Get('Kernel::System::User');
     $Self->{StateObject}        = $Kernel::OM->Get('Kernel::System::State');
     $Self->{TimeObject}         = $Kernel::OM->Get('Kernel::System::Time');
     $Self->{QueueObject}        = $Kernel::OM->Get('Kernel::System::Queue');

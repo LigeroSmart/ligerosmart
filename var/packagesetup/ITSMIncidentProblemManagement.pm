@@ -86,7 +86,7 @@ sub new {
     $Self->{ValidObject}        = $Kernel::OM->Get('Kernel::System::Valid');
     $Self->{DynamicFieldObject} = $Kernel::OM->Get('Kernel::System::DynamicField');
 
-    # the stats object need a UserID parameter for the constructor
+    # the stats object needs a UserID parameter for the constructor
     # we need to discard any existing stats object before
     $Kernel::OM->ObjectsDiscard(
         Objects => ['Kernel::System::Stats'],
