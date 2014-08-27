@@ -12,18 +12,16 @@ package var::packagesetup::ITSMIncidentProblemManagement;    ## no critic
 use strict;
 use warnings;
 
-use Kernel::System::Encode;
-use Kernel::System::DB;
-use Kernel::System::Time;
-use Kernel::System::SysConfig;
-use Kernel::System::CSV;
-use Kernel::System::Group;
-use Kernel::System::State;
-use Kernel::System::Stats;
-use Kernel::System::Type;
-use Kernel::System::User;
-use Kernel::System::Valid;
-use Kernel::System::DynamicField;
+our @ObjectDependencies = (
+    'Kernel::System::DB',
+    'Kernel::System::DynamicField',
+    'Kernel::System::Log',
+    'Kernel::System::State',
+    'Kernel::System::Stats',
+    'Kernel::System::SysConfig',
+    'Kernel::System::Type',
+    'Kernel::System::Valid',
+);
 
 =head1 NAME
 
@@ -43,46 +41,9 @@ All functions
 
 create an object
 
-    use Kernel::Config;
-    use Kernel::System::Encode;
-    use Kernel::System::Log;
-    use Kernel::System::Main;
-    use Kernel::System::Time;
-    use Kernel::System::DB;
-    use var::packagesetup::ITSMIncidentProblemManagement;
-
-    my $ConfigObject = Kernel::Config->new();
-    my $EncodeObject = Kernel::System::Encode->new(
-        ConfigObject => $ConfigObject,
-    );
-    my $LogObject    = Kernel::System::Log->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-    );
-    my $MainObject = Kernel::System::Main->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-    );
-    my $TimeObject = Kernel::System::Time->new(
-        ConfigObject => $ConfigObject,
-        LogObject    => $LogObject,
-    );
-    my $DBObject = Kernel::System::DB->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-        MainObject   => $MainObject,
-    );
-
-    my $CodeObject = var::packagesetup::ITSMIncidentProblemManagement->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-        MainObject   => $MainObject,
-        TimeObject   => $TimeObject,
-        DBObject     => $DBObject,
-    );
+    use Kernel::System::ObjectManager;
+    local $Kernel::OM = Kernel::System::ObjectManager->new();
+    my $CodeObject = $Kernel::OM->Get('var::packagesetup::ITSMIncidentProblemManagement');
 
 =cut
 
@@ -93,16 +54,8 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    # check needed objects
-    for my $Object (
-        qw(ConfigObject MainObject)
-        )
-    {
-        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
-    }
-
     # create needed sysconfig object
-    $Self->{SysConfigObject} = Kernel::System::SysConfig->new( %{$Self} );
+    $Self->{SysConfigObject} = $Kernel::OM->Get('Kernel::System::SysConfig');
 
     # rebuild ZZZ* files
     $Self->{SysConfigObject}->WriteDefault();
@@ -126,21 +79,26 @@ sub new {
     }
 
     # create needed objects
-    $Self->{LogObject}          = Kernel::System::Log->new( %{$Self} );
-    $Self->{EncodeObject}       = Kernel::System::Encode->new( %{$Self} );
-    $Self->{DBObject}           = Kernel::System::DB->new( %{$Self} );
-    $Self->{TimeObject}         = Kernel::System::Time->new( %{$Self} );
-    $Self->{CSVObject}          = Kernel::System::CSV->new( %{$Self} );
-    $Self->{GroupObject}        = Kernel::System::Group->new( %{$Self} );
-    $Self->{UserObject}         = Kernel::System::User->new( %{$Self} );
-    $Self->{StateObject}        = Kernel::System::State->new( %{$Self} );
-    $Self->{TypeObject}         = Kernel::System::Type->new( %{$Self} );
-    $Self->{ValidObject}        = Kernel::System::Valid->new( %{$Self} );
-    $Self->{DynamicFieldObject} = Kernel::System::DynamicField->new( %{$Self} );
-    $Self->{StatsObject}        = Kernel::System::Stats->new(
-        %{$Self},
-        UserID => 1,
+    $Self->{LogObject}          = $Kernel::OM->Get('Kernel::System::Log');
+    $Self->{DBObject}           = $Kernel::OM->Get('Kernel::System::DB');
+    $Self->{StateObject}        = $Kernel::OM->Get('Kernel::System::State');
+    $Self->{TypeObject}         = $Kernel::OM->Get('Kernel::System::Type');
+    $Self->{ValidObject}        = $Kernel::OM->Get('Kernel::System::Valid');
+    $Self->{DynamicFieldObject} = $Kernel::OM->Get('Kernel::System::DynamicField');
+
+    # the stats object need a UserID parameter for the constructor
+    # we need to discard any existing stats object before
+    $Kernel::OM->ObjectsDiscard(
+        Objects => ['Kernel::System::Stats'],
     );
+
+    # define UserID parameter for the constructor of the stats object
+    $Kernel::OM->ObjectParamAdd(
+        'Kernel::System::Stats' => {
+            UserID => 1,
+        },
+    );
+    $Self->{StatsObject} = $Kernel::OM->Get('Kernel::System::Stats');
 
     # define file prefix for stats
     $Self->{FilePrefix} = 'ITSMStats';
@@ -436,7 +394,10 @@ sub _SetStateValid {
 
     # check needed stuff
     if ( !$Param{StateNames} ) {
-        $Self->{LogObject}->Log( Priority => 'error', Message => 'Need StateNames!' );
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need StateNames!',
+        );
         return;
     }
 
@@ -482,7 +443,10 @@ sub _SetTypeValid {
 
     # check needed stuff
     if ( !$Param{TypeNames} ) {
-        $Self->{LogObject}->Log( Priority => 'error', Message => 'Need TypeNames!' );
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need TypeNames!',
+        );
         return;
     }
 
@@ -560,8 +524,9 @@ sub _CreateITSMDynamicFields {
 
     # create a dynamic fields lookup table
     my %DynamicFieldLookup;
+    DYNAMICFIELD:
     for my $DynamicField ( @{$DynamicFieldList} ) {
-        next if ref $DynamicField ne 'HASH';
+        next DYNAMICFIELD if ref $DynamicField ne 'HASH';
         $DynamicFieldLookup{ $DynamicField->{Name} } = $DynamicField;
     }
 

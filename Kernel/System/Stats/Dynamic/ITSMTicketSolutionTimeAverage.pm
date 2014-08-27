@@ -12,15 +12,22 @@ package Kernel::System::Stats::Dynamic::ITSMTicketSolutionTimeAverage;
 use strict;
 use warnings;
 
-use Kernel::System::Queue;
-use Kernel::System::Service;
-use Kernel::System::SLA;
-use Kernel::System::State;
-use Kernel::System::Ticket;
-use Kernel::System::Type;
-use Kernel::System::DynamicField;
-use Kernel::System::DynamicField::Backend;
 use Kernel::System::VariableCheck qw(:all);
+
+our @ObjectDependencies = (
+    'Kernel::Config',
+    'Kernel::System::DB',
+    'Kernel::System::DynamicField',
+    'Kernel::System::DynamicField::Backend',
+    'Kernel::System::Priority',
+    'Kernel::System::Queue',
+    'Kernel::System::SLA',
+    'Kernel::System::Service',
+    'Kernel::System::State',
+    'Kernel::System::Ticket',
+    'Kernel::System::Time',
+    'Kernel::System::Type',
+);
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -29,24 +36,19 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    # check needed objects
-    for my $Object (
-        qw(DBObject EncodeObject ConfigObject LogObject UserObject TimeObject MainObject)
-        )
-    {
-        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
-    }
-
-    $Self->{StateObject}        = Kernel::System::State->new( %{$Self} );
-    $Self->{QueueObject}        = Kernel::System::Queue->new( %{$Self} );
-    $Self->{TicketObject}       = Kernel::System::Ticket->new( %{$Self} );
-    $Self->{PriorityObject}     = Kernel::System::Priority->new( %{$Self} );
-    $Self->{CustomerUser}       = Kernel::System::CustomerUser->new( %{$Self} );
-    $Self->{ServiceObject}      = Kernel::System::Service->new( %{$Self} );
-    $Self->{SLAObject}          = Kernel::System::SLA->new( %{$Self} );
-    $Self->{TypeObject}         = Kernel::System::Type->new( %{$Self} );
-    $Self->{DynamicFieldObject} = Kernel::System::DynamicField->new( %{$Self} );
-    $Self->{BackendObject}      = Kernel::System::DynamicField::Backend->new( %{$Self} );
+    # get some objects from object manager
+    $Self->{DBSlaveObject}      = $Param{DBSlaveObject} || $Kernel::OM->Get('Kernel::System::DB');
+    $Self->{ConfigObject}       = $Kernel::OM->Get('Kernel::Config');
+    $Self->{StateObject}        = $Kernel::OM->Get('Kernel::System::State');
+    $Self->{TimeObject}         = $Kernel::OM->Get('Kernel::System::Time');
+    $Self->{QueueObject}        = $Kernel::OM->Get('Kernel::System::Queue');
+    $Self->{TicketObject}       = $Kernel::OM->Get('Kernel::System::Ticket');
+    $Self->{PriorityObject}     = $Kernel::OM->Get('Kernel::System::Priority');
+    $Self->{ServiceObject}      = $Kernel::OM->Get('Kernel::System::Service');
+    $Self->{SLAObject}          = $Kernel::OM->Get('Kernel::System::SLA');
+    $Self->{TypeObject}         = $Kernel::OM->Get('Kernel::System::Type');
+    $Self->{DynamicFieldObject} = $Kernel::OM->Get('Kernel::System::DynamicField');
+    $Self->{BackendObject}      = $Kernel::OM->Get('Kernel::System::DynamicField::Backend');
 
     # get the dynamic fields for ticket object
     $Self->{DynamicField} = $Self->{DynamicFieldObject}->DynamicFieldListGet(
@@ -58,7 +60,7 @@ sub new {
 }
 
 sub GetObjectName {
-    my $Self = shift;
+    my ( $Self, %Param ) = @_;
 
     return 'ITSMTicketSolutionTimeAverage';
 }
@@ -322,13 +324,13 @@ sub GetObjectAttributes {
 
         # Get CustomerID
         # (This way also can be the solution for the CustomerUserID)
-        $Self->{DBObject}->Prepare(
+        $Self->{DBSlaveObject}->Prepare(
             SQL => 'SELECT DISTINCT customer_id FROM ticket',
         );
 
         # fetch the result
         my %CustomerID;
-        while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        while ( my @Row = $Self->{DBSlaveObject}->FetchrowArray() ) {
             if ( $Row[0] ) {
                 $CustomerID{ $Row[0] } = $Row[0];
             }
@@ -529,7 +531,7 @@ sub _TicketDataGet {
     return {} if !$Param{TicketID};
 
     # ask database
-    $Self->{DBObject}->Prepare(
+    $Self->{DBSlaveObject}->Prepare(
         SQL => 'SELECT queue_id, sla_id, create_time_unix '
             . 'FROM ticket WHERE id = ?',
         Bind  => [ \$Param{TicketID} ],
@@ -538,7 +540,7 @@ sub _TicketDataGet {
 
     # fetch the result
     my %TicketData;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $Self->{DBSlaveObject}->FetchrowArray() ) {
         $TicketData{QueueID}    = $Row[0];
         $TicketData{SLAID}      = $Row[1];
         $TicketData{CreateTime} = $Row[2];
@@ -607,7 +609,7 @@ sub _TicketHistoryDataGet {
     }
 
     # ask database
-    $Self->{DBObject}->Prepare(
+    $Self->{DBSlaveObject}->Prepare(
         SQL => 'SELECT state_id, create_time FROM ticket_history '
             . 'WHERE ticket_id = ? AND history_type_id IN ( ?, ? ) '
             . 'ORDER BY create_time',
@@ -616,7 +618,7 @@ sub _TicketHistoryDataGet {
 
     # fetch the result
     my @TicketHistoryList;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $Self->{DBSlaveObject}->FetchrowArray() ) {
 
         my %HistoryData;
         $HistoryData{StateID}    = $Row[0];
