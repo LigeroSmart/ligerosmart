@@ -14,7 +14,6 @@ use warnings;
 
 our @ObjectDependencies = (
     'Kernel::System::DB',
-    'Kernel::System::XML',
 );
 
 =head1 NAME
