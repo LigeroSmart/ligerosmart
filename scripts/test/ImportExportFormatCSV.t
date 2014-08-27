@@ -14,27 +14,25 @@ use utf8;
 use vars qw($Self);
 
 use Data::Dumper;
-use Kernel::System::Encode;
-use Kernel::System::ImportExport;
-use Kernel::System::ImportExport::FormatBackend::CSV;
 
-$Self->{EncodeObject}        = Kernel::System::Encode->new( %{$Self} );
-$Self->{ImportExportObject}  = Kernel::System::ImportExport->new( %{$Self} );
-$Self->{FormatBackendObject} = Kernel::System::ImportExport::FormatBackend::CSV->new( %{$Self} );
+my $ConfigObject        = $Kernel::OM->Get('Kernel::Config');
+my $MainObject          = $Kernel::OM->Get('Kernel::System::Main');
+my $ImportExportObject  = $Kernel::OM->Get('Kernel::System::ImportExport');
+my $FormatBackendObject = $Kernel::OM->Get('Kernel::System::ImportExport::FormatBackend::CSV');
 
 # ------------------------------------------------------------ #
 # make preparations
 # ------------------------------------------------------------ #
 
 # get home directory
-$Self->{Home} = $Self->{ConfigObject}->Get('Home');
+$Self->{Home} = $ConfigObject->Get('Home');
 
 # add some test templates for later checks
 my @TemplateIDs;
 for ( 1 .. 30 ) {
 
     # add a test template for later checks
-    my $TemplateID = $Self->{ImportExportObject}->TemplateAdd(
+    my $TemplateID = $ImportExportObject->TemplateAdd(
         Object  => 'UnitTest' . int rand 1_000_000,
         Format  => 'CSV',
         Name    => 'UnitTest' . int rand 1_000_000,
@@ -52,7 +50,7 @@ my $TestCount = 1;
 # ------------------------------------------------------------ #
 
 # get format list
-my $FormatList1 = $Self->{ImportExportObject}->FormatList();
+my $FormatList1 = $ImportExportObject->FormatList();
 
 # check format list
 $Self->True(
@@ -67,7 +65,7 @@ $TestCount++;
 # ------------------------------------------------------------ #
 
 # get format attributes
-my $FormatAttributesGet1 = $Self->{ImportExportObject}->FormatAttributesGet(
+my $FormatAttributesGet1 = $ImportExportObject->FormatAttributesGet(
     TemplateID => $TemplateIDs[0],
     UserID     => 1,
 );
@@ -145,7 +143,7 @@ $TestCount++;
 # ------------------------------------------------------------ #
 
 # get format attributes
-my $FormatAttributesGet2 = $Self->{ImportExportObject}->FormatAttributesGet(
+my $FormatAttributesGet2 = $ImportExportObject->FormatAttributesGet(
     TemplateID => $TemplateIDs[-1] + 1,
     UserID     => 1,
 );
@@ -163,7 +161,7 @@ $TestCount++;
 # ------------------------------------------------------------ #
 
 # get mapping format attributes
-my $MappingFormatAttributesGet1 = $Self->{ImportExportObject}->MappingFormatAttributesGet(
+my $MappingFormatAttributesGet1 = $ImportExportObject->MappingFormatAttributesGet(
     TemplateID => $TemplateIDs[0],
     UserID     => 1,
 );
@@ -208,7 +206,7 @@ $TestCount++;
 # ------------------------------------------------------------ #
 
 # get mapping format attributes
-my $MappingFormatAttributesGet2 = $Self->{ImportExportObject}->MappingFormatAttributesGet(
+my $MappingFormatAttributesGet2 = $ImportExportObject->MappingFormatAttributesGet(
     TemplateID => $TemplateIDs[-1] + 1,
     UserID     => 1,
 );
@@ -1078,7 +1076,7 @@ for my $Test ( @{$ImportDataTests} ) {
         my $SourceFile = $Test->{SourceImportData}->{SourceFile};
 
         # read source file
-        my $SourceContent = $Self->{MainObject}->FileRead(
+        my $SourceContent = $MainObject->FileRead(
             Location => $Self->{Home} . '/scripts/test/sample/ImportExport/' . $SourceFile,
             Result   => 'SCALAR',
             Mode     => 'binmode',
@@ -1096,7 +1094,7 @@ for my $Test ( @{$ImportDataTests} ) {
     {
 
         # save format data
-        $Self->{ImportExportObject}->FormatDataSave(
+        $ImportExportObject->FormatDataSave(
             TemplateID => $Test->{SourceImportData}->{ImportDataGet}->{TemplateID},
             FormatData => $Test->{SourceImportData}->{FormatData},
             UserID     => 1,
@@ -1104,7 +1102,7 @@ for my $Test ( @{$ImportDataTests} ) {
     }
 
     # get import data
-    my $ImportData = $Self->{FormatBackendObject}->ImportDataGet(
+    my $ImportData = $FormatBackendObject->ImportDataGet(
         %{ $Test->{SourceImportData}->{ImportDataGet} },
     );
 
@@ -1906,7 +1904,7 @@ for my $Test ( @{$ExportDataTests} ) {
     {
 
         # save format data
-        $Self->{ImportExportObject}->FormatDataSave(
+        $ImportExportObject->FormatDataSave(
             TemplateID => $Test->{SourceExportData}->{ExportDataSave}->{TemplateID},
             FormatData => $Test->{SourceExportData}->{FormatData},
             UserID     => 1,
@@ -1914,7 +1912,7 @@ for my $Test ( @{$ExportDataTests} ) {
     }
 
     # get export data row
-    my $ExportString = $Self->{FormatBackendObject}->ExportDataSave(
+    my $ExportString = $FormatBackendObject->ExportDataSave(
         %{ $Test->{SourceExportData}->{ExportDataSave} },
     );
 
@@ -1964,7 +1962,7 @@ continue {
 # ------------------------------------------------------------ #
 
 # delete the test templates
-$Self->{ImportExportObject}->TemplateDelete(
+$ImportExportObject->TemplateDelete(
     TemplateID => \@TemplateIDs,
     UserID     => 1,
 );

@@ -12,6 +12,12 @@ package Kernel::System::ImportExport::FormatBackend::CSV;
 use strict;
 use warnings;
 
+our @ObjectDependencies = (
+    'Kernel::System::ImportExport',
+    'Kernel::System::Log',
+    'Kernel::System::Main',
+);
+
 =head1 NAME
 
 Kernel::System::ImportExport::FormatBackend::CSV - import/export backend for CSV
@@ -28,40 +34,9 @@ All functions to import and export a csv format
 
 create an object
 
-    use Kernel::Config;
-    use Kernel::System::Encode;
-    use Kernel::System::Log;
-    use Kernel::System::DB;
-    use Kernel::System::Main;
-    use Kernel::System::ImportExport::FormatBackend::CSV;
-
-    my $ConfigObject = Kernel::Config->new();
-    my $EncodeObject = Kernel::System::Encode->new(
-        ConfigObject => $ConfigObject,
-    );
-    my $LogObject = Kernel::System::Log->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-    );
-    my $MainObject = Kernel::System::Main->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-    );
-    my $DBObject = Kernel::System::DB->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-        MainObject   => $MainObject,
-    );
-    my $BackendObject = Kernel::System::ImportExport::FormatBackend::CSV->new(
-        ConfigObject       => $ConfigObject,
-        EncodeObject       => $EncodeObject,
-        LogObject          => $LogObject,
-        DBObject           => $DBObject,
-        MainObject         => $MainObject,
-        ImportExportObject => $ImportExportObject,
-    );
+    use Kernel::System::ObjectManager;
+    local $Kernel::OM = Kernel::System::ObjectManager->new();
+    my $ImportExportCSVBackendObject = $Kernel::OM->Get('Kernel::System::ImportExport::FormatBackend::CSV');
 
 =cut
 
@@ -72,11 +47,10 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    # check needed objects
-    for my $Object (qw(ConfigObject EncodeObject LogObject DBObject MainObject ImportExportObject))
-    {
-        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
-    }
+    # get needed objects
+    $Self->{LogObject}          = $Kernel::OM->Get('Kernel::System::Log');
+    $Self->{MainObject}         = $Kernel::OM->Get('Kernel::System::Main');
+    $Self->{ImportExportObject} = $Kernel::OM->Get('Kernel::System::ImportExport');
 
     if ( !$Self->{MainObject}->Require('Text::CSV') ) {
         $Self->{LogObject}->Log(
@@ -113,7 +87,10 @@ sub FormatAttributesGet {
 
     # check needed stuff
     if ( !$Param{UserID} ) {
-        $Self->{LogObject}->Log( Priority => 'error', Message => 'Need UserID!' );
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need UserID!',
+        );
         return;
     }
 
@@ -180,7 +157,10 @@ sub MappingFormatAttributesGet {
 
     # check needed object
     if ( !$Param{UserID} ) {
-        $Self->{LogObject}->Log( Priority => 'error', Message => 'Need UserID!' );
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need UserID!',
+        );
         return;
     }
 

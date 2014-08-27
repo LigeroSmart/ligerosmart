@@ -12,7 +12,12 @@ package Kernel::System::ImportExport;
 use strict;
 use warnings;
 
-use Kernel::System::CheckItem;
+our @ObjectDependencies = (
+    'Kernel::System::CheckItem',
+    'Kernel::System::DB',
+    'Kernel::System::Log',
+    'Kernel::System::Main',
+);
 
 =head1 NAME
 
@@ -32,40 +37,9 @@ All import and export functions.
 
 create an object
 
-    use Kernel::Config;
-    use Kernel::System::Encode;
-    use Kernel::System::Log;
-    use Kernel::System::DB;
-    use Kernel::System::ImportExport;
-    use Kernel::System::Main;
-
-    my $ConfigObject = Kernel::Config->new();
-    my $EncodeObject = Kernel::System::Encode->new(
-        ConfigObject => $ConfigObject,
-    );
-    my $LogObject = Kernel::System::Log->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-    );
-    my $MainObject = Kernel::System::Main->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-    );
-    my $DBObject = Kernel::System::DB->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-        MainObject   => $MainObject,
-    );
-    my $ImportExportObject = Kernel::System::ImportExport->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-        DBObject     => $DBObject,
-        MainObject   => $MainObject,
-        EncodeObject => $EncodeObject,
-    );
+    use Kernel::System::ObjectManager;
+    local $Kernel::OM = Kernel::System::ObjectManager->new();
+    my $ImportExportObject = $Kernel::OM->Get('Kernel::System::ImportExport');
 
 =cut
 
@@ -76,11 +50,11 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    # check needed objects
-    for my $Object (qw(ConfigObject EncodeObject LogObject DBObject MainObject)) {
-        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
-    }
-    $Self->{CheckItemObject} = Kernel::System::CheckItem->new( %{$Self} );
+    # get needed objects
+    $Self->{CheckItemObject} = $Kernel::OM->Get('Kernel::System::CheckItem');
+    $Self->{DBObject}        = $Kernel::OM->Get('Kernel::System::DB');
+    $Self->{LogObject}       = $Kernel::OM->Get('Kernel::System::Log');
+    $Self->{MainObject}      = $Kernel::OM->Get('Kernel::System::Main');
 
     return $Self;
 }
@@ -2293,11 +2267,7 @@ sub _LoadBackend {
     }
 
     # create new instance
-    my $BackendObject = $Param{Module}->new(
-        %{$Self},
-        %Param,
-        ImportExportObject => $Self,
-    );
+    my $BackendObject = $Param{Module}->new(%Param);
 
     if ( !$BackendObject ) {
         $Self->{LogObject}->Log(

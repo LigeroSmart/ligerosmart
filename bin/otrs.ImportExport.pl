@@ -26,28 +26,23 @@ use File::Basename;
 use FindBin qw($RealBin);
 use lib dirname($RealBin);
 use lib dirname($RealBin) . '/Kernel/cpan-lib';
+use vars qw($RealBin);
 
 use Getopt::Std;
-use Kernel::Config;
-use Kernel::System::DB;
-use Kernel::System::Encode;
-use Kernel::System::ImportExport;
-use Kernel::System::Log;
-use Kernel::System::Main;
 
-use vars qw($RealBin);
+use Kernel::System::ObjectManager;
+
+local $Kernel::OM = Kernel::System::ObjectManager->new(
+    'Kernel::System::Log' => {
+        LogPrefix => 'OTRS-ImportExport',
+    },
+);
 
 # create common objects
 my %CommonObject;
-$CommonObject{ConfigObject} = Kernel::Config->new();
-$CommonObject{LogObject}    = Kernel::System::Log->new(
-    LogPrefix => 'OTRS-ImportExport',
-    %CommonObject,
-);
-$CommonObject{EncodeObject}       = Kernel::System::Encode->new(%CommonObject);
-$CommonObject{MainObject}         = Kernel::System::Main->new(%CommonObject);
-$CommonObject{DBObject}           = Kernel::System::DB->new(%CommonObject);
-$CommonObject{ImportExportObject} = Kernel::System::ImportExport->new(%CommonObject);
+$CommonObject{LogObject}          = $Kernel::OM->Get('Kernel::System::Log');
+$CommonObject{MainObject}         = $Kernel::OM->Get('Kernel::System::Main');
+$CommonObject{ImportExportObject} = $Kernel::OM->Get('Kernel::System::ImportExport');
 
 # get options
 my %Opts;

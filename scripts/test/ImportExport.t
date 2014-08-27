@@ -13,13 +13,9 @@ use utf8;
 
 use vars qw($Self);
 
-use Kernel::System::Encode;
-use Kernel::System::ImportExport;
-use Kernel::System::User;
-
-$Self->{EncodeObject}       = Kernel::System::Encode->new( %{$Self} );
-$Self->{ImportExportObject} = Kernel::System::ImportExport->new( %{$Self} );
-$Self->{UserObject}         = Kernel::System::User->new( %{$Self} );
+my $ConfigObject       = $Kernel::OM->Get('Kernel::Config');
+my $UserObject         = $Kernel::OM->Get('Kernel::System::User');
+my $ImportExportObject = $Kernel::OM->Get('Kernel::System::ImportExport');
 
 # ------------------------------------------------------------ #
 # make preparations
@@ -30,8 +26,10 @@ my @UserIDs;
 {
 
     # disable email checks to create new user
-    my $CheckEmailAddressesOrg = $Self->{ConfigObject}->Get('CheckEmailAddresses') || 1;
-    $Self->{ConfigObject}->Set(
+    my $CheckEmailAddressesOrg =
+    $ConfigObject->Get('CheckEmailAddresses') || 1;
+
+    $ConfigObject->Set(
         Key   => 'CheckEmailAddresses',
         Value => 0,
     );
@@ -39,7 +37,7 @@ my @UserIDs;
     for my $Counter ( 1 .. 2 ) {
 
         # create new users for the tests
-        my $UserID = $Self->{UserObject}->UserAdd(
+        my $UserID = $UserObject->UserAdd(
             UserFirstname => 'ImportExport' . $Counter,
             UserLastname  => 'UnitTest',
             UserLogin     => 'UnitTest-ImportExport-' . $Counter . int rand 1_000_000,
@@ -52,7 +50,8 @@ my @UserIDs;
     }
 
     # restore original email check param
-    $Self->{ConfigObject}->Set(
+
+    $ConfigObject->Set(
         Key   => 'CheckEmailAddresses',
         Value => $CheckEmailAddressesOrg,
     );
@@ -74,12 +73,12 @@ push @ObjectName, 'UnitTest' . int rand 1_000_000;
 my @FormatName = ('CSV');
 
 # get original template list for later checks (all elements)
-my $TemplateList1All = $Self->{ImportExportObject}->TemplateList(
+my $TemplateList1All = $ImportExportObject->TemplateList(
     UserID => 1,
 );
 
 # get original template list for later checks (all elements)
-my $TemplateList1Object = $Self->{ImportExportObject}->TemplateList(
+my $TemplateList1Object = $ImportExportObject->TemplateList(
     Object => $ObjectName[0],
     UserID => 1,
 );
@@ -323,7 +322,7 @@ for my $Item ( @{$ItemData} ) {
     if ( $Item->{Add} ) {
 
         # add new template
-        my $TemplateID = $Self->{ImportExportObject}->TemplateAdd( %{ $Item->{Add} } );
+        my $TemplateID = $ImportExportObject->TemplateAdd( %{ $Item->{Add} } );
 
         if ($TemplateID) {
             push @AddedTemplateIDs, $TemplateID;
@@ -344,7 +343,7 @@ for my $Item ( @{$ItemData} ) {
     if ( $Item->{AddGet} ) {
 
         # get template data to check the values after template was added
-        my $TemplateGet = $Self->{ImportExportObject}->TemplateGet(
+        my $TemplateGet = $ImportExportObject->TemplateGet(
             TemplateID => $AddedTemplateIDs[-1],
             UserID => $Item->{Add}->{UserID} || 1,
         );
@@ -371,7 +370,7 @@ for my $Item ( @{$ItemData} ) {
         }
 
         # update the template
-        my $UpdateSucess = $Self->{ImportExportObject}->TemplateUpdate(
+        my $UpdateSucess = $ImportExportObject->TemplateUpdate(
             %{ $Item->{Update} },
             TemplateID => $AddedTemplateIDs[-1],
         );
@@ -394,7 +393,7 @@ for my $Item ( @{$ItemData} ) {
     if ( $Item->{UpdateGet} ) {
 
         # get template data to check the values after the update
-        my $TemplateGet = $Self->{ImportExportObject}->TemplateGet(
+        my $TemplateGet = $ImportExportObject->TemplateGet(
             TemplateID => $AddedTemplateIDs[-1],
             UserID => $Item->{Update}->{UserID} || 1,
         );
@@ -444,7 +443,7 @@ $TestCount++;
 # ------------------------------------------------------------ #
 
 # get template list with all elements
-my $TemplateList2 = $Self->{ImportExportObject}->TemplateList(
+my $TemplateList2 = $ImportExportObject->TemplateList(
     UserID => 1,
 );
 
@@ -469,13 +468,13 @@ $TestCount++;
 # ------------------------------------------------------------ #
 
 # get template list with all elements
-my $TemplateDelete1List1 = $Self->{ImportExportObject}->TemplateList(
+my $TemplateDelete1List1 = $ImportExportObject->TemplateList(
     Object => $ObjectName[0],
     UserID => 1,
 );
 
 # add a test template
-my $TemplateDeleteID = $Self->{ImportExportObject}->TemplateAdd(
+my $TemplateDeleteID = $ImportExportObject->TemplateAdd(
     Object  => $ObjectName[0],
     Format  => $FormatName[0],
     Name    => $TemplateName[4],
@@ -484,7 +483,7 @@ my $TemplateDeleteID = $Self->{ImportExportObject}->TemplateAdd(
 );
 
 # get template list with all elements
-my $TemplateDelete1List2 = $Self->{ImportExportObject}->TemplateList(
+my $TemplateDelete1List2 = $ImportExportObject->TemplateList(
     Object => $ObjectName[0],
     UserID => 1,
 );
@@ -496,7 +495,7 @@ $Self->True(
 );
 
 # delete the new template
-my $TemplateDelete1 = $Self->{ImportExportObject}->TemplateDelete(
+my $TemplateDelete1 = $ImportExportObject->TemplateDelete(
     TemplateID => $TemplateDeleteID,
     UserID     => 1,
 );
@@ -508,7 +507,7 @@ $Self->True(
 );
 
 # get template list with all elements
-my $TemplateDelete1List3 = $Self->{ImportExportObject}->TemplateList(
+my $TemplateDelete1List3 = $ImportExportObject->TemplateList(
     Object => $ObjectName[0],
     UserID => 1,
 );
@@ -528,7 +527,7 @@ $TestCount++;
 for my $TemplateID (@AddedTemplateIDs) {
 
     # delete the template
-    my $Success = $Self->{ImportExportObject}->TemplateDelete(
+    my $Success = $ImportExportObject->TemplateDelete(
         TemplateID => $TemplateID,
         UserID     => 1,
     );
@@ -559,16 +558,18 @@ my $ObjectList1TestList = {
 };
 
 # get original object list
-my $ObjectListOrg = $Self->{ConfigObject}->Get('ImportExport::ObjectBackendRegistration');
+my $ObjectListOrg =
+$ConfigObject->Get('ImportExport::ObjectBackendRegistration');
 
 # set test list
-$Self->{ConfigObject}->Set(
+
+$ConfigObject->Set(
     Key   => 'ImportExport::ObjectBackendRegistration',
     Value => $ObjectList1TestList,
 );
 
 # get object list
-my $ObjectList1 = $Self->{ImportExportObject}->ObjectList();
+my $ObjectList1 = $ImportExportObject->ObjectList();
 
 # list must be a hash reference
 $Self->True(
@@ -595,7 +596,8 @@ $Self->True(
 );
 
 # restore original object list
-$Self->{ConfigObject}->Set(
+
+$ConfigObject->Set(
     Key   => 'ImportExport::ObjectBackendRegistration',
     Value => $ObjectListOrg,
 );
@@ -619,16 +621,18 @@ my $FormatList1TestList = {
 };
 
 # get original format list
-my $FormatListOrg = $Self->{ConfigObject}->Get('ImportExport::FormatBackendRegistration');
+my $FormatListOrg =
+$ConfigObject->Get('ImportExport::FormatBackendRegistration');
 
 # set test list
-$Self->{ConfigObject}->Set(
+
+$ConfigObject->Set(
     Key   => 'ImportExport::FormatBackendRegistration',
     Value => $FormatList1TestList,
 );
 
 # get format list
-my $FormatList1 = $Self->{ImportExportObject}->FormatList();
+my $FormatList1 = $ImportExportObject->FormatList();
 
 # list must be a hash reference
 $Self->True(
@@ -655,7 +659,8 @@ $Self->True(
 );
 
 # restore original format list
-$Self->{ConfigObject}->Set(
+
+$ConfigObject->Set(
     Key   => 'ImportExport::FormatBackendRegistration',
     Value => $FormatListOrg,
 );

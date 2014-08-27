@@ -3,7 +3,7 @@
     <Name>ImportExport</Name>
 <!-- nofilter(TidyAll::Plugin::OTRS::SOPM::DocumentationPresent) -->
     <Version>0.0.0</Version>
-    <Framework>3.3.x</Framework>
+    <Framework>4.0.x</Framework>
     <Vendor>OTRS AG</Vendor>
     <URL>http://otrs.org/</URL>
     <License>GNU AFFERO GENERAL PUBLIC LICENSE Version 3, November 2007</License>
@@ -165,9 +165,6 @@
     </DatabaseUninstall>
     <CodeUpgrade Type="post" Version="2.0.3"><![CDATA[
 
-        # define function name
-        my $FunctionName = 'CodeUpgradeFromBefore_2_0_3';
-
         # create the package name
         my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
 
@@ -182,31 +179,12 @@
         $CodeModulePath .= '.pm';
         delete $INC{$CodeModulePath};
 
-        # load the module
-        if ( $Self->{MainObject}->Require($CodeModule) ) {
+        # discard internally stored object, so that the next access to object creates them newly
+        $Kernel::OM->ObjectsDiscard(
+            Objects => [$CodeModule],
+        );
 
-            # create new instance
-            my $CodeObject = $CodeModule->new( %{$Self} );
-
-            if ($CodeObject) {
-
-                # start methode
-                if ( !$CodeObject->$FunctionName(%{$Self}) ) {
-                    $Self->{LogObject}->Log(
-                        Priority => 'error',
-                        Message  => "Could not call method $FunctionName() on $CodeModule.pm."
-                    );
-                }
-            }
-
-            # error handling
-            else {
-                $Self->{LogObject}->Log(
-                    Priority => 'error',
-                    Message  => "Could not call method new() on $CodeModule.pm."
-                );
-            }
-        }
+        $Kernel::OM->Get($CodeModule)->CodeUpgradeFromBefore_2_0_3();
 
     ]]></CodeUpgrade>
     <IntroUninstall Type="pre" Title="Uninstallation Information" Lang="en"><![CDATA[
