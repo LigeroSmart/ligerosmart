@@ -12,7 +12,14 @@ package Kernel::System::GeneralCatalog;
 use strict;
 use warnings;
 
-our @ObjectDependencies = ();
+our @ObjectDependencies = (
+    'Kernel::Config',
+    'Kernel::System::Cache',
+    'Kernel::System::CheckItem',
+    'Kernel::System::DB',
+    'Kernel::System::Log',
+    'Kernel::System::Main',
+);
 
 =head1 NAME
 
@@ -57,7 +64,7 @@ sub new {
     $Self->{CacheType} = 'GeneralCatalog';
     $Self->{CacheTTL}  = 60 * 60 * 3;
 
-    # get sonme objects from object manager
+    # get some objects from object manager
     $Self->{CacheObject} = $Kernel::OM->Get('Kernel::System::Cache');
     $Self->{DBObject}    = $Kernel::OM->Get('Kernel::System::DB');
     $Self->{LogObject}   = $Kernel::OM->Get('Kernel::System::Log');

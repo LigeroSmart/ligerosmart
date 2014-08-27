@@ -12,6 +12,12 @@ package Kernel::System::GeneralCatalog::PreferencesDB;
 use strict;
 use warnings;
 
+our @ObjectDependencies = (
+    'Kernel::Config',
+    'Kernel::System::DB',
+    'Kernel::System::Log',
+);
+
 =head1 NAME
 
 Kernel::System::GeneralCatalog::PreferencesDB - some preferences functions for general catalog
