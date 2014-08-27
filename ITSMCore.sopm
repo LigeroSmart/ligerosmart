@@ -355,8 +355,10 @@
         $CodeModulePath .= '.pm';
         delete $INC{$CodeModulePath};
 
-        # discard internally stored objects, so that the next access to objects creates them newly
-        $Kernel::OM->ObjectsDiscard();
+        # discard internally stored object, so that the next access to object creates them newly
+        $Kernel::OM->ObjectsDiscard(
+            Objects => [$CodeModule],
+        );
 
         $Kernel::OM->Get($CodeModule)->CodeUpgradeFromLowerThan_3_2_91();
 
@@ -377,8 +379,10 @@
         $CodeModulePath .= '.pm';
         delete $INC{$CodeModulePath};
 
-        # discard internally stored objects, so that the next access to objects creates them newly
-        $Kernel::OM->ObjectsDiscard();
+        # discard internally stored object, so that the next access to object creates them newly
+        $Kernel::OM->ObjectsDiscard(
+            Objects => [$CodeModule],
+        );
 
         $Kernel::OM->Get($CodeModule)->CodeUpgrade();
 
