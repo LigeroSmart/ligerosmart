@@ -13,6 +13,7 @@ use strict;
 use warnings;
 
 our @ObjectDependencies = (
+    'Kernel::Config',
     'Kernel::System::CheckItem',
     'Kernel::System::DB',
     'Kernel::System::Log',
@@ -51,6 +52,7 @@ sub new {
     bless( $Self, $Type );
 
     # get needed objects
+    $Self->{ConfigObject}    = $Kernel::OM->Get('Kernel::Config');
     $Self->{CheckItemObject} = $Kernel::OM->Get('Kernel::System::CheckItem');
     $Self->{DBObject}        = $Kernel::OM->Get('Kernel::System::DB');
     $Self->{LogObject}       = $Kernel::OM->Get('Kernel::System::Log');
