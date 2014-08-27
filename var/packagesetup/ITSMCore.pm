@@ -22,7 +22,6 @@ use Kernel::System::ITSMCIPAllocate;
 use Kernel::System::Priority;
 use Kernel::System::Valid;
 use Kernel::System::DynamicField;
-use Kernel::System::XML;
 use Kernel::System::VariableCheck qw(:all);
 
 =head1 NAME
@@ -49,7 +48,6 @@ create an object
     use Kernel::System::Main;
     use Kernel::System::Time;
     use Kernel::System::DB;
-    use Kernel::System::XML;
     use var::packagesetup::ITSMCore;
 
     my $ConfigObject = Kernel::Config->new();
@@ -75,13 +73,6 @@ create an object
         LogObject    => $LogObject,
         MainObject   => $MainObject,
     );
-    my $XMLObject = Kernel::System::XML->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-        DBObject     => $DBObject,
-        MainObject   => $MainObject,
-    );
     my $CodeObject = var::packagesetup::ITSMCore->new(
         ConfigObject => $ConfigObject,
         EncodeObject => $EncodeObject,
@@ -89,7 +80,6 @@ create an object
         MainObject   => $MainObject,
         TimeObject   => $TimeObject,
         DBObject     => $DBObject,
-        XMLObject    => $XMLObject,
     );
 
 =cut
@@ -118,7 +108,6 @@ sub new {
     $Self->{PriorityObject}       = Kernel::System::Priority->new( %{$Self} );
     $Self->{ValidObject}          = Kernel::System::Valid->new( %{$Self} );
     $Self->{DynamicFieldObject}   = Kernel::System::DynamicField->new( %{$Self} );
-    $Self->{XMLObject}            = Kernel::System::XML->new( %{$Self} );
 
     return $Self;
 }
