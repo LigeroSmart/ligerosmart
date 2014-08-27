@@ -2,7 +2,7 @@
 # AgentTicketActionCommon.tt - provides common HTML form for several masks
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/72ee17c5fb32c7f225e319f77f4dbf4913613855/Kernel/Output/HTML/Standard/AgentTicketActionCommon.dtl
+# $origin: https://github.com/OTRS/otrs/blob/e86136cc7e6ece1a9eb6e1fcd13c66a00ffd78ca/Kernel/Output/HTML/Standard/AgentTicketActionCommon.tt
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,9 +15,9 @@
     <input type="hidden" name="Action" value="[% Env("Action") %]"/>
     <input type="hidden" name="Subaction" value="Store"/>
     <input type="hidden" name="TicketID" value="[% Data.TicketID | html %]"/>
+    <input type="hidden" name="ReplyToArticle" value="[% Data.ReplyToArticle | html %]"/>
     <input type="hidden" name="Expand" id="Expand" value=""/>
     <input type="hidden" name="FormID" value="[% Data.FormID | html %]"/>
-    <input type="hidden" name="ReturnModule" value="[% Data.ReturnModule | html %]"/>
 # ---
 # ITSM
 # ---
@@ -231,7 +231,7 @@ $('#TypeID').bind('change', function (Event) {
 [% WRAPPER JSOnDocumentComplete %]
 <script type="text/javascript">//<![CDATA[
     $('#NewQueueID').bind('change', function (Event) {
-        Core.AJAX.FormUpdate($('#Compose'), 'AJAXUpdate', 'NewQueueID', [ 'TypeID', 'ServiceID', 'NewOwnerID', 'OldOwnerID', 'NewResponsibleID', 'NewStateID', 'NewPriorityID' [% Data.DynamicFieldNamesStrg %] ]);
+        Core.AJAX.FormUpdate($('#Compose'), 'AJAXUpdate', 'NewQueueID', [ 'TypeID', 'ServiceID', 'NewOwnerID', 'OldOwnerID', 'NewResponsibleID', 'NewStateID', 'NewPriorityID', 'StandardTemplateID' [% Data.DynamicFieldNamesStrg %] ]);
     });
 //]]></script>
 [% END %]
@@ -337,6 +337,23 @@ $('#TypeID').bind('change', function (Event) {
 
 <!-- OutputFilterHook_NoTicketOptionsFallback -->
 
+[% RenderBlockStart("StandardTemplate") %]
+                <label for="StandardTemplateID">[% Translate("Text Template") | html %]:</label>
+                <div class="Field">
+                        [% Data.StandardTemplateStrg %]
+                    <p class="FieldExplanation">Setting a template will overwrite any text or attachment.</p>
+                </div>
+                <div class="Clear"></div>
+[% WRAPPER JSOnDocumentComplete %]
+<script type="text/javascript">//<![CDATA[
+    $('#StandardTemplateID').bind('change', function (Event) {
+        Core.AJAX.FormUpdate($('#Compose'), 'AJAXUpdate', 'StandardTemplateID', ['RichTextField']);
+        return false;
+    });
+//]]></script>
+[% END %]
+[% RenderBlockEnd("StandardTemplate") %]
+
 [% RenderBlockStart("RichTextLabel") %]
                 <label for="RichText">[% Translate("Text") | html %]:</label>
 [% RenderBlockEnd("RichTextLabel") %]
@@ -344,7 +361,7 @@ $('#TypeID').bind('change', function (Event) {
                 <label class="Mandatory" for="RichText"><span class="Marker">*</span>[% Translate("Text") | html %]:</label>
 [% RenderBlockEnd("RichTextLabelMandatory") %]
 
-                <div class="RichTextField">
+                <div id="RichTextField" class="RichTextField">
 [% RenderBlockStart("RichText") %]
 [% InsertTemplate("RichTextEditor.tt") %]
 [% RenderBlockEnd("RichText") %]
@@ -506,7 +523,7 @@ $('#TypeID').bind('change', function (Event) {
             </fieldset>
         </div>
         <div class="Footer">
-            <button class="CallForAction Primary" id="submitRichText" accesskey="g" title="[% Translate("Submit") | html %] (g)" type="submit" value="[% Translate("Submit") | html %]"><span><i class="icon-check"></i> [% Translate("Submit") | html %]</span></button>
+            <button class="CallForAction Primary" id="submitRichText" accesskey="g" title="[% Translate("Submit") | html %] (g)" type="submit" value="[% Translate("Submit") | html %]"><span><i class="fa fa-check-square-o"></i> [% Translate("Submit") | html %]</span></button>
         </div>
     </div>
 </form>
@@ -515,6 +532,7 @@ $('#TypeID').bind('change', function (Event) {
 #Layers
 [% WRAPPER JSOnDocumentComplete %]
 <script type="text/javascript">//<![CDATA[
+    Core.Config.Set('Localization.Delete', '[% Translate("Delete") | html %]');
     Core.Agent.TicketAction.Init();
 # ---
 # ITSM

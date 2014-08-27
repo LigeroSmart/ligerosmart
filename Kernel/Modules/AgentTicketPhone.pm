@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTicketPhone.pm - to handle phone calls
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/72ee17c5fb32c7f225e319f77f4dbf4913613855/Kernel/Modules/AgentTicketPhone.pm
+# $origin: https://github.com/OTRS/otrs/blob/e86136cc7e6ece1a9eb6e1fcd13c66a00ffd78ca/Kernel/Modules/AgentTicketPhone.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -99,7 +99,8 @@ sub Run {
         qw(ArticleID LinkTicketID PriorityID NewUserID
         From Subject Body NextStateID TimeUnits
         Year Month Day Hour Minute
-        NewResponsibleID ResponsibleAll OwnerAll TypeID ServiceID SLAID StandardTemplateID
+        NewResponsibleID ResponsibleAll OwnerAll TypeID ServiceID SLAID
+        StandardTemplateID FromChatID
         )
         )
     {
@@ -308,6 +309,28 @@ sub Run {
         );
     }
 
+    if ( $GetParam{FromChatID} ) {
+        if ( !$Self->{ConfigObject}->Get('ChatEngine::Active') ) {
+            return $Self->{LayoutObject}->FatalError(
+                Message => "Chat is not active.",
+            );
+        }
+
+        # Ok, take the chat
+        my %ChatParticipant = $Kernel::OM->Get('Kernel::System::Chat')->ChatParticipantCheck(
+            ChatID        => $GetParam{FromChatID},
+            ChatterType   => 'User',
+            ChatterID     => $Self->{UserID},
+            ChatterActive => 1,
+        );
+
+        if ( !%ChatParticipant ) {
+            return $Self->{LayoutObject}->FatalError(
+                Message => "No permission.",
+            );
+        }
+    }
+
     if ( !$Self->{Subaction} || $Self->{Subaction} eq 'Created' ) {
 
         # header
@@ -320,8 +343,13 @@ sub Run {
             # notify info
             my %Ticket = $Self->{TicketObject}->TicketGet( TicketID => $Self->{TicketID} );
             $Output .= $Self->{LayoutObject}->Notify(
-                Info => 'Ticket "%s" created!", "' . $Ticket{TicketNumber},
-                Link => '$Env{"Baselink"}Action=AgentTicketZoom;TicketID=' . $Ticket{TicketID},
+                Info => $Self->{LayoutObject}->{LanguageObject}->Translate(
+                    'Ticket "%s" created!',
+                    $Ticket{TicketNumber},
+                ),
+                Link => $Self->{LayoutObject}->{Baselink}
+                    . 'Action=AgentTicketZoom;TicketID='
+                    . $Ticket{TicketID},
             );
         }
 
@@ -773,6 +801,7 @@ sub Run {
             CustomerData => \%CustomerData,
             Attachments  => \@Attachments,
             LinkTicketID => $GetParam{LinkTicketID} || '',
+            FromChatID   => $GetParam{FromChatID} || '',
 
             #            %GetParam,
             %SplitTicketParam,
@@ -789,7 +818,7 @@ sub Run {
         my %Error;
         my %StateData;
         if ( $GetParam{NextStateID} ) {
-            %StateData = $Self->{TicketObject}->{StateObject}->StateGet(
+            %StateData = $Self->{StateObject}->StateGet(
                 ID => $GetParam{NextStateID},
             );
         }
@@ -885,7 +914,8 @@ sub Run {
                 Param => 'FileUpload',
             );
             $Self->{UploadCacheObject}->FormIDAddFile(
-                FormID => $Self->{FormID},
+                FormID      => $Self->{FormID},
+                Disposition => 'attachment',
                 %UploadStuff,
             );
         }
@@ -1374,9 +1404,15 @@ sub Run {
 
             # remove unused inline images
             my @NewAttachmentData;
+            ATTACHMENT:
             for my $Attachment (@AttachmentData) {
                 my $ContentID = $Attachment->{ContentID};
-                if ($ContentID) {
+                if (
+                    $ContentID
+                    && ( $Attachment->{ContentType} =~ /image/i )
+                    && ( $Attachment->{Disposition} eq 'inline' )
+                    )
+                {
                     my $ContentIDHTMLQuote = $Self->{LayoutObject}->Ascii2Html(
                         Text => $ContentID,
                     );
@@ -1386,7 +1422,8 @@ sub Run {
                     $GetParam{Body} =~ s/(ContentID=)$ContentIDLinkEncode/$1$ContentID/g;
 
                     # ignore attachment if not linked in body
-                    next if $GetParam{Body} !~ /(\Q$ContentIDHTMLQuote\E|\Q$ContentID\E)/i;
+                    next ATTACHMENT
+                        if $GetParam{Body} !~ /(\Q$ContentIDHTMLQuote\E|\Q$ContentID\E)/i;
                 }
 
                 # remember inline images and normal attachments
@@ -1455,6 +1492,53 @@ sub Run {
                 Value              => $DynamicFieldValues{ $DynamicFieldConfig->{Name} },
                 UserID             => $Self->{UserID},
             );
+        }
+
+        # Permissions check were done earlier
+        if ($GetParam{FromChatID}) {
+            my $ChatObject = $Kernel::OM->Get('Kernel::System::Chat');
+            my %Chat = $ChatObject->ChatGet(
+                ChatID => $GetParam{FromChatID},
+            );
+            my @ChatMessageList = $ChatObject->ChatMessageList(
+                ChatID => $GetParam{FromChatID},
+            );
+            my $ChatArticleID;
+
+            if (@ChatMessageList) {
+                my $JSONBody = $Kernel::OM->Get('JSONObject')->Encode(
+                    Data => \@ChatMessageList,
+                );
+
+                my $ChatArticleType = 'chat-internal';
+                if ($Chat{RequesterType} eq 'Customer'
+                    || $Chat{TargetType} eq 'Customer'
+                ) {
+                    $ChatArticleType = 'chat-external';
+                }
+
+                $ChatArticleID = $Self->{TicketObject}->ArticleCreate(
+                    NoAgentNotify    => $NoAgentNotify,
+                    TicketID         => $TicketID,
+                    ArticleType      => $ChatArticleType,
+                    SenderType       => $Self->{Config}->{SenderType},
+                    # From             => $GetParam{From},
+                    # To               => $To,
+                    Subject          => $Kernel::OM->Get('LanguageObject')->Translate('Chat'),
+                    Body             => $JSONBody,
+                    MimeType         => 'application/json',
+                    Charset          => $Self->{LayoutObject}->{UserCharset},
+                    UserID           => $Self->{UserID},
+                    HistoryType      => $Self->{Config}->{HistoryType},
+                    HistoryComment   => $Self->{Config}->{HistoryComment} || '%%',
+                    Queue => $Self->{QueueObject}->QueueLookup( QueueID => $NewQueueID ),
+                );
+            }
+            if ($ChatArticleID) {
+                $ChatObject->ChatDelete(
+                    ChatID => $GetParam{FromChatID},
+                );
+            }
         }
 
         # set owner (if new user id is given)
@@ -1866,7 +1950,8 @@ sub Run {
                 for ( sort keys %AllStdAttachments ) {
                     my %AttachmentsData = $StdAttachmentObject->StdAttachmentGet( ID => $_ );
                     $Self->{UploadCacheObject}->FormIDAddFile(
-                        FormID => $Self->{FormID},
+                        FormID      => $Self->{FormID},
+                        Disposition => 'attachment',
                         %AttachmentsData,
                     );
                 }
@@ -2230,11 +2315,12 @@ sub _GetTos {
         );
 
         # build selection string
+        QUEUEID:
         for my $QueueID ( sort keys %Tos ) {
             my %QueueData = $Self->{QueueObject}->QueueGet( ID => $QueueID );
 
             # permission check, can we create new tickets in queue
-            next if !$UserGroups{ $QueueData{GroupID} };
+            next QUEUEID if !$UserGroups{ $QueueData{GroupID} };
 
             my $String = $Self->{ConfigObject}->Get('Ticket::Frontend::NewQueueSelectionString')
                 || '<Realname> <<Email>> - Queue: <Queue>';
@@ -2776,8 +2862,17 @@ sub _MaskPhoneNew {
 # ---
 
     # show attachments
+    ATTACHMENT:
     for my $Attachment ( @{ $Param{Attachments} } ) {
-        next if $Attachment->{ContentID} && $Self->{LayoutObject}->{BrowserRichText};
+        if (
+            $Attachment->{ContentID}
+            && $Self->{LayoutObject}->{BrowserRichText}
+            && ( $Attachment->{ContentType} =~ /image/i )
+            && ( $Attachment->{Disposition} eq 'inline' )
+            )
+        {
+            next ATTACHMENT;
+        }
         $Self->{LayoutObject}->Block(
             Name => 'Attachment',
             Data => $Attachment,
@@ -2797,8 +2892,24 @@ sub _MaskPhoneNew {
         );
     }
 
+    # Permissions have been checked before in Run()
+    if ( $Param{FromChatID} ) {
+        my @ChatMessages = $Kernel::OM->Get('Kernel::System::Chat')->ChatMessageList(
+            ChatID => $Param{FromChatID},
+        );
+        $Self->{LayoutObject}->Block(
+            Name => 'ChatArticlePreview',
+            Data => {
+                ChatMessages => \@ChatMessages,
+            },
+        );
+    }
+
     # get output back
-    return $Self->{LayoutObject}->Output( TemplateFile => 'AgentTicketPhone', Data => \%Param );
+    return $Self->{LayoutObject}->Output(
+        TemplateFile => 'AgentTicketPhone',
+        Data         => \%Param,
+    );
 }
 
 sub _GetFieldsToUpdate {

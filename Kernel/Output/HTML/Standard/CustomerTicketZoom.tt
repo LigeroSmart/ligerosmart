@@ -2,7 +2,7 @@
 # CustomerTicketZoom.tt - provides HTML TicketZoom for CustomerTicketZoom.pm
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/72ee17c5fb32c7f225e319f77f4dbf4913613855/Kernel/Output/HTML/Standard/CustomerTicketZoom.dtl
+# $origin: https://github.com/OTRS/otrs/blob/e86136cc7e6ece1a9eb6e1fcd13c66a00ffd78ca/Kernel/Output/HTML/Standard/CustomerTicketZoom.tt
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -28,12 +28,21 @@
             <ul id="TicketOptions">
 
 [% RenderBlockStart("Print") %]
-                <li><a href="[% Env("Baselink") %]Action=CustomerTicketPrint;TicketID=[% Data.TicketID | uri %]" class="Print AsPopup" title="[% Translate("Print") | html %]">[% Translate("Print") | html %]</a></li>
+                <li>
+                    <a href="[% Env("Baselink") %]Action=CustomerTicketPrint;TicketID=[% Data.TicketID | uri %]" class="Print AsPopup" title="[% Translate("Print") | html %]">
+                        <i class="fa fa-print"></i>
+                        <span>[% Translate("Print") | html %]</span>
+                    </a>
+                </li>
 [% RenderBlockEnd("Print") %]
 
 [% RenderBlockStart("Expand") %]
                 <li>
-                    <a href="[% Env("Baselink") %]Action=CustomerTicketZoom;TicketID=[% Data.TicketID | uri %];ZoomExpand=[% Data.ZoomExpand | uri %]" class="ZoomExpand[% Data.ExpandOption %]"} title="[% Translate(Data.ExpandText) | html %]">[% Translate(Data.ExpandText) | html %]</a>
+                    <a href="[% Env("Baselink") %]Action=CustomerTicketZoom;TicketID=[% Data.TicketID | uri %];ZoomExpand=[% Data.ZoomExpand | uri %]" class="ZoomExpand Expand[% Data.ExpandOption %]"} title="[% Translate(Data.ExpandText) | html %]">
+                        <i class="fa fa-bars"></i>
+                        <i class="fa fa-minus"></i>
+                        <span>[% Translate(Data.ExpandText) | html %]</span>
+                    </a>
                     <input type="hidden" name="ZoomExpand" id="ZoomExpand" value="[% Data.ZoomExpand | html %]" />
                 </li>
 [% RenderBlockEnd("Expand") %]
@@ -59,7 +68,7 @@
                         <h3><a href="[% Env("Baselink") %]Action=[% Env("Action") %];TicketNumber=[% Data.TicketNumber | uri %];ArticleID=[% Data.ArticleID | uri %]">[% Data.FromRealname | html %] &ndash; <span title="[% Data.Subject | html %]">[% Data.Subject | html %]</span></a></h3>
 [% RenderBlockEnd("ArticleExpanded") %]
 
-                        <span class="Age" title="[% Data.Created | Localize("TimeLong") %]">[% Data.Age %]</span>
+                        <span class="Age" title="[% Data.Created | Localize("TimeLong") | html %]">[% Data.Age %]</span>
                         <div class="Clear"></div>
                     </div>
                     <input type="hidden" name="ArticleState" value="untouched" />
@@ -107,6 +116,7 @@
                                 <div class="Label">[% Translate(Data.Key) | html %]:</div>
                                 <div>
 [% RenderBlockStart("ArticleAttachmentRow") %]
+                                    <i class="fa fa-paperclip"></i>
                                     <span class="DownloadAttachment" title="[% Data.Filename | html %] - [% Data.Filesize | html %]">
 [% RenderBlockStart("ArticleAttachmentRowLink") %]
                                         <a href="[% Data.Link %]" [% Data.Target %] title="[% Translate(Data.Action) | html %]">[% Data.Filename | html %]</a>, [% Data.Filesize | html %]
@@ -138,6 +148,9 @@
 #                           <!-- Here we need to append the session info if cookies are disabled, because the layout object cannot automatically do that here, like in the other iframe (only for src attribute). -->
                             <iframe sandbox="allow-same-origin" [% Data.MSSecurityRestricted %] src="about:blank" frameborder="0" title="[% Env("Baselink") %]Action=CustomerTicketAttachment;Subaction=HTMLView;ArticleID=[% Data.ArticleID | html %];FileID=[% Data.AttachmentIDOfHTMLBody | html %];[% Data.SessionInformation | html %];[% Env("SessionName") | html %]=[% Env("SessionID") | html %]"></iframe>
 [% RenderBlockEnd("BodyHTMLPlaceholder") %]
+[% RenderBlockStart("BodyChat") %]
+[% INCLUDE "ChatDisplay.tt" %]
+[% RenderBlockEnd("BodyChat") %]
                         </div>
                     </div>
                 </li>
@@ -158,7 +171,7 @@
                             <div class="Clear"></div>
                         </div>
                     </li>
-                    <li><span class="Key">[% Data.Hook %]:</span> <span>[% Data.TicketNumber | html %]</span></li>
+                    <li><span class="Key">[% Data.Hook | html %]:</span> <span>[% Data.TicketNumber | html %]</span></li>
 
 [% RenderBlockStart("Type") %]
                     <li><span class="Key">[% Translate("Type") | html %]:</span> <span title="[% Data.Type | html %]">[% Data.Type | html %]</span></li>
@@ -186,7 +199,7 @@
                     <li><span class="Key">[% Translate("Priority") | html %]:</span> <span title="[% Translate(Data.Priority) | html %]">[% Translate(Data.Priority) | html %]</span></li>
 [% RenderBlockEnd("Priority") %]
 [% RenderBlockStart("Queue") %]
-                    <li><span class="Key">[% Translate("Queue") | html %]:</span> <span title="[% Data.Queue | html %]">[% Data.Queue | html %]</span></li>
+                    <li><span class="Key">[% Translate("Queue") | html %]:</span> <span title="[% Data.Queue | html %]">[% Data.Queue | html | replace('::', '<wbr>::<wbr>') %]</span></li>
 [% RenderBlockEnd("Queue") %]
 [% RenderBlockStart("Owner") %]
                     <li><span class="Key">[% Translate("Owner") | html %]:</span> [% Data.OwnerName | html %]</li>
@@ -203,7 +216,7 @@
 # ITSM
 # ---
 ## show ticket dynamic fields
-#[% RenderBlockEnd("TicketDynamicField") %]
+#[% RenderBlockStart("TicketDynamicField") %]
 #                    <li>
 #                        <span class="Key">[% Translate(Data.Label) | html %]:</span>
 #                        <span title="[% Data.Title | html %]">[% Data.Value %]</span>
@@ -368,7 +381,7 @@
                         <button type="submit" value="[% Translate("Submit") | html %]">[% Translate("Submit") | html %]</button> [% Translate("or") | html %] <a id="CloseButton" href="">[% Translate("Cancel") | html %]</a>
                     </div>
                 </div>
-                <a id="ReplyButton" class="DontPrint" href="">[% Translate("Reply") | html %]</a>
+                <a id="ReplyButton" class="DontPrint" href=""><i class="fa fa-reply"></i> [% Translate("Reply") | html %]</a>
             </div>
 [% RenderBlockEnd("FollowUp") %]
             <div class="Clear"></div>

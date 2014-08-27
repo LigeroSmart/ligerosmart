@@ -2,7 +2,7 @@
 # AgentTicketPrint.tt - provides HTML print view
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/72ee17c5fb32c7f225e319f77f4dbf4913613855/Kernel/Output/HTML/Standard/AgentTicketPrint.dtl
+# $origin: https://github.com/OTRS/otrs/blob/e86136cc7e6ece1a9eb6e1fcd13c66a00ffd78ca/Kernel/Output/HTML/Standard/AgentTicketPrint.tt
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -267,9 +267,13 @@
                                         </tr>
                                     </table>
 [% Data.TextNote %]
+[% IF Data.IsChat == 1 %]
+[% INCLUDE "ChatDisplay.tt" %]
+[% ELSE %]
                                     <pre>
 [% Data.Body %]
                                     </pre>
+[% END %]
                                 </td>
                             </tr>
                         </table>

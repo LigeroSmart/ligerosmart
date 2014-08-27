@@ -2,7 +2,7 @@
 # Kernel/Modules/CustomerTicketPrint.pm - print layout for customer interface
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/72ee17c5fb32c7f225e319f77f4dbf4913613855/Kernel/Modules/CustomerTicketPrint.pm
+# $origin: https://github.com/OTRS/otrs/blob/e86136cc7e6ece1a9eb6e1fcd13c66a00ffd78ca/Kernel/Modules/CustomerTicketPrint.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -137,8 +137,8 @@ sub Run {
 
     # generate pdf output
     if ( $Self->{PDFObject} ) {
-        my $PrintedBy = $Self->{LayoutObject}->{LanguageObject}->Get('printed by');
-        my $Time = $Self->{LayoutObject}->Output( Template => '$Env{"Time"}' );
+        my $PrintedBy = $Self->{LayoutObject}->{LanguageObject}->Translate('printed by');
+        my $Time      = $Self->{LayoutObject}->{Time};
         my %Page;
 
         # get maximum number of pages
@@ -167,7 +167,7 @@ sub Run {
             . $Self->{UserEmail} . ') '
             . $Time;
         $Page{FooterLeft} = '';
-        $Page{PageText}   = $Self->{LayoutObject}->{LanguageObject}->Get('Page');
+        $Page{PageText}   = $Self->{LayoutObject}->{LanguageObject}->Translate('Page');
         $Page{PageCount}  = 1;
 
         # create new pdf document
@@ -185,8 +185,8 @@ sub Run {
         # type of print tag
         my $PrintTag = '';
 
-        $PrintTag = ( $Self->{LayoutObject}->{LanguageObject}->Get('Ticket') ) . ' ' .
-            ( $Self->{LayoutObject}->{LanguageObject}->Get('Print') );
+        $PrintTag = ( $Self->{LayoutObject}->{LanguageObject}->Translate('Ticket') ) . ' ' .
+            ( $Self->{LayoutObject}->{LanguageObject}->Translate('Print') );
 
         # output headline
         $Self->{PDFObject}->Text(
@@ -304,8 +304,8 @@ sub _PDFOutputTicketInfos {
 # ---
         if ( $Self->{Config}->{AttributesView}->{$Attribute} ) {
             my $Row = {
-                Key   => $Self->{LayoutObject}->{LanguageObject}->Get($Attribute) . ':',
-                Value => $Self->{LayoutObject}->{LanguageObject}->Get( $Ticket{$Attribute} )
+                Key   => $Self->{LayoutObject}->{LanguageObject}->Translate($Attribute) . ':',
+                Value => $Self->{LayoutObject}->{LanguageObject}->Translate( $Ticket{$Attribute} )
                     || $Ticket{$Attribute},
             };
             push( @{$TableLeft}, $Row );
@@ -320,7 +320,7 @@ sub _PDFOutputTicketInfos {
         )
     {
         my $Row = {
-            Key   => $Self->{LayoutObject}->{LanguageObject}->Get('Responsible') . ':',
+            Key   => $Self->{LayoutObject}->{LanguageObject}->Translate('Responsible') . ':',
             Value => $Ticket{Responsible},
         };
         push( @{$TableLeft}, $Row );
@@ -329,7 +329,7 @@ sub _PDFOutputTicketInfos {
     # add type row, if feature is enabled
     if ( $Self->{ConfigObject}->Get('Ticket::Type') && $Self->{Config}->{AttributesView}->{Type} ) {
         my $Row = {
-            Key   => $Self->{LayoutObject}->{LanguageObject}->Get('Type') . ':',
+            Key   => $Self->{LayoutObject}->{LanguageObject}->Translate('Type') . ':',
             Value => $Ticket{Type},
         };
         push( @{$TableLeft}, $Row );
@@ -342,7 +342,7 @@ sub _PDFOutputTicketInfos {
         )
     {
         my $RowService = {
-            Key => $Self->{LayoutObject}->{LanguageObject}->Get('Service') . ':',
+            Key => $Self->{LayoutObject}->{LanguageObject}->Translate('Service') . ':',
             Value => $Ticket{Service} || '-',
         };
         push( @{$TableLeft}, $RowService );
@@ -352,7 +352,7 @@ sub _PDFOutputTicketInfos {
     if ( $Self->{ConfigObject}->Get('Ticket::Service') && $Self->{Config}->{AttributesView}->{SLA} )
     {
         my $RowSLA = {
-            Key => $Self->{LayoutObject}->{LanguageObject}->Get('SLA') . ':',
+            Key => $Self->{LayoutObject}->{LanguageObject}->Translate('SLA') . ':',
             Value => $Ticket{SLA} || '-',
         };
         push( @{$TableLeft}, $RowSLA );
@@ -362,16 +362,16 @@ sub _PDFOutputTicketInfos {
 # ---
     my $TableLeftExtended = [
         {
-            Key => $Self->{LayoutObject}->{LanguageObject}->Get('Criticality') . ':',
-            Value => $Self->{LayoutObject}->{LanguageObject}->Get($Ticket{Criticality}),
+            Key => $Self->{LayoutObject}->{LanguageObject}->Translate('Criticality') . ':',
+            Value => $Self->{LayoutObject}->{LanguageObject}->Translate($Ticket{Criticality}),
         },
         {
-            Key => $Self->{LayoutObject}->{LanguageObject}->Get('Impact') . ':',
-            Value => $Self->{LayoutObject}->{LanguageObject}->Get($Ticket{Impact}),
+            Key => $Self->{LayoutObject}->{LanguageObject}->Translate('Impact') . ':',
+            Value => $Self->{LayoutObject}->{LanguageObject}->Translate($Ticket{Impact}),
         },
         {
-            Key => $Self->{LayoutObject}->{LanguageObject}->Get('Priority') . ':',
-            Value => $Self->{LayoutObject}->{LanguageObject}->Get($Ticket{Priority}),
+            Key => $Self->{LayoutObject}->{LanguageObject}->Translate('Priority') . ':',
+            Value => $Self->{LayoutObject}->{LanguageObject}->Translate($Ticket{Priority}),
         },
     ];
     push @{$TableLeft}, @{$TableLeftExtended};
@@ -380,18 +380,18 @@ sub _PDFOutputTicketInfos {
     # create right table
     my $TableRight = [
         {
-            Key   => $Self->{LayoutObject}->{LanguageObject}->Get('CustomerID') . ':',
+            Key   => $Self->{LayoutObject}->{LanguageObject}->Translate('CustomerID') . ':',
             Value => $Ticket{CustomerID},
         },
         {
-            Key   => $Self->{LayoutObject}->{LanguageObject}->Get('Age') . ':',
-            Value => $Self->{LayoutObject}->{LanguageObject}->Get( $Ticket{Age} ),
+            Key   => $Self->{LayoutObject}->{LanguageObject}->Translate('Age') . ':',
+            Value => $Self->{LayoutObject}->{LanguageObject}->Translate( $Ticket{Age} ),
         },
         {
-            Key   => $Self->{LayoutObject}->{LanguageObject}->Get('Created') . ':',
-            Value => $Self->{LayoutObject}->Output(
-                Template => '$TimeLong{"$Data{"Created"}"}',
-                Data     => \%Ticket,
+            Key   => $Self->{LayoutObject}->{LanguageObject}->Translate('Created') . ':',
+            Value => $Self->{LayoutObject}->{LanguageObject}->FormatTimeString(
+                $Ticket{Created},
+                'DateFormat',
             ),
         },
     ];
@@ -430,6 +430,7 @@ sub _PDFOutputTicketInfos {
     $TableParam{PaddingBottom}       = 3;
 
     # output table
+    PAGE:
     for ( $Page{PageCount} .. $Page{MaxPages} ) {
 
         # output table (or a fragment of it)
@@ -437,7 +438,7 @@ sub _PDFOutputTicketInfos {
 
         # stop output or output next page
         if ( $TableParam{State} ) {
-            last;
+            last PAGE;
         }
         else {
             $Self->{PDFObject}->PageNew(
@@ -502,7 +503,8 @@ sub _PDFOutputTicketDynamicFields {
             LayoutObject       => $Self->{LayoutObject},
         );
         $TableParam{CellData}[$Row][0]{Content}
-            = $Self->{LayoutObject}->{LanguageObject}->Get( $DynamicFieldConfig->{Label} ) . ':';
+            = $Self->{LayoutObject}->{LanguageObject}->Translate( $DynamicFieldConfig->{Label} )
+            . ':';
         $TableParam{CellData}[$Row][0]{Font}    = 'ProportionalBold';
         $TableParam{CellData}[$Row][1]{Content} = $ValueStrg->{Value};
 
@@ -524,7 +526,7 @@ sub _PDFOutputTicketDynamicFields {
 
         # output headline
         $Self->{PDFObject}->Text(
-            Text     => $Self->{LayoutObject}->{LanguageObject}->Get('Ticket Dynamic Fields'),
+            Text     => $Self->{LayoutObject}->{LanguageObject}->Translate('Ticket Dynamic Fields'),
             Height   => 7,
             Type     => 'Cut',
             Font     => 'ProportionalBoldItalic',
@@ -548,6 +550,7 @@ sub _PDFOutputTicketDynamicFields {
         $TableParam{PaddingBottom}   = 3;
 
         # output table
+        PAGE:
         for ( $Page{PageCount} .. $Page{MaxPages} ) {
 
             # output table (or a fragment of it)
@@ -555,7 +558,7 @@ sub _PDFOutputTicketDynamicFields {
 
             # stop output or output next page
             if ( $TableParam{State} ) {
-                last;
+                last PAGE;
             }
             else {
                 $Self->{PDFObject}->PageNew(
@@ -595,7 +598,7 @@ sub _PDFOutputCustomerInfos {
     for my $Field ( @{$Map} ) {
         if ( ${$Field}[3] && $CustomerData{ ${$Field}[0] } ) {
             $TableParam{CellData}[$Row][0]{Content}
-                = $Self->{LayoutObject}->{LanguageObject}->Get( ${$Field}[1] ) . ':';
+                = $Self->{LayoutObject}->{LanguageObject}->Translate( ${$Field}[1] ) . ':';
             $TableParam{CellData}[$Row][0]{Font}    = 'ProportionalBold';
             $TableParam{CellData}[$Row][1]{Content} = $CustomerData{ ${$Field}[0] };
 
@@ -616,7 +619,7 @@ sub _PDFOutputCustomerInfos {
 
         # output headline
         $Self->{PDFObject}->Text(
-            Text     => $Self->{LayoutObject}->{LanguageObject}->Get('Customer Information'),
+            Text     => $Self->{LayoutObject}->{LanguageObject}->Translate('Customer Information'),
             Height   => 7,
             Type     => 'Cut',
             Font     => 'ProportionalBoldItalic',
@@ -640,6 +643,7 @@ sub _PDFOutputCustomerInfos {
         $TableParam{PaddingBottom}   = 3;
 
         # output table
+        PAGE:
         for ( $Page{PageCount} .. $Page{MaxPages} ) {
 
             # output table (or a fragment of it)
@@ -647,7 +651,7 @@ sub _PDFOutputCustomerInfos {
 
             # stop output or output next page
             if ( $TableParam{State} ) {
-                last;
+                last PAGE;
             }
             else {
                 $Self->{PDFObject}->PageNew(
@@ -682,7 +686,7 @@ sub _PDFOutputArticles {
 
             # output headline
             $Self->{PDFObject}->Text(
-                Text     => $Self->{LayoutObject}->{LanguageObject}->Get('Articles'),
+                Text     => $Self->{LayoutObject}->{LanguageObject}->Translate('Articles'),
                 Height   => 7,
                 Type     => 'Cut',
                 Font     => 'ProportionalBoldItalic',
@@ -735,23 +739,24 @@ sub _PDFOutputArticles {
         for my $Parameter (qw(From To Cc Subject)) {
             if ( $Article{$Parameter} ) {
                 $TableParam1{CellData}[$Row][0]{Content}
-                    = $Self->{LayoutObject}->{LanguageObject}->Get($Parameter) . ':';
+                    = $Self->{LayoutObject}->{LanguageObject}->Translate($Parameter) . ':';
                 $TableParam1{CellData}[$Row][0]{Font}    = 'ProportionalBold';
                 $TableParam1{CellData}[$Row][1]{Content} = $Article{$Parameter};
                 $Row++;
             }
         }
         $TableParam1{CellData}[$Row][0]{Content}
-            = $Self->{LayoutObject}->{LanguageObject}->Get('Created') . ':';
-        $TableParam1{CellData}[$Row][0]{Font}    = 'ProportionalBold';
-        $TableParam1{CellData}[$Row][1]{Content} = $Self->{LayoutObject}->Output(
-            Template => '$TimeLong{"$Data{"Created"}"}',
-            Data     => \%Article,
-        );
+            = $Self->{LayoutObject}->{LanguageObject}->Translate('Created') . ':';
+        $TableParam1{CellData}[$Row][0]{Font} = 'ProportionalBold';
         $TableParam1{CellData}[$Row][1]{Content}
-            .= ' ' . $Self->{LayoutObject}->{LanguageObject}->Get('by');
+            = $Self->{LayoutObject}->{LanguageObject}->FormatTimeString(
+            $Article{Created},
+            'DateFormat',
+            ),
+            $TableParam1{CellData}[$Row][1]{Content}
+            .= ' ' . $Self->{LayoutObject}->{LanguageObject}->Translate('by');
         $TableParam1{CellData}[$Row][1]{Content}
-            .= ' ' . $Self->{LayoutObject}->{LanguageObject}->Get( $Article{SenderType} );
+            .= ' ' . $Self->{LayoutObject}->{LanguageObject}->Translate( $Article{SenderType} );
         $Row++;
 
         # get the dynamic fields for ticket object
@@ -790,7 +795,7 @@ sub _PDFOutputArticles {
                 LayoutObject       => $Self->{LayoutObject},
             );
             $TableParam1{CellData}[$Row][0]{Content}
-                = $Self->{LayoutObject}->{LanguageObject}->Get( $DynamicFieldConfig->{Label} )
+                = $Self->{LayoutObject}->{LanguageObject}->Translate( $DynamicFieldConfig->{Label} )
                 . ':';
             $TableParam1{CellData}[$Row][0]{Font}    = 'ProportionalBold';
             $TableParam1{CellData}[$Row][1]{Content} = $ValueStrg->{Value};
@@ -798,15 +803,15 @@ sub _PDFOutputArticles {
         }
 
         $TableParam1{CellData}[$Row][0]{Content}
-            = $Self->{LayoutObject}->{LanguageObject}->Get('Type') . ':';
+            = $Self->{LayoutObject}->{LanguageObject}->Translate('Type') . ':';
         $TableParam1{CellData}[$Row][0]{Font} = 'ProportionalBold';
         $TableParam1{CellData}[$Row][1]{Content}
-            = $Self->{LayoutObject}->{LanguageObject}->Get( $Article{ArticleType} );
+            = $Self->{LayoutObject}->{LanguageObject}->Translate( $Article{ArticleType} );
         $Row++;
 
         if ($Attachments) {
             $TableParam1{CellData}[$Row][0]{Content}
-                = $Self->{LayoutObject}->{LanguageObject}->Get('Attachment') . ':';
+                = $Self->{LayoutObject}->{LanguageObject}->Translate('Attachment') . ':';
             $TableParam1{CellData}[$Row][0]{Font} = 'ProportionalBold';
             chomp($Attachments);
             $TableParam1{CellData}[$Row][1]{Content} = $Attachments;
@@ -829,6 +834,7 @@ sub _PDFOutputArticles {
         $TableParam1{PaddingBottom}   = 3;
 
         # output table (article infos)
+        PAGE:
         for ( $Page{PageCount} .. $Page{MaxPages} ) {
 
             # output table (or a fragment of it)
@@ -836,7 +842,7 @@ sub _PDFOutputArticles {
 
             # stop output or output next page
             if ( $TableParam1{State} ) {
-                last;
+                last PAGE;
             }
             else {
                 $Self->{PDFObject}->PageNew(
@@ -844,6 +850,24 @@ sub _PDFOutputArticles {
                 );
                 $Page{PageCount}++;
             }
+        }
+
+        if ( $Article{ArticleType} eq 'chat-external' || $Article{ArticleType} eq 'chat-internal' ) {
+            $Article{Body} = $Kernel::OM->Get('JSONObject')->Decode(
+                Data => $Article{Body}
+            );
+            my $Lines;
+            if (IsArrayRefWithData($Article{Body})) {
+                for my $Line (@{$Article{Body}}) {
+                    if ($Line->{SystemGenerated}) {
+                        $Lines .= '[' . $Line->{CreateTime} . '] ' . $Line->{MessageText} ."\n";
+                    }
+                    else {
+                        $Lines .= '[' . $Line->{CreateTime} . '] ' . $Line->{ChatterName} . ' ' . $Line->{MessageText} ."\n";
+                    }
+                }
+            }
+            $Article{Body} = $Lines;
         }
 
         # table params (article body)
@@ -859,6 +883,7 @@ sub _PDFOutputArticles {
         $TableParam2{PaddingBottom}           = 8;
 
         # output table (article body)
+        PAGE:
         for ( $Page{PageCount} .. $Page{MaxPages} ) {
 
             # output table (or a fragment of it)
@@ -866,7 +891,7 @@ sub _PDFOutputArticles {
 
             # stop output or output next page
             if ( $TableParam2{State} ) {
-                last;
+                last PAGE;
             }
             else {
                 $Self->{PDFObject}->PageNew(
@@ -1043,38 +1068,43 @@ sub _HTMLMask {
         for my $FileID ( sort keys %AtmIndex ) {
             my %File = %{ $AtmIndex{$FileID} };
             $File{Filename} = $Self->{LayoutObject}->Ascii2Html( Text => $File{Filename} );
+            my $DownloadText = $Self->{LayoutObject}->{LanguageObject}->Translate("Download");
             $Param{'Article::ATM'}
-                .= '<a href="$Env{"Baselink"}Action=CustomerTicketAttachment;'
+                .= '<a href="'
+                . $Self->{LayoutObject}->{Baselink}
+                . 'Action=CustomerTicketAttachment;'
                 . "ArticleID=$Article{ArticleID};FileID=$FileID\" target=\"attachment\" "
-                . "title=\"\$Text{\"Download\"}: $File{Filename}\">"
+                . "title=\"$DownloadText: $File{Filename}\">"
                 . "$File{Filename}</a> $File{Filesize}<br/>";
         }
 
-        # check if just a only html email
-        my $MimeTypeText = $Self->{LayoutObject}->CheckMimeType(
-            %Param, %Article, Action => 'AgentTicketZoom',
-        );
-        if ($MimeTypeText) {
-            $Param{TextNote} = $MimeTypeText;
-            $Article{Body}   = '';
+        if ( $Article{ArticleType} eq 'chat-external') {
+            $Article{ChatMessages} = $Kernel::OM->Get('JSONObject')->Decode(
+                Data => $Article{Body}
+            );
+            $Article{IsChat} = 1;
         }
         else {
 
-            # html quoting
-            $Article{Body} = $Self->{LayoutObject}->Ascii2Html(
-                NewLine => $Self->{ConfigObject}->Get('DefaultViewNewLine'),
-                Text    => $Article{Body},
-                VMax    => $Self->{ConfigObject}->Get('DefaultViewLines') || 5000,
-            );
-
-            # do charset check
-            my $CharsetText = $Self->{LayoutObject}->CheckCharset(
+            # check if just a only html email
+            my $MimeTypeText = $Self->{LayoutObject}->CheckMimeType(
                 %Param, %Article, Action => 'AgentTicketZoom',
             );
-            if ($CharsetText) {
-                $Param{'Article::TextNote'} = $CharsetText;
+            if ($MimeTypeText) {
+                $Param{TextNote} = $MimeTypeText;
+                $Article{Body}   = '';
+            }
+            else {
+
+                # html quoting
+                $Article{Body} = $Self->{LayoutObject}->Ascii2Html(
+                    NewLine => $Self->{ConfigObject}->Get('DefaultViewNewLine'),
+                    Text    => $Article{Body},
+                    VMax    => $Self->{ConfigObject}->Get('DefaultViewLines') || 5000,
+                );
             }
         }
+
         $Self->{LayoutObject}->Block(
             Name => 'Article',
             Data => { %Param, %Article },

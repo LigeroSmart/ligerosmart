@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTicketEmail.pm - to compose initial email to customer
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/72ee17c5fb32c7f225e319f77f4dbf4913613855/Kernel/Modules/AgentTicketEmail.pm
+# $origin: https://github.com/OTRS/otrs/blob/e86136cc7e6ece1a9eb6e1fcd13c66a00ffd78ca/Kernel/Modules/AgentTicketEmail.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -470,8 +470,13 @@ sub Run {
             if ( $Self->{TicketID} ) {
                 my %Ticket = $Self->{TicketObject}->TicketGet( TicketID => $Self->{TicketID} );
                 $Output .= $Self->{LayoutObject}->Notify(
-                    Info => 'Ticket "%s" created!", "' . $Ticket{TicketNumber},
-                    Link => '$Env{"Baselink"}Action=AgentTicketZoom;TicketID=' . $Ticket{TicketID},
+                    Info => $Self->{LayoutObject}->{LanguageObject}->Translate(
+                        'Ticket "%s" created!',
+                        $Ticket{TicketNumber},
+                    ),
+                    Link => $Self->{LayoutObject}->{Baselink}
+                        . 'Action=AgentTicketZoom;TicketID='
+                        . $Ticket{TicketID},
                 );
             }
 
@@ -735,7 +740,7 @@ sub Run {
         my $NextStateID = $Self->{ParamObject}->GetParam( Param => 'NextStateID' ) || '';
         my %StateData;
         if ($NextStateID) {
-            %StateData = $Self->{TicketObject}->{StateObject}->StateGet( ID => $NextStateID, );
+            %StateData = $Self->{StateObject}->StateGet( ID => $NextStateID, );
         }
         my $NextState        = $StateData{Name};
         my $NewResponsibleID = $Self->{ParamObject}->GetParam( Param => 'NewResponsibleID' ) || '';
@@ -838,7 +843,8 @@ sub Run {
                 Param => 'FileUpload',
             );
             $Self->{UploadCacheObject}->FormIDAddFile(
-                FormID => $Self->{FormID},
+                FormID      => $Self->{FormID},
+                Disposition => 'attachment',
                 %UploadStuff,
             );
         }
@@ -1038,8 +1044,9 @@ sub Run {
         }
 
         # check email address
+        PARAMETER:
         for my $Parameter (qw(To Cc Bcc)) {
-            next if !$GetParam{$Parameter};
+            next PARAMETER if !$GetParam{$Parameter};
             for my $Email ( Mail::Address->parse( $GetParam{$Parameter} ) ) {
                 if ( !$Self->{CheckItemObject}->CheckEmail( Address => $Email->address() ) ) {
                     $Error{ $Parameter . 'ErrorType' }
@@ -1380,9 +1387,15 @@ sub Run {
 
             # remove unused inline images
             my @NewAttachmentData;
+            ATTACHMENT:
             for my $Attachment (@Attachments) {
                 my $ContentID = $Attachment->{ContentID};
-                if ($ContentID) {
+                if (
+                    $ContentID
+                    && ( $Attachment->{ContentType} =~ /image/i )
+                    && ( $Attachment->{Disposition} eq 'inline' )
+                    )
+                {
                     my $ContentIDHTMLQuote = $Self->{LayoutObject}->Ascii2Html(
                         Text => $ContentID,
                     );
@@ -1392,7 +1405,8 @@ sub Run {
                     $GetParam{Body} =~ s/(ContentID=)$ContentIDLinkEncode/$1$ContentID/g;
 
                     # ignore attachment if not linked in body
-                    next if $GetParam{Body} !~ /(\Q$ContentIDHTMLQuote\E|\Q$ContentID\E)/i;
+                    next ATTACHMENT
+                        if $GetParam{Body} !~ /(\Q$ContentIDHTMLQuote\E|\Q$ContentID\E)/i;
                 }
 
                 # remember inline images and normal attachments
@@ -1825,7 +1839,8 @@ sub Run {
                 for ( sort keys %AllStdAttachments ) {
                     my %AttachmentsData = $StdAttachmentObject->StdAttachmentGet( ID => $_ );
                     $Self->{UploadCacheObject}->FormIDAddFile(
-                        FormID => $Self->{FormID},
+                        FormID      => $Self->{FormID},
+                        Disposition => 'attachment',
                         %AttachmentsData,
                     );
                 }
@@ -1863,10 +1878,11 @@ sub Run {
             $GetParam{QueueID} = $QueueID;
 
             my %Jobs = %{ $Self->{ConfigObject}->Get('Ticket::Frontend::ArticleComposeModule') };
+            JOB:
             for my $Job ( sort keys %Jobs ) {
 
                 # load module
-                next if !$Self->{MainObject}->Require( $Jobs{$Job}->{Module} );
+                next JOB if !$Self->{MainObject}->Require( $Jobs{$Job}->{Module} );
 
                 my $Object = $Jobs{$Job}->{Module}->new( %{$Self}, Debug => $Self->{Debug}, );
 
@@ -2247,11 +2263,12 @@ sub _GetTos {
         );
 
         # build selection string
+        QUEUEID:
         for my $QueueID ( sort keys %Tos ) {
             my %QueueData = $Self->{QueueObject}->QueueGet( ID => $QueueID );
 
             # permission check, can we create new tickets in queue
-            next if !$UserGroups{ $QueueData{GroupID} };
+            next QUEUEID if !$UserGroups{ $QueueData{GroupID} };
 
             my $String = $Self->{ConfigObject}->Get('Ticket::Frontend::NewQueueSelectionString')
                 || '<Realname> <<Email>> - Queue: <Queue>';
@@ -2935,8 +2952,17 @@ sub _MaskEmailNew {
 # ---
 
     # show attachments
+    ATTACHMENT:
     for my $Attachment ( @{ $Param{Attachments} } ) {
-        next if $Attachment->{ContentID} && $Self->{LayoutObject}->{BrowserRichText};
+        if (
+            $Attachment->{ContentID}
+            && $Self->{LayoutObject}->{BrowserRichText}
+            && ( $Attachment->{ContentType} =~ /image/i )
+            && ( $Attachment->{Disposition} eq 'inline' )
+            )
+        {
+            next ATTACHMENT;
+        }
         $Self->{LayoutObject}->Block(
             Name => 'Attachment',
             Data => $Attachment,

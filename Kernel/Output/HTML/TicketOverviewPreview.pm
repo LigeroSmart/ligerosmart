@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/TicketOverviewPreview.pm
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/72ee17c5fb32c7f225e319f77f4dbf4913613855/Kernel/Output/HTML/TicketOverviewPreview.pm
+# $origin: https://github.com/OTRS/otrs/blob/e86136cc7e6ece1a9eb6e1fcd13c66a00ffd78ca/Kernel/Output/HTML/TicketOverviewPreview.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -13,8 +13,6 @@ package Kernel::Output::HTML::TicketOverviewPreview;
 
 use strict;
 use warnings;
-
-use URI::Escape ();
 
 use Kernel::System::CustomerUser;
 use Kernel::System::SystemAddress;
@@ -70,11 +68,12 @@ sub ActionRow {
             $BulkFeature = 1;
         }
         else {
+            GROUP:
             for my $Group (@Groups) {
-                next if !$Self->{LayoutObject}->{"UserIsGroup[$Group]"};
+                next GROUP if !$Self->{LayoutObject}->{"UserIsGroup[$Group]"};
                 if ( $Self->{LayoutObject}->{"UserIsGroup[$Group]"} eq 'Yes' ) {
                     $BulkFeature = 1;
-                    last;
+                    last GROUP;
                 }
             }
         }
@@ -150,7 +149,7 @@ sub ActionRow {
                     Name => $Item->{Block},
                     Data => {
                         ID   => $Item->{ID},
-                        Name => $Self->{LayoutObject}->{LanguageObject}->Get( $Item->{Name} ),
+                        Name => $Self->{LayoutObject}->{LanguageObject}->Translate( $Item->{Name} ),
                         Link => $Self->{LayoutObject}->{Baselink} . $Item->{Link},
                         Description => $Item->{Description},
                         Block       => $Item->{Block},
@@ -211,11 +210,12 @@ sub Run {
             $BulkFeature = 1;
         }
         else {
+            GROUP:
             for my $Group (@Groups) {
-                next if !$Self->{LayoutObject}->{"UserIsGroup[$Group]"};
+                next GROUP if !$Self->{LayoutObject}->{"UserIsGroup[$Group]"};
                 if ( $Self->{LayoutObject}->{"UserIsGroup[$Group]"} eq 'Yes' ) {
                     $BulkFeature = 1;
-                    last;
+                    last GROUP;
                 }
             }
         }
@@ -360,7 +360,7 @@ sub _Show {
     if ( !%Article ) {
         %Article = %Ticket;
         if ( !$Article{Title} ) {
-            $Article{Title} = $Self->{LayoutObject}->{LanguageObject}->Get(
+            $Article{Title} = $Self->{LayoutObject}->{LanguageObject}->Translate(
                 'This ticket has no title or subject'
             );
         }
@@ -403,21 +403,41 @@ sub _Show {
         }
     }
 
-    # get acl actions
-    $Self->{TicketObject}->TicketAcl(
-        Data          => '-',
+    # get ACL restrictions
+    my %PossibleActions;
+    my $Counter = 0;
+
+    # get all registered Actions
+    if ( ref $Self->{ConfigObject}->Get('Frontend::Module') eq 'HASH' ) {
+
+        my %Actions = %{ $Self->{ConfigObject}->Get('Frontend::Module') };
+
+        # only use those Actions that stats with AgentTicket
+        %PossibleActions
+            = map { ++$Counter => $_ }
+            grep { substr( $_, 0, length 'AgentTicket' ) eq 'AgentTicket' }
+            sort keys %Actions;
+    }
+
+    my $ACL = $Self->{TicketObject}->TicketAcl(
+        Data          => \%PossibleActions,
         Action        => $Self->{Action},
         TicketID      => $Article{TicketID},
         ReturnType    => 'Action',
         ReturnSubType => '-',
         UserID        => $Self->{UserID},
     );
-    my %AclAction = $Self->{TicketObject}->TicketAclActionData();
+
+    my %AclAction = %PossibleActions;
+    if ($ACL) {
+        %AclAction = $Self->{TicketObject}->TicketAclActionData();
+    }
 
     # run ticket pre menu modules
     my @ActionItems;
     if ( ref $Self->{ConfigObject}->Get('Ticket::Frontend::PreMenuModule') eq 'HASH' ) {
         my %Menus = %{ $Self->{ConfigObject}->Get('Ticket::Frontend::PreMenuModule') };
+        MENU:
         for my $Menu ( sort keys %Menus ) {
 
             # load module
@@ -434,20 +454,8 @@ sub _Show {
                 Config => $Menus{$Menu},
             );
 
-            next if !$Item;
-            next if ref $Item ne 'HASH';
-            for my $Key (qw(Name Link Description)) {
-                next if !$Item->{$Key};
-                $Item->{$Key} = $Self->{LayoutObject}->Output(
-                    Template => $Item->{$Key},
-                    Data     => \%Article,
-                );
-            }
-
-            # add the return module to redirect back to the current screen afterwards
-            my $ReturnPath
-                = URI::Escape::uri_escape( $Self->{LayoutObject}->{EnvRef}->{RequestedURL} );
-            $Item->{Link} .= ';ReturnModule=' . $ReturnPath;
+            next MENU if !$Item;
+            next MENU if ref $Item ne 'HASH';
 
             # add session id if needed
             if ( !$Self->{LayoutObject}->{SessionIDCookie} && $Item->{Link} ) {
@@ -461,14 +469,27 @@ sub _Show {
             $Item->{ID} = $Item->{Name};
             $Item->{ID} =~ s/(\s|&|;)//ig;
 
-            $Self->{LayoutObject}->Block(
-                Name => $Item->{Block} || 'DocumentMenuItem',
-                Data => $Item,
-            );
-            my $Output = $Self->{LayoutObject}->Output(
-                TemplateFile => 'AgentTicketOverviewPreview',
-                Data         => $Item,
-            );
+            my $Output;
+            if ( $Item->{Block} ) {
+                $Self->{LayoutObject}->Block(
+                    Name => $Item->{Block},
+                    Data => $Item,
+                );
+                $Output = $Self->{LayoutObject}->Output(
+                    TemplateFile => 'AgentTicketOverviewPreview',
+                    Data         => $Item,
+                );
+            }
+            else {
+                $Output = '<li id="'
+                    . $Item->{ID}
+                    . '"><a href="#" title="'
+                    . $Self->{LayoutObject}->{LanguageObject}->Translate( $Item->{Description} )
+                    . '">'
+                    . $Self->{LayoutObject}->{LanguageObject}->Translate( $Item->{Name} )
+                    . '</a></li>';
+            }
+
             $Output =~ s/\n+//g;
             $Output =~ s/\s+/ /g;
             $Output =~ s/<\!--.+?-->//g;
@@ -476,12 +497,12 @@ sub _Show {
             push @ActionItems, {
                 HTML        => $Output,
                 ID          => $Item->{ID},
-                Name        => $Self->{LayoutObject}->{LanguageObject}->Get( $Item->{Name} ),
+                Name        => $Self->{LayoutObject}->{LanguageObject}->Translate( $Item->{Name} ),
                 Link        => $Self->{LayoutObject}->{Baselink} . $Item->{Link},
                 Target      => $Item->{Target},
                 PopupType   => $Item->{PopupType},
                 Description => $Item->{Description},
-                Block       => $Item->{Block} || 'DocumentMenuItem',
+                Block       => $Item->{Block},
 
             };
         }
@@ -524,7 +545,7 @@ sub _Show {
                 $Class = 'AsPopup PopupType_' . $Item->{PopupType};
             }
 
-            if ( $Item->{Block} eq 'DocumentMenuItem' ) {
+            if ( !$Item->{Block} ) {
                 $Self->{LayoutObject}->Block(
                     Name => 'InlineActionRowItem',
                     Data => {
@@ -802,8 +823,8 @@ sub _Show {
     }
 
     # Dynamic fields
-    my $Counter = 0;
-    my $Class   = 'Middle';
+    $Counter = 0;
+    my $Class = 'Middle';
 
     # cycle trough the activated Dynamic Fields for this screen
     DYNAMICFIELD:
@@ -951,13 +972,14 @@ sub _Show {
         if ($PreviewArticleTypeExpanded) {
 
             my $ClassCount = 0;
+            ARTICLE_ITEM:
             for my $ArticleItem (@ArticleBody) {
-                next if !$ArticleItem;
+                next ARTICLE_ITEM if !$ArticleItem;
 
                 # check if current article type should be shown as expanded
                 if ( $ArticleItem->{ArticleType} eq $PreviewArticleTypeExpanded ) {
                     $ArticleItem->{Class} = 'Active';
-                    last;
+                    last ARTICLE_ITEM;
                 }
 
                 # otherwise display the last article in the list as expanded (default)
@@ -1002,15 +1024,6 @@ sub _Show {
                 HTMLResultMode  => 1,
                 StripEmptyLines => $Param{Config}->{StripEmptyLines},
             );
-
-            # do charset check
-            my $CharsetText = $Self->{LayoutObject}->CheckCharset(
-                %{$ArticleItem},
-                Action => 'AgentTicketZoom',
-            );
-            if ($CharsetText) {
-                $ArticleItem->{BodyNote} = $CharsetText;
-            }
         }
 
         $ArticleItem->{Subject} = $Self->{TicketObject}->TicketSubjectClean(
@@ -1065,7 +1078,7 @@ sub _Show {
                         }
                     }
                 }
-                if ( $Access && !$Param{Output} ) {
+                if ($Access) {
                     $Self->{LayoutObject}->Block(
                         Name => 'ArticlePreviewActionRow',
                         Data => {
@@ -1102,7 +1115,8 @@ sub _Show {
                         {
                             Key   => '0',
                             Value => '- '
-                                . $Self->{LayoutObject}->{LanguageObject}->Get('Reply') . ' -',
+                                . $Self->{LayoutObject}->{LanguageObject}->Translate('Reply')
+                                . ' -',
                             Selected => 1,
                         }
                     );
@@ -1128,8 +1142,9 @@ sub _Show {
 
                     # check if reply all is needed
                     my $Recipients = '';
+                    KEY:
                     for my $Key (qw(From To Cc)) {
-                        next if !$ArticleItem->{$Key};
+                        next KEY if !$ArticleItem->{$Key};
                         if ($Recipients) {
                             $Recipients .= ', ';
                         }
@@ -1142,13 +1157,14 @@ sub _Show {
                             Mode => 'Standalone',
                         );
                         my @Addresses = $EmailParser->SplitAddressLine( Line => $Recipients );
+                        ADDRESS:
                         for my $Address (@Addresses) {
                             my $Email = $EmailParser->GetEmailAddress( Email => $Address );
-                            next if !$Email;
+                            next ADDRESS if !$Email;
                             my $IsLocal = $Self->{SystemAddress}->SystemAddressIsLocalAddress(
                                 Address => $Email,
                             );
-                            next if $IsLocal;
+                            next ADDRESS if $IsLocal;
                             $RecipientCount++;
                         }
                     }
@@ -1161,12 +1177,12 @@ sub _Show {
                             {
                                 Key   => '0',
                                 Value => '- '
-                                    . $Self->{LayoutObject}->{LanguageObject}->Get('Reply All')
+                                    . $Self->{LayoutObject}->{LanguageObject}
+                                    ->Translate('Reply All')
                                     . ' -',
                                 Selected => 1,
                             }
                         );
-
                         $StandardResponsesStrg = $Self->{LayoutObject}->BuildSelection(
                             Name => 'ResponseID',
                             ID   => 'ResponseIDAll' . $ArticleItem->{ArticleID},
@@ -1193,15 +1209,12 @@ sub _Show {
 
     # add action items as js
     if ( @ActionItems && !$Param{Config}->{TicketActionsPerTicket} ) {
-        my $JSON = $Self->{LayoutObject}->JSONEncode(
-            Data => \@ActionItems,
-        );
 
         $Self->{LayoutObject}->Block(
             Name => 'DocumentReadyActionRowAdd',
             Data => {
                 TicketID => $Param{TicketID},
-                Data     => $JSON,
+                Data     => \@ActionItems,
             },
         );
     }

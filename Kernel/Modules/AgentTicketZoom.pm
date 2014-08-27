@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTicketZoom.pm - to get a closer view
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/72ee17c5fb32c7f225e319f77f4dbf4913613855/Kernel/Modules/AgentTicketZoom.pm
+# $origin: https://github.com/OTRS/otrs/blob/e86136cc7e6ece1a9eb6e1fcd13c66a00ffd78ca/Kernel/Modules/AgentTicketZoom.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,6 +25,7 @@ use Kernel::System::ProcessManagement::Process;
 use Kernel::System::ProcessManagement::Transition;
 use Kernel::System::ProcessManagement::TransitionAction;
 use Kernel::System::SystemAddress;
+use Kernel::System::JSON;
 # ---
 # ITSM
 # ---
@@ -32,6 +33,7 @@ use Kernel::System::Service;
 # ---
 
 use Kernel::System::VariableCheck qw(:all);
+use POSIX qw/ceil/;
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -55,6 +57,7 @@ sub new {
 
     # get params
     $Self->{ArticleID}      = $Self->{ParamObject}->GetParam( Param => 'ArticleID' );
+    $Self->{ArticlePage}    = $Self->{ParamObject}->GetParam( Param => 'ArticlePage' );
     $Self->{ZoomExpand}     = $Self->{ParamObject}->GetParam( Param => 'ZoomExpand' );
     $Self->{ZoomExpandSort} = $Self->{ParamObject}->GetParam( Param => 'ZoomExpandSort' );
     if ( !defined $Self->{ZoomExpand} ) {
@@ -90,8 +93,14 @@ sub new {
     $Self->{CustomerUserObject} = Kernel::System::CustomerUser->new(%Param);
     $Self->{LinkObject}         = Kernel::System::LinkObject->new(%Param);
     $Self->{SystemAddress}      = Kernel::System::SystemAddress->new(%Param);
+    $Self->{JSONObject}         = Kernel::System::JSON->new(%Param);
     $Self->{DynamicFieldObject} = Kernel::System::DynamicField->new(%Param);
     $Self->{BackendObject}      = Kernel::System::DynamicField::Backend->new(%Param);
+# ---
+# ITSM
+# ---
+    $Self->{ServiceObject} = Kernel::System::Service->new(%Param);
+# ---
 
     # get dynamic field config for frontend module
     $Self->{DynamicFieldFilter} = {
@@ -102,11 +111,6 @@ sub new {
                 || {}
         },
     };
-# ---
-# ITSM
-# ---
-    $Self->{ServiceObject} = Kernel::System::Service->new(%Param);
-# ---
 
     # create additional objects for process management
     $Self->{ActivityObject} = Kernel::System::ProcessManagement::Activity->new(%Param);
@@ -151,9 +155,8 @@ sub Run {
 
     # error screen, don't show ticket
     if ( !$Access ) {
-        my $TranslatableMessage = $Self->{LayoutObject}->{LanguageObject}->Get(
-            "We are sorry, you do not have permissions anymore to access this ticket in its"
-                . " current state. "
+        my $TranslatableMessage = $Self->{LayoutObject}->{LanguageObject}->Translate(
+            "We are sorry, you do not have permissions anymore to access this ticket in its current state. "
         );
 
         return $Self->{LayoutObject}->NoPermission(
@@ -168,24 +171,42 @@ sub Run {
         DynamicFields => 1,
     );
 
-    # get acl actions
-    $Self->{TicketObject}->TicketAcl(
-        Data          => '-',
+    # get ACL restrictions
+    my %PossibleActions;
+    my $Counter = 0;
+
+    # get all registered Actions
+    if ( ref $Self->{ConfigObject}->Get('Frontend::Module') eq 'HASH' ) {
+
+        my %Actions = %{ $Self->{ConfigObject}->Get('Frontend::Module') };
+
+        # only use those Actions that stats with AgentTicket
+        %PossibleActions
+            = map { ++$Counter => $_ }
+            grep { substr( $_, 0, length 'AgentTicket' ) eq 'AgentTicket' }
+            sort keys %Actions;
+    }
+
+    my $ACL = $Self->{TicketObject}->TicketAcl(
+        Data          => \%PossibleActions,
         Action        => $Self->{Action},
         TicketID      => $Self->{TicketID},
         ReturnType    => 'Action',
         ReturnSubType => '-',
         UserID        => $Self->{UserID},
     );
-    my %AclAction = $Self->{TicketObject}->TicketAclActionData();
+
+    my %AclAction = %PossibleActions;
+    if ($ACL) {
+        %AclAction = $Self->{TicketObject}->TicketAclActionData();
+    }
 
     # check if ACL restrictions exist
-    if ( IsHashRefWithData( \%AclAction ) ) {
+    my %AclActionLookup = reverse %AclAction;
 
-        # show error screen if ACL prohibits this action
-        if ( defined $AclAction{ $Self->{Action} } && $AclAction{ $Self->{Action} } eq '0' ) {
-            return $Self->{LayoutObject}->NoPermission( WithHeader => 'yes' );
-        }
+    # show error screen if ACL prohibits this action
+    if ( !$AclActionLookup{ $Self->{Action} } ) {
+        return $Self->{LayoutObject}->NoPermission( WithHeader => 'yes' );
     }
 
     # mark shown ticket as seen
@@ -291,6 +312,7 @@ sub Run {
             TemplateTypes => 1,
             Valid         => 1,
         );
+
         $Self->_ArticleItem(
             Ticket            => \%Ticket,
             Article           => \%Article,
@@ -410,7 +432,7 @@ sub Run {
             )
         {
             my @IDs = split /,/, $1;
-            $Self->{ArticleFilter}->{ArticleTypeID} = { map { $_ => 1 } @IDs };
+            $Self->{ArticleFilter}->{ArticleTypeID} = \@IDs;
         }
 
         # extract ArticleSenderTypeIDs
@@ -420,17 +442,9 @@ sub Run {
             )
         {
             my @IDs = split /,/, $1;
-            $Self->{ArticleFilter}->{SenderTypeID} = { map { $_ => 1 } @IDs };
+            $Self->{ArticleFilter}->{ArticleSenderTypeID} = \@IDs;
         }
     }
-# ---
-# ITSM
-# ---
-
-    # set criticality and impact
-    $Ticket{Criticality} = $Ticket{DynamicField_ITSMCriticality} || '-';
-    $Ticket{Impact}      = $Ticket{DynamicField_ITSMImpact}      || '-';
-# ---
 
     # return if HTML email
     if ( $Self->{Subaction} eq 'ShowHTMLeMail' ) {
@@ -502,19 +516,107 @@ sub MaskAgentZoom {
 
     # generate shown articles
 
-    # get content
-    my @ArticleBox = $Self->{TicketObject}->ArticleContentIndex(
+    my $Limit = $Self->{ConfigObject}->Get('Ticket::Frontend::MaxArticlesPerPage');
+
+    my $Order = $Self->{ZoomExpandSort} eq 'reverse' ? 'DESC' : 'ASC';
+    my $Page;
+
+    if ( $Self->{ArticleID} ) {
+        $Page = $Self->{TicketObject}->ArticlePage(
+            TicketID    => $Self->{TicketID},
+            ArticleID   => $Self->{ArticleID},
+            RowsPerPage => $Limit,
+            Order       => $Order,
+            %{ $Self->{ArticleFilter} // {} },
+        );
+    }
+    elsif ( $Self->{ArticlePage} ) {
+        $Page = $Self->{ArticlePage};
+    }
+    else {
+        $Page = 1;
+    }
+
+    # We need to find out whether pagination is actually necessary.
+    # The easiest way would be count the articles, but that would slow
+    # down the most common case (fewer articles than $Limit in the ticket).
+    # So instead we use the following trick:
+    # 1) if the $Page > 1, we need pagination
+    # 2) if not, request $Limit + 1 articles. If $Limit + 1 are actually
+    #    returned, pagination is necessary
+    my $Extra = $Page > 1 ? 0 : 1;
+    my $NeedPagination;
+    my $ArticleCount;
+
+    my @ArticleContentArgs = (
         TicketID                   => $Self->{TicketID},
         StripPlainBodyAsAttachment => $Self->{StripPlainBodyAsAttachment},
         UserID                     => $Self->{UserID},
+        Limit                      => $Limit + $Extra,
+        Order                      => $Order,
         DynamicFields => 0,    # fetch later only for the article(s) to display
+        %{ $Self->{ArticleFilter} // {} },    # limit by ArticleSenderTypeID/ArticleTypeID
+
     );
 
+    # get content
+    my @ArticleBox = $Self->{TicketObject}->ArticleContentIndex(
+        @ArticleContentArgs,
+        Page => $Page,
+    );
+
+    if ( !@ArticleBox && $Page > 1 ) {
+
+        # if the page argument is past the actual number of pages,
+        # assume page 1 instead.
+        # This can happen when a new article filter was added.
+        $Page       = 1;
+        @ArticleBox = $Self->{TicketObject}->ArticleContentIndex(
+            @ArticleContentArgs,
+            Page => $Page,
+        );
+        $ArticleCount = $Self->{TicketObject}->ArticleCount(
+            TicketID => $Self->{TicketID},
+            %{ $Self->{ArticleFilter} // {} },
+        );
+        $NeedPagination = $ArticleCount > $Limit;
+    }
+    elsif ( @ArticleBox > $Limit ) {
+        pop @ArticleBox;
+        $NeedPagination = 1;
+        $ArticleCount   = $Self->{TicketObject}->ArticleCount(
+            TicketID => $Self->{TicketID},
+            %{ $Self->{ArticleFilter} // {} },
+        );
+    }
+    elsif ( $Page == 1 ) {
+        $ArticleCount   = @ArticleBox;
+        $NeedPagination = 0;
+    }
+    else {
+        $NeedPagination = 1;
+        $ArticleCount   = $Self->{TicketObject}->ArticleCount(
+            TicketID => $Ticket{TicketID},
+            %{ $Self->{ArticleFilter} // {} },
+        );
+    }
+
+    $Page ||= 1;
+
+    my $Pages;
+    if ($NeedPagination) {
+        $Pages = ceil( $ArticleCount / $Limit );
+    }
+
     # add counter
-    my $Count = 0;
+    my $Count          = ( $Page - 1 ) * $Limit;
+    my $ArticleIDFound = 0;
     for my $Article (@ArticleBox) {
         $Count++;
         $Article->{Count} = $Count;
+        if ( $Self->{ArticleID} && $Self->{ArticleID} == $Article->{ArticleID} ) {
+            $ArticleIDFound = 1;
+        }
     }
 
     my %ArticleFlags = $Self->{TicketObject}->ArticleFlagsOfTicketGet(
@@ -524,7 +626,7 @@ sub MaskAgentZoom {
 
     # get selected or last customer article
     my $ArticleID;
-    if ( $Self->{ArticleID} ) {
+    if ($ArticleIDFound) {
         $ArticleID = $Self->{ArticleID};
     }
     else {
@@ -545,15 +647,10 @@ sub MaskAgentZoom {
 
         # set selected article
         if ( !$ArticleID ) {
-            if ( @ArticleBox && $Self->{ZoomExpandSort} eq 'normal' ) {
+            if (@ArticleBox) {
 
                 # set first article as default if normal sort
                 $ArticleID = $ArticleBox[0]->{ArticleID};
-            }
-            elsif ( @ArticleBox && $Self->{ZoomExpandSort} eq 'reverse' ) {
-
-                # set last article as default if reverse sort
-                $ArticleID = $ArticleBox[$#ArticleBox]->{ArticleID};
             }
 
             # set last customer article as selected article replacing last set
@@ -565,65 +662,10 @@ sub MaskAgentZoom {
         }
     }
 
-    # remember shown article ids if article filter is activated in sysconfig
-    if ( $Self->{ArticleFilterActive} && $Self->{ArticleFilter} ) {
-
-        # reset shown article ids
-        $Self->{ArticleFilter}->{ShownArticleIDs} = undef;
-
-        my $NewArticleID = '';
-        my $Count        = 0;
-
-        ARTICLE:
-        for my $Article (@ArticleBox) {
-
-            # article type id does not match
-            if (
-                $Self->{ArticleFilter}->{ArticleTypeID}
-                && !$Self->{ArticleFilter}->{ArticleTypeID}->{ $Article->{ArticleTypeID} }
-                )
-            {
-                next ARTICLE;
-            }
-
-            # article sender type id does not match
-            if (
-                $Self->{ArticleFilter}->{SenderTypeID}
-                && !$Self->{ArticleFilter}->{SenderTypeID}->{ $Article->{SenderTypeID} }
-                )
-            {
-                next ARTICLE;
-            }
-
-            # count shown articles
-            $Count++;
-
-            # remember article id
-            $Self->{ArticleFilter}->{ShownArticleIDs}->{ $Article->{ArticleID} } = 1;
-
-            # set article id to first shown article
-            if ( $Count == 1 ) {
-                $NewArticleID = $Article->{ArticleID};
-            }
-
-            # set article id to last shown customer article
-            if ( $Article->{SenderType} eq 'customer' ) {
-                $NewArticleID = $Article->{ArticleID};
-            }
-        }
-
-        # change article id if it was filtered out
-        if ( $NewArticleID && !$Self->{ArticleFilter}->{ShownArticleIDs}->{$ArticleID} ) {
-            $ArticleID = $NewArticleID;
-        }
-
-        # add current article id
-        $Self->{ArticleFilter}->{ShownArticleIDs}->{$ArticleID} = 1;
-    }
-
     # check if expand view is usable (only for less then 400 article)
     # if you have more articles is going to be slow and not usable
-    my $ArticleMaxLimit = 400;
+    my $ArticleMaxLimit = $Self->{ConfigObject}->Get('Ticket::Frontend::MaxArticlesZoomExpand')
+        // 400;
     if ( $Self->{ZoomExpand} && $#ArticleBox > $ArticleMaxLimit ) {
         $Self->{ZoomExpand} = 0;
     }
@@ -631,20 +673,16 @@ sub MaskAgentZoom {
     # get shown article(s)
     my @ArticleBoxShown;
     if ( !$Self->{ZoomExpand} ) {
+        ARTICLEBOX:
         for my $ArticleTmp (@ArticleBox) {
             if ( $ArticleID eq $ArticleTmp->{ArticleID} ) {
                 push @ArticleBoxShown, $ArticleTmp;
+                last ARTICLEBOX;
             }
         }
     }
     else {
         @ArticleBoxShown = @ArticleBox;
-    }
-
-    # resort article order
-    if ( $Self->{ZoomExpandSort} eq 'reverse' ) {
-        @ArticleBox      = reverse @ArticleBox;
-        @ArticleBoxShown = reverse @ArticleBoxShown;
     }
 
     # set display options
@@ -661,8 +699,20 @@ sub MaskAgentZoom {
         $Param{WidgetTitle} = $Self->{DisplaySettings}->{ProcessDisplay}->{WidgetTitle};
     }
 
-    # only show article tree if articles are present
-    if (@ArticleBox) {
+    # only show article tree if articles are present,
+    # or if a filter is set (so that the user has the option to
+    # disable the filter)
+    if ( @ArticleBox || $Self->{ArticleFilter} ) {
+
+        my $Pagination;
+
+        if ($NeedPagination) {
+            $Pagination = {
+                Pages       => $Pages,
+                CurrentPage => $Page,
+                TicketID    => $Ticket{TicketID},
+            };
+        }
 
         # show article tree
         $Param{ArticleTree} = $Self->_ArticleTree(
@@ -671,6 +721,9 @@ sub MaskAgentZoom {
             ArticleID       => $ArticleID,
             ArticleMaxLimit => $ArticleMaxLimit,
             ArticleBox      => \@ArticleBox,
+            Pagination      => $Pagination,
+            Page            => $Page,
+            ArticleCount    => scalar @ArticleBox,
         );
     }
 
@@ -679,17 +732,6 @@ sub MaskAgentZoom {
     ARTICLE:
     for my $ArticleTmp (@ArticleBoxShown) {
         my %Article = %$ArticleTmp;
-
-        # article filter is activated in sysconfig and there are articles that passed the filter
-        if ( $Self->{ArticleFilterActive} ) {
-            if ( $Self->{ArticleFilter} && $Self->{ArticleFilter}->{ShownArticleIDs} ) {
-
-                # do not show article if it does not match the filter
-                if ( !$Self->{ArticleFilter}->{ShownArticleIDs}->{ $Article{ArticleID} } ) {
-                    next ARTICLE;
-                }
-            }
-        }
 
         $Self->_ArticleItem(
             Ticket            => \%Ticket,
@@ -763,16 +805,17 @@ sub MaskAgentZoom {
     # get MoveQueuesStrg
     if ( $Self->{ConfigObject}->Get('Ticket::Frontend::MoveType') =~ /^form$/i ) {
         $MoveQueues{0}
-            = '- ' . $Self->{LayoutObject}->{LanguageObject}->Get('Move') . ' -';
+            = '- ' . $Self->{LayoutObject}->{LanguageObject}->Translate('Move') . ' -';
         $Param{MoveQueuesStrg} = $Self->{LayoutObject}->AgentQueueListOption(
             Name           => 'DestQueueID',
             Data           => \%MoveQueues,
             CurrentQueueID => $Ticket{QueueID},
         );
     }
+    my %AclActionLookup = reverse %AclAction;
     if (
         $Self->{ConfigObject}->Get('Frontend::Module')->{AgentTicketMove}
-        && ( !defined $AclAction{AgentTicketMove} || $AclAction{AgentTicketMove} )
+        && ( $AclActionLookup{AgentTicketMove} )
         )
     {
         my $Access = $Self->{TicketObject}->TicketPermission(
@@ -1012,6 +1055,7 @@ sub MaskAgentZoom {
         if ( $Ticket{$ActivityEntityIDField} ) {
             $NextActivityDialogs = $ActivityData;
         }
+        my $ActivityName = $ActivityData->{Name};
 
         if ( IsHashRefWithData($NextActivityDialogs) ) {
 
@@ -1024,41 +1068,29 @@ sub MaskAgentZoom {
                 $NextActivityDialogs = {};
             }
 
-            # ACL Check is done in the initial "Run" statement
-            # so here we can just pick the possibly reduced Activity Dialogs
-            # map and sort reformat the $NextActivityDialogs hash from it's initial form e.g.:
-            # 1 => 'AD1',
-            # 2 => 'AD3',
-            # 3 => 'AD2',
-            # to a regular array in correct order:
-            # ('AD1', 'AD3', 'AD2')
-
-            my @TmpActivityDialogList
-                = map { $NextActivityDialogs->{$_} }
-                sort  { $a <=> $b } keys %{$NextActivityDialogs};
-
             # we have to check if the current user has the needed permissions to view the
             # different activity dialogs, so we loop over every activity dialog and check if there
             # is a permission configured. If there is a permission configured we check this
             # and display/hide the activity dialog link
             my %PermissionRights;
-            my @PermissionActivityDialogList;
+            my %PermissionActivityDialogList;
             ACTIVITYDIALOGPERMISSION:
-            for my $CurrentActivityDialogEntityID (@TmpActivityDialogList) {
+            for my $Index ( sort { $a <=> $b } keys %{$NextActivityDialogs} ) {
+                my $CurrentActivityDialogEntityID = $NextActivityDialogs->{$Index};
                 my $CurrentActivityDialog
                     = $Self->{ActivityDialogObject}->ActivityDialogGet(
                     Interface              => 'AgentInterface',
                     ActivityDialogEntityID => $CurrentActivityDialogEntityID
                     );
 
-                # create an interface lookuplist
+                # create an interface lookup-list
                 my %InterfaceLookup = map { $_ => 1 } @{ $CurrentActivityDialog->{Interface} };
 
                 next ACTIVITYDIALOGPERMISSION if !$InterfaceLookup{AgentInterface};
 
                 if ( $CurrentActivityDialog->{Permission} ) {
 
-                    # performanceboost/cache
+                    # performance-boost/cache
                     if ( !defined $PermissionRights{ $CurrentActivityDialog->{Permission} } ) {
                         $PermissionRights{ $CurrentActivityDialog->{Permission} }
                             = $Self->{TicketObject}->TicketPermission(
@@ -1068,33 +1100,36 @@ sub MaskAgentZoom {
                             );
                     }
 
-                    next ACTIVITYDIALOGPERMISSION
-                        if !$PermissionRights{ $CurrentActivityDialog->{Permission} };
+                    if ( !$PermissionRights{ $CurrentActivityDialog->{Permission} } ) {
+                        next ACTIVITYDIALOGPERMISSION;
+                    }
                 }
 
-                push @PermissionActivityDialogList, $CurrentActivityDialogEntityID;
+                $PermissionActivityDialogList{$Index} = $CurrentActivityDialogEntityID;
             }
 
-            my @PossibleActivityDialogs;
-            if (@PermissionActivityDialogList) {
-                @PossibleActivityDialogs
-                    = $Self->{TicketObject}->TicketAclActivityDialogData(
-                    ActivityDialogs => \@PermissionActivityDialogList
-                    );
-            }
+            # reduce next activity dialogs to the ones that have permissions
+            $NextActivityDialogs = \%PermissionActivityDialogList;
 
-            # reformat the @PossibleActivityDialogs that is of the structure:
-            # @PossibleActivityDialogs = ('AD1', 'AD3', 'AD4', 'AD2');
-            # to get the same structure as in the %NextActivityDialogs
-            # e.g.:
-            # 1 => 'AD1',
-            # 2 => 'AD3',
-            %{$NextActivityDialogs}
-                = map { $_ => $PossibleActivityDialogs[ $_ - 1 ] }
-                1 .. scalar @PossibleActivityDialogs;
+            # get ACL restrictions
+            my $ACL = $Self->{TicketObject}->TicketAcl(
+                Data          => \%PermissionActivityDialogList,
+                TicketID      => $Ticket{TicketID},
+                ReturnType    => 'ActivityDialog',
+                ReturnSubType => '-',
+                UserID        => $Self->{UserID},
+            );
+
+            if ($ACL) {
+                %{$NextActivityDialogs}
+                    = $Self->{TicketObject}->TicketAclData()
+            }
 
             $Self->{LayoutObject}->Block(
                 Name => 'NextActivityDialogs',
+                Data => {
+                    'ActivityName' => $ActivityName,
+                },
             );
 
             if ( IsHashRefWithData($NextActivityDialogs) ) {
@@ -1168,7 +1203,8 @@ sub MaskAgentZoom {
 # ---
 
         # use translation here to be able to reduce the character length in the template
-        my $Label = $Self->{LayoutObject}->{LanguageObject}->Get( $DynamicFieldConfig->{Label} );
+        my $Label
+            = $Self->{LayoutObject}->{LanguageObject}->Translate( $DynamicFieldConfig->{Label} );
 
         if (
             $IsProcessTicket &&
@@ -1378,7 +1414,8 @@ sub MaskAgentZoom {
             $Self->{LayoutObject}->Block(
                 Name => 'ProcessWidgetDynamicFieldGroupSeparator',
                 Data => {
-                    Name => $Self->{LayoutObject}->{LanguageObject}->Get('Fields with no group'),
+                    Name =>
+                        $Self->{LayoutObject}->{LanguageObject}->Translate('Fields with no group'),
                 },
             );
         }
@@ -1482,10 +1519,11 @@ sub MaskAgentZoom {
 
     # get linked objects
     my $LinkListWithData = $Self->{LinkObject}->LinkListWithData(
-        Object => 'Ticket',
-        Key    => $Self->{TicketID},
-        State  => 'Valid',
-        UserID => $Self->{UserID},
+        Object                       => 'Ticket',
+        Key                          => $Self->{TicketID},
+        State                        => 'Valid',
+        IgnoreLinkedTicketStateTypes => 1,
+        UserID                       => $Self->{UserID},
     );
 
     # get link table view mode
@@ -1528,7 +1566,7 @@ sub MaskAgentZoom {
         # build article type list for filter dialog
         $Param{ArticleTypeFilterString} = $Self->{LayoutObject}->BuildSelection(
             Data        => \%ArticleTypes,
-            SelectedID  => [ keys %{ $Self->{ArticleFilter}->{ArticleTypeID} } ],
+            SelectedID  => $Self->{ArticleFilter}->{ArticleTypeID},
             Translation => 1,
             Multiple    => 1,
             Sort        => 'AlphanumericValue',
@@ -1543,7 +1581,7 @@ sub MaskAgentZoom {
         # build article sender type list for filter dialog
         $Param{ArticleSenderTypeFilterString} = $Self->{LayoutObject}->BuildSelection(
             Data        => \%ArticleSenderTypes,
-            SelectedID  => [ keys %{ $Self->{ArticleFilter}->{SenderTypeID} } ],
+            SelectedID  => $Self->{ArticleFilter}->{ArticleSenderTypeID},
             Translation => 1,
             Multiple    => 1,
             Sort        => 'AlphanumericValue',
@@ -1622,7 +1660,15 @@ sub _ArticleTree {
         },
     );
 
-    # check if expand/collapse view is usable (only for less then 300 articles)
+    if ( $Param{Pagination} ) {
+        $Self->{LayoutObject}->Block(
+            Name => 'ArticlePages',
+            Data => $Param{Pagination},
+        );
+    }
+
+    # check if expand/collapse view is usable (not available for too many
+    # articles)
     if ( $#ArticleBox < $ArticleMaxLimit ) {
         if ( $Self->{ZoomExpand} ) {
             $Self->{LayoutObject}->Block(
@@ -1632,6 +1678,7 @@ sub _ArticleTree {
                     ArticleID      => $ArticleID,
                     ZoomExpand     => $Self->{ZoomExpand},
                     ZoomExpandSort => $Self->{ZoomExpandSort},
+                    Page           => $Param{Page},
                 },
             );
         }
@@ -1643,6 +1690,7 @@ sub _ArticleTree {
                     ArticleID      => $ArticleID,
                     ZoomExpand     => $Self->{ZoomExpand},
                     ZoomExpandSort => $Self->{ZoomExpandSort},
+                    Page           => $Param{Page},
                 },
             );
         }
@@ -1977,16 +2025,15 @@ sub _ArticleItem {
 
     # show article actions
 
+    my %AclActionLookup = reverse %AclAction;
+
     # select the output template
-    if ( $Article{ArticleType} !~ /^(note|email-noti)/i ) {
+    if ( $Article{ArticleType} !~ /^(note|email-noti|chat)/i ) {
 
         # check if compose link should be shown
         if (
             $Self->{ConfigObject}->Get('Frontend::Module')->{AgentTicketCompose}
-            && (
-                !defined $AclAction{AgentTicketCompose}
-                || $AclAction{AgentTicketCompose}
-            )
+            && ( $AclActionLookup{AgentTicketCompose} )
             )
         {
             my $Access = 1;
@@ -2039,7 +2086,7 @@ sub _ArticleItem {
                     {
                         Key   => '0',
                         Value => '- '
-                            . $Self->{LayoutObject}->{LanguageObject}->Get('Reply') . ' -',
+                            . $Self->{LayoutObject}->{LanguageObject}->Translate('Reply') . ' -',
                         Selected => 1,
                     }
                 );
@@ -2106,7 +2153,8 @@ sub _ArticleItem {
                         {
                             Key   => '0',
                             Value => '- '
-                                . $Self->{LayoutObject}->{LanguageObject}->Get('Reply All') . ' -',
+                                . $Self->{LayoutObject}->{LanguageObject}->Translate('Reply All')
+                                . ' -',
                             Selected => 1,
                         }
                     );
@@ -2145,7 +2193,7 @@ sub _ArticleItem {
         # (only show forward on email-external, email-internal, phone, webrequest and fax
         if (
             $Self->{ConfigObject}->Get('Frontend::Module')->{AgentTicketForward}
-            && ( !defined $AclAction{AgentTicketForward} || $AclAction{AgentTicketForward} )
+            && ( $AclActionLookup{AgentTicketForward} )
             && $Article{ArticleType} =~ /^(email-external|email-internal|phone|webrequest|fax)$/i
             )
         {
@@ -2196,7 +2244,8 @@ sub _ArticleItem {
                         {
                             Key   => '0',
                             Value => '- '
-                                . $Self->{LayoutObject}->{LanguageObject}->Get('Forward') . ' -',
+                                . $Self->{LayoutObject}->{LanguageObject}->Translate('Forward')
+                                . ' -',
                             Selected => 1,
                         }
                     );
@@ -2238,7 +2287,7 @@ sub _ArticleItem {
                             Name        => 'Forward',
                             Class       => 'AsPopup PopupType_TicketAction',
                             Link =>
-                                'Action=AgentTicketForward;TicketID=$Data{"TicketID"};ArticleID=$Data{"ArticleID"}'
+                                "Action=AgentTicketForward;TicketID=$Ticket{TicketID};ArticleID=$Article{ArticleID}"
                         },
                     );
                 }
@@ -2249,7 +2298,7 @@ sub _ArticleItem {
         # (only show forward on email-external and email-internal
         if (
             $Self->{ConfigObject}->Get('Frontend::Module')->{AgentTicketBounce}
-            && ( !defined $AclAction{AgentTicketBounce} || $AclAction{AgentTicketBounce} )
+            && ( $AclActionLookup{AgentTicketBounce} )
             && $Article{ArticleType} =~ /^(email-external|email-internal)$/i
             )
         {
@@ -2287,7 +2336,7 @@ sub _ArticleItem {
                         Name        => 'Bounce',
                         Class       => 'AsPopup PopupType_TicketAction',
                         Link =>
-                            'Action=AgentTicketBounce;TicketID=$Data{"TicketID"};ArticleID=$Data{"ArticleID"}'
+                            "Action=AgentTicketBounce;TicketID=$Ticket{TicketID};ArticleID=$Article{ArticleID}"
                     },
                 );
                 $Self->{LayoutObject}->Block(
@@ -2301,7 +2350,8 @@ sub _ArticleItem {
     # check if split link should be shown
     if (
         $Self->{ConfigObject}->Get('Frontend::Module')->{AgentTicketPhone}
-        && ( !defined $AclAction{AgentTicketPhone} || $AclAction{AgentTicketPhone} )
+        && ( $AclActionLookup{AgentTicketPhone} )
+        && $Article{ArticleType} !~ /^(chat-external|chat-internal)$/i
         )
     {
         $Self->{LayoutObject}->Block(
@@ -2311,7 +2361,7 @@ sub _ArticleItem {
                 Description => 'Split this article',
                 Name        => 'Split',
                 Link =>
-                    'Action=AgentTicketPhone;TicketID=$Data{"TicketID"};ArticleID=$Data{"ArticleID"};LinkTicketID=$Data{"TicketID"}'
+                    "Action=AgentTicketPhone;TicketID=$Ticket{TicketID};ArticleID=$Article{ArticleID};LinkTicketID=$Ticket{TicketID}"
             },
         );
     }
@@ -2319,7 +2369,7 @@ sub _ArticleItem {
     # check if print link should be shown
     if (
         $Self->{ConfigObject}->Get('Frontend::Module')->{AgentTicketPrint}
-        && ( !defined $AclAction{AgentTicketPrint} || $AclAction{AgentTicketPrint} )
+        && ( $AclActionLookup{AgentTicketPrint} )
         )
     {
         my $OK = $Self->{TicketObject}->TicketPermission(
@@ -2337,7 +2387,7 @@ sub _ArticleItem {
                     Name        => 'Print',
                     Class       => 'AsPopup PopupType_TicketAction',
                     Link =>
-                        'Action=AgentTicketPrint;TicketID=$Data{"TicketID"};ArticleID=$Data{"ArticleID"}'
+                        "Action=AgentTicketPrint;TicketID=$Ticket{TicketID};ArticleID=$Article{ArticleID}"
                 },
             );
         }
@@ -2347,7 +2397,7 @@ sub _ArticleItem {
     if (
         $Self->{ConfigObject}->Get('Frontend::Module')->{AgentTicketPlain}
         && $Self->{ConfigObject}->Get('Ticket::Frontend::PlainView')
-        && ( !defined $AclAction{AgentTicketPlain} || $AclAction{AgentTicketPlain} )
+        && ( $AclActionLookup{AgentTicketPlain} )
         && $Article{ArticleType} =~ /email/i
         )
     {
@@ -2359,7 +2409,7 @@ sub _ArticleItem {
         );
         if ($OK) {
             my $Link
-                = 'Action=AgentTicketPlain;TicketID=$Data{"TicketID"};ArticleID=$Data{"ArticleID"}';
+                = "Action=AgentTicketPlain;TicketID=$Ticket{TicketID};ArticleID=$Article{ArticleID}";
             $Self->{LayoutObject}->Block(
                 Name => 'ArticleMenu',
                 Data => {
@@ -2392,7 +2442,7 @@ sub _ArticleItem {
         my $ArticleIsImportant = $ArticleFlags{Important};
 
         my $Link
-            = 'Action=AgentTicketZoom;Subaction=MarkAsImportant;TicketID=$Data{"TicketID"};ArticleID=$Data{"ArticleID"}';
+            = "Action=AgentTicketZoom;Subaction=MarkAsImportant;TicketID=$Ticket{TicketID};ArticleID=$Article{ArticleID}";
         my $Description = 'Mark';
         if ($ArticleIsImportant) {
             $Description = 'Unmark';
@@ -2406,6 +2456,26 @@ sub _ArticleItem {
                 Description => $Description,
                 Name        => $Description,
                 Link        => $Link,
+            },
+        );
+    }
+
+    # check if internal reply link should be shown
+    if (
+        $Self->{ConfigObject}->Get('Frontend::Module')->{AgentTicketNote}
+        && ( !defined $AclAction{AgentTicketNote} || $AclAction{AgentTicketNote} )
+        && $Article{ArticleType} =~ /^note-(internal|external)$/i
+        )
+    {
+        $Self->{LayoutObject}->Block(
+            Name => 'ArticleMenu',
+            Data => {
+                %Ticket, %Article, %AclAction,
+                Description => 'Reply to note',
+                Name        => 'Reply',
+                Class       => 'AsPopup PopupType_TicketAction',
+                Link =>
+                    "Action=AgentTicketNote;TicketID=$Ticket{TicketID};ReplyToArticle=$Article{ArticleID}"
             },
         );
     }
@@ -2664,51 +2734,60 @@ sub _ArticleItem {
         }
     }
 
-    # show body as html or plain text
-    my $ViewMode = 'BodyHTML';
+    if ( $Article{ArticleType} eq 'chat-external' || $Article{ArticleType} eq 'chat-internal' ) {
 
-    # in case show plain article body (if no html body as attachment exists of if rich
-    # text is not enabled)
-    if ( !$Self->{RichText} || !$Article{AttachmentIDOfHTMLBody} ) {
-        $ViewMode = 'BodyPlain';
-
-        # remember plain body for further processing by ArticleViewModules
-        $Article{BodyPlain} = $Article{Body};
-
-        # html quoting
-        $Article{Body} = $Self->{LayoutObject}->Ascii2Html(
-            NewLine        => $Self->{ConfigObject}->Get('DefaultViewNewLine'),
-            Text           => $Article{Body},
-            VMax           => $Self->{ConfigObject}->Get('DefaultViewLines') || 5000,
-            HTMLResultMode => 1,
-            LinkFeature    => 1,
+        $Self->{LayoutObject}->Block(
+            Name => 'BodyChat',
+            Data => {
+                ChatMessages => $Self->{JSONObject}->Decode(
+                    Data => $Article{Body},
+                ),
+            },
         );
-
-        # do charset check
-        if ( my $CharsetText = $Self->{LayoutObject}->CheckCharset( %Ticket, %Article ) ) {
-            $Article{BodyNote} = $CharsetText;
-        }
-    }
-
-    # security="restricted" may break SSO - disable this feature if requested
-    if ( $Self->{ConfigObject}->Get('DisableMSIFrameSecurityRestricted') ) {
-        $Article{MSSecurityRestricted} = '';
     }
     else {
-        $Article{MSSecurityRestricted} = 'security="restricted"';
-    }
 
-    # show body
-    # Create a reference to an anonymous copy of %Article and pass it to
-    # the LayoutObject, because %Article may be modified afterwards.
-    $Self->{LayoutObject}->Block(
-        Name => $ViewMode,
-        Data => {%Article},
-    );
+        # show body as html or plain text
+        my $ViewMode = 'BodyHTML';
 
-    # restore plain body for further processing by ArticleViewModules
-    if ( !$Self->{RichText} || !$Article{AttachmentIDOfHTMLBody} ) {
-        $Article{Body} = $Article{BodyPlain};
+        # in case show plain article body (if no html body as attachment exists of if rich
+        # text is not enabled)
+        if ( !$Self->{RichText} || !$Article{AttachmentIDOfHTMLBody} ) {
+            $ViewMode = 'BodyPlain';
+
+            # remember plain body for further processing by ArticleViewModules
+            $Article{BodyPlain} = $Article{Body};
+
+            # html quoting
+            $Article{Body} = $Self->{LayoutObject}->Ascii2Html(
+                NewLine        => $Self->{ConfigObject}->Get('DefaultViewNewLine'),
+                Text           => $Article{Body},
+                VMax           => $Self->{ConfigObject}->Get('DefaultViewLines') || 5000,
+                HTMLResultMode => 1,
+                LinkFeature    => 1,
+            );
+        }
+
+        # security="restricted" may break SSO - disable this feature if requested
+        if ( $Self->{ConfigObject}->Get('DisableMSIFrameSecurityRestricted') ) {
+            $Article{MSSecurityRestricted} = '';
+        }
+        else {
+            $Article{MSSecurityRestricted} = 'security="restricted"';
+        }
+
+        # show body
+        # Create a reference to an anonymous copy of %Article and pass it to
+        # the LayoutObject, because %Article may be modified afterwards.
+        $Self->{LayoutObject}->Block(
+            Name => $ViewMode,
+            Data => {%Article},
+        );
+
+        # restore plain body for further processing by ArticleViewModules
+        if ( !$Self->{RichText} || !$Article{AttachmentIDOfHTMLBody} ) {
+            $Article{Body} = $Article{BodyPlain};
+        }
     }
 
     return 1;
