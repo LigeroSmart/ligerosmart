@@ -18,13 +18,13 @@ our @ObjectDependencies = (
     'Kernel::Config',
     'Kernel::System::CheckItem',
     'Kernel::System::DB',
-    'Kernel::System::Log',
-    'Kernel::System::Valid',
 # ---
 # ITSM
 # ---
     'Kernel::System::GeneralCatalog',
 # ---
+    'Kernel::System::Log',
+    'Kernel::System::Valid',
 );
 
 =head1 NAME

@@ -21,9 +21,6 @@ our @ObjectDependencies = (
     'Kernel::System::Cache',
     'Kernel::System::CheckItem',
     'Kernel::System::DB',
-    'Kernel::System::Log',
-    'Kernel::System::Main',
-    'Kernel::System::Valid',
 # ---
 # ITSM
 # ---
@@ -31,6 +28,9 @@ our @ObjectDependencies = (
     'Kernel::System::GeneralCatalog',
     'Kernel::System::LinkObject',
 # ---
+    'Kernel::System::Log',
+    'Kernel::System::Main',
+    'Kernel::System::Valid',
 );
 
 =head1 NAME
