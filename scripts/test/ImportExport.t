@@ -27,7 +27,7 @@ my @UserIDs;
 
     # disable email checks to create new user
     my $CheckEmailAddressesOrg =
-    $ConfigObject->Get('CheckEmailAddresses') || 1;
+        $ConfigObject->Get('CheckEmailAddresses') || 1;
 
     $ConfigObject->Set(
         Key   => 'CheckEmailAddresses',
@@ -559,7 +559,7 @@ my $ObjectList1TestList = {
 
 # get original object list
 my $ObjectListOrg =
-$ConfigObject->Get('ImportExport::ObjectBackendRegistration');
+    $ConfigObject->Get('ImportExport::ObjectBackendRegistration');
 
 # set test list
 
@@ -622,7 +622,7 @@ my $FormatList1TestList = {
 
 # get original format list
 my $FormatListOrg =
-$ConfigObject->Get('ImportExport::FormatBackendRegistration');
+    $ConfigObject->Get('ImportExport::FormatBackendRegistration');
 
 # set test list
 
