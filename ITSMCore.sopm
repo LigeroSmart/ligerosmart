@@ -344,20 +344,10 @@
         # create the package name
         my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
 
-        # The code module has just recently been copied to it's location in the file system.
-        # In a persistent Perl environment an old version of the module might still be loaded,
-        # as watchdogs like Apache2::Reload haven't had a chance to reload it.
-        # So we need to make sure that the new version is being loaded.
-        # Kernel::System::Main::Require() checks the relative file path, so we need to remove that from %INC.
-        # This is only needed in persistent Perl environment, but does no harm in a CGI environment.
-        my $CodeModulePath = $CodeModule;
-        $CodeModulePath =~ s/::/\//g;
-        $CodeModulePath .= '.pm';
-        delete $INC{$CodeModulePath};
-
         # discard internally stored object, so that the next access to object creates them newly
         $Kernel::OM->ObjectsDiscard(
-            Objects => [$CodeModule],
+            Objects            => [$CodeModule],
+            ForcePackageReload => 1,
         );
 
         $Kernel::OM->Get($CodeModule)->CodeUpgradeFromLowerThan_3_2_91();
@@ -368,20 +358,10 @@
         # create the package name
         my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
 
-        # The code module has just recently been copied to it's location in the file system.
-        # In a persistent Perl environment an old version of the module might still be loaded,
-        # as watchdogs like Apache2::Reload haven't had a chance to reload it.
-        # So we need to make sure that the new version is being loaded.
-        # Kernel::System::Main::Require() checks the relative file path, so we need to remove that from %INC.
-        # This is only needed in persistent Perl environment, but does no harm in a CGI environment.
-        my $CodeModulePath = $CodeModule;
-        $CodeModulePath =~ s/::/\//g;
-        $CodeModulePath .= '.pm';
-        delete $INC{$CodeModulePath};
-
         # discard internally stored object, so that the next access to object creates them newly
         $Kernel::OM->ObjectsDiscard(
-            Objects => [$CodeModule],
+            Objects            => [$CodeModule],
+            ForcePackageReload => 1,
         );
 
         $Kernel::OM->Get($CodeModule)->CodeUpgrade();
