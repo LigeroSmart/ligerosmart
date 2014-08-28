@@ -163,25 +163,16 @@
         <TableDrop Name="imexport_mapping_format"/>
         <TableDrop Name="imexport_search"/>
     </DatabaseUninstall>
+    <!-- It is IMPORTANT that this CodeUpgrade (Version="2.0.3") comes BEFORE the regular CodeUpgrade block without any version number! -->
     <CodeUpgrade Type="post" Version="2.0.3"><![CDATA[
 
         # create the package name
         my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
 
-        # The code module has just recently been copied to it's location in the file system.
-        # In a persistent Perl environment an old version of the module might still be loaded,
-        # as watchdogs like Apache2::Reload haven't had a chance to reload it.
-        # So we need to make sure that the new version is being loaded.
-        # Kernel::System::Main::Require() checks the relative file path, so we need to remove that from %INC.
-        # This is only needed in persistent Perl environment, but does no harm in a CGI environment.
-        my $CodeModulePath = $CodeModule;
-        $CodeModulePath =~ s/::/\//g;
-        $CodeModulePath .= '.pm';
-        delete $INC{$CodeModulePath};
-
         # discard internally stored object, so that the next access to object creates them newly
         $Kernel::OM->ObjectsDiscard(
-            Objects => [$CodeModule],
+            Objects            => [$CodeModule],
+            ForcePackageReload => 1,
         );
 
         $Kernel::OM->Get($CodeModule)->CodeUpgradeFromBefore_2_0_3();
