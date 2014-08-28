@@ -225,7 +225,9 @@ sub TableCreateComplex {
             {
                 Type      => 'Link',
                 Content   => $Service->{Name},
-                Link      => '$Env{"Baselink"}Action=AgentITSMServiceZoom;ServiceID=' . $ServiceID,
+                Link      => $Self->{LayoutObject}->{Baselink}
+                    . 'Action=AgentITSMServiceZoom;ServiceID='
+                    . $ServiceID,
                 Title     => "Service: $Service->{Name}",
                 MaxLength => 70,
             },
