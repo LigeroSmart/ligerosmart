@@ -1,0 +1,48 @@
+# --
+# AgentITSMTemplateEditContent.tt - provides HTML form for AgentITSMTemplateEditContent
+# Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+
+[% RenderBlockStart("EditContentDialog") %]
+<fieldset class="TableLike W300px">
+    <label>[% Translate("Name") | html %]:</label>
+    <p class="Value">
+        [% Data.Name | html %]
+    </p>
+    <div class="Clear"></div>
+
+    <label>[% Translate("Type") | html %]:</label>
+    <p class="Value">
+        [% Translate(Data.Type) | html %]
+    </p>
+    <div class="Clear"></div>
+
+    <label>[% Translate("Comment") | html %]:</label>
+    <p class="Value">
+        [% Data.Comment | truncate(40) | html %]
+    </p>
+    <div class="Clear"></div>
+</fieldset>
+
+[% RenderBlockStart("ChangeTemplate") %]
+<p class="SpacingTop">
+    [% Translate("You can create a new change from this template, edit it and then save it again under the same name.") | html %]<br/>
+    [% Translate("The new change will then be deleted automatically after it has been saved.") | html %]
+</p>
+[% RenderBlockEnd("ChangeTemplate") %]
+[% RenderBlockStart("WorkOrderTemplate") %]
+<p class="SpacingTop">
+    [% Translate("You can create a new workorder from this template, edit it and then save it again as under the same name.") | html %]<br/>
+    [% Translate("In order to do this, a new dummy change will be created that contains the workorder from the template.") | html %]<br/>
+    [% Translate("The new change and the new workorder will then be deleted automatically after the workorder has been saved.") | html %]<br/>
+</p>
+[% RenderBlockEnd("WorkOrderTemplate") %]
+
+<p class="SpacingTop Center">
+    [% Translate("Do you really want to do this?") | html %]
+</p>
+[% RenderBlockEnd("EditContentDialog") %]

@@ -775,7 +775,7 @@
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::ToolBarChangeManager</Item>
                 <Item Key="CssClass">ChangeManager</Item>
-                <Item Key="Icon">icon-male</Item>
+                <Item Key="Icon">fa fa-male</Item>
                 <Item Key="Priority">1000610</Item>
             </Hash>
         </Setting>
@@ -788,7 +788,7 @@
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::ToolBarMyChanges</Item>
                 <Item Key="CssClass">MyChanges</Item>
-                <Item Key="Icon">icon-retweet</Item>
+                <Item Key="Icon">fa fa-retweet</Item>
                 <Item Key="Priority">1000630</Item>
             </Hash>
         </Setting>
@@ -801,7 +801,7 @@
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::ToolBarMyWorkOrders</Item>
                 <Item Key="CssClass">MyWorkOrders</Item>
-                <Item Key="Icon">icon-tasks</Item>
+                <Item Key="Icon">fa fa-tasks</Item>
                 <Item Key="Priority">1000640</Item>
             </Hash>
         </Setting>
@@ -814,7 +814,7 @@
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::ToolBarMyCAB</Item>
                 <Item Key="CssClass">MyCABs</Item>
-                <Item Key="Icon">icon-group</Item>
+                <Item Key="Icon">fa fa-group</Item>
                 <Item Key="Priority">1000620</Item>
             </Hash>
         </Setting>
@@ -857,7 +857,7 @@
                 <Item Key="Name">Create Change</Item>
                 <Item Key="Description">Create a change from this ticket!</Item>
                 <Item Key="Action">AgentITSMChangeAdd</Item>
-                <Item Key="Link">Action=AgentITSMChangeAdd;TicketID=$QData{"TicketID"}</Item>
+                <Item Key="Link">Action=AgentITSMChangeAdd;TicketID=[% Data.TicketID | html %]</Item>
             </Hash>
         </Setting>
     </ConfigItem>
@@ -871,7 +871,7 @@
                 <Item Key="Name">Create Change (from template)</Item>
                 <Item Key="Description">Create a change (from template) from this ticket!</Item>
                 <Item Key="Action">AgentITSMChangeAddFromTemplate</Item>
-                <Item Key="Link">Action=AgentITSMChangeAddFromTemplate;TicketID=$QData{"TicketID"}</Item>
+                <Item Key="Link">Action=AgentITSMChangeAddFromTemplate;TicketID=[% Data.TicketID | html %]</Item>
             </Hash>
         </Setting>
     </ConfigItem>
@@ -885,7 +885,7 @@
                 <Item Key="Name">Back</Item>
                 <Item Key="Description">Back</Item>
                 <Item Key="Action"></Item>
-                <Item Key="Link">$Env{"LastScreenChanges"}</Item>
+                <Item Key="Link">[% Env("LastScreenChanges") %]</Item>
                 <Item Key="Target">Back</Item>
             </Hash>
         </Setting>
@@ -900,7 +900,7 @@
                 <Item Key="Name">History</Item>
                 <Item Key="Description">History</Item>
                 <Item Key="Action">AgentITSMChangeHistory</Item>
-                <Item Key="Link">Action=AgentITSMChangeHistory;ChangeID=$QData{"ChangeID"}</Item>
+                <Item Key="Link">Action=AgentITSMChangeHistory;ChangeID=[% Data.ChangeID | html %]</Item>
                 <Item Key="Target">PopUp</Item>
             </Hash>
         </Setting>
@@ -915,7 +915,7 @@
                 <Item Key="Name">Print</Item>
                 <Item Key="Description">Print the change</Item>
                 <Item Key="Action">AgentITSMChangePrint</Item>
-                <Item Key="Link">Action=AgentITSMChangePrint;ChangeID=$QData{"ChangeID"}</Item>
+                <Item Key="Link">Action=AgentITSMChangePrint;ChangeID=[% Data.ChangeID | html %]</Item>
                 <Item Key="LinkParam">target="print_change"</Item>
                 <Item Key="Target">PopUp</Item>
             </Hash>
@@ -931,7 +931,7 @@
                 <Item Key="Name">Edit</Item>
                 <Item Key="Description">Edit the change</Item>
                 <Item Key="Action">AgentITSMChangeEdit</Item>
-                <Item Key="Link">Action=AgentITSMChangeEdit;ChangeID=$QData{"ChangeID"}</Item>
+                <Item Key="Link">Action=AgentITSMChangeEdit;ChangeID=[% Data.ChangeID | html %]</Item>
                 <Item Key="Target">PopUp</Item>
             </Hash>
         </Setting>
@@ -946,7 +946,7 @@
                 <Item Key="Name">Involved Persons</Item>
                 <Item Key="Description">Change involved persons of the change</Item>
                 <Item Key="Action">AgentITSMChangeInvolvedPersons</Item>
-                <Item Key="Link">Action=AgentITSMChangeInvolvedPersons;ChangeID=$QData{"ChangeID"}</Item>
+                <Item Key="Link">Action=AgentITSMChangeInvolvedPersons;ChangeID=[% Data.ChangeID | html %]</Item>
                 <Item Key="Target">PopUp</Item>
             </Hash>
         </Setting>
@@ -961,7 +961,7 @@
                 <Item Key="Name">Add Workorder</Item>
                 <Item Key="Description">Add a workorder to the change</Item>
                 <Item Key="Action">AgentITSMWorkOrderAdd</Item>
-                <Item Key="Link">Action=AgentITSMWorkOrderAdd;ChangeID=$QData{"ChangeID"}</Item>
+                <Item Key="Link">Action=AgentITSMWorkOrderAdd;ChangeID=[% Data.ChangeID | html %]</Item>
                 <Item Key="Target">PopUp</Item>
             </Hash>
         </Setting>
@@ -976,7 +976,7 @@
                 <Item Key="Name">Add Workorder (from template)</Item>
                 <Item Key="Description">Add a workorder (from template) to the change</Item>
                 <Item Key="Action">AgentITSMWorkOrderAddFromTemplate</Item>
-                <Item Key="Link">Action=AgentITSMWorkOrderAddFromTemplate;ChangeID=$QData{"ChangeID"}</Item>
+                <Item Key="Link">Action=AgentITSMWorkOrderAddFromTemplate;ChangeID=[% Data.ChangeID | html %]</Item>
                 <Item Key="Target">PopUp</Item>
             </Hash>
         </Setting>
@@ -991,7 +991,7 @@
                 <Item Key="Name">Conditions</Item>
                 <Item Key="Description">Edit the conditions of the change</Item>
                 <Item Key="Action">AgentITSMChangeCondition</Item>
-                <Item Key="Link">Action=AgentITSMChangeCondition;ChangeID=$QData{"ChangeID"}</Item>
+                <Item Key="Link">Action=AgentITSMChangeCondition;ChangeID=[% Data.ChangeID | html %]</Item>
                 <Item Key="Target">PopUp</Item>
             </Hash>
         </Setting>
@@ -1006,7 +1006,7 @@
                 <Item Key="Name">Link</Item>
                 <Item Key="Description">Link another object to the change</Item>
                 <Item Key="Action">AgentLinkObject</Item>
-                <Item Key="Link">Action=AgentLinkObject;SourceObject=ITSMChange;SourceKey=$QData{"ChangeID"}</Item>
+                <Item Key="Link">Action=AgentLinkObject;SourceObject=ITSMChange;SourceKey=[% Data.ChangeID | html %]</Item>
                 <Item Key="Target">PopUp</Item>
             </Hash>
         </Setting>
@@ -1021,7 +1021,7 @@
                 <Item Key="Name">Move Time Slot</Item>
                 <Item Key="Description">Move all workorders in time</Item>
                 <Item Key="Action">AgentITSMChangeTimeSlot</Item>
-                <Item Key="Link">Action=AgentITSMChangeTimeSlot;ChangeID=$QData{"ChangeID"}</Item>
+                <Item Key="Link">Action=AgentITSMChangeTimeSlot;ChangeID=[% Data.ChangeID | html %]</Item>
                 <Item Key="Target">PopUp</Item>
             </Hash>
         </Setting>
@@ -1036,7 +1036,7 @@
                 <Item Key="Name">Template</Item>
                 <Item Key="Description">Save change as a template</Item>
                 <Item Key="Action">AgentITSMChangeTemplate</Item>
-                <Item Key="Link">Action=AgentITSMChangeTemplate;ChangeID=$QData{"ChangeID"}</Item>
+                <Item Key="Link">Action=AgentITSMChangeTemplate;ChangeID=[% Data.ChangeID | html %]</Item>
                 <Item Key="Target">PopUp</Item>
             </Hash>
         </Setting>
@@ -1051,12 +1051,12 @@
                 <Item Key="Name">Delete</Item>
                 <Item Key="Description">Delete Change</Item>
                 <Item Key="Action">AgentITSMChangeDelete</Item>
-                <Item Key="Link">Action=AgentITSMChangeDelete;ChangeID=$QData{"ChangeID"}</Item>
+                <Item Key="Link">Action=AgentITSMChangeDelete;ChangeID=[% Data.ChangeID | html %]</Item>
                 <Item Key="Target">ConfirmationDialog</Item>
-                <Item Key="ElementSelector">#Menu$QData{"MenuID"}</Item>
-                <Item Key="DialogContentQueryString">Action=AgentITSMChangeDelete;ChangeID=$QData{"ChangeID"}</Item>
-                <Item Key="ConfirmedActionQueryString">Action=AgentITSMChangeDelete;Subaction=ChangeDelete;ChangeID=$QData{"ChangeID"}</Item>
-                <Item Key="DialogTitle">$Text{"Delete"} $Config{"ITSMChange::Hook"} $QData{"ChangeNumber"}</Item>
+                <Item Key="ElementSelector">#Menu[% Data.MenuID | html %]</Item>
+                <Item Key="DialogContentQueryString">Action=AgentITSMChangeDelete;ChangeID=[% Data.ChangeID | html %]</Item>
+                <Item Key="ConfirmedActionQueryString">Action=AgentITSMChangeDelete;Subaction=ChangeDelete;ChangeID=[% Data.ChangeID | html %]</Item>
+                <Item Key="DialogTitle">[% Translate("Delete") | html %] [% Config("ITSMChange::Hook") %] [% Data.ChangeNumber | html %]</Item>
             </Hash>
         </Setting>
     </ConfigItem>
@@ -1070,12 +1070,12 @@
                 <Item Key="Name">Reset</Item>
                 <Item Key="Description">Reset change and its workorders</Item>
                 <Item Key="Action">AgentITSMChangeReset</Item>
-                <Item Key="Link">Action=AgentITSMChangeReset;ChangeID=$QData{"ChangeID"}</Item>
+                <Item Key="Link">Action=AgentITSMChangeReset;ChangeID=[% Data.ChangeID | html %]</Item>
                 <Item Key="Target">ConfirmationDialog</Item>
-                <Item Key="ElementSelector">#Menu$QData{"MenuID"}</Item>
-                <Item Key="DialogContentQueryString">Action=AgentITSMChangeReset;ChangeID=$QData{"ChangeID"}</Item>
-                <Item Key="ConfirmedActionQueryString">Action=AgentITSMChangeReset;Subaction=Reset;ChangeID=$QData{"ChangeID"}</Item>
-                <Item Key="DialogTitle">$Text{"Reset"} $Config{"ITSMChange::Hook"} $QData{"ChangeNumber"}</Item>
+                <Item Key="ElementSelector">#Menu[% Data.MenuID | html %]</Item>
+                <Item Key="DialogContentQueryString">Action=AgentITSMChangeReset;ChangeID=[% Data.ChangeID | html %]</Item>
+                <Item Key="ConfirmedActionQueryString">Action=AgentITSMChangeReset;Subaction=Reset;ChangeID=[% Data.ChangeID | html %]</Item>
+                <Item Key="DialogTitle">[% Translate("Reset") | html %] [% Config("ITSMChange::Hook") %] [% Data.ChangeNumber | html %]</Item>
             </Hash>
         </Setting>
     </ConfigItem>
@@ -1089,7 +1089,7 @@
                 <Item Key="Name">Back</Item>
                 <Item Key="Description">Back</Item>
                 <Item Key="Action"></Item>
-                <Item Key="Link">$Env{"LastScreenWorkOrders"}</Item>
+                <Item Key="Link">[% Env("LastScreenWorkOrders") %]</Item>
                 <Item Key="Target">Back</Item>
             </Hash>
         </Setting>
@@ -1104,7 +1104,7 @@
                 <Item Key="Name">History</Item>
                 <Item Key="Description">History</Item>
                 <Item Key="Action">AgentITSMWorkOrderHistory</Item>
-                <Item Key="Link">Action=AgentITSMWorkOrderHistory;WorkOrderID=$QData{"WorkOrderID"}</Item>
+                <Item Key="Link">Action=AgentITSMWorkOrderHistory;WorkOrderID=[% Data.WorkOrderID | html %]</Item>
                 <Item Key="Target">PopUp</Item>
             </Hash>
         </Setting>
@@ -1119,7 +1119,7 @@
                 <Item Key="Name">Print</Item>
                 <Item Key="Description">Print the workorder</Item>
                 <Item Key="Action">AgentITSMChangePrint</Item>
-                <Item Key="Link">Action=AgentITSMChangePrint;WorkOrderID=$QData{"WorkOrderID"}</Item>
+                <Item Key="Link">Action=AgentITSMChangePrint;WorkOrderID=[% Data.WorkOrderID | html %]</Item>
                 <Item Key="Target">PopUp</Item>
             </Hash>
         </Setting>
@@ -1134,7 +1134,7 @@
                 <Item Key="Name">Edit</Item>
                 <Item Key="Description">Edit the workorder</Item>
                 <Item Key="Action">AgentITSMWorkOrderEdit</Item>
-                <Item Key="Link">Action=AgentITSMWorkOrderEdit;WorkOrderID=$QData{"WorkOrderID"}</Item>
+                <Item Key="Link">Action=AgentITSMWorkOrderEdit;WorkOrderID=[% Data.WorkOrderID | html %]</Item>
                 <Item Key="Target">PopUp</Item>
             </Hash>
         </Setting>
@@ -1149,12 +1149,12 @@
                 <Item Key="Name">Take Workorder</Item>
                 <Item Key="Description">Take the workorder</Item>
                 <Item Key="Action">AgentITSMWorkOrderTake</Item>
-                <Item Key="Link">Action=AgentITSMWorkOrderTake;WorkOrderID=$QData{"WorkOrderID"}</Item>
+                <Item Key="Link">Action=AgentITSMWorkOrderTake;WorkOrderID=[% Data.WorkOrderID | html %]</Item>
                 <Item Key="Target">ConfirmationDialog</Item>
-                <Item Key="ElementSelector">#Menu$QData{"MenuID"}</Item>
-                <Item Key="DialogContentQueryString">Action=AgentITSMWorkOrderTake;WorkOrderID=$QData{"WorkOrderID"}</Item>
-                <Item Key="ConfirmedActionQueryString">Action=AgentITSMWorkOrderTake;Subaction=WorkOrderTake;WorkOrderID=$QData{"WorkOrderID"}</Item>
-                <Item Key="DialogTitle">$Text{"Take Workorder"}: $Config{"ITSMWorkOrder::Hook"} $QData{"ChangeNumber"} - $QData{"WorkOrderNumber"}</Item>
+                <Item Key="ElementSelector">#Menu[% Data.MenuID | html %]</Item>
+                <Item Key="DialogContentQueryString">Action=AgentITSMWorkOrderTake;WorkOrderID=[% Data.WorkOrderID | html %]</Item>
+                <Item Key="ConfirmedActionQueryString">Action=AgentITSMWorkOrderTake;Subaction=WorkOrderTake;WorkOrderID=[% Data.WorkOrderID | html %]</Item>
+                <Item Key="DialogTitle">[% Translate("Take Workorder") | html %]: [% Config("ITSMWorkOrder::Hook") %] [% Data.ChangeNumber | html %] - [% Data.WorkOrderNumber | html %]</Item>
             </Hash>
         </Setting>
     </ConfigItem>
@@ -1168,7 +1168,7 @@
                 <Item Key="Name">WorkOrderAgent</Item>
                 <Item Key="Description">Set the agent for the workorder</Item>
                 <Item Key="Action">AgentITSMWorkOrderAgent</Item>
-                <Item Key="Link">Action=AgentITSMWorkOrderAgent;WorkOrderID=$QData{"WorkOrderID"}</Item>
+                <Item Key="Link">Action=AgentITSMWorkOrderAgent;WorkOrderID=[% Data.WorkOrderID | html %]</Item>
                 <Item Key="Target">PopUp</Item>
             </Hash>
         </Setting>
@@ -1183,7 +1183,7 @@
                 <Item Key="Name">Report</Item>
                 <Item Key="Description">Report</Item>
                 <Item Key="Action">AgentITSMWorkOrderReport</Item>
-                <Item Key="Link">Action=AgentITSMWorkOrderReport;WorkOrderID=$QData{"WorkOrderID"}</Item>
+                <Item Key="Link">Action=AgentITSMWorkOrderReport;WorkOrderID=[% Data.WorkOrderID | html %]</Item>
                 <Item Key="Target">PopUp</Item>
             </Hash>
         </Setting>
@@ -1198,7 +1198,7 @@
                 <Item Key="Name">Link</Item>
                 <Item Key="Description">Link another object to the workorder</Item>
                 <Item Key="Action">AgentLinkObject</Item>
-                <Item Key="Link">Action=AgentLinkObject;SourceObject=ITSMWorkOrder;SourceKey=$QData{"WorkOrderID"}</Item>
+                <Item Key="Link">Action=AgentLinkObject;SourceObject=ITSMWorkOrder;SourceKey=[% Data.WorkOrderID | html %]</Item>
                 <Item Key="Target">PopUp</Item>
             </Hash>
         </Setting>
@@ -1213,7 +1213,7 @@
                 <Item Key="Name">Template</Item>
                 <Item Key="Description">Save workorder as a template</Item>
                 <Item Key="Action">AgentITSMWorkOrderTemplate</Item>
-                <Item Key="Link">Action=AgentITSMWorkOrderTemplate;WorkOrderID=$QData{"WorkOrderID"}</Item>
+                <Item Key="Link">Action=AgentITSMWorkOrderTemplate;WorkOrderID=[% Data.WorkOrderID | html %]</Item>
                 <Item Key="Target">PopUp</Item>
             </Hash>
         </Setting>
@@ -1228,12 +1228,12 @@
                 <Item Key="Name">Delete</Item>
                 <Item Key="Description">Delete Workorder</Item>
                 <Item Key="Action">AgentITSMWorkOrderDelete</Item>
-                <Item Key="Link">Action=AgentITSMWorkOrderDelete;WorkOrderID=$QData{"WorkOrderID"}</Item>
+                <Item Key="Link">Action=AgentITSMWorkOrderDelete;WorkOrderID=[% Data.WorkOrderID | html %]</Item>
                 <Item Key="Target">ConfirmationDialog</Item>
-                <Item Key="ElementSelector">#Menu$QData{"MenuID"}</Item>
-                <Item Key="DialogContentQueryString">Action=AgentITSMWorkOrderDelete;WorkOrderID=$QData{"WorkOrderID"}</Item>
-                <Item Key="ConfirmedActionQueryString">Action=AgentITSMWorkOrderDelete;Subaction=WorkOrderDelete;WorkOrderID=$QData{"WorkOrderID"}</Item>
-                <Item Key="DialogTitle">$Text{"Delete"} $Config{"ITSMWorkOrder::Hook"} $QData{"ChangeNumber"}-$QData{"WorkOrderNumber"}</Item>
+                <Item Key="ElementSelector">#Menu[% Data.MenuID | html %]</Item>
+                <Item Key="DialogContentQueryString">Action=AgentITSMWorkOrderDelete;WorkOrderID=[% Data.WorkOrderID | html %]</Item>
+                <Item Key="ConfirmedActionQueryString">Action=AgentITSMWorkOrderDelete;Subaction=WorkOrderDelete;WorkOrderID=[% Data.WorkOrderID | html %]</Item>
+                <Item Key="DialogTitle">[% Translate("Delete") | html %] [% Config("ITSMWorkOrder::Hook") %] [% Data.ChangeNumber | html %]-[% Data.WorkOrderNumber | html %]</Item>
             </Hash>
         </Setting>
     </ConfigItem>

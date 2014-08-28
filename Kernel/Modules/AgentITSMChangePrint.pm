@@ -620,7 +620,7 @@ sub _PrepareAndAddInfoRow {
 
         # format the time value
         $Value = $Self->{LayoutObject}->Output(
-            Template => qq(\$TimeLong{"\$Data{"$Attribute"}"}),
+            Template => '[% Data.' . $Attribute . ' | Localize("TimeLong") %]',
             Data     => $Data,
         );
     }

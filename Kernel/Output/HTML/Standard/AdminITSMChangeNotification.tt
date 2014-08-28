@@ -1,0 +1,145 @@
+# --
+# AdminITSMChangeNotification.tt - provides HTML form for AdminState
+# Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+
+[% RenderBlockStart("Overview") %]
+<div class="MainBox ARIARoleMain LayoutFixedSidebar SidebarFirst">
+    <h1>[% Translate("ITSM ChangeManagement Notification Management") | html %]</h1>
+
+    <div class="SidebarColumn">
+
+[% RenderBlockStart("ActionList") %]
+        <div class="WidgetSimple">
+            <div class="Header">
+                <h2>[% Translate("Actions") | html %]</h2>
+            </div>
+            <div class="Content">
+                <ul class="ActionList">
+[% RenderBlockStart("ActionOverview") %]
+                    <li>
+                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %]" class="CallForAction"><span>[% Translate("Go to overview") | html %]</span></a>
+                    </li>
+[% RenderBlockEnd("ActionOverview") %]
+[% RenderBlockStart("ActionAdd") %]
+                    <li>
+                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Add" class="CallForAction Plus"><span>[% Translate("Add Notification Rule") | html %]</span></a>
+                    </li>
+[% RenderBlockEnd("ActionAdd") %]
+                </ul>
+            </div>
+        </div>
+[% RenderBlockEnd("ActionList") %]
+    </div>
+
+    <div class="ContentColumn">
+        <div class="WidgetSimple">
+[% RenderBlockStart("OverviewResult") %]
+            <div class="Header">
+                <h2>[% Translate("List") | html %]</h2>
+            </div>
+            <div class="Content">
+
+                <table class="DataTable">
+                    <thead>
+                        <tr>
+                            <th>[% Translate("Name") | html %]</th>
+                            <th>[% Translate("Event") | html %]</th>
+                            <th>[% Translate("Attribute") | html %]</th>
+                            <th>[% Translate("Rule") | html %]</th>
+                            <th>[% Translate("Recipients") | html %]</th>
+#                            <th>[% Translate("Comment") | html %]</th>
+                            <th>[% Translate("valid") | html %]/[% Translate("invalid") | html %]</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+[% RenderBlockStart("OverviewResultRow") %]
+                        <tr>
+                            <td><a class="AsBlock" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Change;ID=[% Data.ID | uri %]">[% Data.Name | html %]</a></td>
+                            <td>[% Translate(Data.Event) | html %]</td>
+                            <td>[% Data.Attribute | html %]</td>
+                            <td>[% Data.Rule | html %]</td>
+                            <td>[% Data.Recipients | html %]</td>
+#                            <td>[% Data.Comment | truncate(20) | html %]</td>
+                            <td>[% Translate(Data.Valid) | html %]</td>
+                        </tr>
+[% RenderBlockEnd("OverviewResultRow") %]
+                    </tbody>
+                </table>
+            </div>
+[% RenderBlockEnd("OverviewResult") %]
+[% RenderBlockStart("OverviewUpdate") %]
+
+            <div class="Header">
+                <h2>[% Translate(Data.ActionLabel) | html %]</h2>
+            </div>
+            <div class="Content">
+
+                <form action="[% Env("CGIHandle") %]" method="post" class="Validate">
+                    <input type="hidden" name="Action" value="[% Env("Action") %]"/>
+                    <input type="hidden" name="Subaction" value="[% Data.Action | uri %]Action"/>
+                    <input type="hidden" name="ID" value="[% Data.ID | html %]"/>
+                    <fieldset class="TableLike">
+                        <label for="Name">[% Translate("Name") | html %]: </label>
+                        <div class="Field">
+                            <input type="text" id="Name" name="Name" class="Validate_Required W50pc [% Data.NameInvalid | html %]" value="[% Data.Name | html %]" maxlength="50"/>
+                            <div id="NameError" class="TooltipErrorMessage"><p>[% Translate("A notification should have a name!") | html %]</p></div>
+                            <div id="NameServerError" class="TooltipErrorMessage"><p>[% Translate("Name is required.") | html %]</p></div>
+                        </div>
+                        <div class="Clear"></div>
+
+                        <label for="EventID">[% Translate("Event") | html %]: </label>
+                        <div class="Field">
+                            [% Data.EventOption %]
+                        </div>
+                        <div class="Clear"></div>
+
+                        <label for="Attribute">[% Translate("Attribute") | html %]:</label>
+                        <div class="Field">
+                            <input type="text" id="Attribute" name="Attribute" value="[% Data.Attribute | html %]" class="W50pc" maxlength="50"/>
+                        </div>
+                        <div class="Clear"></div>
+
+                        <label for="Rule">[% Translate("Rule") | html %]:</label>
+                        <div class="Field">
+                            <input type="text" id="Rule" name="Rule" value="[% Data.Rule | html %]" class="W50pc" maxlength="50"/>
+                        </div>
+                        <div class="Clear"></div>
+
+                        <label for="RecipientIDs">[% Translate("Recipients") | html %]:</label>
+                        <div class="Field">
+                            [% Data.RecipientOption %]
+                        </div>
+                        <div class="Clear"></div>
+
+                        <label for="ValidID">[% Translate("Validity") | html %]:</label>
+                        <div class="Field">
+                            [% Data.ValidOption %]
+                        </div>
+                        <div class="Clear"></div>
+
+                        <label for="Comment">[% Translate("Comment") | html %]:</label>
+                        <div class="Field">
+                            <input type="text" id="Comment" name="Comment" value="[% Data.Comment | html %]" class="W50pc" maxlength="150"/>
+                        </div>
+                        <div class="Clear"></div>
+
+                        <div class="Field SpacingTop">
+                            <button class="Primary" type="submit" value="[% Translate("Submit") | html %]">[% Translate("Submit") | html %]</button>
+                            [% Translate("or") | html %]
+                            <a href="[% Env("Baselink") %]Action=[% Env("Action") %]">[% Translate("Cancel") | html %]</a>
+                        </div>
+                        <div class="Clear"></div>
+                    </fieldset>
+                </form>
+            </div>
+[% RenderBlockEnd("OverviewUpdate") %]
+        </div>
+    </div>
+    <div class="Clear"></div>
+</div>
+[% RenderBlockEnd("Overview") %]

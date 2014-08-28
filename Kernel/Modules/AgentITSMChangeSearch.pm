@@ -726,12 +726,12 @@ sub Run {
                     );
 
                     my $PlannedStart = $Self->{LayoutObject}->Output(
-                        Template => '$TimeLong{"$Data{"PlannedStartTime"}"}',
+                        Template => '[% Data.PlannedStartTime | Localize("TimeLong") %]',
                         Data     => \%Info,
                     );
 
                     my $PlannedEnd = $Self->{LayoutObject}->Output(
-                        Template => '$TimeLong{"$Data{"PlannedEndTime"}"}',
+                        Template => '[% Data.PlannedEndTime | Localize("TimeLong") %]',
                         Data     => \%Info,
                     );
 
