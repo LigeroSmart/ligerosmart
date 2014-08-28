@@ -1502,7 +1502,6 @@
             </Option>
         </Setting>
     </ConfigItem>
-
     <ConfigItem Name="DynamicFields::ObjectType###ITSMChange" Required="0" Valid="1">
         <Description Translatable="1">DynamicField object registration.</Description>
         <Group>ITSM Change Management</Group>
@@ -1511,6 +1510,7 @@
             <Hash>
                 <Item Key="DisplayName" Translatable="1">ITSMChange</Item>
                 <Item Key="Module">Kernel::System::DynamicField::ObjectType::ITSMChange</Item>
+                <Item Key="Prio">100</Item>
             </Hash>
         </Setting>
     </ConfigItem>
@@ -1522,10 +1522,10 @@
             <Hash>
                 <Item Key="DisplayName" Translatable="1">ITSMWorkOrder</Item>
                 <Item Key="Module">Kernel::System::DynamicField::ObjectType::ITSMWorkOrder</Item>
+                <Item Key="Prio">110</Item>
             </Hash>
         </Setting>
     </ConfigItem>
-
     <ConfigItem Name="ITSMChange::CacheTTL" Required="1" Valid="1">
         <Description Translatable="1">Cache time in minutes for the change management. Default: 5 days (7200 minutes).</Description>
         <Group>ITSM Change Management</Group>
