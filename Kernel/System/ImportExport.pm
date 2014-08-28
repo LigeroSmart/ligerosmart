@@ -542,9 +542,7 @@ sub ObjectAttributesGet {
     }
 
     # load backend
-    my $Backend = $Self->_LoadBackend(
-        Module => "Kernel::System::ImportExport::ObjectBackend::$TemplateData->{Object}",
-    );
+    my $Backend = $Kernel::OM->Get( 'Kernel::System::ImportExport::ObjectBackend::' . $TemplateData->{Object} );
 
     return if !$Backend;
 
@@ -779,9 +777,7 @@ sub FormatAttributesGet {
     }
 
     # load backend
-    my $Backend = $Self->_LoadBackend(
-        Module => "Kernel::System::ImportExport::FormatBackend::$TemplateData->{Format}",
-    );
+    my $Backend = $Kernel::OM->Get( 'Kernel::System::ImportExport::FormatBackend::' . $TemplateData->{Format} );
 
     return if !$Backend;
 
@@ -1353,9 +1349,7 @@ sub MappingObjectAttributesGet {
     }
 
     # load backend
-    my $Backend = $Self->_LoadBackend(
-        Module => "Kernel::System::ImportExport::ObjectBackend::$TemplateData->{Object}",
-    );
+    my $Backend = $Kernel::OM->Get( 'Kernel::System::ImportExport::ObjectBackend::' . $TemplateData->{Object} );
 
     return if !$Backend;
 
@@ -1564,9 +1558,7 @@ sub MappingFormatAttributesGet {
     }
 
     # load backend
-    my $Backend = $Self->_LoadBackend(
-        Module => "Kernel::System::ImportExport::FormatBackend::$TemplateData->{Format}",
-    );
+    my $Backend = $Kernel::OM->Get( 'Kernel::System::ImportExport::FormatBackend::' . $TemplateData->{Format} );
 
     return if !$Backend;
 
@@ -1774,9 +1766,7 @@ sub SearchAttributesGet {
     }
 
     # load backend
-    my $Backend = $Self->_LoadBackend(
-        Module => "Kernel::System::ImportExport::ObjectBackend::$TemplateData->{Object}",
-    );
+    my $Backend = $Kernel::OM->Get( 'Kernel::System::ImportExport::ObjectBackend::' . $TemplateData->{Object} );
 
     return if !$Backend;
 
@@ -1997,16 +1987,12 @@ sub Export {
     }
 
     # load object backend
-    my $ObjectBackend = $Self->_LoadBackend(
-        Module => "Kernel::System::ImportExport::ObjectBackend::$TemplateData->{Object}",
-    );
+    my $ObjectBackend = $Kernel::OM->Get( 'Kernel::System::ImportExport::ObjectBackend::' . $TemplateData->{Object} );
 
     return if !$ObjectBackend;
 
     # load format backend
-    my $FormatBackend = $Self->_LoadBackend(
-        Module => "Kernel::System::ImportExport::FormatBackend::$TemplateData->{Format}",
-    );
+    my $FormatBackend = $Kernel::OM->Get( 'Kernel::System::ImportExport::FormatBackend::' . $TemplateData->{Format} );
 
     return if !$FormatBackend;
 
@@ -2142,16 +2128,12 @@ sub Import {
     }
 
     # load object backend
-    my $ObjectBackend = $Self->_LoadBackend(
-        Module => "Kernel::System::ImportExport::ObjectBackend::$TemplateData->{Object}",
-    );
+    my $ObjectBackend = $Kernel::OM->Get( 'Kernel::System::ImportExport::ObjectBackend::' . $TemplateData->{Object} );
 
     return if !$ObjectBackend;
 
     # load format backend
-    my $FormatBackend = $Self->_LoadBackend(
-        Module => "Kernel::System::ImportExport::FormatBackend::$TemplateData->{Format}",
-    );
+    my $FormatBackend = $Kernel::OM->Get( 'Kernel::System::ImportExport::FormatBackend::' . $TemplateData->{Format} );
 
     return if !$FormatBackend;
 
@@ -2233,53 +2215,6 @@ sub Import {
     }
 
     return \%Result;
-}
-
-=item _LoadBackend()
-
-to load a import/export backend module
-
-    my $Backend = $ImportExportObject->_LoadBackend(
-        Module => 'Kernel::System::ImportExport::ObjectBackend::Ticket',
-    );
-
-An instance of the loaded backend module is returned.
-
-=cut
-
-sub _LoadBackend {
-    my ( $Self, %Param ) = @_;
-
-    # check needed stuff
-    if ( !$Param{Module} ) {
-        $Self->{LogObject}->Log(
-            Priority => 'error',
-            Message  => 'Need Module!',
-        );
-        return;
-    }
-
-    # load object backend module
-    if ( !$Self->{MainObject}->Require( $Param{Module} ) ) {
-        $Self->{LogObject}->Log(
-            Priority => 'error',
-            Message  => "Can't load backend module $Param{Module}!"
-        );
-        return;
-    }
-
-    # create new instance
-    my $BackendObject = $Param{Module}->new(%Param);
-
-    if ( !$BackendObject ) {
-        $Self->{LogObject}->Log(
-            Priority => 'error',
-            Message  => "Can't create a new instance of backend module $Param{Module}!",
-        );
-        return;
-    }
-
-    return $BackendObject;
 }
 
 1;
