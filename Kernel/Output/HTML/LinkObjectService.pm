@@ -14,6 +14,17 @@ use warnings;
 
 use Kernel::Output::HTML::Layout;
 
+our @ObjectDependencies = (
+    'Kernel::Config',
+    'Kernel::Language',
+    'Kernel::System::DB',
+    'Kernel::System::Encode',
+    'Kernel::System::Log',
+    'Kernel::System::Main',
+    'Kernel::System::User',
+    'Kernel::System::Web::Request',
+);
+
 =head1 NAME
 
 Kernel::Output::HTML::LinkObjectService - layout backend module
@@ -31,7 +42,8 @@ All layout functions of link object (service)
 create an object
 
     $BackendObject = Kernel::Output::HTML::LinkObjectService->new(
-        %Param,
+        UserLanguage => 'en',
+        UserID       => 1,
     );
 
 =cut
@@ -43,15 +55,17 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    # check needed objects
-    for my $Object (
-        qw(ConfigObject LogObject MainObject DBObject UserObject EncodeObject
-        QueueObject GroupObject ParamObject TimeObject LanguageObject UserLanguage UserID)
-        )
-    {
-        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
-    }
+    $Self->{ConfigObject}   = $Kernel::OM->Get('Kernel::Config');
+    $Self->{LanguageObject} = $Kernel::OM->Get('Kernel::Language');
+    $Self->{LogObject}      = $Kernel::OM->Get('Kernel::System::Log');
+    $Self->{MainObject}     = $Kernel::OM->Get('Kernel::System::Main');
+    $Self->{DBObject}       = $Kernel::OM->Get('Kernel::System::DB');
+    $Self->{UserObject}     = $Kernel::OM->Get('Kernel::System::User');
+    $Self->{EncodeObject}   = $Kernel::OM->Get('Kernel::System::Encode');
+    $Self->{ParamObject}    = $Kernel::OM->Get('Kernel::System::Web::Request');
 
+    # We need our own LayoutObject instance to avoid blockdata collisions
+    #   with the main page.
     $Self->{LayoutObject} = Kernel::Output::HTML::Layout->new( %{$Self} );
 
     # define needed variables
