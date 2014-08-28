@@ -12,26 +12,26 @@ package var::packagesetup::ITSMChangeManagement;    ## no critic
 use strict;
 use warnings;
 
-use Kernel::Config;
-use Kernel::System::SysConfig;
-use Kernel::System::CSV;
-use Kernel::System::DynamicField;
-use Kernel::System::GeneralCatalog;
-use Kernel::System::Group;
-use Kernel::System::ITSMChange;
-use Kernel::System::ITSMChange::ITSMCondition;
-use Kernel::System::ITSMChange::History;
-use Kernel::System::ITSMChange::ITSMChangeCIPAllocate;
-use Kernel::System::ITSMChange::ITSMStateMachine;
-use Kernel::System::ITSMChange::ITSMWorkOrder;
-use Kernel::System::ITSMChange::Notification;
-use Kernel::System::ITSMChange::Template;
-use Kernel::System::LinkObject;
-use Kernel::System::State;
-use Kernel::System::Stats;
-use Kernel::System::Type;
-use Kernel::System::User;
-use Kernel::System::Valid;
+our @ObjectDependencies = (
+    'Kernel::Config',
+    'Kernel::System::DB',
+    'Kernel::System::DynamicField',
+    'Kernel::System::GeneralCatalog',
+    'Kernel::System::Group',
+    'Kernel::System::ITSMChange',
+    'Kernel::System::ITSMChange::History',
+    'Kernel::System::ITSMChange::ITSMChangeCIPAllocate',
+    'Kernel::System::ITSMChange::ITSMCondition',
+    'Kernel::System::ITSMChange::ITSMStateMachine',
+    'Kernel::System::ITSMChange::ITSMWorkOrder',
+    'Kernel::System::ITSMChange::Notification',
+    'Kernel::System::ITSMChange::Template',
+    'Kernel::System::LinkObject',
+    'Kernel::System::Log',
+    'Kernel::System::Stats',
+    'Kernel::System::SysConfig',
+    'Kernel::System::Valid',
+);
 
 =head1 NAME
 
@@ -51,54 +51,9 @@ Functions for installing the ITSMChangeManagement package.
 
 create an object
 
-    use Kernel::Config;
-    use Kernel::System::Encode;
-    use Kernel::System::Log;
-    use Kernel::System::Main;
-    use Kernel::System::Time;
-    use Kernel::System::DB;
-    use Kernel::System::XML;
-    use var::packagesetup::ITSMChangeManagement;
-
-    my $ConfigObject = Kernel::Config->new();
-    my $EncodeObject = Kernel::System::Encode->new(
-        ConfigObject => $ConfigObject,
-    );
-    my $LogObject    = Kernel::System::Log->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-    );
-    my $MainObject = Kernel::System::Main->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-    );
-    my $TimeObject = Kernel::System::Time->new(
-        ConfigObject => $ConfigObject,
-        LogObject    => $LogObject,
-    );
-    my $DBObject = Kernel::System::DB->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-        MainObject   => $MainObject,
-    );
-    my $XMLObject = Kernel::System::XML->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-        DBObject     => $DBObject,
-        MainObject   => $MainObject,
-    );
-    my $CodeObject = var::packagesetup::ITSMChangeManagement->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-        MainObject   => $MainObject,
-        TimeObject   => $TimeObject,
-        DBObject     => $DBObject,
-        XMLObject    => $XMLObject,
-    );
+    use Kernel::System::ObjectManager;
+    local $Kernel::OM = Kernel::System::ObjectManager->new();
+    my $CodeObject = $Kernel::OM->Get('var::packagesetup::ITSMChangeManagement');
 
 =cut
 
@@ -109,16 +64,8 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    # check needed objects
-    for my $Object (
-        qw(ConfigObject EncodeObject LogObject MainObject TimeObject DBObject XMLObject)
-        )
-    {
-        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
-    }
-
     # create needed sysconfig object
-    $Self->{SysConfigObject} = Kernel::System::SysConfig->new( %{$Self} );
+    $Self->{SysConfigObject} = $Kernel::OM->Get('Kernel::System::SysConfig');
 
     # rebuild ZZZ* files
     $Self->{SysConfigObject}->WriteDefault();
@@ -142,28 +89,37 @@ sub new {
     }
 
     # create additional objects
-    $Self->{ConfigObject}       = Kernel::Config->new();
-    $Self->{CSVObject}          = Kernel::System::CSV->new( %{$Self} );
-    $Self->{DynamicFieldObject} = Kernel::System::DynamicField->new( %{$Self} );
-    $Self->{GroupObject}        = Kernel::System::Group->new( %{$Self} );
-    $Self->{UserObject}         = Kernel::System::User->new( %{$Self} );
-    $Self->{StateObject}        = Kernel::System::State->new( %{$Self} );
-    $Self->{TypeObject}         = Kernel::System::Type->new( %{$Self} );
-    $Self->{ValidObject}        = Kernel::System::Valid->new( %{$Self} );
-    $Self->{LinkObject}         = Kernel::System::LinkObject->new( %{$Self} );
-    $Self->{ChangeObject}       = Kernel::System::ITSMChange->new( %{$Self} );
-    $Self->{ConditionObject}    = Kernel::System::ITSMChange::ITSMCondition->new( %{$Self} );
-    $Self->{CIPAllocateObject} = Kernel::System::ITSMChange::ITSMChangeCIPAllocate->new( %{$Self} );
-    $Self->{StateMachineObject}   = Kernel::System::ITSMChange::ITSMStateMachine->new( %{$Self} );
-    $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new( %{$Self} );
-    $Self->{WorkOrderObject}      = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
-    $Self->{HistoryObject}        = Kernel::System::ITSMChange::History->new( %{$Self} );
-    $Self->{NotificationObject}   = Kernel::System::ITSMChange::Notification->new( %{$Self} );
-    $Self->{TemplateObject}       = Kernel::System::ITSMChange::Template->new( %{$Self} );
-    $Self->{StatsObject}          = Kernel::System::Stats->new(
-        %{$Self},
-        UserID => 1,
+    $Self->{ConfigObject}       = $Kernel::OM->Get('Kernel::Config');
+    $Self->{LogObject}          = $Kernel::OM->Get('Kernel::System::Log');
+    $Self->{DBObject}           = $Kernel::OM->Get('Kernel::System::DB');
+    $Self->{DynamicFieldObject} = $Kernel::OM->Get('Kernel::System::DynamicField');
+    $Self->{GroupObject}        = $Kernel::OM->Get('Kernel::System::Group');
+    $Self->{ValidObject}        = $Kernel::OM->Get('Kernel::System::Valid');
+    $Self->{LinkObject}         = $Kernel::OM->Get('Kernel::System::LinkObject');
+    $Self->{ChangeObject}       = $Kernel::OM->Get('Kernel::System::ITSMChange');
+    $Self->{ConditionObject}    = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMCondition');
+    $Self->{CIPAllocateObject}
+        = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMChangeCIPAllocate');
+    $Self->{StateMachineObject} = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMStateMachine');
+    $Self->{GeneralCatalogObject} = $Kernel::OM->Get('Kernel::System::GeneralCatalog');
+    $Self->{WorkOrderObject}      = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder');
+    $Self->{HistoryObject}        = $Kernel::OM->Get('Kernel::System::ITSMChange::History');
+    $Self->{NotificationObject}   = $Kernel::OM->Get('Kernel::System::ITSMChange::Notification');
+    $Self->{TemplateObject}       = $Kernel::OM->Get('Kernel::System::ITSMChange::Template');
+
+    # the stats object needs a UserID parameter for the constructor
+    # we need to discard any existing stats object before
+    $Kernel::OM->ObjectsDiscard(
+        Objects => ['Kernel::System::Stats'],
     );
+
+    # define UserID parameter for the constructor of the stats object
+    $Kernel::OM->ObjectParamAdd(
+        'Kernel::System::Stats' => {
+            UserID => 1,
+        },
+    );
+    $Self->{StatsObject} = $Kernel::OM->Get('Kernel::System::Stats');
 
     # define file prefix for stats
     $Self->{FilePrefix} = 'ITSMStats';
