@@ -725,7 +725,7 @@ sub Run {
                 if ( $Self->{PDFObject} ) {
 
                     my $ChangeTitle = $Self->{LayoutObject}->Output(
-                        Template => '$QData{"ChangeTitle","30"}',
+                        Template => '[% Data.ChangeTitle | truncate(30) | html %]',
                         Data     => \%Info,
                     );
 
