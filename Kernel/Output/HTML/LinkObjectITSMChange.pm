@@ -13,7 +13,12 @@ use strict;
 use warnings;
 
 use Kernel::Output::HTML::Layout;
-use Kernel::System::GeneralCatalog;
+
+our @ObjectDependencies = (
+    'Kernel::Config',
+    'Kernel::System::Log',
+    'Kernel::System::Web::Request',
+);
 
 =head1 NAME
 
@@ -32,7 +37,8 @@ All layout functions of link object (change)
 create an object
 
     $BackendObject = Kernel::Output::HTML::LinkObjectITSMChange->new(
-        %Param,
+        UserLanguage => 'en',
+        UserID       => 1,
     );
 
 =cut
@@ -44,18 +50,9 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    # check needed objects
-    for my $Object (
-        qw(ConfigObject LogObject MainObject DBObject UserObject EncodeObject
-        QueueObject GroupObject ParamObject TimeObject LanguageObject UserLanguage UserID)
-        )
-    {
-        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
-    }
-
-    # create additional objects
-    $Self->{LayoutObject}         = Kernel::Output::HTML::Layout->new( %{$Self} );
-    $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new( %{$Self} );
+    # We need our own LayoutObject instance to avoid blockdata collisions
+    #   with the main page.
+    $Self->{LayoutObject} = Kernel::Output::HTML::Layout->new( %{$Self} );
 
     # define needed variables
     $Self->{ObjectData} = {
@@ -64,7 +61,7 @@ sub new {
     };
 
     # get config
-    $Self->{ChangeHook} = $Self->{ConfigObject}->Get('ITSMChange::Hook');
+    $Self->{ChangeHook} = $$Kernel::OM->Get('Kernel::Config')->Get('ITSMChange::Hook');
 
     return $Self;
 }
@@ -167,7 +164,7 @@ sub TableCreateComplex {
 
     # check needed stuff
     if ( !$Param{ObjectLinkListWithData} || ref $Param{ObjectLinkListWithData} ne 'HASH' ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need ObjectLinkListWithData!',
         );
@@ -215,8 +212,10 @@ sub TableCreateComplex {
             {
                 Type    => 'Link',
                 Content => $Change->{ChangeNumber},
-                Link    => '$Env{"Baselink"}Action=AgentITSMChangeZoom;ChangeID=' . $ChangeID,
-                Title   => "Change# $Change->{ChangeNumber}: $Change->{ChangeTitle}",
+                Link    => $Self->{LayoutObject}->{Baselink}
+                    . 'Action=AgentITSMChangeZoom;ChangeID='
+                    . $ChangeID,
+                Title => "Change# $Change->{ChangeNumber}: $Change->{ChangeTitle}",
             },
             {
                 Type      => 'Text',
@@ -315,7 +314,7 @@ sub TableCreateSimple {
 
     # check needed stuff
     if ( !$Param{ObjectLinkListWithData} || ref $Param{ObjectLinkListWithData} ne 'HASH' ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need ObjectLinkListWithData!',
         );
@@ -351,8 +350,9 @@ sub TableCreateSimple {
                     Content => 'CH:' . $Change->{ChangeNumber},
                     Title =>
                         "$Self->{ChangeHook} $Change->{ChangeNumber}: $Change->{ChangeTitle}",
-                    Link =>
-                        '$Env{"Baselink"}Action=AgentITSMChangeZoom;ChangeID=' . $ChangeID,
+                    Link => $Self->{LayoutObject}->{Baselink}
+                        . 'Action=AgentITSMChangeZoom;ChangeID='
+                        . $ChangeID,
                     MaxLength => 20,
                 );
 
@@ -382,7 +382,7 @@ sub ContentStringCreate {
 
     # check needed stuff
     if ( !$Param{ContentData} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need ContentData!',
         );
@@ -396,8 +396,8 @@ sub ContentStringCreate {
 
     # build html for signal LED
     my $String = $Self->{LayoutObject}->Output(
-        Template => '<div class="Flag Small" title="$QData{"ChangeState"}"> '
-            . '<span class="$QData{"ChangeStateSignal"}"></span> </div>',
+        Template => '<div class="Flag Small" title="[% Data.ChangeState | html %]"> '
+            . '<span class="[% Data.ChangeStateSignal | html %]"></span> </div>',
         Data => {
             ChangeStateSignal => $Content->{Content},
             ChangeState => $Content->{ChangeState} || '',
@@ -512,7 +512,9 @@ sub SearchOptionList {
     for my $Row (@SearchOptionList) {
 
         # get form data
-        $Row->{FormData} = $Self->{ParamObject}->GetParam( Param => $Row->{FormKey} );
+        $Row->{FormData} = $Kernel::OM->Get('Kernel::System::Web::Request')->GetParam(
+            Param => $Row->{FormKey},
+        );
 
         # parse the input text block
         $Self->{LayoutObject}->Block(

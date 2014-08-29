@@ -12,9 +12,11 @@ package Kernel::System::LinkObject::ITSMChange;
 use strict;
 use warnings;
 
-use Kernel::System::User;
-use Kernel::System::Group;
-use Kernel::System::ITSMChange;
+our @ObjectDependencies = (
+    'Kernel::Config',
+    'Kernel::System::ITSMChange',
+    'Kernel::System::Log',
+);
 
 =head1 NAME
 
@@ -28,45 +30,9 @@ Kernel/System/LinkObject/ITSMChange.pm - LinkObject backend for ITSMChange
 
 create an object
 
-    use Kernel::Config;
-    use Kernel::System::Encode;
-    use Kernel::System::Log;
-    use Kernel::System::Time;
-    use Kernel::System::Main;
-    use Kernel::System::DB;
-    use Kernel::System::LinkObject::ITSMChange;
-
-    my $ConfigObject = Kernel::Config->new();
-    my $EncodeObject = Kernel::System::Encode->new(
-        ConfigObject => $ConfigObject,
-    );
-    my $LogObject = Kernel::System::Log->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-    );
-    my $TimeObject = Kernel::System::Time->new(
-        ConfigObject => $ConfigObject,
-        LogObject    => $LogObject,
-    );
-    my $MainObject = Kernel::System::Main->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-    );
-    my $DBObject = Kernel::System::DB->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-        MainObject   => $MainObject,
-    );
-    my $ITSMChangeObject = Kernel::System::LinkObject::ITSMChange->new(
-        ConfigObject       => $ConfigObject,
-        LogObject          => $LogObject,
-        DBObject           => $DBObject,
-        MainObject         => $MainObject,
-        TimeObject         => $TimeObject,
-        EncodeObject       => $EncodeObject,
-    );
+    use Kernel::System::ObjectManager;
+    local $Kernel::OM = Kernel::System::ObjectManager->new();
+    my $LinkObjectITSMChangeObject = $Kernel::OM->Get('Kernel::System::LinkObject::ITSMChange');
 
 =cut
 
@@ -76,19 +42,6 @@ sub new {
     # allocate new hash for object
     my $Self = {};
     bless( $Self, $Type );
-
-    # check needed objects
-    for my $Object (
-        qw(DBObject ConfigObject EncodeObject LogObject MainObject TimeObject)
-        )
-    {
-        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
-    }
-
-    # create additional objects
-    $Self->{UserObject}   = Kernel::System::User->new( %{$Self} );
-    $Self->{GroupObject}  = Kernel::System::Group->new( %{$Self} );
-    $Self->{ChangeObject} = Kernel::System::ITSMChange->new( %{$Self} );
 
     return $Self;
 }
@@ -110,7 +63,7 @@ sub LinkListWithData {
     # check needed stuff
     for my $Argument (qw(LinkList UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -120,7 +73,7 @@ sub LinkListWithData {
 
     # check link list
     if ( ref $Param{LinkList} ne 'HASH' ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'LinkList must be a hash reference!',
         );
@@ -135,7 +88,7 @@ sub LinkListWithData {
             for my $ChangeID ( sort keys %{ $Param{LinkList}->{$LinkType}->{$Direction} } ) {
 
                 # get change data
-                my $ChangeData = $Self->{ChangeObject}->ChangeGet(
+                my $ChangeData = $Kernel::OM->Get('Kernel::System::ITSMChange')->ChangeGet(
                     ChangeID => $ChangeID,
                     UserID   => $Param{UserID},
                 );
@@ -173,7 +126,7 @@ sub ObjectPermission {
     # check needed stuff
     for my $Argument (qw(Object Key UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -182,10 +135,11 @@ sub ObjectPermission {
     }
 
     # get config of change zoom frontend module
-    $Self->{Config} = $Self->{ConfigObject}->Get('ITSMChange::Frontend::AgentITSMChangeZoom');
+    $Self->{Config}
+        = $Kernel::OM->Get('Kernel::Config')->Get('ITSMChange::Frontend::AgentITSMChangeZoom');
 
     # check permissions
-    my $Access = $Self->{ChangeObject}->Permission(
+    my $Access = $Kernel::OM->Get('Kernel::System::ITSMChange')->Permission(
         Type     => $Self->{Config}->{Permission},
         ChangeID => $Param{Key},
         UserID   => $Param{UserID},
@@ -217,7 +171,7 @@ sub ObjectDescriptionGet {
     # check needed stuff
     for my $Argument (qw(Object Key UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -234,7 +188,7 @@ sub ObjectDescriptionGet {
     return %Description if $Param{Mode} && $Param{Mode} eq 'Temporary';
 
     # get change data
-    my $ChangeData = $Self->{ChangeObject}->ChangeGet(
+    my $ChangeData = $Kernel::OM->Get('Kernel::System::ITSMChange')->ChangeGet(
         ChangeID => $Param{Key},
         UserID   => $Param{UserID},
     );
@@ -243,7 +197,7 @@ sub ObjectDescriptionGet {
     return if !%{$ChangeData};
 
     # define description text
-    my $ChangeHook      = $Self->{ConfigObject}->Get('ITSMChange::Hook');
+    my $ChangeHook      = $Kernel::OM->Get('Kernel::Config')->Get('ITSMChange::Hook');
     my $DescriptionText = "$ChangeHook $ChangeData->{ChangeNumber}";
 
     # create description
@@ -282,7 +236,7 @@ sub ObjectSearch {
 
     # check needed stuff
     if ( !$Param{UserID} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need UserID!',
         );
@@ -302,7 +256,7 @@ sub ObjectSearch {
 
     # search the changes
     # no need to use OrderBy here, because it is sorted in TableCreateComplex and TableCreateSimple
-    my $ChangeIDsRef = $Self->{ChangeObject}->ChangeSearch(
+    my $ChangeIDsRef = $Kernel::OM->Get('Kernel::System::ITSMChange')->ChangeSearch(
         %{ $Param{SearchParams} },
         %Search,
         UsingWildcards => 1,
@@ -321,7 +275,7 @@ sub ObjectSearch {
     for my $ChangeID ( @{$ChangeIDsRef} ) {
 
         # get change data
-        my $ChangeData = $Self->{ChangeObject}->ChangeGet(
+        my $ChangeData = $Kernel::OM->Get('Kernel::System::ITSMChange')->ChangeGet(
             ChangeID => $ChangeID,
             UserID   => $Param{UserID},
         );
@@ -367,7 +321,7 @@ sub LinkAddPre {
     # check needed stuff
     for my $Argument (qw(Key Type State UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -413,7 +367,7 @@ sub LinkAddPost {
     # check needed stuff
     for my $Argument (qw(Key Type State UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -429,7 +383,7 @@ sub LinkAddPost {
     my $Object = $Param{TargetObject} || $Param{SourceObject};
 
     # trigger ChangeLinkAddPost-Event
-    $Self->{ChangeObject}->EventHandler(
+    $Kernel::OM->Get('Kernel::System::ITSMChange')->EventHandler(
         Event => 'ChangeLinkAddPost',
         Data  => {
             ChangeID => $Param{Key},
@@ -476,7 +430,7 @@ sub LinkDeletePre {
     # check needed stuff
     for my $Argument (qw(Key Type State UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -522,7 +476,7 @@ sub LinkDeletePost {
     # check needed stuff
     for my $Argument (qw(Key Type State UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -538,7 +492,7 @@ sub LinkDeletePost {
     my $Object = $Param{TargetObject} || $Param{SourceObject};
 
     # trigger ChangeLinkDeletePost-Event
-    $Self->{ChangeObject}->EventHandler(
+    $Kernel::OM->Get('Kernel::System::ITSMChange')->EventHandler(
         Event => 'ChangeLinkDeletePost',
         Data  => {
             ChangeID => $Param{Key},

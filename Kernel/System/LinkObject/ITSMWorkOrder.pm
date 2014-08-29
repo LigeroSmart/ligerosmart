@@ -12,10 +12,12 @@ package Kernel::System::LinkObject::ITSMWorkOrder;
 use strict;
 use warnings;
 
-use Kernel::System::User;
-use Kernel::System::Group;
-use Kernel::System::ITSMChange;
-use Kernel::System::ITSMChange::ITSMWorkOrder;
+our @ObjectDependencies = (
+    'Kernel::Config',
+    'Kernel::System::ITSMChange',
+    'Kernel::System::ITSMChange::ITSMWorkOrder',
+    'Kernel::System::Log',
+);
 
 =head1 NAME
 
@@ -29,45 +31,9 @@ Kernel/System/LinkObject/ITSMWorkOrder.pm - LinkObject ITSMWorkOrder module
 
 create an object
 
-    use Kernel::Config;
-    use Kernel::System::Encode;
-    use Kernel::System::Log;
-    use Kernel::System::Time;
-    use Kernel::System::Main;
-    use Kernel::System::DB;
-    use Kernel::System::LinkObject::ITSMWorkOrder;
-
-    my $ConfigObject = Kernel::Config->new();
-    my $EncodeObject = Kernel::System::Encode->new(
-        ConfigObject => $ConfigObject,
-    );
-    my $LogObject = Kernel::System::Log->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-    );
-    my $TimeObject = Kernel::System::Time->new(
-        ConfigObject => $ConfigObject,
-        LogObject    => $LogObject,
-    );
-    my $MainObject = Kernel::System::Main->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-    );
-    my $DBObject = Kernel::System::DB->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-        MainObject   => $MainObject,
-    );
-    my $ITSMWorkOrderObject = Kernel::System::LinkObject::ITSMWorkOrder->new(
-        ConfigObject       => $ConfigObject,
-        LogObject          => $LogObject,
-        DBObject           => $DBObject,
-        MainObject         => $MainObject,
-        TimeObject         => $TimeObject,
-        EncodeObject       => $EncodeObject,
-    );
+    use Kernel::System::ObjectManager;
+    local $Kernel::OM = Kernel::System::ObjectManager->new();
+    my $LinkObjectITSMWorkOrderObject = $Kernel::OM->Get('Kernel::System::LinkObject::ITSMWorkOrder');
 
 =cut
 
@@ -77,20 +43,6 @@ sub new {
     # allocate new hash for object
     my $Self = {};
     bless( $Self, $Type );
-
-    # check needed objects
-    for my $Object (
-        qw(DBObject ConfigObject EncodeObject LogObject MainObject TimeObject)
-        )
-    {
-        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
-    }
-
-    # create additional objects
-    $Self->{UserObject}      = Kernel::System::User->new( %{$Self} );
-    $Self->{GroupObject}     = Kernel::System::Group->new( %{$Self} );
-    $Self->{WorkOrderObject} = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
-    $Self->{ChangeObject}    = Kernel::System::ITSMChange->new( %{$Self} );
 
     return $Self;
 }
@@ -112,7 +64,7 @@ sub LinkListWithData {
     # check needed stuff
     for my $Argument (qw(LinkList UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -122,7 +74,7 @@ sub LinkListWithData {
 
     # check link list
     if ( ref $Param{LinkList} ne 'HASH' ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'LinkList must be a hash reference!',
         );
@@ -137,10 +89,11 @@ sub LinkListWithData {
             for my $WorkOrderID ( sort keys %{ $Param{LinkList}->{$LinkType}->{$Direction} } ) {
 
                 # get workorder data
-                my $WorkOrderData = $Self->{WorkOrderObject}->WorkOrderGet(
+                my $WorkOrderData
+                    = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderGet(
                     WorkOrderID => $WorkOrderID,
                     UserID      => $Param{UserID},
-                );
+                    );
 
                 # remove id from hash if WorkOrderGet() returns no results
                 if ( !$WorkOrderData ) {
@@ -149,7 +102,7 @@ sub LinkListWithData {
                 }
 
                 # get change data for this workorder
-                my $ChangeData = $Self->{ChangeObject}->ChangeGet(
+                my $ChangeData = $Kernel::OM->Get('Kernel::System::ITSMChange')->ChangeGet(
                     ChangeID => $WorkOrderData->{ChangeID},
                     UserID   => $Param{UserID},
                 );
@@ -193,7 +146,7 @@ sub ObjectPermission {
     # check needed stuff
     for my $Argument (qw(Object Key UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -202,10 +155,11 @@ sub ObjectPermission {
     }
 
     # get config of workorder zoom frontend module
-    $Self->{Config} = $Self->{ConfigObject}->Get('ITSMWorkOrder::Frontend::AgentITSMWorkOrderZoom');
+    $Self->{Config} = $Kernel::OM->Get('Kernel::Config')
+        ->Get('ITSMWorkOrder::Frontend::AgentITSMWorkOrderZoom');
 
     # check permissions
-    my $Access = $Self->{WorkOrderObject}->Permission(
+    my $Access = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->Permission(
         Type        => $Self->{Config}->{Permission},
         WorkOrderID => $Param{Key},
         UserID      => $Param{UserID},
@@ -237,7 +191,7 @@ sub ObjectDescriptionGet {
     # check needed stuff
     for my $Argument (qw(Object Key UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -254,7 +208,7 @@ sub ObjectDescriptionGet {
     return %Description if $Param{Mode} && $Param{Mode} eq 'Temporary';
 
     # get workorder data
-    my $WorkOrderData = $Self->{WorkOrderObject}->WorkOrderGet(
+    my $WorkOrderData = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderGet(
         WorkOrderID => $Param{Key},
         UserID      => $Param{UserID},
     );
@@ -263,7 +217,7 @@ sub ObjectDescriptionGet {
     return if !%{$WorkOrderData};
 
     # get change data for this workorder
-    my $ChangeData = $Self->{ChangeObject}->ChangeGet(
+    my $ChangeData = $Kernel::OM->Get('Kernel::System::ITSMChange')->ChangeGet(
         ChangeID => $WorkOrderData->{ChangeID},
         UserID   => $Param{UserID},
     );
@@ -272,7 +226,7 @@ sub ObjectDescriptionGet {
     return if !%{$ChangeData};
 
     # define description text
-    my $WorkOrderHook = $Self->{ConfigObject}->Get('ITSMWorkOrder::Hook');
+    my $WorkOrderHook = $Kernel::OM->Get('Kernel::Config')->Get('ITSMWorkOrder::Hook');
     my $DescriptionText
         = "$WorkOrderHook $ChangeData->{ChangeNumber}-$WorkOrderData->{WorkOrderNumber}";
 
@@ -312,7 +266,7 @@ sub ObjectSearch {
 
     # check needed stuff
     if ( !$Param{UserID} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need UserID!',
         );
@@ -332,7 +286,8 @@ sub ObjectSearch {
 
     # search the workorders
     # no need to use OrderBy here, because it is sorted in TableCreateComplex and TableCreatSimple
-    my $WorkOrderIDsRef = $Self->{WorkOrderObject}->WorkOrderSearch(
+    my $WorkOrderIDsRef
+        = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderSearch(
         %{ $Param{SearchParams} },
         %Search,
         UsingWildcards => 1,
@@ -344,22 +299,23 @@ sub ObjectSearch {
         Limit => 200,
 
         UserID => $Param{UserID},
-    );
+        );
 
     my %SearchList;
     WORKORDERID:
     for my $WorkOrderID ( @{$WorkOrderIDsRef} ) {
 
         # get workorder data
-        my $WorkOrderData = $Self->{WorkOrderObject}->WorkOrderGet(
+        my $WorkOrderData
+            = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderGet(
             WorkOrderID => $WorkOrderID,
             UserID      => $Param{UserID},
-        );
+            );
 
         next WORKORDERID if !$WorkOrderData;
 
         # get change data for this workorder
-        my $ChangeData = $Self->{ChangeObject}->ChangeGet(
+        my $ChangeData = $Kernel::OM->Get('Kernel::System::ITSMChange')->ChangeGet(
             ChangeID => $WorkOrderData->{ChangeID},
             UserID   => $Param{UserID},
         );
@@ -411,7 +367,7 @@ sub LinkAddPre {
     # check needed stuff
     for my $Argument (qw(Key Type State UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -457,7 +413,7 @@ sub LinkAddPost {
     # check needed stuff
     for my $Argument (qw(Key Type State UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -473,7 +429,7 @@ sub LinkAddPost {
     my $Object = $Param{TargetObject} || $Param{SourceObject};
 
     # trigger WorkOrderLinkAddPost-Event
-    $Self->{WorkOrderObject}->EventHandler(
+    $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->EventHandler(
         Event => 'WorkOrderLinkAddPost',
         Data  => {
             WorkOrderID => $Param{Key},
@@ -520,7 +476,7 @@ sub LinkDeletePre {
     # check needed stuff
     for my $Argument (qw(Key Type State UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -566,7 +522,7 @@ sub LinkDeletePost {
     # check needed stuff
     for my $Argument (qw(Key Type State UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -582,7 +538,7 @@ sub LinkDeletePost {
     my $Object = $Param{TargetObject} || $Param{SourceObject};
 
     # trigger WorkOrderLinkDeletePost-Event
-    $Self->{WorkOrderObject}->EventHandler(
+    $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->EventHandler(
         Event => 'WorkOrderLinkDeletePost',
         Data  => {
             WorkOrderID => $Param{Key},
