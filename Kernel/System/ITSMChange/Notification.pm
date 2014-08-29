@@ -13,7 +13,6 @@ use strict;
 use warnings;
 
 use Kernel::System::EventHandler;
-use Kernel::System::CacheInternal;
 use Kernel::System::CustomerUser;
 use Kernel::System::Email;
 use Kernel::System::HTMLUtils;
@@ -27,6 +26,10 @@ use vars qw(@ISA);
 
 @ISA = (
     'Kernel::System::EventHandler',
+);
+
+our @ObjectDependencies = (
+    'Kernel::System::Cache',
 );
 
 =head1 NAME
@@ -116,15 +119,9 @@ sub new {
     $Self->{SendmailObject}     = Kernel::System::Email->new( %{$Self} );
     $Self->{ValidObject}        = Kernel::System::Valid->new( %{$Self} );
 
-    # get the cache TTL (in seconds)
-    $Self->{CacheTTL} = $Self->{ConfigObject}->Get('ITSMChange::CacheTTL') * 60;
-
-    # create additional objects
-    $Self->{CacheInternalObject} = Kernel::System::CacheInternal->new(
-        %{$Self},
-        Type => 'ITSMChangeManagement',
-        TTL  => $Self->{CacheTTL},
-    );
+    # get the cache type and TTL (in seconds)
+    $Self->{CacheType} = 'ITSMChangeManagement';
+    $Self->{CacheTTL}  = $Self->{ConfigObject}->Get('ITSMChange::CacheTTL') * 60;
 
     # do we use richtext
     $Self->{RichText} = $Self->{ConfigObject}->Get('Frontend::RichText');
@@ -532,8 +529,9 @@ sub NotificationRuleGet {
 
     # check the cache
     my $CacheKey = 'NotificationRuleGet::ID::' . $Param{ID};
-    my $Cache    = $Self->{CacheInternalObject}->Get(
-        Key => $CacheKey,
+    my $Cache    = $Kernel::OM->Get('Kernel::System::Cache')->Get(
+        Type => $Self->{CacheType},
+        Key  => $CacheKey,
     );
     return $Cache if $Cache;
 
@@ -588,7 +586,8 @@ sub NotificationRuleGet {
     }
 
     # save values in cache
-    $Self->{CacheInternalObject}->Set(
+    $Kernel::OM->Get('Kernel::System::Cache')->Set(
+        Type  => $Self->{CacheType},
         Key   => $CacheKey,
         Value => \%NotificationRule,
     );
@@ -684,8 +683,8 @@ sub NotificationRuleAdd {
         )
     {
 
-        $Self->{CacheInternalObject}->Delete(
-            Type => 'ITSMChangeManagement',
+        $Kernel::OM->Get('Kernel::System::Cache')->Delete(
+            Type => $Self->{CacheType},
             Key  => $Key,
         );
     }
@@ -770,8 +769,8 @@ sub NotificationRuleUpdate {
         )
     {
 
-        $Self->{CacheInternalObject}->Delete(
-            Type => 'ITSMChangeManagement',
+        $Kernel::OM->Get('Kernel::System::Cache')->Delete(
+            Type => $Self->{CacheType},
             Key  => $Key,
         );
     }
@@ -796,8 +795,9 @@ sub NotificationRuleList {
 
     # check the cache
     my $CacheKey = 'NotificationRuleList';
-    my $Cache    = $Self->{CacheInternalObject}->Get(
-        Key => $CacheKey,
+    my $Cache    = $Kernel::OM->Get('Kernel::System::Cache')->Get(
+        Type => $Self->{CacheType},
+        Key  => $CacheKey,
     );
     return $Cache if $Cache;
 
@@ -815,7 +815,8 @@ sub NotificationRuleList {
     }
 
     # save values in cache
-    $Self->{CacheInternalObject}->Set(
+    $Kernel::OM->Get('Kernel::System::Cache')->Set(
+        Type  => $Self->{CacheType},
         Key   => $CacheKey,
         Value => \@IDs,
     );
@@ -857,8 +858,9 @@ sub NotificationRuleSearch {
         $CacheKey .= '::EventID::' . $Param{EventID};
     }
 
-    my $Cache = $Self->{CacheInternalObject}->Get(
-        Key => $CacheKey,
+    my $Cache = $Kernel::OM->Get('Kernel::System::Cache')->Get(
+        Type => $Self->{CacheType},
+        Key  => $CacheKey,
     );
     return $Cache if $Cache;
 
@@ -892,7 +894,8 @@ sub NotificationRuleSearch {
     }
 
     # save values in cache
-    $Self->{CacheInternalObject}->Set(
+    $Kernel::OM->Get('Kernel::System::Cache')->Set(
+        Type  => $Self->{CacheType},
         Key   => $CacheKey,
         Value => \@IDs,
     );
@@ -943,8 +946,9 @@ sub RecipientLookup {
     elsif ( $Param{Name} ) {
         $CacheKey = 'RecipientLookup::Name::' . $Param{Name};
     }
-    my $Cache = $Self->{CacheInternalObject}->Get(
-        Key => $CacheKey,
+    my $Cache = $Kernel::OM->Get('Kernel::System::Cache')->Get(
+        Type => $Self->{CacheType},
+        Key  => $CacheKey,
     );
     return $Cache if $Cache;
 
@@ -974,7 +978,8 @@ sub RecipientLookup {
     }
 
     # save value in cache
-    $Self->{CacheInternalObject}->Set(
+    $Kernel::OM->Get('Kernel::System::Cache')->Set(
+        Type  => $Self->{CacheType},
         Key   => $CacheKey,
         Value => $Value,
     );

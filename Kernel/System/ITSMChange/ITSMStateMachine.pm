@@ -12,8 +12,11 @@ package Kernel::System::ITSMChange::ITSMStateMachine;
 use strict;
 use warnings;
 
-use Kernel::System::CacheInternal;
 use Kernel::System::GeneralCatalog;
+
+our @ObjectDependencies = (
+    'Kernel::System::Cache',
+);
 
 =head1 NAME
 
@@ -93,15 +96,9 @@ sub new {
     # create additional objects
     $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new( %{$Self} );
 
-    # get the cache TTL (in seconds)
-    $Self->{CacheTTL} = $Self->{ConfigObject}->Get('ITSMChange::CacheTTL') * 60;
-
-    # create additional objects
-    $Self->{CacheInternalObject} = Kernel::System::CacheInternal->new(
-        %{$Self},
-        Type => 'ITSMStateMachine',
-        TTL  => $Self->{CacheTTL},
-    );
+    # get the cache type and TTL (in seconds)
+    $Self->{CacheType} = 'ITSMStateMachine';
+    $Self->{CacheTTL}  = $Self->{ConfigObject}->Get('ITSMChange::CacheTTL') * 60;
 
     return $Self;
 }
@@ -308,7 +305,9 @@ sub StateTransitionAdd {
     }
 
     # cleanup statemachine cache
-    $Self->{CacheInternalObject}->CleanUp();
+    $Kernel::OM->Get('Kernel::System::Cache')->CleanUp(
+        Type => $Self->{CacheType},
+    );
 
     return $TransitionID;
 }
@@ -348,7 +347,9 @@ sub StateTransitionDelete {
     );
 
     # cleanup statemachine cache
-    $Self->{CacheInternalObject}->CleanUp();
+    $Kernel::OM->Get('Kernel::System::Cache')->CleanUp(
+        Type => $Self->{CacheType},
+    );
 
     return 1;
 }
@@ -402,7 +403,9 @@ sub StateTransitionDeleteAll {
     );
 
     # cleanup statemachine cache
-    $Self->{CacheInternalObject}->CleanUp();
+    $Kernel::OM->Get('Kernel::System::Cache')->CleanUp(
+        Type => $Self->{CacheType},
+    );
 
     return 1;
 
@@ -445,8 +448,9 @@ sub StateTransitionGet {
 
     # check the cache
     my $CacheKey = 'StateTransitionGet::StateID::' . $Param{StateID} . '::Class::' . $Param{Class};
-    my $Cache    = $Self->{CacheInternalObject}->Get(
-        Key => $CacheKey,
+    my $Cache    = $Kernel::OM->Get('Kernel::System::Cache')->Get(
+        Type => $Self->{CacheType},
+        Key  => $CacheKey,
     );
     return $Cache if $Cache;
 
@@ -505,7 +509,8 @@ sub StateTransitionGet {
     }
 
     # save values in cache
-    $Self->{CacheInternalObject}->Set(
+    $Kernel::OM->Get('Kernel::System::Cache')->Set(
+        Type  => $Self->{CacheType},
         Key   => $CacheKey,
         Value => \@NextStateIDs,
     );
@@ -551,8 +556,9 @@ sub StateTransitionGetEndStates {
     # check the cache
     my $CacheKey
         = 'StateTransitionGetEndStates::StateID::' . $Param{StateID} . '::Class::' . $Param{Class};
-    my $Cache = $Self->{CacheInternalObject}->Get(
-        Key => $CacheKey,
+    my $Cache = $Kernel::OM->Get('Kernel::System::Cache')->Get(
+        Type => $Self->{CacheType},
+        Key  => $CacheKey,
     );
     return $Cache if $Cache;
 
@@ -627,7 +633,8 @@ sub StateTransitionGetEndStates {
     }
 
     # save values in cache
-    $Self->{CacheInternalObject}->Set(
+    $Kernel::OM->Get('Kernel::System::Cache')->Set(
+        Type  => $Self->{CacheType},
         Key   => $CacheKey,
         Value => \@NextEndStateIDs,
     );
@@ -673,8 +680,9 @@ sub StateTransitionList {
 
     # check the cache
     my $CacheKey = 'StateTransitionList::Class::' . $Param{Class};
-    my $Cache    = $Self->{CacheInternalObject}->Get(
-        Key => $CacheKey,
+    my $Cache    = $Kernel::OM->Get('Kernel::System::Cache')->Get(
+        Type => $Self->{CacheType},
+        Key  => $CacheKey,
     );
     return $Cache if $Cache;
 
@@ -694,7 +702,8 @@ sub StateTransitionList {
     }
 
     # save values in cache
-    $Self->{CacheInternalObject}->Set(
+    $Kernel::OM->Get('Kernel::System::Cache')->Set(
+        Type  => $Self->{CacheType},
         Key   => $CacheKey,
         Value => \%StateTransition,
     );
@@ -848,7 +857,9 @@ sub StateTransitionUpdate {
     );
 
     # cleanup statemachine cache
-    $Self->{CacheInternalObject}->CleanUp();
+    $Kernel::OM->Get('Kernel::System::Cache')->CleanUp(
+        Type => $Self->{CacheType},
+    );
 
     return 1;
 }

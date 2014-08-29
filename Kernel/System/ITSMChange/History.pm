@@ -12,7 +12,9 @@ package Kernel::System::ITSMChange::History;
 use strict;
 use warnings;
 
-use Kernel::System::CacheInternal;
+our @ObjectDependencies = (
+    'Kernel::System::Cache',
+);
 
 =head1 NAME
 
@@ -87,15 +89,9 @@ sub new {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
     }
 
-    # get the cache TTL (in seconds)
-    $Self->{CacheTTL} = $Self->{ConfigObject}->Get('ITSMChange::CacheTTL') * 60;
-
-    # create additional objects
-    $Self->{CacheInternalObject} = Kernel::System::CacheInternal->new(
-        %{$Self},
-        Type => 'ITSMChangeManagement',
-        TTL  => $Self->{CacheTTL},
-    );
+    # get the cache type and TTL (in seconds)
+    $Self->{CacheType} = 'ITSMChangeManagement';
+    $Self->{CacheTTL}  = $Self->{ConfigObject}->Get('ITSMChange::CacheTTL') * 60;
 
     # set default debug flag
     $Self->{Debug} ||= 0;
@@ -1071,8 +1067,9 @@ sub HistoryTypeLookup {
     }
 
     # check the cache
-    my $Cache = $Self->{CacheInternalObject}->Get(
-        Key => 'HistoryTypeLookup::' . $Key . '::' . $Param{$Key},
+    my $Cache = $Kernel::OM->Get('Kernel::System::Cache')->Get(
+        Type => $Self->{CacheType},
+        Key  => 'HistoryTypeLookup::' . $Key . '::' . $Param{$Key},
     );
 
     # if result is cached return that result
@@ -1098,7 +1095,8 @@ sub HistoryTypeLookup {
     }
 
     # save value in cache
-    $Self->{CacheInternalObject}->Set(
+    $Kernel::OM->Get('Kernel::System::Cache')->Set(
+        Type  => $Self->{CacheType},
         Key   => 'HistoryTypeLookup::' . $Key . '::' . $Param{$Key},
         Value => $Value,
     );
@@ -1117,8 +1115,9 @@ sub HistoryTypeList {
     my ( $Self, %Param ) = @_;
 
     # check the cache
-    my $Cache = $Self->{CacheInternalObject}->Get(
-        Key => 'HistoryTypeList',
+    my $Cache = $Kernel::OM->Get('Kernel::System::Cache')->Get(
+        Type => $Self->{CacheType},
+        Key  => 'HistoryTypeList',
     );
 
     # if result is cached return that result
@@ -1140,7 +1139,8 @@ sub HistoryTypeList {
     }
 
     # save values in cache
-    $Self->{CacheInternalObject}->Set(
+    $Kernel::OM->Get('Kernel::System::Cache')->Set(
+        Type  => $Self->{CacheType},
         Key   => 'HistoryTypeList',
         Value => \@HistoryTypes,
     );
