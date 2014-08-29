@@ -18,7 +18,21 @@ use Kernel::System::VariableCheck qw(:all);
 use vars qw(@ISA);
 
 our @ObjectDependencies = (
-
+    'Kernel::Config',
+    'Kernel::System::Cache',
+    'Kernel::System::DB',
+    'Kernel::System::DynamicField',
+    'Kernel::System::DynamicField::Backend',
+    'Kernel::System::Encode',
+    'Kernel::System::GeneralCatalog',
+    'Kernel::System::HTMLUtils',
+    'Kernel::System::ITSMChange::ITSMCondition',
+    'Kernel::System::ITSMChange::ITSMStateMachine',
+    'Kernel::System::LinkObject',
+    'Kernel::System::Log',
+    'Kernel::System::Main',
+    'Kernel::System::User',
+    'Kernel::System::VirtualFS',
 );
 
 =head1 NAME
