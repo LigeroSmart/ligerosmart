@@ -15,13 +15,7 @@ use warnings;
 use Kernel::Output::HTML::Layout;
 
 our @ObjectDependencies = (
-    'Kernel::Config',
-    'Kernel::Language',
-    'Kernel::System::DB',
-    'Kernel::System::Encode',
     'Kernel::System::Log',
-    'Kernel::System::Main',
-    'Kernel::System::User',
     'Kernel::System::Web::Request',
 );
 
@@ -55,14 +49,10 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    $Self->{ConfigObject}   = $Kernel::OM->Get('Kernel::Config');
-    $Self->{LanguageObject} = $Kernel::OM->Get('Kernel::Language');
-    $Self->{LogObject}      = $Kernel::OM->Get('Kernel::System::Log');
-    $Self->{MainObject}     = $Kernel::OM->Get('Kernel::System::Main');
-    $Self->{DBObject}       = $Kernel::OM->Get('Kernel::System::DB');
-    $Self->{UserObject}     = $Kernel::OM->Get('Kernel::System::User');
-    $Self->{EncodeObject}   = $Kernel::OM->Get('Kernel::System::Encode');
-    $Self->{ParamObject}    = $Kernel::OM->Get('Kernel::System::Web::Request');
+    # check needed objects
+    for my $Needed (qw(UserLanguage UserID)) {
+        $Self->{$Needed} = $Param{$Needed} || die "Got no $Needed!";
+    }
 
     # We need our own LayoutObject instance to avoid blockdata collisions
     #   with the main page.
@@ -178,7 +168,7 @@ sub TableCreateComplex {
 
     # check needed stuff
     if ( !$Param{ObjectLinkListWithData} || ref $Param{ObjectLinkListWithData} ne 'HASH' ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need ObjectLinkListWithData!',
         );
@@ -223,9 +213,9 @@ sub TableCreateComplex {
                 CurInciStateType => $Service->{CurInciStateType},
             },
             {
-                Type      => 'Link',
-                Content   => $Service->{Name},
-                Link      => $Self->{LayoutObject}->{Baselink}
+                Type    => 'Link',
+                Content => $Service->{Name},
+                Link    => $Self->{LayoutObject}->{Baselink}
                     . 'Action=AgentITSMServiceZoom;ServiceID='
                     . $ServiceID,
                 Title     => "Service: $Service->{Name}",
@@ -327,7 +317,10 @@ sub TableCreateSimple {
 
     # check needed stuff
     if ( !$Param{ObjectLinkListWithData} || ref $Param{ObjectLinkListWithData} ne 'HASH' ) {
-        $Self->{LogObject}->Log( Priority => 'error', Message => 'Need ObjectLinkListWithData!' );
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
+            Priority => 'error',
+            Message  => 'Need ObjectLinkListWithData!',
+        );
         return;
     }
 
@@ -388,7 +381,10 @@ sub ContentStringCreate {
 
     # check needed stuff
     if ( !$Param{ContentData} ) {
-        $Self->{LogObject}->Log( Priority => 'error', Message => 'Need ContentData!' );
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
+            Priority => 'error',
+            Message  => 'Need ContentData!',
+        );
         return;
     }
 
@@ -411,8 +407,8 @@ sub ContentStringCreate {
     $CurInciSignal ||= $InciSignals{unknown};
 
     my $String = $Self->{LayoutObject}->Output(
-        Template => '<div class="Flag Small" title="$QData{"CurInciState"}"> '
-            . '<span class="$QData{"CurInciSignal"}"></span> </div>',
+        Template => '<div class="Flag Small" title="[% Data.CurInciState | html %]"> '
+            . '<span class="[% Data.CurInciSignal | html %]"></span> </div>',
 
         Data => {
             CurInciSignal => $CurInciSignal,
@@ -503,7 +499,8 @@ sub SearchOptionList {
     for my $Row (@SearchOptionList) {
 
         # get form data
-        $Row->{FormData} = $Self->{ParamObject}->GetParam( Param => $Row->{FormKey} );
+        $Row->{FormData} = $Kernel::OM->Get('Kernel::System::Web::Request')
+            ->GetParam( Param => $Row->{FormKey} );
 
         # parse the input text block
         $Self->{LayoutObject}->Block(
