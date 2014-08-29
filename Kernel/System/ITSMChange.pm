@@ -72,8 +72,6 @@ sub new {
     # set the debug flag
     $Self->{Debug} = $Param{Debug} || 0;
 
-    # $Kernel::OM->Get('')
-
     # load change number generator
     my $GeneratorModule = $Kernel::OM->Get('Kernel::Config')->Get('ITSMChange::NumberGenerator')
         || 'Kernel::System::ITSMChange::Number::DateChecksum';
@@ -103,7 +101,7 @@ sub new {
 
 =item ChangeAdd()
 
-Add a new change. The UserId is the only required parameter.
+Add a new change. The UserID is the only required parameter.
 Internally first a minimal change is created, then ChangeUpdate() is called.
 
     my $ChangeID = $ChangeObject->ChangeAdd(
