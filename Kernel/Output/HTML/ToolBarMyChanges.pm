@@ -13,7 +13,10 @@ use strict;
 use warnings;
 
 use Kernel::System::ITSMChange;
-use Kernel::System::Cache;
+
+our @ObjectDependencies = (
+    'Kernel::System::Cache',
+);
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -31,11 +34,11 @@ sub new {
     }
 
     # create needed objects
-    $Self->{CacheObject}  = Kernel::System::Cache->new(%Param);
     $Self->{ChangeObject} = Kernel::System::ITSMChange->new(%Param);
 
-    # get the cache TTL (in seconds)
-    $Self->{CacheTTL} = $Self->{ConfigObject}->Get('ITSMChange::ToolBar::CacheTTL') * 60;
+    # get the cache type and TTL (in seconds)
+    $Self->{CacheType} = 'ITSMChangeManagementToolBarMyChanges' . $Self->{UserID};
+    $Self->{CacheTTL}  = $Self->{ConfigObject}->Get('ITSMChange::ToolBar::CacheTTL') * 60;
 
     return $Self;
 }
@@ -83,10 +86,9 @@ sub Run {
         }
 
         # check cache
-        my $CacheType = 'ITSMChangeManagementToolBarMyChanges' . $Self->{UserID};
-        my $CacheKey  = join ',', sort @ChangeStates;
-        my $Cache     = $Self->{CacheObject}->Get(
-            Type => $CacheType,
+        my $CacheKey = join ',', sort @ChangeStates;
+        my $Cache = $Kernel::OM->Get('Kernel::System::Cache')->Get(
+            Type => $Self->{CacheType},
             Key  => $CacheKey,
         );
 
@@ -106,8 +108,8 @@ sub Run {
             );
 
             # set cache
-            $Self->{CacheObject}->Set(
-                Type  => $CacheType,
+            $Kernel::OM->Get('Kernel::System::Cache')->Set(
+                Type  => $Self->{CacheType},
                 Key   => $CacheKey,
                 Value => $Count,
                 TTL   => $Self->{CacheTTL},

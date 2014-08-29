@@ -79,7 +79,6 @@ sub Run {
                 $Order{ 'OrderBy' . $Key } = 'Up';
                 $CSS{ 'Sort' . $Key }      = ' SortAscending';
             }
-            next;
         }
     }
 

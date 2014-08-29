@@ -12,7 +12,9 @@ package Kernel::System::ITSMChange::ITSMWorkOrder::Event::ToolBarMyWorkOrdersCac
 use strict;
 use warnings;
 
-use Kernel::System::Cache;
+our @ObjectDependencies = (
+    'Kernel::System::Cache',
+);
 
 =head1 NAME
 
@@ -87,9 +89,6 @@ sub new {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
     }
 
-    # create additional objects
-    $Self->{CacheObject} = Kernel::System::Cache->new( %{$Self} );
-
     return $Self;
 }
 
@@ -142,7 +141,7 @@ sub Run {
         my $CacheType = $CacheTypePrefix . $Param{Data}->{WorkOrderAgentID};
 
         # delete the cache
-        $Self->{CacheObject}->CleanUp(
+        $Kernel::OM->Get('Kernel::System::Cache')->CleanUp(
             Type => $CacheType,
         );
 
@@ -178,7 +177,7 @@ sub Run {
             my $CacheType = $CacheTypePrefix . $CacheTypePostfix;
 
             # delete the cache
-            $Self->{CacheObject}->CleanUp(
+            $Kernel::OM->Get('Kernel::System::Cache')->CleanUp(
                 Type => $CacheType,
             );
         }
@@ -196,7 +195,7 @@ sub Run {
         my $CacheType = $CacheTypePrefix . $Param{Data}->{OldWorkOrderData}->{WorkOrderAgentID};
 
         # delete the cache
-        $Self->{CacheObject}->CleanUp(
+        $Kernel::OM->Get('Kernel::System::Cache')->CleanUp(
             Type => $CacheType,
         );
 

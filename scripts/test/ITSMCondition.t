@@ -1653,10 +1653,11 @@ for my $ExpressionTest (@ExpressionTests) {
             }
 
             # get all fields for ExpressionAdd
+            EXPRESSIONADDVALUE:
             for my $ExpressionAddValue ( sort keys %ExpressionAddSourceData ) {
 
                 # ommit static fields
-                next if grep { $_ eq $ExpressionAddValue } @StaticFields;
+                next EXPRESSIONADDVALUE if grep { $_ eq $ExpressionAddValue } @StaticFields;
 
                 # get values for fields
                 for my $FieldValue ( sort keys %{ $ExpressionAddSourceData{$ExpressionAddValue} } )
@@ -1727,10 +1728,11 @@ for my $ExpressionTest (@ExpressionTests) {
             }
 
             # get all fields for ExpressionUpdate
+            EXPRESSIONUPDATEVALUE:
             for my $ExpressionUpdateValue ( sort keys %ExpressionUpdateSourceData ) {
 
                 # ommit static fields
-                next if grep { $_ eq $ExpressionUpdateValue } @StaticFields;
+                next EXPRESSIONUPDATEVALUE if grep { $_ eq $ExpressionUpdateValue } @StaticFields;
 
                 # get values for fields
                 for my $FieldValue (
@@ -2343,10 +2345,11 @@ sub _ActionAdd {
     }
 
     # get all fields for ActionAdd
+    ACTIONADDVALUE:
     for my $ActionAddValue ( sort keys %{$ActionData} ) {
 
         # ommit static fields
-        next if grep { $_ eq $ActionAddValue } @StaticFields;
+        next ACTIONADDVALUE if grep { $_ eq $ActionAddValue } @StaticFields;
 
         # get values for fields
         for my $FieldValue ( sort keys %{ $ActionData->{$ActionAddValue} } ) {

@@ -966,10 +966,11 @@ sub _ActionAdd {
     }
 
     # get all fields for ActionAdd
+    ACTIONADDVALUE:
     for my $ActionAddValue ( sort keys %{$ActionData} ) {
 
         # ommit static fields
-        next if grep { $_ eq $ActionAddValue } @StaticFields;
+        next ACTIONADDVALUE if grep { $_ eq $ActionAddValue } @StaticFields;
 
         # get values for fields
         for my $FieldValue ( sort keys %{ $ActionData->{$ActionAddValue} } ) {
@@ -1042,10 +1043,11 @@ sub _ExpressionAdd {
     }
 
     # get all fields for ExpressionAdd
+    EXPRESSIONADDVALUE:
     for my $ExpressionAddValue ( sort keys %ExpressionAddSourceData ) {
 
         # ommit static fields
-        next if grep { $_ eq $ExpressionAddValue } @StaticFields;
+        next EXPRESSIONADDVALUE if grep { $_ eq $ExpressionAddValue } @StaticFields;
 
         # get values for fields
         for my $FieldValue ( sort keys %{ $ExpressionAddSourceData{$ExpressionAddValue} } ) {

@@ -12,7 +12,6 @@ package Kernel::System::ITSMChange::ITSMCondition;
 use strict;
 use warnings;
 
-use Kernel::System::Cache;
 use Kernel::System::Valid;
 
 use Kernel::System::EventHandler;
@@ -31,6 +30,10 @@ use vars qw(@ISA);
     'Kernel::System::ITSMChange::ITSMCondition::Operator',
     'Kernel::System::ITSMChange::ITSMCondition::Expression',
     'Kernel::System::ITSMChange::ITSMCondition::Action',
+);
+
+our @ObjectDependencies = (
+    'Kernel::System::Cache',
 );
 
 =head1 NAME
@@ -112,11 +115,11 @@ sub new {
     $Self->{Debug} = $Param{Debug} || 0;
 
     # create additional objects
-    $Self->{CacheObject} = Kernel::System::Cache->new( %{$Self} );
     $Self->{ValidObject} = Kernel::System::Valid->new( %{$Self} );
 
-    # get the cache TTL (in seconds)
-    $Self->{CacheTTL} = $Self->{ConfigObject}->Get('ITSMChange::CacheTTL') * 60;
+    # get the cache type and TTL (in seconds)
+    $Self->{CacheType} = 'ITSMChangeManagement';
+    $Self->{CacheTTL}  = $Self->{ConfigObject}->Get('ITSMChange::CacheTTL') * 60;
 
     # init of event handler
     $Self->EventHandlerInit(
@@ -236,8 +239,8 @@ sub ConditionAdd {
         'ConditionList::ChangeID::' . $Param{ChangeID} . '::Valid::1',
         )
     {
-        $Self->{CacheObject}->Delete(
-            Type => 'ITSMChangeManagement',
+        $Kernel::OM->Get('Kernel::System::Cache')->Delete(
+            Type => $Self->{CacheType},
             Key  => $Key,
         );
     }
@@ -346,8 +349,8 @@ sub ConditionUpdate {
         'ConditionGet::ConditionID::' . $Param{ConditionID},
         )
     {
-        $Self->{CacheObject}->Delete(
-            Type => 'ITSMChangeManagement',
+        $Kernel::OM->Get('Kernel::System::Cache')->Delete(
+            Type => $Self->{CacheType},
             Key  => $Key,
         );
     }
@@ -518,8 +521,8 @@ sub ConditionGet {
 
     # check cache
     my $CacheKey = 'ConditionGet::ConditionID::' . $Param{ConditionID};
-    my $Cache    = $Self->{CacheObject}->Get(
-        Type => 'ITSMChangeManagement',
+    my $Cache    = $Kernel::OM->Get('Kernel::System::Cache')->Get(
+        Type => $Self->{CacheType},
         Key  => $CacheKey,
     );
     return $Cache if $Cache;
@@ -567,8 +570,8 @@ sub ConditionGet {
     }
 
     # set cache
-    $Self->{CacheObject}->Set(
-        Type  => 'ITSMChangeManagement',
+    $Kernel::OM->Get('Kernel::System::Cache')->Set(
+        Type  => $Self->{CacheType},
         Key   => $CacheKey,
         Value => \%ConditionData,
         TTL   => $Self->{CacheTTL},
@@ -611,8 +614,8 @@ sub ConditionList {
 
     # check cache
     my $CacheKey = 'ConditionList::ChangeID::' . $Param{ChangeID} . '::Valid::' . $Param{Valid};
-    my $Cache    = $Self->{CacheObject}->Get(
-        Type => 'ITSMChangeManagement',
+    my $Cache    = $Kernel::OM->Get('Kernel::System::Cache')->Get(
+        Type => $Self->{CacheType},
         Key  => $CacheKey,
     );
     return $Cache if $Cache;
@@ -647,8 +650,8 @@ sub ConditionList {
     }
 
     # set cache
-    $Self->{CacheObject}->Set(
-        Type  => 'ITSMChangeManagement',
+    $Kernel::OM->Get('Kernel::System::Cache')->Set(
+        Type  => $Self->{CacheType},
         Key   => $CacheKey,
         Value => \@ConditionIDs,
         TTL   => $Self->{CacheTTL},
@@ -727,8 +730,8 @@ sub ConditionDelete {
         'ConditionGet::ConditionID::' . $Param{ConditionID},
         )
     {
-        $Self->{CacheObject}->Delete(
-            Type => 'ITSMChangeManagement',
+        $Kernel::OM->Get('Kernel::System::Cache')->Delete(
+            Type => $Self->{CacheType},
             Key  => $Key,
         );
     }
@@ -807,8 +810,8 @@ sub ConditionDeleteAll {
         return if !$Success;
 
         # delete cache for ConditionGet
-        $Self->{CacheObject}->Delete(
-            Type => 'ITSMChangeManagement',
+        $Kernel::OM->Get('Kernel::System::Cache')->Delete(
+            Type => $Self->{CacheType},
             Key  => 'ConditionGet::ConditionID::' . $ConditionID,
         );
     }
@@ -826,8 +829,8 @@ sub ConditionDeleteAll {
         'ConditionList::ChangeID::' . $Param{ChangeID} . '::Valid::1',
         )
     {
-        $Self->{CacheObject}->Delete(
-            Type => 'ITSMChangeManagement',
+        $Kernel::OM->Get('Kernel::System::Cache')->Delete(
+            Type => $Self->{CacheType},
             Key  => $Key,
         );
     }

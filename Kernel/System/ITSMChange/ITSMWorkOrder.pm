@@ -21,13 +21,17 @@ use Kernel::System::ITSMChange::ITSMStateMachine;
 use Kernel::System::ITSMChange::ITSMCondition;
 use Kernel::System::VirtualFS;
 use Kernel::System::HTMLUtils;
-use Kernel::System::Cache;
+
 use Kernel::System::VariableCheck qw(:all);
 
 use vars qw(@ISA);
 
 @ISA = (
     'Kernel::System::EventHandler',
+);
+
+our @ObjectDependencies = (
+    'Kernel::System::Cache',
 );
 
 =head1 NAME
@@ -126,7 +130,6 @@ sub new {
     $Self->{Debug} = $Param{Debug} || 0;
 
     # create additional objects
-    $Self->{CacheObject}               = Kernel::System::Cache->new( %{$Self} );
     $Self->{DynamicFieldObject}        = Kernel::System::DynamicField->new( %{$Self} );
     $Self->{DynamicFieldBackendObject} = Kernel::System::DynamicField::Backend->new( %{$Self} );
     $Self->{GeneralCatalogObject}      = Kernel::System::GeneralCatalog->new( %{$Self} );
@@ -136,8 +139,9 @@ sub new {
     $Self->{HTMLUtilsObject}    = Kernel::System::HTMLUtils->new( %{$Self} );
     $Self->{VirtualFSObject}    = Kernel::System::VirtualFS->new( %{$Self} );
 
-    # get the cache TTL (in seconds)
-    $Self->{CacheTTL} = $Self->{ConfigObject}->Get('ITSMChange::CacheTTL') * 60;
+    # get the cache type and TTL (in seconds)
+    $Self->{CacheType} = 'ITSMChangeManagement';
+    $Self->{CacheTTL}  = $Self->{ConfigObject}->Get('ITSMChange::CacheTTL') * 60;
 
     # init of event handler
     $Self->EventHandlerInit(
@@ -363,8 +367,8 @@ sub WorkOrderAdd {
         )
     {
 
-        $Self->{CacheObject}->Delete(
-            Type => 'ITSMChangeManagement',
+        $Kernel::OM->Get('Kernel::System::Cache')->Delete(
+            Type => $Self->{CacheType},
             Key  => $Key,
         );
     }
@@ -699,8 +703,8 @@ sub WorkOrderUpdate {
         )
     {
 
-        $Self->{CacheObject}->Delete(
-            Type => 'ITSMChangeManagement',
+        $Kernel::OM->Get('Kernel::System::Cache')->Delete(
+            Type => $Self->{CacheType},
             Key  => $Key,
         );
     }
@@ -779,8 +783,8 @@ sub WorkOrderGet {
 
     # check cache
     my $CacheKey = 'WorkOrderGet::ID::' . $Param{WorkOrderID};
-    my $Cache    = $Self->{CacheObject}->Get(
-        Type => 'ITSMChangeManagement',
+    my $Cache    = $Kernel::OM->Get('Kernel::System::Cache')->Get(
+        Type => $Self->{CacheType},
         Key  => $CacheKey,
     );
 
@@ -902,7 +906,7 @@ sub WorkOrderGet {
         }
 
         # set cache (workorder data exists at this point, it was checked before)
-        $Self->{CacheObject}->Set(
+        $Kernel::OM->Get('Kernel::System::Cache')->Set(
             Type  => 'ITSMChangeManagement',
             Key   => $CacheKey,
             Value => \%WorkOrderData,
@@ -966,8 +970,8 @@ sub WorkOrderList {
 
     # check cache
     my $CacheKey = 'WorkOrderList::ChangeID::' . $Param{ChangeID};
-    my $Cache    = $Self->{CacheObject}->Get(
-        Type => 'ITSMChangeManagement',
+    my $Cache    = $Kernel::OM->Get('Kernel::System::Cache')->Get(
+        Type => $Self->{CacheType},
         Key  => $CacheKey,
     );
 
@@ -995,7 +999,7 @@ sub WorkOrderList {
         }
 
         # set cache
-        $Self->{CacheObject}->Set(
+        $Kernel::OM->Get('Kernel::System::Cache')->Set(
             Type  => 'ITSMChangeManagement',
             Key   => $CacheKey,
             Value => \@WorkOrderIDs,
@@ -1454,7 +1458,7 @@ sub WorkOrderSearch {
                 $Text =~ s/\*/%/gi;
 
                 # check search attribute, we do not need to search for *
-                next if $Text =~ /^\%{1,3}$/;
+                next TEXT if $Text =~ /^\%{1,3}$/;
 
                 # validate data type
                 my $ValidateSuccess = $Self->{DynamicFieldBackendObject}->ValueValidate(
@@ -1808,8 +1812,8 @@ sub WorkOrderDelete {
         )
     {
 
-        $Self->{CacheObject}->Delete(
-            Type => 'ITSMChangeManagement',
+        $Kernel::OM->Get('Kernel::System::Cache')->Delete(
+            Type => $Self->{CacheType},
             Key  => $Key,
         );
     }
@@ -1885,8 +1889,8 @@ sub WorkOrderChangeTimeGet {
 
     # check cache
     my $CacheKey = 'WorkOrderChangeTimeGet::ChangeID::' . $Param{ChangeID};
-    my $Cache    = $Self->{CacheObject}->Get(
-        Type => 'ITSMChangeManagement',
+    my $Cache    = $Kernel::OM->Get('Kernel::System::Cache')->Get(
+        Type => $Self->{CacheType},
         Key  => $CacheKey,
     );
 
@@ -1965,7 +1969,7 @@ sub WorkOrderChangeTimeGet {
         }
 
         # set cache
-        $Self->{CacheObject}->Set(
+        $Kernel::OM->Get('Kernel::System::Cache')->Set(
             Type  => 'ITSMChangeManagement',
             Key   => $CacheKey,
             Value => \%TimeReturn,
@@ -2384,7 +2388,10 @@ sub Permission {
 
     # run the relevant permission modules
     if ( ref $Self->{ConfigObject}->Get($Registry) eq 'HASH' ) {
+
         my %Modules = %{ $Self->{ConfigObject}->Get($Registry) };
+
+        MODULE:
         for my $Module ( sort keys %Modules ) {
 
             # log try of load module
@@ -2396,7 +2403,7 @@ sub Permission {
             }
 
             # load module
-            next if !$Self->{MainObject}->Require( $Modules{$Module}->{Module} );
+            next MODULE if !$Self->{MainObject}->Require( $Modules{$Module}->{Module} );
 
             # create object
             my $ModuleObject = $Modules{$Module}->{Module}->new(
@@ -2926,8 +2933,8 @@ sub WorkOrderChangeEffortsGet {
 
     # check cache
     my $CacheKey = 'WorkOrderChangeEffortsGet::ChangeID::' . $Param{ChangeID};
-    my $Cache    = $Self->{CacheObject}->Get(
-        Type => 'ITSMChangeManagement',
+    my $Cache    = $Kernel::OM->Get('Kernel::System::Cache')->Get(
+        Type => $Self->{CacheType},
         Key  => $CacheKey,
     );
 
@@ -2977,7 +2984,7 @@ sub WorkOrderChangeEffortsGet {
         }
 
         # set cache
-        $Self->{CacheObject}->Set(
+        $Kernel::OM->Get('Kernel::System::Cache')->Set(
             Type  => 'ITSMChangeManagement',
             Key   => $CacheKey,
             Value => \%ChangeEfforts,

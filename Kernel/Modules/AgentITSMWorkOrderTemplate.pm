@@ -103,7 +103,8 @@ sub Run {
     # store needed parameters in %GetParam to make it reloadable
     my %GetParam;
     for my $ParamName (
-        qw(TemplateName Comment ValidID StateReset OverwriteTemplate DeleteWorkOrder))
+        qw(TemplateName Comment ValidID StateReset OverwriteTemplate DeleteWorkOrder)
+        )
     {
         $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
     }

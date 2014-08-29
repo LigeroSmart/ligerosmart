@@ -24,13 +24,16 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::ITSMChange::ITSMCondition;
 use Kernel::System::HTMLUtils;
 use Kernel::System::VirtualFS;
-use Kernel::System::Cache;
 use Kernel::System::VariableCheck qw(:all);
 
 use vars qw(@ISA);
 
 @ISA = (
     'Kernel::System::EventHandler',
+);
+
+our @ObjectDependencies = (
+    'Kernel::System::Cache',
 );
 
 =head1 NAME
@@ -112,7 +115,6 @@ sub new {
     $Self->{Debug} = $Param{Debug} || 0;
 
     # create additional objects
-    $Self->{CacheObject}               = Kernel::System::Cache->new( %{$Self} );
     $Self->{DynamicFieldObject}        = Kernel::System::DynamicField->new( %{$Self} );
     $Self->{DynamicFieldBackendObject} = Kernel::System::DynamicField::Backend->new( %{$Self} );
     $Self->{GeneralCatalogObject}      = Kernel::System::GeneralCatalog->new( %{$Self} );
@@ -134,8 +136,9 @@ sub new {
         die "Can't load change number generator backend module $GeneratorModule! $@";
     }
 
-    # get the cache TTL (in seconds)
-    $Self->{CacheTTL} = $Self->{ConfigObject}->Get('ITSMChange::CacheTTL') * 60;
+    # get the cache type and TTL (in seconds)
+    $Self->{CacheType} = 'ITSMChangeManagement';
+    $Self->{CacheTTL}  = $Self->{ConfigObject}->Get('ITSMChange::CacheTTL') * 60;
 
     # init of event handler
     $Self->EventHandlerInit(
@@ -305,8 +308,8 @@ sub ChangeAdd {
         )
     {
 
-        $Self->{CacheObject}->Delete(
-            Type => 'ITSMChangeManagement',
+        $Kernel::OM->Get('Kernel::System::Cache')->Delete(
+            Type => $Self->{CacheType},
             Key  => $Key,
         );
     }
@@ -576,8 +579,8 @@ sub ChangeUpdate {
         )
     {
 
-        $Self->{CacheObject}->Delete(
-            Type => 'ITSMChangeManagement',
+        $Kernel::OM->Get('Kernel::System::Cache')->Delete(
+            Type => $Self->{CacheType},
             Key  => $Key,
         );
     }
@@ -663,8 +666,8 @@ sub ChangeGet {
 
     # check cache
     my $CacheKey = 'ChangeGet::ID::' . $Param{ChangeID};
-    my $Cache    = $Self->{CacheObject}->Get(
-        Type => 'ITSMChangeManagement',
+    my $Cache    = $Kernel::OM->Get('Kernel::System::Cache')->Get(
+        Type => $Self->{CacheType},
         Key  => $CacheKey,
     );
 
@@ -756,7 +759,7 @@ sub ChangeGet {
         }
 
         # set cache (change data exists at this point, it was checked before)
-        $Self->{CacheObject}->Set(
+        $Kernel::OM->Get('Kernel::System::Cache')->Set(
             Type  => 'ITSMChangeManagement',
             Key   => $CacheKey,
             Value => \%ChangeData,
@@ -959,8 +962,8 @@ sub ChangeCABUpdate {
     }
 
     # delete cache
-    $Self->{CacheObject}->Delete(
-        Type => 'ITSMChangeManagement',
+    $Kernel::OM->Get('Kernel::System::Cache')->Delete(
+        Type => $Self->{CacheType},
         Key  => 'ChangeCABGet::ID::' . $Param{ChangeID},
     );
 
@@ -1018,8 +1021,8 @@ sub ChangeCABGet {
 
     # check cache
     my $CacheKey = 'ChangeCABGet::ID::' . $Param{ChangeID};
-    my $Cache    = $Self->{CacheObject}->Get(
-        Type => 'ITSMChangeManagement',
+    my $Cache    = $Kernel::OM->Get('Kernel::System::Cache')->Get(
+        Type => $Self->{CacheType},
         Key  => $CacheKey,
     );
 
@@ -1079,7 +1082,7 @@ sub ChangeCABGet {
         @{ $CAB{CABCustomers} } = sort @{ $CAB{CABCustomers} };
 
         # set cache
-        $Self->{CacheObject}->Set(
+        $Kernel::OM->Get('Kernel::System::Cache')->Set(
             Type  => 'ITSMChangeManagement',
             Key   => $CacheKey,
             Value => \%CAB,
@@ -1137,8 +1140,8 @@ sub ChangeCABDelete {
     );
 
     # delete cache
-    $Self->{CacheObject}->Delete(
-        Type => 'ITSMChangeManagement',
+    $Kernel::OM->Get('Kernel::System::Cache')->Delete(
+        Type => $Self->{CacheType},
         Key  => 'ChangeCABGet::ID::' . $Param{ChangeID},
     );
 
@@ -1199,8 +1202,8 @@ sub ChangeLookup {
 
         # check cache
         my $CacheKey = 'ChangeLookup::ChangeNumber::' . $Param{ChangeNumber};
-        my $Cache    = $Self->{CacheObject}->Get(
-            Type => 'ITSMChangeManagement',
+        my $Cache    = $Kernel::OM->Get('Kernel::System::Cache')->Get(
+            Type => $Self->{CacheType},
             Key  => $CacheKey,
         );
 
@@ -1225,7 +1228,7 @@ sub ChangeLookup {
             if ($ChangeID) {
 
                 # set cache
-                $Self->{CacheObject}->Set(
+                $Kernel::OM->Get('Kernel::System::Cache')->Set(
                     Type  => 'ITSMChangeManagement',
                     Key   => $CacheKey,
                     Value => $ChangeID,
@@ -1244,8 +1247,8 @@ sub ChangeLookup {
 
         # check cache
         my $CacheKey = 'ChangeLookup::ChangeID::' . $Param{ChangeID};
-        my $Cache    = $Self->{CacheObject}->Get(
-            Type => 'ITSMChangeManagement',
+        my $Cache    = $Kernel::OM->Get('Kernel::System::Cache')->Get(
+            Type => $Self->{CacheType},
             Key  => $CacheKey,
         );
 
@@ -1270,7 +1273,7 @@ sub ChangeLookup {
             if ($ChangeNumber) {
 
                 # set cache
-                $Self->{CacheObject}->Set(
+                $Kernel::OM->Get('Kernel::System::Cache')->Set(
                     Type  => 'ITSMChangeManagement',
                     Key   => $CacheKey,
                     Value => $ChangeNumber,
@@ -1310,8 +1313,8 @@ sub ChangeList {
 
     # check cache
     my $CacheKey = 'ChangeList';
-    my $Cache    = $Self->{CacheObject}->Get(
-        Type => 'ITSMChangeManagement',
+    my $Cache    = $Kernel::OM->Get('Kernel::System::Cache')->Get(
+        Type => $Self->{CacheType},
         Key  => $CacheKey,
     );
 
@@ -1333,7 +1336,7 @@ sub ChangeList {
         }
 
         # set cache
-        $Self->{CacheObject}->Set(
+        $Kernel::OM->Get('Kernel::System::Cache')->Set(
             Type  => 'ITSMChangeManagement',
             Key   => $CacheKey,
             Value => \@ChangeIDs,
@@ -1873,7 +1876,7 @@ sub ChangeSearch {
                 $Text =~ s/\*/%/gi;
 
                 # check search attribute, we do not need to search for *
-                next if $Text =~ /^\%{1,3}$/;
+                next TEXT if $Text =~ /^\%{1,3}$/;
 
                 # validate data type
                 my $ValidateSuccess = $Self->{DynamicFieldBackendObject}->ValueValidate(
@@ -2432,8 +2435,8 @@ sub ChangeDelete {
         )
     {
 
-        $Self->{CacheObject}->Delete(
-            Type => 'ITSMChangeManagement',
+        $Kernel::OM->Get('Kernel::System::Cache')->Delete(
+            Type => $Self->{CacheType},
             Key  => $Key,
         );
     }
@@ -2835,7 +2838,10 @@ sub Permission {
 
     # run the relevant permission modules
     if ( ref $Self->{ConfigObject}->Get($Registry) eq 'HASH' ) {
+
         my %Modules = %{ $Self->{ConfigObject}->Get($Registry) };
+
+        MODULE:
         for my $Module ( sort keys %Modules ) {
 
             # log try of load module
@@ -2847,7 +2853,7 @@ sub Permission {
             }
 
             # load module
-            next if !$Self->{MainObject}->Require( $Modules{$Module}->{Module} );
+            next MODULE if !$Self->{MainObject}->Require( $Modules{$Module}->{Module} );
 
             # create object
             my $ModuleObject = $Modules{$Module}->{Module}->new(

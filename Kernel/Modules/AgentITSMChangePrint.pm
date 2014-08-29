@@ -1561,7 +1561,7 @@ sub _PDFOutputTable {
     # just for having shorter names
     my $Table = $Param{Table};
     my $Page  = $Self->{Page};
-
+    PAGE:
     for ( $Page->{PageCount} .. $Page->{MaxPages} ) {
 
         # output table (or a fragment of it)
@@ -1569,7 +1569,7 @@ sub _PDFOutputTable {
 
         # stop output or output next page
         if ( $Table->{State} ) {
-            last;
+            last PAGE;
         }
         else {
             $Self->{PDFObject}->PageNew(

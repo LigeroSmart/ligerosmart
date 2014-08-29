@@ -190,8 +190,10 @@ sub Run {
         # get Dynamic fields from param object
         # cycle trough the activated Dynamic Fields for this screen
         DYNAMICFIELD:
-        for my $DynamicFieldConfig ( @{ $Self->{DynamicFieldChange} },
-            @{ $Self->{DynamicFieldWorkOrder} } )
+        for my $DynamicFieldConfig (
+            @{ $Self->{DynamicFieldChange} },
+            @{ $Self->{DynamicFieldWorkOrder} }
+            )
         {
             next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
 
@@ -419,8 +421,10 @@ sub Run {
 
         # cycle trough the activated Dynamic Fields for this screen
         DYNAMICFIELD:
-        for my $DynamicFieldConfig ( @{ $Self->{DynamicFieldChange} },
-            @{ $Self->{DynamicFieldWorkOrder} } )
+        for my $DynamicFieldConfig (
+            @{ $Self->{DynamicFieldChange} },
+            @{ $Self->{DynamicFieldWorkOrder} }
+            )
         {
             next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
 
@@ -852,6 +856,7 @@ sub Run {
 
                 # start table output
                 $Self->{PDFObject}->PageNew( %PageParam, FooterRight => $Page . ' 1', );
+                PAGE:
                 for ( 2 .. $MaxPages ) {
 
                     # output table (or a fragment of it)
@@ -859,7 +864,7 @@ sub Run {
 
                     # stop output or another page
                     if ( $TableParam{State} ) {
-                        last;
+                        last PAGE;
                     }
                     else {
                         $Self->{PDFObject}->PageNew(
@@ -1130,15 +1135,19 @@ sub _MaskForm {
     # create dynamic fields search options for attribute select
     # cycle trough the activated Dynamic Fields for this screen
     DYNAMICFIELD:
-    for my $DynamicFieldConfig ( @{ $Self->{DynamicFieldChange} },
-        @{ $Self->{DynamicFieldWorkOrder} } )
+    for my $DynamicFieldConfig (
+        @{ $Self->{DynamicFieldChange} },
+        @{ $Self->{DynamicFieldWorkOrder} }
+        )
     {
         next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
         next DYNAMICFIELD if !$DynamicFieldConfig->{Name};
         next DYNAMICFIELD if $DynamicFieldConfig->{Name} eq '';
 
-        if (   $LastObjectType eq 'ITSMChange'
-            && $DynamicFieldConfig->{ObjectType} eq 'ITSMWorkOrder' )
+        if (
+            $LastObjectType eq 'ITSMChange'
+            && $DynamicFieldConfig->{ObjectType} eq 'ITSMWorkOrder'
+            )
         {
             $DynamicFieldSeparator = 1;
         }
@@ -1210,8 +1219,10 @@ sub _MaskForm {
 
     # cycle trough the activated Dynamic Fields for this screen
     DYNAMICFIELD:
-    for my $DynamicFieldConfig ( @{ $Self->{DynamicFieldChange} },
-        @{ $Self->{DynamicFieldWorkOrder} } )
+    for my $DynamicFieldConfig (
+        @{ $Self->{DynamicFieldChange} },
+        @{ $Self->{DynamicFieldWorkOrder} }
+        )
     {
         next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
 
@@ -1575,8 +1586,10 @@ sub _MaskForm {
     # output Dynamic fields blocks
     # cycle trough the activated Dynamic Fields for this screen
     DYNAMICFIELD:
-    for my $DynamicFieldConfig ( @{ $Self->{DynamicFieldChange} },
-        @{ $Self->{DynamicFieldWorkOrder} } )
+    for my $DynamicFieldConfig (
+        @{ $Self->{DynamicFieldChange} },
+        @{ $Self->{DynamicFieldWorkOrder} }
+        )
     {
         next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
 
