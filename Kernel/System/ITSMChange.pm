@@ -12,28 +12,30 @@ package Kernel::System::ITSMChange;
 use strict;
 use warnings;
 
-use Kernel::System::DynamicField;
-use Kernel::System::DynamicField::Backend;
 use Kernel::System::EventHandler;
-use Kernel::System::GeneralCatalog;
-use Kernel::System::LinkObject;
-use Kernel::System::CustomerUser;
-use Kernel::System::ITSMChange::ITSMChangeCIPAllocate;
-use Kernel::System::ITSMChange::ITSMStateMachine;
-use Kernel::System::ITSMChange::ITSMWorkOrder;
-use Kernel::System::ITSMChange::ITSMCondition;
-use Kernel::System::HTMLUtils;
-use Kernel::System::VirtualFS;
 use Kernel::System::VariableCheck qw(:all);
 
 use vars qw(@ISA);
 
-@ISA = (
-    'Kernel::System::EventHandler',
-);
-
 our @ObjectDependencies = (
+    'Kernel::Config',
     'Kernel::System::Cache',
+    'Kernel::System::CustomerUser',
+    'Kernel::System::DB',
+    'Kernel::System::DynamicField',
+    'Kernel::System::DynamicField::Backend',
+    'Kernel::System::Encode',
+    'Kernel::System::GeneralCatalog',
+    'Kernel::System::HTMLUtils',
+    'Kernel::System::ITSMChange::ITSMChangeCIPAllocate',
+    'Kernel::System::ITSMChange::ITSMCondition',
+    'Kernel::System::ITSMChange::ITSMStateMachine',
+    'Kernel::System::ITSMChange::ITSMWorkOrder',
+    'Kernel::System::LinkObject',
+    'Kernel::System::Log',
+    'Kernel::System::Main',
+    'Kernel::System::User',
+    'Kernel::System::VirtualFS',
 );
 
 =head1 NAME
@@ -54,45 +56,9 @@ All functions for changes in ITSMChangeManagement.
 
 create an object
 
-    use Kernel::Config;
-    use Kernel::System::Encode;
-    use Kernel::System::Log;
-    use Kernel::System::DB;
-    use Kernel::System::Main;
-    use Kernel::System::Time;
-    use Kernel::System::ITSMChange;
-
-    my $ConfigObject = Kernel::Config->new();
-    my $EncodeObject = Kernel::System::Encode->new(
-        ConfigObject => $ConfigObject,
-    );
-    my $LogObject = Kernel::System::Log->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-    );
-    my $MainObject = Kernel::System::Main->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-    );
-    my $TimeObject = Kernel::System::Time->new(
-        ConfigObject => $ConfigObject,
-        LogObject    => $LogObject,
-    );
-    my $DBObject = Kernel::System::DB->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-        MainObject   => $MainObject,
-    );
-    my $ChangeObject = Kernel::System::ITSMChange->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-        DBObject     => $DBObject,
-        TimeObject   => $TimeObject,
-        MainObject   => $MainObject,
-    );
+    use Kernel::System::ObjectManager;
+    local $Kernel::OM = Kernel::System::ObjectManager->new();
+    my $ChangeObject = $Kernel::OM->Get('Kernel::System::ITSMChange');
 
 =cut
 
@@ -103,54 +69,33 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    # check needed objects
-    for my $Object (
-        qw(DBObject ConfigObject EncodeObject LogObject UserObject GroupObject MainObject TimeObject)
-        )
-    {
-        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
-    }
-
     # set the debug flag
     $Self->{Debug} = $Param{Debug} || 0;
 
-    # create additional objects
-    $Self->{DynamicFieldObject}        = Kernel::System::DynamicField->new( %{$Self} );
-    $Self->{DynamicFieldBackendObject} = Kernel::System::DynamicField::Backend->new( %{$Self} );
-    $Self->{GeneralCatalogObject}      = Kernel::System::GeneralCatalog->new( %{$Self} );
-    $Self->{LinkObject}                = Kernel::System::LinkObject->new( %{$Self} );
-    $Self->{CustomerUserObject}        = Kernel::System::CustomerUser->new( %{$Self} );
-    $Self->{HTMLUtilsObject}           = Kernel::System::HTMLUtils->new( %{$Self} );
-    $Self->{StateMachineObject} = Kernel::System::ITSMChange::ITSMStateMachine->new( %{$Self} );
-    $Self->{VirtualFSObject}    = Kernel::System::VirtualFS->new( %{$Self} );
-    $Self->{WorkOrderObject}    = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
-    $Self->{ConditionObject}    = Kernel::System::ITSMChange::ITSMCondition->new( %{$Self} );
-    $Self->{CIPAllocateObject}  = Kernel::System::ITSMChange::ITSMChangeCIPAllocate->new(
-        %{$Self},
-    );
+    # $Kernel::OM->Get('')
 
     # load change number generator
-    my $GeneratorModule = $Self->{ConfigObject}->Get('ITSMChange::NumberGenerator')
+    my $GeneratorModule = $Kernel::OM->Get('Kernel::Config')->Get('ITSMChange::NumberGenerator')
         || 'Kernel::System::ITSMChange::Number::DateChecksum';
-    if ( !$Self->{MainObject}->RequireBaseClass($GeneratorModule) ) {
+    if ( !$Kernel::OM->Get('Kernel::System::Main')->RequireBaseClass($GeneratorModule) ) {
         die "Can't load change number generator backend module $GeneratorModule! $@";
     }
 
     # get the cache type and TTL (in seconds)
     $Self->{CacheType} = 'ITSMChangeManagement';
-    $Self->{CacheTTL}  = $Self->{ConfigObject}->Get('ITSMChange::CacheTTL') * 60;
+    $Self->{CacheTTL}  = $Kernel::OM->Get('Kernel::Config')->Get('ITSMChange::CacheTTL') * 60;
+
+    @ISA = (
+        'Kernel::System::EventHandler',
+    );
 
     # init of event handler
     $Self->EventHandlerInit(
-        Config     => 'ITSMChange::EventModule',
-        BaseObject => 'ChangeObject',
-        Objects    => {
-            %{$Self},
-        },
+        Config => 'ITSMChange::EventModule',
     );
 
     # get database type
-    $Self->{DBType} = $Self->{DBObject}->{'DB::Type'} || '';
+    $Self->{DBType} = $Kernel::OM->Get('Kernel::System::DB')->{'DB::Type'} || '';
     $Self->{DBType} = lc $Self->{DBType};
 
     return $Self;
@@ -196,7 +141,7 @@ sub ChangeAdd {
 
     # check needed stuff
     if ( !$Param{UserID} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need UserID!',
         );
@@ -209,14 +154,14 @@ sub ChangeAdd {
 
         next ARGUMENT if !exists $Param{$Argument};
 
-        $Param{"${Argument}Plain"} = $Self->{HTMLUtilsObject}->ToAscii(
+        $Param{"${Argument}Plain"} = $Kernel::OM->Get('Kernel::System::HTMLUtils')->ToAscii(
             String => $Param{$Argument},
         );
 
         # Even when passed a plain ASCII string,
         # ToAscii() can return a non-utf8 string with chars in the extended range.
         # Upgrade to utf-8 in order to comply to the OTRS-convention.
-        if ( $Self->{EncodeObject}->CharsetInternal() ) {
+        if ( $Kernel::OM->Get('Kernel::System::Encode')->CharsetInternal() ) {
             utf8::upgrade( $Param{"${Argument}Plain"} );
         }
     }
@@ -239,17 +184,19 @@ sub ChangeAdd {
     # get initial change state id
     my $ChangeStateID = delete $Param{ChangeStateID};
     if ( !$ChangeStateID ) {
-        my $NextStateIDs = $Self->{StateMachineObject}->StateTransitionGet(
+        my $NextStateIDs
+            = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMStateMachine')->StateTransitionGet(
             StateID => 0,
             Class   => 'ITSM::ChangeManagement::Change::State',
-        );
+            );
         $ChangeStateID = $NextStateIDs->[0];
     }
 
     # get default Category if not defined
     my $CategoryID = delete $Param{CategoryID};
     if ( !$CategoryID ) {
-        my $DefaultCategory = $Self->{ConfigObject}->Get('ITSMChange::Category::Default');
+        my $DefaultCategory
+            = $Kernel::OM->Get('Kernel::Config')->Get('ITSMChange::Category::Default');
         $CategoryID = $Self->ChangeCIPLookup(
             CIP  => $DefaultCategory,
             Type => 'Category',
@@ -259,7 +206,7 @@ sub ChangeAdd {
     # get default Impact if not defined
     my $ImpactID = delete $Param{ImpactID};
     if ( !$ImpactID ) {
-        my $DefaultImpact = $Self->{ConfigObject}->Get('ITSMChange::Impact::Default');
+        my $DefaultImpact = $Kernel::OM->Get('Kernel::Config')->Get('ITSMChange::Impact::Default');
         $ImpactID = $Self->ChangeCIPLookup(
             CIP  => $DefaultImpact,
             Type => 'Impact',
@@ -269,17 +216,18 @@ sub ChangeAdd {
     # get default Priority if not defined
     my $PriorityID = delete $Param{PriorityID};
     if ( !$PriorityID ) {
-        $PriorityID = $Self->{CIPAllocateObject}->PriorityAllocationGet(
+        $PriorityID = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMChangeCIPAllocate')
+            ->PriorityAllocationGet(
             CategoryID => $CategoryID,
             ImpactID   => $ImpactID,
-        );
+            );
     }
 
     # if no change builder id was given, take the user id
     my $ChangeBuilderID = $Param{ChangeBuilderID} || $Param{UserID};
 
     # add change to database
-    return if !$Self->{DBObject}->Do(
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Do(
         SQL => 'INSERT INTO change_item '
             . '(change_number, change_state_id, change_builder_id, '
             . 'category_id, impact_id, priority_id, '
@@ -393,7 +341,7 @@ sub ChangeUpdate {
     # check needed stuff
     for my $Argument (qw(ChangeID UserID )) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -403,7 +351,7 @@ sub ChangeUpdate {
 
     # check that not both ChangeState and ChangeStateID are given
     if ( $Param{ChangeState} && $Param{ChangeStateID} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need either ChangeState OR ChangeStateID - not both!',
         );
@@ -443,14 +391,14 @@ sub ChangeUpdate {
 
         next ARGUMENT if !exists $Param{$Argument};
 
-        $Param{"${Argument}Plain"} = $Self->{HTMLUtilsObject}->ToAscii(
+        $Param{"${Argument}Plain"} = $Kernel::OM->Get('Kernel::System::HTMLUtils')->ToAscii(
             String => $Param{$Argument},
         );
 
         # Even when passed a plain ASCII string,
         # ToAscii() can return a non-utf8 string with chars in the extended range.
         # Upgrade to utf-8 in order to comply to the OTRS-convention.
-        if ( $Self->{EncodeObject}->CharsetInternal() ) {
+        if ( $Kernel::OM->Get('Kernel::System::Encode')->CharsetInternal() ) {
             utf8::upgrade( $Param{"${Argument}Plain"} );
         }
     }
@@ -477,7 +425,7 @@ sub ChangeUpdate {
             UserID   => $Param{UserID},
         );
         if ( !grep { $_->{Key} == $Param{ChangeStateID} } @{$StateList} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "The state $Param{ChangeStateID} is not a possible next state!",
             );
@@ -515,12 +463,12 @@ sub ChangeUpdate {
         my $DynamicFieldName = $1;
 
         # get the dynamic field config
-        my $DynamicFieldConfig = $Self->{DynamicFieldObject}->DynamicFieldGet(
+        my $DynamicFieldConfig = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldGet(
             Name => $DynamicFieldName,
         );
 
         # write value to dynamic field
-        my $Success = $Self->{DynamicFieldBackendObject}->ValueSet(
+        my $Success = $Kernel::OM->Get('Kernel::System::DynamicField::Backend')->ValueSet(
             DynamicFieldConfig => $DynamicFieldConfig,
             ObjectID           => $Param{ChangeID},
             Value              => $Param{$Key},
@@ -565,7 +513,7 @@ sub ChangeUpdate {
     push @Bind, \$Param{ChangeID};
 
     # update change
-    return if !$Self->{DBObject}->Do(
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Do(
         SQL  => $SQL,
         Bind => \@Bind,
     );
@@ -656,7 +604,7 @@ sub ChangeGet {
     # check needed stuff
     for my $Attribute (qw(ChangeID UserID)) {
         if ( !$Param{$Attribute} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Attribute!",
             );
@@ -679,7 +627,7 @@ sub ChangeGet {
     else {
 
         # get data from database
-        return if !$Self->{DBObject}->Prepare(
+        return if !$Kernel::OM->Get('Kernel::System::DB')->Prepare(
             SQL => 'SELECT id, change_number, title, '
                 . 'description, description_plain, '
                 . 'justification, justification_plain, '
@@ -694,7 +642,7 @@ sub ChangeGet {
         );
 
         # fetch the result
-        while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        while ( my @Row = $Kernel::OM->Get('Kernel::System::DB')->FetchrowArray() ) {
             $ChangeData{ChangeID}           = $Row[0];
             $ChangeData{ChangeNumber}       = $Row[1];
             $ChangeData{ChangeTitle}        = defined( $Row[2] ) ? $Row[2] : '';
@@ -718,7 +666,7 @@ sub ChangeGet {
         # check error
         if ( !%ChangeData ) {
             if ( !$Param{LogNo} ) {
-                $Self->{LogObject}->Log(
+                $Kernel::OM->Get('Kernel::System::Log')->Log(
                     Priority => 'error',
                     Message  => "Change with ID $Param{ChangeID} does not exist.",
                 );
@@ -735,9 +683,10 @@ sub ChangeGet {
         }
 
         # get all dynamic fields for the object type ITSMChange
-        my $DynamicFieldList = $Self->{DynamicFieldObject}->DynamicFieldListGet(
+        my $DynamicFieldList
+            = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldListGet(
             ObjectType => 'ITSMChange',
-        );
+            );
 
         DYNAMICFIELD:
         for my $DynamicFieldConfig ( @{$DynamicFieldList} ) {
@@ -749,7 +698,7 @@ sub ChangeGet {
             next DYNAMICFIELD if !IsHashRefWithData( $DynamicFieldConfig->{Config} );
 
             # get the current value for each dynamic field
-            my $Value = $Self->{DynamicFieldBackendObject}->ValueGet(
+            my $Value = $Kernel::OM->Get('Kernel::System::DynamicField::Backend')->ValueGet(
                 DynamicFieldConfig => $DynamicFieldConfig,
                 ObjectID           => $Param{ChangeID},
             );
@@ -788,7 +737,7 @@ sub ChangeGet {
     if ( $ChangeData{ChangeState} ) {
 
         # get all change state signals
-        my $StateSignal = $Self->{ConfigObject}->Get('ITSMChange::State::Signal');
+        my $StateSignal = $Kernel::OM->Get('Kernel::Config')->Get('ITSMChange::State::Signal');
 
         $ChangeData{ChangeStateSignal} = $StateSignal->{ $ChangeData{ChangeState} };
     }
@@ -803,20 +752,22 @@ sub ChangeGet {
     %ChangeData = ( %ChangeData, %{$CAB} );
 
     # get all workorder ids for this change
-    my $WorkOrderIDsRef = $Self->{WorkOrderObject}->WorkOrderList(
+    my $WorkOrderIDsRef
+        = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderList(
         ChangeID => $Param{ChangeID},
         UserID   => $Param{UserID},
-    );
+        );
 
     # add result to change data
     $ChangeData{WorkOrderIDs} = $WorkOrderIDsRef || [];
     $ChangeData{WorkOrderCount} = scalar @{ $ChangeData{WorkOrderIDs} };
 
     # get planned effort and accounted time for the change
-    my $ChangeEfforts = $Self->{WorkOrderObject}->WorkOrderChangeEffortsGet(
+    my $ChangeEfforts
+        = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderChangeEffortsGet(
         ChangeID => $Param{ChangeID},
         UserID   => $Param{UserID},
-    );
+        );
 
     # merge effort hash with change hash
     if (
@@ -829,10 +780,11 @@ sub ChangeGet {
     }
 
     # get timestamps for the change
-    my $ChangeTime = $Self->{WorkOrderObject}->WorkOrderChangeTimeGet(
+    my $ChangeTime
+        = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderChangeTimeGet(
         ChangeID => $Param{ChangeID},
         UserID   => $Param{UserID},
-    );
+        );
 
     # merge time hash with change hash
     if (
@@ -869,7 +821,7 @@ sub ChangeCABUpdate {
     # check needed stuff
     for my $Attribute (qw(ChangeID UserID)) {
         if ( !$Param{$Attribute} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Attribute!",
             );
@@ -879,7 +831,7 @@ sub ChangeCABUpdate {
 
     # either CABAgents of CABCustomers or both must be passed
     if ( !$Param{CABAgents} && !$Param{CABCustomers} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need parameter CABAgents or CABCustomers!',
         );
@@ -889,7 +841,7 @@ sub ChangeCABUpdate {
     # CABAgents and CABCustomers must be array references
     for my $Attribute (qw(CABAgents CABCustomers)) {
         if ( $Param{$Attribute} && ref $Param{$Attribute} ne 'ARRAY' ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "The parameter $Attribute is not an array reference!",
             );
@@ -919,7 +871,7 @@ sub ChangeCABUpdate {
     if ( $Param{CABAgents} ) {
 
         # remove all current users from cab table
-        return if !$Self->{DBObject}->Do(
+        return if !$Kernel::OM->Get('Kernel::System::DB')->Do(
             SQL => 'DELETE FROM change_cab '
                 . 'WHERE change_id = ? '
                 . 'AND user_id IS NOT NULL',
@@ -931,7 +883,7 @@ sub ChangeCABUpdate {
 
         # add user to cab table
         for my $UserID ( sort keys %UniqueUsers ) {
-            return if !$Self->{DBObject}->Do(
+            return if !$Kernel::OM->Get('Kernel::System::DB')->Do(
                 SQL => 'INSERT INTO change_cab ( change_id, user_id ) VALUES ( ?, ? )',
                 Bind => [ \$Param{ChangeID}, \$UserID ],
             );
@@ -942,7 +894,7 @@ sub ChangeCABUpdate {
     if ( $Param{CABCustomers} ) {
 
         # remove all current customer users from cab table
-        return if !$Self->{DBObject}->Do(
+        return if !$Kernel::OM->Get('Kernel::System::DB')->Do(
             SQL => 'DELETE FROM change_cab '
                 . 'WHERE change_id = ? '
                 . 'AND customer_user_id IS NOT NULL',
@@ -954,7 +906,7 @@ sub ChangeCABUpdate {
 
         # add user to cab table
         for my $CustomerUserID ( sort keys %UniqueCustomerUsers ) {
-            return if !$Self->{DBObject}->Do(
+            return if !$Kernel::OM->Get('Kernel::System::DB')->Do(
                 SQL => 'INSERT INTO change_cab ( change_id, customer_user_id ) VALUES ( ?, ? )',
                 Bind => [ \$Param{ChangeID}, \$CustomerUserID ],
             );
@@ -1005,7 +957,7 @@ sub ChangeCABGet {
     # check needed stuff
     for my $Argument (qw(ChangeID UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -1035,7 +987,7 @@ sub ChangeCABGet {
     else {
 
         # get data
-        return if !$Self->{DBObject}->Prepare(
+        return if !$Kernel::OM->Get('Kernel::System::DB')->Prepare(
             SQL => 'SELECT id, change_id, user_id, customer_user_id '
                 . 'FROM change_cab WHERE change_id = ?',
             Bind => [ \$Param{ChangeID} ],
@@ -1044,7 +996,7 @@ sub ChangeCABGet {
         my $ErrorCABID;
 
         ROW:
-        while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        while ( my @Row = $Kernel::OM->Get('Kernel::System::DB')->FetchrowArray() ) {
             my $CABID          = $Row[0];
             my $ChangeID       = $Row[1];
             my $UserID         = $Row[2];
@@ -1068,7 +1020,7 @@ sub ChangeCABGet {
         # error check if both columns are filled
         if ($ErrorCABID) {
 
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message =>
                     "CAB table entry with ID $ErrorCABID contains UserID and CustomerUserID! "
@@ -1110,7 +1062,7 @@ sub ChangeCABDelete {
     # check needed stuff
     for my $Attribute (qw(ChangeID UserID)) {
         if ( !$Param{$Attribute} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Attribute!",
             );
@@ -1134,7 +1086,7 @@ sub ChangeCABDelete {
     );
 
     # delete CAB
-    return if !$Self->{DBObject}->Do(
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Do(
         SQL  => 'DELETE FROM change_cab WHERE change_id = ?',
         Bind => [ \$Param{ChangeID} ],
     );
@@ -1179,7 +1131,7 @@ sub ChangeLookup {
 
     # the change id or the change number must be passed
     if ( !$Param{ChangeID} && !$Param{ChangeNumber} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need the ChangeID or the ChangeNumber!',
         );
@@ -1188,7 +1140,7 @@ sub ChangeLookup {
 
     # only one of change id and change number can be passed
     if ( $Param{ChangeID} && $Param{ChangeNumber} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need either the ChangeID or the ChangeNumber, not both!',
         );
@@ -1214,13 +1166,13 @@ sub ChangeLookup {
         }
 
         else {
-            return if !$Self->{DBObject}->Prepare(
+            return if !$Kernel::OM->Get('Kernel::System::DB')->Prepare(
                 SQL   => 'SELECT id FROM change_item WHERE change_number = ?',
                 Bind  => [ \$Param{ChangeNumber} ],
                 Limit => 1,
             );
 
-            while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+            while ( my @Row = $Kernel::OM->Get('Kernel::System::DB')->FetchrowArray() ) {
                 $ChangeID = $Row[0];
             }
 
@@ -1259,13 +1211,13 @@ sub ChangeLookup {
         }
 
         else {
-            return if !$Self->{DBObject}->Prepare(
+            return if !$Kernel::OM->Get('Kernel::System::DB')->Prepare(
                 SQL   => 'SELECT change_number FROM change_item WHERE id = ?',
                 Bind  => [ \$Param{ChangeID} ],
                 Limit => 1,
             );
 
-            while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+            while ( my @Row = $Kernel::OM->Get('Kernel::System::DB')->FetchrowArray() ) {
                 $ChangeNumber = $Row[0];
             }
 
@@ -1303,7 +1255,7 @@ sub ChangeList {
 
     # check needed stuff
     if ( !$Param{UserID} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need UserID!',
         );
@@ -1327,11 +1279,11 @@ sub ChangeList {
     else {
 
         # get change ids
-        return if !$Self->{DBObject}->Prepare(
+        return if !$Kernel::OM->Get('Kernel::System::DB')->Prepare(
             SQL => 'SELECT id FROM change_item',
         );
 
-        while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        while ( my @Row = $Kernel::OM->Get('Kernel::System::DB')->FetchrowArray() ) {
             push @ChangeIDs, $Row[0];
         }
 
@@ -1486,7 +1438,7 @@ sub ChangeSearch {
 
     # check needed stuff
     if ( !$Param{UserID} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need UserID!',
         );
@@ -1528,7 +1480,7 @@ sub ChangeSearch {
         }
 
         if ( ref $Param{$Argument} ne 'ARRAY' ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "$Argument must be an array reference!",
             );
@@ -1537,32 +1489,31 @@ sub ChangeSearch {
     }
 
     # define a local database object
-    my $DBObject = $Self->{DBObject};
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
+    # get config object
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
     # if we need to do a change search on an external mirror database
     if (
         $Param{MirrorDB}
-        && $Self->{ConfigObject}->Get('ITSMChange::ChangeSearch::MirrorDB')
-        && $Self->{ConfigObject}->Get('Core::MirrorDB::DSN')
-        && $Self->{ConfigObject}->Get('Core::MirrorDB::User')
-        && $Self->{ConfigObject}->Get('Core::MirrorDB::Password')
+        && $ConfigObject->Get('ITSMChange::ChangeSearch::MirrorDB')
+        && $ConfigObject->Get('Core::MirrorDB::DSN')
+        && $ConfigObject->Get('Core::MirrorDB::User')
+        && $ConfigObject->Get('Core::MirrorDB::Password')
         )
     {
 
         # create an extra database object for the mirror db
         my $ExtraDatabaseObject = Kernel::System::DB->new(
-            LogObject    => $Self->{LogObject},
-            ConfigObject => $Self->{ConfigObject},
-            MainObject   => $Self->{MainObject},
-            EncodeObject => $Self->{EncodeObject},
-            DatabaseDSN  => $Self->{ConfigObject}->Get('Core::MirrorDB::DSN'),
-            DatabaseUser => $Self->{ConfigObject}->Get('Core::MirrorDB::User'),
-            DatabasePw   => $Self->{ConfigObject}->Get('Core::MirrorDB::Password'),
+            DatabaseDSN  => $ConfigObject->Get('Core::MirrorDB::DSN'),
+            DatabaseUser => $ConfigObject->Get('Core::MirrorDB::User'),
+            DatabasePw   => $ConfigObject->Get('Core::MirrorDB::Password'),
         );
 
         # check error
         if ( !$ExtraDatabaseObject ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => 'Could not create database object for MirrorDB!',
             );
@@ -1600,7 +1551,7 @@ sub ChangeSearch {
         if ( !$OrderBy || !$OrderByTable{$OrderBy} || $OrderBySeen{$OrderBy} ) {
 
             # found an error
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "OrderBy contains invalid value '$OrderBy' "
                     . 'or the value is used more than once!',
@@ -1621,7 +1572,7 @@ sub ChangeSearch {
         next DIRECTION if $Direction eq 'Down';
 
         # found an error
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "OrderByDirection can only contain 'Up' or 'Down'!",
         );
@@ -1657,7 +1608,7 @@ sub ChangeSearch {
 
         # check whether the ID was found, whether the name exists
         if ( !$ChangeStateID ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "The change state $ChangeState is not known!",
             );
@@ -1686,7 +1637,7 @@ sub ChangeSearch {
 
             # check whether the ID was found, whether the name exists
             if ( !$CIPID ) {
-                $Self->{LogObject}->Log(
+                $Kernel::OM->Get('Kernel::System::Log')->Log(
                     Priority => 'error',
                     Message  => "The $CIPSingular $CIP is not known!",
                 );
@@ -1699,21 +1650,23 @@ sub ChangeSearch {
     }
 
     # check workorder states - if given
-    return if !$Self->{WorkOrderObject}->WorkOrderStateIDsCheck(
+    return
+        if !$Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderStateIDsCheck(
         WorkOrderStateIDs => $Param{WorkOrderStateIDs},
-    );
+        );
 
     # look up and thus check the workorder states
     for my $WorkOrderState ( @{ $Param{WorkOrderStates} } ) {
 
         # look up the ID for the name
-        my $WorkOrderStateID = $Self->{WorkOrderObject}->WorkOrderStateLookup(
+        my $WorkOrderStateID
+            = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderStateLookup(
             WorkOrderState => $WorkOrderState,
-        );
+            );
 
         # check whether the ID was found, whether the name exists
         if ( !$WorkOrderStateID ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "The workorder state $WorkOrderState is not known!",
             );
@@ -1728,13 +1681,14 @@ sub ChangeSearch {
     for my $WorkOrderType ( @{ $Param{WorkOrderTypes} } ) {
 
         # look up the ID for the name
-        my $WorkOrderTypeID = $Self->{WorkOrderObject}->WorkOrderTypeLookup(
+        my $WorkOrderTypeID
+            = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderTypeLookup(
             WorkOrderType => $WorkOrderType,
-        );
+            );
 
         # check whether the ID was found, whether the name exists
         if ( !$WorkOrderTypeID ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "The workorder type $WorkOrderType is not known!",
             );
@@ -1752,7 +1706,7 @@ sub ChangeSearch {
 
     # check all configured change dynamic fields, build lookup hash by name
     my %ChangeDynamicFieldName2Config;
-    my $ChangeDynamicFields = $Self->{DynamicFieldObject}->DynamicFieldListGet(
+    my $ChangeDynamicFields = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldListGet(
         ObjectType => 'ITSMChange',
     );
     for my $DynamicField ( @{$ChangeDynamicFields} ) {
@@ -1761,9 +1715,10 @@ sub ChangeSearch {
 
     # check all configured workorder dynamic fields, build lookup hash by name
     my %WorkOrderDynamicFieldName2Config;
-    my $WorkOrderDynamicFields = $Self->{DynamicFieldObject}->DynamicFieldListGet(
+    my $WorkOrderDynamicFields
+        = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldListGet(
         ObjectType => 'ITSMWorkOrder',
-    );
+        );
     for my $DynamicField ( @{$WorkOrderDynamicFields} ) {
         $WorkOrderDynamicFieldName2Config{ $DynamicField->{Name} } = $DynamicField;
     }
@@ -1879,13 +1834,14 @@ sub ChangeSearch {
                 next TEXT if $Text =~ /^\%{1,3}$/;
 
                 # validate data type
-                my $ValidateSuccess = $Self->{DynamicFieldBackendObject}->ValueValidate(
+                my $ValidateSuccess
+                    = $Kernel::OM->Get('Kernel::System::DynamicField::Backend')->ValueValidate(
                     DynamicFieldConfig => $DynamicField,
                     Value              => $Text,
                     UserID             => $Param{UserID} || 1,
-                );
+                    );
                 if ( !$ValidateSuccess ) {
-                    $Self->{LogObject}->Log(
+                    $Kernel::OM->Get('Kernel::System::Log')->Log(
                         Priority => 'error',
                         Message =>
                             "Search not executed due to invalid value '"
@@ -1900,12 +1856,13 @@ sub ChangeSearch {
                 if ($Counter) {
                     $SQLDynamicFieldWhereSub .= ' OR ';
                 }
-                $SQLDynamicFieldWhereSub .= $Self->{DynamicFieldBackendObject}->SearchSQLGet(
+                $SQLDynamicFieldWhereSub
+                    .= $Kernel::OM->Get('Kernel::System::DynamicField::Backend')->SearchSQLGet(
                     DynamicFieldConfig => $DynamicField,
                     TableAlias         => "dfv$DynamicFieldJoinCounter",
                     Operator           => $Operator,
                     SearchTerm         => $Text,
-                );
+                    );
 
                 $Counter++;
             }
@@ -1925,7 +1882,7 @@ sub ChangeSearch {
                     .= "INNER JOIN dynamic_field_value dfv$DynamicFieldJoinCounter
                     ON (c.id = dfv$DynamicFieldJoinCounter.object_id
                         AND dfv$DynamicFieldJoinCounter.field_id = " .
-                    $Self->{DBObject}->Quote( $DynamicField->{ID}, 'Integer' ) . ") ";
+                    $DBObject->Quote( $DynamicField->{ID}, 'Integer' ) . ") ";
             }
 
             elsif ( $DynamicField->{ObjectType} eq 'ITSMWorkOrder' ) {
@@ -1939,7 +1896,7 @@ sub ChangeSearch {
                     .= "INNER JOIN dynamic_field_value dfv$DynamicFieldJoinCounter
                     ON (wo2.id = dfv$DynamicFieldJoinCounter.object_id
                         AND dfv$DynamicFieldJoinCounter.field_id = " .
-                    $Self->{DBObject}->Quote( $DynamicField->{ID}, 'Integer' ) . ") ";
+                    $DBObject->Quote( $DynamicField->{ID}, 'Integer' ) . ") ";
             }
 
             $DynamicFieldJoinCounter++;
@@ -2005,7 +1962,7 @@ sub ChangeSearch {
         next TIMEPARAM if !$Param{$TimeParam};
 
         if ( $Param{$TimeParam} !~ m{ \A \d\d\d\d-\d\d-\d\d \s \d\d:\d\d:\d\d \z }xms ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "The parameter $TimeParam has an invalid date format!",
             );
@@ -2169,7 +2126,7 @@ sub ChangeSearch {
         $TableSeen{$Table} = 1;
 
         if ( !$LongTableName{$Table} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Encountered invalid inner join table '$Table'!",
             );
@@ -2193,7 +2150,7 @@ sub ChangeSearch {
 
         # check error
         if ( !$LongTableName{$Table} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Encountered invalid outer join table '$Table'!",
             );
@@ -2332,7 +2289,7 @@ sub ChangeDelete {
     # check needed stuff
     for my $Attribute (qw(ChangeID UserID)) {
         if ( !$Param{$Attribute} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Attribute!",
             );
@@ -2355,7 +2312,7 @@ sub ChangeDelete {
     );
 
     # delete all links to this change
-    return if !$Self->{LinkObject}->LinkDeleteAll(
+    return if !$Kernel::OM->Get('Kernel::System::LinkObject')->LinkDeleteAll(
         Object => 'ITSMChange',
         Key    => $Param{ChangeID},
         UserID => 1,
@@ -2390,11 +2347,12 @@ sub ChangeDelete {
 
         # delete the workorders
         for my $WorkOrderID ( @{ $ChangeData->{WorkOrderIDs} } ) {
-            return if !$Self->{WorkOrderObject}->WorkOrderDelete(
+            return
+                if !$Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderDelete(
                 WorkOrderID  => $WorkOrderID,
                 NoNumberCalc => 1,
                 UserID       => $Param{UserID},
-            );
+                );
         }
     }
 
@@ -2405,10 +2363,11 @@ sub ChangeDelete {
     );
 
     # get all dynamic fields for the object type ITSMChange
-    my $DynamicFieldListTicket = $Self->{DynamicFieldObject}->DynamicFieldListGet(
+    my $DynamicFieldListTicket
+        = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldListGet(
         ObjectType => 'ITSMChange',
         Valid      => 0,
-    );
+        );
 
     # delete dynamicfield values for this change
     DYNAMICFIELD:
@@ -2419,7 +2378,7 @@ sub ChangeDelete {
         next DYNAMICFIELD if !$DynamicFieldConfig->{Name};
         next DYNAMICFIELD if !IsHashRefWithData( $DynamicFieldConfig->{Config} );
 
-        $Self->{DynamicFieldBackendObject}->ValueDelete(
+        $Kernel::OM->Get('Kernel::System::DynamicField::Backend')->ValueDelete(
             DynamicFieldConfig => $DynamicFieldConfig,
             ObjectID           => $Param{ChangeID},
             UserID             => $Param{UserID},
@@ -2454,7 +2413,7 @@ sub ChangeDelete {
     );
 
     # delete the change
-    return if !$Self->{DBObject}->Do(
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Do(
         SQL  => 'DELETE FROM change_item WHERE id = ?',
         Bind => [ \$Param{ChangeID} ],
     );
@@ -2483,7 +2442,7 @@ sub ChangeStateLookup {
 
     # either ChangeStateID or State must be passed
     if ( !$Param{ChangeStateID} && !$Param{ChangeState} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need ChangeStateID or ChangeState!',
         );
@@ -2491,7 +2450,7 @@ sub ChangeStateLookup {
     }
 
     if ( $Param{ChangeStateID} && $Param{ChangeState} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need ChangeStateID OR ChangeState - not both!',
         );
@@ -2499,7 +2458,7 @@ sub ChangeStateLookup {
     }
 
     # get the change states from the general catalog
-    my $StateList = $Self->{GeneralCatalogObject}->ItemList(
+    my $StateList = $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemList(
         Class => 'ITSM::ChangeManagement::Change::State',
     );
 
@@ -2511,7 +2470,7 @@ sub ChangeStateLookup {
 
     # check the state hash
     if ( !%StateID2Name ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Could not retrieve change states from the general catalog.',
         );
@@ -2563,7 +2522,7 @@ sub ChangePossibleStatesGet {
 
     # check needed stuff
     if ( !$Param{UserID} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "Need UserID!",
         );
@@ -2571,7 +2530,7 @@ sub ChangePossibleStatesGet {
     }
 
     # get change state list
-    my $StateList = $Self->{GeneralCatalogObject}->ItemList(
+    my $StateList = $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemList(
         Class => 'ITSM::ChangeManagement::Change::State',
     ) || {};
 
@@ -2589,27 +2548,29 @@ sub ChangePossibleStatesGet {
 
         # check for state lock
         my $StateLock;
-        $StateLock = $Self->{ConditionObject}->ConditionMatchStateLock(
+        $StateLock = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMCondition')
+            ->ConditionMatchStateLock(
             ObjectName => 'ITSMChange',
             Selector   => $Param{ChangeID},
             StateID    => $Change->{ChangeStateID},
             UserID     => $Param{UserID},
-        );
+            );
 
         # set as default state current change state
         my @NextStateIDs = ( $Change->{ChangeStateID} );
 
         # check if reachable change end states should be allowed for locked change states
         my $ChangeEndStatesAllowed
-            = $Self->{ConfigObject}->Get('ITSMChange::StateLock::AllowEndStates');
+            = $Kernel::OM->Get('Kernel::Config')->Get('ITSMChange::StateLock::AllowEndStates');
 
         if ($ChangeEndStatesAllowed) {
 
             # set as default state current state and all possible end states
-            my $EndStateIDsRef = $Self->{StateMachineObject}->StateTransitionGetEndStates(
+            my $EndStateIDsRef = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMStateMachine')
+                ->StateTransitionGetEndStates(
                 StateID => $Change->{ChangeStateID},
                 Class   => 'ITSM::ChangeManagement::Change::State',
-            ) || [];
+                ) || [];
             @NextStateIDs = sort ( @{$EndStateIDsRef}, $Change->{ChangeStateID} );
         }
 
@@ -2617,10 +2578,11 @@ sub ChangePossibleStatesGet {
         if ( !$StateLock ) {
 
             # get the possible next state ids
-            my $NextStateIDsRef = $Self->{StateMachineObject}->StateTransitionGet(
+            my $NextStateIDsRef = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMStateMachine')
+                ->StateTransitionGet(
                 StateID => $Change->{ChangeStateID},
                 Class   => 'ITSM::ChangeManagement::Change::State',
-            ) || [];
+                ) || [];
 
             # add current change state id to list
             @NextStateIDs = sort ( @{$NextStateIDsRef}, $Change->{ChangeStateID} );
@@ -2683,7 +2645,7 @@ sub ChangePossibleCIPGet {
 
     # check needed stuff
     if ( !$Param{UserID} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "Need UserID!",
         );
@@ -2696,7 +2658,7 @@ sub ChangePossibleCIPGet {
         || ( $Param{Type} ne 'Category' && $Param{Type} ne 'Impact' && $Param{Type} ne 'Priority' )
         )
     {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'The param Type must be either "Category" or "Impact" or "Priority"!',
         );
@@ -2704,7 +2666,7 @@ sub ChangePossibleCIPGet {
     }
 
     # get item list for the requested type
-    my $CIPList = $Self->{GeneralCatalogObject}->ItemList(
+    my $CIPList = $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemList(
         Class => 'ITSM::ChangeManagement::' . $Param{Type},
     ) || {};
 
@@ -2743,7 +2705,7 @@ sub ChangeCIPLookup {
 
     # either ID or CIP must be passed
     if ( !$Param{ID} && !$Param{CIP} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need ID or CIP!',
         );
@@ -2752,7 +2714,7 @@ sub ChangeCIPLookup {
 
     # check that not both ID and CIP are given
     if ( $Param{ID} && $Param{CIP} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need either ID OR CIP - not both!',
         );
@@ -2765,7 +2727,7 @@ sub ChangeCIPLookup {
         || ( $Param{Type} ne 'Category' && $Param{Type} ne 'Impact' && $Param{Type} ne 'Priority' )
         )
     {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'The param Type must be either "Category" or "Impact" or "Priority"!',
         );
@@ -2775,7 +2737,7 @@ sub ChangeCIPLookup {
     # get change CIP from general catalog
     # mapping of the id to the name
     my %ChangeCIP = %{
-        $Self->{GeneralCatalogObject}->ItemList(
+        $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemList(
             Class => 'ITSM::ChangeManagement::' . $Param{Type},
             ) || {}
     };
@@ -2821,7 +2783,7 @@ sub Permission {
     # check needed stuff
     for my $Argument (qw(Type UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -2837,37 +2799,28 @@ sub Permission {
     my $Registry = $Param{PermissionRegistry} || 'ITSMChange::Permission';
 
     # run the relevant permission modules
-    if ( ref $Self->{ConfigObject}->Get($Registry) eq 'HASH' ) {
+    if ( ref $Kernel::OM->Get('Kernel::Config')->Get($Registry) eq 'HASH' ) {
 
-        my %Modules = %{ $Self->{ConfigObject}->Get($Registry) };
+        my %Modules = %{ $Kernel::OM->Get('Kernel::Config')->Get($Registry) };
 
         MODULE:
         for my $Module ( sort keys %Modules ) {
 
             # log try of load module
             if ( $Self->{Debug} > 1 ) {
-                $Self->{LogObject}->Log(
+                $Kernel::OM->Get('Kernel::System::Log')->Log(
                     Priority => 'debug',
                     Message  => "Try to load module: $Modules{$Module}->{Module}!",
                 );
             }
 
             # load module
-            next MODULE if !$Self->{MainObject}->Require( $Modules{$Module}->{Module} );
+            next MODULE
+                if !$Kernel::OM->Get('Kernel::System::Main')
+                ->Require( $Modules{$Module}->{Module} );
 
             # create object
-            my $ModuleObject = $Modules{$Module}->{Module}->new(
-                ConfigObject => $Self->{ConfigObject},
-                EncodeObject => $Self->{EncodeObject},
-                LogObject    => $Self->{LogObject},
-                MainObject   => $Self->{MainObject},
-                TimeObject   => $Self->{TimeObject},
-                DBObject     => $Self->{DBObject},
-                UserObject   => $Self->{UserObject},
-                GroupObject  => $Self->{GroupObject},
-                ChangeObject => $Self,
-                Debug        => $Self->{Debug},
-            );
+            my $ModuleObject = $Modules{$Module}->{Module}->new();
 
             # ask for the opinion of the Permission module
             my $Access = $ModuleObject->Run(%Param);
@@ -2876,7 +2829,7 @@ sub Permission {
             # when the module granted a sufficient permission.
             if ( $Access && $Modules{$Module}->{Granted} ) {
                 if ( $Self->{Debug} > 0 ) {
-                    $Self->{LogObject}->Log(
+                    $Kernel::OM->Get('Kernel::System::Log')->Log(
                         Priority => 'debug',
                         Message  => "Granted '$Param{Type}' access for "
                             . "UserID: $Param{UserID} on "
@@ -2893,7 +2846,7 @@ sub Permission {
             # when the module denied a required permission.
             if ( !$Access && $Modules{$Module}->{Required} ) {
                 if ( !$Param{LogNo} ) {
-                    $Self->{LogObject}->Log(
+                    $Kernel::OM->Get('Kernel::System::Log')->Log(
                         Priority => 'notice',
                         Message  => "Denied '$Param{Type}' access for "
                             . "UserID: $Param{UserID} on "
@@ -2910,7 +2863,7 @@ sub Permission {
 
     # Deny access when neither a 'Granted'-Check nor a 'Required'-Check has reached a conclusion.
     if ( !$Param{LogNo} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'notice',
             Message  => "Permission denied (UserID: $Param{UserID} '$Param{Type}' "
                 . "on ChangeID: $Param{ChangeID})!",
@@ -2940,7 +2893,7 @@ sub ChangeAttachmentAdd {
     # check needed stuff
     for my $Needed (qw(ChangeID Filename Content ContentType UserID)) {
         if ( !$Param{$Needed} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Needed!",
             );
@@ -2950,7 +2903,7 @@ sub ChangeAttachmentAdd {
     }
 
     # write to virtual fs
-    my $Success = $Self->{VirtualFSObject}->Write(
+    my $Success = $Kernel::OM->Get('Kernel::System::VirtualFS')->Write(
         Filename    => "Change/$Param{ChangeID}/$Param{Filename}",
         Mode        => 'binary',
         Content     => \$Param{Content},
@@ -2975,7 +2928,7 @@ sub ChangeAttachmentAdd {
         );
     }
     else {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "Cannot add attachment for change $Param{ChangeID}",
         );
@@ -3004,7 +2957,7 @@ sub ChangeAttachmentDelete {
     # check needed stuff
     for my $Needed (qw(ChangeID Filename UserID)) {
         if ( !$Param{$Needed} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Needed!",
             );
@@ -3017,7 +2970,7 @@ sub ChangeAttachmentDelete {
     my $Filename = 'Change/' . $Param{ChangeID} . '/' . $Param{Filename};
 
     # delete file
-    my $Success = $Self->{VirtualFSObject}->Delete(
+    my $Success = $Kernel::OM->Get('Kernel::System::VirtualFS')->Delete(
         Filename => $Filename,
     );
 
@@ -3034,7 +2987,7 @@ sub ChangeAttachmentDelete {
         );
     }
     else {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "Cannot delete attachment $Filename!",
         );
@@ -3075,7 +3028,7 @@ sub ChangeAttachmentGet {
     # check needed stuff
     for my $Argument (qw(ChangeID Filename)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -3087,7 +3040,7 @@ sub ChangeAttachmentGet {
     my $Filename = 'Change/' . $Param{ChangeID} . '/' . $Param{Filename};
 
     # find all attachments of this change
-    my @Attachments = $Self->{VirtualFSObject}->Find(
+    my @Attachments = $Kernel::OM->Get('Kernel::System::VirtualFS')->Find(
         Filename    => $Filename,
         Preferences => {
             ChangeID => $Param{ChangeID},
@@ -3096,7 +3049,7 @@ sub ChangeAttachmentGet {
 
     # return error if file does not exist
     if ( !@Attachments ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Message  => "No such attachment ($Filename)! May be an attack!!!",
             Priority => 'error',
         );
@@ -3104,7 +3057,7 @@ sub ChangeAttachmentGet {
     }
 
     # get data for attachment
-    my %AttachmentData = $Self->{VirtualFSObject}->Read(
+    my %AttachmentData = $Kernel::OM->Get('Kernel::System::VirtualFS')->Read(
         Filename => $Filename,
         Mode     => 'binary',
     );
@@ -3143,7 +3096,7 @@ sub ChangeAttachmentList {
 
     # check needed stuff
     if ( !$Param{ChangeID} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need ChangeID!',
         );
@@ -3152,7 +3105,7 @@ sub ChangeAttachmentList {
     }
 
     # find all attachments of this change
-    my @Attachments = $Self->{VirtualFSObject}->Find(
+    my @Attachments = $Kernel::OM->Get('Kernel::System::VirtualFS')->Find(
         Preferences => {
             ChangeID => $Param{ChangeID},
         },
@@ -3185,7 +3138,7 @@ sub ChangeAttachmentExists {
     # check needed stuff
     for my $Needed (qw(Filename ChangeID UserID)) {
         if ( !$Param{$Needed} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Needed!",
             );
@@ -3194,7 +3147,7 @@ sub ChangeAttachmentExists {
         }
     }
 
-    return if !$Self->{VirtualFSObject}->Find(
+    return if !$Kernel::OM->Get('Kernel::System::VirtualFS')->Find(
         Filename => 'Change/' . $Param{ChangeID} . '/' . $Param{Filename},
     );
 
@@ -3227,7 +3180,7 @@ sub _CheckChangeStateIDs {
 
     # check needed stuff
     if ( !$Param{ChangeStateIDs} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need ChangeStateIDs!',
         );
@@ -3235,7 +3188,7 @@ sub _CheckChangeStateIDs {
     }
 
     if ( ref $Param{ChangeStateIDs} ne 'ARRAY' ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'The param ChangeStateIDs must be an array reference!',
         );
@@ -3249,7 +3202,7 @@ sub _CheckChangeStateIDs {
         );
 
         if ( !$State ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "The state id $StateID is not valid!",
             );
@@ -3278,7 +3231,7 @@ sub _CheckChangeCIPIDs {
     # check needed stuff
     for my $Needed (qw(IDs Type)) {
         if ( !$Param{$Needed} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Needed!",
             );
@@ -3288,7 +3241,7 @@ sub _CheckChangeCIPIDs {
 
     # check if IDs is an array reference
     if ( ref $Param{IDs} ne 'ARRAY' ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'The param IDs must be an array reference!',
         );
@@ -3301,7 +3254,7 @@ sub _CheckChangeCIPIDs {
         || ( $Param{Type} ne 'Category' && $Param{Type} ne 'Impact' && $Param{Type} ne 'Priority' )
         )
     {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'The param Type must be either "Category" or "Impact" or "Priority"!',
         );
@@ -3316,7 +3269,7 @@ sub _CheckChangeCIPIDs {
         );
 
         if ( !$CIP ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "The $Param{Type} id $ID is not valid!",
             );
@@ -3391,7 +3344,7 @@ sub _CheckChangeParams {
 
         # check if param is not defined
         if ( !defined $Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "The parameter '$Argument' must be defined!",
             );
@@ -3400,7 +3353,7 @@ sub _CheckChangeParams {
 
         # check if param is not a reference
         if ( ref $Param{$Argument} ne '' ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "The parameter '$Argument' mustn't be a reference!",
             );
@@ -3409,7 +3362,7 @@ sub _CheckChangeParams {
 
         # check the maximum length of title
         if ( $Argument eq 'ChangeTitle' && length( $Param{$Argument} ) > 250 ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "The parameter '$Argument' must be shorter than 250 characters!",
             );
@@ -3425,7 +3378,7 @@ sub _CheckChangeParams {
             )
         {
             if ( length( $Param{$Argument} ) > 1800000 ) {
-                $Self->{LogObject}->Log(
+                $Kernel::OM->Get('Kernel::System::Log')->Log(
                     Priority => 'error',
                     Message => "The parameter '$Argument' must be shorter than 1800000 characters!",
                 );
@@ -3445,7 +3398,7 @@ sub _CheckChangeParams {
 
         # check if param is not defined
         if ( !defined $Param{$Key} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "The parameter '$Key' must be defined!",
             );
@@ -3454,7 +3407,7 @@ sub _CheckChangeParams {
 
         # check the maximum length of dynamic fields
         if ( length( $Param{$Key} ) > 3800 ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "The parameter '$Key' must be shorter than 3800 characters!",
             );
@@ -3468,7 +3421,7 @@ sub _CheckChangeParams {
         && $Param{RequestedTime} !~ m{ \A \d\d\d\d-\d\d-\d\d \s \d\d:\d\d:\d\d \z }xms
         )
     {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Invalid format for RequestedTime!',
         );
@@ -3507,13 +3460,13 @@ sub _CheckChangeParams {
         next ARGUMENT if !exists $Param{$Argument};
 
         # get user data
-        my %UserData = $Self->{UserObject}->GetUserData(
+        my %UserData = $Kernel::OM->Get('Kernel::System::User')->GetUserData(
             UserID => $Param{$Argument},
             Valid  => 1,
         );
 
         if ( !$UserData{UserID} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "The $Argument $Param{$Argument} is not a valid user id!",
             );
@@ -3524,7 +3477,7 @@ sub _CheckChangeParams {
     # CAB agents must be agents
     if ( exists $Param{CABAgents} ) {
         if ( ref $Param{CABAgents} ne 'ARRAY' ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => 'The parameter CABAgents is not an ARRAY reference!',
             );
@@ -3535,13 +3488,13 @@ sub _CheckChangeParams {
         for my $UserID ( @{ $Param{CABAgents} } ) {
 
             # get user data
-            my %UserData = $Self->{UserObject}->GetUserData(
+            my %UserData = $Kernel::OM->Get('Kernel::System::User')->GetUserData(
                 UserID => $UserID,
                 Valid  => 1,
             );
 
             if ( !$UserData{UserID} ) {
-                $Self->{LogObject}->Log(
+                $Kernel::OM->Get('Kernel::System::Log')->Log(
                     Priority => 'error',
                     Message  => "The CABAgent $UserID is not a valid user id!",
                 );
@@ -3553,7 +3506,7 @@ sub _CheckChangeParams {
     # CAB customers must be customers
     if ( exists $Param{CABCustomers} ) {
         if ( ref $Param{CABCustomers} ne 'ARRAY' ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => 'The parameter CABCustomers is not an ARRAY reference!',
             );
@@ -3564,13 +3517,14 @@ sub _CheckChangeParams {
         for my $CustomerUser ( @{ $Param{CABCustomers} } ) {
 
             # get customer user data
-            my %CustomerUserData = $Self->{CustomerUserObject}->CustomerUserDataGet(
+            my %CustomerUserData
+                = $Kernel::OM->Get('Kernel::System::CustomerUser')->CustomerUserDataGet(
                 User  => $CustomerUser,
                 Valid => 1,
-            );
+                );
 
             if ( !%CustomerUserData ) {
-                $Self->{LogObject}->Log(
+                $Kernel::OM->Get('Kernel::System::Log')->Log(
                     Priority => 'error',
                     Message  => "The CABCustomer $CustomerUser is not a valid customer!",
                 );
