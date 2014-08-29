@@ -12,6 +12,8 @@ package Kernel::System::ITSMChange::ITSMCondition::Operator;
 use strict;
 use warnings;
 
+our $ObjectManagerDisabled = 1;
+
 =head1 NAME
 
 Kernel::System::ITSMChange::ITSMCondition::Operator - condition operator lib
@@ -41,7 +43,7 @@ sub OperatorAdd {
     # check needed stuff
     for my $Argument (qw(Name UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -54,7 +56,7 @@ sub OperatorAdd {
 
     # check if operator name already exists
     if ($OperatorID) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "Condition operator ($Param{Name}) already exists!",
         );
@@ -62,7 +64,7 @@ sub OperatorAdd {
     }
 
     # add new operator name to database
-    return if !$Self->{DBObject}->Do(
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Do(
         SQL => 'INSERT INTO condition_operator '
             . '(name) '
             . 'VALUES (?)',
@@ -76,7 +78,7 @@ sub OperatorAdd {
 
     # check if operator could be added
     if ( !$OperatorID ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "OperatorAdd() failed!",
         );
@@ -84,8 +86,8 @@ sub OperatorAdd {
     }
 
     # delete cache
-    $Self->{CacheObject}->Delete(
-        Type => 'ITSMChangeManagement',
+    $Kernel::OM->Get('Kernel::System::Cache')->Delete(
+        Type => $Self->{CacheType},
         Key  => 'OperatorList',
     );
 
@@ -110,7 +112,7 @@ sub OperatorUpdate {
     # check needed stuff
     for my $Argument (qw(OperatorID Name UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -126,7 +128,7 @@ sub OperatorUpdate {
 
     # check operator data
     if ( !$OperatorData ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "OperatorUpdate of $Param{OperatorID} failed!",
         );
@@ -134,7 +136,7 @@ sub OperatorUpdate {
     }
 
     # update operator in database
-    return if !$Self->{DBObject}->Do(
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Do(
         SQL => 'UPDATE condition_operator '
             . 'SET name = ? '
             . 'WHERE id = ?',
@@ -152,8 +154,8 @@ sub OperatorUpdate {
         'OperatorLookup::Name::' . $OperatorData->{Name},    # use the old name
         )
     {
-        $Self->{CacheObject}->Delete(
-            Type => 'ITSMChangeManagement',
+        $Kernel::OM->Get('Kernel::System::Cache')->Delete(
+            Type => $Self->{CacheType},
             Key  => $Key,
         );
     }
@@ -184,7 +186,7 @@ sub OperatorGet {
     # check needed stuff
     for my $Argument (qw(OperatorID UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -194,14 +196,14 @@ sub OperatorGet {
 
     # check cache
     my $CacheKey = 'OperatorGet::OperatorID::' . $Param{OperatorID};
-    my $Cache    = $Self->{CacheObject}->Get(
-        Type => 'ITSMChangeManagement',
+    my $Cache    = $Kernel::OM->Get('Kernel::System::Cache')->Get(
+        Type => $Self->{CacheType},
         Key  => $CacheKey,
     );
     return $Cache if $Cache;
 
     # prepare SQL statement
-    return if !$Self->{DBObject}->Prepare(
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Prepare(
         SQL   => 'SELECT id, name FROM condition_operator WHERE id = ?',
         Bind  => [ \$Param{OperatorID} ],
         Limit => 1,
@@ -209,14 +211,14 @@ sub OperatorGet {
 
     # fetch the result
     my %OperatorData;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $Kernel::OM->Get('Kernel::System::DB')->FetchrowArray() ) {
         $OperatorData{OperatorID} = $Row[0];
         $OperatorData{Name}       = $Row[1];
     }
 
     # check error
     if ( !%OperatorData ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "OperatorID $Param{OperatorID} does not exist!",
         );
@@ -224,8 +226,8 @@ sub OperatorGet {
     }
 
     # set cache
-    $Self->{CacheObject}->Set(
-        Type  => 'ITSMChangeManagement',
+    $Kernel::OM->Get('Kernel::System::Cache')->Set(
+        Type  => $Self->{CacheType},
         Key   => $CacheKey,
         Value => \%OperatorData,
         TTL   => $Self->{CacheTTL},
@@ -255,7 +257,7 @@ sub OperatorLookup {
 
     # check if both parameters are given
     if ( $Param{OperatorID} && $Param{Name} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need OperatorID or Name - not both!',
         );
@@ -264,7 +266,7 @@ sub OperatorLookup {
 
     # check if both parameters are not given
     if ( !$Param{OperatorID} && !$Param{Name} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need OperatorID or Name - none is given!',
         );
@@ -273,7 +275,7 @@ sub OperatorLookup {
 
     # check if OperatorID is a number
     if ( $Param{OperatorID} && $Param{OperatorID} !~ m{ \A \d+ \z }xms ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "OperatorID must be a number! (OperatorID: $Param{OperatorID})",
         );
@@ -287,13 +289,13 @@ sub OperatorLookup {
 
         # check cache
         $CacheKey = 'OperatorLookup::OperatorID::' . $Param{OperatorID};
-        my $Cache = $Self->{CacheObject}->Get(
-            Type => 'ITSMChangeManagement',
+        my $Cache = $Kernel::OM->Get('Kernel::System::Cache')->Get(
+            Type => $Self->{CacheType},
             Key  => $CacheKey,
         );
         return $Cache if $Cache;
 
-        return if !$Self->{DBObject}->Prepare(
+        return if !$Kernel::OM->Get('Kernel::System::DB')->Prepare(
             SQL   => 'SELECT name FROM condition_operator WHERE id = ?',
             Bind  => [ \$Param{OperatorID} ],
             Limit => 1,
@@ -303,13 +305,13 @@ sub OperatorLookup {
 
         # check cache
         $CacheKey = 'OperatorLookup::Name::' . $Param{Name};
-        my $Cache = $Self->{CacheObject}->Get(
-            Type => 'ITSMChangeManagement',
+        my $Cache = $Kernel::OM->Get('Kernel::System::Cache')->Get(
+            Type => $Self->{CacheType},
             Key  => $CacheKey,
         );
         return $Cache if $Cache;
 
-        return if !$Self->{DBObject}->Prepare(
+        return if !$Kernel::OM->Get('Kernel::System::DB')->Prepare(
             SQL   => 'SELECT id FROM condition_operator WHERE name = ?',
             Bind  => [ \$Param{Name} ],
             Limit => 1,
@@ -318,13 +320,13 @@ sub OperatorLookup {
 
     # fetch the result
     my $Lookup;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $Kernel::OM->Get('Kernel::System::DB')->FetchrowArray() ) {
         $Lookup = $Row[0];
     }
 
     # set cache
-    $Self->{CacheObject}->Set(
-        Type  => 'ITSMChangeManagement',
+    $Kernel::OM->Get('Kernel::System::Cache')->Set(
+        Type  => $Self->{CacheType},
         Key   => $CacheKey,
         Value => $Lookup,
         TTL   => $Self->{CacheTTL},
@@ -352,7 +354,7 @@ sub OperatorList {
 
     # check needed stuff
     if ( !$Param{UserID} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "Need UserID!",
         );
@@ -361,26 +363,26 @@ sub OperatorList {
 
     # check cache
     my $CacheKey = 'OperatorList';
-    my $Cache    = $Self->{CacheObject}->Get(
-        Type => 'ITSMChangeManagement',
+    my $Cache    = $Kernel::OM->Get('Kernel::System::Cache')->Get(
+        Type => $Self->{CacheType},
         Key  => $CacheKey,
     );
     return $Cache if $Cache;
 
     # prepare SQL statement
-    return if !$Self->{DBObject}->Prepare(
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Prepare(
         SQL => 'SELECT id, name FROM condition_operator',
     );
 
     # fetch the result
     my %OperatorList;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $Kernel::OM->Get('Kernel::System::DB')->FetchrowArray() ) {
         $OperatorList{ $Row[0] } = $Row[1];
     }
 
     # set cache
-    $Self->{CacheObject}->Set(
-        Type  => 'ITSMChangeManagement',
+    $Kernel::OM->Get('Kernel::System::Cache')->Set(
+        Type  => $Self->{CacheType},
         Key   => $CacheKey,
         Value => \%OperatorList,
         TTL   => $Self->{CacheTTL},
@@ -406,7 +408,7 @@ sub OperatorDelete {
     # check needed stuff
     for my $Argument (qw(OperatorID UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -420,7 +422,7 @@ sub OperatorDelete {
     );
 
     # delete condition operator from database
-    return if !$Self->{DBObject}->Do(
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Do(
         SQL => 'DELETE FROM condition_operator '
             . 'WHERE id = ?',
         Bind => [ \$Param{OperatorID} ],
@@ -434,8 +436,8 @@ sub OperatorDelete {
         'OperatorLookup::Name::' . $OperatorName,
         )
     {
-        $Self->{CacheObject}->Delete(
-            Type => 'ITSMChangeManagement',
+        $Kernel::OM->Get('Kernel::System::Cache')->Delete(
+            Type => $Self->{CacheType},
             Key  => $Key,
         );
     }
@@ -467,7 +469,7 @@ sub OperatorExecute {
     # check needed stuff
     for my $Argument (qw(OperatorName Attribute Selector ObjectData UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -481,7 +483,7 @@ sub OperatorExecute {
         && ( !exists $Param{ActionValue} || !defined $Param{ActionValue} )
         )
     {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need either CompareValue or ActionValue!',
         );
@@ -496,7 +498,7 @@ sub OperatorExecute {
 
     # check ObjectData
     if ( ref $ObjectData ne 'ARRAY' ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'ObjectData is not an array reference!',
         );
@@ -579,7 +581,7 @@ sub _OperatorExecute {
     # check needed stuff
     for my $Argument (qw(OperatorName UserID)) {
         if ( !exists $Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -590,7 +592,7 @@ sub _OperatorExecute {
     # check needed stuff
     for my $Argument (qw(Value1 Value2)) {
         if ( !exists $Param{$Argument} || !defined $Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -627,7 +629,7 @@ sub _OperatorExecute {
 
     # check for matching operator
     if ( !exists $OperatorAction{$OperatorName} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "No matching operator for '$OperatorName' found!",
         );
@@ -639,7 +641,7 @@ sub _OperatorExecute {
 
     # check for available function
     if ( !$Self->can($Sub) ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "No function '$Sub' available for '$OperatorName'!",
         );
@@ -678,7 +680,7 @@ sub _OperatorActionExecute {
     # check needed stuff
     for my $Argument (qw(Operator ObjectName Selector Attribute ActionID ActionValue UserID)) {
         if ( !exists $Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -689,7 +691,7 @@ sub _OperatorActionExecute {
     # check needed stuff in a special way
     for my $Argument (qw(ActionValue)) {
         if ( !exists $Param{$Argument} || !defined $Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -707,7 +709,7 @@ sub _OperatorActionExecute {
 
     # check for matching operator
     if ( !exists $OperatorAction{$OperatorName} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "No matching operator for '$OperatorName' found!",
         );
@@ -719,7 +721,7 @@ sub _OperatorActionExecute {
 
     # check for available function
     if ( !$Self->can($Sub) ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "No function '$Sub' available for '$OperatorName'!",
         );
@@ -757,7 +759,7 @@ sub _OperatorEqual {
     # check needed stuff
     for my $Argument (qw(Value1 Value2)) {
         if ( !exists $Param{$Argument} || !defined $Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -786,7 +788,7 @@ sub _OperatorNotEqual {
     # check needed stuff
     for my $Argument (qw(Value1 Value2)) {
         if ( !exists $Param{$Argument} || !defined $Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -814,7 +816,7 @@ sub _OperatorIsEmpty {
     # check needed stuff
     for my $Argument (qw(Value1)) {
         if ( !exists $Param{$Argument} || !defined $Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -845,7 +847,7 @@ sub _OperatorIsNotEmpty {
     # check needed stuff
     for my $Argument (qw(Value1)) {
         if ( !exists $Param{$Argument} || !defined $Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -875,7 +877,7 @@ sub _OperatorIsGreaterThan {
     # check needed stuff
     for my $Argument (qw(Value1 Value2)) {
         if ( !exists $Param{$Argument} || !defined $Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -914,7 +916,7 @@ sub _OperatorIsLessThan {
     # check needed stuff
     for my $Argument (qw(Value1 Value2)) {
         if ( !exists $Param{$Argument} || !defined $Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -952,7 +954,7 @@ sub _OperatorIsBefore {
     # check needed stuff
     for my $Argument (qw(Value1 Value2)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -969,7 +971,7 @@ sub _OperatorIsBefore {
     for my $Date (qw(Value1 Value2)) {
 
         # convert time
-        $Timestamp{$Date} = $Self->{TimeObject}->TimeStamp2SystemTime(
+        $Timestamp{$Date} = $Kernel::OM->Get('Kernel::System::Time')->TimeStamp2SystemTime(
             String => $Param{$Date},
         );
 
@@ -998,7 +1000,7 @@ sub _OperatorIsAfter {
     # check needed stuff
     for my $Argument (qw(Value1 Value2)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -1031,7 +1033,7 @@ sub _OperatorContains {
     # check needed stuff
     for my $Argument (qw(Value1 Value2)) {
         if ( !exists $Param{$Argument} || !defined $Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -1067,7 +1069,7 @@ sub _OperatorNotContains {
     # check needed stuff
     for my $Argument (qw(Value1 Value2)) {
         if ( !exists $Param{$Argument} || !defined $Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -1096,7 +1098,7 @@ sub _OperatorBeginsWith {
     # check needed stuff
     for my $Argument (qw(Value1 Value2)) {
         if ( !exists $Param{$Argument} || !defined $Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -1132,7 +1134,7 @@ sub _OperatorEndsWith {
     # check needed stuff
     for my $Argument (qw(Value1 Value2)) {
         if ( !exists $Param{$Argument} || !defined $Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -1173,7 +1175,7 @@ sub _OperatorSet {
     # check needed stuff
     for my $Argument (qw(Operator ObjectName Selector Attribute ActionID ActionValue UserID)) {
         if ( !exists $Param{$Argument} || !defined $Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -1185,9 +1187,10 @@ sub _OperatorSet {
     my $OperatorName = $Param{ObjectName};
 
     # get operator backend
-    my $BackendObject = $Self->_OperatorLoadBackend(
-        Type => $OperatorName,
+    my $BackendObject = $Kernel::OM->Get(
+        'Kernel::System::ITSMChange::ITSMCondition::Operator::' . $OperatorName
     );
+
     return if !$BackendObject;
 
     # define default functions for backend
@@ -1195,7 +1198,7 @@ sub _OperatorSet {
 
     # check for available function
     if ( !$BackendObject->can($Sub) ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "No function '$Sub' available for backend '$OperatorName'!",
         );
@@ -1213,7 +1216,7 @@ sub _OperatorSet {
 
         # check for available function
         if ( !$BackendObject->can($Sub) ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "No function '$Sub' available for backend '$OperatorName'!",
             );
@@ -1265,57 +1268,6 @@ sub _OperatorSet {
     }
 
     return $Result;
-}
-
-=item _OperatorLoadBackend()
-
-Returns a newly loaded backend object
-
-    my $BackendObject = $ConditionObject->_OperatorLoadBackend(
-        Type => 'ITSMChange',
-    );
-
-=cut
-
-sub _OperatorLoadBackend {
-    my ( $Self, %Param ) = @_;
-
-    if ( !$Param{Type} ) {
-        $Self->{LogObject}->Log(
-            Priority => 'error',
-            Message  => 'Need Type!',
-        );
-        return;
-    }
-
-    # define backend module name
-    my $ModuleName = 'Kernel::System::ITSMChange::ITSMCondition::Operator::' . $Param{Type};
-
-    # load the backend module
-    if ( !$Self->{MainObject}->Require($ModuleName) ) {
-        $Self->{LogObject}->Log(
-            Priority => 'error',
-            Message  => "Can't load backend module $Param{Type}!"
-        );
-        return;
-    }
-
-    # create new instance
-    my $BackendObject = $ModuleName->new(
-        %{$Self},
-        %Param,
-    );
-
-    # check for backend object
-    if ( !$BackendObject ) {
-        $Self->{LogObject}->Log(
-            Priority => 'error',
-            Message  => "Can't create a new instance of backend module $Param{Type}!",
-        );
-        return;
-    }
-
-    return $BackendObject;
 }
 
 1;

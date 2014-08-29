@@ -12,21 +12,16 @@ package Kernel::System::ITSMChange::Template;
 use strict;
 use warnings;
 
-use Kernel::System::EventHandler;
-use Kernel::System::ITSMChange;
-use Kernel::System::ITSMChange::ITSMWorkOrder;
-use Kernel::System::ITSMChange::ITSMCondition;
-use Kernel::System::LinkObject;
-use Kernel::System::Valid;
-use Kernel::System::VirtualFS;
-
 ## nofilter(TidyAll::Plugin::OTRS::Perl::Dumper)
 use Data::Dumper;
+use Kernel::System::EventHandler;
 
 use vars qw(@ISA);
 
-@ISA = (
-    'Kernel::System::EventHandler',
+our @ObjectDependencies = (
+    'Kernel::System::DB',
+    'Kernel::System::Log',
+    'Kernel::System::Valid',
 );
 
 =head1 NAME
@@ -47,45 +42,9 @@ All functions for templates in ITSMChangeManagement.
 
 create an object
 
-    use Kernel::Config;
-    use Kernel::System::Encode;
-    use Kernel::System::Log;
-    use Kernel::System::DB;
-    use Kernel::System::Main;
-    use Kernel::System::Time;
-    use Kernel::System::ITSMChange::Template;
-
-    my $ConfigObject = Kernel::Config->new();
-    my $EncodeObject = Kernel::System::Encode->new(
-        ConfigObject => $ConfigObject,
-    );
-    my $LogObject = Kernel::System::Log->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-    );
-    my $MainObject = Kernel::System::Main->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-    );
-    my $TimeObject = Kernel::System::Time->new(
-        ConfigObject => $ConfigObject,
-        LogObject    => $LogObject,
-    );
-    my $DBObject = Kernel::System::DB->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-        MainObject   => $MainObject,
-    );
-    my $TemplateObject = Kernel::System::ITSMChange::Template->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-        DBObject     => $DBObject,
-        TimeObject   => $TimeObject,
-        MainObject   => $MainObject,
-    );
+    use Kernel::System::ObjectManager;
+    local $Kernel::OM = Kernel::System::ObjectManager->new();
+    my $TemplateObject = $Kernel::OM->Get('Kernel::System::ITSMChange::Template');
 
 =cut
 
@@ -96,32 +55,16 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    # check needed objects
-    for my $Object (
-        qw(DBObject ConfigObject EncodeObject LogObject UserObject GroupObject MainObject TimeObject)
-        )
-    {
-        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
-    }
-
     # set the debug flag
     $Self->{Debug} = $Param{Debug} || 0;
 
-    # create additional objects
-    $Self->{ChangeObject}    = Kernel::System::ITSMChange->new( %{$Self} );
-    $Self->{WorkOrderObject} = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
-    $Self->{LinkObject}      = Kernel::System::LinkObject->new( %{$Self} );
-    $Self->{ConditionObject} = Kernel::System::ITSMChange::ITSMCondition->new( %{$Self} );
-    $Self->{ValidObject}     = Kernel::System::Valid->new( %{$Self} );
-    $Self->{VirtualFSObject} = Kernel::System::VirtualFS->new( %{$Self} );
+    @ISA = (
+        'Kernel::System::EventHandler',
+    );
 
     # init of event handler
     $Self->EventHandlerInit(
-        Config     => 'ITSMTemplate::EventModule',
-        BaseObject => 'TemplateObject',
-        Objects    => {
-            %{$Self},
-        },
+        Config => 'ITSMTemplate::EventModule',
     );
 
     return $Self;
@@ -148,7 +91,7 @@ sub TemplateAdd {
 
     # check that not both TemplateType and TemplateTypeID are given
     if ( $Param{TemplateType} && $Param{TemplateTypeID} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need either TemplateType OR TemplateTypeID - not both!',
         );
@@ -165,7 +108,7 @@ sub TemplateAdd {
     # check needed stuff
     for my $Argument (qw(Content Name TemplateTypeID ValidID UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -174,7 +117,7 @@ sub TemplateAdd {
     }
 
     # check whether a template with this name and type already exists
-    return if !$Self->{DBObject}->Prepare(
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Prepare(
         SQL   => 'SELECT id FROM change_template WHERE name = ? AND type_id = ?',
         Bind  => [ \$Param{Name}, \$Param{TemplateTypeID} ],
         Limit => 1,
@@ -182,13 +125,13 @@ sub TemplateAdd {
 
     # fetch the result
     my $TemplateID;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $Kernel::OM->Get('Kernel::System::DB')->FetchrowArray() ) {
         $TemplateID = $Row[0];
     }
 
     # a template with this name exists already
     if ($TemplateID) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message =>
                 "A template with the name '$Param{Name}' and the type '$Param{TemplateTypeID}' already exists!",
@@ -206,7 +149,7 @@ sub TemplateAdd {
     );
 
     # add new template to database
-    return if !$Self->{DBObject}->Do(
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Do(
         SQL => 'INSERT INTO change_template '
             . '(name, comments, content, type_id, valid_id, '
             . 'create_time, create_by, change_time, change_by) '
@@ -218,20 +161,20 @@ sub TemplateAdd {
     );
 
     # prepare SQL statement
-    return if !$Self->{DBObject}->Prepare(
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Prepare(
         SQL   => 'SELECT id FROM change_template WHERE name = ? AND type_id = ?',
         Bind  => [ \$Param{Name}, \$Param{TemplateTypeID} ],
         Limit => 1,
     );
 
     # fetch the result
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $Kernel::OM->Get('Kernel::System::DB')->FetchrowArray() ) {
         $TemplateID = $Row[0];
     }
 
     # check if template could be added
     if ( !$TemplateID ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'TemplateAdd() failed!',
         );
@@ -278,7 +221,7 @@ sub TemplateUpdate {
     # check needed stuff
     for my $Argument (qw(TemplateID UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -334,7 +277,7 @@ sub TemplateUpdate {
     push @Bind, \$Param{TemplateID};
 
     # update template
-    return if !$Self->{DBObject}->Do(
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Do(
         SQL  => $SQL,
         Bind => \@Bind,
     );
@@ -388,7 +331,7 @@ sub TemplateGet {
     # check needed stuff
     for my $Argument (qw(TemplateID UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -397,7 +340,7 @@ sub TemplateGet {
     }
 
     # prepare SQL statement
-    return if !$Self->{DBObject}->Prepare(
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Prepare(
         SQL => 'SELECT ct.id, ct.name, comments, content, type_id, ctt.name, '
             . 'ct.valid_id, ct.create_time, ct.create_by, ct.change_time, ct.change_by '
             . 'FROM change_template ct, change_template_type ctt '
@@ -408,7 +351,7 @@ sub TemplateGet {
 
     # fetch the result
     my %TemplateData;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $Kernel::OM->Get('Kernel::System::DB')->FetchrowArray() ) {
         $TemplateData{TemplateID} = $Row[0];
         $TemplateData{Name}       = $Row[1];
         $TemplateData{Comment}    = $Row[2];
@@ -424,7 +367,7 @@ sub TemplateGet {
 
     # check error
     if ( !%TemplateData ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "TemplateID $Param{TemplateID} does not exist!",
         );
@@ -474,7 +417,7 @@ sub TemplateList {
     # check needed stuff
     for my $Argument (qw(UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -484,7 +427,7 @@ sub TemplateList {
 
     # check that not both TemplateType and TemplateTypeID are given
     if ( $Param{TemplateType} && $Param{TemplateTypeID} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need either TemplateType OR TemplateTypeID - not both!',
         );
@@ -517,7 +460,7 @@ sub TemplateList {
     # get only valid template ids
     if ( $Param{Valid} ) {
 
-        my @ValidIDs = $Self->{ValidObject}->ValidIDsGet();
+        my @ValidIDs = $Kernel::OM->Get('Kernel::System::Valid')->ValidIDsGet();
         my $ValidIDString = join ', ', @ValidIDs;
 
         push @SQLWhere, "valid_id IN ( $ValidIDString )";
@@ -531,14 +474,14 @@ sub TemplateList {
     }
 
     # prepare SQL statement
-    return if !$Self->{DBObject}->Prepare(
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Prepare(
         SQL  => $SQL,
         Bind => \@SQLBind,
     );
 
     # fetch the result
     my %Templates;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $Kernel::OM->Get('Kernel::System::DB')->FetchrowArray() ) {
         $Templates{ $Row[0] } = [ $Row[1], $Row[2] ];
     }
 
@@ -629,7 +572,7 @@ sub TemplateSearch {
 
     # check needed stuff
     if ( !$Param{UserID} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need UserID!',
         );
@@ -656,7 +599,7 @@ sub TemplateSearch {
         }
 
         if ( ref $Param{$Argument} ne 'ARRAY' ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "$Argument must be an array reference!",
             );
@@ -686,7 +629,7 @@ sub TemplateSearch {
         if ( !$OrderBy || !$OrderByTable{$OrderBy} || $OrderBySeen{$OrderBy} ) {
 
             # found an error
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "OrderBy contains invalid value '$OrderBy' "
                     . 'or the value is used more than once!',
@@ -707,7 +650,7 @@ sub TemplateSearch {
         next DIRECTION if $Direction eq 'Down';
 
         # found an error
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "OrderByDirection can only contain 'Up' or 'Down'!",
         );
@@ -738,7 +681,7 @@ sub TemplateSearch {
 
         # check whether the ID was found, whether the name exists
         if ( !$TypeID ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "The template type '$Type' is not known!",
             );
@@ -764,16 +707,19 @@ sub TemplateSearch {
         next STRINGPARAM if $Param{$StringParam} eq '';
 
         # quote
-        $Param{$StringParam} = $Self->{DBObject}->Quote( $Param{$StringParam} );
+        $Param{$StringParam}
+            = $Kernel::OM->Get('Kernel::System::DB')->Quote( $Param{$StringParam} );
 
         # wildcards are used
         if ( $Param{UsingWildcards} ) {
 
             # get like escape string needed for some databases (e.g. oracle)
-            my $LikeEscapeString = $Self->{DBObject}->GetDatabaseFunction('LikeEscapeString');
+            my $LikeEscapeString
+                = $Kernel::OM->Get('Kernel::System::DB')->GetDatabaseFunction('LikeEscapeString');
 
             # Quote
-            $Param{$StringParam} = $Self->{DBObject}->Quote( $Param{$StringParam}, 'Like' );
+            $Param{$StringParam}
+                = $Kernel::OM->Get('Kernel::System::DB')->Quote( $Param{$StringParam}, 'Like' );
 
             # replace * with %
             $Param{$StringParam} =~ s{ \*+ }{%}xmsg;
@@ -808,7 +754,7 @@ sub TemplateSearch {
 
         # quote as integer
         for my $OneParam ( @{ $Param{$ArrayParam} } ) {
-            $OneParam = $Self->{DBObject}->Quote( $OneParam, 'Integer' );
+            $OneParam = $Kernel::OM->Get('Kernel::System::DB')->Quote( $OneParam, 'Integer' );
         }
 
         # create string
@@ -830,7 +776,7 @@ sub TemplateSearch {
         next TIMEPARAM if !$Param{$TimeParam};
 
         if ( $Param{$TimeParam} !~ m{ \A \d\d\d\d-\d\d-\d\d \s \d\d:\d\d:\d\d \z }xms ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "The parameter $TimeParam has an invalid date format!",
             );
@@ -838,7 +784,7 @@ sub TemplateSearch {
         }
 
         # quote
-        $Param{$TimeParam} = $Self->{DBObject}->Quote( $Param{$TimeParam} );
+        $Param{$TimeParam} = $Kernel::OM->Get('Kernel::System::DB')->Quote( $Param{$TimeParam} );
 
         push @SQLWhere, "$TimeParams{$TimeParam} '$Param{$TimeParam}'";
     }
@@ -909,14 +855,14 @@ sub TemplateSearch {
     }
 
     # ask database
-    return if !$Self->{DBObject}->Prepare(
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Prepare(
         SQL   => $SQL,
         Limit => $Param{Limit},
     );
 
     # fetch the result
     my @IDs;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $Kernel::OM->Get('Kernel::System::DB')->FetchrowArray() ) {
         push @IDs, $Row[0];
     }
 
@@ -943,7 +889,7 @@ sub TemplateDelete {
     # check needed stuff
     for my $Argument (qw(TemplateID UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -967,7 +913,7 @@ sub TemplateDelete {
     );
 
     # delete template from database
-    return if !$Self->{DBObject}->Do(
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Do(
         SQL  => 'DELETE FROM change_template WHERE id = ?',
         Bind => [ \$Param{TemplateID} ],
     );
@@ -1007,7 +953,7 @@ sub TemplateTypeLookup {
 
     # the template type id or the template type name must be passed
     if ( !$Param{TemplateTypeID} && !$Param{TemplateType} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need the TemplateTypeID or the TemplateType!',
         );
@@ -1016,7 +962,7 @@ sub TemplateTypeLookup {
 
     # only one of template id and template name can be passed
     if ( $Param{TemplateTypeID} && $Param{TemplateType} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need either the TemplateType or the TemplateTemplateID, not both!',
         );
@@ -1025,14 +971,14 @@ sub TemplateTypeLookup {
 
     # get type id
     if ( $Param{TemplateType} ) {
-        return if !$Self->{DBObject}->Prepare(
+        return if !$Kernel::OM->Get('Kernel::System::DB')->Prepare(
             SQL   => 'SELECT id FROM change_template_type WHERE name = ?',
             Bind  => [ \$Param{TemplateType} ],
             Limit => 1,
         );
 
         my $TypeID;
-        while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        while ( my @Row = $Kernel::OM->Get('Kernel::System::DB')->FetchrowArray() ) {
             $TypeID = $Row[0];
         }
 
@@ -1042,14 +988,14 @@ sub TemplateTypeLookup {
     # get type name
     elsif ( $Param{TemplateTypeID} ) {
 
-        return if !$Self->{DBObject}->Prepare(
+        return if !$Kernel::OM->Get('Kernel::System::DB')->Prepare(
             SQL   => 'SELECT name FROM change_template_type WHERE id = ?',
             Bind  => [ \$Param{TemplateTypeID} ],
             Limit => 1,
         );
 
         my $TypeName;
-        while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        while ( my @Row = $Kernel::OM->Get('Kernel::System::DB')->FetchrowArray() ) {
             $TypeName = $Row[0];
         }
 
@@ -1087,7 +1033,7 @@ sub TemplateSerialize {
 
     # check needed stuff
     if ( !$Param{UserID} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need UserID!',
         );
@@ -1096,7 +1042,7 @@ sub TemplateSerialize {
 
     # the template type id or the template type name must be passed
     if ( !$Param{TemplateTypeID} && !$Param{TemplateType} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need the TemplateTypeID or the TemplateType!',
         );
@@ -1105,7 +1051,7 @@ sub TemplateSerialize {
 
     # only one of template type name and template type id can be passed
     if ( $Param{TemplateType} && $Param{TemplateTypeID} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need either the TemplateTypeID or the TemplateType, not both!',
         );
@@ -1120,9 +1066,8 @@ sub TemplateSerialize {
     }
 
     # what types of templates are supported and what subroutines do the serialization
-    my $BackendObject = $Self->_TemplateLoadBackend(
-        Type => $TemplateType,
-    );
+    my $BackendObject
+        = $Kernel::OM->Get( 'Kernel::System::ITSMChange::Template::' . $TemplateType );
 
     return if !$BackendObject;
 
@@ -1151,7 +1096,7 @@ sub TemplateDeSerialize {
     # check needed stuff
     for my $Argument (qw(UserID TemplateID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -1220,7 +1165,7 @@ sub _CreateTemplateElements {
     # check needed stuff
     for my $Argument (qw(Template)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -1248,16 +1193,12 @@ sub _CreateTemplateElements {
     my ( $Method, $Data ) = each %{ $Param{Template} };
     my $Type = $Method2Object{$Method};
     my $BackendObject;
-
     if ( $Type eq 'Parent' ) {
-        $BackendObject = $Self->_TemplateLoadBackend(
-            Type => $Param{Parent},
-        );
+        $BackendObject
+            = $Kernel::OM->Get( 'Kernel::System::ITSMChange::Template::' . $Param{Parent} );
     }
     else {
-        $BackendObject = $Self->_TemplateLoadBackend(
-            Type => $Type,
-        );
+        $BackendObject = $Kernel::OM->Get( 'Kernel::System::ITSMChange::Template::' . $Type );
     }
 
     return if !$BackendObject;
@@ -1314,7 +1255,7 @@ sub _CheckTemplateTypeIDs {
     # check needed stuff
     for my $Argument (qw(TemplateTypeIDs UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -1323,7 +1264,7 @@ sub _CheckTemplateTypeIDs {
     }
 
     if ( ref $Param{TemplateTypeIDs} ne 'ARRAY' ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'The param TemplateTypeIDs must be an ARRAY reference!',
         );
@@ -1338,7 +1279,7 @@ sub _CheckTemplateTypeIDs {
         );
 
         if ( !$Type ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "The type id $TypeID is not valid!",
             );
@@ -1348,57 +1289,6 @@ sub _CheckTemplateTypeIDs {
     }
 
     return 1;
-}
-
-=item _TemplateLoadBackend()
-
-Returns a newly loaded backend object
-
-    my $BackendObject = $TemplateObject->_TemplateLoadBackend(
-        Type => 'ITSMChange',
-    );
-
-=cut
-
-sub _TemplateLoadBackend {
-    my ( $Self, %Param ) = @_;
-
-    if ( !$Param{Type} ) {
-        $Self->{LogObject}->Log(
-            Priority => 'error',
-            Message  => 'Need Type!',
-        );
-        return;
-    }
-
-    # define backend module name
-    my $ModuleName = 'Kernel::System::ITSMChange::Template::' . $Param{Type};
-
-    # load the backend module
-    if ( !$Self->{MainObject}->Require($ModuleName) ) {
-        $Self->{LogObject}->Log(
-            Priority => 'error',
-            Message  => "Can't load template backend module $Param{Type}!"
-        );
-        return;
-    }
-
-    # create new instance
-    my $BackendObject = $ModuleName->new(
-        %{$Self},
-        %Param,
-    );
-
-    # check for backend object
-    if ( !$BackendObject ) {
-        $Self->{LogObject}->Log(
-            Priority => 'error',
-            Message  => "Can't create a new instance of template backend module $Param{Type}!",
-        );
-        return;
-    }
-
-    return $BackendObject;
 }
 
 1;

@@ -18,6 +18,8 @@ use warnings;
 ## nofilter(TidyAll::Plugin::OTRS::Common::RemoveCVSIDs)
 use vars qw($VERSION);
 
+our $ObjectManagerDisabled = 1;
+
 =head1 NAME
 
 Kernel::System::ITSMChange::ITSMCondition::Attribute - condition attribute lib
@@ -47,7 +49,7 @@ sub AttributeAdd {
     # check needed stuff
     for my $Argument (qw(Name UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -62,7 +64,7 @@ sub AttributeAdd {
 
     # check if attribute name already exists
     if ($AttributeID) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "Condition attribute ($Param{Name}) already exists!",
         );
@@ -70,7 +72,7 @@ sub AttributeAdd {
     }
 
     # add new attribute name to database
-    return if !$Self->{DBObject}->Do(
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Do(
         SQL => 'INSERT INTO condition_attribute '
             . '(name) '
             . 'VALUES (?)',
@@ -84,7 +86,7 @@ sub AttributeAdd {
 
     # check if attribute could be added
     if ( !$AttributeID ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "AttributeAdd() failed!",
         );
@@ -92,8 +94,8 @@ sub AttributeAdd {
     }
 
     # delete cache
-    $Self->{CacheObject}->Delete(
-        Type => 'ITSMChangeManagement',
+    $Kernel::OM->Get('Kernel::System::Cache')->Delete(
+        Type => $Self->{CacheType},
         Key  => 'AttributeList',
     );
 
@@ -118,7 +120,7 @@ sub AttributeUpdate {
     # check needed stuff
     for my $Argument (qw(AttributeID Name UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -134,7 +136,7 @@ sub AttributeUpdate {
 
     # check attribute data
     if ( !$AttributeData ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "AttributeUpdate of $Param{AttributeID} failed!",
         );
@@ -142,7 +144,7 @@ sub AttributeUpdate {
     }
 
     # update attribute in database
-    return if !$Self->{DBObject}->Do(
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Do(
         SQL => 'UPDATE condition_attribute '
             . 'SET name = ? '
             . 'WHERE id = ?',
@@ -160,8 +162,8 @@ sub AttributeUpdate {
         'AttributeLookup::Name::' . $AttributeData->{Name},    # use the old name
         )
     {
-        $Self->{CacheObject}->Delete(
-            Type => 'ITSMChangeManagement',
+        $Kernel::OM->Get('Kernel::System::Cache')->Delete(
+            Type => $Self->{CacheType},
             Key  => $Key,
         );
     }
@@ -192,7 +194,7 @@ sub AttributeGet {
     # check needed stuff
     for my $Argument (qw(AttributeID UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -202,14 +204,14 @@ sub AttributeGet {
 
     # check cache
     my $CacheKey = 'AttributeGet::AttributeID::' . $Param{AttributeID};
-    my $Cache    = $Self->{CacheObject}->Get(
-        Type => 'ITSMChangeManagement',
+    my $Cache    = $Kernel::OM->Get('Kernel::System::Cache')->Get(
+        Type => $Self->{CacheType},
         Key  => $CacheKey,
     );
     return $Cache if $Cache;
 
     # prepare SQL statement
-    return if !$Self->{DBObject}->Prepare(
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Prepare(
         SQL   => 'SELECT id, name FROM condition_attribute WHERE id = ?',
         Bind  => [ \$Param{AttributeID} ],
         Limit => 1,
@@ -217,14 +219,14 @@ sub AttributeGet {
 
     # fetch the result
     my %AttributeData;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $Kernel::OM->Get('Kernel::System::DB')->FetchrowArray() ) {
         $AttributeData{AttributeID} = $Row[0];
         $AttributeData{Name}        = $Row[1];
     }
 
     # check error
     if ( !%AttributeData ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "AttributeID $Param{AttributeID} does not exist!",
         );
@@ -232,8 +234,8 @@ sub AttributeGet {
     }
 
     # set cache
-    $Self->{CacheObject}->Set(
-        Type  => 'ITSMChangeManagement',
+    $Kernel::OM->Get('Kernel::System::Cache')->Set(
+        Type  => $Self->{CacheType},
         Key   => $CacheKey,
         Value => \%AttributeData,
         TTL   => $Self->{CacheTTL},
@@ -263,7 +265,7 @@ sub AttributeLookup {
 
     # check if both parameters are given
     if ( $Param{AttributeID} && $Param{Name} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need AttributeID or Name - not both!',
         );
@@ -272,7 +274,7 @@ sub AttributeLookup {
 
     # check if both parameters are not given
     if ( !$Param{AttributeID} && !$Param{Name} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need AttributeID or Name - none is given!',
         );
@@ -281,7 +283,7 @@ sub AttributeLookup {
 
     # check if AttributeID is a number
     if ( $Param{AttributeID} && $Param{AttributeID} !~ m{ \A \d+ \z }xms ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "AttributeID must be a number! (AttributeID: $Param{AttributeID})",
         );
@@ -295,13 +297,13 @@ sub AttributeLookup {
 
         # check cache
         $CacheKey = 'AttributeLookup::AttributeID::' . $Param{AttributeID};
-        my $Cache = $Self->{CacheObject}->Get(
-            Type => 'ITSMChangeManagement',
+        my $Cache = $Kernel::OM->Get('Kernel::System::Cache')->Get(
+            Type => $Self->{CacheType},
             Key  => $CacheKey,
         );
         return $Cache if $Cache;
 
-        return if !$Self->{DBObject}->Prepare(
+        return if !$Kernel::OM->Get('Kernel::System::DB')->Prepare(
             SQL   => 'SELECT name FROM condition_attribute WHERE id = ?',
             Bind  => [ \$Param{AttributeID} ],
             Limit => 1,
@@ -311,13 +313,13 @@ sub AttributeLookup {
 
         # check cache
         $CacheKey = 'AttributeLookup::Name::' . $Param{Name};
-        my $Cache = $Self->{CacheObject}->Get(
-            Type => 'ITSMChangeManagement',
+        my $Cache = $Kernel::OM->Get('Kernel::System::Cache')->Get(
+            Type => $Self->{CacheType},
             Key  => $CacheKey,
         );
         return $Cache if $Cache;
 
-        return if !$Self->{DBObject}->Prepare(
+        return if !$Kernel::OM->Get('Kernel::System::DB')->Prepare(
             SQL   => 'SELECT id FROM condition_attribute WHERE name = ?',
             Bind  => [ \$Param{Name} ],
             Limit => 1,
@@ -326,13 +328,13 @@ sub AttributeLookup {
 
     # fetch the result
     my $Lookup;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $Kernel::OM->Get('Kernel::System::DB')->FetchrowArray() ) {
         $Lookup = $Row[0];
     }
 
     # set cache
-    $Self->{CacheObject}->Set(
-        Type  => 'ITSMChangeManagement',
+    $Kernel::OM->Get('Kernel::System::Cache')->Set(
+        Type  => $Self->{CacheType},
         Key   => $CacheKey,
         Value => $Lookup,
         TTL   => $Self->{CacheTTL},
@@ -360,7 +362,7 @@ sub AttributeList {
 
     # check needed stuff
     if ( !$Param{UserID} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "Need UserID!",
         );
@@ -369,26 +371,26 @@ sub AttributeList {
 
     # check cache
     my $CacheKey = 'AttributeList';
-    my $Cache    = $Self->{CacheObject}->Get(
-        Type => 'ITSMChangeManagement',
+    my $Cache    = $Kernel::OM->Get('Kernel::System::Cache')->Get(
+        Type => $Self->{CacheType},
         Key  => $CacheKey,
     );
     return $Cache if $Cache;
 
     # prepare SQL statement
-    return if !$Self->{DBObject}->Prepare(
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Prepare(
         SQL => 'SELECT id, name FROM condition_attribute',
     );
 
     # fetch the result
     my %AttributeList;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $Kernel::OM->Get('Kernel::System::DB')->FetchrowArray() ) {
         $AttributeList{ $Row[0] } = $Row[1];
     }
 
     # set cache
-    $Self->{CacheObject}->Set(
-        Type  => 'ITSMChangeManagement',
+    $Kernel::OM->Get('Kernel::System::Cache')->Set(
+        Type  => $Self->{CacheType},
         Key   => $CacheKey,
         Value => \%AttributeList,
         TTL   => $Self->{CacheTTL},
@@ -414,7 +416,7 @@ sub AttributeDelete {
     # check needed stuff
     for my $Argument (qw(AttributeID UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -428,7 +430,7 @@ sub AttributeDelete {
     );
 
     # delete condition attribute from database
-    return if !$Self->{DBObject}->Do(
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Do(
         SQL => 'DELETE FROM condition_attribute '
             . 'WHERE id = ?',
         Bind => [ \$Param{AttributeID} ],
@@ -442,8 +444,8 @@ sub AttributeDelete {
         'AttributeLookup::Name::' . $AttributeName,
         )
     {
-        $Self->{CacheObject}->Delete(
-            Type => 'ITSMChangeManagement',
+        $Kernel::OM->Get('Kernel::System::Cache')->Delete(
+            Type => $Self->{CacheType},
             Key  => $Key,
         );
     }

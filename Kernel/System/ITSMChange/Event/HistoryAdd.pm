@@ -12,66 +12,11 @@ package Kernel::System::ITSMChange::Event::HistoryAdd;
 use strict;
 use warnings;
 
-use Kernel::System::ITSMChange::ITSMWorkOrder;
-use Kernel::System::ITSMChange::History;
-
-=head1 NAME
-
-Kernel::System::ITSMChange::Event::HistoryAdd - Change and workorder history add lib
-
-=head1 SYNOPSIS
-
-Event handler module for history add in change management.
-
-=head1 PUBLIC INTERFACE
-
-=over 4
-
-=item new()
-
-create an object
-
-    use Kernel::Config;
-    use Kernel::System::Encode;
-    use Kernel::System::Log;
-    use Kernel::System::DB;
-    use Kernel::System::Main;
-    use Kernel::System::Time;
-    use Kernel::System::ITSMChange::Event::HistoryAdd;
-
-    my $ConfigObject = Kernel::Config->new();
-    my $EncodeObject = Kernel::System::Encode->new(
-        ConfigObject => $ConfigObject,
-    );
-    my $LogObject = Kernel::System::Log->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-    );
-    my $MainObject = Kernel::System::Main->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-    );
-    my $TimeObject = Kernel::System::Time->new(
-        ConfigObject => $ConfigObject,
-        LogObject    => $LogObject,
-    );
-    my $DBObject = Kernel::System::DB->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-        MainObject   => $MainObject,
-    );
-    my $EventObject = Kernel::System::ITSMChange::Event::HistoryAdd->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-        DBObject     => $DBObject,
-        TimeObject   => $TimeObject,
-        MainObject   => $MainObject,
-    );
-
-=cut
+our @ObjectDependencies = (
+    'Kernel::System::ITSMChange::History',
+    'Kernel::System::ITSMChange::ITSMWorkOrder',
+    'Kernel::System::Log',
+);
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -80,59 +25,8 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    # get needed objects
-    for my $Object (
-        qw(DBObject ConfigObject EncodeObject LogObject UserObject GroupObject MainObject TimeObject)
-        )
-    {
-        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
-    }
-
-    # create additional objects
-    $Self->{WorkOrderObject} = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
-    $Self->{HistoryObject}   = Kernel::System::ITSMChange::History->new( %{$Self} );
-
     return $Self;
 }
-
-=item Run()
-
-The C<Run()> method handles the events and adds/deletes the history entries for
-the given change or workorder.
-
-It returns 1 on success, C<undef> otherwise.
-
-    my $Success = $EventObject->Run(
-        Event => 'ChangeUpdatePost',
-        Data => {
-            ChangeID       => 123,
-            ChangeTitle    => 'test',
-        },
-        Config => {
-            Event       => '(ChangeAddPost|ChangeUpdatePost|ChangeCABUpdatePost|ChangeCABDeletePost)',
-            Module      => 'Kernel::System::ITSMChange::Event::HistoryAdd',
-            Transaction => '0',
-        },
-        UserID => 1,
-    );
-
-For workorder events the C<WorkOrderID> is expected.
-
-    my $Success = $EventObject->Run(
-        Event => 'WorkOrderUpdatePost',
-        Data => {
-            WorkOrderID    => 456,
-            WorkOrderTitle => 'test',
-        },
-        Config => {
-            Event       => '(WorkOrderAddPost|WorkOrderUpdatePost|WorkOrderDeletePost)',
-            Module      => 'Kernel::System::ITSMChange::ITSMWorkOrder::Event::HistoryAdd',
-            Transaction => '0',
-        },
-        UserID => 1,
-    );
-
-=cut
 
 sub Run {
     my ( $Self, %Param ) = @_;
@@ -140,7 +34,7 @@ sub Run {
     # check needed stuff
     for my $Needed (qw(Data Event Config UserID)) {
         if ( !$Param{$Needed} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Needed!",
             );
@@ -157,7 +51,7 @@ sub Run {
     # distinguish between Change and WorkOrder events, based on naming convention
     my ($Type) = $Event =~ m{ \A ( Change | WorkOrder | Condition | Expression | Action ) }xms;
     if ( !$Type ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "Could not determine the object type for the event '$Event'!"
         );
@@ -218,10 +112,11 @@ sub Run {
                 # if accounted time is not empty, we always track the history
 
                 # get workorder data
-                my $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
+                my $WorkOrder
+                    = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderGet(
                     WorkOrderID => $Param{Data}->{WorkOrderID},
                     UserID      => $Param{UserID},
-                );
+                    );
 
                 # save history if accounted time has changed
                 push @HistoryAddData, {
@@ -265,15 +160,16 @@ sub Run {
         my $OldData = $Param{Data}->{OldWorkOrderData};
 
         # get existing history entries for this workorder
-        my $HistoryEntries = $Self->{HistoryObject}->WorkOrderHistoryGet(
+        my $HistoryEntries
+            = $Kernel::OM->Get('Kernel::System::ITSMChange::History')->WorkOrderHistoryGet(
             WorkOrderID => $OldData->{WorkOrderID},
             UserID      => $Param{UserID},
-        );
+            );
 
         # update history entries: delete workorder id
         HISTORYENTRY:
         for my $HistoryEntry ( @{$HistoryEntries} ) {
-            $Self->{HistoryObject}->HistoryUpdate(
+            $Kernel::OM->Get('Kernel::System::ITSMChange::History')->HistoryUpdate(
                 HistoryEntryID => $HistoryEntry->{HistoryEntryID},
                 WorkOrderID    => undef,
                 UserID         => $Param{UserID},
@@ -284,7 +180,7 @@ sub Run {
         # call HistoryAdd directly from here instead of using the @HistoryAddData
         # as we want this to appear next to the line in history that HistoryUpdate
         # just added in the code block before
-        return if !$Self->{HistoryObject}->HistoryAdd(
+        return if !$Kernel::OM->Get('Kernel::System::ITSMChange::History')->HistoryAdd(
             ChangeID    => $OldData->{ChangeID},
             HistoryType => $Event,
             ContentNew  => $OldData->{WorkOrderID},
@@ -336,10 +232,11 @@ sub Run {
 
         # for  workorder links get the change id
         if ( $Param{Data}->{WorkOrderID} ) {
-            my $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
+            my $WorkOrder
+                = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderGet(
                 WorkOrderID => $Param{Data}->{WorkOrderID},
                 UserID      => $Param{UserID},
-            );
+                );
 
             $Param{Data}->{ChangeID} = $WorkOrder->{ChangeID};
         }
@@ -495,7 +392,7 @@ sub Run {
     # handle condition delete events
     elsif ( $Event eq 'ConditionDeleteAll' ) {
 
-        return if !$Self->{HistoryObject}->HistoryAdd(
+        return if !$Kernel::OM->Get('Kernel::System::ITSMChange::History')->HistoryAdd(
             ChangeID    => $Param{Data}->{ChangeID},
             HistoryType => $Event,
             ContentNew  => $Param{Data}->{ChangeID},
@@ -701,7 +598,7 @@ sub Run {
     else {
 
         # an unknown event
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "$Event is an unknown event!",
         );
@@ -716,7 +613,7 @@ sub Run {
     if ( scalar @HistoryAddData == 1 ) {
 
         # write the first and only entry of the array to the history
-        $Self->{HistoryObject}->HistoryAdd(
+        $Kernel::OM->Get('Kernel::System::ITSMChange::History')->HistoryAdd(
             %{ $HistoryAddData[0] },
         );
     }
@@ -724,7 +621,7 @@ sub Run {
     # there is more than one entry to write
     # let the HistoryAddMultiple function handle that
     else {
-        $Self->{HistoryObject}->HistoryAddMultiple(
+        $Kernel::OM->Get('Kernel::System::ITSMChange::History')->HistoryAddMultiple(
             Data => \@HistoryAddData,
         );
     }
@@ -792,15 +689,3 @@ sub _HasFieldChanged {
 1;
 
 =end Internal:
-
-=back
-
-=head1 TERMS AND CONDITIONS
-
-This software is part of the OTRS project (http://otrs.org/).
-
-This software comes with ABSOLUTELY NO WARRANTY. For details, see
-the enclosed file COPYING for license information (AGPL). If you
-did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
-
-=cut

@@ -12,65 +12,10 @@ package Kernel::System::ITSMChange::Event::HistoryDelete;
 use strict;
 use warnings;
 
-use Kernel::System::ITSMChange::History;
-
-=head1 NAME
-
-Kernel::System::ITSMChange::Event::HistoryDelete - Change and workorder history cleanup lib
-
-=head1 SYNOPSIS
-
-Event handler module for history delete in change management.
-
-=head1 PUBLIC INTERFACE
-
-=over 4
-
-=item new()
-
-create an object
-
-    use Kernel::Config;
-    use Kernel::System::Encode;
-    use Kernel::System::Log;
-    use Kernel::System::DB;
-    use Kernel::System::Main;
-    use Kernel::System::Time;
-    use Kernel::System::ITSMChange::Event::HistoryDelete;
-
-    my $ConfigObject = Kernel::Config->new();
-    my $EncodeObject = Kernel::System::Encode->new(
-        ConfigObject => $ConfigObject,
-    );
-    my $LogObject = Kernel::System::Log->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-    );
-    my $MainObject = Kernel::System::Main->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-    );
-    my $TimeObject = Kernel::System::Time->new(
-        ConfigObject => $ConfigObject,
-        LogObject    => $LogObject,
-    );
-    my $DBObject = Kernel::System::DB->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-        MainObject   => $MainObject,
-    );
-    my $EventObject = Kernel::System::ITSMChange::Event::HistoryDelete->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-        DBObject     => $DBObject,
-        TimeObject   => $TimeObject,
-        MainObject   => $MainObject,
-    );
-
-=cut
+our @ObjectDependencies = (
+    'Kernel::System::ITSMChange::History',
+    'Kernel::System::Log',
+);
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -79,41 +24,8 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    # get needed objects
-    for my $Object (
-        qw(DBObject ConfigObject EncodeObject LogObject UserObject GroupObject MainObject TimeObject)
-        )
-    {
-        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
-    }
-
-    # create additional objects
-    $Self->{HistoryObject} = Kernel::System::ITSMChange::History->new( %{$Self} );
-
     return $Self;
 }
-
-=item Run()
-
-The C<Run()> method handles change delete events and deletes the history entries for
-the given change.
-
-It returns 1 on success, C<undef> otherwise.
-
-    my $Success = $EventObject->Run(
-        Event => 'ChangeDelete',
-        Data => {
-            ChangeID    => 123,
-        },
-        Config => {
-            Event       => '(ChangeDeletePost)',
-            Module      => 'Kernel::System::ITSMChange::Event::HistoryDelete',
-            Transaction => '0',
-        },
-        UserID => 1,
-    );
-
-=cut
 
 sub Run {
     my ( $Self, %Param ) = @_;
@@ -121,7 +33,7 @@ sub Run {
     # check needed stuff
     for my $Argument (qw(Data Event Config UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -133,14 +45,14 @@ sub Run {
     if ( $Param{Event} eq 'ChangeDeletePost' ) {
 
         # delete history of change
-        my $Success = $Self->{HistoryObject}->ChangeHistoryDelete(
+        my $Success = $Kernel::OM->Get('Kernel::System::ITSMChange::History')->ChangeHistoryDelete(
             ChangeID => $Param{Data}->{ChangeID},
             UserID   => $Param{UserID},
         );
 
         # handle error
         if ( !$Success ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "ChangeDelete() failed for ChangeID '$Param{Data}->{ChangeID}'!",
             );
@@ -154,7 +66,7 @@ sub Run {
     else {
 
         # an unknown event
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "$Param{Event} is an unknown event!",
         );
@@ -165,22 +77,4 @@ sub Run {
     return 1;
 }
 
-=begin Internal:
-
-=cut
-
 1;
-
-=end Internal:
-
-=back
-
-=head1 TERMS AND CONDITIONS
-
-This software is part of the OTRS project (L<http://otrs.org/>).
-
-This software comes with ABSOLUTELY NO WARRANTY. For details, see
-the enclosed file COPYING for license information (AGPL). If you
-did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
-
-=cut

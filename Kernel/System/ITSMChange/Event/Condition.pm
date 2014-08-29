@@ -12,66 +12,11 @@ package Kernel::System::ITSMChange::Event::Condition;
 use strict;
 use warnings;
 
-use Kernel::System::ITSMChange::ITSMWorkOrder;
-use Kernel::System::ITSMChange::ITSMCondition;
-
-=head1 NAME
-
-Kernel::System::ITSMChange::Event::Condition - ITSM change management condition event lib
-
-=head1 SYNOPSIS
-
-Event handler module for condition matching for changes and workorders.
-
-=head1 PUBLIC INTERFACE
-
-=over 4
-
-=item new()
-
-create an object
-
-    use Kernel::Config;
-    use Kernel::System::Encode;
-    use Kernel::System::Log;
-    use Kernel::System::DB;
-    use Kernel::System::Main;
-    use Kernel::System::Time;
-    use Kernel::System::ITSMChange::Event::Condition;
-
-    my $ConfigObject = Kernel::Config->new();
-    my $EncodeObject = Kernel::System::Encode->new(
-        ConfigObject => $ConfigObject,
-    );
-    my $LogObject = Kernel::System::Log->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-    );
-    my $MainObject = Kernel::System::Main->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-    );
-    my $TimeObject = Kernel::System::Time->new(
-        ConfigObject => $ConfigObject,
-        LogObject    => $LogObject,
-    );
-    my $DBObject = Kernel::System::DB->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-        MainObject   => $MainObject,
-    );
-    my $EventObject = Kernel::System::ITSMChange::Event::Condition->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-        DBObject     => $DBObject,
-        TimeObject   => $TimeObject,
-        MainObject   => $MainObject,
-    );
-
-=cut
+our @ObjectDependencies = (
+    'Kernel::System::ITSMChange::ITSMCondition',
+    'Kernel::System::ITSMChange::ITSMWorkOrder',
+    'Kernel::System::Log',
+);
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -80,43 +25,8 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    # get needed objects
-    for my $Object (
-        qw(DBObject ConfigObject EncodeObject LogObject UserObject GroupObject MainObject TimeObject)
-        )
-    {
-        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
-    }
-
-    # create additional objects
-    $Self->{WorkOrderObject} = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
-    $Self->{ConditionObject} = Kernel::System::ITSMChange::ITSMCondition->new( %{$Self} );
-
     return $Self;
 }
-
-=item Run()
-
-The C<Run()> method handles the events and matches and executes all conditions that are
-defined for the current change.
-
-It returns 1 on success, C<undef> otherwise.
-
-    my $Success = $EventObject->Run(
-        Event => 'ChangeUpdatePost',
-        Data => {
-            ChangeID    => 123,
-            ChangeTitle => 'test',
-        },
-        Config => {
-            Event       => '(ChangeAddPost|ChangeUpdatePost)',
-            Module      => 'Kernel::System::ITSMChange::Event::Condition',
-            Transaction => '0',
-        },
-        UserID => 1,
-    );
-
-=cut
 
 sub Run {
     my ( $Self, %Param ) = @_;
@@ -124,9 +34,9 @@ sub Run {
     # check needed stuff
     for my $Argument (qw(Data Event Config UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
-                Message  => "Need $Argument!"
+                Message  => "Need $Argument!",
             );
             return;
         }
@@ -152,7 +62,7 @@ sub Run {
     elsif ( $Param{Event} =~ m{ \A WorkOrder }xms ) {
 
         # get workorder
-        my $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
+        my $WorkOrder = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderGet(
             WorkOrderID => $Param{Data}->{WorkOrderID},
             UserID      => $Param{UserID},
         );
@@ -166,9 +76,9 @@ sub Run {
 
     # show error for unknown events
     else {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
-            Message  => "Can not handle event '$Param{Event}'!"
+            Message  => "Can not handle event '$Param{Event}'!",
         );
         return;
     }
@@ -255,19 +165,20 @@ sub Run {
     }
 
     # match all conditions for this change and execute all actions
-    my $Success = $Self->{ConditionObject}->ConditionMatchExecuteAll(
+    my $Success
+        = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMCondition')->ConditionMatchExecuteAll(
         ChangeID          => $ChangeID,
         AttributesChanged => { $Object => \@AttributesChanged },
         Event             => $Param{Event},
         UserID            => $Param{UserID},
-    );
+        );
 
     # check errors
     if ( !$Success ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "ConditionMatchExecuteAll could not be "
-                . "executed successfully for event '$Param{Event}' on ChangeID '$ChangeID'!"
+                . "executed successfully for event '$Param{Event}' on ChangeID '$ChangeID'!",
         );
         return;
     }
@@ -333,17 +244,3 @@ sub _HasFieldChanged {
 }
 
 1;
-
-=end Internal:
-
-=back
-
-=head1 TERMS AND CONDITIONS
-
-This software is part of the OTRS project (http://otrs.org/).
-
-This software comes with ABSOLUTELY NO WARRANTY. For details, see
-the enclosed file COPYING for license information (AGPL). If you
-did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
-
-=cut

@@ -12,24 +12,24 @@ package Kernel::System::ITSMChange::Notification;
 use strict;
 use warnings;
 
-use Kernel::System::EventHandler;
-use Kernel::System::CustomerUser;
-use Kernel::System::Email;
-use Kernel::System::HTMLUtils;
-use Kernel::System::ITSMChange;
-use Kernel::System::ITSMChange::ITSMWorkOrder;
-use Kernel::System::Notification;
-use Kernel::System::Valid;
 use Kernel::Language;
+use Kernel::System::EventHandler;
 
 use vars qw(@ISA);
 
-@ISA = (
-    'Kernel::System::EventHandler',
-);
-
 our @ObjectDependencies = (
+    'Kernel::Config',
     'Kernel::System::Cache',
+    'Kernel::System::CustomerUser',
+    'Kernel::System::DB',
+    'Kernel::System::Email',
+    'Kernel::System::HTMLUtils',
+    'Kernel::System::ITSMChange',
+    'Kernel::System::ITSMChange::ITSMWorkOrder',
+    'Kernel::System::Log',
+    'Kernel::System::Notification',
+    'Kernel::System::User',
+    'Kernel::System::Valid',
 );
 
 =head1 NAME
@@ -50,45 +50,9 @@ This module is managing notifications.
 
 create a notification object
 
-    use Kernel::Config;
-    use Kernel::System::Encode;
-    use Kernel::System::Log;
-    use Kernel::System::Main;
-    use Kernel::System::DB;
-    use Kernel::System::Time;
-    use Kernel::System::ITSMChange::Notification;
-
-    my $ConfigObject = Kernel::Config->new();
-    my $EncodeObject = Kernel::System::Encode->new(
-        ConfigObject => $ConfigObject,
-    );
-    my $LogObject = Kernel::System::Log->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-    );
-    my $MainObject = Kernel::System::Main->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-    );
-    my $DBObject = Kernel::System::DB->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-        MainObject   => $MainObject,
-    );
-    my $TimeObject = Kernel::System::Time->new(
-        ConfigObject => $ConfigObject,
-        LogObject    => $LogObject,
-    );
-    my $NotificationObject = Kernel::System::ITSMChange::Notification->new(
-        EncodeObject => $EncodeObject,
-        ConfigObject => $ConfigObject,
-        LogObject    => $LogObject,
-        MainObject   => $MainObject,
-        DBObject     => $DBObject,
-        TimeObject   => $TimeObject,
-    );
+    use Kernel::System::ObjectManager;
+    local $Kernel::OM = Kernel::System::ObjectManager->new();
+    my $NotificationObject = $Kernel::OM->Get('Kernel::System::ITSMChange::Notification');
 
 =cut
 
@@ -99,43 +63,26 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    # check needed objects
-    for my $Object (
-        qw(DBObject ConfigObject EncodeObject LogObject UserObject GroupObject MainObject TimeObject)
-        )
-    {
-        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
-    }
-
     # set the debug flag
     $Self->{Debug} = $Param{Debug} || 0;
 
-    # create additional objects
-    $Self->{NotificationObject} = Kernel::System::Notification->new( %{$Self} );
-    $Self->{CustomerUserObject} = Kernel::System::CustomerUser->new( %{$Self} );
-    $Self->{ChangeObject}       = Kernel::System::ITSMChange->new( %{$Self} );
-    $Self->{WorkOrderObject}    = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
-    $Self->{HTMLUtilsObject}    = Kernel::System::HTMLUtils->new( %{$Self} );
-    $Self->{SendmailObject}     = Kernel::System::Email->new( %{$Self} );
-    $Self->{ValidObject}        = Kernel::System::Valid->new( %{$Self} );
-
     # get the cache type and TTL (in seconds)
     $Self->{CacheType} = 'ITSMChangeManagement';
-    $Self->{CacheTTL}  = $Self->{ConfigObject}->Get('ITSMChange::CacheTTL') * 60;
+    $Self->{CacheTTL}  = $Kernel::OM->Get('Kernel::Config')->Get('ITSMChange::CacheTTL') * 60;
 
     # do we use richtext
-    $Self->{RichText} = $Self->{ConfigObject}->Get('Frontend::RichText');
+    $Self->{RichText} = $Kernel::OM->Get('Kernel::Config')->Get('Frontend::RichText');
 
     # set up empty cache for _NotificationGet()
     $Self->{NotificationCache} = {};
 
+    @ISA = (
+        'Kernel::System::EventHandler',
+    );
+
     # init of event handler
     $Self->EventHandlerInit(
-        Config     => 'ITSMChangeManagementNotification::EventModule',
-        BaseObject => 'ChangeObject',
-        Objects    => {
-            %{$Self},
-        },
+        Config => 'ITSMChangeManagementNotification::EventModule',
     );
 
     return $Self;
@@ -162,7 +109,7 @@ sub NotificationSend {
     # check needed stuff
     for my $Argument (qw(Type Event UserID Data)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -175,7 +122,7 @@ sub NotificationSend {
 
     # need at least AgentIDs or CustomerIDs
     if ( !$Param{AgentIDs} && !$Param{CustomerIDs} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need at least AgentIDs or CustomerIDs!',
         );
@@ -185,7 +132,7 @@ sub NotificationSend {
     # AgentIDs and CustomerIDs have to be array references
     for my $IDKey (qw(AgentIDs CustomerIDs)) {
         if ( defined $Param{$IDKey} && ref $Param{$IDKey} ne 'ARRAY' ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "$IDKey has to be an array reference!",
             );
@@ -194,7 +141,7 @@ sub NotificationSend {
     }
 
     # check whether the sending of notification has been turned off
-    return 1 if !$Self->{ConfigObject}->Get('ITSMChange::SendNotifications');
+    return 1 if !$Kernel::OM->Get('Kernel::Config')->Get('ITSMChange::SendNotifications');
 
     # we need to get the items for replacements
     my $Change    = {};
@@ -213,11 +160,12 @@ sub NotificationSend {
         else {
 
             # get fresh data
-            $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
+            $WorkOrder
+                = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderGet(
                 WorkOrderID => $Param{Data}->{WorkOrderID},
                 UserID      => $Param{UserID},
                 LogNo       => 1,
-            );
+                );
         }
 
         # The event 'WorkOrderAdd' is a special case, as the workorder
@@ -235,7 +183,7 @@ sub NotificationSend {
 
             # get user data for the workorder agent
             $Param{Data}->{WorkOrderAgent} = {
-                $Self->{UserObject}->GetUserData(
+                $Kernel::OM->Get('Kernel::System::User')->GetUserData(
                     UserID => $WorkOrder->{WorkOrderAgentID},
                     )
             };
@@ -249,7 +197,7 @@ sub NotificationSend {
 
     if ( $Param{Data}->{ChangeID} ) {
 
-        $Change = $Self->{ChangeObject}->ChangeGet(
+        $Change = $Kernel::OM->Get('Kernel::System::ITSMChange')->ChangeGet(
             ChangeID => $Param{Data}->{ChangeID},
             UserID   => $Param{UserID},
             LogNo    => 1,
@@ -268,7 +216,7 @@ sub NotificationSend {
 
         if ( $Change->{ChangeBuilderID} ) {
             $Param{Data}->{ChangeBuilder} = {
-                $Self->{UserObject}->GetUserData(
+                $Kernel::OM->Get('Kernel::System::User')->GetUserData(
                     UserID => $Change->{ChangeBuilderID},
                     )
             };
@@ -276,7 +224,7 @@ sub NotificationSend {
 
         if ( $Change->{ChangeManagerID} ) {
             $Param{Data}->{ChangeManager} = {
-                $Self->{UserObject}->GetUserData(
+                $Kernel::OM->Get('Kernel::System::User')->GetUserData(
                     UserID => $Change->{ChangeManagerID},
                     )
             };
@@ -295,7 +243,7 @@ sub NotificationSend {
     }
 
     # get the valid ids
-    my @ValidIDs = $Self->{ValidObject}->ValidIDsGet();
+    my @ValidIDs = $Kernel::OM->Get('Kernel::System::Valid')->ValidIDsGet();
     my %ValidIDLookup = map { $_ => 1 } @ValidIDs;
 
     my %AgentsSent;
@@ -307,7 +255,7 @@ sub NotificationSend {
         next AGENTID if $AgentsSent{$AgentID};
 
         # User info for prefered language and macro replacement
-        my %User = $Self->{UserObject}->GetUserData(
+        my %User = $Kernel::OM->Get('Kernel::System::User')->GetUserData(
             UserID => $AgentID,
         );
 
@@ -317,7 +265,9 @@ sub NotificationSend {
         }
 
         my $PreferredLanguage
-            = $User{UserLanguage} || $Self->{ConfigObject}->Get('DefaultLanguage') || 'en';
+            = $User{UserLanguage}
+            || $Kernel::OM->Get('Kernel::Config')->Get('DefaultLanguage')
+            || 'en';
 
         my $NotificationKey
             = $PreferredLanguage . '::Agent::' . $Param{Type} . '::' . $Param{Event};
@@ -358,20 +308,20 @@ sub NotificationSend {
         # add urls and verify to be full html document
         if ( $Self->{RichText} ) {
 
-            $Notification->{Body} = $Self->{HTMLUtilsObject}->LinkQuote(
+            $Notification->{Body} = $Kernel::OM->Get('Kernel::System::HTMLUtils')->LinkQuote(
                 String => $Notification->{Body},
             );
 
-            $Notification->{Body} = $Self->{HTMLUtilsObject}->DocumentComplete(
+            $Notification->{Body} = $Kernel::OM->Get('Kernel::System::HTMLUtils')->DocumentComplete(
                 Charset => $Notification->{Charset},
                 String  => $Notification->{Body},
             );
         }
 
         # send notification
-        $Self->{SendmailObject}->Send(
-            From => $Self->{ConfigObject}->Get('NotificationSenderName') . ' <'
-                . $Self->{ConfigObject}->Get('NotificationSenderEmail') . '>',
+        $Kernel::OM->Get('Kernel::System::Email')->Send(
+            From => $Kernel::OM->Get('Kernel::Config')->Get('NotificationSenderName') . ' <'
+                . $Kernel::OM->Get('Kernel::Config')->Get('NotificationSenderEmail') . '>',
             To       => $User{UserEmail},
             Subject  => $Notification->{Subject},
             MimeType => $Notification->{ContentType} || 'text/plain',
@@ -413,7 +363,7 @@ sub NotificationSend {
         next CUSTOMERID if $CustomersSent{$CustomerID};
 
         # User info for prefered language and macro replacement
-        my %CustomerUser = $Self->{CustomerUserObject}->CustomerUserDataGet(
+        my %CustomerUser = $Kernel::OM->Get('Kernel::System::CustomerUser')->CustomerUserDataGet(
             User => $CustomerID,
         );
 
@@ -423,7 +373,9 @@ sub NotificationSend {
         }
 
         my $PreferredLanguage
-            = $CustomerUser{UserLanguage} || $Self->{ConfigObject}->Get('DefaultLanguage') || 'en';
+            = $CustomerUser{UserLanguage}
+            || $Kernel::OM->Get('Kernel::Config')->Get('DefaultLanguage')
+            || 'en';
 
         my $NotificationKey
             = $PreferredLanguage . '::Customer::' . $Param{Type} . '::' . $Param{Event};
@@ -460,9 +412,9 @@ sub NotificationSend {
         );
 
         # send notification
-        $Self->{SendmailObject}->Send(
-            From => $Self->{ConfigObject}->Get('NotificationSenderName') . ' <'
-                . $Self->{ConfigObject}->Get('NotificationSenderEmail') . '>',
+        $Kernel::OM->Get('Kernel::System::Email')->Send(
+            From => $Kernel::OM->Get('Kernel::Config')->Get('NotificationSenderName') . ' <'
+                . $Kernel::OM->Get('Kernel::Config')->Get('NotificationSenderEmail') . '>',
             To       => $CustomerUser{UserEmail},
             Subject  => $Notification->{Subject},
             MimeType => $Notification->{ContentType} || 'text/plain',
@@ -520,7 +472,7 @@ sub NotificationRuleGet {
 
     # check needed stuff
     if ( !$Param{ID} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need ID!',
         );
@@ -536,7 +488,7 @@ sub NotificationRuleGet {
     return $Cache if $Cache;
 
     # do sql query
-    return if !$Self->{DBObject}->Prepare(
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Prepare(
         SQL => 'SELECT cn.id, cn.name, item_attribute, event_id, cht.name, '
             . 'cn.valid_id, cn.comments, notification_rule '
             . 'FROM change_notification cn, change_history_type cht '
@@ -547,7 +499,7 @@ sub NotificationRuleGet {
 
     # fetch notification rule
     my %NotificationRule;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $Kernel::OM->Get('Kernel::System::DB')->FetchrowArray() ) {
         %NotificationRule = (
             ID           => $Row[0],
             Name         => $Row[1],
@@ -566,7 +518,7 @@ sub NotificationRuleGet {
     if (%NotificationRule) {
 
         # get recipients
-        return if !$Self->{DBObject}->Prepare(
+        return if !$Kernel::OM->Get('Kernel::System::DB')->Prepare(
             SQL => 'SELECT grp.id, grp.name '
                 . 'FROM change_notification_grps grp, change_notification_rec r '
                 . 'WHERE grp.id = r.group_id AND r.notification_id = ?',
@@ -576,7 +528,7 @@ sub NotificationRuleGet {
         # fetch recipients
         my @Recipients;
         my @RecipientIDs;
-        while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        while ( my @Row = $Kernel::OM->Get('Kernel::System::DB')->FetchrowArray() ) {
             push @RecipientIDs, $Row[0];
             push @Recipients,   $Row[1];
         }
@@ -617,7 +569,7 @@ sub NotificationRuleAdd {
     # check needed stuff
     for my $Needed (qw(Name EventID ValidID RecipientIDs)) {
         if ( !$Param{$Needed} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Needed!",
             );
@@ -627,7 +579,7 @@ sub NotificationRuleAdd {
 
     # RecipientIDs must be an array reference
     if ( ref $Param{RecipientIDs} ne 'ARRAY' ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'RecipientIDs must be an array reference!',
         );
@@ -635,7 +587,7 @@ sub NotificationRuleAdd {
     }
 
     # save notification rule
-    return if !$Self->{DBObject}->Do(
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Do(
         SQL => 'INSERT INTO change_notification (name, event_id, valid_id, '
             . 'item_attribute, comments, notification_rule) '
             . 'VALUES (?, ?, ?, ?, ?, ?)',
@@ -646,7 +598,7 @@ sub NotificationRuleAdd {
     );
 
     # get ID of rule
-    return if !$Self->{DBObject}->Prepare(
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Prepare(
         SQL =>
             'SELECT id FROM change_notification WHERE name = ? AND event_id = ? AND valid_id = ? '
             . 'AND item_attribute = ? AND comments = ? AND notification_rule = ?',
@@ -659,7 +611,7 @@ sub NotificationRuleAdd {
 
     # fetch ID
     my $RuleID;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $Kernel::OM->Get('Kernel::System::DB')->FetchrowArray() ) {
         $RuleID = $Row[0];
     }
 
@@ -667,7 +619,7 @@ sub NotificationRuleAdd {
 
     # insert recipients
     for my $RecipientID ( @{ $Param{RecipientIDs} } ) {
-        return if !$Self->{DBObject}->Do(
+        return if !$Kernel::OM->Get('Kernel::System::DB')->Do(
             SQL => 'INSERT INTO change_notification_rec (notification_id, group_id) VALUES (?, ?)',
             Bind => [ \$RuleID, \$RecipientID ],
         );
@@ -715,7 +667,7 @@ sub NotificationRuleUpdate {
     # check needed stuff
     for my $Needed (qw(ID Name EventID ValidID RecipientIDs)) {
         if ( !$Param{$Needed} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Needed!",
             );
@@ -725,7 +677,7 @@ sub NotificationRuleUpdate {
 
     # RecipientIDs must be an array reference
     if ( ref $Param{RecipientIDs} ne 'ARRAY' ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'RecipientIDs must be an array reference!',
         );
@@ -733,7 +685,7 @@ sub NotificationRuleUpdate {
     }
 
     # save notification rule
-    return if !$Self->{DBObject}->Do(
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Do(
         SQL => 'UPDATE change_notification '
             . 'SET name = ?, event_id = ?, valid_id = ?, item_attribute = ?, '
             . 'comments = ?, notification_rule = ? WHERE id = ?',
@@ -745,14 +697,14 @@ sub NotificationRuleUpdate {
     );
 
     # delete old recipient entries
-    return if !$Self->{DBObject}->Do(
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Do(
         SQL  => 'DELETE FROM change_notification_rec WHERE notification_id = ?',
         Bind => [ \$Param{ID} ],
     );
 
     # insert recipients
     for my $RecipientID ( @{ $Param{RecipientIDs} } ) {
-        return if !$Self->{DBObject}->Do(
+        return if !$Kernel::OM->Get('Kernel::System::DB')->Do(
             SQL => 'INSERT INTO change_notification_rec (notification_id, group_id) VALUES (?, ?)',
             Bind => [ \$Param{ID}, \$RecipientID ],
         );
@@ -803,14 +755,14 @@ sub NotificationRuleList {
 
     # do sql query,
     # sort in a userfriendly fashion
-    return if !$Self->{DBObject}->Prepare(
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Prepare(
         SQL => 'SELECT id FROM change_notification '
             . 'ORDER BY event_id, item_attribute, notification_rule',
     );
 
     # fetch IDs
     my @IDs;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $Kernel::OM->Get('Kernel::System::DB')->FetchrowArray() ) {
         push @IDs, $Row[0],
     }
 
@@ -875,21 +827,22 @@ sub NotificationRuleSearch {
 
     # add valid option
     if ($Valid) {
-        $SQL .= 'AND cn.valid_id IN (' . join( ', ', $Self->{ValidObject}->ValidIDsGet() ) . ') ';
+        $SQL .= 'AND cn.valid_id IN ('
+            . join( ', ', $Kernel::OM->Get('Kernel::System::Valid')->ValidIDsGet() ) . ') ';
     }
 
     # add the ORDER BY clause
     $SQL .= 'ORDER BY cn.id ';
 
     # do sql query
-    return if !$Self->{DBObject}->Prepare(
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Prepare(
         SQL  => $SQL,
         Bind => \@SQLBind,
     );
 
     # fetch IDs
     my @IDs;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $Kernel::OM->Get('Kernel::System::DB')->FetchrowArray() ) {
         push @IDs, $Row[0],
     }
 
@@ -923,7 +876,7 @@ sub RecipientLookup {
 
     # check needed stuff
     if ( !$Param{ID} && !$Param{Name} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need either ID or Name!',
         );
@@ -931,7 +884,7 @@ sub RecipientLookup {
     }
 
     if ( $Param{ID} && $Param{Name} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need either ID or Name - not both!',
         );
@@ -965,7 +918,7 @@ sub RecipientLookup {
     }
 
     # do sql query
-    return if !$Self->{DBObject}->Prepare(
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Prepare(
         SQL   => $SQL,
         Bind  => \@Binds,
         Limit => 1,
@@ -973,7 +926,7 @@ sub RecipientLookup {
 
     # get value
     my $Value;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $Kernel::OM->Get('Kernel::System::DB')->FetchrowArray() ) {
         $Value = $Row[0];
     }
 
@@ -1013,13 +966,13 @@ sub RecipientList {
     my $Self = shift;
 
     # do SQL query
-    return if !$Self->{DBObject}->Prepare(
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Prepare(
         SQL => 'SELECT id, name FROM change_notification_grps ORDER BY name',
     );
 
     # fetch recipients
     my @Recipients;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $Kernel::OM->Get('Kernel::System::DB')->FetchrowArray() ) {
         my $Recipient = {
             Key   => $Row[0],
             Value => $Row[1],
@@ -1048,7 +1001,7 @@ sub _NotificationGet {
 
     for my $Argument (qw(NotificationKey)) {
         if ( !defined $Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -1064,13 +1017,13 @@ sub _NotificationGet {
     }
 
     # get from database
-    my %NotificationData = $Self->{NotificationObject}->NotificationGet(
+    my %NotificationData = $Kernel::OM->Get('Kernel::System::Notification')->NotificationGet(
         Name => $NotificationKey,
     );
 
     # no notification found
     if ( !%NotificationData ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "Could not find notification for $NotificationKey",
         );
@@ -1081,7 +1034,7 @@ sub _NotificationGet {
     # do text/plain to text/html convert
     if ( $Self->{RichText} && $NotificationData{ContentType} =~ m{ text/plain }xmsi ) {
         $NotificationData{ContentType} = 'text/html';
-        $NotificationData{Body}        = $Self->{HTMLUtilsObject}->ToHTML(
+        $NotificationData{Body}        = $Kernel::OM->Get('Kernel::System::HTMLUtils')->ToHTML(
             String => $NotificationData{Body},
         );
     }
@@ -1089,7 +1042,7 @@ sub _NotificationGet {
     # do text/html to text/plain convert
     elsif ( !$Self->{RichText} && $NotificationData{ContentType} =~ m{ text/html }xmsi ) {
         $NotificationData{ContentType} = 'text/plain';
-        $NotificationData{Body}        = $Self->{HTMLUtilsObject}->ToAscii(
+        $NotificationData{Body}        = $Kernel::OM->Get('Kernel::System::HTMLUtils')->ToAscii(
             String => $NotificationData{Body},
         );
     }
@@ -1132,7 +1085,7 @@ sub _NotificationReplaceMacros {
     # check needed stuff
     for my $Needed (qw(Type Text Data UserID Change WorkOrder Link Language)) {
         if ( !defined $Param{$Needed} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Needed!",
             );
@@ -1154,40 +1107,39 @@ sub _NotificationReplaceMacros {
     }
 
     # translate Change and Workorder values, where appropriate
+    # we need to create a new language object manually (without the object manager),
+    # so we can translate into the language of the recipient
     my $LanguageObject = Kernel::Language->new(
-        MainObject   => $Self->{MainObject},
-        ConfigObject => $Self->{ConfigObject},
-        EncodeObject => $Self->{EncodeObject},
-        LogObject    => $Self->{LogObject},
         UserLanguage => $Param{Language},
     );
     my %ChangeData = %{ $Param{Change} };
     for my $Field (qw(ChangeState Category Priority Impact)) {
-        $ChangeData{$Field} = $LanguageObject->Get( $ChangeData{$Field} );
+        $ChangeData{$Field} = $LanguageObject->Translate( $ChangeData{$Field} );
     }
 
     my %WorkOrderData = %{ $Param{WorkOrder} };
     for my $Field (qw(WorkOrderState WorkOrderType)) {
-        $WorkOrderData{$Field} = $LanguageObject->Get( $WorkOrderData{$Field} );
+        $WorkOrderData{$Field} = $LanguageObject->Translate( $WorkOrderData{$Field} );
     }
 
     # replace config options
     my $Tag = $Start . 'OTRS_CONFIG_';
-    $Text =~ s{ $Tag (.+?) $End }{$Self->{ConfigObject}->Get($1)}egx;
+    $Text =~ s{ $Tag (.+?) $End }{$Kernel::OM->Get('Kernel::Config')->Get($1)}egx;
 
     # cleanup
     $Text =~ s{ $Tag .+? $End }{-}gi;
 
     $Tag = $Start . 'OTRS_Agent_';
     my $Tag2 = $Start . 'OTRS_CURRENT_';
-    my %CurrentUser = $Self->{UserObject}->GetUserData( UserID => $Param{UserID} );
+    my %CurrentUser
+        = $Kernel::OM->Get('Kernel::System::User')->GetUserData( UserID => $Param{UserID} );
 
     # html quoting of content
     if ( $Param{RichText} ) {
         KEY:
         for my $Key ( sort keys %CurrentUser ) {
             next KEY if !$CurrentUser{$Key};
-            $CurrentUser{$Key} = $Self->{HTMLUtilsObject}->ToHTML(
+            $CurrentUser{$Key} = $Kernel::OM->Get('Kernel::System::HTMLUtils')->ToHTML(
                 String => $CurrentUser{$Key},
             );
         }
@@ -1230,7 +1182,7 @@ sub _NotificationReplaceMacros {
             KEY:
             for my $Key ( sort keys %ChangeData ) {
                 next KEY if !$ChangeData{$Key};
-                $ChangeData{$Key} = $Self->{HTMLUtilsObject}->ToHTML(
+                $ChangeData{$Key} = $Kernel::OM->Get('Kernel::System::HTMLUtils')->ToHTML(
                     String => $ChangeData{$Key},
                 );
             }
@@ -1246,7 +1198,7 @@ sub _NotificationReplaceMacros {
             next USER if !$ChangeData{$Attribute};
 
             # get user data
-            my %UserData = $Self->{UserObject}->GetUserData(
+            my %UserData = $Kernel::OM->Get('Kernel::System::User')->GetUserData(
                 UserID => $ChangeData{$Attribute},
                 Valid  => 1,
             );
@@ -1277,7 +1229,7 @@ sub _NotificationReplaceMacros {
             KEY:
             for my $Key ( sort keys %WorkOrderData ) {
                 next KEY if !$WorkOrderData{$Key};
-                $WorkOrderData{$Key} = $Self->{HTMLUtilsObject}->ToHTML(
+                $WorkOrderData{$Key} = $Kernel::OM->Get('Kernel::System::HTMLUtils')->ToHTML(
                     String => $WorkOrderData{$Key},
                 );
             }
@@ -1287,7 +1239,7 @@ sub _NotificationReplaceMacros {
         if ( $WorkOrderData{WorkOrderAgentID} ) {
 
             # get user data
-            my %UserData = $Self->{UserObject}->GetUserData(
+            my %UserData = $Kernel::OM->Get('Kernel::System::User')->GetUserData(
                 UserID => $WorkOrderData{WorkOrderAgentID},
                 Valid  => 1,
             );
@@ -1319,7 +1271,7 @@ sub _NotificationReplaceMacros {
             KEY:
             for my $Key ( sort keys %Data ) {
                 next KEY if !$Data{$Key};
-                $Data{$Key} = $Self->{HTMLUtilsObject}->ToHTML(
+                $Data{$Key} = $Kernel::OM->Get('Kernel::System::HTMLUtils')->ToHTML(
                     String => $Data{$Key},
                 );
             }
@@ -1346,7 +1298,7 @@ sub _NotificationReplaceMacros {
             KEY:
             for my $Key ( sort keys %LinkData ) {
                 next KEY if !$LinkData{$Key};
-                $LinkData{$Key} = $Self->{HTMLUtilsObject}->ToHTML(
+                $LinkData{$Key} = $Kernel::OM->Get('Kernel::System::HTMLUtils')->ToHTML(
                     String => $LinkData{$Key},
                 );
             }
@@ -1377,9 +1329,10 @@ sub _NotificationReplaceMacros {
                 KEY:
                 for my $Key ( sort keys %{ $InfoHash{$Object} } ) {
                     next KEY if !$InfoHash{$Object}->{$Key};
-                    $InfoHash{$Object}->{$Key} = $Self->{HTMLUtilsObject}->ToHTML(
+                    $InfoHash{$Object}->{$Key}
+                        = $Kernel::OM->Get('Kernel::System::HTMLUtils')->ToHTML(
                         String => $InfoHash{$Object}->{$Key},
-                    );
+                        );
                 }
             }
 
@@ -1404,7 +1357,7 @@ sub _NotificationReplaceMacros {
             KEY:
             for my $Key ( sort keys %{ $Param{Recipient} } ) {
                 next KEY if !$Param{Recipient}->{$Key};
-                $Param{Recipient}->{$Key} = $Self->{HTMLUtilsObject}->ToHTML(
+                $Param{Recipient}->{$Key} = $Kernel::OM->Get('Kernel::System::HTMLUtils')->ToHTML(
                     String => $Param{Recipient}->{$Key},
                 );
             }

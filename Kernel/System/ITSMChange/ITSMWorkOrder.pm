@@ -79,11 +79,7 @@ sub new {
 
     # init of event handler
     $Self->EventHandlerInit(
-        Config     => 'ITSMWorkOrder::EventModule',
-        BaseObject => 'WorkOrderObject',
-        Objects    => {
-            %{$Self},
-        },
+        Config => 'ITSMWorkOrder::EventModule',
     );
 
     # get database type
@@ -217,10 +213,11 @@ sub WorkOrderAdd {
     if ( !$WorkOrderStateID ) {
 
         # get initial workorder state id
-        my $NextStateIDs = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMStateMachine')->StateTransitionGet(
+        my $NextStateIDs
+            = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMStateMachine')->StateTransitionGet(
             StateID => 0,
             Class   => 'ITSM::ChangeManagement::WorkOrder::State',
-        );
+            );
         $WorkOrderStateID = $NextStateIDs->[0];
     }
 
@@ -610,7 +607,8 @@ sub WorkOrderUpdate {
     if ( $Param{PlannedEffort} ) {
 
         # db quote
-        $Param{PlannedEffort} = $Kernel::OM->Get('Kernel::System::DB')->Quote( $Param{PlannedEffort}, 'Number' );
+        $Param{PlannedEffort}
+            = $Kernel::OM->Get('Kernel::System::DB')->Quote( $Param{PlannedEffort}, 'Number' );
 
         # build SQL (without binds)
         $SQL .= "planned_effort = $Param{PlannedEffort}, ";
@@ -816,9 +814,10 @@ sub WorkOrderGet {
         }
 
         # get all dynamic fields for the object type ITSMWorkOrder
-        my $DynamicFieldList = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldListGet(
+        my $DynamicFieldList
+            = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldListGet(
             ObjectType => 'ITSMWorkOrder',
-        );
+            );
 
         DYNAMICFIELD:
         for my $DynamicFieldConfig ( @{$DynamicFieldList} ) {
@@ -1144,9 +1143,10 @@ sub WorkOrderSearch {
 
     # check all configured workorder dynamic fields, build lookup hash by name
     my %WorkOrderDynamicFieldName2Config;
-    my $WorkOrderDynamicFields = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldListGet(
+    my $WorkOrderDynamicFields
+        = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldListGet(
         ObjectType => 'ITSMWorkOrder',
-    );
+        );
     for my $DynamicField ( @{$WorkOrderDynamicFields} ) {
         $WorkOrderDynamicFieldName2Config{ $DynamicField->{Name} } = $DynamicField;
     }
@@ -1394,11 +1394,12 @@ sub WorkOrderSearch {
                 next TEXT if $Text =~ /^\%{1,3}$/;
 
                 # validate data type
-                my $ValidateSuccess = $Kernel::OM->Get('Kernel::System::DynamicField::Backend')->ValueValidate(
+                my $ValidateSuccess
+                    = $Kernel::OM->Get('Kernel::System::DynamicField::Backend')->ValueValidate(
                     DynamicFieldConfig => $DynamicField,
                     Value              => $Text,
                     UserID             => $Param{UserID} || 1,
-                );
+                    );
                 if ( !$ValidateSuccess ) {
                     $Kernel::OM->Get('Kernel::System::Log')->Log(
                         Priority => 'error',
@@ -1415,12 +1416,13 @@ sub WorkOrderSearch {
                 if ($Counter) {
                     $SQLDynamicFieldWhereSub .= ' OR ';
                 }
-                $SQLDynamicFieldWhereSub .= $Kernel::OM->Get('Kernel::System::DynamicField::Backend')->SearchSQLGet(
+                $SQLDynamicFieldWhereSub
+                    .= $Kernel::OM->Get('Kernel::System::DynamicField::Backend')->SearchSQLGet(
                     DynamicFieldConfig => $DynamicField,
                     TableAlias         => "dfv$DynamicFieldJoinCounter",
                     Operator           => $Operator,
                     SearchTerm         => $Text,
-                );
+                    );
 
                 $Counter++;
             }
@@ -1708,10 +1710,11 @@ sub WorkOrderDelete {
     }
 
     # get all dynamic fields for the object type ITSMWorkOrder
-    my $DynamicFieldListTicket = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldListGet(
+    my $DynamicFieldListTicket
+        = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldListGet(
         ObjectType => 'ITSMWorkOrder',
         Valid      => 0,
-    );
+        );
 
     # delete dynamicfield values for this workorder
     DYNAMICFIELD:
@@ -2043,12 +2046,13 @@ sub WorkOrderPossibleStatesGet {
         );
 
         # check for state lock
-        my $StateLock = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMCondition')->ConditionMatchStateLock(
+        my $StateLock = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMCondition')
+            ->ConditionMatchStateLock(
             ObjectName => 'ITSMWorkOrder',
             Selector   => $Param{WorkOrderID},
             StateID    => $WorkOrder->{WorkOrderStateID},
             UserID     => $Param{UserID},
-        );
+            );
 
         # set as default state current workorder state
         my @NextStateIDs = ( $WorkOrder->{WorkOrderStateID} );
@@ -2060,10 +2064,11 @@ sub WorkOrderPossibleStatesGet {
         if ($WorkOrderEndStatesAllowed) {
 
             # set as default state current state and all possible end states
-            my $EndStateIDsRef = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMStateMachine')->StateTransitionGetEndStates(
+            my $EndStateIDsRef = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMStateMachine')
+                ->StateTransitionGetEndStates(
                 StateID => $WorkOrder->{WorkOrderStateID},
                 Class   => 'ITSM::ChangeManagement::WorkOrder::State',
-            ) || [];
+                ) || [];
             @NextStateIDs = sort ( @{$EndStateIDsRef}, $WorkOrder->{WorkOrderStateID} );
         }
 
@@ -2071,10 +2076,11 @@ sub WorkOrderPossibleStatesGet {
         if ( !$StateLock ) {
 
             # get the possible next state ids
-            my $NextStateIDsRef = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMStateMachine')->StateTransitionGet(
+            my $NextStateIDsRef = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMStateMachine')
+                ->StateTransitionGet(
                 StateID => $WorkOrder->{WorkOrderStateID},
                 Class   => 'ITSM::ChangeManagement::WorkOrder::State',
-            ) || [];
+                ) || [];
 
             # add current workorder state id to list
             @NextStateIDs = sort ( @{$NextStateIDsRef}, $WorkOrder->{WorkOrderStateID} );
@@ -2336,7 +2342,9 @@ sub Permission {
             }
 
             # load module
-            next MODULE if !$Kernel::OM->Get('Kernel::System::Main')->Require( $Modules{$Module}->{Module} );
+            next MODULE
+                if !$Kernel::OM->Get('Kernel::System::Main')
+                ->Require( $Modules{$Module}->{Module} );
 
             # create object
             my $ModuleObject = $Modules{$Module}->{Module}->new();

@@ -12,69 +12,15 @@ package Kernel::System::ITSMChange::Event::Notification;
 use strict;
 use warnings;
 
-use Kernel::System::ITSMChange;
-use Kernel::System::ITSMChange::ITSMWorkOrder;
-use Kernel::System::ITSMChange::Notification;
-use Kernel::System::ITSMChange::History;
-use Kernel::System::LinkObject;
-
-=head1 NAME
-
-Kernel::System::ITSMChange::Event::Notification - ITSM change management notification lib
-
-=head1 SYNOPSIS
-
-Event handler module for notifications for changes and workorders.
-
-=head1 PUBLIC INTERFACE
-
-=over 4
-
-=item new()
-
-create an object
-
-    use Kernel::Config;
-    use Kernel::System::Encode;
-    use Kernel::System::Log;
-    use Kernel::System::DB;
-    use Kernel::System::Main;
-    use Kernel::System::Time;
-    use Kernel::System::ITSMChange::Event::Notification;
-
-    my $ConfigObject = Kernel::Config->new();
-    my $EncodeObject = Kernel::System::Encode->new(
-        ConfigObject => $ConfigObject,
-    );
-    my $LogObject = Kernel::System::Log->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-    );
-    my $MainObject = Kernel::System::Main->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-    );
-    my $TimeObject = Kernel::System::Time->new(
-        ConfigObject => $ConfigObject,
-        LogObject    => $LogObject,
-    );
-    my $DBObject = Kernel::System::DB->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-        MainObject   => $MainObject,
-    );
-    my $NotificationEventObject = Kernel::System::ITSMChange::Event::Notification->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-        DBObject     => $DBObject,
-        TimeObject   => $TimeObject,
-        MainObject   => $MainObject,
-    );
-
-=cut
+our @ObjectDependencies = (
+    'Kernel::System::Group',
+    'Kernel::System::ITSMChange',
+    'Kernel::System::ITSMChange::History',
+    'Kernel::System::ITSMChange::ITSMWorkOrder',
+    'Kernel::System::ITSMChange::Notification',
+    'Kernel::System::LinkObject',
+    'Kernel::System::Log',
+);
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -83,48 +29,8 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    # get needed objects
-    for my $Object (
-        qw(DBObject ConfigObject EncodeObject LogObject UserObject GroupObject MainObject TimeObject)
-        )
-    {
-        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
-    }
-
-    # create additional objects
-    $Self->{ChangeObject}             = Kernel::System::ITSMChange->new( %{$Self} );
-    $Self->{WorkOrderObject}          = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
-    $Self->{ChangeNotificationObject} = Kernel::System::ITSMChange::Notification->new( %{$Self} );
-    $Self->{LinkObject}               = Kernel::System::LinkObject->new( %{$Self} );
-
-    # TODO: find better way to look up event ids
-    $Self->{HistoryObject} = Kernel::System::ITSMChange::History->new( %{$Self} );
-
     return $Self;
 }
-
-=item Run()
-
-The C<Run()> method handles the events and sends notifications about
-the given change or workorder object.
-
-It returns 1 on success, C<undef> otherwise.
-
-    my $Success = $NotificationEventObject->Run(
-        Event => 'ChangeUpdatePost',
-        Data => {
-            ChangeID    => 123,
-            ChangeTitle => 'test',
-        },
-        Config => {
-            Event       => '(ChangeAddPost|ChangeUpdatePost|ChangeCABUpdatePost|ChangeCABDeletePost|ChangeDeletePost)',
-            Module      => 'Kernel::System::ITSMChange::Event::Notification',
-            Transaction => '0',
-        },
-        UserID => 1,
-    );
-
-=cut
 
 sub Run {
     my ( $Self, %Param ) = @_;
@@ -132,9 +38,9 @@ sub Run {
     # check needed stuff
     for my $Argument (qw(Data Event Config UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
-                Message  => "Need $Argument!"
+                Message  => "Need $Argument!",
             );
             return;
         }
@@ -155,7 +61,7 @@ sub Run {
         $Type = 'WorkOrder';
     }
     else {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "Could not determine the object type for the event '$Event'!",
         );
@@ -163,20 +69,22 @@ sub Run {
     }
 
     # get the event id, for looking up the list of relevant rules
-    my $EventID = $Self->{HistoryObject}->HistoryTypeLookup( HistoryType => $Event );
+    my $EventID = $Kernel::OM->Get('Kernel::System::ITSMChange::History')
+        ->HistoryTypeLookup( HistoryType => $Event );
     if ( !$EventID ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "Encountered unknown event '$Event'!",
         );
         return;
     }
 
-    my $NotificationRuleIDs = $Self->{ChangeNotificationObject}->NotificationRuleSearch(
+    my $NotificationRuleIDs
+        = $Kernel::OM->Get('Kernel::System::ITSMChange::Notification')->NotificationRuleSearch(
         EventID => $EventID,
-    );
+        );
     if ( !$NotificationRuleIDs ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "Could not get notification rules for the event '$Event'!",
         );
@@ -196,9 +104,10 @@ sub Run {
     # loop over the notification rules and check the condition
     RULE_ID:
     for my $RuleID ( @{$NotificationRuleIDs} ) {
-        my $Rule = $Self->{ChangeNotificationObject}->NotificationRuleGet(
+        my $Rule
+            = $Kernel::OM->Get('Kernel::System::ITSMChange::Notification')->NotificationRuleGet(
             ID => $RuleID,
-        );
+            );
 
         my $Attribute = $Rule->{Attribute} || '';
         if ( $Name2ID{$Attribute} ) {
@@ -229,14 +138,15 @@ sub Run {
         my $NewFieldContent = $Attribute ? $Param{Data}->{$Attribute} : '';
 
         if ( $Attribute eq 'ChangeStateID' ) {
-            $NewFieldContent = $Self->{ChangeObject}->ChangeStateLookup(
+            $NewFieldContent = $Kernel::OM->Get('Kernel::System::ITSMChange')->ChangeStateLookup(
                 ChangeStateID => $NewFieldContent,
             );
         }
         elsif ( $Attribute eq 'WorkOrderStateID' ) {
-            $NewFieldContent = $Self->{WorkOrderObject}->WorkOrderStateLookup(
+            $NewFieldContent = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')
+                ->WorkOrderStateLookup(
                 WorkOrderStateID => $NewFieldContent,
-            );
+                );
         }
 
         # should the notification be sent ?
@@ -263,7 +173,7 @@ sub Run {
 
         next RULE_ID if !$AgentAndCustomerIDs;
 
-        $Self->{ChangeNotificationObject}->NotificationSend(
+        $Kernel::OM->Get('Kernel::System::ITSMChange::Notification')->NotificationSend(
             %{$AgentAndCustomerIDs},
             Type   => $Type,
             Event  => $Event,
@@ -359,7 +269,7 @@ sub _AgentAndCustomerIDsGet {
 
         # check WorkOrderID
         if ( !$Param{WorkOrderID} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "The param 'WorkOrderID' is required for WorkOrder events!",
             );
@@ -374,11 +284,12 @@ sub _AgentAndCustomerIDsGet {
 
             # get ChangeID and WorkOrderAgentID from the WorkOrder,
             # the WorkOrderAgent might have been recently updated
-            my $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
+            my $WorkOrder
+                = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderGet(
                 WorkOrderID => $Param{WorkOrderID},
                 UserID      => $Param{UserID},
 
-            );
+                );
             $Param{ChangeID} = $WorkOrder->{ChangeID};
             $WorkOrderAgentID = $WorkOrder->{WorkOrderAgentID};
         }
@@ -388,7 +299,7 @@ sub _AgentAndCustomerIDsGet {
     my ( @AgentIDs, @CustomerIDs );
 
     # needed for determining the actual recipients
-    my $Change = $Self->{ChangeObject}->ChangeGet(
+    my $Change = $Kernel::OM->Get('Kernel::System::ITSMChange')->ChangeGet(
         ChangeID => $Param{ChangeID},
         UserID   => $Param{UserID},
     );
@@ -406,7 +317,7 @@ sub _AgentAndCustomerIDsGet {
         }
         elsif ( $Recipient eq 'OldChangeBuilder' || $Recipient eq 'OldChangeManager' ) {
             if ( $Param{Event} ne 'ChangeUpdate' ) {
-                $Self->{LogObject}->Log(
+                $Kernel::OM->Get('Kernel::System::Log')->Log(
                     Priority => 'error',
                     Message  => "Recipient $Recipient is only valid for ChangeUpdate events, "
                         . "but the event was a '$Param{Event}' event!",
@@ -427,7 +338,7 @@ sub _AgentAndCustomerIDsGet {
         }
         elsif ( $Recipient eq 'WorkOrderAgent' ) {
             if ( $Param{Type} ne 'WorkOrder' ) {
-                $Self->{LogObject}->Log(
+                $Kernel::OM->Get('Kernel::System::Log')->Log(
                     Priority => 'error',
                     Message  => "Recipient $Recipient is only valid for workorder events "
                         . "but the event was a '$Param{Event}' event!",
@@ -439,7 +350,7 @@ sub _AgentAndCustomerIDsGet {
         }
         elsif ( $Recipient eq 'OldWorkOrderAgent' ) {
             if ( $Param{Event} ne 'WorkOrderUpdate' ) {
-                $Self->{LogObject}->Log(
+                $Kernel::OM->Get('Kernel::System::Log')->Log(
                     Priority => 'error',
                     Message  => "Recipient $Recipient is only valid for WorkOrderUpdate events "
                         . "but the event was a '$Param{Event}' event!",
@@ -456,10 +367,11 @@ sub _AgentAndCustomerIDsGet {
 
             # loop over the workorders of a change and get their workorder agents
             for my $WorkOrderID ( @{ $Change->{WorkOrderIDs} } ) {
-                my $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
+                my $WorkOrder
+                    = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderGet(
                     WorkOrderID => $WorkOrderID,
                     UserID      => $Param{UserID},
-                );
+                    );
 
                 push @AgentIDs, $WorkOrder->{WorkOrderAgentID};
             }
@@ -467,7 +379,7 @@ sub _AgentAndCustomerIDsGet {
         elsif ( $Recipient eq 'ChangeInitiators' ) {
 
             # get linked objects which are directly linked with this change object
-            my $LinkListWithData = $Self->{LinkObject}->LinkListWithData(
+            my $LinkListWithData = $Kernel::OM->Get('Kernel::System::LinkObject')->LinkListWithData(
                 Object => 'ITSMChange',
                 Key    => $Param{ChangeID},
                 State  => 'Valid',
@@ -502,12 +414,12 @@ sub _AgentAndCustomerIDsGet {
             );
 
             # get group id
-            my $GroupID = $Self->{GroupObject}->GroupLookup(
+            my $GroupID = $Kernel::OM->Get('Kernel::System::Group')->GroupLookup(
                 Group => $Recipient2Group{$Recipient}
             );
 
             # get members of group
-            my %Users = $Self->{GroupObject}->GroupMemberList(
+            my %Users = $Kernel::OM->Get('Kernel::System::Group')->GroupMemberList(
                 GroupID => $GroupID,
                 Type    => 'ro',
                 Result  => 'HASH',
@@ -517,7 +429,7 @@ sub _AgentAndCustomerIDsGet {
             push @AgentIDs, keys %Users;
         }
         else {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Unknown recipient '$Recipient'!",
             );
@@ -541,15 +453,3 @@ sub _AgentAndCustomerIDsGet {
 1;
 
 =end Internal:
-
-=back
-
-=head1 TERMS AND CONDITIONS
-
-This software is part of the OTRS project (http://otrs.org/).
-
-This software comes with ABSOLUTELY NO WARRANTY. For details, see
-the enclosed file COPYING for license information (AGPL). If you
-did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
-
-=cut

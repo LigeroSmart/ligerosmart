@@ -12,7 +12,11 @@ package Kernel::System::ITSMChange::ITSMCondition::Object::ITSMChange;
 use strict;
 use warnings;
 
-use Kernel::System::ITSMChange;
+our @ObjectDependencies = (
+    'Kernel::System::ITSMChange',
+    'Kernel::System::Log',
+    'Kernel::System::User',
+);
 
 =head1 NAME
 
@@ -32,45 +36,9 @@ All ITSMChange object functions for conditions in ITSMChangeManagement.
 
 create an object
 
-    use Kernel::Config;
-    use Kernel::System::Encode;
-    use Kernel::System::Log;
-    use Kernel::System::DB;
-    use Kernel::System::Main;
-    use Kernel::System::Time;
-    use Kernel::System::ITSMChange::ITSMCondition::Object::ITSMChange;
-
-    my $ConfigObject = Kernel::Config->new();
-    my $EncodeObject = Kernel::System::Encode->new(
-        ConfigObject => $ConfigObject,
-    );
-    my $LogObject = Kernel::System::Log->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-    );
-    my $MainObject = Kernel::System::Main->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-    );
-    my $TimeObject = Kernel::System::Time->new(
-        ConfigObject => $ConfigObject,
-        LogObject    => $LogObject,
-    );
-    my $DBObject = Kernel::System::DB->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-        MainObject   => $MainObject,
-    );
-    my $ConditionObjectITSMChange = Kernel::System::ITSMChange::ITSMCondition::Object::ITSMChange->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-        MainObject   => $MainObject,
-        TimeObject   => $TimeObject,
-        DBObject     => $DBObject,
-    );
+    use Kernel::System::ObjectManager;
+    local $Kernel::OM = Kernel::System::ObjectManager->new();
+    my $ConditionObjectITSMChange = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMCondition::Object::ITSMChange');
 
 =cut
 
@@ -80,17 +48,6 @@ sub new {
     # allocate new hash for object
     my $Self = {};
     bless( $Self, $Type );
-
-    # check needed objects
-    for my $Object (
-        qw(DBObject ConfigObject EncodeObject LogObject UserObject GroupObject MainObject TimeObject)
-        )
-    {
-        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
-    }
-
-    # create additional objects
-    $Self->{ChangeObject} = Kernel::System::ITSMChange->new( %{$Self} );
 
     return $Self;
 }
@@ -112,7 +69,7 @@ sub DataGet {
     # check needed stuff
     for my $Argument (qw(Selector UserID)) {
         if ( !exists $Param{$Argument} || !defined $Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -127,7 +84,7 @@ sub DataGet {
     );
 
     # get change data as anon hash ref
-    my $Change = $Self->{ChangeObject}->ChangeGet(%ChangeGet);
+    my $Change = $Kernel::OM->Get('Kernel::System::ITSMChange')->ChangeGet(%ChangeGet);
 
     # check for change
     return if !$Change;
@@ -165,7 +122,7 @@ sub CompareValueList {
     # check needed stuff
     for my $Argument (qw(AttributeName UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -183,7 +140,7 @@ sub CompareValueList {
         my $Type = $1;
 
         # get the category or impact or priority list
-        $CompareValueList = $Self->{ChangeObject}->ChangePossibleCIPGet(
+        $CompareValueList = $Kernel::OM->Get('Kernel::System::ITSMChange')->ChangePossibleCIPGet(
             Type   => $Type,
             UserID => $Param{UserID},
         );
@@ -193,7 +150,7 @@ sub CompareValueList {
     elsif ( $Param{AttributeName} eq 'ChangeStateID' ) {
 
         # get change state list
-        $CompareValueList = $Self->{ChangeObject}->ChangePossibleStatesGet(
+        $CompareValueList = $Kernel::OM->Get('Kernel::System::ITSMChange')->ChangePossibleStatesGet(
             UserID => $Param{UserID},
         );
     }
@@ -204,7 +161,7 @@ sub CompareValueList {
     {
 
         # get a complete list of users
-        my %Users = $Self->{UserObject}->UserList(
+        my %Users = $Kernel::OM->Get('Kernel::System::User')->UserList(
             Type  => 'Long',
             Valid => 1,
         );
@@ -237,7 +194,7 @@ sub SelectorList {
     my ( $Self, %Param ) = @_;
 
     # get change data
-    my $ChangeData = $Self->{ChangeObject}->ChangeGet(
+    my $ChangeData = $Kernel::OM->Get('Kernel::System::ITSMChange')->ChangeGet(
         ChangeID => $Param{ChangeID},
         UserID   => $Param{UserID},
     );

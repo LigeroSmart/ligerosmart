@@ -12,6 +12,8 @@ package Kernel::System::ITSMChange::ITSMCondition::Object;
 use strict;
 use warnings;
 
+our $ObjectManagerDisabled = 1;
+
 =head1 NAME
 
 Kernel::System::ITSMChange::ITSMCondition::Object - condition object lib
@@ -41,7 +43,7 @@ sub ObjectAdd {
     # check needed stuff
     for my $Argument (qw(Name UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -56,7 +58,7 @@ sub ObjectAdd {
 
     # check if object name already exists
     if ($ObjectID) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "Condition object ($Param{Name}) already exists!",
         );
@@ -64,7 +66,7 @@ sub ObjectAdd {
     }
 
     # add new object name to database
-    return if !$Self->{DBObject}->Do(
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Do(
         SQL => 'INSERT INTO condition_object '
             . '(name) '
             . 'VALUES (?)',
@@ -78,7 +80,7 @@ sub ObjectAdd {
 
     # check if object could be added
     if ( !$ObjectID ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "ObjectAdd() failed!",
         );
@@ -86,8 +88,8 @@ sub ObjectAdd {
     }
 
     # delete cache
-    $Self->{CacheObject}->Delete(
-        Type => 'ITSMChangeManagement',
+    $Kernel::OM->Get('Kernel::System::Cache')->Delete(
+        Type => $Self->{CacheType},
         Key  => 'ObjectList',
     );
 
@@ -112,7 +114,7 @@ sub ObjectUpdate {
     # check needed stuff
     for my $Argument (qw(ObjectID Name UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -128,7 +130,7 @@ sub ObjectUpdate {
 
     # check object data
     if ( !$ObjectData ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "ObjectUpdate of $Param{ObjectID} failed!",
         );
@@ -136,7 +138,7 @@ sub ObjectUpdate {
     }
 
     # update object in database
-    return if !$Self->{DBObject}->Do(
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Do(
         SQL => 'UPDATE condition_object '
             . 'SET name = ? '
             . 'WHERE id = ?',
@@ -154,8 +156,8 @@ sub ObjectUpdate {
         'ObjectLookup::Name::' . $ObjectData->{Name},    # use the old name
         )
     {
-        $Self->{CacheObject}->Delete(
-            Type => 'ITSMChangeManagement',
+        $Kernel::OM->Get('Kernel::System::Cache')->Delete(
+            Type => $Self->{CacheType},
             Key  => $Key,
         );
     }
@@ -186,7 +188,7 @@ sub ObjectGet {
     # check needed stuff
     for my $Argument (qw(ObjectID UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -196,14 +198,14 @@ sub ObjectGet {
 
     # check cache
     my $CacheKey = 'ObjectGet::ObjectID::' . $Param{ObjectID};
-    my $Cache    = $Self->{CacheObject}->Get(
-        Type => 'ITSMChangeManagement',
+    my $Cache    = $Kernel::OM->Get('Kernel::System::Cache')->Get(
+        Type => $Self->{CacheType},
         Key  => $CacheKey,
     );
     return $Cache if $Cache;
 
     # prepare SQL statement
-    return if !$Self->{DBObject}->Prepare(
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Prepare(
         SQL   => 'SELECT id, name FROM condition_object WHERE id = ?',
         Bind  => [ \$Param{ObjectID} ],
         Limit => 1,
@@ -211,14 +213,14 @@ sub ObjectGet {
 
     # fetch the result
     my %ObjectData;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $Kernel::OM->Get('Kernel::System::DB')->FetchrowArray() ) {
         $ObjectData{ObjectID} = $Row[0];
         $ObjectData{Name}     = $Row[1];
     }
 
     # check error
     if ( !%ObjectData ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "ObjectID $Param{ObjectID} does not exist!",
         );
@@ -226,8 +228,8 @@ sub ObjectGet {
     }
 
     # set cache
-    $Self->{CacheObject}->Set(
-        Type  => 'ITSMChangeManagement',
+    $Kernel::OM->Get('Kernel::System::Cache')->Set(
+        Type  => $Self->{CacheType},
         Key   => $CacheKey,
         Value => \%ObjectData,
         TTL   => $Self->{CacheTTL},
@@ -257,7 +259,7 @@ sub ObjectLookup {
 
     # check if both parameters are given
     if ( $Param{ObjectID} && $Param{Name} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need ObjectID or Name - not both!',
         );
@@ -266,7 +268,7 @@ sub ObjectLookup {
 
     # check if both parameters are not given
     if ( !$Param{ObjectID} && !$Param{Name} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need ObjectID or Name - none is given!',
         );
@@ -275,7 +277,7 @@ sub ObjectLookup {
 
     # check if ObjectID is a number
     if ( $Param{ObjectID} && $Param{ObjectID} !~ m{ \A \d+ \z }xms ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "ObjectID must be a number! (ObjectID: $Param{ObjectID})",
         );
@@ -289,13 +291,13 @@ sub ObjectLookup {
 
         # check cache
         $CacheKey = 'ObjectLookup::ObjectID::' . $Param{ObjectID};
-        my $Cache = $Self->{CacheObject}->Get(
-            Type => 'ITSMChangeManagement',
+        my $Cache = $Kernel::OM->Get('Kernel::System::Cache')->Get(
+            Type => $Self->{CacheType},
             Key  => $CacheKey,
         );
         return $Cache if $Cache;
 
-        return if !$Self->{DBObject}->Prepare(
+        return if !$Kernel::OM->Get('Kernel::System::DB')->Prepare(
             SQL   => 'SELECT name FROM condition_object WHERE id = ?',
             Bind  => [ \$Param{ObjectID} ],
             Limit => 1,
@@ -305,13 +307,13 @@ sub ObjectLookup {
 
         # check cache
         $CacheKey = 'ObjectLookup::Name::' . $Param{Name};
-        my $Cache = $Self->{CacheObject}->Get(
-            Type => 'ITSMChangeManagement',
+        my $Cache = $Kernel::OM->Get('Kernel::System::Cache')->Get(
+            Type => $Self->{CacheType},
             Key  => $CacheKey,
         );
         return $Cache if $Cache;
 
-        return if !$Self->{DBObject}->Prepare(
+        return if !$Kernel::OM->Get('Kernel::System::DB')->Prepare(
             SQL   => 'SELECT id FROM condition_object WHERE name = ?',
             Bind  => [ \$Param{Name} ],
             Limit => 1,
@@ -320,13 +322,13 @@ sub ObjectLookup {
 
     # fetch the result
     my $Lookup;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $Kernel::OM->Get('Kernel::System::DB')->FetchrowArray() ) {
         $Lookup = $Row[0];
     }
 
     # set cache
-    $Self->{CacheObject}->Set(
-        Type  => 'ITSMChangeManagement',
+    $Kernel::OM->Get('Kernel::System::Cache')->Set(
+        Type  => $Self->{CacheType},
         Key   => $CacheKey,
         Value => $Lookup,
         TTL   => $Self->{CacheTTL},
@@ -354,7 +356,7 @@ sub ObjectList {
 
     # check needed stuff
     if ( !$Param{UserID} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "Need UserID!",
         );
@@ -363,26 +365,26 @@ sub ObjectList {
 
     # check cache
     my $CacheKey = 'ObjectList';
-    my $Cache    = $Self->{CacheObject}->Get(
-        Type => 'ITSMChangeManagement',
+    my $Cache    = $Kernel::OM->Get('Kernel::System::Cache')->Get(
+        Type => $Self->{CacheType},
         Key  => $CacheKey,
     );
     return $Cache if $Cache;
 
     # prepare SQL statement
-    return if !$Self->{DBObject}->Prepare(
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Prepare(
         SQL => 'SELECT id, name FROM condition_object',
     );
 
     # fetch the result
     my %ObjectList;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $Kernel::OM->Get('Kernel::System::DB')->FetchrowArray() ) {
         $ObjectList{ $Row[0] } = $Row[1];
     }
 
     # set cache
-    $Self->{CacheObject}->Set(
-        Type  => 'ITSMChangeManagement',
+    $Kernel::OM->Get('Kernel::System::Cache')->Set(
+        Type  => $Self->{CacheType},
         Key   => $CacheKey,
         Value => \%ObjectList,
         TTL   => $Self->{CacheTTL},
@@ -408,7 +410,7 @@ sub ObjectDelete {
     # check needed stuff
     for my $Argument (qw(ObjectID UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -422,7 +424,7 @@ sub ObjectDelete {
     );
 
     # delete condition object from database
-    return if !$Self->{DBObject}->Do(
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Do(
         SQL => 'DELETE FROM condition_object '
             . 'WHERE id = ?',
         Bind => [ \$Param{ObjectID} ],
@@ -436,8 +438,8 @@ sub ObjectDelete {
         'ObjectLookup::Name::' . $ObjectName,
         )
     {
-        $Self->{CacheObject}->Delete(
-            Type => 'ITSMChangeManagement',
+        $Kernel::OM->Get('Kernel::System::Cache')->Delete(
+            Type => $Self->{CacheType},
             Key  => $Key,
         );
     }
@@ -479,7 +481,7 @@ sub ObjectSelectorList {
     # check needed stuff
     for my $Argument (qw(ObjectID ConditionID UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -502,9 +504,8 @@ sub ObjectSelectorList {
     return if !$ConditionData;
 
     # get object backend
-    my $BackendObject = $Self->_ObjectLoadBackend(
-        Type => $ObjectName,
-    );
+    my $BackendObject
+        = $Kernel::OM->Get( 'Kernel::System::ITSMChange::ITSMCondition::Object::' . $ObjectName );
 
     # check for error
     return if !$BackendObject;
@@ -514,7 +515,7 @@ sub ObjectSelectorList {
 
     # check for available function
     if ( !$BackendObject->can($Sub) ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "No function '$Sub' available for backend '$ObjectName'!",
         );
@@ -562,7 +563,7 @@ sub ObjectCompareValueList {
     # check needed stuff
     for my $Argument (qw(ObjectID AttributeName UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -582,9 +583,9 @@ sub ObjectCompareValueList {
     my $ObjectType = $ObjectName;
 
     # get object backend
-    my $BackendObject = $Self->_ObjectLoadBackend(
-        Type => $ObjectType,
-    );
+    my $BackendObject
+        = $Kernel::OM->Get( 'Kernel::System::ITSMChange::ITSMCondition::Object::' . $ObjectType );
+
     return if !$BackendObject;
 
     # define default functions for backend
@@ -592,7 +593,7 @@ sub ObjectCompareValueList {
 
     # check for available function
     if ( !$BackendObject->can($Sub) ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "No function '$Sub' available for backend '$ObjectType'!",
         );
@@ -628,7 +629,7 @@ sub ObjectDataGet {
     # check needed stuff
     for my $Argument (qw(ConditionID Selector UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -638,7 +639,7 @@ sub ObjectDataGet {
 
     # either ObjectName or ObjectID must be passed
     if ( !$Param{ObjectName} && !$Param{ObjectID} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'ObjectName ID or ObjectID!',
         );
@@ -647,7 +648,7 @@ sub ObjectDataGet {
 
     # check that not both ObjectName and ObjectID are given
     if ( $Param{ObjectName} && $Param{ObjectID} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need either ObjectName OR ObjectID - not both!',
         );
@@ -666,9 +667,9 @@ sub ObjectDataGet {
     my $ObjectType = $ObjectName;
 
     # get object backend
-    my $BackendObject = $Self->_ObjectLoadBackend(
-        Type => $ObjectType,
-    );
+    my $BackendObject
+        = $Kernel::OM->Get( 'Kernel::System::ITSMChange::ITSMCondition::Object::' . $ObjectType );
+
     return if !$BackendObject;
 
     # define default functions for backend
@@ -676,7 +677,7 @@ sub ObjectDataGet {
 
     # check for available function
     if ( !$BackendObject->can($Sub) ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "No function '$Sub' available for backend '$ObjectType'!",
         );
@@ -693,61 +694,7 @@ sub ObjectDataGet {
     return $ObjectData;
 }
 
-=begin Internal:
-
-=item _ObjectLoadBackend()
-
-Returns a newly loaded backend object
-
-    my $BackendObject = $ConditionObject->_ObjectLoadBackend(
-        Type => 'ITSMChange',  # ( ITSMChange | ITSMWorkOrder )
-    );
-
-=cut
-
-sub _ObjectLoadBackend {
-    my ( $Self, %Param ) = @_;
-
-    if ( !$Param{Type} ) {
-        $Self->{LogObject}->Log(
-            Priority => 'error',
-            Message  => 'Need Type!',
-        );
-        return;
-    }
-
-    # define backend module name
-    my $ModuleName = 'Kernel::System::ITSMChange::ITSMCondition::Object::' . $Param{Type};
-
-    # load the backend module
-    if ( !$Self->{MainObject}->Require($ModuleName) ) {
-        $Self->{LogObject}->Log(
-            Priority => 'error',
-            Message  => "Can't load backend module $Param{Type}!"
-        );
-        return;
-    }
-
-    # create new instance
-    my $BackendObject = $ModuleName->new(
-        %{$Self},
-        %Param,
-    );
-
-    if ( !$BackendObject ) {
-        $Self->{LogObject}->Log(
-            Priority => 'error',
-            Message  => "Can't create a new instance of backend module $Param{Type}!",
-        );
-        return;
-    }
-
-    return $BackendObject;
-}
-
 1;
-
-=end Internal:
 
 =back
 

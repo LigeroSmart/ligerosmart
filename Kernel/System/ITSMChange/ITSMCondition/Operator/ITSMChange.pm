@@ -12,7 +12,10 @@ package Kernel::System::ITSMChange::ITSMCondition::Operator::ITSMChange;
 use strict;
 use warnings;
 
-use Kernel::System::ITSMChange;
+our @ObjectDependencies = (
+    'Kernel::System::ITSMChange',
+    'Kernel::System::Log',
+);
 
 =head1 NAME
 
@@ -32,45 +35,9 @@ All ITSMChange operator functions for conditions in ITSMChangeManagement.
 
 create an object
 
-    use Kernel::Config;
-    use Kernel::System::Encode;
-    use Kernel::System::Log;
-    use Kernel::System::DB;
-    use Kernel::System::Main;
-    use Kernel::System::Time;
-    use Kernel::System::ITSMChange::ITSMCondition::Operator::ITSMChange;
-
-    my $ConfigObject = Kernel::Config->new();
-    my $EncodeObject = Kernel::System::Encode->new(
-        ConfigObject => $ConfigObject,
-    );
-    my $LogObject = Kernel::System::Log->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-    );
-    my $MainObject = Kernel::System::Main->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-    );
-    my $TimeObject = Kernel::System::Time->new(
-        ConfigObject => $ConfigObject,
-        LogObject    => $LogObject,
-    );
-    my $DBObject = Kernel::System::DB->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-        MainObject   => $MainObject,
-    );
-    my $ConditionOperatorITSMChange = Kernel::System::ITSMChange::ITSMCondition::Operator::ITSMChange->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-        MainObject   => $MainObject,
-        TimeObject   => $TimeObject,
-        DBObject     => $DBObject,
-    );
+    use Kernel::System::ObjectManager;
+    local $Kernel::OM = Kernel::System::ObjectManager->new();
+    my $ConditionOperatorITSMChange = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMCondition::Operator::ITSMChange');
 
 =cut
 
@@ -80,17 +47,6 @@ sub new {
     # allocate new hash for object
     my $Self = {};
     bless( $Self, $Type );
-
-    # check needed objects
-    for my $Object (
-        qw(DBObject ConfigObject EncodeObject LogObject MainObject UserObject GroupObject TimeObject)
-        )
-    {
-        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
-    }
-
-    # create additional objects
-    $Self->{ChangeObject} = Kernel::System::ITSMChange->new( %{$Self} );
 
     return $Self;
 }
@@ -114,7 +70,7 @@ sub Set {
     # check needed stuff
     for my $Argument (qw(Selector Attribute ActionValue UserID)) {
         if ( !exists $Param{$Argument} || !defined $Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -123,7 +79,7 @@ sub Set {
     }
 
     # get change
-    my $Change = $Self->{ChangeObject}->ChangeGet(
+    my $Change = $Kernel::OM->Get('Kernel::System::ITSMChange')->ChangeGet(
         ChangeID => $Param{Selector},
         UserID   => $Param{UserID},
     );
@@ -140,7 +96,7 @@ sub Set {
     return 1 if $Change->{ $Param{Attribute} } eq $Param{ActionValue};
 
     # update change and return update result
-    return $Self->{ChangeObject}->ChangeUpdate(
+    return $Kernel::OM->Get('Kernel::System::ITSMChange')->ChangeUpdate(
         ChangeID          => $Param{Selector},
         $Param{Attribute} => $Param{ActionValue},
         UserID            => $Param{UserID},

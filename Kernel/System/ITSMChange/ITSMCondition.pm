@@ -12,8 +12,6 @@ package Kernel::System::ITSMChange::ITSMCondition;
 use strict;
 use warnings;
 
-use Kernel::System::Valid;
-
 use Kernel::System::EventHandler;
 use Kernel::System::ITSMChange::ITSMCondition::Object;
 use Kernel::System::ITSMChange::ITSMCondition::Attribute;
@@ -23,17 +21,14 @@ use Kernel::System::ITSMChange::ITSMCondition::Action;
 
 use vars qw(@ISA);
 
-@ISA = (
-    'Kernel::System::EventHandler',
-    'Kernel::System::ITSMChange::ITSMCondition::Object',
-    'Kernel::System::ITSMChange::ITSMCondition::Attribute',
-    'Kernel::System::ITSMChange::ITSMCondition::Operator',
-    'Kernel::System::ITSMChange::ITSMCondition::Expression',
-    'Kernel::System::ITSMChange::ITSMCondition::Action',
-);
-
 our @ObjectDependencies = (
+    'Kernel::Config',
     'Kernel::System::Cache',
+    'Kernel::System::DB',
+    'Kernel::System::Log',
+    'Kernel::System::Valid',
+    'Kernel::System::Time',
+    'Kernel::System::ITSMChange::ITSMCondition::Object::ITSMWorkOrder',
 );
 
 =head1 NAME
@@ -54,45 +49,9 @@ All functions for conditions in ITSMChangeManagement.
 
 create an object
 
-    use Kernel::Config;
-    use Kernel::System::Encode;
-    use Kernel::System::Log;
-    use Kernel::System::DB;
-    use Kernel::System::Main;
-    use Kernel::System::Time;
-    use Kernel::System::ITSMChange::ITSMCondition;
-
-    my $ConfigObject = Kernel::Config->new();
-    my $EncodeObject = Kernel::System::Encode->new(
-        ConfigObject => $ConfigObject,
-    );
-    my $LogObject = Kernel::System::Log->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-    );
-    my $MainObject = Kernel::System::Main->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-    );
-    my $TimeObject = Kernel::System::Time->new(
-        ConfigObject => $ConfigObject,
-        LogObject    => $LogObject,
-    );
-    my $DBObject = Kernel::System::DB->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-        MainObject   => $MainObject,
-    );
-    my $ConditionObject = Kernel::System::ITSMChange::ITSMCondition->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-        DBObject     => $DBObject,
-        TimeObject   => $TimeObject,
-        MainObject   => $MainObject,
-    );
+    use Kernel::System::ObjectManager;
+    local $Kernel::OM = Kernel::System::ObjectManager->new();
+    my $ConditionObject = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMCondition');
 
 =cut
 
@@ -103,31 +62,25 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    # check needed objects
-    for my $Object (
-        qw(DBObject ConfigObject EncodeObject LogObject UserObject GroupObject MainObject TimeObject)
-        )
-    {
-        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
-    }
-
     # set the debug flag
     $Self->{Debug} = $Param{Debug} || 0;
 
-    # create additional objects
-    $Self->{ValidObject} = Kernel::System::Valid->new( %{$Self} );
-
     # get the cache type and TTL (in seconds)
     $Self->{CacheType} = 'ITSMChangeManagement';
-    $Self->{CacheTTL}  = $Self->{ConfigObject}->Get('ITSMChange::CacheTTL') * 60;
+    $Self->{CacheTTL}  = $Kernel::OM->Get('Kernel::Config')->Get('ITSMChange::CacheTTL') * 60;
+
+    @ISA = qw(
+        Kernel::System::EventHandler
+        Kernel::System::ITSMChange::ITSMCondition::Object
+        Kernel::System::ITSMChange::ITSMCondition::Attribute
+        Kernel::System::ITSMChange::ITSMCondition::Operator
+        Kernel::System::ITSMChange::ITSMCondition::Expression
+        Kernel::System::ITSMChange::ITSMCondition::Action
+    );
 
     # init of event handler
     $Self->EventHandlerInit(
-        Config     => 'ITSMCondition::EventModule',
-        BaseObject => 'ConditionObject',
-        Objects    => {
-            %{$Self},
-        },
+        Config => 'ITSMCondition::EventModule',
     );
 
     return $Self;
@@ -154,7 +107,7 @@ sub ConditionAdd {
     # check needed stuff
     for my $Argument (qw(ChangeID Name ExpressionConjunction ValidID UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -163,7 +116,7 @@ sub ConditionAdd {
     }
 
     # check if a condition with this name and change id exist already
-    return if !$Self->{DBObject}->Prepare(
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Prepare(
         SQL => 'SELECT id FROM change_condition '
             . 'WHERE change_id = ? AND name = ?',
         Bind => [
@@ -174,13 +127,13 @@ sub ConditionAdd {
 
     # fetch the result
     my $ConditionID;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $Kernel::OM->Get('Kernel::System::DB')->FetchrowArray() ) {
         $ConditionID = $Row[0];
     }
 
     # a condition with this name and change id exists already
     if ($ConditionID) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "A condition with the name $Param{Name} "
                 . "exists already for ChangeID $Param{ChangeID}!",
@@ -198,7 +151,7 @@ sub ConditionAdd {
     );
 
     # add new condition to database
-    return if !$Self->{DBObject}->Do(
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Do(
         SQL => 'INSERT INTO change_condition '
             . '(change_id, name, expression_conjunction, comments, valid_id, '
             . 'create_time, create_by, change_time, change_by) '
@@ -210,7 +163,7 @@ sub ConditionAdd {
     );
 
     # prepare SQL statement
-    return if !$Self->{DBObject}->Prepare(
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Prepare(
         SQL => 'SELECT id FROM change_condition '
             . 'WHERE change_id = ? AND name = ?',
         Bind => [
@@ -220,13 +173,13 @@ sub ConditionAdd {
     );
 
     # fetch the result
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $Kernel::OM->Get('Kernel::System::DB')->FetchrowArray() ) {
         $ConditionID = $Row[0];
     }
 
     # check if condition could be added
     if ( !$ConditionID ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "ConditionAdd() failed!",
         );
@@ -279,7 +232,7 @@ sub ConditionUpdate {
     # check needed stuff
     for my $Argument (qw(ConditionID UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -337,7 +290,7 @@ sub ConditionUpdate {
     push @Bind, \$Param{ConditionID};
 
     # update condition
-    return if !$Self->{DBObject}->Do(
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Do(
         SQL  => $SQL,
         Bind => \@Bind,
     );
@@ -392,7 +345,7 @@ sub ConditionLookup {
 
     # the change id must be passed
     if ( !$Param{ChangeID} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need the ChangeID!',
         );
@@ -401,7 +354,7 @@ sub ConditionLookup {
 
     # the condition id or the condition name must be passed
     if ( !$Param{ConditionID} && !$Param{Name} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need the ConditionID or the Name!',
         );
@@ -410,7 +363,7 @@ sub ConditionLookup {
 
     # only one of condition id and condition name can be passed
     if ( $Param{ConditionID} && $Param{Name} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need either the ConditionID or the Name, not both!',
         );
@@ -419,7 +372,7 @@ sub ConditionLookup {
 
     # check if ConditionID is a number
     if ( $Param{ConditionID} && $Param{ConditionID} !~ m{ \A \d+ \z }xms ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "ConditionID must be a number! (ConditionID: $Param{ConditionID})",
         );
@@ -431,7 +384,7 @@ sub ConditionLookup {
 
         my $ConditionID;
 
-        return if !$Self->{DBObject}->Prepare(
+        return if !$Kernel::OM->Get('Kernel::System::DB')->Prepare(
             SQL => '
                 SELECT id
                 FROM change_condition
@@ -445,7 +398,7 @@ sub ConditionLookup {
             Limit => 1,
         );
 
-        while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        while ( my @Row = $Kernel::OM->Get('Kernel::System::DB')->FetchrowArray() ) {
             $ConditionID = $Row[0];
         }
 
@@ -457,7 +410,7 @@ sub ConditionLookup {
 
         my $Name;
 
-        return if !$Self->{DBObject}->Prepare(
+        return if !$Kernel::OM->Get('Kernel::System::DB')->Prepare(
             SQL => '
                 SELECT name
                 FROM change_condition
@@ -471,7 +424,7 @@ sub ConditionLookup {
             Limit => 1,
         );
 
-        while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        while ( my @Row = $Kernel::OM->Get('Kernel::System::DB')->FetchrowArray() ) {
             $Name = $Row[0];
         }
 
@@ -511,7 +464,7 @@ sub ConditionGet {
     # check needed stuff
     for my $Argument (qw(ConditionID UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -528,7 +481,7 @@ sub ConditionGet {
     return $Cache if $Cache;
 
     # prepare SQL statement
-    return if !$Self->{DBObject}->Prepare(
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Prepare(
         SQL => 'SELECT id, change_id, name, expression_conjunction, comments, '
             . 'valid_id, create_time, create_by, change_time, change_by '
             . 'FROM change_condition '
@@ -539,7 +492,7 @@ sub ConditionGet {
 
     # fetch the result
     my %ConditionData;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $Kernel::OM->Get('Kernel::System::DB')->FetchrowArray() ) {
         $ConditionData{ConditionID}           = $Row[0];
         $ConditionData{ChangeID}              = $Row[1];
         $ConditionData{Name}                  = $Row[2];
@@ -554,7 +507,7 @@ sub ConditionGet {
 
     # check error
     if ( !%ConditionData ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "ConditionID $Param{ConditionID} does not exist!",
         );
@@ -599,7 +552,7 @@ sub ConditionList {
     # check needed stuff
     for my $Argument (qw(ChangeID UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -628,7 +581,7 @@ sub ConditionList {
     # get only valid condition ids
     if ( $Param{Valid} ) {
 
-        my @ValidIDs = $Self->{ValidObject}->ValidIDsGet();
+        my @ValidIDs = $Kernel::OM->Get('Kernel::System::Valid')->ValidIDsGet();
         my $ValidIDString = join ', ', @ValidIDs;
 
         $SQL .= "AND valid_id IN ( $ValidIDString ) ";
@@ -638,14 +591,14 @@ sub ConditionList {
     $SQL .= 'ORDER BY name ASC ';
 
     # prepare SQL statement
-    return if !$Self->{DBObject}->Prepare(
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Prepare(
         SQL  => $SQL,
         Bind => [ \$Param{ChangeID} ],
     );
 
     # fetch the result
     my @ConditionIDs;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $Kernel::OM->Get('Kernel::System::DB')->FetchrowArray() ) {
         push @ConditionIDs, $Row[0];
     }
 
@@ -677,7 +630,7 @@ sub ConditionDelete {
     # check needed stuff
     for my $Argument (qw(ConditionID UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -717,7 +670,7 @@ sub ConditionDelete {
     return if !$Success;
 
     # delete condition from database
-    return if !$Self->{DBObject}->Do(
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Do(
         SQL => 'DELETE FROM change_condition '
             . 'WHERE id = ?',
         Bind => [ \$Param{ConditionID} ],
@@ -767,7 +720,7 @@ sub ConditionDeleteAll {
     # check needed stuff
     for my $Argument (qw(ChangeID UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -817,7 +770,7 @@ sub ConditionDeleteAll {
     }
 
     # delete conditions from database
-    return if !$Self->{DBObject}->Do(
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Do(
         SQL => 'DELETE FROM change_condition '
             . 'WHERE change_id = ?',
         Bind => [ \$Param{ChangeID} ],
@@ -872,7 +825,7 @@ sub ConditionMatchExecuteAll {
     # check needed stuff
     for my $Argument (qw(ChangeID UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -907,7 +860,7 @@ sub ConditionMatchExecuteAll {
 
         # write log entry but do not return
         if ( !$Success ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "ConditionMatchExecute for ConditionID '$ConditionID' failed!",
             );
@@ -943,7 +896,7 @@ sub ConditionMatchExecute {
     # check needed stuff
     for my $Argument (qw(ConditionID UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -1056,7 +1009,7 @@ sub ConditionMatchExecute {
         # 1 means an action was executed successfully, and 0 means it was a "Lock"-Action,
         # which is no error, and should therefore not be logged.
         if ( !defined $Success ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "ActionID '$ActionID' could not be executed successfully "
                     . "for ConditionID '$Param{ConditionID}' (Condition name: '$ConditionData->{Name}') "
@@ -1085,7 +1038,7 @@ sub ConditionMatchStateLock {
     # check needed stuff
     for my $Argument (qw(ObjectName Selector StateID UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -1214,7 +1167,7 @@ sub ConditionCompareValueFieldType {
     # check needed stuff
     for my $Argument (qw(ObjectID AttributeID UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -1229,7 +1182,7 @@ sub ConditionCompareValueFieldType {
 
     # check error
     if ( !$ObjectName ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "ObjectID $Param{ObjectID} does not exist!",
         );
@@ -1243,7 +1196,7 @@ sub ConditionCompareValueFieldType {
 
     # check error
     if ( !$AttributeName ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "AttributeID $Param{AttributeID} does not exist!",
         );
@@ -1251,7 +1204,7 @@ sub ConditionCompareValueFieldType {
     }
 
     # get the field type config for the given object
-    my $Config = $Self->{ConfigObject}->Get( $ObjectName . '::Attribute::CompareValue::FieldType' );
+    my $Config = $Kernel::OM->Get('Kernel::Config')->Get( $ObjectName . '::Attribute::CompareValue::FieldType' );
 
     # check error
     return if !$Config;
@@ -1285,7 +1238,7 @@ sub ConditionListByObjectType {
     # check needed stuff
     for my $Argument (qw(ObjectType Selector ChangeID UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -1424,7 +1377,7 @@ sub _ConditionMatch {
     # check needed stuff
     for my $Argument (qw(ConditionID UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -1529,7 +1482,7 @@ sub _ConditionListByObject {
     # check needed stuff
     for my $Argument (qw(ObjectName Selector UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -1548,9 +1501,7 @@ sub _ConditionListByObject {
     elsif ( $Param{ObjectName} eq 'ITSMWorkOrder' ) {
 
         # get object backend
-        my $BackendObject = $Self->_ObjectLoadBackend(
-            Type => 'ITSMWorkOrder',
-        );
+        my $BackendObject = $Kernel::OM->Get( 'Kernel::System::ITSMChange::ITSMCondition::Object::ITSMWorkOrder' );
 
         # check for error
         return if !$BackendObject;
@@ -1560,7 +1511,7 @@ sub _ConditionListByObject {
 
         # check for available function
         if ( !$BackendObject->can($Sub) ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "No function '$Sub' available for backend '$Param{ObjectName}'!",
             );

@@ -12,6 +12,8 @@ package Kernel::System::ITSMChange::ITSMCondition::Expression;
 use strict;
 use warnings;
 
+our $ObjectManagerDisabled = 1;
+
 =head1 NAME
 
 Kernel::System::ITSMChange::ITSMCondition::Expression - condition expression lib
@@ -46,7 +48,7 @@ sub ExpressionAdd {
     # check needed stuff
     for my $Argument (qw(ConditionID ObjectID AttributeID OperatorID Selector UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -56,7 +58,7 @@ sub ExpressionAdd {
 
     # handle 'CompareValue' in a special way
     if ( !exists $Param{CompareValue} || !defined $Param{CompareValue} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need CompareValue!',
         );
@@ -83,7 +85,7 @@ sub ExpressionAdd {
     );
 
     # add new expression name to database
-    return if !$Self->{DBObject}->Do(
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Do(
         SQL => 'INSERT INTO condition_expression '
             . '(condition_id, object_id, attribute_id, '
             . 'operator_id, selector, compare_value) '
@@ -96,7 +98,7 @@ sub ExpressionAdd {
 
     # prepare SQL statement
     my $ExpressionID;
-    return if !$Self->{DBObject}->Prepare(
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Prepare(
         SQL => 'SELECT id FROM condition_expression '
             . 'WHERE condition_id = ? AND object_id = ? AND attribute_id = ? '
             . 'AND operator_id = ? AND selector = ? AND compare_value = ?',
@@ -108,13 +110,13 @@ sub ExpressionAdd {
     );
 
     # get id of created expression
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $Kernel::OM->Get('Kernel::System::DB')->FetchrowArray() ) {
         $ExpressionID = $Row[0];
     }
 
     # check if expression could be added
     if ( !$ExpressionID ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "ExpressionAdd() failed!",
         );
@@ -122,8 +124,8 @@ sub ExpressionAdd {
     }
 
     # delete cache
-    $Self->{CacheObject}->Delete(
-        Type => 'ITSMChangeManagement',
+    $Kernel::OM->Get('Kernel::System::Cache')->Delete(
+        Type => $Self->{CacheType},
         Key  => 'ExpressionList::ConditionID::' . $Param{ConditionID},
     );
 
@@ -163,7 +165,7 @@ sub ExpressionUpdate {
     # check needed stuff
     for my $Argument (qw(ExpressionID UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -232,7 +234,7 @@ sub ExpressionUpdate {
     push @Bind, \$Param{ExpressionID};
 
     # update expression
-    return if !$Self->{DBObject}->Do(
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Do(
         SQL  => $SQL,
         Bind => \@Bind,
     );
@@ -243,8 +245,8 @@ sub ExpressionUpdate {
         'ExpressionGet::' . $Param{ExpressionID},
         )
     {
-        $Self->{CacheObject}->Delete(
-            Type => 'ITSMChangeManagement',
+        $Kernel::OM->Get('Kernel::System::Cache')->Delete(
+            Type => $Self->{CacheType},
             Key  => $Key,
         );
     }
@@ -291,7 +293,7 @@ sub ExpressionGet {
     # check needed stuff
     for my $Argument (qw(ExpressionID UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -301,14 +303,14 @@ sub ExpressionGet {
 
     # check cache
     my $CacheKey = 'ExpressionGet::' . $Param{ExpressionID};
-    my $Cache    = $Self->{CacheObject}->Get(
-        Type => 'ITSMChangeManagement',
+    my $Cache    = $Kernel::OM->Get('Kernel::System::Cache')->Get(
+        Type => $Self->{CacheType},
         Key  => $CacheKey,
     );
     return $Cache if $Cache;
 
     # prepare SQL statement
-    return if !$Self->{DBObject}->Prepare(
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Prepare(
         SQL => 'SELECT id, condition_id, object_id, attribute_id, '
             . 'operator_id, selector, compare_value '
             . 'FROM condition_expression WHERE id = ?',
@@ -318,7 +320,7 @@ sub ExpressionGet {
 
     # fetch the result
     my %ExpressionData;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $Kernel::OM->Get('Kernel::System::DB')->FetchrowArray() ) {
         $ExpressionData{ExpressionID} = $Row[0];
         $ExpressionData{ConditionID}  = $Row[1];
         $ExpressionData{ObjectID}     = $Row[2];
@@ -330,7 +332,7 @@ sub ExpressionGet {
 
     # check error
     if ( !%ExpressionData ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "ExpressionID $Param{ExpressionID} does not exist!",
         );
@@ -338,8 +340,8 @@ sub ExpressionGet {
     }
 
     # set cache
-    $Self->{CacheObject}->Set(
-        Type  => 'ITSMChangeManagement',
+    $Kernel::OM->Get('Kernel::System::Cache')->Set(
+        Type  => $Self->{CacheType},
         Key   => $CacheKey,
         Value => \%ExpressionData,
         TTL   => $Self->{CacheTTL},
@@ -366,7 +368,7 @@ sub ExpressionList {
     # check needed stuff
     for my $Argument (qw(ConditionID UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -376,14 +378,14 @@ sub ExpressionList {
 
     # check cache
     my $CacheKey = 'ExpressionList::ConditionID::' . $Param{ConditionID};
-    my $Cache    = $Self->{CacheObject}->Get(
-        Type => 'ITSMChangeManagement',
+    my $Cache    = $Kernel::OM->Get('Kernel::System::Cache')->Get(
+        Type => $Self->{CacheType},
         Key  => $CacheKey,
     );
     return $Cache if $Cache;
 
     # prepare SQL statement
-    return if !$Self->{DBObject}->Prepare(
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Prepare(
         SQL => 'SELECT id FROM condition_expression '
             . 'WHERE condition_id = ?',
         Bind => [ \$Param{ConditionID} ],
@@ -391,13 +393,13 @@ sub ExpressionList {
 
     # fetch the result
     my @ExpressionList;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $Kernel::OM->Get('Kernel::System::DB')->FetchrowArray() ) {
         push @ExpressionList, $Row[0];
     }
 
     # set cache
-    $Self->{CacheObject}->Set(
-        Type  => 'ITSMChangeManagement',
+    $Kernel::OM->Get('Kernel::System::Cache')->Set(
+        Type  => $Self->{CacheType},
         Key   => $CacheKey,
         Value => \@ExpressionList,
         TTL   => $Self->{CacheTTL},
@@ -423,7 +425,7 @@ sub ExpressionDelete {
     # check needed stuff
     for my $Argument (qw(ExpressionID UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -460,7 +462,7 @@ sub ExpressionDelete {
     );
 
     # delete condition expression from database
-    return if !$Self->{DBObject}->Do(
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Do(
         SQL => 'DELETE FROM condition_expression '
             . 'WHERE id = ?',
         Bind => [ \$Param{ExpressionID} ],
@@ -472,8 +474,8 @@ sub ExpressionDelete {
         'ExpressionGet::' . $Param{ExpressionID},
         )
     {
-        $Self->{CacheObject}->Delete(
-            Type => 'ITSMChangeManagement',
+        $Kernel::OM->Get('Kernel::System::Cache')->Delete(
+            Type => $Self->{CacheType},
             Key  => $Key,
         );
     }
@@ -508,7 +510,7 @@ sub ExpressionDeleteAll {
     # check needed stuff
     for my $Argument (qw(ConditionID UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -543,23 +545,23 @@ sub ExpressionDeleteAll {
     );
 
     # delete condition expressions from database
-    return if !$Self->{DBObject}->Do(
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Do(
         SQL => 'DELETE FROM condition_expression '
             . 'WHERE condition_id = ?',
         Bind => [ \$Param{ConditionID} ],
     );
 
     # delete cache
-    $Self->{CacheObject}->Delete(
-        Type => 'ITSMChangeManagement',
+    $Kernel::OM->Get('Kernel::System::Cache')->Delete(
+        Type => $Self->{CacheType},
         Key  => 'ExpressionList::ConditionID::' . $Param{ConditionID},
     );
 
     # delete cache
     if ( $ExpressionIDsRef && @{$ExpressionIDsRef} ) {
         for my $ExpressionID ( @{$ExpressionIDsRef} ) {
-            $Self->{CacheObject}->Delete(
-                Type => 'ITSMChangeManagement',
+            $Kernel::OM->Get('Kernel::System::Cache')->Delete(
+                Type => $Self->{CacheType},
                 Key  => 'ExpressionGet::' . $ExpressionID,
             );
         }
@@ -597,7 +599,7 @@ sub ExpressionMatch {
     # check needed stuff
     for my $Argument (qw(ExpressionID UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -691,7 +693,7 @@ sub ExpressionMatch {
 
     # check attribute type
     if ( !$AttributeType ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "No attribute $ObjectName ($Expression->{Selector}) found!",
         );
@@ -701,7 +703,7 @@ sub ExpressionMatch {
     # check for object attribute
     for my $ExpressionObject ( @{$ExpressionObjectData} ) {
         if ( !exists $ExpressionObject->{$AttributeType} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "No object attribute for $ObjectName ($AttributeType) found!",
             );
@@ -751,7 +753,7 @@ sub _ExpressionMatchInit {
 
     # check for object data
     if ( !$ExpressionData{Object} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "No value for 'Object' with ID '$Expression->{ObjectID}'!",
         );
@@ -766,7 +768,7 @@ sub _ExpressionMatchInit {
 
     # check for attribute data
     if ( !$ExpressionData{Attribute} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "No value for 'Attribute' with ID '$Expression->{AttributeID}'!",
         );
@@ -781,7 +783,7 @@ sub _ExpressionMatchInit {
 
     # check for operator data
     if ( !$ExpressionData{Operator} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "No value for 'Operator' with ID '$Expression->{OperatorID}'!",
         );

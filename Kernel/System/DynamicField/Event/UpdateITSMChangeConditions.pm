@@ -15,7 +15,6 @@ use warnings;
 use Kernel::System::VariableCheck qw(:all);
 
 our @ObjectDependencies = (
-    'Kernel::System::Cache',
     'Kernel::System::Log',
 );
 

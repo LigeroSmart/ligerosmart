@@ -12,6 +12,8 @@ package Kernel::System::ITSMChange::ITSMCondition::Action;
 use strict;
 use warnings;
 
+our $ObjectManagerDisabled = 1;
+
 =head1 NAME
 
 Kernel::System::ITSMChange::ITSMCondition::Action - condition action lib
@@ -47,7 +49,7 @@ sub ActionAdd {
     # check needed stuff
     for my $Argument (qw(ConditionID ObjectID AttributeID OperatorID Selector UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -57,7 +59,7 @@ sub ActionAdd {
 
     # handle 'ActionValue' in a special way
     if ( !exists $Param{ActionValue} || !defined $Param{ActionValue} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need ActionValue!',
         );
@@ -90,7 +92,7 @@ sub ActionAdd {
     }
 
     # add new action name to database
-    return if !$Self->{DBObject}->Do(
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Do(
         SQL => 'INSERT INTO condition_action '
             . '(condition_id, action_number, object_id, '
             . 'attribute_id, operator_id, selector, '
@@ -105,7 +107,7 @@ sub ActionAdd {
 
     # prepare SQL statement
     my $ActionID;
-    return if !$Self->{DBObject}->Prepare(
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Prepare(
         SQL => 'SELECT id FROM condition_action '
             . 'WHERE condition_id = ? AND action_number = ? AND object_id = ? '
             . 'AND attribute_id = ? AND operator_id = ? AND selector = ? '
@@ -119,13 +121,13 @@ sub ActionAdd {
     );
 
     # get id of created action
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $Kernel::OM->Get('Kernel::System::DB')->FetchrowArray() ) {
         $ActionID = $Row[0];
     }
 
     # check if action could be added
     if ( !$ActionID ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "ActionAdd() failed!",
         );
@@ -133,8 +135,8 @@ sub ActionAdd {
     }
 
     # delete cache
-    $Self->{CacheObject}->Delete(
-        Type => 'ITSMChangeManagement',
+    $Kernel::OM->Get('Kernel::System::Cache')->Delete(
+        Type => $Self->{CacheType},
         Key  => 'ActionList::ConditionID::' . $Param{ConditionID},
     );
 
@@ -175,7 +177,7 @@ sub ActionUpdate {
     # check needed stuff
     for my $Argument (qw(ActionID UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -245,7 +247,7 @@ sub ActionUpdate {
     push @Bind, \$Param{ActionID};
 
     # update action
-    return if !$Self->{DBObject}->Do(
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Do(
         SQL  => $SQL,
         Bind => \@Bind,
     );
@@ -256,8 +258,8 @@ sub ActionUpdate {
         'ActionGet::' . $Param{ActionID},
         )
     {
-        $Self->{CacheObject}->Delete(
-            Type => 'ITSMChangeManagement',
+        $Kernel::OM->Get('Kernel::System::Cache')->Delete(
+            Type => $Self->{CacheType},
             Key  => $Key,
         );
     }
@@ -305,7 +307,7 @@ sub ActionGet {
     # check needed stuff
     for my $Argument (qw(ActionID UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -315,14 +317,14 @@ sub ActionGet {
 
     # check cache
     my $CacheKey = 'ActionGet::' . $Param{ActionID};
-    my $Cache    = $Self->{CacheObject}->Get(
-        Type => 'ITSMChangeManagement',
+    my $Cache    = $Kernel::OM->Get('Kernel::System::Cache')->Get(
+        Type => $Self->{CacheType},
         Key  => $CacheKey,
     );
     return $Cache if $Cache;
 
     # prepare SQL statement
-    return if !$Self->{DBObject}->Prepare(
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Prepare(
         SQL => 'SELECT id, condition_id, action_number, object_id, '
             . 'attribute_id, operator_id, selector, action_value '
             . 'FROM condition_action WHERE id = ?',
@@ -332,7 +334,7 @@ sub ActionGet {
 
     # fetch the result
     my %ActionData;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $Kernel::OM->Get('Kernel::System::DB')->FetchrowArray() ) {
         $ActionData{ActionID}     = $Row[0];
         $ActionData{ConditionID}  = $Row[1];
         $ActionData{ActionNumber} = $Row[2];
@@ -345,7 +347,7 @@ sub ActionGet {
 
     # check error
     if ( !%ActionData ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "ActionID $Param{ActionID} does not exist!",
         );
@@ -353,8 +355,8 @@ sub ActionGet {
     }
 
     # set cache
-    $Self->{CacheObject}->Set(
-        Type  => 'ITSMChangeManagement',
+    $Kernel::OM->Get('Kernel::System::Cache')->Set(
+        Type  => $Self->{CacheType},
         Key   => $CacheKey,
         Value => \%ActionData,
         TTL   => $Self->{CacheTTL},
@@ -381,7 +383,7 @@ sub ActionList {
     # check needed stuff
     for my $Argument (qw(ConditionID UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -391,14 +393,14 @@ sub ActionList {
 
     # check cache
     my $CacheKey = 'ActionList::ConditionID::' . $Param{ConditionID};
-    my $Cache    = $Self->{CacheObject}->Get(
-        Type => 'ITSMChangeManagement',
+    my $Cache    = $Kernel::OM->Get('Kernel::System::Cache')->Get(
+        Type => $Self->{CacheType},
         Key  => $CacheKey,
     );
     return $Cache if $Cache;
 
     # prepare SQL statement
-    return if !$Self->{DBObject}->Prepare(
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Prepare(
         SQL => 'SELECT id FROM condition_action '
             . 'WHERE condition_id = ? '
             . 'ORDER BY action_number ASC',
@@ -407,13 +409,13 @@ sub ActionList {
 
     # fetch the result
     my @ActionList;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $Kernel::OM->Get('Kernel::System::DB')->FetchrowArray() ) {
         push @ActionList, $Row[0];
     }
 
     # set cache
-    $Self->{CacheObject}->Set(
-        Type  => 'ITSMChangeManagement',
+    $Kernel::OM->Get('Kernel::System::Cache')->Set(
+        Type  => $Self->{CacheType},
         Key   => $CacheKey,
         Value => \@ActionList,
         TTL   => $Self->{CacheTTL},
@@ -439,7 +441,7 @@ sub ActionDelete {
     # check needed stuff
     for my $Argument (qw(ActionID UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -476,7 +478,7 @@ sub ActionDelete {
     );
 
     # delete condition action from database
-    return if !$Self->{DBObject}->Do(
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Do(
         SQL => 'DELETE FROM condition_action '
             . 'WHERE id = ?',
         Bind => [ \$Param{ActionID} ],
@@ -488,8 +490,8 @@ sub ActionDelete {
         'ActionGet::' . $Param{ActionID},
         )
     {
-        $Self->{CacheObject}->Delete(
-            Type => 'ITSMChangeManagement',
+        $Kernel::OM->Get('Kernel::System::Cache')->Delete(
+            Type => $Self->{CacheType},
             Key  => $Key,
         );
     }
@@ -524,7 +526,7 @@ sub ActionDeleteAll {
     # check needed stuff
     for my $Argument (qw(ConditionID UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -559,23 +561,23 @@ sub ActionDeleteAll {
     );
 
     # delete condition actions from database
-    return if !$Self->{DBObject}->Do(
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Do(
         SQL => 'DELETE FROM condition_action '
             . 'WHERE condition_id = ?',
         Bind => [ \$Param{ConditionID} ],
     );
 
     # delete cache
-    $Self->{CacheObject}->Delete(
-        Type => 'ITSMChangeManagement',
+    $Kernel::OM->Get('Kernel::System::Cache')->Delete(
+        Type => $Self->{CacheType},
         Key  => 'ActionList::ConditionID::' . $Param{ConditionID},
     );
 
     # delete cache
     if ( $ActionIDsRef && @{$ActionIDsRef} ) {
         for my $ActionID ( @{$ActionIDsRef} ) {
-            $Self->{CacheObject}->Delete(
-                Type => 'ITSMChangeManagement',
+            $Kernel::OM->Get('Kernel::System::Cache')->Delete(
+                Type => $Self->{CacheType},
                 Key  => 'ActionGet::' . $ActionID,
             );
         }
@@ -612,7 +614,7 @@ sub ActionExecute {
     # check needed stuff
     for my $Argument (qw(ActionID UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -682,7 +684,7 @@ sub ActionExecute {
         || ref $ActionObjectData eq 'ARRAY' && !@{$ActionObjectData}
         )
     {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "No object data for $ObjectName ($Action->{Selector}) found!",
         );
@@ -694,7 +696,7 @@ sub ActionExecute {
 
     # check attribute type
     if ( !$AttributeType ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "No attribute $ObjectName ($Action->{Selector}) found!",
         );
@@ -704,7 +706,7 @@ sub ActionExecute {
     # check for object attribute
     for my $ActionObject ( @{$ActionObjectData} ) {
         if ( !exists $ActionObject->{$AttributeType} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "No object attribute for $ObjectName ($AttributeType) found!",
             );
@@ -778,7 +780,7 @@ sub _ActionExecuteInit {
 
     # check for object data
     if ( !$ActionData{Object} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "No value for 'Object' with ID '$Action->{ObjectID}'!",
         );
@@ -793,7 +795,7 @@ sub _ActionExecuteInit {
 
     # check for attribute data
     if ( !$ActionData{Attribute} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "No value for 'Attribute' with ID '$Action->{AttributeID}'!",
         );
@@ -808,7 +810,7 @@ sub _ActionExecuteInit {
 
     # check for operator data
     if ( !$ActionData{Operator} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "No value for 'Operator' with ID '$Action->{OperatorID}'!",
         );
@@ -835,7 +837,7 @@ sub _CreateNewActionNumber {
 
     # check needed stuff
     if ( !$Param{ConditionID} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need ConditionID!',
         );
@@ -843,7 +845,7 @@ sub _CreateNewActionNumber {
     }
 
     # get the largest action number
-    return if !$Self->{DBObject}->Prepare(
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Prepare(
         SQL => 'SELECT MAX(action_number) '
             . 'FROM condition_action '
             . 'WHERE condition_id = ?',
@@ -853,7 +855,7 @@ sub _CreateNewActionNumber {
 
     # fetch the result, default to 0 when there are no actions yet
     my $ActionNumber;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $Kernel::OM->Get('Kernel::System::DB')->FetchrowArray() ) {
         $ActionNumber = $Row[0];
     }
     $ActionNumber ||= 0;

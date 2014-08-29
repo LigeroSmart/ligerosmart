@@ -12,8 +12,12 @@ package Kernel::System::ITSMChange::ITSMCondition::Object::ITSMWorkOrder;
 use strict;
 use warnings;
 
-use Kernel::System::ITSMChange::ITSMWorkOrder;
-use Kernel::System::ITSMChange::ITSMCondition;
+our @ObjectDependencies = (
+    'Kernel::System::ITSMChange::ITSMCondition',
+    'Kernel::System::ITSMChange::ITSMWorkOrder',
+    'Kernel::System::Log',
+    'Kernel::System::User',
+);
 
 =head1 NAME
 
@@ -33,45 +37,9 @@ All ITSMWorkOrder object functions for conditions in ITSMChangeManagement.
 
 create an object
 
-    use Kernel::Config;
-    use Kernel::System::Encode;
-    use Kernel::System::Log;
-    use Kernel::System::DB;
-    use Kernel::System::Main;
-    use Kernel::System::Time;
-    use Kernel::System::ITSMChange::ITSMCondition::Object::ITSMWorkOrder;
-
-    my $ConfigObject = Kernel::Config->new();
-    my $EncodeObject = Kernel::System::Encode->new(
-        ConfigObject => $ConfigObject,
-    );
-    my $LogObject = Kernel::System::Log->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-    );
-    my $MainObject = Kernel::System::Main->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-    );
-    my $TimeObject = Kernel::System::Time->new(
-        ConfigObject => $ConfigObject,
-        LogObject    => $LogObject,
-    );
-    my $DBObject = Kernel::System::DB->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-        MainObject   => $MainObject,
-    );
-    my $ConditionObjectITSMWorkOrder = Kernel::System::ITSMChange::ITSMCondition::Object::ITSMWorkOrder->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-        MainObject   => $MainObject,
-        TimeObject   => $TimeObject,
-        DBObject     => $DBObject,
-    );
+    use Kernel::System::ObjectManager;
+    local $Kernel::OM = Kernel::System::ObjectManager->new();
+    my $ConditionObjectITSMWorkOrder = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMCondition::Object::ITSMWorkOrder');
 
 =cut
 
@@ -81,18 +49,6 @@ sub new {
     # allocate new hash for object
     my $Self = {};
     bless( $Self, $Type );
-
-    # check needed objects
-    for my $Object (
-        qw(DBObject ConfigObject EncodeObject LogObject UserObject GroupObject MainObject TimeObject)
-        )
-    {
-        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
-    }
-
-    # create additional objects
-    $Self->{WorkOrderObject} = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
-    $Self->{ConditionObject} = Kernel::System::ITSMChange::ITSMCondition->new( %{$Self} );
 
     return $Self;
 }
@@ -114,7 +70,7 @@ sub DataGet {
     # check needed stuff
     for my $Argument (qw(Selector UserID)) {
         if ( !exists $Param{$Argument} || !defined $Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -133,7 +89,8 @@ sub DataGet {
     );
 
     # get workorder as anon hash ref
-    my $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(%WorkOrderGet);
+    my $WorkOrder = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')
+        ->WorkOrderGet(%WorkOrderGet);
 
     # check for workorder
     return if !$WorkOrder;
@@ -172,7 +129,7 @@ sub CompareValueList {
     # check needed stuff
     for my $Argument (qw(AttributeName UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -187,23 +144,25 @@ sub CompareValueList {
     if ( $Param{AttributeName} eq 'WorkOrderStateID' ) {
 
         # get workorder state list
-        $CompareValueList = $Self->{WorkOrderObject}->WorkOrderPossibleStatesGet(
+        $CompareValueList = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')
+            ->WorkOrderPossibleStatesGet(
             UserID => $Param{UserID},
-        );
+            );
     }
 
     # WorkOrderTypeID
     elsif ( $Param{AttributeName} eq 'WorkOrderTypeID' ) {
 
         # get workorder type list
-        $CompareValueList = $Self->{WorkOrderObject}->WorkOrderTypeList(
+        $CompareValueList
+            = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderTypeList(
             UserID => $Param{UserID},
-        );
+            );
     }
     elsif ( $Param{AttributeName} eq 'WorkOrderAgentID' ) {
 
         # get a complete list of users
-        my %Users = $Self->{UserObject}->UserList(
+        my %Users = $Kernel::OM->Get('Kernel::System::User')->UserList(
             Type  => 'Long',
             Valid => 1,
         );
@@ -240,7 +199,7 @@ sub SelectorList {
     my ( $Self, %Param ) = @_;
 
     # get all workorder ids of change
-    my $WorkOrderIDs = $Self->{WorkOrderObject}->WorkOrderList(
+    my $WorkOrderIDs = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderList(
         ChangeID => $Param{ChangeID},
         UserID   => $Param{UserID},
     );
@@ -254,10 +213,11 @@ sub SelectorList {
     for my $WorkOrderID ( @{$WorkOrderIDs} ) {
 
         # get workorder data
-        my $WorkOrderData = $Self->{WorkOrderObject}->WorkOrderGet(
+        my $WorkOrderData
+            = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderGet(
             WorkOrderID => $WorkOrderID,
             UserID      => $Param{UserID},
-        );
+            );
 
         $SelectorList{ $WorkOrderData->{WorkOrderID} }
             = $WorkOrderData->{WorkOrderNumber} . ' - ' . $WorkOrderData->{WorkOrderTitle};
@@ -289,7 +249,7 @@ sub _DataGetAll {
     my ( $Self, %Param ) = @_;
 
     # get condition
-    my $ConditionData = $Self->{ConditionObject}->ConditionGet(
+    my $ConditionData = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMCondition')->ConditionGet(
         ConditionID => $Param{ConditionID},
         UserID      => $Param{UserID},
     );
@@ -298,7 +258,7 @@ sub _DataGetAll {
     return if !$ConditionData;
 
     # get all workorder ids of change
-    my $WorkOrderIDs = $Self->{WorkOrderObject}->WorkOrderList(
+    my $WorkOrderIDs = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderList(
         ChangeID => $ConditionData->{ChangeID},
         UserID   => $Param{UserID},
     );
@@ -312,7 +272,7 @@ sub _DataGetAll {
     my @WorkOrderData;
     WORKORDERID:
     for my $WorkOrderID ( @{$WorkOrderIDs} ) {
-        my $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
+        my $WorkOrder = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderGet(
             WorkOrderID => $WorkOrderID,
             UserID      => $Param{UserID},
         );

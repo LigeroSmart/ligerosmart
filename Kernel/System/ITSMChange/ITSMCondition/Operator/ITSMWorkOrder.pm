@@ -12,7 +12,10 @@ package Kernel::System::ITSMChange::ITSMCondition::Operator::ITSMWorkOrder;
 use strict;
 use warnings;
 
-use Kernel::System::ITSMChange::ITSMWorkOrder;
+our @ObjectDependencies = (
+    'Kernel::System::ITSMChange::ITSMWorkOrder',
+    'Kernel::System::Log',
+);
 
 =head1 NAME
 
@@ -32,45 +35,9 @@ All ITSMWorkOrder operator functions for conditions in ITSMChangeManagement.
 
 create an object
 
-    use Kernel::Config;
-    use Kernel::System::Encode;
-    use Kernel::System::Log;
-    use Kernel::System::DB;
-    use Kernel::System::Main;
-    use Kernel::System::Time;
-    use Kernel::System::ITSMChange::ITSMCondition::Operator::ITSMWorkOrder;
-
-    my $ConfigObject = Kernel::Config->new();
-    my $EncodeObject = Kernel::System::Encode->new(
-        ConfigObject => $ConfigObject,
-    );
-    my $LogObject = Kernel::System::Log->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-    );
-    my $MainObject = Kernel::System::Main->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-    );
-    my $TimeObject = Kernel::System::Time->new(
-        ConfigObject => $ConfigObject,
-        LogObject    => $LogObject,
-    );
-    my $DBObject = Kernel::System::DB->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-        MainObject   => $MainObject,
-    );
-    my $ConditionOperatorITSMWorkOrder = Kernel::System::ITSMChange::ITSMCondition::Operator::ITSMWorkOrder->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-        MainObject   => $MainObject,
-        TimeObject   => $TimeObject,
-        DBObject     => $DBObject,
-    );
+    use Kernel::System::ObjectManager;
+    local $Kernel::OM = Kernel::System::ObjectManager->new();
+    my $ConditionOperatorITSMWorkOrder = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMCondition::Operator::ITSMWorkOrder');
 
 =cut
 
@@ -80,17 +47,6 @@ sub new {
     # allocate new hash for object
     my $Self = {};
     bless( $Self, $Type );
-
-    # check needed objects
-    for my $Object (
-        qw(DBObject ConfigObject EncodeObject LogObject UserObject GroupObject MainObject TimeObject)
-        )
-    {
-        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
-    }
-
-    # create additional objects
-    $Self->{WorkOrderObject} = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
 
     return $Self;
 }
@@ -114,7 +70,7 @@ sub Set {
     # check needed stuff
     for my $Argument (qw(Selector Attribute ActionValue UserID)) {
         if ( !exists $Param{$Argument} || !defined $Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -123,7 +79,7 @@ sub Set {
     }
 
     # get workorder
-    my $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
+    my $WorkOrder = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderGet(
         WorkOrderID => $Param{Selector},
         UserID      => $Param{UserID},
     );
@@ -145,7 +101,7 @@ sub Set {
     }
 
     # update workorder and return update result
-    return $Self->{WorkOrderObject}->WorkOrderUpdate(
+    return $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderUpdate(
         WorkOrderID       => $Param{Selector},
         $Param{Attribute} => $Param{ActionValue},
         UserID            => $Param{UserID},
@@ -171,7 +127,7 @@ sub SetAll {
     # check needed stuff
     for my $Argument (qw(Objects Attribute ActionValue UserID)) {
         if ( !exists $Param{$Argument} || !defined $Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );

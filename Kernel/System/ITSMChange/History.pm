@@ -13,7 +13,11 @@ use strict;
 use warnings;
 
 our @ObjectDependencies = (
+    'Kernel::Config',
     'Kernel::System::Cache',
+    'Kernel::System::DB',
+    'Kernel::System::Log',
+    'Kernel::System::User',
 );
 
 =head1 NAME
@@ -32,45 +36,9 @@ All history functions.
 
 create an object
 
-    use Kernel::Config;
-    use Kernel::System::Encode;
-    use Kernel::System::Log;
-    use Kernel::System::DB;
-    use Kernel::System::Main;
-    use Kernel::System::Time;
-    use Kernel::System::ITSMChange::History;
-
-    my $ConfigObject = Kernel::Config->new();
-    my $EncodeObject = Kernel::System::Encode->new(
-        ConfigObject => $ConfigObject,
-    );
-    my $LogObject = Kernel::System::Log->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-    );
-    my $MainObject = Kernel::System::Main->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-    );
-    my $TimeObject = Kernel::System::Time->new(
-        ConfigObject => $ConfigObject,
-        LogObject    => $LogObject,
-    );
-    my $DBObject = Kernel::System::DB->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-        MainObject   => $MainObject,
-    );
-    my $HistoryObject = Kernel::System::ITSMChange::History->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-        DBObject     => $DBObject,
-        TimeObject   => $TimeObject,
-        MainObject   => $MainObject,
-    );
+    use Kernel::System::ObjectManager;
+    local $Kernel::OM = Kernel::System::ObjectManager->new();
+    my $HistoryObject = $Kernel::OM->Get('Kernel::System::ITSMChange::History');
 
 =cut
 
@@ -81,17 +49,9 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    # check needed objects
-    for my $Object (
-        qw(DBObject ConfigObject EncodeObject LogObject UserObject MainObject TimeObject)
-        )
-    {
-        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
-    }
-
     # get the cache type and TTL (in seconds)
     $Self->{CacheType} = 'ITSMChangeManagement';
-    $Self->{CacheTTL}  = $Self->{ConfigObject}->Get('ITSMChange::CacheTTL') * 60;
+    $Self->{CacheTTL}  = $Kernel::OM->Get('Kernel::Config')->Get('ITSMChange::CacheTTL') * 60;
 
     # set default debug flag
     $Self->{Debug} ||= 0;
@@ -123,7 +83,7 @@ sub HistoryAdd {
     # ChangeID is always needed, workorder id is only needed for workorder events
     for my $Needed (qw(UserID ChangeID)) {
         if ( !$Param{$Needed} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Needed!",
             );
@@ -133,7 +93,7 @@ sub HistoryAdd {
 
     # either HistoryType or HistoryTypeID is needed
     if ( !( $Param{HistoryType} || $Param{HistoryTypeID} ) ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need HistoryType or HistoryTypeID!',
         );
@@ -150,7 +110,7 @@ sub HistoryAdd {
 
         # no valid history type given
         if ( !$ID ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Invalid history type '$Param{HistoryType}' given!",
             );
@@ -168,7 +128,7 @@ sub HistoryAdd {
     }
 
     # insert history entry
-    return if !$Self->{DBObject}->Do(
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Do(
         SQL => 'INSERT INTO change_history ( change_id, workorder_id, content_new, '
             . 'content_old, create_by, create_time, type_id, fieldname ) '
             . 'VALUES ( ?, ?, ?, ?, ?, current_timestamp, ?, ? )',
@@ -201,7 +161,7 @@ sub HistoryAddMultiple {
 
     # check needed stuff
     if ( !$Param{Data} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "Need Data!",
         );
@@ -210,7 +170,7 @@ sub HistoryAddMultiple {
 
     # check needed stuff
     if ( ref $Param{Data} ne 'ARRAY' ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "Data must be an array reference!",
         );
@@ -219,7 +179,7 @@ sub HistoryAddMultiple {
 
     # check needed stuff
     if ( !@{ $Param{Data} } ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "Data array must not be empty!",
         );
@@ -254,7 +214,7 @@ sub HistoryAddMultiple {
     };
 
     # get the database type
-    my $DBType = $Self->{DBObject}->GetDatabaseFunction('Type');
+    my $DBType = $Kernel::OM->Get('Kernel::System::DB')->GetDatabaseFunction('Type');
 
     # make multiline inserts for defined databases
     if ( $DatabaseSQL{$DBType} ) {
@@ -269,7 +229,7 @@ sub HistoryAddMultiple {
             # ChangeID is always needed, workorder id is only needed for workorder events
             for my $Needed (qw(UserID ChangeID)) {
                 if ( !$HistoryEntry->{$Needed} ) {
-                    $Self->{LogObject}->Log(
+                    $Kernel::OM->Get('Kernel::System::Log')->Log(
                         Priority => 'error',
                         Message  => "Need $Needed!",
                     );
@@ -279,7 +239,7 @@ sub HistoryAddMultiple {
 
             # either HistoryType or HistoryTypeID is needed
             if ( !( $HistoryEntry->{HistoryType} || $HistoryEntry->{HistoryTypeID} ) ) {
-                $Self->{LogObject}->Log(
+                $Kernel::OM->Get('Kernel::System::Log')->Log(
                     Priority => 'error',
                     Message  => 'Need HistoryType or HistoryTypeID!',
                 );
@@ -296,7 +256,7 @@ sub HistoryAddMultiple {
 
                 # no valid history type given
                 if ( !$ID ) {
-                    $Self->{LogObject}->Log(
+                    $Kernel::OM->Get('Kernel::System::Log')->Log(
                         Priority => 'error',
                         Message  => "Invalid history type '$HistoryEntry->{HistoryType}' given!",
                     );
@@ -340,7 +300,7 @@ sub HistoryAddMultiple {
                 $SQL .= $DatabaseSQL{$DBType}->{End};
 
                 # insert multiple history entries
-                return if !$Self->{DBObject}->Do(
+                return if !$Kernel::OM->Get('Kernel::System::DB')->Do(
                     SQL  => $SQL,
                     Bind => \@Bind,
                 );
@@ -358,7 +318,7 @@ sub HistoryAddMultiple {
             $SQL .= $DatabaseSQL{$DBType}->{End};
 
             # insert multiple history entries
-            return if !$Self->{DBObject}->Do(
+            return if !$Kernel::OM->Get('Kernel::System::DB')->Do(
                 SQL  => $SQL,
                 Bind => \@Bind,
             );
@@ -421,7 +381,7 @@ sub WorkOrderHistoryGet {
     # check for needed stuff
     for my $Attribute (qw(WorkOrderID UserID)) {
         if ( !$Param{$Attribute} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Attribute!",
             );
@@ -430,7 +390,7 @@ sub WorkOrderHistoryGet {
     }
 
     # run the sql statement to get history
-    return if !$Self->{DBObject}->Prepare(
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Prepare(
         SQL => 'SELECT ch.id, change_id, workorder_id, content_new, content_old, '
             . 'ch.create_by, ch.create_time, type_id, cht.name, fieldname '
             . 'FROM change_history ch, change_history_type cht '
@@ -441,7 +401,7 @@ sub WorkOrderHistoryGet {
 
     # fetch the entries and save information in array
     my @HistoryEntries;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $Kernel::OM->Get('Kernel::System::DB')->FetchrowArray() ) {
         my %HistoryEntry = (
             HistoryEntryID => $Row[0],
             ChangeID       => $Row[1],
@@ -462,7 +422,7 @@ sub WorkOrderHistoryGet {
     for my $HistoryEntry (@HistoryEntries) {
 
         # get user name
-        my %User = $Self->{UserObject}->GetUserData(
+        my %User = $Kernel::OM->Get('Kernel::System::User')->GetUserData(
             UserID => $HistoryEntry->{CreateBy},
             Cache  => 1,
         );
@@ -512,7 +472,7 @@ sub ChangeHistoryGet {
     # check for needed stuff
     for my $Attribute (qw(ChangeID UserID)) {
         if ( !$Param{$Attribute} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Attribute!",
             );
@@ -521,7 +481,7 @@ sub ChangeHistoryGet {
     }
 
     # run the sql statement to get history
-    return if !$Self->{DBObject}->Prepare(
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Prepare(
         SQL => 'SELECT ch.id, change_id, workorder_id, content_new, content_old, '
             . 'ch.create_by, ch.create_time, type_id, cht.name, fieldname '
             . 'FROM change_history ch, change_history_type cht '
@@ -532,7 +492,7 @@ sub ChangeHistoryGet {
 
     # fetch the entries and save information in array
     my @HistoryEntries;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $Kernel::OM->Get('Kernel::System::DB')->FetchrowArray() ) {
         my %HistoryEntry = (
             HistoryEntryID => $Row[0],
             ChangeID       => $Row[1],
@@ -557,7 +517,7 @@ sub ChangeHistoryGet {
     for my $HistoryEntry (@HistoryEntries) {
 
         # get user name
-        my %User = $Self->{UserObject}->GetUserData(
+        my %User = $Kernel::OM->Get('Kernel::System::User')->GetUserData(
             UserID => $HistoryEntry->{CreateBy},
             Cache  => 1,
         );
@@ -606,7 +566,7 @@ sub HistoryEntryGet {
     # check for needed stuff
     for my $Attribute (qw(HistoryEntryID UserID)) {
         if ( !$Param{$Attribute} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Attribute!",
             );
@@ -615,7 +575,7 @@ sub HistoryEntryGet {
     }
 
     # run the sql statement to get history
-    return if !$Self->{DBObject}->Prepare(
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Prepare(
         SQL => 'SELECT ch.id, change_id, workorder_id, content_new, content_old, '
             . 'ch.create_by, ch.create_time, type_id, cht.name, fieldname '
             . 'FROM change_history ch, change_history_type cht '
@@ -626,7 +586,7 @@ sub HistoryEntryGet {
 
     # fetch the entries and save information in array
     my %HistoryEntry;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $Kernel::OM->Get('Kernel::System::DB')->FetchrowArray() ) {
         %HistoryEntry = (
             HistoryEntryID => $Row[0],
             ChangeID       => $Row[1],
@@ -646,7 +606,7 @@ sub HistoryEntryGet {
     }
 
     # get user name
-    my %User = $Self->{UserObject}->GetUserData(
+    my %User = $Kernel::OM->Get('Kernel::System::User')->GetUserData(
         UserID => $HistoryEntry{CreateBy},
         Cache  => 1,
     );
@@ -680,7 +640,7 @@ sub WorkOrderHistoryDelete {
     # check for needed stuff
     for my $Attribute (qw(WorkOrderID UserID)) {
         if ( !$Param{$Attribute} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Attribute!",
             );
@@ -689,7 +649,7 @@ sub WorkOrderHistoryDelete {
     }
 
     # delete entries for the given workorder
-    return if !$Self->{DBObject}->Do(
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Do(
         SQL  => 'DELETE FROM change_history WHERE workorder_id = ?',
         Bind => [ \$Param{WorkOrderID} ],
     );
@@ -716,7 +676,7 @@ sub ChangeHistoryDelete {
     # check for needed stuff
     for my $Attribute (qw(ChangeID UserID)) {
         if ( !$Param{$Attribute} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Attribute!",
             );
@@ -725,7 +685,7 @@ sub ChangeHistoryDelete {
     }
 
     # delete entries for the given change
-    return if !$Self->{DBObject}->Do(
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Do(
         SQL  => 'DELETE FROM change_history WHERE change_id = ?',
         Bind => [ \$Param{ChangeID} ],
     );
@@ -755,7 +715,7 @@ sub HistoryUpdate {
     # check for needed stuff
     for my $Attribute (qw(HistoryEntryID UserID)) {
         if ( !$Param{$Attribute} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Attribute!",
             );
@@ -769,7 +729,7 @@ sub HistoryUpdate {
 
     # we have to update at least one column
     if ( !keys %Param ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need at least one column to update!',
         );
@@ -797,7 +757,7 @@ sub HistoryUpdate {
     my $Binds = join ', ', map { $ParamKey2ColumnName{$_} . ' = ? ' } @Columns;
 
     # do the update
-    return if !$Self->{DBObject}->Do(
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Do(
         SQL => 'UPDATE change_history SET ' . $Binds . ' '
             . 'WHERE id = ?',
         Bind => [ @Bind, \$HistoryEntryID ],
@@ -833,7 +793,7 @@ sub HistorySearch {
     # check for needed stuff
     for my $Attribute (qw(Type Attribute UserID)) {
         if ( !$Param{$Attribute} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Attribute!",
             );
@@ -858,7 +818,7 @@ sub HistorySearch {
         }
 
         if ( ref $Param{$Argument} ne 'ARRAY' ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "$Argument must be an array reference!",
             );
@@ -893,16 +853,16 @@ sub HistorySearch {
         next STRINGPARAM if $Param{$StringParam} eq '';
 
         # quote
-        $Param{$StringParam} = $Self->{DBObject}->Quote( $Param{$StringParam} );
+        $Param{$StringParam} = $Kernel::OM->Get('Kernel::System::DB')->Quote( $Param{$StringParam} );
 
         # wildcards are used
         if ( $Param{UsingWildcards} ) {
 
             # get like escape string needed for some databases (e.g. oracle)
-            my $LikeEscapeString = $Self->{DBObject}->GetDatabaseFunction('LikeEscapeString');
+            my $LikeEscapeString = $Kernel::OM->Get('Kernel::System::DB')->GetDatabaseFunction('LikeEscapeString');
 
             # Quote
-            $Param{$StringParam} = $Self->{DBObject}->Quote( $Param{$StringParam}, 'Like' );
+            $Param{$StringParam} = $Kernel::OM->Get('Kernel::System::DB')->Quote( $Param{$StringParam}, 'Like' );
 
             # replace * with %
             $Param{$StringParam} =~ s{ \*+ }{%}xmsg;
@@ -937,7 +897,7 @@ sub HistorySearch {
 
         # quote
         for my $OneParam ( @{ $Param{$ArrayParam} } ) {
-            $OneParam = $Self->{DBObject}->Quote($OneParam);
+            $OneParam = $Kernel::OM->Get('Kernel::System::DB')->Quote($OneParam);
 
             # for strings we need single quotes
             if ( $OneParam !~ m{ \A [+-]? \d+ (?:\.\d+)? \z }xms ) {
@@ -966,7 +926,7 @@ sub HistorySearch {
         next TIMEPARAM if !$Param{$TimeParam};
 
         if ( $Param{$TimeParam} !~ m{ \A \d\d\d\d-\d\d-\d\d \s \d\d:\d\d:\d\d \z }xms ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "The parameter $TimeParam has an invalid date format!",
             );
@@ -974,7 +934,7 @@ sub HistorySearch {
             return;
         }
 
-        $Param{$TimeParam} = $Self->{DBObject}->Quote( $Param{$TimeParam} );
+        $Param{$TimeParam} = $Kernel::OM->Get('Kernel::System::DB')->Quote( $Param{$TimeParam} );
 
         # the time attributes of change_history show up in the WHERE clause
         push @SQLWhere, "$TimeParams{$TimeParam} '$Param{$TimeParam}'";
@@ -1001,14 +961,14 @@ sub HistorySearch {
     }
 
     # ask database
-    return if !$Self->{DBObject}->Prepare(
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Prepare(
         SQL   => $SQL,
         Limit => $Param{Limit},
     );
 
     # fetch the result
     my @IDs;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $Kernel::OM->Get('Kernel::System::DB')->FetchrowArray() ) {
         push @IDs, $Row[0];
     }
 
@@ -1043,7 +1003,7 @@ sub HistoryTypeLookup {
 
     # check for needed stuff
     if ( !$Param{HistoryTypeID} && !$Param{HistoryType} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need HistoryTypeID or HistoryType!',
         );
@@ -1052,7 +1012,7 @@ sub HistoryTypeLookup {
 
     # if both valid keys are given, return
     if ( $Param{HistoryTypeID} && $Param{HistoryType} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need either HistoryTypeID OR HistoryType - not both!',
         );
@@ -1083,14 +1043,14 @@ sub HistoryTypeLookup {
     }
 
     # fetch the requested value
-    return if !$Self->{DBObject}->Prepare(
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Prepare(
         SQL   => $SQL,
         Bind  => [ \$Param{$Key} ],
         Limit => 1,
     );
 
     my $Value;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $Kernel::OM->Get('Kernel::System::DB')->FetchrowArray() ) {
         $Value = $Row[0];
     }
 
@@ -1124,13 +1084,13 @@ sub HistoryTypeList {
     return $Cache if $Cache;
 
     # prepare db query
-    return if !$Self->{DBObject}->Prepare(
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Prepare(
         SQL => 'SELECT id, name FROM change_history_type ORDER BY name',
     );
 
     # retrieve data
     my @HistoryTypes;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $Kernel::OM->Get('Kernel::System::DB')->FetchrowArray() ) {
         my $Entry = {
             Key   => $Row[0],
             Value => $Row[1],
