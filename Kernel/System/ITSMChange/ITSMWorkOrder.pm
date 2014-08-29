@@ -12,26 +12,13 @@ package Kernel::System::ITSMChange::ITSMWorkOrder;
 use strict;
 use warnings;
 
-use Kernel::System::DynamicField;
-use Kernel::System::DynamicField::Backend;
 use Kernel::System::EventHandler;
-use Kernel::System::GeneralCatalog;
-use Kernel::System::LinkObject;
-use Kernel::System::ITSMChange::ITSMStateMachine;
-use Kernel::System::ITSMChange::ITSMCondition;
-use Kernel::System::VirtualFS;
-use Kernel::System::HTMLUtils;
-
 use Kernel::System::VariableCheck qw(:all);
 
 use vars qw(@ISA);
 
-@ISA = (
-    'Kernel::System::EventHandler',
-);
-
 our @ObjectDependencies = (
-    'Kernel::System::Cache',
+
 );
 
 =head1 NAME
@@ -52,62 +39,9 @@ All functions for workorders in ITSMChangeManagement.
 
 create an object
 
-    use Kernel::Config;
-    use Kernel::System::Encode;
-    use Kernel::System::Log;
-    use Kernel::System::DB;
-    use Kernel::System::Main;
-    use Kernel::System::Time;
-    use Kernel::System::Group;
-    use Kernel::System::User;
-    use Kernel::System::ITSMChange::ITSMWorkOrder;
-
-    my $ConfigObject = Kernel::Config->new();
-    my $EncodeObject = Kernel::System::Encode->new(
-        ConfigObject => $ConfigObject,
-    );
-    my $LogObject = Kernel::System::Log->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-    );
-    my $MainObject = Kernel::System::Main->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-    );
-    my $TimeObject = Kernel::System::Time->new(
-        ConfigObject => $ConfigObject,
-        LogObject    => $LogObject,
-    );
-    my $DBObject = Kernel::System::DB->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-        MainObject   => $MainObject,
-    );
-    my $GroupObject = Kernel::System::Group->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-        DBObject     => $DBObject,
-        MainObject   => $MainObject,
-    );
-    my $UserObject = Kernel::System::User->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-        DBObject     => $DBObject,
-        TimeObject   => $TimeObject,
-        MainObject   => $MainObject,
-    );
-    my $WorkOrderObject = Kernel::System::ITSMChange::ITSMWorkOrder->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-        DBObject     => $DBObject,
-        TimeObject   => $TimeObject,
-        MainObject   => $MainObject,
-    );
+    use Kernel::System::ObjectManager;
+    local $Kernel::OM = Kernel::System::ObjectManager->new();
+    my $WorkOrderObject = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder');
 
 =cut
 
@@ -118,30 +52,16 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    # check needed objects
-    for my $Object (
-        qw(DBObject ConfigObject EncodeObject LogObject UserObject GroupObject MainObject TimeObject)
-        )
-    {
-        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
-    }
-
     # set the debug flag
     $Self->{Debug} = $Param{Debug} || 0;
 
-    # create additional objects
-    $Self->{DynamicFieldObject}        = Kernel::System::DynamicField->new( %{$Self} );
-    $Self->{DynamicFieldBackendObject} = Kernel::System::DynamicField::Backend->new( %{$Self} );
-    $Self->{GeneralCatalogObject}      = Kernel::System::GeneralCatalog->new( %{$Self} );
-    $Self->{LinkObject}                = Kernel::System::LinkObject->new( %{$Self} );
-    $Self->{StateMachineObject} = Kernel::System::ITSMChange::ITSMStateMachine->new( %{$Self} );
-    $Self->{ConditionObject}    = Kernel::System::ITSMChange::ITSMCondition->new( %{$Self} );
-    $Self->{HTMLUtilsObject}    = Kernel::System::HTMLUtils->new( %{$Self} );
-    $Self->{VirtualFSObject}    = Kernel::System::VirtualFS->new( %{$Self} );
-
     # get the cache type and TTL (in seconds)
     $Self->{CacheType} = 'ITSMChangeManagement';
-    $Self->{CacheTTL}  = $Self->{ConfigObject}->Get('ITSMChange::CacheTTL') * 60;
+    $Self->{CacheTTL}  = $Kernel::OM->Get('Kernel::Config')->Get('ITSMChange::CacheTTL') * 60;
+
+    @ISA = (
+        'Kernel::System::EventHandler',
+    );
 
     # init of event handler
     $Self->EventHandlerInit(
@@ -153,7 +73,7 @@ sub new {
     );
 
     # get database type
-    $Self->{DBType} = $Self->{DBObject}->{'DB::Type'} || '';
+    $Self->{DBType} = $Kernel::OM->Get('Kernel::System::DB')->{'DB::Type'} || '';
     $Self->{DBType} = lc $Self->{DBType};
 
     return $Self;
@@ -200,7 +120,7 @@ sub WorkOrderAdd {
     # check needed stuff
     for my $Argument (qw(ChangeID UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -210,7 +130,7 @@ sub WorkOrderAdd {
 
     # check that not both WorkOrderState and WorkOrderStateID are given
     if ( $Param{WorkOrderState} && $Param{WorkOrderStateID} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need either WorkOrderState OR WorkOrderStateID - not both!',
         );
@@ -230,7 +150,7 @@ sub WorkOrderAdd {
 
     # check that not both WorkOrderType and WorkOrderTypeID are given
     if ( $Param{WorkOrderType} && $Param{WorkOrderTypeID} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need either WorkOrderType OR WorkOrderTypeID - not both!',
         );
@@ -254,14 +174,14 @@ sub WorkOrderAdd {
 
         next ARGUMENT if !exists $Param{$Argument};
 
-        $Param{"${Argument}Plain"} = $Self->{HTMLUtilsObject}->ToAscii(
+        $Param{"${Argument}Plain"} = $Kernel::OM->Get('Kernel::System::HTMLUtils')->ToAscii(
             String => $Param{$Argument},
         );
 
         # Even when passed a plain ASCII string,
         # ToAscii() can return a non-utf8 string with chars in the extended range.
         # Upgrade to utf-8 in order to comply to the OTRS-convention.
-        if ( $Self->{EncodeObject}->CharsetInternal() ) {
+        if ( $Kernel::OM->Get('Kernel::System::Encode')->CharsetInternal() ) {
             utf8::upgrade( $Param{"${Argument}Plain"} );
         }
     }
@@ -283,7 +203,7 @@ sub WorkOrderAdd {
     if ( !$WorkOrderStateID ) {
 
         # get initial workorder state id
-        my $NextStateIDs = $Self->{StateMachineObject}->StateTransitionGet(
+        my $NextStateIDs = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMStateMachine')->StateTransitionGet(
             StateID => 0,
             Class   => 'ITSM::ChangeManagement::WorkOrder::State',
         );
@@ -298,17 +218,17 @@ sub WorkOrderAdd {
         my $ConfigOption = 'ITSMWorkOrder::Type::Default';
 
         # get default workorder type from config
-        my $DefaultType = $Self->{ConfigObject}->Get($ConfigOption);
+        my $DefaultType = $Kernel::OM->Get('Kernel::Config')->Get($ConfigOption);
 
         # check if default type exists in general catalog
-        my $ItemDataRef = $Self->{GeneralCatalogObject}->ItemGet(
+        my $ItemDataRef = $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemGet(
             Class => 'ITSM::ChangeManagement::WorkOrder::Type',
             Name  => $DefaultType,
         );
 
         # error handling because of invalid config setting
         if ( !$ItemDataRef || ref $ItemDataRef ne 'HASH' || !%{$ItemDataRef} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "The default WorkOrderType '$DefaultType' "
                     . "in sysconfig option '$ConfigOption' is invalid! Check the general catalog!",
@@ -324,7 +244,7 @@ sub WorkOrderAdd {
     my $WorkOrderNumber = $Self->_GetWorkOrderNumber(%Param);
 
     # add WorkOrder to database
-    return if !$Self->{DBObject}->Do(
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Do(
         SQL => 'INSERT INTO change_workorder '
             . '(change_id, workorder_number, workorder_state_id, workorder_type_id, '
             . 'create_time, create_by, change_time, change_by) '
@@ -336,7 +256,7 @@ sub WorkOrderAdd {
     );
 
     # get WorkOrderID
-    return if !$Self->{DBObject}->Prepare(
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Prepare(
         SQL   => 'SELECT id FROM change_workorder WHERE change_id = ? AND workorder_number = ?',
         Bind  => [ \$Param{ChangeID}, \$WorkOrderNumber ],
         Limit => 1,
@@ -344,13 +264,13 @@ sub WorkOrderAdd {
 
     # fetch the result
     my $WorkOrderID;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $Kernel::OM->Get('Kernel::System::DB')->FetchrowArray() ) {
         $WorkOrderID = $Row[0];
     }
 
     # check error
     if ( !$WorkOrderID ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "WorkOrderAdd() failed!",
         );
@@ -456,7 +376,7 @@ sub WorkOrderUpdate {
     # check needed stuff
     for my $Argument (qw(WorkOrderID UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -466,7 +386,7 @@ sub WorkOrderUpdate {
 
     # check that not both WorkOrderState and WorkOrderStateID are given
     if ( $Param{WorkOrderState} && $Param{WorkOrderStateID} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need either WorkOrderState OR WorkOrderStateID - not both!',
         );
@@ -482,7 +402,7 @@ sub WorkOrderUpdate {
 
     # check that not both Type and TypeID are given
     if ( $Param{WorkOrderType} && $Param{WorkOrderTypeID} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need either WorkOrderType OR WorkOrderTypeID - not both!',
         );
@@ -512,14 +432,14 @@ sub WorkOrderUpdate {
 
         next ARGUMENT if !exists $Param{$Argument};
 
-        $Param{"${Argument}Plain"} = $Self->{HTMLUtilsObject}->ToAscii(
+        $Param{"${Argument}Plain"} = $Kernel::OM->Get('Kernel::System::HTMLUtils')->ToAscii(
             String => $Param{$Argument},
         );
 
         # Even when passed a plain ASCII string,
         # ToAscii() can return a non-utf8 string with chars in the extended range.
         # Upgrade to utf-8 in order to comply to the OTRS-convention.
-        if ( $Self->{EncodeObject}->CharsetInternal() ) {
+        if ( $Kernel::OM->Get('Kernel::System::Encode')->CharsetInternal() ) {
             utf8::upgrade( $Param{"${Argument}Plain"} );
         }
     }
@@ -556,7 +476,7 @@ sub WorkOrderUpdate {
             UserID      => $Param{UserID},
         );
         if ( !grep { $_->{Key} == $Param{WorkOrderStateID} } @{$StateList} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "The state $Param{WorkOrderStateID} is not a possible next state!",
             );
@@ -595,12 +515,12 @@ sub WorkOrderUpdate {
         my $DynamicFieldName = $1;
 
         # get the dynamic field config
-        my $DynamicFieldConfig = $Self->{DynamicFieldObject}->DynamicFieldGet(
+        my $DynamicFieldConfig = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldGet(
             Name => $DynamicFieldName,
         );
 
         # write value to dynamic field
-        my $Success = $Self->{DynamicFieldBackendObject}->ValueSet(
+        my $Success = $Kernel::OM->Get('Kernel::System::DynamicField::Backend')->ValueSet(
             DynamicFieldConfig => $DynamicFieldConfig,
             ObjectID           => $Param{WorkOrderID},
             Value              => $Param{$Key},
@@ -666,7 +586,7 @@ sub WorkOrderUpdate {
         my $AccountedTime = $CurrentAccountedTime + $Param{AccountedTime};
 
         # db quote
-        $AccountedTime = $Self->{DBObject}->Quote( $AccountedTime, 'Number' );
+        $AccountedTime = $Kernel::OM->Get('Kernel::System::DB')->Quote( $AccountedTime, 'Number' );
 
         # build SQL (without binds)
         $SQL .= "accounted_time = $AccountedTime, ";
@@ -676,7 +596,7 @@ sub WorkOrderUpdate {
     if ( $Param{PlannedEffort} ) {
 
         # db quote
-        $Param{PlannedEffort} = $Self->{DBObject}->Quote( $Param{PlannedEffort}, 'Number' );
+        $Param{PlannedEffort} = $Kernel::OM->Get('Kernel::System::DB')->Quote( $Param{PlannedEffort}, 'Number' );
 
         # build SQL (without binds)
         $SQL .= "planned_effort = $Param{PlannedEffort}, ";
@@ -688,7 +608,7 @@ sub WorkOrderUpdate {
     push @Bind, \$Param{WorkOrderID};
 
     # update workorder
-    return if !$Self->{DBObject}->Do(
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Do(
         SQL  => $SQL,
         Bind => \@Bind,
     );
@@ -771,7 +691,7 @@ sub WorkOrderGet {
     # check needed stuff
     for my $Attribute (qw(WorkOrderID UserID)) {
         if ( !$Param{$Attribute} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Attribute!",
             );
@@ -797,7 +717,7 @@ sub WorkOrderGet {
     else {
 
         # get data from database
-        return if !$Self->{DBObject}->Prepare(
+        return if !$Kernel::OM->Get('Kernel::System::DB')->Prepare(
             SQL => 'SELECT id, change_id, workorder_number, title, '
                 . 'instruction, instruction_plain, '
                 . 'report, report_plain, '
@@ -813,7 +733,7 @@ sub WorkOrderGet {
         );
 
         # fetch the result
-        while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        while ( my @Row = $Kernel::OM->Get('Kernel::System::DB')->FetchrowArray() ) {
             $WorkOrderData{WorkOrderID}      = $Row[0];
             $WorkOrderData{ChangeID}         = $Row[1];
             $WorkOrderData{WorkOrderNumber}  = $Row[2];
@@ -840,7 +760,7 @@ sub WorkOrderGet {
         # check error
         if ( !%WorkOrderData ) {
             if ( !$Param{LogNo} ) {
-                $Self->{LogObject}->Log(
+                $Kernel::OM->Get('Kernel::System::Log')->Log(
                     Priority => 'error',
                     Message  => "WorkOrderID $Param{WorkOrderID} does not exist!",
                 );
@@ -882,7 +802,7 @@ sub WorkOrderGet {
         }
 
         # get all dynamic fields for the object type ITSMWorkOrder
-        my $DynamicFieldList = $Self->{DynamicFieldObject}->DynamicFieldListGet(
+        my $DynamicFieldList = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldListGet(
             ObjectType => 'ITSMWorkOrder',
         );
 
@@ -896,7 +816,7 @@ sub WorkOrderGet {
             next DYNAMICFIELD if !IsHashRefWithData( $DynamicFieldConfig->{Config} );
 
             # get the current value for each dynamic field
-            my $Value = $Self->{DynamicFieldBackendObject}->ValueGet(
+            my $Value = $Kernel::OM->Get('Kernel::System::DynamicField::Backend')->ValueGet(
                 DynamicFieldConfig => $DynamicFieldConfig,
                 ObjectID           => $Param{WorkOrderID},
             );
@@ -925,7 +845,7 @@ sub WorkOrderGet {
     if ( $WorkOrderData{WorkOrderState} ) {
 
         # get all workorder state signals
-        my $StateSignal = $Self->{ConfigObject}->Get('ITSMWorkOrder::State::Signal');
+        my $StateSignal = $Kernel::OM->Get('Kernel::Config')->Get('ITSMWorkOrder::State::Signal');
 
         $WorkOrderData{WorkOrderStateSignal} = $StateSignal->{ $WorkOrderData{WorkOrderState} };
     }
@@ -958,7 +878,7 @@ sub WorkOrderList {
     # check needed stuff
     for my $Attribute (qw(ChangeID UserID)) {
         if ( !$Param{$Attribute} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Attribute!",
             );
@@ -985,7 +905,7 @@ sub WorkOrderList {
     else {
 
         # get workorder ids
-        return if !$Self->{DBObject}->Prepare(
+        return if !$Kernel::OM->Get('Kernel::System::DB')->Prepare(
             SQL =>
                 'SELECT id FROM change_workorder '
                 . 'WHERE change_id = ? '
@@ -994,7 +914,7 @@ sub WorkOrderList {
         );
 
         # fetch the result
-        while ( my ($ID) = $Self->{DBObject}->FetchrowArray() ) {
+        while ( my ($ID) = $Kernel::OM->Get('Kernel::System::DB')->FetchrowArray() ) {
             push @WorkOrderIDs, $ID;
         }
 
@@ -1132,7 +1052,7 @@ sub WorkOrderSearch {
 
     # check needed stuff
     if ( !$Param{UserID} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need UserID!',
         );
@@ -1163,7 +1083,7 @@ sub WorkOrderSearch {
         }
 
         if ( ref $Param{$Argument} ne 'ARRAY' ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "$Argument must be an array reference!",
             );
@@ -1172,32 +1092,31 @@ sub WorkOrderSearch {
     }
 
     # define a local database object
-    my $DBObject = $Self->{DBObject};
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
+    # get config object
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
     # if we need to do a workorder search on an external mirror database
     if (
         $Param{MirrorDB}
-        && $Self->{ConfigObject}->Get('ITSMChange::ChangeSearch::MirrorDB')
-        && $Self->{ConfigObject}->Get('Core::MirrorDB::DSN')
-        && $Self->{ConfigObject}->Get('Core::MirrorDB::User')
-        && $Self->{ConfigObject}->Get('Core::MirrorDB::Password')
+        && $ConfigObject->Get('ITSMChange::ChangeSearch::MirrorDB')
+        && $ConfigObject->Get('Core::MirrorDB::DSN')
+        && $ConfigObject->Get('Core::MirrorDB::User')
+        && $ConfigObject->Get('Core::MirrorDB::Password')
         )
     {
 
         # create an extra database object for the mirror db
         my $ExtraDatabaseObject = Kernel::System::DB->new(
-            LogObject    => $Self->{LogObject},
-            ConfigObject => $Self->{ConfigObject},
-            MainObject   => $Self->{MainObject},
-            EncodeObject => $Self->{EncodeObject},
-            DatabaseDSN  => $Self->{ConfigObject}->Get('Core::MirrorDB::DSN'),
-            DatabaseUser => $Self->{ConfigObject}->Get('Core::MirrorDB::User'),
-            DatabasePw   => $Self->{ConfigObject}->Get('Core::MirrorDB::Password'),
+            DatabaseDSN  => $ConfigObject->Get('Core::MirrorDB::DSN'),
+            DatabaseUser => $ConfigObject->Get('Core::MirrorDB::User'),
+            DatabasePw   => $ConfigObject->Get('Core::MirrorDB::Password'),
         );
 
         # check error
         if ( !$ExtraDatabaseObject ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => 'Could not create database object for MirrorDB!',
             );
@@ -1211,7 +1130,7 @@ sub WorkOrderSearch {
 
     # check all configured workorder dynamic fields, build lookup hash by name
     my %WorkOrderDynamicFieldName2Config;
-    my $WorkOrderDynamicFields = $Self->{DynamicFieldObject}->DynamicFieldListGet(
+    my $WorkOrderDynamicFields = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldListGet(
         ObjectType => 'ITSMWorkOrder',
     );
     for my $DynamicField ( @{$WorkOrderDynamicFields} ) {
@@ -1257,7 +1176,7 @@ sub WorkOrderSearch {
         if ( !$OrderBy || !$OrderByTable{$OrderBy} || $OrderBySeen{$OrderBy} ) {
 
             # found an error
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "OrderBy contains invalid value '$OrderBy' "
                     . 'or the value is used more than once!',
@@ -1283,7 +1202,7 @@ sub WorkOrderSearch {
         next DIRECTION if $Direction eq 'Down';
 
         # found an error
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "OrderByDirection can only contain 'Up' or 'Down'!",
         );
@@ -1311,7 +1230,7 @@ sub WorkOrderSearch {
 
         # check whether the ID was found, whether the name exists
         if ( !$WorkOrderStateID ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "The workorder state $WorkOrderState is not known!",
             );
@@ -1335,7 +1254,7 @@ sub WorkOrderSearch {
 
         # check whether the ID was found, whether the name exists
         if ( !$TypeID ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "The workorder type '$Type' is not known!",
             );
@@ -1461,13 +1380,13 @@ sub WorkOrderSearch {
                 next TEXT if $Text =~ /^\%{1,3}$/;
 
                 # validate data type
-                my $ValidateSuccess = $Self->{DynamicFieldBackendObject}->ValueValidate(
+                my $ValidateSuccess = $Kernel::OM->Get('Kernel::System::DynamicField::Backend')->ValueValidate(
                     DynamicFieldConfig => $DynamicField,
                     Value              => $Text,
                     UserID             => $Param{UserID} || 1,
                 );
                 if ( !$ValidateSuccess ) {
-                    $Self->{LogObject}->Log(
+                    $Kernel::OM->Get('Kernel::System::Log')->Log(
                         Priority => 'error',
                         Message =>
                             "Search not executed due to invalid value '"
@@ -1482,7 +1401,7 @@ sub WorkOrderSearch {
                 if ($Counter) {
                     $SQLDynamicFieldWhereSub .= ' OR ';
                 }
-                $SQLDynamicFieldWhereSub .= $Self->{DynamicFieldBackendObject}->SearchSQLGet(
+                $SQLDynamicFieldWhereSub .= $Kernel::OM->Get('Kernel::System::DynamicField::Backend')->SearchSQLGet(
                     DynamicFieldConfig => $DynamicField,
                     TableAlias         => "dfv$DynamicFieldJoinCounter",
                     Operator           => $Operator,
@@ -1506,7 +1425,7 @@ sub WorkOrderSearch {
                     .= "INNER JOIN dynamic_field_value dfv$DynamicFieldJoinCounter
                     ON (wo.id = dfv$DynamicFieldJoinCounter.object_id
                         AND dfv$DynamicFieldJoinCounter.field_id = " .
-                    $Self->{DBObject}->Quote( $DynamicField->{ID}, 'Integer' ) . ") ";
+                    $DBObject->Quote( $DynamicField->{ID}, 'Integer' ) . ") ";
             }
 
             $DynamicFieldJoinCounter++;
@@ -1562,7 +1481,7 @@ sub WorkOrderSearch {
         next TIMEPARAM if !$Param{$TimeParam};
 
         if ( $Param{$TimeParam} !~ m{ \A \d\d\d\d-\d\d-\d\d \s \d\d:\d\d:\d\d \z }xms ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "The parameter $TimeParam has an invalid date format!",
             );
@@ -1636,7 +1555,7 @@ sub WorkOrderSearch {
         $TableSeen{$Table} = 1;
 
         if ( !$LongTableName{$Table} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Encountered invalid inner join table '$Table'!",
             );
@@ -1716,7 +1635,7 @@ sub WorkOrderDelete {
     # check needed stuff
     for my $Attribute (qw(WorkOrderID UserID)) {
         if ( !$Param{$Attribute} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Attribute!",
             );
@@ -1740,7 +1659,7 @@ sub WorkOrderDelete {
     );
 
     # delete all links to this workorder
-    return if !$Self->{LinkObject}->LinkDeleteAll(
+    return if !$Kernel::OM->Get('Kernel::System::LinkObject')->LinkDeleteAll(
         Object => 'ITSMWorkOrder',
         Key    => $Param{WorkOrderID},
         UserID => 1,
@@ -1775,7 +1694,7 @@ sub WorkOrderDelete {
     }
 
     # get all dynamic fields for the object type ITSMWorkOrder
-    my $DynamicFieldListTicket = $Self->{DynamicFieldObject}->DynamicFieldListGet(
+    my $DynamicFieldListTicket = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldListGet(
         ObjectType => 'ITSMWorkOrder',
         Valid      => 0,
     );
@@ -1789,7 +1708,7 @@ sub WorkOrderDelete {
         next DYNAMICFIELD if !$DynamicFieldConfig->{Name};
         next DYNAMICFIELD if !IsHashRefWithData( $DynamicFieldConfig->{Config} );
 
-        $Self->{DynamicFieldBackendObject}->ValueDelete(
+        $Kernel::OM->Get('Kernel::System::DynamicField::Backend')->ValueDelete(
             DynamicFieldConfig => $DynamicFieldConfig,
             ObjectID           => $Param{WorkOrderID},
             UserID             => $Param{UserID},
@@ -1797,7 +1716,7 @@ sub WorkOrderDelete {
     }
 
     # delete the workorder
-    return if !$Self->{DBObject}->Do(
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Do(
         SQL  => 'DELETE FROM change_workorder WHERE id = ? ',
         Bind => [ \$Param{WorkOrderID} ],
     );
@@ -1876,7 +1795,7 @@ sub WorkOrderChangeTimeGet {
     # check needed stuff
     for my $Attribute (qw(ChangeID UserID)) {
         if ( !$Param{$Attribute} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Attribute!",
             );
@@ -1911,14 +1830,14 @@ sub WorkOrderChangeTimeGet {
             . 'WHERE change_id = ?';
 
         # retrieve the requested time
-        return if !$Self->{DBObject}->Prepare(
+        return if !$Kernel::OM->Get('Kernel::System::DB')->Prepare(
             SQL   => $SQL,
             Bind  => [ \$Param{ChangeID} ],
             Limit => 1,
         );
 
         # fetch the result
-        while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        while ( my @Row = $Kernel::OM->Get('Kernel::System::DB')->FetchrowArray() ) {
             $TimeReturn{PlannedStartTime} = $Row[0] || '';
             $TimeReturn{PlannedEndTime}   = $Row[1] || '';
             $TimeReturn{ActualStartTime}  = $Row[2] || '';
@@ -1950,7 +1869,7 @@ sub WorkOrderChangeTimeGet {
                 . 'AND change_id = ?';
 
             # retrieve number of not defined entries
-            return if !$Self->{DBObject}->Prepare(
+            return if !$Kernel::OM->Get('Kernel::System::DB')->Prepare(
                 SQL   => $SQL,
                 Bind  => [ \$Param{ChangeID} ],
                 Limit => 1,
@@ -1958,7 +1877,7 @@ sub WorkOrderChangeTimeGet {
 
             # fetch the result
             my $Count;
-            while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+            while ( my @Row = $Kernel::OM->Get('Kernel::System::DB')->FetchrowArray() ) {
                 $Count = $Row[0];
             }
 
@@ -2001,7 +1920,7 @@ sub WorkOrderStateLookup {
 
     # either WorkOrderStateID or WorkOrderState must be passed
     if ( !$Param{WorkOrderStateID} && !$Param{WorkOrderState} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need WorkOrderStateID or WorkOrderState!',
         );
@@ -2009,7 +1928,7 @@ sub WorkOrderStateLookup {
     }
 
     if ( $Param{WorkOrderStateID} && $Param{WorkOrderState} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need WorkOrderStateID OR WorkOrderState - not both!',
         );
@@ -2017,7 +1936,7 @@ sub WorkOrderStateLookup {
     }
 
     # get the workorder states from the general catalog
-    my $StateList = $Self->{GeneralCatalogObject}->ItemList(
+    my $StateList = $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemList(
         Class => 'ITSM::ChangeManagement::WorkOrder::State',
     );
 
@@ -2029,7 +1948,7 @@ sub WorkOrderStateLookup {
 
     # check the state hash
     if ( !%StateID2Name ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Could not retrieve workorder states from the general catalog.',
         );
@@ -2084,7 +2003,7 @@ sub WorkOrderPossibleStatesGet {
     # check needed stuff
     for my $Attribute (qw(UserID)) {
         if ( !$Param{$Attribute} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Attribute!",
             );
@@ -2093,7 +2012,7 @@ sub WorkOrderPossibleStatesGet {
     }
 
     # get workorder state list
-    my $StateList = $Self->{GeneralCatalogObject}->ItemList(
+    my $StateList = $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemList(
         Class => 'ITSM::ChangeManagement::WorkOrder::State',
     ) || {};
 
@@ -2110,7 +2029,7 @@ sub WorkOrderPossibleStatesGet {
         );
 
         # check for state lock
-        my $StateLock = $Self->{ConditionObject}->ConditionMatchStateLock(
+        my $StateLock = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMCondition')->ConditionMatchStateLock(
             ObjectName => 'ITSMWorkOrder',
             Selector   => $Param{WorkOrderID},
             StateID    => $WorkOrder->{WorkOrderStateID},
@@ -2122,12 +2041,12 @@ sub WorkOrderPossibleStatesGet {
 
         # check if reachable workorder end states should be allowed for locked workorder states
         my $WorkOrderEndStatesAllowed
-            = $Self->{ConfigObject}->Get('ITSMWorkOrder::StateLock::AllowEndStates');
+            = $Kernel::OM->Get('Kernel::Config')->Get('ITSMWorkOrder::StateLock::AllowEndStates');
 
         if ($WorkOrderEndStatesAllowed) {
 
             # set as default state current state and all possible end states
-            my $EndStateIDsRef = $Self->{StateMachineObject}->StateTransitionGetEndStates(
+            my $EndStateIDsRef = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMStateMachine')->StateTransitionGetEndStates(
                 StateID => $WorkOrder->{WorkOrderStateID},
                 Class   => 'ITSM::ChangeManagement::WorkOrder::State',
             ) || [];
@@ -2138,7 +2057,7 @@ sub WorkOrderPossibleStatesGet {
         if ( !$StateLock ) {
 
             # get the possible next state ids
-            my $NextStateIDsRef = $Self->{StateMachineObject}->StateTransitionGet(
+            my $NextStateIDsRef = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMStateMachine')->StateTransitionGet(
                 StateID => $WorkOrder->{WorkOrderStateID},
                 Class   => 'ITSM::ChangeManagement::WorkOrder::State',
             ) || [];
@@ -2196,7 +2115,7 @@ sub WorkOrderTypeLookup {
 
     # either WorkOrderTypeID or WorkOrderType must be passed
     if ( !$Param{WorkOrderTypeID} && !$Param{WorkOrderType} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need WorkOrderTypeID or WorkOrderType!',
         );
@@ -2204,7 +2123,7 @@ sub WorkOrderTypeLookup {
     }
 
     if ( $Param{WorkOrderTypeID} && $Param{WorkOrderType} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need WorkOrderTypeID OR WorkOrderType - not both!',
         );
@@ -2214,14 +2133,14 @@ sub WorkOrderTypeLookup {
     # get workorder type from general catalog
     # mapping of the id to the name
     my %WorkOrderType = %{
-        $Self->{GeneralCatalogObject}->ItemList(
+        $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemList(
             Class => 'ITSM::ChangeManagement::WorkOrder::Type',
             )
     };
 
     # check the workorder types hash
     if ( !%WorkOrderType ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Could not retrieve workorder types from the general catalog.',
         );
@@ -2274,7 +2193,7 @@ sub WorkOrderTypeList {
     # check needed stuff
     for my $Attribute (qw(UserID)) {
         if ( !$Param{$Attribute} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Attribute!",
             );
@@ -2291,17 +2210,17 @@ sub WorkOrderTypeList {
         my $ConfigOption = 'ITSMWorkOrder::Type::Default';
 
         # get default workorder type from config
-        my $DefaultType = $Self->{ConfigObject}->Get($ConfigOption);
+        my $DefaultType = $Kernel::OM->Get('Kernel::Config')->Get($ConfigOption);
 
         # check if default type exists in general catalog
-        my $ItemDataRef = $Self->{GeneralCatalogObject}->ItemGet(
+        my $ItemDataRef = $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemGet(
             Class => 'ITSM::ChangeManagement::WorkOrder::Type',
             Name  => $DefaultType,
         );
 
         # error handling because of invalid config setting
         if ( !$ItemDataRef || ref $ItemDataRef ne 'HASH' || !%{$ItemDataRef} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "The default WorkOrderType '$DefaultType' "
                     . "in sysconfig option '$ConfigOption' is invalid! Check the general catalog!",
@@ -2314,7 +2233,7 @@ sub WorkOrderTypeList {
     }
 
     # get workorder type list
-    my $WorkOrderTypeList = $Self->{GeneralCatalogObject}->ItemList(
+    my $WorkOrderTypeList = $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemList(
         Class => 'ITSM::ChangeManagement::WorkOrder::Type',
     ) || {};
 
@@ -2375,7 +2294,7 @@ sub Permission {
     # check needed stuff
     for my $Argument (qw(Type UserID WorkOrderID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -2387,37 +2306,26 @@ sub Permission {
     my $Registry = $Param{PermissionRegistry} || 'ITSMWorkOrder::Permission';
 
     # run the relevant permission modules
-    if ( ref $Self->{ConfigObject}->Get($Registry) eq 'HASH' ) {
+    if ( ref $Kernel::OM->Get('Kernel::Config')->Get($Registry) eq 'HASH' ) {
 
-        my %Modules = %{ $Self->{ConfigObject}->Get($Registry) };
+        my %Modules = %{ $Kernel::OM->Get('Kernel::Config')->Get($Registry) };
 
         MODULE:
         for my $Module ( sort keys %Modules ) {
 
             # log try of load module
             if ( $Self->{Debug} > 1 ) {
-                $Self->{LogObject}->Log(
+                $Kernel::OM->Get('Kernel::System::Log')->Log(
                     Priority => 'debug',
                     Message  => "Try to load module: $Modules{$Module}->{Module}!",
                 );
             }
 
             # load module
-            next MODULE if !$Self->{MainObject}->Require( $Modules{$Module}->{Module} );
+            next MODULE if !$Kernel::OM->Get('Kernel::System::Main')->Require( $Modules{$Module}->{Module} );
 
             # create object
-            my $ModuleObject = $Modules{$Module}->{Module}->new(
-                ConfigObject    => $Self->{ConfigObject},
-                EncodeObject    => $Self->{EncodeObject},
-                LogObject       => $Self->{LogObject},
-                MainObject      => $Self->{MainObject},
-                TimeObject      => $Self->{TimeObject},
-                DBObject        => $Self->{DBObject},
-                UserObject      => $Self->{UserObject},
-                GroupObject     => $Self->{GroupObject},
-                WorkOrderObject => $Self,
-                Debug           => $Self->{Debug},
-            );
+            my $ModuleObject = $Modules{$Module}->{Module}->new();
 
             # ask for the opinion of the Permission module
             my $Access = $ModuleObject->Run(%Param);
@@ -2426,7 +2334,7 @@ sub Permission {
             # when the module granted a sufficient permission.
             if ( $Access && $Modules{$Module}->{Granted} ) {
                 if ( $Self->{Debug} > 0 ) {
-                    $Self->{LogObject}->Log(
+                    $Kernel::OM->Get('Kernel::System::Log')->Log(
                         Priority => 'debug',
                         Message  => "Granted '$Param{Type}' access for "
                             . "UserID: $Param{UserID} on "
@@ -2443,7 +2351,7 @@ sub Permission {
             # when the module denied a required permission.
             if ( !$Access && $Modules{$Module}->{Required} ) {
                 if ( !$Param{LogNo} ) {
-                    $Self->{LogObject}->Log(
+                    $Kernel::OM->Get('Kernel::System::Log')->Log(
                         Priority => 'notice',
                         Message  => "Denied '$Param{Type}' access for "
                             . "UserID: $Param{UserID} on "
@@ -2460,7 +2368,7 @@ sub Permission {
 
     # Deny access when neither a 'Granted'-Check nor a 'Required'-Check has reached a conclusion.
     if ( !$Param{LogNo} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'notice',
             Message  => "Permission denied (UserID: $Param{UserID} '$Param{Type}' "
                 . "on WorkOrderID: $Param{WorkOrderID})!",
@@ -2486,7 +2394,7 @@ sub WorkOrderStateIDsCheck {
 
     # check needed stuff
     if ( !$Param{WorkOrderStateIDs} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need WorkOrderStateID!',
         );
@@ -2494,7 +2402,7 @@ sub WorkOrderStateIDsCheck {
     }
 
     if ( ref $Param{WorkOrderStateIDs} ne 'ARRAY' ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'The param WorkOrderStateIDs must be an ARRAY reference!',
         );
@@ -2508,7 +2416,7 @@ sub WorkOrderStateIDsCheck {
         );
 
         if ( !$State ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "The state id $StateID is not valid!",
             );
@@ -2542,7 +2450,7 @@ sub WorkOrderAttachmentAdd {
     # check needed stuff
     for my $Needed (qw(ChangeID WorkOrderID Filename Content ContentType UserID )) {
         if ( !$Param{$Needed} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Needed!",
             );
@@ -2565,7 +2473,7 @@ sub WorkOrderAttachmentAdd {
     }
 
     # write to virtual fs
-    my $Success = $Self->{VirtualFSObject}->Write(
+    my $Success = $Kernel::OM->Get('Kernel::System::VirtualFS')->Write(
         Filename    => "$AttachmentType/$Param{WorkOrderID}/$Param{Filename}",
         Mode        => 'binary',
         Content     => \$Param{Content},
@@ -2590,7 +2498,7 @@ sub WorkOrderAttachmentAdd {
         );
     }
     else {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "Cannot add attachment for workorder $Param{WorkOrderID}",
         );
@@ -2621,7 +2529,7 @@ sub WorkOrderAttachmentDelete {
     # check needed stuff
     for my $Needed (qw(ChangeID WorkOrderID Filename UserID)) {
         if ( !$Param{$Needed} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Needed!",
             );
@@ -2646,7 +2554,7 @@ sub WorkOrderAttachmentDelete {
     my $Filename = "$AttachmentType/$Param{WorkOrderID}/$Param{Filename}";
 
     # delete file
-    my $Success = $Self->{VirtualFSObject}->Delete(
+    my $Success = $Kernel::OM->Get('Kernel::System::VirtualFS')->Delete(
         Filename => $Filename,
     );
 
@@ -2663,7 +2571,7 @@ sub WorkOrderAttachmentDelete {
         );
     }
     else {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "Cannot delete attachment $Filename!",
         );
@@ -2706,7 +2614,7 @@ sub WorkOrderAttachmentGet {
     # check needed stuff
     for my $Argument (qw(WorkOrderID Filename)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -2722,7 +2630,7 @@ sub WorkOrderAttachmentGet {
     my $Filename = $AttachmentType . '/' . $Param{WorkOrderID} . '/' . $Param{Filename};
 
     # find all attachments of this workorder
-    my @Attachments = $Self->{VirtualFSObject}->Find(
+    my @Attachments = $Kernel::OM->Get('Kernel::System::VirtualFS')->Find(
         Filename    => $Filename,
         Preferences => {
             WorkOrderID => $Param{WorkOrderID},
@@ -2731,7 +2639,7 @@ sub WorkOrderAttachmentGet {
 
     # return error if file does not exist
     if ( !@Attachments ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Message  => "No such attachment ($Filename)! May be an attack!!!",
             Priority => 'error',
         );
@@ -2739,7 +2647,7 @@ sub WorkOrderAttachmentGet {
     }
 
     # get data for attachment
-    my %AttachmentData = $Self->{VirtualFSObject}->Read(
+    my %AttachmentData = $Kernel::OM->Get('Kernel::System::VirtualFS')->Read(
         Filename => $Filename,
         Mode     => 'binary',
     );
@@ -2779,7 +2687,7 @@ sub WorkOrderAttachmentList {
 
     # check needed stuff
     if ( !$Param{WorkOrderID} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need WorkOrderID!',
         );
@@ -2788,7 +2696,7 @@ sub WorkOrderAttachmentList {
     }
 
     # find all attachments of this workorder
-    my @Attachments = $Self->{VirtualFSObject}->Find(
+    my @Attachments = $Kernel::OM->Get('Kernel::System::VirtualFS')->Find(
         Preferences => {
             WorkOrderID => $Param{WorkOrderID},
         },
@@ -2832,7 +2740,7 @@ sub WorkOrderReportAttachmentList {
 
     # check needed stuff
     if ( !$Param{WorkOrderID} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need WorkOrderID!',
         );
@@ -2841,7 +2749,7 @@ sub WorkOrderReportAttachmentList {
     }
 
     # find all attachments of this workorder
-    my @Attachments = $Self->{VirtualFSObject}->Find(
+    my @Attachments = $Kernel::OM->Get('Kernel::System::VirtualFS')->Find(
         Preferences => {
             WorkOrderID => $Param{WorkOrderID},
         },
@@ -2883,7 +2791,7 @@ sub WorkOrderAttachmentExists {
     # check needed stuff
     for my $Needed (qw(Filename WorkOrderID UserID)) {
         if ( !$Param{$Needed} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Needed!",
             );
@@ -2896,7 +2804,7 @@ sub WorkOrderAttachmentExists {
     # and those from reports of workorders
     my $AttachmentType = $Param{AttachmentType} || 'WorkOrder';
 
-    return if !$Self->{VirtualFSObject}->Find(
+    return if !$Kernel::OM->Get('Kernel::System::VirtualFS')->Find(
         Filename => $AttachmentType . '/' . $Param{WorkOrderID} . '/' . $Param{Filename},
     );
 
@@ -2920,7 +2828,7 @@ sub WorkOrderChangeEffortsGet {
     # check needed stuff
     for my $Attribute (qw(ChangeID UserID)) {
         if ( !$Param{$Attribute} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Attribute!",
             );
@@ -2953,14 +2861,14 @@ sub WorkOrderChangeEffortsGet {
             . 'WHERE change_id = ?';
 
         # retrieve the requested time
-        return if !$Self->{DBObject}->Prepare(
+        return if !$Kernel::OM->Get('Kernel::System::DB')->Prepare(
             SQL   => $SQL,
             Bind  => [ \$Param{ChangeID} ],
             Limit => 1,
         );
 
         # fetch the result
-        while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        while ( my @Row = $Kernel::OM->Get('Kernel::System::DB')->FetchrowArray() ) {
             $ChangeEfforts{PlannedEffort} = $Row[0] || '';
             $ChangeEfforts{AccountedTime} = $Row[1] || '';
         }
@@ -3021,7 +2929,7 @@ sub _CheckWorkOrderTypeIDs {
 
     # check needed stuff
     if ( !$Param{WorkOrderTypeIDs} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need WorkOrderTypeIDs!',
         );
@@ -3030,7 +2938,7 @@ sub _CheckWorkOrderTypeIDs {
     }
 
     if ( ref $Param{WorkOrderTypeIDs} ne 'ARRAY' ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'The param WorkOrderTypeIDs must be an ARRAY reference!',
         );
@@ -3045,7 +2953,7 @@ sub _CheckWorkOrderTypeIDs {
         );
 
         if ( !$Type ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "The type id $TypeID is not valid!",
             );
@@ -3074,7 +2982,7 @@ sub _GetWorkOrderNumber {
 
     # check needed stuff
     if ( !$Param{ChangeID} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need ChangeID!',
         );
@@ -3082,7 +2990,7 @@ sub _GetWorkOrderNumber {
     }
 
     # get the largest workorder number
-    return if !$Self->{DBObject}->Prepare(
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Prepare(
         SQL => 'SELECT MAX(workorder_number) '
             . 'FROM change_workorder '
             . 'WHERE change_id = ?',
@@ -3092,7 +3000,7 @@ sub _GetWorkOrderNumber {
 
     # fetch the result, default to 0 when there are no workorders yet
     my $WorkOrderNumber;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $Kernel::OM->Get('Kernel::System::DB')->FetchrowArray() ) {
         $WorkOrderNumber = $Row[0];
     }
     $WorkOrderNumber ||= 0;
@@ -3173,7 +3081,7 @@ sub _CheckWorkOrderParams {
             # WorkOrderAgentID can be undefined
         }
         elsif ( !defined $Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "The parameter '$Argument' must be defined!",
             );
@@ -3182,7 +3090,7 @@ sub _CheckWorkOrderParams {
 
         # check if param is not a reference
         if ( ref $Param{$Argument} ne '' ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "The parameter '$Argument' mustn't be a reference!",
             );
@@ -3191,7 +3099,7 @@ sub _CheckWorkOrderParams {
 
         # check the maximum length of title
         if ( $Argument eq 'WorkOrderTitle' && length( $Param{$Argument} ) > 250 ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "The parameter '$Argument' must be shorter than 250 characters!",
             );
@@ -3207,7 +3115,7 @@ sub _CheckWorkOrderParams {
             )
         {
             if ( length( $Param{$Argument} ) > 1800000 ) {
-                $Self->{LogObject}->Log(
+                $Kernel::OM->Get('Kernel::System::Log')->Log(
                     Priority => 'error',
                     Message => "The parameter '$Argument' must be shorter than 1800000 characters!",
                 );
@@ -3228,13 +3136,13 @@ sub _CheckWorkOrderParams {
     if ( exists $Param{WorkOrderAgentID} && defined $Param{WorkOrderAgentID} ) {
 
         # WorkOrderAgent must be an agent
-        my %UserData = $Self->{UserObject}->GetUserData(
+        my %UserData = $Kernel::OM->Get('Kernel::System::User')->GetUserData(
             UserID => $Param{WorkOrderAgentID},
             Valid  => 1,
         );
 
         if ( !$UserData{UserID} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "The WorkOrderAgent $Param{WorkOrderAgentID} is not a valid user id!",
             );
@@ -3253,7 +3161,7 @@ sub _CheckWorkOrderParams {
 
         # check if param is not defined
         if ( !defined $Param{$Key} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "The parameter '$Key' must be defined!",
             );
@@ -3262,7 +3170,7 @@ sub _CheckWorkOrderParams {
 
         # check the maximum length of dynamic fields
         if ( length( $Param{$Key} ) > 3800 ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "The parameter '$Key' must be shorter than 3800 characters!",
             );
@@ -3312,7 +3220,7 @@ sub _CheckTimestamps {
     # check needed stuff
     for my $Argument (qw(WorkOrderData)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -3351,7 +3259,7 @@ sub _CheckTimestamps {
             $StartTime = $Param{WorkOrderData}->{ $Type . 'StartTime' };
         }
         elsif ( $Param{ $Type . 'StartTime' } eq $DefaultTimeStamp ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "The value $StartTime is invalid for the $TypeLc start time!",
             );
@@ -3378,7 +3286,7 @@ sub _CheckTimestamps {
             $EndTime = $Param{WorkOrderData}->{ $Type . 'EndTime' };
         }
         elsif ( $Param{ $Type . 'EndTime' } eq $DefaultTimeStamp ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "The value $EndTime is invalid for the $TypeLc end time!",
             );
@@ -3395,7 +3303,7 @@ sub _CheckTimestamps {
 
         # the check fails if not both (start and end) times are present
         if ( !$StartTime || !$EndTime ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "$Type start time and $TypeLc end time must be given!",
             );
@@ -3411,7 +3319,7 @@ sub _CheckTimestamps {
 
             # start time must be smaller than end time
             if ( $StartTime >= $EndTime ) {
-                $Self->{LogObject}->Log(
+                $Kernel::OM->Get('Kernel::System::Log')->Log(
                     Priority => 'error',
                     Message =>
                         "The $TypeLc start time '$StartTime' must be before the $TypeLc end time '$EndTime'!",
