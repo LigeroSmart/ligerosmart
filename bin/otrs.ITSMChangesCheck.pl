@@ -31,18 +31,15 @@ use lib dirname($RealBin) . '/Kernel/cpan-lib';
 use vars qw(@ISA);
 
 use Getopt::Std;
-use Kernel::Config;
-use Kernel::System::Encode;
-use Kernel::System::Time;
-use Kernel::System::Log;
-use Kernel::System::Main;
-use Kernel::System::DB;
-use Kernel::System::User;
-use Kernel::System::Group;
-use Kernel::System::PID;
-use Kernel::System::ITSMChange;
-use Kernel::System::ITSMChange::History;
-use Kernel::System::ITSMChange::ITSMWorkOrder;
+
+use Kernel::System::ObjectManager;
+
+# create object manager object
+local $Kernel::OM = Kernel::System::ObjectManager->new(
+    'Kernel::System::Log' => {
+        LogPrefix => 'OTRS-ITSMChangesCheck',
+    },
+);
 
 {
 
@@ -56,21 +53,15 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
     );
 
     sub new {
-        my ( $Class, %Objects ) = @_;
+        my ( $Type, %Param ) = @_;
 
-        my $Self = bless {}, $Class;
-
-        for my $Object ( sort keys %Objects ) {
-            $Self->{$Object} = $Objects{$Object};
-        }
+        # allocate new hash for object
+        my $Self = {};
+        bless( $Self, $Type );
 
         # init of event handler
         $Self->EventHandlerInit(
-            Config     => 'ITSMChangeCronjob::EventModule',
-            BaseObject => 'ChangeObject',
-            Objects    => {
-                %{$Self},
-            },
+            Config => 'ITSMChangeCronjob::EventModule',
         );
 
         return $Self;
@@ -79,21 +70,12 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 # common objects
 my %CommonObject;
-$CommonObject{ConfigObject} = Kernel::Config->new();
-$CommonObject{EncodeObject} = Kernel::System::Encode->new(%CommonObject);
-$CommonObject{LogObject}    = Kernel::System::Log->new(
-    LogPrefix => 'OTRS-ITSMChangesCheck',
-    %CommonObject,
-);
-$CommonObject{MainObject}      = Kernel::System::Main->new(%CommonObject);
-$CommonObject{TimeObject}      = Kernel::System::Time->new(%CommonObject);
-$CommonObject{DBObject}        = Kernel::System::DB->new(%CommonObject);
-$CommonObject{UserObject}      = Kernel::System::User->new(%CommonObject);
-$CommonObject{GroupObject}     = Kernel::System::Group->new(%CommonObject);
-$CommonObject{PIDObject}       = Kernel::System::PID->new(%CommonObject);
-$CommonObject{ChangeObject}    = Kernel::System::ITSMChange->new(%CommonObject);
-$CommonObject{WorkOrderObject} = Kernel::System::ITSMChange::ITSMWorkOrder->new(%CommonObject);
-$CommonObject{HistoryObject}   = Kernel::System::ITSMChange::History->new(%CommonObject);
+$CommonObject{ConfigObject}    = $Kernel::OM->Get('Kernel::Config');
+$CommonObject{TimeObject}      = $Kernel::OM->Get('Kernel::System::Time');
+$CommonObject{PIDObject}       = $Kernel::OM->Get('Kernel::System::PID');
+$CommonObject{ChangeObject}    = $Kernel::OM->Get('Kernel::System::ITSMChange');
+$CommonObject{WorkOrderObject} = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder');
+$CommonObject{HistoryObject}   = $Kernel::OM->Get('Kernel::System::ITSMChange::History');
 
 my $MockedObject = OTRSMockObject->new(%CommonObject);
 
@@ -103,8 +85,9 @@ getopt( 'hf', \%Opts );
 
 # show help
 if ( exists $Opts{h} ) {
+    print "\n";
     print "otrs.ITSMChangesCheck.pl - check itsm changes\n";
-    print "Copyright (C) 2001-2014 OTRS AG, http://otrs.com/\n";
+    print "Copyright (C) 2001-2014 OTRS AG, http://otrs.com/\n\n";
     print "usage: otrs.ITSMChangesCheck.pl [-f force]\n\n";
     exit 1;
 }

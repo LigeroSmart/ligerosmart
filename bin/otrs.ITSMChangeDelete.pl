@@ -28,35 +28,24 @@ use FindBin qw($RealBin);
 use lib dirname($RealBin);
 
 use Getopt::Long;
-use Kernel::Config;
-use Kernel::System::Encode;
-use Kernel::System::Log;
-use Kernel::System::Main;
-use Kernel::System::Time;
-use Kernel::System::DB;
-use Kernel::System::User;
-use Kernel::System::Group;
-use Kernel::System::ITSMChange;
-use Kernel::System::GeneralCatalog;
+
+use Kernel::System::ObjectManager;
+
+# create object manager object
+local $Kernel::OM = Kernel::System::ObjectManager->new(
+    'Kernel::System::Log' => {
+        LogPrefix => 'OTRS-ITSMChangeDelete.pl',
+    },
+);
 
 # common objects
-my %CommonObject = ();
-$CommonObject{ConfigObject} = Kernel::Config->new();
-$CommonObject{EncodeObject} = Kernel::System::Encode->new(%CommonObject);
-$CommonObject{LogObject}    = Kernel::System::Log->new(
-    LogPrefix => 'OTRS-ITSMChangeDelete.pl',
-    %CommonObject,
-);
-$CommonObject{MainObject}   = Kernel::System::Main->new(%CommonObject);
-$CommonObject{TimeObject}   = Kernel::System::Time->new(%CommonObject);
-$CommonObject{DBObject}     = Kernel::System::DB->new(%CommonObject);
-$CommonObject{UserObject}   = Kernel::System::User->new(%CommonObject);
-$CommonObject{GroupObject}  = Kernel::System::Group->new(%CommonObject);
-$CommonObject{ChangeObject} = Kernel::System::ITSMChange->new(%CommonObject);
+my %CommonObject;
+$CommonObject{ChangeObject} = $Kernel::OM->Get('Kernel::System::ITSMChange');
 
-print "otrs.ITSMChangeDelete.pl - ";
+print "\n";
+print "otrs.ITSMChangeDelete.pl\n";
 print "delete changes (all or by number).\n";
-print "Copyright (C) 2001-2014 OTRS AG, http://otrs.com/\n";
+print "Copyright (C) 2001-2014 OTRS AG, http://otrs.com/\n\n";
 
 my $Help          = '';
 my $All           = '';
