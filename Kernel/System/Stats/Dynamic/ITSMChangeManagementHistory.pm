@@ -12,8 +12,12 @@ package Kernel::System::Stats::Dynamic::ITSMChangeManagementHistory;
 use strict;
 use warnings;
 
-use Kernel::System::ITSMChange;
-use Kernel::System::ITSMChange::History;
+our @ObjectDependencies = (
+    'Kernel::System::ITSMChange',
+    'Kernel::System::ITSMChange::History',
+    'Kernel::System::Log',
+    'Kernel::System::Time',
+);
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -21,18 +25,6 @@ sub new {
     # allocate new hash for object
     my $Self = {};
     bless( $Self, $Type );
-
-    # check needed objects
-    for my $Object (
-        qw(DBObject ConfigObject LogObject UserObject GroupObject TimeObject MainObject EncodeObject)
-        )
-    {
-        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
-    }
-
-    # create needed objects
-    $Self->{ChangeObject}  = Kernel::System::ITSMChange->new( %{$Self} );
-    $Self->{HistoryObject} = Kernel::System::ITSMChange::History->new( %{$Self} );
 
     return $Self;
 }
@@ -47,13 +39,13 @@ sub GetObjectAttributes {
     my ( $Self, %Param ) = @_;
 
     # get change state list
-    my $ChangeStates = $Self->{ChangeObject}->ChangePossibleStatesGet(
+    my $ChangeStates = $Kernel::OM->Get('Kernel::System::ITSMChange')->ChangePossibleStatesGet(
         UserID => 1,
     );
     my %ChangeStateList = map { $_->{Key} => $_->{Value} } @{$ChangeStates};
 
     # get current time to fix bug#4870
-    my $TimeStamp = $Self->{TimeObject}->CurrentTimestamp();
+    my $TimeStamp = $Kernel::OM->Get('Kernel::System::Time')->CurrentTimestamp();
     my ($Date) = split /\s+/, $TimeStamp;
     my $Today = sprintf "%s 23:59:59", $Date;
 
@@ -90,7 +82,7 @@ sub GetStatElement {
     my ( $Self, %Param ) = @_;
 
     # search history
-    my $IDs = $Self->{HistoryObject}->HistorySearch(
+    my $IDs = $Kernel::OM->Get('Kernel::System::ITSMChange::History')->HistorySearch(
         UserID    => 1,
         Type      => 'Change',
         Attribute => 'ChangeStateID',
@@ -103,7 +95,7 @@ sub GetStatElement {
 
         ID:
         for my $ID ( @{$IDs} ) {
-            my $Change = $Self->{ChangeObject}->ChangeGet(
+            my $Change = $Kernel::OM->Get('Kernel::System::ITSMChange')->ChangeGet(
                 ChangeID => $ID,
                 UserID   => 1,
             );
@@ -129,7 +121,8 @@ sub ExportWrapper {
             my $Values      = $Element->{SelectedValues};
 
             if ( $ElementName eq 'NewValues' ) {
-                my $StateList = $Self->{ChangeObject}->ChangePossibleStatesGet( UserID => 1 );
+                my $StateList = $Kernel::OM->Get('Kernel::System::ITSMChange')
+                    ->ChangePossibleStatesGet( UserID => 1 );
                 ID:
                 for my $ID ( @{$Values} ) {
                     next ID if !$ID;
@@ -162,15 +155,16 @@ sub ImportWrapper {
                 for my $ID ( @{$Values} ) {
                     next ID if !$ID;
 
-                    my $ChangeStateID = $Self->{ChangeObject}->ChangeStateLookup(
+                    my $ChangeStateID
+                        = $Kernel::OM->Get('Kernel::System::ITSMChange')->ChangeStateLookup(
                         ChangeState => $ID->{Content},
                         Cache       => 1,
-                    );
+                        );
                     if ($ChangeStateID) {
                         $ID->{Content} = $ChangeStateID;
                     }
                     else {
-                        $Self->{LogObject}->Log(
+                        $Kernel::OM->Get('Kernel::System::Log')->Log(
                             Priority => 'error',
                             Message  => "Import: Can' find state $ID->{Content}!"
                         );

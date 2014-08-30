@@ -14,20 +14,19 @@ package Kernel::System::Ticket::Acl::RestrictTicketTypes;
 use strict;
 use warnings;
 
+our @ObjectDependencies = (
+    'Kernel::Config',
+    'Kernel::System::Group',
+    'Kernel::System::Log',
+    'Kernel::System::Ticket',
+);
+
 sub new {
     my ( $Type, %Param ) = @_;
 
     # allocate new hash for object
     my $Self = {%Param};
     bless( $Self, $Type );
-
-    # get needed objects
-    for my $Object (
-        qw(ConfigObject DBObject TicketObject LogObject UserObject GroupObject MainObject TimeObject)
-        )
-    {
-        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
-    }
 
     return $Self;
 }
@@ -38,7 +37,7 @@ sub Run {
     # check needed stuff
     for my $Argument (qw(Config Acl)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -51,7 +50,7 @@ sub Run {
 
     # get and check the list of relevant ticket types
     my $AddChangeLinkTicketTypes
-        = $Self->{ConfigObject}->Get('ITSMChange::AddChangeLinkTicketTypes');
+        = $Kernel::OM->Get('Kernel::Config')->Get('ITSMChange::AddChangeLinkTicketTypes');
 
     return 1 if !$AddChangeLinkTicketTypes;
     return 1 if ref $AddChangeLinkTicketTypes ne 'ARRAY';
@@ -64,7 +63,7 @@ sub Run {
     if ( $Param{TicketID} ) {
 
         # get ticket data
-        my %Ticket = $Self->{TicketObject}->TicketGet(
+        my %Ticket = $Kernel::OM->Get('Kernel::System::Ticket')->TicketGet(
             TicketID => $Param{TicketID},
         );
 
@@ -77,7 +76,7 @@ sub Run {
     }
 
     # get user groups, where the user has the rw privilege
-    my %Groups = $Self->{GroupObject}->GroupMemberList(
+    my %Groups = $Kernel::OM->Get('Kernel::System::Group')->GroupMemberList(
         UserID => $Param{UserID},
         Type   => 'rw',
         Result => 'HASH',
@@ -86,7 +85,7 @@ sub Run {
 
     # get and check the list of groups who are allowed to use the AddChangeLinkTicketTypes
     my $RestrictTicketTypesGroups
-        = $Self->{ConfigObject}->Get('ITSMChange::RestrictTicketTypes::Groups');
+        = $Kernel::OM->Get('Kernel::Config')->Get('ITSMChange::RestrictTicketTypes::Groups');
 
     return 1 if !$RestrictTicketTypesGroups;
     return 1 if ref $RestrictTicketTypesGroups ne 'ARRAY';
@@ -96,7 +95,7 @@ sub Run {
     for my $Group ( @{$RestrictTicketTypesGroups} ) {
 
         # get the group id
-        my $GroupID = $Self->{GroupObject}->GroupLookup(
+        my $GroupID = $Kernel::OM->Get('Kernel::System::Group')->GroupLookup(
             Group => $Group,
         );
 

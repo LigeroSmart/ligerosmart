@@ -12,6 +12,12 @@ package Kernel::System::ITSMChange::Permission::AddWorkOrderCheck;
 use strict;
 use warnings;
 
+our @ObjectDependencies = (
+    'Kernel::Config',
+    'Kernel::System::Group',
+    'Kernel::System::Log',
+);
+
 =head1 NAME
 
 Kernel::System::ITSMChange::Permission::AddWorkOrderCheck - WorkOrderAdd and WorkOrderAddFromTemplate permission check
@@ -28,72 +34,9 @@ Kernel::System::ITSMChange::Permission::AddWorkOrderCheck - WorkOrderAdd and Wor
 
 create an object
 
-    use Kernel::Config;
-    use Kernel::System::Encode;
-    use Kernel::System::Log;
-    use Kernel::System::Main;
-    use Kernel::System::Time;
-    use Kernel::System::DB;
-    use Kernel::System::ITSMChange;
-    use Kernel::System::User;
-    use Kernel::System::Group;
-    use Kernel::System::ITSMChange::Permission::AddWorkOrderCheck;
-
-    my $ConfigObject = Kernel::Config->new();
-    my $EncodeObject = Kernel::System::Encode->new(
-        ConfigObject => $ConfigObject,
-    );
-    my $LogObject = Kernel::System::Log->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-    );
-    my $MainObject = Kernel::System::Main->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-    );
-    my $TimeObject = Kernel::System::Time->new(
-        ConfigObject => $ConfigObject,
-        LogObject    => $LogObject,
-    );
-    my $DBObject = Kernel::System::DB->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-        MainObject   => $MainObject,
-    );
-    my $UserObject = Kernel::System::User->new(
-        ConfigObject => $ConfigObject,
-        LogObject    => $LogObject,
-        MainObject   => $MainObject,
-        TimeObject   => $TimeObject,
-        DBObject     => $DBObject,
-        EncodeObject => $EncodeObject,
-    );
-    my $GroupObject = Kernel::System::Group->new(
-        ConfigObject => $ConfigObject,
-        LogObject    => $LogObject,
-        DBObject     => $DBObject,
-    );
-    my $ChangeObject = Kernel::System::ITSMChange->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-        DBObject     => $DBObject,
-        TimeObject   => $TimeObject,
-        MainObject   => $MainObject,
-    );
-    my $CheckObject = Kernel::System::ITSMChange::Permission::AddWorkOrderCheck->new(
-        ConfigObject         => $ConfigObject,
-        EncodeObject         => $EncodeObject,
-        LogObject            => $LogObject,
-        MainObject           => $MainObject,
-        TimeObject           => $TimeObject,
-        DBObject             => $DBObject,
-        UserObject           => $UserObject,
-        GroupObject          => $GroupObject,
-        ChangeObject         => $ChangeObject,
-    );
+    use Kernel::System::ObjectManager;
+    local $Kernel::OM = Kernel::System::ObjectManager->new();
+    my $CheckObject = $Kernel::OM->Get('Kernel::System::ITSMChange::Permission::AddWorkOrderCheck');
 
 =cut
 
@@ -103,14 +46,6 @@ sub new {
     # allocate new hash for object
     my $Self = {};
     bless( $Self, $Type );
-
-    # get needed objects
-    for my $Object (
-        qw(ConfigObject EncodeObject LogObject MainObject TimeObject DBObject UserObject GroupObject ChangeObject)
-        )
-    {
-        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
-    }
 
     return $Self;
 }
@@ -135,7 +70,7 @@ sub Run {
     # check needed stuff
     for my $Argument (qw(UserID Type)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -161,7 +96,7 @@ sub Run {
 
     # get config for the relevant action
     my $FrontendConfig
-        = $Self->{ConfigObject}->Get("ITSMChange::Frontend::$Param{Action}");
+        = $Kernel::OM->Get('Kernel::Config')->Get("ITSMChange::Frontend::$Param{Action}");
 
     # get the required privilege, 'ro' or 'rw'
     my $RequiredPriv;
@@ -175,26 +110,29 @@ sub Run {
     return 1 if !$RequiredPriv;
 
     # get the required group for the frontend module
-    my $Group = $Self->{ConfigObject}->Get('Frontend::Module')->{ $Param{Action} }
+    my $Group = $Kernel::OM->Get('Kernel::Config')->Get('Frontend::Module')->{ $Param{Action} }
         ->{GroupRo}->[0];
 
     # deny access, when the group is not found
     return $Param{Counter} if !$Group;
 
     # get the group id
-    my $GroupID = $Self->{GroupObject}->GroupLookup( Group => $Group );
+    my $GroupID = $Kernel::OM->Get('Kernel::System::Group')->GroupLookup(
+        Group => $Group,
+    );
 
     # deny access, when the group is not found
     return $Param{Counter} if !$GroupID;
 
     # get user groups, where the user has the appropriate privilege
-    my %Groups = $Self->{GroupObject}->GroupMemberList(
+    my %Groups = $Kernel::OM->Get('Kernel::System::Group')->GroupMemberList(
         UserID => $Param{UserID},
         Type   => $RequiredPriv,
         Result => 'HASH',
     );
 
-# access is passed to other permission modules if the agent has the appropriate type in the appropriate group
+    # access is passed to other permission modules if the agent
+    # has the appropriate type in the appropriate group
     return 1 if $Groups{$GroupID};
 
     # deny access otherwise

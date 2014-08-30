@@ -12,11 +12,14 @@ package Kernel::System::ITSMChange::Template::CAB;
 use strict;
 use warnings;
 
-use Kernel::System::ITSMChange;
-use Kernel::System::Valid;
-
 ## nofilter(TidyAll::Plugin::OTRS::Perl::Dumper)
 use Data::Dumper;
+
+our @ObjectDependencies = (
+    'Kernel::System::ITSMChange',
+    'Kernel::System::Log',
+    'Kernel::System::Main',
+);
 
 =head1 NAME
 
@@ -36,45 +39,9 @@ All functions for CAB templates in ITSMChangeManagement.
 
 create an object
 
-    use Kernel::Config;
-    use Kernel::System::Encode;
-    use Kernel::System::Log;
-    use Kernel::System::DB;
-    use Kernel::System::Main;
-    use Kernel::System::Time;
-    use Kernel::System::ITSMChange::Template::CAB;
-
-    my $ConfigObject = Kernel::Config->new();
-    my $EncodeObject = Kernel::System::Encode->new(
-        ConfigObject => $ConfigObject,
-    );
-    my $LogObject = Kernel::System::Log->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-    );
-    my $MainObject = Kernel::System::Main->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-    );
-    my $TimeObject = Kernel::System::Time->new(
-        ConfigObject => $ConfigObject,
-        LogObject    => $LogObject,
-    );
-    my $DBObject = Kernel::System::DB->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-        MainObject   => $MainObject,
-    );
-    my $TemplateObject = Kernel::System::ITSMChange::Template::CAB->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-        DBObject     => $DBObject,
-        TimeObject   => $TimeObject,
-        MainObject   => $MainObject,
-    );
+    use Kernel::System::ObjectManager;
+    local $Kernel::OM = Kernel::System::ObjectManager->new();
+    my $TemplateObject = $Kernel::OM->Get('Kernel::System::ITSMChange::Template::CAB');
 
 =cut
 
@@ -85,20 +52,8 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    # check needed objects
-    for my $Object (
-        qw(DBObject ConfigObject EncodeObject LogObject UserObject GroupObject MainObject TimeObject)
-        )
-    {
-        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
-    }
-
     # set the debug flag
     $Self->{Debug} = $Param{Debug} || 0;
-
-    # create additional objects
-    $Self->{ValidObject}  = Kernel::System::Valid->new( %{$Self} );
-    $Self->{ChangeObject} = Kernel::System::ITSMChange->new( %{$Self} );
 
     return $Self;
 }
@@ -135,7 +90,7 @@ sub Serialize {
     # check needed stuff
     for my $Argument (qw(UserID ChangeID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -147,7 +102,7 @@ sub Serialize {
     $Param{Return} ||= 'STRING';
 
     # get CAB of the change
-    my $Change = $Self->{ChangeObject}->ChangeGet(
+    my $Change = $Kernel::OM->Get('Kernel::System::ITSMChange')->ChangeGet(
         ChangeID => $Param{ChangeID},
         UserID   => $Param{UserID},
     );
@@ -173,7 +128,7 @@ sub Serialize {
     local $Data::Dumper::Deepcopy = 1;
 
     # serialize the data (do not use $VAR1, but $TemplateData for Dumper output)
-    my $SerializedData = $Self->{MainObject}->Dump( $OriginalData, 'binary' );
+    my $SerializedData = $Kernel::OM->Get('Kernel::System::Main')->Dump( $OriginalData, 'binary' );
 
     return $SerializedData;
 }
@@ -200,7 +155,7 @@ sub DeSerialize {
     # check needed stuff
     for my $Argument (qw(UserID ChangeID Data)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -209,13 +164,13 @@ sub DeSerialize {
     }
 
     # get current CAB of change
-    my $Change = $Self->{ChangeObject}->ChangeGet(
+    my $Change = $Kernel::OM->Get('Kernel::System::ITSMChange')->ChangeGet(
         ChangeID => $Param{ChangeID},
         UserID   => $Param{UserID},
     );
 
     # a CAB add is actually a CAB update on a change
-    return if !$Self->{ChangeObject}->ChangeCABUpdate(
+    return if !$Kernel::OM->Get('Kernel::System::ITSMChange')->ChangeCABUpdate(
         ChangeID     => $Param{ChangeID},
         CABCustomers => [ @{ $Param{Data}->{CABCustomers} }, @{ $Change->{CABCustomers} } ],
         CABAgents    => [ @{ $Param{Data}->{CABAgents} }, @{ $Change->{CABAgents} } ],

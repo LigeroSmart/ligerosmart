@@ -6,25 +6,24 @@
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
-# Note:
-# available objects are: ConfigObject, LogObject and DBObject
-#
+
 # Generates change numbers like ID##### (e. g. 1000123)
-#--
 
 package Kernel::System::ITSMChange::Number::AutoIncrement;
 
 use strict;
 use warnings;
 
+our $ObjectManagerDisabled = 1;
+
 sub ChangeNumberCreate {
     my ( $Self, %Param ) = @_;
 
     # get needed config options
-    my $CounterLog = $Self->{ConfigObject}->Get('ITSMChange::CounterLog');
-    my $SystemID   = $Self->{ConfigObject}->Get('SystemID');
+    my $CounterLog = $Kernel::OM->Get('Kernel::Config')->Get('ITSMChange::CounterLog');
+    my $SystemID   = $Kernel::OM->Get('Kernel::Config')->Get('SystemID');
     my $MinSize
-        = $Self->{ConfigObject}->Get('ITSMChange::NumberGenerator::AutoIncrement::MinCounterSize')
+        = $Kernel::OM->Get('Kernel::Config')->Get('ITSMChange::NumberGenerator::AutoIncrement::MinCounterSize')
         || 5;
 
     # define number of maximum loops if created change number exists
@@ -41,7 +40,7 @@ sub ChangeNumberCreate {
         # try to read existing counter from file
         if ( -f $CounterLog ) {
 
-            my $ContentSCALARRef = $Self->{MainObject}->FileRead(
+            my $ContentSCALARRef = $Kernel::OM->Get('Kernel::System::Main')->FileRead(
                 Location => $CounterLog,
             );
 
@@ -51,7 +50,7 @@ sub ChangeNumberCreate {
 
                 # just debug
                 if ( $Self->{Debug} > 0 ) {
-                    $Self->{LogObject}->Log(
+                    $Kernel::OM->Get('Kernel::System::Log')->Log(
                         Priority => 'debug',
                         Message  => "Read counter from $CounterLog: $Count",
                     );
@@ -65,7 +64,7 @@ sub ChangeNumberCreate {
         my $Content = $Count;
 
         # write new count
-        my $Write = $Self->{MainObject}->FileWrite(
+        my $Write = $Kernel::OM->Get('Kernel::System::Main')->FileWrite(
             Location => $CounterLog,
             Content  => \$Content,
         );
@@ -73,7 +72,7 @@ sub ChangeNumberCreate {
         # log debug message
         if ( $Write && $Self->{Debug} ) {
 
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'debug',
                 Message  => "Write counter: $Count",
             );
@@ -97,14 +96,14 @@ sub ChangeNumberCreate {
         $LoopProtectionCounter++;
 
         # create new change number again
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'notice',
             Message  => "ChangeNumber ($ChangeNumber) exists! Creating a new one.",
         );
     }
 
     # loop was running too long
-    $Self->{LogObject}->Log(
+    $Kernel::OM->Get('Kernel::System::Log')->Log(
         Priority => 'error',
         Message  => "LoopProtectionCounter is now $LoopProtectionCounter!"
             . " Stopped ChangeNumberCreate()!",

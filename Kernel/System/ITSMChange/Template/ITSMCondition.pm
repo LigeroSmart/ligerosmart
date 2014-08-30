@@ -12,11 +12,14 @@ package Kernel::System::ITSMChange::Template::ITSMCondition;
 use strict;
 use warnings;
 
-use Kernel::System::ITSMChange::ITSMCondition;
-use Kernel::System::Valid;
-
 ## nofilter(TidyAll::Plugin::OTRS::Perl::Dumper)
 use Data::Dumper;
+
+our @ObjectDependencies = (
+    'Kernel::System::ITSMChange::ITSMCondition',
+    'Kernel::System::Log',
+    'Kernel::System::Main',
+);
 
 =head1 NAME
 
@@ -36,45 +39,9 @@ All functions for condition templates in ITSMChangeManagement.
 
 create an object
 
-    use Kernel::Config;
-    use Kernel::System::Encode;
-    use Kernel::System::Log;
-    use Kernel::System::DB;
-    use Kernel::System::Main;
-    use Kernel::System::Time;
-    use Kernel::System::ITSMChange::Template::ITSMCondition;
-
-    my $ConfigObject = Kernel::Config->new();
-    my $EncodeObject = Kernel::System::Encode->new(
-        ConfigObject => $ConfigObject,
-    );
-    my $LogObject = Kernel::System::Log->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-    );
-    my $MainObject = Kernel::System::Main->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-    );
-    my $TimeObject = Kernel::System::Time->new(
-        ConfigObject => $ConfigObject,
-        LogObject    => $LogObject,
-    );
-    my $DBObject = Kernel::System::DB->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-        MainObject   => $MainObject,
-    );
-    my $TemplateObject = Kernel::System::ITSMChange::Template::ITSMCondition->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-        DBObject     => $DBObject,
-        TimeObject   => $TimeObject,
-        MainObject   => $MainObject,
-    );
+    use Kernel::System::ObjectManager;
+    local $Kernel::OM = Kernel::System::ObjectManager->new();
+    my $TemplateObject = $Kernel::OM->Get('Kernel::System::ITSMChange::Template::ITSMCondition');
 
 =cut
 
@@ -85,20 +52,8 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    # check needed objects
-    for my $Object (
-        qw(DBObject ConfigObject EncodeObject LogObject UserObject GroupObject MainObject TimeObject)
-        )
-    {
-        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
-    }
-
     # set the debug flag
     $Self->{Debug} = $Param{Debug} || 0;
-
-    # create additional objects
-    $Self->{ConditionObject} = Kernel::System::ITSMChange::ITSMCondition->new( %{$Self} );
-    $Self->{ValidObject}     = Kernel::System::Valid->new( %{$Self} );
 
     return $Self;
 }
@@ -135,7 +90,7 @@ sub Serialize {
     # check needed stuff
     for my $Argument (qw(UserID ConditionID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -147,7 +102,7 @@ sub Serialize {
     $Param{Return} ||= 'STRING';
 
     # get condition
-    my $Condition = $Self->{ConditionObject}->ConditionGet(
+    my $Condition = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMCondition')->ConditionGet(
         ConditionID => $Param{ConditionID},
         UserID      => $Param{UserID},
     );
@@ -158,30 +113,31 @@ sub Serialize {
     my $OriginalData = { ConditionAdd => $Condition };
 
     # get expressions
-    my $Expressions = $Self->{ConditionObject}->ExpressionList(
+    my $Expressions = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMCondition')->ExpressionList(
         ConditionID => $Param{ConditionID},
         UserID      => $Param{UserID},
     ) || [];
 
     # add each expression to condition data
     for my $ExpressionID ( @{$Expressions} ) {
-        my $Expression = $Self->{ConditionObject}->ExpressionGet(
+        my $Expression
+            = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMCondition')->ExpressionGet(
             ExpressionID => $ExpressionID,
             UserID       => $Param{UserID},
-        );
+            );
 
         push @{ $OriginalData->{Children} }, { ExpressionAdd => $Expression };
     }
 
     # get actions
-    my $Actions = $Self->{ConditionObject}->ActionList(
+    my $Actions = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMCondition')->ActionList(
         ConditionID => $Param{ConditionID},
         UserID      => $Param{UserID},
     ) || [];
 
     # add each action to condition data
     for my $ActionID ( @{$Actions} ) {
-        my $Action = $Self->{ConditionObject}->ActionGet(
+        my $Action = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMCondition')->ActionGet(
             ActionID => $ActionID,
             UserID   => $Param{UserID},
         );
@@ -200,7 +156,7 @@ sub Serialize {
     local $Data::Dumper::Deepcopy = 1;
 
     # serialize the data (do not use $VAR1, but $TemplateData for Dumper output)
-    my $SerializedData = $Self->{MainObject}->Dump( $OriginalData, 'binary' );
+    my $SerializedData = $Kernel::OM->Get('Kernel::System::Main')->Dump( $OriginalData, 'binary' );
 
     return $SerializedData;
 }
@@ -226,7 +182,7 @@ sub DeSerialize {
     # check needed stuff
     for my $Argument (qw(UserID Method Data)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -244,7 +200,7 @@ sub DeSerialize {
     my $Sub = $Method2Sub{ $Param{Method} };
 
     if ( !$Sub ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Invalid Methodname!',
         );
@@ -278,7 +234,7 @@ sub _ConditionAdd {
     # check needed stuff
     for my $Argument (qw(UserID ChangeID Data)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -292,7 +248,7 @@ sub _ConditionAdd {
     delete $Data{ConditionID};
 
     # add condition
-    my $ConditionID = $Self->{ConditionObject}->ConditionAdd(
+    my $ConditionID = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMCondition')->ConditionAdd(
         %Data,
         ChangeID => $Param{ChangeID},
         UserID   => $Param{UserID},
@@ -329,7 +285,7 @@ sub _ExpressionAdd {
     # check needed stuff
     for my $Argument (qw(UserID ChangeID Data ConditionID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -347,7 +303,7 @@ sub _ExpressionAdd {
 
     # replace old id only if it is an ID
     if ( $Data{Selector} =~ m{ \A \d+ \z }xms ) {
-        my $Object = $Self->{ConditionObject}->ObjectGet(
+        my $Object = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMCondition')->ObjectGet(
             ObjectID => $Data{ObjectID},
             UserID   => $Param{UserID},
         );
@@ -361,7 +317,7 @@ sub _ExpressionAdd {
     }
 
     # add expression
-    my $ExpressionID = $Self->{ConditionObject}->ExpressionAdd(
+    my $ExpressionID = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMCondition')->ExpressionAdd(
         %Data,
         UserID => $Param{UserID},
     );
@@ -397,7 +353,7 @@ sub _ActionAdd {
     # check needed stuff
     for my $Argument (qw(UserID ChangeID Data ConditionID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -415,7 +371,7 @@ sub _ActionAdd {
 
     # replace old id only if it is an ID
     if ( $Data{Selector} =~ m{ \A \d+ \z }xms ) {
-        my $Object = $Self->{ConditionObject}->ObjectGet(
+        my $Object = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMCondition')->ObjectGet(
             ObjectID => $Data{ObjectID},
             UserID   => $Param{UserID},
         );
@@ -429,7 +385,7 @@ sub _ActionAdd {
     }
 
     # add action
-    my $ActionID = $Self->{ConditionObject}->ActionAdd(
+    my $ActionID = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMCondition')->ActionAdd(
         %Data,
         UserID => $Param{UserID},
     );

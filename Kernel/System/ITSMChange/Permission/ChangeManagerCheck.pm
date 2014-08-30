@@ -12,6 +12,11 @@ package Kernel::System::ITSMChange::Permission::ChangeManagerCheck;
 use strict;
 use warnings;
 
+our @ObjectDependencies = (
+    'Kernel::System::Group',
+    'Kernel::System::Log',
+);
+
 =head1 NAME
 
 Kernel::System::ITSMChange::Permission::ChangeManagerCheck - change manager based permission check
@@ -28,72 +33,9 @@ Kernel::System::ITSMChange::Permission::ChangeManagerCheck - change manager base
 
 create an object
 
-    use Kernel::Config;
-    use Kernel::System::Encode;
-    use Kernel::System::Log;
-    use Kernel::System::Main;
-    use Kernel::System::Time;
-    use Kernel::System::DB;
-    use Kernel::System::ITSMChange;
-    use Kernel::System::User;
-    use Kernel::System::Group;
-    use Kernel::System::ITSMChange::Permission::ChangeManagerCheck;
-
-    my $ConfigObject = Kernel::Config->new();
-    my $EncodeObject = Kernel::System::Encode->new(
-        ConfigObject => $ConfigObject,
-    );
-    my $LogObject = Kernel::System::Log->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-    );
-    my $MainObject = Kernel::System::Main->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-    );
-    my $TimeObject = Kernel::System::Time->new(
-        ConfigObject => $ConfigObject,
-        LogObject    => $LogObject,
-    );
-    my $DBObject = Kernel::System::DB->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-        MainObject   => $MainObject,
-    );
-    my $UserObject = Kernel::System::User->new(
-        ConfigObject => $ConfigObject,
-        LogObject    => $LogObject,
-        MainObject   => $MainObject,
-        TimeObject   => $TimeObject,
-        DBObject     => $DBObject,
-        EncodeObject => $EncodeObject,
-    );
-    my $GroupObject = Kernel::System::Group->new(
-        ConfigObject => $ConfigObject,
-        LogObject    => $LogObject,
-        DBObject     => $DBObject,
-    );
-    my $ChangeObject = Kernel::System::ITSMChange->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-        DBObject     => $DBObject,
-        TimeObject   => $TimeObject,
-        MainObject   => $MainObject,
-    );
-    my $CheckObject = Kernel::System::ITSMChange::Permission::ChangeManagerCheck->new(
-        ConfigObject         => $ConfigObject,
-        EncodeObject         => $EncodeObject,
-        LogObject            => $LogObject,
-        MainObject           => $MainObject,
-        TimeObject           => $TimeObject,
-        DBObject             => $DBObject,
-        UserObject           => $UserObject,
-        GroupObject          => $GroupObject,
-        ChangeObject         => $ChangeObject,
-    );
+    use Kernel::System::ObjectManager;
+    local $Kernel::OM = Kernel::System::ObjectManager->new();
+    my $CheckObject = $Kernel::OM->Get('Kernel::System::ITSMChange::Permission::ChangeManagerCheck');
 
 =cut
 
@@ -103,14 +45,6 @@ sub new {
     # allocate new hash for object
     my $Self = {};
     bless( $Self, $Type );
-
-    # get needed objects
-    for my $Object (
-        qw(ConfigObject EncodeObject LogObject MainObject TimeObject DBObject UserObject GroupObject ChangeObject)
-        )
-    {
-        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
-    }
 
     return $Self;
 }
@@ -134,7 +68,7 @@ sub Run {
     # check needed stuff
     for my $Argument (qw(UserID Type)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -144,13 +78,15 @@ sub Run {
     }
 
     # the check is based upon the change manager
-    my $GroupID = $Self->{GroupObject}->GroupLookup( Group => 'itsm-change-manager' );
+    my $GroupID = $Kernel::OM->Get('Kernel::System::Group')->GroupLookup(
+        Group => 'itsm-change-manager',
+    );
 
     # deny access, when the group is not found
     return if !$GroupID;
 
     # get user groups, where the user has the appropriate privilege
-    my %Groups = $Self->{GroupObject}->GroupMemberList(
+    my %Groups = $Kernel::OM->Get('Kernel::System::Group')->GroupMemberList(
         UserID => $Param{UserID},
         Type   => $Param{Type},
         Result => 'HASH',

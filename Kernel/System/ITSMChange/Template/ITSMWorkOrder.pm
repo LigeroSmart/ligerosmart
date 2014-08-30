@@ -12,13 +12,16 @@ package Kernel::System::ITSMChange::Template::ITSMWorkOrder;
 use strict;
 use warnings;
 
-use Kernel::System::ITSMChange::ITSMWorkOrder;
-use Kernel::System::ITSMChange::ITSMStateMachine;
-use Kernel::System::LinkObject;
-use Kernel::System::Valid;
-
 ## nofilter(TidyAll::Plugin::OTRS::Perl::Dumper)
 use Data::Dumper;
+
+our @ObjectDependencies = (
+    'Kernel::System::ITSMChange::ITSMWorkOrder',
+    'Kernel::System::LinkObject',
+    'Kernel::System::Log',
+    'Kernel::System::Main',
+    'Kernel::System::Time',
+);
 
 =head1 NAME
 
@@ -38,45 +41,9 @@ All functions for workorder templates in ITSMChangeManagement.
 
 create an object
 
-    use Kernel::Config;
-    use Kernel::System::Encode;
-    use Kernel::System::Log;
-    use Kernel::System::DB;
-    use Kernel::System::Main;
-    use Kernel::System::Time;
-    use Kernel::System::ITSMChange::Template::ITSMWorkOrder;
-
-    my $ConfigObject = Kernel::Config->new();
-    my $EncodeObject = Kernel::System::Encode->new(
-        ConfigObject => $ConfigObject,
-    );
-    my $LogObject = Kernel::System::Log->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-    );
-    my $MainObject = Kernel::System::Main->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-    );
-    my $TimeObject = Kernel::System::Time->new(
-        ConfigObject => $ConfigObject,
-        LogObject    => $LogObject,
-    );
-    my $DBObject = Kernel::System::DB->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-        MainObject   => $MainObject,
-    );
-    my $TemplateObject = Kernel::System::ITSMChange::Template::ITSMWorkOrder->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-        DBObject     => $DBObject,
-        TimeObject   => $TimeObject,
-        MainObject   => $MainObject,
-    );
+    use Kernel::System::ObjectManager;
+    local $Kernel::OM = Kernel::System::ObjectManager->new();
+    my $TemplateObject = $Kernel::OM->Get('Kernel::System::ITSMChange::Template::ITSMWorkOrder');
 
 =cut
 
@@ -87,22 +54,8 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    # check needed objects
-    for my $Object (
-        qw(DBObject ConfigObject EncodeObject LogObject UserObject GroupObject MainObject TimeObject)
-        )
-    {
-        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
-    }
-
     # set the debug flag
     $Self->{Debug} = $Param{Debug} || 0;
-
-    # create additional objects
-    $Self->{WorkOrderObject}    = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
-    $Self->{StateMachineObject} = Kernel::System::ITSMChange::ITSMStateMachine->new( %{$Self} );
-    $Self->{LinkObject}         = Kernel::System::LinkObject->new( %{$Self} );
-    $Self->{ValidObject}        = Kernel::System::Valid->new( %{$Self} );
 
     return $Self;
 }
@@ -140,7 +93,7 @@ sub Serialize {
     # check needed stuff
     for my $Argument (qw(UserID WorkOrderID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -152,7 +105,7 @@ sub Serialize {
     $Param{Return} ||= 'STRING';
 
     # get workorder
-    my $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
+    my $WorkOrder = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderGet(
         WorkOrderID => $Param{WorkOrderID},
         UserID      => $Param{UserID},
     );
@@ -176,7 +129,7 @@ sub Serialize {
     if ( $Param{StateReset} ) {
 
         # get initial workorder state id
-        my $NextStateIDs = $Self->{StateMachineObject}->StateTransitionGet(
+        my $NextStateIDs = Kernel::System::ITSMChange::ITSMStateMachine->StateTransitionGet(
             StateID => 0,
             Class   => 'ITSM::ChangeManagement::WorkOrder::State',
         );
@@ -202,9 +155,10 @@ sub Serialize {
     my $OriginalData = { WorkOrderAdd => $CleanWorkOrder };
 
     # get attachments
-    my @WorkOrderAttachments = $Self->{WorkOrderObject}->WorkOrderAttachmentList(
+    my @WorkOrderAttachments
+        = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderAttachmentList(
         WorkOrderID => $WorkOrder->{WorkOrderID},
-    );
+        );
 
     for my $Filename (@WorkOrderAttachments) {
 
@@ -213,7 +167,7 @@ sub Serialize {
     }
 
     # get links to other object
-    my $LinkListWithData = $Self->{LinkObject}->LinkListWithData(
+    my $LinkListWithData = $Kernel::OM->Get('Kernel::System::LinkObject')->LinkListWithData(
         Object => 'ITSMWorkOrder',
         Key    => $WorkOrder->{WorkOrderID},
         State  => 'Valid',
@@ -253,7 +207,7 @@ sub Serialize {
     local $Data::Dumper::Deepcopy = 1;
 
     # serialize the data (do not use $VAR1, but $TemplateData for Dumper output)
-    my $SerializedData = $Self->{MainObject}->Dump( $OriginalData, 'binary' );
+    my $SerializedData = $Kernel::OM->Get('Kernel::System::Main')->Dump( $OriginalData, 'binary' );
 
     return $SerializedData;
 }
@@ -279,7 +233,7 @@ sub DeSerialize {
     # check needed stuff
     for my $Argument (qw(UserID Method Data)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -297,7 +251,7 @@ sub DeSerialize {
     my $Sub = $Method2Sub{ $Param{Method} };
 
     if ( !$Sub ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Invalid Methodname!',
         );
@@ -328,7 +282,7 @@ sub _WorkOrderAdd {
     # check needed stuff
     for my $Argument (qw(UserID ChangeID Data)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -381,14 +335,15 @@ sub _WorkOrderAdd {
 
                         # calculate the old planned start time into epoch seconds
                         my $OldPlannedStartTimeInSeconds
-                            = $Self->{TimeObject}->TimeStamp2SystemTime(
+                            = $Kernel::OM->Get('Kernel::System::Time')->TimeStamp2SystemTime(
                             String => $Data{PlannedStartTime},
                             );
 
                         # calculate the old planned end time into epoch seconds
-                        my $OldPlannedEndTimeInSeconds = $Self->{TimeObject}->TimeStamp2SystemTime(
+                        my $OldPlannedEndTimeInSeconds
+                            = $Kernel::OM->Get('Kernel::System::Time')->TimeStamp2SystemTime(
                             String => $Data{PlannedEndTime},
-                        );
+                            );
 
                         # the time length of the workorder in seconds
                         $WorkOrderLengthInSeconds
@@ -412,7 +367,7 @@ sub _WorkOrderAdd {
     }
 
     # override the change id from the template
-    my $WorkOrderID = $Self->{WorkOrderObject}->WorkOrderAdd(
+    my $WorkOrderID = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderAdd(
         %Data,
         NoNumberCalc => $Param{NoNumberCalc},
         ChangeID     => $Param{ChangeID},
@@ -455,7 +410,7 @@ sub _GetTimeDifference {
     # check needed stuff
     for my $Argument (qw(CurrentTime NewTimeInEpoche)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -464,7 +419,7 @@ sub _GetTimeDifference {
     }
 
     # get current time as timestamp
-    my $CurrentSystemTime = $Self->{TimeObject}->TimeStamp2SystemTime(
+    my $CurrentSystemTime = $Kernel::OM->Get('Kernel::System::Time')->TimeStamp2SystemTime(
         String => $Param{CurrentTime},
     );
 
@@ -492,7 +447,7 @@ sub _MoveTime {
     # need to check for defined, because 0 is allowed for Difference
     for my $Argument (qw(CurrentTime Difference)) {
         if ( !defined $Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -501,12 +456,12 @@ sub _MoveTime {
     }
 
     # get current time as timestamp
-    my $CurrentSystemTime = $Self->{TimeObject}->TimeStamp2SystemTime(
+    my $CurrentSystemTime = $Kernel::OM->Get('Kernel::System::Time')->TimeStamp2SystemTime(
         String => $Param{CurrentTime},
     );
 
     # get planned time as timestamp
-    my $NewTime = $Self->{TimeObject}->SystemTime2TimeStamp(
+    my $NewTime = $Kernel::OM->Get('Kernel::System::Time')->SystemTime2TimeStamp(
         SystemTime => $CurrentSystemTime + $Param{Difference},
     );
 
@@ -534,7 +489,7 @@ sub _AttachmentAdd {
     # check needed stuff
     for my $Argument (qw(UserID ChangeID Data)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -547,17 +502,19 @@ sub _AttachmentAdd {
 
     my $OldWorkOrderID = $NewWorkOrderID2OldWorkOrderID{ $Param{WorkOrderID} };
 
-    my $Attachment = $Self->{WorkOrderObject}->WorkOrderAttachmentGet(
+    my $Attachment
+        = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderAttachmentGet(
         WorkOrderID => $OldWorkOrderID,
         Filename    => $Param{Data}->{Filename},
-    );
+        );
 
-    my $Success = $Self->{WorkOrderObject}->WorkOrderAttachmentAdd(
+    my $Success
+        = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderAttachmentAdd(
         %{$Attachment},
         ChangeID    => $Param{ChangeID},
         WorkOrderID => $Param{WorkOrderID},
         UserID      => $Param{UserID},
-    );
+        );
 
     my %Info = (
         Success => $Success,
@@ -588,7 +545,7 @@ sub _LinkAdd {
     # check needed stuff
     for my $Argument (qw(UserID Data)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -606,14 +563,14 @@ sub _LinkAdd {
     }
 
     if ( !$SourceKey ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need WorkOrderID or ChangeID!',
         );
         return;
     }
 
-    my $Success = $Self->{LinkObject}->LinkAdd(
+    my $Success = $Kernel::OM->Get('Kernel::System::LinkObject')->LinkAdd(
         %{ $Param{Data} },
         SourceKey => $SourceKey,
         UserID    => $Param{UserID},

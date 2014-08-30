@@ -7,9 +7,7 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-# Note:
-# available objects are: ConfigObject, LogObject and DBObject
-#
+
 # The algorithm to calculate the checksum is derived from the one
 # Deutsche Bundesbahn (german railway company) uses for calculation
 # of the check digit of their vehikel numbering.
@@ -26,12 +24,14 @@ package Kernel::System::ITSMChange::Number::DateChecksum;
 use strict;
 use warnings;
 
+our $ObjectManagerDisabled = 1;
+
 sub ChangeNumberCreate {
     my ( $Self, %Param ) = @_;
 
     # get needed config options
-    my $CounterLog = $Self->{ConfigObject}->Get('ITSMChange::CounterLog');
-    my $SystemID   = $Self->{ConfigObject}->Get('SystemID');
+    my $CounterLog = $Kernel::OM->Get('Kernel::Config')->Get('ITSMChange::CounterLog');
+    my $SystemID   = $Kernel::OM->Get('Kernel::Config')->Get('SystemID');
 
     # define number of maximum loops if created change number exists
     my $MaxRetryNumber        = 16000;
@@ -41,8 +41,8 @@ sub ChangeNumberCreate {
     while ( $LoopProtectionCounter <= $MaxRetryNumber ) {
 
         # get current time
-        my ( $Sec, $Min, $Hour, $Day, $Month, $Year ) = $Self->{TimeObject}->SystemTime2Date(
-            SystemTime => $Self->{TimeObject}->SystemTime(),
+        my ( $Sec, $Min, $Hour, $Day, $Month, $Year ) = $Kernel::OM->Get('Kernel::System::Time')->SystemTime2Date(
+            SystemTime => $Kernel::OM->Get('Kernel::System::Time')->SystemTime(),
         );
 
         # read count
@@ -52,7 +52,7 @@ sub ChangeNumberCreate {
         # try to read existing counter from file
         if ( -f $CounterLog ) {
 
-            my $ContentSCALARRef = $Self->{MainObject}->FileRead(
+            my $ContentSCALARRef = $Kernel::OM->Get('Kernel::System::Main')->FileRead(
                 Location => $CounterLog,
             );
             if ( $ContentSCALARRef && ${$ContentSCALARRef} ) {
@@ -61,7 +61,7 @@ sub ChangeNumberCreate {
 
                 # just debug
                 if ( $Self->{Debug} > 0 ) {
-                    $Self->{LogObject}->Log(
+                    $Kernel::OM->Get('Kernel::System::Log')->Log(
                         Priority => 'debug',
                         Message  => "Read counter from $CounterLog: $Count",
                     );
@@ -83,14 +83,14 @@ sub ChangeNumberCreate {
         my $Content = $Count . ";$Year-$Month-$Day;";
 
         # write new count
-        my $Write = $Self->{MainObject}->FileWrite(
+        my $Write = $Kernel::OM->Get('Kernel::System::Main')->FileWrite(
             Location => $CounterLog,
             Content  => \$Content,
         );
 
         # log debug message
         if ( $Write && $Self->{Debug} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'debug',
                 Message  => "Write counter: $Count",
             );
@@ -134,14 +134,14 @@ sub ChangeNumberCreate {
         $LoopProtectionCounter++;
 
         # create new change number again
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'notice',
             Message  => "ChangeNumber ($ChangeNumber) exists! Creating a new one.",
         );
     }
 
     # loop was running too long
-    $Self->{LogObject}->Log(
+    $Kernel::OM->Get('Kernel::System::Log')->Log(
         Priority => 'error',
         Message  => "LoopProtectionCounter is now $LoopProtectionCounter!"
             . " Stopped ChangeNumberCreate()!",

@@ -12,9 +12,14 @@ package Kernel::System::Stats::Dynamic::ITSMChangeManagementChangesPerCIClasses;
 use strict;
 use warnings;
 
-use Kernel::System::ITSMChange;
-use Kernel::System::GeneralCatalog;
-use Kernel::System::LinkObject;
+our @ObjectDependencies = (
+    'Kernel::System::DB',
+    'Kernel::System::GeneralCatalog',
+    'Kernel::System::ITSMChange',
+    'Kernel::System::LinkObject',
+    'Kernel::System::Log',
+    'Kernel::System::Time',
+);
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -22,19 +27,6 @@ sub new {
     # allocate new hash for object
     my $Self = {};
     bless( $Self, $Type );
-
-    # check needed objects
-    for my $Object (
-        qw(DBObject ConfigObject LogObject UserObject GroupObject TimeObject MainObject EncodeObject)
-        )
-    {
-        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
-    }
-
-    # created needed objects
-    $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new( %{$Self} );
-    $Self->{ChangeObject}         = Kernel::System::ITSMChange->new( %{$Self} );
-    $Self->{LinkObject}           = Kernel::System::LinkObject->new( %{$Self} );
 
     return $Self;
 }
@@ -49,29 +41,29 @@ sub GetObjectAttributes {
     my ( $Self, %Param ) = @_;
 
     # get cip lists
-    my $Categories = $Self->{ChangeObject}->ChangePossibleCIPGet(
+    my $Categories = $Kernel::OM->Get('Kernel::System::ITSMChange')->ChangePossibleCIPGet(
         Type   => 'Category',
         UserID => 1,
     );
     my %CategoryList = map { $_->{Key} => $_->{Value} } @{$Categories};
 
     # get class list
-    my $ClassList = $Self->{GeneralCatalogObject}->ItemList(
+    my $ClassList = $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemList(
         Class => 'ITSM::ConfigItem::Class',
     );
 
     # get deployment state list
-    my $DeplStateList = $Self->{GeneralCatalogObject}->ItemList(
+    my $DeplStateList = $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemList(
         Class => 'ITSM::ConfigItem::DeploymentState',
     );
 
     # get incident state list
-    my $InciStateList = $Self->{GeneralCatalogObject}->ItemList(
+    my $InciStateList = $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemList(
         Class => 'ITSM::Core::IncidentState',
     );
 
     # get current time to fix bug#4870
-    my $TimeStamp = $Self->{TimeObject}->CurrentTimestamp();
+    my $TimeStamp = $Kernel::OM->Get('Kernel::System::Time')->CurrentTimestamp();
     my ($Date) = split /\s+/, $TimeStamp;
     my $Today = sprintf "%s 23:59:59", $Date;
 
@@ -128,14 +120,14 @@ sub GetStatElement {
     my ( $Self, %Param ) = @_;
 
     # get object ids for change and config item
-    my $ConfigItemObjectID = $Self->{LinkObject}->ObjectLookup(
+    my $ConfigItemObjectID = $Kernel::OM->Get('Kernel::System::LinkObject')->ObjectLookup(
         Name   => 'ITSMConfigItem',
         UserID => 1,
     );
 
     return if !$ConfigItemObjectID;
 
-    my $ChangeObjectID = $Self->{LinkObject}->ObjectLookup(
+    my $ChangeObjectID = $Kernel::OM->Get('Kernel::System::LinkObject')->ObjectLookup(
         Name   => 'ITSMWorkOrder',
         UserID => 1,
     );
@@ -143,7 +135,7 @@ sub GetStatElement {
     return if !$ChangeObjectID;
 
     # get change id and config item id
-    return if !$Self->{DBObject}->Prepare(
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Prepare(
         SQL => 'SELECT chi.id AS change_id, ci.id AS ci_id '
             . 'FROM change_item chi, change_workorder chw, link_relation lr, configitem ci '
             . 'WHERE chi.id = chw.change_id '
@@ -178,7 +170,7 @@ sub GetStatElement {
 
     # fetch change and config item ids
     my @Matches;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $Kernel::OM->Get('Kernel::System::DB')->FetchrowArray() ) {
         push @Matches, \@Row;
     }
 
@@ -190,7 +182,7 @@ sub GetStatElement {
         next MATCH if $ChangesAlreadyCounted{ $Match->[0] };
 
         # get current state of the config item
-        next MATCH if !$Self->{DBObject}->Prepare(
+        next MATCH if !$Kernel::OM->Get('Kernel::System::DB')->Prepare(
             SQL => 'SELECT inci_state_id FROM configitem_version '
                 . 'WHERE configitem_id = ? '
                 . 'AND create_time >= ? AND create_time <= ?',
@@ -204,7 +196,7 @@ sub GetStatElement {
 
         # fetch current incident state
         my $IncidentStateID;
-        while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        while ( my @Row = $Kernel::OM->Get('Kernel::System::DB')->FetchrowArray() ) {
             $IncidentStateID = $Row[0];
         }
 
@@ -227,12 +219,12 @@ sub ExportWrapper {
     my ( $Self, %Param ) = @_;
 
     # get class list
-    my $ClassList = $Self->{GeneralCatalogObject}->ItemList(
+    my $ClassList = $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemList(
         Class => 'ITSM::ConfigItem::Class',
     );
 
     # get incident state list
-    my $InciStateList = $Self->{GeneralCatalogObject}->ItemList(
+    my $InciStateList = $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemList(
         Class => 'ITSM::Core::IncidentState',
     );
 
@@ -262,7 +254,7 @@ sub ExportWrapper {
             }
             elsif ( $ElementName eq 'CategoryIDs' ) {
 
-                my $CIPList = $Self->{ChangeObject}->ChangePossibleCIPGet(
+                my $CIPList = $Kernel::OM->Get('Kernel::System::ITSMChange')->ChangePossibleCIPGet(
                     Type   => 'Category',
                     UserID => 1,
                 );
@@ -287,12 +279,12 @@ sub ImportWrapper {
     my ( $Self, %Param ) = @_;
 
     # get class list
-    my $ClassList = $Self->{GeneralCatalogObject}->ItemList(
+    my $ClassList = $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemList(
         Class => 'ITSM::ConfigItem::Class',
     );
 
     # get incident state list
-    my $InciStateList = $Self->{GeneralCatalogObject}->ItemList(
+    my $InciStateList = $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemList(
         Class => 'ITSM::Core::IncidentState',
     );
 
@@ -338,7 +330,7 @@ sub ImportWrapper {
                     for my $ID ( @{$Values} ) {
                         next ID if !$ID;
 
-                        my $CIPID = $Self->{ChangeObject}->ChangeCIPLookup(
+                        my $CIPID = $Kernel::OM->Get('Kernel::System::ITSMChange')->ChangeCIPLookup(
                             CIP  => $ID->{Content},
                             Type => $Type,
                         );
@@ -346,7 +338,7 @@ sub ImportWrapper {
                             $ID->{Content} = $CIPID;
                         }
                         else {
-                            $Self->{LogObject}->Log(
+                            $Kernel::OM->Get('Kernel::System::Log')->Log(
                                 Priority => 'error',
                                 Message  => "Import: Can' find $Type $ID->{Content}!"
                             );

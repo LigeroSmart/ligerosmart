@@ -12,9 +12,12 @@ package Kernel::System::Stats::Dynamic::ITSMChangeManagementChangesIncidents;
 use strict;
 use warnings;
 
-use Kernel::System::ITSMChange;
-use Kernel::System::Ticket;
-use Kernel::System::Type;
+our @ObjectDependencies = (
+    'Kernel::System::ITSMChange',
+    'Kernel::System::Ticket',
+    'Kernel::System::Time',
+    'Kernel::System::Type',
+);
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -22,19 +25,6 @@ sub new {
     # allocate new hash for object
     my $Self = {};
     bless( $Self, $Type );
-
-    # check needed objects
-    for my $Object (
-        qw(DBObject ConfigObject LogObject UserObject GroupObject TimeObject MainObject EncodeObject)
-        )
-    {
-        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
-    }
-
-    # create needed objects
-    $Self->{ChangeObject} = Kernel::System::ITSMChange->new( %{$Self} );
-    $Self->{TicketObject} = Kernel::System::Ticket->new( %{$Self} );
-    $Self->{TypeObject}   = Kernel::System::Type->new( %{$Self} );
 
     return $Self;
 }
@@ -49,11 +39,13 @@ sub GetObjectAttributes {
     my ( $Self, %Param ) = @_;
 
     # get list of ticket types
-    my %Objects = $Self->{TypeObject}->TypeList( Valid => 1 );
+    my %Objects = $Kernel::OM->Get('Kernel::System::Type')->TypeList(
+        Valid => 1,
+    );
     $Objects{'-1'} = 'Changes';
 
     # get current time to fix bug#4870
-    my $TimeStamp = $Self->{TimeObject}->CurrentTimestamp();
+    my $TimeStamp = $Kernel::OM->Get('Kernel::System::Time')->CurrentTimestamp();
     my ($Date) = split /\s+/, $TimeStamp;
     my $Today = sprintf "%s 23:59:59", $Date;
 
@@ -98,7 +90,7 @@ sub GetStatElement {
 
     # if this cell should be filled with number of changes
     if ( $Param{Object}->[0] == -1 ) {
-        return $Self->{ChangeObject}->ChangeSearch(
+        return $Kernel::OM->Get('Kernel::System::ITSMChange')->ChangeSearch(
             UserID     => 1,
             Result     => 'COUNT',
             Permission => 'ro',
@@ -109,7 +101,7 @@ sub GetStatElement {
 
     # if this cell should be filled with number of tickets
     else {
-        return $Self->{TicketObject}->TicketSearch(
+        return $Kernel::OM->Get('Kernel::System::Ticket')->TicketSearch(
             UserID     => 1,
             Result     => 'COUNT',
             Permission => 'ro',
@@ -126,7 +118,7 @@ sub ExportWrapper {
     my ( $Self, %Param ) = @_;
 
     # get list of ticket types
-    my %Objects = $Self->{TypeObject}->TypeList( Valid => 1 );
+    my %Objects = $Kernel::OM->Get('Kernel::System::Type')->TypeList( Valid => 1 );
     $Objects{'-1'} = 'Changes';
 
     # wrap ids to used spelling
@@ -159,7 +151,7 @@ sub ImportWrapper {
     my ( $Self, %Param ) = @_;
 
     # get list of ticket types
-    my %Objects = $Self->{TypeObject}->TypeList( Valid => 1 );
+    my %Objects = $Kernel::OM->Get('Kernel::System::Type')->TypeList( Valid => 1 );
     $Objects{'-1'} = 'Changes';
 
     # wrap used spelling to ids

@@ -12,10 +12,13 @@ package Kernel::System::Stats::Dynamic::ITSMChangeManagementRfcRequester;
 use strict;
 use warnings;
 
-use Kernel::System::CustomerUser;
-use Kernel::System::ITSMChange;
-use Kernel::System::Ticket;
-use Kernel::System::User;
+our @ObjectDependencies = (
+    'Kernel::Config',
+    'Kernel::System::CustomerUser',
+    'Kernel::System::Ticket',
+    'Kernel::System::Time',
+    'Kernel::System::User',
+);
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -23,20 +26,6 @@ sub new {
     # allocate new hash for object
     my $Self = {};
     bless( $Self, $Type );
-
-    # check needed objects
-    for my $Object (
-        qw(DBObject ConfigObject LogObject UserObject GroupObject TimeObject MainObject EncodeObject)
-        )
-    {
-        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
-    }
-
-    # create needed objects
-    $Self->{CustomerUserObject} = Kernel::System::CustomerUser->new( %{$Self} );
-    $Self->{ChangeObject}       = Kernel::System::ITSMChange->new( %{$Self} );
-    $Self->{TicketObject}       = Kernel::System::Ticket->new( %{$Self} );
-    $Self->{UserObject}         = Kernel::System::User->new( %{$Self} );
 
     return $Self;
 }
@@ -50,10 +39,10 @@ sub GetObjectName {
 sub GetObjectAttributes {
     my ( $Self, %Param ) = @_;
 
-    my $RfCTypes = $Self->{ConfigObject}->Get('ITSMChange::AddChangeLinkTicketTypes');
+    my $RfCTypes = $Kernel::OM->Get('Kernel::Config')->Get('ITSMChange::AddChangeLinkTicketTypes');
 
     # get all rfcs
-    my @TicketIDs = $Self->{TicketObject}->TicketSearch(
+    my @TicketIDs = $Kernel::OM->Get('Kernel::System::Ticket')->TicketSearch(
         UserID     => 1,
         Permission => 'ro',
         Limit      => 100_000_000,
@@ -66,7 +55,7 @@ sub GetObjectAttributes {
 
     TICKETID:
     for my $TicketID (@TicketIDs) {
-        my %Ticket = $Self->{TicketObject}->TicketGet(
+        my %Ticket = $Kernel::OM->Get('Kernel::System::Ticket')->TicketGet(
             TicketID => $TicketID,
             UserID   => 1,
         );
@@ -78,9 +67,10 @@ sub GetObjectAttributes {
 
             next TICKETID if $Requester{"customer_$CustomerUserID"};
 
-            my %CustomerUser = $Self->{CustomerUserObject}->CustomerUserDataGet(
+            my %CustomerUser
+                = $Kernel::OM->Get('Kernel::System::CustomerUser')->CustomerUserDataGet(
                 User => $CustomerUserID,
-            );
+                );
 
             $Requester{"customer_$CustomerUserID"} = sprintf "%s (%s %s)",
                 $CustomerUser{UserLogin},
@@ -92,7 +82,7 @@ sub GetObjectAttributes {
 
             next TICKETID if $Requester{"agent_$OwnerID"};
 
-            my %User = $Self->{UserObject}->GetUserData(
+            my %User = $Kernel::OM->Get('Kernel::System::User')->GetUserData(
                 UserID => $OwnerID,
             );
 
@@ -104,7 +94,7 @@ sub GetObjectAttributes {
     }
 
     # get current time to fix bug#4870
-    my $TimeStamp = $Self->{TimeObject}->CurrentTimestamp();
+    my $TimeStamp = $Kernel::OM->Get('Kernel::System::Time')->CurrentTimestamp();
     my ($Date) = split /\s+/, $TimeStamp;
     my $Today = sprintf "%s 23:59:59", $Date;
 
@@ -148,10 +138,10 @@ sub GetStatElement {
     $Param{$Key} = [$ID];
 
     # get ticket types that are handled as RfCs
-    my $RfCTypes = $Self->{ConfigObject}->Get('ITSMChange::AddChangeLinkTicketTypes');
+    my $RfCTypes = $Kernel::OM->Get('Kernel::Config')->Get('ITSMChange::AddChangeLinkTicketTypes');
 
     # search tickets
-    my @TicketIDs = $Self->{TicketObject}->TicketSearch(
+    my @TicketIDs = $Kernel::OM->Get('Kernel::System::Ticket')->TicketSearch(
         UserID     => 1,
         Result     => 'ARRAY',
         Permission => 'ro',
@@ -168,7 +158,7 @@ sub GetStatElement {
 
         TICKETID:
         for my $TicketID (@TicketIDs) {
-            my %Ticket = $Self->{TicketObject}->TicketGet(
+            my %Ticket = $Kernel::OM->Get('Kernel::System::Ticket')->TicketGet(
                 TicketID => $TicketID,
             );
 

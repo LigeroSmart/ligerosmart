@@ -12,7 +12,11 @@ package Kernel::System::Stats::Dynamic::ITSMChangeManagement;
 use strict;
 use warnings;
 
-use Kernel::System::ITSMChange;
+our @ObjectDependencies = (
+    'Kernel::System::ITSMChange',
+    'Kernel::System::Log',
+    'Kernel::System::Time',
+);
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -20,17 +24,6 @@ sub new {
     # allocate new hash for object
     my $Self = {};
     bless( $Self, $Type );
-
-    # check needed objects
-    for my $Object (
-        qw(DBObject ConfigObject LogObject UserObject TimeObject UserObject GroupObject MainObject EncodeObject)
-        )
-    {
-        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
-    }
-
-    # create needed objects
-    $Self->{ChangeObject} = Kernel::System::ITSMChange->new( %{$Self} );
 
     return $Self;
 }
@@ -45,32 +38,32 @@ sub GetObjectAttributes {
     my ( $Self, %Param ) = @_;
 
     # get change state list
-    my $ChangeStates = $Self->{ChangeObject}->ChangePossibleStatesGet(
+    my $ChangeStates = $Kernel::OM->Get('Kernel::System::ITSMChange')->ChangePossibleStatesGet(
         UserID => 1,
     );
     my %ChangeStateList = map { $_->{Key} => $_->{Value} } @{$ChangeStates};
 
     # get cip lists
-    my $Categories = $Self->{ChangeObject}->ChangePossibleCIPGet(
+    my $Categories = $Kernel::OM->Get('Kernel::System::ITSMChange')->ChangePossibleCIPGet(
         Type   => 'Category',
         UserID => 1,
     );
     my %CategoryList = map { $_->{Key} => $_->{Value} } @{$Categories};
 
-    my $Impacts = $Self->{ChangeObject}->ChangePossibleCIPGet(
+    my $Impacts = $Kernel::OM->Get('Kernel::System::ITSMChange')->ChangePossibleCIPGet(
         Type   => 'Impact',
         UserID => 1,
     );
     my %ImpactList = map { $_->{Key} => $_->{Value} } @{$Impacts};
 
-    my $Priorities = $Self->{ChangeObject}->ChangePossibleCIPGet(
+    my $Priorities = $Kernel::OM->Get('Kernel::System::ITSMChange')->ChangePossibleCIPGet(
         Type   => 'Priority',
         UserID => 1,
     );
     my %PriorityList = map { $_->{Key} => $_->{Value} } @{$Priorities};
 
     # get current time to fix bug#4870
-    my $TimeStamp = $Self->{TimeObject}->CurrentTimestamp();
+    my $TimeStamp = $Kernel::OM->Get('Kernel::System::Time')->CurrentTimestamp();
     my ($Date) = split /\s+/, $TimeStamp;
     my $Today = sprintf "%s 23:59:59", $Date;
 
@@ -135,7 +128,7 @@ sub GetStatElement {
     my ( $Self, %Param ) = @_;
 
     # search changes
-    my $Count = $Self->{ChangeObject}->ChangeSearch(
+    my $Count = $Kernel::OM->Get('Kernel::System::ITSMChange')->ChangeSearch(
         UserID     => 1,
         Result     => 'COUNT',
         Permission => 'ro',
@@ -161,7 +154,8 @@ sub ExportWrapper {
             my $Values      = $Element->{SelectedValues};
 
             if ( $ElementName eq 'ChangeStateIDs' ) {
-                my $StateList = $Self->{ChangeObject}->ChangePossibleStatesGet( UserID => 1 );
+                my $StateList = $Kernel::OM->Get('Kernel::System::ITSMChange')
+                    ->ChangePossibleStatesGet( UserID => 1 );
                 ID:
                 for my $ID ( @{$Values} ) {
                     next ID if !$ID;
@@ -181,7 +175,7 @@ sub ExportWrapper {
             {
                 my ($Type) = $ElementName =~ m{ \A (.*?) IDs \z }xms;
 
-                my $CIPList = $Self->{ChangeObject}->ChangePossibleCIPGet(
+                my $CIPList = $Kernel::OM->Get('Kernel::System::ITSMChange')->ChangePossibleCIPGet(
                     Type   => $Type,
                     UserID => 1,
                 );
@@ -221,15 +215,16 @@ sub ImportWrapper {
                 for my $ID ( @{$Values} ) {
                     next ID if !$ID;
 
-                    my $ChangeStateID = $Self->{ChangeObject}->ChangeStateLookup(
+                    my $ChangeStateID
+                        = $Kernel::OM->Get('Kernel::System::ITSMChange')->ChangeStateLookup(
                         ChangeState => $ID->{Content},
                         Cache       => 1,
-                    );
+                        );
                     if ($ChangeStateID) {
                         $ID->{Content} = $ChangeStateID;
                     }
                     else {
-                        $Self->{LogObject}->Log(
+                        $Kernel::OM->Get('Kernel::System::Log')->Log(
                             Priority => 'error',
                             Message  => "Import: Can't find state $ID->{Content}!"
                         );
@@ -245,7 +240,7 @@ sub ImportWrapper {
                     for my $ID ( @{$Values} ) {
                         next ID if !$ID;
 
-                        my $CIPID = $Self->{ChangeObject}->ChangeCIPLookup(
+                        my $CIPID = $Kernel::OM->Get('Kernel::System::ITSMChange')->ChangeCIPLookup(
                             CIP  => $ID->{Content},
                             Type => $Type,
                         );
@@ -253,7 +248,7 @@ sub ImportWrapper {
                             $ID->{Content} = $CIPID;
                         }
                         else {
-                            $Self->{LogObject}->Log(
+                            $Kernel::OM->Get('Kernel::System::Log')->Log(
                                 Priority => 'error',
                                 Message  => "Import: Can't find $Type $ID->{Content}!"
                             );

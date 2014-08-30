@@ -56,10 +56,6 @@ sub new {
     # set the debug flag
     $Self->{Debug} = $Param{Debug} || 0;
 
-    # create additional objects
-    $Kernel::OM->Get('Kernel::System::GeneralCatalog')
-        = Kernel::System::GeneralCatalog->new( %{$Self} );
-
     # get the cache type and TTL (in seconds)
     $Self->{CacheType} = 'ITSMStateMachine';
     $Self->{CacheTTL}  = $Kernel::OM->Get('Kernel::Config')->Get('ITSMChange::CacheTTL') * 60;
