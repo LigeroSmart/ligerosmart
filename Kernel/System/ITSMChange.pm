@@ -72,13 +72,6 @@ sub new {
     # set the debug flag
     $Self->{Debug} = $Param{Debug} || 0;
 
-    # load change number generator
-    my $GeneratorModule = $Kernel::OM->Get('Kernel::Config')->Get('ITSMChange::NumberGenerator')
-        || 'Kernel::System::ITSMChange::Number::DateChecksum';
-    if ( !$Kernel::OM->Get('Kernel::System::Main')->RequireBaseClass($GeneratorModule) ) {
-        die "Can't load change number generator backend module $GeneratorModule! $@";
-    }
-
     # get the cache type and TTL (in seconds)
     $Self->{CacheType} = 'ITSMChangeManagement';
     $Self->{CacheTTL}  = $Kernel::OM->Get('Kernel::Config')->Get('ITSMChange::CacheTTL') * 60;
@@ -91,6 +84,13 @@ sub new {
     $Self->EventHandlerInit(
         Config => 'ITSMChange::EventModule',
     );
+
+    # load change number generator
+    my $GeneratorModule = $Kernel::OM->Get('Kernel::Config')->Get('ITSMChange::NumberGenerator')
+        || 'Kernel::System::ITSMChange::Number::DateChecksum';
+    if ( !$Kernel::OM->Get('Kernel::System::Main')->RequireBaseClass($GeneratorModule) ) {
+        die "Can't load change number generator backend module $GeneratorModule! $@";
+    }
 
     # get database type
     $Self->{DBType} = $Kernel::OM->Get('Kernel::System::DB')->{'DB::Type'} || '';
