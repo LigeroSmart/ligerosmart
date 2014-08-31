@@ -147,6 +147,7 @@ sub Serialize {
             StateID => 0,
             Class   => 'ITSM::ChangeManagement::Change::State',
             );
+
         $CleanChange->{ChangeStateID} = $NextStateIDs->[0];
     }
 
