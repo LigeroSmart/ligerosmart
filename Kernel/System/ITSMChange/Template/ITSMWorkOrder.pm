@@ -16,6 +16,7 @@ use warnings;
 use Data::Dumper;
 
 our @ObjectDependencies = (
+    'Kernel::System::ITSMChange::ITSMStateMachine',
     'Kernel::System::ITSMChange::ITSMWorkOrder',
     'Kernel::System::LinkObject',
     'Kernel::System::Log',
@@ -129,7 +130,7 @@ sub Serialize {
     if ( $Param{StateReset} ) {
 
         # get initial workorder state id
-        my $NextStateIDs = Kernel::System::ITSMChange::ITSMStateMachine->StateTransitionGet(
+        my $NextStateIDs = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMStateMachine')->StateTransitionGet(
             StateID => 0,
             Class   => 'ITSM::ChangeManagement::WorkOrder::State',
         );
