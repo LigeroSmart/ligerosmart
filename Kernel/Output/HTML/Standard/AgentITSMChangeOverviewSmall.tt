@@ -129,6 +129,11 @@
                     <a href="[% Env("Baselink") %]Action=[% Env("Action") %];[% Data.LinkSort %];SortBy=CreateTime;OrderBy=[% Data.OrderBy | uri %]">[% Translate("Created") | html %]</a>
                 </th>
 [% RenderBlockEnd("RecordCreateTimeHeader") %]
+[% RenderBlockStart("RecordChangeTimeHeader") %]
+                <th class="ChangeTime [% Data.CSS | html %]">
+                    <a href="[% Env("Baselink") %]Action=[% Env("Action") %];[% Data.LinkSort %];SortBy=ChangeTime;OrderBy=[% Data.OrderBy | uri %]">[% Translate("Changed") | html %]</a>
+                </th>
+[% RenderBlockEnd("RecordChangeTimeHeader") %]
             </tr>
         </thead>
         <tbody>
@@ -300,6 +305,11 @@
                     <div>[% Data.CreateTime | Localize("TimeLong") %]</div>
                 </td>
 [% RenderBlockEnd("RecordCreateTime") %]
+[% RenderBlockStart("RecordChangeTime") %]
+                <td>
+                    <div>[% Data.ChangeTime | Localize("TimeLong") %]</div>
+                </td>
+[% RenderBlockEnd("RecordChangeTime") %]
             </tr>
 [% RenderBlockEnd("Record") %]
         </tbody>

@@ -2744,6 +2744,7 @@
                 <Item Key="ActualStartTime">0</Item>
                 <Item Key="ActualEndTime">0</Item>
                 <Item Key="CreateTime">0</Item>
+                <Item Key="ChangeTime">0</Item>
             </Hash>
         </Setting>
     </ConfigItem>
@@ -2939,6 +2940,7 @@
                 <Item Key="ActualStartTime">0</Item>
                 <Item Key="ActualEndTime">0</Item>
                 <Item Key="CreateTime">0</Item>
+                <Item Key="ChangeTime">0</Item>
             </Hash>
         </Setting>
     </ConfigItem>
@@ -3024,6 +3026,7 @@
                 <Item Key="ActualStartTime">0</Item>
                 <Item Key="ActualEndTime">0</Item>
                 <Item Key="CreateTime">0</Item>
+                <Item Key="ChangeTime">0</Item>
             </Hash>
         </Setting>
     </ConfigItem>
@@ -3129,6 +3132,7 @@
                 <Item Key="ActualStartTime">0</Item>
                 <Item Key="ActualEndTime">0</Item>
                 <Item Key="CreateTime">0</Item>
+                <Item Key="ChangeTime">0</Item>
             </Hash>
         </Setting>
     </ConfigItem>
@@ -3210,6 +3214,7 @@
                 <Item Key="ActualStartTime">0</Item>
                 <Item Key="ActualEndTime">0</Item>
                 <Item Key="CreateTime">0</Item>
+                <Item Key="ChangeTime">0</Item>
             </Hash>
         </Setting>
     </ConfigItem>
@@ -3304,6 +3309,7 @@
                 <Item Key="ActualStartTime">0</Item>
                 <Item Key="ActualEndTime">0</Item>
                 <Item Key="CreateTime">0</Item>
+                <Item Key="ChangeTime">0</Item>
             </Hash>
         </Setting>
     </ConfigItem>
@@ -3371,6 +3377,7 @@
                 <Item Key="ActualStartTime">0</Item>
                 <Item Key="ActualEndTime">0</Item>
                 <Item Key="CreateTime">0</Item>
+                <Item Key="ChangeTime">0</Item>
                 <Item Key="WorkOrderStateSignal">1</Item>
                 <Item Key="WorkOrderNumber">1</Item>
                 <Item Key="WorkOrderTitle">1</Item>
@@ -3458,6 +3465,7 @@
                 <Item Key="ActualStartTime">0</Item>
                 <Item Key="ActualEndTime">0</Item>
                 <Item Key="CreateTime">0</Item>
+                <Item Key="ChangeTime">0</Item>
                 <Item Key="WorkOrderStateSignal">1</Item>
                 <Item Key="WorkOrderNumber">1</Item>
                 <Item Key="WorkOrderTitle">1</Item>
@@ -3592,6 +3600,7 @@
                 <Item Key="ActualStartTime">0</Item>
                 <Item Key="ActualEndTime">0</Item>
                 <Item Key="CreateTime">0</Item>
+                <Item Key="ChangeTime">0</Item>
             </Hash>
         </Setting>
     </ConfigItem>
