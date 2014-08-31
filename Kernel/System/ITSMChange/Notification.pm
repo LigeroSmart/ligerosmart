@@ -542,6 +542,7 @@ sub NotificationRuleGet {
         Type  => $Self->{CacheType},
         Key   => $CacheKey,
         Value => \%NotificationRule,
+        TTL   => $Self->{CacheTTL},
     );
 
     return \%NotificationRule;
@@ -771,6 +772,7 @@ sub NotificationRuleList {
         Type  => $Self->{CacheType},
         Key   => $CacheKey,
         Value => \@IDs,
+        TTL   => $Self->{CacheTTL},
     );
 
     return \@IDs;
@@ -851,6 +853,7 @@ sub NotificationRuleSearch {
         Type  => $Self->{CacheType},
         Key   => $CacheKey,
         Value => \@IDs,
+        TTL   => $Self->{CacheTTL},
     );
 
     return \@IDs;
@@ -935,6 +938,7 @@ sub RecipientLookup {
         Type  => $Self->{CacheType},
         Key   => $CacheKey,
         Value => $Value,
+        TTL   => $Self->{CacheTTL},
     );
 
     return $Value;

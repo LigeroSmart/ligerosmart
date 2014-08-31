@@ -1059,6 +1059,7 @@ sub HistoryTypeLookup {
         Type  => $Self->{CacheType},
         Key   => 'HistoryTypeLookup::' . $Key . '::' . $Param{$Key},
         Value => $Value,
+        TTL   => $Self->{CacheTTL},
     );
 
     return $Value;
@@ -1103,6 +1104,7 @@ sub HistoryTypeList {
         Type  => $Self->{CacheType},
         Key   => 'HistoryTypeList',
         Value => \@HistoryTypes,
+        TTL   => $Self->{CacheTTL},
     );
 
     return \@HistoryTypes;

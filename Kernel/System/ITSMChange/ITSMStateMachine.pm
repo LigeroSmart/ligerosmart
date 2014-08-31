@@ -473,6 +473,7 @@ sub StateTransitionGet {
         Type  => $Self->{CacheType},
         Key   => $CacheKey,
         Value => \@NextStateIDs,
+        TTL   => $Self->{CacheTTL},
     );
 
     return \@NextStateIDs;
@@ -597,6 +598,7 @@ sub StateTransitionGetEndStates {
         Type  => $Self->{CacheType},
         Key   => $CacheKey,
         Value => \@NextEndStateIDs,
+        TTL   => $Self->{CacheTTL},
     );
 
     return \@NextEndStateIDs;
@@ -666,6 +668,7 @@ sub StateTransitionList {
         Type  => $Self->{CacheType},
         Key   => $CacheKey,
         Value => \%StateTransition,
+        TTL   => $Self->{CacheTTL},
     );
 
     return \%StateTransition;
