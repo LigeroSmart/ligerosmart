@@ -64,11 +64,8 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    # create needed sysconfig object
-    $Self->{SysConfigObject} = $Kernel::OM->Get('Kernel::System::SysConfig');
-
     # rebuild ZZZ* files
-    $Self->{SysConfigObject}->WriteDefault();
+    $Kernel::OM->Get('Kernel::System::SysConfig')->WriteDefault();
 
     # define the ZZZ files
     my @ZZZFiles = (
@@ -88,25 +85,6 @@ sub new {
         }
     }
 
-    # create additional objects
-    $Self->{ConfigObject}       = $Kernel::OM->Get('Kernel::Config');
-    $Self->{LogObject}          = $Kernel::OM->Get('Kernel::System::Log');
-    $Self->{DBObject}           = $Kernel::OM->Get('Kernel::System::DB');
-    $Self->{DynamicFieldObject} = $Kernel::OM->Get('Kernel::System::DynamicField');
-    $Self->{GroupObject}        = $Kernel::OM->Get('Kernel::System::Group');
-    $Self->{ValidObject}        = $Kernel::OM->Get('Kernel::System::Valid');
-    $Self->{LinkObject}         = $Kernel::OM->Get('Kernel::System::LinkObject');
-    $Self->{ChangeObject}       = $Kernel::OM->Get('Kernel::System::ITSMChange');
-    $Self->{ConditionObject}    = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMCondition');
-    $Self->{CIPAllocateObject}
-        = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMChangeCIPAllocate');
-    $Self->{StateMachineObject} = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMStateMachine');
-    $Self->{GeneralCatalogObject} = $Kernel::OM->Get('Kernel::System::GeneralCatalog');
-    $Self->{WorkOrderObject}      = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder');
-    $Self->{HistoryObject}        = $Kernel::OM->Get('Kernel::System::ITSMChange::History');
-    $Self->{NotificationObject}   = $Kernel::OM->Get('Kernel::System::ITSMChange::Notification');
-    $Self->{TemplateObject}       = $Kernel::OM->Get('Kernel::System::ITSMChange::Template');
-
     # the stats object needs a UserID parameter for the constructor
     # we need to discard any existing stats object before
     $Kernel::OM->ObjectsDiscard(
@@ -119,7 +97,6 @@ sub new {
             UserID => 1,
         },
     );
-    $Self->{StatsObject} = $Kernel::OM->Get('Kernel::System::Stats');
 
     # define file prefix for stats
     $Self->{FilePrefix} = 'ITSMStats';
@@ -157,7 +134,7 @@ sub CodeInstall {
     );
 
     # install stats
-    $Self->{StatsObject}->StatsInstall(
+    $Kernel::OM->Get('Kernel::System::Stats')->StatsInstall(
         FilePrefix => $Self->{FilePrefix},
     );
 
@@ -206,7 +183,7 @@ sub CodeReinstall {
     );
 
     # install stats
-    $Self->{StatsObject}->StatsInstall(
+    $Kernel::OM->Get('Kernel::System::Stats')->StatsInstall(
         FilePrefix => $Self->{FilePrefix},
     );
 
@@ -231,7 +208,7 @@ sub CodeUpgrade {
     my ( $Self, %Param ) = @_;
 
     # install stats
-    $Self->{StatsObject}->StatsInstall(
+    $Kernel::OM->Get('Kernel::System::Stats')->StatsInstall(
         FilePrefix => $Self->{FilePrefix},
     );
 
@@ -361,8 +338,8 @@ sub _MigrateFreeTextToDynamicFields {
         for my $Number ( 1 .. 500 ) {
 
             # get freekey and freetext config
-            my $FreeKeyConfig  = $Self->{ConfigObject}->Get( $Type . 'FreeKey' . $Number );
-            my $FreeTextConfig = $Self->{ConfigObject}->Get( $Type . 'FreeText' . $Number );
+            my $FreeKeyConfig  = $Kernel::OM->Get('Kernel::Config')->Get( $Type . 'FreeKey' . $Number );
+            my $FreeTextConfig = $Kernel::OM->Get('Kernel::Config')->Get( $Type . 'FreeText' . $Number );
 
             # only if a KEY config exists
             next FREETEXTNUMBER if !$FreeKeyConfig;
@@ -387,7 +364,7 @@ sub _MigrateFreeTextToDynamicFields {
                     FieldType  => 'Dropdown',
                     ObjectType => 'ITSM' . $Type,
                     Config     => {
-                        DefaultValue => $Self->{ConfigObject}
+                        DefaultValue => $Kernel::OM->Get('Kernel::Config')
                             ->Get( $Type . 'FreeKey' . $Number . '::DefaultSelection' ) || '',
                         Link               => '',
                         PossibleNone       => $PossibleNone,
@@ -425,10 +402,10 @@ sub _MigrateFreeTextToDynamicFields {
                     FieldType  => 'Dropdown',
                     ObjectType => 'ITSM' . $Type,
                     Config     => {
-                        DefaultValue => $Self->{ConfigObject}
+                        DefaultValue => $Kernel::OM->Get('Kernel::Config')
                             ->Get( $Type . 'FreeText' . $Number . '::DefaultSelection' ) || '',
                         Link =>
-                            $Self->{ConfigObject}->Get( $Type . 'FreeText' . $Number . '::Link' )
+                            $Kernel::OM->Get('Kernel::Config')->Get( $Type . 'FreeText' . $Number . '::Link' )
                             || '',
                         PossibleNone       => $PossibleNone,
                         PossibleValues     => $FreeTextConfig,
@@ -446,10 +423,10 @@ sub _MigrateFreeTextToDynamicFields {
                     FieldType  => 'Text',
                     ObjectType => 'ITSM' . $Type,
                     Config     => {
-                        DefaultValue => $Self->{ConfigObject}
+                        DefaultValue => $Kernel::OM->Get('Kernel::Config')
                             ->Get( $Type . 'FreeText' . $Number . '::DefaultSelection' ) || '',
                         Link =>
-                            $Self->{ConfigObject}->Get( $Type . 'FreeText' . $Number . '::Link' )
+                            $Kernel::OM->Get('Kernel::Config')->Get( $Type . 'FreeText' . $Number . '::Link' )
                             || '',
                     },
                 };
@@ -458,7 +435,7 @@ sub _MigrateFreeTextToDynamicFields {
     }
 
     # get all current dynamic fields
-    my $DynamicFieldList = $Self->{DynamicFieldObject}->DynamicFieldListGet(
+    my $DynamicFieldList = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldListGet(
         Valid => 0,
     );
 
@@ -475,7 +452,7 @@ sub _MigrateFreeTextToDynamicFields {
     }
 
     # get the valid id for "valid"
-    my $ValidID = $Self->{ValidObject}->ValidLookup(
+    my $ValidID = $Kernel::OM->Get('Kernel::System::Valid')->ValidLookup(
         Valid => 'valid',
     );
 
@@ -484,13 +461,13 @@ sub _MigrateFreeTextToDynamicFields {
         = 'DynamicField::EventModulePost###100-UpdateITSMChangeConditions';
 
     # get the original sysconfig setting for the event module registration
-    my %EventModuleConfig = $Self->{SysConfigObject}->ConfigItemGet(
+    my %EventModuleConfig = $Kernel::OM->Get('Kernel::System::SysConfig')->ConfigItemGet(
         Name => $EventModuleSysconfigSetting,
     );
 
     # deactivate the sysconfig setting to prevent event module to react on
     # adding of dynamic fields during the migration
-    $Self->{SysConfigObject}->ConfigItemUpdate(
+    $Kernel::OM->Get('Kernel::System::SysConfig')->ConfigItemUpdate(
         Valid => 0,
         Key   => $EventModuleSysconfigSetting,
         Value => \%EventModuleConfig,
@@ -500,7 +477,7 @@ sub _MigrateFreeTextToDynamicFields {
     for my $DynamicField (@DynamicFields) {
 
         # create a new field
-        my $FieldID = $Self->{DynamicFieldObject}->DynamicFieldAdd(
+        my $FieldID = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldAdd(
             Name       => $DynamicField->{Name},
             Label      => $DynamicField->{Label},
             FieldOrder => $NextOrderNumber,
@@ -517,7 +494,7 @@ sub _MigrateFreeTextToDynamicFields {
     }
 
     # re-activate the sysconfig setting again
-    $Self->{SysConfigObject}->ConfigItemUpdate(
+    $Kernel::OM->Get('Kernel::System::SysConfig')->ConfigItemUpdate(
         Valid => 1,
         Key   => $EventModuleSysconfigSetting,
         Value => \%EventModuleConfig,
@@ -528,7 +505,7 @@ sub _MigrateFreeTextToDynamicFields {
     # ---------------------------------------------------------------------------------------------
 
     # get the list of change and workorder dynamic fields
-    $DynamicFieldList = $Self->{DynamicFieldObject}->DynamicFieldListGet(
+    $DynamicFieldList = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldListGet(
         Valid => 1,
         ObjectType => [ 'ITSMChange', 'ITSMWorkOrder' ],
     );
@@ -561,7 +538,7 @@ sub _MigrateFreeTextToDynamicFields {
         }
 
         # get the old data
-        next DYNAMICFIELD if !$Self->{DBObject}->Prepare(
+        next DYNAMICFIELD if !$Kernel::OM->Get('Kernel::System::DB')->Prepare(
             SQL => "SELECT $ColumnName, field_value
                     FROM $TableName
                     WHERE field_id = ?",
@@ -570,7 +547,7 @@ sub _MigrateFreeTextToDynamicFields {
 
         # fetch the result
         my @Data;
-        while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        while ( my @Row = $Kernel::OM->Get('Kernel::System::DB')->FetchrowArray() ) {
             push @Data, {
                 ObjectID => $Row[0],
                 Value    => $Row[1],
@@ -581,7 +558,7 @@ sub _MigrateFreeTextToDynamicFields {
         RECORD:
         for my $Record (@Data) {
 
-            next RECORD if !$Self->{DBObject}->Do(
+            next RECORD if !$Kernel::OM->Get('Kernel::System::DB')->Do(
                 SQL => 'INSERT INTO dynamic_field_value
                         (field_id, object_id, value_text)
                         VALUES (?, ?, ?)',
@@ -605,7 +582,7 @@ sub _MigrateFreeTextToDynamicFields {
     }
 
     # get all condition attributes
-    my $ConditionAttributes = $Self->{ConditionObject}->AttributeList(
+    my $ConditionAttributes = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMCondition')->AttributeList(
         UserID => 1,
     );
 
@@ -621,7 +598,7 @@ sub _MigrateFreeTextToDynamicFields {
         # rename the attribute (add a prefix to the attribute)
         if ( $DynamicFieldName{$Attribute} ) {
 
-            my $Success = $Self->{ConditionObject}->AttributeUpdate(
+            my $Success = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMCondition')->AttributeUpdate(
                 AttributeID => $Attribute2ID{$Attribute},
                 Name        => 'DynamicField_' . $Attribute,
                 UserID      => 1,
@@ -632,7 +609,7 @@ sub _MigrateFreeTextToDynamicFields {
         else {
 
             # delete this attribute from expression table
-            next ATTRIBUTE if !$Self->{DBObject}->Do(
+            next ATTRIBUTE if !$Kernel::OM->Get('Kernel::System::DB')->Do(
                 SQL => 'DELETE FROM condition_expression
                         WHERE attribute_id = ?',
                 Bind => [
@@ -641,7 +618,7 @@ sub _MigrateFreeTextToDynamicFields {
             );
 
             # delete this attribute from action table
-            next ATTRIBUTE if !$Self->{DBObject}->Do(
+            next ATTRIBUTE if !$Kernel::OM->Get('Kernel::System::DB')->Do(
                 SQL => 'DELETE FROM condition_action
                         WHERE attribute_id = ?',
                 Bind => [
@@ -650,7 +627,7 @@ sub _MigrateFreeTextToDynamicFields {
             );
 
             # delete this attribute from attribute table
-            next ATTRIBUTE if !$Self->{DBObject}->Do(
+            next ATTRIBUTE if !$Kernel::OM->Get('Kernel::System::DB')->Do(
                 SQL => 'DELETE FROM condition_attribute
                         WHERE id = ?',
                 Bind => [
@@ -679,7 +656,7 @@ sub _MigrateFreeTextToDynamicFields {
     {
 
         my $FieldType;
-        my $Config = $Self->{ConfigObject}->Get($ConfigName);
+        my $Config = $Kernel::OM->Get('Kernel::Config')->Get($ConfigName);
         if ( $ConfigName =~ m{ AgentITSMWorkOrder }xms ) {
             $FieldType = 'WorkOrderFreeText';
         }
@@ -702,7 +679,7 @@ sub _MigrateFreeTextToDynamicFields {
         next CONFIGNAME if !%NewSetting;
 
         # update the sysconfig
-        my $Success = $Self->{SysConfigObject}->ConfigItemUpdate(
+        my $Success = $Kernel::OM->Get('Kernel::System::SysConfig')->ConfigItemUpdate(
             Valid => 1,
             Key   => $ConfigName . '###DynamicField',
             Value => \%NewSetting,
@@ -724,14 +701,14 @@ sub _MigrateFreeTextToDynamicFields {
     }
 
     # show all change dynamic fields in the change zoom
-    $Self->{SysConfigObject}->ConfigItemUpdate(
+    $Kernel::OM->Get('Kernel::System::SysConfig')->ConfigItemUpdate(
         Valid => 1,
         Key   => 'ITSMChange::Frontend::AgentITSMChangeZoom###DynamicField',
         Value => \%ChangeDynamicFieldConfig,
     );
 
     # show all workorder dynamic fields in the workorder zoom
-    $Self->{SysConfigObject}->ConfigItemUpdate(
+    $Kernel::OM->Get('Kernel::System::SysConfig')->ConfigItemUpdate(
         Valid => 1,
         Key   => 'ITSMWorkOrder::Frontend::AgentITSMWorkOrderZoom###DynamicField',
         Value => \%WorkorderDynamicFieldConfig,
@@ -740,7 +717,7 @@ sub _MigrateFreeTextToDynamicFields {
     # ---------------------------------------------------------------------------------------------
     # Delete change and workorder freekey and freetext tables
     # ---------------------------------------------------------------------------------------------
-    my @Drop = $Self->{DBObject}->SQLProcessor(
+    my @Drop = $Kernel::OM->Get('Kernel::System::DB')->SQLProcessor(
         Database => [
 
             # drop table change_freekey
@@ -790,7 +767,7 @@ sub _MigrateFreeTextToDynamicFields {
     );
 
     for my $SQL (@Drop) {
-        $Self->{DBObject}->Do(
+        $Kernel::OM->Get('Kernel::System::DB')->Do(
             SQL => $SQL,
         );
     }
@@ -815,7 +792,7 @@ sub _GroupAdd {
     # check needed stuff
     for my $Argument (qw(Name Description)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -824,13 +801,13 @@ sub _GroupAdd {
     }
 
     # get valid list
-    my %ValidList = $Self->{ValidObject}->ValidList(
+    my %ValidList = $Kernel::OM->Get('Kernel::System::Valid')->ValidList(
         UserID => 1,
     );
     my %ValidListReverse = reverse %ValidList;
 
     # get list of all groups
-    my %GroupList = $Self->{GroupObject}->GroupList();
+    my %GroupList = $Kernel::OM->Get('Kernel::System::Group')->GroupList();
 
     # reverse the group list for easier lookup
     my %GroupListReverse = reverse %GroupList;
@@ -842,13 +819,13 @@ sub _GroupAdd {
     if ($GroupID) {
 
         # get current group data
-        my %GroupData = $Self->{GroupObject}->GroupGet(
+        my %GroupData = $Kernel::OM->Get('Kernel::System::Group')->GroupGet(
             ID     => $GroupID,
             UserID => 1,
         );
 
         # reactivate group
-        $Self->{GroupObject}->GroupUpdate(
+        $Kernel::OM->Get('Kernel::System::Group')->GroupUpdate(
             %GroupData,
             ValidID => $ValidListReverse{valid},
             UserID  => 1,
@@ -859,7 +836,7 @@ sub _GroupAdd {
 
     # add the group
     else {
-        return if !$Self->{GroupObject}->GroupAdd(
+        return if !$Kernel::OM->Get('Kernel::System::Group')->GroupAdd(
             Name    => $Param{Name},
             Comment => $Param{Description},
             ValidID => $ValidListReverse{valid},
@@ -868,13 +845,13 @@ sub _GroupAdd {
     }
 
     # lookup the new group id
-    my $NewGroupID = $Self->{GroupObject}->GroupLookup(
+    my $NewGroupID = $Kernel::OM->Get('Kernel::System::Group')->GroupLookup(
         Group  => $Param{Name},
         UserID => 1,
     );
 
     # add user root to the group
-    $Self->{GroupObject}->GroupMemberAdd(
+    $Kernel::OM->Get('Kernel::System::Group')->GroupMemberAdd(
         GID        => $NewGroupID,
         UID        => 1,
         Permission => {
@@ -906,7 +883,7 @@ sub _GroupDeactivate {
 
     # check needed stuff
     if ( !$Param{Name} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need Name!',
         );
@@ -914,26 +891,26 @@ sub _GroupDeactivate {
     }
 
     # lookup group id
-    my $GroupID = $Self->{GroupObject}->GroupLookup(
+    my $GroupID = $Kernel::OM->Get('Kernel::System::Group')->GroupLookup(
         Group => $Param{Name},
     );
 
     return if !$GroupID;
 
     # get valid list
-    my %ValidList = $Self->{ValidObject}->ValidList(
+    my %ValidList = $Kernel::OM->Get('Kernel::System::Valid')->ValidList(
         UserID => 1,
     );
     my %ValidListReverse = reverse %ValidList;
 
     # get current group data
-    my %GroupData = $Self->{GroupObject}->GroupGet(
+    my %GroupData = $Kernel::OM->Get('Kernel::System::Group')->GroupGet(
         ID     => $GroupID,
         UserID => 1,
     );
 
     # deactivate group
-    $Self->{GroupObject}->GroupUpdate(
+    $Kernel::OM->Get('Kernel::System::Group')->GroupUpdate(
         %GroupData,
         ValidID => $ValidListReverse{invalid},
         UserID  => 1,
@@ -954,7 +931,7 @@ sub _CIPDefaultMatrixSet {
     my ( $Self, %Param ) = @_;
 
     # get current allocation list
-    my $List = $Self->{CIPAllocateObject}->AllocateList(
+    my $List = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMChangeCIPAllocate')->AllocateList(
         UserID => 1,
     );
 
@@ -994,19 +971,19 @@ sub _CIPDefaultMatrixSet {
     $Allocation{'5 very high'}->{'5 very high'} = '5 very high';
 
     # get impact list
-    my $ImpactList = $Self->{GeneralCatalogObject}->ItemList(
+    my $ImpactList = $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemList(
         Class => 'ITSM::ChangeManagement::Impact',
     );
     my %ImpactListReverse = reverse %{$ImpactList};
 
     # get category list
-    my $CategoryList = $Self->{GeneralCatalogObject}->ItemList(
+    my $CategoryList = $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemList(
         Class => 'ITSM::ChangeManagement::Category',
     );
     my %CategoryListReverse = reverse %{$CategoryList};
 
     # get priority list
-    my $PriorityList = $Self->{GeneralCatalogObject}->ItemList(
+    my $PriorityList = $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemList(
         Class => 'ITSM::ChangeManagement::Priority',
     );
     my %PriorityListReverse = reverse %{$PriorityList};
@@ -1040,7 +1017,7 @@ sub _CIPDefaultMatrixSet {
     }
 
     # save the matrix
-    $Self->{CIPAllocateObject}->AllocateUpdate(
+    $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMChangeCIPAllocate')->AllocateUpdate(
         AllocateData => \%AllocationMatrix,
         UserID       => 1,
     );
@@ -1061,14 +1038,14 @@ sub _StateMachineDefaultSet {
 
     # get the change states from the general catalog
     my %Name2ChangeStateID = reverse %{
-        $Self->{GeneralCatalogObject}->ItemList(
+        $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemList(
             Class => 'ITSM::ChangeManagement::Change::State',
             )
     };
 
     # get the workorder states from the general catalog
     my %Name2WorkOrderStateID = reverse %{
-        $Self->{GeneralCatalogObject}->ItemList(
+        $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemList(
             Class => 'ITSM::ChangeManagement::WorkOrder::State',
             )
     };
@@ -1105,7 +1082,7 @@ sub _StateMachineDefaultSet {
         for my $NextState ( @{ $ChangeStateTransitions{$State} } ) {
 
             # add state transition
-            my $TransitionID = $Self->{StateMachineObject}->StateTransitionAdd(
+            my $TransitionID = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMStateMachine')->StateTransitionAdd(
                 StateID     => $Name2ChangeStateID{$State}     || 0,
                 NextStateID => $Name2ChangeStateID{$NextState} || 0,
                 Class       => 'ITSM::ChangeManagement::Change::State',
@@ -1119,7 +1096,7 @@ sub _StateMachineDefaultSet {
         for my $NextState ( @{ $WorkOrderStateTransitions{$State} } ) {
 
             # add state transition
-            my $TransitionID = $Self->{StateMachineObject}->StateTransitionAdd(
+            my $TransitionID = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMStateMachine')->StateTransitionAdd(
                 StateID     => $Name2WorkOrderStateID{$State}     || 0,
                 NextStateID => $Name2WorkOrderStateID{$NextState} || 0,
                 Class       => 'ITSM::ChangeManagement::WorkOrder::State',
@@ -1142,7 +1119,7 @@ sub _LinkDelete {
     my ( $Self, %Param ) = @_;
 
     # get all change object ids
-    my $ChangeIDs = $Self->{ChangeObject}->ChangeList(
+    my $ChangeIDs = $Kernel::OM->Get('Kernel::System::ITSMChange')->ChangeList(
         UserID => 1,
     );
 
@@ -1153,14 +1130,14 @@ sub _LinkDelete {
         for my $ChangeID ( @{$ChangeIDs} ) {
 
             # delete all links to this change
-            $Self->{LinkObject}->LinkDeleteAll(
+            $Kernel::OM->Get('Kernel::System::LinkObject')->LinkDeleteAll(
                 Object => 'ITSMChange',
                 Key    => $ChangeID,
                 UserID => 1,
             );
 
             # get all workorder ids for this change
-            my $WorkOrderIDs = $Self->{WorkOrderObject}->WorkOrderList(
+            my $WorkOrderIDs = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderList(
                 ChangeID => $ChangeID,
                 UserID   => 1,
             );
@@ -1170,7 +1147,7 @@ sub _LinkDelete {
 
             # delete all workorder links
             for my $WorkOrderID ( @{$WorkOrderIDs} ) {
-                $Self->{LinkObject}->LinkDeleteAll(
+                $Kernel::OM->Get('Kernel::System::LinkObject')->LinkDeleteAll(
                     Object => 'ITSMWorkOrder',
                     Key    => $WorkOrderID,
                     UserID => 1,
@@ -1194,21 +1171,21 @@ sub _AttachmentDelete {
     my ( $Self, %Param ) = @_;
 
     # get all change object ids
-    my $ChangeIDs = $Self->{ChangeObject}->ChangeList(
+    my $ChangeIDs = $Kernel::OM->Get('Kernel::System::ITSMChange')->ChangeList(
         UserID => 1,
     );
 
     for my $ChangeID ( @{$ChangeIDs} ) {
 
         # get the list of all change attachments
-        my @ChangeAttachments = $Self->{ChangeObject}->ChangeAttachmentList(
+        my @ChangeAttachments = $Kernel::OM->Get('Kernel::System::ITSMChange')->ChangeAttachmentList(
             ChangeID => $ChangeID,
         );
 
         # delete all change attachments
         for my $Filename (@ChangeAttachments) {
 
-            $Self->{ChangeObject}->ChangeAttachmentDelete(
+            $Kernel::OM->Get('Kernel::System::ITSMChange')->ChangeAttachmentDelete(
                 ChangeID => $ChangeID,
                 Filename => $Filename,
                 UserID   => 1,
@@ -1216,7 +1193,7 @@ sub _AttachmentDelete {
         }
 
         # get all workorder ids for this change
-        my $WorkOrderIDs = $Self->{WorkOrderObject}->WorkOrderList(
+        my $WorkOrderIDs = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderList(
             ChangeID => $ChangeID,
             UserID   => 1,
         );
@@ -1224,14 +1201,14 @@ sub _AttachmentDelete {
         for my $WorkOrderID ( @{$WorkOrderIDs} ) {
 
             # get the list of all workorder attachments
-            my @WorkOrderAttachments = $Self->{WorkOrderObject}->WorkOrderAttachmentList(
+            my @WorkOrderAttachments = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderAttachmentList(
                 WorkOrderID => $WorkOrderID,
             );
 
             # delete all workorder attachments
             for my $Filename (@WorkOrderAttachments) {
 
-                $Self->{WorkOrderObject}->WorkOrderAttachmentDelete(
+                $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderAttachmentDelete(
                     ChangeID       => $ChangeID,
                     WorkOrderID    => $WorkOrderID,
                     Filename       => $Filename,
@@ -1241,14 +1218,14 @@ sub _AttachmentDelete {
             }
 
             # get the list of all workorder report attachments
-            my @ReportAttachments = $Self->{WorkOrderObject}->WorkOrderReportAttachmentList(
+            my @ReportAttachments = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderReportAttachmentList(
                 WorkOrderID => $WorkOrderID,
             );
 
             # delete all workorder report attachments
             for my $Filename (@ReportAttachments) {
 
-                $Self->{WorkOrderObject}->WorkOrderAttachmentDelete(
+                $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderAttachmentDelete(
                     ChangeID       => $ChangeID,
                     WorkOrderID    => $WorkOrderID,
                     Filename       => $Filename,
@@ -1274,7 +1251,7 @@ sub _DynamicFieldsDelete {
     my ( $Self, %Param ) = @_;
 
     # get the list of change and workorder dynamic fields (valid an invalid ones)
-    my $DynamicFieldList = $Self->{DynamicFieldObject}->DynamicFieldListGet(
+    my $DynamicFieldList = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldListGet(
         Valid => 0,
         ObjectType => [ 'ITSMChange', 'ITSMWorkOrder' ],
     );
@@ -1283,7 +1260,7 @@ sub _DynamicFieldsDelete {
     DYNAMICFIELD:
     for my $DynamicField ( @{$DynamicFieldList} ) {
 
-        $Self->{DynamicFieldObject}->DynamicFieldDelete(
+        $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldDelete(
             ID     => $DynamicField->{ID},
             UserID => 1,
         );
@@ -1605,7 +1582,7 @@ sub _AddNotifications {
         # find recipients
         my @RecipientIDs;
         for my $Recipient ( @{ $Notification->{Recipients} } ) {
-            my $RecipientID = $Self->{NotificationObject}->RecipientLookup(
+            my $RecipientID = $Kernel::OM->Get('Kernel::System::ITSMChange::Notification')->RecipientLookup(
                 Name => $Recipient,
             );
 
@@ -1617,10 +1594,10 @@ sub _AddNotifications {
         # get event id
         my $EventID =
             $HistoryTypes{ $Notification->{Event} }
-            || $Self->{HistoryObject}->HistoryTypeLookup( HistoryType => $Notification->{Event} );
+            || $Kernel::OM->Get('Kernel::System::ITSMChange::History')->HistoryTypeLookup( HistoryType => $Notification->{Event} );
 
         # insert notification
-        my $RuleID = $Self->{NotificationObject}->NotificationRuleAdd(
+        my $RuleID = $Kernel::OM->Get('Kernel::System::ITSMChange::Notification')->NotificationRuleAdd(
             %{$Notification},
             EventID      => $EventID,
             RecipientIDs => \@RecipientIDs,
@@ -1677,7 +1654,7 @@ sub _AddNotificationsNewIn_2_0_3 {    ## no critic
         # find recipients
         my @RecipientIDs;
         for my $Recipient ( @{ $Notification->{Recipients} } ) {
-            my $RecipientID = $Self->{NotificationObject}->RecipientLookup(
+            my $RecipientID = $Kernel::OM->Get('Kernel::System::ITSMChange::Notification')->RecipientLookup(
                 Name => $Recipient,
             );
 
@@ -1689,10 +1666,10 @@ sub _AddNotificationsNewIn_2_0_3 {    ## no critic
         # get event id
         my $EventID =
             $HistoryTypes{ $Notification->{Event} }
-            || $Self->{HistoryObject}->HistoryTypeLookup( HistoryType => $Notification->{Event} );
+            || $Kernel::OM->Get('Kernel::System::ITSMChange::History')->HistoryTypeLookup( HistoryType => $Notification->{Event} );
 
         # insert notification
-        my $RuleID = $Self->{NotificationObject}->NotificationRuleAdd(
+        my $RuleID = $Kernel::OM->Get('Kernel::System::ITSMChange::Notification')->NotificationRuleAdd(
             %{$Notification},
             EventID      => $EventID,
             RecipientIDs => \@RecipientIDs,
@@ -3114,7 +3091,7 @@ sub _AddSystemNotifications {
         }
 
         # do the insertion
-        $Self->{DBObject}->Do(
+        $Kernel::OM->Get('Kernel::System::DB')->Do(
             SQL => 'INSERT INTO notifications (notification_type, notification_language, '
                 . 'subject, text, notification_charset, content_type, '
                 . 'create_time, create_by, change_time, change_by) '
@@ -3195,7 +3172,7 @@ sub _AddSystemNotificationsNewIn_2_0_3 {    ## no critic
         }
 
         # do the insertion
-        $Self->{DBObject}->Do(
+        $Kernel::OM->Get('Kernel::System::DB')->Do(
             SQL => 'INSERT INTO notifications (notification_type, notification_language, '
                 . 'subject, text, notification_charset, content_type, '
                 . 'create_time, create_by, change_time, change_by) '
@@ -3403,7 +3380,7 @@ sub _AddSystemNotificationsNewIn_3_2_91 {    ## no critic
         }
 
         # do the insertion
-        $Self->{DBObject}->Do(
+        $Kernel::OM->Get('Kernel::System::DB')->Do(
             SQL => 'INSERT INTO notifications (notification_type, notification_language, '
                 . 'subject, text, notification_charset, content_type, '
                 . 'create_time, create_by, change_time, change_by) '
@@ -3428,7 +3405,7 @@ sub _DeleteTemplates {
     my ( $Self, %Param ) = @_;
 
     # get all templates, also invalid ones
-    my $Templates = $Self->{TemplateObject}->TemplateList(
+    my $Templates = $Kernel::OM->Get('Kernel::System::ITSMChange::Template')->TemplateList(
         Valid  => 0,
         UserID => 1,
     );
@@ -3436,7 +3413,7 @@ sub _DeleteTemplates {
     # delete all templates
     for my $TemplateID ( sort keys %{$Templates} ) {
 
-        my $Success = $Self->{TemplateObject}->TemplateDelete(
+        my $Success = $Kernel::OM->Get('Kernel::System::ITSMChange::Template')->TemplateDelete(
             TemplateID => $TemplateID,
             UserID     => 1,
         );
@@ -3458,7 +3435,7 @@ sub _DeleteSystemNotifications {
     my ($Self) = @_;
 
     # there are notification for agents and customers
-    $Self->{DBObject}->Do(
+    $Kernel::OM->Get('Kernel::System::DB')->Do(
         SQL => 'DELETE FROM notifications '
             . 'WHERE notification_type LIKE "Agent::Change::%" '
             . 'OR notification_type LIKE "Agent::WorkOrder::%" '
