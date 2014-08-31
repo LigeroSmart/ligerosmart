@@ -12,8 +12,6 @@ package Kernel::System::ITSMChange::ITSMStateMachine;
 use strict;
 use warnings;
 
-use Kernel::System::GeneralCatalog;
-
 our @ObjectDependencies = (
     'Kernel::Config',
     'Kernel::System::Cache',
