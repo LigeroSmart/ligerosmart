@@ -827,6 +827,7 @@
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::ITSMChangeOverviewSmall</Item>
                 <Item Key="Name">Small</Item>
+                <Item Key="NameShort">S</Item>
                 <Item Key="PageShown">25</Item>
             </Hash>
         </Setting>
@@ -839,6 +840,7 @@
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::ITSMTemplateOverviewSmall</Item>
                 <Item Key="Name">Small</Item>
+                <Item Key="NameShort">S</Item>
                 <Item Key="PageShown">25</Item>
             </Hash>
         </Setting>
