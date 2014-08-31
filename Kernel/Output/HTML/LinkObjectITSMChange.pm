@@ -61,7 +61,7 @@ sub new {
     };
 
     # get config
-    $Self->{ChangeHook} = $$Kernel::OM->Get('Kernel::Config')->Get('ITSMChange::Hook');
+    $Self->{ChangeHook} = $Kernel::OM->Get('Kernel::Config')->Get('ITSMChange::Hook');
 
     return $Self;
 }
