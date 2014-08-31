@@ -828,8 +828,6 @@
                 <Item Key="Module">Kernel::Output::HTML::ITSMChangeOverviewSmall</Item>
                 <Item Key="Name">Small</Item>
                 <Item Key="PageShown">25</Item>
-                <Item Key="Image">overviewsmall.png</Item>
-                <Item Key="ImageSelected">overviewsmall-selected.png</Item>
             </Hash>
         </Setting>
     </ConfigItem>
@@ -842,8 +840,6 @@
                 <Item Key="Module">Kernel::Output::HTML::ITSMTemplateOverviewSmall</Item>
                 <Item Key="Name">Small</Item>
                 <Item Key="PageShown">25</Item>
-                <Item Key="Image">overviewsmall.png</Item>
-                <Item Key="ImageSelected">overviewsmall-selected.png</Item>
             </Hash>
         </Setting>
     </ConfigItem>
