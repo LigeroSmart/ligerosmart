@@ -16,15 +16,6 @@ use vars qw($Self);
 use Data::Dumper;
 use List::Util qw(max);
 
-use Kernel::System::User;
-use Kernel::System::Group;
-use Kernel::System::CustomerUser;
-use Kernel::System::ITSMChange;
-use Kernel::System::ITSMChange::ITSMCondition;
-use Kernel::System::ITSMChange::ITSMWorkOrder;
-use Kernel::System::ITSMChange::Template;
-use Kernel::System::Valid;
-
 # ---------------------------------------------------------------------------- #
 # Note for developers:
 # Please note that the keys in %ChangeDefinitions (resp. WorkOrderDefinitions )
@@ -37,20 +28,14 @@ use Kernel::System::Valid;
 my $TestCount = 1;
 
 # create common objects
-$Self->{UserObject}         = Kernel::System::User->new( %{$Self} );
-$Self->{GroupObject}        = Kernel::System::Group->new( %{$Self} );
-$Self->{CustomerUserObject} = Kernel::System::CustomerUser->new( %{$Self} );
-$Self->{ValidObject}        = Kernel::System::Valid->new( %{$Self} );
-
-# create some objects as local variables to prevent error messages
-# about missing LogObject during event transaction mode in object destruction.
-my $ChangeObject    = Kernel::System::ITSMChange->new( %{$Self} );
-my $ConditionObject = Kernel::System::ITSMChange::ITSMCondition->new( %{$Self} );
-my $WorkOrderObject = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
-my $TemplateObject  = Kernel::System::ITSMChange::Template->new( %{$Self} );
-
-# create local objects that don't clobber $Self
-my $HTMLUtilsObject = Kernel::System::HTMLUtils->new( %{$Self} );
+my $ConfigObject       = $Kernel::OM->Get('Kernel::Config');
+my $CustomerUserObject = $Kernel::OM->Get('Kernel::System::CustomerUser');
+my $ValidObject        = $Kernel::OM->Get('Kernel::System::Valid');
+my $ChangeObject       = $Kernel::OM->Get('Kernel::System::ITSMChange');
+my $ConditionObject    = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMCondition');
+my $WorkOrderObject    = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder');
+my $TemplateObject     = $Kernel::OM->Get('Kernel::System::ITSMChange::Template');
+my $HTMLUtilsObject    = $Kernel::OM->Get('Kernel::System::HTMLUtils');
 
 # test if change object was created successfully
 $Self->True(
@@ -69,11 +54,11 @@ $Self->Is(
 my @CustomerUserIDs;    # a list of existing and valid customer user ids, a list of strings
 
 # disable email checks to create new user
-my $CheckEmailAddressesOrg = $Self->{ConfigObject}->Get('CheckEmailAddresses');
+my $CheckEmailAddressesOrg = $ConfigObject->Get('CheckEmailAddresses');
 if ( !defined $CheckEmailAddressesOrg ) {
     $CheckEmailAddressesOrg = 1;
 }
-$Self->{ConfigObject}->Set(
+$ConfigObject->Set(
     Key   => 'CheckEmailAddresses',
     Value => 0,
 );
@@ -81,7 +66,7 @@ $Self->{ConfigObject}->Set(
 for my $Counter ( 1 .. 3 ) {
 
     # create new customers for the tests
-    my $CustomerUserID = $Self->{CustomerUserObject}->CustomerUserAdd(
+    my $CustomerUserID = $CustomerUserObject->CustomerUserAdd(
         Source         => 'CustomerUser',
         UserFirstname  => 'ITSMChangeCustomer' . $Counter,
         UserLastname   => 'UnitTestCustomer',
@@ -91,7 +76,7 @@ for my $Counter ( 1 .. 3 ) {
             . $Counter
             . int( rand 1_000_000 )
             . '@localhost',
-        ValidID => $Self->{ValidObject}->ValidLookup( Valid => 'valid' ),
+        ValidID => $ValidObject->ValidLookup( Valid => 'valid' ),
         UserID  => 1,
     );
     push @CustomerUserIDs, $CustomerUserID;
@@ -382,7 +367,7 @@ my %ConditionDefinitions = (
             ChangeID              => $CreatedChangeID{BaseChange},
             Name                  => 'Simple Condition - ' . $UniqueSignature,
             ExpressionConjunction => 'all',
-            ValidID               => $Self->{ValidObject}->ValidLookup( Valid => 'valid' ),
+            ValidID               => $ValidObject->ValidLookup( Valid => 'valid' ),
             UserID                => 1,
         },
         ExpressionAdd => {
@@ -475,56 +460,56 @@ my %TemplateDefinitions = (
     BaseChange => {
         Name     => 'Base Change Template - ' . $UniqueSignature,
         Type     => 'ITSMChange',
-        ValidID  => $Self->{ValidObject}->ValidLookup( Valid => 'valid' ),
+        ValidID  => $ValidObject->ValidLookup( Valid => 'valid' ),
         ChangeID => $CreatedChangeID{BaseChange},
         UserID   => 1,
     },
     UnicodeChange => {
         Name     => 'Unicode Change Template - ' . $UniqueSignature,
         Type     => 'ITSMChange',
-        ValidID  => $Self->{ValidObject}->ValidLookup( Valid => 'valid' ),
+        ValidID  => $ValidObject->ValidLookup( Valid => 'valid' ),
         ChangeID => $CreatedChangeID{UnicodeChange},
         UserID   => 1,
     },
     EntityChange => {
         Name     => 'Entity Change Template - ' . $UniqueSignature,
         Type     => 'ITSMChange',
-        ValidID  => $Self->{ValidObject}->ValidLookup( Valid => 'valid' ),
+        ValidID  => $ValidObject->ValidLookup( Valid => 'valid' ),
         ChangeID => $CreatedChangeID{EntityChange},
         UserID   => 1,
     },
     ASCIIWorkOrder => {
         Name        => 'Ascii WorkOrder Template - ' . $UniqueSignature,
         Type        => 'ITSMWorkOrder',
-        ValidID     => $Self->{ValidObject}->ValidLookup( Valid => 'valid' ),
+        ValidID     => $ValidObject->ValidLookup( Valid => 'valid' ),
         WorkOrderID => $CreatedWorkOrderID{ASCIIWorkOrder},
         UserID      => 1,
     },
     UmlautsWorkOrder => {
         Name        => 'Umlauts WorkOrder Template - ' . $UniqueSignature,
         Type        => 'ITSMWorkOrder',
-        ValidID     => $Self->{ValidObject}->ValidLookup( Valid => 'valid' ),
+        ValidID     => $ValidObject->ValidLookup( Valid => 'valid' ),
         WorkOrderID => $CreatedWorkOrderID{UmlautsWorkOrder},
         UserID      => 1,
     },
     UnicodeWorkOrder => {
         Name        => 'Unicode WorkOrder Template - ' . $UniqueSignature,
         Type        => 'ITSMWorkOrder',
-        ValidID     => $Self->{ValidObject}->ValidLookup( Valid => 'valid' ),
+        ValidID     => $ValidObject->ValidLookup( Valid => 'valid' ),
         WorkOrderID => $CreatedWorkOrderID{UnicodeWorkOrder},
         UserID      => 1,
     },
     CABCustomerAgent => {
         Name     => 'Customer and Agent CAB Template - ' . $UniqueSignature,
         Type     => 'CAB',
-        ValidID  => $Self->{ValidObject}->ValidLookup( Valid => 'valid' ),
+        ValidID  => $ValidObject->ValidLookup( Valid => 'valid' ),
         ChangeID => $CreatedChangeID{BaseChange},
         UserID   => 1,
     },
     SimpleCondition => {
         Name        => 'Simple Condition Template - ' . $UniqueSignature,
         Type        => 'ITSMCondition',
-        ValidID     => $Self->{ValidObject}->ValidLookup( Valid => 'valid' ),
+        ValidID     => $ValidObject->ValidLookup( Valid => 'valid' ),
         ConditionID => $CreatedConditionID{SimpleCondition},
         UserID      => 1,
     },
@@ -883,7 +868,7 @@ my %NewValues;
 # ------------------------------------------------------------ #
 
 # restore original email check param
-$Self->{ConfigObject}->Set(
+$ConfigObject->Set(
     Key   => 'CheckEmailAddresses',
     Value => $CheckEmailAddressesOrg,
 );

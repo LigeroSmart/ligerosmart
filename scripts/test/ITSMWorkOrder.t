@@ -16,46 +16,39 @@ use vars qw($Self);
 use Data::Dumper;
 use List::Util qw(max);
 
-use Kernel::System::DynamicField;
-use Kernel::System::User;
-use Kernel::System::Group;
-use Kernel::System::Valid;
-use Kernel::System::GeneralCatalog;
-use Kernel::System::ITSMChange;
-use Kernel::System::ITSMChange::ITSMWorkOrder;
-
 # ------------------------------------------------------------ #
 # make preparations
 # ------------------------------------------------------------ #
 my $TestCount = 1;
 
 # create common objects
-$Self->{DynamicFieldObject}   = Kernel::System::DynamicField->new( %{$Self} );
-$Self->{UserObject}           = Kernel::System::User->new( %{$Self} );
-$Self->{GroupObject}          = Kernel::System::Group->new( %{$Self} );
-$Self->{ValidObject}          = Kernel::System::Valid->new( %{$Self} );
-$Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new( %{$Self} );
-$Self->{ChangeObject}         = Kernel::System::ITSMChange->new( %{$Self} );
-$Self->{WorkOrderObject}      = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
+my $ConfigObject         = $Kernel::OM->Get('Kernel::Config');
+my $DynamicFieldObject   = $Kernel::OM->Get('Kernel::System::DynamicField');
+my $UserObject           = $Kernel::OM->Get('Kernel::System::User');
+my $GroupObject          = $Kernel::OM->Get('Kernel::System::Group');
+my $ValidObject          = $Kernel::OM->Get('Kernel::System::Valid');
+my $GeneralCatalogObject = $Kernel::OM->Get('Kernel::System::GeneralCatalog');
+my $ChangeObject         = $Kernel::OM->Get('Kernel::System::ITSMChange');
+my $WorkOrderObject      = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder');
 
 # test if workorder object was created successfully
 $Self->True(
-    $Self->{WorkOrderObject},
+    $WorkOrderObject,
     "Test " . $TestCount++ . ' - construction of workorder object',
 );
 $Self->Is(
-    ref $Self->{WorkOrderObject},
+    ref $WorkOrderObject,
     'Kernel::System::ITSMChange::ITSMWorkOrder',
     "Test " . $TestCount++ . ' - class of workorder object',
 );
 
 # test if change object was created successfully
 $Self->True(
-    $Self->{ChangeObject},
+    $ChangeObject,
     "Test " . $TestCount++ . ' - construction of change object',
 );
 $Self->Is(
-    ref $Self->{ChangeObject},
+    ref $ChangeObject,
     'Kernel::System::ITSMChange',
     "Test " . $TestCount++ . ' - class of change object',
 );
@@ -68,11 +61,11 @@ my @InvalidUserIDs;        # a list of existing but invalid user ids
 my @NonExistingUserIDs;    # a list of non-existion user ids
 
 # disable email checks to create new user
-my $CheckEmailAddressesOrg = $Self->{ConfigObject}->Get('CheckEmailAddresses');
+my $CheckEmailAddressesOrg = $ConfigObject->Get('CheckEmailAddresses');
 if ( !defined $CheckEmailAddressesOrg ) {
     $CheckEmailAddressesOrg = 1;
 }
-$Self->{ConfigObject}->Set(
+$ConfigObject->Set(
     Key   => 'CheckEmailAddresses',
     Value => 0,
 );
@@ -80,12 +73,12 @@ $Self->{ConfigObject}->Set(
 for my $Counter ( 1 .. 3 ) {
 
     # create new users for the tests
-    my $UserID = $Self->{UserObject}->UserAdd(
+    my $UserID = $UserObject->UserAdd(
         UserFirstname => 'ITSMChange::ITSMWorkOrder' . $Counter,
         UserLastname  => 'UnitTest',
         UserLogin     => 'UnitTest-ITSMChange::ITSMWorkOrder-' . $Counter . int rand 1_000_000,
         UserEmail     => 'UnitTest-ITSMChange::ITSMWorkOrder-' . $Counter . '@localhost',
-        ValidID       => $Self->{ValidObject}->ValidLookup( Valid => 'valid' ),
+        ValidID       => $ValidObject->ValidLookup( Valid => 'valid' ),
         ChangeUserID  => 1,
     );
     push @UserIDs, $UserID;
@@ -103,7 +96,7 @@ for ( 1 .. 2 ) {
         my $TempNonExistingUserID = int rand 1_000_000;
 
         # check if random user id exists already
-        my %UserData = $Self->{UserObject}->GetUserData(
+        my %UserData = $UserObject->GetUserData(
             UserID => $TempNonExistingUserID,
         );
         next LPC if %UserData;
@@ -115,30 +108,30 @@ for ( 1 .. 2 ) {
 }
 
 # set 3rd user invalid
-$Self->{UserObject}->UserUpdate(
-    $Self->{UserObject}->GetUserData(
+$UserObject->UserUpdate(
+    $UserObject->GetUserData(
         UserID => $UserIDs[2],
     ),
-    ValidID => $Self->{ValidObject}->ValidLookup( Valid => 'invalid' ),
+    ValidID => $ValidObject->ValidLookup( Valid => 'invalid' ),
     ChangeUserID => 1,
 );
 push @InvalidUserIDs, pop @UserIDs;
 
 # restore original email check param
-$Self->{ConfigObject}->Set(
+$ConfigObject->Set(
     Key   => 'CheckEmailAddresses',
     Value => $CheckEmailAddressesOrg,
 );
 
 # turn off SendNotifications, in order to avoid a lot of useless mails
-my $SendNotificationsOrg = $Self->{ConfigObject}->Get('ITSMChange::SendNotifcations');
-$Self->{ConfigObject}->Set(
+my $SendNotificationsOrg = $ConfigObject->Get('ITSMChange::SendNotifcations');
+$ConfigObject->Set(
     Key   => 'ITSMChange::SendNotifications',
     Value => 0,
 );
 
 # save original dynamic field configuration
-my $OriginalDynamicFields = $Self->{DynamicFieldObject}->DynamicFieldListGet(
+my $OriginalDynamicFields = $DynamicFieldObject->DynamicFieldListGet(
     Valid => 0,
 );
 
@@ -204,7 +197,7 @@ my @DynamicFieldIDs;
 for my $Test (@DynamicFields) {
 
     # add dynamic field
-    my $DynamicFieldID = $Self->{DynamicFieldObject}->DynamicFieldAdd(
+    my $DynamicFieldID = $DynamicFieldObject->DynamicFieldAdd(
         %{$Test},
     );
 
@@ -247,7 +240,7 @@ my @ObjectMethods = qw(
 # check if subs are available
 for my $ObjectMethod (@ObjectMethods) {
     $Self->True(
-        $Self->{WorkOrderObject}->can($ObjectMethod),
+        $WorkOrderObject->can($ObjectMethod),
         "Test " . $TestCount++ . " - check 'can $ObjectMethod'"
     );
 }
@@ -268,7 +261,7 @@ my @DefaultWorkOrderStates = (
 
 # get item list of the workorder states with swapped keys and values
 my %WorkOrderStateID2Name = %{
-    $Self->{GeneralCatalogObject}->ItemList(
+    $GeneralCatalogObject->ItemList(
         Class => 'ITSM::ChangeManagement::WorkOrder::State',
         ) || {}
 };
@@ -291,7 +284,7 @@ for my $DefaultWorkOrderState (@DefaultWorkOrderStates) {
 for my $State (@DefaultWorkOrderStates) {
 
     # look up the state name
-    my $LookedUpStateID = $Self->{WorkOrderObject}->WorkOrderStateLookup(
+    my $LookedUpStateID = $WorkOrderObject->WorkOrderStateLookup(
         WorkOrderState => $State,
     );
 
@@ -302,7 +295,7 @@ for my $State (@DefaultWorkOrderStates) {
     );
 
     # do the reverse lookup
-    my $LookedUpState = $Self->{WorkOrderObject}->WorkOrderStateLookup(
+    my $LookedUpState = $WorkOrderObject->WorkOrderStateLookup(
         WorkOrderStateID => $LookedUpStateID,
     );
 
@@ -314,14 +307,14 @@ for my $State (@DefaultWorkOrderStates) {
 }
 
 # now some param checks
-my $LookupOK = $Self->{WorkOrderObject}->WorkOrderStateLookup();
+my $LookupOK = $WorkOrderObject->WorkOrderStateLookup();
 
 $Self->False(
     $LookupOK,
     'No params passed to WorkOrderStateLookup()',
 );
 
-$LookupOK = $Self->{WorkOrderObject}->WorkOrderStateLookup(
+$LookupOK = $WorkOrderObject->WorkOrderStateLookup(
     WorkOrderState   => 'approved',
     WorkOrderStateID => 2,
 );
@@ -331,7 +324,7 @@ $Self->False(
     'Exclusive params passed to WorkOrderStateLookup()',
 );
 
-$LookupOK = $Self->{WorkOrderObject}->WorkOrderStateLookup(
+$LookupOK = $WorkOrderObject->WorkOrderStateLookup(
     State => 'approved',
 );
 
@@ -340,7 +333,7 @@ $Self->False(
     "Incorrect param 'State' passed to WorkOrderStateLookup()",
 );
 
-$LookupOK = $Self->{WorkOrderObject}->WorkOrderStateLookup(
+$LookupOK = $WorkOrderObject->WorkOrderStateLookup(
     StateID => 2,
 );
 
@@ -364,7 +357,7 @@ my @DefaultWorkOrderTypes = (
 
 # get class list with swapped keys and values
 my %WorkOrderTypeID2Name = %{
-    $Self->{GeneralCatalogObject}->ItemList(
+    $GeneralCatalogObject->ItemList(
         Class => 'ITSM::ChangeManagement::WorkOrder::Type',
         ) || {}
 };
@@ -381,7 +374,7 @@ for my $DefaultWorkOrderType (@DefaultWorkOrderTypes) {
 
 # test lookup method
 for my $DefaultWorkOrderType (@DefaultWorkOrderTypes) {
-    my $TypeID = $Self->{WorkOrderObject}->WorkOrderTypeLookup(
+    my $TypeID = $WorkOrderObject->WorkOrderTypeLookup(
         WorkOrderType => $DefaultWorkOrderType,
     );
 
@@ -391,7 +384,7 @@ for my $DefaultWorkOrderType (@DefaultWorkOrderTypes) {
         "Lookup $DefaultWorkOrderType",
     );
 
-    my $TypeName = $Self->{WorkOrderObject}->WorkOrderTypeLookup(
+    my $TypeName = $WorkOrderObject->WorkOrderTypeLookup(
         WorkOrderTypeID => $TypeID,
     );
 
@@ -403,7 +396,7 @@ for my $DefaultWorkOrderType (@DefaultWorkOrderTypes) {
 }
 
 # test the method WorkOrderTypeList(). It should return a list of all types.
-my $TypesListUnderTest = $Self->{WorkOrderObject}->WorkOrderTypeList(
+my $TypesListUnderTest = $WorkOrderObject->WorkOrderTypeList(
     UserID => 1,
 ) || {};
 
@@ -586,7 +579,7 @@ for my $Test (@ChangeTests) {
     if ( $SourceData->{ChangeAdd} ) {
 
         # add the change
-        $ChangeID = $Self->{ChangeObject}->ChangeAdd(
+        $ChangeID = $ChangeObject->ChangeAdd(
             %{ $SourceData->{ChangeAdd} }
         );
 
@@ -606,7 +599,7 @@ for my $Test (@ChangeTests) {
 
         my $ChangeGetReferenceData = $ReferenceData->{ChangeGet};
 
-        my $ChangeData = $Self->{ChangeObject}->ChangeGet(
+        my $ChangeData = $ChangeObject->ChangeGet(
             ChangeID => $ChangeID,
             UserID   => 1,
         );
@@ -2039,7 +2032,7 @@ for my $Test (@WorkOrderTests) {
     if ( $SourceData->{WorkOrderAdd} ) {
 
         # add the workorder
-        $WorkOrderID = $Self->{WorkOrderObject}->WorkOrderAdd(
+        $WorkOrderID = $WorkOrderObject->WorkOrderAdd(
             %{ $SourceData->{WorkOrderAdd} },
         );
 
@@ -2081,7 +2074,7 @@ for my $Test (@WorkOrderTests) {
     if ( $SourceData->{WorkOrderUpdate} ) {
 
         # update the workorder
-        my $WorkOrderUpdateSuccess = $Self->{WorkOrderObject}->WorkOrderUpdate(
+        my $WorkOrderUpdateSuccess = $WorkOrderObject->WorkOrderUpdate(
             WorkOrderID => $WorkOrderID,
             %{ $SourceData->{WorkOrderUpdate} },
         );
@@ -2109,7 +2102,7 @@ for my $Test (@WorkOrderTests) {
 
         my $WorkOrderGetReferenceData = $ReferenceData->{WorkOrderGet};
 
-        my $WorkOrderData = $Self->{WorkOrderObject}->WorkOrderGet(
+        my $WorkOrderData = $WorkOrderObject->WorkOrderGet(
             WorkOrderID => $WorkOrderID,
             UserID      => 1,
         );
@@ -2180,14 +2173,14 @@ continue {
 for my $ChangeID ( sort keys %WorkOrderIDForChangeID ) {
 
     # ask the WorkOrder object for a list of workorders
-    my $ListFromWorkOrderObject = $Self->{WorkOrderObject}->WorkOrderList(
+    my $ListFromWorkOrderObject = $WorkOrderObject->WorkOrderList(
         UserID   => 1,
         ChangeID => $ChangeID,
     ) || [];
     my %MapFromWorkOrderObject = map { $_ => 1 } @{$ListFromWorkOrderObject};
 
     # ask the Change object for a list of workorders
-    my $Change = $Self->{ChangeObject}->ChangeGet(
+    my $Change = $ChangeObject->ChangeGet(
         UserID   => 1,
         ChangeID => $ChangeID,
     ) || {};
@@ -2223,7 +2216,7 @@ for my $ChangeID ( sort keys %WorkOrderIDForChangeID ) {
     );
 
     # set efforts test...
-    my $EffortsFromWorkOrderObject = $Self->{WorkOrderObject}->WorkOrderChangeEffortsGet(
+    my $EffortsFromWorkOrderObject = $WorkOrderObject->WorkOrderChangeEffortsGet(
         UserID   => 1,
         ChangeID => $ChangeID,
     );
@@ -2239,7 +2232,7 @@ for my $ChangeID ( sort keys %WorkOrderIDForChangeID ) {
     }
 
     # set time test...
-    my $TimeFromWorkOrderObject = $Self->{WorkOrderObject}->WorkOrderChangeTimeGet(
+    my $TimeFromWorkOrderObject = $WorkOrderObject->WorkOrderChangeTimeGet(
         UserID   => 1,
         ChangeID => $ChangeID,
     );
@@ -2271,7 +2264,7 @@ $Self->Is(
 # define general workorder search tests
 # ------------------------------------------------------------ #
 
-my $StringSearchTestChange = $Self->{ChangeObject}->ChangeGet(
+my $StringSearchTestChange = $ChangeObject->ChangeGet(
     ChangeID => $StringSearchTestID,
     UserID   => 1,
 );
@@ -2778,7 +2771,7 @@ for my $Test (@WorkOrderSearchTests) {
     );
 
     # get a ref to an array of found ids
-    my $WorkOrderIDs = $Self->{WorkOrderObject}->WorkOrderSearch(
+    my $WorkOrderIDs = $WorkOrderObject->WorkOrderSearch(
         %{ $Test->{SearchData} },
         Result   => 'ARRAY',
         UserID   => 1,
@@ -2786,7 +2779,7 @@ for my $Test (@WorkOrderSearchTests) {
     );
 
     # get a count of found ids
-    my $CountWorkOrderIDs = $Self->{WorkOrderObject}->WorkOrderSearch(
+    my $CountWorkOrderIDs = $WorkOrderObject->WorkOrderSearch(
         %{ $Test->{SearchData} },
         Result   => 'COUNT',
         UserID   => 1,
@@ -2873,7 +2866,7 @@ my @WorkOrderIDsForOrderByTests = keys %{ $WorkOrderIDForSearchTest{999999} };
 my @WorkOrdersForOrderByTests;
 
 for my $WorkOrderIDForOrderByTests (@WorkOrderIDsForOrderByTests) {
-    my $WorkOrderData = $Self->{WorkOrderObject}->WorkOrderGet(
+    my $WorkOrderData = $WorkOrderObject->WorkOrderGet(
         WorkOrderID => $WorkOrderIDForOrderByTests,
         UserID      => 1,
     );
@@ -2924,7 +2917,7 @@ for my $OrderByColumn (@OrderByColumns) {
     # dump the reference attribute
     my $ReferenceList = Data::Dumper::Dumper( \@SortedIDs );    ## no critic
 
-    my $SearchResult = $Self->{WorkOrderObject}->WorkOrderSearch(
+    my $SearchResult = $WorkOrderObject->WorkOrderSearch(
         ChangeIDs        => [$OrderByTestID],
         OrderBy          => [$OrderByColumn],
         OrderByDirection => ['Up'],
@@ -2961,7 +2954,7 @@ for my $OrderByColumn (@OrderByColumns) {
     # dump the reference attribute
     my $ReferenceListDown = Data::Dumper::Dumper( \@SortedIDsDown );    ## no critic
 
-    my $SearchResultDown = $Self->{WorkOrderObject}->WorkOrderSearch(
+    my $SearchResultDown = $WorkOrderObject->WorkOrderSearch(
         ChangeIDs => [$OrderByTestID],
         OrderBy   => [$OrderByColumn],
         UserID    => 1,
@@ -2977,7 +2970,7 @@ for my $OrderByColumn (@OrderByColumns) {
     );
 
     # check if WorkOrder.pm handles non-existent OrderByDirection criteria correct
-    my $SearchResultSideways = $Self->{WorkOrderObject}->WorkOrderSearch(
+    my $SearchResultSideways = $WorkOrderObject->WorkOrderSearch(
         WorkOrderTitle   => 'WorkOrderAdd() for OrderBy - Title - ' . $UniqueSignature,
         OrderBy          => [$OrderByColumn],
         OrderByDirection => ['Sideways'],
@@ -3073,7 +3066,7 @@ my @ChangeIDsForSortTest;
 for my $Change (@ChangesForSortTest) {
 
     # create change
-    my $ChangeID = $Self->{ChangeObject}->ChangeAdd( %{ $Change->{Change} } );
+    my $ChangeID = $ChangeObject->ChangeAdd( %{ $Change->{Change} } );
 
     $Self->True(
         $ChangeID,
@@ -3087,7 +3080,7 @@ for my $Change (@ChangesForSortTest) {
     # add the workorders for the change
     my $WorkOrderCount = 1;
     for my $WorkOrder ( @{ $Change->{Workorders} } ) {
-        my $WorkOrderID = $Self->{WorkOrderObject}->WorkOrderAdd(
+        my $WorkOrderID = $WorkOrderObject->WorkOrderAdd(
             ChangeID => $ChangeID,
             %{$WorkOrder},
         );
@@ -3103,7 +3096,7 @@ for my $Change (@ChangesForSortTest) {
     }
 
     # check whether the workorders were added
-    my $ChangeData = $Self->{ChangeObject}->ChangeGet(
+    my $ChangeData = $ChangeObject->ChangeGet(
         ChangeID => $ChangeID,
         UserID   => 1,
     );
@@ -3145,7 +3138,7 @@ for my $OrderByColumn (qw(PlannedStartTime PlannedEndTime ActualStartTime Actual
     my @ResultReferenceAlternative = map { $ChangeIDsForSortTest[$_] } @TestplanAlternative;
 
     # search with direction 'DOWN'
-    my $SearchResult = $Self->{ChangeObject}->ChangeSearch(
+    my $SearchResult = $ChangeObject->ChangeSearch(
         ChangeTitle      => $ChangesTitle,
         OrderBy          => [ $OrderByColumn, 'ChangeID' ],
         OrderByDirection => [ 'Down', 'Up' ],
@@ -3183,7 +3176,7 @@ for my $OrderByColumn (qw(PlannedStartTime PlannedEndTime ActualStartTime Actual
     }
 
     # search with direction 'UP'
-    my $SearchResultUp = $Self->{ChangeObject}->ChangeSearch(
+    my $SearchResultUp = $ChangeObject->ChangeSearch(
         ChangeTitle      => $ChangesTitle,
         OrderBy          => [ $OrderByColumn, 'ChangeID' ],
         OrderByDirection => [ 'Up', 'Down' ],
@@ -3620,7 +3613,7 @@ for my $TSTest (@TimeSearchTests) {
     );
 
     if ( $SourceData->{WorkOrderAdd} ) {
-        $WorkOrderID = $Self->{WorkOrderObject}->WorkOrderAdd(
+        $WorkOrderID = $WorkOrderObject->WorkOrderAdd(
             %{ $SourceData->{WorkOrderAdd} },
             ChangeID => $TimeSearchTestID,
         );
@@ -3636,7 +3629,7 @@ for my $TSTest (@TimeSearchTests) {
 
     my $SearchResult;
     if ( $SourceData->{WorkOrderSearch} ) {
-        $SearchResult = $Self->{WorkOrderObject}->WorkOrderSearch(
+        $SearchResult = $WorkOrderObject->WorkOrderSearch(
             %{ $SourceData->{WorkOrderSearch} },
             ChangeIDs => [$TimeSearchTestID],
         );
@@ -4108,7 +4101,7 @@ for my $WOCTGTest (@WOCTGTests) {
     );
 
     if ( $SourceData->{ChangeAdd} ) {
-        $ChangeID = $Self->{ChangeObject}->ChangeAdd(
+        $ChangeID = $ChangeObject->ChangeAdd(
             %{ $SourceData->{ChangeAdd} },
         );
 
@@ -4123,7 +4116,7 @@ for my $WOCTGTest (@WOCTGTests) {
     }
 
     if ( $SourceData->{WorkOrderAdd} ) {
-        $WorkOrderID = $Self->{WorkOrderObject}->WorkOrderAdd(
+        $WorkOrderID = $WorkOrderObject->WorkOrderAdd(
             %{ $SourceData->{WorkOrderAdd} },
             ChangeID => $ChangeID,
         );
@@ -4144,7 +4137,7 @@ for my $WOCTGTest (@WOCTGTests) {
     }
 
     if ( $ReferenceData->{WorkOrderChangeTimeGet} ) {
-        my $Time = $Self->{WorkOrderObject}->WorkOrderChangeTimeGet(
+        my $Time = $WorkOrderObject->WorkOrderChangeTimeGet(
             %{ $ReferenceData->{WorkOrderChangeTimeGet} },
             ChangeID => $ChangeID,
         );
@@ -4193,7 +4186,7 @@ for my $WOCTGTest (@WOCTGTests) {
 my ($PermissionTestWorkOrderID) = keys %{ $WorkOrderIDForChangeID{$PermissionTestID} };
 
 # get mapping of the group name to the group id
-my %GroupName2ID = reverse $Self->{GroupObject}->GroupList( Valid => 1 );
+my %GroupName2ID = reverse $GroupObject->GroupList( Valid => 1 );
 
 my @PermissionTests = (
 
@@ -4472,7 +4465,7 @@ for my $Test (@PermissionTests) {
     for my $Params ( @{ $SourceData->{GroupMemberAdd} } ) {
 
         # modify the group membership
-        my $Success = $Self->{GroupObject}->GroupMemberAdd(
+        my $Success = $GroupObject->GroupMemberAdd(
             %{$Params},
             UserID => 1,
         );
@@ -4487,8 +4480,8 @@ for my $Test (@PermissionTests) {
         for my $UserIndex ( sort keys %{ $ReferenceData->{Permissions} } ) {
             my $Privs = $ReferenceData->{Permissions}->{$UserIndex};
             for my $Type ( sort keys %{$Privs} ) {
-                $Self->{WorkOrderObject}->{Debug} = 10;
-                my $Access = $Self->{WorkOrderObject}->Permission(
+                $WorkOrderObject->{Debug} = 10;
+                my $Access = $WorkOrderObject->Permission(
                     Type        => $Type,
                     WorkOrderID => $PermissionTestWorkOrderID,
                     UserID      => $UserIDs[$UserIndex],
@@ -4520,19 +4513,19 @@ continue {
 # ------------------------------------------------------------ #
 
 # create change for this test
-my $ChangeIDForPossibleStatesTest = $Self->{ChangeObject}->ChangeAdd(
+my $ChangeIDForPossibleStatesTest = $ChangeObject->ChangeAdd(
     UserID => 1,
 );
 
 # create workorder for this test
-my $WorkOrderIDForPossibleStatesTest = $Self->{WorkOrderObject}->WorkOrderAdd(
+my $WorkOrderIDForPossibleStatesTest = $WorkOrderObject->WorkOrderAdd(
     ChangeID       => $ChangeIDForPossibleStatesTest,
     UserID         => 1,
     WorkOrderState => 'accepted',
 );
 
 # When no WorkOrderID is given WorkOrderPossibleStatesGet() returns a list of all states.
-my $PossibleStates = $Self->{WorkOrderObject}->WorkOrderPossibleStatesGet(
+my $PossibleStates = $WorkOrderObject->WorkOrderPossibleStatesGet(
 
     #    WorkOrderID => $WorkOrderIDForPossibleStatesTest,
     UserID => 1,
@@ -4578,12 +4571,12 @@ push @{ $IDsToDelete{WorkOrder} }, $WorkOrderIDForPossibleStatesTest;
 # ------------------------------------------------------------ #
 
 # create change for this test
-my $ChangeIDForAttachmentTest = $Self->{ChangeObject}->ChangeAdd(
+my $ChangeIDForAttachmentTest = $ChangeObject->ChangeAdd(
     UserID => 1,
 );
 
 # create workorder for this test
-my $WorkOrderIDForAttachmentTest = $Self->{WorkOrderObject}->WorkOrderAdd(
+my $WorkOrderIDForAttachmentTest = $WorkOrderObject->WorkOrderAdd(
     ChangeID       => $ChangeIDForAttachmentTest,
     UserID         => 1,
     WorkOrderState => 'accepted',
@@ -4594,7 +4587,7 @@ push @{ $IDsToDelete{Change} },    $ChangeIDForAttachmentTest;
 push @{ $IDsToDelete{WorkOrder} }, $WorkOrderIDForAttachmentTest;
 
 # verify that initialy no attachment exists
-my @AttachmentList = $Self->{WorkOrderObject}->WorkOrderAttachmentList(
+my @AttachmentList = $WorkOrderObject->WorkOrderAttachmentList(
     WorkOrderID => $WorkOrderIDForAttachmentTest,
     UserID      => 1,
 );
@@ -4639,7 +4632,7 @@ for my $TestFile (@TestFileList) {
     $FileCount{ $TestFile->{AttachmentType} }++;
 
     # add the attachment
-    my $AddOk = $Self->{WorkOrderObject}->WorkOrderAttachmentAdd(
+    my $AddOk = $WorkOrderObject->WorkOrderAttachmentAdd(
         %{$TestFile},
         ChangeID    => $ChangeIDForAttachmentTest,
         WorkOrderID => $WorkOrderIDForAttachmentTest,
@@ -4654,7 +4647,7 @@ for my $TestFile (@TestFileList) {
     if ( $TestFile->{AttachmentType} eq 'WorkOrder' ) {
 
         # get attachment list
-        @AttachmentList = $Self->{WorkOrderObject}->WorkOrderAttachmentList(
+        @AttachmentList = $WorkOrderObject->WorkOrderAttachmentList(
             WorkOrderID => $WorkOrderIDForAttachmentTest,
             UserID      => 1,
         );
@@ -4662,7 +4655,7 @@ for my $TestFile (@TestFileList) {
     elsif ( $TestFile->{AttachmentType} eq 'WorkOrderReport' ) {
 
         # get attachment list
-        @AttachmentList = $Self->{WorkOrderObject}->WorkOrderReportAttachmentList(
+        @AttachmentList = $WorkOrderObject->WorkOrderReportAttachmentList(
             WorkOrderID => $WorkOrderIDForAttachmentTest,
             UserID      => 1,
         );
@@ -4683,7 +4676,7 @@ for my $TestFile (@TestFileList) {
     );
 
     # get the attachment
-    my $Attachment = $Self->{WorkOrderObject}->WorkOrderAttachmentGet(
+    my $Attachment = $WorkOrderObject->WorkOrderAttachmentGet(
         WorkOrderID    => $WorkOrderIDForAttachmentTest,
         Filename       => $TestFile->{Filename},
         AttachmentType => $TestFile->{AttachmentType},
@@ -4703,7 +4696,7 @@ for my $TestFile (@TestFileList) {
     }
 
     # check existence of attachment
-    my $AttachmentExists = $Self->{WorkOrderObject}->WorkOrderAttachmentExists(
+    my $AttachmentExists = $WorkOrderObject->WorkOrderAttachmentExists(
         ChangeID       => $ChangeIDForAttachmentTest,
         WorkOrderID    => $WorkOrderIDForAttachmentTest,
         AttachmentType => $TestFile->{AttachmentType},
@@ -4723,7 +4716,7 @@ for my $TestFile (@TestFileList) {
 
     $FileCount{ $TestFile->{AttachmentType} }++;
 
-    my $DeleteOk = $Self->{WorkOrderObject}->WorkOrderAttachmentDelete(
+    my $DeleteOk = $WorkOrderObject->WorkOrderAttachmentDelete(
         ChangeID       => $ChangeIDForAttachmentTest,
         WorkOrderID    => $WorkOrderIDForAttachmentTest,
         AttachmentType => $TestFile->{AttachmentType},
@@ -4739,7 +4732,7 @@ for my $TestFile (@TestFileList) {
     if ( $TestFile->{AttachmentType} eq 'WorkOrder' ) {
 
         # get attachment list
-        @AttachmentList = $Self->{WorkOrderObject}->WorkOrderAttachmentList(
+        @AttachmentList = $WorkOrderObject->WorkOrderAttachmentList(
             WorkOrderID => $WorkOrderIDForAttachmentTest,
             UserID      => 1,
         );
@@ -4747,7 +4740,7 @@ for my $TestFile (@TestFileList) {
     elsif ( $TestFile->{AttachmentType} eq 'WorkOrderReport' ) {
 
         # get attachment list
-        @AttachmentList = $Self->{WorkOrderObject}->WorkOrderReportAttachmentList(
+        @AttachmentList = $WorkOrderObject->WorkOrderReportAttachmentList(
             WorkOrderID => $WorkOrderIDForAttachmentTest,
             UserID      => 1,
         );
@@ -4759,7 +4752,7 @@ for my $TestFile (@TestFileList) {
         "Attachment ($TestFile->{AttachmentType}) $FileCount{ $TestFile->{AttachmentType} }: number of attachments after deletion",
     );
 
-    my $AttachmentExists = $Self->{WorkOrderObject}->WorkOrderAttachmentExists(
+    my $AttachmentExists = $WorkOrderObject->WorkOrderAttachmentExists(
         ChangeID    => $ChangeIDForAttachmentTest,
         WorkOrderID => $WorkOrderIDForAttachmentTest,
         Filename    => $TestFile->{Filename},
@@ -4776,11 +4769,11 @@ for my $TestFile (@TestFileList) {
 # ------------------------------------------------------------ #
 
 # disable email checks to change the newly added users
-$CheckEmailAddressesOrg = $Self->{ConfigObject}->Get('CheckEmailAddresses');
+$CheckEmailAddressesOrg = $ConfigObject->Get('CheckEmailAddresses');
 if ( !defined $CheckEmailAddressesOrg ) {
     $CheckEmailAddressesOrg = 1;
 }
-$Self->{ConfigObject}->Set(
+$ConfigObject->Set(
     Key   => 'CheckEmailAddresses',
     Value => 0,
 );
@@ -4789,20 +4782,20 @@ $Self->{ConfigObject}->Set(
 for my $UnittestUserID (@UserIDs) {
 
     # get user data
-    my %User = $Self->{UserObject}->GetUserData(
+    my %User = $UserObject->GetUserData(
         UserID => $UnittestUserID,
     );
 
     # update user
-    $Self->{UserObject}->UserUpdate(
+    $UserObject->UserUpdate(
         %User,
-        ValidID => $Self->{ValidObject}->ValidLookup( Valid => 'invalid' ),
+        ValidID => $ValidObject->ValidLookup( Valid => 'invalid' ),
         ChangeUserID => 1,
     );
 }
 
 # restore original email check param
-$Self->{ConfigObject}->Set(
+$ConfigObject->Set(
     Key   => 'CheckEmailAddresses',
     Value => $CheckEmailAddressesOrg,
 );
@@ -4810,7 +4803,7 @@ $Self->{ConfigObject}->Set(
 # delete the test workorders
 my $DeleteTestCount = 1;
 for my $WorkOrderID ( @{ $IDsToDelete{WorkOrder} }, keys %TestedWorkOrderID ) {
-    my $Success = $Self->{WorkOrderObject}->WorkOrderDelete(
+    my $Success = $WorkOrderObject->WorkOrderDelete(
         WorkOrderID => $WorkOrderID,
         UserID      => 1,
     );
@@ -4820,7 +4813,7 @@ for my $WorkOrderID ( @{ $IDsToDelete{WorkOrder} }, keys %TestedWorkOrderID ) {
     );
 
     # double check WorkOrder it is really deleted
-    my $WorkOrderData = $Self->{WorkOrderObject}->WorkOrderGet(
+    my $WorkOrderData = $WorkOrderObject->WorkOrderGet(
         WorkOrderID => $WorkOrderID,
         UserID      => 1,
     );
@@ -4838,7 +4831,7 @@ continue {
 
 # delete the test changes
 for my $ChangeID ( @{ $IDsToDelete{Change} }, keys %TestedChangeID ) {
-    my $DeleteOk = $Self->{ChangeObject}->ChangeDelete(
+    my $DeleteOk = $ChangeObject->ChangeDelete(
         ChangeID => $ChangeID,
         UserID   => 1,
     );
@@ -4848,7 +4841,7 @@ for my $ChangeID ( @{ $IDsToDelete{Change} }, keys %TestedChangeID ) {
     );
 
     # double check if change is really deleted
-    my $ChangeData = $Self->{ChangeObject}->ChangeGet(
+    my $ChangeData = $ChangeObject->ChangeGet(
         ChangeID => $ChangeID,
         UserID   => 1,
         Cache    => 0,
@@ -4866,7 +4859,7 @@ continue {
 # delete dynamic fields that have been created for this test
 for my $DynamicFieldID (@DynamicFieldIDs) {
 
-    my $Success = $Self->{DynamicFieldObject}->DynamicFieldDelete(
+    my $Success = $DynamicFieldObject->DynamicFieldDelete(
         ID     => $DynamicFieldID,
         UserID => 1,
     );
@@ -4880,7 +4873,7 @@ for my $DynamicFieldID (@DynamicFieldIDs) {
 # restore original dynamic fields order
 for my $DynamicField ( @{$OriginalDynamicFields} ) {
 
-    my $Success = $Self->{DynamicFieldObject}->DynamicFieldUpdate(
+    my $Success = $DynamicFieldObject->DynamicFieldUpdate(
         %{$DynamicField},
         Reorder => 0,
         UserID  => 1,
@@ -4894,7 +4887,7 @@ for my $DynamicField ( @{$OriginalDynamicFields} ) {
 }
 
 # set SendNotifications to it's original value
-$Self->{ConfigObject}->Set(
+$ConfigObject->Set(
     Key   => 'ITSMChange::SendNotifications',
     Value => $SendNotificationsOrg,
 );

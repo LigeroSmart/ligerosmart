@@ -13,9 +13,6 @@ use utf8;
 
 use vars qw($Self);
 
-use Kernel::System::ITSMChange::ITSMStateMachine;
-use Kernel::System::GeneralCatalog;
-
 # ------------------------------------------------------------ #
 # make preparations
 # ------------------------------------------------------------ #
@@ -23,16 +20,16 @@ use Kernel::System::GeneralCatalog;
 my $TestCount = 1;
 
 # create common objects
-$Self->{StateMachineObject}   = Kernel::System::ITSMChange::ITSMStateMachine->new( %{$Self} );
-$Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new( %{$Self} );
+my $StateMachineObject   = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMStateMachine');
+my $GeneralCatalogObject = $Kernel::OM->Get('Kernel::System::GeneralCatalog');
 
 # test if statemachine object was created successfully
 $Self->True(
-    $Self->{StateMachineObject},
+    $StateMachineObject,
     'Test ' . $TestCount++ . ' - construction of statemachine object',
 );
 $Self->Is(
-    ref $Self->{StateMachineObject},
+    ref $StateMachineObject,
     'Kernel::System::ITSMChange::ITSMStateMachine',
     'Test ' . $TestCount++ . ' - class of statemachine object',
 );
@@ -58,7 +55,7 @@ $Self->Is(
     # check if subs are available
     for my $ObjectMethod (@ObjectMethods) {
         $Self->True(
-            $Self->{StateMachineObject}->can($ObjectMethod),
+            $StateMachineObject->can($ObjectMethod),
             'Test ' . $TestCount++ . " - check 'can $ObjectMethod'",
         );
     }
@@ -70,7 +67,7 @@ $Self->Is(
 
 # get the change states from the general catalog
 my %Name2ChangeStateID = reverse %{
-    $Self->{GeneralCatalogObject}->ItemList(
+    $GeneralCatalogObject->ItemList(
         Class => 'ITSM::ChangeManagement::Change::State',
         )
 };
@@ -102,7 +99,7 @@ my %DefaultChangeStateTransitions = (
 
 # get the workorder states from the general catalog
 my %Name2WorkOrderStateID = reverse %{
-    $Self->{GeneralCatalogObject}->ItemList(
+    $GeneralCatalogObject->ItemList(
         Class => 'ITSM::ChangeManagement::WorkOrder::State',
         )
 };
@@ -131,7 +128,7 @@ my %DefaultWorkOrderStateTransitions = (
 {
 
     # get next end states for 'approved'
-    my $NextEndStateIDsRef = $Self->{StateMachineObject}->StateTransitionGetEndStates(
+    my $NextEndStateIDsRef = $StateMachineObject->StateTransitionGetEndStates(
         StateID => $Name2ChangeStateID{approved},
         Class   => 'ITSM::ChangeManagement::Change::State',
     );
@@ -156,7 +153,7 @@ my %DefaultWorkOrderStateTransitions = (
     # ---------------------------------------------------------------------------------- #
 
     # get next end states for 'requested'
-    $NextEndStateIDsRef = $Self->{StateMachineObject}->StateTransitionGetEndStates(
+    $NextEndStateIDsRef = $StateMachineObject->StateTransitionGetEndStates(
         StateID => $Name2ChangeStateID{requested},
         Class   => 'ITSM::ChangeManagement::Change::State',
     );
@@ -197,7 +194,7 @@ my %DefaultWorkOrderStateTransitions = (
     # ---------------------------------------------------------------------------------- #
 
     # get next end states for 'retracted'
-    $NextEndStateIDsRef = $Self->{StateMachineObject}->StateTransitionGetEndStates(
+    $NextEndStateIDsRef = $StateMachineObject->StateTransitionGetEndStates(
         StateID => $Name2ChangeStateID{retracted},
         Class   => 'ITSM::ChangeManagement::Change::State',
     );
@@ -218,7 +215,7 @@ my %DefaultWorkOrderStateTransitions = (
 {
 
     # add a second start transition ( must fail )
-    my $TransitionID = $Self->{StateMachineObject}->StateTransitionAdd(
+    my $TransitionID = $StateMachineObject->StateTransitionAdd(
         StateID     => 0,
         NextStateID => $Name2ChangeStateID{approved},
         Class       => 'ITSM::ChangeManagement::Change::State',
@@ -229,7 +226,7 @@ my %DefaultWorkOrderStateTransitions = (
     );
 
     # add a new change state transition
-    $TransitionID = $Self->{StateMachineObject}->StateTransitionAdd(
+    $TransitionID = $StateMachineObject->StateTransitionAdd(
         StateID     => $Name2ChangeStateID{approved},
         NextStateID => $Name2ChangeStateID{approved},
         Class       => 'ITSM::ChangeManagement::Change::State',
@@ -240,7 +237,7 @@ my %DefaultWorkOrderStateTransitions = (
     );
 
     # try to set the state to be an end state (must fail, because other following states exist)
-    $TransitionID = $Self->{StateMachineObject}->StateTransitionAdd(
+    $TransitionID = $StateMachineObject->StateTransitionAdd(
         StateID     => $Name2ChangeStateID{approved},
         NextStateID => 0,
         Class       => 'ITSM::ChangeManagement::Change::State',
@@ -253,7 +250,7 @@ my %DefaultWorkOrderStateTransitions = (
     );
 
     # update a state transition
-    my $Success = $Self->{StateMachineObject}->StateTransitionUpdate(
+    my $Success = $StateMachineObject->StateTransitionUpdate(
         StateID        => $Name2ChangeStateID{approved},
         NextStateID    => $Name2ChangeStateID{approved},
         NewNextStateID => $Name2ChangeStateID{failed},
@@ -265,7 +262,7 @@ my %DefaultWorkOrderStateTransitions = (
     );
 
     # get the updated state transition
-    my $NextStateIDsRef = $Self->{StateMachineObject}->StateTransitionGet(
+    my $NextStateIDsRef = $StateMachineObject->StateTransitionGet(
         StateID => $Name2ChangeStateID{approved},
         Class   => 'ITSM::ChangeManagement::Change::State',
     );
@@ -279,7 +276,7 @@ my %DefaultWorkOrderStateTransitions = (
 
     # update a state transition
     # (must fail, because new next state is an end state and other following states already exists)
-    $Success = $Self->{StateMachineObject}->StateTransitionUpdate(
+    $Success = $StateMachineObject->StateTransitionUpdate(
         StateID        => $Name2ChangeStateID{requested},
         NextStateID    => $Name2ChangeStateID{rejected},
         NewNextStateID => 0,
@@ -293,7 +290,7 @@ my %DefaultWorkOrderStateTransitions = (
     );
 
     # update a state transition (must fail, because both states are zero)
-    $Success = $Self->{StateMachineObject}->StateTransitionUpdate(
+    $Success = $StateMachineObject->StateTransitionUpdate(
         StateID        => 0,
         NextStateID    => 0,
         NewNextStateID => 0,
@@ -307,7 +304,7 @@ my %DefaultWorkOrderStateTransitions = (
     );
 
     # delete the transition that was added before
-    my $DeleteSuccess = $Self->{StateMachineObject}->StateTransitionDelete(
+    my $DeleteSuccess = $StateMachineObject->StateTransitionDelete(
         StateID     => $Name2ChangeStateID{approved},
         NextStateID => $Name2ChangeStateID{failed},
     );
@@ -322,7 +319,7 @@ my %DefaultWorkOrderStateTransitions = (
 # ------------------------------------------------------------ #
 
 # get default change state transitions from database
-my $ChangeStateTransitions = $Self->{StateMachineObject}->StateTransitionList(
+my $ChangeStateTransitions = $StateMachineObject->StateTransitionList(
     Class => 'ITSM::ChangeManagement::Change::State',
 );
 
@@ -368,7 +365,7 @@ for my $DefaultState ( sort keys %DefaultChangeStateTransitions ) {
     }
 
     # test the state lookup function for the state
-    my $LookedUpStateID = $Self->{StateMachineObject}->StateLookup(
+    my $LookedUpStateID = $StateMachineObject->StateLookup(
         State => $DefaultState,
         Class => 'ITSM::ChangeManagement::Change::State',
     );
@@ -379,7 +376,7 @@ for my $DefaultState ( sort keys %DefaultChangeStateTransitions ) {
     );
 
     # test the state lookup function for the state id
-    my $LookedUpState = $Self->{StateMachineObject}->StateLookup(
+    my $LookedUpState = $StateMachineObject->StateLookup(
         StateID => $DefaultStateID,
         Class   => 'ITSM::ChangeManagement::Change::State',
     );
@@ -395,7 +392,7 @@ for my $DefaultState ( sort keys %DefaultChangeStateTransitions ) {
 # ------------------------------------------------------------ #
 
 # get default workorder state transitions from database
-my $WorkOrderStateTransitions = $Self->{StateMachineObject}->StateTransitionList(
+my $WorkOrderStateTransitions = $StateMachineObject->StateTransitionList(
     Class => 'ITSM::ChangeManagement::WorkOrder::State',
 );
 
@@ -441,7 +438,7 @@ for my $DefaultState ( sort keys %DefaultWorkOrderStateTransitions ) {
     }
 
     # test the state lookup function for the state
-    my $LookedUpStateID = $Self->{StateMachineObject}->StateLookup(
+    my $LookedUpStateID = $StateMachineObject->StateLookup(
         State => $DefaultState,
         Class => 'ITSM::ChangeManagement::WorkOrder::State',
     );
@@ -452,7 +449,7 @@ for my $DefaultState ( sort keys %DefaultWorkOrderStateTransitions ) {
     );
 
     # test the state lookup function for the state id
-    my $LookedUpState = $Self->{StateMachineObject}->StateLookup(
+    my $LookedUpState = $StateMachineObject->StateLookup(
         StateID => $DefaultStateID,
         Class   => 'ITSM::ChangeManagement::WorkOrder::State',
     );
@@ -474,7 +471,7 @@ for my $StateID ( sort keys %{$ChangeStateTransitions} ) {
     my @NextStateIDsFromList = sort @{ $ChangeStateTransitions->{$StateID} };
 
     # get the next state ids from StateTransitionGet()
-    my $NextStateIDsRef = $Self->{StateMachineObject}->StateTransitionGet(
+    my $NextStateIDsRef = $StateMachineObject->StateTransitionGet(
         StateID => $StateID,
         Class   => 'ITSM::ChangeManagement::Change::State',
     );
@@ -508,7 +505,7 @@ for my $StateID ( sort keys %{$ChangeStateTransitions} ) {
 # ------------------------------------------------------------ #
 
 {
-    my $StateList = $Self->{StateMachineObject}->StateList(
+    my $StateList = $StateMachineObject->StateList(
         Class  => 'ITSM::ChangeManagement::Change::State',
         UserID => 1,
     ) || [];
@@ -541,7 +538,7 @@ for my $StateID ( sort keys %{$ChangeStateTransitions} ) {
 # ------------------------------------------------------------ #
 
 {
-    my $StateList = $Self->{StateMachineObject}->StateList(
+    my $StateList = $StateMachineObject->StateList(
         Class  => 'ITSM::ChangeManagement::WorkOrder::State',
         UserID => 1,
     ) || [];

@@ -15,12 +15,6 @@ use vars qw($Self);
 
 use Data::Dumper;
 
-use Kernel::System::User;
-use Kernel::System::Group;
-use Kernel::System::ITSMChange;
-use Kernel::System::ITSMChange::ITSMWorkOrder;
-use Kernel::System::ITSMChange::ITSMCondition;
-
 # ------------------------------------------------------------ #
 # make preparations
 # ------------------------------------------------------------ #
@@ -28,14 +22,11 @@ use Kernel::System::ITSMChange::ITSMCondition;
 my $TestCount = 1;
 
 # create common objects
-$Self->{UserObject}      = Kernel::System::User->new( %{$Self} );
-$Self->{GroupObject}     = Kernel::System::Group->new( %{$Self} );
-$Self->{ConditionObject} = Kernel::System::ITSMChange::ITSMCondition->new( %{$Self} );
-
-# create change and workorder objects as local variables to prevent error messages
-# about missing LogObject during event transaction mode in object destruction.
-my $ChangeObject    = Kernel::System::ITSMChange->new( %{$Self} );
-my $WorkOrderObject = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
+my $ConfigObject    = $Kernel::OM->Get('Kernel::Config');
+my $TimeObject      = $Kernel::OM->Get('Kernel::System::Time');
+my $ConditionObject = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMCondition');
+my $ChangeObject    = $Kernel::OM->Get('Kernel::System::ITSMChange');
+my $WorkOrderObject = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder');
 
 # test if change object was created successfully
 $Self->True(
@@ -51,13 +42,13 @@ $Self->True(
 
 # test if condition object was created successfully
 $Self->True(
-    $Self->{ConditionObject},
+    $ConditionObject,
     'Test ' . $TestCount++ . ' - construction of condition object',
 );
 
 # turn off SendNotifications, in order to avoid a lot of useless mails
-my $SendNotificationsOrg = $Self->{ConfigObject}->Get('ITSMChange::SendNotifcations');
-$Self->{ConfigObject}->Set(
+my $SendNotificationsOrg = $ConfigObject->Get('ITSMChange::SendNotifcations');
+$ConfigObject->Set(
     Key   => 'ITSMChange::SendNotifications',
     Value => 0,
 );
@@ -108,7 +99,7 @@ my @ObjectMethods = qw(
 # check if subs are available
 for my $ObjectMethod (@ObjectMethods) {
     $Self->True(
-        $Self->{ConditionObject}->can($ObjectMethod),
+        $ConditionObject->can($ObjectMethod),
         'Test ' . $TestCount++ . " - check 'can $ObjectMethod'",
     );
 }
@@ -119,7 +110,7 @@ for my $ObjectMethod (@ObjectMethods) {
 
 # keep track of a time before objects were added,
 # for comparisons in expression match tests
-my $SystemTimeBeforeAdding = $Self->{TimeObject}->SystemTime() - 1;
+my $SystemTimeBeforeAdding = $TimeObject->SystemTime() - 1;
 
 # create new change
 my @ChangeIDs;
@@ -154,13 +145,13 @@ for my $CreateWorkOrder ( 0 .. ( ( 3 * ( scalar @ChangeIDs ) ) - 1 ) ) {
     my $WorkOrderID    = $WorkOrderObject->WorkOrderAdd(
         ChangeID => $ChangeIDs[ ( $CreateWorkOrder % scalar @ChangeIDs ) ],
         WorkOrderTitle   => $WorkOrderTitle,
-        PlannedStartTime => $Self->{TimeObject}->CurrentTimestamp(),
-        PlannedEndTime   => $Self->{TimeObject}->SystemTime2TimeStamp(
-            SystemTime => ( $Self->{TimeObject}->SystemTime() + 100 ),
+        PlannedStartTime => $TimeObject->CurrentTimestamp(),
+        PlannedEndTime   => $TimeObject->SystemTime2TimeStamp(
+            SystemTime => ( $TimeObject->SystemTime() + 100 ),
         ),
-        ActualStartTime => $Self->{TimeObject}->CurrentTimestamp(),
-        ActualEndTime   => $Self->{TimeObject}->SystemTime2TimeStamp(
-            SystemTime => ( $Self->{TimeObject}->SystemTime() + 100 ),
+        ActualStartTime => $TimeObject->CurrentTimestamp(),
+        ActualEndTime   => $TimeObject->SystemTime2TimeStamp(
+            SystemTime => ( $TimeObject->SystemTime() + 100 ),
         ),
         UserID => 1,
     );
@@ -197,7 +188,7 @@ for my $ChangeID (@ChangeIDs) {
         my $ConditionName = "UnitTestConditionName_${ChangeID}_" . int rand 1_000_000;
 
         # add a condition
-        my $ConditionID = $Self->{ConditionObject}->ConditionAdd(
+        my $ConditionID = $ConditionObject->ConditionAdd(
             ChangeID              => $ChangeID,
             Name                  => $ConditionName,
             ExpressionConjunction => 'all',
@@ -213,7 +204,7 @@ for my $ChangeID (@ChangeIDs) {
         next CONDITIONCOUNTER if !$ConditionID;
 
         # test condition lookup by name
-        my $LookupConditionID = $Self->{ConditionObject}->ConditionLookup(
+        my $LookupConditionID = $ConditionObject->ConditionLookup(
             Name     => $ConditionName,
             ChangeID => $ChangeID,
         );
@@ -224,7 +215,7 @@ for my $ChangeID (@ChangeIDs) {
         );
 
         # test condition lookup by id
-        my $LookupConditionName = $Self->{ConditionObject}->ConditionLookup(
+        my $LookupConditionName = $ConditionObject->ConditionLookup(
             ConditionID => $ConditionID,
             ChangeID    => $ChangeID,
         );
@@ -238,7 +229,7 @@ for my $ChangeID (@ChangeIDs) {
         $ConditionCount{$ChangeID}++;
 
         # get the added condition
-        my $ConditionData = $Self->{ConditionObject}->ConditionGet(
+        my $ConditionData = $ConditionObject->ConditionGet(
             ConditionID => $ConditionID,
             UserID      => 1,
         );
@@ -253,7 +244,7 @@ for my $ChangeID (@ChangeIDs) {
         push @ConditionIDs, $ConditionID;
 
         # condition update tests
-        my $Success = $Self->{ConditionObject}->ConditionUpdate(
+        my $Success = $ConditionObject->ConditionUpdate(
             ConditionID           => $ConditionID,
             ExpressionConjunction => 'all',
             Comment               => 'An updated comment',
@@ -266,7 +257,7 @@ for my $ChangeID (@ChangeIDs) {
         );
 
         # get the updated condition
-        $ConditionData = $Self->{ConditionObject}->ConditionGet(
+        $ConditionData = $ConditionObject->ConditionGet(
             ConditionID => $ConditionID,
             UserID      => 1,
         );
@@ -278,7 +269,7 @@ for my $ChangeID (@ChangeIDs) {
         );
 
         # try to add the same condition again (ChangeID and Name are the same) (must fail)
-        $ConditionID = $Self->{ConditionObject}->ConditionAdd(
+        $ConditionID = $ConditionObject->ConditionAdd(
             ChangeID              => $ChangeID,
             Name                  => $ConditionName,
             ExpressionConjunction => 'all',
@@ -303,7 +294,7 @@ CHANGEID:
 for my $ChangeID ( sort keys %ConditionCount ) {
 
     # get condition list
-    my $ConditionIDsRef = $Self->{ConditionObject}->ConditionList(
+    my $ConditionIDsRef = $ConditionObject->ConditionList(
         ChangeID => $ChangeID,
         Valid    => 1,
         UserID   => 1,
@@ -319,7 +310,7 @@ for my $ChangeID ( sort keys %ConditionCount ) {
     next CHANGEID if !@{$ConditionIDsRef};
 
     # set the first condition of the current change invalid
-    my $Success = $Self->{ConditionObject}->ConditionUpdate(
+    my $Success = $ConditionObject->ConditionUpdate(
         ConditionID => $ConditionIDsRef->[0],
         ValidID     => 2,                       # invalid
         UserID      => 1,
@@ -331,7 +322,7 @@ for my $ChangeID ( sort keys %ConditionCount ) {
     );
 
     # get condition list again
-    $ConditionIDsRef = $Self->{ConditionObject}->ConditionList(
+    $ConditionIDsRef = $ConditionObject->ConditionList(
         ChangeID => $ChangeID,
         Valid    => 1,
         UserID   => 1,
@@ -344,7 +335,7 @@ for my $ChangeID ( sort keys %ConditionCount ) {
     );
 
     # get condition list again, but now with also the invalid conditions
-    $ConditionIDsRef = $Self->{ConditionObject}->ConditionList(
+    $ConditionIDsRef = $ConditionObject->ConditionList(
         ChangeID => $ChangeID,
         Valid    => 0,
         UserID   => 1,
@@ -362,26 +353,23 @@ for my $ChangeID ( sort keys %ConditionCount ) {
 # condition object tests
 #------------------------
 
-# check for default condition objects
-my @ConditionObjects = qw(ITSMChange ITSMWorkOrder);
-
-# check condition objects
-for my $ConditionObject (@ConditionObjects) {
+# check condition sub-objects
+for my $ConditionSubObjectName (qw(ITSMChange ITSMWorkOrder)) {
 
     # make lookup to get object id
-    my $ObjectID = $Self->{ConditionObject}->ObjectLookup(
-        Name   => $ConditionObject,
+    my $ObjectID = $ConditionObject->ObjectLookup(
+        Name   => $ConditionSubObjectName,
         UserID => 1,
     ) || '';
 
     # check on return value
     $Self->True(
         $ObjectID,
-        'Test ' . $TestCount++ . " - ObjectLookup on '$ConditionObject' -> ObjectID: $ObjectID",
+        'Test ' . $TestCount++ . " - ObjectLookup on '$ConditionSubObjectName' -> ObjectID: $ObjectID",
     );
 
     # get object data with object id
-    my $ObjectData = $Self->{ConditionObject}->ObjectGet(
+    my $ObjectData = $ConditionObject->ObjectGet(
         ObjectID => $ObjectID,
         UserID   => 1,
     );
@@ -389,7 +377,7 @@ for my $ConditionObject (@ConditionObjects) {
     # check return parameters
     $Self->Is(
         $ObjectData->{Name},
-        $ConditionObject,
+        $ConditionSubObjectName,
         'Test ' . $TestCount++ . ' - ObjectGet() name check',
     );
 }
@@ -399,7 +387,7 @@ my @ConditionObjectCreated;
 for my $Counter ( 1 .. 3 ) {
 
     # add new objects
-    my $ObjectID = $Self->{ConditionObject}->ObjectAdd(
+    my $ObjectID = $ConditionObject->ObjectAdd(
         Name   => 'ObjectName' . $Counter . int rand 1_000_000,
         UserID => 1,
     );
@@ -415,7 +403,7 @@ for my $Counter ( 1 .. 3 ) {
 }
 
 # check condition object list
-my $ObjectList = $Self->{ConditionObject}->ObjectList(
+my $ObjectList = $ConditionObject->ObjectList(
     UserID => 1,
 );
 
@@ -435,14 +423,14 @@ $Self->Is(
 # check update of condition object
 my $ConditionObjectNewName = 'UnitTestUpdate' . int rand 1_000_000;
 $Self->True(
-    $Self->{ConditionObject}->ObjectUpdate(
+    $ConditionObject->ObjectUpdate(
         ObjectID => $ConditionObjectCreated[0],
         Name     => $ConditionObjectNewName,
         UserID   => 1,
     ),
     'Test ' . $TestCount++ . " - ObjectUpdate",
 );
-my $ConditionObjectUpdate = $Self->{ConditionObject}->ObjectGet(
+my $ConditionObjectUpdate = $ConditionObject->ObjectGet(
     ObjectID => $ConditionObjectCreated[0],
     UserID   => 1,
 );
@@ -455,7 +443,7 @@ $Self->Is(
 # check for object delete
 for my $ObjectID (@ConditionObjectCreated) {
     $Self->True(
-        $Self->{ConditionObject}->ObjectDelete(
+        $ConditionObject->ObjectDelete(
             ObjectID => $ObjectID,
             UserID   => 1,
         ),
@@ -479,7 +467,7 @@ my @ConditionAttributes = qw(
 for my $ConditionAttribute (@ConditionAttributes) {
 
     # make lookup to get attribute id
-    my $AttributeID = $Self->{ConditionObject}->AttributeLookup(
+    my $AttributeID = $ConditionObject->AttributeLookup(
         Name => $ConditionAttribute,
     ) || '';
 
@@ -492,7 +480,7 @@ for my $ConditionAttribute (@ConditionAttributes) {
     );
 
     # get attribute data with attribute id
-    my $AttributeData = $Self->{ConditionObject}->AttributeGet(
+    my $AttributeData = $ConditionObject->AttributeGet(
         UserID      => 1,
         AttributeID => $AttributeID,
     );
@@ -510,7 +498,7 @@ my @ConditionAttributeCreated;
 for my $Counter ( 1 .. 3 ) {
 
     # add new objects
-    my $AttributeID = $Self->{ConditionObject}->AttributeAdd(
+    my $AttributeID = $ConditionObject->AttributeAdd(
         UserID => 1,
         Name   => 'AttributeName' . $Counter . int rand 1_000_000,
     );
@@ -526,7 +514,7 @@ for my $Counter ( 1 .. 3 ) {
 }
 
 # check condition attribute list
-my $AttributeList = $Self->{ConditionObject}->AttributeList(
+my $AttributeList = $ConditionObject->AttributeList(
     UserID => 1,
 );
 
@@ -546,14 +534,14 @@ $Self->Is(
 # check update of attribute object
 my $ConditionAttributeNewName = 'UnitTestUpdate' . int rand 1_000_000;
 $Self->True(
-    $Self->{ConditionObject}->AttributeUpdate(
+    $ConditionObject->AttributeUpdate(
         UserID      => 1,
         AttributeID => $ConditionAttributeCreated[0],
         Name        => $ConditionAttributeNewName,
     ),
     'Test ' . $TestCount++ . " - AttributeUpdate",
 );
-my $ConditionAttributeUpdate = $Self->{ConditionObject}->AttributeGet(
+my $ConditionAttributeUpdate = $ConditionObject->AttributeGet(
     UserID      => 1,
     AttributeID => $ConditionAttributeCreated[0],
 );
@@ -566,7 +554,7 @@ $Self->Is(
 # check for attribute delete
 for my $AttributeID (@ConditionAttributeCreated) {
     $Self->True(
-        $Self->{ConditionObject}->AttributeDelete(
+        $ConditionObject->AttributeDelete(
             UserID      => 1,
             AttributeID => $AttributeID,
         ),
@@ -601,7 +589,7 @@ my @ConditionOperators = (
 for my $ConditionOperator (@ConditionOperators) {
 
     # make lookup to get operator id
-    my $OperatorID = $Self->{ConditionObject}->OperatorLookup( Name => $ConditionOperator ) || '';
+    my $OperatorID = $ConditionObject->OperatorLookup( Name => $ConditionOperator ) || '';
 
     # check on return value
     $Self->True(
@@ -612,7 +600,7 @@ for my $ConditionOperator (@ConditionOperators) {
     );
 
     # get operator data with operator id
-    my $OperatorData = $Self->{ConditionObject}->OperatorGet(
+    my $OperatorData = $ConditionObject->OperatorGet(
         UserID     => 1,
         OperatorID => $OperatorID,
     );
@@ -630,7 +618,7 @@ my @ConditionOperatorCreated;
 for my $Counter ( 1 .. 3 ) {
 
     # add new objects
-    my $OperatorID = $Self->{ConditionObject}->OperatorAdd(
+    my $OperatorID = $ConditionObject->OperatorAdd(
         UserID => 1,
         Name   => 'OperatorName' . $Counter . int rand 1_000_000,
     );
@@ -646,7 +634,7 @@ for my $Counter ( 1 .. 3 ) {
 }
 
 # check condition operator list
-my $OperatorList = $Self->{ConditionObject}->OperatorList(
+my $OperatorList = $ConditionObject->OperatorList(
     UserID => 1,
 );
 
@@ -666,14 +654,14 @@ $Self->Is(
 # check update of operator object
 my $ConditionOperatorNewName = 'UnitTestUpdate' . int rand 1_000_000;
 $Self->True(
-    $Self->{ConditionObject}->OperatorUpdate(
+    $ConditionObject->OperatorUpdate(
         UserID     => 1,
         OperatorID => $ConditionOperatorCreated[0],
         Name       => $ConditionOperatorNewName,
     ),
     'Test ' . $TestCount++ . " - OperatorUpdate",
 );
-my $ConditionOperatorUpdate = $Self->{ConditionObject}->OperatorGet(
+my $ConditionOperatorUpdate = $ConditionObject->OperatorGet(
     UserID     => 1,
     OperatorID => $ConditionOperatorCreated[0],
 );
@@ -686,7 +674,7 @@ $Self->Is(
 # check for operator delete
 for my $OperatorID (@ConditionOperatorCreated) {
     $Self->True(
-        $Self->{ConditionObject}->OperatorDelete(
+        $ConditionObject->OperatorDelete(
             UserID     => 1,
             OperatorID => $OperatorID,
         ),
@@ -1232,8 +1220,8 @@ my @ExpressionTests = (
                 # static fields
                 ConditionID  => $ConditionIDs[2],
                 Selector     => $WorkOrderIDs[0],
-                CompareValue => $Self->{TimeObject}->SystemTime2TimeStamp(
-                    SystemTime => ( $Self->{TimeObject}->SystemTime() + 10 ),
+                CompareValue => $TimeObject->SystemTime2TimeStamp(
+                    SystemTime => ( $TimeObject->SystemTime() + 10 ),
                 ),
                 UserID => 1,
             },
@@ -1262,7 +1250,7 @@ my @ExpressionTests = (
                 # static fields
                 ConditionID  => $ConditionIDs[2],
                 Selector     => $WorkOrderIDs[0],
-                CompareValue => $Self->{TimeObject}->SystemTime2TimeStamp(
+                CompareValue => $TimeObject->SystemTime2TimeStamp(
                     SystemTime => $SystemTimeBeforeAdding,
                 ),
                 UserID => 1,
@@ -1292,7 +1280,7 @@ my @ExpressionTests = (
                 # static fields
                 ConditionID  => $ConditionIDs[2],
                 Selector     => $WorkOrderIDs[0],
-                CompareValue => $Self->{TimeObject}->SystemTime2TimeStamp(
+                CompareValue => $TimeObject->SystemTime2TimeStamp(
                     SystemTime => $SystemTimeBeforeAdding,
                 ),
                 UserID => 1,
@@ -1322,8 +1310,8 @@ my @ExpressionTests = (
                 # static fields
                 ConditionID  => $ConditionIDs[2],
                 Selector     => $WorkOrderIDs[0],
-                CompareValue => $Self->{TimeObject}->SystemTime2TimeStamp(
-                    SystemTime => ( $Self->{TimeObject}->SystemTime() + 10 ),
+                CompareValue => $TimeObject->SystemTime2TimeStamp(
+                    SystemTime => ( $TimeObject->SystemTime() + 10 ),
                 ),
                 UserID => 1,
             },
@@ -1665,14 +1653,14 @@ for my $ExpressionTest (@ExpressionTests) {
 
                     # store gathered information in hash for adding
                     $ExpressionAddData{$ExpressionAddValue} =
-                        $Self->{ConditionObject}->$FieldValue(
+                        $ConditionObject->$FieldValue(
                         %{ $ExpressionAddSourceData{$ExpressionAddValue}->{$FieldValue} },
                         );
                 }
             }
 
             # add expression
-            $ExpressionID = $Self->{ConditionObject}->ExpressionAdd(
+            $ExpressionID = $ConditionObject->ExpressionAdd(
                 %ExpressionAddData,
             ) || 0;
 
@@ -1687,7 +1675,7 @@ for my $ExpressionTest (@ExpressionTests) {
             push @ExpressionIDs, $ExpressionID;
 
             # check the added expression
-            my $ExpressionGetData = $Self->{ConditionObject}->ExpressionGet(
+            my $ExpressionGetData = $ConditionObject->ExpressionGet(
                 ExpressionID => $ExpressionID,
                 UserID       => $ExpressionAddData{UserID},
             );
@@ -1742,14 +1730,14 @@ for my $ExpressionTest (@ExpressionTests) {
 
                     # store gathered information in hash for updating
                     $ExpressionUpdateData{$ExpressionUpdateValue} =
-                        $Self->{ConditionObject}->$FieldValue(
+                        $ConditionObject->$FieldValue(
                         %{ $ExpressionUpdateSourceData{$ExpressionUpdateValue}->{$FieldValue} },
                         );
                 }
             }
 
             # update expression
-            my $UpdateSuccess = $Self->{ConditionObject}->ExpressionUpdate(
+            my $UpdateSuccess = $ConditionObject->ExpressionUpdate(
                 ExpressionID => $ExpressionID,
                 %ExpressionUpdateData,
             );
@@ -1762,7 +1750,7 @@ for my $ExpressionTest (@ExpressionTests) {
             next CREATEDATA if !$UpdateSuccess;
 
             # check the added expression
-            my $ExpressionGetData = $Self->{ConditionObject}->ExpressionGet(
+            my $ExpressionGetData = $ConditionObject->ExpressionGet(
                 ExpressionID => $ExpressionID,
                 UserID       => $ExpressionUpdateData{UserID},
             );
@@ -1806,7 +1794,7 @@ for my $ConditionID (@ConditionIDs) {
             if $ExpressionTest->{SourceData}->{ExpressionAdd}->{ConditionID} == $ConditionID;
     }
 
-    my $ExpressionList = $Self->{ConditionObject}->ExpressionList(
+    my $ExpressionList = $ConditionObject->ExpressionList(
         ConditionID => $ConditionID,
         UserID      => 1,
     );
@@ -1881,7 +1869,7 @@ for my $ExpressionCounter ( 0 .. ( scalar @ExpressionIDs - 1 ) ) {
 
         # test without given changed attributes
         $Self->True(
-            $Self->{ConditionObject}->ExpressionMatch(
+            $ConditionObject->ExpressionMatch(
                 ExpressionID => $ExpressionID,
                 UserID       => 1,
                 )
@@ -1891,7 +1879,7 @@ for my $ExpressionCounter ( 0 .. ( scalar @ExpressionIDs - 1 ) ) {
 
         # test with given changed attributes
         $Self->True(
-            $Self->{ConditionObject}->ExpressionMatch(
+            $ConditionObject->ExpressionMatch(
                 ExpressionID      => $ExpressionID,
                 AttributesChanged => { $ObjectName => [$AttributeName] },
                 UserID            => 1,
@@ -1902,7 +1890,7 @@ for my $ExpressionCounter ( 0 .. ( scalar @ExpressionIDs - 1 ) ) {
 
         # test with wrong given object type of changed attributes
         $Self->False(
-            $Self->{ConditionObject}->ExpressionMatch(
+            $ConditionObject->ExpressionMatch(
                 ExpressionID      => $ExpressionID,
                 AttributesChanged => { $ObjectName . 'UT' . int rand 1_000 => [$AttributeName] },
                 UserID            => 1,
@@ -1913,7 +1901,7 @@ for my $ExpressionCounter ( 0 .. ( scalar @ExpressionIDs - 1 ) ) {
 
         # test with wrong given attribute type of changed attributes
         $Self->False(
-            $Self->{ConditionObject}->ExpressionMatch(
+            $ConditionObject->ExpressionMatch(
                 ExpressionID      => $ExpressionID,
                 AttributesChanged => { $ObjectName => [ $AttributeName . 'UT' . int rand 1_000 ] },
                 UserID            => 1,
@@ -1926,7 +1914,7 @@ for my $ExpressionCounter ( 0 .. ( scalar @ExpressionIDs - 1 ) ) {
 
         # test without given changed attributes
         $Self->False(
-            $Self->{ConditionObject}->ExpressionMatch(
+            $ConditionObject->ExpressionMatch(
                 ExpressionID => $ExpressionID,
                 UserID       => 1,
                 )
@@ -1936,7 +1924,7 @@ for my $ExpressionCounter ( 0 .. ( scalar @ExpressionIDs - 1 ) ) {
 
         # test with given changed attributes
         $Self->False(
-            $Self->{ConditionObject}->ExpressionMatch(
+            $ConditionObject->ExpressionMatch(
                 ExpressionID      => $ExpressionID,
                 AttributesChanged => { $ObjectName => [$AttributeName] },
                 UserID            => 1,
@@ -2135,7 +2123,7 @@ for my $ActionCounter ( 0 .. ( ( scalar @ActionTests ) - 1 ) ) {
 
     # test for result
     $Self->$TestSub(
-        $Self->{ConditionObject}->ActionExecute(
+        $ConditionObject->ActionExecute(
             ActionID => $ActionID,
             UserID   => 1,
             )
@@ -2148,7 +2136,7 @@ for my $ActionCounter ( 0 .. ( ( scalar @ActionTests ) - 1 ) ) {
     next ACTIONCOUNTER if !$ActionTests[$ActionCounter]->{ActionSuccess};
 
     # check for updated action
-    my $Action = $Self->{ConditionObject}->ActionGet(
+    my $Action = $ConditionObject->ActionGet(
         ActionID => $ActionID,
         UserID   => 1,
     );
@@ -2159,7 +2147,7 @@ for my $ActionCounter ( 0 .. ( ( scalar @ActionTests ) - 1 ) ) {
     next ACTIONCOUNTER if !$Action;
 
     # get object name
-    my $ObjectName = $Self->{ConditionObject}->ObjectLookup(
+    my $ObjectName = $ConditionObject->ObjectLookup(
         ObjectID => $Action->{ObjectID},
         UserID   => 1,
     );
@@ -2170,7 +2158,7 @@ for my $ActionCounter ( 0 .. ( ( scalar @ActionTests ) - 1 ) ) {
     next ACTIONCOUNTER if !$ObjectName;
 
     # get attribute name
-    my $AttributeName = $Self->{ConditionObject}->AttributeLookup(
+    my $AttributeName = $ConditionObject->AttributeLookup(
         AttributeID => $Action->{AttributeID},
         UserID      => 1,
     );
@@ -2210,7 +2198,7 @@ for my $ActionCounter ( 0 .. ( ( scalar @ActionTests ) - 1 ) ) {
 
 # test for match state lock
 $Self->False(
-    $Self->{ConditionObject}->ConditionMatchStateLock(
+    $ConditionObject->ConditionMatchStateLock(
         ObjectName => 'ITSMChange',
         Selector   => $ChangeIDs[0],
         StateID    => 1,
@@ -2223,7 +2211,7 @@ $Self->False(
 # check for expression delete
 for my $ExpressionID (@ExpressionIDs) {
     $Self->True(
-        $Self->{ConditionObject}->ExpressionDelete(
+        $ConditionObject->ExpressionDelete(
             UserID       => 1,
             ExpressionID => $ExpressionID,
         ),
@@ -2231,7 +2219,7 @@ for my $ExpressionID (@ExpressionIDs) {
     );
 
     # double check if expression is really deleted
-    my $ExpressionData = $Self->{ConditionObject}->ExpressionGet(
+    my $ExpressionData = $ConditionObject->ExpressionGet(
         ExpressionID => $ExpressionID,
         UserID       => 1,
     );
@@ -2246,7 +2234,7 @@ for my $ExpressionID (@ExpressionIDs) {
 # check for action delete
 for my $ActionID (@ActionIDs) {
     $Self->True(
-        $Self->{ConditionObject}->ActionDelete(
+        $ConditionObject->ActionDelete(
             UserID   => 1,
             ActionID => $ActionID,
         ),
@@ -2254,7 +2242,7 @@ for my $ActionID (@ActionIDs) {
     );
 
     # double check if action is really deleted
-    my $ActionData = $Self->{ConditionObject}->ActionGet(
+    my $ActionData = $ConditionObject->ActionGet(
         ActionID => $ActionID,
         UserID   => 1,
     );
@@ -2269,7 +2257,7 @@ for my $ActionID (@ActionIDs) {
 # delete created conditions
 for my $ConditionID (@ConditionIDs) {
 
-    my $DeleteSuccess = $Self->{ConditionObject}->ConditionDelete(
+    my $DeleteSuccess = $ConditionObject->ConditionDelete(
         ConditionID => $ConditionID,
         UserID      => 1,
     );
@@ -2280,7 +2268,7 @@ for my $ConditionID (@ConditionIDs) {
     );
 
     # double check if condition is really deleted
-    my $ConditionData = $Self->{ConditionObject}->ConditionGet(
+    my $ConditionData = $ConditionObject->ConditionGet(
         ConditionID => $ConditionID,
         UserID      => 1,
     );
@@ -2316,7 +2304,7 @@ for my $ChangeID (@ChangeIDs) {
 }
 
 # set SendNotifications to it's original value
-$Self->{ConfigObject}->Set(
+$ConfigObject->Set(
     Key   => 'ITSMChange::SendNotifications',
     Value => $SendNotificationsOrg,
 );
@@ -2356,14 +2344,14 @@ sub _ActionAdd {
 
             # store gathered information in hash for adding
             $ActionAdd{$ActionAddValue}
-                = $Self->{ConditionObject}->$FieldValue(
+                = $ConditionObject->$FieldValue(
                 %{ $ActionData->{$ActionAddValue}->{$FieldValue} },
                 );
         }
     }
 
     # add action
-    my $ActionID = $Self->{ConditionObject}->ActionAdd(
+    my $ActionID = $ConditionObject->ActionAdd(
         %ActionAdd,
     ) || 0;
 
@@ -2376,7 +2364,7 @@ sub _ActionAdd {
     return if !$ActionID;
 
     # check the added action
-    my $ActionGet = $Self->{ConditionObject}->ActionGet(
+    my $ActionGet = $ConditionObject->ActionGet(
         ActionID => $ActionID,
         UserID   => $ActionAdd{UserID},
     );

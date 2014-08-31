@@ -16,38 +16,27 @@ use vars qw($Self);
 use Data::Dumper;
 use List::Util qw(max);
 
-use Kernel::System::DynamicField;
-use Kernel::System::User;
-use Kernel::System::Group;
-use Kernel::System::CustomerUser;
-use Kernel::System::Valid;
-use Kernel::System::GeneralCatalog;
-use Kernel::System::ITSMChange;
-use Kernel::System::ITSMChange::ITSMChangeCIPAllocate;
-use Kernel::System::ITSMChange::ITSMWorkOrder;
-use Kernel::System::ITSMChange::History;
-use Kernel::System::Cache;
-
 # ------------------------------------------------------------ #
 # make preparations
 # ------------------------------------------------------------ #
 my $TestCount = 1;
 
 # create common objects
-$Self->{DynamicFieldObject}   = Kernel::System::DynamicField->new( %{$Self} );
-$Self->{UserObject}           = Kernel::System::User->new( %{$Self} );
-$Self->{GroupObject}          = Kernel::System::Group->new( %{$Self} );
-$Self->{CustomerUserObject}   = Kernel::System::CustomerUser->new( %{$Self} );
-$Self->{ValidObject}          = Kernel::System::Valid->new( %{$Self} );
-$Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new( %{$Self} );
-$Self->{CIPAllocateObject}    = Kernel::System::ITSMChange::ITSMChangeCIPAllocate->new( %{$Self} );
-$Self->{HistoryObject}        = Kernel::System::ITSMChange::History->new( %{$Self} );
-$Self->{CacheObject}          = Kernel::System::Cache->new( %{$Self} );
-
-# create change and workorder objects as local variables to prevent error messages
-# about missing LogObject during event transaction mode in object destruction.
-my $WorkOrderObject = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
-my $ChangeObject    = Kernel::System::ITSMChange->new( %{$Self} );
+my $ConfigObject         = $Kernel::OM->Get('Kernel::Config');
+my $DynamicFieldObject   = $Kernel::OM->Get('Kernel::System::DynamicField');
+my $UserObject           = $Kernel::OM->Get('Kernel::System::User');
+my $GroupObject          = $Kernel::OM->Get('Kernel::System::Group');
+my $CustomerUserObject   = $Kernel::OM->Get('Kernel::System::CustomerUser');
+my $ValidObject          = $Kernel::OM->Get('Kernel::System::Valid');
+my $GeneralCatalogObject = $Kernel::OM->Get('Kernel::System::GeneralCatalog');
+my $CIPAllocateObject    = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMChangeCIPAllocate');
+my $HistoryObject        = $Kernel::OM->Get('Kernel::System::ITSMChange::History');
+my $CacheObject          = $Kernel::OM->Get('Kernel::System::Cache');
+my $TimeObject           = $Kernel::OM->Get('Kernel::System::Time');
+my $LogObject            = $Kernel::OM->Get('Kernel::System::Log');
+my $DBObject             = $Kernel::OM->Get('Kernel::System::DB');
+my $WorkOrderObject      = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder');
+my $ChangeObject         = $Kernel::OM->Get('Kernel::System::ITSMChange');
 
 # test if change object was created successfully
 $Self->True(
@@ -69,11 +58,11 @@ my @NonExistingUserIDs;    # a list of non-existion user ids
 my @CustomerUserIDs;       # a list of existing and valid customer user ids, a list of strings
 
 # disable email checks to create new user
-my $CheckEmailAddressesOrg = $Self->{ConfigObject}->Get('CheckEmailAddresses');
+my $CheckEmailAddressesOrg = $ConfigObject->Get('CheckEmailAddresses');
 if ( !defined $CheckEmailAddressesOrg ) {
     $CheckEmailAddressesOrg = 1;
 }
-$Self->{ConfigObject}->Set(
+$ConfigObject->Set(
     Key   => 'CheckEmailAddresses',
     Value => 0,
 );
@@ -81,18 +70,18 @@ $Self->{ConfigObject}->Set(
 for my $Counter ( 1 .. 3 ) {
 
     # create new users for the tests
-    my $UserID = $Self->{UserObject}->UserAdd(
+    my $UserID = $UserObject->UserAdd(
         UserFirstname => 'ITSMChange' . $Counter,
         UserLastname  => 'UnitTest',
         UserLogin     => 'UnitTest-ITSMChange-' . $Counter . int rand 1_000_000,
         UserEmail     => 'UnitTest-ITSMChange-' . $Counter . '@localhost',
-        ValidID       => $Self->{ValidObject}->ValidLookup( Valid => 'valid' ),
+        ValidID       => $ValidObject->ValidLookup( Valid => 'valid' ),
         ChangeUserID  => 1,
     );
     push @UserIDs, $UserID;
 
     # create new customers for the tests
-    my $CustomerUserID = $Self->{CustomerUserObject}->CustomerUserAdd(
+    my $CustomerUserID = $CustomerUserObject->CustomerUserAdd(
         Source         => 'CustomerUser',
         UserFirstname  => 'ITSMChangeCustomer' . $Counter,
         UserLastname   => 'UnitTestCustomer',
@@ -102,7 +91,7 @@ for my $Counter ( 1 .. 3 ) {
             . $Counter
             . int( rand 1_000_000 )
             . '@localhost',
-        ValidID => $Self->{ValidObject}->ValidLookup( Valid => 'valid' ),
+        ValidID => $ValidObject->ValidLookup( Valid => 'valid' ),
         UserID  => 1,
     );
     push @CustomerUserIDs, $CustomerUserID;
@@ -121,7 +110,7 @@ for ( 1 .. 2 ) {
         my $TempNonExistingUserID = int rand 1_000_000;
 
         # check if random user id exists already
-        my %UserData = $Self->{UserObject}->GetUserData(
+        my %UserData = $UserObject->GetUserData(
             UserID => $TempNonExistingUserID,
         );
         next LPC if %UserData;
@@ -133,30 +122,30 @@ for ( 1 .. 2 ) {
 }
 
 # set 3rd user invalid
-$Self->{UserObject}->UserUpdate(
-    $Self->{UserObject}->GetUserData(
+$UserObject->UserUpdate(
+    $UserObject->GetUserData(
         UserID => $UserIDs[2],
     ),
-    ValidID => $Self->{ValidObject}->ValidLookup( Valid => 'invalid' ),
+    ValidID => $ValidObject->ValidLookup( Valid => 'invalid' ),
     ChangeUserID => 1,
 );
 push @InvalidUserIDs, pop @UserIDs;
 
 # restore original email check param
-$Self->{ConfigObject}->Set(
+$ConfigObject->Set(
     Key   => 'CheckEmailAddresses',
     Value => $CheckEmailAddressesOrg,
 );
 
 # turn off SendNotifications, in order to avoid a lot of useless mails
-my $SendNotificationsOrg = $Self->{ConfigObject}->Get('ITSMChange::SendNotifcations');
-$Self->{ConfigObject}->Set(
+my $SendNotificationsOrg = $ConfigObject->Get('ITSMChange::SendNotifcations');
+$ConfigObject->Set(
     Key   => 'ITSMChange::SendNotifications',
     Value => 0,
 );
 
 # save original dynamic field configuration
-my $OriginalDynamicFields = $Self->{DynamicFieldObject}->DynamicFieldListGet(
+my $OriginalDynamicFields = $DynamicFieldObject->DynamicFieldListGet(
     Valid => 0,
 );
 
@@ -248,7 +237,7 @@ my @DynamicFieldIDs;
 for my $Test (@DynamicFields) {
 
     # add dynamic field
-    my $DynamicFieldID = $Self->{DynamicFieldObject}->DynamicFieldAdd(
+    my $DynamicFieldID = $DynamicFieldObject->DynamicFieldAdd(
         %{$Test},
     );
 
@@ -318,7 +307,7 @@ my @DefaultChangeStates = (
 
 # get item list of the change states with swapped keys and values
 my %ChangeStateID2Name = %{
-    $Self->{GeneralCatalogObject}->ItemList(
+    $GeneralCatalogObject->ItemList(
         Class => 'ITSM::ChangeManagement::Change::State',
         ) || {}
 };
@@ -452,7 +441,7 @@ my @DefaultHistoryTypes = qw(
 for my $HistoryType (@DefaultHistoryTypes) {
 
     # look up the name
-    my $LookedUpHistoryTypeID = $Self->{HistoryObject}->HistoryTypeLookup(
+    my $LookedUpHistoryTypeID = $HistoryObject->HistoryTypeLookup(
         HistoryType => $HistoryType,
     );
 
@@ -462,7 +451,7 @@ for my $HistoryType (@DefaultHistoryTypes) {
     );
 
     # do the reverse lookup
-    my $LookedUpHistoryType = $Self->{HistoryObject}->HistoryTypeLookup(
+    my $LookedUpHistoryType = $HistoryObject->HistoryTypeLookup(
         HistoryTypeID => $LookedUpHistoryTypeID,
     );
 
@@ -481,7 +470,7 @@ my @CIPValues = ( '1 very low', '2 low', '3 normal', '4 high', '5 very high' );
 
 # get list of the categories with swapped keys and values
 my %ChangeCategoryID2Name = %{
-    $Self->{GeneralCatalogObject}->ItemList(
+    $GeneralCatalogObject->ItemList(
         Class => 'ITSM::ChangeManagement::Category',
         ) || {}
 };
@@ -490,7 +479,7 @@ my @SortedChangeCategoryIDs = sort keys %ChangeCategoryID2Name;
 
 # get list of the impacts with swapped keys and values
 my %ChangeImpactID2Name = %{
-    $Self->{GeneralCatalogObject}->ItemList(
+    $GeneralCatalogObject->ItemList(
         Class => 'ITSM::ChangeManagement::Impact',
         ) || {}
 };
@@ -499,7 +488,7 @@ my @SortedChangeImpactIDs = sort keys %ChangeImpactID2Name;
 
 # get list of the priorities with swapped keys and values
 my %ChangePriorityID2Name = %{
-    $Self->{GeneralCatalogObject}->ItemList(
+    $GeneralCatalogObject->ItemList(
         Class => 'ITSM::ChangeManagement::Priority',
         ) || {}
 };
@@ -561,9 +550,9 @@ for my $CIPValue (@CIPValues) {
 # ------------------------------------------------------------ #
 
 # get mapping of the group name to the group id
-my %GroupName2ID = reverse $Self->{GroupObject}->GroupList( Valid => 1 );
+my %GroupName2ID = reverse $GroupObject->GroupList( Valid => 1 );
 
-# check wheter the groups were found
+# check if the groups were found
 for my $Group (qw( itsm-change itsm-change-builder itsm-change-manager )) {
     $Self->True(
         $GroupName2ID{$Group},
@@ -574,9 +563,9 @@ for my $Group (qw( itsm-change itsm-change-builder itsm-change-manager )) {
 # ------------------------------------------------------------ #
 # get variables for test
 # ------------------------------------------------------------ #
-my $DefaultCategory = $Self->{ConfigObject}->Get('ITSMChange::Category::Default');
-my $DefaultImpact   = $Self->{ConfigObject}->Get('ITSMChange::Impact::Default');
-my $DefaultPriority = $Self->{CIPAllocateObject}->PriorityAllocationGet(
+my $DefaultCategory = $ConfigObject->Get('ITSMChange::Category::Default');
+my $DefaultImpact   = $ConfigObject->Get('ITSMChange::Impact::Default');
+my $DefaultPriority = $CIPAllocateObject->PriorityAllocationGet(
     CategoryID => $ChangeCategoryName2ID{$DefaultCategory},
     ImpactID   => $ChangeImpactName2ID{$DefaultImpact},
 );
@@ -2857,7 +2846,7 @@ for my $Test (@ChangeTests) {
         my $CheckData = $ReferenceData->{HistoryGet};
 
         # get all history entries
-        my $HistoryEntries = $Self->{HistoryObject}->ChangeHistoryGet(
+        my $HistoryEntries = $HistoryObject->ChangeHistoryGet(
             ChangeID => $ChangeID,
             UserID   => 1,
         );
@@ -3072,7 +3061,7 @@ $Self->Is(
 # ------------------------------------------------------------ #
 # define general change search tests
 # ------------------------------------------------------------ #
-my $SystemTime = $Self->{TimeObject}->SystemTime();
+my $SystemTime = $TimeObject->SystemTime();
 
 my @ChangeSearchTests = (
 
@@ -3104,7 +3093,7 @@ my @ChangeSearchTests = (
     {
         Description => 'CreateTimeNewerDate',
         SearchData  => {
-            CreateTimeNewerDate => $Self->{TimeObject}->SystemTime2TimeStamp(
+            CreateTimeNewerDate => $TimeObject->SystemTime2TimeStamp(
                 SystemTime => $SystemTime - ( 60 * 60 ),
             ),
         },
@@ -3117,7 +3106,7 @@ my @ChangeSearchTests = (
     {
         Description => 'CreateTimeOlderDate',
         SearchData  => {
-            CreateTimeOlderDate => $Self->{TimeObject}->SystemTime2TimeStamp(
+            CreateTimeOlderDate => $TimeObject->SystemTime2TimeStamp(
                 SystemTime => $SystemTime + ( 60 * 60 ),
             ),
         },
@@ -3220,7 +3209,7 @@ my @ChangeSearchTests = (
     {
         Description => 'ChangeTimeNewerDate',
         SearchData  => {
-            ChangeTimeNewerDate => $Self->{TimeObject}->SystemTime2TimeStamp(
+            ChangeTimeNewerDate => $TimeObject->SystemTime2TimeStamp(
                 SystemTime => $SystemTime - ( 60 * 60 ),
             ),
         },
@@ -3233,7 +3222,7 @@ my @ChangeSearchTests = (
     {
         Description => 'ChangeTimeOlderDate',
         SearchData  => {
-            ChangeTimeOlderDate => $Self->{TimeObject}->SystemTime2TimeStamp(
+            ChangeTimeOlderDate => $TimeObject->SystemTime2TimeStamp(
                 SystemTime => $SystemTime + ( 60 * 60 ),
             ),
         },
@@ -3393,10 +3382,10 @@ my @ChangeSearchTests = (
     {
         Description => 'ChangeTimeNewerDate, ChangeTimeOlderDate',
         SearchData  => {
-            ChangeTimeNewerDate => $Self->{TimeObject}->SystemTime2TimeStamp(
+            ChangeTimeNewerDate => $TimeObject->SystemTime2TimeStamp(
                 SystemTime => $SystemTime - ( 60 * 60 ),
             ),
-            ChangeTimeOlderDate => $Self->{TimeObject}->SystemTime2TimeStamp(
+            ChangeTimeOlderDate => $TimeObject->SystemTime2TimeStamp(
                 SystemTime => $SystemTime + ( 60 * 60 ),
             ),
         },
@@ -5394,7 +5383,7 @@ for my $ChangeID (@WOSTChangeIDs) {
 # ------------------------------------------------------------ #
 # get item list of the workorder states with swapped keys and values
 my %WorkOrderStateID2Name = %{
-    $Self->{GeneralCatalogObject}->ItemList(
+    $GeneralCatalogObject->ItemList(
         Class => 'ITSM::ChangeManagement::WorkOrder::State',
         ) || {}
 };
@@ -5825,7 +5814,7 @@ for my $Test (@PermissionTests) {
     for my $Params ( @{ $SourceData->{GroupMemberAdd} } ) {
 
         # modify the group membership
-        my $Success = $Self->{GroupObject}->GroupMemberAdd(
+        my $Success = $GroupObject->GroupMemberAdd(
             %{$Params},
             UserID => 1,
         );
@@ -6057,7 +6046,7 @@ $ChangeObject->ChangeDelete(
 # ------------------------------------------------------------ #
 
 # get current allocation list (UserID is needed)
-my $EmptyAllocateData = $Self->{CIPAllocateObject}->AllocateList();
+my $EmptyAllocateData = $CIPAllocateObject->AllocateList();
 
 # check the result
 $Self->False(
@@ -6066,7 +6055,7 @@ $Self->False(
 );
 
 # get current allocation list
-my $CurrentAllocateData = $Self->{CIPAllocateObject}->AllocateList(
+my $CurrentAllocateData = $CIPAllocateObject->AllocateList(
     UserID => 1,
 );
 
@@ -6111,7 +6100,7 @@ $Self->True(
 );
 
 # update the allocation hash (not all needed arguments given)
-my $CIPAllocationUpdated = $Self->{CIPAllocateObject}->AllocateUpdate(
+my $CIPAllocationUpdated = $CIPAllocateObject->AllocateUpdate(
     UserID => 1,
 );
 
@@ -6122,7 +6111,7 @@ $Self->False(
 );
 
 # update the allocation hash (not all needed arguments given)
-my $CIPAllocationIsUpdated = $Self->{CIPAllocateObject}->AllocateUpdate(
+my $CIPAllocationIsUpdated = $CIPAllocateObject->AllocateUpdate(
     AllocateData => $CurrentAllocateData,
 );
 
@@ -6133,7 +6122,7 @@ $Self->False(
 );
 
 # update the allocation hash (allocation hash)
-my $CIPAllocationIsUpdatedNrThree = $Self->{CIPAllocateObject}->AllocateUpdate(
+my $CIPAllocationIsUpdatedNrThree = $CIPAllocateObject->AllocateUpdate(
     AllocateData => {
         Test  => 'aaa',
         Test2 => 'bbb',
@@ -6148,7 +6137,7 @@ $Self->False(
 );
 
 # update the allocation hash
-my $Success = $Self->{CIPAllocateObject}->AllocateUpdate(
+my $Success = $CIPAllocateObject->AllocateUpdate(
     AllocateData => $CurrentAllocateData,
     UserID       => 1,
 );
@@ -6416,7 +6405,7 @@ for my $TestFile (@TestFileList) {
     );
 
     # get the change history
-    my $HistoryEntries = $Self->{HistoryObject}->ChangeHistoryGet(
+    my $HistoryEntries = $HistoryObject->ChangeHistoryGet(
         ChangeID => $ChangeID,
         UserID   => 1,
     );
@@ -6449,11 +6438,11 @@ for my $TestFile (@TestFileList) {
 # ------------------------------------------------------------ #
 
 # disable email checks to change the newly added users
-$CheckEmailAddressesOrg = $Self->{ConfigObject}->Get('CheckEmailAddresses');
+$CheckEmailAddressesOrg = $ConfigObject->Get('CheckEmailAddresses');
 if ( !defined $CheckEmailAddressesOrg ) {
     $CheckEmailAddressesOrg = 1;
 }
-$Self->{ConfigObject}->Set(
+$ConfigObject->Set(
     Key   => 'CheckEmailAddresses',
     Value => 0,
 );
@@ -6462,14 +6451,14 @@ $Self->{ConfigObject}->Set(
 for my $UnittestUserID (@UserIDs) {
 
     # get user data
-    my %User = $Self->{UserObject}->GetUserData(
+    my %User = $UserObject->GetUserData(
         UserID => $UnittestUserID,
     );
 
     # update user
-    $Self->{UserObject}->UserUpdate(
+    $UserObject->UserUpdate(
         %User,
-        ValidID => $Self->{ValidObject}->ValidLookup( Valid => 'invalid' ),
+        ValidID => $ValidObject->ValidLookup( Valid => 'invalid' ),
         ChangeUserID => 1,
     );
 }
@@ -6506,7 +6495,7 @@ continue {
 # delete dynamic fields that have been created for this test
 for my $DynamicFieldID (@DynamicFieldIDs) {
 
-    my $Success = $Self->{DynamicFieldObject}->DynamicFieldDelete(
+    my $Success = $DynamicFieldObject->DynamicFieldDelete(
         ID     => $DynamicFieldID,
         UserID => 1,
     );
@@ -6520,7 +6509,7 @@ for my $DynamicFieldID (@DynamicFieldIDs) {
 # restore original dynamic fields order
 for my $DynamicField ( @{$OriginalDynamicFields} ) {
 
-    my $Success = $Self->{DynamicFieldObject}->DynamicFieldUpdate(
+    my $Success = $DynamicFieldObject->DynamicFieldUpdate(
         %{$DynamicField},
         Reorder => 0,
         UserID  => 1,
@@ -6534,7 +6523,7 @@ for my $DynamicField ( @{$OriginalDynamicFields} ) {
 }
 
 # restore original email check param
-$Self->{ConfigObject}->Set(
+$ConfigObject->Set(
     Key   => 'CheckEmailAddresses',
     Value => $CheckEmailAddressesOrg,
 );
@@ -6560,7 +6549,7 @@ sub SetTimes {
 
     # check change id
     if ( !$Param{ChangeID} ) {
-        $Self->{LogObject}->Log(
+        $LogObject->Log(
             Priority => 'error',
             Message  => 'Need ChangeID!',
         );
@@ -6569,7 +6558,7 @@ sub SetTimes {
 
     # check parameters
     if ( !$Param{CreateTime} && !$Param{ChangeTime} ) {
-        $Self->{LogObject}->Log(
+        $LogObject->Log(
             Priority => 'error',
             Message  => 'Need parameter CreateTime or ChangeTime!',
         );
@@ -6596,26 +6585,21 @@ sub SetTimes {
     $SQL .= 'WHERE id = ? ';
     push @Bind, \$Param{ChangeID};
 
-    return if !$Self->{DBObject}->Do(
+    return if !$DBObject->Do(
         SQL  => $SQL,
         Bind => \@Bind,
     );
 
-    # delete cache
-    $Self->{CacheObject}->Delete(
+    # cleanup the cache
+    $CacheObject->CleanUp(
         Type => 'ITSMChangeManagement',
-        Key  => 'ChangeGet::ID::' . $Param{ChangeID},
-    );
-    $Self->{CacheObject}->Delete(
-        Type => 'ITSMChangeManagement',
-        Key  => 'ChangeList',
     );
 
     return 1;
 }
 
 # set SendNotifications to it's original value
-$Self->{ConfigObject}->Set(
+$ConfigObject->Set(
     Key   => 'ITSMChange::SendNotifications',
     Value => $SendNotificationsOrg,
 );
