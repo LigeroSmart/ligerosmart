@@ -284,10 +284,10 @@
 /*global ITSM: true */
     ITSM.Agent.ConfirmationDialog.BindConfirmationDialog({
         ElementID:                  'Menu[% Data.MenuID %]',
-        ElementSelector:            '[% Data.ElementSelector %]',
-        DialogContentQueryString:   '[% Data.DialogContentQueryString %]',
-        ConfirmedActionQueryString: '[% Data.ConfirmedActionQueryString %]',
-        DialogTitle:                '[% Data.DialogTitle %]',
+        ElementSelector:            '[% Data.ElementSelector | Interpolate %]',
+        DialogContentQueryString:   '[% Data.DialogContentQueryString | Interpolate %]',
+        ConfirmedActionQueryString: '[% Data.ConfirmedActionQueryString | Interpolate %]',
+        DialogTitle:                '[% Data.DialogTitle | Interpolate %]',
         TranslatedText:             {
             Yes: [% Translate("Yes") | JSON %],
             No:  [% Translate("No") | JSON %],
