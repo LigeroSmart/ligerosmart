@@ -163,7 +163,7 @@ sub Run {
             next PARAM if !$WorkOrder->{$Param};
 
             # translate
-            $WorkOrder->{$Param} = $Self->{LayoutObject}->{LanguageObject}->Get(
+            $WorkOrder->{$Param} = $Self->{LayoutObject}->{LanguageObject}->Translate(
                 $WorkOrder->{$Param},
             );
         }

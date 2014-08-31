@@ -108,8 +108,8 @@ sub Run {
         my $AllocateMatrix;
 
         $AllocateMatrix->[0]->[0]->{ObjectType} =
-            $Self->{LayoutObject}->{LanguageObject}->Get('Impact') . ' / '
-            . $Self->{LayoutObject}->{LanguageObject}->Get('Category');
+            $Self->{LayoutObject}->{LanguageObject}->Translate('Impact') . ' / '
+            . $Self->{LayoutObject}->{LanguageObject}->Translate('Category');
         $AllocateMatrix->[0]->[0]->{Class} = 'HeaderColumnDescription';
 
         # generate table description (Impact)

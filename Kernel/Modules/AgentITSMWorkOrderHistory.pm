@@ -186,7 +186,7 @@ sub Run {
                             # E.g. the usernames should not be translated
                             my $TranslatedValue = $TranslationNeeded
                                 ?
-                                $Self->{LayoutObject}->{LanguageObject}->Get($Value)
+                                $Self->{LayoutObject}->{LanguageObject}->Translate($Value)
                                 :
                                 $Value;
 
@@ -207,7 +207,7 @@ sub Run {
             }
 
             # translate fieldname for display
-            $DisplayedFieldname = $Self->{LayoutObject}->{LanguageObject}->Get(
+            $DisplayedFieldname = $Self->{LayoutObject}->{LanguageObject}->Translate(
                 $DisplayedFieldname,
             );
 
@@ -261,7 +261,7 @@ sub Run {
             # show 'nice' output with variable substitution
             # sample input:
             # ChangeHistory::ChangeLinkAdd", "Ticket", "1
-            $Data{Content} = $Self->{LayoutObject}->{LanguageObject}->Get(
+            $Data{Content} = $Self->{LayoutObject}->{LanguageObject}->Translate(
                 'WorkOrderHistory::' . $Data{HistoryType} . '", ' . $Data{Content}
             );
 

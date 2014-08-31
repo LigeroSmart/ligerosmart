@@ -189,7 +189,7 @@ sub Run {
 
     # the second item in the page title is the area in the product 'ITSM Change Management'
     my $HeaderArea = $PrintChange ? 'ITSM Change' : 'ITSM Workorder';
-    $HeaderArea = $Self->{LayoutObject}->{LanguageObject}->Get($HeaderArea);
+    $HeaderArea = $Self->{LayoutObject}->{LanguageObject}->Translate($HeaderArea);
 
     # the last item in the page title is either the change number of the full workorder number
     my $HeaderValue = $PrintChange
@@ -237,7 +237,7 @@ sub Run {
                 PrintChange    => $PrintChange,
                 PrintWorkOrder => $PrintWorkOrder,
                 Title =>
-                    $Self->{LayoutObject}->{LanguageObject}->Get($Attribute),
+                    $Self->{LayoutObject}->{LanguageObject}->Translate($Attribute),
                 LongText => $Change->{ $Attribute . 'Plain' },
             );
         }
@@ -381,7 +381,7 @@ sub Run {
         }
 
         # start a new page for every workorder
-        my $HeaderArea = $Self->{LayoutObject}->{LanguageObject}->Get('ITSM Workorder');
+        my $HeaderArea = $Self->{LayoutObject}->{LanguageObject}->Translate('ITSM Workorder');
         my $HeaderValue = join '-', $Change->{ChangeNumber}, $WorkOrder->{WorkOrderNumber};
         if ( !$Self->{PDFObject} ) {
             $Self->{LayoutObject}->Block( Name => 'WorkOrder' );
@@ -405,7 +405,7 @@ sub Run {
                 PrintChange    => 0,
                 PrintWorkOrder => 1,
                 Title =>
-                    $Self->{LayoutObject}->{LanguageObject}->Get($Attribute),
+                    $Self->{LayoutObject}->{LanguageObject}->Translate($Attribute),
                 LongText => $WorkOrder->{ $Attribute . 'Plain' },
             );
         }
@@ -542,7 +542,7 @@ sub _OutputHeadline {
     }
 
     if ( $Self->{PDFObject} ) {
-        my $PrintedBy = $Self->{LayoutObject}->{LanguageObject}->Get('printed by');
+        my $PrintedBy = $Self->{LayoutObject}->{LanguageObject}->Translate('printed by');
         my $Time = $Self->{LayoutObject}->Output( Template => '$Env{"Time"}' );
 
         my $UserFullName = $Self->{UserObject}->UserName(
@@ -558,7 +558,7 @@ sub _OutputHeadline {
             . $UserFullName . ' '
             . $Time;
         $Page->{FooterLeft} = '';
-        $Page->{PageText}   = $Self->{LayoutObject}->{LanguageObject}->Get('Page');
+        $Page->{PageText}   = $Self->{LayoutObject}->{LanguageObject}->Translate('Page');
         $Page->{PageCount}  = 1;
 
         # create new PDF page
@@ -612,7 +612,7 @@ sub _PrepareAndAddInfoRow {
 
     # keys are always translatable
     my $Key = $RowSpec->{Key} || $Attribute;
-    $Key = $Self->{LayoutObject}->{LanguageObject}->Get($Key);
+    $Key = $Self->{LayoutObject}->{LanguageObject}->Translate($Key);
 
     # determine the value
     my $Value;
@@ -652,7 +652,7 @@ sub _PrepareAndAddInfoRow {
 
     # translate the value
     if ( $Value && $RowSpec->{ValueIsTranslatable} ) {
-        $Value = $Self->{LayoutObject}->{LanguageObject}->Get($Value),
+        $Value = $Self->{LayoutObject}->{LanguageObject}->Translate($Value),
     }
 
     # add separator between key and value
@@ -1436,7 +1436,7 @@ sub _OutputLinkedObjects {
             # investigate link type name
             my @LinkData = split q{::}, $LinkTypeLinkDirection;
             my $LinkTypeName = $TypeList{ $LinkData[0] }->{ $LinkData[1] . 'Name' };
-            $LinkTypeName = $Self->{LayoutObject}->{LanguageObject}->Get($LinkTypeName);
+            $LinkTypeName = $Self->{LayoutObject}->{LanguageObject}->Translate($LinkTypeName);
 
             # define headline
             $Table{CellData}[$Row][0]{Content} = $LinkTypeName . ':';
@@ -1470,7 +1470,7 @@ sub _OutputLinkedObjects {
 
         # output headline
         $Self->{PDFObject}->Text(
-            Text     => $Self->{LayoutObject}->{LanguageObject}->Get('Linked Objects'),
+            Text     => $Self->{LayoutObject}->{LanguageObject}->Translate('Linked Objects'),
             Height   => 7,
             Type     => 'Cut',
             Font     => 'ProportionalBoldItalic',

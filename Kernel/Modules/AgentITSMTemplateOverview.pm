@@ -218,8 +218,8 @@ sub Run {
         Filters     => \%NavBarFilter,
         FilterLink  => $LinkFilter,
 
-        TitleName => $Self->{LayoutObject}->{LanguageObject}->Get('Overview')
-            . ': ' . $Self->{LayoutObject}->{LanguageObject}->Get('Template'),
+        TitleName => $Self->{LayoutObject}->{LanguageObject}->Translate('Overview')
+            . ': ' . $Self->{LayoutObject}->{LanguageObject}->Translate('Template'),
 
         TitleValue => $Filters{ $Self->{Filter} }->{Name},
 

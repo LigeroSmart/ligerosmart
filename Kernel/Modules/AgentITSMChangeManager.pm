@@ -229,9 +229,9 @@ sub Run {
         Filters    => \%NavBarFilter,
         FilterLink => $LinkFilter,
 
-        TitleName => $Self->{LayoutObject}->{LanguageObject}->Get('Overview')
+        TitleName => $Self->{LayoutObject}->{LanguageObject}->Translate('Overview')
             . ': '
-            . $Self->{LayoutObject}->{LanguageObject}->Get('ChangeManager'),
+            . $Self->{LayoutObject}->{LanguageObject}->Translate('ChangeManager'),
 
         TitleValue => $Self->{Filter},
 

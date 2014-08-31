@@ -758,7 +758,7 @@ sub _ITSMChangeGetWorkOrderGraph {
 
     # translate workorder type
     $WorkOrder->{TranslatedWorkOrderType}
-        = $Self->{LanguageObject}->Get( $WorkOrder->{WorkOrderType} );
+        = $Self->{LanguageObject}->Translate( $WorkOrder->{WorkOrderType} );
 
     # build label for link in graph
     $WorkOrder->{WorkOrderLabel}

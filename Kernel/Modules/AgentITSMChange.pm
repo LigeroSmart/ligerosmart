@@ -222,8 +222,8 @@ sub Run {
         Filters    => \%NavBarFilter,
         FilterLink => $LinkFilter,
 
-        TitleName => $Self->{LayoutObject}->{LanguageObject}->Get('Overview')
-            . ': ' . $Self->{LayoutObject}->{LanguageObject}->Get('ITSM Changes'),
+        TitleName => $Self->{LayoutObject}->{LanguageObject}->Translate('Overview')
+            . ': ' . $Self->{LayoutObject}->{LanguageObject}->Translate('ITSM Changes'),
 
         TitleValue => $Filters{ $Self->{Filter} }->{Name},
 

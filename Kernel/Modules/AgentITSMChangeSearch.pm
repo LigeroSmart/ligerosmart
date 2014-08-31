@@ -651,7 +651,7 @@ sub Run {
                     $Header = $Self->{ConfigObject}->Get('ITSMChange::Hook');
                 }
                 else {
-                    $Header = $Self->{LayoutObject}->{LanguageObject}->Get($Header);
+                    $Header = $Self->{LayoutObject}->{LanguageObject}->Translate($Header);
                 }
             }
 
@@ -764,10 +764,10 @@ sub Run {
 
             # PDF Output
             if ( $Self->{PDFObject} ) {
-                my $Title = $Self->{LayoutObject}->{LanguageObject}->Get('Change') . ' '
-                    . $Self->{LayoutObject}->{LanguageObject}->Get('Search');
-                my $PrintedBy = $Self->{LayoutObject}->{LanguageObject}->Get('printed by');
-                my $Page      = $Self->{LayoutObject}->{LanguageObject}->Get('Page');
+                my $Title = $Self->{LayoutObject}->{LanguageObject}->Translate('Change') . ' '
+                    . $Self->{LayoutObject}->{LanguageObject}->Translate('Search');
+                my $PrintedBy = $Self->{LayoutObject}->{LanguageObject}->Translate('printed by');
+                my $Page      = $Self->{LayoutObject}->{LanguageObject}->Translate('Page');
                 my $Time      = $Self->{LayoutObject}->Output( Template => '$Env{"Time"}' );
 
                 # get maximum number of pages
@@ -782,25 +782,25 @@ sub Run {
                     = $Self->{ConfigObject}->Get('ITSMChange::Hook');
                 $CellData->[0]->[0]->{Font} = 'ProportionalBold';
                 $CellData->[0]->[1]->{Content}
-                    = $Self->{LayoutObject}->{LanguageObject}->Get('ChangeTitle');
+                    = $Self->{LayoutObject}->{LanguageObject}->Translate('ChangeTitle');
                 $CellData->[0]->[1]->{Font} = 'ProportionalBold';
                 $CellData->[0]->[2]->{Content}
-                    = $Self->{LayoutObject}->{LanguageObject}->Get('ChangeBuilder');
+                    = $Self->{LayoutObject}->{LanguageObject}->Translate('ChangeBuilder');
                 $CellData->[0]->[2]->{Font} = 'ProportionalBold';
                 $CellData->[0]->[3]->{Content}
-                    = $Self->{LayoutObject}->{LanguageObject}->Get('WorkOrders');
+                    = $Self->{LayoutObject}->{LanguageObject}->Translate('WorkOrders');
                 $CellData->[0]->[3]->{Font} = 'ProportionalBold';
                 $CellData->[0]->[4]->{Content}
-                    = $Self->{LayoutObject}->{LanguageObject}->Get('ChangeState');
+                    = $Self->{LayoutObject}->{LanguageObject}->Translate('ChangeState');
                 $CellData->[0]->[4]->{Font} = 'ProportionalBold';
                 $CellData->[0]->[5]->{Content}
-                    = $Self->{LayoutObject}->{LanguageObject}->Get('Priority');
+                    = $Self->{LayoutObject}->{LanguageObject}->Translate('Priority');
                 $CellData->[0]->[5]->{Font} = 'ProportionalBold';
                 $CellData->[0]->[6]->{Content}
-                    = $Self->{LayoutObject}->{LanguageObject}->Get('PlannedStartTime');
+                    = $Self->{LayoutObject}->{LanguageObject}->Translate('PlannedStartTime');
                 $CellData->[0]->[6]->{Font} = 'ProportionalBold';
                 $CellData->[0]->[7]->{Content}
-                    = $Self->{LayoutObject}->{LanguageObject}->Get('PlannedEndTime');
+                    = $Self->{LayoutObject}->{LanguageObject}->Translate('PlannedEndTime');
                 $CellData->[0]->[7]->{Font} = 'ProportionalBold';
 
                 # create the content array
@@ -817,7 +817,7 @@ sub Run {
                 # output 'No ticket data found', if no content was given
                 if ( !$CellData->[0]->[0] ) {
                     $CellData->[0]->[0]->{Content}
-                        = $Self->{LayoutObject}->{LanguageObject}->Get('No ticket data found.');
+                        = $Self->{LayoutObject}->{LanguageObject}->Translate('No ticket data found.');
                 }
 
                 # page params
@@ -1176,7 +1176,7 @@ sub _MaskForm {
         next DYNAMICFIELD if !IsArrayRefWithData($SearchFieldPreferences);
 
         # translate the dynamic field label
-        my $TranslatedDynamicFieldLabel = $Self->{LayoutObject}->{LanguageObject}->Get(
+        my $TranslatedDynamicFieldLabel = $Self->{LayoutObject}->{LanguageObject}->Translate(
             $DynamicFieldConfig->{Label},
         );
 
@@ -1184,7 +1184,7 @@ sub _MaskForm {
         for my $Preference ( @{$SearchFieldPreferences} ) {
 
             # translate the suffix
-            my $TranslatedSuffix = $Self->{LayoutObject}->{LanguageObject}->Get(
+            my $TranslatedSuffix = $Self->{LayoutObject}->{LanguageObject}->Translate(
                 $Preference->{LabelSuffix},
             ) || '';
 
@@ -1325,11 +1325,11 @@ sub _MaskForm {
             next TIMETYPE;
         }
 
-        my $Title = $Self->{LayoutObject}->{LanguageObject}->Get( $TimeType->{Title} );
+        my $Title = $Self->{LayoutObject}->{LanguageObject}->Translate( $TimeType->{Title} );
         my $BeforeAfterTranslatable
-            = $Self->{LayoutObject}->{LanguageObject}->Get('(before/after)');
+            = $Self->{LayoutObject}->{LanguageObject}->Translate('(before/after)');
         my $BetweenTranslatable
-            = $Self->{LayoutObject}->{LanguageObject}->Get('(between)');
+            = $Self->{LayoutObject}->{LanguageObject}->Translate('(between)');
         push @Attributes, (
             {
                 Key   => $Prefix . 'TimePointField',
@@ -1526,7 +1526,7 @@ sub _MaskForm {
             next TIMETYPE;
         }
 
-        my $Title             = $Self->{LayoutObject}->{LanguageObject}->Get( $TimeType->{Title} );
+        my $Title             = $Self->{LayoutObject}->{LanguageObject}->Translate( $TimeType->{Title} );
         my %TimeSelectionData = (
             Prefix => $Prefix,
             Title  => $Title,

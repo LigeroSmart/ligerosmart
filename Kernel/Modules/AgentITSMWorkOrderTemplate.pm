@@ -70,7 +70,7 @@ sub Run {
     if ( $Self->{LayoutObject}->{LanguageObject} ) {
 
         # translate workorder type
-        $WorkOrder->{WorkOrderType} = $Self->{LayoutObject}->{LanguageObject}->Get(
+        $WorkOrder->{WorkOrderType} = $Self->{LayoutObject}->{LanguageObject}->Translate(
             $WorkOrder->{WorkOrderType}
         );
     }

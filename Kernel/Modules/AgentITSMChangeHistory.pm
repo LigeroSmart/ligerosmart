@@ -290,7 +290,7 @@ sub Run {
                             # E.g. the usernames should not be translated
                             my $TranslatedValue = $TranslationNeeded
                                 ?
-                                $Self->{LayoutObject}->{LanguageObject}->Get($Value)
+                                $Self->{LayoutObject}->{LanguageObject}->Translate($Value)
                                 :
                                 $Value;
 
@@ -344,7 +344,7 @@ sub Run {
             }
 
             # translate fieldname for display
-            $DisplayedFieldname = $Self->{LayoutObject}->{LanguageObject}->Get(
+            $DisplayedFieldname = $Self->{LayoutObject}->{LanguageObject}->Translate(
                 $DisplayedFieldname,
             );
 
@@ -449,7 +449,7 @@ sub Run {
                     = ( $ActionExecuteData[1] =~ m{ ( unsuccessfully | successfully ) }xms )[0];
 
                 # translate result
-                $ActionExecuteData[1] = ' "' . $Self->{LayoutObject}->{LanguageObject}->Get(
+                $ActionExecuteData[1] = ' "' . $Self->{LayoutObject}->{LanguageObject}->Translate(
                     $HistoryEntryType . '::' . $ActionExecuteResult,
                 ) . '"';
 
@@ -464,7 +464,7 @@ sub Run {
             # sample input:
             # ChangeHistory::ChangeLinkAdd", "Ticket", "1
             # YES, this looks strange, but this is the correct way!!!
-            $Data{Content} = $Self->{LayoutObject}->{LanguageObject}->Get(
+            $Data{Content} = $Self->{LayoutObject}->{LanguageObject}->Translate(
                 $HistoryItemType . 'History::' . $HistoryEntryType . '", ' . $Data{Content},
             );
 

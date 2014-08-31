@@ -120,7 +120,7 @@ sub Run {
 
     # get ToolBar object parameters
     my $Class = $Param{Config}->{CssClass};
-    my $Text  = $Self->{LayoutObject}->{LanguageObject}->Get('My Work Orders');
+    my $Text  = $Self->{LayoutObject}->{LanguageObject}->Translate('My Work Orders');
 
     # set ToolBar object
     my $URL      = $Self->{LayoutObject}->{Baselink};

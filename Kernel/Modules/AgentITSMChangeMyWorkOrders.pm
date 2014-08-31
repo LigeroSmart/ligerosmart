@@ -237,8 +237,8 @@ sub Run {
         Filters    => \%NavBarFilter,
         FilterLink => $LinkFilter,
 
-        TitleName => $Self->{LayoutObject}->{LanguageObject}->Get('Overview')
-            . ': ' . $Self->{LayoutObject}->{LanguageObject}->Get('My Workorders'),
+        TitleName => $Self->{LayoutObject}->{LanguageObject}->Translate('Overview')
+            . ': ' . $Self->{LayoutObject}->{LanguageObject}->Translate('My Workorders'),
 
         TitleValue => $Self->{Filter},
 
