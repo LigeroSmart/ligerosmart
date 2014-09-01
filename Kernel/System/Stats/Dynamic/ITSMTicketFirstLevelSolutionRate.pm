@@ -37,22 +37,10 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    $Self->{DBSlaveObject}      = $Param{DBSlaveObject} || $Kernel::OM->Get('Kernel::System::DB');
-    $Self->{ConfigObject}       = $Kernel::OM->Get('Kernel::Config');
-    $Self->{UserObject}         = $Kernel::OM->Get('Kernel::System::User');
-    $Self->{StateObject}        = $Kernel::OM->Get('Kernel::System::State');
-    $Self->{TimeObject}         = $Kernel::OM->Get('Kernel::System::Time');
-    $Self->{QueueObject}        = $Kernel::OM->Get('Kernel::System::Queue');
-    $Self->{TicketObject}       = $Kernel::OM->Get('Kernel::System::Ticket');
-    $Self->{PriorityObject}     = $Kernel::OM->Get('Kernel::System::Priority');
-    $Self->{ServiceObject}      = $Kernel::OM->Get('Kernel::System::Service');
-    $Self->{SLAObject}          = $Kernel::OM->Get('Kernel::System::SLA');
-    $Self->{TypeObject}         = $Kernel::OM->Get('Kernel::System::Type');
-    $Self->{DynamicFieldObject} = $Kernel::OM->Get('Kernel::System::DynamicField');
-    $Self->{BackendObject}      = $Kernel::OM->Get('Kernel::System::DynamicField::Backend');
+    $Self->{DBSlaveObject} = $Param{DBSlaveObject} || $Kernel::OM->Get('Kernel::System::DB');
 
     # get the dynamic fields for ticket object
-    $Self->{DynamicField} = $Self->{DynamicFieldObject}->DynamicFieldListGet(
+    $Self->{DynamicField} = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldListGet(
         Valid      => 1,
         ObjectType => ['Ticket'],
     );
@@ -70,28 +58,28 @@ sub GetObjectAttributes {
     my ( $Self, %Param ) = @_;
 
     # get user list
-    my %UserList = $Self->{UserObject}->UserList(
+    my %UserList = $Kernel::OM->Get('Kernel::System::User')->UserList(
         Type  => 'Long',
         Valid => 0,
     );
 
     # get state list
-    my %StateList = $Self->{StateObject}->StateGetStatesByType(
+    my %StateList = $Kernel::OM->Get('Kernel::System::State')->StateGetStatesByType(
         StateType => ['closed'],
         Result    => 'HASH',
         UserID    => 1,
     );
 
     # get queue list
-    my %QueueList = $Self->{QueueObject}->GetAllQueues();
+    my %QueueList = $Kernel::OM->Get('Kernel::System::Queue')->GetAllQueues();
 
     # get priority list
-    my %PriorityList = $Self->{PriorityObject}->PriorityList(
+    my %PriorityList = $Kernel::OM->Get('Kernel::System::Priority')->PriorityList(
         UserID => 1,
     );
 
     # get current time to fix bug#3830
-    my $TimeStamp = $Self->{TimeObject}->CurrentTimestamp();
+    my $TimeStamp = $Kernel::OM->Get('Kernel::System::Time')->CurrentTimestamp();
     my ($Date) = split /\s+/, $TimeStamp;
     my $Today = sprintf "%s 23:59:59", $Date;
 
@@ -224,15 +212,15 @@ sub GetObjectAttributes {
         },
     );
 
-    if ( $Self->{ConfigObject}->Get('Ticket::Service') ) {
+    if ( $Kernel::OM->Get('Kernel::Config')->Get('Ticket::Service') ) {
 
         # get service list
-        my %Service = $Self->{ServiceObject}->ServiceList(
+        my %Service = $Kernel::OM->Get('Kernel::System::Service')->ServiceList(
             UserID => 1,
         );
 
         # get sla list
-        my %SLA = $Self->{SLAObject}->SLAList(
+        my %SLA = $Kernel::OM->Get('Kernel::System::SLA')->SLAList(
             UserID => 1,
         );
 
@@ -262,10 +250,10 @@ sub GetObjectAttributes {
         unshift @ObjectAttributes, @ObjectAttributeAdd;
     }
 
-    if ( $Self->{ConfigObject}->Get('Ticket::Type') ) {
+    if ( $Kernel::OM->Get('Kernel::Config')->Get('Ticket::Type') ) {
 
         # get ticket type list
-        my %Type = $Self->{TypeObject}->TypeList(
+        my %Type = $Kernel::OM->Get('Kernel::System::Type')->TypeList(
             UserID => 1,
         );
 
@@ -283,7 +271,7 @@ sub GetObjectAttributes {
         unshift @ObjectAttributes, \%ObjectAttribute1;
     }
 
-    if ( $Self->{ConfigObject}->Get('Stats::UseAgentElementInStats') ) {
+    if ( $Kernel::OM->Get('Kernel::Config')->Get('Stats::UseAgentElementInStats') ) {
 
         my @ObjectAttributeAdd = (
             {
@@ -321,7 +309,7 @@ sub GetObjectAttributes {
         push @ObjectAttributes, @ObjectAttributeAdd;
     }
 
-    if ( $Self->{ConfigObject}->Get('Stats::CustomerIDAsMultiSelect') ) {
+    if ( $Kernel::OM->Get('Kernel::Config')->Get('Stats::CustomerIDAsMultiSelect') ) {
 
         # Get CustomerID
         # (This way also can be the solution for the CustomerUserID)
@@ -371,7 +359,7 @@ sub GetObjectAttributes {
         my $PossibleValuesFilter;
 
         # set possible values filter from ACLs
-        my $ACL = $Self->{TicketObject}->TicketAcl(
+        my $ACL = $Kernel::OM->Get('Kernel::System::Ticket')->TicketAcl(
             Action        => 'AgentStats',
             Type          => 'DynamicField_' . $DynamicFieldConfig->{Name},
             ReturnType    => 'Ticket',
@@ -380,12 +368,12 @@ sub GetObjectAttributes {
             UserID        => 1,
         );
         if ($ACL) {
-            my %Filter = $Self->{TicketObject}->TicketAclData();
+            my %Filter = $Kernel::OM->Get('Kernel::System::Ticket')->TicketAclData();
             $PossibleValuesFilter = \%Filter;
         }
 
         # get field html
-        my $DynamicFieldStatsParameter = $Self->{BackendObject}->StatsFieldParameterBuild(
+        my $DynamicFieldStatsParameter = $Kernel::OM->Get('Kernel::System::DynamicField::Backend')->StatsFieldParameterBuild(
             DynamicFieldConfig   => $DynamicFieldConfig,
             PossibleValuesFilter => $PossibleValuesFilter,
         );
@@ -431,7 +419,7 @@ sub GetStatElement {
     }
 
     # start ticket search
-    my @TicketSearchIDs = $Self->{TicketObject}->TicketSearch(
+    my @TicketSearchIDs = $Kernel::OM->Get('Kernel::System::Ticket')->TicketSearch(
         %Param,
         Result     => 'ARRAY',
         Limit      => 100_000_000,
@@ -505,28 +493,28 @@ sub _ArticleDataGet {
 
     # get id of article type 'phone'
     if ( !$Self->{PhoneTypeID} ) {
-        $Self->{PhoneTypeID} = $Self->{TicketObject}->ArticleTypeLookup(
+        $Self->{PhoneTypeID} = $Kernel::OM->Get('Kernel::System::Ticket')->ArticleTypeLookup(
             ArticleType => 'phone',
         );
     }
 
     # get id of article type 'email-external'
     if ( !$Self->{EmailExternalTypeID} ) {
-        $Self->{EmailExternalTypeID} = $Self->{TicketObject}->ArticleTypeLookup(
+        $Self->{EmailExternalTypeID} = $Kernel::OM->Get('Kernel::System::Ticket')->ArticleTypeLookup(
             ArticleType => 'email-external',
         );
     }
 
     # get id of article sender type 'agent'
     if ( !$Self->{AgentSenderTypeID} ) {
-        $Self->{AgentSenderTypeID} = $Self->{TicketObject}->ArticleSenderTypeLookup(
+        $Self->{AgentSenderTypeID} = $Kernel::OM->Get('Kernel::System::Ticket')->ArticleSenderTypeLookup(
             SenderType => 'agent',
         );
     }
 
     # get id of article sender type 'customer'
     if ( !$Self->{CustomerSenderTypeID} ) {
-        $Self->{CustomerSenderTypeID} = $Self->{TicketObject}->ArticleSenderTypeLookup(
+        $Self->{CustomerSenderTypeID} = $Kernel::OM->Get('Kernel::System::Ticket')->ArticleSenderTypeLookup(
             SenderType => 'customer',
         );
     }

@@ -54,11 +54,8 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    # create needed sysconfig object
-    $Self->{SysConfigObject} = $Kernel::OM->Get('Kernel::System::SysConfig');
-
     # rebuild ZZZ* files
-    $Self->{SysConfigObject}->WriteDefault();
+    $Kernel::OM->Get('Kernel::System::SysConfig')->WriteDefault();
 
     # define the ZZZ files
     my @ZZZFiles = (
@@ -79,12 +76,12 @@ sub new {
     }
 
     # create needed objects
-    $Self->{LogObject}          = $Kernel::OM->Get('Kernel::System::Log');
-    $Self->{DBObject}           = $Kernel::OM->Get('Kernel::System::DB');
-    $Self->{StateObject}        = $Kernel::OM->Get('Kernel::System::State');
-    $Self->{TypeObject}         = $Kernel::OM->Get('Kernel::System::Type');
-    $Self->{ValidObject}        = $Kernel::OM->Get('Kernel::System::Valid');
-    $Self->{DynamicFieldObject} = $Kernel::OM->Get('Kernel::System::DynamicField');
+    $Kernel::OM->Get('Kernel::System::Log')          = $Kernel::OM->Get('Kernel::System::Log');
+    $Kernel::OM->Get('Kernel::System::DB')           = $Kernel::OM->Get('Kernel::System::DB');
+    $Kernel::OM->Get('Kernel::System::State')        = $Kernel::OM->Get('Kernel::System::State');
+    $Kernel::OM->Get('Kernel::System::Type')         = $Kernel::OM->Get('Kernel::System::Type');
+    $Kernel::OM->Get('Kernel::System::Valid')        = $Kernel::OM->Get('Kernel::System::Valid');
+    $Kernel::OM->Get('Kernel::System::DynamicField') = $Kernel::OM->Get('Kernel::System::DynamicField');
 
     # the stats object needs a UserID parameter for the constructor
     # we need to discard any existing stats object before
@@ -98,7 +95,6 @@ sub new {
             UserID => 1,
         },
     );
-    $Self->{StatsObject} = $Kernel::OM->Get('Kernel::System::Stats');
 
     # define file prefix for stats
     $Self->{FilePrefix} = 'ITSMStats';
@@ -150,7 +146,7 @@ sub CodeInstall {
     $Self->_CreateITSMDynamicFields();
 
     # install stats
-    $Self->{StatsObject}->StatsInstall(
+    $Kernel::OM->Get('Kernel::System::Stats')->StatsInstall(
         FilePrefix => $Self->{FilePrefix},
     );
 
@@ -169,7 +165,7 @@ sub CodeReinstall {
     my ( $Self, %Param ) = @_;
 
     # install stats
-    $Self->{StatsObject}->StatsInstall(
+    $Kernel::OM->Get('Kernel::System::Stats')->StatsInstall(
         FilePrefix => $Self->{FilePrefix},
     );
 
@@ -211,7 +207,7 @@ sub CodeUpgrade {
     $Self->_MakeDynamicFieldsInternal();
 
     # install stats
-    $Self->{StatsObject}->StatsInstall(
+    $Kernel::OM->Get('Kernel::System::Stats')->StatsInstall(
         FilePrefix => $Self->{FilePrefix},
     );
 
@@ -345,7 +341,7 @@ sub _SetScreenDynamicFieldConfig {
     for my $Screen ( sort keys %ScreenDynamicFieldConfig ) {
 
         # get existing config for each screen
-        my $Config = $Self->{ConfigObject}->Get("Ticket::Frontend::$Screen");
+        my $Config = $Kernel::OM->Get('Kernel::Config')->Get("Ticket::Frontend::$Screen");
 
         # get existing dynamic field config
         my %ExistingSetting = %{ $Config->{DynamicField} || {} };
@@ -368,7 +364,7 @@ sub _SetScreenDynamicFieldConfig {
         }
 
         # update the sysconfig
-        my $Success = $Self->{SysConfigObject}->ConfigItemUpdate(
+        my $Success = $Kernel::OM->Get('Kernel::System::SysConfig')->ConfigItemUpdate(
             Valid => 1,
             Key   => 'Ticket::Frontend::' . $Screen . '###DynamicField',
             Value => \%NewSetting,
@@ -394,7 +390,7 @@ sub _SetStateValid {
 
     # check needed stuff
     if ( !$Param{StateNames} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need StateNames!',
         );
@@ -402,7 +398,7 @@ sub _SetStateValid {
     }
 
     # lookup valid id
-    my %ValidList = $Self->{ValidObject}->ValidList();
+    my %ValidList = $Kernel::OM->Get('Kernel::System::Valid')->ValidList();
     %ValidList = reverse %ValidList;
     my $ValidID = $Param{Valid} ? $ValidList{valid} : $ValidList{invalid};
 
@@ -410,14 +406,14 @@ sub _SetStateValid {
     for my $StateName ( @{ $Param{StateNames} } ) {
 
         # get state
-        my %State = $Self->{StateObject}->StateGet(
+        my %State = $Kernel::OM->Get('Kernel::System::State')->StateGet(
             Name => $StateName,
         );
 
         next STATENAME if !%State;
 
         # set state
-        $Self->{StateObject}->StateUpdate(
+        $Kernel::OM->Get('Kernel::System::State')->StateUpdate(
             %State,
             ValidID => $ValidID,
             UserID  => 1,
@@ -443,7 +439,7 @@ sub _SetTypeValid {
 
     # check needed stuff
     if ( !$Param{TypeNames} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need TypeNames!',
         );
@@ -451,12 +447,12 @@ sub _SetTypeValid {
     }
 
     # lookup valid id
-    my %ValidList = $Self->{ValidObject}->ValidList();
+    my %ValidList = $Kernel::OM->Get('Kernel::System::Valid')->ValidList();
     %ValidList = reverse %ValidList;
     my $ValidID = $Param{Valid} ? $ValidList{valid} : $ValidList{invalid};
 
     # get list of all types
-    my %TypeList = $Self->{TypeObject}->TypeList(
+    my %TypeList = $Kernel::OM->Get('Kernel::System::Type')->TypeList(
         Valid => 0,
     );
 
@@ -472,12 +468,12 @@ sub _SetTypeValid {
         next TYPENAME if !$TypeID;
 
         # get type
-        my %Type = $Self->{TypeObject}->TypeGet(
+        my %Type = $Kernel::OM->Get('Kernel::System::Type')->TypeGet(
             ID => $TypeID,
         );
 
         # set type
-        $Self->{TypeObject}->TypeUpdate(
+        $Kernel::OM->Get('Kernel::System::Type')->TypeUpdate(
             %Type,
             ValidID => $ValidID,
             UserID  => 1,
@@ -498,12 +494,12 @@ creates all dynamic fields that are necessary for ITSM
 sub _CreateITSMDynamicFields {
     my ( $Self, %Param ) = @_;
 
-    my $ValidID = $Self->{ValidObject}->ValidLookup(
+    my $ValidID = $Kernel::OM->Get('Kernel::System::Valid')->ValidLookup(
         Valid => 'valid',
     );
 
     # get all current dynamic fields
-    my $DynamicFieldList = $Self->{DynamicFieldObject}->DynamicFieldListGet(
+    my $DynamicFieldList = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldListGet(
         Valid => 0,
     );
 
@@ -549,7 +545,7 @@ sub _CreateITSMDynamicFields {
         {
 
             # rename the field and create a new one
-            my $Success = $Self->{DynamicFieldObject}->DynamicFieldUpdate(
+            my $Success = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldUpdate(
                 %{ $DynamicFieldLookup{ $DynamicField->{Name} } },
                 Name   => $DynamicFieldLookup{ $DynamicField->{Name} }->{Name} . 'Old',
                 UserID => 1,
@@ -560,7 +556,7 @@ sub _CreateITSMDynamicFields {
 
         # otherwise if the field exists and the type match, update it to the ITSM definition
         else {
-            my $Success = $Self->{DynamicFieldObject}->DynamicFieldUpdate(
+            my $Success = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldUpdate(
                 %{$DynamicField},
                 ID         => $DynamicFieldLookup{ $DynamicField->{Name} }->{ID},
                 FieldOrder => $DynamicFieldLookup{ $DynamicField->{Name} }->{FieldOrder},
@@ -574,7 +570,7 @@ sub _CreateITSMDynamicFields {
         if ($CreateDynamicField) {
 
             # create a new field
-            my $FieldID = $Self->{DynamicFieldObject}->DynamicFieldAdd(
+            my $FieldID = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldAdd(
                 InternalField => 1,
                 Name          => $DynamicField->{Name},
                 Label         => $DynamicField->{Label},
@@ -619,12 +615,12 @@ sub _RenameDynamicFields {
     for my $DynamicFieldNew (@DynamicFields) {
 
         # get existing dynamic field data
-        my $DynamicFieldOld = $Self->{DynamicFieldObject}->DynamicFieldGet(
+        my $DynamicFieldOld = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldGet(
             Name => $DynamicFieldNew->{OldName},
         );
 
         # update the dynamic field
-        my $Success = $Self->{DynamicFieldObject}->DynamicFieldUpdate(
+        my $Success = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldUpdate(
             ID         => $DynamicFieldOld->{ID},
             FieldOrder => $DynamicFieldOld->{FieldOrder},
             Name       => $DynamicFieldNew->{Name},
@@ -645,7 +641,7 @@ sub _RenameDynamicFields {
     # error handling if not all dynamic fields could be updated successfully
     if ( scalar @DynamicFields != $SuccessCounter ) {
 
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "Could not rename all dynamic fields for ITSMIncidentProblemManagement!",
         );
@@ -783,7 +779,7 @@ sub _MakeDynamicFieldsInternal {
     for my $DynamicField (@DynamicFields) {
 
         # set as internal field
-        $Self->{DBObject}->Do(
+        $Kernel::OM->Get('Kernel::System::DB')->Do(
             SQL => 'UPDATE dynamic_field
                 SET internal_field = 1
                 WHERE name = ?',
