@@ -18,14 +18,8 @@ use Kernel::System::User;
 
 # create local objects
 my $ConfigObject         = $Kernel::OM->Get('Kernel::Config');
-my $GeneralCatalogObject = Kernel::System::GeneralCatalog->new(
-    %{$Self},
-    ConfigObject => $ConfigObject,
-);
-my $UserObject = Kernel::System::User->new(
-    %{$Self},
-    ConfigObject => $ConfigObject,
-);
+my $GeneralCatalogObject = $Kernel::OM->Get('Kernel::System::GeneralCatalog');
+my $UserObject           = $Kernel::OM->Get('Kernel::System::User');
 
 # ------------------------------------------------------------ #
 # make preparations

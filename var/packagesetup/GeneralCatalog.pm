@@ -47,9 +47,6 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    # get objects from object manager
-    $Self->{DBObject} = $Kernel::OM->Get('Kernel::System::DB');
-
     return $Self;
 }
 
@@ -122,13 +119,13 @@ sub _MigrateFunctionality {
     my ( $Self, %Param ) = @_;
 
     # SELECT all functionality values
-    $Self->{DBObject}->Prepare(
+    $Kernel::OM->Get('Kernel::System::DB')->Prepare(
         SQL => 'SELECT id, functionality FROM general_catalog',
     );
 
     my @List;
     ROW:
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $Kernel::OM->Get('Kernel::System::DB')->FetchrowArray() ) {
         next ROW if !$Row[1];
 
         push @List, \@Row;
@@ -136,7 +133,7 @@ sub _MigrateFunctionality {
 
     # save entries in new table
     for my $Entry (@List) {
-        $Self->{DBObject}->Do(
+        $Kernel::OM->Get('Kernel::System::DB')->Do(
             SQL =>
                 'INSERT INTO general_catalog_preferences( general_catalog_id, pref_key, pref_value )'
                 . ' VALUES( ?, \'Functionality\', ? )',
@@ -145,7 +142,7 @@ sub _MigrateFunctionality {
     }
 
     # drop column functionality
-    my ($Drop) = $Self->{DBObject}->SQLProcessor(
+    my ($Drop) = $Kernel::OM->Get('Kernel::System::DB')->SQLProcessor(
         Database => [
             {
                 Tag     => 'TableAlter',
@@ -164,7 +161,7 @@ sub _MigrateFunctionality {
         ],
     );
 
-    $Self->{DBObject}->Do(
+    $Kernel::OM->Get('Kernel::System::DB')->Do(
         SQL => $Drop,
     );
 
