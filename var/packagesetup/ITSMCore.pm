@@ -56,16 +56,6 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    # get needed objects from object manager
-    $Self->{LogObject}            = $Kernel::OM->Get('Kernel::System::Log');
-    $Self->{DBObject}             = $Kernel::OM->Get('Kernel::System::DB');
-    $Self->{GeneralCatalogObject} = $Kernel::OM->Get('Kernel::System::GeneralCatalog');
-    $Self->{GroupObject}          = $Kernel::OM->Get('Kernel::System::Group');
-    $Self->{CIPAllocateObject}    = $Kernel::OM->Get('Kernel::System::ITSMCIPAllocate');
-    $Self->{PriorityObject}       = $Kernel::OM->Get('Kernel::System::Priority');
-    $Self->{ValidObject}          = $Kernel::OM->Get('Kernel::System::Valid');
-    $Self->{DynamicFieldObject}   = $Kernel::OM->Get('Kernel::System::DynamicField');
-
     return $Self;
 }
 
@@ -275,12 +265,12 @@ creates all dynamic fields that are necessary for ITSMCore
 sub _CreateITSMDynamicFields {
     my ( $Self, %Param ) = @_;
 
-    my $ValidID = $Self->{ValidObject}->ValidLookup(
+    my $ValidID = $Kernel::OM->Get('Kernel::System::Valid')->ValidLookup(
         Valid => 'valid',
     );
 
     # get all current dynamic fields
-    my $DynamicFieldList = $Self->{DynamicFieldObject}->DynamicFieldListGet(
+    my $DynamicFieldList = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldListGet(
         Valid => 0,
     );
 
@@ -326,7 +316,7 @@ sub _CreateITSMDynamicFields {
         {
 
             # rename the field and create a new one
-            my $Success = $Self->{DynamicFieldObject}->DynamicFieldUpdate(
+            my $Success = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldUpdate(
                 %{ $DynamicFieldLookup{ $DynamicField->{Name} } },
                 Name   => $DynamicFieldLookup{ $DynamicField->{Name} }->{Name} . 'Old',
                 UserID => 1,
@@ -337,7 +327,7 @@ sub _CreateITSMDynamicFields {
 
         # otherwise if the field exists and the type match, update it to the ITSM definition
         else {
-            my $Success = $Self->{DynamicFieldObject}->DynamicFieldUpdate(
+            my $Success = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldUpdate(
                 %{$DynamicField},
                 ID         => $DynamicFieldLookup{ $DynamicField->{Name} }->{ID},
                 FieldOrder => $DynamicFieldLookup{ $DynamicField->{Name} }->{FieldOrder},
@@ -351,7 +341,7 @@ sub _CreateITSMDynamicFields {
         if ($CreateDynamicField) {
 
             # create a new field
-            my $FieldID = $Self->{DynamicFieldObject}->DynamicFieldAdd(
+            my $FieldID = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldAdd(
                 InternalField => 1,
                 Name          => $DynamicField->{Name},
                 Label         => $DynamicField->{Label},
@@ -387,13 +377,13 @@ sub _MigrateCriticalityAndImpactToDynamicFields {
     my ( $Self, %Param ) = @_;
 
     # get criticality list (only valid items)
-    my $CriticalityList = $Self->{GeneralCatalogObject}->ItemList(
+    my $CriticalityList = $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemList(
         Class => 'ITSM::Core::Criticality',
         Valid => 1,
     );
 
     # get impact list (only valid items)
-    my $ImpactList = $Self->{GeneralCatalogObject}->ItemList(
+    my $ImpactList = $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemList(
         Class => 'ITSM::Core::Impact',
         Valid => 1,
     );
@@ -422,7 +412,7 @@ sub _MigrateCriticalityAndImpactToDynamicFields {
         }
 
         # get existing dynamic field data
-        my $DynamicFieldOld = $Self->{DynamicFieldObject}->DynamicFieldGet(
+        my $DynamicFieldOld = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldGet(
             Name => $DynamicFieldNew->{OldName},
         );
 
@@ -430,7 +420,7 @@ sub _MigrateCriticalityAndImpactToDynamicFields {
         $DynamicFieldName2ID{ $DynamicFieldNew->{Name} } = $DynamicFieldOld->{ID};
 
         # update the dynamic field
-        my $Success = $Self->{DynamicFieldObject}->DynamicFieldUpdate(
+        my $Success = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldUpdate(
             ID         => $DynamicFieldOld->{ID},
             FieldOrder => $DynamicFieldOld->{FieldOrder},
             Name       => $DynamicFieldNew->{Name},
@@ -451,7 +441,7 @@ sub _MigrateCriticalityAndImpactToDynamicFields {
     # error handling if not all dynamic fields could be updated successfully
     if ( scalar @DynamicFields != $SuccessCounter ) {
 
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message =>
                 "Could not migrate Criticality and Impact from General Catalog to Dynamic Fields!",
@@ -462,13 +452,13 @@ sub _MigrateCriticalityAndImpactToDynamicFields {
     my %GeneralCatalogList;
 
     # get criticality list (valid and invalid items)
-    $GeneralCatalogList{ITSMCriticality} = $Self->{GeneralCatalogObject}->ItemList(
+    $GeneralCatalogList{ITSMCriticality} = $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemList(
         Class => 'ITSM::Core::Criticality',
         Valid => 0,
     );
 
     # get impact list (valid and invalid items)
-    $GeneralCatalogList{ITSMImpact} = $Self->{GeneralCatalogObject}->ItemList(
+    $GeneralCatalogList{ITSMImpact} = $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemList(
         Class => 'ITSM::Core::Impact',
         Valid => 0,
     );
@@ -479,7 +469,7 @@ sub _MigrateCriticalityAndImpactToDynamicFields {
 
         for my $ID ( sort keys %{ $GeneralCatalogList{$DynamicFieldName} } ) {
 
-            $Self->{DBObject}->Do(
+            $Kernel::OM->Get('Kernel::System::DB')->Do(
                 SQL => 'UPDATE dynamic_field_value
                     SET value_text = ?
                     WHERE field_id = ?
@@ -495,7 +485,7 @@ sub _MigrateCriticalityAndImpactToDynamicFields {
 
     # delete the entries for criticality and impact from general catalog
     for my $Class (qw(ITSM::Core::Criticality ITSM::Core::Impact)) {
-        $Self->{DBObject}->Do(
+        $Kernel::OM->Get('Kernel::System::DB')->Do(
             SQL  => 'DELETE FROM general_catalog WHERE general_catalog_class = ?',
             Bind => [ \$Class ],
         );
@@ -504,7 +494,7 @@ sub _MigrateCriticalityAndImpactToDynamicFields {
     # migrate service table from criticality_id to criticality
     for my $CriticalityID ( sort keys %{ $GeneralCatalogList{ITSMCriticality} } ) {
 
-        $Self->{DBObject}->Do(
+        $Kernel::OM->Get('Kernel::System::DB')->Do(
             SQL => 'UPDATE service
                 SET criticality = ?
                 WHERE criticality_id = ?',
@@ -518,7 +508,7 @@ sub _MigrateCriticalityAndImpactToDynamicFields {
     # migrate cip_allocate table from criticality_id to criticality
     for my $CriticalityID ( sort keys %{ $GeneralCatalogList{ITSMCriticality} } ) {
 
-        $Self->{DBObject}->Do(
+        $Kernel::OM->Get('Kernel::System::DB')->Do(
             SQL => 'UPDATE cip_allocate
                 SET criticality = ?
                 WHERE criticality_id = ?',
@@ -532,7 +522,7 @@ sub _MigrateCriticalityAndImpactToDynamicFields {
     # migrate cip_allocate table from impact_id to impact
     for my $ImpactID ( sort keys %{ $GeneralCatalogList{ITSMImpact} } ) {
 
-        $Self->{DBObject}->Do(
+        $Kernel::OM->Get('Kernel::System::DB')->Do(
             SQL => 'UPDATE cip_allocate
                 SET impact = ?
                 WHERE impact_id = ?',
@@ -544,7 +534,7 @@ sub _MigrateCriticalityAndImpactToDynamicFields {
     }
 
     # drop migrated columns
-    my @Drop = $Self->{DBObject}->SQLProcessor(
+    my @Drop = $Kernel::OM->Get('Kernel::System::DB')->SQLProcessor(
         Database => [
 
             # drop column criticality_id from service table
@@ -598,7 +588,7 @@ sub _MigrateCriticalityAndImpactToDynamicFields {
     );
 
     for my $SQL (@Drop) {
-        $Self->{DBObject}->Do(
+        $Kernel::OM->Get('Kernel::System::DB')->Do(
             SQL => $SQL,
         );
     }
@@ -624,14 +614,14 @@ sub _SetPreferences {
     NAME:
     for my $Name ( sort keys %Map ) {
 
-        my $Item = $Self->{GeneralCatalogObject}->ItemGet(
+        my $Item = $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemGet(
             Name  => $Name,
             Class => 'ITSM::Core::IncidentState',
         );
 
         next NAME if !$Item;
 
-        $Self->{GeneralCatalogObject}->GeneralCatalogPreferencesSet(
+        $Kernel::OM->Get('Kernel::System::GeneralCatalog')->GeneralCatalogPreferencesSet(
             ItemID => $Item->{ItemID},
             Key    => 'Functionality',
             Value  => $Map{$Name},
@@ -651,7 +641,7 @@ sub _CIPDefaultMatrixSet {
     my ( $Self, %Param ) = @_;
 
     # get current allocation list
-    my $List = $Self->{CIPAllocateObject}->AllocateList(
+    my $List = $Kernel::OM->Get('Kernel::System::ITSMCIPAllocate')->AllocateList(
         UserID => 1,
     );
 
@@ -690,7 +680,7 @@ sub _CIPDefaultMatrixSet {
     $Allocation{'5 very high'}->{'5 very high'} = '5 very high';
 
     # get the dynamic fields for ITSMCriticality and ITSMImpact
-    my $DynamicFieldConfigArrayRef = $Self->{DynamicFieldObject}->DynamicFieldListGet(
+    my $DynamicFieldConfigArrayRef = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldListGet(
         Valid       => 1,
         ObjectType  => ['Ticket'],
         FieldFilter => {
@@ -717,7 +707,7 @@ sub _CIPDefaultMatrixSet {
     my %ImpactList = %{ $PossibleValues{ITSMImpact} };
 
     # get priority list
-    my %PriorityList = $Self->{PriorityObject}->PriorityList(
+    my %PriorityList = $Kernel::OM->Get('Kernel::System::Priority')->PriorityList(
         UserID => 1,
     );
     my %PriorityListReverse = reverse %PriorityList;
@@ -747,7 +737,7 @@ sub _CIPDefaultMatrixSet {
     }
 
     # save the matrix
-    $Self->{CIPAllocateObject}->AllocateUpdate(
+    $Kernel::OM->Get('Kernel::System::ITSMCIPAllocate')->AllocateUpdate(
         AllocateData => \%AllocationMatrix,
         UserID       => 1,
     );
@@ -772,7 +762,7 @@ sub _GroupAdd {
     # check needed stuff
     for my $Argument (qw(Name Description)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -781,13 +771,13 @@ sub _GroupAdd {
     }
 
     # get valid list
-    my %ValidList = $Self->{ValidObject}->ValidList(
+    my %ValidList = $Kernel::OM->Get('Kernel::System::Valid')->ValidList(
         UserID => 1,
     );
     my %ValidListReverse = reverse %ValidList;
 
     # get list of all groups
-    my %GroupList = $Self->{GroupObject}->GroupList();
+    my %GroupList = $Kernel::OM->Get('Kernel::System::Group')->GroupList();
 
     # reverse the group list for easier lookup
     my %GroupListReverse = reverse %GroupList;
@@ -799,13 +789,13 @@ sub _GroupAdd {
     if ($GroupID) {
 
         # get current group data
-        my %GroupData = $Self->{GroupObject}->GroupGet(
+        my %GroupData = $Kernel::OM->Get('Kernel::System::Group')->GroupGet(
             ID     => $GroupID,
             UserID => 1,
         );
 
         # reactivate group
-        $Self->{GroupObject}->GroupUpdate(
+        $Kernel::OM->Get('Kernel::System::Group')->GroupUpdate(
             %GroupData,
             ValidID => $ValidListReverse{valid},
             UserID  => 1,
@@ -816,7 +806,7 @@ sub _GroupAdd {
 
     # add the group
     else {
-        return if !$Self->{GroupObject}->GroupAdd(
+        return if !$Kernel::OM->Get('Kernel::System::Group')->GroupAdd(
             Name    => $Param{Name},
             Comment => $Param{Description},
             ValidID => $ValidListReverse{valid},
@@ -825,13 +815,13 @@ sub _GroupAdd {
     }
 
     # lookup the new group id
-    my $NewGroupID = $Self->{GroupObject}->GroupLookup(
+    my $NewGroupID = $Kernel::OM->Get('Kernel::System::Group')->GroupLookup(
         Group  => $Param{Name},
         UserID => 1,
     );
 
     # add user root to the group
-    $Self->{GroupObject}->GroupMemberAdd(
+    $Kernel::OM->Get('Kernel::System::Group')->GroupMemberAdd(
         GID        => $NewGroupID,
         UID        => 1,
         Permission => {
@@ -863,7 +853,7 @@ sub _GroupDeactivate {
 
     # check needed stuff
     if ( !$Param{Name} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need Name!',
         );
@@ -871,26 +861,26 @@ sub _GroupDeactivate {
     }
 
     # lookup group id
-    my $GroupID = $Self->{GroupObject}->GroupLookup(
+    my $GroupID = $Kernel::OM->Get('Kernel::System::Group')->GroupLookup(
         Group => $Param{Name},
     );
 
     return if !$GroupID;
 
     # get valid list
-    my %ValidList = $Self->{ValidObject}->ValidList(
+    my %ValidList = $Kernel::OM->Get('Kernel::System::Valid')->ValidList(
         UserID => 1,
     );
     my %ValidListReverse = reverse %ValidList;
 
     # get current group data
-    my %GroupData = $Self->{GroupObject}->GroupGet(
+    my %GroupData = $Kernel::OM->Get('Kernel::System::Group')->GroupGet(
         ID     => $GroupID,
         UserID => 1,
     );
 
     # deactivate group
-    $Self->{GroupObject}->GroupUpdate(
+    $Kernel::OM->Get('Kernel::System::Group')->GroupUpdate(
         %GroupData,
         ValidID => $ValidListReverse{invalid},
         UserID  => 1,
@@ -911,13 +901,13 @@ sub _FillupEmptyServiceTypeID {
     my ( $Self, %Param ) = @_;
 
     # get service type list
-    my $ServiceTypeList = $Self->{GeneralCatalogObject}->ItemList(
+    my $ServiceTypeList = $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemList(
         Class => 'ITSM::Service::Type',
     );
 
     # error handling
     if ( !$ServiceTypeList || ref $ServiceTypeList ne 'HASH' || !%{$ServiceTypeList} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "Can't find any item in general catalog class ITSM::Service::Type!",
         );
@@ -928,7 +918,7 @@ sub _FillupEmptyServiceTypeID {
     my @ServiceTypeKeyList = sort keys %{$ServiceTypeList};
 
     # update type_id
-    return $Self->{DBObject}->Do(
+    return $Kernel::OM->Get('Kernel::System::DB')->Do(
         SQL => "UPDATE service
             SET type_id = ?
             WHERE type_id = 0
@@ -949,7 +939,7 @@ sub _FillupEmptyServiceCriticality {
     my ( $Self, %Param ) = @_;
 
     # get the dynamic fields for ITSMCriticality
-    my $DynamicFieldConfigArrayRef = $Self->{DynamicFieldObject}->DynamicFieldListGet(
+    my $DynamicFieldConfigArrayRef = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldListGet(
         Valid       => 1,
         ObjectType  => ['Ticket'],
         FieldFilter => {
@@ -973,7 +963,7 @@ sub _FillupEmptyServiceCriticality {
 
     # error handling
     if ( !@CriticalityKeyList ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message =>
                 "Can't find any possible values for ITSMCriticality in dynamic field configuration!",
@@ -982,7 +972,7 @@ sub _FillupEmptyServiceCriticality {
     }
 
     # update criticality with the first criticality entry
-    return $Self->{DBObject}->Do(
+    return $Kernel::OM->Get('Kernel::System::DB')->Do(
         SQL => "UPDATE service
             SET criticality = ?
             WHERE criticality = ''
@@ -1003,13 +993,13 @@ sub _FillupEmptySLATypeID {
     my ( $Self, %Param ) = @_;
 
     # get sla type list
-    my $SLATypeList = $Self->{GeneralCatalogObject}->ItemList(
+    my $SLATypeList = $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemList(
         Class => 'ITSM::SLA::Type',
     );
 
     # error handling
     if ( !$SLATypeList || ref $SLATypeList ne 'HASH' || !%{$SLATypeList} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "Can't find any item in general catalog class ITSM::SLA::Type!",
         );
@@ -1020,7 +1010,7 @@ sub _FillupEmptySLATypeID {
     my @SLATypeKeyList = sort keys %{$SLATypeList};
 
     # update type_id
-    return $Self->{DBObject}->Do(
+    return $Kernel::OM->Get('Kernel::System::DB')->Do(
         SQL => "UPDATE sla
             SET type_id = ?
             WHERE type_id = 0
@@ -1046,7 +1036,7 @@ sub _MakeDynamicFieldsInternal {
     for my $DynamicField (@DynamicFields) {
 
         # set as internal field
-        $Self->{DBObject}->Do(
+        $Kernel::OM->Get('Kernel::System::DB')->Do(
             SQL => 'UPDATE dynamic_field
                 SET internal_field = 1
                 WHERE name = ?',

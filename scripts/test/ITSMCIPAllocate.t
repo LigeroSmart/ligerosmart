@@ -11,18 +11,16 @@ use strict;
 use warnings;
 use vars qw($Self);
 
-use Kernel::System::ITSMCIPAllocate;
-
-$Self->{CIPAllocateObject} = Kernel::System::ITSMCIPAllocate->new( %{$Self} );
+my $CIPAllocateObject = $Kernel::OM->Get('Kernel::System::ITSMCIPAllocate');
 
 # get current allocation list (UserID is needed)
-my $AllocateData1 = $Self->{CIPAllocateObject}->AllocateList();
+my $AllocateData1 = $CIPAllocateObject->AllocateList();
 
 # check the result
 $Self->False( $AllocateData1, 'AllocateList()' );
 
 # get current allocation list
-my $AllocateData2 = $Self->{CIPAllocateObject}->AllocateList(
+my $AllocateData2 = $CIPAllocateObject->AllocateList(
     UserID => 1,
 );
 
@@ -69,7 +67,7 @@ if ($HashOK) {
         my ($Criticality) = sort keys %{ $AllocateData2->{$Impact} };
 
         my $ExpectedPriorityID = $AllocateData2->{$Impact}->{$Criticality};
-        my $PriorityID         = $Self->{CIPAllocateObject}->PriorityAllocationGet(
+        my $PriorityID         = $CIPAllocateObject->PriorityAllocationGet(
             Criticality => $Criticality,
             Impact      => $Impact,
         );
@@ -82,7 +80,7 @@ if ($HashOK) {
 }
 
 # update the allocation hash (not all needed arguments given)
-my $Success1 = $Self->{CIPAllocateObject}->AllocateUpdate(
+my $Success1 = $CIPAllocateObject->AllocateUpdate(
     UserID => 1,
 );
 
@@ -90,7 +88,7 @@ my $Success1 = $Self->{CIPAllocateObject}->AllocateUpdate(
 $Self->False( $Success1, 'AllocateUpdate()' );
 
 # update the allocation hash (not all needed arguments given)
-my $Success2 = $Self->{CIPAllocateObject}->AllocateUpdate(
+my $Success2 = $CIPAllocateObject->AllocateUpdate(
     AllocateData => $AllocateData2,
 );
 
@@ -98,7 +96,7 @@ my $Success2 = $Self->{CIPAllocateObject}->AllocateUpdate(
 $Self->False( $Success2, 'AllocateUpdate()' );
 
 # update the allocation hash (allocation hash)
-my $Success3 = $Self->{CIPAllocateObject}->AllocateUpdate(
+my $Success3 = $CIPAllocateObject->AllocateUpdate(
     AllocateData => {
         Test  => 'aaa',
         Test2 => 'bbb',
@@ -110,7 +108,7 @@ my $Success3 = $Self->{CIPAllocateObject}->AllocateUpdate(
 $Self->False( $Success3, 'AllocateUpdate()' );
 
 # update the allocation hash
-my $Success4 = $Self->{CIPAllocateObject}->AllocateUpdate(
+my $Success4 = $CIPAllocateObject->AllocateUpdate(
     AllocateData => $AllocateData2,
     UserID       => 1,
 );
