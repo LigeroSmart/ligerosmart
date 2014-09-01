@@ -13,6 +13,7 @@ use strict;
 use warnings;
 
 our @ObjectDependencies = (
+    'Kernel::Config',
     'Kernel::System::DB',
     'Kernel::System::DynamicField',
     'Kernel::System::Log',
