@@ -47,9 +47,6 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    # create needed objects
-    $Self->{DBObject} = $Kernel::OM->Get('Kernel::System::DB');
-
     return $Self;
 }
 
@@ -138,7 +135,7 @@ sub _FixDatabaseTypo {
     my ( $Self, %Param ) = @_;
 
     # fix the ColumnSeperator typo (correct is ColumnSeparator)
-    return if !$Self->{DBObject}->Do(
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Do(
         SQL => "UPDATE imexport_format "
             . "SET data_key = 'ColumnSeparator' "
             . "WHERE data_key = 'ColumnSeperator'",

@@ -38,12 +38,6 @@ local $Kernel::OM = Kernel::System::ObjectManager->new(
     },
 );
 
-# create common objects
-my %CommonObject;
-$CommonObject{LogObject}          = $Kernel::OM->Get('Kernel::System::Log');
-$CommonObject{MainObject}         = $Kernel::OM->Get('Kernel::System::Main');
-$CommonObject{ImportExportObject} = $Kernel::OM->Get('Kernel::System::ImportExport');
-
 # get options
 my %Opts;
 getopts( 'hn:a:i:o:', \%Opts );
@@ -85,7 +79,7 @@ if ( lc $Opts{a} ne 'import' && lc $Opts{a} ne 'export' ) {
 }
 
 # get template data
-my $TemplateData = $CommonObject{ImportExportObject}->TemplateGet(
+my $TemplateData = $Kernel::OM->Get('Kernel::System::ImportExport')->TemplateGet(
     TemplateID => $TemplateID,
     UserID     => 1,
 );
@@ -105,7 +99,7 @@ if ( lc $Opts{a} eq 'import' ) {
         print STDOUT "Read File $Opts{i}.\n";
 
         # read source file
-        $SourceContent = $CommonObject{MainObject}->FileRead(
+        $SourceContent = $Kernel::OM->Get('Kernel::System::Main')->FileRead(
             Location => $Opts{i},
             Result   => 'SCALAR',
             Mode     => 'binmode',
@@ -117,7 +111,7 @@ if ( lc $Opts{a} eq 'import' ) {
     print STDOUT "Import in process...\n";
 
     # import data
-    my $Result = $CommonObject{ImportExportObject}->Import(
+    my $Result = $Kernel::OM->Get('Kernel::System::ImportExport')->Import(
         TemplateID    => $TemplateID,
         SourceContent => $SourceContent,
         UserID        => 1,
@@ -145,7 +139,7 @@ elsif ( lc $Opts{a} eq 'export' ) {
     print STDOUT "Export in process...\n";
 
     # export data
-    my $Result = $CommonObject{ImportExportObject}->Export(
+    my $Result = $Kernel::OM->Get('Kernel::System::ImportExport')->Export(
         TemplateID => $TemplateID,
         UserID     => 1,
     );
@@ -163,7 +157,7 @@ elsif ( lc $Opts{a} eq 'export' ) {
         my $FileContent = join "\n", @{ $Result->{DestinationContent} };
 
         # save destination content to file
-        my $Success = $CommonObject{MainObject}->FileWrite(
+        my $Success = $Kernel::OM->Get('Kernel::System::Main')->FileWrite(
             Location => $Opts{o},
             Content  => \$FileContent,
         );
