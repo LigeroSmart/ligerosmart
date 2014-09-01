@@ -48,11 +48,8 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    # create needed sysconfig object
-    $Self->{SysConfigObject} = $Kernel::OM->Get('Kernel::System::SysConfig');
-
     # rebuild ZZZ* files
-    $Self->{SysConfigObject}->WriteDefault();
+    $Kernel::OM->Get('Kernel::System::SysConfig')->WriteDefault();
 
     # define the ZZZ files
     my @ZZZFiles = (
@@ -84,7 +81,6 @@ sub new {
             UserID => 1,
         },
     );
-    $Self->{StatsObject} = $Kernel::OM->Get('Kernel::System::Stats');
 
     # define file prefix
     $Self->{FilePrefix} = 'ITSMStats';
@@ -104,7 +100,7 @@ sub CodeInstall {
     my ( $Self, %Param ) = @_;
 
     # install stats
-    $Self->{StatsObject}->StatsInstall(
+    $Kernel::OM->Get('Kernel::System::Stats')->StatsInstall(
         FilePrefix => $Self->{FilePrefix},
     );
 
@@ -123,7 +119,7 @@ sub CodeReinstall {
     my ( $Self, %Param ) = @_;
 
     # install stats
-    $Self->{StatsObject}->StatsInstall(
+    $Kernel::OM->Get('Kernel::System::Stats')->StatsInstall(
         FilePrefix => $Self->{FilePrefix},
     );
 
@@ -142,7 +138,7 @@ sub CodeUpgrade {
     my ( $Self, %Param ) = @_;
 
     # install stats
-    $Self->{StatsObject}->StatsInstall(
+    $Kernel::OM->Get('Kernel::System::Stats')->StatsInstall(
         FilePrefix => $Self->{FilePrefix},
     );
 
@@ -161,7 +157,7 @@ sub CodeUninstall {
     my ( $Self, %Param ) = @_;
 
     # uninstall stats
-    $Self->{StatsObject}->StatsUninstall(
+    $Kernel::OM->Get('Kernel::System::Stats')->StatsUninstall(
         FilePrefix => $Self->{FilePrefix},
     );
 
