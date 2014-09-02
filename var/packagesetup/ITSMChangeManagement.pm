@@ -88,7 +88,7 @@ sub new {
     # the stats object needs a UserID parameter for the constructor
     # we need to discard any existing stats object before
     $Kernel::OM->ObjectsDiscard(
-        Objects => ['Kernel::System::Stats', 'Kernel::Config' ],
+        Objects => ['Kernel::System::Stats'],
     );
 
     # define UserID parameter for the constructor of the stats object
