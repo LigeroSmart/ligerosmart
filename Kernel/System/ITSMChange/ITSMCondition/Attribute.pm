@@ -327,7 +327,7 @@ sub AttributeLookup {
     }
 
     # fetch the result
-    my $Lookup;
+    my $Lookup = '';
     while ( my @Row = $Kernel::OM->Get('Kernel::System::DB')->FetchrowArray() ) {
         $Lookup = $Row[0];
     }
