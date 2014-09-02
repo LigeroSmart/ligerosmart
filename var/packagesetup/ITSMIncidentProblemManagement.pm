@@ -76,14 +76,6 @@ sub new {
         }
     }
 
-    # create needed objects
-    $Kernel::OM->Get('Kernel::System::Log')          = $Kernel::OM->Get('Kernel::System::Log');
-    $Kernel::OM->Get('Kernel::System::DB')           = $Kernel::OM->Get('Kernel::System::DB');
-    $Kernel::OM->Get('Kernel::System::State')        = $Kernel::OM->Get('Kernel::System::State');
-    $Kernel::OM->Get('Kernel::System::Type')         = $Kernel::OM->Get('Kernel::System::Type');
-    $Kernel::OM->Get('Kernel::System::Valid')        = $Kernel::OM->Get('Kernel::System::Valid');
-    $Kernel::OM->Get('Kernel::System::DynamicField') = $Kernel::OM->Get('Kernel::System::DynamicField');
-
     # the stats object needs a UserID parameter for the constructor
     # we need to discard any existing stats object before
     $Kernel::OM->ObjectsDiscard(
