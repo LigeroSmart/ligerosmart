@@ -56,6 +56,13 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
+    # always discard the config object before package code is executed,
+    # to make sure that the config object will be created newly, so that it
+    # will use the recently written new config from the package
+    $Kernel::OM->ObjectsDiscard(
+        Objects => [ 'Kernel::Config' ],
+    );
+
     return $Self;
 }
 
