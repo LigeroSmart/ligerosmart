@@ -367,6 +367,11 @@ sub ServiceListGet {
         my %Preferences = $Self->ServicePreferencesGet(
             ServiceID => $ServiceData->{ServiceID},
         );
+
+        # merge hash
+        if (%Preferences) {
+            %{$ServiceData} = ( %{$ServiceData}, %Preferences );
+        }
 # ---
 # ITSM
 # ---
@@ -378,11 +383,6 @@ sub ServiceListGet {
         );
         $ServiceData = \%NewServiceData;
 # ---
-
-        # merge hash
-        if (%Preferences) {
-            %{$ServiceData} = ( %{$ServiceData}, %Preferences );
-        }
     }
 
     if (@ServiceList) {
@@ -553,6 +553,11 @@ sub ServiceGet {
     my %Preferences = $Self->ServicePreferencesGet(
         ServiceID => $Param{ServiceID},
     );
+
+    # merge hash
+    if (%Preferences) {
+        %ServiceData = ( %ServiceData, %Preferences );
+    }
 # ---
 # ITSM
 # ---
@@ -565,11 +570,6 @@ sub ServiceGet {
         );
     }
 # ---
-
-    # merge hash
-    if (%Preferences) {
-        %ServiceData = ( %ServiceData, %Preferences );
-    }
 
     # set cache
     $Kernel::OM->Get('Kernel::System::Cache')->Set(
