@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTicketActionCommon.pm - common file for several modules
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/b2388aeda631b8818a068d1584acd90151d3a14e/Kernel/Modules/AgentTicketActionCommon.pm
+# $origin: https://github.com/OTRS/otrs/blob/e5fe8740403fd6bfe49bd0f202f5765bec1140c4/Kernel/Modules/AgentTicketActionCommon.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -723,6 +723,7 @@ sub Run {
                 ),
                 %Ticket,
                 DynamicFieldHTML => \%DynamicFieldHTML,
+                IsUpload => $IsUpload,
                 %GetParam,
                 %Error,
             );
@@ -1492,15 +1493,15 @@ sub Run {
         }
 
         # fillup configured default vars
-        if ( !defined $GetParam{Body} && $Self->{Config}->{Body} ) {
-            $GetParam{Body} = $Self->{LayoutObject}->Output(
+        if ( $Body eq '' && $Self->{Config}->{Body} ) {
+            $Body = $Self->{LayoutObject}->Output(
                 Template => $Self->{Config}->{Body},
             );
 
             # make sure body is rich text
             if ( $Self->{LayoutObject}->{BrowserRichText} ) {
-                $GetParam{Body} = $Self->{LayoutObject}->Ascii2RichText(
-                    String => $GetParam{Body},
+                $Body = $Self->{LayoutObject}->Ascii2RichText(
+                    String => $Body,
                 );
             }
         }
@@ -2109,8 +2110,11 @@ sub _Mask {
 
         $Param{WidgetStatus} = 'Collapsed';
 
+        if ( $Self->{Config}->{NoteMandatory} || $Self->{ConfigObject}->Get('Ticket::Frontend::NeedAccountedTime') || $Param{IsUpload} || $Self->{ReplyToArticle} ) {
+            $Param{WidgetStatus} = 'Expanded';
+        }
+
         if ( $Self->{Config}->{NoteMandatory} || $Self->{ConfigObject}->Get('Ticket::Frontend::NeedAccountedTime') ) {
-            $Param{WidgetStatus}    = 'Expanded';
             $Param{SubjectRequired} = 'Validate_Required';
             $Param{BodyRequired}    = 'Validate_Required';
         }

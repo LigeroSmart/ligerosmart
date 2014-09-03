@@ -2,7 +2,7 @@
 # AgentTicketPhone.tt - provides HTML form for phone
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/b2388aeda631b8818a068d1584acd90151d3a14e/Kernel/Output/HTML/Standard/AgentTicketPhone.tt
+# $origin: https://github.com/OTRS/otrs/blob/e5fe8740403fd6bfe49bd0f202f5765bec1140c4/Kernel/Output/HTML/Standard/AgentTicketPhone.tt
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -399,7 +399,7 @@
                     <label for="StandardTemplateID">[% Translate("Text Template") | html %]:</label>
                     <div class="Field">
                         [% Data.StandardTemplateStrg %]
-                        <p class="FieldExplanation">Setting a template will overwrite any text or attachment.</p>
+                        <p class="FieldExplanation">[% Translate("Setting a template will overwrite any text or attachment.") %]</p>
                     </div>
                     <div class="Clear"></div>
 [% WRAPPER JSOnDocumentComplete %]

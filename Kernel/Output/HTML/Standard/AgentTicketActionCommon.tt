@@ -2,7 +2,7 @@
 # AgentTicketActionCommon.tt - provides common HTML form for several masks
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/b2388aeda631b8818a068d1584acd90151d3a14e/Kernel/Output/HTML/Standard/AgentTicketActionCommon.tt
+# $origin: https://github.com/OTRS/otrs/blob/e5fe8740403fd6bfe49bd0f202f5765bec1140c4/Kernel/Output/HTML/Standard/AgentTicketActionCommon.tt
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -86,7 +86,7 @@
                     <div class="WidgetAction Toggle">
                         <a href="#" title="[% Translate("Toggle this widget") | html %]"><i class="fa fa-caret-right"></i><i class="fa fa-caret-down"></i></a>
                     </div>
-                    <h2>[% Translate("Ticket Actions") | html %]</h2>
+                    <h2>[% Translate("Ticket Settings") | html %]</h2>
                 </div>
                 <div class="Content">
                     <fieldset class="TableLike FixedLabel">
@@ -441,7 +441,7 @@ $('#TypeID').bind('change', function (Event) {
                             <label for="StandardTemplateID">[% Translate("Text Template") | html %]:</label>
                             <div class="Field">
                                 [% Data.StandardTemplateStrg %]
-                                <p class="FieldExplanation">Setting a template will overwrite any text or attachment.</p>
+                                <p class="FieldExplanation">[% Translate("Setting a template will overwrite any text or attachment.") %]</p>
                             </div>
                             <div class="Clear"></div>
 [% WRAPPER JSOnDocumentComplete %]
@@ -502,7 +502,6 @@ $('#TypeID').bind('change', function (Event) {
         var $Form = $('#FileUpload').closest('form');
         Core.Form.Validate.DisableValidation($Form);
         $Form.find('#AttachmentUpload').val('1').end().submit();
-
     });
 //]]></script>
 [% END %]
