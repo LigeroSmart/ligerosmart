@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTicketPrint.pm - print layout for agent interface
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/e86136cc7e6ece1a9eb6e1fcd13c66a00ffd78ca/Kernel/Modules/AgentTicketPrint.pm
+# $origin: https://github.com/OTRS/otrs/blob/b2388aeda631b8818a068d1584acd90151d3a14e/Kernel/Modules/AgentTicketPrint.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you

@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTicketZoom.pm - to get a closer view
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/e86136cc7e6ece1a9eb6e1fcd13c66a00ffd78ca/Kernel/Modules/AgentTicketZoom.pm
+# $origin: https://github.com/OTRS/otrs/blob/b2388aeda631b8818a068d1584acd90151d3a14e/Kernel/Modules/AgentTicketZoom.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -180,10 +180,10 @@ sub Run {
 
         my %Actions = %{ $Self->{ConfigObject}->Get('Frontend::Module') };
 
-        # only use those Actions that stats with AgentTicket
+        # only use those Actions that stats with Agent
         %PossibleActions
             = map { ++$Counter => $_ }
-            grep { substr( $_, 0, length 'AgentTicket' ) eq 'AgentTicket' }
+            grep { substr( $_, 0, length 'Agent' ) eq 'Agent' }
             sort keys %Actions;
     }
 
