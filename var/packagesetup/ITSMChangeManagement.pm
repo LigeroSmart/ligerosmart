@@ -337,6 +337,8 @@ sub _MigrateFreeTextToDynamicFields {
     # Migrate freekey and freetext fields to dynamic fields (just the fields, the data comes later)
     # ---------------------------------------------------------------------------------------------
 
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+
     # get all configured change and workorder freekey and freetext numbers from sysconfig
     my @DynamicFields;
     for my $Type (qw(Change WorkOrder)) {
@@ -345,8 +347,8 @@ sub _MigrateFreeTextToDynamicFields {
         for my $Number ( 1 .. 500 ) {
 
             # get freekey and freetext config
-            my $FreeKeyConfig  = $Kernel::OM->Get('Kernel::Config')->Get( $Type . 'FreeKey' . $Number );
-            my $FreeTextConfig = $Kernel::OM->Get('Kernel::Config')->Get( $Type . 'FreeText' . $Number );
+            my $FreeKeyConfig  = $ConfigObject->Get( $Type . 'FreeKey' . $Number );
+            my $FreeTextConfig = $ConfigObject->Get( $Type . 'FreeText' . $Number );
 
             # only if a KEY config exists
             next FREETEXTNUMBER if !$FreeKeyConfig;
@@ -371,7 +373,7 @@ sub _MigrateFreeTextToDynamicFields {
                     FieldType  => 'Dropdown',
                     ObjectType => 'ITSM' . $Type,
                     Config     => {
-                        DefaultValue => $Kernel::OM->Get('Kernel::Config')
+                        DefaultValue => $ConfigObject
                             ->Get( $Type . 'FreeKey' . $Number . '::DefaultSelection' ) || '',
                         Link               => '',
                         PossibleNone       => $PossibleNone,
@@ -409,10 +411,10 @@ sub _MigrateFreeTextToDynamicFields {
                     FieldType  => 'Dropdown',
                     ObjectType => 'ITSM' . $Type,
                     Config     => {
-                        DefaultValue => $Kernel::OM->Get('Kernel::Config')
+                        DefaultValue => $ConfigObject
                             ->Get( $Type . 'FreeText' . $Number . '::DefaultSelection' ) || '',
                         Link =>
-                            $Kernel::OM->Get('Kernel::Config')->Get( $Type . 'FreeText' . $Number . '::Link' )
+                            $ConfigObject->Get( $Type . 'FreeText' . $Number . '::Link' )
                             || '',
                         PossibleNone       => $PossibleNone,
                         PossibleValues     => $FreeTextConfig,
@@ -430,10 +432,10 @@ sub _MigrateFreeTextToDynamicFields {
                     FieldType  => 'Text',
                     ObjectType => 'ITSM' . $Type,
                     Config     => {
-                        DefaultValue => $Kernel::OM->Get('Kernel::Config')
+                        DefaultValue => $ConfigObject
                             ->Get( $Type . 'FreeText' . $Number . '::DefaultSelection' ) || '',
                         Link =>
-                            $Kernel::OM->Get('Kernel::Config')->Get( $Type . 'FreeText' . $Number . '::Link' )
+                            $ConfigObject->Get( $Type . 'FreeText' . $Number . '::Link' )
                             || '',
                     },
                 };
@@ -463,22 +465,11 @@ sub _MigrateFreeTextToDynamicFields {
         Valid => 'valid',
     );
 
-    # set the name for the sysconfig setting for the event module
-    my $EventModuleSysconfigSetting
-        = 'DynamicField::EventModulePost###100-UpdateITSMChangeConditions';
+    # remember current setting for event module configuratiom
+    my $EventModuleConfig = $ConfigObject->{'DynamicField::EventModulePost'}->{'100-UpdateITSMChangeConditions'};
 
-    # get the original sysconfig setting for the event module registration
-    my %EventModuleConfig = $Kernel::OM->Get('Kernel::System::SysConfig')->ConfigItemGet(
-        Name => $EventModuleSysconfigSetting,
-    );
-
-    # deactivate the sysconfig setting to prevent event module to react on
-    # adding of dynamic fields during the migration
-    $Kernel::OM->Get('Kernel::System::SysConfig')->ConfigItemUpdate(
-        Valid => 0,
-        Key   => $EventModuleSysconfigSetting,
-        Value => \%EventModuleConfig,
-    );
+    # temporary delete event module configuration
+    delete $ConfigObject->{'DynamicField::EventModulePost'}->{'100-UpdateITSMChangeConditions'};
 
     DYNAMICFIELD:
     for my $DynamicField (@DynamicFields) {
@@ -500,12 +491,8 @@ sub _MigrateFreeTextToDynamicFields {
         $NextOrderNumber++;
     }
 
-    # re-activate the sysconfig setting again
-    $Kernel::OM->Get('Kernel::System::SysConfig')->ConfigItemUpdate(
-        Valid => 1,
-        Key   => $EventModuleSysconfigSetting,
-        Value => \%EventModuleConfig,
-    );
+    # re-activate the config setting again
+    $ConfigObject->{'DynamicField::EventModulePost'}->{'100-UpdateITSMChangeConditions'} = $EventModuleConfig;
 
     # ---------------------------------------------------------------------------------------------
     # Migrate the change and workorder data from freekey and freetext fields to dynamic fields
@@ -663,7 +650,7 @@ sub _MigrateFreeTextToDynamicFields {
     {
 
         my $FieldType;
-        my $Config = $Kernel::OM->Get('Kernel::Config')->Get($ConfigName);
+        my $Config = $ConfigObject->Get($ConfigName);
         if ( $ConfigName =~ m{ AgentITSMWorkOrder }xms ) {
             $FieldType = 'WorkOrderFreeText';
         }
