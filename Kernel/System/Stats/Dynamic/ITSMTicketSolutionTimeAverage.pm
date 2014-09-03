@@ -373,10 +373,11 @@ sub GetObjectAttributes {
         }
 
         # get field html
-        my $DynamicFieldStatsParameter = $Kernel::OM->Get('Kernel::System::DynamicField::Backend')->StatsFieldParameterBuild(
+        my $DynamicFieldStatsParameter
+            = $Kernel::OM->Get('Kernel::System::DynamicField::Backend')->StatsFieldParameterBuild(
             DynamicFieldConfig   => $DynamicFieldConfig,
             PossibleValuesFilter => $PossibleValuesFilter,
-        );
+            );
 
         if ( IsHashRefWithData($DynamicFieldStatsParameter) ) {
             if ( IsHashRefWithData( $DynamicFieldStatsParameter->{Values} ) ) {
@@ -464,9 +465,10 @@ sub GetStatElement {
                 next ENTRY if $Entry->{Viewable};
 
                 # set stop time
-                $Timespans{$Counter}->{StopTime} = $Kernel::OM->Get('Kernel::System::Time')->TimeStamp2SystemTime(
+                $Timespans{$Counter}->{StopTime}
+                    = $Kernel::OM->Get('Kernel::System::Time')->TimeStamp2SystemTime(
                     String => $Entry->{CreateTime},
-                );
+                    );
 
                 $Counter++;
             }
@@ -475,9 +477,10 @@ sub GetStatElement {
                 next ENTRY if !$Entry->{Viewable};
 
                 # set start time
-                $Timespans{$Counter}->{StartTime} = $Kernel::OM->Get('Kernel::System::Time')->TimeStamp2SystemTime(
+                $Timespans{$Counter}->{StartTime}
+                    = $Kernel::OM->Get('Kernel::System::Time')->TimeStamp2SystemTime(
                     String => $Entry->{CreateTime},
-                );
+                    );
             }
         }
 

@@ -373,10 +373,11 @@ sub GetObjectAttributes {
         }
 
         # get field html
-        my $DynamicFieldStatsParameter = $Kernel::OM->Get('Kernel::System::DynamicField::Backend')->StatsFieldParameterBuild(
+        my $DynamicFieldStatsParameter
+            = $Kernel::OM->Get('Kernel::System::DynamicField::Backend')->StatsFieldParameterBuild(
             DynamicFieldConfig   => $DynamicFieldConfig,
             PossibleValuesFilter => $PossibleValuesFilter,
-        );
+            );
 
         if ( IsHashRefWithData($DynamicFieldStatsParameter) ) {
             if ( IsHashRefWithData( $DynamicFieldStatsParameter->{Values} ) ) {
@@ -500,23 +501,26 @@ sub _ArticleDataGet {
 
     # get id of article type 'email-external'
     if ( !$Self->{EmailExternalTypeID} ) {
-        $Self->{EmailExternalTypeID} = $Kernel::OM->Get('Kernel::System::Ticket')->ArticleTypeLookup(
+        $Self->{EmailExternalTypeID}
+            = $Kernel::OM->Get('Kernel::System::Ticket')->ArticleTypeLookup(
             ArticleType => 'email-external',
-        );
+            );
     }
 
     # get id of article sender type 'agent'
     if ( !$Self->{AgentSenderTypeID} ) {
-        $Self->{AgentSenderTypeID} = $Kernel::OM->Get('Kernel::System::Ticket')->ArticleSenderTypeLookup(
+        $Self->{AgentSenderTypeID}
+            = $Kernel::OM->Get('Kernel::System::Ticket')->ArticleSenderTypeLookup(
             SenderType => 'agent',
-        );
+            );
     }
 
     # get id of article sender type 'customer'
     if ( !$Self->{CustomerSenderTypeID} ) {
-        $Self->{CustomerSenderTypeID} = $Kernel::OM->Get('Kernel::System::Ticket')->ArticleSenderTypeLookup(
+        $Self->{CustomerSenderTypeID}
+            = $Kernel::OM->Get('Kernel::System::Ticket')->ArticleSenderTypeLookup(
             SenderType => 'customer',
-        );
+            );
     }
 
     # ask database
