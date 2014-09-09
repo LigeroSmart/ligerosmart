@@ -1,5 +1,5 @@
 # --
-# Kernel/System/LinkObject/FAQ.pm - to link faq objects
+# Kernel/System/LinkObject/FAQ.pm - to link FAQ objects
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
