@@ -2,7 +2,7 @@
 <otrs_package version="1.0">
     <Name>FAQ</Name>
     <Version>0.0.0</Version>
-    <Framework>3.4.x</Framework>
+    <Framework>4.0.x</Framework>
     <Vendor>OTRS AG</Vendor>
     <URL>http://otrs.org/</URL>
     <License>GNU AFFERO GENERAL PUBLIC LICENSE Version 3, November 2007</License>
@@ -13,7 +13,7 @@
         <File Permission="755" Location="bin/cgi-bin/faq.pl"/>
         <File Permission="755" Location="bin/fcgi-bin/faq.fpl"/>
         <!--
-        This file is not needed, added only to pass OTRS CodePolity checks
+        This file is not needed, added only to pass OTRS CodePolicy checks
         <File Permission="644" Location="doc/en/FAQ.xml"/>
         -->
         <File Permission="644" Location="doc/faq-database.png"/>
@@ -438,181 +438,41 @@
         <TableDrop Name="faq_voting"/>
         <TableDrop Name="faq_log"/>
     </DatabaseUninstall>
-    <CodeInstall Type="post">
-
-        # define function name
-        my $FunctionName = 'CodeInstall';
+    <CodeInstall Type="post"><![CDATA[
 
         # create the package name
         my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
 
-        # load the module
-        if ( $Self->{MainObject}->Require($CodeModule) ) {
-
-            # create new instance
-            my $CodeObject = $CodeModule->new( %{$Self} );
-
-            if ($CodeObject) {
-
-                # start method
-                if ( !$CodeObject->$FunctionName(%{$Self}) ) {
-                    $Self->{LogObject}->Log(
-                        Priority => 'error',
-                        Message  => "Could not call method $FunctionName() on $CodeModule.pm."
-                    );
-                }
-            }
-
-            # error handling
-            else {
-                $Self->{LogObject}->Log(
-                    Priority => 'error',
-                    Message  => "Could not call method new() on $CodeModule.pm."
-                );
-            }
-        }
-
-    </CodeInstall>
-    <CodeUpgrade Type="post">
-
-        # define function name
-        my $FunctionName = 'CodeUpgrade';
+        $Kernel::OM->Get($CodeModule)->CodeInstall();
+    ]]></CodeInstall>
+    <CodeUpgrade Type="post"><![CDATA[
 
         # create the package name
         my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
 
-        # load the module
-        if ( $Self->{MainObject}->Require($CodeModule) ) {
-
-            # create new instance
-            my $CodeObject = $CodeModule->new( %{$Self} );
-
-            if ($CodeObject) {
-
-                # start method
-                if ( !$CodeObject->$FunctionName(%{$Self}) ) {
-                    $Self->{LogObject}->Log(
-                        Priority => 'error',
-                        Message  => "Could not call method $FunctionName() on $CodeModule.pm."
-                    );
-                }
-            }
-
-            # error handling
-            else {
-                $Self->{LogObject}->Log(
-                    Priority => 'error',
-                    Message  => "Could not call method new() on $CodeModule.pm."
-                );
-            }
-        }
-
-    </CodeUpgrade>
-    <CodeUpgrade Type="post" Version="1.5.3">
-
-        # define function name
-        my $FunctionName = 'CodeUpgradeSpecial';
+        $Kernel::OM->Get($CodeModule)->CodeUpgrade();
+    ]]></CodeUpgrade>
+    <CodeUpgrade Type="post" Version="1.5.3"><![CDATA[
 
         # create the package name
         my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
 
-        # load the module
-        if ( $Self->{MainObject}->Require($CodeModule) ) {
-
-            # create new instance
-            my $CodeObject = $CodeModule->new( %{$Self} );
-
-            if ($CodeObject) {
-
-                # start method
-                if ( !$CodeObject->$FunctionName(%{$Self}) ) {
-                    $Self->{LogObject}->Log(
-                        Priority => 'error',
-                        Message  => "Could not call method $FunctionName() on $CodeModule.pm."
-                    );
-                }
-            }
-
-            # error handling
-            else {
-                $Self->{LogObject}->Log(
-                    Priority => 'error',
-                    Message  => "Could not call method new() on $CodeModule.pm."
-                );
-            }
-        }
-
-    </CodeUpgrade>
-    <CodeReinstall Type="post">
-
-        # define function name
-        my $FunctionName = 'CodeReinstall';
+        $Kernel::OM->Get($CodeModule)->CodeUpgradeSpecial();
+    ]]></CodeUpgrade>
+    <CodeReinstall Type="post"><![CDATA[
 
         # create the package name
         my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
 
-        # load the module
-        if ( $Self->{MainObject}->Require($CodeModule) ) {
-
-            # create new instance
-            my $CodeObject = $CodeModule->new( %{$Self} );
-
-            if ($CodeObject) {
-
-                # start method
-                if ( !$CodeObject->$FunctionName(%{$Self}) ) {
-                    $Self->{LogObject}->Log(
-                        Priority => 'error',
-                        Message  => "Could not call method $FunctionName() on $CodeModule.pm."
-                    );
-                }
-            }
-
-            # error handling
-            else {
-                $Self->{LogObject}->Log(
-                    Priority => 'error',
-                    Message  => "Could not call method new() on $CodeModule.pm."
-                );
-            }
-        }
-
-    </CodeReinstall>
-    <CodeUninstall Type="pre">
-
-        # define function name
-        my $FunctionName = 'CodeUninstall';
+        $Kernel::OM->Get($CodeModule)->CodeReinstall();
+    ]]></CodeReinstall>
+    <CodeUninstall Type="pre"><![CDATA[
 
         # create the package name
         my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
 
-        # load the module
-        if ( $Self->{MainObject}->Require($CodeModule) ) {
-
-            # create new instance
-            my $CodeObject = $CodeModule->new( %{$Self} );
-
-            if ($CodeObject) {
-
-                # start method
-                if ( !$CodeObject->$FunctionName(%{$Self}) ) {
-                    $Self->{LogObject}->Log(
-                        Priority => 'error',
-                        Message  => "Could not call method $FunctionName() on $CodeModule.pm."
-                    );
-                }
-            }
-
-            # error handling
-            else {
-                $Self->{LogObject}->Log(
-                    Priority => 'error',
-                    Message  => "Could not call method new() on $CodeModule.pm."
-                );
-            }
-        }
-
-    </CodeUninstall>
+        $Kernel::OM->Get($CodeModule)->CodeUninstall();
+    ]]></CodeUninstall>
     <IntroInstall Type="pre" Title="Install Information" Lang="en"><![CDATA[
         <br/>
         <strong>WELCOME</strong>
