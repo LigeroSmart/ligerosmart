@@ -62,7 +62,7 @@ sub Run {
         @JournalEntries = @{ $Param{Journal} };
     }
 
-    # show Joural Entries as rows
+    # show Journal Entries as rows
     if (@JournalEntries) {
 
         # check ShowColumns parameter
@@ -151,7 +151,7 @@ sub Run {
         }
     }
 
-    # otherwise set an No FAQ Jounal message
+    # otherwise set an No FAQ Journal message
     else {
         $Self->{LayoutObject}->Block( Name => 'NoFAQFound' );
     }

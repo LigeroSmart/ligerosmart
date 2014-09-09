@@ -88,7 +88,7 @@ search in FAQ articles
         #   You can also pass more than one argument to an operator: ['value1', 'value2']
         DynamicField_FieldNameX => {
             Equals            => 123,
-            Like              => 'value*',                # "equals" operator with wildcard support
+            Like              => 'value*',                # "equals" operator with wild-card support
             GreaterThan       => '2001-01-01 01:01:01',
             GreaterThanEquals => '2001-01-01 01:01:01',
             SmallerThan       => '2002-02-02 02:02:02',
@@ -290,10 +290,10 @@ sub FAQSearch {
     # extended SQL
     my $Ext = '';
 
-    # fulltext search
+    # full-text search
     if ( $Param{What} && $Param{What} ne '*' ) {
 
-        # define the search fields for fulltext search
+        # define the search fields for full-text search
         my @SearchFields = ( 'i.f_number', 'i.f_subject', 'i.f_keywords' );
 
         # used from the agent interface (internal)
@@ -345,7 +345,7 @@ sub FAQSearch {
             }
         }
 
-        # add the SQL for the fulltext search
+        # add the SQL for the full-text search
         $Ext .= $Self->{DBObject}->QueryCondition(
             Key          => \@SearchFields,
             Value        => $Param{What},
@@ -471,7 +471,7 @@ sub FAQSearch {
         }
     }
 
-    # show only approved faq articles for public and customer interface
+    # show only approved FAQ articles for public and customer interface
     if ( $Param{Interface}->{Name} eq 'public' || $Param{Interface}->{Name} eq 'external' ) {
         if ($Ext) {
             $Ext .= ' AND';
@@ -619,7 +619,7 @@ sub FAQSearch {
         # don't execute queries if newer date is after current date
         return if $Time > $CurrentSystemTime;
 
-        # don't execute queries if older/newer date restriction show now valid timeframe
+        # don't execute queries if older/newer date restriction show now valid time frame
         return if $CompareCreateTimeOlderNewerDate && $Time > $CompareCreateTimeOlderNewerDate;
 
         $Ext .= " AND i.created >= '"
@@ -715,7 +715,7 @@ sub FAQSearch {
         # don't execute queries if newer date is after current date
         return if $Time > $CurrentSystemTime;
 
-        # don't execute queries if older/newer date restriction show now valid timeframe
+        # don't execute queries if older/newer date restriction show now valid time frame
         return if $CompareChangeTimeOlderNewerDate && $Time > $CompareChangeTimeOlderNewerDate;
 
         $Ext .= " AND i.changed >= '"
@@ -814,7 +814,7 @@ sub FAQSearch {
     $Ext
         .= ' GROUP BY i.id, i.f_subject, i.f_language_id, i.created, i.changed, s.name, v.item_id ';
 
-    # add HAVING clause ( Votes and Rate are agreggated columns, they can't be in the WHERE clause)
+    # add HAVING clause ( Votes and Rate are aggregated columns, they can't be in the WHERE clause)
     # defined voting parameters (for Votes and Rate)
     my %VotingOperators = (
         Equals            => '=',
@@ -1015,7 +1015,7 @@ sub _InConditionGet {
         $Self->{DBObject}->Quote( $Value, 'Integer' );
     }
 
-    # split IN statement with more than 900 elements in more statements bombined with OR
+    # split IN statement with more than 900 elements in more statements combined with OR
     # because Oracle doesn't support more than 1000 elements in one IN statement.
     my @SQLStrings;
     LOOP:

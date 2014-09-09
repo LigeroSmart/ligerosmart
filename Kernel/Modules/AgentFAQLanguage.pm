@@ -1,5 +1,5 @@
 # --
-# Kernel/Modules/AgentFAQLanguage.pm - the faq language management module
+# Kernel/Modules/AgentFAQLanguage.pm - the FAQ language management module
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -109,12 +109,12 @@ sub Run {
         # check for name and language id
         for my $ParamName (qw(LanguageID Name)) {
 
-            # store needed parameters in %GetParam to make it reloadable
+            # store needed parameters in %GetParam to make it re-loadable
             $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
 
             if ( !$GetParam{$ParamName} ) {
 
-                # html output
+                # HTML output
                 $Self->_Edit(
                     Action                 => 'Change',
                     NameServerError        => 'ServerError',
@@ -143,7 +143,7 @@ sub Run {
         # show the edit screen again
         if ($LanguageExistsAlready) {
 
-            # html output
+            # HTML output
             $Self->_Edit(
                 Action                 => 'Change',
                 NameServerError        => 'ServerError',
@@ -200,7 +200,7 @@ sub Run {
         my $Output = $Self->{LayoutObject}->Header();
         $Output .= $Self->{LayoutObject}->NavigationBar();
 
-        # html output
+        # HTML output
         $Self->_Edit(
             Action => 'Add',
             %GetParam,
@@ -236,7 +236,7 @@ sub Run {
         # check for name
         if ( !$GetParam{Name} ) {
 
-            # html output
+            # HTML output
             $Self->_Edit(
                 Action                 => 'Add',
                 NameServerError        => 'ServerError',
@@ -351,7 +351,7 @@ sub Run {
         # display list of affected FAQ articles
         if (@AffectedItems) {
 
-            # set the dialog type to have only 1 button: Ok
+            # set the dialog type to have only 1 button: OK
             $DialogType = 'Message';
 
             $Self->{LayoutObject}->Block(
@@ -362,14 +362,14 @@ sub Run {
             ITEMID:
             for my $ItemID (@AffectedItems) {
 
-                # get faq article
+                # get FAQ article
                 my %FAQData = $Self->{FAQObject}->FAQGet(
                     ItemID     => $ItemID,
                     ItemFields => 0,
                     UserID     => $Self->{UserID},
                 );
 
-                # check faq article
+                # check FAQ article
                 next ITEMID if !%FAQData;
 
                 $Self->{LayoutObject}->Block(
@@ -469,7 +469,7 @@ sub Run {
         my $Output = $Self->{LayoutObject}->Header();
         $Output .= $Self->{LayoutObject}->NavigationBar();
 
-        # html output
+        # HTML output
         $Self->_Overview();
         $Output .= $Self->{LayoutObject}->Output(
             TemplateFile => 'AgentFAQLanguage',
@@ -549,7 +549,7 @@ sub _Overview {
             }
         }
 
-        # otherwise a no data found msg is displayed
+        # otherwise a no data found message is displayed
         else {
             $Self->{LayoutObject}->Block( Name => 'NoDataFoundMsg' );
         }

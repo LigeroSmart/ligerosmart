@@ -1,5 +1,5 @@
 # --
-# Kernel/Modules/AgentFAQAdd.pm - agent frontend to add faq articles
+# Kernel/Modules/AgentFAQAdd.pm - agent frontend to add FAQ articles
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -132,11 +132,11 @@ sub Run {
     }
 
     # ------------------------------------------------------------ #
-    # show the faq add screen
+    # show the FAQ add screen
     # ------------------------------------------------------------ #
     if ( !$Self->{Subaction} ) {
 
-        # create html strings for all dynamic fields
+        # create HTML strings for all dynamic fields
         my %DynamicFieldHTML;
 
         # cycle trough the activated Dynamic Fields for this screen
@@ -144,7 +144,7 @@ sub Run {
         for my $DynamicFieldConfig ( @{ $Self->{DynamicField} } ) {
             next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
 
-            # get field html
+            # get field HTML
             $DynamicFieldHTML{ $DynamicFieldConfig->{Name} } =
                 $Self->{BackendObject}->EditFieldRender(
                 DynamicFieldConfig => $DynamicFieldConfig,
@@ -178,13 +178,13 @@ sub Run {
             }
         }
 
-        # html output
+        # HTML output
         $Output .= $Self->_MaskNew(
             FormID                  => $Self->{FormID},
             UserCategoriesLongNames => $UserCategoriesLongNames,
             DynamicFieldHTML        => \%DynamicFieldHTML,
 
-            # last viewed category from session (written by faq explorer)
+            # last viewed category from session (written by FAQ explorer)
             CategoryID => $Self->{LastViewedCategory},
         );
 
@@ -195,7 +195,7 @@ sub Run {
     }
 
     # ------------------------------------------------------------ #
-    # save the faq
+    # save the FAQ
     # ------------------------------------------------------------ #
     elsif ( $Self->{Subaction} eq 'Save' ) {
 
@@ -260,7 +260,7 @@ sub Run {
             );
         }
 
-        # create html strings for all dynamic fields
+        # create HTML strings for all dynamic fields
         my %DynamicFieldHTML;
 
         # cycle trough the activated Dynamic Fields for this screen
@@ -294,7 +294,7 @@ sub Run {
                 }
             }
 
-            # get field html
+            # get field HTML
             $DynamicFieldHTML{ $DynamicFieldConfig->{Name} } =
                 $Self->{BackendObject}->EditFieldRender(
                 DynamicFieldConfig => $DynamicFieldConfig,
@@ -342,7 +342,7 @@ sub Run {
                 }
             }
 
-            # html output
+            # HTML output
             $Output .= $Self->_MaskNew(
                 UserCategoriesLongNames => $UserCategoriesLongNames,
                 Attachments             => \@Attachments,
@@ -358,13 +358,13 @@ sub Run {
             return $Output;
         }
 
-        # add the new faq article
+        # add the new FAQ article
         my $FAQID = $Self->{FAQObject}->FAQAdd(
             %GetParam,
             UserID => $Self->{UserID},
         );
 
-        # show error if faq could not be added
+        # show error if FAQ could not be added
         if ( !$FAQID ) {
             return $Self->{LayoutObject}->ErrorScreen();
         }
@@ -385,14 +385,14 @@ sub Run {
                 # remember that it is inline
                 $Inline = 1;
 
-                # remember if this inline attachment is used in any faq article
+                # remember if this inline attachment is used in any FAQ article
                 my $ContentIDFound;
 
                 # check all fields for content id
                 FIELD:
                 for my $Number ( 1 .. 6 ) {
 
-                    # get faq field
+                    # get FAQ field
                     my $Field = $GetParam{ 'Field' . $Number };
 
                     # skip empty fields
@@ -409,7 +409,7 @@ sub Run {
                 }
 
                 # we do not want to keep this attachment,
-                # because it was deleted in the richt text editor
+                # because it was deleted in the rich-text editor
                 next ATTACHMENT if !$ContentIDFound;
             }
 
@@ -457,7 +457,7 @@ sub Run {
         for my $DynamicFieldConfig ( @{ $Self->{DynamicField} } ) {
             next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
 
-            # set the object ID depending on the field configration
+            # set the object ID depending on the field configuration
             my $ObjectID = $FAQID;
 
             # set the value
@@ -530,7 +530,7 @@ sub _MaskNew {
         # get user language ID
         my $SelectedLanguageID = $Self->{FAQObject}->LanguageLookup( Name => $SelectedLanguage );
 
-        # check if LanduageID does not exsits
+        # check if LanduageID does not exists
         if ( !$SelectedLanguageID ) {
 
             # get the lowest language ID
@@ -576,7 +576,7 @@ sub _MaskNew {
         Translation   => 1,
     );
 
-    # show faq add screen
+    # show FAQ add screen
     $Self->{LayoutObject}->Block(
         Name => 'FAQAdd',
         Data => {
@@ -649,7 +649,7 @@ sub _MaskNew {
             Result => 'HASH',
         );
 
-        # get the faq approval group from config
+        # get the FAQ approval group from config
         my $ApprovalGroup = $Self->{ConfigObject}->Get('FAQ::ApprovalGroup') || '';
 
         # build the approval selection if user is in the approval group
@@ -694,7 +694,7 @@ sub _MaskNew {
 
     # add rich text editor javascript
     # only if activated and the browser can handle it
-    # otherwise just a textarea is shown
+    # otherwise just a text-area is shown
     if ( $Self->{LayoutObject}->{BrowserRichText} ) {
 
         # use height/width defined for this screen
@@ -727,7 +727,7 @@ sub _MaskNew {
             $Param{DynamicFieldHTML}->{ $DynamicFieldConfig->{Name} }
         );
 
-        # get the html strings form $Param
+        # get the HTML strings form $Param
         my $DynamicFieldHTML = $Param{DynamicFieldHTML}->{ $DynamicFieldConfig->{Name} };
 
         $Self->{LayoutObject}->Block(

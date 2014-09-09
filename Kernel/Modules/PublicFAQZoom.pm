@@ -155,7 +155,7 @@ sub Run {
             Charset => 'utf-8',
         );
 
-        # build base url for inline images
+        # build base URL for inline images
 
         my $SessionID = '';
         if ( $Self->{SessionID} && !$Self->{SessionIDCookie} ) {
@@ -268,7 +268,7 @@ sub Run {
     # show votes
     if ( $Self->{Voting} ) {
 
-        # always diplays Votes result even if its 0
+        # always displays Votes result even if its 0
         $Self->{LayoutObject}->Block(
             Name => 'ViewVotes',
             Data => {%FAQData},

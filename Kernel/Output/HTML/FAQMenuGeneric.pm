@@ -50,7 +50,7 @@ sub Run {
     if ( $Action eq 'AgentLinkObject' ) {
 
         # The Link-link is a special case, as it is not specific to FAQ.
-        # As a workaround we hardcode that AgentLinkObject is treated like AgentFAQEdit
+        # As a workaround we hardcore that AgentLinkObject is treated like AgentFAQEdit
         $Action = 'AgentFAQEdit';
     }
     my $GroupsRo = $Self->{ConfigObject}->Get('Frontend::Module')->{$Action}->{GroupRo} || [];

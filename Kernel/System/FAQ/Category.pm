@@ -1,5 +1,5 @@
 # --
-# Kernel/System/FAQ/Category.pm - faq category functions
+# Kernel/System/FAQ/Category.pm - FAQ category functions
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -18,7 +18,7 @@ Kernel::System::FAQ::Category - sub module of Kernel::System::FAQ
 
 =head1 SYNOPSIS
 
-All faq category functions.
+All FAQ category functions.
 
 =head1 PUBLIC INTERFACE
 
@@ -273,7 +273,7 @@ sub CategoryDuplicateCheck {
     # db quote
     $Param{ParentID} = $Self->{DBObject}->Quote( $Param{ParentID}, 'Integer' );
 
-    # build sql
+    # build SQL
     my $SQL = '
         SELECT id
         FROM faq_category
@@ -286,7 +286,7 @@ sub CategoryDuplicateCheck {
 
     }
 
-    # prepare sql statement
+    # prepare SQL statement
     return if !$Self->{DBObject}->Prepare(
         SQL   => $SQL,
         Bind  => \@Values,
@@ -352,7 +352,7 @@ sub CategoryGet {
     );
     return %{$Cache} if $Cache;
 
-    # sql
+    # SQL
     return if !$Self->{DBObject}->Prepare(
         SQL => '
             SELECT id, parent_id, name, comments, valid_id
@@ -553,7 +553,7 @@ sub CategoryList {
         return $Self->{Cache}->{CategoryList}->{$Valid};
     }
 
-    # build sql
+    # build SQL
     my $SQL = '
         SELECT id, parent_id, name
         FROM faq_category';
@@ -612,7 +612,7 @@ sub CategorySearch {
         return;
     }
 
-    # sql
+    # SQL
     my $SQL = '
         SELECT id
         FROM faq_category
@@ -847,7 +847,7 @@ sub CategoryTreeList {
         return $Self->{Cache}->{GetCategoryTree}->{$Valid};
     }
 
-    # build sql
+    # build SQL
     my $SQL = '
         SELECT id, parent_id, name
         FROM faq_category';
@@ -885,7 +885,7 @@ sub CategoryTreeList {
             my $NewParentID = $ParentID;
             while ($NewParentID) {
 
-                # preapend parents category name
+                # pre-append parents category name
                 if ( $CategoryNameLookup{$NewParentID} ) {
                     $CategoryName = $CategoryNameLookup{$NewParentID} . '::' . $CategoryName;
                 }

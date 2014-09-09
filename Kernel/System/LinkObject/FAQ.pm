@@ -135,14 +135,14 @@ sub LinkListWithData {
             FAQID:
             for my $FAQID ( sort keys %{ $Param{LinkList}->{$LinkType}->{$Direction} } ) {
 
-                # get faq data
+                # get FAQ data
                 my %FAQData = $Self->{FAQObject}->FAQGet(
                     ItemID     => $FAQID,
                     ItemFields => 1,
                     UserID     => $Param{UserID},
                 );
 
-                # remove id from hash if no faq data was found
+                # remove id from hash if no FAQ data was found
                 if ( !%FAQData ) {
                     delete $Param{LinkList}->{$LinkType}->{$Direction}->{$FAQID};
                     next FAQID;
@@ -189,7 +189,7 @@ sub ObjectPermission {
     # do not grant access if frontend module is not registered
     return if !$ModuleReg;
 
-    # grant access if module permisson has no Group or GroupRo defined
+    # grant access if module permission has no Group or GroupRo defined
     if ( !$ModuleReg->{GroupRo} && !$ModuleReg->{Group} ) {
         return 1;
     }
@@ -326,7 +326,7 @@ sub ObjectSearch {
     # set default params
     $Param{SearchParams} ||= {};
 
-    # add wildcards
+    # add wild-cards
     my %Search;
     if ( $Param{SearchParams}->{Title} ) {
         $Search{Title} = '*' . $Param{SearchParams}->{Title} . '*';
@@ -338,7 +338,7 @@ sub ObjectSearch {
         $Search{What} = '*' . $Param{SearchParams}->{What} . '*';
     }
 
-    # search the faqs
+    # search the FAQs
     my @FAQIDs = $Self->{FAQObject}->FAQSearch(
         %{ $Param{SearchParams} },
         %Search,

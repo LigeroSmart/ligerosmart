@@ -156,7 +156,7 @@ sub Run {
             index[.]pl [?] Action=AgentFAQ [&](amp;)? Subaction=Download [&](amp;)?
         }{customer.pl?Action=CustomerFAQZoom;Subaction=DownloadAttachment;}gxms;
 
-        # build base url for inline images
+        # build base URL for inline images
         my $SessionID = '';
         if ( $Self->{SessionID} && !$Self->{SessionIDCookie} ) {
             $SessionID = ';' . $Self->{SessionName} . '=' . $Self->{SessionID};
@@ -247,7 +247,7 @@ sub Run {
     # ---------------------------------------------------------- #
     if ( $Self->{Subaction} eq 'Vote' ) {
 
-        # customer can't use this subaction if is not enbled
+        # customer can't use this subaction if is not enabled
         if ( !$Self->{Voting} ) {
             $Self->{LayoutObject}->CustomerFatalError(
                 Message => "The voting mechanism is not enabled!",
@@ -331,10 +331,10 @@ sub Run {
             }{customer.pl?Action=CustomerFAQZoom;Subaction=DownloadAttachment;}gxms;
         }
 
-        # no quoting if html view is enabled
+        # no quoting if HTML view is enabled
         next FIELD if $Self->{ConfigObject}->Get('FAQ::Item::HTML');
 
-        # html quoting
+        # HTML quoting
         $FAQData{$Field} = $Self->{LayoutObject}->Ascii2Html(
             NewLine        => 0,
             Text           => $FAQData{$Field},
@@ -370,7 +370,7 @@ sub Run {
     # show votes
     if ( $Self->{Voting} ) {
 
-        # always diplays Votes result even if its 0
+        # always displays Votes result even if its 0
         $Self->{LayoutObject}->Block(
             Name => 'ViewVotes',
             Data => {%FAQData},
@@ -529,7 +529,7 @@ sub _FAQVoting {
 
     my %FAQData = %{ $Param{FAQData} };
 
-    # ouput voting block
+    # output voting block
     $Self->{LayoutObject}->Block(
         Name => 'FAQVoting',
         Data => {%FAQData},
@@ -539,7 +539,7 @@ sub _FAQVoting {
     my $VotingRates = $Self->{ConfigObject}->Get('FAQ::Item::Voting::Rates');
     for my $RateValue ( sort { $a <=> $b } keys %{$VotingRates} ) {
 
-        # create data strucure for output
+        # create data structure for output
         my %Data = (
             Value => $RateValue,
             Title => $VotingRates->{$RateValue},

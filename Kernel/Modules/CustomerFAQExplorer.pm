@@ -167,7 +167,7 @@ sub Run {
                 UserID    => $Self->{UserID},
             );
 
-            # get the number of faq articles in this category
+            # get the number of FAQ articles in this category
             $SubCategoryData{ArticleCount} = $Self->{FAQObject}->FAQCount(
                 CategoryIDs  => [$SubCategoryID],
                 ItemStates   => $Self->{InterfaceStates},
@@ -204,7 +204,7 @@ sub Run {
     # set the SortBy Class
     my $SortClass;
 
-    # this sets the opposit to the OrderBy parameter
+    # this sets the opposite to the OrderBy parameter
     if ( $Self->{OrderBy} eq 'Down' ) {
         $SortClass = 'SortAscending';
     }

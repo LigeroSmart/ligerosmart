@@ -51,7 +51,7 @@ sub Run {
         },
     );
 
-    # build open search description for FAQ fulltext
+    # build open search description for FAQ full-text
     my $Fulltext = $Self->{LayoutObject}->{LanguageObject}->Get('FAQFulltext');
     $Title = $Self->{ConfigObject}->Get('ProductName');
     $Title .= '(' . $Fulltext . ')';

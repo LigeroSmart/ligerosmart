@@ -65,7 +65,7 @@ sub new {
         FieldFilter => $Self->{DynamicFieldFilter} || {},
     );
 
-    # reduce the dynamic fields to only the ones that are desinged for customer interface
+    # reduce the dynamic fields to only the ones that are designed for customer interface
     my @CustomerDynamicFields;
     DYNAMICFIELD:
     for my $DynamicFieldConfig ( @{ $Self->{DynamicField} } ) {
@@ -90,7 +90,7 @@ sub new {
         FieldFilter => $OverviewConfig->{DynamicField} || {},
     );
 
-    # reduce the dynamic fields to only the ones that are desinged for customer interface
+    # reduce the dynamic fields to only the ones that are designed for customer interface
     my @OverviewCustomerDynamicFields;
     DYNAMICFIELD:
     for my $DynamicFieldConfig ( @{ $Self->{OverviewDynamicField} } ) {
@@ -112,7 +112,7 @@ sub new {
         FieldFilter => $Self->{Config}->{SearchCSVDynamicField} || {},
     );
 
-    # reduce the dynamic fields to only the ones that are desinged for customer interface
+    # reduce the dynamic fields to only the ones that are designed for customer interface
     my @CSVCustomerDynamicFields;
     DYNAMICFIELD:
     for my $DynamicFieldConfig ( @{ $Self->{CSVDynamicField} } ) {
@@ -175,7 +175,7 @@ sub Run {
         );
     }
 
-    # build output for open search description by fulltext
+    # build output for open search description by full-text
     if ( $Self->{Subaction} eq 'OpenSearchDescriptionFulltext' ) {
         my $Output = $Self->{LayoutObject}->Output(
             TemplateFile => 'CustomerFAQSearchOpenSearchDescriptionFullText',
@@ -307,7 +307,7 @@ sub Run {
         $GetParam{'TimeSearchType::TimeSlot'} = 'checked="checked"';
     }
 
-    # set result form env
+    # set result form ENV
     if ( !$GetParam{ResultForm} ) {
         $GetParam{ResultForm} = '';
     }
@@ -432,7 +432,7 @@ sub Run {
             }
         }
 
-        # prepare fulltext search
+        # prepare full-text search
         if ( $GetParam{Fulltext} ) {
             $GetParam{ContentSearch} = 'OR';
             $GetParam{What}          = $GetParam{Fulltext};
@@ -580,7 +580,7 @@ sub Run {
                     Data     => \%FAQData,
                 );
 
-                # csv quote
+                # CSV quote
                 if ( !@CSVHead ) {
                     @TmpCSVHead = qw( FAQNumber Title Category);
                     @CSVHead    = qw( FAQNumber Title Category);
@@ -594,7 +594,7 @@ sub Run {
                     push @TmpCSVHead, qw(State Changed);
                     push @CSVHead,    qw(State Changed);
 
-                    # include the selected dynamic fields on CVS resutls
+                    # include the selected dynamic fields on CVS results
                     DYNAMICFIELD:
                     for my $DynamicFieldConfig ( @{ $Self->{CSVDynamicField} } ) {
                         next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
@@ -622,7 +622,7 @@ sub Run {
                             # with out the 'DynamicField_' prefix
                             next DYNAMICFIELD if $DynamicFieldConfig->{Name} ne $1;
 
-                            # get the value as for print (to corretly display)
+                            # get the value as for print (to correctly display)
                             my $ValueStrg = $Self->{BackendObject}->DisplayValueRender(
                                 DynamicFieldConfig => $DynamicFieldConfig,
                                 Value              => $CSVInfo{$Header},
@@ -636,7 +636,7 @@ sub Run {
                         }
                     }
 
-                    # otherwise retreive data from faq item
+                    # otherwise retrieve data from FAQ item
                     else {
                         if ( $Header eq 'FAQNumber' ) {
                             push @Data, $CSVInfo{'Number'};
@@ -652,7 +652,7 @@ sub Run {
                 push @CSVData, \@Data;
             }
 
-            # csv quote
+            # CSV quote
             # translate non existing header may result in a garbage file
             if ( !@CSVHead ) {
                 @TmpCSVHead = qw(FAQNumber Title Category);
@@ -667,7 +667,7 @@ sub Run {
                 push @TmpCSVHead, qw(State Changed);
                 push @CSVHead,    qw(State Changed);
 
-                # include the selected dynamic fields on CVS resutls
+                # include the selected dynamic fields on CVS results
                 DYNAMICFIELD:
                 for my $DynamicFieldConfig ( @{ $Self->{CSVDynamicField} } ) {
                     next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
@@ -691,14 +691,14 @@ sub Run {
                 }
             }
 
-            # assable CSV data
+            # assemble CSV data
             my $CSV = $Self->{CSVObject}->Array2CSV(
                 Head      => \@CSVHead,
                 Data      => \@CSVData,
                 Separator => $Self->{UserCSVSeparator},
             );
 
-            # return csv to download
+            # return CSV to download
             my $CSVFile = 'FAQ_search';
             my ( $s, $m, $h, $D, $M, $Y ) = $Self->{TimeObject}->SystemTime2Date(
                 SystemTime => $Self->{TimeObject}->SystemTime(),
@@ -904,7 +904,7 @@ sub Run {
             }
         }
 
-        # otherwise show a no data found msg
+        # otherwise show a no data found message
         else {
             $Self->{LayoutObject}->Block( Name => 'NoDataFoundMsg' );
         }
@@ -1117,7 +1117,7 @@ sub Run {
             );
         }
 
-        # start html page
+        # start HTML page
         my $Output = $Self->{LayoutObject}->CustomerHeader();
         $Output .= $Self->{LayoutObject}->CustomerNavigationBar();
 
@@ -1204,7 +1204,7 @@ sub Run {
             PREFERENCE:
             for my $Preference ( @{$SearchFieldPreferences} ) {
 
-                # get field html
+                # get field HTML
                 $DynamicFieldHTML{ $DynamicFieldConfig->{Name} . $Preference->{Type} }
                     = $Self->{BackendObject}->SearchFieldRender(
                     DynamicFieldConfig => $DynamicFieldConfig,
@@ -1382,7 +1382,7 @@ sub MaskForm {
         Format => 'DateInputFormat',
     );
 
-    # html search mask output
+    # HTML search mask output
     $Self->{LayoutObject}->Block(
         Name => 'Search',
         Data => {%Param},
@@ -1429,7 +1429,7 @@ sub MaskForm {
         );
     }
 
-    # html search mask output
+    # HTML search mask output
     return $Self->{LayoutObject}->Output(
         TemplateFile => 'CustomerFAQSearch',
         Data         => {%Param},

@@ -1,5 +1,5 @@
 # --
-# Kernel/System/FAQ.pm - all faq functions
+# Kernel/System/FAQ.pm - all FAQ functions
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -37,11 +37,11 @@ use base qw(
 
 =head1 NAME
 
-Kernel::System::FAQ - faq lib
+Kernel::System::FAQ -  FAQ lib
 
 =head1 SYNOPSIS
 
-All faq functions. E. g. to add faqs or to get faqs.
+All FAQ functions. E. g. to add FAQs or to get FAQs.
 
 =head1 PUBLIC INTERFACE
 
@@ -51,7 +51,7 @@ All faq functions. E. g. to add faqs or to get faqs.
 
 =item new()
 
-create a faq object
+create a FAQ object
 
     use Kernel::Config;
     use Kernel::System::Encode;
@@ -140,11 +140,11 @@ sub new {
 
 =item FAQGet()
 
-get an faq item
+get an FAQ item
 
     my %FAQ = $FAQObject->FAQGet(
         ItemID     => 123,
-        ItemFields => 0,        # Optional, default 0. To include the item field cotnent for this
+        ItemFields => 0,        # Optional, default 0. To include the item field content for this
                                 #   FAQ item on the return structure.
         UserID     => 1,
     );
@@ -587,7 +587,7 @@ sub FAQAdd {
         }
     }
 
-    # if approval feature is not activated, a new faq item is always approved
+    # if approval feature is not activated, a new FAQ item is always approved
     else {
         $Param{Approved} = 1;
     }
@@ -1213,7 +1213,7 @@ sub FAQCount {
 
         my @SortedIDs = sort @{ $Param{CategoryIDs} };
 
-        # split IN statement with more than 900 elements in more statements bombined with OR
+        # split IN statement with more than 900 elements in more statements combined with OR
         # because Oracle doesn't support more than 1000 elements in one IN statement.
         my @SQLStrings;
         LOOP:
@@ -1322,7 +1322,7 @@ sub FAQDelete {
         return if !$DeleteSuccess;
     }
 
-    # delete all faq links of this faq article
+    # delete all FAQ links of this FAQ article
     $Self->{LinkObject}->LinkDeleteAll(
         Object => 'FAQ',
         Key    => $Param{ItemID},
@@ -1739,7 +1739,7 @@ sub FAQLogAdd {
     # subtract ReloadBlockTime
     $SystemTime = $SystemTime - $ReloadBlockTime;
 
-    # convert to timesstamp
+    # convert to times-stamp
     my $TimeStamp = $Self->{TimeObject}->SystemTime2TimeStamp(
         SystemTime => $SystemTime,
     );
@@ -1776,11 +1776,11 @@ sub FAQLogAdd {
 
 =item FAQTop10Get()
 
-Returns an array with the top 10 faq article ids.
+Returns an array with the top 10 FAQ article ids.
 
     my $Top10IDsRef = $FAQObject->FAQTop10Get(
         Interface   => 'public',
-        CategoryIDs => [ 1, 2, 3 ],  # (optional) Only show the Top10 articles from these categories
+        CategoryIDs => [ 1, 2, 3 ],  # (optional) Only show the Top-10 articles from these categories
         Limit       => 10,           # (optional, default 10)
         UserID      => 1,
     );
@@ -1878,7 +1878,7 @@ sub FAQTop10Get {
 
         my @SortedIDs = sort @{ $Param{CategoryIDs} };
 
-        # split IN statement with more than 900 elements in more statements bombined with OR
+        # split IN statement with more than 900 elements in more statements combined with OR
         # because Oracle doesn't support more than 1000 elements in one IN statement.
         my @SQLStrings;
         LOOP:
@@ -1986,7 +1986,7 @@ sub FAQInlineAttachmentURLUpdate {
     # only consider inline attachments here (they have a content id)
     return 1 if !$Param{Attachment}->{ContentID};
 
-    # get faq data
+    # get FAQ data
     my %FAQData = $Self->FAQGet(
         ItemID     => $Param{ItemID},
         ItemFields => 1,
@@ -2011,7 +2011,7 @@ sub FAQInlineAttachmentURLUpdate {
         # remove newlines
         $FAQData{"Field$Number"} =~ s{ [\n\r]+ }{}gxms;
 
-        # replace url
+        # replace URL
         $FAQData{"Field$Number"} =~ s{$Search}{$Replace}xms;
     }
 
@@ -2085,7 +2085,7 @@ sub _FAQApprovalUpdate {
         ],
     );
 
-    # approval feature is activated and faq article is not approved yet
+    # approval feature is activated and FAQ article is not approved yet
     if ( $Self->{ConfigObject}->Get('FAQ::ApprovalRequired') && !$Param{Approved} ) {
 
         # get faq data

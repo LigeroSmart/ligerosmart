@@ -81,7 +81,7 @@ sub Run {
     my @ItemIDs;
     my $Title;
 
-    # get the Top10 FAQ articles
+    # get the Top-10 FAQ articles
     if ( $Type eq 'Top10' ) {
 
         # interface needs to be the interface name
@@ -120,7 +120,7 @@ sub Run {
         }
     }
 
-    # generate the rss title
+    # generate the RSS title
     $Title = $Self->{ConfigObject}->Get('ProductName') . ' ' . $Title;
     $Self->{RSSObject}->title($Title);
 
@@ -141,7 +141,7 @@ sub Run {
             }
         }
 
-        # convert preview to ascii
+        # convert preview to ASCII
         $Preview = $Self->{HTMLUtilsObject}->ToAscii( String => $Preview );
 
         # reduce size of preview

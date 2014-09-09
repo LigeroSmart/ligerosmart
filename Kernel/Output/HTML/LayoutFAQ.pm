@@ -27,7 +27,7 @@ All FAQ-related HTML functions
 =cut
 
 =item GetFAQItemVotingRateColor()
-Returns a color depenting on the FAQ rate
+Returns a color depending on the FAQ rate
 
     my $VotingResultColor = $LayoutObject->GetFAQItemVotingRateColor(
         Rate => '20',
@@ -95,7 +95,7 @@ sub FAQListShow {
     # set frontend
     my $Frontend = $Param{Frontend} || 'Agent';
 
-    # set defaut view mode to 'small'
+    # set default view mode to 'small'
     my $View = $Param{View} || 'Small';
 
     # store latest view mode
@@ -162,7 +162,7 @@ sub FAQListShow {
         Link      => $Param{LinkPage},
     );
 
-    # build shown faq articles on a page
+    # build shown FAQ articles on a page
     $Param{RequestedURL}    = "Action=$Self->{Action}";
     $Param{Group}           = $Group;
     $Param{PreferencesKey}  = $PageShownPreferencesKey;
@@ -309,7 +309,7 @@ sub FAQListShow {
         }
     }
 
-    # build html content
+    # build HTML content
     my $OutputNavBar = $Env->{LayoutObject}->Output(
         TemplateFile => 'AgentFAQOverviewNavBar',
         Data         => {
@@ -454,7 +454,7 @@ sub FAQContentShow {
         my $Caption = $Fields{$Field}->{'Caption'};
         my $Content = $Param{FAQData}->{$Field} || '';
 
-        # remove active html content (scripts, applets, etc...)
+        # remove active HTML content (scripts, applets, etc...)
         my %SafeContent = $Self->{HTMLUtilsObject}->Safety(
             String       => $Content,
             NoApplet     => 1,
@@ -465,7 +465,7 @@ sub FAQContentShow {
             NoJavaScript => 1,
         );
 
-        # take the safe content if neccessary
+        # take the safe content if necessary
         if ( $SafeContent{Replace} ) {
             $Content = $SafeContent{String};
         }
@@ -530,7 +530,7 @@ sub FAQContentShow {
         }
     }
 
-    # return all the (permited) FAQ body
+    # return all the (permitted) FAQ body
     if ( $Param{ReturnContent} ) {
         if ($FullContent) {
             return $FullContent;
@@ -594,7 +594,7 @@ sub FAQPathShow {
     # get Show FAQ Path setting
     my $ShowPath = $Self->{ConfigObject}->Get('FAQ::Explorer::Path::Show');
 
-    # do not diplay the path if setting is off
+    # do not display the path if setting is off
     return if !$ShowPath;
 
     # get category list to construct the path
@@ -642,7 +642,7 @@ sub FAQRatingStarsShow {
         }
     }
 
-    # get stars by mutiply by 5 and divide by 100
+    # get stars by multiply by 5 and divide by 100
     # 100 because Vote result is a %
     # 5 because we have only 5 stars
     my $StarCounter = int( $Param{VoteResult} * 0.05 );
@@ -690,7 +690,7 @@ sub FAQRatingStarsShow {
 
 =item FAQShowLatestNewsBox()
 
-Shows an info box wih the last updated or last created FAQ articles.
+Shows an info box with the last updated or last created FAQ articles.
 Depending on the uses interface (agent, customer, public) only the appropriate
 articles are shown here.
 
@@ -869,7 +869,7 @@ sub FAQShowLatestNewsBox {
 
 =item FAQShowTop10()
 
-Shows an info box wih the Top 10 FAQ articles.
+Shows an info box with the Top 10 FAQ articles.
 Depending on the uses interface (agent, customer, public) only the appropriate
 articles are shown here.
 
@@ -1009,7 +1009,7 @@ sub FAQShowTop10 {
                     },
                 );
 
-                # show the Top10 position number
+                # show the Top-10 position number
                 $Self->Block(
                     Name => 'InfoBoxFAQMiniListItemRowPositionNumber',
                     Data => {
@@ -1025,7 +1025,7 @@ sub FAQShowTop10 {
 
 =item FAQShowQuickSearch()
 
-Shows an info box wih the Quick Search.
+Shows an info box with the Quick Search.
 
     $LayoutObject->FAQShowQuickSearch(
         Mode            => 'Public',                   # (Agent, Customer, Public)

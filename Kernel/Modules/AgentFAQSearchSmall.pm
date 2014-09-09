@@ -234,7 +234,7 @@ sub Run {
         $GetParam{'ChangeTimeSearchType::TimeSlot'} = 'checked="checked"';
     }
 
-    # set result form env
+    # set result form ENV
     if ( !$GetParam{ResultForm} ) {
         $GetParam{ResultForm} = '';
     }
@@ -393,7 +393,7 @@ sub Run {
             }
         }
 
-        # prepare fulltext search
+        # prepare full-text search
         if ( $GetParam{Fulltext} ) {
             $GetParam{ContentSearch} = 'OR';
             $GetParam{What}          = $GetParam{Fulltext};
@@ -541,7 +541,7 @@ sub Run {
         }
 
         # Categories got from the web request could include a not allowed category if the user
-        #    temper with the categories dropbox, a check is needed.
+        #    temper with the categories drop-box, a check is needed.
         #
         # "Map" copy from one array to another, while "grep" will only let pass the categories
         #    that are defined in the %AllowedCategoryIDs hash
@@ -579,7 +579,7 @@ sub Run {
             );
         }
 
-        # start html page
+        # start HTML page
         my $Output = $Self->{LayoutObject}->Header( Type => 'Small' );
         $Self->{LayoutObject}->Print( Output => \$Output );
         $Output = '';
@@ -713,7 +713,7 @@ sub _MaskForm {
         UserID => $Self->{UserID},
     );
 
-    # dropdown menu for 'languages'
+    # drop-down menu for 'languages'
     $Param{LanguagesSelectionStrg} = $Self->{LayoutObject}->BuildSelection(
         Data       => \%Languages,
         Name       => 'LanguageIDs',
@@ -835,7 +835,7 @@ sub _MaskForm {
         Valid => 1,
     );
 
-    # get the UserIDs from faq and faq_admin members
+    # get the UserIDs from FAQ and faq_admin members
     my %GroupUsers;
     for my $Group (qw(faq faq_admin)) {
         my $GroupID = $Self->{GroupObject}->GroupLookup( Group => $Group );
@@ -847,7 +847,7 @@ sub _MaskForm {
         %GroupUsers = ( %GroupUsers, %Users );
     }
 
-    # remove all users that are not in the faq or faq_admin groups
+    # remove all users that are not in the FAQ or faq_admin groups
     for my $UserID ( sort keys %ShownUsers ) {
         if ( !$GroupUsers{$UserID} ) {
             delete $ShownUsers{$UserID};
@@ -960,7 +960,7 @@ sub _MaskForm {
         PREFERENCE:
         for my $Preference ( @{$SearchFieldPreferences} ) {
 
-            # get field html
+            # get field HTML
             $DynamicFieldHTML{ $DynamicFieldConfig->{Name} . $Preference->{Type} }
                 = $Self->{BackendObject}->SearchFieldRender(
                 DynamicFieldConfig => $DynamicFieldConfig,
@@ -974,7 +974,7 @@ sub _MaskForm {
         }
     }
 
-    # html search mask output
+    # HTML search mask output
     $Self->{LayoutObject}->Block(
         Name => 'Search',
         Data => {%Param},
@@ -1023,7 +1023,7 @@ sub _MaskForm {
         }
     }
 
-    # html search mask output
+    # HTML search mask output
     return $Self->{LayoutObject}->Output(
         TemplateFile => 'AgentFAQSearchSmall',
         Data         => {%Param},

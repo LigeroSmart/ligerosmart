@@ -58,7 +58,7 @@ sub new {
 
         $Self->{FAQObject} = $Param{FAQObject};
 
-        # Make faq object reference weak so it will not count as a reference on objects destroy.
+        # Make FAQ object reference weak so it will not count as a reference on objects destroy.
         #   This is because the FAQObject has a Kernel::DynamicField::Backend object, which has this
         #   object, which has a FAQObject again. Without weaken() we'd have a cyclic reference.
         Scalar::Util::weaken( $Self->{FAQObject} );
@@ -126,7 +126,7 @@ sub PostValueSet {
         UserID => $Param{UserID},
     );
 
-    # clear faq cache
+    # clear FAQ cache
     $Self->{FAQObject}->_DeleteFromFAQCache( ItemID => $Param{ObjectID} );
 
     # Trigger event.

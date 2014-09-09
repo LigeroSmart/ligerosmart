@@ -1,5 +1,5 @@
 # --
-# Kernel/System/FAQ/State.pm - faq state functions
+# Kernel/System/FAQ/State.pm - FAQ state functions
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -18,7 +18,7 @@ Kernel::System::FAQ::State - sub module of Kernel::System::FAQ
 
 =head1 SYNOPSIS
 
-All faq state functions.
+All FAQ state functions.
 
 =head1 PUBLIC INTERFACE
 

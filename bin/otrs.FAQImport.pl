@@ -96,7 +96,7 @@ die "Can't read file $Opts{i}.\nImport aborted.\n" if !$CSVStringRef;
 
 print STDOUT "Import in process...\n";
 
-# read csv data
+# read CSV data
 my $DataRef = $CommonObject{CSVObject}->CSV2Array(
     String    => $$CSVStringRef,
     Separator => $Opts{s} || ';',

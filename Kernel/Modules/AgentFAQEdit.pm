@@ -1,5 +1,5 @@
 # --
-# Kernel/Modules/AgentFAQEdit.pm - agent frontend to edit faq articles
+# Kernel/Modules/AgentFAQEdit.pm - agent frontend to edit FAQ articles
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -151,16 +151,16 @@ sub Run {
     }
 
     # ------------------------------------------------------------ #
-    # show the faq edit screen
+    # show the FAQ edit screen
     # ------------------------------------------------------------ #
     if ( !$Self->{Subaction} ) {
 
         my $Output;
 
-        # show a popup screen
+        # show a pop-up screen
         if ( $Self->{ScreenType} eq 'Popup' ) {
 
-            # show the small popup screen header
+            # show the small pop-up screen header
             $Output = $Self->{LayoutObject}->Header(
                 Type      => 'Small',
                 BodyClass => 'Popup',
@@ -236,7 +236,7 @@ sub Run {
             }{Action=AgentFAQZoom;Subaction=DownloadAttachment;}gxms;
         }
 
-        # create html strings for all dynamic fields
+        # create HTML strings for all dynamic fields
         my %DynamicFieldHTML;
 
         # cycle trough the activated Dynamic Fields for this screen
@@ -247,7 +247,7 @@ sub Run {
             # to store dynamic field value from database (or undefined)
             my $Value = $FAQData{ 'DynamicField_' . $DynamicFieldConfig->{Name} };
 
-            # get field html
+            # get field HTML
             $DynamicFieldHTML{ $DynamicFieldConfig->{Name} } =
                 $Self->{BackendObject}->EditFieldRender(
                 DynamicFieldConfig => $DynamicFieldConfig,
@@ -278,7 +278,7 @@ sub Run {
             }
         }
 
-        # html output
+        # HTML output
         $Output .= $Self->_MaskNew(
             %FAQData,
             Attachments      => \@Attachments,
@@ -287,7 +287,7 @@ sub Run {
             DynamicFieldHTML => \%DynamicFieldHTML,
         );
 
-        # show a popup screen footer
+        # show a pop-up screen footer
         if ( $Self->{ScreenType} eq 'Popup' ) {
 
             $Self->{LayoutObject}->Block(
@@ -314,7 +314,7 @@ sub Run {
     }
 
     # ------------------------------------------------------------ #
-    # save the faq
+    # save the FAQ
     # ------------------------------------------------------------ #
     elsif ( $Self->{Subaction} eq 'Save' ) {
 
@@ -323,10 +323,10 @@ sub Run {
 
         my $Output;
 
-        # show a popup screen
+        # show a pop-up screen
         if ( $Self->{ScreenType} eq 'Popup' ) {
 
-            # show the small popup screen header
+            # show the small pop-up screen header
             $Output = $Self->{LayoutObject}->Header(
                 Type      => 'Small',
                 BodyClass => 'Popup',
@@ -409,7 +409,7 @@ sub Run {
             );
         }
 
-        # create html strings for all dynamic fields
+        # create HTML strings for all dynamic fields
         my %DynamicFieldHTML;
 
         # cycle trough the activated Dynamic Fields for this screen
@@ -443,7 +443,7 @@ sub Run {
                 }
             }
 
-            # get field html
+            # get field HTML
             $DynamicFieldHTML{ $DynamicFieldConfig->{Name} } =
                 $Self->{BackendObject}->EditFieldRender(
                 DynamicFieldConfig => $DynamicFieldConfig,
@@ -492,7 +492,7 @@ sub Run {
                 }
             }
 
-            # html output
+            # HTML output
             $Output .= $Self->_MaskNew(
                 Attachments => \@Attachments,
                 %GetParam,
@@ -502,7 +502,7 @@ sub Run {
                 DynamicFieldHTML => \%DynamicFieldHTML,
             );
 
-            # show a popup screen footer
+            # show a pop-up screen footer
             if ( $Self->{ScreenType} eq 'Popup' ) {
 
                 $Self->{LayoutObject}->Block(
@@ -538,13 +538,13 @@ sub Run {
             }
         }
 
-        # update the new faq article
+        # update the new FAQ article
         my $UpdateSuccess = $Self->{FAQObject}->FAQUpdate(
             %GetParam,
             UserID => $Self->{UserID},
         );
 
-        # show error if faq could not be updated
+        # show error if FAQ could not be updated
         if ( !$UpdateSuccess ) {
             return $Self->{LayoutObject}->ErrorScreen();
         }
@@ -622,14 +622,14 @@ sub Run {
                 # remember that it is inline
                 $Inline = 1;
 
-                # remember if this inline attachment is used in any faq article
+                # remember if this inline attachment is used in any FAQ article
                 my $ContentIDFound;
 
                 # check all fields for content id
                 FIELD:
                 for my $Number ( 1 .. 6 ) {
 
-                    # get faq field
+                    # get FAQ field
                     my $Field = $GetParam{ 'Field' . $Number };
 
                     # skip empty fields
@@ -646,7 +646,7 @@ sub Run {
                 }
 
                 # we do not want to keep this attachment,
-                # because it was deleted in the richt text editor
+                # because it was deleted in the rich-text editor
                 next ATTACHMENT if !$ContentIDFound;
             }
 
@@ -694,7 +694,7 @@ sub Run {
         for my $DynamicFieldConfig ( @{ $Self->{DynamicField} } ) {
             next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
 
-            # set the object ID depending on the field configration
+            # set the object ID depending on the field configuration
             my $ObjectID = $GetParam{ItemID};
 
             # set the value
@@ -706,7 +706,7 @@ sub Run {
             );
         }
 
-        # check if there if we need to close a popup screen or not
+        # check if there if we need to close a pop-up screen or not
         if ( $Self->{ScreenType} eq 'Popup' ) {
             return $Self->{LayoutObject}->PopupClose(
                 URL => "Action=AgentFAQZoom;ItemID=$GetParam{ItemID}",
@@ -782,7 +782,7 @@ sub _MaskNew {
         # get user language ID
         my $SelectedLanguageID = $Self->{FAQObject}->LanguageLookup( Name => $SelectedLanguage );
 
-        # check if LanduageID does not exsits
+        # check if LanduageID does not exists
         if ( !$SelectedLanguageID ) {
 
             # get the lowest language ID
@@ -833,7 +833,7 @@ sub _MaskNew {
         $FieldsetClass = 'FixedLabel';
     }
 
-    # show faq edit screen
+    # show FAQ edit screen
     $Self->{LayoutObject}->Block(
         Name => 'FAQEdit',
         Data => {
@@ -873,7 +873,7 @@ sub _MaskNew {
             Result => 'HASH',
         );
 
-        # get the faq approval group from config
+        # get the FAQ approval group from config
         my $ApprovalGroup = $Self->{ConfigObject}->Get('FAQ::ApprovalGroup') || '';
 
         # build the approval selection if user is in the approval group
@@ -918,7 +918,7 @@ sub _MaskNew {
 
     # add rich text editor javascript
     # only if activated and the browser can handle it
-    # otherwise just a textarea is shown
+    # otherwise just a text-area is shown
     if ( $Self->{LayoutObject}->{BrowserRichText} ) {
 
         # use height/width defined for this screen
@@ -951,7 +951,7 @@ sub _MaskNew {
             $Param{DynamicFieldHTML}->{ $DynamicFieldConfig->{Name} }
         );
 
-        # get the html strings form $Param
+        # get the HTML strings form $Param
         my $DynamicFieldHTML = $Param{DynamicFieldHTML}->{ $DynamicFieldConfig->{Name} };
 
         $Self->{LayoutObject}->Block(

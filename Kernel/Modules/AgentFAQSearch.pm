@@ -114,7 +114,7 @@ sub Run {
         );
     }
 
-    # build output for open search description by fulltext
+    # build output for open search description by full-text
     if ( $Self->{Subaction} eq 'OpenSearchDescriptionFulltext' ) {
         my $Output = $Self->{LayoutObject}->Output(
             TemplateFile => 'AgentFAQSearchOpenSearchDescriptionFulltext',
@@ -254,7 +254,7 @@ sub Run {
         $GetParam{'ChangeTimeSearchType::TimeSlot'} = 1;
     }
 
-    # set result form env
+    # set result form ENV
     if ( !$GetParam{ResultForm} ) {
         $GetParam{ResultForm} = '';
     }
@@ -444,7 +444,7 @@ sub Run {
             }
         }
 
-        # prepare fulltext search
+        # prepare full-text search
         if ( $GetParam{Fulltext} ) {
             $GetParam{ContentSearch} = 'OR';
             $GetParam{What}          = $GetParam{Fulltext};
@@ -556,7 +556,7 @@ sub Run {
         }
 
         # Categories got from the web request could include a not allowed category if the user
-        #    temper with the categories dropbox, a check is needed.
+        #    temper with the categories drop-box, a check is needed.
         #
         # "Map" copy from one array to another, while "grep" will only let pass the categories
         #    that are defined in the %AllowedCategoryIDs hash
@@ -618,7 +618,7 @@ sub Run {
                     Data     => \%FAQData,
                 );
 
-                # csv quote
+                # CSV quote
                 if ( !@CSVHead ) {
                     @TmpCSVHead = qw( FAQNumber Title Category);
                     @CSVHead    = qw( FAQNumber Title Category);
@@ -632,7 +632,7 @@ sub Run {
                     push @TmpCSVHead, qw(State Changed);
                     push @CSVHead,    qw(State Changed);
 
-                    # include the selected dynamic fields on CVS resutls
+                    # include the selected dynamic fields on CVS results
                     DYNAMICFIELD:
                     for my $DynamicFieldConfig ( @{ $Self->{CSVDynamicField} } ) {
                         next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
@@ -644,7 +644,7 @@ sub Run {
                     }
                 }
 
-                # inssert data
+                # insert data
                 my @Data;
                 for my $Header (@TmpCSVHead) {
 
@@ -662,7 +662,7 @@ sub Run {
                             # with out the 'DynamicField_' prefix
                             next DYNAMICFIELD if $DynamicFieldConfig->{Name} ne $1;
 
-                            # get the value as for print (to corretly display)
+                            # get the value as for print (to correctly display)
                             my $ValueStrg = $Self->{BackendObject}->DisplayValueRender(
                                 DynamicFieldConfig => $DynamicFieldConfig,
                                 Value              => $CSVInfo{$Header},
@@ -676,7 +676,7 @@ sub Run {
                         }
                     }
 
-                    # otherwise retreive data from faq item
+                    # otherwise retrieve data from FAQ item
                     else {
                         if ( $Header eq 'FAQNumber' ) {
                             push @Data, $CSVInfo{'Number'};
@@ -692,7 +692,7 @@ sub Run {
                 push @CSVData, \@Data;
             }
 
-            # csv quote
+            # CSV quote
             # translate non existing header may result in a garbage file
             if ( !@CSVHead ) {
                 @TmpCSVHead = qw(FAQNumber Title Category);
@@ -707,7 +707,7 @@ sub Run {
                 push @TmpCSVHead, qw(State Changed);
                 push @CSVHead,    qw(State Changed);
 
-                # include the selected dynamic fields on CVS resutls
+                # include the selected dynamic fields on CVS results
                 DYNAMICFIELD:
                 for my $DynamicFieldConfig ( @{ $Self->{CSVDynamicField} } ) {
                     next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
@@ -731,14 +731,14 @@ sub Run {
                 }
             }
 
-            # assable CSV data
+            # assemble CSV data
             my $CSV = $Self->{CSVObject}->Array2CSV(
                 Head      => \@CSVHead,
                 Data      => \@CSVData,
                 Separator => $Self->{UserCSVSeparator},
             );
 
-            # return csv to download
+            # return CSV to download
             my $CSVFile = 'FAQ_search';
             my ( $s, $m, $h, $D, $M, $Y ) = $Self->{TimeObject}->SystemTime2Date(
                 SystemTime => $Self->{TimeObject}->SystemTime(),
@@ -905,7 +905,7 @@ sub Run {
                 $TableParam{PaddingTop}          = 3;
                 $TableParam{PaddingBottom}       = 3;
 
-                # create new pdf document
+                # create new PDF document
                 $Self->{PDFObject}->DocumentNew(
                     Title  => $Self->{ConfigObject}->Get('Product') . ': ' . $Title,
                     Encode => $Self->{LayoutObject}->{UserCharset},
@@ -928,7 +928,7 @@ sub Run {
                     }
                 }
 
-                # return the pdf document
+                # return the PDF document
                 my $Filename = 'FAQ_search';
                 my ( $s, $m, $h, $D, $M, $Y )
                     = $Self->{TimeObject}->SystemTime2Date(
@@ -975,7 +975,7 @@ sub Run {
         }
         else {
 
-            # start html page
+            # start HTML page
             my $Output = $Self->{LayoutObject}->Header();
             $Output .= $Self->{LayoutObject}->NavigationBar();
             $Self->{LayoutObject}->Print( Output => \$Output );
@@ -1315,7 +1315,7 @@ sub _MaskForm {
         PREFERENCE:
         for my $Preference ( @{$SearchFieldPreferences} ) {
 
-            # get field html
+            # get field HTML
             $DynamicFieldHTML{ $DynamicFieldConfig->{Name} . $Preference->{Type} }
                 = $Self->{BackendObject}->SearchFieldRender(
                 DynamicFieldConfig => $DynamicFieldConfig,
@@ -1329,7 +1329,7 @@ sub _MaskForm {
         }
     }
 
-    # dropdown menu for 'attributes'
+    # drop-down menu for 'attributes'
     $Param{AttributesStrg} = $Self->{LayoutObject}->BuildSelection(
         Data     => \@Attributes,
         Name     => 'Attribute',
@@ -1346,7 +1346,7 @@ sub _MaskForm {
         UserID => $Self->{UserID},
     );
 
-    # dropdown menu for 'languages'
+    # drop-down menu for 'languages'
     $Param{LanguagesSelectionStrg} = $Self->{LayoutObject}->BuildSelection(
         Data       => \%Languages,
         Name       => 'LanguageIDs',
@@ -1467,7 +1467,7 @@ sub _MaskForm {
         Valid => 1,
     );
 
-    # get the UserIDs from faq and faq_admin members
+    # get the UserIDs from FAQ and faq_admin members
     my %GroupUsers;
     for my $Group (qw(faq faq_admin)) {
         my $GroupID = $Self->{GroupObject}->GroupLookup( Group => $Group );
@@ -1479,7 +1479,7 @@ sub _MaskForm {
         %GroupUsers = ( %GroupUsers, %Users );
     }
 
-    # remove all users that are not in the faq or faq_admin groups
+    # remove all users that are not in the FAQ or faq_admin groups
     for my $UserID ( sort keys %ShownUsers ) {
         if ( !$GroupUsers{$UserID} ) {
             delete $ShownUsers{$UserID};
@@ -1603,7 +1603,7 @@ sub _MaskForm {
         SelectedID => $GetParam{ResultForm} || 'Normal',
     );
 
-    # html search mask output
+    # HTML search mask output
     $Self->{LayoutObject}->Block(
         Name => 'SearchAJAX',
         Data => {
@@ -1667,7 +1667,7 @@ sub _MaskForm {
         );
     }
 
-    # if no attribute is shown, show fulltext search
+    # if no attribute is shown, show full-text search
     if ( !$Profile ) {
         if ( $Self->{Config}->{Defaults} ) {
             KEY:

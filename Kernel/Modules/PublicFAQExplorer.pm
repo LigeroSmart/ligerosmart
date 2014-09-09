@@ -119,7 +119,7 @@ sub Run {
         }
     }
 
-    # add rss feed link for new FAQ articles in the browser URL bar
+    # add RSS feed link for new FAQ articles in the browser URL bar
     $Self->{LayoutObject}->Block(
         Name => 'MetaLink',
         Data => {
@@ -130,7 +130,7 @@ sub Run {
         },
     );
 
-    # add rss feed link for changed FAQ articles in the browser URL bar
+    # add RSS feed link for changed FAQ articles in the browser URL bar
     $Self->{LayoutObject}->Block(
         Name => 'MetaLink',
         Data => {
@@ -142,7 +142,7 @@ sub Run {
         },
     );
 
-    # add rss feed link for Top10 FAQ articles in the browser URL bar
+    # add RSS feed link for Top-10 FAQ articles in the browser URL bar
     $Self->{LayoutObject}->Block(
         Name => 'MetaLink',
         Data => {
@@ -192,7 +192,7 @@ sub Run {
                 UserID    => $Self->{UserID},
             );
 
-            # get the number of faq articles in this category
+            # get the number of FAQ articles in this category
             $SubCategoryData{ArticleCount} = $Self->{FAQObject}->FAQCount(
                 CategoryIDs  => [$SubCategoryID],
                 ItemStates   => $Self->{InterfaceStates},
@@ -229,7 +229,7 @@ sub Run {
     # set the SortBy Class
     my $SortClass;
 
-    # this sets the opposit to the OrderBy parameter
+    # this sets the opposite to the OrderBy parameter
     if ( $Self->{OrderBy} eq 'Down' ) {
         $SortClass = 'SortAscending';
     }

@@ -1,5 +1,5 @@
 # --
-# Kernel/Modules/AgentFAQExplorer.pm - show the faq explorer
+# Kernel/Modules/AgentFAQExplorer.pm - show the FAQ explorer
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -208,7 +208,7 @@ sub Run {
                 UserID    => $Self->{UserID},
             );
 
-            # get the number of faq articles in this category
+            # get the number of FAQ articles in this category
             $SubCategoryData{ArticleCount} = $Self->{FAQObject}->FAQCount(
                 CategoryIDs  => [$SubCategoryID],
                 ItemStates   => $Self->{InterfaceStates},
@@ -245,7 +245,7 @@ sub Run {
         CategoryIDs      => [$CategoryID],
     );
 
-    # build neccessary stuff for the FAQ article list
+    # build necessary stuff for the FAQ article list
     my $LinkPage = 'Filter='
         . $Self->{LayoutObject}->LinkEncode( $Self->{Filter} )
         . ';View=' . $Self->{LayoutObject}->LinkEncode( $Self->{View} )
@@ -294,7 +294,7 @@ sub Run {
         || $Self->{ConfigObject}->Get('FAQ::Default::RootCategoryName')
         || '';
 
-    # build the html for the list of FAQ articles in the given category
+    # build the HTML for the list of FAQ articles in the given category
     my $FAQItemListHTML = $Self->{LayoutObject}->FAQListShow(
         FAQIDs     => \@ViewableFAQIDs,
         Total      => scalar @ViewableFAQIDs,

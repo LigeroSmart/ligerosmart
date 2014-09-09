@@ -1,5 +1,5 @@
 # --
-# Kernel/Modules/AgentFAQRichText.pm - to handle AJAX requests for inserting the richtext of an FAQ
+# Kernel/Modules/AgentFAQRichText.pm - to handle AJAX requests for inserting the rich-text of an FAQ
 # article into a ticket article
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
@@ -236,7 +236,7 @@ sub Run {
                 return $Self->{LayoutObject}->ErrorScreen();
             }
 
-            # extract the actual MIME type from the contenttype, which also contains the filename
+            # extract the actual MIME type from the content type, which also contains the filename
             my ($MimeType) = $Attachment{ContentType} =~ m{^(.+/.+); [ ] name=.+$}xms;
 
             my $Session = '';
@@ -301,8 +301,8 @@ sub Run {
         }
     }
 
-    # send a list of attachments in the upload cache back to the clientside JavaScript which renders
-    # then the list of currently uploaded attachments
+    # send a list of attachments in the upload cache back to the client side JavaScript which
+    # renders then the list of currently uploaded attachments
     my @TicketAttachments = $Self->{UploadCacheObject}->FormIDGetAllFilesMeta(
         FormID => $Self->{FormID},
     );
@@ -322,7 +322,7 @@ sub Run {
     }
     else {
 
-        # if richtext is not active then set also inline attachments as regular attachments
+        # if rich-text is not active then set also inline attachments as regular attachments
         @FilteredTicketAttachments = @TicketAttachments;
     }
 

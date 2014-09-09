@@ -151,7 +151,7 @@ sub Run {
             Action=AgentFAQ [&](amp;)? Subaction=Download [&](amp;)?
         }{Action=AgentFAQZoom;Subaction=DownloadAttachment;}gxms;
 
-        # build base url for inline images
+        # build base URL for inline images
         my $SessionID = '';
         if ( $Self->{SessionID} && !$Self->{SessionIDCookie} ) {
             $SessionID = ';' . $Self->{SessionName} . '=' . $Self->{SessionID};
@@ -264,7 +264,7 @@ sub Run {
     # ---------------------------------------------------------- #
     if ( $Self->{Subaction} eq 'Vote' ) {
 
-        # user can't use this subaction if is not enbled
+        # user can't use this subaction if is not enabled
         if ( !$Self->{Voting} ) {
             $Self->{LayoutObject}->FatalError( Message => "The voting mechanism is not enabled!" );
         }
@@ -336,10 +336,10 @@ sub Run {
             Action=AgentFAQ [&](amp;)? Subaction=Download [&](amp;)?
         }{Action=AgentFAQZoom;Subaction=DownloadAttachment;}gxms;
 
-        # no quoting if html view is enabled
+        # no quoting if HTML view is enabled
         next FIELD if $Self->{ConfigObject}->Get('FAQ::Item::HTML');
 
-        # html quoting
+        # HTML quoting
         $FAQData{$Field} = $Self->{LayoutObject}->Ascii2Html(
             NewLine        => 0,
             Text           => $FAQData{$Field},
@@ -372,7 +372,7 @@ sub Run {
 
     if ( $Nav ne 'None' ) {
 
-        # run faq menu modules
+        # run FAQ menu modules
         if ( ref $Self->{ConfigObject}->Get('FAQ::Frontend::MenuModule') eq 'HASH' ) {
             my %Menus   = %{ $Self->{ConfigObject}->Get('FAQ::Frontend::MenuModule') };
             my $Counter = 0;
@@ -640,7 +640,7 @@ sub Run {
     # start template output
     if ( $Nav && $Nav eq 'None' ) {
 
-        # only convert html to plain text if rich text editor is not used
+        # only convert HTML to plain text if rich text editor is not used
         if ( $Self->{ConfigObject}->Get('Frontend::RichText') ) {
             $FAQData{FullBody} = $FAQBody;
         }
@@ -656,7 +656,7 @@ sub Run {
             UserID => $Self->{UserID},
         );
 
-        # remove inline image links to faq images
+        # remove inline image links to FAQ images
         $FAQData{FullBody}
             =~ s{ <img [^<>]+ Action=(Agent|Customer|Public)FAQ [^<>]+ > }{}gxms;
 
@@ -790,7 +790,7 @@ sub _FAQVoting {
 
     my %FAQData = %{ $Param{FAQData} };
 
-    # ouput voting block
+    # output voting block
     $Self->{LayoutObject}->Block(
         Name => 'FAQVoting',
         Data => {%FAQData},
@@ -800,7 +800,7 @@ sub _FAQVoting {
     my $VotingRates = $Self->{ConfigObject}->Get('FAQ::Item::Voting::Rates');
     for my $RateValue ( sort { $a <=> $b } keys %{$VotingRates} ) {
 
-        # create data strucure for output
+        # create data structure for output
         my %Data = (
             Value => $RateValue,
             Title => $VotingRates->{$RateValue},

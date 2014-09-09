@@ -1,5 +1,5 @@
 # --
-# Kernel/Modules/AgentFAQCategory.pm - the faq language management module
+# Kernel/Modules/AgentFAQCategory.pm - the FAQ category management module
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -89,7 +89,7 @@ sub Run {
         my $Output = $Self->{LayoutObject}->Header();
         $Output .= $Self->{LayoutObject}->NavigationBar();
 
-        # html output
+        # HTML output
         $Self->_Edit(
             Action => 'Change',
             %CategoryData,
@@ -144,7 +144,7 @@ sub Run {
         # send server error if any required parameter is missing
         if (%Error) {
 
-            # html output
+            # HTML output
             $Self->_Edit(
                 Action => 'Change',
                 %GetParam,
@@ -176,7 +176,7 @@ sub Run {
             $GetParam{NameServerError}        = 'ServerError';
             $GetParam{NameServerErrorMessage} = 'This category already exists';
 
-            # html output
+            # HTML output
             $Self->_Edit(
                 Action => 'Change',
                 %GetParam,
@@ -235,7 +235,7 @@ sub Run {
         my $Output = $Self->{LayoutObject}->Header();
         $Output .= $Self->{LayoutObject}->NavigationBar();
 
-        # html output
+        # HTML output
         $Self->_Edit(
             Action => 'Add',
             %GetParam,
@@ -292,7 +292,7 @@ sub Run {
         # send server error if any required parameters are missing
         if (%Error) {
 
-            # html output
+            # HTML output
             $Self->_Edit(
                 Action => 'Add',
                 %GetParam,
@@ -324,7 +324,7 @@ sub Run {
             $GetParam{NameServerError}        = 'ServerError';
             $GetParam{NameServerErrorMessage} = 'This category already exists!';
 
-            # html output
+            # HTML output
             $Self->_Edit(
                 Action => 'Add',
                 %GetParam,
@@ -425,7 +425,7 @@ sub Run {
         # display list of affected FAQ articles or SubCategories
         if ( @AffectedItems || @{$AffectedSubCategories} ) {
 
-            # set the dialog type to have only 1 button: Ok
+            # set the dialog type to have only 1 button: OK
             $DialogType = 'Message';
 
             $Self->{LayoutObject}->Block(
@@ -444,14 +444,14 @@ sub Run {
                 ITEMID:
                 for my $ItemID (@AffectedItems) {
 
-                    # get faq article
+                    # get FAQ article
                     my %FAQData = $Self->{FAQObject}->FAQGet(
                         ItemID     => $ItemID,
                         ItemFields => 0,
                         UserID     => $Self->{UserID},
                     );
 
-                    # check faq article
+                    # check FAQ article
                     next ITEMID if !%FAQData;
 
                     $Self->{LayoutObject}->Block(
@@ -467,7 +467,7 @@ sub Run {
             # display Affected Subcategories
             if ( @{$AffectedSubCategories} ) {
 
-                # get categoies long names
+                # get categories long names
                 my $CategoryLongNames = $Self->{FAQObject}->GetUserCategoriesLongNames(
                     Type   => 'ro',
                     UserID => 1,
@@ -590,7 +590,7 @@ sub Run {
         my $Output = $Self->{LayoutObject}->Header();
         $Output .= $Self->{LayoutObject}->NavigationBar();
 
-        # html output
+        # HTML output
         $Self->_Overview();
         $Output .= $Self->{LayoutObject}->Output(
             TemplateFile => 'AgentFAQCategory',
@@ -654,7 +654,7 @@ sub _Edit {
         UserID => $Self->{UserID},
     );
 
-    # build the catogory selection
+    # build the category selection
     $Data{CategoryOption} = $Self->{LayoutObject}->BuildSelection(
         Data           => $CategoryTree,
         Name           => 'ParentID',

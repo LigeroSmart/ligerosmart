@@ -179,7 +179,7 @@ sub TableCreateComplex {
     my @ItemList;
     for my $FAQID ( sort { $a <=> $b } keys %LinkList ) {
 
-        # extract faq data
+        # extract FAQ data
         my $FAQ = $LinkList{$FAQID}->{Data};
 
         my @ItemColumns = (
@@ -246,7 +246,7 @@ return a hash with the link output data
         ObjectLinkListWithData => $ObjectLinkListRef,
     );
 
-a result coul be Return
+a result could be Return
 
     %LinkOutputData = (
         Normal::Source => {
@@ -303,7 +303,7 @@ sub TableCreateSimple {
             my @ItemList;
             for my $FAQID ( sort { $a <=> $b } keys %{$DirectionList} ) {
 
-                # extract tickt data
+                # extract FAQ data
                 my $FAQ = $DirectionList->{$FAQID};
 
                 # define item data
@@ -438,7 +438,7 @@ sub SearchOptionList {
         },
     );
 
-    # add formkey
+    # add form key
     for my $Row (@SearchOptionList) {
         $Row->{FormKey} = 'SEARCH::' . $Row->{Key};
     }

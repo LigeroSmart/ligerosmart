@@ -1,5 +1,5 @@
 # --
-# Kernel/System/FAQ/Language.pm - faq language functions
+# Kernel/System/FAQ/Language.pm - FAQ language functions
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -18,7 +18,7 @@ Kernel::System::FAQ::Language - sub module of Kernel::System::FAQ
 
 =head1 SYNOPSIS
 
-All faq language functions.
+All FAQ language functions.
 
 =head1 PUBLIC INTERFACE
 
@@ -31,7 +31,7 @@ All faq language functions.
 add a language
 
     my $Success = $FAQObject->LanguageAdd(
-        Name   => 'Some Lanaguage',
+        Name   => 'Some Language',
         UserID => 1,
     );
 
@@ -133,7 +133,7 @@ sub LanguageDuplicateCheck {
         return;
     }
 
-    # build sql
+    # build SQL
     my @Bind = ( \$Param{Name} );
     my $SQL  = '
         SELECT id
@@ -243,7 +243,7 @@ sub LanguageList {
         return;
     }
 
-    # build sql
+    # build SQL
     return if !$Self->{DBObject}->Prepare(
         SQL => '
             SELECT id, name
@@ -261,7 +261,7 @@ sub LanguageList {
 
 =item LanguageLookup()
 
-This method does a lookup for a faq language.
+This method does a lookup for a FAQ language.
 If a language id is given, it returns the name of the language.
 If the name of the language is given, the language id is returned.
 

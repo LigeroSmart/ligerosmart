@@ -84,7 +84,7 @@ sub Run {
     );
     $Output .= $Self->{LayoutObject}->NavigationBar();
 
-    # outout Journal
+    # output Journal
     $Output .= $Self->_FAQJournalShow(
         Journal     => $Journal,
         Total       => scalar @{$Journal},
@@ -110,7 +110,7 @@ sub _FAQJournalShow {
     # set frontend
     my $Frontend = 'Agent';
 
-    # set defaut view mode to 'small'
+    # set default view mode to 'small'
     my $View = $Param{View} || 'Small';
 
     # store latest view mode
@@ -175,7 +175,7 @@ sub _FAQJournalShow {
         Link      => $Param{LinkPage},
     );
 
-    # build shown faq articles on a page
+    # build shown FAQ articles on a page
     $Param{RequestedURL}    = "Action=$Self->{Action}";
     $Param{Group}           = $Group;
     $Param{PreferencesKey}  = $PageShownPreferencesKey;
@@ -262,7 +262,7 @@ sub _FAQJournalShow {
         }
     }
 
-    # build html content
+    # build HTML content
     my $OutputNavBar = $Self->{LayoutObject}->Output(
         TemplateFile => 'AgentFAQOverviewNavBar',
         Data         => {

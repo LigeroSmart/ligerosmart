@@ -1,5 +1,5 @@
 # --
-# Kernel/System/FAQ/Vote.pm - faq vote functions
+# Kernel/System/FAQ/Vote.pm - FAQ vote functions
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -18,7 +18,7 @@ Kernel::System::FAQ::Vote - sub module of Kernel::System::FAQ
 
 =head1 SYNOPSIS
 
-All faq vote functions.
+All FAQ vote functions.
 
 =head1 PUBLIC INTERFACE
 

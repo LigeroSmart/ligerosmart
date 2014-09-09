@@ -37,7 +37,7 @@ sub new {
         }
     }
 
-    # create aditional objects
+    # create additional objects
     $Self->{HTMLUtilsObject}    = Kernel::System::HTMLUtils->new(%Param);
     $Self->{LinkObject}         = Kernel::System::LinkObject->new(%Param);
     $Self->{PDFObject}          = Kernel::System::PDF->new(%Param);
@@ -142,10 +142,10 @@ sub Run {
     for my $Field (qw(Field1 Field2 Field3 Field4 Field5 Field6)) {
         next FIELD if !$FAQData{$Field};
 
-        # no quoting if html view is enabled
+        # no quoting if HTML view is enabled
         next FIELD if $Self->{ConfigObject}->Get('FAQ::Item::HTML');
 
-        # html quoting
+        # HTML quoting
         $FAQData{$Field} = $Self->{LayoutObject}->Ascii2Html(
             NewLine        => 0,
             Text           => $FAQData{$Field},
@@ -167,7 +167,7 @@ sub Run {
     );
     $Param{ChangedByLogin} = $UserInfo{UserLogin};
 
-    # generate pdf output
+    # generate PDF output
     if ( $Self->{PDFObject} ) {
         my $PrintedBy = $Self->{LayoutObject}->{LanguageObject}->Get('printed by');
         my $Time      = $Self->{LayoutObject}->Output( Template => '$Env{"Time"}' );
@@ -208,13 +208,13 @@ sub Run {
         $Page{PageText}   = $Self->{LayoutObject}->{LanguageObject}->Get('Page');
         $Page{PageCount}  = 1;
 
-        # create new pdf document
+        # create new PDF document
         $Self->{PDFObject}->DocumentNew(
             Title  => $Self->{ConfigObject}->Get('Product') . ': ' . $Title,
             Encode => $Self->{LayoutObject}->{UserCharset},
         );
 
-        # create first pdf page
+        # create first PDF page
         $Self->{PDFObject}->PageNew(
             %Page, FooterRight => $Page{PageText} . ' ' . $Page{PageCount},
         );
@@ -239,7 +239,7 @@ sub Run {
             Y    => -6,
         );
 
-        # output faq information
+        # output FAQ information
         $Self->_PDFOutputFAQHeaderInfo(
             PageData => \%Page,
             FAQData  => \%FAQData,
@@ -252,7 +252,7 @@ sub Run {
             );
         }
 
-        # output faq dynamic fields
+        # output FAQ dynamic fields
         $Self->_PDFOutputFAQDynamicFields(
             PageData => \%Page,
             FAQData  => \%FAQData,
@@ -272,7 +272,7 @@ sub Run {
             );
         }
 
-        # return the pdf document
+        # return the PDF document
         my $Filename = 'FAQ_' . $FAQData{Number};
         my ( $s, $m, $h, $D, $M, $Y ) = $Self->{TimeObject}->SystemTime2Date(
             SystemTime => $Self->{TimeObject}->SystemTime(),
@@ -290,7 +290,7 @@ sub Run {
         );
     }
 
-    # generate html output
+    # generate HTML output
     else {
 
         # output header
@@ -343,7 +343,7 @@ sub Run {
             }
         }
 
-        # show faq
+        # show FAQ
         $Output .= $Self->_HTMLMask(
             FAQID => $GetParam{FAQID},
             %Param,
@@ -406,7 +406,7 @@ sub _PDFOutputFAQHeaderInfo {
     # create right table
     my $TableRight;
 
-    # voting rows, featre is enabled
+    # voting rows, feature is enabled
     if ( $Self->{Voting} ) {
         $TableRight = [
             {
@@ -668,7 +668,7 @@ sub _PDFOutputFAQDynamicFields {
     my %TableParam;
     my $Row = 0;
 
-    # get the dynamic fields for faq object
+    # get the dynamic fields for FAQ object
     my $DynamicField = $Self->{DynamicFieldObject}->DynamicFieldListGet(
         Valid       => 1,
         ObjectType  => ['FAQ'],
@@ -676,7 +676,7 @@ sub _PDFOutputFAQDynamicFields {
     );
 
     # generate table
-    # cycle trough the activated Dynamic Fields for faq object
+    # cycle trough the activated Dynamic Fields for FAQ object
     DYNAMICFIELD:
     for my $DynamicFieldConfig ( @{$DynamicField} ) {
         next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
@@ -709,7 +709,7 @@ sub _PDFOutputFAQDynamicFields {
     $TableParam{ColumnData}[0]{Width} = 80;
     $TableParam{ColumnData}[1]{Width} = 431;
 
-    # output faq dynamic fields
+    # output FAQ dynamic fields
     if ($Output) {
 
         # set new position
@@ -809,7 +809,7 @@ sub _PDFOuputFAQContent {
 
         my %TableParam;
 
-        # convert HTML to ascii
+        # convert HTML to ASCII
         my $AsciiField = $Self->{HTMLUtilsObject}->ToAscii( String => $FAQData{$Field} );
 
         $TableParam{CellData}[0][0]{Content} = $AsciiField || '';

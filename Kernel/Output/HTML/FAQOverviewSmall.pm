@@ -104,7 +104,7 @@ sub Run {
                 my $CSS = 'OverviewHeader';
                 my $OrderBy;
 
-                # remove ID if necesary
+                # remove ID if necessary
                 if ( $Param{SortBy} ) {
                     $Param{SortBy}
                         = $Param{SortBy} eq 'PriorityID'
