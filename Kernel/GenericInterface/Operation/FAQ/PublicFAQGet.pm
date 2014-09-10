@@ -13,9 +13,13 @@ use strict;
 use warnings;
 
 use MIME::Base64;
-use Kernel::System::FAQ;
-use Kernel::GenericInterface::Operation::Common;
 use Kernel::System::VariableCheck qw(IsArrayRefWithData IsHashRefWithData IsStringWithData);
+
+use base qw(
+    Kernel::GenericInterface::Operation::Common
+);
+
+our $ObjectManagerDisabled = 1;
 
 =head1 NAME
 
@@ -43,11 +47,9 @@ sub new {
     bless( $Self, $Type );
 
     # check needed objects
-    for my $Needed (
-        qw(DebuggerObject ConfigObject MainObject LogObject TimeObject DBObject EncodeObject WebserviceID)
-        )
-    {
+    for my $Needed (qw( DebuggerObject WebserviceID )) {
         if ( !$Param{$Needed} ) {
+
             return {
                 Success      => 0,
                 ErrorMessage => "Got no $Needed!"
@@ -56,19 +58,6 @@ sub new {
 
         $Self->{$Needed} = $Param{$Needed};
     }
-
-    # create additional objects
-    $Self->{FAQObject}    = Kernel::System::FAQ->new(%Param);
-    $Self->{CommonObject} = Kernel::GenericInterface::Operation::Common->new( %{$Self} );
-
-    # set UserID to root because in public interface there is no user
-    $Self->{UserID} = 1;
-
-    # get public state types
-    $Self->{InterfaceStates} = $Self->{FAQObject}->StateTypeList(
-        Types  => $Self->{ConfigObject}->Get('FAQ::Public::StateTypes'),
-        UserID => $Self->{UserID},
-    );
 
     return $Self;
 }
@@ -181,7 +170,7 @@ sub Run {
 
     if ( !$Param{Data}->{ItemID} ) {
 
-        return $Self->{CommonObject}->ReturnError(
+        return $Self->ReturnError(
             ErrorCode    => 'PublicFAQGet.MissingParameter',
             ErrorMessage => "PublicFAQGet: Got no ItemID!",
         );
@@ -199,14 +188,27 @@ sub Run {
     my @ItemIDs = split( /,/, $Param{Data}->{ItemID} );
     my @Item;
 
+    # get needed objects
+    my $FAQObject    = $Kernel::OM->Get('Kernel::System::FAQ');
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+
+    # set UserID to root because in public interface there is no user
+    my $UserID = 1;
+
+    # get public state types
+    my $InterfaceStates = $Kernel::OM->Get('Kernel::System::FAQ')->StateTypeList(
+        Types  => $ConfigObject->Get('FAQ::Public::StateTypes'),
+        UserID => $UserID,
+    );
+
     # start main loop
     for my $ItemID (@ItemIDs) {
 
         # get the FAQ entry
-        my %FAQEntry = $Self->{FAQObject}->FAQGet(
+        my %FAQEntry = $FAQObject->FAQGet(
             ItemID     => $ItemID,
             ItemFields => 1,
-            UserID     => $Self->{UserID},
+            UserID     => $UserID,
         );
 
         if ( !IsHashRefWithData( \%FAQEntry ) ) {
@@ -214,7 +216,7 @@ sub Run {
             $ErrorMessage = 'Could not get FAQ data'
                 . ' in Kernel::GenericInterface::Operation::FAQ::PublicFAQGet::Run()';
 
-            return $Self->{CommonObject}->ReturnError(
+            return $Self->ReturnError(
                 ErrorCode    => 'PublicFAQGet.NotValidFAQID',
                 ErrorMessage => "PublicFAQGet: $ErrorMessage",
             );
@@ -222,15 +224,15 @@ sub Run {
 
         # check permissions
         my $ApprovalSuccess = 1;
-        if ( $Self->{ConfigObject}->Get('FAQ::ApprovalRequired') ) {
+        if ( $ConfigObject->Get('FAQ::ApprovalRequired') ) {
             $ApprovalSuccess = $FAQEntry{Approved};
         }
-        if ( !$ApprovalSuccess || !$Self->{InterfaceStates}->{ $FAQEntry{StateTypeID} } ) {
+        if ( !$ApprovalSuccess || !$InterfaceStates->{ $FAQEntry{StateTypeID} } ) {
 
             $ErrorMessage = 'Could not get FAQ data'
                 . ' in Kernel::GenericInterface::Operation::FAQ::PublicFAQGet::Run()';
 
-            return $Self->{CommonObject}->ReturnError(
+            return $Self->ReturnError(
                 ErrorCode    => 'PublicFAQGet.AccessDenied',
                 ErrorMessage => "PublicFAQGet: $ErrorMessage",
             );
@@ -241,10 +243,10 @@ sub Run {
             Article => \%FAQEntry,
         };
 
-        my @Index = $Self->{FAQObject}->AttachmentIndex(
+        my @Index = $FAQObject->AttachmentIndex(
             ItemID     => $ItemID,
-            ShowInline => 1,                 #   ( 0|1, default 1)
-            UserID     => $Self->{UserID},
+            ShowInline => 1,         #   ( 0|1, default 1)
+            UserID     => $UserID,
         );
 
         my %File;
@@ -254,10 +256,10 @@ sub Run {
             for my $Attachment (@Index) {
 
                 if ( $Param{Data}->{GetAttachmentContents} ) {
-                    %File = $Self->{FAQObject}->AttachmentGet(
+                    %File = $FAQObject->AttachmentGet(
                         ItemID => $ItemID,
                         FileID => $Attachment->{FileID},
-                        UserID => $Self->{UserID},
+                        UserID => $UserID,
                     );
 
                     # convert content to base64
@@ -286,7 +288,7 @@ sub Run {
         $ErrorMessage = 'Could not get FAQ data'
             . ' in Kernel::GenericInterface::Operation::FAQ::PublicFAQGet::Run()';
 
-        return $Self->{CommonObject}->ReturnError(
+        return $Self->ReturnError(
             ErrorCode    => 'PublicFAQGet.NoFAQData',
             ErrorMessage => "PublicFAQGet: $ErrorMessage",
         );
