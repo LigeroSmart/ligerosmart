@@ -33,7 +33,7 @@ my $HelperObject = Kernel::System::UnitTest::Helper->new(
 
 my $RandomID = $HelperObject->GetRandomID();
 
-# set webservice name
+# set web-service name
 my $WebserviceName = '-Test-' . $HelperObject->GetRandomID();
 
 # set UserID on 1
