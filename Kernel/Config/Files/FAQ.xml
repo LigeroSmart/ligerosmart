@@ -1025,7 +1025,6 @@ Your OTRS Notification Master
                 <NavBarName>FAQ</NavBarName>
                 <Loader>
                     <CSS>FAQ.Agent.Detail.css</CSS>
-                    <CSS>FAQ.Widget.css</CSS>
                     <JavaScript>FAQ.Agent.ConfirmationDialog.js</JavaScript>
                     <JavaScript>FAQ.Agent.TicketCompose.js</JavaScript>
                     <JavaScript>FAQ.Agent.FAQZoom.js</JavaScript>
