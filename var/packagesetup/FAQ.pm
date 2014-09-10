@@ -1,5 +1,5 @@
 # --
-# FAQ.pm - code to excecute during package installation
+# FAQ.pm - code to execute during package installation
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -12,20 +12,22 @@ package var::packagesetup::FAQ;
 use strict;
 use warnings;
 
-use Kernel::Config;
-use Kernel::System::Cache;
-use Kernel::System::SysConfig;
-use Kernel::System::CSV;
-use Kernel::System::Group;
-use Kernel::System::Stats;
-use Kernel::System::User;
-use Kernel::System::Valid;
-use Kernel::System::LinkObject;
-use Kernel::System::FAQ;
+our @ObjectDependencies = (
+    'Kernel::Config',
+    'Kernel::System::Cache',
+    'Kernel::System::DB',
+    'Kernel::System::FAQ',
+    'Kernel::System::Group',
+    'Kernel::System::LinkObject',
+    'Kernel::System::Log',
+    'Kernel::System::Stats',
+    'Kernel::System::SysConfig',
+    'Kernel::System::Valid',
+);
 
 =head1 NAME
 
-FAQ.pm - code to excecute during package installation
+FAQ.pm - code to execute during package installation
 
 =head1 SYNOPSIS
 
@@ -41,45 +43,9 @@ All functions
 
 create an object
 
-    use Kernel::Config;
-    use Kernel::System::Log;
-    use Kernel::System::Main;
-    use Kernel::System::Time;
-    use Kernel::System::DB;
-    use Kernel::System::XML;
-    use var::packagesetup::FAQ;
-
-    my $ConfigObject = Kernel::Config->new();
-    my $LogObject    = Kernel::System::Log->new(
-        ConfigObject => $ConfigObject,
-    );
-    my $MainObject = Kernel::System::Main->new(
-        ConfigObject => $ConfigObject,
-        LogObject    => $LogObject,
-    );
-    my $TimeObject = Kernel::System::Time->new(
-        ConfigObject => $ConfigObject,
-        LogObject    => $LogObject,
-    );
-    my $DBObject = Kernel::System::DB->new(
-        ConfigObject => $ConfigObject,
-        LogObject    => $LogObject,
-        MainObject   => $MainObject,
-    );
-    my $XMLObject = Kernel::System::XML->new(
-        ConfigObject => $ConfigObject,
-        LogObject    => $LogObject,
-        DBObject     => $DBObject,
-        MainObject   => $MainObject,
-    );
-    my $CodeObject = var::packagesetup::FAQ->new(
-        ConfigObject => $ConfigObject,
-        LogObject    => $LogObject,
-        MainObject   => $MainObject,
-        TimeObject   => $TimeObject,
-        DBObject     => $DBObject,
-        XMLObject    => $XMLObject,
-    );
+    use Kernel::System::ObjectManager;
+    local $Kernel::OM = Kernel::System::ObjectManager->new();
+    my $CodeObject = $Kernel::OM->Get('var::packagesetup::FAQ');
 
 =cut
 
@@ -90,19 +56,8 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    # check needed objects
-    for my $Object (
-        qw(ConfigObject LogObject MainObject TimeObject DBObject XMLObject EncodeObject)
-        )
-    {
-        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
-    }
-
-    # create needed sysconfig object
-    $Self->{SysConfigObject} = Kernel::System::SysConfig->new( %{$Self} );
-
     # rebuild ZZZ* files
-    $Self->{SysConfigObject}->WriteDefault();
+    $Kernel::OM->Get('Kernel::System::SysConfig')->WriteDefault();
 
     # define the ZZZ files
     my @ZZZFiles = (
@@ -122,18 +77,24 @@ sub new {
         }
     }
 
-    # create needed objects
-    $Self->{ConfigObject} = Kernel::Config->new();
-    $Self->{CSVObject}    = Kernel::System::CSV->new( %{$Self} );
-    $Self->{GroupObject}  = Kernel::System::Group->new( %{$Self} );
-    $Self->{UserObject}   = Kernel::System::User->new( %{$Self} );
-    $Self->{ValidObject}  = Kernel::System::Valid->new( %{$Self} );
-    $Self->{LinkObject}   = Kernel::System::LinkObject->new( %{$Self} );
-    $Self->{FAQObject}    = Kernel::System::FAQ->new( %{$Self} );
-    $Self->{CacheObject}  = Kernel::System::Cache->new( %{$Self} );
-    $Self->{StatsObject}  = Kernel::System::Stats->new(
-        %{$Self},
-        UserID => 1,
+    # always discard the config object before package code is executed,
+    # to make sure that the config object will be created newly, so that it
+    # will use the recently written new config from the package
+    $Kernel::OM->ObjectsDiscard(
+        Objects => ['Kernel::Config'],
+    );
+
+    # the stats object needs a UserID parameter for the constructor
+    # we need to discard any existing stats object before
+    $Kernel::OM->ObjectsDiscard(
+        Objects => ['Kernel::System::Stats'],
+    );
+
+    # define UserID parameter for the constructor of the stats object
+    $Kernel::OM->ObjectParamAdd(
+        'Kernel::System::Stats' => {
+            UserID => 1,
+        },
     );
 
     # define file prefix
@@ -153,10 +114,10 @@ run the code install part
 sub CodeInstall {
     my ( $Self, %Param ) = @_;
 
-    # insert the faq states
+    # insert the FAQ states
     $Self->_InsertFAQStates();
 
-    # add the group faq
+    # add the group FAQ
     $Self->_GroupAdd(
         Name        => 'faq',
         Description => 'faq database users',
@@ -174,17 +135,17 @@ sub CodeInstall {
         Description => 'faq approval users',
     );
 
-    # add the faq groups to the category 'Misc'
+    # add the FAQ groups to the category 'Misc'
     $Self->_CategoryGroupSet(
         Category => 'Misc',
         Groups => [ 'faq', 'faq_admin', 'faq_approval' ],
     );
 
-    # create aditional FAQ languages
+    # create additional FAQ languages
     $Self->_CreateAditionalFAQLanguages();
 
     # install stats
-    $Self->{StatsObject}->StatsInstall(
+    $Kernel::OM->Get('Kernel::System::Stats')->StatsInstall(
         FilePrefix => $Self->{FilePrefix},
     );
 
@@ -202,10 +163,10 @@ run the code reinstall part
 sub CodeReinstall {
     my ( $Self, %Param ) = @_;
 
-    # insert the faq states
+    # insert the FAQ states
     $Self->_InsertFAQStates();
 
-    # add the group faq
+    # add the group FAQ
     $Self->_GroupAdd(
         Name        => 'faq',
         Description => 'faq database users',
@@ -224,11 +185,11 @@ sub CodeReinstall {
     );
 
     # install stats
-    $Self->{StatsObject}->StatsInstall(
+    $Kernel::OM->Get('Kernel::System::Stats')->StatsInstall(
         FilePrefix => $Self->{FilePrefix},
     );
 
-    # create aditional FAQ languages
+    # create additional FAQ languages
     $Self->_CreateAditionalFAQLanguages();
 
     return 1;
@@ -246,15 +207,15 @@ sub CodeUpgrade {
     my ( $Self, %Param ) = @_;
 
     # install stats
-    $Self->{StatsObject}->StatsInstall(
+    $Kernel::OM->Get('Kernel::System::Stats')->StatsInstall(
         FilePrefix => $Self->{FilePrefix},
     );
 
-    # create aditional FAQ languages
+    # create additional FAQ languages
     $Self->_CreateAditionalFAQLanguages();
 
     # delete the FAQ cache (to avoid old data from previous FAQ modules)
-    $Self->{CacheObject}->CleanUp(
+    $Kernel::OM->Get('Kernel::System::Cache')->CleanUp(
         Type => 'FAQ',
     );
 
@@ -292,7 +253,7 @@ run the code uninstall part
 sub CodeUninstall {
     my ( $Self, %Param ) = @_;
 
-    # deactivate the group faq
+    # deactivate the group FAQ
     $Self->_GroupDeactivate(
         Name => 'faq',
     );
@@ -308,7 +269,7 @@ sub CodeUninstall {
     );
 
     # uninstall stats
-    $Self->{StatsObject}->StatsUninstall(
+    $Kernel::OM->Get('Kernel::System::Stats')->StatsUninstall(
         FilePrefix => $Self->{FilePrefix},
     );
 
@@ -336,16 +297,19 @@ sub _InsertFAQStates {
         'public'   => 'public (all)',
     );
 
+    # get FAQ object
+    my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
+
     for my $Type ( sort keys %State ) {
 
         # get the state type
-        my $StateTypeRef = $Self->{FAQObject}->StateTypeGet(
+        my $StateTypeRef = $FAQObject->StateTypeGet(
             Name   => $Type,
             UserID => 1,
         );
 
         # add the state
-        $Self->{FAQObject}->StateAdd(
+        $FAQObject->StateAdd(
             Name   => $State{$Type},
             TypeID => $StateTypeRef->{StateID},
             UserID => 1,
@@ -367,22 +331,28 @@ sub _ConvertNewlines {
     my ( $Self, %Param ) = @_;
 
     # only convert \n to <br> if HTML view is enabled
-    return if !$Self->{ConfigObject}->Get('FAQ::Item::HTML');
+    return if !$Kernel::OM->Get('Kernel::Config')->Get('FAQ::Item::HTML');
+
+    # get database object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
     # get all FAQ IDs
     my @FAQIDs;
-    $Self->{DBObject}->Prepare(
+    $DBObject->Prepare(
         SQL => "SELECT id FROM faq_item",
     );
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $DBObject->FetchrowArray() ) {
         push( @FAQIDs, $Row[0] );
     }
+
+    # get FAQ object
+    my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
 
     ID:
     for my $ItemID (@FAQIDs) {
 
         # get FAQ data
-        my %FAQ = $Self->{FAQObject}->FAQGet(
+        my %FAQ = $FAQObject->FAQGet(
             ItemID     => $ItemID,
             ItemFields => 1,
             UserID     => 1,
@@ -402,7 +372,7 @@ sub _ConvertNewlines {
         next ID if !$FoundNewline;
 
         # update FAQ data
-        $Self->{FAQObject}->FAQUpdate(
+        $FAQObject->FAQUpdate(
             %FAQ,
             UserID => 1,
         );
@@ -428,22 +398,26 @@ sub _GroupAdd {
     # check needed stuff
     for my $Argument (qw(Name Description)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
+
             return;
         }
     }
 
     # get valid list
-    my %ValidList = $Self->{ValidObject}->ValidList(
+    my %ValidList = $Kernel::OM->Get('Kernel::System::Valid')->ValidList(
         UserID => 1,
     );
     my %ValidListReverse = reverse %ValidList;
 
+    # get group object
+    my $GroupObject = $Kernel::OM->Get('Kernel::System::Group');
+
     # get list of all groups
-    my %GroupList = $Self->{GroupObject}->GroupList();
+    my %GroupList = $GroupObject->GroupList();
 
     # reverse the group list for easier lookup
     my %GroupListReverse = reverse %GroupList;
@@ -455,13 +429,13 @@ sub _GroupAdd {
     if ($GroupID) {
 
         # get current group data
-        my %GroupData = $Self->{GroupObject}->GroupGet(
+        my %GroupData = $GroupObject->GroupGet(
             ID     => $GroupID,
             UserID => 1,
         );
 
         # reactivate group
-        $Self->{GroupObject}->GroupUpdate(
+        $GroupObject->GroupUpdate(
             %GroupData,
             ValidID => $ValidListReverse{valid},
             UserID  => 1,
@@ -472,7 +446,7 @@ sub _GroupAdd {
 
     # add the group
     else {
-        return if !$Self->{GroupObject}->GroupAdd(
+        return if !$GroupObject->GroupAdd(
             Name    => $Param{Name},
             Comment => $Param{Description},
             ValidID => $ValidListReverse{valid},
@@ -481,13 +455,13 @@ sub _GroupAdd {
     }
 
     # lookup the new group id
-    my $NewGroupID = $Self->{GroupObject}->GroupLookup(
+    my $NewGroupID = $GroupObject->GroupLookup(
         Group  => $Param{Name},
         UserID => 1,
     );
 
     # add user root to the group
-    $Self->{GroupObject}->GroupMemberAdd(
+    $GroupObject->GroupMemberAdd(
         GID        => $NewGroupID,
         UID        => 1,
         Permission => {
@@ -519,34 +493,38 @@ sub _GroupDeactivate {
 
     # check needed stuff
     if ( !$Param{Name} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need Name!',
         );
+
         return;
     }
 
+    # get group object
+    my $GroupObject = $Kernel::OM->Get('Kernel::System::Group');
+
     # lookup group id
-    my $GroupID = $Self->{GroupObject}->GroupLookup(
+    my $GroupID = $GroupObject->GroupLookup(
         Group => $Param{Name},
     );
 
     return if !$GroupID;
 
     # get valid list
-    my %ValidList = $Self->{ValidObject}->ValidList(
+    my %ValidList = $Kernel::OM->Get('Kernel::System::Valid')->ValidList(
         UserID => 1,
     );
     my %ValidListReverse = reverse %ValidList;
 
     # get current group data
-    my %GroupData = $Self->{GroupObject}->GroupGet(
+    my %GroupData = $GroupObject->GroupGet(
         ID     => $GroupID,
         UserID => 1,
     );
 
     # deactivate group
-    $Self->{GroupObject}->GroupUpdate(
+    $GroupObject->GroupUpdate(
         %GroupData,
         ValidID => $ValidListReverse{invalid},
         UserID  => 1,
@@ -557,7 +535,7 @@ sub _GroupDeactivate {
 
 =item _LinkDelete()
 
-delete all existing links to faq articles
+delete all existing links to FAQ articles
 
     my $Result = $CodeObject->_LinkDelete();
 
@@ -566,19 +544,22 @@ delete all existing links to faq articles
 sub _LinkDelete {
     my ( $Self, %Param ) = @_;
 
-    # get all faq article ids
+    # get database object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
+    # get all FAQ article ids
     my @FAQIDs = ();
-    $Self->{DBObject}->Prepare(
+    $DBObject->Prepare(
         SQL => 'SELECT id FROM faq_item'
     );
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $DBObject->FetchrowArray() ) {
         push @FAQIDs, $Row[0];
     }
     return if !@FAQIDs;
 
-    # delete the faq article links
+    # delete the FAQ article links
     for my $FAQID (@FAQIDs) {
-        $Self->{LinkObject}->LinkDeleteAll(
+        $Kernel::OM->Get('Kernel::System::LinkObject')->LinkDeleteAll(
             Object => 'FAQ',
             Key    => $FAQID,
             UserID => 1,
@@ -590,7 +571,7 @@ sub _LinkDelete {
 
 =item _CreateAditionalFAQLanguages()
 
-creates aditional FAQ languages for system default language and user language
+creates additional FAQ languages for system default language and user language
 
     my $Result = $CodeObject->_CreateAditionalFAQLanguages();
 
@@ -599,12 +580,15 @@ creates aditional FAQ languages for system default language and user language
 sub _CreateAditionalFAQLanguages {
     my ( $Self, %Param ) = @_;
 
-    # get system defaut language
-    my $Language = $Self->{ConfigObject}->Get('DefaultLanguage');
+    # get system default language
+    my $Language = $Kernel::OM->Get('Kernel::Config')->Get('DefaultLanguage');
     if ($Language) {
 
+        # get FAQ object
+        my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
+
         # get current FAQ languages
-        my %CurrentLanguages = $Self->{FAQObject}->LanguageList(
+        my %CurrentLanguages = $FAQObject->LanguageList(
             UserID => 1,
         );
 
@@ -615,7 +599,7 @@ sub _CreateAditionalFAQLanguages {
         if ( !$ReverseLanguages{$Language} ) {
 
             # add language
-            my $Success = $Self->{FAQObject}->LanguageAdd(
+            my $Success = $FAQObject->LanguageAdd(
                 Name   => $Language,
                 UserID => 1,
             );
@@ -641,30 +625,35 @@ sub _CategoryGroupSet {
     # check needed stuff
     for my $Argument (qw(Category Groups)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
+
             return;
         }
     }
 
     # check needed stuff
     if ( ref $Param{Groups} ne 'ARRAY' ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "Groups must be an array reference!",
         );
+
         return;
     }
 
+    # get FAQ object
+    my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
+
     # get all categories and their ids
-    my $CategoryTree = $Self->{FAQObject}->CategoryTreeList(
+    my $CategoryTree = $FAQObject->CategoryTreeList(
         Valid  => 1,
         UserID => 1,
     );
 
-    # create lookup hash for the catory id
+    # create lookup hash for the category id
     my %FAQ2ID = reverse %{$CategoryTree};
 
     # lookup the category id
@@ -673,14 +662,14 @@ sub _CategoryGroupSet {
     # lookup the group ids
     my @GroupIDs;
     for my $Group ( @{ $Param{Groups} } ) {
-        my $GroupID = $Self->{GroupObject}->GroupLookup(
+        my $GroupID = $Kernel::OM->Get('Kernel::System::Group')->GroupLookup(
             Group => $Group,
         );
         push @GroupIDs, $GroupID;
     }
 
     # set category group
-    $Self->{FAQObject}->SetCategoryGroup(
+    $FAQObject->SetCategoryGroup(
         CategoryID => $CategoryID,
         GroupIDs   => \@GroupIDs,
         UserID     => 1,
