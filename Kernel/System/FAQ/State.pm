@@ -12,6 +12,12 @@ package Kernel::System::FAQ::State;
 use strict;
 use warnings;
 
+our @ObjectDependencies = (
+    'Kernel::System::Cache',
+    'Kernel::System::DB',
+    'Kernel::System::Log',
+);
+
 =head1 NAME
 
 Kernel::System::FAQ::State - sub module of Kernel::System::FAQ
@@ -48,15 +54,16 @@ sub StateAdd {
     # check needed stuff
     for my $Argument (qw(Name TypeID UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
+
             return;
         }
     }
 
-    return if !$Self->{DBObject}->Do(
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Do(
         SQL => '
             INSERT INTO faq_state (name, type_id)
             VALUES ( ?, ? )',
@@ -91,16 +98,20 @@ sub StateGet {
     # check needed stuff
     for my $Argument (qw(StateID UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
+
             return;
         }
     }
 
-    # sql
-    return if !$Self->{DBObject}->Prepare(
+    # get database object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
+    # SQL
+    return if !$DBObject->Prepare(
         SQL => '
             SELECT id, name, type_id
             FROM faq_state
@@ -110,7 +121,7 @@ sub StateGet {
     );
 
     my %Data;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $DBObject->FetchrowArray() ) {
         %Data = (
             StateID => $Row[0],
             Name    => $Row[1],
@@ -144,22 +155,26 @@ sub StateList {
 
     # check needed stuff
     if ( !$Param{UserID} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need UserID!',
         );
+
         return;
     }
 
-    # sql
-    return if !$Self->{DBObject}->Prepare(
+    # get database object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
+    # SQL
+    return if !$DBObject->Prepare(
         SQL => '
             SELECT id, name
             FROM faq_state'
     );
 
     my %List;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $DBObject->FetchrowArray() ) {
         $List{ $Row[0] } = $Row[1];
     }
 
@@ -189,16 +204,17 @@ sub StateUpdate {
     # check needed stuff
     for my $Argument (qw(StateID Name TypeID UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
+
             return;
         }
     }
 
-    # sql
-    return if !$Self->{DBObject}->Do(
+    # SQL
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Do(
         SQL => '
             UPDATE faq_state
             SET name = ?, type_id = ?,
@@ -211,7 +227,7 @@ sub StateUpdate {
 
 =item StateTypeGet()
 
-get a state as hashref
+get a state as hash reference
 
     my $StateTypeHashRef = $FAQObject->StateTypeGet(
         StateID => 1,
@@ -239,10 +255,11 @@ sub StateTypeGet {
 
     # check needed stuff
     if ( !$Param{UserID} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "Need UserID!",
         );
+
         return;
     }
 
@@ -263,21 +280,28 @@ sub StateTypeGet {
         $CacheKey .= 'Name::' . $Param{Name};
     }
 
+    # get cache object
+    my $CacheObject = $Kernel::OM->Get('Kernel::System::Cache');
+
     # check cache
-    my $Cache = $Self->{CacheObject}->Get(
+    my $Cache = $CacheObject->Get(
         Type => 'FAQ',
         Key  => $CacheKey,
     );
+
     return $Cache if $Cache;
 
-    # sql
-    return if !$Self->{DBObject}->Prepare(
+    # get database object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
+    # SQL
+    return if !$DBObject->Prepare(
         SQL  => $SQL,
         Bind => \@Bind,
     );
 
     my %Data;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $DBObject->FetchrowArray() ) {
         %Data = (
             StateID => $Row[0],
             Name    => $Row[1],
@@ -285,7 +309,7 @@ sub StateTypeGet {
     }
 
     # cache result
-    $Self->{CacheObject}->Set(
+    $CacheObject->Set(
         Type  => 'FAQ',
         Key   => $CacheKey,
         Value => \%Data,
@@ -297,7 +321,7 @@ sub StateTypeGet {
 
 =item StateTypeList()
 
-get the state type list as hashref
+get the state type list as hash reference
 
     my $StateTypeHashRef = $FAQObject->StateTypeList(
         UserID => 1,
@@ -325,10 +349,11 @@ sub StateTypeList {
 
     # check needed stuff
     if ( !$Param{UserID} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need UserID!',
         );
+
         return;
     }
 
@@ -341,7 +366,7 @@ sub StateTypeList {
     if ( $Param{Types} ) {
 
         if ( ref $Param{Types} ne 'ARRAY' ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => 'Types should be an array reference!',
             );
@@ -365,12 +390,15 @@ sub StateTypeList {
         }
     }
 
+    # get database object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
     # prepare SQL
-    return if !$Self->{DBObject}->Prepare( SQL => $SQL );
+    return if !$DBObject->Prepare( SQL => $SQL );
 
     # fetch the result
     my %List;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $DBObject->FetchrowArray() ) {
         $List{ $Row[0] } = $Row[1];
     }
 
