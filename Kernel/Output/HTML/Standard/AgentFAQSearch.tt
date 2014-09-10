@@ -43,7 +43,7 @@
             <label>[% Translate("Add another attribute") | html %]:</label>
             <div class="Field">
                 [% Data.AttributesStrg %]
-                <button type="button" class="Add" value="Add" title="Add entry">[% Translate("Add") | html %]</button>
+                <a class="AddButton" href="#" title="[% Translate("Add entry") | html %]"><i class="fa fa-plus-square-o"></i><span class="InvisibleText">[% Translate("Add") | html %]</span></a>
             </div>
             <div class="Clear"></div>
             <label>[% Translate("Output") | html %]:</label>
@@ -59,56 +59,56 @@
         <label for="Fulltext"id="LabelFulltext">[% Translate("Fulltext") | html %]:</label>
         <div class="Field">
             <input type="text" name="Fulltext" value="[% Data.Fulltext | html %]" class="W50pc" />
-            <button type="button" class="Remove" value="Remove" title="[% Translate("Remove this entry") | html %]">[% Translate("Remove") | html %]</button>
+            <a class="RemoveButton" href="#" title="[% Translate("Remove this entry") | html %]"><i class="fa fa-minus-square-o"></i><span class="InvisibleText">[% Translate("Remove") | html %]</span></a>
         </div>
 
         <div class="Clear"></div>
         <label for="Number" id="LabelNumber">[% Config("FAQ::FAQHook") %] [% Translate("(e. g. 10*5155 or 105658*)") | html %]:</label>
         <div class="Field">
             <input type="text" name="Number" value="[% Data.Number | html %]" class="W50pc"/>
-            <button type="button" class="Remove" value="Remove" title="[% Translate("Remove this entry") | html %]">[% Translate("Remove") | html %]</button>
+            <a class="RemoveButton" href="#" title="[% Translate("Remove this entry") | html %]"><i class="fa fa-minus-square-o"></i><span class="InvisibleText">[% Translate("Remove") | html %]</span></a>
         </div>
 
         <div class="Clear"></div>
         <label for="Title" id="LabelTitle">[% Translate("Title") | html %]:</label>
         <div class="Field">
             <input type="text" name="Title" value="[% Data.Title | html %]" class="W50pc"/>
-            <button type="button" class="Remove" value="Remove" title="[% Translate("Remove this entry") | html %]">[% Translate("Remove") | html %]</button>
+            <a class="RemoveButton" href="#" title="[% Translate("Remove this entry") | html %]"><i class="fa fa-minus-square-o"></i><span class="InvisibleText">[% Translate("Remove") | html %]</span></a>
         </div>
 
         <div class="Clear"></div>
         <label for="Keyword" id="LabelKeyword">[% Translate("Keyword") | html %]:</label>
         <div class="Field">
             <input type="text" name="Keyword" value="[% Data.Keyword | html %]" class="W50pc"/>
-            <button type="button" class="Remove" value="Remove" title="[% Translate("Remove this entry") | html %]">[% Translate("Remove") | html %]</button>
+            <a class="RemoveButton" href="#" title="[% Translate("Remove this entry") | html %]"><i class="fa fa-minus-square-o"></i><span class="InvisibleText">[% Translate("Remove") | html %]</span></a>
         </div>
 
         <div class="Clear"></div>
         <label for="ValidIDs" id="LabelValidIDs">[% Translate("Validity") | html %]:</label>
         <div class="Field">
             [% Data.ValidSelectionStrg %]
-            <button type="button" class="Remove" value="Remove" title="[% Translate("Remove this entry") | html %]">[% Translate("Remove") | html %]</button>
+            <a class="RemoveButton" href="#" title="[% Translate("Remove this entry") | html %]"><i class="fa fa-minus-square-o"></i><span class="InvisibleText">[% Translate("Remove") | html %]</span></a>
         </div>
 
         <div class="Clear"></div>
         <label for="LanguageIDs" id="LabelLanguageIDs">[% Translate("Language") | html %]:</label>
         <div class="Field">
             [% Data.LanguagesSelectionStrg %]
-            <button type="button" class="Remove" value="Remove" title="[% Translate("Remove this entry") | html %]">[% Translate("Remove") | html %]</button>
+            <a class="RemoveButton" href="#" title="[% Translate("Remove this entry") | html %]"><i class="fa fa-minus-square-o"></i><span class="InvisibleText">[% Translate("Remove") | html %]</span></a>
         </div>
 
         <div class="Clear"></div>
         <label for="CategoryIDs" id="LabelCategoryIDs">[% Translate("Category") | html %]:</label>
         <div class="Field">
             [% Data.CategoriesSelectionStrg %]
-            <button type="button" class="Remove" value="Remove" title="[% Translate("Remove this entry") | html %]">[% Translate("Remove") | html %]</button>
+            <a class="RemoveButton" href="#" title="[% Translate("Remove this entry") | html %]"><i class="fa fa-minus-square-o"></i><span class="InvisibleText">[% Translate("Remove") | html %]</span></a>
         </div>
 
         <div class="Clear"></div>
         <label for="StateIDs" id="LabelStateIDs">[% Translate("State") | html %]:</label>
         <div class="Field">
             [% Data.StateSelectionStrg %]
-            <button type="button" class="Remove" value="Remove" title="[% Translate("Remove this entry") | html %]">[% Translate("Remove") | html %]</button>
+            <a class="RemoveButton" href="#" title="[% Translate("Remove this entry") | html %]"><i class="fa fa-minus-square-o"></i><span class="InvisibleText">[% Translate("Remove") | html %]</span></a>
         </div>
 
         <div class="Clear"></div>
@@ -116,7 +116,7 @@
         <div class="Field">
             [% Data.VoteSearchTypeSelectionStrg %]
             <input type="text" name="VoteSearch" value="[% Data.VoteSearch | html %]" class="W25pc"/>
-            <button type="button" class="Remove" value="Remove" title="[% Translate("Remove this entry") | html %]">[% Translate("Remove") | html %]</button>
+            <a class="RemoveButton" href="#" title="[% Translate("Remove this entry") | html %]"><i class="fa fa-minus-square-o"></i><span class="InvisibleText">[% Translate("Remove") | html %]</span></a>
         </div>
 
         <div class="Clear"></div>
@@ -124,28 +124,28 @@
         <div class="Field">
             [% Data.RateSearchTypeSelectionStrg %]
             [% Data.RateSearchSelectionStrg %]
-            <button type="button" class="Remove" value="Remove" title="[% Translate("Remove this entry") | html %]">[% Translate("Remove") | html %]</button>
+            <a class="RemoveButton" href="#" title="[% Translate("Remove this entry") | html %]"><i class="fa fa-minus-square-o"></i><span class="InvisibleText">[% Translate("Remove") | html %]</span></a>
         </div>
 
         <div class="Clear"></div>
         <label for="ApprovedSearch" id="LabelApprovedSearch">[% Translate("Approved") | html %]:</label>
         <div class="Field">
             [% Data.ApprovedStrg %]
-            <button type="button" class="Remove" value="Remove" title="[% Translate("Remove this entry") | html %]">[% Translate("Remove") | html %]</button>
+            <a class="RemoveButton" href="#" title="[% Translate("Remove this entry") | html %]"><i class="fa fa-minus-square-o"></i><span class="InvisibleText">[% Translate("Remove") | html %]</span></a>
         </div>
 
         <div class="Clear"></div>
         <label for="CreatedUserIDs" id="LabelCreatedUserIDs">[% Translate("Created by") | html %] [% Translate("Agent") | html %]:</label>
         <div class="Field">
             [% Data.CreatedUserStrg %]
-            <button type="button" class="Remove" value="Remove" title="[% Translate("Remove this entry") | html %]">[% Translate("Remove") | html %]</button>
+            <a class="RemoveButton" href="#" title="[% Translate("Remove this entry") | html %]"><i class="fa fa-minus-square-o"></i><span class="InvisibleText">[% Translate("Remove") | html %]</span></a>
         </div>
 
         <div class="Clear"></div>
         <label for="LastChangedUserIDs" id="LabelLastChangedUserIDs">[% Translate("Last changed by") | html %] [% Translate("Agent") | html %]:</label>
         <div class="Field">
             [% Data.LastChangedUserStrg %]
-            <button type="button" class="Remove" value="Remove" title="[% Translate("Remove this entry") | html %]">[% Translate("Remove") | html %]</button>
+            <a class="RemoveButton" href="#" title="[% Translate("Remove this entry") | html %]"><i class="fa fa-minus-square-o"></i><span class="InvisibleText">[% Translate("Remove") | html %]</span></a>
         </div>
 
         <div class="Clear"></div>
@@ -153,7 +153,7 @@
         <div class="Field">
             <input type="hidden" name="TimeSearchType" value="TimePoint" [% Data.item("TimeSearchType::TimePoint") %]/>
             [% Data.ItemCreateTimePointStartStrg %] [% Data.ItemCreateTimePointStrg %] [% Data.ItemCreateTimePointFormatStrg %]
-            <button type="button" class="Remove" value="Remove" title="[% Translate("Remove this entry") | html %]">[% Translate("Remove") | html %]</button>
+            <a class="RemoveButton" href="#" title="[% Translate("Remove this entry") | html %]"><i class="fa fa-minus-square-o"></i><span class="InvisibleText">[% Translate("Remove") | html %]</span></a>
         </div>
 
         <div class="Clear"></div>
@@ -161,7 +161,7 @@
         <div class="Field">
             <input type="hidden" name="TimeSearchType" value="TimeSlot" [% Data.item("TimeSearchType::TimeSlot") %]/>
             [% Data.ItemCreateTimeStartStrg %] [% Translate("and") | html %] [% Data.ItemCreateTimeStopStrg %]
-            <button type="button" class="Remove" value="Remove" title="[% Translate("Remove this entry") | html %]">[% Translate("Remove") | html %]</button>
+            <a class="RemoveButton" href="#" title="[% Translate("Remove this entry") | html %]"><i class="fa fa-minus-square-o"></i><span class="InvisibleText">[% Translate("Remove") | html %]</span></a>
         </div>
 
         <div class="Clear"></div>
@@ -169,7 +169,7 @@
         <div class="Field">
             <input type="hidden" name="ChangeTimeSearchType" value="TimePoint" [% Data.item("ChangeTimeSearchType::TimePoint") %]/>
             [% Data.ItemChangeTimePointStartStrg %] [% Data.ItemChangeTimePointStrg %] [% Data.ItemChangeTimePointFormatStrg %]
-            <button type="button" class="Remove" value="Remove" title="[% Translate("Remove this entry") | html %]">[% Translate("Remove") | html %]</button>
+            <a class="RemoveButton" href="#" title="[% Translate("Remove this entry") | html %]"><i class="fa fa-minus-square-o"></i><span class="InvisibleText">[% Translate("Remove") | html %]</span></a>
         </div>
 
         <div class="Clear"></div>
@@ -177,7 +177,7 @@
         <div class="Field">
             <input type="hidden" name="ChangeTimeSearchType" value="TimeSlot" [% Data.item("ChangeTimeSearchType::TimeSlot") %]/>
             [% Data.ItemChangeTimeStartStrg %] [% Translate("and") | html %] [% Data.ItemChangeTimeStopStrg %]
-            <button type="button" class="Remove" value="Remove" title="[% Translate("Remove this entry") | html %]">[% Translate("Remove") | html %]</button>
+            <a class="RemoveButton" href="#" title="[% Translate("Remove this entry") | html %]"><i class="fa fa-minus-square-o"></i><span class="InvisibleText">[% Translate("Remove") | html %]</span></a>
         </div>
 
         <div class="Clear"></div>
@@ -185,7 +185,7 @@
         [% Data.Label %]
         <div class="Field">
             [% Data.Field %]
-            <button type="button" class="Remove" value="Remove" title="[% Translate("Remove this entry") | html %]">[% Translate("Remove") | html %]</button>
+            <a class="RemoveButton" href="#" title="[% Translate("Remove this entry") | html %]"><i class="fa fa-minus-square-o"></i><span class="InvisibleText">[% Translate("Remove") | html %]</span></a>
         </div>
 
         <div class="Clear"></div>
