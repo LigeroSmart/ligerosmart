@@ -14,7 +14,8 @@ use vars qw($Self);
 
 use Kernel::System::FAQ;
 
-my $FAQObject = Kernel::System::FAQ->new( %{$Self} );
+my $FAQObject   = $Kernel::OM->Get('Kernel::System::FAQ');
+my $CacheObject = $Kernel::OM->Get('Kernel::System::Cache');
 
 my $FAQID = $FAQObject->FAQAdd(
     Title      => 'Some Text',
@@ -246,7 +247,7 @@ $Self->True(
     "FAQLogAdd() - $FAQID2",
 );
 
-# get FAQ Top10
+# get FAQ Top-10
 my $Top10IDsRef = $FAQObject->FAQTop10Get(
     Interface => 'internal',
     Limit     => 10,
@@ -418,13 +419,13 @@ my $CheckFields = sub {
         my $Field = "Field$FieldCount";
 
         # check that cache is clean
-        my $Cache = $FAQObject->{CacheObject}->Get(
+        my $Cache = $CacheObject->Get(
             Type => 'FAQ',
             Key  => "ItemFieldGet::ItemID::$FAQID",
         );
 
-       # on before first Get cche should be undef, after firs cache exist, but the Field key must be
-       # undef
+      # on before first Get cache should be undef, after firs cache exist, but the Field key must be
+      # undef
         if ( ref $Cache eq 'HASH' ) {
             $Self->Is(
                 $Cache->{$Field},
@@ -448,7 +449,7 @@ my $CheckFields = sub {
         );
 
         # check cache is set
-        $Cache = $FAQObject->{CacheObject}->Get(
+        $Cache = $CacheObject->Get(
             Type => 'FAQ',
             Key  => "ItemFieldGet::ItemID::$FAQID",
         );
@@ -513,7 +514,7 @@ $Self->True(
 );
 
 # check that cache is clean
-my $Cache = $FAQObject->{CacheObject}->Get(
+my $Cache = $CacheObject->Get(
     Type => 'FAQ',
     Key  => "ItemFieldGet::ItemID::$FAQID",
 );
@@ -536,7 +537,7 @@ $FAQID = $FAQObject->FAQAdd(
 );
 
 # check that cache is clean
-$Cache = $FAQObject->{CacheObject}->Get(
+$Cache = $CacheObject->Get(
     Type => 'FAQ',
     Key  => 'FAQGet::ItemID::' . $FAQID . '::ItemFields::0',
 );
@@ -545,7 +546,7 @@ $Self->Is(
     undef,
     "Cache for FAQ No ItemFields Before FAQGet(): Complete cache",
 );
-$Cache = $FAQObject->{CacheObject}->Get(
+$Cache = $CacheObject->Get(
     Type => 'FAQ',
     Key  => 'FAQGet::ItemID::' . $FAQID . '::ItemFields::1',
 );
@@ -578,7 +579,7 @@ for my $FieldCount ( 1 .. 6 ) {
         "Sanity Check for FAQGet(): no ItemFields $Field",
     );
 }
-$Cache = $FAQObject->{CacheObject}->Get(
+$Cache = $CacheObject->Get(
     Type => 'FAQ',
     Key  => 'FAQGet::ItemID::' . $FAQID . '::ItemFields::0',
 );
@@ -587,7 +588,7 @@ $Self->Is(
     'HASH',
     "Cache for FAQ No ItemFields After FAQGet(): Complete cache ref",
 );
-$Cache = $FAQObject->{CacheObject}->Get(
+$Cache = $CacheObject->Get(
     Type => 'FAQ',
     Key  => 'FAQGet::ItemID::' . $FAQID . '::ItemFields::1',
 );
@@ -620,7 +621,7 @@ for my $FieldCount ( 1 .. 6 ) {
         "Sanity Check for FAQGet(): with ItemFields $Field",
     );
 }
-$Cache = $FAQObject->{CacheObject}->Get(
+$Cache = $CacheObject->Get(
     Type => 'FAQ',
     Key  => 'FAQGet::ItemID::' . $FAQID . '::ItemFields::0',
 );
@@ -629,7 +630,7 @@ $Self->Is(
     'HASH',
     "Cache for FAQ No ItemFields After FAQGet(): Complete cache ref",
 );
-$Cache = $FAQObject->{CacheObject}->Get(
+$Cache = $CacheObject->Get(
     Type => 'FAQ',
     Key  => 'FAQGet::ItemID::' . $FAQID . '::ItemFields::1',
 );
@@ -763,7 +764,7 @@ $Self->True(
 );
 
 # check that cache is clean
-$Cache = $FAQObject->{CacheObject}->Get(
+$Cache = $CacheObject->Get(
     Type => 'FAQ',
     Key  => 'FAQGet::ItemID::' . $FAQID . '::ItemFields::0',
 );
@@ -772,7 +773,7 @@ $Self->Is(
     undef,
     "Cache for FAQ No ItemFields After FAQDelete(): Complete cache",
 );
-$Cache = $FAQObject->{CacheObject}->Get(
+$Cache = $CacheObject->Get(
     Type => 'FAQ',
     Key  => 'FAQGet::ItemID::' . $FAQID . '::ItemFields::1',
 );
