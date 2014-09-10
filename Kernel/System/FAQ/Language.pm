@@ -12,6 +12,12 @@ package Kernel::System::FAQ::Language;
 use strict;
 use warnings;
 
+our @ObjectDependencies = (
+    'Kernel::System::Cache',
+    'Kernel::System::DB',
+    'Kernel::System::Log',
+);
+
 =head1 NAME
 
 Kernel::System::FAQ::Language - sub module of Kernel::System::FAQ
@@ -47,15 +53,16 @@ sub LanguageAdd {
     # check needed stuff
     for my $Argument (qw(Name UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
+
             return;
         }
     }
 
-    return if !$Self->{DBObject}->Do(
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Do(
         SQL => '
             INSERT INTO faq_language (name)
             VALUES (?)',
@@ -86,16 +93,17 @@ sub LanguageDelete {
     # check needed stuff
     for my $Attribute (qw(LanguageID UserID)) {
         if ( !$Param{$Attribute} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Attribute!",
             );
+
             return;
         }
     }
 
     # delete the language
-    return if !$Self->{DBObject}->Do(
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Do(
         SQL => '
             DELETE FROM faq_language
             WHERE id = ?',
@@ -126,10 +134,11 @@ sub LanguageDuplicateCheck {
 
     # check needed stuff
     if ( !$Param{UserID} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "Need UserID!",
         );
+
         return;
     }
 
@@ -144,8 +153,11 @@ sub LanguageDuplicateCheck {
         $SQL .= " AND id != ?";
     }
 
-    # prepare sql statement
-    return if !$Self->{DBObject}->Prepare(
+    # get database object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
+    # prepare SQL statement
+    return if !$DBObject->Prepare(
         SQL   => $SQL,
         Limit => 1,
         Bind  => \@Bind,
@@ -153,7 +165,7 @@ sub LanguageDuplicateCheck {
 
     # fetch the result
     my $Exists;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $DBObject->FetchrowArray() ) {
         $Exists = 1;
     }
 
@@ -184,16 +196,20 @@ sub LanguageGet {
     # check needed stuff
     for my $Argument (qw(LanguageID UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
+
             return;
         }
     }
 
-    # sql
-    return if !$Self->{DBObject}->Prepare(
+    # get database object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
+    # SQL
+    return if !$DBObject->Prepare(
         SQL => '
             SELECT id, name
             FROM faq_language
@@ -203,7 +219,7 @@ sub LanguageGet {
     );
 
     my %Data;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $DBObject->FetchrowArray() ) {
         %Data = (
             LanguageID => $Row[0],
             Name       => $Row[1],
@@ -236,15 +252,19 @@ sub LanguageList {
 
     # check needed stuff
     if ( !$Param{UserID} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "Need UserID!",
         );
+
         return;
     }
 
+    # get database object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
     # build SQL
-    return if !$Self->{DBObject}->Prepare(
+    return if !$DBObject->Prepare(
         SQL => '
             SELECT id, name
             FROM faq_language',
@@ -252,7 +272,7 @@ sub LanguageList {
 
     # fetch the result
     my %List;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $DBObject->FetchrowArray() ) {
         $List{ $Row[0] } = $Row[1];
     }
 
@@ -286,34 +306,41 @@ sub LanguageLookup {
 
     # check if both parameters are given
     if ( $Param{LanguageID} && $Param{Name} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need LanguageID or Name - not both!',
         );
+
         return;
     }
 
     # check if both parameters are not given
     if ( !$Param{LanguageID} && !$Param{Name} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need LanguageID or Name - none is given!',
         );
+
         return;
     }
 
     # check if LanguageID is a number
     if ( $Param{LanguageID} && $Param{LanguageID} !~ m{ \A \d+ \z }xms ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "LanguageID must be a number! (LanguageID: $Param{LanguageID})",
         );
+
         return;
     }
 
+    # get database object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
     # prepare SQL statements
     if ( $Param{LanguageID} ) {
-        return if !$Self->{DBObject}->Prepare(
+
+        return if !$DBObject->Prepare(
             SQL => '
                 SELECT name
                 FROM faq_language
@@ -323,7 +350,8 @@ sub LanguageLookup {
         );
     }
     elsif ( $Param{Name} ) {
-        return if !$Self->{DBObject}->Prepare(
+
+        return if !$DBObject->Prepare(
             SQL => '
                 SELECT id
                 FROM faq_language
@@ -335,7 +363,7 @@ sub LanguageLookup {
 
     # fetch the result
     my $Lookup;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $DBObject->FetchrowArray() ) {
         $Lookup = $Row[0];
     }
 
@@ -364,16 +392,20 @@ sub LanguageUpdate {
     # check needed stuff
     for my $Argument (qw(LanguageID Name UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
+
             return;
         }
     }
 
-    # build sql
-    return if !$Self->{DBObject}->Do(
+    # get database object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
+    # build SQL
+    return if !$DBObject->Do(
         SQL => '
             UPDATE faq_language
             SET name = ?
@@ -382,7 +414,7 @@ sub LanguageUpdate {
     );
 
     # delete all cache, as FAQGet() will be also affected.
-    $Self->{CacheObject}->CleanUp(
+    $Kernel::OM->Get('Kernel::System::Cache')->CleanUp(
         Type => 'FAQ',
     );
 
