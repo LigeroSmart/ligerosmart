@@ -12,8 +12,15 @@ package Kernel::System::FAQSearch;
 use strict;
 use warnings;
 
-use Kernel::System::DynamicField;
-use Kernel::System::DynamicField::Backend;
+our @ObjectDependencies = (
+    'Kernel::Config',
+    'Kernel::System::DB',
+    'Kernel::System::DynamicField',
+    'Kernel::System::DynamicField::Backend',
+    'Kernel::System::Log',
+    'Kernel::System::Time',
+    'Kernel::System::Valid',
+);
 
 =head1 NAME
 
@@ -132,7 +139,7 @@ search in FAQ articles
 
         Interface => {              # (default internal)
             StateID => 3,
-            Name    => 'public',    # public|external|internal
+            Name    => 'public',    # public | external | internal
         },
         UserID    => 1,
     );
@@ -157,10 +164,11 @@ sub FAQSearch {
 
     # check needed stuff
     if ( !$Param{UserID} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "Need UserID!",
         );
+
         return;
     }
 
@@ -169,7 +177,7 @@ sub FAQSearch {
         $Param{Interface}->{Name} = 'internal';
     }
 
-    # verify that all passed array parameters contain an arrayref
+    # verify that all passed array parameters contain an array reference
     ARGUMENT:
     for my $Argument (qw(OrderBy OrderByDirection)) {
 
@@ -180,10 +188,11 @@ sub FAQSearch {
         }
 
         if ( ref $Param{$Argument} ne 'ARRAY' ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "$Argument must be an array reference!",
             );
+
             return;
         }
     }
@@ -209,10 +218,6 @@ sub FAQSearch {
         Result => 'vrate',
     );
 
-    $Self->{DynamicFieldObject} ||= Kernel::System::DynamicField->new( %{$Self} );
-    $Self->{DynamicFieldBackendObject}
-        ||= Kernel::System::DynamicField::Backend->new( %{$Self} );
-
     my $FAQDynamicFields = [];
     my %ValidDynamicFieldParams;
     my %FAQDynamicFieldName2Config;
@@ -229,8 +234,8 @@ sub FAQSearch {
 
     if ( $ParamCheckString =~ m/DynamicField_/smx ) {
 
-        # Check all configured faq dynamic fields
-        $FAQDynamicFields = $Self->{DynamicFieldObject}->DynamicFieldListGet(
+        # Check all configured FAQ dynamic fields
+        $FAQDynamicFields = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldListGet(
             ObjectType => 'FAQ',
         );
 
@@ -252,11 +257,12 @@ sub FAQSearch {
         {
 
             # found an error
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "OrderBy contains invalid value '$OrderBy' "
                     . 'or the value is used more than once!',
             );
+
             return;
         }
 
@@ -274,14 +280,15 @@ sub FAQSearch {
         next DIRECTION if $Direction eq 'Down';
 
         # found an error
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "OrderByDirection can only contain 'Up' or 'Down'!",
         );
+
         return;
     }
 
-    # sql
+    # SQL
     my $SQL = 'SELECT i.id, count( v.item_id ) as votes, avg( v.rate ) as vrate '
         . 'FROM faq_item i '
         . 'LEFT JOIN faq_voting v ON v.item_id = i.id '
@@ -289,6 +296,10 @@ sub FAQSearch {
 
     # extended SQL
     my $Ext = '';
+
+    # get needed objects
+    my $DBObject     = $Kernel::OM->Get('Kernel::System::DB');
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
     # full-text search
     if ( $Param{What} && $Param{What} ne '*' ) {
@@ -302,7 +313,7 @@ sub FAQSearch {
             for my $Number ( 1 .. 6 ) {
 
                 # get the state of the field (internal, external, public)
-                my $FieldState = $Self->{ConfigObject}->Get( 'FAQ::Item::Field' . $Number )->{Show};
+                my $FieldState = $ConfigObject->Get( 'FAQ::Item::Field' . $Number )->{Show};
 
                 # add all internal, external and public fields
                 if (
@@ -322,7 +333,7 @@ sub FAQSearch {
             for my $Number ( 1 .. 6 ) {
 
                 # get the state of the field (internal, external, public)
-                my $FieldState = $Self->{ConfigObject}->Get( 'FAQ::Item::Field' . $Number )->{Show};
+                my $FieldState = $ConfigObject->Get( 'FAQ::Item::Field' . $Number )->{Show};
 
                 # add all external and public fields
                 if ( $FieldState eq 'external' || $FieldState eq 'public' ) {
@@ -336,7 +347,7 @@ sub FAQSearch {
             for my $Number ( 1 .. 6 ) {
 
                 # get the state of the field (internal, external, public)
-                my $FieldState = $Self->{ConfigObject}->Get( 'FAQ::Item::Field' . $Number )->{Show};
+                my $FieldState = $ConfigObject->Get( 'FAQ::Item::Field' . $Number )->{Show};
 
                 # add all public fields
                 if ( $FieldState eq 'public' ) {
@@ -346,7 +357,7 @@ sub FAQSearch {
         }
 
         # add the SQL for the full-text search
-        $Ext .= $Self->{DBObject}->QueryCondition(
+        $Ext .= $DBObject->QueryCondition(
             Key          => \@SearchFields,
             Value        => $Param{What},
             SearchPrefix => '*',
@@ -358,7 +369,7 @@ sub FAQSearch {
     if ( $Param{Number} ) {
         $Param{Number} =~ s/\*/%/g;
         $Param{Number} =~ s/%%/%/g;
-        $Param{Number} = $Self->{DBObject}->Quote( $Param{Number}, 'Like' );
+        $Param{Number} = $DBObject->Quote( $Param{Number}, 'Like' );
         if ($Ext) {
             $Ext .= ' AND';
         }
@@ -370,7 +381,7 @@ sub FAQSearch {
         $Param{Title} = "\%$Param{Title}\%";
         $Param{Title} =~ s/\*/%/g;
         $Param{Title} =~ s/%%/%/g;
-        $Param{Title} = $Self->{DBObject}->Quote( $Param{Title}, 'Like' );
+        $Param{Title} = $DBObject->Quote( $Param{Title}, 'Like' );
         if ($Ext) {
             $Ext .= ' AND';
         }
@@ -409,7 +420,7 @@ sub FAQSearch {
     if ( !defined $Param{ValidIDs} ) {
 
         # get the valid ids
-        my @ValidIDs = $Self->{ValidObject}->ValidIDsGet();
+        my @ValidIDs = $$Kernel::OM->Get('Kernel::System::Valid')->ValidIDsGet();
 
         $Param{ValidIDs} = \@ValidIDs;
     }
@@ -452,12 +463,12 @@ sub FAQSearch {
         $Param{Keyword} = "\%$Param{Keyword}\%";
         $Param{Keyword} =~ s/\*/%/g;
         $Param{Keyword} =~ s/%%/%/g;
-        $Param{Keyword} = $Self->{DBObject}->Quote( $Param{Keyword}, 'Like' );
+        $Param{Keyword} = $DBObject->Quote( $Param{Keyword}, 'Like' );
 
-        if ( $Self->{DBObject}->GetDatabaseFunction('NoLowerInLargeText') ) {
+        if ( $DBObject->GetDatabaseFunction('NoLowerInLargeText') ) {
             $Ext .= " i.f_keywords LIKE '" . $Param{Keyword} . "' $Self->{LikeEscapeString}";
         }
-        elsif ( $Self->{DBObject}->GetDatabaseFunction('LcaseLikeInLargeText') ) {
+        elsif ( $DBObject->GetDatabaseFunction('LcaseLikeInLargeText') ) {
             $Ext
                 .= " LCASE(i.f_keywords) LIKE LCASE('"
                 . $Param{Keyword}
@@ -526,19 +537,22 @@ sub FAQSearch {
         $Ext .= $InString;
     }
 
+    # get time object
+    my $TimeObject = $Kernel::OM->Get('Kernel::System::Time');
+
     # search for create and change times
     # remember current time to prevent searches for future timestamps
-    my $CurrentSystemTime = $Self->{TimeObject}->SystemTime();
+    my $CurrentSystemTime = $TimeObject->SystemTime();
 
     # get FAQ items created older than x minutes
     if ( defined $Param{ItemCreateTimeOlderMinutes} ) {
 
         $Param{ItemCreateTimeOlderMinutes} ||= 0;
 
-        my $TimeStamp = $Self->{TimeObject}->SystemTime();
+        my $TimeStamp = $TimeObject->SystemTime();
         $TimeStamp -= ( $Param{ItemCreateTimeOlderMinutes} * 60 );
 
-        $Param{ItemCreateTimeOlderDate} = $Self->{TimeObject}->SystemTime2TimeStamp(
+        $Param{ItemCreateTimeOlderDate} = $TimeObject->SystemTime2TimeStamp(
             SystemTime => $TimeStamp,
         );
     }
@@ -548,10 +562,10 @@ sub FAQSearch {
 
         $Param{ItemCreateTimeNewerMinutes} ||= 0;
 
-        my $TimeStamp = $Self->{TimeObject}->SystemTime();
+        my $TimeStamp = $TimeObject->SystemTime();
         $TimeStamp -= ( $Param{ItemCreateTimeNewerMinutes} * 60 );
 
-        $Param{ItemCreateTimeNewerDate} = $Self->{TimeObject}->SystemTime2TimeStamp(
+        $Param{ItemCreateTimeNewerDate} = $TimeObject->SystemTime2TimeStamp(
             SystemTime => $TimeStamp,
         );
     }
@@ -566,28 +580,30 @@ sub FAQSearch {
             !~ /\d\d\d\d-(\d\d|\d)-(\d\d|\d) (\d\d|\d):(\d\d|\d):(\d\d|\d)/
             )
         {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Invalid time format '$Param{ItemCreateTimeOlderDate}'!",
             );
+
             return;
         }
-        my $Time = $Self->{TimeObject}->TimeStamp2SystemTime(
+        my $Time = $TimeObject->TimeStamp2SystemTime(
             String => $Param{ItemCreateTimeOlderDate},
         );
         if ( !$Time ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message =>
                     "Search not executed due to invalid time '"
                     . $Param{ItemCreateTimeOlderDate} . "'!",
             );
+
             return;
         }
         $CompareCreateTimeOlderNewerDate = $Time;
 
         $Ext .= " AND i.created <= '"
-            . $Self->{DBObject}->Quote( $Param{ItemCreateTimeOlderDate} ) . "'";
+            . $DBObject->Quote( $Param{ItemCreateTimeOlderDate} ) . "'";
     }
 
     # get Items changed newer than xxxx-xx-xx xx:xx date
@@ -597,22 +613,24 @@ sub FAQSearch {
             !~ /\d\d\d\d-(\d\d|\d)-(\d\d|\d) (\d\d|\d):(\d\d|\d):(\d\d|\d)/
             )
         {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Invalid time format '$Param{ItemCreateTimeNewerDate}'!",
             );
+
             return;
         }
-        my $Time = $Self->{TimeObject}->TimeStamp2SystemTime(
+        my $Time = $TimeObject->TimeStamp2SystemTime(
             String => $Param{ItemCreateTimeNewerDate},
         );
         if ( !$Time ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message =>
                     "Search not executed due to invalid time '"
                     . $Param{ItemCreateTimeNewerDate} . "'!",
             );
+
             return;
         }
 
@@ -623,7 +641,7 @@ sub FAQSearch {
         return if $CompareCreateTimeOlderNewerDate && $Time > $CompareCreateTimeOlderNewerDate;
 
         $Ext .= " AND i.created >= '"
-            . $Self->{DBObject}->Quote( $Param{ItemCreateTimeNewerDate} ) . "'";
+            . $DBObject->Quote( $Param{ItemCreateTimeNewerDate} ) . "'";
     }
 
     # get FAQ items changed older than x minutes
@@ -631,10 +649,10 @@ sub FAQSearch {
 
         $Param{ItemChangeTimeOlderMinutes} ||= 0;
 
-        my $TimeStamp = $Self->{TimeObject}->SystemTime();
+        my $TimeStamp = $TimeObject->SystemTime();
         $TimeStamp -= ( $Param{ItemChangeTimeOlderMinutes} * 60 );
 
-        $Param{ItemChangeTimeOlderDate} = $Self->{TimeObject}->SystemTime2TimeStamp(
+        $Param{ItemChangeTimeOlderDate} = $TimeObject->SystemTime2TimeStamp(
             SystemTime => $TimeStamp,
         );
     }
@@ -644,10 +662,10 @@ sub FAQSearch {
 
         $Param{ItemChangeTimeNewerMinutes} ||= 0;
 
-        my $TimeStamp = $Self->{TimeObject}->SystemTime();
+        my $TimeStamp = $TimeObject->SystemTime();
         $TimeStamp -= ( $Param{ItemChangeTimeNewerMinutes} * 60 );
 
-        $Param{ItemChangeTimeNewerDate} = $Self->{TimeObject}->SystemTime2TimeStamp(
+        $Param{ItemChangeTimeNewerDate} = $TimeObject->SystemTime2TimeStamp(
             SystemTime => $TimeStamp,
         );
     }
@@ -662,28 +680,30 @@ sub FAQSearch {
             !~ /\d\d\d\d-(\d\d|\d)-(\d\d|\d) (\d\d|\d):(\d\d|\d):(\d\d|\d)/
             )
         {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Invalid time format '$Param{ItemChangeTimeOlderDate}'!",
             );
+
             return;
         }
-        my $Time = $Self->{TimeObject}->TimeStamp2SystemTime(
+        my $Time = $TimeObject->TimeStamp2SystemTime(
             String => $Param{ItemChangeTimeOlderDate},
         );
         if ( !$Time ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message =>
                     "Search not executed due to invalid time '"
                     . $Param{ItemChangeTimeOlderDate} . "'!",
             );
+
             return;
         }
         $CompareChangeTimeOlderNewerDate = $Time;
 
         $Ext .= " AND i.changed <= '"
-            . $Self->{DBObject}->Quote( $Param{ItemChangeTimeOlderDate} ) . "'";
+            . $DBObject->Quote( $Param{ItemChangeTimeOlderDate} ) . "'";
     }
 
     # get Items changed newer than xxxx-xx-xx xx:xx date
@@ -693,22 +713,24 @@ sub FAQSearch {
             !~ /\d\d\d\d-(\d\d|\d)-(\d\d|\d) (\d\d|\d):(\d\d|\d):(\d\d|\d)/
             )
         {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Invalid time format '$Param{ItemChangeTimeNewerDate}'!",
             );
+
             return;
         }
-        my $Time = $Self->{TimeObject}->TimeStamp2SystemTime(
+        my $Time = $TimeObject->TimeStamp2SystemTime(
             String => $Param{ItemChangeTimeNewerDate},
         );
         if ( !$Time ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message =>
                     "Search not executed due to invalid time '"
                     . $Param{ItemChangeTimeNewerDate} . "'!",
             );
+
             return;
         }
 
@@ -719,7 +741,7 @@ sub FAQSearch {
         return if $CompareChangeTimeOlderNewerDate && $Time > $CompareChangeTimeOlderNewerDate;
 
         $Ext .= " AND i.changed >= '"
-            . $Self->{DBObject}->Quote( $Param{ItemChangeTimeNewerDate} ) . "'";
+            . $DBObject->Quote( $Param{ItemChangeTimeNewerDate} ) . "'";
     }
 
     # add WHERE statement
@@ -730,6 +752,9 @@ sub FAQSearch {
     # Remember already joined tables for sorting.
     my %DynamicFieldJoinTables;
     my $DynamicFieldJoinCounter = 1;
+
+    # get dynamic field back-end object
+    my $DynamicFieldBackendObject = $Kernel::OM->Get('Kernel::System::DynamicField::Backend');
 
     DYNAMIC_FIELD:
     for my $DynamicField ( @{$FAQDynamicFields} ) {
@@ -759,13 +784,13 @@ sub FAQSearch {
                 next TEXT if $Text =~ /^\%{1,3}$/;
 
                 # validate data type
-                my $ValidateSuccess = $Self->{DynamicFieldBackendObject}->ValueValidate(
+                my $ValidateSuccess = $DynamicFieldBackendObject->ValueValidate(
                     DynamicFieldConfig => $DynamicField,
                     Value              => $Text,
                     UserID             => $Param{UserID},
                 );
                 if ( !$ValidateSuccess ) {
-                    $Self->{LogObject}->Log(
+                    $Kernel::OM->Get('Kernel::System::Log')->Log(
                         Priority => 'error',
                         Message =>
                             "Search not executed due to invalid value '"
@@ -774,13 +799,14 @@ sub FAQSearch {
                             . $DynamicField->{Name}
                             . "'!",
                     );
+
                     return;
                 }
 
                 if ($Counter) {
                     $SQLExtSub .= ' OR ';
                 }
-                $SQLExtSub .= $Self->{DynamicFieldBackendObject}->SearchSQLGet(
+                $SQLExtSub .= $DynamicFieldBackendObject->SearchSQLGet(
                     DynamicFieldConfig => $DynamicField,
                     TableAlias         => "dfv$DynamicFieldJoinCounter",
                     Operator           => $Operator,
@@ -802,7 +828,7 @@ sub FAQSearch {
             $SQL .= " INNER JOIN dynamic_field_value dfv$DynamicFieldJoinCounter
                 ON (i.id = dfv$DynamicFieldJoinCounter.object_id
                     AND dfv$DynamicFieldJoinCounter.field_id = " .
-                $Self->{DBObject}->Quote( $DynamicField->{ID}, 'Integer' ) . ") ";
+                $DBObject->Quote( $DynamicField->{ID}, 'Integer' ) . ") ";
 
             $DynamicFieldJoinTables{ $DynamicField->{Name} } = "dfv$DynamicFieldJoinCounter";
 
@@ -879,7 +905,7 @@ sub FAQSearch {
 
                 # set condition
                 $SQLExtSub .= " $AggregateColumn $VotingOperators{$Operator} ";
-                $SQLExtSub .= $Self->{DBObject}->Quote( $Text, 'Number' ) . " ";
+                $SQLExtSub .= $DBObject->Quote( $Text, 'Number' ) . " ";
 
                 $Counter++;
             }
@@ -918,7 +944,7 @@ sub FAQSearch {
                     .= " LEFT OUTER JOIN dynamic_field_value dfv$DynamicFieldJoinCounter
                     ON (i.item_id = dfv$DynamicFieldJoinCounter.object_id
                         AND dfv$DynamicFieldJoinCounter.field_id = " .
-                    $Self->{DBObject}->Quote( $DynamicField->{ID}, 'Integer' ) . ") ";
+                    $DBObject->Quote( $DynamicField->{ID}, 'Integer' ) . ") ";
 
                 $DynamicFieldJoinTables{ $DynamicField->{Name} }
                     = "dfv$DynamicFieldJoinCounter";
@@ -926,7 +952,7 @@ sub FAQSearch {
                 $DynamicFieldJoinCounter++;
             }
 
-            my $SQLOrderField = $Self->{DynamicFieldBackendObject}->SearchSQLOrderFieldGet(
+            my $SQLOrderField = $DynamicFieldBackendObject->SearchSQLOrderFieldGet(
                 DynamicFieldConfig => $DynamicField,
                 TableAlias         => $DynamicFieldJoinTables{$DynamicFieldName},
             );
@@ -960,14 +986,14 @@ sub FAQSearch {
     $SQL .= $Ext;
 
     # ask database
-    return if !$Self->{DBObject}->Prepare(
+    return if !$DBObject->Prepare(
         SQL => $SQL,
         Limit => $Param{Limit} || 500
     );
 
     # fetch the result
     my @List;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $DBObject->FetchrowArray() ) {
         push @List, $Row[0];
     }
 
@@ -999,10 +1025,11 @@ sub _InConditionGet {
     # check needed stuff
     for my $Key (qw(TableColumn IDRef)) {
         if ( !$Param{$Key} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Key!",
             );
+
             return;
         }
     }
@@ -1010,9 +1037,12 @@ sub _InConditionGet {
     # sort ids to cache the SQL query
     my @SortedIDs = sort { $a <=> $b } @{ $Param{IDRef} };
 
+    # get database object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
     # quote values
     for my $Value (@SortedIDs) {
-        $Self->{DBObject}->Quote( $Value, 'Integer' );
+        $DBObject->Quote( $Value, 'Integer' );
     }
 
     # split IN statement with more than 900 elements in more statements combined with OR
