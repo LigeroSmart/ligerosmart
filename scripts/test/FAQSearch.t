@@ -12,41 +12,14 @@ use warnings;
 
 use vars qw($Self);
 
-use Kernel::System::FAQ;
-use Kernel::System::Time;
-use Kernel::System::UnitTest::Helper;
-use Kernel::System::User;
-use Kernel::Config;
-
-my $ConfigObject = Kernel::Config->new( %{$Self} );
-
-# set config optiuons
-$ConfigObject->Set(
+# set config options
+$Kernel::OM->Get('Kernel::Config')->Set(
     Key   => 'FAQ::ApprovalRequired',
     Value => 0,
 );
 
-# create additional objects
-my $FAQObject = Kernel::System::FAQ->new(
-    %{$Self},
-    ConfigObject => $ConfigObject,
-);
-
-my $HelperObject = Kernel::System::UnitTest::Helper->new(
-    %$Self,
-    ConfigObject   => $ConfigObject,
-    UnitTestObject => $Self,
-);
-
-my $TimeObject = Kernel::System::Time->new(
-    %$Self,
-    ConfigObject => $ConfigObject,
-);
-
-my $UserObject = Kernel::System::User->new(
-    %$Self,
-    ConfigObject => $ConfigObject,
-);
+# get helper object
+my $HelperObject = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 
 # generate a random string to help searches
 my $RandomID = $HelperObject->GetRandomID();
@@ -57,7 +30,7 @@ for my $Counter ( 1 .. 4 ) {
     my $TestUserLogin = $HelperObject->TestUserCreate(
         Groups => [ 'admin', 'users', 'faq', 'faq_admin', 'faq_approval' ],
     );
-    my $UserID = $UserObject->UserLookup(
+    my $UserID = $Kernel::OM->Get('Kernel::System::User')->UserLookup(
         UserLogin => $TestUserLogin,
     );
     push @AddedUsers, $UserID;
@@ -80,6 +53,9 @@ my %FAQAddTemplate = (
 # freeze time
 $HelperObject->FixedTimeSet();
 
+# get FAQ object
+my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
+
 for my $Counter ( 1 .. 2 ) {
     my $FAQID = $FAQObject->FAQAdd(
         %FAQAddTemplate,
@@ -94,7 +70,7 @@ for my $Counter ( 1 .. 2 ) {
 
     push @AddedFAQs, $FAQID;
 
-    # add 1 minute to freezed time
+    # add 1 minute to frozen time
     $HelperObject->FixedTimeAddSeconds(60);
 }
 
@@ -517,7 +493,7 @@ my %FAQUpdateTemplate = (
     UserID     => 1,
 );
 
-# add 1 minute to freezed time
+# add 1 minute to frozen time
 $HelperObject->FixedTimeAddSeconds(60);
 
 my $Success = $FAQObject->FAQUpdate(
@@ -544,8 +520,11 @@ $Self->True(
     "FAQUpdate() FAQID:'$AddedFAQs[1]' for FAQSearch()",
 );
 
-# add 2 minutes to freezed time
+# add 2 minutes to frozen time
 $HelperObject->FixedTimeAddSeconds(120);
+
+# get time object
+my $TimeObject = $Kernel::OM->Get('Kernel::System::Time');
 
 my $SystemTime = $TimeObject->SystemTime();
 
@@ -654,7 +633,7 @@ my $DateMinus6Mins = $TimeObject->SystemTime2TimeStamp(
         ],
     },
     {
-        Name   => 'ChangeTimeOlderDate 2 Mins',
+        Name   => 'ChangeTimeOlderDate 2 Min',
         Config => {
             %SearchConfigTemplate,
             ItemChangeTimeOlderDate => $DateMinus2Mins,
