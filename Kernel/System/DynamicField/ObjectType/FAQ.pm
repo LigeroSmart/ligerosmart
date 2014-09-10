@@ -15,7 +15,11 @@ use warnings;
 use Scalar::Util;
 
 use Kernel::System::VariableCheck qw(:all);
-use Kernel::System::FAQ;
+
+our @ObjectDependencies = (
+    'Kernel::System::FAQ',
+    'Kernel::System::Log',
+);
 
 =head1 NAME
 
@@ -43,26 +47,16 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    # get needed objects
-    for my $Needed (
-        qw(ConfigObject EncodeObject LogObject MainObject DBObject TimeObject)
-        )
-    {
-        die "Got no $Needed!" if !$Param{$Needed};
+    # # check for FAQObject
+    # if ( $Param{FAQObject} ) {
 
-        $Self->{$Needed} = $Param{$Needed};
-    }
+    #     $FAQObject = $Param{FAQObject};
 
-    # check for FAQObject
-    if ( $Param{FAQObject} ) {
-
-        $Self->{FAQObject} = $Param{FAQObject};
-
-        # Make FAQ object reference weak so it will not count as a reference on objects destroy.
-        #   This is because the FAQObject has a Kernel::DynamicField::Backend object, which has this
-        #   object, which has a FAQObject again. Without weaken() we'd have a cyclic reference.
-        Scalar::Util::weaken( $Self->{FAQObject} );
-    }
+  #     # Make FAQ object reference weak so it will not count as a reference on objects destroy.
+  #     #   This is because the FAQObject has a Kernel::DynamicField::Backend object, which has this
+  #     #   object, which has a FAQObject again. Without weaken() we'd have a cyclic reference.
+  #     Scalar::Util::weaken( $FAQObject );
+  # }
 
     return $Self;
 }
@@ -87,50 +81,59 @@ sub PostValueSet {
     # check needed stuff
     for my $Needed (qw(DynamicFieldConfig ObjectID UserID)) {
         if ( !$Param{$Needed} ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $Needed!" );
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
+                Priority => 'error',
+                Message  => "Need $Needed!"
+            );
+
             return;
         }
     }
 
     # check DynamicFieldConfig (general)
     if ( !IsHashRefWithData( $Param{DynamicFieldConfig} ) ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "The field configuration is invalid",
         );
+
         return;
     }
 
     # check DynamicFieldConfig (internally)
     for my $Needed (qw(ID FieldType ObjectType)) {
         if ( !$Param{DynamicFieldConfig}->{$Needed} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Needed in DynamicFieldConfig!"
             );
+
             return;
         }
     }
 
-    # check for FAQObject
-    if ( !$Self->{FAQObject} ) {
+    # # check for FAQObject
+    # if ( !$FAQObject ) {
 
-        # create it on demand
-        $Self->{FAQObject} = Kernel::System::FAQ->new( %{$Self} );
-    }
+    #     # create it on demand
+    #     $FAQObject = Kernel::System::FAQ->new( %{$Self} );
+    # }
+
+    # get FAQ object
+    my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
 
     # history insert
-    $Self->{FAQObject}->FAQHistoryAdd(
+    $FAQObject->FAQHistoryAdd(
         Name   => "DynamicField $Param{DynamicFieldConfig}->{Name} Updated",
         ItemID => $Param{ObjectID},
         UserID => $Param{UserID},
     );
 
     # clear FAQ cache
-    $Self->{FAQObject}->_DeleteFromFAQCache( ItemID => $Param{ObjectID} );
+    $FAQObject->_DeleteFromFAQCache( ItemID => $Param{ObjectID} );
 
     # Trigger event.
-    $Self->{FAQObject}->EventHandler(
+    $FAQObject->EventHandler(
         Event => 'FAQDynamicFieldUpdate_' . $Param{DynamicFieldConfig}->{Name},
         Data  => {
             FieldName => $Param{DynamicFieldConfig}->{Name},
