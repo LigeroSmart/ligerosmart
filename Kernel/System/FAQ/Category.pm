@@ -12,6 +12,15 @@ package Kernel::System::FAQ::Category;
 use strict;
 use warnings;
 
+our @ObjectDependencies = (
+    'Kernel::System::Cache',
+    'Kernel::System::CustomerGroup',
+    'Kernel::System::DB',
+    'Kernel::System::Group',
+    'Kernel::System::Log',
+    'Kernel::System::Valid'
+);
+
 =head1 NAME
 
 Kernel::System::FAQ::Category - sub module of Kernel::System::FAQ
@@ -50,34 +59,40 @@ sub CategoryAdd {
     # check needed stuff
     for my $Argument (qw(Name UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
+
             return;
         }
     }
 
     # check needed stuff
     if ( !defined $Param{ParentID} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "Need ParentID!",
         );
+
         return;
     }
 
     # check that ParentID is not an empty string but number 0 is allowed
     if ( $Param{ParentID} eq '' ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "ParentID cannot be empty!",
         );
+
         return;
     }
 
+    # get database object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
     # insert record
-    return if !$Self->{DBObject}->Do(
+    return if !$DBObject->Do(
         SQL => '
             INSERT INTO faq_category (name, parent_id, comments, valid_id, created, created_by,
                 changed, changed_by)
@@ -89,7 +104,7 @@ sub CategoryAdd {
     );
 
     # get new category id
-    return if !$Self->{DBObject}->Prepare(
+    return if !$DBObject->Prepare(
         SQL => '
             SELECT id
             FROM faq_category
@@ -99,12 +114,12 @@ sub CategoryAdd {
     );
 
     my $CategoryID;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $DBObject->FetchrowArray() ) {
         $CategoryID = $Row[0];
     }
 
     # log notice
-    $Self->{LogObject}->Log(
+    $Kernel::OM->Get('Kernel::System::Log')->Log(
         Priority => 'notice',
         Message  => "FAQCategory: '$Param{Name}' CategoryID: '$CategoryID' "
             . "created successfully ($Param{UserID})!",
@@ -133,19 +148,21 @@ sub CategoryCount {
 
     # check needed stuff
     if ( !$Param{UserID} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need UserID!',
         );
+
         return;
     }
 
     # check needed stuff
     if ( !defined $Param{ParentIDs} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need ParentIDs!',
         );
+
         return;
     }
 
@@ -153,14 +170,19 @@ sub CategoryCount {
     my $SQL = '
         SELECT COUNT(*)
         FROM faq_category
-        WHERE valid_id IN (' . join ', ', $Self->{ValidObject}->ValidIDsGet() . ')';
+        WHERE valid_id IN ('
+        . join ', ', $Kernel::OM->Get('Kernel::System::Valid')->ValidIDsGet()
+        . ')';
+
+    # get database object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
     # parent ids are given
     if ( defined $Param{ParentIDs} ) {
 
         # integer quote the parent ids
         for my $ParentID ( @{ $Param{ParentIDs} } ) {
-            $ParentID = $Self->{DBObject}->Quote( $ParentID, 'Integer' );
+            $ParentID = $DBObject->Quote( $ParentID, 'Integer' );
         }
 
         # create string
@@ -172,13 +194,13 @@ sub CategoryCount {
     # add group by
     $SQL .= ' GROUP BY parent_id';
 
-    return if !$Self->{DBObject}->Prepare(
+    return if !$DBObject->Prepare(
         SQL   => $SQL,
         Limit => 200,
     );
 
     my $Count = 0;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $DBObject->FetchrowArray() ) {
         $Count = $Row[0];
     }
 
@@ -206,16 +228,20 @@ sub CategoryDelete {
     # check needed stuff
     for my $Attribute (qw(CategoryID UserID)) {
         if ( !$Param{$Attribute} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Attribute!",
             );
+
             return;
         }
     }
 
+    # get database object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
     # delete the category
-    return if !$Self->{DBObject}->Do(
+    return if !$DBObject->Do(
         SQL => '
             DELETE FROM faq_category
             WHERE id = ?',
@@ -223,7 +249,7 @@ sub CategoryDelete {
     );
 
     # delete the category groups
-    return if !$Self->{DBObject}->Do(
+    return if !$DBObject->Do(
         SQL => '
             DELETE FROM faq_category_group
             WHERE category_id = ?',
@@ -256,10 +282,11 @@ sub CategoryDuplicateCheck {
 
     # check needed stuff
     if ( !$Param{UserID} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "Need UserID!",
         );
+
         return;
     }
 
@@ -270,8 +297,11 @@ sub CategoryDuplicateCheck {
     push @Values, \$Param{Name};
     push @Values, \$Param{ParentID};
 
+    # get database object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
     # db quote
-    $Param{ParentID} = $Self->{DBObject}->Quote( $Param{ParentID}, 'Integer' );
+    $Param{ParentID} = $DBObject->Quote( $Param{ParentID}, 'Integer' );
 
     # build SQL
     my $SQL = '
@@ -287,7 +317,7 @@ sub CategoryDuplicateCheck {
     }
 
     # prepare SQL statement
-    return if !$Self->{DBObject}->Prepare(
+    return if !$DBObject->Prepare(
         SQL   => $SQL,
         Bind  => \@Values,
         Limit => 1,
@@ -295,7 +325,7 @@ sub CategoryDuplicateCheck {
 
     # fetch the result
     my $Exists;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $DBObject->FetchrowArray() ) {
         $Exists = 1;
     }
 
@@ -328,32 +358,42 @@ sub CategoryGet {
 
     # check needed stuff
     if ( !$Param{UserID} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "Need UserID!",
         );
+
         return;
     }
 
     # check needed stuff
     if ( !defined $Param{CategoryID} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need CategoryID!',
         );
+
         return;
     }
 
     # check cache
     my $CacheKey = 'CategoryGet::' . $Param{CategoryID};
-    my $Cache    = $Self->{CacheObject}->Get(
+
+    # get cache object
+    my $CacheObject = $Kernel::OM->Get('Kernel::System::Cache');
+
+    my $Cache = $CacheObject->Get(
         Type => 'FAQ',
         Key  => $CacheKey,
     );
+
     return %{$Cache} if $Cache;
 
+    # get database object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
     # SQL
-    return if !$Self->{DBObject}->Prepare(
+    return if !$DBObject->Prepare(
         SQL => '
             SELECT id, parent_id, name, comments, valid_id
             FROM faq_category
@@ -363,7 +403,7 @@ sub CategoryGet {
     );
 
     my %Data;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $DBObject->FetchrowArray() ) {
         %Data = (
             CategoryID => $Row[0],
             ParentID   => $Row[1],
@@ -374,7 +414,7 @@ sub CategoryGet {
     }
 
     # cache result
-    $Self->{CacheObject}->Set(
+    $CacheObject->Set(
         Type  => 'FAQ',
         Key   => $CacheKey,
         Value => \%Data,
@@ -409,16 +449,20 @@ sub CategoryGroupGet {
     # check needed stuff
     for my $Argument (qw(CategoryID UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
+
             return;
         }
     }
 
+    # get database object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
     # get groups
-    return if !$Self->{DBObject}->Prepare(
+    return if !$DBObject->Prepare(
         SQL => '
             SELECT group_id
             FROM faq_category_group
@@ -427,7 +471,7 @@ sub CategoryGroupGet {
     );
 
     my @Groups;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $DBObject->FetchrowArray() ) {
         push @Groups, $Row[0];
     }
 
@@ -476,27 +520,32 @@ sub CategoryGroupGetAll {
 
     # check needed stuff
     if ( !$Param{UserID} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "Need UserID!",
         );
+
         return;
     }
 
     # check cache
     if ( $Self->{Cache}->{CategoryGroupGetAll} ) {
+
         return $Self->{Cache}->{CategoryGroupGetAll};
     }
 
+    # get database object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
     # get groups
-    return if !$Self->{DBObject}->Prepare(
+    return if !$DBObject->Prepare(
         SQL => '
             SELECT group_id, category_id
             FROM faq_category_group',
     );
 
     my %Groups;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $DBObject->FetchrowArray() ) {
         $Groups{ $Row[1] }->{ $Row[0] } = 1;
     }
 
@@ -535,10 +584,11 @@ sub CategoryList {
 
     # check needed stuff
     if ( !$Param{UserID} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "Need UserID!",
         );
+
         return;
     }
 
@@ -550,6 +600,7 @@ sub CategoryList {
 
     # check cache
     if ( $Self->{Cache}->{CategoryList}->{$Valid} ) {
+
         return $Self->{Cache}->{CategoryList}->{$Valid};
     }
 
@@ -560,15 +611,20 @@ sub CategoryList {
     if ($Valid) {
 
         # get the valid ids
-        $SQL .= ' WHERE valid_id IN (' . join ', ', $Self->{ValidObject}->ValidIDsGet() . ')';
+        $SQL .= ' WHERE valid_id IN ('
+            . join ', ', $Kernel::OM->Get('Kernel::System::Valid')->ValidIDsGet()
+            . ')';
     }
 
-    # prepare sql statement
-    return if !$Self->{DBObject}->Prepare( SQL => $SQL );
+    # get database object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
+    # prepare SQL statement
+    return if !$DBObject->Prepare( SQL => $SQL );
 
     # fetch the result
     my %Data;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $DBObject->FetchrowArray() ) {
         $Data{ $Row[1] }->{ $Row[0] } = $Row[2];
     }
 
@@ -605,10 +661,11 @@ sub CategorySearch {
 
     # check needed stuff
     if ( !$Param{UserID} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "Need UserID!",
         );
+
         return;
     }
 
@@ -616,14 +673,20 @@ sub CategorySearch {
     my $SQL = '
         SELECT id
         FROM faq_category
-        WHERE valid_id IN (' . join ', ', $Self->{ValidObject}->ValidIDsGet() . ')';
+        WHERE valid_id IN ('
+        . join ', ', $Kernel::OM->Get('Kernel::System::Valid')->ValidIDsGet()
+        . ')';
+
     my $Ext = '';
+
+    # get database object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
     # search for name
     if ( defined $Param{Name} ) {
 
         # db like quote
-        $Param{Name} = $Self->{DBObject}->Quote( $Param{Name}, 'Like' );
+        $Param{Name} = $DBObject->Quote( $Param{Name}, 'Like' );
 
         $Ext .= " AND name LIKE '%" . $Param{Name} . "%' $Self->{LikeEscapeString}";
     }
@@ -632,7 +695,7 @@ sub CategorySearch {
     elsif ( defined $Param{ParentID} ) {
 
         # db integer quote
-        $Param{ParentID} = $Self->{DBObject}->Quote( $Param{ParentID}, 'Integer' );
+        $Param{ParentID} = $DBObject->Quote( $Param{ParentID}, 'Integer' );
 
         $Ext .= ' AND parent_id = ' . $Param{ParentID};
     }
@@ -647,7 +710,7 @@ sub CategorySearch {
 
         # integer quote the parent ids
         for my $ParentID ( @{ $Param{ParentIDs} } ) {
-            $ParentID = $Self->{DBObject}->Quote( $ParentID, 'Integer' );
+            $ParentID = $DBObject->Quote( $ParentID, 'Integer' );
         }
 
         # create string
@@ -666,7 +729,7 @@ sub CategorySearch {
 
         # integer quote the category ids
         for my $CategoryID ( @{ $Param{CategoryIDs} } ) {
-            $CategoryID = $Self->{DBObject}->Quote( $CategoryID, 'Integer' );
+            $CategoryID = $DBObject->Quote( $CategoryID, 'Integer' );
         }
 
         # create string
@@ -696,13 +759,13 @@ sub CategorySearch {
     # SQL STATEMENT
     $SQL .= $Ext;
 
-    return if !$Self->{DBObject}->Prepare(
+    return if !$DBObject->Prepare(
         SQL   => $SQL,
         Limit => 500,
     );
 
     my @List;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $DBObject->FetchrowArray() ) {
         push @List, $Row[0];
     }
 
@@ -736,19 +799,21 @@ sub CategorySubCategoryIDList {
 
     # check needed stuff
     if ( !$Param{UserID} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "Need UserID!",
         );
+
         return;
     }
 
     # check needed stuff
     if ( !defined $Param{ParentID} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need ParentID!',
         );
+
         return;
     }
 
@@ -829,10 +894,11 @@ sub CategoryTreeList {
 
     # check needed stuff
     if ( !$Param{UserID} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "Need UserID!",
         );
+
         return;
     }
 
@@ -844,6 +910,7 @@ sub CategoryTreeList {
 
     # check cache
     if ( $Self->{Cache}->{GetCategoryTree}->{$Valid} ) {
+
         return $Self->{Cache}->{GetCategoryTree}->{$Valid};
     }
 
@@ -854,11 +921,16 @@ sub CategoryTreeList {
 
     # add where clause for valid categories
     if ($Valid) {
-        $SQL .= ' WHERE valid_id IN (' . join ', ', $Self->{ValidObject}->ValidIDsGet() . ')';
+        $SQL .= ' WHERE valid_id IN ('
+            . join ', ', $Kernel::OM->Get('Kernel::System::Valid')->ValidIDsGet()
+            . ')';
     }
 
-    # prepare sql
-    return if !$Self->{DBObject}->Prepare(
+    # get database object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
+    # prepare SQL
+    return if !$DBObject->Prepare(
         SQL => $SQL,
     );
 
@@ -866,7 +938,7 @@ sub CategoryTreeList {
     my %CategoryMap;
     my %CategoryNameLookup;
     my %ParentIDLookup;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $DBObject->FetchrowArray() ) {
         $CategoryMap{ $Row[1] }->{ $Row[0] } = $Row[2];
         $CategoryNameLookup{ $Row[0] }       = $Row[2];
         $ParentIDLookup{ $Row[0] }           = $Row[1];
@@ -875,7 +947,7 @@ sub CategoryTreeList {
     # to store the category tree
     my %CategoryTree;
 
-    # check all parent ids
+    # check all parent IDs
     for my $ParentID ( sort { $a <=> $b } keys %CategoryMap ) {
 
         # get subcategories and names for this parent id
@@ -929,10 +1001,11 @@ sub CategoryUpdate {
     # check needed stuff
     for my $Argument (qw(Name UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
+
             return;
         }
     }
@@ -940,25 +1013,30 @@ sub CategoryUpdate {
     # check needed stuff
     for my $Argument (qw(CategoryID ParentID)) {
         if ( !defined $Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
+
             return;
         }
     }
 
     # check that ParentID is not an empty string but number 0 is allowed
     if ( $Param{ParentID} eq '' ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "ParentID cannot be empty!",
         );
+
         return;
     }
 
-    # sql
-    return if !$Self->{DBObject}->Do(
+    # get database object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
+    # SQL
+    return if !$DBObject->Do(
         SQL => '
             UPDATE faq_category
             SET parent_id = ?, name = ?, comments = ?, valid_id = ?, changed = current_timestamp,
@@ -972,14 +1050,14 @@ sub CategoryUpdate {
     );
 
     # log notice
-    $Self->{LogObject}->Log(
+    $Kernel::OM->Get('Kernel::System::Log')->Log(
         Priority => 'notice',
         Message  => "FAQCategory: '$Param{Name}' "
             . "ID: '$Param{CategoryID}' updated successfully ($Param{UserID})!",
     );
 
     # delete all cache, as FAQGet() will be also affected.
-    $Self->{CacheObject}->CleanUp(
+    $Kernel::OM->Get('Kernel::System::Cache')->CleanUp(
         Type => 'FAQ',
     );
 
@@ -1009,10 +1087,11 @@ sub AgentCategorySearch {
 
     # check needed stuff
     if ( !$Param{UserID} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need UserID!',
         );
+
         return;
     }
 
@@ -1057,10 +1136,11 @@ sub CustomerCategorySearch {
     # check needed stuff
     for my $Argument (qw(CustomerUser Mode UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
+
             return;
         }
     }
@@ -1090,7 +1170,7 @@ sub CustomerCategorySearch {
     else {
 
         # build valid id string
-        my $ValidIDsString = join ', ', $Self->{ValidObject}->ValidIDsGet();
+        my $ValidIDsString = join ', ', $Kernel::OM->Get('Kernel::System::Valid')->ValidIDsGet();
 
         my $SQL = "
             SELECT faq_item.id, faq_item.category_id
@@ -1101,10 +1181,13 @@ sub CustomerCategorySearch {
                 AND faq_item.valid_id IN ($ValidIDsString)
                 AND faq_item.approved = 1";
 
-        return if !$Self->{DBObject}->Prepare(
+        # get database object
+        my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
+        return if !$DBObject->Prepare(
             SQL => $SQL,
         );
-        while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        while ( my @Row = $DBObject->FetchrowArray() ) {
             $Articles{ $Row[1] }++;
         }
 
@@ -1162,10 +1245,11 @@ sub PublicCategorySearch {
     # check needed stuff
     for my $Argument (qw(Mode UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
+
             return;
         }
     }
@@ -1186,7 +1270,10 @@ sub PublicCategorySearch {
     my @AllowedCategoryIDs;
 
     # build valid id string
-    my $ValidIDsString = join ', ', $Self->{ValidObject}->ValidIDsGet();
+    my $ValidIDsString = join ', ', $Kernel::OM->Get('Kernel::System::Valid')->ValidIDsGet();
+
+    # get database object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
     for my $CategoryID (@CategoryIDs) {
 
@@ -1216,12 +1303,13 @@ sub PublicCategorySearch {
 
         ID:
         for my $ID (@IDs) {
-            return if !$Self->{DBObject}->Prepare(
+
+            return if !$DBObject->Prepare(
                 SQL   => $SQL,
                 Bind  => [ \$ID ],
                 Limit => 1,
             );
-            while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+            while ( my @Row = $DBObject->FetchrowArray() ) {
                 $FoundArticle = $Row[0];
             }
             last ID if $FoundArticle;
@@ -1270,10 +1358,11 @@ sub GetUserCategories {
     # check needed stuff
     for my $Argument (qw(Type UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
+
             return;
         }
     }
@@ -1288,7 +1377,7 @@ sub GetUserCategories {
     );
     my %UserGroups;
     if ( !$Self->{Cache}->{GetUserCategories}->{GroupMemberList} ) {
-        %UserGroups = $Self->{GroupObject}->GroupMemberList(
+        %UserGroups = $Kernel::OM->Get('Kernel::System::Group')->GroupMemberList(
             UserID => $Param{UserID},
             Type   => $Param{Type},
             Result => 'HASH',
@@ -1335,10 +1424,11 @@ sub GetUserCategoriesLongNames {
     # check needed stuff
     for my $Argument (qw(Type UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
+
             return;
         }
     }
@@ -1408,10 +1498,11 @@ sub GetCustomerCategories {
     # check needed stuff
     for my $Argument (qw(CustomerUser Type UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
+
             return;
         }
     }
@@ -1419,6 +1510,7 @@ sub GetCustomerCategories {
     # check cache
     my $CacheKey = 'GetCustomerCategories::CustomerUser::' . $Param{CustomerUser};
     if ( defined $Self->{Cache}->{$CacheKey} ) {
+
         return $Self->{Cache}->{$CacheKey};
     }
 
@@ -1432,7 +1524,7 @@ sub GetCustomerCategories {
         UserID => $Param{UserID},
     );
 
-    my %UserGroups = $Self->{CustomerGroupObject}->GroupMemberList(
+    my %UserGroups = $Kernel::OM->Get('Kernel::System::CustomerGroup')->GroupMemberList(
         UserID => $Param{CustomerUser},
         Type   => 'ro',
         Result => 'HASH',
@@ -1478,10 +1570,11 @@ sub GetCustomerCategoriesLongNames {
     # check needed stuff
     for my $Argument (qw(CustomerUser Type UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
+
             return;
         }
     }
@@ -1575,10 +1668,11 @@ sub GetPublicCategoriesLongNames {
     # check needed stuff
     for my $Argument (qw(Type UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
+
             return;
         }
     }
@@ -1662,10 +1756,11 @@ sub CheckCategoryUserPermission {
     # check needed stuff
     for my $Argument (qw(CategoryID UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
+
             return;
         }
     }
@@ -1680,6 +1775,7 @@ sub CheckCategoryUserPermission {
             my $Categories = $UserCategories->{$ParentID};
             for my $CategoryID ( sort keys %{$Categories} ) {
                 if ( $CategoryID == $Param{CategoryID} ) {
+
                     return $Permission;
                 }
             }
@@ -1711,10 +1807,11 @@ sub CheckCategoryCustomerPermission {
     # check needed stuff
     for my $Argument (qw(CustomerUser CategoryID UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
+
             return;
         }
     }
@@ -1729,6 +1826,7 @@ sub CheckCategoryCustomerPermission {
             my $Categories = $CustomerCategories->{$ParentID};
             for my $CategoryID ( sort keys %{$Categories} ) {
                 if ( $CategoryID == $Param{CategoryID} ) {
+
                     return $Permission;
                 }
             }
@@ -1760,16 +1858,20 @@ sub SetCategoryGroup {
     # check needed stuff
     for my $Argument (qw(CategoryID GroupIDs UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
+
             return;
         }
     }
 
+    # get database object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
     # delete old groups
-    return if !$Self->{DBObject}->Do(
+    return if !$DBObject->Do(
         SQL => '
             DELETE FROM faq_category_group
             WHERE category_id = ?',
@@ -1777,11 +1879,11 @@ sub SetCategoryGroup {
     );
 
     # insert groups
-    $Param{CategoryID} = $Self->{DBObject}->Quote( $Param{CategoryID}, 'Integer' );
+    $Param{CategoryID} = $DBObject->Quote( $Param{CategoryID}, 'Integer' );
     for my $GroupID ( @{ $Param{GroupIDs} } ) {
 
         # db quote
-        $GroupID = $Self->{DBObject}->Quote( $GroupID, 'Integer' );
+        $GroupID = $DBObject->Quote( $GroupID, 'Integer' );
 
         my $SQL = "
             INSERT INTO faq_category_group (category_id, group_id, changed, changed_by, created,
@@ -1790,7 +1892,7 @@ sub SetCategoryGroup {
                 current_timestamp, $Param{UserID})";
 
         # write attachment to db
-        return if !$Self->{DBObject}->Do( SQL => $SQL );
+        return if !$DBObject->Do( SQL => $SQL );
     }
 
     return 1;
@@ -1829,10 +1931,11 @@ sub _UserCategories {
     # check needed stuff
     for my $Argument (qw(Categories UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
+
             return;
         }
     }
@@ -1869,6 +1972,7 @@ sub _UserCategories {
         }
         $UserCategories{$ParentID} = \%SubCategories;
     }
+
     return \%UserCategories;
 }
 
