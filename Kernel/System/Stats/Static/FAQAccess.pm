@@ -11,8 +11,14 @@ package Kernel::System::Stats::Static::FAQAccess;
 
 use strict;
 use warnings;
+
 use Date::Pcalc qw(Days_in_Month);
-use Kernel::System::FAQ;
+
+our @ObjectDependencies = (
+    'Kernel::Config',
+    'Kernel::System::FAQ',
+    'Kernel::System::Log',
+);
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -20,14 +26,6 @@ sub new {
     # allocate new hash for object
     my $Self = {%Param};
     bless( $Self, $Type );
-
-    # check all needed objects
-    for my $Object (qw(DBObject ConfigObject LogObject UserID)) {
-        die "Got no $Object" if !$Self->{$Object};
-    }
-
-    # create needed object
-    $Self->{FAQObject} = Kernel::System::FAQ->new(%Param);
 
     return $Self;
 }
@@ -121,7 +119,7 @@ sub Run {
     # check needed stuff
     for my $ParamName (qw(StartYear StartMonth StartDay EndYear EndMonth EndDay)) {
         if ( !$Param{$ParamName} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $ParamName!",
             );
@@ -145,33 +143,36 @@ sub Run {
     my $StartDate = "$Param{StartYear}-$Param{StartMonth}-$StartDay 00:00:00";
     my $EndDate   = "$Param{EndYear}-$Param{EndMonth}-$EndDay 23:59:59";
 
-    # get a count of all faq articles
-    my $Top10ItemIDsRef = $Self->{FAQObject}->FAQTop10Get(
+    # get FAQ object
+    my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
+
+    # get a count of all FAQ articles
+    my $Top10ItemIDsRef = $FAQObject->FAQTop10Get(
         Interface => 'internal',
         StartDate => $StartDate,
         EndDate   => $EndDate,
-        UserID    => $Self->{UserID},
+        UserID    => 1,
     ) || [];
 
     # build result table
     my @Data;
     for my $ItemIDRef ( @{$Top10ItemIDsRef} ) {
 
-        # get faq data
-        my %FAQData = $Self->{FAQObject}->FAQGet(
+        # get FAQ data
+        my %FAQData = $FAQObject->FAQGet(
             ItemID     => $ItemIDRef->{ItemID},
             ItemFields => 0,
-            UserID     => $Self->{UserID},
+            UserID     => 1,
         );
 
         # get vote data
-        my $VoteData = $Self->{FAQObject}->ItemVoteDataGet(
+        my $VoteData = $FAQObject->ItemVoteDataGet(
             ItemID => $ItemIDRef->{ItemID},
-            UserID => $Self->{UserID},
+            UserID => 1,
         );
         my $VoteResult = sprintf(
             "%0."
-                . $Self->{ConfigObject}->Get(
+                . $Kernel::OM->Get('Kernel::Config')->Get(
                 "FAQ::Explorer::ItemList::VotingResultDecimalPlaces"
                 )
                 . "f", $VoteData->{Result} || 0
