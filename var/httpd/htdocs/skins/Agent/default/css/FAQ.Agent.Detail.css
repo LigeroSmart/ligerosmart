@@ -16,13 +16,6 @@
  * @subsection  Article table body
  */
 
-.ArticleFAQHeader {
-    margin: 0 8px;
-    padding: 2px 0 7px;
-    font-size: 14px;
-    color: Gray;
-}
-
 .ArticleFAQContent {
     padding: 11px 12px;
     line-height: 1.3;
