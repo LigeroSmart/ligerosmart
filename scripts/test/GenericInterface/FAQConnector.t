@@ -15,21 +15,14 @@ use vars (qw($Self));
 use Socket;
 use YAML;
 use MIME::Base64;
-use Kernel::System::FAQ;
 use Kernel::GenericInterface::Debugger;
-use Kernel::GenericInterface::Requester;
-use Kernel::System::GenericInterface::Webservice;
-use Kernel::System::UnitTest::Helper;
 use Kernel::GenericInterface::Operation::FAQ::LanguageList;
 use Kernel::GenericInterface::Operation::FAQ::PublicCategoryList;
 use Kernel::GenericInterface::Operation::FAQ::PublicFAQSearch;
 use Kernel::GenericInterface::Operation::FAQ::PublicFAQGet;
 
-# helper object
-my $HelperObject = Kernel::System::UnitTest::Helper->new(
-    %{$Self},
-    UnitTestObject => $Self,
-);
+# get helper object
+my $HelperObject = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 
 my $RandomID = $HelperObject->GetRandomID();
 
@@ -39,8 +32,8 @@ my $WebserviceName = '-Test-' . $HelperObject->GetRandomID();
 # set UserID on 1
 my $UserID = 1;
 
-# create all FAQ stuff needed
-my $FAQObject = Kernel::System::FAQ->new( %{$Self} );
+# get helper object
+my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
 
 # get public states
 my %States = $FAQObject->StateList(
@@ -300,8 +293,8 @@ for my $Key ( sort( keys %{$CategoryTree} ) ) {
     push @PublicCategoryList, {%Category};
 }
 
-# create webservice object
-my $WebserviceObject = Kernel::System::GenericInterface::Webservice->new( %{$Self} );
+# create web-service object
+my $WebserviceObject = $Kernel::OM->Get('Kernel::System::GenericInterface::Webservice');
 $Self->Is(
     'Kernel::System::GenericInterface::Webservice',
     ref $WebserviceObject,
@@ -692,7 +685,6 @@ my @Tests = (
 
 # debugger object
 my $DebuggerObject = Kernel::GenericInterface::Debugger->new(
-    %{$Self},
     DebuggerConfig => {
         DebugThreshold => 'debug',
         TestMode       => 1,
@@ -703,14 +695,13 @@ my $DebuggerObject = Kernel::GenericInterface::Debugger->new(
 $Self->Is(
     ref $DebuggerObject,
     'Kernel::GenericInterface::Debugger',
-    'DebuggerObject instanciate correctly',
+    'DebuggerObject instantiate correctly',
 );
 
 for my $Test (@Tests) {
 
     # create local object
     my $LocalObject = "Kernel::GenericInterface::Operation::FAQ::$Test->{Operation}"->new(
-        %{$Self},
         DebuggerObject => $DebuggerObject,
         WebserviceID   => $WebserviceID,
     );
@@ -721,7 +712,7 @@ for my $Test (@Tests) {
         "$Test->{Name} - Create local object",
     );
 
-    # start requester with our webservice
+    # start requester with our web-service
     my $LocalResult = $LocalObject->Run(
         WebserviceID => $WebserviceID,
         Invoker      => $Test->{Operation},
@@ -775,14 +766,14 @@ for my $Test (@Tests) {
     # remote call using the system as Requester and Provider
 
     # create requester object
-    my $RequesterObject = Kernel::GenericInterface::Requester->new( %{$Self} );
+    my $RequesterObject = $Kernel::OM->Get('Kernel::GenericInterface::Requester');
     $Self->Is(
         'Kernel::GenericInterface::Requester',
         ref $RequesterObject,
         "$Test->{Name} - Create requester object",
     );
 
-    # start requester with our webservice
+    # start requester with our web-service
     my $RequesterResult = $RequesterObject->Run(
         WebserviceID => $WebserviceID,
         Invoker      => $Test->{Operation},
@@ -832,14 +823,14 @@ for my $Test (@Tests) {
 
 }    #end loop
 
-# clean up webservice
+# clean up web-service
 my $WebserviceDelete = $WebserviceObject->WebserviceDelete(
     ID     => $WebserviceID,
     UserID => $UserID,
 );
 $Self->True(
     $WebserviceDelete,
-    "Deleted Webservice $WebserviceID",
+    "Deleted Webs-ervice $WebserviceID",
 );
 
 # clean up FAQ stuff
