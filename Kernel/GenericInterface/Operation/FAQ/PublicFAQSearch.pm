@@ -13,9 +13,13 @@ use strict;
 use warnings;
 
 use MIME::Base64;
-use Kernel::System::FAQ;
-use Kernel::GenericInterface::Operation::Common;
 use Kernel::System::VariableCheck qw(IsArrayRefWithData IsHashRefWithData IsStringWithData);
+
+use base qw(
+    Kernel::GenericInterface::Operation::Common
+);
+
+our $ObjectManagerDisabled = 1;
 
 =head1 NAME
 
@@ -43,11 +47,9 @@ sub new {
     bless( $Self, $Type );
 
     # check needed objects
-    for my $Needed (
-        qw(DebuggerObject ConfigObject MainObject LogObject TimeObject DBObject EncodeObject WebserviceID)
-        )
-    {
+    for my $Needed (qw( DebuggerObject WebserviceID )) {
         if ( !$Param{$Needed} ) {
+
             return {
                 Success      => 0,
                 ErrorMessage => "Got no $Needed!"
@@ -56,26 +58,6 @@ sub new {
 
         $Self->{$Needed} = $Param{$Needed};
     }
-
-    # create additional objects
-    $Self->{FAQObject}    = Kernel::System::FAQ->new(%Param);
-    $Self->{CommonObject} = Kernel::GenericInterface::Operation::Common->new( %{$Self} );
-
-    # set UserID to root because in public interface there is no user
-    $Self->{UserID} = 1;
-
-    # get config for frontend
-    $Self->{Config} = $Self->{ConfigObject}->Get("FAQ::Frontend::PublicFAQSearch");
-
-    # set default interface settings
-    $Self->{Interface} = $Self->{FAQObject}->StateTypeGet(
-        Name   => 'public',
-        UserID => $Self->{UserID},
-    );
-    $Self->{InterfaceStates} = $Self->{FAQObject}->StateTypeList(
-        Types  => $Self->{ConfigObject}->Get('FAQ::Public::StateTypes'),
-        UserID => $Self->{UserID},
-    );
 
     return $Self;
 }
@@ -132,60 +114,83 @@ sub Run {
 
     # get config data
     # set SearchLimit on 0 because we need to get all entries
-    $Self->{SearchLimit} = 0;
+    my $SearchLimit = 0;
 
-    $Self->{SortBy} = $Param{Data}->{OrderBy}
-        || $Self->{Config}->{'SortBy::Default'}
+    # get config for frontend
+    my $Config = $Kernel::OM->Get('Kernel::Config')->Get("FAQ::Frontend::PublicFAQSearch");
+
+    my $SortBy = $Param{Data}->{OrderBy}
+        || $Config->{'SortBy::Default'}
         || 'FAQID';
 
     # the CategoryID param could be an ARRAY an SCALAR or an empty value
-    if ( !IsArrayRefWithData( $Self->{SortBy} ) && $Self->{SortBy} ne '' ) {
-        $Self->{SortBy} = [ $Self->{SortBy} ];
+    if ( !IsArrayRefWithData($SortBy) && $SortBy ne '' ) {
+        $SortBy = [$SortBy];
     }
 
-    $Self->{OrderBy} = $Param{Data}->{OrderByDirection}
-        || $Self->{Config}->{'Order::Default'}
+    my $OrderBy = $Param{Data}->{OrderByDirection}
+        || $Config->{'Order::Default'}
         || 'Down';
+
+    my $CategoryIDs;
 
     # the CategoryID param could be an ARRAY an SCALAR or an empty value
     $Param{Data}->{CategoryIDs} = $Param{Data}->{CategoryIDs} || '';
     if ( !IsArrayRefWithData( $Param{Data}->{CategoryIDs} ) && $Param{Data}->{CategoryIDs} ne '' ) {
-        $Self->{CategoryIDs} = [ $Param{Data}->{CategoryIDs} ];
+        $CategoryIDs = [ $Param{Data}->{CategoryIDs} ];
     }
     elsif ( $Param{Data}->{CategoryIDs} ne '' ) {
-        $Self->{CategoryIDs} = $Param{Data}->{CategoryIDs};
+        $CategoryIDs = $Param{Data}->{CategoryIDs};
     }
+
+    my $LanguageIDs;
 
     # the LanguageID param could be an ARRAY an SCALAR or an empty value
     $Param{Data}->{LanguageIDs} = $Param{Data}->{LanguageIDs} || '';
     if ( !IsArrayRefWithData( $Param{Data}->{LanguageIDs} ) && $Param{Data}->{LanguageIDs} ne '' ) {
-        $Self->{LanguageIDs} = [ $Param{Data}->{LanguageIDs} ];
+        $LanguageIDs = [ $Param{Data}->{LanguageIDs} ];
     }
     elsif ( $Param{Data}->{LanguageIDs} ne '' ) {
-        $Self->{LanguageIDs} = $Param{Data}->{LanguageIDs};
+        $LanguageIDs = $Param{Data}->{LanguageIDs};
     }
 
+    # get FAQ object
+    my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
+
+    # set UserID to root because in public interface there is no user
+    my $UserID = 1;
+
+    # set default interface settings
+    my $Interface = $FAQObject->StateTypeGet(
+        Name   => 'public',
+        UserID => $UserID,
+    );
+    my $InterfaceStates = $FAQObject->StateTypeList(
+        Types  => $Kernel::OM->Get('Kernel::Config')->Get('FAQ::Public::StateTypes'),
+        UserID => $UserID,
+    );
+
     # perform FAQ search
-    my @ViewableFAQIDs = $Self->{FAQObject}->FAQSearch(
+    my @ViewableFAQIDs = $FAQObject->FAQSearch(
         Number  => $Param{Data}->{Number}  || '',
         Title   => $Param{Data}->{Title}   || '',
         What    => $Param{Data}->{What}    || '',
         Keyword => $Param{Data}->{Keyword} || '',
-        LanguageIDs      => $Self->{LanguageIDs},
-        CategoryIDs      => $Self->{CategoryIDs},
-        OrderBy          => $Self->{SortBy},
-        OrderByDirection => [ $Self->{OrderBy} ],
-        Limit            => $Self->{SearchLimit},
-        UserID           => $Self->{UserID},
-        States           => $Self->{InterfaceStates},
-        Interface        => $Self->{Interface},
+        LanguageIDs      => $LanguageIDs,
+        CategoryIDs      => $CategoryIDs,
+        OrderBy          => $SortBy,
+        OrderByDirection => [$OrderBy],
+        Limit            => $SearchLimit,
+        UserID           => $UserID,
+        States           => $InterfaceStates,
+        Interface        => $Interface,
     );
     if ( !IsArrayRefWithData( \@ViewableFAQIDs ) ) {
 
         my $ErrorMessage = 'Could not get FAQ data'
             . ' in Kernel::GenericInterface::Operation::FAQ::PublicFAQSearch::Run()';
 
-        return $Self->{CommonObject}->ReturnError(
+        return $Self->ReturnError(
             ErrorCode    => 'PublicFAQSearch.NotFAQData',
             ErrorMessage => "PublicFAQSearch: $ErrorMessage",
         );
