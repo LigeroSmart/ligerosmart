@@ -201,26 +201,24 @@
             <div id="FAQBody">
 
 [% RenderBlockStart("AttachmentHeader") %]
-                <div class="WidgetBox">
-                    <div class="FAQContent">
-                        <div class="ArticleFAQHeader">
-                            <label>[% Translate("Attachments") | html %]:</label>
-                            <div class="Clear"></div>
-                        </div>
-                        <div class="ArticleFAQContent">
-                            <div class="message">
+                <div class="WidgetSimple">
+                    <div class="Header">
+                        <h2>[% Translate("Attachments") | html %]:</h2>
+                        <div class="Clear"></div>
+                    </div>
+                    <div class="ArticleFAQContent">
+                        <div class="message">
 
 [% RenderBlockStart("AttachmentRow") %]
-                                <span class="DownloadAttachment" title="[% Translate("Download Attachment") | html %]">
-                                    <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=DownloadAttachment;ItemID=[% Data.ItemID | uri %];FileID=[% Data.FileID | uri %]">
-                                        [% Data.Filename | html %]
-                                    </a>
-                                    , [% Data.Filesize | html %]
-                                </span>
-                                <br/>
+                            <span class="DownloadAttachment" title="[% Translate("Download Attachment") | html %]">
+                                <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=DownloadAttachment;ItemID=[% Data.ItemID | uri %];FileID=[% Data.FileID | uri %]">
+                                    [% Data.Filename | html %]
+                                </a>
+                                , [% Data.Filesize | html %]
+                            </span>
+                            <br/>
 [% RenderBlockEnd("AttachmentRow") %]
 
-                            </div>
                         </div>
                     </div>
                 </div>
