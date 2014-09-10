@@ -420,7 +420,7 @@ sub FAQSearch {
     if ( !defined $Param{ValidIDs} ) {
 
         # get the valid ids
-        my @ValidIDs = $$Kernel::OM->Get('Kernel::System::Valid')->ValidIDsGet();
+        my @ValidIDs = $Kernel::OM->Get('Kernel::System::Valid')->ValidIDsGet();
 
         $Param{ValidIDs} = \@ValidIDs;
     }
