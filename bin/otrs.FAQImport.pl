@@ -28,33 +28,17 @@ use lib dirname($RealBin);
 use lib dirname($RealBin) . '/Kernel/cpan-lib';
 
 use Getopt::Std;
-use Kernel::Config;
-use Kernel::System::DB;
-use Kernel::System::Encode;
-use Kernel::System::CSV;
-use Kernel::System::Log;
-use Kernel::System::Main;
-use Kernel::System::Time;
-use Kernel::System::Group;
-use Kernel::System::FAQ;
 
-use vars qw($RealBin);
+use Kernel::System::ObjectManager;
 
 # create common objects
-my %CommonObject;
-$CommonObject{UserID}       = 1;
-$CommonObject{ConfigObject} = Kernel::Config->new();
-$CommonObject{LogObject}    = Kernel::System::Log->new(
-    LogPrefix => 'OTRS-FAQImport',
-    %CommonObject,
+local $Kernel::OM = Kernel::System::ObjectManager->new(
+    'Kernel::System::Log' => {
+        LogPrefix => 'OTRS-otrs.FAQImport.pl',
+    },
 );
-$CommonObject{CSVObject}    = Kernel::System::CSV->new(%CommonObject);
-$CommonObject{EncodeObject} = Kernel::System::Encode->new(%CommonObject);
-$CommonObject{MainObject}   = Kernel::System::Main->new(%CommonObject);
-$CommonObject{DBObject}     = Kernel::System::DB->new(%CommonObject);
-$CommonObject{TimeObject}   = Kernel::System::Time->new(%CommonObject);
-$CommonObject{GroupObject}  = Kernel::System::Group->new(%CommonObject);
-$CommonObject{FAQObject}    = Kernel::System::FAQ->new(%CommonObject);
+
+my $UserID = 1;
 
 # get options
 my %Opts;
@@ -87,7 +71,7 @@ if ( !$Opts{i} ) {
 print STDOUT "Read File $Opts{i}.\n";
 
 # read source file
-my $CSVStringRef = $CommonObject{MainObject}->FileRead(
+my $CSVStringRef = $Kernel::OM->Get('Kernel::System::Main')->FileRead(
     Location => $Opts{i},
     Result   => 'SCALAR',
     Mode     => 'binmode',
@@ -97,23 +81,26 @@ die "Can't read file $Opts{i}.\nImport aborted.\n" if !$CSVStringRef;
 print STDOUT "Import in process...\n";
 
 # read CSV data
-my $DataRef = $CommonObject{CSVObject}->CSV2Array(
+my $DataRef = $Kernel::OM->Get('Kernel::System::CSV')->CSV2Array(
     String    => $$CSVStringRef,
     Separator => $Opts{s} || ';',
     Quote     => $Opts{q} || '"',
 );
 die "\nError occurred. Import impossible! See Syslog for details.\n" if !defined $DataRef;
 
+# get FAQ object
+my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
+
 # get all FAQ language ids
-my %LanguageID = reverse $CommonObject{FAQObject}->LanguageList(
+my %LanguageID = reverse $FAQObject->LanguageList(
     UserID => 1,
 );
 
 # get all state type ids
-my %StateTypeID = reverse %{ $CommonObject{FAQObject}->StateTypeList( UserID => 1 ) };
+my %StateTypeID = reverse %{ $FAQObject->StateTypeList( UserID => 1 ) };
 
-# get group id for faq group
-my $FAQGroupID = $CommonObject{GroupObject}->GroupLookup(
+# get group id for FAQ group
+my $FAQGroupID = $Kernel::OM->Get('Kernel::System::Group')->GroupLookup(
     Group => 'faq',
 );
 
@@ -148,34 +135,39 @@ for my $RowRef ( @{$DataRef} ) {
     # check each subcategory if it exists
     my $CategoryID;
     my $ParentID = 0;
+
+    # get database object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
     for my $Category (@CategoryArray) {
 
         # get the category id
-        $CommonObject{DBObject}->Prepare(
+        $DBObject->Prepare(
             SQL => 'SELECT id FROM faq_category '
                 . 'WHERE valid_id = 1 AND name = ? AND parent_id = ?',
             Bind => [ \$Category, \$ParentID ],
             Limit => 1,
         );
         my @Result;
-        while ( my @Row = $CommonObject{DBObject}->FetchrowArray() ) {
+        while ( my @Row = $DBObject->FetchrowArray() ) {
             push( @Result, $Row[0] );
         }
         $CategoryID = $Result[0];
 
         # create category if it does not exist
         if ( !$CategoryID ) {
-            $CategoryID = $CommonObject{FAQObject}->CategoryAdd(
+            $CategoryID = $FAQObject->CategoryAdd(
                 Name     => $Category,
                 ParentID => $ParentID,
                 ValidID  => 1,
                 UserID   => 1,
             );
 
-            # add new category to faq group
-            $CommonObject{FAQObject}->SetCategoryGroup(
+            # add new category to FAQ group
+            $FAQObject->SetCategoryGroup(
                 CategoryID => $CategoryID,
                 GroupIDs   => [$FAQGroupID],
+                UserID     => 1,
             );
         }
 
@@ -191,7 +183,7 @@ for my $RowRef ( @{$DataRef} ) {
     }
 
     # convert StateType to State
-    my %StateLookup = reverse $CommonObject{FAQObject}->StateList( UserID => 1 );
+    my %StateLookup = reverse $FAQObject->StateList( UserID => 1 );
     my $StateID;
 
     STATENAME:
@@ -203,7 +195,7 @@ for my $RowRef ( @{$DataRef} ) {
     }
 
     # add FAQ article
-    my $FAQID = $CommonObject{FAQObject}->FAQAdd(
+    my $FAQID = $FAQObject->FAQAdd(
         Title      => $Title,
         CategoryID => $CategoryID,
         StateID    => $StateID,
