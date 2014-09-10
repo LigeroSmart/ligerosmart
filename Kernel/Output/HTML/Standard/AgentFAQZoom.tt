@@ -160,18 +160,14 @@
 
         </div>
         <div class="ContentColumn">
-            <div class="ControlRow">
-                <div class="AdditionalInformation">
-                </div>
-            </div>
-
-            <div class="ActionRow">
-                <ul class="Actions">
-
+            <div class="WidgetSimple">
+                <div class="Content">
+                    <div class="ActionRow">
+                        <ul class="Actions">
 [% RenderBlockStart("MenuItem") %]
-                    <li>
-                        <a href="[% Env("Baselink") %][% Data.Link | Interpolate %]" id="[% Data.MenuID | html %]" class="[% Data.Class | html %]" [% Data.LinkParam %] title="[% Translate(Data.Description) | html %]">[% Translate(Data.Name) | html %]</a>
-                    </li>
+                            <li>
+                                <a href="[% Env("Baselink") %][% Data.Link | Interpolate %]" id="[% Data.MenuID | html %]" class="[% Data.Class | html %]" [% Data.LinkParam %] title="[% Translate(Data.Description) | html %]">[% Translate(Data.Name) | html %]</a>
+                            </li>
 
 [% RenderBlockStart("ShowConfirmationDialog") %]
 [% WRAPPER JSOnDocumentComplete %]
@@ -195,8 +191,10 @@
 
 [% RenderBlockEnd("MenuItem") %]
 
-                </ul>
-                <div class="Clear"></div>
+                        </ul>
+                        <div class="Clear"></div>
+                    </div>
+                </div>
             </div>
             <div class="SpacingTop"></div>
 
