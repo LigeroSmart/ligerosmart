@@ -12,8 +12,12 @@ package Kernel::System::LinkObject::FAQ;
 use strict;
 use warnings;
 
-use Kernel::System::Group;
-use Kernel::System::FAQ;
+our @ObjectDependencies = (
+    'Kernel::Config',
+    'Kernel::System::FAQ',
+    'Kernel::System::Group',
+    'Kernel::System::Log',
+);
 
 =head1 NAME
 
@@ -31,47 +35,11 @@ FAQ backend for the link object.
 
 =item new()
 
-create an object
+create an object. Do not use it directly, instead use:
 
-    use Kernel::Config;
-    use Kernel::System::Encode;
-    use Kernel::System::Log;
-    use Kernel::System::Time;
-    use Kernel::System::Main;
-    use Kernel::System::DB;
-    use Kernel::System::LinkObject::FAQ;
-
-    my $ConfigObject = Kernel::Config->new();
-    my $EncodeObject = Kernel::System::Encode->new(
-        ConfigObject => $ConfigObject,
-    );
-    my $LogObject = Kernel::System::Log->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-    );
-    my $TimeObject = Kernel::System::Time->new(
-        ConfigObject => $ConfigObject,
-        LogObject    => $LogObject,
-    );
-    my $MainObject = Kernel::System::Main->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-    );
-    my $DBObject = Kernel::System::DB->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-        MainObject   => $MainObject,
-    );
-    my $FAQObjectBackend = Kernel::System::LinkObject::FAQ->new(
-        ConfigObject       => $ConfigObject,
-        LogObject          => $LogObject,
-        DBObject           => $DBObject,
-        MainObject         => $MainObject,
-        TimeObject         => $TimeObject,
-        EncodeObject       => $EncodeObject,
-    );
+    use Kernel::System::ObjectManager;
+    local $Kernel::OM = Kernel::System::ObjectManager->new();
+    my $FAQObjectBackend = $Kernel::OM->Get('Kernel::System::LinkObject::FAQ');
 
 =cut
 
@@ -82,14 +50,9 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    # check needed objects
-    for my $Object (qw(DBObject ConfigObject LogObject MainObject EncodeObject TimeObject)) {
-        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
-    }
-
     # create additional objects
-    $Self->{GroupObject} = Kernel::System::Group->new( %{$Self} );
-    $Self->{FAQObject}   = Kernel::System::FAQ->new( %{$Self} );
+    # $GroupObject = Kernel::System::Group->new( %{$Self} );
+    # $FAQObject   = Kernel::System::FAQ->new( %{$Self} );
 
     return $Self;
 }
@@ -111,22 +74,27 @@ sub LinkListWithData {
     # check needed stuff
     for my $Argument (qw(LinkList UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
+
             return;
         }
     }
 
     # check link list
     if ( ref $Param{LinkList} ne 'HASH' ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'LinkList must be a hash reference!',
         );
+
         return;
     }
+
+    # get FAQ object
+    my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
 
     for my $LinkType ( sort keys %{ $Param{LinkList} } ) {
 
@@ -136,7 +104,7 @@ sub LinkListWithData {
             for my $FAQID ( sort keys %{ $Param{LinkList}->{$LinkType}->{$Direction} } ) {
 
                 # get FAQ data
-                my %FAQData = $Self->{FAQObject}->FAQGet(
+                my %FAQData = $FAQObject->FAQGet(
                     ItemID     => $FAQID,
                     ItemFields => 1,
                     UserID     => $Param{UserID},
@@ -148,7 +116,7 @@ sub LinkListWithData {
                     next FAQID;
                 }
 
-                # add faq data
+                # add FAQ data
                 $Param{LinkList}->{$LinkType}->{$Direction}->{$FAQID} = \%FAQData;
             }
         }
@@ -175,24 +143,29 @@ sub ObjectPermission {
     # check needed stuff
     for my $Argument (qw(Object Key UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
+
             return;
         }
     }
 
     # check module registry of AgentFAQZoom
-    my $ModuleReg = $Self->{ConfigObject}->Get('Frontend::Module')->{AgentFAQZoom};
+    my $ModuleReg = $Kernel::OM->Get('Kernel::Config')->Get('Frontend::Module')->{AgentFAQZoom};
 
     # do not grant access if frontend module is not registered
     return if !$ModuleReg;
 
     # grant access if module permission has no Group or GroupRo defined
     if ( !$ModuleReg->{GroupRo} && !$ModuleReg->{Group} ) {
+
         return 1;
     }
+
+    # get database object
+    my $GroupObject = $Kernel::OM->Get('Kernel::System::Group');
 
     PERMISSION:
     for my $Permission (qw(GroupRo Group)) {
@@ -203,7 +176,7 @@ sub ObjectPermission {
         for my $Group ( @{ $ModuleReg->{$Permission} } ) {
 
             # get the group id
-            my $GroupID = $Self->{GroupObject}->GroupLookup( Group => $Group );
+            my $GroupID = $GroupObject->GroupLookup( Group => $Group );
 
             my $Type;
             if ( $Permission eq 'GroupRo' ) {
@@ -214,7 +187,7 @@ sub ObjectPermission {
             }
 
             # get user groups, where the user has the appropriate privilege
-            my %Groups = $Self->{GroupObject}->GroupMemberList(
+            my %Groups = $GroupObject->GroupMemberList(
                 UserID => $Param{UserID},
                 Type   => $Type,
                 Result => 'HASH',
@@ -251,10 +224,11 @@ sub ObjectDescriptionGet {
     # check needed stuff
     for my $Argument (qw(Object Key UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
+
             return;
         }
     }
@@ -267,8 +241,8 @@ sub ObjectDescriptionGet {
 
     return %Description if $Param{Mode} && $Param{Mode} eq 'Temporary';
 
-    # get faq
-    my %FAQ = $Self->{FAQObject}->FAQGet(
+    # get FAQ
+    my %FAQ = $Kernel::OM->Get('Kernel::System::FAQ')->FAQGet(
         ItemID     => $Param{Key},
         ItemFields => 1,
         UserID     => $Param{UserID},
@@ -277,7 +251,7 @@ sub ObjectDescriptionGet {
     return if !%FAQ;
 
     # define description text
-    my $FAQHook         = $Self->{ConfigObject}->Get('FAQ::FAQHook');
+    my $FAQHook         = $Kernel::OM->Get('Kernel::Config')->Get('FAQ::FAQHook');
     my $DescriptionText = "$FAQHook $FAQ{Number}";
 
     # create description
@@ -316,10 +290,11 @@ sub ObjectSearch {
 
     # check needed stuff
     if ( !$Param{UserID} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need UserID!',
         );
+
         return;
     }
 
@@ -338,8 +313,11 @@ sub ObjectSearch {
         $Search{What} = '*' . $Param{SearchParams}->{What} . '*';
     }
 
+    # get FAQ object
+    my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
+
     # search the FAQs
-    my @FAQIDs = $Self->{FAQObject}->FAQSearch(
+    my @FAQIDs = $FAQObject->FAQSearch(
         %{ $Param{SearchParams} },
         %Search,
         Order  => 'Created',
@@ -353,7 +331,7 @@ sub ObjectSearch {
     for my $FAQID (@FAQIDs) {
 
         # get FAQ data
-        my %FAQData = $Self->{FAQObject}->FAQGet(
+        my %FAQData = $FAQObject->FAQGet(
             ItemID     => $FAQID,
             ItemFields => 1,
             UserID     => $Param{UserID},
@@ -400,10 +378,11 @@ sub LinkAddPre {
     # check needed stuff
     for my $Argument (qw(Key Type State UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
+
             return;
         }
     }
@@ -445,10 +424,11 @@ sub LinkAddPost {
     # check needed stuff
     for my $Argument (qw(Key Type State UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
+
             return;
         }
     }
@@ -490,10 +470,11 @@ sub LinkDeletePre {
     # check needed stuff
     for my $Argument (qw(Key Type State UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
+
             return;
         }
     }
@@ -535,10 +516,11 @@ sub LinkDeletePost {
     # check needed stuff
     for my $Argument (qw(Key Type State UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
+
             return;
         }
     }
