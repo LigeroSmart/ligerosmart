@@ -12,9 +12,13 @@ package Kernel::GenericInterface::Operation::FAQ::LanguageList;
 use strict;
 use warnings;
 
-use Kernel::System::FAQ;
-use Kernel::GenericInterface::Operation::Common;
 use Kernel::System::VariableCheck qw(IsArrayRefWithData IsHashRefWithData IsStringWithData);
+
+use base qw(
+    Kernel::GenericInterface::Operation::Common
+);
+
+our $ObjectManagerDisabled = 1;
 
 =head1 NAME
 
@@ -42,11 +46,9 @@ sub new {
     bless( $Self, $Type );
 
     # check needed objects
-    for my $Needed (
-        qw(DebuggerObject ConfigObject MainObject LogObject TimeObject DBObject EncodeObject WebserviceID)
-        )
-    {
+    for my $Needed (qw( DebuggerObject WebserviceID )) {
         if ( !$Param{$Needed} ) {
+
             return {
                 Success      => 0,
                 ErrorMessage => "Got no $Needed!"
@@ -55,13 +57,6 @@ sub new {
 
         $Self->{$Needed} = $Param{$Needed};
     }
-
-    # create additional objects
-    $Self->{FAQObject}    = Kernel::System::FAQ->new(%Param);
-    $Self->{CommonObject} = Kernel::GenericInterface::Operation::Common->new( %{$Self} );
-
-    # set UserID to root because in public interface there is no user
-    $Self->{UserID} = 1;
 
     return $Self;
 }
@@ -98,8 +93,9 @@ sub Run {
     my ( $Self, %Param ) = @_;
 
     # get languages list
-    my %Languages = $Self->{FAQObject}->LanguageList(
-        UserID => $Self->{UserID},
+    # set UserID to root because in public interface there is no user
+    my %Languages = $Kernel::OM->Get('Kernel::System::FAQ')->LanguageList(
+        UserID => 1,
     );
 
     if ( !IsHashRefWithData( \%Languages ) ) {
@@ -107,7 +103,7 @@ sub Run {
         my $ErrorMessage = 'Could not get language data'
             . ' in Kernel::GenericInterface::Operation::FAQ::LanguageList::Run()';
 
-        return $Self->{CommonObject}->ReturnError(
+        return $Self->ReturnError(
             ErrorCode    => 'TicketList.NotLanguageData',
             ErrorMessage => "TicketList: $ErrorMessage",
         );
