@@ -188,7 +188,7 @@ $Form.find('#AttachmentUpload').val('1').end().submit();
 
 [% RenderBlockStart("EndSmall") %]
                 <div class="Footer">
-                    <button class="Primary CallForAction" id="FAQSubmit" type="button" value="[% Translate("Update") | html %]"><span><i class="fa fa-check"></i> [% Translate("Update") | html %]</span></button>
+                    <button class="Primary CallForAction" id="FAQSubmit" type="button" value="[% Translate("Update") | html %]"><span><i class="fa fa-check-square-o"></i> [% Translate("Update") | html %]</span></button>
                 </div>
 [% RenderBlockEnd("EndSmall") %]
 

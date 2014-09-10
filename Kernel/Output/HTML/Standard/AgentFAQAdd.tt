@@ -163,7 +163,7 @@
 [% RenderBlockEnd("FAQContent") %]
 
                     <div class="Field SpacingTop">
-                        <button class="Primary CallForAction" id="FAQSubmit" type="button" value="[% Translate("Create") | html %]"><span><i class="fa fa-check"></i> [% Translate("Create") | html %]</span></button>
+                        <button class="Primary CallForAction" id="FAQSubmit" type="button" value="[% Translate("Create") | html %]"><span><i class="fa fa-check-square-o"></i> [% Translate("Create") | html %]</span></button>
                         [% Translate("or") | html %]
                         <a href="[% Env("Baselink") %]Action=AgentFAQExplorer;CategoryID=[% Data.CategoryID | uri %]">[% Translate("Cancel") | html %]</a>
                     </div>
