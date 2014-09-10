@@ -14,6 +14,12 @@ use warnings;
 
 use Kernel::Output::HTML::Layout;
 
+our @ObjectDependencies = (
+    'Kernel::Config',
+    'Kernel::System::Log',
+    'Kernel::System::Web::Request',
+);
+
 =head1 NAME
 
 Kernel::Output::HTML::LinkObjectFAQ - layout backend module
@@ -44,14 +50,17 @@ sub new {
     bless( $Self, $Type );
 
     # check needed objects
-    for my $Object (
-        qw(ConfigObject LogObject MainObject DBObject UserObject EncodeObject
-        QueueObject GroupObject ParamObject TimeObject LanguageObject UserLanguage UserID)
-        )
-    {
-        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
+    for my $Needed (qw(UserLanguage UserID)) {
+        $Self->{$Needed} = $Param{$Needed} || die "Got no $Needed!";
     }
 
+    # get needed objects
+    $Self->{ConfigObject} = $Kernel::OM->Get('Kernel::Config');
+    $Self->{LogObject}    = $Kernel::OM->Get('Kernel::System::Log');
+    $Self->{ParamObject}  = $Kernel::OM->Get('Kernel::System::Web::Request');
+
+    # We need our own LayoutObject instance to avoid blockdata collisions
+    #   with the main page.
     $Self->{LayoutObject} = Kernel::Output::HTML::Layout->new( %{$Self} );
 
     # define needed variables
