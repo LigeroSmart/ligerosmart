@@ -69,7 +69,8 @@
                             <td>[% Translate(Data.Valid) | html %]</td>
                             <td class="Center Last">
                                 <a id="DeleteCategoryID[% Data.CategoryID | html %]" class="TrashCan" href="#">
-                                    [% Translate("Delete") | html %]: [% Data.Name | html %]
+                                    <i class="fa fa-trash-o"></i>
+                                    <span class="InvisibleText">[% Translate("Delete") | html %]: [% Data.Name | html %]</span>
                                 </a>
                             </td>
 [% WRAPPER JSOnDocumentComplete %]
@@ -164,7 +165,7 @@
                         <div class="Clear"></div>
 
                         <div class="Field SpacingTop">
-                            <button class="Primary" type="submit" value="[% Translate("Submit") | html %]">[% Translate("Submit") | html %]</button>
+                            <button class="Primary CallForAction" type="submit" value="[% Translate("Submit") | html %]"><span>[% Translate("Submit") | html %]</span></button>
                             [% Translate("or") | html %]
                             <a href="[% Env("Baselink") %]Action=[% Env("Action") %]">[% Translate("Cancel") | html %]</a>
                         </div>
