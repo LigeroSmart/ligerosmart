@@ -12,6 +12,12 @@ package Kernel::System::FAQ::Vote;
 use strict;
 use warnings;
 
+our @ObjectDependencies = (
+    'Kernel::System::Cache',
+    'Kernel::System::DB',
+    'Kernel::System::Log',
+);
+
 =head1 NAME
 
 Kernel::System::FAQ::Vote - sub module of Kernel::System::FAQ
@@ -51,15 +57,16 @@ sub VoteAdd {
     # check needed stuff
     for my $Argument (qw(CreatedBy ItemID IP Interface UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
+
             return;
         }
     }
 
-    return if !$Self->{DBObject}->Do(
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Do(
         SQL => '
             INSERT INTO faq_voting (created_by, item_id, ip, interface, rate, created )
             VALUES ( ?, ?, ?, ?, ?, current_timestamp )',
@@ -71,7 +78,7 @@ sub VoteAdd {
 
     # delete cache
     my $CacheKey = 'ItemVoteDataGet::' . $Param{ItemID};
-    $Self->{CacheObject}->Delete(
+    $Kernel::OM->Get('Kernel::System::Cache')->Delete(
         Type => 'FAQ',
         Key  => $CacheKey,
     );
@@ -100,15 +107,16 @@ sub VoteDelete {
     # check needed stuff
     for my $Argument (qw(VoteID UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
+
             return;
         }
     }
 
-    return if !$Self->{DBObject}->Do(
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Do(
         SQL => '
             DELETE FROM faq_voting
             WHERE id = ?',
@@ -149,10 +157,11 @@ sub VoteGet {
     # check needed stuff
     for my $Argument (qw(CreateBy ItemID Interface IP UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
+
             return;
         }
     }
@@ -179,14 +188,17 @@ sub VoteGet {
         push @Values, ( \$Param{CreateBy}, \$Param{ItemID} );
     }
 
-    return if !$Self->{DBObject}->Prepare(
+    # get database object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
+    return if !$DBObject->Prepare(
         SQL   => $SQL,
         Bind  => \@Values,
         Limit => 1,
     );
 
     my %Data;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $DBObject->FetchrowArray() ) {
         %Data = (
             CreatedBy => $Row[0],
             ItemID    => $Row[1],
@@ -225,15 +237,19 @@ sub VoteSearch {
     # check needed stuff
     for my $Argument (qw(ItemID UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
+
             return;
         }
     }
 
-    return if !$Self->{DBObject}->Prepare(
+    # get database object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
+    return if !$DBObject->Prepare(
         SQL => '
             SELECT id
             FROM faq_voting
@@ -243,7 +259,7 @@ sub VoteSearch {
     );
 
     my @VoteIDs;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $DBObject->FetchrowArray() ) {
         push @VoteIDs, $Row[0];
     }
 
@@ -274,24 +290,32 @@ sub ItemVoteDataGet {
     # check needed stuff
     for my $Argument (qw(ItemID UserID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
+
             return;
         }
     }
 
+    # get cache object
+    my $CacheObject = $Kernel::OM->Get('Kernel::System::Cache');
+
     # check cache
     my $CacheKey = 'ItemVoteDataGet::' . $Param{ItemID};
-    my $Cache    = $Self->{CacheObject}->Get(
+    my $Cache    = $CacheObject->Get(
         Type => 'FAQ',
         Key  => $CacheKey,
     );
+
     return $Cache if $Cache;
 
+    # get database object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
     # get vote from db
-    return if !$Self->{DBObject}->Prepare(
+    return if !$DBObject->Prepare(
         SQL => '
             SELECT count(*), avg(rate)
             FROM faq_voting
@@ -302,13 +326,13 @@ sub ItemVoteDataGet {
 
     # fetch the result
     my %Data;
-    if ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    if ( my @Row = $DBObject->FetchrowArray() ) {
         $Data{Votes}  = $Row[0];
         $Data{Result} = $Row[1];
     }
 
     # cache result
-    $Self->{CacheObject}->Set(
+    $CacheObject->Set(
         Type  => 'FAQ',
         Key   => $CacheKey,
         Value => \%Data,
