@@ -1669,11 +1669,25 @@ sub _MaskForm {
 
     # if no attribute is shown, show full-text search
     if ( !$Profile ) {
-        if ( $Self->{Config}->{Defaults} ) {
-            KEY:
-            for my $Key ( sort keys %{ $Self->{Config}->{Defaults} } ) {
-                next KEY if $AlreadyShown{$Key};
+
+        # Merge regular show/hide settings and the settings for the dynamic fields
+        my %Defaults = %{ $Self->{Config}->{Defaults} || {} };
+
+        delete $Defaults{DynamicField};
+
+        for my $DynamicField ( sort keys %{ $Self->{Config}->{DynamicField} || {} } ) {
+            if ( $Self->{Config}->{DynamicField}->{$DynamicField} == 2 ) {
+                $Defaults{"Search_DynamicField_$DynamicField"} = 1;
+            }
+        }
+
+        if (%Defaults) {
+            DEFAULT:
+            for my $Key ( sort keys %Defaults ) {
+                next DEFAULT if $Key eq 'DynamicField';    # Ignore entry for DF config
+                next DEFAULT if $AlreadyShown{$Key};
                 $AlreadyShown{$Key} = 1;
+
                 $Self->{LayoutObject}->Block(
                     Name => 'SearchAJAXShow',
                     Data => {
