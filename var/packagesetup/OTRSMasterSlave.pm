@@ -18,6 +18,7 @@ use Kernel::System::VariableCheck qw(:all);
 our @ObjectDependencies = (
     'Kernel::Config',
     'Kernel::System::Cache',
+    'Kernel::System::DB',
     'Kernel::System::DynamicField',
     'Kernel::System::DynamicField::Backend',
     'Kernel::System::DynamicFieldValue',
@@ -274,7 +275,7 @@ sub _SetDynamicFields {
 
                 # update InternalField value manually since API does not support
                 # internal_field update
-                my $Success = $Self->{DBObject}->Do(
+                my $Success = $Kernel::OM->Get('Kernel::System::DB')->Do(
                     SQL => '
                         UPDATE dynamic_field
                         SET internal_field = 1
@@ -345,6 +346,9 @@ sub _MigrateOTRSMasterSlave {
 
     my $OldMasterSlaveDynamicFieldID;
 
+    # get database object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
     # check if we got a DynamicFieldID
     if ( $Param{DynamicFieldID} ) {
         $OldMasterSlaveDynamicFieldID = $Param{DynamicFieldID};
@@ -352,13 +356,13 @@ sub _MigrateOTRSMasterSlave {
     else {
 
         # if not: get the migrated field ID by searching for possible data
-        $Self->{DBObject}->Prepare(
+        $DBObject->Prepare(
             SQL => "SELECT dfv.field_id FROM dynamic_field_value dfv "
                 . "WHERE dfv.value_text LIKE 'SlaveOf:%' OR dfv.value_text = 'Master'",
             Limit => 1,
         );
 
-        while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        while ( my @Row = $DBObject->FetchrowArray() ) {
             $OldMasterSlaveDynamicFieldID = $Row[0];
         }
     }
@@ -402,7 +406,7 @@ sub _MigrateOTRSMasterSlave {
     );
 
     # update InternalField value manually since API does not support internal_field update
-    my $Success = $Self->{DBObject}->Do(
+    my $Success = $DBObject->Do(
         SQL => '
             UPDATE dynamic_field
             SET internal_field = 1
@@ -436,14 +440,17 @@ sub _MigrateOTRSMasterSlave {
 sub _CheckMasterSlaveData {
     my ( $Self, %Param ) = @_;
 
+    # get database object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
     # if not: get the migrated field ID by searching for possible data
-    $Self->{DBObject}->Prepare(
+    $DBObject->Prepare(
         SQL   => "SELECT dfv.field_id FROM dynamic_field_value dfv WHERE dfv.value_text = 'Slave'",
         Limit => 1,
     );
 
     my $OldMasterSlaveDynamicFieldID;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $DBObject->FetchrowArray() ) {
         $OldMasterSlaveDynamicFieldID = $Row[0];
     }
 
@@ -461,8 +468,11 @@ sub _MigrateMasterSlaveData {
         return;
     }
 
+    # get database object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
     # get all the slave ticket ids we have to update
-    $Self->{DBObject}->Prepare(
+    $DBObject->Prepare(
         SQL =>
             "SELECT dfv.object_id FROM dynamic_field_value dfv WHERE dfv.value_text = 'Slave' AND dfv.field_id = ?",
         Bind  => [ \$Param{DynamicFieldID} ],
@@ -470,7 +480,7 @@ sub _MigrateMasterSlaveData {
     );
 
     my @DynamicFieldData;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $DBObject->FetchrowArray() ) {
         push( @DynamicFieldData, $Row[0] );
     }
 
@@ -504,18 +514,18 @@ sub _MigrateMasterSlaveData {
         # one is the master we are looking for
         if ($#ParentTicketIDs) {
 
-            $Self->{DBObject}->Prepare(
+            $DBObject->Prepare(
                 SQL =>
                     "SELECT dfv.object_id FROM dynamic_field_value dfv WHERE dfv.value_text = 'Master' AND dfv.field_id = ?"
                     . 'AND dfv.object_id IN ('
-                    . join( ',', map { $Self->{DBObject}->Quote($_) } @ParentTicketIDs )
+                    . join( ',', map { $DBObject->Quote($_) } @ParentTicketIDs )
                     . ')',
                 Bind  => [ \$Param{DynamicFieldID} ],
                 Limit => 1,
             );
 
             my @ParentTicketIDs;
-            while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+            while ( my @Row = $DBObject->FetchrowArray() ) {
                 push( @ParentTicketIDs, $Row[0] );
             }
 
