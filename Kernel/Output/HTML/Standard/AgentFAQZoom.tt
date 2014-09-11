@@ -295,7 +295,7 @@
                                 </ul>
                                 <br class="Clear" />
 
-                                <button type="submit" class="Primary CallForAction Hidden" id="RateSubmitButton" name="btn" value="[% Translate("Vote") | html %]"><span><i class="fa fa-check"></i> [% Translate("Vote") | html %]</span></button>
+                                <button type="submit" class="Primary CallForAction Hidden" id="RateSubmitButton" name="btn" value="[% Translate("Vote") | html %]"><span><i class="fa fa-check-square-o"></i> [% Translate("Vote") | html %]</span></button>
                                 <input type="hidden" name="Action" value="AgentFAQZoom"/>
                                 <input type="hidden" name="Subaction" value="Vote"/>
                                 <input type="hidden" name="CategoryID" value="[% Data.CategoryID | html %]"/>
