@@ -12,16 +12,19 @@ package var::packagesetup::OTRSMasterSlave;
 use strict;
 use warnings;
 
-use Kernel::System::DynamicField;
-use Kernel::System::DynamicField::Backend;
-use Kernel::System::DynamicFieldValue;
-use Kernel::System::LinkObject;
-use Kernel::System::Package;
-use Kernel::System::State;
 use Kernel::System::SysConfig;
-use Kernel::System::Ticket;
-use Kernel::System::Valid;
 use Kernel::System::VariableCheck qw(:all);
+
+our @ObjectDependencies = (
+    'Kernel::Config',
+    'Kernel::System::Cache',
+    'Kernel::System::DynamicField',
+    'Kernel::System::DynamicField::Backend',
+    'Kernel::System::DynamicFieldValue',
+    'Kernel::System::LinkObject',
+    'Kernel::System::Log',
+    'Kernel::System::Ticket',
+);
 
 =head1 NAME
 
@@ -39,47 +42,11 @@ Functions for installing the OTRSMasterSlave package.
 
 =item new()
 
-create an object
+create an object. Do not use it directly, instead use:
 
-    use Kernel::Config;
-    use Kernel::System::Encode;
-    use Kernel::System::Log;
-    use Kernel::System::Main;
-    use Kernel::System::Time;
-    use Kernel::System::DB;
-    use var::packagesetup::OTRSMasterSlave;
-
-    my $ConfigObject = Kernel::Config->new();
-    my $EncodeObject = Kernel::System::Encode->new(
-        ConfigObject => $ConfigObject,
-    );
-    my $LogObject    = Kernel::System::Log->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-    );
-    my $MainObject = Kernel::System::Main->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-    );
-    my $TimeObject = Kernel::System::Time->new(
-        ConfigObject => $ConfigObject,
-        LogObject    => $LogObject,
-    );
-    my $DBObject = Kernel::System::DB->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-        MainObject   => $MainObject,
-    );
-    my $CodeObject = var::packagesetup::OTRSMasterSlave->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-        MainObject   => $MainObject,
-        TimeObject   => $TimeObject,
-        DBObject     => $DBObject,
-    );
+    use Kernel::System::ObjectManager;
+    local $Kernel::OM = Kernel::System::ObjectManager->new();
+    my $CodeObject = $Kernel::OM->Get('var::packagesetup::OTRSMasterSlave');
 
 =cut
 
@@ -90,15 +57,8 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    # check needed objects
-    for my $Object (
-        qw(ConfigObject EncodeObject LogObject MainObject TimeObject DBObject)
-        )
-    {
-        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
-    }
-
-    # create needed sysconfig object
+    # get needed objects
+    $Self->{ConfigObject}    = $Kernel::OM->Get('Kernel::Config');
     $Self->{SysConfigObject} = Kernel::System::SysConfig->new( %{$Self} );
 
     # rebuild ZZZ* files
@@ -122,22 +82,12 @@ sub new {
         }
     }
 
-    # create additional objects
-    $Self->{StateObject}               = Kernel::System::State->new( %{$Self} );
-    $Self->{ValidObject}               = Kernel::System::Valid->new( %{$Self} );
-    $Self->{DynamicFieldObject}        = Kernel::System::DynamicField->new( %{$Self} );
-    $Self->{DynamicFieldBackendObject} = Kernel::System::DynamicField::Backend->new( %{$Self} );
-    $Self->{DynamicFieldValueObject}   = Kernel::System::DynamicFieldValue->new( %{$Self} );
-    $Self->{PackageObject}             = Kernel::System::Package->new( %{$Self} );
-    $Self->{SysConfigObject}           = Kernel::System::SysConfig->new( %{$Self} );
-    $Self->{LinkObject}                = Kernel::System::LinkObject->new( %{$Self} );
-    $Self->{TicketObject}              = Kernel::System::Ticket->new( %{$Self} );
-
     # get dynamic fields list
-    $Self->{DynamicFieldsList} = $Self->{DynamicFieldObject}->DynamicFieldListGet(
+    $Self->{DynamicFieldsList}
+        = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldListGet(
         Valid      => 0,
         ObjectType => ['Ticket'],
-    );
+        );
 
     if ( !IsArrayRefWithData( $Self->{DynamicFieldsList} ) ) {
         $Self->{DynamicFieldsList} = [];
@@ -292,6 +242,9 @@ sub _SetDynamicFields {
         }
     }
 
+    # get dynamic field object
+    my $DynamicFieldObject = $Kernel::OM->Get('Kernel::System::DynamicField');
+
     for my $NewFieldName ( sort keys %NewDynamicFields ) {
 
         # check if dynamic field already exists
@@ -303,7 +256,7 @@ sub _SetDynamicFields {
             # if dynamic field exists make sure is valid
             if ( $DynamicFieldConfig->{ValidID} ne '1' ) {
 
-                my $Success = $Self->{DynamicFieldObject}->DynamicFieldUpdate(
+                my $Success = $DynamicFieldObject->DynamicFieldUpdate(
                     %{$DynamicFieldConfig},
                     ValidID => 1,
                     Reorder => 0,
@@ -311,7 +264,7 @@ sub _SetDynamicFields {
                 );
 
                 if ( !$Success ) {
-                    $Self->{LogObject}->Log(
+                    $Kernel::OM->Get('Kernel::System::Log')->Log(
                         Priority => 'error',
                         Message  => "Could not set dynamic field '$NewFieldName' to valid!",
                     );
@@ -329,14 +282,14 @@ sub _SetDynamicFields {
                     Bind => [ \$DynamicFieldConfig->{ID} ],
                 );
                 if ( !$Success ) {
-                    $Self->{LogObject}->Log(
+                    $Kernel::OM->Get('Kernel::System::Log')->Log(
                         Priority => 'error',
                         Message  => "Could not set dynamic field '$NewFieldName' as internal!",
                     );
                 }
 
                 # clean dynamic field cache
-                $Self->{DynamicFieldObject}->{CacheObject}->CleanUp(
+                $Kernel::OM->Get('Kernel::System::Cache')->CleanUp(
                     Type => 'DynamicField',
                 );
             }
@@ -345,7 +298,7 @@ sub _SetDynamicFields {
         # otherwise create it
         else {
             $MaxFieldOrder++;
-            my $ID = $Self->{DynamicFieldObject}->DynamicFieldAdd(
+            my $ID = $DynamicFieldObject->DynamicFieldAdd(
                 %{ $NewDynamicFields{$NewFieldName} },
                 FieldOrder => $MaxFieldOrder,
                 ValidID    => 1,
@@ -353,7 +306,7 @@ sub _SetDynamicFields {
             );
 
             if ( !$ID ) {
-                $Self->{LogObject}->Log(
+                $Kernel::OM->Get('Kernel::System::Log')->Log(
                     Priority => 'error',
                     Message  => "Could not add dynamic field '$NewFieldName'!",
                 );
@@ -419,8 +372,11 @@ sub _MigrateOTRSMasterSlave {
         );
     }
 
+    # get dynamic field object
+    my $DynamicFieldObject = $Kernel::OM->Get('Kernel::System::DynamicField');
+
     # try to get the dynfield data (for fieldorder etc.)
-    my $OldDynamicField = $Self->{DynamicFieldObject}->DynamicFieldGet(
+    my $OldDynamicField = $DynamicFieldObject->DynamicFieldGet(
         ID => $OldMasterSlaveDynamicFieldID,
     );
 
@@ -428,7 +384,7 @@ sub _MigrateOTRSMasterSlave {
 
     # update the name of the dynamic field to MasterSlave and store it
     # and return the result of this function
-    return 0 if !$Self->{DynamicFieldObject}->DynamicFieldUpdate(
+    return 0 if !$DynamicFieldObject->DynamicFieldUpdate(
         %{$OldDynamicField},
         Name      => $MasterSlaveDynamicField,
         Label     => 'Master Ticket',
@@ -454,14 +410,14 @@ sub _MigrateOTRSMasterSlave {
         Bind => [ \$OldMasterSlaveDynamicFieldID->{ID} ],
     );
     if ( !$Success ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "Could not set dynamic field '$MasterSlaveDynamicField' as internal!",
         );
     }
 
     # clean dynamic field cache
-    $Self->{DynamicFieldObject}->{CacheObject}->CleanUp(
+    $Kernel::OM->Get('Kernel::System::Cache')->CleanUp(
         Type => 'DynamicField',
     );
 
@@ -498,7 +454,7 @@ sub _MigrateMasterSlaveData {
     my ( $Self, %Param ) = @_;
 
     if ( !$Param{DynamicFieldID} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "Need DynamicFieldID for MasterSlave data migration!",
         );
@@ -519,7 +475,7 @@ sub _MigrateMasterSlaveData {
     }
 
     # try to get the dynfield data for setting new value
-    my $DynamicFieldConfig = $Self->{DynamicFieldObject}->DynamicFieldGet(
+    my $DynamicFieldConfig = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldGet(
         ID => $Param{DynamicFieldID},
     );
 
@@ -530,7 +486,7 @@ sub _MigrateMasterSlaveData {
     for my $TicketID (@DynamicFieldData) {
 
         # get linked objects
-        my $LinkListWithData = $Self->{LinkObject}->LinkListWithData(
+        my $LinkListWithData = $Kernel::OM->Get('Kernel::System::LinkObject')->LinkListWithData(
             Object    => 'Ticket',
             Key       => $TicketID,
             State     => 'Valid',
@@ -564,7 +520,7 @@ sub _MigrateMasterSlaveData {
             }
 
             if ($#ParentTicketIDs) {
-                $Self->{LogObject}->Log(
+                $Kernel::OM->Get('Kernel::System::Log')->Log(
                     Priority => 'error',
                     Message =>
                         "Couldn't determine MasterTicket for TicketID $TicketID (Possible Masters: "
@@ -573,7 +529,7 @@ sub _MigrateMasterSlaveData {
                 );
             }
 
-            $TicketNumber = $Self->{TicketObject}->TicketNumberLookup(
+            $TicketNumber = $Kernel::OM->Get('Kernel::System::Ticket')->TicketNumberLookup(
                 TicketID => $ParentTicketIDs[0],
                 UserID   => 1,
             );
@@ -585,7 +541,7 @@ sub _MigrateMasterSlaveData {
 
         # update the dynamic field value to valid
         # data for OTRSMasterSlave
-        my $Success = $Self->{DynamicFieldBackendObject}->ValueSet(
+        my $Success = $Kernel::OM->Get('Kernel::System::DynamicField::Backend')->ValueSet(
             DynamicFieldConfig => $DynamicFieldConfig,
             ObjectID           => $TicketID,
             Value              => 'SlaveOf:' . $TicketNumber,
@@ -593,7 +549,7 @@ sub _MigrateMasterSlaveData {
         );
 
         if ( !$Success ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Error while migrating MasterSlave DynamicField '"
                     . $Param{DynamicFieldID}
@@ -613,7 +569,7 @@ sub _MigrateMasterSlaveData {
         );
 
         if ( !$Success ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Error while migrating MasterSlave data!",
             );
@@ -638,29 +594,30 @@ sub _RemoveDynamicFields {
         my $DynamicFieldID = $Self->{DynamicFieldLookup}->{$MasterSlaveDynamicField}->{ID};
 
         # delete all field values
-        my $ValuesDeleteSuccess = $Self->{DynamicFieldValueObject}->AllValuesDelete(
+        my $ValuesDeleteSuccess
+            = $Kernel::OM->Get('Kernel::System::DynamicFieldValue')->AllValuesDelete(
             FieldID => $DynamicFieldID,
             UserID  => 1,
-        );
+            );
 
         if ($ValuesDeleteSuccess) {
 
             # delete field
-            my $Success = $Self->{DynamicFieldObject}->DynamicFieldDelete(
+            my $Success = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldDelete(
                 ID      => $DynamicFieldID,
                 UserID  => 1,
                 Reorder => 1,
             );
 
             if ( !$Success ) {
-                $Self->{LogObject}->Log(
+                $Kernel::OM->Get('Kernel::System::Log')->Log(
                     Priority => 'error',
                     Message  => "Could not delete dynamic field '$MasterSlaveDynamicField'!",
                 );
             }
         }
         else {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Could not delete values for dynamic field '$MasterSlaveDynamicField'!",
             );
