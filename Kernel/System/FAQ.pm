@@ -87,6 +87,13 @@ sub new {
     $Self->{CacheTTL}
         = int( $ConfigObject->Get('FAQ::CacheTTL') || 60 * 60 * 24 * 2 );
 
+    # init of event handler
+    # currently there are no FAQ event modules but is needed to initialize otherwise errors are
+    #     log due to searching undefined setting into ConfigObject.
+    $Self->EventHandlerInit(
+        Config => '',
+    );
+
     return $Self;
 }
 
