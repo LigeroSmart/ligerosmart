@@ -1934,4 +1934,140 @@ Your OTRS Notification Master
             </Hash>
         </Setting>
     </ConfigItem>
+    <ConfigItem Name="FAQ::Frontend::AgentFAQSearch###Defaults###Fulltext" Required="0" Valid="1">
+        <Description Translatable="1">Defines the default shown FAQ search attribute for FAQ search screen.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Agent::FAQ::ViewSearch</SubGroup>
+        <Setting>
+            <String></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="FAQ::Frontend::AgentFAQSearch###Defaults###Number" Required="0" Valid="0">
+        <Description Translatable="1">Defines the default shown FAQ search attribute for FAQ search screen.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Agent::FAQ::ViewSearch</SubGroup>
+        <Setting>
+            <String></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="FAQ::Frontend::AgentFAQSearch###Defaults###Title" Required="0" Valid="0">
+        <Description Translatable="1">Defines the default shown FAQ search attribute for FAQ search screen.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Agent::FAQ::ViewSearch</SubGroup>
+        <Setting>
+            <String></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="FAQ::Frontend::AgentFAQSearch###Defaults###Keyword" Required="0" Valid="0">
+        <Description Translatable="1">Defines the default shown FAQ search attribute for FAQ search screen.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Agent::FAQ::ViewSearch</SubGroup>
+        <Setting>
+            <String></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="FAQ::Frontend::AgentFAQSearch###Defaults###LanguageIDs" Required="0" Valid="0">
+        <Description Translatable="1">Defines the default shown FAQ search attribute for FAQ search screen.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Agent::FAQ::ViewSearch</SubGroup>
+        <Setting>
+            <String></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="FAQ::Frontend::AgentFAQSearch###Defaults###CategoryIDs" Required="0" Valid="0">
+        <Description Translatable="1">Defines the default shown FAQ search attribute for FAQ search screen.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Agent::FAQ::ViewSearch</SubGroup>
+        <Setting>
+            <String></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="FAQ::Frontend::AgentFAQSearch###Defaults###ValidIDs" Required="0" Valid="0">
+        <Description Translatable="1">Defines the default shown FAQ search attribute for FAQ search screen.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Agent::FAQ::ViewSearch</SubGroup>
+        <Setting>
+            <String></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="FAQ::Frontend::AgentFAQSearch###Defaults###StateIDs" Required="0" Valid="0">
+        <Description Translatable="1">Defines the default shown FAQ search attribute for FAQ search screen.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Agent::FAQ::ViewSearch</SubGroup>
+        <Setting>
+            <String></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="FAQ::Frontend::AgentFAQSearch###Defaults###VoteSearchType" Required="0" Valid="0">
+        <Description Translatable="1">Defines the default shown FAQ search attribute for FAQ search screen.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Agent::FAQ::ViewSearch</SubGroup>
+        <Setting>
+            <String></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="FAQ::Frontend::AgentFAQSearch###Defaults###RateSearchType" Required="0" Valid="0">
+        <Description Translatable="1">Defines the default shown FAQ search attribute for FAQ search screen.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Agent::FAQ::ViewSearch</SubGroup>
+        <Setting>
+            <String></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="FAQ::Frontend::AgentFAQSearch###Defaults###ApprovedSearch" Required="0" Valid="0">
+        <Description Translatable="1">Defines the default shown FAQ search attribute for FAQ search screen.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Agent::FAQ::ViewSearch</SubGroup>
+        <Setting>
+            <String></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="FAQ::Frontend::AgentFAQSearch###Defaults###CreatedUserIDs" Required="0" Valid="0">
+        <Description Translatable="1">Defines the default shown FAQ search attribute for FAQ search screen.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Agent::FAQ::ViewSearch</SubGroup>
+        <Setting>
+            <String></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="FAQ::Frontend::AgentFAQSearch###Defaults###LastChangedUserIDs" Required="0" Valid="0">
+        <Description Translatable="1">Defines the default shown FAQ search attribute for FAQ search screen.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Agent::FAQ::ViewSearch</SubGroup>
+        <Setting>
+            <String></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="FAQ::Frontend::AgentFAQSearch###Defaults###ItemCreateTimePoint" Required="0" Valid="0">
+        <Description Translatable="1">Defines the default shown FAQ search attribute for FAQ search screen.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Agent::FAQ::ViewSearch</SubGroup>
+        <Setting>
+            <String></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="FAQ::Frontend::AgentFAQSearch###Defaults###ItemCreateTimeSlot" Required="0" Valid="0">
+        <Description Translatable="1">Defines the default shown FAQ search attribute for FAQ search screen.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Agent::FAQ::ViewSearch</SubGroup>
+        <Setting>
+            <String></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="FAQ::Frontend::AgentFAQSearch###Defaults###ItemChangeTimePoint" Required="0" Valid="0">
+        <Description Translatable="1">Defines the default shown FAQ search attribute for FAQ search screen.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Agent::FAQ::ViewSearch</SubGroup>
+        <Setting>
+            <String></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="FAQ::Frontend::AgentFAQSearch###Defaults###ItemChangeTimeSlot" Required="0" Valid="0">
+        <Description Translatable="1">Defines the default shown FAQ search attribute for FAQ search screen.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Agent::FAQ::ViewSearch</SubGroup>
+        <Setting>
+            <String></String>
+        </Setting>
+    </ConfigItem>
 </otrs_config>
