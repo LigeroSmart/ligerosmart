@@ -162,8 +162,7 @@
 <div class="ZoomSmallFooter">
 [% RenderBlockStart("UpdateArticleSubject") %]
     <input id="UpdateArticleSubjectOption" type="checkbox" class="ZoomSmallButton" name="UpdateArticleSubjectOption" checked="checked" value"1"/>
-    <label for="UpdateArticleSubjectOption">[% Translate("Update Article Subject") | html %]</label>
-    <div class="SpacingTop Clear"></div>
+    <label for="UpdateArticleSubjectOption">[% Translate("Add FAQ title to article subject") | html %]</label>
 [% RenderBlockEnd("UpdateArticleSubject") %]
 [% RenderBlockStart("InsertText") %]
     <button id="InsertText" class="Primary CallForAction ZoomSmallButton"><span>[% Translate("Insert FAQ Text") | html %]</span></button>
