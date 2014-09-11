@@ -188,6 +188,8 @@ sub VoteGet {
         push @Values, ( \$Param{CreateBy}, \$Param{ItemID} );
     }
 
+    $SQL .= 'ORDER BY created DESC';
+
     # get database object
     my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
