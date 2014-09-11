@@ -39,10 +39,10 @@
 }
 
 #FAQOptions {
+    overflow: hidden;
     position: absolute;
     right: 0px;
-    top: 5px;
-    overflow: hidden;
+    top: 10px;
 }
 
 #FAQOptions li {
@@ -51,17 +51,15 @@
 }
 
 #FAQOptions .Print {
-    width: 16px;
-    height: 16px;
-    margin: 0 0 0 2px;
-    line-height: 16px;
-    background: url(../img/printer.png) no-repeat;
-    text-indent: -9999px;
-    display: block;
+    color: #777;
+    font-size: 15px;
 }
-
-.RTL #FAQOptions .Print {
-    margin: -2px 4px 0 0;
+#FAQOptions .Print:hover {
+    color: #f92;
+}
+#FAQOptions .Print span {
+    display: block;
+    text-indent: -9999px;
 }
 
 li.KeywordsContainer {
