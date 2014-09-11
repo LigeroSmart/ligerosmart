@@ -51,8 +51,6 @@ sub Data {
     $Self->{Translation}->{'The name is required!'} = 'A név szükséges!';
     $Self->{Translation}->{'This language already exists!'} = 'A nyelv már létezik!';
 
-    # Template: AgentDashboardFAQOverview
-
     # Template: AgentFAQAdd
     $Self->{Translation}->{'Add FAQ Article'} = 'FAQ cikk hozzáadása';
     $Self->{Translation}->{'Keywords'} = '';
@@ -90,8 +88,6 @@ sub Data {
     $Self->{Translation}->{'FAQ Articles'} = 'FAQ cikk';
     $Self->{Translation}->{'No subcategories found.'} = 'Nincs alkategória.';
 
-    # Template: AgentFAQHistory
-
     # Template: AgentFAQJournalOverviewSmall
     $Self->{Translation}->{'No FAQ Journal data found.'} = 'Nincs FAQ-Journal adat.';
 
@@ -115,7 +111,6 @@ sub Data {
     # Template: AgentFAQOverviewSmall
     $Self->{Translation}->{'No FAQ data found.'} = 'Nincs FAQ adat.';
     $Self->{Translation}->{'A generic FAQ table'} = '';
-    $Self->{Translation}->{'","50'} = '';
 
     # Template: AgentFAQPrint
     $Self->{Translation}->{'FAQ-Info'} = 'FAQ-infó';
@@ -132,14 +127,9 @@ sub Data {
     $Self->{Translation}->{'FAQ Article Create Time (between)'} = '';
     $Self->{Translation}->{'FAQ Article Change Time (before/after)'} = '';
     $Self->{Translation}->{'FAQ Article Change Time (between)'} = '';
-    $Self->{Translation}->{'Run Search'} = '';
-
-    # Template: AgentFAQSearchOpenSearchDescriptionFAQNumber
 
     # Template: AgentFAQSearchOpenSearchDescriptionFulltext
     $Self->{Translation}->{'FAQFulltext'} = 'FAQ teljes szöveg';
-
-    # Template: AgentFAQSearchResultPrint
 
     # Template: AgentFAQSearchSmall
     $Self->{Translation}->{'FAQ Search'} = 'FAQ keresés';
@@ -159,10 +149,7 @@ sub Data {
 
     # Template: AgentFAQZoom
     $Self->{Translation}->{'FAQ Information'} = 'FAQ információ';
-    $Self->{Translation}->{'","18'} = '';
-    $Self->{Translation}->{'","25'} = '';
     $Self->{Translation}->{'Rating'} = 'Értékelés';
-    $Self->{Translation}->{'Rating %'} = 'Értékelés %';
     $Self->{Translation}->{'out of 5'} = '5-ből';
     $Self->{Translation}->{'No votes found!'} = 'Nincs szavazat!';
     $Self->{Translation}->{'No votes found! Be the first one to rate this FAQ article.'} = 'Nincs szavazat! Legyen az első, aki értékeli a FAQ cikket.';
@@ -173,6 +160,7 @@ sub Data {
     $Self->{Translation}->{'very helpful'} = 'nagyon segít';
 
     # Template: AgentFAQZoomSmall
+    $Self->{Translation}->{'Add FAQ title to article subject'} = '';
     $Self->{Translation}->{'Insert FAQ Text'} = 'FAQ szöveg beírása';
     $Self->{Translation}->{'Insert Full FAQ'} = '';
     $Self->{Translation}->{'Insert FAQ Link'} = 'FAQ link beírása';
@@ -181,8 +169,6 @@ sub Data {
 
     # Template: CustomerFAQExplorer
     $Self->{Translation}->{'No FAQ articles found.'} = 'Nem található FAQ cikk.';
-
-    # Template: CustomerFAQPrint
 
     # Template: CustomerFAQSearch
     $Self->{Translation}->{'Fulltext search in FAQ articles (e. g. "John*n" or "Will*")'} = 'Teljes szöveges keresés a FAQ cikkekben (pl. "J*nos" or "Kov*")';
@@ -194,38 +180,30 @@ sub Data {
     $Self->{Translation}->{'Only FAQ articles created between'} = '';
     $Self->{Translation}->{'Search-Profile as Template?'} = '';
 
-    # Template: CustomerFAQSearchOpenSearchDescriptionFAQNumber
-
-    # Template: CustomerFAQSearchOpenSearchDescriptionFullText
-
-    # Template: CustomerFAQSearchResultPrint
-
-    # Template: CustomerFAQSearchResultShort
-
     # Template: CustomerFAQZoom
     $Self->{Translation}->{'Article Number'} = '';
     $Self->{Translation}->{'Search for articles with keyword'} = 'Cikkek keresése kulcsszavakkal';
 
-    # Template: PublicFAQExplorer
-
-    # Template: PublicFAQPrint
-
-    # Template: PublicFAQSearch
-
     # Template: PublicFAQSearchOpenSearchDescriptionFAQNumber
     $Self->{Translation}->{'Public'} = 'Nyilvános';
-
-    # Template: PublicFAQSearchOpenSearchDescriptionFullText
-
-    # Template: PublicFAQSearchResultPrint
-
-    # Template: PublicFAQSearchResultShort
-
-    # Template: PublicFAQZoom
 
     # SysConfig
     $Self->{Translation}->{'A filter for HTML output to add links behind a defined string. The element Image allows two input kinds. First the name of an image (e.g. faq.png). In this case the OTRS image path will be used. The second possibility is to insert the link to the image.'} =
         'Egy szűrő a HTML kimenethez, hogy hozzáadjon linkeket a definiált szövegekhez. Az Image elem kétféle bemenetet enged. A kép neve az első (pl. faq.png). Ebben az esetben az OTRS képek útvonala kerül felhasználásra. A második lehetőség a képre mutató link belillesztése.';
+    $Self->{Translation}->{'Allows adding notes in the close ticket screen of the agent interface. Can be overwritten by Ticket::Frontend::NeedAccountedTime.'} =
+        '';
+    $Self->{Translation}->{'Allows adding notes in the ticket free text screen of the agent interface. Can be overwritten by Ticket::Frontend::NeedAccountedTime.'} =
+        '';
+    $Self->{Translation}->{'Allows adding notes in the ticket note screen of the agent interface. Can be overwritten by Ticket::Frontend::NeedAccountedTime.'} =
+        '';
+    $Self->{Translation}->{'Allows adding notes in the ticket owner screen of a zoomed ticket in the agent interface. Can be overwritten by Ticket::Frontend::NeedAccountedTime.'} =
+        '';
+    $Self->{Translation}->{'Allows adding notes in the ticket pending screen of a zoomed ticket in the agent interface. Can be overwritten by Ticket::Frontend::NeedAccountedTime.'} =
+        '';
+    $Self->{Translation}->{'Allows adding notes in the ticket priority screen of a zoomed ticket in the agent interface. Can be overwritten by Ticket::Frontend::NeedAccountedTime.'} =
+        '';
+    $Self->{Translation}->{'Allows adding notes in the ticket responsible screen of the agent interface. Can be overwritten by Ticket::Frontend::NeedAccountedTime.'} =
+        '';
     $Self->{Translation}->{'CSS color for the voting result.'} = 'CSS szinek a szavazás eredményéhez.';
     $Self->{Translation}->{'Cache Time To Leave for FAQ items.'} = '';
     $Self->{Translation}->{'Category Management'} = 'Kategóriakezelés';
@@ -239,10 +217,14 @@ sub Data {
     $Self->{Translation}->{'Default type of tickets for the approval of FAQ articles.'} = '';
     $Self->{Translation}->{'Default value for the Action parameter for the public frontend. The Action parameter is used in the scripts of the system.'} =
         'A public frontend Action parameterének alapértelmezett értéke. Az Action parameter a rendszer sciprt-jeiben kerül felhasználásra.';
+    $Self->{Translation}->{'Define if the FAQ title should be concatenated to article subject.'} =
+        '';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ journal.'} =
         'Egy áttekintő modult definiál a FAQ journal kicsi nézetének megmutatásához.';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ list.'} =
         'Egy áttekintő modult definiál a FAQ lista kicsi nézetének megmutatásához.';
+    $Self->{Translation}->{'Defines if time accounting is mandatory in the agent interface. If activated, a note must be entered for all ticket actions (no matter if the note itself is configured as active or is originally mandatory for the individual ticket action screen).'} =
+        '';
     $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in a FAQ search of the agent interface.'} =
         'Az alapértelmezett FAQ attribútumokat definiálja a FAQ rendezéshez az ügyintéző felületén a FAQ keresésnél.';
     $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in a FAQ search of the customer interface.'} =
@@ -279,6 +261,34 @@ sub Data {
         'Definiálja, hogy a \'Insert FAQ\' link hol látható. Megjegyzés: AgentTicketActionCommon tartalmazza az AgentTicketNote, AgentTicketClose, AgentTicketFreeText, AgentTicketOwner, AgentTicketPending, AgentTicketPriority és  AgentTicketResponsible.';
     $Self->{Translation}->{'Definition of FAQ item free text field.'} = 'A FAQ cikk szabad-szöveges mezőjét definiálja.';
     $Self->{Translation}->{'Delete this FAQ'} = 'Töröld ezt a FAQ-t';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ add screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ edit screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ overview screen of the customer interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ overview screen of the public interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ print screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ print screen of the customer interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ print screen of the public interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ search screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and shown by default.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ search screen of the customer interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and shown by default.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ search screen of the public interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and shown by default.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ small format overview screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ zoom screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ zoom screen of the customer interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ zoom screen of the public interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
+        '';
     $Self->{Translation}->{'Edit this FAQ'} = 'Szerkeszd ezt a FAQ-t';
     $Self->{Translation}->{'Enable multiple languages on FAQ module.'} = 'Több nyelv használatát engedélyezi a FAQ modulban.';
     $Self->{Translation}->{'Enable voting mechanism on FAQ module.'} = 'A szavazás engedélyezése a FAQ modulban.';
@@ -295,7 +305,7 @@ sub Data {
     $Self->{Translation}->{'History of this FAQ'} = 'FAQ története';
     $Self->{Translation}->{'Include internal fields on a FAQ based Ticket.'} = 'Belső mezőket tartalmaz a FAQ alapú jegyekhez.';
     $Self->{Translation}->{'Include the name of each field in a FAQ based Ticket.'} = 'Minden mező nevét tartalmazza a FAQ alapú jegyekben.';
-    $Self->{Translation}->{'Interfaces where the quicksearch should be shown.'} = 'Felület, ahol a gyorskeresés látható.';
+    $Self->{Translation}->{'Interfaces where the quick search should be shown.'} = '';
     $Self->{Translation}->{'Journal'} = 'Journal';
     $Self->{Translation}->{'Language Management'} = 'Nyelvek kezelése';
     $Self->{Translation}->{'Link another object to this FAQ item'} = 'A FAQ elemben más objektumra való hivatkozás.';
@@ -319,9 +329,9 @@ sub Data {
         'A megjelenő FAQ cikkek maximális száma a keresésnél az ügyfél felületén.';
     $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the result of a search in the public interface.'} =
         'A megjelenő FAQ cikkek maximális száma a keresésnél a nyilvános felületen.';
-    $Self->{Translation}->{'Module to generate html OpenSearch profile for short faq search in the customer interface.'} =
+    $Self->{Translation}->{'Module to generate HTML OpenSearch profile for short FAQ search in the public interface.'} =
         '';
-    $Self->{Translation}->{'Module to generate html OpenSearch profile for short faq search in the public interface.'} =
+    $Self->{Translation}->{'Module to generate HTML OpenSearch profile for short faq search in the customer interface.'} =
         '';
     $Self->{Translation}->{'Module to generate html OpenSearch profile for short faq search.'} =
         'Modul html OpenSearch profile létrehozásához rövid FAQ keresésnél.';
@@ -353,6 +363,8 @@ sub Data {
     $Self->{Translation}->{'Set the maximum height (in pixels) of inline HTML fields in AgentFAQZoom.'} =
         '';
     $Self->{Translation}->{'Set the maximum height (in pixels) of inline HTML fields in CustomerFAQZoom (and PublicFAQZoom).'} =
+        '';
+    $Self->{Translation}->{'Sets if note must be filled in by the agent. Can be overwritten by Ticket::Frontend::NeedAccountedTime.'} =
         '';
     $Self->{Translation}->{'Show "Insert FAQ Link" Button in AgentFAQZoomSmall for public FAQ Articles.'} =
         'Megmutatja a "FAQ link beszúrás" gombot az AgentFAQZoomSmall a nyilvános FAQ cikkekhez.';
@@ -391,47 +403,6 @@ sub Data {
         'Ez a beállítás definiálja, hogy a \'FAQ\' objektum összekapcsolható más \'Jegy\' objektummal \'ParentChild\' link típus használatával.';
     $Self->{Translation}->{'Ticket body for approval of FAQ article.'} = 'Jegy törzse a FAQ cikk jóváhagyásához.';
     $Self->{Translation}->{'Ticket subject for approval of FAQ article.'} = 'Jegy tárgya a FAQ cikk jóváhagyásához.';
-
-    #
-    # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
-    #
-    $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in a FAQ Explorer of the agent interface.'} =
-        'Definiert das Standard-FAQ-Attribut für die Sortierung des FAQ-Explorers im Agenten-Interface.';
-    $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in the explorer in the customer interface.'} =
-        'Definiert das Standard-FAQ-Attribut für die Sortierung des FAQ-Explorers im Kunden-Interface.';
-    $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in the explorer in the public interface.'} =
-        'Definiert das Standard-FAQ-Attribut für die Sortierung des FAQ-Explorers im Public-Interface.';
-    $Self->{Translation}->{'Defines the default FAQ order in the explorer in the customer interface. Up: oldest on top. Down: latest on top.'} =
-        'Definiert die Standard-Sortierung des FAQ-Explorers im Kunden-Interface. Auf: Ältester FAQ-Artikel oben. Ab: Neuester FAQ-Artikel oben.';
-    $Self->{Translation}->{'Defines the default FAQ order in the explorer in the public interface. Up: oldest on top. Down: latest on top.'} =
-        'Definiert die Standard-Sortierung des FAQ-Explorers im Public-Interface. Auf: Ältester FAQ-Artikel oben. Ab: Neuester FAQ-Artikel oben.';
-    $Self->{Translation}->{'Defines the default FAQ order of a Explorer result in the agent interface. Up: oldest on top. Down: latest on top.'} =
-        'Definiert die Standard-Sortierung des FAQ-Explorers im Agenten-Interface. Auf: Ältester FAQ-Artikel oben. Ab: Neuester FAQ-Artikel oben.';
-    $Self->{Translation}->{'Delete: '} = 'Löschen: ';
-    $Self->{Translation}->{'Languagekey which is defined in the language file *_FAQ.pm.'} = 'A *_FAQ.pm fájlban definiált nyelv kulcsa.';
-    $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the explorer in the customer interface.'} =
-        'Maximale Anzahl von FAQ-Artikeln die im FAQ-Explorer im Kunden-Interface angezeigt werden.';
-    $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the explorer in the public interface.'} =
-        'Maximale Anzahl von FAQ-Artikeln die im FAQ-Explorer im Public-Interface angezeigt werden.';
-    $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the result of a Explorer in the agent interface.'} =
-        'Maximale Anzahl von FAQ-Artikeln die im FAQ-Explorer im Agenten-Interface angezeigt werden.';
-    $Self->{Translation}->{'Number of FAQ articles to be displayed in each page of a search result in the customer interface.'} =
-        'Anzahl von FAQ-Artikeln die in der FAQ-Suche im Kunden-Interface pro Seite angezeigt werden.';
-    $Self->{Translation}->{'Number of FAQ articles to be displayed in each page of a search result in the public interface.'} =
-        'Anzahl von FAQ-Artikeln die in der FAQ-Suche im Public-Interface pro Seite angezeigt werden.';
-    $Self->{Translation}->{'Number of FAQ articles to be displayed in the explorer in the customer interface.'} =
-        'Anzahl von FAQ-Artikeln die im FAQ-Explorer im Kunden-Interface angezeigt werden.';
-    $Self->{Translation}->{'Number of FAQ articles to be displayed in the explorer in the public interface.'} =
-        'Anzahl von FAQ-Artikeln die im FAQ-Explorer im Public-Interface angezeigt werden.';
-    $Self->{Translation}->{'Show "Insert FAQ Text & Link" Button in AgentFAQZoomSmall for public FAQ Articles.'} =
-        'Megmutatja a "FAQ link és szöveg beszúrás" gombot az AgentFAQZoomSmall a nyilvános FAQ cikkekhez.';
-    $Self->{Translation}->{'Show "Insert FAQ Text" Button in AgentFAQZoomSmall.'} = 'Megmutatja a "FAQ szöveg beszúrás" gombot az AgentFAQZoomSmall.';
-    $Self->{Translation}->{'Show "Insert Link" Button in AgentFAQZoomSmall for public FAQ Articles.'} =
-        'Zeige "Link Einfügen"-Button in AgentFAQZoomSmall für öffentliche FAQ-Artikel.';
-    $Self->{Translation}->{'Show "Insert Text & Link" Button in AgentFAQZoomSmall for public FAQ Articles.'} =
-        'Zeige "Text & Link Einfügen"-Button in AgentFAQZoomSmall für öffentliche FAQ-Artikel.';
-    $Self->{Translation}->{'Show "Insert Text" Button in AgentFAQZoomSmall.'} = 'Zeige "Text Einfügen"-Button in AgentFAQZoomSmall für öffentliche FAQ-Artikel.';
-    $Self->{Translation}->{'Show WYSIWYG editor in agent interface.'} = 'WYSIWYG editor megjelenítése az ügyintéző felületén.';
 
 }
 

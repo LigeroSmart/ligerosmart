@@ -51,8 +51,6 @@ sub Data {
     $Self->{Translation}->{'The name is required!'} = '「名前」は必須項目です。';
     $Self->{Translation}->{'This language already exists!'} = 'この言語は設定済です。';
 
-    # Template: AgentDashboardFAQOverview
-
     # Template: AgentFAQAdd
     $Self->{Translation}->{'Add FAQ Article'} = 'FAQの新規追加';
     $Self->{Translation}->{'Keywords'} = '';
@@ -90,8 +88,6 @@ sub Data {
     $Self->{Translation}->{'FAQ Articles'} = 'FAQ項目';
     $Self->{Translation}->{'No subcategories found.'} = '子カテゴリはありません。';
 
-    # Template: AgentFAQHistory
-
     # Template: AgentFAQJournalOverviewSmall
     $Self->{Translation}->{'No FAQ Journal data found.'} = 'ジャーナルの情報がありません。';
 
@@ -115,7 +111,6 @@ sub Data {
     # Template: AgentFAQOverviewSmall
     $Self->{Translation}->{'No FAQ data found.'} = 'FAQデータはありません。';
     $Self->{Translation}->{'A generic FAQ table'} = '';
-    $Self->{Translation}->{'","50'} = '';
 
     # Template: AgentFAQPrint
     $Self->{Translation}->{'FAQ-Info'} = 'FAQ情報';
@@ -132,14 +127,9 @@ sub Data {
     $Self->{Translation}->{'FAQ Article Create Time (between)'} = '';
     $Self->{Translation}->{'FAQ Article Change Time (before/after)'} = '';
     $Self->{Translation}->{'FAQ Article Change Time (between)'} = '';
-    $Self->{Translation}->{'Run Search'} = '';
-
-    # Template: AgentFAQSearchOpenSearchDescriptionFAQNumber
 
     # Template: AgentFAQSearchOpenSearchDescriptionFulltext
     $Self->{Translation}->{'FAQFulltext'} = 'FAQ全文';
-
-    # Template: AgentFAQSearchResultPrint
 
     # Template: AgentFAQSearchSmall
     $Self->{Translation}->{'FAQ Search'} = '';
@@ -159,10 +149,7 @@ sub Data {
 
     # Template: AgentFAQZoom
     $Self->{Translation}->{'FAQ Information'} = 'FAQ情報';
-    $Self->{Translation}->{'","18'} = '';
-    $Self->{Translation}->{'","25'} = '';
     $Self->{Translation}->{'Rating'} = 'レーティング';
-    $Self->{Translation}->{'Rating %'} = 'レーティング（％）';
     $Self->{Translation}->{'out of 5'} = '5つ星のうち';
     $Self->{Translation}->{'No votes found!'} = '投票はありません。';
     $Self->{Translation}->{'No votes found! Be the first one to rate this FAQ article.'} = '投票はありません。この記事に始めて評価を投票しましょう。';
@@ -173,6 +160,7 @@ sub Data {
     $Self->{Translation}->{'very helpful'} = 'とても役に立った';
 
     # Template: AgentFAQZoomSmall
+    $Self->{Translation}->{'Add FAQ title to article subject'} = '';
     $Self->{Translation}->{'Insert FAQ Text'} = '記事を挿入する';
     $Self->{Translation}->{'Insert Full FAQ'} = '';
     $Self->{Translation}->{'Insert FAQ Link'} = 'リンクを挿入する';
@@ -181,8 +169,6 @@ sub Data {
 
     # Template: CustomerFAQExplorer
     $Self->{Translation}->{'No FAQ articles found.'} = '該当する記事はありません。';
-
-    # Template: CustomerFAQPrint
 
     # Template: CustomerFAQSearch
     $Self->{Translation}->{'Fulltext search in FAQ articles (e. g. "John*n" or "Will*")'} = 'FAQ全文検索（例："John*n"、"Will*"）';
@@ -194,37 +180,29 @@ sub Data {
     $Self->{Translation}->{'Only FAQ articles created between'} = '';
     $Self->{Translation}->{'Search-Profile as Template?'} = '';
 
-    # Template: CustomerFAQSearchOpenSearchDescriptionFAQNumber
-
-    # Template: CustomerFAQSearchOpenSearchDescriptionFullText
-
-    # Template: CustomerFAQSearchResultPrint
-
-    # Template: CustomerFAQSearchResultShort
-
     # Template: CustomerFAQZoom
     $Self->{Translation}->{'Article Number'} = '';
     $Self->{Translation}->{'Search for articles with keyword'} = '記事のキーワード検索';
 
-    # Template: PublicFAQExplorer
-
-    # Template: PublicFAQPrint
-
-    # Template: PublicFAQSearch
-
     # Template: PublicFAQSearchOpenSearchDescriptionFAQNumber
     $Self->{Translation}->{'Public'} = '公開';
 
-    # Template: PublicFAQSearchOpenSearchDescriptionFullText
-
-    # Template: PublicFAQSearchResultPrint
-
-    # Template: PublicFAQSearchResultShort
-
-    # Template: PublicFAQZoom
-
     # SysConfig
     $Self->{Translation}->{'A filter for HTML output to add links behind a defined string. The element Image allows two input kinds. First the name of an image (e.g. faq.png). In this case the OTRS image path will be used. The second possibility is to insert the link to the image.'} =
+        '';
+    $Self->{Translation}->{'Allows adding notes in the close ticket screen of the agent interface. Can be overwritten by Ticket::Frontend::NeedAccountedTime.'} =
+        '';
+    $Self->{Translation}->{'Allows adding notes in the ticket free text screen of the agent interface. Can be overwritten by Ticket::Frontend::NeedAccountedTime.'} =
+        '';
+    $Self->{Translation}->{'Allows adding notes in the ticket note screen of the agent interface. Can be overwritten by Ticket::Frontend::NeedAccountedTime.'} =
+        '';
+    $Self->{Translation}->{'Allows adding notes in the ticket owner screen of a zoomed ticket in the agent interface. Can be overwritten by Ticket::Frontend::NeedAccountedTime.'} =
+        '';
+    $Self->{Translation}->{'Allows adding notes in the ticket pending screen of a zoomed ticket in the agent interface. Can be overwritten by Ticket::Frontend::NeedAccountedTime.'} =
+        '';
+    $Self->{Translation}->{'Allows adding notes in the ticket priority screen of a zoomed ticket in the agent interface. Can be overwritten by Ticket::Frontend::NeedAccountedTime.'} =
+        '';
+    $Self->{Translation}->{'Allows adding notes in the ticket responsible screen of the agent interface. Can be overwritten by Ticket::Frontend::NeedAccountedTime.'} =
         '';
     $Self->{Translation}->{'CSS color for the voting result.'} = '評価の結果表示ようのカラー（スタイルシート）';
     $Self->{Translation}->{'Cache Time To Leave for FAQ items.'} = '';
@@ -239,10 +217,14 @@ sub Data {
     $Self->{Translation}->{'Default type of tickets for the approval of FAQ articles.'} = '';
     $Self->{Translation}->{'Default value for the Action parameter for the public frontend. The Action parameter is used in the scripts of the system.'} =
         '公開画面用パラメータのデフォルト値。パラメータ（Action=XXXXXX）は、スクリプトで使用されています。';
+    $Self->{Translation}->{'Define if the FAQ title should be concatenated to article subject.'} =
+        '';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ journal.'} =
         '簡易版FAQジャーナル表示用モジュールの概要を定義';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ list.'} =
         '簡易版FAQ一覧表示用モジュールの概要を定義';
+    $Self->{Translation}->{'Defines if time accounting is mandatory in the agent interface. If activated, a note must be entered for all ticket actions (no matter if the note itself is configured as active or is originally mandatory for the individual ticket action screen).'} =
+        '';
     $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in a FAQ search of the agent interface.'} =
         'エージェント用画面における、FAQ検索結果並び替えに利用する属性順の既定値を定義します。';
     $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in a FAQ search of the customer interface.'} =
@@ -279,6 +261,34 @@ sub Data {
         '定義済の要素にリンクを付加するモジュールです。画像要素については2通りの入力方法があります。ひとつは「faq.png」のように画像のファイル名を指定する方法。このケースではOTRSのイメージパスが使用されます。もうひとつはURLを指定する方法です。';
     $Self->{Translation}->{'Definition of FAQ item free text field.'} = 'FAQのフリーテキストフィールドの定義。';
     $Self->{Translation}->{'Delete this FAQ'} = 'この記事を削除';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ add screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ edit screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ overview screen of the customer interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ overview screen of the public interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ print screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ print screen of the customer interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ print screen of the public interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ search screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and shown by default.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ search screen of the customer interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and shown by default.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ search screen of the public interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and shown by default.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ small format overview screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ zoom screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ zoom screen of the customer interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ zoom screen of the public interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
+        '';
     $Self->{Translation}->{'Edit this FAQ'} = 'この記事を編集';
     $Self->{Translation}->{'Enable multiple languages on FAQ module.'} = '多言語を有効にする';
     $Self->{Translation}->{'Enable voting mechanism on FAQ module.'} = '評価の機能を有効にする';
@@ -295,7 +305,7 @@ sub Data {
     $Self->{Translation}->{'History of this FAQ'} = 'この記事の履歴';
     $Self->{Translation}->{'Include internal fields on a FAQ based Ticket.'} = 'FAQ由来のチケットに含まれる内部項目';
     $Self->{Translation}->{'Include the name of each field in a FAQ based Ticket.'} = 'FAQ由来のチケットに含まれる内部項目すべての名称';
-    $Self->{Translation}->{'Interfaces where the quicksearch should be shown.'} = '検索窓を表示する画面を設定';
+    $Self->{Translation}->{'Interfaces where the quick search should be shown.'} = '';
     $Self->{Translation}->{'Journal'} = 'ジャーナル';
     $Self->{Translation}->{'Language Management'} = '言語管理';
     $Self->{Translation}->{'Link another object to this FAQ item'} = 'この記事から他の記事へのリンク';
@@ -319,9 +329,9 @@ sub Data {
         '';
     $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the result of a search in the public interface.'} =
         '';
-    $Self->{Translation}->{'Module to generate html OpenSearch profile for short faq search in the customer interface.'} =
+    $Self->{Translation}->{'Module to generate HTML OpenSearch profile for short FAQ search in the public interface.'} =
         '';
-    $Self->{Translation}->{'Module to generate html OpenSearch profile for short faq search in the public interface.'} =
+    $Self->{Translation}->{'Module to generate HTML OpenSearch profile for short faq search in the customer interface.'} =
         '';
     $Self->{Translation}->{'Module to generate html OpenSearch profile for short faq search.'} =
         '';
@@ -353,6 +363,8 @@ sub Data {
     $Self->{Translation}->{'Set the maximum height (in pixels) of inline HTML fields in AgentFAQZoom.'} =
         '';
     $Self->{Translation}->{'Set the maximum height (in pixels) of inline HTML fields in CustomerFAQZoom (and PublicFAQZoom).'} =
+        '';
+    $Self->{Translation}->{'Sets if note must be filled in by the agent. Can be overwritten by Ticket::Frontend::NeedAccountedTime.'} =
         '';
     $Self->{Translation}->{'Show "Insert FAQ Link" Button in AgentFAQZoomSmall for public FAQ Articles.'} =
         '\'AgentFAQZoomSmall\'の設定。公開画面において「リンクを挿入する」ボタンを表示する/表示しない';
@@ -391,33 +403,6 @@ sub Data {
         '‘ParentChild’リンク・タイプを使用して、‘FAQ’オブジェクトが他の‘Ticket’オブジェクトとリンクされるように、定義します。';
     $Self->{Translation}->{'Ticket body for approval of FAQ article.'} = '';
     $Self->{Translation}->{'Ticket subject for approval of FAQ article.'} = '';
-
-    #
-    # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
-    #
-    $Self->{Translation}->{'Agent groups which can access this category.'} = 'このカテゴリにアクセス可能なエージェントグループ';
-    $Self->{Translation}->{'Categories'} = 'カテゴリ';
-    $Self->{Translation}->{'DetailSearch'} = '詳細検索';
-    $Self->{Translation}->{'EndDay'} = '終了日';
-    $Self->{Translation}->{'EndMonth'} = '終了月';
-    $Self->{Translation}->{'EndYear'} = '終了年';
-    $Self->{Translation}->{'Languagekey which is defined in the language file *_FAQ.pm.'} = '言語ファイル（*_FAQ.pm）で定義されているLanguagekey';
-    $Self->{Translation}->{'LatestChangedItems'} = '最近変更されたアイテム';
-    $Self->{Translation}->{'LatestCreatedItems'} = '最近作成されたアイテム';
-    $Self->{Translation}->{'No category accessible. To create an article you need access to at least one category. Please check your group/category permission under -category menu-!'} =
-        'カテゴリにアクセスできません。記事を作成するには、1つ以上のカテゴリにアクセスする必要があります。カテゴリのメニューにおいて、あなたのグループ/カテゴリに権限を与えてください。';
-    $Self->{Translation}->{'Problem'} = '問題';
-    $Self->{Translation}->{'QuickSearch'} = '検索';
-    $Self->{Translation}->{'Show "Insert FAQ Text & Link" Button in AgentFAQZoomSmall for public FAQ Articles.'} =
-        '\'AgentFAQZoomSmall\'の設定。公開画面において「テキストとリンクを挿入する」ボタンを表示する/表示しない';
-    $Self->{Translation}->{'Show "Insert FAQ Text" Button in AgentFAQZoomSmall.'} = '\'AgentFAQZoomSmall\'の設定。「テキストを挿入する」ボタンを表示する/表示しない';
-    $Self->{Translation}->{'Show WYSIWYG editor in agent interface.'} = 'エージェント画面においてWYSIWYGエディタを表示する/表示しない';
-    $Self->{Translation}->{'StartDay'} = '開始日';
-    $Self->{Translation}->{'StartMonth'} = '開始月';
-    $Self->{Translation}->{'StartYear'} = '開始年';
-    $Self->{Translation}->{'SubCategoryOf'} = '親カテゴリ';
-    $Self->{Translation}->{'Symptom'} = '症状';
-    $Self->{Translation}->{'Top10Items'} = 'トップ10アクセス';
 
 }
 

@@ -2,8 +2,6 @@
 # Kernel/Language/zh_CN_FAQ.pm - translation file
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
-# Copyright (C) 2013 Michael Shi <micshi at 163.com>
-# --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
@@ -53,8 +51,6 @@ sub Data {
     $Self->{Translation}->{'The name is required!'} = '名称是必需的!';
     $Self->{Translation}->{'This language already exists!'} = '该语言已经存在!';
 
-    # Template: AgentDashboardFAQOverview
-
     # Template: AgentFAQAdd
     $Self->{Translation}->{'Add FAQ Article'} = '添加FAQ文章';
     $Self->{Translation}->{'Keywords'} = '关键字';
@@ -92,8 +88,6 @@ sub Data {
     $Self->{Translation}->{'FAQ Articles'} = 'FAQ文章';
     $Self->{Translation}->{'No subcategories found.'} = '没有找到子类别.';
 
-    # Template: AgentFAQHistory
-
     # Template: AgentFAQJournalOverviewSmall
     $Self->{Translation}->{'No FAQ Journal data found.'} = '没有找到FAQ日志数据.';
 
@@ -117,7 +111,6 @@ sub Data {
     # Template: AgentFAQOverviewSmall
     $Self->{Translation}->{'No FAQ data found.'} = '没有找到FAQ数据.';
     $Self->{Translation}->{'A generic FAQ table'} = '通用的FAQ表';
-    $Self->{Translation}->{'","50'} = '';
 
     # Template: AgentFAQPrint
     $Self->{Translation}->{'FAQ-Info'} = 'FAQ信息';
@@ -134,14 +127,9 @@ sub Data {
     $Self->{Translation}->{'FAQ Article Create Time (between)'} = 'FAQ文章创建时间(绝对)';
     $Self->{Translation}->{'FAQ Article Change Time (before/after)'} = 'FAQ文章创建时间(相对)';
     $Self->{Translation}->{'FAQ Article Change Time (between)'} = 'FAQ文章创建时间(绝对)';
-    $Self->{Translation}->{'Run Search'} = '搜索';
-
-    # Template: AgentFAQSearchOpenSearchDescriptionFAQNumber
 
     # Template: AgentFAQSearchOpenSearchDescriptionFulltext
     $Self->{Translation}->{'FAQFulltext'} = 'FAQ全文';
-
-    # Template: AgentFAQSearchResultPrint
 
     # Template: AgentFAQSearchSmall
     $Self->{Translation}->{'FAQ Search'} = 'FAQ搜索';
@@ -161,10 +149,7 @@ sub Data {
 
     # Template: AgentFAQZoom
     $Self->{Translation}->{'FAQ Information'} = 'FAQ详细信息';
-    $Self->{Translation}->{'","18'} = '';
-    $Self->{Translation}->{'","25'} = '';
     $Self->{Translation}->{'Rating'} = '投票';
-    $Self->{Translation}->{'Rating %'} = '评价 %';
     $Self->{Translation}->{'out of 5'} = '(5分制)';
     $Self->{Translation}->{'No votes found!'} = '没有找到投票!';
     $Self->{Translation}->{'No votes found! Be the first one to rate this FAQ article.'} = '没有找到投票! 这将是该 FAQ 文章的第一个投票.';
@@ -175,6 +160,7 @@ sub Data {
     $Self->{Translation}->{'very helpful'} = '很有帮助';
 
     # Template: AgentFAQZoomSmall
+    $Self->{Translation}->{'Add FAQ title to article subject'} = '';
     $Self->{Translation}->{'Insert FAQ Text'} = '插入FAQ文本';
     $Self->{Translation}->{'Insert Full FAQ'} = '插入FAQ';
     $Self->{Translation}->{'Insert FAQ Link'} = '插入FAQ链接';
@@ -183,8 +169,6 @@ sub Data {
 
     # Template: CustomerFAQExplorer
     $Self->{Translation}->{'No FAQ articles found.'} = '';
-
-    # Template: CustomerFAQPrint
 
     # Template: CustomerFAQSearch
     $Self->{Translation}->{'Fulltext search in FAQ articles (e. g. "John*n" or "Will*")'} = '';
@@ -196,37 +180,29 @@ sub Data {
     $Self->{Translation}->{'Only FAQ articles created between'} = '';
     $Self->{Translation}->{'Search-Profile as Template?'} = '搜索配置作为模板？';
 
-    # Template: CustomerFAQSearchOpenSearchDescriptionFAQNumber
-
-    # Template: CustomerFAQSearchOpenSearchDescriptionFullText
-
-    # Template: CustomerFAQSearchResultPrint
-
-    # Template: CustomerFAQSearchResultShort
-
     # Template: CustomerFAQZoom
     $Self->{Translation}->{'Article Number'} = '';
     $Self->{Translation}->{'Search for articles with keyword'} = '';
 
-    # Template: PublicFAQExplorer
-
-    # Template: PublicFAQPrint
-
-    # Template: PublicFAQSearch
-
     # Template: PublicFAQSearchOpenSearchDescriptionFAQNumber
     $Self->{Translation}->{'Public'} = '';
 
-    # Template: PublicFAQSearchOpenSearchDescriptionFullText
-
-    # Template: PublicFAQSearchResultPrint
-
-    # Template: PublicFAQSearchResultShort
-
-    # Template: PublicFAQZoom
-
     # SysConfig
     $Self->{Translation}->{'A filter for HTML output to add links behind a defined string. The element Image allows two input kinds. First the name of an image (e.g. faq.png). In this case the OTRS image path will be used. The second possibility is to insert the link to the image.'} =
+        '';
+    $Self->{Translation}->{'Allows adding notes in the close ticket screen of the agent interface. Can be overwritten by Ticket::Frontend::NeedAccountedTime.'} =
+        '';
+    $Self->{Translation}->{'Allows adding notes in the ticket free text screen of the agent interface. Can be overwritten by Ticket::Frontend::NeedAccountedTime.'} =
+        '';
+    $Self->{Translation}->{'Allows adding notes in the ticket note screen of the agent interface. Can be overwritten by Ticket::Frontend::NeedAccountedTime.'} =
+        '';
+    $Self->{Translation}->{'Allows adding notes in the ticket owner screen of a zoomed ticket in the agent interface. Can be overwritten by Ticket::Frontend::NeedAccountedTime.'} =
+        '';
+    $Self->{Translation}->{'Allows adding notes in the ticket pending screen of a zoomed ticket in the agent interface. Can be overwritten by Ticket::Frontend::NeedAccountedTime.'} =
+        '';
+    $Self->{Translation}->{'Allows adding notes in the ticket priority screen of a zoomed ticket in the agent interface. Can be overwritten by Ticket::Frontend::NeedAccountedTime.'} =
+        '';
+    $Self->{Translation}->{'Allows adding notes in the ticket responsible screen of the agent interface. Can be overwritten by Ticket::Frontend::NeedAccountedTime.'} =
         '';
     $Self->{Translation}->{'CSS color for the voting result.'} = '';
     $Self->{Translation}->{'Cache Time To Leave for FAQ items.'} = '';
@@ -241,9 +217,13 @@ sub Data {
     $Self->{Translation}->{'Default type of tickets for the approval of FAQ articles.'} = '';
     $Self->{Translation}->{'Default value for the Action parameter for the public frontend. The Action parameter is used in the scripts of the system.'} =
         '';
+    $Self->{Translation}->{'Define if the FAQ title should be concatenated to article subject.'} =
+        '';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ journal.'} =
         '';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ list.'} =
+        '';
+    $Self->{Translation}->{'Defines if time accounting is mandatory in the agent interface. If activated, a note must be entered for all ticket actions (no matter if the note itself is configured as active or is originally mandatory for the individual ticket action screen).'} =
         '';
     $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in a FAQ search of the agent interface.'} =
         '';
@@ -281,6 +261,34 @@ sub Data {
         '';
     $Self->{Translation}->{'Definition of FAQ item free text field.'} = '定义 FAQ 项目的不受限文字字段.';
     $Self->{Translation}->{'Delete this FAQ'} = '删除FAQ';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ add screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ edit screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ overview screen of the customer interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ overview screen of the public interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ print screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ print screen of the customer interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ print screen of the public interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ search screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and shown by default.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ search screen of the customer interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and shown by default.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ search screen of the public interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and shown by default.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ small format overview screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ zoom screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ zoom screen of the customer interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ zoom screen of the public interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
+        '';
     $Self->{Translation}->{'Edit this FAQ'} = '编辑FAQ';
     $Self->{Translation}->{'Enable multiple languages on FAQ module.'} = '';
     $Self->{Translation}->{'Enable voting mechanism on FAQ module.'} = '';
@@ -297,7 +305,7 @@ sub Data {
     $Self->{Translation}->{'History of this FAQ'} = 'FAQ文章历史信息';
     $Self->{Translation}->{'Include internal fields on a FAQ based Ticket.'} = '';
     $Self->{Translation}->{'Include the name of each field in a FAQ based Ticket.'} = '';
-    $Self->{Translation}->{'Interfaces where the quicksearch should be shown.'} = '在介面的那里显示快速搜索.';
+    $Self->{Translation}->{'Interfaces where the quick search should be shown.'} = '';
     $Self->{Translation}->{'Journal'} = '日志';
     $Self->{Translation}->{'Language Management'} = '管理语言';
     $Self->{Translation}->{'Link another object to this FAQ item'} = '链接对象至FAQ';
@@ -321,9 +329,9 @@ sub Data {
         '';
     $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the result of a search in the public interface.'} =
         '';
-    $Self->{Translation}->{'Module to generate html OpenSearch profile for short faq search in the customer interface.'} =
+    $Self->{Translation}->{'Module to generate HTML OpenSearch profile for short FAQ search in the public interface.'} =
         '';
-    $Self->{Translation}->{'Module to generate html OpenSearch profile for short faq search in the public interface.'} =
+    $Self->{Translation}->{'Module to generate HTML OpenSearch profile for short faq search in the customer interface.'} =
         '';
     $Self->{Translation}->{'Module to generate html OpenSearch profile for short faq search.'} =
         '';
@@ -355,6 +363,8 @@ sub Data {
     $Self->{Translation}->{'Set the maximum height (in pixels) of inline HTML fields in AgentFAQZoom.'} =
         '';
     $Self->{Translation}->{'Set the maximum height (in pixels) of inline HTML fields in CustomerFAQZoom (and PublicFAQZoom).'} =
+        '';
+    $Self->{Translation}->{'Sets if note must be filled in by the agent. Can be overwritten by Ticket::Frontend::NeedAccountedTime.'} =
         '';
     $Self->{Translation}->{'Show "Insert FAQ Link" Button in AgentFAQZoomSmall for public FAQ Articles.'} =
         '';
@@ -393,45 +403,6 @@ sub Data {
         '';
     $Self->{Translation}->{'Ticket body for approval of FAQ article.'} = 'FAQ 文章批准请求的 Ticket 内容.';
     $Self->{Translation}->{'Ticket subject for approval of FAQ article.'} = 'FAQ 文章批准请求的 Ticket 主题.';
-
-    #
-    # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
-    #
-    $Self->{Translation}->{'A category needs at least one permission group!'} = '至少要指定一个群组对该类别拥有权限!';
-    $Self->{Translation}->{'A category should have a comment!'} = '类别应该要有一个注释!';
-    $Self->{Translation}->{'Agent groups which can access this category.'} = '哪一个群组可以访问此类别.';
-    $Self->{Translation}->{'Articles'} = '文章';
-    $Self->{Translation}->{'CSS color for the voting flag.'} = '投票标记的 CSS 颜色.';
-    $Self->{Translation}->{'Categories'} = '类别';
-    $Self->{Translation}->{'DetailSearch'} = '高级搜索';
-    $Self->{Translation}->{'Do you really want to delete this Category?'} = '真的要删除该类别吗?';
-    $Self->{Translation}->{'Do you really want to delete this Language?'} = '真的要删除该语言吗?';
-    $Self->{Translation}->{'Equals'} = ' = ';
-    $Self->{Translation}->{'FAQ Category'} = 'FAQ类别';
-    $Self->{Translation}->{'FAQ Item Change Time (before/after)'} = 'FAQ文章创建时间（相对）';
-    $Self->{Translation}->{'FAQ Item Change Time (between)'} = 'FAQ文章创建时间（绝对）';
-    $Self->{Translation}->{'FAQ Item Create Time (before/after)'} = 'FAQ文章创建时间（相对）';
-    $Self->{Translation}->{'FAQ Item Create Time (between)'} = 'FAQ文章创建时间（绝对）';
-    $Self->{Translation}->{'GreaterThan'} = ' > ';
-    $Self->{Translation}->{'GreaterThanEquals'} = ' >= ';
-    $Self->{Translation}->{'Last Changed by'} = '最后修改人';
-    $Self->{Translation}->{'No category accessible. To create an article you need access to at least one category. Please check your group/category permission under -category menu-!'} =
-        '没有归类到类别. 要创建一篇文章需要归类到类别里, 请在 -类别菜单- 里选择您有权限创建文章的类别';
-    $Self->{Translation}->{'Show WYSIWYG editor in agent interface.'} = '在服务人员介面显示 WYSIWYG(所见即所得)编辑器.';
-    $Self->{Translation}->{'SmallerThan'} = '< ';
-    $Self->{Translation}->{'SmallerThanEquals'} = ' <= ';
-    $Self->{Translation}->{'SubCategories'} = '子类别';
-    $Self->{Translation}->{'The title is required.'} = '标题是必须的.';
-    $Self->{Translation}->{'This Category is parent of the following SubCategories'} = '该类别是以下子类别的父类别';
-    $Self->{Translation}->{'This Category is used in the following FAQ Artice(s)'} = '该类别正被以下的 FAQ 文章所使用';
-    $Self->{Translation}->{'This Language is used in the following FAQ Article(s)'} = '该语言正被以下的 FAQ 文章所使用';
-    $Self->{Translation}->{'This category already exists!'} = '该类别已经在存在!';
-    $Self->{Translation}->{'Updated'} = '更新';
-    $Self->{Translation}->{'FAQAccess'} = 'FAQ访问';
-    $Self->{Translation}->{'You can not delete this Category. It is used in at least one FAQ Article! and/or is parent of at least another Category'} =
-        '不能删除该类别. 它至少还被一篇FAQ文章所使用 并/或 它是其中类别的父类别!';
-    $Self->{Translation}->{'You can not delete this Language. It is used in at least one FAQ Article!'} =
-        '不能删除该语言. 它至少还被一篇FAQ文章所使用!';
 
 }
 
