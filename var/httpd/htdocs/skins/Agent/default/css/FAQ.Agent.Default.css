@@ -66,10 +66,13 @@ ul.FAQMiniList span {
 }
 
 .FAQPathCategory h3 {
-    font-weight: bold;
     font-size: 12px;
     padding-left: 5px;
     padding-top: 7px;
+}
+
+.FAQPathCategory h3 > a:last-of-type {
+    font-weight: bold;
 }
 
 .FAQPathCategory h3 > span:last-child {
