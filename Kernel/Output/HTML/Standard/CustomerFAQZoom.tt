@@ -24,7 +24,12 @@
                 [% Data.Title | html %]
             </h2>
             <ul id="FAQOptions">
-                <li><a href="[% Env("Baselink") %]Action=CustomerFAQPrint;ItemID=[% Data.ItemID | uri %]" class="Print AsPopup" title="[% Translate("Print") | html %]">[% Translate("Print") | html %]</a></li>
+                <li>
+                    <a href="[% Env("Baselink") %]Action=CustomerFAQPrint;ItemID=[% Data.ItemID | uri %]" class="Print AsPopup" title="[% Translate("Print") | html %]">
+                        <i class="fa fa-print"></i>
+                        <span>[% Translate("Print") | html %]</span>
+                    </a>
+                </li>
             </ul>
             <div class="Clear"></div>
         </div>
