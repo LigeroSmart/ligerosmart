@@ -38,6 +38,10 @@
     font-size: 12px;
 }
 
+.MessageBody {
+    padding: 0px 15px;
+}
+
 #FAQOptions {
     overflow: hidden;
     position: absolute;
