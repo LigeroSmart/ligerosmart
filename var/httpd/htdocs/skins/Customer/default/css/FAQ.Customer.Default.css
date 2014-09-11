@@ -223,6 +223,10 @@ ul.FAQMiniList span {
     color: #444;
 }
 
+.FAQPathCategory h3 > span:last-child {
+    display: none;
+}
+
 iframe.FAQField {
     width: 100%;
     border: 0px;

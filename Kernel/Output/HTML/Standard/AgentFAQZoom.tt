@@ -23,6 +23,11 @@
             </a>
             <span>[% Config("FAQ::Explorer::Path::Separator") %]</span>
 [% RenderBlockEnd("FAQPathCategoryElement") %]
+[% RenderBlockStart("FAQPathItemElement") %]
+            <a href="[% Env("Baselink") %]Action=[% Env("Action") %];CategoryID=[% Data.CategoryID | uri %];ItemID=[% Data.ItemID | uri %]">
+                    [% Data.Title | html %]
+            </a>
+[% RenderBlockEnd("FAQPathItemElement") %]
         </h3>
     </div>
 

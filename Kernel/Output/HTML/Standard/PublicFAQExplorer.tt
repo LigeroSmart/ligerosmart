@@ -20,10 +20,10 @@
         <div class="FAQPathCategory">
             <h3>
 [% RenderBlockStart("FAQPathCategoryElement") %]
-                [% Config("FAQ::Explorer::Path::Separator") %]
                 <a href="[% Env("Baselink") %]Action=PublicFAQExplorer;CategoryID=[% Data.CategoryID | uri %]">
                     [% Data.Name | html %]
                 </a>
+                <span>[% Config("FAQ::Explorer::Path::Separator") %]</span>
 [% RenderBlockEnd("FAQPathCategoryElement") %]
             </h3>
         </div>

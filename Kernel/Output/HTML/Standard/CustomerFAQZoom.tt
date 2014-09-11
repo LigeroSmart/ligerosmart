@@ -37,13 +37,12 @@
         <div class="FAQPathCategory FAQZoom">
             <h3>
 [% RenderBlockStart("FAQPathCategoryElement") %]
-                [% Config("FAQ::Explorer::Path::Separator") %]
                 <a href="[% Env("Baselink") %]Action=CustomerFAQExplorer;CategoryID=[% Data.CategoryID | uri %]">
                     [% Data.Name | html %]
                 </a>
+                [% Config("FAQ::Explorer::Path::Separator") %]
 [% RenderBlockEnd("FAQPathCategoryElement") %]
 [% RenderBlockStart("FAQPathItemElement") %]
-                [% Config("FAQ::Explorer::Path::Separator") %]
                 <a href="[% Env("Baselink") %]Action=[% Env("Action") %];CategoryID=[% Data.CategoryID | uri %];ItemID=[% Data.ItemID | uri %]">
                     [% Data.Title | html %]
                 </a>
