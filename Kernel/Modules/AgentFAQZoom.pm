@@ -216,6 +216,9 @@ sub Run {
         }
     }
 
+    # ---------------------------------------------------------- #
+    # other subactions continues here
+    # ---------------------------------------------------------- #
     my $Output;
     if ( $Nav eq 'None' ) {
 
@@ -254,6 +257,7 @@ sub Run {
         my $VoteCreatedSystemTime = $Self->{TimeObject}->TimeStamp2SystemTime(
             String => $VoteData->{Created} || '',
         );
+
         if ( $ItemChangedSystemTime <= $VoteCreatedSystemTime ) {
             $AlreadyVoted = 1;
         }
@@ -305,9 +309,10 @@ sub Run {
 
                 # refresh FAQ item data
                 %FAQData = $Self->{FAQObject}->FAQGet(
-                    ItemID     => $GetParam{ItemID},
-                    ItemFields => 1,
-                    UserID     => $Self->{UserID},
+                    ItemID        => $GetParam{ItemID},
+                    ItemFields    => 1,
+                    UserID        => $Self->{UserID},
+                    DynamicFields => 1,
                 );
                 if ( !%FAQData ) {
                     return $Self->{LayoutObject}->ErrorScreen();
