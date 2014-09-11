@@ -2,6 +2,7 @@
 .includepath
 .settings
 .DS_Store
+Kernel/Language/*.pm.old
 
 # OTRSCodePolicy
 .tidyall.d

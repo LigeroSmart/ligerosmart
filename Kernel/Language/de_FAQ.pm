@@ -51,11 +51,9 @@ sub Data {
     $Self->{Translation}->{'The name is required!'} = 'Der Name ist erforderlich!';
     $Self->{Translation}->{'This language already exists!'} = 'Diese Sprache existiert bereits!';
 
-    # Template: AgentDashboardFAQOverview
-
     # Template: AgentFAQAdd
     $Self->{Translation}->{'Add FAQ Article'} = 'FAQ-Artikel hinzufügen';
-    $Self->{Translation}->{'Keywords'} = '';
+    $Self->{Translation}->{'Keywords'} = 'Schlüsselwörter';
     $Self->{Translation}->{'A category is required.'} = 'Eine Kategorie ist erforderlich.';
     $Self->{Translation}->{'Approval'} = 'Freigabe';
 
@@ -90,8 +88,6 @@ sub Data {
     $Self->{Translation}->{'FAQ Articles'} = 'FAQ-Artikel';
     $Self->{Translation}->{'No subcategories found.'} = 'Keine Unterkategorien gefunden.';
 
-    # Template: AgentFAQHistory
-
     # Template: AgentFAQJournalOverviewSmall
     $Self->{Translation}->{'No FAQ Journal data found.'} = 'Keine FAQ-Journaldaten gefunden.';
 
@@ -115,7 +111,6 @@ sub Data {
     # Template: AgentFAQOverviewSmall
     $Self->{Translation}->{'No FAQ data found.'} = 'Keine FAQ-Daten gefunden.';
     $Self->{Translation}->{'A generic FAQ table'} = '';
-    $Self->{Translation}->{'","50'} = '';
 
     # Template: AgentFAQPrint
     $Self->{Translation}->{'FAQ-Info'} = 'FAQ Informationen';
@@ -123,7 +118,7 @@ sub Data {
     $Self->{Translation}->{'Last update'} = '';
 
     # Template: AgentFAQSearch
-    $Self->{Translation}->{'Keyword'} = '';
+    $Self->{Translation}->{'Keyword'} = 'Schlüsselwort';
     $Self->{Translation}->{'Vote (e. g. Equals 10 or GreaterThan 60)'} = '';
     $Self->{Translation}->{'Rate (e. g. Equals 25% or GreaterThan 75%)'} = '';
     $Self->{Translation}->{'Approved'} = '';
@@ -132,14 +127,9 @@ sub Data {
     $Self->{Translation}->{'FAQ Article Create Time (between)'} = '';
     $Self->{Translation}->{'FAQ Article Change Time (before/after)'} = '';
     $Self->{Translation}->{'FAQ Article Change Time (between)'} = '';
-    $Self->{Translation}->{'Run Search'} = '';
-
-    # Template: AgentFAQSearchOpenSearchDescriptionFAQNumber
 
     # Template: AgentFAQSearchOpenSearchDescriptionFulltext
     $Self->{Translation}->{'FAQFulltext'} = 'FAQ-Volltext';
-
-    # Template: AgentFAQSearchResultPrint
 
     # Template: AgentFAQSearchSmall
     $Self->{Translation}->{'FAQ Search'} = 'FAQ Suche';
@@ -159,10 +149,7 @@ sub Data {
 
     # Template: AgentFAQZoom
     $Self->{Translation}->{'FAQ Information'} = 'FAQ-Information';
-    $Self->{Translation}->{'","18'} = '';
-    $Self->{Translation}->{'","25'} = '';
     $Self->{Translation}->{'Rating'} = 'Bewertung';
-    $Self->{Translation}->{'Rating %'} = 'Bewertung %';
     $Self->{Translation}->{'out of 5'} = 'von 5';
     $Self->{Translation}->{'No votes found!'} = 'Keine Bewertungen gefunden!';
     $Self->{Translation}->{'No votes found! Be the first one to rate this FAQ article.'} = 'Keine Bewertungen gefunden! Seien Sie der erste der diesen FAQ-Artikel bewertet.';
@@ -173,6 +160,7 @@ sub Data {
     $Self->{Translation}->{'very helpful'} = 'sehr hilfreich';
 
     # Template: AgentFAQZoomSmall
+    $Self->{Translation}->{'Add FAQ title to article subject'} = '';
     $Self->{Translation}->{'Insert FAQ Text'} = 'FAQ-Text einfügen';
     $Self->{Translation}->{'Insert Full FAQ'} = 'Vollständige FAQ einfügen';
     $Self->{Translation}->{'Insert FAQ Link'} = 'FAQ-Link einfügen';
@@ -181,8 +169,6 @@ sub Data {
 
     # Template: CustomerFAQExplorer
     $Self->{Translation}->{'No FAQ articles found.'} = 'Keine FAQ-Artikel gefunden.';
-
-    # Template: CustomerFAQPrint
 
     # Template: CustomerFAQSearch
     $Self->{Translation}->{'Fulltext search in FAQ articles (e. g. "John*n" or "Will*")'} = 'Volltext-Suche in FAQ-Artikeln (z. B. "John*n" or "Will*")';
@@ -194,38 +180,30 @@ sub Data {
     $Self->{Translation}->{'Only FAQ articles created between'} = '';
     $Self->{Translation}->{'Search-Profile as Template?'} = '';
 
-    # Template: CustomerFAQSearchOpenSearchDescriptionFAQNumber
-
-    # Template: CustomerFAQSearchOpenSearchDescriptionFullText
-
-    # Template: CustomerFAQSearchResultPrint
-
-    # Template: CustomerFAQSearchResultShort
-
     # Template: CustomerFAQZoom
     $Self->{Translation}->{'Article Number'} = '';
     $Self->{Translation}->{'Search for articles with keyword'} = 'Suche nach Artikeln mit Schlüsselwörtern';
 
-    # Template: PublicFAQExplorer
-
-    # Template: PublicFAQPrint
-
-    # Template: PublicFAQSearch
-
     # Template: PublicFAQSearchOpenSearchDescriptionFAQNumber
     $Self->{Translation}->{'Public'} = 'Öffentlich';
-
-    # Template: PublicFAQSearchOpenSearchDescriptionFullText
-
-    # Template: PublicFAQSearchResultPrint
-
-    # Template: PublicFAQSearchResultShort
-
-    # Template: PublicFAQZoom
 
     # SysConfig
     $Self->{Translation}->{'A filter for HTML output to add links behind a defined string. The element Image allows two input kinds. First the name of an image (e.g. faq.png). In this case the OTRS image path will be used. The second possibility is to insert the link to the image.'} =
         'Ein Filter zur automatischen Generierung von FAQ-Links, wenn ein Hinweis auf einen FAQ-Artikel identifiziert wird. Das Element Image erlaubt zwei Eingabeformen: Erstens der Name eines Icons (z. B. faq.png). In diesem Fall wird auf das Grafik-Verzeichnis des OTRS zugegriffen. Als zweite Möglichkeit kann man aber auch den direkten Link zur Grafik angeben (z. B. http://otrs.org/faq.png).';
+    $Self->{Translation}->{'Allows adding notes in the close ticket screen of the agent interface. Can be overwritten by Ticket::Frontend::NeedAccountedTime.'} =
+        '';
+    $Self->{Translation}->{'Allows adding notes in the ticket free text screen of the agent interface. Can be overwritten by Ticket::Frontend::NeedAccountedTime.'} =
+        '';
+    $Self->{Translation}->{'Allows adding notes in the ticket note screen of the agent interface. Can be overwritten by Ticket::Frontend::NeedAccountedTime.'} =
+        '';
+    $Self->{Translation}->{'Allows adding notes in the ticket owner screen of a zoomed ticket in the agent interface. Can be overwritten by Ticket::Frontend::NeedAccountedTime.'} =
+        '';
+    $Self->{Translation}->{'Allows adding notes in the ticket pending screen of a zoomed ticket in the agent interface. Can be overwritten by Ticket::Frontend::NeedAccountedTime.'} =
+        '';
+    $Self->{Translation}->{'Allows adding notes in the ticket priority screen of a zoomed ticket in the agent interface. Can be overwritten by Ticket::Frontend::NeedAccountedTime.'} =
+        '';
+    $Self->{Translation}->{'Allows adding notes in the ticket responsible screen of the agent interface. Can be overwritten by Ticket::Frontend::NeedAccountedTime.'} =
+        '';
     $Self->{Translation}->{'CSS color for the voting result.'} = 'CSS-Farbe für das Bewertungs-Ergebnis.';
     $Self->{Translation}->{'Cache Time To Leave for FAQ items.'} = '';
     $Self->{Translation}->{'Category Management'} = 'Kategorien-Verwaltung';
@@ -239,10 +217,14 @@ sub Data {
     $Self->{Translation}->{'Default type of tickets for the approval of FAQ articles.'} = '';
     $Self->{Translation}->{'Default value for the Action parameter for the public frontend. The Action parameter is used in the scripts of the system.'} =
         'Standardwert des Action-Parameters für den öffentlichen FAQ-Bereich. Der Action-Parameter wird von den Skripten des Systems benutzt.';
+    $Self->{Translation}->{'Define if the FAQ title should be concatenated to article subject.'} =
+        '';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ journal.'} =
         'Definiert ein Übersichts-Modul um die Small-Ansicht im FAQ-Journal anzuzeigen.';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ list.'} =
         'Definiert ein Übersichts-Modul um die Small-Ansicht einer FAQ-Liste anzuzeigen.';
+    $Self->{Translation}->{'Defines if time accounting is mandatory in the agent interface. If activated, a note must be entered for all ticket actions (no matter if the note itself is configured as active or is originally mandatory for the individual ticket action screen).'} =
+        '';
     $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in a FAQ search of the agent interface.'} =
         'Definiert das Standard-FAQ-Attribut für die Sortierung der FAQ-Suche im Agenten-Interface.';
     $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in a FAQ search of the customer interface.'} =
@@ -279,6 +261,34 @@ sub Data {
         'Definiert wo der \'FAQ Einfügen\' link angezeigt wird. Hinweis: AgentTicketActionCommon beinhaltet AgentTicketNote, AgentTicketClose, AgentTicketFreeText, AgentTicketOwner, AgentTicketPending, AgentTicketPriority und AgentTicketResponsible.';
     $Self->{Translation}->{'Definition of FAQ item free text field.'} = 'Definition der freien Textfelder.';
     $Self->{Translation}->{'Delete this FAQ'} = 'Diese FAQ löschen!';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ add screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ edit screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ overview screen of the customer interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ overview screen of the public interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ print screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ print screen of the customer interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ print screen of the public interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ search screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and shown by default.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ search screen of the customer interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and shown by default.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ search screen of the public interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and shown by default.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ small format overview screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ zoom screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ zoom screen of the customer interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ zoom screen of the public interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
+        '';
     $Self->{Translation}->{'Edit this FAQ'} = 'FAQ bearbeiten';
     $Self->{Translation}->{'Enable multiple languages on FAQ module.'} = 'Multiple Sprachen im FAQ-Modul aktivieren.';
     $Self->{Translation}->{'Enable voting mechanism on FAQ module.'} = 'Bewertungs-Mechanismus im FAQ-Modul aktivieren.';
@@ -295,7 +305,7 @@ sub Data {
     $Self->{Translation}->{'History of this FAQ'} = 'FAQ-Historie';
     $Self->{Translation}->{'Include internal fields on a FAQ based Ticket.'} = 'Interne FAQ-Felder in einem FAQ-basiertenTicket verwenden.';
     $Self->{Translation}->{'Include the name of each field in a FAQ based Ticket.'} = 'Den Namen jedes FAQ-Feldes einem FAQ-basierten Ticket verwenden.';
-    $Self->{Translation}->{'Interfaces where the quicksearch should be shown.'} = 'Interfaces in denen das QuickSearch Feature angezeigt wird.';
+    $Self->{Translation}->{'Interfaces where the quick search should be shown.'} = '';
     $Self->{Translation}->{'Journal'} = 'Journal';
     $Self->{Translation}->{'Language Management'} = 'Sprachen-Verwaltung';
     $Self->{Translation}->{'Link another object to this FAQ item'} = 'Diese FAQ mit einem anderen Objekt verknüpfen';
@@ -319,9 +329,9 @@ sub Data {
         'Maximale Anzahl von FAQ-Artikeln die in der FAQ-Suche im Kunden-Interface angezeigt werden.';
     $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the result of a search in the public interface.'} =
         'Maximale Anzahl von FAQ-Artikeln die in der FAQ-Suche im Public-Interface angezeigt werden.';
-    $Self->{Translation}->{'Module to generate html OpenSearch profile for short faq search in the customer interface.'} =
+    $Self->{Translation}->{'Module to generate HTML OpenSearch profile for short FAQ search in the public interface.'} =
         '';
-    $Self->{Translation}->{'Module to generate html OpenSearch profile for short faq search in the public interface.'} =
+    $Self->{Translation}->{'Module to generate HTML OpenSearch profile for short faq search in the customer interface.'} =
         '';
     $Self->{Translation}->{'Module to generate html OpenSearch profile for short faq search.'} =
         'Modul zum Generieren des HTML "OpenSearch" Profils zur FAQ-Suche über das Browser-Suchfeld.';
@@ -353,6 +363,8 @@ sub Data {
     $Self->{Translation}->{'Set the maximum height (in pixels) of inline HTML fields in AgentFAQZoom.'} =
         '';
     $Self->{Translation}->{'Set the maximum height (in pixels) of inline HTML fields in CustomerFAQZoom (and PublicFAQZoom).'} =
+        '';
+    $Self->{Translation}->{'Sets if note must be filled in by the agent. Can be overwritten by Ticket::Frontend::NeedAccountedTime.'} =
         '';
     $Self->{Translation}->{'Show "Insert FAQ Link" Button in AgentFAQZoomSmall for public FAQ Articles.'} =
         '';
@@ -391,44 +403,6 @@ sub Data {
         'Definiert, dass ein \'FAQ\'-Objekte mit dem Linktyp \'ParentChild\' mit anderen \'Ticket\'-Objekten verlinkt werden kann.';
     $Self->{Translation}->{'Ticket body for approval of FAQ article.'} = 'Body des Tickets zur Freigabe eines FAQ-Artikels.';
     $Self->{Translation}->{'Ticket subject for approval of FAQ article.'} = 'Betreff des Tickets zur Freigabe eines FAQ-Artikels.';
-
-    #
-    # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
-    #
-    $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in a FAQ Explorer of the agent interface.'} =
-        'Definiert das Standard-FAQ-Attribut für die Sortierung des FAQ-Explorers im Agenten-Interface.';
-    $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in the explorer in the customer interface.'} =
-        'Definiert das Standard-FAQ-Attribut für die Sortierung des FAQ-Explorers im Kunden-Interface.';
-    $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in the explorer in the public interface.'} =
-        'Definiert das Standard-FAQ-Attribut für die Sortierung des FAQ-Explorers im Public-Interface.';
-    $Self->{Translation}->{'Defines the default FAQ order in the explorer in the customer interface. Up: oldest on top. Down: latest on top.'} =
-        'Definiert die Standard-Sortierung des FAQ-Explorers im Kunden-Interface. Auf: Ältester FAQ-Artikel oben. Ab: Neuester FAQ-Artikel oben.';
-    $Self->{Translation}->{'Defines the default FAQ order in the explorer in the public interface. Up: oldest on top. Down: latest on top.'} =
-        'Definiert die Standard-Sortierung des FAQ-Explorers im Public-Interface. Auf: Ältester FAQ-Artikel oben. Ab: Neuester FAQ-Artikel oben.';
-    $Self->{Translation}->{'Defines the default FAQ order of a Explorer result in the agent interface. Up: oldest on top. Down: latest on top.'} =
-        'Definiert die Standard-Sortierung des FAQ-Explorers im Agenten-Interface. Auf: Ältester FAQ-Artikel oben. Ab: Neuester FAQ-Artikel oben.';
-    $Self->{Translation}->{'Delete: '} = 'Löschen: ';
-    $Self->{Translation}->{'Languagekey which is defined in the language file *_FAQ.pm.'} = 'LanguageKey für die Frage bei der Artikelbewertung. Wird in den Sprachfiles definiert.';
-    $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the explorer in the customer interface.'} =
-        'Maximale Anzahl von FAQ-Artikeln die im FAQ-Explorer im Kunden-Interface angezeigt werden.';
-    $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the explorer in the public interface.'} =
-        'Maximale Anzahl von FAQ-Artikeln die im FAQ-Explorer im Public-Interface angezeigt werden.';
-    $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the result of a Explorer in the agent interface.'} =
-        'Maximale Anzahl von FAQ-Artikeln die im FAQ-Explorer im Agenten-Interface angezeigt werden.';
-    $Self->{Translation}->{'Number of FAQ articles to be displayed in each page of a search result in the customer interface.'} =
-        'Anzahl von FAQ-Artikeln die in der FAQ-Suche im Kunden-Interface pro Seite angezeigt werden.';
-    $Self->{Translation}->{'Number of FAQ articles to be displayed in each page of a search result in the public interface.'} =
-        'Anzahl von FAQ-Artikeln die in der FAQ-Suche im Public-Interface pro Seite angezeigt werden.';
-    $Self->{Translation}->{'Number of FAQ articles to be displayed in the explorer in the customer interface.'} =
-        'Anzahl von FAQ-Artikeln die im FAQ-Explorer im Kunden-Interface angezeigt werden.';
-    $Self->{Translation}->{'Number of FAQ articles to be displayed in the explorer in the public interface.'} =
-        'Anzahl von FAQ-Artikeln die im FAQ-Explorer im Public-Interface angezeigt werden.';
-    $Self->{Translation}->{'Show "Insert Link" Button in AgentFAQZoomSmall for public FAQ Articles.'} =
-        'Zeige "Link Einfügen"-Button in AgentFAQZoomSmall für öffentliche FAQ-Artikel.';
-    $Self->{Translation}->{'Show "Insert Text & Link" Button in AgentFAQZoomSmall for public FAQ Articles.'} =
-        'Zeige "Text & Link Einfügen"-Button in AgentFAQZoomSmall für öffentliche FAQ-Artikel.';
-    $Self->{Translation}->{'Show "Insert Text" Button in AgentFAQZoomSmall.'} = 'Zeige "Text Einfügen"-Button in AgentFAQZoomSmall für öffentliche FAQ-Artikel.';
-    $Self->{Translation}->{'Show WYSIWYG editor in agent interface.'} = 'Anzeige eines WYSIWYG Editors im Agenten-Interface.';
 
 }
 
