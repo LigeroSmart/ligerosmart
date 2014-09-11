@@ -97,7 +97,7 @@
                         <tr>
                             <td><a class="AsBlock" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Change;LanguageID=[% Data.LanguageID | uri %]">[% Data.Name | html %]</a></td>
                             <td class="Center Last">
-                                <a id="DeleteLanguageID[% Data.LanguageID | html %]" class="TrashCan" href="#">
+                                <a href="#" id="DeleteLanguageID[% Data.LanguageID | html %]">
                                     <i class="fa fa-trash-o"></i>
                                     <span class="InvisibleText">[% Translate("Delete") | html %]: [% Data.Name | html %]</span>
                                 </a>

@@ -52,7 +52,7 @@ FAQ.Agent.ConfirmationDialog = (function (TargetNS) {
             Buttons;
 
         // get global saved DialogData for this function
-        LocalDialogData = DialogData[$(Event.target).attr('id')];
+        LocalDialogData = DialogData[$(this).attr('id')];
 
         // define the position of the dialog
         PositionTop = $(window).scrollTop() + ($(window).height() * 0.3);
