@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTicketBulk.pm - to do bulk actions on tickets
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/fa2159290ffa2f0b94b2d8333a6875c00f9d8d32/Kernel/Modules/AgentTicketBulk.pm
+# $origin: https://github.com/OTRS/otrs/blob/8ea0599922d2e35ba2f0a226fe76743a42b97d54/Kernel/Modules/AgentTicketBulk.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -242,12 +242,12 @@ sub Run {
         if ( $GetParam{StateID} || $GetParam{State} ) {
             my %StateData;
             if ( $GetParam{StateID} ) {
-                %StateData = $Self->{TicketObject}->{StateObject}->StateGet(
+                %StateData = $Self->{StateObject}->StateGet(
                     ID => $GetParam{StateID},
                 );
             }
             else {
-                %StateData = $Self->{TicketObject}->{StateObject}->StateGet(
+                %StateData = $Self->{StateObject}->StateGet(
                     Name => $GetParam{State},
                 );
             }
@@ -328,8 +328,9 @@ sub Run {
 
             # error screen, don't show ticket
             $Output .= $Self->{LayoutObject}->Notify(
-                Data => $Ticket{TicketNumber}
-                    . ': $Text{"You don\'t have write access to this ticket."}',
+                Data => "$Ticket{TicketNumber}: "
+                    . $Self->{LayoutObject}->{LanguageObject}
+                    ->Translate("You don't have write access to this ticket."),
             );
             next TICKET_ID;
         }
@@ -337,7 +338,8 @@ sub Run {
         # check if it's already locked by somebody else
         if ( !$Self->{Config}->{RequiredLock} ) {
             $Output .= $Self->{LayoutObject}->Notify(
-                Data => $Ticket{TicketNumber} . ': $Text{"Ticket selected."}',
+                Data => "$Ticket{TicketNumber}: "
+                    . $Self->{LayoutObject}->{LanguageObject}->Translate("Ticket selected."),
             );
         }
         else {
@@ -348,15 +350,16 @@ sub Run {
                 );
                 if ( !$AccessOk ) {
                     $Output .= $Self->{LayoutObject}->Notify(
-                        Data => $Ticket{TicketNumber}
-                            . ': $Text{"Ticket is locked by another agent."}',
+                        Data => "$Ticket{TicketNumber}: "
+                            . $Self->{LayoutObject}->{LanguageObject}
+                            ->Translate("Ticket is locked by another agent."),
                     );
                     next TICKET_ID;
                 }
             }
             else {
-                $Param{TicketsWereLocked} = 1;
                 $LockedTickets .= "LockedTicketID=" . $TicketID . ';';
+                $Param{TicketsWereLocked} = 1;
             }
 
             # set lock
@@ -373,7 +376,8 @@ sub Run {
                 NewUserID => $Self->{UserID},
             );
             $Output .= $Self->{LayoutObject}->Notify(
-                Data => $Ticket{TicketNumber} . ': $Text{"Ticket locked."}',
+                Data => "$Ticket{TicketNumber}: "
+                    . $Self->{LayoutObject}->{LanguageObject}->Translate("Ticket locked."),
             );
         }
 
@@ -569,7 +573,7 @@ sub Run {
                     TicketID      => $TicketID,
                     DynamicFields => 0,
                 );
-                my %StateData = $Self->{TicketObject}->{StateObject}->StateGet(
+                my %StateData = $Self->{StateObject}->StateGet(
                     ID => $Ticket{StateID},
                 );
 
@@ -595,7 +599,7 @@ sub Run {
             }
 
             # time units for note
-            if ( $GetParam{'TimeUnits'} && $ArticleID ) {
+            if ( $GetParam{TimeUnits} && $ArticleID ) {
                 if ( $Self->{ConfigObject}->Get('Ticket::Frontend::BulkAccountedTime') ) {
                     $Self->{TicketObject}->TicketAccountTime(
                         TicketID  => $TicketID,
@@ -619,7 +623,7 @@ sub Run {
             }
 
             # time units for email
-            if ( $GetParam{ 'EmailTimeUnits' && $EmailArticleID } ) {
+            if ( $GetParam{EmailTimeUnits} && $EmailArticleID ) {
                 if ( $Self->{ConfigObject}->Get('Ticket::Frontend::BulkAccountedTime') ) {
                     $Self->{TicketObject}->TicketAccountTime(
                         TicketID  => $TicketID,
@@ -862,7 +866,7 @@ sub _Mask {
         STATE_ID:
         for my $StateID ( sort keys %StateList ) {
             next STATE_ID if !$StateID;
-            my %StateData = $Self->{TicketObject}->{StateObject}->StateGet( ID => $StateID );
+            my %StateData = $Self->{StateObject}->StateGet( ID => $StateID );
             next STATE_ID if $StateData{TypeName} !~ /pending/i;
             $Param{DateString} = $Self->{LayoutObject}->BuildDateSelection(
                 %Param,
@@ -876,7 +880,7 @@ sub _Mask {
                 Name => 'StatePending',
                 Data => \%Param,
             );
-            last;
+            last STATE_ID;
         }
     }
 
@@ -1100,9 +1104,10 @@ sub _Mask {
                 UserID     => $Self->{UserID},
                 Permission => 'ro',
             );
+            TICKETS:
             for my $TicketID (@TicketIDs) {
                 my %Ticket = $Self->{TicketObject}->TicketGet( TicketID => $TicketID );
-                next if !%Ticket;
+                next TICKETS if !%Ticket;
                 $Data{"SlaveOf:$Ticket{TicketNumber}"} = "Slave of Ticket#$Ticket{TicketNumber}: $Ticket{Title}";
             }
         }
@@ -1165,19 +1170,19 @@ sub _Mask {
                 }
         );
 
-        # show undo link
+        # show undo&close link
         $Self->{LayoutObject}->Block(
             Name => 'UndoClosePopup',
-            Data => { %Param, TicketID => $Param{"LockedTickets"} },
+            Data => {%Param},
         );
     }
     else {
-        # show back link
+
+        # show cancel&close link
         $Self->{LayoutObject}->Block(
             Name => 'CancelClosePopup',
-            Data => %Param
+            Data => {%Param},
         );
-
     }
 
     # get output back

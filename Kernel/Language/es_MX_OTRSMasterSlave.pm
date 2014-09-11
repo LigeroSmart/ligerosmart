@@ -12,6 +12,8 @@ package Kernel::Language::es_MX_OTRSMasterSlave;
 use strict;
 use warnings;
 
+use utf8;
+
 sub Data {
     my $Self = shift;
 

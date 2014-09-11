@@ -5,7 +5,7 @@
 
 <!-- nofilter(TidyAll::Plugin::OTRS::SOPM::DocumentationPresent) -->
 
-    <Framework>3.3.x</Framework>
+    <Framework>4.0.x</Framework>
     <Vendor>OTRS AG</Vendor>
     <URL>http://otrs.org/</URL>
     <License>GNU AFFERO GENERAL PUBLIC LICENSE Version 3, November 2007</License>
@@ -19,209 +19,28 @@
         <File Permission="644" Location="Kernel/Modules/AgentMasterSlavePrepareTicket.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentTicketBulk.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentTicketMasterSlave.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTicketBulk.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTicketMasterSlave.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTicketBulk.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTicketMasterSlave.tt"/>
         <File Permission="644" Location="Kernel/System/Ticket/Event/MasterSlave.pm"/>
         <File Permission="644" Location="Kernel/System/MasterSlave.pm"/>
         <File Permission="644" Location="var/packagesetup/OTRSMasterSlave.pm"/>
     </Filelist>
     <CodeInstall Type="post"><![CDATA[
-
-        # define function name
-        my $FunctionName = 'CodeInstall';
-
-        # create the package name
-        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
-
-        # load the module
-        if ( $Self->{MainObject}->Require($CodeModule) ) {
-
-            # create new instance
-            my $CodeObject = $CodeModule->new( %{$Self} );
-
-            if ($CodeObject) {
-
-                # start method
-                if ( !$CodeObject->$FunctionName(%{$Self}) ) {
-                    $Self->{LogObject}->Log(
-                        Priority => 'error',
-                        Message  => "Could not call method $FunctionName() on $CodeModule.pm."
-                    );
-                }
-            }
-
-            # error handling
-            else {
-                $Self->{LogObject}->Log(
-                    Priority => 'error',
-                    Message  => "Could not call method new() on $CodeModule.pm."
-                );
-            }
-        }
-
+        $Kernel::OM->Get('var::packagesetup::OTRSMasterSlave')->CodeInstall();
     ]]></CodeInstall>
     <CodeUpgrade Type="post" Version="1.2.5"><![CDATA[
-
-        # define function name
-        my $FunctionName = 'CodeUpgrade125';
-
-        # create the package name
-        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
-
-        # The code module has just recently been copied to it's location in the file system.
-        # In a persistent Perl environment an old version of the module might still be loaded,
-        # as watchdogs like Apache2::Reload haven't had a chance to reload it.
-        # So we need to make sure that the new version is being loaded.
-        # Kernel::System::Main::Require() checks the relative file path, so we need to remove that from %INC.
-        # This is only needed in persistent Perl environment, but does no harm in a CGI environment.
-        my $CodeModulePath = $CodeModule;
-        $CodeModulePath =~ s/::/\//g;
-        $CodeModulePath .= '.pm';
-        delete $INC{$CodeModulePath};
-
-        # load the module
-        if ( $Self->{MainObject}->Require($CodeModule) ) {
-
-            # create new instance
-            my $CodeObject = $CodeModule->new( %{$Self} );
-
-            if ($CodeObject) {
-
-                # start method
-                if ( !$CodeObject->$FunctionName(%{$Self}) ) {
-                    $Self->{LogObject}->Log(
-                        Priority => 'error',
-                        Message  => "Could not call method $FunctionName() on $CodeModule.pm."
-                    );
-                }
-            }
-
-            # error handling
-            else {
-                $Self->{LogObject}->Log(
-                    Priority => 'error',
-                    Message  => "Could not call method new() on $CodeModule.pm."
-                );
-            }
-        }
-
+        $Kernel::OM->Get('var::packagesetup::OTRSMasterSlave')->CodeUpgrade125();
     ]]></CodeUpgrade>
     <CodeUpgrade Type="post"><![CDATA[
-
-        # define function name
-        my $FunctionName = 'CodeUpgrade';
-
-        # create the package name
-        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
-
-        # The code module has just recently been copied to it's location in the file system.
-        # In a persistent Perl environment an old version of the module might still be loaded,
-        # as watchdogs like Apache2::Reload haven't had a chance to reload it.
-        # So we need to make sure that the new version is being loaded.
-        # Kernel::System::Main::Require() checks the relative file path, so we need to remove that from %INC.
-        # This is only needed in persistent Perl environment, but does no harm in a CGI environment.
-        my $CodeModulePath = $CodeModule;
-        $CodeModulePath =~ s/::/\//g;
-        $CodeModulePath .= '.pm';
-        delete $INC{$CodeModulePath};
-
-        # load the module
-        if ( $Self->{MainObject}->Require($CodeModule) ) {
-
-            # create new instance
-            my $CodeObject = $CodeModule->new( %{$Self} );
-
-            if ($CodeObject) {
-
-                # start method
-                if ( !$CodeObject->$FunctionName(%{$Self}) ) {
-                    $Self->{LogObject}->Log(
-                        Priority => 'error',
-                        Message  => "Could not call method $FunctionName() on $CodeModule.pm."
-                    );
-                }
-            }
-
-            # error handling
-            else {
-                $Self->{LogObject}->Log(
-                    Priority => 'error',
-                    Message  => "Could not call method new() on $CodeModule.pm."
-                );
-            }
-        }
-
+        $Kernel::OM->Get('var::packagesetup::OTRSMasterSlave')->CodeUpgrade();
     ]]></CodeUpgrade>
     <CodeReinstall Type="post"><![CDATA[
-
-        # define function name
-        my $FunctionName = 'CodeReinstall';
-
-        # create the package name
-        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
-
-        # load the module
-        if ( $Self->{MainObject}->Require($CodeModule) ) {
-
-            # create new instance
-            my $CodeObject = $CodeModule->new( %{$Self} );
-
-            if ($CodeObject) {
-
-                # start method
-                if ( !$CodeObject->$FunctionName(%{$Self}) ) {
-                    $Self->{LogObject}->Log(
-                        Priority => 'error',
-                        Message  => "Could not call method $FunctionName() on $CodeModule.pm."
-                    );
-                }
-            }
-
-            # error handling
-            else {
-                $Self->{LogObject}->Log(
-                    Priority => 'error',
-                    Message  => "Could not call method new() on $CodeModule.pm."
-                );
-            }
-        }
-
+        $Kernel::OM->Get('var::packagesetup::OTRSMasterSlave')->CodeReinstall();
     ]]></CodeReinstall>
     <CodeUninstall Type="pre"><![CDATA[
-
-        # define function name
-        my $FunctionName = 'CodeUninstall';
-
-        # create the package name
-        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
-
-        # load the module
-        if ( $Self->{MainObject}->Require($CodeModule) ) {
-
-            # create new instance
-            my $CodeObject = $CodeModule->new( %{$Self} );
-
-            if ($CodeObject) {
-
-                # start method
-                if ( !$CodeObject->$FunctionName(%{$Self}) ) {
-                    $Self->{LogObject}->Log(
-                        Priority => 'error',
-                        Message  => "Could not call method $FunctionName() on $CodeModule.pm."
-                    );
-                }
-            }
-
-            # error handling
-            else {
-                $Self->{LogObject}->Log(
-                    Priority => 'error',
-                    Message  => "Could not call method new() on $CodeModule.pm."
-                );
-            }
-        }
-
+        $Kernel::OM->Get('var::packagesetup::OTRSMasterSlave')->CodeUninstall();
     ]]></CodeUninstall>
+
     <IntroInstall Type="pre" Title="Install Information" Lang="en"><![CDATA[
         <br/>
         <strong>WELCOME</strong>

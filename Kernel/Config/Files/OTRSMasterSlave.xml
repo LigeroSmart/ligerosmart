@@ -97,7 +97,7 @@
                 <Item Key="Name">MasterSlave</Item>
                 <Item Key="Description" Translatable="1">Change the MasterSlave state of the ticket.</Item>
                 <Item Key="Action">AgentTicketMasterSlave</Item>
-                <Item Key="Link">Action=AgentTicketMasterSlave;TicketID=$QData{"TicketID"}</Item>
+                <Item Key="Link">Action=AgentTicketMasterSlave;TicketID=[% Data.TicketID | html %]</Item>
                 <Item Key="Target"></Item>
                 <Item Key="PopupType">TicketAction</Item>
             </Hash>
@@ -227,7 +227,7 @@
         <Group>MasterSlave</Group>
         <SubGroup>Frontend::Agent::Ticket::ViewMasterSlave</SubGroup>
         <Setting>
-            <String Regex="">$Text{"MasterSlave"}!</String>
+            <String Regex="">[% Translate("MasterSlave") | html %]!</String>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Ticket::Frontend::AgentTicketMasterSlave###Body" Required="0" Valid="1">

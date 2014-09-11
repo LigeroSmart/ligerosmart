@@ -12,11 +12,13 @@ package Kernel::System::MasterSlave;
 use strict;
 use warnings;
 
-use Kernel::System::LinkObject;
-use Kernel::System::DynamicField;
-use Kernel::System::DynamicField::Backend;
-
-use vars qw(@ISA $VERSION);
+our @ObjectDependencies = (
+    'Kernel::System::DynamicField',
+    'Kernel::System::DynamicField::Backend',
+    'Kernel::System::LinkObject',
+    'Kernel::System::Log',
+    'Kernel::System::Ticket',
+);
 
 =head1 NAME
 
@@ -34,56 +36,11 @@ All functions to handle ticket master slave tasks ...
 
 =item new()
 
-create an object
+create an object. Do not use it directly, instead use:
 
-    use Kernel::Config;
-    use Kernel::System::Encode;
-    use Kernel::System::Log;
-    use Kernel::System::Time;
-    use Kernel::System::Main;
-    use Kernel::System::DB;
-    use Kernel::System::Ticket;
-    use Kernel::System::MasterSlaveObject;
-
-    my $ConfigObject = Kernel::Config->new();
-    my $EncodeObject = Kernel::System::Encode->new(
-        ConfigObject => $ConfigObject,
-    );
-    my $LogObject = Kernel::System::Log->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-    );
-    my $TimeObject = Kernel::System::Time->new(
-        ConfigObject => $ConfigObject,
-        LogObject    => $LogObject,
-    );
-    my $MainObject = Kernel::System::Main->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-    );
-    my $DBObject = Kernel::System::DB->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-        MainObject   => $MainObject,
-    );
-    my $TicketObject = Kernel::System::Ticket->new(
-        ConfigObject       => $ConfigObject,
-        LogObject          => $LogObject,
-        DBObject           => $DBObject,
-        MainObject         => $MainObject,
-        TimeObject         => $TimeObject,
-        EncodeObject       => $EncodeObject,
-        GroupObject        => $GroupObject,        # if given
-        CustomerUserObject => $CustomerUserObject, # if given
-        QueueObject        => $QueueObject,        # if given
-    );
-
-    my $MasterSlaveObject = Kernel::System::MasterSlaveObject->new(
-        LogObject    => $LogObject,
-        TicketObject => $TicketObject
-    );
+    use Kernel::System::ObjectManager;
+    local $Kernel::OM = Kernel::System::ObjectManager->new();
+    my $MasterSlaveObject = $Kernel::OM->Get('Kernel::System::MasterSlaveObject');
 
 =cut
 
@@ -93,16 +50,6 @@ sub new {
     # allocate new hash for object
     my $Self = {};
     bless( $Self, $Type );
-
-    # check needed objects
-    for (qw( LogObject TicketObject )) {
-        $Self->{$_} = $Param{$_} || die;
-    }
-
-    # create extra needed objects
-    $Self->{LinkObject}         = Kernel::System::LinkObject->new(%Param);
-    $Self->{DynamicFieldObject} = Kernel::System::DynamicField->new(%Param);
-    $Self->{BackendObject}      = Kernel::System::DynamicField::Backend->new(%Param);
 
     return $Self;
 }
@@ -132,7 +79,7 @@ sub MasterSlave {
         )
     {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -140,11 +87,23 @@ sub MasterSlave {
         }
     }
 
+    # get ticket object
+    my $TicketObject = $Kernel::OM->Get('Kernel::System::Ticket');
+
+    # get link object
+    my $LinkObject = $Kernel::OM->Get('Kernel::System::LinkObject');
+
+    # get dynamic field object
+    my $DynamicFieldObject = $Kernel::OM->Get('Kernel::System::DynamicField');
+
+    # get dynamic field backend object
+    my $BackendObject = $Kernel::OM->Get('Kernel::System::DynamicField::Backend');
+
     my $MasterSlaveDynamicFieldName = $Param{MasterSlaveDynamicFieldName};
     my %Ticket
         = $Param{Ticket}
         ? %{ $Param{Ticket} }
-        : $Self->{TicketObject}->TicketGet( TicketID => $Param{TicketID}, DynamicFields => 1 );
+        : $TicketObject->TicketGet( TicketID => $Param{TicketID}, DynamicFields => 1 );
 
     # set a new master ticket
     # check if it is already a master ticket
@@ -165,12 +124,12 @@ sub MasterSlave {
             && !$Param{MasterSlaveKeepParentChildAfterUnset}
             )
         {
-            my $SourceKey = $Self->{TicketObject}->TicketIDLookup(
+            my $SourceKey = $TicketObject->TicketIDLookup(
                 TicketNumber => $1,
                 UserID       => $Param{UserID},
             );
 
-            $Self->{LinkObject}->LinkDelete(
+            $LinkObject->LinkDelete(
                 Object1 => 'Ticket',
                 Key1    => $SourceKey,
                 Object2 => 'Ticket',
@@ -181,12 +140,12 @@ sub MasterSlave {
         }
 
         # get dynamic field config
-        my $DynamicField = $Self->{DynamicFieldObject}->DynamicFieldGet(
+        my $DynamicField = $DynamicFieldObject->DynamicFieldGet(
             Name => $MasterSlaveDynamicFieldName,
         );
 
         # set new master ticket
-        $Self->{BackendObject}->ValueSet(
+        $BackendObject->ValueSet(
             DynamicFieldConfig => $DynamicField,
             ObjectID           => $Param{TicketID},
             Value              => 'Master',
@@ -205,12 +164,12 @@ sub MasterSlave {
         )
         )
     {
-        my $SourceKey = $Self->{TicketObject}->TicketIDLookup(
+        my $SourceKey = $TicketObject->TicketIDLookup(
             TicketNumber => $1,
             UserID       => $Param{UserID},
         );
 
-        $Self->{LinkObject}->LinkAdd(
+        $LinkObject->LinkAdd(
             SourceObject => 'Ticket',
             SourceKey    => $SourceKey,
             TargetObject => 'Ticket',
@@ -220,7 +179,7 @@ sub MasterSlave {
             UserID       => $Param{UserID},
         );
 
-        my %Links = $Self->{LinkObject}->LinkKeyList(
+        my %Links = $LinkObject->LinkKeyList(
             Object1   => 'Ticket',
             Key1      => $Param{TicketID},
             Object2   => 'Ticket',
@@ -230,16 +189,18 @@ sub MasterSlave {
             UserID    => $Param{UserID},
         );
         my @SlaveTicketIDs;
+        LINKS:
         for my $LinkedTicketID ( sort keys %Links ) {
-            next if !$Links{$LinkedTicketID};
+            next LINKS if !$Links{$LinkedTicketID};
 
             # just take ticket with slave attributes for action
-            my %Ticket = $Self->{TicketObject}->TicketGet(
+            my %Ticket = $TicketObject->TicketGet(
                 TicketID      => $LinkedTicketID,
                 DynamicFields => 1,
             );
-            next if !$Ticket{ 'DynamicField_' . $MasterSlaveDynamicFieldName };
-            next if $Ticket{ 'DynamicField_' . $MasterSlaveDynamicFieldName } !~ /^SlaveOf:(.*?)$/;
+            next LINKS if !$Ticket{ 'DynamicField_' . $MasterSlaveDynamicFieldName };
+            next LINKS
+                if $Ticket{ 'DynamicField_' . $MasterSlaveDynamicFieldName } !~ /^SlaveOf:(.*?)$/;
 
             # remember ticket id
             push @SlaveTicketIDs, $LinkedTicketID;
@@ -252,7 +213,7 @@ sub MasterSlave {
         {
             if ( $Param{MasterSlaveFollowUpdatedMaster} && @SlaveTicketIDs ) {
                 for my $LinkedTicketID (@SlaveTicketIDs) {
-                    $Self->{LinkObject}->LinkAdd(
+                    $LinkObject->LinkAdd(
                         SourceObject => 'Ticket',
                         SourceKey    => $SourceKey,
                         TargetObject => 'Ticket',
@@ -266,7 +227,7 @@ sub MasterSlave {
 
             if ( !$Param{MasterSlaveKeepParentChildAfterUnset} ) {
                 for my $LinkedTicketID (@SlaveTicketIDs) {
-                    $Self->{LinkObject}->LinkDelete(
+                    $LinkObject->LinkDelete(
                         Object1 => 'Ticket',
                         Key1    => $Param{TicketID},
                         Object2 => 'Ticket',
@@ -283,12 +244,12 @@ sub MasterSlave {
             && !$Param{MasterSlaveKeepParentChildAfterUpdate}
             )
         {
-            my $SourceKey = $Self->{TicketObject}->TicketIDLookup(
+            my $SourceKey = $TicketObject->TicketIDLookup(
                 TicketNumber => $1,
                 UserID       => $Param{UserID},
             );
 
-            $Self->{LinkObject}->LinkDelete(
+            $LinkObject->LinkDelete(
                 Object1 => 'Ticket',
                 Key1    => $SourceKey,
                 Object2 => 'Ticket',
@@ -299,10 +260,10 @@ sub MasterSlave {
         }
 
         # get dynamic field config
-        my $DynamicField = $Self->{DynamicFieldObject}->DynamicFieldGet(
+        my $DynamicField = $DynamicFieldObject->DynamicFieldGet(
             Name => $MasterSlaveDynamicFieldName,
         );
-        $Self->{BackendObject}->ValueSet(
+        $BackendObject->ValueSet(
             DynamicFieldConfig => $DynamicField,
             ObjectID           => $Param{TicketID},
             Value              => $Param{MasterSlaveDynamicFieldValue},
@@ -319,7 +280,7 @@ sub MasterSlave {
             && !$Param{MasterSlaveKeepParentChildAfterUnset}
             )
         {
-            my %Links = $Self->{LinkObject}->LinkKeyList(
+            my %Links = $LinkObject->LinkKeyList(
                 Object1   => 'Ticket',
                 Key1      => $Param{TicketID},
                 Object2   => 'Ticket',
@@ -329,16 +290,17 @@ sub MasterSlave {
                 UserID    => $Param{UserID},
             );
             my @SlaveTicketIDs;
+            LINKS:
             for my $LinkedTicketID ( sort keys %Links ) {
-                next if !$Links{$LinkedTicketID};
+                next LINKS if !$Links{$LinkedTicketID};
 
                 # just take ticket with slave attributes for action
-                my %Ticket = $Self->{TicketObject}->TicketGet(
+                my %Ticket = $TicketObject->TicketGet(
                     TicketID      => $LinkedTicketID,
                     DynamicFields => 1,
                 );
-                next if !$Ticket{ 'DynamicField_' . $MasterSlaveDynamicFieldName };
-                next
+                next LINKS if !$Ticket{ 'DynamicField_' . $MasterSlaveDynamicFieldName };
+                next LINKS
                     if $Ticket{ 'DynamicField_' . $MasterSlaveDynamicFieldName }
                     !~ /^SlaveOf:(.*?)$/;
 
@@ -347,7 +309,7 @@ sub MasterSlave {
             }
 
             for my $LinkedTicketID (@SlaveTicketIDs) {
-                $Self->{LinkObject}->LinkDelete(
+                $LinkObject->LinkDelete(
                     Object1 => 'Ticket',
                     Key1    => $Param{TicketID},
                     Object2 => 'Ticket',
@@ -363,12 +325,12 @@ sub MasterSlave {
             && $Ticket{ 'DynamicField_' . $MasterSlaveDynamicFieldName } =~ /^SlaveOf:(.*?)$/
             )
         {
-            my $SourceKey = $Self->{TicketObject}->TicketIDLookup(
+            my $SourceKey = $TicketObject->TicketIDLookup(
                 TicketNumber => $1,
                 UserID       => $Param{UserID},
             );
 
-            $Self->{LinkObject}->LinkDelete(
+            $LinkObject->LinkDelete(
                 Object1 => 'Ticket',
                 Key1    => $SourceKey,
                 Object2 => 'Ticket',
@@ -379,10 +341,10 @@ sub MasterSlave {
         }
 
         # get dynamic field config
-        my $DynamicField = $Self->{DynamicFieldObject}->DynamicFieldGet(
+        my $DynamicField = $DynamicFieldObject->DynamicFieldGet(
             Name => $MasterSlaveDynamicFieldName,
         );
-        $Self->{BackendObject}->ValueSet(
+        $BackendObject->ValueSet(
             DynamicFieldConfig => $DynamicField,
             ObjectID           => $Param{TicketID},
             Value              => '',

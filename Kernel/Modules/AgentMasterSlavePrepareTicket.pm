@@ -23,12 +23,12 @@ sub new {
     bless( $Self, $Type );
 
     # check needed Objects
-    for (
+    for my $Needed (
         qw(ParamObject DBObject LayoutObject LogObject ConfigObject TicketObject UserObject UserID)
         )
     {
-        if ( !$Self->{$_} ) {
-            $Self->{LayoutObject}->FatalError( Message => "Got no $_!" );
+        if ( !$Self->{$Needed} ) {
+            $Self->{LayoutObject}->FatalError( Message => "Got no $Needed!" );
         }
     }
     $Self->{UserLanguage} = $Self->{LayoutObject}->{UserLanguage}
@@ -93,13 +93,14 @@ sub PreRun {
     $DynamicField->{Config}->{DefaultValue} = '';
     $DynamicField->{Config}->{PossibleNone} = 1;
 
+    TICKETS:
     for my $TicketID (@TicketIDs) {
         my %CurrentTicket = $Self->{TicketObject}->TicketGet(
             TicketID      => $TicketID,
             DynamicFields => 1,
         );
 
-        next if !%CurrentTicket;
+        next TICKETS if !%CurrentTicket;
 
         # set dynamic field posible values
         $DynamicField->{Config}->{PossibleValues}{
