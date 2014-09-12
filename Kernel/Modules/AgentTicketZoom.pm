@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTicketZoom.pm - to get a closer view
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/e5fe8740403fd6bfe49bd0f202f5765bec1140c4/Kernel/Modules/AgentTicketZoom.pm
+# $origin: https://github.com/OTRS/otrs/blob/257dff6b7ca9197b4dee0ab8985f4d1a92a6ceaa/Kernel/Modules/AgentTicketZoom.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1519,11 +1519,15 @@ sub MaskAgentZoom {
 
     # get linked objects
     my $LinkListWithData = $Self->{LinkObject}->LinkListWithData(
-        Object                       => 'Ticket',
-        Key                          => $Self->{TicketID},
-        State                        => 'Valid',
-        IgnoreLinkedTicketStateTypes => 1,
-        UserID                       => $Self->{UserID},
+        Object           => 'Ticket',
+        Key              => $Self->{TicketID},
+        State            => 'Valid',
+        UserID           => $Self->{UserID},
+        ObjectParameters => {
+            Ticket => {
+                IgnoreLinkedTicketStateTypes => 1,
+            },
+        },
     );
 
     # get link table view mode
