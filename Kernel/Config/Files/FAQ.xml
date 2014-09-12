@@ -723,7 +723,7 @@ Your OTRS Notification Master
                     <Hash>
                         <Item Key="Description">FAQ</Item>
                         <Item Key="URL">/otrs/index.pl?Action=AgentFAQZoom;ItemID=&lt;MATCH2&gt;</Item>
-                        <Item Key="Image">help-small.png</Item>
+                        <Item Key="Image">/otrs-web/skins/Agent/default/img/help-small.png</Item>
                         <Item Key="Target">_blank</Item>
                     </Hash>
                 </Item>

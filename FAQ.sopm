@@ -127,6 +127,7 @@
         <File Permission="644" Location="var/httpd/htdocs/js/FAQ.Customer.FAQZoom.js"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/FAQ.Agent.Default.css"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/FAQ.Agent.Detail.css"/>
+        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/img/help-small.png"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/css/FAQ.Customer.Default.css"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/css/FAQ.Customer.Detail.css"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/css/FAQ.Widget.css"/>
