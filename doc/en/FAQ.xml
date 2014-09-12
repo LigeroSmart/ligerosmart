@@ -265,6 +265,22 @@
             </para>
         </note>
     </section>
+    <section>
+        <title>Dynamic Fields for FAQ</title>
+        <para>
+            Since FAQ 4 Basic Dynamic Fields (Text, TextArea, Checkbox, Dropdown, Multiselect, Date
+            and Date/Time) has been implemented for FAQ items. It creation, behavior and
+            configuration is similar to the Dynamic Fields for Ticket.
+        </para>
+        <para>
+            Already created Dynamic Fields can not be used for FAQ, new Dynamic Fields for FAQ
+            (exclusively) has to be created (Same as Ticket and Article Dynamic Fields).
+        </para>
+        <para>
+            Dynamic Fields extend FAQ by adding multiple options to store and present information on
+            FAQ Items beyond the normal fields (e.g. Symptom, Problem, Solution, etc. ).
+        </para>
+    </section>
 </chapter>
 
 <!-- ********************** -->
