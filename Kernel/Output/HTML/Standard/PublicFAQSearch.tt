@@ -25,7 +25,7 @@
             <fieldset>
                 <h2>[% Translate("Fulltext search in FAQ articles (e. g. \"John*n\" or \"Will*\")") | html %]</h2>
                 <div>
-                    <label for="Title">[% Translate("Fulltext") | html %]</label>
+                    <label for="FullText">[% Translate("Fulltext") | html %]</label>
                     <input title="[% Translate("Fulltext") | html %]" type="text" id="FullText" name="Fulltext" value="[% Data.Fulltext | html %]" size="20" />
                 </div>
                 <div>
