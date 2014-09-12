@@ -20,7 +20,7 @@
     </div>
 [% RenderBlockEnd("NoFAQFound") %]
 [% RenderBlockStart("RecordForm") %]
-    <table class="TableSmall NoCellspacing" summary="[% Translate("A generic FAQ table") | html %]">
+    <table class="TableSmall NoCellspacing">
         <thead>
             <tr>
 [% RenderBlockStart("RecordNumberHeader") %]
