@@ -1926,75 +1926,6 @@ sub _Mask {
         );
     }
 
-# ---
-# MasterSlave
-# ---
-    # get master/slave dynamic field
-    my $MasterSlaveDynamicField   = $Self->{ConfigObject}->Get('MasterSlave::DynamicField') || '';
-    my $MasterSlaveAdvancedEnabled = $Self->{ConfigObject}->Get('MasterSlave::AdvancedEnabled') || 0;
-    if ( $MasterSlaveAdvancedEnabled && $MasterSlaveDynamicField ) {
-        my $UnsetMasterSlave          = $Self->{ConfigObject}->Get('MasterSlave::UnsetMasterSlave') || 0;
-        my $UpdateMasterSlave         = $Self->{ConfigObject}->Get('MasterSlave::UpdateMasterSlave') || 0;
-
-        my %Ticket = $Self->{TicketObject}->TicketGet(
-            TicketID      => $Self->{TicketID},
-            DynamicFields => 1,
-            UserID        => $Self->{UserID},
-        );
-
-        $Param{MasterSlaveDynamicField} = $MasterSlaveDynamicField;
-        my $TicketMasterSlaveDynamicFieldValue = $Ticket{ 'DynamicField_' . $MasterSlaveDynamicField } || '';
-
-        my %Data;
-        if ( $TicketMasterSlaveDynamicFieldValue ne 'Master' ) {
-            $Data{Master} = $Self->{LanguageObject}->Get('New Master Ticket');
-        }
-        if ( $UnsetMasterSlave && $TicketMasterSlaveDynamicFieldValue eq 'Master' ) {
-            $Data{UnsetMaster} = $Self->{LanguageObject}->Get('Unset Master Ticket');
-        }
-        if ( $UnsetMasterSlave && $TicketMasterSlaveDynamicFieldValue =~ m{^SlaveOf:(.*?)$}xms ) {
-            $Data{UnsetSlave}  = $Self->{LanguageObject}->Get('Unset Slave Ticket');
-        }
-        if ( $UpdateMasterSlave ) {
-            my @TicketIDs = $Self->{TicketObject}->TicketSearch(
-
-                # result (required)
-                Result                     => 'ARRAY',
-                # master slave dynamic field
-                'DynamicField_' . $MasterSlaveDynamicField => {
-                    Equals => 'Master',
-                },
-                StateType                  => 'Open',
-
-                # result limit
-                Limit      => 60,
-                UserID     => $Self->{UserID},
-                Permission => 'ro',
-            );
-            TICKETS:
-            for my $TicketID (@TicketIDs) {
-                my %CurrentTicket = $Self->{TicketObject}->TicketGet( TicketID => $TicketID );
-                next TICKETS if !%CurrentTicket;
-                next TICKETS if %Ticket && $Ticket{ 'DynamicField_' . $MasterSlaveDynamicField } && $Ticket{ 'DynamicField_' . $MasterSlaveDynamicField } eq "SlaveOf:$CurrentTicket{TicketNumber}";
-                next TICKETS if %Ticket && $Ticket{ 'DynamicField_' . $MasterSlaveDynamicField } && $Ticket{TicketID} eq $CurrentTicket{TicketID};
-
-                $Data{"SlaveOf:$CurrentTicket{TicketNumber}"}
-                 = $Self->{LanguageObject}->Get('Slave of Ticket#') ."$CurrentTicket{TicketNumber}: $CurrentTicket{Title}";
-            }
-        }
-        $Param{MasterSlaveStrg} = $Self->{LayoutObject}->BuildSelection(
-            Data => { '' => '-', %Data },
-            Name => 'DynamicField_' . $MasterSlaveDynamicField,
-            Translation => 0,
-            SelectedID  => $Param{ResponsibleID},
-        );
-        $Self->{LayoutObject}->Block(
-            Name => 'MasterSlave',
-            Data => \%Param,
-        );
-    }
-# ---
-
     # Dynamic fields
     # cycle trough the activated Dynamic Fields for this screen
     DYNAMICFIELD:
@@ -2347,6 +2278,77 @@ sub _Mask {
             );
         }
     }
+
+# ---
+# MasterSlave
+# ---
+    # get master/slave dynamic field
+    my $MasterSlaveDynamicField   = $Self->{ConfigObject}->Get('MasterSlave::DynamicField') || '';
+    my $MasterSlaveAdvancedEnabled = $Self->{ConfigObject}->Get('MasterSlave::AdvancedEnabled') || 0;
+
+    if ( $MasterSlaveAdvancedEnabled && $MasterSlaveDynamicField ) {
+        my $UnsetMasterSlave          = $Self->{ConfigObject}->Get('MasterSlave::UnsetMasterSlave') || 0;
+        my $UpdateMasterSlave         = $Self->{ConfigObject}->Get('MasterSlave::UpdateMasterSlave') || 0;
+
+        my %Ticket = $Self->{TicketObject}->TicketGet(
+            TicketID      => $Self->{TicketID},
+            DynamicFields => 1,
+            UserID        => $Self->{UserID},
+        );
+
+        $Param{MasterSlaveDynamicField} = $MasterSlaveDynamicField;
+        my $TicketMasterSlaveDynamicFieldValue = $Ticket{ 'DynamicField_' . $MasterSlaveDynamicField } || '';
+
+        my %Data;
+        if ( $TicketMasterSlaveDynamicFieldValue ne 'Master' ) {
+            $Data{Master} = $Self->{LanguageObject}->Get('New Master Ticket');
+        }
+        if ( $UnsetMasterSlave && $TicketMasterSlaveDynamicFieldValue eq 'Master' ) {
+            $Data{UnsetMaster} = $Self->{LanguageObject}->Get('Unset Master Ticket');
+        }
+        if ( $UnsetMasterSlave && $TicketMasterSlaveDynamicFieldValue =~ m{^SlaveOf:(.*?)$}xms ) {
+            $Data{UnsetSlave}  = $Self->{LanguageObject}->Get('Unset Slave Ticket');
+        }
+
+        if ( $UpdateMasterSlave ) {
+            my @TicketIDs = $Self->{TicketObject}->TicketSearch(
+
+                # result (required)
+                Result                     => 'ARRAY',
+                # master slave dynamic field
+                'DynamicField_' . $MasterSlaveDynamicField => {
+                    Equals => 'Master',
+                },
+                StateType                  => 'Open',
+
+                # result limit
+                Limit      => 60,
+                UserID     => $Self->{UserID},
+                Permission => 'ro',
+            );
+            TICKETS:
+            for my $TicketID (@TicketIDs) {
+                my %CurrentTicket = $Self->{TicketObject}->TicketGet( TicketID => $TicketID );
+                next TICKETS if !%CurrentTicket;
+                next TICKETS if %Ticket && $Ticket{ 'DynamicField_' . $MasterSlaveDynamicField } && $Ticket{ 'DynamicField_' . $MasterSlaveDynamicField } eq "SlaveOf:$CurrentTicket{TicketNumber}";
+                next TICKETS if %Ticket && $Ticket{ 'DynamicField_' . $MasterSlaveDynamicField } && $Ticket{TicketID} eq $CurrentTicket{TicketID};
+
+                $Data{"SlaveOf:$CurrentTicket{TicketNumber}"}
+                 = $Self->{LanguageObject}->Get('Slave of Ticket#') ."$CurrentTicket{TicketNumber}: $CurrentTicket{Title}";
+            }
+        }
+        $Param{MasterSlaveStrg} = $Self->{LayoutObject}->BuildSelection(
+            Data => { '' => '-', %Data },
+            Name => 'DynamicField_' . $MasterSlaveDynamicField,
+            Translation => 0,
+            SelectedID  => $Param{ResponsibleID},
+        );
+        $Self->{LayoutObject}->Block(
+            Name => 'MasterSlave',
+            Data => \%Param,
+        );
+    }
+# ---
 
     # End Widget Article
 

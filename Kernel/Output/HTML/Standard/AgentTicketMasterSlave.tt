@@ -325,18 +325,6 @@ $('#TypeID').bind('change', function (Event) {
 #                </div>
 #[% RenderBlockEnd("DynamicField_Field2") %]
 
-# ---
-# MasterSlave
-# ---
-[% RenderBlockStart("MasterSlave") %]
-                            <label for="DynamicField_[% Data.MasterSlaveDynamicField %]">[% Translate("MasterTicket") | html %]:</label>
-                            <div class="Field">
-                    [% Data.MasterSlaveStrg %]
-                            </div>
-                            <div class="Clear"></div>
-[% RenderBlockEnd("MasterSlave") %]
-# ---
-
                         </fieldset>
                     </div>
                 </div>
@@ -476,6 +464,19 @@ $('#TypeID').bind('change', function (Event) {
                             </div>
                             <div class="Clear"></div>
 [% RenderBlockEnd("TimeUnits") %]
+
+# ---
+# MasterSlave
+# ---
+[% RenderBlockStart("MasterSlave") %]
+                            <label for="DynamicField_[% Data.MasterSlaveDynamicField %]">[% Translate("MasterTicket") | html %]:</label>
+                            <div class="Field">
+                    [% Data.MasterSlaveStrg %]
+                            </div>
+                            <div class="Clear"></div>
+[% RenderBlockEnd("MasterSlave") %]
+# ---
+
                         </fieldset>
 [% RenderBlockStart("InformAdditionalAgents") %]
                         <fieldset class="TableLike FixedLabel">
