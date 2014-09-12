@@ -772,7 +772,7 @@ for my $Test (@Tests) {
 
 # approval tests
 # update database to prevent generation of approval ticket
-return if !$Self->{DBObject}->Do(
+return if !$Kernel::OM->Get('Kernel::System::DB')->Do(
     SQL => '
         UPDATE faq_item
         SET approved = ?

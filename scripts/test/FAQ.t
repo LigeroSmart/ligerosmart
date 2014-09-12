@@ -138,7 +138,7 @@ $Self->True(
     "FAQAdd() - 2",
 );
 
-my $Home            = $Self->{ConfigObject}->Get('Home');
+my $Home            = $Kernel::OM->Get('Kernel::Config')->Get('Home');
 my @AttachmentTests = (
     {
         File => 'FAQ-Test1.pdf',
@@ -149,8 +149,12 @@ my @AttachmentTests = (
         MD5  => '2e520036a0cda6a806a8838b1000d9d7',
     },
 );
+
+# get main object
+my $MainObject = $Kernel::OM->Get('Kernel::System::Main');
+
 for my $AttachmentTest (@AttachmentTests) {
-    my $ContentSCALARRef = $Self->{MainObject}->FileRead(
+    my $ContentSCALARRef = $MainObject->FileRead(
         Location => $Home . '/scripts/test/sample/' . $AttachmentTest->{File},
     );
     my $Add = $FAQObject->AttachmentAdd(
@@ -178,7 +182,7 @@ for my $AttachmentTest (@AttachmentTests) {
         $AttachmentTest->{File},
         "AttachmentGet() - Filename $AttachmentTest->{File}",
     );
-    my $MD5 = $Self->{MainObject}->MD5sum(
+    my $MD5 = $MainObject->MD5sum(
         String => \$File{Content},
     );
     $Self->Is(
