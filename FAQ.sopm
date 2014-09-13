@@ -401,7 +401,7 @@
             </IndexCreate>
         </TableAlter>
         <TableAlter Name="faq_voting" Version="2.1.92">
-            <IndexCreate Name="faq_voting_item_id">
+            <IndexCreate Name="faq_voting">
                 <IndexColumn Name="item_id"/>
             </IndexCreate>
         </TableAlter>
@@ -424,6 +424,12 @@
             <ForeignKeyCreate ForeignTable="valid">
                 <Reference Local="valid_id" Foreign="id"/>
             </ForeignKeyCreate>
+        </TableAlter>
+        <TableAlter Name="faq_voting" Version="4.0.90">
+            <IndexDrop Name="faq_voting"/>
+            <IndexCreate Name="faq_voting_item_id">
+                <IndexColumn Name="item_id"/>
+            </IndexCreate>
         </TableAlter>
     </DatabaseUpgrade>
     <DatabaseUninstall Type="pre">
