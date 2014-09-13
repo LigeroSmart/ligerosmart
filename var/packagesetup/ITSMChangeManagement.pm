@@ -16,6 +16,7 @@ our @ObjectDependencies = (
     'Kernel::Config',
     'Kernel::System::DB',
     'Kernel::System::DynamicField',
+    'Kernel::System::DynamicFieldValue',
     'Kernel::System::GeneralCatalog',
     'Kernel::System::Group',
     'Kernel::System::ITSMChange',
@@ -1244,8 +1245,11 @@ delete all existing dynamic fields for changes and workorders
 sub _DynamicFieldsDelete {
     my ( $Self, %Param ) = @_;
 
-    # get the list of change and workorder dynamic fields (valid an invalid ones)
-    my $DynamicFieldList = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldListGet(
+    my $DynamicFieldObject      = $Kernel::OM->Get('Kernel::System::DynamicField');
+    my $DynamicFieldValueObject = $Kernel::OM->Get('Kernel::System::DynamicFieldValue');
+
+    # get the list of change and workorder dynamic fields (valid and invalid ones)
+    my $DynamicFieldList = $DynamicFieldObject->DynamicFieldListGet(
         Valid => 0,
         ObjectType => [ 'ITSMChange', 'ITSMWorkOrder' ],
     );
@@ -1254,10 +1258,37 @@ sub _DynamicFieldsDelete {
     DYNAMICFIELD:
     for my $DynamicField ( @{$DynamicFieldList} ) {
 
-        $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldDelete(
-            ID     => $DynamicField->{ID},
-            UserID => 1,
+        # delete all field values
+        my $ValuesDeleteSuccess = $DynamicFieldValueObject->AllValuesDelete(
+            FieldID => $DynamicField->{ID},
+            UserID  => 1,
         );
+
+        # values could be deleted
+        if ($ValuesDeleteSuccess) {
+
+            # delete field
+            my $Success = $DynamicFieldObject->DynamicFieldDelete(
+                ID     => $DynamicField->{ID},
+                UserID => 1,
+            );
+
+            # check error
+            if ( !$Success ) {
+                $Self->{LogObject}->Log(
+                    Priority => 'error',
+                    Message  => "Could not delete dynamic field '$DynamicField->{Name}'!",
+                );
+            }
+        }
+
+        # values could not be deleted
+        else {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Could not delete values for dynamic field '$DynamicField->{Name}'!",
+            );
+        }
     }
 
     return 1;
