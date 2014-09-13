@@ -694,9 +694,10 @@ delete all existing dynamic fields for FAQ
 sub _DynamicFieldsDelete {
     my ( $Self, %Param ) = @_;
 
-    my $DynamicFieldObject = $Kernel::OM->Get('Kernel::System::DynamicField');
+    my $DynamicFieldObject      = $Kernel::OM->Get('Kernel::System::DynamicField');
+    my $DynamicFieldValueObject = $Kernel::OM->Get('Kernel::System::DynamicFieldValue');
 
-    # get the list of FAQ dynamic fields (valid an invalid ones)
+    # get the list of FAQ dynamic fields (valid and invalid ones)
     my $DynamicFieldList = $DynamicFieldObject->DynamicFieldListGet(
         Valid      => 0,
         ObjectType => ['FAQ'],
@@ -707,12 +708,12 @@ sub _DynamicFieldsDelete {
     for my $DynamicField ( @{$DynamicFieldList} ) {
 
         # delete all field values
-        my $ValuesDeleteSuccess
-            = $Kernel::OM->Get('Kernel::System::DynamicFieldValue')->AllValuesDelete(
+        my $ValuesDeleteSuccess = $DynamicFieldValueObject->AllValuesDelete(
             FieldID => $DynamicField->{ID},
             UserID  => 1,
-            );
+        );
 
+        # values could be deleted
         if ($ValuesDeleteSuccess) {
 
             # delete field
@@ -720,6 +721,8 @@ sub _DynamicFieldsDelete {
                 ID     => $DynamicField->{ID},
                 UserID => 1,
             );
+
+            # check error
             if ( !$Success ) {
                 $Self->{LogObject}->Log(
                     Priority => 'error',
@@ -727,6 +730,8 @@ sub _DynamicFieldsDelete {
                 );
             }
         }
+
+        # values could not be deleted
         else {
             $Self->{LogObject}->Log(
                 Priority => 'error',
