@@ -1778,6 +1778,7 @@ Your OTRS Notification Master
             <Hash>
                 <Item Key="DisplayName" Translatable="1">FAQ</Item>
                 <Item Key="Module">Kernel::System::DynamicField::ObjectType::FAQ</Item>
+                <Item Key="Prio">200</Item>
             </Hash>
         </Setting>
     </ConfigItem>
