@@ -278,7 +278,7 @@
         </para>
         <para>
             Dynamic Fields extend FAQ by adding multiple options to store and present information on
-            FAQ Items beyond the normal fields (e.g. Symptom, Problem, Solution, etc. ).
+            FAQ Items, beyond the normal fields (e.g. Symptom, Problem, Solution, etc. ).
         </para>
     </section>
 </chapter>
