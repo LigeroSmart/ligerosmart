@@ -268,7 +268,7 @@
     <section>
         <title>Dynamic Fields for FAQ</title>
         <para>
-            Since FAQ 4 Basic Dynamic Fields (Text, TextArea, Checkbox, Dropdown, Multiselect, Date
+            From FAQ 4, basic Dynamic Fields (Text, TextArea, Checkbox, Dropdown, Multiselect, Date
             and Date/Time) has been implemented for FAQ items. It creation, behavior and
             configuration is similar to the Dynamic Fields for Ticket.
         </para>
