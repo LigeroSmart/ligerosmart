@@ -611,6 +611,9 @@
         All data from these tables will be irrevocably lost!
         <br/>
         <br/>
+        All Dynamic Fields created for this package and its data will be deleted permanently.
+        <br/>
+        <br/>
         The groups 'faq' and 'faq_admin' that were created during package installation will be deactivated.
         You can activate these groups again in the admin area.
         <br/>
@@ -627,6 +630,9 @@
         Alle darin enthaltenen Daten gehen unwiderruflich verloren!
         <br/>
         <br/>
+        Alle dynamischen Felder für dieses Paket erstellt und seine Daten dauerhaft gelöscht werden.
+        <br/>
+        <br/>
         Die von diesem Paket angelegten Gruppen 'faq' und 'faq_admin' werden deaktiviert.
         Sie können jederzeit im Admin-Bereich wieder aktiviert werden.
         <br/>
@@ -641,6 +647,9 @@
         <br/>
         Si usted desinstala este paquete, todas las tablas de la base de datos creadas durante la instalaci&oacute;n ser&aacute;n borradas.
         &iexcl;Todos los datos de esas tablas se perder&aacute;n irrevocablemente!.
+        <br/>
+        <br/>
+        Todos los Campos Dinámicos creados para este paquete y sus datos serán borrados permanentemente.
         <br/>
         <br/>
         Los grupos 'faq' y 'faq_admin' que fueron creados durante la instalaci&oacute;n del paquete ser&aacute;n desactivados.
