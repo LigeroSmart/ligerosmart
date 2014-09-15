@@ -450,4 +450,14 @@
             </Hash>
         </Setting>
     </ConfigItem>
+    <ConfigItem Name="ACLKeysLevel3::Actions###888-OTRSMasterSlave" Required="0" Valid="1">
+        <Description Translatable="1">Defines which items are available for 'Action' in third level of the ACL structure.</Description>
+        <Group>MasterSlave</Group>
+        <SubGroup>Core::TicketACL</SubGroup>
+        <Setting>
+            <Array>
+                <Item>AgentTicketMasterSlave</Item>
+            </Array>
+        </Setting>
+    </ConfigItem>
 </otrs_config>
