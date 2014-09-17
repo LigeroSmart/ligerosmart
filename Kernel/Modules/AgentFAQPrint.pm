@@ -169,14 +169,8 @@ sub Run {
 
     # generate PDF output
     if ( $Self->{PDFObject} ) {
-        my $PrintedBy = $Self->{LayoutObject}->{LanguageObject}->Get('printed by');
-        my $Time      = $Self->{LayoutObject}->Output( Template => '$Env{"Time"}' );
-        my $Url       = ' ';
-        if ( $ENV{REQUEST_URI} ) {
-            $Url = $Self->{ConfigObject}->Get('HttpType') . '://'
-                . $Self->{ConfigObject}->Get('FQDN')
-                . $ENV{REQUEST_URI};
-        }
+        my $PrintedBy = $Self->{LayoutObject}->{LanguageObject}->Translate('printed by');
+        my $Time      = $Self->{LayoutObject}->{Time};
         my %Page;
 
         # get maximum number of pages
@@ -197,16 +191,9 @@ sub Run {
         $Page{MarginBottom} = 40;
         $Page{MarginLeft}   = 40;
         $Page{HeaderRight}  = $HeaderRight;
-        $Page{HeadlineLeft} = $HeadlineLeft;
-        $Page{HeadlineRight}
-            = $PrintedBy . ' '
-            . $Self->{UserFirstname} . ' '
-            . $Self->{UserLastname} . ' ('
-            . $Self->{UserEmail} . ') '
-            . $Time;
-        $Page{FooterLeft} = $Url;
-        $Page{PageText}   = $Self->{LayoutObject}->{LanguageObject}->Get('Page');
-        $Page{PageCount}  = 1;
+        $Page{FooterLeft}   = '';
+        $Page{PageText}     = $Self->{LayoutObject}->{LanguageObject}->Translate('Page');
+        $Page{PageCount}    = 1;
 
         # create new PDF document
         $Self->{PDFObject}->DocumentNew(
@@ -220,23 +207,35 @@ sub Run {
         );
         $Page{PageCount}++;
 
-        # type of print tag
-        my $PrintTag = $Self->{LayoutObject}->{LanguageObject}->Get('FAQ Article Print');
+        $Self->{PDFObject}->PositionSet(
+            Move => 'relativ',
+            Y    => -6,
+        );
 
-        # output headline
+        # output title
         $Self->{PDFObject}->Text(
-            Text     => $PrintTag,
-            Height   => 9,
-            Type     => 'Cut',
-            Font     => 'ProportionalBold',
-            Align    => 'right',
-            FontSize => 9,
-            Color    => '#666666',
+            Text     => $FAQData{Title},
+            FontSize => 13,
         );
 
         $Self->{PDFObject}->PositionSet(
             Move => 'relativ',
             Y    => -6,
+        );
+
+        # output "printed by"
+        $Self->{PDFObject}->Text(
+            Text => $PrintedBy . ' '
+                . $Self->{UserFirstname} . ' '
+                . $Self->{UserLastname} . ' ('
+                . $Self->{UserEmail} . ')'
+                . ', ' . $Time,
+            FontSize => 9,
+        );
+
+        $Self->{PDFObject}->PositionSet(
+            Move => 'relativ',
+            Y    => -14,
         );
 
         # output FAQ information
@@ -423,9 +422,9 @@ sub _PDFOutputFAQHeaderInfo {
     # last update row
     push @{$TableRight}, {
         Key   => $Self->{LayoutObject}->{LanguageObject}->Get('Last update') . ':',
-        Value => $Self->{LayoutObject}->Output(
-            Template => '$TimeLong{"$Data{"Changed"}"}',
-            Data     => \%FAQData,
+        Value => $Self->{LayoutObject}->{LanguageObject}->FormatTimeString(
+            $FAQData{Changed},
+            'DateFormat',
         ),
     };
 
