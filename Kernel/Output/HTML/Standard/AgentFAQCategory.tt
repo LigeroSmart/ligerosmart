@@ -47,7 +47,7 @@
                 <h2>[% Translate("List") | html %]</h2>
             </div>
             <div class="Content">
-                <table class="DataTable VariableWidth" summary="FAQ categories">
+                <table class="DataTable" summary="FAQ categories">
                     <thead>
                         <tr>
                             <th>[% Translate("Name") | html %]</th>
@@ -132,25 +132,6 @@
                         </div>
                         <div class="Clear"></div>
 
-                        <label class="Mandatory" for="Comment"><span class="Marker">*</span> [% Translate("Comment") | html %]:</label>
-                        <div class="Field">
-                            <input type="text" name="Comment" id="Comment" value="[% Data.Comment | html %]" class="W50pc Validate_Required [% Data.CommentServerError | html %]" maxlength="80"/>
-                            <div id="CommentError" class="TooltipErrorMessage">
-                                <p>[% Translate("This field is required.") | html %]</p>
-                            </div>
-                            <div id="CommentServerError" class="TooltipErrorMessage">
-                                <p>[% Translate("This field is required.") | html %]</p>
-                            </div>
-                            <div class="FieldExplanation">[% Translate("Will be shown as comment in Explorer.") | html %]</div>
-                        </div>
-                        <div class="Clear"></div>
-
-                        <label for="ValidID">[% Translate("Validity") | html %]:</label>
-                        <div class="Field">
-                            [% Data.ValidOption %]
-                        </div>
-                        <div class="Clear"></div>
-
                         <label class="Mandatory" for="PermissionGroups"><span class="Marker">*</span> [% Translate("Permission") | html %]:</label>
                         <div class="Field">
                             [% Data.GroupOption %]
@@ -164,13 +145,31 @@
                         </div>
                         <div class="Clear"></div>
 
+                        <label for="ValidID">[% Translate("Validity") | html %]:</label>
+                        <div class="Field">
+                            [% Data.ValidOption %]
+                        </div>
+                        <div class="Clear"></div>
+
+                        <label class="Mandatory" for="Comment"><span class="Marker">*</span> [% Translate("Comment") | html %]:</label>
+                        <div class="Field">
+                            <input type="text" name="Comment" id="Comment" value="[% Data.Comment | html %]" class="W50pc Validate_Required [% Data.CommentServerError | html %]" maxlength="80"/>
+                            <div id="CommentError" class="TooltipErrorMessage">
+                                <p>[% Translate("This field is required.") | html %]</p>
+                            </div>
+                            <div id="CommentServerError" class="TooltipErrorMessage">
+                                <p>[% Translate("This field is required.") | html %]</p>
+                            </div>
+                            <div class="FieldExplanation">[% Translate("Will be shown as comment in Explorer.") | html %]</div>
+                        </div>
+                        <div class="Clear"></div>
+
                         <div class="Field SpacingTop">
                             <button class="Primary CallForAction" type="submit" value="[% Translate("Submit") | html %]"><span>[% Translate("Submit") | html %]</span></button>
                             [% Translate("or") | html %]
                             <a href="[% Env("Baselink") %]Action=[% Env("Action") %]">[% Translate("Cancel") | html %]</a>
                         </div>
                         <div class="Clear"></div>
-
                     </fieldset>
                 </form>
             </div>
