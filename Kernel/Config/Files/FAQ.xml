@@ -453,7 +453,7 @@ Your OTRS Notification Master
                     <Name>FAQ</Name>
                     <Link>Action=AgentFAQExplorer</Link>
                     <NavBar>FAQ</NavBar>
-                    <AccessKey>q</AccessKey>
+                    <AccessKey>F</AccessKey>
                     <Prio>350</Prio>
                 </NavBar>
                 <NavBar>
@@ -464,7 +464,7 @@ Your OTRS Notification Master
                     <Type></Type>
                     <Block></Block>
                     <NavBar>FAQ</NavBar>
-                    <AccessKey>e</AccessKey>
+                    <AccessKey>X</AccessKey>
                     <Prio>910</Prio>
                 </NavBar>
                 <Loader>
@@ -499,7 +499,7 @@ Your OTRS Notification Master
                     <Type>Submenu</Type>
                     <Block></Block>
                     <NavBar>FAQ</NavBar>
-                    <AccessKey>f</AccessKey>
+                    <AccessKey>X</AccessKey>
                     <Prio>710</Prio>
                 </NavBar>
                 <Loader>
@@ -577,7 +577,7 @@ Your OTRS Notification Master
                     <Type></Type>
                     <Block></Block>
                     <NavBar></NavBar>
-                    <AccessKey>f</AccessKey>
+                    <AccessKey>X</AccessKey>
                     <Prio>400</Prio>
                 </NavBar>
                 <Loader>
@@ -748,7 +748,7 @@ Your OTRS Notification Master
                     <Type></Type>
                     <Block></Block>
                     <NavBar>FAQ</NavBar>
-                    <AccessKey>n</AccessKey>
+                    <AccessKey>A</AccessKey>
                     <Prio>920</Prio>
                 </NavBar>
                 <Loader>
@@ -791,7 +791,7 @@ Your OTRS Notification Master
                     <Type></Type>
                     <Block></Block>
                     <NavBar>FAQ</NavBar>
-                    <AccessKey>u</AccessKey>
+                    <AccessKey>L</AccessKey>
                     <Prio>940</Prio>
                 </NavBar>
                 <Loader>
@@ -818,7 +818,7 @@ Your OTRS Notification Master
                     <Type></Type>
                     <Block></Block>
                     <NavBar>FAQ</NavBar>
-                    <AccessKey>c</AccessKey>
+                    <AccessKey>C</AccessKey>
                     <Prio>950</Prio>
                 </NavBar>
                 <Loader>
@@ -846,7 +846,7 @@ Your OTRS Notification Master
                     <Type></Type>
                     <Block></Block>
                     <NavBar>FAQ</NavBar>
-                    <AccessKey>s</AccessKey>
+                    <AccessKey>S</AccessKey>
                     <Prio>960</Prio>
                 </NavBar>
                 <Loader>
@@ -1175,7 +1175,7 @@ Your OTRS Notification Master
                     <NavBar>FAQ</NavBar>
                     <Link>Action=CustomerFAQSearch</Link>
                     <LinkOption></LinkOption>
-                    <AccessKey></AccessKey>
+                    <AccessKey>S</AccessKey>
                     <Prio>780</Prio>
                 </NavBar>
                 <Loader>
@@ -1376,7 +1376,7 @@ Your OTRS Notification Master
                     <Type></Type>
                     <Block></Block>
                     <NavBar>FAQ</NavBar>
-                    <AccessKey>j</AccessKey>
+                    <AccessKey>J</AccessKey>
                     <Prio>930</Prio>
                 </NavBar>
                 <Loader>

@@ -7,6 +7,7 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 4.0.0.beta1 - 2014-XX-XX
+ - 2014-09-17 Fixed bug#6853 - Access keys are conflicting with standard ticket access keys.
  - 2014-09-12 Fixed bug#10723 - OutputFilterTextAutoLink###FAQ feature shows broken image.
  - 2014-07-31 Fixed bug#10452 - FAQ history isn't sorted by created.
  - 2014-07-25 Added GI PublicFAQGet option to fetch or not attachment contents, thanks to Esteban Marin.
