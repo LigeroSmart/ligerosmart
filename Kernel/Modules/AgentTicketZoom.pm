@@ -1270,53 +1270,6 @@ sub MaskAgentZoom {
             },
         );
     }
-# ---
-# ITSM
-# ---
-    # cycle trough dynamic fields that should be displayed individually
-    DYNAMICFIELD:
-    for my $DynamicFieldConfig ( @IndividualDynamicFields ) {
-
-        # get print string for this dynamic field
-        my $ValueStrg = $Self->{BackendObject}->DisplayValueRender(
-            DynamicFieldConfig => $DynamicFieldConfig,
-            Value              => $Ticket{ 'DynamicField_' . $DynamicFieldConfig->{Name} },
-            ValueMaxChars      => 25,
-            LayoutObject       => $Self->{LayoutObject},
-        );
-
-        my $Label = $DynamicFieldConfig->{Label};
-
-        # example of dynamic fields order customization
-        $Self->{LayoutObject}->Block(
-            Name => 'TicketDynamicField_' . $DynamicFieldConfig->{Name},
-            Data => {
-                Label => $Label,
-            },
-        );
-
-        if ( $ValueStrg->{Link} ) {
-            $Self->{LayoutObject}->Block(
-                Name => 'TicketDynamicField_' . $DynamicFieldConfig->{Name} . '_Link',
-                Data => {
-                    Value                       => $ValueStrg->{Value},
-                    Title                       => $ValueStrg->{Title},
-                    Link                        => $ValueStrg->{Link},
-                    $DynamicFieldConfig->{Name} => $ValueStrg->{Title},
-                },
-            );
-        }
-        else {
-            $Self->{LayoutObject}->Block(
-                Name => 'TicketDynamicField_' . $DynamicFieldConfig->{Name} . '_Plain',
-                Data => {
-                    Value => $ValueStrg->{Value},
-                    Title => $ValueStrg->{Title},
-                },
-            );
-        }
-    }
-# ---
 
     if ($IsProcessTicket) {
 
@@ -1459,6 +1412,53 @@ sub MaskAgentZoom {
             }
         }
     }
+# ---
+# ITSM
+# ---
+    # cycle trough dynamic fields that should be displayed individually
+    DYNAMICFIELD:
+    for my $DynamicFieldConfig ( @IndividualDynamicFields ) {
+
+        # get print string for this dynamic field
+        my $ValueStrg = $Self->{BackendObject}->DisplayValueRender(
+            DynamicFieldConfig => $DynamicFieldConfig,
+            Value              => $Ticket{ 'DynamicField_' . $DynamicFieldConfig->{Name} },
+            ValueMaxChars      => 25,
+            LayoutObject       => $Self->{LayoutObject},
+        );
+
+        my $Label = $DynamicFieldConfig->{Label};
+
+        # example of dynamic fields order customization
+        $Self->{LayoutObject}->Block(
+            Name => 'TicketDynamicField_' . $DynamicFieldConfig->{Name},
+            Data => {
+                Label => $Label,
+            },
+        );
+
+        if ( $ValueStrg->{Link} ) {
+            $Self->{LayoutObject}->Block(
+                Name => 'TicketDynamicField_' . $DynamicFieldConfig->{Name} . '_Link',
+                Data => {
+                    Value                       => $ValueStrg->{Value},
+                    Title                       => $ValueStrg->{Title},
+                    Link                        => $ValueStrg->{Link},
+                    $DynamicFieldConfig->{Name} => $ValueStrg->{Title},
+                },
+            );
+        }
+        else {
+            $Self->{LayoutObject}->Block(
+                Name => 'TicketDynamicField_' . $DynamicFieldConfig->{Name} . '_Plain',
+                Data => {
+                    Value => $ValueStrg->{Value},
+                    Title => $ValueStrg->{Title},
+                },
+            );
+        }
+    }
+# ---
 
     # output dynamic fields in the sidebar
     for my $Field (@FieldsSidebar) {
