@@ -169,7 +169,7 @@ sub Run {
         );
         return $Self->{LayoutObject}->Attachment(
             Filename    => 'OpenSearchDescriptionFAQNumber.xml',
-            ContentType => 'text/xml',
+            ContentType => 'application/opensearchdescription+xml',
             Content     => $Output,
             Type        => 'inline',
         );
@@ -183,7 +183,7 @@ sub Run {
         );
         return $Self->{LayoutObject}->Attachment(
             Filename    => 'OpenSearchDescriptionFulltext.xml',
-            ContentType => 'text/xml',
+            ContentType => 'application/opensearchdescription+xml',
             Content     => $Output,
             Type        => 'inline',
         );
