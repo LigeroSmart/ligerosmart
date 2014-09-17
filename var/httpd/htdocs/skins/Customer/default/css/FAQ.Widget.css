@@ -144,7 +144,7 @@
     margin: 0 0 0 -4px;
     padding: 3px 3px 4px;
     color: #333;
-    font: bold 11px/14px "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font: bold 10px/13px "Helvetica Neue",Helvetica,Arial,sans-serif;
     background: #dedede;
     background: -moz-linear-gradient(top,  #ffffff 0%, #dedede 100%);
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#dedede));
