@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTicketPhone.pm - to handle phone calls
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/257dff6b7ca9197b4dee0ab8985f4d1a92a6ceaa/Kernel/Modules/AgentTicketPhone.pm
+# $origin: https://github.com/OTRS/otrs/blob/60c239c927c6d8cdc985f57af56c42de86cd413a/Kernel/Modules/AgentTicketPhone.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1506,7 +1506,7 @@ sub Run {
             my $ChatArticleID;
 
             if (@ChatMessageList) {
-                my $JSONBody = $Kernel::OM->Get('JSONObject')->Encode(
+                my $JSONBody = $Kernel::OM->Get('Kernel::System::JSON')->Encode(
                     Data => \@ChatMessageList,
                 );
 
@@ -1527,7 +1527,7 @@ sub Run {
 
                     # From             => $GetParam{From},
                     # To               => $To,
-                    Subject        => $Kernel::OM->Get('LanguageObject')->Translate('Chat'),
+                    Subject        => $Kernel::OM->Get('Kernel::Language')->Translate('Chat'),
                     Body           => $JSONBody,
                     MimeType       => 'application/json',
                     Charset        => $Self->{LayoutObject}->{UserCharset},
