@@ -139,7 +139,7 @@
             </para>
             <note>
                 <para>
-                    While this screen is available also in Basic Mode, the "Master Ticket" filed is
+                    While this screen is available also in Basic Mode, the "Master Ticket" field is
                     not available, it's only in advanced mode where this screen will let the change
                     of the Master Slave status.
                 </para>
@@ -157,12 +157,12 @@
         <title>Replace customer's from Master ticket</title>
         <para>
             The sysconfig option 'ReplaceCustomerRealNameOnSlaveArticleTypes' enables
-            the posibility to replace the customer's real name from a Master ticket
+            the possibility to replace the customer's real name from a Master ticket
             with the one for the current Slave ticket into the articles added to a
             Slave ticket due the MasterSlave feature.
         </para>
         <para>
-            For do it possible just enable the posible ArticleTypes on the mentioned
+            For do it possible just enable the possible ArticleTypes on the mentioned
             sysconfig setting.
         </para>
     </section>
