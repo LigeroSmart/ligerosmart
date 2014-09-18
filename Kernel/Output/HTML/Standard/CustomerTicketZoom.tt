@@ -2,7 +2,7 @@
 # CustomerTicketZoom.tt - provides HTML TicketZoom for CustomerTicketZoom.pm
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/60c239c927c6d8cdc985f57af56c42de86cd413a/Kernel/Output/HTML/Standard/CustomerTicketZoom.tt
+# $origin: https://github.com/OTRS/otrs/blob/0cd22dd33cdd51d6fac4c997c2aeb68a8e899134/Kernel/Output/HTML/Standard/CustomerTicketZoom.tt
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
