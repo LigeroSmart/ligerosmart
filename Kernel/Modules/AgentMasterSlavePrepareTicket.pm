@@ -61,7 +61,7 @@ sub PreRun {
         Name => $MasterSlaveDynamicField,
     );
 
-    # return if no dynamic field config is retreived
+    # return if no dynamic field config is retrieved
     return if !$DynamicField;
 
     # find all current open master slave tickets
@@ -86,7 +86,7 @@ sub PreRun {
     $Self->{ConfigObject}->{"Ticket::Frontend::$Self->{Action}"}->{DynamicField}
         ->{$MasterSlaveDynamicField} = 1;
 
-    # set dynamic field posible values
+    # set dynamic field possible values
     $DynamicField->{Config}->{PossibleValues} = {
         Master => $Self->{LanguageObject}->Get('New Master Ticket'),
     };
@@ -102,7 +102,7 @@ sub PreRun {
 
         next TICKET if !%CurrentTicket;
 
-        # set dynamic field posible values
+        # set dynamic field possible values
         $DynamicField->{Config}->{PossibleValues}{
             "SlaveOf:$CurrentTicket{TicketNumber}"
             }
