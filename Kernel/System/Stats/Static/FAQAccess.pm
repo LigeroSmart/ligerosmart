@@ -18,6 +18,7 @@ our @ObjectDependencies = (
     'Kernel::Config',
     'Kernel::System::FAQ',
     'Kernel::System::Log',
+    'Kernel::System::Time',
 );
 
 sub new {
@@ -37,17 +38,17 @@ sub Param {
     my @Params = ();
 
     # get current time
-    my ( $s, $m, $h, $D, $M, $Y ) = $Self->{TimeObject}->SystemTime2Date(
-        SystemTime => $Self->{TimeObject}->SystemTime(),
+    my ( $s, $m, $h, $D, $M, $Y ) = $Kernel::OM->Get('Kernel::System::Time')->SystemTime2Date(
+        SystemTime => $Kernel::OM->Get('Kernel::System::Time')->SystemTime(),
     );
     $D = sprintf( "%02d", $D );
     $M = sprintf( "%02d", $M );
     $Y = sprintf( "%02d", $Y );
 
     # create possible time selections
-    my %Year = map { $_, $_ } ( $Y - 10 .. $Y + 1 );
-    my %Month = map { sprintf( "%02d", $_ ), sprintf( "%02d", $_ ) } ( 1 .. 12 );
-    my %Day   = map { sprintf( "%02d", $_ ), sprintf( "%02d", $_ ) } ( 1 .. 31 );
+    my %Year = map { $_ => $_ } ( $Y - 10 .. $Y + 1 );
+    my %Month = map { sprintf( "%02d", $_ ) => sprintf( "%02d", $_ ) } ( 1 .. 12 );
+    my %Day   = map { sprintf( "%02d", $_ ) => sprintf( "%02d", $_ ) } ( 1 .. 31 );
 
     push @Params, {
         Frontend   => 'Start day',
