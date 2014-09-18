@@ -47,17 +47,6 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    # # check for FAQObject
-    # if ( $Param{FAQObject} ) {
-
-    #     $FAQObject = $Param{FAQObject};
-
-  #     # Make FAQ object reference weak so it will not count as a reference on objects destroy.
-  #     #   This is because the FAQObject has a Kernel::DynamicField::Backend object, which has this
-  #     #   object, which has a FAQObject again. Without weaken() we'd have a cyclic reference.
-  #     Scalar::Util::weaken( $FAQObject );
-  # }
-
     return $Self;
 }
 
@@ -111,13 +100,6 @@ sub PostValueSet {
             return;
         }
     }
-
-    # # check for FAQObject
-    # if ( !$FAQObject ) {
-
-    #     # create it on demand
-    #     $FAQObject = Kernel::System::FAQ->new( %{$Self} );
-    # }
 
     # get FAQ object
     my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
