@@ -1508,7 +1508,7 @@
             <Hash>
                 <Item Key="DisplayName" Translatable="1">ITSMChange</Item>
                 <Item Key="Module">Kernel::System::DynamicField::ObjectType::ITSMChange</Item>
-                <Item Key="Prio">100</Item>
+                <Item Key="Prio">200</Item>
             </Hash>
         </Setting>
     </ConfigItem>
@@ -1520,7 +1520,7 @@
             <Hash>
                 <Item Key="DisplayName" Translatable="1">ITSMWorkOrder</Item>
                 <Item Key="Module">Kernel::System::DynamicField::ObjectType::ITSMWorkOrder</Item>
-                <Item Key="Prio">110</Item>
+                <Item Key="Prio">210</Item>
             </Hash>
         </Setting>
     </ConfigItem>
