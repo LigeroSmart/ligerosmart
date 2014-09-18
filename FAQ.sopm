@@ -425,7 +425,7 @@
                 <Reference Local="valid_id" Foreign="id"/>
             </ForeignKeyCreate>
         </TableAlter>
-        <TableAlter Name="faq_voting" Version="4.0.90">
+        <TableAlter Name="faq_voting" Version="3.3.90">
             <IndexDrop Name="faq_voting"/>
             <IndexCreate Name="faq_voting_item_id">
                 <IndexColumn Name="item_id"/>
