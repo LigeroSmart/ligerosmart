@@ -1,5 +1,5 @@
 # --
-# OTRSMasterSlave.pm - code to excecute during package installation
+# OTRSMasterSlave.pm - code to execute during package installation
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -29,7 +29,7 @@ our @ObjectDependencies = (
 
 =head1 NAME
 
-OTRSMasterSlave.pm - code to excecute during package installation
+OTRSMasterSlave.pm - code to execute during package installation
 
 =head1 SYNOPSIS
 
@@ -341,7 +341,7 @@ sub _MigrateOTRSMasterSlave {
     my $MasterSlaveDynamicField = $Self->{ConfigObject}->Get('MasterSlave::DynamicField')
         || 'MasterSlave';
 
-    # check if there isn't allready a dynamic field with the destinated name
+    # check if there isn't already a dynamic field with the destined name
     return 1 if IsHashRefWithData( $Self->{DynamicFieldLookup}->{$MasterSlaveDynamicField} );
 
     my $OldMasterSlaveDynamicFieldID;
@@ -379,7 +379,7 @@ sub _MigrateOTRSMasterSlave {
     # get dynamic field object
     my $DynamicFieldObject = $Kernel::OM->Get('Kernel::System::DynamicField');
 
-    # try to get the dynfield data (for fieldorder etc.)
+    # try to get the dynamic field  data (for fieldorder etc.)
     my $OldDynamicField = $DynamicFieldObject->DynamicFieldGet(
         ID => $OldMasterSlaveDynamicFieldID,
     );
@@ -484,7 +484,7 @@ sub _MigrateMasterSlaveData {
         push( @DynamicFieldData, $Row[0] );
     }
 
-    # try to get the dynfield data for setting new value
+    # try to get the dynamic field data for setting new value
     my $DynamicFieldConfig = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldGet(
         ID => $Param{DynamicFieldID},
     );
@@ -571,7 +571,7 @@ sub _MigrateMasterSlaveData {
         }
     }
 
-    # do some recursition if we got more than 50 slave tickets in this run
+    # do some recursion if we got more than 50 slave tickets in this run
     # doing this to have a better performance
     if ( 50 == scalar @DynamicFieldData ) {
         my $Success = $Self->_MigrateMasterSlaveData(
