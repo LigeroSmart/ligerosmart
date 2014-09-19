@@ -1,5 +1,5 @@
 # --
-# TimeAccounting.pm - code to excecute during package installation
+# TimeAccounting.pm - code to execute during package installation
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -12,14 +12,16 @@ package var::packagesetup::TimeAccounting;
 use strict;
 use warnings;
 
-use Kernel::System::SysConfig;
-use Kernel::System::CacheInternal;
-use Kernel::System::Group;
-use Kernel::System::Valid;
+our @ObjectDependencies = (
+    'Kernel::System::Cache',
+    'Kernel::System::Group',
+    'Kernel::System::SysConfig',
+    'Kernel::System::Valid',
+);
 
 =head1 NAME
 
-TimeAccounting.pm - code to excecute during package installation
+TimeAccounting.pm - code to execute during package installation
 
 =head1 SYNOPSIS
 
@@ -35,45 +37,9 @@ All functions
 
 create an object
 
-    use Kernel::Config;
-    use Kernel::System::Log;
-    use Kernel::System::Main;
-    use Kernel::System::Time;
-    use Kernel::System::DB;
-    use Kernel::System::XML;
-    use var::packagesetup::TimeAccounting;
-
-    my $ConfigObject = Kernel::Config->new();
-    my $LogObject    = Kernel::System::Log->new(
-        ConfigObject => $ConfigObject,
-    );
-    my $MainObject = Kernel::System::Main->new(
-        ConfigObject => $ConfigObject,
-        LogObject    => $LogObject,
-    );
-    my $TimeObject = Kernel::System::Time->new(
-        ConfigObject => $ConfigObject,
-        LogObject    => $LogObject,
-    );
-    my $DBObject = Kernel::System::DB->new(
-        ConfigObject => $ConfigObject,
-        LogObject    => $LogObject,
-        MainObject   => $MainObject,
-    );
-    my $XMLObject = Kernel::System::XML->new(
-        ConfigObject => $ConfigObject,
-        LogObject    => $LogObject,
-        DBObject     => $DBObject,
-        MainObject   => $MainObject,
-    );
-    my $CodeObject = var::packagesetup::TimeAccounting->new(
-        ConfigObject => $ConfigObject,
-        LogObject    => $LogObject,
-        MainObject   => $MainObject,
-        TimeObject   => $TimeObject,
-        DBObject     => $DBObject,
-        XMLObject    => $XMLObject,
-    );
+    use Kernel::System::ObjectManager;
+    local $Kernel::OM = Kernel::System::ObjectManager->new();
+    my $CodeObject = $Kernel::OM->Get('var::packagesetup::TimeAccounting');
 
 =cut
 
@@ -84,19 +50,8 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    # check needed objects
-    for my $Object (
-        qw(ConfigObject EncodeObject LogObject MainObject TimeObject DBObject XMLObject)
-        )
-    {
-        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
-    }
-
-    # create needed sysconfig object
-    $Self->{SysConfigObject} = Kernel::System::SysConfig->new( %{$Self} );
-
     # rebuild ZZZ* files
-    $Self->{SysConfigObject}->WriteDefault();
+    $Kernel::OM->Get('Kernel::System::SysConfig')->WriteDefault();
 
     # define the ZZZ files
     my @ZZZFiles = (
@@ -116,12 +71,11 @@ sub new {
         }
     }
 
-    $Self->{GroupObject}         = Kernel::System::Group->new( %{$Self} );
-    $Self->{ValidObject}         = Kernel::System::Valid->new( %{$Self} );
-    $Self->{CacheInternalObject} = Kernel::System::CacheInternal->new(
-        %{$Self},
-        Type => 'Group',
-        TTL  => 60 * 60 * 3,
+    # always discard the config object before package code is executed,
+    # to make sure that the config object will be created newly, so that it
+    # will use the recently written new config from the package
+    $Kernel::OM->ObjectsDiscard(
+        Objects => ['Kernel::Config'],
     );
 
     return $Self;
@@ -145,7 +99,7 @@ sub CodeInstall {
     );
 
     # delete the group cache to avoid permission problems
-    $Self->{CacheInternalObject}->CleanUp( OtherType => 'Group' );
+    $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => 'Group' );
 
     return 1;
 }
@@ -186,7 +140,7 @@ sub _GroupAdd {
     # check needed stuff
     for my $Argument (qw(Name Description)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -195,13 +149,16 @@ sub _GroupAdd {
     }
 
     # get valid list
-    my %ValidList = $Self->{ValidObject}->ValidList(
+    my %ValidList = $Kernel::OM->Get('Kernel::System::Valid')->ValidList(
         UserID => 1,
     );
     my %ValidListReverse = reverse %ValidList;
 
+    # get group object
+    my $GroupObject = $Kernel::OM->Get('Kernel::System::Group');
+
     # get list of all groups
-    my %GroupList = $Self->{GroupObject}->GroupList();
+    my %GroupList = $GroupObject->GroupList();
 
     # reverse the group list for easier lookup
     my %GroupListReverse = reverse %GroupList;
@@ -213,13 +170,13 @@ sub _GroupAdd {
     if ($GroupID) {
 
         # get current group data
-        my %GroupData = $Self->{GroupObject}->GroupGet(
+        my %GroupData = $GroupObject->GroupGet(
             ID     => $GroupID,
             UserID => 1,
         );
 
         # reactivate group
-        $Self->{GroupObject}->GroupUpdate(
+        $GroupObject->GroupUpdate(
             %GroupData,
             ValidID => $ValidListReverse{valid},
             UserID  => 1,
@@ -230,7 +187,7 @@ sub _GroupAdd {
 
     # add the group
     else {
-        return if !$Self->{GroupObject}->GroupAdd(
+        return if !$GroupObject->GroupAdd(
             Name    => $Param{Name},
             Comment => $Param{Description},
             ValidID => $ValidListReverse{valid},
@@ -239,13 +196,13 @@ sub _GroupAdd {
     }
 
     # lookup the new group id
-    my $NewGroupID = $Self->{GroupObject}->GroupLookup(
+    my $NewGroupID = $GroupObject->GroupLookup(
         Group  => $Param{Name},
         UserID => 1,
     );
 
     # add user root to the group
-    $Self->{GroupObject}->GroupMemberAdd(
+    $GroupObject->GroupMemberAdd(
         GID        => $NewGroupID,
         UID        => 1,
         Permission => {
@@ -277,34 +234,37 @@ sub _GroupDeactivate {
 
     # check needed stuff
     if ( !$Param{Name} ) {
-        $Self->{LogObject}->Log(
+        Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need Name!',
         );
         return;
     }
 
+    # get group object
+    my $GroupObject = $Kernel::OM->Get('Kernel::System::Group');
+
     # lookup group id
-    my $GroupID = $Self->{GroupObject}->GroupLookup(
+    my $GroupID = $GroupObject->GroupLookup(
         Group => $Param{Name},
     );
 
     return if !$GroupID;
 
     # get valid list
-    my %ValidList = $Self->{ValidObject}->ValidList(
+    my %ValidList = $Kernel::OM->Get('Kernel::System::Valid')->ValidList(
         UserID => 1,
     );
     my %ValidListReverse = reverse %ValidList;
 
     # get current group data
-    my %GroupData = $Self->{GroupObject}->GroupGet(
+    my %GroupData = $GroupObject->GroupGet(
         ID     => $GroupID,
         UserID => 1,
     );
 
     # deactivate group
-    $Self->{GroupObject}->GroupUpdate(
+    $GroupObject->GroupUpdate(
         %GroupData,
         ValidID => $ValidListReverse{invalid},
         UserID  => 1,
