@@ -19,6 +19,7 @@
         <File Permission="644" Location="Kernel/Language/pl_TimeAccounting.pm"/>
         <File Permission="644" Location="Kernel/Language/pt_BR_TimeAccounting.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentTimeAccounting.pm"/>
+        <!-- To delete after test
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AAATimeAccounting.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTimeAccountingDelete.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTimeAccountingEdit.dtl"/>
@@ -27,6 +28,16 @@
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTimeAccountingReporting.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTimeAccountingSetting.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTimeAccountingView.dtl"/>
+        -->
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AAATimeAccounting.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTimeAccountingDelete.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTimeAccountingEdit.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTimeAccountingOverview.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTimeAccountingProjectReporting.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTimeAccountingReporting.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTimeAccountingSetting.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTimeAccountingView.tt"/>
+
         <File Permission="644" Location="Kernel/Output/HTML/NotificationTimeAccounting.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/ToolBarIncompleteWorkingDays.pm"/>
         <File Permission="644" Location="Kernel/System/TimeAccounting.pm"/>
