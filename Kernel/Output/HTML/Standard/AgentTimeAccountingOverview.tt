@@ -1,0 +1,194 @@
+# --
+# AgentTimeAccountingOverview.tt - provides HTML form for time accounting overview
+# Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+
+<div class="MainBox ARIARoleMain">
+    <h1 class="Header">[% Translate("Time reporting monthly overview") | html %]</h1>
+
+    <div class="LayoutFixedSidebar SidebarLast">
+        <div class="SidebarColumn">
+[% RenderBlockStart("Overtime") %]
+            <div class="WidgetSimple">
+                <div class="Header">
+                    <h2>[% Translate("Overtime (Hours)") | html %]</h2>
+                </div>
+                <div class="Content">
+                    <fieldset class="TableLike FixedLabel">
+                        <label>[% Translate("Overtime (this month)") | html %]:</label>
+                        <p class="Value">[% Data.Overtime | html %]</p>
+                        <div class="Clear"></div>
+
+                        <label>[% Translate("Overtime (total)") | html %]:</label>
+                        <p class="Value">[% Data.OvertimeUntil | html %]</p>
+                        <div class="Clear"></div>
+
+                        <label>[% Translate("Remaining overtime leave") | html %]:</label>
+                        <p class="Value">[% Data.OvertimeTotal | html %]</p>
+                        <div class="Clear"></div>
+                    </fieldset>
+                </div>
+            </div>
+[% RenderBlockEnd("Overtime") %]
+
+            <div class="WidgetSimple">
+                <div class="Header">
+                    <h2>[% Translate("Vacation (Days)") | html %]</h2>
+                </div>
+                <div class="Content">
+                    <fieldset class="TableLike FixedLabel">
+                        <label>[% Translate("Vacation taken (this month)") | html %]:</label>
+                        <p class="Value">[% Data.LeaveDay | html %]</p>
+                        <div class="Clear"></div>
+
+                        <label>[% Translate("Vacation taken (total)") | html %]:</label>
+                        <p class="Value">[% Data.LeaveDayTotal | html %]</p>
+                        <div class="Clear"></div>
+
+                        <label>[% Translate("Remaining vacation") | html %]:</label>
+                        <p class="Value">[% Data.LeaveDayRemaining | html %]</p>
+                        <div class="Clear"></div>
+                    </fieldset>
+                </div>
+            </div>
+
+            <div class="WidgetSimple">
+                <div class="Header">
+                    <h2>[% Translate("Sick Leave (Days)") | html %]</h2>
+                </div>
+                <div class="Content">
+                    <fieldset class="TableLike FixedLabel">
+                        <label>[% Translate("Sick leave taken (this month)") | html %]:</label>
+                        <p class="Value">[% Data.Sick | html %]</p>
+                        <div class="Clear"></div>
+
+                        <label>[% Translate("Sick leave taken (total)") | html %]:</label>
+                        <p class="Value">[% Data.SickTotal | html %]</p>
+                        <div class="Clear"></div>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+
+        <div class="ContentColumn">
+            <div class="WidgetSimple">
+                <div class="Header">
+                    <h2>[% Translate("Overview") | html %]
+[% RenderBlockStart("User") %]
+                        - [% Data.User | html %]
+[% RenderBlockEnd("User") %]
+                    </h2>
+                    <div class="AdditionalInformation">
+                        <a class="Arrow Left" title="[% Translate("Previous month") | html %]" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Overview;Year=[% Data.YearBack | uri %];Month=[% Data.MonthBack | uri %];UserID=[% Data.UserID | uri %]"></a>
+                        <a class="Arrow Right" title="[% Translate("Next month") | html %]" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Overview;Year=[% Data.YearNext | uri %];Month=[% Data.MonthNext | uri %];UserID=[% Data.UserID | uri %]"></a>
+                        [% Translate(Data.Month_to_Text) | html %] [% Data.Year | html %]
+                    </div>
+                </div>
+                <div class="Content">
+                    <table class="DataTable">
+                        <thead>
+                            <tr>
+                                <th>[% Translate("Day") | html %]</th>
+                                <th>[% Translate("Weekday") | html %]</th>
+                                <th>[% Translate("Comment") | html %]</th>
+                                <th>[% Translate("Working Hours") | html %]</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+[% RenderBlockStart("Row") %]
+                            <tr class="[% Data.Class | html %] MasterAction">
+                                <td class="Fixed Day">
+                                    <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=[% Data.Subaction | uri %];Year=[% Data.Year | uri %];Month=[% Data.Month | uri %];Day=[% Data.Day | uri %];UserID=[% Data.UserID | uri %]" class="MasterActionLink">
+                                        [% Data.Day | html %]
+                                    </a>
+                                </td>
+                                <td class="Fixed Weekday">[% Translate(Data.Weekday_to_Text) | html %]</td>
+                                <td>[% Translate(Data.Comment) | html %]</td>
+                                <td class="Right">[% Data.WorkingHours | html %]</td>
+                            </tr>
+[% RenderBlockEnd("Row") %]
+                        </tbody>
+                    </table>
+                    <div class="SpacingTop Right"><strong>[% Translate("Total worked hours") | html %]:</strong> [% Data.WorkingHours | html %]</div>
+                </div>
+            </div>
+
+            <div class="WidgetSimple">
+                <div class="Header">
+                    <h2>
+                        [% Translate("User's project overview") | html %]
+                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Overview;Year=[% Data.Year | uri %];Month=[% Data.Month | uri %];ProjectStatusShow=[% Data.ProjectStatusShow | uri %];UserID=[% Data.UserID | uri %]">
+                            ([% Translate(Data.ShowProjects) | html %])
+                        </a>
+                    </h2>
+                </div>
+                <div class="Content">
+                    <table class="DataTable NoHover HighCells">
+                        <thead>
+                            <tr>
+                                <th>[% Translate("Project") | html %]</th>
+                                <th>[% Translate("Task") | html %]</th>
+                                <th>[% Translate("Hours (monthly)") | html %]</th>
+                                <th>[% Translate("Hours (Lifetime)") | html %]</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+[% RenderBlockStart("Action") %]
+                            <tr>
+[% RenderBlockStart("Project") %]
+                                <td rowspan="[% Data.RowSpan %]" class="RowSpan">
+                                    <strong>
+[% RenderBlockStart("ProjectNoLink") %]
+                                    [% Data.Project %]
+[% RenderBlockEnd("ProjectNoLink") %]
+[% RenderBlockStart("ProjectLink") %]
+                                    <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=ProjectReporting;ProjectID=[% Data.ProjectID | uri %]">
+                                        [% Data.Project %]
+                                    </a>
+[% RenderBlockEnd("ProjectLink") %]
+                                    </strong>
+[% RenderBlockStart("ProjectDescription") %]
+                                    <br/>[% Data.ProjectDescription %]
+[% RenderBlockEnd("ProjectDescription") %]
+                                </td>
+[% RenderBlockEnd("Project") %]
+                                <td>[% Data.Action | html %]</td>
+                                <td class="Right">[% Data.Hours | html %]</td>
+                                <td class="Right">[% Data.HoursTotal | html %]</td>
+                            </tr>
+[% RenderBlockStart("ActionTotal") %]
+                            <tr>
+                                <td><strong>[% Translate("Total") | html %]</strong></td>
+                                <td class="Right"><strong>[% Data.Hours | html %]</strong></td>
+                                <td class="Right"><strong>[% Data.HoursTotal | html %]</strong></td>
+                            </tr>
+[% RenderBlockEnd("ActionTotal") %]
+[% RenderBlockEnd("Action") %]
+                            <tr class="GrandTotal">
+                                <td colspan="2"><strong>[% Translate("Grand total") | html %]</strong></td>
+                                <td class="Right"><strong>[% Data.TotalHours | html %]</strong></td>
+                                <td class="Right"><strong>[% Data.TotalHoursTotal | html %]</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+[% WRAPPER JSOnDocumentComplete %]
+<script type="text/javascript">//<![CDATA[
+$('.MasterAction').bind('click', function (Event) {
+    var $MasterActionLink = $(this).find('.MasterActionLink');
+    // only act if the link was not clicked directly
+    if (Event.target !== $MasterActionLink.get(0)) {
+        window.location = $MasterActionLink.attr('href');
+        return false;
+    }
+});
+//]]></script>
+[% END %]

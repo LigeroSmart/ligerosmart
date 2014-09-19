@@ -1,0 +1,31 @@
+# --
+# AgentTimeAccountingDelete.tt - provides HTML form for delete a day of timeaccounting
+# Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+
+<fieldset class="TableLike W300px">
+    <label>[% Translate("Year") | html %]:</label>
+    <p class="Value">
+        [% Data.Year | html %]
+    </p>
+    <div class="Clear"></div>
+
+    <label>[% Translate("Month") | html %]:</label>
+    <p class="Value">
+        [% Translate(Data.Month) | html %]
+    </p>
+    <div class="Clear"></div>
+
+    <label>[% Translate("Day") | html %]:</label>
+    <p class="Value">
+        [% Data.Day | html %]
+    </p>
+    <div class="Clear"></div>
+</fieldset>
+<p class="SpacingTop Center">
+    [% Translate("Do you really want to delete the Time Accounting of this day?") | html %]
+</p>

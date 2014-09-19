@@ -1,0 +1,103 @@
+# --
+# AgentTimeAccountingProjectReporting.tt - provides HTML form for time accounting reporting
+# Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+
+<div class="MainBox ARIARoleMain LayoutFixedSidebar SidebarFirst">
+    <h1 class="Header">[% Translate("Project report") | html %]: [% Data.Project | html %]</h1>
+
+    <div class="SidebarColumn">
+        <div class="WidgetSimple">
+            <div class="Header">
+                <h2>[% Translate("Actions") | html %]</h2>
+            </div>
+            <div class="Content">
+                <ul class="ActionList">
+                    <li>
+                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Reporting" class="CallForAction"><span>[% Translate("Go to overview") | html %]</span></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="ContentColumn">
+        <div class="WidgetSimple">
+            <div class="Header">
+                <h2>[% Translate("Project report") | html %]: [% Data.Project | html %]</h2>
+            </div>
+            <div class="Content">
+
+                <table class="DataTable DataTableNoHighlight">
+                    <thead>
+                        <tr>
+                            <th>[% Translate("Task") | html %]</th>
+[% RenderBlockStart("UserName") %]
+                            <th>[% Data.User | html %]</th>
+[% RenderBlockEnd("UserName") %]
+                            <th>[% Translate("Total") | html %]</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+[% RenderBlockStart("Action") %]
+                            <td>[% Data.Action | html %]</td>
+[% RenderBlockStart("User") %]
+                            <td class="Right">[% Data.Hours | html %]</td>
+[% RenderBlockEnd("User") %]
+                        </tr>
+[% RenderBlockEnd("Action") %]
+                        <tr class="GrandTotal">
+                            <td><strong>[% Translate("Total") | html %]</strong></td>
+[% RenderBlockStart("UserTotal") %]
+                            <td class="Right"><strong>[% Data.Total | html %]</strong></td>
+[% RenderBlockEnd("UserTotal") %]
+                            <td class="Right"><strong>[% Data.TotalAll | html %]</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="WidgetSimple">
+            <div class="Header">
+                <h2>[% Translate("History") | html %]: [% Data.Project | html %]</h2>
+            </div>
+            <div class="Content">
+
+                <table class="DataTable DataTableNoHighlight">
+                    <thead>
+                        <tr>
+                            <th>[% Translate("Date") | html %]</th>
+                            <th>[% Translate("User") | html %]</th>
+                            <th>[% Translate("Task") | html %]</th>
+                            <th>[% Translate("Remark") | html %]</th>
+                            <th>[% Translate("Period") | html %]</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+[% RenderBlockStart("Row") %]
+                        <tr>
+                            <td>[% Data.Date | html %]</td>
+                            <td>[% Data.User | html %]</td>
+                            <td>[% Data.Action | html %]</td>
+                            <td>[% Data.Remark | html %]</td>
+                            <td class="Right">[% Data.Period | html %]</td>
+                        </tr>
+[% RenderBlockEnd("Row") %]
+                        <tr class="GrandTotal">
+[% RenderBlockStart("HistoryTotal") %]
+                            <td colspan="4"><strong>[% Translate("Total") | html %]</strong></td>
+                            <td class="Right"><strong>[% Data.HistoryTotal | html %]</strong></td>
+[% RenderBlockEnd("HistoryTotal") %]
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

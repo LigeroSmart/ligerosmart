@@ -1,0 +1,368 @@
+# --
+# AgentTimeAccountingEdit.tt - provides HTML form for time accounting edit
+# Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+
+<div class="MainBox ARIARoleMain LayoutFixedSidebar SidebarFirst">
+    <h1 class="Header">[% Translate("Edit Time Record") | html %]</h1>
+
+    <div class="SidebarColumn">
+[% RenderBlockStart("OverviewProject") %]
+        <div class="WidgetSimple">
+            <div class="Header">
+                <h2>[% Translate("Actions") | html %]</h2>
+            </div>
+            <div class="Content">
+                <ul class="ActionList">
+                    <li>
+                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Overview;Year=[% Data.Year | uri %];Month=[% Data.Month | uri %]" class="CallForAction"><span>[% Translate("Go to overview") | html %]</span></a>
+                    </li>
+[% RenderBlockStart("CreateProject") %]
+                    <li>
+                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Setting" class="CallForAction"><span>[% Translate("Project settings") | html %]</span></a>
+                    </li>
+[% RenderBlockEnd("CreateProject") %]
+                </ul>
+            </div>
+        </div>
+[% RenderBlockEnd("OverviewProject") %]
+        <div class="WidgetSimple">
+            <div class="Header">
+                <h2>[% Translate("Date Navigation") | html %]</h2>
+            </div>
+            <div class="Content">
+                <div class="MonthSelection">
+                    <a class="Arrow Left" title="[% Translate("Previous day") | html %]" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Edit;Year=[% Data.YearBack | uri %];Month=[% Data.MonthBack | uri %];Day=[% Data.DayBack | uri %]"></a>
+                    <a class="Arrow Right" title="[% Translate("Next day") | html %]" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Edit;Year=[% Data.YearNext | uri %];Month=[% Data.MonthNext | uri %];Day=[% Data.DayNext | uri %]"></a>
+                    [% Data.Year | html %]-[% Data.Month | html %]-[% Data.Day | html %]
+                </div>
+                <div class="Clear"></div>
+                <form action="[% Env("CGIHandle") %]" method="post" enctype="multipart/form-data" class="Validate" name="DateSelection">
+                    <input type="hidden" name="Action" value="[% Env("Action") %]" />
+                    <input type="hidden" name="Subaction" value="Edit" />
+                    [% Data.Date %]
+                    <input class="button" type="submit" value="[% Translate("Submit") | html %]" />
+                </form>
+[% RenderBlockStart("IncompleteWorkingDays") %]
+                <h2 class="SpacingTop">[% Translate("Days without entries") | html %]:</h2>
+                [% Data.IncompleteWorkingDaysSelect %]
+[% WRAPPER JSOnDocumentComplete %]
+<script type="text/javascript">//<![CDATA[
+    $('#IncompleteWorkingDaysList').unbind('change.IncompleteWorkingDays').bind('change.IncompleteWorkingDays', function () {
+        var Date = $(this).val().split('-');
+        if (Date[0] && Date[1] && Date[2]) {
+            location.href = "[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Edit;Year=" + Date[0] + ";Month=" + Date[1] + ";Day=" + Date[2];
+        }
+    });
+//]]></script>
+[% END %]
+[% RenderBlockEnd("IncompleteWorkingDays") %]
+[% RenderBlockStart("IncompleteWorkingDaysMassEntry") %]
+                <h2 class="SpacingTop">[% Translate("Days without entries") | html %]:</h2>
+                <ul class="IncompleteWorkingDays">
+                    <li id="SelectAllDays"><input type="checkbox" id="IncompleteWorkingDay-All" name="IncompleteWorkingDay-All" /><label for="IncompleteWorkingDay-All"><em>[% Translate("Select all days") | html %]</em></label></li>
+[% RenderBlockStart("IncompleteWorkingDaysMassEntrySingleDay") %]
+                    <li><input type="checkbox" id="IncompleteWorkingDay-[% Data.Date | html %]" name="IncompleteWorkingDay-[% Data.Date | html %]" /><label for="IncompleteWorkingDay-[% Data.Date | html %]">[% Data.Date | html %]</label> - <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Edit;Year=[% Data.Year | uri %];Month=[% Data.Month | uri %];Day=[% Data.Day | uri %]">[% Translate("Edit") | html %]</a></li>
+[% RenderBlockEnd("IncompleteWorkingDaysMassEntrySingleDay") %]
+                </ul>
+                <form action="[% Env("CGIHandle") %]" method="post" enctype="multipart/form-data" id="MassEntry" name="MassEntry" class="SpacingTop">
+                    <input type="hidden" name="Action" value="[% Env("Action") %]" />
+                    <input type="hidden" name="Subaction" value="MassEntry" />
+                    <input type="hidden" name="Dates" value="" />
+                    <input type="hidden" name="LeaveDay" value="" />
+                    <input type="hidden" name="Sick" value="" />
+                    <input type="hidden" name="Overtime" value="" />
+                    <input class="button" type="button" id="MassEntrySubmit" value="[% Translate("Mass entry") | html %]" />
+                </form>
+                <div id="MassEntryConfirmDialog" class="Hidden">
+                    <h2>[% Translate("Please choose the reason for your absence for the selected days") | html %].</h2>
+                    <ul id="MassEntryConfirmRadio">
+                        <li><input type="radio" name="LeaveDay" id="ConfirmLeaveDay" /><label for="ConfirmLeaveDay">[% Translate("On vacation") | html %]</label></li>
+                        <li><input type="radio" name="Sick" id="ConfirmSick" /><label for="ConfirmSick">[% Translate("On sick leave") | html %]</label></li>
+                        <li><input type="radio" name="Overtime" id="ConfirmOvertime" /><label for="ConfirmOvertime">[% Translate("On overtime leave") | html %]</label></li>
+                    </ul>
+                </div>
+[% WRAPPER JSOnDocumentComplete %]
+<script type="text/javascript">//<![CDATA[
+    TimeAccounting.Agent.EditTimeRecords.MassEntryInit({
+        MsgChooseOneDay:    [% Translate("Please choose at least one day!") | JSON %],
+        MsgAbsenceReason:   [% Translate("Please choose a reason for absence!") | JSON %],
+        MassEntry:          [% Translate("Mass Entry") | JSON %],
+        Submit:             [% Translate("Submit") | JSON %],
+        Cancel:             [% Translate("Cancel") | JSON %]
+    });
+//]]></script>
+[% END %]
+[% RenderBlockEnd("IncompleteWorkingDaysMassEntry") %]
+            </div>
+        </div>
+        <div class="WidgetSimple SpacingTop">
+            <div class="Header">
+                <h2>[% Translate("Reference") | html %]</h2>
+            </div>
+            <div class="Content">
+                <ul>
+                    <li>[% Translate("Required fields are marked with a \"*\".") | html %]</li>
+                    <li>[% Translate("You have to fill in start and end time or a time period.") | html %]</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="ContentColumn">
+        <div class="WidgetSimple">
+            <div class="Header">
+                <h2>[% Translate("Date") | html %]: [% Translate(Data.Weekday_to_Text) | html %] [% Data.Year | html %]-[% Data.Month | html %]-[% Data.Day | html %]</h2>
+            </div>
+            <div class="Content HorizontalScroll">
+                <form action="[% Env("CGIHandle") %]" method="post" enctype="multipart/form-data" name="WorkingUnits" id="WorkingUnits" class="Validate PreventMultipleSubmits">
+                    <input type="hidden" name="Action" value="[% Env("Action") %]" />
+                    <input type="hidden" name="Subaction" value="Edit" />
+                    <input type="hidden" name="RecordsNumber" id="RecordsNumber" value="[% Data.RecordsNumber | html %]" />
+                    <input type="hidden" name="Status" value="Action" />
+                    <input type="hidden" name="Year" value="[% Data.Year | html %]" />
+                    <input type="hidden" name="Month" value="[% Data.Month | html %]" />
+                    <input type="hidden" name="Day" value="[% Data.Day | html %]" />
+[% RenderBlockStart("UnitBlock") %]
+                    <table class="DataTable NoHover HighCells" id="InsertWorkingHours">
+                        <thead>
+                            <tr>
+                                <th><span class="Marker">*</span> [% Translate("Project") | html %]</th>
+                                <th><span class="Marker">*</span> [% Translate("Task") | html %]</th>
+                                <th>[% Translate("Remark") | html %]</th>
+                                <th>[% Translate("Start") | html %] (HH:MM)</th>
+                                <th>[% Translate("End") | html %] (HH:MM)</th>
+                                <th><span class="Marker">[% Data.PeriodNote | html %]</span> [% Translate("Period") | html %]</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+[% RenderBlockStart("Unit") %]
+                            <tr class="WorkingHours">
+                                <td>
+                                    [% Data.ProjectOption %]
+                                    <div id="ProjectID[% Data.ID | html %]Error" class="TooltipErrorMessage"><p>[% Translate("This field is required.") | html %]</p></div>
+                                    <div id="ProjectID[% Data.ID | html %]ServerError" class="TooltipErrorMessage"><p>[% Translate("This field is required.") | html %]</p></div>
+                                    <div id="Combo_ProjectID[% Data.ID | html %]Error" class="TooltipErrorMessage"><p>[% Translate("This field is required.") | html %]</p></div>
+                                    <div id="Combo_ProjectID[% Data.ID | html %]ServerError" class="TooltipErrorMessage"><p>[% Translate("This field is required.") | html %]</p></div>
+                                </td>
+                                <td>
+                                    [% Data.ActionOption %]
+                                    <div id="ActionID[% Data.ID | html %]Error" class="TooltipErrorMessage"><p>[% Translate("This field is required.") | html %]</p></div>
+                                    <div id="ActionID[% Data.ID | html %]ServerError" class="TooltipErrorMessage"><p>[% Translate("This field is required.") | html %]</p></div>
+                                    <div id="Combo_ActionID[% Data.ID | html %]Error" class="TooltipErrorMessage"><p>[% Translate("This field is required.") | html %]</p></div>
+                                    <div id="Combo_ActionID[% Data.ID | html %]ServerError" class="TooltipErrorMessage"><p>[% Translate("This field is required.") | html %]</p></div>
+                                </td>
+                                <td>
+                                    <input type="text" name="Remark[[% Data.ID | html %]]" id="Remark[% Data.ID | html %]" class="Validate_TimeAccounting_Remark [% Data.RemarkInvalid | html %]" value="[% Data.Remark | html %]" size="35" />
+                                    <div id="Remark[% Data.ID | html %]Error" class="TooltipErrorMessage"><p>[% Translate("Please add a remark with more than 8 characters!.") | html %]</p></div>
+                                    <div id="Remark[% Data.ID | html %]ServerError" class="TooltipErrorMessage">
+                                        <p>[% Translate("This field is required.") | html %]</p>
+                                    </div>
+                                </td>
+                                <td>
+                                    <input type="text" name="StartTime[[% Data.ID | html %]]" id="StartTime[% Data.ID | html %]" class="StartTime Validate_TimeAccounting_StartTime [% Data.StartTimeRequired | html %] [% Data.StartTimeInvalid | html %]" value="[% Data.StartTime | html %]" size="7" />
+                                    <div id="StartTime[% Data.ID | html %]Error" class="TooltipErrorMessage">
+                                        <p>[% Translate("You have to fill in start and end time or a time period.") | html %]</p>
+                                    </div>
+                                    <div id="StartTime[% Data.ID | html %]ServerError" class="TooltipErrorMessage">
+[% RenderBlockStart("StartTimeGenericServerError") %]
+                                        <p>[% Translate("This field is required.") | html %]</p>
+[% RenderBlockEnd("StartTimeGenericServerError") %]
+[% RenderBlockStart("StartTimeNegativeServerError") %]
+                                        <p>[% Translate("Negative times are not allowed.") | html %]</p>
+[% RenderBlockEnd("StartTimeNegativeServerError") %]
+[% RenderBlockStart("StartTimeRepeatedHourServerError") %]
+                                        <p>[% Translate("Repeated hours are not allowed. Start time matches another interval.") | html %]</p>
+[% RenderBlockEnd("StartTimeRepeatedHourServerError") %]
+[% RenderBlockStart("StartTimeInvalidFormatServerError") %]
+                                        <p>[% Translate("Invalid format! Please enter a time with the format HH:MM.") | html %]</p>
+[% RenderBlockEnd("StartTimeInvalidFormatServerError") %]
+[% RenderBlockStart("StartTime24Hours") %]
+                                        <p>[% Translate("24:00 is only permitted as end time.") | html %]</p>
+[% RenderBlockEnd("StartTime24Hours") %]
+[% RenderBlockStart("StartTimeInvalid") %]
+                                        <p>[% Translate("Invalid time! A day has only 24 hours.") | html %]</p>
+[% RenderBlockEnd("StartTimeInvalid") %]
+                                    </div>
+                                </td>
+                                <td>
+                                    <input type="text" name="EndTime[[% Data.ID | html %]]" id="EndTime[% Data.ID | html %]" class="EndTime Validate_DependingRequiredAND Validate_Depending_StartTime[% Data.ID | html %] [% Data.EndTimeRequired | html %] [% Data.EndTimeInvalid | html %]" value="[% Data.EndTime | html %]" size="7" />
+                                    <div id="EndTime[% Data.ID | html %]Error" class="TooltipErrorMessage">
+                                        <p>[% Translate("You have to fill in start and end time or a time period.") | html %]</p>
+                                    </div>
+                                    <div id="EndTime[% Data.ID | html %]ServerError" class="TooltipErrorMessage">
+[% RenderBlockStart("EndTimeGenericServerError") %]
+                                        <p>[% Translate("This field is required.") | html %]</p>
+[% RenderBlockEnd("EndTimeGenericServerError") %]
+[% RenderBlockStart("EndTimeBeforeStartTimeServerError") %]
+                                        <p>[% Translate("End time must be after start time.") | html %]</p>
+[% RenderBlockEnd("EndTimeBeforeStartTimeServerError") %]
+[% RenderBlockStart("EndTimeNegativeServerError") %]
+                                        <p>[% Translate("Negative times are not allowed.") | html %]</p>
+[% RenderBlockEnd("EndTimeNegativeServerError") %]
+[% RenderBlockStart("EndTimeRepeatedHourServerError") %]
+                                        <p>[% Translate("Repeated hours are not allowed. End time matches another interval.") | html %]</p>
+[% RenderBlockEnd("EndTimeRepeatedHourServerError") %]
+[% RenderBlockStart("EndTimeInvalidFormatServerError") %]
+                                        <p>[% Translate("Invalid format! Please enter a time with the format HH:MM.") | html %]</p>
+[% RenderBlockEnd("EndTimeInvalidFormatServerError") %]
+[% RenderBlockStart("EndTimeInvalid") %]
+                                        <p>[% Translate("Invalid time! A day has only 24 hours.") | html %]</p>
+[% RenderBlockEnd("EndTimeInvalid") %]
+                                    </div>
+                                </td>
+[% RenderBlockStart("UnitInputPeriod") %]
+                                <td>
+                                    <input type="text" name="Period[[% Data.ID | html %]]" id="Period[% Data.ID | html %]" class="Period Validate_TimeAccounting_Period Validate_TimeUnits [% Data.PeriodRequired | html %] [% Data.PeriodInvalid | html %]" value="[% Data.Period | html %]" size="7" />
+                                    <div id="Period[% Data.ID | html %]Error" class="TooltipErrorMessage">
+                                        <p>[% Translate("You have to fill in start and end time or a time period.") | html %]</p>
+                                    </div>
+                                    <div id="Period[% Data.ID | html %]ServerError" class="TooltipErrorMessage">
+[% RenderBlockStart("PeriodGenericServerError") %]
+                                        <p>[% Translate("This field is required.") | html %]</p>
+[% RenderBlockEnd("PeriodGenericServerError") %]
+[% RenderBlockStart("InvalidHoursPeriodServerError") %]
+                                        <p>[% Translate("Invalid period! A day has only 24 hours.") | html %]</p>
+[% RenderBlockEnd("InvalidHoursPeriodServerError") %]
+[% RenderBlockStart("ZeroHoursPeriodServerError") %]
+                                        <p>[% Translate("A valid period must be greater than zero.") | html %]</p>
+[% RenderBlockEnd("ZeroHoursPeriodServerError") %]
+[% RenderBlockStart("NegativePeriodServerError") %]
+                                        <p>[% Translate("Invalid period! Negative periods are not allowed.") | html %]</p>
+[% RenderBlockEnd("NegativePeriodServerError") %]
+                                    </div>
+
+                                </td>
+[% RenderBlockEnd("UnitInputPeriod") %]
+[% RenderBlockStart("UnitPeriodWithoutInput") %]
+                                <td>[% Data.Period | html %]</td>
+[% RenderBlockEnd("UnitPeriodWithoutInput") %]
+                            </tr>
+[% RenderBlockEnd("Unit") %]
+                            <tr>
+                                <td colspan="6" class="Right">
+                                    <button class="CallForAction Plus" type="button" id="MoreInputFields" name="MoreInputFields"><span>[% Translate("Add one row") | html %]</span></button>
+                                </td>
+                            </tr>
+[% RenderBlockEnd("UnitBlock") %]
+                            <tr>
+                                <td colspan="4"></td>
+[% RenderBlockStart("Total") %]
+                                <td>[% Translate("Total") | html %]:</td>
+                                <td><span class="TotalHours">[% Data.Total | html %]</span></td>
+[% RenderBlockEnd("Total") %]
+                            </tr>
+[% RenderBlockStart("Readonly") %]
+                            <tr>
+                                <td colspan="6">
+                                    [% Translate(Data.Description) | html %]
+                                </td>
+                            </tr>
+[% RenderBlockEnd("Readonly") %]
+                        </tbody>
+                    </table>
+[% RenderBlockStart("OtherTimes") %]
+                    <div class="SpacingTop">
+                        <input type="checkbox" value="1" id="LeaveDay" name="LeaveDay" title="[% Translate("On vacation") | html %]" class="[% Data.LeaveDayInvalid %]" [% Data.LeaveDay %] />
+                        <label for="LeaveDay">[% Translate("On vacation") | html %]</label>
+                        <div id="LeaveDayServerError" class="TooltipErrorMessage">
+                            <p>[% Translate("You can only select one checkbox element!") | html %]</p>
+                        </div>
+                        <input type="checkbox" value="1" id="Sick" name="Sick" title="[% Translate("On sick leave") | html %]" class="[% Data.SickInvalid %]" [% Data.Sick %] />
+                        <label for="Sick">[% Translate("On sick leave") | html %]</label>
+                        <div id="SickServerError" class="TooltipErrorMessage">
+                            <p>[% Translate("You can only select one checkbox element!") | html %]</p>
+                        </div>
+                        <input type="checkbox" value="1" id="Overtime" name="Overtime" title="[% Translate("On overtime leave") | html %]" class="[% Data.OvertimeInvalid %]" [% Data.Overtime %] />
+                        <label for="Overtime">[% Translate("On overtime leave") | html %]</label>
+                        <div id="OvertimeServerError" class="TooltipErrorMessage">
+                            <p>[% Translate("You can only select one checkbox element!") | html %]</p>
+                        </div>
+                    </div>
+[% RenderBlockEnd("OtherTimes") %]
+                    <div class="Center SpacingTop">
+                        <button class="Primary CallForAction" type="submit" name="InsertWorkingUnits" value="[% Translate("Submit") | html %]"><span><i class="fa fa-check"></i> [% Translate("Submit") | html %]</span></button>
+                        <a id="DeleteTimeAccountingEntry" href="#">
+                            [% Translate("Delete") | html %]
+                        </a>
+                        [% Translate("or") | html %]
+                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Edit">[% Translate("Cancel") | html %]</a>
+                    </div>
+                    <div class="Clear"></div>
+[% WRAPPER JSOnDocumentComplete %]
+<script type="text/javascript">//<![CDATA[
+    TimeAccounting.Agent.EditTimeRecords.ActionList = [% Data.JSActionList | html %];
+    TimeAccounting.Agent.EditTimeRecords.ActionListConstraints = [% Data.JSActionListConstraints | html %];
+    TimeAccounting.Agent.EditTimeRecords.Init({
+        RemarkRegExpContent: "[% Data.RemarkRegExp | html %]",
+        Autocompletion: [% Data.EnableAutocompletion | html %],
+        Language: {
+            ShowAllItems: [% Translate("Show all items") | JSON %]
+        }
+    });
+    TimeAccounting.Agent.ConfirmationDialog.BindConfirmationDialog({
+        ElementID:                  'DeleteTimeAccountingEntry',
+        ElementSelector:            '#DeleteTimeAccountingEntry',
+        DialogContentQueryString:   'Action=AgentTimeAccounting;DeleteDay=1;Year=[% Data.Year | html %];Month=[% Data.Month | html %];Day=[% Data.Day | html %]',
+        ConfirmedActionQueryString: 'Action=AgentTimeAccounting;Subaction=Delete;Year=[% Data.Year | html %];Month=[% Data.Month | html %];Day=[% Data.Day | html %]',
+        DialogTitle:                [% Translate("Delete Time Accounting Entry") | JSON %],
+        TranslatedText:             {
+            Yes: [% Translate("Yes") | JSON %],
+            No:  [% Translate("No") | JSON %]
+        }
+    });
+//]]></script>
+[% END %]
+
+[% RenderBlockStart("ShowConfirmation") %]
+[% WRAPPER JSOnDocumentComplete %]
+<script type="text/javascript">//<![CDATA[
+    // define yes and no buttons
+    var Buttons = [{
+        Label: [% Translate("Yes") | JSON %],
+        Class: "Primary",
+        Type: "Close",
+        }, {
+        Label: [% Translate("No") | JSON %],
+
+        // define the function that is called when the 'No' button is pressed
+        Function: function(){
+
+            // disable Yes and No buttons to prevent multiple submits
+            $('div.Dialog:visible div.ContentFooter button').attr('disabled', 'disabled');
+
+            // redirect to the module that deletes the saved entry after pressing the No button
+            location.href = Core.Config.Get('Baselink') + 'Action=AgentTimeAccounting;Subaction=Delete;Year=[% Data.Year | html %];Month=[% Data.Month | html %];Day=[% Data.Day | html %]';
+        }
+    }];
+    // show the confirmation dialog to confirm the action
+    Core.UI.Dialog.ShowContentDialog($('#[% Data.BlockName | html %]'), [% Translate("Confirm insert") | JSON %], '20%', 'Center', true, Buttons);
+
+//]]></script>
+[% END %]
+[% RenderBlockEnd("ShowConfirmation") %]
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<p id="SickLeaveMessage" class="Hidden Center">
+    [% Translate("Are you sure that you worked while you were on sick leave?") | html %]
+</p>
+
+<p id="VacationMessage" class="Hidden Center">
+    [% Translate("Are you sure that you worked while you were on vacation?") | html %]
+</p>
+
+<p id="OvertimeMessage" class="Hidden Center">
+    [% Translate("Are you sure that you worked while you were on overtime leave?") | html %]
+</p>
+
+<p id="More16HoursMessage" class="Hidden Center">
+    [% Translate("Are you sure that you worked more than 16 hours?") | html %]
+</p>
