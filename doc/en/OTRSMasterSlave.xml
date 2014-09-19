@@ -162,7 +162,7 @@
         <para>
             Ones the sysconfig option 'ReplaceCustomerRealNameOnSlaveArticleTypes' is enabled
             the Slave's customer is keeped for the replicated articles from the Master ticket,
-            for the article types defined on this config setting. 
+            for the article types defined on this config setting.
         </para>
     </section>
 </chapter>
