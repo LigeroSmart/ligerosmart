@@ -1,5 +1,5 @@
 # --
-# scripts/test/TimeAccounting.t - TimeAccounting testscript
+# scripts/test/TimeAccounting.t - TimeAccounting test script
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -7,45 +7,23 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
+## no critic (Modules::RequireExplicitPackage)
 use strict;
 use warnings;
 
 # declare externally defined variables to avoid errors under 'use strict'
 use vars qw($Self);
 
-use Kernel::System::TimeAccounting;
-use Kernel::System::User;
-
-# create local object
-my $UserObject = Kernel::System::User->new( %{$Self} );
-
-# data for new user
 my $RandomNumber = int( rand(10000) );
-my %UserData     = (
-    UserFirstname => 'Unit Test',
-    UserLastname  => 'User',
-    UserLogin     => 'UnitTest' . $RandomNumber,
-    UserPw        => 'pass',
-    UserEmail     => 'email@mydomain.com',
-    ValidID       => 1,
-    ChangeUserID  => 1,
-);
-
-# create test user
-my $UserID = $UserObject->UserAdd(%UserData);
-
-# crete local object
-my $TimeAccountingObject = Kernel::System::TimeAccounting->new(
-    %{$Self},
-    UserID     => $UserID,
-    UserObject => $UserObject,
-);
 
 # data for the new action (task)
 my %NewActionData = (
     Action       => 'TestAction' . $RandomNumber,
     ActionStatus => 1,
 );
+
+# get time accounting object
+my $TimeAccountingObject = $Kernel::OM->Get('Kernel::System::TimeAccounting');
 
 # create a new action (task)
 my $Insert = $TimeAccountingObject->ActionSettingsInsert(%NewActionData);
@@ -147,6 +125,12 @@ $Self->Is(
     $AllProjects{Project}{$ProjectID},
     $NewProjectData{Project} . 'modified',
     'Compare project name saved in DB with the specified in the update',
+);
+
+# create new user
+my $UserLogin = $Kernel::OM->Get('Kernel::System::UnitTest::Helper')->TestUserCreate();
+my $UserID    = $Kernel::OM->Get('Kernel::System::User')->UserLookup(
+    UserLogin => $UserLogin,
 );
 
 # obtain the last registered period of the test user
@@ -318,6 +302,7 @@ my %WorkingUnits = (
             Period    => 2.0,
         },
     ],
+    UserID => $UserID,
 );
 
 # insert working units in the DB
@@ -355,7 +340,9 @@ $Self->Is(
 );
 
 # get projects in which the test user has worked on
-my @LastProjects = $TimeAccountingObject->LastProjectsOfUser();
+my @LastProjects = $TimeAccountingObject->LastProjectsOfUser(
+    UserID => $UserID,
+);
 
 my $TestProjectExistence;
 
@@ -408,9 +395,10 @@ $Self->Is(
 
 # delete working units for Jan. 15th, 2011
 my $Delete = $TimeAccountingObject->WorkingUnitsDelete(
-    Year  => '2011',
-    Month => '1',
-    Day   => '15',
+    Year   => '2011',
+    Month  => '1',
+    Day    => '15',
+    UserID => $UserID,
 );
 
 # verify that the working units were successfully deleted
@@ -448,9 +436,6 @@ $TimeAccountingObject->ProjectSettingsUpdate(
     ProjectStatus      => 0,
 );
 
-$UserData{ValidID} = 2;
-$UserData{UserID}  = $UserID;
-$UserObject->UserUpdate(%UserData);
 $TimeAccountingObject->UserSettingsUpdate(
     UserID        => $UserID,
     Description   => 'Test user',
