@@ -359,8 +359,9 @@ my @LastProjects = $TimeAccountingObject->LastProjectsOfUser();
 
 my $TestProjectExistence;
 
+ID:
 for my $ID (@LastProjects) {
-    next if $ID != $ProjectID;
+    next ID if $ID != $ProjectID;
     $TestProjectExistence = 1;
 }
 
