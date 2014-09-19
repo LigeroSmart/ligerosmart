@@ -170,9 +170,9 @@ sub Run {
         my $TmpArticleBody;
 
         # perform action on linked tickets
-        TICKETIDS:
+        TICKETID:
         for my $TicketID (@TicketIDs) {
-            next TICKETIDS if !$Self->_LoopCheck(
+            next TICKETID if !$Self->_LoopCheck(
                 TicketID => $TicketID,
                 UserID   => $Param{UserID},
                 String   => 'MasterTicketAction: ArticleSend',
@@ -211,7 +211,7 @@ sub Run {
                     Name =>
                         "MasterTicket: no customer email found, send no master message to customer.",
                 );
-                next TICKETIDS;
+                next TICKETID;
             }
 
             # set the new To for ArticleSend
@@ -296,9 +296,9 @@ sub Run {
         }
 
         # perform action on linked tickets
-        TICKETIDS:
+        TICKETID:
         for my $TicketID (@TicketIDs) {
-            next TICKETIDS if !$Self->_LoopCheck(
+            next TICKETID if !$Self->_LoopCheck(
                 TicketID => $TicketID,
                 UserID   => $Param{UserID},
                 String   => 'MasterTicketAction: ArticleCreate',
@@ -328,9 +328,9 @@ sub Run {
         );
 
         # perform action on linked tickets
-        TICKETIDS:
+        TICKETID:
         for my $TicketID (@TicketIDs) {
-            next TICKETIDS if !$Self->_LoopCheck(
+            next TICKETID if !$Self->_LoopCheck(
                 TicketID => $TicketID,
                 UserID   => $Param{UserID},
                 String   => 'MasterTicketAction: TicketStateUpdate',
@@ -358,9 +358,9 @@ sub Run {
         );
 
         # perform action on linked tickets
-        TICKETIDS:
+        TICKETID:
         for my $TicketID (@TicketIDs) {
-            next TICKETIDS if !$Self->_LoopCheck(
+            next TICKETID if !$Self->_LoopCheck(
                 TicketID => $TicketID,
                 UserID   => $Param{UserID},
                 String   => 'MasterTicketAction: TicketPendingTimeUpdate',
@@ -396,9 +396,9 @@ sub Run {
         );
 
         # perform action on linked tickets
-        TICKETIDS:
+        TICKETID:
         for my $TicketID (@TicketIDs) {
-            next TICKETIDS if !$Self->_LoopCheck(
+            next TICKETID if !$Self->_LoopCheck(
                 TicketID => $TicketID,
                 UserID   => $Param{UserID},
                 String   => 'MasterTicketAction: TicketPriorityUpdate',
@@ -426,9 +426,9 @@ sub Run {
         );
 
         # perform action on linked tickets
-        TICKETIDS:
+        TICKETID:
         for my $TicketID (@TicketIDs) {
-            next TICKETIDS if !$Self->_LoopCheck(
+            next TICKETID if !$Self->_LoopCheck(
                 TicketID => $TicketID,
                 UserID   => $Param{UserID},
                 String   => 'MasterTicketAction: TicketOwnerUpdate',
@@ -457,9 +457,9 @@ sub Run {
         );
 
         # perform action on linked tickets
-        TICKETIDS:
+        TICKETID:
         for my $TicketID (@TicketIDs) {
-            next TICKETIDS if !$Self->_LoopCheck(
+            next TICKETID if !$Self->_LoopCheck(
                 TicketID => $TicketID,
                 UserID   => $Param{UserID},
                 String   => 'MasterTicketAction: TicketResponsibleUpdate',
@@ -488,9 +488,9 @@ sub Run {
         );
 
         # perform action on linked tickets
-        TICKETIDS:
+        TICKETID:
         for my $TicketID (@TicketIDs) {
-            next TICKETIDS if !$Self->_LoopCheck(
+            next TICKETID if !$Self->_LoopCheck(
                 TicketID => $TicketID,
                 UserID   => $Param{UserID},
                 String   => 'MasterTicketAction: TicketLockUpdate',

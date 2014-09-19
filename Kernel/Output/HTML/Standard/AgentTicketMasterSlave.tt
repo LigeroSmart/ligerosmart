@@ -2,7 +2,7 @@
 # AgentTicketMasterSlave.tt - provides common HTML form for several masks
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/1d3d1ad4db79f5025bb3a82809b07f6599588ac0/Kernel/Output/HTML/Standard/AgentTicketActionCommon.tt
+# $origin: https://github.com/OTRS/otrs/blob/60c239c927c6d8cdc985f57af56c42de86cd413a/Kernel/Output/HTML/Standard/AgentTicketActionCommon.tt
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,6 +15,7 @@
 # this module uses AgentTicketActionCommon as a base, for easy update and framework compatibility
 # special markers has been set along the file to easy spot the differences introduced by
 # OTRSMasterSlave package
+# ---
 
 [% RenderBlockStart("Properties") %]
 
@@ -324,7 +325,6 @@ $('#TypeID').bind('change', function (Event) {
 #                    <div class="Clear"></div>
 #                </div>
 #[% RenderBlockEnd("DynamicField_Field2") %]
-
                         </fieldset>
                     </div>
                 </div>
@@ -341,6 +341,15 @@ $('#TypeID').bind('change', function (Event) {
                     <div class="Content">
 
                         <fieldset class="TableLike FixedLabel">
+[% IF Data.WidgetStatus == 'Expanded' %]
+                            <input type="hidden" id="CreateArticle" name="CreateArticle" value="1" />
+[% ELSE %]
+                            <label for="CreateArticle">[% Translate("Create an Article") | html %]:</label>
+                            <div class="Field">
+                                <input type="checkbox" id="CreateArticle" name="CreateArticle" value="1" />
+                            </div>
+                            <div class="Clear"></div>
+[% END %]
 [% RenderBlockStart("SubjectLabel") %]
                             <label for="Subject">[% Translate("Subject") | html %]:</label>
 [% RenderBlockEnd("SubjectLabel") %]
@@ -348,7 +357,7 @@ $('#TypeID').bind('change', function (Event) {
                             <label class="Mandatory" for="Subject"><span class="Marker">*</span>[% Translate("Subject") | html %]:</label>
 [% RenderBlockEnd("SubjectLabelMandatory") %]
                             <div class="Field">
-                                <input type="text" id="Subject" name="Subject" data-defaultvalue="[% Data.Subject | html %]" value="[% IF Data.WidgetStatus == 'Expanded' %] [% Data.Subject | html %] [% END %]" class="W75pc Validate [% Data.SubjectInvalid %] [% Data.SubjectRequired %]"/>
+                                <input type="text" id="Subject" name="Subject" value="[% Data.Subject | html %]" class="W75pc Validate [% Data.SubjectInvalid %] [% Data.SubjectRequired %]"/>
                                 <div id="SubjectError" class="TooltipErrorMessage"><p>[% Translate("This field is required.") | html %]</p></div>
                                 <div id="SubjectServerError" class="TooltipErrorMessage"><p>[% Translate("This field is required.") | html %]</p></div>
                             </div>
@@ -399,7 +408,7 @@ $('#TypeID').bind('change', function (Event) {
 [% RenderBlockStart("RichText") %]
 [% InsertTemplate("RichTextEditor.tt") %]
 [% RenderBlockEnd("RichText") %]
-                                <textarea id="RichText" class="RichText Validate [% Data.BodyInvalid %] [% Data.BodyRequired %]" name="Body" rows="15" cols="[% Config("Ticket::Frontend::TextAreaNote") %]" data-defaultvalue="[% Data.Body | html %]">[% IF Data.WidgetStatus == 'Expanded' %] [% Data.Body | html %] [% END %]</textarea>
+                                <textarea id="RichText" class="RichText Validate [% Data.BodyInvalid %] [% Data.BodyRequired %]" name="Body" rows="15" cols="[% Config("Ticket::Frontend::TextAreaNote") %]">[% Data.Body | html %]</textarea>
                                 <div id="RichTextError" class="TooltipErrorMessage"><p>[% Translate("This field is required.") | html %]</p></div>
                                 <div id="RichTextServerError" class="TooltipErrorMessage"><p>[% Translate("This field is required.") | html %]</p></div>
                             </div>

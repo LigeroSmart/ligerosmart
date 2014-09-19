@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTicketMasterSlave.pm - common file for several modules
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/346a3ddb19c1bc521d07114c8fe8c523e720f8ae/Kernel/Modules/AgentTicketActionCommon.pm
+# $origin: https://github.com/OTRS/otrs/blob/60c239c927c6d8cdc985f57af56c42de86cd413a/Kernel/Modules/AgentTicketActionCommon.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -299,7 +299,7 @@ sub Run {
         qw(
         NewStateID NewPriorityID TimeUnits ArticleTypeID Title Body Subject NewQueueID
         Year Month Day Hour Minute NewOwnerID NewOwnerType OldOwnerID NewResponsibleID
-        TypeID ServiceID SLAID Expand ReplyToArticle StandardTemplateID
+        TypeID ServiceID SLAID Expand ReplyToArticle StandardTemplateID CreateArticle
         )
         )
     {
@@ -860,7 +860,7 @@ sub Run {
             }
         }
 
-        if ( $Self->{Config}->{Note} && ( $GetParam{Subject} || $GetParam{Body} ) ) {
+        if ( $GetParam{CreateArticle} && $Self->{Config}->{Note} && ( $GetParam{Subject} || $GetParam{Body} ) ) {
 
             if ( !$GetParam{Subject} ) {
                 if ( $Self->{Config}->{Subject} ) {
@@ -1988,16 +1988,9 @@ sub _Mask {
         }
         else {
             $Param{SubjectRequired}
-                = 'Validate_DependingRequiredAND Validate_Depending_RichText Validate_Depending_AttachmentDeleteButton1';
+                = 'Validate_DependingRequiredAND Validate_Depending_CreateArticle';
             $Param{BodyRequired}
-                = 'Validate_DependingRequiredAND Validate_Depending_Subject Validate_Depending_AttachmentDeleteButton1';
-
-            # time units are being stored with the article, so we need to make sure that once
-            # the time accounting field has been filled in, we also have subject and body
-            if ( $Self->{ConfigObject}->Get('Ticket::Frontend::AccountTime') ) {
-                $Param{SubjectRequired} .= ' Validate_Depending_TimeUnits';
-                $Param{BodyRequired}    .= ' Validate_Depending_TimeUnits';
-            }
+                = 'Validate_DependingRequiredAND Validate_Depending_CreateArticle';
         }
 
         $Self->{LayoutObject}->Block(
@@ -2326,12 +2319,12 @@ sub _Mask {
                 UserID     => $Self->{UserID},
                 Permission => 'ro',
             );
-            TICKETS:
+            TICKET:
             for my $TicketID (@TicketIDs) {
                 my %CurrentTicket = $Self->{TicketObject}->TicketGet( TicketID => $TicketID );
-                next TICKETS if !%CurrentTicket;
-                next TICKETS if %Ticket && $Ticket{ 'DynamicField_' . $MasterSlaveDynamicField } && $Ticket{ 'DynamicField_' . $MasterSlaveDynamicField } eq "SlaveOf:$CurrentTicket{TicketNumber}";
-                next TICKETS if %Ticket && $Ticket{ 'DynamicField_' . $MasterSlaveDynamicField } && $Ticket{TicketID} eq $CurrentTicket{TicketID};
+                next TICKET if !%CurrentTicket;
+                next TICKET if %Ticket && $Ticket{ 'DynamicField_' . $MasterSlaveDynamicField } && $Ticket{ 'DynamicField_' . $MasterSlaveDynamicField } eq "SlaveOf:$CurrentTicket{TicketNumber}";
+                next TICKET if %Ticket && $Ticket{ 'DynamicField_' . $MasterSlaveDynamicField } && $Ticket{TicketID} eq $CurrentTicket{TicketID};
 
                 $Data{"SlaveOf:$CurrentTicket{TicketNumber}"}
                  = $Self->{LanguageObject}->Get('Slave of Ticket#') ."$CurrentTicket{TicketNumber}: $CurrentTicket{Title}";

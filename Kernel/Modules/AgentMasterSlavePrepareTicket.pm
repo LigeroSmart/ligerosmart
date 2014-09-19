@@ -93,14 +93,14 @@ sub PreRun {
     $DynamicField->{Config}->{DefaultValue} = '';
     $DynamicField->{Config}->{PossibleNone} = 1;
 
-    TICKETS:
+    TICKET:
     for my $TicketID (@TicketIDs) {
         my %CurrentTicket = $Self->{TicketObject}->TicketGet(
             TicketID      => $TicketID,
             DynamicFields => 1,
         );
 
-        next TICKETS if !%CurrentTicket;
+        next TICKET if !%CurrentTicket;
 
         # set dynamic field posible values
         $DynamicField->{Config}->{PossibleValues}{

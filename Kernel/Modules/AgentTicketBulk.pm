@@ -1104,10 +1104,10 @@ sub _Mask {
                 UserID     => $Self->{UserID},
                 Permission => 'ro',
             );
-            TICKETS:
+            TICKET:
             for my $TicketID (@TicketIDs) {
                 my %Ticket = $Self->{TicketObject}->TicketGet( TicketID => $TicketID );
-                next TICKETS if !%Ticket;
+                next TICKET if !%Ticket;
                 $Data{"SlaveOf:$Ticket{TicketNumber}"} = "Slave of Ticket#$Ticket{TicketNumber}: $Ticket{Title}";
             }
         }
