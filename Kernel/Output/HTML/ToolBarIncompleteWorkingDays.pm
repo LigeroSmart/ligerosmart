@@ -77,7 +77,9 @@ sub Run {
 
     # get the number of incomplete working days
     my $Count                 = 0;
-    my %IncompleteWorkingDays = $Self->{TimeAccountingObject}->WorkingUnitsCompletnessCheck();
+    my %IncompleteWorkingDays = $Self->{TimeAccountingObject}->WorkingUnitsCompletnessCheck(
+        UserID => $Self->{UserID},
+    );
 
     YEARID:
     for my $YearID ( sort keys %{ $IncompleteWorkingDays{Incomplete} } ) {

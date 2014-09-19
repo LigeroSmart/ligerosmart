@@ -57,7 +57,9 @@ sub PreRun {
 
     return if !$User{ $Self->{UserID} };
 
-    my %IncompleteWorkingDays = $Self->{TimeAccountingObject}->WorkingUnitsCompletnessCheck();
+    my %IncompleteWorkingDays = $Self->{TimeAccountingObject}->WorkingUnitsCompletnessCheck(
+        UserID => $Self->{UserID},
+    );
 
     # redirect if incomplete working day are out of range
     if (
@@ -187,7 +189,7 @@ sub Run {
             }
             if ( $Self->{ParamObject}->GetParam( Param => 'AddPeriod' ) ) {
 
-                # show the edit time settiengs again, but now with a new empty time period line
+                # show the edit time settings again, but now with a new empty time period line
                 return $Self->{LayoutObject}->Redirect(
                     OP =>
                         "Action=AgentTimeAccounting;Subaction=$GetParam{Subaction};UserID=$GetParam{UserID};"
@@ -258,10 +260,13 @@ sub Run {
         # for initial use, the first agent with rw-right will be redirected
         # to 'Setting', so he can do the initial settings
         if ( !$User{ $Self->{UserID} } ) {
+
             return $Self->_FirstUserRedirect();
         }
 
-        my %IncompleteWorkingDays = $Self->{TimeAccountingObject}->WorkingUnitsCompletnessCheck();
+        my %IncompleteWorkingDays = $Self->{TimeAccountingObject}->WorkingUnitsCompletnessCheck(
+            UserID => $Self->{UserID},
+        );
         my $MaxAllowedInsertDays
             = $Self->{ConfigObject}->Get('TimeAccounting::MaxAllowedInsertDays') || '10';
         ( $Param{YearAllowed}, $Param{MonthAllowed}, $Param{DayAllowed} )
@@ -316,9 +321,10 @@ sub Run {
 
             # delete previous entries for this day and user
             $Self->{TimeAccountingObject}->WorkingUnitsDelete(
-                Year  => $Param{Year},
-                Month => $Param{Month},
-                Day   => $Param{Day},
+                Year   => $Param{Year},
+                Month  => $Param{Month},
+                Day    => $Param{Day},
+                UserID => $Self->{UserID},
             );
 
             my %CheckboxCheck = ();
@@ -351,6 +357,7 @@ sub Run {
                             LeaveDay => $CheckboxCheck{LeaveDay} || 0,
                             Sick     => $CheckboxCheck{Sick} || 0,
                             Overtime => $CheckboxCheck{Overtime} || 0,
+                            UserID   => $Self->{UserID},
                         )
                         )
                     {
@@ -631,11 +638,13 @@ sub Run {
                     );
                     push @{ $Data{WorkingUnits} }, \%WorkingUnit;
 
-                    $Data{Year}  = $Param{Year};
-                    $Data{Month} = $Param{Month};
-                    $Data{Day}   = $Param{Day};
+                    $Data{Year}   = $Param{Year};
+                    $Data{Month}  = $Param{Month};
+                    $Data{Day}    = $Param{Day};
+                    $Data{UserID} = $Self->{UserID};
 
                     if ( !$Self->{TimeAccountingObject}->WorkingUnitsInsert(%Data) ) {
+
                         return $Self->{LayoutObject}->ErrorScreen(
                             Message => 'Can\'t insert Working Units!'
                         );
@@ -655,9 +664,10 @@ sub Run {
         # Show Working Units
         # get existing working units
         %Data = $Self->{TimeAccountingObject}->WorkingUnitsGet(
-            Year  => $Param{Year},
-            Month => $Param{Month},
-            Day   => $Param{Day},
+            Year   => $Param{Year},
+            Month  => $Param{Month},
+            Day    => $Param{Day},
+            UserID => $Self->{UserID},
         );
 
     # get number of working units (=records)
@@ -958,9 +968,10 @@ sub Run {
         if ($ErrorNote) {
             if (
                 !$Self->{TimeAccountingObject}->WorkingUnitsDelete(
-                    Year  => $Param{Year},
-                    Month => $Param{Month},
-                    Day   => $Param{Day},
+                    Year   => $Param{Year},
+                    Month  => $Param{Month},
+                    Day    => $Param{Day},
+                    UserID => $Self->{UserID},
                 )
                 )
             {
@@ -1014,7 +1025,9 @@ sub Run {
 
         # get incomplete working days
         my %IncompleteWorkingDaysList;
-        %IncompleteWorkingDays = $Self->{TimeAccountingObject}->WorkingUnitsCompletnessCheck();
+        %IncompleteWorkingDays = $Self->{TimeAccountingObject}->WorkingUnitsCompletnessCheck(
+            UserID => $Self->{UserID},
+        );
 
         for my $YearID ( sort keys %{ $IncompleteWorkingDays{Incomplete} } ) {
             for my $MonthID ( sort keys %{ $IncompleteWorkingDays{Incomplete}{$YearID} } ) {
@@ -1373,9 +1386,10 @@ sub Run {
 
         if (
             !$Self->{TimeAccountingObject}->WorkingUnitsDelete(
-                Year  => $Param{Year},
-                Month => $Param{Month},
-                Day   => $Param{Day},
+                Year   => $Param{Year},
+                Month  => $Param{Month},
+                Day    => $Param{Day},
+                UserID => $Self->{UserID},
             )
             )
         {
@@ -2652,6 +2666,7 @@ sub Run {
                     LeaveDay => $Param{LeaveDay} || 0,
                     Sick     => $Param{Sick} || 0,
                     Overtime => $Param{Overtime} || 0,
+                    UserID   => $Self->{UserID},
                 )
                 )
             {
@@ -2837,9 +2852,11 @@ sub _ProjectList {
     if ( !$Self->{LastProjectsRef} ) {
 
         # get the last projects
-        my @LastProjects = $Self->{TimeAccountingObject}->LastProjectsOfUser();
+        my @LastProjects = $Self->{TimeAccountingObject}->LastProjectsOfUser(
+            UserID => $Self->{UserID},
+        );
 
-        # add the favorits
+        # add the favorites
         %{ $Self->{LastProjectsRef} } = map { $_ => 1 } @LastProjects;
     }
 

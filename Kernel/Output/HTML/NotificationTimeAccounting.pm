@@ -43,7 +43,9 @@ sub Run {
         Day   => $Day,
     );
     if ( $User{ $Self->{UserID} } ) {
-        my %IncompleteWorkingDays = $Self->{TimeAccountingObject}->WorkingUnitsCompletnessCheck();
+        my %IncompleteWorkingDays = $Self->{TimeAccountingObject}->WorkingUnitsCompletnessCheck(
+            UserID => $Self->{UserID},
+        );
 
         # redirect if incomplete working day are out of range
         if ( $IncompleteWorkingDays{Warning} ) {
