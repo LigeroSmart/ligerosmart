@@ -7,6 +7,7 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 4.0.0 beta1 - 2014-??-??
+ - 2014-09-19 Changed API "UserID" parameter is now required for WorkingUnitsCompletnessCheck(), WorkingUnitsGet(), WorkingUnitsInsert(),WorkingUnitsDelete() and LastProjectOfUser(),
  - 2014-09-18 Fixed bug#10494 - Today's Entry does not become available at the time expected on OTRS with timezone offset.
  - 2014-04-23 Fixed bug#10486 - Can not insert a new entry with just using period.
  - 2014-04-23 Fixed bug#10484 - Added period without Start/Stop time shows 00:00 in both times after summit.
