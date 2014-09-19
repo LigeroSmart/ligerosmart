@@ -19,7 +19,7 @@
             <div class="Content">
                 <ul class="ActionList">
                     <li>
-                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Overview;Year=[% Data.Year | uri %];Month=[% Data.Month | uri %]" class="CallForAction"><span>[% Translate("Go to overview") | html %]</span></a>
+                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Overview;Year=[% Data.Year | uri %];Month=[% Data.Month | uri %]" class="CallForAction Fullsize Center"><span><i class="fa fa-caret-left"></i>[% Translate("Go to overview") | html %]</span></a>
                     </li>
 [% RenderBlockStart("CreateProject") %]
                     <li>
@@ -36,17 +36,25 @@
             </div>
             <div class="Content">
                 <div class="MonthSelection">
-                    <a class="Arrow Left" title="[% Translate("Previous day") | html %]" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Edit;Year=[% Data.YearBack | uri %];Month=[% Data.MonthBack | uri %];Day=[% Data.DayBack | uri %]"></a>
-                    <a class="Arrow Right" title="[% Translate("Next day") | html %]" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Edit;Year=[% Data.YearNext | uri %];Month=[% Data.MonthNext | uri %];Day=[% Data.DayNext | uri %]"></a>
+                    <a class="Arrow" title="[% Translate("Previous day") | html %]" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Edit;Year=[% Data.YearBack | uri %];Month=[% Data.MonthBack | uri %];Day=[% Data.DayBack | uri %]"><i class="fa fa-caret-left"></i></a>
+                    <a class="Arrow" title="[% Translate("Next day") | html %]" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Edit;Year=[% Data.YearNext | uri %];Month=[% Data.MonthNext | uri %];Day=[% Data.DayNext | uri %]"><i class="fa fa-caret-right"></i></a>
                     [% Data.Year | html %]-[% Data.Month | html %]-[% Data.Day | html %]
                 </div>
                 <div class="Clear"></div>
-                <form action="[% Env("CGIHandle") %]" method="post" enctype="multipart/form-data" class="Validate" name="DateSelection">
+                <form action="[% Env("CGIHandle") %]" method="post" enctype="multipart/form-data" class="Validate" name="DateSelection" id="DateSelectionForm">
                     <input type="hidden" name="Action" value="[% Env("Action") %]" />
                     <input type="hidden" name="Subaction" value="Edit" />
                     [% Data.Date %]
-                    <input class="button" type="submit" value="[% Translate("Submit") | html %]" />
                 </form>
+                <a href="#" id="NavigationSelect" class="CallForAction Fullsize Center SpacingTop"><span><i class="fa fa-calendar-o"></i>[% Translate("Go to date") | html %]</span></a>
+[% WRAPPER JSOnDocumentComplete %]
+<script type="text/javascript">//<![CDATA[
+$('#NavigationSelect').bind('click', function(){
+    $('#DateSelectionForm').submit();
+});
+//]]></script>
+[% END %]
+
 [% RenderBlockStart("IncompleteWorkingDays") %]
                 <h2 class="SpacingTop">[% Translate("Days without entries") | html %]:</h2>
                 [% Data.IncompleteWorkingDaysSelect %]
@@ -76,7 +84,7 @@
                     <input type="hidden" name="LeaveDay" value="" />
                     <input type="hidden" name="Sick" value="" />
                     <input type="hidden" name="Overtime" value="" />
-                    <input class="button" type="button" id="MassEntrySubmit" value="[% Translate("Mass entry") | html %]" />
+                    <a href="#" id="MassEntrySubmit" class="CallForAction Fullsize Center"><span><i class="fa fa-plus-square-o"> </i>[% Translate("Mass entry") | html %]</span></a>
                 </form>
                 <div id="MassEntryConfirmDialog" class="Hidden">
                     <h2>[% Translate("Please choose the reason for your absence for the selected days") | html %].</h2>
@@ -244,7 +252,7 @@
 [% RenderBlockEnd("Unit") %]
                             <tr>
                                 <td colspan="6" class="Right">
-                                    <button class="CallForAction Plus" type="button" id="MoreInputFields" name="MoreInputFields"><span>[% Translate("Add one row") | html %]</span></button>
+                                    <button class="CallForAction Plus" type="button" id="MoreInputFields" name="MoreInputFields"><span><i class="fa fa-plus-square"></i>[% Translate("Add one row") | html %]</span></button>
                                 </td>
                             </tr>
 [% RenderBlockEnd("UnitBlock") %]
@@ -284,7 +292,7 @@
                     </div>
 [% RenderBlockEnd("OtherTimes") %]
                     <div class="Center SpacingTop">
-                        <button class="Primary CallForAction" type="submit" name="InsertWorkingUnits" value="[% Translate("Submit") | html %]"><span><i class="fa fa-check"></i> [% Translate("Submit") | html %]</span></button>
+                        <button class="Primary CallForAction" type="submit" name="InsertWorkingUnits" value="[% Translate("Submit") | html %]"><span><i class="fa fa-check-square-o"></i> [% Translate("Submit") | html %]</span></button>
                         <a id="DeleteTimeAccountingEntry" href="#">
                             [% Translate("Delete") | html %]
                         </a>

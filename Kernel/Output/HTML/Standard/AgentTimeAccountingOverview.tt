@@ -83,8 +83,8 @@
 [% RenderBlockEnd("User") %]
                     </h2>
                     <div class="AdditionalInformation">
-                        <a class="Arrow Left" title="[% Translate("Previous month") | html %]" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Overview;Year=[% Data.YearBack | uri %];Month=[% Data.MonthBack | uri %];UserID=[% Data.UserID | uri %]"></a>
-                        <a class="Arrow Right" title="[% Translate("Next month") | html %]" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Overview;Year=[% Data.YearNext | uri %];Month=[% Data.MonthNext | uri %];UserID=[% Data.UserID | uri %]"></a>
+                        <a class="Arrow" title="[% Translate("Previous month") | html %]" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Overview;Year=[% Data.YearBack | uri %];Month=[% Data.MonthBack | uri %];UserID=[% Data.UserID | uri %]"><i class="fa fa-caret-left"></i></a>
+                        <a class="Arrow" title="[% Translate("Next month") | html %]" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Overview;Year=[% Data.YearNext | uri %];Month=[% Data.MonthNext | uri %];UserID=[% Data.UserID | uri %]"><i class="fa fa-caret-right"></i></a>
                         [% Translate(Data.Month_to_Text) | html %] [% Data.Year | html %]
                     </div>
                 </div>
