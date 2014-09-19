@@ -12,8 +12,14 @@ package Kernel::System::Stats::Dynamic::TimeAccounting;
 use strict;
 use warnings;
 
-use Kernel::System::TimeAccounting;
 use Date::Pcalc qw( Add_Delta_Days Add_Delta_YMD );
+
+our @ObjectDependencies = (
+    'Kernel::System::Log',
+    'Kernel::System::Time',
+    'Kernel::System::TimeAccounting',
+    'Kernel::System::User',
+);
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -21,20 +27,6 @@ sub new {
     # allocate new hash for object
     my $Self = {};
     bless( $Self, $Type );
-
-    # check needed objects
-    for my $Object (
-        qw(DBObject ConfigObject LogObject UserObject TimeObject MainObject EncodeObject)
-        )
-    {
-        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
-    }
-
-    # create additional needed objects
-    $Self->{TimeAccountingObject} = Kernel::System::TimeAccounting->new(
-        %{$Self},
-        UserID => 1,
-    );
 
     return $Self;
 }
@@ -49,17 +41,20 @@ sub GetObjectAttributes {
     my ( $Self, %Param ) = @_;
 
     # set predefined start time
-    my $TimeStamp = $Self->{TimeObject}->CurrentTimestamp();
+    my $TimeStamp = $Kernel::OM->Get('Kernel::System::Time')->CurrentTimestamp();
     my ($Date) = split /\s+/, $TimeStamp;
     my $Today = sprintf "%s 23:59:59", $Date;
 
+    # get time accounting object
+    my $TimeAccountingObject = $Kernel::OM->Get('Kernel::System::TimeAccounting');
+
     # get project list
-    my %ProjectList = $Self->{TimeAccountingObject}->ProjectSettingsGet(
+    my %ProjectList = $TimeAccountingObject->ProjectSettingsGet(
         Status => 'valid',
     );
 
     # get action list
-    my %ActionListSource = $Self->{TimeAccountingObject}->ActionSettingsGet();
+    my %ActionListSource = $TimeAccountingObject->ActionSettingsGet();
     my %ActionList;
 
     for my $Action ( sort keys %ActionListSource ) {
@@ -67,7 +62,7 @@ sub GetObjectAttributes {
     }
 
     # get user list
-    my %UserList = $Self->{UserObject}->UserList(
+    my %UserList = $Kernel::OM->Get('Kernel::System::User')->UserList(
         Type  => 'Long',
         Valid => 0,
     );
@@ -144,10 +139,13 @@ sub GetHeaderLine {
         # user have been selected as x-value
         my @UserIDs = @{ $Param{XValue}{SelectedValues} };
 
+        # get user object
+        my $UserObject = $Kernel::OM->Get('Kernel::System::User');
+
         # iterate over selected users
         USERID:
         for my $UserID (@UserIDs) {
-            my $UserName = $Self->{UserObject}->UserName(
+            my $UserName = $UserObject->UserName(
                 UserID => $UserID,
             );
 
@@ -157,13 +155,16 @@ sub GetHeaderLine {
 
     # Projects as X-value
     else {
-        # projects have been selevted as x-value
+        # projects have been selected as x-value
         my @ProjectIDs = @{ $Param{XValue}{SelectedValues} };
+
+        # get time accounting object
+        my $TimeAccountingObject = $Kernel::OM->Get('Kernel::System::TimeAccounting');
 
         # iterate over selected projects
         PROJECTID:
         for my $ProjectID (@ProjectIDs) {
-            my %ProjectData = $Self->{TimeAccountingObject}->ProjectGet(
+            my %ProjectData = $TimeAccountingObject->ProjectGet(
                 ID => $ProjectID,
             );
 
@@ -198,11 +199,14 @@ sub GetStatTable {
         my @RawStatArray = @{$StatData};
         return if !@RawStatArray;
 
+        # get time accounting object
+        my $TimeAccountingObject = $Kernel::OM->Get('Kernel::System::TimeAccounting');
+
         # get list of needed data
-        my %ProjectData = $Self->{TimeAccountingObject}->ProjectSettingsGet();
+        my %ProjectData = $TimeAccountingObject->ProjectSettingsGet();
         my %ProjectList = %{ $ProjectData{Project} || {} };
 
-        my %ActionData = $Self->{TimeAccountingObject}->ActionSettingsGet();
+        my %ActionData = $TimeAccountingObject->ActionSettingsGet();
         my %ActionList = map { ( $_ => $ActionData{$_}->{Action} ) } keys %ActionData;
 
         my @SortedProjectIDs = sort { $ProjectList{$a} cmp $ProjectList{$b} } keys %ProjectList;
@@ -271,8 +275,11 @@ sub GetStatTable {
         # projects have been selected as x-value
         my @ProjectIDs = @{ $Param{XValue}{SelectedValues} };
 
+        # get user object
+        my $UserObject = $Kernel::OM->Get('Kernel::System::User');
+
         # we need to get all users
-        my %UserIDs = $Self->{UserObject}->UserList(
+        my %UserIDs = $UserObject->UserList(
             Type  => 'Short',
             Valid => 1,
         );
@@ -293,7 +300,7 @@ sub GetStatTable {
         return if !@RawStatArray;
 
         # get list of needed data
-        my %UserList = $Self->{UserObject}->UserList(
+        my %UserList = $UserObject->UserList(
             Type  => 'Long',
             Valid => 1,
         );
@@ -351,6 +358,10 @@ sub GetStatTable {
 sub ExportWrapper {
     my ( $Self, %Param ) = @_;
 
+    # get needed objects
+    my $UserObject           = $Kernel::OM->Get('Kernel::System::User');
+    my $TimeAccountingObject = $Kernel::OM->Get('Kernel::System::TimeAccounting');
+
     # wrap ids to used spelling
     for my $Use (qw(UseAsValueSeries UseAsRestriction UseAsXvalue)) {
         ELEMENT:
@@ -364,7 +375,7 @@ sub ExportWrapper {
                 for my $ID ( @{$Values} ) {
                     next ID if !$ID;
 
-                    $ID->{Content} = $Self->{UserObject}->UserLookup( UserID => $ID->{Content} );
+                    $ID->{Content} = $UserObject->UserLookup( UserID => $ID->{Content} );
                 }
             }
             elsif ( $ElementName eq 'Project' ) {
@@ -373,7 +384,7 @@ sub ExportWrapper {
                     next ID if !$ID;
 
                     my %TmpProjectData
-                        = $Self->{TimeAccountingObject}->ProjectGet( ID => $ID->{Content} );
+                        = $TimeAccountingObject->ProjectGet( ID => $ID->{Content} );
                     $ID->{Content} = $TmpProjectData{Project};
                 }
             }
@@ -383,7 +394,7 @@ sub ExportWrapper {
                     next ID if !$ID;
 
                     my %TmpActionData
-                        = $Self->{TimeAccountingObject}->ActionGet( ID => $ID->{Content} );
+                        = $TimeAccountingObject->ActionGet( ID => $ID->{Content} );
                     $ID->{Content} = $TmpActionData{Action};
                 }
             }
@@ -394,6 +405,11 @@ sub ExportWrapper {
 
 sub ImportWrapper {
     my ( $Self, %Param ) = @_;
+
+    # get needed objects
+    my $UserObject           = $Kernel::OM->Get('Kernel::System::User');
+    my $LogObject            = $Kernel::OM->Get('Kernel::System::Log');
+    my $TimeAccountingObject = $Kernel::OM->Get('Kernel::System::TimeAccounting');
 
     # wrap used spelling to ids
     for my $Use (qw(UseAsValueSeries UseAsRestriction UseAsXvalue)) {
@@ -409,12 +425,12 @@ sub ImportWrapper {
                 for my $ID ( @{$Values} ) {
                     next ID if !$ID;
 
-                    if ( $Self->{UserObject}->UserLookup( UserLogin => $ID->{Content} ) ) {
+                    if ( $UserObject->UserLookup( UserLogin => $ID->{Content} ) ) {
                         $ID->{Content}
-                            = $Self->{UserObject}->UserLookup( UserLogin => $ID->{Content} );
+                            = $UserObject->UserLookup( UserLogin => $ID->{Content} );
                     }
                     else {
-                        $Self->{LogObject}->Log(
+                        $LogObject->Log(
                             Priority => 'error',
                             Message  => "Import: Can' find the user $ID->{Content}!"
                         );
@@ -427,14 +443,14 @@ sub ImportWrapper {
                 for my $ID ( @{$Values} ) {
                     next ID if !$ID;
 
-                    my %Project = $Self->{TimeAccountingObject}->ProjectGet(
+                    my %Project = $TimeAccountingObject->ProjectGet(
                         Project => $ID->{Content},
                     );
                     if ( $Project{ID} ) {
                         $ID->{Content} = $Project{ID};
                     }
                     else {
-                        $Self->{LogObject}->Log(
+                        $LogObject->Log(
                             Priority => 'error',
                             Message  => "Import: Can' find project $ID->{Content}!"
                         );
@@ -447,14 +463,14 @@ sub ImportWrapper {
                 for my $ID ( @{$Values} ) {
                     next ID if !$ID;
 
-                    my %Action = $Self->{TimeAccountingObject}->ActionGet(
+                    my %Action = $TimeAccountingObject->ActionGet(
                         Action => $ID->{Content},
                     );
                     if ( $Action{ID} ) {
                         $ID->{Content} = $Action{ID};
                     }
                     else {
-                        $Self->{LogObject}->Log(
+                        $LogObject->Log(
                             Priority => 'error',
                             Message  => "Import: Can' find action $ID->{Content}!"
                         );
@@ -489,14 +505,17 @@ sub _GetStatData {
         my $StartDate;
         my $StopDate;
 
+        # get time object
+        my $TimeObject = $Kernel::OM->Get('Kernel::System::Time');
+
         # check if time period has been selected
         if ( $Param{Param}{Restrictions}{TimeAccountingPeriodStart} ) {
 
-            # get unix timestamp of start and end values
-            $StartDate = $Self->{TimeObject}->TimeStamp2SystemTime(
+            # get UNIX time-stamp of start and end values
+            $StartDate = $TimeObject->TimeStamp2SystemTime(
                 String => $Param{Param}{Restrictions}{TimeAccountingPeriodStart},
             );
-            $StopDate = $Self->{TimeObject}->TimeStamp2SystemTime(
+            $StopDate = $TimeObject->TimeStamp2SystemTime(
                 String => $Param{Param}{Restrictions}{TimeAccountingPeriodStop},
             );
         }
@@ -506,8 +525,8 @@ sub _GetStatData {
             # If no time period had been selected previous month will be used as period!
 
             # get current date values
-            my @CurrentDate = $Self->{TimeObject}->SystemTime2Date(
-                SystemTime => $Self->{TimeObject}->SystemTime(),
+            my @CurrentDate = $TimeObject->SystemTime2Date(
+                SystemTime => $TimeObject->SystemTime(),
             );
 
             # get first day of previous month
@@ -541,7 +560,7 @@ sub _GetStatData {
             );
 
             # calculate unix timestamp for start and stop date
-            $StartDate = $Self->{TimeObject}->Date2SystemTime(
+            $StartDate = $TimeObject->Date2SystemTime(
                 Year   => $NewStartDate[0],
                 Month  => $NewStartDate[1],
                 Day    => $NewStartDate[2],
@@ -549,7 +568,7 @@ sub _GetStatData {
                 Minute => 0,
                 Second => 0,
             );
-            $StopDate = $Self->{TimeObject}->Date2SystemTime(
+            $StopDate = $TimeObject->Date2SystemTime(
                 Year   => $NewStopDate[0],
                 Month  => $NewStopDate[1],
                 Day    => $NewStopDate[2],
@@ -562,19 +581,22 @@ sub _GetStatData {
         # calculate number of days within the given range
         my $Days = int( ( $StopDate - $StartDate ) / 86400 ) + 1;
 
+        # get time accounting object
+        my $TimeAccountingObject = $Kernel::OM->Get('Kernel::System::TimeAccounting');
+
         DAY:
         for my $Day ( 0 .. $Days ) {
 
             # get day relative to start date
             my $DateOfPeriod = $StartDate + $Day * 86400;
 
-            # get needed date values out of timestamp
-            my @DateValues = $Self->{TimeObject}->SystemTime2Date(
+            # get needed date values out of time-stamp
+            my @DateValues = $TimeObject->SystemTime2Date(
                 SystemTime => $DateOfPeriod,
             );
 
             # get working unit for user and day
-            my %WorkingUnit = $Self->{TimeAccountingObject}->WorkingUnitsGet(
+            my %WorkingUnit = $TimeAccountingObject->WorkingUnitsGet(
                 Year   => $DateValues[ $DateIndexToName{'Year'} ],
                 Month  => $DateValues[ $DateIndexToName{'Month'} ],
                 Day    => $DateValues[ $DateIndexToName{'Day'} ],
