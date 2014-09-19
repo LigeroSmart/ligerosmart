@@ -156,14 +156,13 @@
     <section>
         <title>Replace customer's from Master ticket</title>
         <para>
-            The sysconfig option 'ReplaceCustomerRealNameOnSlaveArticleTypes' enables
-            the possibility to replace the customer's real name from a Master ticket
-            with the one for the current Slave ticket into the articles added to a
-            Slave ticket due the MasterSlave feature.
+            Creating an article on the Master ticket, it is replicated on the Slave Ticket
+            using the customer from the Master and not the own from the Slave.
         </para>
         <para>
-            For do it possible just enable the possible ArticleTypes on the mentioned
-            sysconfig setting.
+            Ones the sysconfig option 'ReplaceCustomerRealNameOnSlaveArticleTypes' is enabled
+            the Slave's customer is keeped for the replicated articles from the Master ticket,
+            for the article types defined on this config setting. 
         </para>
     </section>
 </chapter>
