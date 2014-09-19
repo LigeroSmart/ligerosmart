@@ -678,7 +678,11 @@ sub Run {
             $Frontend{PeriodNote} = '';
         }
 
-        if ( time() > timelocal( 1, 0, 0, $Param{Day}, $Param{Month} - 1, $Param{Year} - 1900 ) ) {
+        if (
+            $Self->{TimeObject}->SystemTime()
+            > timelocal( 1, 0, 0, $Param{Day}, $Param{Month} - 1, $Param{Year} - 1900 )
+            )
+        {
             $Self->{LayoutObject}->Block(
                 Name => 'UnitBlock',
                 Data => { %Param, %Frontend },
