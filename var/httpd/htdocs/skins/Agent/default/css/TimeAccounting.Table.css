@@ -123,4 +123,13 @@ tr.MasterAction td.RowSpan {
     vertical-align: top;
 }
 
-} /* end @media */
+.DataTable a.DatepickerIcon i {
+    color: #000;
+    margin-left: 2px;
+}
+
+.DataTable a.DatepickerIcon:hover i {
+    color: #f72;
+}
+
+/* end @media */

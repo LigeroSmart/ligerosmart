@@ -17,18 +17,30 @@
             </div>
             <div class="Content">
                 <div class="MonthSelection">
-                    <a class="Arrow Left" title="[% Translate("Previous month") | html %]" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Reporting;Year=[% Data.YearBack | uri %];Month=[% Data.MonthBack | uri %]"></a>
-                    <a class="Arrow Right" title="[% Translate("Next month") | html %]" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Reporting;Year=[% Data.YearNext | uri %];Month=[% Data.MonthNext | uri %]"></a>
+                    <a class="Arrow Left" title="[% Translate("Previous month") | html %]" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Reporting;Year=[% Data.YearBack | uri %];Month=[% Data.MonthBack | uri %]">
+                        <i class="fa fa-caret-left"></i>
+                    </a>
+                    <a class="Arrow" title="[% Translate("Next month") | html %]" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Reporting;Year=[% Data.YearNext | uri %];Month=[% Data.MonthNext | uri %]">
+                        <i class="fa fa-caret-right"></i>
+                    </a>
                     <strong>[% Translate(Data.Month_to_Text) | html %] [% Data.Year %]</strong>
                 </div>
                 <div class="Clear"></div>
-                <form action="[% Env("CGIHandle") %]" method="post" enctype="multipart/form-data" name="compose">
+                <form action="[% Env("CGIHandle") %]" method="post" enctype="multipart/form-data" name="compose" id="DateSelectionForm">
                     <input type="hidden" name="Action"    value="[% Env("Action") %]" />
                     <input type="hidden" name="Subaction" value="Reporting" />
                     [% Data.MonthOption %]
                     [% Data.YearOption %]
-                    <input class="button" accesskey="g" type="submit" value="[% Translate("Submit") | html %]" />
                 </form>
+                <a href="#" id="NavigationSelect" class="CallForAction Fullsize Center SpacingTop" accesskey="g"><span><i class="fa fa-calendar-o"></i>[% Translate("Go to date") | html %]</span></a>
+[% WRAPPER JSOnDocumentComplete %]
+<script type="text/javascript">//<![CDATA[
+$('#NavigationSelect').bind('click', function(){
+    $('#DateSelectionForm').submit();
+});
+//]]></script>
+[% END %]
+
             </div>
         </div>
     </div>

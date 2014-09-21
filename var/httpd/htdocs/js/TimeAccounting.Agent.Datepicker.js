@@ -149,7 +149,7 @@ TimeAccounting.Agent.Datepicker = (function (TargetNS) {
                     $DatepickerElement.datepicker(Options);
 
                     // add datepicker icon and click event
-                    $DatepickerElement.after('<a href="#" class="DatepickerIcon DatepickerNumber' + DatepickerCount + '" title="' + LocalizationData.IconText + '"></a>');
+                    $DatepickerElement.after('<a href="#" class="DatepickerIcon DatepickerNumber' + DatepickerCount + '" title="' + LocalizationData.IconText + '"><span><i class="fa fa-calendar"></i></span></a>');
                     $DatepickerElement.next('a.DatepickerIcon').click(function () {
                         var Classes = $(this).attr('class'),
                             DatepickerNumber = Classes.replace(/^.*DatepickerNumber([0-9]+).*/g, "$1");

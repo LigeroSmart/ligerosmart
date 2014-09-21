@@ -24,8 +24,8 @@
                         <form action="[% Env("CGIHandle") %]" method="post">
                             <input type="hidden" name="Action" value="[% Env("Action") %]"/>
                             <input type="hidden" name="Subaction" value="AddProject"/>
-                            <button class="CallForAction Plus" type="submit" value="[% Translate("Add") | html %]">
-                                <span>[% Translate("Add project") | html %]</span>
+                            <button class="CallForAction Fullsize Center" type="submit" value="[% Translate("Add") | html %]">
+                                <span><i class="fa fa-plus-square"></i>[% Translate("Add project") | html %]</span>
                             </button>
                         </form>
                     </li>
@@ -33,7 +33,7 @@
 
 [% RenderBlockStart("ActionSettingOverview") %]
                     <li>
-                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Setting" class="CallForAction"><span>[% Translate("Go to overview") | html %]</span></a>
+                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Setting" class="CallForAction Fullsize Center"><span><i class="fa fa-caret-left"></i>[% Translate("Go to overview") | html %]</span></a>
                     </li>
 [% RenderBlockEnd("ActionSettingOverview") %]
                 </ul>
@@ -96,7 +96,7 @@
                         <div class="Clear"></div>
 
                         <div class="Field SpacingTop">
-                            <button class="Primary CallForAction" type="submit" id="Submit" value="[% Translate("Submit") | html %]"><span><i class="fa fa-check"></i> [% Translate("Submit") | html %]</span></button>
+                            <button class="Primary CallForAction" type="submit" id="Submit" value="[% Translate("Submit") | html %]"><span><i class="fa fa-check-square-o"></i> [% Translate("Submit") | html %]</span></button>
                             [% Translate("or") | html %]
                             <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Setting">[% Translate("Cancel") | html %]</a>
                         </div>
@@ -128,8 +128,8 @@
                         <form action="[% Env("CGIHandle") %]" method="post">
                             <input type="hidden" name="Action" value="[% Env("Action") %]"/>
                             <input type="hidden" name="Subaction" value="AddProject"/>
-                            <button class="CallForAction Plus" type="submit" value="[% Translate("Add") | html %]">
-                                <span>[% Translate("Add project") | html %]</span>
+                            <button class="CallForAction Fullsize Center" type="submit" value="[% Translate("Add") | html %]">
+                                <span><i class="fa fa-plus-square"></i>[% Translate("Add project") | html %]</span>
                             </button>
                         </form>
                     </li>
@@ -139,27 +139,28 @@
                         <form action="[% Env("CGIHandle") %]" method="post">
                             <input type="hidden" name="Action" value="[% Env("Action") %]"/>
                             <input type="hidden" name="Subaction" value="AddTask"/>
-                            <button class="CallForAction Plus" type="submit" value="[% Translate("Add task") | html %]">
-                                <span>[% Translate("Add task") | html %]</span>
+                            <button class="CallForAction Fullsize Center" type="submit" value="[% Translate("Add task") | html %]">
+                                <span><i class="fa fa-plus-square"></i>[% Translate("Add task") | html %]</span>
                             </button>
                         </form>
                     </li>
 [% RenderBlockEnd("ActionAddTask") %]
 [% RenderBlockStart("ActionAddUser") %]
                     <li>
+                        <div class="SpacingTop"></div>
                         <form action="[% Env("CGIHandle") %]" method="post">
                             <input type="hidden" name="Action" value="[% Env("Action") %]"/>
                             <input type="hidden" name="Subaction" value="AddUser"/>
                             [% Data.NewUserOption %]
-                            <button class="CallForAction" type="submit" value="[% Translate("New user") | html %]">
-                                <span>[% Translate("New user") | html %]</span>
+                            <button class="CallForAction Fullsize Center" type="submit" value="[% Translate("New user") | html %]">
+                                <span><i class="fa fa-users"></i>[% Translate("New user") | html %]</span>
                             </button>
                         </form>
                     </li>
 [% RenderBlockEnd("ActionAddUser") %]
 [% RenderBlockStart("ActionOverviewSetting") %]
                     <li>
-                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Setting" class="CallForAction"><span>[% Translate("Go to overview") | html %]</span></a>
+                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Setting" class="CallForAction Fullsize Center"><span><i class="fa fa-caret-left"></i>[% Translate("Go to overview") | html %]</span></a>
                     </li>
 [% RenderBlockEnd("ActionOverviewSetting") %]
 
@@ -357,7 +358,7 @@
                         <div class="Clear"></div>
 
                         <div class="Field SpacingTop">
-                            <button class="Primary CallForAction" type="submit" id="Submit" value="[% Translate("Submit") | html %]"><span><i class="fa fa-check"></i> [% Translate("Submit") | html %]</span></button>
+                            <button class="Primary CallForAction" type="submit" id="Submit" value="[% Translate("Submit") | html %]"><span><i class="fa fa-check-square-o"></i> [% Translate("Submit") | html %]</span></button>
                             [% Translate("or") | html %]
                             <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Setting">[% Translate("Cancel") | html %]</a>
                         </div>
@@ -530,12 +531,12 @@
                     </table>
 
                     <div class="W100pc Right SpacingTopSmall">
-                        <button type="submit" title="[% Translate("Add time period") | html %]" value="[% Translate("Add time period") | html %]" name="AddPeriod" class="CallForAction Plus"><span>[% Translate("Add time period") | html %]</span></button>
+                        <button type="submit" title="[% Translate("Add time period") | html %]" value="[% Translate("Add time period") | html %]" name="AddPeriod" class="CallForAction Plus"><span><i class="fa fa-plus-square"></i> [% Translate("Add time period") | html %]</span></button>
                     </div>
 
                     <fieldset class="TableLike">
                         <div class="Field SpacingTop">
-                            <button class="Primary CallForAction" type="submit" value="[% Translate("Submit") | html %]" name="SubmitUserData"><span><i class="fa fa-check"></i> [% Translate("Submit") | html %]</span></button>
+                            <button class="Primary CallForAction" type="submit" value="[% Translate("Submit") | html %]" name="SubmitUserData"><span><i class="fa fa-check-square-o"></i> [% Translate("Submit") | html %]</span></button>
                             [% Translate("or") | html %]
                             <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Setting">[% Translate("Cancel") | html %]</a>
                         </div>
