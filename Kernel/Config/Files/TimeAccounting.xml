@@ -14,7 +14,7 @@
                 <NavBar>
                     <Description Translatable="1">Time accounting.</Description>
                     <Name>Time Accounting</Name>
-                    <Link>Action=AgentTimeAccountingEdit;Subaction=Edit</Link>
+                    <Link>Action=AgentTimeAccountingEdit</Link>
                     <NavBar>TimeAccounting</NavBar>
                     <Type>Menu</Type>
                     <Prio>6000</Prio>
@@ -25,7 +25,7 @@
                     <GroupRo>time_accounting</GroupRo>
                     <Description Translatable="1">Edit time record</Description>
                     <Name>Edit</Name>
-                    <Link>Action=AgentTimeAccountingEdit;Subaction=Edit</Link>
+                    <Link>Action=AgentTimeAccountingEdit</Link>
                     <Type></Type>
                     <Block></Block>
                     <NavBar>TimeAccounting</NavBar>
@@ -308,7 +308,7 @@
         <Group>TimeAccounting</Group>
         <SubGroup>Frontend::Agent</SubGroup>
         <Setting>
-            <String Regex="">Kernel::Modules::AgentTimeAccounting</String>
+            <String Regex="">Kernel::Modules::AgentTimeAccountingEdit</String>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="TimeAccounting::Project2RemarkRegExp" Required="0" Valid="1">

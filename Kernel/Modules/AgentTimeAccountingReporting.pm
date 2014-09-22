@@ -66,9 +66,7 @@ sub PreRun {
         && $Self->{Action} ne 'AgentCalendarSmall'
         )
     {
-        return $Self->{LayoutObject}->Redirect(
-            OP => 'Action=AgentTimeAccountingEdit;Subaction=Edit'
-        );
+        return $Self->{LayoutObject}->Redirect( OP => 'Action=AgentTimeAccountingEdit;' );
     }
     return;
 }

@@ -39,9 +39,8 @@ sub Run {
     my ( $Self, %Param ) = @_;
 
     # define action, group, label, image and prio
-    my $Action    = 'AgentTimeAccounting';
-    my $Subaction = 'Edit';
-    my $Group     = 'time_accounting';
+    my $Action = 'AgentTimeAccountingEdit';
+    my $Group  = 'time_accounting';
 
     # do not show icon if frontend module is not registered
     return if !$Self->{ConfigObject}->Get('Frontend::Module')->{$Action};
@@ -125,7 +124,7 @@ sub Run {
             Count       => $Count,
             Class       => $Class,
             Icon        => $Icon,
-            Link        => $URL . 'Action=' . $Action . ';Subaction=' . $Subaction,
+            Link        => $URL . 'Action=' . $Action,
             AccessKey   => '',
             }
     );

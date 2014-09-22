@@ -36,8 +36,8 @@
             </div>
             <div class="Content">
                 <div class="MonthSelection">
-                    <a class="Arrow" title="[% Translate("Previous day") | html %]" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Edit;Year=[% Data.YearBack | uri %];Month=[% Data.MonthBack | uri %];Day=[% Data.DayBack | uri %]"><i class="fa fa-caret-left"></i></a>
-                    <a class="Arrow" title="[% Translate("Next day") | html %]" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Edit;Year=[% Data.YearNext | uri %];Month=[% Data.MonthNext | uri %];Day=[% Data.DayNext | uri %]"><i class="fa fa-caret-right"></i></a>
+                    <a class="Arrow" title="[% Translate("Previous day") | html %]" href="[% Env("Baselink") %]Action=[% Env("Action") %];Year=[% Data.YearBack | uri %];Month=[% Data.MonthBack | uri %];Day=[% Data.DayBack | uri %]"><i class="fa fa-caret-left"></i></a>
+                    <a class="Arrow" title="[% Translate("Next day") | html %]" href="[% Env("Baselink") %]Action=[% Env("Action") %];Year=[% Data.YearNext | uri %];Month=[% Data.MonthNext | uri %];Day=[% Data.DayNext | uri %]"><i class="fa fa-caret-right"></i></a>
                     [% Data.Year | html %]-[% Data.Month | html %]-[% Data.Day | html %]
                 </div>
                 <div class="Clear"></div>
@@ -63,7 +63,7 @@ $('#NavigationSelect').bind('click', function(){
     $('#IncompleteWorkingDaysList').unbind('change.IncompleteWorkingDays').bind('change.IncompleteWorkingDays', function () {
         var Date = $(this).val().split('-');
         if (Date[0] && Date[1] && Date[2]) {
-            location.href = "[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Edit;Year=" + Date[0] + ";Month=" + Date[1] + ";Day=" + Date[2];
+            location.href = "[% Env("Baselink") %]Action=[% Env("Action") %];Year=" + Date[0] + ";Month=" + Date[1] + ";Day=" + Date[2];
         }
     });
 //]]></script>
@@ -74,7 +74,7 @@ $('#NavigationSelect').bind('click', function(){
                 <ul class="IncompleteWorkingDays">
                     <li id="SelectAllDays"><input type="checkbox" id="IncompleteWorkingDay-All" name="IncompleteWorkingDay-All" /><label for="IncompleteWorkingDay-All"><em>[% Translate("Select all days") | html %]</em></label></li>
 [% RenderBlockStart("IncompleteWorkingDaysMassEntrySingleDay") %]
-                    <li><input type="checkbox" id="IncompleteWorkingDay-[% Data.Date | html %]" name="IncompleteWorkingDay-[% Data.Date | html %]" /><label for="IncompleteWorkingDay-[% Data.Date | html %]">[% Data.Date | html %]</label> - <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Edit;Year=[% Data.Year | uri %];Month=[% Data.Month | uri %];Day=[% Data.Day | uri %]">[% Translate("Edit") | html %]</a></li>
+                    <li><input type="checkbox" id="IncompleteWorkingDay-[% Data.Date | html %]" name="IncompleteWorkingDay-[% Data.Date | html %]" /><label for="IncompleteWorkingDay-[% Data.Date | html %]">[% Data.Date | html %]</label> - <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Year=[% Data.Year | uri %];Month=[% Data.Month | uri %];Day=[% Data.Day | uri %]">[% Translate("Edit") | html %]</a></li>
 [% RenderBlockEnd("IncompleteWorkingDaysMassEntrySingleDay") %]
                 </ul>
                 <form action="[% Env("CGIHandle") %]" method="post" enctype="multipart/form-data" id="MassEntry" name="MassEntry" class="SpacingTop">
@@ -297,7 +297,7 @@ $('#NavigationSelect').bind('click', function(){
                             [% Translate("Delete") | html %]
                         </a>
                         [% Translate("or") | html %]
-                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Edit">[% Translate("Cancel") | html %]</a>
+                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %];">[% Translate("Cancel") | html %]</a>
                     </div>
                     <div class="Clear"></div>
 [% WRAPPER JSOnDocumentComplete %]
