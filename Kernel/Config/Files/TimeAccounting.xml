@@ -345,7 +345,7 @@
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::ToolBarIncompleteWorkingDays</Item>
                 <Item Key="CssClass">IncompleteWorkingDays</Item>
-                <Item Key="Icon">fa fa-time</Item>
+                <Item Key="Icon">fa fa-clock-o</Item>
             </Hash>
         </Setting>
     </ConfigItem>
