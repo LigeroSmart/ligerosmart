@@ -142,7 +142,7 @@ if ( !defined $Param{Criticality} ) {
 }
 
 # get service type list
-my $ServiceTypeList = $Kernel::OM->Get('Kernel::System::GeneralCatalogObject')->ItemList(
+my $ServiceTypeList = $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemList(
     Class => 'ITSM::Service::Type',
 );
 
