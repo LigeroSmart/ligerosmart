@@ -68,7 +68,7 @@ sub PreRun {
     {
 
         return $Self->{LayoutObject}->Redirect(
-            OP => 'Action=AgentTimeAccounting;Subaction=Edit'
+            OP => 'Action=AgentTimeAccountingEdit;Subaction=Edit'
         );
     }
     return;
@@ -134,7 +134,7 @@ sub Run {
 
         return $Self->{LayoutObject}->Redirect(
             OP =>
-                "Action=AgentTimeAccounting;Subaction=Edit;Year=$Param{Year};Month=$Param{Month};Day=$Param{Day}"
+                "Action=AgentTimeAccountingEdit;Subaction=Edit;Year=$Param{Year};Month=$Param{Month};Day=$Param{Day}"
         );
     }
 

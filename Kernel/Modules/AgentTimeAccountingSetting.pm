@@ -66,7 +66,7 @@ sub PreRun {
         )
     {
         return $Self->{LayoutObject}->Redirect(
-            OP => 'Action=AgentTimeAccounting;Subaction=Edit'
+            OP => 'Action=AgentTimeAccountingEdit;Subaction=Edit'
         );
     }
     return;

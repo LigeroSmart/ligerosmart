@@ -1,5 +1,5 @@
 # --
-# Kernel/Modules/AgentTimeAccounting.pm - time accounting module
+# Kernel/Modules/AgentTimeAccountingEdit.pm - time accounting edit module
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -7,7 +7,7 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package Kernel::Modules::AgentTimeAccounting;
+package Kernel::Modules::AgentTimeAccountingEdit;
 
 use strict;
 use warnings;
@@ -70,7 +70,7 @@ sub PreRun {
     {
 
         return $Self->{LayoutObject}->Redirect(
-            OP => 'Action=AgentTimeAccounting;Subaction=Edit'
+            OP => 'Action=AgentTimeAccountingEdit;Subaction=Edit'
         );
     }
     return;
@@ -1208,7 +1208,7 @@ sub Run {
 
         # redirect to edit screen with log message
         return $Self->{LayoutObject}->Redirect(
-            OP => 'Action=AgentTimeAccounting;Subaction=Edit;Notification='
+            OP => 'Action=AgentTimeAccountingEdit;Subaction=Edit;Notification='
                 . ( $InsertError ? 'Error' : 'Successful' )
         );
 

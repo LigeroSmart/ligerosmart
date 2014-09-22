@@ -67,7 +67,7 @@ sub PreRun {
         )
     {
         return $Self->{LayoutObject}->Redirect(
-            OP => 'Action=AgentTimeAccounting;Subaction=Edit'
+            OP => 'Action=AgentTimeAccountingEdit;Subaction=Edit'
         );
     }
     return;
@@ -98,7 +98,7 @@ sub Run {
         $Param{$Parameter} = $Self->{ParamObject}->GetParam( Param => $Parameter );
     }
     $Param{Subaction} = 'Edit';
-    $Param{Action}    = 'AgentTimeAccounting';
+    $Param{Action}    = 'AgentTimeAccountingEdit';
 
     if ( !$Param{UserID} ) {
         $Param{UserID} = $Self->{UserID};

@@ -314,8 +314,8 @@ $('#NavigationSelect').bind('click', function(){
     TimeAccounting.Agent.ConfirmationDialog.BindConfirmationDialog({
         ElementID:                  'DeleteTimeAccountingEntry',
         ElementSelector:            '#DeleteTimeAccountingEntry',
-        DialogContentQueryString:   'Action=AgentTimeAccounting;DeleteDialog=1;Year=[% Data.Year | html %];Month=[% Data.Month | html %];Day=[% Data.Day | html %]',
-        ConfirmedActionQueryString: 'Action=AgentTimeAccounting;Subaction=Delete;Year=[% Data.Year | html %];Month=[% Data.Month | html %];Day=[% Data.Day | html %]',
+        DialogContentQueryString:   'Action=AgentTimeAccountingEdit;DeleteDialog=1;Year=[% Data.Year | html %];Month=[% Data.Month | html %];Day=[% Data.Day | html %]',
+        ConfirmedActionQueryString: 'Action=AgentTimeAccountingEdit;Subaction=Delete;Year=[% Data.Year | html %];Month=[% Data.Month | html %];Day=[% Data.Day | html %]',
         DialogTitle:                [% Translate("Delete Time Accounting Entry") | JSON %],
         TranslatedText:             {
             Yes: [% Translate("Yes") | JSON %],
@@ -343,7 +343,7 @@ $('#NavigationSelect').bind('click', function(){
             $('div.Dialog:visible div.ContentFooter button').attr('disabled', 'disabled');
 
             // redirect to the module that deletes the saved entry after pressing the No button
-            location.href = Core.Config.Get('Baselink') + 'Action=AgentTimeAccounting;Subaction=Delete;Year=[% Data.Year | html %];Month=[% Data.Month | html %];Day=[% Data.Day | html %]';
+            location.href = Core.Config.Get('Baselink') + 'Action=AgentTimeAccountingEdit;Subaction=Delete;Year=[% Data.Year | html %];Month=[% Data.Month | html %];Day=[% Data.Day | html %]';
         }
     }];
     // show the confirmation dialog to confirm the action
