@@ -12,8 +12,10 @@ package Kernel::Output::HTML::NotificationTimeAccounting;
 use strict;
 use warnings;
 
-use Kernel::System::TimeAccounting;
-use Kernel::System::Time;
+our @ObjectDependencies = (
+    'Kernel::System::Time',
+    'Kernel::System::TimeAccounting',
+);
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -23,38 +25,46 @@ sub new {
     bless( $Self, $Type );
 
     # get needed objects
-    for (qw(ConfigObject LogObject DBObject LayoutObject UserID)) {
-        $Self->{$_} = $Param{$_} || die "Got no $_!";
+    for my $Needed (qw(LayoutObject UserID)) {
+        $Self->{$Needed} = $Param{$Needed} || die "Got no $Needed!";
     }
 
-    $Self->{TimeObject}           = Kernel::System::Time->new(%Param);
-    $Self->{TimeAccountingObject} = Kernel::System::TimeAccounting->new(%Param);
     return $Self;
 }
 
 sub Run {
     my ( $Self, %Param ) = @_;
 
-    my ( $Sec, $Min, $Hour, $Day, $Month, $Year )
-        = $Self->{TimeObject}->SystemTime2Date( SystemTime => $Self->{TimeObject}->SystemTime(), );
-    my %User = $Self->{TimeAccountingObject}->UserCurrentPeriodGet(
+    # get time object
+    my $TimeObject = $Kernel::OM->Get('Kernel::System::Time');
+
+    my ( $Sec, $Min, $Hour, $Day, $Month, $Year ) = $TimeObject->SystemTime2Date(
+        SystemTime => $TimeObject->SystemTime()
+    );
+
+    # get time accounting object
+    my $TimeAccountingObject = $Kernel::OM->Get('Kernel::System::TimeAccounting');
+
+    my %User = $TimeAccountingObject->UserCurrentPeriodGet(
         Year  => $Year,
         Month => $Month,
         Day   => $Day,
     );
     if ( $User{ $Self->{UserID} } ) {
-        my %IncompleteWorkingDays = $Self->{TimeAccountingObject}->WorkingUnitsCompletnessCheck(
+        my %IncompleteWorkingDays = $TimeAccountingObject->WorkingUnitsCompletnessCheck(
             UserID => $Self->{UserID},
         );
 
         # redirect if incomplete working day are out of range
         if ( $IncompleteWorkingDays{Warning} ) {
+
             return $Self->{LayoutObject}->Notify(
                 Info     => 'Please insert your working hours!',
                 Priority => 'Error'
             );
         }
     }
+
     return '';
 }
 
