@@ -114,7 +114,7 @@
                 <Group>time_accounting</Group>
                     <Description Translatable="1">Project time reporting</Description>
                     <Name>Reporting</Name>
-                    <Link>Action=AgentTimeAccountingReporting;Subaction=Reporting</Link>
+                    <Link>Action=AgentTimeAccountingReporting</Link>
                     <Type></Type>
                     <Block></Block>
                     <NavBar>TimeAccounting</NavBar>

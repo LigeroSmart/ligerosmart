@@ -17,10 +17,10 @@
             </div>
             <div class="Content">
                 <div class="MonthSelection">
-                    <a class="Arrow Left" title="[% Translate("Previous month") | html %]" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Reporting;Year=[% Data.YearBack | uri %];Month=[% Data.MonthBack | uri %]">
+                    <a class="Arrow Left" title="[% Translate("Previous month") | html %]" href="[% Env("Baselink") %]Action=[% Env("Action") %];Year=[% Data.YearBack | uri %];Month=[% Data.MonthBack | uri %]">
                         <i class="fa fa-caret-left"></i>
                     </a>
-                    <a class="Arrow" title="[% Translate("Next month") | html %]" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Reporting;Year=[% Data.YearNext | uri %];Month=[% Data.MonthNext | uri %]">
+                    <a class="Arrow" title="[% Translate("Next month") | html %]" href="[% Env("Baselink") %]Action=[% Env("Action") %];Year=[% Data.YearNext | uri %];Month=[% Data.MonthNext | uri %]">
                         <i class="fa fa-caret-right"></i>
                     </a>
                     <strong>[% Translate(Data.Month_to_Text) | html %] [% Data.Year %]</strong>
@@ -101,7 +101,7 @@ $('#NavigationSelect').bind('click', function(){
         <div class="WidgetSimple">
             <div class="Header">
                 <h2>[% Translate("Project reports") | html %]
-                    <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Reporting;Year=[% Data.Year | uri %];Month=[% Data.Month | uri %];ProjectStatusShow=[% Data.ProjectStatusShow | uri %]">
+                    <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Year=[% Data.Year | uri %];Month=[% Data.Month | uri %];ProjectStatusShow=[% Data.ProjectStatusShow | uri %]">
                         ([% Translate(Data.ShowProjects) | html %])
                     </a>
                 </h2>
