@@ -72,7 +72,7 @@ $('#NavigationSelect').bind('click', function(){
 [% RenderBlockStart("User") %]
                         <tr class="MasterAction">
                             <td>
-                                <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Overview;Year=[% Data.Year | uri %];Month=[% Data.Month | uri %];UserID=[% Data.UserID | uri %]" class="MasterActionLink">
+                                <a href="[% Env("Baselink") %]Action=AgentTimeAccountingOverview;Year=[% Data.Year | uri %];Month=[% Data.Month | uri %];UserID=[% Data.UserID | uri %]" class="MasterActionLink">
                                     [% Data.User | html %]
                                 </a>
                             </td>

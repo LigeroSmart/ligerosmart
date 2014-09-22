@@ -102,7 +102,7 @@
 [% RenderBlockStart("Row") %]
                             <tr class="[% Data.Class | html %] MasterAction">
                                 <td class="Fixed Day">
-                                    <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=[% Data.Subaction | uri %];Year=[% Data.Year | uri %];Month=[% Data.Month | uri %];Day=[% Data.Day | uri %];UserID=[% Data.UserID | uri %]" class="MasterActionLink">
+                                    <a href="[% Env("Baselink") %]Action=AgentTimeAccounting;Subaction=[% Data.Subaction | uri %];Year=[% Data.Year | uri %];Month=[% Data.Month | uri %];Day=[% Data.Day | uri %];UserID=[% Data.UserID | uri %]" class="MasterActionLink">
                                         [% Data.Day | html %]
                                     </a>
                                 </td>
@@ -121,7 +121,7 @@
                 <div class="Header">
                     <h2>
                         [% Translate("User's project overview") | html %]
-                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Overview;Year=[% Data.Year | uri %];Month=[% Data.Month | uri %];ProjectStatusShow=[% Data.ProjectStatusShow | uri %];UserID=[% Data.UserID | uri %]">
+                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Year=[% Data.Year | uri %];Month=[% Data.Month | uri %];ProjectStatusShow=[% Data.ProjectStatusShow | uri %];UserID=[% Data.UserID | uri %]">
                             ([% Translate(Data.ShowProjects) | html %])
                         </a>
                     </h2>

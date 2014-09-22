@@ -23,17 +23,6 @@
                 </NavBar>
                 <NavBar>
                 <GroupRo>time_accounting</GroupRo>
-                    <Description Translatable="1">Overview</Description>
-                    <Name>Overview</Name>
-                    <Link>Action=AgentTimeAccounting;Subaction=Overview</Link>
-                    <Type></Type>
-                    <Block></Block>
-                    <NavBar>TimeAccounting</NavBar>
-                    <AccessKey>o</AccessKey>
-                    <Prio>100</Prio>
-                </NavBar>
-                <NavBar>
-                <GroupRo>time_accounting</GroupRo>
                     <Description Translatable="1">Edit time record</Description>
                     <Name>Edit</Name>
                     <Link>Action=AgentTimeAccounting;Subaction=Edit</Link>
@@ -42,28 +31,6 @@
                     <NavBar>TimeAccounting</NavBar>
                     <AccessKey>n</AccessKey>
                     <Prio>200</Prio>
-                </NavBar>
-                <NavBar>
-                <Group>time_accounting</Group>
-                    <Description Translatable="1">Project time reporting</Description>
-                    <Name>Reporting</Name>
-                    <Link>Action=AgentTimeAccounting;Subaction=Reporting</Link>
-                    <Type></Type>
-                    <Block></Block>
-                    <NavBar>TimeAccounting</NavBar>
-                    <AccessKey></AccessKey>
-                    <Prio>500</Prio>
-                </NavBar>
-                <NavBar>
-                    <Group>time_accounting</Group>
-                    <Description Translatable="1">Edit time accounting settings</Description>
-                    <Name>Settings</Name>
-                    <Link>Action=AgentTimeAccounting;Subaction=Setting</Link>
-                    <Type></Type>
-                    <Block></Block>
-                    <NavBar>TimeAccounting</NavBar>
-                    <AccessKey></AccessKey>
-                    <Prio>900</Prio>
                 </NavBar>
                 <Loader>
                     <CSS>TimeAccounting.Defaults.css</CSS>
@@ -78,6 +45,90 @@
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
+    <ConfigItem Name="Frontend::Module###AgentTimeAccountingOverview" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
+        <Group>TimeAccounting</Group>
+        <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
+        <Setting>
+            <FrontendModuleReg>
+                <Group>time_accounting</Group>
+                <GroupRo>time_accounting</GroupRo>
+                <Description Translatable="1">Time accounting.</Description>
+                <NavBarName>TimeAccounting</NavBarName>
+                <Title>TimeAccountingTitle</Title>
+                <NavBar>
+                <GroupRo>time_accounting</GroupRo>
+                    <Description Translatable="1">Overview</Description>
+                    <Name>Overview</Name>
+                    <Link>Action=AgentTimeAccountingOverview</Link>
+                    <Type></Type>
+                    <Block></Block>
+                    <NavBar>TimeAccounting</NavBar>
+                    <AccessKey>o</AccessKey>
+                    <Prio>100</Prio>
+                </NavBar>
+                <Loader>
+                    <CSS>TimeAccounting.Defaults.css</CSS>
+                    <CSS>TimeAccounting.Table.css</CSS>
+                </Loader>
+            </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Frontend::Module###AgentTimeAccountingSetting" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
+        <Group>TimeAccounting</Group>
+        <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
+        <Setting>
+            <FrontendModuleReg>
+                <Group>time_accounting</Group>
+                <GroupRo>time_accounting</GroupRo>
+                <Description Translatable="1">Time accounting.</Description>
+                <NavBarName>TimeAccounting</NavBarName>
+                <Title>TimeAccountingTitle</Title>
+                <NavBar>
+                    <Group>time_accounting</Group>
+                    <Description Translatable="1">Edit time accounting settings</Description>
+                    <Name>Settings</Name>
+                    <Link>Action=AgentTimeAccountingSetting;Subaction=Setting</Link>
+                    <Type></Type>
+                    <Block></Block>
+                    <NavBar>TimeAccounting</NavBar>
+                    <AccessKey></AccessKey>
+                    <Prio>900</Prio>
+                </NavBar>
+                <Loader>
+                    <CSS>TimeAccounting.Defaults.css</CSS>
+                    <CSS>TimeAccounting.Table.css</CSS>
+                    <JavaScript>TimeAccounting.Agent.Datepicker.js</JavaScript>
+                </Loader>
+            </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Frontend::Module###AgentTimeAccountingReporting" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
+        <Group>TimeAccounting</Group>
+        <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
+        <Setting>
+            <FrontendModuleReg>
+                <NavBar>
+                <Group>time_accounting</Group>
+                    <Description Translatable="1">Project time reporting</Description>
+                    <Name>Reporting</Name>
+                    <Link>Action=AgentTimeAccountingReporting;Subaction=Reporting</Link>
+                    <Type></Type>
+                    <Block></Block>
+                    <NavBar>TimeAccounting</NavBar>
+                    <AccessKey></AccessKey>
+                    <Prio>500</Prio>
+                </NavBar>
+               <Loader>
+                    <CSS>TimeAccounting.Defaults.css</CSS>
+                    <CSS>TimeAccounting.Table.css</CSS>
+                </Loader>
+            </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
+
     <ConfigItem Name="TimeAccounting::DefaultProjectName" Required="1" Valid="1">
         <Description Translatable="1">Default name for new projects.</Description>
         <Group>TimeAccounting</Group>
