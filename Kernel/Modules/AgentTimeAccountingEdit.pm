@@ -487,9 +487,9 @@ sub Run {
                     )
                 {
                     $Errors{$ErrorIndex}{EndTimeInvalid} = 'ServerError';
-                    push @EndTimeServerErrorBlock, 'EndTimeRepeatedHourServerError'
-                        if !grep( /^EndTimeRepeatedHourServerError/,
-                        @EndTimeServerErrorBlock );
+                    if ( !grep {/^EndTimeRepeatedHourServerError/} @EndTimeServerErrorBlock ) {
+                        push @EndTimeServerErrorBlock, 'EndTimeRepeatedHourServerError';
+                    }
                 }
 
                 if (
@@ -499,34 +499,34 @@ sub Run {
                 {
                     if ( $EndTimes[$ID] > $EndTimes[$Position] ) {
                         $Errors{$ErrorIndex}{StartTimeInvalid} = 'ServerError';
-                        push @StartTimeServerErrorBlock, 'StartTimeRepeatedHourServerError'
-                            if !
-                            grep( /^StartTimeRepeatedHourServerError$/,
-                            @StartTimeServerErrorBlock );
+                        if (
+                            !grep {/^StartTimeRepeatedHourServerError$/}
+                            @StartTimeServerErrorBlock
+                            )
+                        {
+                            push @StartTimeServerErrorBlock, 'StartTimeRepeatedHourServerError';
+                        }
                     }
                     else {
                         $Errors{$ErrorIndex}{EndTimeInvalid} = 'ServerError';
-                        push @EndTimeServerErrorBlock, 'EndTimeRepeatedHourServerError'
-                            if !
-                            grep( /^EndTimeRepeatedHourServerError$/,
-                            @EndTimeServerErrorBlock );
+                        if ( !grep {/^EndTimeRepeatedHourServerError$/} @EndTimeServerErrorBlock ) {
+                            push @EndTimeServerErrorBlock, 'EndTimeRepeatedHourServerError';
+                        }
                     }
                 }
 
                 if ( $StartTimes[$Position] == $StartTimes[$ID] ) {
                     $Errors{$ErrorIndex}{StartTimeInvalid} = 'ServerError';
-                    push @StartTimeServerErrorBlock, 'StartTimeRepeatedHourServerError'
-                        if !
-                        grep( /^StartTimeRepeatedHourServerError$/,
-                        @StartTimeServerErrorBlock );
+                    if ( !grep {/^StartTimeRepeatedHourServerError$/} @StartTimeServerErrorBlock ) {
+                        push @StartTimeServerErrorBlock, 'StartTimeRepeatedHourServerError';
+                    }
                 }
 
                 if ( $EndTimes[$Position] == $EndTimes[$ID] ) {
                     $Errors{$ErrorIndex}{EndTimeInvalid} = 'ServerError';
-                    push @EndTimeServerErrorBlock, 'EndTimeRepeatedHourServerError'
-                        if !
-                        grep( /^EndTimeRepeatedHourServerError$/,
-                        @EndTimeServerErrorBlock );
+                    if ( !grep {/^EndTimeRepeatedHourServerError$/} @EndTimeServerErrorBlock ) {
+                        push @EndTimeServerErrorBlock, 'EndTimeRepeatedHourServerError';
+                    }
                 }
 
                 if (
@@ -535,10 +535,9 @@ sub Run {
                     )
                 {
                     $Errors{$ErrorIndex}{StartTimeInvalid} = 'ServerError';
-                    push @StartTimeServerErrorBlock, 'StartTimeRepeatedHourServerError'
-                        if !
-                        grep( /^StartTimeRepeatedHourServerError$/,
-                        @StartTimeServerErrorBlock );
+                    if ( !grep {/^StartTimeRepeatedHourServerError$/} @StartTimeServerErrorBlock ) {
+                        push @StartTimeServerErrorBlock, 'StartTimeRepeatedHourServerError';
+                    }
                 }
 
                 if (
@@ -547,10 +546,9 @@ sub Run {
                     )
                 {
                     $Errors{$ErrorIndex}{EndTimeInvalid} = 'ServerError';
-                    push @EndTimeServerErrorBlock, 'EndTimeRepeatedHourServerError'
-                        if !
-                        grep( /^EndTimeRepeatedHourServerError$/,
-                        @EndTimeServerErrorBlock );
+                    if ( !grep {/^EndTimeRepeatedHourServerError$/} @EndTimeServerErrorBlock ) {
+                        push @EndTimeServerErrorBlock, 'EndTimeRepeatedHourServerError';
+                    }
                 }
             }
 
