@@ -835,7 +835,7 @@ sub WorkOrderGet {
             );
 
             # set the dynamic field name and value into the workorder data hash
-            $WorkOrderData{ 'DynamicField_' . $DynamicFieldConfig->{Name} } = $Value;
+            $WorkOrderData{ 'DynamicField_' . $DynamicFieldConfig->{Name} } = $Value // '';
         }
 
         # set cache (workorder data exists at this point, it was checked before)

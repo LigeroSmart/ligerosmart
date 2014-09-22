@@ -702,7 +702,7 @@ sub ChangeGet {
             );
 
             # set the dynamic field name and value into the change data hash
-            $ChangeData{ 'DynamicField_' . $DynamicFieldConfig->{Name} } = $Value;
+            $ChangeData{ 'DynamicField_' . $DynamicFieldConfig->{Name} } = $Value // '';
         }
 
         # set cache (change data exists at this point, it was checked before)
