@@ -46,16 +46,34 @@ my $TestUserID    = $UserObject->UserLookup(
 my @Services = (
     {
         Name    => 'Service0' . $RandomID,
+# ---
+# ITSM
+# ---
+        TypeID      => 1,
+        Criticality => '3 normal',
+# ---
         ValidID => 1,
         UserID  => 1,
     },
     {
         Name    => 'Service1' . $RandomID,
+# ---
+# ITSM
+# ---
+        TypeID      => 1,
+        Criticality => '3 normal',
+# ---
         ValidID => 1,
         UserID  => 1,
     },
     {
         Name    => 'Service2' . $RandomID,
+# ---
+# ITSM
+# ---
+        TypeID      => 1,
+        Criticality => '3 normal',
+# ---
         ValidID => 1,
         UserID  => 1,
     },
