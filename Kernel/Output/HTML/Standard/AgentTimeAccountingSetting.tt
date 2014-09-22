@@ -33,7 +33,7 @@
 
 [% RenderBlockStart("ActionSettingOverview") %]
                     <li>
-                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Setting" class="CallForAction Fullsize Center"><span><i class="fa fa-caret-left"></i>[% Translate("Go to settings overview") | html %]</span></a>
+                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %]" class="CallForAction Fullsize Center"><span><i class="fa fa-caret-left"></i>[% Translate("Go to settings overview") | html %]</span></a>
                     </li>
 [% RenderBlockEnd("ActionSettingOverview") %]
                 </ul>
@@ -98,7 +98,7 @@
                         <div class="Field SpacingTop">
                             <button class="Primary CallForAction" type="submit" id="Submit" value="[% Translate("Submit") | html %]"><span><i class="fa fa-check-square-o"></i> [% Translate("Submit") | html %]</span></button>
                             [% Translate("or") | html %]
-                            <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Setting">[% Translate("Cancel") | html %]</a>
+                            <a href="[% Env("Baselink") %]Action=[% Env("Action") %]">[% Translate("Cancel") | html %]</a>
                         </div>
                         <div class="Clear"></div>
                     </fieldset>
@@ -160,7 +160,7 @@
 [% RenderBlockEnd("ActionAddUser") %]
 [% RenderBlockStart("ActionOverviewSetting") %]
                     <li>
-                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Setting" class="CallForAction Fullsize Center"><span><i class="fa fa-caret-left"></i>[% Translate("Go to settings overview") | html %]</span></a>
+                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %]" class="CallForAction Fullsize Center"><span><i class="fa fa-caret-left"></i>[% Translate("Go to settings overview") | html %]</span></a>
                     </li>
 [% RenderBlockEnd("ActionOverviewSetting") %]
 
@@ -360,7 +360,7 @@
                         <div class="Field SpacingTop">
                             <button class="Primary CallForAction" type="submit" id="Submit" value="[% Translate("Submit") | html %]"><span><i class="fa fa-check-square-o"></i> [% Translate("Submit") | html %]</span></button>
                             [% Translate("or") | html %]
-                            <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Setting">[% Translate("Cancel") | html %]</a>
+                            <a href="[% Env("Baselink") %]Action=[% Env("Action") %]">[% Translate("Cancel") | html %]</a>
                         </div>
                         <div class="Clear"></div>
                     </fieldset>
@@ -538,7 +538,7 @@
                         <div class="Field SpacingTop">
                             <button class="Primary CallForAction" type="submit" value="[% Translate("Submit") | html %]" name="SubmitUserData"><span><i class="fa fa-check-square-o"></i> [% Translate("Submit") | html %]</span></button>
                             [% Translate("or") | html %]
-                            <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Setting">[% Translate("Cancel") | html %]</a>
+                            <a href="[% Env("Baselink") %]Action=[% Env("Action") %]">[% Translate("Cancel") | html %]</a>
                         </div>
                     </fieldset>
                 </form>

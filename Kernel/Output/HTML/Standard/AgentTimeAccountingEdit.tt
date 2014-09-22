@@ -23,7 +23,7 @@
                     </li>
 [% RenderBlockStart("CreateProject") %]
                     <li>
-                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Setting" class="CallForAction"><span>[% Translate("Project settings") | html %]</span></a>
+                        <a href="[% Env("Baselink") %]Action=AgentTimeAccountingSetting" class="CallForAction Fullsize Center"><span><i class="fa fa-gear"></i>[% Translate("Go to settings") | html %]</span></a>
                     </li>
 [% RenderBlockEnd("CreateProject") %]
                 </ul>

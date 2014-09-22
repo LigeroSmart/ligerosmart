@@ -89,7 +89,7 @@
                     <Group>time_accounting</Group>
                     <Description Translatable="1">Edit time accounting settings</Description>
                     <Name>Settings</Name>
-                    <Link>Action=AgentTimeAccountingSetting;Subaction=Setting</Link>
+                    <Link>Action=AgentTimeAccountingSetting</Link>
                     <Type></Type>
                     <Block></Block>
                     <NavBar>TimeAccounting</NavBar>

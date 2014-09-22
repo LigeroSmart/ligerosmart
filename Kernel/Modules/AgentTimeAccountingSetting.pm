@@ -141,57 +141,16 @@ sub Run {
 
                 # show the overview of tasks and users
                 return $Self->{LayoutObject}->Redirect(
-                    OP =>
-                        "Action=AgentTimeAccountingSetting;Subaction=Setting;User=$Self->{Subaction}",
+                    OP => "Action=AgentTimeAccountingSetting;User=$Self->{Subaction}",
                 );
             }
         }
     }
 
     # ---------------------------------------------------------- #
-    # settings for handling time accounting
-    # ---------------------------------------------------------- #
-    if ( $Self->{Subaction} eq 'Setting' ) {
-
-        # get user data
-        my %UserData = $Self->{TimeAccountingObject}->UserGet(
-            UserID => $Self->{UserID},
-        );
-
-        # permission check
-        if ( $UserData{CreateProject} || $Self->{AccessRw} ) {
-
-            # get the user action to show a message if an user was updated or added
-            my $Note = $Self->{ParamObject}->GetParam( Param => 'User' );
-
-            # build output
-            $Self->_SettingOverview();
-            my $Output = $Self->{LayoutObject}->Header( Title => 'Setting' );
-            $Output .= $Self->{LayoutObject}->NavigationBar();
-
-            # show a notification message if proper
-            if ($Note) {
-                $Output .= $Note eq 'EditUser'
-                    ? $Self->{LayoutObject}->Notify( Info => 'User updated!' )
-                    : $Self->{LayoutObject}->Notify( Info => 'User added!' );
-            }
-
-            $Output .= $Self->{LayoutObject}->Output(
-                Data         => \%Param,
-                TemplateFile => 'AgentTimeAccountingSetting'
-            );
-            $Output .= $Self->{LayoutObject}->Footer();
-            return $Output;
-        }
-
-        # return no permission screen
-        return $Self->{LayoutObject}->NoPermission( WithHeader => 'yes' );
-    }
-
-    # ---------------------------------------------------------- #
     # add project
     # ---------------------------------------------------------- #
-    elsif ( $Self->{Subaction} eq 'AddProject' ) {
+    if ( $Self->{Subaction} eq 'AddProject' ) {
         my $Output = $Self->{LayoutObject}->Header();
         $Output .= $Self->{LayoutObject}->NavigationBar();
         $Self->_ProjectSettingsEdit( Action => 'AddProject' );
@@ -750,9 +709,42 @@ sub Run {
     }
 
     # ---------------------------------------------------------- #
-    # show error screen
+    # settings for handling time accounting
     # ---------------------------------------------------------- #
-    return $Self->{LayoutObject}->ErrorScreen( Message => 'Invalid Subaction!' );
+
+    # get user data
+    my %UserData = $Self->{TimeAccountingObject}->UserGet(
+        UserID => $Self->{UserID},
+    );
+
+    # permission check
+    if ( $UserData{CreateProject} || $Self->{AccessRw} ) {
+
+        # get the user action to show a message if an user was updated or added
+        my $Note = $Self->{ParamObject}->GetParam( Param => 'User' );
+
+        # build output
+        $Self->_SettingOverview();
+        my $Output = $Self->{LayoutObject}->Header( Title => 'Setting' );
+        $Output .= $Self->{LayoutObject}->NavigationBar();
+
+        # show a notification message if proper
+        if ($Note) {
+            $Output .= $Note eq 'EditUser'
+                ? $Self->{LayoutObject}->Notify( Info => 'User updated!' )
+                : $Self->{LayoutObject}->Notify( Info => 'User added!' );
+        }
+
+        $Output .= $Self->{LayoutObject}->Output(
+            Data         => \%Param,
+            TemplateFile => 'AgentTimeAccountingSetting'
+        );
+        $Output .= $Self->{LayoutObject}->Footer();
+        return $Output;
+    }
+
+    # return no permission screen
+    return $Self->{LayoutObject}->NoPermission( WithHeader => 'yes' );
 }
 
 sub _CheckValidityUserPeriods {
