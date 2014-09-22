@@ -1492,7 +1492,7 @@ sub WorkingUnitsInsert {
         my $StartTime = $Date . ' ' . ( $UnitRef->{StartTime} || '00:00' ) . ':00';
         my $EndTime   = $Date . ' ' . ( $UnitRef->{EndTime}   || '00:00' ) . ':00';
 
-        # '' does not work in integer field of postgres
+        # '' does not work in integer field of PostgreSQL
         $UnitRef->{ProjectID} ||= 0;
         $UnitRef->{ActionID}  ||= 0;
         $UnitRef->{Period}    ||= 0;
@@ -1539,6 +1539,7 @@ sub WorkingUnitsDelete {
                 Priority => 'error',
                 Message  => "WorkingUnitsInsert: Need $Needed!"
             );
+
             return;
         }
     }
@@ -1554,6 +1555,7 @@ sub WorkingUnitsDelete {
             . ' AND user_id = ?',
         Bind => [ \$StartTime, \$EndTime, \$Param{UserID}, ],
     );
+
     return 1;
 }
 
@@ -1826,7 +1828,7 @@ sub LastProjectsOfUser {
     my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
     # db select
-    # I don't use distinct because of ORDER BY problems of postgres
+    # I don't use distinct because of ORDER BY problems of PostgreSQL
     return if !$DBObject->Prepare(
         SQL => 'SELECT project_id FROM time_accounting_table '
             . 'WHERE user_id = ? AND project_id <> -1 ORDER BY time_start DESC',
