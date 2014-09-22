@@ -109,11 +109,13 @@ sub UserCurrentPeriodGet {
 
     # db select
     return if !$DBObject->Prepare(
-        SQL => 'SELECT user_id, preference_period, date_start, date_end, '
-            . 'weekly_hours, leave_days, overtime '
-            . 'FROM time_accounting_user_period '
-            . 'WHERE date_start <= ? AND date_end  >= ? '
-            . 'AND status = ?',
+        SQL => '
+            SELECT user_id, preference_period, date_start, date_end, weekly_hours, leave_days,
+                overtime
+            FROM time_accounting_user_period
+            WHERE date_start <= ?
+                AND date_end  >= ?
+                AND status = ?',
         Bind => [ \$Date, \$Date, \1, ],
     );
 
@@ -341,8 +343,10 @@ sub ProjectSettingsGet {
 
     # db select
     $DBObject->Prepare(
-        SQL => "SELECT id, project, description, status "
-            . "FROM time_accounting_project $Where",
+        SQL => "
+            SELECT id, project, description, status
+            FROM time_accounting_project
+            $Where",
     );
 
     # fetch the data
@@ -408,8 +412,10 @@ sub ProjectGet {
 
         # SQL
         return if !$DBObject->Prepare(
-            SQL => 'SELECT project, description, status '
-                . 'FROM time_accounting_project WHERE id = ?',
+            SQL => '
+                SELECT project, description, status
+                FROM time_accounting_project
+                WHERE id = ?',
             Bind => [ \$Param{ID} ],
         );
         while ( my @Data = $DBObject->FetchrowArray() ) {
@@ -427,8 +433,10 @@ sub ProjectGet {
 
         # SQL
         return if !$DBObject->Prepare(
-            SQL => 'SELECT id, description, status '
-                . 'FROM time_accounting_project WHERE project = ?',
+            SQL => '
+                SELECT id, description, status
+                FROM time_accounting_project
+                WHERE project = ?',
             Bind => [ \$Param{Project} ],
         );
         while ( my @Data = $DBObject->FetchrowArray() ) {
@@ -476,14 +484,18 @@ sub ProjectSettingsInsert {
 
     # insert project record
     return if !$DBObject->Do(
-        SQL => 'INSERT INTO time_accounting_project (project, description, status) '
-            . 'VALUES (?, ?, ?)',
+        SQL => '
+            INSERT INTO time_accounting_project (project, description, status)
+            VALUES (?, ?, ?)',
         Bind => [ \$Param{Project}, \$Param{ProjectDescription}, \$Param{ProjectStatus} ],
     );
 
     # get id of newly created project record
     return if !$DBObject->Prepare(
-        SQL   => 'SELECT id FROM time_accounting_project WHERE project = ?',
+        SQL => '
+            SELECT id
+            FROM time_accounting_project
+            WHERE project = ?',
         Bind  => [ \$Param{Project} ],
         Limit => 1,
     );
@@ -527,8 +539,10 @@ sub ProjectSettingsUpdate {
 
     # SQL
     return if !$Kernel::OM->Get('Kernel::System::DB')->Do(
-        SQL => 'UPDATE time_accounting_project SET project = ?, description = ?, status = ?'
-            . ' WHERE id = ?',
+        SQL => '
+            UPDATE time_accounting_project
+            SET project = ?, description = ?, status = ?
+            WHERE id = ?',
         Bind => [
             \$Param{Project}, \$Param{ProjectDescription}, \$Param{ProjectStatus}, \$Param{ID},
         ],
@@ -553,7 +567,9 @@ sub ActionSettingsGet {
 
     # db select
     return if !$DBObject->Prepare(
-        SQL => 'SELECT id, action, status FROM time_accounting_action',
+        SQL => '
+            SELECT id, action, status
+            FROM time_accounting_action',
     );
 
     # fetch the data
@@ -615,8 +631,10 @@ sub ActionGet {
 
         # SQL
         return if !$DBObject->Prepare(
-            SQL => 'SELECT action, status '
-                . 'FROM time_accounting_action WHERE id = ?',
+            SQL => '
+                SELECT action, status
+                FROM time_accounting_action
+                WHERE id = ?',
             Bind => [ \$Param{ID} ],
         );
         while ( my @Data = $DBObject->FetchrowArray() ) {
@@ -633,8 +651,10 @@ sub ActionGet {
 
         # SQL
         return if !$DBObject->Prepare(
-            SQL => 'SELECT id, status '
-                . 'FROM time_accounting_action WHERE action = ?',
+            SQL => '
+                SELECT id, status
+                FROM time_accounting_action
+                WHERE action = ?',
             Bind => [ \$Param{Action} ],
         );
         while ( my @Data = $DBObject->FetchrowArray() ) {
@@ -676,8 +696,9 @@ sub ActionSettingsInsert {
 
     # db insert
     return if !$DBObject->Do(
-        SQL => 'INSERT INTO time_accounting_action (action, status) '
-            . 'VALUES (?, ?)',
+        SQL => '
+            INSERT INTO time_accounting_action (action, status)
+            VALUES (?, ?)',
         Bind => [ \$Param{Action}, \$Param{ActionStatus}, ],
     );
 
@@ -713,8 +734,10 @@ sub ActionSettingsUpdate {
 
     # SQL
     return if !$Kernel::OM->Get('Kernel::System::DB')->Do(
-        SQL => 'UPDATE time_accounting_action SET action = ?, status = ?'
-            . ' WHERE id = ?',
+        SQL => '
+            UPDATE time_accounting_action
+            SET action = ?, status = ?
+            WHERE id = ?',
         Bind => [
             \$Param{Action}, \$Param{ActionStatus}, \$Param{ActionID}
         ],
@@ -739,8 +762,9 @@ sub UserList {
 
     # db select
     $DBObject->Prepare(
-        SQL =>
-            'SELECT user_id, description, show_overtime, create_project, calendar FROM time_accounting_user',
+        SQL => '
+            SELECT user_id, description, show_overtime, create_project, calendar
+            FROM time_accounting_user',
     );
 
     # fetch the data
@@ -784,8 +808,10 @@ sub UserGet {
 
     # db select
     $DBObject->Prepare(
-        SQL =>
-            'SELECT description, show_overtime, create_project, calendar FROM time_accounting_user WHERE user_id = ?',
+        SQL => '
+            SELECT description, show_overtime, create_project, calendar
+            FROM time_accounting_user
+            WHERE user_id = ?',
         Bind => [ \$Param{UserID} ],
     );
 
@@ -856,9 +882,10 @@ sub UserSettingsGet {
 
     # db select
     $DBObject->Prepare(
-        SQL =>
-            'SELECT user_id, preference_period, date_start, date_end, weekly_hours, leave_days, overtime, status
-                FROM time_accounting_user_period'
+        SQL => '
+            SELECT user_id, preference_period, date_start, date_end, weekly_hours, leave_days,
+                overtime, status
+            FROM time_accounting_user_period'
     );
 
     # fetch the data
@@ -903,9 +930,10 @@ sub SingleUserSettingsGet {
 
     # db select
     $DBObject->Prepare(
-        SQL =>
-            'SELECT user_id, preference_period, date_start, date_end, weekly_hours, leave_days, overtime, status '
-            . 'FROM time_accounting_user_period WHERE user_id = ?',
+        SQL => '
+            SELECT user_id, preference_period, date_start, date_end, weekly_hours, leave_days,
+                overtime, status
+            FROM time_accounting_user_period WHERE user_id = ?',
         Bind => [ \$Param{UserID} ],
     );
 
@@ -951,8 +979,10 @@ sub UserLastPeriodNumberGet {
 
     # db select
     $DBObject->Prepare(
-        SQL => 'SELECT max(preference_period) '
-            . 'FROM time_accounting_user_period WHERE user_id = ?',
+        SQL => '
+            SELECT max(preference_period)
+            FROM time_accounting_user_period
+            WHERE user_id = ?',
         Bind => [ \$Param{UserID} ],
     );
 
@@ -1025,10 +1055,10 @@ sub UserSettingsInsert {
 
     # db insert
     return if !$DBObject->Do(
-        SQL =>
-            'INSERT INTO time_accounting_user_period (user_id, preference_period, date_start, date_end,'
-            . ' weekly_hours, leave_days, overtime, status)'
-            . ' VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+        SQL => '
+            INSERT INTO time_accounting_user_period (user_id, preference_period, date_start,
+                date_end, weekly_hours, leave_days, overtime, status)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
         Bind => [
             \$Param{UserID},      \$Param{Period},    \$Param{DateStart}, \$Param{DateEnd},
             \$Param{WeeklyHours}, \$Param{LeaveDays}, \$Param{Overtime},  \$Param{UserStatus},
@@ -1037,7 +1067,10 @@ sub UserSettingsInsert {
 
     # select UserID
     $DBObject->Prepare(
-        SQL   => 'SELECT user_id FROM time_accounting_user WHERE user_id = ?',
+        SQL => '
+            SELECT user_id
+            FROM time_accounting_user
+            WHERE user_id = ?',
         Bind  => [ \$Param{UserID}, ],
         Limit => 1,
     );
@@ -1052,8 +1085,9 @@ sub UserSettingsInsert {
 
         # db insert
         return if !$DBObject->Do(
-            SQL => 'INSERT INTO time_accounting_user (user_id, description)'
-                . ' VALUES (?, ?)',
+            SQL => '
+                INSERT INTO time_accounting_user (user_id, description)
+                VALUES (?, ?)',
             Bind => [ \$Param{UserID}, \$Param{Description}, ],
         );
     }
@@ -1119,9 +1153,10 @@ sub UserSettingsUpdate {
 
     # db insert
     return if !$DBObject->Do(
-        SQL => 'UPDATE time_accounting_user '
-            . ' SET description = ?, show_overtime = ?, create_project = ?, calendar = ?'
-            . ' WHERE user_id = ?',
+        SQL => '
+            UPDATE time_accounting_user
+            SET description = ?, show_overtime = ?, create_project = ?, calendar = ?
+            WHERE user_id = ?',
         Bind => [
             \$Param{Description}, \$Param{ShowOvertime},
             \$Param{CreateProject}, \$Param{Calendar}, \$Param{UserID}
@@ -1133,11 +1168,12 @@ sub UserSettingsUpdate {
 
         # db insert
         return if !$DBObject->Do(
-            SQL => "UPDATE time_accounting_user_period "
-                . "SET leave_days = ?, date_start = ?"
-                . ", date_end = ?, overtime = ?"
-                . ", weekly_hours = ?, status = ? "
-                . "WHERE user_id = ? AND preference_period = ?",
+            SQL => '
+                UPDATE time_accounting_user_period
+                SET leave_days = ?, date_start = ?, date_end = ?, overtime = ?, weekly_hours = ?,
+                    status = ?
+                WHERE user_id = ?
+                    AND preference_period = ?',
             Bind => [
                 \$Param{Period}->{$Period}{LeaveDays},   \$Param{Period}->{$Period}{DateStart},
                 \$Param{Period}->{$Period}{DateEnd},     \$Param{Period}->{$Period}{Overtime},
@@ -1194,7 +1230,10 @@ sub WorkingUnitsCompletnessCheck {
     my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
     $DBObject->Prepare(
-        SQL  => "SELECT DISTINCT time_start FROM time_accounting_table WHERE user_id = ?",
+        SQL => '
+            SELECT DISTINCT time_start
+            FROM time_accounting_table
+            WHERE user_id = ?',
         Bind => [ \$UserID ],
     );
 
@@ -1357,10 +1396,13 @@ sub WorkingUnitsGet {
 
     # ask the database
     $DBObject->Prepare(
-        SQL => 'SELECT user_id, project_id, action_id, remark, time_start, time_end, period '
-            . 'FROM time_accounting_table '
-            . 'WHERE time_start >= ? AND time_start <= ? AND user_id = ? '
-            . 'ORDER by id',
+        SQL => '
+            SELECT user_id, project_id, action_id, remark, time_start, time_end, period
+            FROM time_accounting_table
+            WHERE time_start >= ?
+                AND time_start <= ?
+                AND user_id = ?
+            ORDER by id',
         Bind => [ \$DateStart, \$DateStop, \$Param{UserID} ],
     );
 
@@ -1498,10 +1540,10 @@ sub WorkingUnitsInsert {
         $UnitRef->{Period}    ||= 0;
 
         # build DQL
-        my $SQL = "INSERT INTO time_accounting_table "
-            . "(user_id, project_id, action_id, remark,"
-            . " time_start, time_end, period, created )"
-            . " VALUES  ( ?, ?, ?, ?, ?, ?, ?, current_timestamp)";
+        my $SQL = '
+            INSERT INTO time_accounting_table (user_id, project_id, action_id, remark, time_start,
+                time_end, period, created )
+            VALUES  ( ?, ?, ?, ?, ?, ?, ?, current_timestamp)';
         my $Bind = [
             \$Param{UserID}, \$UnitRef->{ProjectID}, \$UnitRef->{ActionID},
             \$UnitRef->{Remark}, \$StartTime, \$EndTime, \$UnitRef->{Period},
@@ -1549,10 +1591,11 @@ sub WorkingUnitsDelete {
     my $EndTime   = $Date . ' 23:59:59';
 
     return if !$Kernel::OM->Get('Kernel::System::DB')->Do(
-        SQL => 'DELETE FROM time_accounting_table'
-            . ' WHERE time_start >= ?'
-            . ' AND time_start <= ?'
-            . ' AND user_id = ?',
+        SQL => '
+            DELETE FROM time_accounting_table
+            WHERE time_start >= ?
+                AND time_start <= ?
+                AND user_id = ?',
         Bind => [ \$StartTime, \$EndTime, \$Param{UserID}, ],
     );
 
@@ -1594,10 +1637,11 @@ sub ProjectActionReporting {
     my $DateString = $Param{Year} . "-" . sprintf( "%02d", $Param{Month} );
     my $SQLDate = "$DateString-$DaysInMonth 23:59:59";
 
-    my $SQL = 'SELECT project_id, action_id, period
+    my $SQL = '
+        SELECT project_id, action_id, period
         FROM time_accounting_table
         WHERE project_id != -1
-        AND time_start <= ?';
+            AND time_start <= ?';
     my @Bind = ( \$SQLDate );
 
     if ( $Param{UserID} ) {
@@ -1623,11 +1667,12 @@ sub ProjectActionReporting {
 
     my $SQLDateStart = "$DateString-01 00:00:00";
 
-    $SQL = 'SELECT project_id, action_id, period
+    $SQL = '
+        SELECT project_id, action_id, period
         FROM time_accounting_table
         WHERE project_id != -1
-        AND time_start >= ?
-        AND time_start <= ?';
+            AND time_start >= ?
+            AND time_start <= ?';
 
     $DBObject->Prepare(
         SQL => $SQL,
@@ -1691,7 +1736,10 @@ sub ProjectTotalHours {
 
     # ask the database
     return if !$DBObject->Prepare(
-        SQL   => 'SELECT SUM(period) FROM time_accounting_table WHERE project_id = ?',
+        SQL => '
+            SELECT SUM(period)
+            FROM time_accounting_table
+            WHERE project_id = ?',
         Bind  => [ \$Param{ProjectID} ],
         Limit => 1,
     );
@@ -1772,8 +1820,11 @@ sub ProjectHistory {
 
     # ask the database
     $DBObject->Prepare(
-        SQL => 'SELECT id, user_id, action_id, remark, time_start, time_end, period, created'
-            . ' FROM time_accounting_table WHERE project_id = ? ORDER BY time_start',
+        SQL => '
+            SELECT id, user_id, action_id, remark, time_start, time_end, period, created
+            FROM time_accounting_table
+            WHERE project_id = ?
+            ORDER BY time_start',
         Bind => [ \$Param{ProjectID} ],
     );
 
@@ -1830,8 +1881,11 @@ sub LastProjectsOfUser {
     # db select
     # I don't use distinct because of ORDER BY problems of PostgreSQL
     return if !$DBObject->Prepare(
-        SQL => 'SELECT project_id FROM time_accounting_table '
-            . 'WHERE user_id = ? AND project_id <> -1 ORDER BY time_start DESC',
+        SQL => '
+            SELECT project_id FROM time_accounting_table
+            WHERE user_id = ?
+                AND project_id <> -1
+            ORDER BY time_start DESC',
         Bind  => [ \$Param{UserID} ],
         Limit => 40,
     );
