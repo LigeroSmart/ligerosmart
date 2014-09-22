@@ -26,8 +26,8 @@
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTimeAccountingDelete.tt"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTimeAccountingEdit.tt"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTimeAccountingOverview.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTimeAccountingProjectReporting.tt"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTimeAccountingReporting.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTimeAccountingReportingProject.tt"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTimeAccountingSetting.tt"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTimeAccountingView.tt"/>
         <File Permission="644" Location="Kernel/Output/HTML/NotificationTimeAccounting.pm"/>

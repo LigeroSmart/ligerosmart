@@ -146,7 +146,7 @@
                                     [% Data.Project %]
 [% RenderBlockEnd("ProjectNoLink") %]
 [% RenderBlockStart("ProjectLink") %]
-                                    <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=ProjectReporting;ProjectID=[% Data.ProjectID | uri %]">
+                                    <a href="[% Env("Baselink") %]Action=AgentTimeAccountingReporting;Subaction=ReportingProject;ProjectID=[% Data.ProjectID | uri %]">
                                         [% Data.Project %]
                                     </a>
 [% RenderBlockEnd("ProjectLink") %]

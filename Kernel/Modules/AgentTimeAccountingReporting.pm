@@ -290,7 +290,7 @@ sub Run {
     # ---------------------------------------------------------- #
     # time accounting project reporting
     # ---------------------------------------------------------- #
-    elsif ( $Self->{Subaction} eq 'ProjectReporting' ) {
+    elsif ( $Self->{Subaction} eq 'ReportingProject' ) {
         my %Frontend = ();
 
         # permission check
@@ -302,7 +302,7 @@ sub Run {
         # check needed params
         if ( !$Param{ProjectID} ) {
             return $Self->{LayoutObject}->ErrorScreen(
-                Message => 'ProjectReporting: Need ProjectID'
+                Message => 'ReportingProject: Need ProjectID'
             );
         }
 
@@ -425,11 +425,11 @@ sub Run {
         );
 
         # build output
-        my $Output = $Self->{LayoutObject}->Header( Title => 'ProjectReporting' );
+        my $Output = $Self->{LayoutObject}->Header( Title => 'ReportingProject' );
         $Output .= $Self->{LayoutObject}->NavigationBar();
         $Output .= $Self->{LayoutObject}->Output(
             Data => { %Param, %Frontend },
-            TemplateFile => 'AgentTimeAccountingProjectReporting'
+            TemplateFile => 'AgentTimeAccountingReportingProject'
         );
         $Output .= $Self->{LayoutObject}->Footer();
         return $Output;

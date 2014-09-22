@@ -121,7 +121,7 @@ $('#NavigationSelect').bind('click', function(){
                         <tr class="MasterAction">
 [% RenderBlockStart("Project") %]
                             <td rowspan="[% Data.RowSpan %]" class="RowSpan">
-                                <strong><a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=ProjectReporting;ProjectID=[% Data.ProjectID | uri %]" class="MasterActionLink">
+                                <strong><a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=ReportingProject;ProjectID=[% Data.ProjectID | uri %]" class="MasterActionLink">
                                 [% Data.Project %]
                             </a></strong>
 [% RenderBlockStart("ProjectDescription") %]
