@@ -88,7 +88,7 @@ sub Run {
     # ---------------------------------------------------------- #
     # show confirmation dialog to delete the entry of this day
     # ---------------------------------------------------------- #
-    if ( $Self->{ParamObject}->GetParam( Param => 'DeleteDay' ) ) {
+    if ( $Self->{ParamObject}->GetParam( Param => 'DeleteDialog' ) ) {
 
         my ( $Sec, $Min, $Hour, $Day, $Month, $Year )
             = $Self->{TimeObject}->SystemTime2Date(

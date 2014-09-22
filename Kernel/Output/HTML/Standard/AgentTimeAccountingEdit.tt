@@ -314,7 +314,7 @@ $('#NavigationSelect').bind('click', function(){
     TimeAccounting.Agent.ConfirmationDialog.BindConfirmationDialog({
         ElementID:                  'DeleteTimeAccountingEntry',
         ElementSelector:            '#DeleteTimeAccountingEntry',
-        DialogContentQueryString:   'Action=AgentTimeAccounting;DeleteDay=1;Year=[% Data.Year | html %];Month=[% Data.Month | html %];Day=[% Data.Day | html %]',
+        DialogContentQueryString:   'Action=AgentTimeAccounting;DeleteDialog=1;Year=[% Data.Year | html %];Month=[% Data.Month | html %];Day=[% Data.Day | html %]',
         ConfirmedActionQueryString: 'Action=AgentTimeAccounting;Subaction=Delete;Year=[% Data.Year | html %];Month=[% Data.Month | html %];Day=[% Data.Day | html %]',
         DialogTitle:                [% Translate("Delete Time Accounting Entry") | JSON %],
         TranslatedText:             {
