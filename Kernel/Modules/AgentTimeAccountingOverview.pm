@@ -69,6 +69,7 @@ sub Run {
     }
     else {
         if ( $Param{UserID} != $Self->{UserID} && !$Self->{AccessRw} ) {
+
             return $Self->{LayoutObject}->NoPermission( WithHeader => 'yes' );
         }
         $Param{Action} = 'AgentTimeAccountingView';
@@ -326,6 +327,7 @@ sub Run {
         TemplateFile => 'AgentTimeAccountingOverview'
     );
     $Output .= $Self->{LayoutObject}->Footer();
+
     return $Output;
 }
 

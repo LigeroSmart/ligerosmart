@@ -89,6 +89,7 @@ sub Run {
 
             # update periods
             if ( !$Self->{TimeAccountingObject}->UserSettingsUpdate(%GetParam) ) {
+
                 return $Self->{LayoutObject}->ErrorScreen(
                     Message => 'Unable to update user settings! Please contact your administrator.'
                 );
@@ -180,6 +181,7 @@ sub Run {
                     Data         => {%GetParam},
                 );
                 $Output .= $Self->{LayoutObject}->Footer();
+
                 return $Output;
             }
             else {
@@ -209,6 +211,7 @@ sub Run {
             Data         => \%Param,
         );
         $Output .= $Self->{LayoutObject}->Footer();
+
         return $Output;
     }
 
@@ -232,6 +235,7 @@ sub Run {
             Data         => \%Param,
         );
         $Output .= $Self->{LayoutObject}->Footer();
+
         return $Output;
     }
 
@@ -286,6 +290,7 @@ sub Run {
                     Data         => \%Param,
                 );
                 $Output .= $Self->{LayoutObject}->Footer();
+
                 return $Output;
             }
             else {
@@ -316,6 +321,7 @@ sub Run {
             Data         => \%Param,
         );
         $Output .= $Self->{LayoutObject}->Footer();
+
         return $Output;
     }
 
@@ -331,6 +337,7 @@ sub Run {
             Data         => \%Param,
         );
         $Output .= $Self->{LayoutObject}->Footer();
+
         return $Output;
     }
 
@@ -388,6 +395,7 @@ sub Run {
                     Data         => {},
                 );
                 $Output .= $Self->{LayoutObject}->Footer();
+
                 return $Output;
             }
             else {
@@ -417,6 +425,7 @@ sub Run {
             Data         => \%Param,
         );
         $Output .= $Self->{LayoutObject}->Footer();
+
         return $Output;
     }
 
@@ -446,6 +455,7 @@ sub Run {
             Data         => \%Param,
         );
         $Output .= $Self->{LayoutObject}->Footer();
+
         return $Output;
     }
 
@@ -502,6 +512,7 @@ sub Run {
                     Data         => \%Param,
                 );
                 $Output .= $Self->{LayoutObject}->Footer();
+
                 return $Output;
             }
             else {
@@ -532,6 +543,7 @@ sub Run {
             Data         => \%Param,
         );
         $Output .= $Self->{LayoutObject}->Footer();
+
         return $Output;
     }
 
@@ -545,6 +557,7 @@ sub Run {
             || $Self->{ParamObject}->GetParam( Param => 'UserID' )
             || '';
         if ( !$NewUserID ) {
+
             return $Self->{LayoutObject}->ErrorScreen(
                 Message => 'The UserID is not valid!'
             );
@@ -564,6 +577,7 @@ sub Run {
         # if it is not an action about adding a new time period
         if ( !$NewTimePeriod ) {
             if ( !$Success ) {
+
                 return $Self->{LayoutObject}->ErrorScreen(
                     Message => 'Can\'t insert user data!'
                 );
@@ -608,6 +622,7 @@ sub Run {
             Data         => \%Param,
         );
         $Output .= $Self->{LayoutObject}->Footer();
+
         return $Output;
     }
 
@@ -617,6 +632,7 @@ sub Run {
     elsif ( $Self->{Subaction} eq 'EditUser' ) {
         my $ID = $Self->{ParamObject}->GetParam( Param => 'UserID' ) || '';
         if ( !$ID ) {
+
             return $Self->{LayoutObject}->ErrorScreen(
                 Message => 'The UserID is not valid!'
             );
@@ -634,6 +650,7 @@ sub Run {
                 Period => $LastPeriodNumber + 1,
             );
             if ( !$Success ) {
+
                 return $Self->{LayoutObject}->ErrorScreen(
                     Message => 'Unable to add time period! Please contact your administrator.',
                 );
@@ -670,6 +687,7 @@ sub Run {
             Data         => \%Param,
         );
         $Output .= $Self->{LayoutObject}->Footer();
+
         return $Output;
     }
 
@@ -705,6 +723,7 @@ sub Run {
             TemplateFile => 'AgentTimeAccountingSetting'
         );
         $Output .= $Self->{LayoutObject}->Footer();
+
         return $Output;
     }
 
@@ -805,7 +824,7 @@ sub _ProjectSettingsEdit {
         $Self->{LayoutObject}->Block( Name => 'HeaderAddProject' );
     }
 
-    # show server error msg (if any) for the project name
+    # show server error message (if any) for the project name
     if ( $Param{ProjectErrorType} ) {
         $Self->{LayoutObject}->Block( Name => $Param{ProjectErrorType} );
     }
@@ -902,7 +921,7 @@ sub _SettingOverview {
         }
     }
 
-    # otherwise, show a no data found msg
+    # otherwise, show a no data found message
     else {
         $Self->{LayoutObject}->Block( Name => 'NoProjectDataFoundMsg' );
     }
@@ -931,7 +950,7 @@ sub _SettingOverview {
             }
         }
 
-        # otherwise, show a no data found msg
+        # otherwise, show a no data found message
         else {
             $Self->{LayoutObject}->Block( Name => 'NoSettingDataFoundMsg' );
         }
@@ -1017,7 +1036,7 @@ sub _TaskSettingsEdit {
         $Self->{LayoutObject}->Block( Name => 'HeaderAddTask' );
     }
 
-    # show server error msg (if any) for the task name
+    # show server error message (if any) for the task name
     if ( $Param{TaskErrorType} ) {
         $Self->{LayoutObject}->Block( Name => $Param{TaskErrorType} );
     }
@@ -1180,7 +1199,7 @@ sub _UserSettingsEdit {
             }
         }
 
-        # show a no data found msg
+        # show a no data found message
         else {
             $Self->{LayoutObject}->Block( Name => 'PeriodOverviewRowNoData' );
         }

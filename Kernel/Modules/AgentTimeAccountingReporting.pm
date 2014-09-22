@@ -62,6 +62,7 @@ sub Run {
 
         # check needed params
         if ( !$Param{ProjectID} ) {
+
             return $Self->{LayoutObject}->ErrorScreen(
                 Message => 'ReportingProject: Need ProjectID'
             );
@@ -193,6 +194,7 @@ sub Run {
             TemplateFile => 'AgentTimeAccountingReportingProject'
         );
         $Output .= $Self->{LayoutObject}->Footer();
+
         return $Output;
     }
 
@@ -396,6 +398,7 @@ sub Run {
         TemplateFile => 'AgentTimeAccountingReporting'
     );
     $Output .= $Self->{LayoutObject}->Footer();
+
     return $Output;
 }
 

@@ -71,6 +71,7 @@ sub PreRun {
 
         return $Self->{LayoutObject}->Redirect( OP => 'Action=AgentTimeAccountingEdit' );
     }
+
     return;
 }
 
@@ -152,8 +153,10 @@ sub Run {
             )
             )
         {
+
             return $Self->{LayoutObject}->ErrorScreen();
         }
+
         return $Self->{LayoutObject}->Redirect(
             OP =>
                 "Action=$Self->{Action};Year=$Param{Year};Month=$Param{Month};Day=$Param{Day}"
@@ -284,6 +287,7 @@ sub Run {
             { $Param{Day} }
             )
         {
+
             return $Self->{LayoutObject}->Redirect(
                 OP =>
                     "Action=AgentTimeAccountingView;Year=$Param{Year};Month=$Param{Month};Day=$Param{Day}"
@@ -1225,11 +1229,13 @@ sub _FirstUserRedirect {
     );
     for my $GroupKey ( sort keys %GroupList ) {
         if ( $GroupList{$GroupKey} eq 'time_accounting' ) {
+
             return $Self->{LayoutObject}->Redirect(
                 OP => "Action=AgentTimeAccountingSetting"
             );
         }
     }
+
     return $Self->{LayoutObject}->ErrorScreen(
         Message => "No time period configured, or the specified date is outside of the defined "
             . "time periods. Please contact the time accounting admin to update your time periods!"
