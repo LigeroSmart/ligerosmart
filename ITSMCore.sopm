@@ -65,10 +65,16 @@
         <File Permission="644" Location="Kernel/System/ITSMCIPAllocate.pm"/>
         <File Permission="644" Location="Kernel/System/Service.pm"/>
         <File Permission="644" Location="Kernel/System/SLA.pm"/>
+        <File Permission="644" Location="scripts/test/GenericInterface/Operation/Ticket/TicketCreate.t"/>
+        <File Permission="644" Location="scripts/test/GenericInterface/Operation/Ticket/TicketSearch.t"/>
+        <File Permission="644" Location="scripts/test/ProcessManagement/TransitionAction/TicketSLASet.t"/>
+        <File Permission="644" Location="scripts/test/ProcessManagement/TransitionAction/TicketServiceSet.t"/>
+        <File Permission="644" Location="scripts/test/Ticket/TicketACL.t"/>
         <File Permission="644" Location="scripts/test/CustomerUserService.t"/>
         <File Permission="644" Location="scripts/test/ITSMCIPAllocate.t"/>
         <File Permission="644" Location="scripts/test/Service.t"/>
         <File Permission="644" Location="scripts/test/SLA.t"/>
+        <File Permission="644" Location="scripts/test/Ticket.t"/>
         <File Permission="644" Location="var/httpd/htdocs/js/ITSM.Agent.CustomerSearch.js"/>
         <File Permission="644" Location="var/httpd/htdocs/js/ITSM.Agent.IncidentState.js"/>
         <File Permission="644" Location="var/httpd/htdocs/js/ITSM.Agent.Zoom.js"/>
