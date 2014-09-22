@@ -22,7 +22,7 @@
                     <Block>ItemArea</Block>
                 </NavBar>
                 <NavBar>
-                <GroupRo>time_accounting</GroupRo>
+                    <GroupRo>time_accounting</GroupRo>
                     <Description Translatable="1">Edit time record</Description>
                     <Name>Edit</Name>
                     <Link>Action=AgentTimeAccounting;Subaction=Edit</Link>
@@ -57,7 +57,7 @@
                 <NavBarName>TimeAccounting</NavBarName>
                 <Title>TimeAccountingTitle</Title>
                 <NavBar>
-                <GroupRo>time_accounting</GroupRo>
+                    <GroupRo>time_accounting</GroupRo>
                     <Description Translatable="1">Overview</Description>
                     <Name>Overview</Name>
                     <Link>Action=AgentTimeAccountingOverview</Link>
@@ -111,7 +111,7 @@
         <Setting>
             <FrontendModuleReg>
                 <NavBar>
-                <Group>time_accounting</Group>
+                    <Group>time_accounting</Group>
                     <Description Translatable="1">Project time reporting</Description>
                     <Name>Reporting</Name>
                     <Link>Action=AgentTimeAccountingReporting</Link>
@@ -128,6 +128,28 @@
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
+    <ConfigItem Name="Frontend::Module###AgentTimeAccountingView" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
+        <Group>TimeAccounting</Group>
+        <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
+        <Setting>
+            <FrontendModuleReg>
+                <Group>time_accounting</Group>
+                <GroupRo>time_accounting</GroupRo>
+                <Description Translatable="1">Time accounting.</Description>
+                <NavBarName>TimeAccounting</NavBarName>
+                <Title>TimeAccountingTitle</Title>
+                <NavBar>
+                    <GroupRo>time_accounting</GroupRo>
+                </NavBar>
+                <Loader>
+                    <CSS>TimeAccounting.Defaults.css</CSS>
+                    <CSS>TimeAccounting.Table.css</CSS>
+                </Loader>
+            </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
+
 
     <ConfigItem Name="TimeAccounting::DefaultProjectName" Required="1" Valid="1">
         <Description Translatable="1">Default name for new projects.</Description>

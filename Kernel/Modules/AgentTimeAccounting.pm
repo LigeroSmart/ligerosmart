@@ -68,6 +68,7 @@ sub PreRun {
         && $Self->{Action} ne 'AgentCalendarSmall'
         )
     {
+
         return $Self->{LayoutObject}->Redirect(
             OP => 'Action=AgentTimeAccounting;Subaction=Edit'
         );
@@ -214,7 +215,7 @@ sub Run {
             {
                 return $Self->{LayoutObject}->Redirect(
                     OP =>
-                        "Action=$Self->{Action};Subaction=View;Year=$Param{Year};Month=$Param{Month};Day=$Param{Day}"
+                        "Action=AgentTimeAccountingView;Year=$Param{Year};Month=$Param{Month};Day=$Param{Day}"
                 );
             }
         }
@@ -598,8 +599,9 @@ sub Run {
             UserID => $Self->{UserID},
         );
 
-    # get number of working units (=records)
-    # if bigger than RecordsNumber, more than the number of default records were saved for this date
+        # get number of working units (=records)
+        #    if bigger than RecordsNumber, more than the number of default records were saved for
+        #    this date
         if ( $Data{WorkingUnits} ) {
             my $WorkingUnitsCount = @{ $Data{WorkingUnits} };
             if ( $WorkingUnitsCount > $Param{RecordsNumber} ) {
@@ -709,8 +711,9 @@ sub Run {
                 OnChange => "TimeAccounting.Agent.EditTimeRecords.FillActionList($ID);",
             );
 
-# action list initially only contains empty and selected element as well as elements configured for selected project
-# if no constraints are configured, all actions will be displayed
+            # action list initially only contains empty and selected element as well as elements
+            #    configured for selected project
+            #    if no constraints are configured, all actions will be displayed
             my $ActionData = $Self->_ActionListConstraints(
                 ProjectID => $UnitRef->{ProjectID} || $ServerErrorData{$ErrorIndex}{ProjectID},
                 ProjectList           => $ProjectList,
@@ -1132,171 +1135,6 @@ sub Run {
                 %Param,
                 %Frontend,
             },
-        );
-        $Output .= $Self->{LayoutObject}->Footer();
-        return $Output;
-    }
-
-    # ---------------------------------------------------------- #
-    # view older day inserts
-    # ---------------------------------------------------------- #
-    elsif ( $Self->{Subaction} eq 'View' ) {
-
-        # permission check
-        return $Self->{LayoutObject}->NoPermission( WithHeader => 'yes' ) if !$Self->{AccessRo};
-
-        # get params
-        for my $Parameter (qw(Day Month Year UserID)) {
-            $Param{$Parameter} = $Self->{ParamObject}->GetParam( Param => $Parameter );
-        }
-
-        # check needed params
-        for my $Needed (qw(Day Month Year)) {
-            if ( !$Param{$Needed} ) {
-                return $Self->{LayoutObject}->ErrorScreen( Message => "View: Need $Needed" );
-            }
-        }
-
-        # if no UserID posted use the current user
-        $Param{UserID} ||= $Self->{UserID};
-
-        # get current date and time
-        my ( $Sec, $Min, $Hour, $Day, $Month, $Year )
-            = $Self->{TimeObject}->SystemTime2Date(
-            SystemTime => $Self->{TimeObject}->SystemTime(),
-            );
-
-        my $MaxAllowedInsertDays
-            = $Self->{ConfigObject}->Get('TimeAccounting::MaxAllowedInsertDays') || '10';
-        ( $Param{YearAllowed}, $Param{MonthAllowed}, $Param{DayAllowed} )
-            = Add_Delta_YMD( $Year, $Month, $Day, 0, 0, -$MaxAllowedInsertDays );
-
-        # redirect to the edit screen, if necessary
-        if (
-            timelocal( 1, 0, 0, $Param{Day}, $Param{Month} - 1, $Param{Year} - 1900 ) > timelocal(
-                1, 0, 0, $Param{DayAllowed},
-                $Param{MonthAllowed} - 1,
-                $Param{YearAllowed} - 1900
-            ) && $Param{UserID} == $Self->{UserID}
-            )
-        {
-            return $Self->{LayoutObject}->Redirect(
-                OP =>
-                    "Action=$Self->{Action};Subaction=Edit;Year=$Param{Year};Month=$Param{Month};Day=$Param{Day}"
-            );
-        }
-
-        # show the naming of the agent which time accounting is visited
-        if ( $Param{UserID} != $Self->{UserID} ) {
-            my %ShownUsers = $Self->{UserObject}->UserList( Type => 'Long', Valid => 1 );
-            $Param{User} = $ShownUsers{ $Param{UserID} };
-            $Self->{LayoutObject}->Block(
-                Name => 'User',
-                Data => {%Param},
-            );
-        }
-
-        $Param{Weekday}         = Day_of_Week( $Param{Year}, $Param{Month}, $Param{Day} );
-        $Param{Weekday_to_Text} = $WeekdayArray[ $Param{Weekday} - 1 ];
-        $Param{Month_to_Text}   = $MonthArray[ $Param{Month} ];
-
-        # Values for the link icons <>
-        ( $Param{YearBack}, $Param{MonthBack}, $Param{DayBack} )
-            = Add_Delta_YMD( $Param{Year}, $Param{Month}, $Param{Day}, 0, 0, -1 );
-        ( $Param{YearNext}, $Param{MonthNext}, $Param{DayNext} )
-            = Add_Delta_YMD( $Param{Year}, $Param{Month}, $Param{Day}, 0, 0, 1 );
-
-        $Param{DateSelection} = $Self->{LayoutObject}->BuildDateSelection(
-            %Param,
-            Prefix   => '',
-            Format   => 'DateInputFormat',
-            Validate => 1,
-            Class    => $Param{Errors}->{DateInvalid},
-        );
-
-        # Show Working Units
-        # get existing working units
-        my %Data = $Self->{TimeAccountingObject}->WorkingUnitsGet(
-            Year   => $Param{Year},
-            Month  => $Param{Month},
-            Day    => $Param{Day},
-            UserID => $Param{UserID},
-        );
-
-        $Param{Date} = $Data{Date};
-
-        # get project and action settings
-        my %Project = $Self->{TimeAccountingObject}->ProjectSettingsGet();
-        my %Action  = $Self->{TimeAccountingObject}->ActionSettingsGet();
-
-        # get sick, leave day and overtime
-        $Param{Sick}     = $Data{Sick}     ? 'checked' : '';
-        $Param{LeaveDay} = $Data{LeaveDay} ? 'checked' : '';
-        $Param{Overtime} = $Data{Overtime} ? 'checked' : '';
-
-        # only show the unit block if there is some data
-        my $UnitsRef = $Data{WorkingUnits};
-        if ( $UnitsRef->[0] ) {
-
-            for my $UnitRef ( @{$UnitsRef} ) {
-
-                $Self->{LayoutObject}->Block(
-                    Name => 'Unit',
-                    Data => {
-                        Project   => $Project{Project}{ $UnitRef->{ProjectID} },
-                        Action    => $Action{ $UnitRef->{ActionID} }{Action},
-                        Remark    => $UnitRef->{Remark},
-                        StartTime => $UnitRef->{StartTime},
-                        EndTime   => $UnitRef->{EndTime},
-                        Period    => $UnitRef->{Period},
-                        }
-                );
-            }
-
-            $Self->{LayoutObject}->Block(
-                Name => 'Total',
-                Data => { Total => sprintf( "%.2f", $Data{Total} ) }
-            );
-        }
-        else {
-            $Self->{LayoutObject}->Block( Name => 'NoDataFound' );
-        }
-
-        if ( $Param{Sick} || $Param{LeaveDay} || $Param{Overtime} ) {
-            $Self->{LayoutObject}->Block(
-                Name => 'OtherTimes',
-                Data => {
-                    Sick     => $Param{Sick},
-                    LeaveDay => $Param{LeaveDay},
-                    Overtime => $Param{Overtime},
-                    }
-            );
-        }
-
-        my %UserData = $Self->{TimeAccountingObject}->UserGet(
-            UserID => $Param{UserID},
-        );
-
-        my $Vacation = $Self->{TimeObject}->VacationCheck(
-            Year     => $Param{Year},
-            Month    => $Param{Month},
-            Day      => $Param{Day},
-            Calendar => $UserData{Calendar},
-        );
-
-        if ($Vacation) {
-            $Self->{LayoutObject}->Block(
-                Name => 'Vacation',
-                Data => { Vacation => $Vacation },
-            );
-        }
-
-        # presentation
-        my $Output = $Self->{LayoutObject}->Header( Title => 'View' );
-        $Output .= $Self->{LayoutObject}->NavigationBar();
-        $Output .= $Self->{LayoutObject}->Output(
-            Data         => \%Param,
-            TemplateFile => 'AgentTimeAccountingView'
         );
         $Output .= $Self->{LayoutObject}->Footer();
         return $Output;

@@ -102,7 +102,7 @@
 [% RenderBlockStart("Row") %]
                             <tr class="[% Data.Class | html %] MasterAction">
                                 <td class="Fixed Day">
-                                    <a href="[% Env("Baselink") %]Action=AgentTimeAccounting;Subaction=[% Data.Subaction | uri %];Year=[% Data.Year | uri %];Month=[% Data.Month | uri %];Day=[% Data.Day | uri %];UserID=[% Data.UserID | uri %]" class="MasterActionLink">
+                                    <a href="[% Env("Baselink") %]Action=[% Data.Action | uri %];Subaction=[% Data.Subaction | uri %];Year=[% Data.Year | uri %];Month=[% Data.Month | uri %];Day=[% Data.Day | uri %];UserID=[% Data.UserID | uri %]" class="MasterActionLink">
                                         [% Data.Day | html %]
                                     </a>
                                 </td>

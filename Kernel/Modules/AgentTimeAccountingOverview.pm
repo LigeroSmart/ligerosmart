@@ -98,6 +98,7 @@ sub Run {
         $Param{$Parameter} = $Self->{ParamObject}->GetParam( Param => $Parameter );
     }
     $Param{Subaction} = 'Edit';
+    $Param{Action}    = 'AgentTimeAccounting';
 
     if ( !$Param{UserID} ) {
         $Param{UserID} = $Self->{UserID};
@@ -106,7 +107,8 @@ sub Run {
         if ( $Param{UserID} != $Self->{UserID} && !$Self->{AccessRw} ) {
             return $Self->{LayoutObject}->NoPermission( WithHeader => 'yes' );
         }
-        $Param{Subaction} = 'View';
+        $Param{Subaction} = '';
+        $Param{Action}    = 'AgentTimeAccountingView';
     }
     if ( $Param{UserID} != $Self->{UserID} ) {
         my %ShownUsers = $Self->{UserObject}->UserList( Type => 'Long', Valid => 1 );
