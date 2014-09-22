@@ -38,40 +38,6 @@ sub new {
     return $Self;
 }
 
-sub PreRun {
-    my ( $Self, %Param ) = @_;
-
-    # permission check
-    return 1 if !$Self->{AccessRo};
-
-    my ( $Sec, $Min, $Hour, $Day, $Month, $Year )
-        = $Self->{TimeObject}->SystemTime2Date( SystemTime => $Self->{TimeObject}->SystemTime() );
-
-    my %User = $Self->{TimeAccountingObject}->UserCurrentPeriodGet(
-        Year  => $Year,
-        Month => $Month,
-        Day   => $Day,
-    );
-
-    return if !$User{ $Self->{UserID} };
-
-    my %IncompleteWorkingDays = $Self->{TimeAccountingObject}->WorkingUnitsCompletnessCheck(
-        UserID => $Self->{UserID},
-    );
-
-    # redirect if incomplete working day are out of range
-    if (
-        $IncompleteWorkingDays{EnforceInsert}
-        && $Self->{Action} ne 'AgentTimeAccounting'
-        && $Self->{Action} ne 'AgentCalendarSmall'
-        )
-    {
-
-        return $Self->{LayoutObject}->Redirect( OP => 'Action=AgentTimeAccountingEdit;' );
-    }
-    return;
-}
-
 sub Run {
     my ( $Self, %Param ) = @_;
 
