@@ -351,7 +351,7 @@ sub TableCreateSimple {
                     Type    => 'Link',
                     Content => "S:$Service->{NameShort}",
                     Title   => "Service: $Service->{Name}",
-                    Link => $Self->{LayoutObject}->{Baselink}
+                    Link    => $Self->{LayoutObject}->{Baselink}
                         . 'Action=AgentITSMServiceZoom;ServiceID='
                         . $ServiceID,
                     MaxLength => 20,

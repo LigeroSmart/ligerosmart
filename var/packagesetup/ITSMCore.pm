@@ -60,7 +60,7 @@ sub new {
     # to make sure that the config object will be created newly, so that it
     # will use the recently written new config from the package
     $Kernel::OM->ObjectsDiscard(
-        Objects => [ 'Kernel::Config' ],
+        Objects => ['Kernel::Config'],
     );
 
     return $Self;
@@ -459,10 +459,11 @@ sub _MigrateCriticalityAndImpactToDynamicFields {
     my %GeneralCatalogList;
 
     # get criticality list (valid and invalid items)
-    $GeneralCatalogList{ITSMCriticality} = $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemList(
+    $GeneralCatalogList{ITSMCriticality}
+        = $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemList(
         Class => 'ITSM::Core::Criticality',
         Valid => 0,
-    );
+        );
 
     # get impact list (valid and invalid items)
     $GeneralCatalogList{ITSMImpact} = $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemList(
@@ -687,14 +688,15 @@ sub _CIPDefaultMatrixSet {
     $Allocation{'5 very high'}->{'5 very high'} = '5 very high';
 
     # get the dynamic fields for ITSMCriticality and ITSMImpact
-    my $DynamicFieldConfigArrayRef = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldListGet(
+    my $DynamicFieldConfigArrayRef
+        = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldListGet(
         Valid       => 1,
         ObjectType  => ['Ticket'],
         FieldFilter => {
             ITSMCriticality => 1,
             ITSMImpact      => 1,
         },
-    );
+        );
 
     # get the dynamic field value for ITSMCriticality and ITSMImpact
     my %PossibleValues;
@@ -946,13 +948,14 @@ sub _FillupEmptyServiceCriticality {
     my ( $Self, %Param ) = @_;
 
     # get the dynamic fields for ITSMCriticality
-    my $DynamicFieldConfigArrayRef = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldListGet(
+    my $DynamicFieldConfigArrayRef
+        = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldListGet(
         Valid       => 1,
         ObjectType  => ['Ticket'],
         FieldFilter => {
             ITSMCriticality => 1,
         },
-    );
+        );
 
     # get the dynamic field value for ITSMCriticality and ITSMImpact
     my %PossibleValues;
