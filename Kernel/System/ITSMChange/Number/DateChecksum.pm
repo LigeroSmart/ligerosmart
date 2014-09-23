@@ -7,7 +7,6 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-
 # The algorithm to calculate the checksum is derived from the one
 # Deutsche Bundesbahn (german railway company) uses for calculation
 # of the check digit of their vehikel numbering.
@@ -41,9 +40,10 @@ sub ChangeNumberCreate {
     while ( $LoopProtectionCounter <= $MaxRetryNumber ) {
 
         # get current time
-        my ( $Sec, $Min, $Hour, $Day, $Month, $Year ) = $Kernel::OM->Get('Kernel::System::Time')->SystemTime2Date(
+        my ( $Sec, $Min, $Hour, $Day, $Month, $Year )
+            = $Kernel::OM->Get('Kernel::System::Time')->SystemTime2Date(
             SystemTime => $Kernel::OM->Get('Kernel::System::Time')->SystemTime(),
-        );
+            );
 
         # read count
         my $Count      = 0;

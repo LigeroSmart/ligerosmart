@@ -817,7 +817,8 @@ sub Run {
                 # output 'No ticket data found', if no content was given
                 if ( !$CellData->[0]->[0] ) {
                     $CellData->[0]->[0]->{Content}
-                        = $Self->{LayoutObject}->{LanguageObject}->Translate('No ticket data found.');
+                        = $Self->{LayoutObject}->{LanguageObject}
+                        ->Translate('No ticket data found.');
                 }
 
                 # page params
@@ -1526,7 +1527,7 @@ sub _MaskForm {
             next TIMETYPE;
         }
 
-        my $Title             = $Self->{LayoutObject}->{LanguageObject}->Translate( $TimeType->{Title} );
+        my $Title = $Self->{LayoutObject}->{LanguageObject}->Translate( $TimeType->{Title} );
         my %TimeSelectionData = (
             Prefix => $Prefix,
             Title  => $Title,

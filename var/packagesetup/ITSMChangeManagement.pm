@@ -90,13 +90,13 @@ sub new {
     # to make sure that the config object will be created newly, so that it
     # will use the recently written new config from the package
     $Kernel::OM->ObjectsDiscard(
-        Objects => [ 'Kernel::Config' ],
+        Objects => ['Kernel::Config'],
     );
 
     # the stats object needs a UserID parameter for the constructor
     # we need to discard any existing stats object before
     $Kernel::OM->ObjectsDiscard(
-        Objects => [ 'Kernel::System::Stats' ],
+        Objects => ['Kernel::System::Stats'],
     );
 
     # define UserID parameter for the constructor of the stats object
@@ -467,7 +467,8 @@ sub _MigrateFreeTextToDynamicFields {
     );
 
     # remember current setting for event module configuratiom
-    my $EventModuleConfig = $ConfigObject->{'DynamicField::EventModulePost'}->{'100-UpdateITSMChangeConditions'};
+    my $EventModuleConfig
+        = $ConfigObject->{'DynamicField::EventModulePost'}->{'100-UpdateITSMChangeConditions'};
 
     # temporary delete event module configuration
     delete $ConfigObject->{'DynamicField::EventModulePost'}->{'100-UpdateITSMChangeConditions'};
@@ -493,7 +494,8 @@ sub _MigrateFreeTextToDynamicFields {
     }
 
     # re-activate the config setting again
-    $ConfigObject->{'DynamicField::EventModulePost'}->{'100-UpdateITSMChangeConditions'} = $EventModuleConfig;
+    $ConfigObject->{'DynamicField::EventModulePost'}->{'100-UpdateITSMChangeConditions'}
+        = $EventModuleConfig;
 
     # ---------------------------------------------------------------------------------------------
     # Migrate the change and workorder data from freekey and freetext fields to dynamic fields
@@ -577,9 +579,10 @@ sub _MigrateFreeTextToDynamicFields {
     }
 
     # get all condition attributes
-    my $ConditionAttributes = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMCondition')->AttributeList(
+    my $ConditionAttributes
+        = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMCondition')->AttributeList(
         UserID => 1,
-    );
+        );
 
     # reverse the list to lookup attribute names
     my %Attribute2ID = reverse %{$ConditionAttributes};
@@ -593,11 +596,12 @@ sub _MigrateFreeTextToDynamicFields {
         # rename the attribute (add a prefix to the attribute)
         if ( $DynamicFieldName{$Attribute} ) {
 
-            my $Success = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMCondition')->AttributeUpdate(
+            my $Success
+                = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMCondition')->AttributeUpdate(
                 AttributeID => $Attribute2ID{$Attribute},
                 Name        => 'DynamicField_' . $Attribute,
                 UserID      => 1,
-            );
+                );
         }
 
         # this attribute does not exist as dynamic field
@@ -1077,11 +1081,12 @@ sub _StateMachineDefaultSet {
         for my $NextState ( @{ $ChangeStateTransitions{$State} } ) {
 
             # add state transition
-            my $TransitionID = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMStateMachine')->StateTransitionAdd(
+            my $TransitionID = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMStateMachine')
+                ->StateTransitionAdd(
                 StateID     => $Name2ChangeStateID{$State}     || 0,
                 NextStateID => $Name2ChangeStateID{$NextState} || 0,
                 Class       => 'ITSM::ChangeManagement::Change::State',
-            );
+                );
         }
     }
 
@@ -1091,11 +1096,12 @@ sub _StateMachineDefaultSet {
         for my $NextState ( @{ $WorkOrderStateTransitions{$State} } ) {
 
             # add state transition
-            my $TransitionID = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMStateMachine')->StateTransitionAdd(
+            my $TransitionID = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMStateMachine')
+                ->StateTransitionAdd(
                 StateID     => $Name2WorkOrderStateID{$State}     || 0,
                 NextStateID => $Name2WorkOrderStateID{$NextState} || 0,
                 Class       => 'ITSM::ChangeManagement::WorkOrder::State',
-            );
+                );
         }
     }
 
@@ -1132,10 +1138,11 @@ sub _LinkDelete {
             );
 
             # get all workorder ids for this change
-            my $WorkOrderIDs = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderList(
+            my $WorkOrderIDs
+                = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderList(
                 ChangeID => $ChangeID,
                 UserID   => 1,
-            );
+                );
 
             next CHANGEID if !$WorkOrderIDs;
             next CHANGEID if ref $WorkOrderIDs ne 'ARRAY';
@@ -1173,9 +1180,10 @@ sub _AttachmentDelete {
     for my $ChangeID ( @{$ChangeIDs} ) {
 
         # get the list of all change attachments
-        my @ChangeAttachments = $Kernel::OM->Get('Kernel::System::ITSMChange')->ChangeAttachmentList(
+        my @ChangeAttachments
+            = $Kernel::OM->Get('Kernel::System::ITSMChange')->ChangeAttachmentList(
             ChangeID => $ChangeID,
-        );
+            );
 
         # delete all change attachments
         for my $Filename (@ChangeAttachments) {
@@ -1188,45 +1196,50 @@ sub _AttachmentDelete {
         }
 
         # get all workorder ids for this change
-        my $WorkOrderIDs = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderList(
+        my $WorkOrderIDs
+            = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderList(
             ChangeID => $ChangeID,
             UserID   => 1,
-        );
+            );
 
         for my $WorkOrderID ( @{$WorkOrderIDs} ) {
 
             # get the list of all workorder attachments
-            my @WorkOrderAttachments = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderAttachmentList(
+            my @WorkOrderAttachments = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')
+                ->WorkOrderAttachmentList(
                 WorkOrderID => $WorkOrderID,
-            );
+                );
 
             # delete all workorder attachments
             for my $Filename (@WorkOrderAttachments) {
 
-                $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderAttachmentDelete(
+                $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')
+                    ->WorkOrderAttachmentDelete(
                     ChangeID       => $ChangeID,
                     WorkOrderID    => $WorkOrderID,
                     Filename       => $Filename,
                     AttachmentType => 'WorkOrder',
                     UserID         => 1,
-                );
+                    );
             }
 
             # get the list of all workorder report attachments
-            my @ReportAttachments = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderReportAttachmentList(
+            my @ReportAttachments = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')
+                ->WorkOrderReportAttachmentList(
                 WorkOrderID => $WorkOrderID,
-            );
+                );
 
             # delete all workorder report attachments
             for my $Filename (@ReportAttachments) {
 
-                $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderAttachmentDelete(
+                $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')
+                    ->WorkOrderAttachmentDelete(
                     ChangeID       => $ChangeID,
                     WorkOrderID    => $WorkOrderID,
                     Filename       => $Filename,
                     AttachmentType => 'WorkOrderReport',
                     UserID         => 1,
-                );
+                    );
             }
         }
     }
@@ -1607,9 +1620,10 @@ sub _AddNotifications {
         # find recipients
         my @RecipientIDs;
         for my $Recipient ( @{ $Notification->{Recipients} } ) {
-            my $RecipientID = $Kernel::OM->Get('Kernel::System::ITSMChange::Notification')->RecipientLookup(
+            my $RecipientID
+                = $Kernel::OM->Get('Kernel::System::ITSMChange::Notification')->RecipientLookup(
                 Name => $Recipient,
-            );
+                );
 
             if ($RecipientID) {
                 push @RecipientIDs, $RecipientID;
@@ -1619,14 +1633,16 @@ sub _AddNotifications {
         # get event id
         my $EventID =
             $HistoryTypes{ $Notification->{Event} }
-            || $Kernel::OM->Get('Kernel::System::ITSMChange::History')->HistoryTypeLookup( HistoryType => $Notification->{Event} );
+            || $Kernel::OM->Get('Kernel::System::ITSMChange::History')
+            ->HistoryTypeLookup( HistoryType => $Notification->{Event} );
 
         # insert notification
-        my $RuleID = $Kernel::OM->Get('Kernel::System::ITSMChange::Notification')->NotificationRuleAdd(
+        my $RuleID
+            = $Kernel::OM->Get('Kernel::System::ITSMChange::Notification')->NotificationRuleAdd(
             %{$Notification},
             EventID      => $EventID,
             RecipientIDs => \@RecipientIDs,
-        );
+            );
     }
 
     return 1;
@@ -1679,9 +1695,10 @@ sub _AddNotificationsNewIn_2_0_3 {    ## no critic
         # find recipients
         my @RecipientIDs;
         for my $Recipient ( @{ $Notification->{Recipients} } ) {
-            my $RecipientID = $Kernel::OM->Get('Kernel::System::ITSMChange::Notification')->RecipientLookup(
+            my $RecipientID
+                = $Kernel::OM->Get('Kernel::System::ITSMChange::Notification')->RecipientLookup(
                 Name => $Recipient,
-            );
+                );
 
             if ($RecipientID) {
                 push @RecipientIDs, $RecipientID;
@@ -1691,14 +1708,16 @@ sub _AddNotificationsNewIn_2_0_3 {    ## no critic
         # get event id
         my $EventID =
             $HistoryTypes{ $Notification->{Event} }
-            || $Kernel::OM->Get('Kernel::System::ITSMChange::History')->HistoryTypeLookup( HistoryType => $Notification->{Event} );
+            || $Kernel::OM->Get('Kernel::System::ITSMChange::History')
+            ->HistoryTypeLookup( HistoryType => $Notification->{Event} );
 
         # insert notification
-        my $RuleID = $Kernel::OM->Get('Kernel::System::ITSMChange::Notification')->NotificationRuleAdd(
+        my $RuleID
+            = $Kernel::OM->Get('Kernel::System::ITSMChange::Notification')->NotificationRuleAdd(
             %{$Notification},
             EventID      => $EventID,
             RecipientIDs => \@RecipientIDs,
-        );
+            );
     }
 
     return 1;

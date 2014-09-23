@@ -365,7 +365,9 @@ for my $ConditionSubObjectName (qw(ITSMChange ITSMWorkOrder)) {
     # check on return value
     $Self->True(
         $ObjectID,
-        'Test ' . $TestCount++ . " - ObjectLookup on '$ConditionSubObjectName' -> ObjectID: $ObjectID",
+        'Test '
+            . $TestCount++
+            . " - ObjectLookup on '$ConditionSubObjectName' -> ObjectID: $ObjectID",
     );
 
     # get object data with object id

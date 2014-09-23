@@ -23,7 +23,8 @@ sub ChangeNumberCreate {
     my $CounterLog = $Kernel::OM->Get('Kernel::Config')->Get('ITSMChange::CounterLog');
     my $SystemID   = $Kernel::OM->Get('Kernel::Config')->Get('SystemID');
     my $MinSize
-        = $Kernel::OM->Get('Kernel::Config')->Get('ITSMChange::NumberGenerator::AutoIncrement::MinCounterSize')
+        = $Kernel::OM->Get('Kernel::Config')
+        ->Get('ITSMChange::NumberGenerator::AutoIncrement::MinCounterSize')
         || 5;
 
     # define number of maximum loops if created change number exists

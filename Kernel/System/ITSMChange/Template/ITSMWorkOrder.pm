@@ -130,10 +130,11 @@ sub Serialize {
     if ( $Param{StateReset} ) {
 
         # get initial workorder state id
-        my $NextStateIDs = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMStateMachine')->StateTransitionGet(
+        my $NextStateIDs
+            = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMStateMachine')->StateTransitionGet(
             StateID => 0,
             Class   => 'ITSM::ChangeManagement::WorkOrder::State',
-        );
+            );
         $CleanWorkOrder->{WorkOrderStateID} = $NextStateIDs->[0];
 
         # reset actual start and end time
