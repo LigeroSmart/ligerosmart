@@ -1,24 +1,27 @@
 # --
 # SystemMonitoring.t - SystemMonitoring tests
-# Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-use Kernel::System::Ticket;
+use strict;
+use warnings;
+
+use vars qw($Self);
+
 use Kernel::System::PostMaster;
-use Kernel::System::DynamicField;
 
 # add or update dynamic fields if needed
-my $DynamicFieldObject = Kernel::System::DynamicField->new( %{$Self} );
+my $DynamicFieldObject = $Kernel::OM->Get('Kernel::System::DynamicField');
 
 my @DynamicfieldIDs;
 my @DynamicFieldUpdate;
 my %NeededDynamicfields = (
-    TicketFreeText1 => 1,
-    TicketFreeText2 => 1,
+    TicketFreeText1  => 1,
+    TicketFreeText2  => 1,
     ArticleFreeText1 => 1,
 );
 
@@ -78,11 +81,12 @@ for my $FieldName ( sort keys %NeededDynamicfields ) {
     }
 }
 
+# get needed objects
+my $MainObject   = $Kernel::OM->Get('Kernel::System::Main');
+my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
-
-
-my $FileArray = $Self->{MainObject}->FileRead(
-    Location => $Self->{ConfigObject}->Get('Home') . '/scripts/test/sample/SystemMonitoring1.box',
+my $FileArray = $MainObject->FileRead(
+    Location => $ConfigObject->Get('Home') . '/scripts/test/sample/SystemMonitoring1.box',
     Result => 'ARRAY',    # optional - SCALAR|ARRAY
 );
 
@@ -125,8 +129,8 @@ $Self->Is(
     "Run() - Ticket State",
 );
 
-$FileArray = $Self->{MainObject}->FileRead(
-    Location => $Self->{ConfigObject}->Get('Home') . '/scripts/test/sample/SystemMonitoring2.box',
+$FileArray = $MainObject->FileRead(
+    Location => $ConfigObject->Get('Home') . '/scripts/test/sample/SystemMonitoring2.box',
     Result => 'ARRAY',    # optional - SCALAR|ARRAY
 );
 
@@ -146,7 +150,8 @@ $Self->True(
     "Run() - NewTicket/TicketID",
 );
 
-$TicketObject = Kernel::System::Ticket->new( %{$Self} );
+# get ticket object
+$TicketObject = $Kernel::OM->Get('Kernel::System::Ticket');
 %Ticket       = $TicketObject->TicketGet(
     TicketID => $Return[1],
 );
@@ -165,7 +170,6 @@ $Self->True(
     $Delete || 0,
     "TicketDelete()",
 );
-
 
 # revert changes to dynamic fields
 for my $DynamicField (@DynamicFieldUpdate) {

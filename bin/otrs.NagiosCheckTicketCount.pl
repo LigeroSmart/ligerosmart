@@ -1,7 +1,7 @@
-#!/usr/bin/perl -w
+#!/usr/bin/perl
 # --
 # otrs.NagiosCheckTicketCount.pl - OTRS Nagios checker
-# Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU AFFERO General Public License as published by
@@ -28,6 +28,17 @@ use lib dirname($RealBin);
 use lib dirname($RealBin) . '/Kernel/cpan-lib';
 
 use Getopt::Std;
+
+use Kernel::System::ObjectManager;
+
+# create common objects
+local $Kernel::OM = Kernel::System::ObjectManager->new(
+    'Kernel::System::Log' => {
+        LogPrefix => 'otrs.NagiosCheckTicketCount',
+    },
+);
+
+# get options
 my %Options;
 getopts( 'hNc:', \%Options );
 if ( $Options{h} ) {
@@ -58,29 +69,8 @@ if ( !eval {$Content} ) {
     exit 1;
 }
 
-use Kernel::Config;
-use Kernel::System::Encode;
-use Kernel::System::Log;
-use Kernel::System::Time;
-use Kernel::System::Main;
-use Kernel::System::DB;
-use Kernel::System::Ticket;
-
-# create common objects
-my %CommonObject = ();
-$CommonObject{ConfigObject} = Kernel::Config->new(%CommonObject);
-$CommonObject{EncodeObject} = Kernel::System::Encode->new(%CommonObject);
-$CommonObject{LogObject}    = Kernel::System::Log->new(
-    %CommonObject,
-    LogPrefix => 'otrs.NagiosCheckTicketCount'
-);
-$CommonObject{TimeObject}   = Kernel::System::Time->new(%CommonObject);
-$CommonObject{MainObject}   = Kernel::System::Main->new(%CommonObject);
-$CommonObject{DBObject}     = Kernel::System::DB->new(%CommonObject);
-$CommonObject{TicketObject} = Kernel::System::Ticket->new(%CommonObject);
-
 # search tickets
-my $TicketCount = $CommonObject{TicketObject}->TicketSearch(
+my $TicketCount = $Kernel::OM->Get('Kernel::System::Ticket')->TicketSearch(
     %{ $Config{Search} },
     Limit  => 100_000,
     Result => 'COUNT',

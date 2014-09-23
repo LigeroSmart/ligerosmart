@@ -1,6 +1,6 @@
 # --
 # Kernel/System/Ticket/Event/NagiosAcknowledge.pm - acknowlege nagios tickets
-# Copyright (C) 2001-2013 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -11,6 +11,14 @@ package Kernel::System::Ticket::Event::NagiosAcknowledge;
 
 use strict;
 use warnings;
+
+our @ObjectDependencies = (
+    'Kernel::Config',
+    'Kernel::System::Log',
+    'Kernel::System::Ticket',
+    'Kernel::System::User',
+);
+
 use LWP::UserAgent;
 use URI::Escape qw();
 
@@ -21,17 +29,12 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    # get needed objects
-    for (
-        qw(ConfigObject TicketObject LogObject UserObject CustomerUserObject SendmailObject TimeObject EncodeObject UserObject)
-        )
-    {
-        $Self->{$_} = $Param{$_} || die "Got no $_!";
-    }
+    # get config object
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
     # get correct FreeFields
-    $Self->{Fhost}    = $Self->{ConfigObject}->Get('Nagios::Acknowledge::FreeField::Host');
-    $Self->{Fservice} = $Self->{ConfigObject}->Get('Nagios::Acknowledge::FreeField::Service');
+    $Self->{Fhost}    = $ConfigObject->Get('Nagios::Acknowledge::FreeField::Host');
+    $Self->{Fservice} = $ConfigObject->Get('Nagios::Acknowledge::FreeField::Service');
 
     return $Self;
 }
@@ -42,27 +45,33 @@ sub Run {
     # check needed stuff
     for (qw(Data Event Config)) {
         if ( !$Param{$_} ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
+            $Kernel::OM->Get('Kernel::System::Log')
+                ->Log( Priority => 'error', Message => "Need $_!" );
             return;
         }
     }
 
     if ( !$Param{Data}->{TicketID} ) {
-        $Self->{LogObject}->Log( Priority => 'error', Message => "Need Data->{TicketID}!" );
+        $Kernel::OM->Get('Kernel::System::Log')
+            ->Log( Priority => 'error', Message => "Need Data->{TicketID}!" );
         return;
     }
 
     # check if acknowledge is active
-    my $Type = $Self->{ConfigObject}->Get('Nagios::Acknowledge::Type');
+    my $Type = $Kernel::OM->Get('Kernel::Config')->Get('Nagios::Acknowledge::Type');
     return 1 if !$Type;
 
+    # get ticket object
+    my $TicketObject = $Kernel::OM->Get('Kernel::System::Ticket');
+
     # check if it's a Nagios related ticket
-    my %Ticket = $Self->{TicketObject}->TicketGet(
+    my %Ticket = $TicketObject->TicketGet(
         TicketID      => $Param{Data}->{TicketID},
         DynamicFields => 1,
     );
     if ( !$Ticket{ $Self->{Fhost} } ) {
-        $Self->{LogObject}->Log( Priority => 'debug', Message => "No Nagios Ticket!" );
+        $Kernel::OM->Get('Kernel::System::Log')
+            ->Log( Priority => 'debug', Message => "No Nagios Ticket!" );
         return 1;
     }
 
@@ -70,7 +79,7 @@ sub Run {
     return 1 if $Ticket{Lock} ne 'lock';
 
     # agent lookup
-    my %User = $Self->{UserObject}->GetUserData(
+    my %User = $Kernel::OM->Get('Kernel::System::User')->GetUserData(
         UserID => $Param{UserID},
         Cached => 1,                # not required -> 0|1 (default 0)
     );
@@ -89,7 +98,7 @@ sub Run {
         );
     }
     else {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "Unknown Nagios acknowledge type ($Type)!",
         );
@@ -97,7 +106,7 @@ sub Run {
     }
 
     if ($Return) {
-        $Self->{TicketObject}->HistoryAdd(
+        $TicketObject->HistoryAdd(
             TicketID     => $Param{Data}->{TicketID},
             HistoryType  => 'Misc',
             Name         => "Sent Acknowledge to Nagios ($Type).",
@@ -106,7 +115,7 @@ sub Run {
         return 1;
     }
     else {
-        $Self->{TicketObject}->HistoryAdd(
+        $TicketObject->HistoryAdd(
             TicketID     => $Param{Data}->{TicketID},
             HistoryType  => 'Misc',
             Name         => "Was not able to send Acknowledge to Nagios ($Type)!",
@@ -122,26 +131,31 @@ sub _Pipe {
     # check needed stuff
     for (qw(Ticket User)) {
         if ( !$Param{$_} ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
+            $Kernel::OM->Get('Kernel::System::Log')
+                ->Log( Priority => 'error', Message => "Need $_!" );
             return;
         }
     }
     my %Ticket = %{ $Param{Ticket} };
     my %User   = %{ $Param{User} };
 
+    # get config object
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+
     # send acknowledge to nagios
-    my $CMD = $Self->{ConfigObject}->Get('Nagios::Acknowledge::NamedPipe::CMD');
+    my $CMD = $ConfigObject->Get('Nagios::Acknowledge::NamedPipe::CMD');
     my $Data;
     if ( $Ticket{ $Self->{Fservice} } !~ /^host$/i ) {
-        $Data = $Self->{ConfigObject}->Get('Nagios::Acknowledge::NamedPipe::Service');
+        $Data = $ConfigObject->Get('Nagios::Acknowledge::NamedPipe::Service');
     }
     else {
-        $Data = $Self->{ConfigObject}->Get('Nagios::Acknowledge::NamedPipe::Host');
+        $Data = $ConfigObject->Get('Nagios::Acknowledge::NamedPipe::Host');
     }
 
     # replace ticket tags
+    TICKET:
     for my $Key ( sort keys %Ticket ) {
-        next if !defined $Ticket{$Key};
+        next TICKET if !defined $Ticket{$Key};
 
         # strip not allowed characters
         $Ticket{$Key} =~ s/'//g;
@@ -150,7 +164,7 @@ sub _Pipe {
     }
 
     # replace config tags
-    $Data =~ s{<CONFIG_(.+?)>}{$Self->{ConfigObject}->Get($1)}egx;
+    $Data =~ s{<CONFIG_(.+?)>}{$Kernel::OM->Get('Kernel::Config')->Get($1)}egx;
 
     # replace login
     $Data =~ s/<LOGIN>/$User{UserLogin}/g;
@@ -180,16 +194,20 @@ sub _HTTP {
     # check needed stuff
     for (qw(Ticket User)) {
         if ( !$Param{$_} ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
+            $Kernel::OM->Get('Kernel::System::Log')
+                ->Log( Priority => 'error', Message => "Need $_!" );
             return;
         }
     }
     my %Ticket = %{ $Param{Ticket} };
     my %User   = %{ $Param{User} };
 
-    my $URL  = $Self->{ConfigObject}->Get('Nagios::Acknowledge::HTTP::URL');
-    my $User = $Self->{ConfigObject}->Get('Nagios::Acknowledge::HTTP::User');
-    my $Pw   = $Self->{ConfigObject}->Get('Nagios::Acknowledge::HTTP::Password');
+    # get config object
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+
+    my $URL  = $ConfigObject->Get('Nagios::Acknowledge::HTTP::URL');
+    my $User = $ConfigObject->Get('Nagios::Acknowledge::HTTP::User');
+    my $Pw   = $ConfigObject->Get('Nagios::Acknowledge::HTTP::Password');
 
     if ( $Ticket{ $Self->{Fservice} } !~ /^host$/i ) {
         $URL =~ s/<CMD_TYP>/34/g;
@@ -205,9 +223,9 @@ sub _HTTP {
     $URL =~ s/<SERVICE_NAME>/$Ticket{$Self->{Fservice}}/g;
 
     # replace ticket tags
-
+    TICKET:
     for my $Key ( sort keys %Ticket ) {
-        next if !defined $Ticket{$Key};
+        next TICKET if !defined $Ticket{$Key};
 
         # URLencode values
         $Ticket{$Key} = URI::Escape::uri_escape_utf8( $Ticket{$Key} );
@@ -215,7 +233,7 @@ sub _HTTP {
     }
 
     # replace config tags
-    $URL =~ s{<CONFIG_(.+?)>}{$Self->{ConfigObject}->Get($1)}egx;
+    $URL =~ s{<CONFIG_(.+?)>}{$Kernel::OM->Get('Kernel::Config')->Get($1)}egx;
 
     my $UserAgent = LWP::UserAgent->new();
     $UserAgent->timeout(15);
@@ -224,7 +242,7 @@ sub _HTTP {
     $Request->authorization_basic( $User, $Pw );
     my $Response = $UserAgent->request($Request);
     if ( !$Response->is_success() ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "Can't request $URL: " . $Response->status_line(),
         );
