@@ -95,8 +95,10 @@
                             <td>[% Translate(Data.NextStateName) | html %]</td>
                             <td class="Center Last">
 [% RenderBlockStart("StateTransitionDeleteButton") %]
-                                <a class="TrashCan" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=StateTransitionDelete;Class=[% Data.Class | uri %];StateID=[% Data.StateID | uri %];NextStateID=[% Data.NextStateID | uri %]">
-                                    [% Translate("Delete this state transition") | html %]
+                                <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=StateTransitionDelete;Class=[% Data.Class | uri %];StateID=[% Data.StateID | uri %];NextStateID=[% Data.NextStateID | uri %]" title="[% Translate("Delete this state transition") | html %]">
+                                    <i class="fa fa-trash-o">
+                                        <span class="InvisibleText">[% Translate("Delete this state transition") | html %]</span>
+                                    </i>
                                 </a>
 [% RenderBlockEnd("StateTransitionDeleteButton") %]
                             </td>

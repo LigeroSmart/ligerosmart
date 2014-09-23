@@ -96,7 +96,7 @@ sub Run {
         );
     }
 
-    # on first page load we fill the template content string  parameter from the templete
+    # on first page load we fill the template content string parameter from the templete
     if ( !$Self->{Subaction} ) {
         $GetParam{TemplateContent} = $Template->{Content};
     }
@@ -211,6 +211,9 @@ sub Run {
         $Self->{LayoutObject}->Block(
             Name => 'CABMemberRow',
             Data => {
+                %{$Template},
+                %GetParam,
+                %ServerError,
                 UserType         => 'Agent',
                 InternalUserType => 'CABAgents',
                 %UserData,

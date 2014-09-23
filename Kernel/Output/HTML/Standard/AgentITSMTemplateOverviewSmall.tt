@@ -133,8 +133,10 @@
 
 [% RenderBlockStart("RecordDelete") %]
                 <td class="Center Last">
-                    <a id="DeleteTemplateID[% Data.TemplateID | html %]" class="TrashCan" href="#">
-                        [% Translate("Delete") | html %]
+                    <a href="#" title="[% Translate("Delete") | html %]">
+                        <i id="DeleteTemplateID[% Data.TemplateID | html %]" class="fa fa-trash-o">
+                            <span class="InvisibleText">[% Translate("Delete") | html %]</span>
+                        </i>
                     </a>
                 </td>
 

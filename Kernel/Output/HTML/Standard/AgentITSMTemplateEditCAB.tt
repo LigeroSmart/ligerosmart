@@ -93,8 +93,12 @@
                                 <td title="[% Data.UserLogin | html %] ([% Data.UserFirstname | html %] [% Data.UserLastname | html %])">
                                     [% Data.UserLogin | truncate(25) | html %] ([% Data.UserFirstname | html %] [% Data.UserLastname | html %])
                                 </td>
-                                <td>
-                                    <button type="submit" class="TrashCan" name="Delete[% Data.InternalUserType %][% Data.UserID | html %]" value="[% Translate("Delete") | html %]">[% Translate("Delete") | html %]</button>
+                                <td class="Center Last">
+                                    <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Save;Delete[% Data.InternalUserType %][% Data.UserID | html %]=1;TemplateID=[% Data.TemplateID | html %];TemplateContent=[% Data.TemplateContent | html %]" title="[% Translate("Delete") | html %]">
+                                       <i class="fa fa-trash-o">
+                                           <span class="InvisibleText">[% Translate("Delete") | html %]</span>
+                                       </i>
+                                   </a>
                                 </td>
                             </tr>
 [% RenderBlockEnd("CABMemberRow") %]

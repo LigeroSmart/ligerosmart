@@ -151,8 +151,10 @@
                                     </div>
                                 </td>
                                 <td class="Center">
-                                    <a href="#" class="TrashCan DeleteExpression" id="DeleteExpressionID-[% Data.ExpressionID | uri %]" title="[% Translate("Delete") | html %]">
-                                        [% Translate("Delete Expression") | html %]
+                                    <a href="#" class="DeleteExpression" id="DeleteExpressionID-[% Data.ExpressionID | uri %]" title="[% Translate("Delete Expression") | html %]">
+                                        <i class="fa fa-trash-o">
+                                            <span class="InvisibleText">[% Translate("Delete Expression") | html %]</span>
+                                        </i>
                                     </a>
                                 </td>
                             </tr>
@@ -249,8 +251,10 @@
                                     </div>
                                 </td>
                                 <td class="Center">
-                                    <a href="#" class="TrashCan DeleteAction" id="DeleteActionID-[% Data.ActionID | uri %]" title="[% Translate("Delete") | html %]">
-                                        [% Translate("Delete Action") | html %]
+                                    <a href="#" class="DeleteAction" id="DeleteActionID-[% Data.ActionID | uri %]" title="[% Translate("Delete Action") | html %]">
+                                        <i class="fa fa-trash-o">
+                                            <span class="InvisibleText">[% Translate("Delete Action") | html %]</span>
+                                        </i>
                                     </a>
                                 </td>
                             </tr>
