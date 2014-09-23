@@ -129,7 +129,7 @@
                                 <th>
                                     [% Translate("Login") | html %]
                                 </th>
-                                <th>
+                                <th class="Center Last">
                                     [% Translate("Delete") | html %]
                                 </th>
                             </tr>
@@ -143,10 +143,23 @@
                                 <td title="[% Data.UserLogin | html %] ([% Data.UserFirstname | html %] [% Data.UserLastname | html %])">
                                     [% Data.UserLogin | truncate(25) | html %] ([% Data.UserFirstname | html %] [% Data.UserLastname | html %])
                                 </td>
-                                <td>
-                                    <button type="submit" class="TrashCan" name="Delete[% Data.InternalUserType %][% Data.UserID | html %]" value="[% Translate("Delete") | html %]">[% Translate("Delete") | html %]</button>
+                                <td class="Center Last">
+                                    <a href="#" id="[% Data.InternalUserType %][% Data.UserID | html %]" title="[% Translate("Delete") | html %]" class="TrashCan">
+                                        <i class="fa fa-trash-o">
+                                            <span class="InvisibleText">[% Translate("Delete") | html %]</span>
+                                        </i>
+                                    </a>
                                 </td>
                             </tr>
+
+[% WRAPPER JSOnDocumentComplete %]
+<script type="text/javascript">//<![CDATA[
+$('#[% Data.InternalUserType %][% Data.UserID | html %]').bind('click', function(){
+    $(this).closest('form').append("<input name=\"Delete[% Data.InternalUserType %][% Data.UserID | html %]\" type=\"hidden\" value=\"1\"/>").end().submit();
+});
+//]]></script>
+[% END %]
+
 [% RenderBlockEnd("CABMemberRow") %]
                         </tbody>
                     </table>

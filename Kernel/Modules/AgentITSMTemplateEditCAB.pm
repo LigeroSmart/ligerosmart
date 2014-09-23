@@ -211,9 +211,6 @@ sub Run {
         $Self->{LayoutObject}->Block(
             Name => 'CABMemberRow',
             Data => {
-                %{$Template},
-                %GetParam,
-                %ServerError,
                 UserType         => 'Agent',
                 InternalUserType => 'CABAgents',
                 %UserData,
@@ -405,35 +402,19 @@ sub _IsNewCABMemberOk {
             $CurrentMemberLookup{$CustomerUser} = 1;
         }
 
-        # For the sanity check we use the same function as we use for Autocompletion
-        # and customer user expansion
-        # CustomerSearch() does funny formating, when it thinks that it has
-        # encountered an Email-address.
-        # Furthermore the returned hash from CustomerSearch() depends on the setting of
-        # 'CustomerUserListFields'.
+        # check if customer can be found
         my %CustomerUser = $Self->{CustomerUserObject}->CustomerSearch(
             UserLogin => $Param{NewCABMemberSelected},
         );
 
-        # remove spaces at the end of the string
-        for my $Value ( sort values %CustomerUser ) {
-            $Value =~ s{ \s* \z }{}xms;
-        }
+        if ( $CustomerUser{ $Param{NewCABMemberSelected} } ) {
 
-        if ( scalar( keys %CustomerUser ) == 1 ) {
+            $CurrentMemberLookup{ $Param{NewCABMemberSelected} } = 1;
 
-            # compare input value with user data
-            # string comparision can be used for checking, as there are no 'out of office' notes
-            my ($CheckString) = values %CustomerUser;
-            if ( $CheckString eq $Param{NewCABMember} ) {
-
-                $CurrentMemberLookup{ $Param{NewCABMemberSelected} } = 1;
-
-                # save member infos
-                %MemberInfo = (
-                    $MemberType => [ sort keys %CurrentMemberLookup ],
-                );
-            }
+            # save member infos
+            %MemberInfo = (
+                $MemberType => [ sort keys %CurrentMemberLookup ],
+            );
         }
     }
 

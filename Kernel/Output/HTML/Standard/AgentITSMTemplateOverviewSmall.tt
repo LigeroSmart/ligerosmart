@@ -33,10 +33,10 @@
                 </th>
 [% RenderBlockEnd("RecordValidHeader") %]
 [% RenderBlockStart("RecordEditContentHeader") %]
-                <th><span>[% Translate("Edit Content") | html %]</span></th>
+                <th class="Center Last"><span>[% Translate("Edit Content") | html %]</span></th>
 [% RenderBlockEnd("RecordEditContentHeader") %]
 [% RenderBlockStart("RecordDeleteHeader") %]
-                <th><span>[% Translate("Delete") | html %]</span></th>
+                <th class="Center Last"><span>[% Translate("Delete") | html %]</span></th>
 [% RenderBlockEnd("RecordDeleteHeader") %]
 [% RenderBlockStart("RecordCreateByHeader") %]
                 <th><span>[% Translate("CreateBy") | html %]</span></th>
