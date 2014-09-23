@@ -95,10 +95,10 @@
                                 </td>
                                 <td class="Center Last">
                                     <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Save;Delete[% Data.InternalUserType %][% Data.UserID | html %]=1;TemplateID=[% Data.TemplateID | html %];TemplateContent=[% Data.TemplateContent | html %]" title="[% Translate("Delete") | html %]">
-                                       <i class="fa fa-trash-o">
-                                           <span class="InvisibleText">[% Translate("Delete") | html %]</span>
-                                       </i>
-                                   </a>
+                                        <i class="fa fa-trash-o">
+                                            <span class="InvisibleText">[% Translate("Delete") | html %]</span>
+                                        </i>
+                                    </a>
                                 </td>
                             </tr>
 [% RenderBlockEnd("CABMemberRow") %]
