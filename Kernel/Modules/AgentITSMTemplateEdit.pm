@@ -14,6 +14,7 @@ use warnings;
 
 use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::Template;
+use Kernel::System::Valid;
 
 sub new {
     my ( $Type, %Param ) = @_;
