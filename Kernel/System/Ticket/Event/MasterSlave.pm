@@ -123,17 +123,17 @@ sub Run {
         UserID    => $Param{UserID},
     );
     my @TicketIDs;
-    LINKS:
+    LINK:
     for my $TicketID ( sort keys %Links ) {
-        next LINKS if !$Links{$TicketID};
+        next LINK if !$Links{$TicketID};
 
         # just take ticket with slave attributes for action
         my %Ticket = $TicketObject->TicketGet(
             TicketID      => $TicketID,
             DynamicFields => 1,
         );
-        next LINKS if !$Ticket{ 'DynamicField_' . $MasterSlaveDynamicField };
-        next LINKS if $Ticket{ 'DynamicField_' . $MasterSlaveDynamicField } !~ /^SlaveOf:(.*?)$/;
+        next LINK if !$Ticket{ 'DynamicField_' . $MasterSlaveDynamicField };
+        next LINK if $Ticket{ 'DynamicField_' . $MasterSlaveDynamicField } !~ /^SlaveOf:(.*?)$/;
 
         # remember ticket id
         push @TicketIDs, $TicketID;

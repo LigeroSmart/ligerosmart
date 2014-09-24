@@ -189,17 +189,17 @@ sub MasterSlave {
             UserID    => $Param{UserID},
         );
         my @SlaveTicketIDs;
-        LINKS:
+        LINK:
         for my $LinkedTicketID ( sort keys %Links ) {
-            next LINKS if !$Links{$LinkedTicketID};
+            next LINK if !$Links{$LinkedTicketID};
 
             # just take ticket with slave attributes for action
             my %Ticket = $TicketObject->TicketGet(
                 TicketID      => $LinkedTicketID,
                 DynamicFields => 1,
             );
-            next LINKS if !$Ticket{ 'DynamicField_' . $MasterSlaveDynamicFieldName };
-            next LINKS
+            next LINK if !$Ticket{ 'DynamicField_' . $MasterSlaveDynamicFieldName };
+            next LINK
                 if $Ticket{ 'DynamicField_' . $MasterSlaveDynamicFieldName } !~ /^SlaveOf:(.*?)$/;
 
             # remember ticket id
@@ -290,17 +290,17 @@ sub MasterSlave {
                 UserID    => $Param{UserID},
             );
             my @SlaveTicketIDs;
-            LINKS:
+            LINK:
             for my $LinkedTicketID ( sort keys %Links ) {
-                next LINKS if !$Links{$LinkedTicketID};
+                next LINK if !$Links{$LinkedTicketID};
 
                 # just take ticket with slave attributes for action
                 my %Ticket = $TicketObject->TicketGet(
                     TicketID      => $LinkedTicketID,
                     DynamicFields => 1,
                 );
-                next LINKS if !$Ticket{ 'DynamicField_' . $MasterSlaveDynamicFieldName };
-                next LINKS
+                next LINK if !$Ticket{ 'DynamicField_' . $MasterSlaveDynamicFieldName };
+                next LINK
                     if $Ticket{ 'DynamicField_' . $MasterSlaveDynamicFieldName }
                     !~ /^SlaveOf:(.*?)$/;
 
