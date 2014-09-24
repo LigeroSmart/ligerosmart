@@ -25,11 +25,11 @@ sub Data {
 
     # Template: AgentTimeAccountingEdit
     $Self->{Translation}->{'Edit Time Record'} = 'Modificar Registro de Tiempo';
-    $Self->{Translation}->{'Go to settings'} = '';
+    $Self->{Translation}->{'Go to settings'} = 'Ir a configuraciones';
     $Self->{Translation}->{'Date Navigation'} = 'Navegación por Fecha';
     $Self->{Translation}->{'Previous day'} = 'Día anterior';
     $Self->{Translation}->{'Next day'} = 'Día siguiente';
-    $Self->{Translation}->{'Go to this date'} = '';
+    $Self->{Translation}->{'Go to this date'} = 'Ir a esta fecha';
     $Self->{Translation}->{'Days without entries'} = 'Días sin registro';
     $Self->{Translation}->{'Select all days'} = 'Seleccionar todos los días';
     $Self->{Translation}->{'Mass entry'} = 'Registro masivo';
@@ -50,9 +50,9 @@ sub Data {
     $Self->{Translation}->{'Negative times are not allowed.'} = 'No se permite la inserción de horas negativas.';
     $Self->{Translation}->{'Repeated hours are not allowed. Start time matches another interval.'} =
         'No se permite la inserción de horas repetidas. La hora de inicio está incluída en otro intervalo.';
-    $Self->{Translation}->{'Invalid format! Please enter a time with the format HH:MM.'} = '';
-    $Self->{Translation}->{'24:00 is only permitted as end time.'} = '';
-    $Self->{Translation}->{'Invalid time! A day has only 24 hours.'} = '';
+    $Self->{Translation}->{'Invalid format! Please enter a time with the format HH:MM.'} = 'Formato inválido! Por favor introduzca el tiempo con el formato HH:MM.';
+    $Self->{Translation}->{'24:00 is only permitted as end time.'} = '24:00 es solo permitido como tiempo final.';
+    $Self->{Translation}->{'Invalid time! A day has only 24 hours.'} = 'Tiempo inválido! Un día solo tiene 24 horas.';
     $Self->{Translation}->{'End time must be after start time.'} = 'La hora de finalización debe ser posterior a la de inicio.';
     $Self->{Translation}->{'Repeated hours are not allowed. End time matches another interval.'} =
         'No se permite la inserción de horas repetidas. La hora de finalización está incluída en otro intervalo.';
@@ -97,7 +97,7 @@ sub Data {
     # Template: AgentTimeAccountingReporting
     $Self->{Translation}->{'Time reporting'} = 'Reporte de tiempos';
     $Self->{Translation}->{'Month Navigation'} = 'Navegación por mes';
-    $Self->{Translation}->{'Go to date'} = '';
+    $Self->{Translation}->{'Go to date'} = 'Ir a fecha';
     $Self->{Translation}->{'User reports'} = 'Reportes de usuario';
     $Self->{Translation}->{'Monthly total'} = 'Total mensual';
     $Self->{Translation}->{'Lifetime total'} = 'Tiempo total de vida';
@@ -109,12 +109,12 @@ sub Data {
 
     # Template: AgentTimeAccountingReportingProject
     $Self->{Translation}->{'Project report'} = 'Reporte de proyecto';
-    $Self->{Translation}->{'Go to reporting overview'} = '';
+    $Self->{Translation}->{'Go to reporting overview'} = 'Ir al resumen de reportes';
 
     # Template: AgentTimeAccountingSetting
     $Self->{Translation}->{'Edit Time Accounting Project Settings'} = 'Modificar la configuración del proyecto de contabilidad de tiempo.';
     $Self->{Translation}->{'Add project'} = 'Agregar proyecto';
-    $Self->{Translation}->{'Go to settings overview'} = '';
+    $Self->{Translation}->{'Go to settings overview'} = 'Ir al resumen de configuración';
     $Self->{Translation}->{'Add Project'} = 'Agregar Proyecto';
     $Self->{Translation}->{'Edit Project Settings'} = 'Modificar la Configuración del Proyecto';
     $Self->{Translation}->{'There is already a project with this name. Please, choose a different one.'} =
@@ -169,7 +169,7 @@ sub Data {
     $Self->{Translation}->{'Defines the projects for which a remark is required. If the RegExp matches on the project, you have to insert a remark too. The RegExp use the smx parameter.'} =
         'Define para cuáles proyectos es obligatoria la inserción de comentarios. Si la expresión regular coincide con el proyecto, se tiene que escribir un comentario. La expresión regular usa el parámetro smx.';
     $Self->{Translation}->{'Determines if the statistics module may generate time accounting information.'} =
-        '';
+        'Determina si el módulo de estadísticas debe generar información de contabilidad de tiempo.';
     $Self->{Translation}->{'Edit time accounting settings'} = 'Modificar la configuración de la contabilidad de tiempo';
     $Self->{Translation}->{'Edit time record'} = 'Modificar registro de tiempo';
     $Self->{Translation}->{'For how many days ago you can insert working units.'} = 'Especifica el número máximo de días para registrar horas de trabajo atrasadas (por ejemplo: 10 días de antigüedad).';
