@@ -25,10 +25,11 @@ sub Data {
 
     # Template: AgentTimeAccountingEdit
     $Self->{Translation}->{'Edit Time Record'} = 'タイムレコードの編集';
-    $Self->{Translation}->{'Project settings'} = 'プロジェクトの編集';
+    $Self->{Translation}->{'Go to settings'} = '';
     $Self->{Translation}->{'Date Navigation'} = '日別ナビゲーション';
     $Self->{Translation}->{'Previous day'} = '前の日';
     $Self->{Translation}->{'Next day'} = '次の日';
+    $Self->{Translation}->{'Go to this date'} = '';
     $Self->{Translation}->{'Days without entries'} = 'エントリーのない日';
     $Self->{Translation}->{'Select all days'} = '全ての日を選択';
     $Self->{Translation}->{'Mass entry'} = '';
@@ -93,12 +94,10 @@ sub Data {
     $Self->{Translation}->{'Hours (Lifetime)'} = '時間（通算）';
     $Self->{Translation}->{'Grand total'} = '合計';
 
-    # Template: AgentTimeAccountingProjectReporting
-    $Self->{Translation}->{'Project report'} = 'プロジェクト・レポート';
-
     # Template: AgentTimeAccountingReporting
     $Self->{Translation}->{'Time reporting'} = '時間会計レポート';
     $Self->{Translation}->{'Month Navigation'} = '月別ナビゲーション';
+    $Self->{Translation}->{'Go to date'} = '';
     $Self->{Translation}->{'User reports'} = 'ユーザ・レポート';
     $Self->{Translation}->{'Monthly total'} = '月合計';
     $Self->{Translation}->{'Lifetime total'} = '通算合計';
@@ -108,9 +107,14 @@ sub Data {
     $Self->{Translation}->{'Vacation remaining'} = '休日残日数';
     $Self->{Translation}->{'Project reports'} = 'プロジェクト・レポート';
 
+    # Template: AgentTimeAccountingReportingProject
+    $Self->{Translation}->{'Project report'} = 'プロジェクト・レポート';
+    $Self->{Translation}->{'Go to reporting overview'} = '';
+
     # Template: AgentTimeAccountingSetting
     $Self->{Translation}->{'Edit Time Accounting Project Settings'} = '時間会計 プロジェクト設定の編集';
     $Self->{Translation}->{'Add project'} = '新規プロジェクトの追加';
+    $Self->{Translation}->{'Go to settings overview'} = '';
     $Self->{Translation}->{'Add Project'} = '新規プロジェクトの追加';
     $Self->{Translation}->{'Edit Project Settings'} = 'プロジェクトの編集';
     $Self->{Translation}->{'There is already a project with this name. Please, choose a different one.'} =
@@ -190,29 +194,6 @@ sub Data {
     $Self->{Translation}->{'Time accounting.'} = '時間会計';
     $Self->{Translation}->{'To use if some actions reduced the working hours (for example, if only half of the traveling time is paid Key => traveling; Content => 50).'} =
         '業務上の行動において、稼働時間として計上する時間を調整する必要がある場合に、この設定を使用します。（例：「移動時間」の50%のみ勤務時間相当とする場合「鍵」に`journey`、「内容」に`50`と設定)';
-
-    #
-    # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
-    #
-    $Self->{Translation}->{'Can\'t delete Working Units!'} = 'ワーキング・ユニットを削除できません';
-    $Self->{Translation}->{'Can\'t save settings, because a day has only 24 hours!'} = '時間指定が不正です。設定を保存できませんでした。';
-    $Self->{Translation}->{'If enabled, the user is allowed to enter "on vacation leave'} = 'この項目を「許可」にすると、ユーザが休暇申請できるようになります。';
-    $Self->{Translation}->{'Maximum number of working days withouth working units entry after which a warning will be shown.'} =
-        '1つ以上のワーキング・ユニットが設定されていない場合、アラートを発するべき最大の稼働日数。';
-    $Self->{Translation}->{'Period is bigger than the interval between start and end times!'} =
-        '「期間」の設定が不正です。開始時間と終了時間の範囲を超過しています。';
-    $Self->{Translation}->{'Please insert your working hours!'} = '稼働時間を入力してください。';
-    $Self->{Translation}->{'Project added!'} = 'プロジェクトが追加されました';
-    $Self->{Translation}->{'Project updated!'} = 'プロジェクトが更新されました';
-    $Self->{Translation}->{'Reporting'} = '結果表示';
-    $Self->{Translation}->{'Show all projects'} = 'すべてのプロジェクトを表示';
-    $Self->{Translation}->{'Show valid projects'} = '有効なプロジェクトを表示';
-    $Self->{Translation}->{'Successful insert!'} = '挿入が成功しました。';
-    $Self->{Translation}->{'Task added!'} = 'タスクが追加されました';
-    $Self->{Translation}->{'Task updated!'} = 'タスクが更新されました';
-    $Self->{Translation}->{'TimeAccounting'} = '時間会計';
-    $Self->{Translation}->{'User added!'} = 'ユーザ情報が追加されました';
-    $Self->{Translation}->{'User updated!'} = 'ユーザ情報が更新されました';
 
 }
 

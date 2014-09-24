@@ -25,10 +25,11 @@ sub Data {
 
     # Template: AgentTimeAccountingEdit
     $Self->{Translation}->{'Edit Time Record'} = 'Rediger tidsregistrering';
-    $Self->{Translation}->{'Project settings'} = 'Projektindstillinger';
+    $Self->{Translation}->{'Go to settings'} = '';
     $Self->{Translation}->{'Date Navigation'} = 'Datonavigation';
     $Self->{Translation}->{'Previous day'} = 'Forrige dag';
     $Self->{Translation}->{'Next day'} = 'Næste dag';
+    $Self->{Translation}->{'Go to this date'} = '';
     $Self->{Translation}->{'Days without entries'} = 'Dage uden optegnelser';
     $Self->{Translation}->{'Select all days'} = '';
     $Self->{Translation}->{'Mass entry'} = '';
@@ -93,12 +94,10 @@ sub Data {
     $Self->{Translation}->{'Hours (Lifetime)'} = 'Samlet antal timer';
     $Self->{Translation}->{'Grand total'} = 'Alt i alt';
 
-    # Template: AgentTimeAccountingProjectReporting
-    $Self->{Translation}->{'Project report'} = 'Projektrapport';
-
     # Template: AgentTimeAccountingReporting
     $Self->{Translation}->{'Time reporting'} = 'Tidsraportering';
     $Self->{Translation}->{'Month Navigation'} = 'Månedsnavigation';
+    $Self->{Translation}->{'Go to date'} = '';
     $Self->{Translation}->{'User reports'} = 'Brugerrapporter';
     $Self->{Translation}->{'Monthly total'} = 'I alt for måned';
     $Self->{Translation}->{'Lifetime total'} = 'Samlet total';
@@ -108,9 +107,14 @@ sub Data {
     $Self->{Translation}->{'Vacation remaining'} = 'Resterende fraværsdage';
     $Self->{Translation}->{'Project reports'} = 'Projektrapporter';
 
+    # Template: AgentTimeAccountingReportingProject
+    $Self->{Translation}->{'Project report'} = 'Projektrapport';
+    $Self->{Translation}->{'Go to reporting overview'} = '';
+
     # Template: AgentTimeAccountingSetting
     $Self->{Translation}->{'Edit Time Accounting Project Settings'} = 'Rediger indstillinger for tidsregnskabsprojekt';
     $Self->{Translation}->{'Add project'} = 'Tilføj projekt';
+    $Self->{Translation}->{'Go to settings overview'} = '';
     $Self->{Translation}->{'Add Project'} = 'Tilføj projekt';
     $Self->{Translation}->{'Edit Project Settings'} = 'Rediger projektindstillinger';
     $Self->{Translation}->{'There is already a project with this name. Please, choose a different one.'} =
@@ -190,29 +194,6 @@ sub Data {
     $Self->{Translation}->{'Time accounting.'} = 'Tidsregnskab';
     $Self->{Translation}->{'To use if some actions reduced the working hours (for example, if only half of the traveling time is paid Key => traveling; Content => 50).'} =
         'Bruges, hvis nogle handlinger har reduceret arbejdstimerne (f.eks. hvis kun halvdelen af rejsetiden er betalt Key => traveling; Content => 50)';
-
-    #
-    # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
-    #
-    $Self->{Translation}->{'Can\'t delete Working Units!'} = 'Tidsenheder kan ikke slettes!';
-    $Self->{Translation}->{'Can\'t save settings, because a day has only 24 hours!'} = 'Indstillinger kan ikke gemmes, fordi et døgn kun har 24 timer!';
-    $Self->{Translation}->{'Date navigation'} = 'Datonavigation';
-    $Self->{Translation}->{'Maximum number of working days withouth working units entry after which a warning will be shown.'} =
-        'Maksimalt antal af arbejdsdage uden indtastning af arbejdsenheder efter hvilket en advarsel vil blive vist.';
-    $Self->{Translation}->{'Period is bigger than the interval between start and end times!'} =
-        'Perioden er længere end intervallet mellem start- og sluttid!';
-    $Self->{Translation}->{'Please insert your working hours!'} = 'Indtast venligst dine arbejdstimer!';
-    $Self->{Translation}->{'Project added!'} = 'Projekt tilføjet!';
-    $Self->{Translation}->{'Project updated!'} = 'Projekt opdateret!';
-    $Self->{Translation}->{'Reporting'} = 'Raportering';
-    $Self->{Translation}->{'Show all projects'} = 'Vis alle projekter';
-    $Self->{Translation}->{'Show valid projects'} = 'Vis gyldige projekter';
-    $Self->{Translation}->{'Successful insert!'} = 'Vellykket indtastning!';
-    $Self->{Translation}->{'Task added!'} = 'Opgave tilføjet!';
-    $Self->{Translation}->{'Task updated!'} = 'Opgave opdateret!';
-    $Self->{Translation}->{'TimeAccounting'} = 'Tidsregnskab';
-    $Self->{Translation}->{'User added!'} = 'Bruger tilføjet!';
-    $Self->{Translation}->{'User updated!'} = 'Bruger opdateret!';
 
 }
 

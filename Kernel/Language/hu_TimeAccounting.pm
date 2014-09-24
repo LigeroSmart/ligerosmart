@@ -25,10 +25,11 @@ sub Data {
 
     # Template: AgentTimeAccountingEdit
     $Self->{Translation}->{'Edit Time Record'} = 'Idõ bejegyzés szerkesztése';
-    $Self->{Translation}->{'Project settings'} = 'Projekt beállítások';
+    $Self->{Translation}->{'Go to settings'} = '';
     $Self->{Translation}->{'Date Navigation'} = 'Dátum navigáció';
     $Self->{Translation}->{'Previous day'} = 'Elõzõ nap';
     $Self->{Translation}->{'Next day'} = 'Következõ nap';
+    $Self->{Translation}->{'Go to this date'} = '';
     $Self->{Translation}->{'Days without entries'} = 'Bejegyzés nélküli napok';
     $Self->{Translation}->{'Select all days'} = '';
     $Self->{Translation}->{'Mass entry'} = '';
@@ -93,12 +94,10 @@ sub Data {
     $Self->{Translation}->{'Hours (Lifetime)'} = 'Órák (élettartam)';
     $Self->{Translation}->{'Grand total'} = 'Mindösszesen';
 
-    # Template: AgentTimeAccountingProjectReporting
-    $Self->{Translation}->{'Project report'} = 'Projekt kuimutatás';
-
     # Template: AgentTimeAccountingReporting
     $Self->{Translation}->{'Time reporting'} = 'Idõ kimutatás';
     $Self->{Translation}->{'Month Navigation'} = 'Hónap navigáció';
+    $Self->{Translation}->{'Go to date'} = '';
     $Self->{Translation}->{'User reports'} = 'Felhasználó kimutatás';
     $Self->{Translation}->{'Monthly total'} = 'Havi összesítõ';
     $Self->{Translation}->{'Lifetime total'} = 'Élettartam összesítõ';
@@ -108,9 +107,14 @@ sub Data {
     $Self->{Translation}->{'Vacation remaining'} = 'Hátralévõ távollét';
     $Self->{Translation}->{'Project reports'} = 'Projekt kimutatások';
 
+    # Template: AgentTimeAccountingReportingProject
+    $Self->{Translation}->{'Project report'} = 'Projekt kuimutatás';
+    $Self->{Translation}->{'Go to reporting overview'} = '';
+
     # Template: AgentTimeAccountingSetting
     $Self->{Translation}->{'Edit Time Accounting Project Settings'} = 'IdõElszámolás Projekt Beállítások';
     $Self->{Translation}->{'Add project'} = 'Új projekt';
+    $Self->{Translation}->{'Go to settings overview'} = '';
     $Self->{Translation}->{'Add Project'} = 'Új Projekt';
     $Self->{Translation}->{'Edit Project Settings'} = 'Projekt Beállítások Szerkesztése';
     $Self->{Translation}->{'There is already a project with this name. Please, choose a different one.'} =
@@ -190,29 +194,6 @@ sub Data {
     $Self->{Translation}->{'Time accounting.'} = 'IdõElszámolás.';
     $Self->{Translation}->{'To use if some actions reduced the working hours (for example, if only half of the traveling time is paid Key => traveling; Content => 50).'} =
         'Használja, ha valamelyik akció csökkenti a munkaórákat (például ha csak az utazás fele kerül kifizetésre, Kulcs => Utazás; Tartalom =>50).';
-
-    #
-    # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
-    #
-    $Self->{Translation}->{'Can\'t delete Working Units!'} = 'Nem lehet törölni a munkaidõt!';
-    $Self->{Translation}->{'Can\'t save settings, because a day has only 24 hours!'} = 'Nem lehet menteni a beállításokat, a nap csak 24 órából áll!';
-    $Self->{Translation}->{'Date navigation'} = 'Dátum navigáció';
-    $Self->{Translation}->{'Maximum number of working days withouth working units entry after which a warning will be shown.'} =
-        'Maximum hány munkaidõ megadása nélküli munkanap után jelenjen meg figyelmeztetés.';
-    $Self->{Translation}->{'Period is bigger than the interval between start and end times!'} =
-        'Az idõtartam nagyobb, mint a kezdõ és bejezõ idõpont közti idõ!';
-    $Self->{Translation}->{'Please insert your working hours!'} = 'Kérem adja meg a munkaidejét!';
-    $Self->{Translation}->{'Project added!'} = 'Projekt hozzáadva!';
-    $Self->{Translation}->{'Project updated!'} = 'Projekt módosítva!';
-    $Self->{Translation}->{'Reporting'} = 'Kimutatás';
-    $Self->{Translation}->{'Show all projects'} = 'Az összes projekt megjelenítése';
-    $Self->{Translation}->{'Show valid projects'} = 'Az érvényes projektek megjelenítése';
-    $Self->{Translation}->{'Successful insert!'} = 'Sikeresen hozzáadva!';
-    $Self->{Translation}->{'Task added!'} = 'Feladat hozzáadva!';
-    $Self->{Translation}->{'Task updated!'} = 'Feladat módosítva!';
-    $Self->{Translation}->{'TimeAccounting'} = 'IdõElszámolás.';
-    $Self->{Translation}->{'User added!'} = 'Felhasználó hozzáadva!';
-    $Self->{Translation}->{'User updated!'} = 'Felhasználó módosítva!';
 
 }
 

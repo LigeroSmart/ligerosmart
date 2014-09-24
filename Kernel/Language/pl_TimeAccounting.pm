@@ -25,10 +25,11 @@ sub Data {
 
     # Template: AgentTimeAccountingEdit
     $Self->{Translation}->{'Edit Time Record'} = 'Edytuj wpis czasu';
-    $Self->{Translation}->{'Project settings'} = 'Ustawienia projektu';
+    $Self->{Translation}->{'Go to settings'} = '';
     $Self->{Translation}->{'Date Navigation'} = 'Nawigacja po dacie';
     $Self->{Translation}->{'Previous day'} = 'Poprzedni dzień';
     $Self->{Translation}->{'Next day'} = 'Następny dzień';
+    $Self->{Translation}->{'Go to this date'} = '';
     $Self->{Translation}->{'Days without entries'} = 'Dni bez raportów';
     $Self->{Translation}->{'Select all days'} = 'Zaznacz wszystkie dni';
     $Self->{Translation}->{'Mass entry'} = 'Masowy wpis';
@@ -93,12 +94,10 @@ sub Data {
     $Self->{Translation}->{'Hours (Lifetime)'} = 'Godziny (łącznie)';
     $Self->{Translation}->{'Grand total'} = 'Ogółem';
 
-    # Template: AgentTimeAccountingProjectReporting
-    $Self->{Translation}->{'Project report'} = 'Raport projektu';
-
     # Template: AgentTimeAccountingReporting
     $Self->{Translation}->{'Time reporting'} = 'Raport czasu';
     $Self->{Translation}->{'Month Navigation'} = 'Nawigacja miesięczna';
+    $Self->{Translation}->{'Go to date'} = '';
     $Self->{Translation}->{'User reports'} = 'Raporty użytkownika';
     $Self->{Translation}->{'Monthly total'} = 'Łącznie - miesięcznie';
     $Self->{Translation}->{'Lifetime total'} = 'Łącznie - ogółem';
@@ -108,9 +107,14 @@ sub Data {
     $Self->{Translation}->{'Vacation remaining'} = 'Pozostałe dni poza pracą';
     $Self->{Translation}->{'Project reports'} = 'Raporty projektu';
 
+    # Template: AgentTimeAccountingReportingProject
+    $Self->{Translation}->{'Project report'} = 'Raport projektu';
+    $Self->{Translation}->{'Go to reporting overview'} = '';
+
     # Template: AgentTimeAccountingSetting
     $Self->{Translation}->{'Edit Time Accounting Project Settings'} = 'Edytuj ustawienia Raportowania Czasu';
     $Self->{Translation}->{'Add project'} = 'Dodaj projekt';
+    $Self->{Translation}->{'Go to settings overview'} = '';
     $Self->{Translation}->{'Add Project'} = 'Dodaj projekt';
     $Self->{Translation}->{'Edit Project Settings'} = 'Edytuj ustawienia projektu';
     $Self->{Translation}->{'There is already a project with this name. Please, choose a different one.'} =
@@ -190,30 +194,6 @@ sub Data {
     $Self->{Translation}->{'Time accounting.'} = '';
     $Self->{Translation}->{'To use if some actions reduced the working hours (for example, if only half of the traveling time is paid Key => traveling; Content => 50).'} =
         'Używane jeśli niektóre działania zmniejszyły godziny pracy (np. jeśli tylko połowa czas podróży jest wypłacana klucz => podróże; Zawartość => 50).';
-
-    #
-    # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
-    #
-    $Self->{Translation}->{'Can\'t delete Working Units!'} = 'Nie można usunąć Jednostek Czasu!';
-    $Self->{Translation}->{'Can\'t save settings, because a day has only 24 hours!'} = 'Nie można zapisać ustawień ponieważ dzień ma tylko 24 godziny!';
-    $Self->{Translation}->{'Maximum number of working days withouth working units entry after which a warning will be shown.'} =
-        'Maksymalna liczba dni roboczych bez wprowadzania raportu czasu, po których zostanie wyświetlone ostrzeżenie.';
-    $Self->{Translation}->{'Period is bigger than the interval between start and end times!'} =
-        'Okres jest większy niż odstęp między początkiem i końcem czasów!';
-    $Self->{Translation}->{'Please insert your working hours!'} = 'Proszę wprowadzić godziny pracy!';
-    $Self->{Translation}->{'Project added!'} = 'Projekt dodany!';
-    $Self->{Translation}->{'Project updated!'} = 'Projekt zaaktualizowany!';
-    $Self->{Translation}->{'Reporting'} = 'Raportowanie';
-    $Self->{Translation}->{'Saves the login and password on the session table in the database, if "DB" was selected for SessionModule.'} =
-        'Zapisuje login oraz hasło, do tabeli sesji w bazie danych, jeśli baza danych została wybrana w SessionModule.';
-    $Self->{Translation}->{'Show all projects'} = 'Pokaż wszystkie projekty';
-    $Self->{Translation}->{'Show valid projects'} = 'Pokaż aktualne projekty';
-    $Self->{Translation}->{'Successful insert!'} = 'Pomyślnie wstawiono!';
-    $Self->{Translation}->{'Task added!'} = 'Zadanie dodane!';
-    $Self->{Translation}->{'Task updated!'} = 'Zadanie zaaktualizowane!';
-    $Self->{Translation}->{'TimeAccounting'} = 'Raportowanie Czasu';
-    $Self->{Translation}->{'User added!'} = 'Użytkownik dodany!';
-    $Self->{Translation}->{'User updated!'} = 'Użytkownik zaaktualizowany!';
 
 }
 
