@@ -12,7 +12,6 @@ package var::packagesetup::OTRSMasterSlave;
 use strict;
 use warnings;
 
-use Kernel::System::SysConfig;
 use Kernel::System::VariableCheck qw(:all);
 
 our @ObjectDependencies = (
@@ -58,12 +57,8 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    # get needed objects
-    $Self->{ConfigObject}    = $Kernel::OM->Get('Kernel::Config');
-    $Self->{SysConfigObject} = Kernel::System::SysConfig->new( %{$Self} );
-
     # rebuild ZZZ* files
-    $Self->{SysConfigObject}->WriteDefault();
+    $Kernel::OM->Get('Kernel::System::SysConfig')->WriteDefault();
 
     # define the ZZZ files
     my @ZZZFiles = (
@@ -207,9 +202,12 @@ sub CodeUninstall {
 sub _SetDynamicFields {
     my ( $Self, %Param ) = @_;
 
+    # get config object
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+
     # get dynamic field names from sysconfig
     my $MasterSlaveDynamicField
-        = $Self->{ConfigObject}->Get('MasterSlave::DynamicField') || 'MasterSlave';
+        = $ConfigObject->Get('MasterSlave::DynamicField') || 'MasterSlave';
 
     # set attributes of new dynamic fields
     my %NewDynamicFields = (
@@ -317,7 +315,7 @@ sub _SetDynamicFields {
 
     # enable dynamic field for ticket zoom
     # get old configuration
-    my $WindowConfig = $Self->{ConfigObject}->Get('Ticket::Frontend::AgentTicketZoom');
+    my $WindowConfig = $ConfigObject->Get('Ticket::Frontend::AgentTicketZoom');
     my %DynamicFields = %{ $WindowConfig->{DynamicField} || {} };
 
     $DynamicFields{$MasterSlaveDynamicField} =
@@ -325,7 +323,7 @@ sub _SetDynamicFields {
         ? $DynamicFields{$MasterSlaveDynamicField}
         : 1;
 
-    $Self->{SysConfigObject}->ConfigItemUpdate(
+    $Kernel::OM->Get('Kernel::System::SysConfig')->ConfigItemUpdate(
         Valid => 1,
         Key   => 'Ticket::Frontend::AgentTicketZoom###DynamicField',
         Value => \%DynamicFields,
@@ -337,8 +335,12 @@ sub _SetDynamicFields {
 sub _MigrateOTRSMasterSlave {
     my ( $Self, %Param ) = @_;
 
+
+    # get config object
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+
     # get dynamic field names from sysconfig
-    my $MasterSlaveDynamicField = $Self->{ConfigObject}->Get('MasterSlave::DynamicField')
+    my $MasterSlaveDynamicField = $ConfigObject->Get('MasterSlave::DynamicField')
         || 'MasterSlave';
 
     # check if there isn't already a dynamic field with the destined name
@@ -427,10 +429,10 @@ sub _MigrateOTRSMasterSlave {
 
     # activate the DynamicField in ticket details block
     my $KeyString       = "Ticket::Frontend::AgentTicketZoom";
-    my $ExistingSetting = $Self->{ConfigObject}->Get($KeyString) || {};
+    my $ExistingSetting = $ConfigObject->Get($KeyString) || {};
     my %ValuesToSet     = %{ $ExistingSetting->{DynamicField} || {} };
     $ValuesToSet{MasterSlave} = 1;
-    return $Self->{SysConfigObject}->ConfigItemUpdate(
+    return $Kernel::OM->Get('Kernel::System::SysConfig')->ConfigItemUpdate(
         Valid => 1,
         Key   => $KeyString . "###DynamicField",
         Value => \%ValuesToSet,
@@ -593,9 +595,12 @@ sub _MigrateMasterSlaveData {
 sub _RemoveDynamicFields {
     my ( $Self, %Param ) = @_;
 
+    # get config object
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+
     # get dynamic field names from sysconfig
     my $MasterSlaveDynamicField
-        = $Self->{ConfigObject}->Get('MasterSlave::DynamicField') || 'MasterSlave';
+        = $ConfigObject->Get('MasterSlave::DynamicField') || 'MasterSlave';
 
     # check if dynamic field already exists
     if ( IsHashRefWithData( $Self->{DynamicFieldLookup}->{$MasterSlaveDynamicField} ) ) {
@@ -636,14 +641,14 @@ sub _RemoveDynamicFields {
 
     # disable dynamic field for ticket zoom
     # get old configuration
-    my $WindowConfig = $Self->{ConfigObject}->Get('Ticket::Frontend::AgentTicketZoom');
+    my $WindowConfig = $ConfigObject->Get('Ticket::Frontend::AgentTicketZoom');
     my %DynamicFields = %{ $WindowConfig->{DynamicField} || {} };
 
     if ( defined $DynamicFields{$MasterSlaveDynamicField} ) {
         $DynamicFields{$MasterSlaveDynamicField} = 0;
     }
 
-    $Self->{SysConfigObject}->ConfigItemUpdate(
+    $Kernel::OM->Get('Kernel::System::SysConfig')->ConfigItemUpdate(
         Valid => 1,
         Key   => 'Ticket::Frontend::AgentTicketZoom###DynamicField',
         Value => \%DynamicFields,
@@ -657,7 +662,7 @@ sub _SetDashboardConfig {
 
     # get dynamic field names from sysconfig
     my $MasterSlaveDynamicField
-        = $Self->{ConfigObject}->Get('MasterSlave::DynamicField') || 'MasterSlave';
+        = $Kernel::OM->Get('Kernel::Config')->Get('MasterSlave::DynamicField') || 'MasterSlave';
 
     # if MasterSlave dynamic field is 'MasterSlave' the config is already set, nothing else to do
     return 1 if ( $MasterSlaveDynamicField eq 'MasterSlave' );
@@ -690,8 +695,11 @@ sub _SetDashboardConfig {
         Attributes  => 'DynamicField_' . $MasterSlaveDynamicField . '_Like=Slave*;',
     );
 
+    # get sysconfig object
+    my $SysConfigObject = $Kernel::OM->Get('Kernel::System::SysConfig');
+
     # write configurations
-    $Self->{SysConfigObject}->ConfigItemUpdate(
+    $SysConfigObject->ConfigItemUpdate(
         Valid => 1,
         Key   => 'DashboardBackend###0900-TicketMaster',
         Value => {
@@ -699,7 +707,7 @@ sub _SetDashboardConfig {
             %MasterConfig,
         },
     );
-    $Self->{SysConfigObject}->ConfigItemUpdate(
+    $SysConfigObject->ConfigItemUpdate(
         Valid => 1,
         Key   => 'DashboardBackend###0910-TicketSlave',
         Value => {
