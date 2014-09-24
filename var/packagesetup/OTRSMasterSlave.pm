@@ -23,6 +23,7 @@ our @ObjectDependencies = (
     'Kernel::System::DynamicFieldValue',
     'Kernel::System::LinkObject',
     'Kernel::System::Log',
+    'Kernel::System::SysConfig',
     'Kernel::System::Ticket',
 );
 
@@ -334,7 +335,6 @@ sub _SetDynamicFields {
 
 sub _MigrateOTRSMasterSlave {
     my ( $Self, %Param ) = @_;
-
 
     # get config object
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
