@@ -44,7 +44,7 @@
                     <input type="hidden" name="UserID"    value="[% Data.UserID | html %]" />
                     [% Data.DateSelection %]
                 </form>
-                <a href="#" id="NavigationSelect" class="CallForAction Fullsize Center SpacingTop"><span><i class="fa fa-calendar-o"></i>[% Translate("Go to date") | html %]</span></a>
+                <a href="#" id="NavigationSelect" class="CallForAction Fullsize Center SpacingTop"><span><i class="fa fa-arrow-circle-o-right"></i>[% Translate("Go to date") | html %]</span></a>
 [% WRAPPER JSOnDocumentComplete %]
 <script type="text/javascript">//<![CDATA[
 $('#NavigationSelect').bind('click', function(){
