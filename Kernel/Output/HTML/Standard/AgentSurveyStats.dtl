@@ -124,7 +124,7 @@
         <form action="$Env{"CGIHandle"}" method="post">
             <input type="hidden" name="Action" value="$Env{"Action"}" />
             <input type="hidden" name="SurveyID" value="$QData{"SurveyID"}" />
-            <button type="submit" class="Primary CallForAction" value="$Text{"Go back"}"><span><i class="icon-arrow-left"></i> $Text{"Go back"}</span></button>
+            <button type="submit" class="Primary CallForAction" value="$Text{"Go back"}"><span><i class="fa fa-arrow-left"></i> $Text{"Go back"}</span></button>
         </form>
     </div>
 </div>

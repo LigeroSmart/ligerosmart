@@ -344,7 +344,7 @@ Your OTRS-Team
                 <Item Key="Name">Back</Item>
                 <Item Key="Description" Translatable="1">Back</Item>
                 <Item Key="Action"></Item>
-                <Item Key="Link">$Env{"LastScreenOverview"}</Item>
+                <Item Key="Link">[% Env("LastScreenOverview") %]</Item>
                 <Item Key="Target">Back</Item>
             </Hash>
         </Setting>
@@ -359,7 +359,7 @@ Your OTRS-Team
                 <Item Key="Name">Edit General Info</Item>
                 <Item Key="Description" Translatable="1">Edit Survey General Information</Item>
                 <Item Key="Action">AgentSurveyEdit</Item>
-                <Item Key="Link">Action=AgentSurveyEdit;SurveyID=$QData{"SurveyID"}</Item>
+                <Item Key="Link">Action=AgentSurveyEdit;SurveyID=[% Data.SurveyID | html %]</Item>
                 <Item Key="Target">PopUp</Item>
             </Hash>
         </Setting>
@@ -374,7 +374,7 @@ Your OTRS-Team
                 <Item Key="Name">Edit Questions</Item>
                 <Item Key="Description" Translatable="1">Edit Survey Questions</Item>
                 <Item Key="Action">AgentSurveyEditQuestions</Item>
-                <Item Key="Link">Action=AgentSurveyEditQuestions;SurveyID=$QData{"SurveyID"}</Item>
+                <Item Key="Link">Action=AgentSurveyEditQuestions;SurveyID=[% Data.SurveyID | html %]</Item>
                 <Item Key="Target">PopUp</Item>
             </Hash>
         </Setting>
@@ -389,7 +389,7 @@ Your OTRS-Team
                 <Item Key="Name">Stats Details</Item>
                 <Item Key="Description" Translatable="1">Zoom Into Statistics Details</Item>
                 <Item Key="Action">AgentSurveyStats</Item>
-                <Item Key="Link">Action=AgentSurveyStats;SurveyID=$QData{"SurveyID"}</Item>
+                <Item Key="Link">Action=AgentSurveyStats;SurveyID=[% Data.SurveyID | html %]</Item>
                 <Item Key="Target">PopUp</Item>
             </Hash>
         </Setting>
