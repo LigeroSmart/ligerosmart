@@ -156,13 +156,13 @@
     <section>
         <title>Replace customer's from Master ticket</title>
         <para>
-            Creating an article on the Master ticket, it is replicated on the Slave Ticket
-            using the customer from the Master and not the own from the Slave.
+            when a new article is created on the Master ticket, the Slave tickets replicates the
+            article using the customer from the Master and not the own from the Slave.
         </para>
         <para>
-            Ones the sysconfig option 'ReplaceCustomerRealNameOnSlaveArticleTypes' is enabled
-            the Slave's customer is keeped for the replicated articles from the Master ticket,
-            for the article types defined on this config setting.
+            Enabled article types defined in the SysConfig option
+            'ReplaceCustomerRealNameOnSlaveArticleTypes' will retain the customer that is set in the
+            Slave tickets for Master ticket replicated articles.
         </para>
     </section>
 </chapter>
