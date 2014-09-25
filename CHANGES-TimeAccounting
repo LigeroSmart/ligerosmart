@@ -7,8 +7,9 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 4.0.0 beta1 - 2014-??-??
- - 2014-09-25 Added Swedish translation, thanks to andreasberger
- - 2014-09-25 Added Russian translation, thanks to ynkolesnikov
+ - 2014-09-25 Added Spanish (Mexico) translation.
+ - 2014-09-25 Added Swedish translation, thanks to andreasberger.
+ - 2014-09-25 Added Russian translation, thanks to ynkolesnikov.
  - 2014-09-23 Updated Brazilian Portuguese language, thanks to José Junior.
  - 2014-09-19 Changed API "UserID" parameter is now required for WorkingUnitsCompletnessCheck(), WorkingUnitsGet(), WorkingUnitsInsert(),WorkingUnitsDelete() and LastProjectOfUser(),
  - 2014-09-18 Fixed bug#10494 - Today's Entry does not become available at the time expected on OTRS with timezone offset.

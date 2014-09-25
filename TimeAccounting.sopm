@@ -12,6 +12,7 @@
         <File Permission="644" Location="Kernel/Config/Files/TimeAccounting.xml"/>
         <File Permission="644" Location="Kernel/Language/de_TimeAccounting.pm"/>
         <File Permission="644" Location="Kernel/Language/da_TimeAccounting.pm"/>
+        <File Permission="644" Location="Kernel/Language/es_MX_TimeAccounting.pm"/>
         <File Permission="644" Location="Kernel/Language/es_TimeAccounting.pm"/>
         <File Permission="644" Location="Kernel/Language/hu_TimeAccounting.pm"/>
         <File Permission="644" Location="Kernel/Language/it_TimeAccounting.pm"/>
