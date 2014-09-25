@@ -21,6 +21,7 @@ sub Data {
     $Self->{Translation}->{'Show valid projects'} = '';
     $Self->{Translation}->{'Show all projects'} = '';
     $Self->{Translation}->{'TimeAccounting'} = '';
+    $Self->{Translation}->{'Reporting'} = '';
 
     # Template: AgentTimeAccountingDelete
     $Self->{Translation}->{'Do you really want to delete the Time Accounting of this day?'} =

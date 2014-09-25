@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2014-09-24 03:34+0000\n"
+"PO-Revision-Date: 2014-09-25 19:40+0000\n"
 "Last-Translator: José Junior <joserribeiro26@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/projects/p/OTRS/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
@@ -17,6 +17,22 @@ msgstr ""
 #. Template: AAATimeAccounting
 msgid "Time Accounting"
 msgstr "Contabilidade Tempo"
+
+#. Template: AAATimeAccounting
+msgid "Show valid projects"
+msgstr "Projeto válidos"
+
+#. Template: AAATimeAccounting
+msgid "Show all projects"
+msgstr "Todos os projetos"
+
+#. Template: AAATimeAccounting
+msgid "TimeAccounting"
+msgstr "TimeAccounting"
+
+#. Template: AAATimeAccounting
+msgid "Reporting"
+msgstr "Relatórios"
 
 #. Template: AgentTimeAccountingDelete
 msgid "Do you really want to delete the Time Accounting of this day?"
@@ -111,6 +127,10 @@ msgid "Please add a remark with more than 8 characters!."
 msgstr "Por favor, adicione um comentário com mais de 8 caracteres!"
 
 #. Template: AgentTimeAccountingEdit
+msgid "Start Time"
+msgstr "Tempo inicial "
+
+#. Template: AgentTimeAccountingEdit
 msgid "Negative times are not allowed."
 msgstr "Datas negativas não são liberadas"
 
@@ -129,6 +149,10 @@ msgstr "Apenas 24:00 são permitidas como tempo final"
 #. Template: AgentTimeAccountingEdit
 msgid "Invalid time! A day has only 24 hours."
 msgstr "Tempo inválido! Um dia tem apenas 24 horas."
+
+#. Template: AgentTimeAccountingEdit
+msgid "End Time"
+msgstr "Tempo final"
 
 #. Template: AgentTimeAccountingEdit
 msgid "End time must be after start time."
@@ -439,12 +463,32 @@ msgid "Authorized Overtime"
 msgstr "Horas extras autorizada"
 
 #. Template: AgentTimeAccountingSetting
+msgid "Start Date"
+msgstr "Data inicial "
+
+#. Template: AgentTimeAccountingSetting
 msgid "Please insert a valid date."
 msgstr "Por favor, insira uma data válida."
 
 #. Template: AgentTimeAccountingSetting
+msgid "End Date"
+msgstr "Data final"
+
+#. Template: AgentTimeAccountingSetting
 msgid "Period end must be after period begin."
 msgstr "Período final deve ser maior que  período inicial."
+
+#. Template: AgentTimeAccountingSetting
+msgid "Leave Days"
+msgstr "Dias de férias"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Weekly Hours"
+msgstr "Horas semanais"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Overtime"
+msgstr "Horas extras"
 
 #. Template: AgentTimeAccountingSetting
 msgid "No time periods found."
@@ -575,70 +619,30 @@ msgid "This notification module gives a warning if there are too many incomplete
 msgstr "Este módulo de notificação dá um aviso se houver muitos dias de trabalho não registrados."
 
 #. SysConfig
+msgid "Time accounting edit."
+msgstr "Editar contabilidade de tempo"
+
+#. SysConfig
+msgid "Time accounting overview."
+msgstr "Visão geral de contabilidade de tempo"
+
+#. SysConfig
+msgid "Time accounting reporting."
+msgstr "Relatório de contabilidade de tempo"
+
+#. SysConfig
+msgid "Time accounting settings."
+msgstr "Configurações de contabilidade de tempo"
+
+#. SysConfig
+msgid "Time accounting view."
+msgstr "Ver contabilidade de tempo"
+
+#. SysConfig
 msgid "Time accounting."
 msgstr "Contabilidade Tempo"
 
 #. SysConfig
 msgid "To use if some actions reduced the working hours (for example, if only half of the traveling time is paid Key => traveling; Content => 50)."
 msgstr "Usar para  algumas ações de reduzir as horas de trabalho (por exemplo, se apenas metade do tempo de viagem é pago Key => viajar; Content => 50)"
-
-#. Template: AAATimeAccounting
-msgid "Show valid projects"
-msgstr ""
-
-#. Template: AAATimeAccounting
-msgid "Show all projects"
-msgstr ""
-
-#. Template: AAATimeAccounting
-msgid "TimeAccounting"
-msgstr ""
-
-#. Template: AgentTimeAccountingEdit
-msgid "Start Time"
-msgstr ""
-
-#. Template: AgentTimeAccountingEdit
-msgid "End Time"
-msgstr ""
-
-#. Template: AgentTimeAccountingSetting
-msgid "Start Date"
-msgstr ""
-
-#. Template: AgentTimeAccountingSetting
-msgid "End Date"
-msgstr ""
-
-#. Template: AgentTimeAccountingSetting
-msgid "Leave Days"
-msgstr ""
-
-#. Template: AgentTimeAccountingSetting
-msgid "Weekly Hours"
-msgstr ""
-
-#. Template: AgentTimeAccountingSetting
-msgid "Overtime"
-msgstr ""
-
-#. SysConfig
-msgid "Time accounting edit."
-msgstr ""
-
-#. SysConfig
-msgid "Time accounting overview."
-msgstr ""
-
-#. SysConfig
-msgid "Time accounting reporting."
-msgstr ""
-
-#. SysConfig
-msgid "Time accounting settings."
-msgstr ""
-
-#. SysConfig
-msgid "Time accounting view."
-msgstr ""
 

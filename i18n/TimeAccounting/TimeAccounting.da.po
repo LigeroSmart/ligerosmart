@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2014-09-24 02:42+0000\n"
+"PO-Revision-Date: 2014-09-25 16:44+0000\n"
 "Last-Translator: carlosfrodriguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Danish (http://www.transifex.com/projects/p/OTRS/language/da/)\n"
 "MIME-Version: 1.0\n"
@@ -15,6 +15,18 @@ msgstr ""
 
 #. Template: AAATimeAccounting
 msgid "Time Accounting"
+msgstr ""
+
+#. Template: AAATimeAccounting
+msgid "Show valid projects"
+msgstr ""
+
+#. Template: AAATimeAccounting
+msgid "Show all projects"
+msgstr ""
+
+#. Template: AAATimeAccounting
+msgid "TimeAccounting"
 msgstr ""
 
 #. Template: AgentTimeAccountingDelete
@@ -110,6 +122,10 @@ msgid "Please add a remark with more than 8 characters!."
 msgstr "Tilføj venligst en bemærkning med mere end 8 tegn!"
 
 #. Template: AgentTimeAccountingEdit
+msgid "Start Time"
+msgstr ""
+
+#. Template: AgentTimeAccountingEdit
 msgid "Negative times are not allowed."
 msgstr "Negativ tid er ikke tilladt."
 
@@ -127,6 +143,10 @@ msgstr ""
 
 #. Template: AgentTimeAccountingEdit
 msgid "Invalid time! A day has only 24 hours."
+msgstr ""
+
+#. Template: AgentTimeAccountingEdit
+msgid "End Time"
 msgstr ""
 
 #. Template: AgentTimeAccountingEdit
@@ -438,12 +458,32 @@ msgid "Authorized Overtime"
 msgstr "Godkendt overtid"
 
 #. Template: AgentTimeAccountingSetting
+msgid "Start Date"
+msgstr ""
+
+#. Template: AgentTimeAccountingSetting
 msgid "Please insert a valid date."
+msgstr ""
+
+#. Template: AgentTimeAccountingSetting
+msgid "End Date"
 msgstr ""
 
 #. Template: AgentTimeAccountingSetting
 msgid "Period end must be after period begin."
 msgstr "Periodens afslutning skal være efter periodens start."
+
+#. Template: AgentTimeAccountingSetting
+msgid "Leave Days"
+msgstr ""
+
+#. Template: AgentTimeAccountingSetting
+msgid "Weekly Hours"
+msgstr ""
+
+#. Template: AgentTimeAccountingSetting
+msgid "Overtime"
+msgstr ""
 
 #. Template: AgentTimeAccountingSetting
 msgid "No time periods found."
@@ -574,54 +614,6 @@ msgid "This notification module gives a warning if there are too many incomplete
 msgstr "Dette adviseringsmodul giver en advarsel, hvis der er for mange ufuldstændige arbejdsdage."
 
 #. SysConfig
-msgid "Time accounting."
-msgstr "Tidsregnskab"
-
-#. SysConfig
-msgid "To use if some actions reduced the working hours (for example, if only half of the traveling time is paid Key => traveling; Content => 50)."
-msgstr "Bruges, hvis nogle handlinger har reduceret arbejdstimerne (f.eks. hvis kun halvdelen af rejsetiden er betalt Key => traveling; Content => 50)"
-
-#. Template: AAATimeAccounting
-msgid "Show valid projects"
-msgstr ""
-
-#. Template: AAATimeAccounting
-msgid "Show all projects"
-msgstr ""
-
-#. Template: AAATimeAccounting
-msgid "TimeAccounting"
-msgstr ""
-
-#. Template: AgentTimeAccountingEdit
-msgid "Start Time"
-msgstr ""
-
-#. Template: AgentTimeAccountingEdit
-msgid "End Time"
-msgstr ""
-
-#. Template: AgentTimeAccountingSetting
-msgid "Start Date"
-msgstr ""
-
-#. Template: AgentTimeAccountingSetting
-msgid "End Date"
-msgstr ""
-
-#. Template: AgentTimeAccountingSetting
-msgid "Leave Days"
-msgstr ""
-
-#. Template: AgentTimeAccountingSetting
-msgid "Weekly Hours"
-msgstr ""
-
-#. Template: AgentTimeAccountingSetting
-msgid "Overtime"
-msgstr ""
-
-#. SysConfig
 msgid "Time accounting edit."
 msgstr ""
 
@@ -639,5 +631,17 @@ msgstr ""
 
 #. SysConfig
 msgid "Time accounting view."
+msgstr ""
+
+#. SysConfig
+msgid "Time accounting."
+msgstr "Tidsregnskab"
+
+#. SysConfig
+msgid "To use if some actions reduced the working hours (for example, if only half of the traveling time is paid Key => traveling; Content => 50)."
+msgstr "Bruges, hvis nogle handlinger har reduceret arbejdstimerne (f.eks. hvis kun halvdelen af rejsetiden er betalt Key => traveling; Content => 50)"
+
+#. Template: AAATimeAccounting
+msgid "Reporting"
 msgstr ""
 

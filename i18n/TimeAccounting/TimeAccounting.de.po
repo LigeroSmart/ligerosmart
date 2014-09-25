@@ -1,12 +1,14 @@
 #
 # Translators:
+# Ettore Atalan <atalanttore@googlemail.com>, 2014
+# ru_otrs <robert.ullrich@otrs.com>, 2014
 # ru_otrs <robert.ullrich@otrs.com>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2014-09-24 07:02+0000\n"
-"Last-Translator: ru_otrs <robert.ullrich@otrs.com>\n"
+"PO-Revision-Date: 2014-09-25 17:10+0000\n"
+"Last-Translator: Ettore Atalan <atalanttore@googlemail.com>\n"
 "Language-Team: German (http://www.transifex.com/projects/p/OTRS/language/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -16,7 +18,19 @@ msgstr ""
 
 #. Template: AAATimeAccounting
 msgid "Time Accounting"
-msgstr "Zeiterfassung"
+msgstr "Zeitabrechnung"
+
+#. Template: AAATimeAccounting
+msgid "Show valid projects"
+msgstr "Gültige Projekte anzeigen"
+
+#. Template: AAATimeAccounting
+msgid "Show all projects"
+msgstr "Alle Projekte anzeigen"
+
+#. Template: AAATimeAccounting
+msgid "TimeAccounting"
+msgstr "ZeitAbrechnung"
 
 #. Template: AgentTimeAccountingDelete
 msgid "Do you really want to delete the Time Accounting of this day?"
@@ -24,7 +38,7 @@ msgstr "Möchten Sie wirklich den Eintrag für den aktuellen Tag löschen?"
 
 #. Template: AgentTimeAccountingEdit
 msgid "Edit Time Record"
-msgstr "Zeiterfassung bearbeiten"
+msgstr "Zeitabrechnung bearbeiten"
 
 #. Template: AgentTimeAccountingEdit
 msgid "Go to settings"
@@ -111,6 +125,10 @@ msgid "Please add a remark with more than 8 characters!."
 msgstr "Bitte geben Sie eine Anmerkung mit mindestens 8 Zeichen Länge ein."
 
 #. Template: AgentTimeAccountingEdit
+msgid "Start Time"
+msgstr "Startzeit"
+
+#. Template: AgentTimeAccountingEdit
 msgid "Negative times are not allowed."
 msgstr "Negative Angaben sind nicht erlaubt."
 
@@ -129,6 +147,10 @@ msgstr "Nur 24:00 ist als Endzeit erlaubt."
 #. Template: AgentTimeAccountingEdit
 msgid "Invalid time! A day has only 24 hours."
 msgstr "Ungültige Zeit! Ein Tag hat nur 24 Stunden"
+
+#. Template: AgentTimeAccountingEdit
+msgid "End Time"
+msgstr "Endzeit"
 
 #. Template: AgentTimeAccountingEdit
 msgid "End time must be after start time."
@@ -192,7 +214,7 @@ msgstr "Sind Sie sicher, dass Sie mehr als 16 Stunden gearbeitet haben?"
 
 #. Template: AgentTimeAccountingOverview
 msgid "Time reporting monthly overview"
-msgstr "Monatsübersicht Zeiterfassung"
+msgstr "Monatsübersicht Zeitabrechnung"
 
 #. Template: AgentTimeAccountingOverview
 msgid "Overtime (Hours)"
@@ -324,11 +346,11 @@ msgstr "Projektübersicht"
 
 #. Template: AgentTimeAccountingReportingProject
 msgid "Go to reporting overview"
-msgstr "Gehe zur Zeiterfassungsübersicht"
+msgstr "Gehe zur Zeitabrechnungsübersicht"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Edit Time Accounting Project Settings"
-msgstr "Zeiterfassung: Bearbeitung der Projektkonfiguration"
+msgstr "Zeitabrechnung-Projekteinstellungen bearbeiten"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Add project"
@@ -344,7 +366,7 @@ msgstr "Projekt hinzufügen"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Edit Project Settings"
-msgstr "Projektkonfiguration bearbeiten"
+msgstr "Projekteinstellungen bearbeiten"
 
 #. Template: AgentTimeAccountingSetting
 msgid "There is already a project with this name. Please, choose a different one."
@@ -352,7 +374,7 @@ msgstr "Ein Projekt mit gleichem Namen existiert bereits. Bitte wählen Sie eine
 
 #. Template: AgentTimeAccountingSetting
 msgid "Edit Time Accounting Settings"
-msgstr "Zeiterfassungseinstellungen bearbeiten"
+msgstr "Zeitabrechnungseinstellungen bearbeiten"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Add task"
@@ -436,15 +458,35 @@ msgstr "Wochenstunden"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Authorized Overtime"
-msgstr "autorisierte Überstunden"
+msgstr "Autorisierte Überstunden"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Start Date"
+msgstr "Startdatum"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Please insert a valid date."
 msgstr "Bitte geben Sie ein gültiges Datum ein."
 
 #. Template: AgentTimeAccountingSetting
+msgid "End Date"
+msgstr "Enddatum"
+
+#. Template: AgentTimeAccountingSetting
 msgid "Period end must be after period begin."
 msgstr "Das Ende der Zeitspanne muss nach dem Anfang sein."
+
+#. Template: AgentTimeAccountingSetting
+msgid "Leave Days"
+msgstr "Urlaubstage"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Weekly Hours"
+msgstr "Wöchentliche Stunden"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Overtime"
+msgstr "Überstunden"
 
 #. Template: AgentTimeAccountingSetting
 msgid "No time periods found."
@@ -472,7 +514,7 @@ msgstr "Modul zum Anzeigen der Anzahl der unvollständigen Arbeitstage des Benut
 
 #. SysConfig
 msgid "Default name for new actions."
-msgstr "Initialer Name einer neuen Tätigkeit in der Zeiterfassung."
+msgstr "Standardname für neue Tätigkeiten."
 
 #. SysConfig
 msgid "Default name for new projects."
@@ -480,11 +522,11 @@ msgstr "Anfangsstatus eines neuen Projekts."
 
 #. SysConfig
 msgid "Default setting for date end."
-msgstr "Enddatum für die Eingaben."
+msgstr "Standardeinstellung für Enddatum."
 
 #. SysConfig
 msgid "Default setting for date start."
-msgstr "Startdatum für die Eingaben."
+msgstr "Standardeinstellung für Startdatum."
 
 #. SysConfig
 msgid "Default setting for description."
@@ -492,7 +534,7 @@ msgstr "Standardeinstellung für Beschreibungen."
 
 #. SysConfig
 msgid "Default setting for leave days."
-msgstr "Standard Urlaubstage."
+msgstr "Standardeinstellung für Urlaubstage."
 
 #. SysConfig
 msgid "Default setting for overtime."
@@ -520,11 +562,11 @@ msgstr "Innerhalb dieser Konfigurationsoption kann eine RegExp definiert werden,
 
 #. SysConfig
 msgid "Determines if the statistics module may generate time accounting information."
-msgstr "Bestimmt, ob das Statistik-Modul Informationen zur Zeiterfassung generieren kann."
+msgstr "Bestimmt, ob das Statistik-Modul Informationen zur Zeitabrechnung generieren kann."
 
 #. SysConfig
 msgid "Edit time accounting settings"
-msgstr "Zeiterfassungseinstellungen bearbeiten"
+msgstr "Zeitabrechnungseinstellungen bearbeiten"
 
 #. SysConfig
 msgid "Edit time record"
@@ -552,7 +594,7 @@ msgstr "Maximale Anzahl von Arbeitstagen ohne Arbeitszeiteinträge nach denen ei
 
 #. SysConfig
 msgid "Project time reporting"
-msgstr "Projekt Zeiterfassung"
+msgstr "Projekt-Zeitabrechnung"
 
 #. SysConfig
 msgid "Regular expressions for constraining action list according to selected project. Key contains regular expression for project(s), content contains regular expressions for action(s)."
@@ -575,70 +617,34 @@ msgid "This notification module gives a warning if there are too many incomplete
 msgstr "Modul, dass den Agent im Notification-Bereich des Agent-Interfaces darüber informiert, wenn schon zu lange keine Stunden mehr eingetragen wurden."
 
 #. SysConfig
+msgid "Time accounting edit."
+msgstr "Zeitabrechnung Bearbeitung."
+
+#. SysConfig
+msgid "Time accounting overview."
+msgstr "Zeitabrechnung Übersicht."
+
+#. SysConfig
+msgid "Time accounting reporting."
+msgstr "Zeitabrechnung Berichterstattung."
+
+#. SysConfig
+msgid "Time accounting settings."
+msgstr "Zeitabrechnung Einstellungen."
+
+#. SysConfig
+msgid "Time accounting view."
+msgstr "Zeitabrechnung Ansicht."
+
+#. SysConfig
 msgid "Time accounting."
-msgstr "Zeiterfassung."
+msgstr "Zeitabrechnung."
 
 #. SysConfig
 msgid "To use if some actions reduced the working hours (for example, if only half of the traveling time is paid Key => traveling; Content => 50)."
 msgstr "Hier kann man eingeben, ob für eine bestimmte Tätigkeit, die zu verrechnenden Stunden gekürzt werden. Z. B wenn Reisezeiten nur zur Hälfte vergütet werden (Key =&gt; journey; Content =&gt; 50)."
 
 #. Template: AAATimeAccounting
-msgid "Show valid projects"
-msgstr ""
-
-#. Template: AAATimeAccounting
-msgid "Show all projects"
-msgstr ""
-
-#. Template: AAATimeAccounting
-msgid "TimeAccounting"
-msgstr ""
-
-#. Template: AgentTimeAccountingEdit
-msgid "Start Time"
-msgstr ""
-
-#. Template: AgentTimeAccountingEdit
-msgid "End Time"
-msgstr ""
-
-#. Template: AgentTimeAccountingSetting
-msgid "Start Date"
-msgstr ""
-
-#. Template: AgentTimeAccountingSetting
-msgid "End Date"
-msgstr ""
-
-#. Template: AgentTimeAccountingSetting
-msgid "Leave Days"
-msgstr ""
-
-#. Template: AgentTimeAccountingSetting
-msgid "Weekly Hours"
-msgstr ""
-
-#. Template: AgentTimeAccountingSetting
-msgid "Overtime"
-msgstr ""
-
-#. SysConfig
-msgid "Time accounting edit."
-msgstr ""
-
-#. SysConfig
-msgid "Time accounting overview."
-msgstr ""
-
-#. SysConfig
-msgid "Time accounting reporting."
-msgstr ""
-
-#. SysConfig
-msgid "Time accounting settings."
-msgstr ""
-
-#. SysConfig
-msgid "Time accounting view."
+msgid "Reporting"
 msgstr ""
 

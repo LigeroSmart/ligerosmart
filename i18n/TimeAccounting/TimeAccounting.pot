@@ -26,6 +26,10 @@ msgstr ""
 msgid "TimeAccounting"
 msgstr ""
 
+#. Template: AAATimeAccounting
+msgid "Reporting"
+msgstr ""
+
 #. Template: AgentTimeAccountingDelete
 msgid "Do you really want to delete the Time Accounting of this day?"
 msgstr ""
