@@ -23,6 +23,17 @@ TimeAccounting.Agent.EditTimeRecords = (function (TargetNS) {
 
     TargetNS.ActionList = "";
     TargetNS.ActionListConstraints = "";
+    // Adds option to a selection
+
+    function AddSelectionOption($SelectionElement, OptionText, OptionValue, SelectedOption) {
+        var $Option = $('<option value="' + OptionValue + '">' + OptionText + '</option>');
+
+        if (OptionValue === SelectedOption) {
+            $Option.prop('selected', true);
+        }
+
+        $SelectionElement.append($Option);
+    }
 
     /**
      * @function
@@ -47,8 +58,8 @@ TimeAccounting.Agent.EditTimeRecords = (function (TargetNS) {
                 ActionName = this[1];
 
             $.each(ActionListConstraints, function () {
-                var ProjectNameRegExp = new RegExp(this[0]);
-                var ActionNameRegExp = new RegExp(this[1]);
+                var ProjectNameRegExp = new RegExp(this[0]),
+                    ActionNameRegExp = new RegExp(this[1]);
 
                 // add action to selection
                 if (ProjectNameRegExp.test(ProjectName) && ActionNameRegExp.test(ActionName)) {
@@ -69,32 +80,24 @@ TimeAccounting.Agent.EditTimeRecords = (function (TargetNS) {
                 }
             });
         }
-    }
+    };
 
-    // Adds option to a selection
-    function AddSelectionOption($SelectionElement, OptionText, OptionValue, SelectedOption) {
-        var $Option = $('<option value="' + OptionValue + '">' + OptionText + '</option>');
-
-        if (OptionValue == SelectedOption) {
-            $Option.prop('selected', true);
-        }
-
-        $SelectionElement.append($Option);
-    }
 
     function InitAutoCompletion(Language) {
         // Initialize ComboBox on Project dropdown
         Core.UI.ComboBox.Init('.ProjectSelection', {
             Class: "Validate_TimeAccounting_Project",
             Lang: {
-                ShowAllItems: Language.ShowAllItems
+                ShowAllItems: Language.ShowAllItems,
+                InputTitle: Language.ProjectTitle
             }
         });
         // Initialize ComboBox on task dropdown
         Core.UI.ComboBox.Init('.ActionSelection', {
             Class: "Validate_DependingRequiredAND",
             Lang: {
-                ShowAllItems: Language.ShowAllItems
+                ShowAllItems: Language.ShowAllItems,
+                InputTitle: Language.TaskTitle
             }
         });
         // Add special validation class to ActionSelection
@@ -262,7 +265,7 @@ TimeAccounting.Agent.EditTimeRecords = (function (TargetNS) {
 
     /**
      * @function
-     * @param {Object} Options thedifferent possible options:
+     * @param {Object} Options the different possible options:
      *                  RemarkRegExpContent - the regular expression for the remark validation check
      *                  Language - object with text translations
      *                  Autocompletion - boolean
@@ -270,12 +273,12 @@ TimeAccounting.Agent.EditTimeRecords = (function (TargetNS) {
      *      This function initializes all needed JS for the Edit screen
      */
     TargetNS.Init = function (Options) {
-        var Options = Options || {},
-            RemarkRegExpContent = Options.RemarkRegExpContent,
-            Language = Options.Language;
-        // Add some special validation methods for the edit screen
-        // Define all available elements (only the prefixes) in a row
-        var ElementPrefixes = ['ProjectID', 'ActionID', 'Remark', 'StartTime', 'EndTime', 'Period'];
+        var LocalOptions = Options || {},
+            RemarkRegExpContent = LocalOptions.RemarkRegExpContent,
+            Language = LocalOptions.Language,
+            // Add some special validation methods for the edit screen
+            // Define all available elements (only the prefixes) in a row
+            ElementPrefixes = ['ProjectID', 'ActionID', 'Remark', 'StartTime', 'EndTime', 'Period'];
 
         // Validates the project: if some other field in this row is filled, the project select must be filled, too
         Core.Form.Validate.AddMethod('Validate_TimeAccounting_Project', function (Value, Element) {
@@ -350,8 +353,8 @@ TimeAccounting.Agent.EditTimeRecords = (function (TargetNS) {
         Core.Form.Validate.AddRule('Validate_TimeAccounting_Period', { Validate_TimeAccounting_Period: true });
 
         // Enable autocompletion, if configured
-        TargetNS.Autocompletion = Options.Autocompletion;
-        if (Options.Autocompletion) {
+        TargetNS.Autocompletion = LocalOptions.Autocompletion;
+        if (LocalOptions.Autocompletion) {
             InitAutoCompletion(Language);
         }
 
@@ -436,7 +439,7 @@ TimeAccounting.Agent.EditTimeRecords = (function (TargetNS) {
                     Function: function () {
                         Core.UI.Dialog.CloseDialog($('.Dialog:visible'));
                     }
-                },
+                }
             ]);
             return false;
         });

@@ -186,14 +186,14 @@ $('#NavigationSelect').bind('click', function(){
                                     <div id="Combo_ActionID[% Data.ID | html %]ServerError" class="TooltipErrorMessage"><p>[% Translate("This field is required.") | html %]</p></div>
                                 </td>
                                 <td>
-                                    <input type="text" name="Remark[[% Data.ID | html %]]" id="Remark[% Data.ID | html %]" class="Validate_TimeAccounting_Remark [% Data.RemarkInvalid | html %]" value="[% Data.Remark | html %]" size="35" />
+                                    <input type="text" name="Remark[[% Data.ID | html %]]" id="Remark[% Data.ID | html %]" class="Validate_TimeAccounting_Remark [% Data.RemarkInvalid | html %]" value="[% Data.Remark | html %]" size="35" title="[% Translate("Remark") | html %]" />
                                     <div id="Remark[% Data.ID | html %]Error" class="TooltipErrorMessage"><p>[% Translate("Please add a remark with more than 8 characters!.") | html %]</p></div>
                                     <div id="Remark[% Data.ID | html %]ServerError" class="TooltipErrorMessage">
                                         <p>[% Translate("This field is required.") | html %]</p>
                                     </div>
                                 </td>
                                 <td>
-                                    <input type="text" name="StartTime[[% Data.ID | html %]]" id="StartTime[% Data.ID | html %]" class="StartTime Validate_TimeAccounting_StartTime [% Data.StartTimeRequired | html %] [% Data.StartTimeInvalid | html %]" value="[% Data.StartTime | html %]" size="7" />
+                                    <input type="text" name="StartTime[[% Data.ID | html %]]" id="StartTime[% Data.ID | html %]" class="StartTime Validate_TimeAccounting_StartTime [% Data.StartTimeRequired | html %] [% Data.StartTimeInvalid | html %]" value="[% Data.StartTime | html %]" size="7" title="[% Translate("Start Time") | html %]" />
                                     <div id="StartTime[% Data.ID | html %]Error" class="TooltipErrorMessage">
                                         <p>[% Translate("You have to fill in start and end time or a time period.") | html %]</p>
                                     </div>
@@ -219,7 +219,7 @@ $('#NavigationSelect').bind('click', function(){
                                     </div>
                                 </td>
                                 <td>
-                                    <input type="text" name="EndTime[[% Data.ID | html %]]" id="EndTime[% Data.ID | html %]" class="EndTime Validate_DependingRequiredAND Validate_Depending_StartTime[% Data.ID | html %] [% Data.EndTimeRequired | html %] [% Data.EndTimeInvalid | html %]" value="[% Data.EndTime | html %]" size="7" />
+                                    <input type="text" name="EndTime[[% Data.ID | html %]]" id="EndTime[% Data.ID | html %]" class="EndTime Validate_DependingRequiredAND Validate_Depending_StartTime[% Data.ID | html %] [% Data.EndTimeRequired | html %] [% Data.EndTimeInvalid | html %]" value="[% Data.EndTime | html %]" size="7" title="[% Translate("End Time") | html %]" />
                                     <div id="EndTime[% Data.ID | html %]Error" class="TooltipErrorMessage">
                                         <p>[% Translate("You have to fill in start and end time or a time period.") | html %]</p>
                                     </div>
@@ -246,7 +246,7 @@ $('#NavigationSelect').bind('click', function(){
                                 </td>
 [% RenderBlockStart("UnitInputPeriod") %]
                                 <td>
-                                    <input type="text" name="Period[[% Data.ID | html %]]" id="Period[% Data.ID | html %]" class="Period Validate_TimeAccounting_Period Validate_TimeUnits [% Data.PeriodRequired | html %] [% Data.PeriodInvalid | html %]" value="[% Data.Period | html %]" size="7" />
+                                    <input type="text" name="Period[[% Data.ID | html %]]" id="Period[% Data.ID | html %]" class="Period Validate_TimeAccounting_Period Validate_TimeUnits [% Data.PeriodRequired | html %] [% Data.PeriodInvalid | html %]" value="[% Data.Period | html %]" size="7" title="[% Translate("Period") | html %]" />
                                     <div id="Period[% Data.ID | html %]Error" class="TooltipErrorMessage">
                                         <p>[% Translate("You have to fill in start and end time or a time period.") | html %]</p>
                                     </div>
@@ -324,13 +324,16 @@ $('#NavigationSelect').bind('click', function(){
                     <div class="Clear"></div>
 [% WRAPPER JSOnDocumentComplete %]
 <script type="text/javascript">//<![CDATA[
+/*global TimeAccounting: true */
     TimeAccounting.Agent.EditTimeRecords.ActionList = [% Data.JSActionList | html %];
     TimeAccounting.Agent.EditTimeRecords.ActionListConstraints = [% Data.JSActionListConstraints | html %];
     TimeAccounting.Agent.EditTimeRecords.Init({
         RemarkRegExpContent: "[% Data.RemarkRegExp | html %]",
         Autocompletion: [% Data.EnableAutocompletion | html %],
         Language: {
-            ShowAllItems: [% Translate("Show all items") | JSON %]
+            ShowAllItems: [% Translate("Show all items") | JSON %],
+            ProjectTitle: [% Translate("Project") | JSON %],
+            TaskTitle: [% Translate("Task") | JSON %]
         }
     });
     TimeAccounting.Agent.ConfirmationDialog.BindConfirmationDialog({

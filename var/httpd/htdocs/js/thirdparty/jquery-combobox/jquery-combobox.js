@@ -1,8 +1,6 @@
 // --
 // jquery-combobox.js - special jquery ui combobox
-// Copyright (C) 2001-2010 OTRS AG, http://otrs.org/\n";
-// --
-// $Id: jquery-combobox.js,v 1.4 2012-01-31 13:54:38 mn Exp $
+// Copyright (C) 2001-2014 OTRS AG, http://otrs.com/\n";
 // --
 // This software comes with ABSOLUTELY NO WARRANTY. For details, see
 // the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +15,8 @@
             IDPrefixButton: 'ComboBtn_',
             ValidationTooltip: '',
             Lang: {
-                ShowAllItems: 'Show all items'
+                ShowAllItems: 'Show all items',
+                InputTitle: 'Title'
             }
         },
         _create: function() {
@@ -28,6 +27,7 @@
                 $Input = this.input = $("<input>")
                 .addClass(this.options.Class)
                 .attr('id', this.options.IDPrefixInput + $Select[0].id)
+                .attr('title', this.options.Lang.InputTitle)
                 .insertAfter($Select)
                 .css('width', $Select.width())
                 .val(Value)

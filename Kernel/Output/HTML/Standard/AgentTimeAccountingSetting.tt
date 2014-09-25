@@ -450,12 +450,12 @@
                         <div class="Clear"></div>
 
                         <div class="Field">
-                            <input type="checkbox" name="ShowOvertime" id="ShowOvertime" value="1" [% Data.ShowOvertime %] />[% Translate("Show Overtime") | html %]
+                            <input type="checkbox" name="ShowOvertime" id="ShowOvertime" value="1" title="[% Translate("Show Overtime") | html %]" [% Data.ShowOvertime %] />[% Translate("Show Overtime") | html %]
                         </div>
                         <div class="Clear"></div>
 
                         <div class="Field">
-                            <input type="checkbox" name="CreateProject" id="CreateProject" value="1" [% Data.CreateProject %] />[% Translate("Allow project creation") | html %]
+                            <input type="checkbox" name="CreateProject" id="CreateProject" value="1" title="Translate("Allow project creation") | html %]" [% Data.CreateProject %] />[% Translate("Allow project creation") | html %]
                         </div>
                         <div class="Clear"></div>
 
@@ -481,7 +481,7 @@
 [% RenderBlockStart("PeriodOverviewRow") %]
                             <tr>
                                 <td>
-                                    <input type="text" id="DateStart-[% Data.Period | html %]" name="DateStart[[% Data.Period | html %]]" value="[% Data.DateStart | html %]" class="DatepickerElement Validate_Required [% Data.DateStartInvalid | html %]" />
+                                    <input type="text" id="DateStart-[% Data.Period | html %]" name="DateStart[[% Data.Period | html %]]" value="[% Data.DateStart | html %]" class="DatepickerElement Validate_Required [% Data.DateStartInvalid | html %]" title="[% Translate("Start Date") | html %]" />
                                     <div id="DateStart-[% Data.Period | html %]Error" class="TooltipErrorMessage"><p>[% Translate("This field is required.") | html %] [% Translate("Please insert a valid date.") | html %]</p></div>
 [% RenderBlockStart("DateStartInvalid") %]
                                     <div id="DateStart-[% Data.Period | html %]ServerError" class="TooltipErrorMessage"><p>[% Translate("Invalid date!") | html %]</p></div>
@@ -491,7 +491,7 @@
 [% RenderBlockEnd("DateStartMissingValue") %]
                                 </td>
                                 <td>
-                                    <input type="text" id="DateEnd-[% Data.Period | html %]" name="DateEnd[[% Data.Period | html %]]" value="[% Data.DateEnd | html %]" class="DatepickerElement Validate_Required [% Data.DateEndInvalid | html %]" />
+                                    <input type="text" id="DateEnd-[% Data.Period | html %]" name="DateEnd[[% Data.Period | html %]]" value="[% Data.DateEnd | html %]" class="DatepickerElement Validate_Required [% Data.DateEndInvalid | html %]" title="[% Translate("End Date") | html %]" />
                                     <div id="DateEnd-[% Data.Period | html %]Error" class="TooltipErrorMessage"><p>[% Translate("This field is required.") | html %] [% Translate("Please insert a valid date.") | html %]</p></div>
 [% RenderBlockStart("DateEndInvalid") %]
                                     <div id="DateEnd-[% Data.Period | html %]ServerError" class="TooltipErrorMessage"><p>[% Translate("Invalid date!") | html %]</p></div>
@@ -504,15 +504,15 @@
 [% RenderBlockEnd("DateEndBeforeDateStart") %]
                                 </td>
                                 <td>
-                                    <input type="text" id="LeaveDays-[% Data.Period | html %]" name="LeaveDays[[% Data.Period | html %]]" value="[% Data.LeaveDays | html %]" class="Validate_Required [% Data.LeaveDaysInvalid | html %]" />
+                                    <input type="text" id="LeaveDays-[% Data.Period | html %]" name="LeaveDays[[% Data.Period | html %]]" value="[% Data.LeaveDays | html %]" class="Validate_Required [% Data.LeaveDaysInvalid | html %]" title="[% Translate("Leave Days") | html %]" />
                                     <div id="LeaveDays-[% Data.Period | html %]Error" class="TooltipErrorMessage"><p>[% Translate("This field is required.") | html %]</p></div>
                                     <div id="LeaveDays-[% Data.Period | html %]ServerError" class="TooltipErrorMessage"><p>[% Translate("This field is required.") | html %]</p></div>
                                 </td>
                                 <td>
-                                    <input type="text" id="WeeklyHours-[% Data.Period | html %]" name="WeeklyHours[[% Data.Period | html %]]" value="[% Data.WeeklyHours | html %]" />
+                                    <input type="text" id="WeeklyHours-[% Data.Period | html %]" name="WeeklyHours[[% Data.Period | html %]]" value="[% Data.WeeklyHours | html %]" title="[% Translate("Weekly Hours") | html %]" />
                                 </td>
                                 <td>
-                                    <input type="text" id="Overtime-[% Data.Period | html %]" name="Overtime[[% Data.Period | html %]]" value="[% Data.Overtime | html %]" />
+                                    <input type="text" id="Overtime-[% Data.Period | html %]" name="Overtime[[% Data.Period | html %]]" value="[% Data.Overtime | html %]" title="[% Translate("Overtime") | html %]" />
                                 </td>
                                 <td>
                                     [% Data.PeriodStatusOption %]
@@ -546,6 +546,7 @@
         </div>
 [% WRAPPER JSOnDocumentComplete %]
 <script type="text/javascript">//<![CDATA[
+/*global TimeAccounting: true */
     TimeAccounting.Agent.Datepicker.Init($('.DatepickerElement'), {
         DateInFuture: false,
         WeekDayStart: 1
