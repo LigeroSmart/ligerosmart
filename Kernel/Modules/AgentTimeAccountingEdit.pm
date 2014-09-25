@@ -64,7 +64,7 @@ sub PreRun {
     # redirect if incomplete working day are out of range
     if (
         $IncompleteWorkingDays{EnforceInsert}
-        && $Self->{Action} ne 'AgentTimeAccounting'
+        && $Self->{Action} ne 'AgentTimeAccountingEdit'
         && $Self->{Action} ne 'AgentCalendarSmall'
         )
     {
