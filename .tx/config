@@ -1,0 +1,8 @@
+[main]
+host = https://www.transifex.com
+
+[OTRS.OTRSMasterSlave]
+file_filter = i18n/OTRSMasterSlave/OTRSMasterSlave.<lang>.po
+source_file = i18n/OTRSMasterSlave/OTRSMasterSlave.pot
+source_lang = en
+type = PO
