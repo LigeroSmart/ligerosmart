@@ -9,3 +9,6 @@
 
 # Common
 [% Translate("Time Accounting") | html %]
+[% Translate("Show valid projects") | html %]
+[% Translate("Show all projects") | html %]
+[% Translate("TimeAccounting") | html %]
