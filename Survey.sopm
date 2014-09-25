@@ -2,7 +2,7 @@
 <otrs_package version="1.0">
     <Name>Survey</Name>
     <Version>0.0.0</Version>
-    <Framework>3.3.x</Framework>
+    <Framework>4.0.x</Framework>
     <Vendor>OTRS AG</Vendor>
     <URL>http://otrs.org/</URL>
     <License>GNU AFFERO GENERAL PUBLIC LICENSE Version 3, November 2007</License>
@@ -189,95 +189,17 @@
     </DatabaseUninstall>
     <CodeUpgrade Type="post" Version="2.1.5"><![CDATA[
 
-        # define function name
-        my $FunctionName = 'CodeUpgradeFromLowerThan_2_1_5';
-
         # create the package name
         my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
 
-        # The code module has just recently been copied to it's location in the file system.
-        # In a persistent Perl environment an old version of the module might still be loaded,
-        # as watchdogs like Apache2::Reload haven't had a chance to reload it.
-        # So we need to make sure that the new version is being loaded.
-        # Kernel::System::Main::Require() checks the relative file path, so we need to remove that from %INC.
-        # This is only needed in persistent Perl environment, but does no harm in a CGI environment.
-        my $CodeModulePath = $CodeModule;
-        $CodeModulePath =~ s/::/\//g;
-        $CodeModulePath .= '.pm';
-        delete $INC{$CodeModulePath};
-
-        # load the module
-        if ( $Self->{MainObject}->Require($CodeModule) ) {
-
-            # create new instance
-            my $CodeObject = $CodeModule->new( %{$Self} );
-
-            if ($CodeObject) {
-
-                # start methode
-                if ( !$CodeObject->$FunctionName(%{$Self}) ) {
-                    $Self->{LogObject}->Log(
-                        Priority => 'error',
-                        Message  => "Could not call method $FunctionName() on $CodeModule.pm."
-                    );
-                }
-            }
-
-            # error handling
-            else {
-                $Self->{LogObject}->Log(
-                    Priority => 'error',
-                    Message  => "Could not call method new() on $CodeModule.pm."
-                );
-            }
-        }
-
+        $Kernel::OM->Get($CodeModule)->CodeUpgradeFromLowerThan_2_1_5();
     ]]></CodeUpgrade>
     <CodeUpgrade Type="post" Version="2.0.92"><![CDATA[
 
-        # define function name
-        my $FunctionName = 'CodeUpgradeFromLowerThan_2_0_92';
-
         # create the package name
         my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
 
-        # The code module has just recently been copied to it's location in the file system.
-        # In a persistent Perl environment an old version of the module might still be loaded,
-        # as watchdogs like Apache2::Reload haven't had a chance to reload it.
-        # So we need to make sure that the new version is being loaded.
-        # Kernel::System::Main::Require() checks the relative file path, so we need to remove that from %INC.
-        # This is only needed in persistent Perl environment, but does no harm in a CGI environment.
-        my $CodeModulePath = $CodeModule;
-        $CodeModulePath =~ s/::/\//g;
-        $CodeModulePath .= '.pm';
-        delete $INC{$CodeModulePath};
-
-        # load the module
-        if ( $Self->{MainObject}->Require($CodeModule) ) {
-
-            # create new instance
-            my $CodeObject = $CodeModule->new( %{$Self} );
-
-            if ($CodeObject) {
-
-                # start methode
-                if ( !$CodeObject->$FunctionName(%{$Self}) ) {
-                    $Self->{LogObject}->Log(
-                        Priority => 'error',
-                        Message  => "Could not call method $FunctionName() on $CodeModule.pm."
-                    );
-                }
-            }
-
-            # error handling
-            else {
-                $Self->{LogObject}->Log(
-                    Priority => 'error',
-                    Message  => "Could not call method new() on $CodeModule.pm."
-                );
-            }
-        }
-
+        $Kernel::OM->Get($CodeModule)->CodeUpgradeFromLowerThan_2_0_92();
     ]]></CodeUpgrade>
     <IntroInstall Type="pre" Title="Install Information" Lang="en"><![CDATA[
 
