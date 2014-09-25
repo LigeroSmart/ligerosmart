@@ -8,9 +8,9 @@
             <FrontendModuleReg>
                 <Group>time_accounting</Group>
                 <GroupRo>time_accounting</GroupRo>
-                <Description Translatable="1">Time accounting.</Description>
+                <Description Translatable="1">Time accounting edit.</Description>
                 <NavBarName>TimeAccounting</NavBarName>
-                <Title>TimeAccountingTitle</Title>
+                <Title>Edit</Title>
                 <NavBar>
                     <Description Translatable="1">Time accounting.</Description>
                     <Name>Time Accounting</Name>
@@ -53,9 +53,9 @@
             <FrontendModuleReg>
                 <Group>time_accounting</Group>
                 <GroupRo>time_accounting</GroupRo>
-                <Description Translatable="1">Time accounting.</Description>
+                <Description Translatable="1">Time accounting overview.</Description>
                 <NavBarName>TimeAccounting</NavBarName>
-                <Title>TimeAccountingTitle</Title>
+                <Title>Overview</Title>
                 <NavBar>
                     <GroupRo>time_accounting</GroupRo>
                     <Description Translatable="1">Overview</Description>
@@ -82,9 +82,9 @@
             <FrontendModuleReg>
                 <Group>time_accounting</Group>
                 <GroupRo>time_accounting</GroupRo>
-                <Description Translatable="1">Time accounting.</Description>
+                <Description Translatable="1">Time accounting settings.</Description>
                 <NavBarName>TimeAccounting</NavBarName>
-                <Title>TimeAccountingTitle</Title>
+                <Title>Settings</Title>
                 <NavBar>
                     <Group>time_accounting</Group>
                     <Description Translatable="1">Edit time accounting settings</Description>
@@ -110,6 +110,11 @@
         <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
         <Setting>
             <FrontendModuleReg>
+                <Group>time_accounting</Group>
+                <GroupRo>time_accounting</GroupRo>
+                <Description Translatable="1">Time accounting reporting.</Description>
+                <NavBarName>TimeAccounting</NavBarName>
+                <Title>Reporting</Title>
                 <NavBar>
                     <Group>time_accounting</Group>
                     <Description Translatable="1">Project time reporting</Description>
@@ -136,9 +141,9 @@
             <FrontendModuleReg>
                 <Group>time_accounting</Group>
                 <GroupRo>time_accounting</GroupRo>
-                <Description Translatable="1">Time accounting.</Description>
+                <Description Translatable="1">Time accounting view.</Description>
                 <NavBarName>TimeAccounting</NavBarName>
-                <Title>TimeAccountingTitle</Title>
+                <Title>View</Title>
                 <NavBar>
                     <GroupRo>time_accounting</GroupRo>
                 </NavBar>
