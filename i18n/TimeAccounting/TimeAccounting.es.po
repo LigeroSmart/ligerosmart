@@ -582,3 +582,63 @@ msgstr "Contabilidad de tiempo."
 msgid "To use if some actions reduced the working hours (for example, if only half of the traveling time is paid Key => traveling; Content => 50)."
 msgstr "Se usa si algunas acciones reducen el número de horas trabajadas (por ejemplo: si sólo se paga la mitad del tiempo de viaje puede especificarse Key => Viaje; Content => 50)."
 
+#. Template: AAATimeAccounting
+msgid "Show valid projects"
+msgstr ""
+
+#. Template: AAATimeAccounting
+msgid "Show all projects"
+msgstr ""
+
+#. Template: AAATimeAccounting
+msgid "TimeAccounting"
+msgstr ""
+
+#. Template: AgentTimeAccountingEdit
+msgid "Start Time"
+msgstr ""
+
+#. Template: AgentTimeAccountingEdit
+msgid "End Time"
+msgstr ""
+
+#. Template: AgentTimeAccountingSetting
+msgid "Start Date"
+msgstr ""
+
+#. Template: AgentTimeAccountingSetting
+msgid "End Date"
+msgstr ""
+
+#. Template: AgentTimeAccountingSetting
+msgid "Leave Days"
+msgstr ""
+
+#. Template: AgentTimeAccountingSetting
+msgid "Weekly Hours"
+msgstr ""
+
+#. Template: AgentTimeAccountingSetting
+msgid "Overtime"
+msgstr ""
+
+#. SysConfig
+msgid "Time accounting edit."
+msgstr ""
+
+#. SysConfig
+msgid "Time accounting overview."
+msgstr ""
+
+#. SysConfig
+msgid "Time accounting reporting."
+msgstr ""
+
+#. SysConfig
+msgid "Time accounting settings."
+msgstr ""
+
+#. SysConfig
+msgid "Time accounting view."
+msgstr ""
+

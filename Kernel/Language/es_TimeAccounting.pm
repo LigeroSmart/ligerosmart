@@ -18,6 +18,9 @@ sub Data {
 
     # Template: AAATimeAccounting
     $Self->{Translation}->{'Time Accounting'} = 'Contabilidad de Tiempo';
+    $Self->{Translation}->{'Show valid projects'} = '';
+    $Self->{Translation}->{'Show all projects'} = '';
+    $Self->{Translation}->{'TimeAccounting'} = '';
 
     # Template: AgentTimeAccountingDelete
     $Self->{Translation}->{'Do you really want to delete the Time Accounting of this day?'} =
@@ -47,12 +50,14 @@ sub Data {
     $Self->{Translation}->{'Task'} = 'Tarea';
     $Self->{Translation}->{'Remark'} = 'Comentario';
     $Self->{Translation}->{'Please add a remark with more than 8 characters!.'} = '¿Por favor, escriba un comentario de más de 8 caracteres!';
+    $Self->{Translation}->{'Start Time'} = '';
     $Self->{Translation}->{'Negative times are not allowed.'} = 'No se permite la inserción de horas negativas.';
     $Self->{Translation}->{'Repeated hours are not allowed. Start time matches another interval.'} =
         'No se permite la inserción de horas repetidas. La hora de inicio está incluída en otro intervalo.';
     $Self->{Translation}->{'Invalid format! Please enter a time with the format HH:MM.'} = 'Formato inválido! Por favor introduzca el tiempo con el formato HH:MM.';
     $Self->{Translation}->{'24:00 is only permitted as end time.'} = '24:00 es solo permitido como tiempo final.';
     $Self->{Translation}->{'Invalid time! A day has only 24 hours.'} = 'Tiempo inválido! Un día solo tiene 24 horas.';
+    $Self->{Translation}->{'End Time'} = '';
     $Self->{Translation}->{'End time must be after start time.'} = 'La hora de finalización debe ser posterior a la de inicio.';
     $Self->{Translation}->{'Repeated hours are not allowed. End time matches another interval.'} =
         'No se permite la inserción de horas repetidas. La hora de finalización está incluída en otro intervalo.';
@@ -142,8 +147,13 @@ sub Data {
     $Self->{Translation}->{'Days of Vacation'} = 'Días de Vacaciones';
     $Self->{Translation}->{'Hours per Week'} = 'Horas por Semana';
     $Self->{Translation}->{'Authorized Overtime'} = 'Tiempo Extra Autorizado';
+    $Self->{Translation}->{'Start Date'} = '';
     $Self->{Translation}->{'Please insert a valid date.'} = 'Por favor inserte una fecha válida.';
+    $Self->{Translation}->{'End Date'} = '';
     $Self->{Translation}->{'Period end must be after period begin.'} = 'El periodo de finalización debe ser posterior al de inicio.';
+    $Self->{Translation}->{'Leave Days'} = '';
+    $Self->{Translation}->{'Weekly Hours'} = '';
+    $Self->{Translation}->{'Overtime'} = '';
     $Self->{Translation}->{'No time periods found.'} = 'No se encontraron periodos de tiempo.';
     $Self->{Translation}->{'Add time period'} = 'Agregar periodo de tiempo';
 
@@ -191,6 +201,11 @@ sub Data {
     $Self->{Translation}->{'This module forces inserts in TimeAccounting.'} = 'Este módulo hace obligatoria la inserción de horas trabajadas.';
     $Self->{Translation}->{'This notification module gives a warning if there are too many incomplete working days.'} =
         'Módulo de notificación que muestra una advertencia si hay demasiados días sin registro de horas trabajadas.';
+    $Self->{Translation}->{'Time accounting edit.'} = '';
+    $Self->{Translation}->{'Time accounting overview.'} = '';
+    $Self->{Translation}->{'Time accounting reporting.'} = '';
+    $Self->{Translation}->{'Time accounting settings.'} = '';
+    $Self->{Translation}->{'Time accounting view.'} = '';
     $Self->{Translation}->{'Time accounting.'} = 'Contabilidad de tiempo.';
     $Self->{Translation}->{'To use if some actions reduced the working hours (for example, if only half of the traveling time is paid Key => traveling; Content => 50).'} =
         'Se usa si algunas acciones reducen el número de horas trabajadas (por ejemplo: si sólo se paga la mitad del tiempo de viaje puede especificarse Key => Viaje; Content => 50).';

@@ -581,3 +581,63 @@ msgstr "時間会計"
 msgid "To use if some actions reduced the working hours (for example, if only half of the traveling time is paid Key => traveling; Content => 50)."
 msgstr "業務上の行動において、稼働時間として計上する時間を調整する必要がある場合に、この設定を使用します。（例：「移動時間」の50%のみ勤務時間相当とする場合「鍵」に`journey`、「内容」に`50`と設定)"
 
+#. Template: AAATimeAccounting
+msgid "Show valid projects"
+msgstr ""
+
+#. Template: AAATimeAccounting
+msgid "Show all projects"
+msgstr ""
+
+#. Template: AAATimeAccounting
+msgid "TimeAccounting"
+msgstr ""
+
+#. Template: AgentTimeAccountingEdit
+msgid "Start Time"
+msgstr ""
+
+#. Template: AgentTimeAccountingEdit
+msgid "End Time"
+msgstr ""
+
+#. Template: AgentTimeAccountingSetting
+msgid "Start Date"
+msgstr ""
+
+#. Template: AgentTimeAccountingSetting
+msgid "End Date"
+msgstr ""
+
+#. Template: AgentTimeAccountingSetting
+msgid "Leave Days"
+msgstr ""
+
+#. Template: AgentTimeAccountingSetting
+msgid "Weekly Hours"
+msgstr ""
+
+#. Template: AgentTimeAccountingSetting
+msgid "Overtime"
+msgstr ""
+
+#. SysConfig
+msgid "Time accounting edit."
+msgstr ""
+
+#. SysConfig
+msgid "Time accounting overview."
+msgstr ""
+
+#. SysConfig
+msgid "Time accounting reporting."
+msgstr ""
+
+#. SysConfig
+msgid "Time accounting settings."
+msgstr ""
+
+#. SysConfig
+msgid "Time accounting view."
+msgstr ""
+

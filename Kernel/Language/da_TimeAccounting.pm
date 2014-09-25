@@ -18,6 +18,9 @@ sub Data {
 
     # Template: AAATimeAccounting
     $Self->{Translation}->{'Time Accounting'} = '';
+    $Self->{Translation}->{'Show valid projects'} = '';
+    $Self->{Translation}->{'Show all projects'} = '';
+    $Self->{Translation}->{'TimeAccounting'} = '';
 
     # Template: AgentTimeAccountingDelete
     $Self->{Translation}->{'Do you really want to delete the Time Accounting of this day?'} =
@@ -47,12 +50,14 @@ sub Data {
     $Self->{Translation}->{'Task'} = 'Opgave';
     $Self->{Translation}->{'Remark'} = 'Bemærkning';
     $Self->{Translation}->{'Please add a remark with more than 8 characters!.'} = 'Tilføj venligst en bemærkning med mere end 8 tegn!';
+    $Self->{Translation}->{'Start Time'} = '';
     $Self->{Translation}->{'Negative times are not allowed.'} = 'Negativ tid er ikke tilladt.';
     $Self->{Translation}->{'Repeated hours are not allowed. Start time matches another interval.'} =
         'Gentagne timer er ikke tilladt. Starttiden svarer til et andet interval.';
     $Self->{Translation}->{'Invalid format! Please enter a time with the format HH:MM.'} = '';
     $Self->{Translation}->{'24:00 is only permitted as end time.'} = '';
     $Self->{Translation}->{'Invalid time! A day has only 24 hours.'} = '';
+    $Self->{Translation}->{'End Time'} = '';
     $Self->{Translation}->{'End time must be after start time.'} = 'Sluttiden skal være senere end starttiden.';
     $Self->{Translation}->{'Repeated hours are not allowed. End time matches another interval.'} =
         'Gentagne timer er ikke tilladt. Sluttiden svarer til et andet interval.';
@@ -142,8 +147,13 @@ sub Data {
     $Self->{Translation}->{'Days of Vacation'} = 'Feriedage';
     $Self->{Translation}->{'Hours per Week'} = 'Timer pr. uge';
     $Self->{Translation}->{'Authorized Overtime'} = 'Godkendt overtid';
+    $Self->{Translation}->{'Start Date'} = '';
     $Self->{Translation}->{'Please insert a valid date.'} = '';
+    $Self->{Translation}->{'End Date'} = '';
     $Self->{Translation}->{'Period end must be after period begin.'} = 'Periodens afslutning skal være efter periodens start.';
+    $Self->{Translation}->{'Leave Days'} = '';
+    $Self->{Translation}->{'Weekly Hours'} = '';
+    $Self->{Translation}->{'Overtime'} = '';
     $Self->{Translation}->{'No time periods found.'} = 'Ingen tidsperioder fundet.';
     $Self->{Translation}->{'Add time period'} = 'Tilføj tidsperiode';
 
@@ -191,6 +201,11 @@ sub Data {
     $Self->{Translation}->{'This module forces inserts in TimeAccounting.'} = 'Dette modul gennemtvinger indsættelser i tidsregnskab.';
     $Self->{Translation}->{'This notification module gives a warning if there are too many incomplete working days.'} =
         'Dette adviseringsmodul giver en advarsel, hvis der er for mange ufuldstændige arbejdsdage.';
+    $Self->{Translation}->{'Time accounting edit.'} = '';
+    $Self->{Translation}->{'Time accounting overview.'} = '';
+    $Self->{Translation}->{'Time accounting reporting.'} = '';
+    $Self->{Translation}->{'Time accounting settings.'} = '';
+    $Self->{Translation}->{'Time accounting view.'} = '';
     $Self->{Translation}->{'Time accounting.'} = 'Tidsregnskab';
     $Self->{Translation}->{'To use if some actions reduced the working hours (for example, if only half of the traveling time is paid Key => traveling; Content => 50).'} =
         'Bruges, hvis nogle handlinger har reduceret arbejdstimerne (f.eks. hvis kun halvdelen af rejsetiden er betalt Key => traveling; Content => 50)';

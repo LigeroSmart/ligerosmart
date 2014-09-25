@@ -1,4 +1,4 @@
-# 
+#
 # Translators:
 # ynkolesnikov <ynkolesnikov@gmail.com>, 2014
 msgid ""
@@ -347,8 +347,7 @@ msgid "Edit Project Settings"
 msgstr "Редактировать настройки проекта"
 
 #. Template: AgentTimeAccountingSetting
-msgid ""
-"There is already a project with this name. Please, choose a different one."
+msgid "There is already a project with this name. Please, choose a different one."
 msgstr "Уже есть проект с таким наименованием. Выберите другое."
 
 #. Template: AgentTimeAccountingSetting
@@ -392,8 +391,7 @@ msgid "Edit Task Settings"
 msgstr "Редактировать настройки задачи"
 
 #. Template: AgentTimeAccountingSetting
-msgid ""
-"There is already a task with this name. Please, choose a different one."
+msgid "There is already a task with this name. Please, choose a different one."
 msgstr "Уже есть задача с таким именем, Выберите другое."
 
 #. Template: AgentTimeAccountingSetting
@@ -469,9 +467,7 @@ msgid "No data found for this day."
 msgstr "Для этого дня данные не найдены."
 
 #. SysConfig
-msgid ""
-"Agent interface notification module to see the number of incomplete working "
-"days for the user."
+msgid "Agent interface notification module to see the number of incomplete working days for the user."
 msgstr "Модуль уведомлений, для отображения количества незавершенных рабочих дней пользователя в интерфейсе агента"
 
 #. SysConfig
@@ -519,16 +515,11 @@ msgid "Default status for new users."
 msgstr "Значение по умолчанию для статуса новых пользователей."
 
 #. SysConfig
-msgid ""
-"Defines the projects for which a remark is required. If the RegExp matches "
-"on the project, you have to insert a remark too. The RegExp use the smx "
-"parameter."
+msgid "Defines the projects for which a remark is required. If the RegExp matches on the project, you have to insert a remark too. The RegExp use the smx parameter."
 msgstr "Задает проекты для которых требуется занесение замечаний. Если RegExp верно для проекта, вы должны добавить замечания тоже. Для RegExp используйте параметр smx."
 
 #. SysConfig
-msgid ""
-"Determines if the statistics module may generate time accounting "
-"information."
+msgid "Determines if the statistics module may generate time accounting information."
 msgstr "Задает, может ли модуль отчетов генерировать информацию по учету затраченного времени."
 
 #. SysConfig
@@ -544,27 +535,19 @@ msgid "For how many days ago you can insert working units."
 msgstr "Для какого количества прошедших дней вы можете внести данные о времени."
 
 #. SysConfig
-msgid ""
-"If enabled, the dropdown elements in the edit screen are changed to "
-"autocompletion fields."
+msgid "If enabled, the dropdown elements in the edit screen are changed to autocompletion fields."
 msgstr "Если включено, для выбора полей списка на экране редактирования можно использовать автозавершение."
 
 #. SysConfig
-msgid ""
-"If enabled, the user is allowed to enter \"on vacation leave\", \"on sick "
-"leave\" and \"on overtime leave\" to multiple dates at once."
+msgid "If enabled, the user is allowed to enter \"on vacation leave\", \"on sick leave\" and \"on overtime leave\" to multiple dates at once."
 msgstr "Если включено, пользователю разрешено вводить значения \"Осталось в отпске\", \"Осталось дней по болезни\" и \"Осталось переработки\" по несколько дат сразу."
 
 #. SysConfig
-msgid ""
-"Maximum number of working days after which the working units have to be "
-"inserted."
+msgid "Maximum number of working days after which the working units have to be inserted."
 msgstr "Макс. количество рабочих дней, после которых рабочие единицы должны быть занесены."
 
 #. SysConfig
-msgid ""
-"Maximum number of working days without working units entry after which a "
-"warning will be shown."
+msgid "Maximum number of working days without working units entry after which a warning will be shown."
 msgstr "Максимально количество рабочих дней, после которого выдается предупреждение о том, что данные не вводились."
 
 #. SysConfig
@@ -572,22 +555,15 @@ msgid "Project time reporting"
 msgstr "Отчет о времени по проекту"
 
 #. SysConfig
-msgid ""
-"Regular expressions for constraining action list according to selected "
-"project. Key contains regular expression for project(s), content contains "
-"regular expressions for action(s)."
+msgid "Regular expressions for constraining action list according to selected project. Key contains regular expression for project(s), content contains regular expressions for action(s)."
 msgstr ""
 
 #. SysConfig
-msgid ""
-"Regular expressions for constraining project list according to user groups. "
-"Key contains regular expression for project(s), content contains comma "
-"separated list of groups."
+msgid "Regular expressions for constraining project list according to user groups. Key contains regular expression for project(s), content contains comma separated list of groups."
 msgstr ""
 
 #. SysConfig
-msgid ""
-"Specifies if working hours can be inserted without start and end times."
+msgid "Specifies if working hours can be inserted without start and end times."
 msgstr "Задает, можно ли заносить рабочие часы без указания времени начала и окончания."
 
 #. SysConfig
@@ -595,9 +571,7 @@ msgid "This module forces inserts in TimeAccounting."
 msgstr ""
 
 #. SysConfig
-msgid ""
-"This notification module gives a warning if there are too many incomplete "
-"working days."
+msgid "This notification module gives a warning if there are too many incomplete working days."
 msgstr "Модуль уведомлений, для отображения количества незавершенных рабочих дней пользователя."
 
 #. SysConfig
@@ -605,7 +579,66 @@ msgid "Time accounting."
 msgstr "Учет затраченного времени"
 
 #. SysConfig
-msgid ""
-"To use if some actions reduced the working hours (for example, if only half "
-"of the traveling time is paid Key => traveling; Content => 50)."
+msgid "To use if some actions reduced the working hours (for example, if only half of the traveling time is paid Key => traveling; Content => 50)."
 msgstr "Для использования, если некоторые действия уменьшают рабочие часы (например, если только половина времени в пути оплачивается - Key => traveling; Content => 50)."
+
+#. Template: AAATimeAccounting
+msgid "Show valid projects"
+msgstr ""
+
+#. Template: AAATimeAccounting
+msgid "Show all projects"
+msgstr ""
+
+#. Template: AAATimeAccounting
+msgid "TimeAccounting"
+msgstr ""
+
+#. Template: AgentTimeAccountingEdit
+msgid "Start Time"
+msgstr ""
+
+#. Template: AgentTimeAccountingEdit
+msgid "End Time"
+msgstr ""
+
+#. Template: AgentTimeAccountingSetting
+msgid "Start Date"
+msgstr ""
+
+#. Template: AgentTimeAccountingSetting
+msgid "End Date"
+msgstr ""
+
+#. Template: AgentTimeAccountingSetting
+msgid "Leave Days"
+msgstr ""
+
+#. Template: AgentTimeAccountingSetting
+msgid "Weekly Hours"
+msgstr ""
+
+#. Template: AgentTimeAccountingSetting
+msgid "Overtime"
+msgstr ""
+
+#. SysConfig
+msgid "Time accounting edit."
+msgstr ""
+
+#. SysConfig
+msgid "Time accounting overview."
+msgstr ""
+
+#. SysConfig
+msgid "Time accounting reporting."
+msgstr ""
+
+#. SysConfig
+msgid "Time accounting settings."
+msgstr ""
+
+#. SysConfig
+msgid "Time accounting view."
+msgstr ""
+

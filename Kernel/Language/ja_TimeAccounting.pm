@@ -18,6 +18,9 @@ sub Data {
 
     # Template: AAATimeAccounting
     $Self->{Translation}->{'Time Accounting'} = '';
+    $Self->{Translation}->{'Show valid projects'} = '';
+    $Self->{Translation}->{'Show all projects'} = '';
+    $Self->{Translation}->{'TimeAccounting'} = '';
 
     # Template: AgentTimeAccountingDelete
     $Self->{Translation}->{'Do you really want to delete the Time Accounting of this day?'} =
@@ -47,12 +50,14 @@ sub Data {
     $Self->{Translation}->{'Task'} = 'タスク';
     $Self->{Translation}->{'Remark'} = '注釈';
     $Self->{Translation}->{'Please add a remark with more than 8 characters!.'} = '8文字以上の注釈を追加してください。';
+    $Self->{Translation}->{'Start Time'} = '';
     $Self->{Translation}->{'Negative times are not allowed.'} = '－（マイナス）の時間は入力できません';
     $Self->{Translation}->{'Repeated hours are not allowed. Start time matches another interval.'} =
         '繰り返された時間は許可されません。開始時刻は別の間隔と一致します。';
     $Self->{Translation}->{'Invalid format! Please enter a time with the format HH:MM.'} = '';
     $Self->{Translation}->{'24:00 is only permitted as end time.'} = '';
     $Self->{Translation}->{'Invalid time! A day has only 24 hours.'} = '';
+    $Self->{Translation}->{'End Time'} = '';
     $Self->{Translation}->{'End time must be after start time.'} = '終了時間の前に開始時間を設定することはできません。';
     $Self->{Translation}->{'Repeated hours are not allowed. End time matches another interval.'} =
         'Diese Endzeit wurde bereits in einem anderen Eintrag angegeben.';
@@ -142,8 +147,13 @@ sub Data {
     $Self->{Translation}->{'Days of Vacation'} = '休暇';
     $Self->{Translation}->{'Hours per Week'} = '時間 / 週';
     $Self->{Translation}->{'Authorized Overtime'} = '承認済の超過勤務';
+    $Self->{Translation}->{'Start Date'} = '';
     $Self->{Translation}->{'Please insert a valid date.'} = '';
+    $Self->{Translation}->{'End Date'} = '';
     $Self->{Translation}->{'Period end must be after period begin.'} = '終了点の前に開始点を設定することはできません。';
+    $Self->{Translation}->{'Leave Days'} = '';
+    $Self->{Translation}->{'Weekly Hours'} = '';
+    $Self->{Translation}->{'Overtime'} = '';
     $Self->{Translation}->{'No time periods found.'} = '期間が未設定です。';
     $Self->{Translation}->{'Add time period'} = '期間を追加してください。';
 
@@ -191,6 +201,11 @@ sub Data {
     $Self->{Translation}->{'This module forces inserts in TimeAccounting.'} = 'TimeAccountingモジュールと同等の項目が設定必須となります。';
     $Self->{Translation}->{'This notification module gives a warning if there are too many incomplete working days.'} =
         'あまりにも多くの不完全な稼働日がある場合、この通知モジュールは警告を与えます。';
+    $Self->{Translation}->{'Time accounting edit.'} = '';
+    $Self->{Translation}->{'Time accounting overview.'} = '';
+    $Self->{Translation}->{'Time accounting reporting.'} = '';
+    $Self->{Translation}->{'Time accounting settings.'} = '';
+    $Self->{Translation}->{'Time accounting view.'} = '';
     $Self->{Translation}->{'Time accounting.'} = '時間会計';
     $Self->{Translation}->{'To use if some actions reduced the working hours (for example, if only half of the traveling time is paid Key => traveling; Content => 50).'} =
         '業務上の行動において、稼働時間として計上する時間を調整する必要がある場合に、この設定を使用します。（例：「移動時間」の50%のみ勤務時間相当とする場合「鍵」に`journey`、「内容」に`50`と設定)';

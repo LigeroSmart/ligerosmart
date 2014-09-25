@@ -18,6 +18,9 @@ sub Data {
 
     # Template: AAATimeAccounting
     $Self->{Translation}->{'Time Accounting'} = '';
+    $Self->{Translation}->{'Show valid projects'} = '';
+    $Self->{Translation}->{'Show all projects'} = '';
+    $Self->{Translation}->{'TimeAccounting'} = '';
 
     # Template: AgentTimeAccountingDelete
     $Self->{Translation}->{'Do you really want to delete the Time Accounting of this day?'} =
@@ -47,12 +50,14 @@ sub Data {
     $Self->{Translation}->{'Task'} = 'Feladat';
     $Self->{Translation}->{'Remark'} = 'Megjegyzés';
     $Self->{Translation}->{'Please add a remark with more than 8 characters!.'} = 'Kérem adjon meg egy 8 karakternél hosszabb megjegyzést!';
+    $Self->{Translation}->{'Start Time'} = '';
     $Self->{Translation}->{'Negative times are not allowed.'} = 'Negatív idõk nem megengedettek.';
     $Self->{Translation}->{'Repeated hours are not allowed. Start time matches another interval.'} =
         'Ismétlõdõ órák megadása nem megengedett. A kezdõ idõpont egyezik egy másik intervalummal.';
     $Self->{Translation}->{'Invalid format! Please enter a time with the format HH:MM.'} = '';
     $Self->{Translation}->{'24:00 is only permitted as end time.'} = '';
     $Self->{Translation}->{'Invalid time! A day has only 24 hours.'} = '';
+    $Self->{Translation}->{'End Time'} = '';
     $Self->{Translation}->{'End time must be after start time.'} = 'A befejezõ idõpont késõbbi kell legyen, mint a kezdõ idõpont.';
     $Self->{Translation}->{'Repeated hours are not allowed. End time matches another interval.'} =
         'Ismétlõdõ órák megadása nem lehetséges. A befejezõ idõpont egyezik más idõszakkal.';
@@ -142,8 +147,13 @@ sub Data {
     $Self->{Translation}->{'Days of Vacation'} = 'Szabadnapok';
     $Self->{Translation}->{'Hours per Week'} = 'Órák hetente';
     $Self->{Translation}->{'Authorized Overtime'} = 'Jóváhagyott Túlóra';
+    $Self->{Translation}->{'Start Date'} = '';
     $Self->{Translation}->{'Please insert a valid date.'} = '';
+    $Self->{Translation}->{'End Date'} = '';
     $Self->{Translation}->{'Period end must be after period begin.'} = 'Az idõszak végének a kezdete után kell lennie.';
+    $Self->{Translation}->{'Leave Days'} = '';
+    $Self->{Translation}->{'Weekly Hours'} = '';
+    $Self->{Translation}->{'Overtime'} = '';
     $Self->{Translation}->{'No time periods found.'} = 'Idõszak nem található.';
     $Self->{Translation}->{'Add time period'} = 'Idõszak hozzáadása';
 
@@ -191,6 +201,11 @@ sub Data {
     $Self->{Translation}->{'This module forces inserts in TimeAccounting.'} = 'Ez a modul kényszeríti az IdõElszámolás beszúrását..';
     $Self->{Translation}->{'This notification module gives a warning if there are too many incomplete working days.'} =
         'Ez a figyelmeztetõ modul jelzi, ha túl sok kitöltetlen munkanap van.';
+    $Self->{Translation}->{'Time accounting edit.'} = '';
+    $Self->{Translation}->{'Time accounting overview.'} = '';
+    $Self->{Translation}->{'Time accounting reporting.'} = '';
+    $Self->{Translation}->{'Time accounting settings.'} = '';
+    $Self->{Translation}->{'Time accounting view.'} = '';
     $Self->{Translation}->{'Time accounting.'} = 'IdõElszámolás.';
     $Self->{Translation}->{'To use if some actions reduced the working hours (for example, if only half of the traveling time is paid Key => traveling; Content => 50).'} =
         'Használja, ha valamelyik akció csökkenti a munkaórákat (például ha csak az utazás fele kerül kifizetésre, Kulcs => Utazás; Tartalom =>50).';

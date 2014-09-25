@@ -14,6 +14,18 @@ msgstr ""
 msgid "Time Accounting"
 msgstr ""
 
+#. Template: AAATimeAccounting
+msgid "Show valid projects"
+msgstr ""
+
+#. Template: AAATimeAccounting
+msgid "Show all projects"
+msgstr ""
+
+#. Template: AAATimeAccounting
+msgid "TimeAccounting"
+msgstr ""
+
 #. Template: AgentTimeAccountingDelete
 msgid "Do you really want to delete the Time Accounting of this day?"
 msgstr ""
@@ -107,6 +119,10 @@ msgid "Please add a remark with more than 8 characters!."
 msgstr ""
 
 #. Template: AgentTimeAccountingEdit
+msgid "Start Time"
+msgstr ""
+
+#. Template: AgentTimeAccountingEdit
 msgid "Negative times are not allowed."
 msgstr ""
 
@@ -124,6 +140,10 @@ msgstr ""
 
 #. Template: AgentTimeAccountingEdit
 msgid "Invalid time! A day has only 24 hours."
+msgstr ""
+
+#. Template: AgentTimeAccountingEdit
+msgid "End Time"
 msgstr ""
 
 #. Template: AgentTimeAccountingEdit
@@ -435,11 +455,31 @@ msgid "Authorized Overtime"
 msgstr ""
 
 #. Template: AgentTimeAccountingSetting
+msgid "Start Date"
+msgstr ""
+
+#. Template: AgentTimeAccountingSetting
 msgid "Please insert a valid date."
 msgstr ""
 
 #. Template: AgentTimeAccountingSetting
+msgid "End Date"
+msgstr ""
+
+#. Template: AgentTimeAccountingSetting
 msgid "Period end must be after period begin."
+msgstr ""
+
+#. Template: AgentTimeAccountingSetting
+msgid "Leave Days"
+msgstr ""
+
+#. Template: AgentTimeAccountingSetting
+msgid "Weekly Hours"
+msgstr ""
+
+#. Template: AgentTimeAccountingSetting
+msgid "Overtime"
 msgstr ""
 
 #. Template: AgentTimeAccountingSetting
@@ -568,6 +608,26 @@ msgstr ""
 
 #. SysConfig
 msgid "This notification module gives a warning if there are too many incomplete working days."
+msgstr ""
+
+#. SysConfig
+msgid "Time accounting edit."
+msgstr ""
+
+#. SysConfig
+msgid "Time accounting overview."
+msgstr ""
+
+#. SysConfig
+msgid "Time accounting reporting."
+msgstr ""
+
+#. SysConfig
+msgid "Time accounting settings."
+msgstr ""
+
+#. SysConfig
+msgid "Time accounting view."
 msgstr ""
 
 #. SysConfig
