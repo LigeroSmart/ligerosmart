@@ -245,6 +245,7 @@ sub Run {
         Name        => 'Month',
         Sort        => 'NumericKey',
         Translation => 1,
+        Title       => $Self->{LayoutObject}->{LanguageObject}->Translate("Month"),
     );
 
     my @Year = ( $Year - 4 .. $Year + 1 );
@@ -254,6 +255,7 @@ sub Run {
         SelectedID  => $Param{Year} || '',
         Name        => 'Year',
         Translation => 0,
+        Title       => $Self->{LayoutObject}->{LanguageObject}->Translate("Year"),
     );
 
     ( $Param{YearBack}, $Param{MonthBack}, $Param{DayBack} )

@@ -782,6 +782,7 @@ sub Run {
             Class       => 'Validate_TimeAccounting_Project ProjectSelection '
                 . ( $Errors{$ErrorIndex}{ProjectIDInvalid} || '' ),
             OnChange => "TimeAccounting.Agent.EditTimeRecords.FillActionList($ID);",
+            Title    => $Self->{LayoutObject}->{LanguageObject}->Translate("Project"),
         );
 
         # action list initially only contains empty and selected element as well as elements
@@ -819,6 +820,7 @@ sub Run {
                 . $ID
                 . ' ActionSelection '
                 . ( $Errors{$ErrorIndex}{ActionIDInvalid} || '' ),
+            Title => $Self->{LayoutObject}->{LanguageObject}->Translate("Task"),
         );
 
         $Param{Remark} = $UnitRef->{Remark} || $ServerErrorData{$ErrorIndex}{Remark} || '';
@@ -1089,6 +1091,8 @@ sub Run {
                 SelectedID   => $SelectedID,
                 Name         => "IncompleteWorkingDaysList",
                 PossibleNone => 1,
+                Title =>
+                    $Self->{LayoutObject}->{LanguageObject}->Translate("Incomplete Working Days"),
             );
 
             $Self->{LayoutObject}->Block(

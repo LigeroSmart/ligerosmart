@@ -873,6 +873,7 @@ sub _SettingOverview {
                 Name         => 'NewUserID',
                 Translation  => 0,
                 PossibleNone => 0,
+                Title        => $Self->{LayoutObject}->{LanguageObject}->Translate("New User"),
             );
             $Self->{LayoutObject}->Block(
                 Name => 'ActionAddUser',
@@ -1131,6 +1132,7 @@ sub _UserSettingsEdit {
                 SelectedID => $GetParam{PeriodStatus} || $Param{$Period}{PeriodStatus},
                 Name       => "PeriodStatus[$Period]",
                 ID         => "PeriodStatus-$Period",
+                Title      => $Self->{LayoutObject}->{LanguageObject}->Translate("Period Status"),
             );
 
             $Self->{LayoutObject}->Block(
@@ -1190,6 +1192,7 @@ sub _UserSettingsEdit {
                     SelectedID => $User{$Period}{UserStatus},
                     Name       => "PeriodStatus[$Period]",
                     ID         => "PeriodStatus-$Period",
+                    Title => $Self->{LayoutObject}->{LanguageObject}->Translate("Period Status"),
                 );
 
                 $Self->{LayoutObject}->Block(
