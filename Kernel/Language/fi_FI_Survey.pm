@@ -9,10 +9,9 @@
 
 package Kernel::Language::fi_FI_Survey;
 
-use utf8;
-
 use strict;
 use warnings;
+use utf8;
 
 sub Data {
     my $Self = shift;
