@@ -1,5 +1,5 @@
 # --
-# Survey.pm - code to excecute during package installation
+# Survey.pm - code to execute during package installation
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -12,9 +12,14 @@ package var::packagesetup::Survey;
 use strict;
 use warnings;
 
+our @ObjectDependencies = (
+    'Kernel::System::DB',
+    'Kernel::System::SysConfig',
+);
+
 =head1 NAME
 
-Survey.pm - code to excecute during package installation
+Survey.pm - code to execute during package installation
 
 =head1 SYNOPSIS
 
@@ -30,54 +35,9 @@ All functions
 
 create an object
 
-    use Kernel::Config;
-    use Kernel::System::Encode;
-    use Kernel::System::Log;
-    use Kernel::System::Main;
-    use Kernel::System::Time;
-    use Kernel::System::DB;
-    use Kernel::System::XML;
-    use var::packagesetup::Survey;
-
-    my $ConfigObject = Kernel::Config->new();
-    my $EncodeObject = Kernel::System::Encode->new(
-        ConfigObject => $ConfigObject,
-    );
-    my $LogObject    = Kernel::System::Log->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-    );
-    my $MainObject = Kernel::System::Main->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-    );
-    my $TimeObject = Kernel::System::Time->new(
-        ConfigObject => $ConfigObject,
-        LogObject    => $LogObject,
-    );
-    my $DBObject = Kernel::System::DB->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-        MainObject   => $MainObject,
-    );
-    my $XMLObject = Kernel::System::XML->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-        DBObject     => $DBObject,
-        MainObject   => $MainObject,
-    );
-    my $CodeObject = var::packagesetup::Survey->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-        MainObject   => $MainObject,
-        TimeObject   => $TimeObject,
-        DBObject     => $DBObject,
-        XMLObject    => $XMLObject,
-    );
+    use Kernel::System::ObjectManager;
+    local $Kernel::OM = Kernel::System::ObjectManager->new();
+    my $CodeObject = $Kernel::OM->Get('var::packagesetup::Survey');
 
 =cut
 
@@ -88,13 +48,33 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    # check needed objects
-    for my $Object (
-        qw(ConfigObject LogObject EncodeObject MainObject TimeObject DBObject XMLObject)
-        )
-    {
-        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
+    # rebuild ZZZ* files
+    $Kernel::OM->Get('Kernel::System::SysConfig')->WriteDefault();
+
+    # define the ZZZ files
+    my @ZZZFiles = (
+        'ZZZAAuto.pm',
+        'ZZZAuto.pm',
+    );
+
+    # reload the ZZZ files (mod_perl workaround)
+    for my $ZZZFile (@ZZZFiles) {
+
+        PREFIX:
+        for my $Prefix (@INC) {
+            my $File = $Prefix . '/Kernel/Config/Files/' . $ZZZFile;
+            next PREFIX if !-f $File;
+            do $File;
+            last PREFIX;
+        }
     }
+
+    # always discard the config object before package code is executed,
+    # to make sure that the config object will be created newly, so that it
+    # will use the recently written new config from the package
+    $Kernel::OM->ObjectsDiscard(
+        Objects => ['Kernel::Config'],
+    );
 
     return $Self;
 }
@@ -166,14 +146,17 @@ my $Result = $CodeObject->CodeUpgradeFromLowerThan_2_0_92();
 sub CodeUpgradeFromLowerThan_2_0_92 {    ## no critic
     my ( $Self, %Param ) = @_;
 
+    # get database object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
     # SELECT all functionality values
-    $Self->{DBObject}->Prepare(
+    $DBObject->Prepare(
         SQL => 'SELECT id, send_time FROM survey_request',
     );
 
     my @List;
     ROW:
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $DBObject->FetchrowArray() ) {
         next ROW if !$Row[1];
 
         push @List, \@Row;
@@ -181,7 +164,7 @@ sub CodeUpgradeFromLowerThan_2_0_92 {    ## no critic
 
     # save entries in new table
     for my $Entry (@List) {
-        $Self->{DBObject}->Do(
+        $DBObject->Do(
             SQL =>
                 'UPDATE survey_request SET create_time = ? WHERE  id = ?',
             Bind => [ \$Entry->[1], \$Entry->[0] ],
@@ -222,13 +205,16 @@ where there is no entry present.
 sub _Prefill_AnswerRequiredFromSurveyQuestion_2_1_5 {    ## no critic
     my ($Self) = @_;
 
-    return if !$Self->{DBObject}->Prepare(
+    # get database object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
+    return if !$DBObject->Prepare(
         SQL => 'SELECT id, answer_required '
             . 'FROM survey_question',
         Limit => 0,
     );
     my @IdsToUpdate;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $DBObject->FetchrowArray() ) {
 
         # if we had an id
         # but no answer_required or answer_required isn't 0 or 1
@@ -247,7 +233,7 @@ sub _Prefill_AnswerRequiredFromSurveyQuestion_2_1_5 {    ## no critic
     }
 
     for my $QuestionID (@IdsToUpdate) {
-        $Self->{DBObject}->Do(
+        $DBObject->Do(
             SQL =>
                 'UPDATE survey_question SET answer_required = 0 WHERE id = ?',
             Bind => [
