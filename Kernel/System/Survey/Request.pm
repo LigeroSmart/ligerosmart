@@ -14,6 +14,8 @@ use warnings;
 
 use Kernel::System::VariableCheck qw(:all);
 
+our $ObjectManagerDisabled = 1;
+
 =head1 NAME
 
 Kernel::System::Survey::Request - sub module of Kernel::System::Survey
@@ -43,15 +45,19 @@ sub RequestGet {
 
     # check needed stuff
     if ( !$Param{PublicSurveyKey} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need PublicSurveyKey!',
         );
+
         return;
     }
 
+    # get database object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
     # get vote list
-    $Self->{DBObject}->Prepare(
+    $DBObject->Prepare(
         SQL => '
             SELECT id, ticket_id, survey_id, valid_id, public_survey_key, send_to, send_time,
                 vote_time
@@ -64,7 +70,7 @@ sub RequestGet {
     # fetch the result
     my %RequestData;
 
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $DBObject->FetchrowArray() ) {
         $RequestData{RequestID}       = $Row[0];
         $RequestData{TicketID}        = $Row[1];
         $RequestData{SurveyID}        = $Row[2];
@@ -93,27 +99,34 @@ sub RequestSend {
 
     # check needed stuff
     if ( !$Param{TicketID} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need TicketID!',
         );
+
         return;
     }
+
+    # get time object
+    my $TimeObject = $Kernel::OM->Get('Kernel::System::Time');
 
     # create PublicSurveyKey
     my $PublicSurveyKey;
     if ( !$Param{PublicSurveyKey} ) {
         my $MD5 = Digest::MD5->new();
-        $MD5->add( $Self->{TimeObject}->SystemTime() . int( rand(999999999) ) );
+        $MD5->add( $TimeObject->SystemTime() . int( rand(999999999) ) );
         $PublicSurveyKey = $MD5->hexdigest();
     }
     else {
         $PublicSurveyKey = $Param{PublicSurveyKey};
     }
 
+    # get database object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
     # find master survey
     my $Status = 'Master';
-    $Self->{DBObject}->Prepare(
+    $DBObject->Prepare(
         SQL => '
             SELECT id
             FROM survey
@@ -124,7 +137,7 @@ sub RequestSend {
 
     # fetch the result
     my $SurveyID;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $DBObject->FetchrowArray() ) {
         $SurveyID = $Row[0];
     }
 
@@ -141,8 +154,11 @@ sub RequestSend {
     # fix new lines
     $Body =~ s/(\n\r|\r\r\n|\r\n)/\n/g;
 
+    # get ticket object
+    my $TicketObject = $Kernel::OM->Get('Kernel::System::Ticket');
+
     # ticket data
-    my %Ticket = $Self->{TicketObject}->TicketGet(
+    my %Ticket = $TicketObject->TicketGet(
         TicketID => $Param{TicketID},
     );
 
@@ -160,8 +176,11 @@ sub RequestSend {
         return if !$Found;
     }
 
+    # get config object
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+
     # check if the for send condition ticket type check is enabled
-    if ( $Self->{ConfigObject}->Get('Survey::CheckSendConditionTicketType') ) {
+    if ( $ConfigObject->Get('Survey::CheckSendConditionTicketType') ) {
 
         # check if ticket is in a send ticket type id
         if ( IsArrayRefWithData( $Survey{TicketTypeIDs} ) ) {
@@ -182,7 +201,7 @@ sub RequestSend {
     }
 
     # check if the send condition service check is enabled
-    if ( $Self->{ConfigObject}->Get('Survey::CheckSendConditionService') ) {
+    if ( $ConfigObject->Get('Survey::CheckSendConditionService') ) {
 
         # check if ticket is in a send service
         if ( IsArrayRefWithData( $Survey{ServiceIDs} ) ) {
@@ -217,11 +236,11 @@ sub RequestSend {
     $Body =~ s/<OTRS_TICKET_.+?>/-/gi;
 
     # replace config options
-    $Subject =~ s{<OTRS_CONFIG_(.+?)>}{$Self->{ConfigObject}->Get($1)}egx;
-    $Body =~ s{<OTRS_CONFIG_(.+?)>}{$Self->{ConfigObject}->Get($1)}egx;
+    $Subject =~ s{<OTRS_CONFIG_(.+?)>}{$ConfigObject->Get($1)}egx;
+    $Body =~ s{<OTRS_CONFIG_(.+?)>}{$ConfigObject->Get($1)}egx;
 
     # filter for new rich text content
-    $Body =~ s{&lt;OTRS_CONFIG_(.+?)&gt;}{$Self->{ConfigObject}->Get($1)}egx;
+    $Body =~ s{&lt;OTRS_CONFIG_(.+?)&gt;}{$ConfigObject->Get($1)}egx;
 
     # cleanup
     $Subject =~ s/<OTRS_CONFIG_.+?>/-/gi;
@@ -233,13 +252,14 @@ sub RequestSend {
     # get customer data and replace it with <OTRS_CUSTOMER_DATA_...
     my %CustomerUser;
     if ( $Ticket{CustomerUserID} ) {
-        %CustomerUser = $Self->{CustomerUserObject}->CustomerUserDataGet(
+        %CustomerUser = $Kernel::OM->Get('Kernel::System::CustomerUser')->CustomerUserDataGet(
             User => $Ticket{CustomerUserID},
         );
 
         # replace customer stuff with tags
+        CUSTOMER:
         for my $Data ( sort keys %CustomerUser ) {
-            next if !$CustomerUser{$Data};
+            next CUSTOMER if !$CustomerUser{$Data};
 
             $Subject =~ s/<OTRS_CUSTOMER_DATA_$Data>/$CustomerUser{$Data}/gi;
             $Body =~ s/<OTRS_CUSTOMER_DATA_$Data>/$CustomerUser{$Data}/gi;
@@ -266,7 +286,7 @@ sub RequestSend {
     my $ToString = $CustomerUser{UserEmail};
 
     if ( !$ToString ) {
-        my %Article = $Self->{TicketObject}->ArticleLastCustomerArticle(
+        my %Article = $TicketObject->ArticleLastCustomerArticle(
             TicketID => $Param{TicketID},
         );
         if ( $Article{SenderType} eq 'agent' ) {
@@ -286,14 +306,14 @@ sub RequestSend {
     # return if no to is found
     return if !$To;
 
-    # check if it's a valid email addedss (min is needed)
+    # check if it's a valid email address (min is needed)
     return if $To !~ /@/;
 
     # convert to lower cases
     $To = lc $To;
 
     # check recipient blacklist
-    my $RecipientBlacklist = $Self->{ConfigObject}->Get('Survey::NotificationRecipientBlacklist');
+    my $RecipientBlacklist = $ConfigObject->Get('Survey::NotificationRecipientBlacklist');
     if (
         defined $RecipientBlacklist
         && ref $RecipientBlacklist eq 'ARRAY'
@@ -306,26 +326,26 @@ sub RequestSend {
     }
 
     # check if not survey should be send
-    my $SendNoSurveyRegExp = $Self->{ConfigObject}->Get('Survey::SendNoSurveyRegExp');
+    my $SendNoSurveyRegExp = $ConfigObject->Get('Survey::SendNoSurveyRegExp');
 
     return if $SendNoSurveyRegExp && $To =~ /$SendNoSurveyRegExp/i;
 
-    # Only if we haven't been called by cron
+    # Only if we haven't been called by CRON
     if ( !$Param{TriggerSendRequests} ) {
         my $AmountOfSurveysPer30Days
-            = $Self->{ConfigObject}->Get('Survey::AmountOfSurveysPer30Days');
+            = $ConfigObject->Get('Survey::AmountOfSurveysPer30Days');
 
         # if we should just send a certain amount of surveys per 30 days & recipient
         if ($AmountOfSurveysPer30Days) {
-            my $Now = $Self->{TimeObject}->SystemTime();
+            my $Now = $TimeObject->SystemTime();
 
             # Find all surveys that were created in the last 30 days
             my $ThirtyDaysAgo = $Now - 30 * 86400;
             $ThirtyDaysAgo
-                = $Self->{TimeObject}->SystemTime2TimeStamp( SystemTime => $ThirtyDaysAgo );
+                = $TimeObject->SystemTime2TimeStamp( SystemTime => $ThirtyDaysAgo );
             my $LastSentTime = 0;
 
-            $Self->{DBObject}->Prepare(
+            $DBObject->Prepare(
                 SQL => '
                     SELECT create_time
                     FROM survey_request
@@ -337,24 +357,25 @@ sub RequestSend {
 
             # fetch the result
             my @Rows;
-            while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+            while ( my @Row = $DBObject->FetchrowArray() ) {
                 push @Rows, $Row[0];
             }
 
             # If we have reached the maximum amount of surveys per month
             if ( scalar @Rows >= $AmountOfSurveysPer30Days ) {
+
                 return;
             }
         }
     }
 
     # check if a survey is sent in the last time
-    my $SendPeriod = $Self->{ConfigObject}->Get('Survey::SendPeriod');
+    my $SendPeriod = $ConfigObject->Get('Survey::SendPeriod');
     if ($SendPeriod) {
         my $LastSentTime = 0;
 
         # get send time
-        $Self->{DBObject}->Prepare(
+        $DBObject->Prepare(
             SQL => '
                 SELECT send_time
                 FROM survey_request
@@ -365,18 +386,18 @@ sub RequestSend {
         );
 
         # fetch the result
-        while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        while ( my @Row = $DBObject->FetchrowArray() ) {
             $LastSentTime = $Row[0];
         }
         if ($LastSentTime) {
-            my $Now = $Self->{TimeObject}->SystemTime();
-            $LastSentTime = $Self->{TimeObject}->TimeStamp2SystemTime( String => $LastSentTime );
+            my $Now = $TimeObject->SystemTime();
+            $LastSentTime = $TimeObject->TimeStamp2SystemTime( String => $LastSentTime );
 
             return if ( $LastSentTime + $SendPeriod * 60 * 60 * 24 ) > $Now;
 
         }
     }
-    my $SendInHoursAfterClose = $Self->{ConfigObject}->Get('Survey::SendInHoursAfterClose');
+    my $SendInHoursAfterClose = $ConfigObject->Get('Survey::SendInHoursAfterClose');
 
     # If no Delayed Sending is configured
     # send immediately, log it to Ticket History and insert it to survey_requests
@@ -384,7 +405,7 @@ sub RequestSend {
     if ( !$SendInHoursAfterClose && !$Param{TriggerSendRequests} ) {
 
         # insert request
-        $Self->{DBObject}->Do(
+        $DBObject->Do(
             SQL => '
                 INSERT INTO survey_request (ticket_id, survey_id, valid_id, public_survey_key,
                     send_to, send_time, create_time)
@@ -393,7 +414,7 @@ sub RequestSend {
         );
 
         # log action on ticket
-        $Self->{TicketObject}->HistoryAdd(
+        $TicketObject->HistoryAdd(
             TicketID     => $Param{TicketID},
             CreateUserID => 1,
             HistoryType  => 'Misc',
@@ -401,15 +422,15 @@ sub RequestSend {
         );
     }
 
-    # If we should send delayed just cronjobs deliver "TriggerSendRequests",
+    # If we should send delayed just CRON jobs deliver "TriggerSendRequests",
     # so we were called by a closed ticket
     # and have to create the survey_request record with no send_time
-    # (will be filled in by cronjob as soon as it really got delivered)
+    # (will be filled in by CRON job as soon as it really got delivered)
     # additionally no Ticket History yet, cause no send has happened
     elsif ( $SendInHoursAfterClose && !$Param{TriggerSendRequests} ) {
 
         # insert request
-        $Self->{DBObject}->Do(
+        $DBObject->Do(
             SQL => '
                 INSERT INTO survey_request (ticket_id, survey_id, valid_id, public_survey_key,
                     send_to, create_time)
@@ -419,7 +440,7 @@ sub RequestSend {
 
     }
 
-    # here we got called by cron, and no matter if SendInHoursAfterClose is configured
+    # here we got called by CRON, and no matter if SendInHoursAfterClose is configured
     # or not, we have to send the survey requests that weren't sent yet
     # this time we have to update the survey_request line
     # to fill in the send_time and create the Ticket History entry
@@ -429,7 +450,7 @@ sub RequestSend {
         && $Param{SurveyRequestID} =~ /^\d+$/
         )
     {
-        $Self->{DBObject}->Do(
+        $DBObject->Do(
             SQL => '
                 UPDATE survey_request
                 SET send_time = current_timestamp
@@ -438,7 +459,7 @@ sub RequestSend {
         );
 
         # log action on ticket
-        $Self->{TicketObject}->HistoryAdd(
+        $TicketObject->HistoryAdd(
             TicketID     => $Param{TicketID},
             CreateUserID => 1,
             HistoryType  => 'Misc',
@@ -447,38 +468,45 @@ sub RequestSend {
     }
 
     # get charset
-    my $Charset = $Self->{ConfigObject}->Get('DefaultCharset') || 'uft-8';
+    my $Charset = $ConfigObject->Get('DefaultCharset') || 'uft-8';
 
-    # clean html and convert the Field in html (\n --><br>)
+    # get HTMLUtils object
+    my $HTMLUtilsObject = $Kernel::OM->Get('Kernel::System::HTMLUtils');
+
+    # clean HTML and convert the Field in HTML (\n --><br>)
     $Body =~ s{\A\$html\/text\$\s(.*)}{$1}xms;
     if ( !$1 ) {
 
-        # convert body to html
-        $Body = $Self->{HTMLUtilsObject}->ToHTML(
+        # convert body to HTML
+        $Body = $HTMLUtilsObject->ToHTML(
             String => $Body,
         );
     }
 
-    # prepare html links
-    $Self->{HTMLUtilsObject}->LinkQuote(
+    # prepare HTML links
+    $HTMLUtilsObject->LinkQuote(
         String => \$Body,
     );
 
-    # complete html document
-    $Body = $Self->{HTMLUtilsObject}->DocumentComplete(
+    # complete HTML document
+    $Body = $HTMLUtilsObject->DocumentComplete(
         String  => $Body,
         Charset => $Charset,
     );
 
     # send survey
-    return $Self->{SendmailObject}->Send(
-        From     => $Survey{NotificationSender},
-        To       => $To,
-        Subject  => $Subject,
-        MimeType => 'text/html',
-        Charset  => $Charset,
-        Body     => $Body,
-    ) if ( !$SendInHoursAfterClose || $Param{TriggerSendRequests} );
+    if ( !$SendInHoursAfterClose || $Param{TriggerSendRequests} ) {
+        return $Kernel::OM->Get('Kernel::System::Email')->Send(
+            From     => $Survey{NotificationSender},
+            To       => $To,
+            Subject  => $Subject,
+            MimeType => 'text/html',
+            Charset  => $Charset,
+            Body     => $Body,
+        );
+    }
+
+    return 1;
 }
 
 =item RequestCount()
@@ -498,7 +526,7 @@ sub RequestCount {
     # check needed stuff
     for my $Argument (qw(SurveyID ValidID)) {
         if ( !defined $Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -520,8 +548,11 @@ sub RequestCount {
         $SQL .= " AND valid_id = 1";
     }
 
+    # get database object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
     # ask database
-    $Self->{DBObject}->Prepare(
+    $DBObject->Prepare(
         SQL   => $SQL,
         Bind  => [ \$Param{SurveyID} ],
         Limit => 1,
@@ -529,7 +560,7 @@ sub RequestCount {
 
     # fetch the result
     my $RequestCount;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $DBObject->FetchrowArray() ) {
         $RequestCount = $Row[0];
     }
 
