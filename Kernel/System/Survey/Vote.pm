@@ -12,6 +12,8 @@ package Kernel::System::Survey::Vote;
 use strict;
 use warnings;
 
+our $ObjectManagerDisabled = 1;
+
 =head1 NAME
 
 Kernel::System::Survey::Vote - sub module of Kernel::System::Survey
@@ -43,16 +45,20 @@ sub VoteGet {
     # check needed stuff
     for my $Argument (qw(RequestID QuestionID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
+
             return;
         }
     }
 
+    # get database object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
     # get vote
-    $Self->{DBObject}->Prepare(
+    $DBObject->Prepare(
         SQL => '
             SELECT id, vote_value
             FROM survey_vote
@@ -63,7 +69,7 @@ sub VoteGet {
 
     # fetch the result
     my @List;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $DBObject->FetchrowArray() ) {
         my %Data;
         $Data{RequestID} = $Row[0];
         $Data{VoteValue} = $Row[1] || '-';
@@ -89,15 +95,19 @@ sub VoteList {
 
     # check needed stuff
     if ( !$Param{SurveyID} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need SurveyID!',
         );
+
         return;
     }
 
+    # get database object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
     # get vote list
-    $Self->{DBObject}->Prepare(
+    $DBObject->Prepare(
         SQL => '
             SELECT id, ticket_id, send_time, vote_time
             FROM survey_request
@@ -109,7 +119,7 @@ sub VoteList {
 
     # fetch the result
     my @List;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $DBObject->FetchrowArray() ) {
         my %Data;
         $Data{RequestID} = $Row[0];
         $Data{TicketID}  = $Row[1];
@@ -138,16 +148,20 @@ sub VoteAttributeGet {
     # check needed stuff
     for my $Argument (qw(VoteID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
+
             return;
         }
     }
 
+    # get database object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
     # get vote attribute
-    $Self->{DBObject}->Prepare(
+    $DBObject->Prepare(
         SQL => '
             SELECT vote_value
             FROM survey_vote
@@ -157,7 +171,8 @@ sub VoteAttributeGet {
     );
 
     # fetch the result
-    my $VoteAttributeContent = ${ $Self->{DBObject}->FetchrowArray() }[0];
+    my $VoteAttributeContent = ${ $DBObject->FetchrowArray() }[0];
+
     return $VoteAttributeContent;
 }
 
@@ -178,16 +193,20 @@ sub VoteCount {
     # check needed stuff
     for my $Argument (qw(QuestionID VoteValue)) {
         if ( !defined $Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
+
             return;
         }
     }
 
+    # get database object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
     # count votes
-    $Self->{DBObject}->Prepare(
+    $DBObject->Prepare(
         SQL => '
             SELECT COUNT(vote_value)
             FROM survey_vote
@@ -198,7 +217,7 @@ sub VoteCount {
 
     # fetch the result
     my $VoteCount;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $DBObject->FetchrowArray() ) {
         $VoteCount = $Row[0];
     }
 
