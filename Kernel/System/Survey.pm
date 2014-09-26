@@ -1,5 +1,5 @@
 # --
-# Kernel/System/Survey.pm - all survey funtions
+# Kernel/System/Survey.pm - all survey functions
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -13,19 +13,28 @@ use strict;
 use warnings;
 
 use Digest::MD5;
-use Kernel::System::YAML;
-use Kernel::System::CustomerUser;
-use Kernel::System::Email;
-use Kernel::System::HTMLUtils;
-use Kernel::System::Ticket;
-use Kernel::System::VariableCheck qw(:all);
 use Mail::Address;
+
+use Kernel::System::VariableCheck qw(:all);
 
 use base qw(
     Kernel::System::Survey::Answer
     Kernel::System::Survey::Question
     Kernel::System::Survey::Request
     Kernel::System::Survey::Vote
+);
+
+our @ObjectDependencies = (
+    'Kernel::Config',
+    'Kernel::System::CustomerUser',
+    'Kernel::System::DB',
+    'Kernel::System::Email',
+    'Kernel::System::HTMLUtils',
+    'Kernel::System::Log',
+    'Kernel::System::User',
+    'Kernel::System::Ticket',
+    'Kernel::System::Time',
+    'Kernel::System::YAML',
 );
 
 =head1 NAME
@@ -46,55 +55,9 @@ All survey functions. E. g. to add survey or and functions.
 
 create an object
 
-    use Kernel::Config;
-    use Kernel::System::Encode;
-    use Kernel::System::Log;
-    use Kernel::System::Time;
-    use Kernel::System::DB;
-    use Kernel::System::Main;
-    use Kernel::System::User;
-    use Kernel::System::Survey;
-
-    my $ConfigObject = Kernel::Config->new();
-    my $EncodeObject = Kernel::System::Encode->new(
-        ConfigObject => $ConfigObject,
-    );
-    my $LogObject = Kernel::System::Log->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-    );
-    my $TimeObject = Kernel::System::Time->new(
-        ConfigObject => $ConfigObject,
-        LogObject    => $LogObject,
-    );
-    my $MainObject = Kernel::System::Main->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-    );
-    my $DBObject = Kernel::System::DB->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-        MainObject   => $MainObject,
-    );
-    my $UserObject = Kernel::System::User->new(
-        ConfigObject => $ConfigObject,
-        LogObject    => $LogObject,
-        MainObject   => $MainObject,
-        TimeObject   => $TimeObject,
-        DBObject     => $DBObject,
-        EncodeObject => $EncodeObject,
-    );
-    my $SurveyObject = Kernel::System::Survey->new(
-        ConfigObject => $ConfigObject,
-        LogObject    => $LogObject,
-        TimeObject   => $TimeObject,
-        DBObject     => $DBObject,
-        MainObject   => $MainObject,
-        EncodeObject => $EncodeObject,
-        UserObject   => $UserObject,
-    );
+    use Kernel::System::ObjectManager;
+    local $Kernel::OM = Kernel::System::ObjectManager->new();
+    my $SurveyObject = $Kernel::OM->Get('Kernel::System::Survey');
 
 =cut
 
@@ -105,28 +68,9 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    # check needed objects
-    for my $Object (
-        qw(ConfigObject LogObject TimeObject DBObject MainObject EncodeObject UserObject)
-        )
-    {
-        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
-    }
-
-    # create additional objects
-    $Self->{YAMLObject} = Kernel::System::YAML->new( %{$Self} );
-
-    $Self->{HTMLUtilsObject} = $Param{HTMLUtilsObject}
-        || Kernel::System::HTMLUtils->new( %{$Self} );
-
-    $Self->{SendmailObject} = $Param{SendmailObject} || Kernel::System::Email->new( %{$Self} );
-
-    $Self->{CustomerUserObject} = $Param{CustomerUserObject}
-        || Kernel::System::CustomerUser->new( %{$Self} );
-    $Self->{TicketObject} = $Param{TicketObject} || Kernel::System::Ticket->new( %{$Self} );
-
     # get like escape string needed for some databases (e.g. oracle)
-    $Self->{LikeEscapeString} = $Self->{DBObject}->GetDatabaseFunction('LikeEscapeString');
+    $Self->{LikeEscapeString}
+        = $Kernel::OM->Get('Kernel::System::DB')->GetDatabaseFunction('LikeEscapeString');
 
     return $Self;
 }
@@ -162,10 +106,11 @@ sub SurveyAdd {
         )
     {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
+
             return;
         }
     }
@@ -173,9 +118,12 @@ sub SurveyAdd {
     # build send condition string
     my $SendConditionStrg = $Self->_BuildSendConditionStrg(%Param);
 
+    # get database object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
     # insert a new survey
     my $Status = 'New';
-    $Self->{DBObject}->Do(
+    $DBObject->Do(
         SQL => '
             INSERT INTO survey (title, introduction, description, notification_sender,
                 notification_subject, notification_body, status, send_conditions, create_time, create_by,
@@ -190,7 +138,7 @@ sub SurveyAdd {
     );
 
     # get the id of the survey
-    $Self->{DBObject}->Prepare(
+    $DBObject->Prepare(
         SQL => '
             SELECT id
             FROM survey
@@ -204,13 +152,13 @@ sub SurveyAdd {
 
     # fetch the result
     my $SurveyID;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $DBObject->FetchrowArray() ) {
         $SurveyID = $Row[0];
     }
 
     # set the survey number
     my $SurveyNumber = $SurveyID + 10000;
-    $Self->{DBObject}->Do(
+    $DBObject->Do(
         SQL => '
             UPDATE survey
             SET surveynumber = ?
@@ -245,15 +193,19 @@ sub SurveyGet {
 
     # check needed stuff
     if ( !$Param{SurveyID} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need SurveyID!',
         );
+
         return;
     }
 
+    # get database object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
     # get all attributes of a survey
-    $Self->{DBObject}->Prepare(
+    $DBObject->Prepare(
         SQL => '
             SELECT id, surveynumber, title, introduction, description, notification_sender,
                 notification_subject, notification_body, status, send_conditions, create_time, create_by,
@@ -266,10 +218,11 @@ sub SurveyGet {
 
     # fetch the result
     my %Data;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $DBObject->FetchrowArray() ) {
 
         # get SendCondition as hash
-        my $SendConditions = $Self->{YAMLObject}->Load( Data => $Row[9] ) || {};
+        my $SendConditions
+            = $Kernel::OM->Get('Kernel::System::YAML')->Load( Data => $Row[9] ) || {};
 
         # set data fields for send conditions
         ITEM:
@@ -296,17 +249,21 @@ sub SurveyGet {
     }
 
     if ( !%Data ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "No such SurveyID $Param{SurveyID}!",
         );
+
         return;
     }
 
+    # get config object
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+
     # set default values
-    $Data{NotificationSender}  ||= $Self->{ConfigObject}->Get('Survey::NotificationSender');
-    $Data{NotificationSubject} ||= $Self->{ConfigObject}->Get('Survey::NotificationSubject');
-    $Data{NotificationBody}    ||= $Self->{ConfigObject}->Get('Survey::NotificationBody');
+    $Data{NotificationSender}  ||= $ConfigObject->Get('Survey::NotificationSender');
+    $Data{NotificationSubject} ||= $ConfigObject->Get('Survey::NotificationSubject');
+    $Data{NotificationBody}    ||= $ConfigObject->Get('Survey::NotificationBody');
 
     # get queues
     $Data{Queues} = $Self->SurveyQueueGet(
@@ -315,7 +272,11 @@ sub SurveyGet {
 
     # added CreateBy
     if ( !$Param{Public} ) {
-        my %CreateUserInfo = $Self->{UserObject}->GetUserData(
+
+        # get user object
+        my $UserObject = $Kernel::OM->Get('Kernel::System::User');
+
+        my %CreateUserInfo = $UserObject->GetUserData(
             UserID => $Data{CreateBy},
             Cached => 1,
         );
@@ -325,7 +286,7 @@ sub SurveyGet {
         $Data{CreateUserFullname}  = $CreateUserInfo{UserFullname};
 
         # added ChangeBy
-        my %ChangeUserInfo = $Self->{UserObject}->GetUserData(
+        my %ChangeUserInfo = $UserObject->GetUserData(
             UserID => $Data{ChangeBy},
             Cached => 1,
         );
@@ -370,20 +331,22 @@ sub SurveyUpdate {
         )
     {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
+
             return;
         }
     }
 
     # check queues
     if ( $Param{Queues} && ref $Param{Queues} ne 'ARRAY' ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Queues must be an array reference.',
         );
+
         return;
     }
 
@@ -394,7 +357,7 @@ sub SurveyUpdate {
     my $SendConditionStrg = $Self->_BuildSendConditionStrg(%Param);
 
     # update the survey
-    return if !$Self->{DBObject}->Do(
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Do(
         SQL => '
             UPDATE survey
             SET title = ?, introduction = ?, description = ?, notification_sender = ?,
@@ -426,8 +389,11 @@ to get a array list of all survey items
 sub SurveyList {
     my ( $Self, %Param ) = @_;
 
+    # get database object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
     # get survey list
-    $Self->{DBObject}->Prepare(
+    $DBObject->Prepare(
         SQL => '
             SELECT id
             FROM survey
@@ -436,7 +402,7 @@ sub SurveyList {
 
     # fetch the results
     my @List;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $DBObject->FetchrowArray() ) {
         push @List, $Row[0];
     }
 
@@ -478,7 +444,7 @@ search in surveys
 
         # Additional information for OrderBy:
         # The OrderByDirection can be specified for each OrderBy attribute.
-        # The pairing is made by the array indices.
+        # The pairing is made by the array indexes.
 
         OrderByDirection => [ 'Down', 'Up' ],                                   # (optional)
         # default: [ 'Down' ]
@@ -495,14 +461,15 @@ sub SurveySearch {
 
     # check needed stuff
     if ( !$Param{UserID} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "Need UserID!",
         );
+
         return;
     }
 
-    # verify that all passed array parameters contain an arrayref
+    # verify that all passed array parameters contain an array reference
     ARGUMENT:
     for my $Argument (qw(OrderBy OrderByDirection)) {
 
@@ -513,10 +480,11 @@ sub SurveySearch {
         }
 
         if ( ref $Param{$Argument} ne 'ARRAY' ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "$Argument must be an array reference!",
             );
+
             return;
         }
     }
@@ -547,11 +515,12 @@ sub SurveySearch {
         if ( !$OrderBy || !$OrderByTable{$OrderBy} || $OrderBySeen{$OrderBy} ) {
 
             # found an error
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "OrderBy contains invalid value '$OrderBy' "
                     . 'or the value is used more than once!',
             );
+
             return;
         }
 
@@ -569,10 +538,11 @@ sub SurveySearch {
         next DIRECTION if $Direction eq 'Down';
 
         # found an error
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "OrderByDirection can only contain 'Up' or 'Down'!",
         );
+
         return;
     }
 
@@ -609,16 +579,19 @@ sub SurveySearch {
         push @SQLOrderBy, "$OrderByTable{SurveyID} DESC";
     }
 
-    # sql
+    # SQL
     my $SQL = 'SELECT s.id ';
 
     # extended SQL
     my $Ext = '';
 
-    # fulltext search
+    # get database object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
+    # full-text search
     if ( $Param{What} && $Param{What} ne '*' ) {
 
-        # define the search fields for fulltext search
+        # define the search fields for full-text search
         my @SearchFields = (
             's.surveynumber',
             's.title',
@@ -630,8 +603,8 @@ sub SurveySearch {
             's.status',
         );
 
-        # add the SQL for the fulltext search
-        $Ext .= $Self->{DBObject}->QueryCondition(
+        # add the SQL for the full-text search
+        $Ext .= $DBObject->QueryCondition(
             Key          => \@SearchFields,
             Value        => $Param{What},
             SearchPrefix => '*',
@@ -643,7 +616,7 @@ sub SurveySearch {
     if ( $Param{Number} ) {
         $Param{Number} =~ s/\*/%/g;
         $Param{Number} =~ s/%%/%/g;
-        $Param{Number} = $Self->{DBObject}->Quote( $Param{Number}, 'Like' );
+        $Param{Number} = $DBObject->Quote( $Param{Number}, 'Like' );
         if ($Ext) {
             $Ext .= ' AND';
         }
@@ -655,7 +628,7 @@ sub SurveySearch {
         $Param{Title} = "\%$Param{Title}\%";
         $Param{Title} =~ s/\*/%/g;
         $Param{Title} =~ s/%%/%/g;
-        $Param{Title} = $Self->{DBObject}->Quote( $Param{Title}, 'Like' );
+        $Param{Title} = $DBObject->Quote( $Param{Title}, 'Like' );
         if ($Ext) {
             $Ext .= ' AND';
         }
@@ -667,7 +640,7 @@ sub SurveySearch {
         $Param{Introduction} = "\%$Param{Introduction}\%";
         $Param{Introduction} =~ s/\*/%/g;
         $Param{Introduction} =~ s/%%/%/g;
-        $Param{Introduction} = $Self->{DBObject}->Quote( $Param{Introduction}, 'Like' );
+        $Param{Introduction} = $DBObject->Quote( $Param{Introduction}, 'Like' );
         if ($Ext) {
             $Ext .= ' AND';
         }
@@ -682,7 +655,7 @@ sub SurveySearch {
         $Param{Description} = "\%$Param{Description}\%";
         $Param{Description} =~ s/\*/%/g;
         $Param{Description} =~ s/%%/%/g;
-        $Param{Description} = $Self->{DBObject}->Quote( $Param{Description}, 'Like' );
+        $Param{Description} = $DBObject->Quote( $Param{Description}, 'Like' );
         if ($Ext) {
             $Ext .= ' AND';
         }
@@ -697,7 +670,7 @@ sub SurveySearch {
         $Param{NotificationSender} = "\%$Param{NotificationSender}\%";
         $Param{NotificationSender} =~ s/\*/%/g;
         $Param{NotificationSender} =~ s/%%/%/g;
-        $Param{NotificationSender} = $Self->{DBObject}->Quote( $Param{NotificationSender}, 'Like' );
+        $Param{NotificationSender} = $DBObject->Quote( $Param{NotificationSender}, 'Like' );
         if ($Ext) {
             $Ext .= ' AND';
         }
@@ -713,7 +686,7 @@ sub SurveySearch {
         $Param{NotificationSubject} =~ s/\*/%/g;
         $Param{NotificationSubject} =~ s/%%/%/g;
         $Param{NotificationSubject}
-            = $Self->{DBObject}->Quote( $Param{NotificationSubject}, 'Like' );
+            = $DBObject->Quote( $Param{NotificationSubject}, 'Like' );
         if ($Ext) {
             $Ext .= ' AND';
         }
@@ -728,7 +701,7 @@ sub SurveySearch {
         $Param{NotificationBody} = "\%$Param{NotificationBody}\%";
         $Param{NotificationBody} =~ s/\*/%/g;
         $Param{NotificationBody} =~ s/%%/%/g;
-        $Param{NotificationBody} = $Self->{DBObject}->Quote( $Param{NotificationBody}, 'Like' );
+        $Param{NotificationBody} = $DBObject->Quote( $Param{NotificationBody}, 'Like' );
         if ($Ext) {
             $Ext .= ' AND';
         }
@@ -743,7 +716,7 @@ sub SurveySearch {
         $Param{Status} = "\%$Param{Status}\%";
         $Param{Status} =~ s/\*/%/g;
         $Param{Status} =~ s/%%/%/g;
-        $Param{Status} = $Self->{DBObject}->Quote( $Param{Status}, 'Like' );
+        $Param{Status} = $DBObject->Quote( $Param{Status}, 'Like' );
         if ($Ext) {
             $Ext .= ' AND';
         }
@@ -784,7 +757,7 @@ sub SurveySearch {
 
         # check format
         if ( $Param{$TimeParam} !~ m{ \A \d\d\d\d-\d\d-\d\d \s \d\d:\d\d:\d\d \z }xms ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "The parameter $TimeParam has an invalid date format!",
             );
@@ -792,7 +765,7 @@ sub SurveySearch {
             return;
         }
 
-        $Param{$TimeParam} = $Self->{DBObject}->Quote( $Param{$TimeParam} );
+        $Param{$TimeParam} = $DBObject->Quote( $Param{$TimeParam} );
 
         # add time parameter to WHERE
         if ($Ext) {
@@ -821,16 +794,17 @@ sub SurveySearch {
     $SQL .= $Ext;
 
     # ask database
-    return if !$Self->{DBObject}->Prepare(
+    return if !$DBObject->Prepare(
         SQL   => $SQL,
         Limit => $Param{Limit},
     );
 
     # fetch the result
     my @List;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $DBObject->FetchrowArray() ) {
         push @List, $Row[0];
     }
+
     return @List;
 }
 
@@ -851,16 +825,20 @@ sub SurveyStatusSet {
     # check needed stuff
     for my $Argument (qw(SurveyID NewStatus)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
+
             return;
         }
     }
 
+    # get database object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
     # get current status
-    $Self->{DBObject}->Prepare(
+    $DBObject->Prepare(
         SQL => '
             SELECT status
             FROM survey
@@ -871,15 +849,15 @@ sub SurveyStatusSet {
 
     # fetch the result
     my $Status = '';
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $DBObject->FetchrowArray() ) {
         $Status = $Row[0];
     }
 
-    # the curent status
+    # the current status
     if ( $Status eq 'New' || $Status eq 'Invalid' ) {
 
         # get the question ids
-        $Self->{DBObject}->Prepare(
+        $DBObject->Prepare(
             SQL => '
                 SELECT id
                 FROM survey_question
@@ -890,7 +868,7 @@ sub SurveyStatusSet {
 
         # fetch the result
         my $Quest;
-        while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        while ( my @Row = $DBObject->FetchrowArray() ) {
             $Quest = $Row[0];
         }
 
@@ -901,8 +879,8 @@ sub SurveyStatusSet {
             Checkbox => 'Checkbox',
         );
 
-        # get all questions (type radio and checkbox)
-        $Self->{DBObject}->Prepare(
+        # get all questions (type radio and check-box)
+        $DBObject->Prepare(
             SQL => '
                 SELECT id
                 FROM survey_question
@@ -913,13 +891,13 @@ sub SurveyStatusSet {
 
         # fetch the result
         my @QuestionIDs;
-        while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        while ( my @Row = $DBObject->FetchrowArray() ) {
             push( @QuestionIDs, $Row[0] );
         }
         for my $OneID (@QuestionIDs) {
 
             # get all answer ids of a question
-            $Self->{DBObject}->Prepare(
+            $DBObject->Prepare(
                 SQL => '
                     SELECT COUNT(id)
                     FROM survey_answer
@@ -930,7 +908,7 @@ sub SurveyStatusSet {
 
             # fetch the result
             my $Counter;
-            while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+            while ( my @Row = $DBObject->FetchrowArray() ) {
                 $Counter = $Row[0];
             }
 
@@ -940,7 +918,7 @@ sub SurveyStatusSet {
         # set new status
         if ( $Param{NewStatus} eq 'Master' ) {
             my $ValidStatus = 'Valid';
-            $Self->{DBObject}->Do(
+            $DBObject->Do(
                 SQL => '
                     UPDATE survey
                     SET status = ?
@@ -950,12 +928,13 @@ sub SurveyStatusSet {
 
         }
         if ( $Param{NewStatus} eq 'Valid' || $Param{NewStatus} eq 'Master' ) {
-            $Self->{DBObject}->Do(
+            $DBObject->Do(
                 SQL => '
                     UPDATE survey SET status = ?
                     WHERE id = ?',
                 Bind => [ \$Param{NewStatus}, \$Param{SurveyID}, ],
             );
+
             return 'StatusSet';
         }
     }
@@ -965,7 +944,7 @@ sub SurveyStatusSet {
         if ( $Param{NewStatus} eq 'Master' ) {
 
             # set any 'Master' survey to 'Valid'
-            $Self->{DBObject}->Do(
+            $DBObject->Do(
                 SQL => '
                     UPDATE survey
                     SET status = ?
@@ -974,25 +953,27 @@ sub SurveyStatusSet {
             );
 
             # set 'Master' to given survey
-            $Self->{DBObject}->Do(
+            $DBObject->Do(
                 SQL => '
                     UPDATE survey
                     SET status = ?
                     WHERE id = ?',
                 Bind => [ \$Param{NewStatus}, \$Param{SurveyID}, ],
             );
+
             return 'StatusSet';
         }
 
         # set status Invalid
         elsif ( $Param{NewStatus} eq 'Invalid' ) {
-            $Self->{DBObject}->Do(
+            $DBObject->Do(
                 SQL => '
                     UPDATE survey
                     SET status = ?
                     WHERE id = ?',
                 Bind => [ \$Param{NewStatus}, \$Param{SurveyID}, ],
             );
+
             return 'StatusSet';
         }
     }
@@ -1000,13 +981,14 @@ sub SurveyStatusSet {
 
         # set status Valid
         if ( $Param{NewStatus} eq 'Valid' || $Param{NewStatus} eq 'Invalid' ) {
-            $Self->{DBObject}->Do(
+            $DBObject->Do(
                 SQL => '
                     UPDATE survey
                     SET status = ?
                     WHERE id = ?',
                 Bind => [ \$Param{NewStatus}, \$Param{SurveyID}, ],
             );
+
             return 'StatusSet';
         }
     }
@@ -1027,15 +1009,19 @@ sub SurveyQueueGet {
 
     # check needed stuff
     if ( !$Param{SurveyID} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need SurveyID!',
         );
+
         return;
     }
 
+    # get database object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
     # get queue ids from database
-    $Self->{DBObject}->Prepare(
+    $DBObject->Prepare(
         SQL => '
             SELECT queue_id
             FROM survey_queue
@@ -1046,7 +1032,7 @@ sub SurveyQueueGet {
 
     # fetch the result
     my @QueueList;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $DBObject->FetchrowArray() ) {
         push @QueueList, $Row[0];
     }
 
@@ -1070,16 +1056,20 @@ sub SurveyQueueSet {
     # check needed stuff
     for my $Argument (qw(SurveyID QueueIDs)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!"
             );
+
             return;
         }
     }
 
+    # get database object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
     # remove all existing relations
-    $Self->{DBObject}->Do(
+    $DBObject->Do(
         SQL => '
             DELETE FROM survey_queue
             WHERE survey_id = ?',
@@ -1090,7 +1080,7 @@ sub SurveyQueueSet {
     for my $QueueID ( @{ $Param{QueueIDs} } ) {
 
         # add survey_queue relation to database
-        return if !$Self->{DBObject}->Do(
+        return if !$DBObject->Do(
             SQL => '
                 INSERT INTO survey_queue (survey_id, queue_id)
                 VALUES (?, ?)',
@@ -1117,10 +1107,11 @@ sub PublicSurveyGet {
 
     # check needed stuff
     if ( !defined $Param{PublicSurveyKey} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need SurveyID!',
         );
+
         return;
     }
 
@@ -1137,8 +1128,11 @@ sub PublicSurveyGet {
     }
     $SQL .= $ValidStrg;
 
+    # get database object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
     # get request
-    $Self->{DBObject}->Prepare(
+    $DBObject->Prepare(
         SQL   => $SQL,
         Bind  => [ \$Param{PublicSurveyKey} ],
         Limit => 1,
@@ -1146,7 +1140,7 @@ sub PublicSurveyGet {
 
     # fetch the result
     my $SurveyID;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $DBObject->FetchrowArray() ) {
         $SurveyID = $Row[0];
     }
 
@@ -1155,7 +1149,7 @@ sub PublicSurveyGet {
     # get survey
     my $MasterStatus = 'Master';
     my $ValidStatus  = 'Valid';
-    $Self->{DBObject}->Prepare(
+    $DBObject->Prepare(
         SQL => '
             SELECT id, surveynumber, title, introduction
             FROM survey
@@ -1167,7 +1161,7 @@ sub PublicSurveyGet {
 
     # fetch the result
     my %Data;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $DBObject->FetchrowArray() ) {
         $Data{SurveyID}     = $Row[0];
         $Data{SurveyNumber} = $Row[1];
         $Data{Title}        = $Row[2];
@@ -1192,15 +1186,18 @@ sub PublicSurveyInvalidSet {
 
     # check needed stuff
     if ( !$Param{PublicSurveyKey} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need SurveyID!'
         );
         return;
     }
 
+    # get database object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
     # get request
-    $Self->{DBObject}->Prepare(
+    $DBObject->Prepare(
         SQL => '
             SELECT id
             FROM survey_request
@@ -1211,14 +1208,14 @@ sub PublicSurveyInvalidSet {
 
     # fetch the result
     my $RequestID;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $DBObject->FetchrowArray() ) {
         $RequestID = $Row[0];
     }
 
     return if !$RequestID;
 
     # update request
-    return $Self->{DBObject}->Do(
+    return $DBObject->Do(
         SQL => '
             UPDATE survey_request
             SET valid_id = 0, vote_time = current_timestamp
@@ -1244,10 +1241,11 @@ sub ElementExists {
     # check needed stuff
     for my $Argument (qw(ElementID Element)) {
         if ( !defined $Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
+
             return;
         }
     }
@@ -1261,10 +1259,11 @@ sub ElementExists {
 
     my $Table = $LookupTable{ $Param{Element} };
     if ( !$Table ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "Element: '$Param{Element}' is not valid!",
         );
+
         return;
     }
 
@@ -1274,8 +1273,11 @@ sub ElementExists {
     $SQL .= $Table;
     $SQL .= ' WHERE id = ?';
 
+    # get database object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
     # count element
-    $Self->{DBObject}->Prepare(
+    $DBObject->Prepare(
         SQL   => $SQL,
         Bind  => [ \$Param{ElementID} ],
         Limit => 1,
@@ -1283,7 +1285,7 @@ sub ElementExists {
 
     # fetch the result
     my $ElementExists = 'No';
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $DBObject->FetchrowArray() ) {
         if ( $Row[0] ) {
             $ElementExists = 'Yes';
         }
@@ -1294,7 +1296,7 @@ sub ElementExists {
 
 =item GetRichTextDocumentComplete()
 
-get some text ready to show as richtext attachment inline
+get some text ready to show as rich-text attachment in-line
 
     my $RichTextDocumentComplete = $SurveyObject->GetRichTextDocumentComplete(
         Text => $RichText,
@@ -1308,20 +1310,21 @@ sub GetRichTextDocumentComplete {
     # check needed stuff
     for my $Argument (qw(Text)) {
         if ( !defined $Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument parameter!",
             );
+
             return;
         }
     }
 
-    # clean html string
+    # clean HTML string
     my $Text = $Param{Text};
     $Text =~ s{\A\$html\/text\$\s(.*)}{$1}xms;
 
     # get document complete
-    my $HTMLDocumentComplete = $Self->{HTMLUtilsObject}->DocumentComplete(
+    my $HTMLDocumentComplete = $Kernel::OM->Get('Kernel::System::HTMLUtils')->DocumentComplete(
         String  => $Text,
         Charset => 'utf-8',
     );
@@ -1355,7 +1358,8 @@ sub _BuildSendConditionStrg {
     }
 
     # dump send conditions as string
-    my $SendConditionStrg = $Self->{YAMLObject}->Dump( Data => \%SendConditions );
+    my $SendConditionStrg
+        = $Kernel::OM->Get('Kernel::System::YAML')->Dump( Data => \%SendConditions );
 
     # Make sure the resulting string has the UTF-8 flag. YAML only sets it if
     #   part of the data already had it.
