@@ -12,7 +12,11 @@ package Kernel::System::Ticket::Event::SurveySendRequest;
 use strict;
 use warnings;
 
-use Kernel::System::Survey;
+our @ObjectDependencies = (
+    'Kernel::System::Log',
+    'Kernel::System::Survey',
+    'Kernel::System::Ticket',
+);
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -20,15 +24,6 @@ sub new {
     # allocate new hash for object
     my $Self = {};
     bless( $Self, $Type );
-
-    # check needed objects
-    for my $Object (
-        qw(ConfigObject TicketObject LogObject UserObject DBObject MainObject TimeObject EncodeObject)
-        )
-    {
-        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
-    }
-    $Self->{SurveyObject} = Kernel::System::Survey->new( %{$Self} );
 
     return $Self;
 }
@@ -39,18 +34,20 @@ sub Run {
     # check needed stuff
     for my $Argument (qw(Event Config)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
+
             return;
         }
     }
     if ( !$Param{Data}->{TicketID} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "Need TicketID!",
         );
+
         return;
     }
 
@@ -59,8 +56,11 @@ sub Run {
     # prevent deep recursion
     return 1 if $Param{Event} eq 'HistoryAdd';
 
+    # get ticket object
+    my $TicketObject = $Kernel::OM->Get('Kernel::System::Ticket');
+
     # get ticket data
-    my %Ticket = $Self->{TicketObject}->TicketGet(
+    my %Ticket = $TicketObject->TicketGet(
         TicketID => $Param{Data}{TicketID},
     );
 
@@ -69,7 +69,7 @@ sub Run {
     # send also survey request on ticket creation (on first article)
     if ( $Param{Event} eq 'ArticleCreate' ) {
 
-        my @ArticleIndex = $Self->{TicketObject}->ArticleIndex(
+        my @ArticleIndex = $TicketObject->ArticleIndex(
             TicketID => $Param{Data}{TicketID},
         );
 
@@ -77,7 +77,7 @@ sub Run {
     }
 
     # send request
-    $Self->{SurveyObject}->RequestSend(
+    $Kernel::OM->Get('Kernel::System::Survey')->RequestSend(
         TicketID => $Param{Data}->{TicketID},
     );
 
