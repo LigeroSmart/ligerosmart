@@ -7,23 +7,17 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
+## no critic (Modules::RequireExplicitPackage)
 use strict;
 use warnings;
 use utf8;
 
 use vars qw($Self);
 
-use Kernel::System::CustomerUser;
-use Kernel::System::Email;
-use Kernel::System::Survey;
-use Kernel::System::Ticket;
-use Kernel::System::Type;
-use Kernel::System::Service;
-use Kernel::System::UnitTest::Helper;
-use Kernel::System::User;
+use Data::Dumper;
 
 # create local config object
-my $ConfigObject = Kernel::Config->new();
+my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
 # set config to not send emails
 $ConfigObject->Set(
@@ -31,37 +25,16 @@ $ConfigObject->Set(
     Value => 'Kernel::System::Email::DoNotSendEmail',
 );
 
-my $HelperObject = Kernel::System::UnitTest::Helper->new(
-    %$Self,
-    UnitTestObject => $Self,
-    ConfigObject   => $ConfigObject,
-);
-
-# create local objects
-my $UserObject = Kernel::System::User->new(
-    %{$Self},
-    ConfigObject => $ConfigObject,
-);
-my $TicketObject = Kernel::System::Ticket->new(
-    %{$Self},
-    ConfigObject => $ConfigObject,
-);
-my $TypeObject    = Kernel::System::Type->new( %{$Self} );
-my $ServiceObject = Kernel::System::Service->new( %{$Self} );
-my $SurveyObject  = Kernel::System::Survey->new(
-    LogObject    => $Self->{LogObject},
-    TimeObject   => $Self->{TimeObject},
-    DBObject     => $Self->{DBObject},
-    MainObject   => $Self->{MainObject},
-    EncodeObject => $Self->{EncodeObject},
-    ConfigObject => $ConfigObject,
-    UserObject   => $UserObject,
-);
+# get database object
+my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
 # cleanup system
-$Self->{DBObject}->Do(
+$DBObject->Do(
     SQL => "DELETE FROM survey_request WHERE send_to LIKE '\%\@unittest.com\%'",
 );
+
+# get helper object
+my $HelperObject = $Kernel::OM->Get(' Kernel::System::UnitTest::Helper');
 
 # Freeze Time
 $HelperObject->FixedTimeSet();
@@ -70,12 +43,18 @@ $Self->True(
     '-- Set Fixed Time --',
 );
 
+# get type object
+my $TypeObject = $Kernel::OM->Get('Kernel::System::Type');
+
 # create a test type
 my $TicketTypeID = $TypeObject->TypeAdd(
     Name    => 'Unit Test New Type' . int rand 1_000_000,
     ValidID => 1,
     UserID  => 1,
 );
+
+# get service object
+my $ServiceObject = $Kernel::OM->Get('Kernel::System::Service');
 
 # create a test service
 my $ServiceID = $ServiceObject->ServiceAdd(
@@ -97,6 +76,10 @@ my %SurveyData = (
     TicketTypeIDs => [$TicketTypeID],
     ServiceIDs    => [$ServiceID],
 );
+
+# get Survey object
+my $SurveyObject = $Kernel::OM->Get('Kernel::System::Survey');
+
 my $SurveyID = $SurveyObject->SurveyAdd(
     UserID => 1,
     %SurveyData,
@@ -372,6 +355,9 @@ my @Tests = (
         ],
     },
 );
+
+# get ticket object
+my $TicketObject = $Kernel::OM->Get('Kernel::System::Ticket');
 
 for my $Test (@Tests) {
 
@@ -956,7 +942,7 @@ $Self->True(
 );
 
 # cleanup system
-$Self->{DBObject}->Do(
+$DBObject->Do(
     SQL => "DELETE FROM survey_request WHERE send_to LIKE '\%\@unittest.com\%'",
 );
 
