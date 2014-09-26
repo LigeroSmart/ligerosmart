@@ -19,31 +19,7 @@ msgid "Manage Master/Slave"
 msgstr ""
 
 #. SysConfig
-msgid "Adds customers email addresses to recipients in the ticket compose screen of the iPhone interface."
-msgstr ""
-
-#. SysConfig
-msgid "Allows adding notes in the close ticket screen of the iPhone interface."
-msgstr ""
-
-#. SysConfig
 msgid "Allows adding notes in the ticket MasterSlave screen of a zoomed ticket in the agent interface."
-msgstr ""
-
-#. SysConfig
-msgid "Allows adding notes in the ticket note screen of the iPhone interface."
-msgstr ""
-
-#. SysConfig
-msgid "Allows to enable a special log for all communication between iPhone and otrs."
-msgstr ""
-
-#. SysConfig
-msgid "Allows to set a new ticket state in the move ticket screen of the iPhone interface."
-msgstr ""
-
-#. SysConfig
-msgid "Allows to set a new ticket state in the new phone ticket ticket screen of the iPhone interface."
 msgstr ""
 
 #. SysConfig
@@ -51,19 +27,7 @@ msgid "Change the MasterSlave state of the ticket."
 msgstr ""
 
 #. SysConfig
-msgid "Configure access restrictions to objects of iPhone handle."
-msgstr ""
-
-#. SysConfig
 msgid "Define dynamic field name for master ticket feature."
-msgstr ""
-
-#. SysConfig
-msgid "Defines if a ticket lock is required in the close ticket screen of the iPhone interface (if the ticket isn't locked yet, the ticket gets locked and the current agent will be set automatically as its owner)."
-msgstr ""
-
-#. SysConfig
-msgid "Defines if a ticket lock is required in the move ticket screen of the iPhone interface (if the ticket isn't locked yet, the ticket gets locked and the current agent will be set automatically as its owner)."
 msgstr ""
 
 #. SysConfig
@@ -71,43 +35,7 @@ msgid "Defines if a ticket lock is required in the ticket MasterSlave screen of 
 msgstr ""
 
 #. SysConfig
-msgid "Defines if a ticket lock is required in the ticket compose screen of the iPhone interface (if the ticket isn't locked yet, the ticket gets locked and the current agent will be set automatically as its owner)."
-msgstr ""
-
-#. SysConfig
-msgid "Defines if a ticket lock is required in the ticket note screen of the iPhone interface (if the ticket isn't locked yet, the ticket gets locked and the current agent will be set automatically as its owner)."
-msgstr ""
-
-#. SysConfig
-msgid "Defines the default next state of a ticket after adding a note, in the close ticket screen of the iPhone interface."
-msgstr ""
-
-#. SysConfig
-msgid "Defines the default next state of a ticket after adding a note, in the move ticket screen of the iPhone interface."
-msgstr ""
-
-#. SysConfig
 msgid "Defines the default next state of a ticket after adding a note, in the ticket MasterSlave screen of a zoomed ticket in the agent interface."
-msgstr ""
-
-#. SysConfig
-msgid "Defines the default next state of a ticket after adding a note, in the ticket note screen of the iPhone interface."
-msgstr ""
-
-#. SysConfig
-msgid "Defines the default next state of a ticket if it is composed / answered in the ticket compose screen of the iPhone interface."
-msgstr ""
-
-#. SysConfig
-msgid "Defines the default ticket priority in the close ticket screen of the iPhone interface."
-msgstr ""
-
-#. SysConfig
-msgid "Defines the default ticket priority in the move ticket screen of the iPhone interface."
-msgstr ""
-
-#. SysConfig
-msgid "Defines the default ticket priority in the new phone ticket screen of the iPhone interface."
 msgstr ""
 
 #. SysConfig
@@ -115,31 +43,7 @@ msgid "Defines the default ticket priority in the ticket MasterSlave screen of a
 msgstr ""
 
 #. SysConfig
-msgid "Defines the default ticket priority in the ticket note screen of the iPhone interface."
-msgstr ""
-
-#. SysConfig
-msgid "Defines the default type of the note in the close ticket screen of the iPhone interface."
-msgstr ""
-
-#. SysConfig
 msgid "Defines the default type of the note in the ticket MasterSlave screen of a zoomed ticket in the agent interface."
-msgstr ""
-
-#. SysConfig
-msgid "Defines the default type of the note in the ticket note screen of the iPhone interface."
-msgstr ""
-
-#. SysConfig
-msgid "Defines the default type of the ticket in the new phone ticket screen of the iPhone interface."
-msgstr ""
-
-#. SysConfig
-msgid "Defines the history comment for the close ticket screen action, which gets used for ticket history in the iPhone interface."
-msgstr ""
-
-#. SysConfig
-msgid "Defines the history comment for the new phone ticket screen action, which gets used for ticket history in the iPhone interface."
 msgstr ""
 
 #. SysConfig
@@ -147,71 +51,11 @@ msgid "Defines the history comment for the ticket MasterSlave screen action, whi
 msgstr ""
 
 #. SysConfig
-msgid "Defines the history comment for the ticket note screen action, which gets used for ticket history in the iPhone interface."
-msgstr ""
-
-#. SysConfig
-msgid "Defines the history type for the close ticket screen action, which gets used for ticket history in the iPhone interface."
-msgstr ""
-
-#. SysConfig
-msgid "Defines the history type for the new phone ticket screen action, which gets used for ticket history in the iPhone interface."
-msgstr ""
-
-#. SysConfig
 msgid "Defines the history type for the ticket MasterSlave screen action, which gets used for ticket history in the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid "Defines the history type for the ticket note screen action, which gets used for ticket history in the iPhone interface."
-msgstr ""
-
-#. SysConfig
-msgid "Defines the next possible states after composing / answering a ticket in the ticket compose screen of the iPhone interface."
-msgstr ""
-
-#. SysConfig
-msgid "Defines the next state of a ticket after adding a note, in the close ticket screen of the iPhone interface."
-msgstr ""
-
-#. SysConfig
 msgid "Defines the next state of a ticket after adding a note, in the ticket MasterSlave screen of a zoomed ticket in the agent interface."
-msgstr ""
-
-#. SysConfig
-msgid "Defines the next state of a ticket after adding a note, in the ticket note screen of the iPhone interface."
-msgstr ""
-
-#. SysConfig
-msgid "Defines the next state of a ticket after being moved to another queue, in the move ticket screen of the iPhone interface."
-msgstr ""
-
-#. SysConfig
-msgid "Defines the path and file name for the debug log file. This file will be automatically created by the system, if it doesn't exist."
-msgstr ""
-
-#. SysConfig
-msgid "Dynamic Fields Extension."
-msgstr ""
-
-#. SysConfig
-msgid "Dynamic fields shown in the new phone ticket screen of the iPhone interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
-msgstr ""
-
-#. SysConfig
-msgid "Dynamic fields shown in the ticket close screen of the iPhone interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
-msgstr ""
-
-#. SysConfig
-msgid "Dynamic fields shown in the ticket compose screen of the iPhone interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
-msgstr ""
-
-#. SysConfig
-msgid "Dynamic fields shown in the ticket move screen of the iPhone interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
-msgstr ""
-
-#. SysConfig
-msgid "Dynamic fields shown in the ticket note screen of the iPhone interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
 msgstr ""
 
 #. SysConfig
@@ -231,35 +75,7 @@ msgid "Enable the feature to unset the MasterSlave state of a ticket in the adva
 msgstr ""
 
 #. SysConfig
-msgid "If a note is added by an agent, sets the state of a ticket if it is composed / answered in the ticket compose screen of the iPhone interface."
-msgstr ""
-
-#. SysConfig
-msgid "If a note is added by an agent, sets the state of a ticket in the close ticket screen of the iPhone interface."
-msgstr ""
-
-#. SysConfig
-msgid "If a note is added by an agent, sets the state of a ticket in the ticket note screen of the iPhone interface."
-msgstr ""
-
-#. SysConfig
 msgid "If a note is added by an agent, sets the state of the ticket in the ticket MasterSlave screen of a zoomed ticket in the agent interface."
-msgstr ""
-
-#. SysConfig
-msgid "Module to generate statistics about OTRS ITSM downloads."
-msgstr ""
-
-#. SysConfig
-msgid "Module to generate statistics about OTRS downloads."
-msgstr ""
-
-#. SysConfig
-msgid "Module to generate statistics about public extension downloads."
-msgstr ""
-
-#. SysConfig
-msgid "Module to generate statistics about tickets with defined OTRS systems."
 msgstr ""
 
 #. SysConfig
@@ -275,43 +91,7 @@ msgid "Registration of the ticket event module."
 msgstr ""
 
 #. SysConfig
-msgid "Replaces the original sender with current customer's email address on compose answer in the ticket compose screen of the iPhone interface."
-msgstr ""
-
-#. SysConfig
-msgid "Required permissions to use the close ticket screen in the iPhone interface."
-msgstr ""
-
-#. SysConfig
-msgid "Required permissions to use the move ticket screen in the iPhone interface."
-msgstr ""
-
-#. SysConfig
 msgid "Required permissions to use the ticket MasterSlave screen of a zoomed ticket in the agent interface."
-msgstr ""
-
-#. SysConfig
-msgid "Required permissions to use the ticket compose screen in the iPhone interface."
-msgstr ""
-
-#. SysConfig
-msgid "Required permissions to use the ticket note screen in the iPhone interface."
-msgstr ""
-
-#. SysConfig
-msgid "Sets the customer id in the new phone ticket screen of the iPhone interface."
-msgstr ""
-
-#. SysConfig
-msgid "Sets the default body text for notes added in the close ticket screen of the iPhone interface."
-msgstr ""
-
-#. SysConfig
-msgid "Sets the default body text for notes added in the move ticket screen of the iPhone interface."
-msgstr ""
-
-#. SysConfig
-msgid "Sets the default body text for notes added in the new phone ticket screen of the iPhone interface."
 msgstr ""
 
 #. SysConfig
@@ -319,39 +99,7 @@ msgid "Sets the default body text for notes added in the ticket MasterSlave scre
 msgstr ""
 
 #. SysConfig
-msgid "Sets the default body text for notes added in the ticket note screen of the iPhone interface."
-msgstr ""
-
-#. SysConfig
-msgid "Sets the default next state for new phone tickets in the iPhone interface."
-msgstr ""
-
-#. SysConfig
-msgid "Sets the default sender type for new phone ticket in the iPhone interface."
-msgstr ""
-
-#. SysConfig
-msgid "Sets the default subject for notes added in the close ticket screen of the iPhone interface."
-msgstr ""
-
-#. SysConfig
-msgid "Sets the default subject for notes added in the move ticket screen of the iPhone interface."
-msgstr ""
-
-#. SysConfig
 msgid "Sets the default subject for notes added in the ticket MasterSlave screen of a zoomed ticket in the agent interface."
-msgstr ""
-
-#. SysConfig
-msgid "Sets the default subject for notes added in the ticket note screen of the iPhone interface."
-msgstr ""
-
-#. SysConfig
-msgid "Sets the responsible agent of the ticket in the close ticket screen of the iPhone interface."
-msgstr ""
-
-#. SysConfig
-msgid "Sets the responsible agent of the ticket in the new phone ticket screen of the iPhone interface."
 msgstr ""
 
 #. SysConfig
@@ -359,35 +107,7 @@ msgid "Sets the responsible agent of the ticket in the ticket MasterSlave screen
 msgstr ""
 
 #. SysConfig
-msgid "Sets the responsible agent of the ticket in the ticket note screen of the iPhone interface."
-msgstr ""
-
-#. SysConfig
-msgid "Sets the service in the close ticket screen of the iPhone interface (Ticket::Service needs to be activated)."
-msgstr ""
-
-#. SysConfig
-msgid "Sets the service in the new phone ticket screen of the iPhone interface (Ticket::Service needs to be activated)."
-msgstr ""
-
-#. SysConfig
 msgid "Sets the service in the ticket MasterSlave screen of a zoomed ticket in the agent interface (Ticket::Service needs to be activated)."
-msgstr ""
-
-#. SysConfig
-msgid "Sets the service in the ticket note screen of the iPhone interface (Ticket::Service needs to be activated)."
-msgstr ""
-
-#. SysConfig
-msgid "Sets the ticket owner in the close ticket screen of the iPhone interface."
-msgstr ""
-
-#. SysConfig
-msgid "Sets the ticket owner in the move ticket screen of the iPhone interface."
-msgstr ""
-
-#. SysConfig
-msgid "Sets the ticket owner in the new phone ticket screen of the iPhone interface."
 msgstr ""
 
 #. SysConfig
@@ -395,43 +115,7 @@ msgid "Sets the ticket owner in the ticket MasterSlave screen of a zoomed ticket
 msgstr ""
 
 #. SysConfig
-msgid "Sets the ticket owner in the ticket note screen of the iPhone interface."
-msgstr ""
-
-#. SysConfig
-msgid "Sets the ticket type in the close ticket screen of the iPhone interface (Ticket::Type needs to be activated)."
-msgstr ""
-
-#. SysConfig
-msgid "Sets the ticket type in the new phone ticket screen on the iPhone interface (Ticket::Type needs to be activated)."
-msgstr ""
-
-#. SysConfig
 msgid "Sets the ticket type in the ticket MasterSlave screen of a zoomed ticket in the agent interface (Ticket::Type needs to be activated)."
-msgstr ""
-
-#. SysConfig
-msgid "Sets the ticket type in the ticket note screen of the iPhone interface (Ticket::Type needs to be activated)."
-msgstr ""
-
-#. SysConfig
-msgid "Sets the time units in the close ticket screen of the iPhone interface."
-msgstr ""
-
-#. SysConfig
-msgid "Sets the time units in the move ticket screen of the iPhone interface."
-msgstr ""
-
-#. SysConfig
-msgid "Sets the time units in the new phone ticket screen of the iPhone interface."
-msgstr ""
-
-#. SysConfig
-msgid "Sets the time units in the ticket compose screen of the iPhone interface."
-msgstr ""
-
-#. SysConfig
-msgid "Sets the time units in the ticket note screen of the iPhone interface."
 msgstr ""
 
 #. SysConfig
@@ -447,23 +131,7 @@ msgid "Shows a list of all the possible agents (all agents with note permissions
 msgstr ""
 
 #. SysConfig
-msgid "Shows the ticket priority options in the close ticket screen of the iPhone interface."
-msgstr ""
-
-#. SysConfig
-msgid "Shows the ticket priority options in the move ticket screen of the iPhone interface."
-msgstr ""
-
-#. SysConfig
 msgid "Shows the ticket priority options in the ticket MasterSlave screen of a zoomed ticket in the agent interface."
-msgstr ""
-
-#. SysConfig
-msgid "Shows the ticket priority options in the ticket note screen of the iPhone interface."
-msgstr ""
-
-#. SysConfig
-msgid "Shows the title fields in the close ticket screen of the iPhone interface."
 msgstr ""
 
 #. SysConfig
@@ -471,22 +139,10 @@ msgid "Shows the title fields in the ticket MasterSlave screen of a zoomed ticke
 msgstr ""
 
 #. SysConfig
-msgid "Shows the title fields in the ticket note screen of the iphone interface."
-msgstr ""
-
-#. SysConfig
 msgid "Specifies the different article types where the real name from Master ticket will be replaced with the one in the Slave ticket."
 msgstr ""
 
 #. SysConfig
-msgid "Specify the different note types, that you want to use in your system."
-msgstr ""
-
-#. SysConfig
 msgid "This module is preparing master/slave pulldown in email and phone ticket."
-msgstr ""
-
-#. SysConfig
-msgid "Uses Cc recipients in reply Cc list on compose an email answer in the ticket compose screen of the iPhone interface."
 msgstr ""
 
