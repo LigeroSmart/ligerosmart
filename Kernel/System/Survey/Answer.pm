@@ -12,6 +12,8 @@ package Kernel::System::Survey::Answer;
 use strict;
 use warnings;
 
+our $ObjectManagerDisabled = 1;
+
 =head1 NAME
 
 Kernel::System::Survey::Answer - sub module of Kernel::System::Survey
@@ -44,16 +46,17 @@ sub AnswerAdd {
     # check needed stuff
     for my $Argument (qw(UserID QuestionID Answer)) {
         if ( !defined $Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
+
             return;
         }
     }
 
     # insert answer
-    return $Self->{DBObject}->Do(
+    return $Kernel::OM->Get('Kernel::System::DB')->Do(
         SQL => '
             INSERT INTO survey_answer (question_id, answer, position, create_time, create_by,
                 change_time, change_by)
@@ -79,16 +82,17 @@ sub AnswerDelete {
     # check needed stuff
     for my $Argument (qw(QuestionID AnswerID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
+
             return;
         }
     }
 
     # delete answer
-    return $Self->{DBObject}->Do(
+    return $Kernel::OM->Get('Kernel::System::DB')->Do(
         SQL => '
             DELETE FROM survey_answer
             WHERE id = ?
@@ -112,15 +116,19 @@ sub AnswerGet {
 
     # check needed stuff
     if ( !$Param{AnswerID} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need QuestionID!',
         );
+
         return;
     }
 
+    # get database object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
     # get answer
-    $Self->{DBObject}->Prepare(
+    $DBObject->Prepare(
         SQL => '
             SELECT id, question_id, answer, position, create_time, create_by, change_time, change_by
             FROM survey_answer
@@ -131,7 +139,7 @@ sub AnswerGet {
 
     # fetch the result
     my %Data;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $DBObject->FetchrowArray() ) {
         $Data{AnswerID}   = $Row[0];
         $Data{QuestionID} = $Row[1];
         $Data{Answer}     = $Row[2];
@@ -164,16 +172,17 @@ sub AnswerUpdate {
     # check needed stuff
     for my $Argument (qw(UserID AnswerID QuestionID Answer)) {
         if ( !defined $Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
+
             return;
         }
     }
 
     # update answer
-    return $Self->{DBObject}->Do(
+    return $Kernel::OM->Get('Kernel::System::DB')->Do(
         SQL => '
             UPDATE survey_answer
             SET answer = ?, change_time = current_timestamp, change_by = ?
@@ -198,15 +207,19 @@ sub AnswerList {
 
     # check needed stuff
     if ( !$Param{QuestionID} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need QuestionID!',
         );
+
         return;
     }
 
+    # get database object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
     # get answer list
-    $Self->{DBObject}->Prepare(
+    $DBObject->Prepare(
         SQL => '
             SELECT id, question_id, answer
             FROM survey_answer
@@ -215,9 +228,9 @@ sub AnswerList {
         Bind => [ \$Param{QuestionID} ],
     );
 
-    # fetcht the result
+    # fetch the result
     my @List;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $DBObject->FetchrowArray() ) {
         my %Data;
         $Data{AnswerID}   = $Row[0];
         $Data{QuestionID} = $Row[1];
@@ -244,15 +257,19 @@ sub AnswerSort {
 
     # check needed stuff
     if ( !$Param{QuestionID} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need QuestionID!',
         );
+
         return;
     }
 
+    # get database object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
     # get answer list
-    $Self->{DBObject}->Prepare(
+    $DBObject->Prepare(
         SQL => '
             SELECT id
             FROM survey_answer
@@ -263,7 +280,7 @@ sub AnswerSort {
 
     # fetch the result
     my @List;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $DBObject->FetchrowArray() ) {
         push @List, $Row[0];
     }
 
@@ -271,7 +288,7 @@ sub AnswerSort {
     for my $AnswerID (@List) {
 
         # update position
-        $Self->{DBObject}->Do(
+        $DBObject->Do(
             SQL => '
                 UPDATE survey_answer
                 SET position = ?
@@ -303,16 +320,20 @@ sub AnswerUp {
     # check needed stuff
     for my $Argument (qw(QuestionID AnswerID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
+
             return;
         }
     }
 
+    # get database object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
     # get position
-    $Self->{DBObject}->Prepare(
+    $DBObject->Prepare(
         SQL => '
             SELECT position
             FROM survey_answer
@@ -324,7 +345,7 @@ sub AnswerUp {
 
     # fetch the result
     my $Position;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $DBObject->FetchrowArray() ) {
         $Position = $Row[0];
     }
 
@@ -333,7 +354,7 @@ sub AnswerUp {
     my $PositionUp = $Position - 1;
 
     # get answer
-    $Self->{DBObject}->Prepare(
+    $DBObject->Prepare(
         SQL => '
             SELECT id
             FROM survey_answer
@@ -344,14 +365,14 @@ sub AnswerUp {
 
     # fetch the result
     my $AnswerIDDown;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $DBObject->FetchrowArray() ) {
         $AnswerIDDown = $Row[0];
     }
 
     return if !$AnswerIDDown;
 
     # update position
-    $Self->{DBObject}->Do(
+    $DBObject->Do(
         SQL => '
             UPDATE survey_answer
             SET position = ?
@@ -360,7 +381,7 @@ sub AnswerUp {
     );
 
     # update position
-    return $Self->{DBObject}->Do(
+    return $DBObject->Do(
         SQL => '
             UPDATE survey_answer
             SET position = ?
@@ -386,16 +407,20 @@ sub AnswerDown {
     # check needed stuff
     for my $Argument (qw(QuestionID AnswerID)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
+
             return;
         }
     }
 
+    # get database object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
     # get position
-    $Self->{DBObject}->Prepare(
+    $DBObject->Prepare(
         SQL => '
             SELECT position
             FROM survey_answer
@@ -407,7 +432,7 @@ sub AnswerDown {
 
     # fetch the result
     my $Position;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $DBObject->FetchrowArray() ) {
         $Position = $Row[0];
     }
 
@@ -416,7 +441,7 @@ sub AnswerDown {
     my $PositionDown = $Position + 1;
 
     # get answer
-    $Self->{DBObject}->Prepare(
+    $DBObject->Prepare(
         SQL => '
             SELECT id
             FROM survey_answer
@@ -428,14 +453,14 @@ sub AnswerDown {
 
     # fetch the result
     my $AnswerIDUp;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $DBObject->FetchrowArray() ) {
         $AnswerIDUp = $Row[0];
     }
 
     return if !$AnswerIDUp;
 
     # update position
-    $Self->{DBObject}->Do(
+    $DBObject->Do(
         SQL => '
             UPDATE survey_answer
             SET position = ?
@@ -444,7 +469,7 @@ sub AnswerDown {
     );
 
     # update position
-    return $Self->{DBObject}->Do(
+    return $DBObject->Do(
         SQL => '
             UPDATE survey_answer
             SET position = ?
@@ -468,15 +493,19 @@ sub AnswerCount {
 
     # check needed stuff
     if ( !$Param{QuestionID} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need QuestionID!',
         );
+
         return;
     }
 
+    # get database object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
     # count answers
-    $Self->{DBObject}->Prepare(
+    $DBObject->Prepare(
         SQL => '
             SELECT COUNT(id)
             FROM survey_answer
@@ -487,7 +516,7 @@ sub AnswerCount {
 
     # fetch the result
     my $CountAnswer;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $DBObject->FetchrowArray() ) {
         $CountAnswer = $Row[0];
     }
 
@@ -512,16 +541,20 @@ sub PublicAnswerSet {
     # check needed stuff
     for my $Argument (qw(PublicSurveyKey QuestionID VoteValue)) {
         if ( !defined $Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
+
             return;
         }
     }
 
+    # get database object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
     # get request
-    $Self->{DBObject}->Prepare(
+    $DBObject->Prepare(
         SQL => '
             SELECT id
             FROM survey_request
@@ -533,14 +566,14 @@ sub PublicAnswerSet {
 
     # fetch the result
     my $RequestID;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $DBObject->FetchrowArray() ) {
         $RequestID = $Row[0];
     }
 
     return if !$RequestID;
 
     # insert vote
-    return $Self->{DBObject}->Do(
+    return $DBObject->Do(
         SQL => '
             INSERT INTO survey_vote (request_id, question_id, vote_value, create_time)
             VALUES ( ?, ?, ?, current_timestamp)',
