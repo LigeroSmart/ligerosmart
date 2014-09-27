@@ -201,6 +201,7 @@ sub Run {
                     Data         => {%Param},
                 );
                 $Output .= $Self->{LayoutObject}->CustomerFooter();
+
                 return $Output;
             }
         }
@@ -231,6 +232,7 @@ sub Run {
             );
 
             $Output .= $Self->{LayoutObject}->CustomerFooter();
+
             return $Output;
         }
 
@@ -283,7 +285,7 @@ sub Run {
             Public   => 1,
         );
 
-        # clean html
+        # clean HTML
         if ( $Survey{Introduction} ) {
             $Survey{Introduction} =~ s{\A\$html\/text\$\s(.*)}{$1}xms;
 
@@ -349,7 +351,7 @@ sub Run {
                 my %Data;
                 $Data{Answer} = $List[0]->{VoteValue};
 
-                # clean html
+                # clean HTML
                 if ( $Question->{Type} eq 'Textarea' && $Data{Answer} ) {
                     $Data{Answer} =~ s{\A\$html\/text\$\s(.*)}{$1}xms;
                     $Data{Answer} = $Self->{LayoutObject}->Ascii2Html(
@@ -378,6 +380,7 @@ sub Run {
             TemplateFile => 'PublicSurvey',
         );
         $Output .= $Self->{LayoutObject}->CustomerFooter();
+
         return $Output;
     }
 
@@ -417,7 +420,7 @@ sub Run {
     }
     elsif ( $Survey{SurveyID} ) {
 
-        # clean html and proccess introduction text
+        # clean HTML and process introduction text
         $Survey{Introduction} =~ s{\A\$html\/text\$\s(.*)}{$1}xms;
         my $HTMLContent = $1;
         if ( !$HTMLContent ) {
@@ -455,7 +458,7 @@ sub Run {
             {
 
                 # %Errors holds a key for each QuestionID that had errors.
-                # The value is a hashref who's keys are the ErrorType
+                # The value is a hash reference who's keys are the ErrorType
                 # The value is set to 1
                 # Reason for this is, that the value may be used to display
                 # a more specific Error Message containing text question specific error messages
@@ -472,21 +475,22 @@ sub Run {
                 #    },
                 # );
 
-             # Later on a Datastructure like the following would be possible:
-             # %Errors = (
-             #   1 => {
-             #        'Invalid text' => 'Your Text did not contain the Order number',
-             #   },
-             #   2 => {
-             #        'Answer required' => 1,
-             #    },
-             # );
-             # As soon as this is needed, the following $ErrorText stringbuilding has to be changed.
+                # Later on a Data structure like the following would be possible:
+                # %Errors = (
+                #   1 => {
+                #        'Invalid text' => 'Your Text did not contain the Order number',
+                #   },
+                #   2 => {
+                #        'Answer required' => 1,
+                #    },
+                # );
+                # As soon as this is needed, the following $ErrorText string building has to be
+                # changed.
 
-                # The stringbuilding works at the moment this way:
+                # The string building works at the moment this way:
                 # 1. Go through all keys of the %{ $Errors{ $Question->{QuestionID} } } hash
                 # 2. Do a translation for each key (inside the "map {}"-clause)
-                # 3. join the resulting Array by putting "</p>\n</p>" in between the Arraykeys
+                # 3. join the resulting Array by putting "</p>\n</p>" in between the Array keys
                 # 4. add '<p>' at the beginning and '</p>' at the end.
 
                 $ErrorText = '<p>'
@@ -641,6 +645,7 @@ END
         Data         => {%Param},
     );
     $Output .= $Self->{LayoutObject}->CustomerFooter();
+
     return $Output;
 }
 
