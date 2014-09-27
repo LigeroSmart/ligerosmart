@@ -34,3 +34,4 @@
 [% Translate("not answered") | html %]
 [% Translate("Stats Detail") | html %]
 [% Translate("You have already answered the survey.") | html %]
+[% Translate("Survey#") | html %]
