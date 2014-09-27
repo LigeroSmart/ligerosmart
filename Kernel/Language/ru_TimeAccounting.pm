@@ -18,10 +18,15 @@ sub Data {
 
     # Template: AAATimeAccounting
     $Self->{Translation}->{'Time Accounting'} = 'Учет затраченного времени';
-    $Self->{Translation}->{'Show valid projects'} = '';
-    $Self->{Translation}->{'Show all projects'} = '';
-    $Self->{Translation}->{'TimeAccounting'} = '';
-    $Self->{Translation}->{'Reporting'} = '';
+    $Self->{Translation}->{'Show valid projects'} = 'Показать действительные проекты';
+    $Self->{Translation}->{'Show all projects'} = 'Показать все проекты';
+    $Self->{Translation}->{'TimeAccounting'} = 'Учет затрат времени';
+    $Self->{Translation}->{'Reporting'} = 'Отчетность';
+    $Self->{Translation}->{'Please insert your working hours!'} = '';
+    $Self->{Translation}->{'Successful insert!'} = '';
+    $Self->{Translation}->{'Error while inserting multiple dates!'} = '';
+    $Self->{Translation}->{'Successfully inserted entries for several dates!'} = '';
+    $Self->{Translation}->{'Entered date was invalid! Date was changed to today.'} = '';
 
     # Template: AgentTimeAccountingDelete
     $Self->{Translation}->{'Do you really want to delete the Time Accounting of this day?'} =
@@ -51,14 +56,14 @@ sub Data {
     $Self->{Translation}->{'Task'} = 'Задача';
     $Self->{Translation}->{'Remark'} = 'Примечание';
     $Self->{Translation}->{'Please add a remark with more than 8 characters!.'} = 'Примечание должно быть не менее 8 символов.';
-    $Self->{Translation}->{'Start Time'} = '';
+    $Self->{Translation}->{'Start Time'} = 'Время начала';
     $Self->{Translation}->{'Negative times are not allowed.'} = 'Отрицательное значение недопустимо.';
     $Self->{Translation}->{'Repeated hours are not allowed. Start time matches another interval.'} =
         '';
     $Self->{Translation}->{'Invalid format! Please enter a time with the format HH:MM.'} = 'Неверный формат! Введите время в формате HH:MM.';
     $Self->{Translation}->{'24:00 is only permitted as end time.'} = 'Только 24:00 разрешено в качестве времени окончания.';
     $Self->{Translation}->{'Invalid time! A day has only 24 hours.'} = 'Неверное время! В сутках только 24 часа.';
-    $Self->{Translation}->{'End Time'} = '';
+    $Self->{Translation}->{'End Time'} = 'Время окончания';
     $Self->{Translation}->{'End time must be after start time.'} = 'Время окончания должно быть позже времени начала.';
     $Self->{Translation}->{'Repeated hours are not allowed. End time matches another interval.'} =
         '';
@@ -148,13 +153,13 @@ sub Data {
     $Self->{Translation}->{'Days of Vacation'} = 'Дни отпуска';
     $Self->{Translation}->{'Hours per Week'} = 'Часов в неделе';
     $Self->{Translation}->{'Authorized Overtime'} = 'Разрешенная переработка';
-    $Self->{Translation}->{'Start Date'} = '';
+    $Self->{Translation}->{'Start Date'} = 'Дата начала';
     $Self->{Translation}->{'Please insert a valid date.'} = 'Введите правильную дату.';
-    $Self->{Translation}->{'End Date'} = '';
+    $Self->{Translation}->{'End Date'} = 'Дата окончания';
     $Self->{Translation}->{'Period end must be after period begin.'} = 'Время окончания периода должно быть позже времени его начала.';
-    $Self->{Translation}->{'Leave Days'} = '';
-    $Self->{Translation}->{'Weekly Hours'} = '';
-    $Self->{Translation}->{'Overtime'} = '';
+    $Self->{Translation}->{'Leave Days'} = 'Осталось, дней';
+    $Self->{Translation}->{'Weekly Hours'} = 'Часов в неделю';
+    $Self->{Translation}->{'Overtime'} = 'Переработка/Сверхурочные';
     $Self->{Translation}->{'No time periods found.'} = 'Не заданы периоды времени.';
     $Self->{Translation}->{'Add time period'} = 'Добавить перид времени';
 
@@ -194,19 +199,19 @@ sub Data {
         'Максимально количество рабочих дней, после которого выдается предупреждение о том, что данные не вводились.';
     $Self->{Translation}->{'Project time reporting'} = 'Отчет о времени по проекту';
     $Self->{Translation}->{'Regular expressions for constraining action list according to selected project. Key contains regular expression for project(s), content contains regular expressions for action(s).'} =
-        '';
+        'Регулярные выражения для составления списка действий в соответствии с выбранным проектом. Ключ должен содержать регулярное выражение для проекта(ов), Содержание - регулярные выражения для действия(й).';
     $Self->{Translation}->{'Regular expressions for constraining project list according to user groups. Key contains regular expression for project(s), content contains comma separated list of groups.'} =
-        '';
+        'Регулярные выражения для составления списка действий в зависимости от групп пользователей. Ключ должен содержать регулярное выражение для проекта(ов), Содержание - список групп, разделенных запятой.';
     $Self->{Translation}->{'Specifies if working hours can be inserted without start and end times.'} =
         'Задает, можно ли заносить рабочие часы без указания времени начала и окончания.';
     $Self->{Translation}->{'This module forces inserts in TimeAccounting.'} = '';
     $Self->{Translation}->{'This notification module gives a warning if there are too many incomplete working days.'} =
         'Модуль уведомлений, для отображения количества незавершенных рабочих дней пользователя.';
-    $Self->{Translation}->{'Time accounting edit.'} = '';
-    $Self->{Translation}->{'Time accounting overview.'} = '';
-    $Self->{Translation}->{'Time accounting reporting.'} = '';
-    $Self->{Translation}->{'Time accounting settings.'} = '';
-    $Self->{Translation}->{'Time accounting view.'} = '';
+    $Self->{Translation}->{'Time accounting edit.'} = 'Редактирование затрат времени.';
+    $Self->{Translation}->{'Time accounting overview.'} = 'Обзор затрат времени.';
+    $Self->{Translation}->{'Time accounting reporting.'} = 'Отчеты о затртах времени.';
+    $Self->{Translation}->{'Time accounting settings.'} = 'Настройки учета затраченного времени.';
+    $Self->{Translation}->{'Time accounting view.'} = 'Просмотр затрат времени.';
     $Self->{Translation}->{'Time accounting.'} = 'Учет затраченного времени';
     $Self->{Translation}->{'To use if some actions reduced the working hours (for example, if only half of the traveling time is paid Key => traveling; Content => 50).'} =
         'Для использования, если некоторые действия уменьшают рабочие часы (например, если только половина времени в пути оплачивается - Key => traveling; Content => 50).';

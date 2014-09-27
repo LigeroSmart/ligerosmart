@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2014-09-25 16:44+0000\n"
-"Last-Translator: carlosfrodriguez <carlos.rodriguez@otrs.com>\n"
+"PO-Revision-Date: 2014-09-27 07:05+0000\n"
+"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Polish (http://www.transifex.com/projects/p/OTRS/language/pl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -27,6 +27,30 @@ msgstr ""
 
 #. Template: AAATimeAccounting
 msgid "TimeAccounting"
+msgstr ""
+
+#. Template: AAATimeAccounting
+msgid "Reporting"
+msgstr ""
+
+#. Template: AAATimeAccounting
+msgid "Please insert your working hours!"
+msgstr ""
+
+#. Template: AAATimeAccounting
+msgid "Successful insert!"
+msgstr ""
+
+#. Template: AAATimeAccounting
+msgid "Error while inserting multiple dates!"
+msgstr ""
+
+#. Template: AAATimeAccounting
+msgid "Successfully inserted entries for several dates!"
+msgstr ""
+
+#. Template: AAATimeAccounting
+msgid "Entered date was invalid! Date was changed to today."
 msgstr ""
 
 #. Template: AgentTimeAccountingDelete
@@ -640,8 +664,4 @@ msgstr ""
 #. SysConfig
 msgid "To use if some actions reduced the working hours (for example, if only half of the traveling time is paid Key => traveling; Content => 50)."
 msgstr "Używane jeśli niektóre działania zmniejszyły godziny pracy (np. jeśli tylko połowa czas podróży jest wypłacana klucz => podróże; Zawartość => 50)."
-
-#. Template: AAATimeAccounting
-msgid "Reporting"
-msgstr ""
 

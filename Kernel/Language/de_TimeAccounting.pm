@@ -21,7 +21,12 @@ sub Data {
     $Self->{Translation}->{'Show valid projects'} = 'Gültige Projekte anzeigen';
     $Self->{Translation}->{'Show all projects'} = 'Alle Projekte anzeigen';
     $Self->{Translation}->{'TimeAccounting'} = 'ZeitAbrechnung';
-    $Self->{Translation}->{'Reporting'} = '';
+    $Self->{Translation}->{'Reporting'} = 'Berichterstattung';
+    $Self->{Translation}->{'Please insert your working hours!'} = '';
+    $Self->{Translation}->{'Successful insert!'} = '';
+    $Self->{Translation}->{'Error while inserting multiple dates!'} = '';
+    $Self->{Translation}->{'Successfully inserted entries for several dates!'} = '';
+    $Self->{Translation}->{'Entered date was invalid! Date was changed to today.'} = '';
 
     # Template: AgentTimeAccountingDelete
     $Self->{Translation}->{'Do you really want to delete the Time Accounting of this day?'} =
@@ -78,7 +83,7 @@ sub Data {
     $Self->{Translation}->{'Are you sure that you worked more than 16 hours?'} = 'Sind Sie sicher, dass Sie mehr als 16 Stunden gearbeitet haben?';
 
     # Template: AgentTimeAccountingOverview
-    $Self->{Translation}->{'Time reporting monthly overview'} = 'Monatsübersicht Zeitabrechnung';
+    $Self->{Translation}->{'Time reporting monthly overview'} = 'Monatsübersicht Zeitberichterstattung';
     $Self->{Translation}->{'Overtime (Hours)'} = 'Überstunden (in Stunden)';
     $Self->{Translation}->{'Overtime (this month)'} = 'Überstunden (dieser Monat)';
     $Self->{Translation}->{'Overtime (total)'} = 'Überstunden (Summe)';
@@ -101,7 +106,7 @@ sub Data {
     $Self->{Translation}->{'Grand total'} = 'Summe';
 
     # Template: AgentTimeAccountingReporting
-    $Self->{Translation}->{'Time reporting'} = 'Zeitberichte';
+    $Self->{Translation}->{'Time reporting'} = 'Zeitberichterstattung';
     $Self->{Translation}->{'Month Navigation'} = 'Datumsauswahl';
     $Self->{Translation}->{'Go to date'} = 'Gehe zu Datum';
     $Self->{Translation}->{'User reports'} = 'Nutzerberichte';
@@ -115,7 +120,7 @@ sub Data {
 
     # Template: AgentTimeAccountingReportingProject
     $Self->{Translation}->{'Project report'} = 'Projektübersicht';
-    $Self->{Translation}->{'Go to reporting overview'} = 'Gehe zur Zeitabrechnungsübersicht';
+    $Self->{Translation}->{'Go to reporting overview'} = 'Gehe zur Berichterstattungsübersicht';
 
     # Template: AgentTimeAccountingSetting
     $Self->{Translation}->{'Edit Time Accounting Project Settings'} = 'Zeitabrechnung-Projekteinstellungen bearbeiten';
@@ -192,7 +197,7 @@ sub Data {
         'Maximale Anzahl von Arbeitstagen, nach der die Arbeitszeit eingetragen werden muss.';
     $Self->{Translation}->{'Maximum number of working days without working units entry after which a warning will be shown.'} =
         'Maximale Anzahl von Arbeitstagen ohne Arbeitszeiteinträge nach denen eine Warnung angezeigt wird.';
-    $Self->{Translation}->{'Project time reporting'} = 'Projekt-Zeitabrechnung';
+    $Self->{Translation}->{'Project time reporting'} = 'Projekt-Zeitberichterstattung';
     $Self->{Translation}->{'Regular expressions for constraining action list according to selected project. Key contains regular expression for project(s), content contains regular expressions for action(s).'} =
         'Regulärer Ausdruck, um die Liste der Tätigkeiten bezüglich des ausgewählten Projekts einzuschränken. Der Schlüssel enthält einen Regulären Ausdruck für Projekte, der Wert einen Regulären Ausdruck für die Tätigkeiten.';
     $Self->{Translation}->{'Regular expressions for constraining project list according to user groups. Key contains regular expression for project(s), content contains comma separated list of groups.'} =

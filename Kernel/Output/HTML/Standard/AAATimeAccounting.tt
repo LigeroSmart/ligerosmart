@@ -13,3 +13,8 @@
 [% Translate("Show all projects") | html %]
 [% Translate("TimeAccounting") | html %]
 [% Translate("Reporting") | html %]
+[% Translate("Please insert your working hours!") | html %]
+[% Translate("Successful insert!") | html %]
+[% Translate("Error while inserting multiple dates!") | html %]
+[% Translate("Successfully inserted entries for several dates!") | html %]
+[% Translate("Entered date was invalid! Date was changed to today.") | html %]
