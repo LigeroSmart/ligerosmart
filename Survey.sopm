@@ -41,17 +41,6 @@
         <File Permission="644" Location="Kernel/Output/HTML/LayoutSurvey.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/SurveyMenuGeneric.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/SurveyOverviewSmall.pm"/>
-        <!-- Deletred after Tests
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AAASurvey.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentSurveyAdd.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentSurveyEdit.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentSurveyEditQuestions.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentSurveyOverviewNavBar.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentSurveyOverviewSmall.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentSurveyStats.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentSurveyZoom.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/PublicSurvey.dtl"/>
-        -->
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AAASurvey.tt"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentSurveyAdd.tt"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentSurveyEdit.tt"/>
