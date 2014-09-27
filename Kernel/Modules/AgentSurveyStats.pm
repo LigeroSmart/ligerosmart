@@ -202,7 +202,7 @@ sub Run {
             TemplateFile => 'AgentSurveyStats',
             Data         => {%Param},
         );
-        $Output .= $Self->{LayoutObject}->Footer();
+        $Output .= $Self->{LayoutObject}->Footer( Type => 'Small' );
         return $Output;
     }
 }
