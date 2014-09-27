@@ -22,7 +22,7 @@
         </div>
         <div class="Content">
 
-            <fieldset class="TableLike">
+            <fieldset class="TableLike FixedLabel">
 
                 <label class="Mandatory" for="Title"><span class="Marker">*</span> [% Translate("Title") | html %]:</label>
                 <div class="Field">
