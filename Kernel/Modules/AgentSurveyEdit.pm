@@ -59,6 +59,7 @@ sub Run {
             'Yes'
             )
         {
+
             return $Self->{LayoutObject}->NoPermission(
                 Message    => 'You have no permission for this survey!',
                 WithHeader => 'yes',
@@ -82,13 +83,14 @@ sub Run {
         my $SurveyID = $Self->{ParamObject}->GetParam( Param => "SurveyID" );
 
         if ( !$SurveyID ) {
+
             return $Self->{LayoutObject}->ErrorScreen(
                 Message => 'No SurveyID is given!',
                 Comment => 'Please contact the admin.',
             );
         }
 
-        # get requiered form elements and errors
+        # get required form elements and errors
         my %ServerError;
         my %FormElements;
         for my $Item (
@@ -258,10 +260,11 @@ sub _SurveyEditMask {
     }
 
     # convert required elements to RTE
+    FIELD:
     for my $SurveyField ( sort keys %SurveyElements ) {
-        next if !$SurveyElements{$SurveyField};
+        next FIELD if !$SurveyElements{$SurveyField};
 
-        # clean html
+        # clean HTML
         my $HTMLContent =
             $SurveyElements{$SurveyField} =~ s{\A\$html\/text\$\s(.*)}{$1}xms;
 
@@ -293,7 +296,7 @@ sub _SurveyEditMask {
         Data => { Description => $SurveyElements{Description}, },
     );
 
-    # generates generic errors for javascript
+    # generates generic errors for JavaScript
     for my $NeededItem (
         qw( Title Introduction Description NotificationSender NotificationSubject NotificationBody )
         )
