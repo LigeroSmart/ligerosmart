@@ -16,6 +16,7 @@
         <File Permission="644" Location="Kernel/Language/da_Survey.pm"/>
         <File Permission="644" Location="Kernel/Language/de_Survey.pm"/>
         <File Permission="644" Location="Kernel/Language/es_Survey.pm"/>
+        <File Permission="644" Location="Kernel/Language/es_MX_Survey.pm"/>
         <File Permission="644" Location="Kernel/Language/fi_FI_Survey.pm"/>
         <File Permission="644" Location="Kernel/Language/it_Survey.pm"/>
         <File Permission="644" Location="Kernel/Language/ja_Survey.pm"/>

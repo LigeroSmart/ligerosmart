@@ -1,0 +1,440 @@
+#
+# Translators:
+# carlosfrodriguez <carlos.rodriguez@otrs.com>, 2014
+msgid ""
+msgstr ""
+"Project-Id-Version: OTRS\n"
+"POT-Creation-Date: 2014-08-08 19:10+0200\n"
+"PO-Revision-Date: 2014-09-27 04:06+0000\n"
+"Last-Translator: carlosfrodriguez <carlos.rodriguez@otrs.com>\n"
+"Language-Team: Spanish (http://www.transifex.com/projects/p/OTRS/language/es/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: es\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. Template: AAASurvey
+msgid "- Change Status -"
+msgstr "- Cambiar Estado -"
+
+#. Template: AAASurvey
+msgid "Add New Survey"
+msgstr "Añadir Nueva Encuesta"
+
+#. Template: AAASurvey
+msgid "Survey Edit"
+msgstr "Editar Encuesta"
+
+#. Template: AAASurvey
+msgid "Survey Edit Questions"
+msgstr "Editar Preguntas de Estadística"
+
+#. Template: AAASurvey
+msgid "Question Edit"
+msgstr "Editar Pregunta"
+
+#. Template: AAASurvey
+msgid "Answer Edit"
+msgstr "Editar Respuesta"
+
+#. Template: AAASurvey
+msgid "Can't set new status! No questions defined."
+msgstr "No se puede establecer nuevo estado! No hay preguntas definidas."
+
+#. Template: AAASurvey
+msgid "Status changed."
+msgstr "Estado cambiado."
+
+#. Template: AAASurvey
+msgid "Thank you for your feedback."
+msgstr "Gracias por su retroalimentación"
+
+#. Template: AAASurvey
+msgid "The survey is finished."
+msgstr "La encuesta ha terminado."
+
+#. Template: AAASurvey
+msgid "Complete"
+msgstr "Completa"
+
+#. Template: AAASurvey
+msgid "Incomplete"
+msgstr "Incompleta"
+
+#. Template: AAASurvey
+msgid "Checkbox (List)"
+msgstr "Casilla de verificación (lista)"
+
+#. Template: AAASurvey
+msgid "Radio"
+msgstr "Opcion"
+
+#. Template: AAASurvey
+msgid "Radio (List)"
+msgstr "Opción (lista) "
+
+#. Template: AAASurvey
+msgid "Stats Overview"
+msgstr "Resumen de Estadisticas"
+
+#. Template: AAASurvey
+msgid "Survey Description"
+msgstr "Descripción de la Encuesta"
+
+#. Template: AAASurvey
+msgid "Survey Introduction"
+msgstr "Introducción de la Encuesta"
+
+#. Template: AAASurvey
+msgid "Yes/No"
+msgstr "Si/No"
+
+#. Template: AAASurvey
+msgid "YesNo"
+msgstr "SiNo"
+
+#. Template: AAASurvey
+msgid "answered"
+msgstr "respondido"
+
+#. Template: AAASurvey
+msgid "not answered"
+msgstr "no respondido"
+
+#. Template: AAASurvey
+msgid "Stats Detail"
+msgstr "Detalle de Estadísticas"
+
+#. Template: AAASurvey
+msgid "You have already answered the survey."
+msgstr "Usted ya ha contestado esta encuesta."
+
+#. Template: AAASurvey
+msgid "Survey#"
+msgstr "Encuesta#"
+
+#. Template: AgentSurveyAdd
+msgid "Create New Survey"
+msgstr "Crear Nueva Encuesta"
+
+#. Template: AgentSurveyAdd
+msgid "Introduction"
+msgstr "Introducción"
+
+#. Template: AgentSurveyAdd
+msgid "Internal Description"
+msgstr "Descripción Interna"
+
+#. Template: AgentSurveyEdit
+msgid "Edit General Info"
+msgstr "Editar información General"
+
+#. Template: AgentSurveyEditQuestions
+msgid "Edit Questions"
+msgstr "Editar Preguntas"
+
+#. Template: AgentSurveyEditQuestions
+msgid "Add Question"
+msgstr "Agregar Pregunta"
+
+#. Template: AgentSurveyEditQuestions
+msgid "Type the question"
+msgstr "Escriba la pregunta"
+
+#. Template: AgentSurveyEditQuestions
+msgid "Answer required"
+msgstr "Respuesta requerida"
+
+#. Template: AgentSurveyEditQuestions
+msgid "Survey Questions"
+msgstr "Preguntas de Estadistica"
+
+#. Template: AgentSurveyEditQuestions
+msgid "Question"
+msgstr "Pregunta"
+
+#. Template: AgentSurveyEditQuestions
+msgid "Answer Required"
+msgstr "Respuesta Requerida"
+
+#. Template: AgentSurveyEditQuestions
+msgid "No questions saved for this survey."
+msgstr "No hay preguntas almacenadas para esta encuesta."
+
+#. Template: AgentSurveyEditQuestions
+msgid "Edit Question"
+msgstr "Editar Pregunta"
+
+#. Template: AgentSurveyEditQuestions
+msgid "go back to questions"
+msgstr "regresar a preguntas"
+
+#. Template: AgentSurveyEditQuestions
+msgid "Possible Answers For"
+msgstr "Posibles respuestas para"
+
+#. Template: AgentSurveyEditQuestions
+msgid "Add Answer"
+msgstr "Agregar Respuesta"
+
+#. Template: AgentSurveyEditQuestions
+msgid "This doesn't have several answers, a textarea will be displayed."
+msgstr "Esta pregunta no tiene varias respuestas, un area de texto será mostrada"
+
+#. Template: AgentSurveyEditQuestions
+msgid "Go back"
+msgstr "Regresar"
+
+#. Template: AgentSurveyEditQuestions
+msgid "Edit Answer"
+msgstr "Editar Respuesta"
+
+#. Template: AgentSurveyEditQuestions
+msgid "go back to edit question"
+msgstr "volver a editar pregunta"
+
+#. Template: AgentSurveyOverviewNavBar
+msgid "Max. shown Surveys per page"
+msgstr "Numero máximo de encuestas mostradas por página"
+
+#. Template: AgentSurveyOverviewSmall
+msgid "Notification Sender"
+msgstr "Remitente de Notificacion"
+
+#. Template: AgentSurveyOverviewSmall
+msgid "Notification Subject"
+msgstr "Asunto de Notificación"
+
+#. Template: AgentSurveyOverviewSmall
+msgid "Notification Body"
+msgstr "Cuerpo de Notificación"
+
+#. Template: AgentSurveyOverviewSmall
+msgid "Changed By"
+msgstr "Modificaco por"
+
+#. Template: AgentSurveyStats
+msgid "Stats Overview of"
+msgstr "Resumen de Estadísticas de"
+
+#. Template: AgentSurveyStats
+msgid "Requests Table"
+msgstr "Tabla de Solicitudes"
+
+#. Template: AgentSurveyStats
+msgid "Send Time"
+msgstr "Tiempo de Envío"
+
+#. Template: AgentSurveyStats
+msgid "Vote Time"
+msgstr "Tiempo de Voto"
+
+#. Template: AgentSurveyStats
+msgid "Survey Stat Details"
+msgstr "Detalles de Estadisticas de Encuesta"
+
+#. Template: AgentSurveyStats
+msgid "go back to stats overview"
+msgstr "regresar a resúmen de estadisticas"
+
+#. Template: AgentSurveyZoom
+msgid "Survey Information"
+msgstr "Información de Encuesta"
+
+#. Template: AgentSurveyZoom
+msgid "Sent requests"
+msgstr "Solicitudes enviadas"
+
+#. Template: AgentSurveyZoom
+msgid "Received surveys"
+msgstr "Solicitudes recibidas"
+
+#. Template: AgentSurveyZoom
+msgid "Survey Details"
+msgstr "Detalles de Encuesta"
+
+#. Template: AgentSurveyZoom
+msgid "Ticket Services"
+msgstr "Servicios de Tickets"
+
+#. Template: AgentSurveyZoom
+msgid "Survey Results Graph"
+msgstr "Grafica de Resultados de Encuesta"
+
+#. Template: AgentSurveyZoom
+msgid "No stat results."
+msgstr "No hay graficas de resultados."
+
+#. Template: PublicSurvey
+msgid "Survey"
+msgstr "Encuesta"
+
+#. Template: PublicSurvey
+msgid "Please answer these questions"
+msgstr "Por favor conteste estas preguntas"
+
+#. Template: PublicSurvey
+msgid "Show my answers"
+msgstr "Mostrar mis respuestas"
+
+#. Template: PublicSurvey
+msgid "These are your answers"
+msgstr "Estas son sus respuestas"
+
+#. Template: PublicSurvey
+msgid "Survey Title"
+msgstr "Encuesta Título"
+
+#. SysConfig
+msgid "A Survey Module."
+msgstr "Un Módulo de Encuestas."
+
+#. SysConfig
+msgid "A module to edit survey questions."
+msgstr "Un módulo para editar las preguntas de una encuesta."
+
+#. SysConfig
+msgid "All parameters for the Survey object in the agent interface."
+msgstr "Todos los parametros para el objeto Encuesta en la interfase de agente."
+
+#. SysConfig
+msgid "Amount of days after sending a survey mail in which no new survey requests are sent to the same customer. Selecting 0 will always send the survey mail."
+msgstr "Cantidad de días después de haber mandando un correo electrónico de encuesta en los que no se mandarán nuevas encuestas hacia el mismo cliente. Seleccionar 0 mandará nuevos correos electrónicos de encuesta siempre. "
+
+#. SysConfig
+msgid "Default body for the notification email to customers about new survey."
+msgstr "Cuerpo default para el email de notificación a los clientes sobre la encuesta."
+
+#. SysConfig
+msgid "Default sender for the notification email to customers about new survey."
+msgstr "Remitente default para el email de notificación a los clientes sobre la encuesta."
+
+#. SysConfig
+msgid "Default subject for the notification email to customers about new survey."
+msgstr "Asunto default para el email de notificación a los clientes sobre la encuesta."
+
+#. SysConfig
+msgid "Defines an overview module to show the small view of a survey list."
+msgstr "Define una módulo resumen para mostrar la vista pequeña de la lista de encuestas."
+
+#. SysConfig
+msgid "Defines maximum amount of surveys that get sent to a customer per 30 days. ( 0 means no maximum, all survey requests will be sent)."
+msgstr "Define la cantidad máxima de encuestas que se mandarán a un cliente cada 30 días. ( 0 significa que no hay un máximo, todas las encuestas serán enviadas)."
+
+#. SysConfig
+msgid "Defines the amount in hours a ticket has to be closed to trigger the sending of a survey, ( 0 means send immediately after close )."
+msgstr "Define la cantidad de horas que se necesitan para que el cierre de un ticket active el envío de una encuesta, ( 0 significa mandar inmediatamente después de cerrado)."
+
+#. SysConfig
+msgid "Defines the default height for Richtext views for SurveyZoom elements."
+msgstr "Define la altura predefinida para la vista de texto enriquecido para los elementos de la pantall de detalle de estadisticas."
+
+#. SysConfig
+msgid "Defines the shown columns in the survey overview. This option has no effect on the position of the columns."
+msgstr "Define las columnas que se mostrarán en el resumen de encuestas. Esta opción no tienen ningún efecto en la posición de las columnas."
+
+#. SysConfig
+msgid "Edit Survey General Information"
+msgstr "Editar Información General de la Encuesta"
+
+#. SysConfig
+msgid "Edit Survey Questions"
+msgstr "Editar Preguntas de la Encuesta"
+
+#. SysConfig
+msgid "Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time."
+msgstr "Activa o desactiva la pantalla de \"Mostrar Datos de Votos\" en la interface pública para mostrar los resultados de una encuesta específica cuando un cliente quiere responder una encuesta por segunda vez."
+
+#. SysConfig
+msgid "Enable or disable the send condition check for the service."
+msgstr "Activa o desactiva la comprobación de la condición de envío para el servicio."
+
+#. SysConfig
+msgid "Enable or disable the send condition check for the ticket type."
+msgstr "Activa o desactiva la comprobación de la condición de envío para el tipo de ticket."
+
+#. SysConfig
+msgid "Frontend module registration for survey add in the agent interface."
+msgstr "Registro de módulo frontend SurveyAdd en la interface del agente."
+
+#. SysConfig
+msgid "Frontend module registration for survey edit in the agent interface."
+msgstr "Registro de módulo frontend SurveyEdit en la interface del agente."
+
+#. SysConfig
+msgid "Frontend module registration for survey stats in the agent interface."
+msgstr "Registro de módulo frontend SurveyStats en la interface del agente."
+
+#. SysConfig
+msgid "Frontend module registration for survey zoom in the agent interface."
+msgstr "Registro de módulo frontend SurveyZoom en la interface del agente."
+
+#. SysConfig
+msgid "Frontend module registration for the PublicSurvey object in the public Survey area."
+msgstr "Registro de módulo frontend PublicSurvey en la interface pública."
+
+#. SysConfig
+msgid "If this regex matches, no customer survey will be sent."
+msgstr "Si esta expresión regular concuerda, la encuesta no será enviada."
+
+#. SysConfig
+msgid "Parameters for the pages (in which the surveys are shown) of the small survey overview."
+msgstr "Parametros para las páginas (en que las encuestas son mostradas) de la vista de resumen pequeña."
+
+#. SysConfig
+msgid "Public Survey."
+msgstr "Encuesta Pública."
+
+#. SysConfig
+msgid "Shows a link in the menu to edit a survey in its zoom view of the agent interface."
+msgstr "Muestra un vínculo en el menú de edición de una encuesta en su vista de detalle en la interface del agente."
+
+#. SysConfig
+msgid "Shows a link in the menu to edit survey questions in its zoom view of the agent interface."
+msgstr "Muestra un vínculo en el menú de edición preguntas de una encuesta en su vista de detalle en la interface del agente."
+
+#. SysConfig
+msgid "Shows a link in the menu to go back in the survey zoom view of the agent interface."
+msgstr "Muestra un vínculo en el menú para ir hacia atrás en vista de detalle de una encuesta en la interface del agente."
+
+#. SysConfig
+msgid "Shows a link in the menu to zoom into the survey statistics details in its zoom view of the agent interface."
+msgstr "Muestra un vínculo en el menú para ir detalle de las estadísticas de una encuesta en su vista de detalle en la interface del agente."
+
+#. SysConfig
+msgid "Survey Edit Module."
+msgstr "Módulo de Edición de Encuesta."
+
+#. SysConfig
+msgid "Survey Overview \"Small\" Limit"
+msgstr "Limite de la vista de resumen pequeña."
+
+#. SysConfig
+msgid "Survey Stats Module."
+msgstr "Módulo de Stadísticas de Encuesta."
+
+#. SysConfig
+msgid "Survey Zoom Module."
+msgstr "Modulo de Detalle de Encuesta."
+
+#. SysConfig
+msgid "Survey limit per page for Survey Overview \"Small\""
+msgstr "Límite de encientas por página para el Resumen de Encuesta \"Pequeño\""
+
+#. SysConfig
+msgid "Surveys will not be sent to the configured email addresses."
+msgstr "Las encuestas no de mandarán a las direcciones de correo electrónico aquí configuradas."
+
+#. SysConfig
+msgid "The identifier for a survey, e.g. Survey#, MySurvey#. The default is Survey#."
+msgstr "El identificador para una encuesta, ejemplo Survey#, MySurvey#. Por defecto es Survey#."
+
+#. SysConfig
+msgid "Ticket event module to send automatically survey email requests to customers if a ticket is closed."
+msgstr "Módulo de evento de ticket que manda correos electrónicos de encuestas hacia los clientes si un ticket es cerrado."
+
+#. SysConfig
+msgid "Zoom Into Statistics Details"
+msgstr "Ir a los detalles de la Estadística"
+

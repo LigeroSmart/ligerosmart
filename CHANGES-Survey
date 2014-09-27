@@ -6,7 +6,8 @@
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
-2.3.3 - 2014-XX-XX
+4.0.0 beta1 - 2014-XX-XX
+ - 2014-09-26 Added Spanish (Mexico) translation.
  - Improved brazilian portuguese translation, thanks to Murilo Moreira de Oliveira.
  - Added taiwanese chinese translation, thanks to Anson Chow.
  - Added russian translation, thanks to Andrey N. Burdin.
