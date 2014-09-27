@@ -1,5 +1,5 @@
 # --
-# Kernel/Modules/AgentSurvey.pm - a survey module
+# Kernel/Modules/AgentSurveyOverview.pm - a survey module
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -7,7 +7,7 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package Kernel::Modules::AgentSurvey;
+package Kernel::Modules::AgentSurveyOverview;
 
 use strict;
 use warnings;

@@ -180,7 +180,7 @@ sub Run {
     {
         $Message = ';Message=NoSurveyID';
 
-        return $Self->{LayoutObject}->Redirect( OP => "Action=AgentSurvey$Message" );
+        return $Self->{LayoutObject}->Redirect( OP => "Action=AgentSurveyOverview$Message" );
     }
 
     # output header

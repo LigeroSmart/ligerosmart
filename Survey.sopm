@@ -31,10 +31,10 @@
         <File Permission="644" Location="Kernel/Language/ru_Survey.pm"/>
         <File Permission="644" Location="Kernel/Language/zh_TW_Survey.pm"/>
         <File Permission="644" Location="Kernel/Language/zh_CN_Survey.pm"/>
-        <File Permission="644" Location="Kernel/Modules/AgentSurvey.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentSurveyAdd.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentSurveyEdit.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentSurveyEditQuestions.pm"/>
+        <File Permission="644" Location="Kernel/Modules/AgentSurveyOverview.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentSurveyStats.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentSurveyZoom.pm"/>
         <File Permission="644" Location="Kernel/Modules/PublicSurvey.pm"/>
