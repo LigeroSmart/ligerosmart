@@ -345,7 +345,7 @@ Your OTRS-Team
                 <Item Key="Name">Back</Item>
                 <Item Key="Description" Translatable="1">Back</Item>
                 <Item Key="Action"></Item>
-                <Item Key="Link">[% Env("LastScreenOverview") | uri %]</Item>
+                <Item Key="Link">[% Env("LastScreenOverview") | html %]</Item>
                 <Item Key="Target">Back</Item>
             </Hash>
         </Setting>
