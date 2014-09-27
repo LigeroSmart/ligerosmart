@@ -41,6 +41,7 @@ sub Data {
     $Self->{Translation}->{'not answered'} = 'Não respondido';
     $Self->{Translation}->{'Stats Detail'} = 'Detalhe da estatística';
     $Self->{Translation}->{'You have already answered the survey.'} = 'Você já respondeu a pesquisa.';
+    $Self->{Translation}->{'Survey#'} = 'Pesquisa#';
 
     # Template: AgentSurveyAdd
     $Self->{Translation}->{'Create New Survey'} = 'Criar Nova Pesquisa';
@@ -49,7 +50,6 @@ sub Data {
 
     # Template: AgentSurveyEdit
     $Self->{Translation}->{'Edit General Info'} = 'Editar Informações Gerais';
-    $Self->{Translation}->{'Survey#'} = 'Pesquisa#';
 
     # Template: AgentSurveyEditQuestions
     $Self->{Translation}->{'Edit Questions'} = 'Editar Preguntas';
@@ -71,7 +71,6 @@ sub Data {
     $Self->{Translation}->{'go back to edit question'} = 'voltar para editar pergunta';
 
     # Template: AgentSurveyOverviewNavBar
-    $Self->{Translation}->{'Context Settings'} = 'Configurações de Contexto';
     $Self->{Translation}->{'Max. shown Surveys per page'} = 'Máximo de Pesquisas mostradas por página';
 
     # Template: AgentSurveyOverviewSmall
@@ -92,8 +91,8 @@ sub Data {
     $Self->{Translation}->{'Survey Information'} = 'Informação da Pesquisa';
     $Self->{Translation}->{'Sent requests'} = 'Solicitações enviadas';
     $Self->{Translation}->{'Received surveys'} = 'Solicitações recebidas';
-    $Self->{Translation}->{'Stats Details'} = 'Detalhes de Estatísticas';
     $Self->{Translation}->{'Survey Details'} = 'Detalhes da Pesquisa';
+    $Self->{Translation}->{'Ticket Services'} = '';
     $Self->{Translation}->{'Survey Results Graph'} = 'Gráficos de Resultados da Pesquisa';
     $Self->{Translation}->{'No stat results.'} = 'Sem resultados de estatísticas.';
 
@@ -103,9 +102,6 @@ sub Data {
     $Self->{Translation}->{'Show my answers'} = 'Mostrar minhas respostas';
     $Self->{Translation}->{'These are your answers'} = 'Estas são suas respostas';
     $Self->{Translation}->{'Survey Title'} = 'Título da Pesquisa';
-    $Self->{Translation}->{'Survey Error!'} = 'Erro de Pesquisa!';
-    $Self->{Translation}->{'Invalid survey key.'} = 'Chave de pesquisa inválida.';
-    $Self->{Translation}->{'The inserted survey key is invalid, if you followed a link maybe this is obsolete or broken.'} = 'A chave de pesquisa inserida é inválida. Se você seguiu um link, talvez ele esteja obsoleto ou truncado.';
 
     # SysConfig
     $Self->{Translation}->{'A Survey Module.'} = 'Um Módulo de Pesquisa.';
@@ -133,6 +129,9 @@ sub Data {
     $Self->{Translation}->{'Edit Survey General Information'} = 'Editar Informações Gerais da Pesquisa';
     $Self->{Translation}->{'Edit Survey Questions'} = 'Editar Perguntas de Pesquisa';
     $Self->{Translation}->{'Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time.'} =
+        '';
+    $Self->{Translation}->{'Enable or disable the send condition check for the service.'} = '';
+    $Self->{Translation}->{'Enable or disable the send condition check for the ticket type.'} =
         '';
     $Self->{Translation}->{'Frontend module registration for survey add in the agent interface.'} =
         '';
@@ -167,15 +166,6 @@ sub Data {
     $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket is closed.'} =
         '';
     $Self->{Translation}->{'Zoom Into Statistics Details'} = '';
-
-    #
-    # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
-    #
-    $Self->{Translation}->{'Changed Time'} = 'Hora de Modificação';
-    $Self->{Translation}->{'Created By'} = 'Criado por';
-    $Self->{Translation}->{'Created Time'} = 'Hora de Crição';
-    $Self->{Translation}->{'Please answer the next questions'} = 'Por favor, responda as seguintes perguntas';
-    $Self->{Translation}->{'Stats Details'} = 'Detalhes de Estatísticas';
 
 }
 

@@ -41,6 +41,7 @@ sub Data {
     $Self->{Translation}->{'not answered'} = 'nicht beantwortet';
     $Self->{Translation}->{'Stats Detail'} = 'Statistik Detail';
     $Self->{Translation}->{'You have already answered the survey.'} = 'Sie haben die Umfrage schon beantwortet.';
+    $Self->{Translation}->{'Survey#'} = 'Umfrage#';
 
     # Template: AgentSurveyAdd
     $Self->{Translation}->{'Create New Survey'} = 'Neue Umfrage erstellen';
@@ -49,7 +50,6 @@ sub Data {
 
     # Template: AgentSurveyEdit
     $Self->{Translation}->{'Edit General Info'} = 'Allgemeine Angaben bearbeiten';
-    $Self->{Translation}->{'Survey#'} = 'Umfrage#';
 
     # Template: AgentSurveyEditQuestions
     $Self->{Translation}->{'Edit Questions'} = 'Fragen bearbeiten';
@@ -71,7 +71,6 @@ sub Data {
     $Self->{Translation}->{'go back to edit question'} = 'Zurück zum Bearbeiten der Frage';
 
     # Template: AgentSurveyOverviewNavBar
-    $Self->{Translation}->{'Context Settings'} = 'Kontext-Einstellungen';
     $Self->{Translation}->{'Max. shown Surveys per page'} = 'Maximale Anzahl angezeigter Umfragen pro Seite';
 
     # Template: AgentSurveyOverviewSmall
@@ -93,6 +92,7 @@ sub Data {
     $Self->{Translation}->{'Sent requests'} = 'Gesendete Anfragen';
     $Self->{Translation}->{'Received surveys'} = 'Erhaltene Umfragen';
     $Self->{Translation}->{'Survey Details'} = 'Umfrage-Details';
+    $Self->{Translation}->{'Ticket Services'} = '';
     $Self->{Translation}->{'Survey Results Graph'} = 'Grafik Umfrageergebnisse';
     $Self->{Translation}->{'No stat results.'} = 'Keine Statistik-Ergebnisse.';
 
@@ -128,10 +128,11 @@ sub Data {
         'Definiert die angezeigten Spalten der Umfrage Übersicht. Diese Option hat keine Auswirkung auf die Position der Spalten.';
     $Self->{Translation}->{'Edit Survey General Information'} = '';
     $Self->{Translation}->{'Edit Survey Questions'} = '';
-    $Self->{Translation}->{'Enable or disable the send condition check for the service.'} = 'Aktivieren oder deaktivieren der Versandbedingungs-Prüfung für Services.';
-    $Self->{Translation}->{'Enable or disable the send condition check for the ticket type.'} = 'Aktivieren oder deaktivieren der Versandbedingungs-Prüfung für Ticket Typen.';
     $Self->{Translation}->{'Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time.'} =
         'Aktivieren oder deaktivieren die ShowVoteData screens im Public Interface, um Abstimmungs-Daten anzuzeigen, wen ein Kunde versucht, ein zweites mal abzustimmen.';
+    $Self->{Translation}->{'Enable or disable the send condition check for the service.'} = 'Aktivieren oder deaktivieren der Versandbedingungs-Prüfung für Services.';
+    $Self->{Translation}->{'Enable or disable the send condition check for the ticket type.'} =
+        'Aktivieren oder deaktivieren der Versandbedingungs-Prüfung für Ticket Typen.';
     $Self->{Translation}->{'Frontend module registration for survey add in the agent interface.'} =
         '';
     $Self->{Translation}->{'Frontend module registration for survey edit in the agent interface.'} =
@@ -165,27 +166,6 @@ sub Data {
     $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket is closed.'} =
         'Ticket-Event-Modul, um automatisch Umfrage-E-Mails an Kunden zu senden, wenn ein Ticket geschlossen wird.';
     $Self->{Translation}->{'Zoom Into Statistics Details'} = '';
-
-    #
-    # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
-    #
-    $Self->{Translation}->{'Changed Time'} = 'Änderungs-Zeitpunkt';
-    $Self->{Translation}->{'Created By'} = 'Erstellt von';
-    $Self->{Translation}->{'Created Time'} = 'Erstell-Zeitpunkt';
-    $Self->{Translation}->{'Days starting from the latest customer survey email between no customer survey email is sent, ( 0 means Always send it ) .'} =
-        'Anzahl Tage, von der letzten Umfrage-E-Mail an den Kunden, in der keine weitere Umfrage-Email an den Kunden versendet wird (0 bedeutet, dass die E-Mail immer versendet wird).';
-    $Self->{Translation}->{'Defines maximum amount of surveys that get sent to a customer per 30 days, ( 0 means send immediately after close ).'} =
-        'Definiert die maximale Anzahl an Umfragen die ein Kunde pro 30 Tage erhält  ( 0 bedeutet kein Limit, alle Umfrageanfragen werden gesendet ).';
-    $Self->{Translation}->{'Defines the shown columns in the survey overview. This option has no effect on the position of the column.'} =
-        'Definiert die angezeigten Spalten in der Umfrage-Übersicht. Die Einstellung hat keinen Effekt auf die angezeigte Reihenfolge der Spalten.';
-    $Self->{Translation}->{'Enable or disable the ShowVoteData screen on public interface to show data of an specific votation when customer tries to answer a survey by second time.'} =
-        'Aktivieren oder deaktivieren des ShowVoteData screens im Public Interface, um Abstimmungs-Daten anzuzeigen, wenn ein Kunde versucht ein zweites mal abzustimmen.';
-    $Self->{Translation}->{'General Info'} = 'Allgemeine Angaben';
-    $Self->{Translation}->{'Please answer the next questions'} = 'Bitte beantworten Sie die folgenden Fragen';
-    $Self->{Translation}->{'Stats Details'} = 'Statistik-Details';
-    $Self->{Translation}->{'This field is required'} = 'Dieses Feld wird benötigt';
-    $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket gets closed.'} =
-        'Ticket-Event-Modul, um automatisch Umfrage-E-Mails an Kunden zu senden, when ein Ticket geschlossen wird.';
 
 }
 

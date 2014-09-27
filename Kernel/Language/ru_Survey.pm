@@ -39,8 +39,9 @@ sub Data {
     $Self->{Translation}->{'YesNo'} = 'Да или Нет';
     $Self->{Translation}->{'answered'} = 'ответили';
     $Self->{Translation}->{'not answered'} = 'не ответили';
-    $Self->{Translation}->{'Stats Details'} = 'Подробная статистика';
+    $Self->{Translation}->{'Stats Detail'} = '';
     $Self->{Translation}->{'You have already answered the survey.'} = 'Вы уже ответили на опрос.';
+    $Self->{Translation}->{'Survey#'} = 'Опрос №';
 
     # Template: AgentSurveyAdd
     $Self->{Translation}->{'Create New Survey'} = 'Создать новый опрос';
@@ -49,7 +50,6 @@ sub Data {
 
     # Template: AgentSurveyEdit
     $Self->{Translation}->{'Edit General Info'} = 'Редактировать общую информацию';
-    $Self->{Translation}->{'Survey#'} = 'Опрос №';
 
     # Template: AgentSurveyEditQuestions
     $Self->{Translation}->{'Edit Questions'} = 'Редактировать вопросы';
@@ -92,6 +92,7 @@ sub Data {
     $Self->{Translation}->{'Sent requests'} = 'Отправленные запросы';
     $Self->{Translation}->{'Received surveys'} = 'Полученные опросы';
     $Self->{Translation}->{'Survey Details'} = 'Информаия по опросу';
+    $Self->{Translation}->{'Ticket Services'} = '';
     $Self->{Translation}->{'Survey Results Graph'} = 'Результаты опроса в графике';
     $Self->{Translation}->{'No stat results.'} = 'Статистики нет.';
 
@@ -129,6 +130,9 @@ sub Data {
     $Self->{Translation}->{'Edit Survey Questions'} = '';
     $Self->{Translation}->{'Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time.'} =
         'Включите или отключить кнопку "Показать мои ответы", чтобы показать данные определенного результата опроса, когда клиент попытается ответить на опрос во второй раз.';
+    $Self->{Translation}->{'Enable or disable the send condition check for the service.'} = '';
+    $Self->{Translation}->{'Enable or disable the send condition check for the ticket type.'} =
+        '';
     $Self->{Translation}->{'Frontend module registration for survey add in the agent interface.'} =
         '';
     $Self->{Translation}->{'Frontend module registration for survey edit in the agent interface.'} =
@@ -162,16 +166,6 @@ sub Data {
     $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket is closed.'} =
         '';
     $Self->{Translation}->{'Zoom Into Statistics Details'} = 'Подробная информация по статистике';
-
-    #There was no translation, added
-    $Self->{Translation}->{'Survey Error!'} = 'Ошибка опроса!';
-    $Self->{Translation}->{'Invalid survey key.'} = 'Неправильный ключ опроса.';
-    $Self->{Translation}->{'The inserted survey key is invalid, if you followed a link maybe this is obsolete or broken.'} = 'Вставленный ключ опроса - Неправильный, если Вы прошли по ссылке, то возможно опрос устарел или неправильно указан.';
-    $Self->{Translation}->{'Textarea'} = 'Текстовое поле';
-    #
-    # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
-    #
-
 
 }
 

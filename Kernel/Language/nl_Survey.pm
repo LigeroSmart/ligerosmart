@@ -41,6 +41,7 @@ sub Data {
     $Self->{Translation}->{'not answered'} = 'niet beantwoord';
     $Self->{Translation}->{'Stats Detail'} = 'Detail';
     $Self->{Translation}->{'You have already answered the survey.'} = 'U heeft deze enquête al beantwoord.';
+    $Self->{Translation}->{'Survey#'} = '';
 
     # Template: AgentSurveyAdd
     $Self->{Translation}->{'Create New Survey'} = 'Nieuwe enquête aanmaken';
@@ -49,7 +50,6 @@ sub Data {
 
     # Template: AgentSurveyEdit
     $Self->{Translation}->{'Edit General Info'} = 'Bewerk algemene informatie';
-    $Self->{Translation}->{'Survey#'} = '';
 
     # Template: AgentSurveyEditQuestions
     $Self->{Translation}->{'Edit Questions'} = 'Bewerk vragen';
@@ -71,7 +71,6 @@ sub Data {
     $Self->{Translation}->{'go back to edit question'} = 'ga terug naar de vraag';
 
     # Template: AgentSurveyOverviewNavBar
-    $Self->{Translation}->{'Context Settings'} = '';
     $Self->{Translation}->{'Max. shown Surveys per page'} = 'Maximaal aantal enquêtes per pagina';
 
     # Template: AgentSurveyOverviewSmall
@@ -93,6 +92,7 @@ sub Data {
     $Self->{Translation}->{'Sent requests'} = 'Verstuurde verzoeken';
     $Self->{Translation}->{'Received surveys'} = 'Ontvangen enquêtes';
     $Self->{Translation}->{'Survey Details'} = 'Details enquête';
+    $Self->{Translation}->{'Ticket Services'} = '';
     $Self->{Translation}->{'Survey Results Graph'} = 'Resultaten (grafiek)';
     $Self->{Translation}->{'No stat results.'} = 'Geen resultaten.';
 
@@ -130,6 +130,9 @@ sub Data {
     $Self->{Translation}->{'Edit Survey Questions'} = '';
     $Self->{Translation}->{'Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time.'} =
         '';
+    $Self->{Translation}->{'Enable or disable the send condition check for the service.'} = '';
+    $Self->{Translation}->{'Enable or disable the send condition check for the ticket type.'} =
+        '';
     $Self->{Translation}->{'Frontend module registration for survey add in the agent interface.'} =
         '';
     $Self->{Translation}->{'Frontend module registration for survey edit in the agent interface.'} =
@@ -163,12 +166,6 @@ sub Data {
     $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket is closed.'} =
         '';
     $Self->{Translation}->{'Zoom Into Statistics Details'} = '';
-
-    #
-    # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
-    #
-    $Self->{Translation}->{'General Info'} = 'Algemene informatie';
-    $Self->{Translation}->{'Stats Details'} = 'Details statistieken';
 
 }
 

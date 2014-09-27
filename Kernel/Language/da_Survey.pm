@@ -41,6 +41,7 @@ sub Data {
     $Self->{Translation}->{'not answered'} = 'ikke besvaret';
     $Self->{Translation}->{'Stats Detail'} = '';
     $Self->{Translation}->{'You have already answered the survey.'} = '';
+    $Self->{Translation}->{'Survey#'} = 'Undersøgelse#';
 
     # Template: AgentSurveyAdd
     $Self->{Translation}->{'Create New Survey'} = '';
@@ -49,7 +50,6 @@ sub Data {
 
     # Template: AgentSurveyEdit
     $Self->{Translation}->{'Edit General Info'} = '';
-    $Self->{Translation}->{'Survey#'} = 'Undersøgelse#';
 
     # Template: AgentSurveyEditQuestions
     $Self->{Translation}->{'Edit Questions'} = '';
@@ -71,7 +71,6 @@ sub Data {
     $Self->{Translation}->{'go back to edit question'} = '';
 
     # Template: AgentSurveyOverviewNavBar
-    $Self->{Translation}->{'Context Settings'} = '';
     $Self->{Translation}->{'Max. shown Surveys per page'} = '';
 
     # Template: AgentSurveyOverviewSmall
@@ -93,6 +92,7 @@ sub Data {
     $Self->{Translation}->{'Sent requests'} = '';
     $Self->{Translation}->{'Received surveys'} = '';
     $Self->{Translation}->{'Survey Details'} = '';
+    $Self->{Translation}->{'Ticket Services'} = '';
     $Self->{Translation}->{'Survey Results Graph'} = '';
     $Self->{Translation}->{'No stat results.'} = '';
 
@@ -130,6 +130,9 @@ sub Data {
     $Self->{Translation}->{'Edit Survey Questions'} = '';
     $Self->{Translation}->{'Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time.'} =
         '';
+    $Self->{Translation}->{'Enable or disable the send condition check for the service.'} = '';
+    $Self->{Translation}->{'Enable or disable the send condition check for the ticket type.'} =
+        '';
     $Self->{Translation}->{'Frontend module registration for survey add in the agent interface.'} =
         '';
     $Self->{Translation}->{'Frontend module registration for survey edit in the agent interface.'} =
@@ -163,10 +166,6 @@ sub Data {
     $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket is closed.'} =
         '';
     $Self->{Translation}->{'Zoom Into Statistics Details'} = '';
-
-    #
-    # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
-    #
 
 }
 

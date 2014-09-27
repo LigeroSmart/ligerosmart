@@ -41,6 +41,7 @@ sub Data {
     $Self->{Translation}->{'not answered'} = 'nie odpowiedziano';
     $Self->{Translation}->{'Stats Detail'} = 'Szczegóły statusu';
     $Self->{Translation}->{'You have already answered the survey.'} = 'Już odpowiedziałeś na tę ankietę.';
+    $Self->{Translation}->{'Survey#'} = 'Ankieta#';
 
     # Template: AgentSurveyAdd
     $Self->{Translation}->{'Create New Survey'} = 'Utwórz nową ankietę';
@@ -49,7 +50,6 @@ sub Data {
 
     # Template: AgentSurveyEdit
     $Self->{Translation}->{'Edit General Info'} = 'Edytuj informacje ogólne';
-    $Self->{Translation}->{'Survey#'} = 'Ankieta#';
 
     # Template: AgentSurveyEditQuestions
     $Self->{Translation}->{'Edit Questions'} = 'Edytuj pytania';
@@ -71,7 +71,6 @@ sub Data {
     $Self->{Translation}->{'go back to edit question'} = 'powrót do edycji pytania';
 
     # Template: AgentSurveyOverviewNavBar
-    $Self->{Translation}->{'Context Settings'} = 'Ustawienia kontekstowe';
     $Self->{Translation}->{'Max. shown Surveys per page'} = 'Maks. liczba wyświetlanych ankiet na stronę';
 
     # Template: AgentSurveyOverviewSmall
@@ -93,6 +92,7 @@ sub Data {
     $Self->{Translation}->{'Sent requests'} = 'Wysłane żądania';
     $Self->{Translation}->{'Received surveys'} = 'Otrzymane ankiety';
     $Self->{Translation}->{'Survey Details'} = 'Szczegóły ankiety';
+    $Self->{Translation}->{'Ticket Services'} = '';
     $Self->{Translation}->{'Survey Results Graph'} = 'Wykres wyników ankiety';
     $Self->{Translation}->{'No stat results.'} = 'Brak wyników ankiety.';
 
@@ -130,6 +130,9 @@ sub Data {
     $Self->{Translation}->{'Edit Survey Questions'} = '';
     $Self->{Translation}->{'Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time.'} =
         'Włącz lub wyłącz ekran ShowVoteData w interfejsie publicznym aby pokazać wyniki ankiety gdy klient próbuje odpowiedzieć na akietę drugi raz.';
+    $Self->{Translation}->{'Enable or disable the send condition check for the service.'} = '';
+    $Self->{Translation}->{'Enable or disable the send condition check for the ticket type.'} =
+        '';
     $Self->{Translation}->{'Frontend module registration for survey add in the agent interface.'} =
         '';
     $Self->{Translation}->{'Frontend module registration for survey edit in the agent interface.'} =
@@ -163,27 +166,6 @@ sub Data {
     $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket is closed.'} =
         'Zdarzenie zgłoszenia wysyła automatycznie e-maila z prośbą o wypełnienie ankiety po zamknięciu zgłoszenia.';
     $Self->{Translation}->{'Zoom Into Statistics Details'} = '';
-
-    #
-    # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
-    #
-    $Self->{Translation}->{'Change Status'} = 'Zmień status';
-    $Self->{Translation}->{'Changed Time'} = 'Czas zmiany';
-    $Self->{Translation}->{'Created By'} = 'Utworzone przez';
-    $Self->{Translation}->{'Created Time'} = 'Czas utworzenia';
-    $Self->{Translation}->{'Days starting from the latest customer survey email between no customer survey email is sent, ( 0 means Always send it ) .'} =
-        'Liczba dni bez wysyłania żądań wypełnienia ankiety do klienta, począwszy od ostatniej takiej wysyłki do tego klienta (0 oznacza wysyłanie za każdym razem).';
-    $Self->{Translation}->{'Defines the shown columns in the survey overview. This option has no effect on the position of the column.'} =
-        'Definiuje widoczne kolumny w przeglądzie ankiet. Ta opcja nie wpływa na pozycję kolumn.';
-    $Self->{Translation}->{'Enable or disable the ShowVoteData screen on public interface to show data of an specific votation when customer tries to answer a survey by second time.'} =
-        'Włącz lub wyłącz ekran ShowVoteData w interfejsie publicznym aby pokazać wyniki ankiety gdy klient próbuje odpowiedzieć na akietę drugi raz.';
-    $Self->{Translation}->{'General Info'} = 'Informacje ogólne';
-    $Self->{Translation}->{'Please answer the next questions'} = 'Prosimy, odpowiedz na nastêpne pytania';
-    $Self->{Translation}->{'Stats Details'} = 'Szczegóły statystyk';
-    $Self->{Translation}->{'Status changed'} = 'Status zmieniony';
-    $Self->{Translation}->{'This field is required'} = 'To pole jest wymagane';
-    $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket gets closed.'} =
-        'Moduł zdarzeniowy zgłoszenia do automatycznego wysyłania żądań e-mail wypełnienia ankiety do klientów, przy zamknięciu zgłoszenia.';
 
 }
 

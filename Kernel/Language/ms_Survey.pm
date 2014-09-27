@@ -41,6 +41,7 @@ sub Data {
     $Self->{Translation}->{'not answered'} = 'Tidak dijawab';
     $Self->{Translation}->{'Stats Detail'} = 'Statistik Terperinchi';
     $Self->{Translation}->{'You have already answered the survey.'} = 'Anda telah menjawab kaji selidik.';
+    $Self->{Translation}->{'Survey#'} = 'Penyiasatan#';
 
     # Template: AgentSurveyAdd
     $Self->{Translation}->{'Create New Survey'} = 'Buat Survey Baru';
@@ -49,7 +50,6 @@ sub Data {
 
     # Template: AgentSurveyEdit
     $Self->{Translation}->{'Edit General Info'} = 'Edit Maklumat Umum';
-    $Self->{Translation}->{'Survey#'} = 'Penyiasatan#';
 
     # Template: AgentSurveyEditQuestions
     $Self->{Translation}->{'Edit Questions'} = 'Edit Soalan';
@@ -71,7 +71,6 @@ sub Data {
     $Self->{Translation}->{'go back to edit question'} = 'kembali untuk mengedit soalan';
 
     # Template: AgentSurveyOverviewNavBar
-    $Self->{Translation}->{'Context Settings'} = 'konteks Tetapan';
     $Self->{Translation}->{'Max. shown Surveys per page'} = 'Max. Ukur ditunjukkan setiap halaman';
 
     # Template: AgentSurveyOverviewSmall
@@ -93,6 +92,7 @@ sub Data {
     $Self->{Translation}->{'Sent requests'} = 'menghantar permintaan';
     $Self->{Translation}->{'Received surveys'} = 'diterima kaji selidik';
     $Self->{Translation}->{'Survey Details'} = 'Penyiasatan terperinchi';
+    $Self->{Translation}->{'Ticket Services'} = '';
     $Self->{Translation}->{'Survey Results Graph'} = 'Ukur Keputusan Graf';
     $Self->{Translation}->{'No stat results.'} = 'Tiada stat keputusan.';
 
@@ -130,6 +130,9 @@ sub Data {
     $Self->{Translation}->{'Edit Survey Questions'} = '';
     $Self->{Translation}->{'Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time.'} =
         'Dayakan atau nyahdayakan Undi Papar Data skrin dalam antara muka awam untuk menunjukkan data hasil kajian tertentu apabila pelanggan cuba untuk menjawab kaji selidik kali kedua.';
+    $Self->{Translation}->{'Enable or disable the send condition check for the service.'} = '';
+    $Self->{Translation}->{'Enable or disable the send condition check for the ticket type.'} =
+        '';
     $Self->{Translation}->{'Frontend module registration for survey add in the agent interface.'} =
         '';
     $Self->{Translation}->{'Frontend module registration for survey edit in the agent interface.'} =
@@ -163,27 +166,6 @@ sub Data {
     $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket is closed.'} =
         'Tiket modul acara untuk menghantar permintaan e-mel secara automatik kaji selidik kepada pelanggan jika tiket ditutup.';
     $Self->{Translation}->{'Zoom Into Statistics Details'} = '';
-
-    #
-    # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
-    #
-    $Self->{Translation}->{'Changed Time'} = 'Waktu berubah';
-    $Self->{Translation}->{'Created By'} = 'Dibuat Oleh';
-    $Self->{Translation}->{'Created Time'} = 'Waktu Diciptakan';
-    $Self->{Translation}->{'Days starting from the latest customer survey email between no customer survey email is sent, ( 0 means Always send it ) .'} =
-        'Hari bermula dari pelanggan terbaru kaji selidik e-mel antara tiada kajian pelanggan e-mel dihantar, (0 bermakna Sentiasa hantar).';
-    $Self->{Translation}->{'Defines maximum amount of surveys that get sent to a customer per 30 days, ( 0 means send immediately after close ).'} =
-        'Mentakrifkan jumlah maksimum kaji selidik yang mendapat dihantar kepada pelanggan setiap 30 hari, (0 cara menghantar segera selepas penutupan)';
-    $Self->{Translation}->{'Defines the shown columns in the survey overview. This option has no effect on the position of the column.'} =
-        'Mentakrifkan ruangan menunjukkan dalam gambaran kajian. Pilihan ini tidak mempunyai kesan ke atas kedudukan tiang.';
-    $Self->{Translation}->{'Enable or disable the ShowVoteData screen on public interface to show data of an specific votation when customer tries to answer a survey by second time.'} =
-        'Dayakan atau nyahdayakan Undi Papar Data skrin pada antara muka awam untuk menunjukkan data putaran tertentu apabila pelanggan cuba untuk menjawab kaji selidik oleh kali kedua.';
-    $Self->{Translation}->{'General Info'} = 'Maklumat Umum';
-    $Self->{Translation}->{'Please answer the next questions'} = 'Sila jawab soalan seterusnya';
-    $Self->{Translation}->{'Stats Details'} = 'Statistik terperinchi';
-    $Self->{Translation}->{'This field is required'} = 'Bidang ini diperlukan';
-    $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket gets closed.'} =
-        'Tiket modul acara untuk menghantar permintaan e-mel secara automatik kaji selidik kepada pelanggan jika tiket mendapat ditutup.';
 
 }
 

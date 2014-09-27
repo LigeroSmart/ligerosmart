@@ -41,6 +41,7 @@ sub Data {
     $Self->{Translation}->{'not answered'} = '';
     $Self->{Translation}->{'Stats Detail'} = '';
     $Self->{Translation}->{'You have already answered the survey.'} = '';
+    $Self->{Translation}->{'Survey#'} = 'Encuesta#';
 
     # Template: AgentSurveyAdd
     $Self->{Translation}->{'Create New Survey'} = 'Crear Nueva Encuesta';
@@ -49,7 +50,6 @@ sub Data {
 
     # Template: AgentSurveyEdit
     $Self->{Translation}->{'Edit General Info'} = 'Editar información General';
-    $Self->{Translation}->{'Survey#'} = 'Encuesta#';
 
     # Template: AgentSurveyEditQuestions
     $Self->{Translation}->{'Edit Questions'} = 'Editar Preguntas';
@@ -71,7 +71,6 @@ sub Data {
     $Self->{Translation}->{'go back to edit question'} = 'volver a editar pregunta';
 
     # Template: AgentSurveyOverviewNavBar
-    $Self->{Translation}->{'Context Settings'} = 'Configuraciones de Contexto';
     $Self->{Translation}->{'Max. shown Surveys per page'} = 'Numero máximo de encuestas mostradas por página';
 
     # Template: AgentSurveyOverviewSmall
@@ -93,6 +92,7 @@ sub Data {
     $Self->{Translation}->{'Sent requests'} = 'Solicitudes enviadas';
     $Self->{Translation}->{'Received surveys'} = 'Solicitudes recibidas';
     $Self->{Translation}->{'Survey Details'} = 'Detalles de Encuesta';
+    $Self->{Translation}->{'Ticket Services'} = '';
     $Self->{Translation}->{'Survey Results Graph'} = 'Grafica de Resultados de Encuesta';
     $Self->{Translation}->{'No stat results.'} = 'No hay graficas de resultados.';
 
@@ -130,6 +130,9 @@ sub Data {
     $Self->{Translation}->{'Edit Survey Questions'} = '';
     $Self->{Translation}->{'Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time.'} =
         '';
+    $Self->{Translation}->{'Enable or disable the send condition check for the service.'} = '';
+    $Self->{Translation}->{'Enable or disable the send condition check for the ticket type.'} =
+        '';
     $Self->{Translation}->{'Frontend module registration for survey add in the agent interface.'} =
         '';
     $Self->{Translation}->{'Frontend module registration for survey edit in the agent interface.'} =
@@ -163,26 +166,6 @@ sub Data {
     $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket is closed.'} =
         '';
     $Self->{Translation}->{'Zoom Into Statistics Details'} = '';
-
-    #
-    # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
-    #
-    $Self->{Translation}->{'Changed Time'} = 'Tiempo de modificación';
-    $Self->{Translation}->{'Created By'} = 'Creado por';
-    $Self->{Translation}->{'Created Time'} = 'Tiempo de Creación';
-    $Self->{Translation}->{'Days starting from the latest customer survey email between no customer survey email is sent, ( 0 means Always send it ) .'} =
-        'Dias comenzando desde la última en cuesta enviada al cliente ( 0 significa enviala siempre ) .';
-    $Self->{Translation}->{'Defines the shown columns in the survey overview. This option has no effect on the position of the column.'} =
-        'Define las columnas mostradas en la vista \'Resumen de Estadisticas\'.';
-    $Self->{Translation}->{'Enable or disable the ShowVoteData screen on public interface to show data of an specific votation when customer tries to answer a survey by second time.'} =
-        'Habilitar o deshabilitar la pantalla de ShowVoteData screen en la interfase publica para mostrar los datos de un voteo cuando el cliente intenta contestar la encuesta por segunda vez.';
-    $Self->{Translation}->{'General Info'} = 'Información General';
-    $Self->{Translation}->{'Please answer the next questions'} = 'Por favor conteste las siguientes preguntas';
-    $Self->{Translation}->{'Stats Details'} = 'Detalle de Estadísticas';
-    $Self->{Translation}->{'Survey limit per page for Survey Overview "Small".'} = 'Limite de encuestas por página para la vista de resumen pequeña.';
-    $Self->{Translation}->{'This field is required'} = 'Este campo es requerido';
-    $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket gets closed.'} =
-        'Modulo de evento de Ticket para enviar automaticamente correos de solicitudes de encuesta a clientes si el ticket se ha cerrado.';
 
 }
 

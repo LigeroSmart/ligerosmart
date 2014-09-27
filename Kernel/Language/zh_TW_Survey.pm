@@ -41,6 +41,7 @@ sub Data {
     $Self->{Translation}->{'not answered'} = '未回答';
     $Self->{Translation}->{'Stats Detail'} = '統計詳情';
     $Self->{Translation}->{'You have already answered the survey.'} = '你已經回答了調查。';
+    $Self->{Translation}->{'Survey#'} = '調查#';
 
     # Template: AgentSurveyAdd
     $Self->{Translation}->{'Create New Survey'} = '創建新的調查';
@@ -49,7 +50,6 @@ sub Data {
 
     # Template: AgentSurveyEdit
     $Self->{Translation}->{'Edit General Info'} = '編輯一般信息';
-    $Self->{Translation}->{'Survey#'} = '調查#';
 
     # Template: AgentSurveyEditQuestions
     $Self->{Translation}->{'Edit Questions'} = '編輯問題';
@@ -71,7 +71,6 @@ sub Data {
     $Self->{Translation}->{'go back to edit question'} = '返回到編輯問題';
 
     # Template: AgentSurveyOverviewNavBar
-    $Self->{Translation}->{'Context Settings'} = '上下文設置';
     $Self->{Translation}->{'Max. shown Surveys per page'} = '每頁顯示調查的最大數';
 
     # Template: AgentSurveyOverviewSmall
@@ -93,6 +92,7 @@ sub Data {
     $Self->{Translation}->{'Sent requests'} = '已發送的請求';
     $Self->{Translation}->{'Received surveys'} = '已接收的調查';
     $Self->{Translation}->{'Survey Details'} = '調查詳情';
+    $Self->{Translation}->{'Ticket Services'} = '';
     $Self->{Translation}->{'Survey Results Graph'} = '調查結果圖';
     $Self->{Translation}->{'No stat results.'} = '沒有統計結果。';
 
@@ -130,6 +130,9 @@ sub Data {
     $Self->{Translation}->{'Edit Survey Questions'} = '';
     $Self->{Translation}->{'Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time.'} =
         '';
+    $Self->{Translation}->{'Enable or disable the send condition check for the service.'} = '';
+    $Self->{Translation}->{'Enable or disable the send condition check for the ticket type.'} =
+        '';
     $Self->{Translation}->{'Frontend module registration for survey add in the agent interface.'} =
         '';
     $Self->{Translation}->{'Frontend module registration for survey edit in the agent interface.'} =
@@ -163,19 +166,6 @@ sub Data {
     $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket is closed.'} =
         '';
     $Self->{Translation}->{'Zoom Into Statistics Details'} = '';
-
-    #
-    # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
-    #
-    $Self->{Translation}->{'- No queue selected -'} = '沒有選擇隊列';
-    $Self->{Translation}->{'Changed Time'} = '修改時間';
-    $Self->{Translation}->{'Created By'} = '創建人';
-    $Self->{Translation}->{'Created Time'} = '創建時間';
-    $Self->{Translation}->{'General Info'} = '一般信息';
-    $Self->{Translation}->{'No queue selected'} = '沒有選擇隊列';
-    $Self->{Translation}->{'Please answer the next questions'} = '請回答下一個問題';
-    $Self->{Translation}->{'Stats Details'} = '統計詳情';
-    $Self->{Translation}->{'This field is required'} = '這個字段是必需的';
 
 }
 
