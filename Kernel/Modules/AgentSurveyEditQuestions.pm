@@ -666,7 +666,7 @@ sub _MaskQuestionOverview {
                 my $Status = 'Complete';
                 if ( $Question->{Type} eq 'Radio' || $Question->{Type} eq 'Checkbox' ) {
                     if ( $AnswerCount < 2 ) {
-                        $Class  = 'Error';
+                        $Class  = 'Warning';
                         $Status = 'Incomplete';
                     }
                 }
