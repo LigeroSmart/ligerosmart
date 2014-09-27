@@ -57,6 +57,7 @@ sub Run {
             'Yes'
             )
         {
+
             return $Self->{LayoutObject}->NoPermission(
                 Message    => 'You have no permission for this survey!',
                 WithHeader => 'yes',
@@ -91,6 +92,7 @@ sub Run {
         );
 
         $Output .= $Self->{LayoutObject}->Footer( Type => 'Small' );
+
         return $Output;
     }
 
@@ -110,6 +112,7 @@ sub Run {
             ne 'Yes'
             )
         {
+
             return $Self->{LayoutObject}->NoPermission(
                 Message    => 'You have no permission for this survey or stats detail!',
                 WithHeader => 'yes',
@@ -203,6 +206,7 @@ sub Run {
             Data         => {%Param},
         );
         $Output .= $Self->{LayoutObject}->Footer( Type => 'Small' );
+
         return $Output;
     }
 }
