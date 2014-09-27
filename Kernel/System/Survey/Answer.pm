@@ -295,8 +295,7 @@ sub AnswerSort {
                 WHERE id = ?',
             Bind => [ \$Counter, \$AnswerID ],
         );
-    }
-    continue {
+
         $Counter++;
     }
 

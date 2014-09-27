@@ -341,8 +341,7 @@ sub QuestionSort {
                 WHERE id = ?',
             Bind => [ \$Counter, \$QuestionID ],
         );
-    }
-    continue {
+
         $Counter++;
     }
 

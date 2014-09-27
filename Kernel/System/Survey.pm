@@ -568,8 +568,7 @@ sub SurveySearch {
         # add SQL
         push @SQLOrderBy,    "$OrderByTable{$OrderBy} $Direction";
         push @OrderByFields, $OrderByTable{$OrderBy};
-    }
-    continue {
+
         $Count++;
     }
 
