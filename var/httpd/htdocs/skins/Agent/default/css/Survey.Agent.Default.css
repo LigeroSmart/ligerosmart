@@ -125,23 +125,22 @@ a.ArrowDownDisabled i {
     cursor: default;
 }
 
-a.ArrowUp span,
-a.ArrowUpDisabled span,
-a.ArrowDown span,
-a.ArrowDownDisabled span,
+a.SeeDetails {
+    height: 15px;
+    padding: 1px;
+    margin-top: -6px;
+    border-style: none;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
 a.SeeDetails span {
     background: none;
     display: none;
 }
 
-a.SeeDetails {
-    height: 15px;
-    padding: 1px;
-    margin-top: 0;
-    margin-bottom: 1px;
-    border-style: none;
-    vertical-align: middle;
-    cursor: pointer;
+a.SeeDetails i {
+    color: #FF9922;
 }
 
 label.Textarea,
