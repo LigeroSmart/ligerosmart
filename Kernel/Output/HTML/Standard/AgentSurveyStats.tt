@@ -71,7 +71,7 @@
 
     </div>
     <div class="Footer">
-        <button type="submit" class="CancelClosePopup Primary CallForAction" value="[% Translate("Close window") | html %]"><span><i class="fa fa-remove"></i> [% Translate("Close window") | html %]</span></button>
+        <button type="submit" class="CancelClosePopup Primary CallForAction" value="[% Translate("Close window") | html %]"><span><i class="fa fa-times"></i> [% Translate("Close window") | html %]</span></button>
     </div>
 </div>
 [% WRAPPER JSOnDocumentComplete %]
@@ -105,7 +105,7 @@
                 <h2>[% Translate("Details") | html %]</h2>
             </div>
             <div class="Content">
-                <fieldset class="TableLike">
+                <fieldset class="TableLike FixedLabel">
 [% RenderBlockStart("StatsDetailQuestion") %]
                     <label class="[% Data.Class %]">[% Data.RequiredText | html %][% Data.Question | html %]:</label>
 [% RenderBlockStart("StatsDetailAnswer") %]
@@ -124,7 +124,7 @@
         <form action="[% Env("CGIHandle") %]" method="post">
             <input type="hidden" name="Action" value="[% Env("Action") %]" />
             <input type="hidden" name="SurveyID" value="[% Data.SurveyID | html %]" />
-            <button type="submit" class="Primary CallForAction" value="[% Translate("Go back") | html %]"><span><i class="fa fa-arrow-left"></i> [% Translate("Go back") | html %]</span></button>
+            <button type="submit" class="Primary CallForAction" value="[% Translate("Go back") | html %]"><span><i class="fa fa-caret-left"></i> [% Translate("Go back") | html %]</span></button>
         </form>
     </div>
 </div>
