@@ -1,0 +1,436 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Survey\n"
+"POT-Creation-Date: 2014-08-08 19:10+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. Template: AAASurvey
+msgid "- Change Status -"
+msgstr "- 更改狀態 -"
+
+#. Template: AAASurvey
+msgid "Add New Survey"
+msgstr "創建新的調查"
+
+#. Template: AAASurvey
+msgid "Survey Edit"
+msgstr "編輯調查"
+
+#. Template: AAASurvey
+msgid "Survey Edit Questions"
+msgstr "編輯調查問題"
+
+#. Template: AAASurvey
+msgid "Question Edit"
+msgstr "編輯問題"
+
+#. Template: AAASurvey
+msgid "Answer Edit"
+msgstr "編輯回答"
+
+#. Template: AAASurvey
+msgid "Can't set new status! No questions defined."
+msgstr "無法設置新的狀態！還未定義問題。"
+
+#. Template: AAASurvey
+msgid "Status changed."
+msgstr "狀態已更改。"
+
+#. Template: AAASurvey
+msgid "Thank you for your feedback."
+msgstr "感謝你的反饋。"
+
+#. Template: AAASurvey
+msgid "The survey is finished."
+msgstr "調查結束。"
+
+#. Template: AAASurvey
+msgid "Complete"
+msgstr "完整"
+
+#. Template: AAASurvey
+msgid "Incomplete"
+msgstr "不完整"
+
+#. Template: AAASurvey
+msgid "Checkbox (List)"
+msgstr "複選框（列表）"
+
+#. Template: AAASurvey
+msgid "Radio"
+msgstr "單選"
+
+#. Template: AAASurvey
+msgid "Radio (List)"
+msgstr "單選（列表）"
+
+#. Template: AAASurvey
+msgid "Stats Overview"
+msgstr "統計概況"
+
+#. Template: AAASurvey
+msgid "Survey Description"
+msgstr "調查描述"
+
+#. Template: AAASurvey
+msgid "Survey Introduction"
+msgstr "調查介紹"
+
+#. Template: AAASurvey
+msgid "Yes/No"
+msgstr "是/否"
+
+#. Template: AAASurvey
+msgid "YesNo"
+msgstr "是否"
+
+#. Template: AAASurvey
+msgid "answered"
+msgstr "已回答"
+
+#. Template: AAASurvey
+msgid "not answered"
+msgstr "未回答"
+
+#. Template: AAASurvey
+msgid "Stats Detail"
+msgstr "統計詳情"
+
+#. Template: AAASurvey
+msgid "You have already answered the survey."
+msgstr "你已經回答了調查。"
+
+#. Template: AAASurvey
+msgid "Survey#"
+msgstr "調查#"
+
+#. Template: AgentSurveyAdd
+msgid "Create New Survey"
+msgstr "創建新的調查"
+
+#. Template: AgentSurveyAdd
+msgid "Introduction"
+msgstr "介紹"
+
+#. Template: AgentSurveyAdd
+msgid "Internal Description"
+msgstr "内部描述"
+
+#. Template: AgentSurveyEdit
+msgid "Edit General Info"
+msgstr "編輯一般信息"
+
+#. Template: AgentSurveyEditQuestions
+msgid "Edit Questions"
+msgstr "編輯問題"
+
+#. Template: AgentSurveyEditQuestions
+msgid "Add Question"
+msgstr "添加問題"
+
+#. Template: AgentSurveyEditQuestions
+msgid "Type the question"
+msgstr "問題類型"
+
+#. Template: AgentSurveyEditQuestions
+msgid "Answer required"
+msgstr "需要回答"
+
+#. Template: AgentSurveyEditQuestions
+msgid "Survey Questions"
+msgstr "調查問題"
+
+#. Template: AgentSurveyEditQuestions
+msgid "Question"
+msgstr "問題"
+
+#. Template: AgentSurveyEditQuestions
+msgid "Answer Required"
+msgstr "必須回答"
+
+#. Template: AgentSurveyEditQuestions
+msgid "No questions saved for this survey."
+msgstr "這個調查没有保存的問題。"
+
+#. Template: AgentSurveyEditQuestions
+msgid "Edit Question"
+msgstr "編輯問題"
+
+#. Template: AgentSurveyEditQuestions
+msgid "go back to questions"
+msgstr "返回問題"
+
+#. Template: AgentSurveyEditQuestions
+msgid "Possible Answers For"
+msgstr "可選的回答"
+
+#. Template: AgentSurveyEditQuestions
+msgid "Add Answer"
+msgstr "添加回答"
+
+#. Template: AgentSurveyEditQuestions
+msgid "This doesn't have several answers, a textarea will be displayed."
+msgstr ""
+
+#. Template: AgentSurveyEditQuestions
+msgid "Go back"
+msgstr "返回"
+
+#. Template: AgentSurveyEditQuestions
+msgid "Edit Answer"
+msgstr "編輯回答"
+
+#. Template: AgentSurveyEditQuestions
+msgid "go back to edit question"
+msgstr "返回到編輯問題"
+
+#. Template: AgentSurveyOverviewNavBar
+msgid "Max. shown Surveys per page"
+msgstr "每頁顯示調查的最大數"
+
+#. Template: AgentSurveyOverviewSmall
+msgid "Notification Sender"
+msgstr "通知發送者"
+
+#. Template: AgentSurveyOverviewSmall
+msgid "Notification Subject"
+msgstr "通知主題"
+
+#. Template: AgentSurveyOverviewSmall
+msgid "Notification Body"
+msgstr "通知正文"
+
+#. Template: AgentSurveyOverviewSmall
+msgid "Changed By"
+msgstr "修改人"
+
+#. Template: AgentSurveyStats
+msgid "Stats Overview of"
+msgstr "統計概況"
+
+#. Template: AgentSurveyStats
+msgid "Requests Table"
+msgstr "請求表"
+
+#. Template: AgentSurveyStats
+msgid "Send Time"
+msgstr "發送時間"
+
+#. Template: AgentSurveyStats
+msgid "Vote Time"
+msgstr "投票時間"
+
+#. Template: AgentSurveyStats
+msgid "Survey Stat Details"
+msgstr "調查統計詳情"
+
+#. Template: AgentSurveyStats
+msgid "go back to stats overview"
+msgstr "返回統計概況"
+
+#. Template: AgentSurveyZoom
+msgid "Survey Information"
+msgstr "調查信息"
+
+#. Template: AgentSurveyZoom
+msgid "Sent requests"
+msgstr "已發送的請求"
+
+#. Template: AgentSurveyZoom
+msgid "Received surveys"
+msgstr "已接收的調查"
+
+#. Template: AgentSurveyZoom
+msgid "Survey Details"
+msgstr "調查詳情"
+
+#. Template: AgentSurveyZoom
+msgid "Ticket Services"
+msgstr ""
+
+#. Template: AgentSurveyZoom
+msgid "Survey Results Graph"
+msgstr "調查結果圖"
+
+#. Template: AgentSurveyZoom
+msgid "No stat results."
+msgstr "沒有統計結果。"
+
+#. Template: PublicSurvey
+msgid "Survey"
+msgstr "調查"
+
+#. Template: PublicSurvey
+msgid "Please answer these questions"
+msgstr "請回答這些問題"
+
+#. Template: PublicSurvey
+msgid "Show my answers"
+msgstr "顯示我的回答"
+
+#. Template: PublicSurvey
+msgid "These are your answers"
+msgstr "這些是你的回答"
+
+#. Template: PublicSurvey
+msgid "Survey Title"
+msgstr "調查標題"
+
+#. SysConfig
+msgid "A Survey Module."
+msgstr ""
+
+#. SysConfig
+msgid "A module to edit survey questions."
+msgstr ""
+
+#. SysConfig
+msgid "All parameters for the Survey object in the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Amount of days after sending a survey mail in which no new survey requests are sent to the same customer. Selecting 0 will always send the survey mail."
+msgstr ""
+
+#. SysConfig
+msgid "Default body for the notification email to customers about new survey."
+msgstr ""
+
+#. SysConfig
+msgid "Default sender for the notification email to customers about new survey."
+msgstr ""
+
+#. SysConfig
+msgid "Default subject for the notification email to customers about new survey."
+msgstr ""
+
+#. SysConfig
+msgid "Defines an overview module to show the small view of a survey list."
+msgstr ""
+
+#. SysConfig
+msgid "Defines maximum amount of surveys that get sent to a customer per 30 days. ( 0 means no maximum, all survey requests will be sent)."
+msgstr ""
+
+#. SysConfig
+msgid "Defines the amount in hours a ticket has to be closed to trigger the sending of a survey, ( 0 means send immediately after close )."
+msgstr ""
+
+#. SysConfig
+msgid "Defines the default height for Richtext views for SurveyZoom elements."
+msgstr ""
+
+#. SysConfig
+msgid "Defines the shown columns in the survey overview. This option has no effect on the position of the columns."
+msgstr ""
+
+#. SysConfig
+msgid "Edit Survey General Information"
+msgstr ""
+
+#. SysConfig
+msgid "Edit Survey Questions"
+msgstr ""
+
+#. SysConfig
+msgid "Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time."
+msgstr ""
+
+#. SysConfig
+msgid "Enable or disable the send condition check for the service."
+msgstr ""
+
+#. SysConfig
+msgid "Enable or disable the send condition check for the ticket type."
+msgstr ""
+
+#. SysConfig
+msgid "Frontend module registration for survey add in the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Frontend module registration for survey edit in the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Frontend module registration for survey stats in the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Frontend module registration for survey zoom in the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Frontend module registration for the PublicSurvey object in the public Survey area."
+msgstr ""
+
+#. SysConfig
+msgid "If this regex matches, no customer survey will be sent."
+msgstr ""
+
+#. SysConfig
+msgid "Parameters for the pages (in which the surveys are shown) of the small survey overview."
+msgstr ""
+
+#. SysConfig
+msgid "Public Survey."
+msgstr ""
+
+#. SysConfig
+msgid "Shows a link in the menu to edit a survey in its zoom view of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Shows a link in the menu to edit survey questions in its zoom view of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Shows a link in the menu to go back in the survey zoom view of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Shows a link in the menu to zoom into the survey statistics details in its zoom view of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Survey Edit Module."
+msgstr ""
+
+#. SysConfig
+msgid "Survey Overview \"Small\" Limit"
+msgstr ""
+
+#. SysConfig
+msgid "Survey Stats Module."
+msgstr ""
+
+#. SysConfig
+msgid "Survey Zoom Module."
+msgstr "Modul Umfrage-Detailansicht"
+
+#. SysConfig
+msgid "Survey limit per page for Survey Overview \"Small\""
+msgstr ""
+
+#. SysConfig
+msgid "Surveys will not be sent to the configured email addresses."
+msgstr ""
+
+#. SysConfig
+msgid "The identifier for a survey, e.g. Survey#, MySurvey#. The default is Survey#."
+msgstr ""
+
+#. SysConfig
+msgid "Ticket event module to send automatically survey email requests to customers if a ticket is closed."
+msgstr ""
+
+#. SysConfig
+msgid "Zoom Into Statistics Details"
+msgstr ""
+
