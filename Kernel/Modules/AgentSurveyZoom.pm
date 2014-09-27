@@ -47,7 +47,7 @@ sub Run {
 
     my $Output;
 
-    # view attachment for html email
+    # view attachment for HTML email
     if ( $Self->{Subaction} eq 'HTMLView' ) {
 
         # get params
@@ -61,6 +61,7 @@ sub Run {
                     Message  => "Needed Param: $Needed!",
                     Priority => 'error',
                 );
+
                 return;
             }
         }
@@ -70,6 +71,7 @@ sub Run {
                 Message  => "Invalid SurveyField Param: $SurveyField!",
                 Priority => 'error',
             );
+
             return;
         }
 
@@ -83,6 +85,7 @@ sub Run {
                 Message  => "Invalid SurveyID: $SurveyID!",
                 Priority => 'error',
             );
+
             return;
         }
 
@@ -91,7 +94,7 @@ sub Run {
 
         if ( $Survey{$SurveyField} ) {
 
-            # clean html and convert the Field in html (\n --><br>)
+            # clean HTML and convert the Field in HTML (\n --><br>)
             $Survey{$SurveyField} =~ s{\A\$html\/text\$\s(.*)}{$1}xms;
             $Survey{$SurveyField} = $Self->{LayoutObject}->Ascii2Html(
                 Text           => $Survey{$SurveyField},
@@ -99,10 +102,11 @@ sub Run {
             );
         }
         else {
+
             return;
         }
 
-        # convert text area fields to ascii
+        # convert text area fields to ASCII
         $Survey{$SurveyField}
             = $Self->{HTMLUtilsObject}->ToAscii( String => $Survey{$SurveyField} );
 
@@ -131,6 +135,7 @@ sub Run {
             'Yes'
             )
         {
+
             return $Self->{LayoutObject}->NoPermission(
                 Message    => 'You have no permission for this survey!',
                 WithHeader => 'yes',
@@ -152,6 +157,7 @@ sub Run {
         elsif ( defined($StatusSet) && $StatusSet eq 'StatusSet' ) {
             $Message = ';Message=StatusSet';
         }
+
         return $Self->{LayoutObject}->Redirect(
             OP => "Action=AgentSurveyZoom;SurveyID=$SurveyID$Message",
         );
@@ -173,6 +179,7 @@ sub Run {
         )
     {
         $Message = ';Message=NoSurveyID';
+
         return $Self->{LayoutObject}->Redirect( OP => "Action=AgentSurvey$Message" );
     }
 
@@ -180,7 +187,7 @@ sub Run {
     $Output = $Self->{LayoutObject}->Header( Title => 'Survey' );
     $Output .= $Self->{LayoutObject}->NavigationBar();
 
-    # output mesages if status was changed
+    # output messages if status was changed
     if ( defined($Message) && $Message eq 'NoQuestion' ) {
         $Output .= $Self->{LayoutObject}->Notify(
             Priority => 'Error',
@@ -204,9 +211,10 @@ sub Run {
     my %Survey = $Self->{SurveyObject}->SurveyGet( SurveyID => $SurveyID );
     my %HTML;
 
-    # clean html and convert the textareas in html (\n --><br>)
+    # clean HTML and convert the textareas in HTML (\n --><br>)
+    FIELD:
     for my $SurveyField (qw( Introduction Description )) {
-        next if !$Survey{$SurveyField};
+        next FIELD if !$Survey{$SurveyField};
 
         $Survey{$SurveyField} =~ s{\A\$html\/text\$\s(.*)}{$1}xms;
 
@@ -348,6 +356,7 @@ sub Run {
                 );
             }
             else {
+
                 return $Self->{LayoutObject}->FatalError();
             }
         }
@@ -529,6 +538,7 @@ sub Run {
         Data         => {%Param},
     );
     $Output .= $Self->{LayoutObject}->Footer();
+
     return $Output;
 }
 
