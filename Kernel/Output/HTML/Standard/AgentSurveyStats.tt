@@ -48,7 +48,7 @@
                             <td class="Center">
                                 <a class="SeeDetails AsBlock" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=StatsDetail;SurveyID=[% Data.SurveyID | uri %];RequestID=[% Data.RequestID | uri %];TicketNumber=[% Data.TicketNumber | uri %]">
                                     <i class="fa fa-search-plus"></i>
-                                    <span>See Details</span>
+                                    <span>[% Translate("See Details") | html %]</span>
                                 </a>
                             </td>
                             <td>
