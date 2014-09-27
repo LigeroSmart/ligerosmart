@@ -1,17 +1,18 @@
 #
 # Translators:
-# carlosfrodriguez <carlos.rodriguez@otrs.com>, 2014
+# Carlos Rodríguez <carlos.rodriguez@otrs.com>, 2014
+# Carlos Rodríguez <carlos.rodriguez@otrs.com>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2014-09-27 04:06+0000\n"
-"Last-Translator: carlosfrodriguez <carlos.rodriguez@otrs.com>\n"
-"Language-Team: Spanish (http://www.transifex.com/projects/p/OTRS/language/es/)\n"
+"PO-Revision-Date: 2014-09-27 06:25+0000\n"
+"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
+"Language-Team: Spanish (Mexico) (http://www.transifex.com/projects/p/OTRS/language/es_MX/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: es\n"
+"Language: es_MX\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. Template: AAASurvey
@@ -107,12 +108,24 @@ msgid "Stats Detail"
 msgstr "Detalle de Estadísticas"
 
 #. Template: AAASurvey
+msgid "Stats Details"
+msgstr "Detalle de la Encuesta"
+
+#. Template: AAASurvey
 msgid "You have already answered the survey."
 msgstr "Usted ya ha contestado esta encuesta."
 
 #. Template: AAASurvey
 msgid "Survey#"
 msgstr "Encuesta#"
+
+#. Template: AAASurvey
+msgid "- No queue selected -"
+msgstr "- No se ha seleccionado ninguna cola -"
+
+#. Template: AAASurvey
+msgid "Master"
+msgstr "Maestro"
 
 #. Template: AgentSurveyAdd
 msgid "Create New Survey"
@@ -231,6 +244,10 @@ msgid "Vote Time"
 msgstr "Tiempo de Voto"
 
 #. Template: AgentSurveyStats
+msgid "See Details"
+msgstr "Ver Detalles"
+
+#. Template: AgentSurveyStats
 msgid "Survey Stat Details"
 msgstr "Detalles de Estadisticas de Encuesta"
 
@@ -284,7 +301,7 @@ msgstr "Estas son sus respuestas"
 
 #. Template: PublicSurvey
 msgid "Survey Title"
-msgstr "Encuesta Título"
+msgstr "Título de la Encuesta"
 
 #. SysConfig
 msgid "A Survey Module."

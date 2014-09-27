@@ -103,11 +103,23 @@ msgid "Stats Detail"
 msgstr ""
 
 #. Template: AAASurvey
+msgid "Stats Details"
+msgstr ""
+
+#. Template: AAASurvey
 msgid "You have already answered the survey."
 msgstr ""
 
 #. Template: AAASurvey
 msgid "Survey#"
+msgstr ""
+
+#. Template: AAASurvey
+msgid "- No queue selected -"
+msgstr ""
+
+#. Template: AAASurvey
+msgid "Master"
 msgstr ""
 
 #. Template: AgentSurveyAdd
@@ -224,6 +236,10 @@ msgstr ""
 
 #. Template: AgentSurveyStats
 msgid "Vote Time"
+msgstr ""
+
+#. Template: AgentSurveyStats
+msgid "See Details"
 msgstr ""
 
 #. Template: AgentSurveyStats

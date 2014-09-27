@@ -40,8 +40,11 @@ sub Data {
     $Self->{Translation}->{'answered'} = 'Dijawab';
     $Self->{Translation}->{'not answered'} = 'Tidak dijawab';
     $Self->{Translation}->{'Stats Detail'} = 'Statistik Terperinchi';
+    $Self->{Translation}->{'Stats Details'} = '';
     $Self->{Translation}->{'You have already answered the survey.'} = 'Anda telah menjawab kaji selidik.';
     $Self->{Translation}->{'Survey#'} = 'Penyiasatan#';
+    $Self->{Translation}->{'- No queue selected -'} = '';
+    $Self->{Translation}->{'Master'} = '';
 
     # Template: AgentSurveyAdd
     $Self->{Translation}->{'Create New Survey'} = 'Buat Survey Baru';
@@ -84,6 +87,7 @@ sub Data {
     $Self->{Translation}->{'Requests Table'} = 'Jadual permintaan';
     $Self->{Translation}->{'Send Time'} = 'Masa Hantar';
     $Self->{Translation}->{'Vote Time'} = 'Masa Undi';
+    $Self->{Translation}->{'See Details'} = '';
     $Self->{Translation}->{'Survey Stat Details'} = 'Penyiasatan Details Stat';
     $Self->{Translation}->{'go back to stats overview'} = 'kembali ke Statistik gambaran keseluruhan';
 

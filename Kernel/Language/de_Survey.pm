@@ -40,8 +40,11 @@ sub Data {
     $Self->{Translation}->{'answered'} = 'beantwortet';
     $Self->{Translation}->{'not answered'} = 'nicht beantwortet';
     $Self->{Translation}->{'Stats Detail'} = 'Statistik Detail';
+    $Self->{Translation}->{'Stats Details'} = '';
     $Self->{Translation}->{'You have already answered the survey.'} = 'Sie haben die Umfrage schon beantwortet.';
     $Self->{Translation}->{'Survey#'} = 'Umfrage#';
+    $Self->{Translation}->{'- No queue selected -'} = '';
+    $Self->{Translation}->{'Master'} = '';
 
     # Template: AgentSurveyAdd
     $Self->{Translation}->{'Create New Survey'} = 'Neue Umfrage erstellen';
@@ -84,6 +87,7 @@ sub Data {
     $Self->{Translation}->{'Requests Table'} = 'Anfragen-Tabelle';
     $Self->{Translation}->{'Send Time'} = 'Sendezeit';
     $Self->{Translation}->{'Vote Time'} = 'Abstimmungszeit';
+    $Self->{Translation}->{'See Details'} = '';
     $Self->{Translation}->{'Survey Stat Details'} = 'Details Umfragestatistik';
     $Self->{Translation}->{'go back to stats overview'} = 'Zurück zur Übersicht';
 

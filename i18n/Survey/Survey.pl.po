@@ -434,3 +434,19 @@ msgstr "Zdarzenie zgłoszenia wysyła automatycznie e-maila z prośbą o wypełn
 msgid "Zoom Into Statistics Details"
 msgstr ""
 
+#. Template: AAASurvey
+msgid "Stats Details"
+msgstr ""
+
+#. Template: AAASurvey
+msgid "- No queue selected -"
+msgstr ""
+
+#. Template: AAASurvey
+msgid "Master"
+msgstr ""
+
+#. Template: AgentSurveyStats
+msgid "See Details"
+msgstr ""
+

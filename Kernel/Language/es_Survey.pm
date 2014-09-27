@@ -40,8 +40,11 @@ sub Data {
     $Self->{Translation}->{'answered'} = 'respondido';
     $Self->{Translation}->{'not answered'} = 'no respondido';
     $Self->{Translation}->{'Stats Detail'} = 'Detalle de Estadísticas';
+    $Self->{Translation}->{'Stats Details'} = 'Detalle de Estadísticas';
     $Self->{Translation}->{'You have already answered the survey.'} = 'Usted ya ha contestado esta encuesta.';
     $Self->{Translation}->{'Survey#'} = 'Encuesta#';
+    $Self->{Translation}->{'- No queue selected -'} = '- No se ha seleccionado ninguna cola -';
+    $Self->{Translation}->{'Master'} = 'Maestro';
 
     # Template: AgentSurveyAdd
     $Self->{Translation}->{'Create New Survey'} = 'Crear Nueva Encuesta';
@@ -84,6 +87,7 @@ sub Data {
     $Self->{Translation}->{'Requests Table'} = 'Tabla de Solicitudes';
     $Self->{Translation}->{'Send Time'} = 'Tiempo de Envío';
     $Self->{Translation}->{'Vote Time'} = 'Tiempo de Voto';
+    $Self->{Translation}->{'See Details'} = 'Ver Detalles';
     $Self->{Translation}->{'Survey Stat Details'} = 'Detalles de Estadisticas de Encuesta';
     $Self->{Translation}->{'go back to stats overview'} = 'regresar a resúmen de estadisticas';
 
@@ -101,7 +105,7 @@ sub Data {
     $Self->{Translation}->{'Please answer these questions'} = 'Por favor conteste estas preguntas';
     $Self->{Translation}->{'Show my answers'} = 'Mostrar mis respuestas';
     $Self->{Translation}->{'These are your answers'} = 'Estas son sus respuestas';
-    $Self->{Translation}->{'Survey Title'} = 'Encuesta Título';
+    $Self->{Translation}->{'Survey Title'} = 'Título de la Encuesta ';
 
     # SysConfig
     $Self->{Translation}->{'A Survey Module.'} = 'Un Módulo de Encuestas.';

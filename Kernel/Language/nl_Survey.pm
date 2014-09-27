@@ -40,8 +40,11 @@ sub Data {
     $Self->{Translation}->{'answered'} = 'beantwoord';
     $Self->{Translation}->{'not answered'} = 'niet beantwoord';
     $Self->{Translation}->{'Stats Detail'} = 'Detail';
+    $Self->{Translation}->{'Stats Details'} = '';
     $Self->{Translation}->{'You have already answered the survey.'} = 'U heeft deze enquête al beantwoord.';
     $Self->{Translation}->{'Survey#'} = '';
+    $Self->{Translation}->{'- No queue selected -'} = '';
+    $Self->{Translation}->{'Master'} = '';
 
     # Template: AgentSurveyAdd
     $Self->{Translation}->{'Create New Survey'} = 'Nieuwe enquête aanmaken';
@@ -84,6 +87,7 @@ sub Data {
     $Self->{Translation}->{'Requests Table'} = 'Verzoeken';
     $Self->{Translation}->{'Send Time'} = 'Verstuurd op';
     $Self->{Translation}->{'Vote Time'} = 'Ingevuld op';
+    $Self->{Translation}->{'See Details'} = '';
     $Self->{Translation}->{'Survey Stat Details'} = 'Detailoverzicht statistieken';
     $Self->{Translation}->{'go back to stats overview'} = 'ga terug naar het overzicht';
 

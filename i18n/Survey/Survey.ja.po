@@ -434,3 +434,19 @@ msgstr "チケットが完了した際に、顧客に自動的に調査メール
 msgid "Zoom Into Statistics Details"
 msgstr ""
 
+#. Template: AAASurvey
+msgid "Stats Details"
+msgstr ""
+
+#. Template: AAASurvey
+msgid "- No queue selected -"
+msgstr ""
+
+#. Template: AAASurvey
+msgid "Master"
+msgstr ""
+
+#. Template: AgentSurveyStats
+msgid "See Details"
+msgstr ""
+
