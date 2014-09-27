@@ -32,7 +32,7 @@
                     <input type="hidden" name="Subaction" value="QuestionAdd" />
                     <input type="hidden" name="SurveyID" value="[% Data.SurveyID | html %]" />
 
-                    <fieldset class="TableLike SpacingTop">
+                    <fieldset class="TableLike FixedLabel SpacingTop">
                         <label class="Mandatory" for="Question"><span class="Marker">*</span> [% Translate("Type the question") | html %]:&nbsp;</label>
                         <div class="Field">
                             <input type="text" id="Question" name="Question" class="Validate_Required [% Data.QuestionErrorClass | html %] " size="60" />
@@ -52,7 +52,7 @@
                             [% Data.AnswerRequiredSelect %]
                         </div>
                         <div class="Field">
-                            <button type="submit" value="[% Translate("Add") | html %]">[% Translate("Add") | html %]</button>
+                            <button class="CallForAction Plus" type="submit" value="[% Translate("Add") | html %]"><span><i class="fa fa-plus-square"></i> [% Translate("Add") | html %]</span></button>
                         </div>
                     </fieldset>
                 </form>
@@ -147,24 +147,21 @@
                             <td class="Center">
                                 <a class="AsBlock ArrowUp[% Data.ClassUp | html %]" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=QuestionUp;SurveyID=[% Data.SurveyID | uri %];QuestionID=[% Data.QuestionID | uri %]">
                                     <i class="fa fa-chevron-up"></i>
-                                    <span>[% Translate("Up") | html %]</span>
+                                    <span class="InvisibleText">[% Translate("Up") | html %]</span>
                                 </a>
                             </td>
                             <td class="Center">
                                 <a class="AsBlock ArrowDown[% Data.ClassDown | html %]" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=QuestionDown;SurveyID=[% Data.SurveyID | uri %];QuestionID=[% Data.QuestionID | uri %]">
                                     <i class="fa fa-chevron-down"></i>
-                                    <span>[% Translate("Down") | html %]</span>
+                                    <span class="InvisibleText">[% Translate("Down") | html %]</span>
                                 </a>
                             </td>
 [% RenderBlockStart("SurveyQuestionsDeleteButton") %]
                             <td class="Center">
-                                <form action="[% Env("CGIHandle") %]" method="post">
-                                    <input type="hidden" name="Action" value="[% Env("Action") %]" />
-                                    <input type="hidden" name="Subaction" value="QuestionDelete" />
-                                    <input type="hidden" name="SurveyID" value="[% Data.SurveyID | html %]" />
-                                    <input type="hidden" name="QuestionID" value="[% Data.QuestionID | html %]" />
-                                    <button type="submit" class="TrashCan" value="[% Translate("Delete") | html %]" >[% Translate("Delete") | html %]</button>
-                                </form>
+                                <a class="AsBlock" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=QuestionDelete;SurveyID=[% Data.SurveyID | uri %];QuestionID=[% Data.QuestionID | uri %]">
+                                    <i class="fa fa-trash-o"></i>
+                                    <span class="InvisibleText">[% Translate("Delete") | html %]</span>
+                                </a>
                             </td>
 [% RenderBlockEnd("SurveyQuestionsDeleteButton") %]
                         </tr>
@@ -176,7 +173,7 @@
 
     </div>
     <div class="Footer">
-        <button type="submit" class="CancelClosePopup Primary CallForAction" value="[% Translate("Close window") | html %]"><span><i class="fa fa-remove"></i> [% Translate("Close window") | html %]</span></button>
+        <button type="submit" class="CancelClosePopup Primary CallForAction" value="[% Translate("Close window") | html %]"><span><i class="fa fa-times"></i> [% Translate("Close window") | html %]</span></button>
     </div>
 </div>
 [% RenderBlockEnd("SurveyEditQuestions") %]
@@ -208,7 +205,7 @@
                     <input type="hidden" name="Subaction" value="QuestionSave" />
                     <input type="hidden" name="QuestionID" value="[% Data.QuestionID | html %]" />
                     <input type="hidden" name="SurveyID" value="[% Data.SurveyID | html %]" />
-                    <fieldset class="TableLike">
+                    <fieldset class="TableLike FixedLabel">
                         <label for="Question" class="Mandatory"><span class="Marker">*</span> [% Translate("Question") | html %]:</label>
                         <div class="Field">
                             <input type="text" size="60" name="Question" id="Question" value="[% Data.Question | html %]" class="Validate_Required [% Data.QuestionServerError | html %]" />
@@ -226,7 +223,7 @@
                             [% Data.AnswerRequiredSelect %]
                         </div>
                         <div class ="Field">
-                            <button type="submit" value="[% Translate("Save") | html %]">[% Translate("Save") | html %]</button>
+                            <button class="CallForAction" type="submit" value="[% Translate("Save") | html %]"> <span><i class="fa fa-check-square-o"></i> [% Translate("Save") | html %]</span></button>
                         </div>
                     </fieldset>
                 </form>
@@ -244,11 +241,11 @@
                     <input type="hidden" name="Subaction" value="AnswerAdd" />
                     <input type="hidden" name="QuestionID" value="[% Data.QuestionID | html %]" />
                     <input type="hidden" name="SurveyID" value="[% Data.SurveyID | html %]" />
-                    <fieldset class="TableLike">
+                    <fieldset class="TableLike FixedLabel">
                         <label for="Answer" class="Mandatory"><span class="Marker">*</span> [% Translate("Add Answer") | html %]:</label>
                         <div class="Field">
                             <input type="text" id="Answer" name="Answer" size="60" class="Validate_Required [% Data.AnswerServerError | html %] "/>
-                            <button type="submit" value="[% Translate("Add") | html %]">[% Translate("Add") | html %]</button>
+                            <button class="CallForAction Plus" type="submit" value="[% Translate("Add") | html %]"> <span><i class="fa fa-plus-square"></i> [% Translate("Add") | html %]</button>
                         </div>
 
                         <div id="AnswerError" class="TooltipErrorMessage">
@@ -292,25 +289,21 @@
                             <td class="Center">
                                 <a class="AsBlock ArrowUp[% Data.ClassUp | html %]" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=AnswerUp;SurveyID=[% Data.SurveyID | uri %];QuestionID=[% Data.QuestionID | uri %];AnswerID=[% Data.AnswerID | uri %]">
                                     <i class="fa fa-chevron-up"></i>
-                                    <span>[% Translate("Up") | html %]</span>
+                                    <span class="InvisibleText">[% Translate("Up") | html %]</span>
                                 </a>
                             </td>
                             <td class="Center">
                                 <a class="AsBlock ArrowDown[% Data.ClassDown | html %]" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=AnswerDown;SurveyID=[% Data.SurveyID | uri %];QuestionID=[% Data.QuestionID | uri %];AnswerID=[% Data.AnswerID | uri %]">
                                     <i class="fa fa-chevron-down"></i>
-                                    <span>[% Translate("Down") | html %]</span>
+                                    <span class="InvisibleText">[% Translate("Down") | html %]</span>
                                 </a>
                             </td>
 [% RenderBlockStart("QuestionEditRadioDelete") %]
                             <td class="Center">
-                                <form action="[% Env("CGIHandle") %]" method="post">
-                                    <input type="hidden" name="Action" value="[% Env("Action") %]" />
-                                    <input type="hidden" name="Subaction" value="AnswerDelete" />
-                                    <input type="hidden" name="SurveyID" value="[% Data.SurveyID | html %]" />
-                                    <input type="hidden" name="QuestionID" value="[% Data.QuestionID | html %]" />
-                                    <input type="hidden" name="AnswerID" value="[% Data.AnswerID | html %]" />
-                                    <button type="submit" class="TrashCan" value="[% Translate("Delete") | html %]">[% Translate("Delete") | html %]</button>
-                                </form>
+                                <a class="AsBlock" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=AnswerDelete;SurveyID=[% Data.SurveyID | uri %];QuestionID=[% Data.QuestionID | uri %];AnswerID=[% Data.AnswerID | uri %]">
+                                    <i class="fa fa-trash-o"></i>
+                                    <span class="InvisibleText">[% Translate("Delete") | html %]</span>
+                                </a>
                             </td>
 [% RenderBlockEnd("QuestionEditRadioDelete") %]
                         </tr>
@@ -324,25 +317,21 @@
                             <td class="Center">
                                 <a class="AsBlock ArrowUp[% Data.ClassUp | html %]" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=AnswerUp;SurveyID=[% Data.SurveyID | uri %];QuestionID=[% Data.QuestionID | uri %];AnswerID=[% Data.AnswerID | uri %]">
                                     <i class="fa fa-chevron-up"></i>
-                                    <span>[% Translate("Up") | html %]</span>
+                                    <span class="InvisibleText">[% Translate("Up") | html %]</span>
                                 </a>
                             </td>
                             <td class="Center">
                                 <a class="AsBlock ArrowDown[% Data.ClassDown | html %]" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=AnswerDown;SurveyID=[% Data.SurveyID | uri %];QuestionID=[% Data.QuestionID | uri %];AnswerID=[% Data.AnswerID | uri %]">
                                     <i class="fa fa-chevron-down"></i>
-                                    <span>[% Translate("Down") | html %]</span>
+                                    <span class="InvisibleText">[% Translate("Down") | html %]</span>
                                 </a>
                             </td>
 [% RenderBlockStart("QuestionEditCheckboxDelete") %]
                             <td class="Center">
-                                <form action="[% Env("CGIHandle") %]" method="post">
-                                    <input type="hidden" name="Action" value="[% Env("Action") %]" />
-                                    <input type="hidden" name="Subaction" value="AnswerDelete" />
-                                    <input type="hidden" name="SurveyID" value="[% Data.SurveyID | html %]" />
-                                    <input type="hidden" name="QuestionID" value="[% Data.QuestionID | html %]" />
-                                    <input type="hidden" name="AnswerID" value="[% Data.AnswerID | html %]" />
-                                    <button type="submit" value="[% Translate("Delete") | html %]" class="TrashCan" > [% Translate("Delete") | html %] </button>
-                                </form>
+                                <a class="AsBlock" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=AnswerDelete;SurveyID=[% Data.SurveyID | uri %];QuestionID=[% Data.QuestionID | uri %];AnswerID=[% Data.AnswerID | uri %]">
+                                    <i class="fa fa-trash-o"></i>
+                                    <span class="InvisibleText">[% Translate("Delete") | html %]</span>
+                                </a>
                             </td>
 [% RenderBlockEnd("QuestionEditCheckboxDelete") %]
                         </tr>
@@ -354,13 +343,13 @@
                             <td class="Center">
                                 <a class="AsBlock ArrowUpDisabled" href="#">
                                     <i class="fa fa-chevron-up"></i>
-                                    <span>[% Translate("Up") | html %]</span>
+                                    <span class="InvisibleText">[% Translate("Up") | html %]</span>
                                 </a>
                             </td>
                             <td class="Center">
                                 <a class="AsBlock ArrowDownDisabled" href="#">
                                     <i class="fa fa-chevron-down"></i>
-                                    <span>[% Translate("Down") | html %]</span>
+                                    <span class="InvisibleText">[% Translate("Down") | html %]</span>
                                 </a>
                             </td>
                         </tr>
@@ -369,13 +358,13 @@
                             <td class="Center">
                                 <a class="AsBlock ArrowUpDisabled" href="#">
                                     <i class="fa fa-chevron-up"></i>
-                                    <span>[% Translate("Up") | html %]</span>
+                                    <span class="InvisibleText">[% Translate("Up") | html %]</span>
                                 </a>
                             </td>
                             <td class="Center">
                                 <a class="AsBlock ArrowDownDisabled" href="#">
                                     <i class="fa fa-chevron-down"></i>
-                                    <span>[% Translate("Down") | html %]</span>
+                                    <span class="InvisibleText">[% Translate("Down") | html %]</span>
                                 </a>
                             </td>
                         </tr>
@@ -387,7 +376,7 @@
 
 
 [% RenderBlockStart("QuestionEditTextArea") %]
-                <fieldset class="TableLike">
+                <fieldset class="TableLike FixedLabel">
                     <div class="Field">
                         [% Translate("This doesn't have several answers, a textarea will be displayed.") | html %]
                     </div>
@@ -400,7 +389,7 @@
         <form action="[% Env("CGIHandle") %]" method="post">
             <input type="hidden" name="Action" value="[% Env("Action") %]" />
             <input type="hidden" name="SurveyID" value="[% Data.SurveyID | html %]" />
-            <button type="submit" class="Primary CallForAction" value="[% Translate("Go back") | html %]"><span><i class="fa fa-arrow-left"></i> [% Translate("Go back") | html %]</span></button>
+            <button type="submit" class="Primary CallForAction" value="[% Translate("Go back") | html %]"><span><i class="fa fa-caret-left"></i> [% Translate("Go back") | html %]</span></button>
         </form>
     </div>
 </div>
@@ -434,7 +423,7 @@
                 </div>
                 <div class="Content">
 
-                    <fieldset class="TableLike">
+                    <fieldset class="TableLike FixedLabel">
                         <label for="Answer" class="Mandatory"><span class="Marker">*</span> [% Translate("Answer") | html %]:</label>
 
                         <div class="Field">
