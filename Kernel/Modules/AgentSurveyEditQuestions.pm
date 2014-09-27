@@ -62,6 +62,7 @@ sub Run {
             'Yes'
             )
         {
+
             return $Self->{LayoutObject}->NoPermission(
                 Message    => 'You have no permission for this survey!',
                 WithHeader => 'yes',
@@ -106,6 +107,7 @@ sub Run {
             ) ne 'Yes'
             )
         {
+
             return $Self->{LayoutObject}->NoPermission(
                 Message    => 'You have no permission for this survey or question!',
                 WithHeader => 'yes',
@@ -116,6 +118,7 @@ sub Run {
             QuestionID => $QuestionID,
         );
         $Self->{SurveyObject}->QuestionSort( SurveyID => $SurveyID );
+
         return $Self->{LayoutObject}->Redirect(
             OP => "Action=$Self->{Action};Subaction=SurveyEdit;SurveyID=$SurveyID#Question"
         );
@@ -138,6 +141,7 @@ sub Run {
             ) ne 'Yes'
             )
         {
+
             return $Self->{LayoutObject}->NoPermission(
                 Message    => 'You have no permission for this survey or question!',
                 WithHeader => 'yes',
@@ -171,6 +175,7 @@ sub Run {
             ) ne 'Yes'
             )
         {
+
             return $Self->{LayoutObject}->NoPermission(
                 Message    => 'You have no permission for this survey or question!',
                 WithHeader => 'yes',
@@ -181,6 +186,7 @@ sub Run {
             SurveyID   => $SurveyID,
             QuestionID => $QuestionID,
         );
+
         return $Self->{LayoutObject}->Redirect(
             OP => "Action=$Self->{Action};Subaction=SurveyEdit;SurveyID=$SurveyID#Question"
         );
@@ -241,6 +247,7 @@ sub Run {
             ) ne 'Yes'
             )
         {
+
             return $Self->{LayoutObject}->NoPermission(
                 Message    => 'You have no permission for this survey or question!',
                 WithHeader => 'yes',
@@ -291,6 +298,7 @@ sub Run {
             ) ne 'Yes'
             )
         {
+
             return $Self->{LayoutObject}->NoPermission(
                 Message    => 'You have no permission for this survey or question!',
                 WithHeader => 'yes',
@@ -342,6 +350,7 @@ sub Run {
             ne 'Yes'
             )
         {
+
             return $Self->{LayoutObject}->NoPermission(
                 Message    => 'You have no permission for this survey, question or answer!',
                 WithHeader => 'yes',
@@ -352,6 +361,7 @@ sub Run {
             AnswerID   => $AnswerID,
         );
         $Self->{SurveyObject}->AnswerSort( QuestionID => $QuestionID );
+
         return $Self->{LayoutObject}->Redirect(
             OP =>
                 "Action=$Self->{Action};Subaction=QuestionEdit;SurveyID=$SurveyID;QuestionID=$QuestionID#Answer",
@@ -378,6 +388,7 @@ sub Run {
             ne 'Yes'
             )
         {
+
             return $Self->{LayoutObject}->NoPermission(
                 Message    => 'You have no permission for this survey, question or answer!',
                 WithHeader => 'yes',
@@ -388,6 +399,7 @@ sub Run {
             QuestionID => $QuestionID,
             AnswerID   => $AnswerID,
         );
+
         return $Self->{LayoutObject}->Redirect(
             OP =>
                 "Action=$Self->{Action};Subaction=QuestionEdit;SurveyID=$SurveyID;QuestionID=$QuestionID#Answer",
@@ -414,6 +426,7 @@ sub Run {
             ne 'Yes'
             )
         {
+
             return $Self->{LayoutObject}->NoPermission(
                 Message    => 'You have no permission for this survey, question or answer!',
                 WithHeader => 'yes',
@@ -424,6 +437,7 @@ sub Run {
             QuestionID => $QuestionID,
             AnswerID   => $AnswerID,
         );
+
         return $Self->{LayoutObject}->Redirect(
             OP =>
                 "Action=$Self->{Action};Subaction=QuestionEdit;SurveyID=$SurveyID;QuestionID=$QuestionID#Answer",
@@ -450,6 +464,7 @@ sub Run {
             ne 'Yes'
             )
         {
+
             return $Self->{LayoutObject}->NoPermission(
                 Message    => 'You have no permission for this survey, question or answer!',
                 WithHeader => 'yes',
@@ -484,6 +499,7 @@ sub Run {
             ne 'Yes'
             )
         {
+
             return $Self->{LayoutObject}->NoPermission(
                 Message    => 'You have no permission for this survey, question or answer!',
                 WithHeader => 'yes',
@@ -498,6 +514,7 @@ sub Run {
                 Answer     => $Answer,
                 UserID     => $Self->{UserID},
             );
+
             return $Self->{LayoutObject}->Redirect(
                 OP =>
                     "Action=$Self->{Action};Subaction=QuestionEdit;SurveyID=$SurveyID;QuestionID=$QuestionID#Answer"
@@ -521,6 +538,7 @@ sub Run {
     my $SurveyID = $Self->{ParamObject}->GetParam( Param => 'SurveyID' );
 
     if ( !$SurveyID ) {
+
         return $Self->{LayoutObject}->ErrorScreen(
             Message => 'No SurveyID is given!',
             Comment => 'Please contact the admin.',
@@ -533,6 +551,7 @@ sub Run {
         'Yes'
         )
     {
+
         return $Self->{LayoutObject}->NoPermission(
             Message    => 'You have no permission for this survey!',
             WithHeader => 'yes',
@@ -553,6 +572,7 @@ sub _MaskQuestionOverview {
     my $Output;
 
     if ( !$Param{SurveyID} ) {
+
         return $Self->{LayoutObject}->ErrorScreen(
             Message => 'No SurveyID is given!',
             Comment => 'Please contact the admin.',
@@ -656,11 +676,11 @@ sub _MaskQuestionOverview {
                 my $ClassDown;
 
                 if ( !$Counter ) {
-                    $ClassUp = 'Disabled',
+                    $ClassUp = 'Disabled';
                 }
 
                 if ( $Counter == $#List ) {
-                    $ClassDown = 'Disabled',
+                    $ClassDown = 'Disabled';
                 }
 
                 my $Status = 'Complete';
@@ -707,11 +727,11 @@ sub _MaskQuestionOverview {
             my $ClassDown;
 
             if ( !$Counter ) {
-                $ClassUp = 'Disabled',
+                $ClassUp = 'Disabled';
             }
 
             if ( $Counter && $Counter == $#List ) {
-                $ClassDown = 'Disabled',
+                $ClassDown = 'Disabled';
             }
 
             my $AnswerRequired = $Question->{AnswerRequired} ? 'Yes' : 'No';
@@ -736,6 +756,7 @@ sub _MaskQuestionOverview {
     );
 
     $Output .= $Self->{LayoutObject}->Footer( Type => 'Small' );
+
     return $Output;
 }
 
@@ -859,11 +880,11 @@ sub _MaskQuestionEdit {
                     my $ClassDown;
 
                     if ( !$Counter ) {
-                        $ClassUp = 'Disabled',
+                        $ClassUp = 'Disabled';
                     }
 
                     if ( $Counter && $Counter == $#List ) {
-                        $ClassDown = 'Disabled',
+                        $ClassDown = 'Disabled';
                     }
 
                     $Self->{LayoutObject}->Block(
@@ -899,6 +920,7 @@ sub _MaskQuestionEdit {
         Data         => {%Param},
     );
     $Output .= $Self->{LayoutObject}->Footer( Type => 'Small' );
+
     return $Output;
 }
 
@@ -935,6 +957,7 @@ sub _MaskAnswerEdit {
     );
 
     $Output .= $Self->{LayoutObject}->Footer( Type => 'Small' );
+
     return $Output;
 }
 
