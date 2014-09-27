@@ -248,7 +248,8 @@ sub Run {
 
     my $NoQueueMessage = '';
     if ( !$QueueListString ) {
-        $QueueListString = '- No queue selected -';
+        $QueueListString
+            = $Self->{LayoutObject}->{LanguageObject}->Translate('- No queue selected -');
     }
 
     # print the main table.
