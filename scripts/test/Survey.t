@@ -34,7 +34,7 @@ $DBObject->Do(
 );
 
 # get helper object
-my $HelperObject = $Kernel::OM->Get(' Kernel::System::UnitTest::Helper');
+my $HelperObject = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 
 # Freeze Time
 $HelperObject->FixedTimeSet();
