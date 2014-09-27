@@ -33,5 +33,8 @@
 [% Translate("answered") | html %]
 [% Translate("not answered") | html %]
 [% Translate("Stats Detail") | html %]
+[% Translate("Stats Details") | html %]
 [% Translate("You have already answered the survey.") | html %]
 [% Translate("Survey#") | html %]
+[% Translate("- No queue selected -") | html %]
+[% Translate("Master") | html %]
