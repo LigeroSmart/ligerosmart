@@ -22,11 +22,11 @@ sub Data {
     $Self->{Translation}->{'Show all projects'} = 'Mostrar todos los proyectos';
     $Self->{Translation}->{'TimeAccounting'} = 'Contabilidad de Tiempo';
     $Self->{Translation}->{'Reporting'} = 'Reportes';
-    $Self->{Translation}->{'Please insert your working hours!'} = '';
-    $Self->{Translation}->{'Successful insert!'} = '';
-    $Self->{Translation}->{'Error while inserting multiple dates!'} = '';
-    $Self->{Translation}->{'Successfully inserted entries for several dates!'} = '';
-    $Self->{Translation}->{'Entered date was invalid! Date was changed to today.'} = '';
+    $Self->{Translation}->{'Please insert your working hours!'} = 'Por favor inserte sus horas de trabajo!';
+    $Self->{Translation}->{'Successful insert!'} = 'Inserción exitosa!';
+    $Self->{Translation}->{'Error while inserting multiple dates!'} = 'Error al insertar múltiples fechas!';
+    $Self->{Translation}->{'Successfully inserted entries for several dates!'} = 'Se insertaron satisfactoriamente las entradas de varias fechas! ';
+    $Self->{Translation}->{'Entered date was invalid! Date was changed to today.'} = 'La fecha entrada es incorrecta! La fecha de ha cambiado a hoy.';
 
     # Template: AgentTimeAccountingDelete
     $Self->{Translation}->{'Do you really want to delete the Time Accounting of this day?'} =
@@ -123,7 +123,7 @@ sub Data {
     $Self->{Translation}->{'Go to reporting overview'} = 'Ir al resumen de reportes';
 
     # Template: AgentTimeAccountingSetting
-    $Self->{Translation}->{'Edit Time Accounting Project Settings'} = 'Modificar la configuración del proyecto de contabilidad de tiempo.';
+    $Self->{Translation}->{'Edit Time Accounting Project Settings'} = 'Modificar la configuración del proyecto de contabilidad de tiempo';
     $Self->{Translation}->{'Add project'} = 'Agregar proyecto';
     $Self->{Translation}->{'Go to settings overview'} = 'Ir al resumen de configuración';
     $Self->{Translation}->{'Add Project'} = 'Agregar Proyecto';

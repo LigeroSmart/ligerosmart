@@ -22,11 +22,11 @@ sub Data {
     $Self->{Translation}->{'Show all projects'} = 'Todos os projetos';
     $Self->{Translation}->{'TimeAccounting'} = 'TimeAccounting';
     $Self->{Translation}->{'Reporting'} = 'Relatórios';
-    $Self->{Translation}->{'Please insert your working hours!'} = '';
-    $Self->{Translation}->{'Successful insert!'} = '';
-    $Self->{Translation}->{'Error while inserting multiple dates!'} = '';
-    $Self->{Translation}->{'Successfully inserted entries for several dates!'} = '';
-    $Self->{Translation}->{'Entered date was invalid! Date was changed to today.'} = '';
+    $Self->{Translation}->{'Please insert your working hours!'} = 'Por favor insira suas horas de trabalho!';
+    $Self->{Translation}->{'Successful insert!'} = 'Inserido com sucesso!';
+    $Self->{Translation}->{'Error while inserting multiple dates!'} = 'Erro ao inserir múltiplas datas!';
+    $Self->{Translation}->{'Successfully inserted entries for several dates!'} = 'Entrada de várias datas inserida com sucesso!';
+    $Self->{Translation}->{'Entered date was invalid! Date was changed to today.'} = 'Data inserida é inválida! Data foi alterada para hoje.';
 
     # Template: AgentTimeAccountingDelete
     $Self->{Translation}->{'Do you really want to delete the Time Accounting of this day?'} =

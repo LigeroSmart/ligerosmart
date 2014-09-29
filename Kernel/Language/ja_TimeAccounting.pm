@@ -22,11 +22,11 @@ sub Data {
     $Self->{Translation}->{'Show all projects'} = 'すべてのプロジェクトを表示する';
     $Self->{Translation}->{'TimeAccounting'} = 'タイムアカウンティング';
     $Self->{Translation}->{'Reporting'} = '報告する';
-    $Self->{Translation}->{'Please insert your working hours!'} = '';
-    $Self->{Translation}->{'Successful insert!'} = '';
-    $Self->{Translation}->{'Error while inserting multiple dates!'} = '';
-    $Self->{Translation}->{'Successfully inserted entries for several dates!'} = '';
-    $Self->{Translation}->{'Entered date was invalid! Date was changed to today.'} = '';
+    $Self->{Translation}->{'Please insert your working hours!'} = '勤務実績を入力してください';
+    $Self->{Translation}->{'Successful insert!'} = '入力に成功しました!';
+    $Self->{Translation}->{'Error while inserting multiple dates!'} = '複数日を入力中にエラーが発生しました !';
+    $Self->{Translation}->{'Successfully inserted entries for several dates!'} = '複数日にわたる稼働実績の入力に成功しました !';
+    $Self->{Translation}->{'Entered date was invalid! Date was changed to today.'} = '入力された日付は不正です ! 日付は本日に変更されました';
 
     # Template: AgentTimeAccountingDelete
     $Self->{Translation}->{'Do you really want to delete the Time Accounting of this day?'} =

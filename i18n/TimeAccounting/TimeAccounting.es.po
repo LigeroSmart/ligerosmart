@@ -2,11 +2,12 @@
 # Translators:
 # Carlos Rodríguez <carlos.rodriguez@otrs.com>, 2014
 # Carlos Rodríguez <carlos.rodriguez@otrs.com>, 2014
+# Carlos Rodríguez <carlos.rodriguez@otrs.com>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2014-09-27 07:05+0000\n"
+"PO-Revision-Date: 2014-09-29 00:47+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/projects/p/OTRS/language/es/)\n"
 "MIME-Version: 1.0\n"
@@ -37,23 +38,23 @@ msgstr "Reportes"
 
 #. Template: AAATimeAccounting
 msgid "Please insert your working hours!"
-msgstr ""
+msgstr "For favor inserte sus horas de trabajo!"
 
 #. Template: AAATimeAccounting
 msgid "Successful insert!"
-msgstr ""
+msgstr "Inserción exitosa!"
 
 #. Template: AAATimeAccounting
 msgid "Error while inserting multiple dates!"
-msgstr ""
+msgstr "Error al insertar multiples fechas!"
 
 #. Template: AAATimeAccounting
 msgid "Successfully inserted entries for several dates!"
-msgstr ""
+msgstr "Se han insertado satisfactoriamente entradas para varias fechas!"
 
 #. Template: AAATimeAccounting
 msgid "Entered date was invalid! Date was changed to today."
-msgstr ""
+msgstr "La fecha errada es inválida! La fechas fue cambiada a hoy."
 
 #. Template: AgentTimeAccountingDelete
 msgid "Do you really want to delete the Time Accounting of this day?"
