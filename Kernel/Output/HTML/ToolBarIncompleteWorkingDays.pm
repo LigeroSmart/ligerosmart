@@ -22,11 +22,14 @@ sub new {
     bless( $Self, $Type );
 
     # get needed objects
-    for (
-        qw(ConfigObject LogObject DBObject TicketObject UserObject GroupObject LayoutObject UserID TimeObject)
+    for my $Needed (
+        qw(
+        ConfigObject LogObject DBObject TicketObject UserObject GroupObject LayoutObject UserID
+        TimeObject
+        )
         )
     {
-        $Self->{$_} = $Param{$_} || die "Got no $_!";
+        $Self->{$Needed} = $Param{$Needed} || die "Got no $Needed!";
     }
 
     # create needed objects
