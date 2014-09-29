@@ -116,4 +116,12 @@ tr.MasterAction td.RowSpan {
     color: #f72;
 }
 
+#TimeAccountingEmptyMessageSmall {
+    border-color: #ddd;
+    border-image: none;
+    border-style: solid;
+    border-width: 1px;
+    padding: 7px;
+    background-color: white;
+}
 /* end @media */

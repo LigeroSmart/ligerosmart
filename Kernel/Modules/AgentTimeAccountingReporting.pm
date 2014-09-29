@@ -12,9 +12,11 @@ package Kernel::Modules::AgentTimeAccountingReporting;
 use strict;
 use warnings;
 
-use Kernel::System::TimeAccounting;
 use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD check_date);
 use Time::Local;
+
+use Kernel::System::TimeAccounting;
+use Kernel::System::VariableCheck qw(:all);
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -102,89 +104,118 @@ sub Run {
                 delete $ShownUsers{$UserID};
             }
         }
-
-        # show the header line
-        for my $UserID ( sort { $ShownUsers{$a} cmp $ShownUsers{$b} } keys %ShownUsers ) {
+        if ( !IsHashRefWithData( \%ShownUsers ) ) {
             $Self->{LayoutObject}->Block(
-                Name => 'UserName',
-                Data => { User => $ShownUsers{$UserID} },
+                Name => 'NoUserDataFoundMsg',
+                Data => {},
             );
         }
-
-        # better solution for sort actions necessary
-        my %NewAction = ();
-        for my $ActionID ( sort keys %ProjectTime ) {
-            $NewAction{$ActionID} = $Action{$ActionID}{Action};
-        }
-        %Action = %NewAction;
-
-        # show the results
-        my %Total = ();
-        for my $ActionID ( sort { $Action{$a} cmp $Action{$b} } keys %Action ) {
-            my $TotalHours = 0;
+        else {
             $Self->{LayoutObject}->Block(
-                Name => 'Action',
-                Data => { Action => $Action{$ActionID}, },
+                Name => 'UserTable',
+                Data => {},
             );
+
+            # show the header line
             for my $UserID ( sort { $ShownUsers{$a} cmp $ShownUsers{$b} } keys %ShownUsers ) {
-                $TotalHours += $ProjectTime{$ActionID}{$UserID}{Hours} || 0;
-                $Total{$UserID} += $ProjectTime{$ActionID}{$UserID}{Hours} || 0;
                 $Self->{LayoutObject}->Block(
-                    Name => 'User',
-                    Data => {
-                        Hours => sprintf( "%.2f", $ProjectTime{$ActionID}{$UserID}{Hours} || 0 ),
-                    },
+                    Name => 'UserName',
+                    Data => { User => $ShownUsers{$UserID} },
                 );
             }
 
-            # Total
+            # better solution for sort actions necessary
+            my %NewAction = ();
+            for my $ActionID ( sort keys %ProjectTime ) {
+                $NewAction{$ActionID} = $Action{$ActionID}{Action};
+            }
+            %Action = %NewAction;
+
+            # show the results
+            my %Total = ();
+            for my $ActionID ( sort { $Action{$a} cmp $Action{$b} } keys %Action ) {
+                my $TotalHours = 0;
+                $Self->{LayoutObject}->Block(
+                    Name => 'Action',
+                    Data => { Action => $Action{$ActionID}, },
+                );
+                for my $UserID ( sort { $ShownUsers{$a} cmp $ShownUsers{$b} } keys %ShownUsers ) {
+                    $TotalHours += $ProjectTime{$ActionID}{$UserID}{Hours} || 0;
+                    $Total{$UserID} += $ProjectTime{$ActionID}{$UserID}{Hours} || 0;
+                    $Self->{LayoutObject}->Block(
+                        Name => 'User',
+                        Data => {
+                            Hours =>
+                                sprintf( "%.2f", $ProjectTime{$ActionID}{$UserID}{Hours} || 0 ),
+                        },
+                    );
+                }
+
+                # Total
+                $Self->{LayoutObject}->Block(
+                    Name => 'User',
+                    Data => { Hours => sprintf( "%.2f", $TotalHours ), },
+                );
+            }
+            $Param{TotalAll} = 0;
+            for my $UserID ( sort { $ShownUsers{$a} cmp $ShownUsers{$b} } keys %ShownUsers ) {
+                $Param{TotalAll} += $Total{$UserID};
+                $Self->{LayoutObject}->Block(
+                    Name => 'UserTotal',
+                    Data => { Total => sprintf( "%.2f", $Total{$UserID} ), },
+                );
+            }
+
             $Self->{LayoutObject}->Block(
-                Name => 'User',
-                Data => { Hours => sprintf( "%.2f", $TotalHours ), },
+                Name => 'UserTotalAll',
+                Data => { TotalAll => sprintf( "%.2f", $Param{TotalAll} ), },
             );
         }
-        $Param{TotalAll} = 0;
-        for my $UserID ( sort { $ShownUsers{$a} cmp $ShownUsers{$b} } keys %ShownUsers ) {
-            $Param{TotalAll} += $Total{$UserID};
-            $Self->{LayoutObject}->Block(
-                Name => 'UserTotal',
-                Data => { Total => sprintf( "%.2f", $Total{$UserID} ), },
-            );
-        }
-
-        $Param{TotalAll} = sprintf( "%.2f", $Param{TotalAll} );
-
         my @ProjectHistoryArray = $Self->{TimeAccountingObject}->ProjectHistory(
             ProjectID => $Param{ProjectID},
         );
-        for my $Row (@ProjectHistoryArray) {
+
+        if ( !IsArrayRefWithData( \@ProjectHistoryArray ) ) {
             $Self->{LayoutObject}->Block(
-                Name => 'Row',
+                Name => 'NoProjectDataFoundMsg',
+                Data => {},
+            );
+        }
+        else {
+            $Self->{LayoutObject}->Block(
+                Name => 'ProjectTable',
+                Data => { %Param, %Frontend },
+            );
+
+            for my $Row (@ProjectHistoryArray) {
+                $Self->{LayoutObject}->Block(
+                    Name => 'Row',
+                    Data => {
+                        User   => $Row->{User},
+                        Action => $Row->{Action},
+                        Remark => $Row->{Remark} || '--',
+                        Period => sprintf( "%.2f", $Row->{Period} ),
+                        Date   => $Row->{Date},
+                        }
+                );
+            }
+
+            # show the total sum of hours at the end of the history list
+            # I also can use $Param{TotalAll}
+            my $ProjectTotalHours = sprintf(
+                "%.2f",
+                $Self->{TimeAccountingObject}->ProjectTotalHours(
+                    ProjectID => $Param{ProjectID},
+                    )
+            );
+
+            $Self->{LayoutObject}->Block(
+                Name => 'HistoryTotal',
                 Data => {
-                    User   => $Row->{User},
-                    Action => $Row->{Action},
-                    Remark => $Row->{Remark} || '--',
-                    Period => sprintf( "%.2f", $Row->{Period} ),
-                    Date   => $Row->{Date},
+                    HistoryTotal => $ProjectTotalHours || 0,
                     }
             );
         }
-
-        # show the total sum of hours at the end of the history list
-        # I also can use $Param{TotalAll}
-        my $ProjectTotalHours = sprintf(
-            "%.2f",
-            $Self->{TimeAccountingObject}->ProjectTotalHours(
-                ProjectID => $Param{ProjectID},
-                )
-        );
-
-        $Self->{LayoutObject}->Block(
-            Name => 'HistoryTotal',
-            Data => {
-                HistoryTotal => $ProjectTotalHours || 0,
-                }
-        );
 
         # build output
         my $Output = $Self->{LayoutObject}->Header( Title => 'ReportingProject' );
@@ -271,38 +302,57 @@ sub Run {
 
     my %UserBasics = $Self->{TimeAccountingObject}->UserList();
 
-    USERID:
-    for my $UserID ( sort { $ShownUsers{$a} cmp $ShownUsers{$b} } keys %ShownUsers ) {
-        next USERID if !$UserReport{$UserID};
-
-        for my $Parameter (
-            qw(LeaveDay Overtime WorkingHours Sick LeaveDayRemaining OvertimeTotal)
-            )
-        {
-            $Param{$Parameter} = sprintf( "%.2f", ( $UserReport{$UserID}{$Parameter} || 0 ) );
-            $Param{ 'Total' . $Parameter } += $Param{$Parameter};
-        }
-
-        # Show Overtime if allowed
-        if ( !$UserBasics{$UserID}{ShowOvertime} ) {
-            $Param{Overtime}      = '';
-            $Param{OvertimeTotal} = '';
-        }
-
-        $Param{User}   = $ShownUsers{$UserID};
-        $Param{UserID} = $UserID;
+    if ( !IsHashRefWithData( \%ShownUsers ) ) {
         $Self->{LayoutObject}->Block(
-            Name => 'User',
-            Data => { %Param, %Frontend },
+            Name => 'NoUserDataFoundMsg',
+            Data => {},
         );
     }
+    else {
 
-    for my $Parameter (
-        qw(TotalLeaveDay TotalOvertime TotalWorkingHours
-        TotalSick TotalLeaveDayRemaining TotalOvertimeTotal)
-        )
-    {
-        $Param{$Parameter} = sprintf( "%.2f", ( $Param{$Parameter} ) || 0 );
+        $Self->{LayoutObject}->Block(
+            Name => 'UserTable',
+            Data => { %Param, %Frontend },
+        );
+
+        USERID:
+        for my $UserID ( sort { $ShownUsers{$a} cmp $ShownUsers{$b} } keys %ShownUsers ) {
+            next USERID if !$UserReport{$UserID};
+
+            for my $Parameter (
+                qw(LeaveDay Overtime WorkingHours Sick LeaveDayRemaining OvertimeTotal)
+                )
+            {
+                $Param{$Parameter} = sprintf( "%.2f", ( $UserReport{$UserID}{$Parameter} || 0 ) );
+                $Param{ 'Total' . $Parameter } += $Param{$Parameter};
+            }
+
+            # Show Overtime if allowed
+            if ( !$UserBasics{$UserID}{ShowOvertime} ) {
+                $Param{Overtime}      = '';
+                $Param{OvertimeTotal} = '';
+            }
+
+            $Param{User}   = $ShownUsers{$UserID};
+            $Param{UserID} = $UserID;
+            $Self->{LayoutObject}->Block(
+                Name => 'User',
+                Data => { %Param, %Frontend },
+            );
+        }
+
+        for my $Parameter (
+            qw(TotalLeaveDay TotalOvertime TotalWorkingHours
+            TotalSick TotalLeaveDayRemaining TotalOvertimeTotal)
+            )
+        {
+            $Param{$Parameter} = sprintf( "%.2f", ( $Param{$Parameter} ) || 0 );
+        }
+
+        $Self->{LayoutObject}->Block(
+            Name => 'UserGrandTotal',
+            Data => {%Param},
+        );
     }
 
     # show the report sort by projects
@@ -320,77 +370,96 @@ sub Run {
         Month => $Param{Month},
     );
 
-    # REMARK: merge this project reporting list with the list in overview
-    PROJECTID:
-    for my $ProjectID (
-        sort { $ProjectData{$a}->{Name} cmp $ProjectData{$b}->{Name} }
-        keys %ProjectData
-        )
-    {
-        my $ProjectRef = $ProjectData{$ProjectID};
-        my $ActionsRef = $ProjectRef->{Actions};
+    if ( !IsHashRefWithData( \%ProjectData ) ) {
+        $Self->{LayoutObject}->Block(
+            Name => 'NoProjectDataFoundMsg',
+            Data => {},
+        );
+        $Param{ProjectStatusLinkClass} = 'Hidden';
+    }
+    else {
+        $Self->{LayoutObject}->Block(
+            Name => 'ProjectTable',
+            Data => { %Param, %Frontend },
+        );
 
-        $Param{Project} = '';
-        $Param{Status} = $ProjectRef->{Status} ? '' : 'passiv';
-
-        my $Total      = 0;
-        my $TotalTotal = 0;
-
-        next PROJECTID if $Param{ProjectStatusShow} eq 'all' && $Param{Status};
-
-        for my $ActionID (
-            sort { $ActionsRef->{$a}->{Name} cmp $ActionsRef->{$b}->{Name} }
-            keys %{$ActionsRef}
+        # REMARK: merge this project reporting list with the list in overview
+        PROJECTID:
+        for my $ProjectID (
+            sort { $ProjectData{$a}->{Name} cmp $ProjectData{$b}->{Name} }
+            keys %ProjectData
             )
         {
-            my $ActionRef = $ActionsRef->{$ActionID};
+            my $ProjectRef = $ProjectData{$ProjectID};
+            my $ActionsRef = $ProjectRef->{Actions};
 
-            $Param{Action}     = $ActionRef->{Name};
-            $Param{Hours}      = sprintf( "%.2f", $ActionRef->{PerMonth} || 0 );
-            $Param{HoursTotal} = sprintf( "%.2f", $ActionRef->{Total} || 0 );
-            $Total      += $Param{Hours};
-            $TotalTotal += $Param{HoursTotal};
-            $Self->{LayoutObject}->Block(
-                Name => 'Action',
-                Data => {%Param},
-            );
+            $Param{Project} = '';
+            $Param{Status} = $ProjectRef->{Status} ? '' : 'passiv';
 
-            if ( !$Param{Project} ) {
-                $Param{Project} = $ProjectRef->{Name};
-                my $ProjectDescription = $Self->{LayoutObject}->Ascii2Html(
-                    Text           => $ProjectRef->{Description},
-                    HTMLResultMode => 1,
-                    NewLine        => 50,
-                );
+            my $Total      = 0;
+            my $TotalTotal = 0;
 
+            next PROJECTID if $Param{ProjectStatusShow} eq 'all' && $Param{Status};
+
+            for my $ActionID (
+                sort { $ActionsRef->{$a}->{Name} cmp $ActionsRef->{$b}->{Name} }
+                keys %{$ActionsRef}
+                )
+            {
+                my $ActionRef = $ActionsRef->{$ActionID};
+
+                $Param{Action}     = $ActionRef->{Name};
+                $Param{Hours}      = sprintf( "%.2f", $ActionRef->{PerMonth} || 0 );
+                $Param{HoursTotal} = sprintf( "%.2f", $ActionRef->{Total} || 0 );
+                $Total      += $Param{Hours};
+                $TotalTotal += $Param{HoursTotal};
                 $Self->{LayoutObject}->Block(
-                    Name => 'Project',
-                    Data => {
-                        RowSpan            => ( 1 + scalar keys %{$ActionsRef} ),
-                        Status             => $Param{Status},
-                        ProjectDescription => $ProjectDescription,
-                        Project            => $ProjectRef->{Name},
-                        ProjectID          => $ProjectID,
-                    },
+                    Name => 'Action',
+                    Data => {%Param},
                 );
+
+                if ( !$Param{Project} ) {
+                    $Param{Project} = $ProjectRef->{Name};
+                    my $ProjectDescription = $Self->{LayoutObject}->Ascii2Html(
+                        Text           => $ProjectRef->{Description},
+                        HTMLResultMode => 1,
+                        NewLine        => 50,
+                    );
+
+                    $Self->{LayoutObject}->Block(
+                        Name => 'Project',
+                        Data => {
+                            RowSpan            => ( 1 + scalar keys %{$ActionsRef} ),
+                            Status             => $Param{Status},
+                            ProjectDescription => $ProjectDescription,
+                            Project            => $ProjectRef->{Name},
+                            ProjectID          => $ProjectID,
+                        },
+                    );
+                }
             }
+
+            $Param{Hours}      = sprintf( "%.2f", $Total );
+            $Param{HoursTotal} = sprintf( "%.2f", $TotalTotal );
+            $Param{TotalHours}      += $Total;
+            $Param{TotalHoursTotal} += $TotalTotal;
+            $Self->{LayoutObject}->Block(
+                Name => 'ActionTotal',
+                Data => { %Param, %Frontend },
+            );
         }
 
-        $Param{Hours}      = sprintf( "%.2f", $Total );
-        $Param{HoursTotal} = sprintf( "%.2f", $TotalTotal );
-        $Param{TotalHours}      += $Total;
-        $Param{TotalHoursTotal} += $TotalTotal;
+        $Param{TotalHours}      ||= 0;
+        $Param{TotalHoursTotal} ||= 0;
+
+        $Param{TotalHours}      = sprintf( "%.2f", $Param{TotalHours} );
+        $Param{TotalHoursTotal} = sprintf( "%.2f", $Param{TotalHoursTotal} );
+
         $Self->{LayoutObject}->Block(
-            Name => 'ActionTotal',
+            Name => 'ProjectGrandTotal',
             Data => { %Param, %Frontend },
         );
     }
-
-    $Param{TotalHours}      ||= 0;
-    $Param{TotalHoursTotal} ||= 0;
-
-    $Param{TotalHours}      = sprintf( "%.2f", $Param{TotalHours} );
-    $Param{TotalHoursTotal} = sprintf( "%.2f", $Param{TotalHoursTotal} );
 
     # build output
     my $Output = $Self->{LayoutObject}->Header( Title => 'Reporting' );

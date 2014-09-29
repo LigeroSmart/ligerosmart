@@ -32,6 +32,13 @@
             </div>
             <div class="Content">
 
+[% RenderBlockStart("NoUserDataFoundMsg") %]
+                <div id="TimeAccountingEmptyMessageSmall">
+                    [% Translate("No data found.") | html %]
+                </div>
+[% RenderBlockEnd("NoUserDataFoundMsg") %]
+
+[% RenderBlockStart("UserTable") %]
                 <table class="DataTable DataTableNoHighlight">
                     <thead>
                         <tr>
@@ -56,10 +63,14 @@
 [% RenderBlockStart("UserTotal") %]
                             <td class="Right"><strong>[% Data.Total | html %]</strong></td>
 [% RenderBlockEnd("UserTotal") %]
+[% RenderBlockStart("UserTotalAll") %]
                             <td class="Right"><strong>[% Data.TotalAll | html %]</strong></td>
+[% RenderBlockEnd("UserTotalAll") %]
                         </tr>
                     </tbody>
                 </table>
+ [% RenderBlockEnd("UserTable") %]
+
             </div>
         </div>
 
@@ -69,6 +80,13 @@
             </div>
             <div class="Content">
 
+[% RenderBlockStart("NoProjectDataFoundMsg") %]
+                <div id="TimeAccountingEmptyMessageSmall">
+                    [% Translate("No data found.") | html %]
+                </div>
+[% RenderBlockEnd("NoProjectDataFoundMsg") %]
+
+[% RenderBlockStart("ProjectTable") %]
                 <table class="DataTable DataTableNoHighlight">
                     <thead>
                         <tr>
@@ -97,6 +115,7 @@
                         </tr>
                     </tbody>
                 </table>
+[% RenderBlockEnd("ProjectTable") %]
             </div>
         </div>
     </div>
