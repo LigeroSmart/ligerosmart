@@ -82,8 +82,6 @@ sub Run {
         Refresh => $Refresh,
     );
     $Output .= $Self->{LayoutObject}->NavigationBar();
-    $Self->{LayoutObject}->Print( Output => \$Output );
-    $Output = '';
 
     # get survey list
     my @SurveyIDs = $Self->{SurveyObject}->SurveySearch(
@@ -138,6 +136,7 @@ sub Run {
         ShowColumns => \@ShowColumns,
         SortBy      => $Self->{LayoutObject}->Ascii2Html( Text => $SortBy ),
         OrderBy     => $Self->{LayoutObject}->Ascii2Html( Text => $OrderBy ),
+        Output      => 1,
     );
 
     $Output .= $Self->{LayoutObject}->Footer();
