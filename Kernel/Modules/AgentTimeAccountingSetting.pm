@@ -12,8 +12,9 @@ package Kernel::Modules::AgentTimeAccountingSetting;
 use strict;
 use warnings;
 
-use Kernel::System::TimeAccounting;
 use Time::Local;
+
+use Kernel::System::TimeAccounting;
 
 sub new {
     my ( $Type, %Param ) = @_;

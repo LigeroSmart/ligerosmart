@@ -12,10 +12,11 @@ package Kernel::Modules::AgentTimeAccountingEdit;
 use strict;
 use warnings;
 
-use Kernel::System::TimeAccounting;
-use Kernel::System::CheckItem;
 use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD check_date);
 use Time::Local;
+
+use Kernel::System::CheckItem;
+use Kernel::System::TimeAccounting;
 
 sub new {
     my ( $Type, %Param ) = @_;
