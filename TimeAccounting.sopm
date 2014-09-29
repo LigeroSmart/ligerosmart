@@ -247,7 +247,7 @@
         <b>NOTA</b>
         <br>
         <br>
-        Para permitirles s los usuarios el acceso al módulo de contabilidad de tiempo, es necesario añadirlos como miembros del grupo 'time_accounting'.
+        Para permitirles a los usuarios el acceso al módulo de contabilidad de tiempo, es necesario añadirlos como miembros del grupo 'time_accounting'.
         <br>
         <br>
         Los elementos del menú agregados por este paquete, serán visibles luego de reiniciar sesión en el sistema.
