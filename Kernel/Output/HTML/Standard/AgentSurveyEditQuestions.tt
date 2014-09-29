@@ -65,6 +65,13 @@
                 <h2>[% Translate("Survey Questions") | html %]</h2>
             </div>
             <div class="Content">
+[% RenderBlockStart("SurveyNoQuestionsSaved") %]
+                <div id="SurveyEmptyMessageSmall">
+                    [% Translate("No questions saved for this survey.") | html %]
+                </div>
+[% RenderBlockEnd("SurveyNoQuestionsSaved") %]
+
+[% RenderBlockStart("SurveyQuestionsTable") %]
                 <table class="DataTable">
                     <thead>
                         <tr>
@@ -96,13 +103,6 @@
                         </tr>
                     </thead>
                     <tbody>
-[% RenderBlockStart("SurveyNoQuestionsSaved") %]
-                        <tr>
-                            <td colspan="[% Data.Columns | html %]">
-                                [% Translate("No questions saved for this survey.") | html %]
-                            </td>
-                        </tr>
-[% RenderBlockEnd("SurveyNoQuestionsSaved") %]
 
 [% RenderBlockStart("SurveyQuestionsSaved") %]
                         <tr>
@@ -168,6 +168,8 @@
 [% RenderBlockEnd("SurveyQuestionsRow") %]
                     </tbody>
                 </table>
+[% RenderBlockEnd("SurveyQuestionsTable") %]
+
             </div>
         </div>
 
@@ -260,8 +262,15 @@
                 </form>
 [% RenderBlockEnd("QuestionEditAddAnswer") %]
 
+[% RenderBlockStart("NoAnswersSaved") %]
+                <div class="SpacingTop" id="SurveyEmptyMessageSmall">
+                    [% Translate("No questions saved for this survey.") | html %]
+                </div>
+[% RenderBlockEnd("NoAnswersSaved") %]
+
+
 [% RenderBlockStart("QuestionEditTable") %]
-                <table class="DataTable">
+                <table class="DataTable SpacingTop">
                     <thead>
                         <tr>
                             <th> [% Translate("Description") | html %] </th>
@@ -273,13 +282,6 @@
                         </tr>
                     </thead>
                     <tbody>
-[% RenderBlockStart("NoAnswersSaved") %]
-                        <tr>
-                            <td colspan="[% Data.Columns | html %]">
-                                [% Translate("No questions saved for this survey.") | html %]
-                            </td>
-                        </tr>
-[% RenderBlockEnd("NoAnswersSaved") %]
 
 [% RenderBlockStart("QuestionEditRadio") %]
                         <tr>
@@ -376,11 +378,9 @@
 
 
 [% RenderBlockStart("QuestionEditTextArea") %]
-                <fieldset class="TableLike FixedLabel">
-                    <div class="Field">
-                        [% Translate("This doesn't have several answers, a textarea will be displayed.") | html %]
-                    </div>
-                </fieldset>
+                <div class="SpacingTop" id="SurveyEmptyMessageSmall">
+                    [% Translate("This doesn't have several answers, a textarea will be displayed.") | html %]
+                </div>
 [% RenderBlockEnd("QuestionEditTextArea") %]
             </div>
         </div>

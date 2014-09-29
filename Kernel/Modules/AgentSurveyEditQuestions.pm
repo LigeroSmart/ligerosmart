@@ -624,6 +624,7 @@ sub _MaskQuestionOverview {
             ID            => 'Type',
             SelectedValue => 'Yes/No',
             Translation   => 1,
+            Title         => $Self->{LayoutObject}->{LanguageObject}->Translate('Question Type'),
         );
 
         $ArrayHashRef = [
@@ -661,9 +662,21 @@ sub _MaskQuestionOverview {
             },
         );
 
-        $Self->{LayoutObject}->Block( Name => 'SurveyDeleteColumn' );
         if ( scalar @List ) {
-            $Self->{LayoutObject}->Block( Name => 'SurveyStatusColumn' );
+            $Self->{LayoutObject}->Block(
+                Name => 'SurveyQuestionsTable',
+                Data => {},
+            );
+            $Self->{LayoutObject}->Block(
+                Name => 'SurveyStatusColumn',
+                Data => {},
+            );
+
+            $Self->{LayoutObject}->Block(
+                Name => 'SurveyDeleteColumn',
+                Data => {},
+            );
+
             my $Counter = 0;
 
             for my $Question (@List) {
@@ -720,6 +733,10 @@ sub _MaskQuestionOverview {
 
     }
     else {
+        $Self->{LayoutObject}->Block(
+            Name => 'SurveyQuestionsTable',
+            Data => {},
+        );
         my $Counter;
         for my $Question (@List) {
 
@@ -821,13 +838,12 @@ sub _MaskQuestionEdit {
     }
     elsif ( $Question{Type} eq 'Radio' || $Question{Type} eq 'Checkbox' ) {
 
-        $Self->{LayoutObject}->Block( Name => 'QuestionEditTable' );
-
         my $Type = $Question{Type};
         my @List = $Self->{SurveyObject}->AnswerList( QuestionID => $Param{QuestionID} );
         if ( scalar @List ) {
 
             if ( $Survey{Status} eq 'New' ) {
+                $Self->{LayoutObject}->Block( Name => 'QuestionEditTable' );
 
                 $Self->{LayoutObject}->Block( Name => 'QuestionEditTableDelete' );
 
