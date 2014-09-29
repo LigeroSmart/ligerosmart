@@ -153,7 +153,7 @@
                             <input type="hidden" name="Subaction" value="AddUser"/>
                             [% Data.NewUserOption %]
                             <button class="CallForAction Fullsize Center" type="submit" value="[% Translate("New user") | html %]">
-                                <span><i class="fa fa-users"></i>[% Translate("New user") | html %]</span>
+                                <span><i class="fa fa-user"></i>[% Translate("New user") | html %]</span>
                             </button>
                         </form>
                     </li>
