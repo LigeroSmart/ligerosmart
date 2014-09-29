@@ -384,6 +384,7 @@ sub Run {
         ID         => 'NewStatus',
         Data       => \%NewStatus,
         SelectedID => 'ChangeStatus',
+        Title      => $Self->{LayoutObject}->{LanguageObject}->Translate('New Status'),
     );
 
     $Self->{LayoutObject}->Block(
@@ -399,8 +400,9 @@ sub Run {
         $Self->{LayoutObject}->Block(
             Name => 'SurveyBlock',
             Data => {
-                Title => "Survey $Field",
-                }
+                Title       => "Survey $Field",
+                SurveyField => $Field,
+            },
         );
         if ( $HTML{$Field} ) {
             $Self->{LayoutObject}->Block(
