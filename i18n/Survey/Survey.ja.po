@@ -1,14 +1,18 @@
+#
+# Translators:
+# Kentaro Hori <kentaro0919@gmail.com>, 2014
 msgid ""
 msgstr ""
-"Project-Id-Version: Survey\n"
+"Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"PO-Revision-Date: 2014-09-29 14:10+0000\n"
+"Last-Translator: Kentaro Hori <kentaro0919@gmail.com>\n"
+"Language-Team: Japanese (http://www.transifex.com/projects/p/OTRS/language/ja/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: ja\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
 #. Template: AAASurvey
 msgid "- Change Status -"
@@ -103,12 +107,24 @@ msgid "Stats Detail"
 msgstr "統計の詳細"
 
 #. Template: AAASurvey
+msgid "Stats Details"
+msgstr "統計の詳細"
+
+#. Template: AAASurvey
 msgid "You have already answered the survey."
 msgstr "調査に回答済みです。"
 
 #. Template: AAASurvey
 msgid "Survey#"
 msgstr ""
+
+#. Template: AAASurvey
+msgid "- No queue selected -"
+msgstr "キューが選択されていません"
+
+#. Template: AAASurvey
+msgid "Master"
+msgstr "マスター"
 
 #. Template: AgentSurveyAdd
 msgid "Create New Survey"
@@ -152,7 +168,7 @@ msgstr "質問"
 
 #. Template: AgentSurveyEditQuestions
 msgid "Answer Required"
-msgstr ""
+msgstr "回答が必須の項目です"
 
 #. Template: AgentSurveyEditQuestions
 msgid "No questions saved for this survey."
@@ -227,6 +243,10 @@ msgid "Vote Time"
 msgstr "返信日時"
 
 #. Template: AgentSurveyStats
+msgid "See Details"
+msgstr "詳細を確認"
+
+#. Template: AgentSurveyStats
 msgid "Survey Stat Details"
 msgstr "調査統計の詳細"
 
@@ -252,7 +272,7 @@ msgstr "調査の詳細"
 
 #. Template: AgentSurveyZoom
 msgid "Ticket Services"
-msgstr ""
+msgstr "チケット・サービス"
 
 #. Template: AgentSurveyZoom
 msgid "Survey Results Graph"
@@ -332,11 +352,11 @@ msgstr "調査一覧で表示される列数を定義します。このオプシ
 
 #. SysConfig
 msgid "Edit Survey General Information"
-msgstr ""
+msgstr "統計一般情報の編集"
 
 #. SysConfig
 msgid "Edit Survey Questions"
-msgstr ""
+msgstr "統計の設問を編集する"
 
 #. SysConfig
 msgid "Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time."
@@ -400,7 +420,7 @@ msgstr ""
 
 #. SysConfig
 msgid "Survey Edit Module."
-msgstr ""
+msgstr "統計編集モジュール"
 
 #. SysConfig
 msgid "Survey Overview \"Small\" Limit"
@@ -408,7 +428,7 @@ msgstr "調査一覧(S)の表示数"
 
 #. SysConfig
 msgid "Survey Stats Module."
-msgstr ""
+msgstr "統計調査モジュール"
 
 #. SysConfig
 msgid "Survey Zoom Module."
@@ -432,21 +452,5 @@ msgstr "チケットが完了した際に、顧客に自動的に調査メール
 
 #. SysConfig
 msgid "Zoom Into Statistics Details"
-msgstr ""
-
-#. Template: AAASurvey
-msgid "Stats Details"
-msgstr ""
-
-#. Template: AAASurvey
-msgid "- No queue selected -"
-msgstr ""
-
-#. Template: AAASurvey
-msgid "Master"
-msgstr ""
-
-#. Template: AgentSurveyStats
-msgid "See Details"
-msgstr ""
+msgstr "統計調査の詳細にズームする"
 

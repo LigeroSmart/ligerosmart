@@ -39,12 +39,12 @@ sub Data {
     $Self->{Translation}->{'YesNo'} = 'Да или Нет';
     $Self->{Translation}->{'answered'} = 'ответили';
     $Self->{Translation}->{'not answered'} = 'не ответили';
-    $Self->{Translation}->{'Stats Detail'} = '';
-    $Self->{Translation}->{'Stats Details'} = '';
+    $Self->{Translation}->{'Stats Detail'} = 'Подробный отчет';
+    $Self->{Translation}->{'Stats Details'} = 'Подробности отчета';
     $Self->{Translation}->{'You have already answered the survey.'} = 'Вы уже ответили на опрос.';
     $Self->{Translation}->{'Survey#'} = 'Опрос №';
-    $Self->{Translation}->{'- No queue selected -'} = '';
-    $Self->{Translation}->{'Master'} = '';
+    $Self->{Translation}->{'- No queue selected -'} = '- Ни одной очереди не выбрано -';
+    $Self->{Translation}->{'Master'} = 'Главный';
 
     # Template: AgentSurveyAdd
     $Self->{Translation}->{'Create New Survey'} = 'Создать новый опрос';
@@ -68,7 +68,7 @@ sub Data {
     $Self->{Translation}->{'Possible Answers For'} = 'Возможные ответы для';
     $Self->{Translation}->{'Add Answer'} = 'Добавить ответ';
     $Self->{Translation}->{'This doesn\'t have several answers, a textarea will be displayed.'} =
-        '';
+        'Этот вопрос не предусматривает несколько ответов, будет показано текстовое/textarea поле.';
     $Self->{Translation}->{'Go back'} = 'Назад';
     $Self->{Translation}->{'Edit Answer'} = 'Редактировать ответ';
     $Self->{Translation}->{'go back to edit question'} = 'назад к редактированию вопроса';
@@ -77,17 +77,17 @@ sub Data {
     $Self->{Translation}->{'Max. shown Surveys per page'} = 'Макс. кол-во Опросов на страницу';
 
     # Template: AgentSurveyOverviewSmall
-    $Self->{Translation}->{'Notification Sender'} = '';
-    $Self->{Translation}->{'Notification Subject'} = '';
-    $Self->{Translation}->{'Notification Body'} = '';
-    $Self->{Translation}->{'Changed By'} = '';
+    $Self->{Translation}->{'Notification Sender'} = 'Отправитель уведомления';
+    $Self->{Translation}->{'Notification Subject'} = 'Тема уведомления';
+    $Self->{Translation}->{'Notification Body'} = 'Тело уведомления';
+    $Self->{Translation}->{'Changed By'} = 'Изменивший';
 
     # Template: AgentSurveyStats
     $Self->{Translation}->{'Stats Overview of'} = 'Подробности опроса';
     $Self->{Translation}->{'Requests Table'} = 'Таблица ответов';
     $Self->{Translation}->{'Send Time'} = 'Время отправки';
     $Self->{Translation}->{'Vote Time'} = 'Время ответа';
-    $Self->{Translation}->{'See Details'} = '';
+    $Self->{Translation}->{'See Details'} = 'См. подробности';
     $Self->{Translation}->{'Survey Stat Details'} = 'Подробности опроса';
     $Self->{Translation}->{'go back to stats overview'} = 'назад';
 
@@ -96,7 +96,7 @@ sub Data {
     $Self->{Translation}->{'Sent requests'} = 'Отправленные запросы';
     $Self->{Translation}->{'Received surveys'} = 'Полученные опросы';
     $Self->{Translation}->{'Survey Details'} = 'Информаия по опросу';
-    $Self->{Translation}->{'Ticket Services'} = '';
+    $Self->{Translation}->{'Ticket Services'} = 'Сервисы заявок';
     $Self->{Translation}->{'Survey Results Graph'} = 'Результаты опроса в графике';
     $Self->{Translation}->{'No stat results.'} = 'Статистики нет.';
 
@@ -108,67 +108,67 @@ sub Data {
     $Self->{Translation}->{'Survey Title'} = 'Название опроса';
 
     # SysConfig
-    $Self->{Translation}->{'A Survey Module.'} = '';
-    $Self->{Translation}->{'A module to edit survey questions.'} = '';
+    $Self->{Translation}->{'A Survey Module.'} = 'Модуль Опросы.';
+    $Self->{Translation}->{'A module to edit survey questions.'} = 'Модуль для редактирования вопросов для опросов.';
     $Self->{Translation}->{'All parameters for the Survey object in the agent interface.'} =
-        '';
+        'Все параметры для объекта Опросы в интерфейсе агента.';
     $Self->{Translation}->{'Amount of days after sending a survey mail in which no new survey requests are sent to the same customer. Selecting 0 will always send the survey mail.'} =
-        '';
+        'Количество дней, после отсылки писем с опросом, в течение которых никакие новые предложения об опросе не посылаются, одному и тому же клиенту. Выбор значения 0 указывает всегда посылать письмо с опросом.';
     $Self->{Translation}->{'Default body for the notification email to customers about new survey.'} =
-        '';
+        'Задает текст письма в почтовом уведомлении, посылаемом клиентам, о новом опросе.';
     $Self->{Translation}->{'Default sender for the notification email to customers about new survey.'} =
         'Отправитель по умолчанию для электронной почты в новом опросе.';
     $Self->{Translation}->{'Default subject for the notification email to customers about new survey.'} =
         'Тема по умолчанию для электронной почты в новом опросе.';
     $Self->{Translation}->{'Defines an overview module to show the small view of a survey list.'} =
-        '';
+        'Задает модуль просмотра для отображения списка опросов в small формате.';
     $Self->{Translation}->{'Defines maximum amount of surveys that get sent to a customer per 30 days. ( 0 means no maximum, all survey requests will be sent).'} =
-        '';
+        'Задает максимальное количество опросов отсылаемых клиенту за каждые 30 дней. ("0" означает, что все запросы опросов будут отсылаться).';
     $Self->{Translation}->{'Defines the amount in hours a ticket has to be closed to trigger the sending of a survey, ( 0 means send immediately after close ).'} =
-        '';
+        'Задает число часов, после закрытия заявки, по истечении которых будет отправлено сообщение с опросом, ("0" означает немедленную отправку после закрытия). ';
     $Self->{Translation}->{'Defines the default height for Richtext views for SurveyZoom elements.'} =
-        '';
+        'Задает высоту по умолчанию области форматированного текста для элементов опроса при подробном просмотре.';
     $Self->{Translation}->{'Defines the shown columns in the survey overview. This option has no effect on the position of the columns.'} =
-        '';
-    $Self->{Translation}->{'Edit Survey General Information'} = '';
-    $Self->{Translation}->{'Edit Survey Questions'} = '';
+        'Задает перечень колонок, отображаемых в обзоре Опросов. Этот параметр не влияет на порядок колонок.';
+    $Self->{Translation}->{'Edit Survey General Information'} = 'Редактировать Общее описание опроса';
+    $Self->{Translation}->{'Edit Survey Questions'} = 'Редактировать вопросы опроса';
     $Self->{Translation}->{'Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time.'} =
         'Включите или отключить кнопку "Показать мои ответы", чтобы показать данные определенного результата опроса, когда клиент попытается ответить на опрос во второй раз.';
-    $Self->{Translation}->{'Enable or disable the send condition check for the service.'} = '';
+    $Self->{Translation}->{'Enable or disable the send condition check for the service.'} = 'Включить или отключить проверку условия отправки для сервиса.';
     $Self->{Translation}->{'Enable or disable the send condition check for the ticket type.'} =
-        '';
+        'Включить или отключить проверку условия отправки для типа заявки.';
     $Self->{Translation}->{'Frontend module registration for survey add in the agent interface.'} =
-        '';
+        'Frontend module registration для добавления опроса в интерфейса агента.';
     $Self->{Translation}->{'Frontend module registration for survey edit in the agent interface.'} =
-        '';
+        'Frontend module registration для редактирования опроса в интерфейса агента.';
     $Self->{Translation}->{'Frontend module registration for survey stats in the agent interface.'} =
-        '';
+        'Frontend module registration для модуля отчетности об опросе в интерфейса агента.';
     $Self->{Translation}->{'Frontend module registration for survey zoom in the agent interface.'} =
-        '';
+        'Frontend module registration для подробного просмотра опроса в интерфейса агента.';
     $Self->{Translation}->{'Frontend module registration for the PublicSurvey object in the public Survey area.'} =
-        '';
-    $Self->{Translation}->{'If this regex matches, no customer survey will be sent.'} = '';
+        'Frontend module registration для объекта Публичного опроса в разделе публичных опросов.';
+    $Self->{Translation}->{'If this regex matches, no customer survey will be sent.'} = 'Если это регулярное выражение верно, опрос клиенту не посылается.';
     $Self->{Translation}->{'Parameters for the pages (in which the surveys are shown) of the small survey overview.'} =
-        '';
-    $Self->{Translation}->{'Public Survey.'} = '';
+        'Параметры страницы (на которой отображаются опросы) при обзоре опросов в small формате.';
+    $Self->{Translation}->{'Public Survey.'} = 'Общедоступный опрос.';
     $Self->{Translation}->{'Shows a link in the menu to edit a survey in its zoom view of the agent interface.'} =
-        '';
+        'Показывает пункт меню, позволяющий редактировать опрос при его подробном просмотре в интерфейсе агента.';
     $Self->{Translation}->{'Shows a link in the menu to edit survey questions in its zoom view of the agent interface.'} =
-        '';
+        'Показывает пункт меню, позволяющий редактировать вопросы опроса при его подробном просмотре в интерфейсе агента.';
     $Self->{Translation}->{'Shows a link in the menu to go back in the survey zoom view of the agent interface.'} =
-        '';
+        'Показывает пункт меню, позволяющий вернуться назад при просмотре опроса в интерфейсе агента.';
     $Self->{Translation}->{'Shows a link in the menu to zoom into the survey statistics details in its zoom view of the agent interface.'} =
-        '';
-    $Self->{Translation}->{'Survey Edit Module.'} = '';
-    $Self->{Translation}->{'Survey Overview "Small" Limit'} = '';
-    $Self->{Translation}->{'Survey Stats Module.'} = '';
-    $Self->{Translation}->{'Survey Zoom Module.'} = '';
-    $Self->{Translation}->{'Survey limit per page for Survey Overview "Small"'} = '';
-    $Self->{Translation}->{'Surveys will not be sent to the configured email addresses.'} = '';
+        'Показывает пункт меню, позволяющий увидеть подробности отчета об опросе при его детальном просмотре в интерфейсе агента.';
+    $Self->{Translation}->{'Survey Edit Module.'} = 'Модуль редактирования опроса.';
+    $Self->{Translation}->{'Survey Overview "Small" Limit'} = 'Количество записей, отображаемых при просмотре опросов в "Small" формате';
+    $Self->{Translation}->{'Survey Stats Module.'} = 'Модуль построения отчетов об опросах.';
+    $Self->{Translation}->{'Survey Zoom Module.'} = 'Модуль подробного просмотра опросов.';
+    $Self->{Translation}->{'Survey limit per page for Survey Overview "Small"'} = 'Количество записей, отображаемых на странице при просмотре опросов в "Small" формате';
+    $Self->{Translation}->{'Surveys will not be sent to the configured email addresses.'} = 'Опросы не будут отправляться на указанные почтовые адреса.';
     $Self->{Translation}->{'The identifier for a survey, e.g. Survey#, MySurvey#. The default is Survey#.'} =
-        '';
+        'Обозначение для идентификации опроса, например, Опрос№, Survey#, MySurvey#. По умолчанию Survey#.';
     $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket is closed.'} =
-        '';
+        'Модуль управления событием для заявки, автоматически отправляющий письмо клиенту с опросом, при закрытии заявки.';
     $Self->{Translation}->{'Zoom Into Statistics Details'} = 'Подробная информация по статистике';
 
 }

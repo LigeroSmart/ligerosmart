@@ -1,14 +1,17 @@
+#
+# Translators:
 msgid ""
 msgstr ""
-"Project-Id-Version: Survey\n"
+"Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"PO-Revision-Date: 2014-09-27 06:19+0000\n"
+"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
+"Language-Team: Polish (http://www.transifex.com/projects/p/OTRS/language/pl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: pl\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #. Template: AAASurvey
 msgid "- Change Status -"
@@ -103,12 +106,24 @@ msgid "Stats Detail"
 msgstr "Szczegóły statusu"
 
 #. Template: AAASurvey
+msgid "Stats Details"
+msgstr ""
+
+#. Template: AAASurvey
 msgid "You have already answered the survey."
 msgstr "Już odpowiedziałeś na tę ankietę."
 
 #. Template: AAASurvey
 msgid "Survey#"
 msgstr "Ankieta#"
+
+#. Template: AAASurvey
+msgid "- No queue selected -"
+msgstr ""
+
+#. Template: AAASurvey
+msgid "Master"
+msgstr ""
 
 #. Template: AgentSurveyAdd
 msgid "Create New Survey"
@@ -225,6 +240,10 @@ msgstr "Czas wysłania"
 #. Template: AgentSurveyStats
 msgid "Vote Time"
 msgstr "Czas głosowania"
+
+#. Template: AgentSurveyStats
+msgid "See Details"
+msgstr ""
 
 #. Template: AgentSurveyStats
 msgid "Survey Stat Details"
@@ -432,21 +451,5 @@ msgstr "Zdarzenie zgłoszenia wysyła automatycznie e-maila z prośbą o wypełn
 
 #. SysConfig
 msgid "Zoom Into Statistics Details"
-msgstr ""
-
-#. Template: AAASurvey
-msgid "Stats Details"
-msgstr ""
-
-#. Template: AAASurvey
-msgid "- No queue selected -"
-msgstr ""
-
-#. Template: AAASurvey
-msgid "Master"
-msgstr ""
-
-#. Template: AgentSurveyStats
-msgid "See Details"
 msgstr ""
 

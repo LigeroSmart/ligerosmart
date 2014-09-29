@@ -40,10 +40,10 @@ sub Data {
     $Self->{Translation}->{'answered'} = 'Respondido';
     $Self->{Translation}->{'not answered'} = 'Não respondido';
     $Self->{Translation}->{'Stats Detail'} = 'Detalhe da estatística';
-    $Self->{Translation}->{'Stats Details'} = '';
+    $Self->{Translation}->{'Stats Details'} = 'Detalhes da estatística';
     $Self->{Translation}->{'You have already answered the survey.'} = 'Você já respondeu a pesquisa.';
     $Self->{Translation}->{'Survey#'} = 'Pesquisa#';
-    $Self->{Translation}->{'- No queue selected -'} = '';
+    $Self->{Translation}->{'- No queue selected -'} = 'Nenhuma fila selecionada';
     $Self->{Translation}->{'Master'} = '';
 
     # Template: AgentSurveyAdd
@@ -87,7 +87,7 @@ sub Data {
     $Self->{Translation}->{'Requests Table'} = 'Tabela de Requisições';
     $Self->{Translation}->{'Send Time'} = 'Hora de Envio';
     $Self->{Translation}->{'Vote Time'} = 'Hora do Voto';
-    $Self->{Translation}->{'See Details'} = '';
+    $Self->{Translation}->{'See Details'} = 'Ver detalhes';
     $Self->{Translation}->{'Survey Stat Details'} = 'Detalhes de Estatísticas da Pesquisa';
     $Self->{Translation}->{'go back to stats overview'} = 'voltar ao resumo de estatísticas';
 

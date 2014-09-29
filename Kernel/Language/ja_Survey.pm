@@ -40,11 +40,11 @@ sub Data {
     $Self->{Translation}->{'answered'} = '回答あり';
     $Self->{Translation}->{'not answered'} = '回答なし';
     $Self->{Translation}->{'Stats Detail'} = '統計の詳細';
-    $Self->{Translation}->{'Stats Details'} = '';
+    $Self->{Translation}->{'Stats Details'} = '統計の詳細';
     $Self->{Translation}->{'You have already answered the survey.'} = '調査に回答済みです。';
     $Self->{Translation}->{'Survey#'} = '';
-    $Self->{Translation}->{'- No queue selected -'} = '';
-    $Self->{Translation}->{'Master'} = '';
+    $Self->{Translation}->{'- No queue selected -'} = 'キューが選択されていません';
+    $Self->{Translation}->{'Master'} = 'マスター';
 
     # Template: AgentSurveyAdd
     $Self->{Translation}->{'Create New Survey'} = '新規調査の作成';
@@ -61,7 +61,7 @@ sub Data {
     $Self->{Translation}->{'Answer required'} = '回答必須です';
     $Self->{Translation}->{'Survey Questions'} = '調査質問';
     $Self->{Translation}->{'Question'} = '質問';
-    $Self->{Translation}->{'Answer Required'} = '';
+    $Self->{Translation}->{'Answer Required'} = '回答が必須の項目です';
     $Self->{Translation}->{'No questions saved for this survey.'} = 'この調査に対する質問が保存されていません。';
     $Self->{Translation}->{'Edit Question'} = '質問編集';
     $Self->{Translation}->{'go back to questions'} = '質問へ戻る';
@@ -87,7 +87,7 @@ sub Data {
     $Self->{Translation}->{'Requests Table'} = '回答一覧';
     $Self->{Translation}->{'Send Time'} = '送信日時';
     $Self->{Translation}->{'Vote Time'} = '返信日時';
-    $Self->{Translation}->{'See Details'} = '';
+    $Self->{Translation}->{'See Details'} = '詳細を確認';
     $Self->{Translation}->{'Survey Stat Details'} = '調査統計の詳細';
     $Self->{Translation}->{'go back to stats overview'} = '統計一覧に戻る';
 
@@ -96,7 +96,7 @@ sub Data {
     $Self->{Translation}->{'Sent requests'} = '送信数';
     $Self->{Translation}->{'Received surveys'} = '返信数';
     $Self->{Translation}->{'Survey Details'} = '調査の詳細';
-    $Self->{Translation}->{'Ticket Services'} = '';
+    $Self->{Translation}->{'Ticket Services'} = 'チケット・サービス';
     $Self->{Translation}->{'Survey Results Graph'} = '調査結果のグラフ';
     $Self->{Translation}->{'No stat results.'} = '統計結果がありません。';
 
@@ -130,8 +130,8 @@ sub Data {
         '調査拡大画面の要素に対してリッチテキストに対するデフォルトの高さを定義します。';
     $Self->{Translation}->{'Defines the shown columns in the survey overview. This option has no effect on the position of the columns.'} =
         '調査一覧で表示される列数を定義します。このオプションは列の位置には作用しません。';
-    $Self->{Translation}->{'Edit Survey General Information'} = '';
-    $Self->{Translation}->{'Edit Survey Questions'} = '';
+    $Self->{Translation}->{'Edit Survey General Information'} = '統計一般情報の編集';
+    $Self->{Translation}->{'Edit Survey Questions'} = '統計の設問を編集する';
     $Self->{Translation}->{'Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time.'} =
         '公開インターフェースにおいて、顧客が2度回答しようとした際に、これまでの回答データを表示するShowVoteData画面を有効にするか否か';
     $Self->{Translation}->{'Enable or disable the send condition check for the service.'} = '';
@@ -159,9 +159,9 @@ sub Data {
         '';
     $Self->{Translation}->{'Shows a link in the menu to zoom into the survey statistics details in its zoom view of the agent interface.'} =
         '';
-    $Self->{Translation}->{'Survey Edit Module.'} = '';
+    $Self->{Translation}->{'Survey Edit Module.'} = '統計編集モジュール';
     $Self->{Translation}->{'Survey Overview "Small" Limit'} = '調査一覧(S)の表示数';
-    $Self->{Translation}->{'Survey Stats Module.'} = '';
+    $Self->{Translation}->{'Survey Stats Module.'} = '統計調査モジュール';
     $Self->{Translation}->{'Survey Zoom Module.'} = '調査の拡大モジュール';
     $Self->{Translation}->{'Survey limit per page for Survey Overview "Small"'} = '調査一覧(S)での1ページ毎の調査数';
     $Self->{Translation}->{'Surveys will not be sent to the configured email addresses.'} = '調査は設定された電子メールアドレスには送信されません。';
@@ -169,7 +169,7 @@ sub Data {
         '例えばSurvey#, MySurvey#などのチケットの識別子です。デフォルトはSurvey#です。';
     $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket is closed.'} =
         'チケットが完了した際に、顧客に自動的に調査メールを送信するチケットイベントモジュール。';
-    $Self->{Translation}->{'Zoom Into Statistics Details'} = '';
+    $Self->{Translation}->{'Zoom Into Statistics Details'} = '統計調査の詳細にズームする';
 
 }
 
