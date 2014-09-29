@@ -45,8 +45,8 @@ sub Data {
     $Self->{Translation}->{'Survey#'} = 'Encuesta#';
     $Self->{Translation}->{'- No queue selected -'} = '- No se ha seleccionado ninguna cola -';
     $Self->{Translation}->{'Master'} = 'Maestro';
-    $Self->{Translation}->{'New Status'} = '';
-    $Self->{Translation}->{'Question Type'} = '';
+    $Self->{Translation}->{'New Status'} = 'Nuevo Estado';
+    $Self->{Translation}->{'Question Type'} = 'Tipo de Pregunta';
 
     # Template: AgentSurveyAdd
     $Self->{Translation}->{'Create New Survey'} = 'Crear Nueva Encuesta';

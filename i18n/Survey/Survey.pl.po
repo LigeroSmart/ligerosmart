@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2014-09-27 06:19+0000\n"
+"PO-Revision-Date: 2014-09-29 23:45+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Polish (http://www.transifex.com/projects/p/OTRS/language/pl/)\n"
 "MIME-Version: 1.0\n"
@@ -125,6 +125,14 @@ msgstr ""
 msgid "Master"
 msgstr ""
 
+#. Template: AAASurvey
+msgid "New Status"
+msgstr ""
+
+#. Template: AAASurvey
+msgid "Question Type"
+msgstr ""
+
 #. Template: AgentSurveyAdd
 msgid "Create New Survey"
 msgstr "Utwórz nową ankietę"
@@ -162,16 +170,16 @@ msgid "Survey Questions"
 msgstr "Pytania ankiety"
 
 #. Template: AgentSurveyEditQuestions
+msgid "No questions saved for this survey."
+msgstr "Brak pytań zapisanych w tej ankiecie."
+
+#. Template: AgentSurveyEditQuestions
 msgid "Question"
 msgstr "Pytanie"
 
 #. Template: AgentSurveyEditQuestions
 msgid "Answer Required"
 msgstr ""
-
-#. Template: AgentSurveyEditQuestions
-msgid "No questions saved for this survey."
-msgstr "Brak pytań zapisanych w tej ankiecie."
 
 #. Template: AgentSurveyEditQuestions
 msgid "Edit Question"
@@ -451,13 +459,5 @@ msgstr "Zdarzenie zgłoszenia wysyła automatycznie e-maila z prośbą o wypełn
 
 #. SysConfig
 msgid "Zoom Into Statistics Details"
-msgstr ""
-
-#. Template: AAASurvey
-msgid "New Status"
-msgstr ""
-
-#. Template: AAASurvey
-msgid "Question Type"
 msgstr ""
 

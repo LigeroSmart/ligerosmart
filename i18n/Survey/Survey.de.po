@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2014-09-27 17:52+0000\n"
-"Last-Translator: Ettore Atalan <atalanttore@googlemail.com>\n"
+"PO-Revision-Date: 2014-09-29 23:45+0000\n"
+"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: German (http://www.transifex.com/projects/p/OTRS/language/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -127,6 +127,14 @@ msgstr "- Keine Queue ausgewählt -"
 msgid "Master"
 msgstr "Master"
 
+#. Template: AAASurvey
+msgid "New Status"
+msgstr ""
+
+#. Template: AAASurvey
+msgid "Question Type"
+msgstr ""
+
 #. Template: AgentSurveyAdd
 msgid "Create New Survey"
 msgstr "Neue Umfrage erstellen"
@@ -164,16 +172,16 @@ msgid "Survey Questions"
 msgstr "Umfrage-Fragen"
 
 #. Template: AgentSurveyEditQuestions
+msgid "No questions saved for this survey."
+msgstr "Für diese Umfrage sind keine Fragen gespeichert."
+
+#. Template: AgentSurveyEditQuestions
 msgid "Question"
 msgstr "Frage"
 
 #. Template: AgentSurveyEditQuestions
 msgid "Answer Required"
 msgstr "Antwort erforderlich"
-
-#. Template: AgentSurveyEditQuestions
-msgid "No questions saved for this survey."
-msgstr "Für diese Umfrage sind keine Fragen gespeichert."
 
 #. Template: AgentSurveyEditQuestions
 msgid "Edit Question"
@@ -454,12 +462,4 @@ msgstr "Ticket-Event-Modul, um automatisch Umfrage-E-Mails an Kunden zu senden, 
 #. SysConfig
 msgid "Zoom Into Statistics Details"
 msgstr "Statistikdetails anzeigen"
-
-#. Template: AAASurvey
-msgid "New Status"
-msgstr ""
-
-#. Template: AAASurvey
-msgid "Question Type"
-msgstr ""
 
