@@ -38,3 +38,5 @@
 [% Translate("Survey#") | html %]
 [% Translate("- No queue selected -") | html %]
 [% Translate("Master") | html %]
+[% Translate("New Status") | html %]
+[% Translate("Question Type") | html %]

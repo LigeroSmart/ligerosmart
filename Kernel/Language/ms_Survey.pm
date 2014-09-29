@@ -45,6 +45,8 @@ sub Data {
     $Self->{Translation}->{'Survey#'} = 'Penyiasatan#';
     $Self->{Translation}->{'- No queue selected -'} = '';
     $Self->{Translation}->{'Master'} = '';
+    $Self->{Translation}->{'New Status'} = '';
+    $Self->{Translation}->{'Question Type'} = '';
 
     # Template: AgentSurveyAdd
     $Self->{Translation}->{'Create New Survey'} = 'Buat Survey Baru';
@@ -60,9 +62,9 @@ sub Data {
     $Self->{Translation}->{'Type the question'} = 'Taip soalan';
     $Self->{Translation}->{'Answer required'} = 'Jawapan diperlukan';
     $Self->{Translation}->{'Survey Questions'} = 'Penyiasatan Soalan';
+    $Self->{Translation}->{'No questions saved for this survey.'} = 'Tiada soalan yang disimpan untuk kajian ini.';
     $Self->{Translation}->{'Question'} = 'Soalan';
     $Self->{Translation}->{'Answer Required'} = '';
-    $Self->{Translation}->{'No questions saved for this survey.'} = 'Tiada soalan yang disimpan untuk kajian ini.';
     $Self->{Translation}->{'Edit Question'} = 'Edit Soalan';
     $Self->{Translation}->{'go back to questions'} = 'kembali kepada soalan-soalan';
     $Self->{Translation}->{'Possible Answers For'} = 'Jawapan Kemungkinan Untuk';

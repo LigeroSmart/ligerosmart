@@ -122,6 +122,14 @@ msgstr ""
 msgid "Master"
 msgstr ""
 
+#. Template: AAASurvey
+msgid "New Status"
+msgstr ""
+
+#. Template: AAASurvey
+msgid "Question Type"
+msgstr ""
+
 #. Template: AgentSurveyAdd
 msgid "Create New Survey"
 msgstr ""
@@ -159,15 +167,15 @@ msgid "Survey Questions"
 msgstr ""
 
 #. Template: AgentSurveyEditQuestions
+msgid "No questions saved for this survey."
+msgstr ""
+
+#. Template: AgentSurveyEditQuestions
 msgid "Question"
 msgstr ""
 
 #. Template: AgentSurveyEditQuestions
 msgid "Answer Required"
-msgstr ""
-
-#. Template: AgentSurveyEditQuestions
-msgid "No questions saved for this survey."
 msgstr ""
 
 #. Template: AgentSurveyEditQuestions

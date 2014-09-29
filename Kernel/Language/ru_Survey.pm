@@ -45,6 +45,8 @@ sub Data {
     $Self->{Translation}->{'Survey#'} = 'Опрос №';
     $Self->{Translation}->{'- No queue selected -'} = '- Ни одной очереди не выбрано -';
     $Self->{Translation}->{'Master'} = 'Главный';
+    $Self->{Translation}->{'New Status'} = '';
+    $Self->{Translation}->{'Question Type'} = '';
 
     # Template: AgentSurveyAdd
     $Self->{Translation}->{'Create New Survey'} = 'Создать новый опрос';
@@ -60,9 +62,9 @@ sub Data {
     $Self->{Translation}->{'Type the question'} = 'Вопрос и тип вопроса';
     $Self->{Translation}->{'Answer required'} = 'Требуются ответы';
     $Self->{Translation}->{'Survey Questions'} = 'Вопросы опроса';
+    $Self->{Translation}->{'No questions saved for this survey.'} = 'Сохраненых вопросов нет.';
     $Self->{Translation}->{'Question'} = 'Вопрос';
     $Self->{Translation}->{'Answer Required'} = 'Требуются Ответы';
-    $Self->{Translation}->{'No questions saved for this survey.'} = 'Сохраненых вопросов нет.';
     $Self->{Translation}->{'Edit Question'} = 'Редактировать вопрос';
     $Self->{Translation}->{'go back to questions'} = 'назад к вопросам';
     $Self->{Translation}->{'Possible Answers For'} = 'Возможные ответы для';

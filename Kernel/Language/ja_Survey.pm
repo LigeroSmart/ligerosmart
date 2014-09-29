@@ -45,6 +45,8 @@ sub Data {
     $Self->{Translation}->{'Survey#'} = '';
     $Self->{Translation}->{'- No queue selected -'} = 'キューが選択されていません';
     $Self->{Translation}->{'Master'} = 'マスター';
+    $Self->{Translation}->{'New Status'} = '';
+    $Self->{Translation}->{'Question Type'} = '';
 
     # Template: AgentSurveyAdd
     $Self->{Translation}->{'Create New Survey'} = '新規調査の作成';
@@ -60,9 +62,9 @@ sub Data {
     $Self->{Translation}->{'Type the question'} = '質問の入力';
     $Self->{Translation}->{'Answer required'} = '回答必須です';
     $Self->{Translation}->{'Survey Questions'} = '調査質問';
+    $Self->{Translation}->{'No questions saved for this survey.'} = 'この調査に対する質問が保存されていません。';
     $Self->{Translation}->{'Question'} = '質問';
     $Self->{Translation}->{'Answer Required'} = '回答が必須の項目です';
-    $Self->{Translation}->{'No questions saved for this survey.'} = 'この調査に対する質問が保存されていません。';
     $Self->{Translation}->{'Edit Question'} = '質問編集';
     $Self->{Translation}->{'go back to questions'} = '質問へ戻る';
     $Self->{Translation}->{'Possible Answers For'} = '選択肢';

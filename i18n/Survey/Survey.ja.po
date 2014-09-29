@@ -454,3 +454,11 @@ msgstr "チケットが完了した際に、顧客に自動的に調査メール
 msgid "Zoom Into Statistics Details"
 msgstr "統計調査の詳細にズームする"
 
+#. Template: AAASurvey
+msgid "New Status"
+msgstr ""
+
+#. Template: AAASurvey
+msgid "Question Type"
+msgstr ""
+

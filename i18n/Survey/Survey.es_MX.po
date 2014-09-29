@@ -455,3 +455,11 @@ msgstr "Módulo de evento de ticket que manda correos electrónicos de encuestas
 msgid "Zoom Into Statistics Details"
 msgstr "Ir a los detalles de la Estadística"
 
+#. Template: AAASurvey
+msgid "New Status"
+msgstr ""
+
+#. Template: AAASurvey
+msgid "Question Type"
+msgstr ""
+

@@ -453,3 +453,11 @@ msgstr ""
 msgid "Zoom Into Statistics Details"
 msgstr ""
 
+#. Template: AAASurvey
+msgid "New Status"
+msgstr ""
+
+#. Template: AAASurvey
+msgid "Question Type"
+msgstr ""
+

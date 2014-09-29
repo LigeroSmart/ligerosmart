@@ -454,3 +454,11 @@ msgstr "Модуль управления событием для заявки, 
 msgid "Zoom Into Statistics Details"
 msgstr "Подробная информация по статистике"
 
+#. Template: AAASurvey
+msgid "New Status"
+msgstr ""
+
+#. Template: AAASurvey
+msgid "Question Type"
+msgstr ""
+

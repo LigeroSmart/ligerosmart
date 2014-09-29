@@ -453,3 +453,11 @@ msgstr "Zdarzenie zgłoszenia wysyła automatycznie e-maila z prośbą o wypełn
 msgid "Zoom Into Statistics Details"
 msgstr ""
 
+#. Template: AAASurvey
+msgid "New Status"
+msgstr ""
+
+#. Template: AAASurvey
+msgid "Question Type"
+msgstr ""
+

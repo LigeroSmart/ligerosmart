@@ -453,3 +453,11 @@ msgstr "Tiket modul acara untuk menghantar permintaan e-mel secara automatik kaj
 msgid "Zoom Into Statistics Details"
 msgstr ""
 
+#. Template: AAASurvey
+msgid "New Status"
+msgstr ""
+
+#. Template: AAASurvey
+msgid "Question Type"
+msgstr ""
+

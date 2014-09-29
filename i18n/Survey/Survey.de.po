@@ -455,3 +455,11 @@ msgstr "Ticket-Event-Modul, um automatisch Umfrage-E-Mails an Kunden zu senden, 
 msgid "Zoom Into Statistics Details"
 msgstr "Statistikdetails anzeigen"
 
+#. Template: AAASurvey
+msgid "New Status"
+msgstr ""
+
+#. Template: AAASurvey
+msgid "Question Type"
+msgstr ""
+

@@ -45,6 +45,8 @@ sub Data {
     $Self->{Translation}->{'Survey#'} = 'Encuesta#';
     $Self->{Translation}->{'- No queue selected -'} = '- No se ha seleccionado ninguna cola -';
     $Self->{Translation}->{'Master'} = 'Maestro';
+    $Self->{Translation}->{'New Status'} = '';
+    $Self->{Translation}->{'Question Type'} = '';
 
     # Template: AgentSurveyAdd
     $Self->{Translation}->{'Create New Survey'} = 'Crear Nueva Encuesta';
@@ -60,9 +62,9 @@ sub Data {
     $Self->{Translation}->{'Type the question'} = 'Escriba la pregunta';
     $Self->{Translation}->{'Answer required'} = 'Respuesta requerida';
     $Self->{Translation}->{'Survey Questions'} = 'Preguntas de Estadistica';
+    $Self->{Translation}->{'No questions saved for this survey.'} = 'No hay preguntas almacenadas para esta encuesta.';
     $Self->{Translation}->{'Question'} = 'Pregunta';
     $Self->{Translation}->{'Answer Required'} = 'Respuesta Requerida';
-    $Self->{Translation}->{'No questions saved for this survey.'} = 'No hay preguntas almacenadas para esta encuesta.';
     $Self->{Translation}->{'Edit Question'} = 'Editar Pregunta';
     $Self->{Translation}->{'go back to questions'} = 'regresar a preguntas';
     $Self->{Translation}->{'Possible Answers For'} = 'Posibles respuestas para';

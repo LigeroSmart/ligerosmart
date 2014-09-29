@@ -45,6 +45,8 @@ sub Data {
     $Self->{Translation}->{'Survey#'} = '调查#';
     $Self->{Translation}->{'- No queue selected -'} = '';
     $Self->{Translation}->{'Master'} = '';
+    $Self->{Translation}->{'New Status'} = '';
+    $Self->{Translation}->{'Question Type'} = '';
 
     # Template: AgentSurveyAdd
     $Self->{Translation}->{'Create New Survey'} = '创建新的调查';
@@ -60,9 +62,9 @@ sub Data {
     $Self->{Translation}->{'Type the question'} = '问题类型';
     $Self->{Translation}->{'Answer required'} = '需要回答';
     $Self->{Translation}->{'Survey Questions'} = '调查问题';
+    $Self->{Translation}->{'No questions saved for this survey.'} = '这个调查没有保存的问题。';
     $Self->{Translation}->{'Question'} = '问题';
     $Self->{Translation}->{'Answer Required'} = '';
-    $Self->{Translation}->{'No questions saved for this survey.'} = '这个调查没有保存的问题。';
     $Self->{Translation}->{'Edit Question'} = '编辑问题';
     $Self->{Translation}->{'go back to questions'} = '返回问题';
     $Self->{Translation}->{'Possible Answers For'} = '可选的回答';
