@@ -26,7 +26,7 @@
                     <Type></Type>
                     <Block></Block>
                     <NavBar>Survey</NavBar>
-                    <AccessKey>o</AccessKey>
+                    <AccessKey></AccessKey>
                     <Prio>100</Prio>
                 </NavBar>
                 <Loader>
@@ -48,7 +48,7 @@
                     <Type></Type>
                     <Block></Block>
                     <NavBar>Survey</NavBar>
-                    <AccessKey>n</AccessKey>
+                    <AccessKey></AccessKey>
                     <Prio>200</Prio>
                 </NavBar>
                 <Loader>
