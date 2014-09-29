@@ -117,6 +117,7 @@
                 </div>
             </div>
 
+[% RenderBlockStart("ProjectTable") %]
             <div class="WidgetSimple">
                 <div class="Header">
                     <h2>
@@ -168,15 +169,18 @@
                             </tr>
 [% RenderBlockEnd("ActionTotal") %]
 [% RenderBlockEnd("Action") %]
+[% RenderBlockStart("GrandTotal") %]
                             <tr class="GrandTotal">
                                 <td colspan="2"><strong>[% Translate("Grand total") | html %]</strong></td>
                                 <td class="Right"><strong>[% Data.TotalHours | html %]</strong></td>
                                 <td class="Right"><strong>[% Data.TotalHoursTotal | html %]</strong></td>
                             </tr>
+[% RenderBlockEnd("GrandTotal") %]
                         </tbody>
                     </table>
                 </div>
             </div>
+[% RenderBlockEnd("ProjectTable") %]
         </div>
     </div>
 </div>
