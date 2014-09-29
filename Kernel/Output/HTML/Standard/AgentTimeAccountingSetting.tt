@@ -221,7 +221,7 @@
 [% RenderBlockStart("OverviewResultProject") %]
         <div class="WidgetSimple">
             <div class="Header">
-                <div class="WidgetAction Toggle"><a href="#" title="[% Translate("Show or hide the content") | html %]"><i class="fa fa-caret-righ"></i><i class="fa fa-caret-down"></i></a></div>
+                <div class="WidgetAction Toggle"><a href="#" title="[% Translate("Show or hide the content") | html %]"><i class="fa fa-caret-right"></i><i class="fa fa-caret-down"></i></a></div>
                 <h2>[% Translate("Project List") | html %]</h2>
             </div>
             <div class="Content">
@@ -270,7 +270,7 @@
 [% RenderBlockStart("OverviewResultSetting") %]
         <div class="WidgetSimple">
             <div class="Header">
-                <div class="WidgetAction Toggle"><a href="#" title="[% Translate("Show or hide the content") | html %]"><i class="fa fa-caret-righ"></i><i class="fa fa-caret-down"></i></a></div>
+                <div class="WidgetAction Toggle"><a href="#" title="[% Translate("Show or hide the content") | html %]"><i class="fa fa-caret-right"></i><i class="fa fa-caret-down"></i></a></div>
                 <h2>[% Translate("Task List") | html %]</h2>
             </div>
             <div class="Content">
@@ -374,7 +374,7 @@
 [% RenderBlockStart("OverviewResultUser") %]
         <div class="WidgetSimple">
             <div class="Header">
-                <div class="WidgetAction Toggle"><a href="#" title="[% Translate("Show or hide the content") | html %]"><i class="fa fa-caret-righ"></i><i class="fa fa-caret-down"></i></a></div>
+                <div class="WidgetAction Toggle"><a href="#" title="[% Translate("Show or hide the content") | html %]"><i class="fa fa-caret-right"></i><i class="fa fa-caret-down"></i></a></div>
                 <h2>[% Translate("User List") | html %]</h2>
             </div>
             <div class="Content">
