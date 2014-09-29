@@ -29,7 +29,7 @@
                 .attr('id', this.options.IDPrefixInput + $Select[0].id)
                 .attr('title', this.options.Lang.InputTitle)
                 .insertAfter($Select)
-                .css('width', $Select.width())
+                .css('width', $Select.width() -15)
                 .val(Value)
                 .autocomplete({
                     delay: 0,
