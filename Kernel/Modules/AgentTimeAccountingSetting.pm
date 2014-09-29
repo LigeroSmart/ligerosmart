@@ -905,6 +905,12 @@ sub _SettingOverview {
 
     # show list of available projects (if any)
     if ( $Project{Project} ) {
+
+        $Self->{LayoutObject}->Block(
+            Name => 'OverviewResultProjectTable',
+            Data => {%Param},
+        );
+
         for my $ProjectID (
             sort { $Project{Project}{$a} cmp $Project{Project}{$b} }
             keys %{ $Project{Project} }
@@ -939,6 +945,12 @@ sub _SettingOverview {
 
         # show list of available tasks/actions (if any)
         if (%Action) {
+
+            $Self->{LayoutObject}->Block(
+                Name => 'OverviewResultSettingTable',
+                Data => {%Param},
+            );
+
             for my $ActionID ( sort { $Action{$a}{Action} cmp $Action{$b}{Action} } keys %Action ) {
                 $Param{Action}   = $Action{$ActionID}{Action};
                 $Param{ActionID} = $ActionID;
@@ -964,6 +976,12 @@ sub _SettingOverview {
 
         # show list of registered users (if any)
         if (%User) {
+
+            $Self->{LayoutObject}->Block(
+                Name => 'OverviewResultUserTable',
+                Data => {%Param},
+            );
+
             for my $UserID ( sort { $User{$a} cmp $User{$b} } keys %User ) {
 
                 # get missing user data
@@ -987,7 +1005,7 @@ sub _SettingOverview {
             }
         }
 
-        # otherwise, show a no data found msg
+        # otherwise, show a no data found message
         else {
             $Self->{LayoutObject}->Block( Name => 'NoUserDataFoundMsg' );
         }

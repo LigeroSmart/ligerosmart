@@ -226,6 +226,13 @@
             </div>
             <div class="Content">
 
+[% RenderBlockStart("NoProjectDataFoundMsg") %]
+                <div id="TimeAccountingEmptyMessageSmall">
+                    [% Translate("No data found.") | html %]
+                </div>
+[% RenderBlockEnd("NoProjectDataFoundMsg") %]
+
+[% RenderBlockStart("OverviewResultProjectTable") %]
                 <table class="DataTable" id="Projects">
                     <thead>
                         <tr>
@@ -240,14 +247,6 @@
                                 [% Translate("No matches found.") | html %]
                             </td>
                         </tr>
-[% RenderBlockStart("NoProjectDataFoundMsg") %]
-                        <tr>
-                            <td colspan="3">
-                                [% Translate("No data found.") | html %]
-                            </td>
-                        </tr>
-[% RenderBlockEnd("NoProjectDataFoundMsg") %]
-
 [% RenderBlockStart("OverviewResultProjectRow") %]
                         <tr>
                             <td><a class="AsBlock" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=EditProject;ID=[% Data.ProjectID | uri %]">[% Data.Project | html %]</a></td>
@@ -257,6 +256,7 @@
 [% RenderBlockEnd("OverviewResultProjectRow") %]
                     </tbody>
                 </table>
+[% RenderBlockEnd("OverviewResultProjectTable") %]
             </div>
         </div>
 [% RenderBlockEnd("OverviewResultProject") %]
@@ -274,6 +274,14 @@
                 <h2>[% Translate("Task List") | html %]</h2>
             </div>
             <div class="Content">
+
+[% RenderBlockStart("NoSettingDataFoundMsg") %]
+                <div id="TimeAccountingEmptyMessageSmall">
+                    [% Translate("No data found.") | html %]
+                </div>
+[% RenderBlockEnd("NoSettingDataFoundMsg") %]
+
+[% RenderBlockStart("OverviewResultSettingTable") %]
                 <table class="DataTable" id="Tasks">
                     <thead>
                         <tr>
@@ -287,13 +295,6 @@
                                 [% Translate("No matches found.") | html %]
                             </td>
                         </tr>
-[% RenderBlockStart("NoSettingDataFoundMsg") %]
-                        <tr>
-                            <td colspan="2">
-                                [% Translate("No data found.") | html %]
-                            </td>
-                        </tr>
-[% RenderBlockEnd("NoSettingDataFoundMsg") %]
 
 [% RenderBlockStart("OverviewResultSettingRow") %]
                         <tr>
@@ -303,6 +304,7 @@
 [% RenderBlockEnd("OverviewResultSettingRow") %]
                     </tbody>
                 </table>
+[% RenderBlockEnd("OverviewResultSettingTable") %]
             </div>
         </div>
 [% RenderBlockEnd("OverviewResultSetting") %]
@@ -376,6 +378,14 @@
                 <h2>[% Translate("User List") | html %]</h2>
             </div>
             <div class="Content">
+
+[% RenderBlockStart("NoUserDataFoundMsg") %]
+                <div id="TimeAccountingEmptyMessageSmall">
+                    [% Translate("No data found.") | html %]
+                </div>
+[% RenderBlockEnd("NoUserDataFoundMsg") %]
+
+[% RenderBlockStart("OverviewResultUserTable") %]
                 <table class="DataTable" id="Users">
                     <thead>
                         <tr>
@@ -390,13 +400,6 @@
                                 [% Translate("No matches found.") | html %]
                             </td>
                         </tr>
-[% RenderBlockStart("NoUserDataFoundMsg") %]
-                        <tr>
-                            <td colspan="3">
-                                [% Translate("No data found.") | html %]
-                            </td>
-                        </tr>
-[% RenderBlockEnd("NoUserDataFoundMsg") %]
 
 [% RenderBlockStart("OverviewResultUserRow") %]
                         <tr>
@@ -407,6 +410,7 @@
 [% RenderBlockEnd("OverviewResultUserRow") %]
                     </tbody>
                 </table>
+[% RenderBlockEnd("OverviewResultUserTable") %]
             </div>
         </div>
 [% RenderBlockEnd("OverviewResultUser") %]
