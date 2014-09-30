@@ -294,13 +294,6 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
     <title>Tests</title>
     <para>This module has been tested on the current state of the art in quality.</para>
     <section>
-        <title>Test Cases</title>
-        <para>
-            To test this package please follow the examples described in the Usage section, all the
-            tests cases should return the expected results defined at the beginning of each example.
-        </para>
-    </section>
-    <section>
         <title>Unit Tests</title>
         <para>
             To ensure the quality of the module, several so-called unit tests were created, to test
