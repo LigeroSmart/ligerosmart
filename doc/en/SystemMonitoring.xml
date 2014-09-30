@@ -260,10 +260,6 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
 <!--
 <chapter>
     <title>Usage</title>
-    <section>
-        <title>Create Stats</title>
-        <para>New stats can be sected as Dynamic or Static stats object.</para>
-    </section>
 </chapter>
 -->
 
