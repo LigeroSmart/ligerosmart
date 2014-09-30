@@ -23,32 +23,164 @@
     </Filelist>
 
     <CodeInstall Type="post"><![CDATA[
-        $Kernel::OM->Get('var::packagesetup::OTRSMasterSlave')->CodeInstall();
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
+
+        $Kernel::OM->Get($CodeModule)->CodeInstall();
     ]]></CodeInstall>
     <CodeReinstall Type="post"><![CDATA[
-        $Kernel::OM->Get('var::packagesetup::OTRSMasterSlave')->CodeReinstall();
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
+
+        $Kernel::OM->Get($CodeModule)->CodeReinstall();
     ]]></CodeReinstall>
     <CodeUpgrade Type="post"><![CDATA[
-        $Kernel::OM->Get('var::packagesetup::OTRSMasterSlave')->CodeUpgrade();
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
+
+        $Kernel::OM->Get($CodeModule)->CodeUpgrade();
     ]]></CodeUpgrade>
     <CodeUpgrade Type="pre"><![CDATA[
-        $Kernel::OM->Get('var::packagesetup::OTRSMasterSlave')->CodeUpgradePre();
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
+
+        $Kernel::OM->Get($CodeModule)->CodeUpgradePre();
     ]]></CodeUpgrade>
     <CodeUpgrade Type="post" Version="2.2.92"><![CDATA[
-        $Kernel::OM->Get('var::packagesetup::OTRSMasterSlave')->CodeUpgradeFromLowerThan_2_2_92();
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
+
+        $Kernel::OM->Get($CodeModule)->CodeUpgradeFromLowerThan_2_2_92();
     ]]></CodeUpgrade>
     <CodeUninstall Type="pre"><![CDATA[
-        $Kernel::OM->Get('var::packagesetup::OTRSMasterSlave')->CodeUninstall();
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
+
+        $Kernel::OM->Get($CodeModule)->CodeUninstall();
     ]]></CodeUninstall>
     <CodeUninstall Type="post"><![CDATA[
-        $Kernel::OM->Get('var::packagesetup::OTRSMasterSlave')->StatsCleanUp();
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
+
+        $Kernel::OM->Get($CodeModule)->StatsCleanUp();
     ]]></CodeUninstall>
 
-    <IntroInstall Type="post" Title="Using the SystemMonitoring Module" Lang="en">
+    <IntroInstall Type="pre" Title="Install Information" Lang="en"><![CDATA[
+
+        <br>
+        <b>WELCOME</b>
+        <br>
+        <br>
+        You are about to install the OTRS package SystemMonitoring.<br>
+        <br>
+        <br>
+        ((enjoy))<br>
+        <br>
+
+    ]]></IntroInstall>
+    <IntroInstall Type="pre" Title="Installation Information" Lang="de"><![CDATA[
+
+        <br>
+        <b>WILLKOMMEN</b>
+        <br>
+        <br>
+        Sie sind im Begriff das OTRS-Paket SystemMonitoring zu installieren.<br>
+        <br>
+        <br>
+        ((enjoy))<br>
+        <br>
+
+    ]]></IntroInstall>
+    <IntroInstall Type="pre" Title="Install Information" Lang="es"><![CDATA[
+
+        <br>
+        <b>BIENVENIDO</b>
+        <br>
+        <br>
+        Ud. está a punto de instalar el paquete de Monitorización del Sistema de OTRS.<br>
+        <br>
+        <br>
+        ((enjoy))<br>
+        <br>
+
+    ]]></IntroInstall>
+    <IntroInstall Type="post" Title="Installation Information" Lang="en"><![CDATA[
+
+        <br>
+        <b>NOTICE</b>
+        <br>
+        <br>
         For configuration instructions please refer to the enclosed PDF documentation.
-    </IntroInstall>
-    <IntroInstall Type="post" Title="Konfiguration des SystemMonitoring Moduls" Lang="de">
-        Eine Anleitung zur Konfiguration des SystemMonitoring Moduls findet sich in der Datei doc/SystemMonitoring.txt.
-    </IntroInstall>
+        <br>
+        <br>
+        ((enjoy))<br>
+        <br>
+
+    ]]></IntroInstall>
+    <IntroInstall Type="post" Title="Installation Information" Lang="de"><![CDATA[
+
+        <br>
+        <b>HINWEIS</b>
+        <br>
+        <br>
+        Eine Anleitung zur Konfiguration des SystemMonitoring Moduls findet sich in der Datei PDF.
+        <br>
+        <br>
+        ((enjoy))<br>
+        <br>
+
+    ]]></IntroInstall>
+    <IntroInstall Type="post" Title="Installation Information" Lang="es"><![CDATA[
+
+        <br>
+        <b>NOTA</b>
+        <br>
+        <br>
+        Instrucciones sobre cómo configurar el módulo de monitorización del sistema se proporcionan en el archivo PDF .
+        <br>
+        <br>
+        ((enjoy))<br>
+        <br>
+
+    ]]></IntroInstall>
+    <IntroUpgrade Type="pre" Title="Upgrade Information" Lang="en"><![CDATA[
+
+        <br>
+        <b>WELCOME</b>
+        <br>
+        <br>
+        You are about to upgrade the OTRS package SystemMonitoring.<br>
+        <br>
+        <br>
+        ((enjoy))<br>
+        <br>
+
+    ]]></IntroUpgrade>
+    <IntroUpgrade Type="pre" Title="Upgrade Information" Lang="de"><![CDATA[
+
+        <br>
+        <b>WILLKOMMEN</b>
+        <br>
+        <br>
+        Sie sind im Begriff das OTRS-Paket SystemMonitoring zu aktualisieren.<br>
+        <br>
+        <br>
+        ((enjoy))<br>
+        <br>
+
+    ]]></IntroUpgrade>
+    <IntroUpgrade Type="pre" Title="Upgrade Information" Lang="es"><![CDATA[
+
+        <br>
+        <b>BIENVENIDO</b>
+        <br>
+        <br>
+        Ud. está a punto de actualizar el paquete de Monitorización del Sistema de OTRS.<br>
+        <br>
+        <br>
+        ((enjoy))<br>
+        <br>
+
+    ]]></IntroUpgrade>
 
 </otrs_package>

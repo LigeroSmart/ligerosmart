@@ -2,40 +2,37 @@
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
     "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd">
 
-<book lang='en'>
+<book lang="en">
 
-<!-- ************************************** Head *********************************************** -->
-
+<!--
+************************************** Head ***********************************************
+-->
 <bookinfo>
-<title>$Name</title>
-<edition>$Description Version $Version</edition>
-
-<copyright>
-<year>$YearStamp</year>
-<holder>$Vendor, $URL</holder>
-</copyright>
-
-<date>$DateStamp</date>
-
-<legalnotice>
-    <para>$License</para>
-    <para>This work is copyrighted by $Vendor, Norsk-Data-Str. 1, 61352 Bad Homburg, Germany.</para>
-    <para>Build Date: $DateStamp</para>
-</legalnotice>
-
+    <title>$Name</title>
+    <edition>$Description Version $Version</edition>
+    <copyright>
+        <year>$YearStamp</year>
+        <holder>$Vendor, $URL</holder>
+    </copyright>
+    <date>$DateStamp</date>
+    <legalnotice>
+        <para>$License</para>
+        <para>
+            This work is copyrighted by $Vendor, Norsk-Data-Str. 1, 61352 Bad Homburg, Germany.
+        </para>
+        <para>Build Date: $DateStamp</para>
+    </legalnotice>
 </bookinfo>
 
-<!-- ************************************ Customer part ****************************************** -->
+<!--
+************************************ Customer part ******************************************
+-->
 
-<preface id="preface" >
-    <!-- ********** -->
-    <!-- 1. Preface -->
-    <!-- ********** -->
+<!-- ********** -->
+<!-- 1. Preface -->
+<!-- ********** -->
+<preface id="preface">
     <title>Preface</title>
-    <!--
-         A short overview for this module clearly explained to customers!!!
-         e.g. Provides an additional button to also insert FAQ richtext incl. inlines + attachments into tickets.
-    -->
         <para>
             This module implements a basic interface to System Monitoring Suites. It
             works by receiving email messages sent by a Network Monitoring Suite. New
@@ -49,16 +46,19 @@
             mails concerning this particular combination will be attached to the
             ticket until it's closed.
         </para>
+
     <para>
         If you have questions regarding this package, please contact your support team
-        (support@otrs.com) for more information.
+        <ulink url="mailto:support@otrs.com?subject=$Name">
+            &lt;support@otrs.com&gt;
+        </ulink> for more information.
     </para>
 </preface>
 
+<!-- *************** -->
+<!-- 2. Feature List -->
+<!-- *************** -->
 <chapter>
-    <!-- *************** -->
-    <!-- 2. Feature List -->
-    <!-- *************** -->
     <title>Feature List</title>
     <!--
         List of all functions declared at the functional level
@@ -67,7 +67,7 @@
          -   possible screenshots
          -   no OTRS terminology like TicketEventModul, PreApplicationModul
     -->
-    <sect1>
+    <section>
         <title>Control flow</title>
         <para>
             The following diagram illustrates how mails are handled by this module
@@ -104,296 +104,237 @@ Mail matches 'FromAddress'?
             expressions it should be possible to adopt it to different monitoring
             systems.
         </para>
-    </sect1>
+    </section>
 </chapter>
 
+<!-- ********************** -->
+<!-- 3. System Requirements -->
+<!-- ********************** -->
 <chapter>
-    <!-- ******************** -->
-    <!-- 3. System Reqirements -->
-    <!-- ******************** -->
     <title>System Requirements</title>
-    <sect1>
+    <section>
         <title>Framework</title>
         <para>The following OTRS framework is required:</para>
-        <para>
-        $Framework
-        </para>
-    </sect1>
-    <sect1>
+        <para>$Framework</para>
+    </section>
+    <section>
         <title>Packages</title>
         <para>The following packages are required:</para>
-        <para>
-        $PackageRequired
-        </para>
-    </sect1>
-    <sect1>
+        <para>$PackageRequired</para>
+    </section>
+    <section>
         <title>Operating System</title>
         <para>This package requires one of the following operating systems:</para>
-        <para>
-        $OS
-        </para>
-    </sect1>
-    <sect1>
+        <para>$OS</para>
+    </section>
+    <section>
         <title>Third Party Software</title>
         <para>This third party software is required to use this package:</para>
-        <para>
-            <itemizedlist>
-                <listitem><para>A network monitoring system, such as Nagios, or HP OpenView, or similar, capable of sending out events via e-mail.</para></listitem>
-            </itemizedlist>
-        </para>
-    </sect1>
+        <itemizedlist>
+            <listitem>
+                <para>
+                    A network monitoring system, such as Nagios, or HP OpenView,
+                    or similar, capable of sending out events via e-mail.
+                </para>
+            </listitem>
+        </itemizedlist>
+    </section>
 </chapter>
 
+<!-- *************** -->
+<!-- 4. Installation -->
+<!-- *************** -->
 <chapter>
-    <!-- *************** -->
-    <!-- 4. Installation -->
-    <!-- *************** -->
     <title>Installation</title>
-    <para>The following instructions explain how to install the package.</para>
-    <sect1>
+    <para>
+        The following instructions explain how to install the package.
+    </para>
+    <section>
         <title>Admin Interface</title>
         <para>
-            Please use the following URL to install the package utilizing the admin
-            interface (please note that you need to be in the admin group).
+            Please use the following URL to install the package utilizing the Admin Interface
+            (please note that you need to be in the "admin" group).
         </para>
         <para>
             <ulink url="http://localhost/otrs/index.pl?Action=AdminPackageManager">
                 http://localhost/otrs/index.pl?Action=AdminPackageManager
             </ulink>
         </para>
-    </sect1>
-    <sect1>
+    </section>
+    <section>
         <title>Command Line</title>
         <para>
-            Whenever you cannot use the Admin Interface for whatever reason,
-            you may use the following command line tool (&quot;bin/otrs.PackageManager.pl&quot;)
-            instead.
+            Whenever you cannot use the Admin Interface for whatever reason, you may use the
+            following command line tool ("bin/otrs.PackageManager.pl") instead.
         </para>
         <para>
-        <screen>
-            shell> bin/otrs.PackageManager.pl  -a install -p /path/to/$Name-$Version.opm
-        </screen>
+            <screen>
+shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
+            </screen>
         </para>
-    </sect1>
+    </section>
 </chapter>
 
+<!-- **************** -->
+<!-- 5. Configuration -->
+<!-- **************** -->
 <chapter>
     <title>Configuration</title>
-   <para>
-        To allow flexible integration between OTRS and a System Monitoring Suite
-        the following configuration options are available. The default values
-        (as shown below) should be suitable for a standard Nagios installation.
-    </para>
-    <sect1>
-        <title>Creation of dynamic fields</title>
-        <para>
-            A requirement to get a working module is to use existing dynamic fields
-            for the defined values of FreeTextHost, FreeTextService and FreeTextState.
-        </para>
-    </sect1>
-    <sect1>
-        <title>FromAddressRegExp</title>
-        <para>
-            Only mails matching this "From:" address will be considered for this
-            filter. You need to adjust this setting to the from address your
-            System Monitoring Suite uses for outgoing mails.
-        </para>
-        <para>Default: 'sysmon@mysystem.com'</para>
-    </sect1>
-    <sect1>
-        <title>StateRegExp</title>
-        <para>Regular Expression to extract the state from the message.</para>
-        <para>Default: '\s*State:\s+(\S+)'</para>
-    </sect1>
-    <sect1>
-        <title>NewTicketRegExp</title>
-        <para>Regular expression for extracted state to trigger a new ticket</para>
-        <para>Default: 'CRITICAL|DOWN'</para>
-    </sect1>
-    <sect1>
-        <title>CloseTicketRegExp</title>
-        <para>
-            Regular expression for extracted "State" to trigger ticket
-            transition to "CloseActionState".
-        </para>
-        <para>Default: 'OK|UP'</para>
-    </sect1>
-    <sect1>
-        <title>CloseActionState</title>
-        <para>
-            New status for ticket when service recovers. This can be either
-            "OLD" in which case the old status stays, or the name of the new
-            status. Please note, that this state needs to be configured in your
-            OTRS installation as valid state. If the state you set here does not
-            exist, the ticket state will not be altered.
-        </para>
-        <para>Default: 'closed successful'</para>
-    </sect1>
-    <sect1>
-        <title>ClosePendingTime</title>
-        <para>
-            Pending time in seconds for 'Pending...' statuses. (Ignored for
-            other status types). Please note that this setting will be ignored
-            by OTRS versions older than 2.2. On these systems the pending time
-            already associated with the ticket will be used, which may have in
-            surprising effects. It's recommended not to use 'Pending...' states
-            with OTRS prior to 2.2.
-        </para>
-        <para>Default: '60*60*24*2' (2 days)</para>
-    </sect1>
-    <sect1>
-        <title>HostRegExp</title>
-        <para>Regular expression to extract the affected host.</para>
-        <para>Default: '\s*Address:\s+(\d+\.\d+\.\d+\.\d+)\s*'</para>
-    </sect1>
-    <sect1>
-        <title>FreeTextHost</title>
-        <para>
-            A dynamic field (type ticket) to store the affected host.
-            The field name has to be named like free text fields (TicketFreeTextField[1..16]) because of downward compatibility.
-            Example value: '1' for TicketFreeTextField1.
-        </para>
-        <para>Default: '1'</para>
-    </sect1>
-    <sect1>
-        <title>ServiceRegExp</title>
-        <para>Regular expression to extract the affected service.</para>
-        <para>Default: '\s*Service:\s+(.*)\s*'</para>
-    </sect1>
-    <sect1>
-        <title>DefaultService</title>
-        <para>
-            Default for "Service"; used if no service can be extracted, i.e. if
-            host goes DOWN/UP.
-        </para>
-        <para>Default: 'Host'</para>
-    </sect1>
-    <sect1>
-        <title>FreeTextService</title>
-        <para>
-            A dynamic field (type ticket) to store the service.
-            The field name has to be named like free text fields (TicketFreeTextField[1..16]) because of downward compatibility.
-            Example value: '2' for TicketFreeTextField2.
-        </para>
-        <para>Default: '2'</para>
-    </sect1>
-    <sect1>
-        <title>FreeTextState</title>
-        <para>
-            A dynamic field (type article) to store the state.
-            The field name has to be named like free text fields (ArticleFreeTextField[1..16]) because of downward compatibility.
-            Example value: '1' for ArticleFreeTextField1.
-        </para>
-        <para>Default: '1'</para>
-    </sect1>
-    <sect1>
-        <title>SenderType</title>
-        <para>Sender type used for creating tickets and attaching notes.</para>
-        <para>Default: 'system'</para>
-    </sect1>
-    <sect1>
-        <title>ArticleType</title>
-        <para>Article type used to attach follow up emails to existing tickets.</para>
-        <para>Default: 'note-report'</para>
-    </sect1>
-    <sect1>
-        <title>Integration with OTRS Configuration Management</title>
-        <para>
-            If the OTRS::ITSM Configuration Management module is installed and
-            the configuration option 'SystemMonitoring::SetIncidentState' is set
-            to 'Yes', a CI with the given host name is searched in the CI database.
-            If exactly one CI with this name was found, the current incident state is set
-            automatically according to the incoming mail (Incident / Operational).
-
-            If the OTRS::ITSM Configuration Management module is installed and
-            the configuration option 'SystemMonitoring::LinkTicketWithCI' is set
-            to 'Yes', a CI is linked automatically with the system monitoring
-            incident ticket. This is only possible if a subsequent system monitoring
-            email arrives!
-        </para>
-    </sect1>
-
+    <para>The package can be configured via the SysConfig in the Admin Interface. The following configuration options are available:</para>
+    <section>
+        <title>PostMaster::PreFilterModule###1-SystemMonitoring.</title>
+        <para>Group: SystemMonitoring, Subgroup: Core::PostMaster.</para>
+        <para>Basic mail interface to System Monitoring Suites. Use this block if the filter should run AFTER PostMasterFilter.</para>
+    </section>
+    <section>
+        <title>PostMaster::PreFilterModule###00-SystemMonitoring.</title>
+        <para>Group: SystemMonitoring, Subgroup: Core::PostMaster.</para>
+        <para>Basic mail interface to System Monitoring Suites. Use this block if the filter should run BEFORE PostMasterFilter.</para>
+    </section>
+    <section>
+        <title>SystemMonitoring::SetIncidentState.</title>
+        <para>Group: SystemMonitoring, Subgroup: Core::ConfigItem.</para>
+        <para>Set the incident state of a CI automatically when a system monitoring email arrives.</para>
+    </section>
+    <section>
+        <title>SystemMonitoring::LinkTicketWithCI.</title>
+        <para>Group: SystemMonitoring, Subgroup: Core::ConfigItem.</para>
+        <para>Link an already opened incident ticket with the affected CI. This is only possible when a subsequent system monitoring email arrives.</para>
+    </section>
+    <section>
+        <title>Nagios::Acknowledge::FreeField::Host.</title>
+        <para>Group: SystemMonitoring, Subgroup: Nagios::Acknowledge.</para>
+        <para>Name of TicketFreeField for Host.</para>
+    </section>
+    <section>
+        <title>Nagios::Acknowledge::FreeField::Service.</title>
+        <para>Group: SystemMonitoring, Subgroup: Nagios::Acknowledge.</para>
+        <para>Name of TicketFreeField for Service.</para>
+    </section>
+    <section>
+        <title>Nagios::Acknowledge::Type.</title>
+        <para>Group: SystemMonitoring, Subgroup: Nagios::Acknowledge.</para>
+        <para>Define Nagios acknowledge type.</para>
+    </section>
+    <section>
+        <title>Nagios::Acknowledge::NamedPipe::CMD.</title>
+        <para>Group: SystemMonitoring, Subgroup: Nagios::Acknowledge.</para>
+        <para>Named pipe acknowledge command.</para>
+    </section>
+    <section>
+        <title>Nagios::Acknowledge::NamedPipe::Host.</title>
+        <para>Group: SystemMonitoring, Subgroup: Nagios::Acknowledge.</para>
+        <para>Named pipe acknowledge format for host.</para>
+    </section>
+    <section>
+        <title>Nagios::Acknowledge::NamedPipe::Service.</title>
+        <para>Group: SystemMonitoring, Subgroup: Nagios::Acknowledge.</para>
+        <para>Named pipe acknowledge format for service.</para>
+    </section>
+    <section>
+        <title>Ticket::EventModulePost###9-NagiosAcknowledge.</title>
+        <para>Group: SystemMonitoring, Subgroup: Nagios::Acknowledge.</para>
+        <para>Ticket event module to send an acknowlage to Nagios.</para>
+    </section>
+    <section>
+        <title>Nagios::Acknowledge::HTTP::URL.</title>
+        <para>Group: SystemMonitoring, Subgroup: Nagios::Acknowledge.</para>
+        <para>The http acknowledge url.</para>
+    </section>
+    <section>
+        <title>Nagios::Acknowledge::HTTP::User.</title>
+        <para>Group: SystemMonitoring, Subgroup: Nagios::Acknowledge.</para>
+        <para>The http acknowledge user.</para>
+    </section>
+    <section>
+        <title>Nagios::Acknowledge::HTTP::Password.</title>
+        <para>Group: SystemMonitoring, Subgroup: Nagios::Acknowledge.</para>
+        <para>The http acknowledge password.</para>
+    </section>
 </chapter>
 
+<!-- ******** -->
+<!-- 6. Usage -->
+<!-- ******** -->
+
+<!--
 <chapter>
-    <!-- ******** -->
-    <!-- 6. Usage -->
-    <!-- ******** -->
     <title>Usage</title>
-    <!--
-        Create for every "possible" use case a step by step list clearly explained to customers. Screenshots desirable-
-        e.g.
-        1.  Choose new phone ticket frontend ?
-        2.  Fillup required data (subject)
-        3.  Submit the data (have a look at screenshot)
-        ...
-    -->
-
-    <sect1>
-        <title>Title</title>
-        <para>
-            Details.
-        </para>
-    </sect1>
+    <section>
+        <title>Create Stats</title>
+        <para>New stats can be sected as Dynamic or Static stats object.</para>
+    </section>
 </chapter>
+-->
 
-<!-- ***************************************** Technical part ************************************ -->
+<!--
+***************************************** Technical part ************************************
+-->
 
+<!-- ********************************* -->
+<!-- 7. Technical Implementation Detail -->
+<!-- ********************************* -->
+<!--
 <chapter>
-    <!-- ********************************* -->
-    <!-- 7. Technical Implematation Detail -->
-    <!-- ********************************* -->
     <title>Technical Implementation Details</title>
-    <!--
-        Describe the technical structure of the module and the technical functioning out of a developer's perspective.
-            -   Which module layers are used where/as?
-            -   What are the technical features of it?
-        You can split the technical part into a customer part shown in the doku
-        and a hidden part shown in the code.
-    -->
     <para>
         Technical Implementation Details.
     </para>
 </chapter>
-
+-->
+<!-- *********** -->
+<!-- 8. Filelist -->
+<!-- *********** -->
 <chapter>
-    <!-- *********** -->
-    <!-- 8. Filelist -->
-    <!-- *********** -->
-    <title>Filelist</title>
-    <!-- Standard text. Don't change this -->
+    <title>File list</title>
     <para>This list shows all included files and the referring permissions.</para>
-    <para>
-       $Filelist
-    </para>
+    <para>$Filelist</para>
 </chapter>
 
+<!-- ******* -->
+<!-- 9. Test -->
+<!-- ******* -->
 <chapter>
-    <!-- ************* -->
-    <!-- 10. Changelog -->
-    <!-- ************* -->
-    <title>ChangeLog</title>
-    <para>
-    $ChangeLog
-    </para>
+    <title>Tests</title>
+    <para>This module has been tested on the current state of the art in quality.</para>
+    <section>
+        <title>Test Cases</title>
+        <para>
+            To tests this package please follow the examples described in the Usage section, all the
+            tests cases should return the expected results defined at the beginning of each example.
+        </para>
+    </section>
 </chapter>
 
+<!-- ************* -->
+<!-- 10. Changelog -->
+<!-- ************* -->
 <chapter>
-    <!-- ************ -->
-    <!-- 11. Contacts -->
-    <!-- ************ -->
+    <title>Change Log</title>
+    <para>$ChangeLog</para>
+</chapter>
+
+<!-- ************ -->
+<!-- 11. Contacts -->
+<!-- ************ -->
+<chapter>
     <title>Contacts</title>
     <para>People who are involved in this implementation.</para>
-    <sect1>
+    <section>
         <title>OTRS AG</title>
         <para>
-            Accounting: René Bakker &lt;sales@otrs.com&gt;, Phone +49 (0)6172 681988 0
+            Accounting: Rene Bakker
+            <ulink url="mailto:sales@otrs.com?subject=$Name">
+                &lt;sales@otrs.com&gt;
+            </ulink>, Phone +49 (0)6172 681988 0
         </para>
         <para>
-            Technical: Manuel Hecht, Oliver Roettges &lt;dev-support@otrs.com&gt;, Phone +49 (0)6172 681988 0
+            Technical: Manuel Hecht
+            <ulink url="mailto:dev-support@otrs.com?subject=$Name">
+                &lt;dev-support@otrs.com&gt;
+            </ulink>, Phone +49 (0)6172 681988 0
         </para>
-    </sect1>
+    </section>
 </chapter>
-
 
 </book>

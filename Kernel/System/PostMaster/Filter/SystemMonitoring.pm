@@ -27,8 +27,8 @@ our @ObjectDependencies = (
 );
 
 #the base name for dynamic fields
-use constant DynamicFieldTicketTextPrefix  => 'TicketFreeText';
-use constant DynamicFieldArticleTextPrefix => 'ArticleFreeText';
+our $DynamicFieldTicketTextPrefix  = 'TicketFreeText';
+our $DynamicFieldArticleTextPrefix = 'ArticleFreeText';
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -68,13 +68,24 @@ sub new {
 }
 
 sub _GetDynamicFieldDefinition {
-    my $Self       = shift;
-    my $Config     = shift;
-    my $Key        = shift;    #FreeTextHost the config key
-    my $Default    = shift;    #1 the default value
-    my $Base       = shift;    # DynamicFieldTicketTextPrefix
-    my $Name       = shift;    #HostName
-    my $ObjectType = shift;    #HostName
+    my ( $Self, %Param ) = @_;
+
+    for my $Argument (qw(Config Key Default Base Name ObjectType)) {
+        if ( !$Param{$Argument} ) {
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
+
+    my $Config     = $Param{Config};
+    my $Key        = $Param{Key};           #FreeTextHost the config key
+    my $Default    = $Param{Default};       #1 the default value
+    my $Base       = $Param{Base};          # DynamicFieldTicketTextPrefix
+    my $Name       = $Param{Name};          #HostName
+    my $ObjectType = $Param{ObjectType};    #HostName
 
     my $ConfigFreeText = $Config->{$Key};
 
@@ -127,26 +138,38 @@ sub GetDynamicFieldsDefinition {
     my $Config = $Param{Config};
 
     push @{ $Param{NewFields} },
-        _GetDynamicFieldDefinition(
-        $Self, $Config, "FreeTextHost", 1, DynamicFieldTicketTextPrefix,
-        "HostName", "Ticket"
+        $Self->_GetDynamicFieldDefinition(
+        Config     => $Config,
+        Key        => 'FreeTextHost',
+        Default    => 1,
+        Base       => $DynamicFieldTicketTextPrefix,
+        Name       => 'HostName',
+        ObjectType => 'Ticket',
         );
     push @{ $Param{NewFields} },
-        _GetDynamicFieldDefinition(
-        $Self, $Config, "FreeTextService", 2,
-        DynamicFieldTicketTextPrefix, "ServiceName", "Ticket"
+        $Self->_GetDynamicFieldDefinition(
+        Config     => $Config,
+        Key        => 'FreeTextService',
+        Default    => 2,
+        Base       => $DynamicFieldTicketTextPrefix,
+        Name       => 'ServiceName',
+        ObjectType => 'Ticket',
         );
     push @{ $Param{NewFields} },
-        _GetDynamicFieldDefinition(
-        $Self, $Config, "FreeTextState", 1,
-        DynamicFieldArticleTextPrefix, "StateName", "Article"
+        $Self->_GetDynamicFieldDefinition(
+        Config     => $Config,
+        Key        => 'FreeTextState',
+        Default    => 1,
+        Base       => $DynamicFieldArticleTextPrefix,
+        Name       => 'StateName',
+        ObjectType => 'Ticket',
         );
 
     return 1;
 }
 
 sub _IncidentStateIncident {
-    my $Self = shift || die "missing self";
+    my ( $Self, %Param ) = @_;
 
     # set the CI incident state to 'Incident'
     $Self->_SetIncidentState(
@@ -154,22 +177,25 @@ sub _IncidentStateIncident {
         IncidentState => 'Incident',
     );
 
+    return 1;
 }
 
 sub _IncidentStateOperational {
-    my $Self = shift || die "missing self";
+    my ( $Self, %Param ) = @_;
 
     # set the CI incident state to 'Operational'
     $Self->_SetIncidentState(
         Name          => $Self->{Host},
         IncidentState => 'Operational',
     );
+
+    return 1;
 }
 
 # these are optional modules from the ITSM Kernel::System::GeneralCatalog and Kernel::System::ITSMConfigItem
 
 sub _IncidentStateNew {
-    my $Self = shift || die "missing self";
+    my ( $Self, %Param ) = @_;
 
     # get main object
     my $MainObject = $Kernel::OM->Get('Kernel::System::Main');
@@ -187,20 +213,29 @@ sub _IncidentStateNew {
         # create config item object
         $Self->{ConfigItemObject} = Kernel::System::ITSMConfigItem->new( %{$Self} );
     }
+
+    return 1;
 }
 
 sub _MailParse {
-    my $Self = shift || die "missing self";
-    my %Param = @_;
+    my ( $Self, %Param ) = @_;
 
-    my $Subject = $Param{GetParam}->{Subject} || die "No Param Subject";
+    if ( !$Param{GetParam} || !$Param{GetParam}->{Subject} ) {
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
+            Priority => 'error',
+            Message  => "Need Subject!",
+        );
+        return;
+    }
+
+    my $Subject = $Param{GetParam}->{Subject};
 
     # Try to get State, Host and Service from email subject
     my @SubjectLines = split /\n/, $Subject;
     for my $Line (@SubjectLines) {
-        for (qw(State Host Service)) {
-            if ( $Line =~ /$Self->{Config}->{ $_ . 'RegExp' }/ ) {
-                $Self->{$_} = $1;
+        for my $Item (qw(State Host Service)) {
+            if ( $Line =~ /$Self->{Config}->{ $Item . 'RegExp' }/ ) {
+                $Self->{$Item} = $1;
             }
         }
     }
@@ -236,11 +271,22 @@ sub _MailParse {
             }
         }
     }
+
+    return 1;
 }
 
 sub _LogMessage {
-    my $Self        = shift;
-    my $MessageText = shift;
+    my ( $Self, %Param ) = @_;
+
+    if ( !$Param{MessageText} ) {
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
+            Priority => 'error',
+            Message  => "Need MessageText!",
+        );
+        return;
+    }
+
+    my $MessageText = $Param{MessageText};
 
     # logging
     # define log message
@@ -257,10 +303,12 @@ sub _LogMessage {
         Priority => 'notice',
         Message  => 'SystemMonitoring Mail: ' . $LogMessage,
     );
+
+    return 1;
 }
 
 sub _TicketSearch {
-    my $Self = shift || die "missing self";
+    my ( $Self, %Param ) = @_;
 
     # Is there a ticket for this Host/Service pair?
     my %Query = (
@@ -272,7 +320,7 @@ sub _TicketSearch {
 
     for my $Type (qw(Host Service)) {
         my $FreeTextField = $Self->{Config}->{ 'FreeText' . $Type };
-        my $KeyName       = "DynamicField_" . DynamicFieldTicketTextPrefix . $FreeTextField;
+        my $KeyName       = "DynamicField_" . $DynamicFieldTicketTextPrefix . $FreeTextField;
         my $KeyValue      = $Self->{$Type};
 
         $Query{$KeyName}->{Equals} = $KeyValue;
@@ -293,18 +341,18 @@ sub _TicketSearch {
         my $FreeTextField = $Self->{Config}->{ 'FreeText' . $Type };
 
         my $DynamicField = $DynamicFieldObject->DynamicFieldGet(
-            'Name' => DynamicFieldTicketTextPrefix . $FreeTextField,
+            'Name' => $DynamicFieldTicketTextPrefix . $FreeTextField,
         );
 
         if ( !IsHashRefWithData($DynamicField) || $FreeTextField !~ m{\d+}xms ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "DynamicField "
-                    . DynamicFieldTicketTextPrefix
+                    . $DynamicFieldTicketTextPrefix
                     . $FreeTextField
                     . " does not exists or misnamed."
-                    . " The configuration is based on freetext fields, so the number of the freetext field is expected"
-                    . " (wrong value for key FreeText" . $Type . " is set).",
+                    . " The configuration is based on Dynamic fields, so the number of the dynamic field is expected"
+                    . " (wrong value for dynamic field FreeText" . $Type . " is set).",
             );
             $Errors = 1;
         }
@@ -312,18 +360,18 @@ sub _TicketSearch {
 
     my $ArticleFreeTextField = $Self->{Config}->{'FreeTextState'};
     my $DynamicFieldArticle  = $DynamicFieldObject->DynamicFieldGet(
-        'Name' => DynamicFieldArticleTextPrefix . $ArticleFreeTextField,
+        'Name' => $DynamicFieldArticleTextPrefix . $ArticleFreeTextField,
     );
 
     if ( !IsHashRefWithData($DynamicFieldArticle) || $ArticleFreeTextField !~ m{\d+}xms ) {
         $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "DynamicField "
-                . DynamicFieldArticleTextPrefix
+                . $DynamicFieldArticleTextPrefix
                 . $ArticleFreeTextField
                 . " does not exists or misnamed."
-                . " The configuration is based on freetext fields, so the number of the freetext field is expected"
-                . " (wrong value for key FreeTextState is set).",
+                . " The configuration is based on dynamic fields, so the number of the dynamic field is expected"
+                . " (wrong value for dynamic field FreeTextState is set).",
         );
         $Errors = 1;
     }
@@ -337,15 +385,25 @@ sub _TicketSearch {
     }
 
     return $TicketID;
-
 }
 
 # the sub takes the param as a hash reference not as a copy, because it is updated
 
 sub _TicketUpdate {
-    my $Self     = shift || die "missing self";
-    my $TicketID = shift || die "missing ticketid";
-    my $Param    = shift || die "missing param hashref";
+    my ( $Self, %Param ) = @_;
+
+    for my $Needed (qw(TicketID Param)) {
+        if ( !$Param{$Needed} ) {
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
+                Priority => 'error',
+                Message  => "Need $Needed!",
+            );
+            return;
+        }
+    }
+
+    my $TicketID = $Param{TicketID};
+    my $Param    = $Param{Param};
 
     # get ticket object
     my $TicketObject = $Kernel::OM->Get('Kernel::System::Ticket');
@@ -392,7 +450,7 @@ sub _TicketUpdate {
         }
 
         # set log message
-        $Self->_LogMessage('Recovered');
+        $Self->_LogMessage( MessageText => 'Recovered' );
 
         # if the CI incident state should be set
         if ( $ConfigObject->Get('SystemMonitoring::SetIncidentState') ) {
@@ -402,7 +460,7 @@ sub _TicketUpdate {
     else {
 
         # Attach note to existing ticket
-        $Self->_LogMessage('New Notice');
+        $Self->_LogMessage( MessageText => 'New Notice' );
     }
 
     # link ticket with CI, this is only possible if the ticket already exists,
@@ -415,23 +473,24 @@ sub _TicketUpdate {
             TicketID => $TicketID,
         );
     }
+
+    return 1;
 }
 
 # the sub takes the param as a hash reference not as a copy, because it is updated
 
 sub _TicketCreate {
-    my $Self  = shift || die "missing self";
-    my $Param = shift || die "missing param hashref";
+    my ( $Self, $Param ) = @_;
 
     # Create Ticket Condition -> Create new Ticket and record Host and Service
-    for (qw(Host Service)) {
+    for my $Item (qw(Host Service)) {
 
         # get the freetext number from config
-        my $TicketFreeTextNumber = $Self->{Config}->{ 'FreeText' . $_ };
+        my $TicketFreeTextNumber = $Self->{Config}->{ 'FreeText' . $Item };
 
         # see the Kernel::System::PostMaster::NewTicket  where this is read
-        $Param->{GetParam}->{ 'X-OTRS-TicketKey' . $TicketFreeTextNumber }   = $_;
-        $Param->{GetParam}->{ 'X-OTRS-TicketValue' . $TicketFreeTextNumber } = $Self->{$_};
+        $Param->{GetParam}->{ 'X-OTRS-TicketKey' . $TicketFreeTextNumber }   = $Item;
+        $Param->{GetParam}->{ 'X-OTRS-TicketValue' . $TicketFreeTextNumber } = $Self->{$Item};
     }
 
     # Set Article Free Field for State
@@ -444,28 +503,31 @@ sub _TicketCreate {
     $Param->{GetParam}->{'X-OTRS-ArticleType'} = $Self->{Config}->{ArticleType};
 
     # set log message
-    $Self->_LogMessage('New Ticket');
+    $Self->_LogMessage( MessageText => 'New Ticket' );
 
     # if the CI incident state should be set
     if ( $Kernel::OM->Get('Kernel::Config')->Get('SystemMonitoring::SetIncidentState') ) {
         $Self->_IncidentStateIncident();
     }
+
+    return 1;
 }
 
 # the sub takes the param as a hash reference not as a copy, because it is updated
 
 sub _TicketDrop {
-    my $Self  = shift || die "missing self";
-    my $Param = shift || die "missing param hashref";
+    my ( $Self, $Param ) = @_;
 
     # No existing ticket and no open condition -> drop silently
     $Param->{GetParam}->{'X-OTRS-Ignore'} = 'yes';
-    $Self->_LogMessage('Mail Dropped, no matching ticket found, no open on this state ');
+    $Self->_LogMessage(
+        MessageText => 'Mail Dropped, no matching ticket found, no open on this state ',
+    );
 
+    return 1;
 }
 
 sub Run {
-
     my ( $Self, %Param ) = @_;
 
     # get config options, use defaults unless value specified
@@ -502,7 +564,10 @@ sub Run {
 
     # OK, found ticket to deal with
     if ($TicketID) {
-        $Self->_TicketUpdate( $TicketID, \%Param );
+        $Self->_TicketUpdate(
+            TicketID => $TicketID,
+            Param    => \%Param,
+        );
     }
     elsif ( $Self->{State} =~ /$Self->{Config}->{NewTicketRegExp}/ ) {
         $Self->_TicketCreate( \%Param );
@@ -615,7 +680,7 @@ sub _LinkTicketWithCI {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Argument (qw(Name TicketID )) {
+    for my $Argument (qw(Name TicketID)) {
         if ( !$Param{$Argument} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',

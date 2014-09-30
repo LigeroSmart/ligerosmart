@@ -16,6 +16,7 @@ use warnings;
 our @ObjectDependencies = (
     'Kernel::Config',
     'Kernel::System::DynamicField',
+    'Kernel::System::Main',
     'Kernel::System::Log',
     'Kernel::System::SysConfig',
     'Kernel::System::Valid',
@@ -80,6 +81,9 @@ sub new {
     $Kernel::OM->ObjectsDiscard(
         Objects => ['Kernel::Config'],
     );
+
+    # define file prefix
+    $Self->{FilePrefix} = 'SystemMonitoring';
 
     return $Self;
 }
@@ -284,8 +288,6 @@ sub _CreateDynamicFields {
             }
         }
 
-        #
-
         my $FieldID = $DynamicFieldObject->DynamicFieldAdd(
             Name       => $DynamicField->{Name},
             Label      => $DynamicField->{Label},
@@ -322,6 +324,9 @@ sub _GetDynamicFieldsDefinition {
     # get config object
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
+    # get dynamic field object
+    my $MainObject = $Kernel::OM->Get('Kernel::System::Main');
+
     # run all PreFilterModules (modify email params)
     for my $Key ('PostMaster::PreFilterModule')
     {
@@ -329,8 +334,7 @@ sub _GetDynamicFieldsDefinition {
             my %Jobs = %{ $ConfigObject->Get($Key) };
             JOB:
             for my $Job ( sort keys %Jobs ) {
-
-                return if !$Self->{MainObject}->Require( $Jobs{$Job}->{Module} );
+                return if !$MainObject->Require( $Jobs{$Job}->{Module} );
 
                 next JOB if !$Jobs{$Job}->{Module}->can("GetDynamicFieldsDefinition");
 
@@ -339,8 +343,6 @@ sub _GetDynamicFieldsDefinition {
                 eval {
 
                     my $Run = $Jobs{$Job}->{Module}->GetDynamicFieldsDefinition(
-                        $Self,
-                        Param     => \%Param,
                         Config    => $Jobs{$Job},    # the job config
                         NewFields => \@NewFields
                     );

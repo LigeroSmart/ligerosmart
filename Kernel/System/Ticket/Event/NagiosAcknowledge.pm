@@ -43,11 +43,11 @@ sub Run {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for (qw(Data Event Config)) {
-        if ( !$Param{$_} ) {
+    for my $Needed (qw(Data Event Config)) {
+        if ( !$Param{$Needed} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
-                Message  => "Need $_!",
+                Message  => "Need $Needed!",
             );
 
             return;
@@ -142,11 +142,11 @@ sub _Pipe {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for (qw(Ticket User)) {
-        if ( !$Param{$_} ) {
+    for my $Needed (qw(Ticket User)) {
+        if ( !$Param{$Needed} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
-                Message  => "Need $_!",
+                Message  => "Need $Needed!",
             );
 
             return;
@@ -208,11 +208,11 @@ sub _HTTP {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for (qw(Ticket User)) {
-        if ( !$Param{$_} ) {
+    for my $Needed (qw(Ticket User)) {
+        if ( !$Param{$Needed} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
-                Message  => "Need $_!",
+                Message  => "Need $Needed!",
             );
 
             return;

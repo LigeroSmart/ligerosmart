@@ -1,4 +1,4 @@
-# $Id: SystemMonitoring.txt,v 1.1 2012-10-31 17:18:38 cg Exp $
+System Monitoring
 
 Basic mail interface to System Monitoring Suites. Also provides deeper integration to Nagios (Acknowledge on lock and Checkscript).
 
