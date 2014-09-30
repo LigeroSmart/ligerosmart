@@ -76,6 +76,7 @@ sub _GetDynamicFieldDefinition {
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
+
             return;
         }
     }
@@ -225,6 +226,7 @@ sub _MailParse {
             Priority => 'error',
             Message  => "Need Subject!",
         );
+
         return;
     }
 
@@ -283,6 +285,7 @@ sub _LogMessage {
             Priority => 'error',
             Message  => "Need MessageText!",
         );
+
         return;
     }
 
@@ -341,7 +344,7 @@ sub _TicketSearch {
         my $FreeTextField = $Self->{Config}->{ 'FreeText' . $Type };
 
         my $DynamicField = $DynamicFieldObject->DynamicFieldGet(
-            'Name' => $DynamicFieldTicketTextPrefix . $FreeTextField,
+            Name => $DynamicFieldTicketTextPrefix . $FreeTextField,
         );
 
         if ( !IsHashRefWithData($DynamicField) || $FreeTextField !~ m{\d+}xms ) {
@@ -360,7 +363,7 @@ sub _TicketSearch {
 
     my $ArticleFreeTextField = $Self->{Config}->{'FreeTextState'};
     my $DynamicFieldArticle  = $DynamicFieldObject->DynamicFieldGet(
-        'Name' => $DynamicFieldArticleTextPrefix . $ArticleFreeTextField,
+        Name => $DynamicFieldArticleTextPrefix . $ArticleFreeTextField,
     );
 
     if ( !IsHashRefWithData($DynamicFieldArticle) || $ArticleFreeTextField !~ m{\d+}xms ) {
@@ -398,6 +401,7 @@ sub _TicketUpdate {
                 Priority => 'error',
                 Message  => "Need $Needed!",
             );
+
             return;
         }
     }
@@ -554,6 +558,7 @@ sub Run {
                 . 'SystemMonitoring: Could not find host address '
                 . 'and/or state in mail => Ignoring',
         );
+
         return 1;
     }
 

@@ -77,13 +77,13 @@
 # Name of check shown in Nagios Status Information
    checkname => 'OTRS Checker',
 
-# Text shown in Status Information if everything is ok
+# Text shown in Status Information if everything is OK
    OK_TXT    => 'enjoy   tickets:',
 
-# Text shown in Status Information if warning threshhold reached
+# Text shown in Status Information if warning threshold reached
    WARN_TXT  => 'number of tickets:',
 
-# Text shown in Status Information if critical threshhold reached
+# Text shown in Status Information if critical threshold reached
    CRIT_TXT  => 'critical number of tickets:',
 
 );

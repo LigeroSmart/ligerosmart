@@ -64,7 +64,7 @@
         List of all functions declared at the functional level
          -   minimum in 4 sentences
          -   customer-specific
-         -   possible screenshots
+         -   possible screen-shots
          -   no OTRS terminology like TicketEventModul, PreApplicationModul
     -->
     <section>
@@ -319,9 +319,9 @@ shell> perl bin/otrs.UnitTest.pl -n SystemMonitoring
     </section>
 </chapter>
 
-<!-- ************* -->
-<!-- 10. Changelog -->
-<!-- ************* -->
+<!-- ************** -->
+<!-- 10. Change log -->
+<!-- ************** -->
 <chapter>
     <title>Change Log</title>
     <para>$ChangeLog</para>

@@ -45,15 +45,18 @@ if ( $Options{h} ) {
     print
         "Usage: $FindBin::Script [-N (runs as Nagioschecker)] [-c /path/to/config_file]\n";
     print "\n";
+
     exit;
 }
 
 if ( !$Options{c} ) {
     print STDERR "ERROR: Need -c CONFIGFILE\n";
+
     exit 1;
 }
 elsif ( !-e $Options{c} ) {
     print STDERR "ERROR: No such file $Options{c}\n";
+
     exit 1;
 }
 
@@ -66,6 +69,7 @@ while (<$IN>) {
 }
 if ( !eval {$Content} ) {
     print STDERR "ERROR: Invalid config file $Options{c}: $@\n";
+
     exit 1;
 }
 
@@ -80,6 +84,7 @@ my $TicketCount = $Kernel::OM->Get('Kernel::System::Ticket')->TicketSearch(
 # no checker mode
 if ( !$Options{N} ) {
     print "$TicketCount\n";
+
     exit 0;
 }
 
@@ -105,11 +110,13 @@ for my $Type (qw(crit_treshold warn_treshold)) {
             if ( $Type =~ /^crit_/ ) {
                 print
                     "$Config{checkname} CRITICAL $Config{CRIT_TXT} $TicketCount|tickets=$TicketCount;$Config{min_warn_treshold}:$Config{max_warn_treshold};$Config{min_crit_treshold}:$Config{max_crit_treshold}\n";
+
                 exit 2;
             }
             elsif ( $Type =~ /^warn_/ ) {
                 print
                     "$Config{checkname} WARNING $Config{WARN_TXT} $TicketCount|tickets=$TicketCount;$Config{min_warn_treshold}:$Config{max_warn_treshold};$Config{min_crit_treshold}:$Config{max_crit_treshold}\n";
+
                 exit 1;
             }
         }
@@ -119,18 +126,21 @@ for my $Type (qw(crit_treshold warn_treshold)) {
             if ( $Type =~ /^crit_/ ) {
                 print
                     "$Config{checkname} CRITICAL $Config{CRIT_TXT} $TicketCount|tickets=$TicketCount;$Config{min_warn_treshold}:$Config{max_warn_treshold};$Config{min_crit_treshold}:$Config{max_crit_treshold}\n";
+
                 exit 2;
             }
             elsif ( $Type =~ /^warn_/ ) {
                 print
                     "$Config{checkname} WARNING $Config{WARN_TXT} $TicketCount|tickets=$TicketCount;$Config{min_warn_treshold}:$Config{max_warn_treshold};$Config{min_crit_treshold}:$Config{max_crit_treshold}\n";
+
                 exit 1;
             }
         }
     }
 }
 
-# return ok
+# return OK
 print
     "$Config{checkname} OK $Config{OK_TXT} $TicketCount|tickets=$TicketCount;$Config{min_warn_treshold}:$Config{max_warn_treshold};$Config{min_crit_treshold}:$Config{max_crit_treshold}\n";
+
 exit 0;
