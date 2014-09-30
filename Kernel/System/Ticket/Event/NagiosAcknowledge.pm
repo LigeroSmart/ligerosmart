@@ -1,5 +1,5 @@
 # --
-# Kernel/System/Ticket/Event/NagiosAcknowledge.pm - acknowlege nagios tickets
+# Kernel/System/Ticket/Event/NagiosAcknowledge.pm - acknowledge nagios tickets
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -45,20 +45,27 @@ sub Run {
     # check needed stuff
     for (qw(Data Event Config)) {
         if ( !$Param{$_} ) {
-            $Kernel::OM->Get('Kernel::System::Log')
-                ->Log( Priority => 'error', Message => "Need $_!" );
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
+                Priority => 'error',
+                Message  => "Need $_!",
+            );
+
             return;
         }
     }
 
     if ( !$Param{Data}->{TicketID} ) {
-        $Kernel::OM->Get('Kernel::System::Log')
-            ->Log( Priority => 'error', Message => "Need Data->{TicketID}!" );
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
+            Priority => 'error',
+            Message  => "Need Data->{TicketID}!",
+        );
+
         return;
     }
 
     # check if acknowledge is active
     my $Type = $Kernel::OM->Get('Kernel::Config')->Get('Nagios::Acknowledge::Type');
+
     return 1 if !$Type;
 
     # get ticket object
@@ -70,8 +77,11 @@ sub Run {
         DynamicFields => 1,
     );
     if ( !$Ticket{ $Self->{Fhost} } ) {
-        $Kernel::OM->Get('Kernel::System::Log')
-            ->Log( Priority => 'debug', Message => "No Nagios Ticket!" );
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
+            Priority => 'debug',
+            Message  => "No Nagios Ticket!",
+        );
+
         return 1;
     }
 
@@ -102,6 +112,7 @@ sub Run {
             Priority => 'error',
             Message  => "Unknown Nagios acknowledge type ($Type)!",
         );
+
         return 1;
     }
 
@@ -112,6 +123,7 @@ sub Run {
             Name         => "Sent Acknowledge to Nagios ($Type).",
             CreateUserID => $Param{UserID},
         );
+
         return 1;
     }
     else {
@@ -121,6 +133,7 @@ sub Run {
             Name         => "Was not able to send Acknowledge to Nagios ($Type)!",
             CreateUserID => $Param{UserID},
         );
+
         return;
     }
 }
@@ -131,8 +144,11 @@ sub _Pipe {
     # check needed stuff
     for (qw(Ticket User)) {
         if ( !$Param{$_} ) {
-            $Kernel::OM->Get('Kernel::System::Log')
-                ->Log( Priority => 'error', Message => "Need $_!" );
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
+                Priority => 'error',
+                Message  => "Need $_!",
+            );
+
             return;
         }
     }
@@ -183,7 +199,7 @@ sub _Pipe {
     $CMD =~ s/<OUTPUTSTRING>/$Data/g;
 
     #print STDOUT "$CMD\n";
-    system($CMD );
+    system($CMD);
 
     return 1;
 }
@@ -194,8 +210,11 @@ sub _HTTP {
     # check needed stuff
     for (qw(Ticket User)) {
         if ( !$Param{$_} ) {
-            $Kernel::OM->Get('Kernel::System::Log')
-                ->Log( Priority => 'error', Message => "Need $_!" );
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
+                Priority => 'error',
+                Message  => "Need $_!",
+            );
+
             return;
         }
     }
@@ -246,11 +265,11 @@ sub _HTTP {
             Priority => 'error',
             Message  => "Can't request $URL: " . $Response->status_line(),
         );
+
         return;
     }
 
     #    return $Response->content();
-
     return 1;
 }
 1;

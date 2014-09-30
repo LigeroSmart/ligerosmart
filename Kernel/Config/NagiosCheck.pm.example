@@ -62,7 +62,7 @@
 #        TicketFreeText2 => ['Browser', 'Sound', 'Mouse'],
    },
 
-# Declaration of tresholds
+# Declaration of thresholds
 # min_warn_treshold > Number of tickets -> WARNING
 # max_warn_treshold < Number of tickets -> WARNING
 # min_crit_treshold > Number of tickets -> ALARM

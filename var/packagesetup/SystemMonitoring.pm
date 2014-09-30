@@ -329,6 +329,7 @@ sub _GetDynamicFieldsDefinition {
             my %Jobs = %{ $ConfigObject->Get($Key) };
             JOB:
             for my $Job ( sort keys %Jobs ) {
+
                 return if !$Self->{MainObject}->Require( $Jobs{$Job}->{Module} );
 
                 next JOB if !$Jobs{$Job}->{Module}->can("GetDynamicFieldsDefinition");
@@ -364,6 +365,7 @@ sub _GetDynamicFieldsDefinition {
             }
         }
     }
+
     return @AllNewFields;
 }
 

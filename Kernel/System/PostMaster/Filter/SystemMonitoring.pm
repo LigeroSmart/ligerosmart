@@ -106,7 +106,8 @@ sub _GetDynamicFieldDefinition {
 
     my $FieldNameHost = $Base . $ConfigFreeText;
 
-# define all dynamic fields for System Monitoring, these need to be changed as well if the config changes
+    # define all dynamic fields for System Monitoring, these need to be changed as well if the
+    # config changes
     return (
         {
             Name       => $FieldNameHost,
@@ -204,7 +205,7 @@ sub _MailParse {
         }
     }
 
-    #  Dont Try to get State, Host and Service from email body, we want it from the subject alone
+    #  Don't Try to get State, Host and Service from email body, we want it from the subject alone
 
     # split the body into separate lines
     my $Body = $Param{GetParam}->{Body} || die "Message has no Body";
@@ -285,7 +286,7 @@ sub _TicketSearch {
     # and then the new article/ticket could take wrong place.
     # The lesser of the three evils is to create a new ticket
     # instead of defacing existing tickets or dropping it.
-    # This behaviour will come true if the dynamic fields
+    # This behavior will come true if the dynamic fields
     # are named like TicketFreeTextHost. Its also bad.
     my $Errors = 0;
     for my $Type (qw(Host Service)) {
@@ -301,7 +302,7 @@ sub _TicketSearch {
                 Message  => "DynamicField "
                     . DynamicFieldTicketTextPrefix
                     . $FreeTextField
-                    . " does not exists or missnamed."
+                    . " does not exists or misnamed."
                     . " The configuration is based on freetext fields, so the number of the freetext field is expected"
                     . " (wrong value for key FreeText" . $Type . " is set).",
             );
@@ -320,7 +321,7 @@ sub _TicketSearch {
             Message  => "DynamicField "
                 . DynamicFieldArticleTextPrefix
                 . $ArticleFreeTextField
-                . " does not exists or missnamed."
+                . " does not exists or misnamed."
                 . " The configuration is based on freetext fields, so the number of the freetext field is expected"
                 . " (wrong value for key FreeTextState is set).",
         );
@@ -339,7 +340,7 @@ sub _TicketSearch {
 
 }
 
-# the sub takes the param as a hashref not as a copy, because it is updated
+# the sub takes the param as a hash reference not as a copy, because it is updated
 
 sub _TicketUpdate {
     my $Self     = shift || die "missing self";
@@ -416,7 +417,7 @@ sub _TicketUpdate {
     }
 }
 
-# the sub takes the param as a hashref not as a copy, because it is updated
+# the sub takes the param as a hash reference not as a copy, because it is updated
 
 sub _TicketCreate {
     my $Self  = shift || die "missing self";
@@ -451,7 +452,7 @@ sub _TicketCreate {
     }
 }
 
-# the sub takes the param as a hashref not as a copy, because it is updated
+# the sub takes the param as a hash reference not as a copy, because it is updated
 
 sub _TicketDrop {
     my $Self  = shift || die "missing self";
@@ -523,6 +524,7 @@ sub _SetIncidentState {
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
+
             return;
         }
     }
@@ -543,6 +545,7 @@ sub _SetIncidentState {
             Priority => 'error',
             Message  => "Could not find any CI with the name '$Param{Name}'. ",
         );
+
         return;
     }
 
@@ -555,6 +558,7 @@ sub _SetIncidentState {
             Message  => "Can not set incident state for CI with the name '$Param{Name}'. "
                 . "More than one CI with this name was found!",
         );
+
         return;
     }
 
@@ -593,6 +597,7 @@ sub _SetIncidentState {
             Priority => 'error',
             Message  => "Invalid incident state '$Param{IncidentState}'!",
         );
+
         return;
     }
 
@@ -616,6 +621,7 @@ sub _LinkTicketWithCI {
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
+
             return;
         }
     }
@@ -636,6 +642,7 @@ sub _LinkTicketWithCI {
             Priority => 'error',
             Message  => "Could not find any CI with the name '$Param{Name}'. ",
         );
+
         return;
     }
 
@@ -648,6 +655,7 @@ sub _LinkTicketWithCI {
             Message  => "Can not set incident state for CI with the name '$Param{Name}'. "
                 . "More than one CI with this name was found!",
         );
+
         return;
     }
 
