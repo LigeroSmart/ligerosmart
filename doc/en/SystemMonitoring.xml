@@ -296,9 +296,33 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
     <section>
         <title>Test Cases</title>
         <para>
-            To tests this package please follow the examples described in the Usage section, all the
+            To test this package please follow the examples described in the Usage section, all the
             tests cases should return the expected results defined at the beginning of each example.
         </para>
+    </section>
+    <section>
+        <title>Unit Tests</title>
+        <para>
+            To ensure the quality of the module, several so-called unit tests were created, to test
+            the functionalities of this module. These unit tests can be run via command line.
+        </para>
+        <para>
+            ATTENTION: Please never run unit tests on a productive system, since the added test data
+            to the system will no longer be removed. Always use a test system.
+        </para>
+        <para>Run the package specific unit tests</para>
+        <para>
+            To run only the unit test which will be delivered with this package, use the following
+            command on the command line:
+        </para>
+        <screen>
+shell> perl bin/otrs.UnitTest.pl -n SystemMonitoring
+        </screen>
+        <para>Run all available unit tests</para>
+        <para>
+            To run all available unit tests, use the following command on the command line:
+        </para>
+        <screen>shell> perl bin/otrs.UnitTest.pl</screen>
     </section>
 </chapter>
 
