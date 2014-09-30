@@ -115,6 +115,7 @@ $('#NavigationSelect').bind('click', function(){
                 </div>
 [% WRAPPER JSOnDocumentComplete %]
 <script type="text/javascript">//<![CDATA[
+/*global TimeAccounting: true */
     TimeAccounting.Agent.EditTimeRecords.MassEntryInit({
         MsgChooseOneDay:    [% Translate("Please choose at least one day!") | JSON %],
         MsgAbsenceReason:   [% Translate("Please choose a reason for absence!") | JSON %],
