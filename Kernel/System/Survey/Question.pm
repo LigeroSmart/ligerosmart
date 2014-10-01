@@ -114,7 +114,7 @@ sub QuestionDelete {
     my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
     # delete all answers of a question
-    $DBObject->Do(
+    return if !$DBObject->Do(
         SQL => '
             DELETE FROM survey_answer
             WHERE question_id = ?',
@@ -122,13 +122,15 @@ sub QuestionDelete {
     );
 
     # delete the question
-    return $DBObject->Do(
+    return if !$DBObject->Do(
         SQL => '
             DELETE FROM survey_question
             WHERE id = ?
                 AND survey_id = ?',
         Bind => [ \$Param{QuestionID}, \$Param{SurveyID}, ],
     );
+
+    return 1;
 }
 
 =item QuestionGet()
@@ -158,7 +160,7 @@ sub QuestionGet {
     my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
     # get question
-    $DBObject->Prepare(
+    return if !$DBObject->Prepare(
         SQL => '
             SELECT id, survey_id, question, question_type, position, answer_required, create_time,
                 create_by, change_time, change_by
@@ -267,7 +269,7 @@ sub QuestionList {
     my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
     # get all questions of a survey
-    $DBObject->Prepare(
+    return if !$DBObject->Prepare(
         SQL => '
             SELECT id, survey_id, question, question_type, answer_required
             FROM survey_question
@@ -319,7 +321,7 @@ sub QuestionSort {
     my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
     # get all question of a survey (sorted by position)
-    $DBObject->Prepare(
+    return if !$DBObject->Prepare(
         SQL => '
             SELECT id FROM survey_question
             WHERE survey_id = ?
@@ -334,7 +336,7 @@ sub QuestionSort {
 
     my $Counter = 1;
     for my $QuestionID (@List) {
-        $DBObject->Do(
+        return if !$DBObject->Do(
             SQL => '
                 UPDATE survey_question
                 SET position = ?
@@ -378,7 +380,7 @@ sub QuestionUp {
     my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
     # get position
-    $DBObject->Prepare(
+    return if !$DBObject->Prepare(
         SQL => '
             SELECT position
             FROM survey_question
@@ -399,7 +401,7 @@ sub QuestionUp {
     my $PositionUp = $Position - 1;
 
     # get question
-    $DBObject->Prepare(
+    return if !$DBObject->Prepare(
         SQL => '
             SELECT id
             FROM survey_question
@@ -418,7 +420,7 @@ sub QuestionUp {
     return if !$QuestionIDDown;
 
     # update position
-    $DBObject->Do(
+    return if !$DBObject->Do(
         SQL => '
             UPDATE survey_question
             SET position = ?
@@ -427,13 +429,15 @@ sub QuestionUp {
     );
 
     # update position
-    return $DBObject->Do(
+    return if !$DBObject->Do(
         SQL => '
             UPDATE survey_question
             SET position = ?
             WHERE id = ?',
         Bind => [ \$PositionUp, \$Param{QuestionID}, ],
     );
+
+    return 1;
 }
 
 =item QuestionDown()
@@ -466,7 +470,7 @@ sub QuestionDown {
     my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
     # get position
-    $DBObject->Prepare(
+    return if !$DBObject->Prepare(
         SQL => '
             SELECT position
             FROM survey_question
@@ -487,7 +491,7 @@ sub QuestionDown {
     my $PositionDown = $Position + 1;
 
     # get question
-    $DBObject->Prepare(
+    return if !$DBObject->Prepare(
         SQL => '
             SELECT id
             FROM survey_question
@@ -506,7 +510,7 @@ sub QuestionDown {
     return if !$QuestionIDUp;
 
     # update position
-    $DBObject->Do(
+    return if !$DBObject->Do(
         SQL => '
             UPDATE survey_question
             SET position = ?
@@ -515,13 +519,15 @@ sub QuestionDown {
     );
 
     # update position
-    return $DBObject->Do(
+    return if !$DBObject->Do(
         SQL => '
             UPDATE survey_question
             SET position = ?
             WHERE id = ?',
         Bind => [ \$PositionDown, \$Param{QuestionID}, ],
     );
+
+    return 1;
 }
 
 =item QuestionCount()
@@ -551,7 +557,7 @@ sub QuestionCount {
     my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
     # count questions
-    $DBObject->Prepare(
+    return if !$DBObject->Prepare(
         SQL => '
             SELECT COUNT(id)
             FROM survey_question

@@ -123,7 +123,7 @@ sub SurveyAdd {
 
     # insert a new survey
     my $Status = 'New';
-    $DBObject->Do(
+    return if !$DBObject->Do(
         SQL => '
             INSERT INTO survey (title, introduction, description, notification_sender,
                 notification_subject, notification_body, status, send_conditions, create_time, create_by,
@@ -138,7 +138,7 @@ sub SurveyAdd {
     );
 
     # get the id of the survey
-    $DBObject->Prepare(
+    return if !$DBObject->Prepare(
         SQL => '
             SELECT id
             FROM survey
@@ -158,7 +158,7 @@ sub SurveyAdd {
 
     # set the survey number
     my $SurveyNumber = $SurveyID + 10000;
-    $DBObject->Do(
+    return if !$DBObject->Do(
         SQL => '
             UPDATE survey
             SET surveynumber = ?
@@ -205,7 +205,7 @@ sub SurveyGet {
     my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
     # get all attributes of a survey
-    $DBObject->Prepare(
+    return if !$DBObject->Prepare(
         SQL => '
             SELECT id, surveynumber, title, introduction, description, notification_sender,
                 notification_subject, notification_body, status, send_conditions, create_time, create_by,
@@ -393,7 +393,7 @@ sub SurveyList {
     my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
     # get survey list
-    $DBObject->Prepare(
+    return if !$DBObject->Prepare(
         SQL => '
             SELECT id
             FROM survey
@@ -837,7 +837,7 @@ sub SurveyStatusSet {
     my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
     # get current status
-    $DBObject->Prepare(
+    return if !$DBObject->Prepare(
         SQL => '
             SELECT status
             FROM survey
@@ -856,7 +856,7 @@ sub SurveyStatusSet {
     if ( $Status eq 'New' || $Status eq 'Invalid' ) {
 
         # get the question ids
-        $DBObject->Prepare(
+        return if !$DBObject->Prepare(
             SQL => '
                 SELECT id
                 FROM survey_question
@@ -879,7 +879,7 @@ sub SurveyStatusSet {
         );
 
         # get all questions (type radio and check-box)
-        $DBObject->Prepare(
+        return if !$DBObject->Prepare(
             SQL => '
                 SELECT id
                 FROM survey_question
@@ -896,7 +896,7 @@ sub SurveyStatusSet {
         for my $OneID (@QuestionIDs) {
 
             # get all answer ids of a question
-            $DBObject->Prepare(
+            return if !$DBObject->Prepare(
                 SQL => '
                     SELECT COUNT(id)
                     FROM survey_answer
@@ -917,7 +917,7 @@ sub SurveyStatusSet {
         # set new status
         if ( $Param{NewStatus} eq 'Master' ) {
             my $ValidStatus = 'Valid';
-            $DBObject->Do(
+            return if !$DBObject->Do(
                 SQL => '
                     UPDATE survey
                     SET status = ?
@@ -927,7 +927,7 @@ sub SurveyStatusSet {
 
         }
         if ( $Param{NewStatus} eq 'Valid' || $Param{NewStatus} eq 'Master' ) {
-            $DBObject->Do(
+            return if !$DBObject->Do(
                 SQL => '
                     UPDATE survey SET status = ?
                     WHERE id = ?',
@@ -943,7 +943,7 @@ sub SurveyStatusSet {
         if ( $Param{NewStatus} eq 'Master' ) {
 
             # set any 'Master' survey to 'Valid'
-            $DBObject->Do(
+            return if !$DBObject->Do(
                 SQL => '
                     UPDATE survey
                     SET status = ?
@@ -952,7 +952,7 @@ sub SurveyStatusSet {
             );
 
             # set 'Master' to given survey
-            $DBObject->Do(
+            return if !$DBObject->Do(
                 SQL => '
                     UPDATE survey
                     SET status = ?
@@ -965,7 +965,7 @@ sub SurveyStatusSet {
 
         # set status Invalid
         elsif ( $Param{NewStatus} eq 'Invalid' ) {
-            $DBObject->Do(
+            return if !$DBObject->Do(
                 SQL => '
                     UPDATE survey
                     SET status = ?
@@ -980,7 +980,7 @@ sub SurveyStatusSet {
 
         # set status Valid
         if ( $Param{NewStatus} eq 'Valid' || $Param{NewStatus} eq 'Invalid' ) {
-            $DBObject->Do(
+            return if !$DBObject->Do(
                 SQL => '
                     UPDATE survey
                     SET status = ?
@@ -1068,7 +1068,7 @@ sub SurveyQueueSet {
     my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
     # remove all existing relations
-    $DBObject->Do(
+    return if !$DBObject->Do(
         SQL => '
             DELETE FROM survey_queue
             WHERE survey_id = ?',
@@ -1131,7 +1131,7 @@ sub PublicSurveyGet {
     my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
     # get request
-    $DBObject->Prepare(
+    return if !$DBObject->Prepare(
         SQL   => $SQL,
         Bind  => [ \$Param{PublicSurveyKey} ],
         Limit => 1,
@@ -1148,7 +1148,7 @@ sub PublicSurveyGet {
     # get survey
     my $MasterStatus = 'Master';
     my $ValidStatus  = 'Valid';
-    $DBObject->Prepare(
+    return if !$DBObject->Prepare(
         SQL => '
             SELECT id, surveynumber, title, introduction
             FROM survey
@@ -1196,7 +1196,7 @@ sub PublicSurveyInvalidSet {
     my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
     # get request
-    $DBObject->Prepare(
+    return if !$DBObject->Prepare(
         SQL => '
             SELECT id
             FROM survey_request
@@ -1214,13 +1214,15 @@ sub PublicSurveyInvalidSet {
     return if !$RequestID;
 
     # update request
-    return $DBObject->Do(
+    return if !$DBObject->Do(
         SQL => '
             UPDATE survey_request
             SET valid_id = 0, vote_time = current_timestamp
             WHERE id = ?',
         Bind => [ \$RequestID ],
     );
+
+    return 1;
 }
 
 =item ElementExists()
@@ -1276,7 +1278,7 @@ sub ElementExists {
     my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
     # count element
-    $DBObject->Prepare(
+    return if !$DBObject->Prepare(
         SQL   => $SQL,
         Bind  => [ \$Param{ElementID} ],
         Limit => 1,

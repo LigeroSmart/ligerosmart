@@ -128,7 +128,7 @@ sub AnswerGet {
     my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
     # get answer
-    $DBObject->Prepare(
+    return if !$DBObject->Prepare(
         SQL => '
             SELECT id, question_id, answer, position, create_time, create_by, change_time, change_by
             FROM survey_answer
@@ -219,7 +219,7 @@ sub AnswerList {
     my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
     # get answer list
-    $DBObject->Prepare(
+    return if !$DBObject->Prepare(
         SQL => '
             SELECT id, question_id, answer
             FROM survey_answer
@@ -269,7 +269,7 @@ sub AnswerSort {
     my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
     # get answer list
-    $DBObject->Prepare(
+    return if !$DBObject->Prepare(
         SQL => '
             SELECT id
             FROM survey_answer
@@ -288,7 +288,7 @@ sub AnswerSort {
     for my $AnswerID (@List) {
 
         # update position
-        $DBObject->Do(
+        return if !$DBObject->Do(
             SQL => '
                 UPDATE survey_answer
                 SET position = ?
@@ -332,7 +332,7 @@ sub AnswerUp {
     my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
     # get position
-    $DBObject->Prepare(
+    return if !$DBObject->Prepare(
         SQL => '
             SELECT position
             FROM survey_answer
@@ -353,7 +353,7 @@ sub AnswerUp {
     my $PositionUp = $Position - 1;
 
     # get answer
-    $DBObject->Prepare(
+    return if !$DBObject->Prepare(
         SQL => '
             SELECT id
             FROM survey_answer
@@ -371,7 +371,7 @@ sub AnswerUp {
     return if !$AnswerIDDown;
 
     # update position
-    $DBObject->Do(
+    return if !$DBObject->Do(
         SQL => '
             UPDATE survey_answer
             SET position = ?
@@ -380,13 +380,15 @@ sub AnswerUp {
     );
 
     # update position
-    return $DBObject->Do(
+    return if !$DBObject->Do(
         SQL => '
             UPDATE survey_answer
             SET position = ?
             WHERE id = ?',
         Bind => [ \$PositionUp, \$Param{AnswerID}, ],
     );
+
+    return 1;
 }
 
 =item AnswerDown()
@@ -419,7 +421,7 @@ sub AnswerDown {
     my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
     # get position
-    $DBObject->Prepare(
+    return if !$DBObject->Prepare(
         SQL => '
             SELECT position
             FROM survey_answer
@@ -440,7 +442,7 @@ sub AnswerDown {
     my $PositionDown = $Position + 1;
 
     # get answer
-    $DBObject->Prepare(
+    return if !$DBObject->Prepare(
         SQL => '
             SELECT id
             FROM survey_answer
@@ -459,7 +461,7 @@ sub AnswerDown {
     return if !$AnswerIDUp;
 
     # update position
-    $DBObject->Do(
+    return if !$DBObject->Do(
         SQL => '
             UPDATE survey_answer
             SET position = ?
@@ -468,13 +470,15 @@ sub AnswerDown {
     );
 
     # update position
-    return $DBObject->Do(
+    return if !$DBObject->Do(
         SQL => '
             UPDATE survey_answer
             SET position = ?
             WHERE id = ?',
         Bind => [ \$PositionDown, \$Param{AnswerID}, ],
     );
+
+    return 1;
 }
 
 =item AnswerCount()
@@ -504,7 +508,7 @@ sub AnswerCount {
     my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
     # count answers
-    $DBObject->Prepare(
+    return if !$DBObject->Prepare(
         SQL => '
             SELECT COUNT(id)
             FROM survey_answer
@@ -553,7 +557,7 @@ sub PublicAnswerSet {
     my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
     # get request
-    $DBObject->Prepare(
+    return if !$DBObject->Prepare(
         SQL => '
             SELECT id
             FROM survey_request
@@ -572,12 +576,14 @@ sub PublicAnswerSet {
     return if !$RequestID;
 
     # insert vote
-    return $DBObject->Do(
+    return if !$DBObject->Do(
         SQL => '
             INSERT INTO survey_vote (request_id, question_id, vote_value, create_time)
             VALUES ( ?, ?, ?, current_timestamp)',
         Bind => [ \$RequestID, \$Param{QuestionID}, \$Param{VoteValue}, ],
     );
+
+    return 1;
 }
 
 1;

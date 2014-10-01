@@ -57,7 +57,7 @@ sub RequestGet {
     my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
     # get vote list
-    $DBObject->Prepare(
+    return if !$DBObject->Prepare(
         SQL => '
             SELECT id, ticket_id, survey_id, valid_id, public_survey_key, send_to, send_time,
                 vote_time
@@ -126,7 +126,7 @@ sub RequestSend {
 
     # find master survey
     my $Status = 'Master';
-    $DBObject->Prepare(
+    return if !$DBObject->Prepare(
         SQL => '
             SELECT id
             FROM survey
@@ -345,7 +345,7 @@ sub RequestSend {
                 = $TimeObject->SystemTime2TimeStamp( SystemTime => $ThirtyDaysAgo );
             my $LastSentTime = 0;
 
-            $DBObject->Prepare(
+            return if !$DBObject->Prepare(
                 SQL => '
                     SELECT create_time
                     FROM survey_request
@@ -375,7 +375,7 @@ sub RequestSend {
         my $LastSentTime = 0;
 
         # get send time
-        $DBObject->Prepare(
+        return if !$DBObject->Prepare(
             SQL => '
                 SELECT send_time
                 FROM survey_request
@@ -405,7 +405,7 @@ sub RequestSend {
     if ( !$SendInHoursAfterClose && !$Param{TriggerSendRequests} ) {
 
         # insert request
-        $DBObject->Do(
+        return if !$DBObject->Do(
             SQL => '
                 INSERT INTO survey_request (ticket_id, survey_id, valid_id, public_survey_key,
                     send_to, send_time, create_time)
@@ -430,7 +430,7 @@ sub RequestSend {
     elsif ( $SendInHoursAfterClose && !$Param{TriggerSendRequests} ) {
 
         # insert request
-        $DBObject->Do(
+        return if !$DBObject->Do(
             SQL => '
                 INSERT INTO survey_request (ticket_id, survey_id, valid_id, public_survey_key,
                     send_to, create_time)
@@ -450,7 +450,7 @@ sub RequestSend {
         && $Param{SurveyRequestID} =~ /^\d+$/
         )
     {
-        $DBObject->Do(
+        return if !$DBObject->Do(
             SQL => '
                 UPDATE survey_request
                 SET send_time = current_timestamp
@@ -552,7 +552,7 @@ sub RequestCount {
     my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
     # ask database
-    $DBObject->Prepare(
+    return if !$DBObject->Prepare(
         SQL   => $SQL,
         Bind  => [ \$Param{SurveyID} ],
         Limit => 1,

@@ -58,7 +58,7 @@ sub VoteGet {
     my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
     # get vote
-    $DBObject->Prepare(
+    return if !$DBObject->Prepare(
         SQL => '
             SELECT id, vote_value
             FROM survey_vote
@@ -107,7 +107,7 @@ sub VoteList {
     my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
     # get vote list
-    $DBObject->Prepare(
+    return if !$DBObject->Prepare(
         SQL => '
             SELECT id, ticket_id, send_time, vote_time
             FROM survey_request
@@ -161,7 +161,7 @@ sub VoteAttributeGet {
     my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
     # get vote attribute
-    $DBObject->Prepare(
+    return if !$DBObject->Prepare(
         SQL => '
             SELECT vote_value
             FROM survey_vote
@@ -206,7 +206,7 @@ sub VoteCount {
     my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
     # count votes
-    $DBObject->Prepare(
+    return if !$DBObject->Prepare(
         SQL => '
             SELECT COUNT(vote_value)
             FROM survey_vote
