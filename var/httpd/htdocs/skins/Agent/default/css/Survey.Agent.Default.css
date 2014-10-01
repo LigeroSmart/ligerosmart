@@ -88,8 +88,17 @@ a.ArrowDownDisabled {
     margin-bottom: 1px;
     border-style: none;
     vertical-align: middle;
-    cursor: pointer;
     text-align: center;
+}
+
+a.ArrowUp,
+a.ArrowDown {
+    cursor: pointer;
+}
+
+a.ArrowUpDisabled,
+a.ArrowDownDisabled {
+    cursor: default;
 }
 
 a.ArrowUp:active,
