@@ -150,8 +150,10 @@ sub CodeUpgradeFromLowerThan_2_0_92 {    ## no critic
     my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
     # SELECT all functionality values
-    $DBObject->Prepare(
-        SQL => 'SELECT id, send_time FROM survey_request',
+    return if !$DBObject->Prepare(
+        SQL => '
+            SELECT id, send_time
+            FROM survey_request',
     );
 
     my @List;
@@ -164,9 +166,11 @@ sub CodeUpgradeFromLowerThan_2_0_92 {    ## no critic
 
     # save entries in new table
     for my $Entry (@List) {
-        $DBObject->Do(
-            SQL =>
-                'UPDATE survey_request SET create_time = ? WHERE  id = ?',
+        return if !$DBObject->Do(
+            SQL => '
+                UPDATE survey_request
+                SET create_time = ?
+                WHERE  id = ?',
             Bind => [ \$Entry->[1], \$Entry->[0] ],
         );
     }
@@ -209,9 +213,9 @@ sub _Prefill_AnswerRequiredFromSurveyQuestion_2_1_5 {    ## no critic
     my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
     return if !$DBObject->Prepare(
-        SQL => 'SELECT id, answer_required '
-            . 'FROM survey_question',
-        Limit => 0,
+        SQL => '
+            SELECT id, answer_required
+            FROM survey_question',
     );
     my @IdsToUpdate;
     while ( my @Row = $DBObject->FetchrowArray() ) {
@@ -233,9 +237,11 @@ sub _Prefill_AnswerRequiredFromSurveyQuestion_2_1_5 {    ## no critic
     }
 
     for my $QuestionID (@IdsToUpdate) {
-        $DBObject->Do(
-            SQL =>
-                'UPDATE survey_question SET answer_required = 0 WHERE id = ?',
+        return if !$DBObject->Do(
+            SQL => '
+                UPDATE survey_question
+                SET answer_required = 0
+                WHERE id = ?',
             Bind => [
                 \$QuestionID,
             ],
