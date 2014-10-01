@@ -276,8 +276,14 @@ sub Run {
         }
 
         # check if an attachment must be deleted
+        my @AttachmentIDs = map {
+            my ($ID) = $_ =~ m{ \A AttachmentDelete (\d+) \z }xms;
+            $ID ? $ID : ();
+        } $Self->{ParamObject}->GetParamNames();
+
+        # check if an attachment must be deleted
         ATTACHMENT:
-        for my $Number ( 1 .. 32 ) {
+        for my $Number ( reverse sort @AttachmentIDs ) {
 
             # check if the delete button was pressed for this attachment
             my $Delete = $Self->{ParamObject}->GetParam( Param => "AttachmentDelete$Number" );
