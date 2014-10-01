@@ -179,6 +179,14 @@ msgid "Answer Required"
 msgstr ""
 
 #. Template: AgentSurveyEditQuestions
+msgid "When you finish to edit the survey questions just close this window."
+msgstr ""
+
+#. Template: AgentSurveyEditQuestions
+msgid "Do you really want to delete this question? ALL associated data will be LOST!"
+msgstr ""
+
+#. Template: AgentSurveyEditQuestions
 msgid "Edit Question"
 msgstr ""
 
@@ -192,6 +200,14 @@ msgstr ""
 
 #. Template: AgentSurveyEditQuestions
 msgid "Add Answer"
+msgstr ""
+
+#. Template: AgentSurveyEditQuestions
+msgid "No answers saved for this question."
+msgstr ""
+
+#. Template: AgentSurveyEditQuestions
+msgid "Do you really want to delete this answer?"
 msgstr ""
 
 #. Template: AgentSurveyEditQuestions

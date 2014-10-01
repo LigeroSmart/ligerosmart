@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2014-09-29 23:47+0000\n"
+"PO-Revision-Date: 2014-10-01 22:35+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Spanish (Mexico) (http://www.transifex.com/projects/p/OTRS/language/es_MX/)\n"
 "MIME-Version: 1.0\n"
@@ -184,6 +184,14 @@ msgid "Answer Required"
 msgstr "Respuesta Requerida"
 
 #. Template: AgentSurveyEditQuestions
+msgid "When you finish to edit the survey questions just close this window."
+msgstr "Cuando termine de editar las preguntas de la encienta solamente cierre esta ventana."
+
+#. Template: AgentSurveyEditQuestions
+msgid "Do you really want to delete this question? ALL associated data will be LOST!"
+msgstr "¿Realmente desea eliminar esta pregunta? TODOS los datos asociados de PERDERÁN!"
+
+#. Template: AgentSurveyEditQuestions
 msgid "Edit Question"
 msgstr "Editar Pregunta"
 
@@ -198,6 +206,14 @@ msgstr "Posibles respuestas para"
 #. Template: AgentSurveyEditQuestions
 msgid "Add Answer"
 msgstr "Agregar Respuesta"
+
+#. Template: AgentSurveyEditQuestions
+msgid "No answers saved for this question."
+msgstr "No hay respuestas almacenadas para esta pregunta."
+
+#. Template: AgentSurveyEditQuestions
+msgid "Do you really want to delete this answer?"
+msgstr "¿Realmente desea eliminar esta respuesta?"
 
 #. Template: AgentSurveyEditQuestions
 msgid "This doesn't have several answers, a textarea will be displayed."
