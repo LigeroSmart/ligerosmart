@@ -842,8 +842,8 @@ sub _MaskQuestionEdit {
         my @List = $Self->{SurveyObject}->AnswerList( QuestionID => $Param{QuestionID} );
         if ( scalar @List ) {
 
+            $Self->{LayoutObject}->Block( Name => 'QuestionEditTable' );
             if ( $Survey{Status} eq 'New' ) {
-                $Self->{LayoutObject}->Block( Name => 'QuestionEditTable' );
 
                 $Self->{LayoutObject}->Block( Name => 'QuestionEditTableDelete' );
 
