@@ -158,7 +158,7 @@
                             </td>
 [% RenderBlockStart("SurveyQuestionsDeleteButton") %]
                             <td class="Center">
-                                <a class="AsBlock" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=QuestionDelete;SurveyID=[% Data.SurveyID | uri %];QuestionID=[% Data.QuestionID | uri %]">
+                                <a class="AsBlock QuestionDelete" href="#" data-query-string="Action=[% Env("Action") %];Subaction=QuestionDelete;SurveyID=[% Data.SurveyID | uri %];QuestionID=[% Data.QuestionID | uri %]">
                                     <i class="fa fa-trash-o"></i>
                                     <span class="InvisibleText">[% Translate("Delete") | html %]</span>
                                 </a>
@@ -169,9 +169,25 @@
                     </tbody>
                 </table>
 [% RenderBlockEnd("SurveyQuestionsTable") %]
-
+                <div class="SpacingTop">
+                    <span class="FieldExplanation">[% Translate("When you finish to edit the survey questions just close this window.") | html %]</span>
+                </div>
             </div>
         </div>
+
+[% WRAPPER JSOnDocumentComplete %]
+<script type="text/javascript">//<![CDATA[
+$('.QuestionDelete').bind('click', function (Event) {
+
+    if (window.confirm([% Translate("Do you really want to delete this question? ALL associated data will be LOST!") | JSON %])) {
+        window.location = '[% Env("Baselink") %]' + $(this).data('query-string');
+    }
+    Event.stopPropagation();
+    Event.preventDefault();
+    return false;
+});
+//]]></script>
+[% END %]
 
     </div>
     <div class="Footer">
@@ -264,7 +280,7 @@
 
 [% RenderBlockStart("NoAnswersSaved") %]
                 <div class="SpacingTop" id="SurveyEmptyMessageSmall">
-                    [% Translate("No questions saved for this survey.") | html %]
+                    [% Translate("No answers saved for this question.") | html %]
                 </div>
 [% RenderBlockEnd("NoAnswersSaved") %]
 
@@ -302,7 +318,7 @@
                             </td>
 [% RenderBlockStart("QuestionEditRadioDelete") %]
                             <td class="Center">
-                                <a class="AsBlock" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=AnswerDelete;SurveyID=[% Data.SurveyID | uri %];QuestionID=[% Data.QuestionID | uri %];AnswerID=[% Data.AnswerID | uri %]">
+                                <a class="AsBlock AnswerDelete" href="#" data-query-string="Action=[% Env("Action") %];Subaction=AnswerDelete;SurveyID=[% Data.SurveyID | uri %];QuestionID=[% Data.QuestionID | uri %];AnswerID=[% Data.AnswerID | uri %]">
                                     <i class="fa fa-trash-o"></i>
                                     <span class="InvisibleText">[% Translate("Delete") | html %]</span>
                                 </a>
@@ -330,7 +346,7 @@
                             </td>
 [% RenderBlockStart("QuestionEditCheckboxDelete") %]
                             <td class="Center">
-                                <a class="AsBlock" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=AnswerDelete;SurveyID=[% Data.SurveyID | uri %];QuestionID=[% Data.QuestionID | uri %];AnswerID=[% Data.AnswerID | uri %]">
+                                <a class="AsBlock AnswerDelete" href="#" data-query-string="Action=[% Env("Action") %];Subaction=AnswerDelete;SurveyID=[% Data.SurveyID | uri %];QuestionID=[% Data.QuestionID | uri %];AnswerID=[% Data.AnswerID | uri %]">
                                     <i class="fa fa-trash-o"></i>
                                     <span class="InvisibleText">[% Translate("Delete") | html %]</span>
                                 </a>
@@ -376,6 +392,19 @@
                 </table>
 [% RenderBlockEnd("QuestionEditTable") %]
 
+[% WRAPPER JSOnDocumentComplete %]
+<script type="text/javascript">//<![CDATA[
+$('.AnswerDelete').bind('click', function (Event) {
+
+    if (window.confirm([% Translate("Do you really want to delete this answer?") | JSON %])) {
+        window.location = '[% Env("Baselink") %]' + $(this).data('query-string');
+    }
+    Event.stopPropagation();
+    Event.preventDefault();
+    return false;
+});
+//]]></script>
+[% END %]
 
 [% RenderBlockStart("QuestionEditTextArea") %]
                 <div class="SpacingTop" id="SurveyEmptyMessageSmall">
