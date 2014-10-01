@@ -65,10 +65,16 @@ sub Data {
     $Self->{Translation}->{'No questions saved for this survey.'} = 'Er zijn geen vragen opgeslagen voor deze enquête';
     $Self->{Translation}->{'Question'} = 'Vraag';
     $Self->{Translation}->{'Answer Required'} = '';
+    $Self->{Translation}->{'When you finish to edit the survey questions just close this window.'} =
+        '';
+    $Self->{Translation}->{'Do you really want to delete this question? ALL associated data will be LOST!'} =
+        '';
     $Self->{Translation}->{'Edit Question'} = 'Bewerk vraag';
     $Self->{Translation}->{'go back to questions'} = 'ga terug naar de vragen';
     $Self->{Translation}->{'Possible Answers For'} = 'Mogelijke antwoorden';
     $Self->{Translation}->{'Add Answer'} = 'Antwoord toevoegen';
+    $Self->{Translation}->{'No answers saved for this question.'} = '';
+    $Self->{Translation}->{'Do you really want to delete this answer?'} = '';
     $Self->{Translation}->{'This doesn\'t have several answers, a textarea will be displayed.'} =
         'Deze heeft niet meerdere antwoorden. Er zal een tekstvak getoond worden.';
     $Self->{Translation}->{'Go back'} = 'Ga terug';

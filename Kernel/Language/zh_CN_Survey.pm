@@ -65,10 +65,16 @@ sub Data {
     $Self->{Translation}->{'No questions saved for this survey.'} = '这个调查没有保存的问题。';
     $Self->{Translation}->{'Question'} = '问题';
     $Self->{Translation}->{'Answer Required'} = '';
+    $Self->{Translation}->{'When you finish to edit the survey questions just close this window.'} =
+        '';
+    $Self->{Translation}->{'Do you really want to delete this question? ALL associated data will be LOST!'} =
+        '';
     $Self->{Translation}->{'Edit Question'} = '编辑问题';
     $Self->{Translation}->{'go back to questions'} = '返回问题';
     $Self->{Translation}->{'Possible Answers For'} = '可选的回答';
     $Self->{Translation}->{'Add Answer'} = '添加回答';
+    $Self->{Translation}->{'No answers saved for this question.'} = '';
+    $Self->{Translation}->{'Do you really want to delete this answer?'} = '';
     $Self->{Translation}->{'This doesn\'t have several answers, a textarea will be displayed.'} =
         '';
     $Self->{Translation}->{'Go back'} = '返回';

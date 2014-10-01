@@ -45,8 +45,8 @@ sub Data {
     $Self->{Translation}->{'Survey#'} = 'Umfrage#';
     $Self->{Translation}->{'- No queue selected -'} = '- Keine Queue ausgewählt -';
     $Self->{Translation}->{'Master'} = 'Master';
-    $Self->{Translation}->{'New Status'} = '';
-    $Self->{Translation}->{'Question Type'} = '';
+    $Self->{Translation}->{'New Status'} = 'Neuer Status';
+    $Self->{Translation}->{'Question Type'} = 'Fragetyp';
 
     # Template: AgentSurveyAdd
     $Self->{Translation}->{'Create New Survey'} = 'Neue Umfrage erstellen';
@@ -65,10 +65,16 @@ sub Data {
     $Self->{Translation}->{'No questions saved for this survey.'} = 'Für diese Umfrage sind keine Fragen gespeichert.';
     $Self->{Translation}->{'Question'} = 'Frage';
     $Self->{Translation}->{'Answer Required'} = 'Antwort erforderlich';
+    $Self->{Translation}->{'When you finish to edit the survey questions just close this window.'} =
+        '';
+    $Self->{Translation}->{'Do you really want to delete this question? ALL associated data will be LOST!'} =
+        '';
     $Self->{Translation}->{'Edit Question'} = 'Frage bearbeiten';
     $Self->{Translation}->{'go back to questions'} = 'Zurück zu den Fragen';
     $Self->{Translation}->{'Possible Answers For'} = 'Mögliche Antworten für';
     $Self->{Translation}->{'Add Answer'} = 'Antwort hinzufügen';
+    $Self->{Translation}->{'No answers saved for this question.'} = '';
+    $Self->{Translation}->{'Do you really want to delete this answer?'} = '';
     $Self->{Translation}->{'This doesn\'t have several answers, a textarea will be displayed.'} =
         'Diese Frage hat nicht mehrere Antworten, ein Texteingabefeld wird hinzugefügt.';
     $Self->{Translation}->{'Go back'} = 'Zurück';

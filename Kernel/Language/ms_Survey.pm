@@ -65,10 +65,16 @@ sub Data {
     $Self->{Translation}->{'No questions saved for this survey.'} = 'Tiada soalan yang disimpan untuk kajian ini.';
     $Self->{Translation}->{'Question'} = 'Soalan';
     $Self->{Translation}->{'Answer Required'} = '';
+    $Self->{Translation}->{'When you finish to edit the survey questions just close this window.'} =
+        '';
+    $Self->{Translation}->{'Do you really want to delete this question? ALL associated data will be LOST!'} =
+        '';
     $Self->{Translation}->{'Edit Question'} = 'Edit Soalan';
     $Self->{Translation}->{'go back to questions'} = 'kembali kepada soalan-soalan';
     $Self->{Translation}->{'Possible Answers For'} = 'Jawapan Kemungkinan Untuk';
     $Self->{Translation}->{'Add Answer'} = 'Tambah Jawab';
+    $Self->{Translation}->{'No answers saved for this question.'} = '';
+    $Self->{Translation}->{'Do you really want to delete this answer?'} = '';
     $Self->{Translation}->{'This doesn\'t have several answers, a textarea will be displayed.'} =
         'Ini tidak mempunyai beberapa jawapan, textarea akan dipaparkan.';
     $Self->{Translation}->{'Go back'} = 'Kembali';

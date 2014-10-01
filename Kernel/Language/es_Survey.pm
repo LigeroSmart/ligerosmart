@@ -65,10 +65,16 @@ sub Data {
     $Self->{Translation}->{'No questions saved for this survey.'} = 'No hay preguntas almacenadas para esta encuesta.';
     $Self->{Translation}->{'Question'} = 'Pregunta';
     $Self->{Translation}->{'Answer Required'} = 'Respuesta Requerida';
+    $Self->{Translation}->{'When you finish to edit the survey questions just close this window.'} =
+        'Cuando termine de editar las preguntas de la encienta solamente cierre esta ventana.';
+    $Self->{Translation}->{'Do you really want to delete this question? ALL associated data will be LOST!'} =
+        '¿Realmente desea eliminar esta pregunta? TODOS los datos asociados de PERDERÁN!';
     $Self->{Translation}->{'Edit Question'} = 'Editar Pregunta';
     $Self->{Translation}->{'go back to questions'} = 'regresar a preguntas';
     $Self->{Translation}->{'Possible Answers For'} = 'Posibles respuestas para';
     $Self->{Translation}->{'Add Answer'} = 'Agregar Respuesta';
+    $Self->{Translation}->{'No answers saved for this question.'} = 'No hay respuestas almacenadas para esta pregunta.';
+    $Self->{Translation}->{'Do you really want to delete this answer?'} = '¿Realmente desea eliminar esta respuesta?';
     $Self->{Translation}->{'This doesn\'t have several answers, a textarea will be displayed.'} =
         'Esta pregunta no tiene varias respuestas, un area de texto será mostrada';
     $Self->{Translation}->{'Go back'} = 'Regresar';
