@@ -95,9 +95,12 @@ if ( !$SendInHoursAfterClose ) {
 my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
 # Find survey_requests that haven't been sent yet
-$DBObject->Prepare(
-    SQL => "SELECT id, ticket_id, create_time, public_survey_key FROM survey_request WHERE "
-        . "send_time IS NULL ORDER BY create_time DESC",
+exit 1 if !$DBObject->Prepare(
+    SQL => '
+        SELECT id, ticket_id, create_time, public_survey_key
+        FROM survey_request
+        WHERE send_time IS NULL
+        ORDER BY create_time DESC',
 );
 
 # fetch the result
@@ -111,8 +114,11 @@ while ( my @Row = $DBObject->FetchrowArray() ) {
     };
 }
 
+# get time object
+my $TimeObject = $Kernel::OM->Get('Kernel::System::Time');
+
 # Get SystemTime in UnixTime
-my $Now = $Kernel::OM->Get('Kernel::System::Time')->SystemTime();
+my $Now = $TimeObject->SystemTime();
 
 SURVEYREQUEST:
 for my $Line (@Rows) {
@@ -126,7 +132,7 @@ for my $Line (@Rows) {
     }
 
     # Convert create_time to unixtime
-    my $CreateTime = $Kernel::OM->Get('Kernel::System::Time')->TimeStamp2SystemTime(
+    my $CreateTime = $TimeObject->TimeStamp2SystemTime(
         String => $Line->{CreateTime},
     );
 
