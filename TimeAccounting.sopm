@@ -9,6 +9,7 @@
     <Description Lang="en">A Time Registration Module.</Description>
     <Description Lang="de">Ein Zeiterfassungsmodul.</Description>
     <Filelist>
+        <File Permission="644" Location="doc/timeaccounting-database.png"/>
         <File Permission="644" Location="Kernel/Config/Files/TimeAccounting.xml"/>
         <File Permission="644" Location="Kernel/Language/de_TimeAccounting.pm"/>
         <File Permission="644" Location="Kernel/Language/da_TimeAccounting.pm"/>
