@@ -293,7 +293,7 @@
                         <label>[% Translate(Data.Label) | html %]:</label>
                         <p class="Value">
 [% RenderBlockStart("TicketDynamicField_ITSMCriticality_Link") %]
-                            <span title="[% Data.Title | html %]"><a href="[% Data.Link %]" target="_blank">[% Data.Value %]</a></span>
+                            <span title="[% Data.Title | html %]"><a href="[% Data.Link | Interpolate %]" target="_blank">[% Data.Value %]</a></span>
 [% RenderBlockEnd("TicketDynamicField_ITSMCriticality_Link") %]
 [% RenderBlockStart("TicketDynamicField_ITSMCriticality_Plain") %]
                             <span title="[% Data.Title | html %]">[% Data.Value %]</span>
@@ -307,7 +307,7 @@
                         <label>[% Translate(Data.Label) | html %]:</label>
                         <p class="Value">
 [% RenderBlockStart("TicketDynamicField_ITSMImpact_Link") %]
-                            <span title="[% Data.Title | html %]"><a href="[% Data.Link %]" target="_blank">[% Data.Value %]</a></span>
+                            <span title="[% Data.Title | html %]"><a href="[% Data.Link | Interpolate %]" target="_blank">[% Data.Value %]</a></span>
 [% RenderBlockEnd("TicketDynamicField_ITSMImpact_Link") %]
 [% RenderBlockStart("TicketDynamicField_ITSMImpact_Plain") %]
                             <span title="[% Data.Title | html %]">[% Data.Value %]</span>
@@ -328,7 +328,7 @@
                         <label>[% Translate(Data.Label) | html %]:</label>
                         <p class="Value">
 [% RenderBlockStart("TicketDynamicField_ITSMReviewRequired_Link") %]
-                            <span title="[% Data.Title | html %]"><a href="[% Data.Link %]" target="_blank">[% Data.Value %]</a></span>
+                            <span title="[% Data.Title | html %]"><a href="[% Data.Link | Interpolate %]" target="_blank">[% Data.Value %]</a></span>
 [% RenderBlockEnd("TicketDynamicField_ITSMReviewRequired_Link") %]
 [% RenderBlockStart("TicketDynamicField_ITSMReviewRequired_Plain") %]
                             <span title="[% Data.Title | html %]">[% Data.Value %]</span>
@@ -341,7 +341,7 @@
                         <label>[% Translate(Data.Label) | html %]:</label>
                         <p class="Value">
 [% RenderBlockStart("TicketDynamicField_ITSMDecisionResult_Link") %]
-                            <span title="[% Data.Title | html %]"><a href="[% Data.Link %]" target="_blank">[% Data.Value %]</a></span>
+                            <span title="[% Data.Title | html %]"><a href="[% Data.Link | Interpolate %]" target="_blank">[% Data.Value %]</a></span>
 [% RenderBlockEnd("TicketDynamicField_ITSMDecisionResult_Link") %]
 [% RenderBlockStart("TicketDynamicField_ITSMDecisionResult_Plain") %]
                             <span title="[% Data.Title | html %]">[% Data.Value %]</span>
@@ -355,7 +355,7 @@
                         <label>[% Translate(Data.Label) | html %]:</label>
                         <p class="Value">
 [% RenderBlockStart("TicketDynamicField_ITSMDecisionDate_Link") %]
-                            <span title="[% Data.Title | html %]"><a href="[% Data.Link %]" target="_blank">[% Data.Value %]</a></span>
+                            <span title="[% Data.Title | html %]"><a href="[% Data.Link | Interpolate %]" target="_blank">[% Data.Value %]</a></span>
 [% RenderBlockEnd("TicketDynamicField_ITSMDecisionDate_Link") %]
 [% RenderBlockStart("TicketDynamicField_ITSMDecisionDate_Plain") %]
                             <span title="[% Data.Title | html %]">[% Data.Value %]</span>
@@ -369,7 +369,7 @@
                         <label>[% Translate(Data.Label) | html %]:</label>
                         <p class="Value">
 [% RenderBlockStart("TicketDynamicField_ITSMRepairStartTime_Link") %]
-                            <span title="[% Data.Title | html %]"><a href="[% Data.Link %]" target="_blank">[% Data.Value %]</a></span>
+                            <span title="[% Data.Title | html %]"><a href="[% Data.Link | Interpolate %]" target="_blank">[% Data.Value %]</a></span>
 [% RenderBlockEnd("TicketDynamicField_ITSMRepairStartTime_Link") %]
 [% RenderBlockStart("TicketDynamicField_ITSMRepairStartTime_Plain") %]
                             <span title="[% Data.Title | html %]">[% Data.Value %]</span>
@@ -383,7 +383,7 @@
                         <label>[% Translate(Data.Label) | html %]:</label>
                         <p class="Value">
 [% RenderBlockStart("TicketDynamicField_ITSMRecoveryStartTime_Link") %]
-                            <span title="[% Data.Title | html %]"><a href="[% Data.Link %]" target="_blank">[% Data.Value %]</a></span>
+                            <span title="[% Data.Title | html %]"><a href="[% Data.Link | Interpolate %]" target="_blank">[% Data.Value %]</a></span>
 [% RenderBlockEnd("TicketDynamicField_ITSMRecoveryStartTime_Link") %]
 [% RenderBlockStart("TicketDynamicField_ITSMRecoveryStartTime_Plain") %]
                             <span title="[% Data.Title | html %]">[% Data.Value %]</span>
@@ -397,7 +397,7 @@
                         <label>[% Translate(Data.Label) | html %]:</label>
                         <p class="Value">
 [% RenderBlockStart("TicketDynamicField_ITSMDueDate_Link") %]
-                            <span title="[% Data.Title | html %]"><a href="[% Data.Link %]" target="_blank">[% Data.Value %]</a></span>
+                            <span title="[% Data.Title | html %]"><a href="[% Data.Link | Interpolate %]" target="_blank">[% Data.Value %]</a></span>
 [% RenderBlockEnd("TicketDynamicField_ITSMDueDate_Link") %]
 [% RenderBlockStart("TicketDynamicField_ITSMDueDate_Plain") %]
                             <span title="[% Data.Title | html %]">[% Data.Value %]</span>
