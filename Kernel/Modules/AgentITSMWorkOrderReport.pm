@@ -184,11 +184,6 @@ sub Run {
         );
     }
 
-    # get meta data for all already uploaded files
-    my @Attachments = $Self->{UploadCacheObject}->FormIDGetAllFilesMeta(
-        FormID => $Self->{FormID},
-    );
-
     # update workorder
     if ( $Self->{Subaction} eq 'Save' ) {
 
@@ -343,6 +338,55 @@ sub Run {
                     $NewAttachment{$Key} = $Attachment;
                 }
 
+                # get all report attachments meta data
+                my @ExistingAttachments = $Self->{WorkOrderObject}->WorkOrderReportAttachmentList(
+                    WorkOrderID => $WorkOrderID,
+                );
+
+                # check the existing attachments
+                FILENAME:
+                for my $Filename (@ExistingAttachments) {
+
+                    # get the existing attachment data
+                    my $AttachmentData = $Self->{WorkOrderObject}->WorkOrderAttachmentGet(
+                        WorkOrderID    => $WorkOrderID,
+                        Filename       => $Filename,
+                        AttachmentType => 'WorkOrderReport',
+                    );
+
+                    # do not consider inline attachments
+                    next FILENAME if $AttachmentData->{Preferences}->{ContentID};
+
+                    # the key is the filename + filesize + content type
+                    # (no content id, as existing attachments don't have it)
+                    my $Key = $AttachmentData->{Filename}
+                        . $AttachmentData->{Filesize}
+                        . $AttachmentData->{ContentType};
+
+                    # attachment is already existing, we can delete it from the new attachment hash
+                    if ( $NewAttachment{$Key} ) {
+                        delete $NewAttachment{$Key};
+                    }
+
+                    # existing attachment is no longer in new attachments hash
+                    else {
+
+                        # delete the existing attachment
+                        my $DeleteSuccessful = $Self->{WorkOrderObject}->WorkOrderAttachmentDelete(
+                            ChangeID       => $WorkOrder->{ChangeID},
+                            WorkOrderID    => $WorkOrderID,
+                            AttachmentType => 'WorkOrderReport',
+                            Filename       => $Filename,
+                            UserID         => $Self->{UserID},
+                        );
+
+                        # check error
+                        if ( !$DeleteSuccessful ) {
+                            return $Self->{LayoutObject}->FatalError();
+                        }
+                    }
+                }
+
                 # write the new attachments
                 ATTACHMENT:
                 for my $Attachment ( values %NewAttachment ) {
@@ -450,6 +494,34 @@ sub Run {
                 $GetParam{ $TimeType . 'Month' }  = $Month;
                 $GetParam{ $TimeType . 'Year' }   = $Year;
             }
+        }
+
+        # get all report attachments meta data
+        my @ExistingAttachments = $Self->{WorkOrderObject}->WorkOrderReportAttachmentList(
+            WorkOrderID => $WorkOrderID,
+        );
+
+        # copy all existing report attachments to upload cache
+        FILENAME:
+        for my $Filename (@ExistingAttachments) {
+
+            # get the existing attachment data
+            my $AttachmentData = $Self->{WorkOrderObject}->WorkOrderAttachmentGet(
+                WorkOrderID    => $WorkOrderID,
+                Filename       => $Filename,
+                AttachmentType => 'WorkOrderReport',
+            );
+
+            # do not consider inline attachments
+            next FILENAME if $AttachmentData->{Preferences}->{ContentID};
+
+            # add attachment to the upload cache
+            $Self->{UploadCacheObject}->FormIDAddFile(
+                FormID      => $Self->{FormID},
+                Filename    => $AttachmentData->{Filename},
+                Content     => $AttachmentData->{Content},
+                ContentType => $AttachmentData->{ContentType},
+            );
         }
     }
 
@@ -605,45 +677,20 @@ sub Run {
         $AccountedTime = $GetParam{AccountedTime};
     }
 
-    # show attachments
-    my @WorkOrderAttachments = $Self->{WorkOrderObject}->WorkOrderReportAttachmentList(
-        WorkOrderID => $WorkOrderID,
+    # show the attachment upload button
+    $Self->{LayoutObject}->Block(
+        Name => 'AttachmentUpload',
+        Data => {%Param},
     );
 
-    # show attachments (report)
-    ATTACHMENT:
-    for my $Filename (@WorkOrderAttachments) {
-
-        # get info about file
-        my $AttachmentData = $Self->{WorkOrderObject}->WorkOrderAttachmentGet(
-            WorkOrderID    => $WorkOrderID,
-            Filename       => $Filename,
-            AttachmentType => 'WorkOrderReport',
-        );
-
-        # check for attachment information
-        next ATTACHMENT if !$AttachmentData;
-
-        # do not show inline attachments in attachments list (they have a content id)
-        next ATTACHMENT if $AttachmentData->{Preferences}->{ContentID};
-
-        # show block
-        $Self->{LayoutObject}->Block(
-            Name => 'ReportAttachmentRow',
-            Data => {
-                %{$WorkOrder},
-                %{$AttachmentData},
-            },
-        );
-    }
-
-    # get all temporary attachments meta data
-    my @TempAttachments = $Self->{UploadCacheObject}->FormIDGetAllFilesMeta(
+    # get all report attachments meta data
+    my @Attachments = $Self->{UploadCacheObject}->FormIDGetAllFilesMeta(
         FormID => $Self->{FormID},
     );
 
-    # show attachments (report)
-    for my $Attachment (@TempAttachments) {
+    # show report attachments
+    ATTACHMENT:
+    for my $Attachment (@Attachments) {
 
         # do not show inline images as attachments
         # (they have a content id)
@@ -652,7 +699,7 @@ sub Run {
         }
 
         $Self->{LayoutObject}->Block(
-            Name => 'ReportAttachmentRow',
+            Name => 'Attachment',
             Data => $Attachment,
         );
     }

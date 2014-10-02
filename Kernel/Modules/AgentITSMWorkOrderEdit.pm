@@ -478,10 +478,10 @@ sub Run {
                     }
                 }
 
-                # if there are any following workorders
-                # and if the following workorders should be moved,
-                # that means we want to keep the difference
-                # between the planned end date of this workorder and the the planned start dates of ALL LATER workorders
+# if there are any following workorders
+# and if the following workorders should be moved,
+# that means we want to keep the difference
+# between the planned end date of this workorder and the the planned start dates of ALL LATER workorders
                 if ( @FollowingWorkOrderIDs && $GetParam{MoveFollowingWorkOrders} ) {
 
                     # convert the OLD planned end time of this workorder
@@ -602,7 +602,6 @@ sub Run {
             my $AttachmentData = $Self->{WorkOrderObject}->WorkOrderAttachmentGet(
                 WorkOrderID => $WorkOrderID,
                 Filename    => $Filename,
-                UserID      => $Self->{UserID},
             );
 
             # do not consider inline attachments
