@@ -201,6 +201,7 @@ sub Run {
     my @ChangeIDs = @{$ChangeIDsRef};
 
     my %CustomerUserServices;
+    my %CountByChangeState;
 
     # if configured, get only changes which have workorders that are linked with a service
     if ( $Self->{Config}->{ShowOnlyChangesWithAllowedServices} ) {
@@ -251,11 +252,17 @@ sub Run {
 
                     # add change id to list of visible changes for the customer
                     $UniqueChangeIDs{$ChangeID}++;
+
+                    # count the visible changes per state
+                    $CountByChangeState{ $Change->{ChangeState} }++;
                 }
             }
         }
 
         @ChangeIDs = keys %UniqueChangeIDs;
+
+        # add the all count
+        $CountByChangeState{All} = scalar @ChangeIDs;
     }
 
     # display all navbar filters
@@ -270,15 +277,16 @@ sub Run {
     # array to sort the filters by its priority
     my @NavBarFilters = sort { $Filters{$a}->{Prio} <=> $Filters{$b}->{Prio} } keys %Filters;
 
+    FILTER:
     for my $FilterName (@NavBarFilters) {
         $Counter++;
 
-        # do not show the filter count in customer interface,
-        # if the feature ShowOnlyChangesWithAllowedServices is activevated
-        # because it is not accurate due to service restrictions for customer users
+        # due to service restrictions for customer users
+        # we need to count differently if the feature "ShowOnlyChangesWithAllowedServices"
+        # is activated
         my $Count;
         if ( $Self->{Config}->{ShowOnlyChangesWithAllowedServices} ) {
-            $Count = undef;
+            $Count = $CountByChangeState{$FilterName} || 0;
         }
         else {
 
@@ -287,6 +295,10 @@ sub Run {
                 %{ $Filters{$FilterName}->{Search} },
                 Result => 'COUNT',
             );
+        }
+
+        if ( $FilterName ne 'All' && !$Count) {
+            next FILTER;
         }
 
         my $ClassLI = '';
