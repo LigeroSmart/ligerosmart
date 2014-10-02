@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTicketActionCommon.pm - common file for several modules
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/0cd22dd33cdd51d6fac4c997c2aeb68a8e899134/Kernel/Modules/AgentTicketActionCommon.pm
+# $origin: https://github.com/OTRS/otrs/blob/5cd42cab2ba73fb3be998a0d6ff6ca0b71883ca9/Kernel/Modules/AgentTicketActionCommon.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -924,7 +924,12 @@ sub Run {
             }
         }
 
-        if ( $GetParam{CreateArticle} && $Self->{Config}->{Note} && ( $GetParam{Subject} || $GetParam{Body} ) ) {
+        if (
+            $GetParam{CreateArticle}
+            && $Self->{Config}->{Note}
+            && ( $GetParam{Subject} || $GetParam{Body} )
+            )
+        {
 
             if ( !$GetParam{Subject} ) {
                 if ( $Self->{Config}->{Subject} ) {

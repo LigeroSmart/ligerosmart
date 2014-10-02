@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTicketZoom.pm - to get a closer view
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/0cd22dd33cdd51d6fac4c997c2aeb68a8e899134/Kernel/Modules/AgentTicketZoom.pm
+# $origin: https://github.com/OTRS/otrs/blob/5cd42cab2ba73fb3be998a0d6ff6ca0b71883ca9/Kernel/Modules/AgentTicketZoom.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -63,7 +63,7 @@ sub new {
 
     # Please note: ZoomTimeline is an OTRSBusiness feature
     $Self->{ZoomTimeline} = $Self->{ParamObject}->GetParam( Param => 'ZoomTimeline' );
-    if ( defined $Self->{ConfigObject}->Get('ChronicalViewEnabled') && $Self->{ConfigObject}->Get('ChronicalViewEnabled') != 1 ) {
+    if ( !$Self->{ConfigObject}->Get('ChronicalViewEnabled') ) {
         $Self->{ZoomTimeline} = 0;
     }
 
@@ -89,7 +89,11 @@ sub new {
     );
 
     if ( !defined $Self->{ZoomExpand} ) {
-        if ( $UserPreferences{UserLastUsedZoomViewType} eq 'Expand' ) {
+        if (
+            $UserPreferences{UserLastUsedZoomViewType}
+            && $UserPreferences{UserLastUsedZoomViewType} eq 'Expand'
+            )
+        {
             $Self->{ZoomExpand} = 1;
         }
         else {
@@ -99,6 +103,7 @@ sub new {
 
     if (
         !defined $Self->{ZoomTimeline}
+        && $UserPreferences{UserLastUsedZoomViewType}
         && $UserPreferences{UserLastUsedZoomViewType} eq 'Timeline'
         )
     {
@@ -215,7 +220,11 @@ sub new {
 
     # Add custom files to the zoom's frontend module registration on the fly
     #    to avoid conflicts with other modules.
-    if ( defined $Self->{ConfigObject}->Get('ChronicalViewEnabled') && $Self->{ConfigObject}->Get('ChronicalViewEnabled') == 1 ) {
+    if (
+        defined $Self->{ConfigObject}->Get('ChronicalViewEnabled')
+        && $Self->{ConfigObject}->Get('ChronicalViewEnabled') == 1
+        )
+    {
         my $ZoomFrontendConfiguration
             = $Self->{ConfigObject}->Get('Frontend::Module')->{AgentTicketZoom};
         my @CustomJSFiles = (
@@ -2372,8 +2381,10 @@ sub _ArticleTree {
 
                 $Item->{ArticleData}->{ArticleIsImportant} = $ArticleFlags{Important};
 
-                if (   $Item->{ArticleData}->{ArticleType} eq 'chat-external'
-                    || $Item->{ArticleData}->{ArticleType} eq 'chat-internal' )
+                if (
+                    $Item->{ArticleData}->{ArticleType} eq 'chat-external'
+                    || $Item->{ArticleData}->{ArticleType} eq 'chat-internal'
+                    )
                 {
                     $Item->{IsChatArticle} = 1;
                 }
