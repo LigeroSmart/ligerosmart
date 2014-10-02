@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2014-10-01 22:30+0000\n"
-"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
+"PO-Revision-Date: 2014-10-02 06:57+0000\n"
+"Last-Translator: Yuri Kolesniov <ynkolesnikov@gmail.com>\n"
 "Language-Team: Russian (http://www.transifex.com/projects/p/OTRS/language/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -128,11 +128,11 @@ msgstr "Главный"
 
 #. Template: AAASurvey
 msgid "New Status"
-msgstr ""
+msgstr "Новое состояние"
 
 #. Template: AAASurvey
 msgid "Question Type"
-msgstr ""
+msgstr "Тип вопроса"
 
 #. Template: AgentSurveyAdd
 msgid "Create New Survey"
@@ -184,11 +184,11 @@ msgstr "Требуются Ответы"
 
 #. Template: AgentSurveyEditQuestions
 msgid "When you finish to edit the survey questions just close this window."
-msgstr ""
+msgstr "По окончании редактирования опроса просто закройте окно."
 
 #. Template: AgentSurveyEditQuestions
 msgid "Do you really want to delete this question? ALL associated data will be LOST!"
-msgstr ""
+msgstr "ы действительно хотите удалить этот вопрос?  ВСЕ связанные данные будут ПОТЕРЯНЫ!"
 
 #. Template: AgentSurveyEditQuestions
 msgid "Edit Question"
@@ -208,11 +208,11 @@ msgstr "Добавить ответ"
 
 #. Template: AgentSurveyEditQuestions
 msgid "No answers saved for this question."
-msgstr ""
+msgstr "Не заданы варианты ответов для этого вопроса."
 
 #. Template: AgentSurveyEditQuestions
 msgid "Do you really want to delete this answer?"
-msgstr ""
+msgstr "Вы действительно желаете удалить  этот ответ?"
 
 #. Template: AgentSurveyEditQuestions
 msgid "This doesn't have several answers, a textarea will be displayed."

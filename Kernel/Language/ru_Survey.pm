@@ -45,8 +45,8 @@ sub Data {
     $Self->{Translation}->{'Survey#'} = 'Опрос №';
     $Self->{Translation}->{'- No queue selected -'} = '- Ни одной очереди не выбрано -';
     $Self->{Translation}->{'Master'} = 'Главный';
-    $Self->{Translation}->{'New Status'} = '';
-    $Self->{Translation}->{'Question Type'} = '';
+    $Self->{Translation}->{'New Status'} = 'Новое состояние';
+    $Self->{Translation}->{'Question Type'} = 'Тип вопроса';
 
     # Template: AgentSurveyAdd
     $Self->{Translation}->{'Create New Survey'} = 'Создать новый опрос';
@@ -66,15 +66,15 @@ sub Data {
     $Self->{Translation}->{'Question'} = 'Вопрос';
     $Self->{Translation}->{'Answer Required'} = 'Требуются Ответы';
     $Self->{Translation}->{'When you finish to edit the survey questions just close this window.'} =
-        '';
+        'По окончании редактирования опроса просто закройте окно.';
     $Self->{Translation}->{'Do you really want to delete this question? ALL associated data will be LOST!'} =
-        '';
+        'ы действительно хотите удалить этот вопрос?  ВСЕ связанные данные будут ПОТЕРЯНЫ!';
     $Self->{Translation}->{'Edit Question'} = 'Редактировать вопрос';
     $Self->{Translation}->{'go back to questions'} = 'назад к вопросам';
     $Self->{Translation}->{'Possible Answers For'} = 'Возможные ответы для';
     $Self->{Translation}->{'Add Answer'} = 'Добавить ответ';
-    $Self->{Translation}->{'No answers saved for this question.'} = '';
-    $Self->{Translation}->{'Do you really want to delete this answer?'} = '';
+    $Self->{Translation}->{'No answers saved for this question.'} = 'Не заданы варианты ответов для этого вопроса.';
+    $Self->{Translation}->{'Do you really want to delete this answer?'} = 'Вы действительно желаете удалить  этот ответ?';
     $Self->{Translation}->{'This doesn\'t have several answers, a textarea will be displayed.'} =
         'Этот вопрос не предусматривает несколько ответов, будет показано текстовое/textarea поле.';
     $Self->{Translation}->{'Go back'} = 'Назад';
