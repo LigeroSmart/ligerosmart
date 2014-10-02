@@ -2,7 +2,7 @@
 # Ticket.t - ticket module testscript
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/a9de1f48dc60105bdad163acfcac5329728d833e/scripts/test/Ticket.t
+# $origin: https://github.com/OTRS/otrs/blob/5cd42cab2ba73fb3be998a0d6ff6ca0b71883ca9/scripts/test/Ticket.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1095,6 +1095,19 @@ $Self->True(
     'TicketSearch() (HASH:TicketCreateTimeNewerMinutes => 60)',
 );
 
+# Test TicketLastChangeTimeNewerMinutes
+%TicketIDs = $TicketObject->TicketSearch(
+    Result                           => 'HASH',
+    Limit                            => 100,
+    TicketLastChangeTimeNewerMinutes => 60,
+    UserID                           => 1,
+    Permission                       => 'rw',
+);
+$Self->True(
+    $TicketIDs{$TicketID},
+    'TicketSearch() (HASH:TicketLastChangeTimeNewerMinutes => 60)',
+);
+
 # Test ArticleCreateTimeNewerMinutes
 %TicketIDs = $TicketObject->TicketSearch(
     Result                        => 'HASH',
@@ -1119,6 +1132,19 @@ $Self->True(
 $Self->False(
     $TicketIDs{$TicketID},
     'TicketSearch() (HASH:TicketCreateTimeOlderMinutes => 60)',
+);
+
+# Test TicketLastChangeOlderMinutes
+%TicketIDs = $TicketObject->TicketSearch(
+    Result                           => 'HASH',
+    Limit                            => 100,
+    TicketLastChangeTimeOlderMinutes => 60,
+    UserID                           => 1,
+    Permission                       => 'rw',
+);
+$Self->False(
+    $TicketIDs{$TicketID},
+    'TicketSearch() (HASH:TicketLastChangeTimeOlderMinutes => 60)',
 );
 
 # Test ArticleCreateOlderMinutes
@@ -1150,6 +1176,22 @@ $Self->True(
     'TicketSearch() (HASH:TicketCreateTimeNewerDate => 60)',
 );
 
+# Test TicketLastChangeTimeNewerDate
+$SystemTime = $TimeObject->SystemTime();
+%TicketIDs  = $TicketObject->TicketSearch(
+    Result                        => 'HASH',
+    Limit                         => 100,
+    TicketLastChangeTimeNewerDate => $TimeObject->SystemTime2TimeStamp(
+        SystemTime => $SystemTime - ( 60 * 60 ),
+    ),
+    UserID     => 1,
+    Permission => 'rw',
+);
+$Self->True(
+    $TicketIDs{$TicketID},
+    'TicketSearch() (HASH:TicketLastChangeTimeNewerDate => 60)',
+);
+
 # Test ArticleCreateTimeNewerDate
 $SystemTime = $TimeObject->SystemTime();
 %TicketIDs  = $TicketObject->TicketSearch(
@@ -1164,6 +1206,21 @@ $SystemTime = $TimeObject->SystemTime();
 $Self->True(
     $TicketIDs{$TicketID},
     'TicketSearch() (HASH:ArticleCreateTimeNewerDate => 60)',
+);
+
+# Test TicketLastChangeOlderDate
+%TicketIDs = $TicketObject->TicketSearch(
+    Result                        => 'HASH',
+    Limit                         => 100,
+    TicketLastChangeTimeOlderDate => $TimeObject->SystemTime2TimeStamp(
+        SystemTime => $SystemTime - ( 60 * 60 ),
+    ),
+    UserID     => 1,
+    Permission => 'rw',
+);
+$Self->False(
+    $TicketIDs{$TicketID},
+    'TicketSearch() (HASH:TicketLastChangeTimeOlderDate => 60)',
 );
 
 # Test TicketCreateOlderDate

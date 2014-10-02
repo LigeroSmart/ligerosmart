@@ -2,7 +2,7 @@
 # AdminService.tt - provides HTML form for AdminService
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/a9de1f48dc60105bdad163acfcac5329728d833e/Kernel/Output/HTML/Standard/AdminService.tt
+# $origin: https://github.com/OTRS/otrs/blob/5cd42cab2ba73fb3be998a0d6ff6ca0b71883ca9/Kernel/Output/HTML/Standard/AdminService.tt
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
