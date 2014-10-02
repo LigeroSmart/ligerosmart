@@ -1,5 +1,6 @@
 .project
 .settings
+.DS_Store
 
 # OTRSCodePolicy
 .tidyall.d
