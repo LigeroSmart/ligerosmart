@@ -302,7 +302,7 @@ sub Run {
 
     my %UserBasics = $Self->{TimeAccountingObject}->UserList();
 
-    if ( !IsHashRefWithData( \%ShownUsers ) ) {
+    if ( !IsHashRefWithData( \%ShownUsers ) || !IsHashRefWithData( \%UserReport ) ) {
         $Self->{LayoutObject}->Block(
             Name => 'NoUserDataFoundMsg',
             Data => {},
