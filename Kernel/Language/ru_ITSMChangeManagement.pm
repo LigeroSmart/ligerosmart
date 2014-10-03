@@ -2041,7 +2041,7 @@ sub Data {
     $Self->{Translation}->{'Sets the maximal number of search results for the autocomplete feature.'} = 'Задает максимальное количество результатов для опции автозавершения.';
     $Self->{Translation}->{'Sets the minimal ticket counter size (if "AutoIncrement" was selected as TicketNumberGenerator). Default is 5, this means the counter starts from 10000.'} = 'Задает минимальный номер заявки (Если "AutoIncrement" было выбрано как TicketNumberGenerator). По умолчанию выбрано 5, это значит, что счетчик начинается с 10000.';
     $Self->{Translation}->{'Sets the minimum number of characters before autocomplete query is sent.'} = 'Задает минимальное количество знаков перед тем, как послан запрос на автозавершение.';
-    $Self->{Translation}->{'Sets the number of lines that are displayed in text messages (e.g. ticket lines in the QueueZoom).'} = 'Задает количество строк, которые отображаются в текстовом сообщении (например, строки заявки в QueueZoom)'.;
+    $Self->{Translation}->{'Sets the number of lines that are displayed in text messages (e.g. ticket lines in the QueueZoom).'} = 'Задает количество строк, которые отображаются в текстовом сообщении (например, строки заявки в QueueZoom).';
     $Self->{Translation}->{'Sets the number of lines that are displayed in the preview of messages (e.g. for tickets in the QueueView).'} = 'Задает количество строк которые отображаются в предпросмотре сообщений (например, для заявок в QueueView';
     $Self->{Translation}->{'Sets the number of search results to be displayed for the autocomplete feature.'} = 'Задает количество результатов поиска для отображения при автозавершении.';
     $Self->{Translation}->{'Sets the options for PGP binary.'} = 'Задает опции для PGP пакета.';
