@@ -1,5 +1,5 @@
 # --
-# Kernel/Language/en_ITSMChangeManagement.pm - provides ru language translation
+# Kernel/Language/ru_ITSMChangeManagement.pm - provides ru language translation
 # Translated by Yuriy Kolesnikov <ynkolesnikov at gmail.com>
 # Translated by Aleksandr Voloshin <alexus1185 at gmail.com>
 # --
