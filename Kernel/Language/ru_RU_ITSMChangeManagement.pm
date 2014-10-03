@@ -8,7 +8,7 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package Kernel::Language::ru_ITSMChangeManagement;
+package Kernel::Language::ru_RU_ITSMChangeManagement;
 
 use strict;
 use warnings;
