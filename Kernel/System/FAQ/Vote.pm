@@ -174,21 +174,23 @@ sub VoteGet {
 
     # public
     if ( $Param{Interface} eq '3' ) {
-        $SQL .= "
+        $SQL .= '
             ip = ?
-            AND item_id = ?";
+            AND item_id = ?';
         push @Values, ( \$Param{IP}, \$Param{ItemID} );
     }
 
     # customer
     elsif ( $Param{Interface} eq '2' || $Param{Interface} eq '1' ) {
-        $SQL .= "
+        $SQL .= '
             created_by = ?
-            AND item_id = ?";
+            AND item_id = ?';
         push @Values, ( \$Param{CreateBy}, \$Param{ItemID} );
     }
 
-    $SQL .= 'ORDER BY created DESC';
+    # leave a space between AND condition and ORDER BY statement
+    $SQL .= '
+        ORDER BY created DESC';
 
     # get database object
     my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
