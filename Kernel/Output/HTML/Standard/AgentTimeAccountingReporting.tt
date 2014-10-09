@@ -139,10 +139,10 @@ $('#NavigationSelect').bind('click', function(){
                     </thead>
                     <tbody>
 [% RenderBlockStart("Action") %]
-                        <tr class="MasterAction">
+                        <tr class="MasterAction" data-project-id="[% Data.ProjectID | html%]">
 [% RenderBlockStart("Project") %]
                             <td rowspan="[% Data.RowSpan %]" class="RowSpan">
-                                <strong><a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=ReportingProject;ProjectID=[% Data.ProjectID | uri %]" class="MasterActionLink">
+                                <strong><a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=ReportingProject;ProjectID=[% Data.ProjectID | uri %]" class="[% Data.Class %]">
                                 [% Data.Project %]
                             </a></strong>
 [% RenderBlockStart("ProjectDescription") %]
@@ -180,7 +180,7 @@ $('#NavigationSelect').bind('click', function(){
 [% WRAPPER JSOnDocumentComplete %]
 <script type="text/javascript">//<![CDATA[
 $('.MasterAction').bind('click', function (Event) {
-    var $MasterActionLink = $(this).find('.MasterActionLink');
+    var $MasterActionLink = $(this).parents().find('.MasterActionLink' + $(this).attr('data-project-id'));
     // only act if the link was not clicked directly
     if (Event.target !== $MasterActionLink.get(0)) {
         window.location = $MasterActionLink.attr('href');
