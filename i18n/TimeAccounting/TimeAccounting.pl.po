@@ -665,3 +665,7 @@ msgstr ""
 msgid "To use if some actions reduced the working hours (for example, if only half of the traveling time is paid Key => traveling; Content => 50)."
 msgstr "Używane jeśli niektóre działania zmniejszyły godziny pracy (np. jeśli tylko połowa czas podróży jest wypłacana klucz => podróże; Zawartość => 50)."
 
+#. SysConfig
+msgid "If enabled, only users that has added working time to the selected project are shown."
+msgstr ""
+

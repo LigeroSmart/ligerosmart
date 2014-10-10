@@ -595,6 +595,10 @@ msgid "For how many days ago you can insert working units."
 msgstr ""
 
 #. SysConfig
+msgid "If enabled, only users that has added working time to the selected project are shown."
+msgstr ""
+
+#. SysConfig
 msgid "If enabled, the dropdown elements in the edit screen are changed to autocompletion fields."
 msgstr ""
 

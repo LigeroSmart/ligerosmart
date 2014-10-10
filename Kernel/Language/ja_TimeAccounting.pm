@@ -189,6 +189,8 @@ sub Data {
     $Self->{Translation}->{'Edit time accounting settings'} = '時間会計の設定を編集';
     $Self->{Translation}->{'Edit time record'} = 'タイムレコードを編集';
     $Self->{Translation}->{'For how many days ago you can insert working units.'} = '何日前からワーキング・ユニットの新規登録が可能であるかの設定です。';
+    $Self->{Translation}->{'If enabled, only users that has added working time to the selected project are shown.'} =
+        '';
     $Self->{Translation}->{'If enabled, the dropdown elements in the edit screen are changed to autocompletion fields.'} =
         'この項目を「許可」にすると、編集画面内のプルダウンメニューをオートコンプリート機能付きのフォームに変更します。';
     $Self->{Translation}->{'If enabled, the user is allowed to enter "on vacation leave", "on sick leave" and "on overtime leave" to multiple dates at once.'} =

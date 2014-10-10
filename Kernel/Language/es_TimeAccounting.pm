@@ -189,6 +189,8 @@ sub Data {
     $Self->{Translation}->{'Edit time accounting settings'} = 'Modificar la configuración de la contabilidad de tiempo';
     $Self->{Translation}->{'Edit time record'} = 'Modificar registro de tiempo';
     $Self->{Translation}->{'For how many days ago you can insert working units.'} = 'Especifica el número máximo de días para registrar horas de trabajo atrasadas (por ejemplo: 10 días de antigüedad).';
+    $Self->{Translation}->{'If enabled, only users that has added working time to the selected project are shown.'} =
+        'Si se habilita, solamente los usuarios que han registrado sus tiempos en el proyecto seleccionado serán mostrados';
     $Self->{Translation}->{'If enabled, the dropdown elements in the edit screen are changed to autocompletion fields.'} =
         'Si se habilita, los elementos desplegables de la ventana de edición se cambian por campos de autocompletado.';
     $Self->{Translation}->{'If enabled, the user is allowed to enter "on vacation leave", "on sick leave" and "on overtime leave" to multiple dates at once.'} =

@@ -669,3 +669,7 @@ msgstr "Zeitabrechnung."
 msgid "To use if some actions reduced the working hours (for example, if only half of the traveling time is paid Key => traveling; Content => 50)."
 msgstr "Hier kann man eingeben, ob für eine bestimmte Tätigkeit, die zu verrechnenden Stunden gekürzt werden. Z. B wenn Reisezeiten nur zur Hälfte vergütet werden (Key =&gt; journey; Content =&gt; 50)."
 
+#. SysConfig
+msgid "If enabled, only users that has added working time to the selected project are shown."
+msgstr ""
+

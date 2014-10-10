@@ -189,6 +189,8 @@ sub Data {
     $Self->{Translation}->{'Edit time accounting settings'} = 'Edytuj ustawienia czasu raportowania';
     $Self->{Translation}->{'Edit time record'} = 'Edytuj wpis czasu';
     $Self->{Translation}->{'For how many days ago you can insert working units.'} = 'Dla ilu dni wstecz można wstawić jednostki czasu pracy';
+    $Self->{Translation}->{'If enabled, only users that has added working time to the selected project are shown.'} =
+        '';
     $Self->{Translation}->{'If enabled, the dropdown elements in the edit screen are changed to autocompletion fields.'} =
         'Jeśli aktywowane, lista wybierana jest zastąpioną autowypełnianiem.';
     $Self->{Translation}->{'If enabled, the user is allowed to enter "on vacation leave", "on sick leave" and "on overtime leave" to multiple dates at once.'} =

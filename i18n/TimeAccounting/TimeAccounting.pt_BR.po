@@ -666,3 +666,7 @@ msgstr "Contabilidade Tempo"
 msgid "To use if some actions reduced the working hours (for example, if only half of the traveling time is paid Key => traveling; Content => 50)."
 msgstr "Usar para  algumas ações de reduzir as horas de trabalho (por exemplo, se apenas metade do tempo de viagem é pago Key => viajar; Content => 50)"
 
+#. SysConfig
+msgid "If enabled, only users that has added working time to the selected project are shown."
+msgstr ""
+

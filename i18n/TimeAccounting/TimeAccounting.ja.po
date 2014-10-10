@@ -666,3 +666,7 @@ msgstr "時間会計"
 msgid "To use if some actions reduced the working hours (for example, if only half of the traveling time is paid Key => traveling; Content => 50)."
 msgstr "業務上の行動において、稼働時間として計上する時間を調整する必要がある場合に、この設定を使用します。（例：「移動時間」の50%のみ勤務時間相当とする場合「鍵」に`journey`、「内容」に`50`と設定)"
 
+#. SysConfig
+msgid "If enabled, only users that has added working time to the selected project are shown."
+msgstr ""
+
