@@ -54,6 +54,9 @@ sub Run {
     # time accounting project reporting
     # ---------------------------------------------------------- #
     if ( $Self->{Subaction} eq 'ReportingProject' ) {
+
+        my $Config = $Self->{ConfigObject}->Get("TimeAccounting::Frontend::$Self->{Subaction}");
+
         my %Frontend = ();
 
         # permission check
@@ -72,9 +75,19 @@ sub Run {
 
         my %Action  = $Self->{TimeAccountingObject}->ActionSettingsGet();
         my %Project = $Self->{TimeAccountingObject}->ProjectSettingsGet();
-        $Param{Project} = $Project{Project}{ $Param{ProjectID} };
+        $Param{Project} = $Project{Project}->{ $Param{ProjectID} };
 
+        # get system users
         my %ShownUsers = $Self->{UserObject}->UserList( Type => 'Long', Valid => 0 );
+
+        if ( $Config->{ShowOnlyActiveUsers} ) {
+
+            # get registered users
+            my %RegisteredUsers = $Self->{TimeAccountingObject}->UserList();
+
+            # reduce shown users to only the ones that are registered in time accounting
+            %ShownUsers = map { $_ => $ShownUsers{$_} } keys %RegisteredUsers;
+        }
 
         # necessary because the ProjectActionReporting is not reworked
         my ( $Sec, $Min, $Hour, $CurrentDay, $Month, $Year )
@@ -83,6 +96,8 @@ sub Run {
             );
         my %ProjectData = ();
         my %ProjectTime = ();
+
+        my @UserWhiteList;
 
         # Only one function should be enough
         for my $UserID ( sort keys %ShownUsers ) {
@@ -95,15 +110,28 @@ sub Run {
                 UserID => $UserID,
             );
             if ( $ProjectData{ $Param{ProjectID} } ) {
-                my $ActionsRef = $ProjectData{ $Param{ProjectID} }{Actions};
+                my $UserTotalHoursInProject;
+                my $ActionsRef = $ProjectData{ $Param{ProjectID} }->{Actions};
                 for my $ActionID ( sort keys %{$ActionsRef} ) {
-                    $ProjectTime{$ActionID}{$UserID}{Hours} = $ActionsRef->{$ActionID}{Total};
+                    $ProjectTime{$ActionID}->{$UserID}->{Hours} = $ActionsRef->{$ActionID}->{Total};
+
+                    # remember the sum of all hours of all tasks
+                    $UserTotalHoursInProject += $ActionsRef->{$ActionID}->{Total} || 0;
+                }
+
+                # remember only the users that has been added hours to this project
+                if ( defined $UserTotalHoursInProject && $UserTotalHoursInProject > 0 ) {
+                    push @UserWhiteList, $UserID;
                 }
             }
-            else {
-                delete $ShownUsers{$UserID};
-            }
         }
+
+        if ( $Config->{ShowOnlyActiveUsers} ) {
+
+            # reduce shown users to only the ones that are active in the project (by adding hours)
+            %ShownUsers = map { $_ => $ShownUsers{$_} } @UserWhiteList;
+        }
+
         if ( !IsHashRefWithData( \%ShownUsers ) ) {
             $Self->{LayoutObject}->Block(
                 Name => 'NoUserDataFoundMsg',
@@ -127,7 +155,7 @@ sub Run {
             # better solution for sort actions necessary
             my %NewAction = ();
             for my $ActionID ( sort keys %ProjectTime ) {
-                $NewAction{$ActionID} = $Action{$ActionID}{Action};
+                $NewAction{$ActionID} = $Action{$ActionID}->{Action};
             }
             %Action = %NewAction;
 
@@ -184,7 +212,10 @@ sub Run {
         else {
             $Self->{LayoutObject}->Block(
                 Name => 'ProjectTable',
-                Data => { %Param, %Frontend },
+                Data => {
+                    %Param,
+                    %Frontend
+                },
             );
 
             for my $Row (@ProjectHistoryArray) {
@@ -196,7 +227,7 @@ sub Run {
                         Remark => $Row->{Remark} || '--',
                         Period => sprintf( "%.2f", $Row->{Period} ),
                         Date   => $Row->{Date},
-                        }
+                    },
                 );
             }
 
@@ -213,7 +244,7 @@ sub Run {
                 Name => 'HistoryTotal',
                 Data => {
                     HistoryTotal => $ProjectTotalHours || 0,
-                    }
+                },
             );
         }
 
@@ -222,7 +253,7 @@ sub Run {
         $Output .= $Self->{LayoutObject}->NavigationBar();
         $Output .= $Self->{LayoutObject}->Output(
             Data => { %Param, %Frontend },
-            TemplateFile => 'AgentTimeAccountingReportingProject'
+            TemplateFile => 'AgentTimeAccountingReportingProject',
         );
         $Output .= $Self->{LayoutObject}->Footer();
 
