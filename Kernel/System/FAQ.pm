@@ -2038,8 +2038,8 @@ sub FAQInlineAttachmentURLUpdate {
     );
 
     # picture URL in upload cache
-    my $Search = "Action=PictureUpload .+ FormID=$Param{FormID} .+ "
-        . "ContentID=$Param{Attachment}->{ContentID}";
+    my $Search = "Action=PictureUpload . FormID=\Q$Param{FormID}\E . "
+        . "ContentID=\Q$Param{Attachment}->{ContentID}\E";
 
     # picture URL in FAQ attachment
     my $Replace = "Action=AgentFAQZoom;Subaction=DownloadAttachment;"
