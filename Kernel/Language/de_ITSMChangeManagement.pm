@@ -75,9 +75,7 @@ sub Data {
     $Self->{Translation}->{'ChangeNumber'} = 'Change Nummer';
     $Self->{Translation}->{'Condition Edit'} = 'Bedingung bearbeiten';
     $Self->{Translation}->{'Create Change'} = 'Change erstellen';
-    $Self->{Translation}->{'Create Change (from template)'} = 'Change aus Template erstellen';
     $Self->{Translation}->{'Create a change from this ticket!'} = 'Einen Change aus diesem Ticket erstellen!';
-    $Self->{Translation}->{'Create a change (from template) from this ticket!'} = 'Einen Change (aus einem Template) aus diesem Ticket erstellen!';
     $Self->{Translation}->{'Delete Workorder'} = 'Diese Workorder löschen';
     $Self->{Translation}->{'Edit the change'} = 'Diesen Change bearbeiten';
     $Self->{Translation}->{'Edit the conditions of the change'} = 'Bearbeite die Bedingungen dieses Changes';
@@ -191,7 +189,6 @@ sub Data {
     # Template: AdminITSMChangeNotification
     $Self->{Translation}->{'ITSM ChangeManagement Notification Management'} = 'ITSM ChangeManagement Benachrichtigungs-Verwaltung';
     $Self->{Translation}->{'Add Notification Rule'} = 'Benachrichtigungs-Regel';
-    $Self->{Translation}->{'Attribute'} = '';
     $Self->{Translation}->{'Rule'} = 'Regel';
     $Self->{Translation}->{'Recipients'} = '';
     $Self->{Translation}->{'A notification should have a name!'} = 'Eine Benachrichtigung benötigt einen Namen!';
@@ -212,8 +209,6 @@ sub Data {
     $Self->{Translation}->{'Edit a state transition for'} = 'Bearbeiten eines Status-Übergangs für';
     $Self->{Translation}->{'Do you really want to delete the state transition'} = 'Wollen Sie diesen Status-Übergang wirklich löschen?';
     $Self->{Translation}->{'from'} = 'von';
-
-    # Template: AgentITSMCABMemberSearch
 
     # Template: AgentITSMChangeAdd
     $Self->{Translation}->{'Add Change'} = 'Change hinzufügen';
@@ -243,6 +238,8 @@ sub Data {
     # Template: AgentITSMChangeConditionEdit
     $Self->{Translation}->{'Need a valid name.'} = 'Ein gültiger Name ist erforderlich.';
     $Self->{Translation}->{'A a valid name is needed.'} = 'Ein gültiger Name ist erforderlich.';
+    $Self->{Translation}->{'Duplicate name:'} = 'Doppelter Name:';
+    $Self->{Translation}->{'This name is already used by another condition.'} = 'Dieser Name wird bereits von einer anderen Bedingung verwendet.';
     $Self->{Translation}->{'Matching'} = 'Übereinstimmung';
     $Self->{Translation}->{'Any expression (OR)'} = 'Beliebiger logischer Ausdruck (ODER)';
     $Self->{Translation}->{'All expressions (AND)'} = 'Alle logischen Ausdrücke (UND)';
@@ -258,8 +255,6 @@ sub Data {
 
     # Template: AgentITSMChangeDelete
     $Self->{Translation}->{'Do you really want to delete this change?'} = 'Möchten Sie diesen Change wirklich löschen?';
-
-    # Template: AgentITSMChangeEdit
 
     # Template: AgentITSMChangeHistory
     $Self->{Translation}->{'Workorder'} = 'Workorder';
@@ -320,7 +315,6 @@ sub Data {
     $Self->{Translation}->{'Change Category'} = 'Change-Kategorie';
     $Self->{Translation}->{'(before/after)'} = '(vor/nach)';
     $Self->{Translation}->{'(between)'} = '(zwischen)';
-    $Self->{Translation}->{'Run Search'} = '';
 
     # Template: AgentITSMChangeSearchResultPrint
     $Self->{Translation}->{'WorkOrders'} = 'Workorder';
@@ -330,6 +324,8 @@ sub Data {
     $Self->{Translation}->{'A template should have a name!'} = 'Eine Vorlage benötigt einen Namen!';
     $Self->{Translation}->{'The template name is required.'} = 'Der Vorlagen-Name ist erforderlich.';
     $Self->{Translation}->{'Reset States'} = 'Setze Status zurück';
+    $Self->{Translation}->{'Overwrite original template'} = '';
+    $Self->{Translation}->{'Delete original change'} = '';
 
     # Template: AgentITSMChangeTimeSlot
     $Self->{Translation}->{'Move Time Slot'} = 'Verschiebe Zeitfenster';
@@ -349,20 +345,31 @@ sub Data {
     # Template: AgentITSMTemplateDelete
     $Self->{Translation}->{'Do you really want to delete this template?'} = 'Möchten Sie diese Vorlage wirklich löschen?';
 
-    # Template: AgentITSMTemplateEdit
+    # Template: AgentITSMTemplateEditCAB
+    $Self->{Translation}->{'Edit CAB Template'} = '';
 
-    # Template: AgentITSMTemplateOverviewNavBar
+    # Template: AgentITSMTemplateEditContent
+    $Self->{Translation}->{'This will create a new change from this template, so you can edit and save it.'} =
+        '';
+    $Self->{Translation}->{'The new change will be deleted automatically after it has been saved as template.'} =
+        '';
+    $Self->{Translation}->{'This will create a new workorder from this template, so you can edit and save it.'} =
+        '';
+    $Self->{Translation}->{'A temporary change will be created which contains the workorder.'} =
+        '';
+    $Self->{Translation}->{'The temporary change and new workorder will be deleted automatically after the workorder has been saved as template.'} =
+        '';
+    $Self->{Translation}->{'Do you want to proceed?'} = '';
 
     # Template: AgentITSMTemplateOverviewSmall
     $Self->{Translation}->{'TemplateID'} = 'Template-ID';
+    $Self->{Translation}->{'Edit Content'} = '';
     $Self->{Translation}->{'CreateBy'} = 'Erstellt von';
     $Self->{Translation}->{'CreateTime'} = 'Erstellt';
     $Self->{Translation}->{'ChangeBy'} = 'Geändert von';
     $Self->{Translation}->{'ChangeTime'} = 'Geändert';
-    $Self->{Translation}->{'Delete: '} = 'Löschen: ';
+    $Self->{Translation}->{'Edit Template Content'} = '';
     $Self->{Translation}->{'Delete Template'} = 'Vorlage Löschen';
-
-    # Template: AgentITSMUserSearch
 
     # Template: AgentITSMWorkOrderAdd
     $Self->{Translation}->{'Add Workorder to'} = 'Workorder hinzufügen zu';
@@ -372,8 +379,6 @@ sub Data {
 
     # Template: AgentITSMWorkOrderAddFromTemplate
     $Self->{Translation}->{'Select Workorder Template'} = 'Workorder-Vorlage auswählen';
-
-    # Template: AgentITSMWorkOrderAgent
 
     # Template: AgentITSMWorkOrderDelete
     $Self->{Translation}->{'Do you really want to delete this workorder?'} = 'Möchten Sie diese Workorder wirklich löschen?';
@@ -386,15 +391,10 @@ sub Data {
     $Self->{Translation}->{'If the planned end time of this workorder is changed, the planned start times of all following workorders will be changed accordingly'} =
         'Wenn die gepplante Endzeit einer Workorder geändert wird, dann werden die nachfolgenden Workorders entsprechend verschoben';
 
-    # Template: AgentITSMWorkOrderHistory
-
-    # Template: AgentITSMWorkOrderHistoryZoom
-
     # Template: AgentITSMWorkOrderReport
     $Self->{Translation}->{'The actual start time must be before the actual end time!'} = 'Die tatsächliche Startzeit muss vor der tatsächlichen Endzeit liegen!';
     $Self->{Translation}->{'The actual start time must be set, when the actual end time is set!'} =
         'Die tatsächliche Startzeit muss angegeben wreden, wenn eine tatsächliche Endzeit angegeben wurde!';
-    $Self->{Translation}->{'Existing attachments'} = '';
 
     # Template: AgentITSMWorkOrderTake
     $Self->{Translation}->{'Current Agent'} = 'Aktueller Agent';
@@ -402,13 +402,10 @@ sub Data {
 
     # Template: AgentITSMWorkOrderTemplate
     $Self->{Translation}->{'Save Workorder as Template'} = 'Speichere Workorder als Vorlage';
+    $Self->{Translation}->{'Delete original workorder (and surrounding change)'} = '';
 
     # Template: AgentITSMWorkOrderZoom
     $Self->{Translation}->{'Workorder Information'} = 'Workorder-Informationen';
-
-    # Template: CustomerITSMChangeOverview
-
-    # Template: ITSMChange
 
     # SysConfig
     $Self->{Translation}->{'A list of the agents who have permission to take workorders. Key is a login name. Content is 0 or 1.'} =
@@ -431,12 +428,7 @@ sub Data {
     $Self->{Translation}->{'Cache time in minutes for the change management. Default: 5 days (7200 minutes).'} =
         '';
     $Self->{Translation}->{'Change Overview "Small" Limit'} = '';
-    $Self->{Translation}->{'Change free text options shown in the change add of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        '';
-    $Self->{Translation}->{'Change free text options shown in the change edit of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        '';
-    $Self->{Translation}->{'Change free text options shown in the change search of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        '';
+    $Self->{Translation}->{'Change and WorkOrder templates edited by this user.'} = '';
     $Self->{Translation}->{'Change limit per page for Change Overview "Small"'} = '';
     $Self->{Translation}->{'Change search backend router of the agent interface.'} = '';
     $Self->{Translation}->{'Configures how often the notifications are sent when planned the start time or other time values have been reached/passed.'} =
@@ -486,405 +478,7 @@ sub Data {
         'Definiert die Change-States die als Filter in der Change-Übersicht verwendet werden.';
     $Self->{Translation}->{'Defines the change states that will be used as filters in the customer change schedule overview.'} =
         'Definiert die Change-States die als Filter in der Kunden-Ansicht "Change Schedule" verwendet werden.';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 1 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 1 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 10 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 10 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 11 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 11 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 12 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 12 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 13 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 13 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 14 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 14 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 15 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 15 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 16 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 16 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 17 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 17 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 18 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 18 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 19 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 19 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 2 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 2 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 20 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 20 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 21 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 21 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 22 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 22 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 23 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 23 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 24 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 24 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 25 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 25 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 26 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 26 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 27 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 27 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 28 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 28 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 29 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 29 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 3 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 3 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 30 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 30 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 31 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 31 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 32 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 32 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 33 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 33 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 34 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 34 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 35 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 35 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 36 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 36 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 37 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 37 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 38 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 38 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 39 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 39 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 4 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 4 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 40 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 40 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 41 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 41 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 42 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 42 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 43 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 43 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 44 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 44 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 45 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 45 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 46 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 46 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 47 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 47 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 48 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 48 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 49 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 49 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 5 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 5 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 50 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 50 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 6 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 6 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 7 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 7 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 8 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 8 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 9 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free key field number 9 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 1 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 1 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 10 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 10 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 11 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 11 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 12 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 12 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 13 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 13 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 14 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 14 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 15 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 15 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 16 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 16 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 17 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 17 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 18 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 18 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 19 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 19 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 2 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 2 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 20 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 20 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 21 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 21 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 22 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 22 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 23 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 23 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 24 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 24 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 25 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 25 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 26 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 26 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 27 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 27 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 28 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 28 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 29 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 29 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 3 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 3 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 30 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 30 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 31 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 31 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 32 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 32 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 33 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 33 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 34 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 34 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 35 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 35 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 36 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 36 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 37 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 37 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 38 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 38 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 39 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 39 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 4 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 4 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 40 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 40 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 41 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 41 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 42 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 42 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 43 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 43 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 44 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 44 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 45 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 45 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 46 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 46 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 47 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 47 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 48 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 48 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 49 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 49 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 5 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 5 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 50 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 50 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 6 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 6 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 7 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 7 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 8 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 8 for workorders (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 9 for changes (if more than one option is provided).'} =
-        '';
-    $Self->{Translation}->{'Defines the default selection of the free text field number 9 for workorders (if more than one option is provided).'} =
+    $Self->{Translation}->{'Defines the default change title for a dummy change which is needed to edit a workorder template.'} =
         '';
     $Self->{Translation}->{'Defines the default sort criteria in the change PSA overview.'} =
         'Standard Sortierung der Changes in der Change PSA-Übersicht.';
@@ -925,616 +519,6 @@ sub Data {
         'Definiert den Feld-Typ für CompareValue Felder für Change-Attribute in AgentITSMChangeConditionEdit. Gültige Werte sind Selection, Text und Date. Wenn kein Typ definiert ist, dann wird das feld nicht angezeigt.';
     $Self->{Translation}->{'Defines the field type of CompareValue fields for workorder attributes used in AgentITSMChangeConditionEdit. Valid values are Selection, Text and Date. If a type is not defined, the field will not be shown.'} =
         'Definiert den Feld-Typ für CompareValue Felder für Workorder-Attribute in AgentITSMChangeConditionEdit. Gültige Werte sind Selection, Text und Date. Wenn kein Typ definiert ist, dann wird das feld nicht angezeigt.';
-
-    $Self->{Translation}->{'Screen after creating a workorder'}
-        = 'Ansicht nach Workorder-Erstellung';
-    $Self->{Translation}->{'Show this screen after I created a new workorder'}
-        = 'Diese Ansicht nach dem Erstellen einer Workorder anzeigen';
-    $Self->{Translation}->{'Duplicate name:'}
-        = 'Doppelter Name:';
-    $Self->{Translation}->{'This name is already used by another condition.'}
-        = 'Dieser Name wird bereits von einer anderen Bedingung verwendet.';
-
-    $Self->{Translation}->{'Defines the free key field number 1 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 1 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 10 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 10 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 11 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 11 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 12 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 12 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 13 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 13 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 14 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 14 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 15 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 15 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 16 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 16 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 17 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 17 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 18 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 18 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 19 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 19 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 2 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 2 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 20 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 20 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 21 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 21 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 22 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 22 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 23 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 23 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 24 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 24 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 25 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 25 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 26 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 26 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 27 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 27 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 28 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 28 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 29 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 29 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 3 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 3 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 30 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 30 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 31 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 31 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 32 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 32 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 33 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 33 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 34 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 34 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 35 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 35 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 36 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 36 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 37 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 37 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 38 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 38 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 39 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 39 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 4 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 4 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 40 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 40 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 41 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 41 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 42 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 42 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 43 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 43 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 44 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 44 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 45 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 45 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 46 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 46 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 47 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 47 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 48 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 48 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 49 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 49 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 5 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 5 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 50 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 50 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 6 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 6 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 7 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 7 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 8 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 8 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 9 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free key field number 9 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 1 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 1 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 10 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 10 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 11 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 11 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 12 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 13 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 13 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 14 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 14 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 15 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 15 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 16 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 16 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 17 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 17 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 18 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 18 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 19 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 19 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 2 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 2 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 20 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 20 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 21 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 21 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 22 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 22 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 23 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 23 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 24 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 24 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 25 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 25 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 26 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 26 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 27 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 27 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 28 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 28 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 29 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 29 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 3 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 3 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 30 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 30 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 31 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 31 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 32 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 32 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 33 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 33 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 34 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 34 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 35 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 35 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 36 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 36 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 37 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 37 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 38 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 38 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 39 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 39 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 4 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 4 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 40 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 40 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 41 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 41 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 42 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 42 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 43 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 43 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 44 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 44 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 45 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 45 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 46 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 46 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 47 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 47 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 48 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 48 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 49 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 49 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 5 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 5 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 50 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 50 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 6 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 6 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 7 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 7 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 8 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 8 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 9 for changes to add a new change attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the free text field number 9 for workorders to add a new workorder attribute.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 1 for changes.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 1 for workorders.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 10 for changes.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 10 for workorders.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 11 for changes.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 11 for workorders.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 12 for changes.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 12 for workorders.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 13 for changes.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 13 for workorders.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 14 for changes.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 14 for workorders.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 15 for changes.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 15 for workorders.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 16 for changes.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 16 for workorders.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 17 for changes.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 17 for workorders.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 18 for changes.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 18 for workorders.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 19 for changes.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 19 for workorders.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 2 for changes.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 2 for workorders.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 20 for changes.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 20 for workorders.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 21 for changes.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 21 for workorders.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 22 for changes.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 22 for workorders.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 23 for changes.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 23 for workorders.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 24 for changes.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 24 for workorders.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 25 for changes.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 25 for workorders.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 26 for changes.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 26 for workorders.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 27 for changes.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 27 for workorders.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 28 for changes.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 28 for workorders.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 29 for changes.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 29 for workorders.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 3 for changes.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 3 for workorders.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 30 for changes.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 30 for workorders.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 31 for changes.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 31 for workorders.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 32 for changes.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 32 for workorders.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 33 for changes.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 33 for workorders.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 34 for changes.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 34 for workorders.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 35 for changes.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 35 for workorders.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 36 for changes.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 36 for workorders.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 37 for changes.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 37 for workorders.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 38 for changes.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 38 for workorders.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 39 for changes.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 39 for workorders.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 4 for changes.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 4 for workorders.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 40 for changes.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 40 for workorders.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 41 for changes.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 41 for workorders.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 42 for changes.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 42 for workorders.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 43 for changes.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 43 for workorders.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 44 for changes.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 44 for workorders.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 45 for changes.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 45 for workorders.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 46 for changes.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 46 for workorders.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 47 for changes.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 47 for workorders.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 48 for changes.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 48 for workorders.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 49 for changes.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 49 for workorders.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 5 for changes.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 5 for workorders.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 50 for changes.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 50 for workorders.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 6 for changes.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 6 for workorders.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 7 for changes.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 7 for workorders.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 8 for changes.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 8 for workorders.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 9 for changes.'} =
-        '';
-    $Self->{Translation}->{'Defines the http link for the free text field number 9 for workorders.'} =
-        '';
-    $Self->{Translation}->{'Defines the maximum number of change freetext fields.'} = 'Definition der maximalen Anzahl von FreiTextFeldern für Changes.';
-    $Self->{Translation}->{'Defines the maximum number of workorder freetext fields.'} = 'Definition der maximalen Anzahl von FreiTextFeldern für Workorders.';
     $Self->{Translation}->{'Defines the object attributes that are selectable for change objects in AgentITSMChangeConditionEdit.'} =
         'Definiert die Objekt-Attribute die für Change-Objekte in AgentITSMChangeConditionEdit ausgewählt werden können.';
     $Self->{Translation}->{'Defines the object attributes that are selectable for workorder objects in AgentITSMChangeConditionEdit.'} =
@@ -1549,16 +533,14 @@ sub Data {
         'Definiert die Operatoren die für das Attribut CategoryID in AgentITSMChangeConditionEdit ausgewählt werden können.';
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute ChangeBuilderID in AgentITSMChangeConditionEdit.'} =
         'Definiert die Operatoren die für das Attribut ChangeBuilderID in AgentITSMChangeConditionEdit ausgewählt werden können.';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute ChangeFreeKey in AgentITSMChangeConditionEdit.'} =
-        'Definiert die Operatoren die für das Attribut ChangeFreeKey in AgentITSMChangeConditionEdit ausgewählt werden können.';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute ChangeFreeText in AgentITSMChangeConditionEdit.'} =
-        'Definiert die Operatoren die für das Attribut ChangeFreeText in AgentITSMChangeConditionEdit ausgewählt werden können.';
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute ChangeManagerID in AgentITSMChangeConditionEdit.'} =
         'Definiert die Operatoren die für das Attribut ChangeManagerID in AgentITSMChangeConditionEdit ausgewählt werden können.';
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute ChangeStateID in AgentITSMChangeConditionEdit.'} =
         'Definiert die Operatoren die für das Attribut ChangeStateID in AgentITSMChangeConditionEdit ausgewählt werden können.';
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute ChangeTitle in AgentITSMChangeConditionEdit.'} =
         'Definiert die Operatoren die für das Attribut ChangeTitle in AgentITSMChangeConditionEdit ausgewählt werden können.';
+    $Self->{Translation}->{'Defines the operators that are selectable for the attribute DynamicField in AgentITSMChangeConditionEdit.'} =
+        '';
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute ImpactID in AgentITSMChangeConditionEdit.'} =
         'Definiert die Operatoren die für das Attribut ImpactID in AgentITSMChangeConditionEdit ausgewählt werden können.';
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute PlannedEffort in AgentITSMChangeConditionEdit.'} =
@@ -1573,10 +555,6 @@ sub Data {
         'Definiert die Operatoren die für das Attribut RequestedTime in AgentITSMChangeConditionEdit ausgewählt werden können.';
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute WorkOrderAgentID in AgentITSMChangeConditionEdit.'} =
         'Definiert die Operatoren die für das Attribut WorkOrderAgentID in AgentITSMChangeConditionEdit ausgewählt werden können.';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute WorkOrderFreeKey in AgentITSMChangeConditionEdit.'} =
-        'Definiert die Operatoren die für das Attribut WorkOrderFreeKey in AgentITSMChangeConditionEdit ausgewählt werden können.';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute WorkOrderFreeText in AgentITSMChangeConditionEdit.'} =
-        'Definiert die Operatoren die für das Attribut WorkOrderFreeText in AgentITSMChangeConditionEdit ausgewählt werden können.';
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute WorkOrderNumber in AgentITSMChangeConditionEdit.'} =
         'Definiert die Operatoren die für das Attribut WorkOrderNumber in AgentITSMChangeConditionEdit ausgewählt werden können.';
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute WorkOrderStateID in AgentITSMChangeConditionEdit.'} =
@@ -1587,7 +565,7 @@ sub Data {
         'Definiert die Operatoren die für das Attribut WorkOrderTypeID in AgentITSMChangeConditionEdit ausgewählt werden können.';
     $Self->{Translation}->{'Defines the period (in years), in which start and end times can be selected.'} =
         '';
-    $Self->{Translation}->{'Defines the shown attributes of a workorder in the tooltip of the workorder graph in the change zoom.'} =
+    $Self->{Translation}->{'Defines the shown attributes of a workorder in the tooltip of the workorder graph in the change zoom. To show workorder dynamic fields in the tooltip, they must be specified like DynamicField_WorkOrderFieldName1, DynamicField_WorkOrderFieldName2, etc.'} =
         '';
     $Self->{Translation}->{'Defines the shown columns in the Change PSA overview. This option has no effect on the position of the column.'} =
         'Definiert die angezeigten Tabellenspalten in der Change PSA-Übersicht. Diese Option hat keinen Effekt auf die Position der Spalten.';
@@ -1633,6 +611,26 @@ sub Data {
         'Hier können Sie festlegen, ob das Statistik-Modul auch allgemeine Statistiken über Changes generieren darf.';
     $Self->{Translation}->{'Determines if the common stats module may generate stats about the number of Rfc tickets a requester created.'} =
         'Hier können Sie festlegen, ob das Statistik-Modul auch allgemeine Statistiken über die Anzahl von RfC-Tickets, die von Benutzern erzeugt wurden, generieren darf.';
+    $Self->{Translation}->{'Dynamic fields (for changes and workorders) shown in the change print screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the change add screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the change edit screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the change search screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the change zoom screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the workorder add screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the workorder edit screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the workorder report screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the workorder zoom screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
+        '';
+    $Self->{Translation}->{'DynamicField event module to handle the update of conditions if dynamic fields are added, updated or deleted.'} =
+        '';
     $Self->{Translation}->{'Event list to be displayed on GUI to trigger generic interface invokers.'} =
         '';
     $Self->{Translation}->{'ITSM event module deletes the history of changes.'} = 'ITSM Event Modul löscht die Historie von Changes.';
@@ -1652,6 +650,8 @@ sub Data {
         'Wenn die Häufigkeit auf \'regularly\' eingestellt ist, können Sie hier einstellen, nach wievielen Stunden eine erneute Erinnerung verschickt werden soll.';
     $Self->{Translation}->{'Logfile for the ITSM change counter. This file is used for creating the change numbers.'} =
         'Pfad und Verzeichnis zur Logdatei für den ITSM Change-Counter. Diese Datei hilft bei der Erzeugung von Change-Nummern.';
+    $Self->{Translation}->{'Module to check if WorkOrderAdd or WorkOrderAddFromTemplate should be permitted.'} =
+        '';
     $Self->{Translation}->{'Module to check the CAB members.'} = 'Modul zum Überprüfen des Agenten im CAB.';
     $Self->{Translation}->{'Module to check the agent.'} = 'Modul zum Überprüfen des Agenten.';
     $Self->{Translation}->{'Module to check the change builder.'} = 'Modul zum Überprüfen des Change Builders.';
@@ -1665,6 +665,8 @@ sub Data {
     $Self->{Translation}->{'Notification (ITSM Change Management)'} = 'Benachrichtigung (ITSM Change Management)';
     $Self->{Translation}->{'Only users of these groups have the permission to use the ticket types as defined in "ITSMChange::AddChangeLinkTicketTypes" if the feature "Ticket::Acl::Module###200-Ticket::Acl::Module" is enabled.'} =
         'Nur die Mitglieder dieser Gruppen haben die Erlaubnis die Ticket-Typen zu verwenden, die in "ITSMChange::AddChangeLinkTicketTypes" definiert sind, wenn das Feature "Ticket::Acl::Module###200-Ticket::Acl::Module" aktiviert ist.';
+    $Self->{Translation}->{'Parameters for the UserCreateWorkOrderNextMask object in the preference view of the agent interface.'} =
+        '';
     $Self->{Translation}->{'Parameters for the pages (in which the changes are shown) of the small change overview.'} =
         '';
     $Self->{Translation}->{'Presents a link in the menu to show the involved persons in a change, in the zoom view of such change in the agent interface.'} =
@@ -1687,6 +689,7 @@ sub Data {
     $Self->{Translation}->{'Required privileges to edit a workorder.'} = 'Benötigtes Recht zum Ändern einer Workorder.';
     $Self->{Translation}->{'Required privileges to edit changes.'} = 'Benötigtes Recht zum Bearbeiten von Changes.';
     $Self->{Translation}->{'Required privileges to edit the conditions of changes.'} = 'Benötigtes Recht zum Bearbeiten der Condition von Changes.';
+    $Self->{Translation}->{'Required privileges to edit the content of a template.'} = '';
     $Self->{Translation}->{'Required privileges to edit the involved persons of a change.'} =
         'Benötigtes Recht zum Ändern der beteiligten Personen.';
     $Self->{Translation}->{'Required privileges to move changes in time.'} = 'Benötigtes Recht zum zeitlichen Verschieben von Changes.';
@@ -1712,12 +715,14 @@ sub Data {
     $Self->{Translation}->{'Required privileges to view the list of own changes.'} = 'Benötigtes Recht zum Einsehen der Liste der eigenen Changes.';
     $Self->{Translation}->{'Required privileges to view the list of own workorders.'} = 'Benötigtes Recht zum Einsehen der Liste von eigenen Workorders.';
     $Self->{Translation}->{'Required privileges to write a report for the workorder.'} = 'Benötigtes Recht zum Verfassen eines Berichtes für eine Workorder.';
+    $Self->{Translation}->{'Screen after creating a workorder'} = 'Ansicht nach Workorder-Erstellung';
     $Self->{Translation}->{'Selects the change number generator module. "AutoIncrement" increments the change number, the SystemID and the counter are used with SystemID.counter format (e.g. 100118, 100119). With "Date", the change numbers will be generated by the current date and a counter; this format looks like Year.Month.Day.counter, e.g. 2010062400001, 2010062400002. With "DateChecksum", the counter will be appended as checksum to the string of date plus the SystemID. The checksum will be rotated on a daily basis. This format looks like Year.Month.Day.SystemID.Counter.CheckSum, e.g. 2010062410000017, 2010062410000026.'} =
         '';
     $Self->{Translation}->{'Sets the minimal change counter size (if "AutoIncrement" was selected as ITSMChange::NumberGenerator). Default is 5, this means the counter starts from 10000.'} =
         '';
     $Self->{Translation}->{'Sets up the state machine for changes.'} = 'Konfiguration für die State Machine für Changes.';
     $Self->{Translation}->{'Sets up the state machine for workorders.'} = 'Konfiguration für die State Machine für Workorders.';
+    $Self->{Translation}->{'Show this screen after I created a new workorder'} = 'Diese Ansicht nach dem Erstellen einer Workorder anzeigen';
     $Self->{Translation}->{'Shows a checkbox in the AgentITSMWorkOrderEdit screen that defines if the the following workorders should also be moved if a workorder is modified and the planned end time has changed.'} =
         '';
     $Self->{Translation}->{'Shows a link in the menu that allows changing the work order agent, in the zoom view of such work order of the agent interface.'} =
@@ -1765,6 +770,8 @@ sub Data {
     $Self->{Translation}->{'Shows the change history (reverse ordered) in the agent interface.'} =
         '';
     $Self->{Translation}->{'State Machine'} = '';
+    $Self->{Translation}->{'Stores change and workorder ids and their corresponding template id, while a user is editing a template.'} =
+        '';
     $Self->{Translation}->{'The identifier for a change, e.g. Change#, MyChange#. The default is Change#.'} =
         'Change-Identifikator, z. B. Change#, MeinChange#. Als Standard wird Change# verwendet.';
     $Self->{Translation}->{'The identifier for a workorder, e.g. Workorder#, MyWorkorder#. The default is Workorder#.'} =
@@ -1773,49 +780,6 @@ sub Data {
         '';
     $Self->{Translation}->{'Types of tickets, where in the ticket zoom view a link to add a change will be displayed.'} =
         'Typen der Tickets, in denen im Ticket-Zoom ein Link angezeigt wird, um einen Change zu erstellen.';
-    $Self->{Translation}->{'Workorder free text options shown in the change search of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        '';
-    $Self->{Translation}->{'Workorder free text options shown in the workorder add of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        '';
-    $Self->{Translation}->{'Workorder free text options shown in the workorder edit of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        '';
-    $Self->{Translation}->{'Workorder free text options shown in the workorder report of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        '';
-
-    #
-    # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
-    #
-    $Self->{Translation}->{'Adapts the width of the autocomplete drop down to the length of the longest option.'} =
-        'Passe die Breite des Autocomplete-DropDowns an die längste Option an.';
-    $Self->{Translation}->{'CAB Agent'} = 'CAB Agent';
-    $Self->{Translation}->{'CAB Customer'} = 'CAB Kunde';
-    $Self->{Translation}->{'Cache time in minutes for the change management.'} = 'Cache-Zeit in Minuten für das Change Management.';
-    $Self->{Translation}->{'Change Description'} = 'Change Beschreibung';
-    $Self->{Translation}->{'Change Impact'} = 'Change Auswirkung';
-    $Self->{Translation}->{'Change Justification'} = 'Change Begründung';
-    $Self->{Translation}->{'Change Number'} = 'Change Nummer';
-    $Self->{Translation}->{'Change Priority'} = 'Change Priorität';
-    $Self->{Translation}->{'Change State'} = 'Change-Status';
-    $Self->{Translation}->{'Change Title'} = 'Change-Titel';
-    $Self->{Translation}->{'Created By'} = 'Erstellt von';
-    $Self->{Translation}->{'Delete Change'} = 'Diesen Change löschen';
-    $Self->{Translation}->{'Enables or disables TypeAhead for the autocomplete feature.'} = 'Aktivieren oder deaktivieren von TypeAhead in der Autocomplete-Funktionalität.';
-    $Self->{Translation}->{'Enables or disables the autocomplete feature for the customer search in the ITSM agent interface.'} =
-        'Aktivieren oder deaktivieren der Autocomplete-Funktionalität für die Kunden-Suche im ITSM-Agenteninterface.';
-    $Self->{Translation}->{'Enables or disables the autocomplete feature for the user search in the ITSM agent interface.'} =
-        'Aktivieren oder deaktivieren der Autocomplete-Funktionalität für die User-Suche im ITSM-Agenteninterface.';
-    $Self->{Translation}->{'Reset change and its workorders'} = 'Change und dessen Workorders zurücksetzen';
-    $Self->{Translation}->{'Search Agent'} = 'Agenten Suchen';
-    $Self->{Translation}->{'Selects the change number generator module. With "Date", the change numbers will be generated by the current date and a counter; this format looks like Year.Month.Day.counter, e.g. 2010062400001, 2010062400002. With "DateChecksum", the counter will be appended as checksum to the string of date plus the SystemID. The checksum will be rotated on a daily basis. This format looks like Year.Month.Day.SystemID.Counter.CheckSum, e.g. 2010062410000017, 2010062410000026.'} =
-        'Auswahl des Moduls zur Generierung der Changenummern. "Date" generiert die Changenummer aus Datum und dem Counter, es wird das Format "Jahr.Monat.Tag.Counter" verwendet, z. B. 2010062400001, 2010062400002. "DateChecksum" erzeugt die Changenummer aus dem Datum, der SystemID, dem Counter und einer Checksumme. Es wird das Format "Jahr.Monat.Tag.SystemID.Counter.CheckSumme" verwendet, z. B. 2010062410000017, 2010062410000026.';
-    $Self->{Translation}->{'Sets the maximal number of search results for the autocomplete feature.'} =
-        'Maximale Zahl der Suchergebnisse in der Autocomplete-Funktionalität.';
-    $Self->{Translation}->{'Work Order Title'} = 'Workorder-Titel';
-    $Self->{Translation}->{'WorkOrder Agent'} = 'Workorder-Agent';
-    $Self->{Translation}->{'WorkOrder Instruction'} = 'Workorder Anweisung';
-    $Self->{Translation}->{'WorkOrder Report'} = 'Workorder Bericht';
-    $Self->{Translation}->{'WorkOrder State'} = 'Workorder-Status';
-    $Self->{Translation}->{'WorkOrder Type'} = 'Workorder-Typ';
 
 }
 
