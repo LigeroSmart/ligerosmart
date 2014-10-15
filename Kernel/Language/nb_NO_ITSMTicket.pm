@@ -32,28 +32,12 @@ sub Data {
     $Self->{Translation}->{'Change ITSM fields of ticket'} = 'Endre sakens ITSM-felter';
     $Self->{Translation}->{'Service Incident State'} = '';
 
-    # Template: AgentTicketAddtlITSMField
-
-    # Template: AgentTicketDecision
-
     # Template: AgentTicketEmail
     $Self->{Translation}->{'Link ticket'} = 'Koble sak';
-
-    # Template: AgentTicketOverviewMedium
 
     # Template: AgentTicketOverviewPreview
     $Self->{Translation}->{'Criticality'} = 'Kritikalitet';
     $Self->{Translation}->{'Impact'} = 'Omfang';
-
-    # Template: AgentTicketPhone
-
-    # Template: AgentTicketPrint
-
-    # Template: AgentTicketZoom
-
-    # Template: CustomerTicketPrint
-
-    # Template: CustomerTicketZoom
 
     # SysConfig
     $Self->{Translation}->{'Add a decision!'} = 'Legg til en beslutning!';
@@ -158,10 +142,6 @@ sub Data {
         '';
     $Self->{Translation}->{'Shows the title fields in the decision screen of the agent interface.'} =
         '';
-
-    #
-    # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
-    #
 
 }
 

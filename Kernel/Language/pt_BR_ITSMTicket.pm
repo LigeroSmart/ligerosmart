@@ -32,28 +32,12 @@ sub Data {
     $Self->{Translation}->{'Change ITSM fields of ticket'} = 'Alterar os campos ITSM do chamado';
     $Self->{Translation}->{'Service Incident State'} = 'Estado de Incidente do Serviço';
 
-    # Template: AgentTicketAddtlITSMField
-
-    # Template: AgentTicketDecision
-
     # Template: AgentTicketEmail
     $Self->{Translation}->{'Link ticket'} = 'Associar chamado';
-
-    # Template: AgentTicketOverviewMedium
 
     # Template: AgentTicketOverviewPreview
     $Self->{Translation}->{'Criticality'} = 'Criticalidade';
     $Self->{Translation}->{'Impact'} = 'Impacto';
-
-    # Template: AgentTicketPhone
-
-    # Template: AgentTicketPrint
-
-    # Template: AgentTicketZoom
-
-    # Template: CustomerTicketPrint
-
-    # Template: CustomerTicketZoom
 
     # SysConfig
     $Self->{Translation}->{'Add a decision!'} = 'Adicionar uma decisão!';
@@ -158,34 +142,6 @@ sub Data {
         'Mostra os campos de título na tela de campos adicionais ITSM da interface de atendente.';
     $Self->{Translation}->{'Shows the title fields in the decision screen of the agent interface.'} =
         'Mostra os campos de título na tela de decisão da interface de atendente.';
-    $Self->{Translation}->{'Screen after creating a workorder'}
-        = 'Tela Após Criar uma Ordem';
-    $Self->{Translation}->{'Show this screen after I created a new workorder'}
-        = 'Mostra esta tela após criar uma nova ordem';
-
-    #
-    # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
-    #
-    $Self->{Translation}->{'Article free text options shown in the additional ITSM field screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        'Opções de texto livre de artigo mostradas na tela de campos adicionais ITSM da interface de atendente. Configurações possíveis: 0 = desativado, 1 = ativado, 2 = Habilitado e necessária.';
-    $Self->{Translation}->{'Article free text options shown in the decision screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        'Opções de texto livre de artigo mostradas na tela de decisão da interface de atendente. Configurações possíveis: 0 = desativado, 1 = ativado, 2 = Habilitado e necessária.';
-    $Self->{Translation}->{'Defines the the free key field number 13 for tickets to add a new ticket attribute.'} =
-        'Define o campo-chave livre número 13 para chamados para adicionar um novo atributo de chamado.';
-    $Self->{Translation}->{'Defines the the free key field number 14 for tickets to add a new ticket attribute.'} =
-        'Define o campo-chave livre número 14 para chamados para adicionar um novo atributo de chamado.';
-    $Self->{Translation}->{'Defines the the free key field number 15 for tickets to add a new ticket attribute.'} =
-        'Define o campo-chave livre número 15 para chamados para adicionar um novo atributo de chamado.';
-    $Self->{Translation}->{'Defines the the free key field number 16 for tickets to add a new ticket attribute.'} =
-        'Define o campo-chave livre número 16 para chamados para adicionar um novo atributo de chamado.';
-    $Self->{Translation}->{'Ticket free text options shown in the additional ITSM field screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        'Opções de texto livre de chamado mostrandas na tela de campos adicionais ITSM da interface de atendente. Configurações possíveis: 0 = Desativado, 1 = Ativado, 2 = Habilitado e necessário.';
-    $Self->{Translation}->{'Ticket free text options shown in the decision screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        'Opções de texto livre de chamado mostrandas na tela de decisão da interface de atendente. Configurações possíveis: 0 = Desativado, 1 = Ativado, 2 = Habilitado e necessário.';
-    $Self->{Translation}->{'Ticket free time options shown in the additional ITSM field screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        'Opções de tempo livre de chamado mostrandas na tela de campos adicionais ITSM da interface de atendente. Configurações possíveis: 0 = Desativado, 1 = Ativado, 2 = Habilitado e necessário.';
-    $Self->{Translation}->{'Ticket free time options shown in the decision screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        'Opções de tempo livre de chamado mostrandas na tela de decisão da interface de atendente. Configurações possíveis: 0 = Desativado, 1 = Ativado, 2 = Habilitado e necessário.';
 
 }
 

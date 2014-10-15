@@ -32,28 +32,12 @@ sub Data {
     $Self->{Translation}->{'Change ITSM fields of ticket'} = 'Modifica campi ITSM del ticket';
     $Self->{Translation}->{'Service Incident State'} = '';
 
-    # Template: AgentTicketAddtlITSMField
-
-    # Template: AgentTicketDecision
-
     # Template: AgentTicketEmail
     $Self->{Translation}->{'Link ticket'} = '';
-
-    # Template: AgentTicketOverviewMedium
 
     # Template: AgentTicketOverviewPreview
     $Self->{Translation}->{'Criticality'} = '';
     $Self->{Translation}->{'Impact'} = '';
-
-    # Template: AgentTicketPhone
-
-    # Template: AgentTicketPrint
-
-    # Template: AgentTicketZoom
-
-    # Template: CustomerTicketPrint
-
-    # Template: CustomerTicketZoom
 
     # SysConfig
     $Self->{Translation}->{'Add a decision!'} = 'Aggiungi una risoluzione!';
@@ -158,11 +142,6 @@ sub Data {
         '';
     $Self->{Translation}->{'Shows the title fields in the decision screen of the agent interface.'} =
         '';
-
-    #
-    # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
-    #
-    $Self->{Translation}->{'Due date'} = 'Data di scadenza';
 
 }
 

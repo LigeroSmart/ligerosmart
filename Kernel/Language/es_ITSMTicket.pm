@@ -32,28 +32,12 @@ sub Data {
     $Self->{Translation}->{'Change ITSM fields of ticket'} = 'Modificar campos ITSM del ticket';
     $Self->{Translation}->{'Service Incident State'} = '';
 
-    # Template: AgentTicketAddtlITSMField
-
-    # Template: AgentTicketDecision
-
     # Template: AgentTicketEmail
     $Self->{Translation}->{'Link ticket'} = 'Vincular ticket';
-
-    # Template: AgentTicketOverviewMedium
 
     # Template: AgentTicketOverviewPreview
     $Self->{Translation}->{'Criticality'} = '';
     $Self->{Translation}->{'Impact'} = '';
-
-    # Template: AgentTicketPhone
-
-    # Template: AgentTicketPrint
-
-    # Template: AgentTicketZoom
-
-    # Template: CustomerTicketPrint
-
-    # Template: CustomerTicketZoom
 
     # SysConfig
     $Self->{Translation}->{'Add a decision!'} = '¡Agregue una decisión!';
@@ -158,34 +142,6 @@ sub Data {
         'Muestra los campos del título en la ventana de campos ITSM adicionales de la interfaz del agente.';
     $Self->{Translation}->{'Shows the title fields in the decision screen of the agent interface.'} =
         'Muestra los campos del título en la ventana de decisión de la interfaz del agente.';
-
-    #
-    # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
-    #
-    $Self->{Translation}->{'Allows defining new types for ticket (if ticket type feature is enabled), e.g. incident, problem, change, ...'} =
-        'Permite definir tipos de ticket nuevos (si la funcionalidad tipo del ticket está habilitada), por ejemplo: incidente, problema, cambio, ...';
-    $Self->{Translation}->{'Article free text options shown in the additional ITSM field screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        'Opciones free text del artículo, mostradas en la ventana de campos ITSM adicionales de la interfaz del agente. Las configuraciones posibles son: 0 = Deshabilitado, 1 = Habilitado, 2 = Habilitado y obligatorio.';
-    $Self->{Translation}->{'Article free text options shown in the decision screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        'Opciones free text del artículo, mostradas en la ventana de decisión de la interfaz del agente. Las configuraciones posibles son: 0 = Deshabilitado, 1 = Habilitado, 2 = Habilitado y obligatorio.';
-    $Self->{Translation}->{'Defines the the free key field number 13 for tickets to add a new ticket attribute.'} =
-        'Define el campo free key número 13 para agregar un atributo nuevo a los tickets.';
-    $Self->{Translation}->{'Defines the the free key field number 14 for tickets to add a new ticket attribute.'} =
-        'Define el campo free key número 14 para agregar un atributo nuevo a los tickets.';
-    $Self->{Translation}->{'Defines the the free key field number 15 for tickets to add a new ticket attribute.'} =
-        'Define el campo free key número 15 para agregar un atributo nuevo a los tickets.';
-    $Self->{Translation}->{'Defines the the free key field number 16 for tickets to add a new ticket attribute.'} =
-        'Define el campo free key número 16 para agregar un atributo nuevo a los tickets.';
-    $Self->{Translation}->{'Ticket free text options shown in the additional ITSM field screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        'Opciones free text del ticket, mostradas en la ventana de campos ITSM adicionales de la interfaz del agente. Las configuraciones posibles son: 0 = Deshabilitado, 1 = Habilitado, 2 = Habilitado y obligatorio.';
-    $Self->{Translation}->{'Ticket free text options shown in the decision screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        'Opciones free text del ticket, mostradas en la ventana de decisión de la interfaz del agente. Las configuraciones posibles son: 0 = Deshabilitado, 1 = Habilitado, 2 = Habilitado y obligatorio.';
-    $Self->{Translation}->{'Ticket free time options shown in the additional ITSM field screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        'Opciones free time del ticket, mostradas en la ventana de campos ITSM adicionales de la interfaz del agente. Las configuraciones posibles son: 0 = Deshabilitado, 1 = Habilitado, 2 = Habilitado y obligatorio.';
-    $Self->{Translation}->{'Ticket free time options shown in the decision screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        'Opciones free time del ticket, mostradas en la ventana de decisión de la interfaz del agente. Las configuraciones posibles son: 0 = Deshabilitado, 1 = Habilitado, 2 = Habilitado y obligatorio.';
-    $Self->{Translation}->{'Ticket free time options shown in the ticket search of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        'Opciones del atributo free time de los tickets, mostradas en la ventana de búsqueda de tickets de la interfaz del agente. Las configuraciones posibles son: 0 = Deshabilitado, 1 = Habilitado, 2 = Habilitado y obligatorio.';
 
 }
 

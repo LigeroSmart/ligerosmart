@@ -1,7 +1,6 @@
 # --
 # Kernel/Language/ru_ITSMTicket.pm - translation file
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
-# Copyright (C) 2013 Yuriy Kolesnikov <ynkolesnikov at gmail.com>
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -33,28 +32,12 @@ sub Data {
     $Self->{Translation}->{'Change ITSM fields of ticket'} = 'Изменить ITSM поля заявки';
     $Self->{Translation}->{'Service Incident State'} = 'Состояние Сервиса';
 
-    # Template: AgentTicketAddtlITSMField
-
-    # Template: AgentTicketDecision
-
     # Template: AgentTicketEmail
     $Self->{Translation}->{'Link ticket'} = 'Связать заявку';
-
-    # Template: AgentTicketOverviewMedium
 
     # Template: AgentTicketOverviewPreview
     $Self->{Translation}->{'Criticality'} = 'Критичность';
     $Self->{Translation}->{'Impact'} = 'Степень влияния';
-
-    # Template: AgentTicketPhone
-
-    # Template: AgentTicketPrint
-
-    # Template: AgentTicketZoom
-
-    # Template: CustomerTicketPrint
-
-    # Template: CustomerTicketZoom
 
     # SysConfig
     $Self->{Translation}->{'Add a decision!'} = 'Добавить решение';
@@ -159,10 +142,6 @@ sub Data {
         'Показывает поле Тема на экране Дополнительные ITSM поля в интерфейсе агента.';
     $Self->{Translation}->{'Shows the title fields in the decision screen of the agent interface.'} =
         'Показывает поле Тема на экране Решение в интерфейсе агента.';
-
-    #
-    # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
-    #
 
 }
 
