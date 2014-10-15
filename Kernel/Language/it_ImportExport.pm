@@ -45,7 +45,7 @@ sub Data {
     $Self->{Translation}->{'Format is required!'} = '';
     $Self->{Translation}->{'Edit object information'} = 'Modifica informazioni oggetto';
     $Self->{Translation}->{'Edit format information'} = 'Modifica formato informazione';
-    $Self->{Translation}->{' is required!'} = '';
+    $Self->{Translation}->{'is required!'} = '';
     $Self->{Translation}->{'Edit mapping information'} = 'Modifica mappatura informazioni';
     $Self->{Translation}->{'No map elements found.'} = '';
     $Self->{Translation}->{'Add Mapping Element'} = '';
@@ -64,10 +64,6 @@ sub Data {
         '';
     $Self->{Translation}->{'Import and export object information.'} = '';
     $Self->{Translation}->{'Import/Export'} = 'Importare/Esportare';
-
-    #
-    # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
-    #
 
 }
 

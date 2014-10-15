@@ -1,7 +1,6 @@
 # --
 # Kernel/Language/ru_ImportExport.pm - translation file
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
-# Copyright (C) 2013 Yuriy Kolesnikov <ynkolesnikov at gmail.com>
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -41,11 +40,12 @@ sub Data {
     $Self->{Translation}->{'Delete Template'} = 'Удалить шаблон';
     $Self->{Translation}->{'Step'} = 'Шаг';
     $Self->{Translation}->{'Edit common information'} = 'Редактировать общую информацию';
+    $Self->{Translation}->{'Name is required!'} = '';
     $Self->{Translation}->{'Object is required!'} = 'Объект обязателен!';
     $Self->{Translation}->{'Format is required!'} = 'Формат обязателен!';
     $Self->{Translation}->{'Edit object information'} = 'Редактировать информацию об объекте';
     $Self->{Translation}->{'Edit format information'} = 'Редактировать формат данных';
-    $Self->{Translation}->{' is required!'} = 'обязателен!';
+    $Self->{Translation}->{'is required!'} = '';
     $Self->{Translation}->{'Edit mapping information'} = 'Редактировать информацию соответствия';
     $Self->{Translation}->{'No map elements found.'} = 'Нет элементов сопоставления';
     $Self->{Translation}->{'Add Mapping Element'} = 'Добавьте элемент сопоставления';
@@ -64,10 +64,6 @@ sub Data {
         '';
     $Self->{Translation}->{'Import and export object information.'} = 'Импорт и экспорт информации об объектах';
     $Self->{Translation}->{'Import/Export'} = 'Импорт/Экспорт';
-
-    #
-    # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
-    #
 
 }
 

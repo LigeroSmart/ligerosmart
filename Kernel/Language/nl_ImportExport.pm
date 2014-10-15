@@ -45,7 +45,7 @@ sub Data {
     $Self->{Translation}->{'Format is required!'} = 'Formaat is verplicht.';
     $Self->{Translation}->{'Edit object information'} = 'Object-informatie bewerken';
     $Self->{Translation}->{'Edit format information'} = 'Format-informationen bewerken';
-    $Self->{Translation}->{' is required!'} = '';
+    $Self->{Translation}->{'is required!'} = '';
     $Self->{Translation}->{'Edit mapping information'} = 'Mapping-informatie bewerken';
     $Self->{Translation}->{'No map elements found.'} = 'Geen elementen gevonden.';
     $Self->{Translation}->{'Add Mapping Element'} = '';
@@ -64,15 +64,6 @@ sub Data {
         '';
     $Self->{Translation}->{'Import and export object information.'} = 'Import en export objectinformatie';
     $Self->{Translation}->{'Import/Export'} = 'Import/Export';
-
-    #
-    # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
-    #
-    $Self->{Translation}->{'Class is required!'} = 'Klasse is verplicht.';
-    $Self->{Translation}->{'Column Separator is required!'} = 'Scheidingsteken is verplicht';
-    $Self->{Translation}->{'Create a template in order to can import and export object information.'} =
-        'Maak een template aan om objecten te importeren of exporteren.';
-    $Self->{Translation}->{'Empty fields indicate that the current values are kept'} = 'Bij lege velden wordt de huidige waarde behouden';
 
 }
 

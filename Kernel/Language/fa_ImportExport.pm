@@ -45,7 +45,7 @@ sub Data {
     $Self->{Translation}->{'Format is required!'} = 'قالب‌بندی مورد نیاز است!';
     $Self->{Translation}->{'Edit object information'} = 'ویرایش اطلاعات آبجکتی';
     $Self->{Translation}->{'Edit format information'} = 'ویرایش اطلاعات قالب‌بندی';
-    $Self->{Translation}->{' is required!'} = ' مورد نیاز است!';
+    $Self->{Translation}->{'is required!'} = '';
     $Self->{Translation}->{'Edit mapping information'} = 'ویرایش اطلاعات نگاشت';
     $Self->{Translation}->{'No map elements found.'} = 'هیچ عنصر نگاشتی یافت نشد.';
     $Self->{Translation}->{'Add Mapping Element'} = 'افزودن عنصر نگاشت';
@@ -64,11 +64,6 @@ sub Data {
         'قالب‌بندی ثبت ماژول برای ماژول ورود/صدور';
     $Self->{Translation}->{'Import and export object information.'} = 'ورود و صدور اطلاعات آبجکت';
     $Self->{Translation}->{'Import/Export'} = 'ورود/صدور';
-
-    #
-    # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
-    #
-    $Self->{Translation}->{'Template List'} = 'فهرست قالب‌ها';
 
 }
 

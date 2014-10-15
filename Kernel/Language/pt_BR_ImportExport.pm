@@ -45,7 +45,7 @@ sub Data {
     $Self->{Translation}->{'Format is required!'} = 'O formato é obrigatório!';
     $Self->{Translation}->{'Edit object information'} = 'Editar informações do objeto';
     $Self->{Translation}->{'Edit format information'} = 'Editar informações do formato';
-    $Self->{Translation}->{' is required!'} = ' é obrigatório!';
+    $Self->{Translation}->{'is required!'} = '';
     $Self->{Translation}->{'Edit mapping information'} = 'Editar informações do mapeamento';
     $Self->{Translation}->{'No map elements found.'} = 'Não há elementos mapa encontrado.';
     $Self->{Translation}->{'Add Mapping Element'} = 'Adicionar elemento de mapeamento';
@@ -64,10 +64,6 @@ sub Data {
         'Formato de registro backend do módulo de importação / exportação módulo.';
     $Self->{Translation}->{'Import and export object information.'} = 'Importar e exportar informações de objeto.';
     $Self->{Translation}->{'Import/Export'} = 'Importação/Exportação';
-
-    #
-    # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
-    #
 
 }
 

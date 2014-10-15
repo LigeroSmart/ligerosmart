@@ -45,7 +45,7 @@ sub Data {
     $Self->{Translation}->{'Format is required!'} = '¡Debe especificar Formato!';
     $Self->{Translation}->{'Edit object information'} = 'Editar información de objeto';
     $Self->{Translation}->{'Edit format information'} = 'Editar información del formato';
-    $Self->{Translation}->{' is required!'} = '';
+    $Self->{Translation}->{'is required!'} = '';
     $Self->{Translation}->{'Edit mapping information'} = 'Editar información de mapeo';
     $Self->{Translation}->{'No map elements found.'} = 'No se encontraron elementos de mapeo.';
     $Self->{Translation}->{'Add Mapping Element'} = '';
@@ -64,17 +64,6 @@ sub Data {
         'Registro de módulo de formato backend para el módulo import/export.';
     $Self->{Translation}->{'Import and export object information.'} = 'Importar y exportar información de objetos.';
     $Self->{Translation}->{'Import/Export'} = 'Importar/Exportar';
-
-    #
-    # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
-    #
-    $Self->{Translation}->{'Class is required!'} = '¡Debe especificar Clase!';
-    $Self->{Translation}->{'Column Separator is required!'} = '¡Debe especificar Separador de Columna!';
-    $Self->{Translation}->{'Comma (,)'} = 'Coma (,)';
-    $Self->{Translation}->{'Create a template in order to can import and export object information.'} =
-        'Agregue una plantilla nueva para poder importar y exportar.';
-    $Self->{Translation}->{'Empty fields indicate that the current values are kept'} = 'Los campos vacíos indican que los valores actuales se mantienen';
-    $Self->{Translation}->{'Go back'} = 'Regresar';
 
 }
 

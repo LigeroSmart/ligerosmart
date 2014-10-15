@@ -45,7 +45,7 @@ sub Data {
     $Self->{Translation}->{'Format is required!'} = 'Format jest wymagany!';
     $Self->{Translation}->{'Edit object information'} = 'Edytuj informacje obiektu';
     $Self->{Translation}->{'Edit format information'} = 'Edytuj format obiektu';
-    $Self->{Translation}->{' is required!'} = ' jest wymagane!';
+    $Self->{Translation}->{'is required!'} = '';
     $Self->{Translation}->{'Edit mapping information'} = 'Edytuj informacje mapowania';
     $Self->{Translation}->{'No map elements found.'} = 'Nie znaleziono elementów mapy.';
     $Self->{Translation}->{'Add Mapping Element'} = 'Dodaj element mapowania';
@@ -64,16 +64,6 @@ sub Data {
         'Moduł formatowania backend dla modułu import/eksport.';
     $Self->{Translation}->{'Import and export object information.'} = 'Importuj i eksportuj informacje obiektów.';
     $Self->{Translation}->{'Import/Export'} = 'Import/eksport';
-
-    #
-    # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
-    #
-    $Self->{Translation}->{'Class'} = 'Klasa';
-    $Self->{Translation}->{'Config Item'} = 'CI';
-    $Self->{Translation}->{'Element required, please insert data'} = 'Element wymagany, podaj wartość';
-    $Self->{Translation}->{'Empty fields indicate that the current values are kept'} = 'Puste pola oznaczają zachowanie bieżącej wartości';
-    $Self->{Translation}->{'Maximum number of one element'} = 'Maksymalna liczba wystąpień pojedynczego elementu';
-    $Self->{Translation}->{'Template List'} = 'Lista szablonów';
 
 }
 

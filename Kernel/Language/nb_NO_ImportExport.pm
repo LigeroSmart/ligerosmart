@@ -45,7 +45,7 @@ sub Data {
     $Self->{Translation}->{'Format is required!'} = 'Format er påkrevd!';
     $Self->{Translation}->{'Edit object information'} = 'Endre objektet';
     $Self->{Translation}->{'Edit format information'} = 'Endre formatet';
-    $Self->{Translation}->{' is required!'} = ' er påkrevd!';
+    $Self->{Translation}->{'is required!'} = '';
     $Self->{Translation}->{'Edit mapping information'} = 'Endre mapping';
     $Self->{Translation}->{'No map elements found.'} = 'Ingen elementer funnet.';
     $Self->{Translation}->{'Add Mapping Element'} = 'Legg til mapping-element';
@@ -64,11 +64,6 @@ sub Data {
         'Baksidemodul-registrering for formatet til import/eksport-modulen';
     $Self->{Translation}->{'Import and export object information.'} = 'Informasjon for import- og eksport-objekt';
     $Self->{Translation}->{'Import/Export'} = 'Import/Eksport';
-
-    #
-    # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
-    #
-    $Self->{Translation}->{'Column Seperator'} = 'Kolonne adskillelse';
 
 }
 

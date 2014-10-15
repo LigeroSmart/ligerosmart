@@ -45,7 +45,7 @@ sub Data {
     $Self->{Translation}->{'Format is required!'} = 'Format adalah diperlukan!';
     $Self->{Translation}->{'Edit object information'} = 'Audit informasi objek';
     $Self->{Translation}->{'Edit format information'} = 'Audit informasi format';
-    $Self->{Translation}->{' is required!'} = ' adalah diperlukan!';
+    $Self->{Translation}->{'is required!'} = '';
     $Self->{Translation}->{'Edit mapping information'} = 'Audit informasi peta';
     $Self->{Translation}->{'No map elements found.'} = 'Tiada elemen peta ditemui.';
     $Self->{Translation}->{'Add Mapping Element'} = 'Tambah elemen peta';
@@ -64,10 +64,6 @@ sub Data {
         'Format backend modul pendaftaran untuk modul import/eksport.';
     $Self->{Translation}->{'Import and export object information.'} = 'Informasi objek import dan eksport.';
     $Self->{Translation}->{'Import/Export'} = 'Import/Eksport';
-
-    #
-    # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
-    #
 
 }
 
