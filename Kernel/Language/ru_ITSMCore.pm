@@ -1,7 +1,6 @@
 # --
 # Kernel/Language/ru_ITSMCore.pm - translation file
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
-# Copyright (C) 2013 Yuriy Kolesnikov <ynkolesnikov at gmail.com>
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -62,10 +61,6 @@ sub Data {
     # Template: AdminService
     $Self->{Translation}->{'Criticality'} = 'Критичность';
 
-    # Template: AgentITSMCustomerSearch
-
-    # Template: AgentITSMSLA
-
     # Template: AgentITSMSLAPrint
     $Self->{Translation}->{'SLA-Info'} = 'Информация об SLA';
     $Self->{Translation}->{'Last changed'} = 'Дата изменения';
@@ -74,8 +69,6 @@ sub Data {
     # Template: AgentITSMSLAZoom
     $Self->{Translation}->{'SLA Information'} = 'Информация об SLA';
     $Self->{Translation}->{'Associated Services'} = 'Связанные сервисы';
-
-    # Template: AgentITSMService
 
     # Template: AgentITSMServicePrint
     $Self->{Translation}->{'Service-Info'} = 'Информация о Сервисе';
@@ -108,8 +101,8 @@ sub Data {
     $Self->{Translation}->{'Module to show print link in sla menu.'} = 'Показать кнопку "Печать" в меню SLA';
     $Self->{Translation}->{'Module to show the link link in service menu.'} = 'Показать кнопку Связать/Link в меню Сервис';
     $Self->{Translation}->{'Parameters for the incident states in the preference view.'} = 'Параметры для состояния инцидента в preference view.';
-    $Self->{Translation}->{'Set the type of link to be used to calculate the incident state.'} =
-        'Установить тип связи для определения состояния инцидента';
+    $Self->{Translation}->{'Set the type and direction of links to be used to calculate the incident state. The key is the name of the link type (as defined in LinkObject::Type), and the value is the direction of the IncidentLinkType that should be followed to calculate the incident state. For example if the IncidentLinkType is set to \'DependsOn\', and the Direction is \'Source\', only \'Depends on\' links will be followed (and not the opposite link \'Required for\') to calculate the incident state. You can add more link types ad directions as you like, e.g. \'Includes\' with the direction \'Target\'. All link types defined in the sysconfig options LinkObject::Type are possible and the direction can be \'Source\', \'Target\', or \'Both\'. IMPORTANT: AFTER YOU MAKE CHANGES TO THIS SYSCONFIG OPTION YOU NEED TO RUN THE SCRIPT bin/otrs.ITSMConfigItemIncidentStateRecalculate.pl SO THAT ALL INCIDENT STATES WILL BE RECALCULATED BASED ON THE NEW SETTINGS!'} =
+        '';
     $Self->{Translation}->{'This setting defines that a \'ITSMChange\' object can be linked with \'Ticket\' objects using the \'Normal\' link type.'} =
         'Определяет, что \'ITSMChange\' объект может быть связан с объектами \'Ticket\' используя тип связи \'Normal\'';
     $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with \'FAQ\' objects using the \'Normal\' link type.'} =
@@ -167,10 +160,6 @@ sub Data {
     $Self->{Translation}->{'This setting defines the link type \'RelevantTo\'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link.'} =
         'Определяет тип связи \'RelevantTo\'. Если исходное имя и имя цели имеют одинаковое значение, результирующая связь - ненаправленная, иначе это направленная связь';
     $Self->{Translation}->{'Width of ITSM textareas.'} = 'Ширина ITSM поля типа textarea';
-
-    #
-    # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
-    #
 
 }
 

@@ -61,10 +61,6 @@ sub Data {
     # Template: AdminService
     $Self->{Translation}->{'Criticality'} = 'Kritikal';
 
-    # Template: AgentITSMCustomerSearch
-
-    # Template: AgentITSMSLA
-
     # Template: AgentITSMSLAPrint
     $Self->{Translation}->{'SLA-Info'} = 'SLA-Info';
     $Self->{Translation}->{'Last changed'} = 'diubah buat kali terakhir';
@@ -73,8 +69,6 @@ sub Data {
     # Template: AgentITSMSLAZoom
     $Self->{Translation}->{'SLA Information'} = 'SLA-Informasi';
     $Self->{Translation}->{'Associated Services'} = 'Perkhidmatan Bersekutu';
-
-    # Template: AgentITSMService
 
     # Template: AgentITSMServicePrint
     $Self->{Translation}->{'Service-Info'} = 'Info Perkhidmatan';
@@ -107,8 +101,8 @@ sub Data {
     $Self->{Translation}->{'Module to show print link in sla menu.'} = 'Modul untuk menunjukkan pautan cetak dalam menu SLA.';
     $Self->{Translation}->{'Module to show the link link in service menu.'} = 'Modul untuk menunjukkan pautan pautan dalam menu perkhidmatan.';
     $Self->{Translation}->{'Parameters for the incident states in the preference view.'} = 'Parameter untuk keadaan insiden memandangkan keutamaan.';
-    $Self->{Translation}->{'Set the type of link to be used to calculate the incident state.'} =
-        'Tetapkan jenis link yang boleh digunakan untuk mengira keadaan insiden.';
+    $Self->{Translation}->{'Set the type and direction of links to be used to calculate the incident state. The key is the name of the link type (as defined in LinkObject::Type), and the value is the direction of the IncidentLinkType that should be followed to calculate the incident state. For example if the IncidentLinkType is set to \'DependsOn\', and the Direction is \'Source\', only \'Depends on\' links will be followed (and not the opposite link \'Required for\') to calculate the incident state. You can add more link types ad directions as you like, e.g. \'Includes\' with the direction \'Target\'. All link types defined in the sysconfig options LinkObject::Type are possible and the direction can be \'Source\', \'Target\', or \'Both\'. IMPORTANT: AFTER YOU MAKE CHANGES TO THIS SYSCONFIG OPTION YOU NEED TO RUN THE SCRIPT bin/otrs.ITSMConfigItemIncidentStateRecalculate.pl SO THAT ALL INCIDENT STATES WILL BE RECALCULATED BASED ON THE NEW SETTINGS!'} =
+        '';
     $Self->{Translation}->{'This setting defines that a \'ITSMChange\' object can be linked with \'Ticket\' objects using the \'Normal\' link type.'} =
         'Tetapan ini mentakrifkan bahawa \'Ubah ITSM\' objek boleh dikaitkan dengan \'Tiket \' objek menggunakan \'Normal\'  jenis pautan.';
     $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with \'FAQ\' objects using the \'Normal\' link type.'} =
@@ -166,10 +160,6 @@ sub Data {
     $Self->{Translation}->{'This setting defines the link type \'RelevantTo\'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link.'} =
         'Tetapan ini mentakrifkan jenis pautan \'RelevantTo\'. Jika nama sumber dan nama sasaran mengandungi nilai yang sama, pautan yang terhasil adalah bukan satu arah. Jika nilai berbeza, pautan yang terhasil adalah pautan berarah.';
     $Self->{Translation}->{'Width of ITSM textareas.'} = 'Lebar kawasan teks ITSM.';
-
-    #
-    # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
-    #
 
 }
 
