@@ -2,8 +2,6 @@
 # Kernel/Language/zh_TW_GeneralCatalog.pm - translation file
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
-# Copyright (C) 2013 Michael Shi <micshi at 163.com>
-# --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
@@ -36,10 +34,6 @@ sub Data {
         '';
     $Self->{Translation}->{'Parameters for the example permission groups of the general catalog attributes.'} =
         '';
-
-    #
-    # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
-    #
 
 }
 

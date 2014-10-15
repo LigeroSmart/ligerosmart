@@ -1,7 +1,6 @@
 # --
 # Kernel/Language/ru_GeneralCatalog.pm - translation file
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
-# Copyright (C) 2013 Yuriy Kolesnikov <ynkolesnikov at gmail.com>
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -35,10 +34,6 @@ sub Data {
         'Добавление дополнительного комментария к атрибутам Общего каталога';
     $Self->{Translation}->{'Parameters for the example permission groups of the general catalog attributes.'} =
         '';
-
-    #
-    # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
-    #
 
 }
 

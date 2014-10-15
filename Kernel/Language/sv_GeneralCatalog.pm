@@ -35,10 +35,6 @@ sub Data {
     $Self->{Translation}->{'Parameters for the example permission groups of the general catalog attributes.'} =
         'Parametrar för exempel på behörighetsegrupper i grundkatalogens attribut.';
 
-    #
-    # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
-    #
-
 }
 
 1;

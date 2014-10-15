@@ -35,14 +35,6 @@ sub Data {
     $Self->{Translation}->{'Parameters for the example permission groups of the general catalog attributes.'} =
         'Parametry dla przykładowych grup uprawnień atrybutów katalogu głównego.';
 
-    #
-    # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
-    #
-    $Self->{Translation}->{'A Catalog Class should have a Name!'} = 'Klasa katalogu powinna mieć nazwę!';
-    $Self->{Translation}->{'A Catalog Class should have a description!'} = 'Klasa katalogu powinna mieć opis!';
-    $Self->{Translation}->{'Catalog Class is required.'} = 'Klasa katalogu jest wymagana.';
-    $Self->{Translation}->{'Name is required.'} = 'Nazwa jest wymagana.';
-
 }
 
 1;
