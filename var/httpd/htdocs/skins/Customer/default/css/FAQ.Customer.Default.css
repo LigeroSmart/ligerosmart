@@ -75,10 +75,6 @@
     border: 1px solid #E9E9E9;
     border-top: 1px solid #FFF;
     border-bottom: 1px solid #DDD;
-    border-radius: 5px;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
     padding: 0;
     position: relative;
     width: auto;
@@ -89,13 +85,7 @@
 .WidgetSimple .Header {
     padding: 5px 8px 3px;
     color: #222;
-    background: #e5e6e6;
-    background: -moz-linear-gradient(top,  #f4f5f5 0%, #e5e6e6 100%);
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f4f5f5), color-stop(100%,#e5e6e6));
-    background: -webkit-linear-gradient(top,  #f4f5f5 0%,#e5e6e6 100%);
-    background: -o-linear-gradient(top,  #f4f5f5 0%,#e5e6e6 100%);
-    background: -ms-linear-gradient(top,  #f4f5f5 0%,#e5e6e6 100%);
-    background: linear-gradient(to bottom,  #f4f5f5 0%,#e5e6e6 100%);
+    background: #eeeeee;
     border-bottom: 1px solid #D6D6D6;
     text-shadow: 0 1px 0 #FFF;
     position: relative;
@@ -119,7 +109,6 @@
     overflow: hidden;
     padding: 13px 8px;
     background: #FFF;
-    border-radius: 5px;
     border: 0 none;
 }
 
@@ -147,13 +136,7 @@
  */
 
 .Overview thead {
-    background: #eeeeee;
-    background: -moz-linear-gradient(top,  #eeeeee 0%, #e0e0e0 100%);
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#eeeeee), color-stop(100%,#e0e0e0));
-    background: -webkit-linear-gradient(top,  #eeeeee 0%,#e0e0e0 100%);
-    background: -o-linear-gradient(top,  #eeeeee 0%,#e0e0e0 100%);
-    background: -ms-linear-gradient(top,  #eeeeee 0%,#e0e0e0 100%);
-    background: linear-gradient(to bottom,  #eeeeee 0%,#e0e0e0 100%);
+    background: #cccccc;
     display: table-header-group;
 }
 
@@ -184,21 +167,9 @@ ul.FAQMiniList span {
 .FAQPathCategory {
     padding: 4px 8px 4px;
     color: #6A6A6A;
-    background: #f0f2f2;
-    background: -moz-linear-gradient(top,  #f0f2f2 0%, #e6e7e7 100%);
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f0f2f2), color-stop(100%,#e6e7e7));
-    background: -webkit-linear-gradient(top,  #f0f2f2 0%,#e6e7e7 100%);
-    background: -o-linear-gradient(top,  #f0f2f2 0%,#e6e7e7 100%);
-    background: -ms-linear-gradient(top,  #f0f2f2 0%,#e6e7e7 100%);
-    background: linear-gradient(to bottom,  #f0f2f2 0%,#e6e7e7 100%);
-
-    -moz-border-bottom-colors: none;
-    -moz-border-left-colors: none;
-    -moz-border-right-colors: none;
-    -moz-border-top-colors: none;
-    border-color: #E9E9E9 #E9E9E9 #DDDDDD;
+    background: #eeeeee;
+    border-color: #E9E9E9;
     border-image: none;
-    border-radius: 3px 3px 3px 3px;
     border-style: solid;
     border-width: 1px;
     position: relative;

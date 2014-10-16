@@ -17,24 +17,13 @@
  */
 
 .CallForAction {
-    padding: 0;
-    background: #ffffff;
-    background: -moz-linear-gradient(top,  #ebebeb 0%, #ffffff 50%, #ffffff 100%);
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ebebeb), color-stop(50%,#ffffff), color-stop(100%,#ffffff));
-    background: -webkit-linear-gradient(top,  #ebebeb 0%,#ffffff 50%,#ffffff 100%);
-    background: -o-linear-gradient(top,  #ebebeb 0%,#ffffff 50%,#ffffff 100%);
-    background: -ms-linear-gradient(top,  #ebebeb 0%,#ffffff 50%,#ffffff 100%);
-    background: linear-gradient(to bottom,  #ebebeb 0%,#ffffff 50%,#ffffff 100%);
-    border: 1px solid #999;
-    border-bottom: 1px solid #888;
-    box-shadow: 0 1px 0 #E6E6E6;
-    -moz-box-shadow: 0 1px 0 #E6E6E6;
-    -webkit-box-shadow: 0 1px 0 #E6E6E6;
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
-    border-radius: 3px;
+    padding: 0px;
+    background: #eee;
+    border: 1px solid #ccc;
+    border-bottom: 1px solid #bbb;
     display: inline-block;
     cursor: pointer;
+    transition: all ease-in 0.2s;
 }
 
 /**
@@ -58,45 +47,28 @@
     line-height: 14px;
     vertical-align: middle;
     color: #333;
-    font: bold 11px/14px "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 11px;
     border: 1px solid #FFF;
     border-bottom: none;
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
-    border-radius: 3px;
     display: block;
     text-shadow: 0 1px 0 #FFF;
     cursor: pointer;
-    background: #dedede;
-    background: -moz-linear-gradient(top,  #ffffff 0%, #dedede 100%);
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#dedede));
-    background: -webkit-linear-gradient(top,  #ffffff 0%,#dedede 100%);
-    background: -o-linear-gradient(top,  #ffffff 0%,#dedede 100%);
-    background: -ms-linear-gradient(top,  #ffffff 0%,#dedede 100%);
-    background: linear-gradient(to bottom,  #ffffff 0%,#dedede 100%);
-
+    position: relative;
 }
 
-.CallForAction:active {
-    background-color: #DDD;
-    -moz-box-shadow: none;
-    -webkit-box-shadow: none;
-    box-shadow: none;
+.CallForAction span i {
+    position: relative;
+    left: 0px;
+    top: 1px;
+    font-size: 13px;
+    width: 15px;
+    text-align: center;
 }
 
-.CallForAction:active span {
-    padding: 4px 7px 5px;
-    border-color: #DDD;
-    border-bottom: none;
-    text-shadow: 0 1px 0 #DDD;
-    background: #ffffff;
-    background: -moz-linear-gradient(top,  #ebebeb 0%, #ffffff 50%, #ffffff 100%);
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ebebeb), color-stop(50%,#ffffff), color-stop(100%,#ffffff));
-    background: -webkit-linear-gradient(top,  #ebebeb 0%,#ffffff 50%,#ffffff 100%);
-    background: -o-linear-gradient(top,  #ebebeb 0%,#ffffff 50%,#ffffff 100%);
-    background: -ms-linear-gradient(top,  #ebebeb 0%,#ffffff 50%,#ffffff 100%);
-    background: linear-gradient(to bottom,  #ebebeb 0%,#ffffff 50%,#ffffff 100%);
-
+.CallForAction:active,
+.CallForAction:hover {
+    background-color: #e5e5e5;
+    border-color: #999;
 }
 
 .SearchBox {
@@ -105,29 +77,28 @@
 
 .SearchBox input[type='text'] {
     height: 15px;
-    margin: 0;
+    margin: 0px;
     padding: 4px 5px;
     font: normal 12px/15px "Helvetica Neue",Helvetica,Arial,sans-serif;
     border-color: #999;
-    -moz-border-radius: 3px 0 0 3px;
-    -webkit-border-top-right-radius: 0;
-    -webkit-border-bottom-right-radius: 0;
-    border-radius: 3px 0 0 3px;
     border-right: none;
     vertical-align: bottom;
-    width: 10pc;
+    width: 13pc;
+}
+
+.InvisibleText {
+    display: inline-block;
+    height: 0;
+    position: absolute;
+    text-indent: -9999px;
+    white-space: nowrap;
+    width: 0;
 }
 
 .RTL .SearchBox input[type='text']{
     border-left: none;
     border-right: 1px solid #999;
-    -moz-border-radius: 0 3px 3px 0;
-    -webkit-border-top-right-radius: 3px;
-    -webkit-border-bottom-right-radius: 3px;
-    -webkit-border-top-left-radius: 0;
-    -webkit-border-bottom-left-radius: 0;
-    border-radius: 0 3px 3px 0;
-    width: 10pc;
+    width: 13pc;
 }
 
 .SearchBox input:focus {
@@ -145,18 +116,8 @@
     padding: 3px 3px 4px;
     color: #333;
     font: bold 10px/13px "Helvetica Neue",Helvetica,Arial,sans-serif;
-    background: #dedede;
-    background: -moz-linear-gradient(top,  #ffffff 0%, #dedede 100%);
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#dedede));
-    background: -webkit-linear-gradient(top,  #ffffff 0%,#dedede 100%);
-    background: -o-linear-gradient(top,  #ffffff 0%,#dedede 100%);
-    background: -ms-linear-gradient(top,  #ffffff 0%,#dedede 100%);
-    background: linear-gradient(to bottom,  #ffffff 0%,#dedede 100%);
+    background: #EEE;
     border: 1px solid #888;
-    -moz-border-radius: 0 3px 3px 0;
-    -webkit-border-top-right-radius: 3px;
-    -webkit-border-bottom-right-radius: 3px;
-    border-radius: 0 3px 3px 0;
     text-shadow: 0 1px 0 #FFF;
     vertical-align: baseline;
 }
@@ -164,32 +125,15 @@
 .RTL .SearchBox button {
     height: 25px;
     margin: 0 -4px 0 0;
-    -moz-border-radius: 3px 0 0 3px;
-    -webkit-border-top-left-radius: 3px;
-    -webkit-border-top-right-radius: 0;
-    -webkit-border-bottom-right-radius: 0;
-    -webkit-border-bottom-left-radius: 3px;
-    border-radius: 3px 0 0 3px;
     text-shadow: 0 1px 0 #FFF;
     vertical-align: baseline;
-    border-right: 1px solid #888;
+    border: 1px solid #888;
 }
 
+.SearchBox button:hover,
 .SearchBox button:hover {
-    border-color: #696969;
+    background-color: #e5e5e5;
     cursor: pointer;
-}
-
-.SearchBox button:active {
-    padding: 4px 3px 3px;
-    background: #ffffff;
-    background: -moz-linear-gradient(top,  #ebebeb 0%, #ffffff 50%, #ffffff 100%);
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ebebeb), color-stop(50%,#ffffff), color-stop(100%,#ffffff));
-    background: -webkit-linear-gradient(top,  #ebebeb 0%,#ffffff 50%,#ffffff 100%);
-    background: -o-linear-gradient(top,  #ebebeb 0%,#ffffff 50%,#ffffff 100%);
-    background: -ms-linear-gradient(top,  #ebebeb 0%,#ffffff 50%,#ffffff 100%);
-    background: linear-gradient(to bottom,  #ebebeb 0%,#ffffff 50%,#ffffff 100%);
-    outline: none;
 }
 
 }

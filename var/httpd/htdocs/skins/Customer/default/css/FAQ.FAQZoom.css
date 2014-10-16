@@ -77,13 +77,13 @@ div.Attachments {
 }
 
 .Attachments .Label {
-    background: url("../img/paper-clip.png") no-repeat scroll right center transparent;
+    background: no-repeat scroll right center transparent;
     text-align: left;
     text-indent: -9999px;
     color: #AAAAAA;
     float: left;
     margin: 0 3px;
-    width: 65px;
+    width: 10px;
 }
 
 .RTL .Attachments .Label {
@@ -98,7 +98,7 @@ div.Attachments {
 }
 
 .Attachments .DownloadAttachment {
-    margin-left: 10px;
+    margin-left: 2px;
 }
 
 } /* end @media */
