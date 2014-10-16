@@ -77,7 +77,7 @@ for my $Counter ( 1 .. 3 ) {
             . int( rand 1_000_000 )
             . '@localhost',
         ValidID => $ValidObject->ValidLookup( Valid => 'valid' ),
-        UserID  => 1,
+        UserID => 1,
     );
     push @CustomerUserIDs, $CustomerUserID;
 }

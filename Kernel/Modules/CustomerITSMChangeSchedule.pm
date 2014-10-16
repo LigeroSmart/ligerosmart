@@ -297,7 +297,7 @@ sub Run {
             );
         }
 
-        if ( $FilterName ne 'All' && !$Count) {
+        if ( $FilterName ne 'All' && !$Count ) {
             next FILTER;
         }
 

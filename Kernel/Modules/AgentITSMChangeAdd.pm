@@ -445,7 +445,7 @@ sub Run {
                                 . "Filename=$CachedAttachment->{Filename};ChangeID=$ChangeID";
 
                             # replace urls
-                            $ChangeData->{Description} =~ s{$Search}{$Replace}xms;
+                            $ChangeData->{Description}   =~ s{$Search}{$Replace}xms;
                             $ChangeData->{Justification} =~ s{$Search}{$Replace}xms;
 
                             # update change

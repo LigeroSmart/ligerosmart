@@ -228,7 +228,7 @@ sub Run {
             # create change based on the template
             my $ChangeID = $Self->{TemplateObject}->TemplateDeSerialize(
                 TemplateID => $Self->{ParamObject}->GetParam( Param => 'TemplateID' ),
-                UserID     => $Self->{UserID},
+                UserID => $Self->{UserID},
                 NewTimeInEpoche => $NewTime,
                 MoveTimeType    => $GetParam{MoveTimeType},
             );
