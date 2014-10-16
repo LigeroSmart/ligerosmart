@@ -61,6 +61,7 @@
                     <div class="Label">[% Translate("Attachment") | html %]:</div>
                     <div>
 [% RenderBlockStart("AttachmentRow") %]
+                        <i class="fa fa-paperclip"></i>
                         <span class="DownloadAttachment" title="[% Translate("Download Attachment") | html %]">
                             <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=DownloadAttachment;ItemID=[% Data.ItemID | uri %];FileID=[% Data.FileID | uri %]">
                                 [% Data.Filename | html %]

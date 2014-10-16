@@ -46,13 +46,13 @@
                                     <input type="hidden" name="Subaction" value="Search"/>
                                     <input type="hidden" name="Nav" value="[% Data.Nav | html %]"/>
                                     <input type="text" name="Fulltext" value="[% Data.Search | html %]" id="Search" title="[% Translate("Search") | html %]"/>
-                                    <button type="submit" value="[% Translate("Search") | html %]">[% Translate("Quick Search") | html %]</button>
+                                    <button type="submit" value="[% Translate("Search") | html %]"><i class="fa fa-search"></i><span class="InvisibleText">[% Translate("Quick Search") | html %]</span></button>
                                 </form>
                                 <p class="FieldExplanation">
                                     [% Translate("Wildcards are allowed.") | html %]
                                 </p>
                                 <a  class="CallForAction FAQSearchButton SpacingTop" href="[% Env("Baselink") %]Action=[% Data.Action | uri %];">
-                                    <span>[% Translate("Advanced Search") | html %]</span>
+                                    <span><i class="fa fa-search"></i> [% Translate("Advanced Search") | html %]</span>
                                 </a>
                             </li>
                         </ul>
