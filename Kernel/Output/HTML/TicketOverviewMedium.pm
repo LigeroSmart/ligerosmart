@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/TicketOverviewMedium.pm
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/5cd42cab2ba73fb3be998a0d6ff6ca0b71883ca9/Kernel/Output/HTML/TicketOverviewMedium.pm
+# $origin: https://github.com/OTRS/otrs/blob/fb1b994be3d19a08624228f832c2395a3698ee08/Kernel/Output/HTML/TicketOverviewMedium.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -747,8 +747,6 @@ sub _Show {
     for my $DynamicFieldConfig ( @{ $Self->{DynamicField} } ) {
         next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
 
-        $Counter++;
-
         # get field value
         my $Value = $Self->{BackendObject}->ValueGet(
             DynamicFieldConfig => $DynamicFieldConfig,
@@ -756,6 +754,8 @@ sub _Show {
         );
 
         next DYNAMICFIELD if ( !defined $Value );
+
+        $Counter++;
 
         my $ValueStrg = $Self->{BackendObject}->DisplayValueRender(
             DynamicFieldConfig => $DynamicFieldConfig,

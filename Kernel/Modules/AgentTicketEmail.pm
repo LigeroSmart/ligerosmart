@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTicketEmail.pm - to compose initial email to customer
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/5cd42cab2ba73fb3be998a0d6ff6ca0b71883ca9/Kernel/Modules/AgentTicketEmail.pm
+# $origin: https://github.com/OTRS/otrs/blob/fb1b994be3d19a08624228f832c2395a3698ee08/Kernel/Modules/AgentTicketEmail.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1687,7 +1687,9 @@ sub Run {
         my $NewTos;
 
         if ($Tos) {
+            TOs:
             for my $KeyTo ( sort keys %{$Tos} ) {
+                next TOs if ( $Tos->{$KeyTo} eq '-' );
                 $NewTos->{"$KeyTo||$Tos->{$KeyTo}"} = $Tos->{$KeyTo};
             }
         }
@@ -1928,7 +1930,7 @@ sub Run {
                     Data         => $NewTos,
                     SelectedID   => $Dest,
                     Translation  => 0,
-                    PossibleNone => 0,
+                    PossibleNone => 1,
                     TreeView     => $TreeView,
                     Max          => 100,
                 },

@@ -2,7 +2,7 @@
 # Kernel/Modules/CustomerTicketPrint.pm - print layout for customer interface
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/5cd42cab2ba73fb3be998a0d6ff6ca0b71883ca9/Kernel/Modules/CustomerTicketPrint.pm
+# $origin: https://github.com/OTRS/otrs/blob/fb1b994be3d19a08624228f832c2395a3698ee08/Kernel/Modules/CustomerTicketPrint.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -854,7 +854,7 @@ sub _PDFOutputArticles {
 
         if ( $Article{ArticleType} eq 'chat-external' || $Article{ArticleType} eq 'chat-internal' )
         {
-            $Article{Body} = $Kernel::OM->Get('JSONObject')->Decode(
+            $Article{Body} = $Kernel::OM->Get('Kernel::System::JSON')->Decode(
                 Data => $Article{Body}
             );
             my $Lines;
@@ -1084,7 +1084,7 @@ sub _HTMLMask {
         }
 
         if ( $Article{ArticleType} eq 'chat-external' ) {
-            $Article{ChatMessages} = $Kernel::OM->Get('JSONObject')->Decode(
+            $Article{ChatMessages} = $Kernel::OM->Get('Kernel::System::JSON')->Decode(
                 Data => $Article{Body}
             );
             $Article{IsChat} = 1;
