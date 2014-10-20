@@ -60,7 +60,7 @@
                             <th>[% Translate("Name") | html %]</th>
                             <th>[% Translate("Format") | html %]</th>
                             <th>[% Translate("valid") | html %]/[% Translate("invalid") | html %]</th>
-                            <th>[% Translate("Delete") | html %]</th>
+                            <th class="Center">[% Translate("Delete") | html %]</th>
                             <th>[% Translate("Start Import") | html %]</th>
                             <th>[% Translate("Start Export") | html %]</th>
                         </tr>
@@ -83,9 +83,11 @@
                             <td>[% Data.Name | html %]</td>
                             <td>[% Translate(Data.FormatName) | html %]</td>
                             <td>[% Translate(Data.Valid) | html %]</td>
-                            <td>
-                                <a class="TrashCan" title="Delete Template" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=TemplateDelete;TemplateID=[% Data.TemplateID | uri %]">
-                                    [% Translate("Delete Template") | html %]
+                            <td class="Center">
+                                <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=TemplateDelete;TemplateID=[% Data.TemplateID | uri %]" title="[% Translate("Delete") | html %]">
+                                    <i id="DeleteTemplateID[% Data.TemplateID | html %]" class="fa fa-trash-o">
+                                        <span class="InvisibleText">[% Translate("Delete") | html %]</span>
+                                    </i>
                                 </a>
                             </td>
                             <td>
@@ -348,7 +350,7 @@
 [% RenderBlockEnd("TemplateEdit4Column") %]
 [% RenderBlockStart("TemplateEdit4MapNumberColumn") %]
                                 <td class="Center">
-                                    [% Data.InputStrg %]
+                                    [% Data.Counter %]
                                 </td>
 [% RenderBlockEnd("TemplateEdit4MapNumberColumn") %]
                                 <td class="Center">
@@ -367,9 +369,16 @@
                                     <button class="ArrowDown" type="submit" disabled="disabled"> [% Translate("Down") | html %]</button>
 [% RenderBlockEnd("TemplateEdit4NoDownButton") %]
                                 </td>
+
                                 <td class="Center">
-                                    <button class="TrashCan" type="submit" name="MappingDelete::[% Data.MappingID | html %]" value="[% Translate("Delete") | html %]"> [% Translate("Delete") | html %] </button>
+                                    <a href="#" class="DeleteColomn" title="[% Translate("Delete") | html %]">
+                                        <i class="fa fa-trash-o">
+                                            <span class="InvisibleText">[% Translate("Delete") | html %]</span>
+                                        </i>
+                                    </a>
+                                    <input type="hidden" name="MappingDelete::[% Data.MappingID | html %]" value="" />
                                 </td>
+
                             </tr>
 [% RenderBlockEnd("TemplateEdit4Row") %]
                         </tbody>
@@ -395,17 +404,24 @@
     // handle changes to the first column selector
     $FirstColumn.bind('change', function (Event) {
 
-    // check if there is at least one column with a value
-    if ( $FirstColumn.val() ) {
-        // we remove the disabled attribute
-        $NextButton.removeAttr("disabled");
-    }
-    else {
-        // we add the disabled attribute
-        $NextButton.attr("disabled", "disabled");
-    }
+        // check if there is at least one column with a value
+        if ( $FirstColumn.val() ) {
+            // we remove the disabled attribute
+            $NextButton.removeAttr("disabled");
+        }
+        else {
+            // we add the disabled attribute
+            $NextButton.attr("disabled", "disabled");
+        }
 
-}).trigger('change');
+    }).trigger('change');
+
+    // set the hidden field to delete this column and submit the form
+    $('.DeleteColomn').unbind('click').bind('click', function(Event) {
+        $(this).closest('td').find('input[type="hidden"]').val(1);
+        $(this).closest('form').submit();
+        return true;
+    });
 
 //]]></script>
 [% END %]
