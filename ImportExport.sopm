@@ -36,7 +36,7 @@
         <File Permission="644" Location="Kernel/Language/zh_TW_ImportExport.pm"/>
         <File Permission="644" Location="Kernel/Modules/AdminImportExport.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/ImportExportLayoutCheckbox.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/ImportExportLayoutDTL.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/ImportExportLayoutTT.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/ImportExportLayoutSelection.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/ImportExportLayoutText.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/LayoutImportExport.pm"/>

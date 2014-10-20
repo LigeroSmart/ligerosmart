@@ -1,5 +1,5 @@
 # --
-# Kernel/Output/HTML/ImportExportLayoutDTL.pm - layout backend module
+# Kernel/Output/HTML/ImportExportLayoutTT.pm - layout backend module
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -7,18 +7,18 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package Kernel::Output::HTML::ImportExportLayoutDTL;
+package Kernel::Output::HTML::ImportExportLayoutTT;
 
 use strict;
 use warnings;
 
 =head1 NAME
 
-Kernel::Output::HTML::ImportExportLayoutDTL - layout backend module
+Kernel::Output::HTML::ImportExportLayoutTT - layout backend module
 
 =head1 SYNOPSIS
 
-All layout functions for display DTL code
+All layout functions for display TT code
 
 =over 4
 
@@ -28,7 +28,7 @@ All layout functions for display DTL code
 
 create an object
 
-    $BackendObject = Kernel::Output::HTML::ImportExportLayoutDTL->new(
+    $BackendObject = Kernel::Output::HTML::ImportExportLayoutTT->new(
         %Param,
     );
 
@@ -54,7 +54,7 @@ sub new {
 create a input string
 
     my $Value = $BackendObject->FormInputCreate(
-        Item   => $ItemRef,
+        Item => $ItemRef,
     );
 
 =cut

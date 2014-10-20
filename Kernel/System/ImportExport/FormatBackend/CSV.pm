@@ -164,8 +164,8 @@ sub MappingFormatAttributesGet {
             Key   => 'Column',
             Name  => 'Column',
             Input => {
-                Type     => 'DTL',
-                Data     => '$QData{"Counter"}',
+                Type     => 'TT',
+                Data     => '',
                 Required => 0,
             },
         },

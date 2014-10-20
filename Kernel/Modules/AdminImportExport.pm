@@ -473,7 +473,7 @@ sub Run {
         my $HeaderCounter = @Headers;
 
         my $EmptyMap            = 1;
-        my $AtributteRowCounter = 0;
+        my $AttributeRowCounter = 0;
         for my $MappingID ( @{$MappingList} ) {
 
             $EmptyMap = 0;
@@ -503,9 +503,9 @@ sub Run {
                 # create form input
                 my $InputString = $Self->{LayoutObject}->ImportExportFormInputCreate(
                     Item   => $Item,
-                    Prefix => 'Object::' . $AtributteRowCounter . '::',
+                    Prefix => 'Object::' . $AttributeRowCounter . '::',
                     Value  => $MappingObjectData->{ $Item->{Key} },
-                    ID     => $Item->{Key} . $AtributteRowCounter,
+                    ID     => $Item->{Key} . $AttributeRowCounter,
                 );
 
                 # output attribute row
@@ -513,29 +513,20 @@ sub Run {
                     Name => 'TemplateEdit4Column',
                     Data => {
                         Name      => $Item->{Name},
-                        ID        => 'Object::' . $AtributteRowCounter . '::' . $Item->{Key},
+                        ID        => 'Object::' . $AttributeRowCounter . '::' . $Item->{Key},
                         InputStrg => $InputString,
-                        Counter   => $AtributteRowCounter,
+                        Counter   => $AttributeRowCounter,
                     },
                 );
             }
 
             for my $Item ( @{$MappingFormatAttributes} ) {
 
-                # create form input
-                my $InputString = $Self->{LayoutObject}->ImportExportFormInputCreate(
-                    Item   => $Item,
-                    Prefix => 'Format::' . $AtributteRowCounter . '::',
-                    Value  => $MappingFormatData->{ $Item->{Key} },
-                );
-
-                # output attribute row
+                # output column counter
                 $Self->{LayoutObject}->Block(
                     Name => 'TemplateEdit4MapNumberColumn',
                     Data => {
-                        Name      => $Item->{Name},
-                        InputStrg => $InputString,
-                        Counter   => $AtributteRowCounter,
+                        Counter => $AttributeRowCounter,
                     },
                 );
             }
@@ -545,7 +536,7 @@ sub Run {
             my $DownBlock;
             my $NumberOfElements = @{$MappingList};
 
-            if ( $AtributteRowCounter == 0 ) {
+            if ( $AttributeRowCounter == 0 ) {
                 $UpBlock = 'TemplateEdit4NoUpButton';
             }
             else {
@@ -553,7 +544,7 @@ sub Run {
             }
 
             # check if this is the last element
-            if ( $AtributteRowCounter == ( $NumberOfElements - 1 ) ) {
+            if ( $AttributeRowCounter == ( $NumberOfElements - 1 ) ) {
                 $DownBlock = 'TemplateEdit4NoDownButton';
             }
             else {
@@ -572,7 +563,7 @@ sub Run {
                 Data => { MappingID => $MappingID },
             );
 
-            $AtributteRowCounter++;
+            $AttributeRowCounter++;
         }
 
         # output an empty list

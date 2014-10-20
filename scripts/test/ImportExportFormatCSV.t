@@ -122,17 +122,9 @@ my $FormatAttributesGet1Reference = [
     },
 ];
 
-# turn off all pretty print
-$Data::Dumper::Indent = 0;
-
-# dump the list from FormatAttributesGet() and the reference table
-## no critic
-my $FormatAttributesGetDump1 = Data::Dumper::Dumper($FormatAttributesGet1);
-my $FormatAttributesRefDump1 = Data::Dumper::Dumper($FormatAttributesGet1Reference);
-## use critic
-
-$Self->True(
-    $FormatAttributesGetDump1 eq $FormatAttributesRefDump1,
+$Self->IsDeeply(
+    $FormatAttributesGet1,
+    $FormatAttributesGet1Reference,
     "Test $TestCount: FormatAttributesGet() - attributes of the row are identical",
 );
 
@@ -178,24 +170,16 @@ my $MappingFormatAttributesGet1Reference = [
         Key   => 'Column',
         Name  => 'Column',
         Input => {
-            Type     => 'DTL',
-            Data     => '$QData{"Counter"}',
+            Type     => 'TT',
+            Data     => '',
             Required => 0,
         },
     },
 ];
 
-# turn off all pretty print
-$Data::Dumper::Indent = 0;
-
-# dump the list from MappingFormatAttributesGet() and the reference table
-## no critic
-my $MappingFormatAttributesGetDump1 = Data::Dumper::Dumper($MappingFormatAttributesGet1);
-my $MappingFormatAttributesRefDump1 = Data::Dumper::Dumper($MappingFormatAttributesGet1Reference);
-## use critic
-
-$Self->True(
-    $MappingFormatAttributesGetDump1 eq $MappingFormatAttributesRefDump1,
+$Self->IsDeeply(
+    $MappingFormatAttributesGet1,
+    $MappingFormatAttributesGet1Reference,
     "Test $TestCount: MappingFormatAttributesGet() - attributes of the row are identical",
 );
 
