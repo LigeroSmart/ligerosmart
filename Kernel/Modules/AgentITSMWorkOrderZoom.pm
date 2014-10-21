@@ -364,6 +364,7 @@ sub Run {
             $Self->{LayoutObject}->Block(
                 Name => 'DynamicFieldLink',
                 Data => {
+                    %{$WorkOrder},
                     Value                       => $ValueStrg->{Value},
                     Title                       => $ValueStrg->{Title},
                     Link                        => $ValueStrg->{Link},
