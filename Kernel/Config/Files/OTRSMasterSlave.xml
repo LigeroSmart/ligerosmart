@@ -52,6 +52,17 @@
             </Option>
         </Setting>
     </ConfigItem>
+    <ConfigItem Name="MasterSlave::ForwardSlaves" Required="1" Valid="1">
+        <Description Translatable="1">Enable the feature to forward articles of an master ticket to the customers of the slave tickets. By default (disabled) it will not forward anything to the slave tickets.</Description>
+        <Group>MasterSlave</Group>
+        <SubGroup>Core::MasterSlave</SubGroup>
+        <Setting>
+            <Option SelectedID="0">
+                <Item Key="0">Disabled</Item>
+                <Item Key="1">Enabled</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
 
     <ConfigItem Name="Ticket::EventModulePost###MasterSlave" Required="0" Valid="1">
         <Description Translatable="1">Registration of the ticket event module.</Description>

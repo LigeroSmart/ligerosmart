@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
     "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd">
-
+<!-- nofilter(TidyAll::Plugin::OTRS::Common::ProhibitEmailAddresses) -->
 <book lang="en">
 
 <!--
@@ -264,6 +264,11 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
         <para>Enable the feature that slave tickets follow the master ticket to a new master in the advanced MasterSlave mode.</para>
     </section>
     <section>
+        <title>MasterSlave::ForwardSlaves.</title>
+        <para>Group: MasterSlave, Subgroup: Core::MasterSlave.</para>
+        <para>Enable the feature to forward articles of an master ticket to the customers of the slave tickets. By default (disabled) it will not forward anything to the slave tickets.</para>
+    </section>
+    <section>
         <title>Ticket::EventModulePost###MasterSlave.</title>
         <para>Group: MasterSlave, Subgroup: Core::MasterSlave.</para>
         <para>Registration of the ticket event module.</para>
@@ -402,6 +407,16 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
         <title>DashboardBackend###0910-TicketSlave.</title>
         <para>Group: MasterSlave, Subgroup: Frontend::Agent::Dashboard.</para>
         <para>Parameters for the dashboard backend of the slave tickets overview of the agent interface. &quot;Limit&quot; is the number of entries shown by default. &quot;Group&quot; is used to restrict the access to the plugin (e. g. Group: admin;group1;group2;). &quot;Default&quot; determines if the plugin is enabled by default or if the user needs to enable it manually. &quot;CacheTTLLocal&quot; is the cache time in minutes for the plugin.</para>
+    </section>
+    <section>
+        <title>ReplaceCustomerRealNameOnSlaveArticleTypes.</title>
+        <para>Group: OTRSMasterSlave, Subgroup: Frontend::Agent::Ticket::ViewMasterSlave.</para>
+        <para>Specifies the different article types where the real name from Master ticket will be replaced with the one in the Slave ticket.</para>
+    </section>
+    <section>
+        <title>ACLKeysLevel3::Actions###888-OTRSMasterSlave.</title>
+        <para>Group: MasterSlave, Subgroup: Core::TicketACL.</para>
+        <para>Defines which items are available for 'Action' in third level of the ACL structure.</para>
     </section>
 </chapter>
 

@@ -44,6 +44,8 @@ sub Data {
     $Self->{Translation}->{'Enable the advanced MasterSlave part of the feature.'} = 'Das erweiterte Verhalten der MasterSlave Erweiterung aktivieren.';
     $Self->{Translation}->{'Enable the feature that slave tickets follow the master ticket to a new master in the advanced MasterSlave mode.'} =
         'Aktiviere den Modus das Slave Tickets dem Master Ticket im erweiterten MasterSlave Verhalten zum neuen Master folgen.';
+    $Self->{Translation}->{'Enable the feature to forward articles of an master ticket to the customers of the slave tickets. By default (disabled) it will not forward anything to the slave tickets.'} =
+        '';
     $Self->{Translation}->{'Enable the feature to change the MasterSlave state of a ticket in the advanced MasterSlave mode.'} =
         '';
     $Self->{Translation}->{'Enable the feature to unset the MasterSlave state of a ticket in the advanced MasterSlave mode.'} =
