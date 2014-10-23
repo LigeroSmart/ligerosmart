@@ -99,6 +99,10 @@
                 <th><span>[% Translate("Services") | html %]</span></th>
 [% RenderBlockEnd("RecordServicesHeader") %]
 
+[% RenderBlockStart("RecordDynamicFieldHeader") %]
+                <th><span>[% Data.Label | Translate | html %]</span></th>
+[% RenderBlockEnd("RecordDynamicFieldHeader") %]
+
 [% RenderBlockStart("RecordRequestedTimeHeader") %]
                 <th class="RequestedTime [% Data.CSS | html %]">
                     <a href="[% Env("Baselink") %]Action=[% Env("Action") %];[% Data.LinkSort %];SortBy=RequestedTime;OrderBy=[% Data.OrderBy | uri %]">[% Translate("Requested Time") | html %]</a>
@@ -275,6 +279,17 @@
                     </ul>
                 </td>
 [% RenderBlockEnd("RecordServices") %]
+
+[% RenderBlockStart("RecordDynamicField") %]
+                    <td>
+                        <div title="[% Data.Title | html %]">
+[% RenderBlockStart("RecordDynamicFieldPlain") %]
+                            [% Data.Value %]
+[% RenderBlockEnd("RecordDynamicFieldPlain") %]
+                        </div>
+                    </td>
+[% RenderBlockEnd("RecordDynamicField") %]
+
 [% RenderBlockStart("RecordRequestedTime") %]
                 <td>
                     <div>[% Data.RequestedTime | Localize("TimeLong") %]</div>

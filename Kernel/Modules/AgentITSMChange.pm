@@ -99,7 +99,7 @@ sub Run {
         my %PossibleColumn = %{ $Self->{Config}->{ShowColumns} };
 
         # get the column names that should be shown
-        @ShowColumns = grep { $PossibleColumn{$_} } keys %PossibleColumn;
+        @ShowColumns = grep { $PossibleColumn{$_} } sort keys %PossibleColumn;
     }
 
     # to store the filters

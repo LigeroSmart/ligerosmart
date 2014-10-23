@@ -15,6 +15,8 @@ use warnings;
 use Kernel::System::User;
 use Kernel::System::LinkObject;
 use Kernel::System::Service;
+use Kernel::System::DynamicField;
+use Kernel::System::DynamicField::Backend;
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -32,8 +34,11 @@ sub new {
     }
 
     # create needed objects
-    $Self->{LinkObject}    = Kernel::System::LinkObject->new(%Param);
-    $Self->{ServiceObject} = Kernel::System::Service->new(%Param);
+    $Self->{LinkObject}         = Kernel::System::LinkObject->new(%Param);
+    $Self->{ServiceObject}      = Kernel::System::Service->new(%Param);
+    $Self->{ServiceObject}      = Kernel::System::Service->new(%Param);
+    $Self->{DynamicFieldObject} = Kernel::System::DynamicField->new(%Param);
+    $Self->{BackendObject}      = Kernel::System::DynamicField::Backend->new(%Param);
 
     # when called from the customer interface
     if ( !$Self->{UserObject}->can('GetUserData') ) {
@@ -110,8 +115,33 @@ sub Run {
 
     # check ShowColumns parameter
     my @ShowColumns;
+    my %DynamicFieldColumns;
     if ( $Param{ShowColumns} && ref $Param{ShowColumns} eq 'ARRAY' ) {
-        @ShowColumns = @{ $Param{ShowColumns} };
+
+        for my $Column ( sort @{ $Param{ShowColumns} } ) {
+
+            # remember the dynamic field name
+            if ( $Column =~ m{ \A DynamicField_ (.+) \z }xms ) {
+                $DynamicFieldColumns{$1} = 1;
+            }
+
+            # remember normal fields
+            else {
+                push @ShowColumns, $Column;
+            }
+        }
+    }
+
+    # get the dynamic field list of change and workorder dynamic fields
+    my $DynamicFieldList = $Self->{DynamicFieldObject}->DynamicFieldListGet(
+        Valid       => 1,
+        ObjectType  => [ 'ITSMChange', 'ITSMWorkOrder' ],
+        FieldFilter => \%DynamicFieldColumns,
+    );
+
+    # add the already sorted dynamic fields
+    for my $DynamicField ( @{$DynamicFieldList} ) {
+        push @ShowColumns, 'DynamicField_' . $DynamicField->{Name};
     }
 
     # build lookup hash for ShowColumns
@@ -119,6 +149,8 @@ sub Run {
 
     # build column header blocks
     if (@ShowColumns) {
+
+        COLUMN:
         for my $Column (@ShowColumns) {
 
             # create needed veriables
@@ -127,17 +159,16 @@ sub Run {
 
             # remove ID if necesary
             if ( $Param{SortBy} ) {
-                $Param{SortBy} = ( $Param{SortBy} eq 'PriorityID' )
-                    ? 'Priority'
-                    : ( $Param{SortBy} eq 'CategoryID' )       ? 'Category'
-                    : ( $Param{SortBy} eq 'ChangeBuilderID' )  ? 'ChangeBuilder'
-                    : ( $Param{SortBy} eq 'ChangeManagerID' )  ? 'ChangeManager'
-                    : ( $Param{SortBy} eq 'ChangeStateID' )    ? 'ChangeState'
-                    : ( $Param{SortBy} eq 'ImpactID' )         ? 'Impact'
-                    : ( $Param{SortBy} eq 'WorkOrderAgentID' ) ? 'WorkOrderAgent'
-                    : ( $Param{SortBy} eq 'WorkOrderStateID' ) ? 'WorkOrderState'
-                    : ( $Param{SortBy} eq 'WorkOrderTypeID' )  ? 'WorkOrderType'
-                    :                                            $Param{SortBy};
+                $Param{SortBy} = ( $Param{SortBy} eq 'PriorityID' ) ? 'Priority'
+                : ( $Param{SortBy} eq 'CategoryID' )       ? 'Category'
+                : ( $Param{SortBy} eq 'ChangeBuilderID' )  ? 'ChangeBuilder'
+                : ( $Param{SortBy} eq 'ChangeManagerID' )  ? 'ChangeManager'
+                : ( $Param{SortBy} eq 'ChangeStateID' )    ? 'ChangeState'
+                : ( $Param{SortBy} eq 'ImpactID' )         ? 'Impact'
+                : ( $Param{SortBy} eq 'WorkOrderAgentID' ) ? 'WorkOrderAgent'
+                : ( $Param{SortBy} eq 'WorkOrderStateID' ) ? 'WorkOrderState'
+                : ( $Param{SortBy} eq 'WorkOrderTypeID' )  ? 'WorkOrderType'
+                :                                            $Param{SortBy};
             }
 
             # set the correct Set CSS class and order by link
@@ -155,14 +186,35 @@ sub Run {
                 $OrderBy = 'Up';
             }
 
-            $Self->{LayoutObject}->Block(
-                Name => 'Record' . $Column . 'Header',
-                Data => {
-                    %Param,
-                    CSS     => $CSS,
-                    OrderBy => $OrderBy,
-                },
-            );
+            # handle dynamic fields
+            if ( $Column =~ m{ \A DynamicField_ (.+) \z }xms ) {
+
+                # get dynamic field data
+                my $DynamicField = $Self->{DynamicFieldObject}->DynamicFieldGet(
+                    Name => $1,
+                );
+
+                $Self->{LayoutObject}->Block(
+                    Name => 'RecordDynamicFieldHeader',
+                    Data => {
+                        %{$DynamicField},
+                    },
+                );
+
+                next COLUMN;
+            }
+
+            # handle "normal" fields
+            else {
+                $Self->{LayoutObject}->Block(
+                    Name => 'Record' . $Column . 'Header',
+                    Data => {
+                        %Param,
+                        CSS     => $CSS,
+                        OrderBy => $OrderBy,
+                    },
+                );
+            }
         }
     }
 
@@ -399,15 +451,59 @@ sub Run {
 
                 # build column record blocks
                 if (@ShowColumns) {
+
                     COLUMN:
                     for my $Column (@ShowColumns) {
-                        $Self->{LayoutObject}->Block(
-                            Name => 'Record' . $Column,
-                            Data => {
-                                %Param,
-                                %Data,
-                            },
-                        );
+
+                        # handle dynamic fields
+                        if ( $Column =~ m{ \A DynamicField_ (.+) \z }xms ) {
+
+                            # get dynamic field data
+                            my $DynamicField = $Self->{DynamicFieldObject}->DynamicFieldGet(
+                                Name => $1,
+                            );
+
+                            # get field value
+                            my $Value = $Self->{BackendObject}->ValueGet(
+                                DynamicFieldConfig => $DynamicField,
+                                ObjectID           => $ID,
+                            );
+
+                            my $ValueStrg = $Self->{BackendObject}->DisplayValueRender(
+                                DynamicFieldConfig => $DynamicField,
+                                Value              => $Value,
+                                ValueMaxChars      => 20,
+                                LayoutObject       => $Self->{LayoutObject},
+                            );
+
+                            $Self->{LayoutObject}->Block(
+                                Name => 'RecordDynamicField',
+                                Data => {
+                                    Value => $ValueStrg->{Value},
+                                    Title => $ValueStrg->{Title},
+                                },
+                            );
+
+                            $Self->{LayoutObject}->Block(
+                                Name => 'RecordDynamicFieldPlain',
+                                Data => {
+                                    Value => $ValueStrg->{Value},
+                                    Title => $ValueStrg->{Title},
+                                },
+                            );
+                        }
+
+                        # handle "normal" fields
+                        else {
+
+                            $Self->{LayoutObject}->Block(
+                                Name => 'Record' . $Column,
+                                Data => {
+                                    %Param,
+                                    %Data,
+                                },
+                            );
+                        }
 
                         # check if this column contains sub-elements
                         if ( $SubElementData{$Column} && ref $SubElementData{$Column} eq 'ARRAY' ) {
