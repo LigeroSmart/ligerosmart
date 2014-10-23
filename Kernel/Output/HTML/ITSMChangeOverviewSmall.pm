@@ -159,16 +159,17 @@ sub Run {
 
             # remove ID if necesary
             if ( $Param{SortBy} ) {
-                $Param{SortBy} = ( $Param{SortBy} eq 'PriorityID' ) ? 'Priority'
-                : ( $Param{SortBy} eq 'CategoryID' )       ? 'Category'
-                : ( $Param{SortBy} eq 'ChangeBuilderID' )  ? 'ChangeBuilder'
-                : ( $Param{SortBy} eq 'ChangeManagerID' )  ? 'ChangeManager'
-                : ( $Param{SortBy} eq 'ChangeStateID' )    ? 'ChangeState'
-                : ( $Param{SortBy} eq 'ImpactID' )         ? 'Impact'
-                : ( $Param{SortBy} eq 'WorkOrderAgentID' ) ? 'WorkOrderAgent'
-                : ( $Param{SortBy} eq 'WorkOrderStateID' ) ? 'WorkOrderState'
-                : ( $Param{SortBy} eq 'WorkOrderTypeID' )  ? 'WorkOrderType'
-                :                                            $Param{SortBy};
+                $Param{SortBy} = ( $Param{SortBy} eq 'PriorityID' )
+                    ? 'Priority'
+                    : ( $Param{SortBy} eq 'CategoryID' )       ? 'Category'
+                    : ( $Param{SortBy} eq 'ChangeBuilderID' )  ? 'ChangeBuilder'
+                    : ( $Param{SortBy} eq 'ChangeManagerID' )  ? 'ChangeManager'
+                    : ( $Param{SortBy} eq 'ChangeStateID' )    ? 'ChangeState'
+                    : ( $Param{SortBy} eq 'ImpactID' )         ? 'Impact'
+                    : ( $Param{SortBy} eq 'WorkOrderAgentID' ) ? 'WorkOrderAgent'
+                    : ( $Param{SortBy} eq 'WorkOrderStateID' ) ? 'WorkOrderState'
+                    : ( $Param{SortBy} eq 'WorkOrderTypeID' )  ? 'WorkOrderType'
+                    :                                            $Param{SortBy};
             }
 
             # set the correct Set CSS class and order by link

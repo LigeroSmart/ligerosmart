@@ -281,13 +281,13 @@
 [% RenderBlockEnd("RecordServices") %]
 
 [% RenderBlockStart("RecordDynamicField") %]
-                    <td>
-                        <div title="[% Data.Title | html %]">
+                <td>
+                    <div title="[% Data.Title | html %]">
 [% RenderBlockStart("RecordDynamicFieldPlain") %]
                             [% Data.Value %]
 [% RenderBlockEnd("RecordDynamicFieldPlain") %]
-                        </div>
-                    </td>
+                    </div>
+                </td>
 [% RenderBlockEnd("RecordDynamicField") %]
 
 [% RenderBlockStart("RecordRequestedTime") %]
