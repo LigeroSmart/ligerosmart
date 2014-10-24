@@ -2,7 +2,7 @@
 # Service.t - Service tests
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/fb1b994be3d19a08624228f832c2395a3698ee08/scripts/test/Service.t
+# $origin: https://github.com/OTRS/otrs/blob/6c9338fe2a64a6c80cf3dadd0801d16749018c9a/scripts/test/Service.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1061,7 +1061,7 @@ $TestCount++;
 my @ServiceSearch1Search = $ServiceObject->ServiceSearch( UserID => 1 );
 
 my %ServiceSearch1List = $ServiceObject->ServiceList(
-    UserID => 1,
+    UserID       => 1,
     KeepChildren => 1,
 );
 

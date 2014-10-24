@@ -3,7 +3,7 @@
 # bin/otrs.AddService.pl - add new Services
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/fb1b994be3d19a08624228f832c2395a3698ee08/bin/otrs.AddService.pl
+# $origin: https://github.com/OTRS/otrs/blob/6c9338fe2a64a6c80cf3dadd0801d16749018c9a/bin/otrs.AddService.pl
 # --
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU AFFERO General Public License as published by
