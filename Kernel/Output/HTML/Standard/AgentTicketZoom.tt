@@ -2,7 +2,7 @@
 # AgentTicketZoom.tt - provides HTML for AgentTicketZoom.pm
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/fb1b994be3d19a08624228f832c2395a3698ee08/Kernel/Output/HTML/Standard/AgentTicketZoom.tt
+# $origin: https://github.com/OTRS/otrs/blob/6c9338fe2a64a6c80cf3dadd0801d16749018c9a/Kernel/Output/HTML/Standard/AgentTicketZoom.tt
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1012,7 +1012,7 @@ var ListObjects = [
             'cc'     : [% Item.ArticleData.Cc | truncate(75) | JSON %],
             'bcc'    : [% Item.ArticleData.Bcc | truncate(75) | JSON %],
             'is_important' : [% Item.ArticleData.ArticleIsImportant | JSON %],
-            'text'   : [% IF Item.IsChatArticle %][% Translate("This is a chat log. Please zoom this entry in order to see the complete log.") | JSON %][% ELSE %][% Item.ArticleData.Body | truncate(200) | JSON %][% END %],
+            'text'   : [% IF Item.IsChatArticle %][% Item.ArticleData.BodyChat | JSON %][% ELSE %][% Item.ArticleData.Body | truncate(200) | JSON %][% END %],
             'text_long' : [% IF Item.IsChatArticle %][% Item.ArticleData.Body %][% ELSE %][% IF !Item.ArticleData.AttachmentIDOfHTMLBody %][% Item.ArticleData.Body | JSON %][% ELSE %]""[% END %][% END %],
             'attachment_id' : [% Item.ArticleData.AttachmentIDOfHTMLBody | JSON %],
             'iframe_html' : '<iframe sandbox="allow-same-origin allow-popups" data-url="[% Env("Baselink") %]Action=AgentTicketAttachment;Subaction=HTMLView;ArticleID=[% Item.ArticleID | html %];FileID=[% Item.ArticleData.AttachmentIDOfHTMLBody | html %];[% Env("SessionName") | html %]=[% Env("SessionID") | html %]" [% Data.MSSecurityRestricted %] width="100%" frameborder="0" id="Iframe[% Item.ArticleID | html %]" class="ChronicalArticleiFrame" src=""></iframe>'
