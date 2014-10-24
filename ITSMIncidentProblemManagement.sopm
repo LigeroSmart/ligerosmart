@@ -4,13 +4,13 @@
 <!-- nofilter(TidyAll::Plugin::OTRS::SOPM::DocumentationPresent) -->
     <Version>0.0.0</Version>
     <Framework>4.0.x</Framework>
-    <PackageRequired Version="3.3.94">ITSMCore</PackageRequired>
+    <PackageRequired Version="3.3.95">ITSMCore</PackageRequired>
     <Vendor>OTRS AG</Vendor>
     <URL>http://otrs.org/</URL>
     <License>GNU AFFERO GENERAL PUBLIC LICENSE Version 3, November 2007</License>
-    <Description Lang="en">The OTRS ITSM Incident and Problem Management package.</Description>
-    <Description Lang="de">Das OTRS ITSM Incident und Problem Management Paket.</Description>
-    <Description Lang="es">Paquete Incident and Problem Management de OTRS ITSM.</Description>
+    <Description Lang="en">The OTRS::ITSM Incident and Problem Management package.</Description>
+    <Description Lang="de">Das OTRS::ITSM Incident und Problem Management Paket.</Description>
+    <Description Lang="es">Paquete Incident and Problem Management de OTRS::ITSM.</Description>
     <Filelist>
         <File Permission="644" Location="Kernel/Config/Files/ITSMTicket.xml"/>
         <File Permission="644" Location="Kernel/Config/Files/TicketITSMTicket.xml"/>
@@ -121,7 +121,7 @@
     ]]></CodeReinstall>
     <CodeUpgrade Type="pre" Version="3.2.91"><![CDATA[
 
-        # uninstall Feature AddOn OTRSServiceIncidentState that has been integrated in OTRS ITSM 3.2.91 (OTRS ITSM 3.3.0 Beta 1)
+        # uninstall Feature AddOn OTRSServiceIncidentState that has been integrated in OTRS::ITSM 3.2.91 (OTRS::ITSM 3.3.0 Beta 1)
         $Kernel::OM->Get('Kernel::System::Package')->_PackageUninstallMerged(
             Name => 'OTRSServiceIncidentState',
         );
@@ -183,7 +183,7 @@
         <br/>
         <strong>REQUIRED OTRS PACKAGES</strong>
         <ul>
-        <li>ITSMCore 3.3.94</li>
+        <li>ITSMCore 3.3.95</li>
         </ul>
         <br/>
         ((enjoy))<br/>
@@ -201,7 +201,7 @@
         <br/>
         <strong>BENÖTIGTE OTRS-PAKETE</strong>
         <ul>
-        <li>ITSMCore 3.3.94</li>
+        <li>ITSMCore 3.3.95</li>
         </ul>
         <br/>
         ((enjoy))<br/>
@@ -219,7 +219,7 @@
         <br/>
         <strong>PAQUETES OTRS REQUERIDOS</strong>
         <ul>
-        <li>ITSMCore 3.3.94</li>
+        <li>ITSMCore 3.3.95</li>
         </ul>
         <br/>
         ((enjoy))<br/>
@@ -237,7 +237,7 @@
         <br/>
         <strong>REQUIRED OTRS PACKAGES</strong>
         <ul>
-        <li>ITSMCore 3.3.94</li>
+        <li>ITSMCore 3.3.95</li>
         </ul>
         <br/>
         ((enjoy))<br/>
@@ -255,7 +255,7 @@
         <br/>
         <strong>BENÖTIGTE OTRS-PAKETE</strong>
         <ul>
-        <li>ITSMCore 3.3.94</li>
+        <li>ITSMCore 3.3.95</li>
         </ul>
         <br/>
         ((enjoy))<br/>
@@ -273,7 +273,7 @@
         <br/>
         <strong>PAQUETES OTRS REQUERIDOS</strong>
         <ul>
-        <li>ITSMCore 3.3.94</li>
+        <li>ITSMCore 3.3.95</li>
         </ul>
         <br/>
         ((enjoy))<br/>
