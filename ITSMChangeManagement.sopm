@@ -4,13 +4,13 @@
 <!-- nofilter(TidyAll::Plugin::OTRS::SOPM::DocumentationPresent) -->
     <Version>0.0.0</Version>
     <Framework>4.0.x</Framework>
-    <PackageRequired Version="3.3.94">ITSMCore</PackageRequired>
+    <PackageRequired Version="3.3.95">ITSMCore</PackageRequired>
     <Vendor>OTRS AG</Vendor>
     <URL>http://otrs.org/</URL>
     <License>GNU AFFERO GENERAL PUBLIC LICENSE Version 3, November 2007</License>
-    <Description Lang="en">The OTRS ITSM Change Management package.</Description>
-    <Description Lang="de">Das OTRS ITSM Change Management Paket.</Description>
-    <Description Lang="es">El paquete OTRS ITSM Change Management.</Description>
+    <Description Lang="en">The OTRS::ITSM Change Management package.</Description>
+    <Description Lang="de">Das OTRS::ITSM Change Management Paket.</Description>
+    <Description Lang="es">El paquete OTRS::ITSM Change Management.</Description>
     <Filelist>
         <File Permission="755" Location="bin/otrs.ITSMChangesCheck.pl"/>
         <File Permission="755" Location="bin/otrs.ITSMChangeDelete.pl"/>
@@ -1644,12 +1644,12 @@
     ]]></CodeReinstall>
     <CodeUpgrade Type="pre" Version="3.2.91"><![CDATA[
 
-        # uninstall Feature AddOn OTRSWorkOrderTimeDependency that has been integrated in OTRS ITSM 3.2.91 (OTRS::ITSM 3.3.0 Beta 1)
+        # uninstall Feature AddOn OTRSWorkOrderTimeDependency that has been integrated in OTRS::ITSM 3.2.91 (OTRS::ITSM 3.3.0 Beta 1)
         $Kernel::OM->Get('Kernel::System::Package')->_PackageUninstallMerged(
             Name => 'OTRSWorkOrderTimeDependency',
         );
 
-        # uninstall Feature AddOn OTRSWorkOrderReportAttachments that has been integrated in OTRS ITSM 3.2.91 (OTRS::ITSM 3.3.0 Beta 1)
+        # uninstall Feature AddOn OTRSWorkOrderReportAttachments that has been integrated in OTRS::ITSM 3.2.91 (OTRS::ITSM 3.3.0 Beta 1)
         $Kernel::OM->Get('Kernel::System::Package')->_PackageUninstallMerged(
             Name => 'OTRSWorkOrderReportAttachments',
         );
@@ -1738,7 +1738,7 @@
         <br/>
         <strong>REQUIRED OTRS PACKAGES</strong>
         <ul>
-        <li>ITSMCore 3.3.94</li>
+        <li>ITSMCore 3.3.95</li>
         </ul>
         <br/>
         ((enjoy))<br/>
@@ -1756,7 +1756,7 @@
         <br/>
         <strong>BENÖTIGTE OTRS-PAKETE</strong>
         <ul>
-        <li>ITSMCore 3.3.94</li>
+        <li>ITSMCore 3.3.95</li>
         </ul>
         <br/>
         ((enjoy))<br/>
@@ -1773,7 +1773,7 @@
         <br/>
         <strong>PAQUETES OTRS REQUERIDOS</strong>
         <ul>
-        <li>ITSMCore 3.3.94</li>
+        <li>ITSMCore 3.3.95</li>
         </ul>
         <br/>
         ((enjoy))<br/>
@@ -1838,7 +1838,7 @@
         <br/>
         <strong>REQUIRED OTRS PACKAGES</strong>
         <ul>
-        <li>ITSMCore 3.3.94</li>
+        <li>ITSMCore 3.3.95</li>
         </ul>
         <br/>
         ((enjoy))<br/>
@@ -1856,7 +1856,7 @@
         <br/>
         <strong>BENÖTIGTE OTRS-PAKETE</strong>
         <ul>
-        <li>ITSMCore 3.3.94</li>
+        <li>ITSMCore 3.3.95</li>
         </ul>
         <br/>
         ((enjoy))<br/>
@@ -1874,7 +1874,7 @@
         <br/>
         <strong>PAQUETES OTRS REQUERIDOS</strong>
         <ul>
-        <li>ITSMCore 3.3.94</li>
+        <li>ITSMCore 3.3.95</li>
         </ul>
         <br/>
         ((enjoy))<br/>
