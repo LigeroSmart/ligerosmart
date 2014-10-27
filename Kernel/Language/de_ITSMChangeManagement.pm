@@ -190,7 +190,7 @@ sub Data {
     $Self->{Translation}->{'ITSM ChangeManagement Notification Management'} = 'ITSM ChangeManagement Benachrichtigungs-Verwaltung';
     $Self->{Translation}->{'Add Notification Rule'} = 'Benachrichtigungs-Regel';
     $Self->{Translation}->{'Rule'} = 'Regel';
-    $Self->{Translation}->{'Recipients'} = '';
+    $Self->{Translation}->{'Recipients'} = 'Empfänger';
     $Self->{Translation}->{'A notification should have a name!'} = 'Eine Benachrichtigung benötigt einen Namen!';
     $Self->{Translation}->{'Name is required.'} = 'Name ist erforderlich.';
 
@@ -263,7 +263,7 @@ sub Data {
 
     # Template: AgentITSMChangeHistoryZoom
     $Self->{Translation}->{'Detailed history information of'} = 'Detailierte Historien-Informationen von';
-    $Self->{Translation}->{'Modified'} = '';
+    $Self->{Translation}->{'Modified'} = 'Modifiziert';
     $Self->{Translation}->{'Old Value'} = 'Alter Wert';
     $Self->{Translation}->{'New Value'} = 'Neuer Wert';
 
@@ -324,8 +324,8 @@ sub Data {
     $Self->{Translation}->{'A template should have a name!'} = 'Eine Vorlage benötigt einen Namen!';
     $Self->{Translation}->{'The template name is required.'} = 'Der Vorlagen-Name ist erforderlich.';
     $Self->{Translation}->{'Reset States'} = 'Setze Status zurück';
-    $Self->{Translation}->{'Overwrite original template'} = '';
-    $Self->{Translation}->{'Delete original change'} = '';
+    $Self->{Translation}->{'Overwrite original template'} = 'Original-Template überschreiben';
+    $Self->{Translation}->{'Delete original change'} = 'Original-Change löschen';
 
     # Template: AgentITSMChangeTimeSlot
     $Self->{Translation}->{'Move Time Slot'} = 'Verschiebe Zeitfenster';
@@ -346,7 +346,7 @@ sub Data {
     $Self->{Translation}->{'Do you really want to delete this template?'} = 'Möchten Sie diese Vorlage wirklich löschen?';
 
     # Template: AgentITSMTemplateEditCAB
-    $Self->{Translation}->{'Edit CAB Template'} = '';
+    $Self->{Translation}->{'Edit CAB Template'} = 'CAB-Template bearbeiten';
 
     # Template: AgentITSMTemplateEditContent
     $Self->{Translation}->{'This will create a new change from this template, so you can edit and save it.'} =
