@@ -1,0 +1,375 @@
+#
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: OTRS\n"
+"POT-Creation-Date: 2014-08-08 19:10+0200\n"
+"PO-Revision-Date: 2014-10-27 14:55+0000\n"
+"Last-Translator: Udo Bretz\n"
+"Language-Team: Malay (http://www.transifex.com/projects/p/OTRS/language/ms/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ms\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#. Template: AAAITSMCore
+msgid "Alternative to"
+msgstr "Alternatif kepada"
+
+#. Template: AAAITSMCore
+msgid "Availability"
+msgstr "Verfügbarkeit"
+
+#. Template: AAAITSMCore
+msgid "Back End"
+msgstr "Backend"
+
+#. Template: AAAITSMCore
+msgid "Connected to"
+msgstr "Dihungkan kepada"
+
+#. Template: AAAITSMCore
+msgid "Current State"
+msgstr "Status sedia ada"
+
+#. Template: AAAITSMCore
+msgid "Demonstration"
+msgstr "Demostrasi"
+
+#. Template: AAAITSMCore
+msgid "Depends on"
+msgstr "Bergantung kepada"
+
+#. Template: AAAITSMCore
+msgid "End User Service"
+msgstr "Pengguna Akhir Servis"
+
+#. Template: AAAITSMCore
+msgid "Errors"
+msgstr "Kesilapan"
+
+#. Template: AAAITSMCore
+msgid "Front End"
+msgstr "Frontend"
+
+#. Template: AAAITSMCore
+msgid "IT Management"
+msgstr "Pengurusan IT"
+
+#. Template: AAAITSMCore
+msgid "IT Operational"
+msgstr "Operasi IT"
+
+#. Template: AAAITSMCore
+msgid "Impact"
+msgstr "Kesan"
+
+#. Template: AAAITSMCore
+msgid "Incident State"
+msgstr ""
+
+#. Template: AAAITSMCore
+msgid "Includes"
+msgstr "Termasuk"
+
+#. Template: AAAITSMCore
+msgid "Other"
+msgstr "Selain"
+
+#. Template: AAAITSMCore
+msgid "Part of"
+msgstr "Sebahagian daripada"
+
+#. Template: AAAITSMCore
+msgid "Project"
+msgstr "Projek"
+
+#. Template: AAAITSMCore
+msgid "Recovery Time"
+msgstr "Masa Sembuhan"
+
+#. Template: AAAITSMCore
+msgid "Relevant to"
+msgstr "Berkaitan kepada"
+
+#. Template: AAAITSMCore
+msgid "Reporting"
+msgstr "Melaporkan"
+
+#. Template: AAAITSMCore
+msgid "Required for"
+msgstr "Diperlukan untuk"
+
+#. Template: AAAITSMCore
+msgid "Resolution Rate"
+msgstr "kadar Resolusi"
+
+#. Template: AAAITSMCore
+msgid "Response Time"
+msgstr "Masa Tindak balas"
+
+#. Template: AAAITSMCore
+msgid "SLA Overview"
+msgstr "Lihat semula SLA"
+
+#. Template: AAAITSMCore
+msgid "Service Overview"
+msgstr "Lihat semula servis"
+
+#. Template: AAAITSMCore
+msgid "Service-Area"
+msgstr "Kawasan-Servis"
+
+#. Template: AAAITSMCore
+msgid "Training"
+msgstr "Latihan"
+
+#. Template: AAAITSMCore
+msgid "Transactions"
+msgstr "Transaksi"
+
+#. Template: AAAITSMCore
+msgid "Underpinning Contract"
+msgstr "Underpinning Contract"
+
+#. Template: AAAITSMCore
+msgid "allocation"
+msgstr "Menempatkan semula"
+
+#. Template: AdminITSMCIPAllocate
+msgid "Criticality <-> Impact <-> Priority"
+msgstr "Kritikal <-> Kesan <-> Keutamaan"
+
+#. Template: AdminITSMCIPAllocate
+msgid "Manage the priority result of combinating Criticality <-> Impact."
+msgstr "Menguruskan hasil keutamaan kritikal gabungan <-> Kesan."
+
+#. Template: AdminITSMCIPAllocate
+msgid "Priority allocation"
+msgstr "Berikan keutamaan"
+
+#. Template: AdminSLA
+msgid "Minimum Time Between Incidents"
+msgstr "Masa minima antara incident"
+
+#. Template: AdminService
+msgid "Criticality"
+msgstr "Kritikal"
+
+#. Template: AgentITSMSLAPrint
+msgid "SLA-Info"
+msgstr "SLA-Info"
+
+#. Template: AgentITSMSLAPrint
+msgid "Last changed"
+msgstr "diubah buat kali terakhir"
+
+#. Template: AgentITSMSLAPrint
+msgid "Last changed by"
+msgstr "Kali terakhir diubah semasa"
+
+#. Template: AgentITSMSLAZoom
+msgid "SLA Information"
+msgstr "SLA-Informasi"
+
+#. Template: AgentITSMSLAZoom
+msgid "Associated Services"
+msgstr "Perkhidmatan Bersekutu"
+
+#. Template: AgentITSMServicePrint
+msgid "Service-Info"
+msgstr "Info Perkhidmatan"
+
+#. Template: AgentITSMServicePrint
+msgid "Current Incident State"
+msgstr "Insiden status semasa"
+
+#. Template: AgentITSMServicePrint
+msgid "Associated SLAs"
+msgstr "SLA Bersekutu"
+
+#. Template: AgentITSMServiceZoom
+msgid "Service Information"
+msgstr "Informasi Servis"
+
+#. Template: AgentITSMServiceZoom
+msgid "Current incident state"
+msgstr "Kejadian keadaan semasa"
+
+#. SysConfig
+msgid "Frontend module registration for the AdminITSMCIPAllocate configuration in the admin area."
+msgstr "Frontend pendaftaran modul untuk konfigurasi AdminITSMCIPAllocate di kawasan admin."
+
+#. SysConfig
+msgid "Frontend module registration for the AgentITSMSLA object in the agent interface."
+msgstr "Frontend pendaftaran modul bagi objek AgentITSMSLA dalam antara muka ejen."
+
+#. SysConfig
+msgid "Frontend module registration for the AgentITSMSLAPrint object in the agent interface."
+msgstr "Frontend pendaftaran modul untuk objek AgentITSMSLAPrint dalam antara muka ejen."
+
+#. SysConfig
+msgid "Frontend module registration for the AgentITSMSLAZoom object in the agent interface."
+msgstr "Frontend pendaftaran modul untuk objek AgentITSMSLAZoom dalam antara muka ejen."
+
+#. SysConfig
+msgid "Frontend module registration for the AgentITSMService object in the agent interface."
+msgstr "Frontend pendaftaran modul bagi objek AgentITSMService dalam antara muka ejen."
+
+#. SysConfig
+msgid "Frontend module registration for the AgentITSMServicePrint object in the agent interface."
+msgstr "Frontend pendaftaran modul untuk objek AgentITSMServicePrint dalam antara muka ejen."
+
+#. SysConfig
+msgid "Frontend module registration for the AgentITSMServiceZoom object in the agent interface."
+msgstr "Frontend pendaftaran modul untuk objek AgentITSMServiceZoom dalam antara muka ejen."
+
+#. SysConfig
+msgid "Manage priority matrix."
+msgstr "Mengurus matriks keutamaan."
+
+#. SysConfig
+msgid "Module to show back link in service menu."
+msgstr "Modul untuk menunjukkan kembali pautan dalam menu perkhidmatan."
+
+#. SysConfig
+msgid "Module to show back link in sla menu."
+msgstr "Modul untuk menunjukkan kembali pautan dalam menu SLA."
+
+#. SysConfig
+msgid "Module to show print link in service menu."
+msgstr "Modul untuk menunjukkan pautan cetak dalam menu perkhidmatan."
+
+#. SysConfig
+msgid "Module to show print link in sla menu."
+msgstr "Modul untuk menunjukkan pautan cetak dalam menu SLA."
+
+#. SysConfig
+msgid "Module to show the link link in service menu."
+msgstr "Modul untuk menunjukkan pautan pautan dalam menu perkhidmatan."
+
+#. SysConfig
+msgid "Parameters for the incident states in the preference view."
+msgstr "Parameter untuk keadaan insiden memandangkan keutamaan."
+
+#. SysConfig
+msgid "Set the type and direction of links to be used to calculate the incident state. The key is the name of the link type (as defined in LinkObject::Type), and the value is the direction of the IncidentLinkType that should be followed to calculate the incident state. For example if the IncidentLinkType is set to 'DependsOn', and the Direction is 'Source', only 'Depends on' links will be followed (and not the opposite link 'Required for') to calculate the incident state. You can add more link types ad directions as you like, e.g. 'Includes' with the direction 'Target'. All link types defined in the sysconfig options LinkObject::Type are possible and the direction can be 'Source', 'Target', or 'Both'. IMPORTANT: AFTER YOU MAKE CHANGES TO THIS SYSCONFIG OPTION YOU NEED TO RUN THE SCRIPT bin/otrs.ITSMConfigItemIncidentStateRecalculate.pl SO THAT ALL INCIDENT STATES WILL BE RECALCULATED BASED ON THE NEW SETTINGS!"
+msgstr ""
+
+#. SysConfig
+msgid "This setting defines that a 'ITSMChange' object can be linked with 'Ticket' objects using the 'Normal' link type."
+msgstr "Tetapan ini mentakrifkan bahawa 'Ubah ITSM' objek boleh dikaitkan dengan 'Tiket ' objek menggunakan 'Normal'  jenis pautan."
+
+#. SysConfig
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with 'FAQ' objects using the 'Normal' link type."
+msgstr "Tetapan ini mentakrifkan bahawa 'ConfigItem ITSM ' objek boleh dikaitkan dengan 'FAQ' objek menggunakan 'Normal' jenis pautan."
+
+#. SysConfig
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with 'FAQ' objects using the 'ParentChild' link type."
+msgstr "Tetapan ini mentakrifkan bahawa 'ConfigItem ITSM ' objek boleh dikaitkan dengan 'FAQ' objek menggunakan 'Ibu Bapa Anak Anak' jenis pautan."
+
+#. SysConfig
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with 'FAQ' objects using the 'RelevantTo' link type."
+msgstr "Tetapan ini mentakrifkan bahawa 'ConfigItem ITSM ' objek boleh dikaitkan dengan 'FAQ' objek menggunakan 'Relevan Untuk' jenis pautan."
+
+#. SysConfig
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with 'Service' objects using the 'AlternativeTo' link type."
+msgstr "Tetapan ini mentakrifkan bahawa 'ConfigItem ITSM ' objek boleh dikaitkan dengan 'Perkhidmatan' objek menggunakan 'AlternativeTo' jenis pautan."
+
+#. SysConfig
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with 'Service' objects using the 'DependsOn' link type."
+msgstr "Tetapan ini mentakrifkan bahawa 'ConfigItem ITSM ' objek boleh dikaitkan dengan 'Perkhidmatan' objek menggunakan 'Bergantung Pada' jenis pautan."
+
+#. SysConfig
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with 'Service' objects using the 'RelevantTo' link type."
+msgstr "Tetapan ini mentakrifkan bahawa 'ConfigItem ITSM' objek boleh dikaitkan dengan 'Perkhidmatan' objek menggunakan 'Relevan Untuk' jenis pautan."
+
+#. SysConfig
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with 'Ticket' objects using the 'AlternativeTo' link type."
+msgstr "Tetapan ini mentakrifkan bahawa 'ConfigItem ITSM' objek boleh dikaitkan dengan 'Tiket' objek menggunakan 'Alternatif Untuk' jenis pautan."
+
+#. SysConfig
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with 'Ticket' objects using the 'DependsOn' link type."
+msgstr "Tetapan ini mentakrifkan bahawa 'ConfigItem ITSM' objek boleh dikaitkan dengan 'Tiket ' objek menggunakan 'Bergantung Pada' jenis pautan."
+
+#. SysConfig
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with 'Ticket' objects using the 'RelevantTo' link type."
+msgstr "Tetapan ini mentakrifkan bahawa 'ConfigItem ITSM' objek boleh dikaitkan dengan 'Tiket' objek menggunakan 'Relevan Untuk' jenis pautan."
+
+#. SysConfig
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with other 'ITSMConfigItem' objects using the 'AlternativeTo' link type."
+msgstr "Tetapan ini mentakrifkan bahawa 'ConfigItem ITSM' objek boleh dikaitkan dengan lain 'ITSMConfigItem' objek menggunakan 'AlternativeTo' pautan jenis."
+
+#. SysConfig
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with other 'ITSMConfigItem' objects using the 'ConnectedTo' link type."
+msgstr "Tetapan ini mentakrifkan bahawa 'ConfigItem ITSM' objek boleh dikaitkan dengan lain 'ITSMConfigItem' objek menggunakan 'ConnectedTo' pautan jenis."
+
+#. SysConfig
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with other 'ITSMConfigItem' objects using the 'DependsOn' link type."
+msgstr "Tetapan ini mentakrifkan bahawa 'ConfigItem ITSM' objek boleh dikaitkan dengan lain 'ConfigItem ITSM' objek menggunakan 'Bergantung Pada' jenis pautan."
+
+#. SysConfig
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with other 'ITSMConfigItem' objects using the 'Includes' link type."
+msgstr "Tetapan ini mentakrifkan bahawa 'ConfigItem ITSM' objek boleh dikaitkan dengan lain-lain 'ITSMConfigItem' objek menggunakan 'Termasuk' jenis pautan."
+
+#. SysConfig
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with other 'ITSMConfigItem' objects using the 'RelevantTo' link type."
+msgstr "Tetapan ini mentakrifkan bahawa 'ITSM ConfigItem' objek boleh dikaitkan dengan objek 'ConfigItem ITSM'lain yang menggunakan 'Relevan Untuk' yang jenis pautan."
+
+#. SysConfig
+msgid "This setting defines that a 'ITSMWorkOrder' object can be linked with 'ITSMConfigItem' objects using the 'DependsOn' link type."
+msgstr "Tetapan ini mentakrifkan bahawa 'Perintah Kerja ITSM ' objek boleh dikaitkan dengan 'ConfigItem ITSM'objek menggunakan 'Bergantung Pada' jenis pautan."
+
+#. SysConfig
+msgid "This setting defines that a 'ITSMWorkOrder' object can be linked with 'ITSMConfigItem' objects using the 'Normal' link type."
+msgstr "Tetapan ini mentakrifkan bahawa 'Perintah Kerja ITSM ' objek boleh dikaitkan dengan 'ConfigItem ITSM' objek menggunakan 'Normal' jenis pautan."
+
+#. SysConfig
+msgid "This setting defines that a 'ITSMWorkOrder' object can be linked with 'Service' objects using the 'DependsOn' link type."
+msgstr "Tetapan ini mentakrifkan bahawa 'Perintah Kerja ITSM ' objek boleh dikaitkan dengan 'Perkhidmatan' objek menggunakan 'Bergantung Pada' jenis pautan."
+
+#. SysConfig
+msgid "This setting defines that a 'ITSMWorkOrder' object can be linked with 'Service' objects using the 'Normal' link type."
+msgstr "Tetapan ini mentakrifkan bahawa 'Perintah Kerja ITSM ' objek boleh dikaitkan dengan 'Perkhidmatan ' objek menggunakan 'Normal ' jenis pautan."
+
+#. SysConfig
+msgid "This setting defines that a 'ITSMWorkOrder' object can be linked with 'Ticket' objects using the 'Normal' link type."
+msgstr "Tetapan ini mentakrifkan bahawa 'Perintah Kerja ITSM ' objek boleh dikaitkan dengan 'Tiket' objek menggunakan 'Normal' jenis pautan."
+
+#. SysConfig
+msgid "This setting defines that a 'Service' object can be linked with 'FAQ' objects using the 'Normal' link type."
+msgstr "Tetapan ini mentakrifkan bahawa objek 'Perkhidmatan ' boleh dikaitkan dengan 'FAQ' objek menggunakan 'Normal' jenis pautan."
+
+#. SysConfig
+msgid "This setting defines that a 'Service' object can be linked with 'FAQ' objects using the 'ParentChild' link type."
+msgstr "Tetapan ini mentakrifkan bahawa objek 'Perkhidmatan ' boleh dikaitkan dengan 'FAQ' objek menggunakan 'Ibu Bapa Kanak-kanak' jenis pautan."
+
+#. SysConfig
+msgid "This setting defines that a 'Service' object can be linked with 'FAQ' objects using the 'RelevantTo' link type."
+msgstr "Tetapan ini mentakrifkan bahawa objek 'Perkhidmatan ' boleh dikaitkan dengan 'FAQ' objek menggunakan 'Relevan Untuk' jenis pautan."
+
+#. SysConfig
+msgid "This setting defines the link type 'AlternativeTo'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link."
+msgstr "Tetapan ini mentakrifkan jenis pautan 'AlternativeTo'. Jika nama sumber dan nama sasaran mengandungi nilai yang sama, pautan yang terhasil adalah bukan satu arah. Jika nilai berbeza, pautan yang terhasil adalah pautan berarah."
+
+#. SysConfig
+msgid "This setting defines the link type 'ConnectedTo'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link."
+msgstr "Tetapan ini mentakrifkan jenis pautan 'ConnectedTo'. Jika nama sumber dan nama sasaran mengandungi nilai yang sama, pautan yang terhasil adalah bukan satu arah. Jika nilai berbeza, pautan yang terhasil adalah pautan berarah."
+
+#. SysConfig
+msgid "This setting defines the link type 'DependsOn'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link."
+msgstr "Tetapan ini mentakrifkan jenis pautan 'Bergantung Pada'. Jika nama sumber dan nama sasaran mengandungi nilai yang sama, pautan yang terhasil adalah bukan satu arah. Jika nilai berbeza, pautan yang terhasil adalah pautan berarah."
+
+#. SysConfig
+msgid "This setting defines the link type 'Includes'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link."
+msgstr "Tetapan ini mentakrifkan jenis pautan 'Termasuk'. Jika nama sumber dan nama sasaran mengandungi nilai yang sama, pautan yang terhasil adalah bukan satu arah. Jika nilai berbeza, pautan yang terhasil adalah pautan berarah."
+
+#. SysConfig
+msgid "This setting defines the link type 'RelevantTo'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link."
+msgstr "Tetapan ini mentakrifkan jenis pautan 'RelevantTo'. Jika nama sumber dan nama sasaran mengandungi nilai yang sama, pautan yang terhasil adalah bukan satu arah. Jika nilai berbeza, pautan yang terhasil adalah pautan berarah."
+
+#. SysConfig
+msgid "Width of ITSM textareas."
+msgstr "Lebar kawasan teks ITSM."
+

@@ -1,0 +1,375 @@
+#
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: OTRS\n"
+"POT-Creation-Date: 2014-08-08 19:10+0200\n"
+"PO-Revision-Date: 2014-10-27 14:55+0000\n"
+"Last-Translator: Udo Bretz\n"
+"Language-Team: Spanish (http://www.transifex.com/projects/p/OTRS/language/es/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: es\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. Template: AAAITSMCore
+msgid "Alternative to"
+msgstr "Alterantiva a"
+
+#. Template: AAAITSMCore
+msgid "Availability"
+msgstr "Disponibilidad"
+
+#. Template: AAAITSMCore
+msgid "Back End"
+msgstr "Backend"
+
+#. Template: AAAITSMCore
+msgid "Connected to"
+msgstr "Conectado a"
+
+#. Template: AAAITSMCore
+msgid "Current State"
+msgstr "Estado Actual"
+
+#. Template: AAAITSMCore
+msgid "Demonstration"
+msgstr "Demostración"
+
+#. Template: AAAITSMCore
+msgid "Depends on"
+msgstr "Depende en"
+
+#. Template: AAAITSMCore
+msgid "End User Service"
+msgstr "Servicio de Usuario Final"
+
+#. Template: AAAITSMCore
+msgid "Errors"
+msgstr "Errores"
+
+#. Template: AAAITSMCore
+msgid "Front End"
+msgstr "Frontend"
+
+#. Template: AAAITSMCore
+msgid "IT Management"
+msgstr "Administración de TI"
+
+#. Template: AAAITSMCore
+msgid "IT Operational"
+msgstr "Operación de TI"
+
+#. Template: AAAITSMCore
+msgid "Impact"
+msgstr "Impacto"
+
+#. Template: AAAITSMCore
+msgid "Incident State"
+msgstr "Estado del Incidente"
+
+#. Template: AAAITSMCore
+msgid "Includes"
+msgstr "Incluye"
+
+#. Template: AAAITSMCore
+msgid "Other"
+msgstr "Otro"
+
+#. Template: AAAITSMCore
+msgid "Part of"
+msgstr "Parte de"
+
+#. Template: AAAITSMCore
+msgid "Project"
+msgstr "Proyecto"
+
+#. Template: AAAITSMCore
+msgid "Recovery Time"
+msgstr "Tiempo de Recuperación"
+
+#. Template: AAAITSMCore
+msgid "Relevant to"
+msgstr "Relevante a"
+
+#. Template: AAAITSMCore
+msgid "Reporting"
+msgstr "Informes"
+
+#. Template: AAAITSMCore
+msgid "Required for"
+msgstr "Requerido para"
+
+#. Template: AAAITSMCore
+msgid "Resolution Rate"
+msgstr "Tasa de Resolución"
+
+#. Template: AAAITSMCore
+msgid "Response Time"
+msgstr "Tiempo de Respuesta"
+
+#. Template: AAAITSMCore
+msgid "SLA Overview"
+msgstr "Descripción de SLA"
+
+#. Template: AAAITSMCore
+msgid "Service Overview"
+msgstr "Descripción de Servicios"
+
+#. Template: AAAITSMCore
+msgid "Service-Area"
+msgstr "Area-Servicio"
+
+#. Template: AAAITSMCore
+msgid "Training"
+msgstr "Entrenamiento"
+
+#. Template: AAAITSMCore
+msgid "Transactions"
+msgstr "Transacciones"
+
+#. Template: AAAITSMCore
+msgid "Underpinning Contract"
+msgstr ""
+
+#. Template: AAAITSMCore
+msgid "allocation"
+msgstr "Asignar"
+
+#. Template: AdminITSMCIPAllocate
+msgid "Criticality <-> Impact <-> Priority"
+msgstr "Urgencia <-> Impacto <-> Prioridad"
+
+#. Template: AdminITSMCIPAllocate
+msgid "Manage the priority result of combinating Criticality <-> Impact."
+msgstr "Administrar la prioridad resultante al combinar Urgencia <-> Impacto."
+
+#. Template: AdminITSMCIPAllocate
+msgid "Priority allocation"
+msgstr "Asignar prioridad"
+
+#. Template: AdminSLA
+msgid "Minimum Time Between Incidents"
+msgstr "Tiempo Mínimo entre Incidentes"
+
+#. Template: AdminService
+msgid "Criticality"
+msgstr "Urgencia"
+
+#. Template: AgentITSMSLAPrint
+msgid "SLA-Info"
+msgstr ""
+
+#. Template: AgentITSMSLAPrint
+msgid "Last changed"
+msgstr ""
+
+#. Template: AgentITSMSLAPrint
+msgid "Last changed by"
+msgstr ""
+
+#. Template: AgentITSMSLAZoom
+msgid "SLA Information"
+msgstr ""
+
+#. Template: AgentITSMSLAZoom
+msgid "Associated Services"
+msgstr "Servicios Asociados"
+
+#. Template: AgentITSMServicePrint
+msgid "Service-Info"
+msgstr ""
+
+#. Template: AgentITSMServicePrint
+msgid "Current Incident State"
+msgstr "Estado de Incidente Actual"
+
+#. Template: AgentITSMServicePrint
+msgid "Associated SLAs"
+msgstr "SLAs Asociados"
+
+#. Template: AgentITSMServiceZoom
+msgid "Service Information"
+msgstr ""
+
+#. Template: AgentITSMServiceZoom
+msgid "Current incident state"
+msgstr "Estado ctual del incidente"
+
+#. SysConfig
+msgid "Frontend module registration for the AdminITSMCIPAllocate configuration in the admin area."
+msgstr "Registro del módulo frontend para la configuración de AdminITSMCIPAllocate en el área de administrar."
+
+#. SysConfig
+msgid "Frontend module registration for the AgentITSMSLA object in the agent interface."
+msgstr "Registro del módulo frontend para el objeto AgentITSMSLA en la interfaz del agente."
+
+#. SysConfig
+msgid "Frontend module registration for the AgentITSMSLAPrint object in the agent interface."
+msgstr "Registro del módulo frontend para el objeto AgentITSMSLAPrint en la interfaz del agente."
+
+#. SysConfig
+msgid "Frontend module registration for the AgentITSMSLAZoom object in the agent interface."
+msgstr "Registro del módulo frontend para el objeto AgentITSMSLAZoom en la interfaz del agente."
+
+#. SysConfig
+msgid "Frontend module registration for the AgentITSMService object in the agent interface."
+msgstr "Registro del módulo frontend para el objeto AgentITSMService en la interfaz del agente."
+
+#. SysConfig
+msgid "Frontend module registration for the AgentITSMServicePrint object in the agent interface."
+msgstr "Registro del módulo frontend para el objeto AgentITSMServicePrint en la interfaz del agente."
+
+#. SysConfig
+msgid "Frontend module registration for the AgentITSMServiceZoom object in the agent interface."
+msgstr "Registro del módulo frontend para el objeto AgentITSMServiceZoom en la interfaz del agente."
+
+#. SysConfig
+msgid "Manage priority matrix."
+msgstr "Administrar la matríz de prioridades."
+
+#. SysConfig
+msgid "Module to show back link in service menu."
+msgstr "Módulo para mostar un vínculo para regresar en el menú de servicio."
+
+#. SysConfig
+msgid "Module to show back link in sla menu."
+msgstr "Módulo para mostar un vínculo para regresar en el menú de SLA."
+
+#. SysConfig
+msgid "Module to show print link in service menu."
+msgstr "Módulo para mostar un vínculo para imprimir en el menú de servicio."
+
+#. SysConfig
+msgid "Module to show print link in sla menu."
+msgstr "Módulo para mostar un vínculo para imprimir en el menú de SLA."
+
+#. SysConfig
+msgid "Module to show the link link in service menu."
+msgstr "Módulo para mostar el vínculo \"Vincular\" en el menú de servicio."
+
+#. SysConfig
+msgid "Parameters for the incident states in the preference view."
+msgstr "Parámetros para los estados de los incidentes en la vista de preferencias."
+
+#. SysConfig
+msgid "Set the type and direction of links to be used to calculate the incident state. The key is the name of the link type (as defined in LinkObject::Type), and the value is the direction of the IncidentLinkType that should be followed to calculate the incident state. For example if the IncidentLinkType is set to 'DependsOn', and the Direction is 'Source', only 'Depends on' links will be followed (and not the opposite link 'Required for') to calculate the incident state. You can add more link types ad directions as you like, e.g. 'Includes' with the direction 'Target'. All link types defined in the sysconfig options LinkObject::Type are possible and the direction can be 'Source', 'Target', or 'Both'. IMPORTANT: AFTER YOU MAKE CHANGES TO THIS SYSCONFIG OPTION YOU NEED TO RUN THE SCRIPT bin/otrs.ITSMConfigItemIncidentStateRecalculate.pl SO THAT ALL INCIDENT STATES WILL BE RECALCULATED BASED ON THE NEW SETTINGS!"
+msgstr ""
+
+#. SysConfig
+msgid "This setting defines that a 'ITSMChange' object can be linked with 'Ticket' objects using the 'Normal' link type."
+msgstr "Define que un objeto 'ITSMChange' puede ser vinculado con objetos 'Ticket' usando el vínculo de tipo 'Normal'."
+
+#. SysConfig
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with 'FAQ' objects using the 'Normal' link type."
+msgstr "Define que un objeto 'ITSMConfigItem' puede ser vinculado con objetos 'FAQ' usando el vínculo de tipo 'Normal'."
+
+#. SysConfig
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with 'FAQ' objects using the 'ParentChild' link type."
+msgstr "Define que un objeto 'ITSMConfigItem' puede ser vinculado con objetos 'FAQ' usando el vínculo de tipo 'ParentChild'."
+
+#. SysConfig
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with 'FAQ' objects using the 'RelevantTo' link type."
+msgstr "Define que un objeto 'ITSMConfigItem' puede ser vinculado con objetos 'FAQ' usando el vínculo de tipo 'RelevantTo'."
+
+#. SysConfig
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with 'Service' objects using the 'AlternativeTo' link type."
+msgstr "Define que un objeto 'ITSMConfigItem' puede ser vinculado con objetos 'Service' usando el vínculo de tipo 'AlternativeTo'."
+
+#. SysConfig
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with 'Service' objects using the 'DependsOn' link type."
+msgstr "Define que un objeto 'ITSMConfigItem' puede ser vinculado con objetos 'Service' usando el vínculo de tipo 'DependsOn'."
+
+#. SysConfig
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with 'Service' objects using the 'RelevantTo' link type."
+msgstr "Define que un objeto 'ITSMConfigItem' puede ser vinculado con objetos 'Service' usando el vínculo de tipo 'RelevantTo'."
+
+#. SysConfig
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with 'Ticket' objects using the 'AlternativeTo' link type."
+msgstr "Define que un objeto 'ITSMConfigItem' puede ser vinculado con objetos 'Ticket' usando el vínculo de tipo 'AlternativeTo'."
+
+#. SysConfig
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with 'Ticket' objects using the 'DependsOn' link type."
+msgstr "Define que un objeto 'ITSMConfigItem' puede ser vinculado con objetos 'Ticket' usando el vínculo de tipo 'AlternativeTo'."
+
+#. SysConfig
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with 'Ticket' objects using the 'RelevantTo' link type."
+msgstr "Define que un objeto 'ITSMConfigItem' puede ser vinculado con objetos 'Ticket' usando el vínculo de tipo 'RelevantTo'."
+
+#. SysConfig
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with other 'ITSMConfigItem' objects using the 'AlternativeTo' link type."
+msgstr "Define que un objeto 'ITSMConfigItem' puede ser vinculado con otros objetos 'ITSMConfigItem' usando el vínculo de tipo 'AlternativeTo'."
+
+#. SysConfig
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with other 'ITSMConfigItem' objects using the 'ConnectedTo' link type."
+msgstr "Define que un objeto 'ITSMConfigItem' puede ser vinculado con otros objetos 'ITSMConfigItem' usando el vínculo de tipo 'ConnectedTo'."
+
+#. SysConfig
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with other 'ITSMConfigItem' objects using the 'DependsOn' link type."
+msgstr "Define que un objeto 'ITSMConfigItem' puede ser vinculado con otros objetos 'ITSMConfigItem' usando el vínculo de tipo 'DependsOn'."
+
+#. SysConfig
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with other 'ITSMConfigItem' objects using the 'Includes' link type."
+msgstr "Define que un objeto 'ITSMConfigItem' puede ser vinculado con otros objetos 'ITSMConfigItem' usando el vínculo de tipo 'Includes'."
+
+#. SysConfig
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with other 'ITSMConfigItem' objects using the 'RelevantTo' link type."
+msgstr "Define que un objeto 'ITSMConfigItem' puede ser vinculado con otros objetos 'ITSMConfigItem' usando el vínculo 'RelevantTo'."
+
+#. SysConfig
+msgid "This setting defines that a 'ITSMWorkOrder' object can be linked with 'ITSMConfigItem' objects using the 'DependsOn' link type."
+msgstr "Define que un objeto 'ITSMWorkOrder' puede ser vinculado con objetos 'ITSMConfigItem' usando el vínculo de tipo 'DependsOn'."
+
+#. SysConfig
+msgid "This setting defines that a 'ITSMWorkOrder' object can be linked with 'ITSMConfigItem' objects using the 'Normal' link type."
+msgstr "Define que un objeto 'ITSMWorkOrder' puede ser vinculado con objetos 'ITSMConfigItem' usando el vínculo de tipo 'Normal'."
+
+#. SysConfig
+msgid "This setting defines that a 'ITSMWorkOrder' object can be linked with 'Service' objects using the 'DependsOn' link type."
+msgstr "Define que un objeto 'ITSMWorkOrder' puede ser vinculado con objetos 'Service' usando el vínculo de tipo 'DependsOn'."
+
+#. SysConfig
+msgid "This setting defines that a 'ITSMWorkOrder' object can be linked with 'Service' objects using the 'Normal' link type."
+msgstr "Define que un objeto 'ITSMWorkOrder' puede ser vinculado con objetos 'Service' usando el vínculo de tipo 'Normal'."
+
+#. SysConfig
+msgid "This setting defines that a 'ITSMWorkOrder' object can be linked with 'Ticket' objects using the 'Normal' link type."
+msgstr "Define que un objeto 'ITSMWorkOrder' puede ser vinculado con objetos 'Ticket' usando el vínculo de tipo 'Normal'."
+
+#. SysConfig
+msgid "This setting defines that a 'Service' object can be linked with 'FAQ' objects using the 'Normal' link type."
+msgstr "Define que un objeto 'Service' puede ser vinculado con objetos 'FAQ' usando el vínculo de tipo 'Normal'."
+
+#. SysConfig
+msgid "This setting defines that a 'Service' object can be linked with 'FAQ' objects using the 'ParentChild' link type."
+msgstr "Define que un objeto 'Service' puede ser vinculado con objetos 'FAQ' usando el vínculo de tipo 'ParentChild'."
+
+#. SysConfig
+msgid "This setting defines that a 'Service' object can be linked with 'FAQ' objects using the 'RelevantTo' link type."
+msgstr "Define que un objeto 'Service' puede ser vinculado con objetos 'FAQ' usando el vínculo de tipo 'RelevantTo'."
+
+#. SysConfig
+msgid "This setting defines the link type 'AlternativeTo'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link."
+msgstr "Define el tipo de vínculo 'AlternativeTo'. Si el SourceName y el TargetName contienen el mismo valor, el resultado es un vínculo no direccionado. Si los valores son diferentes, el resultado es un vínculo direccionado."
+
+#. SysConfig
+msgid "This setting defines the link type 'ConnectedTo'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link."
+msgstr "Define el tipo de vínculo 'ConnectedTo'. Si el SourceName y el TargetName contienen el mismo valor, el resultado es un vínculo no direccionado. Si los valores son diferentes, el resultado es un vínculo direccionado."
+
+#. SysConfig
+msgid "This setting defines the link type 'DependsOn'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link."
+msgstr "Define el tipo de vínculo 'DependsOn'. Si el SourceName y el TargetName contienen el mismo valor, el resultado es un vínculo no direccionado. Si los valores son diferentes, el resultado es un vínculo direccionado."
+
+#. SysConfig
+msgid "This setting defines the link type 'Includes'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link."
+msgstr "Define el tipo de vínculo 'Includes'. Si el SourceName y el TargetName contienen el mismo valor, el resultado es un vínculo no direccionado. Si los valores son diferentes, el resultado es un vínculo direccionado."
+
+#. SysConfig
+msgid "This setting defines the link type 'RelevantTo'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link."
+msgstr "Define el tipo de vínculo 'RelevantTo'. Si el SourceName y el TargetName contienen el mismo valor, el resultado es un vínculo no direccionado. Si los valores son diferentes, el resultado es un vínculo direccionado."
+
+#. SysConfig
+msgid "Width of ITSM textareas."
+msgstr "Define el ancho de las textareas del ITSM."
+
