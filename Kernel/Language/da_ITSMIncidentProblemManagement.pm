@@ -1,5 +1,5 @@
 # --
-# Kernel/Language/de_ITSMTicket.pm - translation file
+# Kernel/Language/da_ITSMIncidentProblemManagement.pm - translation file
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -7,7 +7,7 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package Kernel::Language::de_ITSMTicket;
+package Kernel::Language::da_ITSMIncidentProblemManagement;
 
 use strict;
 use warnings;
@@ -17,37 +17,37 @@ sub Data {
     my $Self = shift;
 
     # Template: AAAITSMIncidentProblemManagement
-    $Self->{Translation}->{'Add decision to ticket'} = 'Entscheidung an Ticket hängen';
-    $Self->{Translation}->{'Decision Date'} = 'Entscheidungsdatum';
-    $Self->{Translation}->{'Decision Result'} = 'Entscheidung';
-    $Self->{Translation}->{'Due Date'} = 'Fälligkeitsdatum';
-    $Self->{Translation}->{'Reason'} = 'Begründung';
-    $Self->{Translation}->{'Recovery Start Time'} = 'Wiederherstellung Startzeit';
-    $Self->{Translation}->{'Repair Start Time'} = 'Reparatur Startzeit';
-    $Self->{Translation}->{'Review Required'} = 'Nachbearbeitung erforderlich';
-    $Self->{Translation}->{'closed with workaround'} = 'provisorisch geschlossen';
+    $Self->{Translation}->{'Add decision to ticket'} = 'Tilføj beslutning til sag';
+    $Self->{Translation}->{'Decision Date'} = 'Beslutningsdato';
+    $Self->{Translation}->{'Decision Result'} = 'Beslutningsresultat';
+    $Self->{Translation}->{'Due Date'} = 'Forfaldsdato';
+    $Self->{Translation}->{'Reason'} = 'Begrundelse';
+    $Self->{Translation}->{'Recovery Start Time'} = 'Starttid for genetablering';
+    $Self->{Translation}->{'Repair Start Time'} = 'Starttid for reperation';
+    $Self->{Translation}->{'Review Required'} = 'Anmeldelse kræves';
+    $Self->{Translation}->{'closed with workaround'} = 'Lukket med workaround';
 
     # Template: AgentTicketActionCommon
-    $Self->{Translation}->{'Change Decision of Ticket'} = 'Die Entscheidung des Tickets ändern';
-    $Self->{Translation}->{'Change ITSM fields of ticket'} = 'Ändern der ITSM Felder des Tickets';
-    $Self->{Translation}->{'Service Incident State'} = 'Service Vorfallsstatus';
+    $Self->{Translation}->{'Change Decision of Ticket'} = '';
+    $Self->{Translation}->{'Change ITSM fields of ticket'} = 'Ret sagens ITSM felter';
+    $Self->{Translation}->{'Service Incident State'} = '';
 
     # Template: AgentTicketEmail
-    $Self->{Translation}->{'Link ticket'} = 'Ticket verknüpfen';
+    $Self->{Translation}->{'Link ticket'} = '';
 
     # Template: AgentTicketOverviewPreview
-    $Self->{Translation}->{'Criticality'} = 'Kritikalität';
-    $Self->{Translation}->{'Impact'} = 'Auswirkung';
+    $Self->{Translation}->{'Criticality'} = '';
+    $Self->{Translation}->{'Impact'} = '';
 
     # SysConfig
-    $Self->{Translation}->{'Add a decision!'} = 'Hinzufügen einer Entscheidung!';
-    $Self->{Translation}->{'Additional ITSM Fields'} = 'Zusätzliche ITSM Felder';
+    $Self->{Translation}->{'Add a decision!'} = 'Tilføj en beslutning!';
+    $Self->{Translation}->{'Additional ITSM Fields'} = 'Yderlige ITSM felter';
     $Self->{Translation}->{'Allows adding notes in the additional ITSM field screen of the agent interface.'} =
         '';
     $Self->{Translation}->{'Allows adding notes in the decision screen of the agent interface.'} =
         '';
-    $Self->{Translation}->{'Change the ITSM fields!'} = 'Ändern der ITSM-Felder!';
-    $Self->{Translation}->{'Decision'} = 'Entscheidung';
+    $Self->{Translation}->{'Change the ITSM fields!'} = 'Ret ITSM felter!';
+    $Self->{Translation}->{'Decision'} = 'Beslutning';
     $Self->{Translation}->{'Defines if a ticket lock is required in the additional ITSM field screen of the agent interface (if the ticket isn\'t locked yet, the ticket gets locked and the current agent will be set automatically as its owner).'} =
         '';
     $Self->{Translation}->{'Defines if a ticket lock is required in the decision screen of the agent interface (if the ticket isn\'t locked yet, the ticket gets locked and the current agent will be set automatically as its owner).'} =

@@ -1,5 +1,5 @@
 # --
-# Kernel/Language/fr_ITSMTicket.pm - translation file
+# Kernel/Language/ms_ITSMIncidentProblemManagement.pm - translation file
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -7,7 +7,7 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package Kernel::Language::fr_ITSMTicket;
+package Kernel::Language::ms_ITSMIncidentProblemManagement;
 
 use strict;
 use warnings;
@@ -17,37 +17,37 @@ sub Data {
     my $Self = shift;
 
     # Template: AAAITSMIncidentProblemManagement
-    $Self->{Translation}->{'Add decision to ticket'} = 'Ajouter une décision au ticket';
-    $Self->{Translation}->{'Decision Date'} = 'Date de décision';
-    $Self->{Translation}->{'Decision Result'} = 'Résultat de la Décision';
-    $Self->{Translation}->{'Due Date'} = 'Engagenent de date';
-    $Self->{Translation}->{'Reason'} = 'Raison';
-    $Self->{Translation}->{'Recovery Start Time'} = 'Date de début de retour à la normale';
-    $Self->{Translation}->{'Repair Start Time'} = 'Date de début de réparation';
-    $Self->{Translation}->{'Review Required'} = 'Revue requise';
-    $Self->{Translation}->{'closed with workaround'} = 'Fermé avec contournement';
+    $Self->{Translation}->{'Add decision to ticket'} = 'Keputusan bergantung atas tiket';
+    $Self->{Translation}->{'Decision Date'} = 'Tarikh Keputusan';
+    $Self->{Translation}->{'Decision Result'} = 'Keputusan';
+    $Self->{Translation}->{'Due Date'} = 'Tarikh disebabkan';
+    $Self->{Translation}->{'Reason'} = 'Alasan';
+    $Self->{Translation}->{'Recovery Start Time'} = 'Pemulihan Masa Mula';
+    $Self->{Translation}->{'Repair Start Time'} = 'Perbaiki Masa Mula';
+    $Self->{Translation}->{'Review Required'} = 'kerja semula diperlukan';
+    $Self->{Translation}->{'closed with workaround'} = 'ditutup dengan kerja di sekitar';
 
     # Template: AgentTicketActionCommon
-    $Self->{Translation}->{'Change Decision of Ticket'} = '';
-    $Self->{Translation}->{'Change ITSM fields of ticket'} = 'Modifier les champs ITSM du ticket';
+    $Self->{Translation}->{'Change Decision of Ticket'} = 'Ubah Keputusan Tiket';
+    $Self->{Translation}->{'Change ITSM fields of ticket'} = 'Perubahan bidang ITSM tiket';
     $Self->{Translation}->{'Service Incident State'} = '';
 
     # Template: AgentTicketEmail
-    $Self->{Translation}->{'Link ticket'} = '';
+    $Self->{Translation}->{'Link ticket'} = 'Pautan tiket';
 
     # Template: AgentTicketOverviewPreview
-    $Self->{Translation}->{'Criticality'} = '';
-    $Self->{Translation}->{'Impact'} = '';
+    $Self->{Translation}->{'Criticality'} = 'Kritikal';
+    $Self->{Translation}->{'Impact'} = 'Kesan';
 
     # SysConfig
-    $Self->{Translation}->{'Add a decision!'} = 'Ajoutez une décision!';
-    $Self->{Translation}->{'Additional ITSM Fields'} = 'Champs ITSM additionels';
+    $Self->{Translation}->{'Add a decision!'} = 'Tambah keputusan!';
+    $Self->{Translation}->{'Additional ITSM Fields'} = 'Tambahan ITSM Medan';
     $Self->{Translation}->{'Allows adding notes in the additional ITSM field screen of the agent interface.'} =
         '';
     $Self->{Translation}->{'Allows adding notes in the decision screen of the agent interface.'} =
         '';
-    $Self->{Translation}->{'Change the ITSM fields!'} = 'Modifiez les champs ITSM!';
-    $Self->{Translation}->{'Decision'} = 'Décision';
+    $Self->{Translation}->{'Change the ITSM fields!'} = 'Ändern der ITSM-Felder!';
+    $Self->{Translation}->{'Decision'} = 'Entscheidung';
     $Self->{Translation}->{'Defines if a ticket lock is required in the additional ITSM field screen of the agent interface (if the ticket isn\'t locked yet, the ticket gets locked and the current agent will be set automatically as its owner).'} =
         '';
     $Self->{Translation}->{'Defines if a ticket lock is required in the decision screen of the agent interface (if the ticket isn\'t locked yet, the ticket gets locked and the current agent will be set automatically as its owner).'} =

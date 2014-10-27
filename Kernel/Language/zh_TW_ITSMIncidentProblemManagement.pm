@@ -1,5 +1,5 @@
 # --
-# Kernel/Language/cs_ITSMTicket.pm - translation file
+# Kernel/Language/zh_TW_ITSMIncidentProblemManagement.pm - translation file
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -7,7 +7,7 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package Kernel::Language::cs_ITSMTicket;
+package Kernel::Language::zh_TW_ITSMIncidentProblemManagement;
 
 use strict;
 use warnings;
@@ -17,37 +17,37 @@ sub Data {
     my $Self = shift;
 
     # Template: AAAITSMIncidentProblemManagement
-    $Self->{Translation}->{'Add decision to ticket'} = 'Přidat řešení k tiketu';
-    $Self->{Translation}->{'Decision Date'} = 'Datum Řešení';
-    $Self->{Translation}->{'Decision Result'} = 'Výsledek Řešení';
-    $Self->{Translation}->{'Due Date'} = '';
-    $Self->{Translation}->{'Reason'} = 'Příčina';
-    $Self->{Translation}->{'Recovery Start Time'} = 'Čas zahájení obnovení';
-    $Self->{Translation}->{'Repair Start Time'} = 'Čas zahájení opravy';
-    $Self->{Translation}->{'Review Required'} = 'Vyžaduje Přehled';
-    $Self->{Translation}->{'closed with workaround'} = 'uzavřeno dočasným řešením';
+    $Self->{Translation}->{'Add decision to ticket'} = '增加決定';
+    $Self->{Translation}->{'Decision Date'} = '決定日期';
+    $Self->{Translation}->{'Decision Result'} = '決定结果';
+    $Self->{Translation}->{'Due Date'} = '截止日期';
+    $Self->{Translation}->{'Reason'} = '理由';
+    $Self->{Translation}->{'Recovery Start Time'} = '恢復開始時間';
+    $Self->{Translation}->{'Repair Start Time'} = '修復開始時間';
+    $Self->{Translation}->{'Review Required'} = '需要複審';
+    $Self->{Translation}->{'closed with workaround'} = '關閉(變通)';
 
     # Template: AgentTicketActionCommon
-    $Self->{Translation}->{'Change Decision of Ticket'} = '';
-    $Self->{Translation}->{'Change ITSM fields of ticket'} = 'Změna ITSM polí v tiketu';
-    $Self->{Translation}->{'Service Incident State'} = '';
+    $Self->{Translation}->{'Change Decision of Ticket'} = '修改工單決定';
+    $Self->{Translation}->{'Change ITSM fields of ticket'} = '修改ITSM字段';
+    $Self->{Translation}->{'Service Incident State'} = '服務故障狀態';
 
     # Template: AgentTicketEmail
-    $Self->{Translation}->{'Link ticket'} = '';
+    $Self->{Translation}->{'Link ticket'} = '鏈接工單';
 
     # Template: AgentTicketOverviewPreview
-    $Self->{Translation}->{'Criticality'} = '';
-    $Self->{Translation}->{'Impact'} = '';
+    $Self->{Translation}->{'Criticality'} = '重要';
+    $Self->{Translation}->{'Impact'} = '影響';
 
     # SysConfig
-    $Self->{Translation}->{'Add a decision!'} = 'Doplňte řešení!';
-    $Self->{Translation}->{'Additional ITSM Fields'} = 'Doplňková ITSM pole';
+    $Self->{Translation}->{'Add a decision!'} = '添加決定!';
+    $Self->{Translation}->{'Additional ITSM Fields'} = 'ITSM字段';
     $Self->{Translation}->{'Allows adding notes in the additional ITSM field screen of the agent interface.'} =
         '';
     $Self->{Translation}->{'Allows adding notes in the decision screen of the agent interface.'} =
         '';
-    $Self->{Translation}->{'Change the ITSM fields!'} = 'Změňte ITMS pole!';
-    $Self->{Translation}->{'Decision'} = 'Řešení';
+    $Self->{Translation}->{'Change the ITSM fields!'} = '修改ITSM字段!';
+    $Self->{Translation}->{'Decision'} = '決定';
     $Self->{Translation}->{'Defines if a ticket lock is required in the additional ITSM field screen of the agent interface (if the ticket isn\'t locked yet, the ticket gets locked and the current agent will be set automatically as its owner).'} =
         '';
     $Self->{Translation}->{'Defines if a ticket lock is required in the decision screen of the agent interface (if the ticket isn\'t locked yet, the ticket gets locked and the current agent will be set automatically as its owner).'} =

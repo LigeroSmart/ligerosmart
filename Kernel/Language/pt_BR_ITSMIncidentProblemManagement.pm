@@ -1,5 +1,5 @@
 # --
-# Kernel/Language/pt_BR_ITSMTicket.pm - translation file
+# Kernel/Language/pt_BR_ITSMIncidentProblemManagement.pm - translation file
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -7,7 +7,7 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package Kernel::Language::pt_BR_ITSMTicket;
+package Kernel::Language::pt_BR_ITSMIncidentProblemManagement;
 
 use strict;
 use warnings;
