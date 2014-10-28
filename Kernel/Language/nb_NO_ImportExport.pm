@@ -37,7 +37,6 @@ sub Data {
     $Self->{Translation}->{'Create a template to import and export object information.'} = 'Opprett en mal for å eksportere og importere informasjon';
     $Self->{Translation}->{'Start Import'} = 'Start import';
     $Self->{Translation}->{'Start Export'} = 'Start eksport';
-    $Self->{Translation}->{'Delete Template'} = 'Slett mal';
     $Self->{Translation}->{'Step'} = 'Steg';
     $Self->{Translation}->{'Edit common information'} = 'Endre fellesinformasjon';
     $Self->{Translation}->{'Name is required!'} = '';

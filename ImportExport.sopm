@@ -15,7 +15,6 @@
         <File Permission="644" Location="doc/import-export-database.dia"/>
         <File Permission="644" Location="doc/import-export-database.png"/>
         <File Permission="644" Location="Kernel/Config/Files/ImportExport.xml"/>
-        <File Permission="644" Location="Kernel/Language/bg_ImportExport.pm"/>
         <File Permission="644" Location="Kernel/Language/cs_ImportExport.pm"/>
         <File Permission="644" Location="Kernel/Language/ct_ImportExport.pm"/>
         <File Permission="644" Location="Kernel/Language/da_ImportExport.pm"/>
@@ -24,7 +23,6 @@
         <File Permission="644" Location="Kernel/Language/fa_ImportExport.pm"/>
         <File Permission="644" Location="Kernel/Language/fr_ImportExport.pm"/>
         <File Permission="644" Location="Kernel/Language/it_ImportExport.pm"/>
-        <File Permission="644" Location="Kernel/Language/ja_ImportExport.pm"/>
         <File Permission="644" Location="Kernel/Language/ms_ImportExport.pm"/>
         <File Permission="644" Location="Kernel/Language/nb_NO_ImportExport.pm"/>
         <File Permission="644" Location="Kernel/Language/nl_ImportExport.pm"/>

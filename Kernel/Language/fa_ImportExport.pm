@@ -37,7 +37,6 @@ sub Data {
     $Self->{Translation}->{'Create a template to import and export object information.'} = 'ساخت قالبی برای ورود و صدور اطلاعات آبجکت';
     $Self->{Translation}->{'Start Import'} = 'شروع عملیات ورود';
     $Self->{Translation}->{'Start Export'} = 'شروع عملیات صدور';
-    $Self->{Translation}->{'Delete Template'} = 'حذف قالب';
     $Self->{Translation}->{'Step'} = 'گام';
     $Self->{Translation}->{'Edit common information'} = 'ویرایش اطلاعات عمومی';
     $Self->{Translation}->{'Name is required!'} = '';

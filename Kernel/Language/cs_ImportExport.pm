@@ -37,7 +37,6 @@ sub Data {
     $Self->{Translation}->{'Create a template to import and export object information.'} = '';
     $Self->{Translation}->{'Start Import'} = 'Zahájit Import';
     $Self->{Translation}->{'Start Export'} = 'Zahájit Export';
-    $Self->{Translation}->{'Delete Template'} = '';
     $Self->{Translation}->{'Step'} = 'Krok';
     $Self->{Translation}->{'Edit common information'} = 'Editace obecných informací';
     $Self->{Translation}->{'Name is required!'} = '';

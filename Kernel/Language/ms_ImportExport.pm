@@ -37,7 +37,6 @@ sub Data {
     $Self->{Translation}->{'Create a template to import and export object information.'} = 'Cipta templat untuk import dan eksport informasi objek.';
     $Self->{Translation}->{'Start Import'} = 'Mula import';
     $Self->{Translation}->{'Start Export'} = 'Mula eksport';
-    $Self->{Translation}->{'Delete Template'} = 'Padam templat';
     $Self->{Translation}->{'Step'} = 'Langkah';
     $Self->{Translation}->{'Edit common information'} = 'Audit informasi biasa';
     $Self->{Translation}->{'Name is required!'} = '';

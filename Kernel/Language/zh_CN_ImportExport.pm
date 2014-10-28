@@ -37,7 +37,6 @@ sub Data {
     $Self->{Translation}->{'Create a template to import and export object information.'} = '创建模板导入和导出对象信息。';
     $Self->{Translation}->{'Start Import'} = '开始导入';
     $Self->{Translation}->{'Start Export'} = '开始导出';
-    $Self->{Translation}->{'Delete Template'} = '删除模板';
     $Self->{Translation}->{'Step'} = '步骤';
     $Self->{Translation}->{'Edit common information'} = '编辑共用信息';
     $Self->{Translation}->{'Name is required!'} = '';

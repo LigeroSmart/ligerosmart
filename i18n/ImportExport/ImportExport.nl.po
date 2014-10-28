@@ -1,0 +1,176 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: ImportExport\n"
+"POT-Creation-Date: 2014-08-08 19:10+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. Template: AAAImportExport
+msgid "Add mapping template"
+msgstr "Mappingtemplate toevoegen"
+
+#. Template: AAAImportExport
+msgid "Charset"
+msgstr "Karakterset"
+
+#. Template: AAAImportExport
+msgid "Colon (:)"
+msgstr "Dubbele punt (:)"
+
+#. Template: AAAImportExport
+msgid "Column"
+msgstr "Kolom"
+
+#. Template: AAAImportExport
+msgid "Column Separator"
+msgstr "Kolomscheidingsteken"
+
+#. Template: AAAImportExport
+msgid "Dot (.)"
+msgstr "Punt (.)"
+
+#. Template: AAAImportExport
+msgid "Semicolon (;)"
+msgstr "Puntkomma (;)"
+
+#. Template: AAAImportExport
+msgid "Tabulator (TAB)"
+msgstr "Tab"
+
+#. Template: AAAImportExport
+msgid "Include Column Headers"
+msgstr ""
+
+#. Template: AAAImportExport
+msgid "Import summary for"
+msgstr ""
+
+#. Template: AAAImportExport
+msgid "Imported records"
+msgstr ""
+
+#. Template: AAAImportExport
+msgid "Exported records"
+msgstr ""
+
+#. Template: AAAImportExport
+msgid "Records"
+msgstr ""
+
+#. Template: AAAImportExport
+msgid "Skipped"
+msgstr ""
+
+#. Template: AdminImportExport
+msgid "Import/Export Management"
+msgstr "Import/Export beheer"
+
+#. Template: AdminImportExport
+msgid "Create a template to import and export object information."
+msgstr ""
+
+#. Template: AdminImportExport
+msgid "Start Import"
+msgstr "Import starten"
+
+#. Template: AdminImportExport
+msgid "Start Export"
+msgstr "Export starten"
+
+#. Template: AdminImportExport
+msgid "Step"
+msgstr "Stap"
+
+#. Template: AdminImportExport
+msgid "Edit common information"
+msgstr "Algemene informatie bewerken"
+
+#. Template: AdminImportExport
+msgid "Name is required!"
+msgstr ""
+
+#. Template: AdminImportExport
+msgid "Object is required!"
+msgstr "Object is verplicht."
+
+#. Template: AdminImportExport
+msgid "Format is required!"
+msgstr "Formaat is verplicht."
+
+#. Template: AdminImportExport
+msgid "Edit object information"
+msgstr "Object-informatie bewerken"
+
+#. Template: AdminImportExport
+msgid "Edit format information"
+msgstr "Format-informationen bewerken"
+
+#. Template: AdminImportExport
+msgid "is required!"
+msgstr ""
+
+#. Template: AdminImportExport
+msgid "Edit mapping information"
+msgstr "Mapping-informatie bewerken"
+
+#. Template: AdminImportExport
+msgid "No map elements found."
+msgstr "Geen elementen gevonden."
+
+#. Template: AdminImportExport
+msgid "Add Mapping Element"
+msgstr ""
+
+#. Template: AdminImportExport
+msgid "Edit search information"
+msgstr "Zoek-informatie bewerken"
+
+#. Template: AdminImportExport
+msgid "Restrict export per search"
+msgstr "Beperk export tot zoekopdracht"
+
+#. Template: AdminImportExport
+msgid "Import information"
+msgstr "Import-informatie"
+
+#. Template: AdminImportExport
+msgid "Source File"
+msgstr "Bronbestand"
+
+#. Template: AdminImportExport
+msgid "Success"
+msgstr ""
+
+#. Template: AdminImportExport
+msgid "Failed"
+msgstr ""
+
+#. Template: AdminImportExport
+msgid "Duplicate names"
+msgstr ""
+
+#. Template: AdminImportExport
+msgid "Last processed line number of import file"
+msgstr ""
+
+#. Template: AdminImportExport
+msgid "Ok"
+msgstr ""
+
+#. SysConfig
+msgid "Format backend module registration for the import/export module."
+msgstr ""
+
+#. SysConfig
+msgid "Import and export object information."
+msgstr "Import en export objectinformatie"
+
+#. SysConfig
+msgid "Import/Export"
+msgstr "Import/Export"
+

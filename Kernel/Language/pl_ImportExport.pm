@@ -37,7 +37,6 @@ sub Data {
     $Self->{Translation}->{'Create a template to import and export object information.'} = 'Utwórz szablon do importu i eksportu danych obiektów.';
     $Self->{Translation}->{'Start Import'} = 'Rozpocznij import';
     $Self->{Translation}->{'Start Export'} = 'Rozpocznij eksport';
-    $Self->{Translation}->{'Delete Template'} = 'Usuń szablon';
     $Self->{Translation}->{'Step'} = 'Krok';
     $Self->{Translation}->{'Edit common information'} = 'Edytuj informacje wspólne';
     $Self->{Translation}->{'Name is required!'} = '';

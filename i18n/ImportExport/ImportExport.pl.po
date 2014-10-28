@@ -1,0 +1,179 @@
+#
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: OTRS\n"
+"POT-Creation-Date: 2014-08-08 19:10+0200\n"
+"PO-Revision-Date: 2014-10-28 11:44+0000\n"
+"Last-Translator: Udo Bretz\n"
+"Language-Team: Polish (http://www.transifex.com/projects/p/OTRS/language/pl/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: pl\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#. Template: AAAImportExport
+msgid "Add mapping template"
+msgstr "Dodaj szablon mapowania"
+
+#. Template: AAAImportExport
+msgid "Charset"
+msgstr "Kodowanie"
+
+#. Template: AAAImportExport
+msgid "Colon (:)"
+msgstr "Dwukropek (:)"
+
+#. Template: AAAImportExport
+msgid "Column"
+msgstr "Kolumna"
+
+#. Template: AAAImportExport
+msgid "Column Separator"
+msgstr "Separator kolumny"
+
+#. Template: AAAImportExport
+msgid "Dot (.)"
+msgstr "Kropka (.)"
+
+#. Template: AAAImportExport
+msgid "Semicolon (;)"
+msgstr "Średnik (;)"
+
+#. Template: AAAImportExport
+msgid "Tabulator (TAB)"
+msgstr "Tabulator (TAB)"
+
+#. Template: AAAImportExport
+msgid "Include Column Headers"
+msgstr "Umieść nagłówki kolumn"
+
+#. Template: AAAImportExport
+msgid "Import summary for"
+msgstr "Podsumowanie importu dla"
+
+#. Template: AAAImportExport
+msgid "Imported records"
+msgstr "Zaimportowane rekordy"
+
+#. Template: AAAImportExport
+msgid "Exported records"
+msgstr "Wyeksportowane rekordy"
+
+#. Template: AAAImportExport
+msgid "Records"
+msgstr "Rekordy"
+
+#. Template: AAAImportExport
+msgid "Skipped"
+msgstr "Pominięte"
+
+#. Template: AdminImportExport
+msgid "Import/Export Management"
+msgstr "Zarządzanie Importem/Exportem"
+
+#. Template: AdminImportExport
+msgid "Create a template to import and export object information."
+msgstr "Utwórz szablon do importu i eksportu danych obiektów."
+
+#. Template: AdminImportExport
+msgid "Start Import"
+msgstr "Rozpocznij import"
+
+#. Template: AdminImportExport
+msgid "Start Export"
+msgstr "Rozpocznij eksport"
+
+#. Template: AdminImportExport
+msgid "Step"
+msgstr "Krok"
+
+#. Template: AdminImportExport
+msgid "Edit common information"
+msgstr "Edytuj informacje wspólne"
+
+#. Template: AdminImportExport
+msgid "Name is required!"
+msgstr ""
+
+#. Template: AdminImportExport
+msgid "Object is required!"
+msgstr "Obiekt jest wymagany!"
+
+#. Template: AdminImportExport
+msgid "Format is required!"
+msgstr "Format jest wymagany!"
+
+#. Template: AdminImportExport
+msgid "Edit object information"
+msgstr "Edytuj informacje obiektu"
+
+#. Template: AdminImportExport
+msgid "Edit format information"
+msgstr "Edytuj format obiektu"
+
+#. Template: AdminImportExport
+msgid "is required!"
+msgstr ""
+
+#. Template: AdminImportExport
+msgid "Edit mapping information"
+msgstr "Edytuj informacje mapowania"
+
+#. Template: AdminImportExport
+msgid "No map elements found."
+msgstr "Nie znaleziono elementów mapy."
+
+#. Template: AdminImportExport
+msgid "Add Mapping Element"
+msgstr "Dodaj element mapowania"
+
+#. Template: AdminImportExport
+msgid "Edit search information"
+msgstr "Edytuj informacje wyszukiwania"
+
+#. Template: AdminImportExport
+msgid "Restrict export per search"
+msgstr "Ogranicz eksport przez wyszukanie"
+
+#. Template: AdminImportExport
+msgid "Import information"
+msgstr "Importuj informacje"
+
+#. Template: AdminImportExport
+msgid "Source File"
+msgstr "Plik źródłowy"
+
+#. Template: AdminImportExport
+msgid "Success"
+msgstr "Powodzenie"
+
+#. Template: AdminImportExport
+msgid "Failed"
+msgstr "Niepowodzenie"
+
+#. Template: AdminImportExport
+msgid "Duplicate names"
+msgstr "Duplikaty nazw"
+
+#. Template: AdminImportExport
+msgid "Last processed line number of import file"
+msgstr "Nr ostaniej przetworzonej linii pliku importowego"
+
+#. Template: AdminImportExport
+msgid "Ok"
+msgstr "Ok"
+
+#. SysConfig
+msgid "Format backend module registration for the import/export module."
+msgstr "Moduł formatowania backend dla modułu import/eksport."
+
+#. SysConfig
+msgid "Import and export object information."
+msgstr "Importuj i eksportuj informacje obiektów."
+
+#. SysConfig
+msgid "Import/Export"
+msgstr "Import/eksport"
+
