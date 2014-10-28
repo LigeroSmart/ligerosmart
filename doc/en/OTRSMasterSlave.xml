@@ -266,7 +266,7 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
     <section>
         <title>MasterSlave::ForwardSlaves.</title>
         <para>Group: MasterSlave, Subgroup: Core::MasterSlave.</para>
-        <para>Enable the feature to forward articles of an master ticket to the customers of the slave tickets. By default (disabled) it will not forward anything to the slave tickets.</para>
+        <para>Enable the feature to forward articles of a master ticket to the customers of the slave tickets. By default (disabled) it will not forward anything to the slave tickets.</para>
     </section>
     <section>
         <title>Ticket::EventModulePost###MasterSlave.</title>

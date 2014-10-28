@@ -223,7 +223,7 @@ msgid "Enable the feature that slave tickets follow the master ticket to a new m
 msgstr "Aktiviere den Modus das Slave Tickets dem Master Ticket im erweiterten MasterSlave Verhalten zum neuen Master folgen."
 
 #. SysConfig
-msgid "Enable the feature to forward articles of an master ticket to the customers of the slave tickets. By default (disabled) it will not forward anything to the slave tickets."
+msgid "Enable the feature to forward articles of a master ticket to the customers of the slave tickets. By default (disabled) it will not forward anything to the slave tickets."
 msgstr ""
 
 #. SysConfig
