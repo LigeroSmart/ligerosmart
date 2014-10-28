@@ -588,10 +588,10 @@ sub _ArticleHistoryTypeGiven {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for (qw(TicketID ArticleID HistoryType UserID)) {
-        if ( !$Param{$_} ) {
+    for my $Needed (qw(TicketID ArticleID HistoryType UserID)) {
+        if ( !$Param{$Needed} ) {
             $Kernel::OM->Get('Kernel::System::Log')
-                ->Log( Priority => 'error', Message => "Need $_!" );
+                ->Log( Priority => 'error', Message => "Need $Needed!" );
             return;
         }
     }
