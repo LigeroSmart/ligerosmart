@@ -48,10 +48,8 @@
         </para>
 
     <para>
-        If you have questions regarding this package, please contact your support team
-        <ulink url="mailto:support@otrs.com?subject=$Name">
-            &lt;support@otrs.com&gt;
-        </ulink> for more information.
+        If you have questions regarding this document or if you need further information, please log in to our customer portal at portal.otrs.com with your OTRS ID and create a ticket. You do not have an OTRS ID yet? Register
+        <ulink url="https://portal.otrs.com/otrs/customer.pl#Signup">here for free</ulink>.
     </para>
 </preface>
 
@@ -325,29 +323,6 @@ shell> perl bin/otrs.UnitTest.pl -n SystemMonitoring
 <chapter>
     <title>Change Log</title>
     <para>$ChangeLog</para>
-</chapter>
-
-<!-- ************ -->
-<!-- 11. Contacts -->
-<!-- ************ -->
-<chapter>
-    <title>Contacts</title>
-    <para>People who are involved in this implementation.</para>
-    <section>
-        <title>OTRS AG</title>
-        <para>
-            Accounting: Rene Bakker
-            <ulink url="mailto:sales@otrs.com?subject=$Name">
-                &lt;sales@otrs.com&gt;
-            </ulink>, Phone +49 (0)6172 681988 0
-        </para>
-        <para>
-            Technical: Manuel Hecht
-            <ulink url="mailto:dev-support@otrs.com?subject=$Name">
-                &lt;dev-support@otrs.com&gt;
-            </ulink>, Phone +49 (0)6172 681988 0
-        </para>
-    </section>
 </chapter>
 
 </book>
