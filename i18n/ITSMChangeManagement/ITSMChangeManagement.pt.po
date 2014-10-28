@@ -1,109 +1,106 @@
-#
-# Translators:
 msgid ""
 msgstr ""
-"Project-Id-Version: OTRS\n"
+"Project-Id-Version: ITSMChangeManagement\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2014-10-27 15:07+0000\n"
-"Last-Translator: Udo Bretz\n"
-"Language-Team: Persian (http://www.transifex.com/projects/p/OTRS/language/fa/)\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: fa\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
 
 #. Template: AAAITSMChangeManagement
 msgid "ITSMChange"
-msgstr "تغییر"
+msgstr "Alteração"
 
 #. Template: AAAITSMChangeManagement
 msgid "ITSMChanges"
-msgstr "تغییرات"
+msgstr "Alterações"
 
 #. Template: AAAITSMChangeManagement
 msgid "ITSM Changes"
-msgstr "تغییرات"
+msgstr "Alterações ITSM"
 
 #. Template: AAAITSMChangeManagement
 msgid "workorder"
-msgstr "دستور کار"
+msgstr "Ordem de Serviço"
 
 #. Template: AAAITSMChangeManagement
 msgid "A change must have a title!"
-msgstr "هر تغییر باید عنوان داشته باشد!"
+msgstr "Uma Alteração deve ter um título!"
 
 #. Template: AAAITSMChangeManagement
 msgid "A condition must have a name!"
-msgstr "هر شرط باید دارای نام باشد!"
+msgstr "Uma condição deve ter um nome!"
 
 #. Template: AAAITSMChangeManagement
 msgid "A template must have a name!"
-msgstr "قالب باید دارای نام باشد!"
+msgstr "Um modelo deve ter um nome!"
 
 #. Template: AAAITSMChangeManagement
 msgid "A workorder must have a title!"
-msgstr "هر دستور کار باید دارای عنوان باشد!"
+msgstr "Uma ordem de serviço deve ter um título!"
 
 #. Template: AAAITSMChangeManagement
 msgid "ActionExecute::successfully"
-msgstr "با موفقیت"
+msgstr "Com sucesso"
 
 #. Template: AAAITSMChangeManagement
 msgid "ActionExecute::unsuccessfully"
-msgstr "عدم موفقیت"
+msgstr "Sem sucesso"
 
 #. Template: AAAITSMChangeManagement
 msgid "Add CAB Template"
-msgstr "افزودن قالب برای هیئت مشاوران"
+msgstr "Adicionar modelo de CAB"
 
 #. Template: AAAITSMChangeManagement
 msgid "Add Workorder"
-msgstr "افزودن دستور کار"
+msgstr "Adicionar Ordem"
 
 #. Template: AAAITSMChangeManagement
 msgid "Add a workorder to the change"
-msgstr "افزودن یک دستور کار به تغییر"
+msgstr "Adicionar ordem de serviço à Alteração"
 
 #. Template: AAAITSMChangeManagement
 msgid "Add new condition and action pair"
-msgstr "افزودن جفتی از شرط و عملیات"
+msgstr "Adicionar nova condição e par de ações"
 
 #. Template: AAAITSMChangeManagement
 msgid "Agent interface module to show the ChangeManager overview icon."
-msgstr "ماژول واسط کاربری کارشناس برای نمایش آیکون نمای کلی مدیر تغییر"
+msgstr "Módulo de interface de agente para exibir o ícone de vista geral gestor de alterações."
 
 #. Template: AAAITSMChangeManagement
 msgid "Agent interface module to show the MyCAB overview icon."
-msgstr "ماژول واسط کاربری کارشناس برای نمایش آیکون نمای کلی کارشناسان تیم تغییر من"
+msgstr "Módulo de interface de agente para exibir o ícone de vista geral MeuCAB."
 
 #. Template: AAAITSMChangeManagement
 msgid "Agent interface module to show the MyChanges overview icon."
-msgstr "ماژول واسط کاربری کارشناس برای نمایش آیکون نمای کلی تغییرات من"
+msgstr "Módulo de interface de agente para exibir o ícone de vista geral Minhas Alterações."
 
 #. Template: AAAITSMChangeManagement
 msgid "Agent interface module to show the MyWorkOrders overview icon."
-msgstr "ماژول واسط کاربری کارشناس برای نمایش آیکون نمای کلی دستور کارهای من"
+msgstr "Módulo de interface de agente para exibir o ícone de vista geral Minhas Ordens de Serviços."
 
 #. Template: AAAITSMChangeManagement
 msgid "CABAgents"
-msgstr "کارشناسان هیئت مشاور تغییر"
+msgstr "agentes CAB"
 
 #. Template: AAAITSMChangeManagement
 msgid "CABCustomers"
-msgstr "هیئت مشاور تغییر - مشترکان"
+msgstr "Clientes CAB"
 
 #. Template: AAAITSMChangeManagement
 msgid "Change Overview"
-msgstr "نمای کلی تغییر"
+msgstr "Vista de alterações"
 
 #. Template: AAAITSMChangeManagement
 msgid "Change Schedule"
-msgstr "زمان‌بندی تغییر"
+msgstr "Agenda da alteração"
 
 #. Template: AAAITSMChangeManagement
 msgid "Change involved persons of the change"
-msgstr "افراد درگیر این تغییر"
+msgstr "Alterar pessoas envolvidas na Alteração"
 
 #. Template: AAAITSMChangeManagement
 msgid "ChangeHistory::ActionAdd"
@@ -111,79 +108,79 @@ msgstr "%s: %s"
 
 #. Template: AAAITSMChangeManagement
 msgid "ChangeHistory::ActionAddID"
-msgstr "عملیات جدید (ID=%s)"
+msgstr "Nova Ação (ID=%s)"
 
 #. Template: AAAITSMChangeManagement
 msgid "ChangeHistory::ActionDelete"
-msgstr "عملیات (ID=%s) حذف شد"
+msgstr "Ação (ID=%s) apagada"
 
 #. Template: AAAITSMChangeManagement
 msgid "ChangeHistory::ActionDeleteAll"
-msgstr "تمام عملیات‌های شرط (ID=%s) حذف شد"
+msgstr "Todas as Ações de Condição (ID=%s) apagadas"
 
 #. Template: AAAITSMChangeManagement
 msgid "ChangeHistory::ActionExecute"
-msgstr "عملیات (ID=%s) اجرا شد: %s"
+msgstr "Ação (ID=%s) executada: %s"
 
 #. Template: AAAITSMChangeManagement
 msgid "ChangeHistory::ActionUpdate"
-msgstr "%s (شناسه عملیات=%s): جدید: %s -> قدیم: %s"
+msgstr "%s (Ação ID=%s): Nova: %s -> Antiga: %s"
 
 #. Template: AAAITSMChangeManagement
 msgid "ChangeHistory::ChangeActualEndTimeReached"
-msgstr "زمان حقیقی پایان تغییر فرا رسیده (ID=%s)"
+msgstr "Alteração (ID=%s) atingiu o tempo de fim."
 
 #. Template: AAAITSMChangeManagement
 msgid "ChangeHistory::ChangeActualStartTimeReached"
-msgstr "زمان حقیقی آغاز تغییر فرا رسیده (ID=%s)"
+msgstr "Alteração (ID=%s) atingiu o tempo de início."
 
 #. Template: AAAITSMChangeManagement
 msgid "ChangeHistory::ChangeAdd"
-msgstr "تغییر جدید (ID=%s)"
+msgstr "Nova Alteração (ID=%s)"
 
 #. Template: AAAITSMChangeManagement
 msgid "ChangeHistory::ChangeAttachmentAdd"
-msgstr "پیوست جدید: %s"
+msgstr "Novo Anexo: %s"
 
 #. Template: AAAITSMChangeManagement
 msgid "ChangeHistory::ChangeAttachmentDelete"
-msgstr "پیوست حذف شد %s"
+msgstr "Anexo apagado %s"
 
 #. Template: AAAITSMChangeManagement
 msgid "ChangeHistory::ChangeCABDelete"
-msgstr "هیئت مشاوران تغییر حذف شد %s"
+msgstr "CAB apagado %s"
 
 #. Template: AAAITSMChangeManagement
 msgid "ChangeHistory::ChangeCABUpdate"
-msgstr "%s: جدید: %s -> قدیم: %s"
+msgstr "%s: Nova: %s -> Antiga: %s"
 
 #. Template: AAAITSMChangeManagement
 msgid "ChangeHistory::ChangeLinkAdd"
-msgstr "ارتباط به %s (ID=%s) افزوده شد"
+msgstr "Associação a %s (ID=%s) adicionada"
 
 #. Template: AAAITSMChangeManagement
 msgid "ChangeHistory::ChangeLinkDelete"
-msgstr "ارتباط به %s (ID=%s) حذف شد"
+msgstr "Associação a %s (ID=%s) apagada"
 
 #. Template: AAAITSMChangeManagement
 msgid "ChangeHistory::ChangeNotificationSent"
-msgstr "اعلام فرستاده شد %s (رویداد: %s)"
+msgstr "Notificação enviada para %s (Evento: %s)"
 
 #. Template: AAAITSMChangeManagement
 msgid "ChangeHistory::ChangePlannedEndTimeReached"
-msgstr "زمان برنامه‌ریزی شده پایان تغییر فرا رسیده (ID=%s)"
+msgstr "Alteração (ID=%s) atingiu o tempo de fim previsto."
 
 #. Template: AAAITSMChangeManagement
 msgid "ChangeHistory::ChangePlannedStartTimeReached"
-msgstr "زمان برنامه‌ریزی شده آغاز تغییر فرا رسیده (ID=%s)"
+msgstr "Alteração (ID=%s) atingiu o tempo de início previsto."
 
 #. Template: AAAITSMChangeManagement
 msgid "ChangeHistory::ChangeRequestedTimeReached"
-msgstr "زمان درخواست شده تغییر توسط مشترک فرا رسیده (ID=%s)"
+msgstr "Alteração (ID=%s) atingiu o tempo solicitado."
 
 #. Template: AAAITSMChangeManagement
 msgid "ChangeHistory::ChangeUpdate"
-msgstr "%s: جدید: %s -> قدیم: %s"
+msgstr "%s: Nova: %s -> Antiga: %s"
 
 #. Template: AAAITSMChangeManagement
 msgid "ChangeHistory::ConditionAdd"
@@ -191,19 +188,19 @@ msgstr "%s: %s"
 
 #. Template: AAAITSMChangeManagement
 msgid "ChangeHistory::ConditionAddID"
-msgstr "شرط جدید (ID=%s)"
+msgstr "Nova Condição (ID=%s)"
 
 #. Template: AAAITSMChangeManagement
 msgid "ChangeHistory::ConditionDelete"
-msgstr "شرط (ID=%s) حذف شد"
+msgstr "Condição (ID=%s) apagada"
 
 #. Template: AAAITSMChangeManagement
 msgid "ChangeHistory::ConditionDeleteAll"
-msgstr "تمام شروط دستور کار (ID=%s) حذف شد"
+msgstr "Todas as Condições de Alteração (ID=%s) apagadas"
 
 #. Template: AAAITSMChangeManagement
 msgid "ChangeHistory::ConditionUpdate"
-msgstr "%s (شناسه شرط=%s): جدید: %s -> قدیم: %s"
+msgstr "%s (Condição ID=%s): Nova: %s -> Antiga: %s"
 
 #. Template: AAAITSMChangeManagement
 msgid "ChangeHistory::ExpressionAdd"
@@ -211,223 +208,223 @@ msgstr "%s: %s"
 
 #. Template: AAAITSMChangeManagement
 msgid "ChangeHistory::ExpressionAddID"
-msgstr "عبارت منطقی جدید (ID=%s)"
+msgstr "Nova Expressão (ID=%s)"
 
 #. Template: AAAITSMChangeManagement
 msgid "ChangeHistory::ExpressionDelete"
-msgstr "عبارت منطقی (ID=%s) حذف شد"
+msgstr "Expressão (ID=%s) apagada"
 
 #. Template: AAAITSMChangeManagement
 msgid "ChangeHistory::ExpressionDeleteAll"
-msgstr "تمام عبارات منطقی شرط (ID=%s) حذف شد"
+msgstr "Todas as Expressões de Condição (ID=%s) apagadas"
 
 #. Template: AAAITSMChangeManagement
 msgid "ChangeHistory::ExpressionUpdate"
-msgstr "%s (شناسه عبارت=%s): جدید: %s -> قدیم: %s"
+msgstr "%s (ID Expressão=%s): Nova: %s -> Antiga: %s"
 
 #. Template: AAAITSMChangeManagement
 msgid "ChangeNumber"
-msgstr "شماره تغییر"
+msgstr "Número da Alteração"
 
 #. Template: AAAITSMChangeManagement
 msgid "Condition Edit"
-msgstr "ویرایش شرط"
+msgstr "Editar Condição"
 
 #. Template: AAAITSMChangeManagement
 msgid "Create Change"
-msgstr "ساختن تغییر"
+msgstr "Criar Alteração"
 
 #. Template: AAAITSMChangeManagement
 msgid "Create a change from this ticket!"
-msgstr "ساخت یک تغییر از این درخواست!"
+msgstr "Criar uma Alteração a partir deste ticket!"
 
 #. Template: AAAITSMChangeManagement
 msgid "Delete Workorder"
-msgstr "حذف دستور کار"
+msgstr "Apagar Ordem de Serviço"
 
 #. Template: AAAITSMChangeManagement
 msgid "Edit the change"
-msgstr "ویرایش تغییر"
+msgstr "Editar Alteração"
 
 #. Template: AAAITSMChangeManagement
 msgid "Edit the conditions of the change"
-msgstr "ویرایش شروط تغییر"
+msgstr "Editar as condições da alteração"
 
 #. Template: AAAITSMChangeManagement
 msgid "Edit the workorder"
-msgstr "ویرایش دستور کار"
+msgstr "Editar ordem de serviço"
 
 #. Template: AAAITSMChangeManagement
 msgid "Expression"
-msgstr "عبارت منطقی"
+msgstr "Expressão"
 
 #. Template: AAAITSMChangeManagement
 msgid "Full-Text Search in Change and Workorder"
-msgstr "جستجوی تمام متن در تغییرات و دستور کارها"
+msgstr "Procura no texto completo de alterações e ordens de serviço"
 
 #. Template: AAAITSMChangeManagement
 msgid "ITSMCondition"
-msgstr "شرط"
+msgstr "Condição ITSM"
 
 #. Template: AAAITSMChangeManagement
 msgid "ITSMWorkOrder"
-msgstr "دستور کار"
+msgstr "Ordem de Serviço ITSM"
 
 #. Template: AAAITSMChangeManagement
 msgid "Link another object to the change"
-msgstr "ارتباط دادن یک شیء به تغییر"
+msgstr "Associar outro objeto à alteração"
 
 #. Template: AAAITSMChangeManagement
 msgid "Link another object to the workorder"
-msgstr "ارتباط دادن یک شیء دیگر به دستور کار"
+msgstr "Associar outro objeto à ordem de serviço"
 
 #. Template: AAAITSMChangeManagement
 msgid "Move all workorders in time"
-msgstr "جابه‌جا کردن تمام دستور کارها در زمان"
+msgstr "Mover todas as ordens de serviço no tempo"
 
 #. Template: AAAITSMChangeManagement
 msgid "My CABs"
-msgstr "هیئت مشاوران من"
+msgstr "Os meus CABs"
 
 #. Template: AAAITSMChangeManagement
 msgid "My Changes"
-msgstr "تغییرات من"
+msgstr "As minhas alterações"
 
 #. Template: AAAITSMChangeManagement
 msgid "My Workorders"
-msgstr "دستور کارهای من"
+msgstr "As minhas ordens"
 
 #. Template: AAAITSMChangeManagement
 msgid "No XXX settings"
-msgstr "بدون تنظیمات '%s'"
+msgstr "Nenhuma configuração '%s'"
 
 #. Template: AAAITSMChangeManagement
 msgid "PIR (Post Implementation Review)"
-msgstr "بررسی پس از پیاده‌سازی"
+msgstr "RPI (Revista Pós-Implementação)"
 
 #. Template: AAAITSMChangeManagement
 msgid "PSA (Projected Service Availability)"
-msgstr "دسترس‌پذیری پیش‌بینی شده خدمات"
+msgstr "DPS (DisponibilAntiguidade Projetada de Serviço)"
 
 #. Template: AAAITSMChangeManagement
 msgid "Please select first a catalog class!"
-msgstr "لطفا ابتدا یک کلاس انتخاب کنید!"
+msgstr "Por favor, selecione primeiro uma classe de catálogo!"
 
 #. Template: AAAITSMChangeManagement
 msgid "Print the change"
-msgstr "چاپ تغییر"
+msgstr "Imprimir alteração"
 
 #. Template: AAAITSMChangeManagement
 msgid "Print the workorder"
-msgstr "چاپ دستور کار"
+msgstr "Imprimir ordem de serviço"
 
 #. Template: AAAITSMChangeManagement
 msgid "RequestedTime"
-msgstr "زمان مورد انتظار"
+msgstr "Solicitado em"
 
 #. Template: AAAITSMChangeManagement
 msgid "Save Change CAB as Template"
-msgstr "ذخیره کردن تیم کارشناسی تغییر به عنوان قالب"
+msgstr "Guardar CAB da alteração como modelo"
 
 #. Template: AAAITSMChangeManagement
 msgid "Save change as a template"
-msgstr "ذخیره کردن تغییر به عنون قالب"
+msgstr "Guardar alteração como modelo"
 
 #. Template: AAAITSMChangeManagement
 msgid "Save workorder as a template"
-msgstr "ذخیره کردن دستور کار به عنوان قالب"
+msgstr "Guardar ordem de serviço como modelo"
 
 #. Template: AAAITSMChangeManagement
 msgid "Search Changes"
-msgstr "جستجوی تغییرات"
+msgstr "Procurar alterações"
 
 #. Template: AAAITSMChangeManagement
 msgid "Set the agent for the workorder"
-msgstr "مشخص کردن کارشناس برای دستور کار"
+msgstr "Alocar agente à ordem de serviço"
 
 #. Template: AAAITSMChangeManagement
 msgid "Take Workorder"
-msgstr "گرفتن دستور کار"
+msgstr "Assumir ordem de serviço"
 
 #. Template: AAAITSMChangeManagement
 msgid "Take the workorder"
-msgstr "این دستور کار را بگیر"
+msgstr "Assumir a ordem de serviço"
 
 #. Template: AAAITSMChangeManagement
 msgid "Template Overview"
-msgstr "نمای کلی قالب"
+msgstr "Cista de Modelos"
 
 #. Template: AAAITSMChangeManagement
 msgid "The planned end time is invalid!"
-msgstr "زمان برنامه‌ریزی شده پایان معتبر نیست!"
+msgstr "O tempo de fim planeado é inválido!"
 
 #. Template: AAAITSMChangeManagement
 msgid "The planned start time is invalid!"
-msgstr "زمان برنامه‌ریزی شده آغاز معتبر نیست!"
+msgstr "O tempo de início planeado é inválido!"
 
 #. Template: AAAITSMChangeManagement
 msgid "The planned time is invalid!"
-msgstr "زمان برنامه‌ریزی شده معتبر نیست!"
+msgstr "O tempo planeado é inválido!"
 
 #. Template: AAAITSMChangeManagement
 msgid "The requested time is invalid!"
-msgstr "زمان درخواست معتبر نیست!"
+msgstr "O tempo indicado é inválido!"
 
 #. Template: AAAITSMChangeManagement
 msgid "New (from template)"
-msgstr ""
+msgstr "Nova (utilizando modelo)"
 
 #. Template: AAAITSMChangeManagement
 msgid "Add from template"
-msgstr ""
+msgstr "Adicionar utilizando modelo"
 
 #. Template: AAAITSMChangeManagement
 msgid "Add Workorder (from template)"
-msgstr ""
+msgstr "Adicionar ordem (com modelo)"
 
 #. Template: AAAITSMChangeManagement
 msgid "Add a workorder (from template) to the change"
-msgstr ""
+msgstr "Adicionar uma ordem (com modelo) à mudança"
 
 #. Template: AAAITSMChangeManagement
 msgid "WorkOrderHistory::WorkOrderActualEndTimeReached"
-msgstr "زمان حقیقی پایان دستور کار فرا رسیده (ID=%s)"
+msgstr "Ordem de Serviço (ID=%s) atingiu o tempo de fim."
 
 #. Template: AAAITSMChangeManagement
 msgid "WorkOrderHistory::WorkOrderActualEndTimeReachedWithWorkOrderID"
-msgstr "زمان حقیقی پایان دستور کار فرا رسیده (ID=%s)"
+msgstr "Ordem de Serviço (ID=%s) atingiu o tempo de fim."
 
 #. Template: AAAITSMChangeManagement
 msgid "WorkOrderHistory::WorkOrderActualStartTimeReached"
-msgstr "زمان حقیقی آغاز دستور کار فرا رسیده (ID=%s)"
+msgstr "Ordem de Serviço (ID=%s) atingiu o tempo de início."
 
 #. Template: AAAITSMChangeManagement
 msgid "WorkOrderHistory::WorkOrderActualStartTimeReachedWithWorkOrderID"
-msgstr "زمان حقیقی آغاز دستور کار فرا رسیده (ID=%s)"
+msgstr "Ordem de Serviço (ID=%s) atingiu o tempo de início."
 
 #. Template: AAAITSMChangeManagement
 msgid "WorkOrderHistory::WorkOrderAdd"
-msgstr "دستور کار جدید (ID=%s)"
+msgstr "Nova Ordem de Serviço (ID=%s)"
 
 #. Template: AAAITSMChangeManagement
 msgid "WorkOrderHistory::WorkOrderAddWithWorkOrderID"
-msgstr "دستور کار جدید (ID=%s)"
+msgstr "Nova Ordem de Serviço (ID=%s)"
 
 #. Template: AAAITSMChangeManagement
 msgid "WorkOrderHistory::WorkOrderAttachmentAdd"
-msgstr "پیوست جدید برای دستور کار: %s"
+msgstr "Novo anexo à ordem %s"
 
 #. Template: AAAITSMChangeManagement
 msgid "WorkOrderHistory::WorkOrderAttachmentAddWithWorkOrderID"
-msgstr "(ID=%s) پیوست جدید برای دستور کار: %s"
+msgstr "(ID=%s) Novo anexo à ordem: %s"
 
 #. Template: AAAITSMChangeManagement
 msgid "WorkOrderHistory::WorkOrderAttachmentDelete"
-msgstr "پیوست حذف شده از دستور کار: %s"
+msgstr "Anexo apagado da ordem: %s"
 
 #. Template: AAAITSMChangeManagement
 msgid "WorkOrderHistory::WorkOrderAttachmentDeleteWithWorkOrderID"
-msgstr "(ID=%s) پیوست حذف شده از دستور کار: %s"
+msgstr "(ID=%s) anexo apagado da ordem: %s"
 
 #. Template: AAAITSMChangeManagement
 msgid "WorkOrderHistory::WorkOrderReportAttachmentAdd"
@@ -447,355 +444,355 @@ msgstr ""
 
 #. Template: AAAITSMChangeManagement
 msgid "WorkOrderHistory::WorkOrderDelete"
-msgstr "دستور کار (ID=%s) حذف شد"
+msgstr "Ordem (ID=%s) apagada"
 
 #. Template: AAAITSMChangeManagement
 msgid "WorkOrderHistory::WorkOrderDeleteWithWorkOrderID"
-msgstr "دستور کار (ID=%s) حذف شد"
+msgstr "Ordem (ID=%s) apagada"
 
 #. Template: AAAITSMChangeManagement
 msgid "WorkOrderHistory::WorkOrderLinkAdd"
-msgstr "ارتباط به %s (ID=%s) افزوده شد"
+msgstr "Associação a %s (ID=%s) adicionada"
 
 #. Template: AAAITSMChangeManagement
 msgid "WorkOrderHistory::WorkOrderLinkAddWithWorkOrderID"
-msgstr "(ID=%s) ارتباط به %s (ID=%s) افزوده شد"
+msgstr "(ID=%s) Associação a %s (ID=%s) adicionada"
 
 #. Template: AAAITSMChangeManagement
 msgid "WorkOrderHistory::WorkOrderLinkDelete"
-msgstr "ارتباط به %s (ID=%s) حذف شد"
+msgstr "Associação a %s (ID=%s) apagada"
 
 #. Template: AAAITSMChangeManagement
 msgid "WorkOrderHistory::WorkOrderLinkDeleteWithWorkOrderID"
-msgstr "(ID=%s) ارتباط به %s (ID=%s) حذف شد"
+msgstr "(ID=%s) Associação a %s (ID=%s) apagada"
 
 #. Template: AAAITSMChangeManagement
 msgid "WorkOrderHistory::WorkOrderNotificationSent"
-msgstr "اعلان به %s ارسال شد )رویداد: %s("
+msgstr "Notificação enviada para %s (Evento: %s)"
 
 #. Template: AAAITSMChangeManagement
 msgid "WorkOrderHistory::WorkOrderNotificationSentWithWorkOrderID"
-msgstr "(ID=%s) اعلان ارسال شد به %s (رویداد: %s)"
+msgstr "(ID=%s) Notificação enviada para %s (Evento: %s)"
 
 #. Template: AAAITSMChangeManagement
 msgid "WorkOrderHistory::WorkOrderPlannedEndTimeReached"
-msgstr "زمان برنامه‌ریزی شده پایان پایان کار فرا رسیده (ID=%s)"
+msgstr "Ordem de Serviço (ID=%s) atingiu o tempo final previsto."
 
 #. Template: AAAITSMChangeManagement
 msgid "WorkOrderHistory::WorkOrderPlannedEndTimeReachedWithWorkOrderID"
-msgstr "زمان برنامه‌ریزی شده پایان پایان کار فرا رسیده (ID=%s)"
+msgstr "Ordem de Serviço (ID=%s) atingiu o tempo final previsto."
 
 #. Template: AAAITSMChangeManagement
 msgid "WorkOrderHistory::WorkOrderPlannedStartTimeReached"
-msgstr "زمان برنامه‌ریزی شده آغاز دستور کار فرا رسیده (ID=%s)"
+msgstr "Ordem de Serviço (ID=%s) atingiu o tempo de início previsto."
 
 #. Template: AAAITSMChangeManagement
 msgid "WorkOrderHistory::WorkOrderPlannedStartTimeReachedWithWorkOrderID"
-msgstr "زمان برنامه‌ریزی شده آغاز دستور کار فرا رسیده (ID=%s)"
+msgstr "Ordem de Serviço (ID=%s) atingiu o tempo de início previsto."
 
 #. Template: AAAITSMChangeManagement
 msgid "WorkOrderHistory::WorkOrderUpdate"
-msgstr "%s: جدید: %s -> قدیم: %s"
+msgstr "%s: Nova: %s -> Antiga: %s"
 
 #. Template: AAAITSMChangeManagement
 msgid "WorkOrderHistory::WorkOrderUpdateWithWorkOrderID"
-msgstr "(ID=%s) %s: جدید: %s -> قدیم: %s"
+msgstr "(ID=%s) %s: Nova: %s -> Antiga: %s"
 
 #. Template: AAAITSMChangeManagement
 msgid "WorkOrderNumber"
-msgstr "شماره دستور کار"
+msgstr "Número da Ordem de Serviço"
 
 #. Template: AAAITSMChangeManagement
 msgid "accepted"
-msgstr "پذیرفته شده"
+msgstr "Aceite"
 
 #. Template: AAAITSMChangeManagement
 msgid "any"
-msgstr "هیچ"
+msgstr "qualquer"
 
 #. Template: AAAITSMChangeManagement
 msgid "approval"
-msgstr "تصویب"
+msgstr "Aprovação"
 
 #. Template: AAAITSMChangeManagement
 msgid "approved"
-msgstr "تایید شده"
+msgstr "Aprovada"
 
 #. Template: AAAITSMChangeManagement
 msgid "backout"
-msgstr "طرح بازگشت"
+msgstr "Plano de Retorno"
 
 #. Template: AAAITSMChangeManagement
 msgid "begins with"
-msgstr "شروع می‌شود با"
+msgstr "inicia com"
 
 #. Template: AAAITSMChangeManagement
 msgid "canceled"
-msgstr "لغو شده"
+msgstr "Cancelada"
 
 #. Template: AAAITSMChangeManagement
 msgid "contains"
-msgstr "شامل است"
+msgstr "contém"
 
 #. Template: AAAITSMChangeManagement
 msgid "created"
-msgstr "ساخته شده"
+msgstr "Criada"
 
 #. Template: AAAITSMChangeManagement
 msgid "decision"
-msgstr "تصمیم"
+msgstr "Decisão"
 
 #. Template: AAAITSMChangeManagement
 msgid "ends with"
-msgstr "پایان می‌یابد با"
+msgstr "termina com"
 
 #. Template: AAAITSMChangeManagement
 msgid "failed"
-msgstr "شکست"
+msgstr "Falhou"
 
 #. Template: AAAITSMChangeManagement
 msgid "in progress"
-msgstr "در حال اجرا"
+msgstr "Em curso"
 
 #. Template: AAAITSMChangeManagement
 msgid "is"
-msgstr "هست"
+msgstr "é"
 
 #. Template: AAAITSMChangeManagement
 msgid "is after"
-msgstr "پس از"
+msgstr "depois de"
 
 #. Template: AAAITSMChangeManagement
 msgid "is before"
-msgstr "قبل از"
+msgstr "antes de"
 
 #. Template: AAAITSMChangeManagement
 msgid "is empty"
-msgstr "خالی است"
+msgstr "é vazio"
 
 #. Template: AAAITSMChangeManagement
 msgid "is greater than"
-msgstr "بزرگتر است از"
+msgstr "é maior que"
 
 #. Template: AAAITSMChangeManagement
 msgid "is less than"
-msgstr "کوچکتر است از"
+msgstr "é menor que"
 
 #. Template: AAAITSMChangeManagement
 msgid "is not"
-msgstr "نیست"
+msgstr "não é"
 
 #. Template: AAAITSMChangeManagement
 msgid "is not empty"
-msgstr "خالی نیست"
+msgstr "não está vazio"
 
 #. Template: AAAITSMChangeManagement
 msgid "not contains"
-msgstr "شامل نیست"
+msgstr "não contém"
 
 #. Template: AAAITSMChangeManagement
 msgid "pending approval"
-msgstr "در انتظار تایید"
+msgstr "Aprovação Pendente"
 
 #. Template: AAAITSMChangeManagement
 msgid "pending pir"
-msgstr "در انتظار بررسی پس از پیاده‌سازی"
+msgstr "RPI Pendente"
 
 #. Template: AAAITSMChangeManagement
 msgid "pir"
-msgstr "بررسی پس از پیاده‌سازی"
+msgstr "RPI (Revista Pós-Implementação)"
 
 #. Template: AAAITSMChangeManagement
 msgid "ready"
-msgstr "آماده"
+msgstr "Pronta"
 
 #. Template: AAAITSMChangeManagement
 msgid "rejected"
-msgstr "رد شده"
+msgstr "Rejeitada"
 
 #. Template: AAAITSMChangeManagement
 msgid "requested"
-msgstr "درخواست شده"
+msgstr "Requerida"
 
 #. Template: AAAITSMChangeManagement
 msgid "retracted"
-msgstr "جمع شده"
+msgstr "Retratada"
 
 #. Template: AAAITSMChangeManagement
 msgid "set"
-msgstr "تنظیم شده"
+msgstr "configurar"
 
 #. Template: AAAITSMChangeManagement
 msgid "successful"
-msgstr "موفقیت"
+msgstr "Sucesso"
 
 #. Template: AdminITSMChangeCIPAllocate
 msgid "Category <-> Impact <-> Priority"
-msgstr "طبقه <-> اثر <-> الویت"
+msgstr "Categoria <-> Impacto <-> Prioridade"
 
 #. Template: AdminITSMChangeCIPAllocate
 msgid "Manage the priority result of combinating Category <-> Impact."
-msgstr "مدیریت الویت ناشی از ترکیب طبقه <-> اثر"
+msgstr "Gestão de Prioridade a partir da combinação da categoria <-> Impacto."
 
 #. Template: AdminITSMChangeCIPAllocate
 msgid "Priority allocation"
-msgstr "تخصیص الویت"
+msgstr "Atribuir Prioridade"
 
 #. Template: AdminITSMChangeNotification
 msgid "ITSM ChangeManagement Notification Management"
-msgstr "مدیریت اعلان مربوط به مدیریت تغییرات در ITSM"
+msgstr "Gestão de Notificações de gestão de Alteração ITSM"
 
 #. Template: AdminITSMChangeNotification
 msgid "Add Notification Rule"
-msgstr "افزودن قاعده اعلان"
+msgstr "Adicionar Regra de Notificação"
 
 #. Template: AdminITSMChangeNotification
 msgid "Rule"
-msgstr "قاعده"
+msgstr "Regra"
 
 #. Template: AdminITSMChangeNotification
 msgid "Recipients"
-msgstr ""
+msgstr "Destinatários"
 
 #. Template: AdminITSMChangeNotification
 msgid "A notification should have a name!"
-msgstr "اعلان باید دارای نام باشد!"
+msgstr "A notificação precisa de um nome!"
 
 #. Template: AdminITSMChangeNotification
 msgid "Name is required."
-msgstr "نام مورد نیاز است."
+msgstr "Nome é obrigatório."
 
 #. Template: AdminITSMStateMachine
 msgid "Admin State Machine"
-msgstr "ماشین حالت مدیر"
+msgstr "Gerir Máquina de Estado"
 
 #. Template: AdminITSMStateMachine
 msgid "Select a catalog class!"
-msgstr "یک کلاس انتخاب کنید!"
+msgstr "Selecione uma classe de catálogo!"
 
 #. Template: AdminITSMStateMachine
 msgid "A catalog class is required!"
-msgstr "کلاس فهرست مورد نیاز است!"
+msgstr "A classe de catálogo é necessária!"
 
 #. Template: AdminITSMStateMachine
 msgid "Add a state transition"
-msgstr "افزودن یک انتقال وضعیت"
+msgstr "Adicionar uma transição de estado"
 
 #. Template: AdminITSMStateMachine
 msgid "Catalog Class"
-msgstr "کلاس فهرست"
+msgstr "Classe de Catálogo"
 
 #. Template: AdminITSMStateMachine
 msgid "Object Name"
-msgstr "نام شیء"
+msgstr "Nome do Objeto"
 
 #. Template: AdminITSMStateMachine
 msgid "Overview over state transitions for"
-msgstr "نمای کلی روی انتقال‌های وضعیت برای"
+msgstr "Revisão da transição de estado para"
 
 #. Template: AdminITSMStateMachine
 msgid "Delete this state transition"
-msgstr ""
+msgstr "Excluir esta transição de estado"
 
 #. Template: AdminITSMStateMachine
 msgid "Add a new state transition for"
-msgstr "افزودن یک انتقال وضعیت برای"
+msgstr "Adicionar uma nova transição de estado para"
 
 #. Template: AdminITSMStateMachine
 msgid "Please select a state!"
-msgstr "لطفا یک وضعیت را انتخای نمایید!"
+msgstr "Por favor selecione um estado!"
 
 #. Template: AdminITSMStateMachine
 msgid "Please select a next state!"
-msgstr "لطفا یک وضعیت بعدی انخاب نمایید!"
+msgstr "Por favor, escolha o próximo estado!"
 
 #. Template: AdminITSMStateMachine
 msgid "Edit a state transition for"
-msgstr "ویرایش یک انتقال وضعیت برای"
+msgstr "Editar uma transição de estado para"
 
 #. Template: AdminITSMStateMachine
 msgid "Do you really want to delete the state transition"
-msgstr "آیا از حذف انتقال وضعیت مطمئن هستید؟"
+msgstr "Você quer mesmo Apagar esta transição de estado?"
 
 #. Template: AdminITSMStateMachine
 msgid "from"
-msgstr "از"
+msgstr "de"
 
 #. Template: AgentITSMChangeAdd
 msgid "Add Change"
-msgstr "افزودن تغییر"
+msgstr "Adicionar Alteração"
 
 #. Template: AgentITSMChangeAdd
 msgid "ITSM Change"
-msgstr "تغییر"
+msgstr "Alteração"
 
 #. Template: AgentITSMChangeAdd
 msgid "Justification"
-msgstr "دلیل"
+msgstr "Justificação"
 
 #. Template: AgentITSMChangeAdd
 msgid "Input invalid."
-msgstr "ورودی نامعتبر است."
+msgstr "Entrada inválida."
 
 #. Template: AgentITSMChangeAdd
 msgid "Impact"
-msgstr "اثر مخرب"
+msgstr "Impacto"
 
 #. Template: AgentITSMChangeAdd
 msgid "Requested Date"
-msgstr "تاریخ درخواست شده"
+msgstr "Data Solicitada"
 
 #. Template: AgentITSMChangeAddFromTemplate
 msgid "Select Change Template"
-msgstr "انتخاب قالب تغییر"
+msgstr "Selecione modelo de Alteração"
 
 #. Template: AgentITSMChangeAddFromTemplate
 msgid "Time type"
-msgstr "نوع زمان"
+msgstr "Tipo de Horário"
 
 #. Template: AgentITSMChangeAddFromTemplate
 msgid "Invalid time type."
-msgstr "نوع زمان نامعتبراست."
+msgstr "Tipo de horário inválido."
 
 #. Template: AgentITSMChangeAddFromTemplate
 msgid "New time"
-msgstr "زمان جدید"
+msgstr "Novo horário"
 
 #. Template: AgentITSMChangeCABTemplate
 msgid "Save Change CAB as template"
-msgstr "ذخیره کردن هیئت مشاوران تغییر به عنوان قالب"
+msgstr "Guardar CAB da Alteração como modelo"
 
 #. Template: AgentITSMChangeCABTemplate
 msgid "go to involved persons screen"
-msgstr "به صفحه افراد درگیر کار برو"
+msgstr "ir para o ecrãn \"Pessoas Envolvidas\""
 
 #. Template: AgentITSMChangeCABTemplate
 msgid "This field is required"
-msgstr "این فیلد مورد نیاز است"
+msgstr "Este campo é obrigatório"
 
 #. Template: AgentITSMChangeCABTemplate
 msgid "Invalid Name"
-msgstr "نام معتبر نیست"
+msgstr "Nome inválido"
 
 #. Template: AgentITSMChangeCondition
 msgid "Conditions and Actions"
-msgstr "شروط و عملیات‌ها"
+msgstr "Condições e Ações"
 
 #. Template: AgentITSMChangeCondition
 msgid "Delete Condition"
-msgstr "حذف شرط"
+msgstr "Apagar Condição"
 
 #. Template: AgentITSMChangeCondition
 msgid "Add new condition"
-msgstr "افزودن شرط جدید"
+msgstr "Adicionar nova condição"
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "Need a valid name."
-msgstr "یک نام معتبر مورد نیاز است."
+msgstr "Um nome válido é necessário."
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "A a valid name is needed."
-msgstr "یک نام معتبر مورد نیاز است."
+msgstr "Um nome válido é necessário."
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "Duplicate name:"
@@ -807,251 +804,251 @@ msgstr ""
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "Matching"
-msgstr "تطابق"
+msgstr "Combinação"
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "Any expression (OR)"
-msgstr "هر عبارتی (OR)"
+msgstr "Qualquer expressão lógica (OU)"
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "All expressions (AND)"
-msgstr "همه عبارات (AND)"
+msgstr "Todas as expressões lógicas (E)"
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "Expressions"
-msgstr "عبارات منطقی"
+msgstr "Expressões"
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "Selector"
-msgstr "انتخاب کننده"
+msgstr "Seletor"
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "Operator"
-msgstr "اپراتور"
+msgstr "Operador"
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "Delete Expression"
-msgstr ""
+msgstr "Excluir Expressão"
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "No Expressions found."
-msgstr "هیچ عبارتی یافت نشد."
+msgstr "Nenhuma expressão lógica encontrada."
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "Add new expression"
-msgstr "افزودن یک عبارت منطقی"
+msgstr "Adicionar nova expressão"
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "Delete Action"
-msgstr ""
+msgstr "Excluir Ação"
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "No Actions found."
-msgstr "هیچ عملیاتی یافت نشد."
+msgstr "Nenhuma ação encontrada."
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "Add new action"
-msgstr "افزودن عملیات جدید"
+msgstr "Adicionar nova ação"
 
 #. Template: AgentITSMChangeDelete
 msgid "Do you really want to delete this change?"
-msgstr ""
+msgstr "Você quer realmente excluir esta mudança?"
 
 #. Template: AgentITSMChangeHistory
 msgid "Workorder"
-msgstr "دستور کار"
+msgstr "Ordem de Serviço"
 
 #. Template: AgentITSMChangeHistory
 msgid "Show details"
-msgstr "نمایش جزئیات"
+msgstr "Mostrar detalhes"
 
 #. Template: AgentITSMChangeHistory
 msgid "Show workorder"
-msgstr "نمایش دستور کارها"
+msgstr "Mostrar Ordem de Serviço"
 
 #. Template: AgentITSMChangeHistoryZoom
 msgid "Detailed history information of"
-msgstr "اطلاعات تاریخچه جزئی مربوط به"
+msgstr "Informações detalhadas sobre o histórico de"
 
 #. Template: AgentITSMChangeHistoryZoom
 msgid "Modified"
-msgstr ""
+msgstr "Modificado"
 
 #. Template: AgentITSMChangeHistoryZoom
 msgid "Old Value"
-msgstr "مقدار قدیمی"
+msgstr "Antigo valor"
 
 #. Template: AgentITSMChangeHistoryZoom
 msgid "New Value"
-msgstr "مقدار جدید"
+msgstr "Novo valor"
 
 #. Template: AgentITSMChangeInvolvedPersons
 msgid "Involved Persons"
-msgstr "افراد درگیر"
+msgstr "Pessoas Envolvidas"
 
 #. Template: AgentITSMChangeInvolvedPersons
 msgid "ChangeManager"
-msgstr "مدیر تغییر"
+msgstr "gestor da Alteração"
 
 #. Template: AgentITSMChangeInvolvedPersons
 msgid "User invalid."
-msgstr "کاربر نامعتبر است."
+msgstr "Utilizador inválido"
 
 #. Template: AgentITSMChangeInvolvedPersons
 msgid "ChangeBuilder"
-msgstr "سازنده تغییر"
+msgstr "Construtor da Alteração"
 
 #. Template: AgentITSMChangeInvolvedPersons
 msgid "Change Advisory Board"
-msgstr "هیئت مشاوران تغییر"
+msgstr "Conselho Consultivo de Alteração"
 
 #. Template: AgentITSMChangeInvolvedPersons
 msgid "CAB Template"
-msgstr "قالب هیئت مشاوران تغییر"
+msgstr "Modelo de CAB"
 
 #. Template: AgentITSMChangeInvolvedPersons
 msgid "Apply Template"
-msgstr "اعمال قالب"
+msgstr "Aplicar Modelo"
 
 #. Template: AgentITSMChangeInvolvedPersons
 msgid "NewTemplate"
-msgstr "قالب جدید"
+msgstr "Novo modelo"
 
 #. Template: AgentITSMChangeInvolvedPersons
 msgid "Save this CAB as template"
-msgstr "این را به عنوان یک قالب ذخیره کن"
+msgstr "Guardar este CAB como modelo"
 
 #. Template: AgentITSMChangeInvolvedPersons
 msgid "Add to CAB"
-msgstr "افزودن به هیئت مشاوران تغییر"
+msgstr "Adicionar ao CAB"
 
 #. Template: AgentITSMChangeInvolvedPersons
 msgid "Invalid User"
-msgstr "کاربر نامعتبر"
+msgstr "Utilizador inválido"
 
 #. Template: AgentITSMChangeInvolvedPersons
 msgid "Current CAB"
-msgstr "هیئت مشاور کنونی"
+msgstr "CAB Atual"
 
 #. Template: AgentITSMChangeOverviewNavBar
 msgid "Context Settings"
-msgstr "تنظیمات مفاد"
+msgstr "Configurações de Contexto"
 
 #. Template: AgentITSMChangeOverviewNavBar
 msgid "Changes per page"
-msgstr "تغییر در صفحه"
+msgstr "Alterações por página"
 
 #. Template: AgentITSMChangeOverviewSmall
 msgid "WorkOrderTitle"
-msgstr "عنوان دستور کار"
+msgstr "Título da Ordem de Serviço"
 
 #. Template: AgentITSMChangeOverviewSmall
 msgid "ChangeTitle"
-msgstr "عنوان تغییر"
+msgstr "Título da Alteração"
 
 #. Template: AgentITSMChangeOverviewSmall
 msgid "WorkOrderAgent"
-msgstr "کارشناس انجام دستور کار"
+msgstr "agente da Ordem de Serviço"
 
 #. Template: AgentITSMChangeOverviewSmall
 msgid "Workorders"
-msgstr "دستور کارها"
+msgstr "Ordem de Serviço"
 
 #. Template: AgentITSMChangeOverviewSmall
 msgid "ChangeState"
-msgstr "وضعیت تغییر"
+msgstr "Estado da Alteração"
 
 #. Template: AgentITSMChangeOverviewSmall
 msgid "WorkOrderState"
-msgstr "وضعیت دستور کار"
+msgstr "Estado da Ordem de Serviço"
 
 #. Template: AgentITSMChangeOverviewSmall
 msgid "WorkOrderType"
-msgstr "نوع دستور کار"
+msgstr "Tipo da Ordem de Serviço"
 
 #. Template: AgentITSMChangeOverviewSmall
 msgid "Requested Time"
-msgstr "زمان درخواست شده"
+msgstr "Horário solicitado"
 
 #. Template: AgentITSMChangeOverviewSmall
 msgid "PlannedStartTime"
-msgstr "زمان آغاز برنامه‌ریزی شده"
+msgstr "Início planeado"
 
 #. Template: AgentITSMChangeOverviewSmall
 msgid "PlannedEndTime"
-msgstr "زمان خاتمه برنامه‌ریزی شده"
+msgstr "fim planeado"
 
 #. Template: AgentITSMChangeOverviewSmall
 msgid "ActualStartTime"
-msgstr "زمان آغاز در عمل"
+msgstr "Início Real"
 
 #. Template: AgentITSMChangeOverviewSmall
 msgid "ActualEndTime"
-msgstr "زمان خاتمه در عمل"
+msgstr "fim Real"
 
 #. Template: AgentITSMChangePrint
 msgid "ITSM Workorder"
-msgstr "دستور کار"
+msgstr "Ordem de Serviço ITSM"
 
 #. Template: AgentITSMChangeReset
 msgid "Do you really want to reset this change?"
-msgstr ""
+msgstr "Você quer realmente redefinir esta mudança?"
 
 #. Template: AgentITSMChangeSearch
 msgid "(e.g. 10*5155 or 105658*)"
-msgstr "مثال: 10*5155 یا 105658*"
+msgstr "(ex. 10*5155 ou 105658*)"
 
 #. Template: AgentITSMChangeSearch
 msgid "CABAgent"
-msgstr "کارشناس هیئت مشاور تغییر"
+msgstr "agente CAB"
 
 #. Template: AgentITSMChangeSearch
 msgid "e.g."
-msgstr "به عنوان مثال"
+msgstr "ex."
 
 #. Template: AgentITSMChangeSearch
 msgid "CABCustomer"
-msgstr "هیئت مشاور تغییر - مشترک"
+msgstr "Cliente CAB"
 
 #. Template: AgentITSMChangeSearch
 msgid "Instruction"
-msgstr "دستورالعمل"
+msgstr "Instrução"
 
 #. Template: AgentITSMChangeSearch
 msgid "Report"
-msgstr "گزارش"
+msgstr "Relatório"
 
 #. Template: AgentITSMChangeSearch
 msgid "Change Category"
-msgstr "تغییر طبقه‌بندی"
+msgstr "Categoria da Alteração"
 
 #. Template: AgentITSMChangeSearch
 msgid "(before/after)"
-msgstr "قبل از/بعد از"
+msgstr "(antes/depois)"
 
 #. Template: AgentITSMChangeSearch
 msgid "(between)"
-msgstr "بین"
+msgstr "(entre)"
 
 #. Template: AgentITSMChangeSearchResultPrint
 msgid "WorkOrders"
-msgstr "دستور کارها"
+msgstr "Ordens de Serviço"
 
 #. Template: AgentITSMChangeTemplate
 msgid "Save Change as Template"
-msgstr "ذخیره تغییر به عنوان قالب"
+msgstr "Guardar Alteração como Modelo"
 
 #. Template: AgentITSMChangeTemplate
 msgid "A template should have a name!"
-msgstr "قالب باید دارای نام باشد!"
+msgstr "Um modelo precisa de um nome!"
 
 #. Template: AgentITSMChangeTemplate
 msgid "The template name is required."
-msgstr "نام قالب مورد نیاز است."
+msgstr "O nome do modelo é necessário."
 
 #. Template: AgentITSMChangeTemplate
 msgid "Reset States"
-msgstr "تنظیم مجدد وضعیت‌ها"
+msgstr "Restabelecer Estados"
 
 #. Template: AgentITSMChangeTemplate
 msgid "Overwrite original template"
@@ -1063,51 +1060,51 @@ msgstr ""
 
 #. Template: AgentITSMChangeTimeSlot
 msgid "Move Time Slot"
-msgstr "جابجایی شیار زمان"
+msgstr "Deslocar Horários"
 
 #. Template: AgentITSMChangeZoom
 msgid "Change Information"
-msgstr "اطلاعات تغییر"
+msgstr "Informação da Alteração"
 
 #. Template: AgentITSMChangeZoom
 msgid "PlannedEffort"
-msgstr "سعی برنامه‌ریزی شده"
+msgstr "Esforço planeado"
 
 #. Template: AgentITSMChangeZoom
 msgid "Change Initiator(s)"
-msgstr "آغازگر تغییر"
+msgstr "Iniciador(es) da Alteração"
 
 #. Template: AgentITSMChangeZoom
 msgid "Change Manager"
-msgstr "مدیر تغییر"
+msgstr "Gestor de Alteração"
 
 #. Template: AgentITSMChangeZoom
 msgid "Change Builder"
-msgstr "سازنده تغییر"
+msgstr "Construtor da Alteração"
 
 #. Template: AgentITSMChangeZoom
 msgid "CAB"
-msgstr "هیئت مشاور تغییر"
+msgstr "CAB"
 
 #. Template: AgentITSMChangeZoom
 msgid "Last changed"
-msgstr "آخرین تغییر "
+msgstr "Última alteração"
 
 #. Template: AgentITSMChangeZoom
 msgid "Last changed by"
-msgstr "آخرین تغییر توسط"
+msgstr "Última alteração por"
 
 #. Template: AgentITSMChangeZoom
 msgid "Ok"
-msgstr "تایید"
+msgstr "Ok"
 
 #. Template: AgentITSMChangeZoom
 msgid "Download Attachment"
-msgstr "دریافت پیوست"
+msgstr "Descarregar Anexo"
 
 #. Template: AgentITSMTemplateDelete
 msgid "Do you really want to delete this template?"
-msgstr "آیا واقعا مایل به حذف این قالب هستید؟"
+msgstr "Deseja apagar este modelo?"
 
 #. Template: AgentITSMTemplateEditCAB
 msgid "Edit CAB Template"
@@ -1139,7 +1136,7 @@ msgstr ""
 
 #. Template: AgentITSMTemplateOverviewSmall
 msgid "TemplateID"
-msgstr "شناسه قالب"
+msgstr "Template-ID"
 
 #. Template: AgentITSMTemplateOverviewSmall
 msgid "Edit Content"
@@ -1147,19 +1144,19 @@ msgstr ""
 
 #. Template: AgentITSMTemplateOverviewSmall
 msgid "CreateBy"
-msgstr "ساخته شده توسط"
+msgstr "Criado por"
 
 #. Template: AgentITSMTemplateOverviewSmall
 msgid "CreateTime"
-msgstr "ساخته شده"
+msgstr "Criado em"
 
 #. Template: AgentITSMTemplateOverviewSmall
 msgid "ChangeBy"
-msgstr "تغییر یافته توسط"
+msgstr "Alterado por"
 
 #. Template: AgentITSMTemplateOverviewSmall
 msgid "ChangeTime"
-msgstr "تغییر یافته"
+msgstr "Alterado em"
 
 #. Template: AgentITSMTemplateOverviewSmall
 msgid "Edit Template Content"
@@ -1167,67 +1164,67 @@ msgstr ""
 
 #. Template: AgentITSMTemplateOverviewSmall
 msgid "Delete Template"
-msgstr "حذف قالب"
+msgstr "Apagar modelo"
 
 #. Template: AgentITSMWorkOrderAdd
 msgid "Add Workorder to"
-msgstr "افزودن دستور کار به"
+msgstr "Adicionar ordem de serviço a"
 
 #. Template: AgentITSMWorkOrderAdd
 msgid "Invalid workorder type."
-msgstr "نوع دستور کار نامعتبر است."
+msgstr "Tipo de ordem de serviço inválido"
 
 #. Template: AgentITSMWorkOrderAdd
 msgid "The planned start time must be before the planned end time!"
-msgstr "زمان آغاز باید قبل از زمان پایان باشد!"
+msgstr "O tempo de início planeado deve ser anterior ao horário de fim planeado!"
 
 #. Template: AgentITSMWorkOrderAdd
 msgid "Invalid format."
-msgstr "قالب نامعتبر است."
+msgstr "Formato Inválido."
 
 #. Template: AgentITSMWorkOrderAddFromTemplate
 msgid "Select Workorder Template"
-msgstr "انتخاب قالب دستور کار"
+msgstr "Selecione modelo de ordem de serviço"
 
 #. Template: AgentITSMWorkOrderDelete
 msgid "Do you really want to delete this workorder?"
-msgstr "آیا مایل به حذف این دستور کار هستید؟"
+msgstr "Deseja apagar esta ordem de serviço?"
 
 #. Template: AgentITSMWorkOrderDelete
 msgid "You can not delete this Workorder. It is used in at least one Condition!"
-msgstr "شما نمی‌توانید این دستور کار را حذف نمایید زیرا حداقل در یک شرط استفاده شده است."
+msgstr "Não é possível apagar esta ordem de serviço. É utilizada pelo menos numa condição!"
 
 #. Template: AgentITSMWorkOrderDelete
 msgid "This Workorder is used in the following Condition(s)"
-msgstr "این دستور کار در شروط زیر استفاده شده است"
+msgstr "Esta ordem de serviço está em utilização na(s) condição(ões)"
 
 #. Template: AgentITSMWorkOrderEdit
 msgid "Move following workorders accordingly"
-msgstr ""
+msgstr "Mover as seguintes ordens de acordo"
 
 #. Template: AgentITSMWorkOrderEdit
 msgid "If the planned end time of this workorder is changed, the planned start times of all following workorders will be changed accordingly"
-msgstr ""
+msgstr "Se o término planejado desta ordem de serviço for alterado, o horário planejado de início de todas as seguintes ordens também serão alterados"
 
 #. Template: AgentITSMWorkOrderReport
 msgid "The actual start time must be before the actual end time!"
-msgstr "زمان واقعی آغاز باید قبل از زمان واقعی خاتمه باشد!"
+msgstr "O tempo de início real deve ser anterior ao tempo final real !"
 
 #. Template: AgentITSMWorkOrderReport
 msgid "The actual start time must be set, when the actual end time is set!"
-msgstr "زمانی که زمان واقعی خاتمه مشخص شده است، می‌بایست زمان واقعی آغاز نیز مشخص شده باشد!"
+msgstr "O tempo de início real deve ser definido, quando o tempo de fim real é configurado!"
 
 #. Template: AgentITSMWorkOrderTake
 msgid "Current Agent"
-msgstr "کارشناس کنونی"
+msgstr "agente atual"
 
 #. Template: AgentITSMWorkOrderTake
 msgid "Do you really want to take this workorder?"
-msgstr "آیا واقعا می‌خواهید این دستور کار را بگیرید؟"
+msgstr "Deseja assumir esta ordem de serviço?"
 
 #. Template: AgentITSMWorkOrderTemplate
 msgid "Save Workorder as Template"
-msgstr "ذخیره دستور کار به عنوان قالب"
+msgstr "Guardar Ordem de Serviço como Modelo"
 
 #. Template: AgentITSMWorkOrderTemplate
 msgid "Delete original workorder (and surrounding change)"
@@ -1235,43 +1232,43 @@ msgstr ""
 
 #. Template: AgentITSMWorkOrderZoom
 msgid "Workorder Information"
-msgstr "اطلاعات قالب کار"
+msgstr "Informação da Ordem de Serviço"
 
 #. SysConfig
 msgid "A list of the agents who have permission to take workorders. Key is a login name. Content is 0 or 1."
-msgstr "فهرست کارشناسانی که اجازه دسترسی برای گرفتن دستور کار را دارا هستند. کلید یک نام برای ورود است. محتوا 0 یا 1 است."
+msgstr "Lista dos agentes que têm permissão para ter Ordens de Serviço.Chave é um nome de login.O conteúdo é 0 ou 1"
 
 #. SysConfig
 msgid "A list of workorder states, at which the ActualStartTime of a workorder will be set if it was empty at this point."
-msgstr "فهرستی از وضعیت‌های دستور کار که در صورتی در اینجا وارد نشود، به عنوان زمان واقعی آغاز مشخص خواهد شد."
+msgstr "Lista de estados de Ordem de Serviço, em que a hora de início real de uma Ordem de Serviço será definida se estiver vazia."
 
 #. SysConfig
 msgid "Admin of notification rules."
-msgstr "مدیر قواعد اعلان"
+msgstr "Gerir regras de notificação."
 
 #. SysConfig
 msgid "Admin of the CIP matrix."
-msgstr "مدیر ماتریس اهمیت <-> اثر <-> الویت"
+msgstr "Gerir matriz CIP."
 
 #. SysConfig
 msgid "Admin of the state machine."
-msgstr "مدیر ماشین وضعیت"
+msgstr "Gerir máquina de estado."
 
 #. SysConfig
 msgid "Agent interface notification module to see the number of change advisory boards."
-msgstr "ماژول اعلان واسط کارشناس برای نمایش تعداد هیئت‌های مشاور تغییرات"
+msgstr "Módulo de notificação da interface do agente para ver o número de CAB."
 
 #. SysConfig
 msgid "Agent interface notification module to see the number of changes managed by the user."
-msgstr "ماژول اعلان واسط کارشناس برای نمایش تعداد تغییرات مدیریت شده توسط کاربر"
+msgstr "Módulo de notificação da interface do agente para ver o número de alterações geridas pelo utilizador."
 
 #. SysConfig
 msgid "Agent interface notification module to see the number of changes."
-msgstr "ماژول اعلان واسط کارشناس برای نمایش تعداد تغییرات"
+msgstr "Módulo de notificação da interface do agente para ver o número de alterações."
 
 #. SysConfig
 msgid "Agent interface notification module to see the number of work orders."
-msgstr "ماژول اعلان واسط کارشناس برای نمایش تعداد دستور کارها"
+msgstr "Módulo de notificação da interface do agente para ver o número de ordens de serviço."
 
 #. SysConfig
 msgid "Cache time in minutes for the change management toolbars. Default: 3 hours (180 minutes)."
@@ -1283,7 +1280,7 @@ msgstr ""
 
 #. SysConfig
 msgid "Change Overview \"Small\" Limit"
-msgstr "نمای کلی تغییر به صورت کوچک"
+msgstr "Limite para a vista de Alterações \"pequeno\""
 
 #. SysConfig
 msgid "Change and WorkOrder templates edited by this user."
@@ -1291,39 +1288,39 @@ msgstr ""
 
 #. SysConfig
 msgid "Change limit per page for Change Overview \"Small\""
-msgstr "تغییر محدودیت برای هر صفحه برای نمای کوچک تغییر"
+msgstr "Limite para a página vista de Alterações \"pequeno\""
 
 #. SysConfig
 msgid "Change search backend router of the agent interface."
-msgstr "تغییر مسیریاب جستجو در رابط کاربری کارشناس"
+msgstr "Alterar pesquisa apoiada do router do agente de interface"
 
 #. SysConfig
 msgid "Configures how often the notifications are sent when planned the start time or other time values have been reached/passed."
-msgstr ""
+msgstr "Configura a freqüência com que as notificações são enviadas quando o tempo previsto de início ou outros valores de tempo for atingido/ultrpassado."
 
 #. SysConfig
 msgid "Default type for a workorder. This entry must exist in general catalog class 'ITSM::ChangeManagement::WorkOrder::Type'."
-msgstr ""
+msgstr "Tipo por omissão de Ordem de Serviço.Esta entrada deve existir na classe catálogo geral 'ITSM::Gestão da Alteração::Ordem de Serviço::Tipo'."
 
 #. SysConfig
 msgid "Define the signals for each workorder state."
-msgstr "تعریف علائم برای هر وضعیت دستور کار"
+msgstr "Definição dos avisos para cada estado de Ordem de Serviço."
 
 #. SysConfig
 msgid "Defines an overview module to show the small view of a change list."
-msgstr "تعریف ماژول نمای کلی برای نمایش نمای کوچک از فهرست تغییرات"
+msgstr "Define uma vista global do módulo para mostrar uma pequena vista da lista de Alterações."
 
 #. SysConfig
 msgid "Defines an overview module to show the small view of a template list."
-msgstr "تعریف ماژول نمای کلی برای نمایش نمای کوچک از فهرست قالب‌ها"
+msgstr "Define uma vista global do módulo para mostrar uma pequena vistão da lista de modelos."
 
 #. SysConfig
 msgid "Defines if it will be possible to print the accounted time."
-msgstr ""
+msgstr "Define se será possível imprimir o tempo contabilizado."
 
 #. SysConfig
 msgid "Defines if it will be possible to print the planned effort."
-msgstr ""
+msgstr "Define se será possível imprimir o esforço planeado."
 
 #. SysConfig
 msgid "Defines if reachable (as defined by the state machine) change end states should be allowed if a change is in a locked state."
@@ -1335,11 +1332,11 @@ msgstr ""
 
 #. SysConfig
 msgid "Defines if the accounted time should be shown."
-msgstr ""
+msgstr "Define se o tempo contabilizado deve ser mostrado."
 
 #. SysConfig
 msgid "Defines if the actual start and end times should be set."
-msgstr ""
+msgstr "Define se o real início e de fim deve ser definido."
 
 #. SysConfig
 msgid "Defines if the change search and the workorder search functions could use the mirror DB."
@@ -1347,43 +1344,43 @@ msgstr ""
 
 #. SysConfig
 msgid "Defines if the change state can be set in AgentITSMChangeEdit."
-msgstr ""
+msgstr "Define se o estado de Alteração pode ser definida em agenteITSMEditarAlteração."
 
 #. SysConfig
 msgid "Defines if the planned effort should be shown."
-msgstr ""
+msgstr "Define se o esforço planeado deve ser mostrado."
 
 #. SysConfig
 msgid "Defines if the requested date should be print by customer."
-msgstr ""
+msgstr "Define se a data solicitada deverá ser impressa por cliente"
 
 #. SysConfig
 msgid "Defines if the requested date should be searched by customer."
-msgstr ""
+msgstr "Define se a data solicitada deverá ser pesquisado pelo cliente.."
 
 #. SysConfig
 msgid "Defines if the requested date should be set by customer."
-msgstr ""
+msgstr "Define se a data solicitada deverá ser definido pelo cliente."
 
 #. SysConfig
 msgid "Defines if the requested date should be shown by customer."
-msgstr ""
+msgstr "Define se a data solicitada deve ser indicada pelo cliente."
 
 #. SysConfig
 msgid "Defines if the workorder state should be shown."
-msgstr ""
+msgstr "Define se o estado da Ordem de Serviço deve ser mostrado."
 
 #. SysConfig
 msgid "Defines if the workorder title should be shown."
-msgstr ""
+msgstr "Define se o título da Ordem de Serviço deve ser mostrado."
 
 #. SysConfig
 msgid "Defines shown graph attributes."
-msgstr ""
+msgstr "Define mostrado atributos gráfico."
 
 #. SysConfig
 msgid "Defines that only changes containing Workorders linked with services, which the customer user has permission to use will be shown. Any other changes will not be displayed."
-msgstr ""
+msgstr "Define que somente as alterações contendo Ordens de Serviço relacionadas com os serviços, que o utilizador cliente tem permissão para utilizar serão mostradas. Quaisquer outras alterações não serão exibidas."
 
 #. SysConfig
 msgid "Defines the change states that will be allowed to delete."
@@ -1391,31 +1388,31 @@ msgstr ""
 
 #. SysConfig
 msgid "Defines the change states that will be used as filters in the Change PSA overview."
-msgstr ""
+msgstr "Define os estados de alteração que serão utilizado como filtros na vista global de alteração PSA."
 
 #. SysConfig
 msgid "Defines the change states that will be used as filters in the Change Schedule overview."
-msgstr ""
+msgstr "Define os estados de alteração que serão utilizados como filtros na vista global de agendamento de alteração ."
 
 #. SysConfig
 msgid "Defines the change states that will be used as filters in the MyCAB overview."
-msgstr ""
+msgstr "Define os estados de alteração que serão utilizados como filtros na minha vista global CAB."
 
 #. SysConfig
 msgid "Defines the change states that will be used as filters in the MyChanges overview."
-msgstr ""
+msgstr "Define os estados de alteração que serão utilizados como filtros na minha vista global de Alteração."
 
 #. SysConfig
 msgid "Defines the change states that will be used as filters in the change manager overview."
-msgstr ""
+msgstr "Define os estados de alteração que serão utilizados como filtros na vista global do gestor de alterações."
 
 #. SysConfig
 msgid "Defines the change states that will be used as filters in the change overview."
-msgstr ""
+msgstr "Define os estados alteração que serão utilizados como filtros na vista global de alterações."
 
 #. SysConfig
 msgid "Defines the change states that will be used as filters in the customer change schedule overview."
-msgstr ""
+msgstr "Define os estados de alteração que serão utilizados como filtros na vista global do cliente de agendamento de alterações."
 
 #. SysConfig
 msgid "Defines the default change title for a dummy change which is needed to edit a workorder template."
@@ -1423,139 +1420,139 @@ msgstr ""
 
 #. SysConfig
 msgid "Defines the default sort criteria in the change PSA overview."
-msgstr ""
+msgstr "Define os critérios de classificação por omissão na alteração de vista global da PSA."
 
 #. SysConfig
 msgid "Defines the default sort criteria in the change manager overview."
-msgstr ""
+msgstr "Define os critérios de classificação por omissão na vista global da gestão de alterações."
 
 #. SysConfig
 msgid "Defines the default sort criteria in the change overview."
-msgstr ""
+msgstr "Define os critérios de classificação por omissão na vista global de alteração."
 
 #. SysConfig
 msgid "Defines the default sort criteria in the change schedule overview."
-msgstr ""
+msgstr "Define os critérios de classificação por omissão na vista global de programação de alterações."
 
 #. SysConfig
 msgid "Defines the default sort criteria of the changes in the MyCAB overview."
-msgstr ""
+msgstr "Define os critérios de classificação por omissão na vista global de Alterações do \"Meu CAB\"."
 
 #. SysConfig
 msgid "Defines the default sort criteria of the changes in the MyChanges overview."
-msgstr ""
+msgstr "Define os critérios de classificação por omissão na vista global de Alterações da \"Minha Alteração\"."
 
 #. SysConfig
 msgid "Defines the default sort criteria of the changes in the MyWorkorders overview."
-msgstr ""
+msgstr "Define os critérios de classificação por omissão na vista global de alterações da \"Minha Ordem de Serviço\"."
 
 #. SysConfig
 msgid "Defines the default sort criteria of the changes in the PIR overview."
-msgstr ""
+msgstr "Define os critérios de classificação por omissão na vista global de Alterações PIR."
 
 #. SysConfig
 msgid "Defines the default sort criteria of the changes in the customer change schedule overview."
-msgstr ""
+msgstr "Define os critérios de classificação por omissão na vista global para os clientes programarem a Alteração."
 
 #. SysConfig
 msgid "Defines the default sort criteria of the changes in the template overview."
-msgstr ""
+msgstr "Define os critérios de classificação por omissão na vista global do modelo de Alterações."
 
 #. SysConfig
 msgid "Defines the default sort order in the MyCAB overview."
-msgstr ""
+msgstr "Define a ordem de classificação por omissão na vista global de \"Meu CAB\"."
 
 #. SysConfig
 msgid "Defines the default sort order in the MyChanges overview."
-msgstr ""
+msgstr "Define a ordem de classificação por omissão na vista global de \"Minha Alteração\"."
 
 #. SysConfig
 msgid "Defines the default sort order in the MyWorkorders overview."
-msgstr ""
+msgstr "Define a ordem de classificação por omissão na vista global de \"Minha Ordem de Serviço\"."
 
 #. SysConfig
 msgid "Defines the default sort order in the PIR overview."
-msgstr ""
+msgstr "Define a ordem de classificação por omissão na vista global de PIR."
 
 #. SysConfig
 msgid "Defines the default sort order in the change PSA overview."
-msgstr ""
+msgstr "Define a ordem de classificação por omissão na vista global de Alteração PSA."
 
 #. SysConfig
 msgid "Defines the default sort order in the change manager overview."
-msgstr ""
+msgstr "Define a ordem de classificação por omissão na vista global da gestão de Alteração."
 
 #. SysConfig
 msgid "Defines the default sort order in the change overview."
-msgstr ""
+msgstr "Define a ordem de classificação por omissão na vista global de Alteração."
 
 #. SysConfig
 msgid "Defines the default sort order in the change schedule overview."
-msgstr ""
+msgstr "Define a ordem de classificação por omissão na vista global de programar a Alteração."
 
 #. SysConfig
 msgid "Defines the default sort order in the customer change schedule overview."
-msgstr ""
+msgstr "Define a ordem de classificação por omissão na vista global do cliente programar a Alteração."
 
 #. SysConfig
 msgid "Defines the default sort order in the template overview."
-msgstr ""
+msgstr "Define a ordem de classificação por omissão na vista global de modelo."
 
 #. SysConfig
 msgid "Defines the default value for the category of a change."
-msgstr ""
+msgstr "Define o valor por omissão para a categoria de uma alteração."
 
 #. SysConfig
 msgid "Defines the default value for the impact of a change."
-msgstr ""
+msgstr "Define o valor por omissão para o Impacto de uma alteração."
 
 #. SysConfig
 msgid "Defines the field type of CompareValue fields for change attributes used in AgentITSMChangeConditionEdit. Valid values are Selection, Text and Date. If a type is not defined, the field will not be shown."
-msgstr ""
+msgstr "Define o tipo de campo para comparar os campos de valor para o agente de Alteração, atributos em ITSM Editar Condição de Alteração. Os valores válidos são de Seleção, texto e data. Se nenhum tipo for definido, o campo não é exibido."
 
 #. SysConfig
 msgid "Defines the field type of CompareValue fields for workorder attributes used in AgentITSMChangeConditionEdit. Valid values are Selection, Text and Date. If a type is not defined, the field will not be shown."
-msgstr ""
+msgstr "Define o tipo de campo para comparar os campos de valor para a Ordem de Serviço, atributos em ITSM Editar Condição de Alteração. Os valores válidos são de Seleção, texto e data. Se nenhum tipo for definido, o campo não é exibido."
 
 #. SysConfig
 msgid "Defines the object attributes that are selectable for change objects in AgentITSMChangeConditionEdit."
-msgstr ""
+msgstr "Define os atributos de objeto que são selecionáveis para objetos de Alteração em Editar a Condição de Alteração do ITSM."
 
 #. SysConfig
 msgid "Defines the object attributes that are selectable for workorder objects in AgentITSMChangeConditionEdit."
-msgstr ""
+msgstr "Define os atributos de objeto que são selecionáveis para objetos de ordem de serviço em Editar a Condição de Alteração do ITSM."
 
 #. SysConfig
 msgid "Defines the operators that are selectable for the attribute AccountedTime in AgentITSMChangeConditionEdit."
-msgstr ""
+msgstr "Define os operadores que são selecionáveis para o atributo Tempo Contabilizados em Editar a Condição de Alteração do ITSM."
 
 #. SysConfig
 msgid "Defines the operators that are selectable for the attribute ActualEndTime in AgentITSMChangeConditionEdit."
-msgstr ""
+msgstr "Define os operadores que são selecionáveis para o atributo Hora de fim real em Editar a Condição de Alteração do ITSM."
 
 #. SysConfig
 msgid "Defines the operators that are selectable for the attribute ActualStartTime in AgentITSMChangeConditionEdit."
-msgstr ""
+msgstr "Define os operadores que são selecionáveis para o atributo Hora de início real em Editar a Condição de Alteração do ITSM."
 
 #. SysConfig
 msgid "Defines the operators that are selectable for the attribute CategoryID in AgentITSMChangeConditionEdit."
-msgstr ""
+msgstr "Define os operadores que são selecionáveis para o atributo Categoria ID em Editar a Condição de Alteração do ITSM."
 
 #. SysConfig
 msgid "Defines the operators that are selectable for the attribute ChangeBuilderID in AgentITSMChangeConditionEdit."
-msgstr ""
+msgstr "Define os operadores que são selecionáveis para o atributo Alterar Construtor ID em Editar a Condição de Alteração do ITSM."
 
 #. SysConfig
 msgid "Defines the operators that are selectable for the attribute ChangeManagerID in AgentITSMChangeConditionEdit."
-msgstr ""
+msgstr "Define os operadores que são selecionáveis para o atributo Alterar gestor ID em Editar a Condição de Alteração do ITSM."
 
 #. SysConfig
 msgid "Defines the operators that are selectable for the attribute ChangeStateID in AgentITSMChangeConditionEdit."
-msgstr ""
+msgstr "Define os operadores que são selecionáveis para o atributo Alterar Estado ID em Editar a Condição de Alteração do ITSM."
 
 #. SysConfig
 msgid "Defines the operators that are selectable for the attribute ChangeTitle in AgentITSMChangeConditionEdit."
-msgstr ""
+msgstr "Define os operadores que são selecionáveis para o atributo Alterar Título ID em Editar a Condição de Alteração do ITSM."
 
 #. SysConfig
 msgid "Defines the operators that are selectable for the attribute DynamicField in AgentITSMChangeConditionEdit."
@@ -1563,51 +1560,51 @@ msgstr ""
 
 #. SysConfig
 msgid "Defines the operators that are selectable for the attribute ImpactID in AgentITSMChangeConditionEdit."
-msgstr ""
+msgstr "Define os operadores que são selecionáveis para o atributo Impacto ID em Editar a Condição de Alteração do ITSM."
 
 #. SysConfig
 msgid "Defines the operators that are selectable for the attribute PlannedEffort in AgentITSMChangeConditionEdit."
-msgstr ""
+msgstr "Define os operadores que são selecionáveis para o atributo Esforço planeado em Editar a Condição de Alteração do ITSM."
 
 #. SysConfig
 msgid "Defines the operators that are selectable for the attribute PlannedEndTime in AgentITSMChangeConditionEdit."
-msgstr ""
+msgstr "Define os operadores que são selecionáveis para o atributo Hora Final Planejada em Editar a Condição de Alteração do ITSM."
 
 #. SysConfig
 msgid "Defines the operators that are selectable for the attribute PlannedStartTime in AgentITSMChangeConditionEdit."
-msgstr ""
+msgstr "Define os operadores que são selecionáveis para o atributo Hora Ínicio Planejada em Editar a Condição de Alteração do ITSM."
 
 #. SysConfig
 msgid "Defines the operators that are selectable for the attribute PriorityID in AgentITSMChangeConditionEdit."
-msgstr ""
+msgstr "Define os operadores que são selecionáveis para o atributo Prioridade ID em Editar a Condição de Alteração do ITSM."
 
 #. SysConfig
 msgid "Defines the operators that are selectable for the attribute RequestedTime in AgentITSMChangeConditionEdit."
-msgstr ""
+msgstr "Define os operadores que são selecionáveis para o atributo Tempo Requerido em Editar a Condição de Alteração do ITSM."
 
 #. SysConfig
 msgid "Defines the operators that are selectable for the attribute WorkOrderAgentID in AgentITSMChangeConditionEdit."
-msgstr ""
+msgstr "Define os operadores que são selecionáveis para o atributo Ordem de Serviço agente ID em Editar a Condição de Alteração do ITSM."
 
 #. SysConfig
 msgid "Defines the operators that are selectable for the attribute WorkOrderNumber in AgentITSMChangeConditionEdit."
-msgstr ""
+msgstr "Define os operadores que são selecionáveis para o atributo Número Ordem de Serviço em Editar a Condição de Alteração do ITSM."
 
 #. SysConfig
 msgid "Defines the operators that are selectable for the attribute WorkOrderStateID in AgentITSMChangeConditionEdit."
-msgstr ""
+msgstr "Define os operadores que são selecionáveis para o atributo Estado ID Ordem de Serviço em Editar a Condição de Alteração do ITSM."
 
 #. SysConfig
 msgid "Defines the operators that are selectable for the attribute WorkOrderTitle in AgentITSMChangeConditionEdit."
-msgstr ""
+msgstr "Define os operadores que são selecionáveis para o atributo Título Ordem de Serviço em Editar a Condição de Alteração do ITSM."
 
 #. SysConfig
 msgid "Defines the operators that are selectable for the attribute WorkOrderTypeID in AgentITSMChangeConditionEdit."
-msgstr ""
+msgstr "Define os operadores que são selecionáveis para o atributo Tipo ID Ordem de Serviço em Editar a Condição de Alteração do ITSM."
 
 #. SysConfig
 msgid "Defines the period (in years), in which start and end times can be selected."
-msgstr ""
+msgstr "Define o período (em anos), em que os tempos de início e fim podem ser selecionados."
 
 #. SysConfig
 msgid "Defines the shown attributes of a workorder in the tooltip of the workorder graph in the change zoom. To show workorder dynamic fields in the tooltip, they must be specified like DynamicField_WorkOrderFieldName1, DynamicField_WorkOrderFieldName2, etc."
@@ -1615,95 +1612,95 @@ msgstr ""
 
 #. SysConfig
 msgid "Defines the shown columns in the Change PSA overview. This option has no effect on the position of the column."
-msgstr ""
+msgstr "Define as colunas visualizadas na vista geral da PSA. Esta opção não tem efeito sobre a posição da coluna."
 
 #. SysConfig
 msgid "Defines the shown columns in the Change Schedule overview. This option has no effect on the position of the column."
-msgstr ""
+msgstr "Define as colunas visualizadas na vista geral da Agenda. Esta opção não tem efeito sobre a posição da coluna."
 
 #. SysConfig
 msgid "Defines the shown columns in the MyCAB overview. This option has no effect on the position of the column."
-msgstr ""
+msgstr "Define as colunas visualizadas na vista geral do \"Meu CAB\". Esta opção não tem efeito sobre a posição da coluna."
 
 #. SysConfig
 msgid "Defines the shown columns in the MyChanges overview. This option has no effect on the position of the column."
-msgstr ""
+msgstr "Define as colunas visualizadas na vista geral das Minhas Alterações. Esta opção não tem efeito sobre a posição da coluna."
 
 #. SysConfig
 msgid "Defines the shown columns in the MyWorkorders overview. This option has no effect on the position of the column."
-msgstr ""
+msgstr "Define as colunas visualizadas na vista geral das Minhas Ordens de Serviço. Esta opção não tem efeito sobre a posição da coluna."
 
 #. SysConfig
 msgid "Defines the shown columns in the PIR overview. This option has no effect on the position of the column."
-msgstr ""
+msgstr "Define as colunas visualizadas na vista geral da PIR. Esta opção não tem efeito sobre a posição da coluna."
 
 #. SysConfig
 msgid "Defines the shown columns in the change manager overview. This option has no effect on the position of the column."
-msgstr ""
+msgstr "Define as colunas visualizadas na vista geral do gestor de Alteração. Esta opção não tem efeito sobre a posição da coluna."
 
 #. SysConfig
 msgid "Defines the shown columns in the change overview. This option has no effect on the position of the column."
-msgstr ""
+msgstr "Define as colunas visualizadas na vista geral da Alteração. Esta opção não tem efeito sobre a posição da coluna."
 
 #. SysConfig
 msgid "Defines the shown columns in the change search. This option has no effect on the position of the column."
-msgstr ""
+msgstr "Define as colunas visualizadas na pesquisa da Alteração. Esta opção não tem efeito sobre a posição da coluna."
 
 #. SysConfig
 msgid "Defines the shown columns in the customer change schedule overview. This option has no effect on the position of the column."
-msgstr ""
+msgstr "Define as colunas visualizadas na vista geral de Agendar a Alteração. Esta opção não tem efeito sobre a posição da coluna."
 
 #. SysConfig
 msgid "Defines the shown columns in the template overview. This option has no effect on the position of the column."
-msgstr ""
+msgstr "Define as colunas visualizadas na vista geral do modelo. Esta opção não tem efeito sobre a posição da coluna."
 
 #. SysConfig
 msgid "Defines the signals for each ITSMChange state."
-msgstr ""
+msgstr "Define os sinais para cada estado Alteração ITSM."
 
 #. SysConfig
 msgid "Defines the template types that will be used as filters in the template overview."
-msgstr ""
+msgstr "Define os tipos de modelo que serão usados como filtros na vista global de modelo."
 
 #. SysConfig
 msgid "Defines the workorder states that will be used as filters in the MyWorkorders overview."
-msgstr ""
+msgstr "Define os estados de ordem de serviço que serão usados como filtros na vista global das Minhas Ordens de Serviço."
 
 #. SysConfig
 msgid "Defines the workorder states that will be used as filters in the PIR overview."
-msgstr ""
+msgstr "Define os estados de ordem de serviço que serão usados como filtros na vista global da PIR."
 
 #. SysConfig
 msgid "Defines the workorder types that will be used to show the PIR overview."
-msgstr ""
+msgstr "Define os tipos de ordem de serviço que serão usados como filtros para mostrar na vista global da PIR."
 
 #. SysConfig
 msgid "Defines whether notifications should be sent."
-msgstr ""
+msgstr "Define se as notificações devem ser enviadas."
 
 #. SysConfig
 msgid "Determines if an agent can exchange the X-axis of a stat if he generates one."
-msgstr ""
+msgstr "Define se um agente pode trocar o eixo X de uma estatística gerida por si."
 
 #. SysConfig
 msgid "Determines if the common stats module may generate stats about changes done for config item classes."
-msgstr ""
+msgstr "Define se o módulo de estatísticas comuns pode gerar estatísticas sobre as Alterações feitas para as classes de item de configuração."
 
 #. SysConfig
 msgid "Determines if the common stats module may generate stats about changes regarding change state updates within a timeperiod."
-msgstr ""
+msgstr "Define se o módulo de estatísticas comuns pode gerar estatísticas sobre as Alterações referentes às atualizações Alteração de estado dentro de um período de tempo."
 
 #. SysConfig
 msgid "Determines if the common stats module may generate stats about changes regarding the relation between changes and incident tickets."
-msgstr ""
+msgstr "Define se o módulo de estatísticas comuns pode gerar estatísticas sobre as Alterações a respeito da relação entre as Alterações e os tickets de incidente."
 
 #. SysConfig
 msgid "Determines if the common stats module may generate stats about changes."
-msgstr ""
+msgstr "Define se o módulo de estatísticas comuns pode gerar estatísticas sobre as Alterações."
 
 #. SysConfig
 msgid "Determines if the common stats module may generate stats about the number of Rfc tickets a requester created."
-msgstr ""
+msgstr "Define se o módulo de estatísticas comuns pode gerar estatísticas sobre o número de tickets RFC a um solicitante criado."
 
 #. SysConfig
 msgid "Dynamic fields (for changes and workorders) shown in the change print screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled."
@@ -1751,11 +1748,11 @@ msgstr ""
 
 #. SysConfig
 msgid "ITSM event module deletes the history of changes."
-msgstr ""
+msgstr "Módulo de evento ITSM apaga o histórico de Alterações."
 
 #. SysConfig
 msgid "ITSM event module that cleans up conditions."
-msgstr ""
+msgstr "Módulo de evento ITSM que limpa condições."
 
 #. SysConfig
 msgid "ITSM event module that deletes the cache for a toolbar."
@@ -1763,43 +1760,43 @@ msgstr ""
 
 #. SysConfig
 msgid "ITSM event module that matches conditions and executes actions."
-msgstr ""
+msgstr "Módulo de evento ITSM que coincide com as condições e executa as ações."
 
 #. SysConfig
 msgid "ITSM event module that sends notifications."
-msgstr ""
+msgstr "Módulo de eventos ITSM que envia notificações."
 
 #. SysConfig
 msgid "ITSM event module that updates the history of changes."
-msgstr ""
+msgstr "Módulo de evento ITSM que atualiza o histórico de Alterações."
 
 #. SysConfig
 msgid "ITSM event module to recalculate the workorder numbers."
-msgstr ""
+msgstr "Módulo de evento ITSM para recalcular os números de ordem de serviço."
 
 #. SysConfig
 msgid "ITSM event module to set the actual start and end times of workorders."
-msgstr ""
+msgstr "Módulo de evento ITSM para definir o tempo início e de fim de ordens de serviço."
 
 #. SysConfig
 msgid "ITSM event module updates the history of changes."
-msgstr ""
+msgstr "Módulo de evento ITSM atualiza o histórico de Alterações."
 
 #. SysConfig
 msgid "ITSM event module updates the history of conditions."
-msgstr ""
+msgstr "Módulo de evento ITSM atualiza o histórico de condições."
 
 #. SysConfig
 msgid "ITSM event module updates the history of workorders."
-msgstr ""
+msgstr "Módulo de evento ITSM atualiza o histórico de ordens de serviço."
 
 #. SysConfig
 msgid "If frequency is 'regularly', you can configure how often the notications are sent (every X hours)."
-msgstr ""
+msgstr "Se a freqüência é 'regular ', você pode configurar quantas vezes as notificações são enviadas (a cada X horas)."
 
 #. SysConfig
 msgid "Logfile for the ITSM change counter. This file is used for creating the change numbers."
-msgstr ""
+msgstr "Ficheiro de log para o contador de Alteração ITSM. Este ficheiro é usado para criar os números de Alteração."
 
 #. SysConfig
 msgid "Module to check if WorkOrderAdd or WorkOrderAddFromTemplate should be permitted."
@@ -1807,43 +1804,43 @@ msgstr ""
 
 #. SysConfig
 msgid "Module to check the CAB members."
-msgstr ""
+msgstr "Módulo para verificar os membros do CAB."
 
 #. SysConfig
 msgid "Module to check the agent."
-msgstr ""
+msgstr "Módulo para verificar o agente."
 
 #. SysConfig
 msgid "Module to check the change builder."
-msgstr ""
+msgstr "Módulo para verificar o construtor da Alteração."
 
 #. SysConfig
 msgid "Module to check the change manager."
-msgstr ""
+msgstr "Módulo para verificar o gestor de Alteração."
 
 #. SysConfig
 msgid "Module to check the workorder agent."
-msgstr ""
+msgstr "Módulo para verificar o agente da ordem de serviço."
 
 #. SysConfig
 msgid "Module to check whether no workorder agent is set."
-msgstr ""
+msgstr "Módulo para verificar se não existe agente de ordem de serviço."
 
 #. SysConfig
 msgid "Module to check whether the agent is contained in the configured list."
-msgstr ""
+msgstr "Módulo para verificar se o agente pertence à lista configurada."
 
 #. SysConfig
 msgid "Module to show a link to create a change from this ticket. The ticket will be automatically linked with the new change."
-msgstr ""
+msgstr "Módulo para mostrar um link para criar uma Alteração a partir deste ticket. O ticket será automaticamente ligado com a nova Alteração."
 
 #. SysConfig
 msgid "Notification (ITSM Change Management)"
-msgstr "اعلان (مدیریت تغییرات)"
+msgstr "Notificação (Gestão de Alterações ITSM)"
 
 #. SysConfig
 msgid "Only users of these groups have the permission to use the ticket types as defined in \"ITSMChange::AddChangeLinkTicketTypes\" if the feature \"Ticket::Acl::Module###200-Ticket::Acl::Module\" is enabled."
-msgstr ""
+msgstr "Somente Utilizadors dos grupos têm permissão para utilizar os tipos de tickets, tal como definido em \"AlteraçãoITSM:TiposticketsAdicionarLinkAlteração\" se o recurso \"ticket::ACL:: Módulo###200-ticket::ACL::Módulo\" estiver ativo."
 
 #. SysConfig
 msgid "Parameters for the UserCreateWorkOrderNextMask object in the preference view of the agent interface."
@@ -1851,39 +1848,39 @@ msgstr ""
 
 #. SysConfig
 msgid "Parameters for the pages (in which the changes are shown) of the small change overview."
-msgstr ""
+msgstr "Parâmetros para as páginas (em que as Alterações são mostradas) da vista pequena global de Alteração."
 
 #. SysConfig
 msgid "Presents a link in the menu to show the involved persons in a change, in the zoom view of such change in the agent interface."
-msgstr ""
+msgstr "Apresenta um link no menu para mostrar as pessoas envolvidas numa Alteração, na vista a ampliar."
 
 #. SysConfig
 msgid "Required privileges in order for an agent to take a workorder."
-msgstr ""
+msgstr "Privilégios necessários para um agente ter uma ordem de serviço."
 
 #. SysConfig
 msgid "Required privileges to access the overview of all changes."
-msgstr ""
+msgstr "Privilégios necessários para aceder à vista global de todas as alterações."
 
 #. SysConfig
 msgid "Required privileges to add a workorder."
-msgstr ""
+msgstr "Privilégios necessários para adicionar uma ordem de serviço."
 
 #. SysConfig
 msgid "Required privileges to change the workorder agent."
-msgstr ""
+msgstr "Privilégios necessários para alterar o agente de ordem de serviço."
 
 #. SysConfig
 msgid "Required privileges to create a template from a change."
-msgstr ""
+msgstr "Privilégios necessários para criar um modelo de uma alteração."
 
 #. SysConfig
 msgid "Required privileges to create a template from a changes' CAB."
-msgstr ""
+msgstr "Privilégios necessários para criar um modelo de uma Alteração' CAB."
 
 #. SysConfig
 msgid "Required privileges to create a template from a workorder."
-msgstr ""
+msgstr "Privilégios necessários para criar um modelo de uma ordem de serviço."
 
 #. SysConfig
 msgid "Required privileges to create changes from templates."
@@ -1891,35 +1888,35 @@ msgstr ""
 
 #. SysConfig
 msgid "Required privileges to create changes."
-msgstr ""
+msgstr "Privilégios necessários para criar Alterações."
 
 #. SysConfig
 msgid "Required privileges to delete a template."
-msgstr ""
+msgstr "Privilégios necessários para criar um modelo."
 
 #. SysConfig
 msgid "Required privileges to delete a workorder."
-msgstr ""
+msgstr "Privilégios necessários para criar uma ordem de serviço."
 
 #. SysConfig
 msgid "Required privileges to delete changes."
-msgstr ""
+msgstr "Privilégios necessários para excluir mudanças."
 
 #. SysConfig
 msgid "Required privileges to edit a template."
-msgstr ""
+msgstr "Privilégios necessários para editar um modelo."
 
 #. SysConfig
 msgid "Required privileges to edit a workorder."
-msgstr ""
+msgstr "Privilégios necessários para editar uma ordem de serviço."
 
 #. SysConfig
 msgid "Required privileges to edit changes."
-msgstr ""
+msgstr "Privilégios necessários para editar uma Alteração."
 
 #. SysConfig
 msgid "Required privileges to edit the conditions of changes."
-msgstr ""
+msgstr "Privilégios necessários para editar uma condição de alteração."
 
 #. SysConfig
 msgid "Required privileges to edit the content of a template."
@@ -1927,87 +1924,87 @@ msgstr ""
 
 #. SysConfig
 msgid "Required privileges to edit the involved persons of a change."
-msgstr ""
+msgstr "Privilégios necessários para editar pessoas envolvidas na alteração."
 
 #. SysConfig
 msgid "Required privileges to move changes in time."
-msgstr ""
+msgstr "Privilégios necessários para mover as alterações no tempo."
 
 #. SysConfig
 msgid "Required privileges to print a change."
-msgstr ""
+msgstr "Privilégios necessários para imprimir uma alteração"
 
 #. SysConfig
 msgid "Required privileges to reset changes."
-msgstr ""
+msgstr "Privilégios necessários para redefinir mudanças."
 
 #. SysConfig
 msgid "Required privileges to view a workorder."
-msgstr ""
+msgstr "Privilégios necessários para visualizar uma ordem de serviço."
 
 #. SysConfig
 msgid "Required privileges to view changes."
-msgstr ""
+msgstr "Privilégios necessários para visualizar alterações."
 
 #. SysConfig
 msgid "Required privileges to view list of changes where the user is a CAB member."
-msgstr ""
+msgstr "Privilégios necessários para visualizar a lista de alterações, onde o Utilizador é membro do CAB."
 
 #. SysConfig
 msgid "Required privileges to view list of changes where the user is the change manager."
-msgstr ""
+msgstr "Privilégios necessários para visualizar a lista de alterações, onde o utilizador é o gestor da alteração."
 
 #. SysConfig
 msgid "Required privileges to view overview over all templates."
-msgstr ""
+msgstr "Privilégios necessários para visualizar a vista global de todos os modelos."
 
 #. SysConfig
 msgid "Required privileges to view the conditions of changes."
-msgstr ""
+msgstr "Privilégios necessários para visualizar as condições de alterações."
 
 #. SysConfig
 msgid "Required privileges to view the history of a change."
-msgstr ""
+msgstr "Privilégios necessários para visualizar o histórico de uma alteração."
 
 #. SysConfig
 msgid "Required privileges to view the history of a workorder."
-msgstr ""
+msgstr "Privilégios necessários para visualizar o histórico de uma ordem de serviço."
 
 #. SysConfig
 msgid "Required privileges to view the history zoom of a change."
-msgstr ""
+msgstr "Privilégios necessários para visualizar o histórico ampliado de uma alteração."
 
 #. SysConfig
 msgid "Required privileges to view the history zoom of a workorder."
-msgstr ""
+msgstr "Privilégios necessários para visualizar o histórico ampliado de uma ordem de serviço."
 
 #. SysConfig
 msgid "Required privileges to view the list of Change Schedule."
-msgstr ""
+msgstr "Privilégios necessários para visualizar a lista da agenda de alteração."
 
 #. SysConfig
 msgid "Required privileges to view the list of change PSA."
-msgstr ""
+msgstr "Privilégios necessários para visualizar a lista de Alterações PSA."
 
 #. SysConfig
 msgid "Required privileges to view the list of changes with an upcoming PIR (Post Implementation Review)."
-msgstr ""
+msgstr "Privilégios necessários para visualizar a lista de Alterações com um PIR."
 
 #. SysConfig
 msgid "Required privileges to view the list of own changes."
-msgstr ""
+msgstr "Privilégios necessários para visualizar a lista de alterações próprias."
 
 #. SysConfig
 msgid "Required privileges to view the list of own workorders."
-msgstr ""
+msgstr "Privilégios necessários para visualizar a lista de ordens de serviço próprias."
 
 #. SysConfig
 msgid "Required privileges to write a report for the workorder."
-msgstr ""
+msgstr "Privilégios necessários para escrever um relatório para a ordem de serviço."
 
 #. SysConfig
 msgid "Screen after creating a workorder"
-msgstr ""
+msgstr "Tela Após Criar Ordem de Serviço"
 
 #. SysConfig
 msgid "Selects the change number generator module. \"AutoIncrement\" increments the change number, the SystemID and the counter are used with SystemID.counter format (e.g. 100118, 100119). With \"Date\", the change numbers will be generated by the current date and a counter; this format looks like Year.Month.Day.counter, e.g. 2010062400001, 2010062400002. With \"DateChecksum\", the counter will be appended as checksum to the string of date plus the SystemID. The checksum will be rotated on a daily basis. This format looks like Year.Month.Day.SystemID.Counter.CheckSum, e.g. 2010062410000017, 2010062410000026."
@@ -2019,15 +2016,15 @@ msgstr ""
 
 #. SysConfig
 msgid "Sets up the state machine for changes."
-msgstr ""
+msgstr "Configura a máquina de estado para as Alterações."
 
 #. SysConfig
 msgid "Sets up the state machine for workorders."
-msgstr ""
+msgstr "Configura a máquina de estado para as ordens de serviço."
 
 #. SysConfig
 msgid "Show this screen after I created a new workorder"
-msgstr ""
+msgstr "Mostra esta tela após a criação de uma nova ordem"
 
 #. SysConfig
 msgid "Shows a checkbox in the AgentITSMWorkOrderEdit screen that defines if the the following workorders should also be moved if a workorder is modified and the planned end time has changed."
@@ -2035,51 +2032,51 @@ msgstr ""
 
 #. SysConfig
 msgid "Shows a link in the menu that allows changing the work order agent, in the zoom view of such work order of the agent interface."
-msgstr ""
+msgstr "Mostra um link no menu que permite alterar a ordem de serviço do agente."
 
 #. SysConfig
 msgid "Shows a link in the menu that allows defining a change as a template in the zoom view of the change, in the agent interface."
-msgstr ""
+msgstr "Mostra um link no menu que permite definir uma Alteração como um modelo na vista de alteração, na interface do agente."
 
 #. SysConfig
 msgid "Shows a link in the menu that allows defining a work order as a template in the zoom view of the work order, in the agent interface."
-msgstr ""
+msgstr "Mostra um link no menu que permite definir uma ordem de serviço como um modelo na vista da ordem de serviço, na interface do agente."
 
 #. SysConfig
 msgid "Shows a link in the menu that allows editing the report of a workd order, in the zoom view of such work order of the agent interface."
-msgstr ""
+msgstr "Mostra um link no menu que permite a edição do relatório de uma ordem de serviço, na vista de ordem de serviço, tais como agente de interface."
 
 #. SysConfig
 msgid "Shows a link in the menu that allows linking a change with another object in the change zoom view of the agent interface."
-msgstr ""
+msgstr "Mostra um link no menu que permite ligar uma Alteração com outro objeto na Alteração."
 
 #. SysConfig
 msgid "Shows a link in the menu that allows linking a work order with another object in the zoom view of such work order of the agent interface."
-msgstr ""
+msgstr "Mostra um link no menu que permite a ligação de uma ordem de serviço com outro objeto."
 
 #. SysConfig
 msgid "Shows a link in the menu that allows moving the time slot of a change in its zoom view of the agent interface."
-msgstr ""
+msgstr "Mostra um link no menu que permite mover o intervalo de tempo de uma Alteração na sua opinião."
 
 #. SysConfig
 msgid "Shows a link in the menu that allows taking a work order in the its zoom view of the agent interface."
-msgstr ""
+msgstr "Mostra um link no menu que permite a captura de uma ordem de serviço."
 
 #. SysConfig
 msgid "Shows a link in the menu to access the conditions of a change in the its zoom view of the agent interface."
-msgstr ""
+msgstr "Mostra um link no menu para aceder as condições de uma Alteração."
 
 #. SysConfig
 msgid "Shows a link in the menu to access the history of a change in the its zoom view of the agent interface."
-msgstr ""
+msgstr "Mostra um link no menu para aceder o histórico de uma Alteração."
 
 #. SysConfig
 msgid "Shows a link in the menu to access the history of a work order in the its zoom view of the agent interface."
-msgstr ""
+msgstr "Mostra um link no menu para aceder o histórico de uma ordem de serviço."
 
 #. SysConfig
 msgid "Shows a link in the menu to add a work order in the change zoom view of the agent interface."
-msgstr ""
+msgstr "Mostra um link no menu para adicionar uma ordem de serviço na Alteração."
 
 #. SysConfig
 msgid "Shows a link in the menu to delete a change in its zoom view of the agent interface."
@@ -2087,31 +2084,31 @@ msgstr ""
 
 #. SysConfig
 msgid "Shows a link in the menu to delete a work order in its zoom view of the agent interface."
-msgstr ""
+msgstr "Mostra um link no menu para apagar uma ordem de serviço."
 
 #. SysConfig
 msgid "Shows a link in the menu to edit a change in the its zoom view of the agent interface."
-msgstr ""
+msgstr "Mostra um link no menu para editar uma Alteração."
 
 #. SysConfig
 msgid "Shows a link in the menu to edit a work order in the its zoom view of the agent interface."
-msgstr ""
+msgstr "Mostra um link no menu para editar uma ordem de serviço."
 
 #. SysConfig
 msgid "Shows a link in the menu to go back in the change zoom view of the agent interface."
-msgstr ""
+msgstr "Mostra um link no menu para voltar a Alteração."
 
 #. SysConfig
 msgid "Shows a link in the menu to go back in the work order zoom view of the agent interface."
-msgstr ""
+msgstr "Mostra um link no menu para voltar a ordem de serviço."
 
 #. SysConfig
 msgid "Shows a link in the menu to print a change in the its zoom view of the agent interface."
-msgstr ""
+msgstr "Mostra um link no menu para imprimir uma Alteração."
 
 #. SysConfig
 msgid "Shows a link in the menu to print a work order in the its zoom view of the agent interface."
-msgstr ""
+msgstr "Mostra um link no menu para imprimir uma ordem de serviço."
 
 #. SysConfig
 msgid "Shows a link in the menu to reset a change and its workorders in its zoom view of the agent interface."
@@ -2119,11 +2116,11 @@ msgstr ""
 
 #. SysConfig
 msgid "Shows the change history (reverse ordered) in the agent interface."
-msgstr ""
+msgstr "Mostra o histórico de alterações (ordem inversa)."
 
 #. SysConfig
 msgid "State Machine"
-msgstr "ماشین وضعیت"
+msgstr "Máquina de Estado"
 
 #. SysConfig
 msgid "Stores change and workorder ids and their corresponding template id, while a user is editing a template."
@@ -2131,11 +2128,11 @@ msgstr ""
 
 #. SysConfig
 msgid "The identifier for a change, e.g. Change#, MyChange#. The default is Change#."
-msgstr ""
+msgstr "O identificador de uma Alteração, por exemplo, Alteração#,Minha Alteração#. Por omissão é Alteração#."
 
 #. SysConfig
 msgid "The identifier for a workorder, e.g. Workorder#, MyWorkorder#. The default is Workorder#."
-msgstr ""
+msgstr "O identificador de uma Ordem de Serviço, por exemplo, Ordem de Serviço#,Minha Ordem de Serviço#. Por omissão é Ordem de Serviço#."
 
 #. SysConfig
 msgid "This ACL module restricts the usuage of the ticket types that are defined in the sysconfig option 'ITSMChange::AddChangeLinkTicketTypes', to users of the groups as defined in \"ITSMChange::RestrictTicketTypes::Groups\". As this ACL could collide with other ACLs which are also related to the ticket type, this sysconfig option is disabled by default and should only be activated if needed."
@@ -2143,5 +2140,5 @@ msgstr ""
 
 #. SysConfig
 msgid "Types of tickets, where in the ticket zoom view a link to add a change will be displayed."
-msgstr ""
+msgstr "Tipos de tickets, onde no detalhe de visualização do ticket é mostrado um link para adicionar uma Alteração."
 
