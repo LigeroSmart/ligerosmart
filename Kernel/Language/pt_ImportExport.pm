@@ -1,5 +1,5 @@
 # --
-# Kernel/Language/pt_PT_ImportExport.pm - translation file
+# Kernel/Language/pt_ImportExport.pm - translation file
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # Copyright (C) 2012 FCCN - Rui Francisco <rui.francisco@fccn.pt>
 # --
@@ -8,7 +8,7 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package Kernel::Language::pt_PT_ImportExport;
+package Kernel::Language::pt_ImportExport;
 
 use strict;
 use warnings;
