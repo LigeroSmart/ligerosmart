@@ -109,7 +109,7 @@
 [% RenderBlockEnd("RecordNumber") %]
 [% RenderBlockStart("RecordTitle") %]
                 <td>
-                    <div title="[% Data.Title | html %]">[% Data.Title | truncate(40) | html %]</div>
+                    <div title="[% Data.Title | html %]">[% Data.CleanTitle | html %]</div>
                 </td>
 [% RenderBlockEnd("RecordTitle") %]
 [% RenderBlockStart("RecordCategory") %]

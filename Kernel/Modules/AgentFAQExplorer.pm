@@ -307,14 +307,15 @@ sub Run {
         TitleName  => 'FAQ Articles',
         TitleValue => $Title,
 
-        Limit       => $Self->{SearchLimit},
-        Filter      => $Self->{Filter},
-        FilterLink  => $FilterLink,
-        OrderBy     => $Self->{OrderBy},
-        SortBy      => $Self->{SortBy},
-        ShowColumns => \@ShowColumns,
-        Output      => 1,
-        Nav         => $Nav,
+        Limit        => $Self->{SearchLimit},
+        Filter       => $Self->{Filter},
+        FilterLink   => $FilterLink,
+        OrderBy      => $Self->{OrderBy},
+        SortBy       => $Self->{SortBy},
+        ShowColumns  => \@ShowColumns,
+        Output       => 1,
+        Nav          => $Nav,
+        FAQTitleSize => $Self->{Config}->{TitleSize},
     );
 
     # show the FAQ article list

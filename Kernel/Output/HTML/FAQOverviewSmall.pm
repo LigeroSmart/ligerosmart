@@ -271,6 +271,11 @@ sub Run {
                     UserID     => $Self->{UserID},
                 );
 
+                $FAQ{CleanTitle} = $Self->{FAQObject}->FAQArticleTitleClean(
+                    Title => $FAQ{Title},
+                    Size  => $Param{TitleSize},
+                );
+
                 next ID if !%FAQ;
 
                 # add FAQ data

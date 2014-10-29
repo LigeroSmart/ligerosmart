@@ -86,11 +86,12 @@ sub Run {
 
     # output Journal
     $Output .= $Self->_FAQJournalShow(
-        Journal     => $Journal,
-        Total       => scalar @{$Journal},
-        TitleName   => $Self->{LayoutObject}->{LanguageObject}->Get('FAQ Journal'),
-        Limit       => $Self->{JournalLimit},
-        ShowColumns => \@ShowColumns,
+        Journal          => $Journal,
+        Total            => scalar @{$Journal},
+        TitleName        => $Self->{LayoutObject}->{LanguageObject}->Get('FAQ Journal'),
+        Limit            => $Self->{JournalLimit},
+        ShowColumns      => \@ShowColumns,
+        JournalTitleSize => $Self->{Config}->{TitleSize},
     );
 
     # build footer
@@ -291,6 +292,7 @@ sub _FAQJournalShow {
         PageShown => $PageShown,
         AllHits   => $Param{Total} || 0,
         Frontend  => $Frontend,
+        TitleSize => $Param{JournalTitleSize},
     );
 
     $OutputRaw .= $Output;

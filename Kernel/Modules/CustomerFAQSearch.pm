@@ -862,6 +862,11 @@ sub Run {
                         UserID        => $Self->{UserID},
                     );
 
+                    $FAQData{CleanTitle} = $Self->{FAQObject}->FAQArticleTitleClean(
+                        Title => $FAQData{Title},
+                        Size  => $Self->{Config}->{TitleSize},
+                    );
+
                     # add blocks to template
                     $Self->{LayoutObject}->Block(
                         Name => 'Record',

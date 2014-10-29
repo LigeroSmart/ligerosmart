@@ -80,7 +80,7 @@
                             [% Data.Number | html %].
 [% RenderBlockEnd("InfoBoxFAQMiniListItemRowPositionNumber") %]
                                 <a href="[% Env("Baselink") %]Action=AgentFAQZoom;ItemID=[% Data.ItemID | uri %];Nav=[% Data.Nav | uri %]" title="[% Data.Title | html %] ([% Data.CategoryName | html %])">
-                                [% Data.Title | truncate(50) | html %]
+                                [% Data.Title | html %]
                                 </a>
                                 <span>
                                 [% Data.CategoryShortName | truncate(15) | html %] - [% Data.Language | html %] - [% Translate(Data.State) | html %] - [% Data.Created | Localize("TimeShort") %]

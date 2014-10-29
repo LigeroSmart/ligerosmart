@@ -2080,6 +2080,40 @@ sub FAQInlineAttachmentURLUpdate {
     return 1;
 }
 
+=item FAQArticleTitleClean()
+
+strip/clean up a FAQ article title
+
+    my $NewTitle = $FAQObject->FAQArticleTitleClean(
+        Title      => $OldTitle,
+        Size       => $TitleSizeToBeDisplayed   # optional, if 0 do not cut title
+    );
+
+=cut
+
+sub FAQArticleTitleClean {
+    my ( $Self, %Param ) = @_;
+
+    my $Title = $Param{Title} || '';
+
+    # get config options
+    my $TitleSize = $Param{Size};
+    if ( !defined $TitleSize ) {
+        $TitleSize = $Kernel::OM->Get('Kernel::Config')->Get('FAQ::TitleSize') || 100;
+    }
+
+    # trim white space at the beginning or end
+    $Title =~ s/(^\s+|\s+$)//;
+
+    # resize title based on config
+    # do not cut title, if size parameter was 0
+    if ($TitleSize) {
+        $Title =~ s/^(.{$TitleSize}).*$/$1 [...]/;
+    }
+
+    return $Title;
+}
+
 =begin Internal:
 
 =item _FAQApprovalUpdate()

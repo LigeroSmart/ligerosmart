@@ -347,6 +347,7 @@ sub FAQListShow {
         AllHits   => $Param{Total} || 0,
         Frontend  => $Frontend,
         Nav       => $Param{Nav} || '',
+        TitleSize => $Param{FAQTitleSize},
     );
 
     # create output

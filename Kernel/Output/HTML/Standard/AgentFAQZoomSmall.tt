@@ -11,7 +11,7 @@
     <div class="ClearLeft"></div>
     <div class="Headline">
         <h1 title="[% Translate("Zoom") | html %] [% Config("FAQ::FAQHook") %]: [% Data.Number | html %] &ndash; [% Data.Title | html %]">
-            [% Config("FAQ::FAQHook") %]: [% Data.Number %] <span>&mdash;</span> [% Data.Title | truncate(60) | html %]
+            [% Config("FAQ::FAQHook") %]: [% Data.Number %] <span>&mdash;</span> [% Data.Title | html %]
         </h1>
     </div>
 

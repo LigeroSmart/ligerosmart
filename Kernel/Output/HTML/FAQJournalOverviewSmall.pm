@@ -106,6 +106,11 @@ sub Run {
                     UserID     => $Self->{UserID},
                 );
 
+                $JournalEntry->{CleanSubject} = $Self->{FAQObject}->FAQArticleTitleClean(
+                    Title => $FAQ{Title},
+                    Size  => $Param{TitleSize},
+                );
+
                 next ID if !%FAQ;
 
                 # build record block

@@ -224,6 +224,14 @@
             <String>FAQ#</String>
         </Setting>
     </ConfigItem>
+    <ConfigItem Name="FAQ::TitleSize" Required="1" Valid="1">
+        <Description Translatable="1">Default maximum size of the titles in a FAQ article to be shown.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Core</SubGroup>
+        <Setting>
+            <String Regex="^[0-9]{1,3}$">50</String>
+        </Setting>
+    </ConfigItem>
     <ConfigItem Name="FAQ::Default::State" Required="1" Valid="1">
         <Description Translatable="1">Default state for FAQ entry.</Description>
         <Group>FAQ</Group>
@@ -553,6 +561,14 @@ Your OTRS Notification Master
             </Option>
         </Setting>
     </ConfigItem>
+    <ConfigItem Name="FAQ::Frontend::CustomerFAQExplorer###TitleSize" Required="0" Valid="0">
+        <Description Translatable="1">Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer in the customer interface.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Customer::FAQ::ViewExplorer</SubGroup>
+        <Setting>
+            <String Regex="^[0-9]{1,3}$">50</String>
+        </Setting>
+    </ConfigItem>
     <ConfigItem Name="PublicFrontend::CommonParam###Action" Required="1" Valid="1">
         <Description Translatable="1">Default value for the Action parameter for the public frontend. The Action parameter is used in the scripts of the system.</Description>
         <Group>FAQ</Group>
@@ -629,6 +645,14 @@ Your OTRS Notification Master
                 <Item Key="Down">Down</Item>
                 <Item Key="Up">Up</Item>
             </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="FAQ::Frontend::PublicFAQExplorer###TitleSize" Required="0" Valid="0">
+        <Description Translatable="1">Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer in the public interface.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Public::FAQ::ViewExplorer</SubGroup>
+        <Setting>
+            <String Regex="^[0-9]{1,3}$">50</String>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="PublicFrontend::Module###PublicFAQRSS" Required="0" Valid="1">
@@ -985,6 +1009,14 @@ Your OTRS Notification Master
             <String Regex="^[0-9]{1,8}$">200</String>
         </Setting>
     </ConfigItem>
+    <ConfigItem Name="FAQ::Frontend::AgentFAQExplorer###TitleSize" Required="0" Valid="0">
+        <Description Translatable="1">Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer in the agent interface.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Agent::FAQ::ViewExplorer</SubGroup>
+        <Setting>
+            <String Regex="^[0-9]{1,3}$">50</String>
+        </Setting>
+    </ConfigItem>
     <ConfigItem Name="PreferencesGroups###FAQOverviewSmallPageShown" Required="0" Valid="1">
         <Description Translatable="1">Parameters for the pages (in which the FAQ items are shown) of the small FAQ overview.</Description>
         <Group>FAQ</Group>
@@ -1286,7 +1318,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::PublicFAQSearch###SearchPageShown" Required="1" Valid="1">
         <Description Translatable="1">Number of FAQ articles to be displayed on each page of a search result in the public interface.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Public::ViewFAQSearch</SubGroup>
+        <SubGroup>Frontend::Public::FAQ::ViewFAQSearch</SubGroup>
         <Setting>
             <String Regex="^[0-9]{1,3}$">40</String>
         </Setting>
@@ -1404,6 +1436,14 @@ Your OTRS Notification Master
         <SubGroup>Frontend::Agent::FAQ::ViewJournal</SubGroup>
         <Setting>
             <String Regex="^[0-9]{1,8}$">200</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="FAQ::Frontend::AgentFAQJournal###TitleSize" Required="0" Valid="0">
+        <Description Translatable="1">Maximum size of the titles in a FAQ article to be shown in the FAQ journal in the agent interface.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Agent::FAQ::ViewJournal</SubGroup>
+        <Setting>
+            <String Regex="^[0-9]{1,3}$">50</String>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="PreferencesGroups###FAQJournalOverviewSmallPageShown" Required="0" Valid="1">
@@ -2071,4 +2111,29 @@ Your OTRS Notification Master
             <String></String>
         </Setting>
     </ConfigItem>
+    <ConfigItem Name="FAQ::Frontend::AgentFAQSearch###TitleSize" Required="0" Valid="0">
+        <Description Translatable="1">Maximum size of the titles in a FAQ article to be shown in the FAQ Search in the agent interface.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Agent::FAQ::ViewSearch</SubGroup>
+        <Setting>
+            <String Regex="^[0-9]{1,3}$">50</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="FAQ::Frontend::CustomerFAQSearch###TitleSize" Required="0" Valid="0">
+        <Description Translatable="1">Maximum size of the titles in a FAQ article to be shown in the FAQ Search in the customer interface.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Customer::FAQ::ViewSearch</SubGroup>
+        <Setting>
+            <String Regex="^[0-9]{1,3}$">50</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="FAQ::Frontend::PublicFAQSearch###TitleSize" Required="0" Valid="0">
+        <Description Translatable="1">Maximum size of the titles in a FAQ article to be shown in the FAQ Search in the public interface.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Public::FAQ::ViewSearch</SubGroup>
+        <Setting>
+            <String Regex="^[0-9]{1,3}$">50</String>
+        </Setting>
+    </ConfigItem>
+
 </otrs_config>

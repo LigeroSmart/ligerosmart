@@ -11,10 +11,7 @@
 
     <div class="Content">
         <div class="FAQHeader">
-            <h2 title="[% Data.Title | html %]">
-                [% Data.Title | truncate(40) | html %]
-            </h2>
-            <div class="Clear"></div>
+            <h1>[% Translate("FAQ Explorer") | html %]</h1>
         </div>
 
         <div class="FAQPathCategory">
@@ -79,7 +76,7 @@
                                 [% Data.Number | html %].
 [% RenderBlockEnd("InfoBoxFAQMiniListItemRowPositionNumber") %]
                                 <a href="[% Env("Baselink") %]Action=PublicFAQZoom;ItemID=[% Data.ItemID | uri %]" title="[% Data.Title | html %] ([% Data.CategoryName | html %])">
-                                    [% Data.Title | truncate(50) | html %]
+                                    [% Data.Title | html %]
                                 </a>
                                 <span>
                                     [% Data.CategoryShortName | truncate(15) | html %] - [% Data.Language | html %] - [% Translate(Data.State) | html %] - [% Data.Created | Localize("TimeShort") %]
@@ -191,7 +188,7 @@
 [% RenderBlockStart("Record") %]
                                 <tr>
                                     <td class="FAQNumber" title="[% Data.Number | html %]"><a href="[% Env("Baselink") %]Action=PublicFAQZoom;ItemID=[% Data.FAQID | uri %];ZoomBackLink=[% Data.ZoomBackLink | uri %];">[% Data.Number | html %]</a></td>
-                                    <td class="Title" title="[% Data.Title | html %]">[% Data.Title | truncate(60) | html %]</td>
+                                    <td class="Title" title="[% Data.Title | html %]">[% Data.CleanTitle | html %]</td>
                                     <td class="Category" title="[% Data.CategoryName | html %]">[% Data.CategoryName | truncate(45) | html %]</td>
 [% RenderBlockStart("RecordLanguage") %]
                                     <td class="Language" title="[% Data.Language | html %]">[% Data.Language | truncate(5) | html %]</td>

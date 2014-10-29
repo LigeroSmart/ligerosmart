@@ -1053,7 +1053,8 @@ sub Run {
                 OrderBy => $Self->{OrderBy},
                 SortBy  => $Self->{SortBy},
 
-                ShowColumns => \@ShowColumns,
+                ShowColumns  => \@ShowColumns,
+                FAQTitleSize => $Self->{Config}->{TitleSize},
             );
 
             # build footer
