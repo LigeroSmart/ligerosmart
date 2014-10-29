@@ -528,16 +528,6 @@ sub Run {
             return $Output;
         }
 
-        if ( !$Self->{LayoutObject}->{BrowserRichText} ) {
-            for my $Number ( 1 .. 6 ) {
-                $GetParam{ 'Field' . $Number } = $Self->{LayoutObject}->Ascii2Html(
-                    Text           => $GetParam{ 'Field' . $Number },
-                    NewLine        => $Self->{ConfigObject}->Get('DefaultViewNewLine'),
-                    HTMLResultMode => 1,
-                );
-            }
-        }
-
         # update the new FAQ article
         my $UpdateSuccess = $Self->{FAQObject}->FAQUpdate(
             %GetParam,
