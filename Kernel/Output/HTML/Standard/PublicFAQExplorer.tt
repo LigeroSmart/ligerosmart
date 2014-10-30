@@ -42,6 +42,7 @@
                                     <input type="hidden" name="Action" value="[% Data.Action | html %]"/>
                                     <input type="hidden" name="Subaction" value="Search"/>
                                     <input type="hidden" name="Nav" value="[% Data.Nav | html %]"/>
+                                    <input type="hidden" name="SearchBackLink" value="[% Data.SearchBackLink | html %]"/>
                                     <input type="text" name="Fulltext" value="[% Data.Search | html %]" id="Search" title="[% Translate("Search") | html %]"/>
                                     <button type="submit" value="[% Translate("Search") | html %]"><i class="fa fa-search"></i><span class="InvisibleText"><span>[% Translate("Quick Search") | html %]</button>
                                 </form>

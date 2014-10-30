@@ -1034,6 +1034,7 @@ Shows an info box with the Quick Search.
         InterfaceStates => $Self->{InterfaceStates},
         UserID          => 1,
         Nav             => 'none',                     # optional
+        SearchBackLink  => $Base64EncodedUrl,          # optional
     );
 
 =cut
@@ -1087,8 +1088,9 @@ sub FAQShowQuickSearch {
         $Self->Block(
             Name => 'QuickSearch',
             Data => {
-                Action => $Action,
-                Nav => $Param{Nav} || '',
+                Action         => $Action,
+                Nav            => $Param{Nav} || '',
+                SearchBackLink => $Param{SearchBackLink} || '',
             },
         );
     }

@@ -213,6 +213,20 @@ sub Run {
 
     }
 
+    # get back link
+    $GetParam{SearchBackLink} = $Self->{ParamObject}->GetParam( Param => 'SearchBackLink' ) || '';
+    if ( $GetParam{SearchBackLink} ) {
+        $GetParam{SearchBackLink} = MIME::Base64::decode_base64( $GetParam{SearchBackLink} );
+    }
+
+    # show back link
+    $Self->{LayoutObject}->Block(
+        Name => 'Back',
+        Data => {
+            %GetParam,
+        },
+    );
+
     # get array params
     for my $ParamName (qw(CategoryIDs LanguageIDs )) {
 
