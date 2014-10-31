@@ -71,19 +71,19 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Nagios::Acknowledge::FreeField::Host" Required="1" Valid="1">
-        <Description Translatable="1">Name of TicketFreeField for Host.</Description>
+        <Description Translatable="1">Name of the Dynamic Field for Host.</Description>
         <Group>SystemMonitoring</Group>
         <SubGroup>Nagios::Acknowledge</SubGroup>
         <Setting>
-            <String Regex="">TicketFreeText1</String>
+            <String Regex="">DynamicField_TicketFreeText1</String>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Nagios::Acknowledge::FreeField::Service" Required="1" Valid="1">
-        <Description Translatable="1">Name of TicketFreeField for Service.</Description>
+        <Description Translatable="1">Name of the Dynamic Field for Service.</Description>
         <Group>SystemMonitoring</Group>
         <SubGroup>Nagios::Acknowledge</SubGroup>
         <Setting>
-            <String Regex="">TicketFreeText2</String>
+            <String Regex="">DynamicField_TicketFreeText2</String>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Nagios::Acknowledge::Type" Required="0" Valid="1">

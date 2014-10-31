@@ -10,6 +10,7 @@
 # --
 
 4.0.0 RC1 - 2014-??-??
+ - 2014-10-31 Fixed bug#10847 - Configuration settings for the dynamic fields have missing the DynamicField_ prefix.
  - 2014-10-31 Fixed bug#10123 - DynamicFields will not be installed.
 
 4.0.0 beta1 - 2014-10-07
