@@ -336,29 +336,34 @@ sub _GetDynamicFieldsDefinition {
             for my $Job ( sort keys %Jobs ) {
                 return if !$MainObject->Require( $Jobs{$Job}->{Module} );
 
-                next JOB if !$Jobs{$Job}->{Module}->can("GetDynamicFieldsDefinition");
+                if (
+                    $Jobs{$Job}->{Module} ne 'Kernel::System::PostMaster::Filter::SystemMonitoring'
+                    )
+                {
+                    next JOB;
+                }
 
                 my @NewFields;
 
-                eval {
+                my $FilterObject = $Kernel::OM->Get("$Jobs{$Job}->{Module}");
 
-                    my $Run = $Jobs{$Job}->{Module}->GetDynamicFieldsDefinition(
-                        Config    => $Jobs{$Job},    # the job config
-                        NewFields => \@NewFields
+                if ( !$FilterObject ) {
+                    $Kernel::OM->Get('Kernel::System::Log')->Log(
+                        Priority => 'error',
+                        Message  => "Can not create $Jobs{$Job}->{Module} object!",
                     );
-                    if ( !$Run ) {
-                        $Kernel::OM->Get('Kernel::System::Log')->Log(
-                            Priority => 'error',
-                            Message =>
-                                "Execute GetDynamicFieldsDefinition() of $Key $Jobs{$Job}->{Module} not successful!",
-                        );
-                    }
-                };
-                if ($@) {                            # error in eval
+                    next JOB;
+                }
+
+                my $Run = $FilterObject->GetDynamicFieldsDefinition(
+                    Config    => $Jobs{$Job},    # the job config
+                    NewFields => \@NewFields
+                );
+                if ( !$Run ) {
                     $Kernel::OM->Get('Kernel::System::Log')->Log(
                         Priority => 'error',
                         Message =>
-                            "Execute GetDynamicFieldsDefinition() of $Key $Jobs{$Job}->{Module} not successful with error $@!",
+                            "Execute GetDynamicFieldsDefinition() of $Key $Jobs{$Job}->{Module} not successful!",
                     );
                 }
                 else {

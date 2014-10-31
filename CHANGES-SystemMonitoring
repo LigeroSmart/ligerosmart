@@ -9,6 +9,9 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
+4.0.0 RC1 - 2014-??-??
+ - 2014-10-31 Fixed bug#10123 - DynamicFields will not be installed.
+
 4.0.0 beta1 - 2014-10-07
  - Initial release for OTRS 4.
 
