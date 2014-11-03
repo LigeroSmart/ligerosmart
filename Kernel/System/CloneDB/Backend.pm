@@ -14,6 +14,9 @@ use warnings;
 
 use Scalar::Util qw(weaken);
 use Kernel::System::VariableCheck qw(:all);
+use Kernel::System::Package;
+use Kernel::System::Time;
+use Kernel::System::XML;
 
 =head1 NAME
 
@@ -85,6 +88,8 @@ sub new {
         $Self->{$Needed} = $Param{$Needed};
     }
 
+    $Self->{TimeObject} = Kernel::System::Time->new( %{$Self} );
+
     #
     # OTRS stores binary data in some columns. On some database systems,
     #   these are handled differently (data is converted to base64-encoding before
@@ -93,32 +98,10 @@ sub new {
 
     $Self->{CheckEncodingColumns} = $Self->{ConfigObject}->Get('CloneDB::CheckEncodingColumns');
 
-    # get the Clone DB Backends configuration
-    my $CloneDBConfig = $Self->{ConfigObject}->Get('CloneDB::Driver');
-
-    # check Configuration format
-    if ( !IsHashRefWithData($CloneDBConfig) ) {
-        $Self->{LogObject}->Log(
-            Priority => 'error',
-            Message  => "Clone DB configuration is not valid!",
-        );
-        return;
-    }
-
     # create all registered backend modules
-    for my $DBType ( sort keys %{$CloneDBConfig} ) {
+    for my $DBType (qw(mssql mysql oracle postgresql)) {
 
-        # check if the registration for each database type is valid
-        if ( !$CloneDBConfig->{$DBType}->{Module} ) {
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message  => "Registration for DBMS $DBType is invalid!",
-            );
-            return;
-        }
-
-        # set the backend file
-        my $BackendModule = $CloneDBConfig->{$DBType}->{Module};
+        my $BackendModule = 'Kernel::System::CloneDB::Driver::' . $DBType;
 
         # check if database backend exists
         if ( !$Self->{MainObject}->Require($BackendModule) ) {
@@ -136,14 +119,6 @@ sub new {
             $Self->{LogObject}->Log(
                 Priority => 'error',
                 Message  => "Couldn't create a backend object for DBMS $DBType!",
-            );
-            return;
-        }
-
-        if ( ref $BackendObject ne $BackendModule ) {
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message  => "Backend object for DBMS $DBType was not created successfuly!",
             );
             return;
         }
@@ -303,6 +278,171 @@ sub SanityChecks {
     );
 
     return $SanityChecks;
+}
+
+sub _GenerateTargetStructuresSQL {
+    my ( $Self, %Param ) = @_;
+
+    for my $Needed (qw(TargetDBObject)) {
+        if ( !$Param{$Needed} ) {
+            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $Needed!" );
+            return;
+        }
+    }
+
+    $Self->PrintWithTime("Generating DDL for OTRS.\n");
+
+    my $XMLObject = Kernel::System::XML->new(
+        %{$Self},
+        DBObject => $Param{TargetDBObject},
+    );
+    my $SQLDirectory = $Self->{ConfigObject}->Get('Home') . '/scripts/database';
+
+    if ( !-f "$SQLDirectory/otrs-schema.xml" ) {
+        die "SQL directory $SQLDirectory not found.";
+    }
+
+    my $XML = $Self->{MainObject}->FileRead(
+        Directory => $SQLDirectory,
+        Filename  => 'otrs-schema.xml',
+    );
+    my @XMLArray = $XMLObject->XMLParse(
+        String => $XML,
+    );
+    $Self->{SQL} = [];
+    push $Self->{SQL}, $Param{TargetDBObject}->SQLProcessor(
+        Database => \@XMLArray,
+    );
+    $Self->{SQLPost} = [];
+    push $Self->{SQLPost}, $Param{TargetDBObject}->SQLProcessorPost();
+
+    my $PackageObject = Kernel::System::Package->new(
+        %{$Self},
+        DBObject => $Self->{SourceDBObject},    # this time we need the source
+    );
+
+    my @Packages = $PackageObject->RepositoryList();
+
+    # first step: get the dependencies into a single hash,
+    # so that the topological sorting goes faster
+    my %ReverseDependencies;
+    for my $Package (@Packages) {
+        my $Dependencies = $Package->{PackageRequired} // [];
+
+        for my $Dependency (@$Dependencies) {
+
+            # undef happens to be the value that uses the least amount
+            # of memory in Perl, and we are only interested in the keys
+            $ReverseDependencies{ $Dependency->{Content} }->{ $Package->{Name}->{Content} } = undef;
+        }
+    }
+
+    # second step: sort packages based on dependencies
+    my $Sort = sub {
+        if (
+            exists $ReverseDependencies{ $a->{Name}->{Content} }
+            && exists $ReverseDependencies{ $a->{Name}->{Content} }->{ $b->{Name}->{Content} }
+            )
+        {
+            return -1;
+        }
+        if (
+            exists $ReverseDependencies{ $b->{Name}->{Content} }
+            && exists $ReverseDependencies{ $b->{Name}->{Content} }->{ $a->{Name}->{Content} }
+            )
+        {
+            return 1;
+        }
+        return 0;
+    };
+    @Packages = sort { $Sort->() } @Packages;
+
+    # loop all locally installed packages
+    PACKAGE:
+    for my $Package (@Packages) {
+        $Self->PrintWithTime("Generating DDL for package $Package->{Name}->{Content}.\n");
+        next PACKAGE if !$Package->{DatabaseInstall};
+
+        TYPE:
+        for my $Type (qw(pre post)) {
+            next TYPE if !$Package->{DatabaseInstall}->{$Type};
+
+            push $Self->{SQL}, $Param{TargetDBObject}->SQLProcessor(
+                Database => $Package->{DatabaseInstall}->{$Type},
+            );
+            push $Self->{SQLPost}, $Param{TargetDBObject}->SQLProcessorPost();
+        }
+    }
+
+    return;
+}
+
+sub PopulateTargetStructuresPre {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Needed (qw(TargetDBObject)) {
+        if ( !$Param{$Needed} ) {
+            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $Needed!" );
+            return;
+        }
+    }
+
+    $Self->_GenerateTargetStructuresSQL(%Param);
+
+    $Self->PrintWithTime("Creating structures in target database (phase 1/2)");
+
+    STATEMENT:
+    for my $Statement ( @{ $Self->{SQL} } ) {
+        next STATEMENT if $Statement =~ m{^INSERT}smxi;
+        my $Result = $Param{TargetDBObject}->Do( SQL => $Statement );
+        print '.';
+        if ( !$Result ) {
+            die
+                "ERROR: Could not generate structures in target database!\nPlease make sure the target database is empty.\n";
+        }
+    }
+
+    print " done.\n";
+
+    return 1;
+}
+
+sub PopulateTargetStructuresPost {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Needed (qw(TargetDBObject)) {
+        if ( !$Param{$Needed} ) {
+            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $Needed!" );
+            return;
+        }
+    }
+
+    $Self->PrintWithTime("Creating structures in target database (phase 2/2)");
+
+    for my $Statement ( @{ $Self->{SQLPost} } ) {
+        next STATEMENT if $Statement =~ m{^INSERT}smxi;
+        my $Result = $Param{TargetDBObject}->Do( SQL => $Statement );
+        print '.';
+        if ( !$Result ) {
+            die "ERROR: Could not generate structures in target database!\n";
+        }
+    }
+
+    print " done.\n";
+
+    return 1;
+}
+
+sub PrintWithTime {
+    my $Self = shift;
+
+    my $TimeStamp = $Self->{TimeObject}->SystemTime2TimeStamp(
+        SystemTime => $Self->{TimeObject}->SystemTime(),
+    );
+
+    print "[$TimeStamp] ", @_;
 }
 
 =back

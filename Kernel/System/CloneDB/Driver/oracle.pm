@@ -31,32 +31,7 @@ Please look there for a detailed reference of the functions.
 
 =over 4
 
-=item new()
-
-usually, you want to create an instance of this
-by using Kernel::System::CloneDB::Backend->new();
-
 =cut
-
-sub new {
-    my ( $Type, %Param ) = @_;
-
-    # allocate new hash for object
-    my $Self = {};
-    bless( $Self, $Type );
-
-    # get needed objects
-    for my $Needed (
-        qw(ConfigObject EncodeObject LogObject MainObject SourceDBObject BlobColumns CheckEncodingColumns)
-        )
-    {
-        die "Got no $Needed!" if !$Param{$Needed};
-
-        $Self->{$Needed} = $Param{$Needed};
-    }
-
-    return $Self;
-}
 
 #
 # create external db connection.

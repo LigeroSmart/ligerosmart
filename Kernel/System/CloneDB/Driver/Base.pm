@@ -28,6 +28,33 @@ Kernel::System::CloneDB::Driver::Base - common backend functions
 
 =cut
 
+=item new()
+
+usually, you want to create an instance of this
+by using Kernel::System::CloneDB::Backend->new();
+
+=cut
+
+sub new {
+    my ( $Type, %Param ) = @_;
+
+    # allocate new hash for object
+    my $Self = {};
+    bless( $Self, $Type );
+
+    # get needed objects
+    for my $Needed (
+        qw(ConfigObject EncodeObject LogObject MainObject TimeObject SourceDBObject BlobColumns CheckEncodingColumns)
+        )
+    {
+        die "Got no $Needed!" if !$Param{$Needed};
+
+        $Self->{$Needed} = $Param{$Needed};
+    }
+
+    return $Self;
+}
+
 #
 # Some up-front sanity checks
 #
@@ -161,14 +188,16 @@ sub DataTransfer {
     for my $Table (@Tables) {
 
         if ( defined $SkipTables->{ lc $Table } && $SkipTables->{ lc $Table } ) {
-            print "Skipping table $Table...\n";
+            $Self->PrintWithTime("Skipping table $Table...\n");
             next TABLES;
         }
 
-        print "Converting table $Table...\n" if !$Param{DryRun};
-
-        # on dry run just check tables
-        print "Checking table $Table...\n" if $Param{DryRun};
+        if ( $Param{DryRun} ) {
+            $Self->PrintWithTime("Checking table $Table...\n") if $Param{DryRun};
+        }
+        else {
+            $Self->PrintWithTime("Converting table $Table...\n")
+        }
 
         # Get the list of columns of this table to be able to
         #   generate correct INSERT statements.
@@ -336,14 +365,23 @@ sub DataTransfer {
             );
         }
 
-        print "Finished converting table $Table.\n";
+        $Self->PrintWithTime("Finished converting table $Table.\n");
     }
 
     # if DryRun mode is activate, return a diferent value
     return 2 if $Param{DryRun};
 
     return 1;
+}
 
+sub PrintWithTime {
+    my $Self = shift;
+
+    my $TimeStamp = $Self->{TimeObject}->SystemTime2TimeStamp(
+        SystemTime => $Self->{TimeObject}->SystemTime(),
+    );
+
+    print "[$TimeStamp] ", @_;
 }
 
 1;

@@ -29,6 +29,8 @@ use lib dirname($RealBin);
 
 use Getopt::Std;
 
+$| = 1;    # auto-flush console output
+
 use Kernel::Config;
 use Kernel::System::Encode;
 use Kernel::System::Log;
@@ -67,10 +69,16 @@ getopt( 'h', \%Options );
 
 if ( exists $Options{h} ) {
     _Help();
-    exit 1;
+    exit 0;
 }
 
 if ( exists $Options{r} || exists $Options{n} ) {
+    if ( !exists $Options{n} ) {
+        $CommonObject{CloneDBBackendObject}->PopulateTargetStructuresPre(
+            TargetDBObject => $TargetDBObject,
+        );
+    }
+
     my $SanityResult = $CommonObject{CloneDBBackendObject}->SanityChecks(
         TargetDBObject => $TargetDBObject,
         DryRun => $Options{n} || '',
@@ -85,25 +93,31 @@ if ( exists $Options{r} || exists $Options{n} ) {
         die "Was not possible to complete the data transfer. \n" if !$DataTransferResult;
 
         if ( $DataTransferResult eq 2 ) {
-
-            # dry run was succesfull
-            print STDERR "Dry run was succesfully finished! \n";
+            print STDERR "Dry run succesfully finished.\n";
         }
     }
-    exit 1;
+
+    if ( !exists $Options{n} ) {
+        $CommonObject{CloneDBBackendObject}->PopulateTargetStructuresPost(
+            TargetDBObject => $TargetDBObject,
+        );
+    }
+
+    exit 0;
 }
 
 _Help();
-exit 1;
+exit 0;
 
 sub _Help {
-    print STDERR <<EOF;
+    print <<EOF;
 $0 migrate OTRS databases
 Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 
-This script clones an OTRS database into a target database, even
+This script clones an OTRS database into an empty target database, even
 on another database platform. It will dynamically get the list of tables in the
 source DB, and copy the data of each table to the target DB.
+Please note that you first need to configure the target database via SysConfig.
 
 Usage: $0 [-r] [-f] [-n]
 
@@ -111,17 +125,5 @@ Usage: $0 [-r] [-f] [-n]
     -f  Continue even if there are errors while writint the data.
     -n  Dry run mode, only read and verify, but don't write to the target database.
 
-Instructions:
-    - Configure target database settings on SysConfig for this package (OTRSCloneDB).
-    - Create the needed data structures of OTRS (first part) and installed packages in the target database.
-        - Only the the otrs-schema.<DB>.sql files should be used, not the otrs-schema-post.\$DB.sql files.
-        - Also for installed packages, the SQL (first part only) must be generated and executed.
-    - Run this script.
-    - Apply the second part of the data structure definitions (foreign key constraints etc.).
-        - Now the otrs-schema-post.<DB>.sql files should be used.
-        - Also for the installed packages
-    - Verify the result.
-
 EOF
-    exit 1;
 }

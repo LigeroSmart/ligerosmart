@@ -3,75 +3,31 @@
     <ConfigItem Name="CloneDB::TargetDBSettings" Required="0" Valid="1">
         <Description Translatable="1">Settings for connecting with the target database.</Description>
         <Group>OTRSCloneDB</Group>
-        <SubGroup>TargetDatabase</SubGroup>
+        <SubGroup>Configuration</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="TargetDatabaseHost">localhost</Item>
+                <Item Key="TargetDatabaseType">mysql</Item>
                 <Item Key="TargetDatabase">target</Item>
                 <Item Key="TargetDatabaseUser">user</Item>
-                <Item Key="TargetDatabasePw">pwd</Item>
-                <Item Key="TargetDatabaseType">mysql</Item>
-            </Hash>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="CloneDB::Driver###mysql" Required="0" Valid="1">
-        <Description Translatable="1">CloneDB backend registration.</Description>
-        <Group>OTRSCloneDB</Group>
-        <SubGroup>OTRSCloneDB::Driver::Registration</SubGroup>
-        <Setting>
-            <Hash>
-                <Item Key="DisplayName">MySQL</Item>
-                <Item Key="Module">Kernel::System::CloneDB::Driver::mysql</Item>
-            </Hash>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="CloneDB::Driver###postgresql" Required="0" Valid="1">
-        <Description Translatable="1">CloneDB backend registration.</Description>
-        <Group>OTRSCloneDB</Group>
-        <SubGroup>OTRSCloneDB::Driver::Registration</SubGroup>
-        <Setting>
-            <Hash>
-                <Item Key="DisplayName">PostgreSQL</Item>
-                <Item Key="Module">Kernel::System::CloneDB::Driver::postgresql</Item>
-            </Hash>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="CloneDB::Driver###oracle" Required="0" Valid="1">
-        <Description Translatable="1">CloneDB backend registration.</Description>
-        <Group>OTRSCloneDB</Group>
-        <SubGroup>OTRSCloneDB::Driver::Registration</SubGroup>
-        <Setting>
-            <Hash>
-                <Item Key="DisplayName">Oracle</Item>
-                <Item Key="Module">Kernel::System::CloneDB::Driver::oracle</Item>
-            </Hash>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="CloneDB::Driver###mssql" Required="0" Valid="1">
-        <Description Translatable="1">CloneDB backend registration.</Description>
-        <Group>OTRSCloneDB</Group>
-        <SubGroup>OTRSCloneDB::Driver::Registration</SubGroup>
-        <Setting>
-            <Hash>
-                <Item Key="DisplayName">MSSQL</Item>
-                <Item Key="Module">Kernel::System::CloneDB::Driver::mssql</Item>
+                <Item Key="TargetDatabasePw">password</Item>
             </Hash>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="CloneDB::SkipTables" Required="0" Valid="1">
         <Description Translatable="1">List of tables should be skipped, perhaps internal DB tables. Please use lowercase.</Description>
         <Group>OTRSCloneDB</Group>
-        <SubGroup>SourceDatabase</SubGroup>
+        <SubGroup>Configuration</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="htmldb_plan_table">1</Item>
+                <Item Key="otrsclonedb_example_skip_table">1</Item>
             </Hash>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="CloneDB::BlobColumns" Required="0" Valid="1">
-        <Description Translatable="1">Settings for blob columns on the database.</Description>
+        <Description Translatable="1">This setting specifies which table columns contain blob data as these need special treatment.</Description>
         <Group>OTRSCloneDB</Group>
-        <SubGroup>TargetDatabase</SubGroup>
+        <SubGroup>Configuration</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="article_plain.body">1</Item>
@@ -83,9 +39,9 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="CloneDB::CheckEncodingColumns" Required="0" Valid="1">
-        <Description Translatable="1">Settings for checking encode on columns in the database.</Description>
+        <Description Translatable="1">Specifies which columns should be checked for valid UTF8 source data.</Description>
         <Group>OTRSCloneDB</Group>
-        <SubGroup>SourceDatabase</SubGroup>
+        <SubGroup>Configuration</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="article.a_body">1</Item>
@@ -94,11 +50,11 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="CloneDB::LogFile" Required="1" Valid="1">
-        <Description Translatable="1">Log file for replacement of malformed utf8 column values.</Description>
+        <Description Translatable="1">Log file for replacement of malformed utf8 data values.</Description>
         <Group>OTRSCloneDB</Group>
-        <SubGroup>Core::Log</SubGroup>
+        <SubGroup>Configuration</SubGroup>
         <Setting>
-            <String Regex="">/tmp/CloneDB.log</String>
+            <String Regex="">/tmp/OTRSCloneDB.log</String>
         </Setting>
     </ConfigItem>
 </otrs_config>

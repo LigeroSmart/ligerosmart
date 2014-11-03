@@ -41,13 +41,12 @@
         This package provides the 'OTRSCloneDB' feature.
     </para>
     <para>
-        It clones an OTRS source database into a target database.
+        It clones an OTRS source database into a target database, possibly on a different RDBMS.
     </para>
     <para>
-        If you have questions regarding this package, please contact your support team
-        <ulink url="mailto:support@otrs.com?subject=$Name">
-            &lt;support@otrs.com&gt;
-        </ulink> for more information.
+        If you have questions regarding this document or if you need further information, please log in to our customer portal at portal.otrs.com with your OTRS ID and create a ticket.
+        You do not have an OTRS ID yet? Register
+        <ulink url="https://portal.otrs.com/otrs/customer.pl#Signup">here for free</ulink>.
     </para>
 </preface>
 
@@ -59,13 +58,9 @@
     <section>
         <title>Clone DB</title>
         <para>
-            This script clones an OTRS database into a target database, even on another database
-            platform. It will dynamically get the list of tables in the source DB, and copy the
-            data of each table to the target DB.
-        </para>
-        <para>
-            Currently, only MySQL, PostgreSQL, Oracle and MSSQL are supported as a source and
-            target platforms, but this could be extended in future.
+            This script clones an OTRS database into an empty target database, even
+            on another database platform. It will dynamically get the list of tables in the
+            source DB, and copy the data of each table to the target DB.
         </para>
     </section>
 </chapter>
@@ -147,33 +142,28 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
     <para>The package can be configured via the SysConfig in the Admin Interface. The following configuration options are available:</para>
     <section>
         <title>CloneDB::TargetDBSettings.</title>
-        <para>Group: OTRSCloneDB, Subgroup: TargetDatabase.</para>
+        <para>Group: OTRSCloneDB, Subgroup: Configuration.</para>
         <para>Settings for connecting with the target database.</para>
     </section>
     <section>
-        <title>CloneDB::Driver###mysql.</title>
-        <para>Group: OTRSCloneDB, Subgroup: OTRSCloneDB::Driver::Registration.</para>
-        <para>CloneDB backend registration for MySQL.</para>
-    </section>
-    <section>
-        <title>CloneDB::Driver###postgresql.</title>
-        <para>Group: OTRSCloneDB, Subgroup: OTRSCloneDB::Driver::Registration.</para>
-        <para>CloneDB backend registration for PostgreSQL.</para>
-    </section>
-    <section>
-        <title>CloneDB::Driver###oracle.</title>
-        <para>Group: OTRSCloneDB, Subgroup: OTRSCloneDB::Driver::Registration.</para>
-        <para>CloneDB backend registration for Oracle.</para>
-    </section>
-    <section>
-        <title>CloneDB::Driver###mssql.</title>
-        <para>Group: OTRSCloneDB, Subgroup: OTRSCloneDB::Driver::Registration.</para>
-        <para>CloneDB backend registration for MSSQL.</para>
-    </section>
-    <section>
         <title>CloneDB::SkipTables.</title>
-        <para>Group: OTRSCloneDB, Subgroup: SourceDatabase.</para>
-        <para>List of tables should be skipped, perhaps internal DB tables.</para>
+        <para>Group: OTRSCloneDB, Subgroup: Configuration.</para>
+        <para>List of tables should be skipped, perhaps internal DB tables. Please use lowercase.</para>
+    </section>
+    <section>
+        <title>CloneDB::BlobColumns.</title>
+        <para>Group: OTRSCloneDB, Subgroup: Configuration.</para>
+        <para>This setting specifies which table columns contain blob data as these need special treatment.</para>
+    </section>
+    <section>
+        <title>CloneDB::CheckEncodingColumns.</title>
+        <para>Group: OTRSCloneDB, Subgroup: Configuration.</para>
+        <para>Specifies which columns should be checked for valid UTF8 source data.</para>
+    </section>
+    <section>
+        <title>CloneDB::LogFile.</title>
+        <para>Group: OTRSCloneDB, Subgroup: Configuration.</para>
+        <para>Log file for replacement of malformed utf8 data values.</para>
     </section>
 </chapter>
 
@@ -183,7 +173,7 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
 <chapter>
     <title>Usage</title>
         <section>
-            <title>Clone A Database</title>
+            <title>Cloning a Database</title>
             <para>
                 The goal of this example is to clone current database into another database engine.
             </para>
@@ -240,6 +230,22 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
                         </itemizedlist>
                         <para>If not set, the default value "SQL Server" will be used.</para>
                     </note>
+                    <note>
+                        <para>
+                            If you don't have access to the graphical user interface of the source
+                            OTRS system, for example during a migration, you can also perform the
+                            configuration directly in <filename>Kernel/Config.pm</filename> like this:
+                            <programlisting format="linespecific"><![CDATA[
+$Self->{'CloneDB::TargetDBSettings'} =  {
+    'TargetDatabaseHost' => 'localhost',
+    'TargetDatabaseType' => 'mysql',
+    'TargetDatabase'     => 'otrs_target',
+    'TargetDatabaseUser' => 'otrs_target'
+    'TargetDatabasePw'   => 'otrs_target',
+};
+                            ]]></programlisting>
+                        </para>
+                    </note>
                 </listitem>
                 <listitem>
                     <para>
@@ -253,42 +259,7 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
                     </para>
                 </listitem>
                 <listitem>
-                    <para>
-                        Create the needed data structures of OTRS (first part) and installed
-                        packages in the target database.
-                    </para>
-                    <itemizedlist mark="round">
-                        <listitem>
-                            <para>
-                                Only the the otrs-schema.&lt;DB&gt;.sql files should be used, not
-                                the otrs-schema-post.&lt;DB&gt;.sql files.</para>
-                        </listitem>
-                        <listitem>
-                            <para>
-                                Also for installed packages, the SQL (first part only) must be
-                                generated and executed.
-                            </para>
-                        </listitem>
-                    </itemizedlist>
-                </listitem>
-                <listitem>
-                    <para>Run bin/otrs.CloneDB.pl script.</para>
-                </listitem>
-                <listitem>
-                    <para>
-                        Apply the second part of the data structure definitions (foreign key
-                        constraints etc.).
-                    </para>
-                    <itemizedlist mark="round">
-                        <listitem>
-                            <para>
-                                Now the otrs-schema-post.&lt;DB&gt;.sql files should be used.
-                            </para>
-                        </listitem>
-                        <listitem>
-                            <para>Also for the installed packages.</para>
-                        </listitem>
-                    </itemizedlist>
+                    <para>Run the <filename>bin/otrs.CloneDB.pl</filename> script.</para>
                 </listitem>
                 <listitem>
                     <para>Verify the result.</para>
@@ -309,29 +280,29 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
     <section>
         <title>OTRS Clone DB</title>
         <para>
-            bin/otrs.CloneDB.pl: This is the script that triggers the cloning of the databases.
+            <filename>bin/otrs.CloneDB.pl</filename>: This is the script that triggers the cloning of the databases.
         </para>
         <para>
-            Kernel/Config/Files/OTRSCloneDB.xml: Holds all the needed settings for this package.
+            <filename>Kernel/Config/Files/OTRSCloneDB.xml</filename>: Holds all the needed settings for this package.
         </para>
         <para>
-            Kernel/System/CloneDB/Backend.pm: Is the common interface regardless the type of the
+            <filename>Kernel/System/CloneDB/Backend.pm</filename>: Is the common interface regardless the type of the
             database that is used.
         </para>
         <para>
-            Kernel/System/CloneDB/Driver/Base: Holds shared function for all database types.
+            <filename>Kernel/System/CloneDB/Driver/Base</filename>: Holds shared function for all database types.
         </para>
         <para>
-            Kernel/System/CloneDB/Driver/mssql: Implement Backend functions for mssql database.
+            <filename>Kernel/System/CloneDB/Driver/mssql</filename>: Implement Backend functions for mssql database.
         </para>
         <para>
-            Kernel/System/CloneDB/Driver/myssql: Implement Backend functions for mysql database.
+            <filename>Kernel/System/CloneDB/Driver/myssql</filename>: Implement Backend functions for mysql database.
         </para>
         <para>
-            Kernel/System/CloneDB/Driver/oracle: Implement Backend functions for oracle database.
+            <filename>Kernel/System/CloneDB/Driver/oracle</filename>: Implement Backend functions for oracle database.
         </para>
         <para>
-            Kernel/System/CloneDB/Driver/postgresql: Implement Backend functions for postgresql
+            <filename>Kernel/System/CloneDB/Driver/postgresql</filename>: Implement Backend functions for postgresql
             database.
         </para>
 
@@ -405,26 +376,4 @@ shell> perl bin/otrs.UnitTest.pl -n OTRSCloneDB
     <para>$ChangeLog</para>
 </chapter>
 
-<!-- *********** -->
-<!-- 11. Contact -->
-<!-- *********** -->
-<chapter>
-    <title>Contacts</title>
-    <para>People who are involved in this implementation.</para>
-    <section>
-        <title>OTRS AG</title>
-        <para>
-            Accounting: Rene Bakker
-            <ulink url="mailto:sales@otrs.com?subject=$Name">
-                &lt;sales@otrs.com&gt;
-            </ulink>, Phone +49 (0)6172 681988 0
-        </para>
-        <para>
-            Technical: Manuel Hecht
-            <ulink url="mailto:dev-support@otrs.com?subject=$Name">
-                &lt;dev-support@otrs.com&gt;
-            </ulink>, Phone +49 (0)6172 681988 0
-        </para>
-    </section>
-</chapter>
 </book>
