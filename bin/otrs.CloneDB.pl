@@ -101,23 +101,15 @@ sub _Help {
 $0 migrate OTRS databases
 Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 
-Usage: $0 -r
-
--r
-    Run the clone function.
-
--n
-    Don't actually copy anything, just show if something could be wrong.
-
--f
-    Continue if and error on inserting data ocurrs, use together wiht -r option.
-
 This script clones an OTRS database into a target database, even
 on another database platform. It will dynamically get the list of tables in the
 source DB, and copy the data of each table to the target DB.
 
-Currently, only MySQL, PostgreSQL, Oracle and MSSQL are supported as a source platform, but this will
-be extended in future.
+Usage: $0 [-r] [-f] [-n]
+
+    -r  Clone the data into the target database.
+    -f  Continue even if there are errors while writint the data.
+    -n  Dry run mode, only read and verify, but don't write to the target database.
 
 Instructions:
     - Configure target database settings on SysConfig for this package (OTRSCloneDB).
