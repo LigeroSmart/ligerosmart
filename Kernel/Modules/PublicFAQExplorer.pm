@@ -123,10 +123,11 @@ sub Run {
     $Self->{LayoutObject}->Block(
         Name => 'MetaLink',
         Data => {
-            Rel   => 'alternate',
-            Type  => 'application/rss+xml',
-            Title => $Self->{LayoutObject}->{LanguageObject}->Get('FAQ Articles (new created)'),
-            Href  => $Self->{LayoutObject}->{Baselink} . 'Action=PublicFAQRSS;Type=Created',
+            Rel  => 'alternate',
+            Type => 'application/rss+xml',
+            Title =>
+                $Self->{LayoutObject}->{LanguageObject}->Translate('FAQ Articles (new created)'),
+            Href => $Self->{LayoutObject}->{Baselink} . 'Action=PublicFAQRSS;Type=Created',
         },
     );
 
@@ -137,7 +138,8 @@ sub Run {
             Rel  => 'alternate',
             Type => 'application/rss+xml',
             Title =>
-                $Self->{LayoutObject}->{LanguageObject}->Get('FAQ Articles (recently changed)'),
+                $Self->{LayoutObject}->{LanguageObject}
+                ->Translate('FAQ Articles (recently changed)'),
             Href => $Self->{LayoutObject}->{Baselink} . 'Action=PublicFAQRSS;Type=Changed',
         },
     );
@@ -148,7 +150,7 @@ sub Run {
         Data => {
             Rel   => 'alternate',
             Type  => 'application/rss+xml',
-            Title => $Self->{LayoutObject}->{LanguageObject}->Get('FAQ Articles (Top 10)'),
+            Title => $Self->{LayoutObject}->{LanguageObject}->Translate('FAQ Articles (Top 10)'),
             Href  => $Self->{LayoutObject}->{Baselink} . 'Action=PublicFAQRSS;Type=Top10',
         },
     );

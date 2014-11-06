@@ -374,20 +374,20 @@ sub _PDFOutputFAQHeaderInfo {
     # create left table
     my $TableLeft = [
         {
-            Key   => $Self->{LayoutObject}->{LanguageObject}->Get('Category') . ':',
-            Value => $Self->{LayoutObject}->{LanguageObject}->Get( $FAQData{CategoryName} ),
+            Key   => $Self->{LayoutObject}->{LanguageObject}->Translate('Category') . ':',
+            Value => $Self->{LayoutObject}->{LanguageObject}->Translate( $FAQData{CategoryName} ),
         },
         {
-            Key   => $Self->{LayoutObject}->{LanguageObject}->Get('State') . ':',
-            Value => $Self->{LayoutObject}->{LanguageObject}->Get( $FAQData{State} ),
+            Key   => $Self->{LayoutObject}->{LanguageObject}->Translate('State') . ':',
+            Value => $Self->{LayoutObject}->{LanguageObject}->Translate( $FAQData{State} ),
         },
     ];
 
     # language row, feature is enabled
     if ( $Self->{MultiLanguage} ) {
         my $Row = {
-            Key   => $Self->{LayoutObject}->{LanguageObject}->Get('Language') . ':',
-            Value => $Self->{LayoutObject}->{LanguageObject}->Get( $FAQData{Language} ),
+            Key   => $Self->{LayoutObject}->{LanguageObject}->Translate('Language') . ':',
+            Value => $Self->{LayoutObject}->{LanguageObject}->Translate( $FAQData{Language} ),
         };
         push @{$TableLeft}, $Row;
     }
@@ -396,8 +396,8 @@ sub _PDFOutputFAQHeaderInfo {
     if ( $Self->{ConfigObject}->Get('FAQ::ApprovalRequired') ) {
         $FAQData{Approval} = $FAQData{Approved} ? 'Yes' : 'No';
         my $Row = {
-            Key   => $Self->{LayoutObject}->{LanguageObject}->Get('Approval') . ':',
-            Value => $Self->{LayoutObject}->{LanguageObject}->Get( $FAQData{Approval} ),
+            Key   => $Self->{LayoutObject}->{LanguageObject}->Translate('Approval') . ':',
+            Value => $Self->{LayoutObject}->{LanguageObject}->Translate( $FAQData{Approval} ),
         };
         push @{$TableLeft}, $Row;
     }
@@ -409,11 +409,11 @@ sub _PDFOutputFAQHeaderInfo {
     if ( $Self->{Voting} ) {
         $TableRight = [
             {
-                Key   => $Self->{LayoutObject}->{LanguageObject}->Get('Votes') . ':',
+                Key   => $Self->{LayoutObject}->{LanguageObject}->Translate('Votes') . ':',
                 Value => $FAQData{Votes},
             },
             {
-                Key   => $Self->{LayoutObject}->{LanguageObject}->Get('Result') . ':',
+                Key   => $Self->{LayoutObject}->{LanguageObject}->Translate('Result') . ':',
                 Value => $FAQData{VoteResult} . " %",
             },
         ];
@@ -421,7 +421,7 @@ sub _PDFOutputFAQHeaderInfo {
 
     # last update row
     push @{$TableRight}, {
-        Key   => $Self->{LayoutObject}->{LanguageObject}->Get('Last update') . ':',
+        Key   => $Self->{LayoutObject}->{LanguageObject}->Translate('Last update') . ':',
         Value => $Self->{LayoutObject}->{LanguageObject}->FormatTimeString(
             $FAQData{Changed},
             'DateFormat',
@@ -503,7 +503,7 @@ sub _PDFOutputLinkedObjects {
         # investigate link type name
         my @LinkData = split q{::}, $LinkTypeLinkDirection;
         my $LinkTypeName = $TypeList{ $LinkData[0] }->{ $LinkData[1] . 'Name' };
-        $LinkTypeName = $Self->{LayoutObject}->{LanguageObject}->Get($LinkTypeName);
+        $LinkTypeName = $Self->{LayoutObject}->{LanguageObject}->Translate($LinkTypeName);
 
         # define headline
         $TableParam{CellData}[$Row][0]{Content} = $LinkTypeName . ':';
@@ -537,7 +537,7 @@ sub _PDFOutputLinkedObjects {
 
     # output headline
     $Self->{PDFObject}->Text(
-        Text     => $Self->{LayoutObject}->{LanguageObject}->Get('Linked Objects'),
+        Text     => $Self->{LayoutObject}->{LanguageObject}->Translate('Linked Objects'),
         Height   => 7,
         Type     => 'Cut',
         Font     => 'ProportionalBoldItalic',
@@ -606,7 +606,7 @@ sub _PDFOutputKeywords {
 
     # output headline
     $Self->{PDFObject}->Text(
-        Text     => $Self->{LayoutObject}->{LanguageObject}->Get('Keywords'),
+        Text     => $Self->{LayoutObject}->{LanguageObject}->Translate('Keywords'),
         Height   => 7,
         Type     => 'Cut',
         Font     => 'ProportionalBoldItalic',
@@ -697,7 +697,8 @@ sub _PDFOutputFAQDynamicFields {
         );
 
         $TableParam{CellData}[$Row][0]{Content}
-            = $Self->{LayoutObject}->{LanguageObject}->Get( $DynamicFieldConfig->{Label} ) . ':';
+            = $Self->{LayoutObject}->{LanguageObject}->Translate( $DynamicFieldConfig->{Label} )
+            . ':';
         $TableParam{CellData}[$Row][0]{Font}    = 'ProportionalBold';
         $TableParam{CellData}[$Row][1]{Content} = $ValueStrg->{Value};
 
@@ -719,7 +720,7 @@ sub _PDFOutputFAQDynamicFields {
 
         # output headline
         $Self->{PDFObject}->Text(
-            Text     => $Self->{LayoutObject}->{LanguageObject}->Get('FAQ Dynamic Fields'),
+            Text     => $Self->{LayoutObject}->{LanguageObject}->Translate('FAQ Dynamic Fields'),
             Height   => 7,
             Type     => 'Cut',
             Font     => 'ProportionalBoldItalic',
@@ -821,9 +822,10 @@ sub _PDFOuputFAQContent {
         );
 
         # translate the field name and state
-        my $FieldName = $Self->{LayoutObject}->{LanguageObject}->Get( $Fields{$Field}->{'Caption'} )
+        my $FieldName
+            = $Self->{LayoutObject}->{LanguageObject}->Translate( $Fields{$Field}->{'Caption'} )
             . ' ('
-            . $Self->{LayoutObject}->{LanguageObject}->Get( $StateTypeData->{Name} )
+            . $Self->{LayoutObject}->{LanguageObject}->Translate( $StateTypeData->{Name} )
             . ')';
 
         # output headline

@@ -687,7 +687,7 @@ sub Run {
                     $Header = $Self->{ConfigObject}->Get('FAQ::FAQHook');
                 }
                 else {
-                    $Header = $Self->{LayoutObject}->{LanguageObject}->Get($Header);
+                    $Header = $Self->{LayoutObject}->{LanguageObject}->Translate($Header);
                 }
             }
 
@@ -964,7 +964,8 @@ sub Run {
                 # set attribute name and translate it if applies
                 my $AttributeName = $AttributeMap{$Attribute}->{Name};
                 if ( $AttributeMap{$Attribute}->{Translatable} ) {
-                    $AttributeName = $Self->{LayoutObject}->{LanguageObject}->Get($AttributeName);
+                    $AttributeName
+                        = $Self->{LayoutObject}->{LanguageObject}->Translate($AttributeName);
                 }
 
                 my $AttributeValue;
@@ -1038,7 +1039,7 @@ sub Run {
                         $Attribute = 'Created between';
                         $AttributeValue
                             = $StartDate . ' '
-                            . $Self->{LayoutObject}->{LanguageObject}->Get('and') . ' '
+                            . $Self->{LayoutObject}->{LanguageObject}->Translate('and') . ' '
                             . $StopDate;
                     }
                     else {

@@ -334,7 +334,7 @@ sub Run {
             FAQHTMLContent    => $FAQHTML,
             TicketAttachments => \@FilteredTicketAttachments,
             Localization      => {
-                Delete => $Self->{LayoutObject}->{LanguageObject}->Get('Delete'),
+                Delete => $Self->{LayoutObject}->{LanguageObject}->Translate('Delete'),
             },
         },
     );

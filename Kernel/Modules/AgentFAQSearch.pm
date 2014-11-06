@@ -727,7 +727,7 @@ sub Run {
                     $Header = $Self->{ConfigObject}->Get('FAQ::FAQHook');
                 }
                 else {
-                    $Header = $Self->{LayoutObject}->{LanguageObject}->Get($Header);
+                    $Header = $Self->{LayoutObject}->{LanguageObject}->Translate($Header);
                 }
             }
 
@@ -811,10 +811,10 @@ sub Run {
 
             # PDF Output
             if ( $Self->{PDFObject} ) {
-                my $Title = $Self->{LayoutObject}->{LanguageObject}->Get('FAQ') . ' '
-                    . $Self->{LayoutObject}->{LanguageObject}->Get('Search');
-                my $PrintedBy = $Self->{LayoutObject}->{LanguageObject}->Get('printed by');
-                my $Page      = $Self->{LayoutObject}->{LanguageObject}->Get('Page');
+                my $Title = $Self->{LayoutObject}->{LanguageObject}->Translate('FAQ') . ' '
+                    . $Self->{LayoutObject}->{LanguageObject}->Translate('Search');
+                my $PrintedBy = $Self->{LayoutObject}->{LanguageObject}->Translate('printed by');
+                my $Page      = $Self->{LayoutObject}->{LanguageObject}->Translate('Page');
                 my $Time      = $Self->{LayoutObject}->{Time};
                 my $Url       = '';
                 if ( $ENV{REQUEST_URI} ) {
@@ -835,10 +835,10 @@ sub Run {
                 $CellData->[0]->[0]->{Content} = $Self->{ConfigObject}->Get('FAQ::FAQHook');
                 $CellData->[0]->[0]->{Font}    = 'ProportionalBold';
                 $CellData->[0]->[1]->{Content}
-                    = $Self->{LayoutObject}->{LanguageObject}->Get('Title');
+                    = $Self->{LayoutObject}->{LanguageObject}->Translate('Title');
                 $CellData->[0]->[1]->{Font} = 'ProportionalBold';
                 $CellData->[0]->[2]->{Content}
-                    = $Self->{LayoutObject}->{LanguageObject}->Get('Category');
+                    = $Self->{LayoutObject}->{LanguageObject}->Translate('Category');
                 $CellData->[0]->[2]->{Font} = 'ProportionalBold';
 
                 # store the correct header index
@@ -847,17 +847,17 @@ sub Run {
                 # add language header
                 if ( $Self->{MultiLanguage} ) {
                     $CellData->[0]->[3]->{Content}
-                        = $Self->{LayoutObject}->{LanguageObject}->Get('Language');
+                        = $Self->{LayoutObject}->{LanguageObject}->Translate('Language');
                     $CellData->[0]->[3]->{Font} = 'ProportionalBold';
                     $NextHeaderIndex = 4;
                 }
 
                 $CellData->[0]->[$NextHeaderIndex]->{Content}
-                    = $Self->{LayoutObject}->{LanguageObject}->Get('State');
+                    = $Self->{LayoutObject}->{LanguageObject}->Translate('State');
                 $CellData->[0]->[$NextHeaderIndex]->{Font} = 'ProportionalBold';
 
                 $CellData->[0]->[ $NextHeaderIndex + 1 ]->{Content}
-                    = $Self->{LayoutObject}->{LanguageObject}->Get('Changed');
+                    = $Self->{LayoutObject}->{LanguageObject}->Translate('Changed');
                 $CellData->[0]->[ $NextHeaderIndex + 1 ]->{Font} = 'ProportionalBold';
 
                 # create the content array
@@ -874,7 +874,7 @@ sub Run {
                 # output 'No Result', if no content was given
                 if ( !$CellData->[0]->[0] ) {
                     $CellData->[0]->[0]->{Content}
-                        = $Self->{LayoutObject}->{LanguageObject}->Get('No Result!');
+                        = $Self->{LayoutObject}->{LanguageObject}->Translate('No Result!');
                 }
 
                 # page params
@@ -1260,7 +1260,7 @@ sub _MaskForm {
         next DYNAMICFIELD if !IsArrayRefWithData($SearchFieldPreferences);
 
         # translate the dynamic field label
-        my $TranslatedDynamicFieldLabel = $Self->{LayoutObject}->{LanguageObject}->Get(
+        my $TranslatedDynamicFieldLabel = $Self->{LayoutObject}->{LanguageObject}->Translate(
             $DynamicFieldConfig->{Label},
         );
 
@@ -1268,7 +1268,7 @@ sub _MaskForm {
         for my $Preference ( @{$SearchFieldPreferences} ) {
 
             # translate the suffix
-            my $TranslatedSuffix = $Self->{LayoutObject}->{LanguageObject}->Get(
+            my $TranslatedSuffix = $Self->{LayoutObject}->{LanguageObject}->Translate(
                 $Preference->{LabelSuffix},
             ) || '';
 

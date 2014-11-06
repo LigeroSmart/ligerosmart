@@ -94,7 +94,7 @@ sub Run {
         @ItemIDs = map { $_->{ItemID} } @{$Top10ItemIDsRef};
 
         # build the title
-        $Title = $Self->{LayoutObject}->{LanguageObject}->Get('FAQ Articles (Top 10)');
+        $Title = $Self->{LayoutObject}->{LanguageObject}->Translate('FAQ Articles (Top 10)');
     }
 
     # search the FAQ articles
@@ -112,11 +112,14 @@ sub Run {
 
         # build the title
         if ( $Type eq 'Created' ) {
-            $Title = $Self->{LayoutObject}->{LanguageObject}->Get('FAQ Articles (new created)');
+            $Title
+                = $Self->{LayoutObject}->{LanguageObject}->Translate('FAQ Articles (new created)');
         }
         elsif ( $Type eq 'Changed' ) {
             $Title
-                = $Self->{LayoutObject}->{LanguageObject}->Get('FAQ Articles (recently changed)');
+                = $Self->{LayoutObject}->{LanguageObject}->Translate(
+                'FAQ Articles (recently changed)'
+                );
         }
     }
 

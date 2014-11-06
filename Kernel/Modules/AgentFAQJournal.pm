@@ -88,7 +88,7 @@ sub Run {
     $Output .= $Self->_FAQJournalShow(
         Journal          => $Journal,
         Total            => scalar @{$Journal},
-        TitleName        => $Self->{LayoutObject}->{LanguageObject}->Get('FAQ Journal'),
+        TitleName        => $Self->{LayoutObject}->{LanguageObject}->Translate('FAQ Journal'),
         Limit            => $Self->{JournalLimit},
         ShowColumns      => \@ShowColumns,
         JournalTitleSize => $Self->{Config}->{TitleSize},

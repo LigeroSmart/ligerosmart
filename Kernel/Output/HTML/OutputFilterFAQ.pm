@@ -57,7 +57,7 @@ sub Run {
     }
 
     my $StartPattern    = '<!-- [ ] OutputFilterHook_TicketOptionsEnd [ ] --> .+?';
-    my $FAQTranslatable = $Self->{LayoutObject}->{LanguageObject}->Get('FAQ');
+    my $FAQTranslatable = $Self->{LayoutObject}->{LanguageObject}->Translate('FAQ');
 
     # add FAQ link to an existing Options block
     #$FinishPattern will be replaced by $Replace
@@ -86,7 +86,7 @@ EOF
 
     # add FAQ link and its own block, if there no TicketOptions block was called
     $StartPattern = '<!-- [ ] OutputFilterHook_NoTicketOptionsFallback [ ] --> .+?';
-    my $OptionsTranslatable = $Self->{LayoutObject}->{LanguageObject}->Get('Options');
+    my $OptionsTranslatable = $Self->{LayoutObject}->{LanguageObject}->Translate('Options');
     my $Replace             = <<"END";
 <!-- OutputFilterHook_NoTicketOptionsFallback -->
                     <label>$OptionsTranslatable:</label>

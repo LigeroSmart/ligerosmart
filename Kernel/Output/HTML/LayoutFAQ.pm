@@ -524,7 +524,7 @@ sub FAQContentShow {
 
                 # Check if field name should be returned
                 if ( $TicketComposeConfig->{ShowFieldNames} ) {
-                    $FullContent .= $Self->{LanguageObject}->Get($Caption) . ' <br/> ';
+                    $FullContent .= $Self->{LanguageObject}->Translate($Caption) . ' <br/> ';
                 }
                 $FullContent .= $Content . ' <br/> ';
             }
@@ -536,7 +536,7 @@ sub FAQContentShow {
         if ($FullContent) {
             return $FullContent;
         }
-        return $Self->{LanguageObject}->Get('This article is empty!');
+        return $Self->{LanguageObject}->Translate('This article is empty!');
     }
 
     return 1;
