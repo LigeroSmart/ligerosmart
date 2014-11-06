@@ -121,7 +121,7 @@ sub Run {
     }
 
     # ---------------------------------------------------------- #
-    # HTMLView Subaction
+    # HTMLView Sub-action
     # ---------------------------------------------------------- #
     if ( $Self->{Subaction} eq 'HTMLView' ) {
 
@@ -151,7 +151,7 @@ sub Run {
             Action=AgentFAQ [&](amp;)? Subaction=Download [&](amp;)?
         }{Action=AgentFAQZoom;Subaction=DownloadAttachment;}gxms;
 
-        # build base URL for inline images
+        # build base URL for in-line images
         my $SessionID = '';
         if ( $Self->{SessionID} && !$Self->{SessionIDCookie} ) {
             $SessionID = ';' . $Self->{SessionName} . '=' . $Self->{SessionID};
@@ -187,7 +187,7 @@ sub Run {
     }
 
     # ---------------------------------------------------------- #
-    # DownloadAttachment Subaction
+    # DownloadAttachment Sub-action
     # ---------------------------------------------------------- #
     if ( $Self->{Subaction} eq 'DownloadAttachment' ) {
 
@@ -217,7 +217,7 @@ sub Run {
     }
 
     # ---------------------------------------------------------- #
-    # other subactions continues here
+    # other sub-actions continues here
     # ---------------------------------------------------------- #
     my $Output;
     if ( $Nav eq 'None' ) {
@@ -232,6 +232,30 @@ sub Run {
             Value => $FAQData{Title},
         );
         $Output .= $Self->{LayoutObject}->NavigationBar();
+    }
+
+    # define different notifications
+    my %Notifications = (
+        Thanks => {
+            Priority => 'Info',
+            Info     => 'Thanks for your vote!'
+        },
+        AlreadyVoted => {
+            Priority => 'Error',
+            Info     => 'You have already voted!',
+        },
+        NoRate => {
+            Priority => 'Error',
+            Info     => 'No rate selected!',
+        },
+    );
+
+    # output notifications if any
+    my $Notify = $Self->{ParamObject}->GetParam( Param => 'Notify' ) || '';
+    if ( $Notify && IsHashRefWithData( $Notifications{$Notify} ) ) {
+        $Output .= $Self->{LayoutObject}->Notify(
+            %{ $Notifications{$Notify} },
+        );
     }
 
     # get FAQ vote information
@@ -264,20 +288,23 @@ sub Run {
     }
 
     # ---------------------------------------------------------- #
-    # Vote Subaction
+    # Vote Sub-action
     # ---------------------------------------------------------- #
     if ( $Self->{Subaction} eq 'Vote' ) {
 
-        # user can't use this subaction if is not enabled
+        # user can't use this sub-action if is not enabled
         if ( !$Self->{Voting} ) {
             $Self->{LayoutObject}->FatalError( Message => "The voting mechanism is not enabled!" );
         }
 
         # user can vote only once per FAQ revision
         if ($AlreadyVoted) {
-            $Output .= $Self->{LayoutObject}->Notify(
-                Priority => 'Error',
-                Info     => 'You have already voted!',
+
+            # redirect to FAQ zoom
+            return $Self->{LayoutObject}->Redirect(
+                OP => 'Action=AgentFAQZoom;ItemID='
+                    . $GetParam{ItemID}
+                    . ';Nav=$Nav;Notify=AlreadyVoted'
             );
         }
 
@@ -318,15 +345,20 @@ sub Run {
                     return $Self->{LayoutObject}->ErrorScreen();
                 }
 
-                $Output .= $Self->{LayoutObject}->Notify( Info => 'Thanks for your vote!' );
+                # redirect to FAQ zoom
+                return $Self->{LayoutObject}->Redirect(
+                    OP => 'Action=AgentFAQZoom;ItemID='
+                        . $GetParam{ItemID}
+                        . ';Nav=$Nav;Notify=Thanks'
+                );
             }
         }
 
         # user is able to vote but no rate has been selected
         else {
-            $Output .= $Self->{LayoutObject}->Notify(
-                Priority => 'Error',
-                Info     => 'No rate selected!',
+            # redirect to FAQ zoom
+            return $Self->{LayoutObject}->Redirect(
+                OP => 'Action=AgentFAQZoom;ItemID=' . $GetParam{ItemID} . ';Nav=$Nav;Notify=NoRate'
             );
         }
     }
@@ -661,7 +693,7 @@ sub Run {
             UserID => $Self->{UserID},
         );
 
-        # remove inline image links to FAQ images
+        # remove in-line image links to FAQ images
         $FAQData{FullBody}
             =~ s{ <img [^<>]+ Action=(Agent|Customer|Public)FAQ [^<>]+ > }{}gxms;
 
