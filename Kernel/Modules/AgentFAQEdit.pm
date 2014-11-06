@@ -272,7 +272,8 @@ sub Run {
                 $Output .= $Self->{LayoutObject}->Notify(
                     Priority => 'Error',
                     Info => "FAQ Approval is enabled but queue '$ApprovalQueue' does not exists",
-                    Link => '$Env{"Baselink"}Action=AdminSysConfig;Subaction=Edit;'
+                    Link => $Self->{LayoutObject}->{Baselink}
+                        . 'Action=AdminSysConfig;Subaction=Edit;'
                         . 'SysConfigSubGroup=Core%3A%3AApproval;SysConfigGroup=FAQ',
                 );
             }
@@ -486,7 +487,8 @@ sub Run {
                         Priority => 'Error',
                         Info =>
                             "FAQ Approval is enabled but queue '$ApprovalQueue' does not exists",
-                        Link => '$Env{"Baselink"}Action=AdminSysConfig;Subaction=Edit;'
+                        Link => $Self->{LayoutObject}->{Baselink}
+                            . 'Action=AdminSysConfig;Subaction=Edit;'
                             . 'SysConfigSubGroup=Core%3A%3AApproval;SysConfigGroup=FAQ',
                     );
                 }

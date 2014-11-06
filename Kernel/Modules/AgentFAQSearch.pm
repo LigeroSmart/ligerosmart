@@ -613,9 +613,9 @@ sub Run {
                 # get info for CSV output
                 my %CSVInfo = (%FAQData);
 
-                $CSVInfo{Changed} = $Self->{LayoutObject}->Output(
-                    Template => '$TimeLong{"$Data{"Changed"}"}',
-                    Data     => \%FAQData,
+                $CSVInfo{Changed} = $Self->{LayoutObject}->{LanguageObject}->FormatTimeString(
+                    $FAQData{Changed},
+                    'DateFormat',
                 );
 
                 # CSV quote
@@ -771,9 +771,9 @@ sub Run {
 
                 # set change date to long format
                 if ( $Self->{PDFObject} ) {
-                    my $Changed = $Self->{LayoutObject}->Output(
-                        Template => '$TimeLong{"$Data{"Changed"}"}',
-                        Data     => \%FAQData,
+                    my $Changed = $Self->{LayoutObject}->{LanguageObject}->FormatTimeString(
+                        $FAQData{Changed},
+                        'DateFormat',
                     );
 
                     # create PDF Rows
@@ -815,7 +815,7 @@ sub Run {
                     . $Self->{LayoutObject}->{LanguageObject}->Get('Search');
                 my $PrintedBy = $Self->{LayoutObject}->{LanguageObject}->Get('printed by');
                 my $Page      = $Self->{LayoutObject}->{LanguageObject}->Get('Page');
-                my $Time      = $Self->{LayoutObject}->Output( Template => '$Env{"Time"}' );
+                my $Time      = $Self->{LayoutObject}->{Time};
                 my $Url       = '';
                 if ( $ENV{REQUEST_URI} ) {
                     $Url

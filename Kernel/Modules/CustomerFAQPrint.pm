@@ -143,7 +143,7 @@ sub Run {
     # generate PDF output
     if ( $Self->{PDFObject} ) {
         my $PrintedBy = $Self->{LayoutObject}->{LanguageObject}->Get('printed by');
-        my $Time      = $Self->{LayoutObject}->Output( Template => '$Env{"Time"}' );
+        my $Time      = $Self->{LayoutObject}->{Time};
         my $Url       = ' ';
         if ( $ENV{REQUEST_URI} ) {
             $Url = $Self->{ConfigObject}->Get('HttpType') . '://'
@@ -338,9 +338,9 @@ sub _PDFOutputFAQHeaderInfo {
     # last update row
     push @{$TableRight}, {
         Key   => $Self->{LayoutObject}->{LanguageObject}->Get('Last update') . ':',
-        Value => $Self->{LayoutObject}->Output(
-            Template => '$TimeLong{"$Data{"Changed"}"}',
-            Data     => \%FAQData,
+        Value => $Self->{LayoutObject}->{LanguageObject}->FormatTimeString(
+            $FAQData{Changed},
+            'DateFormat',
         ),
     };
 

@@ -196,7 +196,7 @@ sub TableCreateComplex {
                 Type    => 'Link',
                 Key     => $FAQID,
                 Content => $FAQ->{Number},
-                Link    => '$Env{"Baselink"}Action=AgentFAQZoom;ItemID=' . $FAQID,
+                Link => $Self->{LayoutObject}->{Baselink} . 'Action=AgentFAQZoom;ItemID=' . $FAQID,
             },
             {
                 Type      => 'Text',
@@ -320,7 +320,9 @@ sub TableCreateSimple {
                     Type    => 'Link',
                     Content => 'F:' . $FAQ->{Number},
                     Title   => "$FAQHook$FAQ->{Number}: $FAQ->{Title}",
-                    Link    => '$Env{"Baselink"}Action=AgentFAQZoom;ItemID=' . $FAQID,
+                    Link    => $Self->{LayoutObject}->{Baselink}
+                        . 'Action=AgentFAQZoom;ItemID='
+                        . $FAQID,
                 );
                 push @ItemList, \%Item;
             }

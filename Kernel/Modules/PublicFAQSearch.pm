@@ -548,9 +548,9 @@ sub Run {
 
                 # get info for CSV output
                 my %CSVInfo = (%FAQData);
-                $CSVInfo{Changed} = $Self->{LayoutObject}->Output(
-                    Template => '$TimeLong{"$Data{"Changed"}"}',
-                    Data     => \%FAQData,
+                $CSVInfo{Changed} = $Self->{LayoutObject}->{LanguageObject}->FormatTimeString(
+                    $FAQData{Changed},
+                    'DateFormat',
                 );
 
                 # CSV quote

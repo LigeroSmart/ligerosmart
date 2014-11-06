@@ -126,7 +126,7 @@ sub Run {
             Rel   => 'alternate',
             Type  => 'application/rss+xml',
             Title => $Self->{LayoutObject}->{LanguageObject}->Get('FAQ Articles (new created)'),
-            Href  => '$Env{"Baselink"}Action=PublicFAQRSS;Type=Created',
+            Href  => $Self->{LayoutObject}->{Baselink} . 'Action=PublicFAQRSS;Type=Created',
         },
     );
 
@@ -138,7 +138,7 @@ sub Run {
             Type => 'application/rss+xml',
             Title =>
                 $Self->{LayoutObject}->{LanguageObject}->Get('FAQ Articles (recently changed)'),
-            Href => '$Env{"Baselink"}Action=PublicFAQRSS;Type=Changed',
+            Href => $Self->{LayoutObject}->{Baselink} . 'Action=PublicFAQRSS;Type=Changed',
         },
     );
 
@@ -149,7 +149,7 @@ sub Run {
             Rel   => 'alternate',
             Type  => 'application/rss+xml',
             Title => $Self->{LayoutObject}->{LanguageObject}->Get('FAQ Articles (Top 10)'),
-            Href  => '$Env{"Baselink"}Action=PublicFAQRSS;Type=Top10',
+            Href  => $Self->{LayoutObject}->{Baselink} . 'Action=PublicFAQRSS;Type=Top10',
         },
     );
 
