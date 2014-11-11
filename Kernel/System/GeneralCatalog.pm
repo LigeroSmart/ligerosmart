@@ -271,15 +271,6 @@ sub ItemList {
         $Data{ $Row[0] } = $Row[1];
     }
 
-    # check item
-    if ( !%Data ) {
-        $Kernel::OM->Get('Kernel::System::Log')->Log(
-            Priority => 'error',
-            Message  => "Class $Param{Class} not found in database!",
-        );
-        return;
-    }
-
     # cache the result
     $Kernel::OM->Get('Kernel::System::Cache')->Set(
         Type  => $Self->{CacheType},
