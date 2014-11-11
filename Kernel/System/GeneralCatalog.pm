@@ -271,6 +271,9 @@ sub ItemList {
         $Data{ $Row[0] } = $Row[1];
     }
 
+    # just return without logging an error and without caching the empty result
+    return if !%Data;
+
     # cache the result
     $Kernel::OM->Get('Kernel::System::Cache')->Set(
         Type  => $Self->{CacheType},
