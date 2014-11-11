@@ -383,8 +383,7 @@ sub ExportWrapper {
                 for my $ID ( @{$Values} ) {
                     next ID if !$ID;
 
-                    my %TmpProjectData
-                        = $TimeAccountingObject->ProjectGet( ID => $ID->{Content} );
+                    my %TmpProjectData = $TimeAccountingObject->ProjectGet( ID => $ID->{Content} );
                     $ID->{Content} = $TmpProjectData{Project};
                 }
             }
@@ -393,8 +392,7 @@ sub ExportWrapper {
                 for my $ID ( @{$Values} ) {
                     next ID if !$ID;
 
-                    my %TmpActionData
-                        = $TimeAccountingObject->ActionGet( ID => $ID->{Content} );
+                    my %TmpActionData = $TimeAccountingObject->ActionGet( ID => $ID->{Content} );
                     $ID->{Content} = $TmpActionData{Action};
                 }
             }
@@ -426,8 +424,7 @@ sub ImportWrapper {
                     next ID if !$ID;
 
                     if ( $UserObject->UserLookup( UserLogin => $ID->{Content} ) ) {
-                        $ID->{Content}
-                            = $UserObject->UserLookup( UserLogin => $ID->{Content} );
+                        $ID->{Content} = $UserObject->UserLookup( UserLogin => $ID->{Content} );
                     }
                     else {
                         $LogObject->Log(
@@ -614,8 +611,7 @@ sub _GetStatData {
             {
 
                 # build matching hash for selected projects
-                my %SelectedProjectIDs
-                    = map { ( $_ => 1 ) } @{ $Param{Param}{Restrictions}->{Project} };
+                my %SelectedProjectIDs = map { ( $_ => 1 ) } @{ $Param{Param}{Restrictions}->{Project} };
 
                 # filter only selected projects
                 my @FilteredProjectWUs = grep {
@@ -633,8 +629,7 @@ sub _GetStatData {
             {
 
                 # build matching hash for selected actions
-                my %SelectedActionIDs
-                    = map { ( $_ => 1 ) } @{ $Param{Param}{Restrictions}->{ProjectAction} };
+                my %SelectedActionIDs = map { ( $_ => 1 ) } @{ $Param{Param}{Restrictions}->{ProjectAction} };
 
                 # filter only selected actions
                 my @FilteredActionWUs = grep {

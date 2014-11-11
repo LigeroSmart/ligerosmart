@@ -78,7 +78,10 @@ sub Run {
         $Param{Project} = $Project{Project}->{ $Param{ProjectID} };
 
         # get system users
-        my %ShownUsers = $Self->{UserObject}->UserList( Type => 'Long', Valid => 0 );
+        my %ShownUsers = $Self->{UserObject}->UserList(
+            Type  => 'Long',
+            Valid => 0
+        );
 
         if ( $Config->{ShowOnlyActiveUsers} ) {
 
@@ -90,10 +93,9 @@ sub Run {
         }
 
         # necessary because the ProjectActionReporting is not reworked
-        my ( $Sec, $Min, $Hour, $CurrentDay, $Month, $Year )
-            = $Self->{TimeObject}->SystemTime2Date(
+        my ( $Sec, $Min, $Hour, $CurrentDay, $Month, $Year ) = $Self->{TimeObject}->SystemTime2Date(
             SystemTime => $Self->{TimeObject}->SystemTime(),
-            );
+        );
         my %ProjectData = ();
         my %ProjectTime = ();
 
@@ -165,7 +167,9 @@ sub Run {
                 my $TotalHours = 0;
                 $Self->{LayoutObject}->Block(
                     Name => 'Action',
-                    Data => { Action => $Action{$ActionID}, },
+                    Data => {
+                        Action => $Action{$ActionID},
+                    },
                 );
                 for my $UserID ( sort { $ShownUsers{$a} cmp $ShownUsers{$b} } keys %ShownUsers ) {
                     $TotalHours += $ProjectTime{$ActionID}{$UserID}{Hours} || 0;
@@ -182,7 +186,9 @@ sub Run {
                 # Total
                 $Self->{LayoutObject}->Block(
                     Name => 'User',
-                    Data => { Hours => sprintf( "%.2f", $TotalHours ), },
+                    Data => {
+                        Hours => sprintf( "%.2f", $TotalHours ),
+                    },
                 );
             }
             $Param{TotalAll} = 0;
@@ -190,13 +196,17 @@ sub Run {
                 $Param{TotalAll} += $Total{$UserID};
                 $Self->{LayoutObject}->Block(
                     Name => 'UserTotal',
-                    Data => { Total => sprintf( "%.2f", $Total{$UserID} ), },
+                    Data => {
+                        Total => sprintf( "%.2f", $Total{$UserID} ),
+                    },
                 );
             }
 
             $Self->{LayoutObject}->Block(
                 Name => 'UserTotalAll',
-                Data => { TotalAll => sprintf( "%.2f", $Param{TotalAll} ), },
+                Data => {
+                    TotalAll => sprintf( "%.2f", $Param{TotalAll} ),
+                },
             );
         }
         my @ProjectHistoryArray = $Self->{TimeAccountingObject}->ProjectHistory(
@@ -252,7 +262,7 @@ sub Run {
         my $Output = $Self->{LayoutObject}->Header( Title => 'ReportingProject' );
         $Output .= $Self->{LayoutObject}->NavigationBar();
         $Output .= $Self->{LayoutObject}->Output(
-            Data => { %Param, %Frontend },
+            Data         => { %Param, %Frontend },
             TemplateFile => 'AgentTimeAccountingReportingProject',
         );
         $Output .= $Self->{LayoutObject}->Footer();
@@ -263,12 +273,14 @@ sub Run {
     # ---------------------------------------------------------- #
     # time accounting reporting
     # ---------------------------------------------------------- #
-    my %Frontend = ();
-    my %ShownUsers = $Self->{UserObject}->UserList( Type => 'Long', Valid => 0 );
-    my ( $Sec, $Min, $Hour, $CurrentDay, $Month, $Year )
-        = $Self->{TimeObject}->SystemTime2Date(
+    my %Frontend   = ();
+    my %ShownUsers = $Self->{UserObject}->UserList(
+        Type  => 'Long',
+        Valid => 0
+    );
+    my ( $Sec, $Min, $Hour, $CurrentDay, $Month, $Year ) = $Self->{TimeObject}->SystemTime2Date(
         SystemTime => $Self->{TimeObject}->SystemTime(),
-        );
+    );
 
     # permission check
     return $Self->{LayoutObject}->NoPermission( WithHeader => 'yes' ) if !$Self->{AccessRw};
@@ -322,8 +334,7 @@ sub Run {
 
     ( $Param{YearBack}, $Param{MonthBack}, $Param{DayBack} )
         = Add_Delta_YMD( $Param{Year}, $Param{Month}, 1, 0, -1, 0 );
-    ( $Param{YearNext}, $Param{MonthNext}, $Param{DayNext} )
-        = Add_Delta_YMD( $Param{Year}, $Param{Month}, 1, 0, 1, 0 );
+    ( $Param{YearNext}, $Param{MonthNext}, $Param{DayNext} ) = Add_Delta_YMD( $Param{Year}, $Param{Month}, 1, 0, 1, 0 );
 
     my %UserReport = $Self->{TimeAccountingObject}->UserReporting(
         Year   => $Param{Year},

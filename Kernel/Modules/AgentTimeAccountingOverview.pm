@@ -53,10 +53,9 @@ sub Run {
     # ---------------------------------------------------------- #
     # overview about the users time accounting
     # ---------------------------------------------------------- #
-    my ( $Sec, $Min, $Hour, $CurrentDay, $Month, $Year )
-        = $Self->{TimeObject}->SystemTime2Date(
+    my ( $Sec, $Min, $Hour, $CurrentDay, $Month, $Year ) = $Self->{TimeObject}->SystemTime2Date(
         SystemTime => $Self->{TimeObject}->SystemTime(),
-        );
+    );
 
     # permission check
     return $Self->{LayoutObject}->NoPermission( WithHeader => 'yes' ) if !$Self->{AccessRo};
@@ -77,7 +76,10 @@ sub Run {
         $Param{Action} = 'AgentTimeAccountingView';
     }
     if ( $Param{UserID} != $Self->{UserID} ) {
-        my %ShownUsers = $Self->{UserObject}->UserList( Type => 'Long', Valid => 1 );
+        my %ShownUsers = $Self->{UserObject}->UserList(
+            Type  => 'Long',
+            Valid => 1
+        );
         $Param{User} = $ShownUsers{ $Param{UserID} };
         $Self->{LayoutObject}->Block(
             Name => 'User',
@@ -106,8 +108,7 @@ sub Run {
 
     ( $Param{YearBack}, $Param{MonthBack}, $Param{DayBack} )
         = Add_Delta_YMD( $Param{Year}, $Param{Month}, 1, 0, -1, 0 );
-    ( $Param{YearNext}, $Param{MonthNext}, $Param{DayNext} )
-        = Add_Delta_YMD( $Param{Year}, $Param{Month}, 1, 0, 1, 0 );
+    ( $Param{YearNext}, $Param{MonthNext}, $Param{DayNext} ) = Add_Delta_YMD( $Param{Year}, $Param{Month}, 1, 0, 1, 0 );
 
     # Overview per day
     my $DaysOfMonth = Days_in_Month( $Param{Year}, $Param{Month} );
@@ -127,10 +128,8 @@ sub Run {
         );
 
         my $Date = sprintf( "%04d-%02d-%02d", $Param{Year}, $Param{Month}, $Day );
-        my $DayStartTime
-            = $Self->{TimeObject}->TimeStamp2SystemTime( String => $Date . ' 00:00:00' );
-        my $DayStopTime
-            = $Self->{TimeObject}->TimeStamp2SystemTime( String => $Date . ' 23:59:59' );
+        my $DayStartTime = $Self->{TimeObject}->TimeStamp2SystemTime( String => $Date . ' 00:00:00' );
+        my $DayStopTime  = $Self->{TimeObject}->TimeStamp2SystemTime( String => $Date . ' 23:59:59' );
 
         # add time zone to calculation
         my $UserCalendar = $UserData{Calendar} || '';
@@ -195,8 +194,7 @@ sub Run {
         )
     {
         $UserReport{ $Param{UserID} }{$ReportElement} ||= 0;
-        $Param{$ReportElement}
-            = sprintf( "%.2f", $UserReport{ $Param{UserID} }{$ReportElement} );
+        $Param{$ReportElement} = sprintf( "%.2f", $UserReport{ $Param{UserID} }{$ReportElement} );
     }
 
     if ( $UserData{ShowOvertime} ) {
@@ -355,8 +353,7 @@ sub _CheckValidityUserPeriods {
 
         # check for needed data
         for my $Parameter (qw(DateStart DateEnd LeaveDays)) {
-            $GetParam{$Parameter}
-                = $Self->{ParamObject}->GetParam( Param => $Parameter . "[$Period]" );
+            $GetParam{$Parameter} = $Self->{ParamObject}->GetParam( Param => $Parameter . "[$Period]" );
             if ( !$GetParam{$Parameter} ) {
                 $Errors{ $Parameter . '-' . $Period . 'Invalid' }   = 'ServerError';
                 $Errors{ $Parameter . '-' . $Period . 'ErrorType' } = 'MissingValue';

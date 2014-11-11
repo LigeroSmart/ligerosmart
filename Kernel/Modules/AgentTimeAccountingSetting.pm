@@ -50,8 +50,7 @@ sub Run {
         my %GetParam = ();
 
         $GetParam{UserID} = $Self->{ParamObject}->GetParam( Param => 'UserID' );
-        my $Periods
-            = $Self->{TimeAccountingObject}->UserLastPeriodNumberGet( UserID => $GetParam{UserID} );
+        my $Periods = $Self->{TimeAccountingObject}->UserLastPeriodNumberGet( UserID => $GetParam{UserID} );
 
         # check validity of periods
         my %Errors = $Self->_CheckValidityUserPeriods( Period => $Periods );
@@ -70,10 +69,9 @@ sub Run {
             my $Period = 1;
             my %PeriodData;
 
-            my %UserData
-                = $Self->{TimeAccountingObject}->SingleUserSettingsGet(
+            my %UserData = $Self->{TimeAccountingObject}->SingleUserSettingsGet(
                 UserID => $GetParam{UserID}
-                );
+            );
 
             # get parameters for all registered periods
             while ( $UserData{$Period} ) {
@@ -156,8 +154,7 @@ sub Run {
         else {
 
             # check that the name is unique
-            my %ExistingProject
-                = $Self->{TimeAccountingObject}->ProjectGet( Project => $GetParam{Project} );
+            my %ExistingProject = $Self->{TimeAccountingObject}->ProjectGet( Project => $GetParam{Project} );
             if (%ExistingProject) {
                 $Errors{ProjectInvalid}   = 'ServerError';
                 $Errors{ProjectErrorType} = 'ProjectDuplicateName';
@@ -266,8 +263,7 @@ sub Run {
         else {
 
             # check that the name is unique
-            my %ExistingProject
-                = $Self->{TimeAccountingObject}->ProjectGet( Project => $GetParam{Project} );
+            my %ExistingProject = $Self->{TimeAccountingObject}->ProjectGet( Project => $GetParam{Project} );
 
             # if the project name is found, check that the ID is different
             if ( %ExistingProject && $ExistingProject{ID} ne $GetParam{ID} ) {
@@ -367,8 +363,7 @@ sub Run {
         else {
 
             # check that the name is unique
-            my %ExistingTask
-                = $Self->{TimeAccountingObject}->ActionGet( Action => $GetParam{Task} );
+            my %ExistingTask = $Self->{TimeAccountingObject}->ActionGet( Action => $GetParam{Task} );
             if (%ExistingTask) {
                 $Errors{TaskInvalid}   = 'ServerError';
                 $Errors{TaskErrorType} = 'TaskDuplicateName';
@@ -483,8 +478,7 @@ sub Run {
         else {
 
             # check that the name is unique
-            my %ExistingTask
-                = $Self->{TimeAccountingObject}->ActionGet( Action => $GetParam{Task} );
+            my %ExistingTask = $Self->{TimeAccountingObject}->ActionGet( Action => $GetParam{Task} );
 
             # if the task name is found, check that the ID is different
             if ( %ExistingTask && $ExistingTask{ID} ne $GetParam{ActionID} ) {
@@ -742,8 +736,7 @@ sub _CheckValidityUserPeriods {
 
         # check for needed data
         for my $Parameter (qw(DateStart DateEnd LeaveDays)) {
-            $GetParam{$Parameter}
-                = $Self->{ParamObject}->GetParam( Param => $Parameter . "[$Period]" );
+            $GetParam{$Parameter} = $Self->{ParamObject}->GetParam( Param => $Parameter . "[$Period]" );
             if ( !$GetParam{$Parameter} ) {
                 $Errors{ $Parameter . '-' . $Period . 'Invalid' }   = 'ServerError';
                 $Errors{ $Parameter . '-' . $Period . 'ErrorType' } = 'MissingValue';
@@ -840,7 +833,9 @@ sub _SettingOverview {
     my %Data    = ();
 
     # build output
-    $Self->{LayoutObject}->Block( Name => 'Setting', );
+    $Self->{LayoutObject}->Block(
+        Name => 'Setting',
+    );
     $Self->{LayoutObject}->Block( Name => 'ActionListSetting' );
     $Self->{LayoutObject}->Block( Name => 'ActionAddProject' );
 
@@ -878,7 +873,9 @@ sub _SettingOverview {
             );
             $Self->{LayoutObject}->Block(
                 Name => 'ActionAddUser',
-                Data => { NewUserOption => $NewUserOption, },
+                Data => {
+                    NewUserOption => $NewUserOption,
+                },
             );
         }
     }
@@ -1073,8 +1070,8 @@ sub _UserSettingsEdit {
         $GetParam{$Parameter} = $Self->{ParamObject}->GetParam( Param => $Parameter );
     }
 
-# the datepicker used in this screen is non-standard
-# Therefor we have to define this var in the LayoutObject for automatic config generation in the JS footer
+    # the datepicker used in this screen is non-standard
+    # Therefor we have to define this var in the LayoutObject for automatic config generation in the JS footer
     $Self->{LayoutObject}->{HasDatepicker} = 1;
 
     $Self->{LayoutObject}->Block(
@@ -1118,9 +1115,11 @@ sub _UserSettingsEdit {
         Data => {
             %Param,
             ShowOvertime => ( $GetParam{ShowOvertime} || $UserData{ShowOvertime} )
-            ? 'checked="checked"' : '',
+            ? 'checked="checked"'
+            : '',
             CreateProject => ( $GetParam{CreateProject} || $UserData{CreateProject} )
-            ? 'checked="checked"' : '',
+            ? 'checked="checked"'
+            : '',
             }
     );
 
@@ -1142,8 +1141,7 @@ sub _UserSettingsEdit {
         for ( my $Period = 1; $Period <= $Param{Periods}; $Period++ ) {
 
             for my $Parameter (qw(DateStart DateEnd LeaveDays WeeklyHours Overtime PeriodStatus )) {
-                $GetParam{$Parameter}
-                    = $Self->{ParamObject}->GetParam( Param => "$Parameter\[$Period\]" );
+                $GetParam{$Parameter} = $Self->{ParamObject}->GetParam( Param => "$Parameter\[$Period\]" );
             }
 
             $Param{$Period}{PeriodStatusOption} = $Self->{LayoutObject}->BuildSelection(
@@ -1192,10 +1190,9 @@ sub _UserSettingsEdit {
 
         # show user data
         if (%User) {
-            my $LastPeriodNumber
-                = $Self->{TimeAccountingObject}->UserLastPeriodNumberGet(
+            my $LastPeriodNumber = $Self->{TimeAccountingObject}->UserLastPeriodNumberGet(
                 UserID => $Param{UserID}
-                );
+            );
 
             for ( my $Period = 1; $Period <= $LastPeriodNumber; $Period++ ) {
                 my %PeriodParam = ();
@@ -1211,7 +1208,7 @@ sub _UserSettingsEdit {
                     SelectedID => $User{$Period}{UserStatus},
                     Name       => "PeriodStatus[$Period]",
                     ID         => "PeriodStatus-$Period",
-                    Title => $Self->{LayoutObject}->{LanguageObject}->Translate("Period Status"),
+                    Title      => $Self->{LayoutObject}->{LanguageObject}->Translate("Period Status"),
                 );
 
                 $Self->{LayoutObject}->Block(

@@ -82,8 +82,7 @@ sub Run {
         SystemTime => $Self->{TimeObject}->SystemTime(),
     );
 
-    my $MaxAllowedInsertDays
-        = $Self->{ConfigObject}->Get('TimeAccounting::MaxAllowedInsertDays') || '10';
+    my $MaxAllowedInsertDays = $Self->{ConfigObject}->Get('TimeAccounting::MaxAllowedInsertDays') || '10';
     ( $Param{YearAllowed}, $Param{MonthAllowed}, $Param{DayAllowed} )
         = Add_Delta_YMD( $Year, $Month, $Day, 0, 0, -$MaxAllowedInsertDays );
 
@@ -105,7 +104,10 @@ sub Run {
 
     # show the naming of the agent which time accounting is visited
     if ( $Param{UserID} != $Self->{UserID} ) {
-        my %ShownUsers = $Self->{UserObject}->UserList( Type => 'Long', Valid => 1 );
+        my %ShownUsers = $Self->{UserObject}->UserList(
+            Type  => 'Long',
+            Valid => 1
+        );
         $Param{User} = $ShownUsers{ $Param{UserID} };
         $Self->{LayoutObject}->Block(
             Name => 'User',

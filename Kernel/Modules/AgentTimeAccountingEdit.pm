@@ -91,10 +91,9 @@ sub Run {
     # ---------------------------------------------------------- #
     if ( $Self->{ParamObject}->GetParam( Param => 'DeleteDialog' ) ) {
 
-        my ( $Sec, $Min, $Hour, $Day, $Month, $Year )
-            = $Self->{TimeObject}->SystemTime2Date(
+        my ( $Sec, $Min, $Hour, $Day, $Month, $Year ) = $Self->{TimeObject}->SystemTime2Date(
             SystemTime => $Self->{TimeObject}->SystemTime(),
-            );
+        );
 
         # get params
         for my $Parameter (qw(Status Year Month Day)) {
@@ -221,18 +220,16 @@ sub Run {
     my %Frontend   = ();
     my %Data       = ();
     my %ActionList = $Self->_ActionList();
-    my ( $Sec, $Min, $Hour, $Day, $Month, $Year )
-        = $Self->{TimeObject}->SystemTime2Date(
+    my ( $Sec, $Min, $Hour, $Day, $Month, $Year ) = $Self->{TimeObject}->SystemTime2Date(
         SystemTime => $Self->{TimeObject}->SystemTime(),
-        );
+    );
 
     # get params
     for my $Parameter (qw(Status Year Month Day Notification)) {
         $Param{$Parameter} = $Self->{ParamObject}->GetParam( Param => $Parameter ) || '';
     }
     $Param{RecordsNumber} = $Self->{ParamObject}->GetParam( Param => 'RecordsNumber' ) || 8;
-    $Param{InsertWorkingUnits}
-        = $Self->{ParamObject}->GetParam( Param => 'InsertWorkingUnits' );
+    $Param{InsertWorkingUnits} = $Self->{ParamObject}->GetParam( Param => 'InsertWorkingUnits' );
 
     # Check Date
     if ( !$Param{Year} || !$Param{Month} || !$Param{Day} ) {
@@ -271,8 +268,7 @@ sub Run {
     my %IncompleteWorkingDays = $Self->{TimeAccountingObject}->WorkingUnitsCompletnessCheck(
         UserID => $Self->{UserID},
     );
-    my $MaxAllowedInsertDays
-        = $Self->{ConfigObject}->Get('TimeAccounting::MaxAllowedInsertDays') || '10';
+    my $MaxAllowedInsertDays = $Self->{ConfigObject}->Get('TimeAccounting::MaxAllowedInsertDays') || '10';
     ( $Param{YearAllowed}, $Param{MonthAllowed}, $Param{DayAllowed} )
         = Add_Delta_YMD( $Year, $Month, $Day, 0, 0, -$MaxAllowedInsertDays );
     if (
@@ -378,12 +374,10 @@ sub Run {
         for my $ID ( 1 .. $Param{RecordsNumber} ) {
 
             # arrays to save the server errors block to show the error messages
-            my ( @StartTimeServerErrorBlock, @EndTimeServerErrorBlock, @PeriodServerErrorBlock )
-                = ();
+            my ( @StartTimeServerErrorBlock, @EndTimeServerErrorBlock, @PeriodServerErrorBlock ) = ();
 
             for my $Parameter (qw(ProjectID ActionID Remark StartTime EndTime Period)) {
-                $Param{$Parameter}
-                    = $Self->{ParamObject}->GetParam( Param => $Parameter . '[' . $ID . ']' );
+                $Param{$Parameter} = $Self->{ParamObject}->GetParam( Param => $Parameter . '[' . $ID . ']' );
                 if ( $Param{$Parameter} ) {
                     my $ParamRef = \$Param{$Parameter};
 
@@ -719,8 +713,7 @@ sub Run {
     }
     $Param{JSActionList} = '[' . ( join ', ', @JSActions ) . ']';
 
-    my $ActionListConstraints
-        = $Self->{ConfigObject}->Get('TimeAccounting::ActionListConstraints');
+    my $ActionListConstraints = $Self->{ConfigObject}->Get('TimeAccounting::ActionListConstraints');
     my @JSActionListConstraints;
     for my $ProjectNameRegExp ( sort keys %{$ActionListConstraints} ) {
         my $ActionNameRegExp = $ActionListConstraints->{$ProjectNameRegExp};
@@ -756,8 +749,7 @@ sub Run {
                 || '',
         );
 
-        $Param{ProjectID}
-            = $UnitRef->{ProjectID}
+        $Param{ProjectID} = $UnitRef->{ProjectID}
             || $ServerErrorData{$ErrorIndex}{ProjectID}
             || '';
         $Param{ProjectName} = '';
@@ -874,8 +866,7 @@ sub Run {
         if ( $Errors{$ErrorIndex} && $Errors{$ErrorIndex}{StartTimeInvalid} ) {
             if ( scalar @{ $Errors{$ErrorIndex}{StartTimeServerErrorBlock} } > 0 ) {
                 while ( @{ $Errors{$ErrorIndex}{StartTimeServerErrorBlock} } ) {
-                    $ServerErrorBlockName
-                        = shift @{ $Errors{$ErrorIndex}{StartTimeServerErrorBlock} };
+                    $ServerErrorBlockName = shift @{ $Errors{$ErrorIndex}{StartTimeServerErrorBlock} };
                     $Self->{LayoutObject}->Block( Name => $ServerErrorBlockName );
                 }
             }
@@ -886,8 +877,7 @@ sub Run {
         if ( $Errors{$ErrorIndex} && $Errors{$ErrorIndex}{EndTimeInvalid} ) {
             if ( scalar @{ $Errors{$ErrorIndex}{EndTimeServerErrorBlock} } > 0 ) {
                 while ( @{ $Errors{$ErrorIndex}{EndTimeServerErrorBlock} } ) {
-                    $ServerErrorBlockName
-                        = shift @{ $Errors{$ErrorIndex}{EndTimeServerErrorBlock} };
+                    $ServerErrorBlockName = shift @{ $Errors{$ErrorIndex}{EndTimeServerErrorBlock} };
                     $Self->{LayoutObject}->Block( Name => $ServerErrorBlockName );
                 }
             }
@@ -909,8 +899,7 @@ sub Run {
         if ( $Errors{$ErrorIndex} && $Errors{$ErrorIndex}{PeriodInvalid} ) {
             if ( scalar @{ $Errors{$ErrorIndex}{PeriodServerErrorBlock} } > 0 ) {
                 while ( @{ $Errors{$ErrorIndex}{PeriodServerErrorBlock} } ) {
-                    $ServerErrorBlockName
-                        = shift @{ $Errors{$ErrorIndex}{PeriodServerErrorBlock} };
+                    $ServerErrorBlockName = shift @{ $Errors{$ErrorIndex}{PeriodServerErrorBlock} };
                     $Self->{LayoutObject}->Block( Name => $ServerErrorBlockName );
                 }
             }
@@ -1042,8 +1031,7 @@ sub Run {
                 sort keys %{ $IncompleteWorkingDays{Incomplete}{$YearID}{$MonthID} }
                 )
             {
-                $IncompleteWorkingDaysList{"$YearID-$MonthID-$DayID"}
-                    = "$YearID-$MonthID-$DayID";
+                $IncompleteWorkingDaysList{"$YearID-$MonthID-$DayID"} = "$YearID-$MonthID-$DayID";
                 $Param{Incomplete} = 1;
             }
         }
@@ -1060,8 +1048,7 @@ sub Run {
             );
 
             for my $WorkingDays ( sort keys %IncompleteWorkingDaysList ) {
-                my ( $Year, $Month, $Day )
-                    = split( /-/, $IncompleteWorkingDaysList{$WorkingDays} );
+                my ( $Year, $Month, $Day ) = split( /-/, $IncompleteWorkingDaysList{$WorkingDays} );
                 $Self->{LayoutObject}->Block(
                     Name => 'IncompleteWorkingDaysMassEntrySingleDay',
                     Data => {
@@ -1145,8 +1132,7 @@ sub Run {
     $Param{RemarkRegExp} = $Self->_Project2RemarkRegExp();
 
     # enable auto-completion?
-    $Param{EnableAutocompletion}
-        = $Self->{ConfigObject}->Get("TimeAccounting::EnableAutoCompletion");
+    $Param{EnableAutocompletion} = $Self->{ConfigObject}->Get("TimeAccounting::EnableAutoCompletion");
 
     # build output
     my $Output = $Self->{LayoutObject}->Header( Title => 'Edit' );
@@ -1163,7 +1149,9 @@ sub Run {
             UserID => $Self->{UserID},
         );
         if ( $UserData{CreateProject} ) {
-            $Self->{LayoutObject}->Block( Name => 'CreateProject', );
+            $Self->{LayoutObject}->Block(
+                Name => 'CreateProject',
+            );
         }
     }
     else {
@@ -1183,7 +1171,9 @@ sub Run {
     }
     elsif ( defined $Param{SuccessfulInsert} )
     {
-        $Output .= $Self->{LayoutObject}->Notify( Info => 'Successful insert!', );
+        $Output .= $Self->{LayoutObject}->Notify(
+            Info => 'Successful insert!',
+        );
     }
 
     # show mass entry notification
@@ -1384,7 +1374,7 @@ sub _ProjectList {
     }
 
     @List = $Self->_ProjectListConstraints(
-        List => \@List,
+        List       => \@List,
         SelectedID => $Param{SelectedID} || '',
     );
 
@@ -1395,9 +1385,8 @@ sub _ProjectListConstraints {
     my ( $Self, %Param ) = @_;
 
     my @List;
-    my $ProjectCount = 0;
-    my $ProjectListConstraints
-        = $Self->{ConfigObject}->Get('TimeAccounting::ProjectListConstraints');
+    my $ProjectCount           = 0;
+    my $ProjectListConstraints = $Self->{ConfigObject}->Get('TimeAccounting::ProjectListConstraints');
 
     if ( keys %{$ProjectListConstraints} ) {
 

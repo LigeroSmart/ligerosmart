@@ -303,15 +303,12 @@ sub UserReporting {
             }
         }
 
-        $CurrentUserData{Overtime} = $CurrentUserData{WorkingHours} - $CurrentUserData{TargetState};
-        $CurrentUserData{OvertimeTotal}
-            = $UserCurrentPeriod{$UserID}{Overtime}
+        $CurrentUserData{Overtime}      = $CurrentUserData{WorkingHours} - $CurrentUserData{TargetState};
+        $CurrentUserData{OvertimeTotal} = $UserCurrentPeriod{$UserID}{Overtime}
             + $CurrentUserData{WorkingHoursTotal}
             - $CurrentUserData{TargetStateTotal};
-        $CurrentUserData{OvertimeUntil}
-            = $CurrentUserData{OvertimeTotal} - $CurrentUserData{Overtime};
-        $CurrentUserData{LeaveDayRemaining}
-            = $UserCurrentPeriod{$UserID}{LeaveDays} - $CurrentUserData{LeaveDayTotal};
+        $CurrentUserData{OvertimeUntil}     = $CurrentUserData{OvertimeTotal} - $CurrentUserData{Overtime};
+        $CurrentUserData{LeaveDayRemaining} = $UserCurrentPeriod{$UserID}{LeaveDays} - $CurrentUserData{LeaveDayTotal};
 
         $Data{$UserID} = \%CurrentUserData;
     }
@@ -1295,10 +1292,8 @@ sub WorkingUnitsCompletnessCheck {
                 );
 
                 my $Date = sprintf( "%04d-%02d-%02d", $Year, $Month, $Day );
-                my $DayStartTime
-                    = $TimeObject->TimeStamp2SystemTime( String => $Date . ' 00:00:00' );
-                my $DayStopTime
-                    = $TimeObject->TimeStamp2SystemTime( String => $Date . ' 23:59:59' );
+                my $DayStartTime = $TimeObject->TimeStamp2SystemTime( String => $Date . ' 00:00:00' );
+                my $DayStopTime  = $TimeObject->TimeStamp2SystemTime( String => $Date . ' 23:59:59' );
 
                 # add time zone to calculation
                 my $Zone = $ConfigObject->Get( "TimeZone::Calendar" . ( $Calendar || '' ) );
@@ -1330,8 +1325,7 @@ sub WorkingUnitsCompletnessCheck {
             }
         }
     }
-    my $MaxIntervallOfIncompleteDays
-        = $ConfigObject->Get('TimeAccounting::MaxIntervalOfIncompleteDays') || '5';
+    my $MaxIntervallOfIncompleteDays = $ConfigObject->Get('TimeAccounting::MaxIntervalOfIncompleteDays') || '5';
     my $MaxIntervallOfIncompleteDaysBeforeWarning
         = $ConfigObject->Get('TimeAccounting::MaxIntervalOfIncompleteDaysBeforeWarning')
         || '3';
@@ -1675,7 +1669,7 @@ sub ProjectActionReporting {
             AND time_start <= ?';
 
     $DBObject->Prepare(
-        SQL => $SQL,
+        SQL  => $SQL,
         Bind => [ \$SQLDateStart, \$SQLDate ],
     );
 
