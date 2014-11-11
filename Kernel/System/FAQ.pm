@@ -74,8 +74,7 @@ sub new {
     bless( $Self, $Type );
 
     # get like escape string needed for some databases (e.g. oracle)
-    $Self->{LikeEscapeString}
-        = $Kernel::OM->Get('Kernel::System::DB')->GetDatabaseFunction('LikeEscapeString');
+    $Self->{LikeEscapeString} = $Kernel::OM->Get('Kernel::System::DB')->GetDatabaseFunction('LikeEscapeString');
 
     # get config object
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
@@ -84,8 +83,7 @@ sub new {
     $Self->{Voting} = $ConfigObject->Get('FAQ::Voting');
 
     # get the cache TTL (in seconds)
-    $Self->{CacheTTL}
-        = int( $ConfigObject->Get('FAQ::CacheTTL') || 60 * 60 * 24 * 2 );
+    $Self->{CacheTTL} = int( $ConfigObject->Get('FAQ::CacheTTL') || 60 * 60 * 24 * 2 );
 
     # init of event handler
     # currently there are no FAQ event modules but is needed to initialize otherwise errors are
@@ -312,7 +310,7 @@ sub FAQGet {
             my $Number = $ConfigObject->Get('SystemID') . '00' . $Data{ItemID};
 
             return if !$DBObject->Do(
-                SQL => 'UPDATE faq_item SET f_number = ? WHERE id = ?',
+                SQL  => 'UPDATE faq_item SET f_number = ? WHERE id = ?',
                 Bind => [ \$Number, \$Data{ItemID} ],
             );
 
@@ -353,8 +351,7 @@ sub FAQGet {
     }
 
     # get number of decimal places from config
-    my $DecimalPlaces
-        = $ConfigObject->Get('FAQ::Explorer::ItemList::VotingResultDecimalPlaces') || 0;
+    my $DecimalPlaces = $ConfigObject->Get('FAQ::Explorer::ItemList::VotingResultDecimalPlaces') || 0;
 
     # format the vote result
     my $VoteResult = sprintf( "%0." . $DecimalPlaces . "f", $VoteData->{Result} || 0 );
@@ -367,10 +364,9 @@ sub FAQGet {
     if ( $Param{DynamicFields} ) {
 
         # get all dynamic fields for the object type FAQ
-        my $DynamicFieldList
-            = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldListGet(
+        my $DynamicFieldList = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldListGet(
             ObjectType => 'FAQ'
-            );
+        );
 
         DYNAMICFIELD:
         for my $DynamicFieldConfig ( @{$DynamicFieldList} ) {
@@ -666,7 +662,7 @@ sub FAQAdd {
     my $Number = $ConfigObject->Get('SystemID') . '00' . $ID;
 
     return if !$DBObject->Do(
-        SQL => 'UPDATE faq_item SET f_number = ? WHERE id = ?',
+        SQL  => 'UPDATE faq_item SET f_number = ? WHERE id = ?',
         Bind => [ \$Number, \$ID ],
     );
 
@@ -1016,7 +1012,7 @@ sub AttachmentGet {
             . 'ORDER BY created',
         Bind => [ \$Param{FileID}, \$Param{ItemID} ],
         Encode => [ 1, 1, 1, 0 ],
-        Limit => 1,
+        Limit  => 1,
     );
 
     my %File;
@@ -1068,7 +1064,7 @@ sub AttachmentDelete {
     }
 
     return if !$Kernel::OM->Get('Kernel::System::DB')->Do(
-        SQL => 'DELETE FROM faq_attachment WHERE id = ? AND faq_id = ? ',
+        SQL  => 'DELETE FROM faq_attachment WHERE id = ? AND faq_id = ? ',
         Bind => [ \$Param{FileID}, \$Param{ItemID} ],
     );
 
@@ -1787,7 +1783,7 @@ sub FAQLogAdd {
         SQL => 'SELECT id FROM faq_log '
             . 'WHERE item_id = ? AND ip = ? '
             . 'AND user_agent = ? AND created >= ? ',
-        Bind => [ \$Param{ItemID}, \$IP, \$UserAgent, \$TimeStamp ],
+        Bind  => [ \$Param{ItemID}, \$IP, \$UserAgent, \$TimeStamp ],
         Limit => 1,
     );
 

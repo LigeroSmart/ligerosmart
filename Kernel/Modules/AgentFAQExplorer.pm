@@ -112,8 +112,7 @@ sub Run {
     # but only if the FAQ explorer is not shown as overlay
     if ( !$Nav || $Nav ne 'None' ) {
 
-        my $URL
-            = "Action=AgentFAQExplorer;SortBy=$Self->{SortBy}"
+        my $URL = "Action=AgentFAQExplorer;SortBy=$Self->{SortBy}"
             . ";CategoryID=$CategoryID;Nav=$Nav"
             . ";OrderBy=$Self->{OrderBy};StartHit=$Self->{StartHit}";
         $Self->{SessionObject}->UpdateSessionID(
@@ -260,8 +259,7 @@ sub Run {
         . ';Nav=' . $Nav
         . ';CategoryID=' . $CategoryID
         . ';';
-    my $FilterLink
-        = 'SortBy=' . $Self->{LayoutObject}->LinkEncode( $Self->{SortBy} )
+    my $FilterLink = 'SortBy=' . $Self->{LayoutObject}->LinkEncode( $Self->{SortBy} )
         . ';OrderBy=' . $Self->{LayoutObject}->LinkEncode( $Self->{OrderBy} )
         . ';View=' . $Self->{LayoutObject}->LinkEncode( $Self->{View} )
         . ';Nav=' . $Nav
@@ -289,8 +287,7 @@ sub Run {
     }
 
     # build the title value (on top of the article list)
-    my $Title
-        = $CategoryData{Name}
+    my $Title = $CategoryData{Name}
         || $Self->{ConfigObject}->Get('FAQ::Default::RootCategoryName')
         || '';
 

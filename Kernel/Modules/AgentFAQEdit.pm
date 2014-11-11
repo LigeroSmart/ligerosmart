@@ -142,12 +142,11 @@ sub Run {
         next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
 
         # extract the dynamic field value form the web request
-        $DynamicFieldValues{ $DynamicFieldConfig->{Name} }
-            = $Self->{BackendObject}->EditFieldValueGet(
+        $DynamicFieldValues{ $DynamicFieldConfig->{Name} } = $Self->{BackendObject}->EditFieldValueGet(
             DynamicFieldConfig => $DynamicFieldConfig,
             ParamObject        => $Self->{ParamObject},
             LayoutObject       => $Self->{LayoutObject},
-            );
+        );
     }
 
     # ------------------------------------------------------------ #
@@ -271,8 +270,8 @@ sub Run {
             if ( !$ApprovalQueueID ) {
                 $Output .= $Self->{LayoutObject}->Notify(
                     Priority => 'Error',
-                    Info => "FAQ Approval is enabled but queue '$ApprovalQueue' does not exists",
-                    Link => $Self->{LayoutObject}->{Baselink}
+                    Info     => "FAQ Approval is enabled but queue '$ApprovalQueue' does not exists",
+                    Link     => $Self->{LayoutObject}->{Baselink}
                         . 'Action=AdminSysConfig;Subaction=Edit;'
                         . 'SysConfigSubGroup=Core%3A%3AApproval;SysConfigGroup=FAQ',
                 );

@@ -767,8 +767,7 @@ sub FAQSearch {
 
         for my $Operator ( sort keys %{$SearchParam} ) {
 
-            my @SearchParams
-                = ( ref $SearchParam->{$Operator} eq 'ARRAY' )
+            my @SearchParams = ( ref $SearchParam->{$Operator} eq 'ARRAY' )
                 ? @{ $SearchParam->{$Operator} }
                 : ( $SearchParam->{$Operator} );
 
@@ -873,8 +872,7 @@ sub FAQSearch {
 
             my $SQLExtSub;
 
-            my @SearchParams
-                = ( ref $SearchParam->{$Operator} eq 'ARRAY' )
+            my @SearchParams = ( ref $SearchParam->{$Operator} eq 'ARRAY' )
                 ? @{ $SearchParam->{$Operator} }
                 : ( $SearchParam->{$Operator} );
 
@@ -946,8 +944,7 @@ sub FAQSearch {
                         AND dfv$DynamicFieldJoinCounter.field_id = " .
                     $DBObject->Quote( $DynamicField->{ID}, 'Integer' ) . ") ";
 
-                $DynamicFieldJoinTables{ $DynamicField->{Name} }
-                    = "dfv$DynamicFieldJoinCounter";
+                $DynamicFieldJoinTables{ $DynamicField->{Name} } = "dfv$DynamicFieldJoinCounter";
 
                 $DynamicFieldJoinCounter++;
             }
@@ -987,7 +984,7 @@ sub FAQSearch {
 
     # ask database
     return if !$DBObject->Prepare(
-        SQL => $SQL,
+        SQL   => $SQL,
         Limit => $Param{Limit} || 500
     );
 

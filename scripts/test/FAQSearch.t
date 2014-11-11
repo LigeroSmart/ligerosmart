@@ -438,7 +438,7 @@ my @Tests = (
         Config => {
             %SearchConfigTemplate,
             Rate => {
-                GreaterThan => [ 50, 60 ],
+                GreaterThan       => [ 50, 60 ],
                 SmallerThanEquals => 67,
             },
         },
@@ -453,7 +453,7 @@ my @Tests = (
         Config => {
             %SearchConfigTemplate,
             Votes => {
-                Equals => [ 2, 3, 4 ],
+                Equals            => [ 2, 3, 4 ],
                 GreaterThanEquals => [3],
             },
             Rate => {

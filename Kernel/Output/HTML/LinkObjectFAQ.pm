@@ -196,7 +196,7 @@ sub TableCreateComplex {
                 Type    => 'Link',
                 Key     => $FAQID,
                 Content => $FAQ->{Number},
-                Link => $Self->{LayoutObject}->{Baselink} . 'Action=AgentFAQZoom;ItemID=' . $FAQID,
+                Link    => $Self->{LayoutObject}->{Baselink} . 'Action=AgentFAQZoom;ItemID=' . $FAQID,
             },
             {
                 Type      => 'Text',
@@ -468,7 +468,7 @@ sub SearchOptionList {
             $Self->{LayoutObject}->Block(
                 Name => 'InputText',
                 Data => {
-                    Key => $Row->{FormKey},
+                    Key   => $Row->{FormKey},
                     Value => $Row->{FormData} || '',
                 },
             );

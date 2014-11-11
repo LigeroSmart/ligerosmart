@@ -138,8 +138,7 @@ sub Run {
             Rel  => 'alternate',
             Type => 'application/rss+xml',
             Title =>
-                $Self->{LayoutObject}->{LanguageObject}
-                ->Translate('FAQ Articles (recently changed)'),
+                $Self->{LayoutObject}->{LanguageObject}->Translate('FAQ Articles (recently changed)'),
             Href => $Self->{LayoutObject}->{Baselink} . 'Action=PublicFAQRSS;Type=Changed',
         },
     );

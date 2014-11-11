@@ -669,7 +669,7 @@ sub Run {
 
     # log access to this FAQ item
     $Self->{FAQObject}->FAQLogAdd(
-        ItemID => $Self->{ParamObject}->GetParam( Param => 'ItemID' ),
+        ItemID    => $Self->{ParamObject}->GetParam( Param => 'ItemID' ),
         Interface => $Self->{Interface}->{Name},
         UserID    => $Self->{UserID},
     );

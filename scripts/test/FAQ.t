@@ -428,8 +428,8 @@ my $CheckFields = sub {
             Key  => "ItemFieldGet::ItemID::$FAQID",
         );
 
-      # on before first Get cache should be undef, after firs cache exist, but the Field key must be
-      # undef
+        # on before first Get cache should be undef, after firs cache exist, but the Field key must be
+        # undef
         if ( ref $Cache eq 'HASH' ) {
             $Self->Is(
                 $Cache->{$Field},
@@ -715,7 +715,7 @@ $Self->Is(
 );
 
 $StateTypeList = $FAQObject->StateTypeList(
-    Types => [ 'public', 'external' ],
+    Types  => [ 'public', 'external' ],
     UserID => 1,
 );
 

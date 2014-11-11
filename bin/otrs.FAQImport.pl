@@ -145,7 +145,7 @@ for my $RowRef ( @{$DataRef} ) {
         $DBObject->Prepare(
             SQL => 'SELECT id FROM faq_category '
                 . 'WHERE valid_id = 1 AND name = ? AND parent_id = ?',
-            Bind => [ \$Category, \$ParentID ],
+            Bind  => [ \$Category, \$ParentID ],
             Limit => 1,
         );
         my @Result;

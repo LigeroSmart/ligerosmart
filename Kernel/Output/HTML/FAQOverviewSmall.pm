@@ -37,8 +37,7 @@ sub new {
     $Self->{MultiLanguage} = $Self->{ConfigObject}->Get('FAQ::MultiLanguage');
 
     # get dynamic field config for frontend module
-    $Self->{DynamicFieldFilter}
-        = $Self->{ConfigObject}->Get("FAQ::Frontend::OverviewSmall")->{DynamicField};
+    $Self->{DynamicFieldFilter} = $Self->{ConfigObject}->Get("FAQ::Frontend::OverviewSmall")->{DynamicField};
 
     # get the dynamic fields for this screen
     $Self->{DynamicField} = $Self->{DynamicFieldObject}->DynamicFieldListGet(
@@ -106,8 +105,7 @@ sub Run {
 
                 # remove ID if necessary
                 if ( $Param{SortBy} ) {
-                    $Param{SortBy}
-                        = $Param{SortBy} eq 'PriorityID'
+                    $Param{SortBy} = $Param{SortBy} eq 'PriorityID'
                         ? 'Priority'
                         : $Param{SortBy} eq 'CategoryID' ? 'Category'
                         : $Param{SortBy} eq 'LanguageID' ? 'Language'

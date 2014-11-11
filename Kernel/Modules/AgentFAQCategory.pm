@@ -60,8 +60,7 @@ sub Run {
     $GetParam{ParentID} ||= 0;
 
     # get array parameters
-    @{ $GetParam{PermissionGroups} }
-        = $Self->{ParamObject}->GetArray( Param => 'PermissionGroups' );
+    @{ $GetParam{PermissionGroups} } = $Self->{ParamObject}->GetArray( Param => 'PermissionGroups' );
 
     # ------------------------------------------------------------ #
     # change
@@ -707,8 +706,7 @@ sub _Overview {
         my %ValidList = $Self->{ValidObject}->ValidList();
 
         # sort the category ids by the long category name
-        my @CategoryIDsSorted
-            = sort { $CategoryTree->{$a} cmp $CategoryTree->{$b} } keys %{$CategoryTree};
+        my @CategoryIDsSorted = sort { $CategoryTree->{$a} cmp $CategoryTree->{$b} } keys %{$CategoryTree};
 
         # show all categories
         for my $CategoryID (@CategoryIDsSorted) {

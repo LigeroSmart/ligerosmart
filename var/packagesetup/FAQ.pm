@@ -140,7 +140,7 @@ sub CodeInstall {
     # add the FAQ groups to the category 'Misc'
     $Self->_CategoryGroupSet(
         Category => 'Misc',
-        Groups => [ 'faq', 'faq_admin', 'faq_approval' ],
+        Groups   => [ 'faq', 'faq_admin', 'faq_approval' ],
     );
 
     # create additional FAQ languages

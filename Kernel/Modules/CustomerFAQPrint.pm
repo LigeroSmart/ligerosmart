@@ -44,8 +44,7 @@ sub new {
     $Self->{BackendObject}      = Kernel::System::DynamicField::Backend->new(%Param);
 
     # get dynamic field config for frontend module
-    $Self->{DynamicFieldFilter}
-        = $Self->{ConfigObject}->Get("FAQ::Frontend::CustomerFAQPrint")->{DynamicField};
+    $Self->{DynamicFieldFilter} = $Self->{ConfigObject}->Get("FAQ::Frontend::CustomerFAQPrint")->{DynamicField};
 
     # set default interface settings
     $Self->{Interface} = $Self->{FAQObject}->StateTypeGet(
@@ -165,14 +164,13 @@ sub Run {
             $Title .= ' / ' . $FAQData{Title};
         }
 
-        $Page{MarginTop}    = 30;
-        $Page{MarginRight}  = 40;
-        $Page{MarginBottom} = 40;
-        $Page{MarginLeft}   = 40;
-        $Page{HeaderRight}  = $HeaderRight;
-        $Page{HeadlineLeft} = $HeadlineLeft;
-        $Page{HeadlineRight}
-            = $PrintedBy . ' '
+        $Page{MarginTop}     = 30;
+        $Page{MarginRight}   = 40;
+        $Page{MarginBottom}  = 40;
+        $Page{MarginLeft}    = 40;
+        $Page{HeaderRight}   = $HeaderRight;
+        $Page{HeadlineLeft}  = $HeadlineLeft;
+        $Page{HeadlineRight} = $PrintedBy . ' '
             . $Self->{UserFirstname} . ' '
             . $Self->{UserLastname} . ' ('
             . $Self->{UserEmail} . ') '
@@ -189,7 +187,8 @@ sub Run {
 
         # create first PDF page
         $Self->{PDFObject}->PageNew(
-            %Page, FooterRight => $Page{PageText} . ' ' . $Page{PageCount},
+            %Page,
+            FooterRight => $Page{PageText} . ' ' . $Page{PageCount},
         );
         $Page{PageCount}++;
 
@@ -290,7 +289,10 @@ sub _PDFOutputFAQHeaderInfo {
     # check needed stuff
     for my $Needed (qw(PageData FAQData)) {
         if ( !defined( $Param{$Needed} ) ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $Needed!" );
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Needed!"
+            );
             return;
         }
     }
@@ -390,7 +392,8 @@ sub _PDFOutputFAQHeaderInfo {
         }
         else {
             $Self->{PDFObject}->PageNew(
-                %Page, FooterRight => $Page{PageText} . ' ' . $Page{PageCount},
+                %Page,
+                FooterRight => $Page{PageText} . ' ' . $Page{PageCount},
             );
             $Page{PageCount}++;
         }
@@ -404,7 +407,10 @@ sub _PDFOutputKeywords {
     # check needed stuff
     for my $Needed (qw(PageData FAQData)) {
         if ( !defined( $Param{$Needed} ) ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $Needed!" );
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Needed!"
+            );
             return;
         }
     }
@@ -459,7 +465,8 @@ sub _PDFOutputKeywords {
         }
         else {
             $Self->{PDFObject}->PageNew(
-                %Page, FooterRight => $Page{PageText} . ' ' . $Page{PageCount},
+                %Page,
+                FooterRight => $Page{PageText} . ' ' . $Page{PageCount},
             );
             $Page{PageCount}++;
         }
@@ -473,7 +480,10 @@ sub _PDFOutputFAQDynamicFields {
     # check needed stuff
     for my $Needed (qw(PageData FAQData)) {
         if ( !defined( $Param{$Needed} ) ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $Needed!" );
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Needed!"
+            );
             return;
         }
     }
@@ -579,7 +589,8 @@ sub _PDFOutputFAQDynamicFields {
             }
             else {
                 $Self->{PDFObject}->PageNew(
-                    %Page, FooterRight => $Page{PageText} . ' ' . $Page{PageCount},
+                    %Page,
+                    FooterRight => $Page{PageText} . ' ' . $Page{PageCount},
                 );
                 $Page{PageCount}++;
             }
@@ -648,8 +659,7 @@ sub _PDFOuputFAQContent {
         );
 
         # translate the field name and state
-        my $FieldName
-            = $Self->{LayoutObject}->{LanguageObject}->Translate( $Fields{$Field}->{'Caption'} )
+        my $FieldName = $Self->{LayoutObject}->{LanguageObject}->Translate( $Fields{$Field}->{'Caption'} )
             . ' ('
             . $Self->{LayoutObject}->{LanguageObject}->Translate( $StateTypeData->{Name} )
             . ')';
@@ -692,7 +702,8 @@ sub _PDFOuputFAQContent {
             }
             else {
                 $Self->{PDFObject}->PageNew(
-                    %Page, FooterRight => $Page{PageText} . ' ' . $Page{PageCount},
+                    %Page,
+                    FooterRight => $Page{PageText} . ' ' . $Page{PageCount},
                 );
                 $Page{PageCount}++;
             }

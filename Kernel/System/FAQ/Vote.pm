@@ -258,7 +258,7 @@ sub VoteSearch {
             SELECT id
             FROM faq_voting
             WHERE item_id = ?',
-        Bind => [ \$Param{ItemID} ],
+        Bind  => [ \$Param{ItemID} ],
         Limit => $Param{Limit} || 500,
     );
 
@@ -324,7 +324,7 @@ sub ItemVoteDataGet {
             SELECT count(*), avg(rate)
             FROM faq_voting
             WHERE item_id = ?',
-        Bind => [ \$Param{ItemID} ],
+        Bind  => [ \$Param{ItemID} ],
         Limit => $Param{Limit} || 500,
     );
 

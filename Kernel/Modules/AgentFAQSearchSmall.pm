@@ -180,7 +180,7 @@ sub Run {
                     Type                   => $Preference->{Type},
                 );
 
-              # set the complete value structure in GetParam to store it later in the search profile
+                # set the complete value structure in GetParam to store it later in the search profile
                 if ( IsHashRefWithData($DynamicFieldValue) ) {
                     %GetParam = ( %GetParam, %{$DynamicFieldValue} );
                 }
@@ -248,8 +248,7 @@ sub Run {
         }
 
         # store last overview screen
-        my $URL
-            = "Action=AgentFAQSearchSmall;Subaction=Search;Profile=$Self->{Profile};SortBy=$Self->{SortBy}"
+        my $URL = "Action=AgentFAQSearchSmall;Subaction=Search;Profile=$Self->{Profile};SortBy=$Self->{SortBy}"
             . ";OrderBy=$Self->{OrderBy};TakeLastSearch=1;StartHit=$Self->{StartHit};Nav=$Nav";
         $Self->{SessionObject}->UpdateSessionID(
             SessionID => $Self->{SessionID},
@@ -328,8 +327,7 @@ sub Run {
                     && $GetParam{ $TimeType . 'TimeStartYear' }
                     )
                 {
-                    $GetParam{ $TimeType . 'TimeNewerDate' }
-                        = $GetParam{ $TimeType . 'TimeStartYear' } . '-'
+                    $GetParam{ $TimeType . 'TimeNewerDate' } = $GetParam{ $TimeType . 'TimeStartYear' } . '-'
                         . $GetParam{ $TimeType . 'TimeStartMonth' } . '-'
                         . $GetParam{ $TimeType . 'TimeStartDay' }
                         . ' 00:00:00';
@@ -340,8 +338,7 @@ sub Run {
                     && $GetParam{ $TimeType . 'TimeStopYear' }
                     )
                 {
-                    $GetParam{ $TimeType . 'TimeOlderDate' }
-                        = $GetParam{ $TimeType . 'TimeStopYear' } . '-'
+                    $GetParam{ $TimeType . 'TimeOlderDate' } = $GetParam{ $TimeType . 'TimeStopYear' } . '-'
                         . $GetParam{ $TimeType . 'TimeStopMonth' } . '-'
                         . $GetParam{ $TimeType . 'TimeStopDay' }
                         . ' 23:59:59';
@@ -546,8 +543,7 @@ sub Run {
         # "Map" copy from one array to another, while "grep" will only let pass the categories
         #    that are defined in the %AllowedCategoryIDs hash
         if ( IsArrayRefWithData( $GetParam{CategoryIDs} ) ) {
-            @{ $GetParam{CategoryIDs} }
-                = map {$_} grep { $AllowedCategoryIDs{$_} } @{ $GetParam{CategoryIDs} };
+            @{ $GetParam{CategoryIDs} } = map {$_} grep { $AllowedCategoryIDs{$_} } @{ $GetParam{CategoryIDs} };
         }
 
         # Just search if we do have categories, we have access to.
@@ -612,8 +608,7 @@ sub Run {
             . ';Nav=' . $Nav
             . ';TakeLastSearch=1;';
 
-        my $FilterLink
-            = 'SortBy=' . $Self->{LayoutObject}->LinkEncode( $Self->{SortBy} )
+        my $FilterLink = 'SortBy=' . $Self->{LayoutObject}->LinkEncode( $Self->{SortBy} )
             . ';OrderBy=' . $Self->{LayoutObject}->LinkEncode( $Self->{OrderBy} )
             . ';View=' . $Self->{LayoutObject}->LinkEncode( $Self->{View} )
             . ';Profile=' . $Self->{Profile} . ';TakeLastSearch=1;Subaction=Search'
@@ -878,7 +873,7 @@ sub _MaskForm {
             'Last'   => 'within the last ...',
             'Before' => 'more than ... ago',
         },
-        Name => 'ItemCreateTimePointStart',
+        Name       => 'ItemCreateTimePointStart',
         SelectedID => $Param{ItemCreateTimePointStart} || 'Last',
     );
     $Param{ItemCreateTimePointFormatStrg} = $Self->{LayoutObject}->BuildSelection(
@@ -915,7 +910,7 @@ sub _MaskForm {
             'Last'   => 'within the last ...',
             'Before' => 'more than ... ago',
         },
-        Name => 'ItemChangeTimePointStart',
+        Name       => 'ItemChangeTimePointStart',
         SelectedID => $Param{ItemChangeTimePointStart} || 'Last',
     );
     $Param{ItemChangeTimePointFormatStrg} = $Self->{LayoutObject}->BuildSelection(

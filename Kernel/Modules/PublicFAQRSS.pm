@@ -112,14 +112,12 @@ sub Run {
 
         # build the title
         if ( $Type eq 'Created' ) {
-            $Title
-                = $Self->{LayoutObject}->{LanguageObject}->Translate('FAQ Articles (new created)');
+            $Title = $Self->{LayoutObject}->{LanguageObject}->Translate('FAQ Articles (new created)');
         }
         elsif ( $Type eq 'Changed' ) {
-            $Title
-                = $Self->{LayoutObject}->{LanguageObject}->Translate(
+            $Title = $Self->{LayoutObject}->{LanguageObject}->Translate(
                 'FAQ Articles (recently changed)'
-                );
+            );
         }
     }
 

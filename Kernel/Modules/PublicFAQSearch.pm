@@ -451,8 +451,7 @@ sub Run {
                     && $GetParam{ $TimeType . 'TimeStartYear' }
                     )
                 {
-                    $GetParam{ $TimeType . 'TimeNewerDate' }
-                        = $GetParam{ $TimeType . 'TimeStartYear' } . '-'
+                    $GetParam{ $TimeType . 'TimeNewerDate' } = $GetParam{ $TimeType . 'TimeStartYear' } . '-'
                         . $GetParam{ $TimeType . 'TimeStartMonth' } . '-'
                         . $GetParam{ $TimeType . 'TimeStartDay' }
                         . ' 00:00:00';
@@ -463,8 +462,7 @@ sub Run {
                     && $GetParam{ $TimeType . 'TimeStopYear' }
                     )
                 {
-                    $GetParam{ $TimeType . 'TimeOlderDate' }
-                        = $GetParam{ $TimeType . 'TimeStopYear' } . '-'
+                    $GetParam{ $TimeType . 'TimeOlderDate' } = $GetParam{ $TimeType . 'TimeStopYear' } . '-'
                         . $GetParam{ $TimeType . 'TimeStopMonth' } . '-'
                         . $GetParam{ $TimeType . 'TimeStopDay' }
                         . ' 23:59:59';
@@ -875,9 +873,9 @@ sub Run {
                         # get field value
                         my $ValueStrg = $Self->{BackendObject}->DisplayValueRender(
                             DynamicFieldConfig => $DynamicFieldConfig,
-                            Value => $FAQData{ 'DynamicField_' . $DynamicFieldConfig->{Name} },
-                            ValueMaxChars => 20,
-                            LayoutObject  => $Self->{LayoutObject},
+                            Value              => $FAQData{ 'DynamicField_' . $DynamicFieldConfig->{Name} },
+                            ValueMaxChars      => 20,
+                            LayoutObject       => $Self->{LayoutObject},
                         );
 
                         $Self->{LayoutObject}->Block(
@@ -947,8 +945,7 @@ sub Run {
                 # set attribute name and translate it if applies
                 my $AttributeName = $AttributeMap{$Attribute}->{Name};
                 if ( $AttributeMap{$Attribute}->{Translatable} ) {
-                    $AttributeName
-                        = $Self->{LayoutObject}->{LanguageObject}->Translate($AttributeName);
+                    $AttributeName = $Self->{LayoutObject}->{LanguageObject}->Translate($AttributeName);
                 }
 
                 my $AttributeValue;
@@ -1018,9 +1015,8 @@ sub Run {
                                 . ' 00:00:00', 'DateFormatShort'
                         );
 
-                        $Attribute = 'Created between';
-                        $AttributeValue
-                            = $StartDate . ' '
+                        $Attribute      = 'Created between';
+                        $AttributeValue = $StartDate . ' '
                             . $Self->{LayoutObject}->{LanguageObject}->Translate('and') . ' '
                             . $StopDate;
                     }
@@ -1031,24 +1027,21 @@ sub Run {
                             'Before' => 'Created more than ... ago',
                         };
 
-                        $Attribute = $Mapping->{ $GetParam{ItemCreateTimePointStart} };
-                        $AttributeValue
-                            = $GetParam{ItemCreateTimePoint} . ' '
+                        $Attribute      = $Mapping->{ $GetParam{ItemCreateTimePointStart} };
+                        $AttributeValue = $GetParam{ItemCreateTimePoint} . ' '
                             . $Self->{LayoutObject}->{LanguageObject}
                             ->Get( $GetParam{ItemCreateTimePointFormat} . '(s)' );
                     }
                 }
                 elsif ( $Attribute eq 'VoteSearchType' ) {
                     next ATTRIBUTE if !$GetParam{VoteSearchOption};
-                    $AttributeValue
-                        = $Self->{LayoutObject}->{LanguageObject}
-                        ->Get( $GetParam{VoteSearchType} ) . ' ' . $GetParam{VoteSearch};
+                    $AttributeValue = $Self->{LayoutObject}->{LanguageObject}->Get( $GetParam{VoteSearchType} ) . ' '
+                        . $GetParam{VoteSearch};
                 }
                 elsif ( $Attribute eq 'RateSearchType' ) {
                     next ATTRIBUTE if !$GetParam{RateSearchOption};
-                    $AttributeValue
-                        = $Self->{LayoutObject}->{LanguageObject}
-                        ->Get( $GetParam{RateSearchType} ) . ' ' . $GetParam{RateSearch} . '%';
+                    $AttributeValue = $Self->{LayoutObject}->{LanguageObject}->Get( $GetParam{RateSearchType} ) . ' '
+                        . $GetParam{RateSearch} . '%';
                 }
 
                 $Self->{LayoutObject}->Block(

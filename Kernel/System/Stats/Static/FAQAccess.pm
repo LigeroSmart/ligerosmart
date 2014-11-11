@@ -176,7 +176,9 @@ sub Run {
                 . $Kernel::OM->Get('Kernel::Config')->Get(
                 "FAQ::Explorer::ItemList::VotingResultDecimalPlaces"
                 )
-                . "f", $VoteData->{Result} || 0
+                . "f",
+            $VoteData->{Result}
+                || 0
         );
         my $Votes = $VoteData->{Votes} || 0;
 
@@ -191,8 +193,7 @@ sub Run {
     }
 
     # set report title
-    my $Title
-        = "$Param{StartYear}-$Param{StartMonth}-$StartDay - $Param{EndYear}-$Param{EndMonth}-$EndDay";
+    my $Title = "$Param{StartYear}-$Param{StartMonth}-$StartDay - $Param{EndYear}-$Param{EndMonth}-$EndDay";
 
     # table headlines
     my @HeadData = (

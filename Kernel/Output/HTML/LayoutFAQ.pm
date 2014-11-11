@@ -45,9 +45,8 @@ sub GetFAQItemVotingRateColor {
     if ( !defined $Param{Rate} ) {
         return $Self->FatalError( Message => 'Need rate!' );
     }
-    my $CssTmp = '';
-    my $VotingResultColors
-        = $Self->{ConfigObject}->Get('FAQ::Explorer::ItemList::VotingResultColors');
+    my $CssTmp             = '';
+    my $VotingResultColors = $Self->{ConfigObject}->Get('FAQ::Explorer::ItemList::VotingResultColors');
 
     for my $Key ( sort { $b <=> $a } keys %{$VotingResultColors} ) {
         if ( $Param{Rate} <= $Key ) {
@@ -814,8 +813,8 @@ sub FAQShowLatestNewsBox {
             OrderBy          => [$OrderBy],
             OrderByDirection => ['Down'],
             Interface        => $Param{Interface},
-            Limit  => $Self->{ConfigObject}->Get("FAQ::Explorer::$Param{Type}::Limit") || 5,
-            UserID => $Param{UserID},
+            Limit            => $Self->{ConfigObject}->Get("FAQ::Explorer::$Param{Type}::Limit") || 5,
+            UserID           => $Param{UserID},
             %CategorySearchParam,
         );
 
