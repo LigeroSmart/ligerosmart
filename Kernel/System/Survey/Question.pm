@@ -386,7 +386,7 @@ sub QuestionUp {
             FROM survey_question
             WHERE id = ?
                 AND survey_id = ?',
-        Bind => [ \$Param{QuestionID}, \$Param{SurveyID}, ],
+        Bind  => [ \$Param{QuestionID}, \$Param{SurveyID}, ],
         Limit => 1,
     );
 
@@ -407,7 +407,7 @@ sub QuestionUp {
             FROM survey_question
             WHERE survey_id = ?
                 AND position = ?',
-        Bind => [ \$Param{SurveyID}, \$PositionUp ],
+        Bind  => [ \$Param{SurveyID}, \$PositionUp ],
         Limit => 1,
     );
 
@@ -476,7 +476,7 @@ sub QuestionDown {
             FROM survey_question
             WHERE id = ?
                 AND survey_id = ?',
-        Bind => [ \$Param{QuestionID}, \$Param{SurveyID}, ],
+        Bind  => [ \$Param{QuestionID}, \$Param{SurveyID}, ],
         Limit => 1,
     );
 
@@ -497,7 +497,7 @@ sub QuestionDown {
             FROM survey_question
             WHERE survey_id = ?
                 AND position = ?',
-        Bind => [ \$Param{SurveyID}, \$PositionDown, ],
+        Bind  => [ \$Param{SurveyID}, \$PositionDown, ],
         Limit => 1,
     );
 

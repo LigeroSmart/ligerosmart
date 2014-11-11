@@ -77,7 +77,10 @@ sub Run {
 
         # check if survey exists
         if (
-            $Self->{SurveyObject}->ElementExists( ElementID => $SurveyID, Element => 'Survey' ) ne
+            $Self->{SurveyObject}->ElementExists(
+                ElementID => $SurveyID,
+                Element   => 'Survey'
+            ) ne
             'Yes'
             )
         {
@@ -107,8 +110,7 @@ sub Run {
         }
 
         # convert text area fields to ASCII
-        $Survey{$SurveyField}
-            = $Self->{HTMLUtilsObject}->ToAscii( String => $Survey{$SurveyField} );
+        $Survey{$SurveyField} = $Self->{HTMLUtilsObject}->ToAscii( String => $Survey{$SurveyField} );
 
         $Survey{$SurveyField} = $Self->{HTMLUtilsObject}->DocumentComplete(
             String  => $Survey{$SurveyField},
@@ -131,7 +133,10 @@ sub Run {
 
         # check if survey exists
         if (
-            $Self->{SurveyObject}->ElementExists( ElementID => $SurveyID, Element => 'Survey' ) ne
+            $Self->{SurveyObject}->ElementExists(
+                ElementID => $SurveyID,
+                Element   => 'Survey'
+            ) ne
             'Yes'
             )
         {
@@ -174,7 +179,10 @@ sub Run {
     # check if survey exists
     if (
         !$SurveyID ||
-        $Self->{SurveyObject}->ElementExists( ElementID => $SurveyID, Element => 'Survey' ) ne
+        $Self->{SurveyObject}->ElementExists(
+            ElementID => $SurveyID,
+            Element   => 'Survey'
+        ) ne
         'Yes'
         )
     {
@@ -248,8 +256,7 @@ sub Run {
 
     my $NoQueueMessage = '';
     if ( !$QueueListString ) {
-        $QueueListString
-            = $Self->{LayoutObject}->{LanguageObject}->Translate('- No queue selected -');
+        $QueueListString = $Self->{LayoutObject}->{LanguageObject}->Translate('- No queue selected -');
     }
 
     # print the main table.
@@ -271,8 +278,7 @@ sub Run {
 
         # get selected ticket types
         my %TicketTypes = $Self->{TypeObject}->TypeList();
-        my @TicketTypeList
-            = map { $TicketTypes{$_} ? $TicketTypes{$_} : () } @{ $Survey{TicketTypeIDs} };
+        my @TicketTypeList = map { $TicketTypes{$_} ? $TicketTypes{$_} : () } @{ $Survey{TicketTypeIDs} };
         @TicketTypeList = sort { lc $a cmp lc $b } @TicketTypeList;
         my $TicketTypeListString = join q{, }, @TicketTypeList;
 

@@ -142,9 +142,8 @@ for my $Attribute ( sort keys %SurveyData ) {
 
     # dump the attribute from ChangeGet() and the reference attribute
     ## no critic
-    my $SurveyGetAttribute = Data::Dumper::Dumper( $SurveyGet{$Attribute} );
-    my $SurveyDataAttribute
-        = Data::Dumper::Dumper( $SurveyData{$Attribute} );
+    my $SurveyGetAttribute  = Data::Dumper::Dumper( $SurveyGet{$Attribute} );
+    my $SurveyDataAttribute = Data::Dumper::Dumper( $SurveyData{$Attribute} );
     ## use critic
 
     $Self->Is(
@@ -181,7 +180,7 @@ my @Tests = (
             HistoryType    => 'OwnerUpdate',
             HistoryComment => 'Some free text!',
             UserID         => 1,
-            NoAgentNotify => 1,    # if you don't want to send agent notifications
+            NoAgentNotify  => 1,                                     # if you don't want to send agent notifications
         },
         Result => [
             1,
@@ -214,7 +213,7 @@ my @Tests = (
             HistoryType    => 'OwnerUpdate',
             HistoryComment => 'Some free text!',
             UserID         => 1,
-            NoAgentNotify => 1,    # if you don't want to send agent notifications
+            NoAgentNotify  => 1,                                     # if you don't want to send agent notifications
         },
         Result => [
             0,
@@ -247,7 +246,7 @@ my @Tests = (
             HistoryType    => 'OwnerUpdate',
             HistoryComment => 'Some free text!',
             UserID         => 1,
-            NoAgentNotify => 1,    # if you don't want to send agent notifications
+            NoAgentNotify  => 1,                                   # if you don't want to send agent notifications
         },
         Result => [
             0,
@@ -281,7 +280,7 @@ my @Tests = (
             HistoryType    => 'OwnerUpdate',
             HistoryComment => 'Some free text!',
             UserID         => 1,
-            NoAgentNotify => 1,    # if you don't want to send agent notifications
+            NoAgentNotify  => 1,                                   # if you don't want to send agent notifications
         },
         Result => [
             1,
@@ -315,7 +314,7 @@ my @Tests = (
             HistoryType    => 'OwnerUpdate',
             HistoryComment => 'Some free text!',
             UserID         => 1,
-            NoAgentNotify => 1,    # if you don't want to send agent notifications
+            NoAgentNotify  => 1,                                   # if you don't want to send agent notifications
         },
         Result => [
             0,
@@ -347,7 +346,7 @@ my @Tests = (
             HistoryType    => 'OwnerUpdate',
             HistoryComment => 'Some free text!',
             UserID         => 1,
-            NoAgentNotify => 1,    # if you don't want to send agent notifications
+            NoAgentNotify  => 1,                                   # if you don't want to send agent notifications
         },
         Result => [
             0,
@@ -513,7 +512,7 @@ my @SendConditionTests = (
             HistoryType    => 'OwnerUpdate',
             HistoryComment => 'Some free text!',
             UserID         => 1,
-            NoAgentNotify => 1,    # if you don't want to send agent notifications
+            NoAgentNotify  => 1,                                     # if you don't want to send agent notifications
         },
         Success => 1,
     },
@@ -545,12 +544,12 @@ my @SendConditionTests = (
             HistoryType    => 'OwnerUpdate',
             HistoryComment => 'Some free text!',
             UserID         => 1,
-            NoAgentNotify => 1,    # if you don't want to send agent notifications
+            NoAgentNotify  => 1,                                     # if you don't want to send agent notifications
         },
         Success => 1,
     },
     {
-        Name => 'SendCondition#3 try with check for ticket type (value false)',
+        Name                                   => 'SendCondition#3 try with check for ticket type (value false)',
         'Survey::CheckSendConditionTicketType' => 1,
         'Survey::CheckSendConditionService'    => 0,
         Ticket                                 => {
@@ -577,7 +576,7 @@ my @SendConditionTests = (
             HistoryType    => 'OwnerUpdate',
             HistoryComment => 'Some free text!',
             UserID         => 1,
-            NoAgentNotify => 1,    # if you don't want to send agent notifications
+            NoAgentNotify  => 1,                                     # if you don't want to send agent notifications
         },
         Success => 0,
     },
@@ -609,12 +608,12 @@ my @SendConditionTests = (
             HistoryType    => 'OwnerUpdate',
             HistoryComment => 'Some free text!',
             UserID         => 1,
-            NoAgentNotify => 1,    # if you don't want to send agent notifications
+            NoAgentNotify  => 1,                                     # if you don't want to send agent notifications
         },
         Success => 1,
     },
     {
-        Name => 'SendCondition#5 try with check for service (value false)',
+        Name                                   => 'SendCondition#5 try with check for service (value false)',
         'Survey::CheckSendConditionTicketType' => 0,
         'Survey::CheckSendConditionService'    => 1,
         Ticket                                 => {
@@ -641,12 +640,12 @@ my @SendConditionTests = (
             HistoryType    => 'OwnerUpdate',
             HistoryComment => 'Some free text!',
             UserID         => 1,
-            NoAgentNotify => 1,    # if you don't want to send agent notifications
+            NoAgentNotify  => 1,                                     # if you don't want to send agent notifications
         },
         Success => 0,
     },
     {
-        Name => 'SendCondition#6 try with check for ticket type and service',
+        Name                                   => 'SendCondition#6 try with check for ticket type and service',
         'Survey::CheckSendConditionTicketType' => 1,
         'Survey::CheckSendConditionService'    => 1,
         Ticket                                 => {
@@ -674,7 +673,7 @@ my @SendConditionTests = (
             HistoryType    => 'OwnerUpdate',
             HistoryComment => 'Some free text!',
             UserID         => 1,
-            NoAgentNotify => 1,    # if you don't want to send agent notifications
+            NoAgentNotify  => 1,                                     # if you don't want to send agent notifications
         },
         Success => 1,
     },
@@ -707,7 +706,7 @@ my @SendConditionTests = (
             HistoryType    => 'OwnerUpdate',
             HistoryComment => 'Some free text!',
             UserID         => 1,
-            NoAgentNotify => 1,    # if you don't want to send agent notifications
+            NoAgentNotify  => 1,                                     # if you don't want to send agent notifications
         },
         Success => 0,
     },
@@ -740,7 +739,7 @@ my @SendConditionTests = (
             HistoryType    => 'OwnerUpdate',
             HistoryComment => 'Some free text!',
             UserID         => 1,
-            NoAgentNotify => 1,    # if you don't want to send agent notifications
+            NoAgentNotify  => 1,                                     # if you don't want to send agent notifications
         },
         Success => 0,
     },
@@ -774,7 +773,7 @@ my @SendConditionTests = (
             HistoryType    => 'OwnerUpdate',
             HistoryComment => 'Some free text!',
             UserID         => 1,
-            NoAgentNotify => 1,    # if you don't want to send agent notifications
+            NoAgentNotify  => 1,                                     # if you don't want to send agent notifications
         },
         Success => 0,
     },
@@ -905,8 +904,7 @@ That\'s it.
 
     my $DocumentComplete;
     for my $TextType ( sort keys %Text ) {
-        $DocumentComplete
-            = $SurveyObject->GetRichTextDocumentComplete( Text => $Text{$TextType}->{Input} );
+        $DocumentComplete = $SurveyObject->GetRichTextDocumentComplete( Text => $Text{$TextType}->{Input} );
         $Self->Is(
             $Text{$TextType}->{Output},
             $DocumentComplete,

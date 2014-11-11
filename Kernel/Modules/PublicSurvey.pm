@@ -123,8 +123,7 @@ sub Run {
 
                     # check if rich text is enabled
                     if ( $Self->{LayoutObject}->{BrowserRichText} ) {
-                        $PublicSurveyVote4
-                            = ( length $PublicSurveyVote4 )
+                        $PublicSurveyVote4 = ( length $PublicSurveyVote4 )
                             ? "\$html/text\$ $PublicSurveyVote4"
                             : '';
                     }
@@ -184,8 +183,7 @@ sub Run {
                         );
                     }
                 }
-                $Self->{SurveyObject}
-                    ->PublicSurveyInvalidSet( PublicSurveyKey => $PublicSurveyKey );
+                $Self->{SurveyObject}->PublicSurveyInvalidSet( PublicSurveyKey => $PublicSurveyKey );
                 $Output = $Self->{LayoutObject}->CustomerHeader( Title => 'Survey' );
 
                 # print the main table.
@@ -249,9 +247,15 @@ sub Run {
 
         # check if survey exists
         if (
-            $Self->{SurveyObject}->ElementExists( ElementID => $SurveyID, Element => 'Survey' ) ne
+            $Self->{SurveyObject}->ElementExists(
+                ElementID => $SurveyID,
+                Element   => 'Survey'
+            ) ne
             'Yes'
-            || $Self->{SurveyObject}->ElementExists( ElementID => $RequestID, Element => 'Request' )
+            || $Self->{SurveyObject}->ElementExists(
+                ElementID => $RequestID,
+                Element   => 'Request'
+            )
             ne 'Yes'
             )
         {

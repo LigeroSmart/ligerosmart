@@ -81,8 +81,7 @@ if ( $Opts{d} ) {
     $Opts{v} = 1;
 }
 
-my $SendInHoursAfterClose
-    = $Kernel::OM->Get('Kernel::Config')->Get('Survey::SendInHoursAfterClose');
+my $SendInHoursAfterClose = $Kernel::OM->Get('Kernel::Config')->Get('Survey::SendInHoursAfterClose');
 if ( !$SendInHoursAfterClose ) {
     if ( $Opts{v} ) {
         print "No days configured in Survey::SendInHoursAfterClose.\n";

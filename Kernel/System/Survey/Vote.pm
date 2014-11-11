@@ -211,7 +211,7 @@ sub VoteCount {
             SELECT COUNT(vote_value)
             FROM survey_vote
             WHERE question_id = ? AND vote_value = ?',
-        Bind => [ \$Param{QuestionID}, \$Param{VoteValue}, ],
+        Bind  => [ \$Param{QuestionID}, \$Param{VoteValue}, ],
         Limit => 1,
     );
 

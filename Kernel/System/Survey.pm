@@ -69,8 +69,7 @@ sub new {
     bless( $Self, $Type );
 
     # get like escape string needed for some databases (e.g. oracle)
-    $Self->{LikeEscapeString}
-        = $Kernel::OM->Get('Kernel::System::DB')->GetDatabaseFunction('LikeEscapeString');
+    $Self->{LikeEscapeString} = $Kernel::OM->Get('Kernel::System::DB')->GetDatabaseFunction('LikeEscapeString');
 
     return $Self;
 }
@@ -146,7 +145,7 @@ sub SurveyAdd {
                 AND introduction = ?
                 AND description = ?
             ORDER BY id DESC',
-        Bind => [ \$Param{Title}, \$Param{Introduction}, \$Param{Description}, ],
+        Bind  => [ \$Param{Title}, \$Param{Introduction}, \$Param{Description}, ],
         Limit => 1,
     );
 
@@ -221,8 +220,7 @@ sub SurveyGet {
     while ( my @Row = $DBObject->FetchrowArray() ) {
 
         # get SendCondition as hash
-        my $SendConditions
-            = $Kernel::OM->Get('Kernel::System::YAML')->Load( Data => $Row[9] ) || {};
+        my $SendConditions = $Kernel::OM->Get('Kernel::System::YAML')->Load( Data => $Row[9] ) || {};
 
         # set data fields for send conditions
         ITEM:
@@ -684,8 +682,7 @@ sub SurveySearch {
         $Param{NotificationSubject} = "\%$Param{NotificationSubject}\%";
         $Param{NotificationSubject} =~ s/\*/%/g;
         $Param{NotificationSubject} =~ s/%%/%/g;
-        $Param{NotificationSubject}
-            = $DBObject->Quote( $Param{NotificationSubject}, 'Like' );
+        $Param{NotificationSubject} = $DBObject->Quote( $Param{NotificationSubject}, 'Like' );
         if ($Ext) {
             $Ext .= ' AND';
         }
@@ -1154,7 +1151,7 @@ sub PublicSurveyGet {
             FROM survey
             WHERE id = ?
                 AND (status = ? OR status = ?)',
-        Bind => [ \$SurveyID, \$MasterStatus, \$ValidStatus, ],
+        Bind  => [ \$SurveyID, \$MasterStatus, \$ValidStatus, ],
         Limit => 1,
     );
 
@@ -1359,8 +1356,7 @@ sub _BuildSendConditionStrg {
     }
 
     # dump send conditions as string
-    my $SendConditionStrg
-        = $Kernel::OM->Get('Kernel::System::YAML')->Dump( Data => \%SendConditions );
+    my $SendConditionStrg = $Kernel::OM->Get('Kernel::System::YAML')->Dump( Data => \%SendConditions );
 
     # Make sure the resulting string has the UTF-8 flag. YAML only sets it if
     #   part of the data already had it.

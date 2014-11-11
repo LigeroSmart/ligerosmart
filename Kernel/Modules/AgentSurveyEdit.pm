@@ -55,7 +55,10 @@ sub Run {
 
         # check if survey exists
         if (
-            $Self->{SurveyObject}->ElementExists( ElementID => $SurveyID, Element => 'Survey' ) ne
+            $Self->{SurveyObject}->ElementExists(
+                ElementID => $SurveyID,
+                Element   => 'Survey'
+            ) ne
             'Yes'
             )
         {
@@ -110,16 +113,13 @@ sub Run {
         }
 
         if ( $Self->{ConfigObject}->Get('Frontend::RichText') ) {
-            $FormElements{Introduction}
-                = ( length $FormElements{Introduction} )
+            $FormElements{Introduction} = ( length $FormElements{Introduction} )
                 ? "\$html/text\$ $FormElements{Introduction}"
                 : '';
-            $FormElements{NotificationBody}
-                = ( length $FormElements{NotificationBody} )
+            $FormElements{NotificationBody} = ( length $FormElements{NotificationBody} )
                 ? "\$html/text\$ $FormElements{NotificationBody}"
                 : '';
-            $FormElements{Description}
-                = ( length $FormElements{Description} )
+            $FormElements{Description} = ( length $FormElements{Description} )
                 ? "\$html/text\$ $FormElements{Description}"
                 : '';
         }
@@ -283,17 +283,23 @@ sub _SurveyEditMask {
 
     $Self->{LayoutObject}->Block(
         Name => 'Introduction',
-        Data => { Introduction => $SurveyElements{Introduction}, },
+        Data => {
+            Introduction => $SurveyElements{Introduction},
+        },
     );
 
     $Self->{LayoutObject}->Block(
         Name => 'NotificationBody',
-        Data => { NotificationBody => $SurveyElements{NotificationBody}, },
+        Data => {
+            NotificationBody => $SurveyElements{NotificationBody},
+        },
     );
 
     $Self->{LayoutObject}->Block(
         Name => 'InternalDescription',
-        Data => { Description => $SurveyElements{Description}, },
+        Data => {
+            Description => $SurveyElements{Description},
+        },
     );
 
     # generates generic errors for JavaScript

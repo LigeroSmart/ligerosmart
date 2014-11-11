@@ -332,8 +332,7 @@ sub RequestSend {
 
     # Only if we haven't been called by CRON
     if ( !$Param{TriggerSendRequests} ) {
-        my $AmountOfSurveysPer30Days
-            = $ConfigObject->Get('Survey::AmountOfSurveysPer30Days');
+        my $AmountOfSurveysPer30Days = $ConfigObject->Get('Survey::AmountOfSurveysPer30Days');
 
         # if we should just send a certain amount of surveys per 30 days & recipient
         if ($AmountOfSurveysPer30Days) {
@@ -341,8 +340,7 @@ sub RequestSend {
 
             # Find all surveys that were created in the last 30 days
             my $ThirtyDaysAgo = $Now - 30 * 86400;
-            $ThirtyDaysAgo
-                = $TimeObject->SystemTime2TimeStamp( SystemTime => $ThirtyDaysAgo );
+            $ThirtyDaysAgo = $TimeObject->SystemTime2TimeStamp( SystemTime => $ThirtyDaysAgo );
             my $LastSentTime = 0;
 
             return if !$DBObject->Prepare(

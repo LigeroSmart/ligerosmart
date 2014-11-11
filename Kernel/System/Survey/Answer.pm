@@ -338,7 +338,7 @@ sub AnswerUp {
             FROM survey_answer
             WHERE id = ?
                 AND question_id = ?',
-        Bind => [ \$Param{AnswerID}, \$Param{QuestionID}, ],
+        Bind  => [ \$Param{AnswerID}, \$Param{QuestionID}, ],
         Limit => 1,
     );
 
@@ -358,7 +358,7 @@ sub AnswerUp {
             SELECT id
             FROM survey_answer
             WHERE question_id = ? AND position = ?',
-        Bind => [ \$Param{QuestionID}, \$PositionUp, ],
+        Bind  => [ \$Param{QuestionID}, \$PositionUp, ],
         Limit => 1,
     );
 
@@ -427,7 +427,7 @@ sub AnswerDown {
             FROM survey_answer
             WHERE id = ?
                 AND question_id = ?',
-        Bind => [ \$Param{AnswerID}, \$Param{QuestionID}, ],
+        Bind  => [ \$Param{AnswerID}, \$Param{QuestionID}, ],
         Limit => 1,
     );
 
@@ -448,7 +448,7 @@ sub AnswerDown {
             FROM survey_answer
             WHERE question_id = ?
                 AND position = ?',
-        Bind => [ \$Param{QuestionID}, \$PositionDown, ],
+        Bind  => [ \$Param{QuestionID}, \$PositionDown, ],
         Limit => 1,
     );
 
