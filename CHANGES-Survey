@@ -6,6 +6,9 @@
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
+4.0.0 RC1 - 2014-??-??
+ - 2014-10-10 Added basic ticket information to public survey screen.
+
 4.0.0 beta1 - 2014-10-07
  - 2014-09-26 Added Spanish (Mexico) translation.
  - Improved brazilian portuguese translation, thanks to Murilo Moreira de Oliveira.

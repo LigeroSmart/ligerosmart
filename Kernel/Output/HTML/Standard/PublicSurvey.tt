@@ -13,6 +13,19 @@
         <h2>[% Translate("Survey") | html %]: [% Data.Title | html %]</h2>
     </div>
 
+[% RenderBlockStart("PublicTicket") %]
+    <div class="SurveyBlock">
+        <div class="SurveyBlockHeader">
+            [% Translate("Ticket") | html %]
+        </div>
+        <div class="Content">
+            [% Config("Ticket::Hook") | html %][% Data.TicketNumber | html %] <span>&mdash;</span> [% Data.Title | truncate(100) %]
+        </div>
+    </div>
+
+    <div class="Clear"></div>
+[% RenderBlockEnd("PublicTicket") %]
+
     <div class="SurveyBlock">
         <div class="SurveyBlockHeader">
             [% Translate("Introduction") | html %]

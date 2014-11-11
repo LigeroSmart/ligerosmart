@@ -14,6 +14,7 @@ use warnings;
 
 use Kernel::System::Survey;
 use Kernel::System::HTMLUtils;
+use Kernel::System::Ticket;
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -33,6 +34,7 @@ sub new {
     }
     $Self->{SurveyObject}    = Kernel::System::Survey->new(%Param);
     $Self->{HTMLUtilsObject} = Kernel::System::HTMLUtils->new(%Param);
+    $Self->{TicketObject}    = Kernel::System::Ticket->new(%Param);
 
     return $Self;
 }
@@ -432,6 +434,19 @@ sub Run {
         $Self->{LayoutObject}->Block(
             Name => 'PublicSurvey',
             Data => {%Survey},
+        );
+
+        # get ticket
+        my %RequestData = $Self->{SurveyObject}->RequestGet(
+            PublicSurveyKey => $PublicSurveyKey,
+        );
+        my %Ticket = $Self->{TicketObject}->TicketGet(
+            TicketID => $RequestData{TicketID},
+        );
+
+        $Self->{LayoutObject}->Block(
+            Name => 'PublicTicket',
+            Data => {%Ticket},
         );
 
         # If we had errors, @QuestionList is already filled, so let's save a SQL query
