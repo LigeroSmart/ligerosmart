@@ -143,8 +143,7 @@ sub ObjectPermission {
     }
 
     # check module registry of AgentITSMServiceZoom
-    my $ModuleReg
-        = $Kernel::OM->Get('Kernel::Config')->Get('Frontend::Module')->{AgentITSMServiceZoom};
+    my $ModuleReg = $Kernel::OM->Get('Kernel::Config')->Get('Frontend::Module')->{AgentITSMServiceZoom};
 
     # do not grant access if frontend module is not registered
     return if !$ModuleReg;

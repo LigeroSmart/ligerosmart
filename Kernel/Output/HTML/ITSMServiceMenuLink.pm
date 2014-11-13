@@ -35,13 +35,15 @@ sub Run {
 
     # check needed stuff
     if ( !$Param{Service} ) {
-        $Self->{LogObject}->Log( Priority => 'error', Message => 'Need Service!' );
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need Service!'
+        );
         return;
     }
 
     # get groups
-    my $GroupsRw
-        = $Self->{ConfigObject}->Get('Frontend::Module')->{ $Param{Config}->{Action} }->{Group}
+    my $GroupsRw = $Self->{ConfigObject}->Get('Frontend::Module')->{ $Param{Config}->{Action} }->{Group}
         || [];
 
     # set access

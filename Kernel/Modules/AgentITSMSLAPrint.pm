@@ -88,14 +88,13 @@ sub Run {
         if ( !$Page{MaxPages} || $Page{MaxPages} < 1 || $Page{MaxPages} > 1000 ) {
             $Page{MaxPages} = 100;
         }
-        $Page{MarginTop}    = 30;
-        $Page{MarginRight}  = 40;
-        $Page{MarginBottom} = 40;
-        $Page{MarginLeft}   = 40;
-        $Page{HeaderRight}  = $Self->{LayoutObject}->{LanguageObject}->Get('SLA');
-        $Page{HeadlineLeft} = $SLA{Name};
-        $Page{HeadlineRight}
-            = $Self->{LayoutObject}->{LanguageObject}->Get('printed by') . ' '
+        $Page{MarginTop}     = 30;
+        $Page{MarginRight}   = 40;
+        $Page{MarginBottom}  = 40;
+        $Page{MarginLeft}    = 40;
+        $Page{HeaderRight}   = $Self->{LayoutObject}->{LanguageObject}->Get('SLA');
+        $Page{HeadlineLeft}  = $SLA{Name};
+        $Page{HeadlineRight} = $Self->{LayoutObject}->{LanguageObject}->Get('printed by') . ' '
             . $Self->{UserFullname} . ' '
             . $Self->{LayoutObject}->Output( Template => '$Env{"Time"}' );
         $Page{FooterLeft} = '';

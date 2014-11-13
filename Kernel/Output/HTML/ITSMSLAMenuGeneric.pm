@@ -32,16 +32,17 @@ sub Run {
 
     # check needed stuff
     if ( !$Param{SLA} ) {
-        $Self->{LogObject}->Log( Priority => 'error', Message => 'Need SLA!' );
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need SLA!'
+        );
         return;
     }
 
     # get groups
-    my $GroupsRo
-        = $Self->{ConfigObject}->Get('Frontend::Module')->{ $Param{Config}->{Action} }->{GroupRo}
+    my $GroupsRo = $Self->{ConfigObject}->Get('Frontend::Module')->{ $Param{Config}->{Action} }->{GroupRo}
         || [];
-    my $GroupsRw
-        = $Self->{ConfigObject}->Get('Frontend::Module')->{ $Param{Config}->{Action} }->{Group}
+    my $GroupsRw = $Self->{ConfigObject}->Get('Frontend::Module')->{ $Param{Config}->{Action} }->{Group}
         || [];
 
     # set access

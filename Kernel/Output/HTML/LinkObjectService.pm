@@ -414,7 +414,7 @@ sub ContentStringCreate {
 
         Data => {
             CurInciSignal => $CurInciSignal,
-            CurInciState => $Content->{Content} || '',
+            CurInciState  => $Content->{Content} || '',
         },
     );
 
@@ -501,14 +501,13 @@ sub SearchOptionList {
     for my $Row (@SearchOptionList) {
 
         # get form data
-        $Row->{FormData} = $Kernel::OM->Get('Kernel::System::Web::Request')
-            ->GetParam( Param => $Row->{FormKey} );
+        $Row->{FormData} = $Kernel::OM->Get('Kernel::System::Web::Request')->GetParam( Param => $Row->{FormKey} );
 
         # parse the input text block
         $Self->{LayoutObject}->Block(
             Name => 'InputText',
             Data => {
-                Key => $Row->{FormKey},
+                Key   => $Row->{FormKey},
                 Value => $Row->{FormData} || '',
             },
         );

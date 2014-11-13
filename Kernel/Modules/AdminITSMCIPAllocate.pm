@@ -53,8 +53,7 @@ sub new {
         next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
 
         # get PossibleValues
-        $PossibleValues{ $DynamicFieldConfig->{Name} }
-            = $DynamicFieldConfig->{Config}->{PossibleValues} || {};
+        $PossibleValues{ $DynamicFieldConfig->{Name} } = $DynamicFieldConfig->{Config}->{PossibleValues} || {};
     }
 
     # set the criticality list
@@ -150,8 +149,7 @@ sub Run {
         {
             $AllocateMatrix->[0]->[$Counter2]->{ObjectType}     = 'Criticality';
             $AllocateMatrix->[0]->[$Counter2]->{CriticalityKey} = $Criticality;
-            $AllocateMatrix->[0]->[$Counter2]->{ObjectOption}
-                = $Self->{CriticalityList}->{$Criticality};
+            $AllocateMatrix->[0]->[$Counter2]->{ObjectOption}   = $Self->{CriticalityList}->{$Criticality};
             $Counter2++;
         }
 

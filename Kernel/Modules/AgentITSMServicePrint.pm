@@ -88,14 +88,13 @@ sub Run {
         if ( !$Page{MaxPages} || $Page{MaxPages} < 1 || $Page{MaxPages} > 1000 ) {
             $Page{MaxPages} = 100;
         }
-        $Page{MarginTop}    = 30;
-        $Page{MarginRight}  = 40;
-        $Page{MarginBottom} = 40;
-        $Page{MarginLeft}   = 40;
-        $Page{HeaderRight}  = $Self->{LayoutObject}->{LanguageObject}->Get('Service');
-        $Page{HeadlineLeft} = $Service{NameShort};
-        $Page{HeadlineRight}
-            = $Self->{LayoutObject}->{LanguageObject}->Get('printed by') . ' '
+        $Page{MarginTop}     = 30;
+        $Page{MarginRight}   = 40;
+        $Page{MarginBottom}  = 40;
+        $Page{MarginLeft}    = 40;
+        $Page{HeaderRight}   = $Self->{LayoutObject}->{LanguageObject}->Get('Service');
+        $Page{HeadlineLeft}  = $Service{NameShort};
+        $Page{HeadlineRight} = $Self->{LayoutObject}->{LanguageObject}->Get('printed by') . ' '
             . $Self->{UserFullname} . ' '
             . $Self->{LayoutObject}->Output( Template => '$Env{"Time"}' );
         $Page{FooterLeft} = '';
@@ -400,8 +399,7 @@ sub _PDFOutputAssociatedSLAs {
 
     # generate table data
     for my $SLAID ( sort keys %{ $Param{SLAList} } ) {
-        $TableParam{CellData}[$Row][0]{Content}
-            = $Self->{LayoutObject}->{LanguageObject}->Get('SLA') . ':';
+        $TableParam{CellData}[$Row][0]{Content} = $Self->{LayoutObject}->{LanguageObject}->Get('SLA') . ':';
         $TableParam{CellData}[$Row][0]{Font}    = 'ProportionalBold';
         $TableParam{CellData}[$Row][1]{Content} = $Param{SLAList}->{$SLAID};
         $Row++;

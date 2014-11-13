@@ -208,7 +208,7 @@ sub PriorityAllocationGet {
     $Kernel::OM->Get('Kernel::System::DB')->Prepare(
         SQL => 'SELECT priority_id FROM cip_allocate '
             . 'WHERE criticality = ? AND impact = ?',
-        Bind => [ \$Param{Criticality}, \$Param{Impact} ],
+        Bind  => [ \$Param{Criticality}, \$Param{Impact} ],
         Limit => 1,
     );
 
