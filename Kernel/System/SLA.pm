@@ -2,7 +2,7 @@
 # Kernel/System/SLA.pm - all sla functions
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/3608b606259ace61fedbb82f94273d6abefc6972/Kernel/System/SLA.pm
+# $origin: https://github.com/OTRS/otrs/blob/75b2fdd054b47725c6a1c1925a77475a7a5af46c/Kernel/System/SLA.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -85,8 +85,10 @@ sub SLAList {
 
     # check needed stuff
     if ( !$Param{UserID} ) {
-        $Kernel::OM->Get('Kernel::System::Log')
-            ->Log( Priority => 'error', Message => 'Need UserID!' );
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
+            Priority => 'error',
+            Message  => 'Need UserID!'
+        );
         return;
     }
 
@@ -190,8 +192,10 @@ sub SLAGet {
     # check needed stuff
     for my $Argument (qw(SLAID UserID)) {
         if ( !$Param{$Argument} ) {
-            $Kernel::OM->Get('Kernel::System::Log')
-                ->Log( Priority => 'error', Message => "Need $Argument!" );
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!"
+            );
             return;
         }
     }
@@ -499,9 +503,9 @@ sub SLAAdd {
 #            . 'valid_id, comments, create_time, create_by, change_time, change_by) VALUES '
 #            . '(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, current_timestamp, ?, current_timestamp, ?)',
 #        Bind => [
-#            \$Param{Name},                \$Param{Calendar},   \$Param{FirstResponseTime},
-#            \$Param{FirstResponseNotify}, \$Param{UpdateTime}, \$Param{UpdateNotify},
-#            \$Param{SolutionTime}, \$Param{SolutionNotify}, \$Param{ValidID}, \$Param{Comment},
+#            \$Param{Name},                \$Param{Calendar},       \$Param{FirstResponseTime},
+#            \$Param{FirstResponseNotify}, \$Param{UpdateTime},     \$Param{UpdateNotify},
+#            \$Param{SolutionTime},        \$Param{SolutionNotify}, \$Param{ValidID}, \$Param{Comment},
 #            \$Param{UserID}, \$Param{UserID},
 #        ],
         SQL => 'INSERT INTO sla '
@@ -552,7 +556,7 @@ sub SLAAdd {
 
         # add one allocation
         $DBObject->Do(
-            SQL => 'INSERT INTO service_sla (service_id, sla_id) VALUES (?, ?)',
+            SQL  => 'INSERT INTO service_sla (service_id, sla_id) VALUES (?, ?)',
             Bind => [ \$ServiceID, \$SLAID ],
         );
     }
@@ -687,9 +691,9 @@ sub SLAUpdate {
 #            . 'valid_id = ?, comments = ?, change_time = current_timestamp, change_by = ? '
 #            . 'WHERE id = ?',
 #        Bind => [
-#            \$Param{Name},                \$Param{Calendar},   \$Param{FirstResponseTime},
-#            \$Param{FirstResponseNotify}, \$Param{UpdateTime}, \$Param{UpdateNotify},
-#            \$Param{SolutionTime}, \$Param{SolutionNotify}, \$Param{ValidID}, \$Param{Comment},
+#            \$Param{Name},                \$Param{Calendar},       \$Param{FirstResponseTime},
+#            \$Param{FirstResponseNotify}, \$Param{UpdateTime},     \$Param{UpdateNotify},
+#            \$Param{SolutionTime},        \$Param{SolutionNotify}, \$Param{ValidID}, \$Param{Comment},
 #            \$Param{UserID}, \$Param{SLAID},
 #        ],
         SQL => 'UPDATE sla SET name = ?, calendar_name = ?, '
@@ -718,7 +722,7 @@ sub SLAUpdate {
 
         # add one allocation
         return if !$DBObject->Do(
-            SQL => 'INSERT INTO service_sla (service_id, sla_id) VALUES (?, ?)',
+            SQL  => 'INSERT INTO service_sla (service_id, sla_id) VALUES (?, ?)',
             Bind => [ \$ServiceID, \$Param{SLAID} ],
         );
     }

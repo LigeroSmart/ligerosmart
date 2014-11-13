@@ -2,7 +2,7 @@
 # TicketSLASet.t - TicketSLASet testscript
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/3608b606259ace61fedbb82f94273d6abefc6972/scripts/test/ProcessManagement/TransitionAction/TicketSLASet.t
+# $origin: https://github.com/OTRS/otrs/blob/75b2fdd054b47725c6a1c1925a77475a7a5af46c/scripts/test/ProcessManagement/TransitionAction/TicketSLASet.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,8 +24,7 @@ my $ServiceObject = $Kernel::OM->Get('Kernel::System::Service');
 my $SLAObject     = $Kernel::OM->Get('Kernel::System::SLA');
 my $TicketObject  = $Kernel::OM->Get('Kernel::System::Ticket');
 my $UserObject    = $Kernel::OM->Get('Kernel::System::User');
-my $ModuleObject
-    = $Kernel::OM->Get('Kernel::System::ProcessManagement::TransitionAction::TicketSLASet');
+my $ModuleObject  = $Kernel::OM->Get('Kernel::System::ProcessManagement::TransitionAction::TicketSLASet');
 
 # define variables
 my $UserID     = 1;

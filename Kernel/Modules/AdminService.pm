@@ -2,7 +2,7 @@
 # Kernel/Modules/AdminService.pm - admin frontend to manage services
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/3608b606259ace61fedbb82f94273d6abefc6972/Kernel/Modules/AdminService.pm
+# $origin: https://github.com/OTRS/otrs/blob/75b2fdd054b47725c6a1c1925a77475a7a5af46c/Kernel/Modules/AdminService.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -175,11 +175,15 @@ sub Run {
                     if (@Params) {
                         my %GetParam = ();
                         for my $ParamItem (@Params) {
-                            my @Array
-                                = $Self->{ParamObject}->GetArray( Param => $ParamItem->{Name} );
+                            my @Array = $Self->{ParamObject}->GetArray( Param => $ParamItem->{Name} );
                             $GetParam{ $ParamItem->{Name} } = \@Array;
                         }
-                        if ( !$Object->Run( GetParam => \%GetParam, ServiceData => \%ServiceData ) )
+                        if (
+                            !$Object->Run(
+                                GetParam    => \%GetParam,
+                                ServiceData => \%ServiceData
+                            )
+                            )
                         {
                             $Note .= $Self->{LayoutObject}->Notify( Info => $Object->Error() );
                         }
@@ -224,8 +228,7 @@ sub Run {
         if ( !$Self->{ConfigObject}->Get('Ticket::Service') ) {
             $Output .= $Self->{LayoutObject}->Notify(
                 Priority => 'Error',
-                Data     => $Self->{LayoutObject}->{LanguageObject}
-                    ->Translate( "Please activate %s first!", "Service" ),
+                Data => $Self->{LayoutObject}->{LanguageObject}->Translate( "Please activate %s first!", "Service" ),
                 Link =>
                     $Self->{LayoutObject}->{Baselink}
                     . 'Action=AdminSysConfig;Subaction=Edit;SysConfigGroup=Ticket;SysConfigSubGroup=Core::Ticket#Ticket::Service',
@@ -432,6 +435,9 @@ sub _MaskNew {
     }
 
     # generate output
-    return $Self->{LayoutObject}->Output( TemplateFile => 'AdminService', Data => \%Param );
+    return $Self->{LayoutObject}->Output(
+        TemplateFile => 'AdminService',
+        Data         => \%Param
+    );
 }
 1;

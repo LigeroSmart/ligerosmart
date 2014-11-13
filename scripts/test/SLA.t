@@ -2,7 +2,7 @@
 # SLA.t - SLA tests
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/3608b606259ace61fedbb82f94273d6abefc6972/scripts/test/SLA.t
+# $origin: https://github.com/OTRS/otrs/blob/75b2fdd054b47725c6a1c1925a77475a7a5af46c/scripts/test/SLA.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -376,9 +376,9 @@ my $ItemData = [
 # ---
         },
         AddGet => {
-            ServiceIDs => [ $ServiceIDs[0], $ServiceIDs[1] ],
-            Name       => $SLAName[2],
-            Calendar   => '',
+            ServiceIDs          => [ $ServiceIDs[0], $ServiceIDs[1] ],
+            Name                => $SLAName[2],
+            Calendar            => '',
             FirstResponseTime   => 0,
             FirstResponseNotify => 0,
             UpdateTime          => 0,
@@ -414,9 +414,9 @@ my $ItemData = [
     # this sla must be inserted sucessfully
     {
         Add => {
-            ServiceIDs => [ $ServiceIDs[1], $ServiceIDs[2], $ServiceIDs[0] ],
-            Name       => $SLAName[3],
-            Calendar   => '1',
+            ServiceIDs          => [ $ServiceIDs[1], $ServiceIDs[2], $ServiceIDs[0] ],
+            Name                => $SLAName[3],
+            Calendar            => '1',
             FirstResponseTime   => 10,
             FirstResponseNotify => 20,
             UpdateTime          => 30,
@@ -433,9 +433,9 @@ my $ItemData = [
 # ---
         },
         AddGet => {
-            ServiceIDs => [ $ServiceIDs[0], $ServiceIDs[1], $ServiceIDs[2] ],
-            Name       => $SLAName[3],
-            Calendar   => '1',
+            ServiceIDs          => [ $ServiceIDs[0], $ServiceIDs[1], $ServiceIDs[2] ],
+            Name                => $SLAName[3],
+            Calendar            => '1',
             FirstResponseTime   => 10,
             FirstResponseNotify => 20,
             UpdateTime          => 30,

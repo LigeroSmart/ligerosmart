@@ -2,7 +2,7 @@
 # Ticket.t - ticket module testscript
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/3608b606259ace61fedbb82f94273d6abefc6972/scripts/test/Ticket.t
+# $origin: https://github.com/OTRS/otrs/blob/75b2fdd054b47725c6a1c1925a77475a7a5af46c/scripts/test/Ticket.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -223,7 +223,7 @@ If you feel the urge to write Perl modules, perlnewmod will give you good advice
     HistoryType    => 'OwnerUpdate',
     HistoryComment => 'Some free text!',
     UserID         => 1,
-    NoAgentNotify => 1,    # if you don't want to send agent notifications
+    NoAgentNotify  => 1,                                   # if you don't want to send agent notifications
 );
 
 $Self->True(
@@ -1434,10 +1434,9 @@ my ( $Sec, $Min, $Hour, $Day, $Month, $Year ) = $TimeObject->SystemTime2Date(
     SystemTime => $TimeObject->SystemTime(),
 );
 
-my ( $StopSec, $StopMin, $StopHour, $StopDay, $StopMonth, $StopYear )
-    = $TimeObject->SystemTime2Date(
+my ( $StopSec, $StopMin, $StopHour, $StopDay, $StopMonth, $StopYear ) = $TimeObject->SystemTime2Date(
     SystemTime => $TimeObject->SystemTime() - 60 * 60 * 24,
-    );
+);
 
 my %TicketStatus = $TicketObject->HistoryTicketStatusGet(
     StopYear   => $Year,
@@ -2140,7 +2139,9 @@ my @NewStates = $StateObject->StateGetStatesByType(
 
 # make sure we dont have valid states for state type new
 for my $NewStateID (@NewStates) {
-    my %State = $StateObject->StateGet( ID => $NewStateID, );
+    my %State = $StateObject->StateGet(
+        ID => $NewStateID,
+    );
     $StateObject->StateUpdate(
         %State,
         ValidID => 2,
@@ -2163,7 +2164,9 @@ $Self->False(
 
 # activate states again
 for my $NewStateID (@NewStates) {
-    my %State = $StateObject->StateGet( ID => $NewStateID, );
+    my %State = $StateObject->StateGet(
+        ID => $NewStateID,
+    );
     $StateObject->StateUpdate(
         %State,
         ValidID => 1,
