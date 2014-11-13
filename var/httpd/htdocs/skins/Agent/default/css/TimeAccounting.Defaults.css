@@ -62,7 +62,12 @@ table#InsertWorkingHours tbody td {
 
 button.ui-button-icon-only {
     width: 24px !important;
-    top: -9px;
+    position: relative;
+}
+
+span.ui-icon {
+    position: absolute;
+    left: 3px !important;
 }
 
 .ui-autocomplete .ui-menu-ietm {
