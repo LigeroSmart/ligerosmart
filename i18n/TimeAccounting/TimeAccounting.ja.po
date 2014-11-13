@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2014-09-27 14:00+0000\n"
+"PO-Revision-Date: 2014-10-10 23:16+0000\n"
 "Last-Translator: Kentaro Hori <kentaro0919@gmail.com>\n"
 "Language-Team: Japanese (http://www.transifex.com/projects/p/OTRS/language/ja/)\n"
 "MIME-Version: 1.0\n"
@@ -599,6 +599,10 @@ msgid "For how many days ago you can insert working units."
 msgstr "何日前からワーキング・ユニットの新規登録が可能であるかの設定です。"
 
 #. SysConfig
+msgid "If enabled, only users that has added working time to the selected project are shown."
+msgstr "有効時には、該当のプロジェクトに稼働時間を投入しているユーザーのみ表示されます"
+
+#. SysConfig
 msgid "If enabled, the dropdown elements in the edit screen are changed to autocompletion fields."
 msgstr "この項目を「許可」にすると、編集画面内のプルダウンメニューをオートコンプリート機能付きのフォームに変更します。"
 
@@ -665,8 +669,4 @@ msgstr "時間会計"
 #. SysConfig
 msgid "To use if some actions reduced the working hours (for example, if only half of the traveling time is paid Key => traveling; Content => 50)."
 msgstr "業務上の行動において、稼働時間として計上する時間を調整する必要がある場合に、この設定を使用します。（例：「移動時間」の50%のみ勤務時間相当とする場合「鍵」に`journey`、「内容」に`50`と設定)"
-
-#. SysConfig
-msgid "If enabled, only users that has added working time to the selected project are shown."
-msgstr ""
 

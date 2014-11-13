@@ -7,6 +7,7 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 4.0.0 rc1 - 2014-11-18
+ - 2014-11-13 Sync translation files.
  - 2014-11-11 Code cleanup.
  - 2014-10-09 Added new setting to shown only active users in project reports (enabled by default).
  - 2014-10-09 Fixed bug#10439 - Too much users displayed in AgentTimeAccountingReportingProject.

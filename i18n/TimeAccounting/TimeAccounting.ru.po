@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2014-09-27 08:30+0000\n"
+"PO-Revision-Date: 2014-10-10 05:17+0000\n"
 "Last-Translator: Yuri Kolesniov <ynkolesnikov@gmail.com>\n"
 "Language-Team: Russian (http://www.transifex.com/projects/p/OTRS/language/ru/)\n"
 "MIME-Version: 1.0\n"
@@ -158,7 +158,7 @@ msgstr "Отрицательное значение недопустимо."
 
 #. Template: AgentTimeAccountingEdit
 msgid "Repeated hours are not allowed. Start time matches another interval."
-msgstr ""
+msgstr "Не допускается повторение. Время начала соответствует другому интервалу."
 
 #. Template: AgentTimeAccountingEdit
 msgid "Invalid format! Please enter a time with the format HH:MM."
@@ -182,7 +182,7 @@ msgstr "Время окончания должно быть позже врем�
 
 #. Template: AgentTimeAccountingEdit
 msgid "Repeated hours are not allowed. End time matches another interval."
-msgstr ""
+msgstr "Не допускается повторение. Время окончания соответствует другому интервалу."
 
 #. Template: AgentTimeAccountingEdit
 msgid "Invalid period! A day has only 24 hours."
@@ -601,6 +601,10 @@ msgid "For how many days ago you can insert working units."
 msgstr "Для какого количества прошедших дней вы можете внести данные о времени."
 
 #. SysConfig
+msgid "If enabled, only users that has added working time to the selected project are shown."
+msgstr "Если включено, отображаются только пользователи, которые заносили затраты времени в выбранный проект."
+
+#. SysConfig
 msgid "If enabled, the dropdown elements in the edit screen are changed to autocompletion fields."
 msgstr "Если включено, для выбора полей списка на экране редактирования можно использовать автозавершение."
 
@@ -634,7 +638,7 @@ msgstr "Задает, можно ли заносить рабочие часы �
 
 #. SysConfig
 msgid "This module forces inserts in TimeAccounting."
-msgstr ""
+msgstr "Этот модуль ускоряет ввод данных в TimeAccounting."
 
 #. SysConfig
 msgid "This notification module gives a warning if there are too many incomplete working days."
@@ -667,8 +671,4 @@ msgstr "Учет затраченного времени"
 #. SysConfig
 msgid "To use if some actions reduced the working hours (for example, if only half of the traveling time is paid Key => traveling; Content => 50)."
 msgstr "Для использования, если некоторые действия уменьшают рабочие часы (например, если только половина времени в пути оплачивается - Key => traveling; Content => 50)."
-
-#. SysConfig
-msgid "If enabled, only users that has added working time to the selected project are shown."
-msgstr ""
 

@@ -59,14 +59,14 @@ sub Data {
     $Self->{Translation}->{'Start Time'} = 'Время начала';
     $Self->{Translation}->{'Negative times are not allowed.'} = 'Отрицательное значение недопустимо.';
     $Self->{Translation}->{'Repeated hours are not allowed. Start time matches another interval.'} =
-        '';
+        'Не допускается повторение. Время начала соответствует другому интервалу.';
     $Self->{Translation}->{'Invalid format! Please enter a time with the format HH:MM.'} = 'Неверный формат! Введите время в формате HH:MM.';
     $Self->{Translation}->{'24:00 is only permitted as end time.'} = 'Только 24:00 разрешено в качестве времени окончания.';
     $Self->{Translation}->{'Invalid time! A day has only 24 hours.'} = 'Неверное время! В сутках только 24 часа.';
     $Self->{Translation}->{'End Time'} = 'Время окончания';
     $Self->{Translation}->{'End time must be after start time.'} = 'Время окончания должно быть позже времени начала.';
     $Self->{Translation}->{'Repeated hours are not allowed. End time matches another interval.'} =
-        '';
+        'Не допускается повторение. Время окончания соответствует другому интервалу.';
     $Self->{Translation}->{'Invalid period! A day has only 24 hours.'} = 'Неверный период! В сутках только 24 часа.';
     $Self->{Translation}->{'A valid period must be greater than zero.'} = 'Правильный период должен быть больше нуля.';
     $Self->{Translation}->{'Invalid period! Negative periods are not allowed.'} = 'Неверный период! Отрицательное значение не допускается.';
@@ -190,7 +190,7 @@ sub Data {
     $Self->{Translation}->{'Edit time record'} = 'Редактировать запись времени';
     $Self->{Translation}->{'For how many days ago you can insert working units.'} = 'Для какого количества прошедших дней вы можете внести данные о времени.';
     $Self->{Translation}->{'If enabled, only users that has added working time to the selected project are shown.'} =
-        '';
+        'Если включено, отображаются только пользователи, которые заносили затраты времени в выбранный проект.';
     $Self->{Translation}->{'If enabled, the dropdown elements in the edit screen are changed to autocompletion fields.'} =
         'Если включено, для выбора полей списка на экране редактирования можно использовать автозавершение.';
     $Self->{Translation}->{'If enabled, the user is allowed to enter "on vacation leave", "on sick leave" and "on overtime leave" to multiple dates at once.'} =
@@ -206,7 +206,7 @@ sub Data {
         'Регулярные выражения для составления списка действий в зависимости от групп пользователей. Ключ должен содержать регулярное выражение для проекта(ов), Содержание - список групп, разделенных запятой.';
     $Self->{Translation}->{'Specifies if working hours can be inserted without start and end times.'} =
         'Задает, можно ли заносить рабочие часы без указания времени начала и окончания.';
-    $Self->{Translation}->{'This module forces inserts in TimeAccounting.'} = '';
+    $Self->{Translation}->{'This module forces inserts in TimeAccounting.'} = 'Этот модуль ускоряет ввод данных в TimeAccounting.';
     $Self->{Translation}->{'This notification module gives a warning if there are too many incomplete working days.'} =
         'Модуль уведомлений, для отображения количества незавершенных рабочих дней пользователя.';
     $Self->{Translation}->{'Time accounting edit.'} = 'Редактирование затрат времени.';
