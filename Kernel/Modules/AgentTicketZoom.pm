@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTicketZoom.pm - to get a closer view
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/3608b606259ace61fedbb82f94273d6abefc6972/Kernel/Modules/AgentTicketZoom.pm
+# $origin: https://github.com/OTRS/otrs/blob/75b2fdd054b47725c6a1c1925a77475a7a5af46c/Kernel/Modules/AgentTicketZoom.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -114,12 +114,10 @@ sub new {
         $Self->{ZoomExpandSort} = $Self->{ConfigObject}->Get('Ticket::Frontend::ZoomExpandSort');
     }
 
-    $Self->{ArticleFilterActive}
-        = $Self->{ConfigObject}->Get('Ticket::Frontend::TicketArticleFilter');
+    $Self->{ArticleFilterActive} = $Self->{ConfigObject}->Get('Ticket::Frontend::TicketArticleFilter');
 
     # define if rich text should be used
-    $Self->{RichText}
-        = $Self->{ConfigObject}->Get('Ticket::Frontend::ZoomRichTextForce')
+    $Self->{RichText} = $Self->{ConfigObject}->Get('Ticket::Frontend::ZoomRichTextForce')
         || $Self->{LayoutObject}->{BrowserRichText}
         || 0;
 
@@ -161,13 +159,11 @@ sub new {
     };
 
     # create additional objects for process management
-    $Self->{ActivityObject} = Kernel::System::ProcessManagement::Activity->new(%Param);
-    $Self->{ActivityDialogObject}
-        = Kernel::System::ProcessManagement::ActivityDialog->new(%Param);
+    $Self->{ActivityObject}       = Kernel::System::ProcessManagement::Activity->new(%Param);
+    $Self->{ActivityDialogObject} = Kernel::System::ProcessManagement::ActivityDialog->new(%Param);
 
-    $Self->{TransitionObject} = Kernel::System::ProcessManagement::Transition->new(%Param);
-    $Self->{TransitionActionObject}
-        = Kernel::System::ProcessManagement::TransitionAction->new(%Param);
+    $Self->{TransitionObject}       = Kernel::System::ProcessManagement::Transition->new(%Param);
+    $Self->{TransitionActionObject} = Kernel::System::ProcessManagement::TransitionAction->new(%Param);
 
     $Self->{ProcessObject} = Kernel::System::ProcessManagement::Process->new(
         %Param,
@@ -228,9 +224,8 @@ sub new {
         && $Self->{ConfigObject}->Get('ChronicalViewEnabled') == 1
         )
     {
-        my $ZoomFrontendConfiguration
-            = $Self->{ConfigObject}->Get('Frontend::Module')->{AgentTicketZoom};
-        my @CustomJSFiles = (
+        my $ZoomFrontendConfiguration = $Self->{ConfigObject}->Get('Frontend::Module')->{AgentTicketZoom};
+        my @CustomJSFiles             = (
             'Core.Agent.TicketZoom.ChronicalView.js',
         );
         push( @{ $ZoomFrontendConfiguration->{Loader}->{JavaScript} || [] }, @CustomJSFiles );
@@ -285,8 +280,7 @@ sub Run {
         my %Actions = %{ $Self->{ConfigObject}->Get('Frontend::Module') };
 
         # only use those Actions that stats with Agent
-        %PossibleActions
-            = map { ++$Counter => $_ }
+        %PossibleActions = map { ++$Counter => $_ }
             grep { substr( $_, 0, length 'Agent' ) eq 'Agent' }
             sort keys %Actions;
     }
@@ -427,7 +421,7 @@ sub Run {
         );
         my $Content = $Self->{LayoutObject}->Output(
             TemplateFile => 'AgentTicketZoom',
-            Data => { %Ticket, %Article, %AclAction },
+            Data         => { %Ticket, %Article, %AclAction },
         );
         if ( !$Content ) {
             $Self->{LayoutObject}->FatalError(
@@ -449,9 +443,8 @@ sub Run {
         # get params
         my $TicketID     = $Self->{ParamObject}->GetParam( Param => 'TicketID' );
         my $SaveDefaults = $Self->{ParamObject}->GetParam( Param => 'SaveDefaults' );
-        my @ArticleTypeFilterIDs = $Self->{ParamObject}->GetArray( Param => 'ArticleTypeFilter' );
-        my @ArticleSenderTypeFilterIDs
-            = $Self->{ParamObject}->GetArray( Param => 'ArticleSenderTypeFilter' );
+        my @ArticleTypeFilterIDs       = $Self->{ParamObject}->GetArray( Param => 'ArticleTypeFilter' );
+        my @ArticleSenderTypeFilterIDs = $Self->{ParamObject}->GetArray( Param => 'ArticleSenderTypeFilter' );
 
         # build session string
         my $SessionString = '';
@@ -668,7 +661,10 @@ sub Run {
     # generate output
     my $Output = $Self->{LayoutObject}->Header( Value => $Ticket{TicketNumber} );
     $Output .= $Self->{LayoutObject}->NavigationBar();
-    $Output .= $Self->MaskAgentZoom( Ticket => \%Ticket, AclAction => \%AclAction );
+    $Output .= $Self->MaskAgentZoom(
+        Ticket    => \%Ticket,
+        AclAction => \%AclAction
+    );
     $Output .= $Self->{LayoutObject}->Footer();
     return $Output;
 }
@@ -852,14 +848,16 @@ sub MaskAgentZoom {
         if ( !$ArticleID ) {
             if (@ArticleBox) {
 
-                # set first article as default if normal sort
+                # set first listed article as fallback
                 $ArticleID = $ArticleBox[0]->{ArticleID};
             }
 
             # set last customer article as selected article replacing last set
+            ARTICLETMP:
             for my $ArticleTmp (@ArticleBox) {
                 if ( $ArticleTmp->{SenderType} eq 'customer' ) {
                     $ArticleID = $ArticleTmp->{ArticleID};
+                    last ARTICLETMP if $Self->{ZoomExpandSort} eq 'reverse';
                 }
             }
         }
@@ -953,7 +951,7 @@ sub MaskAgentZoom {
         }
         $Param{ArticleItems} .= $Self->{LayoutObject}->Output(
             TemplateFile => 'AgentTicketZoom',
-            Data => { %Ticket, %AclAction },
+            Data         => { %Ticket, %AclAction },
         );
     }
 
@@ -966,7 +964,10 @@ sub MaskAgentZoom {
     }
 
     # age design
-    $Ticket{Age} = $Self->{LayoutObject}->CustomerAge( Age => $Ticket{Age}, Space => ' ' );
+    $Ticket{Age} = $Self->{LayoutObject}->CustomerAge(
+        Age   => $Ticket{Age},
+        Space => ' '
+    );
 
     # number of articles
     $Param{ArticleCount} = scalar @ArticleBox;
@@ -1017,8 +1018,7 @@ sub MaskAgentZoom {
 
     # get MoveQueuesStrg
     if ( $Self->{ConfigObject}->Get('Ticket::Frontend::MoveType') =~ /^form$/i ) {
-        $MoveQueues{0}
-            = '- ' . $Self->{LayoutObject}->{LanguageObject}->Translate('Move') . ' -';
+        $MoveQueues{0} = '- ' . $Self->{LayoutObject}->{LanguageObject}->Translate('Move') . ' -';
         $Param{MoveQueuesStrg} = $Self->{LayoutObject}->AgentQueueListOption(
             Name           => 'DestQueueID',
             Data           => \%MoveQueues,
@@ -1290,11 +1290,10 @@ sub MaskAgentZoom {
             ACTIVITYDIALOGPERMISSION:
             for my $Index ( sort { $a <=> $b } keys %{$NextActivityDialogs} ) {
                 my $CurrentActivityDialogEntityID = $NextActivityDialogs->{$Index};
-                my $CurrentActivityDialog
-                    = $Self->{ActivityDialogObject}->ActivityDialogGet(
+                my $CurrentActivityDialog         = $Self->{ActivityDialogObject}->ActivityDialogGet(
                     Interface              => 'AgentInterface',
                     ActivityDialogEntityID => $CurrentActivityDialogEntityID
-                    );
+                );
 
                 # create an interface lookup-list
                 my %InterfaceLookup = map { $_ => 1 } @{ $CurrentActivityDialog->{Interface} };
@@ -1334,8 +1333,7 @@ sub MaskAgentZoom {
             );
 
             if ($ACL) {
-                %{$NextActivityDialogs}
-                    = $Self->{TicketObject}->TicketAclData()
+                %{$NextActivityDialogs} = $Self->{TicketObject}->TicketAclData()
             }
 
             $Self->{LayoutObject}->Block(
@@ -1416,8 +1414,7 @@ sub MaskAgentZoom {
 # ---
 
         # use translation here to be able to reduce the character length in the template
-        my $Label
-            = $Self->{LayoutObject}->{LanguageObject}->Translate( $DynamicFieldConfig->{Label} );
+        my $Label = $Self->{LayoutObject}->{LanguageObject}->Translate( $DynamicFieldConfig->{Label} );
 
         if (
             $IsProcessTicket &&
@@ -1497,8 +1494,7 @@ sub MaskAgentZoom {
                 Name => 'ProcessWidgetDynamicFieldGroups',
             );
 
-            my $GroupFieldsString
-                = $Self->{DisplaySettings}->{ProcessWidgetDynamicFieldGroups}->{$GroupName};
+            my $GroupFieldsString = $Self->{DisplaySettings}->{ProcessWidgetDynamicFieldGroups}->{$GroupName};
 
             $GroupFieldsString =~ s{\s}{}xmsg;
             my @GroupFields = split( ',', $GroupFieldsString );
@@ -1871,7 +1867,7 @@ sub MaskAgentZoom {
     # return output
     return $Self->{LayoutObject}->Output(
         TemplateFile => 'AgentTicketZoom',
-        Data => { %Param, %Ticket, %AclAction },
+        Data         => { %Param, %Ticket, %AclAction },
     );
 }
 
@@ -2060,7 +2056,7 @@ sub _ArticleTree {
 
             my $TmpSubject = $Self->{TicketObject}->TicketSubjectClean(
                 TicketNumber => $Article{TicketNumber},
-                Subject => $Article{Subject} || '',
+                Subject      => $Article{Subject} || '',
             );
 
             # check if we need to show also expand/collapse icon
@@ -2155,7 +2151,7 @@ sub _ArticleTree {
         }
     }
 
-    # show chronical view
+    # show timeline view
     else {
 
         # get ticket history
@@ -2274,7 +2270,6 @@ sub _ArticleTree {
 
         # incoming types
         my @TypesIncoming = qw(
-            NewTicket
             EmailCustomer
             AddNoteCustomer
             PhoneCallCustomer
@@ -2299,7 +2294,6 @@ sub _ArticleTree {
             @TypesInternal,
             @TypesIncoming,
             'PhoneCallCustomer',
-            'NewTicket',
         );
 
         my %HistoryItems;
@@ -2309,8 +2303,7 @@ sub _ArticleTree {
 
         # Get mapping of history types to readable strings
         my %HistoryTypes;
-        my %HistoryTypeConfig
-            = %{ $Kernel::OM->Get('Kernel::Config')->Get('Ticket::Frontend::HistoryTypes') // {} };
+        my %HistoryTypeConfig = %{ $Kernel::OM->Get('Kernel::Config')->Get('Ticket::Frontend::HistoryTypes') // {} };
         for my $Entry ( sort keys %HistoryTypeConfig ) {
             %HistoryTypes = (
                 %HistoryTypes,
@@ -2330,7 +2323,7 @@ sub _ArticleTree {
             # check which color the item should have
             if ( $Item->{HistoryType} eq 'NewTicket' ) {
 
-          # if the 'NewTicket' item has an article, display this "creation article" event separately
+                # if the 'NewTicket' item has an article, display this "creation article" event separately
                 if ( $Item->{ArticleID} ) {
                     push @{ $Param{Items} }, {
                         %{$Item},
@@ -2344,25 +2337,38 @@ sub _ArticleTree {
                 }
                 else {
                     $Item->{Class} = 'NewTicket';
+                    delete $Item->{ArticleID};
                     delete $Item->{Name};
                 }
             }
+
             # special treatment for certain types, e.g. external notes from customers
-            elsif ( $Item->{ArticleID} && $Item->{HistoryType} eq 'AddNote' && IsHashRefWithData($ArticlesByArticleID->{$Item->{ArticleID}}) && $ArticlesByArticleID->{$Item->{ArticleID}}->{SenderType} eq 'customer') {
+            elsif ($Item->{ArticleID}
+                && $Item->{HistoryType} eq 'AddNote'
+                && IsHashRefWithData( $ArticlesByArticleID->{ $Item->{ArticleID} } )
+                && $ArticlesByArticleID->{ $Item->{ArticleID} }->{SenderType} eq 'customer' )
+            {
                 $Item->{Class} = 'TypeIncoming';
 
                 # We fake a custom history type because external notes from customers still
                 # have the history type 'AddNote' which does not allow for distinguishing.
                 $Item->{HistoryType} = 'AddNoteCustomer';
             }
+
             # special treatment for certain types, e.g. external notes from customers
-            elsif ( $Item->{ArticleID} && IsHashRefWithData($ArticlesByArticleID->{$Item->{ArticleID}}) && $ArticlesByArticleID->{$Item->{ArticleID}}->{ArticleType} eq 'chat-external') {
+            elsif ($Item->{ArticleID}
+                && IsHashRefWithData( $ArticlesByArticleID->{ $Item->{ArticleID} } )
+                && $ArticlesByArticleID->{ $Item->{ArticleID} }->{ArticleType} eq 'chat-external' )
+            {
                 $Item->{HistoryType} = 'ChatExternal';
-                $Item->{Class} = 'TypeIncoming';
+                $Item->{Class}       = 'TypeIncoming';
             }
-            elsif ( $Item->{ArticleID} && IsHashRefWithData($ArticlesByArticleID->{$Item->{ArticleID}}) && $ArticlesByArticleID->{$Item->{ArticleID}}->{ArticleType} eq 'chat-internal') {
+            elsif ($Item->{ArticleID}
+                && IsHashRefWithData( $ArticlesByArticleID->{ $Item->{ArticleID} } )
+                && $ArticlesByArticleID->{ $Item->{ArticleID} }->{ArticleType} eq 'chat-internal' )
+            {
                 $Item->{HistoryType} = 'ChatInternal';
-                $Item->{Class} = 'TypeInternal';
+                $Item->{Class}       = 'TypeInternal';
             }
             elsif ( grep { $_ eq $Item->{HistoryType} } @TypesTicketAction ) {
                 $Item->{Class} = 'TypeTicketAction';
@@ -2397,12 +2403,18 @@ sub _ArticleTree {
                     $Item->{ArticleData}->{MSSecurityRestricted} = 'security="restricted"';
                 }
 
-                my %ArticleFlags = $Self->{TicketObject}->ArticleFlagGet(
+                my %ArticleFlagsAll = $Self->{TicketObject}->ArticleFlagGet(
                     ArticleID => $Item->{ArticleID},
                     UserID    => 1,
                 );
 
-                $Item->{ArticleData}->{ArticleIsImportant} = $ArticleFlags{Important};
+                my %ArticleFlagsMe = $Self->{TicketObject}->ArticleFlagGet(
+                    ArticleID => $Item->{ArticleID},
+                    UserID    => $Self->{UserID},
+                );
+
+                $Item->{ArticleData}->{ArticleIsImportant} = $ArticleFlagsAll{Important};
+                $Item->{ArticleData}->{ArticleIsSeen}      = $ArticleFlagsMe{Seen};
 
                 if (
                     $Item->{ArticleData}->{ArticleType} eq 'chat-external'
@@ -2419,19 +2431,21 @@ sub _ArticleTree {
                     my $ItemCounter = 0;
 
                     CHATITEM:
-                    for my $MessageData (sort { $a->{ID} <=> $b->{ID} } @{$ChatMessages}) {
-                        if ($MessageData->{SystemGenerated} == 1) {
+                    for my $MessageData ( sort { $a->{ID} <=> $b->{ID} } @{$ChatMessages} ) {
+                        if ( $MessageData->{SystemGenerated} == 1 ) {
 
                             $Item->{ArticleData}->{BodyChat} .= $Self->{LayoutObject}->Output(
-                                Template => '<div class="ChatMessage">[[% Data.CreateTime | html %]] - [% Data.MessageText | html %]</div>',
-                                Data     => $MessageData,
+                                Template =>
+                                    '<div class="ChatMessage">[[% Data.CreateTime | html %]] - [% Data.MessageText | html %]</div>',
+                                Data => $MessageData,
                             );
                         }
                         else {
 
                             $Item->{ArticleData}->{BodyChat} .= $Self->{LayoutObject}->Output(
-                                Template => '<div class="ChatMessage">[[% Data.CreateTime | html %]] - [% Data.ChatterName | html %]: [% Data.MessageText | html %]</div>',
-                                Data     => $MessageData,
+                                Template =>
+                                    '<div class="ChatMessage">[[% Data.CreateTime | html %]] - [% Data.ChatterName | html %]: [% Data.MessageText | html %]</div>',
+                                Data => $MessageData,
                             );
                         }
                         $ItemCounter++;
@@ -2512,6 +2526,9 @@ sub _ArticleTree {
             }
         }
 
+        # set TicketID for usage in JS
+        $Param{TicketID} = $Self->{TicketID};
+
         $Self->{LayoutObject}->Block(
             Name => 'ChronicalView',
             Data => \%Param,
@@ -2569,7 +2586,7 @@ sub _ArticleTree {
     # return output
     return $Self->{LayoutObject}->Output(
         TemplateFile => 'AgentTicketZoom',
-        Data => { %Param, %Ticket },
+        Data         => { %Param, %Ticket },
     );
 }
 
@@ -2815,7 +2832,10 @@ sub _ArticleItem {
             );
 
             # run module
-            my @Data = $Object->Check( Article => \%Article, %Ticket, Config => $Jobs{$Job} );
+            my @Data = $Object->Check(
+                Article => \%Article,
+                %Ticket, Config => $Jobs{$Job}
+            );
             for my $DataRef (@Data) {
                 if ( !$DataRef->{Successful} ) {
                     $DataRef->{Result} = 'Error';
@@ -2838,7 +2858,10 @@ sub _ArticleItem {
             }
 
             # filter option
-            $Object->Filter( Article => \%Article, %Ticket, Config => $Jobs{$Job} );
+            $Object->Filter(
+                Article => \%Article,
+                %Ticket, Config => $Jobs{$Job}
+            );
         }
     }
 
@@ -3027,9 +3050,9 @@ sub _ArticleMenu {
                 # get StandardResponsesStrg
                 my %StandardResponseHash = %{ $Param{StandardResponses} || {} };
 
-              # get revers StandardResponseHash because we need to sort by Values
-              # from %ReverseStandardResponseHash we get value of Key by %StandardResponseHash Value
-              # and @StandardResponseArray is created as array of hashes with elements Key and Value
+                # get revers StandardResponseHash because we need to sort by Values
+                # from %ReverseStandardResponseHash we get value of Key by %StandardResponseHash Value
+                # and @StandardResponseArray is created as array of hashes with elements Key and Value
 
                 my %ReverseStandardResponseHash = reverse %StandardResponseHash;
                 my @StandardResponseArray       = map {
@@ -3038,6 +3061,9 @@ sub _ArticleMenu {
                         Value => $_
                     }
                 } sort values %StandardResponseHash;
+
+                # use this array twice (also for Reply All), so copy it first
+                my @StandardResponseArrayReplyAll = @StandardResponseArray;
 
                 unshift(
                     @StandardResponseArray,
@@ -3097,14 +3123,20 @@ sub _ArticleMenu {
                     }
                 }
                 if ( $RecipientCount > 1 ) {
-                    $Param{StandardResponses}->{0}
-                        = '- '
-                        . $Self->{LayoutObject}->{LanguageObject}->Translate('Reply All') . ' -';
+                    unshift(
+                        @StandardResponseArrayReplyAll,
+                        {
+                            Key   => '0',
+                            Value => '- '
+                                . $Self->{LayoutObject}->{LanguageObject}->Translate('Reply All') . ' -',
+                            Selected => 1,
+                        }
+                    );
 
                     $StandardResponsesStrg = $Self->{LayoutObject}->BuildSelection(
                         Name => 'ResponseID',
                         ID   => 'ResponseIDAll' . $Article{ArticleID},
-                        Data => $Param{StandardResponses},
+                        Data => \@StandardResponseArrayReplyAll,
                     );
 
                     push @MenuItems, {
@@ -3116,7 +3148,7 @@ sub _ArticleMenu {
                         Action                => 'AgentTicketCompose',
                         FormID                => 'ReplyAll' . $Article{ArticleID},
                         ReplyAll              => 1,
-                        ResponseElementID     => 'ResponseIDAll',
+                        ResponseElementID     => 'ResponseIDAll' . $Article{ArticleID},
                         Type                  => $Param{Type},
                     };
                 }
@@ -3163,9 +3195,9 @@ sub _ArticleMenu {
                     # get StandardForwardsStrg
                     my %StandardForwardHash = %{ $Param{StandardForwards} };
 
-               # get revers @StandardForwardHash because we need to sort by Values
-               # from %ReverseStandarForward we get value of Key by %StandardForwardHash Value
-               # and @StandardForwardArray is created as array of hashes with elements Key and Value
+                    # get revers @StandardForwardHash because we need to sort by Values
+                    # from %ReverseStandarForward we get value of Key by %StandardForwardHash Value
+                    # and @StandardForwardArray is created as array of hashes with elements Key and Value
                     my %ReverseStandarForward = reverse %StandardForwardHash;
                     my @StandardForwardArray  = map {
                         {
@@ -3377,8 +3409,7 @@ sub _ArticleMenu {
         )
     {
 
-        my $Link
-            = "Action=AgentTicketNote;TicketID=$Ticket{TicketID};ReplyToArticle=$Article{ArticleID}";
+        my $Link        = "Action=AgentTicketNote;TicketID=$Ticket{TicketID};ReplyToArticle=$Article{ArticleID}";
         my $Description = 'Reply to note';
 
         # set important menu item
@@ -3413,8 +3444,7 @@ sub _CollectArticleAttachments {
         $Target = 'target="attachment" ';
     }
 
-    $Attachments{ZoomAttachmentDisplayCount}
-        = $Self->{ConfigObject}->Get('Ticket::ZoomAttachmentDisplayCount');
+    $Attachments{ZoomAttachmentDisplayCount} = $Self->{ConfigObject}->Get('Ticket::ZoomAttachmentDisplayCount');
 
     ATTACHMENT:
     for my $FileID ( sort keys %{ $Article{Atms} } ) {
