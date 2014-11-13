@@ -6,7 +6,8 @@
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
-4.0.0 RC1 - 2014-??-??
+4.0.0 rc1 - 2014-11-18
+ - 2014-11-12 Sync translation files.
  - 2014-10-10 Added basic ticket information to public survey screen.
 
 4.0.0 beta1 - 2014-10-07

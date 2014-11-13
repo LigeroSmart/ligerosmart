@@ -66,7 +66,7 @@ sub Data {
     $Self->{Translation}->{'Question'} = 'Frage';
     $Self->{Translation}->{'Answer Required'} = 'Antwort erforderlich';
     $Self->{Translation}->{'When you finish to edit the survey questions just close this window.'} =
-        '';
+        'Wenn Sie mit dem editieren der Umfrage fertig sind, können Sie dieses Fenster einfach schließen.';
     $Self->{Translation}->{'Do you really want to delete this question? ALL associated data will be LOST!'} =
         'Wollen Sie diese Frage wirklich löschen? Alle darin enthaltenen Daten werden GELÖSCHT!';
     $Self->{Translation}->{'Edit Question'} = 'Frage bearbeiten';
