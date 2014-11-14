@@ -1,12 +1,14 @@
 #
 # Translators:
+# Ettore Atalan <atalanttore@googlemail.com>, 2014
 # Martin Gruner <martin.gruner@otrs.com>, 2014
+# ru_otrs <robert.ullrich@otrs.com>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2014-09-11 15:04+0000\n"
-"Last-Translator: Martin Gruner <martin.gruner@otrs.com>\n"
+"PO-Revision-Date: 2014-09-12 07:49+0000\n"
+"Last-Translator: ru_otrs <robert.ullrich@otrs.com>\n"
 "Language-Team: German (http://www.transifex.com/projects/p/OTRS/language/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -232,7 +234,7 @@ msgstr "Schnellsuche"
 
 #. Template: AgentFAQExplorer
 msgid "Wildcards are allowed."
-msgstr ""
+msgstr "Wildcards sind erlaubt."
 
 #. Template: AgentFAQExplorer
 msgid "Advanced Search"
@@ -304,7 +306,7 @@ msgstr "Keine FAQ-Daten gefunden."
 
 #. Template: AgentFAQOverviewSmall
 msgid "A generic FAQ table"
-msgstr ""
+msgstr "Eine exemplarische FAQ-Tabelle"
 
 #. Template: AgentFAQPrint
 msgid "FAQ-Info"
@@ -316,7 +318,7 @@ msgstr "Bewertungen"
 
 #. Template: AgentFAQPrint
 msgid "Last update"
-msgstr ""
+msgstr "Letzte Aktualisierung"
 
 #. Template: AgentFAQSearch
 msgid "Keyword"
@@ -324,35 +326,35 @@ msgstr "Schlüsselwort"
 
 #. Template: AgentFAQSearch
 msgid "Vote (e. g. Equals 10 or GreaterThan 60)"
-msgstr ""
+msgstr "Abstimmung (Zum Beispiel: =10 oder >60)"
 
 #. Template: AgentFAQSearch
 msgid "Rate (e. g. Equals 25% or GreaterThan 75%)"
-msgstr ""
+msgstr "Anteil (Zum Beispiel: =25% oder >75%)"
 
 #. Template: AgentFAQSearch
 msgid "Approved"
-msgstr ""
+msgstr "Genehmigt"
 
 #. Template: AgentFAQSearch
 msgid "Last changed by"
-msgstr ""
+msgstr "Letzte Änderung von:"
 
 #. Template: AgentFAQSearch
 msgid "FAQ Article Create Time (before/after)"
-msgstr ""
+msgstr "Erstellzeit des FAQ-Artikel (davor/danach)"
 
 #. Template: AgentFAQSearch
 msgid "FAQ Article Create Time (between)"
-msgstr ""
+msgstr "Erstellzeit des FAQ-Artikel (zwischen)"
 
 #. Template: AgentFAQSearch
 msgid "FAQ Article Change Time (before/after)"
-msgstr ""
+msgstr "Letzte Änderung des FAQ-Artikel (davor/danach)"
 
 #. Template: AgentFAQSearch
 msgid "FAQ Article Change Time (between)"
-msgstr ""
+msgstr "Letzte Änderung des FAQ-Artikel (zwischen)"
 
 #. Template: AgentFAQSearchOpenSearchDescriptionFulltext
 msgid "FAQFulltext"
@@ -364,55 +366,55 @@ msgstr "FAQ Suche"
 
 #. Template: AgentFAQSearchSmall
 msgid "Profile Selection"
-msgstr ""
+msgstr "Profilauswahl"
 
 #. Template: AgentFAQSearchSmall
 msgid "Vote"
-msgstr ""
+msgstr "Abstimmen"
 
 #. Template: AgentFAQSearchSmall
 msgid "No vote settings"
-msgstr ""
+msgstr "Keine Abstimmungseinstellung"
 
 #. Template: AgentFAQSearchSmall
 msgid "Specific votes"
-msgstr ""
+msgstr "spezifische Abstimmung"
 
 #. Template: AgentFAQSearchSmall
 msgid "e. g. Equals 10 or GreaterThan 60"
-msgstr ""
+msgstr "Zum Beispiel: =10 oder >60"
 
 #. Template: AgentFAQSearchSmall
 msgid "Rate"
-msgstr ""
+msgstr "Anteil"
 
 #. Template: AgentFAQSearchSmall
 msgid "No rate settings"
-msgstr ""
+msgstr "Keine Anteil-Einstellungen"
 
 #. Template: AgentFAQSearchSmall
 msgid "Specific rate"
-msgstr ""
+msgstr "bestimmter Anteil"
 
 #. Template: AgentFAQSearchSmall
 msgid "e. g. Equals 25% or GreaterThan 75%"
-msgstr ""
+msgstr "Zum Beispiel: =25% oder >75%"
 
 #. Template: AgentFAQSearchSmall
 msgid "FAQ Article Create Time"
-msgstr ""
+msgstr "Erstellzeit des FAQ-Artikel"
 
 #. Template: AgentFAQSearchSmall
 msgid "Specific date"
-msgstr ""
+msgstr "spezifisches Datum"
 
 #. Template: AgentFAQSearchSmall
 msgid "Date range"
-msgstr ""
+msgstr "Datumsbereich"
 
 #. Template: AgentFAQSearchSmall
 msgid "FAQ Article Change Time"
-msgstr ""
+msgstr "letzte Änderung des FAQ-Artikel"
 
 #. Template: AgentFAQZoom
 msgid "FAQ Information"
@@ -452,7 +454,7 @@ msgstr "sehr hilfreich"
 
 #. Template: AgentFAQZoomSmall
 msgid "Add FAQ title to article subject"
-msgstr ""
+msgstr "Füge den FAQ-Titel als Artikelbetreff hinzu."
 
 #. Template: AgentFAQZoomSmall
 msgid "Insert FAQ Text"
@@ -484,35 +486,35 @@ msgstr "Volltext-Suche in FAQ-Artikeln (z. B. \"John*n\" or \"Will*\")"
 
 #. Template: CustomerFAQSearch
 msgid "Vote restrictions"
-msgstr ""
+msgstr "Wahleinschränkungen"
 
 #. Template: CustomerFAQSearch
 msgid "Only FAQ articles with votes..."
-msgstr ""
+msgstr "Nur FAQ-Artikel mit Abstimmungen"
 
 #. Template: CustomerFAQSearch
 msgid "Rate restrictions"
-msgstr ""
+msgstr "Anteilsbeschränkungen"
 
 #. Template: CustomerFAQSearch
 msgid "Only FAQ articles with rate..."
-msgstr ""
+msgstr "Nur FAQ-Artikel mit einem Anteil von..."
 
 #. Template: CustomerFAQSearch
 msgid "Only FAQ articles created"
-msgstr ""
+msgstr "Nur FAQ-Artikel erstellt"
 
 #. Template: CustomerFAQSearch
 msgid "Only FAQ articles created between"
-msgstr ""
+msgstr "Nur Tickets, die erstellt wurden zwischen"
 
 #. Template: CustomerFAQSearch
 msgid "Search-Profile as Template?"
-msgstr ""
+msgstr "Suchprofil als Vorlage?"
 
 #. Template: CustomerFAQZoom
 msgid "Article Number"
-msgstr ""
+msgstr "Artikelnummer"
 
 #. Template: CustomerFAQZoom
 msgid "Search for articles with keyword"
@@ -528,31 +530,31 @@ msgstr "Ein Filter zur automatischen Generierung von FAQ-Links, wenn ein Hinweis
 
 #. SysConfig
 msgid "Allows adding notes in the close ticket screen of the agent interface. Can be overwritten by Ticket::Frontend::NeedAccountedTime."
-msgstr ""
+msgstr "Erlaubt in der Agentenoberfläche das Hinzufügen von Notizen, wenn ein Ticket geschlossen werden soll."
 
 #. SysConfig
 msgid "Allows adding notes in the ticket free text screen of the agent interface. Can be overwritten by Ticket::Frontend::NeedAccountedTime."
-msgstr ""
+msgstr "Erlaubt in der Agentenoberfläche das Hinzufügen von Notizen, in der TicketFreeText Oberfläche. Kann durch Ticket::Frontend::NeedAccountedTime überschrieben werden."
 
 #. SysConfig
 msgid "Allows adding notes in the ticket note screen of the agent interface. Can be overwritten by Ticket::Frontend::NeedAccountedTime."
-msgstr ""
+msgstr "Erlaubt in der Agentenoberfläche das Hinzufügen von Notizen, in der TicketNoteOberfläche. Kann durch Ticket::Frontend::NeedAccountedTime überschrieben werden."
 
 #. SysConfig
 msgid "Allows adding notes in the ticket owner screen of a zoomed ticket in the agent interface. Can be overwritten by Ticket::Frontend::NeedAccountedTime."
-msgstr ""
+msgstr "Erlaubt in der Agentenoberfläche das Hinzufügen von Notizen, in der TicketInhaber Oberfläche. Kann durch Ticket::Frontend::NeedAccountedTime überschrieben werden."
 
 #. SysConfig
 msgid "Allows adding notes in the ticket pending screen of a zoomed ticket in the agent interface. Can be overwritten by Ticket::Frontend::NeedAccountedTime."
-msgstr ""
+msgstr "Erlaubt in der Agentenoberfläche das Hinzufügen von Notizen, in der Oberfläche Warten. Kann durch Ticket::Frontend::NeedAccountedTime überschrieben werden."
 
 #. SysConfig
 msgid "Allows adding notes in the ticket priority screen of a zoomed ticket in the agent interface. Can be overwritten by Ticket::Frontend::NeedAccountedTime."
-msgstr ""
+msgstr "Erlaubt in der Agentenoberfläche das Hinzufügen von Notizen, in der Oberfläche TicketPrioritäten. Kann durch Ticket::Frontend::NeedAccountedTime überschrieben werden."
 
 #. SysConfig
 msgid "Allows adding notes in the ticket responsible screen of the agent interface. Can be overwritten by Ticket::Frontend::NeedAccountedTime."
-msgstr ""
+msgstr "Erlaubt in der Agentenoberfläche das Hinzufügen von Notizen, in der Oberfläche Ticket-Verantwortlicher. Kann durch Ticket::Frontend::NeedAccountedTime überschrieben werden."
 
 #. SysConfig
 msgid "CSS color for the voting result."
@@ -560,7 +562,7 @@ msgstr "CSS-Farbe für das Bewertungs-Ergebnis."
 
 #. SysConfig
 msgid "Cache Time To Leave for FAQ items."
-msgstr ""
+msgstr "Cachezeit für FAQ-Artikel."
 
 #. SysConfig
 msgid "Category Management"
@@ -592,7 +594,7 @@ msgstr "Standard-Status von Tickets für die Freigabe von FAQ-Artikeln."
 
 #. SysConfig
 msgid "Default type of tickets for the approval of FAQ articles."
-msgstr ""
+msgstr "Standard Tickettyp für die Genehmigung von FAQ-Artikeln"
 
 #. SysConfig
 msgid "Default value for the Action parameter for the public frontend. The Action parameter is used in the scripts of the system."
@@ -600,7 +602,7 @@ msgstr "Standardwert des Action-Parameters für den öffentlichen FAQ-Bereich. D
 
 #. SysConfig
 msgid "Define if the FAQ title should be concatenated to article subject."
-msgstr ""
+msgstr "Definiert ob der FAQ-Titel mit dem Artikelbetreff verkettet werden soll."
 
 #. SysConfig
 msgid "Defines an overview module to show the small view of a FAQ journal."
@@ -612,7 +614,7 @@ msgstr "Definiert ein Übersichts-Modul um die Small-Ansicht einer FAQ-Liste anz
 
 #. SysConfig
 msgid "Defines if time accounting is mandatory in the agent interface. If activated, a note must be entered for all ticket actions (no matter if the note itself is configured as active or is originally mandatory for the individual ticket action screen)."
-msgstr ""
+msgstr "Definiert ob die Zeiterfassung verpflichtend in der Agenten-Oberfläche ist. Wenn diese Funktion aktiviert ist, muss eine Notiz für alle Ticketaktionen (egal ob die Notiz als aktiv konfiguriert ist oder ursprünglich zwingend für die individuellen Ticket-Aktionen konfiguert wurde)."
 
 #. SysConfig
 msgid "Defines the default FAQ attribute for FAQ sorting in a FAQ search of the agent interface."
@@ -628,27 +630,27 @@ msgstr "Definiert das Standard-FAQ-Attribut für die Sortierung des FAQ-Suche im
 
 #. SysConfig
 msgid "Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the agent interface."
-msgstr ""
+msgstr "Definiert das Standard-FAQ-Attribut für die Sortierung des FAQ-Explorer im Agenten-Interface."
 
 #. SysConfig
 msgid "Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the customer interface."
-msgstr ""
+msgstr "Definiert das Standard-FAQ-Attribut für die Sortierung des FAQ-Explorer im Kunden-Interface."
 
 #. SysConfig
 msgid "Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the public interface."
-msgstr ""
+msgstr "Definiert das Standard-FAQ-Attribut für die Sortierung des FAQ-Explorer im Public-Interface."
 
 #. SysConfig
 msgid "Defines the default FAQ order in the FAQ Explorer result of the agent interface. Up: oldest on top. Down: latest on top."
-msgstr ""
+msgstr "Definiert die Standard-Sortierung des FAQ-Explorer im Agenten-Interface. Auf: Ältester FAQ-Artikel oben. Ab: Neuester FAQ-Artikel oben."
 
 #. SysConfig
 msgid "Defines the default FAQ order in the FAQ Explorer result of the customer interface. Up: oldest on top. Down: latest on top."
-msgstr ""
+msgstr "Definiert die Standard-Sortierung des FAQ-Explorer im Kunden-Interface. Auf: Ältester FAQ-Artikel oben. Ab: Neuester FAQ-Artikel oben."
 
 #. SysConfig
 msgid "Defines the default FAQ order in the FAQ Explorer result of the public interface. Up: oldest on top. Down: latest on top."
-msgstr ""
+msgstr "Definiert die Standard-Sortierung des FAQ-Explorers im Public-Interface. Auf: Ältester FAQ-Artikel oben. Ab: Neuester FAQ-Artikel oben."
 
 #. SysConfig
 msgid "Defines the default FAQ order of a search result in the agent interface. Up: oldest on top. Down: latest on top."
@@ -664,7 +666,7 @@ msgstr "Definiert die Standard-Sortierung der FAQ-Suche im Public-Interface. Auf
 
 #. SysConfig
 msgid "Defines the information to be inserted in a FAQ based Ticket. \"Full FAQ\" includes text, attachments and inline images."
-msgstr ""
+msgstr "Definiert die Informationen, welche in ein FAQ-basierendes Ticket eingegeben werden. \"Komplette FAQ\" beinhaltet den Text, Anhänge und Inline-Bilder."
 
 #. SysConfig
 msgid "Defines the shown columns in the FAQ Explorer. This option has no effect on the position of the column."
@@ -692,59 +694,59 @@ msgstr "Diese FAQ löschen!"
 
 #. SysConfig
 msgid "Dynamic fields shown in the FAQ add screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
-msgstr ""
+msgstr "Anzeige von dynamischen Felder in der Öberfläche \"FAQ hinzufügen\" im Agenten-Interface. Mögliche Einstellungen: 0 = deaktiviert, 1 = aktiviert, 2 = aktiviert und benötigt."
 
 #. SysConfig
 msgid "Dynamic fields shown in the FAQ edit screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
-msgstr ""
+msgstr "Anzeige von dynamischen Felder in der Öberfläche \"FAQ bearbeiten\" im Agenten-Interface. Mögliche Einstellungen: 0 = deaktiviert, 1 = aktiviert, 2 = aktiviert und benötigt."
 
 #. SysConfig
 msgid "Dynamic fields shown in the FAQ overview screen of the customer interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
-msgstr ""
+msgstr "Anzeige von dynamischen Felder in der Öberfläche \"FAQ Übersicht\" im Kunden-Interface. Mögliche Einstellungen: 0 = deaktiviert, 1 = aktiviert, 2 = aktiviert und benötigt."
 
 #. SysConfig
 msgid "Dynamic fields shown in the FAQ overview screen of the public interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
-msgstr ""
+msgstr "Anzeige von dynamischen Felder in der Öberfläche \"FAQ Übersicht\" im Public-Interface. Mögliche Einstellungen: 0 = deaktiviert, 1 = aktiviert, 2 = aktiviert und benötigt."
 
 #. SysConfig
 msgid "Dynamic fields shown in the FAQ print screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled."
-msgstr ""
+msgstr "Anzeige von dynamischen Felder in der Öberfläche \"FAQ drucken\" im Agenten-Interface. Mögliche Einstellungen: 0 = deaktiviert, 1 = aktiviert, 2 = aktiviert und benötigt."
 
 #. SysConfig
 msgid "Dynamic fields shown in the FAQ print screen of the customer interface. Possible settings: 0 = Disabled, 1 = Enabled."
-msgstr ""
+msgstr "Anzeige von dynamischen Felder in der Öberfläche \"FAQ drucken\" im Kunden-Interface. Mögliche Einstellungen: 0 = deaktiviert, 1 = aktiviert, 2 = aktiviert und benötigt."
 
 #. SysConfig
 msgid "Dynamic fields shown in the FAQ print screen of the public interface. Possible settings: 0 = Disabled, 1 = Enabled."
-msgstr ""
+msgstr "Anzeige von dynamischen Felder in der Öberfläche \"FAQ drucken\" im Public-Interface. Mögliche Einstellungen: 0 = deaktiviert, 1 = aktiviert, 2 = aktiviert und benötigt."
 
 #. SysConfig
 msgid "Dynamic fields shown in the FAQ search screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and shown by default."
-msgstr ""
+msgstr "Anzeige von dynamischen Felder in der Öberfläche \"FAQ durchsuchen\" im Agenten-Interface. Mögliche Einstellungen: 0 = deaktiviert, 1 = aktiviert, 2 = aktiviert und benötigt."
 
 #. SysConfig
 msgid "Dynamic fields shown in the FAQ search screen of the customer interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and shown by default."
-msgstr ""
+msgstr "Anzeige von dynamischen Felder in der Öberfläche \"FAQ durchsuchen\" im Kunden-Interface. Mögliche Einstellungen: 0 = deaktiviert, 1 = aktiviert, 2 = aktiviert und benötigt."
 
 #. SysConfig
 msgid "Dynamic fields shown in the FAQ search screen of the public interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and shown by default."
-msgstr ""
+msgstr "Anzeige von dynamischen Felder in der Öberfläche \"FAQ durchsuchen\" im Public-Interface. Mögliche Einstellungen: 0 = deaktiviert, 1 = aktiviert, 2 = aktiviert und benötigt."
 
 #. SysConfig
 msgid "Dynamic fields shown in the FAQ small format overview screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled."
-msgstr ""
+msgstr "Anzeige von dynamischen Felder in der Öberfläche \"small FAQ Übersicht\" im Agenten-Interface. Mögliche Einstellungen: 0 = deaktiviert, 1 = aktiviert, 2 = aktiviert und benötigt."
 
 #. SysConfig
 msgid "Dynamic fields shown in the FAQ zoom screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled."
-msgstr ""
+msgstr "Anzeige von dynamischen Feldern in der Oberfläche \"FAQ Zoom\" im Agenten-Interface. Mögliche Einstellungen: 0 = deaktiviert, 1 = aktiviert, 2 = aktiviert und benötigt."
 
 #. SysConfig
 msgid "Dynamic fields shown in the FAQ zoom screen of the customer interface. Possible settings: 0 = Disabled, 1 = Enabled."
-msgstr ""
+msgstr "Anzeige von dynamischen Feldern in der Oberfläche \"FAQ Zoom\" im Kunden-Interface. Mögliche Einstellungen: 0 = deaktiviert, 1 = aktiviert, 2 = aktiviert und benötigt."
 
 #. SysConfig
 msgid "Dynamic fields shown in the FAQ zoom screen of the public interface. Possible settings: 0 = Disabled, 1 = Enabled."
-msgstr ""
+msgstr "Anzeige von dynamischen Feldern in der Oberfläche \"FAQ Zoom\" im Public-Interface. Mögliche Einstellungen: 0 = deaktiviert, 1 = aktiviert, 2 = aktiviert und benötigt."
 
 #. SysConfig
 msgid "Edit this FAQ"
@@ -812,7 +814,7 @@ msgstr "Den Namen jedes FAQ-Feldes einem FAQ-basierten Ticket verwenden."
 
 #. SysConfig
 msgid "Interfaces where the quick search should be shown."
-msgstr ""
+msgstr "Oberfläche auf der die Schnellsuche angezeigt werden soll"
 
 #. SysConfig
 msgid "Journal"
@@ -828,27 +830,27 @@ msgstr "Diese FAQ mit einem anderen Objekt verknüpfen"
 
 #. SysConfig
 msgid "List of state types which can be used in the agent interface."
-msgstr ""
+msgstr "Liste der Statustypen, die in der Agentenoberfläche genutzt werden können."
 
 #. SysConfig
 msgid "List of state types which can be used in the customer interface."
-msgstr ""
+msgstr "Liste der Statustypen, die in der Kundenoberfläche genutzt werden können."
 
 #. SysConfig
 msgid "List of state types which can be used in the public interface."
-msgstr ""
+msgstr "Liste der Statustypen, die in der öffentlichen Oberfläche genutzt werden können."
 
 #. SysConfig
 msgid "Maximum number of FAQ articles to be displayed in the FAQ Explorer result of the agent interface."
-msgstr ""
+msgstr "Maximale Anzahl von FAQ-Artikeln die im FAQ-Explorerl im Agenten-Interface angezeigt werden."
 
 #. SysConfig
 msgid "Maximum number of FAQ articles to be displayed in the FAQ Explorer result of the customer interface."
-msgstr ""
+msgstr "Maximale Anzahl von FAQ-Artikeln die in der FAQ-Explorer im Kunden-Interface angezeigt werden."
 
 #. SysConfig
 msgid "Maximum number of FAQ articles to be displayed in the FAQ Explorer result of the public interface."
-msgstr ""
+msgstr "Maximale Anzahl von FAQ-Artikeln die in der FAQ-Explorer im Public-Interface angezeigt werden."
 
 #. SysConfig
 msgid "Maximum number of FAQ articles to be displayed in the FAQ journal in the agent interface."
@@ -868,11 +870,11 @@ msgstr "Maximale Anzahl von FAQ-Artikeln die in der FAQ-Suche im Public-Interfac
 
 #. SysConfig
 msgid "Module to generate HTML OpenSearch profile for short FAQ search in the public interface."
-msgstr ""
+msgstr "Modul zum Generieren des HTML \"OpenSearch\" Profils zur FAQ-Suche in der öffentlichen Oberfläche."
 
 #. SysConfig
 msgid "Module to generate HTML OpenSearch profile for short faq search in the customer interface."
-msgstr ""
+msgstr "Modul zum Generieren des HTML \"OpenSearch\" Profils zur FAQ-Suche in der Kundenoberfläche."
 
 #. SysConfig
 msgid "Module to generate html OpenSearch profile for short faq search."
@@ -888,19 +890,19 @@ msgstr "Neue FAQ-Artikel benötigen eine Freigabe vor der Veröffentlichung."
 
 #. SysConfig
 msgid "Number of FAQ articles to be displayed in the FAQ Explorer of the customer interface."
-msgstr ""
+msgstr "Maximale Anzahl von FAQ-Artikeln die im FAQ-Explorer im Kunden-Interface angezeigt werden."
 
 #. SysConfig
 msgid "Number of FAQ articles to be displayed in the FAQ Explorer of the public interface."
-msgstr ""
+msgstr "Maximale Anzahl von FAQ-Artikeln die im FAQ-Explorer in der öffentlichen Oberfläche angezeigt werden."
 
 #. SysConfig
 msgid "Number of FAQ articles to be displayed on each page of a search result in the customer interface."
-msgstr ""
+msgstr "Setzt in Suchergebnissen die Anzahl von FAQ-Artikeln pro Seite in der Kundenoberfläche."
 
 #. SysConfig
 msgid "Number of FAQ articles to be displayed on each page of a search result in the public interface."
-msgstr ""
+msgstr "Setzt in Suchergebnissen die Anzahl von FAQ-Artikeln pro Seite in der öffentlichen Oberfläche."
 
 #. SysConfig
 msgid "Number of shown items in last changes."
@@ -940,35 +942,35 @@ msgstr "FAQ durchsuchen"
 
 #. SysConfig
 msgid "Set the default height (in pixels) of inline HTML fields in AgentFAQZoom."
-msgstr ""
+msgstr "Setzt die maximale Höhe (in Pixeln) von Inline-HTML-Felder in AgentFAQZoom."
 
 #. SysConfig
 msgid "Set the default height (in pixels) of inline HTML fields in CustomerFAQZoom (and PublicFAQZoom)."
-msgstr ""
+msgstr "Setzt die maximale Höhe (in Pixeln) von Inline-HTML-Felder in CustomerFAQZoom (und PublicFAQZoom)."
 
 #. SysConfig
 msgid "Set the maximum height (in pixels) of inline HTML fields in AgentFAQZoom."
-msgstr ""
+msgstr "Setzt die maximale Höhe (in Pixeln) von Inline-HTML-Felder in AgentFAQZoom."
 
 #. SysConfig
 msgid "Set the maximum height (in pixels) of inline HTML fields in CustomerFAQZoom (and PublicFAQZoom)."
-msgstr ""
+msgstr "Setzt die maximale Höhe (in Pixeln) von Inline-HTML-Felder in CustomerFAQZoom (und PublicFAQZoom)."
 
 #. SysConfig
 msgid "Sets if note must be filled in by the agent. Can be overwritten by Ticket::Frontend::NeedAccountedTime."
-msgstr ""
+msgstr "Setzt ob eine Notiz vom Agenten ausgefüllt werden muss. Kann durch Ticket::Frontend::NeedAccountedTime überschrieben werden."
 
 #. SysConfig
 msgid "Show \"Insert FAQ Link\" Button in AgentFAQZoomSmall for public FAQ Articles."
-msgstr ""
+msgstr "Zeigt die Schaltfläche \"FAQ-Link einfügen\" in AgentFAQZoomSmall für öffentliche FAQ-Artikel an."
 
 #. SysConfig
 msgid "Show \"Insert FAQ Text & Link\" / \"Insert Full FAQ & Link\" Button in AgentFAQZoomSmall for public FAQ Articles."
-msgstr ""
+msgstr "Zeigt die Schaltfläche \"FAQ-Text & Link einfügen / Komplette FAQ & Link einfügen\" in AgentFAQZoomSmall für öffentliche FAQ-Artikel an."
 
 #. SysConfig
 msgid "Show \"Insert FAQ Text\" / \"Insert Full FAQ\" Button in AgentFAQZoomSmall."
-msgstr ""
+msgstr "Zeigt die Schaltfläche \"FAQ-Text einfügen / Komplette FAQ einfügen\" in AgentFAQZoomSmall an."
 
 #. SysConfig
 msgid "Show FAQ Article with HTML."
@@ -1049,4 +1051,44 @@ msgstr "Body des Tickets zur Freigabe eines FAQ-Artikels."
 #. SysConfig
 msgid "Ticket subject for approval of FAQ article."
 msgstr "Betreff des Tickets zur Freigabe eines FAQ-Artikels."
+
+#. Template: PublicFAQSearchResultShort
+msgid "Back to FAQ Explorer"
+msgstr ""
+
+#. SysConfig
+msgid "Default maximum size of the titles in a FAQ article to be shown."
+msgstr ""
+
+#. SysConfig
+msgid "Defines the default shown FAQ search attribute for FAQ search screen."
+msgstr ""
+
+#. SysConfig
+msgid "Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer in the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer in the customer interface."
+msgstr ""
+
+#. SysConfig
+msgid "Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer in the public interface."
+msgstr ""
+
+#. SysConfig
+msgid "Maximum size of the titles in a FAQ article to be shown in the FAQ Search in the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Maximum size of the titles in a FAQ article to be shown in the FAQ Search in the customer interface."
+msgstr ""
+
+#. SysConfig
+msgid "Maximum size of the titles in a FAQ article to be shown in the FAQ Search in the public interface."
+msgstr ""
+
+#. SysConfig
+msgid "Maximum size of the titles in a FAQ article to be shown in the FAQ journal in the agent interface."
+msgstr ""
 

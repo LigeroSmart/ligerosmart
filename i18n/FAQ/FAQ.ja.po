@@ -1,14 +1,18 @@
+#
+# Translators:
+# Kentaro Hori <kentaro0919@gmail.com>, 2014
 msgid ""
 msgstr ""
-"Project-Id-Version: FAQ\n"
+"Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"PO-Revision-Date: 2014-10-14 23:25+0000\n"
+"Last-Translator: Kentaro Hori <kentaro0919@gmail.com>\n"
+"Language-Team: Japanese (http://www.transifex.com/projects/p/OTRS/language/ja/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: ja\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
 #. Template: AAAFAQ
 msgid "internal"
@@ -28,19 +32,19 @@ msgstr "FAQナンバー"
 
 #. Template: AAAFAQ
 msgid "Latest updated FAQ articles"
-msgstr ""
+msgstr "最後に更新されたFAQ項目"
 
 #. Template: AAAFAQ
 msgid "Latest created FAQ articles"
-msgstr ""
+msgstr "最後に作成されたFAQ項目"
 
 #. Template: AAAFAQ
 msgid "Top 10 FAQ articles"
-msgstr ""
+msgstr "Top 10 FAQ項目"
 
 #. Template: AAAFAQ
 msgid "Subcategory of"
-msgstr ""
+msgstr "のサブカテゴリー"
 
 #. Template: AAAFAQ
 msgid "No rate selected!"
@@ -64,27 +68,27 @@ msgstr "内部 (担当者)"
 
 #. Template: AAAFAQ
 msgid "Start day"
-msgstr ""
+msgstr "開始日"
 
 #. Template: AAAFAQ
 msgid "Start month"
-msgstr ""
+msgstr "開始月"
 
 #. Template: AAAFAQ
 msgid "Start year"
-msgstr ""
+msgstr "開始年"
 
 #. Template: AAAFAQ
 msgid "End day"
-msgstr ""
+msgstr "終了日"
 
 #. Template: AAAFAQ
 msgid "End month"
-msgstr ""
+msgstr "終了月"
 
 #. Template: AAAFAQ
 msgid "End year"
-msgstr ""
+msgstr "終了年"
 
 #. Template: AAAFAQ
 msgid "Thanks for your vote!"
@@ -148,7 +152,7 @@ msgstr "FAQの新規追加"
 
 #. Template: AgentFAQAdd
 msgid "Keywords"
-msgstr ""
+msgstr "キーワード"
 
 #. Template: AgentFAQAdd
 msgid "A category is required."
@@ -216,7 +220,7 @@ msgstr "この記事を削除してよろしいですか？"
 
 #. Template: AgentFAQEdit
 msgid "FAQ"
-msgstr ""
+msgstr "FAQ"
 
 #. Template: AgentFAQExplorer
 msgid "FAQ Explorer"
@@ -228,7 +232,7 @@ msgstr "検索"
 
 #. Template: AgentFAQExplorer
 msgid "Wildcards are allowed."
-msgstr ""
+msgstr "ワイルドカードが利用可能です。"
 
 #. Template: AgentFAQExplorer
 msgid "Advanced Search"
@@ -300,7 +304,7 @@ msgstr "FAQデータはありません。"
 
 #. Template: AgentFAQOverviewSmall
 msgid "A generic FAQ table"
-msgstr ""
+msgstr "ジェネリックFAQ テーブル"
 
 #. Template: AgentFAQPrint
 msgid "FAQ-Info"
@@ -312,43 +316,43 @@ msgstr "Votes"
 
 #. Template: AgentFAQPrint
 msgid "Last update"
-msgstr ""
+msgstr "最終更新日"
 
 #. Template: AgentFAQSearch
 msgid "Keyword"
-msgstr ""
+msgstr "キーワード"
 
 #. Template: AgentFAQSearch
 msgid "Vote (e. g. Equals 10 or GreaterThan 60)"
-msgstr ""
+msgstr "投票 (例. 10に等しい あるいは 60より大きい)"
 
 #. Template: AgentFAQSearch
 msgid "Rate (e. g. Equals 25% or GreaterThan 75%)"
-msgstr ""
+msgstr "レート (例. 25%に等しい あるいは 75より大きい)"
 
 #. Template: AgentFAQSearch
 msgid "Approved"
-msgstr ""
+msgstr "承認"
 
 #. Template: AgentFAQSearch
 msgid "Last changed by"
-msgstr ""
+msgstr "最終更新者"
 
 #. Template: AgentFAQSearch
 msgid "FAQ Article Create Time (before/after)"
-msgstr ""
+msgstr "FAQ項目作成日時 (以前/以後)"
 
 #. Template: AgentFAQSearch
 msgid "FAQ Article Create Time (between)"
-msgstr ""
+msgstr "FAQ項目作成日時 (間)"
 
 #. Template: AgentFAQSearch
 msgid "FAQ Article Change Time (before/after)"
-msgstr ""
+msgstr "FAQ項目変更日時 (以前/以後)"
 
 #. Template: AgentFAQSearch
 msgid "FAQ Article Change Time (between)"
-msgstr ""
+msgstr "FAQ項目変更日時 (間)"
 
 #. Template: AgentFAQSearchOpenSearchDescriptionFulltext
 msgid "FAQFulltext"
@@ -356,59 +360,59 @@ msgstr "FAQ全文"
 
 #. Template: AgentFAQSearchSmall
 msgid "FAQ Search"
-msgstr ""
+msgstr "FAQ検索"
 
 #. Template: AgentFAQSearchSmall
 msgid "Profile Selection"
-msgstr ""
+msgstr "プロファイル選択"
 
 #. Template: AgentFAQSearchSmall
 msgid "Vote"
-msgstr ""
+msgstr "投票"
 
 #. Template: AgentFAQSearchSmall
 msgid "No vote settings"
-msgstr ""
+msgstr "投票の設定がありません"
 
 #. Template: AgentFAQSearchSmall
 msgid "Specific votes"
-msgstr ""
+msgstr "特定の投票"
 
 #. Template: AgentFAQSearchSmall
 msgid "e. g. Equals 10 or GreaterThan 60"
-msgstr ""
+msgstr "例. 10 に等しいまたは 60 より大きい"
 
 #. Template: AgentFAQSearchSmall
 msgid "Rate"
-msgstr ""
+msgstr "レート"
 
 #. Template: AgentFAQSearchSmall
 msgid "No rate settings"
-msgstr ""
+msgstr "れーとの設定がありません"
 
 #. Template: AgentFAQSearchSmall
 msgid "Specific rate"
-msgstr ""
+msgstr "特定のレート"
 
 #. Template: AgentFAQSearchSmall
 msgid "e. g. Equals 25% or GreaterThan 75%"
-msgstr ""
+msgstr "例. 25%以上または75%以上"
 
 #. Template: AgentFAQSearchSmall
 msgid "FAQ Article Create Time"
-msgstr ""
+msgstr "FAQ項目作成時間"
 
 #. Template: AgentFAQSearchSmall
 msgid "Specific date"
-msgstr ""
+msgstr "特定の日付"
 
 #. Template: AgentFAQSearchSmall
 msgid "Date range"
-msgstr ""
+msgstr "日付の範囲"
 
 #. Template: AgentFAQSearchSmall
 msgid "FAQ Article Change Time"
-msgstr ""
+msgstr "FAQ項目変更時間"
 
 #. Template: AgentFAQZoom
 msgid "FAQ Information"
@@ -436,7 +440,7 @@ msgstr "添付ファイルをダウンロード"
 
 #. Template: AgentFAQZoom
 msgid "How helpful was this article? Please give us your rating and help to improve the FAQ Database. Thank You!"
-msgstr ""
+msgstr "このFAQ項目はお役にたちましたか? 　FAQデーターベースの改善に役立てますので、レーティングに協力ください。よろしくお願いします"
 
 #. Template: AgentFAQZoom
 msgid "not helpful"
@@ -448,7 +452,7 @@ msgstr "とても役に立った"
 
 #. Template: AgentFAQZoomSmall
 msgid "Add FAQ title to article subject"
-msgstr ""
+msgstr "項目の主題にFAQタイトルを追加する"
 
 #. Template: AgentFAQZoomSmall
 msgid "Insert FAQ Text"
@@ -456,7 +460,7 @@ msgstr "記事を挿入する"
 
 #. Template: AgentFAQZoomSmall
 msgid "Insert Full FAQ"
-msgstr ""
+msgstr "FAQ全文を挿入する"
 
 #. Template: AgentFAQZoomSmall
 msgid "Insert FAQ Link"
@@ -468,7 +472,7 @@ msgstr "記事とリンクを挿入する"
 
 #. Template: AgentFAQZoomSmall
 msgid "Insert Full FAQ & Link"
-msgstr ""
+msgstr "FAQ全文とリンクを挿入する"
 
 #. Template: CustomerFAQExplorer
 msgid "No FAQ articles found."
@@ -480,35 +484,35 @@ msgstr "FAQ全文検索（例：\"John*n\"、\"Will*\"）"
 
 #. Template: CustomerFAQSearch
 msgid "Vote restrictions"
-msgstr ""
+msgstr "投票規制"
 
 #. Template: CustomerFAQSearch
 msgid "Only FAQ articles with votes..."
-msgstr ""
+msgstr "投票されているFAQのみ..."
 
 #. Template: CustomerFAQSearch
 msgid "Rate restrictions"
-msgstr ""
+msgstr "レート規制"
 
 #. Template: CustomerFAQSearch
 msgid "Only FAQ articles with rate..."
-msgstr ""
+msgstr "レートされているFAQのみ..."
 
 #. Template: CustomerFAQSearch
 msgid "Only FAQ articles created"
-msgstr ""
+msgstr "作成されたFAQ項目のみ"
 
 #. Template: CustomerFAQSearch
 msgid "Only FAQ articles created between"
-msgstr ""
+msgstr "期間内に作成されたFAQ項目のみ"
 
 #. Template: CustomerFAQSearch
 msgid "Search-Profile as Template?"
-msgstr ""
+msgstr "Search-Profile-検索プロフィール　をテンプレートにしますか?"
 
 #. Template: CustomerFAQZoom
 msgid "Article Number"
-msgstr ""
+msgstr " FAQ 項目ナンバー"
 
 #. Template: CustomerFAQZoom
 msgid "Search for articles with keyword"
@@ -588,7 +592,7 @@ msgstr "FAQへの取り込みを行うチケットの優先順位の既定値"
 
 #. SysConfig
 msgid "Default type of tickets for the approval of FAQ articles."
-msgstr ""
+msgstr "FAQ項目承認用デフォルトチケットタイプ"
 
 #. SysConfig
 msgid "Default value for the Action parameter for the public frontend. The Action parameter is used in the scripts of the system."
@@ -596,7 +600,7 @@ msgstr "公開画面用パラメータのデフォルト値。パラメータ（
 
 #. SysConfig
 msgid "Define if the FAQ title should be concatenated to article subject."
-msgstr ""
+msgstr "FAQタイトルが記事の件名に連結するかどうかを定義します"
 
 #. SysConfig
 msgid "Defines an overview module to show the small view of a FAQ journal."
@@ -784,7 +788,7 @@ msgstr "エージェント用画面における、FAQ検索のバックエンド
 
 #. SysConfig
 msgid "FAQ-Area"
-msgstr ""
+msgstr " FAQ エリア"
 
 #. SysConfig
 msgid "Frontend module registration for the public interface."
@@ -808,7 +812,7 @@ msgstr "FAQ由来のチケットに含まれる内部項目すべての名称"
 
 #. SysConfig
 msgid "Interfaces where the quick search should be shown."
-msgstr ""
+msgstr "クイック検索が表示される画面"
 
 #. SysConfig
 msgid "Journal"
@@ -824,15 +828,15 @@ msgstr "この記事から他の記事へのリンク"
 
 #. SysConfig
 msgid "List of state types which can be used in the agent interface."
-msgstr ""
+msgstr "エージェント画面で利用可能なステートタイプリスト"
 
 #. SysConfig
 msgid "List of state types which can be used in the customer interface."
-msgstr ""
+msgstr "顧客画面で利用可能なステートタイプリスト"
 
 #. SysConfig
 msgid "List of state types which can be used in the public interface."
-msgstr ""
+msgstr "公開画面で利用可能なステートタイプリスト"
 
 #. SysConfig
 msgid "Maximum number of FAQ articles to be displayed in the FAQ Explorer result of the agent interface."
@@ -852,15 +856,15 @@ msgstr "エージェント画面のFAQジャーナルで表示する記事の最
 
 #. SysConfig
 msgid "Maximum number of FAQ articles to be displayed in the result of a search in the agent interface."
-msgstr ""
+msgstr "検索結果としてエージェント画面で表示されるFAQ項目の最大数"
 
 #. SysConfig
 msgid "Maximum number of FAQ articles to be displayed in the result of a search in the customer interface."
-msgstr ""
+msgstr "検索結果として顧客画面で表示されるFAQ項目の最大数"
 
 #. SysConfig
 msgid "Maximum number of FAQ articles to be displayed in the result of a search in the public interface."
-msgstr ""
+msgstr "検索結果として公開画面で表示されるFAQ項目の最大数"
 
 #. SysConfig
 msgid "Module to generate HTML OpenSearch profile for short FAQ search in the public interface."
@@ -872,27 +876,27 @@ msgstr ""
 
 #. SysConfig
 msgid "Module to generate html OpenSearch profile for short faq search."
-msgstr ""
+msgstr "ショート検索のhtml OpenSearchプロフィールを生成するモジュール"
 
 #. SysConfig
 msgid "New FAQ Article"
-msgstr ""
+msgstr "新規 FAQ 項目"
 
 #. SysConfig
 msgid "New FAQ articles need approval before they get published."
-msgstr ""
+msgstr "新規 FAQ 項目を公開するには事前に承認されることが必要です"
 
 #. SysConfig
 msgid "Number of FAQ articles to be displayed in the FAQ Explorer of the customer interface."
-msgstr ""
+msgstr "顧客用インターフェイスで表示される FAQ 項目の数"
 
 #. SysConfig
 msgid "Number of FAQ articles to be displayed in the FAQ Explorer of the public interface."
-msgstr ""
+msgstr "公開用インターフェイスで表示される FAQ 項目の数"
 
 #. SysConfig
 msgid "Number of FAQ articles to be displayed on each page of a search result in the customer interface."
-msgstr ""
+msgstr "顧客用インターフェイス 検索結果表示の各画面で表示される FAQ 項目の数"
 
 #. SysConfig
 msgid "Number of FAQ articles to be displayed on each page of a search result in the public interface."
@@ -1020,7 +1024,7 @@ msgstr ""
 
 #. SysConfig
 msgid "The identifier for a FAQ, e.g. FAQ#, KB#, MyFAQ#. The default is FAQ#."
-msgstr ""
+msgstr "FAQ用の識別子 例. FAQ#, KB#, MyFAQ#. デフォルトでは FAQ# となっています"
 
 #. SysConfig
 msgid "This setting defines that a 'FAQ' object can be linked with other 'FAQ' objects using the 'Normal' link type."
@@ -1040,9 +1044,49 @@ msgstr "‘ParentChild’リンク・タイプを使用して、‘FAQ’オブ�
 
 #. SysConfig
 msgid "Ticket body for approval of FAQ article."
-msgstr ""
+msgstr "FAQ承認チケット用　チケット本文"
 
 #. SysConfig
 msgid "Ticket subject for approval of FAQ article."
+msgstr "FAQ承認チケット用　チケット件名 "
+
+#. Template: PublicFAQSearchResultShort
+msgid "Back to FAQ Explorer"
+msgstr ""
+
+#. SysConfig
+msgid "Default maximum size of the titles in a FAQ article to be shown."
+msgstr ""
+
+#. SysConfig
+msgid "Defines the default shown FAQ search attribute for FAQ search screen."
+msgstr ""
+
+#. SysConfig
+msgid "Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer in the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer in the customer interface."
+msgstr ""
+
+#. SysConfig
+msgid "Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer in the public interface."
+msgstr ""
+
+#. SysConfig
+msgid "Maximum size of the titles in a FAQ article to be shown in the FAQ Search in the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Maximum size of the titles in a FAQ article to be shown in the FAQ Search in the customer interface."
+msgstr ""
+
+#. SysConfig
+msgid "Maximum size of the titles in a FAQ article to be shown in the FAQ Search in the public interface."
+msgstr ""
+
+#. SysConfig
+msgid "Maximum size of the titles in a FAQ article to be shown in the FAQ journal in the agent interface."
 msgstr ""
 

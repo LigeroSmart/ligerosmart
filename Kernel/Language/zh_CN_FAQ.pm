@@ -64,9 +64,9 @@ sub Data {
     $Self->{Translation}->{'Ok'} = '';
     $Self->{Translation}->{'Add Category'} = '添加类别';
     $Self->{Translation}->{'Edit Category'} = '编辑类别';
-    $Self->{Translation}->{'Will be shown as comment in Explorer.'} = '将作为注释在浏览时显示.';
     $Self->{Translation}->{'Please select at least one permission group.'} = '请至少选择一个组权限.';
     $Self->{Translation}->{'Agent groups that can access articles in this category.'} = '能访问此类别文章的服务人员组';
+    $Self->{Translation}->{'Will be shown as comment in Explorer.'} = '将作为注释在浏览时显示.';
     $Self->{Translation}->{'Do you really want to delete this category?'} = '你确定要删除这个类别吗?';
     $Self->{Translation}->{'You can not delete this category. It is used in at least one FAQ article and/or is parent of at least one other category'} =
         '你不能删除这个类别. 该类别至少包含一篇FAQ文章，或者至少包含一个子类别。';
@@ -110,7 +110,6 @@ sub Data {
 
     # Template: AgentFAQOverviewSmall
     $Self->{Translation}->{'No FAQ data found.'} = '没有找到FAQ数据.';
-    $Self->{Translation}->{'A generic FAQ table'} = '通用的FAQ表';
 
     # Template: AgentFAQPrint
     $Self->{Translation}->{'FAQ-Info'} = 'FAQ信息';
@@ -187,22 +186,11 @@ sub Data {
     # Template: PublicFAQSearchOpenSearchDescriptionFAQNumber
     $Self->{Translation}->{'Public'} = '';
 
+    # Template: PublicFAQSearchResultShort
+    $Self->{Translation}->{'Back to FAQ Explorer'} = '';
+
     # SysConfig
     $Self->{Translation}->{'A filter for HTML output to add links behind a defined string. The element Image allows two input kinds. First the name of an image (e.g. faq.png). In this case the OTRS image path will be used. The second possibility is to insert the link to the image.'} =
-        '';
-    $Self->{Translation}->{'Allows adding notes in the close ticket screen of the agent interface. Can be overwritten by Ticket::Frontend::NeedAccountedTime.'} =
-        '';
-    $Self->{Translation}->{'Allows adding notes in the ticket free text screen of the agent interface. Can be overwritten by Ticket::Frontend::NeedAccountedTime.'} =
-        '';
-    $Self->{Translation}->{'Allows adding notes in the ticket note screen of the agent interface. Can be overwritten by Ticket::Frontend::NeedAccountedTime.'} =
-        '';
-    $Self->{Translation}->{'Allows adding notes in the ticket owner screen of a zoomed ticket in the agent interface. Can be overwritten by Ticket::Frontend::NeedAccountedTime.'} =
-        '';
-    $Self->{Translation}->{'Allows adding notes in the ticket pending screen of a zoomed ticket in the agent interface. Can be overwritten by Ticket::Frontend::NeedAccountedTime.'} =
-        '';
-    $Self->{Translation}->{'Allows adding notes in the ticket priority screen of a zoomed ticket in the agent interface. Can be overwritten by Ticket::Frontend::NeedAccountedTime.'} =
-        '';
-    $Self->{Translation}->{'Allows adding notes in the ticket responsible screen of the agent interface. Can be overwritten by Ticket::Frontend::NeedAccountedTime.'} =
         '';
     $Self->{Translation}->{'CSS color for the voting result.'} = '';
     $Self->{Translation}->{'Cache Time To Leave for FAQ items.'} = '';
@@ -210,6 +198,8 @@ sub Data {
     $Self->{Translation}->{'Decimal places of the voting result.'} = '以十分制显示评分结果.';
     $Self->{Translation}->{'Default category name.'} = '默认的目录名.';
     $Self->{Translation}->{'Default language for FAQ articles on single language mode.'} = '';
+    $Self->{Translation}->{'Default maximum size of the titles in a FAQ article to be shown.'} =
+        '';
     $Self->{Translation}->{'Default priority of tickets for the approval of FAQ articles.'} =
         'FAQ 文章批准请求的 Ticket 的优先级.';
     $Self->{Translation}->{'Default state for FAQ entry.'} = '默认的 FAQ 统计条目.';
@@ -222,8 +212,6 @@ sub Data {
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ journal.'} =
         '';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ list.'} =
-        '';
-    $Self->{Translation}->{'Defines if time accounting is mandatory in the agent interface. If activated, a note must be entered for all ticket actions (no matter if the note itself is configured as active or is originally mandatory for the individual ticket action screen).'} =
         '';
     $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in a FAQ search of the agent interface.'} =
         '';
@@ -248,6 +236,8 @@ sub Data {
     $Self->{Translation}->{'Defines the default FAQ order of a search result in the customer interface. Up: oldest on top. Down: latest on top.'} =
         '';
     $Self->{Translation}->{'Defines the default FAQ order of a search result in the public interface. Up: oldest on top. Down: latest on top.'} =
+        '';
+    $Self->{Translation}->{'Defines the default shown FAQ search attribute for FAQ search screen.'} =
         '';
     $Self->{Translation}->{'Defines the information to be inserted in a FAQ based Ticket. "Full FAQ" includes text, attachments and inline images.'} =
         '';
@@ -329,6 +319,20 @@ sub Data {
         '';
     $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the result of a search in the public interface.'} =
         '';
+    $Self->{Translation}->{'Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer in the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer in the customer interface.'} =
+        '';
+    $Self->{Translation}->{'Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer in the public interface.'} =
+        '';
+    $Self->{Translation}->{'Maximum size of the titles in a FAQ article to be shown in the FAQ Search in the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Maximum size of the titles in a FAQ article to be shown in the FAQ Search in the customer interface.'} =
+        '';
+    $Self->{Translation}->{'Maximum size of the titles in a FAQ article to be shown in the FAQ Search in the public interface.'} =
+        '';
+    $Self->{Translation}->{'Maximum size of the titles in a FAQ article to be shown in the FAQ journal in the agent interface.'} =
+        '';
     $Self->{Translation}->{'Module to generate HTML OpenSearch profile for short FAQ search in the public interface.'} =
         '';
     $Self->{Translation}->{'Module to generate HTML OpenSearch profile for short faq search in the customer interface.'} =
@@ -363,8 +367,6 @@ sub Data {
     $Self->{Translation}->{'Set the maximum height (in pixels) of inline HTML fields in AgentFAQZoom.'} =
         '';
     $Self->{Translation}->{'Set the maximum height (in pixels) of inline HTML fields in CustomerFAQZoom (and PublicFAQZoom).'} =
-        '';
-    $Self->{Translation}->{'Sets if note must be filled in by the agent. Can be overwritten by Ticket::Frontend::NeedAccountedTime.'} =
         '';
     $Self->{Translation}->{'Show "Insert FAQ Link" Button in AgentFAQZoomSmall for public FAQ Articles.'} =
         '';

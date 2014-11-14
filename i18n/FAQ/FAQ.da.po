@@ -1046,3 +1046,43 @@ msgstr ""
 msgid "Ticket subject for approval of FAQ article."
 msgstr ""
 
+#. Template: PublicFAQSearchResultShort
+msgid "Back to FAQ Explorer"
+msgstr ""
+
+#. SysConfig
+msgid "Default maximum size of the titles in a FAQ article to be shown."
+msgstr ""
+
+#. SysConfig
+msgid "Defines the default shown FAQ search attribute for FAQ search screen."
+msgstr ""
+
+#. SysConfig
+msgid "Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer in the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer in the customer interface."
+msgstr ""
+
+#. SysConfig
+msgid "Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer in the public interface."
+msgstr ""
+
+#. SysConfig
+msgid "Maximum size of the titles in a FAQ article to be shown in the FAQ Search in the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Maximum size of the titles in a FAQ article to be shown in the FAQ Search in the customer interface."
+msgstr ""
+
+#. SysConfig
+msgid "Maximum size of the titles in a FAQ article to be shown in the FAQ Search in the public interface."
+msgstr ""
+
+#. SysConfig
+msgid "Maximum size of the titles in a FAQ article to be shown in the FAQ journal in the agent interface."
+msgstr ""
+

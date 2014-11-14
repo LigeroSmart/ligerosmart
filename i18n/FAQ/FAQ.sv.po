@@ -1,14 +1,18 @@
+#
+# Translators:
+# andreasberger <andreas.berger@hagfors.se>, 2014
 msgid ""
 msgstr ""
-"Project-Id-Version: FAQ\n"
+"Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"PO-Revision-Date: 2014-09-29 11:25+0000\n"
+"Last-Translator: andreasberger <andreas.berger@hagfors.se>\n"
+"Language-Team: Swedish (http://www.transifex.com/projects/p/OTRS/language/sv/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: sv\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. Template: AAAFAQ
 msgid "internal"
@@ -264,7 +268,7 @@ msgstr "Lägg till språk"
 
 #. Template: AgentFAQLanguage
 msgid "Delete Language %s"
-msgstr ""
+msgstr "Ta bort språk %s"
 
 #. Template: AgentFAQLanguage
 msgid "Add Language"
@@ -328,11 +332,11 @@ msgstr ""
 
 #. Template: AgentFAQSearch
 msgid "Approved"
-msgstr ""
+msgstr "Godkänd"
 
 #. Template: AgentFAQSearch
 msgid "Last changed by"
-msgstr ""
+msgstr "Senast ändrad av"
 
 #. Template: AgentFAQSearch
 msgid "FAQ Article Create Time (before/after)"
@@ -972,7 +976,7 @@ msgstr ""
 
 #. SysConfig
 msgid "Show FAQ path yes/no."
-msgstr ""
+msgstr "Visa FAQ sökväg ja/nej."
 
 #. SysConfig
 msgid "Show items of subcategories."
@@ -1044,5 +1048,45 @@ msgstr ""
 
 #. SysConfig
 msgid "Ticket subject for approval of FAQ article."
+msgstr ""
+
+#. Template: PublicFAQSearchResultShort
+msgid "Back to FAQ Explorer"
+msgstr ""
+
+#. SysConfig
+msgid "Default maximum size of the titles in a FAQ article to be shown."
+msgstr ""
+
+#. SysConfig
+msgid "Defines the default shown FAQ search attribute for FAQ search screen."
+msgstr ""
+
+#. SysConfig
+msgid "Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer in the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer in the customer interface."
+msgstr ""
+
+#. SysConfig
+msgid "Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer in the public interface."
+msgstr ""
+
+#. SysConfig
+msgid "Maximum size of the titles in a FAQ article to be shown in the FAQ Search in the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Maximum size of the titles in a FAQ article to be shown in the FAQ Search in the customer interface."
+msgstr ""
+
+#. SysConfig
+msgid "Maximum size of the titles in a FAQ article to be shown in the FAQ Search in the public interface."
+msgstr ""
+
+#. SysConfig
+msgid "Maximum size of the titles in a FAQ article to be shown in the FAQ journal in the agent interface."
 msgstr ""
 
