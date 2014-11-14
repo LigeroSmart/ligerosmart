@@ -1599,6 +1599,35 @@ my @ExpressionTests = (
             },
         },
     },
+    # Test for bug# 10862
+    {
+        MatchSuccess => 0,
+        SourceData   => {
+            ExpressionAdd => {
+                ObjectID => {
+                    ObjectLookup => {
+                        Name => 'ITSMChange',
+                    },
+                },
+                AttributeID => {
+                    AttributeLookup => {
+                        Name => 'ChangeManagerID',
+                    },
+                },
+                OperatorID => {
+                    OperatorLookup => {
+                        Name => 'is not',
+                    },
+                },
+
+                # static fields
+                ConditionID  => $ConditionIDs[0],
+                Selector     => $ChangeIDs[0],
+                CompareValue => '',
+                UserID       => 1,
+            },
+        },
+    },
 );
 
 # check condition expressions
@@ -1938,10 +1967,10 @@ for my $ExpressionCounter ( 0 .. ( scalar @ExpressionIDs - 1 ) ) {
 }
 
 #-------------------------
-# condition expression tests
+# condition action tests
 #-------------------------
 
-# check for default condition expressions
+# check for default condition actions
 my @ActionTests = (
     {
         ActionSuccess => 1,
@@ -1970,6 +1999,38 @@ my @ActionTests = (
                 ConditionID => $ConditionIDs[1],
                 Selector    => $ChangeIDs[0],
                 ActionValue => 'New Change Title' . int rand 1_000,
+                UserID      => 1,
+            },
+        },
+    },
+    # Test for bug# 10862
+    {
+        ActionSuccess => 0,
+        SourceData    => {
+            ActionAdd => {
+                ObjectID => {
+                    ObjectLookup => {
+                        Name   => 'ITSMChange',
+                        UserID => 1,
+                    },
+                },
+                AttributeID => {
+                    AttributeLookup => {
+                        Name   => 'ChangeManagerID',
+                        UserID => 1,
+                    },
+                },
+                OperatorID => {
+                    OperatorLookup => {
+                        Name   => 'lock',
+                        UserID => 1,
+                    },
+                },
+
+                # static fields
+                ConditionID => $ConditionIDs[1],
+                Selector    => $ChangeIDs[0],
+                ActionValue => '',
                 UserID      => 1,
             },
         },
