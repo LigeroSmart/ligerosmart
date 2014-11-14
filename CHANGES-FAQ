@@ -6,7 +6,8 @@
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
-4.0.0.RC1 - 2014-??-??
+4.0.0.rc1 - 2014-??-??
+ - 2014-11-11 Code cleanup.
  - 2014-11-06 Fixed bug#10851 - `You have already voted' by addition of link after vote.
  - 2014-11-06 Fixed bug#10848 - $Env{"..."} on OTRS 4.0.
  - 2014-10-30 Fixed bug#10661 - in public.pl no 'home' button or 'back' button.
