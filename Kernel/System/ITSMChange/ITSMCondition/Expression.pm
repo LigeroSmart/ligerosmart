@@ -98,16 +98,35 @@ sub ExpressionAdd {
 
     # prepare SQL statement
     my $ExpressionID;
-    return if !$Kernel::OM->Get('Kernel::System::DB')->Prepare(
-        SQL => 'SELECT id FROM condition_expression '
-            . 'WHERE condition_id = ? AND object_id = ? AND attribute_id = ? '
-            . 'AND operator_id = ? AND selector = ? AND compare_value = ?',
-        Bind => [
-            \$Param{ConditionID}, \$Param{ObjectID}, \$Param{AttributeID},
-            \$Param{OperatorID},  \$Param{Selector}, \$Param{CompareValue},
-        ],
-        Limit => 1,
-    );
+
+    # this is important for oracle for which an empty string and NULL is the same!
+    if ( $Self->{DBType} eq 'oracle' && $Param{CompareValue} eq '' ) {
+
+        return if !$Kernel::OM->Get('Kernel::System::DB')->Prepare(
+            SQL => 'SELECT id FROM condition_expression '
+                . 'WHERE condition_id = ? AND object_id = ? AND attribute_id = ? '
+                . 'AND operator_id = ? AND selector = ? AND compare_value IS NULL',
+            Bind => [
+                \$Param{ConditionID}, \$Param{ObjectID}, \$Param{AttributeID},
+                \$Param{OperatorID},  \$Param{Selector},
+            ],
+            Limit => 1,
+        );
+    }
+
+    # for all other databases AND for oracle IF the compare value is NOT an empty string
+    else {
+        return if !$Kernel::OM->Get('Kernel::System::DB')->Prepare(
+            SQL => 'SELECT id FROM condition_expression '
+                . 'WHERE condition_id = ? AND object_id = ? AND attribute_id = ? '
+                . 'AND operator_id = ? AND selector = ? AND compare_value = ?',
+            Bind => [
+                \$Param{ConditionID}, \$Param{ObjectID}, \$Param{AttributeID},
+                \$Param{OperatorID},  \$Param{Selector}, \$Param{CompareValue},
+            ],
+            Limit => 1,
+        );
+    }
 
     # get id of created expression
     while ( my @Row = $Kernel::OM->Get('Kernel::System::DB')->FetchrowArray() ) {
@@ -327,7 +346,9 @@ sub ExpressionGet {
         $ExpressionData{AttributeID}  = $Row[3];
         $ExpressionData{OperatorID}   = $Row[4];
         $ExpressionData{Selector}     = $Row[5];
-        $ExpressionData{CompareValue} = $Row[6];
+
+        # this is important for oracle for which an empty string and NULL is the same!
+        $ExpressionData{CompareValue} = $Row[6] // '';
     }
 
     # check error

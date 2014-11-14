@@ -69,6 +69,10 @@ sub new {
     $Self->{CacheType} = 'ITSMChangeManagement';
     $Self->{CacheTTL}  = $Kernel::OM->Get('Kernel::Config')->Get('ITSMChange::CacheTTL') * 60;
 
+    # get the database type
+    $Self->{DBType} = $Kernel::OM->Get('Kernel::System::DB')->{'DB::Type'} || '';
+    $Self->{DBType} = lc $Self->{DBType};
+
     @ISA = qw(
         Kernel::System::EventHandler
         Kernel::System::ITSMChange::ITSMCondition::Object

@@ -107,18 +107,38 @@ sub ActionAdd {
 
     # prepare SQL statement
     my $ActionID;
-    return if !$Kernel::OM->Get('Kernel::System::DB')->Prepare(
-        SQL => 'SELECT id FROM condition_action '
-            . 'WHERE condition_id = ? AND action_number = ? AND object_id = ? '
-            . 'AND attribute_id = ? AND operator_id = ? AND selector = ? '
-            . 'AND action_value = ?',
-        Bind => [
-            \$Param{ConditionID}, \$ActionNumber, \$Param{ObjectID},
-            \$Param{AttributeID}, \$Param{OperatorID}, \$Param{Selector},
-            \$Param{ActionValue},
-        ],
-        Limit => 1,
-    );
+
+    # this is important for oracle for which an empty string and NULL is the same!
+    if ( $Self->{DBType} eq 'oracle' && $Param{ActionValue} eq '' ) {
+
+        return if !$Kernel::OM->Get('Kernel::System::DB')->Prepare(
+            SQL => 'SELECT id FROM condition_action '
+                . 'WHERE condition_id = ? AND action_number = ? AND object_id = ? '
+                . 'AND attribute_id = ? AND operator_id = ? AND selector = ? '
+                . 'AND action_value IS NULL',
+            Bind => [
+                \$Param{ConditionID}, \$ActionNumber, \$Param{ObjectID},
+                \$Param{AttributeID}, \$Param{OperatorID}, \$Param{Selector},
+            ],
+            Limit => 1,
+        );
+    }
+
+    # for all other databases AND for oracle IF the action value is NOT an empty string
+    else {
+        return if !$Kernel::OM->Get('Kernel::System::DB')->Prepare(
+            SQL => 'SELECT id FROM condition_action '
+                . 'WHERE condition_id = ? AND action_number = ? AND object_id = ? '
+                . 'AND attribute_id = ? AND operator_id = ? AND selector = ? '
+                . 'AND action_value = ?',
+            Bind => [
+                \$Param{ConditionID}, \$ActionNumber, \$Param{ObjectID},
+                \$Param{AttributeID}, \$Param{OperatorID}, \$Param{Selector},
+                \$Param{ActionValue},
+            ],
+            Limit => 1,
+        );
+    }
 
     # get id of created action
     while ( my @Row = $Kernel::OM->Get('Kernel::System::DB')->FetchrowArray() ) {
@@ -342,7 +362,9 @@ sub ActionGet {
         $ActionData{AttributeID}  = $Row[4];
         $ActionData{OperatorID}   = $Row[5];
         $ActionData{Selector}     = $Row[6];
-        $ActionData{ActionValue}  = $Row[7];
+
+        # this is important for oracle for which an empty string and NULL is the same!
+        $ActionData{ActionValue}  = $Row[7] // '';
     }
 
     # check error
