@@ -57,17 +57,19 @@ table#InsertWorkingHours tbody td {
 }
 
 .ui-button .ui-button-text {
-    line-height: 0 !important;
+    position: absolute;
+    left: -9999px;
+    top: -9999px;
 }
 
 button.ui-button-icon-only {
     width: 24px !important;
+    height: 20px;
+    padding: 0px !important;
+    margin-bottom: 9px;
     position: relative;
-}
-
-span.ui-icon {
-    position: absolute;
-    left: 3px !important;
+    top: 3px;
+    width: 24px !important;
 }
 
 .ui-autocomplete .ui-menu-ietm {
