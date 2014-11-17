@@ -62,7 +62,7 @@ sub Data {
     $Self->{Translation}->{'Criticality'} = '重要';
 
     # Template: AgentITSMSLAPrint
-    $Self->{Translation}->{'SLA-Info'} = '';
+    $Self->{Translation}->{'SLA-Info'} = 'SLA信息';
     $Self->{Translation}->{'Last changed'} = '上次修改于';
     $Self->{Translation}->{'Last changed by'} = '上次修改人';
 
@@ -71,7 +71,7 @@ sub Data {
     $Self->{Translation}->{'Associated Services'} = '关联的服务';
 
     # Template: AgentITSMServicePrint
-    $Self->{Translation}->{'Service-Info'} = '';
+    $Self->{Translation}->{'Service-Info'} = '服务信息';
     $Self->{Translation}->{'Current Incident State'} = '当前故障状态';
     $Self->{Translation}->{'Associated SLAs'} = '关联的SLAs';
 

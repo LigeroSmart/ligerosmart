@@ -52,7 +52,7 @@ sub Data {
     # Template: AdminITSMCIPAllocate
     $Self->{Translation}->{'Criticality <-> Impact <-> Priority'} = 'Kritikalitet <-> Omfang <-> Prioritet';
     $Self->{Translation}->{'Manage the priority result of combinating Criticality <-> Impact.'} =
-        '';
+        'Administrer prioritetsresultat ved å kombinere Kritikalitet <-> Omfang';
     $Self->{Translation}->{'Priority allocation'} = 'Tildeling av prioritet';
 
     # Template: AdminSLA
