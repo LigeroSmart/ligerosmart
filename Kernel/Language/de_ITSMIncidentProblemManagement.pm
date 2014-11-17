@@ -43,7 +43,7 @@ sub Data {
     $Self->{Translation}->{'Add a decision!'} = 'Hinzufügen einer Entscheidung!';
     $Self->{Translation}->{'Additional ITSM Fields'} = 'Zusätzliche ITSM Felder';
     $Self->{Translation}->{'Allows adding notes in the additional ITSM field screen of the agent interface.'} =
-        '';
+        'Erlaubt das Hinzufügen von Notizen in der zusätzlichen ITSM-Oberfläche im Agenten-Interface.';
     $Self->{Translation}->{'Allows adding notes in the decision screen of the agent interface.'} =
         'Erlaubt das Hinzufügen von Notizen im Entscheidungs-Bildschirm im Agenten-Interface.';
     $Self->{Translation}->{'Change the ITSM fields!'} = 'Ändern der ITSM-Felder!';
