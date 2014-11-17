@@ -1,4 +1,4 @@
-#
+# 
 # Translators:
 msgid ""
 msgstr ""
@@ -38,7 +38,9 @@ msgid "Create and manage the General Catalog."
 msgstr ""
 
 #. SysConfig
-msgid "Frontend module registration for the AdminGeneralCatalog configuration in the admin area."
+msgid ""
+"Frontend module registration for the AdminGeneralCatalog configuration in "
+"the admin area."
 msgstr ""
 
 #. SysConfig
@@ -46,10 +48,12 @@ msgid "General Catalog"
 msgstr "Catálogo General"
 
 #. SysConfig
-msgid "Parameters for the example comment 2 of the general catalog attributes."
+msgid ""
+"Parameters for the example comment 2 of the general catalog attributes."
 msgstr "Parámetros para el ejemplo comentario 2 de los atributos del catálogo general."
 
 #. SysConfig
-msgid "Parameters for the example permission groups of the general catalog attributes."
+msgid ""
+"Parameters for the example permission groups of the general catalog "
+"attributes."
 msgstr "Parámetros para los permisos de ejemplo de los atributos del catálogo general."
-

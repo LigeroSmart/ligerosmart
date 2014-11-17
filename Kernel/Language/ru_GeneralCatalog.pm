@@ -33,7 +33,7 @@ sub Data {
     $Self->{Translation}->{'Parameters for the example comment 2 of the general catalog attributes.'} =
         'Добавление дополнительного комментария к атрибутам Общего каталога';
     $Self->{Translation}->{'Parameters for the example permission groups of the general catalog attributes.'} =
-        '';
+        'Параметры для примерных групповых прав для атрибутов Общего каталога';
 
 }
 
