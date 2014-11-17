@@ -1,18 +1,22 @@
+# 
+# Translators:
+# Yuri Kolesniov <ynkolesnikov@gmail.com>, 2014
 msgid ""
 msgstr ""
-"Project-Id-Version: ImportExport\n"
+"Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"PO-Revision-Date: 2014-10-28 11:55+0000\n"
+"Last-Translator: Yuri Kolesniov <ynkolesnikov@gmail.com>\n"
+"Language-Team: Russian (http://www.transifex.com/projects/p/OTRS/language/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: ru\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #. Template: AAAImportExport
 msgid "Add mapping template"
-msgstr "Добавление шаблона соответствия"
+msgstr "Добавить шаблон сопоставления"
 
 #. Template: AAAImportExport
 msgid "Charset"
@@ -24,7 +28,7 @@ msgstr "Двоеточие (:)"
 
 #. Template: AAAImportExport
 msgid "Column"
-msgstr "Столбец"
+msgstr "Столбец "
 
 #. Template: AAAImportExport
 msgid "Column Separator"
@@ -92,7 +96,7 @@ msgstr "Редактировать общую информацию"
 
 #. Template: AdminImportExport
 msgid "Name is required!"
-msgstr ""
+msgstr "Требуется имя!"
 
 #. Template: AdminImportExport
 msgid "Object is required!"
@@ -112,7 +116,7 @@ msgstr "Редактировать формат данных"
 
 #. Template: AdminImportExport
 msgid "is required!"
-msgstr ""
+msgstr "обязателен!"
 
 #. Template: AdminImportExport
 msgid "Edit mapping information"
@@ -120,7 +124,7 @@ msgstr "Редактировать информацию соответствия
 
 #. Template: AdminImportExport
 msgid "No map elements found."
-msgstr "Нет элементов сопоставления"
+msgstr "Нет элементов сопоставления."
 
 #. Template: AdminImportExport
 msgid "Add Mapping Element"
@@ -136,7 +140,7 @@ msgstr "Ограничить экспорт поиском"
 
 #. Template: AdminImportExport
 msgid "Import information"
-msgstr "Информация импорта"
+msgstr "Информация об импорте"
 
 #. Template: AdminImportExport
 msgid "Source File"
@@ -160,11 +164,11 @@ msgstr "Номер последней обработанной строки им
 
 #. Template: AdminImportExport
 msgid "Ok"
-msgstr ""
+msgstr "Ok"
 
 #. SysConfig
 msgid "Format backend module registration for the import/export module."
-msgstr ""
+msgstr "Format backend module registration для модуля import/export."
 
 #. SysConfig
 msgid "Import and export object information."
@@ -173,4 +177,3 @@ msgstr "Импорт и экспорт информации об объекта�
 #. SysConfig
 msgid "Import/Export"
 msgstr "Импорт/Экспорт"
-

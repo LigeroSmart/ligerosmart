@@ -25,12 +25,12 @@ sub Data {
     $Self->{Translation}->{'Dot (.)'} = 'Punktum (.)';
     $Self->{Translation}->{'Semicolon (;)'} = 'Semikolon (;)';
     $Self->{Translation}->{'Tabulator (TAB)'} = 'Tabulator (TAB)';
-    $Self->{Translation}->{'Include Column Headers'} = '';
-    $Self->{Translation}->{'Import summary for'} = '';
-    $Self->{Translation}->{'Imported records'} = '';
-    $Self->{Translation}->{'Exported records'} = '';
-    $Self->{Translation}->{'Records'} = '';
-    $Self->{Translation}->{'Skipped'} = '';
+    $Self->{Translation}->{'Include Column Headers'} = 'Inkluder kolonneoverskrifter';
+    $Self->{Translation}->{'Import summary for'} = 'Oppsummeringer for import';
+    $Self->{Translation}->{'Imported records'} = 'Importerte rader';
+    $Self->{Translation}->{'Exported records'} = 'Eksporterte rader';
+    $Self->{Translation}->{'Records'} = 'Rader';
+    $Self->{Translation}->{'Skipped'} = 'Hoppet over';
 
     # Template: AdminImportExport
     $Self->{Translation}->{'Import/Export Management'} = 'Administrasjon av Import/Eksport';
@@ -39,12 +39,12 @@ sub Data {
     $Self->{Translation}->{'Start Export'} = 'Start eksport';
     $Self->{Translation}->{'Step'} = 'Steg';
     $Self->{Translation}->{'Edit common information'} = 'Endre fellesinformasjon';
-    $Self->{Translation}->{'Name is required!'} = '';
+    $Self->{Translation}->{'Name is required!'} = 'Navn er påkrevd!';
     $Self->{Translation}->{'Object is required!'} = 'Objekt er påkrevd!';
     $Self->{Translation}->{'Format is required!'} = 'Format er påkrevd!';
     $Self->{Translation}->{'Edit object information'} = 'Endre objektet';
     $Self->{Translation}->{'Edit format information'} = 'Endre formatet';
-    $Self->{Translation}->{'is required!'} = '';
+    $Self->{Translation}->{'is required!'} = 'er påkrevd!';
     $Self->{Translation}->{'Edit mapping information'} = 'Endre mapping';
     $Self->{Translation}->{'No map elements found.'} = 'Ingen elementer funnet.';
     $Self->{Translation}->{'Add Mapping Element'} = 'Legg til mapping-element';
@@ -52,11 +52,11 @@ sub Data {
     $Self->{Translation}->{'Restrict export per search'} = 'Begrens eksport per søk';
     $Self->{Translation}->{'Import information'} = 'Import-informasjon';
     $Self->{Translation}->{'Source File'} = 'Kildefil';
-    $Self->{Translation}->{'Success'} = '';
-    $Self->{Translation}->{'Failed'} = '';
-    $Self->{Translation}->{'Duplicate names'} = '';
-    $Self->{Translation}->{'Last processed line number of import file'} = '';
-    $Self->{Translation}->{'Ok'} = '';
+    $Self->{Translation}->{'Success'} = 'Vellykket';
+    $Self->{Translation}->{'Failed'} = 'Feilet';
+    $Self->{Translation}->{'Duplicate names'} = 'Duplikate navn';
+    $Self->{Translation}->{'Last processed line number of import file'} = 'Siste prosesserte linjenummer av importfil';
+    $Self->{Translation}->{'Ok'} = 'Ok';
 
     # SysConfig
     $Self->{Translation}->{'Format backend module registration for the import/export module.'} =

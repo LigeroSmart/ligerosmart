@@ -44,7 +44,7 @@ sub Data {
     $Self->{Translation}->{'Format is required!'} = 'Format ist erforderlich!';
     $Self->{Translation}->{'Edit object information'} = 'Objekt-Informationen bearbeiten';
     $Self->{Translation}->{'Edit format information'} = 'Format-Informationen bearbeiten';
-    $Self->{Translation}->{'is required!'} = '';
+    $Self->{Translation}->{'is required!'} = 'wird benötigt!';
     $Self->{Translation}->{'Edit mapping information'} = 'Mapping-Informationen bearbeiten';
     $Self->{Translation}->{'No map elements found.'} = 'Keine Mapping-Elemente gefunden.';
     $Self->{Translation}->{'Add Mapping Element'} = 'Mapping-Element hinzufügen';

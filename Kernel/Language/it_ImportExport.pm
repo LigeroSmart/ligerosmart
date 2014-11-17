@@ -25,43 +25,43 @@ sub Data {
     $Self->{Translation}->{'Dot (.)'} = 'Punto (.)';
     $Self->{Translation}->{'Semicolon (;)'} = 'Punto e virgola (;)';
     $Self->{Translation}->{'Tabulator (TAB)'} = 'Tabulatore (TAB)';
-    $Self->{Translation}->{'Include Column Headers'} = '';
-    $Self->{Translation}->{'Import summary for'} = '';
-    $Self->{Translation}->{'Imported records'} = '';
-    $Self->{Translation}->{'Exported records'} = '';
-    $Self->{Translation}->{'Records'} = '';
-    $Self->{Translation}->{'Skipped'} = '';
+    $Self->{Translation}->{'Include Column Headers'} = 'Includi le Colonne di Intestazione';
+    $Self->{Translation}->{'Import summary for'} = 'Importa il sommario per';
+    $Self->{Translation}->{'Imported records'} = 'Importa voci';
+    $Self->{Translation}->{'Exported records'} = 'Esporta voci';
+    $Self->{Translation}->{'Records'} = 'Voci';
+    $Self->{Translation}->{'Skipped'} = 'Saltato';
 
     # Template: AdminImportExport
     $Self->{Translation}->{'Import/Export Management'} = 'Gestione Importazione/Esportazione';
-    $Self->{Translation}->{'Create a template to import and export object information.'} = '';
+    $Self->{Translation}->{'Create a template to import and export object information.'} = 'Crea un template per importare ed esportare le informazioni degli oggetti.';
     $Self->{Translation}->{'Start Import'} = 'Iniziare Importazione';
     $Self->{Translation}->{'Start Export'} = 'Iniziare Esportazione';
     $Self->{Translation}->{'Step'} = 'Passo';
     $Self->{Translation}->{'Edit common information'} = 'Modifica informazioni comuni';
-    $Self->{Translation}->{'Name is required!'} = '';
-    $Self->{Translation}->{'Object is required!'} = '';
-    $Self->{Translation}->{'Format is required!'} = '';
+    $Self->{Translation}->{'Name is required!'} = 'Il nome è obbligatorio!';
+    $Self->{Translation}->{'Object is required!'} = 'L\'oggetto è obbligatorio!';
+    $Self->{Translation}->{'Format is required!'} = 'Il formato è obbligatorio!';
     $Self->{Translation}->{'Edit object information'} = 'Modifica informazioni oggetto';
     $Self->{Translation}->{'Edit format information'} = 'Modifica formato informazione';
-    $Self->{Translation}->{'is required!'} = '';
+    $Self->{Translation}->{'is required!'} = 'è obbligatorio!';
     $Self->{Translation}->{'Edit mapping information'} = 'Modifica mappatura informazioni';
-    $Self->{Translation}->{'No map elements found.'} = '';
-    $Self->{Translation}->{'Add Mapping Element'} = '';
+    $Self->{Translation}->{'No map elements found.'} = 'Nessun elemento mappa trovato.';
+    $Self->{Translation}->{'Add Mapping Element'} = 'Aggiungi un elemento di mappatura.';
     $Self->{Translation}->{'Edit search information'} = 'Modifica informazioni di ricerca';
     $Self->{Translation}->{'Restrict export per search'} = 'Restringere esportazione per ricerca';
     $Self->{Translation}->{'Import information'} = 'Importare informazione';
     $Self->{Translation}->{'Source File'} = 'Archivio origine';
-    $Self->{Translation}->{'Success'} = '';
-    $Self->{Translation}->{'Failed'} = '';
-    $Self->{Translation}->{'Duplicate names'} = '';
-    $Self->{Translation}->{'Last processed line number of import file'} = '';
-    $Self->{Translation}->{'Ok'} = '';
+    $Self->{Translation}->{'Success'} = 'Successo';
+    $Self->{Translation}->{'Failed'} = 'Fallito';
+    $Self->{Translation}->{'Duplicate names'} = 'Duplica i nomi';
+    $Self->{Translation}->{'Last processed line number of import file'} = 'Numero dell\'ultima riga processata del file da importare';
+    $Self->{Translation}->{'Ok'} = 'Ok';
 
     # SysConfig
     $Self->{Translation}->{'Format backend module registration for the import/export module.'} =
         '';
-    $Self->{Translation}->{'Import and export object information.'} = '';
+    $Self->{Translation}->{'Import and export object information.'} = 'Importa ed esporta le informazioni sull\'oggetto.';
     $Self->{Translation}->{'Import/Export'} = 'Importare/Esportare';
 
 }
