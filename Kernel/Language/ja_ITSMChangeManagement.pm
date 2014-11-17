@@ -37,11 +37,11 @@ sub Data {
     $Self->{Translation}->{'Agent interface module to show the MyChanges overview icon.'} = 'エージェントインターフェイスモジュールは、MyChanges概要アイコンを表示する。';
     $Self->{Translation}->{'Agent interface module to show the MyWorkOrders overview icon.'} =
         'エージェントインターフェイスモジュールは、MyWorkOrders概要アイコンを表示する。';
-    $Self->{Translation}->{'CABAgents'} = '';
-    $Self->{Translation}->{'CABCustomers'} = '';
-    $Self->{Translation}->{'Change Overview'} = '';
-    $Self->{Translation}->{'Change Schedule'} = '';
-    $Self->{Translation}->{'Change involved persons of the change'} = '';
+    $Self->{Translation}->{'CABAgents'} = 'CABエージェント';
+    $Self->{Translation}->{'CABCustomers'} = 'CAB顧客';
+    $Self->{Translation}->{'Change Overview'} = '変更 概要';
+    $Self->{Translation}->{'Change Schedule'} = '変更 スケジュール';
+    $Self->{Translation}->{'Change involved persons of the change'} = '変更管理関係者の変更';
     $Self->{Translation}->{'ChangeHistory::ActionAdd'} = '%s: %s';
     $Self->{Translation}->{'ChangeHistory::ActionAddID'} = '(暫定)ChangeHistory::ActionAddID (ID=%s)';
     $Self->{Translation}->{'ChangeHistory::ActionDelete'} = '(暫定)ChangeHistory::ActionDelete (ID=%s)';
@@ -82,7 +82,7 @@ sub Data {
     $Self->{Translation}->{'Edit the workorder'} = '作業オーダーを編集';
     $Self->{Translation}->{'Expression'} = '期限';
     $Self->{Translation}->{'Full-Text Search in Change and Workorder'} = '変更・作業オーダーの全文字検索';
-    $Self->{Translation}->{'ITSMCondition'} = '';
+    $Self->{Translation}->{'ITSMCondition'} = 'ITSM条件';
     $Self->{Translation}->{'ITSMWorkOrder'} = 'ITSM業務指示';
     $Self->{Translation}->{'Link another object to the change'} = '';
     $Self->{Translation}->{'Link another object to the workorder'} = '';

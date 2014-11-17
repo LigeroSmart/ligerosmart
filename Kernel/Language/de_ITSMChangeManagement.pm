@@ -202,7 +202,7 @@ sub Data {
     $Self->{Translation}->{'Catalog Class'} = 'Katalog-Klasse';
     $Self->{Translation}->{'Object Name'} = 'Objekt-Name';
     $Self->{Translation}->{'Overview over state transitions for'} = 'Übersicht über Status-Übergänge für';
-    $Self->{Translation}->{'Delete this state transition'} = '';
+    $Self->{Translation}->{'Delete this state transition'} = 'Löschen dieses Status-Übergangs';
     $Self->{Translation}->{'Add a new state transition for'} = 'Hinzufügen eines neuen Status-Übergangs für';
     $Self->{Translation}->{'Please select a state!'} = 'Bitte wählen Sie einen Status!';
     $Self->{Translation}->{'Please select a next state!'} = 'Bitte wählen sie den Folge-Status!';
@@ -246,10 +246,10 @@ sub Data {
     $Self->{Translation}->{'Expressions'} = 'Logische Ausdrücke';
     $Self->{Translation}->{'Selector'} = 'Selektor';
     $Self->{Translation}->{'Operator'} = 'Operator';
-    $Self->{Translation}->{'Delete Expression'} = '';
+    $Self->{Translation}->{'Delete Expression'} = 'Ausdruck löschen';
     $Self->{Translation}->{'No Expressions found.'} = 'Keinen logischen Ausdruck gefunden.';
     $Self->{Translation}->{'Add new expression'} = 'Füge einen neuen logischen Ausdruck hinzu';
-    $Self->{Translation}->{'Delete Action'} = '';
+    $Self->{Translation}->{'Delete Action'} = 'Aktion löschen';
     $Self->{Translation}->{'No Actions found.'} = 'Keine Aktionen gefunden.';
     $Self->{Translation}->{'Add new action'} = 'Füge eine neue Aktion hinzu';
 
@@ -350,25 +350,25 @@ sub Data {
 
     # Template: AgentITSMTemplateEditContent
     $Self->{Translation}->{'This will create a new change from this template, so you can edit and save it.'} =
-        '';
+        'Dieses wird einen neuen Change aus diesem Template erstellen, Sie können diesen editieren und speichern.';
     $Self->{Translation}->{'The new change will be deleted automatically after it has been saved as template.'} =
-        '';
+        'Der neue Change wird automatisch gelöscht, nachdem dieser als Template gespeichert wurde.';
     $Self->{Translation}->{'This will create a new workorder from this template, so you can edit and save it.'} =
-        '';
+        'Dieses wird eine neue Workorder aus diesem Template erstellen, Sie können diese editieren und speichern.';
     $Self->{Translation}->{'A temporary change will be created which contains the workorder.'} =
-        '';
+        'Ein temporärer Change wird erstellt, der die Workorder enthält.';
     $Self->{Translation}->{'The temporary change and new workorder will be deleted automatically after the workorder has been saved as template.'} =
-        '';
-    $Self->{Translation}->{'Do you want to proceed?'} = '';
+        'Der temporäre Change und die neue Workorder wird automatisch gelöscht, nachdem die Workorder als Template gespeichert wurde.';
+    $Self->{Translation}->{'Do you want to proceed?'} = 'Möchten Sie fortfahren?';
 
     # Template: AgentITSMTemplateOverviewSmall
     $Self->{Translation}->{'TemplateID'} = 'Template-ID';
-    $Self->{Translation}->{'Edit Content'} = '';
+    $Self->{Translation}->{'Edit Content'} = 'Inhalt bearbeiten';
     $Self->{Translation}->{'CreateBy'} = 'Erstellt von';
     $Self->{Translation}->{'CreateTime'} = 'Erstellt';
     $Self->{Translation}->{'ChangeBy'} = 'Geändert von';
     $Self->{Translation}->{'ChangeTime'} = 'Geändert';
-    $Self->{Translation}->{'Edit Template Content'} = '';
+    $Self->{Translation}->{'Edit Template Content'} = 'Vorlageninhalt bearbeiten';
     $Self->{Translation}->{'Delete Template'} = 'Vorlage Löschen';
 
     # Template: AgentITSMWorkOrderAdd
@@ -402,19 +402,19 @@ sub Data {
 
     # Template: AgentITSMWorkOrderTemplate
     $Self->{Translation}->{'Save Workorder as Template'} = 'Speichere Workorder als Vorlage';
-    $Self->{Translation}->{'Delete original workorder (and surrounding change)'} = '';
+    $Self->{Translation}->{'Delete original workorder (and surrounding change)'} = 'Löschen der Original-Workorder (und der umgebenden Changes)';
 
     # Template: AgentITSMWorkOrderZoom
     $Self->{Translation}->{'Workorder Information'} = 'Workorder-Informationen';
 
     # SysConfig
     $Self->{Translation}->{'A list of the agents who have permission to take workorders. Key is a login name. Content is 0 or 1.'} =
-        '';
+        'Eine Liste der Agenten, die Zugriff auf Workorders haben. Key ist der Login-Name. Content ist 0 oder 1';
     $Self->{Translation}->{'A list of workorder states, at which the ActualStartTime of a workorder will be set if it was empty at this point.'} =
         'Eine Liste von Workorder-States bei denen die ActualStartTime einer Workorder gesetzt wird, wenn diese vorher nicht gesetzt war.';
-    $Self->{Translation}->{'Admin of notification rules.'} = '';
-    $Self->{Translation}->{'Admin of the CIP matrix.'} = '';
-    $Self->{Translation}->{'Admin of the state machine.'} = '';
+    $Self->{Translation}->{'Admin of notification rules.'} = 'Admin der Notification-Regeln.';
+    $Self->{Translation}->{'Admin of the CIP matrix.'} = 'Admin der CIP-Matrix.';
+    $Self->{Translation}->{'Admin of the state machine.'} = 'Admin der State Machine';
     $Self->{Translation}->{'Agent interface notification module to see the number of change advisory boards.'} =
         '';
     $Self->{Translation}->{'Agent interface notification module to see the number of changes managed by the user.'} =
@@ -683,18 +683,18 @@ sub Data {
     $Self->{Translation}->{'Required privileges to create changes from templates.'} = '';
     $Self->{Translation}->{'Required privileges to create changes.'} = 'Benötigtes Recht zum Erstellen von Changes.';
     $Self->{Translation}->{'Required privileges to delete a template.'} = 'Benötigtes Recht zum Löschen einer Vorlage.';
-    $Self->{Translation}->{'Required privileges to delete a workorder.'} = '';
-    $Self->{Translation}->{'Required privileges to delete changes.'} = '';
+    $Self->{Translation}->{'Required privileges to delete a workorder.'} = 'Benötigtes Recht zum Löschen einer Workorder.';
+    $Self->{Translation}->{'Required privileges to delete changes.'} = 'Benötigtes Recht zum Löschen von Changes.';
     $Self->{Translation}->{'Required privileges to edit a template.'} = 'Benötigtes Recht zum Ändern einer Vorlage.';
     $Self->{Translation}->{'Required privileges to edit a workorder.'} = 'Benötigtes Recht zum Ändern einer Workorder.';
     $Self->{Translation}->{'Required privileges to edit changes.'} = 'Benötigtes Recht zum Bearbeiten von Changes.';
     $Self->{Translation}->{'Required privileges to edit the conditions of changes.'} = 'Benötigtes Recht zum Bearbeiten der Condition von Changes.';
-    $Self->{Translation}->{'Required privileges to edit the content of a template.'} = '';
+    $Self->{Translation}->{'Required privileges to edit the content of a template.'} = 'Benötigtes Recht zum Ändern des Inhalts einer Vorlage.';
     $Self->{Translation}->{'Required privileges to edit the involved persons of a change.'} =
         'Benötigtes Recht zum Ändern der beteiligten Personen.';
     $Self->{Translation}->{'Required privileges to move changes in time.'} = 'Benötigtes Recht zum zeitlichen Verschieben von Changes.';
-    $Self->{Translation}->{'Required privileges to print a change.'} = '';
-    $Self->{Translation}->{'Required privileges to reset changes.'} = '';
+    $Self->{Translation}->{'Required privileges to print a change.'} = 'Benötigtes Recht zum Drucken von Changes.';
+    $Self->{Translation}->{'Required privileges to reset changes.'} = 'Benötigtes Recht zum Zurücksetzen von Changes.';
     $Self->{Translation}->{'Required privileges to view a workorder.'} = 'Benötigtes Recht zum Betrachten einer Workorder.';
     $Self->{Translation}->{'Required privileges to view changes.'} = 'Benötigtes Recht zum Ansehen von Changes.';
     $Self->{Translation}->{'Required privileges to view list of changes where the user is a CAB member.'} =
@@ -769,7 +769,7 @@ sub Data {
         '';
     $Self->{Translation}->{'Shows the change history (reverse ordered) in the agent interface.'} =
         '';
-    $Self->{Translation}->{'State Machine'} = '';
+    $Self->{Translation}->{'State Machine'} = 'State Machine';
     $Self->{Translation}->{'Stores change and workorder ids and their corresponding template id, while a user is editing a template.'} =
         '';
     $Self->{Translation}->{'The identifier for a change, e.g. Change#, MyChange#. The default is Change#.'} =

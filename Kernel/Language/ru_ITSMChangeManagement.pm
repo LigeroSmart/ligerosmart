@@ -109,10 +109,10 @@ sub Data {
     $Self->{Translation}->{'The planned start time is invalid!'} = 'Запланированное время начала неверно!';
     $Self->{Translation}->{'The planned time is invalid!'} = 'Планоый срок неверен!';
     $Self->{Translation}->{'The requested time is invalid!'} = 'Запрашиваемое время неверно!';
-    $Self->{Translation}->{'New (from template)'} = '';
-    $Self->{Translation}->{'Add from template'} = '';
-    $Self->{Translation}->{'Add Workorder (from template)'} = '';
-    $Self->{Translation}->{'Add a workorder (from template) to the change'} = '';
+    $Self->{Translation}->{'New (from template)'} = 'Новое(ая) из шаблона';
+    $Self->{Translation}->{'Add from template'} = 'Добавить, используя шаблон';
+    $Self->{Translation}->{'Add Workorder (from template)'} = 'Добавить задачу ( используя шаблон)';
+    $Self->{Translation}->{'Add a workorder (from template) to the change'} = 'Добавить задачу к изменению (используя шаблон)';
     $Self->{Translation}->{'WorkOrderHistory::WorkOrderActualEndTimeReached'} = 'Задача (ID=%s) достигла фактического времени окончания.';
     $Self->{Translation}->{'WorkOrderHistory::WorkOrderActualEndTimeReachedWithWorkOrderID'} =
         'Задача (ID=%s) достигла фактического времени окончания.';
@@ -161,7 +161,7 @@ sub Data {
     $Self->{Translation}->{'ends with'} = 'окончить с';
     $Self->{Translation}->{'failed'} = 'не удалось';
     $Self->{Translation}->{'in progress'} = 'в работе';
-    $Self->{Translation}->{'is'} = '';
+    $Self->{Translation}->{'is'} = 'Является';
     $Self->{Translation}->{'is after'} = 'после';
     $Self->{Translation}->{'is before'} = 'до';
     $Self->{Translation}->{'is empty'} = 'пусто';
@@ -202,7 +202,7 @@ sub Data {
     $Self->{Translation}->{'Catalog Class'} = 'Класс каталога';
     $Self->{Translation}->{'Object Name'} = 'Имя объекта';
     $Self->{Translation}->{'Overview over state transitions for'} = 'Обзор состояний перехода для';
-    $Self->{Translation}->{'Delete this state transition'} = '';
+    $Self->{Translation}->{'Delete this state transition'} = 'Удалить это состояние перехода';
     $Self->{Translation}->{'Add a new state transition for'} = 'Добавить новое состояние перехода для';
     $Self->{Translation}->{'Please select a state!'} = 'Выберите состояние!';
     $Self->{Translation}->{'Please select a next state!'} = 'Выберите следующее состояние!';
@@ -238,23 +238,23 @@ sub Data {
     # Template: AgentITSMChangeConditionEdit
     $Self->{Translation}->{'Need a valid name.'} = 'Требуется правильное имя';
     $Self->{Translation}->{'A a valid name is needed.'} = 'Требуется правильное имя';
-    $Self->{Translation}->{'Duplicate name:'} = '';
-    $Self->{Translation}->{'This name is already used by another condition.'} = '';
+    $Self->{Translation}->{'Duplicate name:'} = 'Уже используемое имя:';
+    $Self->{Translation}->{'This name is already used by another condition.'} = 'Это имя уже сипользуется в другом условии.';
     $Self->{Translation}->{'Matching'} = 'Сопоставление';
     $Self->{Translation}->{'Any expression (OR)'} = 'Любое выражение (OR)';
     $Self->{Translation}->{'All expressions (AND)'} = 'Все выражения (AND)';
     $Self->{Translation}->{'Expressions'} = 'Выражения';
     $Self->{Translation}->{'Selector'} = 'Переключатель';
     $Self->{Translation}->{'Operator'} = 'Оператор';
-    $Self->{Translation}->{'Delete Expression'} = '';
+    $Self->{Translation}->{'Delete Expression'} = 'Удалить выражение';
     $Self->{Translation}->{'No Expressions found.'} = 'Выражение не задано.';
     $Self->{Translation}->{'Add new expression'} = 'Добавитьновое выражение';
-    $Self->{Translation}->{'Delete Action'} = '';
+    $Self->{Translation}->{'Delete Action'} = 'Удалить действие';
     $Self->{Translation}->{'No Actions found.'} = 'Действий не задано.';
     $Self->{Translation}->{'Add new action'} = 'Добавить новое действие';
 
     # Template: AgentITSMChangeDelete
-    $Self->{Translation}->{'Do you really want to delete this change?'} = '';
+    $Self->{Translation}->{'Do you really want to delete this change?'} = 'Вы действительно желаете удалить это изменение?';
 
     # Template: AgentITSMChangeHistory
     $Self->{Translation}->{'Workorder'} = 'Задача';
@@ -303,7 +303,7 @@ sub Data {
     $Self->{Translation}->{'ITSM Workorder'} = 'Задача';
 
     # Template: AgentITSMChangeReset
-    $Self->{Translation}->{'Do you really want to reset this change?'} = '';
+    $Self->{Translation}->{'Do you really want to reset this change?'} = 'Вы действительно желаете очистить это изменение?';
 
     # Template: AgentITSMChangeSearch
     $Self->{Translation}->{'(e.g. 10*5155 or 105658*)'} = '(т.е. 10*5155 или 105658*)';
@@ -324,8 +324,8 @@ sub Data {
     $Self->{Translation}->{'A template should have a name!'} = 'Надо присвоить имя шаблону!';
     $Self->{Translation}->{'The template name is required.'} = 'Требуется имя шаблона.';
     $Self->{Translation}->{'Reset States'} = 'Очистить состояния';
-    $Self->{Translation}->{'Overwrite original template'} = '';
-    $Self->{Translation}->{'Delete original change'} = '';
+    $Self->{Translation}->{'Overwrite original template'} = 'Перезаписать исходный шаблон';
+    $Self->{Translation}->{'Delete original change'} = 'Удалить исходное изменение';
 
     # Template: AgentITSMChangeTimeSlot
     $Self->{Translation}->{'Move Time Slot'} = 'Сместить диапазон времени';
@@ -336,7 +336,7 @@ sub Data {
     $Self->{Translation}->{'Change Initiator(s)'} = 'Инициатор изменения';
     $Self->{Translation}->{'Change Manager'} = 'Менеджер изменения';
     $Self->{Translation}->{'Change Builder'} = 'Составитель изменения';
-    $Self->{Translation}->{'CAB'} = '';
+    $Self->{Translation}->{'CAB'} = 'CAB';
     $Self->{Translation}->{'Last changed'} = 'Дата последнего изменеия';
     $Self->{Translation}->{'Last changed by'} = 'Последний изменил';
     $Self->{Translation}->{'Ok'} = 'О.К.';
@@ -346,29 +346,29 @@ sub Data {
     $Self->{Translation}->{'Do you really want to delete this template?'} = 'Ва действительно желаете удалить этот шаблон';
 
     # Template: AgentITSMTemplateEditCAB
-    $Self->{Translation}->{'Edit CAB Template'} = '';
+    $Self->{Translation}->{'Edit CAB Template'} = 'Редактировать шаблон CAB';
 
     # Template: AgentITSMTemplateEditContent
     $Self->{Translation}->{'This will create a new change from this template, so you can edit and save it.'} =
-        '';
+        'Будет создано новое изменение из этого шаблона и вы сможете его редактировать и сохранить.';
     $Self->{Translation}->{'The new change will be deleted automatically after it has been saved as template.'} =
-        '';
+        'Новое изменение будет автоматически удалено после его сохранения в качестве шаблона.';
     $Self->{Translation}->{'This will create a new workorder from this template, so you can edit and save it.'} =
-        '';
+        'Будет создана новая задача из этого шаблона и вы сможете его редактировать и сохранить.';
     $Self->{Translation}->{'A temporary change will be created which contains the workorder.'} =
-        '';
+        'Будет создано временное изменение, содержащее задачу.';
     $Self->{Translation}->{'The temporary change and new workorder will be deleted automatically after the workorder has been saved as template.'} =
-        '';
-    $Self->{Translation}->{'Do you want to proceed?'} = '';
+        'Временное изменение и новая задача будет автоматически удалены после сохранения задачи в качестве шаблона.';
+    $Self->{Translation}->{'Do you want to proceed?'} = 'Желаете продолжить?';
 
     # Template: AgentITSMTemplateOverviewSmall
     $Self->{Translation}->{'TemplateID'} = 'ID шаблона';
-    $Self->{Translation}->{'Edit Content'} = '';
+    $Self->{Translation}->{'Edit Content'} = 'Редактировать содержание';
     $Self->{Translation}->{'CreateBy'} = 'Кем создан';
     $Self->{Translation}->{'CreateTime'} = 'Создан';
     $Self->{Translation}->{'ChangeBy'} = 'Кем изменен';
     $Self->{Translation}->{'ChangeTime'} = 'Изменен';
-    $Self->{Translation}->{'Edit Template Content'} = '';
+    $Self->{Translation}->{'Edit Template Content'} = 'Редактировать содержание шаблона';
     $Self->{Translation}->{'Delete Template'} = 'Удалить шаблон';
 
     # Template: AgentITSMWorkOrderAdd
@@ -387,9 +387,9 @@ sub Data {
     $Self->{Translation}->{'This Workorder is used in the following Condition(s)'} = 'Эта задача используется в следующих условиях';
 
     # Template: AgentITSMWorkOrderEdit
-    $Self->{Translation}->{'Move following workorders accordingly'} = '';
+    $Self->{Translation}->{'Move following workorders accordingly'} = 'Переместить/сдвинуть следующие задачи соответственно';
     $Self->{Translation}->{'If the planned end time of this workorder is changed, the planned start times of all following workorders will be changed accordingly'} =
-        '';
+        'Если запланированное время окончания задачи будет изменено, запланированное время начала всех последующих задач будет соответственно изменено';
 
     # Template: AgentITSMWorkOrderReport
     $Self->{Translation}->{'The actual start time must be before the actual end time!'} = 'Время начала должно предшествовать времени окончания!';
@@ -402,7 +402,7 @@ sub Data {
 
     # Template: AgentITSMWorkOrderTemplate
     $Self->{Translation}->{'Save Workorder as Template'} = 'Сохранить задачу как шаблон';
-    $Self->{Translation}->{'Delete original workorder (and surrounding change)'} = '';
+    $Self->{Translation}->{'Delete original workorder (and surrounding change)'} = 'Удалить исходную задачу  (и окружающее изменение)';
 
     # Template: AgentITSMWorkOrderZoom
     $Self->{Translation}->{'Workorder Information'} = 'Информация о задаче';
@@ -424,11 +424,11 @@ sub Data {
     $Self->{Translation}->{'Agent interface notification module to see the number of work orders.'} =
         'Модуль отображающий количество задач';
     $Self->{Translation}->{'Cache time in minutes for the change management toolbars. Default: 3 hours (180 minutes).'} =
-        '';
+        'Время кэширования в минутах для панели управления изменениями. По умолчанию: 3 часа (180 минут).';
     $Self->{Translation}->{'Cache time in minutes for the change management. Default: 5 days (7200 minutes).'} =
-        '';
+        'Время кэширования в минутах для управлени изменениями. По умолчанию: 5 дней (7200 минут).';
     $Self->{Translation}->{'Change Overview "Small" Limit'} = 'Изменить количество строк/записей при просмотре изменений в формате Small.';
-    $Self->{Translation}->{'Change and WorkOrder templates edited by this user.'} = '';
+    $Self->{Translation}->{'Change and WorkOrder templates edited by this user.'} = 'Шаблоны Изменения и Задачи отредактированные пользователем.';
     $Self->{Translation}->{'Change limit per page for Change Overview "Small"'} = 'Изменить количество записей на странице при просмотре изменений в формате Small.';
     $Self->{Translation}->{'Change search backend router of the agent interface.'} = 'Изменить источник поиска (backend) в интерфейсе агента.';
     $Self->{Translation}->{'Configures how often the notifications are sent when planned the start time or other time values have been reached/passed.'} =
@@ -443,13 +443,13 @@ sub Data {
     $Self->{Translation}->{'Defines if it will be possible to print the accounted time.'} = 'Задает возможность печати затраченного времени.';
     $Self->{Translation}->{'Defines if it will be possible to print the planned effort.'} = 'Задает возможность печати планируемых затрат.';
     $Self->{Translation}->{'Defines if reachable (as defined by the state machine) change end states should be allowed if a change is in a locked state.'} =
-        '';
+        'Определяет, будут ли (как задано машиной состояний) конечные состояния изменения разрешены , если изменение в состоянии блокировки.';
     $Self->{Translation}->{'Defines if reachable (as defined by the state machine) workorder end states should be allowed if a workorder is in a locked state.'} =
-        '';
+        'Определяет, будут ли (как задано машиной состояний) конечные состояния задачи разрешены, если задача в состоянии блокировки.';
     $Self->{Translation}->{'Defines if the accounted time should be shown.'} = 'Задает возможность отображения затраченного времени.';
     $Self->{Translation}->{'Defines if the actual start and end times should be set.'} = 'Задает необходимость указания фактического времени начала и окончания.';
     $Self->{Translation}->{'Defines if the change search and the workorder search functions could use the mirror DB.'} =
-        '';
+        'Задает будет ли использоваться зеркальная БД для поиска изменений и задач.';
     $Self->{Translation}->{'Defines if the change state can be set in AgentITSMChangeEdit.'} =
         'Задает возможность установки состояния изменения в AgentITSMChangeEdit';
     $Self->{Translation}->{'Defines if the planned effort should be shown.'} = 'Задает необходимость отображения планируемых затрат.';
@@ -463,7 +463,7 @@ sub Data {
     $Self->{Translation}->{'Defines shown graph attributes.'} = 'Задает отображаемые атрибуты диаграммы.';
     $Self->{Translation}->{'Defines that only changes containing Workorders linked with services, which the customer user has permission to use will be shown. Any other changes will not be displayed.'} =
         'Задет, что только изменения содержащие задачи связанные с сервисами на которые у клиента есть права будут отображаться. Любые другие изменения не отображаются.';
-    $Self->{Translation}->{'Defines the change states that will be allowed to delete.'} = '';
+    $Self->{Translation}->{'Defines the change states that will be allowed to delete.'} = 'Задает состояния изменения которые будет разрешено удалить.';
     $Self->{Translation}->{'Defines the change states that will be used as filters in the Change PSA overview.'} =
         'Задает состояния изменений используемые в фильтрах в обзоре изменений PSA.';
     $Self->{Translation}->{'Defines the change states that will be used as filters in the Change Schedule overview.'} =
@@ -479,7 +479,7 @@ sub Data {
     $Self->{Translation}->{'Defines the change states that will be used as filters in the customer change schedule overview.'} =
         'Задает состояния изменений используемые в фильтрах в обзоре изменений управляемых клиентом.';
     $Self->{Translation}->{'Defines the default change title for a dummy change which is needed to edit a workorder template.'} =
-        '';
+        'Задает имя по умолчанию для фиктивного изменения, необходимое для редактирования шаблона задачи.';
     $Self->{Translation}->{'Defines the default sort criteria in the change PSA overview.'} =
         'Задает стандартные критерии сортировки при просмотре изменений PSA.';
     $Self->{Translation}->{'Defines the default sort criteria in the change manager overview.'} =
@@ -540,7 +540,7 @@ sub Data {
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute ChangeTitle in AgentITSMChangeConditionEdit.'} =
         'Задает операторы, доступные при выборе атрибута ChangeTitle в AgentITSMChangeConditionEdit.';
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute DynamicField in AgentITSMChangeConditionEdit.'} =
-        '';
+        'Задает операторы, доступные при выборе атрибута DynamicField в AgentITSMChangeConditionEdit.';
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute ImpactID in AgentITSMChangeConditionEdit.'} =
         'Задает операторы, доступные при выборе атрибута ImpactID в AgentITSMChangeConditionEdit.';
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute PlannedEffort in AgentITSMChangeConditionEdit.'} =
@@ -566,7 +566,7 @@ sub Data {
     $Self->{Translation}->{'Defines the period (in years), in which start and end times can be selected.'} =
         'Задает период (в годах), в котором время начала и окончания могут быть выбраны.';
     $Self->{Translation}->{'Defines the shown attributes of a workorder in the tooltip of the workorder graph in the change zoom. To show workorder dynamic fields in the tooltip, they must be specified like DynamicField_WorkOrderFieldName1, DynamicField_WorkOrderFieldName2, etc.'} =
-        '';
+        'Задает отображаемые атрибуты задачи в подсказке для задачи на графике при просмотре изменения. Для отображения динамических полей в подсказке, они должны быть указаны как DynamicField_WorkOrderFieldName1, DynamicField_WorkOrderFieldName2, и т.д.';
     $Self->{Translation}->{'Defines the shown columns in the Change PSA overview. This option has no effect on the position of the column.'} =
         'Задает список колонок при просмотре изменений PSA. Не влияет на порядок колонок.';
     $Self->{Translation}->{'Defines the shown columns in the Change Schedule overview. This option has no effect on the position of the column.'} =
@@ -600,7 +600,7 @@ sub Data {
         'Задает типы задач, которые будут использоваться при просмотре PIR.';
     $Self->{Translation}->{'Defines whether notifications should be sent.'} = 'Задает, следует ли отправлять уведомления.';
     $Self->{Translation}->{'Determines if an agent can exchange the X-axis of a stat if he generates one.'} =
-        '';
+        'Задает возможность агенту поменять ось Х на графике при его создании.';
     $Self->{Translation}->{'Determines if the common stats module may generate stats about changes done for config item classes.'} =
         'Определяет, может ли базовый модуль отчетов строить отчеты об изменениях выполненных для классов учетных элементов.';
     $Self->{Translation}->{'Determines if the common stats module may generate stats about changes regarding change state updates within a timeperiod.'} =
@@ -612,30 +612,30 @@ sub Data {
     $Self->{Translation}->{'Determines if the common stats module may generate stats about the number of Rfc tickets a requester created.'} =
         'Определяет, может ли базовый модуль отчетов строить отчеты о количестве созданных заявителем заявок с запросами на изменение (Rfc).';
     $Self->{Translation}->{'Dynamic fields (for changes and workorders) shown in the change print screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        '';
+        'Динамические поля (для изменений и задач) отображаемые на экране печати изменения в интерфейсе агента. Возможные значения: 0 = не показывать, 1 - показывать.';
     $Self->{Translation}->{'Dynamic fields shown in the change add screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        '';
+        'Динамические поля отображаемые на экране добавления изменения в интерфейсе агента. Возможные значения: 0 = не показывать, 1 = показывать, 2 = показывать и должно быть заполнено.';
     $Self->{Translation}->{'Dynamic fields shown in the change edit screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        '';
+        'Динамические поля отображаемые на экране редактирования изменения в интерфейсе агента. Возможные значения: 0 = не показывать, 1 = показывать, 2 = показывать и должно быть заполнено.';
     $Self->{Translation}->{'Dynamic fields shown in the change search screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        '';
+        'Динамические поля отображаемые на экране поиска изменения в интерфейсе агента. Возможные значения: 0 = не показывать, 1 = показывать.';
     $Self->{Translation}->{'Dynamic fields shown in the change zoom screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        '';
+        'Динамические поля отображаемые на экране просмотра изменения в интерфейсе агента. Возможные значения: 0 = не показывать, 1 = показывать.';
     $Self->{Translation}->{'Dynamic fields shown in the workorder add screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        '';
+        'Динамические поля отображаемые на экране добавления задачи в интерфейсе агента. Возможные значения: 0 = не показывать, 1 = показывать, 2 = показывать и должно быть заполнено.';
     $Self->{Translation}->{'Dynamic fields shown in the workorder edit screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        '';
+        'Динамические поля отображаемые на экране редактирования задачи в интерфейсе агента. Возможные значения: 0 = не показывать, 1 = показывать, 2 = показывать и должно быть заполнено.';
     $Self->{Translation}->{'Dynamic fields shown in the workorder report screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        '';
+        'Динамические поля отображаемые на экране создания отчета по задаче в интерфейсе агента. Возможные значения: 0 = не показывать, 1 = показывать, 2 = показывать и должно быть заполнено.';
     $Self->{Translation}->{'Dynamic fields shown in the workorder zoom screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        '';
+        'Динамические поля отображаемые на экране просмотра задачи в интерфейсе агента. Возможные значения: 0 = не показывать, 1 = показывать.';
     $Self->{Translation}->{'DynamicField event module to handle the update of conditions if dynamic fields are added, updated or deleted.'} =
-        '';
+        'Модуль управления событиями для динамических полей при изменении Условий, если динамические поля добавляются, изменяются или удаляются.';
     $Self->{Translation}->{'Event list to be displayed on GUI to trigger generic interface invokers.'} =
-        '';
+        'Список событий отображаемый в GUI  для переключения generic interface invokers.';
     $Self->{Translation}->{'ITSM event module deletes the history of changes.'} = 'ITSM модуль обработки событий, удаляющий историю изменений.';
     $Self->{Translation}->{'ITSM event module that cleans up conditions.'} = 'ITSM модуль обработки событий, очищающий условия.';
-    $Self->{Translation}->{'ITSM event module that deletes the cache for a toolbar.'} = '';
+    $Self->{Translation}->{'ITSM event module that deletes the cache for a toolbar.'} = 'ITSM модуль управления событиями, который очищает кэш для панели инструментов.';
     $Self->{Translation}->{'ITSM event module that matches conditions and executes actions.'} =
         'ITSM модуль обработки событий, проверяющий соответствие условиям и выполняющий действия.';
     $Self->{Translation}->{'ITSM event module that sends notifications.'} = 'ITSM модуль обработки событий, отправляющий уведомления.';
@@ -651,7 +651,7 @@ sub Data {
     $Self->{Translation}->{'Logfile for the ITSM change counter. This file is used for creating the change numbers.'} =
         'Лог файл для счетчика ITSM изменений. Он используется создания номеров изменений.';
     $Self->{Translation}->{'Module to check if WorkOrderAdd or WorkOrderAddFromTemplate should be permitted.'} =
-        '';
+        'Модуль, проверяющий, что WorkOrderAdd или WorkOrderAddFromTemplate должны быть разрешены.';
     $Self->{Translation}->{'Module to check the CAB members.'} = 'Модуль проверки члено CAB.';
     $Self->{Translation}->{'Module to check the agent.'} = 'Модуль проверки агента.';
     $Self->{Translation}->{'Module to check the change builder.'} = 'Модуль проверки составителя изменения.';
@@ -666,7 +666,7 @@ sub Data {
     $Self->{Translation}->{'Only users of these groups have the permission to use the ticket types as defined in "ITSMChange::AddChangeLinkTicketTypes" if the feature "Ticket::Acl::Module###200-Ticket::Acl::Module" is enabled.'} =
         'Пользователи только указанных групп имеют права на использование типов заявок заданных в "ITSMChange::AddChangeLinkTicketTypes", если параметр "Ticket::Acl::Module###200-Ticket::Acl::Module" включен.';
     $Self->{Translation}->{'Parameters for the UserCreateWorkOrderNextMask object in the preference view of the agent interface.'} =
-        '';
+        'Параметры для объекта UserCreateWorkOrderNextMask  в предварительном просмотре в интерфейсе агента';
     $Self->{Translation}->{'Parameters for the pages (in which the changes are shown) of the small change overview.'} =
         'Параметры для страниц (на которых отображаются изменения) в кратком (small) обзоре изменений.';
     $Self->{Translation}->{'Presents a link in the menu to show the involved persons in a change, in the zoom view of such change in the agent interface.'} =
@@ -680,21 +680,21 @@ sub Data {
     $Self->{Translation}->{'Required privileges to create a template from a changes\' CAB.'} =
         'Привилегии, требуемые агенту для создания шаблона из изменения или CAB.';
     $Self->{Translation}->{'Required privileges to create a template from a workorder.'} = 'Привилегии, требуемые агенту для создания шаблона из задачи.';
-    $Self->{Translation}->{'Required privileges to create changes from templates.'} = '';
+    $Self->{Translation}->{'Required privileges to create changes from templates.'} = 'Права, требуемые для создания изменений с использованием шаблонов.';
     $Self->{Translation}->{'Required privileges to create changes.'} = 'Привилегии, требуемые агенту для создания изменения.';
     $Self->{Translation}->{'Required privileges to delete a template.'} = 'Привилегии, требуемые агенту для удаления шаблона.';
     $Self->{Translation}->{'Required privileges to delete a workorder.'} = 'Привилегии, требуемые агенту для удаления задачи.';
-    $Self->{Translation}->{'Required privileges to delete changes.'} = '';
+    $Self->{Translation}->{'Required privileges to delete changes.'} = 'Права, требуемые для удаления изменений.';
     $Self->{Translation}->{'Required privileges to edit a template.'} = 'Привилегии, требуемые агенту для редактирования шаблона.';
     $Self->{Translation}->{'Required privileges to edit a workorder.'} = 'Привилегии, требуемые агенту для редактирования задачи.';
     $Self->{Translation}->{'Required privileges to edit changes.'} = 'Привилегии, требуемые агенту для редактирования изменения.';
     $Self->{Translation}->{'Required privileges to edit the conditions of changes.'} = 'Привилегии, требуемые агенту для редактирования условий изменения.';
-    $Self->{Translation}->{'Required privileges to edit the content of a template.'} = '';
+    $Self->{Translation}->{'Required privileges to edit the content of a template.'} = 'Права, необходимые для редактирования содержимого шаблона.';
     $Self->{Translation}->{'Required privileges to edit the involved persons of a change.'} =
         'Привилегии, требуемые агенту для редактирования списка вовлеченных сотрудников в изменении.';
     $Self->{Translation}->{'Required privileges to move changes in time.'} = 'Привилегии, требуемые агенту для сдвига временНых границ изменения.';
     $Self->{Translation}->{'Required privileges to print a change.'} = 'Привилегии, требуемые агенту для печати изменения.';
-    $Self->{Translation}->{'Required privileges to reset changes.'} = '';
+    $Self->{Translation}->{'Required privileges to reset changes.'} = 'Права, требуемые для очистки изменений.';
     $Self->{Translation}->{'Required privileges to view a workorder.'} = 'Привилегии, требуемые агенту для просмотра задачи.';
     $Self->{Translation}->{'Required privileges to view changes.'} = 'Привилегии, требуемые агенту для просмотра изменений.';
     $Self->{Translation}->{'Required privileges to view list of changes where the user is a CAB member.'} =
@@ -715,16 +715,16 @@ sub Data {
     $Self->{Translation}->{'Required privileges to view the list of own changes.'} = 'Привилегии, требуемые агенту для просмотра собственных изменений.';
     $Self->{Translation}->{'Required privileges to view the list of own workorders.'} = 'Привилегии, требуемые агенту для просмотра списка собственных задач.';
     $Self->{Translation}->{'Required privileges to write a report for the workorder.'} = 'Привилегии, требуемые агенту для создания отчета по задачам';
-    $Self->{Translation}->{'Screen after creating a workorder'} = '';
+    $Self->{Translation}->{'Screen after creating a workorder'} = 'Показать этот экран после создания новой задачи';
     $Self->{Translation}->{'Selects the change number generator module. "AutoIncrement" increments the change number, the SystemID and the counter are used with SystemID.counter format (e.g. 100118, 100119). With "Date", the change numbers will be generated by the current date and a counter; this format looks like Year.Month.Day.counter, e.g. 2010062400001, 2010062400002. With "DateChecksum", the counter will be appended as checksum to the string of date plus the SystemID. The checksum will be rotated on a daily basis. This format looks like Year.Month.Day.SystemID.Counter.CheckSum, e.g. 2010062410000017, 2010062410000026.'} =
-        '';
+        'Задает способ генерации номеров изменений.  "AutoIncrement" - увеличивает номер на 1, формат - SystemID.counter (например, 100118, 100119).  "Date" - использует текущую дату, SystemID и счетчик, вид: Year.Month.Day.SystemID.counter - 2010062400001, 2010062400002. "DateChecksum" - счетчик дополняется контрольной суммой к строке из даты и SystemID. Формат строится как Year.Month.Day.SystemID.Counter.CheckSum. Контрольная сумма обновляется ежедневно, вид: 2010062410000017, 2010062410000026.';
     $Self->{Translation}->{'Sets the minimal change counter size (if "AutoIncrement" was selected as ITSMChange::NumberGenerator). Default is 5, this means the counter starts from 10000.'} =
-        '';
+        'Задает минимальное количество разрядов для счетчика изменений (если выбран тип  "AutoIncrement" для ITSMChange::NumberGenerator). По умолчанию - 5, что означает, что начальное значение счетчика будет 10000.';
     $Self->{Translation}->{'Sets up the state machine for changes.'} = 'Задает state machine для изменений.';
     $Self->{Translation}->{'Sets up the state machine for workorders.'} = 'Задает state machine для заданий.';
-    $Self->{Translation}->{'Show this screen after I created a new workorder'} = '';
+    $Self->{Translation}->{'Show this screen after I created a new workorder'} = 'Показать этот экран после создания новой задачи';
     $Self->{Translation}->{'Shows a checkbox in the AgentITSMWorkOrderEdit screen that defines if the the following workorders should also be moved if a workorder is modified and the planned end time has changed.'} =
-        '';
+        'Отображает поле выбора/checkbox на экране AgentITSMWorkOrderEdit которое задает будут ли сдвигаться последующие задачи, если задача изменяется и запланированное время окончания изменено.';
     $Self->{Translation}->{'Shows a link in the menu that allows changing the work order agent, in the zoom view of such work order of the agent interface.'} =
         'Отображает ссылку в меню, которая позволяет агента для задания, в детальном просмотре этого задания в интерфейсе агента.';
     $Self->{Translation}->{'Shows a link in the menu that allows defining a change as a template in the zoom view of the change, in the agent interface.'} =
@@ -750,7 +750,7 @@ sub Data {
     $Self->{Translation}->{'Shows a link in the menu to add a work order in the change zoom view of the agent interface.'} =
         'Отображает ссылку в меню для добавления задания в детальном просмотре изменения в интерфейсе агента.';
     $Self->{Translation}->{'Shows a link in the menu to delete a change in its zoom view of the agent interface.'} =
-        '';
+        'Показывает пункт меню для удаления изменения при его подробном просмотре в интерфейсе агента.';
     $Self->{Translation}->{'Shows a link in the menu to delete a work order in its zoom view of the agent interface.'} =
         'Отображает ссылку в меню для удаления задания в его детальном просмотре в интерфейсе агента.';
     $Self->{Translation}->{'Shows a link in the menu to edit a change in the its zoom view of the agent interface.'} =
@@ -766,18 +766,18 @@ sub Data {
     $Self->{Translation}->{'Shows a link in the menu to print a work order in the its zoom view of the agent interface.'} =
         'Отображает ссылку в меню для печати задания при ее детальном просмотре в интерфейсе агента.';
     $Self->{Translation}->{'Shows a link in the menu to reset a change and its workorders in its zoom view of the agent interface.'} =
-        '';
+        'Показывает пункт меню для очистки изменения и его задач при его подробном просмотре в интерфейсе агента.';
     $Self->{Translation}->{'Shows the change history (reverse ordered) in the agent interface.'} =
         'Показывает историю изменений (в обратном порядке) в интерфейсе агента.';
     $Self->{Translation}->{'State Machine'} = 'Состояния';
     $Self->{Translation}->{'Stores change and workorder ids and their corresponding template id, while a user is editing a template.'} =
-        '';
+        'Сохраняет идентфикаторы - id\'s изменениия и задачи и их соответствующие идентификаторы шаблонов во время редактирования их пользователем.';
     $Self->{Translation}->{'The identifier for a change, e.g. Change#, MyChange#. The default is Change#.'} =
         'Индентификатор для изменения, например Change#, MyChange#. The default is Change#.';
     $Self->{Translation}->{'The identifier for a workorder, e.g. Workorder#, MyWorkorder#. The default is Workorder#.'} =
         'Индентификатор для задания, например Workorder#, MyWorkorder#. The default is Workorder#.';
     $Self->{Translation}->{'This ACL module restricts the usuage of the ticket types that are defined in the sysconfig option \'ITSMChange::AddChangeLinkTicketTypes\', to users of the groups as defined in "ITSMChange::RestrictTicketTypes::Groups". As this ACL could collide with other ACLs which are also related to the ticket type, this sysconfig option is disabled by default and should only be activated if needed.'} =
-        '';
+        'Этот ACL модуль ограничивает использование типов заявок заданных в параметре  \'ITSMChange::AddChangeLinkTicketTypes\', для агентов групп, указанных в "ITSMChange::RestrictTicketTypes::Groups". Так как этот ACL может конфликтовать с другими ACL, также связанными с типами заявок, этот параметр отключен по умолчанию и может быть, при необходимости, активирован вручную.';
     $Self->{Translation}->{'Types of tickets, where in the ticket zoom view a link to add a change will be displayed.'} =
         'Типы заявок, в которых подробном просмотре ссылка для добавления изменения будет показана.';
 
