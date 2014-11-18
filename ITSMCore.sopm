@@ -35,6 +35,7 @@
         <File Permission="644" Location="Kernel/Language/pt_BR_ITSMCore.pm"/>
         <File Permission="644" Location="Kernel/Language/pt_ITSMCore.pm"/>
         <File Permission="644" Location="Kernel/Language/ru_ITSMCore.pm"/>
+        <File Permission="644" Location="Kernel/Language/sw_ITSMCore.pm"/>
         <File Permission="644" Location="Kernel/Language/zh_CN_ITSMCore.pm"/>
         <File Permission="644" Location="Kernel/Language/zh_TW_ITSMCore.pm"/>
         <File Permission="644" Location="Kernel/Modules/AdminITSMCIPAllocate.pm"/>
