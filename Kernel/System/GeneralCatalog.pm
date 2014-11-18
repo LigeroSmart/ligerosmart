@@ -53,8 +53,7 @@ sub new {
     bless( $Self, $Type );
 
     # load generator preferences module
-    my $GeneratorModule
-        = $Kernel::OM->Get('Kernel::Config')->Get('GeneralCatalog::PreferencesModule')
+    my $GeneratorModule = $Kernel::OM->Get('Kernel::Config')->Get('GeneralCatalog::PreferencesModule')
         || 'Kernel::System::GeneralCatalog::PreferencesDB';
     if ( $Kernel::OM->Get('Kernel::System::Main')->Require($GeneratorModule) ) {
         $Self->{PreferencesObject} = $GeneratorModule->new(%Param);
@@ -233,8 +232,7 @@ sub ItemList {
             $PreferencesCacheKey .= join q{####}, $Key, map {$_} @{ $Param{Preferences}->{$Key} };
         }
 
-        $PreferencesWhere
-            = 'AND general_catalog.id = general_catalog_preferences.general_catalog_id';
+        $PreferencesWhere = 'AND general_catalog.id = general_catalog_preferences.general_catalog_id';
         $PreferencesWhere .= ' AND ' . join ' AND ', @Wheres;
     }
 
@@ -249,8 +247,7 @@ sub ItemList {
     }
 
     # create cache key
-    my $CacheKey
-        = 'ItemList::' . $Param{Class} . '####' . $Param{Valid} . '####' . $PreferencesCacheKey;
+    my $CacheKey = 'ItemList::' . $Param{Class} . '####' . $Param{Valid} . '####' . $PreferencesCacheKey;
 
     # check if result is already cached
     my $Cache = $Kernel::OM->Get('Kernel::System::Cache')->Get(
@@ -481,7 +478,7 @@ sub ItemAdd {
     $Kernel::OM->Get('Kernel::System::DB')->Prepare(
         SQL => 'SELECT id FROM general_catalog '
             . 'WHERE general_catalog_class = ? AND name = ?',
-        Bind => [ \$Param{Class}, \$Param{Name} ],
+        Bind  => [ \$Param{Class}, \$Param{Name} ],
         Limit => 1,
     );
 
@@ -524,7 +521,7 @@ sub ItemAdd {
     $Kernel::OM->Get('Kernel::System::DB')->Prepare(
         SQL => 'SELECT id FROM general_catalog '
             . 'WHERE general_catalog_class = ? AND name = ?',
-        Bind => [ \$Param{Class}, \$Param{Name} ],
+        Bind  => [ \$Param{Class}, \$Param{Name} ],
         Limit => 1,
     );
 

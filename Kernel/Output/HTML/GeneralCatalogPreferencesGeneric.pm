@@ -42,8 +42,7 @@ sub Param {
     my $GetParam = $Self->{ParamObject}->GetParam( Param => $Self->{ConfigItem}->{PrefKey} );
 
     if ( !defined($GetParam) ) {
-        $GetParam
-            = defined( $Param{GeneralCatalogData}->{ $Self->{ConfigItem}->{PrefKey} } )
+        $GetParam = defined( $Param{GeneralCatalogData}->{ $Self->{ConfigItem}->{PrefKey} } )
             ? $Param{GeneralCatalogData}->{ $Self->{ConfigItem}->{PrefKey} }
             : $Self->{ConfigItem}->{DataSelected};
     }

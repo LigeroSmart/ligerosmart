@@ -69,8 +69,7 @@ for my $Counter ( 1 .. 3 ) {
 # store original general catalog permission preferences setting
 my $GeneralCatalogPreferencesPermissionsOrg;
 if ( $ConfigObject->Get('GeneralCatalogPreferences') ) {
-    $GeneralCatalogPreferencesPermissionsOrg
-        = $ConfigObject->Get('GeneralCatalogPreferences')->{Permissions};
+    $GeneralCatalogPreferencesPermissionsOrg = $ConfigObject->Get('GeneralCatalogPreferences')->{Permissions};
 }
 
 # enable general catalog permission preferences setting with a dummy true value
