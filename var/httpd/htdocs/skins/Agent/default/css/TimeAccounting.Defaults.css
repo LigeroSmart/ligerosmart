@@ -48,7 +48,13 @@ div.MonthSelection {
 
 table#InsertWorkingHours tbody td {
     white-space: nowrap;
-    padding-top: 5px;
+    height: 35px;
+}
+
+table#InsertWorkingHours tbody td input.ui-widget {
+    height: 17px;
+    padding: 0px;
+    font-size: 12px;
 }
 
 .ui-button-icon-only .ui-button-text {
@@ -64,12 +70,11 @@ table#InsertWorkingHours tbody td {
 
 button.ui-button-icon-only {
     width: 24px !important;
-    height: 20px;
+    height: 17px;
     padding: 0px !important;
-    margin-bottom: 9px;
-    position: relative;
-    top: 3px;
     width: 24px !important;
+    box-sizing: initial;
+    vertical-align: top;
 }
 
 .ui-autocomplete .ui-menu-ietm {
