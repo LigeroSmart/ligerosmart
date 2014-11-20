@@ -49,7 +49,7 @@
                         </div>
 
                         <div class="Field SpacingTop">
-                            <button class="Primary" id="SubmitTemplate" name="SubmitTemplate" title="[% Translate("Create") | html %]" type="submit" value="[% Translate("Create") | html %]">[% Translate("Create") | html %]</button>
+                            <button class="Primary CallForAction" id="SubmitTemplate" name="SubmitTemplate" title="[% Translate("Create") | html %]" type="submit" value="[% Translate("Create") | html %]"><span><i class="fa fa-check-square-o"></i> [% Translate("Create") | html %]</span></button>
                         </div>
 
                     </fieldset>

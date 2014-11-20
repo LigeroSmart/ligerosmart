@@ -45,7 +45,9 @@
             </fieldset>
         </div>
         <div class="Footer">
-            <button class="Primary" id="SubmitMoveTimeSlot" accesskey="g" title="[% Translate("Move") | html %] (g)" type="submit" value="[% Translate("Move") | html %]">[% Translate("Move") | html %]</button>
+            <button class="Primary CallForAction" id="SubmitMoveTimeSlot" accesskey="g" title="[% Translate("Move") | html %] (g)" type="submit" value="[% Translate("Move") | html %]">
+                <span><i class="fa fa-check-square-o"></i> [% Translate("Move") | html %]</span>
+            </button>
         </div>
     </div>
 </form>

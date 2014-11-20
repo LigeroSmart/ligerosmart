@@ -170,7 +170,7 @@
 [% RenderBlockEnd("AttachmentUpload") %]
 
                         <div class="Field SpacingTop">
-                            <button class="Primary" id="SubmitWorkOrderAdd" name="WorkOrderAdd" title="[% Translate("Save") | html %]" type="submit" value="[% Translate("Save") | html %]">[% Translate("Save") | html %]</button>
+                            <button class="Primary CallForAction" id="SubmitWorkOrderAdd" name="WorkOrderAdd" title="[% Translate("Create") | html %]" type="submit" value="[% Translate("Create") | html %]"><span><i class="fa fa-check-square-o"></i> [% Translate("Create") | html %]</span></button>
                         </div>
 
                     </fieldset>

@@ -54,7 +54,9 @@
             </fieldset>
         </div>
         <div class="Footer">
-            <button class="Primary" type="submit" name="Submit" value="[% Translate("Save") | html %]">[% Translate("Save") | html %]</button>
+            <button class="Primary CallForAction" accesskey="g" title="[% Translate("Submit") | html %] (g)" type="submit" value="[% Translate("Submit") | html %]">
+                <span><i class="fa fa-check-square-o"></i> [% Translate("Submit") | html %]</span>
+            </button>
         </div>
     </div>
 </form>
