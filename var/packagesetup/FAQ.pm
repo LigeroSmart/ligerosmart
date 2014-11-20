@@ -12,6 +12,8 @@ package var::packagesetup::FAQ;
 use strict;
 use warnings;
 
+use Kernel::Output::Template::Provider;
+
 our @ObjectDependencies = (
     'Kernel::Config',
     'Kernel::System::Cache',
