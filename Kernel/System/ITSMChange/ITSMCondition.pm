@@ -1208,8 +1208,7 @@ sub ConditionCompareValueFieldType {
     }
 
     # get the field type config for the given object
-    my $Config = $Kernel::OM->Get('Kernel::Config')
-        ->Get( $ObjectName . '::Attribute::CompareValue::FieldType' );
+    my $Config = $Kernel::OM->Get('Kernel::Config')->Get( $ObjectName . '::Attribute::CompareValue::FieldType' );
 
     # check error
     return if !$Config;
@@ -1506,8 +1505,7 @@ sub _ConditionListByObject {
     elsif ( $Param{ObjectName} eq 'ITSMWorkOrder' ) {
 
         # get object backend
-        my $BackendObject
-            = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMCondition::Object::ITSMWorkOrder');
+        my $BackendObject = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMCondition::Object::ITSMWorkOrder');
 
         # check for error
         return if !$BackendObject;

@@ -30,10 +30,9 @@ sub ChangeNumberCreate {
     while ( $LoopProtectionCounter <= $MaxRetryNumber ) {
 
         # get current time
-        my ( $Sec, $Min, $Hour, $Day, $Month, $Year )
-            = $Kernel::OM->Get('Kernel::System::Time')->SystemTime2Date(
+        my ( $Sec, $Min, $Hour, $Day, $Month, $Year ) = $Kernel::OM->Get('Kernel::System::Time')->SystemTime2Date(
             SystemTime => $Kernel::OM->Get('Kernel::System::Time')->SystemTime(),
-            );
+        );
 
         # read count
         my $Count      = 0;

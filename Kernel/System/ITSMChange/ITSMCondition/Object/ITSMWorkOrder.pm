@@ -89,8 +89,7 @@ sub DataGet {
     );
 
     # get workorder as anon hash ref
-    my $WorkOrder = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')
-        ->WorkOrderGet(%WorkOrderGet);
+    my $WorkOrder = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderGet(%WorkOrderGet);
 
     # check for workorder
     return if !$WorkOrder;
@@ -144,20 +143,18 @@ sub CompareValueList {
     if ( $Param{AttributeName} eq 'WorkOrderStateID' ) {
 
         # get workorder state list
-        $CompareValueList = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')
-            ->WorkOrderPossibleStatesGet(
+        $CompareValueList = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderPossibleStatesGet(
             UserID => $Param{UserID},
-            );
+        );
     }
 
     # WorkOrderTypeID
     elsif ( $Param{AttributeName} eq 'WorkOrderTypeID' ) {
 
         # get workorder type list
-        $CompareValueList
-            = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderTypeList(
+        $CompareValueList = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderTypeList(
             UserID => $Param{UserID},
-            );
+        );
     }
     elsif ( $Param{AttributeName} eq 'WorkOrderAgentID' ) {
 
@@ -213,11 +210,10 @@ sub SelectorList {
     for my $WorkOrderID ( @{$WorkOrderIDs} ) {
 
         # get workorder data
-        my $WorkOrderData
-            = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderGet(
+        my $WorkOrderData = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderGet(
             WorkOrderID => $WorkOrderID,
             UserID      => $Param{UserID},
-            );
+        );
 
         $SelectorList{ $WorkOrderData->{WorkOrderID} }
             = $WorkOrderData->{WorkOrderNumber} . ' - ' . $WorkOrderData->{WorkOrderTitle};

@@ -104,16 +104,14 @@ sub ITSMChangeBuildWorkOrderGraph {
 
     # get smallest start time
     if ( !$Time{StartTime} ) {
-        $Time{StartTime}
-            = ( $Time{PlannedStartTime} lt $Time{ActualStartTime} )
+        $Time{StartTime} = ( $Time{PlannedStartTime} lt $Time{ActualStartTime} )
             ? $Time{PlannedStartTime}
             : $Time{ActualStartTime};
     }
 
     # get highest end time
     if ( !$Time{EndTime} ) {
-        $Time{EndTime}
-            = ( $Time{PlannedEndTime} gt $Time{ActualEndTime} )
+        $Time{EndTime} = ( $Time{PlannedEndTime} gt $Time{ActualEndTime} )
             ? $Time{PlannedEndTime}
             : $Time{ActualEndTime};
     }
@@ -262,8 +260,7 @@ sub ITSMChangeBuildWorkOrderGraph {
         for my $WorkOrderColor (qw( _planned _actual )) {
 
             # get configured or fallback planned color for workorder
-            my $WorkOrderTypeColor
-                = $WorkOrderGraphConfig->{"${WorkOrderTypeName}${WorkOrderColor}_color"};
+            my $WorkOrderTypeColor = $WorkOrderGraphConfig->{"${WorkOrderTypeName}${WorkOrderColor}_color"};
 
             # set default color if no color is found
             $WorkOrderTypeColor ||= $WorkOrderGraphConfig->{"undefined${WorkOrderColor}_color"};
@@ -757,12 +754,10 @@ sub _ITSMChangeGetWorkOrderGraph {
     my %WorkOrderInformation = %{$WorkOrder};
 
     # translate workorder type
-    $WorkOrder->{TranslatedWorkOrderType}
-        = $Self->{LanguageObject}->Translate( $WorkOrder->{WorkOrderType} );
+    $WorkOrder->{TranslatedWorkOrderType} = $Self->{LanguageObject}->Translate( $WorkOrder->{WorkOrderType} );
 
     # build label for link in graph
-    $WorkOrder->{WorkOrderLabel}
-        = "Title: $WorkOrder->{WorkOrderTitle} | Type: $WorkOrder->{TranslatedWorkOrderType}";
+    $WorkOrder->{WorkOrderLabel} = "Title: $WorkOrder->{WorkOrderTitle} | Type: $WorkOrder->{TranslatedWorkOrderType}";
 
     # create workorder item
     $Self->Block(
@@ -842,15 +837,13 @@ sub _ITSMChangeGetWorkOrderGraph {
         $TickValue{"${TimeType}Padding"} = $StartPadding;
 
         # get values for trailing span
-        my $EndTrailing
-            = sprintf( "%.1f", ( $Param{EndTime} - $Time{"${TimeType}EndTime"} ) / $Param{Ticks} );
+        my $EndTrailing = sprintf( "%.1f", ( $Param{EndTime} - $Time{"${TimeType}EndTime"} ) / $Param{Ticks} );
         $EndTrailing = ( $EndTrailing <= 0 )   ? 0    : $EndTrailing;
         $EndTrailing = ( $EndTrailing >= 100 ) ? 99.9 : $EndTrailing;
         $TickValue{"${TimeType}Trailing"} = $EndTrailing;
 
         # get values for display span
-        my $TimeTicks
-            = 100 - ( $TickValue{"${TimeType}Padding"} + $TickValue{"${TimeType}Trailing"} );
+        my $TimeTicks = 100 - ( $TickValue{"${TimeType}Padding"} + $TickValue{"${TimeType}Trailing"} );
         $TimeTicks = ( $TimeTicks <= 0 )   ? 0.1  : $TimeTicks;
         $TimeTicks = ( $TimeTicks >= 100 ) ? 99.9 : $TimeTicks;
         $TickValue{"${TimeType}Ticks"} = sprintf( "%.1f", $TimeTicks );
@@ -952,9 +945,9 @@ sub _ITSMChangeGetWorkOrderGraph {
                 # get print string for this dynamic field
                 my $ValueStrg = $Param{BackendObject}->DisplayValueRender(
                     DynamicFieldConfig => $DynamicFieldConfig,
-                    Value         => $WorkOrderInformation{ 'DynamicField_' . $DynamicFieldName },
-                    ValueMaxChars => 50,
-                    LayoutObject  => $Self,
+                    Value              => $WorkOrderInformation{ 'DynamicField_' . $DynamicFieldName },
+                    ValueMaxChars      => 50,
+                    LayoutObject       => $Self,
                 );
 
                 $Self->Block(

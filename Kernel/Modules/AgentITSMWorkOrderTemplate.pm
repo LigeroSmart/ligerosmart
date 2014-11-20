@@ -307,7 +307,7 @@ sub Run {
             0 => 'No',
             1 => 'Yes',
         },
-        Name => 'StateReset',
+        Name       => 'StateReset',
         SelectedID => $GetParam{StateReset} // 1,
     );
 
@@ -320,7 +320,7 @@ sub Run {
                 0 => 'No',
                 1 => 'Yes',
             },
-            Name => 'OverwriteTemplate',
+            Name       => 'OverwriteTemplate',
             SelectedID => $GetParam{OverwriteTemplate} // 1,
         );
 
@@ -339,7 +339,7 @@ sub Run {
                 0 => 'No',
                 1 => 'Yes',
             },
-            Name => 'DeleteWorkOrder',
+            Name       => 'DeleteWorkOrder',
             SelectedID => $GetParam{DeleteWorkOrder} // 1,
         );
 

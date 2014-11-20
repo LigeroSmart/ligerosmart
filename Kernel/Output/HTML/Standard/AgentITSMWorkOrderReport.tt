@@ -159,8 +159,8 @@
 
                 <div class="Field SpacingTop">
                     <button class="Primary CallForAction" id="SubmitWorkOrderEditReport" accesskey="g" name="WorkOrderEdit" title="[% Translate("Submit") | html %] (g)" type="submit" value="[% Translate("Submit") | html %]">
-                            <span><i class="fa fa-check-square-o"></i> [% Translate("Submit") | html %]</span>
-                        </button>
+                        <span><i class="fa fa-check-square-o"></i> [% Translate("Submit") | html %]</span>
+                    </button>
                 </div>
 
             </fieldset>

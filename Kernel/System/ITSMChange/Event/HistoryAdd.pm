@@ -112,11 +112,10 @@ sub Run {
                 # if accounted time is not empty, we always track the history
 
                 # get workorder data
-                my $WorkOrder
-                    = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderGet(
+                my $WorkOrder = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderGet(
                     WorkOrderID => $Param{Data}->{WorkOrderID},
                     UserID      => $Param{UserID},
-                    );
+                );
 
                 # save history if accounted time has changed
                 push @HistoryAddData, {
@@ -160,11 +159,10 @@ sub Run {
         my $OldData = $Param{Data}->{OldWorkOrderData};
 
         # get existing history entries for this workorder
-        my $HistoryEntries
-            = $Kernel::OM->Get('Kernel::System::ITSMChange::History')->WorkOrderHistoryGet(
+        my $HistoryEntries = $Kernel::OM->Get('Kernel::System::ITSMChange::History')->WorkOrderHistoryGet(
             WorkOrderID => $OldData->{WorkOrderID},
             UserID      => $Param{UserID},
-            );
+        );
 
         # update history entries: delete workorder id
         HISTORYENTRY:
@@ -232,11 +230,10 @@ sub Run {
 
         # for  workorder links get the change id
         if ( $Param{Data}->{WorkOrderID} ) {
-            my $WorkOrder
-                = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderGet(
+            my $WorkOrder = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderGet(
                 WorkOrderID => $Param{Data}->{WorkOrderID},
                 UserID      => $Param{UserID},
-                );
+            );
 
             $Param{Data}->{ChangeID} = $WorkOrder->{ChangeID};
         }

@@ -75,12 +75,11 @@ sub Run {
         if ( !$ActualStartTime && $ActualStartTimeSetStates{ $WorkOrder->{WorkOrderState} } ) {
 
             # set the actual start time
-            my $Success
-                = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderUpdate(
+            my $Success = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderUpdate(
                 WorkOrderID     => $Param{Data}->{WorkOrderID},
                 ActualStartTime => $CurrentTimeStamp,
                 UserID          => $Param{UserID},
-                );
+            );
 
             # check error
             if ( !$Success ) {
@@ -101,11 +100,10 @@ sub Run {
         if ( !$WorkOrder->{ActualEndTime} ) {
 
             # get the possible next state ids
-            my $NextStateIDsRef = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMStateMachine')
-                ->StateTransitionGet(
+            my $NextStateIDsRef = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMStateMachine')->StateTransitionGet(
                 StateID => $WorkOrder->{WorkOrderStateID},
                 Class   => 'ITSM::ChangeManagement::WorkOrder::State',
-                ) || [];
+            ) || [];
 
             # if there is only one next state, which is also 0,
             # which means that this is an end state
@@ -118,23 +116,21 @@ sub Run {
 
                 # increase the current time stamp by one second to avoid the case that
                 # actual start and end times are the same
-                my $CurrentSystemTime
-                    = $Kernel::OM->Get('Kernel::System::Time')->TimeStamp2SystemTime(
+                my $CurrentSystemTime = $Kernel::OM->Get('Kernel::System::Time')->TimeStamp2SystemTime(
                     String => $CurrentTimeStamp,
-                    );
+                );
                 my $ActualEndTime = $Kernel::OM->Get('Kernel::System::Time')->SystemTime2TimeStamp(
                     SystemTime => $CurrentSystemTime + 1,
                 );
 
                 # set the actual end time,
                 # and if the actual start time was not set, set it also
-                my $Success = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')
-                    ->WorkOrderUpdate(
+                my $Success = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderUpdate(
                     WorkOrderID     => $Param{Data}->{WorkOrderID},
                     ActualStartTime => $ActualStartTime,
                     ActualEndTime   => $ActualEndTime,
                     UserID          => $Param{UserID},
-                    );
+                );
 
                 # check error
                 if ( !$Success ) {

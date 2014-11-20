@@ -1599,6 +1599,7 @@ my @ExpressionTests = (
             },
         },
     },
+
     # Test for bug# 10862
     {
         MatchSuccess => 0,
@@ -1862,8 +1863,7 @@ for my $ExpressionCounter ( 0 .. ( scalar @ExpressionIDs - 1 ) ) {
     );
 
     # get object value for attributes
-    my $ObjectName
-        = $ExpressionTests[$ExpressionCounter]->{SourceData}->{ExpressionAdd}->{ObjectID}
+    my $ObjectName = $ExpressionTests[$ExpressionCounter]->{SourceData}->{ExpressionAdd}->{ObjectID}
         ->{ObjectLookup}->{Name};
 
     # check for updated object
@@ -1873,14 +1873,12 @@ for my $ExpressionCounter ( 0 .. ( scalar @ExpressionIDs - 1 ) ) {
         ->{ObjectLookup}->{Name}
         )
     {
-        $ObjectName
-            = $ExpressionTests[$ExpressionCounter]->{SourceData}->{ExpressionUpdate}->{ObjectID}
+        $ObjectName = $ExpressionTests[$ExpressionCounter]->{SourceData}->{ExpressionUpdate}->{ObjectID}
             ->{ObjectLookup}->{Name};
     }
 
     # get attribute values for attributes
-    my $AttributeName
-        = $ExpressionTests[$ExpressionCounter]->{SourceData}->{ExpressionAdd}->{AttributeID}
+    my $AttributeName = $ExpressionTests[$ExpressionCounter]->{SourceData}->{ExpressionAdd}->{AttributeID}
         ->{AttributeLookup}->{Name};
 
     # check for updated attribute
@@ -1890,8 +1888,7 @@ for my $ExpressionCounter ( 0 .. ( scalar @ExpressionIDs - 1 ) ) {
         ->{AttributeLookup}->{Name}
         )
     {
-        $AttributeName
-            = $ExpressionTests[$ExpressionCounter]->{SourceData}->{ExpressionUpdate}->{AttributeID}
+        $AttributeName = $ExpressionTests[$ExpressionCounter]->{SourceData}->{ExpressionUpdate}->{AttributeID}
             ->{AttributeLookup}->{Name};
     }
 
@@ -2003,6 +2000,7 @@ my @ActionTests = (
             },
         },
     },
+
     # Test for bug# 10862
     {
         ActionSuccess => 0,
@@ -2406,10 +2404,9 @@ sub _ActionAdd {
         for my $FieldValue ( sort keys %{ $ActionData->{$ActionAddValue} } ) {
 
             # store gathered information in hash for adding
-            $ActionAdd{$ActionAddValue}
-                = $ConditionObject->$FieldValue(
+            $ActionAdd{$ActionAddValue} = $ConditionObject->$FieldValue(
                 %{ $ActionData->{$ActionAddValue}->{$FieldValue} },
-                );
+            );
         }
     }
 

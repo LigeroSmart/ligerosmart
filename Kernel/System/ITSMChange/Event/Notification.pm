@@ -69,8 +69,7 @@ sub Run {
     }
 
     # get the event id, for looking up the list of relevant rules
-    my $EventID = $Kernel::OM->Get('Kernel::System::ITSMChange::History')
-        ->HistoryTypeLookup( HistoryType => $Event );
+    my $EventID = $Kernel::OM->Get('Kernel::System::ITSMChange::History')->HistoryTypeLookup( HistoryType => $Event );
     if ( !$EventID ) {
         $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
@@ -79,10 +78,9 @@ sub Run {
         return;
     }
 
-    my $NotificationRuleIDs
-        = $Kernel::OM->Get('Kernel::System::ITSMChange::Notification')->NotificationRuleSearch(
+    my $NotificationRuleIDs = $Kernel::OM->Get('Kernel::System::ITSMChange::Notification')->NotificationRuleSearch(
         EventID => $EventID,
-        );
+    );
     if ( !$NotificationRuleIDs ) {
         $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
@@ -104,10 +102,9 @@ sub Run {
     # loop over the notification rules and check the condition
     RULE_ID:
     for my $RuleID ( @{$NotificationRuleIDs} ) {
-        my $Rule
-            = $Kernel::OM->Get('Kernel::System::ITSMChange::Notification')->NotificationRuleGet(
+        my $Rule = $Kernel::OM->Get('Kernel::System::ITSMChange::Notification')->NotificationRuleGet(
             ID => $RuleID,
-            );
+        );
 
         my $Attribute = $Rule->{Attribute} || '';
         if ( $Name2ID{$Attribute} ) {
@@ -143,10 +140,9 @@ sub Run {
             );
         }
         elsif ( $Attribute eq 'WorkOrderStateID' ) {
-            $NewFieldContent = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')
-                ->WorkOrderStateLookup(
+            $NewFieldContent = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderStateLookup(
                 WorkOrderStateID => $NewFieldContent,
-                );
+            );
         }
 
         # should the notification be sent ?
@@ -179,7 +175,7 @@ sub Run {
             Event  => $Event,
             UserID => $Param{UserID},
             Data   => {
-                %{ $Param{Data} },   # do not pass as reference, as it would influence later events!
+                %{ $Param{Data} },    # do not pass as reference, as it would influence later events!
             },
         );
     }
@@ -284,12 +280,11 @@ sub _AgentAndCustomerIDsGet {
 
             # get ChangeID and WorkOrderAgentID from the WorkOrder,
             # the WorkOrderAgent might have been recently updated
-            my $WorkOrder
-                = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderGet(
+            my $WorkOrder = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderGet(
                 WorkOrderID => $Param{WorkOrderID},
                 UserID      => $Param{UserID},
 
-                );
+            );
             $Param{ChangeID} = $WorkOrder->{ChangeID};
             $WorkOrderAgentID = $WorkOrder->{WorkOrderAgentID};
         }
@@ -367,11 +362,10 @@ sub _AgentAndCustomerIDsGet {
 
             # loop over the workorders of a change and get their workorder agents
             for my $WorkOrderID ( @{ $Change->{WorkOrderIDs} } ) {
-                my $WorkOrder
-                    = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderGet(
+                my $WorkOrder = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderGet(
                     WorkOrderID => $WorkOrderID,
                     UserID      => $Param{UserID},
-                    );
+                );
 
                 push @AgentIDs, $WorkOrder->{WorkOrderAgentID};
             }

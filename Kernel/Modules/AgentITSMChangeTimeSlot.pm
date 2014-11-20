@@ -294,8 +294,14 @@ sub Run {
     # build drop-down with time types
     my $MoveTimeTypeSelectionString = $Self->{LayoutObject}->BuildSelection(
         Data => [
-            { Key => 'PlannedStartTime', Value => 'PlannedStartTime' },
-            { Key => 'PlannedEndTime',   Value => 'PlannedEndTime' },
+            {
+                Key   => 'PlannedStartTime',
+                Value => 'PlannedStartTime'
+            },
+            {
+                Key   => 'PlannedEndTime',
+                Value => 'PlannedEndTime'
+            },
         ],
         Name       => 'MoveTimeType',
         SelectedID => $GetParam{MoveTimeType},

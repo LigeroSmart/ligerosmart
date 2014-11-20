@@ -120,11 +120,10 @@ sub Serialize {
 
     # add each expression to condition data
     for my $ExpressionID ( @{$Expressions} ) {
-        my $Expression
-            = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMCondition')->ExpressionGet(
+        my $Expression = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMCondition')->ExpressionGet(
             ExpressionID => $ExpressionID,
             UserID       => $Param{UserID},
-            );
+        );
 
         push @{ $OriginalData->{Children} }, { ExpressionAdd => $Expression };
     }

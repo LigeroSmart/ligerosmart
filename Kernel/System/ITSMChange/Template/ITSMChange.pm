@@ -142,11 +142,10 @@ sub Serialize {
     if ( $Param{StateReset} ) {
 
         # get initial change state id
-        my $NextStateIDs
-            = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMStateMachine')->StateTransitionGet(
+        my $NextStateIDs = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMStateMachine')->StateTransitionGet(
             StateID => 0,
             Class   => 'ITSM::ChangeManagement::Change::State',
-            );
+        );
 
         $CleanChange->{ChangeStateID} = $NextStateIDs->[0];
     }
@@ -177,13 +176,12 @@ sub Serialize {
     # get workorders
     WORKORDERID:
     for my $WorkOrderID ( @{ $Change->{WorkOrderIDs} } ) {
-        my $WorkOrder
-            = $Kernel::OM->Get('Kernel::System::ITSMChange::Template::ITSMWorkOrder')->Serialize(
+        my $WorkOrder = $Kernel::OM->Get('Kernel::System::ITSMChange::Template::ITSMWorkOrder')->Serialize(
             WorkOrderID => $WorkOrderID,
             StateReset  => $Param{StateReset} || 0,
             UserID      => $Param{UserID},
             Return      => 'HASH',
-            );
+        );
 
         next WORKORDERID if !$WorkOrder;
 
@@ -191,22 +189,20 @@ sub Serialize {
     }
 
     # get condition list for the change
-    my $ConditionList
-        = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMCondition')->ConditionList(
+    my $ConditionList = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMCondition')->ConditionList(
         ChangeID => $Param{ChangeID},
         Valid    => 0,
         UserID   => $Param{UserID},
-        ) || [];
+    ) || [];
 
     # get each condition
     CONDITIONID:
     for my $ConditionID ( @{$ConditionList} ) {
-        my $Condition
-            = $Kernel::OM->Get('Kernel::System::ITSMChange::Template::ITSMCondition')->Serialize(
+        my $Condition = $Kernel::OM->Get('Kernel::System::ITSMChange::Template::ITSMCondition')->Serialize(
             ConditionID => $ConditionID,
             UserID      => $Param{UserID},
             Return      => 'HASH',
-            );
+        );
 
         next CONDITIONID if !$Condition;
 

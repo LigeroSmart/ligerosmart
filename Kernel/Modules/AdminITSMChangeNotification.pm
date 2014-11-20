@@ -203,7 +203,7 @@ sub _Edit {
         Data => $Self->{NotificationObject}->RecipientList( UserID => 1 ) || [],
         Name => 'RecipientIDs',
         Multiple   => 1,
-        Size       => 13,                    # current number of default recipients, avoid scrolling
+        Size       => 13,                     # current number of default recipients, avoid scrolling
         SelectedID => $Param{RecipientIDs},
     );
 

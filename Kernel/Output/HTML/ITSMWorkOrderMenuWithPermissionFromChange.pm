@@ -46,8 +46,7 @@ sub Run {
     }
 
     # get config for the relevant action
-    my $FrontendConfig
-        = $Self->{ConfigObject}->Get("ITSMWorkOrder::Frontend::$Param{Config}->{Action}");
+    my $FrontendConfig = $Self->{ConfigObject}->Get("ITSMWorkOrder::Frontend::$Param{Config}->{Action}");
 
     # get the required privilege, 'ro' or 'rw'
     my $RequiredPriv;

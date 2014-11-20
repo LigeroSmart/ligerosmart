@@ -119,13 +119,12 @@ sub _WorkOrderNumberCalc {
 
     # use WorkOrderSearch: Search for given IDs, ordered by:
     # PlannedStartTime, PlannedEndTime, WorOrderID
-    my $SortedWorkOrderIDs
-        = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderSearch(
+    my $SortedWorkOrderIDs = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderSearch(
         ChangeIDs        => [ $Param{ChangeID} ],
         OrderBy          => \@OrderBy,
         OrderByDirection => \@OrderByDirection,
         UserID           => $Param{UserID},
-        ) || [];
+    ) || [];
 
     # counter - used as WorkOrderNumber
     my $Counter = 0;
@@ -157,13 +156,12 @@ sub _WorkOrderNumberCalc {
     for my $WorkOrderID ( sort keys %NewWorkOrderNumber ) {
 
         # update each workorder, prevent recalculation of the WorkOrderNumber again
-        my $CouldUpdateWorkOrder
-            = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderUpdate(
+        my $CouldUpdateWorkOrder = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderUpdate(
             WorkOrderID     => $WorkOrderID,
             WorkOrderNumber => $NewWorkOrderNumber{$WorkOrderID},
             NoNumberCalc    => 1,
             UserID          => $Param{UserID},
-            );
+        );
     }
 
     return 1;

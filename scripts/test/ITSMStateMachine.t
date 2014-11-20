@@ -80,17 +80,17 @@ my %ChangeStateID2Name = reverse %Name2ChangeStateID;
 
 # default ChangeState Transitions
 my %DefaultChangeStateTransitions = (
-    0 => ['requested'],
+    0           => ['requested'],
     'requested' => [ 'rejected', 'retracted', 'pending approval', 'in progress' ],
-    'pending approval' => [ 'rejected', 'retracted', 'approved' ],
-    'approved'    => [ 'retracted',   'in progress' ],
+    'pending approval' => [ 'rejected',  'retracted', 'approved' ],
+    'approved'         => [ 'retracted', 'in progress' ],
     'in progress' => [ 'pending pir', 'retracted', 'failed', 'successful', 'canceled' ],
     'pending pir' => [ 'failed',      'successful' ],
-    'rejected'   => [0],
-    'retracted'  => [0],
-    'failed'     => [0],
-    'successful' => [0],
-    'canceled'   => [0],
+    'rejected'    => [0],
+    'retracted'   => [0],
+    'failed'      => [0],
+    'successful'  => [0],
+    'canceled'    => [0],
 );
 
 # ------------------------------------------------------------ #
@@ -348,8 +348,7 @@ for my $DefaultState ( sort keys %DefaultChangeStateTransitions ) {
     );
 
     # get lookup hash of actual next states
-    my @NextStates
-        = sort map { $ChangeStateID2Name{$_} } @{ $ChangeStateTransitions->{$DefaultStateID} };
+    my @NextStates = sort map { $ChangeStateID2Name{$_} } @{ $ChangeStateTransitions->{$DefaultStateID} };
 
     my $Index = 0;
     for my $DefaultNextState ( sort @{ $DefaultChangeStateTransitions{$DefaultState} } ) {

@@ -121,8 +121,7 @@ sub ExportWrapper {
             my $Values      = $Element->{SelectedValues};
 
             if ( $ElementName eq 'NewValues' ) {
-                my $StateList = $Kernel::OM->Get('Kernel::System::ITSMChange')
-                    ->ChangePossibleStatesGet( UserID => 1 );
+                my $StateList = $Kernel::OM->Get('Kernel::System::ITSMChange')->ChangePossibleStatesGet( UserID => 1 );
                 ID:
                 for my $ID ( @{$Values} ) {
                     next ID if !$ID;
@@ -155,11 +154,10 @@ sub ImportWrapper {
                 for my $ID ( @{$Values} ) {
                     next ID if !$ID;
 
-                    my $ChangeStateID
-                        = $Kernel::OM->Get('Kernel::System::ITSMChange')->ChangeStateLookup(
+                    my $ChangeStateID = $Kernel::OM->Get('Kernel::System::ITSMChange')->ChangeStateLookup(
                         ChangeState => $ID->{Content},
                         Cache       => 1,
-                        );
+                    );
                     if ($ChangeStateID) {
                         $ID->{Content} = $ChangeStateID;
                     }

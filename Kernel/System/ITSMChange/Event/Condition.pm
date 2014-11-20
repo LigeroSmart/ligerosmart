@@ -165,13 +165,12 @@ sub Run {
     }
 
     # match all conditions for this change and execute all actions
-    my $Success
-        = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMCondition')->ConditionMatchExecuteAll(
+    my $Success = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMCondition')->ConditionMatchExecuteAll(
         ChangeID          => $ChangeID,
         AttributesChanged => { $Object => \@AttributesChanged },
         Event             => $Param{Event},
         UserID            => $Param{UserID},
-        );
+    );
 
     # check errors
     if ( !$Success ) {

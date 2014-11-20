@@ -150,11 +150,10 @@ sub GetObjectAttributes {
         my $PossibleValuesFilter;
 
         # get field html
-        my $DynamicFieldStatsParameter
-            = $DynamicFieldBackendObject->StatsFieldParameterBuild(
+        my $DynamicFieldStatsParameter = $DynamicFieldBackendObject->StatsFieldParameterBuild(
             DynamicFieldConfig   => $DynamicFieldConfig,
             PossibleValuesFilter => $PossibleValuesFilter,
-            );
+        );
 
         if ( IsHashRefWithData($DynamicFieldStatsParameter) ) {
 
@@ -169,8 +168,7 @@ sub GetObjectAttributes {
             if ( $DynamicFieldStatsParameter->{Block} eq 'Time' ) {
 
                 # create object attributes (date/time fields)
-                my $TimePeriodFormat
-                    = $DynamicFieldStatsParameter->{TimePeriodFormat} || 'DateInputFormatLong';
+                my $TimePeriodFormat = $DynamicFieldStatsParameter->{TimePeriodFormat} || 'DateInputFormatLong';
 
                 my %ObjectAttribute = (
                     Name             => $DynamicFieldStatsParameter->{Name},
@@ -261,12 +259,11 @@ sub GetStatElement {
                 next DYNAMICFIELD if !$IsStatsCondition;
 
                 # get new search parameter
-                my $DynamicFieldStatsSearchParameter
-                    = $DynamicFieldBackendObject->StatsSearchFieldParameterBuild(
+                my $DynamicFieldStatsSearchParameter = $DynamicFieldBackendObject->StatsSearchFieldParameterBuild(
                     DynamicFieldConfig => $DynamicFieldConfig,
                     Value              => $Param{$ParameterName},
                     Operator           => $Operator,
-                    );
+                );
 
                 # add new search parameter
                 if ( !IsHashRefWithData( $Param{"DynamicField_$FieldName"} ) ) {
@@ -312,8 +309,7 @@ sub ExportWrapper {
             my $Values      = $Element->{SelectedValues};
 
             if ( $ElementName eq 'ChangeStateIDs' ) {
-                my $StateList = $Kernel::OM->Get('Kernel::System::ITSMChange')
-                    ->ChangePossibleStatesGet( UserID => 1 );
+                my $StateList = $Kernel::OM->Get('Kernel::System::ITSMChange')->ChangePossibleStatesGet( UserID => 1 );
                 ID:
                 for my $ID ( @{$Values} ) {
                     next ID if !$ID;
@@ -373,11 +369,10 @@ sub ImportWrapper {
                 for my $ID ( @{$Values} ) {
                     next ID if !$ID;
 
-                    my $ChangeStateID
-                        = $Kernel::OM->Get('Kernel::System::ITSMChange')->ChangeStateLookup(
+                    my $ChangeStateID = $Kernel::OM->Get('Kernel::System::ITSMChange')->ChangeStateLookup(
                         ChangeState => $ID->{Content},
                         Cache       => 1,
-                        );
+                    );
                     if ($ChangeStateID) {
                         $ID->{Content} = $ChangeStateID;
                     }

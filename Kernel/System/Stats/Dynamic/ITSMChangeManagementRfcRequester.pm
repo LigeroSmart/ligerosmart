@@ -67,10 +67,9 @@ sub GetObjectAttributes {
 
             next TICKETID if $Requester{"customer_$CustomerUserID"};
 
-            my %CustomerUser
-                = $Kernel::OM->Get('Kernel::System::CustomerUser')->CustomerUserDataGet(
+            my %CustomerUser = $Kernel::OM->Get('Kernel::System::CustomerUser')->CustomerUserDataGet(
                 User => $CustomerUserID,
-                );
+            );
 
             $Requester{"customer_$CustomerUserID"} = sprintf "%s (%s %s)",
                 $CustomerUser{UserLogin},

@@ -110,8 +110,7 @@ sub Run {
         }
 
         # get list of relevant ticket types
-        my $AddChangeLinkTicketTypes
-            = $Self->{ConfigObject}->Get('ITSMChange::AddChangeLinkTicketTypes');
+        my $AddChangeLinkTicketTypes = $Self->{ConfigObject}->Get('ITSMChange::AddChangeLinkTicketTypes');
 
         # check the list of relevant ticket types
         if (
@@ -144,8 +143,7 @@ sub Run {
         if ( !$IsRelevant{ $Ticket{Type} } ) {
 
             # set error message
-            my $Message
-                = "Invalid ticket type '$Ticket{Type}' for directly linking a ticket with a change. "
+            my $Message = "Invalid ticket type '$Ticket{Type}' for directly linking a ticket with a change. "
                 . 'Only the following ticket type(s) are allowed for this operation: '
                 . join ',', @{$AddChangeLinkTicketTypes};
 
@@ -227,8 +225,8 @@ sub Run {
 
             # create change based on the template
             my $ChangeID = $Self->{TemplateObject}->TemplateDeSerialize(
-                TemplateID => $Self->{ParamObject}->GetParam( Param => 'TemplateID' ),
-                UserID => $Self->{UserID},
+                TemplateID      => $Self->{ParamObject}->GetParam( Param => 'TemplateID' ),
+                UserID          => $Self->{UserID},
                 NewTimeInEpoche => $NewTime,
                 MoveTimeType    => $GetParam{MoveTimeType},
             );
@@ -303,8 +301,14 @@ sub Run {
     my $MoveTimeTypeSelectionString = $Self->{LayoutObject}->BuildSelection(
         Name => 'MoveTimeType',
         Data => [
-            { Key => 'PlannedStartTime', Value => 'PlannedStartTime' },
-            { Key => 'PlannedEndTime',   Value => 'PlannedEndTime' },
+            {
+                Key   => 'PlannedStartTime',
+                Value => 'PlannedStartTime'
+            },
+            {
+                Key   => 'PlannedEndTime',
+                Value => 'PlannedEndTime'
+            },
         ],
         SelectedID => $GetParam{MoveTimeType} || 'PlannedStartTime',
         Class => 'Validate_Required ' . ( $ValidationError{MoveTimeTypeInvalid} || '' ),

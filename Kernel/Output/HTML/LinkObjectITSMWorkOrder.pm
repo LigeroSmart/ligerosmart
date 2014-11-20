@@ -432,7 +432,7 @@ sub ContentStringCreate {
             . '<span class="[% Data.WorkOrderStateSignal | html %]"></span> </div>',
         Data => {
             WorkOrderStateSignal => $Content->{Content},
-            WorkOrderState => $Content->{WorkOrderState} || '',
+            WorkOrderState       => $Content->{WorkOrderState} || '',
         },
     );
 
@@ -560,7 +560,7 @@ sub SearchOptionList {
         $Self->{LayoutObject}->Block(
             Name => 'InputText',
             Data => {
-                Key => $Row->{FormKey},
+                Key   => $Row->{FormKey},
                 Value => $Row->{FormData} || '',
             },
         );

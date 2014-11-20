@@ -209,7 +209,7 @@ sub PriorityAllocationGet {
     return if !$Kernel::OM->Get('Kernel::System::DB')->Prepare(
         SQL => 'SELECT priority_id FROM change_cip_allocate '
             . 'WHERE category_id = ? AND impact_id = ?',
-        Bind => [ \$Param{CategoryID}, \$Param{ImpactID} ],
+        Bind  => [ \$Param{CategoryID}, \$Param{ImpactID} ],
         Limit => 1,
     );
 

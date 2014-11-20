@@ -232,8 +232,8 @@ sub Run {
                                 # get the UpdateID (ConditionID or ExpressionID or ActionID)
                                 # and the AttributeID
                                 if ( $HistoryEntry->{$ContentNewOrOld} =~ m{ %% }xms ) {
-                                    ( $HistoryEntry->{UpdateID}, $HistoryEntry->{$ContentNewOrOld} )
-                                        = split m/%%/, $HistoryEntry->{$ContentNewOrOld};
+                                    ( $HistoryEntry->{UpdateID}, $HistoryEntry->{$ContentNewOrOld} ) = split m/%%/,
+                                        $HistoryEntry->{$ContentNewOrOld};
                                 }
 
                                 $Value = $Self->{ValidObject}->ValidLookup(
@@ -245,13 +245,12 @@ sub Run {
                                 # get the UpdateID (ConditionID or ExpressionID or ActionID)
                                 # and the AttributeID
                                 if ( $HistoryEntry->{$ContentNewOrOld} =~ m{ %% }xms ) {
-                                    ( $HistoryEntry->{UpdateID}, $HistoryEntry->{$ContentNewOrOld} )
-                                        = split m/%%/, $HistoryEntry->{$ContentNewOrOld};
+                                    ( $HistoryEntry->{UpdateID}, $HistoryEntry->{$ContentNewOrOld} ) = split m/%%/,
+                                        $HistoryEntry->{$ContentNewOrOld};
                                 }
 
                                 # lookup the object name
-                                $Value
-                                    = $Cache->{ObjectList}->{ $HistoryEntry->{$ContentNewOrOld} };
+                                $Value = $Cache->{ObjectList}->{ $HistoryEntry->{$ContentNewOrOld} };
 
                             }
                             elsif ( $Type eq 'Attribute' ) {
@@ -259,8 +258,8 @@ sub Run {
                                 # get the UpdateID (ConditionID or ExpressionID or ActionID)
                                 # and the AttributeID
                                 if ( $HistoryEntry->{$ContentNewOrOld} =~ m{ %% }xms ) {
-                                    ( $HistoryEntry->{UpdateID}, $HistoryEntry->{$ContentNewOrOld} )
-                                        = split m/%%/, $HistoryEntry->{$ContentNewOrOld};
+                                    ( $HistoryEntry->{UpdateID}, $HistoryEntry->{$ContentNewOrOld} ) = split m/%%/,
+                                        $HistoryEntry->{$ContentNewOrOld};
                                 }
 
                                 # lookup the attribute name
@@ -272,13 +271,12 @@ sub Run {
                                 # get the UpdateID (ConditionID or ExpressionID or ActionID)
                                 # and the AttributeID
                                 if ( $HistoryEntry->{$ContentNewOrOld} =~ m{ %% }xms ) {
-                                    ( $HistoryEntry->{UpdateID}, $HistoryEntry->{$ContentNewOrOld} )
-                                        = split m/%%/, $HistoryEntry->{$ContentNewOrOld};
+                                    ( $HistoryEntry->{UpdateID}, $HistoryEntry->{$ContentNewOrOld} ) = split m/%%/,
+                                        $HistoryEntry->{$ContentNewOrOld};
                                 }
 
                                 # lookup the operator name
-                                $Value
-                                    = $Cache->{OperatorList}->{ $HistoryEntry->{$ContentNewOrOld} };
+                                $Value = $Cache->{OperatorList}->{ $HistoryEntry->{$ContentNewOrOld} };
                             }
                             else {
                                 return $Self->{LayoutObject}->ErrorScreen(
@@ -306,8 +304,8 @@ sub Run {
                     }
                     elsif ( $HistoryEntry->{Fieldname} eq 'CABCustomers' ) {
 
-                      # ContentNew and ContentOld contain a '%%' seperated list of customer user ids
-                      # reformat it as a comma separated list
+                        # ContentNew and ContentOld contain a '%%' seperated list of customer user ids
+                        # reformat it as a comma separated list
                         $HistoryEntry->{$ContentNewOrOld} =~ s{ % % }{,}xmsg;
                     }
                     elsif ( $HistoryEntry->{Fieldname} eq 'CABAgents' ) {
@@ -316,8 +314,7 @@ sub Run {
                         # look up the login names from the user ids and
                         # format it as a comma separated list
                         my @UserIDs = split m/%%/, $HistoryEntry->{$ContentNewOrOld};
-                        my @UserLogins
-                            = map { $Self->{UserObject}->UserLookup( UserID => $_ ) } @UserIDs;
+                        my @UserLogins = map { $Self->{UserObject}->UserLookup( UserID => $_ ) } @UserIDs;
                         $HistoryEntry->{$ContentNewOrOld} = join ',', @UserLogins;
                     }
                     elsif (
@@ -333,8 +330,8 @@ sub Run {
                         # get the UpdateID (ConditionID or ExpressionID or ActionID)
                         # and the AttributeID
                         if ( $HistoryEntry->{$ContentNewOrOld} =~ m{ %% }xms ) {
-                            ( $HistoryEntry->{UpdateID}, $HistoryEntry->{$ContentNewOrOld} )
-                                = split m/%%/, $HistoryEntry->{$ContentNewOrOld};
+                            ( $HistoryEntry->{UpdateID}, $HistoryEntry->{$ContentNewOrOld} ) = split m/%%/,
+                                $HistoryEntry->{$ContentNewOrOld};
                         }
                     }
 
@@ -445,8 +442,7 @@ sub Run {
                 my @ActionExecuteData = split m/,/, $Data{Content};
 
                 # extract result
-                my $ActionExecuteResult
-                    = ( $ActionExecuteData[1] =~ m{ ( unsuccessfully | successfully ) }xms )[0];
+                my $ActionExecuteResult = ( $ActionExecuteData[1] =~ m{ ( unsuccessfully | successfully ) }xms )[0];
 
                 # translate result
                 $ActionExecuteData[1] = ' "' . $Self->{LayoutObject}->{LanguageObject}->Translate(

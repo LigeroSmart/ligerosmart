@@ -182,19 +182,17 @@ sub ChangeAdd {
     # get initial change state id
     my $ChangeStateID = delete $Param{ChangeStateID};
     if ( !$ChangeStateID ) {
-        my $NextStateIDs
-            = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMStateMachine')->StateTransitionGet(
+        my $NextStateIDs = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMStateMachine')->StateTransitionGet(
             StateID => 0,
             Class   => 'ITSM::ChangeManagement::Change::State',
-            );
+        );
         $ChangeStateID = $NextStateIDs->[0];
     }
 
     # get default Category if not defined
     my $CategoryID = delete $Param{CategoryID};
     if ( !$CategoryID ) {
-        my $DefaultCategory
-            = $Kernel::OM->Get('Kernel::Config')->Get('ITSMChange::Category::Default');
+        my $DefaultCategory = $Kernel::OM->Get('Kernel::Config')->Get('ITSMChange::Category::Default');
         $CategoryID = $Self->ChangeCIPLookup(
             CIP  => $DefaultCategory,
             Type => 'Category',
@@ -214,11 +212,10 @@ sub ChangeAdd {
     # get default Priority if not defined
     my $PriorityID = delete $Param{PriorityID};
     if ( !$PriorityID ) {
-        $PriorityID = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMChangeCIPAllocate')
-            ->PriorityAllocationGet(
+        $PriorityID = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMChangeCIPAllocate')->PriorityAllocationGet(
             CategoryID => $CategoryID,
             ImpactID   => $ImpactID,
-            );
+        );
     }
 
     # if no change builder id was given, take the user id
@@ -681,10 +678,9 @@ sub ChangeGet {
         }
 
         # get all dynamic fields for the object type ITSMChange
-        my $DynamicFieldList
-            = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldListGet(
+        my $DynamicFieldList = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldListGet(
             ObjectType => 'ITSMChange',
-            );
+        );
 
         DYNAMICFIELD:
         for my $DynamicFieldConfig ( @{$DynamicFieldList} ) {
@@ -750,22 +746,20 @@ sub ChangeGet {
     %ChangeData = ( %ChangeData, %{$CAB} );
 
     # get all workorder ids for this change
-    my $WorkOrderIDsRef
-        = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderList(
+    my $WorkOrderIDsRef = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderList(
         ChangeID => $Param{ChangeID},
         UserID   => $Param{UserID},
-        );
+    );
 
     # add result to change data
     $ChangeData{WorkOrderIDs} = $WorkOrderIDsRef || [];
     $ChangeData{WorkOrderCount} = scalar @{ $ChangeData{WorkOrderIDs} };
 
     # get planned effort and accounted time for the change
-    my $ChangeEfforts
-        = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderChangeEffortsGet(
+    my $ChangeEfforts = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderChangeEffortsGet(
         ChangeID => $Param{ChangeID},
         UserID   => $Param{UserID},
-        );
+    );
 
     # merge effort hash with change hash
     if (
@@ -778,11 +772,10 @@ sub ChangeGet {
     }
 
     # get timestamps for the change
-    my $ChangeTime
-        = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderChangeTimeGet(
+    my $ChangeTime = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderChangeTimeGet(
         ChangeID => $Param{ChangeID},
         UserID   => $Param{UserID},
-        );
+    );
 
     # merge time hash with change hash
     if (
@@ -882,7 +875,7 @@ sub ChangeCABUpdate {
         # add user to cab table
         for my $UserID ( sort keys %UniqueUsers ) {
             return if !$Kernel::OM->Get('Kernel::System::DB')->Do(
-                SQL => 'INSERT INTO change_cab ( change_id, user_id ) VALUES ( ?, ? )',
+                SQL  => 'INSERT INTO change_cab ( change_id, user_id ) VALUES ( ?, ? )',
                 Bind => [ \$Param{ChangeID}, \$UserID ],
             );
         }
@@ -905,7 +898,7 @@ sub ChangeCABUpdate {
         # add user to cab table
         for my $CustomerUserID ( sort keys %UniqueCustomerUsers ) {
             return if !$Kernel::OM->Get('Kernel::System::DB')->Do(
-                SQL => 'INSERT INTO change_cab ( change_id, customer_user_id ) VALUES ( ?, ? )',
+                SQL  => 'INSERT INTO change_cab ( change_id, customer_user_id ) VALUES ( ?, ? )',
                 Bind => [ \$Param{ChangeID}, \$CustomerUserID ],
             );
         }
@@ -1657,10 +1650,9 @@ sub ChangeSearch {
     for my $WorkOrderState ( @{ $Param{WorkOrderStates} } ) {
 
         # look up the ID for the name
-        my $WorkOrderStateID
-            = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderStateLookup(
+        my $WorkOrderStateID = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderStateLookup(
             WorkOrderState => $WorkOrderState,
-            );
+        );
 
         # check whether the ID was found, whether the name exists
         if ( !$WorkOrderStateID ) {
@@ -1679,10 +1671,9 @@ sub ChangeSearch {
     for my $WorkOrderType ( @{ $Param{WorkOrderTypes} } ) {
 
         # look up the ID for the name
-        my $WorkOrderTypeID
-            = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderTypeLookup(
+        my $WorkOrderTypeID = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderTypeLookup(
             WorkOrderType => $WorkOrderType,
-            );
+        );
 
         # check whether the ID was found, whether the name exists
         if ( !$WorkOrderTypeID ) {
@@ -1713,10 +1704,9 @@ sub ChangeSearch {
 
     # check all configured workorder dynamic fields, build lookup hash by name
     my %WorkOrderDynamicFieldName2Config;
-    my $WorkOrderDynamicFields
-        = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldListGet(
+    my $WorkOrderDynamicFields = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldListGet(
         ObjectType => 'ITSMWorkOrder',
-        );
+    );
     for my $DynamicField ( @{$WorkOrderDynamicFields} ) {
         $WorkOrderDynamicFieldName2Config{ $DynamicField->{Name} } = $DynamicField;
     }
@@ -1808,8 +1798,7 @@ sub ChangeSearch {
 
         for my $Operator ( sort keys %{$SearchParam} ) {
 
-            my @SearchParams
-                = ( ref $SearchParam->{$Operator} eq 'ARRAY' )
+            my @SearchParams = ( ref $SearchParam->{$Operator} eq 'ARRAY' )
                 ? @{ $SearchParam->{$Operator} }
                 : ( $SearchParam->{$Operator} );
 
@@ -1832,12 +1821,11 @@ sub ChangeSearch {
                 next TEXT if $Text =~ /^\%{1,3}$/;
 
                 # validate data type
-                my $ValidateSuccess
-                    = $Kernel::OM->Get('Kernel::System::DynamicField::Backend')->ValueValidate(
+                my $ValidateSuccess = $Kernel::OM->Get('Kernel::System::DynamicField::Backend')->ValueValidate(
                     DynamicFieldConfig => $DynamicField,
                     Value              => $Text,
                     UserID             => $Param{UserID} || 1,
-                    );
+                );
                 if ( !$ValidateSuccess ) {
                     $Kernel::OM->Get('Kernel::System::Log')->Log(
                         Priority => 'error',
@@ -2361,11 +2349,10 @@ sub ChangeDelete {
     );
 
     # get all dynamic fields for the object type ITSMChange
-    my $DynamicFieldListTicket
-        = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldListGet(
+    my $DynamicFieldListTicket = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldListGet(
         ObjectType => 'ITSMChange',
         Valid      => 0,
-        );
+    );
 
     # delete dynamicfield values for this change
     DYNAMICFIELD:
@@ -2546,26 +2533,24 @@ sub ChangePossibleStatesGet {
 
         # check for state lock
         my $StateLock;
-        $StateLock = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMCondition')
-            ->ConditionMatchStateLock(
+        $StateLock = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMCondition')->ConditionMatchStateLock(
             ObjectName => 'ITSMChange',
             Selector   => $Param{ChangeID},
             StateID    => $Change->{ChangeStateID},
             UserID     => $Param{UserID},
-            );
+        );
 
         # set as default state current change state
         my @NextStateIDs = ( $Change->{ChangeStateID} );
 
         # check if reachable change end states should be allowed for locked change states
-        my $ChangeEndStatesAllowed
-            = $Kernel::OM->Get('Kernel::Config')->Get('ITSMChange::StateLock::AllowEndStates');
+        my $ChangeEndStatesAllowed = $Kernel::OM->Get('Kernel::Config')->Get('ITSMChange::StateLock::AllowEndStates');
 
         if ($ChangeEndStatesAllowed) {
 
             # set as default state current state and all possible end states
-            my $EndStateIDsRef = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMStateMachine')
-                ->StateTransitionGetEndStates(
+            my $EndStateIDsRef
+                = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMStateMachine')->StateTransitionGetEndStates(
                 StateID => $Change->{ChangeStateID},
                 Class   => 'ITSM::ChangeManagement::Change::State',
                 ) || [];
@@ -2576,11 +2561,10 @@ sub ChangePossibleStatesGet {
         if ( !$StateLock ) {
 
             # get the possible next state ids
-            my $NextStateIDsRef = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMStateMachine')
-                ->StateTransitionGet(
+            my $NextStateIDsRef = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMStateMachine')->StateTransitionGet(
                 StateID => $Change->{ChangeStateID},
                 Class   => 'ITSM::ChangeManagement::Change::State',
-                ) || [];
+            ) || [];
 
             # add current change state id to list
             @NextStateIDs = sort ( @{$NextStateIDsRef}, $Change->{ChangeStateID} );
@@ -2814,8 +2798,7 @@ sub Permission {
 
             # load module
             next MODULE
-                if !$Kernel::OM->Get('Kernel::System::Main')
-                ->Require( $Modules{$Module}->{Module} );
+                if !$Kernel::OM->Get('Kernel::System::Main')->Require( $Modules{$Module}->{Module} );
 
             # create object
             my $ModuleObject = $Modules{$Module}->{Module}->new();
@@ -3378,7 +3361,7 @@ sub _CheckChangeParams {
             if ( length( $Param{$Argument} ) > 1800000 ) {
                 $Kernel::OM->Get('Kernel::System::Log')->Log(
                     Priority => 'error',
-                    Message => "The parameter '$Argument' must be shorter than 1800000 characters!",
+                    Message  => "The parameter '$Argument' must be shorter than 1800000 characters!",
                 );
                 return;
             }
@@ -3515,11 +3498,10 @@ sub _CheckChangeParams {
         for my $CustomerUser ( @{ $Param{CABCustomers} } ) {
 
             # get customer user data
-            my %CustomerUserData
-                = $Kernel::OM->Get('Kernel::System::CustomerUser')->CustomerUserDataGet(
+            my %CustomerUserData = $Kernel::OM->Get('Kernel::System::CustomerUser')->CustomerUserDataGet(
                 User  => $CustomerUser,
                 Valid => 1,
-                );
+            );
 
             if ( !%CustomerUserData ) {
                 $Kernel::OM->Get('Kernel::System::Log')->Log(

@@ -140,7 +140,7 @@ sub StateTransitionAdd {
         SQL => 'SELECT id FROM change_state_machine '
             . 'WHERE state_id = ? '
             . 'AND next_state_id = ?',
-        Bind => [ \$Param{StateID}, \$Param{NextStateID} ],
+        Bind  => [ \$Param{StateID}, \$Param{NextStateID} ],
         Limit => 1,
     );
 
@@ -244,7 +244,7 @@ sub StateTransitionAdd {
         SQL => 'SELECT id FROM change_state_machine '
             . 'WHERE state_id = ? '
             . 'AND next_state_id = ?',
-        Bind => [ \$Param{StateID}, \$Param{NextStateID} ],
+        Bind  => [ \$Param{StateID}, \$Param{NextStateID} ],
         Limit => 1,
     );
 
@@ -513,9 +513,8 @@ sub StateTransitionGetEndStates {
     }
 
     # check the cache
-    my $CacheKey
-        = 'StateTransitionGetEndStates::StateID::' . $Param{StateID} . '::Class::' . $Param{Class};
-    my $Cache = $Kernel::OM->Get('Kernel::System::Cache')->Get(
+    my $CacheKey = 'StateTransitionGetEndStates::StateID::' . $Param{StateID} . '::Class::' . $Param{Class};
+    my $Cache    = $Kernel::OM->Get('Kernel::System::Cache')->Get(
         Type => $Self->{CacheType},
         Key  => $CacheKey,
     );
@@ -768,7 +767,7 @@ sub StateTransitionUpdate {
             . 'ON ( (s.state_id = g.id ) OR (s.next_state_id = g.id) ) '
             . 'WHERE s.state_id = ? AND s.next_state_id = ? '
             . 'AND g.general_catalog_class = ?',
-        Bind => [ \$Param{StateID}, \$Param{NextStateID}, \$Param{Class} ],
+        Bind  => [ \$Param{StateID}, \$Param{NextStateID}, \$Param{Class} ],
         Limit => 1,
     );
 

@@ -89,11 +89,10 @@ sub LinkListWithData {
             for my $WorkOrderID ( sort keys %{ $Param{LinkList}->{$LinkType}->{$Direction} } ) {
 
                 # get workorder data
-                my $WorkOrderData
-                    = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderGet(
+                my $WorkOrderData = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderGet(
                     WorkOrderID => $WorkOrderID,
                     UserID      => $Param{UserID},
-                    );
+                );
 
                 # remove id from hash if WorkOrderGet() returns no results
                 if ( !$WorkOrderData ) {
@@ -155,8 +154,7 @@ sub ObjectPermission {
     }
 
     # get config of workorder zoom frontend module
-    $Self->{Config} = $Kernel::OM->Get('Kernel::Config')
-        ->Get('ITSMWorkOrder::Frontend::AgentITSMWorkOrderZoom');
+    $Self->{Config} = $Kernel::OM->Get('Kernel::Config')->Get('ITSMWorkOrder::Frontend::AgentITSMWorkOrderZoom');
 
     # check permissions
     my $Access = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->Permission(
@@ -226,9 +224,8 @@ sub ObjectDescriptionGet {
     return if !%{$ChangeData};
 
     # define description text
-    my $WorkOrderHook = $Kernel::OM->Get('Kernel::Config')->Get('ITSMWorkOrder::Hook');
-    my $DescriptionText
-        = "$WorkOrderHook $ChangeData->{ChangeNumber}-$WorkOrderData->{WorkOrderNumber}";
+    my $WorkOrderHook   = $Kernel::OM->Get('Kernel::Config')->Get('ITSMWorkOrder::Hook');
+    my $DescriptionText = "$WorkOrderHook $ChangeData->{ChangeNumber}-$WorkOrderData->{WorkOrderNumber}";
 
     # create description
     %Description = (
@@ -286,8 +283,7 @@ sub ObjectSearch {
 
     # search the workorders
     # no need to use OrderBy here, because it is sorted in TableCreateComplex and TableCreatSimple
-    my $WorkOrderIDsRef
-        = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderSearch(
+    my $WorkOrderIDsRef = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderSearch(
         %{ $Param{SearchParams} },
         %Search,
         UsingWildcards => 1,
@@ -299,18 +295,17 @@ sub ObjectSearch {
         Limit => 200,
 
         UserID => $Param{UserID},
-        );
+    );
 
     my %SearchList;
     WORKORDERID:
     for my $WorkOrderID ( @{$WorkOrderIDsRef} ) {
 
         # get workorder data
-        my $WorkOrderData
-            = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderGet(
+        my $WorkOrderData = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderGet(
             WorkOrderID => $WorkOrderID,
             UserID      => $Param{UserID},
-            );
+        );
 
         next WORKORDERID if !$WorkOrderData;
 

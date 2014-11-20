@@ -504,8 +504,7 @@ sub ObjectSelectorList {
     return if !$ConditionData;
 
     # get object backend
-    my $BackendObject
-        = $Kernel::OM->Get( 'Kernel::System::ITSMChange::ITSMCondition::Object::' . $ObjectName );
+    my $BackendObject = $Kernel::OM->Get( 'Kernel::System::ITSMChange::ITSMCondition::Object::' . $ObjectName );
 
     # check for error
     return if !$BackendObject;
@@ -583,8 +582,7 @@ sub ObjectCompareValueList {
     my $ObjectType = $ObjectName;
 
     # get object backend
-    my $BackendObject
-        = $Kernel::OM->Get( 'Kernel::System::ITSMChange::ITSMCondition::Object::' . $ObjectType );
+    my $BackendObject = $Kernel::OM->Get( 'Kernel::System::ITSMChange::ITSMCondition::Object::' . $ObjectType );
 
     return if !$BackendObject;
 
@@ -667,8 +665,7 @@ sub ObjectDataGet {
     my $ObjectType = $ObjectName;
 
     # get object backend
-    my $BackendObject
-        = $Kernel::OM->Get( 'Kernel::System::ITSMChange::ITSMCondition::Object::' . $ObjectType );
+    my $BackendObject = $Kernel::OM->Get( 'Kernel::System::ITSMChange::ITSMCondition::Object::' . $ObjectType );
 
     return if !$BackendObject;
 

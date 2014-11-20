@@ -632,8 +632,7 @@ sub Run {
 
                         # combine the linked object data from all workorders
                         $LinkListWithDataCombinedWorkOrders->{$Object}->{$LinkType}->{$Direction}
-                            ->{$ID}
-                            = $LinkListWithDataWorkOrder->{$Object}->{$LinkType}->{$Direction}
+                            ->{$ID} = $LinkListWithDataWorkOrder->{$Object}->{$LinkType}->{$Direction}
                             ->{$ID};
                     }
                 }

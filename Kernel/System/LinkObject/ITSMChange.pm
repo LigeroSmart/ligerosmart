@@ -135,8 +135,7 @@ sub ObjectPermission {
     }
 
     # get config of change zoom frontend module
-    $Self->{Config}
-        = $Kernel::OM->Get('Kernel::Config')->Get('ITSMChange::Frontend::AgentITSMChangeZoom');
+    $Self->{Config} = $Kernel::OM->Get('Kernel::Config')->Get('ITSMChange::Frontend::AgentITSMChangeZoom');
 
     # check permissions
     my $Access = $Kernel::OM->Get('Kernel::System::ITSMChange')->Permission(

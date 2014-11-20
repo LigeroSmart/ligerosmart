@@ -132,10 +132,9 @@ sub Run {
             keys %{ $ObjectOption{CategoryList} }
             )
         {
-            $AllocateMatrix->[0]->[$Counter2]->{ObjectType}  = 'Category';
-            $AllocateMatrix->[0]->[$Counter2]->{CategoryKey} = $Category;
-            $AllocateMatrix->[0]->[$Counter2]->{ObjectOption}
-                = $ObjectOption{CategoryList}{$Category};
+            $AllocateMatrix->[0]->[$Counter2]->{ObjectType}   = 'Category';
+            $AllocateMatrix->[0]->[$Counter2]->{CategoryKey}  = $Category;
+            $AllocateMatrix->[0]->[$Counter2]->{ObjectOption} = $ObjectOption{CategoryList}{$Category};
             $Counter2++;
         }
 

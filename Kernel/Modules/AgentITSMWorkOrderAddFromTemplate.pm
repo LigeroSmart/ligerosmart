@@ -235,8 +235,14 @@ sub Run {
     my $MoveTimeTypeSelectionString = $Self->{LayoutObject}->BuildSelection(
         Name => 'MoveTimeType',
         Data => [
-            { Key => 'PlannedStartTime', Value => 'PlannedStartTime' },
-            { Key => 'PlannedEndTime',   Value => 'PlannedEndTime' },
+            {
+                Key   => 'PlannedStartTime',
+                Value => 'PlannedStartTime'
+            },
+            {
+                Key   => 'PlannedEndTime',
+                Value => 'PlannedEndTime'
+            },
         ],
         SelectedID => $GetParam{MoveTimeType} || 'PlannedStartTime',
         Class => 'Validate_Required ' . ( $ValidationError{MoveTimeTypeInvalid} || '' ),

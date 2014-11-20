@@ -97,8 +97,7 @@ sub Run {
         );
 
         # get preference to see which templates are in edit by the user
-        my $TemplateEditPreferenceString
-            = $UserPreferences{UserITSMChangeManagementTemplateEdit} || '';
+        my $TemplateEditPreferenceString = $UserPreferences{UserITSMChangeManagementTemplateEdit} || '';
 
         # convert to lookup hash
         my @EditedTemplates = split m/;/, $TemplateEditPreferenceString;

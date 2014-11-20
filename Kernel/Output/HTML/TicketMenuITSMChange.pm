@@ -93,8 +93,7 @@ sub Run {
     return if !$Param{Ticket}->{Type};
 
     # get and check the list of relevant ticket types
-    my $AddChangeLinkTicketTypes
-        = $Self->{ConfigObject}->Get('ITSMChange::AddChangeLinkTicketTypes');
+    my $AddChangeLinkTicketTypes = $Self->{ConfigObject}->Get('ITSMChange::AddChangeLinkTicketTypes');
 
     return if !$AddChangeLinkTicketTypes;
     return if ref $AddChangeLinkTicketTypes ne 'ARRAY';
@@ -106,8 +105,7 @@ sub Run {
     return if !$IsRelevant{ $Param{Ticket}->{Type} };
 
     # check permission
-    my $FrontendConfig
-        = $Self->{ConfigObject}->Get("ITSMChange::Frontend::$Param{Config}->{Action}");
+    my $FrontendConfig = $Self->{ConfigObject}->Get("ITSMChange::Frontend::$Param{Config}->{Action}");
 
     if ( $FrontendConfig && $FrontendConfig->{Permission} ) {
 

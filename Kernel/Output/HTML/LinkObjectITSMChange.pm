@@ -400,7 +400,7 @@ sub ContentStringCreate {
             . '<span class="[% Data.ChangeStateSignal | html %]"></span> </div>',
         Data => {
             ChangeStateSignal => $Content->{Content},
-            ChangeState => $Content->{ChangeState} || '',
+            ChangeState       => $Content->{ChangeState} || '',
         },
     );
 
@@ -520,7 +520,7 @@ sub SearchOptionList {
         $Self->{LayoutObject}->Block(
             Name => 'InputText',
             Data => {
-                Key => $Row->{FormKey},
+                Key   => $Row->{FormKey},
                 Value => $Row->{FormData} || '',
             },
         );

@@ -49,8 +49,7 @@ sub Run {
     return 1 if !$Param{UserID};
 
     # get and check the list of relevant ticket types
-    my $AddChangeLinkTicketTypes
-        = $Kernel::OM->Get('Kernel::Config')->Get('ITSMChange::AddChangeLinkTicketTypes');
+    my $AddChangeLinkTicketTypes = $Kernel::OM->Get('Kernel::Config')->Get('ITSMChange::AddChangeLinkTicketTypes');
 
     return 1 if !$AddChangeLinkTicketTypes;
     return 1 if ref $AddChangeLinkTicketTypes ne 'ARRAY';
@@ -84,8 +83,7 @@ sub Run {
     );
 
     # get and check the list of groups who are allowed to use the AddChangeLinkTicketTypes
-    my $RestrictTicketTypesGroups
-        = $Kernel::OM->Get('Kernel::Config')->Get('ITSMChange::RestrictTicketTypes::Groups');
+    my $RestrictTicketTypesGroups = $Kernel::OM->Get('Kernel::Config')->Get('ITSMChange::RestrictTicketTypes::Groups');
 
     return 1 if !$RestrictTicketTypesGroups;
     return 1 if ref $RestrictTicketTypesGroups ne 'ARRAY';

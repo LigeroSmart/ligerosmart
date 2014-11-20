@@ -81,18 +81,16 @@ sub Run {
     elsif ( $Param{Event} eq 'DynamicFieldUpdate' ) {
 
         # lookup the ID of the old attribute
-        my $AttributeID
-            = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMCondition')->AttributeLookup(
+        my $AttributeID = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMCondition')->AttributeLookup(
             Name => 'DynamicField_' . $Param{Data}->{OldData}->{Name},
-            );
+        );
 
         # update the attribute name
-        my $Success
-            = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMCondition')->AttributeUpdate(
+        my $Success = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMCondition')->AttributeUpdate(
             AttributeID => $AttributeID,
             Name        => 'DynamicField_' . $Param{Data}->{NewData}->{Name},
             UserID      => 1,
-            );
+        );
 
         # check error
         if ( !$Success ) {
@@ -108,10 +106,9 @@ sub Run {
     elsif ( $Param{Event} eq 'DynamicFieldDelete' ) {
 
         # get all condition attributes
-        my $ConditionAttributes
-            = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMCondition')->AttributeList(
+        my $ConditionAttributes = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMCondition')->AttributeList(
             UserID => 1,
-            );
+        );
 
         # reverse the list to lookup attribute names
         my %Attribute2ID = reverse %{$ConditionAttributes};

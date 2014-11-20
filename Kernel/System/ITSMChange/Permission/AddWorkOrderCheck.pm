@@ -95,8 +95,7 @@ sub Run {
     }
 
     # get config for the relevant action
-    my $FrontendConfig
-        = $Kernel::OM->Get('Kernel::Config')->Get("ITSMChange::Frontend::$Param{Action}");
+    my $FrontendConfig = $Kernel::OM->Get('Kernel::Config')->Get("ITSMChange::Frontend::$Param{Action}");
 
     # get the required privilege, 'ro' or 'rw'
     my $RequiredPriv;

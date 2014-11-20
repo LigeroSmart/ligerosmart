@@ -45,11 +45,10 @@ sub Run {
     if ( $Param{Event} eq 'ChangeDeletePost' ) {
 
         # delete all conditions (and expressions and actions) for this change id
-        my $Success
-            = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMCondition')->ConditionDeleteAll(
+        my $Success = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMCondition')->ConditionDeleteAll(
             ChangeID => $Param{Data}->{ChangeID},
             UserID   => $Param{UserID},
-            );
+        );
 
         # handle error
         if ( !$Success ) {

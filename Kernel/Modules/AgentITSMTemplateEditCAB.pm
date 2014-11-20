@@ -144,8 +144,7 @@ sub Run {
         if (%CABUpdateInfo) {
 
             # add new member
-            $CABReference->{CABAdd}->{ $GetParam{NewCABMemberType} }
-                = $CABUpdateInfo{ $GetParam{NewCABMemberType} };
+            $CABReference->{CABAdd}->{ $GetParam{NewCABMemberType} } = $CABUpdateInfo{ $GetParam{NewCABMemberType} };
 
             # do not display a name in autocomplete field
             # and do not set values in hidden fields as the

@@ -707,19 +707,16 @@ sub TemplateSearch {
         next STRINGPARAM if $Param{$StringParam} eq '';
 
         # quote
-        $Param{$StringParam}
-            = $Kernel::OM->Get('Kernel::System::DB')->Quote( $Param{$StringParam} );
+        $Param{$StringParam} = $Kernel::OM->Get('Kernel::System::DB')->Quote( $Param{$StringParam} );
 
         # wildcards are used
         if ( $Param{UsingWildcards} ) {
 
             # get like escape string needed for some databases (e.g. oracle)
-            my $LikeEscapeString
-                = $Kernel::OM->Get('Kernel::System::DB')->GetDatabaseFunction('LikeEscapeString');
+            my $LikeEscapeString = $Kernel::OM->Get('Kernel::System::DB')->GetDatabaseFunction('LikeEscapeString');
 
             # Quote
-            $Param{$StringParam}
-                = $Kernel::OM->Get('Kernel::System::DB')->Quote( $Param{$StringParam}, 'Like' );
+            $Param{$StringParam} = $Kernel::OM->Get('Kernel::System::DB')->Quote( $Param{$StringParam}, 'Like' );
 
             # replace * with %
             $Param{$StringParam} =~ s{ \*+ }{%}xmsg;
@@ -1066,8 +1063,7 @@ sub TemplateSerialize {
     }
 
     # what types of templates are supported and what subroutines do the serialization
-    my $BackendObject
-        = $Kernel::OM->Get( 'Kernel::System::ITSMChange::Template::' . $TemplateType );
+    my $BackendObject = $Kernel::OM->Get( 'Kernel::System::ITSMChange::Template::' . $TemplateType );
 
     return if !$BackendObject;
 
@@ -1194,8 +1190,7 @@ sub _CreateTemplateElements {
     my $Type = $Method2Object{$Method};
     my $BackendObject;
     if ( $Type eq 'Parent' ) {
-        $BackendObject
-            = $Kernel::OM->Get( 'Kernel::System::ITSMChange::Template::' . $Param{Parent} );
+        $BackendObject = $Kernel::OM->Get( 'Kernel::System::ITSMChange::Template::' . $Param{Parent} );
     }
     else {
         $BackendObject = $Kernel::OM->Get( 'Kernel::System::ITSMChange::Template::' . $Type );

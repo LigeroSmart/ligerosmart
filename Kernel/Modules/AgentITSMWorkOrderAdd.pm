@@ -237,7 +237,7 @@ sub Run {
             my $ValidationResult = $Self->{BackendObject}->EditFieldValueValidate(
                 DynamicFieldConfig => $DynamicFieldConfig,
                 ParamObject        => $Self->{ParamObject},
-                Mandatory => $Self->{Config}->{DynamicField}->{ $DynamicFieldConfig->{Name} } == 2,
+                Mandatory          => $Self->{Config}->{DynamicField}->{ $DynamicFieldConfig->{Name} } == 2,
             );
 
             if ( !IsHashRefWithData($ValidationResult) ) {
@@ -342,8 +342,7 @@ sub Run {
                                 . "ContentID=$CachedAttachment->{ContentID}";
 
                             # picture url in workorder atttachment
-                            my $Replace
-                                = "Action=AgentITSMWorkOrderZoom;Subaction=DownloadAttachment;"
+                            my $Replace = "Action=AgentITSMWorkOrderZoom;Subaction=DownloadAttachment;"
                                 . "Filename=$CachedAttachment->{Filename};WorkOrderID=$WorkOrderID";
 
                             # replace url
@@ -464,12 +463,12 @@ sub Run {
         # get field html
         my $DynamicFieldHTML = $Self->{BackendObject}->EditFieldRender(
             DynamicFieldConfig => $DynamicFieldConfig,
-            Value        => $DynamicFieldValues{ 'DynamicField_' . $DynamicFieldConfig->{Name} },
-            ServerError  => $ValidationError{ $DynamicFieldConfig->{Name} } || '',
-            Mandatory    => $Self->{Config}->{DynamicField}->{ $DynamicFieldConfig->{Name} } == 2,
-            LayoutObject => $Self->{LayoutObject},
-            ParamObject  => $Self->{ParamObject},
-            AJAXUpdate   => 0,
+            Value              => $DynamicFieldValues{ 'DynamicField_' . $DynamicFieldConfig->{Name} },
+            ServerError        => $ValidationError{ $DynamicFieldConfig->{Name} } || '',
+            Mandatory          => $Self->{Config}->{DynamicField}->{ $DynamicFieldConfig->{Name} } == 2,
+            LayoutObject       => $Self->{LayoutObject},
+            ParamObject        => $Self->{ParamObject},
+            AJAXUpdate         => 0,
         );
 
         # skip fields that HTML could not be retrieved

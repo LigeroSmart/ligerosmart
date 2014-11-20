@@ -108,7 +108,7 @@ sub ExpressionAdd {
                 . 'AND operator_id = ? AND selector = ? AND compare_value IS NULL',
             Bind => [
                 \$Param{ConditionID}, \$Param{ObjectID}, \$Param{AttributeID},
-                \$Param{OperatorID},  \$Param{Selector},
+                \$Param{OperatorID}, \$Param{Selector},
             ],
             Limit => 1,
         );

@@ -216,7 +216,7 @@ sub Run {
                     Type                   => $Preference->{Type},
                 );
 
-              # set the complete value structure in GetParam to store it later in the search profile
+                # set the complete value structure in GetParam to store it later in the search profile
                 if ( IsHashRefWithData($DynamicFieldValue) ) {
                     %GetParam = ( %GetParam, %{$DynamicFieldValue} );
                 }
@@ -273,8 +273,7 @@ sub Run {
         }
 
         # store last queue screen
-        my $URL
-            = "Action=AgentITSMChangeSearch;Subaction=Search;Profile=$Self->{Profile};SortBy=$Self->{SortBy}"
+        my $URL = "Action=AgentITSMChangeSearch;Subaction=Search;Profile=$Self->{Profile};SortBy=$Self->{SortBy}"
             . ";OrderBy=$Self->{OrderBy};TakeLastSearch=1;StartHit=$Self->{StartHit}";
         $Self->{SessionObject}->UpdateSessionID(
             SessionID => $Self->{SessionID},
@@ -778,30 +777,22 @@ sub Run {
 
                 # create the header
                 my $CellData;
-                $CellData->[0]->[0]->{Content}
-                    = $Self->{ConfigObject}->Get('ITSMChange::Hook');
-                $CellData->[0]->[0]->{Font} = 'ProportionalBold';
-                $CellData->[0]->[1]->{Content}
-                    = $Self->{LayoutObject}->{LanguageObject}->Translate('ChangeTitle');
-                $CellData->[0]->[1]->{Font} = 'ProportionalBold';
-                $CellData->[0]->[2]->{Content}
-                    = $Self->{LayoutObject}->{LanguageObject}->Translate('ChangeBuilder');
-                $CellData->[0]->[2]->{Font} = 'ProportionalBold';
-                $CellData->[0]->[3]->{Content}
-                    = $Self->{LayoutObject}->{LanguageObject}->Translate('WorkOrders');
-                $CellData->[0]->[3]->{Font} = 'ProportionalBold';
-                $CellData->[0]->[4]->{Content}
-                    = $Self->{LayoutObject}->{LanguageObject}->Translate('ChangeState');
-                $CellData->[0]->[4]->{Font} = 'ProportionalBold';
-                $CellData->[0]->[5]->{Content}
-                    = $Self->{LayoutObject}->{LanguageObject}->Translate('Priority');
-                $CellData->[0]->[5]->{Font} = 'ProportionalBold';
-                $CellData->[0]->[6]->{Content}
-                    = $Self->{LayoutObject}->{LanguageObject}->Translate('PlannedStartTime');
-                $CellData->[0]->[6]->{Font} = 'ProportionalBold';
-                $CellData->[0]->[7]->{Content}
-                    = $Self->{LayoutObject}->{LanguageObject}->Translate('PlannedEndTime');
-                $CellData->[0]->[7]->{Font} = 'ProportionalBold';
+                $CellData->[0]->[0]->{Content} = $Self->{ConfigObject}->Get('ITSMChange::Hook');
+                $CellData->[0]->[0]->{Font}    = 'ProportionalBold';
+                $CellData->[0]->[1]->{Content} = $Self->{LayoutObject}->{LanguageObject}->Translate('ChangeTitle');
+                $CellData->[0]->[1]->{Font}    = 'ProportionalBold';
+                $CellData->[0]->[2]->{Content} = $Self->{LayoutObject}->{LanguageObject}->Translate('ChangeBuilder');
+                $CellData->[0]->[2]->{Font}    = 'ProportionalBold';
+                $CellData->[0]->[3]->{Content} = $Self->{LayoutObject}->{LanguageObject}->Translate('WorkOrders');
+                $CellData->[0]->[3]->{Font}    = 'ProportionalBold';
+                $CellData->[0]->[4]->{Content} = $Self->{LayoutObject}->{LanguageObject}->Translate('ChangeState');
+                $CellData->[0]->[4]->{Font}    = 'ProportionalBold';
+                $CellData->[0]->[5]->{Content} = $Self->{LayoutObject}->{LanguageObject}->Translate('Priority');
+                $CellData->[0]->[5]->{Font}    = 'ProportionalBold';
+                $CellData->[0]->[6]->{Content} = $Self->{LayoutObject}->{LanguageObject}->Translate('PlannedStartTime');
+                $CellData->[0]->[6]->{Font}    = 'ProportionalBold';
+                $CellData->[0]->[7]->{Content} = $Self->{LayoutObject}->{LanguageObject}->Translate('PlannedEndTime');
+                $CellData->[0]->[7]->{Font}    = 'ProportionalBold';
 
                 # create the content array
                 my $CounterRow = 1;
@@ -817,8 +808,7 @@ sub Run {
                 # output 'No ticket data found', if no content was given
                 if ( !$CellData->[0]->[0] ) {
                     $CellData->[0]->[0]->{Content}
-                        = $Self->{LayoutObject}->{LanguageObject}
-                        ->Translate('No ticket data found.');
+                        = $Self->{LayoutObject}->{LanguageObject}->Translate('No ticket data found.');
                 }
 
                 # page params
@@ -870,17 +860,17 @@ sub Run {
                     else {
                         $Self->{PDFObject}->PageNew(
                             %PageParam, FooterRight => $Page
-                                . ' ' . $_,
+                                . ' '
+                                . $_,
                         );
                     }
                 }
 
                 # return the pdf document
                 my $Filename = 'change_search';
-                my ( $s, $m, $h, $D, $M, $Y )
-                    = $Self->{TimeObject}->SystemTime2Date(
+                my ( $s, $m, $h, $D, $M, $Y ) = $Self->{TimeObject}->SystemTime2Date(
                     SystemTime => $Self->{TimeObject}->SystemTime(),
-                    );
+                );
                 $M = sprintf( "%02d", $M );
                 $D = sprintf( "%02d", $D );
                 $h = sprintf( "%02d", $h );
@@ -1308,13 +1298,34 @@ sub _MaskForm {
 
     # set time attributes
     my @TimeTypes = (
-        { Prefix => 'Requested',    Title => 'Requested Date', },
-        { Prefix => 'PlannedStart', Title => 'PlannedStartTime', },
-        { Prefix => 'PlannedEnd',   Title => 'PlannedEndTime', },
-        { Prefix => 'ActualStart',  Title => 'ActualStartTime', },
-        { Prefix => 'ActualEnd',    Title => 'ActualEndTime', },
-        { Prefix => 'Create',       Title => 'CreateTime', },
-        { Prefix => 'Change',       Title => 'ChangeTime', },
+        {
+            Prefix => 'Requested',
+            Title  => 'Requested Date',
+        },
+        {
+            Prefix => 'PlannedStart',
+            Title  => 'PlannedStartTime',
+        },
+        {
+            Prefix => 'PlannedEnd',
+            Title  => 'PlannedEndTime',
+        },
+        {
+            Prefix => 'ActualStart',
+            Title  => 'ActualStartTime',
+        },
+        {
+            Prefix => 'ActualEnd',
+            Title  => 'ActualEndTime',
+        },
+        {
+            Prefix => 'Create',
+            Title  => 'CreateTime',
+        },
+        {
+            Prefix => 'Change',
+            Title  => 'ChangeTime',
+        },
     );
 
     TIMETYPE:
@@ -1326,11 +1337,9 @@ sub _MaskForm {
             next TIMETYPE;
         }
 
-        my $Title = $Self->{LayoutObject}->{LanguageObject}->Translate( $TimeType->{Title} );
-        my $BeforeAfterTranslatable
-            = $Self->{LayoutObject}->{LanguageObject}->Translate('(before/after)');
-        my $BetweenTranslatable
-            = $Self->{LayoutObject}->{LanguageObject}->Translate('(between)');
+        my $Title                   = $Self->{LayoutObject}->{LanguageObject}->Translate( $TimeType->{Title} );
+        my $BeforeAfterTranslatable = $Self->{LayoutObject}->{LanguageObject}->Translate('(before/after)');
+        my $BetweenTranslatable     = $Self->{LayoutObject}->{LanguageObject}->Translate('(between)');
         push @Attributes, (
             {
                 Key   => $Prefix . 'TimePointField',
@@ -1483,7 +1492,7 @@ sub _MaskForm {
             Print  => 'Print',
             CSV    => 'CSV',
         },
-        Name => 'ResultForm',
+        Name       => 'ResultForm',
         SelectedID => $Param{ResultForm} || 'Normal',
     );
 
@@ -1527,7 +1536,7 @@ sub _MaskForm {
             next TIMETYPE;
         }
 
-        my $Title = $Self->{LayoutObject}->{LanguageObject}->Translate( $TimeType->{Title} );
+        my $Title             = $Self->{LayoutObject}->{LanguageObject}->Translate( $TimeType->{Title} );
         my %TimeSelectionData = (
             Prefix => $Prefix,
             Title  => $Title,
@@ -1544,7 +1553,7 @@ sub _MaskForm {
                 'Last'   => 'last',
                 'Before' => 'before',
             },
-            Name => $Prefix . 'TimePointStart',
+            Name       => $Prefix . 'TimePointStart',
             SelectedID => $Param{ $Prefix . 'TimePointStart' } || 'Last',
         );
 

@@ -160,12 +160,11 @@ sub NotificationSend {
         else {
 
             # get fresh data
-            $WorkOrder
-                = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderGet(
+            $WorkOrder = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderGet(
                 WorkOrderID => $Param{Data}->{WorkOrderID},
                 UserID      => $Param{UserID},
                 LogNo       => 1,
-                );
+            );
         }
 
         # The event 'WorkOrderAdd' is a special case, as the workorder
@@ -264,13 +263,11 @@ sub NotificationSend {
             next AGENTID;
         }
 
-        my $PreferredLanguage
-            = $User{UserLanguage}
+        my $PreferredLanguage = $User{UserLanguage}
             || $Kernel::OM->Get('Kernel::Config')->Get('DefaultLanguage')
             || 'en';
 
-        my $NotificationKey
-            = $PreferredLanguage . '::Agent::' . $Param{Type} . '::' . $Param{Event};
+        my $NotificationKey = $PreferredLanguage . '::Agent::' . $Param{Type} . '::' . $Param{Event};
 
         # get notification (cache || database)
         my $Notification = $Self->_NotificationGet(
@@ -372,13 +369,11 @@ sub NotificationSend {
             next CUSTOMERID;
         }
 
-        my $PreferredLanguage
-            = $CustomerUser{UserLanguage}
+        my $PreferredLanguage = $CustomerUser{UserLanguage}
             || $Kernel::OM->Get('Kernel::Config')->Get('DefaultLanguage')
             || 'en';
 
-        my $NotificationKey
-            = $PreferredLanguage . '::Customer::' . $Param{Type} . '::' . $Param{Event};
+        my $NotificationKey = $PreferredLanguage . '::Customer::' . $Param{Type} . '::' . $Param{Event};
 
         # get notification (cache || database)
         my $Notification = $Self->_NotificationGet(
@@ -621,7 +616,7 @@ sub NotificationRuleAdd {
     # insert recipients
     for my $RecipientID ( @{ $Param{RecipientIDs} } ) {
         return if !$Kernel::OM->Get('Kernel::System::DB')->Do(
-            SQL => 'INSERT INTO change_notification_rec (notification_id, group_id) VALUES (?, ?)',
+            SQL  => 'INSERT INTO change_notification_rec (notification_id, group_id) VALUES (?, ?)',
             Bind => [ \$RuleID, \$RecipientID ],
         );
     }
@@ -706,7 +701,7 @@ sub NotificationRuleUpdate {
     # insert recipients
     for my $RecipientID ( @{ $Param{RecipientIDs} } ) {
         return if !$Kernel::OM->Get('Kernel::System::DB')->Do(
-            SQL => 'INSERT INTO change_notification_rec (notification_id, group_id) VALUES (?, ?)',
+            SQL  => 'INSERT INTO change_notification_rec (notification_id, group_id) VALUES (?, ?)',
             Bind => [ \$Param{ID}, \$RecipientID ],
         );
     }
@@ -1135,8 +1130,7 @@ sub _NotificationReplaceMacros {
 
     $Tag = $Start . 'OTRS_Agent_';
     my $Tag2 = $Start . 'OTRS_CURRENT_';
-    my %CurrentUser
-        = $Kernel::OM->Get('Kernel::System::User')->GetUserData( UserID => $Param{UserID} );
+    my %CurrentUser = $Kernel::OM->Get('Kernel::System::User')->GetUserData( UserID => $Param{UserID} );
 
     # html quoting of content
     if ( $Param{RichText} ) {
@@ -1333,10 +1327,9 @@ sub _NotificationReplaceMacros {
                 KEY:
                 for my $Key ( sort keys %{ $InfoHash{$Object} } ) {
                     next KEY if !$InfoHash{$Object}->{$Key};
-                    $InfoHash{$Object}->{$Key}
-                        = $Kernel::OM->Get('Kernel::System::HTMLUtils')->ToHTML(
+                    $InfoHash{$Object}->{$Key} = $Kernel::OM->Get('Kernel::System::HTMLUtils')->ToHTML(
                         String => $InfoHash{$Object}->{$Key},
-                        );
+                    );
                 }
             }
 

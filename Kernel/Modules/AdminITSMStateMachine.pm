@@ -96,7 +96,11 @@ sub Run {
     # Build drop-down for the class selection on the left side.
     my @ArrHashRef;
     for my $Class ( sort keys %{ $Self->{ConfigByClass} } ) {
-        push @ArrHashRef, { Key => $Class, Value => $Class, };
+        push @ArrHashRef,
+            {
+            Key   => $Class,
+            Value => $Class,
+            };
     }
     $GetParam{ClassSelectionString} = $Self->{LayoutObject}->BuildSelection(
         Name         => 'Class',
@@ -203,7 +207,11 @@ sub _StateTransitionUpdatePageGet {
     );
 
     # Add the special final state
-    push @{$AllStatesArrayHashRef}, { Key => '0', Value => '*END*' };
+    push @{$AllStatesArrayHashRef},
+        {
+        Key   => '0',
+        Value => '*END*'
+        };
 
     $Param{NextStateSelectionString} = $Self->{LayoutObject}->BuildSelection(
         Data       => $AllStatesArrayHashRef,
@@ -355,8 +363,7 @@ sub _OverviewStateTransitionsPageGet {
     );
 
     # lookup for state names
-    my %NextStateIDs
-        = %{ $Self->{StateMachineObject}->StateTransitionList( Class => $Param{Class} ) || {} };
+    my %NextStateIDs = %{ $Self->{StateMachineObject}->StateTransitionList( Class => $Param{Class} ) || {} };
 
     # loop over all 'State' and 'NextState' pairs for the catalog class
     for my $StateID ( sort keys %NextStateIDs ) {

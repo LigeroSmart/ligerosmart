@@ -116,8 +116,7 @@ sub Run {
     }
 
     # get the checkbox value and store it in %GetParam to make it reloadable
-    $GetParam{MoveFollowingWorkOrders}
-        = $Self->{ParamObject}->GetParam( Param => 'MoveFollowingWorkOrders' );
+    $GetParam{MoveFollowingWorkOrders} = $Self->{ParamObject}->GetParam( Param => 'MoveFollowingWorkOrders' );
 
     # get all workorder ids for this change
     my $WorkOrderIDsRef = $Self->{WorkOrderObject}->WorkOrderList(
@@ -258,7 +257,7 @@ sub Run {
             my $ValidationResult = $Self->{BackendObject}->EditFieldValueValidate(
                 DynamicFieldConfig => $DynamicFieldConfig,
                 ParamObject        => $Self->{ParamObject},
-                Mandatory => $Self->{Config}->{DynamicField}->{ $DynamicFieldConfig->{Name} } == 2,
+                Mandatory          => $Self->{Config}->{DynamicField}->{ $DynamicFieldConfig->{Name} } == 2,
             );
 
             if ( !IsHashRefWithData($ValidationResult) ) {
@@ -454,8 +453,7 @@ sub Run {
                         . "ContentID=$Attachment->{ContentID}";
 
                     # picture url in workorder atttachment
-                    my $Replace
-                        = "Action=AgentITSMWorkOrderZoom;Subaction=DownloadAttachment;"
+                    my $Replace = "Action=AgentITSMWorkOrderZoom;Subaction=DownloadAttachment;"
                         . "Filename=$Attachment->{Filename};WorkOrderID=$WorkOrderID";
 
                     # replace url
@@ -478,10 +476,10 @@ sub Run {
                     }
                 }
 
-# if there are any following workorders
-# and if the following workorders should be moved,
-# that means we want to keep the difference
-# between the planned end date of this workorder and the the planned start dates of ALL LATER workorders
+                # if there are any following workorders
+                # and if the following workorders should be moved,
+                # that means we want to keep the difference
+                # between the planned end date of this workorder and the the planned start dates of ALL LATER workorders
                 if ( @FollowingWorkOrderIDs && $GetParam{MoveFollowingWorkOrders} ) {
 
                     # convert the OLD planned end time of this workorder
@@ -575,10 +573,9 @@ sub Run {
                 my $SystemTime = $Self->{TimeObject}->TimeStamp2SystemTime(
                     String => $WorkOrder->{$TimeType},
                 );
-                my ( $Second, $Minute, $Hour, $Day, $Month, $Year )
-                    = $Self->{TimeObject}->SystemTime2Date(
+                my ( $Second, $Minute, $Hour, $Day, $Month, $Year ) = $Self->{TimeObject}->SystemTime2Date(
                     SystemTime => $SystemTime,
-                    );
+                );
 
                 # set the parameter hash for BuildDateSelection()
                 $GetParam{ $TimeType . 'Minute' } = $Minute;
@@ -658,12 +655,12 @@ sub Run {
         # get field html
         my $DynamicFieldHTML = $Self->{BackendObject}->EditFieldRender(
             DynamicFieldConfig => $DynamicFieldConfig,
-            Value        => $DynamicFieldValues{ 'DynamicField_' . $DynamicFieldConfig->{Name} },
-            ServerError  => $ValidationError{ $DynamicFieldConfig->{Name} } || '',
-            Mandatory    => $Self->{Config}->{DynamicField}->{ $DynamicFieldConfig->{Name} } == 2,
-            LayoutObject => $Self->{LayoutObject},
-            ParamObject  => $Self->{ParamObject},
-            AJAXUpdate   => 0,
+            Value              => $DynamicFieldValues{ 'DynamicField_' . $DynamicFieldConfig->{Name} },
+            ServerError        => $ValidationError{ $DynamicFieldConfig->{Name} } || '',
+            Mandatory          => $Self->{Config}->{DynamicField}->{ $DynamicFieldConfig->{Name} } == 2,
+            LayoutObject       => $Self->{LayoutObject},
+            ParamObject        => $Self->{ParamObject},
+            AJAXUpdate         => 0,
         );
 
         # skip fields that HTML could not be retrieved

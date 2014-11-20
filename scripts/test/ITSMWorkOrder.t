@@ -112,7 +112,7 @@ $UserObject->UserUpdate(
     $UserObject->GetUserData(
         UserID => $UserIDs[2],
     ),
-    ValidID => $ValidObject->ValidLookup( Valid => 'invalid' ),
+    ValidID      => $ValidObject->ValidLookup( Valid => 'invalid' ),
     ChangeUserID => 1,
 );
 push @InvalidUserIDs, pop @UserIDs;
@@ -402,8 +402,7 @@ my $TypesListUnderTest = $WorkOrderObject->WorkOrderTypeList(
 
 # do the checks
 for my $TypeID (@SortedTypeIDs) {
-    my ( $FirstHashRef, $SecondHashRef )
-        = grep { $_->{Key} == $TypeID } @{$TypesListUnderTest};
+    my ( $FirstHashRef, $SecondHashRef ) = grep { $_->{Key} == $TypeID } @{$TypesListUnderTest};
 
     # a match is expected
     $Self->True(
@@ -641,12 +640,10 @@ for my $Test (@ChangeTests) {
 
             # dump the attribute from ChangeGet() and the reference attribute
             ## no critic
-            my $ChangeAttribute
-                = Data::Dumper::Dumper( $ChangeData->{$RequestedAttribute} );    ## no critic
-            my $ReferenceAttribute
-                = Data::Dumper::Dumper( $ReferenceData->{ChangeGet}->{$RequestedAttribute} )
-                ;                                                                ## no critic
-                                                                                 # use critic
+            my $ChangeAttribute = Data::Dumper::Dumper( $ChangeData->{$RequestedAttribute} );    ## no critic
+            my $ReferenceAttribute = Data::Dumper::Dumper( $ReferenceData->{ChangeGet}->{$RequestedAttribute} )
+                ;                                                                                ## no critic
+                                                                                                 # use critic
 
             $Self->Is(
                 $ChangeAttribute,
@@ -676,9 +673,9 @@ my @WorkOrderTests = (
     # Tests where the workorder doesn't contain all data (required attributes)
     {
         Description => 'Test contains no params for WorkOrderAdd().',
-        Fails       => 1,                                              # we expect this test to fail
+        Fails       => 1,                                               # we expect this test to fail
         SourceData  => {
-            WorkOrderAdd => {},    # UserID and ChangeID are missing
+            WorkOrderAdd => {},                                         # UserID and ChangeID are missing
         },
         ReferenceData => {
             WorkOrderGet => undef,
@@ -686,9 +683,9 @@ my @WorkOrderTests = (
     },
     {
         Description => 'Test contains no UserID for WorkOrderAdd().',
-        Fails       => 1,                                              # we expect this test to fail
+        Fails       => 1,                                               # we expect this test to fail
         SourceData  => {
-            WorkOrderAdd => {                                          # UserID is missing
+            WorkOrderAdd => {                                           # UserID is missing
                 ChangeID => $WorkOrderAddTestID,
             },
         },
@@ -698,9 +695,9 @@ my @WorkOrderTests = (
     },
     {
         Description => 'Test contains no ChangeID for WorkOrderAdd().',
-        Fails       => 1,                                              # we expect this test to fail
+        Fails       => 1,                                                 # we expect this test to fail
         SourceData  => {
-            WorkOrderAdd => {                                          # ChangeID is missing
+            WorkOrderAdd => {                                             # ChangeID is missing
                 UserID => 1,
             },
         },
@@ -826,8 +823,8 @@ my @WorkOrderTests = (
                 UserID          => 1,
                 ChangeID        => $WorkOrderAddTestID,
                 WorkOrderTypeID => $WorkOrderTypeName2ID{approval},
-                WorkOrderTitle => 'WorkOrderAdd with WorkOrderTypeID - Title - ' . $UniqueSignature,
-                Instruction    => 'WorkOrderAdd with WorkOrderTypeID - Instruction - '
+                WorkOrderTitle  => 'WorkOrderAdd with WorkOrderTypeID - Title - ' . $UniqueSignature,
+                Instruction     => 'WorkOrderAdd with WorkOrderTypeID - Instruction - '
                     . $UniqueSignature,
                 Report => 'WorkOrderAdd with WorkOrderTypeID - Report - ' . $UniqueSignature,
             },
@@ -836,8 +833,8 @@ my @WorkOrderTests = (
             WorkOrderGet => {
                 ChangeID        => $WorkOrderAddTestID,
                 WorkOrderTypeID => $WorkOrderTypeName2ID{approval},
-                WorkOrderTitle => 'WorkOrderAdd with WorkOrderTypeID - Title - ' . $UniqueSignature,
-                Instruction    => 'WorkOrderAdd with WorkOrderTypeID - Instruction - '
+                WorkOrderTitle  => 'WorkOrderAdd with WorkOrderTypeID - Title - ' . $UniqueSignature,
+                Instruction     => 'WorkOrderAdd with WorkOrderTypeID - Instruction - '
                     . $UniqueSignature,
                 Report => 'WorkOrderAdd with WorkOrderTypeID - Report - ' . $UniqueSignature,
             },
@@ -1116,8 +1113,8 @@ my @WorkOrderTests = (
 push @WorkOrderTests, (
     {
         Description => 'Test contains no params for WorkOrderUpdate().',
-        Fails      => 1,    # we expect this test to fail
-        SourceData => {
+        Fails       => 1,                                                  # we expect this test to fail
+        SourceData  => {
             WorkOrderUpdate => {},
         },
         ReferenceData => {
@@ -1973,16 +1970,16 @@ push @WorkOrderTests, (
             'WorkOrderAdd() for testing the Permission() method',
         SourceData => {
             WorkOrderAdd => {
-                UserID         => 1,
-                ChangeID       => $PermissionTestID,
-                WorkOrderTitle => 'WorkOrderAdd() for Permission()  - Title - ' . $UniqueSignature,
+                UserID           => 1,
+                ChangeID         => $PermissionTestID,
+                WorkOrderTitle   => 'WorkOrderAdd() for Permission()  - Title - ' . $UniqueSignature,
                 WorkOrderAgentID => $UserIDs[0],
             },
         },
         ReferenceData => {
             WorkOrderGet => {
-                ChangeID       => $PermissionTestID,
-                WorkOrderTitle => 'WorkOrderAdd() for Permission()  - Title - ' . $UniqueSignature,
+                ChangeID         => $PermissionTestID,
+                WorkOrderTitle   => 'WorkOrderAdd() for Permission()  - Title - ' . $UniqueSignature,
                 WorkOrderAgentID => $UserIDs[0],
             },
         },
@@ -2144,11 +2141,9 @@ for my $Test (@WorkOrderTests) {
 
             # dump the attribute from WorkOrderGet() and the reference attribute
             ## no critic
-            my $WorkOrderAttribute
-                = Data::Dumper::Dumper( $WorkOrderData->{$RequestedAttribute} );    ## no critic
-            my $ReferenceAttribute
-                = Data::Dumper::Dumper( $ReferenceData->{WorkOrderGet}->{$RequestedAttribute} )
-                ;                                                                   ## no critic
+            my $WorkOrderAttribute = Data::Dumper::Dumper( $WorkOrderData->{$RequestedAttribute} );    ## no critic
+            my $ReferenceAttribute = Data::Dumper::Dumper( $ReferenceData->{WorkOrderGet}->{$RequestedAttribute} )
+                ;                                                                                      ## no critic
             ## use critic
 
             $Self->Is(
@@ -3134,7 +3129,7 @@ for my $OrderByColumn (qw(PlannedStartTime PlannedEndTime ActualStartTime Actual
     unshift @TestplanAlternative, $Last;
 
     # result what we expect
-    my @ResultReference = map { $ChangeIDsForSortTest[$_] } @{ $Testplan[$OrderByTestCount] };
+    my @ResultReference            = map { $ChangeIDsForSortTest[$_] } @{ $Testplan[$OrderByTestCount] };
     my @ResultReferenceAlternative = map { $ChangeIDsForSortTest[$_] } @TestplanAlternative;
 
     # search with direction 'DOWN'
@@ -4197,8 +4192,14 @@ my @PermissionTests = (
         },
         ReferenceData => {
             Permissions => {
-                0 => { ro => 0, rw => 0 },
-                1 => { ro => 0, rw => 0 },
+                0 => {
+                    ro => 0,
+                    rw => 0
+                },
+                1 => {
+                    ro => 0,
+                    rw => 0
+                },
             },
         },
     },
@@ -4211,14 +4212,23 @@ my @PermissionTests = (
                 {
                     GID        => $GroupName2ID{'itsm-change'},
                     UID        => $UserIDs[0],
-                    Permission => { ro => 1, rw => 0, },
+                    Permission => {
+                        ro => 1,
+                        rw => 0,
+                    },
                 },
             ],
         },
         ReferenceData => {
             Permissions => {
-                0 => { ro => 1, rw => 0, },
-                1 => { ro => 0, rw => 0, },
+                0 => {
+                    ro => 1,
+                    rw => 0,
+                },
+                1 => {
+                    ro => 0,
+                    rw => 0,
+                },
             },
         },
     },
@@ -4236,19 +4246,31 @@ my @PermissionTests = (
                 {
                     GID        => $GroupName2ID{'itsm-change'},
                     UID        => $UserIDs[0],
-                    Permission => { ro => 0, rw => 1, },
+                    Permission => {
+                        ro => 0,
+                        rw => 1,
+                    },
                 },
                 {
                     GID        => $GroupName2ID{'itsm-change'},
                     UID        => $UserIDs[1],
-                    Permission => { ro => 0, rw => 1, },
+                    Permission => {
+                        ro => 0,
+                        rw => 1,
+                    },
                 },
             ],
         },
         ReferenceData => {
             Permissions => {
-                0 => { ro => 1, rw => 1, },
-                1 => { ro => 1, rw => 0, },
+                0 => {
+                    ro => 1,
+                    rw => 1,
+                },
+                1 => {
+                    ro => 1,
+                    rw => 0,
+                },
             },
         },
     },
@@ -4262,7 +4284,10 @@ my @PermissionTests = (
                 {
                     GID        => $GroupName2ID{'itsm-change'},
                     UID        => $UserIDs[1],
-                    Permission => { ro => 0, rw => 0, },
+                    Permission => {
+                        ro => 0,
+                        rw => 0,
+                    },
                 },
             ],
         },
@@ -4276,19 +4301,31 @@ my @PermissionTests = (
                 {
                     GID        => $GroupName2ID{'itsm-change'},
                     UID        => $UserIDs[0],
-                    Permission => { ro => 0, rw => 0, },
+                    Permission => {
+                        ro => 0,
+                        rw => 0,
+                    },
                 },
                 {
                     GID        => $GroupName2ID{'itsm-change-manager'},
                     UID        => $UserIDs[0],
-                    Permission => { ro => 1, rw => 0, },
+                    Permission => {
+                        ro => 1,
+                        rw => 0,
+                    },
                 },
             ],
         },
         ReferenceData => {
             Permissions => {
-                0 => { ro => 1, rw => 0, },
-                1 => { ro => 0, rw => 0, },
+                0 => {
+                    ro => 1,
+                    rw => 0,
+                },
+                1 => {
+                    ro => 0,
+                    rw => 0,
+                },
             },
         },
     },
@@ -4301,19 +4338,31 @@ my @PermissionTests = (
                 {
                     GID        => $GroupName2ID{'itsm-change'},
                     UID        => $UserIDs[0],
-                    Permission => { ro => 0, rw => 0, },
+                    Permission => {
+                        ro => 0,
+                        rw => 0,
+                    },
                 },
                 {
                     GID        => $GroupName2ID{'itsm-change-manager'},
                     UID        => $UserIDs[0],
-                    Permission => { ro => 1, rw => 1, },
+                    Permission => {
+                        ro => 1,
+                        rw => 1,
+                    },
                 },
             ],
         },
         ReferenceData => {
             Permissions => {
-                0 => { ro => 1, rw => 1, },
-                1 => { ro => 0, rw => 0, },
+                0 => {
+                    ro => 1,
+                    rw => 1,
+                },
+                1 => {
+                    ro => 0,
+                    rw => 0,
+                },
             },
         },
     },
@@ -4326,24 +4375,39 @@ my @PermissionTests = (
                 {
                     GID        => $GroupName2ID{'itsm-change'},
                     UID        => $UserIDs[0],
-                    Permission => { ro => 0, rw => 0, },
+                    Permission => {
+                        ro => 0,
+                        rw => 0,
+                    },
                 },
                 {
                     GID        => $GroupName2ID{'itsm-change-manager'},
                     UID        => $UserIDs[0],
-                    Permission => { ro => 0, rw => 0, },
+                    Permission => {
+                        ro => 0,
+                        rw => 0,
+                    },
                 },
                 {
                     GID        => $GroupName2ID{'itsm-change-builder'},
                     UID        => $UserIDs[0],
-                    Permission => { ro => 1, rw => 0, },
+                    Permission => {
+                        ro => 1,
+                        rw => 0,
+                    },
                 },
             ],
         },
         ReferenceData => {
             Permissions => {
-                0 => { ro => 1, rw => 0, },
-                1 => { ro => 0, rw => 0, },
+                0 => {
+                    ro => 1,
+                    rw => 0,
+                },
+                1 => {
+                    ro => 0,
+                    rw => 0,
+                },
             },
         },
     },
@@ -4356,24 +4420,39 @@ my @PermissionTests = (
                 {
                     GID        => $GroupName2ID{'itsm-change'},
                     UID        => $UserIDs[0],
-                    Permission => { ro => 0, rw => 0, },
+                    Permission => {
+                        ro => 0,
+                        rw => 0,
+                    },
                 },
                 {
                     GID        => $GroupName2ID{'itsm-change-manager'},
                     UID        => $UserIDs[0],
-                    Permission => { ro => 0, rw => 0, },
+                    Permission => {
+                        ro => 0,
+                        rw => 0,
+                    },
                 },
                 {
                     GID        => $GroupName2ID{'itsm-change-builder'},
                     UID        => $UserIDs[0],
-                    Permission => { ro => 0, rw => 1, },
+                    Permission => {
+                        ro => 0,
+                        rw => 1,
+                    },
                 },
             ],
         },
         ReferenceData => {
             Permissions => {
-                0 => { ro => 1, rw => 1, },
-                1 => { ro => 0, rw => 0, },
+                0 => {
+                    ro => 1,
+                    rw => 1,
+                },
+                1 => {
+                    ro => 0,
+                    rw => 0,
+                },
             },
         },
     },
@@ -4386,29 +4465,47 @@ my @PermissionTests = (
                 {
                     GID        => $GroupName2ID{'itsm-change'},
                     UID        => $UserIDs[0],
-                    Permission => { ro => 0, rw => 0, },
+                    Permission => {
+                        ro => 0,
+                        rw => 0,
+                    },
                 },
                 {
                     GID        => $GroupName2ID{'itsm-change-manager'},
                     UID        => $UserIDs[0],
-                    Permission => { ro => 0, rw => 0, },
+                    Permission => {
+                        ro => 0,
+                        rw => 0,
+                    },
                 },
                 {
                     GID        => $GroupName2ID{'itsm-change-builder'},
                     UID        => $UserIDs[0],
-                    Permission => { ro => 0, rw => 0, },
+                    Permission => {
+                        ro => 0,
+                        rw => 0,
+                    },
                 },
                 {
                     GID        => $GroupName2ID{'itsm-change-builder'},
                     UID        => $UserIDs[1],
-                    Permission => { ro => 1, rw => 0, },
+                    Permission => {
+                        ro => 1,
+                        rw => 0,
+                    },
                 },
             ],
         },
         ReferenceData => {
             Permissions => {
-                0 => { ro => 0, rw => 0, },
-                1 => { ro => 0, rw => 0, },
+                0 => {
+                    ro => 0,
+                    rw => 0,
+                },
+                1 => {
+                    ro => 0,
+                    rw => 0,
+                },
             },
         },
     },
@@ -4421,29 +4518,47 @@ my @PermissionTests = (
                 {
                     GID        => $GroupName2ID{'itsm-change'},
                     UID        => $UserIDs[0],
-                    Permission => { ro => 0, rw => 0, },
+                    Permission => {
+                        ro => 0,
+                        rw => 0,
+                    },
                 },
                 {
                     GID        => $GroupName2ID{'itsm-change-manager'},
                     UID        => $UserIDs[0],
-                    Permission => { ro => 0, rw => 0, },
+                    Permission => {
+                        ro => 0,
+                        rw => 0,
+                    },
                 },
                 {
                     GID        => $GroupName2ID{'itsm-change-builder'},
                     UID        => $UserIDs[0],
-                    Permission => { ro => 0, rw => 0, },
+                    Permission => {
+                        ro => 0,
+                        rw => 0,
+                    },
                 },
                 {
                     GID        => $GroupName2ID{'itsm-change-builder'},
                     UID        => $UserIDs[1],
-                    Permission => { ro => 0, rw => 0, },
+                    Permission => {
+                        ro => 0,
+                        rw => 0,
+                    },
                 },
             ],
         },
         ReferenceData => {
             Permissions => {
-                0 => { ro => 0, rw => 0, },
-                1 => { ro => 0, rw => 0, },
+                0 => {
+                    ro => 0,
+                    rw => 0,
+                },
+                1 => {
+                    ro => 0,
+                    rw => 0,
+                },
             },
         },
     },
@@ -4534,8 +4649,7 @@ my $PossibleStates = $WorkOrderObject->WorkOrderPossibleStatesGet(
 # do the checks
 my @PossibleStateIDsReference = @SortedWorkOrderStateIDs;
 for my $PossibleStateID (@PossibleStateIDsReference) {
-    my ( $FirstHashRef, $SecondHashRef )
-        = grep { $_->{Key} == $PossibleStateID } @{$PossibleStates};
+    my ( $FirstHashRef, $SecondHashRef ) = grep { $_->{Key} == $PossibleStateID } @{$PossibleStates};
 
     # a match is expected
     $Self->True(
@@ -4789,7 +4903,7 @@ for my $UnittestUserID (@UserIDs) {
     # update user
     $UserObject->UserUpdate(
         %User,
-        ValidID => $ValidObject->ValidLookup( Valid => 'invalid' ),
+        ValidID      => $ValidObject->ValidLookup( Valid => 'invalid' ),
         ChangeUserID => 1,
     );
 }

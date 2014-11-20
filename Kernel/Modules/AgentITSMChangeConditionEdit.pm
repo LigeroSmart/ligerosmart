@@ -1531,7 +1531,7 @@ sub _GetAttributeSelection {
                 # get attribute name
                 my $AttributeName = $AllAttributes->{$AttributeID};
 
-         # check if the attribute is a dynamic field and dynamic fields should be used as attributes
+                # check if the attribute is a dynamic field and dynamic fields should be used as attributes
                 next ATTRIBUTEID if !$ObjectAttributeMapping->{DynamicField};
                 next ATTRIBUTEID if $AttributeName !~ m{ \A DynamicField_ (\w+) }xms;
 

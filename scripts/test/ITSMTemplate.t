@@ -77,7 +77,7 @@ for my $Counter ( 1 .. 3 ) {
             . int( rand 1_000_000 )
             . '@localhost',
         ValidID => $ValidObject->ValidLookup( Valid => 'valid' ),
-        UserID => 1,
+        UserID  => 1,
     );
     push @CustomerUserIDs, $CustomerUserID;
 }
@@ -287,9 +287,8 @@ for my $ChangeName ( sort keys %CreatedChangeID ) {
 
         # dump the attribute from ChangeGet() and the reference attribute
         ## no critic
-        my $ChangeAttribute = Data::Dumper::Dumper( $Change->{$RequestedAttribute} );
-        my $ReferenceAttribute
-            = Data::Dumper::Dumper( $ChangeDefinitions{$ChangeName}->{$RequestedAttribute} );
+        my $ChangeAttribute    = Data::Dumper::Dumper( $Change->{$RequestedAttribute} );
+        my $ReferenceAttribute = Data::Dumper::Dumper( $ChangeDefinitions{$ChangeName}->{$RequestedAttribute} );
         ## use critic
 
         $Self->Is(
@@ -346,8 +345,7 @@ for my $WorkOrderName ( sort keys %WorkOrderDefinitions ) {
         # dump the attribute from ChangeGet() and the reference attribute
         ## no critic
         my $WorkOrderAttribute = Data::Dumper::Dumper( $WorkOrder->{$RequestedAttribute} );
-        my $ReferenceAttribute
-            = Data::Dumper::Dumper( $WorkOrderDefinitions{$WorkOrderName}->{$RequestedAttribute} );
+        my $ReferenceAttribute = Data::Dumper::Dumper( $WorkOrderDefinitions{$WorkOrderName}->{$RequestedAttribute} );
         ## use critic
 
         $Self->Is(
@@ -763,9 +761,8 @@ for my $CABTemplateName (@CABTemplateNames) {
 
     # dump the attribute from ChangeGet() and the reference attribute
     ## no critic
-    my $ChangeAttribute = Data::Dumper::Dumper( [ $Change->{CABAgents}, $Change->{CABCustomers} ] );
-    my $ReferenceAttribute
-        = Data::Dumper::Dumper( [ $OrigChange->{CABAgents}, $OrigChange->{CABCustomers} ] );
+    my $ChangeAttribute    = Data::Dumper::Dumper( [ $Change->{CABAgents},     $Change->{CABCustomers} ] );
+    my $ReferenceAttribute = Data::Dumper::Dumper( [ $OrigChange->{CABAgents}, $OrigChange->{CABCustomers} ] );
     ## use critic
 
     $Self->Is(
@@ -961,10 +958,9 @@ sub _ActionAdd {
         for my $FieldValue ( sort keys %{ $ActionData->{$ActionAddValue} } ) {
 
             # store gathered information in hash for adding
-            $ActionAdd{$ActionAddValue}
-                = $ConditionObject->$FieldValue(
+            $ActionAdd{$ActionAddValue} = $ConditionObject->$FieldValue(
                 %{ $ActionData->{$ActionAddValue}->{$FieldValue} },
-                );
+            );
         }
     }
 

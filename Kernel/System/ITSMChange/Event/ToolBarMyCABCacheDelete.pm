@@ -64,7 +64,7 @@ sub Run {
             $ChangedCABAgentsLookup{$CABAgent}++;
         }
 
-     # find the CABAgents which have been changed, which are only agents with a count of exactly one
+        # find the CABAgents which have been changed, which are only agents with a count of exactly one
         my @ChangedCABAgents;
         for my $CABAgent ( sort keys %ChangedCABAgentsLookup ) {
             if ( $ChangedCABAgentsLookup{$CABAgent} == 1 ) {

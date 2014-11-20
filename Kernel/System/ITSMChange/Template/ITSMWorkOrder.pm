@@ -130,11 +130,10 @@ sub Serialize {
     if ( $Param{StateReset} ) {
 
         # get initial workorder state id
-        my $NextStateIDs
-            = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMStateMachine')->StateTransitionGet(
+        my $NextStateIDs = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMStateMachine')->StateTransitionGet(
             StateID => 0,
             Class   => 'ITSM::ChangeManagement::WorkOrder::State',
-            );
+        );
         $CleanWorkOrder->{WorkOrderStateID} = $NextStateIDs->[0];
 
         # reset actual start and end time
@@ -157,10 +156,9 @@ sub Serialize {
     my $OriginalData = { WorkOrderAdd => $CleanWorkOrder };
 
     # get attachments
-    my @WorkOrderAttachments
-        = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderAttachmentList(
+    my @WorkOrderAttachments = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderAttachmentList(
         WorkOrderID => $WorkOrder->{WorkOrderID},
-        );
+    );
 
     for my $Filename (@WorkOrderAttachments) {
 
@@ -342,14 +340,12 @@ sub _WorkOrderAdd {
                             );
 
                         # calculate the old planned end time into epoch seconds
-                        my $OldPlannedEndTimeInSeconds
-                            = $Kernel::OM->Get('Kernel::System::Time')->TimeStamp2SystemTime(
+                        my $OldPlannedEndTimeInSeconds = $Kernel::OM->Get('Kernel::System::Time')->TimeStamp2SystemTime(
                             String => $Data{PlannedEndTime},
-                            );
+                        );
 
                         # the time length of the workorder in seconds
-                        $WorkOrderLengthInSeconds
-                            = $OldPlannedEndTimeInSeconds - $OldPlannedStartTimeInSeconds;
+                        $WorkOrderLengthInSeconds = $OldPlannedEndTimeInSeconds - $OldPlannedStartTimeInSeconds;
                     }
 
                     # calculate the time difference
@@ -504,19 +500,17 @@ sub _AttachmentAdd {
 
     my $OldWorkOrderID = $NewWorkOrderID2OldWorkOrderID{ $Param{WorkOrderID} };
 
-    my $Attachment
-        = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderAttachmentGet(
+    my $Attachment = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderAttachmentGet(
         WorkOrderID => $OldWorkOrderID,
         Filename    => $Param{Data}->{Filename},
-        );
+    );
 
-    my $Success
-        = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderAttachmentAdd(
+    my $Success = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderAttachmentAdd(
         %{$Attachment},
         ChangeID    => $Param{ChangeID},
         WorkOrderID => $Param{WorkOrderID},
         UserID      => $Param{UserID},
-        );
+    );
 
     my %Info = (
         Success => $Success,

@@ -161,8 +161,7 @@ sub Run {
         }
 
         # get list of relevant ticket types
-        my $AddChangeLinkTicketTypes
-            = $Self->{ConfigObject}->Get('ITSMChange::AddChangeLinkTicketTypes');
+        my $AddChangeLinkTicketTypes = $Self->{ConfigObject}->Get('ITSMChange::AddChangeLinkTicketTypes');
 
         # check the list of relevant ticket types
         if (
@@ -195,8 +194,7 @@ sub Run {
         if ( !$IsRelevant{ $Ticket{Type} } ) {
 
             # set error message
-            my $Message
-                = "Invalid ticket type '$Ticket{Type}' for directly linking a ticket with a change. "
+            my $Message = "Invalid ticket type '$Ticket{Type}' for directly linking a ticket with a change. "
                 . 'Only the following ticket type(s) are allowed for this operation: '
                 . join ',', @{$AddChangeLinkTicketTypes};
 
@@ -294,7 +292,7 @@ sub Run {
             my $ValidationResult = $Self->{BackendObject}->EditFieldValueValidate(
                 DynamicFieldConfig => $DynamicFieldConfig,
                 ParamObject        => $Self->{ParamObject},
-                Mandatory => $Self->{Config}->{DynamicField}->{ $DynamicFieldConfig->{Name} } == 2,
+                Mandatory          => $Self->{Config}->{DynamicField}->{ $DynamicFieldConfig->{Name} } == 2,
             );
 
             if ( !IsHashRefWithData($ValidationResult) ) {
@@ -440,8 +438,7 @@ sub Run {
                                 . "ContentID=$CachedAttachment->{ContentID}";
 
                             # picture url in change atttachment
-                            my $Replace
-                                = "Action=AgentITSMChangeZoom;Subaction=DownloadAttachment;"
+                            my $Replace = "Action=AgentITSMChangeZoom;Subaction=DownloadAttachment;"
                                 . "Filename=$CachedAttachment->{Filename};ChangeID=$ChangeID";
 
                             # replace urls
@@ -635,12 +632,12 @@ sub Run {
         # get field html
         my $DynamicFieldHTML = $Self->{BackendObject}->EditFieldRender(
             DynamicFieldConfig => $DynamicFieldConfig,
-            Value        => $DynamicFieldValues{ 'DynamicField_' . $DynamicFieldConfig->{Name} },
-            ServerError  => $ValidationError{ $DynamicFieldConfig->{Name} } || '',
-            Mandatory    => $Self->{Config}->{DynamicField}->{ $DynamicFieldConfig->{Name} } == 2,
-            LayoutObject => $Self->{LayoutObject},
-            ParamObject  => $Self->{ParamObject},
-            AJAXUpdate   => 0,
+            Value              => $DynamicFieldValues{ 'DynamicField_' . $DynamicFieldConfig->{Name} },
+            ServerError        => $ValidationError{ $DynamicFieldConfig->{Name} } || '',
+            Mandatory          => $Self->{Config}->{DynamicField}->{ $DynamicFieldConfig->{Name} } == 2,
+            LayoutObject       => $Self->{LayoutObject},
+            ParamObject        => $Self->{ParamObject},
+            AJAXUpdate         => 0,
         );
 
         # skip fields that HTML could not be retrieved

@@ -564,8 +564,7 @@ sub Run {
                     );
 
                     # add current incident signal
-                    $ServiceData{CurInciSignal}
-                        = $InciSignals{ $ServiceData{CurInciStateType} || '' } || '';
+                    $ServiceData{CurInciSignal} = $InciSignals{ $ServiceData{CurInciStateType} || '' } || '';
 
                     # store service data
                     push @ServicesData, \%ServiceData;
