@@ -252,6 +252,23 @@ run the code uninstall part
 
 =cut
 
+=item CodeUpgradeFromLowerThan_4_0_1()
+
+This function is only executed if the installed module version is smaller than 4.0.1.
+
+my $Result = $CodeObject->CodeUpgradeFromLowerThan_4_0_1();
+
+=cut
+
+sub CodeUpgradeFromLowerThan_4_0_1 {    ## no critic
+    my ( $Self, %Param ) = @_;
+
+    # migrate the DTL Content in the SysConfig
+    $Self->_MigrateDTLInSysConfig();
+
+    return 1;
+}
+
 sub CodeUninstall {
     my ( $Self, %Param ) = @_;
 
@@ -743,6 +760,93 @@ sub _DynamicFieldsDelete {
     return 1;
 }
 
+sub _MigrateDTLInSysConfig {
+
+    # create needed objects
+    my $ConfigObject    = $Kernel::OM->Get('Kernel::Config');
+    my $SysConfigObject = $Kernel::OM->Get('Kernel::System::SysConfig');
+    my $ProviderObject  = Kernel::Output::Template::Provider->new();
+
+    # define setting for migrating
+    my @SettingsToTT;
+
+    # include menu settings
+    my $SettingName    = 'FAQ::Frontend::MenuModule';
+    my $SysConfigEntry = $ConfigObject->Get($SettingName);
+
+    if ( IsHashRefWithData($SysConfigEntry) ) {
+
+        for my $Item ( sort keys %{$SysConfigEntry} ) {
+            push @SettingsToTT, {
+                Key    => $SettingName,
+                SubKey => $Item
+            };
+        }
+    }
+
+    SETTING:
+    for my $Values (@SettingsToTT) {
+
+        # initialize setting
+        my $Key    = $Values->{Key}    || '';
+        my $SubKey = $Values->{SubKey} || '';
+
+        next SETTING if !$Key;
+
+        # next SETTING if !$SubKey;
+
+        # get setting's content
+        my $Setting = $ConfigObject->Get($Key);
+        next SETTING if !$Setting;
+
+        my $SettingContent;
+        if ( !$SubKey ) {
+            $SettingContent = $Setting;
+        }
+        elsif ( $SubKey eq 'Subject' ) {
+            $SettingContent = $Setting->{$SubKey} || '';
+        }
+        else {
+            $SettingContent = $Setting->{$SubKey}->{Link} || '';
+        }
+
+        # do nothing no value for migrating
+        next SETTING if !$SettingContent;
+
+        my $TTContent;
+        eval {
+            $TTContent = $ProviderObject->MigrateDTLtoTT( Content => $SettingContent );
+        };
+        if ($@) {
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
+                Priority => 'error',
+                Message  => "$Key : $@!",
+            );
+        }
+        else {
+
+            next SETTING if $TTContent eq $SettingContent;
+
+            # set migrated value
+            if ( !$SubKey ) {
+                $Setting = $TTContent;
+            }
+            elsif ( $SubKey eq 'Subject' ) {
+                $Setting->{$SubKey} = $TTContent;
+            }
+            else {
+                $Setting->{$SubKey}->{Link} = $TTContent;
+            }
+
+            my $Success = $SysConfigObject->ConfigItemUpdate(
+                Valid => 1,
+                Key   => $Key,
+                Value => $Setting,
+            );
+        }
+    }
+    return 1;
+}
 1;
 
 =back
