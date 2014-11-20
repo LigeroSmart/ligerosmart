@@ -1,12 +1,12 @@
-#
+# 
 # Translators:
 # José Junior <joserribeiro26@gmail.com>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2014-09-22 18:24+0000\n"
-"Last-Translator: José Junior <joserribeiro26@gmail.com>\n"
+"PO-Revision-Date: 2014-11-14 00:32+0000\n"
+"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/projects/p/OTRS/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -187,10 +187,6 @@ msgid "Edit Category"
 msgstr "Alterar Categoria"
 
 #. Template: AgentFAQCategory
-msgid "Will be shown as comment in Explorer."
-msgstr "Será exibido como comentário no Explorador"
-
-#. Template: AgentFAQCategory
 msgid "Please select at least one permission group."
 msgstr "Por favor, selecione pelo menos um grupo de permissão."
 
@@ -199,11 +195,17 @@ msgid "Agent groups that can access articles in this category."
 msgstr "Grupos de atendentes que podem acessar artigos nesta categoria."
 
 #. Template: AgentFAQCategory
+msgid "Will be shown as comment in Explorer."
+msgstr "Será exibido como comentário no Explorador"
+
+#. Template: AgentFAQCategory
 msgid "Do you really want to delete this category?"
 msgstr "Você realmente quer apagar esta categoria?"
 
 #. Template: AgentFAQCategory
-msgid "You can not delete this category. It is used in at least one FAQ article and/or is parent of at least one other category"
+msgid ""
+"You can not delete this category. It is used in at least one FAQ article "
+"and/or is parent of at least one other category"
 msgstr "Você não pode remover essa categoria. Ela é utilizada por pelo menos um Artigo da FAQ e/ou é pai de pelo menos uma outra categoria. "
 
 #. Template: AgentFAQCategory
@@ -283,7 +285,8 @@ msgid "Do you really want to delete this language?"
 msgstr "Você realmente quer excluir este idioma?"
 
 #. Template: AgentFAQLanguage
-msgid "You can not delete this language. It is used in at least one FAQ article!"
+msgid ""
+"You can not delete this language. It is used in at least one FAQ article!"
 msgstr "Você não pode excluir este idioma. Ele é usado em pelo menos um artigo FAQ!"
 
 #. Template: AgentFAQLanguage
@@ -301,10 +304,6 @@ msgstr "Artigos FAQ por página"
 #. Template: AgentFAQOverviewSmall
 msgid "No FAQ data found."
 msgstr "Não foram encontrados dados de FAQ."
-
-#. Template: AgentFAQOverviewSmall
-msgid "A generic FAQ table"
-msgstr "Uma tabela de FAQ genérica"
 
 #. Template: AgentFAQPrint
 msgid "FAQ-Info"
@@ -439,7 +438,9 @@ msgid "Download Attachment"
 msgstr "Baixar anexos"
 
 #. Template: AgentFAQZoom
-msgid "How helpful was this article? Please give us your rating and help to improve the FAQ Database. Thank You!"
+msgid ""
+"How helpful was this article? Please give us your rating and help to improve"
+" the FAQ Database. Thank You!"
 msgstr "Este artigo te ajudou?"
 
 #. Template: AgentFAQZoom
@@ -522,37 +523,17 @@ msgstr "Procure por artigos com palavras-chave"
 msgid "Public"
 msgstr "Público"
 
+#. Template: PublicFAQSearchResultShort
+msgid "Back to FAQ Explorer"
+msgstr ""
+
 #. SysConfig
-msgid "A filter for HTML output to add links behind a defined string. The element Image allows two input kinds. First the name of an image (e.g. faq.png). In this case the OTRS image path will be used. The second possibility is to insert the link to the image."
+msgid ""
+"A filter for HTML output to add links behind a defined string. The element "
+"Image allows two input kinds. First the name of an image (e.g. faq.png). In "
+"this case the OTRS image path will be used. The second possibility is to "
+"insert the link to the image."
 msgstr "Um filtro de saída HTML para adicionar links para trás uma seqüência definida. O elemento de imagem permite dois tipos de entrada. Primeiro, o nome de uma imagem (faq.png, por exemplo). Neste caso, o caminho da imagem OTRS será usado. A segunda possibilidade é inserir o link para a imagem."
-
-#. SysConfig
-msgid "Allows adding notes in the close ticket screen of the agent interface. Can be overwritten by Ticket::Frontend::NeedAccountedTime."
-msgstr ""
-
-#. SysConfig
-msgid "Allows adding notes in the ticket free text screen of the agent interface. Can be overwritten by Ticket::Frontend::NeedAccountedTime."
-msgstr ""
-
-#. SysConfig
-msgid "Allows adding notes in the ticket note screen of the agent interface. Can be overwritten by Ticket::Frontend::NeedAccountedTime."
-msgstr ""
-
-#. SysConfig
-msgid "Allows adding notes in the ticket owner screen of a zoomed ticket in the agent interface. Can be overwritten by Ticket::Frontend::NeedAccountedTime."
-msgstr ""
-
-#. SysConfig
-msgid "Allows adding notes in the ticket pending screen of a zoomed ticket in the agent interface. Can be overwritten by Ticket::Frontend::NeedAccountedTime."
-msgstr ""
-
-#. SysConfig
-msgid "Allows adding notes in the ticket priority screen of a zoomed ticket in the agent interface. Can be overwritten by Ticket::Frontend::NeedAccountedTime."
-msgstr ""
-
-#. SysConfig
-msgid "Allows adding notes in the ticket responsible screen of the agent interface. Can be overwritten by Ticket::Frontend::NeedAccountedTime."
-msgstr ""
 
 #. SysConfig
 msgid "CSS color for the voting result."
@@ -579,6 +560,10 @@ msgid "Default language for FAQ articles on single language mode."
 msgstr "Idioma padrão para os artigos FAQ no modo de idioma único."
 
 #. SysConfig
+msgid "Default maximum size of the titles in a FAQ article to be shown."
+msgstr ""
+
+#. SysConfig
 msgid "Default priority of tickets for the approval of FAQ articles."
 msgstr "Prioridade padrão de chamados para a aprovação dos artigos FAQ."
 
@@ -595,7 +580,9 @@ msgid "Default type of tickets for the approval of FAQ articles."
 msgstr "Tipo padrão do chamados para a aprovação de artigos da FAQ."
 
 #. SysConfig
-msgid "Default value for the Action parameter for the public frontend. The Action parameter is used in the scripts of the system."
+msgid ""
+"Default value for the Action parameter for the public frontend. The Action "
+"parameter is used in the scripts of the system."
 msgstr "Valor padrão para o parâmetro de Recurso para a interface pública. O parâmetro de ação é usado nos scripts do sistema."
 
 #. SysConfig
@@ -611,75 +598,111 @@ msgid "Defines an overview module to show the small view of a FAQ list."
 msgstr "Define um módulo de resumo para mostrar a visualizar de uma pequena lista de FAQ."
 
 #. SysConfig
-msgid "Defines if time accounting is mandatory in the agent interface. If activated, a note must be entered for all ticket actions (no matter if the note itself is configured as active or is originally mandatory for the individual ticket action screen)."
-msgstr ""
-
-#. SysConfig
-msgid "Defines the default FAQ attribute for FAQ sorting in a FAQ search of the agent interface."
+msgid ""
+"Defines the default FAQ attribute for FAQ sorting in a FAQ search of the "
+"agent interface."
 msgstr "Define o atributo padrão FAQ para classificar o FAQ em uma pesquisa FAQ da interface do atendente."
 
 #. SysConfig
-msgid "Defines the default FAQ attribute for FAQ sorting in a FAQ search of the customer interface."
+msgid ""
+"Defines the default FAQ attribute for FAQ sorting in a FAQ search of the "
+"customer interface."
 msgstr "Define o atributo padrão FAQ para classificar o FAQ em uma pesquisa FAQ da interface do cliente."
 
 #. SysConfig
-msgid "Defines the default FAQ attribute for FAQ sorting in a FAQ search of the public interface."
+msgid ""
+"Defines the default FAQ attribute for FAQ sorting in a FAQ search of the "
+"public interface."
 msgstr "Define o atributo padrão FAQ para classificar o FAQ em uma pesquisa FAQ da interface pública."
 
 #. SysConfig
-msgid "Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the agent interface."
+msgid ""
+"Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the"
+" agent interface."
 msgstr "Define o atributo padrão FAQ para classificar o FAQ no Gerenciador FAQ da interface do atendente"
 
 #. SysConfig
-msgid "Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the customer interface."
+msgid ""
+"Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the"
+" customer interface."
 msgstr "Define o atributo padrão FAQ para classificar o FAQ no Gerenciador FAQ da interface do cliente"
 
 #. SysConfig
-msgid "Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the public interface."
+msgid ""
+"Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the"
+" public interface."
 msgstr "Define o atributo padrão FAQ para classificar o FAQ no Gerenciador FAQ da interface pública"
 
 #. SysConfig
-msgid "Defines the default FAQ order in the FAQ Explorer result of the agent interface. Up: oldest on top. Down: latest on top."
+msgid ""
+"Defines the default FAQ order in the FAQ Explorer result of the agent "
+"interface. Up: oldest on top. Down: latest on top."
 msgstr "Define a ordem padrão de FAQ no resultado do Gerenciador FAQ da interface do atendente. Acima: A mais antiga no topo. Abaixo: mais recentes no topo."
 
 #. SysConfig
-msgid "Defines the default FAQ order in the FAQ Explorer result of the customer interface. Up: oldest on top. Down: latest on top."
+msgid ""
+"Defines the default FAQ order in the FAQ Explorer result of the customer "
+"interface. Up: oldest on top. Down: latest on top."
 msgstr "Define a ordem padrão de FAQ no resultado do Gerenciador FAQ da interface do cliente. Acima: A mais antiga no topo. Abaixo: mais recentes no topo."
 
 #. SysConfig
-msgid "Defines the default FAQ order in the FAQ Explorer result of the public interface. Up: oldest on top. Down: latest on top."
+msgid ""
+"Defines the default FAQ order in the FAQ Explorer result of the public "
+"interface. Up: oldest on top. Down: latest on top."
 msgstr "Define a ordem padrão de FAQ no resultado do Gerenciador FAQ da interface pública. Acima: A mais antiga no topo. Abaixo: mais recentes no topo."
 
 #. SysConfig
-msgid "Defines the default FAQ order of a search result in the agent interface. Up: oldest on top. Down: latest on top."
+msgid ""
+"Defines the default FAQ order of a search result in the agent interface. Up:"
+" oldest on top. Down: latest on top."
 msgstr "Define a ordem padrão de FAQ no resultado da pesquisa na interface do atendente. Acima: A mais antiga no topo. Abaixo: mais recentes no topo."
 
 #. SysConfig
-msgid "Defines the default FAQ order of a search result in the customer interface. Up: oldest on top. Down: latest on top."
+msgid ""
+"Defines the default FAQ order of a search result in the customer interface. "
+"Up: oldest on top. Down: latest on top."
 msgstr "Define a ordem padrão de FAQ no resultado da pesquisa na interface do cliente. Acima: A mais antiga no topo. Abaixo: mais recentes no topo."
 
 #. SysConfig
-msgid "Defines the default FAQ order of a search result in the public interface. Up: oldest on top. Down: latest on top."
+msgid ""
+"Defines the default FAQ order of a search result in the public interface. "
+"Up: oldest on top. Down: latest on top."
 msgstr "Define a ordem padrão de FAQ no resultado da pesquisa na interface pública. Acima: A mais antiga no topo. Abaixo: mais recentes no topo."
 
 #. SysConfig
-msgid "Defines the information to be inserted in a FAQ based Ticket. \"Full FAQ\" includes text, attachments and inline images."
+msgid "Defines the default shown FAQ search attribute for FAQ search screen."
 msgstr ""
 
 #. SysConfig
-msgid "Defines the shown columns in the FAQ Explorer. This option has no effect on the position of the column."
+msgid ""
+"Defines the information to be inserted in a FAQ based Ticket. \"Full FAQ\" "
+"includes text, attachments and inline images."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Defines the shown columns in the FAQ Explorer. This option has no effect on "
+"the position of the column."
 msgstr "Define as colunas mostradas no Gerenciador FAQ. Esta opção não tem efeito sobre a posição da coluna."
 
 #. SysConfig
-msgid "Defines the shown columns in the FAQ journal. This option has no effect on the position of the column."
+msgid ""
+"Defines the shown columns in the FAQ journal. This option has no effect on "
+"the position of the column."
 msgstr "Define as colunas mostradas no jornal FAQ. Esta opção não tem efeito sobre a posição da coluna."
 
 #. SysConfig
-msgid "Defines the shown columns in the FAQ search. This option has no effect on the position of the column."
+msgid ""
+"Defines the shown columns in the FAQ search. This option has no effect on "
+"the position of the column."
 msgstr "Define as colunas mostradas na pesquisa FAQ. Esta opção não tem efeito sobre a posição da coluna."
 
 #. SysConfig
-msgid "Defines where the 'Insert FAQ' link will be displayed. Note: AgentTicketActionCommon includes AgentTicketNote, AgentTicketClose, AgentTicketFreeText, AgentTicketOwner, AgentTicketPending, AgentTicketPriority and AgentTicketResponsible."
+msgid ""
+"Defines where the 'Insert FAQ' link will be displayed. Note: "
+"AgentTicketActionCommon includes AgentTicketNote, AgentTicketClose, "
+"AgentTicketFreeText, AgentTicketOwner, AgentTicketPending, "
+"AgentTicketPriority and AgentTicketResponsible."
 msgstr "Define onde o link 'Inserir FAQ' será exibido. Nota: Os Recurso comum do Atendente inclui Abrir Chamado, Fechar Chamado, Chamado de Texto Livre, Chamado do proprietário, Chamado pendente, Chamado prioritário e Responsável pelo Chamado."
 
 #. SysConfig
@@ -691,59 +714,90 @@ msgid "Delete this FAQ"
 msgstr "Excluir este FAQ!"
 
 #. SysConfig
-msgid "Dynamic fields shown in the FAQ add screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
+msgid ""
+"Dynamic fields shown in the FAQ add screen of the agent interface. Possible "
+"settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
 msgstr ""
 
 #. SysConfig
-msgid "Dynamic fields shown in the FAQ edit screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
+msgid ""
+"Dynamic fields shown in the FAQ edit screen of the agent interface. Possible"
+" settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
 msgstr ""
 
 #. SysConfig
-msgid "Dynamic fields shown in the FAQ overview screen of the customer interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
+msgid ""
+"Dynamic fields shown in the FAQ overview screen of the customer interface. "
+"Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
 msgstr ""
 
 #. SysConfig
-msgid "Dynamic fields shown in the FAQ overview screen of the public interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
+msgid ""
+"Dynamic fields shown in the FAQ overview screen of the public interface. "
+"Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
 msgstr ""
 
 #. SysConfig
-msgid "Dynamic fields shown in the FAQ print screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled."
+msgid ""
+"Dynamic fields shown in the FAQ print screen of the agent interface. "
+"Possible settings: 0 = Disabled, 1 = Enabled."
 msgstr ""
 
 #. SysConfig
-msgid "Dynamic fields shown in the FAQ print screen of the customer interface. Possible settings: 0 = Disabled, 1 = Enabled."
+msgid ""
+"Dynamic fields shown in the FAQ print screen of the customer interface. "
+"Possible settings: 0 = Disabled, 1 = Enabled."
 msgstr ""
 
 #. SysConfig
-msgid "Dynamic fields shown in the FAQ print screen of the public interface. Possible settings: 0 = Disabled, 1 = Enabled."
+msgid ""
+"Dynamic fields shown in the FAQ print screen of the public interface. "
+"Possible settings: 0 = Disabled, 1 = Enabled."
 msgstr ""
 
 #. SysConfig
-msgid "Dynamic fields shown in the FAQ search screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and shown by default."
+msgid ""
+"Dynamic fields shown in the FAQ search screen of the agent interface. "
+"Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and shown by "
+"default."
 msgstr ""
 
 #. SysConfig
-msgid "Dynamic fields shown in the FAQ search screen of the customer interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and shown by default."
+msgid ""
+"Dynamic fields shown in the FAQ search screen of the customer interface. "
+"Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and shown by "
+"default."
 msgstr ""
 
 #. SysConfig
-msgid "Dynamic fields shown in the FAQ search screen of the public interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and shown by default."
+msgid ""
+"Dynamic fields shown in the FAQ search screen of the public interface. "
+"Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and shown by "
+"default."
 msgstr ""
 
 #. SysConfig
-msgid "Dynamic fields shown in the FAQ small format overview screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled."
+msgid ""
+"Dynamic fields shown in the FAQ small format overview screen of the agent "
+"interface. Possible settings: 0 = Disabled, 1 = Enabled."
 msgstr ""
 
 #. SysConfig
-msgid "Dynamic fields shown in the FAQ zoom screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled."
+msgid ""
+"Dynamic fields shown in the FAQ zoom screen of the agent interface. Possible"
+" settings: 0 = Disabled, 1 = Enabled."
 msgstr ""
 
 #. SysConfig
-msgid "Dynamic fields shown in the FAQ zoom screen of the customer interface. Possible settings: 0 = Disabled, 1 = Enabled."
+msgid ""
+"Dynamic fields shown in the FAQ zoom screen of the customer interface. "
+"Possible settings: 0 = Disabled, 1 = Enabled."
 msgstr ""
 
 #. SysConfig
-msgid "Dynamic fields shown in the FAQ zoom screen of the public interface. Possible settings: 0 = Disabled, 1 = Enabled."
+msgid ""
+"Dynamic fields shown in the FAQ zoom screen of the public interface. "
+"Possible settings: 0 = Disabled, 1 = Enabled."
 msgstr ""
 
 #. SysConfig
@@ -839,39 +893,99 @@ msgid "List of state types which can be used in the public interface."
 msgstr "Lista dos tipos de estado que pode ser utilizado na interface pública."
 
 #. SysConfig
-msgid "Maximum number of FAQ articles to be displayed in the FAQ Explorer result of the agent interface."
+msgid ""
+"Maximum number of FAQ articles to be displayed in the FAQ Explorer result of"
+" the agent interface."
 msgstr "O número máximo de artigos FAQ para ser exibido no resultado do Gerenciador FAQ da interface do atendente."
 
 #. SysConfig
-msgid "Maximum number of FAQ articles to be displayed in the FAQ Explorer result of the customer interface."
+msgid ""
+"Maximum number of FAQ articles to be displayed in the FAQ Explorer result of"
+" the customer interface."
 msgstr "O número máximo de artigos FAQ para ser exibido no resultado do Gerenciador FAQ da interface do cliente."
 
 #. SysConfig
-msgid "Maximum number of FAQ articles to be displayed in the FAQ Explorer result of the public interface."
+msgid ""
+"Maximum number of FAQ articles to be displayed in the FAQ Explorer result of"
+" the public interface."
 msgstr "O número máximo de artigos FAQ para ser exibido no resultado do Gerenciador FAQ da interface pública."
 
 #. SysConfig
-msgid "Maximum number of FAQ articles to be displayed in the FAQ journal in the agent interface."
+msgid ""
+"Maximum number of FAQ articles to be displayed in the FAQ journal in the "
+"agent interface."
 msgstr "O número máximo de artigos FAQ para ser exibido no jornal FAQ da interface do atendente."
 
 #. SysConfig
-msgid "Maximum number of FAQ articles to be displayed in the result of a search in the agent interface."
+msgid ""
+"Maximum number of FAQ articles to be displayed in the result of a search in "
+"the agent interface."
 msgstr "O número máximo de artigos FAQ para ser exibido no resultado de uma pesquisa na interface do atendente."
 
 #. SysConfig
-msgid "Maximum number of FAQ articles to be displayed in the result of a search in the customer interface."
+msgid ""
+"Maximum number of FAQ articles to be displayed in the result of a search in "
+"the customer interface."
 msgstr "O número máximo de artigos FAQ para ser exibido no resultado de uma pesquisa na interface do cliente."
 
 #. SysConfig
-msgid "Maximum number of FAQ articles to be displayed in the result of a search in the public interface."
+msgid ""
+"Maximum number of FAQ articles to be displayed in the result of a search in "
+"the public interface."
 msgstr "O número máximo de artigos FAQ para ser exibido no resultado de uma pesquisa na interface publica."
 
 #. SysConfig
-msgid "Module to generate HTML OpenSearch profile for short FAQ search in the public interface."
+msgid ""
+"Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer "
+"in the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid "Module to generate HTML OpenSearch profile for short faq search in the customer interface."
+msgid ""
+"Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer "
+"in the customer interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer "
+"in the public interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Maximum size of the titles in a FAQ article to be shown in the FAQ Search in"
+" the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Maximum size of the titles in a FAQ article to be shown in the FAQ Search in"
+" the customer interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Maximum size of the titles in a FAQ article to be shown in the FAQ Search in"
+" the public interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Maximum size of the titles in a FAQ article to be shown in the FAQ journal "
+"in the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Module to generate HTML OpenSearch profile for short FAQ search in the "
+"public interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Module to generate HTML OpenSearch profile for short faq search in the "
+"customer interface."
 msgstr ""
 
 #. SysConfig
@@ -887,19 +1001,27 @@ msgid "New FAQ articles need approval before they get published."
 msgstr "Novos artigos FAQ precisam de aprovação antes de ser publicados."
 
 #. SysConfig
-msgid "Number of FAQ articles to be displayed in the FAQ Explorer of the customer interface."
+msgid ""
+"Number of FAQ articles to be displayed in the FAQ Explorer of the customer "
+"interface."
 msgstr "Número de artigos FAQ para ser exibido no Gerenciador FAQ do interface do cliente"
 
 #. SysConfig
-msgid "Number of FAQ articles to be displayed in the FAQ Explorer of the public interface."
+msgid ""
+"Number of FAQ articles to be displayed in the FAQ Explorer of the public "
+"interface."
 msgstr "Número de artigos FAQ para ser exibido no Gerenciador FAQ do interface publica"
 
 #. SysConfig
-msgid "Number of FAQ articles to be displayed on each page of a search result in the customer interface."
+msgid ""
+"Number of FAQ articles to be displayed on each page of a search result in "
+"the customer interface."
 msgstr "Número de artigos FAQ para ser exibido em cada página de um resultado de pesquisa na interface do cliente"
 
 #. SysConfig
-msgid "Number of FAQ articles to be displayed on each page of a search result in the public interface."
+msgid ""
+"Number of FAQ articles to be displayed on each page of a search result in "
+"the public interface."
 msgstr "Número de artigos FAQ para ser exibido em cada página de um resultado de pesquisa na interface publica"
 
 #. SysConfig
@@ -915,11 +1037,15 @@ msgid "Number of shown items in the top 10 feature."
 msgstr "Número de itens mostrados no recurso top 10."
 
 #. SysConfig
-msgid "Parameters for the pages (in which the FAQ items are shown) of the small FAQ journal overview."
+msgid ""
+"Parameters for the pages (in which the FAQ items are shown) of the small FAQ"
+" journal overview."
 msgstr "Parâmetros de páginas (nas quais os itens FAQ são mostrados) da visão geral pequena do jornal FAQ."
 
 #. SysConfig
-msgid "Parameters for the pages (in which the FAQ items are shown) of the small FAQ overview."
+msgid ""
+"Parameters for the pages (in which the FAQ items are shown) of the small FAQ"
+" overview."
 msgstr "Parâmetros de páginas (nas quais os itens FAQ são mostrados) da visão geral pequena de FAQ."
 
 #. SysConfig
@@ -939,31 +1065,37 @@ msgid "Search FAQ"
 msgstr "Pesquisa FAQ"
 
 #. SysConfig
-msgid "Set the default height (in pixels) of inline HTML fields in AgentFAQZoom."
+msgid ""
+"Set the default height (in pixels) of inline HTML fields in AgentFAQZoom."
 msgstr ""
 
 #. SysConfig
-msgid "Set the default height (in pixels) of inline HTML fields in CustomerFAQZoom (and PublicFAQZoom)."
+msgid ""
+"Set the default height (in pixels) of inline HTML fields in CustomerFAQZoom "
+"(and PublicFAQZoom)."
 msgstr ""
 
 #. SysConfig
-msgid "Set the maximum height (in pixels) of inline HTML fields in AgentFAQZoom."
+msgid ""
+"Set the maximum height (in pixels) of inline HTML fields in AgentFAQZoom."
 msgstr ""
 
 #. SysConfig
-msgid "Set the maximum height (in pixels) of inline HTML fields in CustomerFAQZoom (and PublicFAQZoom)."
+msgid ""
+"Set the maximum height (in pixels) of inline HTML fields in CustomerFAQZoom "
+"(and PublicFAQZoom)."
 msgstr ""
 
 #. SysConfig
-msgid "Sets if note must be filled in by the agent. Can be overwritten by Ticket::Frontend::NeedAccountedTime."
-msgstr ""
-
-#. SysConfig
-msgid "Show \"Insert FAQ Link\" Button in AgentFAQZoomSmall for public FAQ Articles."
+msgid ""
+"Show \"Insert FAQ Link\" Button in AgentFAQZoomSmall for public FAQ "
+"Articles."
 msgstr "Mostra botão \"Inserir Link FAQ\" em Ampliação pequena para o artigos FAQ públicos"
 
 #. SysConfig
-msgid "Show \"Insert FAQ Text & Link\" / \"Insert Full FAQ & Link\" Button in AgentFAQZoomSmall for public FAQ Articles."
+msgid ""
+"Show \"Insert FAQ Text & Link\" / \"Insert Full FAQ & Link\" Button in "
+"AgentFAQZoomSmall for public FAQ Articles."
 msgstr ""
 
 #. SysConfig
@@ -999,27 +1131,39 @@ msgid "Show voting in defined interfaces."
 msgstr "Mostrar votação em interfaces definidas."
 
 #. SysConfig
-msgid "Shows a link in the menu that allows linking a FAQ with another object in the zoom view of such FAQ of the agent interface."
+msgid ""
+"Shows a link in the menu that allows linking a FAQ with another object in "
+"the zoom view of such FAQ of the agent interface."
 msgstr "Mostra um link no menu que permite ligar um FAQ com outro objeto no modo de exibição ampliada na interface do atendente."
 
 #. SysConfig
-msgid "Shows a link in the menu that allows to delete a FAQ in its zoom view in the agent interface."
+msgid ""
+"Shows a link in the menu that allows to delete a FAQ in its zoom view in the"
+" agent interface."
 msgstr "Mostra um link no menu que permite excluir um FAQ no modo de exibição ampliada na interface do atendente."
 
 #. SysConfig
-msgid "Shows a link in the menu to access the history of a FAQ in its zoom view of the agent interface."
+msgid ""
+"Shows a link in the menu to access the history of a FAQ in its zoom view of "
+"the agent interface."
 msgstr "Mostra um link no menu para acessar o histórico de um FAQ no modo de exibição ampliada na interface do atendente."
 
 #. SysConfig
-msgid "Shows a link in the menu to edit a FAQ in the its zoom view of the agent interface."
+msgid ""
+"Shows a link in the menu to edit a FAQ in the its zoom view of the agent "
+"interface."
 msgstr "Mostra um link no menu para editar um FAQ no modo de exibição ampliada na interface do atendente."
 
 #. SysConfig
-msgid "Shows a link in the menu to go back in the FAQ zoom view of the agent interface."
+msgid ""
+"Shows a link in the menu to go back in the FAQ zoom view of the agent "
+"interface."
 msgstr "Mostra um link no menu para voltar um FAQ no modo de exibição ampliada na interface do atendente."
 
 #. SysConfig
-msgid "Shows a link in the menu to print a FAQ in the its zoom view of the agent interface."
+msgid ""
+"Shows a link in the menu to print a FAQ in the its zoom view of the agent "
+"interface."
 msgstr "Mostra um link no menu para imprimir um FAQ no modo de exibição ampliada na interface do atendente."
 
 #. SysConfig
@@ -1027,19 +1171,27 @@ msgid "The identifier for a FAQ, e.g. FAQ#, KB#, MyFAQ#. The default is FAQ#."
 msgstr "O identificador para um FAQ, exemplo FAQ # KB # # MyFAQ. O padrão é FAQ #."
 
 #. SysConfig
-msgid "This setting defines that a 'FAQ' object can be linked with other 'FAQ' objects using the 'Normal' link type."
+msgid ""
+"This setting defines that a 'FAQ' object can be linked with other 'FAQ' "
+"objects using the 'Normal' link type."
 msgstr "Essa configuração define que um objeto 'FAQ' pode ser relacionado com outros objetos 'FAQ' usando o tipo de vínculo 'Normal'"
 
 #. SysConfig
-msgid "This setting defines that a 'FAQ' object can be linked with other 'FAQ' objects using the 'ParentChild' link type."
+msgid ""
+"This setting defines that a 'FAQ' object can be linked with other 'FAQ' "
+"objects using the 'ParentChild' link type."
 msgstr "Essa configuração define que um objeto 'FAQ' pode ser relacionado com outros objetos 'FAQ' usando o tipo de vínculo 'Pai e filho'"
 
 #. SysConfig
-msgid "This setting defines that a 'FAQ' object can be linked with other 'Ticket' objects using the 'Normal' link type."
+msgid ""
+"This setting defines that a 'FAQ' object can be linked with other 'Ticket' "
+"objects using the 'Normal' link type."
 msgstr "Essa configuração define que um objeto 'FAQ' pode ser relacionado com outros objetos 'Chamado' usando o tipo de vínculo 'Normal'"
 
 #. SysConfig
-msgid "This setting defines that a 'FAQ' object can be linked with other 'Ticket' objects using the 'ParentChild' link type."
+msgid ""
+"This setting defines that a 'FAQ' object can be linked with other 'Ticket' "
+"objects using the 'ParentChild' link type."
 msgstr "Essa configuração define que um objeto 'FAQ' pode ser relacionado com outros objetos 'Chamado' usando o tipo de vínculo 'Pai e filho'"
 
 #. SysConfig
@@ -1049,44 +1201,3 @@ msgstr "Corpo do chamado para aprovação de um artigo FAQ."
 #. SysConfig
 msgid "Ticket subject for approval of FAQ article."
 msgstr "O assunto do chamado para aprovação de um artigo FAQ."
-
-#. Template: PublicFAQSearchResultShort
-msgid "Back to FAQ Explorer"
-msgstr ""
-
-#. SysConfig
-msgid "Default maximum size of the titles in a FAQ article to be shown."
-msgstr ""
-
-#. SysConfig
-msgid "Defines the default shown FAQ search attribute for FAQ search screen."
-msgstr ""
-
-#. SysConfig
-msgid "Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer in the agent interface."
-msgstr ""
-
-#. SysConfig
-msgid "Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer in the customer interface."
-msgstr ""
-
-#. SysConfig
-msgid "Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer in the public interface."
-msgstr ""
-
-#. SysConfig
-msgid "Maximum size of the titles in a FAQ article to be shown in the FAQ Search in the agent interface."
-msgstr ""
-
-#. SysConfig
-msgid "Maximum size of the titles in a FAQ article to be shown in the FAQ Search in the customer interface."
-msgstr ""
-
-#. SysConfig
-msgid "Maximum size of the titles in a FAQ article to be shown in the FAQ Search in the public interface."
-msgstr ""
-
-#. SysConfig
-msgid "Maximum size of the titles in a FAQ article to be shown in the FAQ journal in the agent interface."
-msgstr ""
-

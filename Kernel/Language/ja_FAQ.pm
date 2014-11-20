@@ -187,19 +187,19 @@ sub Data {
     $Self->{Translation}->{'Public'} = '公開';
 
     # Template: PublicFAQSearchResultShort
-    $Self->{Translation}->{'Back to FAQ Explorer'} = '';
+    $Self->{Translation}->{'Back to FAQ Explorer'} = 'FAQエクスプローラーに戻る';
 
     # SysConfig
     $Self->{Translation}->{'A filter for HTML output to add links behind a defined string. The element Image allows two input kinds. First the name of an image (e.g. faq.png). In this case the OTRS image path will be used. The second possibility is to insert the link to the image.'} =
         '';
     $Self->{Translation}->{'CSS color for the voting result.'} = '評価の結果表示ようのカラー（スタイルシート）';
-    $Self->{Translation}->{'Cache Time To Leave for FAQ items.'} = '';
+    $Self->{Translation}->{'Cache Time To Leave for FAQ items.'} = 'FAQ項目から離脱するまでのキャッシュ時間';
     $Self->{Translation}->{'Category Management'} = 'カテゴリー管理';
     $Self->{Translation}->{'Decimal places of the voting result.'} = '投票の結果の小数点以下の桁数';
     $Self->{Translation}->{'Default category name.'} = '既定のカテゴリ';
     $Self->{Translation}->{'Default language for FAQ articles on single language mode.'} = '規定の言語（単一言語モードで運用時）';
     $Self->{Translation}->{'Default maximum size of the titles in a FAQ article to be shown.'} =
-        '';
+        'デフォルトで表示されるFAQ項目タイトルのデフォルト最大値';
     $Self->{Translation}->{'Default priority of tickets for the approval of FAQ articles.'} =
         'FAQへの取り込みを行うチケットの優先順位の既定値';
     $Self->{Translation}->{'Default state for FAQ entry.'} = '記事エントリー時の規定のステータス';

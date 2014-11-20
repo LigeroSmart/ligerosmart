@@ -53,7 +53,7 @@ sub Data {
 
     # Template: AgentFAQAdd
     $Self->{Translation}->{'Add FAQ Article'} = 'Añadir artículo FAQ.';
-    $Self->{Translation}->{'Keywords'} = '';
+    $Self->{Translation}->{'Keywords'} = 'Palabras Clave';
     $Self->{Translation}->{'A category is required.'} = 'Se requiere una categoría.';
     $Self->{Translation}->{'Approval'} = 'Aprobación';
 
@@ -82,7 +82,7 @@ sub Data {
     # Template: AgentFAQExplorer
     $Self->{Translation}->{'FAQ Explorer'} = 'Explorador FAQ';
     $Self->{Translation}->{'Quick Search'} = 'Búsqueda Rápida';
-    $Self->{Translation}->{'Wildcards are allowed.'} = '';
+    $Self->{Translation}->{'Wildcards are allowed.'} = 'Se permiten comodines.';
     $Self->{Translation}->{'Advanced Search'} = 'Búsqueda Avanzada';
     $Self->{Translation}->{'Subcategories'} = 'Subcategorías';
     $Self->{Translation}->{'FAQ Articles'} = 'Artículos FAQ';

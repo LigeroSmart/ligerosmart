@@ -105,7 +105,7 @@ sub Data {
     $Self->{Translation}->{'This language is used in the following FAQ Article(s)'} = 'Этот язык использован в следующих статьях FAQ';
 
     # Template: AgentFAQOverviewNavBar
-    $Self->{Translation}->{'Context Settings'} = '';
+    $Self->{Translation}->{'Context Settings'} = 'Параметры контекста';
     $Self->{Translation}->{'FAQ articles per page'} = 'Количество статей на страницу';
 
     # Template: AgentFAQOverviewSmall
@@ -118,8 +118,8 @@ sub Data {
 
     # Template: AgentFAQSearch
     $Self->{Translation}->{'Keyword'} = 'Ключевое слово';
-    $Self->{Translation}->{'Vote (e. g. Equals 10 or GreaterThan 60)'} = '';
-    $Self->{Translation}->{'Rate (e. g. Equals 25% or GreaterThan 75%)'} = '';
+    $Self->{Translation}->{'Vote (e. g. Equals 10 or GreaterThan 60)'} = 'Голосование (например, равно 10 или более чем 60)';
+    $Self->{Translation}->{'Rate (e. g. Equals 25% or GreaterThan 75%)'} = 'Оценить (например, равно 25% или более чем 75%)';
     $Self->{Translation}->{'Approved'} = 'Утверждено';
     $Self->{Translation}->{'Last changed by'} = 'Последним изменил';
     $Self->{Translation}->{'FAQ Article Create Time (before/after)'} = 'Время создания статьи FAQ (до/после)';
@@ -187,7 +187,7 @@ sub Data {
     $Self->{Translation}->{'Public'} = 'Общедоступное';
 
     # Template: PublicFAQSearchResultShort
-    $Self->{Translation}->{'Back to FAQ Explorer'} = '';
+    $Self->{Translation}->{'Back to FAQ Explorer'} = 'Вернуться в обзор FAQ';
 
     # SysConfig
     $Self->{Translation}->{'A filter for HTML output to add links behind a defined string. The element Image allows two input kinds. First the name of an image (e.g. faq.png). In this case the OTRS image path will be used. The second possibility is to insert the link to the image.'} =
@@ -199,7 +199,7 @@ sub Data {
     $Self->{Translation}->{'Default category name.'} = 'Название категории по-умолчанию.';
     $Self->{Translation}->{'Default language for FAQ articles on single language mode.'} = 'Язык статей FAQ по-умолчанию в одноязычном режиме.';
     $Self->{Translation}->{'Default maximum size of the titles in a FAQ article to be shown.'} =
-        '';
+        'Максимальный размер заголовков, по умолчанию, показываемых в статьях FAQ.';
     $Self->{Translation}->{'Default priority of tickets for the approval of FAQ articles.'} =
         'Приоритет заявок на одобрение статей FAQ по-умолчанию.';
     $Self->{Translation}->{'Default state for FAQ entry.'} = 'Статус записи FAQ по-умолчанию.';
@@ -208,7 +208,7 @@ sub Data {
     $Self->{Translation}->{'Default value for the Action parameter for the public frontend. The Action parameter is used in the scripts of the system.'} =
         'Значение по умолчанию параметра Action для общедоступного фронтенда. Параметр Action используется в скриптах системы.';
     $Self->{Translation}->{'Define if the FAQ title should be concatenated to article subject.'} =
-        '';
+        'Задает, должен ли заголовок FAQ объединяться с темой статьи.';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ journal.'} =
         'Задает модуль просмотра для отображения журнала FAQ в small формате';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ list.'} =
@@ -238,7 +238,7 @@ sub Data {
     $Self->{Translation}->{'Defines the default FAQ order of a search result in the public interface. Up: oldest on top. Down: latest on top.'} =
         'Задает стандартный порядок сортировки в результатах поиска в FAQ в общем/публичном интерфейсе. Up: старые вверху. Down: новые вверху.';
     $Self->{Translation}->{'Defines the default shown FAQ search attribute for FAQ search screen.'} =
-        '';
+        'Задает атрибут FAQ по умолчанию для показа на экране поискового запроса.';
     $Self->{Translation}->{'Defines the information to be inserted in a FAQ based Ticket. "Full FAQ" includes text, attachments and inline images.'} =
         'Определяет перечень информации включаемой в заявку из FAQ. "Full FAQ" включает ткест, вложения и встроенные изображения.';
     $Self->{Translation}->{'Defines the shown columns in the FAQ Explorer. This option has no effect on the position of the column.'} =
@@ -288,7 +288,7 @@ sub Data {
     $Self->{Translation}->{'FAQ limit per page for FAQ Journal Overview "Small"'} = 'Количество статей при просмотре Журнала FAQ в "Small" формате на страницу';
     $Self->{Translation}->{'FAQ limit per page for FAQ Overview "Small"'} = 'Количество статей, отображаемых при просмотре Журнала FAQ в "Small" формате на страницу';
     $Self->{Translation}->{'FAQ path separator.'} = 'Разделитель пути FAQ.';
-    $Self->{Translation}->{'FAQ search backend router of the agent interface.'} = '';
+    $Self->{Translation}->{'FAQ search backend router of the agent interface.'} = 'Включить и настроить модуль поиска FAQ для интерфейса агента.';
     $Self->{Translation}->{'FAQ-Area'} = 'Область FAQ';
     $Self->{Translation}->{'Frontend module registration for the public interface.'} = 'Frontend module registration для публичного/общедоступного интерфейса.';
     $Self->{Translation}->{'Group for the approval of FAQ articles.'} = 'Группа для одобрения статей FAQ.';
@@ -320,19 +320,19 @@ sub Data {
     $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the result of a search in the public interface.'} =
         'Максимальное количество статей, выводимых в результате поиска в общедоступном интерфейсе.';
     $Self->{Translation}->{'Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer in the agent interface.'} =
-        '';
+        'Максимальный размер заголовков в статье FAQ показываемых в обзоре FAQ в интерфейсе агента.';
     $Self->{Translation}->{'Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer in the customer interface.'} =
-        '';
+        'Максимальный размер заголовков в статье FAQ показываемых в обзоре FAQ в интерфейсе клиента.';
     $Self->{Translation}->{'Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer in the public interface.'} =
-        '';
+        'Максимальный размер заголовков в статье FAQ показываемых в обзоре FAQ в публичном интерфейсе.';
     $Self->{Translation}->{'Maximum size of the titles in a FAQ article to be shown in the FAQ Search in the agent interface.'} =
-        '';
+        'Максимальный размер заголовков в статье FAQ показываемых в окне поиска FAQ в интерфейсе агента.';
     $Self->{Translation}->{'Maximum size of the titles in a FAQ article to be shown in the FAQ Search in the customer interface.'} =
-        '';
+        'Максимальный размер заголовков в статье FAQ показываемых в окне поиска FAQ в интерфейсе клиента.';
     $Self->{Translation}->{'Maximum size of the titles in a FAQ article to be shown in the FAQ Search in the public interface.'} =
-        '';
+        'Максимальный размер заголовков в статье FAQ показываемых в окне поиска FAQ в общедоступном интерфейсе.';
     $Self->{Translation}->{'Maximum size of the titles in a FAQ article to be shown in the FAQ journal in the agent interface.'} =
-        '';
+        'Максимальный размер заголовков в статье FAQ показываемых в журнале FAQ в интерфейсе агента.';
     $Self->{Translation}->{'Module to generate HTML OpenSearch profile for short FAQ search in the public interface.'} =
         'Модуль для генерации HTML OpenSearch шаблонов для быстрого поиска в FAQ в общедоступном интерфейсе.';
     $Self->{Translation}->{'Module to generate HTML OpenSearch profile for short faq search in the customer interface.'} =
@@ -373,7 +373,7 @@ sub Data {
     $Self->{Translation}->{'Show "Insert FAQ Text & Link" / "Insert Full FAQ & Link" Button in AgentFAQZoomSmall for public FAQ Articles.'} =
         'Показать кнопку "Insert FAQ Text & Link" / "Insert Full FAQ & Link"/"Вставить текст FAQ и связать"/Вставить полный FAQ и связать" в AgentFAQZoomSmall для публичных статей FAQ.';
     $Self->{Translation}->{'Show "Insert FAQ Text" / "Insert Full FAQ" Button in AgentFAQZoomSmall.'} =
-        '';
+        'Показывать кнопку "Вставить текст FAQ! / "Вставить статью FAQ полностью" на экране AgentFAQZoomSmall.';
     $Self->{Translation}->{'Show FAQ Article with HTML.'} = 'Показывать статью FAQ в HTML.';
     $Self->{Translation}->{'Show FAQ path yes/no.'} = 'Показывать путь FAQ да/нет.';
     $Self->{Translation}->{'Show items of subcategories.'} = 'Показывать содержимое подразделов.';

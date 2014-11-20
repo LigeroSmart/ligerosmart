@@ -6,7 +6,10 @@
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
-4.0.0.rc1 - 2014-??-??
+4.0.1 - 2014-11-25
+- 2014-11-20 Sync translation files.
+
+4.0.0.rc1 - 2014-11-18
  - 2014-11-13 Sync Translation files.
  - 2014-11-11 Code cleanup.
  - 2014-11-06 Fixed bug#10851 - `You have already voted' by addition of link after vote.
