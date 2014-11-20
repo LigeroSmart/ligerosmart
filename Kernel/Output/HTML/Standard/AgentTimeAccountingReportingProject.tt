@@ -23,6 +23,24 @@
                 </ul>
             </div>
         </div>
+        <div class="WidgetSimple">
+            <div class="Header">
+                <h2>[% Translate("Hint") | html %]</h2>
+            </div>
+            <div class="Content">
+[% IF Data.ShowOnlyActiveUsers == '1' %]
+                <p class="FieldExplanation">
+                    [% Translate("Currently only active users in this project are shown. To change this behavior, please update setting:") | html %]
+                    <a href="[% Env("Baselink") %]Action=AdminSysConfig;Subaction=Edit;SysConfigGroup=TimeAccounting;SysConfigSubGroup=Frontend::Agent::TimeAccoutning::ViewReportingProject">ShowOnlyActiveUsers</a>
+                </p>
+[% ELSE %]
+                <p class="FieldExplanation">
+                    [% Translate("Currently all time accounting users are shown. To change this behavior, please update setting:") | html %]
+                    <a href="[% Env("Baselink") %]Action=AdminSysConfig;Subaction=Edit;SysConfigGroup=TimeAccounting;SysConfigSubGroup=Frontend::Agent::TimeAccoutning::ViewReportingProject">ShowOnlyActiveUsers</a>
+                </p>
+[% END %]
+            </div>
+        </div>
     </div>
 
     <div class="ContentColumn">

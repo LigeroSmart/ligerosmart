@@ -83,7 +83,9 @@ sub Run {
             Valid => 0
         );
 
-        if ( $Config->{ShowOnlyActiveUsers} ) {
+        $Param{ShowOnlyActiveUsers} = $Config->{ShowOnlyActiveUsers};
+
+        if ( $Param{ShowOnlyActiveUsers} ) {
 
             # get registered users
             my %RegisteredUsers = $Self->{TimeAccountingObject}->UserList();
@@ -128,7 +130,7 @@ sub Run {
             }
         }
 
-        if ( $Config->{ShowOnlyActiveUsers} ) {
+        if ( $Param{ShowOnlyActiveUsers} ) {
 
             # reduce shown users to only the ones that are active in the project (by adding hours)
             %ShownUsers = map { $_ => $ShownUsers{$_} } @UserWhiteList;
@@ -262,7 +264,10 @@ sub Run {
         my $Output = $Self->{LayoutObject}->Header( Title => 'ReportingProject' );
         $Output .= $Self->{LayoutObject}->NavigationBar();
         $Output .= $Self->{LayoutObject}->Output(
-            Data         => { %Param, %Frontend },
+            Data => {
+                %Param,
+                %Frontend,
+            },
             TemplateFile => 'AgentTimeAccountingReportingProject',
         );
         $Output .= $Self->{LayoutObject}->Footer();
