@@ -1,0 +1,510 @@
+# 
+# Translators:
+# Милорад Јовановић <j.milorad@gmail.com>, 2014
+msgid ""
+msgstr ""
+"Project-Id-Version: OTRS\n"
+"POT-Creation-Date: 2014-08-08 19:10+0200\n"
+"PO-Revision-Date: 2014-10-02 01:04+0000\n"
+"Last-Translator: Милорад Јовановић <j.milorad@gmail.com>\n"
+"Language-Team: Serbian (http://www.transifex.com/projects/p/OTRS/language/sr/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sr\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#. Template: AAASurvey
+msgid "- Change Status -"
+msgstr "- Промени статус -"
+
+#. Template: AAASurvey
+msgid "Add New Survey"
+msgstr "Додај нову анкету"
+
+#. Template: AAASurvey
+msgid "Survey Edit"
+msgstr "Уреди анкету"
+
+#. Template: AAASurvey
+msgid "Survey Edit Questions"
+msgstr "Уреди питања анкете"
+
+#. Template: AAASurvey
+msgid "Question Edit"
+msgstr "Уреди питање"
+
+#. Template: AAASurvey
+msgid "Answer Edit"
+msgstr "Уреди одговор"
+
+#. Template: AAASurvey
+msgid "Can't set new status! No questions defined."
+msgstr "Не може се поставити нови статус! Нема дефинисаних питања."
+
+#. Template: AAASurvey
+msgid "Status changed."
+msgstr "Статус промењен"
+
+#. Template: AAASurvey
+msgid "Thank you for your feedback."
+msgstr "Хвала на вашим одговорима."
+
+#. Template: AAASurvey
+msgid "The survey is finished."
+msgstr "Аанкета је завршена."
+
+#. Template: AAASurvey
+msgid "Complete"
+msgstr "Комплетно"
+
+#. Template: AAASurvey
+msgid "Incomplete"
+msgstr "Некомплетно"
+
+#. Template: AAASurvey
+msgid "Checkbox (List)"
+msgstr "Поље за потврду (Листа)"
+
+#. Template: AAASurvey
+msgid "Radio"
+msgstr "Дугме"
+
+#. Template: AAASurvey
+msgid "Radio (List)"
+msgstr "Дугме (Листа)"
+
+#. Template: AAASurvey
+msgid "Stats Overview"
+msgstr "Преглед статистике"
+
+#. Template: AAASurvey
+msgid "Survey Description"
+msgstr "Опис анкете"
+
+#. Template: AAASurvey
+msgid "Survey Introduction"
+msgstr "Увод у анкету"
+
+#. Template: AAASurvey
+msgid "Yes/No"
+msgstr "Да/Не"
+
+#. Template: AAASurvey
+msgid "YesNo"
+msgstr "ДаНе"
+
+#. Template: AAASurvey
+msgid "answered"
+msgstr "одговорено"
+
+#. Template: AAASurvey
+msgid "not answered"
+msgstr "није одговорено"
+
+#. Template: AAASurvey
+msgid "Stats Detail"
+msgstr "Детаљ статистике"
+
+#. Template: AAASurvey
+msgid "Stats Details"
+msgstr "Детаљи статистике"
+
+#. Template: AAASurvey
+msgid "You have already answered the survey."
+msgstr "Већ сте одговорили на анкету."
+
+#. Template: AAASurvey
+msgid "Survey#"
+msgstr "Анкета#"
+
+#. Template: AAASurvey
+msgid "- No queue selected -"
+msgstr "- Није изабран ред -"
+
+#. Template: AAASurvey
+msgid "Master"
+msgstr "Главно"
+
+#. Template: AAASurvey
+msgid "New Status"
+msgstr "Нови статус"
+
+#. Template: AAASurvey
+msgid "Question Type"
+msgstr "Тип питања"
+
+#. Template: AgentSurveyAdd
+msgid "Create New Survey"
+msgstr "Направи нову анкету"
+
+#. Template: AgentSurveyAdd
+msgid "Introduction"
+msgstr "Увод"
+
+#. Template: AgentSurveyAdd
+msgid "Internal Description"
+msgstr "Интерни опис"
+
+#. Template: AgentSurveyEdit
+msgid "Edit General Info"
+msgstr "Уреди опште информације"
+
+#. Template: AgentSurveyEditQuestions
+msgid "Edit Questions"
+msgstr "Уреди питања"
+
+#. Template: AgentSurveyEditQuestions
+msgid "Add Question"
+msgstr "Додај питање"
+
+#. Template: AgentSurveyEditQuestions
+msgid "Type the question"
+msgstr "Унеси питање"
+
+#. Template: AgentSurveyEditQuestions
+msgid "Answer required"
+msgstr "Обавезан одговор"
+
+#. Template: AgentSurveyEditQuestions
+msgid "Survey Questions"
+msgstr "Анкетна питања"
+
+#. Template: AgentSurveyEditQuestions
+msgid "No questions saved for this survey."
+msgstr "За ову анкету нису сачувана питања."
+
+#. Template: AgentSurveyEditQuestions
+msgid "Question"
+msgstr "Питање"
+
+#. Template: AgentSurveyEditQuestions
+msgid "Answer Required"
+msgstr "Обавезан одговор"
+
+#. Template: AgentSurveyEditQuestions
+msgid "When you finish to edit the survey questions just close this window."
+msgstr "Када завршите са уређивањем анкетних питања само затзворите овај прозор."
+
+#. Template: AgentSurveyEditQuestions
+msgid ""
+"Do you really want to delete this question? ALL associated data will be "
+"LOST!"
+msgstr "Да ли заиста желите да обришете ово питање? Сви повезани подаци ће бити ИЗГУБЉЕНИ!"
+
+#. Template: AgentSurveyEditQuestions
+msgid "Edit Question"
+msgstr "Уреди питање"
+
+#. Template: AgentSurveyEditQuestions
+msgid "go back to questions"
+msgstr "назад на питања"
+
+#. Template: AgentSurveyEditQuestions
+msgid "Possible Answers For"
+msgstr "Могући одговори за"
+
+#. Template: AgentSurveyEditQuestions
+msgid "Add Answer"
+msgstr "Додај одговор"
+
+#. Template: AgentSurveyEditQuestions
+msgid "No answers saved for this question."
+msgstr "За ово питање није сачуван одговор."
+
+#. Template: AgentSurveyEditQuestions
+msgid "Do you really want to delete this answer?"
+msgstr "Да ли заиста желите да избришете овај одговор?"
+
+#. Template: AgentSurveyEditQuestions
+msgid "This doesn't have several answers, a textarea will be displayed."
+msgstr "Ово нема више одговора, простор за текст ће бити приказан."
+
+#. Template: AgentSurveyEditQuestions
+msgid "Go back"
+msgstr "Иди назад"
+
+#. Template: AgentSurveyEditQuestions
+msgid "Edit Answer"
+msgstr "Уреди одговор"
+
+#. Template: AgentSurveyEditQuestions
+msgid "go back to edit question"
+msgstr "назад на уређивање питања"
+
+#. Template: AgentSurveyOverviewNavBar
+msgid "Max. shown Surveys per page"
+msgstr "Макс. приказаних анкета по страни"
+
+#. Template: AgentSurveyOverviewSmall
+msgid "Notification Sender"
+msgstr "Пошиљаоц обавештења"
+
+#. Template: AgentSurveyOverviewSmall
+msgid "Notification Subject"
+msgstr "Предмет обавештења"
+
+#. Template: AgentSurveyOverviewSmall
+msgid "Notification Body"
+msgstr "Сарджај обавештења"
+
+#. Template: AgentSurveyOverviewSmall
+msgid "Changed By"
+msgstr "Мењао"
+
+#. Template: AgentSurveyStats
+msgid "Stats Overview of"
+msgstr "Преглед статистике за"
+
+#. Template: AgentSurveyStats
+msgid "Requests Table"
+msgstr "Табела захтева"
+
+#. Template: AgentSurveyStats
+msgid "Send Time"
+msgstr "Време слања"
+
+#. Template: AgentSurveyStats
+msgid "Vote Time"
+msgstr "Време гласања"
+
+#. Template: AgentSurveyStats
+msgid "See Details"
+msgstr "Види детаље"
+
+#. Template: AgentSurveyStats
+msgid "Survey Stat Details"
+msgstr "Детаљи статистике анкете"
+
+#. Template: AgentSurveyStats
+msgid "go back to stats overview"
+msgstr "иди назад на преглед статистике"
+
+#. Template: AgentSurveyZoom
+msgid "Survey Information"
+msgstr "Информације о анкети"
+
+#. Template: AgentSurveyZoom
+msgid "Sent requests"
+msgstr "Послати захтеви"
+
+#. Template: AgentSurveyZoom
+msgid "Received surveys"
+msgstr "Примљене анкете"
+
+#. Template: AgentSurveyZoom
+msgid "Survey Details"
+msgstr "Детаљи анкете"
+
+#. Template: AgentSurveyZoom
+msgid "Ticket Services"
+msgstr "Услуге за тикет"
+
+#. Template: AgentSurveyZoom
+msgid "Survey Results Graph"
+msgstr "Графикон резултата анкете"
+
+#. Template: AgentSurveyZoom
+msgid "No stat results."
+msgstr "Нема статистике резултата."
+
+#. Template: PublicSurvey
+msgid "Survey"
+msgstr "Аанкета"
+
+#. Template: PublicSurvey
+msgid "Please answer these questions"
+msgstr "Молимо да одговорите на ова питања"
+
+#. Template: PublicSurvey
+msgid "Show my answers"
+msgstr "Покажи моје одговоре"
+
+#. Template: PublicSurvey
+msgid "These are your answers"
+msgstr "Ово су ваши одговори"
+
+#. Template: PublicSurvey
+msgid "Survey Title"
+msgstr "Наслов анкете"
+
+#. SysConfig
+msgid "A Survey Module."
+msgstr "Анкетни модул"
+
+#. SysConfig
+msgid "A module to edit survey questions."
+msgstr "Модул за уређивање анкетних питања."
+
+#. SysConfig
+msgid "All parameters for the Survey object in the agent interface."
+msgstr "Сви параметри Објекта анкете у оператерском интерфејсу."
+
+#. SysConfig
+msgid ""
+"Amount of days after sending a survey mail in which no new survey requests "
+"are sent to the same customer. Selecting 0 will always send the survey mail."
+msgstr "Број дана после слања имејла о анкети у ком истом кориснику неће бити слани нови захтеви. Ако изаберете 0 имејл о анкети се увек шаље."
+
+#. SysConfig
+msgid "Default body for the notification email to customers about new survey."
+msgstr "Подразумевани садржај имејла обавештења о новој анкети за кориснике."
+
+#. SysConfig
+msgid ""
+"Default sender for the notification email to customers about new survey."
+msgstr "Подразумевани пошиљаоц имејла обавештења о новом истраживању за кориснике."
+
+#. SysConfig
+msgid ""
+"Default subject for the notification email to customers about new survey."
+msgstr "Подразумевани предмет имејла обавештења о новој анкети за кориснике."
+
+#. SysConfig
+msgid "Defines an overview module to show the small view of a survey list."
+msgstr "Дефинише модул прегледа за мали приказ листе анкета. "
+
+#. SysConfig
+msgid ""
+"Defines maximum amount of surveys that get sent to a customer per 30 days. ("
+" 0 means no maximum, all survey requests will be sent)."
+msgstr "Дефинише максимални број анкета која ће бити послата кориснику током 30 дана. (0 значи да нема максимума, сви захтеви ће бити послати)."
+
+#. SysConfig
+msgid ""
+"Defines the amount in hours a ticket has to be closed to trigger the sending"
+" of a survey, ( 0 means send immediately after close )."
+msgstr "Дефинише број сати од затварања тикета за покретање слања анкете. (0 значи да се шаље одмах по затварању)."
+
+#. SysConfig
+msgid "Defines the default height for Richtext views for SurveyZoom elements."
+msgstr "Дефинише подразумевану висину оквира за приказ текста  за детаљни приказ елемената анкете."
+
+#. SysConfig
+msgid ""
+"Defines the shown columns in the survey overview. This option has no effect "
+"on the position of the columns."
+msgstr "Дефинише приказане колоне у прегледу анкете. Ова опције нема утицај на позиције колона."
+
+#. SysConfig
+msgid "Edit Survey General Information"
+msgstr "Уреди опште информације оистраживању"
+
+#. SysConfig
+msgid "Edit Survey Questions"
+msgstr "Уреди анкетна питања"
+
+#. SysConfig
+msgid ""
+"Enable or disable the ShowVoteData screen in the public interface to show "
+"data of a specific survey result when the customer tries to answer a survey "
+"the second time."
+msgstr "Укључи или искључи приказ екрана за гласање на јавном интерфејсу ради приказа резултата поједине анкете када корисник покуша да одговори на упитник по други пут."
+
+#. SysConfig
+msgid "Enable or disable the send condition check for the service."
+msgstr "Уклључи или искључи проверу статуса слања за услугу."
+
+#. SysConfig
+msgid "Enable or disable the send condition check for the ticket type."
+msgstr "Уклључи или искључи проверу статуса слања за тип тикета."
+
+#. SysConfig
+msgid "Frontend module registration for survey add in the agent interface."
+msgstr "Регистрација \"Frontend\" модула за додавање анкете у оператерском интерфејсу."
+
+#. SysConfig
+msgid "Frontend module registration for survey edit in the agent interface."
+msgstr "Регистрација \"Frontend\" модула за уређивање анкете у оператерском интерфејсу."
+
+#. SysConfig
+msgid "Frontend module registration for survey stats in the agent interface."
+msgstr "Регистрација \"Frontend\" модула за статистику анкете у оператерском интерфејсу."
+
+#. SysConfig
+msgid "Frontend module registration for survey zoom in the agent interface."
+msgstr "Регистрација \"Frontend\" модула за детаљни приказ анкете у оператерском интерфејсу."
+
+#. SysConfig
+msgid ""
+"Frontend module registration for the PublicSurvey object in the public "
+"Survey area."
+msgstr "Регистрација \"Frontend\" модула за јавне анкетне објекте анкете у простору јавних анкета."
+
+#. SysConfig
+msgid "If this regex matches, no customer survey will be sent."
+msgstr "Ако се овај израз поклапа, анкета неће бити послата кориснику."
+
+#. SysConfig
+msgid ""
+"Parameters for the pages (in which the surveys are shown) of the small "
+"survey overview."
+msgstr "Параметри страница (на којима су анкете видљиве) на малом приказу прегледа анкета."
+
+#. SysConfig
+msgid "Public Survey."
+msgstr "Јавна анкета"
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu to edit a survey in its zoom view of the agent "
+"interface."
+msgstr "У менију приказује везу за уређивање анкете у детаљном приказу оператерског интерфејса."
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu to edit survey questions in its zoom view of the "
+"agent interface."
+msgstr "У менију приказује везу за уређивање анкетних питања у детаљном приказу оператерског интерфејса."
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu to go back in the survey zoom view of the agent "
+"interface."
+msgstr "У менију приказује везу за повратак у детаљни приказ анкете у оператерском интерфејсу."
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu to zoom into the survey statistics details in its "
+"zoom view of the agent interface."
+msgstr "У менију приказује везу за детаљни приказ статистике анкете у детаљном приказу на оператерском интерфејсу."
+
+#. SysConfig
+msgid "Survey Edit Module."
+msgstr "Модул за уређивање анкете."
+
+#. SysConfig
+msgid "Survey Overview \"Small\" Limit"
+msgstr "Ограничење прегледа анкете - \"мало\""
+
+#. SysConfig
+msgid "Survey Stats Module."
+msgstr "Модул за статистику анкете."
+
+#. SysConfig
+msgid "Survey Zoom Module."
+msgstr "Модул за детаљни приказ анкете."
+
+#. SysConfig
+msgid "Survey limit per page for Survey Overview \"Small\""
+msgstr "Ограничење броја анкета по страни за преглед - \"мало\""
+
+#. SysConfig
+msgid "Surveys will not be sent to the configured email addresses."
+msgstr "Анкета неће бити послата на подешену имејл адресу."
+
+#. SysConfig
+msgid ""
+"The identifier for a survey, e.g. Survey#, MySurvey#. The default is "
+"Survey#."
+msgstr "Идентификатор за анкету, нпр Survey#, MySurvey#. Подразумевано је Survey#."
+
+#. SysConfig
+msgid ""
+"Ticket event module to send automatically survey email requests to customers"
+" if a ticket is closed."
+msgstr "Модул догађаја на тикету за аутоматско слање имејла о истраживању корисницима ако је тикет затворен."
+
+#. SysConfig
+msgid "Zoom Into Statistics Details"
+msgstr "Детаљни приказ статистике"
