@@ -345,7 +345,7 @@ for my $Item ( @{$ItemData} ) {
         # get template data to check the values after template was added
         my $TemplateGet = $ImportExportObject->TemplateGet(
             TemplateID => $AddedTemplateIDs[-1],
-            UserID => $Item->{Add}->{UserID} || 1,
+            UserID     => $Item->{Add}->{UserID} || 1,
         );
 
         # check template data after creation of template
@@ -395,7 +395,7 @@ for my $Item ( @{$ItemData} ) {
         # get template data to check the values after the update
         my $TemplateGet = $ImportExportObject->TemplateGet(
             TemplateID => $AddedTemplateIDs[-1],
-            UserID => $Item->{Update}->{UserID} || 1,
+            UserID     => $Item->{Update}->{UserID} || 1,
         );
 
         # check template data after update

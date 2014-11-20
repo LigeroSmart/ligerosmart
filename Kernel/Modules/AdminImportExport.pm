@@ -69,7 +69,10 @@ sub Run {
 
             # if needed new form
             if ( !$TemplateID ) {
-                return $Self->_MaskTemplateEdit1( New => 1, %Param );
+                return $Self->_MaskTemplateEdit1(
+                    New => 1,
+                    %Param
+                );
             }
 
             # if there is template id
@@ -647,11 +650,10 @@ sub Run {
             for my $Item ( @{$MappingObjectAttributes} ) {
 
                 # get object form data
-                $ObjectAttributeValues{ $Item->{Key} }
-                    = $Self->{LayoutObject}->ImportExportFormDataGet(
+                $ObjectAttributeValues{ $Item->{Key} } = $Self->{LayoutObject}->ImportExportFormDataGet(
                     Item   => $Item,
                     Prefix => 'Object::' . $Counter . '::',
-                    );
+                );
             }
 
             # save the mapping object data
@@ -666,11 +668,10 @@ sub Run {
             for my $Item ( @{$MappingFormatAttributes} ) {
 
                 # get format form data
-                $FormatAttributeValues{ $Item->{Key} }
-                    = $Self->{LayoutObject}->ImportExportFormDataGet(
+                $FormatAttributeValues{ $Item->{Key} } = $Self->{LayoutObject}->ImportExportFormDataGet(
                     Item   => $Item,
                     Prefix => 'Format::' . $Counter . '::',
-                    );
+                );
             }
 
             # save the mapping format data

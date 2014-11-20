@@ -66,7 +66,10 @@ sub FormInputCreate {
 
     # check needed stuff
     if ( !$Param{Item} ) {
-        $Self->{LogObject}->Log( Priority => 'error', Message => 'Need Item!' );
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need Item!'
+        );
         return;
     }
 
@@ -93,8 +96,7 @@ sub FormInputCreate {
     my $Name = ( $Param{Prefix} || '' ) . ( $Param{Name} || $ID );
     my $Class = ( $SizeClass || '' ) . ( $Param{Class} || '' );
 
-    my $String
-        = "<input id=\"$ID\" type=\"text\" name=\"$Name\" class=\"$Class\" ";
+    my $String = "<input id=\"$ID\" type=\"text\" name=\"$Name\" class=\"$Class\" ";
 
     if ($Value) {
 
@@ -138,7 +140,10 @@ sub FormDataGet {
 
     # check needed stuff
     if ( !$Param{Item} ) {
-        $Self->{LogObject}->Log( Priority => 'error', Message => 'Need Item!' );
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need Item!'
+        );
         return;
     }
 

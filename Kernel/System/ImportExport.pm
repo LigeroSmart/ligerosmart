@@ -480,8 +480,7 @@ sub ObjectList {
     my ( $Self, %Param ) = @_;
 
     # get config
-    my $ModuleList
-        = $Kernel::OM->Get('Kernel::Config')->Get('ImportExport::ObjectBackendRegistration');
+    my $ModuleList = $Kernel::OM->Get('Kernel::Config')->Get('ImportExport::ObjectBackendRegistration');
 
     return if !$ModuleList;
     return if ref $ModuleList ne 'HASH';
@@ -718,8 +717,7 @@ sub FormatList {
     my ( $Self, %Param ) = @_;
 
     # get config
-    my $ModuleList
-        = $Kernel::OM->Get('Kernel::Config')->Get('ImportExport::FormatBackendRegistration');
+    my $ModuleList = $Kernel::OM->Get('Kernel::Config')->Get('ImportExport::FormatBackendRegistration');
 
     return if !$ModuleList;
     return if ref $ModuleList ne 'HASH';
@@ -1027,7 +1025,7 @@ sub MappingAdd {
 
     # insert a new mapping data row
     return if !$Kernel::OM->Get('Kernel::System::DB')->Do(
-        SQL => 'INSERT INTO imexport_mapping (template_id, position) VALUES (?, ?)',
+        SQL  => 'INSERT INTO imexport_mapping (template_id, position) VALUES (?, ?)',
         Bind => [ \$Param{TemplateID}, \$NewPosition ],
     );
 
@@ -1191,11 +1189,11 @@ sub MappingUp {
 
     # update positions
     $Kernel::OM->Get('Kernel::System::DB')->Do(
-        SQL => 'UPDATE imexport_mapping SET position = ? WHERE template_id = ? AND position = ?',
+        SQL  => 'UPDATE imexport_mapping SET position = ? WHERE template_id = ? AND position = ?',
         Bind => [ \$Position, \$Param{TemplateID}, \$PositionUpper ],
     );
     $Kernel::OM->Get('Kernel::System::DB')->Do(
-        SQL => 'UPDATE imexport_mapping SET position = ? WHERE id = ?',
+        SQL  => 'UPDATE imexport_mapping SET position = ? WHERE id = ?',
         Bind => [ \$PositionUpper, \$Param{MappingID} ],
     );
 
@@ -1252,11 +1250,11 @@ sub MappingDown {
 
     # update positions
     $Kernel::OM->Get('Kernel::System::DB')->Do(
-        SQL => 'UPDATE imexport_mapping SET position = ? WHERE template_id = ? AND position = ?',
+        SQL  => 'UPDATE imexport_mapping SET position = ? WHERE template_id = ? AND position = ?',
         Bind => [ \$Position, \$Param{TemplateID}, \$PositionDown ],
     );
     $Kernel::OM->Get('Kernel::System::DB')->Do(
-        SQL => 'UPDATE imexport_mapping SET position = ? WHERE id = ?',
+        SQL  => 'UPDATE imexport_mapping SET position = ? WHERE id = ?',
         Bind => [ \$PositionDown, \$Param{MappingID} ],
     );
 
@@ -1298,7 +1296,7 @@ sub MappingPositionRebuild {
     my $Counter = 0;
     for my $MappingID ( @{$MappingList} ) {
         $Kernel::OM->Get('Kernel::System::DB')->Do(
-            SQL => 'UPDATE imexport_mapping SET position = ? WHERE id = ?',
+            SQL  => 'UPDATE imexport_mapping SET position = ? WHERE id = ?',
             Bind => [ \$Counter, \$MappingID ],
         );
         $Counter++;
@@ -2027,8 +2025,7 @@ sub Export {
         );
 
         # create a lookup hash for the object attribute names
-        my %AttributeLookup
-            = map { $_->{Key} => $_->{Value} } @{ $MappingObjectAttributes->[0]->{Input}->{Data} };
+        my %AttributeLookup = map { $_->{Key} => $_->{Value} } @{ $MappingObjectAttributes->[0]->{Input}->{Data} };
 
         # get mapping data list
         my $MappingList = $Self->MappingList(
