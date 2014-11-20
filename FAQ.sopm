@@ -27,6 +27,7 @@
         <File Permission="644" Location="Kernel/Language/fi_FAQ.pm"/>
         <File Permission="644" Location="Kernel/Language/fr_FAQ.pm"/>
         <File Permission="644" Location="Kernel/Language/hu_FAQ.pm"/>
+        <File Permission="644" Location="Kernel/Language/it_FAQ.pm"/>
         <File Permission="644" Location="Kernel/Language/ja_FAQ.pm"/>
         <File Permission="644" Location="Kernel/Language/ms_FAQ.pm"/>
         <File Permission="644" Location="Kernel/Language/nb_NO_FAQ.pm"/>
@@ -35,7 +36,9 @@
         <File Permission="644" Location="Kernel/Language/pt_BR_FAQ.pm"/>
         <File Permission="644" Location="Kernel/Language/pt_PT_FAQ.pm"/>
         <File Permission="644" Location="Kernel/Language/ru_FAQ.pm"/>
+        <File Permission="644" Location="Kernel/Language/sr_Cyrl_FAQ.pm"/>
         <File Permission="644" Location="Kernel/Language/sv_FAQ.pm"/>
+        <File Permission="644" Location="Kernel/Language/sw_FAQ.pm"/>
         <File Permission="644" Location="Kernel/Language/uk_FAQ.pm"/>
         <File Permission="644" Location="Kernel/Language/zh_CN_FAQ.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentFAQAdd.pm"/>
