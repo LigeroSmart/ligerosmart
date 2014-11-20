@@ -2,13 +2,14 @@
 # TicketSearch.t - GenericInterface transport interface tests for TicketConnector backend
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/75b2fdd054b47725c6a1c1925a77475a7a5af46c/scripts/test/GenericInterface/Operation/Ticket/TicketSearch.t
+# $origin: https://github.com/OTRS/otrs/blob/b976a7c4d0132dbcd8daf00fd3a11d2c90c4b3d9/scripts/test/GenericInterface/Operation/Ticket/TicketSearch.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
+## no critic (Modules::RequireExplicitPackage)
 use strict;
 use warnings;
 use utf8;
@@ -277,6 +278,24 @@ my $TicketID1 = $TicketObject->TicketCreate(
 $Self->True(
     $TicketID1,
     "TicketCreate() successful for Ticket One ID $TicketID1",
+);
+
+# update escalation times directly in the DB
+my $EscalationTime = $TimeObject->SystemTime() + 120;
+return if !$Kernel::OM->Get('Kernel::System::DB')->Do(
+    SQL => '
+        UPDATE ticket
+        SET escalation_time = ?, escalation_response_time = ?, escalation_update_time = ?,
+            escalation_solution_time = ?, change_time = current_timestamp, change_by = ?
+        WHERE id = ?',
+    Bind => [
+        \$EscalationTime,
+        \$EscalationTime,
+        \$EscalationTime,
+        \$EscalationTime,
+        \'1',
+        \$TicketID1,
+    ],
 );
 
 # create backend object and delegates
@@ -1240,6 +1259,86 @@ my @Tests = (
         ExpectedReturnRemoteData => {
             Data => {
                 TicketID => $TicketID4,
+            },
+            Success => 1,
+        },
+        Operation => 'TicketSearch',
+    },
+    {
+        Name           => "Test EscalationTime " . $TestCounter++,
+        SuccessRequest => 1,
+        RequestData    => {
+            TicketEscalationTimeNewerMinutes => 120,
+        },
+        ExpectedReturnLocalData => {
+            Data => {
+                TicketID => [$TicketID1],
+            },
+            Success => 1
+        },
+        ExpectedReturnRemoteData => {
+            Data => {
+                TicketID => $TicketID1,
+            },
+            Success => 1,
+        },
+        Operation => 'TicketSearch',
+    },
+    {
+        Name           => "Test EscalationResponseTime " . $TestCounter++,
+        SuccessRequest => 1,
+        RequestData    => {
+            TicketEscalationResponseTimeNewerMinutes => 120,
+        },
+        ExpectedReturnLocalData => {
+            Data => {
+                TicketID => [$TicketID1],
+            },
+            Success => 1
+        },
+        ExpectedReturnRemoteData => {
+            Data => {
+                TicketID => $TicketID1,
+            },
+            Success => 1,
+        },
+        Operation => 'TicketSearch',
+    },
+    {
+        Name           => "Test EscalationUpdateTime " . $TestCounter++,
+        SuccessRequest => 1,
+        RequestData    => {
+            TicketEscalationUpdateTimeNewerMinutes => 120,
+        },
+        ExpectedReturnLocalData => {
+            Data => {
+                TicketID => [$TicketID1],
+            },
+            Success => 1
+        },
+        ExpectedReturnRemoteData => {
+            Data => {
+                TicketID => $TicketID1,
+            },
+            Success => 1,
+        },
+        Operation => 'TicketSearch',
+    },
+    {
+        Name           => "Test EscalationSolutionTime " . $TestCounter++,
+        SuccessRequest => 1,
+        RequestData    => {
+            TicketEscalationSolutionTimeNewerMinutes => 120,
+        },
+        ExpectedReturnLocalData => {
+            Data => {
+                TicketID => [$TicketID1],
+            },
+            Success => 1
+        },
+        ExpectedReturnRemoteData => {
+            Data => {
+                TicketID => $TicketID1,
             },
             Success => 1,
         },
