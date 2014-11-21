@@ -13,6 +13,7 @@ use strict;
 use warnings;
 
 use Kernel::Output::Template::Provider;
+use Kernel::System::VariableCheck qw(:all);
 
 our @ObjectDependencies = (
     'Kernel::Config',
@@ -246,14 +247,6 @@ sub CodeUpgradeSpecial {
     return 1;
 }
 
-=item CodeUninstall()
-
-run the code uninstall part
-
-    my $Result = $CodeObject->CodeUninstall();
-
-=cut
-
 =item CodeUpgradeFromLowerThan_4_0_1()
 
 This function is only executed if the installed module version is smaller than 4.0.1.
@@ -270,6 +263,14 @@ sub CodeUpgradeFromLowerThan_4_0_1 {    ## no critic
 
     return 1;
 }
+
+=item CodeUninstall()
+
+run the code uninstall part
+
+    my $Result = $CodeObject->CodeUninstall();
+
+=cut
 
 sub CodeUninstall {
     my ( $Self, %Param ) = @_;
@@ -769,83 +770,40 @@ sub _MigrateDTLInSysConfig {
     my $SysConfigObject = $Kernel::OM->Get('Kernel::System::SysConfig');
     my $ProviderObject  = Kernel::Output::Template::Provider->new();
 
-    # define setting for migrating
-    my @SettingsToTT;
+    # get setting's content
+    my $Setting = $ConfigObject->Get('FAQ::Frontend::MenuModule');
+    next SETTING if !$Setting;
 
-    # include menu settings
-    my $SettingName    = 'FAQ::Frontend::MenuModule';
-    my $SysConfigEntry = $ConfigObject->Get($SettingName);
+    MENUMODULE:
+    for my $MenuModule ( sort keys %{$Setting} ) {
 
-    if ( IsHashRefWithData($SysConfigEntry) ) {
+        SETTINGITEM:
+        for my $SettingItem ( sort keys %{ $Setting->{$MenuModule} } ) {
 
-        for my $Item ( sort keys %{$SysConfigEntry} ) {
-            push @SettingsToTT, {
-                Key    => $SettingName,
-                SubKey => $Item
+            my $SettingContent = $Setting->{$MenuModule}->{$SettingItem};
+
+            # do nothing no value for migrating
+            next SETTINGITEM if !$SettingContent;
+
+            my $TTContent;
+            eval {
+                $TTContent = $ProviderObject->MigrateDTLtoTT( Content => $SettingContent );
             };
-        }
-    }
-
-    SETTING:
-    for my $Values (@SettingsToTT) {
-
-        # initialize setting
-        my $Key    = $Values->{Key}    || '';
-        my $SubKey = $Values->{SubKey} || '';
-
-        next SETTING if !$Key;
-
-        # next SETTING if !$SubKey;
-
-        # get setting's content
-        my $Setting = $ConfigObject->Get($Key);
-        next SETTING if !$Setting;
-
-        my $SettingContent;
-        if ( !$SubKey ) {
-            $SettingContent = $Setting;
-        }
-        elsif ( $SubKey eq 'Subject' ) {
-            $SettingContent = $Setting->{$SubKey} || '';
-        }
-        else {
-            $SettingContent = $Setting->{$SubKey}->{Link} || '';
-        }
-
-        # do nothing no value for migrating
-        next SETTING if !$SettingContent;
-
-        my $TTContent;
-        eval {
-            $TTContent = $ProviderObject->MigrateDTLtoTT( Content => $SettingContent );
-        };
-        if ($@) {
-            $Kernel::OM->Get('Kernel::System::Log')->Log(
-                Priority => 'error',
-                Message  => "$Key : $@!",
-            );
-        }
-        else {
-
-            next SETTING if $TTContent eq $SettingContent;
-
-            # set migrated value
-            if ( !$SubKey ) {
-                $Setting = $TTContent;
-            }
-            elsif ( $SubKey eq 'Subject' ) {
-                $Setting->{$SubKey} = $TTContent;
+            if ($@) {
+                $Kernel::OM->Get('Kernel::System::Log')->Log(
+                    Priority => 'error',
+                    Message  => "$MenuModule->$SettingItem : $@!",
+                );
             }
             else {
-                $Setting->{$SubKey}->{Link} = $TTContent;
+                $Setting->{$MenuModule}->{$SettingItem} = $TTContent;
             }
-
-            my $Success = $SysConfigObject->ConfigItemUpdate(
-                Valid => 1,
-                Key   => $Key,
-                Value => $Setting,
-            );
         }
+        my $Success = $SysConfigObject->ConfigItemUpdate(
+            Valid => 1,
+            Key   => 'FAQ::Frontend::MenuModule',
+            Value => $Setting,
+        );
     }
     return 1;
 }

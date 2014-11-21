@@ -454,21 +454,6 @@
 
         $Kernel::OM->Get($CodeModule)->CodeInstall();
     ]]></CodeInstall>
-    <!-- It is IMPORTANT that this CodeUpgrade (Version="4.0.1") comes BEFORE the regular CodeUpgrade block without any version number! -->
-    <CodeUpgrade Type="post" Version="4.0.0"><![CDATA[
-
-        # create the package name
-        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
-
-        # discard internally stored object, so that the next access to object creates them newly
-        $Kernel::OM->ObjectsDiscard(
-            Objects            => [$CodeModule],
-            ForcePackageReload => 1,
-        );
-
-        $Kernel::OM->Get($CodeModule)->CodeUpgradeFromLowerThan_4_0_1();
-
-    ]]></CodeUpgrade>
     <CodeUpgrade Type="post"><![CDATA[
 
         # create the package name
@@ -482,6 +467,14 @@
         my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
 
         $Kernel::OM->Get($CodeModule)->CodeUpgradeSpecial();
+    ]]></CodeUpgrade>
+    <CodeUpgrade Type="post" Version="4.0.1"><![CDATA[
+
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
+
+        $Kernel::OM->Get($CodeModule)->CodeUpgradeFromLowerThan_4_0_1();
+
     ]]></CodeUpgrade>
     <CodeReinstall Type="post"><![CDATA[
 
