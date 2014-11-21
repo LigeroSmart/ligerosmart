@@ -1,12 +1,12 @@
-#
+# 
 # Translators:
 # Luca Maranzano <liuk@linux.it>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2014-11-07 09:28+0000\n"
-"Last-Translator: Luca Maranzano <liuk@linux.it>\n"
+"PO-Revision-Date: 2014-11-21 02:50+0000\n"
+"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Italian (http://www.transifex.com/projects/p/OTRS/language/it/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -370,6 +370,18 @@ msgstr "Riassunto progetto"
 msgid "Go to reporting overview"
 msgstr "Vai al riepilogo di reportistica"
 
+#. Template: AgentTimeAccountingReportingProject
+msgid ""
+"Currently only active users in this project are shown. To change this "
+"behavior, please update setting:"
+msgstr ""
+
+#. Template: AgentTimeAccountingReportingProject
+msgid ""
+"Currently all time accounting users are shown. To change this behavior, "
+"please update setting:"
+msgstr ""
+
 #. Template: AgentTimeAccountingSetting
 msgid "Edit Time Accounting Project Settings"
 msgstr "Modificare le configurazioni di gestione del tempo del progetto."
@@ -391,7 +403,8 @@ msgid "Edit Project Settings"
 msgstr "Modificare la configurazione del progetto"
 
 #. Template: AgentTimeAccountingSetting
-msgid "There is already a project with this name. Please, choose a different one."
+msgid ""
+"There is already a project with this name. Please, choose a different one."
 msgstr "Esiste già un progetto con questo nome. Scegleire un nome diverso."
 
 #. Template: AgentTimeAccountingSetting
@@ -435,7 +448,8 @@ msgid "Edit Task Settings"
 msgstr "Modificare la configurazione dei compiti"
 
 #. Template: AgentTimeAccountingSetting
-msgid "There is already a task with this name. Please, choose a different one."
+msgid ""
+"There is already a task with this name. Please, choose a different one."
 msgstr "Esiste già un compito con questo nome. Scegliere un nome diverso."
 
 #. Template: AgentTimeAccountingSetting
@@ -531,7 +545,9 @@ msgid "No data found for this day."
 msgstr "Nessun dato trovato per questo giorno."
 
 #. SysConfig
-msgid "Agent interface notification module to see the number of incomplete working days for the user."
+msgid ""
+"Agent interface notification module to see the number of incomplete working "
+"days for the user."
 msgstr "Modulo di notifica dell'interfaccia agente per vedere il numero di giorni lavorativi incompleti per l'utente"
 
 #. SysConfig
@@ -579,11 +595,16 @@ msgid "Default status for new users."
 msgstr "Valore predefinito per i nuovi utenti."
 
 #. SysConfig
-msgid "Defines the projects for which a remark is required. If the RegExp matches on the project, you have to insert a remark too. The RegExp use the smx parameter."
+msgid ""
+"Defines the projects for which a remark is required. If the RegExp matches "
+"on the project, you have to insert a remark too. The RegExp use the smx "
+"parameter."
 msgstr "Definisce i progetti per i quali una annotazione è obbligatoria. Se la RegExp coincide il progetto si è obbligati ad inserire una annotazione. La RegExp utilizza il parametro smx."
 
 #. SysConfig
-msgid "Determines if the statistics module may generate time accounting information."
+msgid ""
+"Determines if the statistics module may generate time accounting "
+"information."
 msgstr "Determina se il modulo statistiche può generare informazioni di rendicontazione temporale."
 
 #. SysConfig
@@ -599,23 +620,33 @@ msgid "For how many days ago you can insert working units."
 msgstr "Numero massimo di giorni nel passato in cui è possibile inserire le unità di lavoro."
 
 #. SysConfig
-msgid "If enabled, only users that has added working time to the selected project are shown."
+msgid ""
+"If enabled, only users that has added working time to the selected project "
+"are shown."
 msgstr "Se abilitato, mostra solo gli utenti che hanno aggiunto voci di tempo lavoro al progetto selezionato."
 
 #. SysConfig
-msgid "If enabled, the dropdown elements in the edit screen are changed to autocompletion fields."
+msgid ""
+"If enabled, the dropdown elements in the edit screen are changed to "
+"autocompletion fields."
 msgstr "Se abilitato, modifica gli elementi nella schermata di modifica a campi con completamento automatico."
 
 #. SysConfig
-msgid "If enabled, the user is allowed to enter \"on vacation leave\", \"on sick leave\" and \"on overtime leave\" to multiple dates at once."
+msgid ""
+"If enabled, the user is allowed to enter \"on vacation leave\", \"on sick "
+"leave\" and \"on overtime leave\" to multiple dates at once."
 msgstr "Se abilitato, è possibile per gli utenti inserire i campi \"periodo di vacanza\", \"periodo di malattia\" e \"straordinario\" con date multiple."
 
 #. SysConfig
-msgid "Maximum number of working days after which the working units have to be inserted."
+msgid ""
+"Maximum number of working days after which the working units have to be "
+"inserted."
 msgstr "Numero massimo di giorni lavorativi in cui è possibile inserire le voci di unità di lavoro."
 
 #. SysConfig
-msgid "Maximum number of working days without working units entry after which a warning will be shown."
+msgid ""
+"Maximum number of working days without working units entry after which a "
+"warning will be shown."
 msgstr "Numero massimo di giorni lavorativi che non hanno voci di unità di lavoro oltre il quale verrà mostrato un avviso."
 
 #. SysConfig
@@ -623,15 +654,22 @@ msgid "Project time reporting"
 msgstr "Reportistica temporale del progetto"
 
 #. SysConfig
-msgid "Regular expressions for constraining action list according to selected project. Key contains regular expression for project(s), content contains regular expressions for action(s)."
+msgid ""
+"Regular expressions for constraining action list according to selected "
+"project. Key contains regular expression for project(s), content contains "
+"regular expressions for action(s)."
 msgstr "Espressioni regolari per vincolare lista di azioni in base al progetto selezionato. La chiave contiene un'espressione regolare per il/i progetto/i, il contenuto contiene espressioni regolari per le azioni."
 
 #. SysConfig
-msgid "Regular expressions for constraining project list according to user groups. Key contains regular expression for project(s), content contains comma separated list of groups."
+msgid ""
+"Regular expressions for constraining project list according to user groups. "
+"Key contains regular expression for project(s), content contains comma "
+"separated list of groups."
 msgstr "Espressioni regolari per vincolare lista di progetti in base ai gruppi utente. La chiave contiene un'espressione regolare per il/i progetto/i, il contenuto contiene espressioni regolari per le azioni."
 
 #. SysConfig
-msgid "Specifies if working hours can be inserted without start and end times."
+msgid ""
+"Specifies if working hours can be inserted without start and end times."
 msgstr "Specifica se le ore lavorative possono essere inserite senza orari di inizio e di fine."
 
 #. SysConfig
@@ -639,7 +677,9 @@ msgid "This module forces inserts in TimeAccounting."
 msgstr "Questo modulo forza gli inserimenti in TimeAccounting."
 
 #. SysConfig
-msgid "This notification module gives a warning if there are too many incomplete working days."
+msgid ""
+"This notification module gives a warning if there are too many incomplete "
+"working days."
 msgstr "Questo modulo di notifica genera un avviso se ci sono troppi giorni lavorativi non completi."
 
 #. SysConfig
@@ -667,6 +707,7 @@ msgid "Time accounting."
 msgstr "Contabilizzazione tempo."
 
 #. SysConfig
-msgid "To use if some actions reduced the working hours (for example, if only half of the traveling time is paid Key => traveling; Content => 50)."
+msgid ""
+"To use if some actions reduced the working hours (for example, if only half "
+"of the traveling time is paid Key => traveling; Content => 50)."
 msgstr "Da utilizzare se alcune azioni hanno ridotto le ore lavorative (per esempio: se solo la metà del tempo di viaggio è pagato: Chiave => Viaggio; Contenuto => 50)."
-

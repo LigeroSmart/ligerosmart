@@ -1,10 +1,10 @@
-#
+# 
 # Translators:
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2014-09-27 07:05+0000\n"
+"PO-Revision-Date: 2014-11-21 02:50+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Hungarian (http://www.transifex.com/projects/p/OTRS/language/hu/)\n"
 "MIME-Version: 1.0\n"
@@ -369,6 +369,18 @@ msgstr "Projekt kuimutatás"
 msgid "Go to reporting overview"
 msgstr ""
 
+#. Template: AgentTimeAccountingReportingProject
+msgid ""
+"Currently only active users in this project are shown. To change this "
+"behavior, please update setting:"
+msgstr ""
+
+#. Template: AgentTimeAccountingReportingProject
+msgid ""
+"Currently all time accounting users are shown. To change this behavior, "
+"please update setting:"
+msgstr ""
+
 #. Template: AgentTimeAccountingSetting
 msgid "Edit Time Accounting Project Settings"
 msgstr "IdõElszámolás Projekt Beállítások"
@@ -390,7 +402,8 @@ msgid "Edit Project Settings"
 msgstr "Projekt Beállítások Szerkesztése"
 
 #. Template: AgentTimeAccountingSetting
-msgid "There is already a project with this name. Please, choose a different one."
+msgid ""
+"There is already a project with this name. Please, choose a different one."
 msgstr "Már van ilyen nevû projekt, válasszon más nevet."
 
 #. Template: AgentTimeAccountingSetting
@@ -434,7 +447,8 @@ msgid "Edit Task Settings"
 msgstr "Feladat Beállítások Szerkesztése"
 
 #. Template: AgentTimeAccountingSetting
-msgid "There is already a task with this name. Please, choose a different one."
+msgid ""
+"There is already a task with this name. Please, choose a different one."
 msgstr "Már van ilyen nevû feladat, válasszon más nevet."
 
 #. Template: AgentTimeAccountingSetting
@@ -530,7 +544,9 @@ msgid "No data found for this day."
 msgstr "Nincs adat ehhez a naphoz."
 
 #. SysConfig
-msgid "Agent interface notification module to see the number of incomplete working days for the user."
+msgid ""
+"Agent interface notification module to see the number of incomplete working "
+"days for the user."
 msgstr "Ügyintézõ interface figyelmeztetõ modul a kitöltetlen munkanapok megjelenítéséhez."
 
 #. SysConfig
@@ -578,11 +594,16 @@ msgid "Default status for new users."
 msgstr "Az új felhasználók alapértelmezett státusza."
 
 #. SysConfig
-msgid "Defines the projects for which a remark is required. If the RegExp matches on the project, you have to insert a remark too. The RegExp use the smx parameter."
+msgid ""
+"Defines the projects for which a remark is required. If the RegExp matches "
+"on the project, you have to insert a remark too. The RegExp use the smx "
+"parameter."
 msgstr "Adja meg a projekteket, amelyekhez kötelezõ a megjegyzés. Ha a RegExp kifejezés illeszkedik egy projektre, meg kell adnia megjegyzést. A RegExp az smx paramétert használja."
 
 #. SysConfig
-msgid "Determines if the statistics module may generate time accounting information."
+msgid ""
+"Determines if the statistics module may generate time accounting "
+"information."
 msgstr "Meghatározza, ha a statisztika modul generálhat IdõElszámolás információkat."
 
 #. SysConfig
@@ -598,19 +619,33 @@ msgid "For how many days ago you can insert working units."
 msgstr "Hány napra visszamenõleg tudja megadni a munkaidõt."
 
 #. SysConfig
-msgid "If enabled, the dropdown elements in the edit screen are changed to autocompletion fields."
-msgstr "Ha engedélyezett, a legördülõ elemek helyett automatikus kiegészítés lesz a mezõknél."
-
-#. SysConfig
-msgid "If enabled, the user is allowed to enter \"on vacation leave\", \"on sick leave\" and \"on overtime leave\" to multiple dates at once."
+msgid ""
+"If enabled, only users that has added working time to the selected project "
+"are shown."
 msgstr ""
 
 #. SysConfig
-msgid "Maximum number of working days after which the working units have to be inserted."
+msgid ""
+"If enabled, the dropdown elements in the edit screen are changed to "
+"autocompletion fields."
+msgstr "Ha engedélyezett, a legördülõ elemek helyett automatikus kiegészítés lesz a mezõknél."
+
+#. SysConfig
+msgid ""
+"If enabled, the user is allowed to enter \"on vacation leave\", \"on sick "
+"leave\" and \"on overtime leave\" to multiple dates at once."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Maximum number of working days after which the working units have to be "
+"inserted."
 msgstr "Maximum hány nap után kötelezõ megadni a munkaidõt."
 
 #. SysConfig
-msgid "Maximum number of working days without working units entry after which a warning will be shown."
+msgid ""
+"Maximum number of working days without working units entry after which a "
+"warning will be shown."
 msgstr ""
 
 #. SysConfig
@@ -618,15 +653,22 @@ msgid "Project time reporting"
 msgstr "Projekt idõ kimutatás"
 
 #. SysConfig
-msgid "Regular expressions for constraining action list according to selected project. Key contains regular expression for project(s), content contains regular expressions for action(s)."
+msgid ""
+"Regular expressions for constraining action list according to selected "
+"project. Key contains regular expression for project(s), content contains "
+"regular expressions for action(s)."
 msgstr "Reguláris kifejezés a projekthez megfelelõ akciók listájának szükítéséhez. A kulcs reguláris kifejezést tartalmaz a projektekhez, a tartalom reguláris kifejezést tartalmaz az akciókhoz."
 
 #. SysConfig
-msgid "Regular expressions for constraining project list according to user groups. Key contains regular expression for project(s), content contains comma separated list of groups."
+msgid ""
+"Regular expressions for constraining project list according to user groups. "
+"Key contains regular expression for project(s), content contains comma "
+"separated list of groups."
 msgstr "Reguláris kifejezés a felhasználók csoportjának megfelelõ projektek listájának szükítéséhez. A kulcs reguláris kifejezést tartalmaz a projektekhez, a tartalom reguláris kifejezést tartalmaz a csoportok listájához."
 
 #. SysConfig
-msgid "Specifies if working hours can be inserted without start and end times."
+msgid ""
+"Specifies if working hours can be inserted without start and end times."
 msgstr "Adja meg, ha a munkaidõ megadható kezdõ és befejezõ idõpont nélkül."
 
 #. SysConfig
@@ -634,7 +676,9 @@ msgid "This module forces inserts in TimeAccounting."
 msgstr "Ez a modul kényszeríti az IdõElszámolás beszúrását.."
 
 #. SysConfig
-msgid "This notification module gives a warning if there are too many incomplete working days."
+msgid ""
+"This notification module gives a warning if there are too many incomplete "
+"working days."
 msgstr "Ez a figyelmeztetõ modul jelzi, ha túl sok kitöltetlen munkanap van."
 
 #. SysConfig
@@ -662,10 +706,7 @@ msgid "Time accounting."
 msgstr "IdõElszámolás."
 
 #. SysConfig
-msgid "To use if some actions reduced the working hours (for example, if only half of the traveling time is paid Key => traveling; Content => 50)."
+msgid ""
+"To use if some actions reduced the working hours (for example, if only half "
+"of the traveling time is paid Key => traveling; Content => 50)."
 msgstr "Használja, ha valamelyik akció csökkenti a munkaórákat (például ha csak az utazás fele kerül kifizetésre, Kulcs => Utazás; Tartalom =>50)."
-
-#. SysConfig
-msgid "If enabled, only users that has added working time to the selected project are shown."
-msgstr ""
-
