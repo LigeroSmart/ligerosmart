@@ -7,6 +7,7 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 4.0.1 - 2014-11-25
+ - 2014-11-21 Added code to migrate DTL code in SysConfig settings to TT during package update.
  - 2014-11-20 Added Serbian Cyrillic language
  - 2014-11-20 Added Swahili language
 
