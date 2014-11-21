@@ -8,6 +8,7 @@
 # --
 
 4.0.1 - 2014-11-25
+ - 2014-11-20 Added Swahili language.
  - 2014-11-20 Synced translation files.
  - 2014-11-20 Fixed bug#10887 - User reports row click leads to an 'undefined' screen.
  - 2014-11-17 Followup for bug#10871 - Project and Task ComboBox buttons looks broken.
