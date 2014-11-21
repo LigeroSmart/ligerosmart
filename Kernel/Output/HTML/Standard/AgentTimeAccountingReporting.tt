@@ -78,7 +78,7 @@ $('#NavigationSelect').bind('click', function(){
                     </thead>
                     <tbody>
 [% RenderBlockStart("User") %]
-                        <tr class="MasterAction">
+                        <tr class="MasterActionUser">
                             <td>
                                 <a href="[% Env("Baselink") %]Action=AgentTimeAccountingOverview;Year=[% Data.Year | uri %];Month=[% Data.Month | uri %];UserID=[% Data.UserID | uri %]" class="MasterActionLink">
                                     [% Data.User | html %]
@@ -187,5 +187,14 @@ $('.MasterAction').bind('click', function (Event) {
         return false;
     }
 });
+$('.MasterActionUser').bind('click', function (Event) {
+    var $MasterActionLink = $(this).find('.MasterActionLink');
+    // only act if the link was not clicked directly
+    if (Event.target !== $MasterActionLink.get(0)) {
+        window.location = $MasterActionLink.attr('href');
+        return false;
+    }
+});
+
 //]]></script>
 [% END %]
