@@ -121,6 +121,10 @@ sub Data {
     # Template: AgentTimeAccountingReportingProject
     $Self->{Translation}->{'Project report'} = 'Projektübersicht';
     $Self->{Translation}->{'Go to reporting overview'} = 'Gehe zur Berichterstattungsübersicht';
+    $Self->{Translation}->{'Currently only active users in this project are shown. To change this behavior, please update setting:'} =
+        '';
+    $Self->{Translation}->{'Currently all time accounting users are shown. To change this behavior, please update setting:'} =
+        '';
 
     # Template: AgentTimeAccountingSetting
     $Self->{Translation}->{'Edit Time Accounting Project Settings'} = 'Zeitabrechnung-Projekteinstellungen bearbeiten';

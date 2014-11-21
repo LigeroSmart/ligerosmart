@@ -366,6 +366,14 @@ msgstr ""
 msgid "Go to reporting overview"
 msgstr ""
 
+#. Template: AgentTimeAccountingReportingProject
+msgid "Currently only active users in this project are shown. To change this behavior, please update setting:"
+msgstr ""
+
+#. Template: AgentTimeAccountingReportingProject
+msgid "Currently all time accounting users are shown. To change this behavior, please update setting:"
+msgstr ""
+
 #. Template: AgentTimeAccountingSetting
 msgid "Edit Time Accounting Project Settings"
 msgstr ""
