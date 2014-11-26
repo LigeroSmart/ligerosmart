@@ -280,7 +280,7 @@ sub _MigrateDTLInSysConfig {
 
     # get setting's content
     my $Setting = $ConfigObject->Get('Survey::Frontend::MenuModule');
-    next SETTING if !$Setting;
+    return if !$Setting;
 
     MENUMODULE:
     for my $MenuModule ( sort keys %{$Setting} ) {
