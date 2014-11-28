@@ -12,6 +12,8 @@ package var::packagesetup::ITSMChangeManagement;    ## no critic
 use strict;
 use warnings;
 
+use Kernel::Output::Template::Provider;
+
 our @ObjectDependencies = (
     'Kernel::Config',
     'Kernel::System::DB',
@@ -276,6 +278,23 @@ sub CodeUpgradeFromLowerThan_3_3_91 {    ## no critic
 
     # Migrate change and workorder freetext fields to dynamic fields.
     $Self->_MigrateFreeTextToDynamicFields();
+
+    return 1;
+}
+
+=item CodeUpgradeFromLowerThan_4_0_2()
+
+This function is only executed if the installed module version is smaller than 4.0.2.
+
+my $Result = $CodeObject->CodeUpgradeFromLowerThan_4_0_2();
+
+=cut
+
+sub CodeUpgradeFromLowerThan_4_0_2 {    ## no critic
+    my ( $Self, %Param ) = @_;
+
+    # migrate the DTL Content in the SysConfig
+    $Self->_MigrateDTLInSysConfig();
 
     return 1;
 }
@@ -3468,6 +3487,75 @@ sub _DeleteSystemNotifications {
             . 'OR notification_type LIKE "Customer::Change::%" '
             . 'OR notification_type LIKE "Customer::WorkOrder::%"',
     );
+
+    return 1;
+}
+
+=item _MigrateDTLInSysConfig()
+
+Converts DTL settings in sysconfig to TT.
+
+    my $Result = $CodeObject->_MigrateDTLInSysConfig();
+
+=cut
+
+sub _MigrateDTLInSysConfig {
+
+    # create needed objects
+    my $ConfigObject    = $Kernel::OM->Get('Kernel::Config');
+    my $SysConfigObject = $Kernel::OM->Get('Kernel::System::SysConfig');
+    my $ProviderObject  = Kernel::Output::Template::Provider->new();
+
+    # handle hash settings
+    NAME:
+    for my $Name (
+        qw(
+        Ticket::Frontend::MenuModule
+        ITSMChange::Frontend::MenuModule
+        ITSMWorkOrder::Frontend::MenuModule
+        )
+        )
+    {
+
+        # get setting's content
+        my $Setting = $ConfigObject->Get($Name);
+        next NAME if !$Setting;
+
+        MENUMODULE:
+        for my $MenuModule ( sort keys %{$Setting} ) {
+
+            # setting is a hash
+            SETTINGITEM:
+            for my $SettingItem ( sort keys %{ $Setting->{$MenuModule} } ) {
+
+                my $SettingContent = $Setting->{$MenuModule}->{$SettingItem};
+
+                # do nothing if there is no value for migrating
+                next SETTINGITEM if !$SettingContent;
+
+                my $TTContent;
+                eval {
+                    $TTContent = $ProviderObject->MigrateDTLtoTT( Content => $SettingContent );
+                };
+                if ($@) {
+                    $Kernel::OM->Get('Kernel::System::Log')->Log(
+                        Priority => 'error',
+                        Message  => "$MenuModule->$SettingItem : $@!",
+                    );
+                }
+                else {
+                    $Setting->{$MenuModule}->{$SettingItem} = $TTContent;
+                }
+            }
+
+            # update the config item
+            my $Success = $SysConfigObject->ConfigItemUpdate(
+                Valid => 1,
+                Key   => $Name,
+                Value => $Setting,
+            );
+        }
+    }
 
     return 1;
 }
