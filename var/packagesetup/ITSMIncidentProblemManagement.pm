@@ -827,7 +827,11 @@ sub _MigrateDTLInSysConfig {
 
     NAME:
     for my $Name (
-        qw(Ticket::Frontend::MenuModule Ticket::Frontend::AgentTicketAddtlITSMField Ticket::Frontend::AgentTicketDecision)
+        qw(
+            Ticket::Frontend::MenuModule
+            Ticket::Frontend::AgentTicketAddtlITSMField
+            Ticket::Frontend::AgentTicketDecision
+        )
         )
     {
 
@@ -838,6 +842,37 @@ sub _MigrateDTLInSysConfig {
         MENUMODULE:
         for my $MenuModule ( sort keys %{$Setting} ) {
 
+            # if setting is a scalar
+            if ( !ref $Setting->{$MenuModule} ) {
+
+                # go to next setting if scalar setting is not named "Subject" or "Body"
+                if ( $Setting->{$MenuModule} ne 'Subject' && $Setting->{$MenuModule} ne 'Body') {
+                    next MENUMODULE;
+                }
+
+                my $ScalarContent = $Setting->{$MenuModule};
+
+                # do nothing if there is no value for migrating
+                next MENUMODULE if !$ScalarContent;
+
+                my $TTContent;
+                eval {
+                    $TTContent = $ProviderObject->MigrateDTLtoTT( Content => $ScalarContent );
+                };
+                if ($@) {
+                    $Kernel::OM->Get('Kernel::System::Log')->Log(
+                        Priority => 'error',
+                        Message  => "$MenuModule : $@!",
+                    );
+                }
+                else {
+                    $Setting->{$MenuModule} = $TTContent;
+                }
+
+                next MENUMODULE;
+            }
+
+            # if setting is a hash
             SETTINGITEM:
             for my $SettingItem ( sort keys %{ $Setting->{$MenuModule} } ) {
 
