@@ -772,7 +772,7 @@ sub _MigrateDTLInSysConfig {
 
     # get setting's content
     my $Setting = $ConfigObject->Get('FAQ::Frontend::MenuModule');
-    next SETTING if !$Setting;
+    return if !$Setting;
 
     MENUMODULE:
     for my $MenuModule ( sort keys %{$Setting} ) {
@@ -807,6 +807,7 @@ sub _MigrateDTLInSysConfig {
     }
     return 1;
 }
+
 1;
 
 =back
