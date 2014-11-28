@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTicketActionCommon.pm - common file for several modules
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/b976a7c4d0132dbcd8daf00fd3a11d2c90c4b3d9/Kernel/Modules/AgentTicketActionCommon.pm
+# $origin: https://github.com/OTRS/otrs/blob/493d347a554b027e68d53f1477b959c838fda86a/Kernel/Modules/AgentTicketActionCommon.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1198,6 +1198,11 @@ sub Run {
             CustomerUserID => $CustomerUser,
             QueueID        => $QueueID,
         );
+        my $Types = $Self->_GetTypes(
+            %GetParam,
+            CustomerUserID => $CustomerUser,
+            QueueID        => $QueueID,
+        );
 
         # reset previous ServiceID to reset SLA-List if no service is selected
         if ( !defined $ServiceID || !$Services->{$ServiceID} ) {
@@ -1441,6 +1446,14 @@ sub Run {
                     SelectedID   => $GetParam{StandardTemplateID},
                     PossibleNone => 1,
                     Translation  => 1,
+                    Max          => 100,
+                },
+                {
+                    Name         => 'TypeID',
+                    Data         => $Types,
+                    SelectedID   => $GetParam{TypeID},
+                    PossibleNone => 1,
+                    Translation  => 0,
                     Max          => 100,
                 },
                 @DynamicFieldAJAX,
@@ -2776,6 +2789,21 @@ sub _GetStandardTemplates {
 
     # return just the templates for this screen
     return $StandardTemplates{Note};
+}
+
+sub _GetTypes {
+    my ( $Self, %Param ) = @_;
+
+    # get type
+    my %Type;
+    if ( $Param{QueueID} || $Param{TicketID} ) {
+        %Type = $Self->{TicketObject}->TicketTypeList(
+            %Param,
+            Action => $Self->{Action},
+            UserID => $Self->{UserID},
+        );
+    }
+    return \%Type;
 }
 
 1;
