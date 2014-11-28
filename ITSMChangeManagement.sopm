@@ -4,7 +4,7 @@
 <!-- nofilter(TidyAll::Plugin::OTRS::SOPM::DocumentationPresent) -->
     <Version>0.0.0</Version>
     <Framework>4.0.x</Framework>
-    <PackageRequired Version="4.0.1">ITSMCore</PackageRequired>
+    <PackageRequired Version="4.0.2">ITSMCore</PackageRequired>
     <Vendor>OTRS AG</Vendor>
     <URL>http://otrs.org/</URL>
     <License>GNU AFFERO GENERAL PUBLIC LICENSE Version 3, November 2007</License>
@@ -1739,7 +1739,7 @@
         <br/>
         <strong>REQUIRED OTRS PACKAGES</strong>
         <ul>
-        <li>ITSMCore 4.0.1</li>
+        <li>ITSMCore 4.0.2</li>
         </ul>
         <br/>
         ((enjoy))<br/>
@@ -1757,7 +1757,7 @@
         <br/>
         <strong>BENÖTIGTE OTRS-PAKETE</strong>
         <ul>
-        <li>ITSMCore 4.0.1</li>
+        <li>ITSMCore 4.0.2</li>
         </ul>
         <br/>
         ((enjoy))<br/>
@@ -1774,7 +1774,7 @@
         <br/>
         <strong>PAQUETES OTRS REQUERIDOS</strong>
         <ul>
-        <li>ITSMCore 4.0.1</li>
+        <li>ITSMCore 4.0.2</li>
         </ul>
         <br/>
         ((enjoy))<br/>
@@ -1839,7 +1839,7 @@
         <br/>
         <strong>REQUIRED OTRS PACKAGES</strong>
         <ul>
-        <li>ITSMCore 4.0.1</li>
+        <li>ITSMCore 4.0.2</li>
         </ul>
         <br/>
         ((enjoy))<br/>
@@ -1857,7 +1857,7 @@
         <br/>
         <strong>BENÖTIGTE OTRS-PAKETE</strong>
         <ul>
-        <li>ITSMCore 4.0.1</li>
+        <li>ITSMCore 4.0.2</li>
         </ul>
         <br/>
         ((enjoy))<br/>
@@ -1875,7 +1875,7 @@
         <br/>
         <strong>PAQUETES OTRS REQUERIDOS</strong>
         <ul>
-        <li>ITSMCore 4.0.1</li>
+        <li>ITSMCore 4.0.2</li>
         </ul>
         <br/>
         ((enjoy))<br/>
