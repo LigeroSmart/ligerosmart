@@ -42,9 +42,9 @@ use Kernel::System::CloneDB::Backend;
 my %CommonObject = ();
 $CommonObject{ConfigObject} = Kernel::Config->new();
 $CommonObject{EncodeObject} = Kernel::System::Encode->new(%CommonObject);
-$CommonObject{LogObject}    = Kernel::System::Log->new(
-    LogPrefix    => 'OTRS-otrs.CheckDB.pl',
-    ConfigObject => $CommonObject{ConfigObject},
+$CommonObject{LogObject} = Kernel::System::Log->new(
+    %CommonObject,
+    LogPrefix => 'OTRS-otrs.CloneDB.pl',
 );
 $CommonObject{MainObject}     = Kernel::System::Main->new(%CommonObject);
 $CommonObject{SourceDBObject} = Kernel::System::DB->new(%CommonObject)

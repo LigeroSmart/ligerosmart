@@ -169,8 +169,27 @@ sub ResetAutoIncrementField {
     # add one more to the last ID
     $LastID++;
 
+    # check if sequence exists
+    $Param{DBObject}->Prepare(
+        SQL => "
+        SELECT
+            1
+        FROM pg_class c
+        WHERE
+            c.relkind = 'S' AND
+            c.relname = '$Param{Table}_id_seq'",
+        Limit => 1,
+    ) || die @!;
+
+    my $SequenceExists = 0;
+    while ( my @Row = $Param{DBObject}->FetchrowArray() ) {
+        $SequenceExists = $Row[0];
+    }
+
+    return 1 if !$SequenceExists;
+
     my $SQL = "
-        ALTER SEQUENCE IF EXISTS $Param{Table}_id_seq RESTART WITH $LastID;
+        ALTER SEQUENCE $Param{Table}_id_seq RESTART WITH $LastID;
     ";
 
     $Param{DBObject}->Do(
