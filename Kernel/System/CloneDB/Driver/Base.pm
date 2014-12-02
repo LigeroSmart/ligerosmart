@@ -67,7 +67,10 @@ sub SanityChecks {
     # check needed stuff
     for my $Needed (qw(TargetDBObject)) {
         if ( !$Param{$Needed} ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $Needed!" );
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Needed!"
+            );
             return;
         }
     }
@@ -82,8 +85,7 @@ sub SanityChecks {
     }
 
     # get skip tables settings
-    my $SkipTables
-        = $Self->{ConfigObject}->Get('CloneDB::SkipTables');
+    my $SkipTables = $Self->{ConfigObject}->Get('CloneDB::SkipTables');
 
     # get a list of tables on Source DB
     my @Tables = $Self->TablesList(
@@ -136,7 +138,10 @@ sub RowCount {
     # check needed stuff
     for my $Needed (qw(DBObject Table)) {
         if ( !$Param{$Needed} ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $Needed!" );
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Needed!"
+            );
             return;
         }
     }
@@ -164,7 +169,10 @@ sub DataTransfer {
     # check needed stuff
     for my $Needed (qw(TargetDBObject TargetDBBackend)) {
         if ( !$Param{$Needed} ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $Needed!" );
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Needed!"
+            );
             return;
         }
     }
@@ -176,8 +184,7 @@ sub DataTransfer {
     my $FH;
 
     # get skip tables settings
-    my $SkipTables
-        = $Self->{ConfigObject}->Get('CloneDB::SkipTables');
+    my $SkipTables = $Self->{ConfigObject}->Get('CloneDB::SkipTables');
 
     # get a list of tables on Source DB
     my @Tables = $Self->TablesList(

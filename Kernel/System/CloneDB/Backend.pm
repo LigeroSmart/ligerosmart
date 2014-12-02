@@ -82,7 +82,10 @@ sub new {
     # get needed objects
     for my $Needed (qw(ConfigObject EncodeObject LogObject MainObject SourceDBObject)) {
         if ( !$Param{$Needed} ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Got no $Needed!" );
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Got no $Needed!"
+            );
             return;
         }
         $Self->{$Needed} = $Param{$Needed};
@@ -146,7 +149,10 @@ sub CreateTargetDBConnection {
     # check needed stuff
     for my $Needed (qw(TargetDBSettings)) {
         if ( !$Param{$Needed} ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $Needed!" );
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Needed!"
+            );
             return;
         }
     }
@@ -200,7 +206,10 @@ sub DataTransfer {
     # check needed stuff
     for my $Needed (qw(TargetDBObject)) {
         if ( !$Param{$Needed} ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $Needed!" );
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Needed!"
+            );
             return;
         }
     }
@@ -254,7 +263,10 @@ sub SanityChecks {
     # check needed stuff
     for my $Needed (qw(TargetDBObject)) {
         if ( !$Param{$Needed} ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $Needed!" );
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Needed!"
+            );
             return;
         }
     }
@@ -285,7 +297,10 @@ sub _GenerateTargetStructuresSQL {
 
     for my $Needed (qw(TargetDBObject)) {
         if ( !$Param{$Needed} ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $Needed!" );
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Needed!"
+            );
             return;
         }
     }
@@ -383,7 +398,10 @@ sub PopulateTargetStructuresPre {
     # check needed stuff
     for my $Needed (qw(TargetDBObject)) {
         if ( !$Param{$Needed} ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $Needed!" );
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Needed!"
+            );
             return;
         }
     }
@@ -414,7 +432,10 @@ sub PopulateTargetStructuresPost {
     # check needed stuff
     for my $Needed (qw(TargetDBObject)) {
         if ( !$Param{$Needed} ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $Needed!" );
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Needed!"
+            );
             return;
         }
     }

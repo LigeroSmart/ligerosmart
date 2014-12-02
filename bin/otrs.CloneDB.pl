@@ -42,7 +42,7 @@ use Kernel::System::CloneDB::Backend;
 my %CommonObject = ();
 $CommonObject{ConfigObject} = Kernel::Config->new();
 $CommonObject{EncodeObject} = Kernel::System::Encode->new(%CommonObject);
-$CommonObject{LogObject} = Kernel::System::Log->new(
+$CommonObject{LogObject}    = Kernel::System::Log->new(
     %CommonObject,
     LogPrefix => 'OTRS-otrs.CloneDB.pl',
 );
@@ -55,8 +55,7 @@ $CommonObject{CloneDBBackendObject} = Kernel::System::CloneDB::Backend->new(%Com
     || die "Could not create clone db object.";
 
 # get the target DB settings
-my $TargetDBSettings
-    = $CommonObject{ConfigObject}->Get('CloneDB::TargetDBSettings');
+my $TargetDBSettings = $CommonObject{ConfigObject}->Get('CloneDB::TargetDBSettings');
 
 # create DB connections
 my $TargetDBObject = $CommonObject{CloneDBBackendObject}->CreateTargetDBConnection(
@@ -81,7 +80,7 @@ if ( exists $Options{r} || exists $Options{n} ) {
 
     my $SanityResult = $CommonObject{CloneDBBackendObject}->SanityChecks(
         TargetDBObject => $TargetDBObject,
-        DryRun => $Options{n} || '',
+        DryRun         => $Options{n} || '',
     );
     if ($SanityResult) {
         my $DataTransferResult = $CommonObject{CloneDBBackendObject}->DataTransfer(
