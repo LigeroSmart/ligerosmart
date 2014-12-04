@@ -62,6 +62,10 @@ my $ServiceID = $ServiceObject->ServiceAdd(
     ValidID => 1,
     Comment => 'Unit Test Comment',
     UserID  => 1,
+
+    # TypeID and Criticality is needed to test SurveySend() together with ITSM
+    TypeID      => 2,
+    Criticality => '3 normal',
 );
 
 # create survey
