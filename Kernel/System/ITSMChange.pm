@@ -703,7 +703,7 @@ sub ChangeGet {
 
         # set cache (change data exists at this point, it was checked before)
         $Kernel::OM->Get('Kernel::System::Cache')->Set(
-            Type  => 'ITSMChangeManagement',
+            Type  => $Self->{CacheType},
             Key   => $CacheKey,
             Value => \%ChangeData,
             TTL   => $Self->{CacheTTL},
@@ -1026,7 +1026,7 @@ sub ChangeCABGet {
 
         # set cache
         $Kernel::OM->Get('Kernel::System::Cache')->Set(
-            Type  => 'ITSMChangeManagement',
+            Type  => $Self->{CacheType},
             Key   => $CacheKey,
             Value => \%CAB,
             TTL   => $Self->{CacheTTL},
@@ -1172,7 +1172,7 @@ sub ChangeLookup {
 
                 # set cache
                 $Kernel::OM->Get('Kernel::System::Cache')->Set(
-                    Type  => 'ITSMChangeManagement',
+                    Type  => $Self->{CacheType},
                     Key   => $CacheKey,
                     Value => $ChangeID,
                     TTL   => $Self->{CacheTTL},
@@ -1217,7 +1217,7 @@ sub ChangeLookup {
 
                 # set cache
                 $Kernel::OM->Get('Kernel::System::Cache')->Set(
-                    Type  => 'ITSMChangeManagement',
+                    Type  => $Self->{CacheType},
                     Key   => $CacheKey,
                     Value => $ChangeNumber,
                     TTL   => $Self->{CacheTTL},
@@ -1280,7 +1280,7 @@ sub ChangeList {
 
         # set cache
         $Kernel::OM->Get('Kernel::System::Cache')->Set(
-            Type  => 'ITSMChangeManagement',
+            Type  => $Self->{CacheType},
             Key   => $CacheKey,
             Value => \@ChangeIDs,
             TTL   => $Self->{CacheTTL},
