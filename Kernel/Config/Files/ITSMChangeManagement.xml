@@ -4531,44 +4531,44 @@
             </Array>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="GenericInterface::Invoker::Event###ITSMChange" Required="0" Valid="1">
-        <Description Translatable="1">Event list to be displayed on GUI to trigger generic interface invokers.</Description>
+    <ConfigItem Name="Events###ITSMChange" Required="0" Valid="1">
+        <Description Translatable="1">List of all ticket events to be displayed in the GUI.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>GenericInterface::Invoker</SubGroup>
+        <SubGroup>Frontend::Admin</SubGroup>
         <Setting>
-            <Hash>
-                <Item Key="ChangeAddPre">1</Item>
-                <Item Key="ChangeAddPost">1</Item>
-                <Item Key="ChangeUpdatePre">1</Item>
-                <Item Key="ChangeUpdatePost">1</Item>
-                <Item Key="ChangeCABUpdatePre">1</Item>
-                <Item Key="ChangeCABUpdatePost">1</Item>
-                <Item Key="ChangeCABDeletePre">1</Item>
-                <Item Key="ChangeCABDeletePost">1</Item>
-                <Item Key="ChangeDeletePre">1</Item>
-                <Item Key="ChangeDeletePost">1</Item>
-                <Item Key="ChangeAttachmentAddPost">1</Item>
-                <Item Key="ChangeAttachmentDeletePost">1</Item>
-            </Hash>
+             <Array>
+                <Item>ChangeAddPre</Item>
+                <Item>ChangeAddPost</Item>
+                <Item>ChangeUpdatePre</Item>
+                <Item>ChangeUpdatePost</Item>
+                <Item>ChangeCABUpdatePre</Item>
+                <Item>ChangeCABUpdatePost</Item>
+                <Item>ChangeCABDeletePre</Item>
+                <Item>ChangeCABDeletePost</Item>
+                <Item>ChangeDeletePre</Item>
+                <Item>ChangeDeletePost</Item>
+                <Item>ChangeAttachmentAddPost</Item>
+                <Item>ChangeAttachmentDeletePost</Item>
+            </Array>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="GenericInterface::Invoker::Event###ITSMWorkOrder" Required="0" Valid="1">
-        <Description Translatable="1">Event list to be displayed on GUI to trigger generic interface invokers.</Description>
+    <ConfigItem Name="Events###ITSMWorkOrder" Required="0" Valid="1">
+        <Description Translatable="1">List of all ticket events to be displayed in the GUI.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>GenericInterface::Invoker</SubGroup>
+        <SubGroup>Frontend::Admin</SubGroup>
         <Setting>
-            <Hash>
-                <Item Key="WorkOrderAddPre">1</Item>
-                <Item Key="WorkOrderAddPost">1</Item>
-                <Item Key="WorkOrderUpdatePre">1</Item>
-                <Item Key="WorkOrderUpdatePost">1</Item>
-                <Item Key="WorkOrderDeletePre">1</Item>
-                <Item Key="WorkOrderDeletePost">1</Item>
-                <Item Key="WorkOrderAttachmentAddPost">1</Item>
-                <Item Key="WorkOrderAttachmentDeletePost">1</Item>
-                <Item Key="WorkOrderReportAttachmentAddPost">1</Item>
-                <Item Key="WorkOrderReportAttachmentDeletePost">1</Item>
-            </Hash>
+            <Array>
+                <Item>WorkOrderAddPre</Item>
+                <Item>WorkOrderAddPost</Item>
+                <Item>WorkOrderUpdatePre</Item>
+                <Item>WorkOrderUpdatePost</Item>
+                <Item>WorkOrderDeletePre</Item>
+                <Item>WorkOrderDeletePost</Item>
+                <Item>WorkOrderAttachmentAddPost</Item>
+                <Item>WorkOrderAttachmentDeletePost</Item>
+                <Item>WorkOrderReportAttachmentAddPost</Item>
+                <Item>WorkOrderReportAttachmentDeletePost</Item>
+            </Array>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMChange::EventModule###1000-GenericInterface" Required="0" Valid="1">
@@ -4579,7 +4579,7 @@
             <Hash>
                 <Item Key="Module">Kernel::GenericInterface::Event::Handler</Item>
                 <Item Key="Transaction">1</Item>
-                <Item Key="Event">.*</Item>
+                <Item Key="Event"></Item><!-- run on all events -->
             </Hash>
         </Setting>
     </ConfigItem>
@@ -4591,7 +4591,7 @@
             <Hash>
                 <Item Key="Module">Kernel::GenericInterface::Event::Handler</Item>
                 <Item Key="Transaction">1</Item>
-                <Item Key="Event">.*</Item>
+                <Item Key="Event"></Item><!-- run on all events -->
             </Hash>
         </Setting>
     </ConfigItem>
