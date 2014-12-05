@@ -35,6 +35,7 @@
                 <Item Key="virtual_fs_db.content">1</Item>
                 <Item Key="web_upload_cache.content">1</Item>
                 <Item Key="standard_attachment.content">1</Item>
+                <Item Key="faq_attachment.content">1</Item>
             </Hash>
         </Setting>
     </ConfigItem>
