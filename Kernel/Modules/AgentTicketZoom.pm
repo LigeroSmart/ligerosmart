@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTicketZoom.pm - to get a closer view
 # Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/493d347a554b027e68d53f1477b959c838fda86a/Kernel/Modules/AgentTicketZoom.pm
+# $origin: https://github.com/OTRS/otrs/blob/a3587fd543ecae667290f439bcec1133a40edfa6/Kernel/Modules/AgentTicketZoom.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -13,6 +13,8 @@ package Kernel::Modules::AgentTicketZoom;
 
 use strict;
 use warnings;
+
+use POSIX qw/ceil/;
 
 use Kernel::System::CustomerUser;
 use Kernel::System::DynamicField;
@@ -31,9 +33,9 @@ use Kernel::System::JSON;
 # ---
 use Kernel::System::Service;
 # ---
-
 use Kernel::System::VariableCheck qw(:all);
-use POSIX qw/ceil/;
+
+our $ObjectManagerDisabled = 1;
 
 sub new {
     my ( $Type, %Param ) = @_;
