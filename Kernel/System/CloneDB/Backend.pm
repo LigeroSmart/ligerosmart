@@ -325,11 +325,11 @@ sub _GenerateTargetStructuresSQL {
         String => $XML,
     );
     $Self->{SQL} = [];
-    push $Self->{SQL}, $Param{TargetDBObject}->SQLProcessor(
+    push @{ $Self->{SQL} }, $Param{TargetDBObject}->SQLProcessor(
         Database => \@XMLArray,
     );
     $Self->{SQLPost} = [];
-    push $Self->{SQLPost}, $Param{TargetDBObject}->SQLProcessorPost();
+    push @{ $Self->{SQLPost} }, $Param{TargetDBObject}->SQLProcessorPost();
 
     my $PackageObject = Kernel::System::Package->new(
         %{$Self},
@@ -382,10 +382,10 @@ sub _GenerateTargetStructuresSQL {
         for my $Type (qw(pre post)) {
             next TYPE if !$Package->{DatabaseInstall}->{$Type};
 
-            push $Self->{SQL}, $Param{TargetDBObject}->SQLProcessor(
+            push @{ $Self->{SQL} }, $Param{TargetDBObject}->SQLProcessor(
                 Database => $Package->{DatabaseInstall}->{$Type},
             );
-            push $Self->{SQLPost}, $Param{TargetDBObject}->SQLProcessorPost();
+            push @{ $Self->{SQLPost} }, $Param{TargetDBObject}->SQLProcessorPost();
         }
     }
 
