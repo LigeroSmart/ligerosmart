@@ -84,7 +84,7 @@ sub new {
         if ( !$Param{$Needed} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "Got no $Needed!"
+                Message  => "Got no $Needed!",
             );
             return;
         }
@@ -151,7 +151,7 @@ sub CreateTargetDBConnection {
         if ( !$Param{$Needed} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "Need $Needed!"
+                Message  => "Need $Needed!",
             );
             return;
         }
@@ -165,7 +165,7 @@ sub CreateTargetDBConnection {
         if ( !$Param{TargetDBSettings}->{$Needed} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "Need $Needed in TargetDBSettings!"
+                Message  => "Need $Needed in TargetDBSettings!",
             );
             return;
         }
@@ -177,7 +177,7 @@ sub CreateTargetDBConnection {
     if ( !$Self->{$CloneDBBackend} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => "Backend $Param{TargetDBSettings}->{TargetDatabaseType} is invalid!"
+            Message  => "Backend $Param{TargetDBSettings}->{TargetDatabaseType} is invalid!",
         );
         return;
     }
@@ -208,7 +208,7 @@ sub DataTransfer {
         if ( !$Param{$Needed} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "Need $Needed!"
+                Message  => "Need $Needed!",
             );
             return;
         }
@@ -220,7 +220,7 @@ sub DataTransfer {
     if ( !$Self->{$SourceDBBackend} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => "Backend $Self->{SourceDBObject}->{'DB::Type'} is invalid!"
+            Message  => "Backend $Self->{SourceDBObject}->{'DB::Type'} is invalid!",
         );
         return;
     }
@@ -231,7 +231,7 @@ sub DataTransfer {
     if ( !$Self->{$TargetDBBackend} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => "Backend $Param{TargetDBObject}->{'DB::Type'} is invalid!"
+            Message  => "Backend $Param{TargetDBObject}->{'DB::Type'} is invalid!",
         );
         return;
     }
@@ -265,7 +265,7 @@ sub SanityChecks {
         if ( !$Param{$Needed} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "Need $Needed!"
+                Message  => "Need $Needed!",
             );
             return;
         }
@@ -277,7 +277,7 @@ sub SanityChecks {
     if ( !$Self->{$CloneDBBackend} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => "Backend $Self->{SourceDBObject}->{'DB::Type'} is invalid!"
+            Message  => "Backend $Self->{SourceDBObject}->{'DB::Type'} is invalid!",
         );
         return;
     }
@@ -299,7 +299,7 @@ sub _GenerateTargetStructuresSQL {
         if ( !$Param{$Needed} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "Need $Needed!"
+                Message  => "Need $Needed!",
             );
             return;
         }
@@ -400,7 +400,7 @@ sub PopulateTargetStructuresPre {
         if ( !$Param{$Needed} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "Need $Needed!"
+                Message  => "Need $Needed!",
             );
             return;
         }
@@ -434,7 +434,7 @@ sub PopulateTargetStructuresPost {
         if ( !$Param{$Needed} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "Need $Needed!"
+                Message  => "Need $Needed!",
             );
             return;
         }
