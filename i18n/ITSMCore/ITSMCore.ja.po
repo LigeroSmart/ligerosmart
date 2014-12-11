@@ -1,11 +1,12 @@
 # 
 # Translators:
+# Kentaro Hori <kentaro0919@gmail.com>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2014-10-27 14:55+0000\n"
-"Last-Translator: Udo Bretz\n"
+"PO-Revision-Date: 2014-12-10 22:54+0000\n"
+"Last-Translator: Kentaro Hori <kentaro0919@gmail.com>\n"
 "Language-Team: Japanese (http://www.transifex.com/projects/p/OTRS/language/ja/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -201,43 +202,43 @@ msgstr "インシデントの状態"
 msgid ""
 "Frontend module registration for the AdminITSMCIPAllocate configuration in "
 "the admin area."
-msgstr ""
+msgstr "管理エリアでのAdminITSMCIPAllocateのフロントエンドモジュールの登録"
 
 #. SysConfig
 msgid ""
 "Frontend module registration for the AgentITSMSLA object in the agent "
 "interface."
-msgstr ""
+msgstr "担当者インタフェースのAgentITSMSLAオブジェクト　フロントエンド・モジュールの登録です。"
 
 #. SysConfig
 msgid ""
 "Frontend module registration for the AgentITSMSLAPrint object in the agent "
 "interface."
-msgstr ""
+msgstr "担当者インタフェースのAgentITSMSLAPrintオブジェクト　フロントエンド・モジュールの登録です。"
 
 #. SysConfig
 msgid ""
 "Frontend module registration for the AgentITSMSLAZoom object in the agent "
 "interface."
-msgstr ""
+msgstr "担当者インタフェースのAgentITSMSLAZoomオブジェクト　フロントエンド・モジュールの登録です。"
 
 #. SysConfig
 msgid ""
 "Frontend module registration for the AgentITSMService object in the agent "
 "interface."
-msgstr ""
+msgstr "担当者インタフェースのAgentITSMServiceオブジェクト　フロントエンド・モジュールの登録です。"
 
 #. SysConfig
 msgid ""
 "Frontend module registration for the AgentITSMServicePrint object in the "
 "agent interface."
-msgstr ""
+msgstr "担当者インタフェースのAgentITSMServicePrintオブジェクト　フロントエンド・モジュールの登録です。"
 
 #. SysConfig
 msgid ""
 "Frontend module registration for the AgentITSMServiceZoom object in the "
 "agent interface."
-msgstr ""
+msgstr "担当者インタフェースのAgentITSMServiceZoomオブジェクト　フロントエンド・モジュールの登録です。"
 
 #. SysConfig
 msgid "Manage priority matrix."
@@ -245,27 +246,27 @@ msgstr "優先度の関連性を管理"
 
 #. SysConfig
 msgid "Module to show back link in service menu."
-msgstr ""
+msgstr "サービスメニューでバックリンクを表示するためのモジュール"
 
 #. SysConfig
 msgid "Module to show back link in sla menu."
-msgstr ""
+msgstr "SLAメニューでバックリンクを表示するためのモジュール"
 
 #. SysConfig
 msgid "Module to show print link in service menu."
-msgstr ""
+msgstr "サービスメニューで印刷を表示するためのモジュール"
 
 #. SysConfig
 msgid "Module to show print link in sla menu."
-msgstr ""
+msgstr "SLAメニューで印刷を表示するためのモジュール"
 
 #. SysConfig
 msgid "Module to show the link link in service menu."
-msgstr ""
+msgstr "サービスメニューで「リンク」リンクを表示するためのモジュール"
 
 #. SysConfig
 msgid "Parameters for the incident states in the preference view."
-msgstr ""
+msgstr "設定ビューでのインシデントステータスのパラメーター"
 
 #. SysConfig
 msgid ""
@@ -288,25 +289,25 @@ msgstr ""
 msgid ""
 "This setting defines that a 'ITSMChange' object can be linked with 'Ticket' "
 "objects using the 'Normal' link type."
-msgstr ""
+msgstr "‘Normal’リンク・タイプを使用して、‘ITSMChange’オブジェクトが他の‘Ticket’オブジェクトとリンクされるように、定義します。"
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'ITSMConfigItem' object can be linked with 'FAQ'"
 " objects using the 'Normal' link type."
-msgstr ""
+msgstr "‘Normal’リンク・タイプを使用して、‘ITSMChange’オブジェクトが‘FAQ’オブジェクトとリンクされるように、定義します。"
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'ITSMConfigItem' object can be linked with 'FAQ'"
 " objects using the 'ParentChild' link type."
-msgstr ""
+msgstr "‘親子’リンク・タイプを使用して、‘ITSMChange’オブジェクトが‘FAQ’オブジェクトとリンクされるように、定義します。"
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'ITSMConfigItem' object can be linked with 'FAQ'"
 " objects using the 'RelevantTo' link type."
-msgstr ""
+msgstr "‘関連した’リンク・タイプを使用して、‘ITSMChange’オブジェクトが‘FAQ’オブジェクトとリンクされるように、定義します。"
 
 #. SysConfig
 msgid ""
@@ -460,4 +461,4 @@ msgstr ""
 
 #. SysConfig
 msgid "Width of ITSM textareas."
-msgstr ""
+msgstr "ITSM テキストエリア幅"
