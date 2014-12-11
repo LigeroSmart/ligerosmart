@@ -825,7 +825,6 @@ sub _MigrateDTLInSysConfig {
     my $SysConfigObject = $Kernel::OM->Get('Kernel::System::SysConfig');
     my $ProviderObject  = Kernel::Output::Template::Provider->new();
 
-
     # handle hash settings
     NAME:
     for my $Name (qw(Ticket::Frontend::MenuModule)) {
@@ -874,8 +873,8 @@ sub _MigrateDTLInSysConfig {
     NAME:
     for my $Name (
         qw(
-            Ticket::Frontend::AgentTicketAddtlITSMField
-            Ticket::Frontend::AgentTicketDecision
+        Ticket::Frontend::AgentTicketAddtlITSMField
+        Ticket::Frontend::AgentTicketDecision
         )
         )
     {
