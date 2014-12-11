@@ -631,8 +631,6 @@ sub Data {
         '';
     $Self->{Translation}->{'DynamicField event module to handle the update of conditions if dynamic fields are added, updated or deleted.'} =
         '';
-    $Self->{Translation}->{'Event list to be displayed on GUI to trigger generic interface invokers.'} =
-        '';
     $Self->{Translation}->{'ITSM event module deletes the history of changes.'} = 'ITSM modul acara memadam sejarah perubahan.';
     $Self->{Translation}->{'ITSM event module that cleans up conditions.'} = 'ITSM modul peristiwa yang membersihkan sehingga keadaan.';
     $Self->{Translation}->{'ITSM event module that deletes the cache for a toolbar.'} = '';

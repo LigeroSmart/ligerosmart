@@ -1743,10 +1743,6 @@ msgid "DynamicField event module to handle the update of conditions if dynamic f
 msgstr ""
 
 #. SysConfig
-msgid "Event list to be displayed on GUI to trigger generic interface invokers."
-msgstr ""
-
-#. SysConfig
 msgid "ITSM event module deletes the history of changes."
 msgstr ""
 

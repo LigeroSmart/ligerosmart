@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2014-11-11 01:40+0000\n"
+"PO-Revision-Date: 2014-12-01 23:28+0000\n"
 "Last-Translator: Kentaro Hori <kentaro0919@gmail.com>\n"
 "Language-Team: Japanese (http://www.transifex.com/projects/p/OTRS/language/ja/)\n"
 "MIME-Version: 1.0\n"
@@ -288,15 +288,15 @@ msgstr ""
 
 #. Template: AAAITSMChangeManagement
 msgid "My CABs"
-msgstr ""
+msgstr "作成済み　CAB"
 
 #. Template: AAAITSMChangeManagement
 msgid "My Changes"
-msgstr ""
+msgstr "作成済み 変更"
 
 #. Template: AAAITSMChangeManagement
 msgid "My Workorders"
-msgstr ""
+msgstr "作成済み ワークオーダー"
 
 #. Template: AAAITSMChangeManagement
 msgid "No XXX settings"
@@ -308,7 +308,7 @@ msgstr "事後レビュー"
 
 #. Template: AAAITSMChangeManagement
 msgid "PSA (Projected Service Availability)"
-msgstr ""
+msgstr "PSA(プロジェクトサービス可用性)"
 
 #. Template: AAAITSMChangeManagement
 msgid "Please select first a catalog class!"
@@ -340,47 +340,47 @@ msgstr ""
 
 #. Template: AAAITSMChangeManagement
 msgid "Search Changes"
-msgstr ""
+msgstr "変更を検索"
 
 #. Template: AAAITSMChangeManagement
 msgid "Set the agent for the workorder"
-msgstr ""
+msgstr "ワークオーダーを担当するエージェントを設定する"
 
 #. Template: AAAITSMChangeManagement
 msgid "Take Workorder"
-msgstr ""
+msgstr "ワークオーダーを受け取る"
 
 #. Template: AAAITSMChangeManagement
 msgid "Take the workorder"
-msgstr ""
+msgstr "ワークオーダーを受け取る"
 
 #. Template: AAAITSMChangeManagement
 msgid "Template Overview"
-msgstr ""
+msgstr "テンプレート概要"
 
 #. Template: AAAITSMChangeManagement
 msgid "The planned end time is invalid!"
-msgstr ""
+msgstr "計画されている終了時間が不正です!"
 
 #. Template: AAAITSMChangeManagement
 msgid "The planned start time is invalid!"
-msgstr ""
+msgstr "計画されている開始時間が不正です!"
 
 #. Template: AAAITSMChangeManagement
 msgid "The planned time is invalid!"
-msgstr ""
+msgstr "計画されている時間が不正です!"
 
 #. Template: AAAITSMChangeManagement
 msgid "The requested time is invalid!"
-msgstr ""
+msgstr "リクエストされた時間が不正です!"
 
 #. Template: AAAITSMChangeManagement
 msgid "New (from template)"
-msgstr ""
+msgstr "新規(テンプレートから)"
 
 #. Template: AAAITSMChangeManagement
 msgid "Add from template"
-msgstr ""
+msgstr "テンプレートから追加する"
 
 #. Template: AAAITSMChangeManagement
 msgid "Add Workorder (from template)"
@@ -504,7 +504,7 @@ msgstr "(暫定)WorkOrderHistory::WorkOrderUpdateWithWorkOrderID(ID=%s) %s:: %s 
 
 #. Template: AAAITSMChangeManagement
 msgid "WorkOrderNumber"
-msgstr ""
+msgstr "ワークオーダー番号"
 
 #. Template: AAAITSMChangeManagement
 msgid "accepted"
@@ -512,11 +512,11 @@ msgstr "承認済み"
 
 #. Template: AAAITSMChangeManagement
 msgid "any"
-msgstr ""
+msgstr "すべて"
 
 #. Template: AAAITSMChangeManagement
 msgid "approval"
-msgstr ""
+msgstr "認証"
 
 #. Template: AAAITSMChangeManagement
 msgid "approved"
@@ -536,31 +536,31 @@ msgstr "キャンセル"
 
 #. Template: AAAITSMChangeManagement
 msgid "contains"
-msgstr ""
+msgstr "含んでいる"
 
 #. Template: AAAITSMChangeManagement
 msgid "created"
-msgstr ""
+msgstr "作成済み"
 
 #. Template: AAAITSMChangeManagement
 msgid "decision"
-msgstr ""
+msgstr "決定"
 
 #. Template: AAAITSMChangeManagement
 msgid "ends with"
-msgstr ""
+msgstr "で終了"
 
 #. Template: AAAITSMChangeManagement
 msgid "failed"
-msgstr ""
+msgstr "失敗"
 
 #. Template: AAAITSMChangeManagement
 msgid "in progress"
-msgstr ""
+msgstr "進行中"
 
 #. Template: AAAITSMChangeManagement
 msgid "is"
-msgstr ""
+msgstr "である"
 
 #. Template: AAAITSMChangeManagement
 msgid "is after"

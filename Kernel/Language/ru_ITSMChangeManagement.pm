@@ -631,8 +631,6 @@ sub Data {
         'Динамические поля отображаемые на экране просмотра задачи в интерфейсе агента. Возможные значения: 0 = не показывать, 1 = показывать.';
     $Self->{Translation}->{'DynamicField event module to handle the update of conditions if dynamic fields are added, updated or deleted.'} =
         'Модуль управления событиями для динамических полей при изменении Условий, если динамические поля добавляются, изменяются или удаляются.';
-    $Self->{Translation}->{'Event list to be displayed on GUI to trigger generic interface invokers.'} =
-        'Список событий отображаемый в GUI  для переключения generic interface invokers.';
     $Self->{Translation}->{'ITSM event module deletes the history of changes.'} = 'ITSM модуль обработки событий, удаляющий историю изменений.';
     $Self->{Translation}->{'ITSM event module that cleans up conditions.'} = 'ITSM модуль обработки событий, очищающий условия.';
     $Self->{Translation}->{'ITSM event module that deletes the cache for a toolbar.'} = 'ITSM модуль управления событиями, который очищает кэш для панели инструментов.';

@@ -1,13 +1,14 @@
 # 
 # Translators:
+# Macbethana Wilfred <mwi@nrd.no>, 2014
 # nilsleideck <nils.leideck@leidex.net>, 2014
 # Silvanus Silvester Swai <ssw@nrd.no>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2014-11-18 11:27+0000\n"
-"Last-Translator: nilsleideck <nils.leideck@leidex.net>\n"
+"PO-Revision-Date: 2014-11-27 09:44+0000\n"
+"Last-Translator: Macbethana Wilfred <mwi@nrd.no>\n"
 "Language-Team: Swahili (http://www.transifex.com/projects/p/OTRS/language/sw/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1925,7 +1926,7 @@ msgstr "Moduli ya matukio ya SehemuZinazobadilika kushughulikia usasishaji wa ma
 #. SysConfig
 msgid ""
 "Event list to be displayed on GUI to trigger generic interface invokers."
-msgstr ""
+msgstr "Orodha ya matukio itainyeshwa katika GUI kuamsha vichochezi vya kiolesura cha jumla."
 
 #. SysConfig
 msgid "ITSM event module deletes the history of changes."
@@ -2032,25 +2033,25 @@ msgid ""
 "Only users of these groups have the permission to use the ticket types as "
 "defined in \"ITSMChange::AddChangeLinkTicketTypes\" if the feature "
 "\"Ticket::Acl::Module###200-Ticket::Acl::Module\" is enabled."
-msgstr ""
+msgstr "Watumiaji wa makundi haya tu wana ruhusa ya kutumia aina hii ya tiketi kama ilivyofafanuliwa katika \"Badiliko la ITSM::Ongeza aina za tiketi za kiungo cha badiliko\" kama kipengele \"Tiketi::Acl::Moduli###200-Tiketi::Acl::Moduli\" kimewezeshwa."
 
 #. SysConfig
 msgid ""
 "Parameters for the UserCreateWorkOrderNextMask object in the preference view"
 " of the agent interface."
-msgstr ""
+msgstr "Vigezo kwa ajili ya kipengele Barakoa ijayo ya mpangilio kazi wa kutengenezwa na mtumiaji katika mandhari ya mapendeleo ya kiolesura cha wakala."
 
 #. SysConfig
 msgid ""
 "Parameters for the pages (in which the changes are shown) of the small "
 "change overview."
-msgstr ""
+msgstr "Vigezo kwa ajili vya kurasa(ambapo tiketi zinaonyeshwa) za mapitio ya mabadiliko madogo."
 
 #. SysConfig
 msgid ""
 "Presents a link in the menu to show the involved persons in a change, in the"
 " zoom view of such change in the agent interface."
-msgstr ""
+msgstr "Inawasilisha kiunganishi katika menyu kuonyesha watu wanaohusika katika badiliko, katika mandhari iliyokuzwa ya badiliko hilo katika kiolesura cha wakala."
 
 #. SysConfig
 msgid "Required privileges in order for an agent to take a workorder."
@@ -2220,14 +2221,14 @@ msgid ""
 "date plus the SystemID. The checksum will be rotated on a daily basis. This "
 "format looks like Year.Month.Day.SystemID.Counter.CheckSum, e.g. "
 "2010062410000017, 2010062410000026."
-msgstr ""
+msgstr "Chagua module ya kutengeneza namba ya badiliko. \"Kuongezeka kwa otomatiki\" inaongeza namba ya badiliko, kitambulisho cha mfumo na kihesabuji zinatumika na kitambulisho cha mfumo.umbizo la kihesabuji (mfano 100118, 100119). Na \"Tarehe\" namba za mabadiliko zitatengenezwa na tarehe ya sasa na kihesabuji; Umbizo linafanana kama hivi Mwaka.Mwezi.Siku.Kitambulisho cha mfumo.Kihesabuji mfano 2010062400001, 2010062400002. Na \"Kuangalia jumla kwa tarehe\"  kihesabuji kitaambatanishwa kama kiangaliaji jumla kwenye tungo ya tarehe na kitambulisho. Kiangalia jumla kitazungushwa kwa mishingi ya kila siku. Umbizo litafanana kama hivi Mwaka.Mwezi.Siku.Kitambulisho cha mfumo.Kihesabuji mfano 2010062410000017, 2010062410000026."
 
 #. SysConfig
 msgid ""
 "Sets the minimal change counter size (if \"AutoIncrement\" was selected as "
 "ITSMChange::NumberGenerator). Default is 5, this means the counter starts "
 "from 10000."
-msgstr ""
+msgstr "Inaweka upeo wa chini wa ukubwa wa kihesabuji tiketi (Kama \"Inaongezeka otomatiki\" imechaguliwa kama Badiliko la ITSM::Kitengeneza namaba za tiketi). Chaguo-msingi ni 5, hii inamaanisha kihesabuji kinaanzia 10000"
 
 #. SysConfig
 msgid "Sets up the state machine for changes."
@@ -2246,7 +2247,7 @@ msgid ""
 "Shows a checkbox in the AgentITSMWorkOrderEdit screen that defines if the "
 "the following workorders should also be moved if a workorder is modified and"
 " the planned end time has changed."
-msgstr ""
+msgstr "Inaonyesha kisanduku tiki katika skrini ya kuhariri mpangilio wa kazi wa OTRS wa ITSM ya wakala ambayo inafafanua kama mipangilio ifuatayo ya kazi pia itaondolewa kama mpangilio kazi ukirekebishwa na muda wa kuisha uliopangwa umebadilika."
 
 #. SysConfig
 msgid ""
