@@ -17,37 +17,37 @@ sub Data {
     my $Self = shift;
 
     # Template: AAAITSMIncidentProblemManagement
-    $Self->{Translation}->{'Add decision to ticket'} = '';
-    $Self->{Translation}->{'Decision Date'} = '';
-    $Self->{Translation}->{'Decision Result'} = '';
+    $Self->{Translation}->{'Add decision to ticket'} = 'チケットに決断を追加する';
+    $Self->{Translation}->{'Decision Date'} = '決定日付';
+    $Self->{Translation}->{'Decision Result'} = '決定結果';
     $Self->{Translation}->{'Due Date'} = '対応期限';
-    $Self->{Translation}->{'Reason'} = '';
-    $Self->{Translation}->{'Recovery Start Time'} = '';
-    $Self->{Translation}->{'Repair Start Time'} = '';
-    $Self->{Translation}->{'Review Required'} = '';
-    $Self->{Translation}->{'closed with workaround'} = '';
+    $Self->{Translation}->{'Reason'} = '理由';
+    $Self->{Translation}->{'Recovery Start Time'} = '回復開始時間';
+    $Self->{Translation}->{'Repair Start Time'} = '修理開始時間';
+    $Self->{Translation}->{'Review Required'} = 'レビュー必須';
+    $Self->{Translation}->{'closed with workaround'} = 'ワークアラウンドで完了';
 
     # Template: AgentTicketActionCommon
-    $Self->{Translation}->{'Change Decision of Ticket'} = '';
-    $Self->{Translation}->{'Change ITSM fields of ticket'} = '';
-    $Self->{Translation}->{'Service Incident State'} = '';
+    $Self->{Translation}->{'Change Decision of Ticket'} = 'チケットの変更決定';
+    $Self->{Translation}->{'Change ITSM fields of ticket'} = 'チケットのITSM項目を変更する';
+    $Self->{Translation}->{'Service Incident State'} = 'サービスインシデント状況';
 
     # Template: AgentTicketEmail
     $Self->{Translation}->{'Link ticket'} = 'チケットをリンクする';
 
     # Template: AgentTicketOverviewPreview
-    $Self->{Translation}->{'Criticality'} = '';
+    $Self->{Translation}->{'Criticality'} = '重要度';
     $Self->{Translation}->{'Impact'} = '影響度';
 
     # SysConfig
-    $Self->{Translation}->{'Add a decision!'} = '';
-    $Self->{Translation}->{'Additional ITSM Fields'} = '';
+    $Self->{Translation}->{'Add a decision!'} = '決定を追加する！';
+    $Self->{Translation}->{'Additional ITSM Fields'} = '追加のITSM項目';
     $Self->{Translation}->{'Allows adding notes in the additional ITSM field screen of the agent interface.'} =
-        '';
+        'エージェントインターフェイスのアディショナルITSM項目画面で追加のノートを許可する';
     $Self->{Translation}->{'Allows adding notes in the decision screen of the agent interface.'} =
-        '';
-    $Self->{Translation}->{'Change the ITSM fields!'} = '';
-    $Self->{Translation}->{'Decision'} = '';
+        '担当者インタフェースの決定 画面で、メモの追加を許可します。';
+    $Self->{Translation}->{'Change the ITSM fields!'} = 'ITSM項目を変更する！';
+    $Self->{Translation}->{'Decision'} = '決定';
     $Self->{Translation}->{'Defines if a ticket lock is required in the additional ITSM field screen of the agent interface (if the ticket isn\'t locked yet, the ticket gets locked and the current agent will be set automatically as its owner).'} =
         '';
     $Self->{Translation}->{'Defines if a ticket lock is required in the decision screen of the agent interface (if the ticket isn\'t locked yet, the ticket gets locked and the current agent will be set automatically as its owner).'} =

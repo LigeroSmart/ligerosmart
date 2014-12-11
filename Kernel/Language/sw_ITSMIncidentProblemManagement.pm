@@ -39,14 +39,6 @@ sub Data {
     $Self->{Translation}->{'Criticality'} = 'Kwa kina';
     $Self->{Translation}->{'Impact'} = 'Madhara';
 
-    # Template: AgentTicketPhone
-    $Self->{Translation}->{'The chat will be appended as a separate article.'} = '';
-
-    # Template: AgentTicketZoom
-    $Self->{Translation}->{'Article could not be opened! Perhaps it is on another article page?'} =
-        '';
-    $Self->{Translation}->{'Start chat'} = '';
-
     # SysConfig
     $Self->{Translation}->{'Add a decision!'} = 'Ongeza uamuzi!';
     $Self->{Translation}->{'Additional ITSM Fields'} = 'Uga zilizoongezwa Za ITSM';
