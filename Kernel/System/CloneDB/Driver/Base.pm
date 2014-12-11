@@ -264,7 +264,7 @@ sub DataTransfer {
                     # If it runs on good UTF-8 input, output should be identical to input
                     my $TmpResult = eval {
                         Encode::decode( 'UTF-8', $ColumnValue );
-                    };
+                    } || '';
 
                     # remove wrong characters
                     if ( $TmpResult =~ m{[\x{FFFD}]}xms ) {
