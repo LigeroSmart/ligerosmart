@@ -44,7 +44,7 @@ sub Data {
     $Self->{Translation}->{'Format is required!'} = 'O formato é obrigatório!';
     $Self->{Translation}->{'Edit object information'} = 'Editar informações do objeto';
     $Self->{Translation}->{'Edit format information'} = 'Editar informações do formato';
-    $Self->{Translation}->{'is required!'} = '';
+    $Self->{Translation}->{'is required!'} = 'é obrigatório!';
     $Self->{Translation}->{'Edit mapping information'} = 'Editar informações do mapeamento';
     $Self->{Translation}->{'No map elements found.'} = 'Não há elementos mapa encontrado.';
     $Self->{Translation}->{'Add Mapping Element'} = 'Adicionar elemento de mapeamento';
@@ -56,7 +56,7 @@ sub Data {
     $Self->{Translation}->{'Failed'} = 'Falhou';
     $Self->{Translation}->{'Duplicate names'} = 'Nomes duplicados';
     $Self->{Translation}->{'Last processed line number of import file'} = 'Último número de linha processada do arquivo de imporatação';
-    $Self->{Translation}->{'Ok'} = '';
+    $Self->{Translation}->{'Ok'} = 'Ok';
 
     # SysConfig
     $Self->{Translation}->{'Format backend module registration for the import/export module.'} =
