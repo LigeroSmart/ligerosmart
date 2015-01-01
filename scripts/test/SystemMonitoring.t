@@ -1,6 +1,6 @@
 # --
 # SystemMonitoring.t - SystemMonitoring tests
-# Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2015 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -59,8 +59,7 @@ for my $FieldName ( sort keys %NeededDynamicfields ) {
         push @DynamicfieldIDs, $FieldID;
     }
     else {
-        my $DynamicField
-            = $DynamicFieldObject->DynamicFieldGet( ID => $DynamicFields->{$FieldName} );
+        my $DynamicField = $DynamicFieldObject->DynamicFieldGet( ID => $DynamicFields->{$FieldName} );
 
         if ( $DynamicField->{ValidID} > 1 ) {
             push @DynamicFieldUpdate, $DynamicField;
@@ -87,7 +86,7 @@ my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
 my $FileArray = $MainObject->FileRead(
     Location => $ConfigObject->Get('Home') . '/scripts/test/sample/SystemMonitoring1.box',
-    Result => 'ARRAY',    # optional - SCALAR|ARRAY
+    Result   => 'ARRAY',                                                                     # optional - SCALAR|ARRAY
 );
 
 my $PostMasterObject = Kernel::System::PostMaster->new(
@@ -131,7 +130,7 @@ $Self->Is(
 
 $FileArray = $MainObject->FileRead(
     Location => $ConfigObject->Get('Home') . '/scripts/test/sample/SystemMonitoring2.box',
-    Result => 'ARRAY',    # optional - SCALAR|ARRAY
+    Result   => 'ARRAY',                                                                     # optional - SCALAR|ARRAY
 );
 
 $PostMasterObject = Kernel::System::PostMaster->new(
