@@ -1,6 +1,6 @@
 # --
 # TicketSearch.t - GenericInterface transport interface tests for TicketConnector backend
-# Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2015 OTRS AG, http://otrs.com/
 # --
 # $origin: https://github.com/OTRS/otrs/blob/c4828176240c938e4f72b3fe0c6450093b2f032c/scripts/test/GenericInterface/Operation/Ticket/TicketSearch.t
 # --
