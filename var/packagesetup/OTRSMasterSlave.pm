@@ -1,6 +1,6 @@
 # --
 # OTRSMasterSlave.pm - code to execute during package installation
-# Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2015 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -80,11 +80,10 @@ sub new {
     }
 
     # get dynamic fields list
-    $Self->{DynamicFieldsList}
-        = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldListGet(
+    $Self->{DynamicFieldsList} = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldListGet(
         Valid      => 0,
         ObjectType => ['Ticket'],
-        );
+    );
 
     if ( !IsArrayRefWithData( $Self->{DynamicFieldsList} ) ) {
         $Self->{DynamicFieldsList} = [];
@@ -207,8 +206,7 @@ sub _SetDynamicFields {
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
     # get dynamic field names from sysconfig
-    my $MasterSlaveDynamicField
-        = $ConfigObject->Get('MasterSlave::DynamicField') || 'MasterSlave';
+    my $MasterSlaveDynamicField = $ConfigObject->Get('MasterSlave::DynamicField') || 'MasterSlave';
 
     # set attributes of new dynamic fields
     my %NewDynamicFields = (
@@ -599,8 +597,7 @@ sub _RemoveDynamicFields {
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
     # get dynamic field names from sysconfig
-    my $MasterSlaveDynamicField
-        = $ConfigObject->Get('MasterSlave::DynamicField') || 'MasterSlave';
+    my $MasterSlaveDynamicField = $ConfigObject->Get('MasterSlave::DynamicField') || 'MasterSlave';
 
     # check if dynamic field already exists
     if ( IsHashRefWithData( $Self->{DynamicFieldLookup}->{$MasterSlaveDynamicField} ) ) {
@@ -609,11 +606,10 @@ sub _RemoveDynamicFields {
         my $DynamicFieldID = $Self->{DynamicFieldLookup}->{$MasterSlaveDynamicField}->{ID};
 
         # delete all field values
-        my $ValuesDeleteSuccess
-            = $Kernel::OM->Get('Kernel::System::DynamicFieldValue')->AllValuesDelete(
+        my $ValuesDeleteSuccess = $Kernel::OM->Get('Kernel::System::DynamicFieldValue')->AllValuesDelete(
             FieldID => $DynamicFieldID,
             UserID  => 1,
-            );
+        );
 
         if ($ValuesDeleteSuccess) {
 
@@ -661,8 +657,7 @@ sub _SetDashboardConfig {
     my ( $Self, %Param ) = @_;
 
     # get dynamic field names from sysconfig
-    my $MasterSlaveDynamicField
-        = $Kernel::OM->Get('Kernel::Config')->Get('MasterSlave::DynamicField') || 'MasterSlave';
+    my $MasterSlaveDynamicField = $Kernel::OM->Get('Kernel::Config')->Get('MasterSlave::DynamicField') || 'MasterSlave';
 
     # if MasterSlave dynamic field is 'MasterSlave' the config is already set, nothing else to do
     return 1 if ( $MasterSlaveDynamicField eq 'MasterSlave' );

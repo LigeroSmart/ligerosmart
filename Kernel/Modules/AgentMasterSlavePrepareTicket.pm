@@ -1,6 +1,6 @@
 # --
 # Kernel/Modules/AgentMasterSlavePrepareTicket.pm - to prepare master/slave pull downs
-# Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2015 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -33,11 +33,10 @@ sub new {
     }
     $Self->{UserLanguage} = $Self->{LayoutObject}->{UserLanguage}
         || $Self->{ConfigObject}->Get('DefaultLanguage');
-    $Self->{LanguageObject}
-        = Kernel::Language->new(
+    $Self->{LanguageObject} = Kernel::Language->new(
         %Param,
         UserLanguage => $Self->{UserLanguage}
-        );
+    );
 
     $Self->{DynamicFieldObject} = Kernel::System::DynamicField->new(%Param);
 
@@ -105,8 +104,7 @@ sub PreRun {
         # set dynamic field possible values
         $DynamicField->{Config}->{PossibleValues}{
             "SlaveOf:$CurrentTicket{TicketNumber}"
-            }
-            =
+            } =
             $Self->{LanguageObject}->Get('Slave of Ticket#')
             . "$CurrentTicket{TicketNumber}: $CurrentTicket{Title}";
     }

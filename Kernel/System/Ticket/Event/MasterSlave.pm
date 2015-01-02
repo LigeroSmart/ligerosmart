@@ -1,6 +1,6 @@
 # --
 # Kernel/System/Ticket/Event/MasterSlave.pm - master slave ticket
-# Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2015 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -41,14 +41,18 @@ sub Run {
     # check needed stuff
     for (qw(Data Event Config)) {
         if ( !$Param{$_} ) {
-            $Kernel::OM->Get('Kernel::System::Log')
-                ->Log( Priority => 'error', Message => "Need $_!" );
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
+                Priority => 'error',
+                Message  => "Need $_!"
+            );
             return;
         }
     }
     if ( !$Param{Data}->{TicketID} ) {
-        $Kernel::OM->Get('Kernel::System::Log')
-            ->Log( Priority => 'error', Message => "Need Data->{TicketID}!" );
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
+            Priority => 'error',
+            Message  => "Need Data->{TicketID}!"
+        );
         return;
     }
 
@@ -239,12 +243,11 @@ sub Run {
             );
             my $Subject = $TicketObject->TicketSubjectBuild(
                 TicketNumber => $TicketSlave{TicketNumber},
-                Subject => $Article{Subject} || '',
+                Subject      => $Article{Subject} || '',
             );
 
             # exchange Customer from MasterTicket for the one into the SlaveTicket
-            my $ReplaceOnNoteTypes
-                = $ConfigObject->Get('ReplaceCustomerRealNameOnSlaveArticleTypes');
+            my $ReplaceOnNoteTypes = $ConfigObject->Get('ReplaceCustomerRealNameOnSlaveArticleTypes');
             if (
                 defined $ReplaceOnNoteTypes->{ $Article{ArticleType} } &&
                 $ReplaceOnNoteTypes->{ $Article{ArticleType} } eq '1'
@@ -530,8 +533,10 @@ sub _LoopCheck {
     # check needed stuff
     for (qw(TicketID String UserID)) {
         if ( !$Param{$_} ) {
-            $Kernel::OM->Get('Kernel::System::Log')
-                ->Log( Priority => 'error', Message => "Need $_!" );
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
+                Priority => 'error',
+                Message  => "Need $_!"
+            );
             return;
         }
     }
@@ -590,8 +595,10 @@ sub _ArticleHistoryTypeGiven {
     # check needed stuff
     for my $Needed (qw(TicketID ArticleID HistoryType UserID)) {
         if ( !$Param{$Needed} ) {
-            $Kernel::OM->Get('Kernel::System::Log')
-                ->Log( Priority => 'error', Message => "Need $Needed!" );
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
+                Priority => 'error',
+                Message  => "Need $Needed!"
+            );
             return;
         }
     }

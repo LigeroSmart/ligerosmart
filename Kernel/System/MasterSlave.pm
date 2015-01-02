@@ -1,6 +1,6 @@
 # --
 # Kernel/System/MasterSlave.pm - to handle ticket master slave tasks
-# Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2015 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -100,10 +100,12 @@ sub MasterSlave {
     my $BackendObject = $Kernel::OM->Get('Kernel::System::DynamicField::Backend');
 
     my $MasterSlaveDynamicFieldName = $Param{MasterSlaveDynamicFieldName};
-    my %Ticket
-        = $Param{Ticket}
+    my %Ticket                      = $Param{Ticket}
         ? %{ $Param{Ticket} }
-        : $TicketObject->TicketGet( TicketID => $Param{TicketID}, DynamicFields => 1 );
+        : $TicketObject->TicketGet(
+        TicketID      => $Param{TicketID},
+        DynamicFields => 1
+        );
 
     # set a new master ticket
     # check if it is already a master ticket
