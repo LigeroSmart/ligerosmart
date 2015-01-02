@@ -1,6 +1,6 @@
 # --
 # Kernel/System/ITSMChange.pm - all change functions
-# Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2015 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -3352,7 +3352,7 @@ sub _CheckChangeParams {
 
         # check the maximum length of description and justification
         if (
-            $Argument    eq 'Description'
+            $Argument eq 'Description'
             || $Argument eq 'DescriptionPlain'
             || $Argument eq 'Justification'
             || $Argument eq 'JustificationPlain'

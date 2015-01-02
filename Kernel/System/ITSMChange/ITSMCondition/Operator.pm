@@ -1,6 +1,6 @@
 # --
 # Kernel/System/ITSMChange/ITSMCondition/Operator.pm - all condition operator functions
-# Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2015 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1242,7 +1242,7 @@ sub _OperatorSet {
 
         # check objects
         return 1 if !$ActionObjects;
-        return if ref $ActionObjects ne 'ARRAY';
+        return   if ref $ActionObjects ne 'ARRAY';
 
         # execute actions for all objects
         $Result = $BackendObject->$Sub(

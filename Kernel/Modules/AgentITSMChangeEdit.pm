@@ -1,6 +1,6 @@
 # --
 # Kernel/Modules/AgentITSMChangeEdit.pm - the OTRS ITSM ChangeManagement change edit module
-# Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2015 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -441,7 +441,7 @@ sub Run {
                         . "Filename=$Attachment->{Filename};ChangeID=$ChangeID";
 
                     # replace urls
-                    $GetParam{Description}   =~ s{$Search}{$Replace}xms;
+                    $GetParam{Description} =~ s{$Search}{$Replace}xms;
                     $GetParam{Justification} =~ s{$Search}{$Replace}xms;
 
                     # update change
