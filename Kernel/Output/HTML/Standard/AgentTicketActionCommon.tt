@@ -2,7 +2,7 @@
 # AgentTicketActionCommon.tt - provides common HTML form for several masks
 # Copyright (C) 2001-2015 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/c4828176240c938e4f72b3fe0c6450093b2f032c/Kernel/Output/HTML/Standard/AgentTicketActionCommon.tt
+# $origin: https://github.com/OTRS/otrs/blob/114b67598635606fe4fe400aa980c4701e913038/Kernel/Output/HTML/Standard/AgentTicketActionCommon.tt
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -564,6 +564,18 @@ $('#TypeID').bind('change', function (Event) {
                             </div>
                         </fieldset>
 [% RenderBlockEnd("InformAdditionalAgents") %]
+[% RenderBlockStart("InformAgentsWithoutSelection") %]
+                        <fieldset class="TableLike FixedLabel">
+                            <label>[% Translate("Note will be (also) received by:") | html %]:</label>
+                            <p class="Value">
+                                <input type="hidden" name="UserListWithoutSelection" value="[% Data.UserListWithoutSelection  | html %]" />
+[% RenderBlockStart("InformAgentsWithoutSelectionSingleUser") %]
+                                <span title="[% Data.UserEmail %]">[% Data.UserFullname %]</span>[% RenderBlockStart("InformAgentsWithoutSelectionSingleUserSeparator") %],[% RenderBlockEnd("InformAgentsWithoutSelectionSingleUserSeparator") %]
+[% RenderBlockEnd("InformAgentsWithoutSelectionSingleUser") %]
+                            </p>
+                            <div class="Clear"></div>
+                        </fieldset>
+[% RenderBlockEnd("InformAgentsWithoutSelection") %]
                     </div>
                 </div>
 [% RenderBlockEnd("WidgetArticle") %]

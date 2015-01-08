@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTicketZoom.pm - to get a closer view
 # Copyright (C) 2001-2015 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/c4828176240c938e4f72b3fe0c6450093b2f032c/Kernel/Modules/AgentTicketZoom.pm
+# $origin: https://github.com/OTRS/otrs/blob/114b67598635606fe4fe400aa980c4701e913038/Kernel/Modules/AgentTicketZoom.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1268,20 +1268,11 @@ sub MaskAgentZoom {
         # get next activity dialogs
         my $NextActivityDialogs;
         if ( $Ticket{$ActivityEntityIDField} ) {
-            $NextActivityDialogs = $ActivityData;
+            $NextActivityDialogs = ${ActivityData}->{ActivityDialog} // {};
         }
         my $ActivityName = $ActivityData->{Name};
 
-        if ( IsHashRefWithData($NextActivityDialogs) ) {
-
-            # we don't need the whole Activity config,
-            # just the Activity Dialogs of the current Activity
-            if ( IsHashRefWithData( $NextActivityDialogs->{ActivityDialog} ) ) {
-                %{$NextActivityDialogs} = %{ $NextActivityDialogs->{ActivityDialog} };
-            }
-            else {
-                $NextActivityDialogs = {};
-            }
+        if ( $NextActivityDialogs ) {
 
             # we have to check if the current user has the needed permissions to view the
             # different activity dialogs, so we loop over every activity dialog and check if there
@@ -2444,7 +2435,7 @@ sub _ArticleTree {
 
                             $Item->{ArticleData}->{BodyChat} .= $Self->{LayoutObject}->Output(
                                 Template =>
-                                    '<div class="ChatMessage">[[% Data.CreateTime | html %]] - [% Data.MessageText | html %]</div>',
+                                    '<div class="ChatMessage SystemGenerated"><span>[[% Data.CreateTime | html %]]</span> - [% Data.MessageText | html %]</div>',
                                 Data => $MessageData,
                             );
                         }
@@ -2452,13 +2443,18 @@ sub _ArticleTree {
 
                             $Item->{ArticleData}->{BodyChat} .= $Self->{LayoutObject}->Output(
                                 Template =>
-                                    '<div class="ChatMessage">[[% Data.CreateTime | html %]] - [% Data.ChatterName | html %]: [% Data.MessageText | html %]</div>',
+                                    '<div class="ChatMessage"><span>[[% Data.CreateTime | html %]]</span> - [% Data.ChatterName | html %]: [% Data.MessageText | html %]</div>',
                                 Data => $MessageData,
                             );
                         }
                         $ItemCounter++;
-                        last CHATITEM if $ItemCounter == 3;
+                        last CHATITEM if $ItemCounter == 7;
                     }
+                }
+                else {
+
+                    # remove empty lines
+                    $Item->{ArticleData}->{Body} =~ s{^[\n\r]+}{}xmsg;
                 }
             }
             else {

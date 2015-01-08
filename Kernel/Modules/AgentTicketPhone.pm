@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTicketPhone.pm - to handle phone calls
 # Copyright (C) 2001-2015 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/c4828176240c938e4f72b3fe0c6450093b2f032c/Kernel/Modules/AgentTicketPhone.pm
+# $origin: https://github.com/OTRS/otrs/blob/114b67598635606fe4fe400aa980c4701e913038/Kernel/Modules/AgentTicketPhone.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -408,7 +408,15 @@ sub Run {
             # if To is present and is no a queue
             # set To as article from
             if ( IsStringWithData( $Article{To} ) ) {
-                my %Queues      = $Self->{QueueObject}->QueueList();
+                my %Queues = $Self->{QueueObject}->QueueList();
+
+                if ( $Self->{ConfigObject}->{CustomerPanelOwnSelection} ) {
+                    for my $Queue ( sort keys %{ $Self->{ConfigObject}->{CustomerPanelOwnSelection} } ) {
+                        my $Value = $Self->{ConfigObject}->{CustomerPanelOwnSelection}->{$Queue};
+                        $Queues{$Queue} = $Value;
+                    }
+                }
+
                 my %QueueLookup = reverse %Queues;
                 if ( !defined $QueueLookup{ $Article{To} } ) {
                     $ArticleFrom = $Article{To};
