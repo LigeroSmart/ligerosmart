@@ -2,7 +2,7 @@
 # Service.t - Service tests
 # Copyright (C) 2001-2015 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/114b67598635606fe4fe400aa980c4701e913038/scripts/test/Service.t
+# $origin: https://github.com/OTRS/otrs/blob/ef4cfca8aee06a1b9b2b104e003d27b6ca0f7be7/scripts/test/Service.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
