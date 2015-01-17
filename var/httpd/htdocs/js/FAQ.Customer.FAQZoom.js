@@ -31,11 +31,7 @@ FAQ.Customer.FAQZoom = (function (TargetNS) {
 
             var NewHeight = $Iframe
                 .contents()
-                .find('body')
-                .css({
-                    'margin': '0px', // we remove margins and paddings from the body in order to get the real height
-                    'padding': '0px'
-                })
+                .find('html')
                 .height();
 
             // IE8 needs some more space due to incorrect height calculation

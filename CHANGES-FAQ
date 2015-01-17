@@ -6,6 +6,9 @@
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
+4.0.2 - 2015-??-??
+ - 2015-01-16 Fixed bug#11008 - FAQ content size iframes is wrong calculated.
+
 4.0.1 - 2014-11-25
  - 2014-11-20 Added code to migrate DTL code in SysConfig settings to TT during package update.
  - 2014-11-20 Added Italian language.
