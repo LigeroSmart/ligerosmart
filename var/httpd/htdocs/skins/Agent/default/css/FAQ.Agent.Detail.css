@@ -140,4 +140,16 @@ fieldset .FAQStateName {
     margin-left: 12px;
 }
 
+.FAQMessageBrowser {
+    margin: 5px 0;
+    padding: 0px;
+    border-radius: 2px;
+}
+
+.FAQMessageBrowser p {
+     padding: 5px;
+     background-color: #E8E8E8;
+     font-size: 11px;
+     text-align: center;
+}
 }

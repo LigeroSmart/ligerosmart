@@ -74,6 +74,17 @@
                 </div>
             </li>
 [% RenderBlockEnd("AttachmentHeader") %]
+
+# Show info, that links within the iframe must be clicked with strg/cmd/shift (depending on the used browser and os)
+# to open the links in a new window without the security permissions given to the iframe
+            <li>
+                <div class="FAQMessageBrowser">
+                    <p>
+        [% Translate("To open links in the following FAQ item, you might need to press Ctrl or Cmd or Shift key while clicking the link (depending on your browser and OS).") | html %]
+                    </p>
+                </div>
+            </li>
+
 [% RenderBlockStart("FAQContent") %]
             <li class="Customer Visible">
                 <div class="MessageHeader">

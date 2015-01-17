@@ -167,4 +167,18 @@
 .VotingActionRow {
     height: 23px;
 }
+
+.FAQMessageBrowser {
+    margin-top: 5px;
+    padding: 0px;
+    border-radius: 2px;
+}
+
+.FAQMessageBrowser p {
+     margin-bottom: 0;
+     padding: 5px;
+     background-color: #EEE;
+     font-size: 11px;
+     text-align: center;
+}
 }
