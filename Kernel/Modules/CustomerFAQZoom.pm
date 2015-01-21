@@ -27,7 +27,7 @@ sub new {
 
     # check needed objects
     for my $Object (
-        qw(ParamObject DBObject LayoutObject LogObject ConfigObject)
+        qw(ParamObject DBObject LayoutObject LogObject ConfigObject UserObject)
         )
     {
         if ( !$Self->{$Object} ) {
@@ -64,6 +64,19 @@ sub new {
         ObjectType  => 'FAQ',
         FieldFilter => $Self->{Config}->{DynamicField} || {},
     );
+
+    if ( !defined $Self->{DoNotShowBrowserLinkMessage} ) {
+        my %UserPreferences = $Self->{UserObject}->GetPreferences(
+            UserID => $Self->{UserID},
+        );
+
+        if ( $UserPreferences{UserCustomerDoNotShowBrowserLinkMessage} ) {
+            $Self->{DoNotShowBrowserLinkMessage} = 1;
+        }
+        else {
+            $Self->{DoNotShowBrowserLinkMessage} = 0;
+        }
+    }
 
     return $Self;
 }
@@ -206,6 +219,23 @@ sub Run {
             );
             return $Self->{LayoutObject}->CustomerFatalError();
         }
+    }
+
+    # save, if browser link message was closed
+    elsif ( $Self->{Subaction} eq 'BrowserLinkMessage' ) {
+
+        $Self->{UserObject}->SetPreferences(
+            UserID => $Self->{UserID},
+            Key    => 'UserCustomerDoNotShowBrowserLinkMessage',
+            Value  => 1,
+        );
+
+        return $Self->{LayoutObject}->Attachment(
+            ContentType => 'text/html',
+            Content     => 1,
+            Type        => 'inline',
+            NoCache     => 1,
+        );
     }
 
     # output header
@@ -437,6 +467,13 @@ sub Run {
                 },
             );
         }
+    }
+
+    # show message about links in iframes, if user didn't close it already
+    if ( !$Self->{DoNotShowBrowserLinkMessage} ) {
+        $Self->{LayoutObject}->Block(
+            Name => 'BrowserLinkMessage',
+        );
     }
 
     # show FAQ Content

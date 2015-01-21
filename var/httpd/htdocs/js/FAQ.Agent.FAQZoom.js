@@ -56,7 +56,14 @@ FAQ.Agent.FAQZoom = (function (TargetNS) {
         }
     };
 
-
+    // init browser link message close button
+    if ($('.FAQMessageBrowser').length) {
+        $('.FAQMessageBrowser a.Close').on('click', function () {
+            $('.FAQMessageBrowser').fadeOut("slow");
+            Core.Agent.PreferencesUpdate('UserAgentDoNotShowBrowserLinkMessage', 1);
+            return false;
+        });
+    }
 
     return TargetNS;
 }(FAQ.Agent.FAQZoom || {}));

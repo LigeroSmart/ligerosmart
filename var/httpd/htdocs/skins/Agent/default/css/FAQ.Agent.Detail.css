@@ -141,9 +141,10 @@ fieldset .FAQStateName {
 }
 
 .FAQMessageBrowser {
-    margin: 5px 0;
+    border-bottom: 1px dotted #999;
     padding: 0px;
     border-radius: 2px;
+    position: relative;
 }
 
 .FAQMessageBrowser p {
@@ -151,5 +152,19 @@ fieldset .FAQStateName {
      background-color: #E8E8E8;
      font-size: 11px;
      text-align: center;
+}
+
+.FAQMessageBrowser a.Close {
+    display: block;
+    width: 12px;
+    height: 12px;
+    position: absolute;
+    right: 4px;
+    top: 6px;
+    color: #5D5D5D;
+}
+
+.FAQMessageBrowser a.Close:hover {
+    color: #000;
 }
 }

@@ -88,6 +88,28 @@ FAQ.Customer.FAQZoom = (function (TargetNS) {
             ToggleMessage($(this).parent());
             Event.preventDefault();
         });
+
+        // init browser link message close button
+        if ($('.FAQMessageBrowser').length) {
+            $('.FAQMessageBrowser a.Close').on('click', function () {
+                var Data = {
+                    Action: 'CustomerFAQZoom',
+                    Subaction: 'BrowserLinkMessage',
+                    ItemID: $('input[name=ItemID]').val()
+                };
+
+                $('.FAQMessageBrowser').fadeOut("slow");
+
+                // call server, to save that the button was closed and do not show it again on reload
+                Core.AJAX.FunctionCall(
+                    Core.Config.Get('CGIHandle'),
+                    Data,
+                    function () {}
+                );
+
+                return false;
+            });
+        }
     };
 
     return TargetNS;

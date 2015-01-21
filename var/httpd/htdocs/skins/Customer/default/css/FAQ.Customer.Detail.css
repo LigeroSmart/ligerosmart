@@ -169,6 +169,7 @@
 }
 
 .FAQMessageBrowser {
+    border-bottom: 1px dotted #999;
     margin-top: 5px;
     padding: 0px;
     border-radius: 2px;
@@ -180,5 +181,18 @@
      background-color: #EEE;
      font-size: 11px;
      text-align: center;
+}
+.FAQMessageBrowser a.Close {
+    display: block;
+    width: 12px;
+    height: 12px;
+    position: absolute;
+    right: 4px;
+    top: 6px;
+    color: #5D5D5D;
+}
+
+.FAQMessageBrowser a.Close:hover {
+    color: #000;
 }
 }

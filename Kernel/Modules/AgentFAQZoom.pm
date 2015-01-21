@@ -65,6 +65,19 @@ sub new {
         FieldFilter => $Self->{Config}->{DynamicField} || {},
     );
 
+    my %UserPreferences = $Self->{UserObject}->GetPreferences(
+        UserID => $Self->{UserID},
+    );
+
+    if ( !defined $Self->{DoNotShowBrowserLinkMessage} ) {
+        if ( $UserPreferences{UserAgentDoNotShowBrowserLinkMessage} ) {
+            $Self->{DoNotShowBrowserLinkMessage} = 1;
+        }
+        else {
+            $Self->{DoNotShowBrowserLinkMessage} = 0;
+        }
+    }
+
     return $Self;
 }
 
@@ -552,6 +565,13 @@ sub Run {
                 );
             }
         }
+    }
+
+    # show message about links in iframes, if user didn't close it already
+    if ( !$Self->{DoNotShowBrowserLinkMessage} ) {
+        $Self->{LayoutObject}->Block(
+            Name => 'BrowserLinkMessage',
+        );
     }
 
     # show FAQ Content
