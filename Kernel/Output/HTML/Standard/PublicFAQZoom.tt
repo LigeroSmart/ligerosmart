@@ -80,7 +80,7 @@
             <li>
                 <div class="FAQMessageBrowser">
                     <p>
-        [% Translate("To open links in the following FAQ item, you might need to press Ctrl or Cmd or Shift key while clicking the link (depending on your browser and OS).") | html %]
+        [% Translate("To open links in the following description blocks, you might need to press Ctrl or Cmd or Shift key while clicking the link (depending on your browser and OS).") | html %]
                     </p>
                 </div>
             </li>

@@ -141,7 +141,7 @@ fieldset .FAQStateName {
 }
 
 .FAQMessageBrowser {
-    border-bottom: 1px dotted #999;
+    margin-bottom: 10px;
     padding: 0px;
     border-radius: 2px;
     position: relative;
