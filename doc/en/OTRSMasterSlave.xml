@@ -430,6 +430,9 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
             Be sure to enable the Master Slave dynamic field in the ticket zoom screen, this help
             to see quickly the Master Slave status in the "Ticket Information" box.
         </para>
+        <para>
+            Be aware 'Ticket::Acl::Module###1-Ticket::Acl::Module' is not compatible to use with this package.
+        </para>
     </note>
     <section>
         <title>Create a Master Ticket</title>
