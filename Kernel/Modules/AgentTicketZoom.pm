@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTicketZoom.pm - to get a closer view
 # Copyright (C) 2001-2015 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/ef4cfca8aee06a1b9b2b104e003d27b6ca0f7be7/Kernel/Modules/AgentTicketZoom.pm
+# $origin: https://github.com/OTRS/otrs/blob/80628f7acba22f97f4b01292f90a3d1ec9634daa/Kernel/Modules/AgentTicketZoom.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -89,6 +89,15 @@ sub new {
     my %UserPreferences = $Self->{UserObject}->GetPreferences(
         UserID => $Self->{UserID},
     );
+
+    if ( !defined $Self->{DoNotShowBrowserLinkMessage} ) {
+        if ( $UserPreferences{UserAgentDoNotShowBrowserLinkMessage} ) {
+            $Self->{DoNotShowBrowserLinkMessage} = 1;
+        }
+        else {
+            $Self->{DoNotShowBrowserLinkMessage} = 0;
+        }
+    }
 
     if ( !defined $Self->{ZoomExpand} ) {
         if (
@@ -2991,6 +3000,13 @@ sub _ArticleItem {
         Name => $ViewMode,
         Data => {%Article},
     );
+
+    # show message about links in iframes, if user didn't close it already
+    if ( $ViewMode eq 'BodyHTML' && !$Self->{DoNotShowBrowserLinkMessage} ) {
+        $Self->{LayoutObject}->Block(
+            Name => 'BrowserLinkMessage',
+        );
+    }
 
     # restore plain body for further processing by ArticleViewModules
     if ( !$Self->{RichText} || !$Article{AttachmentIDOfHTMLBody} ) {
