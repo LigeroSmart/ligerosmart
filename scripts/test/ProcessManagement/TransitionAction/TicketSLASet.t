@@ -2,7 +2,7 @@
 # TicketSLASet.t - TicketSLASet testscript
 # Copyright (C) 2001-2015 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/ef4cfca8aee06a1b9b2b104e003d27b6ca0f7be7/scripts/test/ProcessManagement/TransitionAction/TicketSLASet.t
+# $origin: https://github.com/OTRS/otrs/blob/80628f7acba22f97f4b01292f90a3d1ec9634daa/scripts/test/ProcessManagement/TransitionAction/TicketSLASet.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -401,7 +401,7 @@ my @Tests = (
             UserID => $UserID,
             Ticket => \%Ticket1,
             Config => {
-                SLAID => '<OTRS_Ticket_Title>',
+                SLAID => '<OTRS_TICKET_Title>',
             },
         },
         Success => 1,
@@ -412,7 +412,7 @@ my @Tests = (
             UserID => $UserID,
             Ticket => \%Ticket1,
             Config => {
-                SLAID => '<OTRS_Ticket_NotExisting>',
+                SLAID => '<OTRS_TICKET_NotExisting>',
             },
         },
         Success => 0,
@@ -473,7 +473,7 @@ for my $Test (@Tests) {
             my $ExpectedValue = $Test->{Config}->{Config}->{$Attribute};
             if (
                 $OrigTest->{Config}->{Config}->{$Attribute}
-                =~ m{\A<OTRS_Ticket_([A-Za-z0-9_]+)>\z}msx
+                =~ m{\A<OTRS_TICKET_([A-Za-z0-9_]+)>\z}msx
                 )
             {
                 $ExpectedValue = $Ticket{$1} // '';
