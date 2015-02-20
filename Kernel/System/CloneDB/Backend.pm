@@ -1,6 +1,6 @@
 # --
 # Kernel/System/CloneDB/Backend.pm - Interface for CloneDB backends
-# Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2015 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -382,9 +382,30 @@ sub _GenerateTargetStructuresSQL {
         for my $Type (qw(pre post)) {
             next TYPE if !$Package->{DatabaseInstall}->{$Type};
 
-            push @{ $Self->{SQL} }, $Param{TargetDBObject}->SQLProcessor(
+            my @SQLProcessorResult = $Param{TargetDBObject}->SQLProcessor(
                 Database => $Package->{DatabaseInstall}->{$Type},
             );
+
+            # check for problematic index in faq module which caused a problem on postgres
+            if ( $Package->{Name}->{Content} eq 'FAQ' ) {
+
+                my @NewSQLProcessorResult;
+
+                STATEMENT:
+                for my $Statement (@SQLProcessorResult) {
+
+                    # do not keep this statement (due to a problem with a wrong index name)
+                    next STATEMENT if $Statement eq 'CREATE INDEX faq_voting ON faq_voting (item_id)';
+
+                    # but use all other statements
+                    push @NewSQLProcessorResult, $Statement;
+                }
+
+                @SQLProcessorResult = @NewSQLProcessorResult;
+            }
+
+            push @{ $Self->{SQL} }, @SQLProcessorResult;
+
             push @{ $Self->{SQLPost} }, $Param{TargetDBObject}->SQLProcessorPost();
         }
     }
