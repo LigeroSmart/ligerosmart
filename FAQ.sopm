@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
     <Name>FAQ</Name>
+<!-- nofilter(TidyAll::Plugin::OTRS::SOPM::DocumentationPresent) -->
     <Version>0.0.0</Version>
     <Framework>4.0.x</Framework>
     <Vendor>OTRS AG</Vendor>
@@ -12,10 +13,6 @@
         <File Permission="755" Location="bin/otrs.FAQImport.pl"/>
         <File Permission="755" Location="bin/cgi-bin/faq.pl"/>
         <File Permission="755" Location="bin/fcgi-bin/faq.fpl"/>
-        <!--
-        This file is not needed, added only to pass OTRS CodePolicy checks
-        <File Permission="644" Location="doc/en/FAQ.xml"/>
-        -->
         <File Permission="644" Location="doc/faq-database.png"/>
         <File Permission="644" Location="Kernel/Config/Files/FAQ.xml"/>
         <File Permission="644" Location="Kernel/cpan-lib/XML/RSS/SimpleGen.pm"/>
