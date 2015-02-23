@@ -17,7 +17,6 @@ use Kernel::System::VariableCheck qw(:all);
 use base qw(Kernel::System::CloneDB::Driver::Base);
 
 our @ObjectDependencies = (
-    'Kernel::System::DB',
     'Kernel::System::Log',
 );
 
@@ -94,14 +93,12 @@ sub TablesList {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Needed (qw(DBObject)) {
-        if ( !$Param{$Needed} ) {
-            $Kernel::OM->Get('Kernel::System::Log')->Log(
-                Priority => 'error',
-                Message  => "Need $Needed!"
-            );
-            return;
-        }
+    if ( !$Param{DBObject} ) {
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
+            Priority => 'error',
+            Message  => "Need DBObject!"
+        );
+        return;
     }
 
     $Param{DBObject}->Prepare(
@@ -186,8 +183,8 @@ sub ResetAutoIncrementField {
 
     my $SEName = 'SE_' . uc $Param{Table};
 
-    # we assump the sequence have a minimum value (0)
-    # we will to increase it till the last enrty on
+    # we assume the sequence have a minimum value (0)
+    # we will to increase it till the last entry on
     # if field we have
 
     # verify if the sequence exists

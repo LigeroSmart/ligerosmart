@@ -88,14 +88,12 @@ sub TablesList {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Needed (qw(DBObject)) {
-        if ( !$Param{$Needed} ) {
-            $Kernel::OM->Get('Kernel::System::Log')->Log(
-                Priority => 'error',
-                Message  => "Need $Needed!"
-            );
-            return;
-        }
+    if ( !$Param{DBObject} ) {
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
+            Priority => 'error',
+            Message  => "Need DBObject!"
+        );
+        return;
     }
 
     $Param{DBObject}->Prepare(

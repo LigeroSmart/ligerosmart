@@ -18,7 +18,6 @@ use Kernel::System::VariableCheck qw(:all);
 our @ObjectDependencies = (
     'Kernel::Config',
     'Kernel::System::DB',
-    'Kernel::System::Encode',
     'Kernel::System::Log',
     'Kernel::System::Main',
     'Kernel::System::Package',
@@ -47,7 +46,7 @@ create a CloneDB backend object
     use Kernel::System::ObjectManager;
     local $Kernel::OM = Kernel::System::ObjectManager->new();
 
-    my $CloneDBObject = $Kernel::OM->Get('Kernel::System::CloneDB::Backend');
+    my $CloneDBBackendObject = $Kernel::OM->Get('Kernel::System::CloneDB::Backend');
 
 =cut
 
@@ -58,13 +57,17 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    #
+    # get config object
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+
     # OTRS stores binary data in some columns. On some database systems,
     #   these are handled differently (data is converted to base64-encoding before
     #   it is stored. Here is the list of these columns which need special treatment.
-    $Self->{BlobColumns} = $Kernel::OM->Get('Kernel::Config')->Get('CloneDB::BlobColumns');
+    $Self->{BlobColumns}          = $ConfigObject->Get('CloneDB::BlobColumns');
+    $Self->{CheckEncodingColumns} = $ConfigObject->Get('CloneDB::CheckEncodingColumns');
 
-    $Self->{CheckEncodingColumns} = $Kernel::OM->Get('Kernel::Config')->Get('CloneDB::CheckEncodingColumns');
+    # get main object
+    my $MainObject = $Kernel::OM->Get('Kernel::System::Main');
 
     # create all registered backend modules
     for my $DBType (qw(mssql mysql oracle postgresql)) {
@@ -72,7 +75,7 @@ sub new {
         my $BackendModule = 'Kernel::System::CloneDB::Driver::' . $DBType;
 
         # check if database backend exists
-        if ( !$Kernel::OM->Get('Kernel::System::Main')->Require($BackendModule) ) {
+        if ( !$MainObject->Require($BackendModule) ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Can't load Clone DB backend module for DBMS $DBType!",
@@ -80,6 +83,7 @@ sub new {
             return;
         }
 
+        # sanity action
         $Kernel::OM->ObjectsDiscard(
             Objects => [$BackendModule],
         );
@@ -123,14 +127,12 @@ sub CreateTargetDBConnection {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Needed (qw(TargetDBSettings)) {
-        if ( !$Param{$Needed} ) {
-            $Kernel::OM->Get('Kernel::System::Log')->Log(
-                Priority => 'error',
-                Message  => "Need $Needed!"
-            );
-            return;
-        }
+    if ( !$Param{TargetDBSettings} ) {
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
+            Priority => 'error',
+            Message  => "Need TargetDBSettings!"
+        );
+        return;
     }
 
     # check TargetDBSettings (internally)
@@ -180,14 +182,12 @@ sub DataTransfer {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Needed (qw(TargetDBObject)) {
-        if ( !$Param{$Needed} ) {
-            $Kernel::OM->Get('Kernel::System::Log')->Log(
-                Priority => 'error',
-                Message  => "Need $Needed!"
-            );
-            return;
-        }
+    if ( !$Param{TargetDBObject} ) {
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
+            Priority => 'error',
+            Message  => "Need TargetDBObject!"
+        );
+        return;
     }
 
     # set the source db specific backend
@@ -225,7 +225,7 @@ sub DataTransfer {
 
 =item SanityChecks()
 
-perform some sanity check befor db cloning.
+perform some sanity check before db cloning.
 
     my $SuccessSanityChecks = $BackendObject->SanityChecks(
         TargetDBObject => $TargetDBObject, # mandatory
@@ -237,14 +237,12 @@ sub SanityChecks {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Needed (qw(TargetDBObject)) {
-        if ( !$Param{$Needed} ) {
-            $Kernel::OM->Get('Kernel::System::Log')->Log(
-                Priority => 'error',
-                Message  => "Need $Needed!"
-            );
-            return;
-        }
+    if ( !$Param{TargetDBObject} ) {
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
+            Priority => 'error',
+            Message  => "Need TargetDBObject!"
+        );
+        return;
     }
 
     # set the clone db specific backend
@@ -271,24 +269,29 @@ sub SanityChecks {
 sub _GenerateTargetStructuresSQL {
     my ( $Self, %Param ) = @_;
 
-    for my $Needed (qw(TargetDBObject)) {
-        if ( !$Param{$Needed} ) {
-            $Kernel::OM->Get('Kernel::System::Log')->Log(
-                Priority => 'error',
-                Message  => "Need $Needed!"
-            );
-            return;
-        }
+    # check needed stuff
+    if ( !$Param{TargetDBObject} ) {
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
+            Priority => 'error',
+            Message  => "Need TargetDBObject!"
+        );
+        return;
     }
 
     $Self->PrintWithTime("Generating DDL for OTRS.\n");
 
     # SourceDBObject get data
-    my $PackageObject = $Kernel::OM->Get('Kernel::System::Package');
-    my @Packages      = $PackageObject->RepositoryList();
-    my $SQLDirectory  = $Kernel::OM->Get('Kernel::Config')->Get('Home') . '/scripts/database';
+    my $SQLDirectory = $Kernel::OM->Get('Kernel::Config')->Get('Home') . '/scripts/database';
 
-    # attension!!!
+    if ( !-f "$SQLDirectory/otrs-schema.xml" ) {
+        die "SQL directory $SQLDirectory not found.";
+    }
+
+    # keep next lines here due this time we need the source db object
+    # get repository list
+    my @Packages = $Kernel::OM->Get('Kernel::System::Package')->RepositoryList();
+
+    # attention!!!
     # switch database object to target object to use the xml
     # object of the target database
     $Kernel::OM->ObjectsDiscard(
@@ -304,10 +307,7 @@ sub _GenerateTargetStructuresSQL {
 
     my $XMLObject = $Kernel::OM->Get('Kernel::System::XML');    # of target database
 
-    if ( !-f "$SQLDirectory/otrs-schema.xml" ) {
-        die "SQL directory $SQLDirectory not found.";
-    }
-
+    # get XML structure
     my $XML = $Kernel::OM->Get('Kernel::System::Main')->FileRead(
         Directory => $SQLDirectory,
         Filename  => 'otrs-schema.xml',
@@ -315,6 +315,7 @@ sub _GenerateTargetStructuresSQL {
     my @XMLArray = $XMLObject->XMLParse(
         String => $XML,
     );
+
     $Self->{SQL} = [];
     push @{ $Self->{SQL} }, $Param{TargetDBObject}->SQLProcessor(
         Database => \@XMLArray,
@@ -388,14 +389,12 @@ sub PopulateTargetStructuresPre {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Needed (qw(TargetDBObject)) {
-        if ( !$Param{$Needed} ) {
-            $Kernel::OM->Get('Kernel::System::Log')->Log(
-                Priority => 'error',
-                Message  => "Need $Needed!"
-            );
-            return;
-        }
+    if ( !$Param{TargetDBObject} ) {
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
+            Priority => 'error',
+            Message  => "Need TargetDBObject!"
+        );
+        return;
     }
 
     $Self->_GenerateTargetStructuresSQL(%Param);
@@ -451,8 +450,11 @@ sub PopulateTargetStructuresPost {
 sub PrintWithTime {
     my $Self = shift;
 
-    my $TimeStamp = $Kernel::OM->Get('Kernel::System::Time')->SystemTime2TimeStamp(
-        SystemTime => $Kernel::OM->Get('Kernel::System::Time')->SystemTime(),
+    # get time object
+    my $TimeObject = $Kernel::OM->Get('Kernel::System::Time');
+
+    my $TimeStamp = $TimeObject->SystemTime2TimeStamp(
+        SystemTime => $TimeObject->SystemTime(),
     );
 
     print "[$TimeStamp] ", @_;

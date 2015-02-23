@@ -79,22 +79,23 @@ sub new {
 sub SanityChecks {
     my ( $Self, %Param ) = @_;
 
-    # return is dry run
+    # return if dry run
     return 1 if $Param{DryRun};
 
     # check needed stuff
-    for my $Needed (qw(TargetDBObject)) {
-        if ( !$Param{$Needed} ) {
-            $Kernel::OM->Get('Kernel::System::Log')->Log(
-                Priority => 'error',
-                Message  => "Need $Needed!"
-            );
-            return;
-        }
+    if ( !$Param{TargetDBObject} ) {
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
+            Priority => 'error',
+            Message  => "Need TargetDBObject!"
+        );
+        return;
     }
 
+    # get source DB object
+    my $SourceDBObject = $Kernel::OM->Get('Kernel::System::DB');
+
     # verify DSN for Source and Target DB
-    if ( $Kernel::OM->Get('Kernel::System::DB')->{DSN} eq $Param{TargetDBObject}->{DSN} ) {
+    if ( $SourceDBObject->{DSN} eq $Param{TargetDBObject}->{DSN} ) {
         $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "Source and target database DSN are the same!"
@@ -107,7 +108,7 @@ sub SanityChecks {
 
     # get a list of tables on Source DB
     my @Tables = $Self->TablesList(
-        DBObject => $Kernel::OM->Get('Kernel::System::DB'),
+        DBObject => $SourceDBObject,
     );
 
     TABLES:
@@ -195,18 +196,24 @@ sub DataTransfer {
         }
     }
 
+    # get config object
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+
     # get logfile location
-    my $LogFile = $Kernel::OM->Get('Kernel::Config')->Get('CloneDB::LogFile');
+    my $LogFile = $ConfigObject->Get('CloneDB::LogFile');
 
     # file handle
     my $FH;
 
     # get skip tables settings
-    my $SkipTables = $Kernel::OM->Get('Kernel::Config')->Get('CloneDB::SkipTables');
+    my $SkipTables = $ConfigObject->Get('CloneDB::SkipTables');
+
+    # get Source db object
+    my $SourceDBObject = $Kernel::OM->Get('Kernel::System::DB');
 
     # get a list of tables on Source DB
     my @Tables = $Self->TablesList(
-        DBObject => $Kernel::OM->Get('Kernel::System::DB'),
+        DBObject => $SourceDBObject,
     );
 
     TABLES:
@@ -228,20 +235,20 @@ sub DataTransfer {
         #   generate correct INSERT statements.
         my @Columns = $Self->ColumnsList(
             Table    => $Table,
-            DBObject => $Kernel::OM->Get('Kernel::System::DB'),
+            DBObject => $SourceDBObject,
         );
         my $ColumnsString = join( ', ', @Columns );
         my $BindString = join ', ', map {'?'} @Columns;
         my $SQL = "INSERT INTO $Table ($ColumnsString) VALUES ($BindString)";
 
         my $RowCount = $Self->RowCount(
-            DBObject => $Kernel::OM->Get('Kernel::System::DB'),
+            DBObject => $SourceDBObject,
             Table    => $Table,
         );
         my $Counter = 1;
 
         # Now fetch all the data and insert it to the target DB.
-        $Kernel::OM->Get('Kernel::System::DB')->Prepare(
+        $SourceDBObject->Prepare(
             SQL => "
                SELECT $ColumnsString
                FROM $Table",
@@ -262,8 +269,11 @@ sub DataTransfer {
             );
         }
 
+        # get encode object
+        my $EncodeObject = $Kernel::OM->Get('Kernel::System::Encode');
+
         TABLEROW:
-        while ( my @Row = $Kernel::OM->Get('Kernel::System::DB')->FetchrowArray() ) {
+        while ( my @Row = $SourceDBObject->FetchrowArray() ) {
 
             COLUMNVALUES:
             for my $ColumnCounter ( 1 .. $#Columns ) {
@@ -336,7 +346,7 @@ sub DataTransfer {
             # If the two databases have different blob handling (base64), convert
             #   columns that need it.
             if (
-                $Kernel::OM->Get('Kernel::System::DB')->GetDatabaseFunction('DirectBlob')
+                $SourceDBObject->GetDatabaseFunction('DirectBlob')
                 != $Param{TargetDBObject}->GetDatabaseFunction('DirectBlob')
                 )
             {
@@ -346,12 +356,12 @@ sub DataTransfer {
 
                     next COLUMN if ( !$Self->{BlobColumns}->{ lc "$Table.$Column" } );
 
-                    if ( !$Kernel::OM->Get('Kernel::System::DB')->GetDatabaseFunction('DirectBlob') ) {
+                    if ( !$SourceDBObject->GetDatabaseFunction('DirectBlob') ) {
                         $Row[$ColumnCounter] = decode_base64( $Row[$ColumnCounter] );
                     }
 
                     if ( !$Param{TargetDBObject}->GetDatabaseFunction('DirectBlob') ) {
-                        Kernel::OM->Get('Kernel::System::Encode')->EncodeOutput( \$Row[$ColumnCounter] );
+                        $EncodeObject->EncodeOutput( \$Row[$ColumnCounter] );
                         $Row[$ColumnCounter] = encode_base64( $Row[$ColumnCounter] );
                     }
 
@@ -378,7 +388,7 @@ sub DataTransfer {
         # in case dry run do nothing more
         next TABLES if $Param{DryRun};
 
-        # if needed, reset the autoincremental field
+        # if needed, reset the auto-incremental field
         if (
             $Param{TargetDBBackend}->can('ResetAutoIncrementField')
             && grep { $_ eq 'id' } @Columns
@@ -394,7 +404,7 @@ sub DataTransfer {
         $Self->PrintWithTime("Finished converting table $Table.\n");
     }
 
-    # if DryRun mode is activate, return a diferent value
+    # if DryRun mode is activate, return a different value
     return 2 if $Param{DryRun};
 
     return 1;

@@ -26,12 +26,13 @@ use warnings;
 use File::Basename;
 use FindBin qw($RealBin);
 use lib dirname($RealBin);
-
-use Getopt::Std;
-
-$| = 1;    # auto-flush console output
+use lib dirname($RealBin) . '/Kernel/cpan-lib';
 
 use Kernel::System::ObjectManager;
+use Getopt::Std;
+
+# auto-flush console output
+$| = 1;
 
 # create object manager
 local $Kernel::OM = Kernel::System::ObjectManager->new(
@@ -39,12 +40,6 @@ local $Kernel::OM = Kernel::System::ObjectManager->new(
         LogPrefix => 'OTRS-otrs.CloneDB.pl',
     },
 );
-
-# create common objects
-my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
-my $EncodeObject = $Kernel::OM->Get('Kernel::System::Encode');
-my $LogObject    = $Kernel::OM->Get('Kernel::System::Log');
-my $MainObject   = $Kernel::OM->Get('Kernel::System::Main');
 
 my $SourceDBObject = $Kernel::OM->Get('Kernel::System::DB')
     || die "Could not connect to source DB";
@@ -54,7 +49,7 @@ my $CloneDBBackendObject = $Kernel::OM->Get('Kernel::System::CloneDB::Backend')
     || die "Could not create clone db object.";
 
 # get the target DB settings
-my $TargetDBSettings = $ConfigObject->Get('CloneDB::TargetDBSettings');
+my $TargetDBSettings = $Kernel::OM->Get('Kernel::Config')->Get('CloneDB::TargetDBSettings');
 
 # create DB connections
 my $TargetDBObject = $CloneDBBackendObject->CreateTargetDBConnection(
@@ -91,7 +86,7 @@ if ( exists $Options{r} || exists $Options{n} ) {
         die "Was not possible to complete the data transfer. \n" if !$DataTransferResult;
 
         if ( $DataTransferResult eq 2 ) {
-            print STDERR "Dry run succesfully finished.\n";
+            print STDERR "Dry run successfully finished.\n";
         }
     }
 
@@ -120,7 +115,7 @@ Please note that you first need to configure the target database via SysConfig.
 Usage: $0 [-r] [-f] [-n]
 
     -r  Clone the data into the target database.
-    -f  Continue even if there are errors while writint the data.
+    -f  Continue even if there are errors while writing the data.
     -n  Dry run mode, only read and verify, but don't write to the target database.
 
 EOF
