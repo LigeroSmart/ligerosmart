@@ -1,6 +1,6 @@
 # --
 # Kernel/System/CloneDB/Driver/oracle.pm - Delegate for CloneDB oracle Driver
-# Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2015 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,6 +15,11 @@ use warnings;
 use Kernel::System::VariableCheck qw(:all);
 
 use base qw(Kernel::System::CloneDB::Driver::Base);
+
+our @ObjectDependencies = (
+    'Kernel::System::DB',
+    'Kernel::System::Log',
+);
 
 =head1 NAME
 
@@ -45,7 +50,7 @@ sub CreateTargetDBConnection {
         )
     {
         if ( !$Param{$Needed} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Needed for external DB settings!"
             );
@@ -65,7 +70,6 @@ sub CreateTargetDBConnection {
 
     # create target DB object
     my $TargetDBObject = Kernel::System::DB->new(
-        %{$Self},
         DatabaseDSN  => $Param{TargetDatabaseDSN},
         DatabaseUser => $Param{TargetDatabaseUser},
         DatabasePw   => $Param{TargetDatabasePw},
@@ -73,7 +77,7 @@ sub CreateTargetDBConnection {
     );
 
     if ( !$TargetDBObject ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "Could not connect to target DB!"
         );
@@ -92,7 +96,7 @@ sub TablesList {
     # check needed stuff
     for my $Needed (qw(DBObject)) {
         if ( !$Param{$Needed} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Needed!"
             );
@@ -123,7 +127,7 @@ sub ColumnsList {
     # check needed stuff
     for my $Needed (qw(DBObject Table)) {
         if ( !$Param{$Needed} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Needed!"
             );
@@ -156,7 +160,7 @@ sub ResetAutoIncrementField {
     # check needed stuff
     for my $Needed (qw(DBObject Table)) {
         if ( !$Param{$Needed} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Needed!"
             );

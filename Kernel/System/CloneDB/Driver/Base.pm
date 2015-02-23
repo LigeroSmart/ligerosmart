@@ -1,6 +1,6 @@
 # --
 # Kernel/System/CloneDB/Driver/Base.pm - Clone DB backend functions
-# Copyright (C) 2001-2014 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2015 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,6 +16,16 @@ use Encode;
 use MIME::Base64;
 use Kernel::System::VariableCheck qw(:all);
 
+use Kernel::System::DB;
+
+our @ObjectDependencies = (
+    'Kernel::Config',
+    'Kernel::System::DB',
+    'Kernel::System::Encode',
+    'Kernel::System::Log',
+    'Kernel::System::Time',
+);
+
 =head1 NAME
 
 Kernel::System::CloneDB::Driver::Base - common backend functions
@@ -30,8 +40,16 @@ Kernel::System::CloneDB::Driver::Base - common backend functions
 
 =item new()
 
-usually, you want to create an instance of this
-by using Kernel::System::CloneDB::Backend->new();
+    use Kernel::System::ObjectManager;
+    local $Kernel::OM = Kernel::System::ObjectManager->new();
+
+    $Kernel::OM->ObjectParamAdd(
+        'Kernel::System::CloneDB::Driver::Base' => {
+            BlobColumns => $BlobColumns,
+            CheckEncodingColumns => $CheckEncodingColumns,
+        },
+    );
+    my $CloneDBBaseObject = $Kernel::OM->Get('Kernel::System::CloneDB::Driver::Base');
 
 =cut
 
@@ -44,7 +62,7 @@ sub new {
 
     # get needed objects
     for my $Needed (
-        qw(ConfigObject EncodeObject LogObject MainObject TimeObject SourceDBObject BlobColumns CheckEncodingColumns)
+        qw(BlobColumns CheckEncodingColumns)
         )
     {
         die "Got no $Needed!" if !$Param{$Needed};
@@ -67,7 +85,7 @@ sub SanityChecks {
     # check needed stuff
     for my $Needed (qw(TargetDBObject)) {
         if ( !$Param{$Needed} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Needed!"
             );
@@ -76,8 +94,8 @@ sub SanityChecks {
     }
 
     # verify DSN for Source and Target DB
-    if ( $Self->{SourceDBObject}->{DSN} eq $Param{TargetDBObject}->{DSN} ) {
-        $Self->{LogObject}->Log(
+    if ( $Kernel::OM->Get('Kernel::System::DB')->{DSN} eq $Param{TargetDBObject}->{DSN} ) {
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "Source and target database DSN are the same!"
         );
@@ -85,11 +103,11 @@ sub SanityChecks {
     }
 
     # get skip tables settings
-    my $SkipTables = $Self->{ConfigObject}->Get('CloneDB::SkipTables');
+    my $SkipTables = $Kernel::OM->Get('Kernel::Config')->Get('CloneDB::SkipTables');
 
     # get a list of tables on Source DB
     my @Tables = $Self->TablesList(
-        DBObject => $Self->{SourceDBObject},
+        DBObject => $Kernel::OM->Get('Kernel::System::DB'),
     );
 
     TABLES:
@@ -109,7 +127,7 @@ sub SanityChecks {
 
         # table should exists
         if ( !defined $TargetRowCount ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Required table '$Table' does not seem to exist in the target database!"
             );
@@ -118,7 +136,7 @@ sub SanityChecks {
 
         # and be empty
         if ( $TargetRowCount > 0 ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Table '$Table' in the target database already contains data!"
             );
@@ -138,7 +156,7 @@ sub RowCount {
     # check needed stuff
     for my $Needed (qw(DBObject Table)) {
         if ( !$Param{$Needed} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Needed!"
             );
@@ -169,7 +187,7 @@ sub DataTransfer {
     # check needed stuff
     for my $Needed (qw(TargetDBObject TargetDBBackend)) {
         if ( !$Param{$Needed} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Needed!"
             );
@@ -178,17 +196,17 @@ sub DataTransfer {
     }
 
     # get logfile location
-    my $LogFile = $Self->{ConfigObject}->Get('CloneDB::LogFile');
+    my $LogFile = $Kernel::OM->Get('Kernel::Config')->Get('CloneDB::LogFile');
 
     # file handle
     my $FH;
 
     # get skip tables settings
-    my $SkipTables = $Self->{ConfigObject}->Get('CloneDB::SkipTables');
+    my $SkipTables = $Kernel::OM->Get('Kernel::Config')->Get('CloneDB::SkipTables');
 
     # get a list of tables on Source DB
     my @Tables = $Self->TablesList(
-        DBObject => $Self->{SourceDBObject},
+        DBObject => $Kernel::OM->Get('Kernel::System::DB'),
     );
 
     TABLES:
@@ -210,20 +228,20 @@ sub DataTransfer {
         #   generate correct INSERT statements.
         my @Columns = $Self->ColumnsList(
             Table    => $Table,
-            DBObject => $Self->{SourceDBObject},
+            DBObject => $Kernel::OM->Get('Kernel::System::DB'),
         );
         my $ColumnsString = join( ', ', @Columns );
         my $BindString = join ', ', map {'?'} @Columns;
         my $SQL = "INSERT INTO $Table ($ColumnsString) VALUES ($BindString)";
 
         my $RowCount = $Self->RowCount(
-            DBObject => $Self->{SourceDBObject},
+            DBObject => $Kernel::OM->Get('Kernel::System::DB'),
             Table    => $Table,
         );
         my $Counter = 1;
 
         # Now fetch all the data and insert it to the target DB.
-        $Self->{SourceDBObject}->Prepare(
+        $Kernel::OM->Get('Kernel::System::DB')->Prepare(
             SQL => "
                SELECT $ColumnsString
                FROM $Table",
@@ -245,7 +263,7 @@ sub DataTransfer {
         }
 
         TABLEROW:
-        while ( my @Row = $Self->{SourceDBObject}->FetchrowArray() ) {
+        while ( my @Row = $Kernel::OM->Get('Kernel::System::DB')->FetchrowArray() ) {
 
             COLUMNVALUES:
             for my $ColumnCounter ( 1 .. $#Columns ) {
@@ -318,21 +336,22 @@ sub DataTransfer {
             # If the two databases have different blob handling (base64), convert
             #   columns that need it.
             if (
-                $Self->{SourceDBObject}->GetDatabaseFunction('DirectBlob')
+                $Kernel::OM->Get('Kernel::System::DB')->GetDatabaseFunction('DirectBlob')
                 != $Param{TargetDBObject}->GetDatabaseFunction('DirectBlob')
                 )
             {
+                COLUMN:
                 for my $ColumnCounter ( 1 .. $#Columns ) {
                     my $Column = $Columns[$ColumnCounter];
 
-                    next if ( !$Self->{BlobColumns}->{ lc "$Table.$Column" } );
+                    next COLUMN if ( !$Self->{BlobColumns}->{ lc "$Table.$Column" } );
 
-                    if ( !$Self->{SourceDBObject}->GetDatabaseFunction('DirectBlob') ) {
+                    if ( !$Kernel::OM->Get('Kernel::System::DB')->GetDatabaseFunction('DirectBlob') ) {
                         $Row[$ColumnCounter] = decode_base64( $Row[$ColumnCounter] );
                     }
 
                     if ( !$Param{TargetDBObject}->GetDatabaseFunction('DirectBlob') ) {
-                        $Self->{EncodeObject}->EncodeOutput( \$Row[$ColumnCounter] );
+                        Kernel::OM->Get('Kernel::System::Encode')->EncodeOutput( \$Row[$ColumnCounter] );
                         $Row[$ColumnCounter] = encode_base64( $Row[$ColumnCounter] );
                     }
 
@@ -384,8 +403,8 @@ sub DataTransfer {
 sub PrintWithTime {
     my $Self = shift;
 
-    my $TimeStamp = $Self->{TimeObject}->SystemTime2TimeStamp(
-        SystemTime => $Self->{TimeObject}->SystemTime(),
+    my $TimeStamp = $Kernel::OM->Get('Kernel::System::Time')->SystemTime2TimeStamp(
+        SystemTime => $Kernel::OM->Get('Kernel::System::Time')->SystemTime(),
     );
 
     print "[$TimeStamp] ", @_;
