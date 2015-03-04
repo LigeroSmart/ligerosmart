@@ -103,7 +103,7 @@ sub Data {
     $Self->{Translation}->{'Edit Language'} = 'Redigera språk';
     $Self->{Translation}->{'Do you really want to delete this language?'} = 'Vill du verkligen ta bort detta språk?';
     $Self->{Translation}->{'You can not delete this language. It is used in at least one FAQ article!'} =
-        '';
+        'Du kan inte ta bort detta språk. Det används i minst en FAQ-artikel!';
     $Self->{Translation}->{'This language is used in the following FAQ Article(s)'} = '';
 
     # Template: AgentFAQOverviewNavBar
@@ -163,8 +163,8 @@ sub Data {
     $Self->{Translation}->{'very helpful'} = 'väldigt hjälpsam';
 
     # Template: AgentFAQZoomSmall
-    $Self->{Translation}->{'Add FAQ title to article subject'} = '';
-    $Self->{Translation}->{'Insert FAQ Text'} = '';
+    $Self->{Translation}->{'Add FAQ title to article subject'} = 'Lägg till FAQ-titeln till artikelns ämne';
+    $Self->{Translation}->{'Insert FAQ Text'} = 'Klistra in FAQ-text';
     $Self->{Translation}->{'Insert Full FAQ'} = 'Klistra in fullständig FAQ';
     $Self->{Translation}->{'Insert FAQ Link'} = 'Klistra in länk till FAQ';
     $Self->{Translation}->{'Insert FAQ Text & Link'} = 'Klistra in FAQ-text & länk';
@@ -191,7 +191,7 @@ sub Data {
     $Self->{Translation}->{'Public'} = 'Offentlig';
 
     # Template: PublicFAQSearchResultShort
-    $Self->{Translation}->{'Back to FAQ Explorer'} = '';
+    $Self->{Translation}->{'Back to FAQ Explorer'} = 'Tillbaka till FAQ-utforskaren';
 
     # SysConfig
     $Self->{Translation}->{'A filter for HTML output to add links behind a defined string. The element Image allows two input kinds. First the name of an image (e.g. faq.png). In this case the OTRS image path will be used. The second possibility is to insert the link to the image.'} =
@@ -361,7 +361,7 @@ sub Data {
     $Self->{Translation}->{'Parameters for the pages (in which the FAQ items are shown) of the small FAQ overview.'} =
         '';
     $Self->{Translation}->{'Print this FAQ'} = 'Skriv ut FAQ';
-    $Self->{Translation}->{'Queue for the approval of FAQ articles.'} = '';
+    $Self->{Translation}->{'Queue for the approval of FAQ articles.'} = 'Kö för godkännande av FAQ-artiklar.';
     $Self->{Translation}->{'Rates for voting. Key must be in percent.'} = '';
     $Self->{Translation}->{'Search FAQ'} = 'Sök FAQ';
     $Self->{Translation}->{'Set the default height (in pixels) of inline HTML fields in AgentFAQZoom.'} =
@@ -378,7 +378,7 @@ sub Data {
         '';
     $Self->{Translation}->{'Show "Insert FAQ Text" / "Insert Full FAQ" Button in AgentFAQZoomSmall.'} =
         '';
-    $Self->{Translation}->{'Show FAQ Article with HTML.'} = '';
+    $Self->{Translation}->{'Show FAQ Article with HTML.'} = 'Visa FAQ-artikel med HTML.';
     $Self->{Translation}->{'Show FAQ path yes/no.'} = 'Visa FAQ sökväg ja/nej.';
     $Self->{Translation}->{'Show items of subcategories.'} = '';
     $Self->{Translation}->{'Show last change items in defined interfaces.'} = '';

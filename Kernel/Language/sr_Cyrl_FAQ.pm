@@ -158,7 +158,7 @@ sub Data {
     $Self->{Translation}->{'To open links in the following description blocks, you might need to press Ctrl or Cmd or Shift key while clicking the link (depending on your browser and OS).'} =
         '';
     $Self->{Translation}->{'How helpful was this article? Please give us your rating and help to improve the FAQ Database. Thank You!'} =
-        '';
+        'Колико је користан овај чланак? Молимо вас да дате вашу оцену и помогнете подизању квалитата базе често постављаних питања. Хвала Вам! ';
     $Self->{Translation}->{'not helpful'} = 'није корисно';
     $Self->{Translation}->{'very helpful'} = 'врло корисно';
 
@@ -171,7 +171,7 @@ sub Data {
     $Self->{Translation}->{'Insert Full FAQ & Link'} = 'Унеси комплетан ЧПП и везу';
 
     # Template: CustomerFAQExplorer
-    $Self->{Translation}->{'No FAQ articles found.'} = '';
+    $Self->{Translation}->{'No FAQ articles found.'} = 'Нису пронађени ЧПП чланци.';
 
     # Template: CustomerFAQSearch
     $Self->{Translation}->{'Fulltext search in FAQ articles (e. g. "John*n" or "Will*")'} = '';
@@ -201,18 +201,18 @@ sub Data {
     $Self->{Translation}->{'Category Management'} = 'Управљање категоријама';
     $Self->{Translation}->{'Decimal places of the voting result.'} = 'Број децимала у резултату гласања.';
     $Self->{Translation}->{'Default category name.'} = 'Назив подразумеване категорије.';
-    $Self->{Translation}->{'Default language for FAQ articles on single language mode.'} = '';
+    $Self->{Translation}->{'Default language for FAQ articles on single language mode.'} = 'Подразумевани језик ЧПП чланака у једнојезичком начину рада.';
     $Self->{Translation}->{'Default maximum size of the titles in a FAQ article to be shown.'} =
-        '';
+        'Подразумевана максимална дужина наслова ЧПП чланка која ће бити приказана.';
     $Self->{Translation}->{'Default priority of tickets for the approval of FAQ articles.'} =
-        '';
+        'Подразумевани приоритет тикета за одобравање ЧПП чланака.';
     $Self->{Translation}->{'Default state for FAQ entry.'} = 'Подразумевани статус ЧПП уноса.';
-    $Self->{Translation}->{'Default state of tickets for the approval of FAQ articles.'} = '';
-    $Self->{Translation}->{'Default type of tickets for the approval of FAQ articles.'} = '';
+    $Self->{Translation}->{'Default state of tickets for the approval of FAQ articles.'} = 'Подразумевано стање тикета за одобравање ЧПП чланака.';
+    $Self->{Translation}->{'Default type of tickets for the approval of FAQ articles.'} = 'Подразумевани тип тикета за одобравање ЧПП чланака.';
     $Self->{Translation}->{'Default value for the Action parameter for the public frontend. The Action parameter is used in the scripts of the system.'} =
         '';
     $Self->{Translation}->{'Define if the FAQ title should be concatenated to article subject.'} =
-        '';
+        'Одређује да ли наслов ЧПП треба да буде додат на тему чланка.';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ journal.'} =
         '';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ list.'} =
@@ -253,7 +253,7 @@ sub Data {
         '';
     $Self->{Translation}->{'Defines where the \'Insert FAQ\' link will be displayed. Note: AgentTicketActionCommon includes AgentTicketNote, AgentTicketClose, AgentTicketFreeText, AgentTicketOwner, AgentTicketPending, AgentTicketPriority and AgentTicketResponsible.'} =
         '';
-    $Self->{Translation}->{'Definition of FAQ item free text field.'} = '';
+    $Self->{Translation}->{'Definition of FAQ item free text field.'} = 'Дефиниција поља слободног текста за ЧПП ставку.';
     $Self->{Translation}->{'Delete this FAQ'} = 'Обриши ово ЧПП';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ add screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
         '';
@@ -284,25 +284,25 @@ sub Data {
     $Self->{Translation}->{'Dynamic fields shown in the FAQ zoom screen of the public interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
         '';
     $Self->{Translation}->{'Edit this FAQ'} = 'Уреди ово ЧПП';
-    $Self->{Translation}->{'Enable multiple languages on FAQ module.'} = '';
-    $Self->{Translation}->{'Enable voting mechanism on FAQ module.'} = '';
+    $Self->{Translation}->{'Enable multiple languages on FAQ module.'} = 'Активирање више језика на ЧПП модулу.';
+    $Self->{Translation}->{'Enable voting mechanism on FAQ module.'} = 'Активирање механизма за гласање на ЧПП модулу.';
     $Self->{Translation}->{'FAQ Journal'} = 'ЧПП дневник';
     $Self->{Translation}->{'FAQ Journal Overview "Small" Limit'} = '';
     $Self->{Translation}->{'FAQ Overview "Small" Limit'} = '';
     $Self->{Translation}->{'FAQ limit per page for FAQ Journal Overview "Small"'} = '';
     $Self->{Translation}->{'FAQ limit per page for FAQ Overview "Small"'} = '';
-    $Self->{Translation}->{'FAQ path separator.'} = '';
+    $Self->{Translation}->{'FAQ path separator.'} = 'Разделник путање до ЧПП.';
     $Self->{Translation}->{'FAQ search backend router of the agent interface.'} = '';
     $Self->{Translation}->{'FAQ-Area'} = '';
     $Self->{Translation}->{'Frontend module registration for the public interface.'} = '';
-    $Self->{Translation}->{'Group for the approval of FAQ articles.'} = '';
+    $Self->{Translation}->{'Group for the approval of FAQ articles.'} = 'Група за одобравање ЧПП чланака.';
     $Self->{Translation}->{'History of this FAQ'} = 'Историјат овог ЧПП';
     $Self->{Translation}->{'Include internal fields on a FAQ based Ticket.'} = '';
     $Self->{Translation}->{'Include the name of each field in a FAQ based Ticket.'} = '';
     $Self->{Translation}->{'Interfaces where the quick search should be shown.'} = '';
     $Self->{Translation}->{'Journal'} = 'Дневник';
     $Self->{Translation}->{'Language Management'} = 'Управљање језицима';
-    $Self->{Translation}->{'Link another object to this FAQ item'} = '';
+    $Self->{Translation}->{'Link another object to this FAQ item'} = 'Повежи објекат са овом ставком ЧПП';
     $Self->{Translation}->{'List of state types which can be used in the agent interface.'} =
         '';
     $Self->{Translation}->{'List of state types which can be used in the customer interface.'} =
@@ -344,7 +344,7 @@ sub Data {
     $Self->{Translation}->{'Module to generate html OpenSearch profile for short faq search.'} =
         '';
     $Self->{Translation}->{'New FAQ Article'} = 'Нови ЧПП чланак';
-    $Self->{Translation}->{'New FAQ articles need approval before they get published.'} = '';
+    $Self->{Translation}->{'New FAQ articles need approval before they get published.'} = 'Нови ЧПП чланци требају бити одобрени пре објављивања.';
     $Self->{Translation}->{'Number of FAQ articles to be displayed in the FAQ Explorer of the customer interface.'} =
         '';
     $Self->{Translation}->{'Number of FAQ articles to be displayed in the FAQ Explorer of the public interface.'} =
@@ -353,17 +353,17 @@ sub Data {
         '';
     $Self->{Translation}->{'Number of FAQ articles to be displayed on each page of a search result in the public interface.'} =
         '';
-    $Self->{Translation}->{'Number of shown items in last changes.'} = '';
-    $Self->{Translation}->{'Number of shown items in last created.'} = '';
-    $Self->{Translation}->{'Number of shown items in the top 10 feature.'} = '';
+    $Self->{Translation}->{'Number of shown items in last changes.'} = 'Број приказаних ставки у последњим изменама.';
+    $Self->{Translation}->{'Number of shown items in last created.'} = 'Број приказаних ставки у последње креираним.';
+    $Self->{Translation}->{'Number of shown items in the top 10 feature.'} = 'Број приказаних ставки у "првих 10" .';
     $Self->{Translation}->{'Parameters for the pages (in which the FAQ items are shown) of the small FAQ journal overview.'} =
         '';
     $Self->{Translation}->{'Parameters for the pages (in which the FAQ items are shown) of the small FAQ overview.'} =
         '';
     $Self->{Translation}->{'Print this FAQ'} = 'Штампај ово ЧПП';
-    $Self->{Translation}->{'Queue for the approval of FAQ articles.'} = '';
-    $Self->{Translation}->{'Rates for voting. Key must be in percent.'} = '';
-    $Self->{Translation}->{'Search FAQ'} = '';
+    $Self->{Translation}->{'Queue for the approval of FAQ articles.'} = 'Ред за одобравање ЧПП чланака.';
+    $Self->{Translation}->{'Rates for voting. Key must be in percent.'} = 'Оцене за гласање. Кључ мора бити у процентима.';
+    $Self->{Translation}->{'Search FAQ'} = 'Претражи ЧПП';
     $Self->{Translation}->{'Set the default height (in pixels) of inline HTML fields in AgentFAQZoom.'} =
         '';
     $Self->{Translation}->{'Set the default height (in pixels) of inline HTML fields in CustomerFAQZoom (and PublicFAQZoom).'} =
@@ -379,8 +379,8 @@ sub Data {
     $Self->{Translation}->{'Show "Insert FAQ Text" / "Insert Full FAQ" Button in AgentFAQZoomSmall.'} =
         '';
     $Self->{Translation}->{'Show FAQ Article with HTML.'} = '';
-    $Self->{Translation}->{'Show FAQ path yes/no.'} = '';
-    $Self->{Translation}->{'Show items of subcategories.'} = '';
+    $Self->{Translation}->{'Show FAQ path yes/no.'} = 'Прикажи путању до ЧПП да/не.';
+    $Self->{Translation}->{'Show items of subcategories.'} = 'Прикажи ставке у субкатегоријама.';
     $Self->{Translation}->{'Show last change items in defined interfaces.'} = '';
     $Self->{Translation}->{'Show last created items in defined interfaces.'} = '';
     $Self->{Translation}->{'Show top 10 items in defined interfaces.'} = '';

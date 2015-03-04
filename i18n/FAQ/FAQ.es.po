@@ -1,10 +1,12 @@
 # 
 # Translators:
+# Camilo ochoa <ceochoa@misena.edu.co>, 2015
+# Duilio Poggi Oneto <duiliopoggio@gmail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2014-11-14 00:32+0000\n"
+"PO-Revision-Date: 2015-03-04 01:44+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/projects/p/OTRS/language/es/)\n"
 "MIME-Version: 1.0\n"
@@ -51,7 +53,7 @@ msgstr "¡No se ha seleccionado ninguna puntuación!"
 
 #. Template: AAAFAQ
 msgid "Explorer"
-msgstr ""
+msgstr "Explorador"
 
 #. Template: AAAFAQ
 msgid "public (all)"
@@ -145,13 +147,21 @@ msgstr "El nombre es imprescindible."
 msgid "This language already exists!"
 msgstr "Este idioma ya existe."
 
+#. Template: AAAFAQ
+msgid "Symptom"
+msgstr ""
+
+#. Template: AAAFAQ
+msgid "Solution"
+msgstr ""
+
 #. Template: AgentFAQAdd
 msgid "Add FAQ Article"
 msgstr "Añadir artículo FAQ."
 
 #. Template: AgentFAQAdd
 msgid "Keywords"
-msgstr ""
+msgstr "Palabras claves"
 
 #. Template: AgentFAQAdd
 msgid "A category is required."
@@ -233,7 +243,7 @@ msgstr "Búsqueda Rápida"
 
 #. Template: AgentFAQExplorer
 msgid "Wildcards are allowed."
-msgstr ""
+msgstr "Esta permitido los comodines"
 
 #. Template: AgentFAQExplorer
 msgid "Advanced Search"
@@ -314,27 +324,27 @@ msgstr "Votos"
 
 #. Template: AgentFAQPrint
 msgid "Last update"
-msgstr ""
+msgstr "Ultima actualización"
 
 #. Template: AgentFAQSearch
 msgid "Keyword"
-msgstr ""
+msgstr "Palabra clave"
 
 #. Template: AgentFAQSearch
 msgid "Vote (e. g. Equals 10 or GreaterThan 60)"
-msgstr ""
+msgstr "Vota (ejm. Igual a 10 o mayor a 60)"
 
 #. Template: AgentFAQSearch
 msgid "Rate (e. g. Equals 25% or GreaterThan 75%)"
-msgstr ""
+msgstr "Califica (Ejm. Igual a 25% o mayor a 75%)"
 
 #. Template: AgentFAQSearch
 msgid "Approved"
-msgstr ""
+msgstr "Aprobado"
 
 #. Template: AgentFAQSearch
 msgid "Last changed by"
-msgstr ""
+msgstr "Ultimo cambio por"
 
 #. Template: AgentFAQSearch
 msgid "FAQ Article Create Time (before/after)"
@@ -342,7 +352,7 @@ msgstr ""
 
 #. Template: AgentFAQSearch
 msgid "FAQ Article Create Time (between)"
-msgstr ""
+msgstr "Tiempo "
 
 #. Template: AgentFAQSearch
 msgid "FAQ Article Change Time (before/after)"
@@ -362,11 +372,11 @@ msgstr "Búsqueda FAQ"
 
 #. Template: AgentFAQSearchSmall
 msgid "Profile Selection"
-msgstr ""
+msgstr "Selección de perfil "
 
 #. Template: AgentFAQSearchSmall
 msgid "Vote"
-msgstr ""
+msgstr "Voto"
 
 #. Template: AgentFAQSearchSmall
 msgid "No vote settings"
@@ -435,6 +445,13 @@ msgstr "No se encontró ningún voto. Sea el primero en valorar este artículo F
 #. Template: AgentFAQZoom
 msgid "Download Attachment"
 msgstr "Descargar Adjunto"
+
+#. Template: AgentFAQZoom
+msgid ""
+"To open links in the following description blocks, you might need to press "
+"Ctrl or Cmd or Shift key while clicking the link (depending on your browser "
+"and OS)."
+msgstr ""
 
 #. Template: AgentFAQZoom
 msgid ""

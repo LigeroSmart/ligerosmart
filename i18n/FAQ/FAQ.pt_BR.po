@@ -1,11 +1,13 @@
 # 
 # Translators:
 # José Junior <joserribeiro26@gmail.com>, 2014
+# Marcos Aurélio Silvério <maureliosilverio@gmail.com>, 2014
+# Murilo Moreira de Oliveira <murilo.moreira@gmail.com>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2014-11-14 00:32+0000\n"
+"PO-Revision-Date: 2015-03-04 01:44+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/projects/p/OTRS/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
@@ -92,7 +94,7 @@ msgstr "Ano de término"
 
 #. Template: AAAFAQ
 msgid "Thanks for your vote!"
-msgstr "Obrigado por seu Voto"
+msgstr "Obrigado por seu voto!"
 
 #. Template: AAAFAQ
 msgid "You have already voted!"
@@ -145,6 +147,14 @@ msgstr "O nome é obrigatório!"
 #. Template: AAAFAQ
 msgid "This language already exists!"
 msgstr "Esse idioma já existe!"
+
+#. Template: AAAFAQ
+msgid "Symptom"
+msgstr ""
+
+#. Template: AAAFAQ
+msgid "Solution"
+msgstr ""
 
 #. Template: AgentFAQAdd
 msgid "Add FAQ Article"
@@ -274,11 +284,11 @@ msgstr "Excluir idioma %s"
 
 #. Template: AgentFAQLanguage
 msgid "Add Language"
-msgstr "Adicionar idioma"
+msgstr "Adicionar Idioma"
 
 #. Template: AgentFAQLanguage
 msgid "Edit Language"
-msgstr "Editar idioma"
+msgstr "Editar Idioma"
 
 #. Template: AgentFAQLanguage
 msgid "Do you really want to delete this language?"
@@ -439,6 +449,13 @@ msgstr "Baixar anexos"
 
 #. Template: AgentFAQZoom
 msgid ""
+"To open links in the following description blocks, you might need to press "
+"Ctrl or Cmd or Shift key while clicking the link (depending on your browser "
+"and OS)."
+msgstr ""
+
+#. Template: AgentFAQZoom
+msgid ""
 "How helpful was this article? Please give us your rating and help to improve"
 " the FAQ Database. Thank You!"
 msgstr "Este artigo te ajudou?"
@@ -525,7 +542,7 @@ msgstr "Público"
 
 #. Template: PublicFAQSearchResultShort
 msgid "Back to FAQ Explorer"
-msgstr ""
+msgstr "Voltar para o Explorador FAQ"
 
 #. SysConfig
 msgid ""
@@ -541,7 +558,7 @@ msgstr "CSS cor para o resultado da votação."
 
 #. SysConfig
 msgid "Cache Time To Leave for FAQ items."
-msgstr ""
+msgstr "Tempo de expiração de cache para itens de FAQ."
 
 #. SysConfig
 msgid "Category Management"
@@ -561,7 +578,7 @@ msgstr "Idioma padrão para os artigos FAQ no modo de idioma único."
 
 #. SysConfig
 msgid "Default maximum size of the titles in a FAQ article to be shown."
-msgstr ""
+msgstr "Tamanho máximo padrão dos títulos em um artigo de FAQ a serem exibidos."
 
 #. SysConfig
 msgid "Default priority of tickets for the approval of FAQ articles."
@@ -587,7 +604,7 @@ msgstr "Valor padrão para o parâmetro de Recurso para a interface pública. O 
 
 #. SysConfig
 msgid "Define if the FAQ title should be concatenated to article subject."
-msgstr ""
+msgstr "Define se o título do FAQ deve ser concatenado ao assunto do artigo."
 
 #. SysConfig
 msgid "Defines an overview module to show the small view of a FAQ journal."
@@ -671,13 +688,13 @@ msgstr "Define a ordem padrão de FAQ no resultado da pesquisa na interface púb
 
 #. SysConfig
 msgid "Defines the default shown FAQ search attribute for FAQ search screen."
-msgstr ""
+msgstr "Define o atributo de pesquisa de FAQ padrão na tela de procura de FAQ."
 
 #. SysConfig
 msgid ""
 "Defines the information to be inserted in a FAQ based Ticket. \"Full FAQ\" "
 "includes text, attachments and inline images."
-msgstr ""
+msgstr "Define a informação a ser inserida no chamado baseado em FAQ. \"Todo o FAQ\" inclui texto, anexos e imagens embutidas."
 
 #. SysConfig
 msgid ""
@@ -717,88 +734,88 @@ msgstr "Excluir este FAQ!"
 msgid ""
 "Dynamic fields shown in the FAQ add screen of the agent interface. Possible "
 "settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
-msgstr ""
+msgstr "Campos dinâmicos mostrados na tela de adição de FAQ da interface de atendente. Configurações possíveis: 0 = Desabilitado, 1 = Habilitado, 2 = Habilitado e requerido."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ edit screen of the agent interface. Possible"
 " settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
-msgstr ""
+msgstr "Campos dinâmicos mostrados na tela de edição de FAQ da interface de atendente. Configurações possíveis: 0 = Desabilitado, 1 = Habilitado, 2 = Habilitado e requerido."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ overview screen of the customer interface. "
 "Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
-msgstr ""
+msgstr "Campos dinâmicos mostrados na visão geral de FAQ da interface de cliente. Configurações possíveis: 0 = Desabilitado, 1 = Habilitado, 2 = Habilitado e requerido."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ overview screen of the public interface. "
 "Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
-msgstr ""
+msgstr "Campos dinâmicos mostrados na visão geral de FAQ da interface pública. Configurações possíveis: 0 = Desabilitado, 1 = Habilitado, 2 = Habilitado e requerido."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ print screen of the agent interface. "
 "Possible settings: 0 = Disabled, 1 = Enabled."
-msgstr ""
+msgstr "Campos dinâmicos mostrados na tela de impressão de FAQ da interface de atendente. Configurações possíveis: 0 = Desabilitado, 1 = Habilitado."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ print screen of the customer interface. "
 "Possible settings: 0 = Disabled, 1 = Enabled."
-msgstr ""
+msgstr "Campos dinâmicos mostrados na tela de impressão de FAQ da interface de cliente. Configurações possíveis: 0 = Desabilitado, 1 = Habilitado."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ print screen of the public interface. "
 "Possible settings: 0 = Disabled, 1 = Enabled."
-msgstr ""
+msgstr "Campos dinâmicos mostrados na tela de impressão de FAQ da interface pública. Configurações possíveis: 0 = Desabilitado, 1 = Habilitado."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ search screen of the agent interface. "
 "Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and shown by "
 "default."
-msgstr ""
+msgstr "Campos dinâmicos mostrados na tela de pesquisa de FAQ da interface de atendente. Configurações possíveis: 0 = Desabilitado, 1 = Habilitado, 2 = Habilitado e exibido por padrão."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ search screen of the customer interface. "
 "Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and shown by "
 "default."
-msgstr ""
+msgstr "Campos dinâmicos mostrados na tela de pesquisa de FAQ da interface de cliente. Configurações possíveis: 0 = Desabilitado, 1 = Habilitado, 2 = Habilitado e exibido por padrão."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ search screen of the public interface. "
 "Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and shown by "
 "default."
-msgstr ""
+msgstr "Campos dinâmicos mostrados na tela de pesquisa de FAQ da interface pública. Configurações possíveis: 0 = Desabilitado, 1 = Habilitado, 2 = Habilitado e exibido por padrão."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ small format overview screen of the agent "
 "interface. Possible settings: 0 = Disabled, 1 = Enabled."
-msgstr ""
+msgstr "Campos dinâmicos mostrados na tela de visão geral de FAQ em formato pequeno da interface de atendente. Configurações possíveis: 0 = Desabilitado, 1 = Habilitado."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ zoom screen of the agent interface. Possible"
 " settings: 0 = Disabled, 1 = Enabled."
-msgstr ""
+msgstr "Campos dinâmicos mostrados na tela de detalhes de FAQ da interface de atendente. Configurações possíveis: 0 = Desabilitado, 1 = Habilitado."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ zoom screen of the customer interface. "
 "Possible settings: 0 = Disabled, 1 = Enabled."
-msgstr ""
+msgstr "Campos dinâmicos mostrados na tela de detalhes de FAQ da interface de cliente. Configurações possíveis: 0 = Desabilitado, 1 = Habilitado."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ zoom screen of the public interface. "
 "Possible settings: 0 = Disabled, 1 = Enabled."
-msgstr ""
+msgstr "Campos dinâmicos mostrados na tela de detalhes de FAQ da interface pública. Configurações possíveis: 0 = Desabilitado, 1 = Habilitado."
 
 #. SysConfig
 msgid "Edit this FAQ"
@@ -866,7 +883,7 @@ msgstr "Incluir o nome de cada campo em um Chamado base FAQ."
 
 #. SysConfig
 msgid "Interfaces where the quick search should be shown."
-msgstr ""
+msgstr "Interfaces onde a pesquisa rápida deve ser mostrada."
 
 #. SysConfig
 msgid "Journal"
@@ -938,55 +955,55 @@ msgstr "O número máximo de artigos FAQ para ser exibido no resultado de uma pe
 msgid ""
 "Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer "
 "in the agent interface."
-msgstr ""
+msgstr "Tamanho máximo de títulos em um artigo FAQ a serem exibidos no Explorador FAQ da interface de atendente."
 
 #. SysConfig
 msgid ""
 "Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer "
 "in the customer interface."
-msgstr ""
+msgstr "Tamanho máximo de títulos em um artigo FAQ a serem exibidos no Explorador FAQ da interface de cliente."
 
 #. SysConfig
 msgid ""
 "Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer "
 "in the public interface."
-msgstr ""
+msgstr "Tamanho máximo de títulos em um artigo FAQ a serem exibidos no Explorador FAQ da interface pública."
 
 #. SysConfig
 msgid ""
 "Maximum size of the titles in a FAQ article to be shown in the FAQ Search in"
 " the agent interface."
-msgstr ""
+msgstr "Tamanho máximo de títulos em um artigo FAQ a serem exibidos na Pesquisa de FAQ da interface de atendente."
 
 #. SysConfig
 msgid ""
 "Maximum size of the titles in a FAQ article to be shown in the FAQ Search in"
 " the customer interface."
-msgstr ""
+msgstr "Tamanho máximo de títulos em um artigo FAQ a serem exibidos na Pesquisa de FAQ da interface de cliente."
 
 #. SysConfig
 msgid ""
 "Maximum size of the titles in a FAQ article to be shown in the FAQ Search in"
 " the public interface."
-msgstr ""
+msgstr "Tamanho máximo de títulos em um artigo FAQ a serem exibidos na Pesquisa de FAQ da interface pública."
 
 #. SysConfig
 msgid ""
 "Maximum size of the titles in a FAQ article to be shown in the FAQ journal "
 "in the agent interface."
-msgstr ""
+msgstr "Tamanho máximo de títulos em um artigo FAQ a serem exibidos no Jornal FAQ da interface de atendente."
 
 #. SysConfig
 msgid ""
 "Module to generate HTML OpenSearch profile for short FAQ search in the "
 "public interface."
-msgstr ""
+msgstr "Módulo para gerar perfil HTML OpenSearch para pesquisas curtas de FAQ na interface pública."
 
 #. SysConfig
 msgid ""
 "Module to generate HTML OpenSearch profile for short faq search in the "
 "customer interface."
-msgstr ""
+msgstr "Módulo para gerar perfil HTML OpenSearch para pesquisas curtas de FAQ na interface de cliente."
 
 #. SysConfig
 msgid "Module to generate html OpenSearch profile for short faq search."
@@ -1067,24 +1084,24 @@ msgstr "Pesquisa FAQ"
 #. SysConfig
 msgid ""
 "Set the default height (in pixels) of inline HTML fields in AgentFAQZoom."
-msgstr ""
+msgstr "Configura a altura padrão (em pixels) de campos HTML embutidos no AgentFAQZoom."
 
 #. SysConfig
 msgid ""
 "Set the default height (in pixels) of inline HTML fields in CustomerFAQZoom "
 "(and PublicFAQZoom)."
-msgstr ""
+msgstr "Configura a altura padrão (em pixels) de campos HTML embutidos em CustomerFAQZoom (e PublicFAQZoom)."
 
 #. SysConfig
 msgid ""
 "Set the maximum height (in pixels) of inline HTML fields in AgentFAQZoom."
-msgstr ""
+msgstr "Configura a altura máxima (em pixels) de campos HTML embutidos no AgentFAQZoom."
 
 #. SysConfig
 msgid ""
 "Set the maximum height (in pixels) of inline HTML fields in CustomerFAQZoom "
 "(and PublicFAQZoom)."
-msgstr ""
+msgstr "Configura a altura máxima (em pixels) de campos HTML embutidos em CustomerFAQZoom (e PublicFAQZoom)."
 
 #. SysConfig
 msgid ""
@@ -1096,11 +1113,11 @@ msgstr "Mostra botão \"Inserir Link FAQ\" em Ampliação pequena para o artigos
 msgid ""
 "Show \"Insert FAQ Text & Link\" / \"Insert Full FAQ & Link\" Button in "
 "AgentFAQZoomSmall for public FAQ Articles."
-msgstr ""
+msgstr "Mostrar botões \"Inserir texto do FAQ e link\" / \"Inserir todo o FAQ e link\" em AgentFAQZoomSmall para Artigos de FAQ públicos."
 
 #. SysConfig
 msgid "Show \"Insert FAQ Text\" / \"Insert Full FAQ\" Button in AgentFAQZoomSmall."
-msgstr ""
+msgstr "Mostrar botões \"Inserir texto do FAQ\" / \"Inserir todo o FAQ\" em AgentFAQZoomSmall."
 
 #. SysConfig
 msgid "Show FAQ Article with HTML."

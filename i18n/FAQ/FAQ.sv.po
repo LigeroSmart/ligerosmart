@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2014-11-14 00:32+0000\n"
+"PO-Revision-Date: 2015-03-04 01:44+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Swedish (http://www.transifex.com/projects/p/OTRS/language/sv/)\n"
 "MIME-Version: 1.0\n"
@@ -145,6 +145,14 @@ msgstr "Namn krävs!"
 #. Template: AAAFAQ
 msgid "This language already exists!"
 msgstr "Detta språk finns redan!"
+
+#. Template: AAAFAQ
+msgid "Symptom"
+msgstr ""
+
+#. Template: AAAFAQ
+msgid "Solution"
+msgstr ""
 
 #. Template: AgentFAQAdd
 msgid "Add FAQ Article"
@@ -287,7 +295,7 @@ msgstr "Vill du verkligen ta bort detta språk?"
 #. Template: AgentFAQLanguage
 msgid ""
 "You can not delete this language. It is used in at least one FAQ article!"
-msgstr ""
+msgstr "Du kan inte ta bort detta språk. Det används i minst en FAQ-artikel!"
 
 #. Template: AgentFAQLanguage
 msgid "This language is used in the following FAQ Article(s)"
@@ -439,6 +447,13 @@ msgstr "Ladda ner bilaga"
 
 #. Template: AgentFAQZoom
 msgid ""
+"To open links in the following description blocks, you might need to press "
+"Ctrl or Cmd or Shift key while clicking the link (depending on your browser "
+"and OS)."
+msgstr ""
+
+#. Template: AgentFAQZoom
+msgid ""
 "How helpful was this article? Please give us your rating and help to improve"
 " the FAQ Database. Thank You!"
 msgstr "Hur hjälpsam var den här artikeln? Vänligen ge oss ditt betyg och hjälp oss förbättra FAQ-databasen. Tack!"
@@ -453,11 +468,11 @@ msgstr "väldigt hjälpsam"
 
 #. Template: AgentFAQZoomSmall
 msgid "Add FAQ title to article subject"
-msgstr ""
+msgstr "Lägg till FAQ-titeln till artikelns ämne"
 
 #. Template: AgentFAQZoomSmall
 msgid "Insert FAQ Text"
-msgstr ""
+msgstr "Klistra in FAQ-text"
 
 #. Template: AgentFAQZoomSmall
 msgid "Insert Full FAQ"
@@ -525,7 +540,7 @@ msgstr "Offentlig"
 
 #. Template: PublicFAQSearchResultShort
 msgid "Back to FAQ Explorer"
-msgstr ""
+msgstr "Tillbaka till FAQ-utforskaren"
 
 #. SysConfig
 msgid ""
@@ -1054,7 +1069,7 @@ msgstr "Skriv ut FAQ"
 
 #. SysConfig
 msgid "Queue for the approval of FAQ articles."
-msgstr ""
+msgstr "Kö för godkännande av FAQ-artiklar."
 
 #. SysConfig
 msgid "Rates for voting. Key must be in percent."
@@ -1104,7 +1119,7 @@ msgstr ""
 
 #. SysConfig
 msgid "Show FAQ Article with HTML."
-msgstr ""
+msgstr "Visa FAQ-artikel med HTML."
 
 #. SysConfig
 msgid "Show FAQ path yes/no."

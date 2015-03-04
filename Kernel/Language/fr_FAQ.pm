@@ -55,7 +55,7 @@ sub Data {
 
     # Template: AgentFAQAdd
     $Self->{Translation}->{'Add FAQ Article'} = 'Ajouter Article de FAQ';
-    $Self->{Translation}->{'Keywords'} = '';
+    $Self->{Translation}->{'Keywords'} = 'Mots-clés';
     $Self->{Translation}->{'A category is required.'} = 'Une catégorie est requise';
     $Self->{Translation}->{'Approval'} = 'Autorisation';
 
@@ -79,12 +79,12 @@ sub Data {
     $Self->{Translation}->{'Do you really want to delete this FAQ article?'} = 'Voulez-vous vraiment effacer cet article de FAQ?';
 
     # Template: AgentFAQEdit
-    $Self->{Translation}->{'FAQ'} = '';
+    $Self->{Translation}->{'FAQ'} = 'FAQ';
 
     # Template: AgentFAQExplorer
     $Self->{Translation}->{'FAQ Explorer'} = 'Navigateur FAQ';
     $Self->{Translation}->{'Quick Search'} = 'Recherche rapide';
-    $Self->{Translation}->{'Wildcards are allowed.'} = '';
+    $Self->{Translation}->{'Wildcards are allowed.'} = 'Les métacaractères sont autorisés';
     $Self->{Translation}->{'Advanced Search'} = 'Recherche Avancée';
     $Self->{Translation}->{'Subcategories'} = 'Sous-catégories';
     $Self->{Translation}->{'FAQ Articles'} = 'Articles de FAQ';
@@ -116,14 +116,14 @@ sub Data {
     # Template: AgentFAQPrint
     $Self->{Translation}->{'FAQ-Info'} = 'FAQ-Info';
     $Self->{Translation}->{'Votes'} = 'Votes';
-    $Self->{Translation}->{'Last update'} = '';
+    $Self->{Translation}->{'Last update'} = 'Dernière mise à jour';
 
     # Template: AgentFAQSearch
-    $Self->{Translation}->{'Keyword'} = '';
-    $Self->{Translation}->{'Vote (e. g. Equals 10 or GreaterThan 60)'} = '';
-    $Self->{Translation}->{'Rate (e. g. Equals 25% or GreaterThan 75%)'} = '';
-    $Self->{Translation}->{'Approved'} = '';
-    $Self->{Translation}->{'Last changed by'} = '';
+    $Self->{Translation}->{'Keyword'} = 'Mot-clé';
+    $Self->{Translation}->{'Vote (e. g. Equals 10 or GreaterThan 60)'} = 'Vote (ex. EgalA 10 ou SuperieurA 60)';
+    $Self->{Translation}->{'Rate (e. g. Equals 25% or GreaterThan 75%)'} = 'Note (ex. EgalA 25% ou SuperieurA 75%)';
+    $Self->{Translation}->{'Approved'} = 'Approuvé';
+    $Self->{Translation}->{'Last changed by'} = 'Dernière modification par';
     $Self->{Translation}->{'FAQ Article Create Time (before/after)'} = '';
     $Self->{Translation}->{'FAQ Article Create Time (between)'} = '';
     $Self->{Translation}->{'FAQ Article Change Time (before/after)'} = '';
@@ -133,11 +133,11 @@ sub Data {
     $Self->{Translation}->{'FAQFulltext'} = 'Texte Intégral FAQ';
 
     # Template: AgentFAQSearchSmall
-    $Self->{Translation}->{'FAQ Search'} = '';
-    $Self->{Translation}->{'Profile Selection'} = '';
-    $Self->{Translation}->{'Vote'} = '';
-    $Self->{Translation}->{'No vote settings'} = '';
-    $Self->{Translation}->{'Specific votes'} = '';
+    $Self->{Translation}->{'FAQ Search'} = 'Recherche dans la FAQ';
+    $Self->{Translation}->{'Profile Selection'} = 'Sélection du profil';
+    $Self->{Translation}->{'Vote'} = 'Vote';
+    $Self->{Translation}->{'No vote settings'} = 'Pas de paramètres de vote';
+    $Self->{Translation}->{'Specific votes'} = 'Vote spécifique';
     $Self->{Translation}->{'e. g. Equals 10 or GreaterThan 60'} = '';
     $Self->{Translation}->{'Rate'} = '';
     $Self->{Translation}->{'No rate settings'} = '';
@@ -163,9 +163,9 @@ sub Data {
     $Self->{Translation}->{'very helpful'} = 'très utile';
 
     # Template: AgentFAQZoomSmall
-    $Self->{Translation}->{'Add FAQ title to article subject'} = '';
+    $Self->{Translation}->{'Add FAQ title to article subject'} = 'Ajouter un titre de la FAQ au sujet de l\'article';
     $Self->{Translation}->{'Insert FAQ Text'} = 'Insérer Texte dans la FAQ';
-    $Self->{Translation}->{'Insert Full FAQ'} = '';
+    $Self->{Translation}->{'Insert Full FAQ'} = 'Insérer toute la FAQ';
     $Self->{Translation}->{'Insert FAQ Link'} = 'Insérer Lien dans la FAQ';
     $Self->{Translation}->{'Insert FAQ Text & Link'} = 'Insérer Texte & Lien dans la FAQ';
     $Self->{Translation}->{'Insert Full FAQ & Link'} = '';
@@ -175,7 +175,7 @@ sub Data {
 
     # Template: CustomerFAQSearch
     $Self->{Translation}->{'Fulltext search in FAQ articles (e. g. "John*n" or "Will*")'} = 'Recherche texte intégrale dans les articles FAQ (ex. "Emilie*")';
-    $Self->{Translation}->{'Vote restrictions'} = '';
+    $Self->{Translation}->{'Vote restrictions'} = 'Restrictions de vote';
     $Self->{Translation}->{'Only FAQ articles with votes...'} = '';
     $Self->{Translation}->{'Rate restrictions'} = '';
     $Self->{Translation}->{'Only FAQ articles with rate...'} = '';
@@ -184,31 +184,31 @@ sub Data {
     $Self->{Translation}->{'Search-Profile as Template?'} = '';
 
     # Template: CustomerFAQZoom
-    $Self->{Translation}->{'Article Number'} = '';
+    $Self->{Translation}->{'Article Number'} = 'Numéro d\'Article';
     $Self->{Translation}->{'Search for articles with keyword'} = 'Recherche des Articles avec mot clé';
 
     # Template: PublicFAQSearchOpenSearchDescriptionFAQNumber
     $Self->{Translation}->{'Public'} = 'Public';
 
     # Template: PublicFAQSearchResultShort
-    $Self->{Translation}->{'Back to FAQ Explorer'} = '';
+    $Self->{Translation}->{'Back to FAQ Explorer'} = 'Revenir au Navigateur FAQ';
 
     # SysConfig
     $Self->{Translation}->{'A filter for HTML output to add links behind a defined string. The element Image allows two input kinds. First the name of an image (e.g. faq.png). In this case the OTRS image path will be used. The second possibility is to insert the link to the image.'} =
         '';
-    $Self->{Translation}->{'CSS color for the voting result.'} = '';
-    $Self->{Translation}->{'Cache Time To Leave for FAQ items.'} = '';
+    $Self->{Translation}->{'CSS color for the voting result.'} = 'Couleur CSS pour le résultat du vote';
+    $Self->{Translation}->{'Cache Time To Leave for FAQ items.'} = 'Durée de validité du Cache pour les éléments de la FAQ';
     $Self->{Translation}->{'Category Management'} = 'Gestion des catégories';
     $Self->{Translation}->{'Decimal places of the voting result.'} = '';
     $Self->{Translation}->{'Default category name.'} = 'Nom de catégorie par défaut';
-    $Self->{Translation}->{'Default language for FAQ articles on single language mode.'} = '';
+    $Self->{Translation}->{'Default language for FAQ articles on single language mode.'} = 'Langue par défaut pour les articles de la FAQ en mode langage unique.';
     $Self->{Translation}->{'Default maximum size of the titles in a FAQ article to be shown.'} =
-        '';
+        'Taille maximum par défaut des titres dans un article de la FAQ à montrer.';
     $Self->{Translation}->{'Default priority of tickets for the approval of FAQ articles.'} =
-        '';
-    $Self->{Translation}->{'Default state for FAQ entry.'} = '';
-    $Self->{Translation}->{'Default state of tickets for the approval of FAQ articles.'} = '';
-    $Self->{Translation}->{'Default type of tickets for the approval of FAQ articles.'} = '';
+        'Priorité par défaut des tickets pour l\'approbation d\'articles de la FAQ.';
+    $Self->{Translation}->{'Default state for FAQ entry.'} = 'Etat par défaut d\'une entrée de la FAQ.';
+    $Self->{Translation}->{'Default state of tickets for the approval of FAQ articles.'} = 'Etat par défaut des tickets pour l\'approbation d\'articles de la FAQ.';
+    $Self->{Translation}->{'Default type of tickets for the approval of FAQ articles.'} = 'Type par défaut des tickets pour l\'approbation d\'articles de la FAQ.';
     $Self->{Translation}->{'Default value for the Action parameter for the public frontend. The Action parameter is used in the scripts of the system.'} =
         '';
     $Self->{Translation}->{'Define if the FAQ title should be concatenated to article subject.'} =

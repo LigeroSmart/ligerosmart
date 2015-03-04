@@ -63,7 +63,7 @@ sub Data {
     $Self->{Translation}->{'FAQ Category Management'} = 'FAQ类别管理';
     $Self->{Translation}->{'Add category'} = '添加类别';
     $Self->{Translation}->{'Delete Category'} = '删除类别';
-    $Self->{Translation}->{'Ok'} = '';
+    $Self->{Translation}->{'Ok'} = 'Ok';
     $Self->{Translation}->{'Add Category'} = '添加类别';
     $Self->{Translation}->{'Edit Category'} = '编辑类别';
     $Self->{Translation}->{'Please select at least one permission group.'} = '请至少选择一个组权限.';
@@ -79,7 +79,7 @@ sub Data {
     $Self->{Translation}->{'Do you really want to delete this FAQ article?'} = '你确定要删除该FAQ文章吗?';
 
     # Template: AgentFAQEdit
-    $Self->{Translation}->{'FAQ'} = '';
+    $Self->{Translation}->{'FAQ'} = 'FAQ知识库';
 
     # Template: AgentFAQExplorer
     $Self->{Translation}->{'FAQ Explorer'} = 'FAQ浏览器';
@@ -188,7 +188,7 @@ sub Data {
     $Self->{Translation}->{'Search for articles with keyword'} = '';
 
     # Template: PublicFAQSearchOpenSearchDescriptionFAQNumber
-    $Self->{Translation}->{'Public'} = '';
+    $Self->{Translation}->{'Public'} = '公开';
 
     # Template: PublicFAQSearchResultShort
     $Self->{Translation}->{'Back to FAQ Explorer'} = '';
@@ -378,7 +378,7 @@ sub Data {
         '';
     $Self->{Translation}->{'Show "Insert FAQ Text" / "Insert Full FAQ" Button in AgentFAQZoomSmall.'} =
         '';
-    $Self->{Translation}->{'Show FAQ Article with HTML.'} = '';
+    $Self->{Translation}->{'Show FAQ Article with HTML.'} = '以 HTML 格式显示 FAQ 文章';
     $Self->{Translation}->{'Show FAQ path yes/no.'} = '是/否显示 FAQ 路径.';
     $Self->{Translation}->{'Show items of subcategories.'} = '显示子目录的数量.';
     $Self->{Translation}->{'Show last change items in defined interfaces.'} = '在介面上显示最近更改的项目.';

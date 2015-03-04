@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2014-11-14 00:32+0000\n"
+"PO-Revision-Date: 2015-03-04 01:44+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Ukrainian (http://www.transifex.com/projects/p/OTRS/language/uk/)\n"
 "MIME-Version: 1.0\n"
@@ -143,6 +143,14 @@ msgstr ""
 
 #. Template: AAAFAQ
 msgid "This language already exists!"
+msgstr ""
+
+#. Template: AAAFAQ
+msgid "Symptom"
+msgstr ""
+
+#. Template: AAAFAQ
+msgid "Solution"
 msgstr ""
 
 #. Template: AgentFAQAdd
@@ -434,6 +442,13 @@ msgstr ""
 
 #. Template: AgentFAQZoom
 msgid "Download Attachment"
+msgstr ""
+
+#. Template: AgentFAQZoom
+msgid ""
+"To open links in the following description blocks, you might need to press "
+"Ctrl or Cmd or Shift key while clicking the link (depending on your browser "
+"and OS)."
 msgstr ""
 
 #. Template: AgentFAQZoom

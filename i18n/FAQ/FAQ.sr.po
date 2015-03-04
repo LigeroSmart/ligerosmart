@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2014-11-14 00:32+0000\n"
+"PO-Revision-Date: 2015-03-04 01:44+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Serbian (http://www.transifex.com/projects/p/OTRS/language/sr/)\n"
 "MIME-Version: 1.0\n"
@@ -145,6 +145,14 @@ msgstr "Име је обавезно!"
 #. Template: AAAFAQ
 msgid "This language already exists!"
 msgstr "Овај језик већ постоји!"
+
+#. Template: AAAFAQ
+msgid "Symptom"
+msgstr ""
+
+#. Template: AAAFAQ
+msgid "Solution"
+msgstr ""
 
 #. Template: AgentFAQAdd
 msgid "Add FAQ Article"
@@ -439,9 +447,16 @@ msgstr "Преузми прилог"
 
 #. Template: AgentFAQZoom
 msgid ""
+"To open links in the following description blocks, you might need to press "
+"Ctrl or Cmd or Shift key while clicking the link (depending on your browser "
+"and OS)."
+msgstr ""
+
+#. Template: AgentFAQZoom
+msgid ""
 "How helpful was this article? Please give us your rating and help to improve"
 " the FAQ Database. Thank You!"
-msgstr ""
+msgstr "Колико је користан овај чланак? Молимо вас да дате вашу оцену и помогнете подизању квалитата базе често постављаних питања. Хвала Вам! "
 
 #. Template: AgentFAQZoom
 msgid "not helpful"
@@ -477,7 +492,7 @@ msgstr "Унеси комплетан ЧПП и везу"
 
 #. Template: CustomerFAQExplorer
 msgid "No FAQ articles found."
-msgstr ""
+msgstr "Нису пронађени ЧПП чланци."
 
 #. Template: CustomerFAQSearch
 msgid "Fulltext search in FAQ articles (e. g. \"John*n\" or \"Will*\")"
@@ -557,15 +572,15 @@ msgstr "Назив подразумеване категорије."
 
 #. SysConfig
 msgid "Default language for FAQ articles on single language mode."
-msgstr ""
+msgstr "Подразумевани језик ЧПП чланака у једнојезичком начину рада."
 
 #. SysConfig
 msgid "Default maximum size of the titles in a FAQ article to be shown."
-msgstr ""
+msgstr "Подразумевана максимална дужина наслова ЧПП чланка која ће бити приказана."
 
 #. SysConfig
 msgid "Default priority of tickets for the approval of FAQ articles."
-msgstr ""
+msgstr "Подразумевани приоритет тикета за одобравање ЧПП чланака."
 
 #. SysConfig
 msgid "Default state for FAQ entry."
@@ -573,11 +588,11 @@ msgstr "Подразумевани статус ЧПП уноса."
 
 #. SysConfig
 msgid "Default state of tickets for the approval of FAQ articles."
-msgstr ""
+msgstr "Подразумевано стање тикета за одобравање ЧПП чланака."
 
 #. SysConfig
 msgid "Default type of tickets for the approval of FAQ articles."
-msgstr ""
+msgstr "Подразумевани тип тикета за одобравање ЧПП чланака."
 
 #. SysConfig
 msgid ""
@@ -587,7 +602,7 @@ msgstr ""
 
 #. SysConfig
 msgid "Define if the FAQ title should be concatenated to article subject."
-msgstr ""
+msgstr "Одређује да ли наслов ЧПП треба да буде додат на тему чланка."
 
 #. SysConfig
 msgid "Defines an overview module to show the small view of a FAQ journal."
@@ -707,7 +722,7 @@ msgstr ""
 
 #. SysConfig
 msgid "Definition of FAQ item free text field."
-msgstr ""
+msgstr "Дефиниција поља слободног текста за ЧПП ставку."
 
 #. SysConfig
 msgid "Delete this FAQ"
@@ -806,11 +821,11 @@ msgstr "Уреди ово ЧПП"
 
 #. SysConfig
 msgid "Enable multiple languages on FAQ module."
-msgstr ""
+msgstr "Активирање више језика на ЧПП модулу."
 
 #. SysConfig
 msgid "Enable voting mechanism on FAQ module."
-msgstr ""
+msgstr "Активирање механизма за гласање на ЧПП модулу."
 
 #. SysConfig
 msgid "FAQ Journal"
@@ -834,7 +849,7 @@ msgstr ""
 
 #. SysConfig
 msgid "FAQ path separator."
-msgstr ""
+msgstr "Разделник путање до ЧПП."
 
 #. SysConfig
 msgid "FAQ search backend router of the agent interface."
@@ -850,7 +865,7 @@ msgstr ""
 
 #. SysConfig
 msgid "Group for the approval of FAQ articles."
-msgstr ""
+msgstr "Група за одобравање ЧПП чланака."
 
 #. SysConfig
 msgid "History of this FAQ"
@@ -878,7 +893,7 @@ msgstr "Управљање језицима"
 
 #. SysConfig
 msgid "Link another object to this FAQ item"
-msgstr ""
+msgstr "Повежи објекат са овом ставком ЧПП"
 
 #. SysConfig
 msgid "List of state types which can be used in the agent interface."
@@ -998,7 +1013,7 @@ msgstr "Нови ЧПП чланак"
 
 #. SysConfig
 msgid "New FAQ articles need approval before they get published."
-msgstr ""
+msgstr "Нови ЧПП чланци требају бити одобрени пре објављивања."
 
 #. SysConfig
 msgid ""
@@ -1026,15 +1041,15 @@ msgstr ""
 
 #. SysConfig
 msgid "Number of shown items in last changes."
-msgstr ""
+msgstr "Број приказаних ставки у последњим изменама."
 
 #. SysConfig
 msgid "Number of shown items in last created."
-msgstr ""
+msgstr "Број приказаних ставки у последње креираним."
 
 #. SysConfig
 msgid "Number of shown items in the top 10 feature."
-msgstr ""
+msgstr "Број приказаних ставки у \"првих 10\" ."
 
 #. SysConfig
 msgid ""
@@ -1054,15 +1069,15 @@ msgstr "Штампај ово ЧПП"
 
 #. SysConfig
 msgid "Queue for the approval of FAQ articles."
-msgstr ""
+msgstr "Ред за одобравање ЧПП чланака."
 
 #. SysConfig
 msgid "Rates for voting. Key must be in percent."
-msgstr ""
+msgstr "Оцене за гласање. Кључ мора бити у процентима."
 
 #. SysConfig
 msgid "Search FAQ"
-msgstr ""
+msgstr "Претражи ЧПП"
 
 #. SysConfig
 msgid ""
@@ -1108,11 +1123,11 @@ msgstr ""
 
 #. SysConfig
 msgid "Show FAQ path yes/no."
-msgstr ""
+msgstr "Прикажи путању до ЧПП да/не."
 
 #. SysConfig
 msgid "Show items of subcategories."
-msgstr ""
+msgstr "Прикажи ставке у субкатегоријама."
 
 #. SysConfig
 msgid "Show last change items in defined interfaces."

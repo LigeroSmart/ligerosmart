@@ -1,12 +1,13 @@
 # 
 # Translators:
+# Carlos Rodríguez <carlos.rodriguez@otrs.com>, 2015
 # Carlos Rodríguez <carlos.rodriguez@otrs.com>, 2014
 # Leonel Vazquez <leonel.vazquez@otrs.com>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2014-11-14 00:32+0000\n"
+"PO-Revision-Date: 2015-03-04 02:42+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Spanish (Mexico) (http://www.transifex.com/projects/p/OTRS/language/es_MX/)\n"
 "MIME-Version: 1.0\n"
@@ -53,7 +54,7 @@ msgstr "¡No se ha seleccionado ninguna puntuación!"
 
 #. Template: AAAFAQ
 msgid "Explorer"
-msgstr ""
+msgstr "Explorador"
 
 #. Template: AAAFAQ
 msgid "public (all)"
@@ -146,6 +147,14 @@ msgstr "El nombre es imprescindible."
 #. Template: AAAFAQ
 msgid "This language already exists!"
 msgstr "Este idioma ya existe."
+
+#. Template: AAAFAQ
+msgid "Symptom"
+msgstr "Síntoma"
+
+#. Template: AAAFAQ
+msgid "Solution"
+msgstr "Solución"
 
 #. Template: AgentFAQAdd
 msgid "Add FAQ Article"
@@ -320,15 +329,15 @@ msgstr "Última Actualización"
 
 #. Template: AgentFAQSearch
 msgid "Keyword"
-msgstr ""
+msgstr "Palabra clave"
 
 #. Template: AgentFAQSearch
 msgid "Vote (e. g. Equals 10 or GreaterThan 60)"
-msgstr ""
+msgstr "Voto (e.g. Igual a 10 o MayorQue 60)"
 
 #. Template: AgentFAQSearch
 msgid "Rate (e. g. Equals 25% or GreaterThan 75%)"
-msgstr ""
+msgstr "Valoración (e.g. Igual a 25% o MayorQue 75%)"
 
 #. Template: AgentFAQSearch
 msgid "Approved"
@@ -336,23 +345,23 @@ msgstr "Aprobado"
 
 #. Template: AgentFAQSearch
 msgid "Last changed by"
-msgstr ""
+msgstr "Último cambio por"
 
 #. Template: AgentFAQSearch
 msgid "FAQ Article Create Time (before/after)"
-msgstr ""
+msgstr "Tiempo de Creación del Artículo FAQ (antes/después)"
 
 #. Template: AgentFAQSearch
 msgid "FAQ Article Create Time (between)"
-msgstr ""
+msgstr "Tiempo de Creación del Artículo FAQ (entre)"
 
 #. Template: AgentFAQSearch
 msgid "FAQ Article Change Time (before/after)"
-msgstr ""
+msgstr "Tiempo de Modificación del Artículo FAQ (antes/después)"
 
 #. Template: AgentFAQSearch
 msgid "FAQ Article Change Time (between)"
-msgstr ""
+msgstr "Tiempo de Modificación del Artículo FAQ (entre)"
 
 #. Template: AgentFAQSearchOpenSearchDescriptionFulltext
 msgid "FAQFulltext"
@@ -364,55 +373,55 @@ msgstr "Búsqueda FAQ"
 
 #. Template: AgentFAQSearchSmall
 msgid "Profile Selection"
-msgstr ""
+msgstr "Selección de perfil"
 
 #. Template: AgentFAQSearchSmall
 msgid "Vote"
-msgstr ""
+msgstr "Voto"
 
 #. Template: AgentFAQSearchSmall
 msgid "No vote settings"
-msgstr ""
+msgstr "Sin configuración de votación"
 
 #. Template: AgentFAQSearchSmall
 msgid "Specific votes"
-msgstr ""
+msgstr "Votos especóificos"
 
 #. Template: AgentFAQSearchSmall
 msgid "e. g. Equals 10 or GreaterThan 60"
-msgstr ""
+msgstr "e.g. Igual a 10 o MayorQue 60"
 
 #. Template: AgentFAQSearchSmall
 msgid "Rate"
-msgstr ""
+msgstr "Valoración"
 
 #. Template: AgentFAQSearchSmall
 msgid "No rate settings"
-msgstr ""
+msgstr "Sin configuración de valoración"
 
 #. Template: AgentFAQSearchSmall
 msgid "Specific rate"
-msgstr ""
+msgstr "Valoración específica"
 
 #. Template: AgentFAQSearchSmall
 msgid "e. g. Equals 25% or GreaterThan 75%"
-msgstr ""
+msgstr "e.g. Igual a 25% o Mayor Que 75%"
 
 #. Template: AgentFAQSearchSmall
 msgid "FAQ Article Create Time"
-msgstr ""
+msgstr "Tiempo de creación del artículo FAQ"
 
 #. Template: AgentFAQSearchSmall
 msgid "Specific date"
-msgstr ""
+msgstr "Fecha específica"
 
 #. Template: AgentFAQSearchSmall
 msgid "Date range"
-msgstr ""
+msgstr "Rango de fechas"
 
 #. Template: AgentFAQSearchSmall
 msgid "FAQ Article Change Time"
-msgstr ""
+msgstr "Tiempo de modificación del artículo FAQ"
 
 #. Template: AgentFAQZoom
 msgid "FAQ Information"
@@ -440,6 +449,13 @@ msgstr "Descargar Adjunto"
 
 #. Template: AgentFAQZoom
 msgid ""
+"To open links in the following description blocks, you might need to press "
+"Ctrl or Cmd or Shift key while clicking the link (depending on your browser "
+"and OS)."
+msgstr ""
+
+#. Template: AgentFAQZoom
+msgid ""
 "How helpful was this article? Please give us your rating and help to improve"
 " the FAQ Database. Thank You!"
 msgstr "¿Cómo de útil fue este artículo? Por favor, dénos su puntuación y ayude a mejorar la base de datos de FAQ. Gracias."
@@ -454,7 +470,7 @@ msgstr "muy útil"
 
 #. Template: AgentFAQZoomSmall
 msgid "Add FAQ title to article subject"
-msgstr ""
+msgstr "Agregar el título del FAQ al asunto del artículo"
 
 #. Template: AgentFAQZoomSmall
 msgid "Insert FAQ Text"
@@ -462,7 +478,7 @@ msgstr "Insertar Texto de la FAQ"
 
 #. Template: AgentFAQZoomSmall
 msgid "Insert Full FAQ"
-msgstr ""
+msgstr "Insertar FAQ Completo"
 
 #. Template: AgentFAQZoomSmall
 msgid "Insert FAQ Link"
@@ -474,7 +490,7 @@ msgstr "Insertar texto y Enlace a la FAQ"
 
 #. Template: AgentFAQZoomSmall
 msgid "Insert Full FAQ & Link"
-msgstr ""
+msgstr "Insertar FAQ Completo & Enlace"
 
 #. Template: CustomerFAQExplorer
 msgid "No FAQ articles found."
@@ -486,35 +502,35 @@ msgstr "Búsqueda de texto completo en artículos FAQ (ej: \"John*n\" o \"Will*\
 
 #. Template: CustomerFAQSearch
 msgid "Vote restrictions"
-msgstr ""
+msgstr "Restricciones de votación"
 
 #. Template: CustomerFAQSearch
 msgid "Only FAQ articles with votes..."
-msgstr ""
+msgstr "Únicamente artículos FAQ con votos..."
 
 #. Template: CustomerFAQSearch
 msgid "Rate restrictions"
-msgstr ""
+msgstr "Restricciones de valoración"
 
 #. Template: CustomerFAQSearch
 msgid "Only FAQ articles with rate..."
-msgstr ""
+msgstr "Solo artículos FAQ con valoración..."
 
 #. Template: CustomerFAQSearch
 msgid "Only FAQ articles created"
-msgstr ""
+msgstr "únicamente artículos FAQ creados"
 
 #. Template: CustomerFAQSearch
 msgid "Only FAQ articles created between"
-msgstr ""
+msgstr "Únicamente artículos FAQ creados entre"
 
 #. Template: CustomerFAQSearch
 msgid "Search-Profile as Template?"
-msgstr ""
+msgstr "¿Perfil de búsqueda como plantilla?"
 
 #. Template: CustomerFAQZoom
 msgid "Article Number"
-msgstr ""
+msgstr "Número de Artículo"
 
 #. Template: CustomerFAQZoom
 msgid "Search for articles with keyword"
@@ -526,7 +542,7 @@ msgstr "Público"
 
 #. Template: PublicFAQSearchResultShort
 msgid "Back to FAQ Explorer"
-msgstr ""
+msgstr "Regresar al Explorador de FAQ"
 
 #. SysConfig
 msgid ""

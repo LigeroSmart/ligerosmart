@@ -203,7 +203,7 @@ sub Data {
     $Self->{Translation}->{'Default category name.'} = 'Jina la chaguo-msingi la kategori';
     $Self->{Translation}->{'Default language for FAQ articles on single language mode.'} = 'Chaguo-msingi la lugha ya makala ya maswali yaliyoulizwa mara nyingi katika lugha moja.';
     $Self->{Translation}->{'Default maximum size of the titles in a FAQ article to be shown.'} =
-        '';
+        'Ukubwa wa upeo wa juu chaguo msingi wa vichwa katika makala ya maswali yanayoulizwa mara kwa mara kuonyeshwa.';
     $Self->{Translation}->{'Default priority of tickets for the approval of FAQ articles.'} =
         'Kipaumbele cha chaguo-msingi cha tiketi kwa idhini ya makala ya maswali';
     $Self->{Translation}->{'Default state for FAQ entry.'} = 'Hali ya chaguo-msingi ya ingizo la maswali yaliyoulizwa mara kwa mara.';
@@ -242,7 +242,7 @@ sub Data {
     $Self->{Translation}->{'Defines the default FAQ order of a search result in the public interface. Up: oldest on top. Down: latest on top.'} =
         'Fafanua chaguo-msingi wa maswali yanayoulizwa mara kwa mara ya majibu ya utafutaji katika intafase ya umma. Juu: Kongwe zaidi juu. Chini: Ya sasa hivi juu';
     $Self->{Translation}->{'Defines the default shown FAQ search attribute for FAQ search screen.'} =
-        '';
+        'Inafafana sifa ya utafutaji wa maswali yanayoulizwa mara kwa mara kwa ajili ya skrini ya utafutaji maswali yanayoulizwa mara kwa mara.';
     $Self->{Translation}->{'Defines the information to be inserted in a FAQ based Ticket. "Full FAQ" includes text, attachments and inline images.'} =
         'Fafanua taarifa itakayoingizwa kwenye maswali yanayoulizwa mara kwa mara kwa misingi ya tiketi. "Maswali yaliyojaa nayayoulizwa mara kwa mara" yanayojumuisha nakala, viambatanishi na taswaira ya mstari wa ndani.';
     $Self->{Translation}->{'Defines the shown columns in the FAQ Explorer. This option has no effect on the position of the column.'} =
@@ -324,19 +324,19 @@ sub Data {
     $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the result of a search in the public interface.'} =
         'Namba ya upeo wa juu ya maswali yanayoulizwa mara kwa mara yanayatayoonyeshwa katika majibu ya uchunguzi  ya kiolesura cha umma.';
     $Self->{Translation}->{'Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer in the agent interface.'} =
-        '';
+        'Upeo wa juu wa ukubwa wa vichwa katika makala ya maswali inayoonyeshwa katika kivinjari cha maswali yanayoulizwa mara kwa mara katika kiolesura cha wakala.';
     $Self->{Translation}->{'Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer in the customer interface.'} =
-        '';
+        'Upeo wa juu wa ukubwa wa vichwa katika makala ya maswali inayoonyeshwa katika kivinjari cha maswali yanayoulizwa mara kwa mara katika kiolesura cha mteja.';
     $Self->{Translation}->{'Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer in the public interface.'} =
-        '';
+        'Upeo wa juu wa ukubwa wa vichwa katika makala ya maswali inayoonyeshwa katika kivinjari cha maswali yanayoulizwa mara kwa mara katika kiolesura cha umma.';
     $Self->{Translation}->{'Maximum size of the titles in a FAQ article to be shown in the FAQ Search in the agent interface.'} =
-        '';
+        'Upeo wa juu wa ukubwa wa vichwa katika makala ya maswali inayoonyeshwa katika utafutaji wa maswali yanayoulizwa mara kwa mara katika kiolesura cha wakala.';
     $Self->{Translation}->{'Maximum size of the titles in a FAQ article to be shown in the FAQ Search in the customer interface.'} =
-        '';
+        'Upeo wa juu wa ukubwa wa vichwa katika makala ya maswali inayoonyeshwa katika utafutaji wa maswali yanayoulizwa mara kwa mara  katika kiolesura cha mteja.';
     $Self->{Translation}->{'Maximum size of the titles in a FAQ article to be shown in the FAQ Search in the public interface.'} =
-        '';
+        'Upeo wa juu wa ukubwa wa vichwa katika makala ya maswali inayoonyeshwa katika utafutaji wa maswali yanayoulizwa mara kwa mara katika kiolesura cha umma.';
     $Self->{Translation}->{'Maximum size of the titles in a FAQ article to be shown in the FAQ journal in the agent interface.'} =
-        '';
+        'Upeo wa juu wa ukubwa wa vichwa katika makala ya maswali inayoonyeshwa katika jarida la maswali yanayoulizwa mara kwa mara katika kiolesura cha wakala.';
     $Self->{Translation}->{'Module to generate HTML OpenSearch profile for short FAQ search in the public interface.'} =
         'Moduli ya kuzalisha maelezo mafupi ya utafutaji wa wazi wa HTML kwa utafutaji mfupi wa maswali yanayoulizwa mara kwa mara katika kiolesura cha umma. ';
     $Self->{Translation}->{'Module to generate HTML OpenSearch profile for short faq search in the customer interface.'} =

@@ -1,10 +1,11 @@
 # 
 # Translators:
+# Richard BARET <richardbaret@gmail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2014-11-14 00:32+0000\n"
+"PO-Revision-Date: 2015-03-04 01:44+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: French (http://www.transifex.com/projects/p/OTRS/language/fr/)\n"
 "MIME-Version: 1.0\n"
@@ -145,13 +146,21 @@ msgstr "Le nom est requis!"
 msgid "This language already exists!"
 msgstr "Cette langue existe déjà!"
 
+#. Template: AAAFAQ
+msgid "Symptom"
+msgstr ""
+
+#. Template: AAAFAQ
+msgid "Solution"
+msgstr ""
+
 #. Template: AgentFAQAdd
 msgid "Add FAQ Article"
 msgstr "Ajouter Article de FAQ"
 
 #. Template: AgentFAQAdd
 msgid "Keywords"
-msgstr ""
+msgstr "Mots-clés"
 
 #. Template: AgentFAQAdd
 msgid "A category is required."
@@ -221,7 +230,7 @@ msgstr "Voulez-vous vraiment effacer cet article de FAQ?"
 
 #. Template: AgentFAQEdit
 msgid "FAQ"
-msgstr ""
+msgstr "FAQ"
 
 #. Template: AgentFAQExplorer
 msgid "FAQ Explorer"
@@ -233,7 +242,7 @@ msgstr "Recherche rapide"
 
 #. Template: AgentFAQExplorer
 msgid "Wildcards are allowed."
-msgstr ""
+msgstr "Les métacaractères sont autorisés"
 
 #. Template: AgentFAQExplorer
 msgid "Advanced Search"
@@ -314,27 +323,27 @@ msgstr "Votes"
 
 #. Template: AgentFAQPrint
 msgid "Last update"
-msgstr ""
+msgstr "Dernière mise à jour"
 
 #. Template: AgentFAQSearch
 msgid "Keyword"
-msgstr ""
+msgstr "Mot-clé"
 
 #. Template: AgentFAQSearch
 msgid "Vote (e. g. Equals 10 or GreaterThan 60)"
-msgstr ""
+msgstr "Vote (ex. EgalA 10 ou SuperieurA 60)"
 
 #. Template: AgentFAQSearch
 msgid "Rate (e. g. Equals 25% or GreaterThan 75%)"
-msgstr ""
+msgstr "Note (ex. EgalA 25% ou SuperieurA 75%)"
 
 #. Template: AgentFAQSearch
 msgid "Approved"
-msgstr ""
+msgstr "Approuvé"
 
 #. Template: AgentFAQSearch
 msgid "Last changed by"
-msgstr ""
+msgstr "Dernière modification par"
 
 #. Template: AgentFAQSearch
 msgid "FAQ Article Create Time (before/after)"
@@ -358,23 +367,23 @@ msgstr "Texte Intégral FAQ"
 
 #. Template: AgentFAQSearchSmall
 msgid "FAQ Search"
-msgstr ""
+msgstr "Recherche dans la FAQ"
 
 #. Template: AgentFAQSearchSmall
 msgid "Profile Selection"
-msgstr ""
+msgstr "Sélection du profil"
 
 #. Template: AgentFAQSearchSmall
 msgid "Vote"
-msgstr ""
+msgstr "Vote"
 
 #. Template: AgentFAQSearchSmall
 msgid "No vote settings"
-msgstr ""
+msgstr "Pas de paramètres de vote"
 
 #. Template: AgentFAQSearchSmall
 msgid "Specific votes"
-msgstr ""
+msgstr "Vote spécifique"
 
 #. Template: AgentFAQSearchSmall
 msgid "e. g. Equals 10 or GreaterThan 60"
@@ -438,6 +447,13 @@ msgstr "Télécharger Fichier Joint"
 
 #. Template: AgentFAQZoom
 msgid ""
+"To open links in the following description blocks, you might need to press "
+"Ctrl or Cmd or Shift key while clicking the link (depending on your browser "
+"and OS)."
+msgstr ""
+
+#. Template: AgentFAQZoom
+msgid ""
 "How helpful was this article? Please give us your rating and help to improve"
 " the FAQ Database. Thank You!"
 msgstr "Cet Article était-il utile? Merci de donner une note et de participer à l'amélioration de la base de données. Merci!"
@@ -452,7 +468,7 @@ msgstr "très utile"
 
 #. Template: AgentFAQZoomSmall
 msgid "Add FAQ title to article subject"
-msgstr ""
+msgstr "Ajouter un titre de la FAQ au sujet de l'article"
 
 #. Template: AgentFAQZoomSmall
 msgid "Insert FAQ Text"
@@ -460,7 +476,7 @@ msgstr "Insérer Texte dans la FAQ"
 
 #. Template: AgentFAQZoomSmall
 msgid "Insert Full FAQ"
-msgstr ""
+msgstr "Insérer toute la FAQ"
 
 #. Template: AgentFAQZoomSmall
 msgid "Insert FAQ Link"
@@ -484,7 +500,7 @@ msgstr "Recherche texte intégrale dans les articles FAQ (ex. \"Emilie*\")"
 
 #. Template: CustomerFAQSearch
 msgid "Vote restrictions"
-msgstr ""
+msgstr "Restrictions de vote"
 
 #. Template: CustomerFAQSearch
 msgid "Only FAQ articles with votes..."
@@ -512,7 +528,7 @@ msgstr ""
 
 #. Template: CustomerFAQZoom
 msgid "Article Number"
-msgstr ""
+msgstr "Numéro d'Article"
 
 #. Template: CustomerFAQZoom
 msgid "Search for articles with keyword"
@@ -524,7 +540,7 @@ msgstr "Public"
 
 #. Template: PublicFAQSearchResultShort
 msgid "Back to FAQ Explorer"
-msgstr ""
+msgstr "Revenir au Navigateur FAQ"
 
 #. SysConfig
 msgid ""
@@ -536,11 +552,11 @@ msgstr ""
 
 #. SysConfig
 msgid "CSS color for the voting result."
-msgstr ""
+msgstr "Couleur CSS pour le résultat du vote"
 
 #. SysConfig
 msgid "Cache Time To Leave for FAQ items."
-msgstr ""
+msgstr "Durée de validité du Cache pour les éléments de la FAQ"
 
 #. SysConfig
 msgid "Category Management"
@@ -556,27 +572,27 @@ msgstr "Nom de catégorie par défaut"
 
 #. SysConfig
 msgid "Default language for FAQ articles on single language mode."
-msgstr ""
+msgstr "Langue par défaut pour les articles de la FAQ en mode langage unique."
 
 #. SysConfig
 msgid "Default maximum size of the titles in a FAQ article to be shown."
-msgstr ""
+msgstr "Taille maximum par défaut des titres dans un article de la FAQ à montrer."
 
 #. SysConfig
 msgid "Default priority of tickets for the approval of FAQ articles."
-msgstr ""
+msgstr "Priorité par défaut des tickets pour l'approbation d'articles de la FAQ."
 
 #. SysConfig
 msgid "Default state for FAQ entry."
-msgstr ""
+msgstr "Etat par défaut d'une entrée de la FAQ."
 
 #. SysConfig
 msgid "Default state of tickets for the approval of FAQ articles."
-msgstr ""
+msgstr "Etat par défaut des tickets pour l'approbation d'articles de la FAQ."
 
 #. SysConfig
 msgid "Default type of tickets for the approval of FAQ articles."
-msgstr ""
+msgstr "Type par défaut des tickets pour l'approbation d'articles de la FAQ."
 
 #. SysConfig
 msgid ""

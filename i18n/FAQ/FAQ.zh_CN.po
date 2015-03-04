@@ -1,10 +1,12 @@
 # 
 # Translators:
+# 文浩坚 <never.min@gmail.com>, 2015
+# 陈德文 <sggggy@gmail.com>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2014-11-14 00:32+0000\n"
+"PO-Revision-Date: 2015-03-04 01:44+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/projects/p/OTRS/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
@@ -145,6 +147,14 @@ msgstr "名称是必需的!"
 msgid "This language already exists!"
 msgstr "该语言已经存在!"
 
+#. Template: AAAFAQ
+msgid "Symptom"
+msgstr ""
+
+#. Template: AAAFAQ
+msgid "Solution"
+msgstr ""
+
 #. Template: AgentFAQAdd
 msgid "Add FAQ Article"
 msgstr "添加FAQ文章"
@@ -175,7 +185,7 @@ msgstr "删除类别"
 
 #. Template: AgentFAQCategory
 msgid "Ok"
-msgstr ""
+msgstr "Ok"
 
 #. Template: AgentFAQCategory
 msgid "Add Category"
@@ -221,7 +231,7 @@ msgstr "你确定要删除该FAQ文章吗?"
 
 #. Template: AgentFAQEdit
 msgid "FAQ"
-msgstr ""
+msgstr "FAQ知识库"
 
 #. Template: AgentFAQExplorer
 msgid "FAQ Explorer"
@@ -438,6 +448,13 @@ msgstr "下载附件"
 
 #. Template: AgentFAQZoom
 msgid ""
+"To open links in the following description blocks, you might need to press "
+"Ctrl or Cmd or Shift key while clicking the link (depending on your browser "
+"and OS)."
+msgstr ""
+
+#. Template: AgentFAQZoom
+msgid ""
 "How helpful was this article? Please give us your rating and help to improve"
 " the FAQ Database. Thank You!"
 msgstr "此文档对您有帮助吗？请给出您的评价，谢谢！"
@@ -520,7 +537,7 @@ msgstr ""
 
 #. Template: PublicFAQSearchOpenSearchDescriptionFAQNumber
 msgid "Public"
-msgstr ""
+msgstr "公开"
 
 #. Template: PublicFAQSearchResultShort
 msgid "Back to FAQ Explorer"
@@ -1103,7 +1120,7 @@ msgstr ""
 
 #. SysConfig
 msgid "Show FAQ Article with HTML."
-msgstr ""
+msgstr "以 HTML 格式显示 FAQ 文章"
 
 #. SysConfig
 msgid "Show FAQ path yes/no."
