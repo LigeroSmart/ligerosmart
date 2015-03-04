@@ -50,6 +50,8 @@ sub Data {
     $Self->{Translation}->{'FAQ language updated!'} = 'Ажуриран ЧПП језик!';
     $Self->{Translation}->{'The name is required!'} = 'Име је обавезно!';
     $Self->{Translation}->{'This language already exists!'} = 'Овај језик већ постоји!';
+    $Self->{Translation}->{'Symptom'} = '';
+    $Self->{Translation}->{'Solution'} = '';
 
     # Template: AgentFAQAdd
     $Self->{Translation}->{'Add FAQ Article'} = 'Додај ЧПП чланак';
@@ -153,6 +155,8 @@ sub Data {
     $Self->{Translation}->{'No votes found!'} = 'Гласови нису пронађени!';
     $Self->{Translation}->{'No votes found! Be the first one to rate this FAQ article.'} = 'Гласови нису пронађени! Будите први који ће оценити овај ЧПП чланак!';
     $Self->{Translation}->{'Download Attachment'} = 'Преузми прилог';
+    $Self->{Translation}->{'To open links in the following description blocks, you might need to press Ctrl or Cmd or Shift key while clicking the link (depending on your browser and OS).'} =
+        '';
     $Self->{Translation}->{'How helpful was this article? Please give us your rating and help to improve the FAQ Database. Thank You!'} =
         '';
     $Self->{Translation}->{'not helpful'} = 'није корисно';

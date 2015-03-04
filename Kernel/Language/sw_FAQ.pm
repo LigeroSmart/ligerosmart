@@ -50,6 +50,8 @@ sub Data {
     $Self->{Translation}->{'FAQ language updated!'} = 'Lugha ya maswali imebadilishwa!';
     $Self->{Translation}->{'The name is required!'} = 'Jina linahitajika!';
     $Self->{Translation}->{'This language already exists!'} = 'Lugha ipo tayari!';
+    $Self->{Translation}->{'Symptom'} = '';
+    $Self->{Translation}->{'Solution'} = '';
 
     # Template: AgentFAQAdd
     $Self->{Translation}->{'Add FAQ Article'} = 'Ongeza makala ya maswali';
@@ -153,6 +155,8 @@ sub Data {
     $Self->{Translation}->{'No votes found!'} = 'Hakuna Kura zilizopatika';
     $Self->{Translation}->{'No votes found! Be the first one to rate this FAQ article.'} = 'Hakuna kura. Kuwa wa kwanza kuthaminisha makala hii ya maswali.';
     $Self->{Translation}->{'Download Attachment'} = 'Download Kiambatanishwa';
+    $Self->{Translation}->{'To open links in the following description blocks, you might need to press Ctrl or Cmd or Shift key while clicking the link (depending on your browser and OS).'} =
+        '';
     $Self->{Translation}->{'How helpful was this article? Please give us your rating and help to improve the FAQ Database. Thank You!'} =
         'Ni kwa kiasi gan makala hii imesaidia? Tafadhali tusaidie kuthaminisha kuleta mabadiliko katika database ya Maswali. Asante';
     $Self->{Translation}->{'not helpful'} = 'Haina Msaada';

@@ -57,3 +57,9 @@
 [% Translate("The name is required!") | html %]
 [% Translate("This language already exists!") | html %]
 [% Translate("The name is required!") | html %]
+
+# Default FAQ Field captions
+[% Translate("Symptom") | html %]
+[% Translate("Problem") | html %]
+[% Translate("Solution") | html %]
+[% Translate("Comment") | html %]

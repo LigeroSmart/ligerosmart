@@ -50,6 +50,8 @@ sub Data {
     $Self->{Translation}->{'FAQ language updated!'} = 'FAQ nyelv módosult!';
     $Self->{Translation}->{'The name is required!'} = 'A név szükséges!';
     $Self->{Translation}->{'This language already exists!'} = 'A nyelv már létezik!';
+    $Self->{Translation}->{'Symptom'} = '';
+    $Self->{Translation}->{'Solution'} = '';
 
     # Template: AgentFAQAdd
     $Self->{Translation}->{'Add FAQ Article'} = 'FAQ cikk hozzáadása';
@@ -153,6 +155,8 @@ sub Data {
     $Self->{Translation}->{'No votes found!'} = 'Nincs szavazat!';
     $Self->{Translation}->{'No votes found! Be the first one to rate this FAQ article.'} = 'Nincs szavazat! Legyen az első, aki értékeli a FAQ cikket.';
     $Self->{Translation}->{'Download Attachment'} = 'Melléklet letöltése';
+    $Self->{Translation}->{'To open links in the following description blocks, you might need to press Ctrl or Cmd or Shift key while clicking the link (depending on your browser and OS).'} =
+        '';
     $Self->{Translation}->{'How helpful was this article? Please give us your rating and help to improve the FAQ Database. Thank You!'} =
         'How helpful was this article? Please give us your rating and help to improve the FAQ Database. Thank You!';
     $Self->{Translation}->{'not helpful'} = 'nem segít';

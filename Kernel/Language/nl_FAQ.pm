@@ -50,6 +50,8 @@ sub Data {
     $Self->{Translation}->{'FAQ language updated!'} = 'Taal bijgewerkt';
     $Self->{Translation}->{'The name is required!'} = 'De naam is verplicht.';
     $Self->{Translation}->{'This language already exists!'} = 'Deze taal bestaat al.';
+    $Self->{Translation}->{'Symptom'} = '';
+    $Self->{Translation}->{'Solution'} = '';
 
     # Template: AgentFAQAdd
     $Self->{Translation}->{'Add FAQ Article'} = 'Artikel toevoegen';
@@ -153,6 +155,8 @@ sub Data {
     $Self->{Translation}->{'No votes found!'} = 'Geen stemmen gevonden';
     $Self->{Translation}->{'No votes found! Be the first one to rate this FAQ article.'} = 'Geen stemmen gevonden. Wees de eerste om dit artikel te beoordelen.';
     $Self->{Translation}->{'Download Attachment'} = 'Sla bijlage op';
+    $Self->{Translation}->{'To open links in the following description blocks, you might need to press Ctrl or Cmd or Shift key while clicking the link (depending on your browser and OS).'} =
+        '';
     $Self->{Translation}->{'How helpful was this article? Please give us your rating and help to improve the FAQ Database. Thank You!'} =
         'Hielp dit artikel bij het beantwoorden van uw vraag?';
     $Self->{Translation}->{'not helpful'} = 'helemaal niet';
