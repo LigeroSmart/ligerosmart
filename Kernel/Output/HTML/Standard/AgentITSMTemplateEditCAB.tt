@@ -10,14 +10,12 @@
 [% InsertTemplate("AgentITSMCABMemberSearch.tt") %]
 
 [% WRAPPER JSOnDocumentComplete %]
-    <script type="text/javascript">//<![CDATA[
-
-        $('#AddCABMember').bind('click', function (Event) {
-            var $Form = $('#AddCABMember').closest('form');
-            Core.Form.Validate.DisableValidation($Form);
-        });
-
-    //]]></script>
+<script type="text/javascript">//<![CDATA[
+    $('#AddCABMember').bind('click', function (Event) {
+        var $Form = $('#AddCABMember').closest('form');
+        Core.Form.Validate.DisableValidation($Form);
+    });
+//]]></script>
 [% END %]
 
 <form action="[% Env("CGIHandle") %]" method="post" name="compose" class="Validate">
@@ -105,7 +103,7 @@
 [% WRAPPER JSOnDocumentComplete %]
 <script type="text/javascript">//<![CDATA[
 $('#[% Data.InternalUserType %][% Data.UserID | html %]').bind('click', function(){
-    $(this).closest('form').append("<input name=\"Delete[% Data.InternalUserType %][% Data.UserID | html %]\" type=\"hidden\" value=\"1\"/>").end().submit();
+    $(this).closest('form').append("<input name=\"Delete[% Data.InternalUserType %][% Data.UserID | html %]\" type=\"hidden\" value=\"1\"/>").end().submit();
 });
 //]]></script>
 [% END %]

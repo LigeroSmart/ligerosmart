@@ -11,22 +11,22 @@
 [% InsertTemplate("AgentITSMCABMemberSearch.tt") %]
 
 [% WRAPPER JSOnDocumentComplete %]
-    <script type="text/javascript">//<![CDATA[
+<script type="text/javascript">//<![CDATA[
 
-        $('#ChangeManager').bind('focus', function( Event ) {
-            Core.Config.Set('UserAutocomplete.Groups', 'itsm-change-manager');
-        });
+    $('#ChangeManager').bind('focus', function( Event ) {
+        Core.Config.Set('UserAutocomplete.Groups', 'itsm-change-manager');
+    });
 
-        $('#ChangeBuilder').bind('focus', function( Event ) {
-            Core.Config.Set('UserAutocomplete.Groups', 'itsm-change-builder');
-        });
+    $('#ChangeBuilder').bind('focus', function( Event ) {
+        Core.Config.Set('UserAutocomplete.Groups', 'itsm-change-builder');
+    });
 
-        $('#AddCABMember').bind('click', function (Event) {
-            var $Form = $('#AddCABMember').closest('form');
-            Core.Form.Validate.DisableValidation($Form);
-        });
+    $('#AddCABMember').bind('click', function (Event) {
+        var $Form = $('#AddCABMember').closest('form');
+        Core.Form.Validate.DisableValidation($Form);
+    });
 
-    //]]></script>
+//]]></script>
 [% END %]
 
 
@@ -157,9 +157,9 @@
 
 [% WRAPPER JSOnDocumentComplete %]
 <script type="text/javascript">//<![CDATA[
-$('#[% Data.InternalUserType %][% Data.UserID | html %]').bind('click', function(){
-    $(this).closest('form').append("<input name=\"Delete[% Data.InternalUserType %][% Data.UserID | html %]\" type=\"hidden\" value=\"1\"/>").end().submit();
-});
+    $('#[% Data.InternalUserType %][% Data.UserID | html %]').bind('click', function(){
+        $(this).closest('form').append("<input name=\"Delete[% Data.InternalUserType %][% Data.UserID | html %]\" type=\"hidden\" value=\"1\"/>").end().submit();
+    });
 //]]></script>
 [% END %]
 
