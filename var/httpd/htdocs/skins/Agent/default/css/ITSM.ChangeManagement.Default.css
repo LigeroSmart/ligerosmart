@@ -36,4 +36,32 @@
     min-height: 450px;
 }
 
+.ITSMMessageBrowser {
+    margin-bottom: 10px;
+    padding: 0px;
+    border-radius: 2px;
+    position: relative;
+}
+
+.ITSMMessageBrowser p {
+     padding: 5px;
+     background-color: #E8E8E8;
+     font-size: 11px;
+     text-align: center;
+}
+
+.ITSMMessageBrowser a.Close {
+    display: block;
+    width: 12px;
+    height: 12px;
+    position: absolute;
+    right: 4px;
+    top: 6px;
+    color: #5D5D5D;
+}
+
+.ITSMMessageBrowser a.Close:hover {
+    color: #000;
+}
+
 } /* end @media */

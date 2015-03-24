@@ -55,6 +55,21 @@ sub new {
         FieldFilter => $Self->{Config}->{DynamicField} || {},
     );
 
+    # get agents preferences
+    my %UserPreferences = $Self->{UserObject}->GetPreferences(
+        UserID => $Self->{UserID},
+    );
+
+    # remember if user already closed message about links in iframes
+    if ( !defined $Self->{DoNotShowBrowserLinkMessage} ) {
+        if ( $UserPreferences{UserAgentDoNotShowBrowserLinkMessage} ) {
+            $Self->{DoNotShowBrowserLinkMessage} = 1;
+        }
+        else {
+            $Self->{DoNotShowBrowserLinkMessage} = 0;
+        }
+    }
+
     return $Self;
 }
 
@@ -125,8 +140,70 @@ sub Run {
         }
     }
 
+    # handle HTMLView
+    if ( $Self->{Subaction} eq 'HTMLView' ) {
+
+        # get param
+        my $Field = $Self->{ParamObject}->GetParam( Param => "Field" );
+
+        # needed param
+        if ( !$Field ) {
+            $Self->{LogObject}->Log(
+                Message  => "Needed Param: $Field!",
+                Priority => 'error',
+            );
+            return;
+        }
+
+        # error checking
+        if ( $Field ne 'Instruction' && $Field ne 'Report' ) {
+            $Self->{LogObject}->Log(
+                Message  => "Unknown field: $Field! Field must be either Instruction or Report!",
+                Priority => 'error',
+            );
+            return;
+        }
+
+        # get the Field content
+        my $FieldContent = $WorkOrder->{$Field};
+
+        # build base URL for in-line images if no session cookies are used
+        my $SessionID = '';
+        if ( $Self->{SessionID} && !$Self->{SessionIDCookie} ) {
+            $SessionID = ';' . $Self->{SessionName} . '=' . $Self->{SessionID};
+            $FieldContent =~ s{
+                (Action=AgentITSMWorkOrderZoom;Subaction=DownloadAttachment;Filename=.+;WorkOrderID=\d+)
+            }{$1$SessionID}gmsx;
+        }
+
+        # detect all plain text links and put them into an HTML <a> tag
+        $FieldContent = $Self->{LayoutObject}->{HTMLUtilsObject}->LinkQuote(
+            String => $FieldContent,
+        );
+
+        # set target="_blank" attribute to all HTML <a> tags
+        # the LinkQuote function needs to be called again
+        $FieldContent = $Self->{LayoutObject}->{HTMLUtilsObject}->LinkQuote(
+            String    => $FieldContent,
+            TargetAdd => 1,
+        );
+
+        # add needed HTML headers
+        $FieldContent = $Self->{LayoutObject}->{HTMLUtilsObject}->DocumentComplete(
+            String  => $FieldContent,
+            Charset => 'utf-8',
+        );
+
+        # return complete HTML as an attachment
+        return $Self->{LayoutObject}->Attachment(
+            Type        => 'inline',
+            ContentType => 'text/html',
+            Content     => $FieldContent,
+        );
+    }
+
     # handle DownloadAttachment
-    if ( $Self->{Subaction} eq 'DownloadAttachment' ) {
+    elsif ( $Self->{Subaction} eq 'DownloadAttachment' ) {
 
         # get data for attachment
         my $Filename = $Self->{ParamObject}->GetParam( Param => 'Filename' );
@@ -458,6 +535,36 @@ sub Run {
         $Self->{LayoutObject}->Block(
             Name => 'EmptyWorkOrderAgent',
             Data => {},
+        );
+    }
+
+    # show message about links in iframes, if user didn't close it already
+    if ( !$Self->{DoNotShowBrowserLinkMessage} ) {
+        $Self->{LayoutObject}->Block(
+            Name => 'BrowserLinkMessage',
+        );
+    }
+
+    # get security restriction setting for iframes
+    # security="restricted" may break SSO - disable this feature if requested
+    my $MSSecurityRestricted;
+    if ( $Self->{ConfigObject}->Get('DisableMSIFrameSecurityRestricted') ) {
+        $Param{MSSecurityRestricted} = '';
+    }
+    else {
+        $Param{MSSecurityRestricted} = 'security="restricted"';
+    }
+
+    # show the HTML field blocks as iframes
+    for my $Field (qw(Instruction Report)) {
+
+        $Self->{LayoutObject}->Block(
+            Name => 'ITSMContent',
+            Data => {
+                WorkOrderID          => $WorkOrderID,
+                Field                => $Field,
+                MSSecurityRestricted => $MSSecurityRestricted,
+            },
         );
     }
 
