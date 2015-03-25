@@ -494,6 +494,7 @@
                     <CSS>ITSM.ChangeManagement.WorkorderGraph.css</CSS>
                     <CSS>ITSM.ChangeManagement.RTEContent.css</CSS>
                     <JavaScript>ITSM.Agent.ChangeManagement.WorkorderGraph.js</JavaScript>
+                    <JavaScript>ITSM.Agent.ChangeManagement.Zoom.js</JavaScript>
                     <JavaScript>ITSM.Agent.ConfirmationDialog.js</JavaScript>
                 </Loader>
             </FrontendModuleReg>
@@ -736,6 +737,7 @@
                     <CSS>ITSM.Agent.Default.css</CSS>
                     <CSS>ITSM.ChangeManagement.Default.css</CSS>
                     <CSS>ITSM.ChangeManagement.RTEContent.css</CSS>
+                    <JavaScript>ITSM.Agent.ChangeManagement.Zoom.js</JavaScript>
                     <JavaScript>ITSM.Agent.ConfirmationDialog.js</JavaScript>
                 </Loader>
             </FrontendModuleReg>
@@ -1235,7 +1237,6 @@
             </Hash>
         </Setting>
     </ConfigItem>
-
     <ConfigItem Name="DynamicField::EventModulePost###100-UpdateITSMChangeConditions" Required="0" Valid="1">
         <Description Translatable="1">DynamicField event module to handle the update of conditions if dynamic fields are added, updated or deleted.</Description>
         <Group>ITSM Change Management</Group>
@@ -1248,7 +1249,6 @@
             </Hash>
         </Setting>
     </ConfigItem>
-
     <ConfigItem Name="ITSMChange::EventModule###01-HistoryAdd" Required="0" Valid="1">
         <Description Translatable="1">ITSM event module that updates the history of changes.</Description>
         <Group>ITSM Change Management</Group>
@@ -4414,16 +4414,6 @@
             <String Regex="^[0-9]$">5</String>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="Loader::Agent::CommonCSS###100-ITSMChangeManagement" Required="1" Valid="1">
-        <Description Translatable="1">List of CSS files to always be loaded for the agent interface.</Description>
-        <Group>Framework</Group>
-        <SubGroup>Core::Web</SubGroup>
-        <Setting>
-            <Array>
-                <Item>ITSM.ChangeManagement.Header.css</Item>
-            </Array>
-        </Setting>
-    </ConfigItem>
     <ConfigItem Name="PreferencesGroups###UserCreateWorkOrderNextMask" Required="0" Valid="1">
         <Description Translatable="1">Parameters for the UserCreateWorkOrderNextMask object in the preference view of the agent interface.</Description>
         <Group>ITSM Change Management</Group>
@@ -4517,6 +4507,22 @@
                 <Item>PlannedStartTime</Item>
                 <Item>PlannedEndTime</Item>
             </Array>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentHTMLFieldHeightDefault" Required="1" Valid="1">
+        <Description Translatable="1">Set the default height (in pixels) of inline HTML fields in AgentITSMChangeZoom and AgentITSMWorkOrderZoom.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ViewZoom</SubGroup>
+        <Setting>
+            <String Regex="^[0-9]{1,4}$">100</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentHTMLFieldHeightMax" Required="1" Valid="1">
+        <Description Translatable="1">Set the maximum height (in pixels) of inline HTML fields in AgentITSMChangeZoom and AgentITSMWorkOrderZoom.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ViewZoom</SubGroup>
+        <Setting>
+            <String Regex="^[0-9]{1,5}$">2500</String>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Loader::Agent::CommonJS###100-ITSMChangeManagement" Required="1" Valid="1">
