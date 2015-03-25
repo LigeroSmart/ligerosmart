@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTicketActionCommon.pm - common file for several modules
 # Copyright (C) 2001-2015 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/80628f7acba22f97f4b01292f90a3d1ec9634daa/Kernel/Modules/AgentTicketActionCommon.pm
+# $origin: https://github.com/OTRS/otrs/blob/8fa543a053d8be01fea038666a0e442a2e0849b3/Kernel/Modules/AgentTicketActionCommon.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -802,7 +802,7 @@ sub Run {
                     push @NotifyDone, $GetParam{OldOwnerID};
                 }
             }
-            elsif ( $GetParam{NewOwnerID} ) {
+            elsif ( $GetParam{NewOwnerType} eq 'New' && $GetParam{NewOwnerID} ) {
                 $Self->{TicketObject}->TicketLockSet(
                     TicketID => $Self->{TicketID},
                     Lock     => 'lock',
@@ -2188,7 +2188,7 @@ sub _Mask {
         my %ReplyToUserIDs;
         if ( $Self->{ReplyToArticle} ) {
             my @ReplyToParts = $Self->{EmailParserObject}->SplitAddressLine(
-                Line => $Self->{ReplyToArticleContent}->{To},
+                Line => $Self->{ReplyToArticleContent}->{To} || '',
             );
 
             REPLYTOPART:
@@ -2671,6 +2671,21 @@ sub _GetServices {
 
 sub _GetSLAs {
     my ( $Self, %Param ) = @_;
+
+    # if non set customers can get default services then they should also be able to get the SLAs
+    #  for those services (this works during ticket creation).
+    # if no CustomerUserID is set, TicketSLAList will complain during AJAX updates as UserID is not
+    #  passed. See bug 11147.
+
+    # get options for default services for unknown customers
+    my $DefaultServiceUnknownCustomer = $Self->{ConfigObject}->Get('Ticket::Service::Default::UnknownCustomer');
+
+    # check if no CustomerUserID is selected
+    # if $DefaultServiceUnknownCustomer = 0 leave CustomerUserID empty, it will not get any services
+    # if $DefaultServiceUnknownCustomer = 1 set CustomerUserID to get default services
+    if ( !$Param{CustomerUserID} && $DefaultServiceUnknownCustomer ) {
+        $Param{CustomerUserID} = '<DEFAULT>';
+    }
 
     my %SLA;
     if ( $Param{ServiceID} ) {

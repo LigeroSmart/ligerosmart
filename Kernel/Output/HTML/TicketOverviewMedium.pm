@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/TicketOverviewMedium.pm
 # Copyright (C) 2001-2015 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/80628f7acba22f97f4b01292f90a3d1ec9634daa/Kernel/Output/HTML/TicketOverviewMedium.pm
+# $origin: https://github.com/OTRS/otrs/blob/8fa543a053d8be01fea038666a0e442a2e0849b3/Kernel/Output/HTML/TicketOverviewMedium.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you

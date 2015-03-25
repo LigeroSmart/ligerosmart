@@ -2,7 +2,7 @@
 # AgentTicketZoom.tt - provides HTML for AgentTicketZoom.pm
 # Copyright (C) 2001-2015 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/80628f7acba22f97f4b01292f90a3d1ec9634daa/Kernel/Output/HTML/Standard/AgentTicketZoom.tt
+# $origin: https://github.com/OTRS/otrs/blob/8fa543a053d8be01fea038666a0e442a2e0849b3/Kernel/Output/HTML/Standard/AgentTicketZoom.tt
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -971,9 +971,6 @@ $('.ShowFieldInfoOverlay').bind('click', function() {
                 <li class="cc">
                     <strong>[% Translate("Cc") | html %]: </strong>
                 </li>
-                <li class="bcc">
-                    <strong>[% Translate("Bcc") | html %]: </strong>
-                </li>
             </ul>
             <div class="Hidden FullArticlePlainText" data-title="[% Translate("Full Article Text") | html %]">
                 <div class="ChronicalPlainText"></div>
@@ -1011,11 +1008,10 @@ var TicketID    = [% Data.TicketID | JSON %],
         'is_chat'       : [% Item.IsChatArticle | JSON %],
         'article_data'  : {
         [% IF Item.ArticleID %]
-            'subject': [% Item.ArticleData.Subject | truncate(75) | JSON %],
-            'from'   : [% Item.ArticleData.From | truncate(75) | JSON %],
-            'to'     : [% Item.ArticleData.To | truncate(75) | JSON %],
-            'cc'     : [% Item.ArticleData.Cc | truncate(75) | JSON %],
-            'bcc'    : [% Item.ArticleData.Bcc | truncate(75) | JSON %],
+            'subject': [% Item.ArticleData.Subject | html | JSON %],
+            'from'   : [% Item.ArticleData.From | html | JSON %],
+            'to'     : [% Item.ArticleData.To | html | JSON %],
+            'cc'     : [% Item.ArticleData.Cc | html | JSON %],
             'is_important' : [% Item.ArticleData.ArticleIsImportant | JSON %],
             'is_seen' : [% Item.ArticleData.ArticleIsSeen | JSON %],
             'text'   : [% IF Item.IsChatArticle %][% Item.ArticleData.BodyChat | JSON %][% ELSE %][% Item.ArticleData.Body | truncate(650) | JSON %][% END %],
@@ -1224,12 +1220,12 @@ if ($('#Article_[% Data.ArticleID %]').length) {
         Core.UI.Dialog.ShowContentDialog($Dialog.html(), [% Translate('Start chat') | JSON %], '100px', 'Center', true);
 
         // Only enable button if there is a message
-        $('.Dialog input[name="ChatStartFirstMessage"]').on('keyup', function(){
+        $('.Dialog textarea[name="ChatStartFirstMessage"]').on('keyup', function(){
             $('.Dialog button').prop('disabled', $(this).val().length ? false : true );
         });
 
         $('.Dialog form').on('submit', function(){
-            if (!$('.Dialog input[name=ChatStartFirstMessage]').val().length) {
+            if (!$('.Dialog textarea[name=ChatStartFirstMessage]').val().length) {
                 return false;
             }
             // Close after submit
