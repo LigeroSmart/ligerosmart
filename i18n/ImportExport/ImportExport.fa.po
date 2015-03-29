@@ -1,4 +1,4 @@
-# 
+#
 # Translators:
 msgid ""
 msgstr ""
@@ -176,3 +176,4 @@ msgstr "ورود و صدور اطلاعات آبجکت"
 #. SysConfig
 msgid "Import/Export"
 msgstr "ورود/صدور"
+

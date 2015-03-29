@@ -1,4 +1,4 @@
-# 
+#
 # Translators:
 # Luca Maranzano <liuk@linux.it>, 2014
 msgid ""
@@ -177,3 +177,4 @@ msgstr "Importa ed esporta le informazioni sull'oggetto."
 #. SysConfig
 msgid "Import/Export"
 msgstr "Importare/Esportare"
+

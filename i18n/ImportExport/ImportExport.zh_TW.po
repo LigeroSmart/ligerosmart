@@ -1,4 +1,4 @@
-# 
+#
 # Translators:
 msgid ""
 msgstr ""
@@ -176,3 +176,4 @@ msgstr "導入和導出對象信息"
 #. SysConfig
 msgid "Import/Export"
 msgstr "導入/導出"
+

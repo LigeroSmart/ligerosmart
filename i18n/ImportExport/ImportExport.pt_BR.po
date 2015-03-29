@@ -1,4 +1,4 @@
-# 
+#
 # Translators:
 # Marcos Aurélio Silvério <maureliosilverio@gmail.com>, 2014
 msgid ""
@@ -177,3 +177,4 @@ msgstr "Importar e exportar informações de objeto."
 #. SysConfig
 msgid "Import/Export"
 msgstr "Importação/Exportação"
+

@@ -16,7 +16,6 @@
         <File Permission="644" Location="doc/import-export-database.png"/>
         <File Permission="644" Location="Kernel/Config/Files/ImportExport.xml"/>
         <File Permission="644" Location="Kernel/Language/cs_ImportExport.pm"/>
-        <File Permission="644" Location="Kernel/Language/ct_ImportExport.pm"/>
         <File Permission="644" Location="Kernel/Language/da_ImportExport.pm"/>
         <File Permission="644" Location="Kernel/Language/de_ImportExport.pm"/>
         <File Permission="644" Location="Kernel/Language/es_ImportExport.pm"/>

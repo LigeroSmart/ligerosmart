@@ -1,4 +1,4 @@
-# 
+#
 # Translators:
 # Lars Åge Kamfjord <lars-transifex@kamfjord.org>, 2014
 msgid ""
@@ -177,3 +177,4 @@ msgstr "Informasjon for import- og eksport-objekt"
 #. SysConfig
 msgid "Import/Export"
 msgstr "Import/Eksport"
+

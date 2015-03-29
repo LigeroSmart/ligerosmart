@@ -1,4 +1,4 @@
-# 
+#
 # Translators:
 # Yuri Kolesniov <ynkolesnikov@gmail.com>, 2014
 msgid ""
@@ -177,3 +177,4 @@ msgstr "Импорт и экспорт информации об объекта�
 #. SysConfig
 msgid "Import/Export"
 msgstr "Импорт/Экспорт"
+

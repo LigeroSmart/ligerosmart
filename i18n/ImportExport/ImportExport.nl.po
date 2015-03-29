@@ -1,4 +1,4 @@
-# 
+#
 # Translators:
 msgid ""
 msgstr ""
@@ -176,3 +176,4 @@ msgstr "Import en export objectinformatie"
 #. SysConfig
 msgid "Import/Export"
 msgstr "Import/Export"
+
