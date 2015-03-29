@@ -94,12 +94,12 @@ sub Data {
     $Self->{Translation}->{'PIR (Post Implementation Review)'} = '事後レビュー';
     $Self->{Translation}->{'PSA (Projected Service Availability)'} = 'PSA(プロジェクトサービス可用性)';
     $Self->{Translation}->{'Please select first a catalog class!'} = '';
-    $Self->{Translation}->{'Print the change'} = '';
-    $Self->{Translation}->{'Print the workorder'} = '';
+    $Self->{Translation}->{'Print the change'} = '変更を印刷';
+    $Self->{Translation}->{'Print the workorder'} = 'ワークオーダーを印刷';
     $Self->{Translation}->{'RequestedTime'} = '';
     $Self->{Translation}->{'Save Change CAB as Template'} = '';
-    $Self->{Translation}->{'Save change as a template'} = '';
-    $Self->{Translation}->{'Save workorder as a template'} = '';
+    $Self->{Translation}->{'Save change as a template'} = '変更をテンプレートとして保存する';
+    $Self->{Translation}->{'Save workorder as a template'} = 'ワークオーダーをテンプレートとして保存する';
     $Self->{Translation}->{'Search Changes'} = '変更を検索';
     $Self->{Translation}->{'Set the agent for the workorder'} = 'ワークオーダーを担当するエージェントを設定する';
     $Self->{Translation}->{'Take Workorder'} = 'ワークオーダーを受け取る';
@@ -111,8 +111,8 @@ sub Data {
     $Self->{Translation}->{'The requested time is invalid!'} = 'リクエストされた時間が不正です!';
     $Self->{Translation}->{'New (from template)'} = '新規(テンプレートから)';
     $Self->{Translation}->{'Add from template'} = 'テンプレートから追加する';
-    $Self->{Translation}->{'Add Workorder (from template)'} = '';
-    $Self->{Translation}->{'Add a workorder (from template) to the change'} = '';
+    $Self->{Translation}->{'Add Workorder (from template)'} = 'ワークオーダーを追加する(テンプレートから)';
+    $Self->{Translation}->{'Add a workorder (from template) to the change'} = '変更にワークオーダー(テンプレートから)を追加する';
     $Self->{Translation}->{'WorkOrderHistory::WorkOrderActualEndTimeReached'} = '(暫定)WorkOrderHistory::WorkOrderActualEndTimeReached (ID=%s)';
     $Self->{Translation}->{'WorkOrderHistory::WorkOrderActualEndTimeReachedWithWorkOrderID'} =
         '(暫定)WorkOrderHistory::WorkOrderActualEndTimeReachedWithWorkOrderID (ID=%s)';
@@ -125,12 +125,12 @@ sub Data {
     $Self->{Translation}->{'WorkOrderHistory::WorkOrderAttachmentAddWithWorkOrderID'} = '(暫定)WorkOrderHistory::WorkOrderAttachmentAddWithWorkOrderID(ID=%s): %s';
     $Self->{Translation}->{'WorkOrderHistory::WorkOrderAttachmentDelete'} = '(暫定)WorkOrderHistory::WorkOrderAttachmentDelete: %s';
     $Self->{Translation}->{'WorkOrderHistory::WorkOrderAttachmentDeleteWithWorkOrderID'} = '(暫定)WorkOrderHistory::WorkOrderAttachmentDeleteWithWorkOrderID(ID=%s) : %s';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderReportAttachmentAdd'} = '';
+    $Self->{Translation}->{'WorkOrderHistory::WorkOrderReportAttachmentAdd'} = 'WorkOrderHistory::WorkOrderReportAttachmentAdd';
     $Self->{Translation}->{'WorkOrderHistory::WorkOrderReportAttachmentAddWithWorkOrderID'} =
-        '';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderReportAttachmentDelete'} = '';
+        'WorkOrderHistory::WorkOrderReportAttachmentAddWithWorkOrderID';
+    $Self->{Translation}->{'WorkOrderHistory::WorkOrderReportAttachmentDelete'} = 'WorkOrderHistory::WorkOrderReportAttachmentDelete';
     $Self->{Translation}->{'WorkOrderHistory::WorkOrderReportAttachmentDeleteWithWorkOrderID'} =
-        '';
+        'WorkOrderHistory::WorkOrderReportAttachmentDeleteWithWorkOrderID';
     $Self->{Translation}->{'WorkOrderHistory::WorkOrderDelete'} = '(暫定)WorkOrderHistory::WorkOrderDelete (ID=%s)';
     $Self->{Translation}->{'WorkOrderHistory::WorkOrderDeleteWithWorkOrderID'} = '(暫定)WorkOrderHistory::WorkOrderDeleteWithWorkOrderID(ID=%s)';
     $Self->{Translation}->{'WorkOrderHistory::WorkOrderLinkAdd'} = '(暫定)WorkOrderHistory::WorkOrderLinkAdd %s (ID=%s)';
@@ -152,8 +152,8 @@ sub Data {
     $Self->{Translation}->{'any'} = 'すべて';
     $Self->{Translation}->{'approval'} = '認証';
     $Self->{Translation}->{'approved'} = '承認済み';
-    $Self->{Translation}->{'backout'} = '';
-    $Self->{Translation}->{'begins with'} = '';
+    $Self->{Translation}->{'backout'} = 'バックアウト';
+    $Self->{Translation}->{'begins with'} = 'で始まる';
     $Self->{Translation}->{'canceled'} = 'キャンセル';
     $Self->{Translation}->{'contains'} = '含んでいる';
     $Self->{Translation}->{'created'} = '作成済み';
@@ -162,23 +162,23 @@ sub Data {
     $Self->{Translation}->{'failed'} = '失敗';
     $Self->{Translation}->{'in progress'} = '進行中';
     $Self->{Translation}->{'is'} = 'である';
-    $Self->{Translation}->{'is after'} = '';
-    $Self->{Translation}->{'is before'} = '';
-    $Self->{Translation}->{'is empty'} = '';
-    $Self->{Translation}->{'is greater than'} = '';
-    $Self->{Translation}->{'is less than'} = '';
-    $Self->{Translation}->{'is not'} = '';
-    $Self->{Translation}->{'is not empty'} = '';
-    $Self->{Translation}->{'not contains'} = '';
-    $Self->{Translation}->{'pending approval'} = '';
-    $Self->{Translation}->{'pending pir'} = '';
-    $Self->{Translation}->{'pir'} = '';
+    $Self->{Translation}->{'is after'} = 'の後である';
+    $Self->{Translation}->{'is before'} = 'の前である';
+    $Self->{Translation}->{'is empty'} = 'は空である';
+    $Self->{Translation}->{'is greater than'} = 'より大きい';
+    $Self->{Translation}->{'is less than'} = 'より小さい';
+    $Self->{Translation}->{'is not'} = 'ではない';
+    $Self->{Translation}->{'is not empty'} = 'は空ではない';
+    $Self->{Translation}->{'not contains'} = 'を含まない';
+    $Self->{Translation}->{'pending approval'} = '承認待ち';
+    $Self->{Translation}->{'pending pir'} = '保留中のPIR';
+    $Self->{Translation}->{'pir'} = 'PIR';
     $Self->{Translation}->{'ready'} = '準備完了';
     $Self->{Translation}->{'rejected'} = '却下';
-    $Self->{Translation}->{'requested'} = '';
+    $Self->{Translation}->{'requested'} = '要求されている';
     $Self->{Translation}->{'retracted'} = '取消済み';
-    $Self->{Translation}->{'set'} = '';
-    $Self->{Translation}->{'successful'} = '';
+    $Self->{Translation}->{'set'} = 'セット';
+    $Self->{Translation}->{'successful'} = '成功した';
 
     # Template: AdminITSMChangeCIPAllocate
     $Self->{Translation}->{'Category <-> Impact <-> Priority'} = 'カテゴリ  <-> 影響度 <-> 優先度';
@@ -190,7 +190,7 @@ sub Data {
     $Self->{Translation}->{'ITSM ChangeManagement Notification Management'} = 'ITSM 変更管理の通知管理';
     $Self->{Translation}->{'Add Notification Rule'} = '通知ルールを追加';
     $Self->{Translation}->{'Rule'} = 'ルール';
-    $Self->{Translation}->{'Recipients'} = '';
+    $Self->{Translation}->{'Recipients'} = '受信者';
     $Self->{Translation}->{'A notification should have a name!'} = '通知には名称が必須です。';
     $Self->{Translation}->{'Name is required.'} = '名称は入力必須です。';
 
@@ -202,41 +202,41 @@ sub Data {
     $Self->{Translation}->{'Catalog Class'} = 'カタログ・クラス';
     $Self->{Translation}->{'Object Name'} = 'オブジェクト名';
     $Self->{Translation}->{'Overview over state transitions for'} = 'ステータスの概要：';
-    $Self->{Translation}->{'Delete this state transition'} = '';
+    $Self->{Translation}->{'Delete this state transition'} = 'この状態遷移を削除する';
     $Self->{Translation}->{'Add a new state transition for'} = '新しいステータスを追加：';
     $Self->{Translation}->{'Please select a state!'} = '状態を選択してください。';
     $Self->{Translation}->{'Please select a next state!'} = '新しい状態を選択してください。';
     $Self->{Translation}->{'Edit a state transition for'} = 'ステータスの編集：';
     $Self->{Translation}->{'Do you really want to delete the state transition'} = 'ステータスを削除しますか？';
-    $Self->{Translation}->{'from'} = '';
+    $Self->{Translation}->{'from'} = 'フロム';
 
     # Template: AgentITSMChangeAdd
-    $Self->{Translation}->{'Add Change'} = '';
-    $Self->{Translation}->{'ITSM Change'} = '';
-    $Self->{Translation}->{'Justification'} = '';
-    $Self->{Translation}->{'Input invalid.'} = '';
-    $Self->{Translation}->{'Impact'} = '';
-    $Self->{Translation}->{'Requested Date'} = '';
+    $Self->{Translation}->{'Add Change'} = '変更を追加';
+    $Self->{Translation}->{'ITSM Change'} = 'ITSM Change';
+    $Self->{Translation}->{'Justification'} = '正当化';
+    $Self->{Translation}->{'Input invalid.'} = '入力は無効です';
+    $Self->{Translation}->{'Impact'} = 'インパクト';
+    $Self->{Translation}->{'Requested Date'} = '要求日';
 
     # Template: AgentITSMChangeAddFromTemplate
-    $Self->{Translation}->{'Select Change Template'} = '';
-    $Self->{Translation}->{'Time type'} = '';
-    $Self->{Translation}->{'Invalid time type.'} = '';
-    $Self->{Translation}->{'New time'} = '';
+    $Self->{Translation}->{'Select Change Template'} = '変更テンプレートを選択';
+    $Self->{Translation}->{'Time type'} = '時間タイプ';
+    $Self->{Translation}->{'Invalid time type.'} = '不正な時間タイプ';
+    $Self->{Translation}->{'New time'} = '新規の時間';
 
     # Template: AgentITSMChangeCABTemplate
-    $Self->{Translation}->{'Save Change CAB as template'} = '';
-    $Self->{Translation}->{'go to involved persons screen'} = '';
-    $Self->{Translation}->{'This field is required'} = '';
-    $Self->{Translation}->{'Invalid Name'} = '';
+    $Self->{Translation}->{'Save Change CAB as template'} = '変更CABをテンプレートとして保存する';
+    $Self->{Translation}->{'go to involved persons screen'} = '関係者画面に遷移する';
+    $Self->{Translation}->{'This field is required'} = 'このフィールドは必須です';
+    $Self->{Translation}->{'Invalid Name'} = '不正な名称です';
 
     # Template: AgentITSMChangeCondition
-    $Self->{Translation}->{'Conditions and Actions'} = '';
-    $Self->{Translation}->{'Delete Condition'} = '';
-    $Self->{Translation}->{'Add new condition'} = '';
+    $Self->{Translation}->{'Conditions and Actions'} = '条件とアクション';
+    $Self->{Translation}->{'Delete Condition'} = '条件を削除する';
+    $Self->{Translation}->{'Add new condition'} = '新しい条件を追加する';
 
     # Template: AgentITSMChangeConditionEdit
-    $Self->{Translation}->{'Need a valid name.'} = '';
+    $Self->{Translation}->{'Need a valid name.'} = '有効な名称が必要です';
     $Self->{Translation}->{'A a valid name is needed.'} = '';
     $Self->{Translation}->{'Duplicate name:'} = '';
     $Self->{Translation}->{'This name is already used by another condition.'} = '';
@@ -340,6 +340,8 @@ sub Data {
     $Self->{Translation}->{'Last changed'} = '最終変更時刻';
     $Self->{Translation}->{'Last changed by'} = '最終変更者';
     $Self->{Translation}->{'Ok'} = '';
+    $Self->{Translation}->{'To open links in the following description blocks, you might need to press Ctrl or Cmd or Shift key while clicking the link (depending on your browser and OS).'} =
+        '';
     $Self->{Translation}->{'Download Attachment'} = '添付ファイルのダウンロード';
 
     # Template: AgentITSMTemplateDelete
@@ -715,6 +717,10 @@ sub Data {
     $Self->{Translation}->{'Required privileges to write a report for the workorder.'} = '';
     $Self->{Translation}->{'Screen after creating a workorder'} = '';
     $Self->{Translation}->{'Selects the change number generator module. "AutoIncrement" increments the change number, the SystemID and the counter are used with SystemID.counter format (e.g. 100118, 100119). With "Date", the change numbers will be generated by the current date and a counter; this format looks like Year.Month.Day.counter, e.g. 2010062400001, 2010062400002. With "DateChecksum", the counter will be appended as checksum to the string of date plus the SystemID. The checksum will be rotated on a daily basis. This format looks like Year.Month.Day.SystemID.Counter.CheckSum, e.g. 2010062410000017, 2010062410000026.'} =
+        '';
+    $Self->{Translation}->{'Set the default height (in pixels) of inline HTML fields in AgentITSMChangeZoom and AgentITSMWorkOrderZoom.'} =
+        '';
+    $Self->{Translation}->{'Set the maximum height (in pixels) of inline HTML fields in AgentITSMChangeZoom and AgentITSMWorkOrderZoom.'} =
         '';
     $Self->{Translation}->{'Sets the minimal change counter size (if "AutoIncrement" was selected as ITSMChange::NumberGenerator). Default is 5, this means the counter starts from 10000.'} =
         '';
