@@ -1,4 +1,4 @@
-# 
+#
 # Translators:
 msgid ""
 msgstr ""
@@ -198,45 +198,31 @@ msgid "Current incident state"
 msgstr "Estado Atual de Incidente"
 
 #. SysConfig
-msgid ""
-"Frontend module registration for the AdminITSMCIPAllocate configuration in "
-"the admin area."
+msgid "Frontend module registration for the AdminITSMCIPAllocate configuration in the admin area."
 msgstr "Registro de módulo de interface para a configuração AdminITSMCIPAllocate na área administrativa."
 
 #. SysConfig
-msgid ""
-"Frontend module registration for the AgentITSMSLA object in the agent "
-"interface."
+msgid "Frontend module registration for the AgentITSMSLA object in the agent interface."
 msgstr "Registro de módulo de interface para o objeto AgentITSMSLA na interface de atendente."
 
 #. SysConfig
-msgid ""
-"Frontend module registration for the AgentITSMSLAPrint object in the agent "
-"interface."
+msgid "Frontend module registration for the AgentITSMSLAPrint object in the agent interface."
 msgstr "Registro de módulo de interface para o objeto AgentITSMSLAPrint na interface de atendente."
 
 #. SysConfig
-msgid ""
-"Frontend module registration for the AgentITSMSLAZoom object in the agent "
-"interface."
+msgid "Frontend module registration for the AgentITSMSLAZoom object in the agent interface."
 msgstr "Registro de módulo de interface para o objeto AgentITSMSLAZoom na interface de atendente."
 
 #. SysConfig
-msgid ""
-"Frontend module registration for the AgentITSMService object in the agent "
-"interface."
+msgid "Frontend module registration for the AgentITSMService object in the agent interface."
 msgstr "Registro de módulo de interface para o objeto AgentITSMService na interface de atendente."
 
 #. SysConfig
-msgid ""
-"Frontend module registration for the AgentITSMServicePrint object in the "
-"agent interface."
+msgid "Frontend module registration for the AgentITSMServicePrint object in the agent interface."
 msgstr "Registro de módulo de interface para o objeto AgentITSMServicePrint na interface de atendente."
 
 #. SysConfig
-msgid ""
-"Frontend module registration for the AgentITSMServiceZoom object in the "
-"agent interface."
+msgid "Frontend module registration for the AgentITSMServiceZoom object in the agent interface."
 msgstr "Registro de módulo de interface para o objeto AgentITSMServiceZoom na interface de atendente."
 
 #. SysConfig
@@ -268,196 +254,122 @@ msgid "Parameters for the incident states in the preference view."
 msgstr "Parâmetros para os estados de incidente na visão de preferências."
 
 #. SysConfig
-msgid ""
-"Set the type and direction of links to be used to calculate the incident "
-"state. The key is the name of the link type (as defined in "
-"LinkObject::Type), and the value is the direction of the IncidentLinkType "
-"that should be followed to calculate the incident state. For example if the "
-"IncidentLinkType is set to 'DependsOn', and the Direction is 'Source', only "
-"'Depends on' links will be followed (and not the opposite link 'Required "
-"for') to calculate the incident state. You can add more link types ad "
-"directions as you like, e.g. 'Includes' with the direction 'Target'. All "
-"link types defined in the sysconfig options LinkObject::Type are possible "
-"and the direction can be 'Source', 'Target', or 'Both'. IMPORTANT: AFTER YOU"
-" MAKE CHANGES TO THIS SYSCONFIG OPTION YOU NEED TO RUN THE SCRIPT "
-"bin/otrs.ITSMConfigItemIncidentStateRecalculate.pl SO THAT ALL INCIDENT "
-"STATES WILL BE RECALCULATED BASED ON THE NEW SETTINGS!"
+msgid "Set the type and direction of links to be used to calculate the incident state. The key is the name of the link type (as defined in LinkObject::Type), and the value is the direction of the IncidentLinkType that should be followed to calculate the incident state. For example if the IncidentLinkType is set to 'DependsOn', and the Direction is 'Source', only 'Depends on' links will be followed (and not the opposite link 'Required for') to calculate the incident state. You can add more link types ad directions as you like, e.g. 'Includes' with the direction 'Target'. All link types defined in the sysconfig options LinkObject::Type are possible and the direction can be 'Source', 'Target', or 'Both'. IMPORTANT: AFTER YOU MAKE CHANGES TO THIS SYSCONFIG OPTION YOU NEED TO RUN THE SCRIPT bin/otrs.ITSMConfigItemIncidentStateRecalculate.pl SO THAT ALL INCIDENT STATES WILL BE RECALCULATED BASED ON THE NEW SETTINGS!"
 msgstr ""
 
 #. SysConfig
-msgid ""
-"This setting defines that a 'ITSMChange' object can be linked with 'Ticket' "
-"objects using the 'Normal' link type."
+msgid "This setting defines that a 'ITSMChange' object can be linked with 'Ticket' objects using the 'Normal' link type."
 msgstr "Essa configuração define que um objeto 'MudançaITSM' pode ser associado com objetos 'Chamado' usando o tipo de associação 'Normal'."
 
 #. SysConfig
-msgid ""
-"This setting defines that a 'ITSMConfigItem' object can be linked with 'FAQ'"
-" objects using the 'Normal' link type."
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with 'FAQ' objects using the 'Normal' link type."
 msgstr "Essa configuração define que um objeto 'ItemConfigITSM' pode ser associado com objetos 'FAQ' usando o tipo de associação 'Normal'."
 
 #. SysConfig
-msgid ""
-"This setting defines that a 'ITSMConfigItem' object can be linked with 'FAQ'"
-" objects using the 'ParentChild' link type."
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with 'FAQ' objects using the 'ParentChild' link type."
 msgstr "Essa configuração define que um objeto 'ItemConfigITSM' pode ser associado com objetos 'FAQ' usando o tipo de associação 'PaiFilho'."
 
 #. SysConfig
-msgid ""
-"This setting defines that a 'ITSMConfigItem' object can be linked with 'FAQ'"
-" objects using the 'RelevantTo' link type."
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with 'FAQ' objects using the 'RelevantTo' link type."
 msgstr "Essa configuração define que um objeto 'ItemConfigITSM' pode ser associado com objetos 'FAQ' usando o tipo de associação 'Relevante a'."
 
 #. SysConfig
-msgid ""
-"This setting defines that a 'ITSMConfigItem' object can be linked with "
-"'Service' objects using the 'AlternativeTo' link type."
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with 'Service' objects using the 'AlternativeTo' link type."
 msgstr "Essa configuração define que um objeto 'ItemConfigITSM' pode ser associado com objetos 'Serviço' usando o tipo de associação 'Alternativa a'."
 
 #. SysConfig
-msgid ""
-"This setting defines that a 'ITSMConfigItem' object can be linked with "
-"'Service' objects using the 'DependsOn' link type."
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with 'Service' objects using the 'DependsOn' link type."
 msgstr "Essa configuração define que um objeto 'ItemConfigITSM' pode ser associado com objetos 'Serviço' usando o tipo de associação 'Depende de'."
 
 #. SysConfig
-msgid ""
-"This setting defines that a 'ITSMConfigItem' object can be linked with "
-"'Service' objects using the 'RelevantTo' link type."
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with 'Service' objects using the 'RelevantTo' link type."
 msgstr "Essa configuração define que um objeto 'ItemConfigITSM' pode ser associado com objetos 'Serviço' usando o tipo de associação 'Relevante a'."
 
 #. SysConfig
-msgid ""
-"This setting defines that a 'ITSMConfigItem' object can be linked with "
-"'Ticket' objects using the 'AlternativeTo' link type."
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with 'Ticket' objects using the 'AlternativeTo' link type."
 msgstr "Essa configuração define que um objeto 'ItemConfigITSM' pode ser associado com objetos 'Chamado' usando o tipo de associação 'Alternativa a'."
 
 #. SysConfig
-msgid ""
-"This setting defines that a 'ITSMConfigItem' object can be linked with "
-"'Ticket' objects using the 'DependsOn' link type."
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with 'Ticket' objects using the 'DependsOn' link type."
 msgstr "Essa configuração define que um objeto 'ItemConfigITSM' pode ser associado com objetos 'Chamado' usando o tipo de associação 'Depende de'."
 
 #. SysConfig
-msgid ""
-"This setting defines that a 'ITSMConfigItem' object can be linked with "
-"'Ticket' objects using the 'RelevantTo' link type."
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with 'Ticket' objects using the 'RelevantTo' link type."
 msgstr "Essa configuração define que um objeto 'ItemConfigITSM' pode ser associado com objetos 'Chamado' usando o tipo de associação 'Relevante a'."
 
 #. SysConfig
-msgid ""
-"This setting defines that a 'ITSMConfigItem' object can be linked with other"
-" 'ITSMConfigItem' objects using the 'AlternativeTo' link type."
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with other 'ITSMConfigItem' objects using the 'AlternativeTo' link type."
 msgstr "Essa configuração define que um objeto 'ItemConfigITSM' pode ser associado com outros objetos 'ItemConfigITSM' usando o tipo de associação 'Alternativa a'."
 
 #. SysConfig
-msgid ""
-"This setting defines that a 'ITSMConfigItem' object can be linked with other"
-" 'ITSMConfigItem' objects using the 'ConnectedTo' link type."
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with other 'ITSMConfigItem' objects using the 'ConnectedTo' link type."
 msgstr "Essa configuração define que um objeto 'ItemConfigITSM' pode ser associado com outros objetos 'ItemConfigITSM' usando o tipo de associação 'Conectado a'."
 
 #. SysConfig
-msgid ""
-"This setting defines that a 'ITSMConfigItem' object can be linked with other"
-" 'ITSMConfigItem' objects using the 'DependsOn' link type."
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with other 'ITSMConfigItem' objects using the 'DependsOn' link type."
 msgstr "Essa configuração define que um objeto 'ItemConfigITSM' pode ser associado com outros objetos 'ItemConfigITSM' usando o tipo de associação 'Depende de'."
 
 #. SysConfig
-msgid ""
-"This setting defines that a 'ITSMConfigItem' object can be linked with other"
-" 'ITSMConfigItem' objects using the 'Includes' link type."
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with other 'ITSMConfigItem' objects using the 'Includes' link type."
 msgstr "Essa configuração define que um objeto 'ItemConfigITSM' pode ser associado com outros objetos 'ItemConfigITSM' usando o tipo de associação 'Inclui'."
 
 #. SysConfig
-msgid ""
-"This setting defines that a 'ITSMConfigItem' object can be linked with other"
-" 'ITSMConfigItem' objects using the 'RelevantTo' link type."
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with other 'ITSMConfigItem' objects using the 'RelevantTo' link type."
 msgstr "Essa configuração define que um objeto 'ItemConfigITSM' pode ser associado com outros objetos 'ItemConfigITSM' usando o tipo de associação 'Relevante a'."
 
 #. SysConfig
-msgid ""
-"This setting defines that a 'ITSMWorkOrder' object can be linked with "
-"'ITSMConfigItem' objects using the 'DependsOn' link type."
+msgid "This setting defines that a 'ITSMWorkOrder' object can be linked with 'ITSMConfigItem' objects using the 'DependsOn' link type."
 msgstr "Essa configuração define que um objeto 'OrdemServiçoITSM' pode ser associado com objetos 'ItemConfigITSM' usando o tipo de associação 'Depende de'."
 
 #. SysConfig
-msgid ""
-"This setting defines that a 'ITSMWorkOrder' object can be linked with "
-"'ITSMConfigItem' objects using the 'Normal' link type."
+msgid "This setting defines that a 'ITSMWorkOrder' object can be linked with 'ITSMConfigItem' objects using the 'Normal' link type."
 msgstr "Essa configuração define que um objeto 'OrdemServiçoITSM' pode ser associado com objetos 'ItemConfigITSM' usando o tipo de associação 'Normal'."
 
 #. SysConfig
-msgid ""
-"This setting defines that a 'ITSMWorkOrder' object can be linked with "
-"'Service' objects using the 'DependsOn' link type."
+msgid "This setting defines that a 'ITSMWorkOrder' object can be linked with 'Service' objects using the 'DependsOn' link type."
 msgstr "Essa configuração define que um objeto 'OrdemServiçoITSM' pode ser associado com objetos 'Serviço' usando o tipo de associação 'Depende de'."
 
 #. SysConfig
-msgid ""
-"This setting defines that a 'ITSMWorkOrder' object can be linked with "
-"'Service' objects using the 'Normal' link type."
+msgid "This setting defines that a 'ITSMWorkOrder' object can be linked with 'Service' objects using the 'Normal' link type."
 msgstr "Essa configuração define que um objeto 'OrdemServiçoITSM' pode ser associado com objetos 'Serviço' usando o tipo de associação 'Normal'."
 
 #. SysConfig
-msgid ""
-"This setting defines that a 'ITSMWorkOrder' object can be linked with "
-"'Ticket' objects using the 'Normal' link type."
+msgid "This setting defines that a 'ITSMWorkOrder' object can be linked with 'Ticket' objects using the 'Normal' link type."
 msgstr "Essa configuração define que um objeto 'OrdemServiçoITSM' pode ser associado com objetos 'Chamado' usando o tipo de associação 'Normal'."
 
 #. SysConfig
-msgid ""
-"This setting defines that a 'Service' object can be linked with 'FAQ' "
-"objects using the 'Normal' link type."
+msgid "This setting defines that a 'Service' object can be linked with 'FAQ' objects using the 'Normal' link type."
 msgstr "Essa configuração define que um objeto 'Serviço' pode ser associado com objetos 'FAQ' usando o tipo de associação 'Normal'."
 
 #. SysConfig
-msgid ""
-"This setting defines that a 'Service' object can be linked with 'FAQ' "
-"objects using the 'ParentChild' link type."
+msgid "This setting defines that a 'Service' object can be linked with 'FAQ' objects using the 'ParentChild' link type."
 msgstr "Essa configuração define que um objeto 'Serviço' pode ser associado com objetos 'FAQ' usando o tipo de associação 'PaiFilho'."
 
 #. SysConfig
-msgid ""
-"This setting defines that a 'Service' object can be linked with 'FAQ' "
-"objects using the 'RelevantTo' link type."
+msgid "This setting defines that a 'Service' object can be linked with 'FAQ' objects using the 'RelevantTo' link type."
 msgstr "Essa configuração define que um objeto 'Serviço' pode ser associado com objetos 'FAQ' usando o tipo de associação 'Relevante a'."
 
 #. SysConfig
-msgid ""
-"This setting defines the link type 'AlternativeTo'. If the source name and "
-"the target name contain the same value, the resulting link is a non-"
-"directional one. If the values are different, the resulting link is a "
-"directional link."
+msgid "This setting defines the link type 'AlternativeTo'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link."
 msgstr "Esta configuração define o tipo de link 'Alternativa a'. Se o nome da fonte e o nome do alvo contêm o mesmo valor, a associação resultante é não-direcional. Se os valores são diferentes, a associação resultante é um link direcional."
 
 #. SysConfig
-msgid ""
-"This setting defines the link type 'ConnectedTo'. If the source name and the"
-" target name contain the same value, the resulting link is a non-directional"
-" one. If the values are different, the resulting link is a directional link."
+msgid "This setting defines the link type 'ConnectedTo'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link."
 msgstr "Esta configuração define o tipo de link 'Conectado a'. Se o nome da fonte e o nome do alvo contêm o mesmo valor, a associação resultante é não-direcional. Se os valores são diferentes, a associação resultante é um link direcional."
 
 #. SysConfig
-msgid ""
-"This setting defines the link type 'DependsOn'. If the source name and the "
-"target name contain the same value, the resulting link is a non-directional "
-"one. If the values are different, the resulting link is a directional link."
+msgid "This setting defines the link type 'DependsOn'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link."
 msgstr "Esta configuração define o tipo de link 'Depende de'. Se o nome da fonte e o nome do alvo contêm o mesmo valor, a associação resultante é não-direcional. Se os valores são diferentes, a associação resultante é um link direcional."
 
 #. SysConfig
-msgid ""
-"This setting defines the link type 'Includes'. If the source name and the "
-"target name contain the same value, the resulting link is a non-directional "
-"one. If the values are different, the resulting link is a directional link."
+msgid "This setting defines the link type 'Includes'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link."
 msgstr "Esta configuração define o tipo de link 'Inclui'. Se o nome da fonte e o nome do alvo contêm o mesmo valor, a associação resultante é não-direcional. Se os valores são diferentes, a associação resultante é um link direcional."
 
 #. SysConfig
-msgid ""
-"This setting defines the link type 'RelevantTo'. If the source name and the "
-"target name contain the same value, the resulting link is a non-directional "
-"one. If the values are different, the resulting link is a directional link."
+msgid "This setting defines the link type 'RelevantTo'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link."
 msgstr "Esta configuração define o tipo de link 'Relevante a'. Se o nome da fonte e o nome do alvo contêm o mesmo valor, a associação resultante é não-direcional. Se os valores são diferentes, a associação resultante é um link direcional."
 
 #. SysConfig
 msgid "Width of ITSM textareas."
 msgstr "Número de caracteres por linha em áreas de texto ITSM."
+

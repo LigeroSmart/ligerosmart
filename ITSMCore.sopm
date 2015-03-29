@@ -20,7 +20,6 @@
         <File Permission="644" Location="Kernel/Config/Files/TicketITSMService.xml"/>
         <File Permission="644" Location="Kernel/Language/bg_ITSMCore.pm"/>
         <File Permission="644" Location="Kernel/Language/cs_ITSMCore.pm"/>
-        <File Permission="644" Location="Kernel/Language/ct_ITSMCore.pm"/>
         <File Permission="644" Location="Kernel/Language/da_ITSMCore.pm"/>
         <File Permission="644" Location="Kernel/Language/de_ITSMCore.pm"/>
         <File Permission="644" Location="Kernel/Language/es_ITSMCore.pm"/>
