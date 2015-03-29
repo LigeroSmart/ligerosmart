@@ -1,4 +1,4 @@
-# 
+#
 # Translators:
 # Yuri Kolesniov <ynkolesnikov@gmail.com>, 2014
 msgid ""
@@ -39,9 +39,7 @@ msgid "Create and manage the General Catalog."
 msgstr "Создание и управление Общим каталогом"
 
 #. SysConfig
-msgid ""
-"Frontend module registration for the AdminGeneralCatalog configuration in "
-"the admin area."
+msgid "Frontend module registration for the AdminGeneralCatalog configuration in the admin area."
 msgstr "Module registration для конфигурации AdminGeneralCatalog в панели администратора."
 
 #. SysConfig
@@ -49,12 +47,10 @@ msgid "General Catalog"
 msgstr "Общий каталог"
 
 #. SysConfig
-msgid ""
-"Parameters for the example comment 2 of the general catalog attributes."
+msgid "Parameters for the example comment 2 of the general catalog attributes."
 msgstr "Добавление дополнительного комментария к атрибутам Общего каталога"
 
 #. SysConfig
-msgid ""
-"Parameters for the example permission groups of the general catalog "
-"attributes."
+msgid "Parameters for the example permission groups of the general catalog attributes."
 msgstr "Параметры для примерных групповых прав для атрибутов Общего каталога"
+

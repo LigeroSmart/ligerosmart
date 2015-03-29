@@ -1,4 +1,4 @@
-# 
+#
 # Translators:
 # Kentaro Hori <kentaro0919@gmail.com>, 2014
 msgid ""
@@ -39,9 +39,7 @@ msgid "Create and manage the General Catalog."
 msgstr "ジェネラルカタログの作成と管理"
 
 #. SysConfig
-msgid ""
-"Frontend module registration for the AdminGeneralCatalog configuration in "
-"the admin area."
+msgid "Frontend module registration for the AdminGeneralCatalog configuration in the admin area."
 msgstr "管理エリアでのAdminGeneralCatalogのフロントエンドモジュールの登録"
 
 #. SysConfig
@@ -49,12 +47,10 @@ msgid "General Catalog"
 msgstr "ジェネラルカタログ"
 
 #. SysConfig
-msgid ""
-"Parameters for the example comment 2 of the general catalog attributes."
+msgid "Parameters for the example comment 2 of the general catalog attributes."
 msgstr "ジェネラルカタログ属性のコメント例 2　の設定値"
 
 #. SysConfig
-msgid ""
-"Parameters for the example permission groups of the general catalog "
-"attributes."
+msgid "Parameters for the example permission groups of the general catalog attributes."
 msgstr "ジェネラルカタログ属性のパーミッショングループ　の設定値"
+

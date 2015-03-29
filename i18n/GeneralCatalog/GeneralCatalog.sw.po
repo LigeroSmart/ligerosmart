@@ -1,4 +1,4 @@
-# 
+#
 # Translators:
 # Macbethana Wilfred <mwi@nrd.no>, 2014
 msgid ""
@@ -39,9 +39,7 @@ msgid "Create and manage the General Catalog."
 msgstr "Tengeneza na simamia Katalogi ya ujumla."
 
 #. SysConfig
-msgid ""
-"Frontend module registration for the AdminGeneralCatalog configuration in "
-"the admin area."
+msgid "Frontend module registration for the AdminGeneralCatalog configuration in the admin area."
 msgstr "Usajili wa moduli ya mazingira ya mbele kwa usanidi wa katalogi ya ujumla ya msimamizi katika eneo la usimamizi."
 
 #. SysConfig
@@ -49,12 +47,10 @@ msgid "General Catalog"
 msgstr "Katalogi ya ujumla"
 
 #. SysConfig
-msgid ""
-"Parameters for the example comment 2 of the general catalog attributes."
+msgid "Parameters for the example comment 2 of the general catalog attributes."
 msgstr "Vigezo kwa mfano Maoni 2 ya sifa za katalogi za ujumla."
 
 #. SysConfig
-msgid ""
-"Parameters for the example permission groups of the general catalog "
-"attributes."
+msgid "Parameters for the example permission groups of the general catalog attributes."
 msgstr "Vigezo kwa mfano vikundi vya ruhusa vya sifa vya katalogi ya ujumla."
+
