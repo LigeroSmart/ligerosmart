@@ -53,7 +53,7 @@ sub Data {
     $Self->{Translation}->{'Defines if a ticket lock is required in the decision screen of the agent interface (if the ticket isn\'t locked yet, the ticket gets locked and the current agent will be set automatically as its owner).'} =
         '';
     $Self->{Translation}->{'Defines if the service incident state should be shown during service selection in the agent interface.'} =
-        '';
+        '担当者インターフェイスでサービス選択時にサービスインシデント状況を表示するか定義するする';
     $Self->{Translation}->{'Defines the default body of a note in the additional ITSM field screen of the agent interface.'} =
         '';
     $Self->{Translation}->{'Defines the default body of a note in the decision screen of the agent interface.'} =
@@ -87,13 +87,13 @@ sub Data {
     $Self->{Translation}->{'Defines the next state of a ticket after adding a note, in the decision screen of the agent interface.'} =
         '';
     $Self->{Translation}->{'Dynamic fields shown in the additional ITSM field screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        '';
+        '担当者インターフェイスの追加 ITSMフィールド画面で表示される動的領域。 選択可能な設定値: 0 = 無効, 1 = 有効, 2 = 有効 さらに 必須';
     $Self->{Translation}->{'Dynamic fields shown in the decision screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        '';
+        '担当者インターフェイスの決定画面で表示される動的領域。 選択可能な設定値: 0 = 無効, 1 = 有効, 2 = 有効 さらに 必須';
     $Self->{Translation}->{'Dynamic fields shown in the ticket search screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        '';
+        '担当者インターフェイスのチケット検索画面で表示される動的領域。 選択可能な設定値: 0 = 無効, 1 = 有効';
     $Self->{Translation}->{'Dynamic fields shown in the ticket zoom screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        '';
+        '担当者インターフェイスのチケットズーム画面で表示される動的領域。 選択可能な設定値: 0 = 無効, 1 = 有効';
     $Self->{Translation}->{'Enables the stats module to generate statistics about the average of ITSM ticket first level solution rate.'} =
         '';
     $Self->{Translation}->{'Enables the stats module to generate statistics about the average of ITSM ticket solution.'} =
