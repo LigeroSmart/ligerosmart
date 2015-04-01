@@ -7,6 +7,7 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 4.0.2 - 2015-??-??
+ - 2015-04-01 Fixed bug#10962 - Invalid or wrong session on FAQ dasboard link.
  - 2015-03-03 Updated translations, thanks to all translators.
  - 2015-03-03 Fixed bug#10937 - Missing translation strings in FAQ (OTRS 4.0.2).
  - 2015-01-20 Added message about opening external links from FAQ item fields.
