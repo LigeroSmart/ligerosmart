@@ -583,7 +583,7 @@ sub Run {
         ReturnContent   => 1,
     );
 
-    # cycle trough the activated Dynamic Fields for ticket object
+    # cycle trough the activated Dynamic Fields for faq object
     DYNAMICFIELD:
     for my $DynamicFieldConfig ( @{ $Self->{DynamicField} } ) {
         next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
