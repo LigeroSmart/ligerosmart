@@ -329,7 +329,7 @@ Your OTRS Notification Master
         <Setting>
             <Hash>
                 <Item Key="Show">public</Item>
-                <Item Key="Caption">Symptom</Item>
+                <Item Translatable="1" Key="Caption">Symptom</Item>
                 <Item Key="Prio">100</Item>
             </Hash>
         </Setting>
@@ -341,7 +341,7 @@ Your OTRS Notification Master
         <Setting>
             <Hash>
                 <Item Key="Show">public</Item>
-                <Item Key="Caption">Problem</Item>
+                <Item Translatable="1" Key="Caption">Problem</Item>
                 <Item Key="Prio">200</Item>
             </Hash>
         </Setting>
@@ -353,7 +353,7 @@ Your OTRS Notification Master
         <Setting>
             <Hash>
                 <Item Key="Show">public</Item>
-                <Item Key="Caption">Solution</Item>
+                <Item Translatable="1" Key="Caption">Solution</Item>
                 <Item Key="Prio">300</Item>
             </Hash>
         </Setting>
@@ -365,7 +365,7 @@ Your OTRS Notification Master
         <Setting>
             <Hash>
                 <Item Key="Show"></Item>
-                <Item Key="Caption">Field4</Item>
+                <Item Translatable="1" Key="Caption">Field4</Item>
                 <Item Key="Prio">400</Item>
             </Hash>
         </Setting>
@@ -377,7 +377,7 @@ Your OTRS Notification Master
         <Setting>
             <Hash>
                 <Item Key="Show"></Item>
-                <Item Key="Caption">Field5</Item>
+                <Item Translatable="1" Key="Caption">Field5</Item>
                 <Item Key="Prio">500</Item>
             </Hash>
         </Setting>
@@ -389,7 +389,7 @@ Your OTRS Notification Master
         <Setting>
             <Hash>
                 <Item Key="Show">internal</Item>
-                <Item Key="Caption">Comment</Item>
+                <Item Translatable="1" Key="Caption">Comment</Item>
                 <Item Key="Prio">600</Item>
             </Hash>
         </Setting>
