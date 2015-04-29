@@ -1941,11 +1941,11 @@ sub FAQTop10Get {
         $SQL .= 'AND faq_item.approved = 1 ';
 
         # only show the public articles
-        $SQL .= "AND ( ( faq_state_type.name = 'public' ) ";
+        $SQL .= "AND ( ( faq_state_type.name = 'public' AND faq_log.interface = 'public' ) ";
 
         # customers can additionally see the external articles
         if ( $Param{Interface} eq 'external' ) {
-            $SQL .= "OR ( faq_state_type.name = 'external' ) ";
+            $SQL .= "OR ( faq_state_type.name = 'external' AND faq_log.interface = 'external' ) ";
         }
 
         $SQL .= ') ';
