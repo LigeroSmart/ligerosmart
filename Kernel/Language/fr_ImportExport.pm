@@ -39,9 +39,9 @@ sub Data {
     $Self->{Translation}->{'Start Export'} = 'Démarrer Export';
     $Self->{Translation}->{'Step'} = 'Etape';
     $Self->{Translation}->{'Edit common information'} = 'Editer les informations communes';
-    $Self->{Translation}->{'Name is required!'} = '';
-    $Self->{Translation}->{'Object is required!'} = '';
-    $Self->{Translation}->{'Format is required!'} = '';
+    $Self->{Translation}->{'Name is required!'} = 'Un Nom est requis!';
+    $Self->{Translation}->{'Object is required!'} = 'Un Objet est requis!';
+    $Self->{Translation}->{'Format is required!'} = 'Un Format est requis!';
     $Self->{Translation}->{'Edit object information'} = 'Editer les informations de l\'objet';
     $Self->{Translation}->{'Edit format information'} = 'Editer les informations de format';
     $Self->{Translation}->{'is required!'} = 'est requis !';

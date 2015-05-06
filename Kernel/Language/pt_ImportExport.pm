@@ -56,7 +56,7 @@ sub Data {
     $Self->{Translation}->{'Failed'} = 'Falhou';
     $Self->{Translation}->{'Duplicate names'} = 'Nomes duplicados';
     $Self->{Translation}->{'Last processed line number of import file'} = 'Último número de linha processada do arquivo de imporatação';
-    $Self->{Translation}->{'Ok'} = '';
+    $Self->{Translation}->{'Ok'} = 'Ok';
 
     # SysConfig
     $Self->{Translation}->{'Format backend module registration for the import/export module.'} =

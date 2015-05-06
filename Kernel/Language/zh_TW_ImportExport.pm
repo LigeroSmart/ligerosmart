@@ -56,7 +56,7 @@ sub Data {
     $Self->{Translation}->{'Failed'} = '失敗';
     $Self->{Translation}->{'Duplicate names'} = '重複的名稱';
     $Self->{Translation}->{'Last processed line number of import file'} = '導入文件最後處理的行數';
-    $Self->{Translation}->{'Ok'} = '';
+    $Self->{Translation}->{'Ok'} = 'Ok';
 
     # SysConfig
     $Self->{Translation}->{'Format backend module registration for the import/export module.'} =
