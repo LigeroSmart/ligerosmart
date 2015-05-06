@@ -80,6 +80,8 @@ sub Data {
     $Self->{Translation}->{'Current incident state'} = 'Estado Atual de Incidente';
 
     # SysConfig
+    $Self->{Translation}->{'Display a warning and prevent search when using stop words within fulltext search.'} =
+        '';
     $Self->{Translation}->{'Frontend module registration for the AdminITSMCIPAllocate configuration in the admin area.'} =
         'Registo de módulo de interface para a configuração AdminITSMCIPAllocate na área de gestão.';
     $Self->{Translation}->{'Frontend module registration for the AgentITSMSLA object in the agent interface.'} =

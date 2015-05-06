@@ -21,65 +21,67 @@ sub Data {
     $Self->{Translation}->{'Availability'} = 'Dostupnost';
     $Self->{Translation}->{'Back End'} = 'Základní rozhraní/Backend';
     $Self->{Translation}->{'Connected to'} = 'Spojen s';
-    $Self->{Translation}->{'Current State'} = 'Souèasný Stav';
+    $Self->{Translation}->{'Current State'} = 'Současný Stav';
     $Self->{Translation}->{'Demonstration'} = 'Ukázka';
-    $Self->{Translation}->{'Depends on'} = 'ZaleŸí na';
-    $Self->{Translation}->{'End User Service'} = 'SluŸby koncovým uŸivatelùm';
+    $Self->{Translation}->{'Depends on'} = 'Závisí na';
+    $Self->{Translation}->{'End User Service'} = 'Služby koncovým uživatelům';
     $Self->{Translation}->{'Errors'} = 'Chyby';
     $Self->{Translation}->{'Front End'} = 'Zákaznické rozhraní/Frontend';
-    $Self->{Translation}->{'IT Management'} = 'Øízení IT';
+    $Self->{Translation}->{'IT Management'} = 'Řízení IT';
     $Self->{Translation}->{'IT Operational'} = 'IT Operace';
     $Self->{Translation}->{'Impact'} = 'Vliv';
     $Self->{Translation}->{'Incident State'} = 'Stav Incidentu';
     $Self->{Translation}->{'Includes'} = 'Zahrnuje';
-    $Self->{Translation}->{'Other'} = 'Dal¹í';
-    $Self->{Translation}->{'Part of'} = 'Èást z';
+    $Self->{Translation}->{'Other'} = 'Další';
+    $Self->{Translation}->{'Part of'} = 'Část z';
     $Self->{Translation}->{'Project'} = 'Projekt';
-    $Self->{Translation}->{'Recovery Time'} = 'Èas Obnovy';
+    $Self->{Translation}->{'Recovery Time'} = 'Čas obnovy';
     $Self->{Translation}->{'Relevant to'} = 'Relevantní k';
     $Self->{Translation}->{'Reporting'} = 'Reporting';
-    $Self->{Translation}->{'Required for'} = 'PoŸadovaný pro';
-    $Self->{Translation}->{'Resolution Rate'} = 'Èas Øe¹ení';
-    $Self->{Translation}->{'Response Time'} = 'Èas Odpovìdi';
-    $Self->{Translation}->{'SLA Overview'} = 'SLA Pøehled';
-    $Self->{Translation}->{'Service Overview'} = 'Pøehled SluŸby';
-    $Self->{Translation}->{'Service-Area'} = 'Prostor ÚdrŸby';
-    $Self->{Translation}->{'Training'} = '©kolení';
+    $Self->{Translation}->{'Required for'} = 'Požadovaný pro';
+    $Self->{Translation}->{'Resolution Rate'} = 'Čas řešeni';
+    $Self->{Translation}->{'Response Time'} = 'Čas odpovědi';
+    $Self->{Translation}->{'SLA Overview'} = 'SLA Přehled';
+    $Self->{Translation}->{'Service Overview'} = 'Přehled Služby';
+    $Self->{Translation}->{'Service-Area'} = 'Prostor Údržby';
+    $Self->{Translation}->{'Training'} = 'Školení';
     $Self->{Translation}->{'Transactions'} = 'Transakce';
     $Self->{Translation}->{'Underpinning Contract'} = 'Základní smlouva';
-    $Self->{Translation}->{'allocation'} = 'pøidìlit';
+    $Self->{Translation}->{'allocation'} = 'přidělit';
 
     # Template: AdminITSMCIPAllocate
-    $Self->{Translation}->{'Criticality <-> Impact <-> Priority'} = 'Kritiènost<->Vliv<->Priorita';
+    $Self->{Translation}->{'Criticality <-> Impact <-> Priority'} = 'Kritičnost<->Vliv<->Priorita';
     $Self->{Translation}->{'Manage the priority result of combinating Criticality <-> Impact.'} =
         '';
     $Self->{Translation}->{'Priority allocation'} = '';
 
     # Template: AdminSLA
-    $Self->{Translation}->{'Minimum Time Between Incidents'} = 'Minimální èas mezi incidenty';
+    $Self->{Translation}->{'Minimum Time Between Incidents'} = 'Minimální čas mezi incidenty';
 
     # Template: AdminService
-    $Self->{Translation}->{'Criticality'} = 'Kritiènost';
+    $Self->{Translation}->{'Criticality'} = 'Kritičnost';
 
     # Template: AgentITSMSLAPrint
-    $Self->{Translation}->{'SLA-Info'} = '';
-    $Self->{Translation}->{'Last changed'} = '';
-    $Self->{Translation}->{'Last changed by'} = '';
+    $Self->{Translation}->{'SLA-Info'} = 'SLA-Info';
+    $Self->{Translation}->{'Last changed'} = 'Naposledy změněn';
+    $Self->{Translation}->{'Last changed by'} = 'Naposledy změnil';
 
     # Template: AgentITSMSLAZoom
-    $Self->{Translation}->{'SLA Information'} = '';
-    $Self->{Translation}->{'Associated Services'} = 'Pøiøazené SluŸby';
+    $Self->{Translation}->{'SLA Information'} = 'SLA Informace';
+    $Self->{Translation}->{'Associated Services'} = 'Přiřazené Služby';
 
     # Template: AgentITSMServicePrint
     $Self->{Translation}->{'Service-Info'} = '';
-    $Self->{Translation}->{'Current Incident State'} = 'Souèasný Stav Incidentu';
-    $Self->{Translation}->{'Associated SLAs'} = 'Pøiøazené SLA smlouvy';
+    $Self->{Translation}->{'Current Incident State'} = 'Současný Stav Incidentu';
+    $Self->{Translation}->{'Associated SLAs'} = 'Přiřazené SLA smlouvy';
 
     # Template: AgentITSMServiceZoom
     $Self->{Translation}->{'Service Information'} = '';
     $Self->{Translation}->{'Current incident state'} = '';
 
     # SysConfig
+    $Self->{Translation}->{'Display a warning and prevent search when using stop words within fulltext search.'} =
+        '';
     $Self->{Translation}->{'Frontend module registration for the AdminITSMCIPAllocate configuration in the admin area.'} =
         '';
     $Self->{Translation}->{'Frontend module registration for the AgentITSMSLA object in the agent interface.'} =

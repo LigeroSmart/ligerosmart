@@ -63,8 +63,8 @@ sub Data {
 
     # Template: AgentITSMSLAPrint
     $Self->{Translation}->{'SLA-Info'} = '';
-    $Self->{Translation}->{'Last changed'} = '';
-    $Self->{Translation}->{'Last changed by'} = '';
+    $Self->{Translation}->{'Last changed'} = 'Dernière modification';
+    $Self->{Translation}->{'Last changed by'} = 'Dernière modification par';
 
     # Template: AgentITSMSLAZoom
     $Self->{Translation}->{'SLA Information'} = '';
@@ -80,6 +80,8 @@ sub Data {
     $Self->{Translation}->{'Current incident state'} = '';
 
     # SysConfig
+    $Self->{Translation}->{'Display a warning and prevent search when using stop words within fulltext search.'} =
+        '';
     $Self->{Translation}->{'Frontend module registration for the AdminITSMCIPAllocate configuration in the admin area.'} =
         '';
     $Self->{Translation}->{'Frontend module registration for the AgentITSMSLA object in the agent interface.'} =

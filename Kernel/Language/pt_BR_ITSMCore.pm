@@ -19,14 +19,14 @@ sub Data {
     # Template: AAAITSMCore
     $Self->{Translation}->{'Alternative to'} = 'Alternativa a';
     $Self->{Translation}->{'Availability'} = 'Disponibilidade';
-    $Self->{Translation}->{'Back End'} = '';
+    $Self->{Translation}->{'Back End'} = 'Back End';
     $Self->{Translation}->{'Connected to'} = 'Conectado a';
     $Self->{Translation}->{'Current State'} = 'Estado Atual';
     $Self->{Translation}->{'Demonstration'} = 'Demonstração';
     $Self->{Translation}->{'Depends on'} = 'Depende de';
     $Self->{Translation}->{'End User Service'} = 'Serviço a Usuário Final';
     $Self->{Translation}->{'Errors'} = 'Erros';
-    $Self->{Translation}->{'Front End'} = '';
+    $Self->{Translation}->{'Front End'} = 'Front End';
     $Self->{Translation}->{'IT Management'} = 'Gerenciamento de TI';
     $Self->{Translation}->{'IT Operational'} = 'Operações de TI';
     $Self->{Translation}->{'Impact'} = 'Impacto';
@@ -80,6 +80,8 @@ sub Data {
     $Self->{Translation}->{'Current incident state'} = 'Estado Atual de Incidente';
 
     # SysConfig
+    $Self->{Translation}->{'Display a warning and prevent search when using stop words within fulltext search.'} =
+        '';
     $Self->{Translation}->{'Frontend module registration for the AdminITSMCIPAllocate configuration in the admin area.'} =
         'Registro de módulo de interface para a configuração AdminITSMCIPAllocate na área administrativa.';
     $Self->{Translation}->{'Frontend module registration for the AgentITSMSLA object in the agent interface.'} =
@@ -102,7 +104,7 @@ sub Data {
     $Self->{Translation}->{'Module to show the link link in service menu.'} = 'Módulo para mostrar o link associar no menu serviço.';
     $Self->{Translation}->{'Parameters for the incident states in the preference view.'} = 'Parâmetros para os estados de incidente na visão de preferências.';
     $Self->{Translation}->{'Set the type and direction of links to be used to calculate the incident state. The key is the name of the link type (as defined in LinkObject::Type), and the value is the direction of the IncidentLinkType that should be followed to calculate the incident state. For example if the IncidentLinkType is set to \'DependsOn\', and the Direction is \'Source\', only \'Depends on\' links will be followed (and not the opposite link \'Required for\') to calculate the incident state. You can add more link types ad directions as you like, e.g. \'Includes\' with the direction \'Target\'. All link types defined in the sysconfig options LinkObject::Type are possible and the direction can be \'Source\', \'Target\', or \'Both\'. IMPORTANT: AFTER YOU MAKE CHANGES TO THIS SYSCONFIG OPTION YOU NEED TO RUN THE SCRIPT bin/otrs.ITSMConfigItemIncidentStateRecalculate.pl SO THAT ALL INCIDENT STATES WILL BE RECALCULATED BASED ON THE NEW SETTINGS!'} =
-        '';
+        'Configura o tipo e a direção de links usados para calcular o estado de incidente. A chave é o nome do tipo de link (como definido em LinkObject::Type) e o valor é a direção do IncidentLinkType que deve ser seguido para calcular o estado de incidente. Por exemplo, se o IncidentLinkType é configurado para \'Depende de\' e a Direção é \'Origem\', apenas links \'Depende de\' serão seguidos (e não o link oposto \'Requerido por\') para calcular o estado de incidente. Você pode adicionar mais de um tipo de link e direções. Ex. \'Inclui\' com a direção \'Destino\'. Todos os tipos de links definidos nas opções LinkObject::Type do sysconfig são possíveis e a direção pode ser \'Origem\', \'Destino\' ou \'Ambos\'. IMPORTANTE: APÓS VOCÊ FAZER MUDANÇAS NESTA OPÇÃO SYSCONFIG, É NECESSÁRIO EXECUTAR O SCRIPT bin/otrs.ITSMConfigItemIncidentStateRecalculate.pl DE FORMA QUE TODOS OS ESTADOS DE INCIDENTES SEJAM RECALCULADOS COM BASE NAS NOVAS CONFIGURAÇÕES!';
     $Self->{Translation}->{'This setting defines that a \'ITSMChange\' object can be linked with \'Ticket\' objects using the \'Normal\' link type.'} =
         'Essa configuração define que um objeto \'MudançaITSM\' pode ser associado com objetos \'Chamado\' usando o tipo de associação \'Normal\'.';
     $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with \'FAQ\' objects using the \'Normal\' link type.'} =

@@ -46,7 +46,7 @@ sub Data {
     $Self->{Translation}->{'Service-Area'} = 'Area-Servicio';
     $Self->{Translation}->{'Training'} = 'Entrenamiento';
     $Self->{Translation}->{'Transactions'} = 'Transacciones';
-    $Self->{Translation}->{'Underpinning Contract'} = '';
+    $Self->{Translation}->{'Underpinning Contract'} = 'Contrato con Terceros';
     $Self->{Translation}->{'allocation'} = 'Asignar';
 
     # Template: AdminITSMCIPAllocate
@@ -62,24 +62,26 @@ sub Data {
     $Self->{Translation}->{'Criticality'} = 'Urgencia';
 
     # Template: AgentITSMSLAPrint
-    $Self->{Translation}->{'SLA-Info'} = '';
-    $Self->{Translation}->{'Last changed'} = '';
-    $Self->{Translation}->{'Last changed by'} = '';
+    $Self->{Translation}->{'SLA-Info'} = 'Información-SLA';
+    $Self->{Translation}->{'Last changed'} = 'Último cambio';
+    $Self->{Translation}->{'Last changed by'} = 'Último cambio por';
 
     # Template: AgentITSMSLAZoom
-    $Self->{Translation}->{'SLA Information'} = '';
+    $Self->{Translation}->{'SLA Information'} = 'Información del SLA';
     $Self->{Translation}->{'Associated Services'} = 'Servicios Asociados';
 
     # Template: AgentITSMServicePrint
-    $Self->{Translation}->{'Service-Info'} = '';
+    $Self->{Translation}->{'Service-Info'} = 'Información-Servicio';
     $Self->{Translation}->{'Current Incident State'} = 'Estado de Incidente Actual';
     $Self->{Translation}->{'Associated SLAs'} = 'SLAs Asociados';
 
     # Template: AgentITSMServiceZoom
-    $Self->{Translation}->{'Service Information'} = '';
+    $Self->{Translation}->{'Service Information'} = 'Información del Servicio';
     $Self->{Translation}->{'Current incident state'} = 'Estado ctual del incidente';
 
     # SysConfig
+    $Self->{Translation}->{'Display a warning and prevent search when using stop words within fulltext search.'} =
+        '';
     $Self->{Translation}->{'Frontend module registration for the AdminITSMCIPAllocate configuration in the admin area.'} =
         'Registro del módulo frontend para la configuración de AdminITSMCIPAllocate en el área de administrar.';
     $Self->{Translation}->{'Frontend module registration for the AgentITSMSLA object in the agent interface.'} =
@@ -102,7 +104,8 @@ sub Data {
     $Self->{Translation}->{'Module to show the link link in service menu.'} = 'Módulo para mostar el vínculo "Vincular" en el menú de servicio.';
     $Self->{Translation}->{'Parameters for the incident states in the preference view.'} = 'Parámetros para los estados de los incidentes en la vista de preferencias.';
     $Self->{Translation}->{'Set the type and direction of links to be used to calculate the incident state. The key is the name of the link type (as defined in LinkObject::Type), and the value is the direction of the IncidentLinkType that should be followed to calculate the incident state. For example if the IncidentLinkType is set to \'DependsOn\', and the Direction is \'Source\', only \'Depends on\' links will be followed (and not the opposite link \'Required for\') to calculate the incident state. You can add more link types ad directions as you like, e.g. \'Includes\' with the direction \'Target\'. All link types defined in the sysconfig options LinkObject::Type are possible and the direction can be \'Source\', \'Target\', or \'Both\'. IMPORTANT: AFTER YOU MAKE CHANGES TO THIS SYSCONFIG OPTION YOU NEED TO RUN THE SCRIPT bin/otrs.ITSMConfigItemIncidentStateRecalculate.pl SO THAT ALL INCIDENT STATES WILL BE RECALCULATED BASED ON THE NEW SETTINGS!'} =
-        '';
+        'Configurar el tipo y direccion de los enlaces para ser usados para calculo del estado del incidente. La clave es el nombre del enlace (como esta definido en LinkObject::Type), y el valor es la dirección en el IncidentLinkType que debe seguir para calcular el estado del incidente. Por ejemplo si el IncidentLinkType esta configurado en \'DependeDe, y la direccion es \'Origen\', solo \'Depende de\' enlaces será seguido (y no el enlace opuesto \'Requerido para\') para calcular el estado del incidente. Puede añadir más tipos de direcciones de aviso como desee, ejm. \'Incluye\' con la direccion \'Objetivo\'. Todos los tipos definidos en el Sysconfig opcion LinkObject::Type son posible y la direccion puede ser \'Origen\', \'Objetivo\', o \'Ambos\'.
+¡IMPORTANTE: DESPUES DE REALIZAR CAMBIOS EN LA OPCION DEL SISCONFIG ES NECESARIO CORRER EL SCRIPT bin/otrs.ITSMConfigItemIncidentStateRecalculate.pl ASÍ TODO LOS ESTADOS DE LOS INCIDENTES SERÁN RECALCULADOS EN BASE A LA NUEVA CONFIGURACIÓN!';
     $Self->{Translation}->{'This setting defines that a \'ITSMChange\' object can be linked with \'Ticket\' objects using the \'Normal\' link type.'} =
         'Define que un objeto \'ITSMChange\' puede ser vinculado con objetos \'Ticket\' usando el vínculo de tipo \'Normal\'.';
     $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with \'FAQ\' objects using the \'Normal\' link type.'} =
