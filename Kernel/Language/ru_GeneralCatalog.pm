@@ -27,8 +27,6 @@ sub Data {
 
     # SysConfig
     $Self->{Translation}->{'Create and manage the General Catalog.'} = 'Создание и управление Общим каталогом';
-    $Self->{Translation}->{'Display a warning and prevent search when using stop words within fulltext search.'} =
-        '';
     $Self->{Translation}->{'Frontend module registration for the AdminGeneralCatalog configuration in the admin area.'} =
         'Module registration для конфигурации AdminGeneralCatalog в панели администратора.';
     $Self->{Translation}->{'General Catalog'} = 'Общий каталог';
