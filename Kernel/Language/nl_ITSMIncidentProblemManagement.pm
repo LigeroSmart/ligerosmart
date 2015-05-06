@@ -36,8 +36,8 @@ sub Data {
     $Self->{Translation}->{'Link ticket'} = '';
 
     # Template: AgentTicketOverviewPreview
-    $Self->{Translation}->{'Criticality'} = '';
-    $Self->{Translation}->{'Impact'} = '';
+    $Self->{Translation}->{'Criticality'} = 'Urgentie';
+    $Self->{Translation}->{'Impact'} = 'Impact';
 
     # SysConfig
     $Self->{Translation}->{'Add a decision!'} = 'Beslissing toevoegen!';
