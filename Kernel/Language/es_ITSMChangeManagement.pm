@@ -184,7 +184,7 @@ sub Data {
     $Self->{Translation}->{'Category <-> Impact <-> Priority'} = 'Categoría <-> Impacto <-> Prioridad';
     $Self->{Translation}->{'Manage the priority result of combinating Category <-> Impact.'} =
         '';
-    $Self->{Translation}->{'Priority allocation'} = '';
+    $Self->{Translation}->{'Priority allocation'} = 'Asignar prioridad';
 
     # Template: AdminITSMChangeNotification
     $Self->{Translation}->{'ITSM ChangeManagement Notification Management'} = '';
@@ -199,7 +199,7 @@ sub Data {
     $Self->{Translation}->{'Select a catalog class!'} = '';
     $Self->{Translation}->{'A catalog class is required!'} = '';
     $Self->{Translation}->{'Add a state transition'} = 'Adicionar un estado de transición';
-    $Self->{Translation}->{'Catalog Class'} = '';
+    $Self->{Translation}->{'Catalog Class'} = 'Clase de Catálogo';
     $Self->{Translation}->{'Object Name'} = 'Nombre del Objeto';
     $Self->{Translation}->{'Overview over state transitions for'} = 'Resumen de las transiciones de estado para';
     $Self->{Translation}->{'Delete this state transition'} = '';
@@ -282,14 +282,14 @@ sub Data {
     $Self->{Translation}->{'Current CAB'} = 'Comité de Cambios Actual';
 
     # Template: AgentITSMChangeOverviewNavBar
-    $Self->{Translation}->{'Context Settings'} = '';
+    $Self->{Translation}->{'Context Settings'} = 'Ajustes de Contexto';
     $Self->{Translation}->{'Changes per page'} = '';
 
     # Template: AgentITSMChangeOverviewSmall
     $Self->{Translation}->{'WorkOrderTitle'} = 'Título de la Orden de Trabajo';
     $Self->{Translation}->{'ChangeTitle'} = 'Título del Cambio';
     $Self->{Translation}->{'WorkOrderAgent'} = 'Agente de la Orden de Trabajo';
-    $Self->{Translation}->{'Workorders'} = '';
+    $Self->{Translation}->{'Workorders'} = 'Orden de Trabajo';
     $Self->{Translation}->{'ChangeState'} = 'Estado del Cambio';
     $Self->{Translation}->{'WorkOrderState'} = 'Estado de la Orden de Trabajo';
     $Self->{Translation}->{'WorkOrderType'} = 'Tipo de Orden de Trabajo';
@@ -317,7 +317,7 @@ sub Data {
     $Self->{Translation}->{'(between)'} = '';
 
     # Template: AgentITSMChangeSearchResultPrint
-    $Self->{Translation}->{'WorkOrders'} = '';
+    $Self->{Translation}->{'WorkOrders'} = 'Orden de Trabajo';
 
     # Template: AgentITSMChangeTemplate
     $Self->{Translation}->{'Save Change as Template'} = 'Guardar Cambio como Plantilla';
@@ -337,12 +337,12 @@ sub Data {
     $Self->{Translation}->{'Change Manager'} = '';
     $Self->{Translation}->{'Change Builder'} = '';
     $Self->{Translation}->{'CAB'} = 'CAB';
-    $Self->{Translation}->{'Last changed'} = '';
-    $Self->{Translation}->{'Last changed by'} = '';
-    $Self->{Translation}->{'Ok'} = '';
+    $Self->{Translation}->{'Last changed'} = 'Último cambio';
+    $Self->{Translation}->{'Last changed by'} = 'Último cambio por';
+    $Self->{Translation}->{'Ok'} = 'Ok';
     $Self->{Translation}->{'To open links in the following description blocks, you might need to press Ctrl or Cmd or Shift key while clicking the link (depending on your browser and OS).'} =
         '';
-    $Self->{Translation}->{'Download Attachment'} = '';
+    $Self->{Translation}->{'Download Attachment'} = 'Descargar Adjunto';
 
     # Template: AgentITSMTemplateDelete
     $Self->{Translation}->{'Do you really want to delete this template?'} = '¿Realmente desea eliminar esta plantilla?';

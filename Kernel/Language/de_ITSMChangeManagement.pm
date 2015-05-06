@@ -341,7 +341,7 @@ sub Data {
     $Self->{Translation}->{'Last changed by'} = 'Zuletzt geändert von';
     $Self->{Translation}->{'Ok'} = 'Ok';
     $Self->{Translation}->{'To open links in the following description blocks, you might need to press Ctrl or Cmd or Shift key while clicking the link (depending on your browser and OS).'} =
-        '';
+        'Um die Links im folgenden Beitrag zu öffnen, kann es notwendig sein Strg oder Shift zu drücken, während auf den Link geklickt wird (abhängig vom verwendeten Browser und Betriebssystem).';
     $Self->{Translation}->{'Download Attachment'} = 'Anhang herunterladen';
 
     # Template: AgentITSMTemplateDelete

@@ -282,7 +282,7 @@ sub Data {
     $Self->{Translation}->{'Current CAB'} = 'Actueel CAB';
 
     # Template: AgentITSMChangeOverviewNavBar
-    $Self->{Translation}->{'Context Settings'} = '';
+    $Self->{Translation}->{'Context Settings'} = 'Context Instellingen';
     $Self->{Translation}->{'Changes per page'} = 'Changes per pagina';
 
     # Template: AgentITSMChangeOverviewSmall

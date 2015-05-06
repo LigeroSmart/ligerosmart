@@ -282,7 +282,7 @@ sub Data {
     $Self->{Translation}->{'Current CAB'} = '現在のCAB';
 
     # Template: AgentITSMChangeOverviewNavBar
-    $Self->{Translation}->{'Context Settings'} = '';
+    $Self->{Translation}->{'Context Settings'} = '設定';
     $Self->{Translation}->{'Changes per page'} = '';
 
     # Template: AgentITSMChangeOverviewSmall
@@ -300,7 +300,7 @@ sub Data {
     $Self->{Translation}->{'ActualEndTime'} = '実績終了日時';
 
     # Template: AgentITSMChangePrint
-    $Self->{Translation}->{'ITSM Workorder'} = '';
+    $Self->{Translation}->{'ITSM Workorder'} = '作業オーダー';
 
     # Template: AgentITSMChangeReset
     $Self->{Translation}->{'Do you really want to reset this change?'} = '';
@@ -309,7 +309,7 @@ sub Data {
     $Self->{Translation}->{'(e.g. 10*5155 or 105658*)'} = '';
     $Self->{Translation}->{'CABAgent'} = '';
     $Self->{Translation}->{'e.g.'} = '';
-    $Self->{Translation}->{'CABCustomer'} = '';
+    $Self->{Translation}->{'CABCustomer'} = 'CAB顧客';
     $Self->{Translation}->{'Instruction'} = '';
     $Self->{Translation}->{'Report'} = '';
     $Self->{Translation}->{'Change Category'} = '';
@@ -317,7 +317,7 @@ sub Data {
     $Self->{Translation}->{'(between)'} = '';
 
     # Template: AgentITSMChangeSearchResultPrint
-    $Self->{Translation}->{'WorkOrders'} = '';
+    $Self->{Translation}->{'WorkOrders'} = '作業オーダー';
 
     # Template: AgentITSMChangeTemplate
     $Self->{Translation}->{'Save Change as Template'} = '';
@@ -339,9 +339,9 @@ sub Data {
     $Self->{Translation}->{'CAB'} = '変更承認者';
     $Self->{Translation}->{'Last changed'} = '最終変更時刻';
     $Self->{Translation}->{'Last changed by'} = '最終変更者';
-    $Self->{Translation}->{'Ok'} = '';
+    $Self->{Translation}->{'Ok'} = 'Ok';
     $Self->{Translation}->{'To open links in the following description blocks, you might need to press Ctrl or Cmd or Shift key while clicking the link (depending on your browser and OS).'} =
-        '';
+        '(一部のOSにおいては)下記のリンクをオープンするためにクリック時に、Ctrl あるいは Cmd または Shiftキーを押下する必要がる場合があります。';
     $Self->{Translation}->{'Download Attachment'} = '添付ファイルのダウンロード';
 
     # Template: AgentITSMTemplateDelete
@@ -368,8 +368,8 @@ sub Data {
     $Self->{Translation}->{'Edit Content'} = '';
     $Self->{Translation}->{'CreateBy'} = '変更作成者';
     $Self->{Translation}->{'CreateTime'} = '変更作成日時';
-    $Self->{Translation}->{'ChangeBy'} = '';
-    $Self->{Translation}->{'ChangeTime'} = '';
+    $Self->{Translation}->{'ChangeBy'} = 'ChangeBy';
+    $Self->{Translation}->{'ChangeTime'} = 'ChangeTime';
     $Self->{Translation}->{'Edit Template Content'} = '';
     $Self->{Translation}->{'Delete Template'} = '';
 
