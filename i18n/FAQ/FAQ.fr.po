@@ -1,11 +1,12 @@
 # 
 # Translators:
+# Matthieu HUTIN, 2015
 # Richard BARET <richardbaret@gmail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-03-04 01:44+0000\n"
+"PO-Revision-Date: 2015-05-06 22:59+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: French (http://www.transifex.com/projects/p/OTRS/language/fr/)\n"
 "MIME-Version: 1.0\n"
@@ -52,7 +53,7 @@ msgstr "Pas de sélection !"
 
 #. Template: AAAFAQ
 msgid "Explorer"
-msgstr ""
+msgstr "Explorateur"
 
 #. Template: AAAFAQ
 msgid "public (all)"
@@ -148,11 +149,11 @@ msgstr "Cette langue existe déjà!"
 
 #. Template: AAAFAQ
 msgid "Symptom"
-msgstr ""
+msgstr "Symptôme"
 
 #. Template: AAAFAQ
 msgid "Solution"
-msgstr ""
+msgstr "Solution"
 
 #. Template: AgentFAQAdd
 msgid "Add FAQ Article"
@@ -696,6 +697,15 @@ msgstr ""
 
 #. SysConfig
 msgid ""
+"Defines the parameters for the dashboard backend. \"Limit\" defines the "
+"number of entries displayed by default. \"Group\" is used to restrict access"
+" to the plugin (e. g. Group: admin;group1;group2;). \"Default\" indicates if"
+" the plugin is enabled by default or if the user needs to enable it "
+"manually."
+msgstr ""
+
+#. SysConfig
+msgid ""
 "Defines the shown columns in the FAQ Explorer. This option has no effect on "
 "the position of the column."
 msgstr ""
@@ -860,6 +870,14 @@ msgid "FAQ-Area"
 msgstr ""
 
 #. SysConfig
+msgid "Field4"
+msgstr ""
+
+#. SysConfig
+msgid "Field5"
+msgstr ""
+
+#. SysConfig
 msgid "Frontend module registration for the public interface."
 msgstr ""
 
@@ -885,7 +903,7 @@ msgstr ""
 
 #. SysConfig
 msgid "Journal"
-msgstr ""
+msgstr "Journal"
 
 #. SysConfig
 msgid "Language Management"
@@ -1009,11 +1027,11 @@ msgstr ""
 
 #. SysConfig
 msgid "New FAQ Article"
-msgstr ""
+msgstr "Nouvel Article FAQ"
 
 #. SysConfig
 msgid "New FAQ articles need approval before they get published."
-msgstr ""
+msgstr "Les nouveaux articles FAQ doivent être approuvés avant d'être publiés"
 
 #. SysConfig
 msgid ""

@@ -2,14 +2,16 @@
 # Translators:
 # Ettore Atalan <atalanttore@googlemail.com>, 2014
 # Mainboarder, 2014
+# Mainboarder, 2014
 # Martin Gruner <martin.gruner@otrs.com>, 2014
+# mathiasbraeunling <mathias.braeunling@otrs.com>, 2015
 # ru_otrs <robert.ullrich@otrs.com>, 2014
 # ru_otrs <robert.ullrich@otrs.com>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-03-04 01:44+0000\n"
+"PO-Revision-Date: 2015-05-06 23:00+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: German (http://www.transifex.com/projects/p/OTRS/language/de/)\n"
 "MIME-Version: 1.0\n"
@@ -152,11 +154,11 @@ msgstr "Diese Sprache existiert bereits!"
 
 #. Template: AAAFAQ
 msgid "Symptom"
-msgstr ""
+msgstr "Symptom"
 
 #. Template: AAAFAQ
 msgid "Solution"
-msgstr ""
+msgstr "Lösung"
 
 #. Template: AgentFAQAdd
 msgid "Add FAQ Article"
@@ -454,7 +456,7 @@ msgid ""
 "To open links in the following description blocks, you might need to press "
 "Ctrl or Cmd or Shift key while clicking the link (depending on your browser "
 "and OS)."
-msgstr ""
+msgstr "Um die Links im folgenden Beitrag zu öffnen, kann es notwendig sein Strg oder Shift zu drücken, während auf den Link geklickt wird (abhängig vom verwendeten Browser und Betriebssystem)."
 
 #. Template: AgentFAQZoom
 msgid ""
@@ -700,6 +702,15 @@ msgstr "Definiert die Informationen, welche in ein FAQ-basierendes Ticket eingeg
 
 #. SysConfig
 msgid ""
+"Defines the parameters for the dashboard backend. \"Limit\" defines the "
+"number of entries displayed by default. \"Group\" is used to restrict access"
+" to the plugin (e. g. Group: admin;group1;group2;). \"Default\" indicates if"
+" the plugin is enabled by default or if the user needs to enable it "
+"manually."
+msgstr ""
+
+#. SysConfig
+msgid ""
 "Defines the shown columns in the FAQ Explorer. This option has no effect on "
 "the position of the column."
 msgstr "Definert die angezeigten Spalten im FAQ-Explorer. Diese Option hat keine Auswirkung auf die Position der Spalten."
@@ -862,6 +873,14 @@ msgstr "Such-Backend-Router für die FAQ-Suche im Agenten-Interface."
 #. SysConfig
 msgid "FAQ-Area"
 msgstr "FAQ-Bereich"
+
+#. SysConfig
+msgid "Field4"
+msgstr "Feld4"
+
+#. SysConfig
+msgid "Field5"
+msgstr "Feld5"
 
 #. SysConfig
 msgid "Frontend module registration for the public interface."

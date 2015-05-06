@@ -50,8 +50,8 @@ sub Data {
     $Self->{Translation}->{'FAQ language updated!'} = 'Idioma FAQ atualizado!';
     $Self->{Translation}->{'The name is required!'} = 'O nome é obrigatório!';
     $Self->{Translation}->{'This language already exists!'} = 'Esse idioma já existe!';
-    $Self->{Translation}->{'Symptom'} = '';
-    $Self->{Translation}->{'Solution'} = '';
+    $Self->{Translation}->{'Symptom'} = 'Sintoma';
+    $Self->{Translation}->{'Solution'} = 'Solução';
 
     # Template: AgentFAQAdd
     $Self->{Translation}->{'Add FAQ Article'} = 'Adicionar Artigo de FAQ';
@@ -156,7 +156,7 @@ sub Data {
     $Self->{Translation}->{'No votes found! Be the first one to rate this FAQ article.'} = 'Nenhum voto encontrado! Seja o primeiro a avaliar este artigo FAQ.';
     $Self->{Translation}->{'Download Attachment'} = 'Baixar anexos';
     $Self->{Translation}->{'To open links in the following description blocks, you might need to press Ctrl or Cmd or Shift key while clicking the link (depending on your browser and OS).'} =
-        '';
+        'Para abrir links nos blocos de descrição seguintes, talvez você precise pressionar Ctrl, Cmd ou Shift enquanto clica no link (dependendo do seu navegador ou sistema operacional).';
     $Self->{Translation}->{'How helpful was this article? Please give us your rating and help to improve the FAQ Database. Thank You!'} =
         'Este artigo te ajudou?';
     $Self->{Translation}->{'not helpful'} = 'pouco útil';
@@ -245,6 +245,8 @@ sub Data {
         'Define o atributo de pesquisa de FAQ padrão na tela de procura de FAQ.';
     $Self->{Translation}->{'Defines the information to be inserted in a FAQ based Ticket. "Full FAQ" includes text, attachments and inline images.'} =
         'Define a informação a ser inserida no chamado baseado em FAQ. "Todo o FAQ" inclui texto, anexos e imagens embutidas.';
+    $Self->{Translation}->{'Defines the parameters for the dashboard backend. "Limit" defines the number of entries displayed by default. "Group" is used to restrict access to the plugin (e. g. Group: admin;group1;group2;). "Default" indicates if the plugin is enabled by default or if the user needs to enable it manually.'} =
+        '';
     $Self->{Translation}->{'Defines the shown columns in the FAQ Explorer. This option has no effect on the position of the column.'} =
         'Define as colunas mostradas no Gerenciador FAQ. Esta opção não tem efeito sobre a posição da coluna.';
     $Self->{Translation}->{'Defines the shown columns in the FAQ journal. This option has no effect on the position of the column.'} =
@@ -294,6 +296,8 @@ sub Data {
     $Self->{Translation}->{'FAQ path separator.'} = 'Delimitador de caminho FAQ.';
     $Self->{Translation}->{'FAQ search backend router of the agent interface.'} = 'FAQ busca servidor roteador da interface do atendente.';
     $Self->{Translation}->{'FAQ-Area'} = 'Área FAQ';
+    $Self->{Translation}->{'Field4'} = '';
+    $Self->{Translation}->{'Field5'} = '';
     $Self->{Translation}->{'Frontend module registration for the public interface.'} = 'Frontend de registo do módulo para a interface pública.';
     $Self->{Translation}->{'Group for the approval of FAQ articles.'} = 'Grupo para a aprovação dos artigos FAQ.';
     $Self->{Translation}->{'History of this FAQ'} = 'Histórico deste FAQ';

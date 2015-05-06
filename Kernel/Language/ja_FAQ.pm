@@ -50,8 +50,8 @@ sub Data {
     $Self->{Translation}->{'FAQ language updated!'} = '言語が更新されました。';
     $Self->{Translation}->{'The name is required!'} = '「名前」は必須項目です。';
     $Self->{Translation}->{'This language already exists!'} = 'この言語は設定済です。';
-    $Self->{Translation}->{'Symptom'} = '';
-    $Self->{Translation}->{'Solution'} = '';
+    $Self->{Translation}->{'Symptom'} = '症状';
+    $Self->{Translation}->{'Solution'} = '解決';
 
     # Template: AgentFAQAdd
     $Self->{Translation}->{'Add FAQ Article'} = 'FAQの新規追加';
@@ -156,7 +156,7 @@ sub Data {
     $Self->{Translation}->{'No votes found! Be the first one to rate this FAQ article.'} = '投票はありません。この記事に始めて評価を投票しましょう。';
     $Self->{Translation}->{'Download Attachment'} = '添付ファイルをダウンロード';
     $Self->{Translation}->{'To open links in the following description blocks, you might need to press Ctrl or Cmd or Shift key while clicking the link (depending on your browser and OS).'} =
-        '';
+        '(一部のOSにおいては)下記のリンクをオープンするためにクリック時に、Ctrl あるいは Cmd または Shiftキーを押下する必要がる場合があります。';
     $Self->{Translation}->{'How helpful was this article? Please give us your rating and help to improve the FAQ Database. Thank You!'} =
         'このFAQ項目はお役にたちましたか? 　FAQデーターベースの改善に役立てますので、レーティングに協力ください。よろしくお願いします';
     $Self->{Translation}->{'not helpful'} = 'あまり役に立たなかった';
@@ -245,6 +245,8 @@ sub Data {
         'FAQ 検索画面に表示されるFAQ 検索属性のデフォルト値を定義する。';
     $Self->{Translation}->{'Defines the information to be inserted in a FAQ based Ticket. "Full FAQ" includes text, attachments and inline images.'} =
         'FAQ記事からチケットへの挿入される情報を定義する。「FAQすべて」にはテキスト・添付・及びインラインの画像が含まれます。';
+    $Self->{Translation}->{'Defines the parameters for the dashboard backend. "Limit" defines the number of entries displayed by default. "Group" is used to restrict access to the plugin (e. g. Group: admin;group1;group2;). "Default" indicates if the plugin is enabled by default or if the user needs to enable it manually.'} =
+        '';
     $Self->{Translation}->{'Defines the shown columns in the FAQ Explorer. This option has no effect on the position of the column.'} =
         '担当者画面における、FAQ一覧での表示項目の設定。この設定によって項目の並び順を制御することはできません。';
     $Self->{Translation}->{'Defines the shown columns in the FAQ journal. This option has no effect on the position of the column.'} =
@@ -294,6 +296,8 @@ sub Data {
     $Self->{Translation}->{'FAQ path separator.'} = 'パスインフォを使用する際のセパレータ文字（例：\'/\'）';
     $Self->{Translation}->{'FAQ search backend router of the agent interface.'} = '担当者インターフェイスにおける、FAQ検索のバックエンドルータ';
     $Self->{Translation}->{'FAQ-Area'} = ' FAQ エリア';
+    $Self->{Translation}->{'Field4'} = 'Field4';
+    $Self->{Translation}->{'Field5'} = 'Field5';
     $Self->{Translation}->{'Frontend module registration for the public interface.'} = '公開画面のフロントエンドモジュールの定義';
     $Self->{Translation}->{'Group for the approval of FAQ articles.'} = 'FAQの記事の承認のためのグループ';
     $Self->{Translation}->{'History of this FAQ'} = 'この記事の履歴';

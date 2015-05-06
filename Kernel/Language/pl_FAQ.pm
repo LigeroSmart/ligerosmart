@@ -123,7 +123,7 @@ sub Data {
     $Self->{Translation}->{'Vote (e. g. Equals 10 or GreaterThan 60)'} = '';
     $Self->{Translation}->{'Rate (e. g. Equals 25% or GreaterThan 75%)'} = '';
     $Self->{Translation}->{'Approved'} = '';
-    $Self->{Translation}->{'Last changed by'} = '';
+    $Self->{Translation}->{'Last changed by'} = 'Ostatnio zmienione przez';
     $Self->{Translation}->{'FAQ Article Create Time (before/after)'} = '';
     $Self->{Translation}->{'FAQ Article Create Time (between)'} = '';
     $Self->{Translation}->{'FAQ Article Change Time (before/after)'} = '';
@@ -245,6 +245,8 @@ sub Data {
         '';
     $Self->{Translation}->{'Defines the information to be inserted in a FAQ based Ticket. "Full FAQ" includes text, attachments and inline images.'} =
         '';
+    $Self->{Translation}->{'Defines the parameters for the dashboard backend. "Limit" defines the number of entries displayed by default. "Group" is used to restrict access to the plugin (e. g. Group: admin;group1;group2;). "Default" indicates if the plugin is enabled by default or if the user needs to enable it manually.'} =
+        '';
     $Self->{Translation}->{'Defines the shown columns in the FAQ Explorer. This option has no effect on the position of the column.'} =
         '';
     $Self->{Translation}->{'Defines the shown columns in the FAQ journal. This option has no effect on the position of the column.'} =
@@ -294,6 +296,8 @@ sub Data {
     $Self->{Translation}->{'FAQ path separator.'} = 'Separator ścieżki FAQ';
     $Self->{Translation}->{'FAQ search backend router of the agent interface.'} = '';
     $Self->{Translation}->{'FAQ-Area'} = 'FAQ: często zadawane pytania';
+    $Self->{Translation}->{'Field4'} = '';
+    $Self->{Translation}->{'Field5'} = '';
     $Self->{Translation}->{'Frontend module registration for the public interface.'} = '';
     $Self->{Translation}->{'Group for the approval of FAQ articles.'} = 'Grupaa dla akceptacji artykułów FAQ.';
     $Self->{Translation}->{'History of this FAQ'} = 'Historia tego FAQ';

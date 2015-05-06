@@ -1,12 +1,13 @@
 # 
 # Translators:
 # 文浩坚 <never.min@gmail.com>, 2015
+# 文浩坚 <never.min@gmail.com>, 2015
 # 陈德文 <sggggy@gmail.com>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-03-04 01:44+0000\n"
+"PO-Revision-Date: 2015-05-06 22:59+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/projects/p/OTRS/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
@@ -697,6 +698,15 @@ msgstr ""
 
 #. SysConfig
 msgid ""
+"Defines the parameters for the dashboard backend. \"Limit\" defines the "
+"number of entries displayed by default. \"Group\" is used to restrict access"
+" to the plugin (e. g. Group: admin;group1;group2;). \"Default\" indicates if"
+" the plugin is enabled by default or if the user needs to enable it "
+"manually."
+msgstr ""
+
+#. SysConfig
+msgid ""
 "Defines the shown columns in the FAQ Explorer. This option has no effect on "
 "the position of the column."
 msgstr ""
@@ -858,6 +868,14 @@ msgstr ""
 
 #. SysConfig
 msgid "FAQ-Area"
+msgstr ""
+
+#. SysConfig
+msgid "Field4"
+msgstr ""
+
+#. SysConfig
+msgid "Field5"
 msgstr ""
 
 #. SysConfig

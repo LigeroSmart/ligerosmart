@@ -26,7 +26,7 @@ sub Data {
     $Self->{Translation}->{'Top 10 FAQ articles'} = 'Top 10 des questions';
     $Self->{Translation}->{'Subcategory of'} = 'Sous catégorie de';
     $Self->{Translation}->{'No rate selected!'} = 'Pas de sélection !';
-    $Self->{Translation}->{'Explorer'} = '';
+    $Self->{Translation}->{'Explorer'} = 'Explorateur';
     $Self->{Translation}->{'public (all)'} = 'public (tous)';
     $Self->{Translation}->{'external (customer)'} = 'externe (client)';
     $Self->{Translation}->{'internal (agent)'} = 'interne (opérateur)';
@@ -50,8 +50,8 @@ sub Data {
     $Self->{Translation}->{'FAQ language updated!'} = 'Langue de FAQ mise à jour!';
     $Self->{Translation}->{'The name is required!'} = 'Le nom est requis!';
     $Self->{Translation}->{'This language already exists!'} = 'Cette langue existe déjà!';
-    $Self->{Translation}->{'Symptom'} = '';
-    $Self->{Translation}->{'Solution'} = '';
+    $Self->{Translation}->{'Symptom'} = 'Symptôme';
+    $Self->{Translation}->{'Solution'} = 'Solution';
 
     # Template: AgentFAQAdd
     $Self->{Translation}->{'Add FAQ Article'} = 'Ajouter Article de FAQ';
@@ -245,6 +245,8 @@ sub Data {
         '';
     $Self->{Translation}->{'Defines the information to be inserted in a FAQ based Ticket. "Full FAQ" includes text, attachments and inline images.'} =
         '';
+    $Self->{Translation}->{'Defines the parameters for the dashboard backend. "Limit" defines the number of entries displayed by default. "Group" is used to restrict access to the plugin (e. g. Group: admin;group1;group2;). "Default" indicates if the plugin is enabled by default or if the user needs to enable it manually.'} =
+        '';
     $Self->{Translation}->{'Defines the shown columns in the FAQ Explorer. This option has no effect on the position of the column.'} =
         '';
     $Self->{Translation}->{'Defines the shown columns in the FAQ journal. This option has no effect on the position of the column.'} =
@@ -294,13 +296,15 @@ sub Data {
     $Self->{Translation}->{'FAQ path separator.'} = '';
     $Self->{Translation}->{'FAQ search backend router of the agent interface.'} = '';
     $Self->{Translation}->{'FAQ-Area'} = '';
+    $Self->{Translation}->{'Field4'} = '';
+    $Self->{Translation}->{'Field5'} = '';
     $Self->{Translation}->{'Frontend module registration for the public interface.'} = '';
     $Self->{Translation}->{'Group for the approval of FAQ articles.'} = '';
     $Self->{Translation}->{'History of this FAQ'} = 'Historique de cette FAQ';
     $Self->{Translation}->{'Include internal fields on a FAQ based Ticket.'} = '';
     $Self->{Translation}->{'Include the name of each field in a FAQ based Ticket.'} = '';
     $Self->{Translation}->{'Interfaces where the quick search should be shown.'} = '';
-    $Self->{Translation}->{'Journal'} = '';
+    $Self->{Translation}->{'Journal'} = 'Journal';
     $Self->{Translation}->{'Language Management'} = 'Gestion des langues';
     $Self->{Translation}->{'Link another object to this FAQ item'} = '';
     $Self->{Translation}->{'List of state types which can be used in the agent interface.'} =
@@ -343,8 +347,8 @@ sub Data {
         '';
     $Self->{Translation}->{'Module to generate html OpenSearch profile for short faq search.'} =
         '';
-    $Self->{Translation}->{'New FAQ Article'} = '';
-    $Self->{Translation}->{'New FAQ articles need approval before they get published.'} = '';
+    $Self->{Translation}->{'New FAQ Article'} = 'Nouvel Article FAQ';
+    $Self->{Translation}->{'New FAQ articles need approval before they get published.'} = 'Les nouveaux articles FAQ doivent être approuvés avant d\'être publiés';
     $Self->{Translation}->{'Number of FAQ articles to be displayed in the FAQ Explorer of the customer interface.'} =
         '';
     $Self->{Translation}->{'Number of FAQ articles to be displayed in the FAQ Explorer of the public interface.'} =

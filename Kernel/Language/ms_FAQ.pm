@@ -123,7 +123,7 @@ sub Data {
     $Self->{Translation}->{'Vote (e. g. Equals 10 or GreaterThan 60)'} = '';
     $Self->{Translation}->{'Rate (e. g. Equals 25% or GreaterThan 75%)'} = '';
     $Self->{Translation}->{'Approved'} = '';
-    $Self->{Translation}->{'Last changed by'} = '';
+    $Self->{Translation}->{'Last changed by'} = 'Terakhir diubah oleh';
     $Self->{Translation}->{'FAQ Article Create Time (before/after)'} = '';
     $Self->{Translation}->{'FAQ Article Create Time (between)'} = '';
     $Self->{Translation}->{'FAQ Article Change Time (before/after)'} = '';
@@ -245,6 +245,8 @@ sub Data {
         '';
     $Self->{Translation}->{'Defines the information to be inserted in a FAQ based Ticket. "Full FAQ" includes text, attachments and inline images.'} =
         '';
+    $Self->{Translation}->{'Defines the parameters for the dashboard backend. "Limit" defines the number of entries displayed by default. "Group" is used to restrict access to the plugin (e. g. Group: admin;group1;group2;). "Default" indicates if the plugin is enabled by default or if the user needs to enable it manually.'} =
+        '';
     $Self->{Translation}->{'Defines the shown columns in the FAQ Explorer. This option has no effect on the position of the column.'} =
         'Mentakrifkan lajur menunjukkan di Explorer FAQ. Pilihan ini tidak mempunyai kesan ke atas kedudukan tiang.';
     $Self->{Translation}->{'Defines the shown columns in the FAQ journal. This option has no effect on the position of the column.'} =
@@ -294,6 +296,8 @@ sub Data {
     $Self->{Translation}->{'FAQ path separator.'} = 'Laluan pemisah FAQ.';
     $Self->{Translation}->{'FAQ search backend router of the agent interface.'} = 'Carian Soalan Lazim backend router muka ejen.';
     $Self->{Translation}->{'FAQ-Area'} = 'Kawasan FAQ';
+    $Self->{Translation}->{'Field4'} = '';
+    $Self->{Translation}->{'Field5'} = '';
     $Self->{Translation}->{'Frontend module registration for the public interface.'} = 'Frontend pendaftaran modul untuk antara muka awam.';
     $Self->{Translation}->{'Group for the approval of FAQ articles.'} = 'Kumpulan bagi kelulusan artikel FAQ.';
     $Self->{Translation}->{'History of this FAQ'} = 'Sejarah FAQ ini';

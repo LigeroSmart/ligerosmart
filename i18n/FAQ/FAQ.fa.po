@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-03-04 01:44+0000\n"
+"PO-Revision-Date: 2015-05-06 22:59+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Persian (http://www.transifex.com/projects/p/OTRS/language/fa/)\n"
 "MIME-Version: 1.0\n"
@@ -183,7 +183,7 @@ msgstr ""
 
 #. Template: AgentFAQCategory
 msgid "Ok"
-msgstr ""
+msgstr "تایید"
 
 #. Template: AgentFAQCategory
 msgid "Add Category"
@@ -302,7 +302,7 @@ msgstr ""
 
 #. Template: AgentFAQOverviewNavBar
 msgid "Context Settings"
-msgstr ""
+msgstr "تنظیمات مفاد"
 
 #. Template: AgentFAQOverviewNavBar
 msgid "FAQ articles per page"
@@ -342,7 +342,7 @@ msgstr ""
 
 #. Template: AgentFAQSearch
 msgid "Last changed by"
-msgstr ""
+msgstr "آخرین تغییر به وسیله"
 
 #. Template: AgentFAQSearch
 msgid "FAQ Article Create Time (before/after)"
@@ -442,7 +442,7 @@ msgstr ""
 
 #. Template: AgentFAQZoom
 msgid "Download Attachment"
-msgstr ""
+msgstr "دریافت پیوست"
 
 #. Template: AgentFAQZoom
 msgid ""
@@ -695,6 +695,15 @@ msgstr ""
 
 #. SysConfig
 msgid ""
+"Defines the parameters for the dashboard backend. \"Limit\" defines the "
+"number of entries displayed by default. \"Group\" is used to restrict access"
+" to the plugin (e. g. Group: admin;group1;group2;). \"Default\" indicates if"
+" the plugin is enabled by default or if the user needs to enable it "
+"manually."
+msgstr ""
+
+#. SysConfig
+msgid ""
 "Defines the shown columns in the FAQ Explorer. This option has no effect on "
 "the position of the column."
 msgstr ""
@@ -856,6 +865,14 @@ msgstr ""
 
 #. SysConfig
 msgid "FAQ-Area"
+msgstr ""
+
+#. SysConfig
+msgid "Field4"
+msgstr ""
+
+#. SysConfig
+msgid "Field5"
 msgstr ""
 
 #. SysConfig

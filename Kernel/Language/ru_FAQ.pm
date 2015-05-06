@@ -50,8 +50,8 @@ sub Data {
     $Self->{Translation}->{'FAQ language updated!'} = 'Язык для FAQ изменён!';
     $Self->{Translation}->{'The name is required!'} = 'Необходимо задать название!';
     $Self->{Translation}->{'This language already exists!'} = 'Такой язык уже существует!';
-    $Self->{Translation}->{'Symptom'} = '';
-    $Self->{Translation}->{'Solution'} = '';
+    $Self->{Translation}->{'Symptom'} = 'Симптомы';
+    $Self->{Translation}->{'Solution'} = 'Решение';
 
     # Template: AgentFAQAdd
     $Self->{Translation}->{'Add FAQ Article'} = 'Добавить статью FAQ';
@@ -156,7 +156,7 @@ sub Data {
     $Self->{Translation}->{'No votes found! Be the first one to rate this FAQ article.'} = 'Оценок не найдено! Оцените эту статью FAQ первым.';
     $Self->{Translation}->{'Download Attachment'} = 'Скачать вложение';
     $Self->{Translation}->{'To open links in the following description blocks, you might need to press Ctrl or Cmd or Shift key while clicking the link (depending on your browser and OS).'} =
-        '';
+        'Для открытия ссылки в следующем сообщении/заметке необходимо нажать и удерживать клавишу Ctrl или Cmd или Shift и кликнуть по ссылке (зависит от вашего браузера и ОС).';
     $Self->{Translation}->{'How helpful was this article? Please give us your rating and help to improve the FAQ Database. Thank You!'} =
         'Насколько была полезна эта статья? Пожалуйста, оцените её, чтобы мы могли улучшить базу FAQ. Спасибо!';
     $Self->{Translation}->{'not helpful'} = 'бесполезная';
@@ -245,6 +245,8 @@ sub Data {
         'Задает атрибут FAQ по умолчанию для показа на экране поискового запроса.';
     $Self->{Translation}->{'Defines the information to be inserted in a FAQ based Ticket. "Full FAQ" includes text, attachments and inline images.'} =
         'Определяет перечень информации включаемой в заявку из FAQ. "Full FAQ" включает ткест, вложения и встроенные изображения.';
+    $Self->{Translation}->{'Defines the parameters for the dashboard backend. "Limit" defines the number of entries displayed by default. "Group" is used to restrict access to the plugin (e. g. Group: admin;group1;group2;). "Default" indicates if the plugin is enabled by default or if the user needs to enable it manually.'} =
+        '';
     $Self->{Translation}->{'Defines the shown columns in the FAQ Explorer. This option has no effect on the position of the column.'} =
         'Задает перечень колонок, отображаемых в Обзоре FAQ. Этот параметр не влияет на порядок колонок.';
     $Self->{Translation}->{'Defines the shown columns in the FAQ journal. This option has no effect on the position of the column.'} =
@@ -294,6 +296,8 @@ sub Data {
     $Self->{Translation}->{'FAQ path separator.'} = 'Разделитель пути FAQ.';
     $Self->{Translation}->{'FAQ search backend router of the agent interface.'} = 'Включить и настроить модуль поиска FAQ для интерфейса агента.';
     $Self->{Translation}->{'FAQ-Area'} = 'Область FAQ';
+    $Self->{Translation}->{'Field4'} = 'Поле4';
+    $Self->{Translation}->{'Field5'} = 'Поле5';
     $Self->{Translation}->{'Frontend module registration for the public interface.'} = 'Frontend module registration для публичного/общедоступного интерфейса.';
     $Self->{Translation}->{'Group for the approval of FAQ articles.'} = 'Группа для одобрения статей FAQ.';
     $Self->{Translation}->{'History of this FAQ'} = 'История этого FAQ';

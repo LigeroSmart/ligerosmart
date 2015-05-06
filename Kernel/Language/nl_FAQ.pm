@@ -51,11 +51,11 @@ sub Data {
     $Self->{Translation}->{'The name is required!'} = 'De naam is verplicht.';
     $Self->{Translation}->{'This language already exists!'} = 'Deze taal bestaat al.';
     $Self->{Translation}->{'Symptom'} = '';
-    $Self->{Translation}->{'Solution'} = '';
+    $Self->{Translation}->{'Solution'} = 'Oplossing';
 
     # Template: AgentFAQAdd
     $Self->{Translation}->{'Add FAQ Article'} = 'Artikel toevoegen';
-    $Self->{Translation}->{'Keywords'} = '';
+    $Self->{Translation}->{'Keywords'} = 'Trefwoorden';
     $Self->{Translation}->{'A category is required.'} = 'Kies een categorie.';
     $Self->{Translation}->{'Approval'} = 'Goedkeuring';
 
@@ -84,7 +84,7 @@ sub Data {
     # Template: AgentFAQExplorer
     $Self->{Translation}->{'FAQ Explorer'} = 'FAQ verkenner';
     $Self->{Translation}->{'Quick Search'} = 'Zoeken';
-    $Self->{Translation}->{'Wildcards are allowed.'} = '';
+    $Self->{Translation}->{'Wildcards are allowed.'} = 'Wildcards zijn toegestaan.';
     $Self->{Translation}->{'Advanced Search'} = 'Uitgebreid zoeken';
     $Self->{Translation}->{'Subcategories'} = 'Subcategoriën';
     $Self->{Translation}->{'FAQ Articles'} = 'Artikelen';
@@ -107,7 +107,7 @@ sub Data {
     $Self->{Translation}->{'This language is used in the following FAQ Article(s)'} = 'Deze taal is gebruikt voor de volgende artikelen';
 
     # Template: AgentFAQOverviewNavBar
-    $Self->{Translation}->{'Context Settings'} = '';
+    $Self->{Translation}->{'Context Settings'} = 'Context Instellingen';
     $Self->{Translation}->{'FAQ articles per page'} = 'Aantal artikelen per pagina';
 
     # Template: AgentFAQOverviewSmall
@@ -116,14 +116,14 @@ sub Data {
     # Template: AgentFAQPrint
     $Self->{Translation}->{'FAQ-Info'} = 'FAQ Informatie';
     $Self->{Translation}->{'Votes'} = 'Stemmen';
-    $Self->{Translation}->{'Last update'} = '';
+    $Self->{Translation}->{'Last update'} = 'Laatste update';
 
     # Template: AgentFAQSearch
-    $Self->{Translation}->{'Keyword'} = '';
+    $Self->{Translation}->{'Keyword'} = 'Trefwoorden';
     $Self->{Translation}->{'Vote (e. g. Equals 10 or GreaterThan 60)'} = '';
     $Self->{Translation}->{'Rate (e. g. Equals 25% or GreaterThan 75%)'} = '';
-    $Self->{Translation}->{'Approved'} = '';
-    $Self->{Translation}->{'Last changed by'} = '';
+    $Self->{Translation}->{'Approved'} = 'Aangenomen';
+    $Self->{Translation}->{'Last changed by'} = 'Laatst gewijzigd door';
     $Self->{Translation}->{'FAQ Article Create Time (before/after)'} = '';
     $Self->{Translation}->{'FAQ Article Create Time (between)'} = '';
     $Self->{Translation}->{'FAQ Article Change Time (before/after)'} = '';
@@ -135,7 +135,7 @@ sub Data {
     # Template: AgentFAQSearchSmall
     $Self->{Translation}->{'FAQ Search'} = 'FAQ zoeken';
     $Self->{Translation}->{'Profile Selection'} = '';
-    $Self->{Translation}->{'Vote'} = '';
+    $Self->{Translation}->{'Vote'} = 'Stem';
     $Self->{Translation}->{'No vote settings'} = '';
     $Self->{Translation}->{'Specific votes'} = '';
     $Self->{Translation}->{'e. g. Equals 10 or GreaterThan 60'} = '';
@@ -245,6 +245,8 @@ sub Data {
         '';
     $Self->{Translation}->{'Defines the information to be inserted in a FAQ based Ticket. "Full FAQ" includes text, attachments and inline images.'} =
         '';
+    $Self->{Translation}->{'Defines the parameters for the dashboard backend. "Limit" defines the number of entries displayed by default. "Group" is used to restrict access to the plugin (e. g. Group: admin;group1;group2;). "Default" indicates if the plugin is enabled by default or if the user needs to enable it manually.'} =
+        '';
     $Self->{Translation}->{'Defines the shown columns in the FAQ Explorer. This option has no effect on the position of the column.'} =
         '';
     $Self->{Translation}->{'Defines the shown columns in the FAQ journal. This option has no effect on the position of the column.'} =
@@ -294,6 +296,8 @@ sub Data {
     $Self->{Translation}->{'FAQ path separator.'} = '';
     $Self->{Translation}->{'FAQ search backend router of the agent interface.'} = '';
     $Self->{Translation}->{'FAQ-Area'} = 'Knowledge Base';
+    $Self->{Translation}->{'Field4'} = '';
+    $Self->{Translation}->{'Field5'} = '';
     $Self->{Translation}->{'Frontend module registration for the public interface.'} = '';
     $Self->{Translation}->{'Group for the approval of FAQ articles.'} = '';
     $Self->{Translation}->{'History of this FAQ'} = 'Geschiedenis';

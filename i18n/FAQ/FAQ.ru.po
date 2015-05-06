@@ -1,19 +1,19 @@
 # 
 # Translators:
 # Yuri Kolesniov <ynkolesnikov@gmail.com>, 2014
-# Yuri Kolesniov <ynkolesnikov@gmail.com>, 2014
+# Yuri Kolesniov <ynkolesnikov@gmail.com>, 2014-2015
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-03-04 01:44+0000\n"
+"PO-Revision-Date: 2015-05-06 23:00+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Russian (http://www.transifex.com/projects/p/OTRS/language/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: ru\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
 
 #. Template: AAAFAQ
 msgid "internal"
@@ -149,11 +149,11 @@ msgstr "Такой язык уже существует!"
 
 #. Template: AAAFAQ
 msgid "Symptom"
-msgstr ""
+msgstr "Симптомы"
 
 #. Template: AAAFAQ
 msgid "Solution"
-msgstr ""
+msgstr "Решение"
 
 #. Template: AgentFAQAdd
 msgid "Add FAQ Article"
@@ -451,7 +451,7 @@ msgid ""
 "To open links in the following description blocks, you might need to press "
 "Ctrl or Cmd or Shift key while clicking the link (depending on your browser "
 "and OS)."
-msgstr ""
+msgstr "Для открытия ссылки в следующем сообщении/заметке необходимо нажать и удерживать клавишу Ctrl или Cmd или Shift и кликнуть по ссылке (зависит от вашего браузера и ОС)."
 
 #. Template: AgentFAQZoom
 msgid ""
@@ -697,6 +697,15 @@ msgstr "Определяет перечень информации включа�
 
 #. SysConfig
 msgid ""
+"Defines the parameters for the dashboard backend. \"Limit\" defines the "
+"number of entries displayed by default. \"Group\" is used to restrict access"
+" to the plugin (e. g. Group: admin;group1;group2;). \"Default\" indicates if"
+" the plugin is enabled by default or if the user needs to enable it "
+"manually."
+msgstr ""
+
+#. SysConfig
+msgid ""
 "Defines the shown columns in the FAQ Explorer. This option has no effect on "
 "the position of the column."
 msgstr "Задает перечень колонок, отображаемых в Обзоре FAQ. Этот параметр не влияет на порядок колонок."
@@ -859,6 +868,14 @@ msgstr "Включить и настроить модуль поиска FAQ д�
 #. SysConfig
 msgid "FAQ-Area"
 msgstr "Область FAQ"
+
+#. SysConfig
+msgid "Field4"
+msgstr "Поле4"
+
+#. SysConfig
+msgid "Field5"
+msgstr "Поле5"
 
 #. SysConfig
 msgid "Frontend module registration for the public interface."

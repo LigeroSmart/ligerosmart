@@ -1,10 +1,11 @@
 # 
 # Translators:
+# Balázs Úr <urbalazs@gmail.com>, 2014-2015
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-03-04 01:44+0000\n"
+"PO-Revision-Date: 2015-05-06 22:59+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Hungarian (http://www.transifex.com/projects/p/OTRS/language/hu/)\n"
 "MIME-Version: 1.0\n"
@@ -51,7 +52,7 @@ msgstr "Nincs értékelés kiválasztva!"
 
 #. Template: AAAFAQ
 msgid "Explorer"
-msgstr ""
+msgstr "Böngésző"
 
 #. Template: AAAFAQ
 msgid "public (all)"
@@ -147,11 +148,11 @@ msgstr "A nyelv már létezik!"
 
 #. Template: AAAFAQ
 msgid "Symptom"
-msgstr ""
+msgstr "Jelenség"
 
 #. Template: AAAFAQ
 msgid "Solution"
-msgstr ""
+msgstr "Megoldás"
 
 #. Template: AgentFAQAdd
 msgid "Add FAQ Article"
@@ -159,7 +160,7 @@ msgstr "FAQ cikk hozzáadása"
 
 #. Template: AgentFAQAdd
 msgid "Keywords"
-msgstr ""
+msgstr "Kulcsszavak"
 
 #. Template: AgentFAQAdd
 msgid "A category is required."
@@ -241,7 +242,7 @@ msgstr "Gyorskeresés"
 
 #. Template: AgentFAQExplorer
 msgid "Wildcards are allowed."
-msgstr ""
+msgstr "Helyettesítő karakterek engedélyezettek."
 
 #. Template: AgentFAQExplorer
 msgid "Advanced Search"
@@ -322,43 +323,43 @@ msgstr "Szavazatok"
 
 #. Template: AgentFAQPrint
 msgid "Last update"
-msgstr ""
+msgstr "Utolsó frissítés"
 
 #. Template: AgentFAQSearch
 msgid "Keyword"
-msgstr ""
+msgstr "Kulcsszó"
 
 #. Template: AgentFAQSearch
 msgid "Vote (e. g. Equals 10 or GreaterThan 60)"
-msgstr ""
+msgstr "Szavazás (például Equals 10 vagy GreaterThan 60)"
 
 #. Template: AgentFAQSearch
 msgid "Rate (e. g. Equals 25% or GreaterThan 75%)"
-msgstr ""
+msgstr "Értékelés (például Equals 25% vagy GreaterThan 75%)"
 
 #. Template: AgentFAQSearch
 msgid "Approved"
-msgstr ""
+msgstr "Jóváhagyott"
 
 #. Template: AgentFAQSearch
 msgid "Last changed by"
-msgstr ""
+msgstr "Utoljára módosította"
 
 #. Template: AgentFAQSearch
 msgid "FAQ Article Create Time (before/after)"
-msgstr ""
+msgstr "GyIK bejegyzés létrehozási ideje (előtt/után)"
 
 #. Template: AgentFAQSearch
 msgid "FAQ Article Create Time (between)"
-msgstr ""
+msgstr "GyIK bejegyzés létrehozási ideje (között)"
 
 #. Template: AgentFAQSearch
 msgid "FAQ Article Change Time (before/after)"
-msgstr ""
+msgstr "GyIK bejegyzés módosítási ideje (előtt/után)"
 
 #. Template: AgentFAQSearch
 msgid "FAQ Article Change Time (between)"
-msgstr ""
+msgstr "GyIK bejegyzés módosítási ideje (között)"
 
 #. Template: AgentFAQSearchOpenSearchDescriptionFulltext
 msgid "FAQFulltext"
@@ -370,55 +371,55 @@ msgstr "FAQ keresés"
 
 #. Template: AgentFAQSearchSmall
 msgid "Profile Selection"
-msgstr ""
+msgstr "Profil kiválasztás"
 
 #. Template: AgentFAQSearchSmall
 msgid "Vote"
-msgstr ""
+msgstr "Szavazás"
 
 #. Template: AgentFAQSearchSmall
 msgid "No vote settings"
-msgstr ""
+msgstr "Nincsenek szavazási beállítások"
 
 #. Template: AgentFAQSearchSmall
 msgid "Specific votes"
-msgstr ""
+msgstr "Adott szavazatok"
 
 #. Template: AgentFAQSearchSmall
 msgid "e. g. Equals 10 or GreaterThan 60"
-msgstr ""
+msgstr "például Equals 10 vagy GreaterThan 60"
 
 #. Template: AgentFAQSearchSmall
 msgid "Rate"
-msgstr ""
+msgstr "Értékelés"
 
 #. Template: AgentFAQSearchSmall
 msgid "No rate settings"
-msgstr ""
+msgstr "Nincsenek értékelési beállítások"
 
 #. Template: AgentFAQSearchSmall
 msgid "Specific rate"
-msgstr ""
+msgstr "Adott értékelés"
 
 #. Template: AgentFAQSearchSmall
 msgid "e. g. Equals 25% or GreaterThan 75%"
-msgstr ""
+msgstr "például Equals 25% vagy GreaterThan 75%"
 
 #. Template: AgentFAQSearchSmall
 msgid "FAQ Article Create Time"
-msgstr ""
+msgstr "GyIK bejegyzés létrehozási ideje"
 
 #. Template: AgentFAQSearchSmall
 msgid "Specific date"
-msgstr ""
+msgstr "Adott dátum"
 
 #. Template: AgentFAQSearchSmall
 msgid "Date range"
-msgstr ""
+msgstr "Dátumtartomány"
 
 #. Template: AgentFAQSearchSmall
 msgid "FAQ Article Change Time"
-msgstr ""
+msgstr "GyIK bejegyzés módosítási ideje"
 
 #. Template: AgentFAQZoom
 msgid "FAQ Information"
@@ -449,7 +450,7 @@ msgid ""
 "To open links in the following description blocks, you might need to press "
 "Ctrl or Cmd or Shift key while clicking the link (depending on your browser "
 "and OS)."
-msgstr ""
+msgstr "A következő leírási blokkokban lévő hivatkozások megnyitásához lehetséges, hogy le kell nyomnia a Ctrl vagy Cmd vagy Shift billentyűt, miközben a hivatkozásra kattint (a böngészőjétől és operációs rendszerétől függően)."
 
 #. Template: AgentFAQZoom
 msgid ""
@@ -467,7 +468,7 @@ msgstr "nagyon segít"
 
 #. Template: AgentFAQZoomSmall
 msgid "Add FAQ title to article subject"
-msgstr ""
+msgstr "GyIK cím hozzáadása a bejegyzés tárgyához"
 
 #. Template: AgentFAQZoomSmall
 msgid "Insert FAQ Text"
@@ -475,7 +476,7 @@ msgstr "FAQ szöveg beírása"
 
 #. Template: AgentFAQZoomSmall
 msgid "Insert Full FAQ"
-msgstr ""
+msgstr "Teljes GyIK beszúrása"
 
 #. Template: AgentFAQZoomSmall
 msgid "Insert FAQ Link"
@@ -487,7 +488,7 @@ msgstr "FAQ szöveg és link beírása"
 
 #. Template: AgentFAQZoomSmall
 msgid "Insert Full FAQ & Link"
-msgstr ""
+msgstr "Teljes GyIK és hivatkozás beszúrása"
 
 #. Template: CustomerFAQExplorer
 msgid "No FAQ articles found."
@@ -499,35 +500,35 @@ msgstr "Teljes szöveges keresés a FAQ cikkekben (pl. \"J*nos\" or \"Kov*\")"
 
 #. Template: CustomerFAQSearch
 msgid "Vote restrictions"
-msgstr ""
+msgstr "Szavazási korlátozások"
 
 #. Template: CustomerFAQSearch
 msgid "Only FAQ articles with votes..."
-msgstr ""
+msgstr "Csak a szavazatokkal rendelkező GyIK bejegyzések…"
 
 #. Template: CustomerFAQSearch
 msgid "Rate restrictions"
-msgstr ""
+msgstr "Értékelés korlátozások"
 
 #. Template: CustomerFAQSearch
 msgid "Only FAQ articles with rate..."
-msgstr ""
+msgstr "Csak az értékeléssel rendelkező GyIK bejegyzések…"
 
 #. Template: CustomerFAQSearch
 msgid "Only FAQ articles created"
-msgstr ""
+msgstr "Csak az ekkor létrehozott GyIK bejegyzések"
 
 #. Template: CustomerFAQSearch
 msgid "Only FAQ articles created between"
-msgstr ""
+msgstr "Csak az e között létrehozott GyIK bejegyzések"
 
 #. Template: CustomerFAQSearch
 msgid "Search-Profile as Template?"
-msgstr ""
+msgstr "Keresési profil sablonként?"
 
 #. Template: CustomerFAQZoom
 msgid "Article Number"
-msgstr ""
+msgstr "Bejegyzésszám"
 
 #. Template: CustomerFAQZoom
 msgid "Search for articles with keyword"
@@ -539,7 +540,7 @@ msgstr "Nyilvános"
 
 #. Template: PublicFAQSearchResultShort
 msgid "Back to FAQ Explorer"
-msgstr ""
+msgstr "Vissza a GyIK böngészőhöz"
 
 #. SysConfig
 msgid ""
@@ -555,7 +556,7 @@ msgstr "CSS szinek a szavazás eredményéhez."
 
 #. SysConfig
 msgid "Cache Time To Leave for FAQ items."
-msgstr ""
+msgstr "Gyorsítótár idő a GyIK elemek elhagyásához."
 
 #. SysConfig
 msgid "Category Management"
@@ -575,7 +576,7 @@ msgstr "Egynyelvű mód esetén a FAQ cikkek alapértelmezett nyelve."
 
 #. SysConfig
 msgid "Default maximum size of the titles in a FAQ article to be shown."
-msgstr ""
+msgstr "Egy GyIK bejegyzésben megjelenítendő címek alapértelmezett legnagyobb mérete."
 
 #. SysConfig
 msgid "Default priority of tickets for the approval of FAQ articles."
@@ -591,7 +592,7 @@ msgstr "FAQ cikkek jóváhagyásához a jegyek alapértelmezett állapota."
 
 #. SysConfig
 msgid "Default type of tickets for the approval of FAQ articles."
-msgstr ""
+msgstr "A jegyek alapértelmezett típusa a GyIK bejegyzések jóváhagyásánál."
 
 #. SysConfig
 msgid ""
@@ -601,7 +602,7 @@ msgstr "A public frontend Action parameterének alapértelmezett értéke. Az Ac
 
 #. SysConfig
 msgid "Define if the FAQ title should be concatenated to article subject."
-msgstr ""
+msgstr "Meghatározza, hogy a GyIK címét össze kell-e fűzni a bejegyzés tárgyával."
 
 #. SysConfig
 msgid "Defines an overview module to show the small view of a FAQ journal."
@@ -685,12 +686,21 @@ msgstr "Az alapértelmezett FAQ sorrendet definiálja a keresésnél a nyilváno
 
 #. SysConfig
 msgid "Defines the default shown FAQ search attribute for FAQ search screen."
-msgstr ""
+msgstr "Meghatározza az alapértelmezetten megjelenített GyIK keresési attribútumot a GyIK keresés képernyőnél."
 
 #. SysConfig
 msgid ""
 "Defines the information to be inserted in a FAQ based Ticket. \"Full FAQ\" "
 "includes text, attachments and inline images."
+msgstr "Meghatározza egy GyIK-alapú jegybe beszúrandó információkat. A „Teljes GyIK” szöveget, mellékleteket és sorközi képeket tartalmaz."
+
+#. SysConfig
+msgid ""
+"Defines the parameters for the dashboard backend. \"Limit\" defines the "
+"number of entries displayed by default. \"Group\" is used to restrict access"
+" to the plugin (e. g. Group: admin;group1;group2;). \"Default\" indicates if"
+" the plugin is enabled by default or if the user needs to enable it "
+"manually."
 msgstr ""
 
 #. SysConfig
@@ -731,88 +741,88 @@ msgstr "Töröld ezt a FAQ-t"
 msgid ""
 "Dynamic fields shown in the FAQ add screen of the agent interface. Possible "
 "settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
-msgstr ""
+msgstr "Az ügyintézői felület GyIK hozzáadása képernyőjén megjelenített dinamikus mezők. Lehetséges beállítások: 0 = Letiltva, 1 = Engedélyezve, 2 = Engedélyezve és kötelező."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ edit screen of the agent interface. Possible"
 " settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
-msgstr ""
+msgstr "Az ügyintézői felület GyIK szerkesztése képernyőjén megjelenített dinamikus mezők. Lehetséges beállítások: 0 = Letiltva, 1 = Engedélyezve, 2 = Engedélyezve és kötelező."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ overview screen of the customer interface. "
 "Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
-msgstr ""
+msgstr "Az ügyfélfelület GyIK áttekintő képernyőjén megjelenített dinamikus mezők. Lehetséges beállítások: 0 = Letiltva, 1 = Engedélyezve, 2 = Engedélyezve és kötelező."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ overview screen of the public interface. "
 "Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
-msgstr ""
+msgstr "A nyilvános felület GyIK áttekintő képernyőjén megjelenített dinamikus mezők. Lehetséges beállítások: 0 = Letiltva, 1 = Engedélyezve, 2 = Engedélyezve és kötelező."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ print screen of the agent interface. "
 "Possible settings: 0 = Disabled, 1 = Enabled."
-msgstr ""
+msgstr "Az ügyintézői felület GyIK nyomtatása képernyőjén megjelenített dinamikus mezők. Lehetséges beállítások: 0 = Letiltva, 1 = Engedélyezve."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ print screen of the customer interface. "
 "Possible settings: 0 = Disabled, 1 = Enabled."
-msgstr ""
+msgstr "Az ügyfélfelület GyIK nyomtatása képernyőjén megjelenített dinamikus mezők. Lehetséges beállítások: 0 = Letiltva, 1 = Engedélyezve."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ print screen of the public interface. "
 "Possible settings: 0 = Disabled, 1 = Enabled."
-msgstr ""
+msgstr "A nyilvános felület GyIK nyomtatása képernyőjén megjelenített dinamikus mezők. Lehetséges beállítások: 0 = Letiltva, 1 = Engedélyezve."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ search screen of the agent interface. "
 "Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and shown by "
 "default."
-msgstr ""
+msgstr "Az ügyintézői felület GyIK keresés képernyőjén megjelenített dinamikus mezők. Lehetséges beállítások: 0 = Letiltva, 1 = Engedélyezve, 2 = Engedélyezve és alapértelmezetten megjelenítve."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ search screen of the customer interface. "
 "Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and shown by "
 "default."
-msgstr ""
+msgstr "Az ügyfélfelület GyIK keresés képernyőjén megjelenített dinamikus mezők. Lehetséges beállítások: 0 = Letiltva, 1 = Engedélyezve, 2 = Engedélyezve és alapértelmezetten megjelenítve."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ search screen of the public interface. "
 "Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and shown by "
 "default."
-msgstr ""
+msgstr "A nyilvános felület GyIK keresés képernyőjén megjelenített dinamikus mezők. Lehetséges beállítások: 0 = Letiltva, 1 = Engedélyezve, 2 = Engedélyezve és alapértelmezetten megjelenítve."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ small format overview screen of the agent "
 "interface. Possible settings: 0 = Disabled, 1 = Enabled."
-msgstr ""
+msgstr "Az ügyintézői felület GyIK kis formátumú áttekintő képernyőjén megjelenített dinamikus mezők. Lehetséges beállítások: 0 = Letiltva, 1 = Engedélyezve."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ zoom screen of the agent interface. Possible"
 " settings: 0 = Disabled, 1 = Enabled."
-msgstr ""
+msgstr "Az ügyintézői felület GyIK nagyítás képernyőjén megjelenített dinamikus mezők. Lehetséges beállítások: 0 = Letiltva, 1 = Engedélyezve."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ zoom screen of the customer interface. "
 "Possible settings: 0 = Disabled, 1 = Enabled."
-msgstr ""
+msgstr "Az ügyfélfelület GyIK nagyítás képernyőjén megjelenített dinamikus mezők. Lehetséges beállítások: 0 = Letiltva, 1 = Engedélyezve."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ zoom screen of the public interface. "
 "Possible settings: 0 = Disabled, 1 = Enabled."
-msgstr ""
+msgstr "A nyilvános felület GyIK nagyítás képernyőjén megjelenített dinamikus mezők. Lehetséges beállítások: 0 = Letiltva, 1 = Engedélyezve."
 
 #. SysConfig
 msgid "Edit this FAQ"
@@ -859,6 +869,14 @@ msgid "FAQ-Area"
 msgstr "FAQ-terület"
 
 #. SysConfig
+msgid "Field4"
+msgstr ""
+
+#. SysConfig
+msgid "Field5"
+msgstr ""
+
+#. SysConfig
 msgid "Frontend module registration for the public interface."
 msgstr "A nyilvános interface frontend module regisztrációja."
 
@@ -880,7 +898,7 @@ msgstr "Minden mező nevét tartalmazza a FAQ alapú jegyekben."
 
 #. SysConfig
 msgid "Interfaces where the quick search should be shown."
-msgstr ""
+msgstr "Azok a felületek, ahol a gyors keresésnek meg kell jelennie."
 
 #. SysConfig
 msgid "Journal"
@@ -896,15 +914,15 @@ msgstr "A FAQ elemben más objektumra való hivatkozás."
 
 #. SysConfig
 msgid "List of state types which can be used in the agent interface."
-msgstr ""
+msgstr "Állapottípusok listája, amelyek használhatók az ügyintézői felületen."
 
 #. SysConfig
 msgid "List of state types which can be used in the customer interface."
-msgstr ""
+msgstr "Állapottípusok listája, amelyek használhatók az ügyfélfelületen."
 
 #. SysConfig
 msgid "List of state types which can be used in the public interface."
-msgstr ""
+msgstr "Állapottípusok listája, amelyek használhatók a nyilvános felületen."
 
 #. SysConfig
 msgid ""
@@ -952,55 +970,55 @@ msgstr "A megjelenő FAQ cikkek maximális száma a keresésnél a nyilvános fe
 msgid ""
 "Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer "
 "in the agent interface."
-msgstr ""
+msgstr "A GyIK böngészőben megjelenítendő GyIK bejegyzésben lévő címek legnagyobb mérete az ügyintézői felületen."
 
 #. SysConfig
 msgid ""
 "Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer "
 "in the customer interface."
-msgstr ""
+msgstr "A GyIK böngészőben megjelenítendő GyIK bejegyzésben lévő címek legnagyobb mérete az ügyfélfelületen."
 
 #. SysConfig
 msgid ""
 "Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer "
 "in the public interface."
-msgstr ""
+msgstr "A GyIK böngészőben megjelenítendő GyIK bejegyzésben lévő címek legnagyobb mérete a nyilvános felületen."
 
 #. SysConfig
 msgid ""
 "Maximum size of the titles in a FAQ article to be shown in the FAQ Search in"
 " the agent interface."
-msgstr ""
+msgstr "A GyIK keresőben megjelenítendő GyIK bejegyzésben lévő címek legnagyobb mérete az ügyintézői felületen."
 
 #. SysConfig
 msgid ""
 "Maximum size of the titles in a FAQ article to be shown in the FAQ Search in"
 " the customer interface."
-msgstr ""
+msgstr "A GyIK keresőben megjelenítendő GyIK bejegyzésben lévő címek legnagyobb mérete az ügyfélfelületen."
 
 #. SysConfig
 msgid ""
 "Maximum size of the titles in a FAQ article to be shown in the FAQ Search in"
 " the public interface."
-msgstr ""
+msgstr "A GyIK keresőben megjelenítendő GyIK bejegyzésben lévő címek legnagyobb mérete a nyilvános felületen."
 
 #. SysConfig
 msgid ""
 "Maximum size of the titles in a FAQ article to be shown in the FAQ journal "
 "in the agent interface."
-msgstr ""
+msgstr "A GyIK naplóban megjelenítendő GyIK bejegyzésben lévő címek legnagyobb mérete az ügyintézői felületen."
 
 #. SysConfig
 msgid ""
 "Module to generate HTML OpenSearch profile for short FAQ search in the "
 "public interface."
-msgstr ""
+msgstr "Egy modul a HTML OpenSearch profil előállításához a rövid GyIK kereséshez a nyilvános felületen."
 
 #. SysConfig
 msgid ""
 "Module to generate HTML OpenSearch profile for short faq search in the "
 "customer interface."
-msgstr ""
+msgstr "Egy modul a HTML OpenSearch profil előállításához a rövid GyIK kereséshez az ügyfélfelületen."
 
 #. SysConfig
 msgid "Module to generate html OpenSearch profile for short faq search."
@@ -1081,24 +1099,24 @@ msgstr "FAQ keresés"
 #. SysConfig
 msgid ""
 "Set the default height (in pixels) of inline HTML fields in AgentFAQZoom."
-msgstr ""
+msgstr "A sorközi HTML mezők alapértelmezett magasságának beállítása (képpontban) az AgentFAQZoom elemben."
 
 #. SysConfig
 msgid ""
 "Set the default height (in pixels) of inline HTML fields in CustomerFAQZoom "
 "(and PublicFAQZoom)."
-msgstr ""
+msgstr "A sorközi HTML mezők alapértelmezett magasságának beállítása (képpontban) a CustomerFAQZoom (és PublicFAQZoom) elemben."
 
 #. SysConfig
 msgid ""
 "Set the maximum height (in pixels) of inline HTML fields in AgentFAQZoom."
-msgstr ""
+msgstr "A sorközi HTML mezők legnagyobb magasságának beállítása (képpontban) az AgentFAQZoom elemben."
 
 #. SysConfig
 msgid ""
 "Set the maximum height (in pixels) of inline HTML fields in CustomerFAQZoom "
 "(and PublicFAQZoom)."
-msgstr ""
+msgstr "A sorközi HTML mezők legnagyobb magasságának beállítása (képpontban) a CustomerFAQZoom (és PublicFAQZoom) elemben."
 
 #. SysConfig
 msgid ""
@@ -1110,11 +1128,11 @@ msgstr "Megmutatja a \"FAQ link beszúrás\" gombot az AgentFAQZoomSmall a nyilv
 msgid ""
 "Show \"Insert FAQ Text & Link\" / \"Insert Full FAQ & Link\" Button in "
 "AgentFAQZoomSmall for public FAQ Articles."
-msgstr ""
+msgstr "A „GyIK szöveg és hivatkozás beszúrása” / „Teljes GyIK és hivatkozás beszúrása” gomb megjelenítése az AgentFAQZoomSmall nézetben a nyilvános GyIK bejegyzéseknél."
 
 #. SysConfig
 msgid "Show \"Insert FAQ Text\" / \"Insert Full FAQ\" Button in AgentFAQZoomSmall."
-msgstr ""
+msgstr "A „GyIK szöveg beszúrása” / „Teljes GyIK beszúrása” gomb megjelenítése a AgentFAQZoomSmall nézetnél."
 
 #. SysConfig
 msgid "Show FAQ Article with HTML."

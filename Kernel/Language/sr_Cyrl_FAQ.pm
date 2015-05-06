@@ -210,7 +210,7 @@ sub Data {
     $Self->{Translation}->{'Default state of tickets for the approval of FAQ articles.'} = 'Подразумевано стање тикета за одобравање ЧПП чланака.';
     $Self->{Translation}->{'Default type of tickets for the approval of FAQ articles.'} = 'Подразумевани тип тикета за одобравање ЧПП чланака.';
     $Self->{Translation}->{'Default value for the Action parameter for the public frontend. The Action parameter is used in the scripts of the system.'} =
-        '';
+        'Подразумевана вредност за Action параметар у јавном фронтенду. Овај параметар користе скрипте система. ';
     $Self->{Translation}->{'Define if the FAQ title should be concatenated to article subject.'} =
         'Одређује да ли наслов ЧПП треба да буде додат на тему чланка.';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ journal.'} =
@@ -244,6 +244,8 @@ sub Data {
     $Self->{Translation}->{'Defines the default shown FAQ search attribute for FAQ search screen.'} =
         '';
     $Self->{Translation}->{'Defines the information to be inserted in a FAQ based Ticket. "Full FAQ" includes text, attachments and inline images.'} =
+        '';
+    $Self->{Translation}->{'Defines the parameters for the dashboard backend. "Limit" defines the number of entries displayed by default. "Group" is used to restrict access to the plugin (e. g. Group: admin;group1;group2;). "Default" indicates if the plugin is enabled by default or if the user needs to enable it manually.'} =
         '';
     $Self->{Translation}->{'Defines the shown columns in the FAQ Explorer. This option has no effect on the position of the column.'} =
         '';
@@ -294,6 +296,8 @@ sub Data {
     $Self->{Translation}->{'FAQ path separator.'} = 'Разделник путање до ЧПП.';
     $Self->{Translation}->{'FAQ search backend router of the agent interface.'} = '';
     $Self->{Translation}->{'FAQ-Area'} = '';
+    $Self->{Translation}->{'Field4'} = '';
+    $Self->{Translation}->{'Field5'} = '';
     $Self->{Translation}->{'Frontend module registration for the public interface.'} = '';
     $Self->{Translation}->{'Group for the approval of FAQ articles.'} = 'Група за одобравање ЧПП чланака.';
     $Self->{Translation}->{'History of this FAQ'} = 'Историјат овог ЧПП';

@@ -1,12 +1,12 @@
 # 
 # Translators:
-# Kentaro Hori <kentaro0919@gmail.com>, 2014
+# Kentaro Hori <kentaro0919@gmail.com>, 2014-2015
 # Norihiro Tanaka <noritnk@kcn.ne.jp>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-03-04 01:44+0000\n"
+"PO-Revision-Date: 2015-05-06 23:00+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Japanese (http://www.transifex.com/projects/p/OTRS/language/ja/)\n"
 "MIME-Version: 1.0\n"
@@ -149,11 +149,11 @@ msgstr "この言語は設定済です。"
 
 #. Template: AAAFAQ
 msgid "Symptom"
-msgstr ""
+msgstr "症状"
 
 #. Template: AAAFAQ
 msgid "Solution"
-msgstr ""
+msgstr "解決"
 
 #. Template: AgentFAQAdd
 msgid "Add FAQ Article"
@@ -451,7 +451,7 @@ msgid ""
 "To open links in the following description blocks, you might need to press "
 "Ctrl or Cmd or Shift key while clicking the link (depending on your browser "
 "and OS)."
-msgstr ""
+msgstr "(一部のOSにおいては)下記のリンクをオープンするためにクリック時に、Ctrl あるいは Cmd または Shiftキーを押下する必要がる場合があります。"
 
 #. Template: AgentFAQZoom
 msgid ""
@@ -697,6 +697,15 @@ msgstr "FAQ記事からチケットへの挿入される情報を定義する。
 
 #. SysConfig
 msgid ""
+"Defines the parameters for the dashboard backend. \"Limit\" defines the "
+"number of entries displayed by default. \"Group\" is used to restrict access"
+" to the plugin (e. g. Group: admin;group1;group2;). \"Default\" indicates if"
+" the plugin is enabled by default or if the user needs to enable it "
+"manually."
+msgstr ""
+
+#. SysConfig
+msgid ""
 "Defines the shown columns in the FAQ Explorer. This option has no effect on "
 "the position of the column."
 msgstr "担当者画面における、FAQ一覧での表示項目の設定。この設定によって項目の並び順を制御することはできません。"
@@ -859,6 +868,14 @@ msgstr "担当者インターフェイスにおける、FAQ検索のバックエ
 #. SysConfig
 msgid "FAQ-Area"
 msgstr " FAQ エリア"
+
+#. SysConfig
+msgid "Field4"
+msgstr "Field4"
+
+#. SysConfig
+msgid "Field5"
+msgstr "Field5"
 
 #. SysConfig
 msgid "Frontend module registration for the public interface."

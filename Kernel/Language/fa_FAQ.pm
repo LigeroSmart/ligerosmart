@@ -63,7 +63,7 @@ sub Data {
     $Self->{Translation}->{'FAQ Category Management'} = '';
     $Self->{Translation}->{'Add category'} = '';
     $Self->{Translation}->{'Delete Category'} = '';
-    $Self->{Translation}->{'Ok'} = '';
+    $Self->{Translation}->{'Ok'} = 'تایید';
     $Self->{Translation}->{'Add Category'} = '';
     $Self->{Translation}->{'Edit Category'} = '';
     $Self->{Translation}->{'Please select at least one permission group.'} = '';
@@ -107,7 +107,7 @@ sub Data {
     $Self->{Translation}->{'This language is used in the following FAQ Article(s)'} = '';
 
     # Template: AgentFAQOverviewNavBar
-    $Self->{Translation}->{'Context Settings'} = '';
+    $Self->{Translation}->{'Context Settings'} = 'تنظیمات مفاد';
     $Self->{Translation}->{'FAQ articles per page'} = '';
 
     # Template: AgentFAQOverviewSmall
@@ -123,7 +123,7 @@ sub Data {
     $Self->{Translation}->{'Vote (e. g. Equals 10 or GreaterThan 60)'} = '';
     $Self->{Translation}->{'Rate (e. g. Equals 25% or GreaterThan 75%)'} = '';
     $Self->{Translation}->{'Approved'} = '';
-    $Self->{Translation}->{'Last changed by'} = '';
+    $Self->{Translation}->{'Last changed by'} = 'آخرین تغییر به وسیله';
     $Self->{Translation}->{'FAQ Article Create Time (before/after)'} = '';
     $Self->{Translation}->{'FAQ Article Create Time (between)'} = '';
     $Self->{Translation}->{'FAQ Article Change Time (before/after)'} = '';
@@ -154,7 +154,7 @@ sub Data {
     $Self->{Translation}->{'out of 5'} = '';
     $Self->{Translation}->{'No votes found!'} = '';
     $Self->{Translation}->{'No votes found! Be the first one to rate this FAQ article.'} = '';
-    $Self->{Translation}->{'Download Attachment'} = '';
+    $Self->{Translation}->{'Download Attachment'} = 'دریافت پیوست';
     $Self->{Translation}->{'To open links in the following description blocks, you might need to press Ctrl or Cmd or Shift key while clicking the link (depending on your browser and OS).'} =
         '';
     $Self->{Translation}->{'How helpful was this article? Please give us your rating and help to improve the FAQ Database. Thank You!'} =
@@ -245,6 +245,8 @@ sub Data {
         '';
     $Self->{Translation}->{'Defines the information to be inserted in a FAQ based Ticket. "Full FAQ" includes text, attachments and inline images.'} =
         '';
+    $Self->{Translation}->{'Defines the parameters for the dashboard backend. "Limit" defines the number of entries displayed by default. "Group" is used to restrict access to the plugin (e. g. Group: admin;group1;group2;). "Default" indicates if the plugin is enabled by default or if the user needs to enable it manually.'} =
+        '';
     $Self->{Translation}->{'Defines the shown columns in the FAQ Explorer. This option has no effect on the position of the column.'} =
         '';
     $Self->{Translation}->{'Defines the shown columns in the FAQ journal. This option has no effect on the position of the column.'} =
@@ -294,6 +296,8 @@ sub Data {
     $Self->{Translation}->{'FAQ path separator.'} = '';
     $Self->{Translation}->{'FAQ search backend router of the agent interface.'} = '';
     $Self->{Translation}->{'FAQ-Area'} = '';
+    $Self->{Translation}->{'Field4'} = '';
+    $Self->{Translation}->{'Field5'} = '';
     $Self->{Translation}->{'Frontend module registration for the public interface.'} = '';
     $Self->{Translation}->{'Group for the approval of FAQ articles.'} = '';
     $Self->{Translation}->{'History of this FAQ'} = '';

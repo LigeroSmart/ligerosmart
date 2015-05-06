@@ -245,6 +245,8 @@ sub Data {
         'Inafafana sifa ya utafutaji wa maswali yanayoulizwa mara kwa mara kwa ajili ya skrini ya utafutaji maswali yanayoulizwa mara kwa mara.';
     $Self->{Translation}->{'Defines the information to be inserted in a FAQ based Ticket. "Full FAQ" includes text, attachments and inline images.'} =
         'Fafanua taarifa itakayoingizwa kwenye maswali yanayoulizwa mara kwa mara kwa misingi ya tiketi. "Maswali yaliyojaa nayayoulizwa mara kwa mara" yanayojumuisha nakala, viambatanishi na taswaira ya mstari wa ndani.';
+    $Self->{Translation}->{'Defines the parameters for the dashboard backend. "Limit" defines the number of entries displayed by default. "Group" is used to restrict access to the plugin (e. g. Group: admin;group1;group2;). "Default" indicates if the plugin is enabled by default or if the user needs to enable it manually.'} =
+        '';
     $Self->{Translation}->{'Defines the shown columns in the FAQ Explorer. This option has no effect on the position of the column.'} =
         'Fafanua safu zilizoonyeshwa katika kitafuta maswali. Hili chaguo halina madhara katika nafasi kwenye safu.';
     $Self->{Translation}->{'Defines the shown columns in the FAQ journal. This option has no effect on the position of the column.'} =
@@ -294,6 +296,8 @@ sub Data {
     $Self->{Translation}->{'FAQ path separator.'} = 'Kitenganishi cha njia ya maswali yaliyoulizwa mara kwa mara. ';
     $Self->{Translation}->{'FAQ search backend router of the agent interface.'} = 'Maswali yanayoulizwa mara kwa mara tafuta backend ruta ya kiolesura cha wakala.';
     $Self->{Translation}->{'FAQ-Area'} = 'Sehemu ya maswali';
+    $Self->{Translation}->{'Field4'} = 'Sehemu4';
+    $Self->{Translation}->{'Field5'} = 'Sehemu5';
     $Self->{Translation}->{'Frontend module registration for the public interface.'} = 'Moduli ya usajili ya frontend kwa ajili ya kiolesura cha umma.';
     $Self->{Translation}->{'Group for the approval of FAQ articles.'} = 'Makundi ya idhini kwa maswali yaliyoulizwa mara kwa mara.';
     $Self->{Translation}->{'History of this FAQ'} = 'Historia ya maswali haya yaliyoulizwa mara kwa mara.';

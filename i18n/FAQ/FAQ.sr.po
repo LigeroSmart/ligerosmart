@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-03-04 01:44+0000\n"
+"PO-Revision-Date: 2015-05-06 22:59+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Serbian (http://www.transifex.com/projects/p/OTRS/language/sr/)\n"
 "MIME-Version: 1.0\n"
@@ -598,7 +598,7 @@ msgstr "Подразумевани тип тикета за одобравање
 msgid ""
 "Default value for the Action parameter for the public frontend. The Action "
 "parameter is used in the scripts of the system."
-msgstr ""
+msgstr "Подразумевана вредност за Action параметар у јавном фронтенду. Овај параметар користе скрипте система. "
 
 #. SysConfig
 msgid "Define if the FAQ title should be concatenated to article subject."
@@ -692,6 +692,15 @@ msgstr ""
 msgid ""
 "Defines the information to be inserted in a FAQ based Ticket. \"Full FAQ\" "
 "includes text, attachments and inline images."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Defines the parameters for the dashboard backend. \"Limit\" defines the "
+"number of entries displayed by default. \"Group\" is used to restrict access"
+" to the plugin (e. g. Group: admin;group1;group2;). \"Default\" indicates if"
+" the plugin is enabled by default or if the user needs to enable it "
+"manually."
 msgstr ""
 
 #. SysConfig
@@ -857,6 +866,14 @@ msgstr ""
 
 #. SysConfig
 msgid "FAQ-Area"
+msgstr ""
+
+#. SysConfig
+msgid "Field4"
+msgstr ""
+
+#. SysConfig
+msgid "Field5"
 msgstr ""
 
 #. SysConfig

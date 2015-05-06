@@ -3,12 +3,13 @@
 # Macbethana Wilfred <mwi@nrd.no>, 2014
 # Mantas Gudas <mgu@nrd.no>, 2014
 # nilsleideck <nils.leideck@leidex.net>, 2014
+# nilsleideck <nils.leideck@leidex.net>, 2014
 # Silvanus Silvester Swai <ssw@nrd.no>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-03-04 01:44+0000\n"
+"PO-Revision-Date: 2015-05-06 23:00+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Swahili (http://www.transifex.com/projects/p/OTRS/language/sw/)\n"
 "MIME-Version: 1.0\n"
@@ -699,6 +700,15 @@ msgstr "Fafanua taarifa itakayoingizwa kwenye maswali yanayoulizwa mara kwa mara
 
 #. SysConfig
 msgid ""
+"Defines the parameters for the dashboard backend. \"Limit\" defines the "
+"number of entries displayed by default. \"Group\" is used to restrict access"
+" to the plugin (e. g. Group: admin;group1;group2;). \"Default\" indicates if"
+" the plugin is enabled by default or if the user needs to enable it "
+"manually."
+msgstr ""
+
+#. SysConfig
+msgid ""
 "Defines the shown columns in the FAQ Explorer. This option has no effect on "
 "the position of the column."
 msgstr "Fafanua safu zilizoonyeshwa katika kitafuta maswali. Hili chaguo halina madhara katika nafasi kwenye safu."
@@ -861,6 +871,14 @@ msgstr "Maswali yanayoulizwa mara kwa mara tafuta backend ruta ya kiolesura cha 
 #. SysConfig
 msgid "FAQ-Area"
 msgstr "Sehemu ya maswali"
+
+#. SysConfig
+msgid "Field4"
+msgstr "Sehemu4"
+
+#. SysConfig
+msgid "Field5"
+msgstr "Sehemu5"
 
 #. SysConfig
 msgid "Frontend module registration for the public interface."

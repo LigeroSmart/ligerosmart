@@ -1,10 +1,11 @@
 # 
 # Translators:
+# Kenneth Nilssen <kenneth@nilssen.cc>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-03-04 01:44+0000\n"
+"PO-Revision-Date: 2015-05-06 23:00+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Norwegian Bokmål (Norway) (http://www.transifex.com/projects/p/OTRS/language/nb_NO/)\n"
 "MIME-Version: 1.0\n"
@@ -151,7 +152,7 @@ msgstr ""
 
 #. Template: AAAFAQ
 msgid "Solution"
-msgstr ""
+msgstr "Løsning"
 
 #. Template: AgentFAQAdd
 msgid "Add FAQ Article"
@@ -159,7 +160,7 @@ msgstr "Legg til OSS-artikkel"
 
 #. Template: AgentFAQAdd
 msgid "Keywords"
-msgstr ""
+msgstr "Nøkkelord"
 
 #. Template: AgentFAQAdd
 msgid "A category is required."
@@ -229,7 +230,7 @@ msgstr "Vil du virkelig slette denne artikkelen?"
 
 #. Template: AgentFAQEdit
 msgid "FAQ"
-msgstr ""
+msgstr "OSS"
 
 #. Template: AgentFAQExplorer
 msgid "FAQ Explorer"
@@ -302,7 +303,7 @@ msgstr ""
 
 #. Template: AgentFAQOverviewNavBar
 msgid "Context Settings"
-msgstr ""
+msgstr "Kontekstvalg"
 
 #. Template: AgentFAQOverviewNavBar
 msgid "FAQ articles per page"
@@ -342,7 +343,7 @@ msgstr ""
 
 #. Template: AgentFAQSearch
 msgid "Last changed by"
-msgstr ""
+msgstr "Sist endret av"
 
 #. Template: AgentFAQSearch
 msgid "FAQ Article Create Time (before/after)"
@@ -695,6 +696,15 @@ msgstr ""
 
 #. SysConfig
 msgid ""
+"Defines the parameters for the dashboard backend. \"Limit\" defines the "
+"number of entries displayed by default. \"Group\" is used to restrict access"
+" to the plugin (e. g. Group: admin;group1;group2;). \"Default\" indicates if"
+" the plugin is enabled by default or if the user needs to enable it "
+"manually."
+msgstr ""
+
+#. SysConfig
+msgid ""
 "Defines the shown columns in the FAQ Explorer. This option has no effect on "
 "the position of the column."
 msgstr ""
@@ -857,6 +867,14 @@ msgstr ""
 #. SysConfig
 msgid "FAQ-Area"
 msgstr "OSS-område"
+
+#. SysConfig
+msgid "Field4"
+msgstr "Felt 4"
+
+#. SysConfig
+msgid "Field5"
+msgstr "Felt 5"
 
 #. SysConfig
 msgid "Frontend module registration for the public interface."
