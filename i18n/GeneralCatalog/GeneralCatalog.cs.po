@@ -1,10 +1,11 @@
-#
+# 
 # Translators:
+# Jan Řežab <honza@rezab.eu>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2014-10-27 14:22+0000\n"
+"PO-Revision-Date: 2015-05-06 12:53+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: Czech (http://www.transifex.com/projects/p/OTRS/language/cs/)\n"
 "MIME-Version: 1.0\n"
@@ -23,22 +24,30 @@ msgstr "Správa Hlavního Katalogu"
 
 #. Template: AdminGeneralCatalog
 msgid "Add Catalog Item"
-msgstr "Pøidat PoloŸku Katalogu"
+msgstr "Přidat položku Katalogu"
 
 #. Template: AdminGeneralCatalog
 msgid "Add Catalog Class"
-msgstr "Pøidat Tøídu Katalogu"
+msgstr "Přidat třídu Katalogu"
 
 #. Template: AdminGeneralCatalog
 msgid "Catalog Class"
-msgstr "Tøídy Katalogu"
+msgstr "Třídy Katalogu"
 
 #. SysConfig
 msgid "Create and manage the General Catalog."
 msgstr ""
 
 #. SysConfig
-msgid "Frontend module registration for the AdminGeneralCatalog configuration in the admin area."
+msgid ""
+"Display a warning and prevent search when using stop words within fulltext "
+"search."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Frontend module registration for the AdminGeneralCatalog configuration in "
+"the admin area."
 msgstr ""
 
 #. SysConfig
@@ -46,10 +55,12 @@ msgid "General Catalog"
 msgstr "Hlavní Katalog"
 
 #. SysConfig
-msgid "Parameters for the example comment 2 of the general catalog attributes."
+msgid ""
+"Parameters for the example comment 2 of the general catalog attributes."
 msgstr ""
 
 #. SysConfig
-msgid "Parameters for the example permission groups of the general catalog attributes."
+msgid ""
+"Parameters for the example permission groups of the general catalog "
+"attributes."
 msgstr ""
-

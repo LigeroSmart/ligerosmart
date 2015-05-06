@@ -35,6 +35,10 @@ msgid "Create and manage the General Catalog."
 msgstr ""
 
 #. SysConfig
+msgid "Display a warning and prevent search when using stop words within fulltext search."
+msgstr ""
+
+#. SysConfig
 msgid "Frontend module registration for the AdminGeneralCatalog configuration in the admin area."
 msgstr ""
 

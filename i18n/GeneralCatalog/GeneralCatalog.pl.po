@@ -1,10 +1,10 @@
-#
+# 
 # Translators:
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2014-10-27 14:22+0000\n"
+"PO-Revision-Date: 2015-05-06 12:53+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: Polish (http://www.transifex.com/projects/p/OTRS/language/pl/)\n"
 "MIME-Version: 1.0\n"
@@ -38,7 +38,15 @@ msgid "Create and manage the General Catalog."
 msgstr "Utwórz i zarządzaj katalogiem głównym."
 
 #. SysConfig
-msgid "Frontend module registration for the AdminGeneralCatalog configuration in the admin area."
+msgid ""
+"Display a warning and prevent search when using stop words within fulltext "
+"search."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Frontend module registration for the AdminGeneralCatalog configuration in "
+"the admin area."
 msgstr "Rejestracja modułu frontend do konfiguracji modułu AdminGeneralCatalog w panelu administratora."
 
 #. SysConfig
@@ -46,10 +54,12 @@ msgid "General Catalog"
 msgstr "Katalog główny"
 
 #. SysConfig
-msgid "Parameters for the example comment 2 of the general catalog attributes."
+msgid ""
+"Parameters for the example comment 2 of the general catalog attributes."
 msgstr "Parametry do przykładowego komentarza 2 atrybutów katalogu generalnego."
 
 #. SysConfig
-msgid "Parameters for the example permission groups of the general catalog attributes."
+msgid ""
+"Parameters for the example permission groups of the general catalog "
+"attributes."
 msgstr "Parametry dla przykładowych grup uprawnień atrybutów katalogu głównego."
-

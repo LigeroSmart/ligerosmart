@@ -21,12 +21,14 @@ sub Data {
 
     # Template: AdminGeneralCatalog
     $Self->{Translation}->{'General Catalog Management'} = 'Správa Hlavního Katalogu';
-    $Self->{Translation}->{'Add Catalog Item'} = 'Pøidat PoloŸku Katalogu';
-    $Self->{Translation}->{'Add Catalog Class'} = 'Pøidat Tøídu Katalogu';
-    $Self->{Translation}->{'Catalog Class'} = 'Tøídy Katalogu';
+    $Self->{Translation}->{'Add Catalog Item'} = 'Přidat položku Katalogu';
+    $Self->{Translation}->{'Add Catalog Class'} = 'Přidat třídu Katalogu';
+    $Self->{Translation}->{'Catalog Class'} = 'Třídy Katalogu';
 
     # SysConfig
     $Self->{Translation}->{'Create and manage the General Catalog.'} = '';
+    $Self->{Translation}->{'Display a warning and prevent search when using stop words within fulltext search.'} =
+        '';
     $Self->{Translation}->{'Frontend module registration for the AdminGeneralCatalog configuration in the admin area.'} =
         '';
     $Self->{Translation}->{'General Catalog'} = 'Hlavní Katalog';
