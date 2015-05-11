@@ -203,7 +203,7 @@ for my $Type (qw(StartTime EndTime)) {
     }
 }
 
-# get changes with actualxxxtime
+# get changes with RequestedTimeOlderDate
 my $RequestedTimeChangeIDs = $CommonObject{ChangeObject}->ChangeSearch(
     RequestedTimeOlderDate => $Now,
     MirrorDB               => 1,
