@@ -16,6 +16,8 @@ use vars qw($Self);
 use Data::Dumper;
 use List::Util qw(max);
 
+## nofilter(TidyAll::Plugin::OTRS::Perl::TestSubs)
+
 # ---------------------------------------------------------------------------- #
 # Note for developers:
 # Please note that the keys in %ChangeDefinitions (resp. WorkOrderDefinitions )
