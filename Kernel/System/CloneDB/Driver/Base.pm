@@ -258,7 +258,7 @@ sub DataTransfer {
         # if needed, set pre-requisites
         if (
             $Param{TargetDBBackend}->can('SetPreRequisites')
-            && grep { $_ eq 'id' } @Columns
+            && grep { lc($_) eq 'id' } @Columns
             && !$Param{DryRun}
             )
         {
@@ -391,7 +391,7 @@ sub DataTransfer {
         # if needed, reset the auto-incremental field
         if (
             $Param{TargetDBBackend}->can('ResetAutoIncrementField')
-            && grep { $_ eq 'id' } @Columns
+            && grep { lc($_) eq 'id' } @Columns
             )
         {
 
