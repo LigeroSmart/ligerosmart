@@ -36,6 +36,10 @@
     min-height: 450px;
 }
 
+.FixedLabelSmall iframe.Field {
+    width: 80%;
+}
+
 .ITSMMessageBrowser {
     margin-bottom: 10px;
     padding: 0px;
