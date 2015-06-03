@@ -312,7 +312,7 @@ sub Run {
         # get service
         %Service = $Kernel::OM->Get('Kernel::System::Service')->ServiceGet(
             ServiceID     => $GetParam{ServiceID},
-            IncidentState => $Self->{Config}->{ShowIncidentState} || 0,
+            IncidentState => $Config->{ShowIncidentState} || 0,
             UserID        => $Self->{UserID},
         );
 
@@ -331,7 +331,7 @@ sub Run {
         }
 
         # recalculate priority
-        if ( $GetParam{PriorityRC} && $GetParam{DynamicField_ITSMImpact} && $Self->{Config}->{Priority} ) {
+        if ( $GetParam{PriorityRC} && $GetParam{DynamicField_ITSMImpact} && $Config->{Priority} ) {
 
             if ( $GetParam{DynamicField_ITSMImpact} ) {
 
@@ -1096,7 +1096,7 @@ sub Run {
         );
 
         # only if service id is selected and incident state should be shown in this screen
-        if ( $ServiceID && $Self->{Config}->{ShowIncidentState} ) {
+        if ( $ServiceID && $Config->{ShowIncidentState} ) {
 
             # set incident signal
             my %InciSignals = (
