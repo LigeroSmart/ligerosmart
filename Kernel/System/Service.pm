@@ -1,8 +1,7 @@
 # --
-# Kernel/System/Service.pm - all service function
 # Copyright (C) 2001-2015 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/7de340897951e5ada5ea344ca3401525b1494412/Kernel/System/Service.pm
+# $origin: https://github.com/OTRS/otrs/blob/a05740a9c3ccdbfe18ebee5ad8c2b396d68c670a/Kernel/System/Service.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
