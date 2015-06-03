@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2015 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/a05740a9c3ccdbfe18ebee5ad8c2b396d68c670a/scripts/test/Ticket.t
+# $origin: https://github.com/OTRS/otrs/blob/bc2139dd409b8aa286e5bbfe797bf8496a312ab0/scripts/test/Ticket.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -300,6 +300,32 @@ $Self->True(
 $Self->True(
     $TicketIDs{$TicketID},
     'TicketSearch() (HASH:TicketNumber)',
+);
+
+%TicketIDs = $TicketObject->TicketSearch(
+    Result     => 'HASH',
+    Limit      => 100,
+    TicketID   => $TicketID,
+    UserID     => 1,
+    Permission => 'rw',
+);
+
+$Self->True(
+    $TicketIDs{$TicketID},
+    'TicketSearch() (HASH:TicketID)',
+);
+
+%TicketIDs = $TicketObject->TicketSearch(
+    Result     => 'HASH',
+    Limit      => 100,
+    TicketID   => [ $TicketID, 42 ],
+    UserID     => 1,
+    Permission => 'rw',
+);
+
+$Self->True(
+    $TicketIDs{$TicketID},
+    'TicketSearch() (HASH:TicketID as ARRAYREF)',
 );
 
 my $Count = $TicketObject->TicketSearch(

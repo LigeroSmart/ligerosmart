@@ -5,7 +5,7 @@
         <Group>Framework</Group>
         <SubGroup>Core</SubGroup>
         <Setting>
-            <String Regex="">OTRS::ITSM 4</String>
+            <String Regex="">OTRS::ITSM 5</String>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="LinkObject::ViewMode" Required="1" Valid="1">
@@ -25,7 +25,7 @@
         <SubGroup>Core::Package</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="http://ftp.otrs.org/pub/otrs/itsm/packages4/">[--OTRS::ITSM 4 Master--] http://ftp.otrs.org/</Item>
+                <Item Key="http://ftp.otrs.org/pub/otrs/itsm/packages5/">[--OTRS::ITSM 5 Master--] http://ftp.otrs.org/</Item>
             </Hash>
         </Setting>
     </ConfigItem>

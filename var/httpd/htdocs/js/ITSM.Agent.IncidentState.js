@@ -1,5 +1,4 @@
 // --
-// ITSM.Agent.IncidentState.js - provides the special module functions to show the service incident state
 // Copyright (C) 2001-2011 OTRS AG, http://otrs.org/\n";
 // --
 // This software comes with ABSOLUTELY NO WARRANTY. For details, see
