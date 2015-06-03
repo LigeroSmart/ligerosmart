@@ -12,7 +12,7 @@ var ITSM = ITSM || {};
 ITSM.Agent = ITSM.Agent || {};
 
 /**
- * @namespace
+ * @namespace ITSM.Agent.Zoom
  * @exports TargetNS as Core.ITSM.TicketZoom
  * @description
  *      This namespace contains the special module functions for ITSM.
@@ -21,12 +21,13 @@ ITSM.Agent.Zoom = (function (TargetNS) {
 
     /**
      * @function
-     * @return nothing
-     *      This function initializes the special module functions
+     * @param {String} ITSMTableHeight - The heigth of the table.
+     * @description
+     *      This function initializes the special module functions.
      */
     TargetNS.Init = function (ITSMTableHeight) {
 
-        Core.UI.Resizable.Init($('#ITSMTableBody'), ITSMTableHeight, function (event, ui, Height, Width) {
+        Core.UI.Resizable.Init($('#ITSMTableBody'), ITSMTableHeight, function (event, ui, Height) {
 
             // remember new height for next reload
             window.clearTimeout(TargetNS.ResizeTimeOutScroller);

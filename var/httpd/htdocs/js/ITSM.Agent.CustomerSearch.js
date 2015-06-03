@@ -24,9 +24,9 @@ ITSM.Agent.CustomerSearch = (function (TargetNS) {
      * @name Init
      * @memberof ITSM.Agent.CustomerSearch
      * @function
-     * @param {jQueryObject} $Element The jQuery object of the input field with autocomplete
+     * @param {jQueryObject} $Element - The jQuery object of the input field with autocomplete.
      * @description
-     *      Initializes the special module functions
+     *      Initializes the special module functions.
      */
     TargetNS.Init = function ($Element) {
 
