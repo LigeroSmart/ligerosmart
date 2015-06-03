@@ -1520,7 +1520,7 @@ sub Run {
             # get the temporarily links
             my $TempLinkList = $Kernel::OM->Get('Kernel::System::LinkObject')->LinkList(
                 Object => 'Ticket',
-                Key    => $Self->{FormID},
+                Key    => $FormID,
                 State  => 'Temporary',
                 UserID => $Self->{UserID},
             );
@@ -1544,7 +1544,7 @@ sub Run {
                                 # delete the temp link
                                 $Kernel::OM->Get('Kernel::System::LinkObject')->LinkDelete(
                                     Object1 => 'Ticket',
-                                    Key1    => $Self->{FormID},
+                                    Key1    => $FormID,
                                     Object2 => $TargetObjectOrg,
                                     Key2    => $TargetKeyOrg,
                                     Type    => $Type,
