@@ -12,23 +12,21 @@ var ITSM = ITSM || {};
 ITSM.Agent = ITSM.Agent || {};
 
 /**
- * @namespace
- * @exports TargetNS as ITSM.Agent.CustomerSearch
+ * @namespace ITSM.Agent.CustomerSearch
+ * @memberof ITSM.Agent
+ * @author OTRS AG
  * @description
  *      This namespace contains the special module functions for the customer search.
  */
 ITSM.Agent.CustomerSearch = (function (TargetNS) {
-    var BackupData = {
-        CustomerInfo: '',
-        CustomerEmail: '',
-        CustomerKey: ''
-    };
 
     /**
+     * @name Init
+     * @memberof ITSM.Agent.CustomerSearch
      * @function
      * @param {jQueryObject} $Element The jQuery object of the input field with autocomplete
-     * @return nothing
-     *      This function initializes the special module functions
+     * @description
+     *      Initializes the special module functions
      */
     TargetNS.Init = function ($Element) {
 
