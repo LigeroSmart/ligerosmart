@@ -1,5 +1,4 @@
 # --
-# Kernel/System/ITSMChange/Permission/AddWorkOrderCheck.pm - WorkOrderAdd and WorkOrderAddFromTemplate permission check
 # Copyright (C) 2001-2015 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see

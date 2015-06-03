@@ -1,6 +1,4 @@
 # --
-# Kernel/System/ITSMChange/ITSMWorkOrder/Event/WorkOrderActualTimesSet.pm - to set actual workorder times
-# event module for ITSMWorkOrder
 # Copyright (C) 2001-2015 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see

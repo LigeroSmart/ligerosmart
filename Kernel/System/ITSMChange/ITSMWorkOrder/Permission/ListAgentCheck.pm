@@ -1,5 +1,4 @@
 # --
-# Kernel/System/ITSMChange/ITSMWorkOrder/Permission/ListAgentCheck.pm - grant permission when the agent is in a list
 # Copyright (C) 2001-2015 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see

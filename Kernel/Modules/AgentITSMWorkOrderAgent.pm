@@ -1,5 +1,4 @@
 # --
-# Kernel/Modules/AgentITSMWorkOrderAgent.pm - the OTRS ITSM ChangeManagement workorder agent edit module
 # Copyright (C) 2001-2015 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
