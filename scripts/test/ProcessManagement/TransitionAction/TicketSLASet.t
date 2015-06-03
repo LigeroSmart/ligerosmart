@@ -1,5 +1,4 @@
 # --
-# TicketSLASet.t - TicketSLASet testscript
 # Copyright (C) 2001-2015 OTRS AG, http://otrs.com/
 # --
 # $origin: https://github.com/OTRS/otrs/blob/a05740a9c3ccdbfe18ebee5ad8c2b396d68c670a/scripts/test/ProcessManagement/TransitionAction/TicketSLASet.t
