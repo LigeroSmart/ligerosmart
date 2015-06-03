@@ -53,8 +53,8 @@
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTicketZoom.tt"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/CustomerTicketPrint.tt"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/CustomerTicketZoom.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/TicketOverviewMedium.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/TicketOverviewPreview.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/TicketOverview/Medium.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/TicketOverview/Preview.pm"/>
         <File Permission="644" Location="Kernel/System/Stats/Dynamic/ITSMTicketFirstLevelSolutionRate.pm"/>
         <File Permission="644" Location="Kernel/System/Stats/Dynamic/ITSMTicketSolutionTimeAverage.pm"/>
         <File Permission="644" Location="var/packagesetup/ITSMIncidentProblemManagement.pm"/>
