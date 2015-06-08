@@ -158,9 +158,7 @@ sub ChangeAdd {
         # Even when passed a plain ASCII string,
         # ToAscii() can return a non-utf8 string with chars in the extended range.
         # Upgrade to utf-8 in order to comply to the OTRS-convention.
-        if ( $Kernel::OM->Get('Kernel::System::Encode')->CharsetInternal() ) {
-            utf8::upgrade( $Param{"${Argument}Plain"} );
-        }
+        utf8::upgrade( $Param{"${Argument}Plain"} );
     }
 
     # check the parameters
@@ -392,9 +390,7 @@ sub ChangeUpdate {
         # Even when passed a plain ASCII string,
         # ToAscii() can return a non-utf8 string with chars in the extended range.
         # Upgrade to utf-8 in order to comply to the OTRS-convention.
-        if ( $Kernel::OM->Get('Kernel::System::Encode')->CharsetInternal() ) {
-            utf8::upgrade( $Param{"${Argument}Plain"} );
-        }
+        utf8::upgrade( $Param{"${Argument}Plain"} );
     }
 
     # check the given parameters
