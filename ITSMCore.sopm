@@ -65,6 +65,7 @@
         <File Permission="644" Location="Kernel/System/ITSMCIPAllocate.pm"/>
         <File Permission="644" Location="Kernel/System/Service.pm"/>
         <File Permission="644" Location="Kernel/System/SLA.pm"/>
+        <File Permission="644" Location="scripts/test/Console/Command/Admin/Service/Add.t"/>
         <File Permission="644" Location="scripts/test/GenericInterface/Operation/Ticket/TicketCreate.t"/>
         <File Permission="644" Location="scripts/test/GenericInterface/Operation/Ticket/TicketSearch.t"/>
         <File Permission="644" Location="scripts/test/ProcessManagement/TransitionAction/TicketSLASet.t"/>
