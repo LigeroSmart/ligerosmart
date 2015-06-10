@@ -101,7 +101,7 @@ $Selenium->RunTest(
             Type => 'SLA'
         );
 
-    }
+        }
 );
 
 1;

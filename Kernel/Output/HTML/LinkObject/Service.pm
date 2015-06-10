@@ -55,7 +55,7 @@ sub new {
 
     # we need our own LayoutObject instance to avoid blockdata collisions
     # with the main page.
-    $Self->{LayoutObject} = Kernel::Output::HTML::Layout->new( %{$Self});
+    $Self->{LayoutObject} = Kernel::Output::HTML::Layout->new( %{$Self} );
 
     # define needed variables
     $Self->{ObjectData} = {
