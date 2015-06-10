@@ -6,12 +6,12 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package Kernel::Output::HTML::GeneralCatalogPreferencesGeneric;
+package Kernel::Output::HTML::GeneralCatalogPreferences::Generic;
 
 use strict;
 use warnings;
 
-use Kernel::System::Group;
+our $ObjectManagerDisabled = 1;
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -20,16 +20,10 @@ sub new {
     my $Self = {%Param};
     bless( $Self, $Type );
 
-    # get needed objects
-    for my $Object (
-        qw(ConfigObject LogObject DBObject LayoutObject UserID
-        ParamObject ConfigItem GeneralCatalogObject EncodeObject MainObject)
-        )
-    {
-        die "Got no $Object!" if ( !$Self->{$Object} );
+    # get needed params
+    for my $Needed (qw( UserID ConfigItem )) {
+        die "Got no $Needed!" if ( !$Self->{$Needed} );
     }
-
-    $Self->{GroupObject} = Kernel::System::Group->new( %{$Self} );
 
     return $Self;
 }
@@ -38,7 +32,8 @@ sub Param {
     my ( $Self, %Param ) = @_;
 
     my @Params = ();
-    my $GetParam = $Self->{ParamObject}->GetParam( Param => $Self->{ConfigItem}->{PrefKey} );
+    my $GetParam
+        = $Kernel::OM->Get('Kernel::System::Web::Request')->GetParam( Param => $Self->{ConfigItem}->{PrefKey} );
 
     if ( !defined($GetParam) ) {
         $GetParam = defined( $Param{GeneralCatalogData}->{ $Self->{ConfigItem}->{PrefKey} } )
@@ -51,7 +46,7 @@ sub Param {
     }
 
     if ( $Self->{ConfigItem}->{Block} eq 'Permission' ) {
-        $Param{Data}         = { $Self->{GroupObject}->GroupList( Valid => 1 ) };
+        $Param{Data}         = { $Kernel::OM->Get('Kernel::System::Group')->GroupList( Valid => 1 ) };
         $Param{PossibleNone} = 1;
         $Param{Block}        = 'Option';
     }
@@ -76,7 +71,7 @@ sub Run {
         for my $Value (@Array) {
 
             # pref update db
-            $Self->{GeneralCatalogObject}->GeneralCatalogPreferencesSet(
+            $Kernel::OM->Get('Kernel::System::GeneralCatalog')->GeneralCatalogPreferencesSet(
                 ItemID => $Param{ItemID},
                 Key    => $Key,
                 Value  => $Value,

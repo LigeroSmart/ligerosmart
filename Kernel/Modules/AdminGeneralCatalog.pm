@@ -11,8 +11,7 @@ package Kernel::Modules::AdminGeneralCatalog;
 use strict;
 use warnings;
 
-use Kernel::System::GeneralCatalog;
-use Kernel::System::Valid;
+our $ObjectManagerDisabled = 1;
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -21,40 +20,38 @@ sub new {
     my $Self = {%Param};
     bless( $Self, $Type );
 
-    # check needed objects
-    for my $Object (qw(ConfigObject ParamObject LogObject LayoutObject)) {
-        if ( !$Self->{$Object} ) {
-            $Self->{LayoutObject}->FatalError( Message => "Got no $Object!" );
-        }
-    }
-    $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new(%Param);
-    $Self->{ValidObject}          = Kernel::System::Valid->new(%Param);
-
     return $Self;
 }
 
 sub Run {
     my ( $Self, %Param ) = @_;
 
+    # get needed object
+    my $ConfigObject         = $Kernel::OM->Get('Kernel::Config');
+    my $ParamObject          = $Kernel::OM->Get('Kernel::System::Web::Request');
+    my $LayoutObject         = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+    my $ValidObject          = $Kernel::OM->Get('Kernel::System::Valid');
+    my $GeneralCatalogObject = $Kernel::OM->Get('Kernel::System::GeneralCatalog');
+
     # ------------------------------------------------------------ #
     # catalog item list
     # ------------------------------------------------------------ #
     if ( $Self->{Subaction} eq 'ItemList' ) {
-        my $Class = $Self->{ParamObject}->GetParam( Param => "Class" ) || '';
+        my $Class = $ParamObject->GetParam( Param => "Class" ) || '';
 
         # check needed class
         if ( !$Class ) {
-            return $Self->{LayoutObject}->Redirect( OP => "Action=$Self->{Action}" );
+            return $LayoutObject->Redirect( OP => "Action=$Self->{Action}" );
         }
 
         # output overview
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'Overview',
             Data => {
                 %Param,
             },
         );
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'OverviewItem',
             Data => {
                 %Param,
@@ -63,28 +60,28 @@ sub Run {
         );
 
         # get availability list
-        my %ValidList = $Self->{ValidObject}->ValidList();
+        my %ValidList = $ValidObject->ValidList();
 
         # get catalog item list
-        my $ItemIDList = $Self->{GeneralCatalogObject}->ItemList(
+        my $ItemIDList = $GeneralCatalogObject->ItemList(
             Class => $Class,
             Valid => 0,
         );
 
         # check item list
         if ( !$ItemIDList || !%{$ItemIDList} ) {
-            return $Self->{LayoutObject}->ErrorScreen();
+            return $LayoutObject->ErrorScreen();
         }
 
         for my $ItemID ( sort { $ItemIDList->{$a} cmp $ItemIDList->{$b} } keys %{$ItemIDList} ) {
 
             # get item data
-            my $ItemData = $Self->{GeneralCatalogObject}->ItemGet(
+            my $ItemData = $GeneralCatalogObject->ItemGet(
                 ItemID => $ItemID,
             );
 
             # output overview item list
-            $Self->{LayoutObject}->Block(
+            $LayoutObject->Block(
                 Name => 'OverviewItemList',
                 Data => {
                     %{$ItemData},
@@ -94,7 +91,7 @@ sub Run {
         }
 
         # ActionOverview
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'ActionAddItem',
             Data => {
                 %Param,
@@ -103,22 +100,22 @@ sub Run {
         );
 
         # ActionOverview
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'ActionOverview',
         );
 
         # output header and navbar
-        my $Output = $Self->{LayoutObject}->Header();
-        $Output .= $Self->{LayoutObject}->NavigationBar();
+        my $Output = $LayoutObject->Header();
+        $Output .= $LayoutObject->NavigationBar();
 
         # create output string
-        $Output .= $Self->{LayoutObject}->Output(
+        $Output .= $LayoutObject->Output(
             TemplateFile => 'AdminGeneralCatalog',
             Data         => \%Param,
         );
 
         # add footer
-        $Output .= $Self->{LayoutObject}->Footer();
+        $Output .= $LayoutObject->Footer();
 
         return $Output;
     }
@@ -130,17 +127,17 @@ sub Run {
         my %ItemData;
 
         # get params
-        $ItemData{ItemID} = $Self->{ParamObject}->GetParam( Param => "ItemID" );
+        $ItemData{ItemID} = $ParamObject->GetParam( Param => "ItemID" );
 
         # add a new catalog item
         if ( $ItemData{ItemID} eq 'NEW' ) {
 
             # get class
-            $ItemData{Class} = $Self->{ParamObject}->GetParam( Param => "Class" );
+            $ItemData{Class} = $ParamObject->GetParam( Param => "Class" );
 
             # redirect to overview
             if ( !$ItemData{Class} ) {
-                return $Self->{LayoutObject}->Redirect( OP => "Action=$Self->{Action}" );
+                return $LayoutObject->Redirect( OP => "Action=$Self->{Action}" );
             }
         }
 
@@ -148,20 +145,20 @@ sub Run {
         else {
 
             # get item data
-            my $ItemDataRef = $Self->{GeneralCatalogObject}->ItemGet(
+            my $ItemDataRef = $GeneralCatalogObject->ItemGet(
                 ItemID => $ItemData{ItemID},
             );
 
             # check item data
             if ( !$ItemDataRef ) {
-                return $Self->{LayoutObject}->ErrorScreen();
+                return $LayoutObject->ErrorScreen();
             }
 
             %ItemData = %{$ItemDataRef};
         }
 
         # output overview
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'Overview',
             Data => {
                 %Param,
@@ -170,16 +167,16 @@ sub Run {
         );
 
         # generate ValidOptionStrg
-        my %ValidList        = $Self->{ValidObject}->ValidList();
+        my %ValidList        = $ValidObject->ValidList();
         my %ValidListReverse = reverse %ValidList;
-        my $ValidOptionStrg  = $Self->{LayoutObject}->BuildSelection(
+        my $ValidOptionStrg  = $LayoutObject->BuildSelection(
             Name       => 'ValidID',
             Data       => \%ValidList,
             SelectedID => $ItemData{ValidID} || $ValidListReverse{valid},
         );
 
         # output ItemEdit
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'ItemEdit',
             Data => {
                 %ItemData,
@@ -189,8 +186,8 @@ sub Run {
 
         # show each preferences setting
         my %Preferences = ();
-        if ( $Self->{ConfigObject}->Get('GeneralCatalogPreferences') ) {
-            %Preferences = %{ $Self->{ConfigObject}->Get('GeneralCatalogPreferences') };
+        if ( $ConfigObject->Get('GeneralCatalogPreferences') ) {
+            %Preferences = %{ $ConfigObject->Get('GeneralCatalogPreferences') };
         }
 
         ITEM:
@@ -204,11 +201,11 @@ sub Run {
 
             # find output module
             my $Module = $Preferences{$Item}->{Module}
-                || 'Kernel::Output::HTML::GeneralCatalogPreferencesGeneric';
+                || 'Kernel::Output::HTML::GeneralCatalogPreferences::Generic';
 
             # load module
             if ( !$Self->{MainObject}->Require($Module) ) {
-                return $Self->{LayoutObject}->FatalError();
+                return $LayoutObject->FatalError();
             }
 
             # create object for this preferences item
@@ -227,13 +224,13 @@ sub Run {
                     || ref( $Preferences{$Item}->{Data} ) eq 'HASH'
                     )
                 {
-                    $ParamItem->{'Option'} = $Self->{LayoutObject}->BuildSelection(
+                    $ParamItem->{'Option'} = $LayoutObject->BuildSelection(
                         %{ $Preferences{$Item} },
                         %{$ParamItem},
                     );
                 }
 
-                $Self->{LayoutObject}->Block(
+                $LayoutObject->Block(
                     Name => $ParamItem->{Block} || $Preferences{$Item}->{Block} || 'Option',
                     Data => {
                         %{ $Preferences{$Item} },
@@ -246,7 +243,7 @@ sub Run {
         if ( $ItemData{Class} eq 'NEW' ) {
 
             # output ItemEditClassAdd
-            $Self->{LayoutObject}->Block(
+            $LayoutObject->Block(
                 Name => 'ItemEditClassAdd',
                 Data => {
                     Class => $ItemData{Class},
@@ -256,7 +253,7 @@ sub Run {
         else {
 
             # output ItemEditClassExist
-            $Self->{LayoutObject}->Block(
+            $LayoutObject->Block(
                 Name => 'ItemEditClassExist',
                 Data => {
                     Class => $ItemData{Class},
@@ -265,22 +262,22 @@ sub Run {
         }
 
         # ActionOverview
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'ActionOverview',
         );
 
         # output header
-        my $Output = $Self->{LayoutObject}->Header();
-        $Output .= $Self->{LayoutObject}->NavigationBar();
+        my $Output = $LayoutObject->Header();
+        $Output .= $LayoutObject->NavigationBar();
 
         # create output string
-        $Output .= $Self->{LayoutObject}->Output(
+        $Output .= $LayoutObject->Output(
             TemplateFile => 'AdminGeneralCatalog',
             Data         => \%Param,
         );
 
         # add footer
-        $Output .= $Self->{LayoutObject}->Footer();
+        $Output .= $LayoutObject->Footer();
 
         return $Output;
     }
@@ -293,50 +290,50 @@ sub Run {
 
         # get params
         for my $Param (qw(Class ItemID ValidID Comment)) {
-            $ItemData{$Param} = $Self->{ParamObject}->GetParam( Param => $Param ) || '';
+            $ItemData{$Param} = $ParamObject->GetParam( Param => $Param ) || '';
         }
 
         # get name param, name must be not empty, but number zero (0) is allowed
-        $ItemData{Name} = $Self->{ParamObject}->GetParam( Param => 'Name' );
+        $ItemData{Name} = $ParamObject->GetParam( Param => 'Name' );
 
         # check class
         if ( $ItemData{Class} eq 'NEW' ) {
-            return $Self->{LayoutObject}->Redirect( OP => "Action=$Self->{Action}" );
+            return $LayoutObject->Redirect( OP => "Action=$Self->{Action}" );
         }
 
         # save to database
         my $Success;
         my $ItemID = $ItemData{ItemID};
         if ( $ItemData{ItemID} eq 'NEW' ) {
-            $Success = $Self->{GeneralCatalogObject}->ItemAdd(
+            $Success = $GeneralCatalogObject->ItemAdd(
                 %ItemData,
                 UserID => $Self->{UserID},
             );
             $ItemID = $Success;
         }
         else {
-            $Success = $Self->{GeneralCatalogObject}->ItemUpdate(
+            $Success = $GeneralCatalogObject->ItemUpdate(
                 %ItemData,
                 UserID => $Self->{UserID},
             );
         }
 
         # update preferences
-        my $GCData      = $Self->{GeneralCatalogObject}->ItemGet( ItemID => $ItemID );
+        my $GCData      = $GeneralCatalogObject->ItemGet( ItemID => $ItemID );
         my %Preferences = ();
         my $Note        = '';
 
-        if ( $Self->{ConfigObject}->Get('GeneralCatalogPreferences') ) {
-            %Preferences = %{ $Self->{ConfigObject}->Get('GeneralCatalogPreferences') };
+        if ( $ConfigObject->Get('GeneralCatalogPreferences') ) {
+            %Preferences = %{ $ConfigObject->Get('GeneralCatalogPreferences') };
         }
 
         for my $Item ( sort keys %Preferences ) {
             my $Module = $Preferences{$Item}->{Module}
-                || 'Kernel::Output::HTML::GeneralCatalogPreferencesGeneric';
+                || 'Kernel::Output::HTML::GeneralCatalogPreferences::Generic';
 
             # load module
             if ( !$Self->{MainObject}->Require($Module) ) {
-                return $Self->{LayoutObject}->FatalError();
+                return $LayoutObject->FatalError();
             }
 
             my $Object = $Module->new(
@@ -348,7 +345,7 @@ sub Run {
             if (@Params) {
                 my %GetParam = ();
                 for my $ParamItem (@Params) {
-                    my @Array = $Self->{ParamObject}->GetArray( Param => $ParamItem->{Name} );
+                    my @Array = $ParamObject->GetArray( Param => $ParamItem->{Name} );
                     $GetParam{ $ParamItem->{Name} } = \@Array;
                 }
                 if (
@@ -358,17 +355,17 @@ sub Run {
                     )
                     )
                 {
-                    $Note .= $Self->{LayoutObject}->Notify( Info => $Object->Error() );
+                    $Note .= $LayoutObject->Notify( Info => $Object->Error() );
                 }
             }
         }
 
         if ( !$Success ) {
-            return $Self->{LayoutObject}->ErrorScreen();
+            return $LayoutObject->ErrorScreen();
         }
 
         # redirect to overview class list
-        return $Self->{LayoutObject}->Redirect(
+        return $LayoutObject->Redirect(
             OP => "Action=$Self->{Action};Subaction=ItemList;Class=$ItemData{Class}"
         );
     }
@@ -379,13 +376,13 @@ sub Run {
     else {
 
         # output overview
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'Overview',
             Data => {
                 %Param,
             },
         );
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'OverviewClass',
             Data => {
                 %Param,
@@ -393,12 +390,12 @@ sub Run {
         );
 
         # get catalog class list
-        my $ClassList = $Self->{GeneralCatalogObject}->ClassList();
+        my $ClassList = $GeneralCatalogObject->ClassList();
 
         for my $Class ( @{$ClassList} ) {
 
             # output overview class list
-            $Self->{LayoutObject}->Block(
+            $LayoutObject->Block(
                 Name => 'OverviewClassList',
                 Data => {
                     Class => $Class,
@@ -407,22 +404,22 @@ sub Run {
         }
 
         # ActionAddClass
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'ActionAddClass',
         );
 
         # output header and navbar
-        my $Output = $Self->{LayoutObject}->Header();
-        $Output .= $Self->{LayoutObject}->NavigationBar();
+        my $Output = $LayoutObject->Header();
+        $Output .= $LayoutObject->NavigationBar();
 
         # create output string
-        $Output .= $Self->{LayoutObject}->Output(
+        $Output .= $LayoutObject->Output(
             TemplateFile => 'AdminGeneralCatalog',
             Data         => \%Param,
         );
 
         # add footer
-        $Output .= $Self->{LayoutObject}->Footer();
+        $Output .= $LayoutObject->Footer();
 
         return $Output;
     }

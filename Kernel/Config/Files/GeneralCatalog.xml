@@ -11,7 +11,7 @@
                 <Title>General Catalog</Title>
                 <NavBarName>Admin</NavBarName>
                 <NavBarModule>
-                    <Module>Kernel::Output::HTML::NavBarModuleAdmin</Module>
+                    <Module>Kernel::Output::HTML::NavBar::ModuleAdmin</Module>
                     <Name Translatable="1">General Catalog</Name>
                     <Description Translatable="1">Create and manage the General Catalog.</Description>
                     <Block>Ticket</Block>
@@ -26,7 +26,7 @@
         <SubGroup>GeneralCatalog::Preferences</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::Output::HTML::GeneralCatalogPreferencesGeneric</Item>
+                <Item Key="Module">Kernel::Output::HTML::GeneralCatalogPreferences::Generic</Item>
                 <Item Key="Label">Comment2</Item>
                 <Item Key="Desc">Define the general catalog comment 2.</Item>
                 <Item Key="Block">TextArea</Item>
@@ -42,7 +42,7 @@
         <SubGroup>GeneralCatalog::Preferences</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::Output::HTML::GeneralCatalogPreferencesGeneric</Item>
+                <Item Key="Module">Kernel::Output::HTML::GeneralCatalogPreferences::Generic</Item>
                 <Item Key="Label">Permissions</Item>
                 <Item Key="Desc">Define the group with permissions.</Item>
                 <Item Key="Block">Permission</Item>
