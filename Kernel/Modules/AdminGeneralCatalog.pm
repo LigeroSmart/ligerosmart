@@ -204,7 +204,7 @@ sub Run {
                 || 'Kernel::Output::HTML::GeneralCatalogPreferences::Generic';
 
             # load module
-            if ( !$Self->{MainObject}->Require($Module) ) {
+            if ( !$Kernel::OM->Get('Kernel::System::Main')->Require($Module) ) {
                 return $LayoutObject->FatalError();
             }
 
@@ -332,7 +332,7 @@ sub Run {
                 || 'Kernel::Output::HTML::GeneralCatalogPreferences::Generic';
 
             # load module
-            if ( !$Self->{MainObject}->Require($Module) ) {
+            if ( !$Kernel::OM->Get('Kernel::System::Main')->Require($Module) ) {
                 return $LayoutObject->FatalError();
             }
 
