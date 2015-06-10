@@ -161,14 +161,14 @@ $Selenium->RunTest(
         # navigate to AdminGeneralCatalog screen
         $Selenium->get("${ScriptAlias}index.pl?Action=AdminGeneralCatalog");
 
-        # click on "ITSM::ConfigItem::Class"
-        $Selenium->find_element( "ITSM::ConfigItem::Class", 'link_text' )->click();
+        # click on test CatalogClass
+        $Selenium->find_element( $CatalogClassDsc, 'link_text' )->click();
 
         # click "Add Catalog Item"
         $Selenium->find_element("//button[\@value='Add'][\@type='submit']")->click();
 
         # verify that general catalog preference Permissions is not present while invalid
-        undef $Success;
+        $Success = 0;
         eval {
             $Success = $Selenium->find_element( "#Permissions", 'css' )->is_enabled();
         };
@@ -177,13 +177,16 @@ $Selenium->RunTest(
             "#Permissions in not enabled!",
         );
 
-        # get general catalog preference Comment2 default sysconfig
+        # get general catalog preference Permission default sysconfig
         my %PreferencePermissionsConfig = $SysConfigObject->ConfigItemGet(
             Name    => 'GeneralCatalogPreferences###Permissions',
             Default => 1,
         );
 
-        # set general catalog preference Comment2 to valid
+        # set Class for GeneralCatalogPreferences###Permissions as test CatalogClass
+        $PreferencePermissionsConfig{Setting}->[1]->{Hash}->[1]->{Item}->[5]->{Content} = $CatalogClassDsc;
+
+        # set general catalog preference Permission to valid
         my %PreferencePermissionsConfigUpdate = map { $_->{Key} => $_->{Content} }
             grep { defined $_->{Key} } @{ $PreferencePermissionsConfig{Setting}->[1]->{Hash}->[1]->{Item} };
 
@@ -228,7 +231,7 @@ $Selenium->RunTest(
         # clean up cache
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => 'GeneralCatalog' );
 
-        }
+    }
 );
 
 1;
