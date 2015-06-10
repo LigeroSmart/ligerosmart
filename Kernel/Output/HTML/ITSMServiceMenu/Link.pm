@@ -6,10 +6,12 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package Kernel::Output::HTML::ITSMServiceMenuLink;
+package Kernel::Output::HTML::ITSMServiceMenu::Link;
 
 use strict;
 use warnings;
+
+our $ObjectManagerDisabled = 1;
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -18,13 +20,8 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    # check needed objects
-    for my $Object (
-        qw(ConfigObject LogObject DBObject LayoutObject ServiceObject LinkObject UserID)
-        )
-    {
-        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
-    }
+    # check UserID param
+    $Self->{UserID} = $Param{UserID} || die "Got no UserID!";
 
     return $Self;
 }
@@ -34,7 +31,7 @@ sub Run {
 
     # check needed stuff
     if ( !$Param{Service} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need Service!'
         );
@@ -42,11 +39,14 @@ sub Run {
     }
 
     # get groups
-    my $GroupsRw = $Self->{ConfigObject}->Get('Frontend::Module')->{ $Param{Config}->{Action} }->{Group}
+    my $GroupsRw = $Kernel::OM->Get('Kernel::Config')->Get('Frontend::Module')->{ $Param{Config}->{Action} }->{Group}
         || [];
 
     # set access
     my $Access = 1;
+
+    # get layout object
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
     # check permission
     if ( $Param{Config}->{Action} && @{$GroupsRw} ) {
@@ -58,8 +58,8 @@ sub Run {
         RWGROUP:
         for my $RwGroup ( @{$GroupsRw} ) {
 
-            next RWGROUP if !$Self->{LayoutObject}->{"UserIsGroup[$RwGroup]"};
-            next RWGROUP if $Self->{LayoutObject}->{"UserIsGroup[$RwGroup]"} ne 'Yes';
+            next RWGROUP if !$LayoutObject->{"UserIsGroup[$RwGroup]"};
+            next RWGROUP if $LayoutObject->{"UserIsGroup[$RwGroup]"} ne 'Yes';
 
             # set access
             $Access = 1;
@@ -70,7 +70,7 @@ sub Run {
     return $Param{Counter} if !$Access;
 
     # check if services can be linked with other objects
-    my %PossibleObjects = $Self->{LinkObject}->PossibleObjectsList(
+    my %PossibleObjects = $Kernel::OM->Get('Kernel::System::LinkObject')->PossibleObjectsList(
         Object => 'Service',
         UserID => $Self->{UserID},
     );
@@ -78,7 +78,7 @@ sub Run {
     # don't show link menu item if there are no linkable objects
     return if !%PossibleObjects;
 
-    $Self->{LayoutObject}->Block(
+    $LayoutObject->Block(
         Name => 'MenuItem',
         Data => {
             %Param,

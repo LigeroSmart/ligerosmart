@@ -45,21 +45,21 @@
         <File Permission="644" Location="Kernel/Modules/AgentITSMSLA.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentITSMSLAPrint.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentITSMSLAZoom.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/ITSMServiceMenuGeneric.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/ITSMServiceMenuLink.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/ITSMSLAMenuGeneric.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/LinkObjectService.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AAAITSMCore.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AdminITSMCIPAllocate.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AdminService.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AdminSLA.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMCustomerSearch.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMService.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMServicePrint.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMServiceZoom.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMSLA.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMSLAPrint.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMSLAZoom.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/ITSMServiceMenu/Generic.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/ITSMServiceMenu/Link.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/ITSMSLAMenu/Generic.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/LinkObject/Service.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Template/Standard/AAAITSMCore.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Template/Standard/AdminITSMCIPAllocate.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Template/Standard/AdminService.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Template/Standard/AdminSLA.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Template/Standard/AgentITSMCustomerSearch.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Template/Standard/AgentITSMService.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Template/Standard/AgentITSMServicePrint.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Template/Standard/AgentITSMServiceZoom.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Template/Standard/AgentITSMSLA.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Template/Standard/AgentITSMSLAPrint.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Template/Standard/AgentITSMSLAZoom.tt"/>
         <File Permission="644" Location="Kernel/System/Console/Command/Admin/Service/Add.pm"/>
         <File Permission="644" Location="Kernel/System/LinkObject/Service.pm"/>
         <File Permission="644" Location="Kernel/System/ITSMCIPAllocate.pm"/>
@@ -76,6 +76,13 @@
         <File Permission="644" Location="scripts/test/Service.t"/>
         <File Permission="644" Location="scripts/test/SLA.t"/>
         <File Permission="644" Location="scripts/test/Ticket.t"/>
+        <File Permission="644" Location="scripts/test/Selenium/Agent/Admin/AdminITSMCIPAllocate.t"/>
+        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMService.t"/>
+        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMServiceZoom.t"/>
+        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMServicePrint.t"/>
+        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMSLA.t"/>
+        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMSLAZoom.t"/>
+        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMSLAPrint.t"/>
         <File Permission="644" Location="var/httpd/htdocs/js/ITSM.Agent.CustomerSearch.js"/>
         <File Permission="644" Location="var/httpd/htdocs/js/ITSM.Agent.IncidentState.js"/>
         <File Permission="644" Location="var/httpd/htdocs/js/ITSM.Agent.Zoom.js"/>

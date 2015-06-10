@@ -11,8 +11,7 @@ package Kernel::Modules::AgentITSMSLAZoom;
 use strict;
 use warnings;
 
-use Kernel::System::Service;
-use Kernel::System::SLA;
+our $ObjectManagerDisabled = 1;
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -21,15 +20,6 @@ sub new {
     my $Self = {%Param};
     bless( $Self, $Type );
 
-    # check needed objects
-    for my $Object (qw(ConfigObject ParamObject DBObject LayoutObject LogObject)) {
-        if ( !$Self->{$Object} ) {
-            $Self->{LayoutObject}->FatalError( Message => "Got no $Object!" );
-        }
-    }
-    $Self->{ServiceObject} = Kernel::System::Service->new(%Param);
-    $Self->{SLAObject}     = Kernel::System::SLA->new(%Param);
-
     return $Self;
 }
 
@@ -37,45 +27,51 @@ sub Run {
     my ( $Self, %Param ) = @_;
 
     # get params
-    my $SLAID = $Self->{ParamObject}->GetParam( Param => "SLAID" );
+    my $SLAID = $Kernel::OM->Get('Kernel::System::Web::Request')->GetParam( Param => "SLAID" );
+
+    # get layout object
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
     # check needed stuff
     if ( !$SLAID ) {
-        return $Self->{LayoutObject}->ErrorScreen(
+        return $LayoutObject->ErrorScreen(
             Message => "No SLAID is given!",
             Comment => 'Please contact the admin.',
         );
     }
 
     # get sla
-    my %SLA = $Self->{SLAObject}->SLAGet(
+    my %SLA = $Kernel::OM->Get('Kernel::System::SLA')->SLAGet(
         SLAID  => $SLAID,
         UserID => $Self->{UserID},
     );
     if ( !$SLA{SLAID} ) {
-        return $Self->{LayoutObject}->ErrorScreen(
+        return $LayoutObject->ErrorScreen(
             Message => "SLAID $SLAID not found in database!",
             Comment => 'Please contact the admin.',
         );
     }
 
+    # get config object
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+
     # get calendar name
     if ( $SLA{Calendar} ) {
         $SLA{CalendarName} = "Calendar $SLA{Calendar} - "
-            . $Self->{ConfigObject}->Get( "TimeZone::Calendar" . $SLA{Calendar} . "Name" );
+            . $ConfigObject->Get( "TimeZone::Calendar" . $SLA{Calendar} . "Name" );
     }
     else {
         $SLA{CalendarName} = 'Calendar Default';
     }
 
     # run config item menu modules
-    if ( ref $Self->{ConfigObject}->Get('ITSMSLA::Frontend::MenuModule') eq 'HASH' ) {
-        my %Menus   = %{ $Self->{ConfigObject}->Get('ITSMSLA::Frontend::MenuModule') };
+    if ( ref $ConfigObject->Get('ITSMSLA::Frontend::MenuModule') eq 'HASH' ) {
+        my %Menus   = %{ $ConfigObject->Get('ITSMSLA::Frontend::MenuModule') };
         my $Counter = 0;
         for my $Menu ( sort keys %Menus ) {
 
             # load module
-            if ( $Self->{MainObject}->Require( $Menus{$Menu}->{Module} ) ) {
+            if ( $Kernel::OM->Get('Kernel::System::Main')->Require( $Menus{$Menu}->{Module} ) ) {
                 my $Object = $Menus{$Menu}->{Module}->new(
                     %{$Self},
                     SLAID => $Self->{SLAID},
@@ -100,7 +96,7 @@ sub Run {
                 );
             }
             else {
-                return $Self->{LayoutObject}->FatalError();
+                return $LayoutObject->FatalError();
             }
         }
     }
@@ -108,7 +104,7 @@ sub Run {
     if ( $SLA{ServiceIDs} && ref $SLA{ServiceIDs} eq 'ARRAY' && @{ $SLA{ServiceIDs} } ) {
 
         # output row
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'Service',
         );
 
@@ -117,7 +113,7 @@ sub Run {
         for my $ServiceID ( @{ $SLA{ServiceIDs} } ) {
 
             # get service data
-            my %Service = $Self->{ServiceObject}->ServiceGet(
+            my %Service = $Kernel::OM->Get('Kernel::System::Service')->ServiceGet(
                 ServiceID     => $ServiceID,
                 IncidentState => 1,
                 UserID        => $Self->{UserID},
@@ -145,7 +141,7 @@ sub Run {
             $CssClass = $CssClass eq 'searchpassive' ? 'searchactive' : 'searchpassive';
 
             # output row
-            $Self->{LayoutObject}->Block(
+            $LayoutObject->Block(
                 Name => 'ServiceRow',
                 Data => {
                     %{ $ServiceList{$ServiceID} },
@@ -156,29 +152,32 @@ sub Run {
         }
     }
 
+    # get user object
+    my $UserObject = $Kernel::OM->Get('Kernel::System::User');
+
     # get create user data
-    $SLA{CreateByName} = $Self->{UserObject}->UserName(
+    $SLA{CreateByName} = $UserObject->UserName(
         UserID => $SLA{CreateBy},
     );
 
     # get change user data
-    $SLA{ChangeByName} = $Self->{UserObject}->UserName(
+    $SLA{ChangeByName} = $UserObject->UserName(
         UserID => $SLA{ChangeBy},
     );
 
     # output header
-    my $Output = $Self->{LayoutObject}->Header();
-    $Output .= $Self->{LayoutObject}->NavigationBar();
+    my $Output = $LayoutObject->Header();
+    $Output .= $LayoutObject->NavigationBar();
 
     # generate output
-    $Output .= $Self->{LayoutObject}->Output(
+    $Output .= $LayoutObject->Output(
         TemplateFile => 'AgentITSMSLAZoom',
         Data         => {
             %Param,
             %SLA,
         },
     );
-    $Output .= $Self->{LayoutObject}->Footer();
+    $Output .= $LayoutObject->Footer();
 
     return $Output;
 }

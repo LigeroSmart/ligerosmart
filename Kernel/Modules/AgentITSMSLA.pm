@@ -11,7 +11,7 @@ package Kernel::Modules::AgentITSMSLA;
 use strict;
 use warnings;
 
-use Kernel::System::SLA;
+our $ObjectManagerDisabled = 1;
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -20,28 +20,26 @@ sub new {
     my $Self = {%Param};
     bless( $Self, $Type );
 
-    # check needed objects
-    for my $Object (qw(ConfigObject ParamObject DBObject LayoutObject LogObject)) {
-        if ( !$Self->{$Object} ) {
-            $Self->{LayoutObject}->FatalError( Message => "Got no $Object!" );
-        }
-    }
-    $Self->{SLAObject} = Kernel::System::SLA->new(%Param);
-
     return $Self;
 }
 
 sub Run {
     my ( $Self, %Param ) = @_;
 
+    # get layout object
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+
     # output overview
-    $Self->{LayoutObject}->Block(
+    $LayoutObject->Block(
         Name => 'Overview',
         Data => {%Param},
     );
 
+    # get sla object
+    my $SLAObject = $Kernel::OM->Get('Kernel::System::SLA');
+
     # get sla list
-    my %SLAList = $Self->{SLAObject}->SLAList(
+    my %SLAList = $SLAObject->SLAList(
         UserID => $Self->{UserID},
     );
 
@@ -49,13 +47,13 @@ sub Run {
         for my $SLAID ( sort { $SLAList{$a} cmp $SLAList{$b} } keys %SLAList ) {
 
             # get sla data
-            my %SLA = $Self->{SLAObject}->SLAGet(
+            my %SLA = $SLAObject->SLAGet(
                 SLAID  => $SLAID,
                 UserID => $Self->{UserID},
             );
 
             # output overview row
-            $Self->{LayoutObject}->Block(
+            $LayoutObject->Block(
                 Name => 'OverviewRow',
                 Data => {
                     %SLA,
@@ -66,7 +64,7 @@ sub Run {
 
     # otherwise it displays a no data found message
     else {
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'NoDataFoundMsg',
         );
     }
@@ -75,18 +73,18 @@ sub Run {
     my $Refresh = $Self->{UserRefreshTime} ? 60 * $Self->{UserRefreshTime} : undef;
 
     # output header
-    my $Output = $Self->{LayoutObject}->Header(
+    my $Output = $LayoutObject->Header(
         Title   => 'Overview',
         Refresh => $Refresh,
     );
-    $Output .= $Self->{LayoutObject}->NavigationBar();
+    $Output .= $LayoutObject->NavigationBar();
 
     # generate output
-    $Output .= $Self->{LayoutObject}->Output(
+    $Output .= $LayoutObject->Output(
         TemplateFile => 'AgentITSMSLA',
         Data         => \%Param,
     );
-    $Output .= $Self->{LayoutObject}->Footer();
+    $Output .= $LayoutObject->Footer();
 
     return $Output;
 }

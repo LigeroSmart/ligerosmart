@@ -115,7 +115,7 @@
         <SubGroup>Frontend::Agent::ITSMService::MenuModule</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::Output::HTML::ITSMServiceMenuGeneric</Item>
+                <Item Key="Module">Kernel::Output::HTML::ITSMServiceMenu::Generic</Item>
                 <Item Key="Name">Back</Item>
                 <Item Key="Target">Back</Item>
                 <Item Key="Description">Back</Item>
@@ -130,7 +130,7 @@
         <SubGroup>Frontend::Agent::ITSMService::MenuModule</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::Output::HTML::ITSMServiceMenuGeneric</Item>
+                <Item Key="Module">Kernel::Output::HTML::ITSMServiceMenu::Generic</Item>
                 <Item Key="Name">Print</Item>
                 <Item Key="Description" Translatable="1">Print</Item>
                 <Item Key="Action">AgentITSMServicePrint</Item>
@@ -144,7 +144,7 @@
         <SubGroup>Frontend::Agent::ITSMService::MenuModule</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::Output::HTML::ITSMServiceMenuLink</Item>
+                <Item Key="Module">Kernel::Output::HTML::ITSMServiceMenu::Link</Item>
                 <Item Key="Name">Link</Item>
                 <Item Key="Target">PopUp</Item>
                 <Item Key="Description">Link</Item>
@@ -159,7 +159,7 @@
         <SubGroup>Frontend::Agent::ITSMSLA::MenuModule</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::Output::HTML::ITSMSLAMenuGeneric</Item>
+                <Item Key="Module">Kernel::Output::HTML::ITSMSLAMenu::Generic</Item>
                 <Item Key="Name">Back</Item>
                 <Item Key="Target">Back</Item>
                 <Item Key="Description">Back</Item>
@@ -174,7 +174,7 @@
         <SubGroup>Frontend::Agent::ITSMSLA::MenuModule</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::Output::HTML::ITSMSLAMenuGeneric</Item>
+                <Item Key="Module">Kernel::Output::HTML::ITSMSLAMenu::Generic</Item>
                 <Item Key="Name">Print</Item>
                 <Item Key="Description">Print</Item>
                 <Item Key="Action">AgentITSMSLAPrint</Item>

@@ -11,8 +11,7 @@ package Kernel::Modules::AgentITSMSLAPrint;
 use strict;
 use warnings;
 
-use Kernel::System::PDF;
-use Kernel::System::SLA;
+our $ObjectManagerDisabled = 1;
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -21,15 +20,6 @@ sub new {
     my $Self = {%Param};
     bless( $Self, $Type );
 
-    # check needed objects
-    for my $Object (qw(ConfigObject ParamObject DBObject LayoutObject LogObject)) {
-        if ( !$Self->{$Object} ) {
-            $Self->{LayoutObject}->FatalError( Message => "Got no $Object!" );
-        }
-    }
-    $Self->{PDFObject} = Kernel::System::PDF->new(%Param);
-    $Self->{SLAObject} = Kernel::System::SLA->new(%Param);
-
     return $Self;
 }
 
@@ -37,53 +27,65 @@ sub Run {
     my ( $Self, %Param ) = @_;
 
     # get params
-    my $SLAID = $Self->{ParamObject}->GetParam( Param => "SLAID" );
+    my $SLAID = $Kernel::OM->Get('Kernel::System::Web::Request')->GetParam( Param => "SLAID" );
+
+    # get layout object
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
     # check needed stuff
     if ( !$SLAID ) {
-        return $Self->{LayoutObject}->ErrorScreen(
+        return $LayoutObject->ErrorScreen(
             Message => "No SLAID is given!",
             Comment => 'Please contact the admin.',
         );
     }
 
     # get sla
-    my %SLA = $Self->{SLAObject}->SLAGet(
+    my %SLA = $Kernel::OM->Get('Kernel::System::SLA')->SLAGet(
         SLAID  => $SLAID,
         UserID => $Self->{UserID},
     );
     if ( !$SLA{SLAID} ) {
-        return $Self->{LayoutObject}->ErrorScreen(
+        return $LayoutObject->ErrorScreen(
             Message => "SLAID $SLAID not found in database!",
             Comment => 'Please contact the admin.',
         );
     }
 
+    # get config object
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+
     # get calendar name
     if ( $SLA{Calendar} ) {
         $SLA{CalendarName} = "Calendar $SLA{Calendar} - "
-            . $Self->{ConfigObject}->Get( "TimeZone::Calendar" . $SLA{Calendar} . "Name" );
+            . $ConfigObject->Get( "TimeZone::Calendar" . $SLA{Calendar} . "Name" );
     }
     else {
         $SLA{CalendarName} = 'Calendar Default';
     }
 
+    # get user object
+    my $UserObject = $Kernel::OM->Get('Kernel::System::User');
+
     # get user data (create by)
-    $SLA{CreateByName} = $Self->{UserObject}->UserName(
+    $SLA{CreateByName} = $UserObject->UserName(
         UserID => $SLA{CreateBy},
     );
 
     # get user data (change by)
-    $SLA{ChangeByName} = $Self->{UserObject}->UserName(
+    $SLA{ChangeByName} = $UserObject->UserName(
         UserID => $SLA{ChangeBy},
     );
 
-    # generate pdf output
-    if ( $Self->{PDFObject} ) {
+    # get PDF object
+    my $PDFObject = $Kernel::OM->Get('Kernel::System::PDF');
+
+    # generate PDF output
+    if ($PDFObject) {
         my %Page;
 
         # get maximum number of pages
-        $Page{MaxPages} = $Self->{ConfigObject}->Get('PDF::MaxPages');
+        $Page{MaxPages} = $ConfigObject->Get('PDF::MaxPages');
         if ( !$Page{MaxPages} || $Page{MaxPages} < 1 || $Page{MaxPages} > 1000 ) {
             $Page{MaxPages} = 100;
         }
@@ -91,23 +93,23 @@ sub Run {
         $Page{MarginRight}   = 40;
         $Page{MarginBottom}  = 40;
         $Page{MarginLeft}    = 40;
-        $Page{HeaderRight}   = $Self->{LayoutObject}->{LanguageObject}->Get('SLA');
+        $Page{HeaderRight}   = $LayoutObject->{LanguageObject}->Translate('SLA');
         $Page{HeadlineLeft}  = $SLA{Name};
-        $Page{HeadlineRight} = $Self->{LayoutObject}->{LanguageObject}->Get('printed by') . ' '
+        $Page{HeadlineRight} = $LayoutObject->{LanguageObject}->Translate('printed by') . ' '
             . $Self->{UserFullname} . ' '
-            . $Self->{LayoutObject}->Output( Template => '$Env{"Time"}' );
+            . $LayoutObject->{Time};
         $Page{FooterLeft} = '';
-        $Page{PageText}   = $Self->{LayoutObject}->{LanguageObject}->Get('Page');
+        $Page{PageText}   = $LayoutObject->{LanguageObject}->Translate('Page');
         $Page{PageCount}  = 1;
 
-        # create new pdf document
-        $Self->{PDFObject}->DocumentNew(
-            Title  => $Self->{ConfigObject}->Get('Product') . ': ' . $SLA{Name},
-            Encode => $Self->{LayoutObject}->{UserCharset},
+        # create new PDF document
+        $PDFObject->DocumentNew(
+            Title  => $ConfigObject->Get('Product') . ': ' . $SLA{Name},
+            Encode => $LayoutObject->{UserCharset},
         );
 
-        # create first pdf page
-        $Self->{PDFObject}->PageNew(
+        # create first PDF page
+        $PDFObject->PageNew(
             %Page,
             FooterRight => $Page{PageText} . ' ' . $Page{PageCount},
         );
@@ -126,23 +128,27 @@ sub Run {
         );
 
         # create file name
-        my $Filename = $Self->{MainObject}->FilenameCleanUp(
+        my $Filename = $Kernel::OM->Get('Kernel::System::Main')->FilenameCleanUp(
             Filename => $SLA{Name},
             Type     => 'Attachment',
         );
-        my ( $s, $m, $h, $D, $M, $Y ) = $Self->{TimeObject}->SystemTime2Date(
-            SystemTime => $Self->{TimeObject}->SystemTime(),
+
+        # get time object
+        my $TimeObject = $Kernel::OM->Get('Kernel::System::Time');
+
+        my ( $s, $m, $h, $D, $M, $Y ) = $TimeObject->SystemTime2Date(
+            SystemTime => $TimeObject->SystemTime(),
         );
         $M = sprintf( "%02d", $M );
         $D = sprintf( "%02d", $D );
         $h = sprintf( "%02d", $h );
         $m = sprintf( "%02d", $m );
 
-        # return the pdf document
-        return $Self->{LayoutObject}->Attachment(
+        # return the PDF document
+        return $LayoutObject->Attachment(
             Filename    => 'sla_' . $Filename . "_$Y-$M-$D\_$h-$m.pdf",
             ContentType => 'application/pdf',
-            Content     => $Self->{PDFObject}->DocumentOutput(),
+            Content     => $PDFObject->DocumentOutput(),
             Type        => 'attachment',
         );
     }
@@ -151,16 +157,16 @@ sub Run {
     else {
 
         # output header
-        my $Output = $Self->{LayoutObject}->PrintHeader( Value => $SLA{Name} );
+        my $Output = $LayoutObject->PrintHeader( Value => $SLA{Name} );
 
         # generate output
-        $Output .= $Self->{LayoutObject}->Output(
+        $Output .= $LayoutObject->Output(
             TemplateFile => 'AgentITSMSLAPrint',
             Data         => \%SLA,
         );
 
         # add footer
-        $Output .= $Self->{LayoutObject}->PrintFooter();
+        $Output .= $LayoutObject->PrintFooter();
 
         # return output
         return $Output;
@@ -173,7 +179,7 @@ sub _PDFOutputGeneralInfos {
     # check needed stuff
     for my $Argument (qw(Page SLA)) {
         if ( !defined $Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!"
             );
@@ -181,10 +187,13 @@ sub _PDFOutputGeneralInfos {
         }
     }
 
+    # get layout object
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+
     # create left table
     my $TableLeft = [
         {
-            Key   => $Self->{LayoutObject}->{LanguageObject}->Get('SLA') . ':',
+            Key   => $LayoutObject->{LanguageObject}->Translate('SLA') . ':',
             Value => $Param{SLA}->{Name},
         },
     ];
@@ -192,25 +201,25 @@ sub _PDFOutputGeneralInfos {
     # create right table
     my $TableRight = [
         {
-            Key   => $Self->{LayoutObject}->{LanguageObject}->Get('Created') . ':',
-            Value => $Self->{LayoutObject}->Output(
+            Key   => $LayoutObject->{LanguageObject}->Translate('Created') . ':',
+            Value => $LayoutObject->Output(
                 Template => '[% Data.CreateTime | Localize("TimeLong") %]',
                 Data     => \%{ $Param{SLA} },
             ),
         },
         {
-            Key   => $Self->{LayoutObject}->{LanguageObject}->Get('Created by') . ':',
+            Key   => $LayoutObject->{LanguageObject}->Translate('Created by') . ':',
             Value => $Param{SLA}->{ChangeByName},
         },
         {
-            Key   => $Self->{LayoutObject}->{LanguageObject}->Get('Last changed') . ':',
-            Value => $Self->{LayoutObject}->Output(
+            Key   => $LayoutObject->{LanguageObject}->Translate('Last changed') . ':',
+            Value => $LayoutObject->Output(
                 Template => '[% Data.ChangeTime | Localize("TimeLong") %]',
                 Data     => \%{ $Param{SLA} },
             ),
         },
         {
-            Key   => $Self->{LayoutObject}->{LanguageObject}->Get('Last changed by') . ':',
+            Key   => $LayoutObject->{LanguageObject}->Translate('Last changed by') . ':',
             Value => $Param{SLA}->{ChangeByName},
         },
     ];
@@ -246,17 +255,20 @@ sub _PDFOutputGeneralInfos {
     $TableParam{PaddingTop}           = 3;
     $TableParam{PaddingBottom}        = 3;
 
+    # get PDF object
+    my $PDFObject = $Kernel::OM->Get('Kernel::System::PDF');
+
     # output table
     PAGE:
     for ( $Param{Page}->{PageCount} .. $Param{Page}->{MaxPages} ) {
 
         # output table (or a fragment of it)
-        %TableParam = $Self->{PDFObject}->Table(%TableParam);
+        %TableParam = $PDFObject->Table(%TableParam);
 
         # stop output or output next page
         last PAGE if $TableParam{State};
 
-        $Self->{PDFObject}->PageNew(
+        $PDFObject->PageNew(
             %{ $Param{Page} },
             FooterRight => $Param{Page}->{PageText} . ' ' . $Param{Page}->{PageCount}
         );
@@ -271,7 +283,7 @@ sub _PDFOutputDetailedInfos {
     # check needed stuff
     for my $Argument (qw(Page SLA)) {
         if ( !defined $Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!"
             );
@@ -279,15 +291,21 @@ sub _PDFOutputDetailedInfos {
         }
     }
 
+    # get PDF object
+    my $PDFObject = $Kernel::OM->Get('Kernel::System::PDF');
+
     # set new position
-    $Self->{PDFObject}->PositionSet(
+    $PDFObject->PositionSet(
         Move => 'relativ',
         Y    => -15,
     );
 
+    # get layout object
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+
     # output headline
-    $Self->{PDFObject}->Text(
-        Text     => $Self->{LayoutObject}->{LanguageObject}->Get('SLA'),
+    $PDFObject->Text(
+        Text     => $LayoutObject->{LanguageObject}->Translate('SLA'),
         Height   => 7,
         Type     => 'Cut',
         Font     => 'ProportionalBoldItalic',
@@ -296,7 +314,7 @@ sub _PDFOutputDetailedInfos {
     );
 
     # set new position
-    $Self->{PDFObject}->PositionSet(
+    $PDFObject->PositionSet(
         Move => 'relativ',
         Y    => -4,
     );
@@ -304,43 +322,43 @@ sub _PDFOutputDetailedInfos {
     # create table
     my $Table = [
         {
-            Key   => $Self->{LayoutObject}->{LanguageObject}->Get('SLA') . ':',
+            Key   => $LayoutObject->{LanguageObject}->Translate('SLA') . ':',
             Value => $Param{SLA}->{Name},
         },
         {
-            Key   => $Self->{LayoutObject}->{LanguageObject}->Get('Type') . ':',
-            Value => $Self->{LayoutObject}->{LanguageObject}->Get( $Param{SLA}->{Type} ),
+            Key   => $LayoutObject->{LanguageObject}->Translate('Type') . ':',
+            Value => $LayoutObject->{LanguageObject}->Translate( $Param{SLA}->{Type} ),
         },
         {
-            Key   => $Self->{LayoutObject}->{LanguageObject}->Get('Calendar') . ':',
-            Value => $Self->{LayoutObject}->{LanguageObject}->Get( $Param{SLA}->{CalendarName} ),
+            Key   => $LayoutObject->{LanguageObject}->Translate('Calendar') . ':',
+            Value => $LayoutObject->{LanguageObject}->Translate( $Param{SLA}->{CalendarName} ),
         },
         {
-            Key => $Self->{LayoutObject}->{LanguageObject}->Get('First Response Time') . ':',
+            Key => $LayoutObject->{LanguageObject}->Translate('First Response Time') . ':',
             Value =>
-                $Self->{LayoutObject}->{LanguageObject}->Get( $Param{SLA}->{FirstResponseTime} )
+                $LayoutObject->{LanguageObject}->Translate( $Param{SLA}->{FirstResponseTime} )
                 . ' '
-                . $Self->{LayoutObject}->{LanguageObject}->Get('minutes'),
+                . $LayoutObject->{LanguageObject}->Translate('minutes'),
         },
         {
-            Key   => $Self->{LayoutObject}->{LanguageObject}->Get('Update Time') . ':',
-            Value => $Self->{LayoutObject}->{LanguageObject}->Get( $Param{SLA}->{UpdateTime} ) . ' '
-                . $Self->{LayoutObject}->{LanguageObject}->Get('minutes'),
+            Key   => $LayoutObject->{LanguageObject}->Translate('Update Time') . ':',
+            Value => $LayoutObject->{LanguageObject}->Translate( $Param{SLA}->{UpdateTime} ) . ' '
+                . $LayoutObject->{LanguageObject}->Translate('minutes'),
         },
         {
-            Key   => $Self->{LayoutObject}->{LanguageObject}->Get('Solution Time') . ':',
-            Value => $Self->{LayoutObject}->{LanguageObject}->Get( $Param{SLA}->{SolutionTime} )
+            Key   => $LayoutObject->{LanguageObject}->Translate('Solution Time') . ':',
+            Value => $LayoutObject->{LanguageObject}->Translate( $Param{SLA}->{SolutionTime} )
                 . ' '
-                . $Self->{LayoutObject}->{LanguageObject}->Get('minutes'),
+                . $LayoutObject->{LanguageObject}->Translate('minutes'),
         },
         {
-            Key => $Self->{LayoutObject}->{LanguageObject}->Get('Minimum Time Between Incidents')
+            Key => $LayoutObject->{LanguageObject}->Translate('Minimum Time Between Incidents')
                 . ':',
-            Value => $Self->{LayoutObject}->{LanguageObject}->Get(
+            Value => $LayoutObject->{LanguageObject}->Translate(
                 $Param{SLA}->{MinTimeBetweenIncidents},
                 )
                 . ' '
-                . $Self->{LayoutObject}->{LanguageObject}->Get('minutes'),
+                . $LayoutObject->{LanguageObject}->Translate('minutes'),
         },
     ];
     my %TableParam;
@@ -366,12 +384,12 @@ sub _PDFOutputDetailedInfos {
     for ( $Param{Page}->{PageCount} .. $Param{Page}->{MaxPages} ) {
 
         # output table (or a fragment of it)
-        %TableParam = $Self->{PDFObject}->Table(%TableParam);
+        %TableParam = $PDFObject->Table(%TableParam);
 
         # stop output or output next page
         last PAGE if $TableParam{State};
 
-        $Self->{PDFObject}->PageNew(
+        $PDFObject->PageNew(
             %{ $Param{Page} },
             FooterRight => $Param{Page}->{PageText} . ' ' . $Param{Page}->{PageCount}
         );

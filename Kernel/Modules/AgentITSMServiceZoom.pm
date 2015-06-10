@@ -11,9 +11,7 @@ package Kernel::Modules::AgentITSMServiceZoom;
 use strict;
 use warnings;
 
-use Kernel::System::LinkObject;
-use Kernel::System::Service;
-use Kernel::System::SLA;
+our $ObjectManagerDisabled = 1;
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -22,16 +20,6 @@ sub new {
     my $Self = {%Param};
     bless( $Self, $Type );
 
-    # check needed objects
-    for my $Object (qw(ConfigObject ParamObject DBObject LayoutObject LogObject)) {
-        if ( !$Self->{$Object} ) {
-            $Self->{LayoutObject}->FatalError( Message => "Got no $Object!" );
-        }
-    }
-    $Self->{LinkObject}    = Kernel::System::LinkObject->new(%Param);
-    $Self->{ServiceObject} = Kernel::System::Service->new(%Param);
-    $Self->{SLAObject}     = Kernel::System::SLA->new(%Param);
-
     return $Self;
 }
 
@@ -39,37 +27,43 @@ sub Run {
     my ( $Self, %Param ) = @_;
 
     # get params
-    my $ServiceID = $Self->{ParamObject}->GetParam( Param => 'ServiceID' );
+    my $ServiceID = $Kernel::OM->Get('Kernel::System::Web::Request')->GetParam( Param => 'ServiceID' );
+
+    # get layout object
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
     # check needed stuff
     if ( !$ServiceID ) {
-        return $Self->{LayoutObject}->ErrorScreen(
+        return $LayoutObject->ErrorScreen(
             Message => 'No ServiceID is given!',
             Comment => 'Please contact the admin.',
         );
     }
 
     # get service
-    my %Service = $Self->{ServiceObject}->ServiceGet(
+    my %Service = $Kernel::OM->Get('Kernel::System::Service')->ServiceGet(
         ServiceID     => $ServiceID,
         IncidentState => 1,
         UserID        => $Self->{UserID},
     );
     if ( !$Service{ServiceID} ) {
-        return $Self->{LayoutObject}->ErrorScreen(
+        return $LayoutObject->ErrorScreen(
             Message => "ServiceID $ServiceID not found in database!",
             Comment => 'Please contact the admin.',
         );
     }
 
+    # get config object
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+
     # run config item menu modules
-    if ( ref $Self->{ConfigObject}->Get('ITSMService::Frontend::MenuModule') eq 'HASH' ) {
-        my %Menus   = %{ $Self->{ConfigObject}->Get('ITSMService::Frontend::MenuModule') };
+    if ( ref $ConfigObject->Get('ITSMService::Frontend::MenuModule') eq 'HASH' ) {
+        my %Menus   = %{ $ConfigObject->Get('ITSMService::Frontend::MenuModule') };
         my $Counter = 0;
         for my $Menu ( sort keys %Menus ) {
 
             # load module
-            if ( $Self->{MainObject}->Require( $Menus{$Menu}->{Module} ) ) {
+            if ( $Kernel::OM->Get('Kernel::System::Main')->Require( $Menus{$Menu}->{Module} ) ) {
                 my $Object = $Menus{$Menu}->{Module}->new(
                     %{$Self},
                     ServiceID => $Self->{ServiceID},
@@ -94,33 +88,36 @@ sub Run {
                 );
             }
             else {
-                return $Self->{LayoutObject}->FatalError();
+                return $LayoutObject->FatalError();
             }
         }
     }
 
+    # get sla object
+    my $SLAObject = $Kernel::OM->Get('Kernel::System::SLA');
+
     # get sla list
-    my %SLAList = $Self->{SLAObject}->SLAList(
+    my %SLAList = $SLAObject->SLAList(
         ServiceID => $ServiceID,
         UserID    => $Self->{UserID},
     );
     if (%SLAList) {
 
         # output row
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'SLA',
         );
 
         for my $SLAID ( sort { $SLAList{$a} cmp $SLAList{$b} } keys %SLAList ) {
 
             # get sla data
-            my %SLA = $Self->{SLAObject}->SLAGet(
+            my %SLA = $SLAObject->SLAGet(
                 SLAID  => $SLAID,
                 UserID => $Self->{UserID},
             );
 
             # output row
-            $Self->{LayoutObject}->Block(
+            $LayoutObject->Block(
                 Name => 'SLARow',
                 Data => {
                     %SLA,
@@ -130,7 +127,7 @@ sub Run {
     }
 
     # get linked objects
-    my $LinkListWithData = $Self->{LinkObject}->LinkListWithData(
+    my $LinkListWithData = $Kernel::OM->Get('Kernel::System::LinkObject')->LinkListWithData(
         Object => 'Service',
         Key    => $ServiceID,
         State  => 'Valid',
@@ -138,17 +135,17 @@ sub Run {
     );
 
     # get link table view mode
-    my $LinkTableViewMode = $Self->{ConfigObject}->Get('LinkObject::ViewMode');
+    my $LinkTableViewMode = $ConfigObject->Get('LinkObject::ViewMode');
 
     # create the link table
-    my $LinkTableStrg = $Self->{LayoutObject}->LinkObjectTableCreate(
+    my $LinkTableStrg = $LayoutObject->LinkObjectTableCreate(
         LinkListWithData => $LinkListWithData,
         ViewMode         => $LinkTableViewMode,
     );
 
     # output the link table
     if ($LinkTableStrg) {
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'LinkTable' . $LinkTableViewMode,
             Data => {
                 LinkTableStrg => $LinkTableStrg,
@@ -163,29 +160,32 @@ sub Run {
         incident    => 'redled',
     );
 
+    # get user object
+    my $UserObject = $Kernel::OM->Get('Kernel::System::User');
+
     # get create user data
-    $Service{CreateByName} = $Self->{UserObject}->UserName(
+    $Service{CreateByName} = $UserObject->UserName(
         UserID => $Service{CreateBy},
     );
 
     # get change user data
-    $Service{ChangeByName} = $Self->{UserObject}->UserName(
+    $Service{ChangeByName} = $UserObject->UserName(
         UserID => $Service{ChangeBy},
     );
 
     # store last screen
-    $Self->{SessionObject}->UpdateSessionID(
+    $Kernel::OM->Get('Kernel::System::AuthSession')->UpdateSessionID(
         SessionID => $Self->{SessionID},
         Key       => 'LastScreenView',
         Value     => $Self->{RequestedURL},
     );
 
     # output header
-    my $Output = $Self->{LayoutObject}->Header();
-    $Output .= $Self->{LayoutObject}->NavigationBar();
+    my $Output = $LayoutObject->Header();
+    $Output .= $LayoutObject->NavigationBar();
 
     # generate output
-    $Output .= $Self->{LayoutObject}->Output(
+    $Output .= $LayoutObject->Output(
         TemplateFile => 'AgentITSMServiceZoom',
         Data         => {
             %Param,
@@ -193,7 +193,7 @@ sub Run {
             CurInciSignal => $InciSignals{ $Service{CurInciStateType} },
         },
     );
-    $Output .= $Self->{LayoutObject}->Footer();
+    $Output .= $LayoutObject->Footer();
 
     return $Output;
 }

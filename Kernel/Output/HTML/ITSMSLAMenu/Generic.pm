@@ -6,10 +6,12 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package Kernel::Output::HTML::ITSMSLAMenuGeneric;
+package Kernel::Output::HTML::ITSMSLAMenu::Generic;
 
 use strict;
 use warnings;
+
+our $ObjectManagerDisabled = 1;
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -18,10 +20,8 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    # check needed objects
-    for my $Object (qw(ConfigObject LogObject DBObject LayoutObject SLAObject UserID)) {
-        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
-    }
+    # check UserID param
+    $Self->{UserID} = $Param{UserID} || die "Got no UserID!";
 
     return $Self;
 }
@@ -31,21 +31,27 @@ sub Run {
 
     # check needed stuff
     if ( !$Param{SLA} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need SLA!'
         );
         return;
     }
 
+    # get config object
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+
     # get groups
-    my $GroupsRo = $Self->{ConfigObject}->Get('Frontend::Module')->{ $Param{Config}->{Action} }->{GroupRo}
+    my $GroupsRo = $ConfigObject->Get('Frontend::Module')->{ $Param{Config}->{Action} }->{GroupRo}
         || [];
-    my $GroupsRw = $Self->{ConfigObject}->Get('Frontend::Module')->{ $Param{Config}->{Action} }->{Group}
+    my $GroupsRw = $ConfigObject->Get('Frontend::Module')->{ $Param{Config}->{Action} }->{Group}
         || [];
 
     # set access
     my $Access = 1;
+
+    # get layout object
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
     # check permission
     if ( $Param{Config}->{Action} && ( @{$GroupsRo} || @{$GroupsRw} ) ) {
@@ -57,8 +63,8 @@ sub Run {
         ROGROUP:
         for my $RoGroup ( @{$GroupsRo} ) {
 
-            next ROGROUP if !$Self->{LayoutObject}->{"UserIsGroupRo[$RoGroup]"};
-            next ROGROUP if $Self->{LayoutObject}->{"UserIsGroupRo[$RoGroup]"} ne 'Yes';
+            next ROGROUP if !$LayoutObject->{"UserIsGroupRo[$RoGroup]"};
+            next ROGROUP if $LayoutObject->{"UserIsGroupRo[$RoGroup]"} ne 'Yes';
 
             # set access
             $Access = 1;
@@ -69,8 +75,8 @@ sub Run {
         RWGROUP:
         for my $RwGroup ( @{$GroupsRw} ) {
 
-            next RWGROUP if !$Self->{LayoutObject}->{"UserIsGroup[$RwGroup]"};
-            next RWGROUP if $Self->{LayoutObject}->{"UserIsGroup[$RwGroup]"} ne 'Yes';
+            next RWGROUP if !$LayoutObject->{"UserIsGroup[$RwGroup]"};
+            next RWGROUP if $LayoutObject->{"UserIsGroup[$RwGroup]"} ne 'Yes';
 
             # set access
             $Access = 1;
@@ -81,7 +87,7 @@ sub Run {
     return $Param{Counter} if !$Access;
 
     # output menu item
-    $Self->{LayoutObject}->Block(
+    $LayoutObject->Block(
         Name => 'MenuItem',
         Data => {
             %Param,

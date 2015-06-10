@@ -11,11 +11,9 @@ package Kernel::Modules::AdminITSMCIPAllocate;
 use strict;
 use warnings;
 
-use Kernel::System::DynamicField;
-use Kernel::System::ITSMCIPAllocate;
-use Kernel::System::Priority;
-use Kernel::System::Valid;
 use Kernel::System::VariableCheck qw(:all);
+
+our $ObjectManagerDisabled = 1;
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -24,19 +22,19 @@ sub new {
     my $Self = {%Param};
     bless( $Self, $Type );
 
-    # check needed objects
-    for my $Object (qw(ConfigObject ParamObject LogObject LayoutObject)) {
-        if ( !$Self->{$Object} ) {
-            $Self->{LayoutObject}->FatalError( Message => "Got no $Object!" );
-        }
-    }
-    $Self->{CIPAllocateObject}  = Kernel::System::ITSMCIPAllocate->new(%Param);
-    $Self->{DynamicFieldObject} = Kernel::System::DynamicField->new(%Param);
-    $Self->{PriorityObject}     = Kernel::System::Priority->new(%Param);
-    $Self->{ValidObject}        = Kernel::System::Valid->new(%Param);
+    return $Self;
+}
+
+sub Run {
+    my ( $Self, %Param ) = @_;
+
+    # get the priority list
+    my %PriorityList = $Kernel::OM->Get('Kernel::System::Priority')->PriorityList(
+        UserID => 1,
+    );
 
     # get the dynamic fields for ITSMCriticality and ITSMImpact
-    my $DynamicFieldConfigArrayRef = $Self->{DynamicFieldObject}->DynamicFieldListGet(
+    my $DynamicFieldConfigArrayRef = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldListGet(
         Valid       => 1,
         ObjectType  => ['Ticket'],
         FieldFilter => {
@@ -61,16 +59,9 @@ sub new {
     # set the impact list
     $Self->{ImpactList} = $PossibleValues{ITSMImpact};
 
-    return $Self;
-}
-
-sub Run {
-    my ( $Self, %Param ) = @_;
-
-    # get the priority list
-    my %PriorityList = $Self->{PriorityObject}->PriorityList(
-        UserID => 1,
-    );
+    # get needed object
+    my $CIPAllocateObject = $Kernel::OM->Get('Kernel::System::ITSMCIPAllocate');
+    my $LayoutObject      = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
     # ------------------------------------------------------------ #
     # criticality, impact and priority allocation
@@ -91,7 +82,7 @@ sub Run {
                 $FieldName =~ s{ \s+ }{}gxms;
 
                 # get form param for priority id
-                my $PriorityID = $Self->{ParamObject}->GetParam(
+                my $PriorityID = $Kernel::OM->Get('Kernel::System::Web::Request')->GetParam(
                     Param => $FieldName,
                 ) || '';
 
@@ -102,12 +93,12 @@ sub Run {
         }
 
         # update allocations
-        $Self->{CIPAllocateObject}->AllocateUpdate(
+        $CIPAllocateObject->AllocateUpdate(
             AllocateData => $AllocateData,
             UserID       => 1,
         );
 
-        return $Self->{LayoutObject}->Redirect( OP => "Action=$Self->{Action}" );
+        return $LayoutObject->Redirect( OP => "Action=$Self->{Action}" );
     }
 
     # ------------------------------------------------------------ #
@@ -116,14 +107,14 @@ sub Run {
     else {
 
         # get allocation data
-        my $AllocateData = $Self->{CIPAllocateObject}->AllocateList(
+        my $AllocateData = $CIPAllocateObject->AllocateList(
             UserID => 1,
         );
 
         my $AllocateMatrix;
         $AllocateMatrix->[0]->[0]->{ObjectType} =
-            $Self->{LayoutObject}->{LanguageObject}->Get('Impact') . ' / '
-            . $Self->{LayoutObject}->{LanguageObject}->Get('Criticality');
+            $LayoutObject->{LanguageObject}->Translate('Impact') . ' / '
+            . $LayoutObject->{LanguageObject}->Translate('Criticality');
         $AllocateMatrix->[0]->[0]->{Class} = 'HeaderColumnDescription';
 
         # generate table description (Impact)
@@ -167,7 +158,7 @@ sub Run {
                 $FieldName =~ s{ \s+ }{}gxms;
 
                 # create option string
-                my $OptionStrg = $Self->{LayoutObject}->BuildSelection(
+                my $OptionStrg = $LayoutObject->BuildSelection(
                     Name       => $FieldName,
                     Data       => \%PriorityList,
                     SelectedID => $AllocateData->{$ImpactKey}->{$CriticalityKey} || '',
@@ -182,7 +173,7 @@ sub Run {
         for my $Row ( 0 .. $#{$AllocateMatrix} ) {
 
             if ( $Row != 0 ) {
-                $Self->{LayoutObject}->Block( Name => 'Row' )
+                $LayoutObject->Block( Name => 'Row' )
             }
 
             for my $Column ( 0 .. $#{ $AllocateMatrix->[$Row] } ) {
@@ -191,13 +182,13 @@ sub Run {
                 if ( $Row == 0 ) {
 
                     if ( $Column == 0 ) {
-                        $Self->{LayoutObject}->Block(
+                        $LayoutObject->Block(
                             Name => 'HeaderColumnDescription',
                             Data => $AllocateMatrix->[$Row]->[$Column],
                         );
                     }
                     else {
-                        $Self->{LayoutObject}->Block(
+                        $LayoutObject->Block(
                             Name => 'HeaderCell',
                             Data => $AllocateMatrix->[$Row]->[$Column],
                         );
@@ -206,13 +197,13 @@ sub Run {
 
                 # check if the column is description
                 elsif ( $Column == 0 ) {
-                    $Self->{LayoutObject}->Block(
+                    $LayoutObject->Block(
                         Name => 'DescriptionCell',
                         Data => $AllocateMatrix->[$Row]->[$Column],
                     );
                 }
                 else {
-                    $Self->{LayoutObject}->Block(
+                    $LayoutObject->Block(
                         Name => 'ContentCell',
                         Data => $AllocateMatrix->[$Row]->[$Column],
                     );
@@ -221,15 +212,15 @@ sub Run {
         }
 
         # output header and navbar
-        my $Output = $Self->{LayoutObject}->Header();
-        $Output .= $Self->{LayoutObject}->NavigationBar();
+        my $Output = $LayoutObject->Header();
+        $Output .= $LayoutObject->NavigationBar();
 
         # generate output
-        $Output .= $Self->{LayoutObject}->Output(
+        $Output .= $LayoutObject->Output(
             TemplateFile => 'AdminITSMCIPAllocate',
             Data         => \%Param,
         );
-        $Output .= $Self->{LayoutObject}->Footer();
+        $Output .= $LayoutObject->Footer();
 
         return $Output;
     }

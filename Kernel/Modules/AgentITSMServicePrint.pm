@@ -11,9 +11,7 @@ package Kernel::Modules::AgentITSMServicePrint;
 use strict;
 use warnings;
 
-use Kernel::System::PDF;
-use Kernel::System::Service;
-use Kernel::System::SLA;
+our $ObjectManagerDisabled = 1;
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -22,16 +20,6 @@ sub new {
     my $Self = {%Param};
     bless( $Self, $Type );
 
-    # check needed objects
-    for my $Object (qw(ConfigObject ParamObject DBObject LayoutObject LogObject)) {
-        if ( !$Self->{$Object} ) {
-            $Self->{LayoutObject}->FatalError( Message => "Got no $Object!" );
-        }
-    }
-    $Self->{PDFObject}     = Kernel::System::PDF->new(%Param);
-    $Self->{ServiceObject} = Kernel::System::Service->new(%Param);
-    $Self->{SLAObject}     = Kernel::System::SLA->new(%Param);
-
     return $Self;
 }
 
@@ -39,51 +27,63 @@ sub Run {
     my ( $Self, %Param ) = @_;
 
     # get params
-    my $ServiceID = $Self->{ParamObject}->GetParam( Param => 'ServiceID' );
+    my $ServiceID = $Kernel::OM->Get('Kernel::System::Web::Request')->GetParam( Param => 'ServiceID' );
+
+    # get layout object
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
     # check needed stuff
     if ( !$ServiceID ) {
-        return $Self->{LayoutObject}->ErrorScreen(
+        return $LayoutObject->ErrorScreen(
             Message => 'No ServiceID is given!',
             Comment => 'Please contact the admin.',
         );
     }
 
     # get service
-    my %Service = $Self->{ServiceObject}->ServiceGet(
+    my %Service = $Kernel::OM->Get('Kernel::System::Service')->ServiceGet(
         ServiceID     => $ServiceID,
         UserID        => $Self->{UserID},
         IncidentState => 1,
     );
     if ( !$Service{ServiceID} ) {
-        return $Self->{LayoutObject}->ErrorScreen(
+        return $LayoutObject->ErrorScreen(
             Message => "ServiceID $ServiceID not found in database!",
             Comment => 'Please contact the admin.',
         );
     }
 
     # get sla list
-    my %SLAList = $Self->{SLAObject}->SLAList(
+    my %SLAList = $Kernel::OM->Get('Kernel::System::SLA')->SLAList(
         ServiceID => $Service{ServiceID},
         UserID    => $Self->{UserID},
     );
 
+    # get user object
+    my $UserObject = $Kernel::OM->Get('Kernel::System::User');
+
     # get user data (create by)
-    $Service{CreateByName} = $Self->{UserObject}->UserName(
+    $Service{CreateByName} = $UserObject->UserName(
         UserID => $Service{CreateBy},
     );
 
     # get user data (change by)
-    $Service{ChangeByName} = $Self->{UserObject}->UserName(
+    $Service{ChangeByName} = $UserObject->UserName(
         UserID => $Service{ChangeBy},
     );
 
+    # get PDF object
+    my $PDFObject = $Kernel::OM->Get('Kernel::System::PDF');
+
     # generate pdf output
-    if ( $Self->{PDFObject} ) {
+    if ($PDFObject) {
         my %Page;
 
+        # get config object
+        my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+
         # get maximum number of pages
-        $Page{MaxPages} = $Self->{ConfigObject}->Get('PDF::MaxPages');
+        $Page{MaxPages} = $ConfigObject->Get('PDF::MaxPages');
         if ( !$Page{MaxPages} || $Page{MaxPages} < 1 || $Page{MaxPages} > 1000 ) {
             $Page{MaxPages} = 100;
         }
@@ -91,23 +91,23 @@ sub Run {
         $Page{MarginRight}   = 40;
         $Page{MarginBottom}  = 40;
         $Page{MarginLeft}    = 40;
-        $Page{HeaderRight}   = $Self->{LayoutObject}->{LanguageObject}->Get('Service');
+        $Page{HeaderRight}   = $LayoutObject->{LanguageObject}->Translate('Service');
         $Page{HeadlineLeft}  = $Service{NameShort};
-        $Page{HeadlineRight} = $Self->{LayoutObject}->{LanguageObject}->Get('printed by') . ' '
+        $Page{HeadlineRight} = $LayoutObject->{LanguageObject}->Translate('printed by') . ' '
             . $Self->{UserFullname} . ' '
-            . $Self->{LayoutObject}->Output( Template => '$Env{"Time"}' );
+            . $LayoutObject->{Time};
         $Page{FooterLeft} = '';
-        $Page{PageText}   = $Self->{LayoutObject}->{LanguageObject}->Get('Page');
+        $Page{PageText}   = $LayoutObject->{LanguageObject}->Translate('Page');
         $Page{PageCount}  = 1;
 
         # create new pdf document
-        $Self->{PDFObject}->DocumentNew(
-            Title  => $Self->{ConfigObject}->Get('Product') . ': ' . $Service{NameShort},
-            Encode => $Self->{LayoutObject}->{UserCharset},
+        $PDFObject->DocumentNew(
+            Title  => $ConfigObject->Get('Product') . ': ' . $Service{NameShort},
+            Encode => $LayoutObject->{UserCharset},
         );
 
         # create first pdf page
-        $Self->{PDFObject}->PageNew(
+        $PDFObject->PageNew(
             %Page,
             FooterRight => $Page{PageText} . ' ' . $Page{PageCount},
         );
@@ -134,12 +134,16 @@ sub Run {
         );
 
         # create file name
-        my $Filename = $Self->{MainObject}->FilenameCleanUp(
+        my $Filename = $Kernel::OM->Get('Kernel::System::Main')->FilenameCleanUp(
             Filename => $Service{NameShort},
             Type     => 'Attachment',
         );
-        my ( $s, $m, $h, $D, $M, $Y ) = $Self->{TimeObject}->SystemTime2Date(
-            SystemTime => $Self->{TimeObject}->SystemTime(),
+
+        # get time object
+        my $TimeObject = $Kernel::OM->Get('Kernel::System::Time');
+
+        my ( $s, $m, $h, $D, $M, $Y ) = $TimeObject->SystemTime2Date(
+            SystemTime => $TimeObject->SystemTime(),
         );
         $M = sprintf( "%02d", $M );
         $D = sprintf( "%02d", $D );
@@ -147,10 +151,10 @@ sub Run {
         $m = sprintf( "%02d", $m );
 
         # return the pdf document
-        return $Self->{LayoutObject}->Attachment(
+        return $LayoutObject->Attachment(
             Filename    => 'service_' . $Filename . "_$Y-$M-$D\_$h-$m.pdf",
             ContentType => 'application/pdf',
-            Content     => $Self->{PDFObject}->DocumentOutput(),
+            Content     => $PDFObject->DocumentOutput(),
             Type        => 'attachment',
         );
     }
@@ -159,13 +163,13 @@ sub Run {
     else {
 
         # output header
-        my $Output = $Self->{LayoutObject}->PrintHeader( Value => $Service{NameShort} );
+        my $Output = $LayoutObject->PrintHeader( Value => $Service{NameShort} );
 
         # output associated slas
         if ( keys %SLAList ) {
-            $Self->{LayoutObject}->Block( Name => "AssociatedSLAs" );
+            $LayoutObject->Block( Name => "AssociatedSLAs" );
             for my $SLAID ( sort keys %SLAList ) {
-                $Self->{LayoutObject}->Block(
+                $LayoutObject->Block(
                     Name => "AssociatedSLAsRow",
                     Data => {
                         Name => $SLAList{$SLAID},
@@ -175,13 +179,13 @@ sub Run {
         }
 
         # generate output
-        $Output .= $Self->{LayoutObject}->Output(
+        $Output .= $LayoutObject->Output(
             TemplateFile => 'AgentITSMServicePrint',
             Data         => \%Service,
         );
 
         # add footer
-        $Output .= $Self->{LayoutObject}->PrintFooter();
+        $Output .= $LayoutObject->PrintFooter();
 
         return $Output;
     }
@@ -193,7 +197,7 @@ sub _PDFOutputGeneralInfos {
     # check needed stuff
     for my $Argument (qw(Page Service)) {
         if ( !defined $Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!"
             );
@@ -201,14 +205,17 @@ sub _PDFOutputGeneralInfos {
         }
     }
 
+    # get layout object
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+
     # create left table
     my $TableLeft = [
         {
-            Key   => $Self->{LayoutObject}->{LanguageObject}->Get('Service') . ':',
+            Key   => $LayoutObject->{LanguageObject}->Translate('Service') . ':',
             Value => $Param{Service}->{NameShort},
         },
         {
-            Key   => $Self->{LayoutObject}->{LanguageObject}->Get('Current Incident State') . ':',
+            Key   => $LayoutObject->{LanguageObject}->Translate('Current Incident State') . ':',
             Value => $Param{Service}->{CurInciState},
         },
     ];
@@ -216,25 +223,25 @@ sub _PDFOutputGeneralInfos {
     # create right table
     my $TableRight = [
         {
-            Key   => $Self->{LayoutObject}->{LanguageObject}->Get('Created') . ':',
-            Value => $Self->{LayoutObject}->Output(
+            Key   => $LayoutObject->{LanguageObject}->Translate('Created') . ':',
+            Value => $LayoutObject->Output(
                 Template => '[% Data.CreateTime | Localize("TimeLong") %]',
                 Data     => \%{ $Param{Service} },
             ),
         },
         {
-            Key   => $Self->{LayoutObject}->{LanguageObject}->Get('Created by') . ':',
+            Key   => $LayoutObject->{LanguageObject}->Translate('Created by') . ':',
             Value => $Param{Service}->{CreateByName},
         },
         {
-            Key   => $Self->{LayoutObject}->{LanguageObject}->Get('Last changed') . ':',
-            Value => $Self->{LayoutObject}->Output(
+            Key   => $LayoutObject->{LanguageObject}->Translate('Last changed') . ':',
+            Value => $LayoutObject->Output(
                 Template => '[% Data.ChangeTime | Localize("TimeLong") %]',
                 Data     => \%{ $Param{Service} },
             ),
         },
         {
-            Key   => $Self->{LayoutObject}->{LanguageObject}->Get('Last changed by') . ':',
+            Key   => $LayoutObject->{LanguageObject}->Translate('Last changed by') . ':',
             Value => $Param{Service}->{CreateByName},
         },
     ];
@@ -270,17 +277,20 @@ sub _PDFOutputGeneralInfos {
     $TableParam{PaddingTop}           = 3;
     $TableParam{PaddingBottom}        = 3;
 
+    # get PDF object
+    my $PDFObject = $Kernel::OM->Get('Kernel::System::PDF');
+
     # output table
     PAGE:
     for ( $Param{Page}->{PageCount} .. $Param{Page}->{MaxPages} ) {
 
         # output table (or a fragment of it)
-        %TableParam = $Self->{PDFObject}->Table(%TableParam);
+        %TableParam = $PDFObject->Table(%TableParam);
 
         # stop output or output next page
         last PAGE if $TableParam{State};
 
-        $Self->{PDFObject}->PageNew(
+        $PDFObject->PageNew(
             %{ $Param{Page} },
             FooterRight => $Param{Page}->{PageText} . ' ' . $Param{Page}->{PageCount}
         );
@@ -296,7 +306,7 @@ sub _PDFOutputDetailedInfos {
     # check needed stuff
     for my $Argument (qw(Page Service)) {
         if ( !defined $Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!"
             );
@@ -304,15 +314,21 @@ sub _PDFOutputDetailedInfos {
         }
     }
 
+    # get PDF object
+    my $PDFObject = $Kernel::OM->Get('Kernel::System::PDF');
+
     # set new position
-    $Self->{PDFObject}->PositionSet(
+    $PDFObject->PositionSet(
         Move => 'relativ',
         Y    => -15,
     );
 
+    # get layout object
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+
     # output headline
-    $Self->{PDFObject}->Text(
-        Text     => $Self->{LayoutObject}->{LanguageObject}->Get('Service'),
+    $PDFObject->Text(
+        Text     => $LayoutObject->{LanguageObject}->Translate('Service'),
         Height   => 7,
         Type     => 'Cut',
         Font     => 'ProportionalBoldItalic',
@@ -321,7 +337,7 @@ sub _PDFOutputDetailedInfos {
     );
 
     # set new position
-    $Self->{PDFObject}->PositionSet(
+    $PDFObject->PositionSet(
         Move => 'relativ',
         Y    => -4,
     );
@@ -329,16 +345,16 @@ sub _PDFOutputDetailedInfos {
     # create table
     my $Table = [
         {
-            Key   => $Self->{LayoutObject}->{LanguageObject}->Get('Service') . ':',
+            Key   => $LayoutObject->{LanguageObject}->Translate('Service') . ':',
             Value => $Param{Service}->{Name},
         },
         {
-            Key   => $Self->{LayoutObject}->{LanguageObject}->Get('Type') . ':',
-            Value => $Self->{LayoutObject}->{LanguageObject}->Get( $Param{Service}->{Type} ),
+            Key   => $LayoutObject->{LanguageObject}->Translate('Type') . ':',
+            Value => $LayoutObject->{LanguageObject}->Translate( $Param{Service}->{Type} ),
         },
         {
-            Key   => $Self->{LayoutObject}->{LanguageObject}->Get('Criticality') . ':',
-            Value => $Self->{LayoutObject}->{LanguageObject}->Get( $Param{Service}->{Criticality} ),
+            Key   => $LayoutObject->{LanguageObject}->Translate('Criticality') . ':',
+            Value => $LayoutObject->{LanguageObject}->Translate( $Param{Service}->{Criticality} ),
         },
     ];
     my %TableParam;
@@ -364,12 +380,12 @@ sub _PDFOutputDetailedInfos {
     for ( $Param{Page}->{PageCount} .. $Param{Page}->{MaxPages} ) {
 
         # output table (or a fragment of it)
-        %TableParam = $Self->{PDFObject}->Table(%TableParam);
+        %TableParam = $PDFObject->Table(%TableParam);
 
         # stop output or output next page
         last PAGE if $TableParam{State};
 
-        $Self->{PDFObject}->PageNew(
+        $PDFObject->PageNew(
             %{ $Param{Page} },
             FooterRight => $Param{Page}->{PageText} . ' ' . $Param{Page}->{PageCount}
         );
@@ -385,7 +401,7 @@ sub _PDFOutputAssociatedSLAs {
     # check needed stuff
     for my $Argument (qw(Page SLAList)) {
         if ( !defined $Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!"
             );
@@ -396,9 +412,12 @@ sub _PDFOutputAssociatedSLAs {
     my %TableParam;
     my $Row = 0;
 
+    # get layout object
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+
     # generate table data
     for my $SLAID ( sort keys %{ $Param{SLAList} } ) {
-        $TableParam{CellData}[$Row][0]{Content} = $Self->{LayoutObject}->{LanguageObject}->Get('SLA') . ':';
+        $TableParam{CellData}[$Row][0]{Content} = $LayoutObject->{LanguageObject}->Translate('SLA') . ':';
         $TableParam{CellData}[$Row][0]{Font}    = 'ProportionalBold';
         $TableParam{CellData}[$Row][1]{Content} = $Param{SLAList}->{$SLAID};
         $Row++;
@@ -406,15 +425,18 @@ sub _PDFOutputAssociatedSLAs {
     $TableParam{ColumnData}[0]{Width} = 80;
     $TableParam{ColumnData}[1]{Width} = 431;
 
+    # get PDF object
+    my $PDFObject = $Kernel::OM->Get('Kernel::System::PDF');
+
     # set new position
-    $Self->{PDFObject}->PositionSet(
+    $PDFObject->PositionSet(
         Move => 'relativ',
         Y    => -15,
     );
 
     # output headline
-    $Self->{PDFObject}->Text(
-        Text     => $Self->{LayoutObject}->{LanguageObject}->Get('Associated SLAs'),
+    $PDFObject->Text(
+        Text     => $LayoutObject->{LanguageObject}->Translate('Associated SLAs'),
         Height   => 7,
         Type     => 'Cut',
         Font     => 'ProportionalBoldItalic',
@@ -423,7 +445,7 @@ sub _PDFOutputAssociatedSLAs {
     );
 
     # set new position
-    $Self->{PDFObject}->PositionSet(
+    $PDFObject->PositionSet(
         Move => 'relativ',
         Y    => -4,
     );
@@ -442,12 +464,12 @@ sub _PDFOutputAssociatedSLAs {
     for ( $Param{Page}->{PageCount} .. $Param{Page}->{MaxPages} ) {
 
         # output table (or a fragment of it)
-        %TableParam = $Self->{PDFObject}->Table(%TableParam);
+        %TableParam = $PDFObject->Table(%TableParam);
 
         # stop output or output next page
         last PAGE if $TableParam{State};
 
-        $Self->{PDFObject}->PageNew(
+        $PDFObject->PageNew(
             %{ $Param{Page} },
             FooterRight => $Param{Page}->{PageText} . ' ' . $Param{Page}->{PageCount}
         );
