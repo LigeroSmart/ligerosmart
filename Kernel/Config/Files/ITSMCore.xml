@@ -11,7 +11,7 @@
                 <Title>Criticality &lt;-&gt; Impact &lt;-&gt; Priority</Title>
                 <NavBarName>Admin</NavBarName>
                 <NavBarModule>
-                    <Module>Kernel::Output::HTML::NavBarModuleAdmin</Module>
+                    <Module>Kernel::Output::HTML::NavBar::ModuleAdmin</Module>
                     <Name Translatable="1">Criticality &lt;-&gt; Impact &lt;-&gt; Priority</Name>
                     <Block>System</Block>
                     <Prio>430</Prio>
@@ -378,7 +378,7 @@
         <SubGroup>GeneralCatalog::Preferences</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::Output::HTML::GeneralCatalogPreferencesGeneric</Item>
+                <Item Key="Module">Kernel::Output::HTML::GeneralCatalogPreferences::Generic</Item>
                 <Item Key="Class">ITSM::Core::IncidentState</Item>
                 <Item Key="Label">Incident State Type</Item>
                 <Item Key="Desc">Incident State Type.</Item>
