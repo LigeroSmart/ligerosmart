@@ -6,31 +6,27 @@
 // did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 // --
 
-
-// TODO:
-//Remove this line and fix JSDoc
-// nofilter(TidyAll::Plugin::OTRS::JavaScript::ESLint)
-
-
-
 "use strict";
 
 var ITSM = ITSM || {};
 ITSM.Agent = ITSM.Agent || {};
 
 /**
- * @namespace
- * @exports TargetNS as ITSM.Agent.CABMemberSearch
+ * @namespace ITSM.Agent.CABMemberSearch
+ * @memberof ITSM.Agent
+ * @author OTRS AG
  * @description
  *      This namespace contains the special module functions for the CAB search.
  */
 ITSM.Agent.CABMemberSearch = (function (TargetNS) {
 
     /**
+     * @name Init
+     * @memberof ITSM.Agent.CABMemberSearch
      * @function
-     * @param {jQueryObject} $Element The jQuery object of the input field with autocomplete
-     * @return nothing
-     *      This function initializes the special module functions
+     * @param {jQueryObject} $Element - The jQuery object of the input field with autocomplete.
+     * @description
+            This function initializes the special module functions.
      */
     TargetNS.Init = function ($Element) {
 
