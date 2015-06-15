@@ -541,8 +541,7 @@ sub _OutputHeadline {
 
     if ( $Self->{PDFObject} ) {
         my $PrintedBy = $Self->{LayoutObject}->{LanguageObject}->Translate('printed by');
-        my $Time = $Self->{LayoutObject}->Output( Template => '$Env{"Time"}' );
-
+        my $Time = $Self->{LayoutObject}->{Time};
         my $UserFullName = $Self->{UserObject}->UserName(
             UserID => $Self->{UserID},
         );
