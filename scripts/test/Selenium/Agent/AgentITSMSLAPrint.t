@@ -30,7 +30,7 @@ $Selenium->RunTest(
         $Kernel::OM->Get('Kernel::System::SysConfig')->ConfigItemUpdate(
             Valid => 1,
             Key   => 'PDF',
-            Value => 1
+            Value => 1,
         );
 
         # create and log in test user
