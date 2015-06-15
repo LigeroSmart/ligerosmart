@@ -501,16 +501,16 @@ sub _PDFOutputTicketInfos {
 # ---
     my $TableLeftExtended = [
         {
-            Key => $Self->{LayoutObject}->{LanguageObject}->Translate('Criticality') . ':',
-            Value => $Self->{LayoutObject}->{LanguageObject}->Translate($Ticket{Criticality}),
+            Key => $LayoutObject->{LanguageObject}->Translate('Criticality') . ':',
+            Value => $LayoutObject->{LanguageObject}->Translate($Ticket{Criticality}),
         },
         {
-            Key => $Self->{LayoutObject}->{LanguageObject}->Translate('Impact') . ':',
-            Value => $Self->{LayoutObject}->{LanguageObject}->Translate($Ticket{Impact}),
+            Key => $LayoutObject->{LanguageObject}->Translate('Impact') . ':',
+            Value => $LayoutObject->{LanguageObject}->Translate($Ticket{Impact}),
         },
         {
-            Key => $Self->{LayoutObject}->{LanguageObject}->Translate('Priority') . ':',
-            Value => $Self->{LayoutObject}->{LanguageObject}->Translate($Ticket{Priority}),
+            Key => $LayoutObject->{LanguageObject}->Translate('Priority') . ':',
+            Value => $LayoutObject->{LanguageObject}->Translate($Ticket{Priority}),
         },
     ];
     push @{$TableLeft}, @{$TableLeftExtended};

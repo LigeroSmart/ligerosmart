@@ -41,18 +41,25 @@
         <File Permission="644" Location="Kernel/Modules/AgentTicketPrint.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentTicketZoom.pm"/>
         <File Permission="644" Location="Kernel/Modules/CustomerTicketPrint.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AAAITSMIncidentProblemManagement.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTicketActionCommon.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTicketAddtlITSMField.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTicketDecision.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTicketEmail.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTicketOverviewMedium.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTicketOverviewPreview.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTicketPhone.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTicketPrint.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTicketZoom.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/CustomerTicketPrint.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/CustomerTicketZoom.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AAAITSMIncidentProblemManagement.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentTicketActionCommon.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentTicketAddtlITSMField.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentTicketDecision.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentTicketEmail.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentTicketOverviewMedium.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentTicketOverviewPreview.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentTicketPhone.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentTicketPrint.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentTicketZoom.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/CustomerTicketPrint.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/CustomerTicketZoom.tt"/>
+        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentTicketDecision.t"/>
+        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMReviewRequired.t"/>
+        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentTicketAddtlITSMField.t"/>
+        <File Permission="644" Location="scripts/test/Selenium/Agent/ITSMIncidentProblemManagement/AgentTicketPrint.t"/>
+        <File Permission="644" Location="scripts/test/Selenium/Agent/ITSMIncidentProblemManagement/AgentTicketEmail.t"/>
+        <File Permission="644" Location="scripts/test/Selenium/Agent/ITSMIncidentProblemManagement/CustomerTicketPrint.t"/>
+        <File Permission="644" Location="scripts/test/Selenium/Agent/ITSMIncidentProblemManagement/AgentTicketPhone.t"/>
         <File Permission="644" Location="Kernel/Output/HTML/TicketOverview/Medium.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/TicketOverview/Preview.pm"/>
         <File Permission="644" Location="Kernel/System/Stats/Dynamic/ITSMTicketFirstLevelSolutionRate.pm"/>
