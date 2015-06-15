@@ -26,11 +26,11 @@ $Selenium->RunTest(
         );
         my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 
-        # disable PDF output
+        # enable PDF output
         $Kernel::OM->Get('Kernel::System::SysConfig')->ConfigItemUpdate(
             Valid => 1,
             Key   => 'PDF',
-            Value => 0
+            Value => 1
         );
 
         # create and log in test user
@@ -61,15 +61,25 @@ $Selenium->RunTest(
         $Selenium->get("${ScriptAlias}index.pl?Action=AgentITSMServiceZoom;ServiceID=$ServiceID");
 
         # click on print
-        $Selenium->find_element("//a[contains(\@href, \'Action=AgentITSMServicePrint;ServiceID=$ServiceID\' )]");
+        $Selenium->find_element("//a[contains(\@href, \'Action=AgentITSMServicePrint;ServiceID=$ServiceID\' )]")
+            ->click();
 
         # switch to another window
         my $Handles = $Selenium->get_window_handles();
         $Selenium->switch_to_window( $Handles->[1] );
 
+        # wait until print screen is loaded
+        ACTIVESLEEP:
+        for my $Second ( 1 .. 20 ) {
+            if ( index( $Selenium->get_page_source(), "printed by" ) > -1, ) {
+                last ACTIVESLEEP;
+            }
+            sleep 1;
+        }
+
         # check for printed values of test service
         $Self->True(
-            index( $Selenium->get_page_source(), "Service: $ServiceName" ) > -1,
+            index( $Selenium->get_page_source(), "$ServiceName" ) > -1,
             "Service: $ServiceName - found",
         );
         $Self->True(

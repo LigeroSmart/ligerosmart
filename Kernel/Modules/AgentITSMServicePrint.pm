@@ -155,7 +155,7 @@ sub Run {
             Filename    => 'service_' . $Filename . "_$Y-$M-$D\_$h-$m.pdf",
             ContentType => 'application/pdf',
             Content     => $PDFObject->DocumentOutput(),
-            Type        => 'attachment',
+            Type        => 'inline',
         );
     }
 

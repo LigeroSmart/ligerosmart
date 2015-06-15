@@ -26,11 +26,11 @@ $Selenium->RunTest(
         );
         my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 
-        # disable PDF output
+        # make sure PDF is enabled
         $Kernel::OM->Get('Kernel::System::SysConfig')->ConfigItemUpdate(
             Valid => 1,
             Key   => 'PDF',
-            Value => 0
+            Value => 1
         );
 
         # create and log in test user
@@ -62,16 +62,25 @@ $Selenium->RunTest(
         # navigate to AgentITSMSLAZoom screen
         $Selenium->get("${ScriptAlias}index.pl?Action=AgentITSMSLAZoom;SLAID=$SLAID");
 
-        # click on print
-        $Selenium->find_element("//a[contains(\@href, \'Action=AgentITSMSLAPrint;SLAID=$SLAID\' )]");
+        # click on print menu
+        $Selenium->find_element("//a[contains(\@href, \'Action=AgentITSMSLAPrint;SLAID=$SLAID\' )]")->click();
 
         # switch to another window
         my $Handles = $Selenium->get_window_handles();
         $Selenium->switch_to_window( $Handles->[1] );
 
+        # wait until print screen is loaded
+        ACTIVESLEEP:
+        for my $Second ( 1 .. 20 ) {
+            if ( index( $Selenium->get_page_source(), "printed by" ) > -1, ) {
+                last ACTIVESLEEP;
+            }
+            sleep 1;
+        }
+
         # check for printed values of test SLA
         $Self->True(
-            index( $Selenium->get_page_source(), "SLA: $SLAName" ) > -1,
+            index( $Selenium->get_page_source(), "$SLAName" ) > -1,
             "Service: $SLAName - found",
         );
         $Self->True(
@@ -100,7 +109,6 @@ $Selenium->RunTest(
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp(
             Type => 'SLA'
         );
-
     }
 );
 
