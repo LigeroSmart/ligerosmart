@@ -89,6 +89,7 @@ sub FormInputCreate {
         Data         => $Param{Item}->{Input}->{Data} || {},
         SelectedID   => $Param{Value},
         Translation  => $Param{Item}->{Input}->{Translation},
+        TreeView     => $Param{Item}->{Input}->{TreeView} || 0,
         PossibleNone => $Param{Item}->{Input}->{PossibleNone},
         Multiple     => $Param{Item}->{Input}->{Multiple},
         Size         => $Param{Item}->{Input}->{Size},
