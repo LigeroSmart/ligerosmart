@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2015 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/bc2139dd409b8aa286e5bbfe797bf8496a312ab0/scripts/test/Console/Command/Admin/Service/Add.t
+# $origin: https://github.com/OTRS/otrs/blob/621383628fec5fada6fd47d4606d99c92bbd53b6/scripts/test/Console/Command/Admin/Service/Add.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -34,7 +34,7 @@ $Self->Is(
 # ---
 # ITSM
 # ---
-# $ExitCode = $CommandObject->Execute( '--name', $RandomName );
+#$ExitCode = $CommandObject->Execute( '--name', $RandomName );
 $ExitCode = $CommandObject->Execute( '--name', $RandomName, '--criticality', '3 normal', '--type', 'Demonstration' );
 # ---
 $Self->Is(
@@ -47,7 +47,7 @@ $Self->Is(
 # ---
 # ITSM
 # ---
-# $ExitCode = $CommandObject->Execute( '--name', $RandomName );
+#$ExitCode = $CommandObject->Execute( '--name', $RandomName );
 $ExitCode = $CommandObject->Execute( '--name', $RandomName, '--criticality', '3 normal', '--type', 'Demonstration' );
 # ---
 $Self->Is(
@@ -60,7 +60,7 @@ $Self->Is(
 # ---
 # ITSM
 # ---
-# $ExitCode = $CommandObject->Execute( '--name', $RandomName2, '--parent-name', $RandomName2 );
+#$ExitCode = $CommandObject->Execute( '--name', $RandomName2, '--parent-name', $RandomName2 );
 $ExitCode = $CommandObject->Execute( '--name', $RandomName2, '--parent-name', $RandomName2, '--criticality', '3 normal', '--type', 'Demonstration' );
 # ---
 $Self->Is(
@@ -73,7 +73,7 @@ $Self->Is(
 # ---
 # ITSM
 # ---
-# $ExitCode = $CommandObject->Execute( '--name', $RandomName2, '--parent-name', $RandomName );
+#$ExitCode = $CommandObject->Execute( '--name', $RandomName2, '--parent-name', $RandomName );
 $ExitCode = $CommandObject->Execute( '--name', $RandomName2, '--parent-name', $RandomName, '--criticality', '3 normal', '--type', 'Demonstration' );
 # ---
 $Self->Is(
