@@ -16,7 +16,6 @@ our @ObjectDependencies = (
     'Kernel::System::CheckItem',
     'Kernel::System::DB',
     'Kernel::System::Log',
-    'Kernel::System::Main',
 );
 
 =head1 NAME
@@ -93,15 +92,18 @@ sub TemplateList {
     # add order option
     $SQL .= 'ORDER BY id';
 
+    # get DB object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
     # ask database
-    $Kernel::OM->Get('Kernel::System::DB')->Prepare(
+    $DBObject->Prepare(
         SQL  => $SQL,
         Bind => \@BIND,
     );
 
     # fetch the result
     my @TemplateList;
-    while ( my @Row = $Kernel::OM->Get('Kernel::System::DB')->FetchrowArray() ) {
+    while ( my @Row = $DBObject->FetchrowArray() ) {
         push @TemplateList, $Row[0];
     }
 
@@ -150,8 +152,11 @@ sub TemplateGet {
     return $Self->{Cache}->{TemplateGet}->{ $Param{TemplateID} }
         if $Self->{Cache}->{TemplateGet}->{ $Param{TemplateID} };
 
+    # get DB object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
     # ask database
-    $Kernel::OM->Get('Kernel::System::DB')->Prepare(
+    $DBObject->Prepare(
         SQL => 'SELECT id, imexport_object, imexport_format, name, valid_id, comments, '
             . 'create_time, create_by, change_time, change_by FROM imexport_template WHERE id = ?',
         Bind  => [ \$Param{TemplateID} ],
@@ -160,7 +165,7 @@ sub TemplateGet {
 
     # fetch the result
     my %TemplateData;
-    while ( my @Row = $Kernel::OM->Get('Kernel::System::DB')->FetchrowArray() ) {
+    while ( my @Row = $DBObject->FetchrowArray() ) {
         $TemplateData{TemplateID} = $Row[0];
         $TemplateData{Object}     = $Row[1];
         $TemplateData{Format}     = $Row[2];
@@ -199,10 +204,13 @@ add a new import/export template
 sub TemplateAdd {
     my ( $Self, %Param ) = @_;
 
+    # get log object
+    my $LogObject = $Kernel::OM->Get('Kernel::System::Log');
+
     # check needed stuff
     for my $Argument (qw(Object Format Name ValidID UserID)) {
         if ( !$Param{$Argument} ) {
-            $Kernel::OM->Get('Kernel::System::Log')->Log(
+            $LogObject->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -213,9 +221,12 @@ sub TemplateAdd {
     # set default values
     $Param{Comment} ||= '';
 
+    # get CheckItem object
+    my $CheckItemObject = $Kernel::OM->Get('Kernel::System::CheckItem');
+
     # cleanup given params
     for my $Argument (qw(Object Format)) {
-        $Kernel::OM->Get('Kernel::System::CheckItem')->StringClean(
+        $CheckItemObject->StringClean(
             StringRef         => \$Param{$Argument},
             RemoveAllNewlines => 1,
             RemoveAllTabs     => 1,
@@ -223,15 +234,18 @@ sub TemplateAdd {
         );
     }
     for my $Argument (qw(Name Comment)) {
-        $Kernel::OM->Get('Kernel::System::CheckItem')->StringClean(
+        $CheckItemObject->StringClean(
             StringRef         => \$Param{$Argument},
             RemoveAllNewlines => 1,
             RemoveAllTabs     => 1,
         );
     }
 
+    # get DB object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
     # find exiting template with same name
-    $Kernel::OM->Get('Kernel::System::DB')->Prepare(
+    $DBObject->Prepare(
         SQL   => 'SELECT id FROM imexport_template WHERE imexport_object = ? AND name = ?',
         Bind  => [ \$Param{Object}, \$Param{Name} ],
         Limit => 1,
@@ -239,13 +253,13 @@ sub TemplateAdd {
 
     # fetch the result
     my $NoAdd;
-    while ( $Kernel::OM->Get('Kernel::System::DB')->FetchrowArray() ) {
+    while ( $DBObject->FetchrowArray() ) {
         $NoAdd = 1;
     }
 
     # abort insert of new template, if template name already exists
     if ($NoAdd) {
-        $Kernel::OM->Get('Kernel::System::Log')->Log(
+        $LogObject->Log(
             Priority => 'error',
             Message =>
                 "Can't add new template! Template with same name already exists in this object.",
@@ -254,7 +268,7 @@ sub TemplateAdd {
     }
 
     # insert new template
-    return if !$Kernel::OM->Get('Kernel::System::DB')->Do(
+    return if !$DBObject->Do(
         SQL => 'INSERT INTO imexport_template '
             . '(imexport_object, imexport_format, name, valid_id, comments, '
             . 'create_time, create_by, change_time, change_by) VALUES '
@@ -266,7 +280,7 @@ sub TemplateAdd {
     );
 
     # find id of new template
-    $Kernel::OM->Get('Kernel::System::DB')->Prepare(
+    $DBObject->Prepare(
         SQL   => 'SELECT id FROM imexport_template WHERE imexport_object = ? AND name = ?',
         Bind  => [ \$Param{Object}, \$Param{Name} ],
         Limit => 1,
@@ -274,7 +288,7 @@ sub TemplateAdd {
 
     # fetch the result
     my $TemplateID;
-    while ( my @Row = $Kernel::OM->Get('Kernel::System::DB')->FetchrowArray() ) {
+    while ( my @Row = $DBObject->FetchrowArray() ) {
         $TemplateID = $Row[0];
     }
 
@@ -298,10 +312,13 @@ update a existing import/export template
 sub TemplateUpdate {
     my ( $Self, %Param ) = @_;
 
+    # get log object
+    my $LogObject = $Kernel::OM->Get('Kernel::System::Log');
+
     # check needed stuff
     for my $Argument (qw(TemplateID Name ValidID UserID)) {
         if ( !$Param{$Argument} ) {
-            $Kernel::OM->Get('Kernel::System::Log')->Log(
+            $LogObject->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -321,8 +338,11 @@ sub TemplateUpdate {
         );
     }
 
+    # get DB object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
     # get the object of this template id
-    $Kernel::OM->Get('Kernel::System::DB')->Prepare(
+    $DBObject->Prepare(
         SQL   => 'SELECT imexport_object FROM imexport_template WHERE id = ?',
         Bind  => [ \$Param{TemplateID} ],
         Limit => 1,
@@ -330,12 +350,12 @@ sub TemplateUpdate {
 
     # fetch the result
     my $Object;
-    while ( my @Row = $Kernel::OM->Get('Kernel::System::DB')->FetchrowArray() ) {
+    while ( my @Row = $DBObject->FetchrowArray() ) {
         $Object = $Row[0];
     }
 
     if ( !$Object ) {
-        $Kernel::OM->Get('Kernel::System::Log')->Log(
+        $LogObject->Log(
             Priority => 'error',
             Message  => "Can't update template because it hasn't been found!",
         );
@@ -343,7 +363,7 @@ sub TemplateUpdate {
     }
 
     # find exiting template with same name
-    $Kernel::OM->Get('Kernel::System::DB')->Prepare(
+    $DBObject->Prepare(
         SQL   => 'SELECT id FROM imexport_template WHERE imexport_object = ? AND name = ?',
         Bind  => [ \$Object, \$Param{Name} ],
         Limit => 1,
@@ -351,14 +371,14 @@ sub TemplateUpdate {
 
     # fetch the result
     my $Update = 1;
-    while ( my @Row = $Kernel::OM->Get('Kernel::System::DB')->FetchrowArray() ) {
+    while ( my @Row = $DBObject->FetchrowArray() ) {
         if ( $Param{TemplateID} ne $Row[0] ) {
             $Update = 0;
         }
     }
 
     if ( !$Update ) {
-        $Kernel::OM->Get('Kernel::System::Log')->Log(
+        $LogObject->Log(
             Priority => 'error',
             Message =>
                 "Can't update template! Template with same name already exists in this object.",
@@ -370,7 +390,7 @@ sub TemplateUpdate {
     delete $Self->{Cache}->{TemplateGet}->{ $Param{TemplateID} };
 
     # update template
-    return $Kernel::OM->Get('Kernel::System::DB')->Do(
+    return $DBObject->Do(
         SQL => 'UPDATE imexport_template SET name = ?,'
             . 'valid_id = ?, comments = ?, '
             . 'change_time = current_timestamp, change_by = ? '
@@ -403,10 +423,13 @@ delete existing import/export templates
 sub TemplateDelete {
     my ( $Self, %Param ) = @_;
 
+    # get log object
+    my $LogObject = $Kernel::OM->Get('Kernel::System::Log');
+
     # check needed stuff
     for my $Argument (qw(TemplateID UserID)) {
         if ( !$Param{$Argument} ) {
-            $Kernel::OM->Get('Kernel::System::Log')->Log(
+            $LogObject->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -418,7 +441,7 @@ sub TemplateDelete {
         $Param{TemplateID} = [ $Param{TemplateID} ];
     }
     elsif ( ref $Param{TemplateID} ne 'ARRAY' ) {
-        $Kernel::OM->Get('Kernel::System::Log')->Log(
+        $LogObject->Log(
             Priority => 'error',
             Message  => 'TemplateID must be an array reference or a string!',
         );
@@ -507,10 +530,13 @@ get the attributes of an object backend as array/hash reference
 sub ObjectAttributesGet {
     my ( $Self, %Param ) = @_;
 
+    # get log object
+    my $LogObject = $Kernel::OM->Get('Kernel::System::Log');
+
     # check needed stuff
     for my $Argument (qw(TemplateID UserID)) {
         if ( !$Param{$Argument} ) {
-            $Kernel::OM->Get('Kernel::System::Log')->Log(
+            $LogObject->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -526,7 +552,7 @@ sub ObjectAttributesGet {
 
     # check template data
     if ( !$TemplateData || !$TemplateData->{Object} ) {
-        $Kernel::OM->Get('Kernel::System::Log')->Log(
+        $LogObject->Log(
             Priority => 'error',
             Message  => "Template with ID $Param{TemplateID} is incomplete!",
         );
@@ -573,15 +599,18 @@ sub ObjectDataGet {
         }
     }
 
+    # get DB object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
     # ask database
-    $Kernel::OM->Get('Kernel::System::DB')->Prepare(
+    $DBObject->Prepare(
         SQL  => 'SELECT data_key, data_value FROM imexport_object WHERE template_id = ?',
         Bind => [ \$Param{TemplateID} ],
     );
 
     # fetch the result
     my %ObjectData;
-    while ( my @Row = $Kernel::OM->Get('Kernel::System::DB')->FetchrowArray() ) {
+    while ( my @Row = $DBObject->FetchrowArray() ) {
         $ObjectData{ $Row[0] } = $Row[1];
     }
 
@@ -603,10 +632,13 @@ save the object data of a template
 sub ObjectDataSave {
     my ( $Self, %Param ) = @_;
 
+    # get log object
+    my $LogObject = $Kernel::OM->Get('Kernel::System::Log');
+
     # check needed stuff
     for my $Argument (qw(TemplateID ObjectData UserID)) {
         if ( !$Param{$Argument} ) {
-            $Kernel::OM->Get('Kernel::System::Log')->Log(
+            $LogObject->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -615,7 +647,7 @@ sub ObjectDataSave {
     }
 
     if ( ref $Param{ObjectData} ne 'HASH' ) {
-        $Kernel::OM->Get('Kernel::System::Log')->Log(
+        $LogObject->Log(
             Priority => 'error',
             Message  => 'ObjectData must be a hash reference!',
         );
@@ -669,10 +701,13 @@ delete the existing object data of a template
 sub ObjectDataDelete {
     my ( $Self, %Param ) = @_;
 
+    # get log object
+    my $LogObject = $Kernel::OM->Get('Kernel::System::Log');
+
     # check needed stuff
     for my $Argument (qw(TemplateID UserID)) {
         if ( !$Param{$Argument} ) {
-            $Kernel::OM->Get('Kernel::System::Log')->Log(
+            $LogObject->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -684,7 +719,7 @@ sub ObjectDataDelete {
         $Param{TemplateID} = [ $Param{TemplateID} ];
     }
     elsif ( ref $Param{TemplateID} ne 'ARRAY' ) {
-        $Kernel::OM->Get('Kernel::System::Log')->Log(
+        $LogObject->Log(
             Priority => 'error',
             Message  => 'TemplateID must be an array reference or a string!',
         );
@@ -744,10 +779,13 @@ get the attributes of a format backend as array/hash reference
 sub FormatAttributesGet {
     my ( $Self, %Param ) = @_;
 
+    # get log object
+    my $LogObject = $Kernel::OM->Get('Kernel::System::Log');
+
     # check needed stuff
     for my $Argument (qw(TemplateID UserID)) {
         if ( !$Param{$Argument} ) {
-            $Kernel::OM->Get('Kernel::System::Log')->Log(
+            $LogObject->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -763,7 +801,7 @@ sub FormatAttributesGet {
 
     # check template data
     if ( !$TemplateData || !$TemplateData->{Format} ) {
-        $Kernel::OM->Get('Kernel::System::Log')->Log(
+        $LogObject->Log(
             Priority => 'error',
             Message  => "Template with ID $Param{TemplateID} is incomplete!",
         );
@@ -810,15 +848,18 @@ sub FormatDataGet {
         }
     }
 
+    # get DB object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
     # ask database
-    $Kernel::OM->Get('Kernel::System::DB')->Prepare(
+    $DBObject->Prepare(
         SQL  => 'SELECT data_key, data_value FROM imexport_format WHERE template_id = ?',
         Bind => [ \$Param{TemplateID} ],
     );
 
     # fetch the result
     my %FormatData;
-    while ( my @Row = $Kernel::OM->Get('Kernel::System::DB')->FetchrowArray() ) {
+    while ( my @Row = $DBObject->FetchrowArray() ) {
         $FormatData{ $Row[0] } = $Row[1];
     }
 
@@ -840,10 +881,13 @@ save the format data of a template
 sub FormatDataSave {
     my ( $Self, %Param ) = @_;
 
+    # get log object
+    my $LogObject = $Kernel::OM->Get('Kernel::System::Log');
+
     # check needed stuff
     for my $Argument (qw(TemplateID FormatData UserID)) {
         if ( !$Param{$Argument} ) {
-            $Kernel::OM->Get('Kernel::System::Log')->Log(
+            $LogObject->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -852,7 +896,7 @@ sub FormatDataSave {
     }
 
     if ( ref $Param{FormatData} ne 'HASH' ) {
-        $Kernel::OM->Get('Kernel::System::Log')->Log(
+        $LogObject->Log(
             Priority => 'error',
             Message  => 'FormatData must be a hash reference!',
         );
@@ -905,10 +949,13 @@ delete the existing format data of a template
 sub FormatDataDelete {
     my ( $Self, %Param ) = @_;
 
+    # get log object
+    my $LogObject = $Kernel::OM->Get('Kernel::System::Log');
+
     # check needed stuff
     for my $Argument (qw(TemplateID UserID)) {
         if ( !$Param{$Argument} ) {
-            $Kernel::OM->Get('Kernel::System::Log')->Log(
+            $LogObject->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -920,7 +967,7 @@ sub FormatDataDelete {
         $Param{TemplateID} = [ $Param{TemplateID} ];
     }
     elsif ( ref $Param{TemplateID} ne 'ARRAY' ) {
-        $Kernel::OM->Get('Kernel::System::Log')->Log(
+        $LogObject->Log(
             Priority => 'error',
             Message  => 'TemplateID must be an array reference or a string!',
         );
@@ -965,15 +1012,18 @@ sub MappingList {
         }
     }
 
+    # get DB object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
     # ask database
-    $Kernel::OM->Get('Kernel::System::DB')->Prepare(
+    $DBObject->Prepare(
         SQL  => 'SELECT id FROM imexport_mapping WHERE template_id = ? ORDER BY position',
         Bind => [ \$Param{TemplateID} ],
     );
 
     # fetch the result
     my @MappingList;
-    while ( my @Row = $Kernel::OM->Get('Kernel::System::DB')->FetchrowArray() ) {
+    while ( my @Row = $DBObject->FetchrowArray() ) {
         push @MappingList, $Row[0];
     }
 
@@ -1005,8 +1055,11 @@ sub MappingAdd {
         }
     }
 
+    # get DB object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
     # find maximum position
-    $Kernel::OM->Get('Kernel::System::DB')->Prepare(
+    $DBObject->Prepare(
         SQL   => 'SELECT max(position) FROM imexport_mapping WHERE template_id = ?',
         Bind  => [ \$Param{TemplateID} ],
         Limit => 1,
@@ -1014,7 +1067,7 @@ sub MappingAdd {
 
     # fetch the result
     my $NewPosition = 0;
-    while ( my @Row = $Kernel::OM->Get('Kernel::System::DB')->FetchrowArray() ) {
+    while ( my @Row = $DBObject->FetchrowArray() ) {
 
         if ( defined $Row[0] ) {
             $NewPosition = $Row[0];
@@ -1023,13 +1076,13 @@ sub MappingAdd {
     }
 
     # insert a new mapping data row
-    return if !$Kernel::OM->Get('Kernel::System::DB')->Do(
+    return if !$DBObject->Do(
         SQL  => 'INSERT INTO imexport_mapping (template_id, position) VALUES (?, ?)',
         Bind => [ \$Param{TemplateID}, \$NewPosition ],
     );
 
     # find id of new mapping data row
-    $Kernel::OM->Get('Kernel::System::DB')->Prepare(
+    $DBObject->Prepare(
         SQL   => 'SELECT id FROM imexport_mapping WHERE template_id = ? AND position = ?',
         Bind  => [ \$Param{TemplateID}, \$NewPosition ],
         Limit => 1,
@@ -1037,7 +1090,7 @@ sub MappingAdd {
 
     # fetch the result
     my $MappingID;
-    while ( my @Row = $Kernel::OM->Get('Kernel::System::DB')->FetchrowArray() ) {
+    while ( my @Row = $DBObject->FetchrowArray() ) {
         $MappingID = $Row[0];
     }
 
@@ -1077,6 +1130,9 @@ sub MappingDelete {
         }
     }
 
+    # get DB object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
     if ( defined $Param{MappingID} ) {
 
         # delete existing object mapping data
@@ -1092,7 +1148,7 @@ sub MappingDelete {
         );
 
         # delete one mapping row
-        $Kernel::OM->Get('Kernel::System::DB')->Do(
+        $DBObject->Do(
             SQL  => 'DELETE FROM imexport_mapping WHERE id = ?',
             Bind => [ \$Param{MappingID} ],
         );
@@ -1129,7 +1185,7 @@ sub MappingDelete {
         }
 
         # delete all mapping rows of this template
-        return $Kernel::OM->Get('Kernel::System::DB')->Do(
+        return $DBObject->Do(
             SQL  => 'DELETE FROM imexport_mapping WHERE template_id = ?',
             Bind => [ \$Param{TemplateID} ],
         );
@@ -1170,15 +1226,18 @@ sub MappingUp {
 
     return 1 if $Param{MappingID} == $MappingList->[0];
 
+    # get DB object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
     # ask database
-    $Kernel::OM->Get('Kernel::System::DB')->Prepare(
+    $DBObject->Prepare(
         SQL  => 'SELECT position FROM imexport_mapping WHERE id = ?',
         Bind => [ \$Param{MappingID} ],
     );
 
     # fetch the result
     my $Position;
-    while ( my @Row = $Kernel::OM->Get('Kernel::System::DB')->FetchrowArray() ) {
+    while ( my @Row = $DBObject->FetchrowArray() ) {
         $Position = $Row[0];
     }
 
@@ -1187,11 +1246,11 @@ sub MappingUp {
     my $PositionUpper = $Position - 1;
 
     # update positions
-    $Kernel::OM->Get('Kernel::System::DB')->Do(
+    $DBObject->Do(
         SQL  => 'UPDATE imexport_mapping SET position = ? WHERE template_id = ? AND position = ?',
         Bind => [ \$Position, \$Param{TemplateID}, \$PositionUpper ],
     );
-    $Kernel::OM->Get('Kernel::System::DB')->Do(
+    $DBObject->Do(
         SQL  => 'UPDATE imexport_mapping SET position = ? WHERE id = ?',
         Bind => [ \$PositionUpper, \$Param{MappingID} ],
     );
@@ -1233,26 +1292,29 @@ sub MappingDown {
 
     return 1 if $Param{MappingID} == $MappingList->[-1];
 
+    # get DB object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
     # ask database
-    $Kernel::OM->Get('Kernel::System::DB')->Prepare(
+    $DBObject->Prepare(
         SQL  => 'SELECT position FROM imexport_mapping WHERE id = ?',
         Bind => [ \$Param{MappingID} ],
     );
 
     # fetch the result
     my $Position;
-    while ( my @Row = $Kernel::OM->Get('Kernel::System::DB')->FetchrowArray() ) {
+    while ( my @Row = $DBObject->FetchrowArray() ) {
         $Position = $Row[0];
     }
 
     my $PositionDown = $Position + 1;
 
     # update positions
-    $Kernel::OM->Get('Kernel::System::DB')->Do(
+    $DBObject->Do(
         SQL  => 'UPDATE imexport_mapping SET position = ? WHERE template_id = ? AND position = ?',
         Bind => [ \$Position, \$Param{TemplateID}, \$PositionDown ],
     );
-    $Kernel::OM->Get('Kernel::System::DB')->Do(
+    $DBObject->Do(
         SQL  => 'UPDATE imexport_mapping SET position = ? WHERE id = ?',
         Bind => [ \$PositionDown, \$Param{MappingID} ],
     );
@@ -1318,10 +1380,13 @@ get the attributes of an object backend as array/hash reference
 sub MappingObjectAttributesGet {
     my ( $Self, %Param ) = @_;
 
+    # get log object
+    my $LogObject = $Kernel::OM->Get('Kernel::System::Log');
+
     # check needed stuff
     for my $Argument (qw(TemplateID UserID)) {
         if ( !$Param{$Argument} ) {
-            $Kernel::OM->Get('Kernel::System::Log')->Log(
+            $LogObject->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -1337,7 +1402,7 @@ sub MappingObjectAttributesGet {
 
     # check template data
     if ( !$TemplateData || !$TemplateData->{Object} ) {
-        $Kernel::OM->Get('Kernel::System::Log')->Log(
+        $LogObject->Log(
             Priority => 'error',
             Message  => "Template with ID $Param{TemplateID} is incomplete!",
         );
@@ -1381,10 +1446,13 @@ delete the existing object data of a mapping
 sub MappingObjectDataDelete {
     my ( $Self, %Param ) = @_;
 
+    # get log object
+    my $LogObject = $Kernel::OM->Get('Kernel::System::Log');
+
     # check needed stuff
     for my $Argument (qw(MappingID UserID)) {
         if ( !$Param{$Argument} ) {
-            $Kernel::OM->Get('Kernel::System::Log')->Log(
+            $LogObject->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -1396,7 +1464,7 @@ sub MappingObjectDataDelete {
         $Param{MappingID} = [ $Param{MappingID} ];
     }
     elsif ( ref $Param{MappingID} ne 'ARRAY' ) {
-        $Kernel::OM->Get('Kernel::System::Log')->Log(
+        $LogObject->Log(
             Priority => 'error',
             Message  => 'MappingID must be an array reference or a string!',
         );
@@ -1431,10 +1499,13 @@ save the object data of a mapping
 sub MappingObjectDataSave {
     my ( $Self, %Param ) = @_;
 
+    # get log object
+    my $LogObject = $Kernel::OM->Get('Kernel::System::Log');
+
     # check needed stuff
     for my $Argument (qw(MappingID MappingObjectData UserID)) {
         if ( !$Param{$Argument} ) {
-            $Kernel::OM->Get('Kernel::System::Log')->Log(
+            $LogObject->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -1443,7 +1514,7 @@ sub MappingObjectDataSave {
     }
 
     if ( ref $Param{MappingObjectData} ne 'HASH' ) {
-        $Kernel::OM->Get('Kernel::System::Log')->Log(
+        $LogObject->Log(
             Priority => 'error',
             Message  => 'MappingObjectData must be a hash reference!',
         );
@@ -1500,15 +1571,18 @@ sub MappingObjectDataGet {
         }
     }
 
+    # get DB object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
     # ask database
-    $Kernel::OM->Get('Kernel::System::DB')->Prepare(
+    $DBObject->Prepare(
         SQL  => 'SELECT data_key, data_value FROM imexport_mapping_object WHERE mapping_id = ?',
         Bind => [ \$Param{MappingID} ],
     );
 
     # fetch the result
     my %MappingObjectData;
-    while ( my @Row = $Kernel::OM->Get('Kernel::System::DB')->FetchrowArray() ) {
+    while ( my @Row = $DBObject->FetchrowArray() ) {
         $MappingObjectData{ $Row[0] } = $Row[1];
     }
 
@@ -1529,10 +1603,13 @@ get the attributes of an format backend as array/hash reference
 sub MappingFormatAttributesGet {
     my ( $Self, %Param ) = @_;
 
+    # get log object
+    my $LogObject = $Kernel::OM->Get('Kernel::System::Log');
+
     # check needed stuff
     for my $Argument (qw(TemplateID UserID)) {
         if ( !$Param{$Argument} ) {
-            $Kernel::OM->Get('Kernel::System::Log')->Log(
+            $LogObject->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -1548,7 +1625,7 @@ sub MappingFormatAttributesGet {
 
     # check template data
     if ( !$TemplateData || !$TemplateData->{Format} ) {
-        $Kernel::OM->Get('Kernel::System::Log')->Log(
+        $LogObject->Log(
             Priority => 'error',
             Message  => "Template with ID $Param{TemplateID} is incomplete!",
         );
@@ -1591,10 +1668,13 @@ delete the existing format data of a mapping
 sub MappingFormatDataDelete {
     my ( $Self, %Param ) = @_;
 
+    # get log object
+    my $LogObject = $Kernel::OM->Get('Kernel::System::Log');
+
     # check needed stuff
     for my $Argument (qw(MappingID UserID)) {
         if ( !$Param{$Argument} ) {
-            $Kernel::OM->Get('Kernel::System::Log')->Log(
+            $LogObject->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -1606,7 +1686,7 @@ sub MappingFormatDataDelete {
         $Param{MappingID} = [ $Param{MappingID} ];
     }
     elsif ( ref $Param{MappingID} ne 'ARRAY' ) {
-        $Kernel::OM->Get('Kernel::System::Log')->Log(
+        $LogObject->Log(
             Priority => 'error',
             Message  => 'MappingID must be an array reference or a string!',
         );
@@ -1641,10 +1721,13 @@ save the format data of a mapping
 sub MappingFormatDataSave {
     my ( $Self, %Param ) = @_;
 
+    # get log object
+    my $LogObject = $Kernel::OM->Get('Kernel::System::Log');
+
     # check needed stuff
     for my $Argument (qw(MappingID MappingFormatData UserID)) {
         if ( !$Param{$Argument} ) {
-            $Kernel::OM->Get('Kernel::System::Log')->Log(
+            $LogObject->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -1653,7 +1736,7 @@ sub MappingFormatDataSave {
     }
 
     if ( ref $Param{MappingFormatData} ne 'HASH' ) {
-        $Kernel::OM->Get('Kernel::System::Log')->Log(
+        $LogObject->Log(
             Priority => 'error',
             Message  => 'MappingFormatData must be a hash reference!',
         );
@@ -1710,15 +1793,18 @@ sub MappingFormatDataGet {
         }
     }
 
+    # get DB object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
     # ask database
-    $Kernel::OM->Get('Kernel::System::DB')->Prepare(
+    $DBObject->Prepare(
         SQL  => 'SELECT data_key, data_value FROM imexport_mapping_format WHERE mapping_id = ?',
         Bind => [ \$Param{MappingID} ],
     );
 
     # fetch the result
     my %MappingFormatData;
-    while ( my @Row = $Kernel::OM->Get('Kernel::System::DB')->FetchrowArray() ) {
+    while ( my @Row = $DBObject->FetchrowArray() ) {
         $MappingFormatData{ $Row[0] } = $Row[1];
     }
 
@@ -1739,10 +1825,13 @@ get the search attributes of a object backend as array/hash reference
 sub SearchAttributesGet {
     my ( $Self, %Param ) = @_;
 
+    # get log object
+    my $LogObject = $Kernel::OM->Get('Kernel::System::Log');
+
     # check needed stuff
     for my $Argument (qw(TemplateID UserID)) {
         if ( !$Param{$Argument} ) {
-            $Kernel::OM->Get('Kernel::System::Log')->Log(
+            $LogObject->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -1758,7 +1847,7 @@ sub SearchAttributesGet {
 
     # check template data
     if ( !$TemplateData || !$TemplateData->{Object} ) {
-        $Kernel::OM->Get('Kernel::System::Log')->Log(
+        $LogObject->Log(
             Priority => 'error',
             Message  => "Template with ID $Param{TemplateID} is incomplete!",
         );
@@ -1806,15 +1895,18 @@ sub SearchDataGet {
         }
     }
 
+    # get DB object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
     # ask database
-    $Kernel::OM->Get('Kernel::System::DB')->Prepare(
+    $DBObject->Prepare(
         SQL  => 'SELECT data_key, data_value FROM imexport_search WHERE template_id = ?',
         Bind => [ \$Param{TemplateID} ],
     );
 
     # fetch the result
     my %SearchData;
-    while ( my @Row = $Kernel::OM->Get('Kernel::System::DB')->FetchrowArray() ) {
+    while ( my @Row = $DBObject->FetchrowArray() ) {
         $SearchData{ $Row[0] } = $Row[1];
     }
 
@@ -1836,10 +1928,13 @@ save the search data of a template
 sub SearchDataSave {
     my ( $Self, %Param ) = @_;
 
+    # get log object
+    my $LogObject = $Kernel::OM->Get('Kernel::System::Log');
+
     # check needed stuff
     for my $Argument (qw(TemplateID SearchData UserID)) {
         if ( !$Param{$Argument} ) {
-            $Kernel::OM->Get('Kernel::System::Log')->Log(
+            $LogObject->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -1848,7 +1943,7 @@ sub SearchDataSave {
     }
 
     if ( ref $Param{SearchData} ne 'HASH' ) {
-        $Kernel::OM->Get('Kernel::System::Log')->Log(
+        $LogObject->Log(
             Priority => 'error',
             Message  => 'SearchData must be a hash reference!',
         );
@@ -1902,10 +1997,13 @@ delete the existing search data of a template
 sub SearchDataDelete {
     my ( $Self, %Param ) = @_;
 
+    # get log object
+    my $LogObject = $Kernel::OM->Get('Kernel::System::Log');
+
     # check needed stuff
     for my $Argument (qw(TemplateID UserID)) {
         if ( !$Param{$Argument} ) {
-            $Kernel::OM->Get('Kernel::System::Log')->Log(
+            $LogObject->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -1917,7 +2015,7 @@ sub SearchDataDelete {
         $Param{TemplateID} = [ $Param{TemplateID} ];
     }
     elsif ( ref $Param{TemplateID} ne 'ARRAY' ) {
-        $Kernel::OM->Get('Kernel::System::Log')->Log(
+        $LogObject->Log(
             Priority => 'error',
             Message  => 'TemplateID must be an array reference or a string!',
         );
@@ -1962,10 +2060,13 @@ returns something like
 sub Export {
     my ( $Self, %Param ) = @_;
 
+    # get log object
+    my $LogObject = $Kernel::OM->Get('Kernel::System::Log');
+
     # check needed stuff
     for my $Argument (qw(TemplateID UserID)) {
         if ( !$Param{$Argument} ) {
-            $Kernel::OM->Get('Kernel::System::Log')->Log(
+            $LogObject->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -1981,7 +2082,7 @@ sub Export {
 
     # check template data
     if ( !$TemplateData || !$TemplateData->{Object} || !$TemplateData->{Format} ) {
-        $Kernel::OM->Get('Kernel::System::Log')->Log(
+        $LogObject->Log(
             Priority => 'error',
             Message  => "Template with ID $Param{TemplateID} is incomplete!",
         );
@@ -2079,11 +2180,11 @@ sub Export {
     }
 
     # log result
-    $Kernel::OM->Get('Kernel::System::Log')->Log(
+    $LogObject->Log(
         Priority => 'notice',
         Message  => "Export of $Result{Failed} records ($TemplateData->{Object}): failed!",
     );
-    $Kernel::OM->Get('Kernel::System::Log')->Log(
+    $LogObject->Log(
         Priority => 'notice',
         Message  => "Export of $Result{Success} records ($TemplateData->{Object}): successful!",
     );
@@ -2106,10 +2207,13 @@ import function
 sub Import {
     my ( $Self, %Param ) = @_;
 
+    # get log object
+    my $LogObject = $Kernel::OM->Get('Kernel::System::Log');
+
     # check needed stuff
     for my $Argument (qw(TemplateID UserID)) {
         if ( !$Param{$Argument} ) {
-            $Kernel::OM->Get('Kernel::System::Log')->Log(
+            $LogObject->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -2125,7 +2229,7 @@ sub Import {
 
     # check template data
     if ( !$TemplateData || !$TemplateData->{Object} || !$TemplateData->{Format} ) {
-        $Kernel::OM->Get('Kernel::System::Log')->Log(
+        $LogObject->Log(
             Priority => 'error',
             Message  => "Template with ID $Param{TemplateID} is incomplete!",
         );
@@ -2202,7 +2306,7 @@ sub Import {
     }
 
     # log result
-    $Kernel::OM->Get('Kernel::System::Log')->Log(
+    $LogObject->Log(
         Priority => 'notice',
         Message =>
             "Import of $Result{Counter} $Result{Object} records: "
@@ -2210,14 +2314,14 @@ sub Import {
     );
     for my $RetCode ( sort keys %{ $Result{RetCode} } ) {
         my $Count = $Result{RetCode}->{$RetCode} || 0;
-        $Kernel::OM->Get('Kernel::System::Log')->Log(
+        $LogObject->Log(
             Priority => 'notice',
             Message =>
                 "Import of $Result{Counter} $Result{Object} records: $Count $RetCode",
         );
     }
     if ( $Result{Failed} ) {
-        $Kernel::OM->Get('Kernel::System::Log')->Log(
+        $LogObject->Log(
             Priority => 'notice',
             Message  => "Last processed line number of import file: $Result{Counter}",
         );

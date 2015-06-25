@@ -6,14 +6,18 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package Kernel::Output::HTML::ImportExportLayoutTT;
+package Kernel::Output::HTML::ImportExport::LayoutTT;
 
 use strict;
 use warnings;
 
+our @ObjectDependencies = (
+    'Kernel::System::Log',
+);
+
 =head1 NAME
 
-Kernel::Output::HTML::ImportExportLayoutTT - layout backend module
+Kernel::Output::HTML::ImportExport::LayoutTT - layout backend module
 
 =head1 SYNOPSIS
 
@@ -27,7 +31,7 @@ All layout functions for display TT code
 
 create an object
 
-    $BackendObject = Kernel::Output::HTML::ImportExportLayoutTT->new(
+    $BackendObject = Kernel::Output::HTML::ImportExport::LayoutTT->new(
         %Param,
     );
 
@@ -39,11 +43,6 @@ sub new {
     # allocate new hash for object
     my $Self = {};
     bless( $Self, $Type );
-
-    # check needed objects
-    for my $Object (qw(ConfigObject LogObject MainObject ParamObject LayoutObject)) {
-        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
-    }
 
     return $Self;
 }
@@ -63,7 +62,7 @@ sub FormInputCreate {
 
     # check needed stuff
     if ( !$Param{Item} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need Item!'
         );

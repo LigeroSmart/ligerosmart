@@ -11,7 +11,7 @@
                 <Title>Import/Export</Title>
                 <NavBarName>Admin</NavBarName>
                 <NavBarModule>
-                    <Module>Kernel::Output::HTML::NavBarModuleAdmin</Module>
+                    <Module>Kernel::Output::HTML::NavBar::ModuleAdmin</Module>
                     <Name Translatable="1">Import/Export</Name>
                     <Block>System</Block>
                     <Prio>710</Prio>

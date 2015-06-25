@@ -6,10 +6,15 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package Kernel::Output::HTML::LayoutImportExport;
+package Kernel::Output::HTML::Layout::ImportExport;
 
 use strict;
 use warnings;
+
+our @ObjectDependencies = (
+    'Kernel::System::Log',
+    'Kernel::System::Main',
+);
 
 =over
 
@@ -29,7 +34,7 @@ sub ImportExportFormInputCreate {
 
     # check needed stuff
     if ( !$Param{Item} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need Item!'
         );
@@ -64,7 +69,7 @@ sub ImportExportFormDataGet {
 
     # check needed stuff
     if ( !$Param{Item} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need Item!'
         );
@@ -99,19 +104,22 @@ An instance of the loaded backend module is returned.
 sub _ImportExportLoadLayoutBackend {
     my ( $Self, %Param ) = @_;
 
+    # get log object
+    my $LogObject = $Kernel::OM->Get('Kernel::System::Log');
+
     if ( !$Param{Type} ) {
-        $Self->{LogObject}->Log(
+        $LogObject->Log(
             Priority => 'error',
             Message  => 'Need Type!',
         );
         return;
     }
 
-    my $GenericModule = "Kernel::Output::HTML::ImportExportLayout$Param{Type}";
+    my $GenericModule = "Kernel::Output::HTML::ImportExport::Layout$Param{Type}";
 
     # load the backend module
-    if ( !$Self->{MainObject}->Require($GenericModule) ) {
-        $Self->{LogObject}->Log(
+    if ( !$Kernel::OM->Get('Kernel::System::Main')->Require($GenericModule) ) {
+        $LogObject->Log(
             Priority => 'error',
             Message  => "Can't load backend module $Param{Type}!"
         );
@@ -126,7 +134,7 @@ sub _ImportExportLoadLayoutBackend {
     );
 
     if ( !$BackendObject ) {
-        $Self->{LogObject}->Log(
+        $LogObject->Log(
             Priority => 'error',
             Message  => "Can't create a new instance of backend module $Param{Type}!",
         );

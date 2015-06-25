@@ -11,8 +11,7 @@ package Kernel::Modules::AdminImportExport;
 use strict;
 use warnings;
 
-use Kernel::System::ImportExport;
-use Kernel::System::Valid;
+our $ObjectManagerDisabled = 1;
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -21,20 +20,16 @@ sub new {
     my $Self = {%Param};
     bless( $Self, $Type );
 
-    # check needed objects
-    for my $Object (qw(ConfigObject ParamObject LogObject LayoutObject EncodeObject)) {
-        if ( !$Self->{$Object} ) {
-            $Self->{LayoutObject}->FatalError( Message => "Got no $Object!" );
-        }
-    }
-    $Self->{ImportExportObject} = Kernel::System::ImportExport->new( %{$Self} );
-    $Self->{ValidObject}        = Kernel::System::Valid->new( %{$Self} );
-
     return $Self;
 }
 
 sub Run {
     my ( $Self, %Param ) = @_;
+
+    # get needed objects
+    my $ImportExportObject = $Kernel::OM->Get('Kernel::System::ImportExport');
+    my $ParamObject        = $Kernel::OM->Get('Kernel::System::Web::Request');
+    my $LayoutObject       = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
     # ------------------------------------------------------------ #
     # template edit (common)
@@ -42,27 +37,27 @@ sub Run {
     if ( $Self->{Subaction} eq 'TemplateEdit1' ) {
 
         # get object list
-        my $ObjectList = $Self->{ImportExportObject}->ObjectList();
+        my $ObjectList = $ImportExportObject->ObjectList();
 
         if ( !$ObjectList ) {
-            $Self->{LayoutObject}->FatalError( Message => 'No object backend found!' );
+            $LayoutObject->FatalError( Message => 'No object backend found!' );
             return;
         }
 
         # get format list
-        my $FormatList = $Self->{ImportExportObject}->FormatList();
+        my $FormatList = $ImportExportObject->FormatList();
 
         if ( !$FormatList ) {
-            $Self->{LayoutObject}->FatalError( Message => 'No format backend found!' );
+            $LayoutObject->FatalError( Message => 'No format backend found!' );
             return;
         }
 
         # get params
         my $TemplateData;
-        my $TemplateID = $Self->{ParamObject}->GetParam( Param => 'TemplateID' );
+        my $TemplateID = $ParamObject->GetParam( Param => 'TemplateID' );
 
         my $SaveContinue;
-        $SaveContinue = $Self->{ParamObject}->GetParam( Param => 'SubmitNext' );
+        $SaveContinue = $ParamObject->GetParam( Param => 'SubmitNext' );
 
         if ( !$SaveContinue ) {
 
@@ -76,13 +71,13 @@ sub Run {
 
             # if there is template id
             # get template data
-            $TemplateData = $Self->{ImportExportObject}->TemplateGet(
+            $TemplateData = $ImportExportObject->TemplateGet(
                 TemplateID => $TemplateID,
                 UserID     => $Self->{UserID},
             );
 
             if ( !$TemplateData->{TemplateID} ) {
-                $Self->{LayoutObject}->FatalError( Message => 'Template not found!' );
+                $LayoutObject->FatalError( Message => 'Template not found!' );
                 return;
             }
 
@@ -98,7 +93,7 @@ sub Run {
 
         # get all data for params and check for errors
         for my $Param (qw(Comment Object Format Name ValidID TemplateID)) {
-            $TemplateData->{$Param} = $Self->{ParamObject}->GetParam( Param => $Param ) || '';
+            $TemplateData->{$Param} = $ParamObject->GetParam( Param => $Param ) || '';
         }
 
         # is a new template?
@@ -139,25 +134,25 @@ sub Run {
         my $Success;
 
         if ($New) {
-            $TemplateData->{TemplateID} = $Self->{ImportExportObject}->TemplateAdd(
+            $TemplateData->{TemplateID} = $ImportExportObject->TemplateAdd(
                 %{$TemplateData},
                 UserID => $Self->{UserID},
             );
             $Success = $TemplateData->{TemplateID};
         }
         else {
-            $Success = $Self->{ImportExportObject}->TemplateUpdate(
+            $Success = $ImportExportObject->TemplateUpdate(
                 UserID => $Self->{UserID},
                 %{$TemplateData},
             );
         }
 
         if ( !$Success ) {
-            $Self->{LayoutObject}->FatalError( Message => "Can't insert/update template!" );
+            $LayoutObject->FatalError( Message => "Can't insert/update template!" );
             return;
         }
 
-        return $Self->{LayoutObject}->Redirect(
+        return $LayoutObject->Redirect(
             OP =>
                 "Action=$Self->{Action};Subaction=TemplateEdit2;TemplateID=$TemplateData->{TemplateID}",
         );
@@ -169,30 +164,30 @@ sub Run {
     elsif ( $Self->{Subaction} eq 'TemplateEdit2' ) {
 
         # get object list
-        my $ObjectList = $Self->{ImportExportObject}->ObjectList();
+        my $ObjectList = $ImportExportObject->ObjectList();
 
         if ( !$ObjectList ) {
-            $Self->{LayoutObject}->FatalError( Message => 'No object backend found!' );
+            $LayoutObject->FatalError( Message => 'No object backend found!' );
             return;
         }
 
         # get format list
-        my $FormatList = $Self->{ImportExportObject}->FormatList();
+        my $FormatList = $ImportExportObject->FormatList();
 
         if ( !$FormatList ) {
-            $Self->{LayoutObject}->FatalError( Message => 'No format backend found!' );
+            $LayoutObject->FatalError( Message => 'No format backend found!' );
             return;
         }
 
         # get template id
-        my $TemplateID = $Self->{ParamObject}->GetParam( Param => 'TemplateID' );
+        my $TemplateID = $ParamObject->GetParam( Param => 'TemplateID' );
 
         if ( !$TemplateID ) {
-            $Self->{LayoutObject}->FatalError( Message => 'Needed TemplateID!' );
+            $LayoutObject->FatalError( Message => 'Needed TemplateID!' );
             return;
         }
 
-        my $SubmitNext = $Self->{ParamObject}->GetParam( Param => 'SubmitNext' );
+        my $SubmitNext = $ParamObject->GetParam( Param => 'SubmitNext' );
 
         if ( !$SubmitNext ) {
             return $Self->_MaskTemplateEdit2( TemplateID => $TemplateID );
@@ -201,7 +196,7 @@ sub Run {
         # save template starts here
 
         # get object attributes
-        my $ObjectAttributeList = $Self->{ImportExportObject}->ObjectAttributesGet(
+        my $ObjectAttributeList = $ImportExportObject->ObjectAttributesGet(
             TemplateID => $TemplateID,
             UserID     => $Self->{UserID},
         );
@@ -216,7 +211,7 @@ sub Run {
         for my $Item ( @{$ObjectAttributeList} ) {
 
             # get form data
-            $AttributeValues{ $Item->{Key} } = $Self->{LayoutObject}->ImportExportFormDataGet(
+            $AttributeValues{ $Item->{Key} } = $LayoutObject->ImportExportFormDataGet(
                 Item => $Item,
             );
 
@@ -254,13 +249,13 @@ sub Run {
         }
 
         # save the object data
-        $Self->{ImportExportObject}->ObjectDataSave(
+        $ImportExportObject->ObjectDataSave(
             TemplateID => $TemplateID,
             ObjectData => \%AttributeValues,
             UserID     => $Self->{UserID},
         );
 
-        return $Self->{LayoutObject}->Redirect(
+        return $LayoutObject->Redirect(
             OP => "Action=$Self->{Action};Subaction=TemplateEdit3;TemplateID=$TemplateID",
         );
 
@@ -272,30 +267,30 @@ sub Run {
     elsif ( $Self->{Subaction} eq 'TemplateEdit3' ) {
 
         # get object list
-        my $ObjectList = $Self->{ImportExportObject}->ObjectList();
+        my $ObjectList = $ImportExportObject->ObjectList();
 
         if ( !$ObjectList ) {
-            $Self->{LayoutObject}->FatalError( Message => 'No object backend found!' );
+            $LayoutObject->FatalError( Message => 'No object backend found!' );
             return;
         }
 
         # get format list
-        my $FormatList = $Self->{ImportExportObject}->FormatList();
+        my $FormatList = $ImportExportObject->FormatList();
 
         if ( !$FormatList ) {
-            $Self->{LayoutObject}->FatalError( Message => 'No format backend found!' );
+            $LayoutObject->FatalError( Message => 'No format backend found!' );
             return;
         }
 
         # get template id
-        my $TemplateID = $Self->{ParamObject}->GetParam( Param => 'TemplateID' );
+        my $TemplateID = $ParamObject->GetParam( Param => 'TemplateID' );
 
         if ( !$TemplateID ) {
-            $Self->{LayoutObject}->FatalError( Message => 'Needed TemplateID!' );
+            $LayoutObject->FatalError( Message => 'Needed TemplateID!' );
             return;
         }
 
-        my $SubmitNext = $Self->{ParamObject}->GetParam( Param => 'SubmitNext' );
+        my $SubmitNext = $ParamObject->GetParam( Param => 'SubmitNext' );
 
         if ( !$SubmitNext ) {
             return $Self->_MaskTemplateEdit3( TemplateID => $TemplateID );
@@ -304,13 +299,13 @@ sub Run {
         # save starting here
 
         # get format attributes
-        my $FormatAttributeList = $Self->{ImportExportObject}->FormatAttributesGet(
+        my $FormatAttributeList = $ImportExportObject->FormatAttributesGet(
             TemplateID => $TemplateID,
             UserID     => $Self->{UserID},
         );
 
         # get format data
-        my $FormatData = $Self->{ImportExportObject}->FormatDataGet(
+        my $FormatData = $ImportExportObject->FormatDataGet(
             TemplateID => $TemplateID,
             UserID     => $Self->{UserID},
         );
@@ -323,7 +318,7 @@ sub Run {
         for my $Item ( @{$FormatAttributeList} ) {
 
             # get form data
-            $AttributeValues{ $Item->{Key} } = $Self->{LayoutObject}->ImportExportFormDataGet(
+            $AttributeValues{ $Item->{Key} } = $LayoutObject->ImportExportFormDataGet(
                 Item => $Item,
             );
 
@@ -343,13 +338,13 @@ sub Run {
         }
 
         # save the format data
-        $Self->{ImportExportObject}->FormatDataSave(
+        $ImportExportObject->FormatDataSave(
             TemplateID => $TemplateID,
             FormatData => \%AttributeValues,
             UserID     => $Self->{UserID},
         );
 
-        return $Self->{LayoutObject}->Redirect(
+        return $LayoutObject->Redirect(
             OP => "Action=$Self->{Action};Subaction=TemplateEdit4;TemplateID=$TemplateID",
         );
     }
@@ -360,38 +355,38 @@ sub Run {
     elsif ( $Self->{Subaction} eq 'TemplateEdit4' ) {
 
         # get object list
-        my $ObjectList = $Self->{ImportExportObject}->ObjectList();
+        my $ObjectList = $ImportExportObject->ObjectList();
 
         if ( !$ObjectList ) {
-            $Self->{LayoutObject}->FatalError( Message => 'No object backend found!' );
+            $LayoutObject->FatalError( Message => 'No object backend found!' );
             return;
         }
 
         # get format list
-        my $FormatList = $Self->{ImportExportObject}->FormatList();
+        my $FormatList = $ImportExportObject->FormatList();
 
         if ( !$FormatList ) {
-            $Self->{LayoutObject}->FatalError( Message => 'No format backend found!' );
+            $LayoutObject->FatalError( Message => 'No format backend found!' );
             return;
         }
 
         # get params
         my $TemplateData = {};
-        $TemplateData->{TemplateID} = $Self->{ParamObject}->GetParam( Param => 'TemplateID' );
+        $TemplateData->{TemplateID} = $ParamObject->GetParam( Param => 'TemplateID' );
 
         # get template data
-        $TemplateData = $Self->{ImportExportObject}->TemplateGet(
+        $TemplateData = $ImportExportObject->TemplateGet(
             TemplateID => $TemplateData->{TemplateID},
             UserID     => $Self->{UserID},
         );
 
         if ( !$TemplateData->{TemplateID} ) {
-            $Self->{LayoutObject}->FatalError( Message => 'Template not found!' );
+            $LayoutObject->FatalError( Message => 'Template not found!' );
             return;
         }
 
         # generate ObjectOptionStrg
-        my $ObjectOptionStrg = $Self->{LayoutObject}->BuildSelection(
+        my $ObjectOptionStrg = $LayoutObject->BuildSelection(
             Data         => $ObjectList,
             Name         => 'Object',
             SelectedID   => $TemplateData->{Object},
@@ -400,7 +395,7 @@ sub Run {
         );
 
         # generate FormatOptionStrg
-        my $FormatOptionStrg = $Self->{LayoutObject}->BuildSelection(
+        my $FormatOptionStrg = $LayoutObject->BuildSelection(
             Data         => $FormatList,
             Name         => 'Format',
             SelectedID   => $TemplateData->{Format},
@@ -409,7 +404,7 @@ sub Run {
         );
 
         # output overview
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'Overview',
             Data => {
                 %Param,
@@ -418,11 +413,11 @@ sub Run {
             },
         );
 
-        $Self->{LayoutObject}->Block( Name => 'ActionList' );
-        $Self->{LayoutObject}->Block( Name => 'ActionOverview' );
+        $LayoutObject->Block( Name => 'ActionList' );
+        $LayoutObject->Block( Name => 'ActionOverview' );
 
         # output headline
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'TemplateEdit4',
             Data => {
                 %{$TemplateData},
@@ -432,19 +427,19 @@ sub Run {
         );
 
         # get mapping data list
-        my $MappingList = $Self->{ImportExportObject}->MappingList(
+        my $MappingList = $ImportExportObject->MappingList(
             TemplateID => $TemplateData->{TemplateID},
             UserID     => $Self->{UserID},
         );
 
         # get object attributes
-        my $MappingObjectAttributes = $Self->{ImportExportObject}->MappingObjectAttributesGet(
+        my $MappingObjectAttributes = $ImportExportObject->MappingObjectAttributesGet(
             TemplateID => $TemplateData->{TemplateID},
             UserID     => $Self->{UserID},
         );
 
         # get format attributes
-        my $MappingFormatAttributes = $Self->{ImportExportObject}->MappingFormatAttributesGet(
+        my $MappingFormatAttributes = $ImportExportObject->MappingFormatAttributesGet(
             TemplateID => $TemplateData->{TemplateID},
             UserID     => $Self->{UserID},
         );
@@ -463,7 +458,7 @@ sub Run {
         for my $Header (@Headers) {
 
             # output attribute row
-            $Self->{LayoutObject}->Block(
+            $LayoutObject->Block(
                 Name => 'TemplateEdit4TableHeader',
                 Data => {
                     Header => $Header,
@@ -481,7 +476,7 @@ sub Run {
             $EmptyMap = 0;
 
             # output attribute row
-            $Self->{LayoutObject}->Block(
+            $LayoutObject->Block(
                 Name => 'TemplateEdit4Row',
                 Data => {
                     MappingID => $MappingID,
@@ -489,13 +484,13 @@ sub Run {
             );
 
             # get mapping object data
-            my $MappingObjectData = $Self->{ImportExportObject}->MappingObjectDataGet(
+            my $MappingObjectData = $ImportExportObject->MappingObjectDataGet(
                 MappingID => $MappingID,
                 UserID    => $Self->{UserID},
             );
 
             # get mapping format data
-            my $MappingFormatData = $Self->{ImportExportObject}->MappingFormatDataGet(
+            my $MappingFormatData = $ImportExportObject->MappingFormatDataGet(
                 MappingID => $MappingID,
                 UserID    => $Self->{UserID},
             );
@@ -503,7 +498,7 @@ sub Run {
             for my $Item ( @{$MappingObjectAttributes} ) {
 
                 # create form input
-                my $InputString = $Self->{LayoutObject}->ImportExportFormInputCreate(
+                my $InputString = $LayoutObject->ImportExportFormInputCreate(
                     Item   => $Item,
                     Prefix => 'Object::' . $AttributeRowCounter . '::',
                     Value  => $MappingObjectData->{ $Item->{Key} },
@@ -511,7 +506,7 @@ sub Run {
                 );
 
                 # output attribute row
-                $Self->{LayoutObject}->Block(
+                $LayoutObject->Block(
                     Name => 'TemplateEdit4Column',
                     Data => {
                         Name      => $Item->{Name},
@@ -525,7 +520,7 @@ sub Run {
             for my $Item ( @{$MappingFormatAttributes} ) {
 
                 # output column counter
-                $Self->{LayoutObject}->Block(
+                $LayoutObject->Block(
                     Name => 'TemplateEdit4MapNumberColumn',
                     Data => {
                         Counter => $AttributeRowCounter,
@@ -554,13 +549,13 @@ sub Run {
             }
 
             # up button block
-            $Self->{LayoutObject}->Block(
+            $LayoutObject->Block(
                 Name => $UpBlock,
                 Data => { MappingID => $MappingID },
             );
 
             # down button block
-            $Self->{LayoutObject}->Block(
+            $LayoutObject->Block(
                 Name => $DownBlock,
                 Data => { MappingID => $MappingID },
             );
@@ -572,7 +567,7 @@ sub Run {
         if ($EmptyMap) {
 
             # output list
-            $Self->{LayoutObject}->Block(
+            $LayoutObject->Block(
                 Name => 'TemplateEdit4NoMapFound',
                 Data => {
                     Columns => $HeaderCounter,
@@ -581,16 +576,16 @@ sub Run {
         }
 
         # output header and navbar
-        my $Output = $Self->{LayoutObject}->Header();
-        $Output .= $Self->{LayoutObject}->NavigationBar();
+        my $Output = $LayoutObject->Header();
+        $Output .= $LayoutObject->NavigationBar();
 
         # start template output
-        $Output .= $Self->{LayoutObject}->Output(
+        $Output .= $LayoutObject->Output(
             TemplateFile => 'AdminImportExport',
             Data         => \%Param,
         );
 
-        $Output .= $Self->{LayoutObject}->Footer();
+        $Output .= $LayoutObject->Footer();
         return $Output;
     }
 
@@ -600,7 +595,7 @@ sub Run {
     elsif ( $Self->{Subaction} eq 'TemplateSave4' ) {
 
         # get template id
-        my $TemplateID = $Self->{ParamObject}->GetParam( Param => 'TemplateID' );
+        my $TemplateID = $ParamObject->GetParam( Param => 'TemplateID' );
 
         my %Submit = (
             SubmitNext => 'TemplateEdit5',
@@ -615,7 +610,7 @@ sub Run {
 
         PARAM:
         for my $SubmitKey ( sort keys %Submit ) {
-            next PARAM if !$Self->{ParamObject}->GetParam( Param => $SubmitKey );
+            next PARAM if !$ParamObject->GetParam( Param => $SubmitKey );
 
             $Subaction    = $Submit{$SubmitKey};
             $SubmitButton = $SubmitKey;
@@ -623,19 +618,19 @@ sub Run {
         }
 
         # get mapping data list
-        my $MappingList = $Self->{ImportExportObject}->MappingList(
+        my $MappingList = $ImportExportObject->MappingList(
             TemplateID => $TemplateID,
             UserID     => $Self->{UserID},
         );
 
         # get object attributes
-        my $MappingObjectAttributes = $Self->{ImportExportObject}->MappingObjectAttributesGet(
+        my $MappingObjectAttributes = $ImportExportObject->MappingObjectAttributesGet(
             TemplateID => $TemplateID,
             UserID     => $Self->{UserID},
         );
 
         # get format attributes
-        my $MappingFormatAttributes = $Self->{ImportExportObject}->MappingFormatAttributesGet(
+        my $MappingFormatAttributes = $ImportExportObject->MappingFormatAttributesGet(
             TemplateID => $TemplateID,
             UserID     => $Self->{UserID},
         );
@@ -649,14 +644,14 @@ sub Run {
             for my $Item ( @{$MappingObjectAttributes} ) {
 
                 # get object form data
-                $ObjectAttributeValues{ $Item->{Key} } = $Self->{LayoutObject}->ImportExportFormDataGet(
+                $ObjectAttributeValues{ $Item->{Key} } = $LayoutObject->ImportExportFormDataGet(
                     Item   => $Item,
                     Prefix => 'Object::' . $Counter . '::',
                 );
             }
 
             # save the mapping object data
-            $Self->{ImportExportObject}->MappingObjectDataSave(
+            $ImportExportObject->MappingObjectDataSave(
                 MappingID         => $MappingID,
                 MappingObjectData => \%ObjectAttributeValues,
                 UserID            => $Self->{UserID},
@@ -667,14 +662,14 @@ sub Run {
             for my $Item ( @{$MappingFormatAttributes} ) {
 
                 # get format form data
-                $FormatAttributeValues{ $Item->{Key} } = $Self->{LayoutObject}->ImportExportFormDataGet(
+                $FormatAttributeValues{ $Item->{Key} } = $LayoutObject->ImportExportFormDataGet(
                     Item   => $Item,
                     Prefix => 'Format::' . $Counter . '::',
                 );
             }
 
             # save the mapping format data
-            $Self->{ImportExportObject}->MappingFormatDataSave(
+            $ImportExportObject->MappingFormatDataSave(
                 MappingID         => $MappingID,
                 MappingFormatData => \%FormatAttributeValues,
                 UserID            => $Self->{UserID},
@@ -687,8 +682,8 @@ sub Run {
         for my $MappingID ( @{$MappingList} ) {
 
             # delete this mapping row
-            if ( $Self->{ParamObject}->GetParam( Param => "MappingDelete::$MappingID" ) ) {
-                $Self->{ImportExportObject}->MappingDelete(
+            if ( $ParamObject->GetParam( Param => "MappingDelete::$MappingID" ) ) {
+                $ImportExportObject->MappingDelete(
                     MappingID  => $MappingID,
                     TemplateID => $TemplateID,
                     UserID     => $Self->{UserID},
@@ -698,8 +693,8 @@ sub Run {
             }
 
             # move mapping data row up
-            if ( $Self->{ParamObject}->GetParam( Param => "MappingUp::$MappingID" ) ) {
-                $Self->{ImportExportObject}->MappingUp(
+            if ( $ParamObject->GetParam( Param => "MappingUp::$MappingID" ) ) {
+                $ImportExportObject->MappingUp(
                     MappingID  => $MappingID,
                     TemplateID => $TemplateID,
                     UserID     => $Self->{UserID},
@@ -709,8 +704,8 @@ sub Run {
             }
 
             # move mapping data row down
-            if ( $Self->{ParamObject}->GetParam( Param => "MappingDown::$MappingID" ) ) {
-                $Self->{ImportExportObject}->MappingDown(
+            if ( $ParamObject->GetParam( Param => "MappingDown::$MappingID" ) ) {
+                $ImportExportObject->MappingDown(
                     MappingID  => $MappingID,
                     TemplateID => $TemplateID,
                     UserID     => $Self->{UserID},
@@ -722,13 +717,13 @@ sub Run {
 
         # add a new mapping row
         if ( $SubmitButton eq 'MappingAdd' ) {
-            $Self->{ImportExportObject}->MappingAdd(
+            $ImportExportObject->MappingAdd(
                 TemplateID => $TemplateID,
                 UserID     => $Self->{UserID},
             );
         }
 
-        return $Self->{LayoutObject}->Redirect(
+        return $LayoutObject->Redirect(
             OP => "Action=$Self->{Action};Subaction=$Subaction;TemplateID=$TemplateID",
         );
     }
@@ -739,38 +734,38 @@ sub Run {
     elsif ( $Self->{Subaction} eq 'TemplateEdit5' ) {
 
         # get object list
-        my $ObjectList = $Self->{ImportExportObject}->ObjectList();
+        my $ObjectList = $ImportExportObject->ObjectList();
 
         if ( !$ObjectList ) {
-            $Self->{LayoutObject}->FatalError( Message => 'No object backend found!' );
+            $LayoutObject->FatalError( Message => 'No object backend found!' );
             return;
         }
 
         # get format list
-        my $FormatList = $Self->{ImportExportObject}->FormatList();
+        my $FormatList = $ImportExportObject->FormatList();
 
         if ( !$FormatList ) {
-            $Self->{LayoutObject}->FatalError( Message => 'No format backend found!' );
+            $LayoutObject->FatalError( Message => 'No format backend found!' );
             return;
         }
 
         # get params
         my $TemplateData = {};
-        $TemplateData->{TemplateID} = $Self->{ParamObject}->GetParam( Param => 'TemplateID' );
+        $TemplateData->{TemplateID} = $ParamObject->GetParam( Param => 'TemplateID' );
 
         # get template data
-        $TemplateData = $Self->{ImportExportObject}->TemplateGet(
+        $TemplateData = $ImportExportObject->TemplateGet(
             TemplateID => $TemplateData->{TemplateID},
             UserID     => $Self->{UserID},
         );
 
         if ( !$TemplateData->{TemplateID} ) {
-            $Self->{LayoutObject}->FatalError( Message => 'Template not found!' );
+            $LayoutObject->FatalError( Message => 'Template not found!' );
             return;
         }
 
         # generate ObjectOptionStrg
-        my $ObjectOptionStrg = $Self->{LayoutObject}->BuildSelection(
+        my $ObjectOptionStrg = $LayoutObject->BuildSelection(
             Data         => $ObjectList,
             Name         => 'Object',
             SelectedID   => $TemplateData->{Object},
@@ -779,7 +774,7 @@ sub Run {
         );
 
         # generate FormatOptionStrg
-        my $FormatOptionStrg = $Self->{LayoutObject}->BuildSelection(
+        my $FormatOptionStrg = $LayoutObject->BuildSelection(
             Data         => $FormatList,
             Name         => 'Format',
             SelectedID   => $TemplateData->{Format},
@@ -788,7 +783,7 @@ sub Run {
         );
 
         # output overview
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'Overview',
             Data => {
                 %Param,
@@ -797,17 +792,17 @@ sub Run {
             },
         );
 
-        $Self->{LayoutObject}->Block( Name => 'ActionList' );
-        $Self->{LayoutObject}->Block( Name => 'ActionOverview' );
+        $LayoutObject->Block( Name => 'ActionList' );
+        $LayoutObject->Block( Name => 'ActionOverview' );
 
         # get search data
-        my $SearchData = $Self->{ImportExportObject}->SearchDataGet(
+        my $SearchData = $ImportExportObject->SearchDataGet(
             TemplateID => $TemplateData->{TemplateID},
             UserID     => $Self->{UserID},
         );
 
         # create rescrict export string
-        my $RestrictExportStrg = $Self->{LayoutObject}->ImportExportFormInputCreate(
+        my $RestrictExportStrg = $LayoutObject->ImportExportFormInputCreate(
             Item => {
                 Key   => 'RestrictExport',
                 Input => {
@@ -818,7 +813,7 @@ sub Run {
         );
 
         # output list
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'TemplateEdit5',
             Data => {
                 %{$TemplateData},
@@ -827,7 +822,7 @@ sub Run {
         );
 
         # get search attributes
-        my $SearchAttributeList = $Self->{ImportExportObject}->SearchAttributesGet(
+        my $SearchAttributeList = $ImportExportObject->SearchAttributesGet(
             TemplateID => $TemplateData->{TemplateID},
             UserID     => $Self->{UserID},
         );
@@ -836,13 +831,13 @@ sub Run {
         for my $Item ( @{$SearchAttributeList} ) {
 
             # create form input
-            my $InputString = $Self->{LayoutObject}->ImportExportFormInputCreate(
+            my $InputString = $LayoutObject->ImportExportFormInputCreate(
                 Item  => $Item,
                 Value => $SearchData->{ $Item->{Key} },
             );
 
             # output attribute row
-            $Self->{LayoutObject}->Block(
+            $LayoutObject->Block(
                 Name => 'TemplateEdit5Element',
                 Data => {
                     Name => $Item->{Name} || '',
@@ -853,16 +848,16 @@ sub Run {
         }
 
         # output header and navbar
-        my $Output = $Self->{LayoutObject}->Header();
-        $Output .= $Self->{LayoutObject}->NavigationBar();
+        my $Output = $LayoutObject->Header();
+        $Output .= $LayoutObject->NavigationBar();
 
         # start template output
-        $Output .= $Self->{LayoutObject}->Output(
+        $Output .= $LayoutObject->Output(
             TemplateFile => 'AdminImportExport',
             Data         => \%Param,
         );
 
-        $Output .= $Self->{LayoutObject}->Footer();
+        $Output .= $LayoutObject->Footer();
         return $Output;
     }
 
@@ -872,7 +867,7 @@ sub Run {
     elsif ( $Self->{Subaction} eq 'TemplateSave5' ) {
 
         # get template id
-        my $TemplateID = $Self->{ParamObject}->GetParam( Param => 'TemplateID' );
+        my $TemplateID = $ParamObject->GetParam( Param => 'TemplateID' );
 
         my %Submit = (
             SubmitNext => 'Overview',
@@ -885,28 +880,28 @@ sub Run {
 
         PARAM:
         for my $SubmitKey ( sort keys %Submit ) {
-            next PARAM if !$Self->{ParamObject}->GetParam( Param => $SubmitKey );
+            next PARAM if !$ParamObject->GetParam( Param => $SubmitKey );
 
             $Subaction = $Submit{$SubmitKey};
             last PARAM;
         }
 
         # delete all search restrictions
-        if ( !$Self->{ParamObject}->GetParam( Param => 'RestrictExport' ) ) {
+        if ( !$ParamObject->GetParam( Param => 'RestrictExport' ) ) {
 
             # delete all search data
-            $Self->{ImportExportObject}->SearchDataDelete(
+            $ImportExportObject->SearchDataDelete(
                 TemplateID => $TemplateID,
                 UserID     => $Self->{UserID},
             );
 
-            return $Self->{LayoutObject}->Redirect(
+            return $LayoutObject->Redirect(
                 OP => "Action=$Self->{Action};Subaction=$Subaction;TemplateID=$TemplateID",
             );
         }
 
         # get search attributes
-        my $SearchAttributeList = $Self->{ImportExportObject}->SearchAttributesGet(
+        my $SearchAttributeList = $ImportExportObject->SearchAttributesGet(
             TemplateID => $TemplateID,
             UserID     => $Self->{UserID},
         );
@@ -916,7 +911,7 @@ sub Run {
         for my $Item ( @{$SearchAttributeList} ) {
 
             # get form data
-            $AttributeValues{ $Item->{Key} } = $Self->{LayoutObject}->ImportExportFormDataGet(
+            $AttributeValues{ $Item->{Key} } = $LayoutObject->ImportExportFormDataGet(
                 Item => $Item,
             );
 
@@ -927,13 +922,13 @@ sub Run {
         }
 
         # save the search data
-        $Self->{ImportExportObject}->SearchDataSave(
+        $ImportExportObject->SearchDataSave(
             TemplateID => $TemplateID,
             SearchData => \%AttributeValues,
             UserID     => $Self->{UserID},
         );
 
-        return $Self->{LayoutObject}->Redirect(
+        return $LayoutObject->Redirect(
             OP => "Action=$Self->{Action};Subaction=$Subaction;TemplateID=$TemplateID",
         );
     }
@@ -944,16 +939,16 @@ sub Run {
     elsif ( $Self->{Subaction} eq 'TemplateDelete' ) {
 
         # get template id
-        my $TemplateID = $Self->{ParamObject}->GetParam( Param => 'TemplateID' );
+        my $TemplateID = $ParamObject->GetParam( Param => 'TemplateID' );
 
         # delete template from database
-        $Self->{ImportExportObject}->TemplateDelete(
+        $ImportExportObject->TemplateDelete(
             TemplateID => $TemplateID,
             UserID     => $Self->{UserID},
         );
 
         # redirect to overview
-        return $Self->{LayoutObject}->Redirect( OP => "Action=$Self->{Action}" );
+        return $LayoutObject->Redirect( OP => "Action=$Self->{Action}" );
     }
 
     # ------------------------------------------------------------ #
@@ -962,38 +957,38 @@ sub Run {
     elsif ( $Self->{Subaction} eq 'ImportInformation' ) {
 
         # get object list
-        my $ObjectList = $Self->{ImportExportObject}->ObjectList();
+        my $ObjectList = $ImportExportObject->ObjectList();
 
         if ( !$ObjectList ) {
-            $Self->{LayoutObject}->FatalError( Message => 'No object backend found!' );
+            $LayoutObject->FatalError( Message => 'No object backend found!' );
             return;
         }
 
         # get format list
-        my $FormatList = $Self->{ImportExportObject}->FormatList();
+        my $FormatList = $ImportExportObject->FormatList();
 
         if ( !$FormatList ) {
-            $Self->{LayoutObject}->FatalError( Message => 'No format backend found!' );
+            $LayoutObject->FatalError( Message => 'No format backend found!' );
             return;
         }
 
         # get params
         my $TemplateData = {};
-        $TemplateData->{TemplateID} = $Self->{ParamObject}->GetParam( Param => 'TemplateID' );
+        $TemplateData->{TemplateID} = $ParamObject->GetParam( Param => 'TemplateID' );
 
         # get template data
-        $TemplateData = $Self->{ImportExportObject}->TemplateGet(
+        $TemplateData = $ImportExportObject->TemplateGet(
             TemplateID => $TemplateData->{TemplateID},
             UserID     => $Self->{UserID},
         );
 
         if ( !$TemplateData->{TemplateID} ) {
-            $Self->{LayoutObject}->FatalError( Message => 'Template not found!' );
+            $LayoutObject->FatalError( Message => 'Template not found!' );
             return;
         }
 
         # generate ObjectOptionStrg
-        my $ObjectOptionStrg = $Self->{LayoutObject}->BuildSelection(
+        my $ObjectOptionStrg = $LayoutObject->BuildSelection(
             Data         => $ObjectList,
             Name         => 'Object',
             SelectedID   => $TemplateData->{Object},
@@ -1002,7 +997,7 @@ sub Run {
         );
 
         # generate FormatOptionStrg
-        my $FormatOptionStrg = $Self->{LayoutObject}->BuildSelection(
+        my $FormatOptionStrg = $LayoutObject->BuildSelection(
             Data         => $FormatList,
             Name         => 'Format',
             SelectedID   => $TemplateData->{Format},
@@ -1011,7 +1006,7 @@ sub Run {
         );
 
         # output overview
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'Overview',
             Data => {
                 %Param,
@@ -1020,11 +1015,11 @@ sub Run {
             },
         );
 
-        $Self->{LayoutObject}->Block( Name => 'ActionList' );
-        $Self->{LayoutObject}->Block( Name => 'ActionOverview' );
+        $LayoutObject->Block( Name => 'ActionList' );
+        $LayoutObject->Block( Name => 'ActionOverview' );
 
         # output list
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'ImportInformation',
             Data => {
                 %{$TemplateData},
@@ -1032,16 +1027,16 @@ sub Run {
         );
 
         # output header and navbar
-        my $Output = $Self->{LayoutObject}->Header();
-        $Output .= $Self->{LayoutObject}->NavigationBar();
+        my $Output = $LayoutObject->Header();
+        $Output .= $LayoutObject->NavigationBar();
 
         # start template output
-        $Output .= $Self->{LayoutObject}->Output(
+        $Output .= $LayoutObject->Output(
             TemplateFile => 'AdminImportExport',
             Data         => \%Param,
         );
 
-        $Output .= $Self->{LayoutObject}->Footer();
+        $Output .= $LayoutObject->Footer();
         return $Output;
     }
 
@@ -1052,21 +1047,21 @@ sub Run {
 
         # get params
         my $TemplateData = {};
-        $TemplateData->{TemplateID} = $Self->{ParamObject}->GetParam( Param => 'TemplateID' );
+        $TemplateData->{TemplateID} = $ParamObject->GetParam( Param => 'TemplateID' );
 
         # get template data
-        $TemplateData = $Self->{ImportExportObject}->TemplateGet(
+        $TemplateData = $ImportExportObject->TemplateGet(
             TemplateID => $TemplateData->{TemplateID},
             UserID     => $Self->{UserID},
         );
 
         if ( !$TemplateData->{TemplateID} ) {
-            $Self->{LayoutObject}->FatalError( Message => 'Template not found!' );
+            $LayoutObject->FatalError( Message => 'Template not found!' );
             return;
         }
 
         # get source file
-        my %SourceFile = $Self->{ParamObject}->GetUploadAll(
+        my %SourceFile = $ParamObject->GetUploadAll(
             Param  => 'SourceFile',
             Source => 'String',
         );
@@ -1074,25 +1069,25 @@ sub Run {
         $SourceFile{Content} ||= '';
 
         # import data
-        my $Result = $Self->{ImportExportObject}->Import(
+        my $Result = $ImportExportObject->Import(
             TemplateID    => $TemplateData->{TemplateID},
             SourceContent => \$SourceFile{Content},
             UserID        => $Self->{UserID},
         );
 
         if ( !$Result ) {
-            $Self->{LayoutObject}->FatalError(
+            $LayoutObject->FatalError(
                 Message => 'Error occurred. Import impossible! See Syslog for details.',
             );
             return;
         }
 
         # output header and navbar
-        my $Output = $Self->{LayoutObject}->Header();
-        $Output .= $Self->{LayoutObject}->NavigationBar();
+        my $Output = $LayoutObject->Header();
+        $Output .= $LayoutObject->NavigationBar();
 
         # output import results
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'ImportResult',
             Data => {
                 %{$Result},
@@ -1109,7 +1104,7 @@ sub Run {
                 push @DuplicateNames, $1;
             }
             else {
-                $Self->{LayoutObject}->Block(
+                $LayoutObject->Block(
                     Name => 'ImportResultReturnCode',
                     Data => {
                         ReturnCodeName  => $RetCode,
@@ -1124,7 +1119,7 @@ sub Run {
 
             my $DuplicateNamesString = join ', ', @DuplicateNames;
 
-            $Self->{LayoutObject}->Block(
+            $LayoutObject->Block(
                 Name => 'ImportResultDuplicateNames',
                 Data => {
                     DuplicateNames => $DuplicateNamesString,
@@ -1134,7 +1129,7 @@ sub Run {
 
         # output last processed line mumber of import file
         if ( $Result->{Failed} ) {
-            $Self->{LayoutObject}->Block(
+            $LayoutObject->Block(
                 Name => 'ImportResultLastLineNumber',
                 Data => {
                     LastLineNumber => $Result->{Counter},
@@ -1143,14 +1138,14 @@ sub Run {
         }
 
         # start output
-        $Output .= $Self->{LayoutObject}->Output(
+        $Output .= $LayoutObject->Output(
             TemplateFile => 'AdminImportExport',
             Data         => {
                 %Param,
             },
         );
 
-        $Output .= $Self->{LayoutObject}->Footer();
+        $Output .= $LayoutObject->Footer();
         return $Output;
     }
 
@@ -1161,27 +1156,27 @@ sub Run {
 
         # get params
         my $TemplateData = {};
-        $TemplateData->{TemplateID} = $Self->{ParamObject}->GetParam( Param => 'TemplateID' );
+        $TemplateData->{TemplateID} = $ParamObject->GetParam( Param => 'TemplateID' );
 
         # get template data
-        $TemplateData = $Self->{ImportExportObject}->TemplateGet(
+        $TemplateData = $ImportExportObject->TemplateGet(
             TemplateID => $TemplateData->{TemplateID},
             UserID     => $Self->{UserID},
         );
 
         if ( !$TemplateData->{TemplateID} ) {
-            $Self->{LayoutObject}->FatalError( Message => 'Template not found!' );
+            $LayoutObject->FatalError( Message => 'Template not found!' );
             return;
         }
 
         # export data
-        my $Result = $Self->{ImportExportObject}->Export(
+        my $Result = $ImportExportObject->Export(
             TemplateID => $TemplateData->{TemplateID},
             UserID     => $Self->{UserID},
         );
 
         if ( !$Result ) {
-            $Self->{LayoutObject}->FatalError(
+            $LayoutObject->FatalError(
                 Message => 'Error occurred. Export impossible! See Syslog for details.',
             );
             return;
@@ -1189,7 +1184,7 @@ sub Run {
 
         my $FileContent = join "\n", @{ $Result->{DestinationContent} };
 
-        return $Self->{LayoutObject}->Attachment(
+        return $LayoutObject->Attachment(
             Type        => 'attachment',
             Filename    => 'Export.csv',
             ContentType => 'text/csv',
@@ -1203,39 +1198,39 @@ sub Run {
     else {
 
         # get object list
-        my $ObjectList = $Self->{ImportExportObject}->ObjectList();
+        my $ObjectList = $ImportExportObject->ObjectList();
 
         if ( !$ObjectList ) {
-            $Self->{LayoutObject}->FatalError( Message => 'No object backend found!' );
+            $LayoutObject->FatalError( Message => 'No object backend found!' );
             return;
         }
 
         # get format list
-        my $FormatList = $Self->{ImportExportObject}->FormatList();
+        my $FormatList = $ImportExportObject->FormatList();
 
         if ( !$FormatList ) {
-            $Self->{LayoutObject}->FatalError( Message => 'No format backend found!' );
+            $LayoutObject->FatalError( Message => 'No format backend found!' );
             return;
         }
 
         # output overview
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'Overview',
             Data => {
                 %Param,
             },
         );
 
-        $Self->{LayoutObject}->Block( Name => 'ActionList' );
-        $Self->{LayoutObject}->Block( Name => 'ActionAdd' );
+        $LayoutObject->Block( Name => 'ActionList' );
+        $LayoutObject->Block( Name => 'ActionAdd' );
 
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'OverviewResult',
             Data => \%Param,
         );
 
         # get valid list
-        my %ValidList = $Self->{ValidObject}->ValidList();
+        my %ValidList = $Kernel::OM->Get('Kernel::System::Valid')->ValidList();
 
         my $EmptyDatabase = 1;
 
@@ -1243,7 +1238,7 @@ sub Run {
         for my $Object ( sort { $ObjectList->{$a} cmp $ObjectList->{$b} } keys %{$ObjectList} ) {
 
             # get template list
-            my $TemplateList = $Self->{ImportExportObject}->TemplateList(
+            my $TemplateList = $ImportExportObject->TemplateList(
                 Object => $Object,
                 UserID => $Self->{UserID},
             );
@@ -1255,7 +1250,7 @@ sub Run {
             $EmptyDatabase = 0;
 
             # output list
-            $Self->{LayoutObject}->Block(
+            $LayoutObject->Block(
                 Name => 'OverviewList',
                 Data => {
                     ObjectName => $ObjectList->{$Object},
@@ -1265,13 +1260,13 @@ sub Run {
             for my $TemplateID ( @{$TemplateList} ) {
 
                 # get template data
-                my $TemplateData = $Self->{ImportExportObject}->TemplateGet(
+                my $TemplateData = $ImportExportObject->TemplateGet(
                     TemplateID => $TemplateID,
                     UserID     => $Self->{UserID},
                 );
 
                 # output row
-                $Self->{LayoutObject}->Block(
+                $LayoutObject->Block(
                     Name => 'OverviewListRow',
                     Data => {
                         %{$TemplateData},
@@ -1286,26 +1281,26 @@ sub Run {
         if ($EmptyDatabase) {
 
             # output list
-            $Self->{LayoutObject}->Block(
+            $LayoutObject->Block(
                 Name => 'OverviewList',
                 Data => {
                     ObjectName => 'Template List',
                 },
             );
-            $Self->{LayoutObject}->Block( Name => 'NoDataFoundMsg' );
+            $LayoutObject->Block( Name => 'NoDataFoundMsg' );
         }
 
         # output header and navbar
-        my $Output = $Self->{LayoutObject}->Header();
-        $Output .= $Self->{LayoutObject}->NavigationBar();
+        my $Output = $LayoutObject->Header();
+        $Output .= $LayoutObject->NavigationBar();
 
         # start template output
-        $Output .= $Self->{LayoutObject}->Output(
+        $Output .= $LayoutObject->Output(
             TemplateFile => 'AdminImportExport',
             Data         => \%Param,
         );
 
-        $Output .= $Self->{LayoutObject}->Footer();
+        $Output .= $LayoutObject->Footer();
         return $Output;
     }
 }
@@ -1318,19 +1313,22 @@ sub _MaskTemplateEdit1 {
         %ServerError = %{ $Param{ServerError} };
     }
 
+    # get layout object
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+
     # output overview
-    $Self->{LayoutObject}->Block(
+    $LayoutObject->Block(
         Name => 'Overview',
         Data => \%Param,
     );
 
-    $Self->{LayoutObject}->Block( Name => 'ActionList' );
-    $Self->{LayoutObject}->Block( Name => 'ActionOverview' );
+    $LayoutObject->Block( Name => 'ActionList' );
+    $LayoutObject->Block( Name => 'ActionOverview' );
 
     # generate ValidOptionStrg
-    my %ValidList        = $Self->{ValidObject}->ValidList();
+    my %ValidList        = $Kernel::OM->Get('Kernel::System::Valid')->ValidList();
     my %ValidListReverse = reverse %ValidList;
-    my $ValidOptionStrg  = $Self->{LayoutObject}->BuildSelection(
+    my $ValidOptionStrg  = $LayoutObject->BuildSelection(
         Name       => 'ValidID',
         Data       => \%ValidList,
         SelectedID => $Param{ValidID} || $ValidListReverse{valid},
@@ -1342,7 +1340,7 @@ sub _MaskTemplateEdit1 {
         $Class .= 'ServerError';
     }
 
-    $Self->{LayoutObject}->Block(
+    $LayoutObject->Block(
         Name => 'TemplateEdit1',
         Data => {
             %Param,
@@ -1352,7 +1350,7 @@ sub _MaskTemplateEdit1 {
     );
 
     if ( $Param{TemplateID} ) {
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'EditObjectFormat',
             Data => {
                 %Param,
@@ -1364,19 +1362,22 @@ sub _MaskTemplateEdit1 {
 
     if ( $Param{New} ) {
 
+        # get ImportExport object
+        my $ImportExportObject = $Kernel::OM->Get('Kernel::System::ImportExport');
+
         # get object list
-        my $ObjectList = $Self->{ImportExportObject}->ObjectList();
+        my $ObjectList = $ImportExportObject->ObjectList();
 
         if ( !$ObjectList ) {
-            $Self->{LayoutObject}->FatalError( Message => 'No object backend found!' );
+            $LayoutObject->FatalError( Message => 'No object backend found!' );
             return;
         }
 
         # get format list
-        my $FormatList = $Self->{ImportExportObject}->FormatList();
+        my $FormatList = $ImportExportObject->FormatList();
 
         if ( !$FormatList ) {
-            $Self->{LayoutObject}->FatalError( Message => 'No format backend found!' );
+            $LayoutObject->FatalError( Message => 'No format backend found!' );
             return;
         }
 
@@ -1387,7 +1388,7 @@ sub _MaskTemplateEdit1 {
         }
 
         # generate ObjectOptionStrg
-        my $ObjectOptionStrg = $Self->{LayoutObject}->BuildSelection(
+        my $ObjectOptionStrg = $LayoutObject->BuildSelection(
             Data         => $ObjectList,
             Name         => 'Object',
             SelectedID   => $Param{Object} || '',
@@ -1402,7 +1403,7 @@ sub _MaskTemplateEdit1 {
         }
 
         # generate FormatOptionStrg
-        my $FormatOptionStrg = $Self->{LayoutObject}->BuildSelection(
+        my $FormatOptionStrg = $LayoutObject->BuildSelection(
             Data         => $FormatList,
             Name         => 'Format',
             SelectedID   => $Param{Format} || '',
@@ -1411,7 +1412,7 @@ sub _MaskTemplateEdit1 {
             Class        => $Class,
         );
 
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'NewObjectFormat',
             Data => {
                 ObjectOption => $ObjectOptionStrg,
@@ -1421,16 +1422,16 @@ sub _MaskTemplateEdit1 {
     }
 
     # output header and navbar
-    my $Output = $Self->{LayoutObject}->Header();
-    $Output .= $Self->{LayoutObject}->NavigationBar();
+    my $Output = $LayoutObject->Header();
+    $Output .= $LayoutObject->NavigationBar();
 
     # start template output
-    $Output .= $Self->{LayoutObject}->Output(
+    $Output .= $LayoutObject->Output(
         TemplateFile => 'AdminImportExport',
         Data         => \%Param,
     );
 
-    $Output .= $Self->{LayoutObject}->Footer();
+    $Output .= $LayoutObject->Footer();
     return $Output;
 }
 
@@ -1447,52 +1448,58 @@ sub _MaskTemplateEdit2 {
         %DataTypeError = %{ $Param{DataTypeError} };
     }
 
+    # get layout object
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+
     my $TemplateID;
     if ( $Param{TemplateID} ) {
         $TemplateID = $Param{TemplateID};
     }
     else {
-        $Self->{LayoutObject}->FatalError( Message => 'Needed TemplateID!' );
+        $LayoutObject->FatalError( Message => 'Needed TemplateID!' );
         return;
     }
 
+    # get ImportExport object
+    my $ImportExportObject = $Kernel::OM->Get('Kernel::System::ImportExport');
+
     # get template data
     my $TemplateData;
-    $TemplateData = $Self->{ImportExportObject}->TemplateGet(
+    $TemplateData = $ImportExportObject->TemplateGet(
         TemplateID => $TemplateID,
         UserID     => $Self->{UserID},
     );
 
     if ( !$TemplateData->{TemplateID} ) {
-        $Self->{LayoutObject}->FatalError( Message => 'Template not found!' );
+        $LayoutObject->FatalError( Message => 'Template not found!' );
         return;
     }
 
     $Param{BackURL} = "Action=$Self->{Action};Subaction=TemplateEdit1;TemplateID=$TemplateID";
 
     # output overview
-    $Self->{LayoutObject}->Block(
+    $LayoutObject->Block(
         Name => 'Overview',
         Data => \%Param,
     );
 
-    $Self->{LayoutObject}->Block( Name => 'ActionList' );
-    $Self->{LayoutObject}->Block( Name => 'ActionOverview' );
+    $LayoutObject->Block( Name => 'ActionList' );
+    $LayoutObject->Block( Name => 'ActionOverview' );
 
     # output list
-    $Self->{LayoutObject}->Block(
+    $LayoutObject->Block(
         Name => 'TemplateEdit2',
         Data => $TemplateData,
     );
 
     # get object attributes
-    my $ObjectAttributeList = $Self->{ImportExportObject}->ObjectAttributesGet(
+    my $ObjectAttributeList = $ImportExportObject->ObjectAttributesGet(
         TemplateID => $TemplateData->{TemplateID},
         UserID     => $Self->{UserID},
     );
 
     # get object data
-    my $ObjectData = $Self->{ImportExportObject}->ObjectDataGet(
+    my $ObjectData = $ImportExportObject->ObjectDataGet(
         TemplateID => $TemplateData->{TemplateID},
         UserID     => $Self->{UserID},
     );
@@ -1550,7 +1557,7 @@ sub _MaskTemplateEdit2 {
         }
 
         # create form input
-        my $InputString = $Self->{LayoutObject}->ImportExportFormInputCreate(
+        my $InputString = $LayoutObject->ImportExportFormInputCreate(
             Item  => $Item,
             Class => $Class,
             Value => $Value,
@@ -1566,7 +1573,7 @@ sub _MaskTemplateEdit2 {
         }
 
         # output attribute row
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'TemplateEdit2Element',
             Data => {
                 Name => $Item->{Name} || '',
@@ -1578,16 +1585,16 @@ sub _MaskTemplateEdit2 {
     }
 
     # output header and navbar
-    my $Output = $Self->{LayoutObject}->Header();
-    $Output .= $Self->{LayoutObject}->NavigationBar();
+    my $Output = $LayoutObject->Header();
+    $Output .= $LayoutObject->NavigationBar();
 
     # start template output
-    $Output .= $Self->{LayoutObject}->Output(
+    $Output .= $LayoutObject->Output(
         TemplateFile => 'AdminImportExport',
         Data         => \%Param,
     );
 
-    $Output .= $Self->{LayoutObject}->Footer();
+    $Output .= $LayoutObject->Footer();
     return $Output;
 
 }
@@ -1605,54 +1612,60 @@ sub _MaskTemplateEdit3 {
         $TemplateID = $Param{TemplateID};
     }
 
+    # get layout object
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+
     if ( !$TemplateID ) {
-        $Self->{LayoutObject}->FatalError( Message => 'Template not found!' );
+        $LayoutObject->FatalError( Message => 'Template not found!' );
         return;
     }
 
+    # get ImportExport object
+    my $ImportExportObject = $Kernel::OM->Get('Kernel::System::ImportExport');
+
     # get template data
     my $TemplateData;
-    $TemplateData = $Self->{ImportExportObject}->TemplateGet(
+    $TemplateData = $ImportExportObject->TemplateGet(
         TemplateID => $TemplateID,
         UserID     => $Self->{UserID},
     );
 
     if ( !$TemplateData->{TemplateID} ) {
-        $Self->{LayoutObject}->FatalError( Message => 'Template not found!' );
+        $LayoutObject->FatalError( Message => 'Template not found!' );
         return;
     }
 
     $Param{BackURL} = "Action=$Self->{Action};Subaction=TemplateEdit2;TemplateID=$TemplateID";
 
     # output overview
-    $Self->{LayoutObject}->Block(
+    $LayoutObject->Block(
         Name => 'Overview',
         Data => \%Param,
     );
 
-    $Self->{LayoutObject}->Block( Name => 'ActionList' );
-    $Self->{LayoutObject}->Block( Name => 'ActionOverview' );
+    $LayoutObject->Block( Name => 'ActionList' );
+    $LayoutObject->Block( Name => 'ActionOverview' );
 
     # output list
-    $Self->{LayoutObject}->Block(
+    $LayoutObject->Block(
         Name => 'TemplateEdit3',
         Data => $TemplateData,
     );
 
     # get format attributes
-    my $FormatAttributeList = $Self->{ImportExportObject}->FormatAttributesGet(
+    my $FormatAttributeList = $ImportExportObject->FormatAttributesGet(
         TemplateID => $TemplateData->{TemplateID},
         UserID     => $Self->{UserID},
     );
 
     # get format data
-    my $FormatData = $Self->{ImportExportObject}->FormatDataGet(
+    my $FormatData = $ImportExportObject->FormatDataGet(
         TemplateID => $TemplateData->{TemplateID},
         UserID     => $Self->{UserID},
     );
 
     if ( !$FormatData ) {
-        $Self->{LayoutObject}->FatalError( Message => 'Format not found!' );
+        $LayoutObject->FatalError( Message => 'Format not found!' );
         return;
     }
 
@@ -1678,14 +1691,14 @@ sub _MaskTemplateEdit3 {
         }
 
         # create form input
-        my $InputString = $Self->{LayoutObject}->ImportExportFormInputCreate(
+        my $InputString = $LayoutObject->ImportExportFormInputCreate(
             Item  => $Item,
             Class => $Class,
             Value => $FormatData->{ $Item->{Key} },
         );
 
         # output attribute row
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'TemplateEdit3Element',
             Data => {
                 Name => $Item->{Name} || '',
@@ -1696,7 +1709,7 @@ sub _MaskTemplateEdit3 {
 
         # output required notice
         if ( $Item->{Input}->{Required} ) {
-            $Self->{LayoutObject}->Block(
+            $LayoutObject->Block(
                 Name => 'TemplateEdit3ElementRequired',
                 Data => {
                     Name => $Item->{Name} || '',
@@ -1707,16 +1720,16 @@ sub _MaskTemplateEdit3 {
     }
 
     # output header and navbar
-    my $Output = $Self->{LayoutObject}->Header();
-    $Output .= $Self->{LayoutObject}->NavigationBar();
+    my $Output = $LayoutObject->Header();
+    $Output .= $LayoutObject->NavigationBar();
 
     # start template output
-    $Output .= $Self->{LayoutObject}->Output(
+    $Output .= $LayoutObject->Output(
         TemplateFile => 'AdminImportExport',
         Data         => \%Param,
     );
 
-    $Output .= $Self->{LayoutObject}->Footer();
+    $Output .= $LayoutObject->Footer();
     return $Output;
 
 }
