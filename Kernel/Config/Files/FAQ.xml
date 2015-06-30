@@ -713,7 +713,7 @@ Your OTRS Notification Master
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Frontend::Output::FilterElementPost###FAQ" Required="0" Valid="1">
-        <Description Translatable="1">Defines where the 'Insert FAQ' link will be displayed. Note: AgentTicketActionCommon includes AgentTicketNote, AgentTicketClose, AgentTicketFreeText, AgentTicketOwner, AgentTicketPending, AgentTicketPriority and AgentTicketResponsible.</Description>
+        <Description Translatable="1">Defines where the 'Insert FAQ' link will be displayed.</Description>
         <Group>FAQ</Group>
         <SubGroup>Frontend::Agent</SubGroup>
         <Setting>
@@ -722,11 +722,18 @@ Your OTRS Notification Master
                 <Item Key="Debug">0</Item>
                 <Item Key="Templates">
                     <Hash>
-                        <Item Key="AgentTicketPhone">1</Item>
-                        <Item Key="AgentTicketEmail">1</Item>
+                        <Item Key="AgentTicketClose">1</Item>
                         <Item Key="AgentTicketCompose">1</Item>
+                        <Item Key="AgentTicketEmail">1</Item>
+                        <Item Key="AgentTicketEmailOutbound">1</Item>
                         <Item Key="AgentTicketForward">1</Item>
-                        <Item Key="AgentTicketActionCommon">1</Item>
+                        <Item Key="AgentTicketFreeText">1</Item>
+                        <Item Key="AgentTicketNote">1</Item>
+                        <Item Key="AgentTicketOwner">1</Item>
+                        <Item Key="AgentTicketPending">1</Item>
+                        <Item Key="AgentTicketPhone">1</Item>
+                        <Item Key="AgentTicketPriority">1</Item>
+                        <Item Key="AgentTicketResponsible">1</Item>
                     </Hash>
                 </Item>
             </Hash>

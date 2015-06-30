@@ -387,12 +387,12 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
         <section>
             <title>DashboardBackend###0398-FAQ-LastChange.</title>
             <para>Group: FAQ, Subgroup: Frontend::Agent::Dashboard.</para>
-            <para>Defines the parameters for the dashboard backend. &quot;Limit&quot; defines the number of entries displayed by default. &quot;Group&quot; is used to restrict access to the plugin (e. g. Group: admin;group1;group2;). &quot;Default&quot; indicates if the plugin is enabled by default or if the user needs to enable it manually. &quot;CacheTTL&quot; indicates the cache expiration period in minutes for the plugin.</para>
+            <para>Defines the parameters for the dashboard backend. &quot;Limit&quot; defines the number of entries displayed by default. &quot;Group&quot; is used to restrict access to the plugin (e. g. Group: admin;group1;group2;). &quot;Default&quot; indicates if the plugin is enabled by default or if the user needs to enable it manually.</para>
         </section>
         <section>
             <title>DashboardBackend###0399-FAQ-LastCreate.</title>
             <para>Group: FAQ, Subgroup: Frontend::Agent::Dashboard.</para>
-            <para>Defines the parameters for the dashboard backend. &quot;Limit&quot; defines the number of entries displayed by default. &quot;Group&quot; is used to restrict access to the plugin (e. g. Group: admin;group1;group2;). &quot;Default&quot; indicates if the plugin is enabled by default or if the user needs to enable it manually. &quot;CacheTTL&quot; indicates the cache expiration period in minutes for the plugin.</para>
+            <para>Defines the parameters for the dashboard backend. &quot;Limit&quot; defines the number of entries displayed by default. &quot;Group&quot; is used to restrict access to the plugin (e. g. Group: admin;group1;group2;). &quot;Default&quot; indicates if the plugin is enabled by default or if the user needs to enable it manually.</para>
         </section>
         <section>
             <title>DynamicFields::ObjectType###FAQ.</title>
@@ -600,6 +600,11 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
             <para>Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the agent interface.</para>
         </section>
         <section>
+            <title>FAQ::Frontend::AgentFAQExplorer###TitleSize.</title>
+            <para>Group: FAQ, Subgroup: Frontend::Agent::FAQ::ViewExplorer.</para>
+            <para>Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer in the agent interface.</para>
+        </section>
+        <section>
             <title>FAQ::Frontend::AgentFAQJournal###JournalLimit.</title>
             <para>Group: FAQ, Subgroup: Frontend::Agent::FAQ::ViewJournal.</para>
             <para>Maximum number of FAQ articles to be displayed in the FAQ journal in the agent interface.</para>
@@ -608,6 +613,11 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
             <title>FAQ::Frontend::AgentFAQJournal###ShowColumns.</title>
             <para>Group: FAQ, Subgroup: Frontend::Agent::FAQ::ViewJournal.</para>
             <para>Defines the shown columns in the FAQ journal. This option has no effect on the position of the column.</para>
+        </section>
+        <section>
+            <title>FAQ::Frontend::AgentFAQJournal###TitleSize.</title>
+            <para>Group: FAQ, Subgroup: Frontend::Agent::FAQ::ViewJournal.</para>
+            <para>Maximum size of the titles in a FAQ article to be shown in the FAQ journal in the agent interface.</para>
         </section>
         <section>
             <title>FAQ::Frontend::AgentFAQPrint###DynamicField.</title>
@@ -730,6 +740,11 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
             <para>Defines the default FAQ attribute for FAQ sorting in a FAQ search of the agent interface.</para>
         </section>
         <section>
+            <title>FAQ::Frontend::AgentFAQSearch###TitleSize.</title>
+            <para>Group: FAQ, Subgroup: Frontend::Agent::FAQ::ViewSearch.</para>
+            <para>Maximum size of the titles in a FAQ article to be shown in the FAQ Search in the agent interface.</para>
+        </section>
+        <section>
             <title>FAQ::Frontend::AgentFAQZoom###DynamicField.</title>
             <para>Group: FAQ, Subgroup: Frontend::Agent::FAQ::ViewZoom.</para>
             <para>Dynamic fields shown in the FAQ zoom screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.</para>
@@ -763,6 +778,11 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
             <title>FAQ::Frontend::CustomerFAQExplorer###SortBy::Default.</title>
             <para>Group: FAQ, Subgroup: Frontend::Customer::FAQ::ViewExplorer.</para>
             <para>Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the customer interface.</para>
+        </section>
+        <section>
+            <title>FAQ::Frontend::CustomerFAQExplorer###TitleSize.</title>
+            <para>Group: FAQ, Subgroup: Frontend::Customer::FAQ::ViewExplorer.</para>
+            <para>Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer in the customer interface.</para>
         </section>
         <section>
             <title>FAQ::Frontend::CustomerFAQOverview###DynamicField.</title>
@@ -803,6 +823,11 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
             <title>FAQ::Frontend::CustomerFAQSearch###SortBy::Default.</title>
             <para>Group: FAQ, Subgroup: Frontend::Customer::FAQ::ViewSearch.</para>
             <para>Defines the default FAQ attribute for FAQ sorting in a FAQ search of the customer interface.</para>
+        </section>
+        <section>
+            <title>FAQ::Frontend::CustomerFAQSearch###TitleSize.</title>
+            <para>Group: FAQ, Subgroup: Frontend::Customer::FAQ::ViewSearch.</para>
+            <para>Maximum size of the titles in a FAQ article to be shown in the FAQ Search in the customer interface.</para>
         </section>
         <section>
             <title>FAQ::Frontend::CustomerFAQZoom###DynamicField.</title>
@@ -885,6 +910,11 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
             <para>Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the public interface.</para>
         </section>
         <section>
+            <title>FAQ::Frontend::PublicFAQExplorer###TitleSize.</title>
+            <para>Group: FAQ, Subgroup: Frontend::Public::FAQ::ViewExplorer.</para>
+            <para>Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer in the public interface.</para>
+        </section>
+        <section>
             <title>FAQ::Frontend::PublicFAQOverview###DynamicField.</title>
             <para>Group: FAQ, Subgroup: Frontend::Public::FAQOverview.</para>
             <para>Dynamic fields shown in the FAQ overview screen of the public interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.</para>
@@ -916,13 +946,18 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
         </section>
         <section>
             <title>FAQ::Frontend::PublicFAQSearch###SearchPageShown.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Public::ViewFAQSearch.</para>
+            <para>Group: FAQ, Subgroup: Frontend::Public::FAQ::ViewFAQSearch.</para>
             <para>Number of FAQ articles to be displayed on each page of a search result in the public interface.</para>
         </section>
         <section>
             <title>FAQ::Frontend::PublicFAQSearch###SortBy::Default.</title>
             <para>Group: FAQ, Subgroup: Frontend::Public::FAQ::ViewSearch.</para>
             <para>Defines the default FAQ attribute for FAQ sorting in a FAQ search of the public interface.</para>
+        </section>
+        <section>
+            <title>FAQ::Frontend::PublicFAQSearch###TitleSize.</title>
+            <para>Group: FAQ, Subgroup: Frontend::Public::FAQ::ViewSearch.</para>
+            <para>Maximum size of the titles in a FAQ article to be shown in the FAQ Search in the public interface.</para>
         </section>
         <section>
             <title>FAQ::Frontend::PublicFAQZoom###DynamicField.</title>
@@ -1020,6 +1055,11 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
             <para>Define if the FAQ title should be concatenated to article subject.</para>
         </section>
         <section>
+            <title>FAQ::TitleSize.</title>
+            <para>Group: FAQ, Subgroup: Core.</para>
+            <para>Default maximum size of the titles in a FAQ article to be shown.</para>
+        </section>
+        <section>
             <title>FAQ::Voting.</title>
             <para>Group: FAQ, Subgroup: Core.</para>
             <para>Enable voting mechanism on FAQ module.</para>
@@ -1097,7 +1137,7 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
         <section>
             <title>Frontend::Output::FilterElementPost###FAQ.</title>
             <para>Group: FAQ, Subgroup: Frontend::Agent.</para>
-            <para>Defines where the 'Insert FAQ' link will be displayed. Note: AgentTicketActionCommon includes AgentTicketNote, AgentTicketClose, AgentTicketFreeText, AgentTicketOwner, AgentTicketPending, AgentTicketPriority and AgentTicketResponsible.</para>
+            <para>Defines where the 'Insert FAQ' link will be displayed.</para>
         </section>
         <section>
             <title>Frontend::Output::OutputFilterTextAutoLink###FAQ.</title>
