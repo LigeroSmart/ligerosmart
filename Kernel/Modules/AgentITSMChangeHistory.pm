@@ -457,7 +457,8 @@ sub Run {
             # ChangeHistory::ChangeLinkAdd", "Ticket", "1
             # YES, this looks strange, but this is the correct way!!!
             $Data{Content} = $LayoutObject->{LanguageObject}->Translate(
-                $HistoryItemType . 'History::' . $HistoryEntryType . '", ' . $Data{Content},
+                $HistoryItemType . 'History::' . $HistoryEntryType,
+                $Data{Content},
             );
 
             # remove not needed place holder
