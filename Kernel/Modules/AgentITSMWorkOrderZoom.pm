@@ -11,13 +11,9 @@ package Kernel::Modules::AgentITSMWorkOrderZoom;
 use strict;
 use warnings;
 
-use Kernel::System::HTMLUtils;
-use Kernel::System::ITSMChange;
-use Kernel::System::ITSMChange::ITSMWorkOrder;
-use Kernel::System::LinkObject;
-use Kernel::System::DynamicField;
-use Kernel::System::DynamicField::Backend;
 use Kernel::System::VariableCheck qw(:all);
+
+our $ObjectManagerDisabled = 1;
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -26,68 +22,36 @@ sub new {
     my $Self = {%Param};
     bless( $Self, $Type );
 
-    # check needed objects
-    for my $Object (
-        qw(ParamObject DBObject LayoutObject LogObject ConfigObject UserObject GroupObject)
-        )
-    {
-        if ( !$Self->{$Object} ) {
-            $Self->{LayoutObject}->FatalError( Message => "Got no $Object!" );
-        }
-    }
-
-    # create needed objects
-    $Self->{HTMLUtilsObject}    = Kernel::System::HTMLUtils->new(%Param);
-    $Self->{ChangeObject}       = Kernel::System::ITSMChange->new(%Param);
-    $Self->{WorkOrderObject}    = Kernel::System::ITSMChange::ITSMWorkOrder->new(%Param);
-    $Self->{LinkObject}         = Kernel::System::LinkObject->new(%Param);
-    $Self->{DynamicFieldObject} = Kernel::System::DynamicField->new(%Param);
-    $Self->{BackendObject}      = Kernel::System::DynamicField::Backend->new(%Param);
-
-    # get config of frontend module
-    $Self->{Config} = $Self->{ConfigObject}->Get("ITSMWorkOrder::Frontend::$Self->{Action}");
-
-    # get the dynamic fields for this screen
-    $Self->{DynamicField} = $Self->{DynamicFieldObject}->DynamicFieldListGet(
-        Valid       => 1,
-        ObjectType  => 'ITSMWorkOrder',
-        FieldFilter => $Self->{Config}->{DynamicField} || {},
-    );
-
-    # get agents preferences
-    my %UserPreferences = $Self->{UserObject}->GetPreferences(
-        UserID => $Self->{UserID},
-    );
-
-    # remember if user already closed message about links in iframes
-    if ( !defined $Self->{DoNotShowBrowserLinkMessage} ) {
-        if ( $UserPreferences{UserAgentDoNotShowBrowserLinkMessage} ) {
-            $Self->{DoNotShowBrowserLinkMessage} = 1;
-        }
-        else {
-            $Self->{DoNotShowBrowserLinkMessage} = 0;
-        }
-    }
-
     return $Self;
 }
 
 sub Run {
     my ( $Self, %Param ) = @_;
 
+    # get needed object
+    my $ParamObject  = $Kernel::OM->Get('Kernel::System::Web::Request');
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+
     # get needed WorkOrderID
-    my $WorkOrderID = $Self->{ParamObject}->GetParam( Param => 'WorkOrderID' );
+    my $WorkOrderID = $ParamObject->GetParam( Param => 'WorkOrderID' );
 
     # check needed stuff
     if ( !$WorkOrderID ) {
-        return $Self->{LayoutObject}->ErrorScreen(
+        return $LayoutObject->ErrorScreen(
             Message => 'No WorkOrderID is given!',
             Comment => 'Please contact the admin.',
         );
     }
 
+    # get needed objects
+    my $WorkOrderObject = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder');
+    my $ConfigObject    = $Kernel::OM->Get('Kernel::Config');
+
+    # get config of frontend module
+    $Self->{Config} = $ConfigObject->Get("ITSMWorkOrder::Frontend::$Self->{Action}");
+
     # check permissions
-    my $Access = $Self->{WorkOrderObject}->Permission(
+    my $Access = $WorkOrderObject->Permission(
         Type        => $Self->{Config}->{Permission},
         Action      => $Self->{Action},
         WorkOrderID => $WorkOrderID,
@@ -96,21 +60,21 @@ sub Run {
 
     # error screen
     if ( !$Access ) {
-        return $Self->{LayoutObject}->NoPermission(
+        return $LayoutObject->NoPermission(
             Message    => "You need $Self->{Config}->{Permission} permissions!",
             WithHeader => 'yes',
         );
     }
 
     # get workorder data
-    my $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
+    my $WorkOrder = $WorkOrderObject->WorkOrderGet(
         WorkOrderID => $WorkOrderID,
         UserID      => $Self->{UserID},
     );
 
     # check error
     if ( !$WorkOrder ) {
-        return $Self->{LayoutObject}->ErrorScreen(
+        return $LayoutObject->ErrorScreen(
             Message => "WorkOrder '$WorkOrderID' not found in database!",
             Comment => 'Please contact the admin.',
         );
@@ -123,7 +87,7 @@ sub Run {
         next ATTRIBUTE if !$WorkOrder->{$Attribute};
 
         # remove active html content (scripts, applets, etc...)
-        my %SafeContent = $Self->{HTMLUtilsObject}->Safety(
+        my %SafeContent = $Kernel::OM->Get('Kernel::System::HTMLUtils')->Safety(
             String       => $WorkOrder->{$Attribute},
             NoApplet     => 1,
             NoObject     => 1,
@@ -139,15 +103,18 @@ sub Run {
         }
     }
 
+    # get log object
+    my $LogObject = $Kernel::OM->Get('Kernel::System::Log');
+
     # handle HTMLView
     if ( $Self->{Subaction} eq 'HTMLView' ) {
 
         # get param
-        my $Field = $Self->{ParamObject}->GetParam( Param => "Field" );
+        my $Field = $ParamObject->GetParam( Param => "Field" );
 
         # needed param
         if ( !$Field ) {
-            $Self->{LogObject}->Log(
+            $LogObject->Log(
                 Message  => "Needed Param: $Field!",
                 Priority => 'error',
             );
@@ -156,7 +123,7 @@ sub Run {
 
         # error checking
         if ( $Field ne 'Instruction' && $Field ne 'Report' ) {
-            $Self->{LogObject}->Log(
+            $LogObject->Log(
                 Message  => "Unknown field: $Field! Field must be either Instruction or Report!",
                 Priority => 'error',
             );
@@ -175,26 +142,29 @@ sub Run {
             }{$1$SessionID}gmsx;
         }
 
+        # get HTML utils object
+        my $HTMLUtilsObject = $Kernel::OM->Get('Kernel::System::HTMLUtils');
+
         # detect all plain text links and put them into an HTML <a> tag
-        $FieldContent = $Self->{LayoutObject}->{HTMLUtilsObject}->LinkQuote(
+        $FieldContent = $HTMLUtilsObject->LinkQuote(
             String => $FieldContent,
         );
 
         # set target="_blank" attribute to all HTML <a> tags
         # the LinkQuote function needs to be called again
-        $FieldContent = $Self->{LayoutObject}->{HTMLUtilsObject}->LinkQuote(
+        $FieldContent = $HTMLUtilsObject->LinkQuote(
             String    => $FieldContent,
             TargetAdd => 1,
         );
 
         # add needed HTML headers
-        $FieldContent = $Self->{LayoutObject}->{HTMLUtilsObject}->DocumentComplete(
+        $FieldContent = $HTMLUtilsObject->DocumentComplete(
             String  => $FieldContent,
             Charset => 'utf-8',
         );
 
         # return complete HTML as an attachment
-        return $Self->{LayoutObject}->Attachment(
+        return $LayoutObject->Attachment(
             Type        => 'inline',
             ContentType => 'text/html',
             Content     => $FieldContent,
@@ -205,9 +175,9 @@ sub Run {
     elsif ( $Self->{Subaction} eq 'DownloadAttachment' ) {
 
         # get data for attachment
-        my $Filename = $Self->{ParamObject}->GetParam( Param => 'Filename' );
-        my $Type     = $Self->{ParamObject}->GetParam( Param => 'Type' );
-        my $AttachmentData = $Self->{WorkOrderObject}->WorkOrderAttachmentGet(
+        my $Filename = $ParamObject->GetParam( Param => 'Filename' );
+        my $Type     = $ParamObject->GetParam( Param => 'Type' );
+        my $AttachmentData = $WorkOrderObject->WorkOrderAttachmentGet(
             WorkOrderID    => $WorkOrderID,
             Filename       => $Filename,
             AttachmentType => $Type,
@@ -215,21 +185,21 @@ sub Run {
 
         # return error if file does not exist
         if ( !$AttachmentData ) {
-            $Self->{LogObject}->Log(
+            $LogObject->Log(
                 Message  => "No such attachment ($Filename)! May be an attack!!!",
                 Priority => 'error',
             );
-            return $Self->{LayoutObject}->ErrorScreen();
+            return $LayoutObject->ErrorScreen();
         }
 
-        return $Self->{LayoutObject}->Attachment(
+        return $LayoutObject->Attachment(
             %{$AttachmentData},
             Type => 'attachment',
         );
     }
 
     # check if LayoutObject has TranslationObject
-    if ( $Self->{LayoutObject}->{LanguageObject} ) {
+    if ( $LayoutObject->{LanguageObject} ) {
 
         # translate parameter
         PARAM:
@@ -239,50 +209,53 @@ sub Run {
             next PARAM if !$WorkOrder->{$Param};
 
             # translate
-            $WorkOrder->{$Param} = $Self->{LayoutObject}->{LanguageObject}->Translate(
+            $WorkOrder->{$Param} = $LayoutObject->{LanguageObject}->Translate(
                 $WorkOrder->{$Param},
             );
         }
     }
 
+    # get session object
+    my $SessionObject = $Kernel::OM->Get('Kernel::System::AuthSession');
+
     # Store LastWorkOrderView, for backlinks from workorder specific pages
-    $Self->{SessionObject}->UpdateSessionID(
+    $SessionObject->UpdateSessionID(
         SessionID => $Self->{SessionID},
         Key       => 'LastWorkOrderView',
         Value     => $Self->{RequestedURL},
     );
 
     # Store LastScreenOverview, for backlinks from AgentLinkObject
-    $Self->{SessionObject}->UpdateSessionID(
+    $SessionObject->UpdateSessionID(
         SessionID => $Self->{SessionID},
         Key       => 'LastScreenOverView',
         Value     => $Self->{RequestedURL},
     );
 
     # Store LastScreenOverview, for backlinks from 'AgentLinkObject'
-    $Self->{SessionObject}->UpdateSessionID(
+    $SessionObject->UpdateSessionID(
         SessionID => $Self->{SessionID},
         Key       => 'LastScreenView',
         Value     => $Self->{RequestedURL},
     );
 
     # get the change that workorder belongs to
-    my $Change = $Self->{ChangeObject}->ChangeGet(
+    my $Change = $Kernel::OM->Get('Kernel::System::ITSMChange')->ChangeGet(
         ChangeID => $WorkOrder->{ChangeID},
         UserID   => $Self->{UserID},
     );
 
     # run workorder menu modules
-    if ( ref $Self->{ConfigObject}->Get('ITSMWorkOrder::Frontend::MenuModule') eq 'HASH' ) {
+    if ( ref $ConfigObject->Get('ITSMWorkOrder::Frontend::MenuModule') eq 'HASH' ) {
 
         # get items for menu
-        my %Menus   = %{ $Self->{ConfigObject}->Get('ITSMWorkOrder::Frontend::MenuModule') };
+        my %Menus   = %{ $ConfigObject->Get('ITSMWorkOrder::Frontend::MenuModule') };
         my $Counter = 0;
 
         for my $Menu ( sort keys %Menus ) {
 
             # load module
-            if ( $Self->{MainObject}->Require( $Menus{$Menu}->{Module} ) ) {
+            if ( $Kernel::OM->Get('Kernel::System::Main')->Require( $Menus{$Menu}->{Module} ) ) {
                 my $Object = $Menus{$Menu}->{Module}->new(
                     %{$Self},
                     WorkOrderID => $WorkOrder->{WorkOrderID},
@@ -313,19 +286,22 @@ sub Run {
                 );
             }
             else {
-                return $Self->{LayoutObject}->FatalError();
+                return $LayoutObject->FatalError();
             }
         }
     }
 
     # output header
-    my $Output = $Self->{LayoutObject}->Header(
+    my $Output = $LayoutObject->Header(
         Title => $WorkOrder->{WorkOrderTitle},
     );
-    $Output .= $Self->{LayoutObject}->NavigationBar();
+    $Output .= $LayoutObject->NavigationBar();
+
+    # get user object
+    my $UserObject = $Kernel::OM->Get('Kernel::System::User');
 
     # get create user data
-    my %CreateUser = $Self->{UserObject}->GetUserData(
+    my %CreateUser = $UserObject->GetUserData(
         UserID => $WorkOrder->{CreateBy},
         Cached => 1,
     );
@@ -336,7 +312,7 @@ sub Run {
     }
 
     # get change user data
-    my %ChangeUser = $Self->{UserObject}->GetUserData(
+    my %ChangeUser = $UserObject->GetUserData(
         UserID => $WorkOrder->{ChangeBy},
         Cached => 1,
     );
@@ -347,7 +323,7 @@ sub Run {
     }
 
     # output meta block
-    $Self->{LayoutObject}->Block(
+    $LayoutObject->Block(
         Name => 'Meta',
         Data => {
             %{$WorkOrder},
@@ -360,7 +336,7 @@ sub Run {
         )
     {
         if ( $WorkOrder->{$BlockName} ) {
-            $Self->{LayoutObject}->Block(
+            $LayoutObject->Block(
                 Name => $BlockName,
                 Data => {
                     $BlockName => $WorkOrder->{$BlockName},
@@ -368,7 +344,7 @@ sub Run {
             );
         }
         else {
-            $Self->{LayoutObject}->Block(
+            $LayoutObject->Block(
                 Name => 'Empty' . $BlockName,
             );
         }
@@ -382,13 +358,13 @@ sub Run {
         next BLOCKNAME if !$Self->{Config}->{$BlockName};
 
         # show block
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'Show' . $BlockName,
         );
 
         # show value or dash
         if ( $WorkOrder->{$BlockName} ) {
-            $Self->{LayoutObject}->Block(
+            $LayoutObject->Block(
                 Name => $BlockName,
                 Data => {
                     $BlockName => $WorkOrder->{$BlockName},
@@ -396,28 +372,38 @@ sub Run {
             );
         }
         else {
-            $Self->{LayoutObject}->Block(
+            $LayoutObject->Block(
                 Name => 'Empty' . $BlockName,
             );
         }
     }
 
+    # get the dynamic fields for this screen
+    my $DynamicField = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldListGet(
+        Valid       => 1,
+        ObjectType  => 'ITSMWorkOrder',
+        FieldFilter => $Self->{Config}->{DynamicField} || {},
+    );
+
+    # get dynamic field backend object
+    my $DynamicFieldBackendObject = $Kernel::OM->Get('Kernel::System::DynamicField::Backend');
+
     # cycle trough the activated Dynamic Fields
     DYNAMICFIELD:
-    for my $DynamicFieldConfig ( @{ $Self->{DynamicField} } ) {
+    for my $DynamicFieldConfig ( @{$DynamicField} ) {
         next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
 
-        my $Value = $Self->{BackendObject}->ValueGet(
+        my $Value = $DynamicFieldBackendObject->ValueGet(
             DynamicFieldConfig => $DynamicFieldConfig,
             ObjectID           => $WorkOrderID,
         );
 
         # get print string for this dynamic field
-        my $ValueStrg = $Self->{BackendObject}->DisplayValueRender(
+        my $ValueStrg = $DynamicFieldBackendObject->DisplayValueRender(
             DynamicFieldConfig => $DynamicFieldConfig,
             Value              => $Value,
             ValueMaxChars      => 100,
-            LayoutObject       => $Self->{LayoutObject},
+            LayoutObject       => $LayoutObject,
         );
 
         # for empty values
@@ -427,7 +413,7 @@ sub Run {
 
         my $Label = $DynamicFieldConfig->{Label};
 
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'DynamicField',
             Data => {
                 Label => $Label,
@@ -437,7 +423,7 @@ sub Run {
         if ( $ValueStrg->{Link} ) {
 
             # output link element
-            $Self->{LayoutObject}->Block(
+            $LayoutObject->Block(
                 Name => 'DynamicFieldLink',
                 Data => {
                     %{$WorkOrder},
@@ -451,7 +437,7 @@ sub Run {
         else {
 
             # output non link element
-            $Self->{LayoutObject}->Block(
+            $LayoutObject->Block(
                 Name => 'DynamicFieldPlain',
                 Data => {
                     Value => $ValueStrg->{Value},
@@ -461,7 +447,7 @@ sub Run {
         }
 
         # example of dynamic fields order customization
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'DynamicField' . $DynamicFieldConfig->{Name},
             Data => {
                 Label => $Label,
@@ -474,7 +460,7 @@ sub Run {
     # get change builder user
     my %ChangeBuilderUser;
     if ( $Change->{ChangeBuilderID} ) {
-        %ChangeBuilderUser = $Self->{UserObject}->GetUserData(
+        %ChangeBuilderUser = $UserObject->GetUserData(
             UserID => $Change->{ChangeBuilderID},
             Cached => 1,
         );
@@ -489,7 +475,7 @@ sub Run {
     if (%ChangeBuilderUser) {
 
         # show name and mail address if user exists
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'ChangeBuilder',
             Data => {
                 %{$WorkOrder},
@@ -499,7 +485,7 @@ sub Run {
     else {
 
         # show dash if no change builder exists
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'EmptyChangeBuilder',
             Data => {},
         );
@@ -507,7 +493,7 @@ sub Run {
 
     # get workorder agent user
     if ( $WorkOrder->{WorkOrderAgentID} ) {
-        my %WorkOrderAgentUser = $Self->{UserObject}->GetUserData(
+        my %WorkOrderAgentUser = $UserObject->GetUserData(
             UserID => $WorkOrder->{WorkOrderAgentID},
             Cached => 1,
         );
@@ -520,7 +506,7 @@ sub Run {
             }
 
             # output WorkOrderAgent information
-            $Self->{LayoutObject}->Block(
+            $LayoutObject->Block(
                 Name => 'WorkOrderAgent',
                 Data => {
                     %{$WorkOrder},
@@ -531,15 +517,30 @@ sub Run {
 
     # output if no WorkOrderAgent is found
     if ( !$WorkOrder->{WorkOrderAgentUserLogin} ) {
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'EmptyWorkOrderAgent',
             Data => {},
         );
     }
 
+    # get agents preferences
+    my %UserPreferences = $UserObject->GetPreferences(
+        UserID => $Self->{UserID},
+    );
+
+    # remember if user already closed message about links in iframes
+    if ( !defined $Self->{DoNotShowBrowserLinkMessage} ) {
+        if ( $UserPreferences{UserAgentDoNotShowBrowserLinkMessage} ) {
+            $Self->{DoNotShowBrowserLinkMessage} = 1;
+        }
+        else {
+            $Self->{DoNotShowBrowserLinkMessage} = 0;
+        }
+    }
+
     # show message about links in iframes, if user didn't close it already
     if ( !$Self->{DoNotShowBrowserLinkMessage} ) {
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'BrowserLinkMessage',
         );
     }
@@ -547,7 +548,7 @@ sub Run {
     # get security restriction setting for iframes
     # security="restricted" may break SSO - disable this feature if requested
     my $MSSecurityRestricted;
-    if ( $Self->{ConfigObject}->Get('DisableMSIFrameSecurityRestricted') ) {
+    if ( $ConfigObject->Get('DisableMSIFrameSecurityRestricted') ) {
         $Param{MSSecurityRestricted} = '';
     }
     else {
@@ -557,7 +558,7 @@ sub Run {
     # show the HTML field blocks as iframes
     for my $Field (qw(Instruction Report)) {
 
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'ITSMContent',
             Data => {
                 WorkOrderID          => $WorkOrderID,
@@ -568,7 +569,7 @@ sub Run {
     }
 
     # get linked objects
-    my $LinkListWithData = $Self->{LinkObject}->LinkListWithData(
+    my $LinkListWithData = $Kernel::OM->Get('Kernel::System::LinkObject')->LinkListWithData(
         Object => 'ITSMWorkOrder',
         Key    => $WorkOrderID,
         State  => 'Valid',
@@ -576,17 +577,17 @@ sub Run {
     );
 
     # get link table view mode
-    my $LinkTableViewMode = $Self->{ConfigObject}->Get('LinkObject::ViewMode');
+    my $LinkTableViewMode = $ConfigObject->Get('LinkObject::ViewMode');
 
     # create the link table
-    my $LinkTableStrg = $Self->{LayoutObject}->LinkObjectTableCreate(
+    my $LinkTableStrg = $LayoutObject->LinkObjectTableCreate(
         LinkListWithData => $LinkListWithData,
         ViewMode         => $LinkTableViewMode,
     );
 
     # output the link table
     if ($LinkTableStrg) {
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'LinkTable' . $LinkTableViewMode,
             Data => {
                 LinkTableStrg => $LinkTableStrg,
@@ -595,7 +596,7 @@ sub Run {
     }
 
     # get attachments
-    my @Attachments = $Self->{WorkOrderObject}->WorkOrderAttachmentList(
+    my @Attachments = $WorkOrderObject->WorkOrderAttachmentList(
         WorkOrderID => $WorkOrderID,
     );
 
@@ -604,7 +605,7 @@ sub Run {
     for my $Filename (@Attachments) {
 
         # get info about file
-        my $AttachmentData = $Self->{WorkOrderObject}->WorkOrderAttachmentGet(
+        my $AttachmentData = $WorkOrderObject->WorkOrderAttachmentGet(
             WorkOrderID => $WorkOrderID,
             Filename    => $Filename,
         );
@@ -616,7 +617,7 @@ sub Run {
         next ATTACHMENT if $AttachmentData->{Preferences}->{ContentID};
 
         # show block
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'AttachmentRow',
             Data => {
                 %{$WorkOrder},
@@ -626,7 +627,7 @@ sub Run {
     }
 
     # get report attachments
-    my @ReportAttachments = $Self->{WorkOrderObject}->WorkOrderReportAttachmentList(
+    my @ReportAttachments = $WorkOrderObject->WorkOrderReportAttachmentList(
         WorkOrderID => $WorkOrderID,
     );
 
@@ -635,7 +636,7 @@ sub Run {
     for my $Filename (@ReportAttachments) {
 
         # get info about file
-        my $AttachmentData = $Self->{WorkOrderObject}->WorkOrderAttachmentGet(
+        my $AttachmentData = $WorkOrderObject->WorkOrderAttachmentGet(
             WorkOrderID    => $WorkOrderID,
             Filename       => $Filename,
             AttachmentType => 'WorkOrderReport',
@@ -648,7 +649,7 @@ sub Run {
         next ATTACHMENT if $AttachmentData->{Preferences}->{ContentID};
 
         # show block
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'ReportAttachmentRow',
             Data => {
                 %{$WorkOrder},
@@ -658,7 +659,7 @@ sub Run {
     }
 
     # start template output
-    $Output .= $Self->{LayoutObject}->Output(
+    $Output .= $LayoutObject->Output(
         TemplateFile => 'AgentITSMWorkOrderZoom',
         Data         => {
             %{$Change},
@@ -667,7 +668,7 @@ sub Run {
     );
 
     # add footer
-    $Output .= $Self->{LayoutObject}->Footer();
+    $Output .= $LayoutObject->Footer();
 
     return $Output;
 }

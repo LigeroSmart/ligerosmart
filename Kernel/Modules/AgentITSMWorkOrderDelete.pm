@@ -11,9 +11,7 @@ package Kernel::Modules::AgentITSMWorkOrderDelete;
 use strict;
 use warnings;
 
-use Kernel::System::ITSMChange;
-use Kernel::System::ITSMChange::ITSMWorkOrder;
-use Kernel::System::ITSMChange::ITSMCondition;
+our $ObjectManagerDisabled = 1;
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -22,24 +20,6 @@ sub new {
     my $Self = {%Param};
     bless( $Self, $Type );
 
-    # check needed objects
-    for my $Object (
-        qw(ParamObject DBObject LayoutObject LogObject ConfigObject UserObject GroupObject)
-        )
-    {
-        if ( !$Self->{$Object} ) {
-            $Self->{LayoutObject}->FatalError( Message => "Got no $Object!" );
-        }
-    }
-
-    # create additional objects
-    $Self->{ChangeObject}    = Kernel::System::ITSMChange->new(%Param);
-    $Self->{WorkOrderObject} = Kernel::System::ITSMChange::ITSMWorkOrder->new(%Param);
-    $Self->{ConditionObject} = Kernel::System::ITSMChange::ITSMCondition->new(%Param);
-
-    # get config of frontend module
-    $Self->{Config} = $Self->{ConfigObject}->Get("ITSMWorkOrder::Frontend::$Self->{Action}");
-
     return $Self;
 }
 
@@ -47,32 +27,44 @@ sub Run {
     my ( $Self, %Param ) = @_;
 
     # get needed WorkOrderID
-    my $WorkOrderID = $Self->{ParamObject}->GetParam( Param => 'WorkOrderID' );
+    my $WorkOrderID = $Kernel::OM->Get('Kernel::System::Web::Request')->GetParam( Param => 'WorkOrderID' );
+
+    # get layout object
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
     # check needed stuff
     if ( !$WorkOrderID ) {
-        return $Self->{LayoutObject}->ErrorScreen(
+        return $LayoutObject->ErrorScreen(
             Message => 'No WorkOrderID is given!',
             Comment => 'Please contact the administrator.',
         );
     }
 
+    # get workorder object
+    my $WorkOrderObject = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder');
+
     # get workorder data
-    my $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
+    my $WorkOrder = $WorkOrderObject->WorkOrderGet(
         WorkOrderID => $WorkOrderID,
         UserID      => $Self->{UserID},
     );
 
     # check error
     if ( !$WorkOrder ) {
-        return $Self->{LayoutObject}->ErrorScreen(
+        return $LayoutObject->ErrorScreen(
             Message => "WorkOrder '$WorkOrderID' not found in database!",
             Comment => 'Please contact the administrator.',
         );
     }
 
+    # get change object
+    my $ChangeObject = $Kernel::OM->Get('Kernel::System::ITSMChange');
+
+    # get config of frontend module
+    $Self->{Config} = $Kernel::OM->Get('Kernel::Config')->Get("ITSMWorkOrder::Frontend::$Self->{Action}");
+
     # check permissions
-    my $Access = $Self->{ChangeObject}->Permission(
+    my $Access = $ChangeObject->Permission(
         Type        => $Self->{Config}->{Permission},
         Action      => $Self->{Action},
         ChangeID    => $WorkOrder->{ChangeID},
@@ -82,7 +74,7 @@ sub Run {
 
     # error screen, don't show workorder delete mask
     if ( !$Access ) {
-        return $Self->{LayoutObject}->NoPermission(
+        return $LayoutObject->NoPermission(
             Message    => "You need $Self->{Config}->{Permission} permissions on the change!",
             WithHeader => 'yes',
         );
@@ -91,7 +83,7 @@ sub Run {
     if ( $Self->{Subaction} eq 'WorkOrderDelete' ) {
 
         # delete the workorder
-        my $CouldDeleteWorkOrder = $Self->{WorkOrderObject}->WorkOrderDelete(
+        my $CouldDeleteWorkOrder = $WorkOrderObject->WorkOrderDelete(
             WorkOrderID => $WorkOrder->{WorkOrderID},
             UserID      => $Self->{UserID},
         );
@@ -99,14 +91,14 @@ sub Run {
         if ($CouldDeleteWorkOrder) {
 
             # redirect to change, when the deletion was successful
-            return $Self->{LayoutObject}->Redirect(
+            return $LayoutObject->Redirect(
                 OP => "Action=AgentITSMChangeZoom;ChangeID=$WorkOrder->{ChangeID}",
             );
         }
         else {
 
             # show error message, when delete failed
-            return $Self->{LayoutObject}->ErrorScreen(
+            return $LayoutObject->ErrorScreen(
                 Message => "Was not able to delete the workorder $WorkOrder->{WorkOrderID}!",
                 Comment => 'Please contact the administrator.',
             );
@@ -114,21 +106,24 @@ sub Run {
     }
 
     # get change that workorder belongs to
-    my $Change = $Self->{ChangeObject}->ChangeGet(
+    my $Change = $ChangeObject->ChangeGet(
         ChangeID => $WorkOrder->{ChangeID},
         UserID   => $Self->{UserID},
     );
 
     # check if change is found
     if ( !$Change ) {
-        return $Self->{LayoutObject}->ErrorScreen(
+        return $LayoutObject->ErrorScreen(
             Message => "Could not find Change for WorkOrder $WorkOrderID!",
             Comment => 'Please contact the administrator.',
         );
     }
 
+    # get condition object
+    my $ConditionObject = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMCondition');
+
     # get affected condition ids
-    my $AffectedConditionIDs = $Self->{ConditionObject}->ConditionListByObjectType(
+    my $AffectedConditionIDs = $ConditionObject->ConditionListByObjectType(
         ObjectType => 'ITSMWorkOrder',
         Selector   => $WorkOrder->{WorkOrderID},
         ChangeID   => $WorkOrder->{ChangeID},
@@ -144,7 +139,7 @@ sub Run {
         # set the dialog type to have only 1 button: Ok
         $DialogType = 'Message';
 
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'WorkOrderInCondition',
             Data => {},
         );
@@ -153,7 +148,7 @@ sub Run {
         for my $ConditionID ( @{$AffectedConditionIDs} ) {
 
             # get condition
-            my $Condition = $Self->{ConditionObject}->ConditionGet(
+            my $Condition = $ConditionObject->ConditionGet(
                 ConditionID => $ConditionID,
                 UserID      => $Self->{UserID},
             );
@@ -161,7 +156,7 @@ sub Run {
             # check condition
             next CONDITIONID if !$Condition;
 
-            $Self->{LayoutObject}->Block(
+            $LayoutObject->Block(
                 Name => 'WorkOrderInConditionRow',
                 Data => {
                     %{$Condition},
@@ -171,14 +166,14 @@ sub Run {
         }
     }
     else {
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'NoWorkOrderInCondition',
             Data => $WorkOrder,
         );
     }
 
     # output content
-    my $Output .= $Self->{LayoutObject}->Output(
+    my $Output .= $LayoutObject->Output(
         TemplateFile => 'AgentITSMWorkOrderDelete',
         Data         => {
             %Param,
@@ -194,10 +189,10 @@ sub Run {
     );
 
     # return JSON-String because of AJAX-Mode
-    my $OutputJSON = $Self->{LayoutObject}->JSONEncode( Data => \%Data );
+    my $OutputJSON = $LayoutObject->JSONEncode( Data => \%Data );
 
-    return $Self->{LayoutObject}->Attachment(
-        ContentType => 'application/json; charset=' . $Self->{LayoutObject}->{Charset},
+    return $LayoutObject->Attachment(
+        ContentType => 'application/json; charset=' . $LayoutObject->{Charset},
         Content     => $OutputJSON,
         Type        => 'inline',
         NoCache     => 1,

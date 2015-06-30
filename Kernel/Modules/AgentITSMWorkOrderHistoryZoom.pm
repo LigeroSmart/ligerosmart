@@ -11,9 +11,7 @@ package Kernel::Modules::AgentITSMWorkOrderHistoryZoom;
 use strict;
 use warnings;
 
-use Kernel::System::ITSMChange;
-use Kernel::System::ITSMChange::ITSMWorkOrder;
-use Kernel::System::ITSMChange::History;
+our $ObjectManagerDisabled = 1;
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -22,24 +20,6 @@ sub new {
     my $Self = {%Param};
     bless( $Self, $Type );
 
-    # check needed objects
-    for my $Object (
-        qw(ParamObject DBObject LayoutObject LogObject ConfigObject UserObject GroupObject)
-        )
-    {
-        if ( !$Self->{$Object} ) {
-            $Self->{LayoutObject}->FatalError( Message => "Got no $Object!" );
-        }
-    }
-
-    # create needed objects
-    $Self->{ChangeObject}    = Kernel::System::ITSMChange->new(%Param);
-    $Self->{WorkOrderObject} = Kernel::System::ITSMChange::ITSMWorkOrder->new(%Param);
-    $Self->{HistoryObject}   = Kernel::System::ITSMChange::History->new(%Param);
-
-    # get config of frontend module
-    $Self->{Config} = $Self->{ConfigObject}->Get("ITSMWorkOrder::Frontend::$Self->{Action}");
-
     return $Self;
 }
 
@@ -47,33 +27,42 @@ sub Run {
     my ( $Self, %Param ) = @_;
 
     # get needed change id
-    my $HistoryEntryID = $Self->{ParamObject}->GetParam( Param => 'HistoryEntryID' );
+    my $HistoryEntryID = $Kernel::OM->Get('Kernel::System::Web::Request')->GetParam( Param => 'HistoryEntryID' );
+
+    # get layout object
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
     # check needed stuff
     if ( !$HistoryEntryID ) {
 
         # error page
-        return $Self->{LayoutObject}->ErrorScreen(
+        return $LayoutObject->ErrorScreen(
             Message => "Can't show history zoom, no HistoryEntryID is given!",
             Comment => 'Please contact the administrator.',
         );
     }
 
     # get history entries
-    my $HistoryEntry = $Self->{HistoryObject}->HistoryEntryGet(
+    my $HistoryEntry = $Kernel::OM->Get('Kernel::System::ITSMChange::History')->HistoryEntryGet(
         HistoryEntryID => $HistoryEntryID,
         UserID         => $Self->{UserID},
     );
 
     if ( !$HistoryEntry ) {
-        return $Self->{LayoutObject}->ErrorScreen(
+        return $LayoutObject->ErrorScreen(
             Message => "HistoryEntry '$HistoryEntryID' not found in the data base!",
             Comment => 'Please contact the administrator.',
         );
     }
 
+    # get workorder object
+    my $WorkOrderObject = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder');
+
+    # get config of frontend module
+    $Self->{Config} = $Kernel::OM->Get('Kernel::Config')->Get("ITSMWorkOrder::Frontend::$Self->{Action}");
+
     # check permissions
-    my $Access = $Self->{WorkOrderObject}->Permission(
+    my $Access = $WorkOrderObject->Permission(
         Type        => $Self->{Config}->{Permission},
         Action      => $Self->{Action},
         WorkOrderID => $HistoryEntry->{WorkOrderID},
@@ -82,35 +71,35 @@ sub Run {
 
     # error screen
     if ( !$Access ) {
-        return $Self->{LayoutObject}->NoPermission(
+        return $LayoutObject->NoPermission(
             Message    => "You need $Self->{Config}->{Permission} permissions!",
             WithHeader => 'yes',
         );
     }
 
     # get workorder information
-    my $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
+    my $WorkOrder = $WorkOrderObject->WorkOrderGet(
         WorkOrderID => $HistoryEntry->{WorkOrderID},
         UserID      => $Self->{UserID},
     );
 
     # check error
     if ( !$WorkOrder ) {
-        return $Self->{LayoutObject}->ErrorScreen(
+        return $LayoutObject->ErrorScreen(
             Message => "WorkOrder '$HistoryEntry->{WorkOrderID}' not found in the data base!",
             Comment => 'Please contact the administrator.',
         );
     }
 
     # get change information
-    my $Change = $Self->{ChangeObject}->ChangeGet(
+    my $Change = $Kernel::OM->Get('Kernel::System::ITSMChange')->ChangeGet(
         ChangeID => $HistoryEntry->{ChangeID},
         UserID   => $Self->{UserID},
     );
 
     # check error
     if ( !$WorkOrder ) {
-        return $Self->{LayoutObject}->ErrorScreen(
+        return $LayoutObject->ErrorScreen(
             Message => "Change '$HistoryEntry->{ChangeID}' not found in the data base!",
             Comment => 'Please contact the administrator.',
         );
@@ -122,13 +111,13 @@ sub Run {
     }
 
     # output header
-    my $Output = $Self->{LayoutObject}->Header(
+    my $Output = $LayoutObject->Header(
         Type  => 'Small',
         Title => 'WorkOrderHistoryZoom',
     );
 
     # start template output
-    $Output .= $Self->{LayoutObject}->Output(
+    $Output .= $LayoutObject->Output(
         TemplateFile => 'AgentITSMWorkOrderHistoryZoom',
         Data         => {
             %Param,
@@ -139,7 +128,7 @@ sub Run {
     );
 
     # add footer
-    $Output .= $Self->{LayoutObject}->Footer(
+    $Output .= $LayoutObject->Footer(
         Type => 'Small',
     );
 

@@ -11,8 +11,7 @@ package Kernel::Modules::AgentITSMChangePIR;
 use strict;
 use warnings;
 
-use Kernel::System::ITSMChange;
-use Kernel::System::ITSMChange::ITSMWorkOrder;
+our $ObjectManagerDisabled = 1;
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -21,62 +20,50 @@ sub new {
     my $Self = {%Param};
     bless( $Self, $Type );
 
-    # check needed objects
-    for my $Object (
-        qw(ParamObject DBObject LayoutObject LogObject ConfigObject UserObject GroupObject)
-        )
-    {
-        if ( !$Self->{$Object} ) {
-            $Self->{LayoutObject}->FatalError( Message => "Got no $Object!" );
-        }
-    }
-
-    # create needed objects
-    $Self->{ChangeObject}    = Kernel::System::ITSMChange->new(%Param);
-    $Self->{WorkOrderObject} = Kernel::System::ITSMChange::ITSMWorkOrder->new(%Param);
-
-    # get config of frontend module
-    $Self->{Config} = $Self->{ConfigObject}->Get("ITSMChange::Frontend::$Self->{Action}");
-
-    # get filter and view params
-    $Self->{Filter} = $Self->{ParamObject}->GetParam( Param => 'Filter' ) || 'All';
-    $Self->{View}   = $Self->{ParamObject}->GetParam( Param => 'View' )   || '';
-
     return $Self;
 }
 
 sub Run {
     my ( $Self, %Param ) = @_;
 
+    # get config of frontend module
+    $Self->{Config} = $Kernel::OM->Get('Kernel::Config')->Get("ITSMChange::Frontend::$Self->{Action}");
+
     # check permissions
-    my $Access = $Self->{ChangeObject}->Permission(
+    my $Access = $Kernel::OM->Get('Kernel::System::ITSMChange')->Permission(
         Type   => $Self->{Config}->{Permission},
         Action => $Self->{Action},
         UserID => $Self->{UserID},
     );
 
+    # get layout object
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+
     # error screen
     if ( !$Access ) {
-        return $Self->{LayoutObject}->NoPermission(
+        return $LayoutObject->NoPermission(
             Message    => "You need $Self->{Config}->{Permission} permissions!",
             WithHeader => 'yes',
         );
     }
 
     # store last screen, used for backlinks
-    $Self->{SessionObject}->UpdateSessionID(
+    $Kernel::OM->Get('Kernel::System::AuthSession')->UpdateSessionID(
         SessionID => $Self->{SessionID},
         Key       => 'LastScreenWorkOrders',
         Value     => $Self->{RequestedURL},
     );
 
+    # get param object
+    my $ParamObject = $Kernel::OM->Get('Kernel::System::Web::Request');
+
     # get sorting parameters
-    my $SortBy = $Self->{ParamObject}->GetParam( Param => 'SortBy' )
+    my $SortBy = $ParamObject->GetParam( Param => 'SortBy' )
         || $Self->{Config}->{'SortBy::Default'}
         || 'PlannedStartTime';
 
     # get ordering parameters
-    my $OrderBy = $Self->{ParamObject}->GetParam( Param => 'OrderBy' )
+    my $OrderBy = $ParamObject->GetParam( Param => 'OrderBy' )
         || $Self->{Config}->{'Order::Default'}
         || 'Up';
 
@@ -93,9 +80,9 @@ sub Run {
     my $Refresh = $Self->{UserRefreshTime} ? 60 * $Self->{UserRefreshTime} : undef;
 
     # starting with page ...
-    my $Output = $Self->{LayoutObject}->Header( Refresh => $Refresh );
-    $Output .= $Self->{LayoutObject}->NavigationBar();
-    $Self->{LayoutObject}->Print( Output => \$Output );
+    my $Output = $LayoutObject->Header( Refresh => $Refresh );
+    $Output .= $LayoutObject->NavigationBar();
+    $LayoutObject->Print( Output => \$Output );
     $Output = '';
 
     # find out which columns should be shown
@@ -113,6 +100,9 @@ sub Run {
         }
     }
 
+    # get work order object
+    my $WorkOrderObject = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder');
+
     # find out which workorder types should be used to show PIR
     my @WorkOrderTypes;
     if ( $Self->{Config}->{WorkOrderTypes} ) {
@@ -120,7 +110,7 @@ sub Run {
         for my $WorkOrderType ( @{ $Self->{Config}->{WorkOrderTypes} } ) {
 
             # check if workorder type is valid by looking up the type id
-            my $WorkOrderTypeID = $Self->{WorkOrderObject}->WorkOrderTypeLookup(
+            my $WorkOrderTypeID = $WorkOrderObject->WorkOrderTypeLookup(
                 WorkOrderType => $WorkOrderType,
             );
 
@@ -148,7 +138,7 @@ sub Run {
             next WORKORDERSTATE if !$WorkOrderState;
 
             # check if state is valid by looking up the state id
-            my $WorkOrderStateID = $Self->{WorkOrderObject}->WorkOrderStateLookup(
+            my $WorkOrderStateID = $WorkOrderObject->WorkOrderStateLookup(
                 WorkOrderState => $WorkOrderState,
             );
 
@@ -173,6 +163,10 @@ sub Run {
             };
         }
     }
+
+    # get filter and view params
+    $Self->{Filter} = $ParamObject->GetParam( Param => 'Filter' ) || 'All';
+    $Self->{View}   = $ParamObject->GetParam( Param => 'View' )   || '';
 
     # if only one filter exists
     if ( scalar keys %Filters == 1 ) {
@@ -201,11 +195,11 @@ sub Run {
 
     # check if filter is valid
     if ( !$Filters{ $Self->{Filter} } ) {
-        $Self->{LayoutObject}->FatalError( Message => "Invalid Filter: $Self->{Filter}!" );
+        $LayoutObject->FatalError( Message => "Invalid Filter: $Self->{Filter}!" );
     }
 
     # search workorders which match the selected filter
-    my $WorkOrderIDsRef = $Self->{WorkOrderObject}->WorkOrderSearch(
+    my $WorkOrderIDsRef = $WorkOrderObject->WorkOrderSearch(
         %{ $Filters{ $Self->{Filter} }->{Search} },
     );
 
@@ -214,7 +208,7 @@ sub Run {
     for my $Filter ( sort keys %Filters ) {
 
         # count the number of workorders for each filter
-        my $Count = $Self->{WorkOrderObject}->WorkOrderSearch(
+        my $Count = $WorkOrderObject->WorkOrderSearch(
             %{ $Filters{$Filter}->{Search} },
             Result => 'COUNT',
         );
@@ -229,20 +223,20 @@ sub Run {
 
     # show changes
     my $LinkPage = 'Filter='
-        . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{Filter} )
-        . ';View=' . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{View} )
-        . ';SortBy=' . $Self->{LayoutObject}->Ascii2Html( Text => $SortBy )
-        . ';OrderBy=' . $Self->{LayoutObject}->Ascii2Html( Text => $OrderBy )
+        . $LayoutObject->Ascii2Html( Text => $Self->{Filter} )
+        . ';View=' . $LayoutObject->Ascii2Html( Text => $Self->{View} )
+        . ';SortBy=' . $LayoutObject->Ascii2Html( Text => $SortBy )
+        . ';OrderBy=' . $LayoutObject->Ascii2Html( Text => $OrderBy )
         . ';';
     my $LinkSort = 'Filter='
-        . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{Filter} )
-        . ';View=' . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{View} )
+        . $LayoutObject->Ascii2Html( Text => $Self->{Filter} )
+        . ';View=' . $LayoutObject->Ascii2Html( Text => $Self->{View} )
         . ';';
-    my $LinkFilter = 'SortBy=' . $Self->{LayoutObject}->Ascii2Html( Text => $SortBy )
-        . ';OrderBy=' . $Self->{LayoutObject}->Ascii2Html( Text => $OrderBy )
-        . ';View=' . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{View} )
+    my $LinkFilter = 'SortBy=' . $LayoutObject->Ascii2Html( Text => $SortBy )
+        . ';OrderBy=' . $LayoutObject->Ascii2Html( Text => $OrderBy )
+        . ';View=' . $LayoutObject->Ascii2Html( Text => $Self->{View} )
         . ';';
-    $Output .= $Self->{LayoutObject}->ITSMChangeListShow(
+    $Output .= $LayoutObject->ITSMChangeListShow(
 
         WorkOrderIDs => $WorkOrderIDsRef,
         Total        => scalar @{$WorkOrderIDsRef},
@@ -253,8 +247,8 @@ sub Run {
         Filters    => \%NavBarFilter,
         FilterLink => $LinkFilter,
 
-        TitleName => $Self->{LayoutObject}->{LanguageObject}->Translate('Overview')
-            . ': ' . $Self->{LayoutObject}->{LanguageObject}->Translate('PIR'),
+        TitleName => $LayoutObject->{LanguageObject}->Translate('Overview')
+            . ': ' . $LayoutObject->{LanguageObject}->Translate('PIR'),
 
         TitleValue => $Self->{Filter},
 
@@ -263,11 +257,11 @@ sub Run {
         LinkSort => $LinkSort,
 
         ShowColumns => \@ShowColumns,
-        SortBy      => $Self->{LayoutObject}->Ascii2Html( Text => $SortBy ),
-        OrderBy     => $Self->{LayoutObject}->Ascii2Html( Text => $OrderBy ),
+        SortBy      => $LayoutObject->Ascii2Html( Text => $SortBy ),
+        OrderBy     => $LayoutObject->Ascii2Html( Text => $OrderBy ),
     );
 
-    $Output .= $Self->{LayoutObject}->Footer();
+    $Output .= $LayoutObject->Footer();
     return $Output;
 }
 

@@ -11,9 +11,7 @@ package Kernel::Modules::AgentITSMChangeInvolvedPersons;
 use strict;
 use warnings;
 
-use Kernel::System::ITSMChange;
-use Kernel::System::ITSMChange::Template;
-use Kernel::System::CustomerUser;
+our $ObjectManagerDisabled = 1;
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -22,43 +20,37 @@ sub new {
     my $Self = {%Param};
     bless( $Self, $Type );
 
-    # check needed objects
-    for my $Object (
-        qw(ParamObject DBObject LayoutObject LogObject ConfigObject UserObject GroupObject)
-        )
-    {
-        if ( !$Self->{$Object} ) {
-            $Self->{LayoutObject}->FatalError( Message => "Got no $Object!" );
-        }
-    }
-
-    # create needed objects
-    $Self->{CustomerUserObject} = Kernel::System::CustomerUser->new(%Param);
-    $Self->{ChangeObject}       = Kernel::System::ITSMChange->new(%Param);
-    $Self->{TemplateObject}     = Kernel::System::ITSMChange::Template->new(%Param);
-
-    # get config of frontend module
-    $Self->{Config} = $Self->{ConfigObject}->Get("ITSMChange::Frontend::$Self->{Action}");
-
     return $Self;
 }
 
 sub Run {
     my ( $Self, %Param ) = @_;
 
+    # get param object
+    my $ParamObject = $Kernel::OM->Get('Kernel::System::Web::Request');
+
     # get needed ChangeID
-    my $ChangeID = $Self->{ParamObject}->GetParam( Param => 'ChangeID' );
+    my $ChangeID = $ParamObject->GetParam( Param => 'ChangeID' );
+
+    # get layout object
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
     # check needed stuff
     if ( !$ChangeID ) {
-        return $Self->{LayoutObject}->ErrorScreen(
+        return $LayoutObject->ErrorScreen(
             Message => 'No ChangeID is given!',
             Comment => 'Please contact the admin.',
         );
     }
 
+    # get change object
+    my $ChangeObject = $Kernel::OM->Get('Kernel::System::ITSMChange');
+
+    # get config of frontend module
+    $Self->{Config} = $Kernel::OM->Get('Kernel::Config')->Get("ITSMChange::Frontend::$Self->{Action}");
+
     # check permissions
-    my $Access = $Self->{ChangeObject}->Permission(
+    my $Access = $ChangeObject->Permission(
         Type     => $Self->{Config}->{Permission},
         Action   => $Self->{Action},
         ChangeID => $ChangeID,
@@ -67,21 +59,21 @@ sub Run {
 
     # error screen
     if ( !$Access ) {
-        return $Self->{LayoutObject}->NoPermission(
+        return $LayoutObject->NoPermission(
             Message    => "You need $Self->{Config}->{Permission} permissions!",
             WithHeader => 'yes',
         );
     }
 
     # get change data
-    my $Change = $Self->{ChangeObject}->ChangeGet(
+    my $Change = $ChangeObject->ChangeGet(
         ChangeID => $ChangeID,
         UserID   => $Self->{UserID},
     );
 
     # check if change is found
     if ( !$Change ) {
-        return $Self->{LayoutObject}->ErrorScreen(
+        return $LayoutObject->ErrorScreen(
             Message => "Change '$ChangeID' not found in database!",
             Comment => 'Please contact the admin.',
         );
@@ -95,7 +87,7 @@ sub Run {
         AddCABTemplate TemplateID NewTemplate Submit)
         )
     {
-        $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
+        $GetParam{$ParamName} = $ParamObject->GetParam( Param => $ParamName );
     }
 
     # server error hash, to store the items with ServerError class
@@ -105,11 +97,15 @@ sub Run {
     # The entries are the names of the dtl validation error blocks.
     my @ValidationErrors;
 
+    # get needed objects
+    my $TemplateObject = $Kernel::OM->Get('Kernel::System::ITSMChange::Template');
+    my $UserObject     = $Kernel::OM->Get('Kernel::System::User');
+
     if ( $Self->{Subaction} eq 'Save' ) {
 
         # go to store the new template
         if ( $GetParam{NewTemplate} ) {
-            return $Self->{LayoutObject}->Redirect(
+            return $LayoutObject->Redirect(
                 OP => "Action=AgentITSMChangeCABTemplate;ChangeID=$ChangeID",
             );
         }
@@ -137,7 +133,7 @@ sub Run {
             if (%CABUpdateInfo) {
 
                 # update change CAB
-                my $CouldUpdateCAB = $Self->{ChangeObject}->ChangeCABUpdate(
+                my $CouldUpdateCAB = $ChangeObject->ChangeCABUpdate(
                     %CABUpdateInfo,
                     ChangeID => $Change->{ChangeID},
                     UserID   => $Self->{UserID},
@@ -147,7 +143,7 @@ sub Run {
                 if ($CouldUpdateCAB) {
 
                     # get new change data as a member was added
-                    $Change = $Self->{ChangeObject}->ChangeGet(
+                    $Change = $ChangeObject->ChangeGet(
                         ChangeID => $Change->{ChangeID},
                         UserID   => $Self->{UserID},
                     );
@@ -160,7 +156,7 @@ sub Run {
                 else {
 
                     # show error message
-                    return $Self->{LayoutObject}->ErrorScreen(
+                    return $LayoutObject->ErrorScreen(
                         Message => "Was not able to update Change CAB for Change $ChangeID!",
                         Comment => 'Please contact the admin.',
                     );
@@ -177,14 +173,14 @@ sub Run {
             if ( $GetParam{TemplateID} ) {
 
                 # create CAB based on the template
-                my $CreatedID = $Self->{TemplateObject}->TemplateDeSerialize(
+                my $CreatedID = $TemplateObject->TemplateDeSerialize(
                     TemplateID => $GetParam{TemplateID},
                     UserID     => $Self->{UserID},
                     ChangeID   => $ChangeID,
                 );
 
                 # redirect to involved person, when adding was successful
-                return $Self->{LayoutObject}->Redirect(
+                return $LayoutObject->Redirect(
                     OP => "Action=AgentITSMChangeInvolvedPersons;ChangeID=$ChangeID",
                 );
             }
@@ -199,7 +195,7 @@ sub Run {
             my @StillMembers = grep { $_ ne $DeleteMember{ID} } @{ $Change->{$Type} };
 
             # update ChangeCAB
-            my $CouldUpdateCABMember = $Self->{ChangeObject}->ChangeCABUpdate(
+            my $CouldUpdateCABMember = $ChangeObject->ChangeCABUpdate(
                 ChangeID => $Change->{ChangeID},
                 $Type    => \@StillMembers,
                 UserID   => $Self->{UserID},
@@ -209,14 +205,14 @@ sub Run {
             if ( !$CouldUpdateCABMember ) {
 
                 # show error message
-                return $Self->{LayoutObject}->ErrorScreen(
+                return $LayoutObject->ErrorScreen(
                     Message => "Was not able to update Change CAB for Change $ChangeID!",
                     Comment => 'Please contact the admin.',
                 );
             }
 
             # get new change data as a member was removed
-            $Change = $Self->{ChangeObject}->ChangeGet(
+            $Change = $ChangeObject->ChangeGet(
                 ChangeID => $Change->{ChangeID},
                 UserID   => $Self->{UserID},
             );
@@ -226,7 +222,7 @@ sub Run {
         elsif ( !%ErrorAllRequired && $GetParam{Submit} ) {
 
             # update change
-            my $CanUpdateChange = $Self->{ChangeObject}->ChangeUpdate(
+            my $CanUpdateChange = $ChangeObject->ChangeUpdate(
                 ChangeID        => $ChangeID,
                 ChangeManagerID => $GetParam{ChangeManagerSelected},
                 ChangeBuilderID => $GetParam{ChangeBuilderSelected},
@@ -238,14 +234,14 @@ sub Run {
 
                 # redirect to change zoom mask
                 # load new URL in parent window and close popup
-                return $Self->{LayoutObject}->PopupClose(
+                return $LayoutObject->PopupClose(
                     URL => "Action=AgentITSMChangeZoom;ChangeID=$ChangeID",
                 );
             }
             else {
 
                 # show error message
-                return $Self->{LayoutObject}->ErrorScreen(
+                return $LayoutObject->ErrorScreen(
                     Message => "Was not able to update Change $ChangeID!",
                     Comment => 'Please contact the admin.',
                 );
@@ -287,7 +283,7 @@ sub Run {
         if ( $Change->{ChangeManagerID} ) {
 
             # get changemanager data
-            my %ChangeManagerData = $Self->{UserObject}->GetUserData(
+            my %ChangeManagerData = $UserObject->GetUserData(
                 UserID => $Change->{ChangeManagerID},
             );
 
@@ -305,7 +301,7 @@ sub Run {
         if ( $Change->{ChangeBuilderID} ) {
 
             # get changebuilder data
-            my %ChangeBuilderData = $Self->{UserObject}->GetUserData(
+            my %ChangeBuilderData = $UserObject->GetUserData(
                 UserID => $Change->{ChangeBuilderID},
             );
 
@@ -330,14 +326,14 @@ sub Run {
 
     # show all agent members of CAB
     if ( @{ $Change->{CABAgents} } || @{ $Change->{CABCustomers} } ) {
-        $Self->{LayoutObject}->Block( Name => 'CABMemberTable' );
+        $LayoutObject->Block( Name => 'CABMemberTable' );
     }
 
     USERID:
     for my $UserID ( @{ $Change->{CABAgents} } ) {
 
         # get user data
-        my %UserData = $Self->{UserObject}->GetUserData(
+        my %UserData = $UserObject->GetUserData(
             UserID => $UserID,
         );
 
@@ -345,7 +341,7 @@ sub Run {
         next USERID if !%UserData;
 
         # display cab member info
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'CABMemberRow',
             Data => {
                 UserType         => 'Agent',
@@ -355,12 +351,15 @@ sub Run {
         );
     }
 
+    # get customer user object
+    my $CustomerUserObject = $Kernel::OM->Get('Kernel::System::CustomerUser');
+
     # show all customer members of CAB
     CUSTOMERLOGIN:
     for my $CustomerLogin ( @{ $Change->{CABCustomers} } ) {
 
         # get user data
-        my %CustomerUserData = $Self->{CustomerUserObject}->CustomerUserDataGet(
+        my %CustomerUserData = $CustomerUserObject->CustomerUserDataGet(
             User  => $CustomerLogin,
             Valid => 1,
         );
@@ -369,7 +368,7 @@ sub Run {
         next CUSTOMERLOGIN if !%CustomerUserData;
 
         # display cab member info
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'CABMemberRow',
             Data => {
                 UserType         => 'Customer',
@@ -381,7 +380,7 @@ sub Run {
 
     # code and return blocks for change builder and change manager (AgentITSMUserSearch.dtl)
     for my $ItemID (qw(ChangeManager ChangeBuilder)) {
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'UserSearchInit',
             Data => {
                 ItemID => $ItemID,
@@ -403,20 +402,20 @@ sub Run {
     }
 
     # build template dropdown
-    my $TemplateList = $Self->{TemplateObject}->TemplateList(
+    my $TemplateList = $TemplateObject->TemplateList(
         UserID        => $Self->{UserID},
         CommentLength => 15,
         TemplateType  => 'CAB',
     );
 
-    my $TemplateDropDown = $Self->{LayoutObject}->BuildSelection(
+    my $TemplateDropDown = $LayoutObject->BuildSelection(
         Name         => 'TemplateID',
         Data         => $TemplateList,
         PossibleNone => 1,
     );
 
     # show block with template dropdown
-    $Self->{LayoutObject}->Block(
+    $LayoutObject->Block(
         Name => 'CABTemplate',
         Data => {
             CABTemplateStrg => $TemplateDropDown,
@@ -425,11 +424,11 @@ sub Run {
 
     # if CAB Members show New Template Button
     if ( @{ $Change->{CABAgents} } || @{ $Change->{CABCustomers} } ) {
-        $Self->{LayoutObject}->Block( Name => 'NewTemplateButton' );
+        $LayoutObject->Block( Name => 'NewTemplateButton' );
     }
 
     # search init
-    $Self->{LayoutObject}->Block(
+    $LayoutObject->Block(
         Name => 'CABMemberSearchInit',
         Data => {
             ItemID => 'NewCABMember',
@@ -437,13 +436,13 @@ sub Run {
     );
 
     # output header and navigation
-    my $Output = $Self->{LayoutObject}->Header(
+    my $Output = $LayoutObject->Header(
         Title => 'Involved Persons',
         Type  => 'Small',
     );
 
     # start template output
-    $Output .= $Self->{LayoutObject}->Output(
+    $Output .= $LayoutObject->Output(
         TemplateFile => 'AgentITSMChangeInvolvedPersons',
         Data         => {
             %Param,
@@ -454,7 +453,7 @@ sub Run {
     );
 
     # add footer
-    $Output .= $Self->{LayoutObject}->Footer( Type => 'Small' );
+    $Output .= $LayoutObject->Footer( Type => 'Small' );
 
     return $Output;
 }
@@ -471,10 +470,13 @@ sub _IsMemberDeletion {
     # info about what to delete
     my %DeleteInfo;
 
+    # get param object
+    my $ParamObject = $Kernel::OM->Get('Kernel::System::Web::Request');
+
     # check possible agent ids
     AGENTID:
     for my $AgentID ( @{ $Param{Change}->{CABAgents} } ) {
-        if ( $Self->{ParamObject}->GetParam( Param => 'DeleteCABAgents' . $AgentID ) ) {
+        if ( $ParamObject->GetParam( Param => 'DeleteCABAgents' . $AgentID ) ) {
 
             # save info
             %DeleteInfo = (
@@ -491,7 +493,7 @@ sub _IsMemberDeletion {
         # check possible customer ids
         CUSTOMERID:
         for my $CustomerID ( @{ $Param{Change}->{CABCustomers} } ) {
-            if ( $Self->{ParamObject}->GetParam( Param => 'DeleteCABCustomers' . $CustomerID ) ) {
+            if ( $ParamObject->GetParam( Param => 'DeleteCABCustomers' . $CustomerID ) ) {
 
                 # save info
                 %DeleteInfo = (
@@ -523,7 +525,7 @@ sub _CheckChangeManagerAndChangeBuilder {
         }
 
         # get user data
-        my %User = $Self->{UserObject}->GetUserData(
+        my %User = $Kernel::OM->Get('Kernel::System::User')->GetUserData(
             UserID => $Param{ $Role . 'Selected' },
         );
 
@@ -566,7 +568,11 @@ sub _IsNewCABMemberOk {
 
     # an agent is requested to be added
     if ( $MemberType eq 'CABAgents' ) {
-        my %User = $Self->{UserObject}->GetUserData(
+
+        # get user object
+        my $UserObject = $Kernel::OM->Get('Kernel::System::User');
+
+        my %User = $UserObject->GetUserData(
             UserID => $Param{NewCABMemberSelected},
         );
 
@@ -577,7 +583,7 @@ sub _IsNewCABMemberOk {
             for my $UserID ( @{ $Param{Change}->{$MemberType} } ) {
 
                 # get user data
-                my %UserData = $Self->{UserObject}->GetUserData(
+                my %UserData = $UserObject->GetUserData(
                     UserID => $UserID,
                     Valid  => 1,
                 );
@@ -609,12 +615,15 @@ sub _IsNewCABMemberOk {
     # an customer is requested to be added
     else {
 
+        # get customer user object
+        my $CustomerUserObject = $Kernel::OM->Get('Kernel::System::CustomerUser');
+
         # check current customer users
         CUSTOMERUSER:
         for my $CustomerUser ( @{ $Param{Change}->{$MemberType} } ) {
 
             # get customer user data
-            my %CustomerUserData = $Self->{CustomerUserObject}->CustomerUserDataGet(
+            my %CustomerUserData = $CustomerUserObject->CustomerUserDataGet(
                 User  => $CustomerUser,
                 Valid => 1,
             );
@@ -626,7 +635,7 @@ sub _IsNewCABMemberOk {
         }
 
         # check if customer can be found
-        my %CustomerUser = $Self->{CustomerUserObject}->CustomerSearch(
+        my %CustomerUser = $CustomerUserObject->CustomerSearch(
             UserLogin => $Param{NewCABMemberSelected},
         );
 

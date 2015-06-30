@@ -6,7 +6,7 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package Kernel::Output::HTML::LinkObjectITSMChange;
+package Kernel::Output::HTML::LinkObject::ITSMChange;
 
 use strict;
 use warnings;
@@ -21,7 +21,7 @@ our @ObjectDependencies = (
 
 =head1 NAME
 
-Kernel::Output::HTML::LinkObjectITSMChange - layout backend module
+Kernel::Output::HTML::LinkObject::ITSMChange - layout backend module
 
 =head1 SYNOPSIS
 
@@ -35,7 +35,7 @@ All layout functions of link object (change)
 
 create an object
 
-    $BackendObject = Kernel::Output::HTML::LinkObjectITSMChange->new(
+    $BackendObject = Kernel::Output::HTML::LinkObject::ITSMChange->new(
         UserLanguage => 'en',
         UserID       => 1,
     );

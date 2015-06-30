@@ -11,10 +11,7 @@ package Kernel::Modules::AgentITSMWorkOrderAddFromTemplate;
 use strict;
 use warnings;
 
-use Kernel::System::ITSMChange;
-use Kernel::System::ITSMChange::ITSMWorkOrder;
-use Kernel::System::ITSMChange::Template;
-use Kernel::System::Web::UploadCache;
+our $ObjectManagerDisabled = 1;
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -23,52 +20,36 @@ sub new {
     my $Self = {%Param};
     bless( $Self, $Type );
 
-    # check needed objects
-    for my $Object (
-        qw(ParamObject DBObject LayoutObject LogObject ConfigObject UserObject GroupObject)
-        )
-    {
-        if ( !$Self->{$Object} ) {
-            $Self->{LayoutObject}->FatalError( Message => "Got no $Object!" );
-        }
-    }
-
-    # create needed objects
-    $Self->{ChangeObject}      = Kernel::System::ITSMChange->new(%Param);
-    $Self->{WorkOrderObject}   = Kernel::System::ITSMChange::ITSMWorkOrder->new(%Param);
-    $Self->{UploadCacheObject} = Kernel::System::Web::UploadCache->new(%Param);
-    $Self->{TemplateObject}    = Kernel::System::ITSMChange::Template->new(%Param);
-
-    # get config of frontend module (WorkorderAdd is a change action!)
-    $Self->{Config} = $Self->{ConfigObject}->Get("ITSMChange::Frontend::$Self->{Action}");
-
-    # get form id
-    $Self->{FormID} = $Self->{ParamObject}->GetParam( Param => 'FormID' );
-
-    # create form id
-    if ( !$Self->{FormID} ) {
-        $Self->{FormID} = $Self->{UploadCacheObject}->FormIDCreate();
-    }
-
     return $Self;
 }
 
 sub Run {
     my ( $Self, %Param ) = @_;
 
+    # get needed objects
+    my $ParamObject  = $Kernel::OM->Get('Kernel::System::Web::Request');
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+
     # get needed ChangeID
-    my $ChangeID = $Self->{ParamObject}->GetParam( Param => 'ChangeID' );
+    my $ChangeID = $ParamObject->GetParam( Param => 'ChangeID' );
 
     # check needed stuff
     if ( !$ChangeID ) {
-        return $Self->{LayoutObject}->ErrorScreen(
+        return $LayoutObject->ErrorScreen(
             Message => 'No ChangeID is given!',
             Comment => 'Please contact the admin.',
         );
     }
 
+    # get needed objects
+    my $ChangeObject = $Kernel::OM->Get('Kernel::System::ITSMChange');
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+
+    # get config of frontend module (WorkorderAdd is a change action!)
+    $Self->{Config} = $ConfigObject->Get("ITSMChange::Frontend::$Self->{Action}");
+
     # check permissions
-    my $Access = $Self->{ChangeObject}->Permission(
+    my $Access = $ChangeObject->Permission(
         Type     => $Self->{Config}->{Permission},
         Action   => $Self->{Action},
         ChangeID => $ChangeID,
@@ -77,21 +58,21 @@ sub Run {
 
     # error screen
     if ( !$Access ) {
-        return $Self->{LayoutObject}->NoPermission(
+        return $LayoutObject->NoPermission(
             Message    => "You need $Self->{Config}->{Permission} permissions on the change!",
             WithHeader => 'yes',
         );
     }
 
     # get change data
-    my $Change = $Self->{ChangeObject}->ChangeGet(
+    my $Change = $ChangeObject->ChangeGet(
         ChangeID => $ChangeID,
         UserID   => $Self->{UserID},
     );
 
     # check error
     if ( !$Change ) {
-        return $Self->{LayoutObject}->ErrorScreen(
+        return $LayoutObject->ErrorScreen(
             Message => "Change '$ChangeID' not found in database!",
             Comment => 'Please contact the admin.',
         );
@@ -103,17 +84,20 @@ sub Run {
         qw(MoveTimeType MoveTimeYear MoveTimeMonth MoveTimeDay MoveTimeHour MoveTimeMinute TemplateID)
         )
     {
-        $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
+        $GetParam{$ParamName} = $ParamObject->GetParam( Param => $ParamName );
     }
 
     # store time related fields in %GetParam
     for my $TimePart (qw(Year Month Day Hour Minute)) {
         my $ParamName = 'MoveTime' . $TimePart;
-        $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
+        $GetParam{$ParamName} = $ParamObject->GetParam( Param => $ParamName );
     }
 
     # Remember the reason why saving was not attempted.
     my %ValidationError;
+
+    # get template object
+    my $TemplateObject = $Kernel::OM->Get('Kernel::System::ITSMChange::Template');
 
     # create workorder from template
     if ( $Self->{Subaction} eq 'CreateFromTemplate' ) {
@@ -149,7 +133,7 @@ sub Run {
         if ( !%ValidationError ) {
 
             # transform work order planned time, time stamp based on user time zone
-            %GetParam = $Self->{LayoutObject}->TransformDateSelection(
+            %GetParam = $LayoutObject->TransformDateSelection(
                 %GetParam,
                 Prefix => 'MoveTime',
             );
@@ -163,7 +147,7 @@ sub Run {
                 $GetParam{MoveTimeMinute};
 
             # sanity check of the assembled timestamp
-            $NewTime = $Self->{TimeObject}->TimeStamp2SystemTime(
+            $NewTime = $Kernel::OM->Get('Kernel::System::Time')->TimeStamp2SystemTime(
                 String => $PlannedTime,
             );
 
@@ -180,9 +164,9 @@ sub Run {
         if ( !%ValidationError ) {
 
             # create workorder based on the template
-            my $WorkOrderID = $Self->{TemplateObject}->TemplateDeSerialize(
+            my $WorkOrderID = $TemplateObject->TemplateDeSerialize(
                 ChangeID        => $ChangeID,
-                TemplateID      => $Self->{ParamObject}->GetParam( Param => 'TemplateID' ),
+                TemplateID      => $ParamObject->GetParam( Param => 'TemplateID' ),
                 UserID          => $Self->{UserID},
                 NewTimeInEpoche => $NewTime,
                 MoveTimeType    => $GetParam{MoveTimeType},
@@ -192,7 +176,7 @@ sub Run {
             if ( !$WorkOrderID ) {
 
                 # show error message, when adding failed
-                return $Self->{LayoutObject}->ErrorScreen(
+                return $LayoutObject->ErrorScreen(
                     Message => 'Was not able to create workorder from template!',
                     Comment => 'Please contact the admin.',
                 );
@@ -210,19 +194,19 @@ sub Run {
             }
 
             # load new URL in parent window and close popup
-            return $Self->{LayoutObject}->PopupClose(
+            return $LayoutObject->PopupClose(
                 URL => "Action=$NextScreen",
             );
         }
     }
 
     # build template dropdown
-    my $TemplateList = $Self->{TemplateObject}->TemplateList(
+    my $TemplateList = $TemplateObject->TemplateList(
         UserID        => $Self->{UserID},
         CommentLength => 15,
         TemplateType  => 'ITSMWorkOrder',
     );
-    my $TemplateSelectionString = $Self->{LayoutObject}->BuildSelection(
+    my $TemplateSelectionString = $LayoutObject->BuildSelection(
         Name         => 'TemplateID',
         Data         => $TemplateList,
         Class        => 'Validate_Required ' . ( $ValidationError{TemplateIDServerError} || '' ),
@@ -231,7 +215,7 @@ sub Run {
     );
 
     # build drop-down with time types
-    my $MoveTimeTypeSelectionString = $Self->{LayoutObject}->BuildSelection(
+    my $MoveTimeTypeSelectionString = $LayoutObject->BuildSelection(
         Name => 'MoveTimeType',
         Data => [
             {
@@ -248,10 +232,10 @@ sub Run {
     );
 
     # time period that can be selected from the GUI
-    my %TimePeriod = %{ $Self->{ConfigObject}->Get('ITSMWorkOrder::TimePeriod') };
+    my %TimePeriod = %{ $ConfigObject->Get('ITSMWorkOrder::TimePeriod') };
 
     # add selection for the time
-    my $MoveTimeSelectionString = $Self->{LayoutObject}->BuildDateSelection(
+    my $MoveTimeSelectionString = $LayoutObject->BuildDateSelection(
         %GetParam,
         Format        => 'DateInputFormatLong',
         Prefix        => 'MoveTime',
@@ -261,7 +245,7 @@ sub Run {
     );
 
     # output header
-    my $Output = $Self->{LayoutObject}->Header(
+    my $Output = $LayoutObject->Header(
         Title => 'Add',
         Type  => 'Small',
     );
@@ -276,19 +260,27 @@ sub Run {
     }
 
     # get WorkOrderType list
-    my $WorkOrderTypeList = $Self->{WorkOrderObject}->WorkOrderTypeList(
+    my $WorkOrderTypeList = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderTypeList(
         UserID => $Self->{UserID},
         %SelectedInfo,
     ) || [];
 
     # build the WorkOrderType dropdown
-    $GetParam{WorkOrderTypeStrg} = $Self->{LayoutObject}->BuildSelection(
+    $GetParam{WorkOrderTypeStrg} = $LayoutObject->BuildSelection(
         Name => 'WorkOrderTypeID',
         Data => $WorkOrderTypeList,
     );
 
+    # get form id
+    $Self->{FormID} = $ParamObject->GetParam( Param => 'FormID' );
+
+    # create form id
+    if ( !$Self->{FormID} ) {
+        $Self->{FormID} = $Kernel::OM->Get('Kernel::System::Web::UploadCache')->FormIDCreate();
+    }
+
     # start template output
-    $Output .= $Self->{LayoutObject}->Output(
+    $Output .= $LayoutObject->Output(
         TemplateFile => 'AgentITSMWorkOrderAddFromTemplate',
         Data         => {
             %Param,
@@ -304,7 +296,7 @@ sub Run {
     );
 
     # add footer
-    $Output .= $Self->{LayoutObject}->Footer( Type => 'Small' );
+    $Output .= $LayoutObject->Footer( Type => 'Small' );
 
     return $Output;
 }

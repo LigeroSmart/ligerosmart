@@ -11,9 +11,7 @@ package Kernel::Modules::AdminITSMChangeNotification;
 use strict;
 use warnings;
 
-use Kernel::System::ITSMChange::History;
-use Kernel::System::ITSMChange::Notification;
-use Kernel::System::Valid;
+our $ObjectManagerDisabled = 1;
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -21,21 +19,6 @@ sub new {
     # allocate new hash for object
     my $Self = {%Param};
     bless( $Self, $Type );
-
-    # check all needed objects
-    for my $NeededObject (
-        qw(ParamObject DBObject LayoutObject UserObject GroupObject ConfigObject LogObject)
-        )
-    {
-        if ( !$Self->{$NeededObject} ) {
-            $Self->{LayoutObject}->FatalError( Message => "Got no $NeededObject!" );
-        }
-    }
-
-    # create needed objects
-    $Self->{HistoryObject}      = Kernel::System::ITSMChange::History->new(%Param);
-    $Self->{NotificationObject} = Kernel::System::ITSMChange::Notification->new(%Param);
-    $Self->{ValidObject}        = Kernel::System::Valid->new(%Param);
 
     return $Self;
 }
@@ -46,12 +29,17 @@ sub Run {
     # hash with feedback to the user
     my %Notification;
 
+    # get needed object
+    my $NotificationObject = $Kernel::OM->Get('Kernel::System::ITSMChange::Notification');
+    my $ParamObject        = $Kernel::OM->Get('Kernel::System::Web::Request');
+    my $LayoutObject       = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+
     # ------------------------------------------------------------ #
     # change
     # ------------------------------------------------------------ #
     if ( $Self->{Subaction} eq 'Change' ) {
-        my $ID = $Self->{ParamObject}->GetParam( Param => 'ID' ) || '';
-        my $Data = $Self->{NotificationObject}->NotificationRuleGet( ID => $ID );
+        my $ID = $ParamObject->GetParam( Param => 'ID' ) || '';
+        my $Data = $NotificationObject->NotificationRuleGet( ID => $ID );
 
         $Self->_Edit(
             Action      => 'Change',
@@ -66,20 +54,20 @@ sub Run {
     elsif ( $Self->{Subaction} eq 'ChangeAction' ) {
 
         # challenge token check for write action
-        $Self->{LayoutObject}->ChallengeTokenCheck();
+        $LayoutObject->ChallengeTokenCheck();
 
         my $Note = '';
         my %GetParam;
         for my $Param (qw(ID Name EventID Comment ValidID Attribute Rule)) {
-            $GetParam{$Param} = $Self->{ParamObject}->GetParam( Param => $Param ) || '';
+            $GetParam{$Param} = $ParamObject->GetParam( Param => $Param ) || '';
         }
 
         $GetParam{RecipientIDs} = [
-            $Self->{ParamObject}->GetArray( Param => 'RecipientIDs' )
+            $ParamObject->GetArray( Param => 'RecipientIDs' )
         ];
 
         # update group
-        if ( $Self->{NotificationObject}->NotificationRuleUpdate(%GetParam) ) {
+        if ( $NotificationObject->NotificationRuleUpdate(%GetParam) ) {
             $Self->_Overview();
 
             # notification was updated
@@ -114,14 +102,14 @@ sub Run {
     elsif ( $Self->{Subaction} eq 'AddAction' ) {
 
         # challenge token check for write action
-        $Self->{LayoutObject}->ChallengeTokenCheck();
+        $LayoutObject->ChallengeTokenCheck();
 
         my $Note = '';
         my %GetParam;
         my %Error;
 
         for my $Param (qw(ID EventID Name Comment ValidID Attribute Rule)) {
-            $GetParam{$Param} = $Self->{ParamObject}->GetParam( Param => $Param ) || '';
+            $GetParam{$Param} = $ParamObject->GetParam( Param => $Param ) || '';
         }
 
         if ( !$GetParam{Name} ) {
@@ -130,7 +118,7 @@ sub Run {
         }
 
         $GetParam{RecipientIDs} = [
-            $Self->{ParamObject}->GetArray( Param => 'RecipientIDs' )
+            $ParamObject->GetArray( Param => 'RecipientIDs' )
         ];
 
         if (%Error) {
@@ -143,7 +131,7 @@ sub Run {
         }
 
         # add notification rule
-        if ( my $StateID = $Self->{NotificationObject}->NotificationRuleAdd(%GetParam) ) {
+        if ( my $StateID = $NotificationObject->NotificationRuleAdd(%GetParam) ) {
             $Self->_Overview();
 
             # notification was added
@@ -159,17 +147,17 @@ sub Run {
         $Self->_Overview();
     }
 
-    my $Output = $Self->{LayoutObject}->Header();
-    $Output .= $Self->{LayoutObject}->NavigationBar();
+    my $Output = $LayoutObject->Header();
+    $Output .= $LayoutObject->NavigationBar();
 
     if (%Notification) {
-        $Output .= $Self->{LayoutObject}->Notify(%Notification) || '';
+        $Output .= $LayoutObject->Notify(%Notification) || '';
     }
-    $Output .= $Self->{LayoutObject}->Output(
+    $Output .= $LayoutObject->Output(
         TemplateFile => 'AdminITSMChangeNotification',
         Data         => \%Param,
     );
-    $Output .= $Self->{LayoutObject}->Footer();
+    $Output .= $LayoutObject->Footer();
 
 }
 
@@ -177,35 +165,41 @@ sub Run {
 sub _Edit {
     my ( $Self, %Param ) = @_;
 
-    $Self->{LayoutObject}->Block(
+    # get layout object
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+
+    $LayoutObject->Block(
         Name => 'Overview',
         Data => \%Param,
     );
-    $Self->{LayoutObject}->Block( Name => 'ActionList' );
-    $Self->{LayoutObject}->Block( Name => 'ActionOverview' );
+    $LayoutObject->Block( Name => 'ActionList' );
+    $LayoutObject->Block( Name => 'ActionOverview' );
 
-    $Param{ValidOption} = $Self->{LayoutObject}->BuildSelection(
+    # get valid object
+    my $ValidObject = $Kernel::OM->Get('Kernel::System::Valid');
+
+    $Param{ValidOption} = $LayoutObject->BuildSelection(
         Data => {
-            $Self->{ValidObject}->ValidList(),
+            $ValidObject->ValidList(),
         },
         Name       => 'ValidID',
-        SelectedID => $Param{ValidID} || ( $Self->{ValidObject}->ValidIDsGet() )[0],
+        SelectedID => $Param{ValidID} || ( $ValidObject->ValidIDsGet() )[0],
         Sort       => 'NumericKey',
     );
-    $Param{EventOption} = $Self->{LayoutObject}->BuildSelection(
-        Data => $Self->{HistoryObject}->HistoryTypeList( UserID => 1 ) || [],
+    $Param{EventOption} = $LayoutObject->BuildSelection(
+        Data => $Kernel::OM->Get('Kernel::System::ITSMChange::History')->HistoryTypeList( UserID => 1 ) || [],
         Name => 'EventID',
         SelectedID => $Param{EventID},
     );
-    $Param{RecipientOption} = $Self->{LayoutObject}->BuildSelection(
-        Data => $Self->{NotificationObject}->RecipientList( UserID => 1 ) || [],
+    $Param{RecipientOption} = $LayoutObject->BuildSelection(
+        Data => $Kernel::OM->Get('Kernel::System::ITSMChange::Notification')->RecipientList( UserID => 1 ) || [],
         Name => 'RecipientIDs',
         Multiple   => 1,
         Size       => 13,                     # current number of default recipients, avoid scrolling
         SelectedID => $Param{RecipientIDs},
     );
 
-    $Self->{LayoutObject}->Block(
+    $LayoutObject->Block(
         Name => 'OverviewUpdate',
         Data => \%Param,
     );
@@ -217,28 +211,35 @@ sub _Edit {
 sub _Overview {
     my ( $Self, %Param ) = @_;
 
-    $Self->{LayoutObject}->Block(
+    # get layout object
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+
+    $LayoutObject->Block(
         Name => 'Overview',
         Data => \%Param,
     );
 
-    $Self->{LayoutObject}->Block( Name => 'ActionList' );
-    $Self->{LayoutObject}->Block( Name => 'ActionAdd' );
+    $LayoutObject->Block( Name => 'ActionList' );
+    $LayoutObject->Block( Name => 'ActionAdd' );
 
-    $Self->{LayoutObject}->Block(
+    $LayoutObject->Block(
         Name => 'OverviewResult',
         Data => \%Param,
     );
-    my $RuleIDs = $Self->{NotificationObject}->NotificationRuleList() || [];
+
+    # get notification object
+    my $NotificationObject = $Kernel::OM->Get('Kernel::System::ITSMChange::Notification');
+
+    my $RuleIDs = $NotificationObject->NotificationRuleList() || [];
 
     # get valid list
-    my %ValidList = $Self->{ValidObject}->ValidList();
+    my %ValidList = $Kernel::OM->Get('Kernel::System::Valid')->ValidList();
     for my $RuleID ( @{$RuleIDs} ) {
 
-        my $Data = $Self->{NotificationObject}->NotificationRuleGet( ID => $RuleID );
+        my $Data = $NotificationObject->NotificationRuleGet( ID => $RuleID );
         my $Recipients = join ', ', @{ $Data->{Recipients} || [] };
 
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'OverviewResultRow',
             Data => {
                 Valid => $ValidList{ $Data->{ValidID} },

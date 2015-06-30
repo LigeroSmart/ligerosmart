@@ -11,9 +11,7 @@ package Kernel::Modules::AdminITSMChangeCIPAllocate;
 use strict;
 use warnings;
 
-use Kernel::System::GeneralCatalog;
-use Kernel::System::ITSMChange::ITSMChangeCIPAllocate;
-use Kernel::System::Valid;
+our $ObjectManagerDisabled = 1;
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -22,21 +20,16 @@ sub new {
     my $Self = {%Param};
     bless( $Self, $Type );
 
-    # check needed objects
-    for my $Object (qw(ConfigObject ParamObject LogObject LayoutObject)) {
-        if ( !$Self->{$Object} ) {
-            $Self->{LayoutObject}->FatalError( Message => "Got no $Object!" );
-        }
-    }
-    $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new(%Param);
-    $Self->{CIPAllocateObject}    = Kernel::System::ITSMChange::ITSMChangeCIPAllocate->new(%Param);
-    $Self->{ValidObject}          = Kernel::System::Valid->new(%Param);
-
     return $Self;
 }
 
 sub Run {
     my ( $Self, %Param ) = @_;
+
+    # get needed objects
+    my $GeneralCatalogObject = $Kernel::OM->Get('Kernel::System::GeneralCatalog');
+    my $CIPAllocateObject    = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMChangeCIPAllocate');
+    my $LayoutObject         = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
     # ------------------------------------------------------------ #
     # category, impact and priority allocation
@@ -45,13 +38,13 @@ sub Run {
 
         # get option lists
         my %ObjectOption;
-        $ObjectOption{CategoryList} = $Self->{GeneralCatalogObject}->ItemList(
+        $ObjectOption{CategoryList} = $GeneralCatalogObject->ItemList(
             Class => 'ITSM::ChangeManagement::Category',
         );
-        $ObjectOption{ImpactList} = $Self->{GeneralCatalogObject}->ItemList(
+        $ObjectOption{ImpactList} = $GeneralCatalogObject->ItemList(
             Class => 'ITSM::ChangeManagement::Impact',
         );
-        $ObjectOption{PriorityList} = $Self->{GeneralCatalogObject}->ItemList(
+        $ObjectOption{PriorityList} = $GeneralCatalogObject->ItemList(
             Class => 'ITSM::ChangeManagement::Priority',
         );
 
@@ -63,7 +56,7 @@ sub Run {
             for my $CategoryID ( sort keys %{ $ObjectOption{CategoryList} } ) {
 
                 # get form param
-                my $PriorityID = $Self->{ParamObject}->GetParam(
+                my $PriorityID = $Kernel::OM->Get('Kernel::System::Web::Request')->GetParam(
                     Param => "PriorityID" . $ImpactID . '-' . $CategoryID
                 ) || '';
 
@@ -74,12 +67,12 @@ sub Run {
         }
 
         # update allocations
-        $Self->{CIPAllocateObject}->AllocateUpdate(
+        $CIPAllocateObject->AllocateUpdate(
             AllocateData => $AllocateData,
             UserID       => 1,
         );
 
-        return $Self->{LayoutObject}->Redirect( OP => "Action=$Self->{Action}" );
+        return $LayoutObject->Redirect( OP => "Action=$Self->{Action}" );
     }
 
     # ------------------------------------------------------------ #
@@ -89,26 +82,26 @@ sub Run {
 
         # get option lists
         my %ObjectOption;
-        $ObjectOption{CategoryList} = $Self->{GeneralCatalogObject}->ItemList(
+        $ObjectOption{CategoryList} = $GeneralCatalogObject->ItemList(
             Class => 'ITSM::ChangeManagement::Category',
         );
-        $ObjectOption{ImpactList} = $Self->{GeneralCatalogObject}->ItemList(
+        $ObjectOption{ImpactList} = $GeneralCatalogObject->ItemList(
             Class => 'ITSM::ChangeManagement::Impact',
         );
-        $ObjectOption{PriorityList} = $Self->{GeneralCatalogObject}->ItemList(
+        $ObjectOption{PriorityList} = $GeneralCatalogObject->ItemList(
             Class => 'ITSM::ChangeManagement::Priority',
         );
 
         # get allocation data
-        my $AllocateData = $Self->{CIPAllocateObject}->AllocateList(
+        my $AllocateData = $CIPAllocateObject->AllocateList(
             UserID => 1,
         );
 
         my $AllocateMatrix;
 
         $AllocateMatrix->[0]->[0]->{ObjectType} =
-            $Self->{LayoutObject}->{LanguageObject}->Translate('Impact') . ' / '
-            . $Self->{LayoutObject}->{LanguageObject}->Translate('Category');
+            $LayoutObject->{LanguageObject}->Translate('Impact') . ' / '
+            . $LayoutObject->{LanguageObject}->Translate('Category');
         $AllocateMatrix->[0]->[0]->{Class} = 'HeaderColumnDescription';
 
         # generate table description (Impact)
@@ -146,7 +139,7 @@ sub Run {
                 my $CategoryKey = $AllocateMatrix->[0]->[$Column]->{CategoryKey};
 
                 # create option string
-                my $OptionStrg = $Self->{LayoutObject}->BuildSelection(
+                my $OptionStrg = $LayoutObject->BuildSelection(
                     Name       => 'PriorityID' . $ImpactKey . '-' . $CategoryKey,
                     Data       => $ObjectOption{PriorityList},
                     SelectedID => $AllocateData->{$ImpactKey}{$CategoryKey} || '',
@@ -161,7 +154,7 @@ sub Run {
         for my $Row ( 0 .. $#{$AllocateMatrix} ) {
 
             if ( $Row != 0 ) {
-                $Self->{LayoutObject}->Block( Name => 'Row' )
+                $LayoutObject->Block( Name => 'Row' )
             }
 
             for my $Column ( 0 .. $#{ $AllocateMatrix->[$Row] } ) {
@@ -170,13 +163,13 @@ sub Run {
                 if ( $Row == 0 ) {
 
                     if ( $Column == 0 ) {
-                        $Self->{LayoutObject}->Block(
+                        $LayoutObject->Block(
                             Name => 'HeaderColumnDescription',
                             Data => $AllocateMatrix->[$Row]->[$Column],
                         );
                     }
                     else {
-                        $Self->{LayoutObject}->Block(
+                        $LayoutObject->Block(
                             Name => 'HeaderCell',
                             Data => $AllocateMatrix->[$Row]->[$Column],
                         );
@@ -185,13 +178,13 @@ sub Run {
 
                 # check if the column is description
                 elsif ( $Column == 0 ) {
-                    $Self->{LayoutObject}->Block(
+                    $LayoutObject->Block(
                         Name => 'DescriptionCell',
                         Data => $AllocateMatrix->[$Row]->[$Column],
                     );
                 }
                 else {
-                    $Self->{LayoutObject}->Block(
+                    $LayoutObject->Block(
                         Name => 'ContentCell',
                         Data => $AllocateMatrix->[$Row]->[$Column],
                     );
@@ -200,15 +193,15 @@ sub Run {
         }
 
         # output header and navbar
-        my $Output = $Self->{LayoutObject}->Header();
-        $Output .= $Self->{LayoutObject}->NavigationBar();
+        my $Output = $LayoutObject->Header();
+        $Output .= $LayoutObject->NavigationBar();
 
         # generate output
-        $Output .= $Self->{LayoutObject}->Output(
+        $Output .= $LayoutObject->Output(
             TemplateFile => 'AdminITSMChangeCIPAllocate',
             Data         => \%Param,
         );
-        $Output .= $Self->{LayoutObject}->Footer();
+        $Output .= $LayoutObject->Footer();
 
         return $Output;
     }

@@ -6,10 +6,12 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package Kernel::Output::HTML::ITSMTemplateOverviewSmall;
+package Kernel::Output::HTML::ITSMTemplate::OverviewSmall;
 
 use strict;
 use warnings;
+
+our $ObjectManagerDisabled = 1;
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -18,16 +20,8 @@ sub new {
     my $Self = {%Param};
     bless( $Self, $Type );
 
-    # get needed objects
-    for my $Object (
-        qw(ConfigObject LogObject DBObject LayoutObject UserID UserObject MainObject)
-        )
-    {
-        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
-    }
-
-    # create additional objects
-    $Self->{ValidObject} = Kernel::System::Valid->new(%Param);
+    # get UserID param
+    $Self->{UserID} = $Param{UserID} || die "Got no UserID!";
 
     return $Self;
 }
@@ -35,10 +29,13 @@ sub new {
 sub Run {
     my ( $Self, %Param ) = @_;
 
+    # get log object
+    my $LogObject = $Kernel::OM->Get('Kernel::System::Log');
+
     # check needed stuff
     for my $Needed (qw(PageShown StartHit)) {
         if ( !$Param{$Needed} ) {
-            $Self->{LogObject}->Log(
+            $LogObject->Log(
                 Priority => 'error',
                 Message  => "Need $Needed!",
             );
@@ -48,7 +45,7 @@ sub Run {
 
     # need TemplateIDs
     if ( !$Param{TemplateIDs} ) {
-        $Self->{LogObject}->Log(
+        $LogObject->Log(
             Priority => 'error',
             Message  => 'Need the TemplateIDs!',
         );
@@ -81,11 +78,14 @@ sub Run {
         }
     }
 
+    # get layout object
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+
     # build column header blocks
     if (@ShowColumns) {
         for my $Column (@ShowColumns) {
 
-            $Self->{LayoutObject}->Block(
+            $LayoutObject->Block(
                 Name => 'Record' . $Column . 'Header',
                 Data => {
                     %Param,
@@ -112,14 +112,14 @@ sub Run {
             {
 
                 # display the template data
-                my $Template = $Self->{TemplateObject}->TemplateGet(
+                my $Template = $Kernel::OM->Get('Kernel::System::ITSMChange::Template')->TemplateGet(
                     TemplateID => $ID,
                     UserID     => $Self->{UserID},
                 );
                 my %Data = %{$Template};
 
                 # human readable validity
-                $Data{Valid} = $Self->{ValidObject}->ValidLookup( ValidID => $Data{ValidID} );
+                $Data{Valid} = $Kernel::OM->Get('Kernel::System::Valid')->ValidLookup( ValidID => $Data{ValidID} );
 
                 # get user data for needed user types
                 USERTYPE:
@@ -129,7 +129,7 @@ sub Run {
                     next USERTYPE if !$Data{$UserType};
 
                     # get user data
-                    my %User = $Self->{UserObject}->GetUserData(
+                    my %User = $Kernel::OM->Get('Kernel::System::User')->GetUserData(
                         UserID => $Data{$UserType},
                         Cached => 1,
                     );
@@ -143,7 +143,7 @@ sub Run {
                 }
 
                 # build record block
-                $Self->{LayoutObject}->Block(
+                $LayoutObject->Block(
                     Name => 'Record',
                     Data => {
                         %Param,
@@ -155,7 +155,7 @@ sub Run {
                 if (@ShowColumns) {
                     for my $Column (@ShowColumns) {
                         if ( $Column eq 'EditContent' && $Data{Type} eq 'CAB' ) {
-                            $Self->{LayoutObject}->Block(
+                            $LayoutObject->Block(
                                 Name => 'RecordEditContentCAB',
                                 Data => {
                                     %Param,
@@ -164,7 +164,7 @@ sub Run {
                             );
                         }
                         else {
-                            $Self->{LayoutObject}->Block(
+                            $LayoutObject->Block(
                                 Name => 'Record' . $Column,
                                 Data => {
                                     %Param,
@@ -180,7 +180,7 @@ sub Run {
 
     # if there are no templates to show, a no data found message is displayed in the table
     else {
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'NoDataFoundMsg',
             Data => {
                 TotalColumns => scalar @ShowColumns,
@@ -189,7 +189,7 @@ sub Run {
     }
 
     # use template
-    $Output .= $Self->{LayoutObject}->Output(
+    $Output .= $LayoutObject->Output(
         TemplateFile => 'AgentITSMTemplateOverviewSmall',
         Data         => {
             %Param,

@@ -11,12 +11,7 @@ package Kernel::Modules::AgentITSMChangeHistory;
 use strict;
 use warnings;
 
-use Kernel::System::ITSMChange;
-use Kernel::System::ITSMChange::ITSMWorkOrder;
-use Kernel::System::ITSMChange::ITSMCondition;
-use Kernel::System::ITSMChange::History;
-use Kernel::System::HTMLUtils;
-use Kernel::System::Valid;
+our $ObjectManagerDisabled = 1;
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -25,27 +20,6 @@ sub new {
     my $Self = {%Param};
     bless( $Self, $Type );
 
-    # check needed objects
-    for my $Object (
-        qw(ParamObject DBObject LayoutObject LogObject UserObject GroupObject ConfigObject)
-        )
-    {
-        if ( !$Self->{$Object} ) {
-            $Self->{LayoutObject}->FatalError( Message => "Got no $Object!" );
-        }
-    }
-
-    # create additional objects
-    $Self->{ChangeObject}    = Kernel::System::ITSMChange->new(%Param);
-    $Self->{WorkOrderObject} = Kernel::System::ITSMChange::ITSMWorkOrder->new(%Param);
-    $Self->{ConditionObject} = Kernel::System::ITSMChange::ITSMCondition->new(%Param);
-    $Self->{HistoryObject}   = Kernel::System::ITSMChange::History->new(%Param);
-    $Self->{HTMLUtilsObject} = Kernel::System::HTMLUtils->new(%Param);
-    $Self->{ValidObject}     = Kernel::System::Valid->new(%Param);
-
-    # get config of frontend module
-    $Self->{Config} = $Self->{ConfigObject}->Get("ITSMChange::Frontend::$Self->{Action}");
-
     return $Self;
 }
 
@@ -53,20 +27,30 @@ sub Run {
     my ( $Self, %Param ) = @_;
 
     # get needed change id
-    my $ChangeID = $Self->{ParamObject}->GetParam( Param => 'ChangeID' );
+    my $ChangeID = $Kernel::OM->Get('Kernel::System::Web::Request')->GetParam( Param => 'ChangeID' );
+
+    # get layout object
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
     # check needed stuff
     if ( !$ChangeID ) {
 
         # error page
-        return $Self->{LayoutObject}->ErrorScreen(
+        return $LayoutObject->ErrorScreen(
             Message => "Can't show history, as no ChangeID is given!",
             Comment => 'Please contact the administrator.',
         );
     }
 
+    # get needed objects
+    my $ChangeObject = $Kernel::OM->Get('Kernel::System::ITSMChange');
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+
+    # get config of frontend module
+    $Self->{Config} = $ConfigObject->Get("ITSMChange::Frontend::$Self->{Action}");
+
     # check permissions
-    my $Access = $Self->{ChangeObject}->Permission(
+    my $Access = $ChangeObject->Permission(
         Type     => $Self->{Config}->{Permission},
         Action   => $Self->{Action},
         ChangeID => $ChangeID,
@@ -75,21 +59,21 @@ sub Run {
 
     # error screen
     if ( !$Access ) {
-        return $Self->{LayoutObject}->NoPermission(
+        return $LayoutObject->NoPermission(
             Message    => "You need $Self->{Config}->{Permission} permissions!",
             WithHeader => 'yes',
         );
     }
 
     # get change information
-    my $Change = $Self->{ChangeObject}->ChangeGet(
+    my $Change = $ChangeObject->ChangeGet(
         ChangeID => $ChangeID,
         UserID   => $Self->{UserID},
     );
 
     # check error
     if ( !$Change ) {
-        return $Self->{LayoutObject}->ErrorScreen(
+        return $LayoutObject->ErrorScreen(
             Message => "Change '$ChangeID' not found in the data base!",
             Comment => 'Please contact the administrator.',
         );
@@ -99,32 +83,35 @@ sub Run {
     my %WorkOrderIDLookup = map { $_ => 1 } @{ $Change->{WorkOrderIDs} };
 
     # get history entries
-    my $HistoryEntriesRef = $Self->{HistoryObject}->ChangeHistoryGet(
+    my $HistoryEntriesRef = $Kernel::OM->Get('Kernel::System::ITSMChange::History')->ChangeHistoryGet(
         ChangeID => $ChangeID,
         UserID   => $Self->{UserID},
     ) || [];
 
     # get order direction
     my @HistoryLines = @{$HistoryEntriesRef};
-    if ( $Self->{ConfigObject}->Get('ITSMChange::Frontend::HistoryOrder') eq 'reverse' ) {
+    if ( $ConfigObject->Get('ITSMChange::Frontend::HistoryOrder') eq 'reverse' ) {
         @HistoryLines = reverse @{$HistoryEntriesRef};
     }
 
     # make some lookups in advance to improve performance
     my $Cache = {};
 
+    # get condition object
+    my $ConditionObject = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMCondition');
+
     # get the object list
-    $Cache->{ObjectList} = $Self->{ConditionObject}->ObjectList(
+    $Cache->{ObjectList} = $ConditionObject->ObjectList(
         UserID => $Self->{UserID},
     );
 
     # get the attribute list
-    $Cache->{AttributeList} = $Self->{ConditionObject}->AttributeList(
+    $Cache->{AttributeList} = $ConditionObject->AttributeList(
         UserID => $Self->{UserID},
     );
 
     # get the operator list
-    $Cache->{OperatorList} = $Self->{ConditionObject}->OperatorList(
+    $Cache->{OperatorList} = $ConditionObject->OperatorList(
         UserID => $Self->{UserID},
     );
 
@@ -168,6 +155,9 @@ sub Run {
                 }
                 else {
 
+                    # get user object
+                    my $UserObject = $Kernel::OM->Get('Kernel::System::User');
+
                     # for the ID fields, we replace ID with its textual value
                     if (
                         my ($Type) = $HistoryEntry->{Fieldname} =~ m{
@@ -187,28 +177,32 @@ sub Run {
                         if ( $HistoryEntry->{$ContentNewOrOld} ) {
                             my $Value;
                             my $TranslationNeeded = 1;
+
+                            # get work order object
+                            my $WorkOrderObject = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder');
+
                             if ( $Type eq 'WorkOrderState' ) {
-                                $Value = $Self->{WorkOrderObject}->WorkOrderStateLookup(
+                                $Value = $WorkOrderObject->WorkOrderStateLookup(
                                     WorkOrderStateID => $HistoryEntry->{$ContentNewOrOld},
                                 );
                             }
                             elsif ( $Type eq 'WorkOrderType' ) {
-                                $Value = $Self->{WorkOrderObject}->WorkOrderTypeLookup(
+                                $Value = $WorkOrderObject->WorkOrderTypeLookup(
                                     WorkOrderTypeID => $HistoryEntry->{$ContentNewOrOld},
                                 );
                             }
                             elsif ( $Type eq 'ChangeState' ) {
-                                $Value = $Self->{ChangeObject}->ChangeStateLookup(
+                                $Value = $ChangeObject->ChangeStateLookup(
                                     ChangeStateID => $HistoryEntry->{$ContentNewOrOld},
                                 );
                             }
                             elsif (
-                                $Type    eq 'WorkOrderAgent'
+                                $Type eq 'WorkOrderAgent'
                                 || $Type eq 'ChangeBuilder'
                                 || $Type eq 'ChangeManager'
                                 )
                             {
-                                $Value = $Self->{UserObject}->UserLookup(
+                                $Value = $UserObject->UserLookup(
                                     UserID => $HistoryEntry->{$ContentNewOrOld},
                                 );
 
@@ -216,12 +210,12 @@ sub Run {
                                 $TranslationNeeded = 0;
                             }
                             elsif (
-                                $Type    eq 'Category'
+                                $Type eq 'Category'
                                 || $Type eq 'Impact'
                                 || $Type eq 'Priority'
                                 )
                             {
-                                $Value = $Self->{ChangeObject}->ChangeCIPLookup(
+                                $Value = $ChangeObject->ChangeCIPLookup(
                                     ID   => $HistoryEntry->{$ContentNewOrOld},
                                     Type => $Type,
                                 );
@@ -235,7 +229,7 @@ sub Run {
                                         $HistoryEntry->{$ContentNewOrOld};
                                 }
 
-                                $Value = $Self->{ValidObject}->ValidLookup(
+                                $Value = $Kernel::OM->Get('Kernel::System::Valid')->ValidLookup(
                                     ValidID => $HistoryEntry->{$ContentNewOrOld},
                                 );
                             }
@@ -278,7 +272,7 @@ sub Run {
                                 $Value = $Cache->{OperatorList}->{ $HistoryEntry->{$ContentNewOrOld} };
                             }
                             else {
-                                return $Self->{LayoutObject}->ErrorScreen(
+                                return $LayoutObject->ErrorScreen(
                                     Message => "Unknown type '$Type' encountered!",
                                     Comment => 'Please contact the administrator.',
                                 );
@@ -287,7 +281,7 @@ sub Run {
                             # E.g. the usernames should not be translated
                             my $TranslatedValue = $TranslationNeeded
                                 ?
-                                $Self->{LayoutObject}->{LanguageObject}->Translate($Value)
+                                $LayoutObject->{LanguageObject}->Translate($Value)
                                 :
                                 $Value;
 
@@ -313,11 +307,11 @@ sub Run {
                         # look up the login names from the user ids and
                         # format it as a comma separated list
                         my @UserIDs = split m/%%/, $HistoryEntry->{$ContentNewOrOld};
-                        my @UserLogins = map { $Self->{UserObject}->UserLookup( UserID => $_ ) } @UserIDs;
+                        my @UserLogins = map { $UserObject->UserLookup( UserID => $_ ) } @UserIDs;
                         $HistoryEntry->{$ContentNewOrOld} = join ',', @UserLogins;
                     }
                     elsif (
-                        $HistoryEntry->{Fieldname}    eq 'ExpressionConjunction'
+                        $HistoryEntry->{Fieldname} eq 'ExpressionConjunction'
                         || $HistoryEntry->{Fieldname} eq 'Name'
                         || $HistoryEntry->{Fieldname} eq 'Comment'
                         || $HistoryEntry->{Fieldname} eq 'Selector'
@@ -340,15 +334,18 @@ sub Run {
             }
 
             # translate fieldname for display
-            $DisplayedFieldname = $Self->{LayoutObject}->{LanguageObject}->Translate(
+            $DisplayedFieldname = $LayoutObject->{LanguageObject}->Translate(
                 $DisplayedFieldname,
             );
 
+            # get HTML utils object
+            my $HTMLUtilsObject = $Kernel::OM->Get('Kernel::System::HTMLUtils');
+
             # trim strings to a max length of $MaxLength
-            my $ContentNew = $Self->{HTMLUtilsObject}->ToAscii(
+            my $ContentNew = $HTMLUtilsObject->ToAscii(
                 String => $HistoryEntry->{ContentNew} || '-',
             );
-            my $ContentOld = $Self->{HTMLUtilsObject}->ToAscii(
+            my $ContentOld = $HTMLUtilsObject->ToAscii(
                 String => $HistoryEntry->{ContentOld} || '-',
             );
 
@@ -364,7 +361,7 @@ sub Run {
 
             # add the ID of the Condition, Expression or Action that was updated
             if (
-                $HistoryType    eq 'ConditionUpdate'
+                $HistoryType eq 'ConditionUpdate'
                 || $HistoryType eq 'ExpressionUpdate'
                 || $HistoryType eq 'ActionUpdate'
                 )
@@ -444,7 +441,7 @@ sub Run {
                 my $ActionExecuteResult = ( $ActionExecuteData[1] =~ m{ ( unsuccessfully | successfully ) }xms )[0];
 
                 # translate result
-                $ActionExecuteData[1] = ' "' . $Self->{LayoutObject}->{LanguageObject}->Translate(
+                $ActionExecuteData[1] = ' "' . $LayoutObject->{LanguageObject}->Translate(
                     $HistoryEntryType . '::' . $ActionExecuteResult,
                 ) . '"';
 
@@ -459,7 +456,7 @@ sub Run {
             # sample input:
             # ChangeHistory::ChangeLinkAdd", "Ticket", "1
             # YES, this looks strange, but this is the correct way!!!
-            $Data{Content} = $Self->{LayoutObject}->{LanguageObject}->Translate(
+            $Data{Content} = $LayoutObject->{LanguageObject}->Translate(
                 $HistoryItemType . 'History::' . $HistoryEntryType . '", ' . $Data{Content},
             );
 
@@ -467,7 +464,7 @@ sub Run {
             $Data{Content} =~ s{ % s }{}xmsg;
         }
 
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'Row',
             Data => {%Data},
         );
@@ -493,7 +490,7 @@ sub Run {
             }
 
             # show historyzoom block
-            $Self->{LayoutObject}->Block(
+            $LayoutObject->Block(
                 Name => 'ShowHistoryZoom',
                 Data => {
                     %Data,
@@ -504,7 +501,7 @@ sub Run {
 
         # don't show a link
         else {
-            $Self->{LayoutObject}->Block(
+            $LayoutObject->Block(
                 Name => 'NoHistoryZoom',
             );
         }
@@ -518,7 +515,7 @@ sub Run {
         {
 
             # show link
-            $Self->{LayoutObject}->Block(
+            $LayoutObject->Block(
                 Name => 'ShowWorkOrderZoom',
                 Data => {%Data},
             );
@@ -526,20 +523,20 @@ sub Run {
 
         # don't show any link
         else {
-            $Self->{LayoutObject}->Block(
+            $LayoutObject->Block(
                 Name => 'NoWorkOrderZoom',
             );
         }
     }
 
     # output header
-    my $Output = $Self->{LayoutObject}->Header(
+    my $Output = $LayoutObject->Header(
         Type  => 'Small',
         Title => 'ChangeHistory',
     );
 
     # start template output
-    $Output .= $Self->{LayoutObject}->Output(
+    $Output .= $LayoutObject->Output(
         TemplateFile => 'AgentITSMChangeHistory',
         Data         => {
             %Param,
@@ -548,7 +545,7 @@ sub Run {
     );
 
     # add footer
-    $Output .= $Self->{LayoutObject}->Footer(
+    $Output .= $LayoutObject->Footer(
         Type => 'Small',
     );
 

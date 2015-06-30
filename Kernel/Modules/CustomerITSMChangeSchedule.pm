@@ -11,10 +11,7 @@ package Kernel::Modules::CustomerITSMChangeSchedule;
 use strict;
 use warnings;
 
-use Kernel::System::ITSMChange;
-use Kernel::System::LinkObject;
-use Kernel::System::Service;
-use Kernel::System::User;
+our $ObjectManagerDisabled = 1;
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -23,68 +20,51 @@ sub new {
     my $Self = {%Param};
     bless( $Self, $Type );
 
-    # check needed objects
-    for my $Object (
-        qw(ParamObject DBObject LayoutObject LogObject ConfigObject UserObject GroupObject)
-        )
-    {
-        if ( !$Self->{$Object} ) {
-            $Self->{LayoutObject}->FatalError( Message => "Got no $Object!" );
-        }
-    }
-
-    # create needed objects
-    $Self->{ChangeObject}       = Kernel::System::ITSMChange->new(%Param);
-    $Self->{LinkObject}         = Kernel::System::LinkObject->new(%Param);
-    $Self->{ServiceObject}      = Kernel::System::Service->new(%Param);
-    $Self->{CustomerUserObject} = $Self->{UserObject};
-    $Self->{UserObject}         = Kernel::System::User->new(%Param);
-
-    # get config of frontend module
-    $Self->{Config} = $Self->{ConfigObject}->Get("ITSMChange::Frontend::$Self->{Action}");
-
-    # get filter and view params
-    $Self->{Filter} = $Self->{ParamObject}->GetParam( Param => 'Filter' ) || 'All';
-    $Self->{View}   = $Self->{ParamObject}->GetParam( Param => 'View' )   || '';
-    $Self->{StartHit} = int( $Self->{ParamObject}->GetParam( Param => 'StartHit' ) || 1 );
-    $Self->{PageShown} = $Self->{UserShowTickets} || 1;
-
     return $Self;
 }
 
 sub Run {
     my ( $Self, %Param ) = @_;
 
+    # get layout object
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+
     # store last screen
     if (
-        !$Self->{SessionObject}->UpdateSessionID(
+        !$Kernel::OM->Get('Kernel::System::AuthSession')->UpdateSessionID(
             SessionID => $Self->{SessionID},
             Key       => 'LastChangeView',
             Value     => $Self->{RequestedURL},
         )
         )
     {
-        my $Output = $Self->{LayoutObject}->CustomerHeader( Title => 'Error' );
-        $Output .= $Self->{LayoutObject}->CustomerError();
-        $Output .= $Self->{LayoutObject}->CustomerFooter();
+        my $Output = $LayoutObject->CustomerHeader( Title => 'Error' );
+        $Output .= $LayoutObject->CustomerError();
+        $Output .= $LayoutObject->CustomerFooter();
         return $Output;
     }
 
     # check needed CustomerID
     if ( !$Self->{UserCustomerID} ) {
-        my $Output = $Self->{LayoutObject}->CustomerHeader( Title => 'Error' );
-        $Output .= $Self->{LayoutObject}->CustomerError( Message => 'Need CustomerID!' );
-        $Output .= $Self->{LayoutObject}->CustomerFooter();
+        my $Output = $LayoutObject->CustomerHeader( Title => 'Error' );
+        $Output .= $LayoutObject->CustomerError( Message => 'Need CustomerID!' );
+        $Output .= $LayoutObject->CustomerFooter();
         return $Output;
     }
 
+    # get config of frontend module
+    $Self->{Config} = $Kernel::OM->Get('Kernel::Config')->Get("ITSMChange::Frontend::$Self->{Action}");
+
+    # get param object
+    my $ParamObject = $Kernel::OM->Get('Kernel::System::Web::Request');
+
     # get sorting parameters
-    my $SortBy = $Self->{ParamObject}->GetParam( Param => 'SortBy' )
+    my $SortBy = $ParamObject->GetParam( Param => 'SortBy' )
         || $Self->{Config}->{'SortBy::Default'}
         || 'PlannedStartTime';
 
     # get ordering parameters
-    my $OrderBy = $Self->{ParamObject}->GetParam( Param => 'OrderBy' )
+    my $OrderBy = $ParamObject->GetParam( Param => 'OrderBy' )
         || $Self->{Config}->{'Order::Default'}
         || 'Up';
 
@@ -95,15 +75,15 @@ sub Run {
     my $Refresh = $Self->{UserRefreshTime} ? 60 * $Self->{UserRefreshTime} : undef;
 
     # starting with page ...
-    my $Output = $Self->{LayoutObject}->CustomerHeader(
+    my $Output = $LayoutObject->CustomerHeader(
         Refresh => $Refresh,
         Title   => '',
     );
 
     # build NavigationBar
-    $Output .= $Self->{LayoutObject}->CustomerNavigationBar();
+    $Output .= $LayoutObject->CustomerNavigationBar();
 
-    $Self->{LayoutObject}->Print( Output => \$Output );
+    $LayoutObject->Print( Output => \$Output );
     $Output = '';
 
     # find out which columns should be shown
@@ -124,6 +104,9 @@ sub Run {
     # to store the filters
     my %Filters;
 
+    # get change object
+    my $ChangeObject = $Kernel::OM->Get('Kernel::System::ITSMChange');
+
     # set other filters based on change state
     if ( $Self->{Config}->{'Filter::ChangeStates'} ) {
 
@@ -138,7 +121,7 @@ sub Run {
             next CHANGESTATE if !$ChangeState;
 
             # check if state is valid by looking up the state id
-            my $ChangeStateID = $Self->{ChangeObject}->ChangeStateLookup(
+            my $ChangeStateID = $ChangeObject->ChangeStateLookup(
                 ChangeState => $ChangeState,
             );
 
@@ -162,6 +145,12 @@ sub Run {
             };
         }
     }
+
+    # get filter and view params
+    $Self->{Filter} = $ParamObject->GetParam( Param => 'Filter' ) || 'All';
+    $Self->{View}   = $ParamObject->GetParam( Param => 'View' )   || '';
+    $Self->{StartHit} = int( $ParamObject->GetParam( Param => 'StartHit' ) || 1 );
+    $Self->{PageShown} = $Self->{UserShowTickets} || 1;
 
     # if only one filter exists
     if ( scalar keys %Filters == 1 ) {
@@ -190,11 +179,11 @@ sub Run {
 
     # check if filter is valid
     if ( !$Filters{ $Self->{Filter} } ) {
-        $Self->{LayoutObject}->FatalError( Message => "Invalid Filter: $Self->{Filter}!" );
+        $LayoutObject->FatalError( Message => "Invalid Filter: $Self->{Filter}!" );
     }
 
     # search changes which match the selected filter
-    my $ChangeIDsRef = $Self->{ChangeObject}->ChangeSearch(
+    my $ChangeIDsRef = $ChangeObject->ChangeSearch(
         %{ $Filters{ $Self->{Filter} }->{Search} },
     );
     my @ChangeIDs = @{$ChangeIDsRef};
@@ -202,11 +191,15 @@ sub Run {
     my %CustomerUserServices;
     my %CountByChangeState;
 
+    # get needed objects
+    my $LinkObject    = $Kernel::OM->Get('Kernel::System::LinkObject');
+    my $ServiceObject = $Kernel::OM->Get('Kernel::System::Service');
+
     # if configured, get only changes which have workorders that are linked with a service
     if ( $Self->{Config}->{ShowOnlyChangesWithAllowedServices} ) {
 
         # get all services the customer user is allowed to use
-        %CustomerUserServices = $Self->{ServiceObject}->CustomerUserServiceMemberList(
+        %CustomerUserServices = $ServiceObject->CustomerUserServiceMemberList(
             CustomerUserLogin => $Self->{UserID},
             Result            => 'HASH',
             DefaultServices   => 1,
@@ -217,7 +210,7 @@ sub Run {
         for my $ChangeID (@ChangeIDs) {
 
             # get change data
-            my $Change = $Self->{ChangeObject}->ChangeGet(
+            my $Change = $ChangeObject->ChangeGet(
                 UserID   => $Self->{UserID},
                 ChangeID => $ChangeID,
             );
@@ -232,7 +225,7 @@ sub Run {
             for my $WorkOrderID (@WorkOrderIDs) {
 
                 # get the list of linked services
-                my %LinkKeyList = $Self->{LinkObject}->LinkKeyList(
+                my %LinkKeyList = $LinkObject->LinkKeyList(
                     Object1 => 'ITSMWorkOrder',
                     Key1    => $WorkOrderID,
                     Object2 => 'Service',
@@ -290,7 +283,7 @@ sub Run {
         else {
 
             # count the number of changes for each filter
-            $Count = $Self->{ChangeObject}->ChangeSearch(
+            $Count = $ChangeObject->ChangeSearch(
                 %{ $Filters{$FilterName}->{Search} },
                 Result => 'COUNT',
             );
@@ -330,14 +323,14 @@ sub Run {
     }
 
     # set meta-link for pagination
-    my $Link = 'SortBy=' . $Self->{LayoutObject}->Ascii2Html( Text => $SortBy )
-        . ';OrderBy=' . $Self->{LayoutObject}->Ascii2Html( Text => $OrderBy )
-        . ';Filter=' . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{Filter} )
-        . ';Subaction=' . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{Subaction} )
+    my $Link = 'SortBy=' . $LayoutObject->Ascii2Html( Text => $SortBy )
+        . ';OrderBy=' . $LayoutObject->Ascii2Html( Text => $OrderBy )
+        . ';Filter=' . $LayoutObject->Ascii2Html( Text => $Self->{Filter} )
+        . ';Subaction=' . $LayoutObject->Ascii2Html( Text => $Self->{Subaction} )
         . ';';
 
     # create pagination
-    my %PageNav = $Self->{LayoutObject}->PageNavBar(
+    my %PageNav = $LayoutObject->PageNavBar(
         Limit     => 10000,
         StartHit  => $Self->{StartHit},
         PageShown => $Self->{PageShown},
@@ -352,7 +345,7 @@ sub Run {
 
         # show header filter
         for my $Key ( sort keys %NavBarFilter ) {
-            $Self->{LayoutObject}->Block(
+            $LayoutObject->Block(
                 Name => 'FilterHeader',
                 Data => {
                     %{ $NavBarFilter{$Key} },
@@ -399,7 +392,7 @@ sub Run {
                     $SetOrderBy = 'Up';
                 }
 
-                $Self->{LayoutObject}->Block(
+                $LayoutObject->Block(
                     Name => 'Record' . $ColumnName . 'Header',
                     Data => {
                         CSS     => $CSS,
@@ -434,7 +427,7 @@ sub Run {
                 # to store data of sub-elements
                 my %SubElementData;
 
-                my $Change = $Self->{ChangeObject}->ChangeGet(
+                my $Change = $ChangeObject->ChangeGet(
                     ChangeID => $ChangeID,
                     UserID   => $Self->{UserID},
                 );
@@ -456,7 +449,7 @@ sub Run {
                     }
 
                     # get user data
-                    my %User = $Self->{UserObject}->GetUserData(
+                    my %User = $Kernel::OM->Get('Kernel::System::User')->GetUserData(
                         UserID => $Change->{ $UserType . 'ID' } || $Data{ $UserType . 'ID' },
                         Cached => 1,
                     );
@@ -481,7 +474,7 @@ sub Run {
                 for my $WorkOrderID (@WorkOrderIDs) {
 
                     # get linked objects of this workorder
-                    my $LinkListWithDataWorkOrder = $Self->{LinkObject}->LinkListWithData(
+                    my $LinkListWithDataWorkOrder = $LinkObject->LinkListWithData(
                         Object => 'ITSMWorkOrder',
                         Key    => $WorkOrderID,
                         State  => 'Valid',
@@ -556,7 +549,7 @@ sub Run {
                     }
 
                     # get service data
-                    my %ServiceData = $Self->{ServiceObject}->ServiceGet(
+                    my %ServiceData = $ServiceObject->ServiceGet(
                         ServiceID     => $ServiceID,
                         IncidentState => 1,
                         UserID        => $Self->{UserID},
@@ -579,7 +572,7 @@ sub Run {
                 $SubElementData{Services} = \@ServicesData;
 
                 # add block
-                $Self->{LayoutObject}->Block(
+                $LayoutObject->Block(
                     Name => 'Record',
                     Data => {},
                 );
@@ -587,7 +580,7 @@ sub Run {
                 if (@ShowColumns) {
                     COLUMN:
                     for my $ColumnName (@ShowColumns) {
-                        $Self->{LayoutObject}->Block(
+                        $LayoutObject->Block(
                             Name => 'Record' . $ColumnName,
                             Data => {
                                 %Data,
@@ -604,7 +597,7 @@ sub Run {
                             for my $SubElement ( @{ $SubElementData{$ColumnName} } ) {
 
                                 # show sub-elements of column
-                                $Self->{LayoutObject}->Block(
+                                $LayoutObject->Block(
                                     Name => 'Record' . $ColumnName . 'SubElement',
                                     Data => {
                                         %Param,
@@ -616,7 +609,7 @@ sub Run {
                         }
 
                         if ( !@ServicesData ) {
-                            $Self->{LayoutObject}->Block(
+                            $LayoutObject->Block(
                                 Name => 'Record' . $ColumnName . 'SubElementEmpty',
                                 Data => {},
                             );
@@ -629,19 +622,19 @@ sub Run {
 
     # otherwise show no data found message
     else {
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'NoDataFoundMsg',
             Data => {},
         );
     }
 
-    $Output .= $Self->{LayoutObject}->Output(
+    $Output .= $LayoutObject->Output(
         TemplateFile => 'CustomerITSMChangeOverview',
         Data         => \%Param,
     );
 
     # get page footer
-    $Output .= $Self->{LayoutObject}->CustomerFooter();
+    $Output .= $LayoutObject->CustomerFooter();
 
     return $Output;
 }

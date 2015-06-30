@@ -11,12 +11,9 @@ package Kernel::Modules::AgentITSMWorkOrderAdd;
 use strict;
 use warnings;
 
-use Kernel::System::ITSMChange;
-use Kernel::System::ITSMChange::ITSMWorkOrder;
-use Kernel::System::DynamicField;
-use Kernel::System::DynamicField::Backend;
-use Kernel::System::Web::UploadCache;
 use Kernel::System::VariableCheck qw(:all);
+
+our $ObjectManagerDisabled = 1;
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -25,60 +22,36 @@ sub new {
     my $Self = {%Param};
     bless( $Self, $Type );
 
-    # check needed objects
-    for my $Object (
-        qw(ParamObject DBObject LayoutObject LogObject ConfigObject UserObject GroupObject)
-        )
-    {
-        if ( !$Self->{$Object} ) {
-            $Self->{LayoutObject}->FatalError( Message => "Got no $Object!" );
-        }
-    }
-
-    # create needed objects
-    $Self->{ChangeObject}       = Kernel::System::ITSMChange->new(%Param);
-    $Self->{WorkOrderObject}    = Kernel::System::ITSMChange::ITSMWorkOrder->new(%Param);
-    $Self->{DynamicFieldObject} = Kernel::System::DynamicField->new(%Param);
-    $Self->{BackendObject}      = Kernel::System::DynamicField::Backend->new(%Param);
-    $Self->{UploadCacheObject}  = Kernel::System::Web::UploadCache->new(%Param);
-
-    # get config of frontend module (WorkorderAdd is a change action!)
-    $Self->{Config} = $Self->{ConfigObject}->Get("ITSMChange::Frontend::$Self->{Action}");
-
-    # get the dynamic fields for this screen
-    $Self->{DynamicField} = $Self->{DynamicFieldObject}->DynamicFieldListGet(
-        Valid       => 1,
-        ObjectType  => 'ITSMWorkOrder',
-        FieldFilter => $Self->{Config}->{DynamicField} || {},
-    );
-
-    # get form id
-    $Self->{FormID} = $Self->{ParamObject}->GetParam( Param => 'FormID' );
-
-    # create form id
-    if ( !$Self->{FormID} ) {
-        $Self->{FormID} = $Self->{UploadCacheObject}->FormIDCreate();
-    }
-
     return $Self;
 }
 
 sub Run {
     my ( $Self, %Param ) = @_;
 
+    # get needed objects
+    my $ParamObject  = $Kernel::OM->Get('Kernel::System::Web::Request');
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+
     # get needed ChangeID
-    my $ChangeID = $Self->{ParamObject}->GetParam( Param => 'ChangeID' );
+    my $ChangeID = $ParamObject->GetParam( Param => 'ChangeID' );
 
     # check needed stuff
     if ( !$ChangeID ) {
-        return $Self->{LayoutObject}->ErrorScreen(
+        return $LayoutObject->ErrorScreen(
             Message => 'No ChangeID is given!',
             Comment => 'Please contact the admin.',
         );
     }
 
+    # get needed objects
+    my $ChangeObject = $Kernel::OM->Get('Kernel::System::ITSMChange');
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+
+    # get config of frontend module (WorkorderAdd is a change action!)
+    $Self->{Config} = $ConfigObject->Get("ITSMChange::Frontend::$Self->{Action}");
+
     # check permissions
-    my $Access = $Self->{ChangeObject}->Permission(
+    my $Access = $ChangeObject->Permission(
         Type     => $Self->{Config}->{Permission},
         Action   => $Self->{Action},
         ChangeID => $ChangeID,
@@ -87,21 +60,21 @@ sub Run {
 
     # error screen
     if ( !$Access ) {
-        return $Self->{LayoutObject}->NoPermission(
+        return $LayoutObject->NoPermission(
             Message    => "You need $Self->{Config}->{Permission} permissions on the change!",
             WithHeader => 'yes',
         );
     }
 
     # get change data
-    my $Change = $Self->{ChangeObject}->ChangeGet(
+    my $Change = $ChangeObject->ChangeGet(
         ChangeID => $ChangeID,
         UserID   => $Self->{UserID},
     );
 
     # check error
     if ( !$Change ) {
-        return $Self->{LayoutObject}->ErrorScreen(
+        return $LayoutObject->ErrorScreen(
             Message => "Change '$ChangeID' not found in database!",
             Comment => 'Please contact the admin.',
         );
@@ -113,23 +86,33 @@ sub Run {
         qw(WorkOrderTitle Instruction WorkOrderTypeID PlannedEffort AttachmentUpload FileID)
         )
     {
-        $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
+        $GetParam{$ParamName} = $ParamObject->GetParam( Param => $ParamName );
     }
 
     # get Dynamic fields from ParamObject
     my %DynamicFieldValues;
 
+    # get the dynamic fields for this screen
+    my $DynamicField = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldListGet(
+        Valid       => 1,
+        ObjectType  => 'ITSMWorkOrder',
+        FieldFilter => $Self->{Config}->{DynamicField} || {},
+    );
+
+    # get dynamic field backend object
+    my $DynamicFieldBackendObject = $Kernel::OM->Get('Kernel::System::DynamicField::Backend');
+
     # cycle trough the activated Dynamic Fields for this screen
     DYNAMICFIELD:
-    for my $DynamicFieldConfig ( @{ $Self->{DynamicField} } ) {
+    for my $DynamicFieldConfig ( @{$DynamicField} ) {
         next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
 
         # extract the dynamic field value from the web request and add the prefix
         $DynamicFieldValues{ 'DynamicField_' . $DynamicFieldConfig->{Name} }
-            = $Self->{BackendObject}->EditFieldValueGet(
+            = $DynamicFieldBackendObject->EditFieldValueGet(
             DynamicFieldConfig => $DynamicFieldConfig,
-            ParamObject        => $Self->{ParamObject},
-            LayoutObject       => $Self->{LayoutObject},
+            ParamObject        => $ParamObject,
+            LayoutObject       => $LayoutObject,
             );
     }
 
@@ -137,18 +120,32 @@ sub Run {
     for my $TimeType (qw(PlannedStartTime PlannedEndTime)) {
         for my $TimePart (qw(Year Month Day Hour Minute)) {
             my $ParamName = $TimeType . $TimePart;
-            $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
+            $GetParam{$ParamName} = $ParamObject->GetParam( Param => $ParamName );
         }
     }
 
     # Remember the reason why saving was not attempted.
     my %ValidationError;
 
+    # get workorder object
+    my $WorkOrderObject = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder');
+
+    # get form id
+    $Self->{FormID} = $ParamObject->GetParam( Param => 'FormID' );
+
+    # get upload cache object
+    my $UploadCacheObject = $Kernel::OM->Get('Kernel::System::Web::UploadCache');
+
+    # create form id
+    if ( !$Self->{FormID} ) {
+        $Self->{FormID} = $UploadCacheObject->FormIDCreate();
+    }
+
     # add the workorder
     if ( $Self->{Subaction} eq 'Save' ) {
 
         # challenge token check for write action
-        $Self->{LayoutObject}->ChallengeTokenCheck();
+        $LayoutObject->ChallengeTokenCheck();
 
         # the title is required
         if ( !$GetParam{WorkOrderTitle} ) {
@@ -156,7 +153,7 @@ sub Run {
         }
 
         # check WorkOrderTypeID
-        my $WorkOrderType = $Self->{WorkOrderObject}->WorkOrderTypeLookup(
+        my $WorkOrderType = $WorkOrderObject->WorkOrderTypeLookup(
             UserID          => $Self->{UserID},
             WorkOrderTypeID => $GetParam{WorkOrderTypeID},
         );
@@ -165,6 +162,9 @@ sub Run {
             $ValidationError{WorkOrderTypeIDServerError} = 'ServerError';
         }
 
+        # get log object
+        my $LogObject = $Kernel::OM->Get('Kernel::System::Log');
+
         # check whether complete times are passed and build the time stamps
         my %SystemTime;
         TIMETYPE:
@@ -172,7 +172,7 @@ sub Run {
             for my $TimePart (qw(Year Month Day Hour Minute)) {
                 my $ParamName = $TimeType . $TimePart;
                 if ( !defined $GetParam{$ParamName} ) {
-                    $Self->{LogObject}->Log(
+                    $LogObject->Log(
                         Priority => 'error',
                         Message  => "Need $ParamName!",
                     );
@@ -181,7 +181,7 @@ sub Run {
             }
 
             # transform work order planned time, time stamp based on user time zone
-            %GetParam = $Self->{LayoutObject}->TransformDateSelection(
+            %GetParam = $LayoutObject->TransformDateSelection(
                 %GetParam,
                 Prefix => $TimeType,
             );
@@ -195,7 +195,7 @@ sub Run {
                 $GetParam{ $TimeType . 'Minute' };
 
             # sanity check the assembled timestamp
-            $SystemTime{$TimeType} = $Self->{TimeObject}->TimeStamp2SystemTime(
+            $SystemTime{$TimeType} = $Kernel::OM->Get('Kernel::System::Time')->TimeStamp2SystemTime(
                 String => $GetParam{$TimeType},
             );
 
@@ -230,17 +230,17 @@ sub Run {
 
         # cycle trough the activated Dynamic Fields for this screen
         DYNAMICFIELD:
-        for my $DynamicFieldConfig ( @{ $Self->{DynamicField} } ) {
+        for my $DynamicFieldConfig ( @{$DynamicField} ) {
             next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
 
-            my $ValidationResult = $Self->{BackendObject}->EditFieldValueValidate(
+            my $ValidationResult = $DynamicFieldBackendObject->EditFieldValueValidate(
                 DynamicFieldConfig => $DynamicFieldConfig,
-                ParamObject        => $Self->{ParamObject},
+                ParamObject        => $ParamObject,
                 Mandatory          => $Self->{Config}->{DynamicField}->{ $DynamicFieldConfig->{Name} } == 2,
             );
 
             if ( !IsHashRefWithData($ValidationResult) ) {
-                return $Self->{LayoutObject}->ErrorScreen(
+                return $LayoutObject->ErrorScreen(
                     Message =>
                         "Could not perform validation on field $DynamicFieldConfig->{Label}!",
                     Comment => 'Please contact the admin.',
@@ -258,7 +258,7 @@ sub Run {
         for my $Number ( 1 .. 32 ) {
 
             # check if the delete button was pressed for this attachment
-            my $Delete = $Self->{ParamObject}->GetParam( Param => "AttachmentDelete$Number" );
+            my $Delete = $ParamObject->GetParam( Param => "AttachmentDelete$Number" );
 
             # check next attachment if it was not pressed
             next ATTACHMENT if !$Delete;
@@ -267,7 +267,7 @@ sub Run {
             $ValidationError{Attachment} = 1;
 
             # remove the attachment from the upload cache
-            $Self->{UploadCacheObject}->FormIDRemoveFile(
+            $UploadCacheObject->FormIDRemoveFile(
                 FormID => $Self->{FormID},
                 FileID => $Number,
             );
@@ -280,13 +280,13 @@ sub Run {
             $ValidationError{Attachment} = 1;
 
             # get the uploaded attachment
-            my %UploadStuff = $Self->{ParamObject}->GetUploadAll(
+            my %UploadStuff = $ParamObject->GetUploadAll(
                 Param  => 'FileUpload',
                 Source => 'string',
             );
 
             # add attachment to the upload cache
-            $Self->{UploadCacheObject}->FormIDAddFile(
+            $UploadCacheObject->FormIDAddFile(
                 FormID => $Self->{FormID},
                 %UploadStuff,
             );
@@ -296,7 +296,7 @@ sub Run {
         if ( !%ValidationError ) {
 
             # create the workorder
-            my $WorkOrderID = $Self->{WorkOrderObject}->WorkOrderAdd(
+            my $WorkOrderID = $WorkOrderObject->WorkOrderAdd(
                 ChangeID         => $ChangeID,
                 WorkOrderTitle   => $GetParam{WorkOrderTitle},
                 Instruction      => $GetParam{Instruction},
@@ -312,12 +312,12 @@ sub Run {
             if ($WorkOrderID) {
 
                 # move attachments from cache to virtual fs
-                my @CachedAttachments = $Self->{UploadCacheObject}->FormIDGetAllFilesData(
+                my @CachedAttachments = $UploadCacheObject->FormIDGetAllFilesData(
                     FormID => $Self->{FormID},
                 );
 
                 for my $CachedAttachment (@CachedAttachments) {
-                    my $Success = $Self->{WorkOrderObject}->WorkOrderAttachmentAdd(
+                    my $Success = $WorkOrderObject->WorkOrderAttachmentAdd(
                         %{$CachedAttachment},
                         WorkOrderID => $WorkOrderID,
                         ChangeID    => $ChangeID,
@@ -331,7 +331,7 @@ sub Run {
                         if ( $CachedAttachment->{ContentID} ) {
 
                             # get the workorder data
-                            my $WorkOrderData = $Self->{WorkOrderObject}->WorkOrderGet(
+                            my $WorkOrderData = $WorkOrderObject->WorkOrderGet(
                                 WorkOrderID => $WorkOrderID,
                                 UserID      => $Self->{UserID},
                             );
@@ -348,7 +348,7 @@ sub Run {
                             $WorkOrderData->{Instruction} =~ s{$Search}{$Replace}xms;
 
                             # update workorder
-                            my $Success = $Self->{WorkOrderObject}->WorkOrderUpdate(
+                            my $Success = $WorkOrderObject->WorkOrderUpdate(
                                 WorkOrderID => $WorkOrderID,
                                 Instruction => $WorkOrderData->{Instruction},
                                 UserID      => $Self->{UserID},
@@ -356,7 +356,7 @@ sub Run {
 
                             # check error
                             if ( !$Success ) {
-                                $Self->{LogObject}->Log(
+                                $LogObject->Log(
                                     Priority => 'error',
                                     Message  => "Could not update the inline image URLs "
                                         . "for WorkOrderID '$WorkOrderID'!",
@@ -364,13 +364,13 @@ sub Run {
                             }
                         }
 
-                        $Self->{UploadCacheObject}->FormIDRemoveFile(
+                        $UploadCacheObject->FormIDRemoveFile(
                             FormID => $Self->{FormID},
                             FileID => $CachedAttachment->{FileID},
                         );
                     }
                     else {
-                        $Self->{LogObject}->Log(
+                        $LogObject->Log(
                             Priority => 'error',
                             Message  => 'Cannot move File from Cache to VirtualFS'
                                 . "(${$CachedAttachment}{Filename})",
@@ -390,14 +390,14 @@ sub Run {
                 }
 
                 # load new URL in parent window and close popup
-                return $Self->{LayoutObject}->PopupClose(
+                return $LayoutObject->PopupClose(
                     URL => "Action=$NextScreen",
                 );
             }
             else {
 
                 # show error message, when adding failed
-                return $Self->{LayoutObject}->ErrorScreen(
+                return $LayoutObject->ErrorScreen(
                     Message => 'Was not able to add workorder!',
                     Comment => 'Please contact the admin.',
                 );
@@ -412,12 +412,12 @@ sub Run {
     }
 
     # get all attachments meta data
-    my @Attachments = $Self->{UploadCacheObject}->FormIDGetAllFilesMeta(
+    my @Attachments = $UploadCacheObject->FormIDGetAllFilesMeta(
         FormID => $Self->{FormID},
     );
 
     # output header
-    my $Output = $Self->{LayoutObject}->Header(
+    my $Output = $LayoutObject->Header(
         Title => 'Add',
         Type  => 'Small',
     );
@@ -432,20 +432,20 @@ sub Run {
     }
 
     # get WorkOrderType list
-    my $WorkOrderTypeList = $Self->{WorkOrderObject}->WorkOrderTypeList(
+    my $WorkOrderTypeList = $WorkOrderObject->WorkOrderTypeList(
         UserID => $Self->{UserID},
         %SelectedInfo,
     ) || [];
 
     # build the WorkOrderType dropdown
-    $GetParam{WorkOrderTypeStrg} = $Self->{LayoutObject}->BuildSelection(
+    $GetParam{WorkOrderTypeStrg} = $LayoutObject->BuildSelection(
         Name => 'WorkOrderTypeID',
         Data => $WorkOrderTypeList,
     );
 
     # cycle trough the activated Dynamic Fields for this screen
     DYNAMICFIELD:
-    for my $DynamicFieldConfig ( @{ $Self->{DynamicField} } ) {
+    for my $DynamicFieldConfig ( @{$DynamicField} ) {
 
         next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
 
@@ -460,20 +460,20 @@ sub Run {
         }
 
         # get field html
-        my $DynamicFieldHTML = $Self->{BackendObject}->EditFieldRender(
+        my $DynamicFieldHTML = $DynamicFieldBackendObject->EditFieldRender(
             DynamicFieldConfig => $DynamicFieldConfig,
             Value              => $DynamicFieldValues{ 'DynamicField_' . $DynamicFieldConfig->{Name} },
             ServerError        => $ValidationError{ $DynamicFieldConfig->{Name} } || '',
             Mandatory          => $Self->{Config}->{DynamicField}->{ $DynamicFieldConfig->{Name} } == 2,
-            LayoutObject       => $Self->{LayoutObject},
-            ParamObject        => $Self->{ParamObject},
+            LayoutObject       => $LayoutObject,
+            ParamObject        => $ParamObject,
             AJAXUpdate         => 0,
         );
 
         # skip fields that HTML could not be retrieved
         next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldHTML);
 
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'DynamicField',
             Data => {
                 Name  => $DynamicFieldConfig->{Name},
@@ -483,7 +483,7 @@ sub Run {
         );
 
         # example of dynamic fields order customization
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'DynamicField_' . $DynamicFieldConfig->{Name},
             Data => {
                 Name  => $DynamicFieldConfig->{Name},
@@ -494,7 +494,7 @@ sub Run {
     }
 
     # time period that can be selected from the GUI
-    my %TimePeriod = %{ $Self->{ConfigObject}->Get('ITSMWorkOrder::TimePeriod') };
+    my %TimePeriod = %{ $ConfigObject->Get('ITSMWorkOrder::TimePeriod') };
 
     # set the time selections
     for my $TimeType (qw(PlannedStartTime PlannedEndTime)) {
@@ -505,7 +505,7 @@ sub Run {
         my $DiffTime = $TimeType eq 'PlannedStartTime' ? 0 : 60 * 60;
 
         # add selection for the time
-        $GetParam{ $TimeType . 'SelectionString' } = $Self->{LayoutObject}->BuildDateSelection(
+        $GetParam{ $TimeType . 'SelectionString' } = $LayoutObject->BuildDateSelection(
             %GetParam,
             Format              => 'DateInputFormatLong',
             Prefix              => $TimeType,
@@ -517,7 +517,7 @@ sub Run {
         );
 
         # add server error messages for the planned times
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => $TimeType
                 . ( $ValidationError{ $TimeType . 'ErrorType' } || 'GenericServerError' )
         );
@@ -525,7 +525,7 @@ sub Run {
 
     # show planned effort if it is configured
     if ( $Self->{Config}->{PlannedEffort} ) {
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'ShowPlannedEffort',
             Data => {
                 PlannedEffort => $GetParam{PlannedEffort},
@@ -535,7 +535,7 @@ sub Run {
     }
 
     # show the attachment upload button
-    $Self->{LayoutObject}->Block(
+    $LayoutObject->Block(
         Name => 'AttachmentUpload',
         Data => {%Param},
     );
@@ -546,11 +546,11 @@ sub Run {
 
         # do not show inline images as attachments
         # (they have a content id)
-        if ( $Attachment->{ContentID} && $Self->{LayoutObject}->{BrowserRichText} ) {
+        if ( $Attachment->{ContentID} && $LayoutObject->{BrowserRichText} ) {
             next ATTACHMENT;
         }
 
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'Attachment',
             Data => $Attachment,
         );
@@ -559,15 +559,15 @@ sub Run {
     # add rich text editor javascript
     # only if activated and the browser can handle it
     # otherwise just a textarea is shown
-    if ( $Self->{LayoutObject}->{BrowserRichText} ) {
-        $Self->{LayoutObject}->Block(
+    if ( $LayoutObject->{BrowserRichText} ) {
+        $LayoutObject->Block(
             Name => 'RichText',
             Data => {%Param},
         );
     }
 
     # start template output
-    $Output .= $Self->{LayoutObject}->Output(
+    $Output .= $LayoutObject->Output(
         TemplateFile => 'AgentITSMWorkOrderAdd',
         Data         => {
             %Param,
@@ -579,7 +579,7 @@ sub Run {
     );
 
     # add footer
-    $Output .= $Self->{LayoutObject}->Footer( Type => 'Small' );
+    $Output .= $LayoutObject->Footer( Type => 'Small' );
 
     return $Output;
 }

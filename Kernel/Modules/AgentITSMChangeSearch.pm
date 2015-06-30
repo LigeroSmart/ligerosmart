@@ -11,16 +11,9 @@ package Kernel::Modules::AgentITSMChangeSearch;
 use strict;
 use warnings;
 
-use Kernel::System::CustomerUser;
-use Kernel::System::DynamicField;
-use Kernel::System::DynamicField::Backend;
-use Kernel::System::SearchProfile;
-use Kernel::System::ITSMChange;
-use Kernel::System::ITSMChange::ITSMWorkOrder;
-use Kernel::System::CSV;
-use Kernel::System::LinkObject;
-use Kernel::System::Service;
 use Kernel::System::VariableCheck qw(:all);
+
+our $ObjectManagerDisabled = 1;
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -29,73 +22,68 @@ sub new {
     my $Self = {%Param};
     bless( $Self, $Type );
 
-    # check needed objects
-    for my $Object (
-        qw(ParamObject DBObject LayoutObject LogObject UserObject GroupObject ConfigObject MainObject EncodeObject)
-        )
-    {
-        if ( !$Self->{$Object} ) {
-            $Self->{LayoutObject}->FatalError( Message => "Got no $Object!" );
-        }
-    }
-
-    # create needed objects
-    $Self->{CustomerUserObject}  = Kernel::System::CustomerUser->new(%Param);
-    $Self->{DynamicFieldObject}  = Kernel::System::DynamicField->new(%Param);
-    $Self->{BackendObject}       = Kernel::System::DynamicField::Backend->new(%Param);
-    $Self->{SearchProfileObject} = Kernel::System::SearchProfile->new(%Param);
-    $Self->{ChangeObject}        = Kernel::System::ITSMChange->new(%Param);
-    $Self->{WorkOrderObject}     = Kernel::System::ITSMChange::ITSMWorkOrder->new(%Param);
-    $Self->{CSVObject}           = Kernel::System::CSV->new(%Param);
-    $Self->{LinkObject}          = Kernel::System::LinkObject->new(%Param);
-    $Self->{ServiceObject}       = Kernel::System::Service->new(%Param);
-
-    # get config for frontend
-    $Self->{Config} = $Self->{ConfigObject}->Get("ITSMChange::Frontend::$Self->{Action}");
-
-    # get the dynamic fields for this screen (change dynamic fields)
-    $Self->{DynamicFieldChange} = $Self->{DynamicFieldObject}->DynamicFieldListGet(
-        Valid       => 1,
-        ObjectType  => 'ITSMChange',
-        FieldFilter => $Self->{Config}->{DynamicField} || {},
-    );
-
-    # get the dynamic fields for this screen (workorder dynamic fields)
-    $Self->{DynamicFieldWorkOrder} = $Self->{DynamicFieldObject}->DynamicFieldListGet(
-        Valid       => 1,
-        ObjectType  => 'ITSMWorkOrder',
-        FieldFilter => $Self->{Config}->{DynamicField} || {},
-    );
-
     return $Self;
 }
 
 sub Run {
     my ( $Self, %Param ) = @_;
 
+    # get config object
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+
+    # get config for frontend
+    $Self->{Config} = $ConfigObject->Get("ITSMChange::Frontend::$Self->{Action}");
+
+    # get param object
+    my $ParamObject = $Kernel::OM->Get('Kernel::System::Web::Request');
+
     # get confid data
-    $Self->{StartHit} = int( $Self->{ParamObject}->GetParam( Param => 'StartHit' ) || 1 );
+    $Self->{StartHit} = int( $ParamObject->GetParam( Param => 'StartHit' ) || 1 );
     $Self->{SearchLimit} = $Self->{Config}->{SearchLimit} || 500;
-    $Self->{SortBy} = $Self->{ParamObject}->GetParam( Param => 'SortBy' )
+    $Self->{SortBy} = $ParamObject->GetParam( Param => 'SortBy' )
         || $Self->{Config}->{'SortBy::Default'}
         || 'ChangeID';
-    $Self->{OrderBy} = $Self->{ParamObject}->GetParam( Param => 'OrderBy' )
+    $Self->{OrderBy} = $ParamObject->GetParam( Param => 'OrderBy' )
         || $Self->{Config}->{'Order::Default'}
         || 'Down';
-    $Self->{Profile}        = $Self->{ParamObject}->GetParam( Param => 'Profile' )        || '';
-    $Self->{SaveProfile}    = $Self->{ParamObject}->GetParam( Param => 'SaveProfile' )    || '';
-    $Self->{TakeLastSearch} = $Self->{ParamObject}->GetParam( Param => 'TakeLastSearch' ) || '';
-    $Self->{SelectTemplate} = $Self->{ParamObject}->GetParam( Param => 'SelectTemplate' ) || '';
-    $Self->{EraseTemplate}  = $Self->{ParamObject}->GetParam( Param => 'EraseTemplate' )  || '';
+    $Self->{Profile}        = $ParamObject->GetParam( Param => 'Profile' )        || '';
+    $Self->{SaveProfile}    = $ParamObject->GetParam( Param => 'SaveProfile' )    || '';
+    $Self->{TakeLastSearch} = $ParamObject->GetParam( Param => 'TakeLastSearch' ) || '';
+    $Self->{SelectTemplate} = $ParamObject->GetParam( Param => 'SelectTemplate' ) || '';
+    $Self->{EraseTemplate}  = $ParamObject->GetParam( Param => 'EraseTemplate' )  || '';
+
+    # get layout object
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
     # check request
-    if ( $Self->{ParamObject}->GetParam( Param => 'SearchTemplate' ) && $Self->{Profile} ) {
+    if ( $ParamObject->GetParam( Param => 'SearchTemplate' ) && $Self->{Profile} ) {
 
-        return $Self->{LayoutObject}->Redirect(
+        return $LayoutObject->Redirect(
             OP =>
                 "Action=AgentITSMChangeSearch;Subaction=Search;TakeLastSearch=1;SaveProfile=1;Profile=$Self->{Profile}"
         );
     }
+
+    # get dynamic field object
+    my $DynamicFieldObject = $Kernel::OM->Get('Kernel::System::DynamicField');
+
+    # get the dynamic fields for this screen (change dynamic fields)
+    $Self->{DynamicFieldChange} = $DynamicFieldObject->DynamicFieldListGet(
+        Valid       => 1,
+        ObjectType  => 'ITSMChange',
+        FieldFilter => $Self->{Config}->{DynamicField} || {},
+    );
+
+    # get the dynamic fields for this screen (workorder dynamic fields)
+    $Self->{DynamicFieldWorkOrder} = $DynamicFieldObject->DynamicFieldListGet(
+        Valid       => 1,
+        ObjectType  => 'ITSMWorkOrder',
+        FieldFilter => $Self->{Config}->{DynamicField} || {},
+    );
+
+    # get needed objects
+    my $DynamicFieldBackendObject = $Kernel::OM->Get('Kernel::System::DynamicField::Backend');
+    my $SearchProfileObject       = $Kernel::OM->Get('Kernel::System::SearchProfile');
 
     # get single params
     my %GetParam;
@@ -103,7 +91,7 @@ sub Run {
     # load parameters from search profile,
     # this happens when the next result page should be shown, or when the results are reordered
     if ( ( $Self->{Subaction} eq 'LoadProfile' && $Self->{Profile} ) || $Self->{TakeLastSearch} ) {
-        %GetParam = $Self->{SearchProfileObject}->SearchProfileGet(
+        %GetParam = $SearchProfileObject->SearchProfileGet(
             Base      => 'ITSMChangeSearch',
             Name      => $Self->{Profile},
             UserLogin => $Self->{UserLogin},
@@ -124,7 +112,7 @@ sub Run {
             )
             )
         {
-            $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
+            $GetParam{$ParamName} = $ParamObject->GetParam( Param => $ParamName );
 
             # remove whitespace on the start and end
             if ( $GetParam{$ParamName} ) {
@@ -143,7 +131,7 @@ sub Run {
             )
             )
         {
-            my @Array = $Self->{ParamObject}->GetArray( Param => $SearchParam );
+            my @Array = $ParamObject->GetArray( Param => $SearchParam );
             if (@Array) {
                 $GetParam{$SearchParam} = \@Array;
             }
@@ -156,7 +144,7 @@ sub Run {
         {
 
             # get time params fields
-            my @Array = $Self->{ParamObject}->GetArray( Param => $TimeType . 'TimeSearchType' );
+            my @Array = $ParamObject->GetArray( Param => $TimeType . 'TimeSearchType' );
             if (@Array) {
                 for my $Item (@Array) {
                     $GetParam{ $TimeType . $Item . 'Field' } = 1;
@@ -173,7 +161,7 @@ sub Run {
                 )
             {
                 my $ParamKey = "${TimeType}Time${Part}";
-                my $ParamVal = $Self->{ParamObject}->GetParam( Param => $ParamKey );
+                my $ParamVal = $ParamObject->GetParam( Param => $ParamKey );
 
                 # remove white space on the start and end
                 if ($ParamVal) {
@@ -197,7 +185,7 @@ sub Run {
             next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
 
             # get search field preferences
-            my $SearchFieldPreferences = $Self->{BackendObject}->SearchFieldPreferences(
+            my $SearchFieldPreferences = $DynamicFieldBackendObject->SearchFieldPreferences(
                 DynamicFieldConfig => $DynamicFieldConfig,
             );
 
@@ -207,11 +195,11 @@ sub Run {
             for my $Preference ( @{$SearchFieldPreferences} ) {
 
                 # extract the dynamic field value from the web request
-                my $DynamicFieldValue = $Self->{BackendObject}->SearchFieldValueGet(
+                my $DynamicFieldValue = $DynamicFieldBackendObject->SearchFieldValueGet(
                     DynamicFieldConfig     => $DynamicFieldConfig,
-                    ParamObject            => $Self->{ParamObject},
+                    ParamObject            => $ParamObject,
                     ReturnProfileStructure => 1,
-                    LayoutObject           => $Self->{LayoutObject},
+                    LayoutObject           => $LayoutObject,
                     Type                   => $Preference->{Type},
                 );
 
@@ -243,7 +231,7 @@ sub Run {
         if ( $Self->{SaveProfile} && $Self->{Profile} ) {
 
             # remove old profile stuff
-            $Self->{SearchProfileObject}->SearchProfileDelete(
+            $SearchProfileObject->SearchProfileDelete(
                 Base      => 'ITSMChangeSearch',
                 Name      => $Self->{Profile},
                 UserLogin => $Self->{UserLogin},
@@ -252,7 +240,7 @@ sub Run {
             # insert new profile params
             for my $Key ( sort keys %GetParam ) {
                 if ( $GetParam{$Key} ) {
-                    $Self->{SearchProfileObject}->SearchProfileAdd(
+                    $SearchProfileObject->SearchProfileAdd(
                         Base      => 'ITSMChangeSearch',
                         Name      => $Self->{Profile},
                         Key       => $Key,
@@ -271,19 +259,25 @@ sub Run {
             $GetParam{CABCustomers} = [ $GetParam{CABCustomer} ];
         }
 
+        # get session object
+        my $SessionObject = $Kernel::OM->Get('Kernel::System::AuthSession');
+
         # store last queue screen
         my $URL = "Action=AgentITSMChangeSearch;Subaction=Search;Profile=$Self->{Profile};SortBy=$Self->{SortBy}"
             . ";OrderBy=$Self->{OrderBy};TakeLastSearch=1;StartHit=$Self->{StartHit}";
-        $Self->{SessionObject}->UpdateSessionID(
+        $SessionObject->UpdateSessionID(
             SessionID => $Self->{SessionID},
             Key       => 'LastScreenChanges',
             Value     => $URL,
         );
-        $Self->{SessionObject}->UpdateSessionID(
+        $SessionObject->UpdateSessionID(
             SessionID => $Self->{SessionID},
             Key       => 'LastChangeView',
             Value     => $URL,
         );
+
+        # get time object
+        my $TimeObject = $Kernel::OM->Get('Kernel::System::Time');
 
         # get and check the time search parameters
         TIMETYPE:
@@ -374,21 +368,21 @@ sub Run {
                         $DiffSeconds = $TimeSelectionParam{Point} * 60 * 60 * 24 * 365;
                     }
 
-                    my $CurrentSystemTime = $Self->{TimeObject}->SystemTime();
-                    my $CurrentTimeStamp  = $Self->{TimeObject}->SystemTime2TimeStamp(
+                    my $CurrentSystemTime = $TimeObject->SystemTime();
+                    my $CurrentTimeStamp  = $TimeObject->SystemTime2TimeStamp(
                         SystemTime => $CurrentSystemTime
                     );
                     if ( $TimeSelectionParam{PointStart} eq 'Before' ) {
 
                         # search in the future
-                        my $SearchTimeStamp = $Self->{TimeObject}->SystemTime2TimeStamp(
+                        my $SearchTimeStamp = $TimeObject->SystemTime2TimeStamp(
                             SystemTime => $CurrentSystemTime + $DiffSeconds,
                         );
                         $GetParam{ $TimeType . 'TimeNewerDate' } = $CurrentTimeStamp;
                         $GetParam{ $TimeType . 'TimeOlderDate' } = $SearchTimeStamp;
                     }
                     else {
-                        my $SearchTimeStamp = $Self->{TimeObject}->SystemTime2TimeStamp(
+                        my $SearchTimeStamp = $TimeObject->SystemTime2TimeStamp(
                             SystemTime => $CurrentSystemTime - $DiffSeconds,
                         );
                         $GetParam{ $TimeType . 'TimeNewerDate' } = $SearchTimeStamp;
@@ -427,7 +421,7 @@ sub Run {
             next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
 
             # get search field preferences
-            my $SearchFieldPreferences = $Self->{BackendObject}->SearchFieldPreferences(
+            my $SearchFieldPreferences = $DynamicFieldBackendObject->SearchFieldPreferences(
                 DynamicFieldConfig => $DynamicFieldConfig,
             );
 
@@ -437,10 +431,10 @@ sub Run {
             for my $Preference ( @{$SearchFieldPreferences} ) {
 
                 # extract the dynamic field value from the profile
-                my $SearchParameter = $Self->{BackendObject}->SearchFieldParameterBuild(
+                my $SearchParameter = $DynamicFieldBackendObject->SearchFieldParameterBuild(
                     DynamicFieldConfig => $DynamicFieldConfig,
                     Profile            => \%GetParam,
-                    LayoutObject       => $Self->{LayoutObject},
+                    LayoutObject       => $LayoutObject,
                     Type               => $Preference->{Type},
                 );
 
@@ -452,8 +446,11 @@ sub Run {
             }
         }
 
+        # get change object
+        my $ChangeObject = $Kernel::OM->Get('Kernel::System::ITSMChange');
+
         # perform change search
-        my $ViewableChangeIDs = $Self->{ChangeObject}->ChangeSearch(
+        my $ViewableChangeIDs = $ChangeObject->ChangeSearch(
             Result           => 'ARRAY',
             OrderBy          => [ $Self->{SortBy} ],
             OrderByDirection => [ $Self->{OrderBy} ],
@@ -463,6 +460,9 @@ sub Run {
             %GetParam,
             %DynamicFieldSearchParameters,
         );
+
+        # get user object
+        my $UserObject = $Kernel::OM->Get('Kernel::System::User');
 
         # CSV output
         if ( $GetParam{ResultForm} eq 'CSV' ) {
@@ -479,7 +479,7 @@ sub Run {
                 my %SubElementData;
 
                 # get change data
-                my $Change = $Self->{ChangeObject}->ChangeGet(
+                my $Change = $ChangeObject->ChangeGet(
                     UserID   => $Self->{UserID},
                     ChangeID => $ChangeID,
                 );
@@ -501,7 +501,7 @@ sub Run {
                     }
 
                     # get user data
-                    my %User = $Self->{UserObject}->GetUserData(
+                    my %User = $UserObject->GetUserData(
                         UserID =>
                             $Change->{ $UserType . 'ID' } || $Info{ $UserType . 'ID' },
                         Cached => 1,
@@ -531,7 +531,7 @@ sub Run {
                 for my $WorkOrderID (@WorkOrderIDs) {
 
                     # get linked objects of this workorder
-                    my $LinkListWithDataWorkOrder = $Self->{LinkObject}->LinkListWithData(
+                    my $LinkListWithDataWorkOrder = $Kernel::OM->Get('Kernel::System::LinkObject')->LinkListWithData(
                         Object => 'ITSMWorkOrder',
                         Key    => $WorkOrderID,
                         State  => 'Valid',
@@ -598,7 +598,7 @@ sub Run {
                 for my $ServiceID ( sort keys %UniqueServiceIDs ) {
 
                     # get service data
-                    my %ServiceData = $Self->{ServiceObject}->ServiceGet(
+                    my %ServiceData = $Kernel::OM->Get('Kernel::System::service')->ServiceGet(
                         ServiceID => $ServiceID,
                         UserID    => $Self->{UserID},
                     );
@@ -646,15 +646,15 @@ sub Run {
 
                 # replace ChangeNumber header with the current ChangeHook from config
                 if ( $Header eq 'ChangeNumber' ) {
-                    $Header = $Self->{ConfigObject}->Get('ITSMChange::Hook');
+                    $Header = $ConfigObject->Get('ITSMChange::Hook');
                 }
                 else {
-                    $Header = $Self->{LayoutObject}->{LanguageObject}->Translate($Header);
+                    $Header = $LayoutObject->{LanguageObject}->Translate($Header);
                 }
             }
 
             # assable CSV data
-            my $CSV = $Self->{CSVObject}->Array2CSV(
+            my $CSV = $Kernel::OM->Get('Kernel::System::CSV')->Array2CSV(
                 Head      => \@CSVHead,
                 Data      => \@CSVData,
                 Separator => $Self->{UserCSVSeparator},
@@ -662,16 +662,16 @@ sub Run {
 
             # return csv to download
             my $CSVFile = 'change_search';
-            my ( $s, $m, $h, $D, $M, $Y ) = $Self->{TimeObject}->SystemTime2Date(
-                SystemTime => $Self->{TimeObject}->SystemTime(),
+            my ( $s, $m, $h, $D, $M, $Y ) = $TimeObject->SystemTime2Date(
+                SystemTime => $TimeObject->SystemTime(),
             );
             $M = sprintf( "%02d", $M );
             $D = sprintf( "%02d", $D );
             $h = sprintf( "%02d", $h );
             $m = sprintf( "%02d", $m );
-            return $Self->{LayoutObject}->Attachment(
+            return $LayoutObject->Attachment(
                 Filename    => $CSVFile . "_" . "$Y-$M-$D" . "_" . "$h-$m.csv",
-                ContentType => "text/csv; charset=" . $Self->{LayoutObject}->{UserCharset},
+                ContentType => "text/csv; charset=" . $LayoutObject->{UserCharset},
                 Content     => $CSV,
             );
 
@@ -681,13 +681,17 @@ sub Run {
             # to store all data
             my %Info;
 
+            # when there is no PDF-Support, $PDFObject will be undefined
+            my $PDFObject
+                = ( $Kernel::OM->Get('Kernel::Config')->Get('PDF') ) ? $Kernel::OM->Get('Kernel::System::PDF') : undef;
+
             # to send data to the PDF output
             my @PDFData;
             ID:
             for my $ChangeID ( @{$ViewableChangeIDs} ) {
 
                 # get change data
-                my $Change = $Self->{ChangeObject}->ChangeGet(
+                my $Change = $ChangeObject->ChangeGet(
                     UserID   => $Self->{UserID},
                     ChangeID => $ChangeID,
                 );
@@ -707,7 +711,7 @@ sub Run {
                     }
 
                     # get user data
-                    my %User = $Self->{UserObject}->GetUserData(
+                    my %User = $UserObject->GetUserData(
                         UserID =>
                             $Change->{ $UserType . 'ID' } || $Info{ $UserType . 'ID' },
                         Cached => 1,
@@ -718,21 +722,19 @@ sub Run {
                         . $User{UserLastname} . ')';
                 }
 
-                use Kernel::System::PDF;
-                $Self->{PDFObject} = Kernel::System::PDF->new( %{$Self} );
-                if ( $Self->{PDFObject} ) {
+                if ($PDFObject) {
 
-                    my $ChangeTitle = $Self->{LayoutObject}->Output(
+                    my $ChangeTitle = $LayoutObject->Output(
                         Template => '[% Data.ChangeTitle | truncate(30) | html %]',
                         Data     => \%Info,
                     );
 
-                    my $PlannedStart = $Self->{LayoutObject}->Output(
+                    my $PlannedStart = $LayoutObject->Output(
                         Template => '[% Data.PlannedStartTime | Localize("TimeLong") %]',
                         Data     => \%Info,
                     );
 
-                    my $PlannedEnd = $Self->{LayoutObject}->Output(
+                    my $PlannedEnd = $LayoutObject->Output(
                         Template => '[% Data.PlannedEndTime | Localize("TimeLong") %]',
                         Data     => \%Info,
                     );
@@ -751,7 +753,7 @@ sub Run {
                 else {
 
                     # add table block
-                    $Self->{LayoutObject}->Block(
+                    $LayoutObject->Block(
                         Name => 'Record',
                         Data => {
                             %Info,
@@ -761,36 +763,36 @@ sub Run {
             }
 
             # PDF Output
-            if ( $Self->{PDFObject} ) {
-                my $Title = $Self->{LayoutObject}->{LanguageObject}->Translate('Change') . ' '
-                    . $Self->{LayoutObject}->{LanguageObject}->Translate('Search');
-                my $PrintedBy = $Self->{LayoutObject}->{LanguageObject}->Translate('printed by');
-                my $Page      = $Self->{LayoutObject}->{LanguageObject}->Translate('Page');
-                my $Time      = $Self->{LayoutObject}->Output( Template => '$Env{"Time"}' );
+            if ($PDFObject) {
+                my $Title = $LayoutObject->{LanguageObject}->Translate('Change') . ' '
+                    . $LayoutObject->{LanguageObject}->Translate('Search');
+                my $PrintedBy = $LayoutObject->{LanguageObject}->Translate('printed by');
+                my $Page      = $LayoutObject->{LanguageObject}->Translate('Page');
+                my $Time      = $LayoutObject->{Time};
 
                 # get maximum number of pages
-                my $MaxPages = $Self->{ConfigObject}->Get('PDF::MaxPages');
+                my $MaxPages = $ConfigObject->Get('PDF::MaxPages');
                 if ( !$MaxPages || $MaxPages < 1 || $MaxPages > 1000 ) {
                     $MaxPages = 100;
                 }
 
                 # create the header
                 my $CellData;
-                $CellData->[0]->[0]->{Content} = $Self->{ConfigObject}->Get('ITSMChange::Hook');
+                $CellData->[0]->[0]->{Content} = $ConfigObject->Get('ITSMChange::Hook');
                 $CellData->[0]->[0]->{Font}    = 'ProportionalBold';
-                $CellData->[0]->[1]->{Content} = $Self->{LayoutObject}->{LanguageObject}->Translate('ChangeTitle');
+                $CellData->[0]->[1]->{Content} = $LayoutObject->{LanguageObject}->Translate('ChangeTitle');
                 $CellData->[0]->[1]->{Font}    = 'ProportionalBold';
-                $CellData->[0]->[2]->{Content} = $Self->{LayoutObject}->{LanguageObject}->Translate('ChangeBuilder');
+                $CellData->[0]->[2]->{Content} = $LayoutObject->{LanguageObject}->Translate('ChangeBuilder');
                 $CellData->[0]->[2]->{Font}    = 'ProportionalBold';
-                $CellData->[0]->[3]->{Content} = $Self->{LayoutObject}->{LanguageObject}->Translate('WorkOrders');
+                $CellData->[0]->[3]->{Content} = $LayoutObject->{LanguageObject}->Translate('WorkOrders');
                 $CellData->[0]->[3]->{Font}    = 'ProportionalBold';
-                $CellData->[0]->[4]->{Content} = $Self->{LayoutObject}->{LanguageObject}->Translate('ChangeState');
+                $CellData->[0]->[4]->{Content} = $LayoutObject->{LanguageObject}->Translate('ChangeState');
                 $CellData->[0]->[4]->{Font}    = 'ProportionalBold';
-                $CellData->[0]->[5]->{Content} = $Self->{LayoutObject}->{LanguageObject}->Translate('Priority');
+                $CellData->[0]->[5]->{Content} = $LayoutObject->{LanguageObject}->Translate('Priority');
                 $CellData->[0]->[5]->{Font}    = 'ProportionalBold';
-                $CellData->[0]->[6]->{Content} = $Self->{LayoutObject}->{LanguageObject}->Translate('PlannedStartTime');
+                $CellData->[0]->[6]->{Content} = $LayoutObject->{LanguageObject}->Translate('PlannedStartTime');
                 $CellData->[0]->[6]->{Font}    = 'ProportionalBold';
-                $CellData->[0]->[7]->{Content} = $Self->{LayoutObject}->{LanguageObject}->Translate('PlannedEndTime');
+                $CellData->[0]->[7]->{Content} = $LayoutObject->{LanguageObject}->Translate('PlannedEndTime');
                 $CellData->[0]->[7]->{Font}    = 'ProportionalBold';
 
                 # create the content array
@@ -807,7 +809,7 @@ sub Run {
                 # output 'No ticket data found', if no content was given
                 if ( !$CellData->[0]->[0] ) {
                     $CellData->[0]->[0]->{Content}
-                        = $Self->{LayoutObject}->{LanguageObject}->Translate('No ticket data found.');
+                        = $LayoutObject->{LanguageObject}->Translate('No ticket data found.');
                 }
 
                 # page params
@@ -839,13 +841,13 @@ sub Run {
                 $TableParam{PaddingBottom}       = 3;
 
                 # create new pdf document
-                $Self->{PDFObject}->DocumentNew(
-                    Title  => $Self->{ConfigObject}->Get('Product') . ': ' . $Title,
-                    Encode => $Self->{LayoutObject}->{UserCharset},
+                $PDFObject->DocumentNew(
+                    Title  => $ConfigObject->Get('Product') . ': ' . $Title,
+                    Encode => $LayoutObject->{UserCharset},
                 );
 
                 # start table output
-                $Self->{PDFObject}->PageNew(
+                $PDFObject->PageNew(
                     %PageParam,
                     FooterRight => $Page . ' 1',
                 );
@@ -853,14 +855,14 @@ sub Run {
                 for ( 2 .. $MaxPages ) {
 
                     # output table (or a fragment of it)
-                    %TableParam = $Self->{PDFObject}->Table( %TableParam, );
+                    %TableParam = $PDFObject->Table( %TableParam, );
 
                     # stop output or another page
                     if ( $TableParam{State} ) {
                         last PAGE;
                     }
                     else {
-                        $Self->{PDFObject}->PageNew(
+                        $PDFObject->PageNew(
                             %PageParam, FooterRight => $Page
                                 . ' '
                                 . $_,
@@ -870,15 +872,15 @@ sub Run {
 
                 # return the pdf document
                 my $Filename = 'change_search';
-                my ( $s, $m, $h, $D, $M, $Y ) = $Self->{TimeObject}->SystemTime2Date(
-                    SystemTime => $Self->{TimeObject}->SystemTime(),
+                my ( $s, $m, $h, $D, $M, $Y ) = $TimeObject->SystemTime2Date(
+                    SystemTime => $TimeObject->SystemTime(),
                 );
                 $M = sprintf( "%02d", $M );
                 $D = sprintf( "%02d", $D );
                 $h = sprintf( "%02d", $h );
                 $m = sprintf( "%02d", $m );
-                my $PDFString = $Self->{PDFObject}->DocumentOutput();
-                return $Self->{LayoutObject}->Attachment(
+                my $PDFString = $PDFObject->DocumentOutput();
+                return $LayoutObject->Attachment(
                     Filename    => $Filename . "_" . "$Y-$M-$D" . "_" . "$h-$m.pdf",
                     ContentType => "application/pdf",
                     Content     => $PDFString,
@@ -886,18 +888,18 @@ sub Run {
                 );
             }
             else {
-                my $Output = $Self->{LayoutObject}->PrintHeader( Width => 800 );
+                my $Output = $LayoutObject->PrintHeader( Width => 800 );
                 if ( @{$ViewableChangeIDs} == $Self->{SearchLimit} ) {
                     $Param{Warning} = '$Text{"Reached max. count of %s search hits!", "'
                         . $Self->{SearchLimit} . '"}';
                 }
-                $Output .= $Self->{LayoutObject}->Output(
+                $Output .= $LayoutObject->Output(
                     TemplateFile => 'AgentITSMChangeSearchResultPrint',
                     Data         => \%Param,
                 );
 
                 # add footer
-                $Output .= $Self->{LayoutObject}->PrintFooter();
+                $Output .= $LayoutObject->PrintFooter();
 
                 # return output
                 return $Output;
@@ -907,33 +909,33 @@ sub Run {
         else {
 
             # start html page
-            my $Output = $Self->{LayoutObject}->Header();
-            $Output .= $Self->{LayoutObject}->NavigationBar();
-            $Self->{LayoutObject}->Print( Output => \$Output );
+            my $Output = $LayoutObject->Header();
+            $Output .= $LayoutObject->NavigationBar();
+            $LayoutObject->Print( Output => \$Output );
             $Output = '';
 
-            $Self->{Filter} = $Self->{ParamObject}->GetParam( Param => 'Filter' ) || '';
-            $Self->{View}   = $Self->{ParamObject}->GetParam( Param => 'View' )   || '';
+            $Self->{Filter} = $ParamObject->GetParam( Param => 'Filter' ) || '';
+            $Self->{View}   = $ParamObject->GetParam( Param => 'View' )   || '';
 
             # show changes
             my $LinkPage = 'Filter='
-                . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{Filter} )
-                . ';View=' . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{View} )
-                . ';SortBy=' . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{SortBy} )
+                . $LayoutObject->Ascii2Html( Text => $Self->{Filter} )
+                . ';View=' . $LayoutObject->Ascii2Html( Text => $Self->{View} )
+                . ';SortBy=' . $LayoutObject->Ascii2Html( Text => $Self->{SortBy} )
                 . ';OrderBy='
-                . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{OrderBy} )
+                . $LayoutObject->Ascii2Html( Text => $Self->{OrderBy} )
                 . ';Profile=' . $Self->{Profile} . ';TakeLastSearch=1;Subaction=Search'
                 . ';';
             my $LinkSort = 'Filter='
-                . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{Filter} )
-                . ';View=' . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{View} )
+                . $LayoutObject->Ascii2Html( Text => $Self->{Filter} )
+                . ';View=' . $LayoutObject->Ascii2Html( Text => $Self->{View} )
                 . ';Profile=' . $Self->{Profile} . ';TakeLastSearch=1;Subaction=Search'
                 . ';';
             my $LinkFilter = 'TakeLastSearch=1;Subaction=Search;Profile='
-                . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{Profile} )
+                . $LayoutObject->Ascii2Html( Text => $Self->{Profile} )
                 . ';';
             my $LinkBack = 'Subaction=LoadProfile;Profile='
-                . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{Profile} )
+                . $LayoutObject->Ascii2Html( Text => $Self->{Profile} )
                 . ';TakeLastSearch=1;';
 
             # find out which columns should be shown
@@ -951,7 +953,7 @@ sub Run {
                 }
             }
 
-            $Output .= $Self->{LayoutObject}->ITSMChangeListShow(
+            $Output .= $LayoutObject->ITSMChangeListShow(
                 ChangeIDs    => $ViewableChangeIDs,
                 Total        => scalar @{$ViewableChangeIDs},
                 View         => $Self->{View},
@@ -963,30 +965,30 @@ sub Run {
                 Profile      => $Self->{Profile},
                 TitleName    => 'Change Search Result',
                 ShowColumns  => \@ShowColumns,
-                SortBy       => $Self->{LayoutObject}->Ascii2Html( Text => $Self->{SortBy} ),
-                OrderBy      => $Self->{LayoutObject}->Ascii2Html( Text => $Self->{OrderBy} ),
+                SortBy       => $LayoutObject->Ascii2Html( Text => $Self->{SortBy} ),
+                OrderBy      => $LayoutObject->Ascii2Html( Text => $Self->{OrderBy} ),
                 RequestedURL => 'Action=' . $Self->{Action} . ';' . $LinkPage,
             );
 
             # build footer
-            $Output .= $Self->{LayoutObject}->Footer();
+            $Output .= $LayoutObject->Footer();
 
             return $Output;
         }
     }
     elsif ( $Self->{Subaction} eq 'AJAXProfileDelete' ) {
-        my $Profile = $Self->{ParamObject}->GetParam( Param => 'Profile' );
+        my $Profile = $ParamObject->GetParam( Param => 'Profile' );
 
         # remove old profile stuff
-        $Self->{SearchProfileObject}->SearchProfileDelete(
+        $SearchProfileObject->SearchProfileDelete(
             Base      => 'ITSMChangeSearch',
             Name      => $Profile,
             UserLogin => $Self->{UserLogin},
         );
-        my $Output = $Self->{LayoutObject}->JSONEncode(
+        my $Output = $LayoutObject->JSONEncode(
             Data => 1,
         );
-        return $Self->{LayoutObject}->Attachment(
+        return $LayoutObject->Attachment(
             NoCache     => 1,
             ContentType => 'text/html',
             Content     => $Output,
@@ -999,11 +1001,11 @@ sub Run {
             %GetParam,
         );
 
-        $Output .= $Self->{LayoutObject}->Output(
+        $Output .= $LayoutObject->Output(
             TemplateFile => 'AgentITSMChangeSearch',
             Data         => \%Param,
         );
-        return $Self->{LayoutObject}->Attachment(
+        return $LayoutObject->Attachment(
             NoCache     => 1,
             ContentType => 'text/html',
             Content     => $Output,
@@ -1014,18 +1016,18 @@ sub Run {
 
     # There was no 'SubAction', or there were validation errors, or an user or customer was searched
     # generate search mask
-    my $Output = $Self->{LayoutObject}->Header();
-    $Output .= $Self->{LayoutObject}->NavigationBar();
+    my $Output = $LayoutObject->Header();
+    $Output .= $LayoutObject->NavigationBar();
 
-    $Self->{LayoutObject}->Block(
+    $LayoutObject->Block(
         Name => 'Search',
         Data => \%Param,
     );
-    $Output .= $Self->{LayoutObject}->Output(
+    $Output .= $LayoutObject->Output(
         TemplateFile => 'AgentITSMChangeSearch',
         Data         => \%Param,
     );
-    $Output .= $Self->{LayoutObject}->Footer();
+    $Output .= $LayoutObject->Footer();
 
     return $Output;
 }
@@ -1033,12 +1035,19 @@ sub Run {
 sub _MaskForm {
     my ( $Self, %Param ) = @_;
 
-    my $Profile = $Self->{ParamObject}->GetParam( Param => 'Profile' ) || '';
-    my $EmptySearch = $Self->{ParamObject}->GetParam( Param => 'EmptySearch' );
+    # get param object
+    my $ParamObject = $Kernel::OM->Get('Kernel::System::Web::Request');
+
+    my $Profile = $ParamObject->GetParam( Param => 'Profile' ) || '';
+    my $EmptySearch = $ParamObject->GetParam( Param => 'EmptySearch' );
     if ( !$Profile ) {
         $EmptySearch = 1;
     }
-    my %GetParam = $Self->{SearchProfileObject}->SearchProfileGet(
+
+    # get search profile object
+    my $SearchProfileObject = $Kernel::OM->Get('Kernel::System::SearchProfile');
+
+    my %GetParam = $SearchProfileObject->SearchProfileGet(
         Base      => 'ITSMChangeSearch',
         Name      => $Profile,
         UserLogin => $Self->{UserLogin},
@@ -1050,11 +1059,14 @@ sub _MaskForm {
         %GetParam,
     );
 
+    # get user object
+    my $UserObject = $Kernel::OM->Get('Kernel::System::User');
+
     # set user friendly CABAgent field
     if ( $Param{CABAgent} && $Param{CABAgent} ne '' ) {
 
         # get user data
-        my %UserData = $Self->{UserObject}->GetUserData(
+        my %UserData = $UserObject->GetUserData(
             UserID => $Param{CABAgent},
         );
 
@@ -1071,7 +1083,7 @@ sub _MaskForm {
     if ( $Param{CABCustomer} && $Param{CABCustomer} ne '' ) {
 
         # get customer data
-        my %CustomerSearchList = $Self->{CustomerUserObject}->CustomerSearch(
+        my %CustomerSearchList = $Kernel::OM->Get('Kernel::System::CustomerUser')->CustomerSearch(
             Search => $Param{CABCustomer},
         );
         $Param{CABCustomerSearch} = $CustomerSearchList{ $Param{CABCustomer} };
@@ -1122,8 +1134,37 @@ sub _MaskForm {
         },
     );
 
+    # get config object
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+
+    # get config for frontend
+    $Self->{Config} = $ConfigObject->Get("ITSMChange::Frontend::$Self->{Action}");
+
+    # get dynamic field object
+    my $DynamicFieldObject = $Kernel::OM->Get('Kernel::System::DynamicField');
+
+    # get the dynamic fields for this screen (change dynamic fields)
+    $Self->{DynamicFieldChange} = $DynamicFieldObject->DynamicFieldListGet(
+        Valid       => 1,
+        ObjectType  => 'ITSMChange',
+        FieldFilter => $Self->{Config}->{DynamicField} || {},
+    );
+
+    # get the dynamic fields for this screen (workorder dynamic fields)
+    $Self->{DynamicFieldWorkOrder} = $DynamicFieldObject->DynamicFieldListGet(
+        Valid       => 1,
+        ObjectType  => 'ITSMWorkOrder',
+        FieldFilter => $Self->{Config}->{DynamicField} || {},
+    );
+
+    # get dynamic field backend object
+    my $DynamicFieldBackendObject = $Kernel::OM->Get('Kernel::System::DynamicField::Backend');
+
     my $DynamicFieldSeparator = 1;
     my $LastObjectType        = '';
+
+    # get layout object
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
     # create dynamic fields search options for attribute select
     # cycle trough the activated Dynamic Fields for this screen
@@ -1162,14 +1203,14 @@ sub _MaskForm {
         }
 
         # get search field preferences
-        my $SearchFieldPreferences = $Self->{BackendObject}->SearchFieldPreferences(
+        my $SearchFieldPreferences = $DynamicFieldBackendObject->SearchFieldPreferences(
             DynamicFieldConfig => $DynamicFieldConfig,
         );
 
         next DYNAMICFIELD if !IsArrayRefWithData($SearchFieldPreferences);
 
         # translate the dynamic field label
-        my $TranslatedDynamicFieldLabel = $Self->{LayoutObject}->{LanguageObject}->Translate(
+        my $TranslatedDynamicFieldLabel = $LayoutObject->{LanguageObject}->Translate(
             $DynamicFieldConfig->{Label},
         );
 
@@ -1177,7 +1218,7 @@ sub _MaskForm {
         for my $Preference ( @{$SearchFieldPreferences} ) {
 
             # translate the suffix
-            my $TranslatedSuffix = $Self->{LayoutObject}->{LanguageObject}->Translate(
+            my $TranslatedSuffix = $LayoutObject->{LanguageObject}->Translate(
                 $Preference->{LabelSuffix},
             ) || '';
 
@@ -1220,14 +1261,14 @@ sub _MaskForm {
         next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
 
         # get search field preferences
-        my $SearchFieldPreferences = $Self->{BackendObject}->SearchFieldPreferences(
+        my $SearchFieldPreferences = $DynamicFieldBackendObject->SearchFieldPreferences(
             DynamicFieldConfig => $DynamicFieldConfig,
         );
 
         next DYNAMICFIELD if !IsArrayRefWithData($SearchFieldPreferences);
 
         # get PossibleValues
-        my $PossibleValues = $Self->{BackendObject}->PossibleValuesGet(
+        my $PossibleValues = $DynamicFieldBackendObject->PossibleValuesGet(
             DynamicFieldConfig   => $DynamicFieldConfig,
             OverridePossibleNone => 0,
         );
@@ -1237,14 +1278,14 @@ sub _MaskForm {
 
             # get field html
             $DynamicFieldHTML{ $DynamicFieldConfig->{Name} . $Preference->{Type} }
-                = $Self->{BackendObject}->SearchFieldRender(
+                = $DynamicFieldBackendObject->SearchFieldRender(
                 DynamicFieldConfig   => $DynamicFieldConfig,
                 Profile              => \%GetParam,
                 PossibleValuesFilter => $PossibleValues,
                 DefaultValue =>
                     $Self->{Config}->{Defaults}->{DynamicField}
                     ->{ $DynamicFieldConfig->{Name} },
-                LayoutObject => $Self->{LayoutObject},
+                LayoutObject => $LayoutObject,
                 Type         => $Preference->{Type},
                 );
         }
@@ -1339,9 +1380,9 @@ sub _MaskForm {
             next TIMETYPE;
         }
 
-        my $Title                   = $Self->{LayoutObject}->{LanguageObject}->Translate( $TimeType->{Title} );
-        my $BeforeAfterTranslatable = $Self->{LayoutObject}->{LanguageObject}->Translate('(before/after)');
-        my $BetweenTranslatable     = $Self->{LayoutObject}->{LanguageObject}->Translate('(between)');
+        my $Title                   = $LayoutObject->{LanguageObject}->Translate( $TimeType->{Title} );
+        my $BeforeAfterTranslatable = $LayoutObject->{LanguageObject}->Translate('(before/after)');
+        my $BetweenTranslatable     = $LayoutObject->{LanguageObject}->Translate('(between)');
         push @Attributes, (
             {
                 Key   => $Prefix . 'TimePointField',
@@ -1355,12 +1396,12 @@ sub _MaskForm {
         );
     }
 
-    $Param{AttributesStrg} = $Self->{LayoutObject}->BuildSelection(
+    $Param{AttributesStrg} = $LayoutObject->BuildSelection(
         Data     => \@Attributes,
         Name     => 'Attribute',
         Multiple => 0,
     );
-    $Param{AttributesOrigStrg} = $Self->{LayoutObject}->BuildSelection(
+    $Param{AttributesOrigStrg} = $LayoutObject->BuildSelection(
         Data     => \@Attributes,
         Name     => 'AttributeOrig',
         Multiple => 0,
@@ -1371,13 +1412,13 @@ sub _MaskForm {
     # It is important to also search for invalid agents, as we want to find
     # these changes too.
     # Out of office nice might be appended to the values.
-    my %Users = $Self->{UserObject}->UserList(
+    my %Users = $UserObject->UserList(
         Type  => 'Long',
         Valid => 0,
     );
 
     # dropdown menu for 'created by users'
-    $Param{'CreateBySelectionString'} = $Self->{LayoutObject}->BuildSelection(
+    $Param{'CreateBySelectionString'} = $LayoutObject->BuildSelection(
         Data       => \%Users,
         Name       => 'CreateBy',
         Multiple   => 1,
@@ -1386,7 +1427,7 @@ sub _MaskForm {
     );
 
     # build change manager dropdown
-    $Param{'ChangeManagerSelectionString'} = $Self->{LayoutObject}->BuildSelection(
+    $Param{'ChangeManagerSelectionString'} = $LayoutObject->BuildSelection(
         Data       => \%Users,
         Name       => 'ChangeManagerIDs',
         Multiple   => 1,
@@ -1395,7 +1436,7 @@ sub _MaskForm {
     );
 
     # build change builder dropdown
-    $Param{'ChangeBuilderSelectionString'} = $Self->{LayoutObject}->BuildSelection(
+    $Param{'ChangeBuilderSelectionString'} = $LayoutObject->BuildSelection(
         Data       => \%Users,
         Name       => 'ChangeBuilderIDs',
         Multiple   => 1,
@@ -1403,12 +1444,15 @@ sub _MaskForm {
         SelectedID => $Param{ChangeBuilderIDs},
     );
 
+    # get change object
+    my $ChangeObject = $Kernel::OM->Get('Kernel::System::ITSMChange');
+
     # get possible Change Categories
-    my $Categories = $Self->{ChangeObject}->ChangePossibleCIPGet(
+    my $Categories = $ChangeObject->ChangePossibleCIPGet(
         Type   => 'Category',
         UserID => $Self->{UserID},
     );
-    $Param{'ChangeCategorySelectionString'} = $Self->{LayoutObject}->BuildSelection(
+    $Param{'ChangeCategorySelectionString'} = $LayoutObject->BuildSelection(
         Data       => $Categories,
         Name       => 'CategoryIDs',
         Multiple   => 1,
@@ -1417,11 +1461,11 @@ sub _MaskForm {
     );
 
     # get possible Change Impacts
-    my $Impacts = $Self->{ChangeObject}->ChangePossibleCIPGet(
+    my $Impacts = $ChangeObject->ChangePossibleCIPGet(
         Type   => 'Impact',
         UserID => $Self->{UserID},
     );
-    $Param{'ChangeImpactSelectionString'} = $Self->{LayoutObject}->BuildSelection(
+    $Param{'ChangeImpactSelectionString'} = $LayoutObject->BuildSelection(
         Data       => $Impacts,
         Name       => 'ImpactIDs',
         Multiple   => 1,
@@ -1430,11 +1474,11 @@ sub _MaskForm {
     );
 
     # get possible Change Priorities
-    my $Priorities = $Self->{ChangeObject}->ChangePossibleCIPGet(
+    my $Priorities = $ChangeObject->ChangePossibleCIPGet(
         Type   => 'Priority',
         UserID => $Self->{UserID},
     );
-    $Param{'ChangePrioritySelectionString'} = $Self->{LayoutObject}->BuildSelection(
+    $Param{'ChangePrioritySelectionString'} = $LayoutObject->BuildSelection(
         Data       => $Priorities,
         Name       => 'PriorityIDs',
         Multiple   => 1,
@@ -1443,10 +1487,10 @@ sub _MaskForm {
     );
 
     # get change states
-    my $ChangeStates = $Self->{ChangeObject}->ChangePossibleStatesGet(
+    my $ChangeStates = $ChangeObject->ChangePossibleStatesGet(
         UserID => $Self->{UserID},
     );
-    $Param{'ChangeStateSelectionString'} = $Self->{LayoutObject}->BuildSelection(
+    $Param{'ChangeStateSelectionString'} = $LayoutObject->BuildSelection(
         Data       => $ChangeStates,
         Name       => 'ChangeStateIDs',
         Multiple   => 1,
@@ -1455,7 +1499,7 @@ sub _MaskForm {
     );
 
     # get workorder agents
-    $Param{'WorkOrderAgentIDSelectionString'} = $Self->{LayoutObject}->BuildSelection(
+    $Param{'WorkOrderAgentIDSelectionString'} = $LayoutObject->BuildSelection(
         Data       => \%Users,
         Name       => 'WorkOrderAgentIDs',
         Multiple   => 1,
@@ -1463,11 +1507,14 @@ sub _MaskForm {
         SelectedID => $Param{WorkOrderAgentIDs},
     );
 
+    # get work order object
+    my $WorkOrderObject = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder');
+
     # get workorder states
-    my $WorkOrderStates = $Self->{WorkOrderObject}->WorkOrderPossibleStatesGet(
+    my $WorkOrderStates = $WorkOrderObject->WorkOrderPossibleStatesGet(
         UserID => 1,
     );
-    $Param{'WorkOrderStateSelectionString'} = $Self->{LayoutObject}->BuildSelection(
+    $Param{'WorkOrderStateSelectionString'} = $LayoutObject->BuildSelection(
         Data       => $WorkOrderStates,
         Name       => 'WorkOrderStateIDs',
         Multiple   => 1,
@@ -1476,10 +1523,10 @@ sub _MaskForm {
     );
 
     # get workorder types
-    my $WorkOrderTypes = $Self->{WorkOrderObject}->WorkOrderTypeList(
+    my $WorkOrderTypes = $WorkOrderObject->WorkOrderTypeList(
         UserID => 1,
     );
-    $Param{'WorkOrderTypeSelectionString'} = $Self->{LayoutObject}->BuildSelection(
+    $Param{'WorkOrderTypeSelectionString'} = $LayoutObject->BuildSelection(
         Data       => $WorkOrderTypes,
         Name       => 'WorkOrderTypeIDs',
         Multiple   => 1,
@@ -1488,7 +1535,7 @@ sub _MaskForm {
     );
 
     # set result output formats
-    $Param{ResultFormStrg} = $Self->{LayoutObject}->BuildSelection(
+    $Param{ResultFormStrg} = $LayoutObject->BuildSelection(
         Data => {
             Normal => 'Normal',
             Print  => 'Print',
@@ -1498,7 +1545,7 @@ sub _MaskForm {
         SelectedID => $Param{ResultForm} || 'Normal',
     );
 
-    my %Profiles = $Self->{SearchProfileObject}->SearchProfileList(
+    my %Profiles = $SearchProfileObject->SearchProfileList(
         Base      => 'ITSMChangeSearch',
         UserLogin => $Self->{UserLogin},
     );
@@ -1510,7 +1557,7 @@ sub _MaskForm {
     else {
         $Profiles{'last-search'} = '-';
     }
-    $Param{ProfilesStrg} = $Self->{LayoutObject}->BuildSelection(
+    $Param{ProfilesStrg} = $LayoutObject->BuildSelection(
         Data       => \%Profiles,
         Name       => 'Profile',
         ID         => 'SearchProfile',
@@ -1518,7 +1565,7 @@ sub _MaskForm {
     );
 
     # html search mask output
-    $Self->{LayoutObject}->Block(
+    $LayoutObject->Block(
         Name => 'SearchAJAX',
         Data => { %Param, },    #%GetParam },
     );
@@ -1527,7 +1574,7 @@ sub _MaskForm {
     my %OneToFiftyNine = map { $_ => sprintf '%2s', $_ } ( 1 .. 59 );
 
     # time period that can be selected from the GUI
-    my %TimePeriod = %{ $Self->{ConfigObject}->Get('ITSMWorkOrder::TimePeriod') };
+    my %TimePeriod = %{ $ConfigObject->Get('ITSMWorkOrder::TimePeriod') };
 
     TIMETYPE:
     for my $TimeType (@TimeTypes) {
@@ -1538,19 +1585,19 @@ sub _MaskForm {
             next TIMETYPE;
         }
 
-        my $Title             = $Self->{LayoutObject}->{LanguageObject}->Translate( $TimeType->{Title} );
+        my $Title             = $LayoutObject->{LanguageObject}->Translate( $TimeType->{Title} );
         my %TimeSelectionData = (
             Prefix => $Prefix,
             Title  => $Title,
         );
 
-        $TimeSelectionData{TimePoint} = $Self->{LayoutObject}->BuildSelection(
+        $TimeSelectionData{TimePoint} = $LayoutObject->BuildSelection(
             Data       => \%OneToFiftyNine,
             Name       => $Prefix . 'TimePoint',
             SelectedID => $Param{ $Prefix . 'TimePoint' },
         );
 
-        $TimeSelectionData{TimePointStart} = $Self->{LayoutObject}->BuildSelection(
+        $TimeSelectionData{TimePointStart} = $LayoutObject->BuildSelection(
             Data => {
                 'Last'   => 'last',
                 'Before' => 'before',
@@ -1559,7 +1606,7 @@ sub _MaskForm {
             SelectedID => $Param{ $Prefix . 'TimePointStart' } || 'Last',
         );
 
-        $TimeSelectionData{TimePointFormat} = $Self->{LayoutObject}->BuildSelection(
+        $TimeSelectionData{TimePointFormat} = $LayoutObject->BuildSelection(
             Data => {
                 minute => 'minute(s)',
                 hour   => 'hour(s)',
@@ -1572,7 +1619,7 @@ sub _MaskForm {
             SelectedID => $Param{ $Prefix . 'TimePointFormat' },
         );
 
-        $TimeSelectionData{TimeStart} = $Self->{LayoutObject}->BuildDateSelection(
+        $TimeSelectionData{TimeStart} = $LayoutObject->BuildDateSelection(
             %Param,
             %TimePeriod,
             Prefix   => $Prefix . 'TimeStart',
@@ -1581,7 +1628,7 @@ sub _MaskForm {
             DiffTime => -( ( 60 * 60 * 24 ) * 30 ),
         );
 
-        $TimeSelectionData{TimeStop} = $Self->{LayoutObject}->BuildDateSelection(
+        $TimeSelectionData{TimeStop} = $LayoutObject->BuildDateSelection(
             %Param,
             %TimePeriod,
             Prefix => $Prefix . 'TimeStop',
@@ -1589,7 +1636,7 @@ sub _MaskForm {
         );
 
         # show time field
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'TimeSelection',
             Data => \%TimeSelectionData,
         );
@@ -1606,7 +1653,7 @@ sub _MaskForm {
         next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
 
         # get search field preferences
-        my $SearchFieldPreferences = $Self->{BackendObject}->SearchFieldPreferences(
+        my $SearchFieldPreferences = $DynamicFieldBackendObject->SearchFieldPreferences(
             DynamicFieldConfig => $DynamicFieldConfig,
         );
 
@@ -1620,7 +1667,7 @@ sub _MaskForm {
                 $DynamicFieldHTML{ $DynamicFieldConfig->{Name} . $Preference->{Type} }
             );
 
-            $Self->{LayoutObject}->Block(
+            $LayoutObject->Block(
                 Name => 'DynamicField',
                 Data => {
                     Label =>
@@ -1648,7 +1695,7 @@ sub _MaskForm {
         }
         $AlreadyShown{$Key} = 1;
 
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'SearchAJAXShow',
             Data => {
                 Attribute => $Key,
@@ -1659,7 +1706,7 @@ sub _MaskForm {
     # if no attribute is shown, show change number
     if ( !$Profile ) {
 
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'SearchAJAXShow',
             Data => {
                 Attribute => 'ChangeNumber',
@@ -1668,7 +1715,7 @@ sub _MaskForm {
     }
 
     # build output
-    my $Output = $Self->{LayoutObject}->Output(
+    my $Output = $LayoutObject->Output(
         TemplateFile => 'AgentITSMChangeSearch',
         Data         => \%Param,
     );

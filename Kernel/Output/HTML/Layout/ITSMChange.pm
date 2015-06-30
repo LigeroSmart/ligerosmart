@@ -6,12 +6,21 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package Kernel::Output::HTML::LayoutITSMChange;
+package Kernel::Output::HTML::Layout::ITSMChange;
 
 use strict;
 use warnings;
 
-use Kernel::Output::HTML::Layout;
+our @ObjectDependencies = (
+    'Kernel::System::Log',
+    'Kernel::Output::HTML::Layout',
+    'Kernel::System::Time',
+    'Kernel::Config',
+    'Kernel::System::AuthSession',
+    'Kernel::System::Web::Request',
+    'Kernel::System::Main',
+    'Kernel::System::User',
+);
 
 =over 4
 
@@ -31,20 +40,13 @@ returns a output string for WorkOrder graph
 sub ITSMChangeBuildWorkOrderGraph {
     my ( $Self, %Param ) = @_;
 
-    # check needed objects
-    for my $Object (qw(TimeObject ConfigObject)) {
-        if ( !$Self->{$Object} ) {
-            $Self->{LayoutObject}->FatalError(
-                Message => "Got no $Object!",
-            );
-            return;
-        }
-    }
+    # get log object
+    my $LogObject = $Kernel::OM->Get('Kernel::System::Log');
 
     # check for change
     my $Change = $Param{Change};
     if ( !$Change ) {
-        $Self->{LogObject}->Log(
+        $LogObject->Log(
             Priority => 'error',
             Message  => 'Need Change!',
         );
@@ -53,7 +55,7 @@ sub ITSMChangeBuildWorkOrderGraph {
 
     # check workorder object
     if ( !$Param{WorkOrderObject} ) {
-        $Self->{LogObject}->Log(
+        $LogObject->Log(
             Priority => 'error',
             Message  => 'Need WorkOrderObject!',
         );
@@ -61,7 +63,7 @@ sub ITSMChangeBuildWorkOrderGraph {
     }
 
     # store workorder object locally
-    $Self->{WorkOrderObject} = $Param{WorkOrderObject};
+    my $WorkOrderObject = $Param{WorkOrderObject};
 
     # check if workorders are available
     return if !$Change->{WorkOrderCount};
@@ -71,6 +73,9 @@ sub ITSMChangeBuildWorkOrderGraph {
 
     # hash for smallest time
     my %Time;
+
+    # get time object
+    my $TimeObject = $Kernel::OM->Get('Kernel::System::Time');
 
     TIMETYPE:
     for my $TimeType (qw(Start End)) {
@@ -82,7 +87,7 @@ sub ITSMChangeBuildWorkOrderGraph {
             next TIMETYPE if !$Change->{"Planned${TimeType}Time"};
 
             # translate to timestamp
-            $Time{"${TimeType}Time"} = $Self->{TimeObject}->TimeStamp2SystemTime(
+            $Time{"${TimeType}Time"} = $TimeObject->TimeStamp2SystemTime(
                 String => $Change->{"Planned${TimeType}Time"},
             );
 
@@ -91,12 +96,12 @@ sub ITSMChangeBuildWorkOrderGraph {
         }
 
         # translate planned time to timestamp for equation
-        $Time{"Planned${TimeType}Time"} = $Self->{TimeObject}->TimeStamp2SystemTime(
+        $Time{"Planned${TimeType}Time"} = $TimeObject->TimeStamp2SystemTime(
             String => $Change->{"Planned${TimeType}Time"},
         );
 
         # translate actual time to timestamp for equation
-        $Time{"Actual${TimeType}Time"} = $Self->{TimeObject}->TimeStamp2SystemTime(
+        $Time{"Actual${TimeType}Time"} = $TimeObject->TimeStamp2SystemTime(
             String => $Change->{"Actual${TimeType}Time"},
         );
     }
@@ -120,10 +125,10 @@ sub ITSMChangeBuildWorkOrderGraph {
     if (
         $Time{ActualStartTime}
         && !$Time{ActualEndTime}
-        && ( $Time{EndTime} lt $Self->{TimeObject}->SystemTime() )
+        && ( $Time{EndTime} lt $TimeObject->SystemTime() )
         )
     {
-        $Time{EndTime} = $Self->{TimeObject}->SystemTime();
+        $Time{EndTime} = $TimeObject->SystemTime();
     }
 
     # calculate ticks for change
@@ -134,7 +139,7 @@ sub ITSMChangeBuildWorkOrderGraph {
 
     # check for valid ticks
     if ( !$ChangeTicks ) {
-        $Self->{LogObject}->Log(
+        $LogObject->Log(
             Priority => 'error',
             Message  => 'Unable to calculate time scale.',
         );
@@ -144,7 +149,7 @@ sub ITSMChangeBuildWorkOrderGraph {
     my @WorkOrders;
     WORKORDERID:
     for my $WorkOrderID ( @{ $Change->{WorkOrderIDs} } ) {
-        my $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
+        my $WorkOrder = $WorkOrderObject->WorkOrderGet(
             WorkOrderID => $WorkOrderID,
             UserID      => $Self->{UserID},
         );
@@ -154,11 +159,11 @@ sub ITSMChangeBuildWorkOrderGraph {
     }
 
     # get config settings
-    my $ChangeZoomConfig = $Self->{ConfigObject}->Get('ITSMChange::Frontend::AgentITSMChangeZoom');
+    my $ChangeZoomConfig = $Kernel::OM->Get('Kernel::Config')->Get('ITSMChange::Frontend::AgentITSMChangeZoom');
 
     # check config setting
     if ( !$ChangeZoomConfig ) {
-        $Self->{LogObject}->Log(
+        $LogObject->Log(
             Priority => 'error',
             Message  => 'Need SysConfig settings for ITSMChange::Frontend::AgentITSMChangeZoom!',
         );
@@ -167,7 +172,7 @@ sub ITSMChangeBuildWorkOrderGraph {
 
     # check graph config setting
     if ( !$ChangeZoomConfig->{WorkOrderGraph} ) {
-        $Self->{LogObject}->Log(
+        $LogObject->Log(
             Priority => 'error',
             Message  => 'Need SysConfig settings for '
                 . 'ITSMChange::Frontend::AgentITSMChangeZoom###WorkOrderGraph!',
@@ -191,7 +196,7 @@ sub ITSMChangeBuildWorkOrderGraph {
         if ( !$WorkOrderGraphConfig->{$GraphSetting} ) {
 
             # display error and return
-            $Self->{LogObject}->Log(
+            $LogObject->Log(
                 Priority => 'error',
                 Message  => "Need SysConfig setting '$GraphSetting' in "
                     . "ITSMChange::Frontend::AgentITSMChangeZoom###WorkOrderGraph!",
@@ -207,7 +212,7 @@ sub ITSMChangeBuildWorkOrderGraph {
         {
 
             # display error and return
-            $Self->{LogObject}->Log(
+            $LogObject->Log(
                 Priority => 'error',
                 Message  => "SysConfig setting '$GraphSetting' is invalid in "
                     . "ITSMChange::Frontend::AgentITSMChangeZoom###WorkOrderGraph!",
@@ -238,7 +243,7 @@ sub ITSMChangeBuildWorkOrderGraph {
     );
 
     # create color definitions for all configured workorder types
-    my $WorkOrderTypes = $Self->{WorkOrderObject}->WorkOrderTypeList(
+    my $WorkOrderTypes = $WorkOrderObject->WorkOrderTypeList(
         UserID => $Self->{UserID},
     ) || [];
 
@@ -385,36 +390,40 @@ sub ITSMChangeListShow {
     my $View = $Param{View} || 'Small';
 
     # store latest view mode
-    $Self->{SessionObject}->UpdateSessionID(
+    $Kernel::OM->Get('Kernel::System::AuthSession')->UpdateSessionID(
         SessionID => $Self->{SessionID},
         Key       => 'UserITSMChangeOverview' . $Env->{Action},
         Value     => $View,
     );
 
+    # get config object
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+
     # get backend from config
-    my $Backends = $Self->{ConfigObject}->Get('ITSMChange::Frontend::Overview');
+    my $Backends = $ConfigObject->Get('ITSMChange::Frontend::Overview');
     if ( !$Backends ) {
-        return $Env->{LayoutObject}->FatalError(
+        return $LayoutObject->FatalError(
             Message => 'Need config option ITSMChange::Frontend::Overview',
         );
     }
 
     # check for hash-ref
     if ( ref $Backends ne 'HASH' ) {
-        return $Env->{LayoutObject}->FatalError(
+        return $LayoutObject->FatalError(
             Message => 'Config option ITSMChange::Frontend::Overview needs to be a HASH ref!',
         );
     }
 
     # check for config key
     if ( !$Backends->{$View} ) {
-        return $Env->{LayoutObject}->FatalError(
+        return $LayoutObject->FatalError(
             Message => "No config option found for the view '$View'!",
         );
     }
 
     # nav bar
-    my $StartHit = $Self->{ParamObject}->GetParam(
+    my $StartHit = $Kernel::OM->Get('Kernel::System::Web::Request')->GetParam(
         Param => 'StartHit',
     ) || 1;
 
@@ -432,19 +441,19 @@ sub ITSMChangeListShow {
 
     # get data selection
     my %Data;
-    my $Config = $Self->{ConfigObject}->Get('PreferencesGroups');
+    my $Config = $ConfigObject->Get('PreferencesGroups');
     if ( $Config && $Config->{$Group} && $Config->{$Group}->{Data} ) {
         %Data = %{ $Config->{$Group}->{Data} };
     }
 
     # set page limit and build page nav
     my $Limit = $Param{Limit} || 20_000;
-    my %PageNav = $Env->{LayoutObject}->PageNavBar(
+    my %PageNav = $LayoutObject->PageNavBar(
         Limit     => $Limit,
         StartHit  => $StartHit,
         PageShown => $PageShown,
         AllHits   => $Param{Total} || 0,
-        Action    => 'Action=' . $Env->{LayoutObject}->{Action},
+        Action    => 'Action=' . $LayoutObject->{Action},
         Link      => $Param{LinkPage},
     );
 
@@ -460,14 +469,14 @@ sub ITSMChangeListShow {
     );
 
     # build navbar content
-    $Env->{LayoutObject}->Block(
+    $LayoutObject->Block(
         Name => 'OverviewNavBar',
         Data => \%Param,
     );
 
     # back link
     if ( $Param{LinkBack} ) {
-        $Env->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'OverviewNavBarPageBack',
             Data => \%Param,
         );
@@ -483,7 +492,7 @@ sub ITSMChangeListShow {
         }
 
         # build filter content
-        $Env->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'OverviewNavBarFilter',
             Data => {
                 %Param,
@@ -496,7 +505,7 @@ sub ITSMChangeListShow {
 
             # increment filter count and build filter item
             $Count++;
-            $Env->{LayoutObject}->Block(
+            $LayoutObject->Block(
                 Name => 'OverviewNavBarFilterItem',
                 Data => {
                     %Param,
@@ -506,7 +515,7 @@ sub ITSMChangeListShow {
 
             # filter is selected
             if ( $Filter->{Filter} eq $Param{Filter} ) {
-                $Env->{LayoutObject}->Block(
+                $LayoutObject->Block(
                     Name => 'OverviewNavBarFilterItemSelected',
                     Data => {
                         %Param,
@@ -516,7 +525,7 @@ sub ITSMChangeListShow {
 
             }
             else {
-                $Env->{LayoutObject}->Block(
+                $LayoutObject->Block(
                     Name => 'OverviewNavBarFilterItemSelectedNot',
                     Data => {
                         %Param,
@@ -532,7 +541,7 @@ sub ITSMChangeListShow {
     for my $Backend ( sort keys %{$Backends} ) {
 
         # build navbar view mode
-        $Env->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'OverviewNavBarViewMode',
             Data => {
                 %Param,
@@ -544,7 +553,7 @@ sub ITSMChangeListShow {
 
         # current view is configured in backend
         if ( $View eq $Backend ) {
-            $Env->{LayoutObject}->Block(
+            $LayoutObject->Block(
                 Name => 'OverviewNavBarViewModeSelected',
                 Data => {
                     %Param,
@@ -555,7 +564,7 @@ sub ITSMChangeListShow {
             );
         }
         else {
-            $Env->{LayoutObject}->Block(
+            $LayoutObject->Block(
                 Name => 'OverviewNavBarViewModeNotSelected',
                 Data => {
                     %Param,
@@ -569,7 +578,7 @@ sub ITSMChangeListShow {
 
     # check if page nav is available
     if (%PageNav) {
-        $Env->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'OverviewNavBarPageNavBar',
             Data => \%PageNav,
         );
@@ -577,7 +586,7 @@ sub ITSMChangeListShow {
         # don't show context settings in AJAX case (e. g. in customer ticket history),
         #   because the submit with page reload will not work there
         if ( !$Param{AJAX} ) {
-            $Env->{LayoutObject}->Block(
+            $LayoutObject->Block(
                 Name => 'ContextSettings',
                 Data => {
                     %PageNav,
@@ -588,7 +597,7 @@ sub ITSMChangeListShow {
     }
 
     # build html content
-    my $OutputNavBar = $Env->{LayoutObject}->Output(
+    my $OutputNavBar = $LayoutObject->Output(
         TemplateFile => 'AgentITSMChangeOverviewNavBar',
         Data         => {%Param},
     );
@@ -596,7 +605,7 @@ sub ITSMChangeListShow {
     # create output
     my $OutputRaw = '';
     if ( !$Param{Output} ) {
-        $Env->{LayoutObject}->Print(
+        $LayoutObject->Print(
             Output => \$OutputNavBar,
         );
     }
@@ -605,8 +614,8 @@ sub ITSMChangeListShow {
     }
 
     # load module
-    if ( !$Self->{MainObject}->Require( $Backends->{$View}->{Module} ) ) {
-        return $Env->{LayoutObject}->FatalError();
+    if ( !$Kernel::OM->Get('Kernel::System::Main')->Require( $Backends->{$View}->{Module} ) ) {
+        return $LayoutObject->FatalError();
     }
 
     # check for backend object
@@ -625,7 +634,7 @@ sub ITSMChangeListShow {
 
     # create output
     if ( !$Param{Output} ) {
-        $Env->{LayoutObject}->Print(
+        $LayoutObject->Print(
             Output => \$Output,
         );
     }
@@ -634,7 +643,7 @@ sub ITSMChangeListShow {
     }
 
     # create overview nav bar
-    $Env->{LayoutObject}->Block(
+    $LayoutObject->Block(
         Name => 'OverviewNavBar',
         Data => {%Param},
     );
@@ -700,7 +709,7 @@ sub _ITSMChangeGetChangeScale {
 
     # translate timestamps in date format
     map {
-        $ScaleName{$_} = $Self->{TimeObject}->SystemTime2TimeStamp(
+        $ScaleName{$_} = $Kernel::OM->Get('Kernel::System::Time')->SystemTime2TimeStamp(
             SystemTime => $ScaleName{$_}
             )
     } keys %ScaleName;
@@ -767,7 +776,7 @@ sub _ITSMChangeGetWorkOrderGraph {
     );
 
     # get config settings
-    my $ChangeZoomConfig = $Self->{ConfigObject}->Get('ITSMChange::Frontend::AgentITSMChangeZoom');
+    my $ChangeZoomConfig = $Kernel::OM->Get('Kernel::Config')->Get('ITSMChange::Frontend::AgentITSMChangeZoom');
 
     # add workorder state
     if ( $ChangeZoomConfig->{WorkOrderState} ) {
@@ -798,9 +807,12 @@ sub _ITSMChangeGetWorkOrderGraph {
         $WorkOrder->{ActualEndTime}   = $WorkOrder->{PlannedEndTime};
     }
 
+    # get time object
+    my $TimeObject = $Kernel::OM->Get('Kernel::System::Time');
+
     # set current time if no actual end time is set
     if ( $WorkOrder->{ActualStartTime} && !$WorkOrder->{ActualEndTime} ) {
-        $WorkOrder->{ActualEndTime} = $Self->{TimeObject}->CurrentTimestamp();
+        $WorkOrder->{ActualEndTime} = $TimeObject->CurrentTimestamp();
     }
 
     # set nice display of undef actual times
@@ -816,7 +828,7 @@ sub _ITSMChangeGetWorkOrderGraph {
     for my $TimeType (qw(PlannedStartTime PlannedEndTime ActualStartTime ActualEndTime)) {
 
         # translate time
-        $Time{$TimeType} = $Self->{TimeObject}->TimeStamp2SystemTime(
+        $Time{$TimeType} = $TimeObject->TimeStamp2SystemTime(
             String => $WorkOrder->{$TimeType},
         );
     }
@@ -855,7 +867,7 @@ sub _ITSMChangeGetWorkOrderGraph {
 
     # set workorder agent
     if ( $WorkOrderInformation{WorkOrderAgentID} ) {
-        my %WorkOrderAgentData = $Self->{UserObject}->GetUserData(
+        my %WorkOrderAgentData = $Kernel::OM->Get('Kernel::System::User')->GetUserData(
             UserID => $WorkOrderInformation{WorkOrderAgentID},
             Cached => 1,
         );
@@ -999,7 +1011,7 @@ sub _ITSMChangeGetTimeLine {
     return if $Param{Ticks} !~ m{ \A \d+ \z }xms;
 
     # get current system time
-    my $CurrentTime = $Self->{TimeObject}->SystemTime();
+    my $CurrentTime = $Kernel::OM->Get('Kernel::System::Time')->SystemTime();
 
     # check for system time
     return if !$CurrentTime;

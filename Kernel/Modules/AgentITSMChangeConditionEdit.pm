@@ -11,10 +11,7 @@ package Kernel::Modules::AgentITSMChangeConditionEdit;
 use strict;
 use warnings;
 
-use Kernel::System::ITSMChange;
-use Kernel::System::ITSMChange::ITSMCondition;
-use Kernel::System::DynamicField;
-use Kernel::System::Valid;
+our $ObjectManagerDisabled = 1;
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -23,30 +20,14 @@ sub new {
     my $Self = {%Param};
     bless( $Self, $Type );
 
-    # check needed objects
-    for my $Object (
-        qw(ConfigObject ParamObject DBObject LayoutObject LogObject UserObject GroupObject)
-        )
-    {
-        if ( !$Self->{$Object} ) {
-            $Self->{LayoutObject}->FatalError( Message => "Got no $Object!" );
-        }
-    }
-
-    # create needed objects
-    $Self->{ChangeObject}       = Kernel::System::ITSMChange->new(%Param);
-    $Self->{ConditionObject}    = Kernel::System::ITSMChange::ITSMCondition->new(%Param);
-    $Self->{DynamicFieldObject} = Kernel::System::DynamicField->new( %{$Self} );
-    $Self->{ValidObject}        = Kernel::System::Valid->new(%Param);
-
-    # get config of frontend module
-    $Self->{Config} = $Self->{ConfigObject}->Get("ITSMChange::Frontend::$Self->{Action}");
-
     return $Self;
 }
 
 sub Run {
     my ( $Self, %Param ) = @_;
+
+    # get param object
+    my $ParamObject = $Kernel::OM->Get('Kernel::System::Web::Request');
 
     # store needed parameters in %GetParam
     my %GetParam;
@@ -56,13 +37,16 @@ sub Run {
         Save AddAction AddExpression NewExpression NewAction ElementChanged UpdateDivName)
         )
     {
-        $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
+        $GetParam{$ParamName} = $ParamObject->GetParam( Param => $ParamName );
     }
+
+    # get layout object
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
     # check needed stuff
     for my $Needed (qw(ChangeID ConditionID)) {
         if ( !$GetParam{$Needed} ) {
-            $Self->{LayoutObject}->ErrorScreen(
+            $LayoutObject->ErrorScreen(
                 Message => "No $Needed is given!",
                 Comment => 'Please contact the admin.',
             );
@@ -70,8 +54,14 @@ sub Run {
         }
     }
 
+    # get change object
+    my $ChangeObject = $Kernel::OM->Get('Kernel::System::ITSMChange');
+
+    # get config of frontend module
+    $Self->{Config} = $Kernel::OM->Get('Kernel::Config')->Get("ITSMChange::Frontend::$Self->{Action}");
+
     # check permissions
-    my $Access = $Self->{ChangeObject}->Permission(
+    my $Access = $ChangeObject->Permission(
         Type     => $Self->{Config}->{Permission},
         Action   => $Self->{Action},
         ChangeID => $GetParam{ChangeID},
@@ -80,43 +70,49 @@ sub Run {
 
     # error screen
     if ( !$Access ) {
-        return $Self->{LayoutObject}->NoPermission(
+        return $LayoutObject->NoPermission(
             Message    => "You need $Self->{Config}->{Permission} permissions!",
             WithHeader => 'yes',
         );
     }
 
     # get change data
-    my $ChangeData = $Self->{ChangeObject}->ChangeGet(
+    my $ChangeData = $ChangeObject->ChangeGet(
         ChangeID => $GetParam{ChangeID},
         UserID   => $Self->{UserID},
     );
 
     # check if change exists
     if ( !$ChangeData ) {
-        return $Self->{LayoutObject}->ErrorScreen(
+        return $LayoutObject->ErrorScreen(
             Message => "Change '$GetParam{ChangeID}' not found in database!",
             Comment => 'Please contact the admin.',
         );
     }
 
+    # get valid object
+    my $ValidObject = $Kernel::OM->Get('Kernel::System::Valid');
+
     # get valid list
-    my %ValidList = $Self->{ValidObject}->ValidList();
+    my %ValidList = $ValidObject->ValidList();
 
     my $ExpressionIDsRef = [];
     my $ActionIDsRef     = [];
+
+    # get condition object
+    my $ConditionObject = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMCondition');
 
     # only get expression list and action list if condition exists already
     if ( $GetParam{ConditionID} ne 'NEW' ) {
 
         # get all expression ids for the given condition id
-        $ExpressionIDsRef = $Self->{ConditionObject}->ExpressionList(
+        $ExpressionIDsRef = $ConditionObject->ExpressionList(
             ConditionID => $GetParam{ConditionID},
             UserID      => $Self->{UserID},
         );
 
         # get all action ids for the given condition id
-        $ActionIDsRef = $Self->{ConditionObject}->ActionList(
+        $ActionIDsRef = $ConditionObject->ActionList(
             ConditionID => $GetParam{ConditionID},
             UserID      => $Self->{UserID},
         );
@@ -141,7 +137,7 @@ sub Run {
         else {
 
             # check if condition name exists already for this change
-            my $ConditionID = $Self->{ConditionObject}->ConditionLookup(
+            my $ConditionID = $ConditionObject->ConditionLookup(
                 Name     => $GetParam{Name},
                 ChangeID => $GetParam{ChangeID},
             );
@@ -161,7 +157,7 @@ sub Run {
             if ( $GetParam{ConditionID} eq 'NEW' ) {
 
                 # create a new condition
-                $GetParam{ConditionID} = $Self->{ConditionObject}->ConditionAdd(
+                $GetParam{ConditionID} = $ConditionObject->ConditionAdd(
                     ChangeID              => $GetParam{ChangeID},
                     Name                  => $GetParam{Name},
                     ExpressionConjunction => $GetParam{ExpressionConjunction},
@@ -172,7 +168,7 @@ sub Run {
 
                 # check error
                 if ( !$GetParam{ConditionID} ) {
-                    $Self->{LayoutObject}->ErrorScreen(
+                    $LayoutObject->ErrorScreen(
                         Message => 'Could not create new condition!',
                         Comment => 'Please contact the admin.',
                     );
@@ -184,7 +180,7 @@ sub Run {
             else {
 
                 # update the condition
-                my $Success = $Self->{ConditionObject}->ConditionUpdate(
+                my $Success = $ConditionObject->ConditionUpdate(
                     ConditionID           => $GetParam{ConditionID},
                     Name                  => $GetParam{Name},
                     ExpressionConjunction => $GetParam{ExpressionConjunction},
@@ -195,7 +191,7 @@ sub Run {
 
                 # check error
                 if ( !$Success ) {
-                    $Self->{LayoutObject}->ErrorScreen(
+                    $LayoutObject->ErrorScreen(
                         Message => "Could not update ConditionID $GetParam{ConditionID}!",
                         Comment => 'Please contact the admin.',
                     );
@@ -209,7 +205,7 @@ sub Run {
                 # get expression fields
                 my %ExpressionData;
                 for my $Field (qw(ObjectID Selector AttributeID OperatorID CompareValue)) {
-                    $ExpressionData{$Field} = $Self->{ParamObject}->GetParam(
+                    $ExpressionData{$Field} = $ParamObject->GetParam(
                         Param => 'ExpressionID-' . $ExpressionID . '-' . $Field,
                     );
                 }
@@ -231,7 +227,7 @@ sub Run {
                 if ($FieldsOk) {
 
                     # update the expression
-                    my $Success = $Self->{ConditionObject}->ExpressionUpdate(
+                    my $Success = $ConditionObject->ExpressionUpdate(
                         ExpressionID => $ExpressionID,
                         ObjectID     => $ExpressionData{ObjectID},
                         AttributeID  => $ExpressionData{AttributeID},
@@ -245,7 +241,7 @@ sub Run {
 
                     # check error
                     if ( !$Success ) {
-                        return $Self->{LayoutObject}->ErrorScreen(
+                        return $LayoutObject->ErrorScreen(
                             Message => "Could not update ExpressionID $ExpressionID!",
                             Comment => 'Please contact the admin.',
                         );
@@ -256,7 +252,7 @@ sub Run {
             # get new expression fields
             my %ExpressionData;
             for my $Field (qw(ObjectID Selector AttributeID OperatorID CompareValue)) {
-                $ExpressionData{$Field} = $Self->{ParamObject}->GetParam(
+                $ExpressionData{$Field} = $ParamObject->GetParam(
                     Param => 'ExpressionID-NEW-' . $Field,
                 );
             }
@@ -278,7 +274,7 @@ sub Run {
             if ($FieldsOk) {
 
                 # add new expression
-                my $ExpressionID = $Self->{ConditionObject}->ExpressionAdd(
+                my $ExpressionID = $ConditionObject->ExpressionAdd(
                     ConditionID  => $GetParam{ConditionID},
                     ObjectID     => $ExpressionData{ObjectID},
                     AttributeID  => $ExpressionData{AttributeID},
@@ -292,7 +288,7 @@ sub Run {
 
                 # check error
                 if ( !$ExpressionID ) {
-                    return $Self->{LayoutObject}->ErrorScreen(
+                    return $LayoutObject->ErrorScreen(
                         Message => "Could not add new Expression!",
                         Comment => 'Please contact the admin.',
                     );
@@ -305,7 +301,7 @@ sub Run {
                 # get action fields
                 my %ActionData;
                 for my $Field (qw(ObjectID Selector AttributeID OperatorID ActionValue)) {
-                    $ActionData{$Field} = $Self->{ParamObject}->GetParam(
+                    $ActionData{$Field} = $ParamObject->GetParam(
                         Param => 'ActionID-' . $ActionID . '-' . $Field,
                     );
                 }
@@ -327,7 +323,7 @@ sub Run {
                 if ($FieldsOk) {
 
                     # update the action
-                    my $Success = $Self->{ConditionObject}->ActionUpdate(
+                    my $Success = $ConditionObject->ActionUpdate(
                         ActionID    => $ActionID,
                         ObjectID    => $ActionData{ObjectID},
                         AttributeID => $ActionData{AttributeID},
@@ -339,7 +335,7 @@ sub Run {
 
                     # check error
                     if ( !$Success ) {
-                        return $Self->{LayoutObject}->ErrorScreen(
+                        return $LayoutObject->ErrorScreen(
                             Message => "Could not update ActionID $ActionID!",
                             Comment => 'Please contact the admin.',
                         );
@@ -350,7 +346,7 @@ sub Run {
             # get new action fields
             my %ActionData;
             for my $Field (qw(ObjectID Selector AttributeID OperatorID ActionValue)) {
-                $ActionData{$Field} = $Self->{ParamObject}->GetParam(
+                $ActionData{$Field} = $ParamObject->GetParam(
                     Param => 'ActionID-NEW-' . $Field,
                 );
             }
@@ -372,7 +368,7 @@ sub Run {
             if ($FieldsOk) {
 
                 # add new action
-                my $ActionID = $Self->{ConditionObject}->ActionAdd(
+                my $ActionID = $ConditionObject->ActionAdd(
                     ConditionID => $GetParam{ConditionID},
                     ObjectID    => $ActionData{ObjectID},
                     AttributeID => $ActionData{AttributeID},
@@ -384,7 +380,7 @@ sub Run {
 
                 # check error
                 if ( !$ActionID ) {
-                    return $Self->{LayoutObject}->ErrorScreen(
+                    return $LayoutObject->ErrorScreen(
                         Message => "Could not add new Action!",
                         Comment => 'Please contact the admin.',
                     );
@@ -393,7 +389,7 @@ sub Run {
 
             # just the save button was pressed, redirect to condition overview
             if ( $GetParam{Save} ) {
-                return $Self->{LayoutObject}->Redirect(
+                return $LayoutObject->Redirect(
                     OP => "Action=AgentITSMChangeCondition;ChangeID=$GetParam{ChangeID}",
                 );
             }
@@ -402,7 +398,7 @@ sub Run {
             elsif ( $GetParam{AddExpression} ) {
 
                 # show the edit view again, but now with a new empty expression line
-                return $Self->{LayoutObject}->Redirect(
+                return $LayoutObject->Redirect(
                     OP => "Action=AgentITSMChangeConditionEdit;ChangeID=$GetParam{ChangeID};"
                         . "ConditionID=$GetParam{ConditionID};NewExpression=1",
                 );
@@ -412,7 +408,7 @@ sub Run {
             elsif ( $GetParam{AddAction} ) {
 
                 # show the edit view again, but now with a new empty action line
-                return $Self->{LayoutObject}->Redirect(
+                return $LayoutObject->Redirect(
                     OP => "Action=AgentITSMChangeConditionEdit;ChangeID=$GetParam{ChangeID};"
                         . "ConditionID=$GetParam{ConditionID};NewAction=1",
                 );
@@ -422,21 +418,21 @@ sub Run {
             if ( $GetParam{DeleteExpressionID} && $GetParam{DeleteExpressionID} ne 'NEW' ) {
 
                 # delete the expression
-                my $Success = $Self->{ConditionObject}->ExpressionDelete(
+                my $Success = $ConditionObject->ExpressionDelete(
                     ExpressionID => $GetParam{DeleteExpressionID},
                     UserID       => $Self->{UserID},
                 );
 
                 # check error
                 if ( !$Success ) {
-                    return $Self->{LayoutObject}->ErrorScreen(
+                    return $LayoutObject->ErrorScreen(
                         Message => "Could not delete ExpressionID $GetParam{DeleteExpressionID}!",
                         Comment => 'Please contact the admin.',
                     );
                 }
 
                 # show the edit view again
-                return $Self->{LayoutObject}->Redirect(
+                return $LayoutObject->Redirect(
                     OP => "Action=AgentITSMChangeConditionEdit;ChangeID=$GetParam{ChangeID};"
                         . "ConditionID=$GetParam{ConditionID}",
                 );
@@ -446,28 +442,28 @@ sub Run {
             if ( $GetParam{DeleteActionID} && $GetParam{DeleteActionID} ne 'NEW' ) {
 
                 # delete the action
-                my $Success = $Self->{ConditionObject}->ActionDelete(
+                my $Success = $ConditionObject->ActionDelete(
                     ActionID => $GetParam{DeleteActionID},
                     UserID   => $Self->{UserID},
                 );
 
                 # check error
                 if ( !$Success ) {
-                    return $Self->{LayoutObject}->ErrorScreen(
+                    return $LayoutObject->ErrorScreen(
                         Message => "Could not delete ActionID $GetParam{DeleteActionID}!",
                         Comment => 'Please contact the admin.',
                     );
                 }
 
                 # show the edit view again
-                return $Self->{LayoutObject}->Redirect(
+                return $LayoutObject->Redirect(
                     OP => "Action=AgentITSMChangeConditionEdit;ChangeID=$GetParam{ChangeID};"
                         . "ConditionID=$GetParam{ConditionID}",
                 );
             }
 
             # show the edit view again
-            return $Self->{LayoutObject}->Redirect(
+            return $LayoutObject->Redirect(
                 OP => "Action=AgentITSMChangeConditionEdit;ChangeID=$GetParam{ChangeID};"
                     . "ConditionID=$GetParam{ConditionID}",
             );
@@ -503,7 +499,7 @@ sub Run {
 
             # get expression or action fields
             for my $Field (qw(ObjectID Selector AttributeID OperatorID CompareValue ActionValue)) {
-                $GetParam{$Field} = $Self->{ParamObject}->GetParam(
+                $GetParam{$Field} = $ParamObject->GetParam(
                     Param => $IDName . '-' . $ID . '-' . $Field,
                 );
             }
@@ -578,7 +574,7 @@ sub Run {
             }
 
             # build json
-            $JSON = $Self->{LayoutObject}->BuildSelectionJSON(
+            $JSON = $LayoutObject->BuildSelectionJSON(
                 [
                     {
                         Name         => $IDName . '-' . $ID . '-ObjectID',
@@ -617,8 +613,8 @@ sub Run {
         }
 
         # return json
-        return $Self->{LayoutObject}->Attachment(
-            ContentType => 'text/plain; charset=' . $Self->{LayoutObject}->{Charset},
+        return $LayoutObject->Attachment(
+            ContentType => 'text/plain; charset=' . $LayoutObject->{Charset},
             Content     => $JSON,
             Type        => 'inline',
             NoCache     => 1,
@@ -654,7 +650,7 @@ sub Run {
 
             # get expression or action fields
             for my $Field (qw(ObjectID Selector AttributeID OperatorID CompareValue ActionValue)) {
-                $GetParam{$Field} = $Self->{ParamObject}->GetParam(
+                $GetParam{$Field} = $ParamObject->GetParam(
                     Param => $IDName . '-' . $ID . '-' . $Field,
                 );
             }
@@ -682,7 +678,7 @@ sub Run {
                 }
 
                 # generate ValueOptionString
-                $HTMLString = $Self->{LayoutObject}->BuildSelection(
+                $HTMLString = $LayoutObject->BuildSelection(
                     Data         => $CompareValueList,
                     Name         => $IDName . '-' . $ID . '-' . $ValueFieldName,
                     SelectedID   => $GetParam{$ValueFieldName},
@@ -709,9 +705,9 @@ sub Run {
         }
 
         # return HTML
-        return $Self->{LayoutObject}->Attachment(
+        return $LayoutObject->Attachment(
             ContentType => 'text/html',
-            Charset     => $Self->{LayoutObject}->{UserCharset},
+            Charset     => $LayoutObject->{UserCharset},
             Content     => $HTMLString,
             Type        => 'inline',
             NoCache     => 1,
@@ -731,14 +727,14 @@ sub Run {
     if ( $ConditionData{ConditionID} ne 'NEW' ) {
 
         # get condition data
-        my $Condition = $Self->{ConditionObject}->ConditionGet(
+        my $Condition = $ConditionObject->ConditionGet(
             ConditionID => $ConditionData{ConditionID},
             UserID      => $Self->{UserID},
         );
 
         # check if the condition belongs to the given change
         if ( $Condition->{ChangeID} ne $GetParam{ChangeID} ) {
-            return $Self->{LayoutObject}->ErrorScreen(
+            return $LayoutObject->ErrorScreen(
                 Message => "ConditionID $ConditionData{ConditionID} does not belong to"
                     . " the given ChangeID $GetParam{ChangeID}!",
                 Comment => 'Please contact the administrator.',
@@ -765,8 +761,8 @@ sub Run {
         );
     }
     else {
-        $Self->{LayoutObject}->Block( Name => 'ExpressionOverviewRowNoData' );
-        $Self->{LayoutObject}->Block( Name => 'ActionOverviewRowNoData' );
+        $LayoutObject->Block( Name => 'ExpressionOverviewRowNoData' );
+        $LayoutObject->Block( Name => 'ActionOverviewRowNoData' );
     }
 
     # get expression conjunction from condition
@@ -783,20 +779,20 @@ sub Run {
     }
 
     # output header
-    my $Output = $Self->{LayoutObject}->Header( Type => 'Small' );
+    my $Output = $LayoutObject->Header( Type => 'Small' );
 
     # generate ValidOptionString
-    $ConditionData{ValidOptionString} = $Self->{LayoutObject}->BuildSelection(
+    $ConditionData{ValidOptionString} = $LayoutObject->BuildSelection(
         Data        => \%ValidList,
         Name        => 'ValidID',
-        SelectedID  => $ConditionData{ValidID} || ( $Self->{ValidObject}->ValidIDsGet() )[0],
+        SelectedID  => $ConditionData{ValidID} || ( $ValidObject->ValidIDsGet() )[0],
         Sort        => 'NumericKey',
         Translation => 1,
     );
 
     # add the validation error messages
     for my $BlockName (@ValidationErrors) {
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => $BlockName,
             Data => {
                 %GetParam,
@@ -805,7 +801,7 @@ sub Run {
     }
 
     # generate output
-    $Output .= $Self->{LayoutObject}->Output(
+    $Output .= $LayoutObject->Output(
         TemplateFile => 'AgentITSMChangeConditionEdit',
         Data         => {
             %Param,
@@ -813,7 +809,7 @@ sub Run {
             %ConditionData,
         },
     );
-    $Output .= $Self->{LayoutObject}->Footer(
+    $Output .= $LayoutObject->Footer(
         Type => 'Small',
     );
 
@@ -834,8 +830,11 @@ sub _ExpressionOverview {
         push @ExpressionIDs, 'NEW';
     }
 
+    # get layout object
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+
     if ( !@ExpressionIDs ) {
-        $Self->{LayoutObject}->Block( Name => 'ExpressionOverviewRowNoData' );
+        $LayoutObject->Block( Name => 'ExpressionOverviewRowNoData' );
         return;
     }
 
@@ -854,7 +853,7 @@ sub _ExpressionOverview {
         else {
 
             # get condition data
-            $ExpressionData = $Self->{ConditionObject}->ExpressionGet(
+            $ExpressionData = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMCondition')->ExpressionGet(
                 ExpressionID => $ExpressionID,
                 UserID       => $Self->{UserID},
             );
@@ -863,7 +862,7 @@ sub _ExpressionOverview {
         }
 
         # output overview row
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'ExpressionOverviewRow',
             Data => {
                 %Param,
@@ -919,8 +918,11 @@ sub _ActionOverview {
         push @ActionIDs, 'NEW';
     }
 
+    # get layout object
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+
     if ( !@ActionIDs ) {
-        $Self->{LayoutObject}->Block( Name => 'ActionOverviewRowNoData' );
+        $LayoutObject->Block( Name => 'ActionOverviewRowNoData' );
         return;
     }
 
@@ -939,7 +941,7 @@ sub _ActionOverview {
         else {
 
             # get condition data
-            $ActionData = $Self->{ConditionObject}->ActionGet(
+            $ActionData = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMCondition')->ActionGet(
                 ActionID => $ActionID,
                 UserID   => $Self->{UserID},
             );
@@ -948,7 +950,7 @@ sub _ActionOverview {
         }
 
         # output overview row
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'ActionOverviewRow',
             Data => {
                 %Param,
@@ -1036,8 +1038,11 @@ sub _ShowObjectSelection {
     $Param{ObjectOptionName} = $IDName . '-' . $Param{$IDName} . '-ObjectID';
     $Param{IDName}           = $IDName;
 
+    # get layout object
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+
     # generate ObjectOptionString
-    my $ObjectOptionString = $Self->{LayoutObject}->BuildSelection(
+    my $ObjectOptionString = $LayoutObject->BuildSelection(
         Data         => $ObjectList,
         Name         => $Param{ObjectOptionName},
         SelectedID   => $Param{ObjectID},
@@ -1046,7 +1051,7 @@ sub _ShowObjectSelection {
     );
 
     # output object selection
-    $Self->{LayoutObject}->Block(
+    $LayoutObject->Block(
         Name => $BlockName,
         Data => {
             %Param,
@@ -1098,8 +1103,11 @@ sub _ShowSelectorSelection {
     $Param{ObjectOptionName} = $IDName . '-' . $Param{$IDName} . '-Selector';
     $Param{IDName}           = $IDName;
 
+    # get layout object
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+
     # generate SelectorOptionString
-    my $SelectorOptionString = $Self->{LayoutObject}->BuildSelection(
+    my $SelectorOptionString = $LayoutObject->BuildSelection(
         Data         => $SelectorList,
         Name         => $Param{ObjectOptionName},
         SelectedID   => $Param{Selector},
@@ -1108,7 +1116,7 @@ sub _ShowSelectorSelection {
     );
 
     # output selector selection
-    $Self->{LayoutObject}->Block(
+    $LayoutObject->Block(
         Name => $BlockName,
         Data => {
             %Param,
@@ -1174,8 +1182,11 @@ sub _ShowAttributeSelection {
     $Param{ObjectOptionName} = $IDName . '-' . $Param{$IDName} . '-AttributeID';
     $Param{IDName}           = $IDName;
 
+    # get layout object
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+
     # generate AttributeOptionString
-    my $AttributeOptionString = $Self->{LayoutObject}->BuildSelection(
+    my $AttributeOptionString = $LayoutObject->BuildSelection(
         Data         => $AttributeList,
         Name         => $Param{ObjectOptionName},
         SelectedID   => $Param{AttributeID},
@@ -1184,7 +1195,7 @@ sub _ShowAttributeSelection {
     );
 
     # output attribute selection
-    $Self->{LayoutObject}->Block(
+    $LayoutObject->Block(
         Name => $BlockName,
         Data => {
             %Param,
@@ -1240,8 +1251,11 @@ sub _ShowOperatorSelection {
     $Param{ObjectOptionName} = $IDName . '-' . $Param{$IDName} . '-OperatorID';
     $Param{IDName}           = $IDName;
 
+    # get layout object
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+
     # generate OperatorOptionString
-    my $OperatorOptionString = $Self->{LayoutObject}->BuildSelection(
+    my $OperatorOptionString = $LayoutObject->BuildSelection(
         Data         => $OperatorList,
         Name         => $Param{ObjectOptionName},
         SelectedID   => $Param{OperatorID},
@@ -1250,7 +1264,7 @@ sub _ShowOperatorSelection {
     );
 
     # output operator selection
-    $Self->{LayoutObject}->Block(
+    $LayoutObject->Block(
         Name => $BlockName,
         Data => {
             %Param,
@@ -1293,9 +1307,12 @@ sub _ShowCompareValueField {
         $ValueFieldName     = 'ActionValue';
     }
 
+    # get layout object
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+
     # compare value is a text field
     if ( $FieldType eq 'Text' ) {
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => $BlockNameText,
             Data => {
                 %Param,
@@ -1313,7 +1330,7 @@ sub _ShowCompareValueField {
         if ( $Param{AttributeID} ) {
 
             # lookup attribute name
-            $AttributeName = $Self->{ConditionObject}->AttributeLookup(
+            $AttributeName = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMCondition')->AttributeLookup(
                 AttributeID => $Param{AttributeID},
             );
         }
@@ -1338,7 +1355,7 @@ sub _ShowCompareValueField {
         }
 
         # generate ValueOptionString
-        my $ValueOptionString = $Self->{LayoutObject}->BuildSelection(
+        my $ValueOptionString = $LayoutObject->BuildSelection(
             Data         => $CompareValueList,
             Name         => $IDName . '-' . $Param{$IDName} . '-' . $ValueFieldName,
             SelectedID   => $Param{$ValueFieldName},
@@ -1347,7 +1364,7 @@ sub _ShowCompareValueField {
         );
 
         # output selection
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => $BlockNameSelection,
             Data => {
                 %Param,
@@ -1372,7 +1389,7 @@ sub _ShowCompareValueField {
     else {
 
         # output empty block
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => $BlockNameSelection,
             Data => {
                 %Param,
@@ -1393,14 +1410,17 @@ sub _GetCompareValueFieldType {
     # if an attribute is set
     if ( $Param{AttributeID} ) {
 
+        # get condition object
+        my $ConditionObject = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMCondition');
+
         # lookup attribute name
-        my $AttributeName = $Self->{ConditionObject}->AttributeLookup(
+        my $AttributeName = $ConditionObject->AttributeLookup(
             AttributeID => $Param{AttributeID},
         );
 
         # check error
         if ( !$AttributeName ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "AttributeID $Param{AttributeID} does not exist!",
             );
@@ -1408,7 +1428,7 @@ sub _GetCompareValueFieldType {
         }
 
         # get the field type
-        $FieldType = $Self->{ConditionObject}->ConditionCompareValueFieldType(
+        $FieldType = $ConditionObject->ConditionCompareValueFieldType(
             ObjectID    => $Param{ObjectID},
             AttributeID => $Param{AttributeID},
             UserID      => $Self->{UserID},
@@ -1434,7 +1454,7 @@ sub _GetObjectSelection {
     my ( $Self, %Param ) = @_;
 
     # get object list
-    my $ObjectList = $Self->{ConditionObject}->ObjectList(
+    my $ObjectList = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMCondition')->ObjectList(
         UserID => $Self->{UserID},
     );
 
@@ -1451,7 +1471,7 @@ sub _GetSelectorSelection {
     if ( $Param{ObjectID} ) {
 
         # get selector list
-        $SelectorList = $Self->{ConditionObject}->ObjectSelectorList(
+        $SelectorList = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMCondition')->ObjectSelectorList(
             ObjectID     => $Param{ObjectID},
             ConditionID  => $Param{ConditionID},
             ExpressionID => $Param{ExpressionID},
@@ -1473,19 +1493,22 @@ sub _GetAttributeSelection {
     # if a selector is set
     if ( $Param{Selector} ) {
 
+        # get condition object
+        my $ConditionObject = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMCondition');
+
         # get list of all attributes
-        my $AllAttributes = $Self->{ConditionObject}->AttributeList(
+        my $AllAttributes = $ConditionObject->AttributeList(
             UserID => $Self->{UserID},
         );
 
         # lookup object name
-        my $ObjectName = $Self->{ConditionObject}->ObjectLookup(
+        my $ObjectName = $ConditionObject->ObjectLookup(
             ObjectID => $Param{ObjectID},
         );
 
         # check error
         if ( !$ObjectName ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "ObjectID $Param{ObjectID} does not exist!",
             );
@@ -1495,20 +1518,23 @@ sub _GetAttributeSelection {
         # get object attribute mapping from sysconfig
         my $ObjectAttributeMapping;
 
+        # get config object
+        my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+
         # get mapping config for expressions or actions
         if ( $Param{ExpressionID} ) {
-            $ObjectAttributeMapping = $Self->{ConfigObject}->Get(
+            $ObjectAttributeMapping = $ConfigObject->Get(
                 $ObjectName . '::Mapping::Expression::Object::Attribute',
             );
         }
         elsif ( $Param{ActionID} ) {
-            $ObjectAttributeMapping = $Self->{ConfigObject}->Get(
+            $ObjectAttributeMapping = $ConfigObject->Get(
                 $ObjectName . '::Mapping::Action::Object::Attribute',
             );
         }
 
         # get the list of dynamic fields (change or workorder)
-        my $DynamicFields = $Self->{DynamicFieldObject}->DynamicFieldListGet(
+        my $DynamicFields = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldListGet(
             Valid      => 0,
             ObjectType => $ObjectName,
         );
@@ -1567,14 +1593,20 @@ sub _GetOperatorSelection {
     # if an atribute is set
     if ( $Param{AttributeID} ) {
 
+        # get condition object
+        my $ConditionObject = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMCondition');
+
         # lookup object name
-        my $ObjectName = $Self->{ConditionObject}->ObjectLookup(
+        my $ObjectName = $ConditionObject->ObjectLookup(
             ObjectID => $Param{ObjectID},
         );
 
+        # get log object
+        my $LogObject = $Kernel::OM->Get('Kernel::System::Log');
+
         # check error
         if ( !$ObjectName ) {
-            $Self->{LogObject}->Log(
+            $LogObject->Log(
                 Priority => 'error',
                 Message  => "ObjectID $Param{ObjectID} does not exist!",
             );
@@ -1582,13 +1614,13 @@ sub _GetOperatorSelection {
         }
 
         # lookup attribute name
-        my $AttributeName = $Self->{ConditionObject}->AttributeLookup(
+        my $AttributeName = $ConditionObject->AttributeLookup(
             AttributeID => $Param{AttributeID},
         );
 
         # check error
         if ( !$AttributeName ) {
-            $Self->{LogObject}->Log(
+            $LogObject->Log(
                 Priority => 'error',
                 Message  => "AttributeID $Param{AttributeID} does not exist!",
             );
@@ -1596,21 +1628,24 @@ sub _GetOperatorSelection {
         }
 
         # get list of all operators
-        my $AllOperators = $Self->{ConditionObject}->OperatorList(
+        my $AllOperators = $ConditionObject->OperatorList(
             UserID => $Self->{UserID},
         );
 
         # get attribute operator mapping from sysconfig
         my $MappingConfig;
 
+        # get config object
+        my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+
         # get mapping config for expressions or actions
         if ( $Param{ExpressionID} ) {
-            $MappingConfig = $Self->{ConfigObject}->Get(
+            $MappingConfig = $ConfigObject->Get(
                 $ObjectName . '::Mapping::Expression::Attribute::Operator'
             );
         }
         elsif ( $Param{ActionID} ) {
-            $MappingConfig = $Self->{ConfigObject}->Get(
+            $MappingConfig = $ConfigObject->Get(
                 $ObjectName . '::Mapping::Action::Attribute::Operator'
             );
         }
@@ -1651,14 +1686,17 @@ sub _GetCompareValueSelection {
     # if an attribute is set
     if ( $Param{AttributeID} ) {
 
+        # get condition object
+        my $ConditionObject = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMCondition');
+
         # lookup attribute name
-        my $AttributeName = $Self->{ConditionObject}->AttributeLookup(
+        my $AttributeName = $ConditionObject->AttributeLookup(
             AttributeID => $Param{AttributeID},
         );
 
         # check error
         if ( !$AttributeName ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "AttributeID $Param{AttributeID} does not exist!",
             );
@@ -1666,7 +1704,7 @@ sub _GetCompareValueSelection {
         }
 
         # get compare value list
-        $CompareValueList = $Self->{ConditionObject}->ObjectCompareValueList(
+        $CompareValueList = $ConditionObject->ObjectCompareValueList(
             ObjectID      => $Param{ObjectID},
             AttributeName => $AttributeName,
             UserID        => $Self->{UserID},

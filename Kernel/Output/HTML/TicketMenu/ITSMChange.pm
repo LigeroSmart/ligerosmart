@@ -6,12 +6,12 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package Kernel::Output::HTML::TicketMenuITSMChange;
+package Kernel::Output::HTML::TicketMenu::ITSMChange;
 
 use strict;
 use warnings;
 
-use Kernel::System::ITSMChange;
+our $ObjectManagerDisabled = 1;
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -20,16 +20,8 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    # get needed objects
-    for my $Object (
-        qw(ConfigObject LogObject DBObject LayoutObject UserID UserObject GroupObject TicketObject)
-        )
-    {
-        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
-    }
-
-    # create needed objects
-    $Self->{ChangeObject} = Kernel::System::ITSMChange->new(%Param);
+    # get UserID param
+    $Self->{UserID} = $Param{UserID} || die "Got no UserID!";
 
     return $Self;
 }
@@ -39,18 +31,21 @@ sub Run {
 
     # check needed stuff
     if ( !$Param{Ticket} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need Ticket!',
         );
         return;
     }
 
+    # get config object
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+
     # if an action parameter was given
     if ( $Param{Config}->{Action} ) {
 
         # check if frontend module is registered, if not, do not show action
-        my $Module = $Self->{ConfigObject}->Get('Frontend::Module')->{ $Param{Config}->{Action} };
+        my $Module = $ConfigObject->Get('Frontend::Module')->{ $Param{Config}->{Action} };
         return if !$Module;
 
         # check if current user has the permission for the given action
@@ -61,8 +56,11 @@ sub Run {
             GROUP:
             for my $Group ( @{ $Module->{GroupRo} } ) {
 
+                # get group object
+                my $GroupObject = $Kernel::OM->Get('Kernel::System::Group');
+
                 # lookup the group id
-                my $GroupID = $Self->{GroupObject}->GroupLookup(
+                my $GroupID = $GroupObject->GroupLookup(
                     Group => $Group,
                 );
 
@@ -70,7 +68,7 @@ sub Run {
                 next GROUP if !$GroupID;
 
                 # get user groups, where the user has the 'ro' privilege
-                my %Groups = $Self->{GroupObject}->GroupMemberList(
+                my %Groups = $GroupObject->GroupMemberList(
                     UserID => $Self->{UserID},
                     Type   => 'ro',
                     Result => 'HASH',
@@ -92,7 +90,7 @@ sub Run {
     return if !$Param{Ticket}->{Type};
 
     # get and check the list of relevant ticket types
-    my $AddChangeLinkTicketTypes = $Self->{ConfigObject}->Get('ITSMChange::AddChangeLinkTicketTypes');
+    my $AddChangeLinkTicketTypes = $ConfigObject->Get('ITSMChange::AddChangeLinkTicketTypes');
 
     return if !$AddChangeLinkTicketTypes;
     return if ref $AddChangeLinkTicketTypes ne 'ARRAY';
@@ -104,11 +102,11 @@ sub Run {
     return if !$IsRelevant{ $Param{Ticket}->{Type} };
 
     # check permission
-    my $FrontendConfig = $Self->{ConfigObject}->Get("ITSMChange::Frontend::$Param{Config}->{Action}");
+    my $FrontendConfig = $ConfigObject->Get("ITSMChange::Frontend::$Param{Config}->{Action}");
 
     if ( $FrontendConfig && $FrontendConfig->{Permission} ) {
 
-        my $Access = $Self->{ChangeObject}->Permission(
+        my $Access = $Kernel::OM->Get('Kernel::System::ITSMChange')->Permission(
             Type   => $FrontendConfig->{Permission},
             Action => $Param{Config}->{Action},
             UserID => $Self->{UserID},

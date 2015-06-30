@@ -6,10 +6,12 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package Kernel::Output::HTML::ITSMWorkOrderMenuGeneric;
+package Kernel::Output::HTML::ITSMWorkOrder::MenuWithTakePermission;
 
 use strict;
 use warnings;
+
+our $ObjectManagerDisabled = 1;
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -18,13 +20,8 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    # check needed objects
-    for my $Object (
-        qw(ConfigObject EncodeObject LogObject DBObject LayoutObject WorkOrderObject UserID)
-        )
-    {
-        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
-    }
+    # get UserID param
+    $Self->{UserID} = $Param{UserID} || die "Got no UserID!";
 
     return $Self;
 }
@@ -34,7 +31,7 @@ sub Run {
 
     # check needed stuff
     if ( !$Param{WorkOrder} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need WorkOrder!',
         );
@@ -42,7 +39,7 @@ sub Run {
     }
 
     # get config for the relevant action
-    my $FrontendConfig = $Self->{ConfigObject}->Get("ITSMWorkOrder::Frontend::$Param{Config}->{Action}");
+    my $FrontendConfig = $Kernel::OM->Get('Kernel::Config')->Get("ITSMWorkOrder::Frontend::$Param{Config}->{Action}");
 
     # get the required privilege, 'ro' or 'rw'
     my $RequiredPriv;
@@ -50,11 +47,6 @@ sub Run {
 
         # get the required priv from the frontend configuration
         $RequiredPriv = $FrontendConfig->{Permission};
-    }
-    elsif ( $Param{Config}->{Action} eq 'AgentLinkObject' ) {
-
-        # the Link-link is a special case, as it is not specific to ITSMChange
-        $RequiredPriv = 'rw';
     }
 
     my $Access;
@@ -66,27 +58,27 @@ sub Run {
     else {
 
         # check permissions, based on the required privilege
-        $Access = $Self->{WorkOrderObject}->Permission(
-            Type        => $RequiredPriv,
-            Action      => $Param{Config}->{Action},
-            WorkOrderID => $Param{WorkOrder}->{WorkOrderID},
-            UserID      => $Self->{UserID},
-            LogNo       => 1,
+        # query the permission modules registered in 'ITSMWorkOrder::TakePermission'
+        $Access = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->Permission(
+            Type               => $RequiredPriv,
+            Action             => $Param{Config}->{Action},
+            PermissionRegistry => 'ITSMWorkOrder::TakePermission',
+            WorkOrderID        => $Param{WorkOrder}->{WorkOrderID},
+            UserID             => $Self->{UserID},
+            LogNo              => 1,
         );
     }
 
     return $Param{Counter} if !$Access;
 
-    # output menu block
-    $Self->{LayoutObject}->Block( Name => 'Menu' );
+    # get layout object
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
-    # output seperator, when this is not the first menu item
-    if ( $Param{Counter} ) {
-        $Self->{LayoutObject}->Block( Name => 'MenuItemSplit' );
-    }
+    # output menu block
+    $LayoutObject->Block( Name => 'Menu' );
 
     # output menu item
-    $Self->{LayoutObject}->Block(
+    $LayoutObject->Block(
         Name => 'MenuItem',
         Data => {
             %Param,
@@ -94,6 +86,17 @@ sub Run {
             %{ $Param{Config} },
         },
     );
+
+    # output confirmation dialog
+    $LayoutObject->Block(
+        Name => 'ShowConfirmationDialog',
+        Data => {
+            %Param,
+            %{ $Param{WorkOrder} },
+            %{ $Param{Config} },
+        },
+    );
+
     $Param{Counter}++;
 
     return $Param{Counter};

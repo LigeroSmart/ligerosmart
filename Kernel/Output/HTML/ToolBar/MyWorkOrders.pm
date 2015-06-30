@@ -6,16 +6,12 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package Kernel::Output::HTML::ToolBarMyChanges;
+package Kernel::Output::HTML::ToolBar::MyWorkOrders;
 
 use strict;
 use warnings;
 
-use Kernel::System::ITSMChange;
-
-our @ObjectDependencies = (
-    'Kernel::System::Cache',
-);
+our $ObjectManagerDisabled = 1;
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -24,20 +20,8 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    # get needed objects
-    for (
-        qw(ConfigObject LogObject DBObject TicketObject UserObject GroupObject LayoutObject UserID)
-        )
-    {
-        $Self->{$_} = $Param{$_} || die "Got no $_!";
-    }
-
-    # create needed objects
-    $Self->{ChangeObject} = Kernel::System::ITSMChange->new(%Param);
-
-    # get the cache type and TTL (in seconds)
-    $Self->{CacheType} = 'ITSMChangeManagementToolBarMyChanges' . $Self->{UserID};
-    $Self->{CacheTTL}  = $Self->{ConfigObject}->Get('ITSMChange::ToolBar::CacheTTL') * 60;
+    # get UserID param
+    $Self->{UserID} = $Param{UserID} || die "Got no UserID!";
 
     return $Self;
 }
@@ -45,25 +29,31 @@ sub new {
 sub Run {
     my ( $Self, %Param ) = @_;
 
-    # define action, group, label, image and prio
-    my $Action = 'AgentITSMChangeMyChanges';
-    my $Group  = 'itsm-change-builder';
+    # define action
+    my $Action = 'AgentITSMChangeMyWorkOrders';
+    my $Group  = 'itsm-change';
     my $Icon   = $Param{Config}->{Icon};
 
+    # get config object
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+
     # do not show icon if frontend module is not registered
-    return if !$Self->{ConfigObject}->Get('Frontend::Module')->{$Action};
+    return if !$ConfigObject->Get('Frontend::Module')->{$Action};
 
     # get config of frontend module
-    my $Config = $Self->{ConfigObject}->Get("ITSMChange::Frontend::$Action");
+    my $Config = $ConfigObject->Get("ITSMChange::Frontend::$Action");
+
+    # get group object
+    my $GroupObject = $Kernel::OM->Get('Kernel::System::Group');
 
     # get the group id
-    my $GroupID = $Self->{GroupObject}->GroupLookup( Group => $Group );
+    my $GroupID = $GroupObject->GroupLookup( Group => $Group );
 
     # deny access, when the group is not found
     return if !$GroupID;
 
     # get user groups, where the user has the appropriate privilege
-    my %Groups = $Self->{GroupObject}->GroupMemberList(
+    my %Groups = $GroupObject->GroupMemberList(
         UserID => $Self->{UserID},
         Type   => $Config->{Permission},
         Result => 'HASH',
@@ -74,18 +64,23 @@ sub Run {
 
     # get the number of viewable changes
     my $Count = 0;
-    if ( $Config->{'Filter::ChangeStates'} && @{ $Config->{'Filter::ChangeStates'} } ) {
+    if ( $Config->{'Filter::WorkOrderStates'} && @{ $Config->{'Filter::WorkOrderStates'} } ) {
 
-        # remove empty change states
-        my @ChangeStates;
-        CHANGESTATE:
-        for my $ChangeState ( @{ $Config->{'Filter::ChangeStates'} } ) {
-            next CHANGESTATE if !$ChangeState;
-            push @ChangeStates, $ChangeState;
+        # remove empty workorder states
+        my @WorkOrderStates;
+        WORKORDERSTATE:
+        for my $WorkOrderState ( @{ $Config->{'Filter::WorkOrderStates'} } ) {
+            next WORKORDERSTATE if !$WorkOrderState;
+            push @WorkOrderStates, $WorkOrderState;
         }
 
+        # get the cache type and TTL (in seconds)
+        $Self->{CacheType} = 'ITSMChangeManagementToolBarMyWorkOrders' . $Self->{UserID};
+        $Self->{CacheTTL}  = $ConfigObject->Get('ITSMChange::ToolBar::CacheTTL') * 60;
+
         # check cache
-        my $CacheKey = join ',', sort @ChangeStates;
+        my $CacheKey = join ',', sort @WorkOrderStates;
+
         my $Cache = $Kernel::OM->Get('Kernel::System::Cache')->Get(
             Type => $Self->{CacheType},
             Key  => $CacheKey,
@@ -96,14 +91,14 @@ sub Run {
         }
         else {
 
-            # count the number of viewable changes
-            $Count = $Self->{ChangeObject}->ChangeSearch(
-                ChangeBuilderIDs => [ $Self->{UserID} ],
-                ChangeStates     => \@ChangeStates,
-                Limit            => 1000,
-                Result           => 'COUNT',
-                MirrorDB         => 1,
-                UserID           => $Self->{UserID},
+            # count the number of viewable workorders
+            $Count = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderSearch(
+                WorkOrderAgentIDs => [ $Self->{UserID} ],
+                WorkOrderStates   => \@WorkOrderStates,
+                Limit             => 1000,
+                Result            => 'COUNT',
+                MirrorDB          => 1,
+                UserID            => $Self->{UserID},
             );
 
             # set cache
@@ -116,12 +111,15 @@ sub Run {
         }
     }
 
+    # get layout object
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+
     # get ToolBar object parameters
     my $Class = $Param{Config}->{CssClass};
-    my $Text  = $Self->{LayoutObject}->{LanguageObject}->Translate('My Changes');
+    my $Text  = $LayoutObject->{LanguageObject}->Translate('My Work Orders');
 
     # set ToolBar object
-    my $URL      = $Self->{LayoutObject}->{Baselink};
+    my $URL      = $LayoutObject->{Baselink};
     my $Priority = $Param{Config}->{Priority};
     my %Return;
     if ($Count) {

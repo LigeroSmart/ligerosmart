@@ -11,10 +11,7 @@ package Kernel::Modules::AgentITSMChangeAddFromTemplate;
 use strict;
 use warnings;
 
-use Kernel::System::ITSMChange;
-use Kernel::System::ITSMChange::Template;
-use Kernel::System::LinkObject;
-use Kernel::System::Web::UploadCache;
+our $ObjectManagerDisabled = 1;
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -23,53 +20,38 @@ sub new {
     my $Self = {%Param};
     bless( $Self, $Type );
 
-    # check needed objects
-    for my $Object (
-        qw(ParamObject DBObject LayoutObject LogObject ConfigObject UserObject GroupObject)
-        )
-    {
-        if ( !$Self->{$Object} ) {
-            $Self->{LayoutObject}->FatalError( Message => "Got no $Object!" );
-        }
-    }
-
-    # create needed objects
-    $Self->{ChangeObject}      = Kernel::System::ITSMChange->new(%Param);
-    $Self->{LinkObject}        = Kernel::System::LinkObject->new(%Param);
-    $Self->{TemplateObject}    = Kernel::System::ITSMChange::Template->new(%Param);
-    $Self->{UploadCacheObject} = Kernel::System::Web::UploadCache->new(%Param);
-
-    # get config of frontend module
-    $Self->{Config} = $Self->{ConfigObject}->Get("ITSMChange::Frontend::$Self->{Action}");
-
-    # get form id
-    $Self->{FormID} = $Self->{ParamObject}->GetParam( Param => 'FormID' );
-
-    # create form id
-    if ( !$Self->{FormID} ) {
-        $Self->{FormID} = $Self->{UploadCacheObject}->FormIDCreate();
-    }
-
     return $Self;
 }
 
 sub Run {
     my ( $Self, %Param ) = @_;
 
+    # get config object
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+
+    # get config of frontend module
+    $Self->{Config} = $ConfigObject->Get("ITSMChange::Frontend::$Self->{Action}");
+
     # check permissions
-    my $Access = $Self->{ChangeObject}->Permission(
+    my $Access = $Kernel::OM->Get('Kernel::System::ITSMChange')->Permission(
         Type   => $Self->{Config}->{Permission},
         Action => $Self->{Action},
         UserID => $Self->{UserID},
     );
 
+    # get layout object
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+
     # error screen
     if ( !$Access ) {
-        return $Self->{LayoutObject}->NoPermission(
+        return $LayoutObject->NoPermission(
             Message    => "You need $Self->{Config}->{Permission} permissions!",
             WithHeader => 'yes',
         );
     }
+
+    # get param object
+    my $ParamObject = $Kernel::OM->Get('Kernel::System::Web::Request');
 
     # store needed parameters in %GetParam to make it reloadable
     my %GetParam;
@@ -77,14 +59,17 @@ sub Run {
         qw(MoveTimeType MoveTimeYear MoveTimeMonth MoveTimeDay MoveTimeHour MoveTimeMinute TicketID TemplateID)
         )
     {
-        $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
+        $GetParam{$ParamName} = $ParamObject->GetParam( Param => $ParamName );
     }
 
     # store time related fields in %GetParam
     for my $TimePart (qw(Used Year Month Day Hour Minute)) {
         my $ParamName = 'MoveTime' . $TimePart;
-        $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
+        $GetParam{$ParamName} = $ParamObject->GetParam( Param => $ParamName );
     }
+
+    # get log object
+    my $LogObject = $Kernel::OM->Get('Kernel::System::Log');
 
     # Remember the reason why saving was not attempted.
     my %ValidationError;
@@ -94,7 +79,7 @@ sub Run {
     if ( $GetParam{TicketID} ) {
 
         # get ticket data
-        my %Ticket = $Self->{TicketObject}->TicketGet(
+        my %Ticket = $Kernel::OM->Get('Kernel::System::Ticket')->TicketGet(
             TicketID => $GetParam{TicketID},
         );
 
@@ -102,14 +87,14 @@ sub Run {
         if ( !%Ticket ) {
 
             # show error message
-            return $Self->{LayoutObject}->ErrorScreen(
+            return $LayoutObject->ErrorScreen(
                 Message => "Ticket with TicketID $GetParam{TicketID} does not exist!",
                 Comment => 'Please contact the admin.',
             );
         }
 
         # get list of relevant ticket types
-        my $AddChangeLinkTicketTypes = $Self->{ConfigObject}->Get('ITSMChange::AddChangeLinkTicketTypes');
+        my $AddChangeLinkTicketTypes = $ConfigObject->Get('ITSMChange::AddChangeLinkTicketTypes');
 
         # check the list of relevant ticket types
         if (
@@ -123,13 +108,13 @@ sub Run {
             my $Message = "Missing sysconfig option 'ITSMChange::AddChangeLinkTicketTypes'!";
 
             # log error
-            $Self->{LogObject}->Log(
+            $LogObject->Log(
                 Priority => 'error',
                 Message  => $Message,
             );
 
             # show error message
-            return $Self->{LayoutObject}->ErrorScreen(
+            return $LayoutObject->ErrorScreen(
                 Message => $Message,
                 Comment => 'Please contact the admin.',
             );
@@ -147,18 +132,21 @@ sub Run {
                 . join ',', @{$AddChangeLinkTicketTypes};
 
             # log error
-            $Self->{LogObject}->Log(
+            $LogObject->Log(
                 Priority => 'error',
                 Message  => $Message,
             );
 
             # show error message
-            return $Self->{LayoutObject}->ErrorScreen(
+            return $LayoutObject->ErrorScreen(
                 Message => $Message,
                 Comment => 'Please contact the admin.',
             );
         }
     }
+
+    # get template object
+    my $TemplateObject = $Kernel::OM->Get('Kernel::System::ITSMChange::Template');
 
     # create change from template
     if ( $Self->{Subaction} eq 'CreateFromTemplate' ) {
@@ -192,7 +180,7 @@ sub Run {
         if ( !%ValidationError ) {
 
             # transform change planned time, time stamp based on user time zone
-            %GetParam = $Self->{LayoutObject}->TransformDateSelection(
+            %GetParam = $LayoutObject->TransformDateSelection(
                 %GetParam,
                 Prefix => 'MoveTime',
             );
@@ -206,7 +194,7 @@ sub Run {
                 $GetParam{MoveTimeMinute};
 
             # sanity check of the assembled timestamp
-            $NewTime = $Self->{TimeObject}->TimeStamp2SystemTime(
+            $NewTime = $Kernel::OM->Get('Kernel::System::Time')->TimeStamp2SystemTime(
                 String => $PlannedTime,
             );
 
@@ -223,8 +211,8 @@ sub Run {
         if ( !%ValidationError ) {
 
             # create change based on the template
-            my $ChangeID = $Self->{TemplateObject}->TemplateDeSerialize(
-                TemplateID      => $Self->{ParamObject}->GetParam( Param => 'TemplateID' ),
+            my $ChangeID = $TemplateObject->TemplateDeSerialize(
+                TemplateID      => $ParamObject->GetParam( Param => 'TemplateID' ),
                 UserID          => $Self->{UserID},
                 NewTimeInEpoche => $NewTime,
                 MoveTimeType    => $GetParam{MoveTimeType},
@@ -234,7 +222,7 @@ sub Run {
             if ( !$ChangeID ) {
 
                 # show error message, when adding failed
-                return $Self->{LayoutObject}->ErrorScreen(
+                return $LayoutObject->ErrorScreen(
                     Message => 'Was not able to create change from template!',
                     Comment => 'Please contact the admin.',
                 );
@@ -244,7 +232,7 @@ sub Run {
             if ( $GetParam{TicketID} ) {
 
                 # link ticket with newly created change
-                my $LinkSuccess = $Self->{LinkObject}->LinkAdd(
+                my $LinkSuccess = $Kernel::OM->Get('Kernel::System::LinkObject')->LinkAdd(
                     SourceObject => 'Ticket',
                     SourceKey    => $GetParam{TicketID},
                     TargetObject => 'ITSMChange',
@@ -262,13 +250,13 @@ sub Run {
                         . "but a link to Ticket with TicketID $GetParam{TicketID} could not be created!";
 
                     # log error
-                    $Self->{LogObject}->Log(
+                    $LogObject->Log(
                         Priority => 'error',
                         Message  => $Message,
                     );
 
                     # show error message
-                    return $Self->{LayoutObject}->ErrorScreen(
+                    return $LayoutObject->ErrorScreen(
                         Message => $Message,
                         Comment => 'Please contact the admin.',
                     );
@@ -276,19 +264,19 @@ sub Run {
             }
 
             # redirect to zoom mask, when adding was successful
-            return $Self->{LayoutObject}->Redirect(
+            return $LayoutObject->Redirect(
                 OP => "Action=AgentITSMChangeZoom;ChangeID=$ChangeID",
             );
         }
     }
 
     # build template dropdown
-    my $TemplateList = $Self->{TemplateObject}->TemplateList(
+    my $TemplateList = $TemplateObject->TemplateList(
         UserID        => $Self->{UserID},
         CommentLength => 15,
         TemplateType  => 'ITSMChange',
     );
-    my $TemplateSelectionString = $Self->{LayoutObject}->BuildSelection(
+    my $TemplateSelectionString = $LayoutObject->BuildSelection(
         Name         => 'TemplateID',
         Data         => $TemplateList,
         Class        => 'Validate_Required ' . ( $ValidationError{TemplateIDServerError} || '' ),
@@ -297,7 +285,7 @@ sub Run {
     );
 
     # build drop-down with time types
-    my $MoveTimeTypeSelectionString = $Self->{LayoutObject}->BuildSelection(
+    my $MoveTimeTypeSelectionString = $LayoutObject->BuildSelection(
         Name => 'MoveTimeType',
         Data => [
             {
@@ -314,10 +302,10 @@ sub Run {
     );
 
     # time period that can be selected from the GUI
-    my %TimePeriod = %{ $Self->{ConfigObject}->Get('ITSMWorkOrder::TimePeriod') };
+    my %TimePeriod = %{ $ConfigObject->Get('ITSMWorkOrder::TimePeriod') };
 
     # add selection for the time
-    my $MoveTimeSelectionString = $Self->{LayoutObject}->BuildDateSelection(
+    my $MoveTimeSelectionString = $LayoutObject->BuildDateSelection(
         %GetParam,
         Format        => 'DateInputFormatLong',
         Prefix        => 'MoveTime',
@@ -327,13 +315,21 @@ sub Run {
     );
 
     # output header
-    my $Output = $Self->{LayoutObject}->Header(
+    my $Output = $LayoutObject->Header(
         Title => 'Add',
     );
-    $Output .= $Self->{LayoutObject}->NavigationBar();
+    $Output .= $LayoutObject->NavigationBar();
+
+    # get form id
+    $Self->{FormID} = $ParamObject->GetParam( Param => 'FormID' );
+
+    # create form id
+    if ( !$Self->{FormID} ) {
+        $Self->{FormID} = $Kernel::OM->Get('Kernel::System::Web::UploadCache')->FormIDCreate();
+    }
 
     # start template output
-    $Output .= $Self->{LayoutObject}->Output(
+    $Output .= $LayoutObject->Output(
         TemplateFile => 'AgentITSMChangeAddFromTemplate',
         Data         => {
             %Param,
@@ -347,7 +343,7 @@ sub Run {
     );
 
     # add footer
-    $Output .= $Self->{LayoutObject}->Footer();
+    $Output .= $LayoutObject->Footer();
 
     return $Output;
 }

@@ -11,8 +11,7 @@ package Kernel::Modules::AgentITSMTemplateEditContent;
 use strict;
 use warnings;
 
-use Kernel::System::ITSMChange;
-use Kernel::System::ITSMChange::Template;
+our $ObjectManagerDisabled = 1;
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -21,64 +20,59 @@ sub new {
     my $Self = {%Param};
     bless( $Self, $Type );
 
-    # check needed objects
-    for my $Object (
-        qw(ParamObject DBObject TimeObject LayoutObject LogObject ConfigObject UserObject GroupObject)
-        )
-    {
-        if ( !$Self->{$Object} ) {
-            $Self->{LayoutObject}->FatalError( Message => "Got no $Object!" );
-        }
-    }
-
-    # create additional objects
-    $Self->{ChangeObject}   = Kernel::System::ITSMChange->new(%Param);
-    $Self->{TemplateObject} = Kernel::System::ITSMChange::Template->new(%Param);
-
-    # get config for frontend
-    $Self->{Config} = $Self->{ConfigObject}->Get("ITSMChange::Frontend::$Self->{Action}");
-
     return $Self;
 }
 
 sub Run {
     my ( $Self, %Param ) = @_;
 
+    # get change object
+    my $ChangeObject = $Kernel::OM->Get('Kernel::System::ITSMChange');
+
+    # get config for frontend
+    $Self->{Config} = $Kernel::OM->Get('Kernel::Config')->Get("ITSMChange::Frontend::$Self->{Action}");
+
     # check permissions
-    my $Access = $Self->{ChangeObject}->Permission(
+    my $Access = $ChangeObject->Permission(
         Type   => $Self->{Config}->{Permission},
         Action => $Self->{Action},
         UserID => $Self->{UserID},
     );
 
+    # get layout object
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+
     # error screen
     if ( !$Access ) {
-        return $Self->{LayoutObject}->NoPermission(
+        return $LayoutObject->NoPermission(
             Message    => "You need $Self->{Config}->{Permission} permission!",
             WithHeader => 'yes',
         );
     }
 
     # get needed TemplateID
-    my $TemplateID = $Self->{ParamObject}->GetParam( Param => 'TemplateID' );
+    my $TemplateID = $Kernel::OM->Get('Kernel::System::Web::Request')->GetParam( Param => 'TemplateID' );
 
     # check needed stuff
     if ( !$TemplateID ) {
-        return $Self->{LayoutObject}->ErrorScreen(
+        return $LayoutObject->ErrorScreen(
             Message => 'No TemplateID is given!',
             Comment => 'Please contact the admin.',
         );
     }
 
+    # get template object
+    my $TemplateObject = $Kernel::OM->Get('Kernel::System::ITSMChange::Template');
+
     # get template data
-    my $Template = $Self->{TemplateObject}->TemplateGet(
+    my $Template = $TemplateObject->TemplateGet(
         TemplateID => $TemplateID,
         UserID     => $Self->{UserID},
     );
 
     # check error
     if ( !$Template ) {
-        return $Self->{LayoutObject}->ErrorScreen(
+        return $LayoutObject->ErrorScreen(
             Message => "Template '$TemplateID' not found in database!",
             Comment => 'Please contact the admin.',
         );
@@ -88,10 +82,13 @@ sub Run {
     if ( $Self->{Subaction} eq 'TemplateEditContent' ) {
 
         # get current system time in epoch seconds
-        my $SystemTime = $Self->{TimeObject}->SystemTime();
+        my $SystemTime = $Kernel::OM->Get('Kernel::System::Time')->SystemTime();
+
+        # get user object
+        my $UserObject = $Kernel::OM->Get('Kernel::System::User');
 
         # get existing user preferences
-        my %UserPreferences = $Self->{UserObject}->GetPreferences(
+        my %UserPreferences = $UserObject->GetPreferences(
             UserID => $Self->{UserID},
         );
 
@@ -110,7 +107,7 @@ sub Run {
         if ( $Template->{Type} eq 'ITSMChange' ) {
 
             # create change based on the template
-            my $ChangeID = $Self->{TemplateObject}->TemplateDeSerialize(
+            my $ChangeID = $TemplateObject->TemplateDeSerialize(
                 TemplateID      => $TemplateID,
                 MoveTimeType    => 'PlannedStartTime',
                 NewTimeInEpoche => $SystemTime,
@@ -120,7 +117,7 @@ sub Run {
             # show error message, when adding failed
             if ( !$ChangeID ) {
 
-                return $Self->{LayoutObject}->ErrorScreen(
+                return $LayoutObject->ErrorScreen(
                     Message => 'Was not able to create change from template!',
                     Comment => 'Please contact the admin.',
                 );
@@ -136,14 +133,14 @@ sub Run {
             }
 
             # save preferences
-            $Self->{UserObject}->SetPreferences(
+            $UserObject->SetPreferences(
                 Key    => 'UserITSMChangeManagementTemplateEdit',
                 Value  => $TemplateEditPreferenceString,
                 UserID => $Self->{UserID},
             );
 
             # redirect to change zoom mask, when adding was successful
-            return $Self->{LayoutObject}->Redirect(
+            return $LayoutObject->Redirect(
                 OP => "Action=AgentITSMChangeZoom;ChangeID=$ChangeID",
             );
         }
@@ -152,21 +149,21 @@ sub Run {
         elsif ( $Template->{Type} eq 'ITSMWorkOrder' ) {
 
             # add a dummy change, needed to contain the workorder
-            my $ChangeID = $Self->{ChangeObject}->ChangeAdd(
+            my $ChangeID = $ChangeObject->ChangeAdd(
                 ChangeTitle => $Self->{Config}->{DefaultChangeTitle},
                 UserID      => $Self->{UserID},
             );
 
             # show error message, when adding failed
             if ( !$ChangeID ) {
-                return $Self->{LayoutObject}->ErrorScreen(
+                return $LayoutObject->ErrorScreen(
                     Message => 'Was not able to create change!',
                     Comment => 'Please contact the admin.',
                 );
             }
 
             # create workorder based on the template, and add it to the dummy change
-            my $WorkOrderID = $Self->{TemplateObject}->TemplateDeSerialize(
+            my $WorkOrderID = $TemplateObject->TemplateDeSerialize(
                 ChangeID        => $ChangeID,
                 TemplateID      => $TemplateID,
                 MoveTimeType    => 'PlannedStartTime',
@@ -178,7 +175,7 @@ sub Run {
             if ( !$WorkOrderID ) {
 
                 # show error message, when adding failed
-                return $Self->{LayoutObject}->ErrorScreen(
+                return $LayoutObject->ErrorScreen(
                     Message => 'Was not able to create workorder from template!',
                     Comment => 'Please contact the admin.',
                 );
@@ -194,14 +191,14 @@ sub Run {
             }
 
             # save preferences
-            $Self->{UserObject}->SetPreferences(
+            $UserObject->SetPreferences(
                 Key    => 'UserITSMChangeManagementTemplateEdit',
                 Value  => $TemplateEditPreferenceString,
                 UserID => $Self->{UserID},
             );
 
             # redirect to workorder zoom mask, when adding was successful
-            return $Self->{LayoutObject}->Redirect(
+            return $LayoutObject->Redirect(
                 OP => "Action=AgentITSMWorkOrderZoom;WorkOrderID=$WorkOrderID",
             );
         }
@@ -211,7 +208,7 @@ sub Run {
     elsif ( $Self->{Subaction} eq 'TemplateEditContentShowDialog' ) {
 
         # show the edit content dialog
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'EditContentDialog',
             Data => {
                 %{$Template},
@@ -220,7 +217,7 @@ sub Run {
 
         # show the correct block depending on template type
         if ( $Template->{Type} eq 'ITSMChange' ) {
-            $Self->{LayoutObject}->Block(
+            $LayoutObject->Block(
                 Name => 'ChangeTemplate',
                 Data => {
                     %{$Template},
@@ -228,7 +225,7 @@ sub Run {
             );
         }
         elsif ( $Template->{Type} eq 'ITSMWorkOrder' ) {
-            $Self->{LayoutObject}->Block(
+            $LayoutObject->Block(
                 Name => 'WorkOrderTemplate',
                 Data => {
                     %{$Template},
@@ -237,7 +234,7 @@ sub Run {
         }
 
         # output content
-        my $Output = $Self->{LayoutObject}->Output(
+        my $Output = $LayoutObject->Output(
             TemplateFile => 'AgentITSMTemplateEditContent',
             Data         => {
                 %{$Template},
@@ -251,10 +248,10 @@ sub Run {
         );
 
         # return JSON-String because of AJAX-Mode
-        my $OutputJSON = $Self->{LayoutObject}->JSONEncode( Data => \%Data );
+        my $OutputJSON = $LayoutObject->JSONEncode( Data => \%Data );
 
-        return $Self->{LayoutObject}->Attachment(
-            ContentType => 'application/json; charset=' . $Self->{LayoutObject}->{Charset},
+        return $LayoutObject->Attachment(
+            ContentType => 'application/json; charset=' . $LayoutObject->{Charset},
             Content     => $OutputJSON,
             Type        => 'inline',
             NoCache     => 1,

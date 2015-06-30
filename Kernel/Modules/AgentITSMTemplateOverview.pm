@@ -11,8 +11,7 @@ package Kernel::Modules::AgentITSMTemplateOverview;
 use strict;
 use warnings;
 
-use Kernel::System::ITSMChange;
-use Kernel::System::ITSMChange::Template;
+our $ObjectManagerDisabled = 1;
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -21,61 +20,50 @@ sub new {
     my $Self = {%Param};
     bless( $Self, $Type );
 
-    # check needed objects
-    for my $Object (
-        qw(ParamObject DBObject LayoutObject LogObject ConfigObject UserObject UserObject GroupObject)
-        )
-    {
-        if ( !$Self->{$Object} ) {
-            $Self->{LayoutObject}->FatalError( Message => "Got no $Object!" );
-        }
-    }
-
-    # create additional objects
-    $Self->{ChangeObject}   = Kernel::System::ITSMChange->new(%Param);
-    $Self->{TemplateObject} = Kernel::System::ITSMChange::Template->new(%Param);
-
-    # get config of frontend module
-    $Self->{Config} = $Self->{ConfigObject}->Get("ITSMChange::Frontend::$Self->{Action}");
-
-    # get filter params
-    $Self->{Filter} = $Self->{ParamObject}->GetParam( Param => 'Filter' ) || 'All';
-
     return $Self;
 }
 
 sub Run {
     my ( $Self, %Param ) = @_;
 
+    # get config of frontend module
+    $Self->{Config} = $Kernel::OM->Get('Kernel::Config')->Get("ITSMChange::Frontend::$Self->{Action}");
+
     # check permissions
-    my $Access = $Self->{ChangeObject}->Permission(
+    my $Access = $Kernel::OM->Get('Kernel::System::ITSMChange')->Permission(
         Type   => $Self->{Config}->{Permission},
         Action => $Self->{Action},
         UserID => $Self->{UserID},
     );
 
+    # get layout object
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+
     # error screen
     if ( !$Access ) {
-        return $Self->{LayoutObject}->NoPermission(
+        return $LayoutObject->NoPermission(
             Message    => "You need $Self->{Config}->{Permission} permissions!",
             WithHeader => 'yes',
         );
     }
 
     # store last screen, used for backlinks
-    $Self->{SessionObject}->UpdateSessionID(
+    $Kernel::OM->Get('Kernel::System::AuthSession')->UpdateSessionID(
         SessionID => $Self->{SessionID},
         Key       => 'LastScreenTemplates',
         Value     => $Self->{RequestedURL},
     );
 
+    # get param object
+    my $ParamObject = $Kernel::OM->Get('Kernel::System::Web::Request');
+
     # get sorting parameters
-    my $SortBy = $Self->{ParamObject}->GetParam( Param => 'SortBy' )
+    my $SortBy = $ParamObject->GetParam( Param => 'SortBy' )
         || $Self->{Config}->{'SortBy::Default'}
         || 'TemplateID';
 
     # get ordering parameters
-    my $OrderBy = $Self->{ParamObject}->GetParam( Param => 'OrderBy' )
+    my $OrderBy = $ParamObject->GetParam( Param => 'OrderBy' )
         || $Self->{Config}->{'Order::Default'}
         || 'Up';
 
@@ -86,9 +74,9 @@ sub Run {
     my $Refresh = $Self->{UserRefreshTime} ? 60 * $Self->{UserRefreshTime} : undef;
 
     # starting with page ...
-    my $Output = $Self->{LayoutObject}->Header( Refresh => $Refresh );
-    $Output .= $Self->{LayoutObject}->NavigationBar();
-    $Self->{LayoutObject}->Print( Output => \$Output );
+    my $Output = $LayoutObject->Header( Refresh => $Refresh );
+    $Output .= $LayoutObject->NavigationBar();
+    $LayoutObject->Print( Output => \$Output );
     $Output = '';
 
     # find out which columns should be shown
@@ -105,6 +93,9 @@ sub Run {
     # to store the filters
     my %Filters;
 
+    # get template object
+    my $TemplateObject = $Kernel::OM->Get('Kernel::System::ITSMChange::Template');
+
     # set other filters based on template type
     if ( $Self->{Config}->{'Filter::TemplateTypes'} ) {
 
@@ -119,7 +110,7 @@ sub Run {
             next TEMPLATETYPE if !$TemplateType;
 
             # check if the template type is valid by looking up the id
-            my $TemplateTypeID = $Self->{TemplateObject}->TemplateTypeLookup(
+            my $TemplateTypeID = $TemplateObject->TemplateTypeLookup(
                 TemplateType => $TemplateType,
             );
 
@@ -143,6 +134,9 @@ sub Run {
             };
         }
     }
+
+    # get filter params
+    $Self->{Filter} = $ParamObject->GetParam( Param => 'Filter' ) || 'All';
 
     # if only one filter exists
     if ( scalar keys %Filters == 1 ) {
@@ -170,11 +164,11 @@ sub Run {
 
     # check if filter is valid
     if ( !$Filters{ $Self->{Filter} } ) {
-        $Self->{LayoutObject}->FatalError( Message => "Invalid Filter: $Self->{Filter}!" );
+        $LayoutObject->FatalError( Message => "Invalid Filter: $Self->{Filter}!" );
     }
 
     # search templates which match the selected filter
-    my $IDsRef = $Self->{TemplateObject}->TemplateSearch(
+    my $IDsRef = $TemplateObject->TemplateSearch(
         %{ $Filters{ $Self->{Filter} }->{Search} },
     );
 
@@ -183,7 +177,7 @@ sub Run {
     for my $Filter ( sort keys %Filters ) {
 
         # count the number of items for each filter
-        my $Count = $Self->{TemplateObject}->TemplateSearch(
+        my $Count = $TemplateObject->TemplateSearch(
             %{ $Filters{$Filter}->{Search} },
             Result => 'COUNT',
         );
@@ -198,18 +192,18 @@ sub Run {
 
     # show the list
     my $LinkPage = 'Filter='
-        . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{Filter} )
-        . ';SortBy=' . $Self->{LayoutObject}->Ascii2Html( Text => $SortBy )
-        . ';OrderBy=' . $Self->{LayoutObject}->Ascii2Html( Text => $OrderBy )
+        . $LayoutObject->Ascii2Html( Text => $Self->{Filter} )
+        . ';SortBy=' . $LayoutObject->Ascii2Html( Text => $SortBy )
+        . ';OrderBy=' . $LayoutObject->Ascii2Html( Text => $OrderBy )
         . ';';
     my $LinkSort = 'Filter='
-        . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{Filter} )
+        . $LayoutObject->Ascii2Html( Text => $Self->{Filter} )
         . ';';
     my $LinkFilter = 'SortBy='
-        . $Self->{LayoutObject}->Ascii2Html( Text => $SortBy )
-        . ';OrderBy=' . $Self->{LayoutObject}->Ascii2Html( Text => $OrderBy )
+        . $LayoutObject->Ascii2Html( Text => $SortBy )
+        . ';OrderBy=' . $LayoutObject->Ascii2Html( Text => $OrderBy )
         . ';';
-    $Output .= $Self->{LayoutObject}->ITSMTemplateListShow(
+    $Output .= $LayoutObject->ITSMTemplateListShow(
 
         TemplateIDs => $IDsRef,
         Total       => scalar @{$IDsRef},
@@ -217,8 +211,8 @@ sub Run {
         Filters     => \%NavBarFilter,
         FilterLink  => $LinkFilter,
 
-        TitleName => $Self->{LayoutObject}->{LanguageObject}->Translate('Overview')
-            . ': ' . $Self->{LayoutObject}->{LanguageObject}->Translate('Template'),
+        TitleName => $LayoutObject->{LanguageObject}->Translate('Overview')
+            . ': ' . $LayoutObject->{LanguageObject}->Translate('Template'),
 
         TitleValue => $Filters{ $Self->{Filter} }->{Name},
 
@@ -231,7 +225,7 @@ sub Run {
         SortBy      => $SortBy,
     );
 
-    $Output .= $Self->{LayoutObject}->Footer();
+    $Output .= $LayoutObject->Footer();
 
     return $Output;
 }

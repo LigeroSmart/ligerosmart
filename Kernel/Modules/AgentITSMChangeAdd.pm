@@ -11,13 +11,9 @@ package Kernel::Modules::AgentITSMChangeAdd;
 use strict;
 use warnings;
 
-use Kernel::System::ITSMChange;
-use Kernel::System::ITSMChange::ITSMChangeCIPAllocate;
-use Kernel::System::LinkObject;
-use Kernel::System::DynamicField;
-use Kernel::System::DynamicField::Backend;
-use Kernel::System::Web::UploadCache;
 use Kernel::System::VariableCheck qw(:all);
+
+our $ObjectManagerDisabled = 1;
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -26,62 +22,39 @@ sub new {
     my $Self = {%Param};
     bless( $Self, $Type );
 
-    # check needed objects
-    for my $Object (
-        qw(ParamObject DBObject LayoutObject LogObject ConfigObject UserObject GroupObject)
-        )
-    {
-        if ( !$Self->{$Object} ) {
-            $Self->{LayoutObject}->FatalError( Message => "Got no $Object!" );
-        }
-    }
-
-    # create needed objects
-    $Self->{ChangeObject}       = Kernel::System::ITSMChange->new(%Param);
-    $Self->{LinkObject}         = Kernel::System::LinkObject->new(%Param);
-    $Self->{DynamicFieldObject} = Kernel::System::DynamicField->new(%Param);
-    $Self->{BackendObject}      = Kernel::System::DynamicField::Backend->new(%Param);
-    $Self->{CIPAllocateObject}  = Kernel::System::ITSMChange::ITSMChangeCIPAllocate->new(%Param);
-    $Self->{UploadCacheObject}  = Kernel::System::Web::UploadCache->new(%Param);
-
-    # get config of frontend module
-    $Self->{Config} = $Self->{ConfigObject}->Get("ITSMChange::Frontend::$Self->{Action}");
-
-    # get the dynamic fields for this screen
-    $Self->{DynamicField} = $Self->{DynamicFieldObject}->DynamicFieldListGet(
-        Valid       => 1,
-        ObjectType  => 'ITSMChange',
-        FieldFilter => $Self->{Config}->{DynamicField} || {},
-    );
-
-    # get form id
-    $Self->{FormID} = $Self->{ParamObject}->GetParam( Param => 'FormID' );
-
-    # create form id
-    if ( !$Self->{FormID} ) {
-        $Self->{FormID} = $Self->{UploadCacheObject}->FormIDCreate();
-    }
-
     return $Self;
 }
 
 sub Run {
     my ( $Self, %Param ) = @_;
 
+    # get needed objects
+    my $ChangeObject = $Kernel::OM->Get('Kernel::System::ITSMChange');
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+
+    # get config of frontend module
+    $Self->{Config} = $ConfigObject->Get("ITSMChange::Frontend::$Self->{Action}");
+
     # check permissions
-    my $Access = $Self->{ChangeObject}->Permission(
+    my $Access = $ChangeObject->Permission(
         Type   => $Self->{Config}->{Permission},
         Action => $Self->{Action},
         UserID => $Self->{UserID},
     );
 
+    # get layout object
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+
     # error screen
     if ( !$Access ) {
-        return $Self->{LayoutObject}->NoPermission(
+        return $LayoutObject->NoPermission(
             Message    => "You need $Self->{Config}->{Permission} permissions!",
             WithHeader => 'yes',
         );
     }
+
+    # get param object
+    my $ParamObject = $Kernel::OM->Get('Kernel::System::Web::Request');
 
     # store needed parameters in %GetParam to make it reloadable
     my %GetParam;
@@ -89,23 +62,33 @@ sub Run {
         qw(ChangeTitle Description Justification TicketID CategoryID ImpactID PriorityID AttachmentUpload FileID)
         )
     {
-        $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
+        $GetParam{$ParamName} = $ParamObject->GetParam( Param => $ParamName );
     }
 
-    # get Dynamic fields from ParamObject
+    # get dynamic fields from ParamObject
     my %DynamicFieldValues;
+
+    # get the dynamic fields for this screen
+    my $DynamicField = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldListGet(
+        Valid       => 1,
+        ObjectType  => 'ITSMChange',
+        FieldFilter => $Self->{Config}->{DynamicField} || {},
+    );
+
+    # get dynamic field backend object
+    my $DynamicFieldBackendObject = $Kernel::OM->Get('Kernel::System::DynamicField::Backend');
 
     # cycle trough the activated Dynamic Fields for this screen
     DYNAMICFIELD:
-    for my $DynamicFieldConfig ( @{ $Self->{DynamicField} } ) {
+    for my $DynamicFieldConfig ( @{$DynamicField} ) {
         next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
 
         # extract the dynamic field value from the web request and add the prefix
         $DynamicFieldValues{ 'DynamicField_' . $DynamicFieldConfig->{Name} }
-            = $Self->{BackendObject}->EditFieldValueGet(
+            = $DynamicFieldBackendObject->EditFieldValueGet(
             DynamicFieldConfig => $DynamicFieldConfig,
-            ParamObject        => $Self->{ParamObject},
-            LayoutObject       => $Self->{LayoutObject},
+            ParamObject        => $ParamObject,
+            LayoutObject       => $LayoutObject,
             );
     }
 
@@ -113,15 +96,15 @@ sub Run {
     if ( $Self->{Config}->{RequestedTime} ) {
         for my $TimePart (qw(Used Year Month Day Hour Minute)) {
             my $ParamName = 'RequestedTime' . $TimePart;
-            $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
+            $GetParam{$ParamName} = $ParamObject->GetParam( Param => $ParamName );
         }
     }
 
     # set default value for category
     $Param{CategoryID} = $GetParam{CategoryID};
     if ( !$Param{CategoryID} ) {
-        my $DefaultCategory = $Self->{ConfigObject}->Get('ITSMChange::Category::Default');
-        $Param{CategoryID} = $Self->{ChangeObject}->ChangeCIPLookup(
+        my $DefaultCategory = $ConfigObject->Get('ITSMChange::Category::Default');
+        $Param{CategoryID} = $ChangeObject->ChangeCIPLookup(
             CIP  => $DefaultCategory,
             Type => 'Category',
         );
@@ -130,12 +113,26 @@ sub Run {
     # set default value for impact
     $Param{ImpactID} = $GetParam{ImpactID};
     if ( !$Param{ImpactID} ) {
-        my $DefaultImpact = $Self->{ConfigObject}->Get('ITSMChange::Impact::Default');
-        $Param{ImpactID} = $Self->{ChangeObject}->ChangeCIPLookup(
+        my $DefaultImpact = $ConfigObject->Get('ITSMChange::Impact::Default');
+        $Param{ImpactID} = $ChangeObject->ChangeCIPLookup(
             CIP  => $DefaultImpact,
             Type => 'Impact',
         );
     }
+
+    # get upload cache object
+    my $UploadCacheObject = $Kernel::OM->Get('Kernel::System::Web::UploadCache');
+
+    # get form id
+    $Self->{FormID} = $ParamObject->GetParam( Param => 'FormID' );
+
+    # create form id
+    if ( !$Self->{FormID} ) {
+        $Self->{FormID} = $UploadCacheObject->FormIDCreate();
+    }
+
+    # get log object
+    my $LogObject = $Kernel::OM->Get('Kernel::System::Log');
 
     # Remember the reason why saving was not attempted.
     my %ValidationError;
@@ -145,7 +142,7 @@ sub Run {
     if ( $GetParam{TicketID} ) {
 
         # get ticket data
-        my %Ticket = $Self->{TicketObject}->TicketGet(
+        my %Ticket = $Kernel::OM->Get('Kernel::System::Ticket')->TicketGet(
             TicketID => $GetParam{TicketID},
         );
 
@@ -153,14 +150,14 @@ sub Run {
         if ( !%Ticket ) {
 
             # show error message
-            return $Self->{LayoutObject}->ErrorScreen(
+            return $LayoutObject->ErrorScreen(
                 Message => "Ticket with TicketID $GetParam{TicketID} does not exist!",
                 Comment => 'Please contact the admin.',
             );
         }
 
         # get list of relevant ticket types
-        my $AddChangeLinkTicketTypes = $Self->{ConfigObject}->Get('ITSMChange::AddChangeLinkTicketTypes');
+        my $AddChangeLinkTicketTypes = $ConfigObject->Get('ITSMChange::AddChangeLinkTicketTypes');
 
         # check the list of relevant ticket types
         if (
@@ -174,13 +171,13 @@ sub Run {
             my $Message = "Missing sysconfig option 'ITSMChange::AddChangeLinkTicketTypes'!";
 
             # log error
-            $Self->{LogObject}->Log(
+            $LogObject->Log(
                 Priority => 'error',
                 Message  => $Message,
             );
 
             # show error message
-            return $Self->{LayoutObject}->ErrorScreen(
+            return $LayoutObject->ErrorScreen(
                 Message => $Message,
                 Comment => 'Please contact the admin.',
             );
@@ -198,24 +195,27 @@ sub Run {
                 . join ',', @{$AddChangeLinkTicketTypes};
 
             # log error
-            $Self->{LogObject}->Log(
+            $LogObject->Log(
                 Priority => 'error',
                 Message  => $Message,
             );
 
             # show error message
-            return $Self->{LayoutObject}->ErrorScreen(
+            return $LayoutObject->ErrorScreen(
                 Message => $Message,
                 Comment => 'Please contact the admin.',
             );
         }
     }
 
+    # get CIP allocate object
+    my $CIPAllocateObject = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMChangeCIPAllocate');
+
     # perform the adding
     if ( $Self->{Subaction} eq 'Save' ) {
 
         # challenge token check for write action
-        $Self->{LayoutObject}->ChallengeTokenCheck();
+        $LayoutObject->ChallengeTokenCheck();
 
         # the title is required
         if ( !$GetParam{ChangeTitle} ) {
@@ -228,7 +228,7 @@ sub Run {
                 $ValidationError{ $Type . 'IDServerError' } = 'ServerError';
             }
             else {
-                my $CIPIsValid = $Self->{ChangeObject}->ChangeCIPLookup(
+                my $CIPIsValid = $ChangeObject->ChangeCIPLookup(
                     ID   => $GetParam{"${Type}ID"},
                     Type => $Type,
                 );
@@ -252,7 +252,7 @@ sub Run {
             {
 
                 # transform change requested time, time stamp based on user time zone
-                %GetParam = $Self->{LayoutObject}->TransformDateSelection(
+                %GetParam = $LayoutObject->TransformDateSelection(
                     %GetParam,
                     Prefix => 'RequestedTime',
                 );
@@ -266,7 +266,7 @@ sub Run {
                     $GetParam{RequestedTimeMinute};
 
                 # sanity check of the assembled timestamp
-                my $SystemTime = $Self->{TimeObject}->TimeStamp2SystemTime(
+                my $SystemTime = $Kernel::OM->Get('Kernel::System::Time')->TimeStamp2SystemTime(
                     String => $GetParam{RequestedTime},
                 );
 
@@ -285,17 +285,17 @@ sub Run {
 
         # cycle trough the activated Dynamic Fields for this screen
         DYNAMICFIELD:
-        for my $DynamicFieldConfig ( @{ $Self->{DynamicField} } ) {
+        for my $DynamicFieldConfig ( @{$DynamicField} ) {
             next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
 
-            my $ValidationResult = $Self->{BackendObject}->EditFieldValueValidate(
+            my $ValidationResult = $DynamicFieldBackendObject->EditFieldValueValidate(
                 DynamicFieldConfig => $DynamicFieldConfig,
-                ParamObject        => $Self->{ParamObject},
+                ParamObject        => $ParamObject,
                 Mandatory          => $Self->{Config}->{DynamicField}->{ $DynamicFieldConfig->{Name} } == 2,
             );
 
             if ( !IsHashRefWithData($ValidationResult) ) {
-                return $Self->{LayoutObject}->ErrorScreen(
+                return $LayoutObject->ErrorScreen(
                     Message =>
                         "Could not perform validation on field $DynamicFieldConfig->{Label}!",
                     Comment => 'Please contact the admin.',
@@ -313,7 +313,7 @@ sub Run {
         for my $Number ( 1 .. 32 ) {
 
             # check if the delete button was pressed for this attachment
-            my $Delete = $Self->{ParamObject}->GetParam( Param => "AttachmentDelete$Number" );
+            my $Delete = $ParamObject->GetParam( Param => "AttachmentDelete$Number" );
 
             # check next attachment if it was not pressed
             next ATTACHMENT if !$Delete;
@@ -322,7 +322,7 @@ sub Run {
             $ValidationError{Attachment} = 1;
 
             # remove the attachment from the upload cache
-            $Self->{UploadCacheObject}->FormIDRemoveFile(
+            $UploadCacheObject->FormIDRemoveFile(
                 FormID => $Self->{FormID},
                 FileID => $Number,
             );
@@ -335,13 +335,13 @@ sub Run {
             $ValidationError{Attachment} = 1;
 
             # get the uploaded attachment
-            my %UploadStuff = $Self->{ParamObject}->GetUploadAll(
+            my %UploadStuff = $ParamObject->GetUploadAll(
                 Param  => 'FileUpload',
                 Source => 'string',
             );
 
             # add attachment to the upload cache
-            $Self->{UploadCacheObject}->FormIDAddFile(
+            $UploadCacheObject->FormIDAddFile(
                 FormID => $Self->{FormID},
                 %UploadStuff,
             );
@@ -358,7 +358,7 @@ sub Run {
             }
 
             # create the change
-            my $ChangeID = $Self->{ChangeObject}->ChangeAdd(
+            my $ChangeID = $ChangeObject->ChangeAdd(
                 Description   => $GetParam{Description},
                 Justification => $GetParam{Justification},
                 ChangeTitle   => $GetParam{ChangeTitle},
@@ -377,7 +377,7 @@ sub Run {
                 if ( $GetParam{TicketID} ) {
 
                     # link ticket with newly created change
-                    my $LinkSuccess = $Self->{LinkObject}->LinkAdd(
+                    my $LinkSuccess = $Kernel::OM->Get('Kernel::System::LinkObject')->LinkAdd(
                         SourceObject => 'Ticket',
                         SourceKey    => $GetParam{TicketID},
                         TargetObject => 'ITSMChange',
@@ -395,13 +395,13 @@ sub Run {
                             . "but a link to Ticket with TicketID $GetParam{TicketID} could not be created!";
 
                         # log error
-                        $Self->{LogObject}->Log(
+                        $LogObject->Log(
                             Priority => 'error',
                             Message  => $Message,
                         );
 
                         # show error message
-                        return $Self->{LayoutObject}->ErrorScreen(
+                        return $LayoutObject->ErrorScreen(
                             Message => $Message,
                             Comment => 'Please contact the admin.',
                         );
@@ -409,12 +409,12 @@ sub Run {
                 }
 
                 # move attachments from cache to virtual fs
-                my @CachedAttachments = $Self->{UploadCacheObject}->FormIDGetAllFilesData(
+                my @CachedAttachments = $UploadCacheObject->FormIDGetAllFilesData(
                     FormID => $Self->{FormID},
                 );
 
                 for my $CachedAttachment (@CachedAttachments) {
-                    my $Success = $Self->{ChangeObject}->ChangeAttachmentAdd(
+                    my $Success = $ChangeObject->ChangeAttachmentAdd(
                         %{$CachedAttachment},
                         ChangeID => $ChangeID,
                         UserID   => $Self->{UserID},
@@ -427,7 +427,7 @@ sub Run {
                         if ( $CachedAttachment->{ContentID} ) {
 
                             # get the change data
-                            my $ChangeData = $Self->{ChangeObject}->ChangeGet(
+                            my $ChangeData = $ChangeObject->ChangeGet(
                                 ChangeID => $ChangeID,
                                 UserID   => $Self->{UserID},
                             );
@@ -441,11 +441,11 @@ sub Run {
                                 . "Filename=$CachedAttachment->{Filename};ChangeID=$ChangeID";
 
                             # replace urls
-                            $ChangeData->{Description}   =~ s{$Search}{$Replace}xms;
+                            $ChangeData->{Description} =~ s{$Search}{$Replace}xms;
                             $ChangeData->{Justification} =~ s{$Search}{$Replace}xms;
 
                             # update change
-                            my $Success = $Self->{ChangeObject}->ChangeUpdate(
+                            my $Success = $ChangeObject->ChangeUpdate(
                                 ChangeID      => $ChangeID,
                                 Description   => $ChangeData->{Description},
                                 Justification => $ChangeData->{Justification},
@@ -454,7 +454,7 @@ sub Run {
 
                             # check error
                             if ( !$Success ) {
-                                $Self->{LogObject}->Log(
+                                $LogObject->Log(
                                     Priority => 'error',
                                     Message  => "Could not update the inline image URLs "
                                         . "for ChangeID '$ChangeID'!",
@@ -462,13 +462,13 @@ sub Run {
                             }
                         }
 
-                        $Self->{UploadCacheObject}->FormIDRemoveFile(
+                        $UploadCacheObject->FormIDRemoveFile(
                             FormID => $Self->{FormID},
                             FileID => $CachedAttachment->{FileID},
                         );
                     }
                     else {
-                        $Self->{LogObject}->Log(
+                        $LogObject->Log(
                             Priority => 'error',
                             Message  => 'Cannot move File from Cache to VirtualFS'
                                 . "(${$CachedAttachment}{Filename})",
@@ -477,14 +477,14 @@ sub Run {
                 }
 
                 # redirect to zoom mask of the new change, when adding was successful
-                return $Self->{LayoutObject}->Redirect(
+                return $LayoutObject->Redirect(
                     OP => "Action=AgentITSMChangeZoom;ChangeID=$ChangeID",
                 );
             }
             else {
 
                 # show error message, when adding failed
-                return $Self->{LayoutObject}->ErrorScreen(
+                return $LayoutObject->ErrorScreen(
                     Message => 'Was not able to add change!',
                     Comment => 'Please contact the admin.',
                 );
@@ -496,19 +496,19 @@ sub Run {
     elsif ( $Self->{Subaction} eq 'AJAXUpdate' ) {
 
         # get priorities
-        my $Priorities = $Self->{ChangeObject}->ChangePossibleCIPGet(
+        my $Priorities = $ChangeObject->ChangePossibleCIPGet(
             Type   => 'Priority',
             UserID => $Self->{UserID},
         );
 
         # get selected priority
-        my $SelectedPriority = $Self->{CIPAllocateObject}->PriorityAllocationGet(
+        my $SelectedPriority = $CIPAllocateObject->PriorityAllocationGet(
             CategoryID => $GetParam{CategoryID},
             ImpactID   => $GetParam{ImpactID},
         );
 
         # build json
-        my $JSON = $Self->{LayoutObject}->BuildSelectionJSON(
+        my $JSON = $LayoutObject->BuildSelectionJSON(
             [
                 {
                     Name        => 'PriorityID',
@@ -521,8 +521,8 @@ sub Run {
         );
 
         # return json
-        return $Self->{LayoutObject}->Attachment(
-            ContentType => 'text/plain; charset=' . $Self->{LayoutObject}->{Charset},
+        return $LayoutObject->Attachment(
+            ContentType => 'text/plain; charset=' . $LayoutObject->{Charset},
             Content     => $JSON,
             Type        => 'inline',
             NoCache     => 1,
@@ -536,24 +536,24 @@ sub Run {
     }
 
     # get all attachments meta data
-    my @Attachments = $Self->{UploadCacheObject}->FormIDGetAllFilesMeta(
+    my @Attachments = $UploadCacheObject->FormIDGetAllFilesMeta(
         FormID => $Self->{FormID},
     );
 
     # output header
-    my $Output = $Self->{LayoutObject}->Header(
+    my $Output = $LayoutObject->Header(
         Title => 'Add',
     );
-    $Output .= $Self->{LayoutObject}->NavigationBar();
+    $Output .= $LayoutObject->NavigationBar();
 
     # check if requested time should be shown
     if ( $Self->{Config}->{RequestedTime} ) {
 
         # time period that can be selected from the GUI
-        my %TimePeriod = %{ $Self->{ConfigObject}->Get('ITSMWorkOrder::TimePeriod') };
+        my %TimePeriod = %{ $ConfigObject->Get('ITSMWorkOrder::TimePeriod') };
 
         # add selection for the time
-        my $TimeSelectionString = $Self->{LayoutObject}->BuildDateSelection(
+        my $TimeSelectionString = $LayoutObject->BuildDateSelection(
             %GetParam,
             Format                => 'DateInputFormatLong',
             Prefix                => 'RequestedTime',
@@ -564,7 +564,7 @@ sub Run {
         );
 
         # show time fields
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'RequestedTime',
             Data => {
                 'RequestedTimeString' => $TimeSelectionString,
@@ -575,11 +575,11 @@ sub Run {
     # create dropdown for the category
     # all categories are selectable
     # when the category is changed, a new priority is proposed
-    my $Categories = $Self->{ChangeObject}->ChangePossibleCIPGet(
+    my $Categories = $ChangeObject->ChangePossibleCIPGet(
         Type   => 'Category',
         UserID => $Self->{UserID},
     );
-    $Param{CategorySelectionString} = $Self->{LayoutObject}->BuildSelection(
+    $Param{CategorySelectionString} = $LayoutObject->BuildSelection(
         Data       => $Categories,
         Name       => 'CategoryID',
         SelectedID => $Param{CategoryID},
@@ -588,11 +588,11 @@ sub Run {
     # create dropdown for the impact
     # all impacts are selectable
     # when the impact is changed, a new priority is proposed
-    my $Impacts = $Self->{ChangeObject}->ChangePossibleCIPGet(
+    my $Impacts = $ChangeObject->ChangePossibleCIPGet(
         Type   => 'Impact',
         UserID => $Self->{UserID},
     );
-    $Param{ImpactSelectionString} = $Self->{LayoutObject}->BuildSelection(
+    $Param{ImpactSelectionString} = $LayoutObject->BuildSelection(
         Data       => $Impacts,
         Name       => 'ImpactID',
         SelectedID => $Param{ImpactID},
@@ -601,16 +601,16 @@ sub Run {
     # create dropdown for priority,
     # all priorities are selectable
     # the default value might depend on category and impact
-    my $Priorities = $Self->{ChangeObject}->ChangePossibleCIPGet(
+    my $Priorities = $ChangeObject->ChangePossibleCIPGet(
         Type   => 'Priority',
         UserID => $Self->{UserID},
     );
     my $SelectedPriority = $GetParam{PriorityID}
-        || $Self->{CIPAllocateObject}->PriorityAllocationGet(
+        || $CIPAllocateObject->PriorityAllocationGet(
         CategoryID => $Param{CategoryID},
         ImpactID   => $Param{ImpactID},
         );
-    $Param{PrioritySelectionString} = $Self->{LayoutObject}->BuildSelection(
+    $Param{PrioritySelectionString} = $LayoutObject->BuildSelection(
         Data       => $Priorities,
         Name       => 'PriorityID',
         SelectedID => $SelectedPriority,
@@ -618,7 +618,7 @@ sub Run {
 
     # cycle trough the activated Dynamic Fields for this screen
     DYNAMICFIELD:
-    for my $DynamicFieldConfig ( @{ $Self->{DynamicField} } ) {
+    for my $DynamicFieldConfig ( @{$DynamicField} ) {
 
         next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
 
@@ -629,20 +629,20 @@ sub Run {
         }
 
         # get field html
-        my $DynamicFieldHTML = $Self->{BackendObject}->EditFieldRender(
+        my $DynamicFieldHTML = $DynamicFieldBackendObject->EditFieldRender(
             DynamicFieldConfig => $DynamicFieldConfig,
             Value              => $DynamicFieldValues{ 'DynamicField_' . $DynamicFieldConfig->{Name} },
             ServerError        => $ValidationError{ $DynamicFieldConfig->{Name} } || '',
             Mandatory          => $Self->{Config}->{DynamicField}->{ $DynamicFieldConfig->{Name} } == 2,
-            LayoutObject       => $Self->{LayoutObject},
-            ParamObject        => $Self->{ParamObject},
+            LayoutObject       => $LayoutObject,
+            ParamObject        => $ParamObject,
             AJAXUpdate         => 0,
         );
 
         # skip fields that HTML could not be retrieved
         next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldHTML);
 
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'DynamicField',
             Data => {
                 Name  => $DynamicFieldConfig->{Name},
@@ -652,7 +652,7 @@ sub Run {
         );
 
         # example of dynamic fields order customization
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'DynamicField_' . $DynamicFieldConfig->{Name},
             Data => {
                 Name  => $DynamicFieldConfig->{Name},
@@ -663,7 +663,7 @@ sub Run {
     }
 
     # show the attachment upload button
-    $Self->{LayoutObject}->Block(
+    $LayoutObject->Block(
         Name => 'AttachmentUpload',
         Data => {%Param},
     );
@@ -674,11 +674,11 @@ sub Run {
 
         # do not show inline images as attachments
         # (they have a content id)
-        if ( $Attachment->{ContentID} && $Self->{LayoutObject}->{BrowserRichText} ) {
+        if ( $Attachment->{ContentID} && $LayoutObject->{BrowserRichText} ) {
             next ATTACHMENT;
         }
 
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'Attachment',
             Data => $Attachment,
         );
@@ -687,15 +687,15 @@ sub Run {
     # add rich text editor javascript
     # only if activated and the browser can handle it
     # otherwise just a textarea is shown
-    if ( $Self->{LayoutObject}->{BrowserRichText} ) {
-        $Self->{LayoutObject}->Block(
+    if ( $LayoutObject->{BrowserRichText} ) {
+        $LayoutObject->Block(
             Name => 'RichText',
             Data => {%Param},
         );
     }
 
     # start template output
-    $Output .= $Self->{LayoutObject}->Output(
+    $Output .= $LayoutObject->Output(
         TemplateFile => 'AgentITSMChangeAdd',
         Data         => {
             %Param,
@@ -706,7 +706,7 @@ sub Run {
     );
 
     # add footer
-    $Output .= $Self->{LayoutObject}->Footer();
+    $Output .= $LayoutObject->Footer();
 
     return $Output;
 }

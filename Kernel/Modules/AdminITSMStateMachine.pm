@@ -11,7 +11,7 @@ package Kernel::Modules::AdminITSMStateMachine;
 use strict;
 use warnings;
 
-use Kernel::System::ITSMChange::ITSMStateMachine;
+our $ObjectManagerDisabled = 1;
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -19,26 +19,6 @@ sub new {
     # allocate new hash for object
     my $Self = {%Param};
     bless( $Self, $Type );
-
-    # check all needed objects
-    for (qw(ParamObject DBObject LayoutObject ConfigObject LogObject)) {
-        if ( !$Self->{$_} ) {
-            $Self->{LayoutObject}->FatalError( Message => "Got no $_!" );
-        }
-    }
-
-    # create additional objects
-    $Self->{StateMachineObject} = Kernel::System::ITSMChange::ITSMStateMachine->new(%Param);
-
-    # read the config,
-    my $Config = $Self->{ConfigObject}->Get("ITSMStateMachine::Object") || {};
-
-    # prepare the config for lookup by class
-    # the hash keys of $Config are not significant
-    $Self->{ConfigByClass} = {};
-    for my $HashRef ( values %{$Config} ) {
-        $Self->{ConfigByClass}->{ $HashRef->{Class} } = $HashRef;
-    }
 
     return $Self;
 }
@@ -48,10 +28,23 @@ sub Run {
 
     my %Error;
 
+    # get param object
+    my $ParamObject = $Kernel::OM->Get('Kernel::System::Web::Request');
+
     # store commonly needed parameters in %GetParam
     my %GetParam;
     for my $ParamName (qw(StateID NextStateID Class)) {
-        $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
+        $GetParam{$ParamName} = $ParamObject->GetParam( Param => $ParamName );
+    }
+
+    # read the config,
+    my $Config = $Kernel::OM->Get('Kernel::Config')->Get("ITSMStateMachine::Object") || {};
+
+    # prepare the config for lookup by class
+    # the hash keys of $Config are not significant
+    $Self->{ConfigByClass} = {};
+    for my $HashRef ( values %{$Config} ) {
+        $Self->{ConfigByClass}->{ $HashRef->{Class} } = $HashRef;
     }
 
     # translate from name to class and vice versa
@@ -101,7 +94,11 @@ sub Run {
             Value => $Class,
             };
     }
-    $GetParam{ClassSelectionString} = $Self->{LayoutObject}->BuildSelection(
+
+    # get layout object
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+
+    $GetParam{ClassSelectionString} = $LayoutObject->BuildSelection(
         Name         => 'Class',
         Data         => \@ArrHashRef,
         SelectedID   => $GetParam{Class},
@@ -111,19 +108,21 @@ sub Run {
     );
 
     # perform actions
-
     my $ActionIsOk = 1;
+
+    # get state machine object
+    my $StateMachineObject = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMStateMachine');
 
     # update the next state of a state transition
     if ( $Self->{Subaction} eq 'StateTransitionUpdateAction' ) {
 
         # params specific to StateTransitionUpdate
         for my $ParamName (qw(NewNextStateID)) {
-            $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
+            $GetParam{$ParamName} = $ParamObject->GetParam( Param => $ParamName );
         }
 
         # Update the state transition
-        $ActionIsOk = $Self->{StateMachineObject}->StateTransitionUpdate(
+        $ActionIsOk = $StateMachineObject->StateTransitionUpdate(
             Class          => $GetParam{Class},
             StateID        => $GetParam{StateID},
             NextStateID    => $GetParam{NextStateID},
@@ -158,7 +157,7 @@ sub Run {
         }
 
         # Add the state transition
-        $ActionIsOk = $Self->{StateMachineObject}->StateTransitionAdd(
+        $ActionIsOk = $StateMachineObject->StateTransitionAdd(
             Class       => $GetParam{Class},
             StateID     => $GetParam{StateID},
             NextStateID => $GetParam{NextStateID},
@@ -167,7 +166,7 @@ sub Run {
     elsif ( $Self->{Subaction} eq 'StateTransitionDeleteAction' ) {
 
         # Delete the state transition
-        $ActionIsOk = $Self->{StateMachineObject}->StateTransitionDelete(
+        $ActionIsOk = $StateMachineObject->StateTransitionDelete(
             StateID     => $GetParam{StateID},
             NextStateID => $GetParam{NextStateID},
         );
@@ -175,7 +174,7 @@ sub Run {
 
     # Show list of state transitions for the class
     if ( $GetParam{Class} ) {
-        $Note .= $ActionIsOk ? '' : $Self->{LayoutObject}->Notify( Priority => 'Error' );
+        $Note .= $ActionIsOk ? '' : $LayoutObject->Notify( Priority => 'Error' );
 
         return $Self->_OverviewStateTransitionsPageGet(
             %GetParam,
@@ -194,13 +193,16 @@ sub Run {
 sub _StateTransitionUpdatePageGet {
     my ( $Self, %Param ) = @_;
 
-    $Param{StateName} = $Self->{StateMachineObject}->StateLookup(
+    # get state machine object
+    my $StateMachineObject = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMStateMachine');
+
+    $Param{StateName} = $StateMachineObject->StateLookup(
         Class   => $Param{Class},
         StateID => $Param{StateID},
     ) || '*START*';
 
     # ArrayHashRef with all states for a catalog class
-    my $AllStatesArrayHashRef = $Self->{StateMachineObject}->StateList(
+    my $AllStatesArrayHashRef = $StateMachineObject->StateList(
         Class  => $Param{Class},
         UserID => $Self->{UserID},
     );
@@ -212,35 +214,38 @@ sub _StateTransitionUpdatePageGet {
         Value => '*END*'
         };
 
-    $Param{NextStateSelectionString} = $Self->{LayoutObject}->BuildSelection(
+    # get layout object
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+
+    $Param{NextStateSelectionString} = $LayoutObject->BuildSelection(
         Data       => $AllStatesArrayHashRef,
         Name       => 'NewNextStateID',
         SelectedID => $Param{NextStateID},
     );
 
-    $Self->{LayoutObject}->Block(
+    $LayoutObject->Block(
         Name => 'Overview',
         Data => \%Param,
     );
 
-    $Self->{LayoutObject}->Block(
+    $LayoutObject->Block(
         Name => 'ActionOverview',
     );
 
-    $Self->{LayoutObject}->Block(
+    $LayoutObject->Block(
         Name => 'StateTransitionUpdate',
         Data => \%Param,
     );
 
     # generate HTML
-    my $Output = $Self->{LayoutObject}->Header();
-    $Output .= $Self->{LayoutObject}->NavigationBar();
+    my $Output = $LayoutObject->Header();
+    $Output .= $LayoutObject->NavigationBar();
     $Output .= $Param{Note} || '';
-    $Output .= $Self->{LayoutObject}->Output(
+    $Output .= $LayoutObject->Output(
         TemplateFile => 'AdminITSMStateMachine',
         Data         => \%Param,
     );
-    $Output .= $Self->{LayoutObject}->Footer();
+    $Output .= $LayoutObject->Footer();
 
     return $Output;
 }
@@ -250,7 +255,7 @@ sub _StateTransitionAddPageGet {
     my ( $Self, %Param ) = @_;
 
     # ArrayHashRef with all states for a catalog class
-    my $AllStatesArrayHashRef = $Self->{StateMachineObject}->StateList(
+    my $AllStatesArrayHashRef = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMStateMachine')->StateList(
         Class  => $Param{Class},
         UserID => $Self->{UserID},
     );
@@ -261,8 +266,11 @@ sub _StateTransitionAddPageGet {
         Value => '*START*',
     };
 
+    # get layout object
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+
     # dropdown menu, where the state can be selected for addition
-    $Param{StateSelectionString} = $Self->{LayoutObject}->BuildSelection(
+    $Param{StateSelectionString} = $LayoutObject->BuildSelection(
         Data         => $AllStatesArrayHashRef,
         Name         => 'StateID',
         SelectedID   => $Param{StateID},
@@ -275,7 +283,7 @@ sub _StateTransitionAddPageGet {
         Key   => '0',
         Value => '*END*',
     };
-    $Param{NextStateSelectionString} = $Self->{LayoutObject}->BuildSelection(
+    $Param{NextStateSelectionString} = $LayoutObject->BuildSelection(
         Data         => $AllStatesArrayHashRef,
         Name         => 'NextStateID',
         SelectedID   => $Param{NextStateID},
@@ -283,27 +291,27 @@ sub _StateTransitionAddPageGet {
         Class        => 'Validate_Required ' . ( $Param{NextStateInvalid} || '' ),
     );
 
-    $Self->{LayoutObject}->Block(
+    $LayoutObject->Block(
         Name => 'Overview',
         Data => \%Param,
     );
 
-    $Self->{LayoutObject}->Block( Name => 'ActionOverview' );
+    $LayoutObject->Block( Name => 'ActionOverview' );
 
-    $Self->{LayoutObject}->Block(
+    $LayoutObject->Block(
         Name => 'StateTransitionAdd',
         Data => \%Param,
     );
 
     # generate HTML
-    my $Output = $Self->{LayoutObject}->Header();
-    $Output .= $Self->{LayoutObject}->NavigationBar();
+    my $Output = $LayoutObject->Header();
+    $Output .= $LayoutObject->NavigationBar();
     $Output .= $Param{Note} || '';
-    $Output .= $Self->{LayoutObject}->Output(
+    $Output .= $LayoutObject->Output(
         TemplateFile => 'AdminITSMStateMachine',
         Data         => \%Param,
     );
-    $Output .= $Self->{LayoutObject}->Footer();
+    $Output .= $LayoutObject->Footer();
 
     return $Output;
 }
@@ -312,39 +320,45 @@ sub _StateTransitionAddPageGet {
 sub _StateTransitionDeletePageGet {
     my ( $Self, %Param ) = @_;
 
-    $Self->{LayoutObject}->Block(
+    # get layout object
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+
+    $LayoutObject->Block(
         Name => 'Overview',
         Data => \%Param,
     );
 
-    $Self->{LayoutObject}->Block(
+    $LayoutObject->Block(
         Name => 'ActionOverview',
     );
 
-    $Param{StateName} = $Self->{StateMachineObject}->StateLookup(
+    # get state machine object
+    my $StateMachineObject = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMStateMachine');
+
+    $Param{StateName} = $StateMachineObject->StateLookup(
         Class   => $Param{Class},
         StateID => $Param{StateID},
     ) || '*START*';
 
-    $Param{NextStateName} = $Self->{StateMachineObject}->StateLookup(
+    $Param{NextStateName} = $StateMachineObject->StateLookup(
         Class   => $Param{Class},
         StateID => $Param{NextStateID},
     ) || '*END*';
 
-    $Self->{LayoutObject}->Block(
+    $LayoutObject->Block(
         Name => 'StateTransitionDelete',
         Data => \%Param,
     );
 
     # generate HTML
-    my $Output = $Self->{LayoutObject}->Header();
-    $Output .= $Self->{LayoutObject}->NavigationBar();
+    my $Output = $LayoutObject->Header();
+    $Output .= $LayoutObject->NavigationBar();
     $Output .= $Param{Note} || '';
-    $Output .= $Self->{LayoutObject}->Output(
+    $Output .= $LayoutObject->Output(
         TemplateFile => 'AdminITSMStateMachine',
         Data         => \%Param,
     );
-    $Output .= $Self->{LayoutObject}->Footer();
+    $Output .= $LayoutObject->Footer();
 
     return $Output;
 }
@@ -353,22 +367,28 @@ sub _StateTransitionDeletePageGet {
 sub _OverviewStateTransitionsPageGet {
     my ( $Self, %Param ) = @_;
 
-    $Self->{LayoutObject}->Block(
+    # get layout object
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+
+    $LayoutObject->Block(
         Name => 'Overview',
         Data => \%Param,
     );
 
-    $Self->{LayoutObject}->Block(
+    $LayoutObject->Block(
         Name => 'ActionOverview',
     );
 
-    $Self->{LayoutObject}->Block(
+    $LayoutObject->Block(
         Name => 'OverviewStateTransitions',
         Data => \%Param,
     );
 
+    # get state machine object
+    my $StateMachineObject = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMStateMachine');
+
     # lookup for state names
-    my %NextStateIDs = %{ $Self->{StateMachineObject}->StateTransitionList( Class => $Param{Class} ) || {} };
+    my %NextStateIDs = %{ $StateMachineObject->StateTransitionList( Class => $Param{Class} ) || {} };
 
     # loop over all 'State' and 'NextState' pairs for the catalog class
     for my $StateID ( sort keys %NextStateIDs ) {
@@ -376,16 +396,16 @@ sub _OverviewStateTransitionsPageGet {
         for my $NextStateID ( @{ $NextStateIDs{$StateID} } ) {
 
             # state names
-            my $StateName = $Self->{StateMachineObject}->StateLookup(
+            my $StateName = $StateMachineObject->StateLookup(
                 Class   => $Param{Class},
                 StateID => $StateID,
             ) || '*START*';
-            my $NextStateName = $Self->{StateMachineObject}->StateLookup(
+            my $NextStateName = $StateMachineObject->StateLookup(
                 Class   => $Param{Class},
                 StateID => $NextStateID,
             ) || '*END*';
 
-            $Self->{LayoutObject}->Block(
+            $LayoutObject->Block(
                 Name => 'StateTransitionRow',
                 Data => {
                     %Param,
@@ -398,7 +418,7 @@ sub _OverviewStateTransitionsPageGet {
 
             # only show the delete link if it is not the start state
             if ( $StateName ne '*START*' ) {
-                $Self->{LayoutObject}->Block(
+                $LayoutObject->Block(
                     Name => 'StateTransitionDeleteButton',
                     Data => {
                         %Param,
@@ -413,14 +433,14 @@ sub _OverviewStateTransitionsPageGet {
     }
 
     # generate HTML
-    my $Output = $Self->{LayoutObject}->Header();
-    $Output .= $Self->{LayoutObject}->NavigationBar();
+    my $Output = $LayoutObject->Header();
+    $Output .= $LayoutObject->NavigationBar();
     $Output .= $Param{Note} || '';
-    $Output .= $Self->{LayoutObject}->Output(
+    $Output .= $LayoutObject->Output(
         TemplateFile => 'AdminITSMStateMachine',
         Data         => \%Param,
     );
-    $Output .= $Self->{LayoutObject}->Footer();
+    $Output .= $LayoutObject->Footer();
 
     return $Output;
 }
@@ -429,23 +449,36 @@ sub _OverviewStateTransitionsPageGet {
 sub _OverviewClassesPageGet {
     my ( $Self, %Param ) = @_;
 
-    $Self->{LayoutObject}->Block(
+    # get layout object
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+
+    $LayoutObject->Block(
         Name => 'Overview',
         Data => \%Param,
     );
 
-    $Self->{LayoutObject}->Block(
+    $LayoutObject->Block(
         Name => 'ActionAddState',
         Data => \%Param,
     );
 
-    $Self->{LayoutObject}->Block(
+    $LayoutObject->Block(
         Name => 'OverviewClasses',
         Data => \%Param,
     );
 
+    # read the config,
+    my $Config = $Kernel::OM->Get('Kernel::Config')->Get("ITSMStateMachine::Object") || {};
+
+    # prepare the config for lookup by class
+    # the hash keys of $Config are not significant
+    $Self->{ConfigByClass} = {};
+    for my $HashRef ( values %{$Config} ) {
+        $Self->{ConfigByClass}->{ $HashRef->{Class} } = $HashRef;
+    }
+
     for my $Class ( sort keys %{ $Self->{ConfigByClass} } ) {
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'OverviewClassesRow',
             Data => {
                 ClassShortName => $Self->{ConfigByClass}->{$Class}->{Name},
@@ -455,14 +488,14 @@ sub _OverviewClassesPageGet {
     }
 
     # generate HTML
-    my $Output = $Self->{LayoutObject}->Header();
-    $Output .= $Self->{LayoutObject}->NavigationBar();
+    my $Output = $LayoutObject->Header();
+    $Output .= $LayoutObject->NavigationBar();
     $Output .= $Param{Note} || '';
-    $Output .= $Self->{LayoutObject}->Output(
+    $Output .= $LayoutObject->Output(
         TemplateFile => 'AdminITSMStateMachine',
         Data         => \%Param,
     );
-    $Output .= $Self->{LayoutObject}->Footer();
+    $Output .= $LayoutObject->Footer();
 
     return $Output;
 }

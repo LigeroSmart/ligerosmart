@@ -11,7 +11,7 @@ package Kernel::Modules::AgentITSMChangeDelete;
 use strict;
 use warnings;
 
-use Kernel::System::ITSMChange;
+our $ObjectManagerDisabled = 1;
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -20,22 +20,6 @@ sub new {
     my $Self = {%Param};
     bless( $Self, $Type );
 
-    # check needed objects
-    for my $Object (
-        qw(ParamObject DBObject LayoutObject LogObject ConfigObject UserObject GroupObject)
-        )
-    {
-        if ( !$Self->{$Object} ) {
-            $Self->{LayoutObject}->FatalError( Message => "Got no $Object!" );
-        }
-    }
-
-    # create additional objects
-    $Self->{ChangeObject} = Kernel::System::ITSMChange->new(%Param);
-
-    # get config of frontend module
-    $Self->{Config} = $Self->{ConfigObject}->Get("ITSMChange::Frontend::$Self->{Action}");
-
     return $Self;
 }
 
@@ -43,18 +27,27 @@ sub Run {
     my ( $Self, %Param ) = @_;
 
     # get needed ChangeID
-    my $ChangeID = $Self->{ParamObject}->GetParam( Param => 'ChangeID' );
+    my $ChangeID = $Kernel::OM->Get('Kernel::System::Web::Request')->GetParam( Param => 'ChangeID' );
+
+    # get layout object
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
     # check needed stuff
     if ( !$ChangeID ) {
-        return $Self->{LayoutObject}->ErrorScreen(
+        return $LayoutObject->ErrorScreen(
             Message => 'No ChangeID is given!',
             Comment => 'Please contact the admin.',
         );
     }
 
+    # get change object
+    my $ChangeObject = $Kernel::OM->Get('Kernel::System::ITSMChange');
+
+    # get config of frontend module
+    $Self->{Config} = $Kernel::OM->Get('Kernel::Config')->Get("ITSMChange::Frontend::$Self->{Action}");
+
     # check permissions
-    my $Access = $Self->{ChangeObject}->Permission(
+    my $Access = $ChangeObject->Permission(
         Type     => $Self->{Config}->{Permission},
         Action   => $Self->{Action},
         ChangeID => $ChangeID,
@@ -63,21 +56,21 @@ sub Run {
 
     # error screen
     if ( !$Access ) {
-        return $Self->{LayoutObject}->NoPermission(
+        return $LayoutObject->NoPermission(
             Message    => "You need $Self->{Config}->{Permission} permissions!",
             WithHeader => 'yes',
         );
     }
 
     # get change data
-    my $Change = $Self->{ChangeObject}->ChangeGet(
+    my $Change = $ChangeObject->ChangeGet(
         ChangeID => $ChangeID,
         UserID   => $Self->{UserID},
     );
 
     # check if change is found
     if ( !$Change ) {
-        return $Self->{LayoutObject}->ErrorScreen(
+        return $LayoutObject->ErrorScreen(
             Message => "Change '$ChangeID' not found in database!",
             Comment => 'Please contact the admin.',
         );
@@ -88,7 +81,7 @@ sub Run {
 
     # only allow deletion if change is in one of the allowed change states
     if ( !$AllowedChangeStates{ $Change->{ChangeState} } ) {
-        return $Self->{LayoutObject}->ErrorScreen(
+        return $LayoutObject->ErrorScreen(
             Message => "Change '$ChangeID' does not have an allowed change state to be deleted!",
             Comment => 'Please contact the admin.',
         );
@@ -97,7 +90,7 @@ sub Run {
     if ( $Self->{Subaction} eq 'ChangeDelete' ) {
 
         # delete the change
-        my $CouldDeleteChange = $Self->{ChangeObject}->ChangeDelete(
+        my $CouldDeleteChange = $ChangeObject->ChangeDelete(
             ChangeID => $ChangeID,
             UserID   => $Self->{UserID},
         );
@@ -105,14 +98,14 @@ sub Run {
         if ($CouldDeleteChange) {
 
             # redirect to change overview, when the deletion was successful
-            return $Self->{LayoutObject}->Redirect(
+            return $LayoutObject->Redirect(
                 OP => "Action=AgentITSMChange",
             );
         }
         else {
 
             # show error message, when delete failed
-            return $Self->{LayoutObject}->ErrorScreen(
+            return $LayoutObject->ErrorScreen(
                 Message => "Was not able to delete the change ID $ChangeID!",
                 Comment => 'Please contact the administrator.',
             );
@@ -123,7 +116,7 @@ sub Run {
     my $DialogType = 'Confirmation';
 
     # output content
-    my $Output .= $Self->{LayoutObject}->Output(
+    my $Output .= $LayoutObject->Output(
         TemplateFile => 'AgentITSMChangeDelete',
         Data         => {
             %Param,
@@ -138,10 +131,10 @@ sub Run {
     );
 
     # return JSON-String because of AJAX-Mode
-    my $OutputJSON = $Self->{LayoutObject}->JSONEncode( Data => \%Data );
+    my $OutputJSON = $LayoutObject->JSONEncode( Data => \%Data );
 
-    return $Self->{LayoutObject}->Attachment(
-        ContentType => 'application/json; charset=' . $Self->{LayoutObject}->{Charset},
+    return $LayoutObject->Attachment(
+        ContentType => 'application/json; charset=' . $LayoutObject->{Charset},
         Content     => $OutputJSON,
         Type        => 'inline',
         NoCache     => 1,

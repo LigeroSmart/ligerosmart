@@ -11,10 +11,7 @@ package Kernel::Modules::AgentITSMWorkOrderTemplate;
 use strict;
 use warnings;
 
-use Kernel::System::ITSMChange;
-use Kernel::System::ITSMChange::ITSMWorkOrder;
-use Kernel::System::ITSMChange::Template;
-use Kernel::System::Valid;
+our $ObjectManagerDisabled = 1;
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -23,67 +20,58 @@ sub new {
     my $Self = {%Param};
     bless( $Self, $Type );
 
-    # check needed objects
-    for my $Object (
-        qw(ParamObject DBObject LayoutObject LogObject ConfigObject UserObject GroupObject)
-        )
-    {
-        if ( !$Self->{$Object} ) {
-            $Self->{LayoutObject}->FatalError( Message => "Got no $Object!" );
-        }
-    }
-
-    # create additional objects
-    $Self->{ChangeObject}    = Kernel::System::ITSMChange->new(%Param);
-    $Self->{WorkOrderObject} = Kernel::System::ITSMChange::ITSMWorkOrder->new(%Param);
-    $Self->{TemplateObject}  = Kernel::System::ITSMChange::Template->new(%Param);
-    $Self->{ValidObject}     = Kernel::System::Valid->new(%Param);
-
-    # get config of frontend module
-    $Self->{Config} = $Self->{ConfigObject}->Get("ITSMWorkOrder::Frontend::$Self->{Action}");
-
     return $Self;
 }
 
 sub Run {
     my ( $Self, %Param ) = @_;
 
+    # get needed object
+    my $ParamObject  = $Kernel::OM->Get('Kernel::System::Web::Request');
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+
     # get needed WorkOrderID
-    my $WorkOrderID = $Self->{ParamObject}->GetParam( Param => 'WorkOrderID' );
+    my $WorkOrderID = $ParamObject->GetParam( Param => 'WorkOrderID' );
 
     # check needed stuff
     if ( !$WorkOrderID ) {
-        return $Self->{LayoutObject}->ErrorScreen(
+        return $LayoutObject->ErrorScreen(
             Message => 'No WorkOrderID is given!',
             Comment => 'Please contact the administrator.',
         );
     }
 
     # get workorder data
-    my $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
+    my $WorkOrder = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderGet(
         WorkOrderID => $WorkOrderID,
         UserID      => $Self->{UserID},
     );
 
     # check if LayoutObject has TranslationObject
-    if ( $Self->{LayoutObject}->{LanguageObject} ) {
+    if ( $LayoutObject->{LanguageObject} ) {
 
         # translate workorder type
-        $WorkOrder->{WorkOrderType} = $Self->{LayoutObject}->{LanguageObject}->Translate(
+        $WorkOrder->{WorkOrderType} = $LayoutObject->{LanguageObject}->Translate(
             $WorkOrder->{WorkOrderType}
         );
     }
 
     # check error
     if ( !$WorkOrder ) {
-        return $Self->{LayoutObject}->ErrorScreen(
+        return $LayoutObject->ErrorScreen(
             Message => "WorkOrder '$WorkOrderID' not found in database!",
             Comment => 'Please contact the administrator.',
         );
     }
 
+    # get change object
+    my $ChangeObject = $Kernel::OM->Get('Kernel::System::ITSMChange');
+
+    # get config of frontend module
+    $Self->{Config} = $Kernel::OM->Get('Kernel::Config')->Get("ITSMWorkOrder::Frontend::$Self->{Action}");
+
     # check permissions
-    my $Access = $Self->{ChangeObject}->Permission(
+    my $Access = $ChangeObject->Permission(
         Type        => $Self->{Config}->{Permission},
         Action      => $Self->{Action},
         ChangeID    => $WorkOrder->{ChangeID},
@@ -93,7 +81,7 @@ sub Run {
 
     # error screen
     if ( !$Access ) {
-        return $Self->{LayoutObject}->NoPermission(
+        return $LayoutObject->NoPermission(
             Message    => "You need $Self->{Config}->{Permission} permissions!",
             WithHeader => 'yes',
         );
@@ -105,11 +93,14 @@ sub Run {
         qw(TemplateName Comment ValidID StateReset OverwriteTemplate DeleteWorkOrder)
         )
     {
-        $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
+        $GetParam{$ParamName} = $ParamObject->GetParam( Param => $ParamName );
     }
 
+    # get user object
+    my $UserObject = $Kernel::OM->Get('Kernel::System::User');
+
     # get existing user preferences
-    my %UserPreferences = $Self->{UserObject}->GetPreferences(
+    my %UserPreferences = $UserObject->GetPreferences(
         UserID => $Self->{UserID},
     );
 
@@ -127,11 +118,14 @@ sub Run {
     # get template id from user preferences
     my $TemplateID = $Object2Template{ 'WorkOrderID' . $WorkOrderID };
 
+    # get template object
+    my $TemplateObject = $Kernel::OM->Get('Kernel::System::ITSMChange::Template');
+
     # check if this workorder was created by this user using a template
     if ($TemplateID) {
 
         # get template data
-        my $TemplateData = $Self->{TemplateObject}->TemplateGet(
+        my $TemplateData = $TemplateObject->TemplateGet(
             TemplateID => $TemplateID,
             UserID     => 1,
         );
@@ -162,7 +156,7 @@ sub Run {
         if ( !%Error ) {
 
             # serialize the workorder
-            my $TemplateContent = $Self->{TemplateObject}->TemplateSerialize(
+            my $TemplateContent = $TemplateObject->TemplateSerialize(
                 TemplateType => 'ITSMWorkOrder',
                 StateReset   => $GetParam{StateReset} || 0,
                 WorkOrderID  => $WorkOrderID,
@@ -171,7 +165,7 @@ sub Run {
 
             # show error message
             if ( !$TemplateContent ) {
-                return $Self->{LayoutObject}->ErrorScreen(
+                return $LayoutObject->ErrorScreen(
                     Message => "The workorder '$WorkOrderID' could not be serialized.",
                     Comment => 'Please contact the administrator.',
                 );
@@ -180,7 +174,7 @@ sub Run {
             # if this workorder was created from a template and should be saved back
             if ( $TemplateID && $GetParam{OverwriteTemplate} ) {
 
-                my $UpdateSuccess = $Self->{TemplateObject}->TemplateUpdate(
+                my $UpdateSuccess = $TemplateObject->TemplateUpdate(
                     TemplateID => $TemplateID,
                     Name       => $GetParam{TemplateName},
                     Comment    => $GetParam{Comment},
@@ -191,7 +185,7 @@ sub Run {
 
                 # show error message
                 if ( !$UpdateSuccess ) {
-                    return $Self->{LayoutObject}->ErrorScreen(
+                    return $LayoutObject->ErrorScreen(
                         Message => "Could not update the template '$TemplateID'.",
                         Comment => 'Please contact the administrator.',
                     );
@@ -200,7 +194,7 @@ sub Run {
 
             else {
                 # store the serialized workorder as a new template
-                $TemplateID = $Self->{TemplateObject}->TemplateAdd(
+                $TemplateID = $TemplateObject->TemplateAdd(
                     Name         => $GetParam{TemplateName},
                     Comment      => $GetParam{Comment},
                     ValidID      => $GetParam{ValidID},
@@ -211,7 +205,7 @@ sub Run {
 
                 # show error message
                 if ( !$TemplateID ) {
-                    return $Self->{LayoutObject}->ErrorScreen(
+                    return $LayoutObject->ErrorScreen(
                         Message => "Could not add the template.",
                         Comment => 'Please contact the administrator.',
                     );
@@ -225,14 +219,14 @@ sub Run {
             if ( $GetParam{DeleteWorkOrder} ) {
 
                 # delete the change and all workorders (including this one)
-                my $DeleteSuccess = $Self->{ChangeObject}->ChangeDelete(
+                my $DeleteSuccess = $ChangeObject->ChangeDelete(
                     ChangeID => $WorkOrder->{ChangeID},
                     UserID   => $Self->{UserID},
                 );
 
                 # show error message
                 if ( !$DeleteSuccess ) {
-                    return $Self->{LayoutObject}->ErrorScreen(
+                    return $LayoutObject->ErrorScreen(
                         Message => "Could not delete change '$WorkOrder->{ChangeID}'.",
                         Comment => 'Please contact the administrator.',
                     );
@@ -257,51 +251,54 @@ sub Run {
             }
 
             # save preferences
-            $Self->{UserObject}->SetPreferences(
+            $UserObject->SetPreferences(
                 Key    => 'UserITSMChangeManagementTemplateEdit',
                 Value  => $TemplateEditPreferenceString,
                 UserID => $Self->{UserID},
             );
 
             # load new URL in parent window and close popup
-            return $Self->{LayoutObject}->PopupClose(
+            return $LayoutObject->PopupClose(
                 URL => $RedirectURL,
             );
         }
     }
 
     # get change that the workorder belongs to
-    my $Change = $Self->{ChangeObject}->ChangeGet(
+    my $Change = $ChangeObject->ChangeGet(
         ChangeID => $WorkOrder->{ChangeID},
         UserID   => $Self->{UserID},
     );
 
     # no change found
     if ( !$Change ) {
-        return $Self->{LayoutObject}->ErrorScreen(
+        return $LayoutObject->ErrorScreen(
             Message => "Could not find Change for WorkOrder $WorkOrderID!",
             Comment => 'Please contact the administrator.',
         );
     }
 
     # output header
-    my $Output = $Self->{LayoutObject}->Header(
+    my $Output = $LayoutObject->Header(
         Type  => 'Small',
         Title => 'Template',
     );
 
+    # get valid object
+    my $ValidObject = $Kernel::OM->Get('Kernel::System::Valid');
+
     # build valid selection
-    my $ValidSelectionString = $Self->{LayoutObject}->BuildSelection(
+    my $ValidSelectionString = $LayoutObject->BuildSelection(
         Data => {
-            $Self->{ValidObject}->ValidList(),
+            $ValidObject->ValidList(),
         },
         Name       => 'ValidID',
-        SelectedID => $GetParam{ValidID} || ( $Self->{ValidObject}->ValidIDsGet() )[0],
+        SelectedID => $GetParam{ValidID} || ( $ValidObject->ValidIDsGet() )[0],
         Sort       => 'NumericKey',
     );
 
     # build selection string for state reset
-    my $StateResetSelectionString = $Self->{LayoutObject}->BuildSelection(
+    my $StateResetSelectionString = $LayoutObject->BuildSelection(
         Data => {
             0 => 'No',
             1 => 'Yes',
@@ -314,7 +311,7 @@ sub Run {
     if ($TemplateID) {
 
         # build selection string for template overwrite, default is yes
-        my $OverwriteTemplateSelectionString = $Self->{LayoutObject}->BuildSelection(
+        my $OverwriteTemplateSelectionString = $LayoutObject->BuildSelection(
             Data => {
                 0 => 'No',
                 1 => 'Yes',
@@ -324,7 +321,7 @@ sub Run {
         );
 
         # show overwrite original template dropdown
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'OverwriteTemplate',
             Data => {
                 %GetParam,
@@ -333,7 +330,7 @@ sub Run {
         );
 
         # build selection string for delete workorder
-        my $DeleteWorkOrderSelectionString = $Self->{LayoutObject}->BuildSelection(
+        my $DeleteWorkOrderSelectionString = $LayoutObject->BuildSelection(
             Data => {
                 0 => 'No',
                 1 => 'Yes',
@@ -343,7 +340,7 @@ sub Run {
         );
 
         # show delete WorkOrder dropdown
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'DeleteWorkOrder',
             Data => {
                 %GetParam,
@@ -353,7 +350,7 @@ sub Run {
     }
 
     # start template output
-    $Output .= $Self->{LayoutObject}->Output(
+    $Output .= $LayoutObject->Output(
         TemplateFile => 'AgentITSMWorkOrderTemplate',
         Data         => {
             %GetParam,
@@ -366,7 +363,7 @@ sub Run {
     );
 
     # add footer
-    $Output .= $Self->{LayoutObject}->Footer( Type => 'Small' );
+    $Output .= $LayoutObject->Footer( Type => 'Small' );
 
     return $Output;
 }

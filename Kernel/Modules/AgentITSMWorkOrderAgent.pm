@@ -11,8 +11,7 @@ package Kernel::Modules::AgentITSMWorkOrderAgent;
 use strict;
 use warnings;
 
-use Kernel::System::ITSMChange;
-use Kernel::System::ITSMChange::ITSMWorkOrder;
+our $ObjectManagerDisabled = 1;
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -21,56 +20,52 @@ sub new {
     my $Self = {%Param};
     bless( $Self, $Type );
 
-    # check needed objects
-    for my $Object (
-        qw(ParamObject DBObject LayoutObject LogObject UserObject GroupObject ConfigObject)
-        )
-    {
-        if ( !$Self->{$Object} ) {
-            $Self->{LayoutObject}->FatalError( Message => "Got no $Object!" );
-        }
-    }
-
-    # create additional objects
-    $Self->{ChangeObject}    = Kernel::System::ITSMChange->new(%Param);
-    $Self->{WorkOrderObject} = Kernel::System::ITSMChange::ITSMWorkOrder->new(%Param);
-
-    # get config for frontend
-    $Self->{Config} = $Self->{ConfigObject}->Get("ITSMWorkOrder::Frontend::$Self->{Action}");
-
     return $Self;
 }
 
 sub Run {
     my ( $Self, %Param ) = @_;
 
+    # get needed object
+    my $ParamObject  = $Kernel::OM->Get('Kernel::System::Web::Request');
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+
     # get needed WorkOrderID
-    my $WorkOrderID = $Self->{ParamObject}->GetParam( Param => 'WorkOrderID' );
+    my $WorkOrderID = $ParamObject->GetParam( Param => 'WorkOrderID' );
 
     # check needed stuff
     if ( !$WorkOrderID ) {
-        return $Self->{LayoutObject}->ErrorScreen(
+        return $LayoutObject->ErrorScreen(
             Message => 'No WorkOrderID is given!',
             Comment => 'Please contact the admin.',
         );
     }
 
+    # get workorder object
+    my $WorkOrderObject = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder');
+
     # get workorder data
-    my $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
+    my $WorkOrder = $WorkOrderObject->WorkOrderGet(
         WorkOrderID => $WorkOrderID,
         UserID      => $Self->{UserID},
     );
 
     # check error
     if ( !$WorkOrder ) {
-        return $Self->{LayoutObject}->ErrorScreen(
+        return $LayoutObject->ErrorScreen(
             Message => "WorkOrder '$WorkOrderID' not found in database!",
             Comment => 'Please contact the admin.',
         );
     }
 
+    # get change object
+    my $ChangeObject = $Kernel::OM->Get('Kernel::System::ITSMChange');
+
+    # get config for frontend
+    $Self->{Config} = $Kernel::OM->Get('Kernel::Config')->Get("ITSMWorkOrder::Frontend::$Self->{Action}");
+
     # check permissions
-    my $Access = $Self->{ChangeObject}->Permission(
+    my $Access = $ChangeObject->Permission(
         Type        => $Self->{Config}->{Permission},
         Action      => $Self->{Action},
         ChangeID    => $WorkOrder->{ChangeID},
@@ -80,7 +75,7 @@ sub Run {
 
     # error screen
     if ( !$Access ) {
-        return $Self->{LayoutObject}->NoPermission(
+        return $LayoutObject->NoPermission(
             Message    => "You need $Self->{Config}->{Permission} permissions on the change!",
             WithHeader => 'yes',
         );
@@ -88,7 +83,7 @@ sub Run {
 
     my %GetParam;
     for my $ParamName (qw(User UserSelected)) {
-        $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
+        $GetParam{$ParamName} = $ParamObject->GetParam( Param => $ParamName );
     }
 
     my $UserServerError = '';
@@ -100,7 +95,7 @@ sub Run {
         if ( !$GetParam{User} ) {
 
             # setting workorder agent to empty
-            my $CouldUpdateWorkOrder = $Self->{WorkOrderObject}->WorkOrderUpdate(
+            my $CouldUpdateWorkOrder = $WorkOrderObject->WorkOrderUpdate(
                 WorkOrderID      => $WorkOrder->{WorkOrderID},
                 WorkOrderAgentID => undef,
                 UserID           => $Self->{UserID},
@@ -109,7 +104,7 @@ sub Run {
             if ($CouldUpdateWorkOrder) {
 
                 # load new URL in parent window and close popup
-                return $Self->{LayoutObject}->PopupClose(
+                return $LayoutObject->PopupClose(
                     URL => $Self->{LastWorkOrderView},
                 );
 
@@ -117,7 +112,7 @@ sub Run {
             else {
 
                 # show error message
-                return $Self->{LayoutObject}->ErrorScreen(
+                return $LayoutObject->ErrorScreen(
                     Message =>
                         "Was not able to set the workorder agent of the workorder '$WorkOrder->{WorkOrderID}' to empty!",
                     Comment => 'Please contact the admin.',
@@ -134,7 +129,7 @@ sub Run {
             # if everything is fine
             if ( !%ErrorAllRequired ) {
 
-                my $CouldUpdateWorkOrder = $Self->{WorkOrderObject}->WorkOrderUpdate(
+                my $CouldUpdateWorkOrder = $WorkOrderObject->WorkOrderUpdate(
                     WorkOrderID      => $WorkOrder->{WorkOrderID},
                     WorkOrderAgentID => $GetParam{UserSelected},
                     UserID           => $Self->{UserID},
@@ -143,7 +138,7 @@ sub Run {
                 if ($CouldUpdateWorkOrder) {
 
                     # load new URL in parent window and close popup
-                    return $Self->{LayoutObject}->PopupClose(
+                    return $LayoutObject->PopupClose(
                         URL =>
                             "Action=AgentITSMWorkOrderZoom;WorkOrderID=$WorkOrder->{WorkOrderID}",
                     );
@@ -151,7 +146,7 @@ sub Run {
                 else {
 
                     # show error message
-                    return $Self->{LayoutObject}->ErrorScreen(
+                    return $LayoutObject->ErrorScreen(
                         Message =>
                             "Was not able to update the workorder '$WorkOrder->{WorkOrderID}'!",
                         Comment => 'Please contact the admin.',
@@ -171,7 +166,7 @@ sub Run {
 
     # show current workorder agent
     if ( $WorkOrder->{WorkOrderAgentID} ) {
-        my %UserData = $Self->{UserObject}->GetUserData(
+        my %UserData = $Kernel::OM->Get('Kernel::System::User')->GetUserData(
             UserID => $WorkOrder->{WorkOrderAgentID},
         );
 
@@ -183,20 +178,20 @@ sub Run {
     }
 
     # get change that workorder belongs to
-    my $Change = $Self->{ChangeObject}->ChangeGet(
+    my $Change = $ChangeObject->ChangeGet(
         ChangeID => $WorkOrder->{ChangeID},
         UserID   => $Self->{UserID},
     );
 
     # check whether change was found
     if ( !$Change ) {
-        return $Self->{LayoutObject}->ErrorScreen(
+        return $LayoutObject->ErrorScreen(
             Message => "Could not find Change for WorkOrder $WorkOrderID!",
             Comment => 'Please contact the admin.',
         );
     }
 
-    $Self->{LayoutObject}->Block(
+    $LayoutObject->Block(
         Name => 'UserSearchInit',
         Data => {
             ItemID => 'User',
@@ -204,13 +199,13 @@ sub Run {
     );
 
     # output header
-    my $Output = $Self->{LayoutObject}->Header(
+    my $Output = $LayoutObject->Header(
         Title => $WorkOrder->{WorkOrderTitle},
         Type  => 'Small',
     );
 
     # start template output
-    $Output .= $Self->{LayoutObject}->Output(
+    $Output .= $LayoutObject->Output(
         TemplateFile => 'AgentITSMWorkOrderAgent',
         Data         => {
             UserServerError => $UserServerError,
@@ -221,7 +216,7 @@ sub Run {
     );
 
     # add footer
-    $Output .= $Self->{LayoutObject}->Footer( Type => 'Small' );
+    $Output .= $LayoutObject->Footer( Type => 'Small' );
 
     return $Output;
 }
@@ -239,7 +234,7 @@ sub _CheckWorkOrderAgent {
     else {
 
         # get workorder agent data
-        my %User = $Self->{UserObject}->GetUserData(
+        my %User = $Kernel::OM->Get('Kernel::System::User')->GetUserData(
             UserID => $Param{UserSelected},
         );
 

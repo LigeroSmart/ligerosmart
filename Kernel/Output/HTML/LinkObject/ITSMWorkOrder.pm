@@ -6,7 +6,7 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package Kernel::Output::HTML::LinkObjectITSMWorkOrder;
+package Kernel::Output::HTML::LinkObject::ITSMWorkOrder;
 
 use strict;
 use warnings;
@@ -21,7 +21,7 @@ our @ObjectDependencies = (
 
 =head1 NAME
 
-Kernel::Output::HTML::LinkObjectITSMWorkOrder - layout backend module
+Kernel::Output::HTML::LinkObject::ITSMWorkOrder - layout backend module
 
 =head1 SYNOPSIS
 
@@ -35,7 +35,7 @@ All layout functions of link object (workorder)
 
 create an object
 
-    $BackendObject = Kernel::Output::HTML::LinkObjectITSMWorkOrder->new(
+    $BackendObject = Kernel::Output::HTML::LinkObject::ITSMWorkOrder->new(
         UserLanguage => 'en',
         UserID       => 1,
     );
@@ -59,9 +59,12 @@ sub new {
         Realname => 'Workorder',
     };
 
+    # get config object
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+
     # get config
-    $Self->{ChangeHook}    = $Kernel::OM->Get('Kernel::Config')->Get('ITSMChange::Hook');
-    $Self->{WorkOrderHook} = $Kernel::OM->Get('Kernel::Config')->Get('ITSMWorkOrder::Hook');
+    $Self->{ChangeHook}    = $ConfigObject->Get('ITSMChange::Hook');
+    $Self->{WorkOrderHook} = $ConfigObject->Get('ITSMWorkOrder::Hook');
 
     return $Self;
 }

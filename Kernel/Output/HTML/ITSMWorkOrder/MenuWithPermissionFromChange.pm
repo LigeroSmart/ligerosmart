@@ -6,10 +6,12 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package Kernel::Output::HTML::ITSMWorkOrderMenuWithPermissionFromChange;
+package Kernel::Output::HTML::ITSMWorkOrder::MenuWithPermissionFromChange;
 
 use strict;
 use warnings;
+
+our $ObjectManagerDisabled = 1;
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -18,16 +20,8 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    # check needed objects
-    for my $Object (
-        qw(ConfigObject EncodeObject LogObject DBObject UserObject GroupObject LayoutObject WorkOrderObject UserID)
-        )
-    {
-        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
-    }
-
-    # create additional objects
-    $Self->{ChangeObject} = Kernel::System::ITSMChange->new(%Param);
+    # get UserID param
+    $Self->{UserID} = $Param{UserID} || die "Got no UserID!";
 
     return $Self;
 }
@@ -37,7 +31,7 @@ sub Run {
 
     # check needed stuff
     if ( !$Param{WorkOrder} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need WorkOrder!',
         );
@@ -45,7 +39,7 @@ sub Run {
     }
 
     # get config for the relevant action
-    my $FrontendConfig = $Self->{ConfigObject}->Get("ITSMWorkOrder::Frontend::$Param{Config}->{Action}");
+    my $FrontendConfig = $Kernel::OM->Get('Kernel::Config')->Get("ITSMWorkOrder::Frontend::$Param{Config}->{Action}");
 
     # get the required privilege, 'ro' or 'rw'
     my $RequiredPriv;
@@ -54,6 +48,9 @@ sub Run {
         # get the required priv from the frontend configuration
         $RequiredPriv = $FrontendConfig->{Permission};
     }
+
+    # get change object
+    my $ChangeObject = $Kernel::OM->Get('Kernel::System::ITSMChange');
 
     my $Access;
     if ( !$RequiredPriv ) {
@@ -64,7 +61,7 @@ sub Run {
     else {
 
         # check permissions, based on the required privilege
-        $Access = $Self->{ChangeObject}->Permission(
+        $Access = $ChangeObject->Permission(
             Type        => $RequiredPriv,
             Action      => $Param{Config}->{Action},
             ChangeID    => $Param{WorkOrder}->{ChangeID},
@@ -77,16 +74,19 @@ sub Run {
     return $Param{Counter} if !$Access;
 
     # get the change data
-    my $Change = $Self->{ChangeObject}->ChangeGet(
+    my $Change = $ChangeObject->ChangeGet(
         ChangeID => $Param{WorkOrder}->{ChangeID},
         UserID   => $Self->{UserID},
     );
 
+    # get layout object
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+
     # output menu block
-    $Self->{LayoutObject}->Block( Name => 'Menu' );
+    $LayoutObject->Block( Name => 'Menu' );
 
     # output menu item
-    $Self->{LayoutObject}->Block(
+    $LayoutObject->Block(
         Name => 'MenuItem',
         Data => {
             %Param,
@@ -100,7 +100,7 @@ sub Run {
     if ( $Param{Config}->{DialogTitle} ) {
 
         # output confirmation dialog
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'ShowConfirmationDialog',
             Data => {
                 %Param,

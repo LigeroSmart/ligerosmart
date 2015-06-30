@@ -6,14 +6,19 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package Kernel::Output::HTML::LayoutITSMTemplate;
+package Kernel::Output::HTML::Layout::ITSMTemplate;
 
 use strict;
 use warnings;
 
 use POSIX qw(ceil);
 
-use Kernel::Output::HTML::Layout;
+our @ObjectDependencies = (
+    'Kernel::Config',
+    'Kernel::System::Web::Request',
+    'Kernel::System::Main',
+    'Kernel::Output::HTML::Layout',
+);
 
 =over 4
 
@@ -21,7 +26,7 @@ use Kernel::Output::HTML::Layout;
 
 Returns a list of templates as sortable list with pagination.
 
-This function is similar to L<Kernel::Output::HTML::LayoutITSMChange::ITMChangeListShow()>
+This function is similar to L<Kernel::Output::HTML::Layout::ITSMChange::ITMChangeListShow()>
 in F<Kernel/Output/HTML/LayoutITSMChange.pm>.
 
     my $Output = $LayoutObject->ITSMTemplateListShow(
@@ -48,17 +53,20 @@ sub ITSMTemplateListShow {
     # for now there is only the 'Small' view
     my $View = 'Small';
 
+    # get layout object
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+
     # get backend from config
-    my $Backends = $Self->{ConfigObject}->Get('ITSMChange::Frontend::TemplateOverview');
+    my $Backends = $Kernel::OM->Get('Kernel::Config')->Get('ITSMChange::Frontend::TemplateOverview');
     if ( !$Backends ) {
-        return $Env->{LayoutObject}->FatalError(
+        return $LayoutObject->FatalError(
             Message => 'Need config option ITSMChange::Frontend::TemplateOverview',
         );
     }
 
     # check for hash-ref
     if ( ref $Backends ne 'HASH' ) {
-        return $Env->{LayoutObject}->FatalError(
+        return $LayoutObject->FatalError(
             Message =>
                 'Config option ITSMChange::Frontend::TemplateOverview needs to be a HASH ref!',
         );
@@ -66,13 +74,13 @@ sub ITSMTemplateListShow {
 
     # check for config key
     if ( !$Backends->{$View} ) {
-        return $Env->{LayoutObject}->FatalError(
+        return $LayoutObject->FatalError(
             Message => "No config option found for the view '$View'!",
         );
     }
 
     # nav bar
-    my $StartHit = $Self->{ParamObject}->GetParam( Param => 'StartHit' ) || 1;
+    my $StartHit = $Kernel::OM->Get('Kernel::System::Web::Request')->GetParam( Param => 'StartHit' ) || 1;
 
     # check start option, if higher then elements available, set
     # it to the last overview page (Thanks to Stefan Schmidt!)
@@ -84,24 +92,24 @@ sub ITSMTemplateListShow {
 
     # set page limit and build page nav
     my $Limit = $Param{Limit} || 20_000;
-    my %PageNav = $Env->{LayoutObject}->PageNavBar(
+    my %PageNav = $LayoutObject->PageNavBar(
         Limit     => $Limit,
         StartHit  => $StartHit,
         PageShown => $PageShown,
         AllHits   => $Param{Total} || 0,
-        Action    => 'Action=' . $Env->{LayoutObject}->{Action},
+        Action    => 'Action=' . $LayoutObject->{Action},
         Link      => $Param{LinkPage},
     );
 
     # build navbar content
-    $Env->{LayoutObject}->Block(
+    $LayoutObject->Block(
         Name => 'OverviewNavBar',
         Data => \%Param,
     );
 
     # back link
     if ( $Param{LinkBack} ) {
-        $Env->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'OverviewNavBarPageBack',
             Data => \%Param,
         );
@@ -117,7 +125,7 @@ sub ITSMTemplateListShow {
         }
 
         # build filter content
-        $Env->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'OverviewNavBarFilter',
             Data => {
                 %Param,
@@ -130,7 +138,7 @@ sub ITSMTemplateListShow {
 
             # increment filter count and build filter item
             $Count++;
-            $Env->{LayoutObject}->Block(
+            $LayoutObject->Block(
                 Name => 'OverviewNavBarFilterItem',
                 Data => {
                     %Param,
@@ -140,7 +148,7 @@ sub ITSMTemplateListShow {
 
             # filter is selected
             if ( $Filter->{Filter} eq $Param{Filter} ) {
-                $Env->{LayoutObject}->Block(
+                $LayoutObject->Block(
                     Name => 'OverviewNavBarFilterItemSelected',
                     Data => {
                         %Param,
@@ -149,7 +157,7 @@ sub ITSMTemplateListShow {
                 );
             }
             else {
-                $Env->{LayoutObject}->Block(
+                $LayoutObject->Block(
                     Name => 'OverviewNavBarFilterItemSelectedNot',
                     Data => {
                         %Param,
@@ -164,7 +172,7 @@ sub ITSMTemplateListShow {
     for my $Backend ( sort keys %{$Backends} ) {
 
         # build navbar view mode
-        $Env->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'OverviewNavBarViewMode',
             Data => {
                 %Param,
@@ -176,7 +184,7 @@ sub ITSMTemplateListShow {
 
         # current view is configured in backend
         if ( $View eq $Backend ) {
-            $Env->{LayoutObject}->Block(
+            $LayoutObject->Block(
                 Name => 'OverviewNavBarViewModeSelected',
                 Data => {
                     %Param,
@@ -187,7 +195,7 @@ sub ITSMTemplateListShow {
             );
         }
         else {
-            $Env->{LayoutObject}->Block(
+            $LayoutObject->Block(
                 Name => 'OverviewNavBarViewModeNotSelected',
                 Data => {
                     %Param,
@@ -201,7 +209,7 @@ sub ITSMTemplateListShow {
 
     # check if page nav is available
     if (%PageNav) {
-        $Env->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'OverviewNavBarPageNavBar',
             Data => \%PageNav,
         );
@@ -210,7 +218,7 @@ sub ITSMTemplateListShow {
     # check if nav bar is available
     if ( $Param{NavBar} ) {
         if ( $Param{NavBar}->{MainName} ) {
-            $Env->{LayoutObject}->Block(
+            $LayoutObject->Block(
                 Name => 'OverviewNavBarMain',
                 Data => $Param{NavBar},
             );
@@ -218,7 +226,7 @@ sub ITSMTemplateListShow {
     }
 
     # build html content
-    my $OutputNavBar = $Env->{LayoutObject}->Output(
+    my $OutputNavBar = $LayoutObject->Output(
         TemplateFile => 'AgentITSMTemplateOverviewNavBar',
         Data         => {%Param},
     );
@@ -226,7 +234,7 @@ sub ITSMTemplateListShow {
     # create output
     my $OutputRaw = '';
     if ( !$Param{Output} ) {
-        $Env->{LayoutObject}->Print(
+        $LayoutObject->Print(
             Output => \$OutputNavBar,
         );
     }
@@ -235,8 +243,8 @@ sub ITSMTemplateListShow {
     }
 
     # load module
-    if ( !$Self->{MainObject}->Require( $Backends->{$View}->{Module} ) ) {
-        return $Env->{LayoutObject}->FatalError();
+    if ( !$Kernel::OM->Get('Kernel::System::Main')->Require( $Backends->{$View}->{Module} ) ) {
+        return $LayoutObject->FatalError();
     }
 
     # check for backend object
@@ -254,7 +262,7 @@ sub ITSMTemplateListShow {
 
     # create output
     if ( !$Param{Output} ) {
-        $Env->{LayoutObject}->Print(
+        $LayoutObject->Print(
             Output => \$Output,
         );
     }
@@ -263,7 +271,7 @@ sub ITSMTemplateListShow {
     }
 
     # create overview nav bar
-    $Env->{LayoutObject}->Block(
+    $LayoutObject->Block(
         Name => 'OverviewNavBar',
         Data => {%Param},
     );

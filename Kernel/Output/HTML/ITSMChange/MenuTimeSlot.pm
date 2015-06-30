@@ -6,10 +6,12 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package Kernel::Output::HTML::ITSMChangeMenuTimeSlot;
+package Kernel::Output::HTML::ITSMChange::MenuTimeSlot;
 
 use strict;
 use warnings;
+
+our $ObjectManagerDisabled = 1;
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -18,13 +20,8 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    # check needed objects
-    for my $Object (
-        qw(ConfigObject EncodeObject LogObject DBObject LayoutObject ChangeObject UserID)
-        )
-    {
-        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
-    }
+    # get UserID param
+    $Self->{UserID} = $Param{UserID} || die "Got no UserID!";
 
     return $Self;
 }
@@ -34,7 +31,7 @@ sub Run {
 
     # check needed stuff
     if ( !$Param{Change} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need Change!',
         );
@@ -48,7 +45,7 @@ sub Run {
     return $Param{Counter} if $Param{Change}->{ActualStartTime};
 
     # get config for the relevant action
-    my $FrontendConfig = $Self->{ConfigObject}->Get("ITSMChange::Frontend::$Param{Config}->{Action}");
+    my $FrontendConfig = $Kernel::OM->Get('Kernel::Config')->Get("ITSMChange::Frontend::$Param{Config}->{Action}");
 
     # get the required privilege, 'ro' or 'rw'
     my $RequiredPriv;
@@ -67,7 +64,7 @@ sub Run {
     else {
 
         # check permissions, based on the required privilege
-        $Access = $Self->{ChangeObject}->Permission(
+        $Access = $Kernel::OM->Get('Kernel::System::ITSMChange')->Permission(
             Type     => $RequiredPriv,
             Action   => $Param{Config}->{Action},
             ChangeID => $Param{Change}->{ChangeID},
@@ -78,16 +75,19 @@ sub Run {
 
     return $Param{Counter} if !$Access;
 
+    # get layout object
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+
     # output menu block
-    $Self->{LayoutObject}->Block( Name => 'Menu' );
+    $LayoutObject->Block( Name => 'Menu' );
 
     # output seperator, when this is not the first menu item
     if ( $Param{Counter} ) {
-        $Self->{LayoutObject}->Block( Name => 'MenuItemSplit' );
+        $LayoutObject->Block( Name => 'MenuItemSplit' );
     }
 
     # output menu item
-    $Self->{LayoutObject}->Block(
+    $LayoutObject->Block(
         Name => 'MenuItem',
         Data => {
             %Param,

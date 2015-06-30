@@ -11,8 +11,7 @@ package Kernel::Modules::AgentITSMChangeTimeSlot;
 use strict;
 use warnings;
 
-use Kernel::System::ITSMChange;
-use Kernel::System::ITSMChange::ITSMWorkOrder;
+our $ObjectManagerDisabled = 1;
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -21,42 +20,36 @@ sub new {
     my $Self = {%Param};
     bless( $Self, $Type );
 
-    # check needed objects
-    for my $Object (
-        qw(ParamObject DBObject LayoutObject LogObject ConfigObject UserObject GroupObject)
-        )
-    {
-        if ( !$Self->{$Object} ) {
-            $Self->{LayoutObject}->FatalError( Message => "Got no $Object!" );
-        }
-    }
-
-    # create additional objects
-    $Self->{ChangeObject}    = Kernel::System::ITSMChange->new(%Param);
-    $Self->{WorkOrderObject} = Kernel::System::ITSMChange::ITSMWorkOrder->new(%Param);
-
-    # get config of frontend module
-    $Self->{Config} = $Self->{ConfigObject}->Get("ITSMChange::Frontend::$Self->{Action}");
-
     return $Self;
 }
 
 sub Run {
     my ( $Self, %Param ) = @_;
 
+    # get needed object
+    my $ParamObject  = $Kernel::OM->Get('Kernel::System::Web::Request');
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+
     # get needed ChangeID
-    my $ChangeID = $Self->{ParamObject}->GetParam( Param => 'ChangeID' );
+    my $ChangeID = $ParamObject->GetParam( Param => 'ChangeID' );
 
     # check needed stuff
     if ( !$ChangeID ) {
-        return $Self->{LayoutObject}->ErrorScreen(
+        return $LayoutObject->ErrorScreen(
             Message => 'No ChangeID is given!',
             Comment => 'Please contact the admin.',
         );
     }
 
+    # get needed objects
+    my $ChangeObject = $Kernel::OM->Get('Kernel::System::ITSMChange');
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+
+    # get config of frontend module
+    $Self->{Config} = $ConfigObject->Get("ITSMChange::Frontend::$Self->{Action}");
+
     # check permissions
-    my $Access = $Self->{ChangeObject}->Permission(
+    my $Access = $ChangeObject->Permission(
         Type     => $Self->{Config}->{Permission},
         Action   => $Self->{Action},
         ChangeID => $ChangeID,
@@ -65,21 +58,21 @@ sub Run {
 
     # error screen
     if ( !$Access ) {
-        return $Self->{LayoutObject}->NoPermission(
+        return $LayoutObject->NoPermission(
             Message    => "You need $Self->{Config}->{Permission} permissions!",
             WithHeader => 'yes',
         );
     }
 
     # get change data
-    my $Change = $Self->{ChangeObject}->ChangeGet(
+    my $Change = $ChangeObject->ChangeGet(
         ChangeID => $ChangeID,
         UserID   => $Self->{UserID},
     );
 
     # check if change is found
     if ( !$Change ) {
-        return $Self->{LayoutObject}->ErrorScreen(
+        return $LayoutObject->ErrorScreen(
             Message => "Change '$ChangeID' not found in database!",
             Comment => 'Please contact the admin.',
         );
@@ -87,7 +80,7 @@ sub Run {
 
     # Moving is possible only when there are workorders.
     if ( !$Change->{WorkOrderCount} ) {
-        return $Self->{LayoutObject}->ErrorScreen(
+        return $LayoutObject->ErrorScreen(
             Message => "The change can't be moved, as it has no workorders.",
             Comment => 'Add a workorder first.',
         );
@@ -95,7 +88,7 @@ sub Run {
 
     # Moving is allowed only when there the change has not started yet.
     if ( $Change->{ActualStartTime} ) {
-        return $Self->{LayoutObject}->ErrorScreen(
+        return $LayoutObject->ErrorScreen(
             Message => "Can't move a change which already has started!",
             Comment => 'Please move the individual workorders instead.',
         );
@@ -103,20 +96,23 @@ sub Run {
 
     # store needed parameters in %GetParam to make it reloadable
     my %GetParam;
-    $GetParam{MoveTimeType} = $Self->{ParamObject}->GetParam(
+    $GetParam{MoveTimeType} = $ParamObject->GetParam(
         Param => 'MoveTimeType',
     ) || 'PlannedStartTime';
 
     # store time related fields in %GetParam
     for my $TimePart (qw(Year Month Day Hour Minute)) {
         my $ParamName = 'MoveTime' . $TimePart;
-        $GetParam{$ParamName} = $Self->{ParamObject}->GetParam(
+        $GetParam{$ParamName} = $ParamObject->GetParam(
             Param => $ParamName,
         );
     }
 
     # Remember the reason why saving was not attempted.
     my %ValidationErrors;
+
+    # get time object
+    my $TimeObject = $Kernel::OM->Get('Kernel::System::Time');
 
     # move time slot of change
     if ( $Self->{Subaction} eq 'MoveTimeSlot' ) {
@@ -148,7 +144,7 @@ sub Run {
         if ( !%ValidationErrors ) {
 
             # transform change planned time, time stamp based on user time zone
-            %GetParam = $Self->{LayoutObject}->TransformDateSelection(
+            %GetParam = $LayoutObject->TransformDateSelection(
                 %GetParam,
                 Prefix => 'MoveTime',
             );
@@ -162,7 +158,7 @@ sub Run {
                 $GetParam{MoveTimeMinute};
 
             # sanity check of the assembled timestamp
-            $PlannedSystemTime = $Self->{TimeObject}->TimeStamp2SystemTime(
+            $PlannedSystemTime = $TimeObject->TimeStamp2SystemTime(
                 String => $PlannedTime,
             );
 
@@ -182,13 +178,13 @@ sub Run {
             if ( !$CurrentPlannedTime ) {
 
                 # show error message
-                return $Self->{LayoutObject}->ErrorScreen(
+                return $LayoutObject->ErrorScreen(
                     Message => "The current $MoveTimeType could not be determined.",
                     Comment => "The $MoveTimeType of all workorders has to be defined.",
                 );
             }
 
-            my $CurrentPlannedSystemTime = $Self->{TimeObject}->TimeStamp2SystemTime(
+            my $CurrentPlannedSystemTime = $TimeObject->TimeStamp2SystemTime(
                 String => $CurrentPlannedTime,
             );
             my $DiffSeconds = $PlannedSystemTime - $CurrentPlannedSystemTime;
@@ -204,7 +200,7 @@ sub Run {
             }
 
             # load new URL in parent window and close popup
-            return $Self->{LayoutObject}->PopupClose(
+            return $LayoutObject->PopupClose(
                 URL => "Action=AgentITSMChangeZoom;ChangeID=$ChangeID",
             );
         }
@@ -212,28 +208,28 @@ sub Run {
     elsif ( $Self->{Subaction} eq 'AJAXUpdate' ) {
 
         # get planned start time or planned end time from the change
-        my $SystemTime = $Self->{TimeObject}->TimeStamp2SystemTime(
+        my $SystemTime = $TimeObject->TimeStamp2SystemTime(
             String => $Change->{ $GetParam{MoveTimeType} },
         );
 
         # time zone translation
-        if ( $Self->{ConfigObject}->Get('TimeZoneUser') && $Self->{UserTimeZone} ) {
+        if ( $ConfigObject->Get('TimeZoneUser') && $Self->{UserTimeZone} ) {
             $SystemTime = $SystemTime + ( $Self->{UserTimeZone} * 3600 );
         }
 
         # set the parameter hash for the answers
         # the seconds are ignored
-        my ( $Second, $Minute, $Hour, $Day, $Month, $Year ) = $Self->{TimeObject}->SystemTime2Date(
+        my ( $Second, $Minute, $Hour, $Day, $Month, $Year ) = $TimeObject->SystemTime2Date(
             SystemTime => $SystemTime,
         );
 
         # get config for the number of years which should be selectable
-        my $TimePeriod = $Self->{ConfigObject}->Get('ITSMWorkOrder::TimePeriod');
+        my $TimePeriod = $ConfigObject->Get('ITSMWorkOrder::TimePeriod');
         my $StartYear  = $Year - $TimePeriod->{YearPeriodPast};
         my $EndYear    = $Year + $TimePeriod->{YearPeriodFuture};
 
         # assemble the data that will be returned
-        my $JSON = $Self->{LayoutObject}->BuildSelectionJSON(
+        my $JSON = $LayoutObject->BuildSelectionJSON(
             [
                 {
                     Name       => 'MoveTimeMinute',
@@ -263,8 +259,8 @@ sub Run {
             ],
         );
 
-        return $Self->{LayoutObject}->Attachment(
-            ContentType => 'text/plain; charset=' . $Self->{LayoutObject}->{Charset},
+        return $LayoutObject->Attachment(
+            ContentType => 'text/plain; charset=' . $LayoutObject->{Charset},
             Content     => $JSON,
             Type        => 'inline',
             NoCache     => 1,
@@ -274,13 +270,13 @@ sub Run {
 
         # no subaction,
         # get planned start time or planned end time from the change
-        my $SystemTime = $Self->{TimeObject}->TimeStamp2SystemTime(
+        my $SystemTime = $TimeObject->TimeStamp2SystemTime(
             String => $Change->{ $GetParam{MoveTimeType} },
         );
 
         # set the parameter hash for BuildDateSelection()
         # the seconds are ignored
-        my ( $Second, $Minute, $Hour, $Day, $Month, $Year ) = $Self->{TimeObject}->SystemTime2Date(
+        my ( $Second, $Minute, $Hour, $Day, $Month, $Year ) = $TimeObject->SystemTime2Date(
             SystemTime => $SystemTime,
         );
         $GetParam{MoveTimeMinute} = $Minute;
@@ -291,7 +287,7 @@ sub Run {
     }
 
     # build drop-down with time types
-    my $MoveTimeTypeSelectionString = $Self->{LayoutObject}->BuildSelection(
+    my $MoveTimeTypeSelectionString = $LayoutObject->BuildSelection(
         Data => [
             {
                 Key   => 'PlannedStartTime',
@@ -307,10 +303,10 @@ sub Run {
     );
 
     # time period that can be selected from the GUI
-    my %TimePeriod = %{ $Self->{ConfigObject}->Get('ITSMWorkOrder::TimePeriod') };
+    my %TimePeriod = %{ $ConfigObject->Get('ITSMWorkOrder::TimePeriod') };
 
     # add selection for the time
-    my $MoveTimeSelectionString = $Self->{LayoutObject}->BuildDateSelection(
+    my $MoveTimeSelectionString = $LayoutObject->BuildDateSelection(
         %GetParam,
         Format        => 'DateInputFormatLong',
         Prefix        => 'MoveTime',
@@ -320,13 +316,13 @@ sub Run {
     );
 
     # output header
-    my $Output = $Self->{LayoutObject}->Header(
+    my $Output = $LayoutObject->Header(
         Title => 'Move Time Slot',
         Type  => 'Small',
     );
 
     # start template output
-    $Output .= $Self->{LayoutObject}->Output(
+    $Output .= $LayoutObject->Output(
         TemplateFile => 'AgentITSMChangeTimeSlot',
         Data         => {
             %{$Change},
@@ -337,7 +333,7 @@ sub Run {
     );
 
     # add footer
-    $Output .= $Self->{LayoutObject}->Footer( Type => 'Small' );
+    $Output .= $LayoutObject->Footer( Type => 'Small' );
 
     return $Output;
 }
@@ -349,10 +345,13 @@ sub _MoveWorkOrders {
     my @CollectedUpdateParams;    # an array of params for WorkOrderUpdate()
     my %WorkOrderID2Number;       # used only for error messages
 
+    # get work order object
+    my $WorkOrderObject = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder');
+
     # determine the new times
     WORKORDERID:
     for my $WorkOrderID ( @{ $Param{WorkOrderIDs} } ) {
-        my $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
+        my $WorkOrder = $WorkOrderObject->WorkOrderGet(
             WorkOrderID => $WorkOrderID,
             UserID      => $Self->{UserID},
         );
@@ -368,14 +367,17 @@ sub _MoveWorkOrders {
 
             next TYPE if !$WorkOrder->{$Type};
 
-            my $SystemTime = $Self->{TimeObject}->TimeStamp2SystemTime(
+            # get time object
+            my $TimeObject = $Kernel::OM->Get('Kernel::System::Time');
+
+            my $SystemTime = $TimeObject->TimeStamp2SystemTime(
                 String => $WorkOrder->{$Type},
             );
             next TYPE if !$SystemTime;
 
             # add the number of seconds that the time slot should be moved
             $SystemTime += $Param{DiffSeconds};
-            $UpdateParams{$Type} = $Self->{TimeObject}->SystemTime2TimeStamp(
+            $UpdateParams{$Type} = $TimeObject->SystemTime2TimeStamp(
                 SystemTime => $SystemTime,
             );
         }
@@ -393,7 +395,7 @@ sub _MoveWorkOrders {
     for my $UpdateParams (@CollectedUpdateParams) {
 
         # no number calculation necessary because the workorder order doesn't change
-        my $UpdateOk = $Self->{WorkOrderObject}->WorkOrderUpdate(
+        my $UpdateOk = $WorkOrderObject->WorkOrderUpdate(
             %{$UpdateParams},
             NoNumberCalc => 1,
             UserID       => $Self->{UserID},
@@ -406,7 +408,7 @@ sub _MoveWorkOrders {
                 $Param{ChangeNumber},
                 $WorkOrderID2Number{ $UpdateParams->{WorkOrderID} };
 
-            return $Self->{LayoutObject}->ErrorScreen(
+            return $Kernel::OM->Get('Kernel::Output::HTML::Layout')->ErrorScreen(
                 Message => "Was not able to move time slot for workorder #$Number!",
                 Comment => 'Please contact the admin.',
             );

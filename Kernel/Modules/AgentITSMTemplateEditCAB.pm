@@ -11,9 +11,7 @@ package Kernel::Modules::AgentITSMTemplateEditCAB;
 use strict;
 use warnings;
 
-use Kernel::System::ITSMChange;
-use Kernel::System::ITSMChange::Template;
-use Kernel::System::CustomerUser;
+our $ObjectManagerDisabled = 1;
 
 ## nofilter(TidyAll::Plugin::OTRS::Perl::Dumper)
 use Data::Dumper;
@@ -25,40 +23,28 @@ sub new {
     my $Self = {%Param};
     bless( $Self, $Type );
 
-    # check needed objects
-    for my $Object (
-        qw(ParamObject DBObject LayoutObject LogObject ConfigObject UserObject GroupObject)
-        )
-    {
-        if ( !$Self->{$Object} ) {
-            $Self->{LayoutObject}->FatalError( Message => "Got no $Object!" );
-        }
-    }
-
-    # create needed objects
-    $Self->{ChangeObject}       = Kernel::System::ITSMChange->new(%Param);
-    $Self->{CustomerUserObject} = Kernel::System::CustomerUser->new(%Param);
-    $Self->{TemplateObject}     = Kernel::System::ITSMChange::Template->new(%Param);
-
-    # get config of frontend module
-    $Self->{Config} = $Self->{ConfigObject}->Get("ITSMChange::Frontend::$Self->{Action}");
-
     return $Self;
 }
 
 sub Run {
     my ( $Self, %Param ) = @_;
 
+    # get config of frontend module
+    $Self->{Config} = $Kernel::OM->Get('Kernel::Config')->Get("ITSMChange::Frontend::$Self->{Action}");
+
     # check permissions
-    my $Access = $Self->{ChangeObject}->Permission(
+    my $Access = $Kernel::OM->Get('Kernel::System::ITSMChange')->Permission(
         Type   => $Self->{Config}->{Permission},
         Action => $Self->{Action},
         UserID => $Self->{UserID},
     );
 
+    # get layout object
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+
     # error screen
     if ( !$Access ) {
-        return $Self->{LayoutObject}->NoPermission(
+        return $LayoutObject->NoPermission(
             Message    => "You need $Self->{Config}->{Permission} permission!",
             WithHeader => 'yes',
         );
@@ -70,26 +56,29 @@ sub Run {
         qw(TemplateID TemplateContent NewCABMember NewCABMemberSelected NewCABMemberType AddCABMember)
         )
     {
-        $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
+        $GetParam{$ParamName} = $Kernel::OM->Get('Kernel::System::Web::Request')->GetParam( Param => $ParamName );
     }
 
     # check needed stuff
     if ( !$GetParam{TemplateID} ) {
-        return $Self->{LayoutObject}->ErrorScreen(
+        return $LayoutObject->ErrorScreen(
             Message => 'No TemplateID is given!',
             Comment => 'Please contact the admin.',
         );
     }
 
+    # get template object
+    my $TemplateObject = $Kernel::OM->Get('Kernel::System::ITSMChange::Template');
+
     # get template data
-    my $Template = $Self->{TemplateObject}->TemplateGet(
+    my $Template = $TemplateObject->TemplateGet(
         TemplateID => $GetParam{TemplateID},
         UserID     => $Self->{UserID},
     );
 
     # check error
     if ( !$Template ) {
-        return $Self->{LayoutObject}->ErrorScreen(
+        return $LayoutObject->ErrorScreen(
             Message => "Template '$GetParam{TemplateID}' not found in database!",
             Comment => 'Please contact the admin.',
         );
@@ -164,7 +153,7 @@ sub Run {
     if ( $Self->{Subaction} eq 'Save' ) {
 
         # update the template
-        my $UpdateSuccess = $Self->{TemplateObject}->TemplateUpdate(
+        my $UpdateSuccess = $TemplateObject->TemplateUpdate(
             TemplateID => $GetParam{TemplateID},
             Content    => $GetParam{TemplateContent},
             UserID     => $Self->{UserID},
@@ -174,14 +163,14 @@ sub Run {
 
             # redirect to template overview
             # load new URL in parent window and close popup
-            return $Self->{LayoutObject}->PopupClose(
+            return $LayoutObject->PopupClose(
                 URL => "Action=AgentITSMTemplateOverview",
             );
         }
         else {
 
             # show error message
-            return $Self->{LayoutObject}->ErrorScreen(
+            return $LayoutObject->ErrorScreen(
                 Message => "Was not able to update Template '$GetParam{TemplateID}'!",
                 Comment => 'Please contact the admin.',
             );
@@ -191,14 +180,14 @@ sub Run {
     # check if CAB contains anyone
     if ( @{ $CABReference->{CABAdd}->{CABAgents} } || @{ $CABReference->{CABAdd}->{CABCustomers} } )
     {
-        $Self->{LayoutObject}->Block( Name => 'CABMemberTable' );
+        $LayoutObject->Block( Name => 'CABMemberTable' );
     }
 
     USERID:
     for my $UserID ( @{ $CABReference->{CABAdd}->{CABAgents} } ) {
 
         # get user data
-        my %UserData = $Self->{UserObject}->GetUserData(
+        my %UserData = $Kernel::OM->Get('Kernel::System::User')->GetUserData(
             UserID => $UserID,
         );
 
@@ -206,7 +195,7 @@ sub Run {
         next USERID if !%UserData;
 
         # display cab member info
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'CABMemberRow',
             Data => {
                 UserType         => 'Agent',
@@ -221,7 +210,7 @@ sub Run {
     for my $CustomerLogin ( @{ $CABReference->{CABAdd}->{CABCustomers} } ) {
 
         # get user data
-        my %CustomerUserData = $Self->{CustomerUserObject}->CustomerUserDataGet(
+        my %CustomerUserData = $Kernel::OM->Get('Kernel::System::CustomerUser')->CustomerUserDataGet(
             User  => $CustomerLogin,
             Valid => 1,
         );
@@ -230,7 +219,7 @@ sub Run {
         next CUSTOMERLOGIN if !%CustomerUserData;
 
         # display cab member info
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'CABMemberRow',
             Data => {
                 UserType         => 'Customer',
@@ -247,7 +236,7 @@ sub Run {
     );
 
     # search init
-    $Self->{LayoutObject}->Block(
+    $LayoutObject->Block(
         Name => 'CABMemberSearchInit',
         Data => {
             ItemID => 'NewCABMember',
@@ -255,13 +244,13 @@ sub Run {
     );
 
     # output header and navigation
-    my $Output = $Self->{LayoutObject}->Header(
+    my $Output = $LayoutObject->Header(
         Title => 'Edit CAB Template',
         Type  => 'Small',
     );
 
     # start template output
-    $Output .= $Self->{LayoutObject}->Output(
+    $Output .= $LayoutObject->Output(
         TemplateFile => 'AgentITSMTemplateEditCAB',
         Data         => {
             %Param,
@@ -272,7 +261,7 @@ sub Run {
     );
 
     # add footer
-    $Output .= $Self->{LayoutObject}->Footer( Type => 'Small' );
+    $Output .= $LayoutObject->Footer( Type => 'Small' );
 
     return $Output;
 }
@@ -286,10 +275,13 @@ sub _IsMemberDeletion {
     # info about what to delete
     my %DeleteInfo;
 
+    # get param object
+    my $ParamObject = $Kernel::OM->Get('Kernel::System::Web::Request');
+
     # check possible agent ids
     AGENTID:
     for my $AgentID ( @{ $Param{CABReference}->{CABAdd}->{CABAgents} } ) {
-        if ( $Self->{ParamObject}->GetParam( Param => 'DeleteCABAgents' . $AgentID ) ) {
+        if ( $ParamObject->GetParam( Param => 'DeleteCABAgents' . $AgentID ) ) {
 
             # save info
             %DeleteInfo = (
@@ -306,7 +298,7 @@ sub _IsMemberDeletion {
         # check possible customer ids
         CUSTOMERID:
         for my $CustomerID ( @{ $Param{CABReference}->{CABAdd}->{CABCustomers} } ) {
-            if ( $Self->{ParamObject}->GetParam( Param => 'DeleteCABCustomers' . $CustomerID ) ) {
+            if ( $ParamObject->GetParam( Param => 'DeleteCABCustomers' . $CustomerID ) ) {
 
                 # save info
                 %DeleteInfo = (
@@ -337,7 +329,10 @@ sub _IsNewCABMemberOk {
     # an agent is requested to be added
     if ( $MemberType eq 'CABAgents' ) {
 
-        my %User = $Self->{UserObject}->GetUserData(
+        # get user object
+        my $UserObject = $Kernel::OM->Get('Kernel::System::User');
+
+        my %User = $UserObject->GetUserData(
             UserID => $Param{NewCABMemberSelected},
         );
 
@@ -348,7 +343,7 @@ sub _IsNewCABMemberOk {
             for my $UserID ( @{ $Param{CABReference}->{CABAdd}->{$MemberType} } ) {
 
                 # get user data
-                my %UserData = $Self->{UserObject}->GetUserData(
+                my %UserData = $UserObject->GetUserData(
                     UserID => $UserID,
                     Valid  => 1,
                 );
@@ -383,12 +378,15 @@ sub _IsNewCABMemberOk {
     # an customer is requested to be added
     else {
 
+        # get customer user object
+        my $CustomerUserObject = $Kernel::OM->Get('Kernel::System::CustomerUser');
+
         # check current customer users
         CUSTOMERUSER:
         for my $CustomerUser ( @{ $Param{CABReference}->{CABAdd}->{$MemberType} } ) {
 
             # get customer user data
-            my %CustomerUserData = $Self->{CustomerUserObject}->CustomerUserDataGet(
+            my %CustomerUserData = $CustomerUserObject->CustomerUserDataGet(
                 User  => $CustomerUser,
                 Valid => 1,
             );
@@ -401,7 +399,7 @@ sub _IsNewCABMemberOk {
         }
 
         # check if customer can be found
-        my %CustomerUser = $Self->{CustomerUserObject}->CustomerSearch(
+        my %CustomerUser = $CustomerUserObject->CustomerSearch(
             UserLogin => $Param{NewCABMemberSelected},
         );
 
@@ -425,7 +423,7 @@ sub _CABDeSerialize {
     # check needed stuff
     for my $Argument (qw(UserID Content)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -450,7 +448,7 @@ sub _CABSerialize {
     # check needed stuff
     for my $Argument (qw(UserID Content)) {
         if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
@@ -465,7 +463,7 @@ sub _CABSerialize {
     local $Data::Dumper::Deepcopy = 1;
 
     # serialize the data (do not use $VAR1, but $TemplateData for Dumper output)
-    my $SerializedData = $Self->{MainObject}->Dump( $Param{Content}, 'binary' );
+    my $SerializedData = $Kernel::OM->Get('Kernel::System::Main')->Dump( $Param{Content}, 'binary' );
 
     return $SerializedData;
 }

@@ -12,15 +12,9 @@ use strict;
 use warnings;
 
 use List::Util qw(max);
-
-use Kernel::System::ITSMChange;
-use Kernel::System::ITSMChange::ITSMWorkOrder;
-use Kernel::System::DynamicField;
-use Kernel::System::DynamicField::Backend;
-use Kernel::System::LinkObject;
-use Kernel::System::PDF;
-use Kernel::System::CustomerUser;
 use Kernel::System::VariableCheck qw(:all);
+
+our $ObjectManagerDisabled = 1;
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -29,60 +23,37 @@ sub new {
     my $Self = {%Param};
     bless( $Self, $Type );
 
-    # check needed objects
-    for my $Object (
-        qw(ParamObject DBObject LayoutObject LogObject ConfigObject UserObject GroupObject)
-        )
-    {
-        if ( !$Self->{$Object} ) {
-            $Self->{LayoutObject}->FatalError( Message => "Got no $Object!" );
-        }
-    }
-
-    # create additional objects
-    $Self->{ChangeObject}       = Kernel::System::ITSMChange->new(%Param);
-    $Self->{WorkOrderObject}    = Kernel::System::ITSMChange::ITSMWorkOrder->new(%Param);
-    $Self->{CustomerUserObject} = Kernel::System::CustomerUser->new(%Param);
-    $Self->{DynamicFieldObject} = Kernel::System::DynamicField->new(%Param);
-    $Self->{BackendObject}      = Kernel::System::DynamicField::Backend->new(%Param);
-    $Self->{LinkObject}         = Kernel::System::LinkObject->new(%Param);
-
-    # when there is no PDF-Support, $Self->{PDFObject} will be undefined
-    $Self->{PDFObject} = Kernel::System::PDF->new(%Param);
-
-    # get config of frontend module
-    $Self->{Config} = $Self->{ConfigObject}->Get("ITSMChange::Frontend::$Self->{Action}");
-
-    # get the dynamic fields for this screen
-    $Self->{DynamicField} = $Self->{DynamicFieldObject}->DynamicFieldListGet(
-        Valid       => 1,
-        ObjectType  => [ 'ITSMChange', 'ITSMWorkOrder' ],
-        FieldFilter => $Self->{Config}->{DynamicField} || {},
-    );
-
-    # Page controls the PDF-generation
-    # it won't be used when there is no PDF-Support
-    $Self->{Page} = {};
-
     return $Self;
 }
 
 sub Run {
     my ( $Self, %Param ) = @_;
 
+    # get param object
+    my $ParamObject = $Kernel::OM->Get('Kernel::System::Web::Request');
+
     # Find out whether a change or a workorder should be printed.
     # A workorder is to be printed when the WorkOrderID is passed.
     # Otherwise a change should be printed.
-    my $WorkOrderID = $Self->{ParamObject}->GetParam( Param => 'WorkOrderID' );
+    my $WorkOrderID = $ParamObject->GetParam( Param => 'WorkOrderID' );
     my $PrintWorkOrder = $WorkOrderID ? 1 : 0;
     my $PrintChange    = !$WorkOrderID;
     my $WorkOrder      = {};
     my $ChangeID;
 
+    # get needed objects
+    my $ChangeObject    = $Kernel::OM->Get('Kernel::System::ITSMChange');
+    my $WorkOrderObject = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder');
+    my $ConfigObject    = $Kernel::OM->Get('Kernel::Config');
+    my $LayoutObject    = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+
+    # get config of frontend module
+    $Self->{Config} = $ConfigObject->Get("ITSMChange::Frontend::$Self->{Action}");
+
     if ($PrintWorkOrder) {
 
         # check permission on the workorder
-        my $Access = $Self->{WorkOrderObject}->Permission(
+        my $Access = $WorkOrderObject->Permission(
             Type        => $Self->{Config}->{Permission},
             Action      => $Self->{Action},
             WorkOrderID => $WorkOrderID,
@@ -91,21 +62,21 @@ sub Run {
 
         # error screen
         if ( !$Access ) {
-            return $Self->{LayoutObject}->NoPermission(
+            return $LayoutObject->NoPermission(
                 Message    => "You need $Self->{Config}->{Permission} permissions!",
                 WithHeader => 'yes',
             );
         }
 
         # get workorder information
-        $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
+        $WorkOrder = $WorkOrderObject->WorkOrderGet(
             WorkOrderID => $WorkOrderID,
             UserID      => $Self->{UserID},
         );
 
         # check error
         if ( !$WorkOrder ) {
-            return $Self->{LayoutObject}->ErrorScreen(
+            return $LayoutObject->ErrorScreen(
                 Message => "WorkOrder '$WorkOrderID' not found in database!",
                 Comment => 'Please contact the admin.',
             );
@@ -117,7 +88,7 @@ sub Run {
         if ( !$ChangeID ) {
 
             # error page
-            return $Self->{LayoutObject}->ErrorScreen(
+            return $LayoutObject->ErrorScreen(
                 Message => "Can't create output, as the workorder is not attached to a change!",
                 Comment => 'Please contact the admin.',
             );
@@ -126,19 +97,19 @@ sub Run {
     else {
 
         # the change id is required, as we have no workorder id
-        $ChangeID = $Self->{ParamObject}->GetParam( Param => 'ChangeID' );
+        $ChangeID = $ParamObject->GetParam( Param => 'ChangeID' );
 
         if ( !$ChangeID ) {
 
             # error page
-            return $Self->{LayoutObject}->ErrorScreen(
+            return $LayoutObject->ErrorScreen(
                 Message => "Can't create output, as no ChangeID is given!",
                 Comment => 'Please contact the admin.',
             );
         }
 
         # check permission on the change
-        my $Access = $Self->{ChangeObject}->Permission(
+        my $Access = $ChangeObject->Permission(
             Type     => $Self->{Config}->{Permission},
             Action   => $Self->{Action},
             ChangeID => $ChangeID,
@@ -147,7 +118,7 @@ sub Run {
 
         # error screen
         if ( !$Access ) {
-            return $Self->{LayoutObject}->NoPermission(
+            return $LayoutObject->NoPermission(
                 Message    => "You need $Self->{Config}->{Permission} permissions!",
                 WithHeader => 'yes',
             );
@@ -155,26 +126,34 @@ sub Run {
     }
 
     # get change information
-    my $Change = $Self->{ChangeObject}->ChangeGet(
+    my $Change = $ChangeObject->ChangeGet(
         ChangeID => $ChangeID,
         UserID   => $Self->{UserID},
     );
 
     # check error
     if ( !$Change ) {
-        return $Self->{LayoutObject}->ErrorScreen(
+        return $LayoutObject->ErrorScreen(
             Message => "Change '$ChangeID' not found in database!",
             Comment => 'Please contact the admin.',
         );
     }
 
+    # when there is no PDF-Support, $PDFObject will be undefined
+    my $PDFObject
+        = ( $Kernel::OM->Get('Kernel::Config')->Get('PDF') ) ? $Kernel::OM->Get('Kernel::System::PDF') : undef;
+
     # some init for PDF-Output
-    if ( $Self->{PDFObject} ) {
+    if ($PDFObject) {
+
+        # page controls the PDF-generation
+        # it won't be used when there is no PDF-Support
+        $Self->{Page} = {};
 
         my $Page = $Self->{Page};
 
         # get maximum number of pages
-        $Page->{MaxPages} = $Self->{ConfigObject}->Get('PDF::MaxPages');
+        $Page->{MaxPages} = $ConfigObject->Get('PDF::MaxPages');
         if ( !$Page->{MaxPages} || $Page->{MaxPages} < 1 || $Page->{MaxPages} > 1000 ) {
             $Page->{MaxPages} = 100;
         }
@@ -188,7 +167,7 @@ sub Run {
 
     # the second item in the page title is the area in the product 'ITSM Change Management'
     my $HeaderArea = $PrintChange ? 'ITSM Change' : 'ITSM Workorder';
-    $HeaderArea = $Self->{LayoutObject}->{LanguageObject}->Translate($HeaderArea);
+    $HeaderArea = $LayoutObject->{LanguageObject}->Translate($HeaderArea);
 
     # the last item in the page title is either the change number of the full workorder number
     my $HeaderValue = $PrintChange
@@ -204,8 +183,11 @@ sub Run {
         HeaderValue => $HeaderValue,
     );
 
+    # get link object
+    my $LinkObject = $Kernel::OM->Get('Kernel::System::LinkObject');
+
     # the link types are needed for showing the linked objects
-    my %LinkTypeList = $Self->{LinkObject}->TypeList(
+    my %LinkTypeList = $LinkObject->TypeList(
         UserID => $Self->{UserID},
     );
 
@@ -213,8 +195,8 @@ sub Run {
     if ($PrintChange) {
 
         # start the first page
-        if ( !$Self->{PDFObject} ) {
-            $Self->{LayoutObject}->Block( Name => 'Change' );
+        if ( !$PDFObject ) {
+            $LayoutObject->Block( Name => 'Change' );
         }
         $Output .= $Self->_OutputHeadline(
             HeaderArea     => $HeaderArea,
@@ -236,13 +218,13 @@ sub Run {
                 PrintChange    => $PrintChange,
                 PrintWorkOrder => $PrintWorkOrder,
                 Title =>
-                    $Self->{LayoutObject}->{LanguageObject}->Translate($Attribute),
+                    $LayoutObject->{LanguageObject}->Translate($Attribute),
                 LongText => $Change->{ $Attribute . 'Plain' },
             );
         }
 
         # get linked objects which are directly linked with this change object
-        my $LinkListWithData = $Self->{LinkObject}->LinkListWithData(
+        my $LinkListWithData = $LinkObject->LinkListWithData(
             Object => 'ITSMChange',
             Key    => $ChangeID,
             State  => 'Valid',
@@ -254,7 +236,7 @@ sub Run {
         for my $WorkOrderID ( @{ $Change->{WorkOrderIDs} } ) {
 
             # get linked objects of this workorder
-            my $LinkListWithDataWorkOrder = $Self->{LinkObject}->LinkListWithData(
+            my $LinkListWithDataWorkOrder = $LinkObject->LinkListWithData(
                 Object => 'ITSMWorkOrder',
                 Key    => $WorkOrderID,
                 State  => 'Valid',
@@ -303,7 +285,7 @@ sub Run {
 
         # get the link data
         if ( $LinkListWithData && ref $LinkListWithData eq 'HASH' && %{$LinkListWithData} ) {
-            my %LinkData = $Self->{LayoutObject}->LinkObjectTableCreate(
+            my %LinkData = $LayoutObject->LinkObjectTableCreate(
                 LinkListWithData => $LinkListWithData,
                 ViewMode         => 'SimpleRaw',
             );
@@ -321,14 +303,14 @@ sub Run {
         for my $WorkOrderID ( @{ $Change->{WorkOrderIDs} } ) {
 
             # get workorder info
-            my $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
+            my $WorkOrder = $WorkOrderObject->WorkOrderGet(
                 WorkOrderID => $WorkOrderID,
                 UserID      => $Self->{UserID},
             );
 
             # check error
             if ( !$WorkOrder ) {
-                return $Self->{LayoutObject}->ErrorScreen(
+                return $LayoutObject->ErrorScreen(
                     Message => "WorkOrder '$WorkOrderID' not found in database!",
                     Comment => 'Please contact the admin.',
                 );
@@ -358,31 +340,31 @@ sub Run {
         :
         ($WorkOrderID);
 
-    if ( !$Self->{PDFObject} ) {
-        $Self->{LayoutObject}->Block( Name => 'WorkOrders' );
+    if ( !$PDFObject ) {
+        $LayoutObject->Block( Name => 'WorkOrders' );
     }
 
     for my $WorkOrderID (@WorkOrderIDs) {
 
         # get workorder info
-        my $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
+        my $WorkOrder = $WorkOrderObject->WorkOrderGet(
             WorkOrderID => $WorkOrderID,
             UserID      => $Self->{UserID},
         );
 
         # check error
         if ( !$WorkOrder ) {
-            return $Self->{LayoutObject}->ErrorScreen(
+            return $LayoutObject->ErrorScreen(
                 Message => "WorkOrder '$WorkOrderID' not found in database!",
                 Comment => 'Please contact the admin.',
             );
         }
 
         # start a new page for every workorder
-        my $HeaderArea = $Self->{LayoutObject}->{LanguageObject}->Translate('ITSM Workorder');
+        my $HeaderArea = $LayoutObject->{LanguageObject}->Translate('ITSM Workorder');
         my $HeaderValue = join '-', $Change->{ChangeNumber}, $WorkOrder->{WorkOrderNumber};
-        if ( !$Self->{PDFObject} ) {
-            $Self->{LayoutObject}->Block( Name => 'WorkOrder' );
+        if ( !$PDFObject ) {
+            $LayoutObject->Block( Name => 'WorkOrder' );
         }
         $Output .= $Self->_OutputHeadline(
             HeaderArea     => $HeaderArea,
@@ -403,13 +385,13 @@ sub Run {
                 PrintChange    => 0,
                 PrintWorkOrder => 1,
                 Title =>
-                    $Self->{LayoutObject}->{LanguageObject}->Translate($Attribute),
+                    $LayoutObject->{LanguageObject}->Translate($Attribute),
                 LongText => $WorkOrder->{ $Attribute . 'Plain' },
             );
         }
 
         # get linked objects
-        my $LinkListWithData = $Self->{LinkObject}->LinkListWithData(
+        my $LinkListWithData = $LinkObject->LinkListWithData(
             Object => 'ITSMWorkOrder',
             Key    => $WorkOrderID,
             State  => 'Valid',
@@ -418,7 +400,7 @@ sub Run {
 
         # get the link data
         if ( $LinkListWithData && ref $LinkListWithData eq 'HASH' && %{$LinkListWithData} ) {
-            my %LinkData = $Self->{LayoutObject}->LinkObjectTableCreate(
+            my %LinkData = $LayoutObject->LinkObjectTableCreate(
                 LinkListWithData => $LinkListWithData,
                 ViewMode         => 'SimpleRaw',
             );
@@ -433,11 +415,14 @@ sub Run {
     }
 
     # generate PDF output
-    if ( $Self->{PDFObject} ) {
+    if ($PDFObject) {
+
+        # get time object
+        my $TimeObject = $Kernel::OM->Get('Kernel::System::Time');
 
         # generate a filename
-        my ( $s, $m, $h, $D, $M, $Y ) = $Self->{TimeObject}->SystemTime2Date(
-            SystemTime => $Self->{TimeObject}->SystemTime(),
+        my ( $s, $m, $h, $D, $M, $Y ) = $TimeObject->SystemTime2Date(
+            SystemTime => $TimeObject->SystemTime(),
         );
         my $Filename = $PrintChange
             ?
@@ -452,9 +437,9 @@ sub Run {
             );
 
         # return the PDF document
-        my $PDFString = $Self->{PDFObject}->DocumentOutput();
+        my $PDFString = $PDFObject->DocumentOutput();
 
-        return $Self->{LayoutObject}->Attachment(
+        return $LayoutObject->Attachment(
             Filename    => $Filename,
             ContentType => 'application/pdf',
             Content     => $PDFString,
@@ -466,7 +451,7 @@ sub Run {
         # generate html output when there is no PDF-support
 
         # start template output
-        $Output .= $Self->{LayoutObject}->Output(
+        $Output .= $LayoutObject->Output(
             TemplateFile => 'AgentITSMChangePrint',
             Data         => {
                 %Param,
@@ -476,7 +461,7 @@ sub Run {
         );
 
         # add footer
-        $Output .= $Self->{LayoutObject}->PrintFooter();
+        $Output .= $LayoutObject->PrintFooter();
 
         # return output
         return $Output;
@@ -490,7 +475,7 @@ sub _StartDocument {
     # check needed stuff
     for my $Argument (qw(HeaderArea HeaderValue)) {
         if ( !defined( $Param{$Argument} ) ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $_!",
             );
@@ -498,16 +483,20 @@ sub _StartDocument {
         }
     }
 
-    if ( $Self->{PDFObject} ) {
+    # when there is no PDF-Support, $PDFObject will be undefined
+    my $PDFObject    = $Kernel::OM->Get('Kernel::System::PDF');
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+
+    if ($PDFObject) {
 
         # Title of the PDF-Document, or the HTML-Page
-        my $Product = $Self->{ConfigObject}->Get('Product');
+        my $Product = $Kernel::OM->Get('Kernel::Config')->Get('Product');
         my $Title = sprintf '%s: %s#%s', $Product, $Param{HeaderArea}, $Param{HeaderValue};
 
         # create new PDF document
-        $Self->{PDFObject}->DocumentNew(
+        $PDFObject->DocumentNew(
             Title  => $Title,
-            Encode => $Self->{LayoutObject}->{UserCharset},
+            Encode => $LayoutObject->{UserCharset},
         );
 
         return '';
@@ -515,7 +504,7 @@ sub _StartDocument {
     else {
 
         # output header
-        my $Output = $Self->{LayoutObject}->PrintHeader(
+        my $Output = $LayoutObject->PrintHeader(
             Area  => $Param{HeaderArea},
             Value => $Param{HeaderValue},
         );
@@ -531,7 +520,7 @@ sub _OutputHeadline {
     # check needed stuff
     for my $Argument (qw(HeaderArea HeaderValue Title TemplatePrefix)) {
         if ( !defined( $Param{$Argument} ) ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $_!",
             );
@@ -539,12 +528,20 @@ sub _OutputHeadline {
         }
     }
 
-    if ( $Self->{PDFObject} ) {
-        my $PrintedBy = $Self->{LayoutObject}->{LanguageObject}->Translate('printed by');
-        my $Time = $Self->{LayoutObject}->{Time};
-        my $UserFullName = $Self->{UserObject}->UserName(
+    # when there is no PDF-Support, $PDFObject will be undefined
+    my $PDFObject    = $Kernel::OM->Get('Kernel::System::PDF');
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+
+    if ($PDFObject) {
+        my $PrintedBy    = $LayoutObject->{LanguageObject}->Translate('printed by');
+        my $Time         = $LayoutObject->{Time};
+        my $UserFullName = $Kernel::OM->Get('Kernel::System::User')->UserName(
             UserID => $Self->{UserID},
         );
+
+        # Page controls the PDF-generation
+        # it won't be used when there is no PDF-Support
+        $Self->{Page} = {};
 
         # page headers and footer
         my $Page = $Self->{Page};
@@ -554,11 +551,11 @@ sub _OutputHeadline {
             . $UserFullName . ' '
             . $Time;
         $Page->{FooterLeft} = '';
-        $Page->{PageText}   = $Self->{LayoutObject}->{LanguageObject}->Translate('Page');
+        $Page->{PageText}   = $LayoutObject->{LanguageObject}->Translate('Page');
         $Page->{PageCount}  = 1;
 
         # create new PDF page
-        $Self->{PDFObject}->PageNew(
+        $PDFObject->PageNew(
             %{$Page},
             FooterRight => $Page->{PageText} . ' ' . $Page->{PageCount},
         );
@@ -569,7 +566,7 @@ sub _OutputHeadline {
     else {
 
         # headline in the user visible HTML output
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => $Param{TemplatePrefix} . 'Headline',
             Data => {
                 HeaderArea  => $Param{HeaderArea},
@@ -590,7 +587,7 @@ sub _PrepareAndAddInfoRow {
     # check needed stuff
     for my $Argument (qw(RowSpec Data)) {
         if ( !defined( $Param{$Argument} ) ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $_!",
             );
@@ -603,19 +600,25 @@ sub _PrepareAndAddInfoRow {
     # short name, just for convenience
     my $Attribute = $RowSpec->{Attribute};
 
+    # get config of frontend module
+    $Self->{Config} = $Kernel::OM->Get('Kernel::Config')->Get("ITSMChange::Frontend::$Self->{Action}");
+
     # skip if row is switched off in SysConfig
     return if $RowSpec->{IsOptional} && !$Self->{Config}->{$Attribute};
 
+    # get layout object
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+
     # keys are always translatable
     my $Key = $RowSpec->{Key} || $Attribute;
-    $Key = $Self->{LayoutObject}->{LanguageObject}->Translate($Key);
+    $Key = $LayoutObject->{LanguageObject}->Translate($Key);
 
     # determine the value
     my $Value;
     if ( $RowSpec->{ValueIsTime} ) {
 
         # format the time value
-        $Value = $Self->{LayoutObject}->Output(
+        $Value = $LayoutObject->Output(
             Template => '[% Data.' . $Attribute . ' | Localize("TimeLong") %]',
             Data     => $Data,
         );
@@ -625,7 +628,7 @@ sub _PrepareAndAddInfoRow {
         # format the user id
         if ( $Data->{ $Attribute . 'ID' } ) {
 
-            my $UserFullName = $Self->{UserObject}->UserName(
+            my $UserFullName = $Kernel::OM->Get('Kernel::System::User')->UserName(
                 UserID => $Data->{ $Attribute . 'ID' },
             );
 
@@ -648,7 +651,7 @@ sub _PrepareAndAddInfoRow {
 
     # translate the value
     if ( $Value && $RowSpec->{ValueIsTranslatable} ) {
-        $Value = $Self->{LayoutObject}->{LanguageObject}->Translate($Value),
+        $Value = $LayoutObject->{LanguageObject}->Translate($Value),
     }
 
     # add separator between key and value
@@ -671,7 +674,7 @@ sub _OutputChangeInfo {
     # check needed stuff
     for my $Argument (qw(Change PrintWorkOrder)) {
         if ( !defined( $Param{$Argument} ) ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $_!",
             );
@@ -696,7 +699,7 @@ sub _OutputChangeInfo {
 
             for my $CABAgent ( @{ $Change->{$Attribute} } ) {
 
-                my $UserFullName = $Self->{UserObject}->UserName(
+                my $UserFullName = $Kernel::OM->Get('Kernel::System::User')->UserName(
                     UserID => $CABAgent,
                 );
 
@@ -712,7 +715,7 @@ sub _OutputChangeInfo {
 
             for my $CABCustomer ( @{ $Change->{$Attribute} } ) {
 
-                my %UserData = $Self->{CustomerUserObject}->CustomerUserDataGet(
+                my %UserData = $Kernel::OM->Get('Kernel::System::CustomerUser')->CustomerUserDataGet(
                     User  => $CABCustomer,
                     Cache => 1,
                 );
@@ -732,7 +735,11 @@ sub _OutputChangeInfo {
 
     # value for attachments
     {
-        my @Attachments = $Self->{ChangeObject}->ChangeAttachmentList(
+
+        # get change object
+        my $ChangeObject = $Kernel::OM->Get('Kernel::System::ITSMChange');
+
+        my @Attachments = $ChangeObject->ChangeAttachmentList(
             ChangeID => $Change->{ChangeID},
         );
 
@@ -742,7 +749,7 @@ sub _OutputChangeInfo {
         for my $Filename (@Attachments) {
 
             # get info about file
-            my $AttachmentData = $Self->{ChangeObject}->ChangeAttachmentGet(
+            my $AttachmentData = $ChangeObject->ChangeAttachmentGet(
                 ChangeID => $Change->{ChangeID},
                 Filename => $Filename,
             );
@@ -759,26 +766,39 @@ sub _OutputChangeInfo {
         $ComplicatedValue{Attachments} = join( "\n", @Values ) || '-';
     }
 
+    # get the dynamic fields for this screen
+    my $DynamicField = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldListGet(
+        Valid       => 1,
+        ObjectType  => [ 'ITSMChange', 'ITSMWorkOrder' ],
+        FieldFilter => $Self->{Config}->{DynamicField} || {},
+    );
+
+    # get layout object
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+
     # cycle trough the activated Dynamic Fields
     my @DynamicFieldRowSpec;
     DYNAMICFIELD:
-    for my $DynamicFieldConfig ( @{ $Self->{DynamicField} } ) {
+    for my $DynamicFieldConfig ( @{$DynamicField} ) {
         next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
 
         # show only change dynamic fields here
         next DYNAMICFIELD if $DynamicFieldConfig->{ObjectType} ne 'ITSMChange';
 
-        my $Value = $Self->{BackendObject}->ValueGet(
+        # get dynamic field backend object
+        my $DynamicFieldBackendObject = $Kernel::OM->Get('Kernel::System::DynamicField::Backend');
+
+        my $Value = $DynamicFieldBackendObject->ValueGet(
             DynamicFieldConfig => $DynamicFieldConfig,
             ObjectID           => $Change->{ChangeID},
         );
 
         # get print string for this dynamic field
-        my $ValueStrg = $Self->{BackendObject}->DisplayValueRender(
+        my $ValueStrg = $DynamicFieldBackendObject->DisplayValueRender(
             DynamicFieldConfig => $DynamicFieldConfig,
             Value              => $Value,
             ValueMaxChars      => 1000,
-            LayoutObject       => $Self->{LayoutObject},
+            LayoutObject       => $LayoutObject,
         );
 
         # for empty values
@@ -909,7 +929,7 @@ sub _OutputChangeInfo {
     # number of rows in the change info table
     my $Rows = max( scalar(@TableLeft), scalar(@TableRight) );
 
-    if ( $Self->{PDFObject} ) {
+    if ( $Kernel::OM->Get('Kernel::System::PDF') ) {
 
         my %Table;
         for my $Row ( 0 .. $Rows - 1 ) {
@@ -949,7 +969,7 @@ sub _OutputChangeInfo {
 
         # show left table
         for my $Row (@TableLeft) {
-            $Self->{LayoutObject}->Block(
+            $LayoutObject->Block(
                 Name => 'ChangeInfoLeft',
                 Data => $Row,
             );
@@ -957,7 +977,7 @@ sub _OutputChangeInfo {
 
         # show right table
         for my $Row (@TableRight) {
-            $Self->{LayoutObject}->Block(
+            $LayoutObject->Block(
                 Name => 'ChangeInfoRight',
                 Data => $Row,
             );
@@ -974,7 +994,7 @@ sub _OutputWorkOrderInfo {
     # check needed stuff
     for my $Argument (qw(Change WorkOrder)) {
         if ( !defined( $Param{$Argument} ) ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $_!",
             );
@@ -995,7 +1015,11 @@ sub _OutputWorkOrderInfo {
 
     # value for attachments
     {
-        my @Attachments = $Self->{WorkOrderObject}->WorkOrderAttachmentList(
+
+        # get work order object
+        my $WorkOrderObject = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder');
+
+        my @Attachments = $WorkOrderObject->WorkOrderAttachmentList(
             WorkOrderID => $WorkOrder->{WorkOrderID},
         );
 
@@ -1005,7 +1029,7 @@ sub _OutputWorkOrderInfo {
         for my $Filename (@Attachments) {
 
             # get info about file
-            my $AttachmentData = $Self->{WorkOrderObject}->WorkOrderAttachmentGet(
+            my $AttachmentData = $WorkOrderObject->WorkOrderAttachmentGet(
                 WorkOrderID => $WorkOrder->{WorkOrderID},
                 Filename    => $Filename,
             );
@@ -1026,25 +1050,41 @@ sub _OutputWorkOrderInfo {
     ( $ComplicatedValue{WrappableChangeTitle} = $Change->{ChangeTitle} )
         =~ s{ ( \S{25} ) }{$1 }xmsg;
 
+    # get config of frontend module
+    $Self->{Config} = $Kernel::OM->Get('Kernel::Config')->Get("ITSMChange::Frontend::$Self->{Action}");
+
+    # get the dynamic fields for this screen
+    my $DynamicField = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldListGet(
+        Valid       => 1,
+        ObjectType  => [ 'ITSMChange', 'ITSMWorkOrder' ],
+        FieldFilter => $Self->{Config}->{DynamicField} || {},
+    );
+
+    # get layout object
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+
     my @DynamicFieldRowSpec;
     DYNAMICFIELD:
-    for my $DynamicFieldConfig ( @{ $Self->{DynamicField} } ) {
+    for my $DynamicFieldConfig ( @{$DynamicField} ) {
         next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
 
         # show only workorder dynamic fields here
         next DYNAMICFIELD if $DynamicFieldConfig->{ObjectType} ne 'ITSMWorkOrder';
 
-        my $Value = $Self->{BackendObject}->ValueGet(
+        # get dynamic field backend object
+        my $DynamicFieldBackendObject = $Kernel::OM->Get('Kernel::System::DynamicField::Backend');
+
+        my $Value = $DynamicFieldBackendObject->ValueGet(
             DynamicFieldConfig => $DynamicFieldConfig,
             ObjectID           => $WorkOrder->{WorkOrderID},
         );
 
         # get print string for this dynamic field
-        my $ValueStrg = $Self->{BackendObject}->DisplayValueRender(
+        my $ValueStrg = $DynamicFieldBackendObject->DisplayValueRender(
             DynamicFieldConfig => $DynamicFieldConfig,
             Value              => $Value,
             ValueMaxChars      => 1000,
-            LayoutObject       => $Self->{LayoutObject},
+            LayoutObject       => $LayoutObject,
         );
 
         # for empty values
@@ -1157,7 +1197,7 @@ sub _OutputWorkOrderInfo {
 
     my $Rows = max( scalar(@TableLeft), scalar(@TableRight) );
 
-    if ( $Self->{PDFObject} ) {
+    if ( $Kernel::OM->Get('Kernel::System::PDF') ) {
         my %Table;
         for my $Row ( 0 .. $Rows - 1 ) {
             $Table{CellData}[$Row][0]{Content}         = $TableLeft[$Row]->{Key};
@@ -1196,7 +1236,7 @@ sub _OutputWorkOrderInfo {
 
         # show left table
         for my $Row (@TableLeft) {
-            $Self->{LayoutObject}->Block(
+            $LayoutObject->Block(
                 Name => 'WorkOrderInfoLeft',
                 Data => $Row,
             );
@@ -1204,7 +1244,7 @@ sub _OutputWorkOrderInfo {
 
         # show right table
         for my $Row (@TableRight) {
-            $Self->{LayoutObject}->Block(
+            $LayoutObject->Block(
                 Name => 'WorkOrderInfoRight',
                 Data => $Row,
             );
@@ -1221,7 +1261,7 @@ sub _OutputLongText {
     # check needed stuff
     for my $Argument (qw(PrintChange PrintWorkOrder Title LongText)) {
         if ( !defined( $Param{$Argument} ) ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $_!",
             );
@@ -1229,16 +1269,19 @@ sub _OutputLongText {
         }
     }
 
-    if ( $Self->{PDFObject} ) {
+    # when there is no PDF-Support, $PDFObject will be undefined
+    my $PDFObject = $Kernel::OM->Get('Kernel::System::PDF');
+
+    if ($PDFObject) {
 
         # some vertical whitespace
-        $Self->{PDFObject}->PositionSet(
+        $PDFObject->PositionSet(
             Move => 'relativ',
             Y    => -15,
         );
 
         # output headline for the section
-        $Self->{PDFObject}->Text(
+        $PDFObject->Text(
             Text     => $Param{Title},
             Height   => 7,
             Type     => 'Cut',
@@ -1248,7 +1291,7 @@ sub _OutputLongText {
         );
 
         # vertical whitespace after title
-        $Self->{PDFObject}->PositionSet(
+        $PDFObject->PositionSet(
             Move => 'relativ',
             Y    => -4,
         );
@@ -1279,7 +1322,7 @@ sub _OutputLongText {
     else {
 
         my $BlockName = $Param{PrintChange} ? 'ChangeLongText' : 'WorkOrderLongText';
-        $Self->{LayoutObject}->Block(
+        $Kernel::OM->Get('Kernel::Output::HTML::Layout')->Block(
             Name => $BlockName,
             Data => \%Param,
         );
@@ -1295,7 +1338,7 @@ sub _OutputWorkOrderOverview {
     # check needed stuff
     for (qw(WorkOrderOverview)) {
         if ( !defined( $Param{$_} ) ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $_!"
             );
@@ -1303,21 +1346,25 @@ sub _OutputWorkOrderOverview {
         }
     }
 
-    if ( $Self->{PDFObject} ) {
+    # when there is no PDF-Support, $PDFObject will be undefined
+    my $PDFObject    = $Kernel::OM->Get('Kernel::System::PDF');
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+
+    if ($PDFObject) {
 
         # vertical whitespace before section headline
-        $Self->{PDFObject}->PositionSet(
+        $PDFObject->PositionSet(
             Move => 'relativ',
             Y    => -15,
         );
 
         # output headline for the section
-        my $Translation = $Self->{LayoutObject}->{LanguageObject};
+        my $Translation = $LayoutObject->{LanguageObject};
         my $SectionTitle =
             $Translation->Get('ITSM Workorder')
             . ' ' . $Translation->Get('Overview')
             . ' (' . scalar @{ $Param{WorkOrderOverview} } . ')';
-        $Self->{PDFObject}->Text(
+        $PDFObject->Text(
             Text     => $SectionTitle,
             Height   => 7,
             Type     => 'Cut',
@@ -1327,7 +1374,7 @@ sub _OutputWorkOrderOverview {
         );
 
         # vertical whitespace after section headline
-        $Self->{PDFObject}->PositionSet(
+        $PDFObject->PositionSet(
             Move => 'relativ',
             Y    => -4,
         );
@@ -1401,7 +1448,7 @@ sub _OutputWorkOrderOverview {
     else {
 
         # output workorder overview
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'WorkOrderOverview',
         );
 
@@ -1413,7 +1460,7 @@ sub _OutputWorkOrderOverview {
                     PlannedStartTime PlannedEndTime ActualStartTime ActualEndTime )
             } = @{$WorkOrder};
 
-            $Self->{LayoutObject}->Block(
+            $LayoutObject->Block(
                 Name => 'WorkOrderRow',
                 Data => \%Data,
             );
@@ -1432,7 +1479,7 @@ sub _OutputLinkedObjects {
     # check needed stuff
     for (qw(PrintChange PrintWorkOrder LinkData LinkTypeList)) {
         if ( !defined( $Param{$_} ) ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $_!"
             );
@@ -1440,8 +1487,12 @@ sub _OutputLinkedObjects {
         }
     }
 
+    # when there is no PDF-Support, $PDFObject will be undefined
+    my $PDFObject    = $Kernel::OM->Get('Kernel::System::PDF');
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+
     my %TypeList = %{ $Param{LinkTypeList} };
-    if ( $Self->{PDFObject} ) {
+    if ($PDFObject) {
 
         my %Table;
         my $Row = 0;
@@ -1450,7 +1501,7 @@ sub _OutputLinkedObjects {
             # investigate link type name
             my @LinkData = split q{::}, $LinkTypeLinkDirection;
             my $LinkTypeName = $TypeList{ $LinkData[0] }->{ $LinkData[1] . 'Name' };
-            $LinkTypeName = $Self->{LayoutObject}->{LanguageObject}->Translate($LinkTypeName);
+            $LinkTypeName = $LayoutObject->{LanguageObject}->Translate($LinkTypeName);
 
             # define headline
             $Table{CellData}[$Row][0]{Content} = $LinkTypeName . ':';
@@ -1477,14 +1528,14 @@ sub _OutputLinkedObjects {
         $Table{ColumnData}[1]{Width} = 431;
 
         # set new position
-        $Self->{PDFObject}->PositionSet(
+        $PDFObject->PositionSet(
             Move => 'relativ',
             Y    => -15,
         );
 
         # output headline
-        $Self->{PDFObject}->Text(
-            Text     => $Self->{LayoutObject}->{LanguageObject}->Translate('Linked Objects'),
+        $PDFObject->Text(
+            Text     => $LayoutObject->{LanguageObject}->Translate('Linked Objects'),
             Height   => 7,
             Type     => 'Cut',
             Font     => 'ProportionalBoldItalic',
@@ -1493,7 +1544,7 @@ sub _OutputLinkedObjects {
         );
 
         # set new position
-        $Self->{PDFObject}->PositionSet(
+        $PDFObject->PositionSet(
             Move => 'relativ',
             Y    => -4,
         );
@@ -1518,7 +1569,7 @@ sub _OutputLinkedObjects {
         my $BlockPrefix = $Param{PrintChange} ? 'Change' : 'WorkOrder';
 
         # output link data
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => $BlockPrefix . 'LinkedObjects',
         );
 
@@ -1529,7 +1580,7 @@ sub _OutputLinkedObjects {
             my $LinkTypeName = $TypeList{ $LinkData[0] }->{ $LinkData[1] . 'Name' };
 
             # output link type data
-            $Self->{LayoutObject}->Block(
+            $LayoutObject->Block(
                 Name => $BlockPrefix . 'LinkType',
                 Data => {
                     LinkTypeName => $LinkTypeName,
@@ -1544,7 +1595,7 @@ sub _OutputLinkedObjects {
                 for my $Item ( @{ $ObjectList->{$Object} } ) {
 
                     # output link type data
-                    $Self->{LayoutObject}->Block(
+                    $LayoutObject->Block(
                         Name => $BlockPrefix . 'LinkTypeRow',
                         Data => {
                             LinkStrg => $Item->{Title},
@@ -1567,7 +1618,7 @@ sub _PDFOutputTable {
     # check needed stuff
     for (qw(Table)) {
         if ( !defined( $Param{$_} ) ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $_!"
             );
@@ -1575,21 +1626,28 @@ sub _PDFOutputTable {
         }
     }
 
+    # Page controls the PDF-generation
+    # it won't be used when there is no PDF-Support
+    $Self->{Page} = {};
+
     # just for having shorter names
     my $Table = $Param{Table};
     my $Page  = $Self->{Page};
     PAGE:
     for ( $Page->{PageCount} .. $Page->{MaxPages} ) {
 
+        # when there is no PDF-Support, $PDFObject will be undefined
+        my $PDFObject = $Kernel::OM->Get('Kernel::System::PDF');
+
         # output table (or a fragment of it)
-        %{$Table} = $Self->{PDFObject}->Table( %{$Table} );
+        %{$Table} = $PDFObject->Table( %{$Table} );
 
         # stop output or output next page
         if ( $Table->{State} ) {
             last PAGE;
         }
         else {
-            $Self->{PDFObject}->PageNew(
+            $PDFObject->PageNew(
                 %{$Page},
                 FooterRight => join( ' ', $Page->{PageText}, $Page->{PageCount} ),
             );

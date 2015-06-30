@@ -6,16 +6,12 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package Kernel::Output::HTML::ITSMChangeOverviewSmall;
+package Kernel::Output::HTML::ITSMChange::OverviewSmall;
 
 use strict;
 use warnings;
 
-use Kernel::System::User;
-use Kernel::System::LinkObject;
-use Kernel::System::Service;
-use Kernel::System::DynamicField;
-use Kernel::System::DynamicField::Backend;
+our $ObjectManagerDisabled = 1;
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -24,30 +20,8 @@ sub new {
     my $Self = {%Param};
     bless( $Self, $Type );
 
-    # get needed objects
-    for my $Object (
-        qw(ConfigObject LogObject DBObject LayoutObject UserID UserObject MainObject)
-        )
-    {
-        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
-    }
-
-    # create needed objects
-    $Self->{LinkObject}         = Kernel::System::LinkObject->new(%Param);
-    $Self->{ServiceObject}      = Kernel::System::Service->new(%Param);
-    $Self->{ServiceObject}      = Kernel::System::Service->new(%Param);
-    $Self->{DynamicFieldObject} = Kernel::System::DynamicField->new(%Param);
-    $Self->{BackendObject}      = Kernel::System::DynamicField::Backend->new(%Param);
-
-    # when called from the customer interface
-    if ( !$Self->{UserObject}->can('GetUserData') ) {
-
-        # workaround for customer interface
-        # in the customer interface the UserObject is in fact the CustomerUserObject
-        # so we need to correct this here by creating a new UserObject
-        $Self->{CustomerUserObject} = $Self->{UserObject};
-        $Self->{UserObject}         = Kernel::System::User->new(%Param);
-    }
+    # get UserID param
+    $Self->{UserID} = $Param{UserID} || die "Got no UserID!";
 
     return $Self;
 }
@@ -55,10 +29,13 @@ sub new {
 sub Run {
     my ( $Self, %Param ) = @_;
 
+    # get log object
+    my $LogObject = $Kernel::OM->Get('Kernel::System::Log');
+
     # check needed stuff
     for my $Needed (qw(PageShown StartHit)) {
         if ( !$Param{$Needed} ) {
-            $Self->{LogObject}->Log(
+            $LogObject->Log(
                 Priority => 'error',
                 Message  => "Need $Needed!",
             );
@@ -68,7 +45,7 @@ sub Run {
 
     # need ChangeIDs or WorkOrderIDs
     if ( !$Param{ChangeIDs} && !$Param{WorkOrderIDs} ) {
-        $Self->{LogObject}->Log(
+        $LogObject->Log(
             Priority => 'error',
             Message  => 'Need the ChangeIDs or the WorkOrderIDs!',
         );
@@ -77,19 +54,22 @@ sub Run {
 
     # only one of ChangeIDs or WorkOrderIDs can be used
     if ( $Param{ChangeIDs} && $Param{WorkOrderIDs} ) {
-        $Self->{LogObject}->Log(
+        $LogObject->Log(
             Priority => 'error',
             Message  => 'Need either the ChangeIDs or the WorkOrderIDs, not both!',
         );
         return;
     }
 
+    # get service object
+    my $ServiceObject = $Kernel::OM->Get('Kernel::System::Service');
+
     # in the customer frontend
     my %CustomerUserServices;
     if ( $Param{Frontend} eq 'Customer' && $Self->{Config}->{ShowOnlyChangesWithAllowedServices} ) {
 
         # get all services the customer user is allowed to use
-        %CustomerUserServices = $Self->{ServiceObject}->CustomerUserServiceMemberList(
+        %CustomerUserServices = $ServiceObject->CustomerUserServiceMemberList(
             CustomerUserLogin => $Self->{UserID},
             Result            => 'HASH',
             DefaultServices   => 1,
@@ -131,8 +111,11 @@ sub Run {
         }
     }
 
+    # get dynamic field object
+    my $DynamicFieldObject = $Kernel::OM->Get('Kernel::System::DynamicField');
+
     # get the dynamic field list of change and workorder dynamic fields
-    my $DynamicFieldList = $Self->{DynamicFieldObject}->DynamicFieldListGet(
+    my $DynamicFieldList = $DynamicFieldObject->DynamicFieldListGet(
         Valid       => 1,
         ObjectType  => [ 'ITSMChange', 'ITSMWorkOrder' ],
         FieldFilter => \%DynamicFieldColumns,
@@ -145,6 +128,9 @@ sub Run {
 
     # build lookup hash for ShowColumns
     my %ShowColumnsLookup = map { $_ => 1 } @ShowColumns;
+
+    # get layout object
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
     # build column header blocks
     if (@ShowColumns) {
@@ -190,11 +176,11 @@ sub Run {
             if ( $Column =~ m{ \A DynamicField_ (.+) \z }xms ) {
 
                 # get dynamic field data
-                my $DynamicField = $Self->{DynamicFieldObject}->DynamicFieldGet(
+                my $DynamicField = $DynamicFieldObject->DynamicFieldGet(
                     Name => $1,
                 );
 
-                $Self->{LayoutObject}->Block(
+                $LayoutObject->Block(
                     Name => 'RecordDynamicFieldHeader',
                     Data => {
                         %{$DynamicField},
@@ -206,7 +192,7 @@ sub Run {
 
             # handle "normal" fields
             else {
-                $Self->{LayoutObject}->Block(
+                $LayoutObject->Block(
                     Name => 'Record' . $Column . 'Header',
                     Data => {
                         %Param,
@@ -248,7 +234,7 @@ sub Run {
                 elsif ( $Param{WorkOrderIDs} ) {
 
                     # get workorder data
-                    my $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
+                    my $WorkOrder = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderGet(
                         WorkOrderID => $ID,
                         UserID      => $Self->{UserID},
                     );
@@ -263,7 +249,7 @@ sub Run {
                 }
 
                 # get change data
-                my $Change = $Self->{ChangeObject}->ChangeGet(
+                my $Change = $Kernel::OM->Get('Kernel::System::ITSMChange')->ChangeGet(
                     UserID   => $Self->{UserID},
                     ChangeID => $ChangeID,
                 );
@@ -287,8 +273,21 @@ sub Run {
                         next USERTYPE;
                     }
 
+                    # get user object
+                    my $UserObject = $Kernel::OM->Get('Kernel::System::User');
+
+                    # when called from the customer interface
+                    if ( !$UserObject->can('GetUserData') ) {
+
+                        # workaround for customer interface
+                        # in the customer interface the UserObject is in fact the CustomerUserObject
+                        # so we need to correct this here by creating a new UserObject
+                        $Self->{CustomerUserObject} = $UserObject;
+                        $UserObject = $Kernel::OM->Get('Kernel::System::User');
+                    }
+
                     # get user data
-                    my %User = $Self->{UserObject}->GetUserData(
+                    my %User = $UserObject->GetUserData(
                         UserID => $Change->{ $UserType . 'ID' } || $Data{ $UserType . 'ID' },
                         Cached => 1,
                     );
@@ -323,12 +322,13 @@ sub Run {
                     for my $WorkOrderID (@WorkOrderIDs) {
 
                         # get linked objects of this workorder
-                        my $LinkListWithDataWorkOrder = $Self->{LinkObject}->LinkListWithData(
+                        my $LinkListWithDataWorkOrder
+                            = $Kernel::OM->Get('Kernel::System::LinkObject')->LinkListWithData(
                             Object => 'ITSMWorkOrder',
                             Key    => $WorkOrderID,
                             State  => 'Valid',
                             UserID => $Self->{UserID},
-                        );
+                            );
 
                         OBJECT:
                         for my $Object ( sort keys %{$LinkListWithDataWorkOrder} ) {
@@ -407,7 +407,7 @@ sub Run {
                         }
 
                         # get service data
-                        my %ServiceData = $Self->{ServiceObject}->ServiceGet(
+                        my %ServiceData = $ServiceObject->ServiceGet(
                             ServiceID     => $ServiceID,
                             IncidentState => 1,
                             UserID        => $Self->{UserID},
@@ -439,7 +439,7 @@ sub Run {
                 }
 
                 # build record block
-                $Self->{LayoutObject}->Block(
+                $LayoutObject->Block(
                     Name => 'Record',
                     Data => {
                         %Param,
@@ -457,24 +457,27 @@ sub Run {
                         if ( $Column =~ m{ \A DynamicField_ (.+) \z }xms ) {
 
                             # get dynamic field data
-                            my $DynamicField = $Self->{DynamicFieldObject}->DynamicFieldGet(
+                            my $DynamicField = $DynamicFieldObject->DynamicFieldGet(
                                 Name => $1,
                             );
 
+                            # get dynamic field backend object
+                            my $DynamicFieldBackendObject = $Kernel::OM->Get('Kernel::System::DynamicField::Backend');
+
                             # get field value
-                            my $Value = $Self->{BackendObject}->ValueGet(
+                            my $Value = $DynamicFieldBackendObject->ValueGet(
                                 DynamicFieldConfig => $DynamicField,
                                 ObjectID           => $ID,
                             );
 
-                            my $ValueStrg = $Self->{BackendObject}->DisplayValueRender(
+                            my $ValueStrg = $DynamicFieldBackendObject->DisplayValueRender(
                                 DynamicFieldConfig => $DynamicField,
                                 Value              => $Value,
                                 ValueMaxChars      => 20,
-                                LayoutObject       => $Self->{LayoutObject},
+                                LayoutObject       => $LayoutObject,
                             );
 
-                            $Self->{LayoutObject}->Block(
+                            $LayoutObject->Block(
                                 Name => 'RecordDynamicField',
                                 Data => {
                                     Value => $ValueStrg->{Value},
@@ -482,7 +485,7 @@ sub Run {
                                 },
                             );
 
-                            $Self->{LayoutObject}->Block(
+                            $LayoutObject->Block(
                                 Name => 'RecordDynamicFieldPlain',
                                 Data => {
                                     Value => $ValueStrg->{Value},
@@ -494,7 +497,7 @@ sub Run {
                         # handle "normal" fields
                         else {
 
-                            $Self->{LayoutObject}->Block(
+                            $LayoutObject->Block(
                                 Name => 'Record' . $Column,
                                 Data => {
                                     %Param,
@@ -509,7 +512,7 @@ sub Run {
                             for my $SubElement ( @{ $SubElementData{$Column} } ) {
 
                                 # show sub-elements of column
-                                $Self->{LayoutObject}->Block(
+                                $LayoutObject->Block(
                                     Name => 'Record' . $Column . 'SubElement',
                                     Data => {
                                         %Param,
@@ -521,7 +524,7 @@ sub Run {
                         }
 
                         if ( !$SubElementData{Services} ) {
-                            $Self->{LayoutObject}->Block(
+                            $LayoutObject->Block(
                                 Name => 'Record' . $Column . 'SubElementEmpty',
                                 Data => {},
                             );
@@ -531,14 +534,14 @@ sub Run {
                         next COLUMN if $Param{Frontend} eq 'Customer';
 
                         # show links if available
-                        $Self->{LayoutObject}->Block(
+                        $LayoutObject->Block(
                             Name => 'Record' . $Column . 'LinkStart',
                             Data => {
                                 %Param,
                                 %Data,
                             },
                         );
-                        $Self->{LayoutObject}->Block(
+                        $LayoutObject->Block(
                             Name => 'Record' . $Column . 'LinkEnd',
                             Data => {
                                 %Param,
@@ -553,7 +556,7 @@ sub Run {
 
     # if there are no changes to show, a no data found message is displayed in the table
     else {
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'NoDataFoundMsg',
             Data => {
                 TotalColumns => scalar @ShowColumns,
@@ -562,7 +565,7 @@ sub Run {
     }
 
     # use template
-    $Output .= $Self->{LayoutObject}->Output(
+    $Output .= $LayoutObject->Output(
         TemplateFile => 'AgentITSMChangeOverviewSmall',
         Data         => {
             %Param,

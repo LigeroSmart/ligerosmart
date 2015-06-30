@@ -11,10 +11,7 @@ package Kernel::Modules::AgentITSMWorkOrderHistory;
 use strict;
 use warnings;
 
-use Kernel::System::ITSMChange;
-use Kernel::System::ITSMChange::ITSMWorkOrder;
-use Kernel::System::ITSMChange::History;
-use Kernel::System::HTMLUtils;
+our $ObjectManagerDisabled = 1;
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -23,25 +20,6 @@ sub new {
     my $Self = {%Param};
     bless( $Self, $Type );
 
-    # check needed objects
-    for my $Object (
-        qw(ParamObject DBObject LayoutObject LogObject UserObject GroupObject ConfigObject)
-        )
-    {
-        if ( !$Self->{$Object} ) {
-            $Self->{LayoutObject}->FatalError( Message => "Got no $Object!" );
-        }
-    }
-
-    # create needed objects
-    $Self->{ChangeObject}    = Kernel::System::ITSMChange->new(%Param);
-    $Self->{WorkOrderObject} = Kernel::System::ITSMChange::ITSMWorkOrder->new(%Param);
-    $Self->{HistoryObject}   = Kernel::System::ITSMChange::History->new(%Param);
-    $Self->{HTMLUtilsObject} = Kernel::System::HTMLUtils->new(%Param);
-
-    # get config of frontend module
-    $Self->{Config} = $Self->{ConfigObject}->Get("ITSMWorkOrder::Frontend::$Self->{Action}");
-
     return $Self;
 }
 
@@ -49,20 +27,30 @@ sub Run {
     my ( $Self, %Param ) = @_;
 
     # get needed workorder id
-    my $WorkOrderID = $Self->{ParamObject}->GetParam( Param => 'WorkOrderID' );
+    my $WorkOrderID = $Kernel::OM->Get('Kernel::System::Web::Request')->GetParam( Param => 'WorkOrderID' );
+
+    # get layout object
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
     # check needed stuff
     if ( !$WorkOrderID ) {
 
         # error page
-        return $Self->{LayoutObject}->ErrorScreen(
+        return $LayoutObject->ErrorScreen(
             Message => "Can't show history, as no WorkOrderID is given!",
             Comment => 'Please contact the administrator.',
         );
     }
 
+    # get needed objects
+    my $WorkOrderObject = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder');
+    my $ConfigObject    = $Kernel::OM->Get('Kernel::Config');
+
+    # get config of frontend module
+    $Self->{Config} = $ConfigObject->Get("ITSMWorkOrder::Frontend::$Self->{Action}");
+
     # check permissions
-    my $Access = $Self->{WorkOrderObject}->Permission(
+    my $Access = $WorkOrderObject->Permission(
         Type        => $Self->{Config}->{Permission},
         Action      => $Self->{Action},
         WorkOrderID => $WorkOrderID,
@@ -71,49 +59,49 @@ sub Run {
 
     # error screen
     if ( !$Access ) {
-        return $Self->{LayoutObject}->NoPermission(
+        return $LayoutObject->NoPermission(
             Message    => "You need $Self->{Config}->{Permission} permissions!",
             WithHeader => 'yes',
         );
     }
 
     # get workorder information
-    my $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
+    my $WorkOrder = $WorkOrderObject->WorkOrderGet(
         WorkOrderID => $WorkOrderID,
         UserID      => $Self->{UserID},
     );
 
     # check error
     if ( !$WorkOrder ) {
-        return $Self->{LayoutObject}->ErrorScreen(
+        return $LayoutObject->ErrorScreen(
             Message => "WorkOrder '$WorkOrderID' not found in the data base!",
             Comment => 'Please contact the administrator.',
         );
     }
 
     # get change information
-    my $Change = $Self->{ChangeObject}->ChangeGet(
+    my $Change = $Kernel::OM->Get('Kernel::System::ITSMChange')->ChangeGet(
         ChangeID => $WorkOrder->{ChangeID},
         UserID   => $Self->{UserID},
     );
 
     # check error
     if ( !$Change ) {
-        return $Self->{LayoutObject}->ErrorScreen(
+        return $LayoutObject->ErrorScreen(
             Message => "Change '$WorkOrder->{ChangeID}' not found in the data base!",
             Comment => 'Please contact the administrator.',
         );
     }
 
     # get history entries
-    my $HistoryEntriesRef = $Self->{HistoryObject}->WorkOrderHistoryGet(
+    my $HistoryEntriesRef = $Kernel::OM->Get('Kernel::System::ITSMChange::History')->WorkOrderHistoryGet(
         WorkOrderID => $WorkOrderID,
         UserID      => $Self->{UserID},
     ) || [];
 
     # get order direction
     my @HistoryLines = @{$HistoryEntriesRef};
-    if ( $Self->{ConfigObject}->Get('ITSMChange::Frontend::HistoryOrder') eq 'reverse' ) {
+    if ( $ConfigObject->Get('ITSMChange::Frontend::HistoryOrder') eq 'reverse' ) {
         @HistoryLines = reverse @{$HistoryEntriesRef};
     }
 
@@ -158,17 +146,17 @@ sub Run {
                             my $Value;
                             my $TranslationNeeded = 1;
                             if ( $Type eq 'WorkOrderState' ) {
-                                $Value = $Self->{WorkOrderObject}->WorkOrderStateLookup(
+                                $Value = $WorkOrderObject->WorkOrderStateLookup(
                                     WorkOrderStateID => $HistoryEntry->{$ContentNewOrOld},
                                 );
                             }
                             elsif ( $Type eq 'WorkOrderType' ) {
-                                $Value = $Self->{WorkOrderObject}->WorkOrderTypeLookup(
+                                $Value = $WorkOrderObject->WorkOrderTypeLookup(
                                     WorkOrderTypeID => $HistoryEntry->{$ContentNewOrOld},
                                 );
                             }
                             elsif ( $Type eq 'WorkOrderAgent' ) {
-                                $Value = $Self->{UserObject}->UserLookup(
+                                $Value = $Kernel::OM->Get('Kernel::System::User')->UserLookup(
                                     UserID => $HistoryEntry->{$ContentNewOrOld},
                                 );
 
@@ -176,7 +164,7 @@ sub Run {
                                 $TranslationNeeded = 0;
                             }
                             else {
-                                return $Self->{LayoutObject}->ErrorScreen(
+                                return $LayoutObject->ErrorScreen(
                                     Message => "Unknown type '$Type' encountered!",
                                     Comment => 'Please contact the administrator.',
                                 );
@@ -185,7 +173,7 @@ sub Run {
                             # E.g. the usernames should not be translated
                             my $TranslatedValue = $TranslationNeeded
                                 ?
-                                $Self->{LayoutObject}->{LanguageObject}->Translate($Value)
+                                $LayoutObject->{LanguageObject}->Translate($Value)
                                 :
                                 $Value;
 
@@ -206,15 +194,18 @@ sub Run {
             }
 
             # translate fieldname for display
-            $DisplayedFieldname = $Self->{LayoutObject}->{LanguageObject}->Translate(
+            $DisplayedFieldname = $LayoutObject->{LanguageObject}->Translate(
                 $DisplayedFieldname,
             );
 
+            # get HTML utils object
+            my $HTMLUtilsObject = $Kernel::OM->Get('Kernel::System::HTMLUtils');
+
             # trim strings to a max length of $MaxLength
-            my $ContentNew = $Self->{HTMLUtilsObject}->ToAscii(
+            my $ContentNew = $HTMLUtilsObject->ToAscii(
                 String => $HistoryEntry->{ContentNew} || '-',
             );
-            my $ContentOld = $Self->{HTMLUtilsObject}->ToAscii(
+            my $ContentOld = $HTMLUtilsObject->ToAscii(
                 String => $HistoryEntry->{ContentOld} || '-',
             );
 
@@ -260,7 +251,7 @@ sub Run {
             # show 'nice' output with variable substitution
             # sample input:
             # ChangeHistory::ChangeLinkAdd", "Ticket", "1
-            $Data{Content} = $Self->{LayoutObject}->{LanguageObject}->Translate(
+            $Data{Content} = $LayoutObject->{LanguageObject}->Translate(
                 'WorkOrderHistory::' . $Data{HistoryType} . '", ' . $Data{Content}
             );
 
@@ -268,7 +259,7 @@ sub Run {
             $Data{Content} =~ s{ % s }{}xmsg;
         }
 
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'Row',
             Data => {%Data},
         );
@@ -288,7 +279,7 @@ sub Run {
         {
 
             # show historyzoom block
-            $Self->{LayoutObject}->Block(
+            $LayoutObject->Block(
                 Name => 'ShowHistoryZoom',
                 Data => {%Data},
             );
@@ -296,12 +287,12 @@ sub Run {
 
         # don't show a link
         else {
-            $Self->{LayoutObject}->Block(
+            $LayoutObject->Block(
                 Name => 'NoHistoryZoom',
             );
         }
 
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'ShowWorkOrderZoom',
             Data => {%Data},
         );
@@ -309,13 +300,13 @@ sub Run {
     }
 
     # output header
-    my $Output = $Self->{LayoutObject}->Header(
+    my $Output = $LayoutObject->Header(
         Type  => 'Small',
         Title => 'WorkOrderHistory',
     );
 
     # start template output
-    $Output .= $Self->{LayoutObject}->Output(
+    $Output .= $LayoutObject->Output(
         TemplateFile => 'AgentITSMWorkOrderHistory',
         Data         => {
             %Param,
@@ -325,7 +316,7 @@ sub Run {
     );
 
     # add footer
-    $Output .= $Self->{LayoutObject}->Footer(
+    $Output .= $LayoutObject->Footer(
         Type => 'Small',
     );
 

@@ -11,7 +11,7 @@
                 <Title>Category &lt;-&gt; Impact &lt;-&gt; Priority</Title>
                 <NavBarName>Admin</NavBarName>
                 <NavBarModule>
-                    <Module>Kernel::Output::HTML::NavBarModuleAdmin</Module>
+                    <Module>Kernel::Output::HTML::NavBar::ModuleAdmin</Module>
                     <Name Translatable="1">Category &lt;-&gt; Impact &lt;-&gt; Priority</Name>
                     <Block>System</Block>
                     <Prio>431</Prio>
@@ -33,7 +33,7 @@
                 <Title>ITSM Change notification rules</Title>
                 <NavBarName>Admin</NavBarName>
                 <NavBarModule>
-                    <Module>Kernel::Output::HTML::NavBarModuleAdmin</Module>
+                    <Module>Kernel::Output::HTML::NavBar::ModuleAdmin</Module>
                     <Name Translatable="1">Notification (ITSM Change Management)</Name>
                     <Block>System</Block>
                     <Prio>406</Prio>
@@ -52,7 +52,7 @@
                 <Title>State Machine</Title>
                 <NavBarName>Admin</NavBarName>
                 <NavBarModule>
-                    <Module>Kernel::Output::HTML::NavBarModuleAdmin</Module>
+                    <Module>Kernel::Output::HTML::NavBar::ModuleAdmin</Module>
                     <Name Translatable="1">State Machine</Name>
                     <Block>System</Block>
                     <Prio>433</Prio>
@@ -775,7 +775,7 @@
         <SubGroup>Frontend::Agent::ToolBarModule</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::Output::HTML::ToolBarChangeManager</Item>
+                <Item Key="Module">Kernel::Output::HTML::ToolBar::ChangeManager</Item>
                 <Item Key="CssClass">ChangeManager</Item>
                 <Item Key="Icon">fa fa-male</Item>
                 <Item Key="Priority">1000610</Item>
@@ -788,7 +788,7 @@
         <SubGroup>Frontend::Agent::ToolBarModule</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::Output::HTML::ToolBarMyChanges</Item>
+                <Item Key="Module">Kernel::Output::HTML::ToolBar::MyChanges</Item>
                 <Item Key="CssClass">MyChanges</Item>
                 <Item Key="Icon">fa fa-retweet</Item>
                 <Item Key="Priority">1000630</Item>
@@ -801,7 +801,7 @@
         <SubGroup>Frontend::Agent::ToolBarModule</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::Output::HTML::ToolBarMyWorkOrders</Item>
+                <Item Key="Module">Kernel::Output::HTML::ToolBar::MyWorkOrders</Item>
                 <Item Key="CssClass">MyWorkOrders</Item>
                 <Item Key="Icon">fa fa-tasks</Item>
                 <Item Key="Priority">1000640</Item>
@@ -814,7 +814,7 @@
         <SubGroup>Frontend::Agent::ToolBarModule</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::Output::HTML::ToolBarMyCAB</Item>
+                <Item Key="Module">Kernel::Output::HTML::ToolBar::MyCAB</Item>
                 <Item Key="CssClass">MyCABs</Item>
                 <Item Key="Icon">fa fa-group</Item>
                 <Item Key="Priority">1000620</Item>
@@ -827,7 +827,7 @@
         <SubGroup>Frontend::Agent::ITSMChangeOverview</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::Output::HTML::ITSMChangeOverviewSmall</Item>
+                <Item Key="Module">Kernel::Output::HTML::ITSMChange::OverviewSmall</Item>
                 <Item Key="Name">Small</Item>
                 <Item Key="NameShort">S</Item>
                 <Item Key="PageShown">25</Item>
@@ -840,7 +840,7 @@
         <SubGroup>Frontend::Agent::ITSMTemplateOverview</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::Output::HTML::ITSMTemplateOverviewSmall</Item>
+                <Item Key="Module">Kernel::Output::HTML::ITSMTemplate::OverviewSmall</Item>
                 <Item Key="Name">Small</Item>
                 <Item Key="NameShort">S</Item>
                 <Item Key="PageShown">25</Item>
@@ -853,7 +853,7 @@
         <SubGroup>Frontend::Agent::Ticket::MenuModule</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::Output::HTML::TicketMenuITSMChange</Item>
+                <Item Key="Module">Kernel::Output::HTML::TicketMenu::ITSMChange</Item>
                 <Item Key="Name">Create Change</Item>
                 <Item Key="Description">Create a change from this ticket!</Item>
                 <Item Key="Action">AgentITSMChangeAdd</Item>
@@ -867,7 +867,7 @@
         <SubGroup>Frontend::Agent::Ticket::MenuModule</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::Output::HTML::TicketMenuITSMChange</Item>
+                <Item Key="Module">Kernel::Output::HTML::TicketMenu::ITSMChange</Item>
                 <Item Key="Name">Create Change (from template)</Item>
                 <Item Key="Description">Create a change (from template) from this ticket!</Item>
                 <Item Key="Action">AgentITSMChangeAddFromTemplate</Item>
@@ -881,7 +881,7 @@
         <SubGroup>Frontend::Agent::ITSMChange::MenuModule</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::Output::HTML::ITSMChangeMenuGeneric</Item>
+                <Item Key="Module">Kernel::Output::HTML::ITSMChange::MenuGeneric</Item>
                 <Item Key="Name">Back</Item>
                 <Item Key="Description">Back</Item>
                 <Item Key="Action"></Item>
@@ -896,7 +896,7 @@
         <SubGroup>Frontend::Agent::ITSMChange::MenuModule</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::Output::HTML::ITSMChangeMenuGeneric</Item>
+                <Item Key="Module">Kernel::Output::HTML::ITSMChange::MenuGeneric</Item>
                 <Item Key="Name">History</Item>
                 <Item Key="Description">History</Item>
                 <Item Key="Action">AgentITSMChangeHistory</Item>
@@ -911,7 +911,7 @@
         <SubGroup>Frontend::Agent::ITSMChange::MenuModule</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::Output::HTML::ITSMChangeMenuGeneric</Item>
+                <Item Key="Module">Kernel::Output::HTML::ITSMChange::MenuGeneric</Item>
                 <Item Key="Name">Print</Item>
                 <Item Key="Description">Print the change</Item>
                 <Item Key="Action">AgentITSMChangePrint</Item>
@@ -927,7 +927,7 @@
         <SubGroup>Frontend::Agent::ITSMChange::MenuModule</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::Output::HTML::ITSMChangeMenuGeneric</Item>
+                <Item Key="Module">Kernel::Output::HTML::ITSMChange::MenuGeneric</Item>
                 <Item Key="Name">Edit</Item>
                 <Item Key="Description">Edit the change</Item>
                 <Item Key="Action">AgentITSMChangeEdit</Item>
@@ -942,7 +942,7 @@
         <SubGroup>Frontend::Agent::ITSMChange::MenuModule</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::Output::HTML::ITSMChangeMenuGeneric</Item>
+                <Item Key="Module">Kernel::Output::HTML::ITSMChange::MenuGeneric</Item>
                 <Item Key="Name">Involved Persons</Item>
                 <Item Key="Description">Change involved persons of the change</Item>
                 <Item Key="Action">AgentITSMChangeInvolvedPersons</Item>
@@ -957,7 +957,7 @@
         <SubGroup>Frontend::Agent::ITSMChange::MenuModule</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::Output::HTML::ITSMChangeMenuGeneric</Item>
+                <Item Key="Module">Kernel::Output::HTML::ITSMChange::MenuGeneric</Item>
                 <Item Key="Name">Add Workorder</Item>
                 <Item Key="Description">Add a workorder to the change</Item>
                 <Item Key="Action">AgentITSMWorkOrderAdd</Item>
@@ -972,7 +972,7 @@
         <SubGroup>Frontend::Agent::ITSMChange::MenuModule</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::Output::HTML::ITSMChangeMenuGeneric</Item>
+                <Item Key="Module">Kernel::Output::HTML::ITSMChange::MenuGeneric</Item>
                 <Item Key="Name">Add Workorder (from template)</Item>
                 <Item Key="Description">Add a workorder (from template) to the change</Item>
                 <Item Key="Action">AgentITSMWorkOrderAddFromTemplate</Item>
@@ -987,7 +987,7 @@
         <SubGroup>Frontend::Agent::ITSMChange::MenuModule</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::Output::HTML::ITSMChangeMenuGeneric</Item>
+                <Item Key="Module">Kernel::Output::HTML::ITSMChange::MenuGeneric</Item>
                 <Item Key="Name">Conditions</Item>
                 <Item Key="Description">Edit the conditions of the change</Item>
                 <Item Key="Action">AgentITSMChangeCondition</Item>
@@ -1002,7 +1002,7 @@
         <SubGroup>Frontend::Agent::ITSMChange::MenuModule</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::Output::HTML::ITSMChangeMenuGeneric</Item>
+                <Item Key="Module">Kernel::Output::HTML::ITSMChange::MenuGeneric</Item>
                 <Item Key="Name">Link</Item>
                 <Item Key="Description">Link another object to the change</Item>
                 <Item Key="Action">AgentLinkObject</Item>
@@ -1017,7 +1017,7 @@
         <SubGroup>Frontend::Agent::ITSMChange::MenuModule</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::Output::HTML::ITSMChangeMenuTimeSlot</Item>
+                <Item Key="Module">Kernel::Output::HTML::ITSMChange::MenuTimeSlot</Item>
                 <Item Key="Name">Move Time Slot</Item>
                 <Item Key="Description">Move all workorders in time</Item>
                 <Item Key="Action">AgentITSMChangeTimeSlot</Item>
@@ -1032,7 +1032,7 @@
         <SubGroup>Frontend::Agent::ITSMChange::MenuModule</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::Output::HTML::ITSMChangeMenuGeneric</Item>
+                <Item Key="Module">Kernel::Output::HTML::ITSMChange::MenuGeneric</Item>
                 <Item Key="Name">Template</Item>
                 <Item Key="Description">Save change as a template</Item>
                 <Item Key="Action">AgentITSMChangeTemplate</Item>
@@ -1047,7 +1047,7 @@
         <SubGroup>Frontend::Agent::ITSMChange::MenuModule</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::Output::HTML::ITSMChangeMenuChangeDelete</Item>
+                <Item Key="Module">Kernel::Output::HTML::ITSMChange::MenuChangeDelete</Item>
                 <Item Key="Name">Delete</Item>
                 <Item Key="Description">Delete Change</Item>
                 <Item Key="Action">AgentITSMChangeDelete</Item>
@@ -1066,7 +1066,7 @@
         <SubGroup>Frontend::Agent::ITSMChange::MenuModule</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::Output::HTML::ITSMChangeMenuGeneric</Item>
+                <Item Key="Module">Kernel::Output::HTML::ITSMChange::MenuGeneric</Item>
                 <Item Key="Name">Reset</Item>
                 <Item Key="Description">Reset change and its workorders</Item>
                 <Item Key="Action">AgentITSMChangeReset</Item>
@@ -1085,7 +1085,7 @@
         <SubGroup>Frontend::Agent::ITSMWorkOrder::MenuModule</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::Output::HTML::ITSMWorkOrderMenuGeneric</Item>
+                <Item Key="Module">Kernel::Output::HTML::ITSMWorkOrder::MenuGeneric</Item>
                 <Item Key="Name">Back</Item>
                 <Item Key="Description">Back</Item>
                 <Item Key="Action"></Item>
@@ -1100,7 +1100,7 @@
         <SubGroup>Frontend::Agent::ITSMWorkOrder::MenuModule</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::Output::HTML::ITSMWorkOrderMenuGeneric</Item>
+                <Item Key="Module">Kernel::Output::HTML::ITSMWorkOrder::MenuGeneric</Item>
                 <Item Key="Name">History</Item>
                 <Item Key="Description">History</Item>
                 <Item Key="Action">AgentITSMWorkOrderHistory</Item>
@@ -1115,7 +1115,7 @@
         <SubGroup>Frontend::Agent::ITSMWorkOrder::MenuModule</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::Output::HTML::ITSMWorkOrderMenuGeneric</Item>
+                <Item Key="Module">Kernel::Output::HTML::ITSMWorkOrder::MenuGeneric</Item>
                 <Item Key="Name">Print</Item>
                 <Item Key="Description">Print the workorder</Item>
                 <Item Key="Action">AgentITSMChangePrint</Item>
@@ -1130,7 +1130,7 @@
         <SubGroup>Frontend::Agent::ITSMWorkOrder::MenuModule</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::Output::HTML::ITSMWorkOrderMenuWithPermissionFromChange</Item>
+                <Item Key="Module">Kernel::Output::HTML::ITSMWorkOrder::MenuWithPermissionFromChange</Item>
                 <Item Key="Name">Edit</Item>
                 <Item Key="Description">Edit the workorder</Item>
                 <Item Key="Action">AgentITSMWorkOrderEdit</Item>
@@ -1145,7 +1145,7 @@
         <SubGroup>Frontend::Agent::ITSMWorkOrder::MenuModule</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::Output::HTML::ITSMWorkOrderMenuWithTakePermission</Item>
+                <Item Key="Module">Kernel::Output::HTML::ITSMWorkOrder::MenuWithTakePermission</Item>
                 <Item Key="Name">Take Workorder</Item>
                 <Item Key="Description">Take the workorder</Item>
                 <Item Key="Action">AgentITSMWorkOrderTake</Item>
@@ -1164,7 +1164,7 @@
         <SubGroup>Frontend::Agent::ITSMWorkOrder::MenuModule</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::Output::HTML::ITSMWorkOrderMenuWithPermissionFromChange</Item>
+                <Item Key="Module">Kernel::Output::HTML::ITSMWorkOrder::MenuWithPermissionFromChange</Item>
                 <Item Key="Name">WorkOrderAgent</Item>
                 <Item Key="Description">Set the agent for the workorder</Item>
                 <Item Key="Action">AgentITSMWorkOrderAgent</Item>
@@ -1179,7 +1179,7 @@
         <SubGroup>Frontend::Agent::ITSMWorkOrder::MenuModule</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::Output::HTML::ITSMWorkOrderMenuGeneric</Item>
+                <Item Key="Module">Kernel::Output::HTML::ITSMWorkOrder::MenuGeneric</Item>
                 <Item Key="Name">Report</Item>
                 <Item Key="Description">Report</Item>
                 <Item Key="Action">AgentITSMWorkOrderReport</Item>
@@ -1194,7 +1194,7 @@
         <SubGroup>Frontend::Agent::ITSMWorkOrder::MenuModule</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::Output::HTML::ITSMWorkOrderMenuGeneric</Item>
+                <Item Key="Module">Kernel::Output::HTML::ITSMWorkOrder::MenuGeneric</Item>
                 <Item Key="Name">Link</Item>
                 <Item Key="Description">Link another object to the workorder</Item>
                 <Item Key="Action">AgentLinkObject</Item>
@@ -1209,7 +1209,7 @@
         <SubGroup>Frontend::Agent::ITSMWorkOrder::MenuModule</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::Output::HTML::ITSMWorkOrderMenuWithPermissionFromChange</Item>
+                <Item Key="Module">Kernel::Output::HTML::ITSMWorkOrder::MenuWithPermissionFromChange</Item>
                 <Item Key="Name">Template</Item>
                 <Item Key="Description">Save workorder as a template</Item>
                 <Item Key="Action">AgentITSMWorkOrderTemplate</Item>
@@ -1224,7 +1224,7 @@
         <SubGroup>Frontend::Agent::ITSMWorkOrder::MenuModule</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::Output::HTML::ITSMWorkOrderMenuWithPermissionFromChange</Item>
+                <Item Key="Module">Kernel::Output::HTML::ITSMWorkOrder::MenuWithPermissionFromChange</Item>
                 <Item Key="Name">Delete</Item>
                 <Item Key="Description">Delete Workorder</Item>
                 <Item Key="Action">AgentITSMWorkOrderDelete</Item>
@@ -4420,7 +4420,7 @@
         <SubGroup>Frontend::Agent::Preferences</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::Output::HTML::PreferencesGeneric</Item>
+                <Item Key="Module">Kernel::Output::HTML::Preferences::Generic</Item>
                 <Item Key="Column">Other Settings</Item>
                 <Item Key="Label" Translatable="1">Screen after creating a workorder</Item>
                 <Item Key="Key" Translatable="1">Show this screen after I created a new workorder</Item>
@@ -4443,7 +4443,7 @@
         <SubGroup>Frontend::Agent::Preferences</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::Output::HTML::PreferencesGeneric</Item>
+                <Item Key="Module">Kernel::Output::HTML::Preferences::Generic</Item>
                 <Item Key="Column">Other Settings</Item>
                 <Item Key="Label" Translatable="1">Change Overview "Small" Limit</Item>
                 <Item Key="Key" Translatable="1">Change limit per page for Change Overview "Small"</Item>
@@ -4470,7 +4470,7 @@
         <SubGroup>Frontend::Agent::Preferences</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::Output::HTML::PreferencesGeneric</Item>
+                <Item Key="Module">Kernel::Output::HTML::Preferences::Generic</Item>
                 <Item Key="Column">Other Settings</Item>
                 <Item Key="Label" Translatable="1">Change and WorkOrder templates edited by this user.</Item>
                 <Item Key="Key" Translatable="1">Change and WorkOrder templates edited by this user.</Item>

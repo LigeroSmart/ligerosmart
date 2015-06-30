@@ -6,10 +6,12 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package Kernel::Output::HTML::ITSMChangeMenuChangeDelete;
+package Kernel::Output::HTML::ITSMChange::MenuChangeDelete;
 
 use strict;
 use warnings;
+
+our $ObjectManagerDisabled = 1;
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -18,13 +20,8 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    # check needed objects
-    for my $Object (
-        qw(ConfigObject EncodeObject LogObject DBObject LayoutObject UserObject GroupObject ChangeObject UserID)
-        )
-    {
-        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
-    }
+    # get UserID param
+    $Self->{UserID} = $Param{UserID} || die "Got no UserID!";
 
     return $Self;
 }
@@ -34,15 +31,18 @@ sub Run {
 
     # check needed stuff
     if ( !$Param{Change} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need Change!',
         );
         return;
     }
 
+    # get config object
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+
     # get config for the relevant action
-    my $FrontendConfig = $Self->{ConfigObject}->Get("ITSMChange::Frontend::$Param{Config}->{Action}");
+    my $FrontendConfig = $ConfigObject->Get("ITSMChange::Frontend::$Param{Config}->{Action}");
 
     # get the required privilege, 'ro' or 'rw'
     my $RequiredPriv;
@@ -61,20 +61,23 @@ sub Run {
     else {
 
         # get the required group for the frontend module
-        my $Group = $Self->{ConfigObject}->Get('Frontend::Module')->{ $Param{Config}->{Action} }
+        my $Group = $ConfigObject->Get('Frontend::Module')->{ $Param{Config}->{Action} }
             ->{GroupRo}->[0];
 
         # deny access, when the group is not found
         return $Param{Counter} if !$Group;
 
+        # get group object
+        my $GroupObject = $Kernel::OM->Get('Kernel::System::Group');
+
         # get the group id
-        my $GroupID = $Self->{GroupObject}->GroupLookup( Group => $Group );
+        my $GroupID = $GroupObject->GroupLookup( Group => $Group );
 
         # deny access, when the group is not found
         return $Param{Counter} if !$GroupID;
 
         # get user groups, where the user has the appropriate privilege
-        my %Groups = $Self->{GroupObject}->GroupMemberList(
+        my %Groups = $GroupObject->GroupMemberList(
             UserID => $Self->{UserID},
             Type   => $RequiredPriv,
             Result => 'HASH',
@@ -94,16 +97,19 @@ sub Run {
     # only show the delete link for changes in the allowed change states
     return $Param{Counter} if !$AllowedChangeStates{ $Param{Change}->{ChangeState} };
 
+    # get layout object
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+
     # output menu block
-    $Self->{LayoutObject}->Block( Name => 'Menu' );
+    $LayoutObject->Block( Name => 'Menu' );
 
     # output seperator, when this is not the first menu item
     if ( $Param{Counter} ) {
-        $Self->{LayoutObject}->Block( Name => 'MenuItemSplit' );
+        $LayoutObject->Block( Name => 'MenuItemSplit' );
     }
 
     # output menu item
-    $Self->{LayoutObject}->Block(
+    $LayoutObject->Block(
         Name => 'MenuItem',
         Data => {
             %Param,
@@ -116,7 +122,7 @@ sub Run {
     if ( $Param{Config}->{DialogTitle} ) {
 
         # output confirmation dialog
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'ShowConfirmationDialog',
             Data => {
                 %Param,

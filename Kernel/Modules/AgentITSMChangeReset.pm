@@ -11,9 +11,7 @@ package Kernel::Modules::AgentITSMChangeReset;
 use strict;
 use warnings;
 
-use Kernel::System::ITSMChange;
-use Kernel::System::ITSMChange::ITSMStateMachine;
-use Kernel::System::ITSMChange::ITSMWorkOrder;
+our $ObjectManagerDisabled = 1;
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -22,24 +20,6 @@ sub new {
     my $Self = {%Param};
     bless( $Self, $Type );
 
-    # check needed objects
-    for my $Object (
-        qw(ParamObject DBObject LayoutObject LogObject ConfigObject UserObject GroupObject)
-        )
-    {
-        if ( !$Self->{$Object} ) {
-            $Self->{LayoutObject}->FatalError( Message => "Got no $Object!" );
-        }
-    }
-
-    # create needed objects
-    $Self->{ChangeObject}       = Kernel::System::ITSMChange->new(%Param);
-    $Self->{WorkOrderObject}    = Kernel::System::ITSMChange::ITSMWorkOrder->new(%Param);
-    $Self->{StateMachineObject} = Kernel::System::ITSMChange::ITSMStateMachine->new(%Param);
-
-    # get config of frontend module
-    $Self->{Config} = $Self->{ConfigObject}->Get("ITSMChange::Frontend::$Self->{Action}");
-
     return $Self;
 }
 
@@ -47,18 +27,27 @@ sub Run {
     my ( $Self, %Param ) = @_;
 
     # get needed ChangeID
-    my $ChangeID = $Self->{ParamObject}->GetParam( Param => 'ChangeID' );
+    my $ChangeID = $Kernel::OM->Get('Kernel::System::Web::Request')->GetParam( Param => 'ChangeID' );
+
+    # get layout object
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
     # check needed stuff
     if ( !$ChangeID ) {
-        return $Self->{LayoutObject}->ErrorScreen(
+        return $LayoutObject->ErrorScreen(
             Message => 'No ChangeID is given!',
             Comment => 'Please contact the admin.',
         );
     }
 
+    # get change object
+    my $ChangeObject = $Kernel::OM->Get('Kernel::System::ITSMChange');
+
+    # get config of frontend module
+    $Self->{Config} = $Kernel::OM->Get('Kernel::Config')->Get("ITSMChange::Frontend::$Self->{Action}");
+
     # check permissions
-    my $Access = $Self->{ChangeObject}->Permission(
+    my $Access = $ChangeObject->Permission(
         Type     => $Self->{Config}->{Permission},
         Action   => $Self->{Action},
         ChangeID => $ChangeID,
@@ -67,21 +56,21 @@ sub Run {
 
     # error screen
     if ( !$Access ) {
-        return $Self->{LayoutObject}->NoPermission(
+        return $LayoutObject->NoPermission(
             Message    => "You need $Self->{Config}->{Permission} permissions!",
             WithHeader => 'yes',
         );
     }
 
     # get change data
-    my $Change = $Self->{ChangeObject}->ChangeGet(
+    my $Change = $ChangeObject->ChangeGet(
         ChangeID => $ChangeID,
         UserID   => $Self->{UserID},
     );
 
     # check if change is found
     if ( !$Change ) {
-        return $Self->{LayoutObject}->ErrorScreen(
+        return $LayoutObject->ErrorScreen(
             Message => "Change '$ChangeID' not found in database!",
             Comment => 'Please contact the admin.',
         );
@@ -90,15 +79,18 @@ sub Run {
     # reset change
     if ( $Self->{Subaction} eq 'Reset' ) {
 
+        # get state machine object
+        my $StateMachineObject = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMStateMachine');
+
         # get start state for Changes
-        my $NextChangeStateIDs = $Self->{StateMachineObject}->StateTransitionGet(
+        my $NextChangeStateIDs = $StateMachineObject->StateTransitionGet(
             StateID => 0,
             Class   => 'ITSM::ChangeManagement::Change::State',
         );
         my $ChangeStartStateID = $NextChangeStateIDs->[0];
 
         # get start state for WorkOrders
-        my $NextWorkOrderStateIDs = $Self->{StateMachineObject}->StateTransitionGet(
+        my $NextWorkOrderStateIDs = $StateMachineObject->StateTransitionGet(
             StateID => 0,
             Class   => 'ITSM::ChangeManagement::WorkOrder::State',
         );
@@ -106,7 +98,7 @@ sub Run {
 
         # reset WorkOrders
         for my $WorkOrderID ( @{ $Change->{WorkOrderIDs} } ) {
-            my $CouldUpdateWorkOrder = $Self->{WorkOrderObject}->WorkOrderUpdate(
+            my $CouldUpdateWorkOrder = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderUpdate(
                 WorkOrderID        => $WorkOrderID,
                 WorkOrderStateID   => $WorkOrderStartStateID,
                 ActualStartTime    => undef,
@@ -119,7 +111,7 @@ sub Run {
             if ( !$CouldUpdateWorkOrder ) {
 
                 # show error message
-                return $Self->{LayoutObject}->ErrorScreen(
+                return $LayoutObject->ErrorScreen(
                     Message => "Was not able to reset WorkOrder $WorkOrderID of Change $ChangeID!",
                     Comment => 'Please contact the admin.',
                 );
@@ -127,7 +119,7 @@ sub Run {
         }
 
         # reset Change
-        my $CouldUpdateChange = $Self->{ChangeObject}->ChangeUpdate(
+        my $CouldUpdateChange = $ChangeObject->ChangeUpdate(
             ChangeID           => $ChangeID,
             ChangeStateID      => $ChangeStartStateID,
             BypassStateMachine => 1,
@@ -138,7 +130,7 @@ sub Run {
         if ($CouldUpdateChange) {
 
             # load new URL in parent window and close popup
-            return $Self->{LayoutObject}->PopupClose(
+            return $LayoutObject->PopupClose(
                 URL => "Action=AgentITSMChangeZoom;ChangeID=$ChangeID",
             );
 
@@ -146,7 +138,7 @@ sub Run {
         else {
 
             # show error message
-            return $Self->{LayoutObject}->ErrorScreen(
+            return $LayoutObject->ErrorScreen(
                 Message => "Was not able to reset Change $ChangeID!",
                 Comment => 'Please contact the admin.',
             );
@@ -157,7 +149,7 @@ sub Run {
     my $DialogType = 'Confirmation';
 
     # output content
-    my $Output .= $Self->{LayoutObject}->Output(
+    my $Output .= $LayoutObject->Output(
         TemplateFile => 'AgentITSMChangeReset',
         Data         => {
             %Param,
@@ -172,10 +164,10 @@ sub Run {
     );
 
     # return JSON-String because of AJAX-Mode
-    my $OutputJSON = $Self->{LayoutObject}->JSONEncode( Data => \%Data );
+    my $OutputJSON = $LayoutObject->JSONEncode( Data => \%Data );
 
-    return $Self->{LayoutObject}->Attachment(
-        ContentType => 'application/json; charset=' . $Self->{LayoutObject}->{Charset},
+    return $LayoutObject->Attachment(
+        ContentType => 'application/json; charset=' . $LayoutObject->{Charset},
         Content     => $OutputJSON,
         Type        => 'inline',
         NoCache     => 1,
