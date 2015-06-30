@@ -1141,7 +1141,7 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
         </section>
         <section>
             <title>Frontend::Output::OutputFilterTextAutoLink###FAQ.</title>
-            <para>Group: Framework, Subgroup: Core::Web.</para>
+            <para>Group: FAQ, Subgroup: Core::Web.</para>
             <para>A filter for HTML output to add links behind a defined string. The element Image allows two input kinds. First the name of an image (e.g. faq.png). In this case the OTRS image path will be used. The second possibility is to insert the link to the image.</para>
         </section>
         <section>
@@ -1156,52 +1156,52 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
         </section>
         <section>
             <title>GenericInterface::Operation::Module###FAQ::LanguageList.</title>
-            <para>Group: GenericInterface, Subgroup: GenericInterface::Operation::ModuleRegistration.</para>
+            <para>Group: FAQ, Subgroup: GenericInterface::Operation::ModuleRegistration.</para>
             <para>GenericInterface module registration for the operation layer.</para>
         </section>
         <section>
             <title>GenericInterface::Operation::Module###FAQ::PublicCategoryList.</title>
-            <para>Group: GenericInterface, Subgroup: GenericInterface::Operation::ModuleRegistration.</para>
+            <para>Group: FAQ, Subgroup: GenericInterface::Operation::ModuleRegistration.</para>
             <para>GenericInterface module registration for the operation layer.</para>
         </section>
         <section>
             <title>GenericInterface::Operation::Module###FAQ::PublicFAQGet.</title>
-            <para>Group: GenericInterface, Subgroup: GenericInterface::Operation::ModuleRegistration.</para>
+            <para>Group: FAQ, Subgroup: GenericInterface::Operation::ModuleRegistration.</para>
             <para>GenericInterface module registration for the operation layer.</para>
         </section>
         <section>
             <title>GenericInterface::Operation::Module###FAQ::PublicFAQSearch.</title>
-            <para>Group: GenericInterface, Subgroup: GenericInterface::Operation::ModuleRegistration.</para>
+            <para>Group: FAQ, Subgroup: GenericInterface::Operation::ModuleRegistration.</para>
             <para>GenericInterface module registration for the operation layer.</para>
         </section>
         <section>
             <title>LinkObject::PossibleLink###8301.</title>
-            <para>Group: Framework, Subgroup: Core::LinkObject.</para>
+            <para>Group: FAQ, Subgroup: Core::LinkObject.</para>
             <para>This setting defines that a 'FAQ' object can be linked with other 'FAQ' objects using the 'Normal' link type.</para>
         </section>
         <section>
             <title>LinkObject::PossibleLink###8302.</title>
-            <para>Group: Framework, Subgroup: Core::LinkObject.</para>
+            <para>Group: FAQ, Subgroup: Core::LinkObject.</para>
             <para>This setting defines that a 'FAQ' object can be linked with other 'FAQ' objects using the 'ParentChild' link type.</para>
         </section>
         <section>
             <title>LinkObject::PossibleLink###8303.</title>
-            <para>Group: Framework, Subgroup: Core::LinkObject.</para>
+            <para>Group: FAQ, Subgroup: Core::LinkObject.</para>
             <para>This setting defines that a 'FAQ' object can be linked with other 'Ticket' objects using the 'Normal' link type.</para>
         </section>
         <section>
             <title>LinkObject::PossibleLink###8304.</title>
-            <para>Group: Framework, Subgroup: Core::LinkObject.</para>
+            <para>Group: FAQ, Subgroup: Core::LinkObject.</para>
             <para>This setting defines that a 'FAQ' object can be linked with other 'Ticket' objects using the 'ParentChild' link type.</para>
         </section>
         <section>
             <title>Loader::Agent::CommonCSS###200-FAQ.</title>
-            <para>Group: Framework, Subgroup: Core::Web.</para>
+            <para>Group: FAQ, Subgroup: Core::Web.</para>
             <para>List of CSS files to always be loaded for the agent interface.</para>
         </section>
         <section>
             <title>Loader::Agent::CommonJS###200-FAQ.</title>
-            <para>Group: Framework, Subgroup: Core::Web.</para>
+            <para>Group: FAQ, Subgroup: Core::Web.</para>
             <para>List of JS files to always be loaded for the agent interface.</para>
         </section>
         <section>

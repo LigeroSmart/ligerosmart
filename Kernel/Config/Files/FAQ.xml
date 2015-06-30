@@ -396,7 +396,7 @@ Your OTRS Notification Master
     </ConfigItem>
     <ConfigItem Name="LinkObject::PossibleLink###8301" Required="0" Valid="1">
         <Description Translatable="1">This setting defines that a 'FAQ' object can be linked with other 'FAQ' objects using the 'Normal' link type.</Description>
-        <Group>Framework</Group>
+        <Group>FAQ</Group>
         <SubGroup>Core::LinkObject</SubGroup>
         <Setting>
             <Hash>
@@ -408,7 +408,7 @@ Your OTRS Notification Master
     </ConfigItem>
     <ConfigItem Name="LinkObject::PossibleLink###8302" Required="0" Valid="1">
         <Description Translatable="1">This setting defines that a 'FAQ' object can be linked with other 'FAQ' objects using the 'ParentChild' link type.</Description>
-        <Group>Framework</Group>
+        <Group>FAQ</Group>
         <SubGroup>Core::LinkObject</SubGroup>
         <Setting>
             <Hash>
@@ -420,7 +420,7 @@ Your OTRS Notification Master
     </ConfigItem>
     <ConfigItem Name="LinkObject::PossibleLink###8303" Required="0" Valid="1">
         <Description Translatable="1">This setting defines that a 'FAQ' object can be linked with other 'Ticket' objects using the 'Normal' link type.</Description>
-        <Group>Framework</Group>
+        <Group>FAQ</Group>
         <SubGroup>Core::LinkObject</SubGroup>
         <Setting>
             <Hash>
@@ -432,7 +432,7 @@ Your OTRS Notification Master
     </ConfigItem>
     <ConfigItem Name="LinkObject::PossibleLink###8304" Required="0" Valid="1">
         <Description Translatable="1">This setting defines that a 'FAQ' object can be linked with other 'Ticket' objects using the 'ParentChild' link type.</Description>
-        <Group>Framework</Group>
+        <Group>FAQ</Group>
         <SubGroup>Core::LinkObject</SubGroup>
         <Setting>
             <Hash>
@@ -741,7 +741,7 @@ Your OTRS Notification Master
     </ConfigItem>
     <ConfigItem Name="Frontend::Output::OutputFilterTextAutoLink###FAQ" Required="0" Valid="0">
         <Description Translatable="1">A filter for HTML output to add links behind a defined string. The element Image allows two input kinds. First the name of an image (e.g. faq.png). In this case the OTRS image path will be used. The second possibility is to insert the link to the image.</Description>
-        <Group>Framework</Group>
+        <Group>FAQ</Group>
         <SubGroup>Core::Web</SubGroup>
         <Setting>
             <Hash>
@@ -1616,7 +1616,7 @@ Your OTRS Notification Master
     </ConfigItem>
     <ConfigItem Name="Loader::Agent::CommonCSS###200-FAQ" Required="1" Valid="1">
         <Description Translatable="1">List of CSS files to always be loaded for the agent interface.</Description>
-        <Group>Framework</Group>
+        <Group>FAQ</Group>
         <SubGroup>Core::Web</SubGroup>
         <Setting>
             <Array>
@@ -1626,7 +1626,7 @@ Your OTRS Notification Master
     </ConfigItem>
     <ConfigItem Name="Loader::Agent::CommonJS###200-FAQ" Required="1" Valid="1">
         <Description Translatable="1">List of JS files to always be loaded for the agent interface.</Description>
-        <Group>Framework</Group>
+        <Group>FAQ</Group>
         <SubGroup>Core::Web</SubGroup>
         <Setting>
             <Array>
@@ -1688,7 +1688,7 @@ Your OTRS Notification Master
 
     <ConfigItem Name="GenericInterface::Operation::Module###FAQ::LanguageList" Required="0" Valid="1">
         <Description Translatable="1">GenericInterface module registration for the operation layer.</Description>
-        <Group>GenericInterface</Group>
+        <Group>FAQ</Group>
         <SubGroup>GenericInterface::Operation::ModuleRegistration</SubGroup>
         <Setting>
             <Hash>
@@ -1700,7 +1700,7 @@ Your OTRS Notification Master
     </ConfigItem>
     <ConfigItem Name="GenericInterface::Operation::Module###FAQ::PublicCategoryList" Required="0" Valid="1">
         <Description Translatable="1">GenericInterface module registration for the operation layer.</Description>
-        <Group>GenericInterface</Group>
+        <Group>FAQ</Group>
         <SubGroup>GenericInterface::Operation::ModuleRegistration</SubGroup>
         <Setting>
             <Hash>
@@ -1712,7 +1712,7 @@ Your OTRS Notification Master
     </ConfigItem>
     <ConfigItem Name="GenericInterface::Operation::Module###FAQ::PublicFAQGet" Required="0" Valid="1">
         <Description Translatable="1">GenericInterface module registration for the operation layer.</Description>
-        <Group>GenericInterface</Group>
+        <Group>FAQ</Group>
         <SubGroup>GenericInterface::Operation::ModuleRegistration</SubGroup>
         <Setting>
             <Hash>
@@ -1724,7 +1724,7 @@ Your OTRS Notification Master
     </ConfigItem>
     <ConfigItem Name="GenericInterface::Operation::Module###FAQ::PublicFAQSearch" Required="0" Valid="1">
         <Description Translatable="1">GenericInterface module registration for the operation layer.</Description>
-        <Group>GenericInterface</Group>
+        <Group>FAQ</Group>
         <SubGroup>GenericInterface::Operation::ModuleRegistration</SubGroup>
         <Setting>
             <Hash>
