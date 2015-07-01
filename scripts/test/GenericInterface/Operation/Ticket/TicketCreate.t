@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2015 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/621383628fec5fada6fd47d4606d99c92bbd53b6/scripts/test/GenericInterface/Operation/Ticket/TicketCreate.t
+# $origin: https://github.com/OTRS/otrs/blob/ba27a6e89d9fb67365067d0aac47aa872236f2f9/scripts/test/GenericInterface/Operation/Ticket/TicketCreate.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -3828,6 +3828,10 @@ for my $Test (@Tests) {
             $RequesterResult->{Data}->{TicketID}
             )
         {
+
+            # Allow some time for all history entries to be written to the ticket before deleting it,
+            #   otherwise TicketDelete could fail.
+            sleep 1;
 
             my $TicketDelete = $TicketObject->TicketDelete(
                 TicketID => $TicketID,
