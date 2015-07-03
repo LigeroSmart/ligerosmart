@@ -11,7 +11,6 @@
     <Description Lang="de">Das ImportExport Paket.</Description>
     <Description Lang="es">El paquete ImportExport.</Description>
     <Filelist>
-        <File Permission="755" Location="bin/otrs.ImportExport.pl"/>
         <File Permission="644" Location="doc/import-export-database.dia"/>
         <File Permission="644" Location="doc/import-export-database.png"/>
         <File Permission="644" Location="Kernel/Config/Files/ImportExport.xml"/>
@@ -42,8 +41,12 @@
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AdminImportExport.tt"/>
         <File Permission="644" Location="Kernel/System/ImportExport.pm"/>
         <File Permission="644" Location="Kernel/System/ImportExport/FormatBackend/CSV.pm"/>
+        <File Permission="644" Location="Kernel/System/Console/Command/Admin/ITSM/ImportExport/Import.pm"/>
+        <File Permission="644" Location="Kernel/System/Console/Command/Admin/ITSM/ImportExport/Export.pm"/>
         <File Permission="644" Location="scripts/test/ImportExport.t"/>
         <File Permission="644" Location="scripts/test/ImportExportFormatCSV.t"/>
+        <File Permission="644" Location="scripts/test/Console/Command/Admin/ITSM/ImportExport/Import.t"/>
+        <File Permission="644" Location="scripts/test/Console/Command/Admin/ITSM/ImportExport/Export.t"/>
         <File Permission="644" Location="scripts/test/Selenium/Agent/Admin/AdminImportExport.t"/>
         <File Permission="644" Location="scripts/test/sample/ImportExport/ImportExportFormatCSV001-MSExcel-Semicolon.csv"/>
         <File Permission="644" Location="scripts/test/sample/ImportExport/ImportExportFormatCSV001-MSExcel-Tabulator.csv"/>
@@ -75,6 +78,7 @@
         <File Permission="644" Location="scripts/test/sample/ImportExport/ImportExportFormatCSV006-OpenOffice-Tabulator.csv"/>
         <File Permission="644" Location="scripts/test/sample/ImportExport/ImportExportFormatCSV007-OpenOffice-Semicolon.csv"/>
         <File Permission="644" Location="scripts/test/sample/ImportExport/ImportExportFormatCSV008-OpenOffice-Semicolon.csv"/>
+        <File Permission="644" Location="scripts/test/sample/ImportExport/TemplateExport.csv"/>
         <File Permission="644" Location="var/packagesetup/ImportExport.pm"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/ITSM.ImportExport.css"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/img/icons/importexport_arrow_up.png"/>
