@@ -106,7 +106,14 @@ sub Run {
     # print result
     $Self->Print("\n<green>Import of $Result->{Counter} $Result->{Object} records:</green>\n");
     $Self->Print( "<green>" . ( '-' x 69 ) . "</green>\n" );
-    $Self->Print("<green>$Result->{Failed} failed, $Result->{Success} succeeded</green>\n");
+    $Self->Print("<green>Success: $Result->{Success} succeeded</green>\n");
+    if ( $Result->{Failed} ){
+        $Self->PrintError("$Result->{Failed} failed.\n");
+    }
+    else{
+        $Self->Print("<green>Error: $Result->{Failed} failed.</green>\n");
+    }
+
 
     for my $RetCode ( sort keys %{ $Result->{RetCode} } ) {
         my $Count = $Result->{RetCode}->{$RetCode} || 0;
