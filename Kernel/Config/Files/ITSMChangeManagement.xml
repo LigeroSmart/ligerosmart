@@ -29,12 +29,12 @@
         <Setting>
             <FrontendModuleReg>
                 <Group>admin</Group>
-                <Description Translatable="1">Admin of notification rules.</Description>
+                <Description Translatable="1">Create and manage ITSM Change Management notifications.</Description>
                 <Title>ITSM Change notification rules</Title>
                 <NavBarName>Admin</NavBarName>
                 <NavBarModule>
                     <Module>Kernel::Output::HTML::NavBar::ModuleAdmin</Module>
-                    <Name Translatable="1">Notification (ITSM Change Management)</Name>
+                    <Name Translatable="1">ITSM Change Management Notifications</Name>
                     <Block>System</Block>
                     <Prio>406</Prio>
                 </NavBarModule>

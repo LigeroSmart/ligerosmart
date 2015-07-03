@@ -679,6 +679,29 @@
                 <Reference Local="valid_id" Foreign="id"/>
             </ForeignKey>
         </TableCreate>
+        <TableCreate Name="change_notification_message">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
+            <Column Name="notification_id" Required="true" Type="BIGINT"/>
+            <Column Name="subject" Required="true" Size="200" Type="VARCHAR"/>
+            <Column Name="text" Required="true" Size="4000" Type="VARCHAR"/>
+            <Column Name="content_type" Required="true" Size="250" Type="VARCHAR"/>
+            <Column Name="language" Required="true" Size="60" Type="VARCHAR"/>
+            <Column Name="notification_type" Required="true" Size="60" Type="VARCHAR"/>
+            <ForeignKey ForeignTable="change_notification">
+                <Reference Foreign="id" Local="notification_id"/>
+            </ForeignKey>
+            <Index Name="change_notification_message_notification_id">
+                <IndexColumn Name="notification_id"/>
+            </Index>
+            <Index Name="change_notification_message_language">
+                <IndexColumn Name="language"/>
+            </Index>
+            <Unique Name="change_notification_message_notification_id_language">
+                <UniqueColumn Name="notification_id"/>
+                <UniqueColumn Name="language"/>
+                <UniqueColumn Name="notification_type"/>
+            </Unique>
+        </TableCreate>
         <TableCreate Name="change_notification_grps">
             <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
             <Column Name="name" Required="true" Size="250" Type="VARCHAR"/>
@@ -1575,6 +1598,7 @@
             <IndexDrop Name="change_workorder_instruction_plain"/>
             <IndexDrop Name="change_workorder_report_plain"/>
         </TableAlter>
+
         <TableAlter Name="change_item" Version="3.1.91">
             <ColumnChange NameOld="description" NameNew="description" Required="false" Size="1800000" Type="VARCHAR" />
             <ColumnChange NameOld="description_plain" NameNew="description_plain" Required="false" Size="1800000" Type="VARCHAR" />
@@ -1591,6 +1615,7 @@
             <ColumnChange NameOld="content_new" NameNew="content_new" Required="false" Size="1800000" Type="VARCHAR"/>
             <ColumnChange NameOld="content_old" NameNew="content_old" Required="false" Size="1800000" Type="VARCHAR"/>
         </TableAlter>
+
         <Insert Table="change_history_type" Version="3.2.91">
             <Data Key="name" Type="Quote">WorkOrderReportAttachmentAdd</Data>
             <Data Key="valid_id">1</Data>
@@ -1607,10 +1632,35 @@
             <Data Key="change_time">current_timestamp</Data>
             <Data Key="change_by">1</Data>
         </Insert>
+
+        <TableCreate Name="change_notification_message" Version="4.0.91">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
+            <Column Name="notification_id" Required="true" Type="BIGINT"/>
+            <Column Name="subject" Required="true" Size="200" Type="VARCHAR"/>
+            <Column Name="text" Required="true" Size="4000" Type="VARCHAR"/>
+            <Column Name="content_type" Required="true" Size="250" Type="VARCHAR"/>
+            <Column Name="language" Required="true" Size="60" Type="VARCHAR"/>
+            <Column Name="notification_type" Required="true" Size="60" Type="VARCHAR"/>
+            <ForeignKey ForeignTable="change_notification">
+                <Reference Foreign="id" Local="notification_id"/>
+            </ForeignKey>
+            <Index Name="change_notification_message_notification_id">
+                <IndexColumn Name="notification_id"/>
+            </Index>
+            <Index Name="change_notification_message_language">
+                <IndexColumn Name="language"/>
+            </Index>
+            <Unique Name="change_notification_message_notification_id_language">
+                <UniqueColumn Name="notification_id"/>
+                <UniqueColumn Name="language"/>
+                <UniqueColumn Name="notification_type"/>
+            </Unique>
+        </TableCreate>
     </DatabaseUpgrade>
     <DatabaseUninstall Type="pre">
         <TableDrop Name="change_notification_rec"/>
         <TableDrop Name="change_notification_grps"/>
+        <TableDrop Name="change_notification_message"/>
         <TableDrop Name="change_notification"/>
         <TableDrop Name="change_cab"/>
         <TableDrop Name="change_history"/>
@@ -1671,34 +1721,6 @@
         $Kernel::OM->Get($CodeModule)->CodeUpgrade();
 
     ]]></CodeUpgrade>
-    <CodeUpgrade Type="post" Version="2.0.3"><![CDATA[
-
-        # create the package name
-        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
-
-        # discard internally stored object, so that the next access to object creates them newly
-        $Kernel::OM->ObjectsDiscard(
-            Objects            => [$CodeModule],
-            ForcePackageReload => 1,
-        );
-
-        $Kernel::OM->Get($CodeModule)->CodeUpgradeFromLowerThan_2_0_3();
-
-    ]]></CodeUpgrade>
-    <CodeUpgrade Type="post" Version="3.2.91"><![CDATA[
-
-        # create the package name
-        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
-
-        # discard internally stored object, so that the next access to object creates them newly
-        $Kernel::OM->ObjectsDiscard(
-            Objects            => [$CodeModule],
-            ForcePackageReload => 1,
-        );
-
-        $Kernel::OM->Get($CodeModule)->CodeUpgradeFromLowerThan_3_2_91();
-
-    ]]></CodeUpgrade>
     <CodeUpgrade Type="post" Version="3.3.91"><![CDATA[
 
         # create the package name
@@ -1725,6 +1747,20 @@
         );
 
         $Kernel::OM->Get($CodeModule)->CodeUpgradeFromLowerThan_4_0_2();
+
+    ]]></CodeUpgrade>
+    <CodeUpgrade Type="post" Version="4.0.91"><![CDATA[
+
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
+
+        # discard internally stored object, so that the next access to object creates them newly
+        $Kernel::OM->ObjectsDiscard(
+            Objects            => [$CodeModule],
+            ForcePackageReload => 1,
+        );
+
+        $Kernel::OM->Get($CodeModule)->CodeUpgradeFromLowerThan_4_0_91();
 
     ]]></CodeUpgrade>
     <CodeUninstall Type="pre"><![CDATA[

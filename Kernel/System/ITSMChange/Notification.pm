@@ -11,6 +11,8 @@ package Kernel::System::ITSMChange::Notification;
 use strict;
 use warnings;
 
+use Kernel::System::VariableCheck qw(:all);
+
 use Kernel::Language;
 use Kernel::System::EventHandler;
 
@@ -26,7 +28,6 @@ our @ObjectDependencies = (
     'Kernel::System::ITSMChange',
     'Kernel::System::ITSMChange::ITSMWorkOrder',
     'Kernel::System::Log',
-    'Kernel::System::Notification',
     'Kernel::System::User',
     'Kernel::System::Valid',
 );
@@ -72,9 +73,6 @@ sub new {
     # do we use richtext
     $Self->{RichText} = $Kernel::OM->Get('Kernel::Config')->Get('Frontend::RichText');
 
-    # set up empty cache for _NotificationGet()
-    $Self->{NotificationCache} = {};
-
     @ISA = (
         'Kernel::System::EventHandler',
     );
@@ -97,7 +95,33 @@ Send the notification to customers and/or agents.
         Type        => 'Change',          # Change|WorkOrder
         Event       => 'ChangeUpdate',
         Data        => { %ChangeData },   # Change|WorkOrder|Link data
-        UserID      => 123,
+        Message => {
+            Agent => {
+                'en' => {
+                    Subject     => 'Hello Agent',
+                    Body        => 'Hello World',
+                    ContentType => 'text/plain',
+                },
+                'de' => {
+                    Subject     => 'Hallo Agent',
+                    Body        => 'Hallo Welt',
+                    ContentType => 'text/plain',
+                },
+            },
+            Customer => {
+                'en' => {
+                    Subject     => 'Hello Customer',
+                    Body        => 'Hello World',
+                    ContentType => 'text/plain',
+                },
+                'de' => {
+                    Subject     => 'Hallo Kunde',
+                    Body        => 'Hallo Welt',
+                    ContentType => 'text/plain',
+                },
+            },
+        },
+        UserID => 123,
     );
 
 =cut
@@ -106,13 +130,42 @@ sub NotificationSend {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Argument (qw(Type Event UserID Data)) {
+    for my $Argument (qw(Type Event UserID Data Message)) {
         if ( !$Param{$Argument} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
             return;
+        }
+    }
+
+    # check message
+    for my $Type (qw(Agent Customer)) {
+
+        # check message parameter, we always need agent and message
+        if ( !IsHashRefWithData( $Param{Message}->{$Type} ) ) {
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
+                Priority => 'error',
+                Message  => "Need $Type Message!",
+            );
+            return;
+        }
+
+        # check each argument for each message language
+        for my $Language ( sort keys %{ $Param{Message}->{$Type} } ) {
+
+            for my $Argument (qw(Subject Body ContentType)) {
+
+                # error if message data is incomplete
+                if ( !$Param{Message}->{$Type}->{$Language}->{$Argument} ) {
+                    $Kernel::OM->Get('Kernel::System::Log')->Log(
+                        Priority => 'error',
+                        Message  => "Need $Type Message argument '$Argument' for language '$Language'!",
+                    );
+                    return;
+                }
+            }
         }
     }
 
@@ -183,7 +236,7 @@ sub NotificationSend {
             $Param{Data}->{WorkOrderAgent} = {
                 $Kernel::OM->Get('Kernel::System::User')->GetUserData(
                     UserID => $WorkOrder->{WorkOrderAgentID},
-                    )
+                )
             };
         }
 
@@ -216,7 +269,7 @@ sub NotificationSend {
             $Param{Data}->{ChangeBuilder} = {
                 $Kernel::OM->Get('Kernel::System::User')->GetUserData(
                     UserID => $Change->{ChangeBuilderID},
-                    )
+                )
             };
         }
 
@@ -224,7 +277,7 @@ sub NotificationSend {
             $Param{Data}->{ChangeManager} = {
                 $Kernel::OM->Get('Kernel::System::User')->GetUserData(
                     UserID => $Change->{ChangeManagerID},
-                    )
+                )
             };
         }
     }
@@ -252,7 +305,7 @@ sub NotificationSend {
         # check if notification was already sent to this agent
         next AGENTID if $AgentsSent{$AgentID};
 
-        # User info for prefered language and macro replacement
+        # user info for preferred language and macro replacement
         my %User = $Kernel::OM->Get('Kernel::System::User')->GetUserData(
             UserID => $AgentID,
         );
@@ -262,18 +315,43 @@ sub NotificationSend {
             next AGENTID;
         }
 
-        my $PreferredLanguage = $User{UserLanguage}
-            || $Kernel::OM->Get('Kernel::Config')->Get('DefaultLanguage')
-            || 'en';
+        # get system default language
+        my $DefaultLanguage = $Kernel::OM->Get('Kernel::Config')->Get('DefaultLanguage') || 'en';
 
-        my $NotificationKey = $PreferredLanguage . '::Agent::' . $Param{Type} . '::' . $Param{Event};
+        # get user preferred language
+        my $PreferredLanguage = $User{UserLanguage} || $DefaultLanguage;
 
-        # get notification (cache || database)
-        my $Notification = $Self->_NotificationGet(
-            NotificationKey => $NotificationKey,
-        );
+        # make sure a message in the user language exists
+        if ( !$Param{Message}->{Agent}->{$PreferredLanguage} ) {
 
+            # otherwise use default language
+            $PreferredLanguage = $DefaultLanguage;
+
+            # if no message exists in default language, then take the first available language
+            if ( !$Param{Message}->{Agent}->{$PreferredLanguage} ) {
+                my @Languages = sort keys %{ $Param{Message}->{Agent} };
+                $PreferredLanguage = $Languages[0];
+            }
+        }
+
+        my $Notification = $Param{Message}->{Agent}->{$PreferredLanguage};
         return if !$Notification;
+
+        # do text/plain to text/html convert
+        if ( $Self->{RichText} && $Notification->{ContentType} =~ m{ text/plain }xmsi ) {
+            $Notification->{ContentType} = 'text/html';
+            $Notification->{Body}        = $Kernel::OM->Get('Kernel::System::HTMLUtils')->ToHTML(
+                String => $Notification->{Body},
+            );
+        }
+
+        # do text/html to text/plain convert
+        elsif ( !$Self->{RichText} && $Notification->{ContentType} =~ m{ text/html }xmsi ) {
+            $Notification->{ContentType} = 'text/plain';
+            $Notification->{Body}        = $Kernel::OM->Get('Kernel::System::HTMLUtils')->ToAscii(
+                String => $Notification->{Body},
+            );
+        }
 
         # replace otrs macros
         $Notification->{Body} = $Self->_NotificationReplaceMacros(
@@ -309,7 +387,7 @@ sub NotificationSend {
             );
 
             $Notification->{Body} = $Kernel::OM->Get('Kernel::System::HTMLUtils')->DocumentComplete(
-                Charset => $Notification->{Charset},
+                Charset => 'utf-8',
                 String  => $Notification->{Body},
             );
         }
@@ -321,7 +399,7 @@ sub NotificationSend {
             To       => $User{UserEmail},
             Subject  => $Notification->{Subject},
             MimeType => $Notification->{ContentType} || 'text/plain',
-            Charset  => $Notification->{Charset},
+            Charset  => 'utf-8',
             Body     => $Notification->{Body},
             Loop     => 1,
         );
@@ -368,16 +446,43 @@ sub NotificationSend {
             next CUSTOMERID;
         }
 
-        my $PreferredLanguage = $CustomerUser{UserLanguage}
-            || $Kernel::OM->Get('Kernel::Config')->Get('DefaultLanguage')
-            || 'en';
+        # get system default language
+        my $DefaultLanguage = $Kernel::OM->Get('Kernel::Config')->Get('DefaultLanguage') || 'en';
 
-        my $NotificationKey = $PreferredLanguage . '::Customer::' . $Param{Type} . '::' . $Param{Event};
+        # get user preferred language
+        my $PreferredLanguage = $CustomerUser{UserLanguage} || $DefaultLanguage;
 
-        # get notification (cache || database)
-        my $Notification = $Self->_NotificationGet(
-            NotificationKey => $NotificationKey,
-        );
+        # make sure a message in the user language exists
+        if ( !$Param{Message}->{Customer}->{$PreferredLanguage} ) {
+
+            # otherwise use default language
+            $PreferredLanguage = $DefaultLanguage;
+
+            # if no message exists in default language, then take the first available language
+            if ( !$Param{Message}->{Customer}->{$PreferredLanguage} ) {
+                my @Languages = sort keys %{ $Param{Message}->{Customer} };
+                $PreferredLanguage = $Languages[0];
+            }
+        }
+
+        my $Notification = $Param{Message}->{Customer}->{$PreferredLanguage};
+        return if !$Notification;
+
+        # do text/plain to text/html convert
+        if ( $Self->{RichText} && $Notification->{ContentType} =~ m{ text/plain }xmsi ) {
+            $Notification->{ContentType} = 'text/html';
+            $Notification->{Body}        = $Kernel::OM->Get('Kernel::System::HTMLUtils')->ToHTML(
+                String => $Notification->{Body},
+            );
+        }
+
+        # do text/html to text/plain convert
+        elsif ( !$Self->{RichText} && $Notification->{ContentType} =~ m{ text/html }xmsi ) {
+            $Notification->{ContentType} = 'text/plain';
+            $Notification->{Body}        = $Kernel::OM->Get('Kernel::System::HTMLUtils')->ToAscii(
+                String => $Notification->{Body},
+            );
+        }
 
         # replace otrs macros
         $Notification->{Body} = $Self->_NotificationReplaceMacros(
@@ -412,7 +517,7 @@ sub NotificationSend {
             To       => $CustomerUser{UserEmail},
             Subject  => $Notification->{Subject},
             MimeType => $Notification->{ContentType} || 'text/plain',
-            Charset  => $Notification->{Charset},
+            Charset  => 'utf-8',
             Body     => $Notification->{Body},
             Loop     => 1,
         );
@@ -457,6 +562,32 @@ returns
         Rule         => 'rejected',
         Recipients   => [ 'ChangeBuilder', 'ChangeManager', 'ChangeCABCustomers' ],
         RecipientIDs => [ 2, 3, 7 ],
+        Message => {
+            Agent => {
+                'en' => {
+                    Subject     => 'Hello Agent',
+                    Body        => 'Hello World',
+                    ContentType => 'text/plain',
+                },
+                'de' => {
+                    Subject     => 'Hallo Agent',
+                    Body        => 'Hallo Welt',
+                    ContentType => 'text/plain',
+                },
+            },
+            Customer => {
+                'en' => {
+                    Subject     => 'Hello Customer',
+                    Body        => 'Hello World',
+                    ContentType => 'text/plain',
+                },
+                'de' => {
+                    Subject     => 'Hallo Kunde',
+                    Body        => 'Hallo Welt',
+                    ContentType => 'text/plain',
+                },
+            },
+        },
     }
 
 =cut
@@ -483,10 +614,10 @@ sub NotificationRuleGet {
 
     # do sql query
     return if !$Kernel::OM->Get('Kernel::System::DB')->Prepare(
-        SQL => 'SELECT cn.id, cn.name, item_attribute, event_id, cht.name, '
-            . 'cn.valid_id, cn.comments, notification_rule '
-            . 'FROM change_notification cn, change_history_type cht '
-            . 'WHERE event_id = cht.id AND cn.id = ?',
+        SQL => 'SELECT cn.id, cn.name, item_attribute, event_id, cht.name,
+            cn.valid_id, cn.comments, notification_rule
+            FROM change_notification cn, change_history_type cht
+            WHERE event_id = cht.id AND cn.id = ?',
         Bind  => [ \$Param{ID} ],
         Limit => 1,
     );
@@ -497,12 +628,12 @@ sub NotificationRuleGet {
         %NotificationRule = (
             ID           => $Row[0],
             Name         => $Row[1],
-            Attribute    => defined $Row[2] ? $Row[2] : '',
+            Attribute    => $Row[2] // '',
             EventID      => $Row[3],
             Event        => $Row[4],
             ValidID      => $Row[5],
             Comment      => $Row[6],
-            Rule         => defined $Row[7] ? $Row[7] : '',
+            Rule         => $Row[7] // '',
             Recipients   => undef,
             RecipientIDs => undef,
         );
@@ -513,9 +644,9 @@ sub NotificationRuleGet {
 
         # get recipients
         return if !$Kernel::OM->Get('Kernel::System::DB')->Prepare(
-            SQL => 'SELECT grp.id, grp.name '
-                . 'FROM change_notification_grps grp, change_notification_rec r '
-                . 'WHERE grp.id = r.group_id AND r.notification_id = ?',
+            SQL => 'SELECT grp.id, grp.name
+                FROM change_notification_grps grp, change_notification_rec r
+                WHERE grp.id = r.group_id AND r.notification_id = ?',
             Bind => [ \$NotificationRule{ID} ],
         );
 
@@ -529,6 +660,28 @@ sub NotificationRuleGet {
 
         $NotificationRule{Recipients}   = \@Recipients;
         $NotificationRule{RecipientIDs} = \@RecipientIDs;
+
+        # get change notification message data
+        return if !$Kernel::OM->Get('Kernel::System::DB')->Prepare(
+            SQL => 'SELECT subject, text, content_type, language, notification_type
+                FROM change_notification_message
+                WHERE notification_id = ?',
+            Bind => [ \$NotificationRule{ID} ],
+        );
+
+        my %Message;
+        while ( my @Row = $Kernel::OM->Get('Kernel::System::DB')->FetchrowArray() ) {
+
+            # add to message hash with the notification type and the language as key
+            # e.g. $Message{Agent}->{de}, or $Message{Customer}->{en}
+            $Message{ $Row[4] }->{ $Row[3] } = {
+                Subject     => $Row[0],
+                Body        => $Row[1],
+                ContentType => $Row[2],
+            };
+        }
+
+        $NotificationRule{Message} = \%Message;
     }
 
     # save values in cache
@@ -554,6 +707,32 @@ Add a notification rule. Returns the ID of the rule.
         Comment      => 'description what the rule does',
         Rule         => 'rejected',
         RecipientIDs => [ 2, 3, 7 ],
+        Message => {
+            Agent => {
+                'en' => {
+                    Subject     => 'Hello Agent',
+                    Body        => 'Hello World',
+                    ContentType => 'text/plain',
+                },
+                'de' => {
+                    Subject     => 'Hallo Agent',
+                    Body        => 'Hallo Welt',
+                    ContentType => 'text/plain',
+                },
+            },
+            Customer => {
+                'en' => {
+                    Subject     => 'Hello Customer',
+                    Body        => 'Hello World',
+                    ContentType => 'text/plain',
+                },
+                'de' => {
+                    Subject     => 'Hallo Kunde',
+                    Body        => 'Hallo Welt',
+                    ContentType => 'text/plain',
+                },
+            },
+        },
     );
 
 =cut
@@ -562,7 +741,7 @@ sub NotificationRuleAdd {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Needed (qw(Name EventID ValidID RecipientIDs)) {
+    for my $Needed (qw(Name EventID ValidID RecipientIDs Message)) {
         if ( !$Param{$Needed} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
@@ -581,11 +760,43 @@ sub NotificationRuleAdd {
         return;
     }
 
+    # check message
+    for my $Type (qw(Agent Customer)) {
+
+        # check message parameter, we always need agent and message
+        if ( !IsHashRefWithData( $Param{Message}->{$Type} ) ) {
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
+                Priority => 'error',
+                Message  => "Need $Type Message!",
+            );
+            return;
+        }
+
+        # check each argument for each message language
+        for my $Language ( sort keys %{ $Param{Message}->{$Type} } ) {
+
+            for my $Argument (qw(Subject Body ContentType)) {
+
+                # error if message data is incomplete
+                if ( !$Param{Message}->{$Type}->{$Language}->{$Argument} ) {
+                    $Kernel::OM->Get('Kernel::System::Log')->Log(
+                        Priority => 'error',
+                        Message  => "Need $Type Message argument '$Argument' for language '$Language'!",
+                    );
+                    return;
+                }
+
+                # fix some bad stuff from some browsers (Opera)!
+                $Param{Message}->{$Language}->{Body} =~ s/(\n\r|\r\r\n|\r\n|\r)/\n/g;
+            }
+        }
+    }
+
     # save notification rule
     return if !$Kernel::OM->Get('Kernel::System::DB')->Do(
-        SQL => 'INSERT INTO change_notification (name, event_id, valid_id, '
-            . 'item_attribute, comments, notification_rule) '
-            . 'VALUES (?, ?, ?, ?, ?, ?)',
+        SQL => 'INSERT INTO change_notification
+            (name, event_id, valid_id, item_attribute, comments, notification_rule)
+            VALUES (?, ?, ?, ?, ?, ?)',
         Bind => [
             \$Param{Name},      \$Param{EventID}, \$Param{ValidID},
             \$Param{Attribute}, \$Param{Comment}, \$Param{Rule},
@@ -594,9 +805,14 @@ sub NotificationRuleAdd {
 
     # get ID of rule
     return if !$Kernel::OM->Get('Kernel::System::DB')->Prepare(
-        SQL =>
-            'SELECT id FROM change_notification WHERE name = ? AND event_id = ? AND valid_id = ? '
-            . 'AND item_attribute = ? AND comments = ? AND notification_rule = ?',
+        SQL => 'SELECT id
+            FROM change_notification
+            WHERE name = ?
+            AND event_id = ?
+            AND valid_id = ?
+            AND item_attribute = ?
+            AND comments = ?
+            AND notification_rule = ?',
         Bind => [
             \$Param{Name},      \$Param{EventID}, \$Param{ValidID},
             \$Param{Attribute}, \$Param{Comment}, \$Param{Rule},
@@ -618,6 +834,29 @@ sub NotificationRuleAdd {
             SQL  => 'INSERT INTO change_notification_rec (notification_id, group_id) VALUES (?, ?)',
             Bind => [ \$RuleID, \$RecipientID ],
         );
+    }
+
+    # insert change notification message data
+    for my $Type (qw(Agent Customer)) {
+
+        for my $Language ( sort keys %{ $Param{Message}->{$Type} } ) {
+
+            my %Message = %{ $Param{Message}->{$Type}->{$Language} };
+
+            return if !$Kernel::OM->Get('Kernel::System::DB')->Do(
+                SQL => 'INSERT INTO change_notification_message
+                    (notification_id, subject, text, content_type, language, notification_type)
+                    VALUES (?, ?, ?, ?, ?)',
+                Bind => [
+                    \$RuleID,
+                    \$Message{Subject},
+                    \$Message{Body},
+                    \$Message{ContentType},
+                    \$Language,
+                    \$Type,
+                ],
+            );
+        }
     }
 
     # delete cache
@@ -652,6 +891,32 @@ updates an existing notification rule
         Comment      => 'description what the rule does',
         Rule         => 'rejected',
         RecipientIDs => [ 2, 3, 7 ],
+        Message => {
+            Agent => {
+                'en' => {
+                    Subject     => 'Hello Agent',
+                    Body        => 'Hello World',
+                    ContentType => 'text/plain',
+                },
+                'de' => {
+                    Subject     => 'Hallo Agent',
+                    Body        => 'Hallo Welt',
+                    ContentType => 'text/plain',
+                },
+            },
+            Customer => {
+                'en' => {
+                    Subject     => 'Hello Customer',
+                    Body        => 'Hello World',
+                    ContentType => 'text/plain',
+                },
+                'de' => {
+                    Subject     => 'Hallo Kunde',
+                    Body        => 'Hallo Welt',
+                    ContentType => 'text/plain',
+                },
+            },
+        },
     );
 
 =cut
@@ -660,7 +925,7 @@ sub NotificationRuleUpdate {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Needed (qw(ID Name EventID ValidID RecipientIDs)) {
+    for my $Needed (qw(ID Name EventID ValidID RecipientIDs Message)) {
         if ( !$Param{$Needed} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
@@ -677,6 +942,38 @@ sub NotificationRuleUpdate {
             Message  => 'RecipientIDs must be an array reference!',
         );
         return;
+    }
+
+    # check message
+    for my $Type (qw(Agent Customer)) {
+
+        # check message parameter, we always need agent and message
+        if ( !IsHashRefWithData( $Param{Message}->{$Type} ) ) {
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
+                Priority => 'error',
+                Message  => "Need $Type Message!",
+            );
+            return;
+        }
+
+        # check each argument for each message language
+        for my $Language ( sort keys %{ $Param{Message}->{$Type} } ) {
+
+            for my $Argument (qw(Subject Body ContentType)) {
+
+                # error if message data is incomplete
+                if ( !$Param{Message}->{$Type}->{$Language}->{$Argument} ) {
+                    $Kernel::OM->Get('Kernel::System::Log')->Log(
+                        Priority => 'error',
+                        Message  => "Need $Type Message argument '$Argument' for language '$Language'!",
+                    );
+                    return;
+                }
+
+                # fix some bad stuff from some browsers (Opera)!
+                $Param{Message}->{$Language}->{Body} =~ s/(\n\r|\r\r\n|\r\n|\r)/\n/g;
+            }
+        }
     }
 
     # save notification rule
@@ -703,6 +1000,35 @@ sub NotificationRuleUpdate {
             SQL  => 'INSERT INTO change_notification_rec (notification_id, group_id) VALUES (?, ?)',
             Bind => [ \$Param{ID}, \$RecipientID ],
         );
+    }
+
+    # delete old change notification message data
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Do(
+        SQL  => 'DELETE FROM change_notification_message WHERE notification_id = ?',
+        Bind => [ \$Param{ID} ],
+    );
+
+    # insert change notification message data
+    for my $Type (qw(Agent Customer)) {
+
+        for my $Language ( sort keys %{ $Param{Message}->{$Type} } ) {
+
+            my %Message = %{ $Param{Message}->{$Type}->{$Language} };
+
+            return if !$Kernel::OM->Get('Kernel::System::DB')->Do(
+                SQL => 'INSERT INTO change_notification_message
+                    (notification_id, subject, text, content_type, language, notification_type)
+                    VALUES (?, ?, ?, ?, ?)',
+                Bind => [
+                    \$Param{ID},
+                    \$Message{Subject},
+                    \$Message{Body},
+                    \$Message{ContentType},
+                    \$Language,
+                    \$Type,
+                ],
+            );
+        }
     }
 
     # delete cache
@@ -982,75 +1308,6 @@ sub RecipientList {
 }
 
 =begin Internal:
-
-=item _NotificationGet()
-
-Get the notification template from cache or from the NotificationObject.
-Also convert to notification the appropriate content type.
-
-    my $Notification = $NotificationObject->_NotificationGet(
-        NotificationKey => 'en::Agent::WorkOrder::WorkOrderUpdate',
-    );
-
-=cut
-
-sub _NotificationGet {
-    my ( $Self, %Param ) = @_;
-
-    for my $Argument (qw(NotificationKey)) {
-        if ( !defined $Param{$Argument} ) {
-            $Kernel::OM->Get('Kernel::System::Log')->Log(
-                Priority => 'error',
-                Message  => "Need $Argument!",
-            );
-            return;
-        }
-    }
-
-    my $NotificationKey = $Param{NotificationKey};
-
-    # check the cache
-    if ( $Self->{NotificationCache}->{$NotificationKey} ) {
-        return $Self->{NotificationCache}->{$NotificationKey};
-    }
-
-    # get from database
-    my %NotificationData = $Kernel::OM->Get('Kernel::System::Notification')->NotificationGet(
-        Name => $NotificationKey,
-    );
-
-    # no notification found
-    if ( !%NotificationData ) {
-        $Kernel::OM->Get('Kernel::System::Log')->Log(
-            Priority => 'error',
-            Message  => "Could not find notification for $NotificationKey",
-        );
-
-        return;
-    }
-
-    # do text/plain to text/html convert
-    if ( $Self->{RichText} && $NotificationData{ContentType} =~ m{ text/plain }xmsi ) {
-        $NotificationData{ContentType} = 'text/html';
-        $NotificationData{Body}        = $Kernel::OM->Get('Kernel::System::HTMLUtils')->ToHTML(
-            String => $NotificationData{Body},
-        );
-    }
-
-    # do text/html to text/plain convert
-    elsif ( !$Self->{RichText} && $NotificationData{ContentType} =~ m{ text/html }xmsi ) {
-        $NotificationData{ContentType} = 'text/plain';
-        $NotificationData{Body}        = $Kernel::OM->Get('Kernel::System::HTMLUtils')->ToAscii(
-            String => $NotificationData{Body},
-        );
-    }
-
-    # cache data
-    $Self->{NotificationCache}->{$NotificationKey} = \%NotificationData;
-
-    # return data
-    return \%NotificationData;
-}
 
 =item _NotificationReplaceMacros()
 

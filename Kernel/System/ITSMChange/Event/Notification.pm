@@ -176,6 +176,8 @@ sub Run {
             Data   => {
                 %{ $Param{Data} },    # do not pass as reference, as it would influence later events!
             },
+
+            Message => $Rule->{Message},
         );
     }
 
