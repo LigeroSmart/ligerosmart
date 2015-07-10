@@ -253,8 +253,7 @@ sub Data {
         'Fafanua safu zilizoonyeshwa katika jarida la maswali. Hili chaguo halina madhara katika nafasi kwenye safu.';
     $Self->{Translation}->{'Defines the shown columns in the FAQ search. This option has no effect on the position of the column.'} =
         'Fafanua safu zilizoonyeshwa katika makala ya maswali. Hili chaguo halina madhara katika nafasi kwenye safu.';
-    $Self->{Translation}->{'Defines where the \'Insert FAQ\' link will be displayed. Note: AgentTicketActionCommon includes AgentTicketNote, AgentTicketClose, AgentTicketFreeText, AgentTicketOwner, AgentTicketPending, AgentTicketPriority and AgentTicketResponsible.'} =
-        'Amefafanua ambapo \'Insert Maswali\' kiungo kuonyeshwa. Kumbuka: AgentTicketActionCommon pamoja AgentTicketNote, AgentTicketClose, AgentTicketFreeText, AgentTicketOwner, AgentTicketPending, AgentTicketPriority na AgentTicketResponsible.';
+    $Self->{Translation}->{'Defines where the \'Insert FAQ\' link will be displayed.'} = '';
     $Self->{Translation}->{'Definition of FAQ item free text field.'} = 'Ufafanuzi wa uga ya matini huru ya kipengele cha maswali yanayoulizwa mara kwa mara.';
     $Self->{Translation}->{'Delete this FAQ'} = 'Futa haya maswali yaliyoulizwa mara kwa mara';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ add screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =

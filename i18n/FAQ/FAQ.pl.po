@@ -1,12 +1,13 @@
 # 
 # Translators:
+# Jerzy Ruszczak <orcio6@o2.pl>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-05-06 22:59+0000\n"
+"PO-Revision-Date: 2015-07-10 17:18+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
-"Language-Team: Polish (http://www.transifex.com/projects/p/OTRS/language/pl/)\n"
+"Language-Team: Polish (http://www.transifex.com/p/OTRS/language/pl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -15,11 +16,11 @@ msgstr ""
 
 #. Template: AAAFAQ
 msgid "internal"
-msgstr "wewnętrzne"
+msgstr "wewnętrzny"
 
 #. Template: AAAFAQ
 msgid "public"
-msgstr "publiczne"
+msgstr "publiczny"
 
 #. Template: AAAFAQ
 msgid "external"
@@ -31,15 +32,15 @@ msgstr "Numer FAQ"
 
 #. Template: AAAFAQ
 msgid "Latest updated FAQ articles"
-msgstr "ostatnio zmienione artykuły FAQ"
+msgstr "Ostatnio zaktualizowane informacje FAQ"
 
 #. Template: AAAFAQ
 msgid "Latest created FAQ articles"
-msgstr "ostatnio utworzone artykuły FAQ"
+msgstr "Ostatnio dodane informacje FAQ"
 
 #. Template: AAAFAQ
 msgid "Top 10 FAQ articles"
-msgstr "10 najlepszych artykułów FAQ"
+msgstr "Top 10 informacji FAQ"
 
 #. Template: AAAFAQ
 msgid "Subcategory of"
@@ -99,7 +100,7 @@ msgstr "Już raz głosowałeś!"
 
 #. Template: AAAFAQ
 msgid "FAQ Article Print"
-msgstr "Drukuj artykuł FAQ"
+msgstr "Drukuj informację FAQ"
 
 #. Template: AAAFAQ
 msgid "FAQ Articles (Top 10)"
@@ -147,11 +148,11 @@ msgstr "Ten język już istnieje!"
 
 #. Template: AAAFAQ
 msgid "Symptom"
-msgstr ""
+msgstr "Objaw"
 
 #. Template: AAAFAQ
 msgid "Solution"
-msgstr ""
+msgstr "Rozwiązanie"
 
 #. Template: AgentFAQAdd
 msgid "Add FAQ Article"
@@ -159,7 +160,7 @@ msgstr "Dodaj artykuł FAQ"
 
 #. Template: AgentFAQAdd
 msgid "Keywords"
-msgstr ""
+msgstr "słowa kluczowe"
 
 #. Template: AgentFAQAdd
 msgid "A category is required."
@@ -241,7 +242,7 @@ msgstr "Szybkie wyszukiwanie"
 
 #. Template: AgentFAQExplorer
 msgid "Wildcards are allowed."
-msgstr ""
+msgstr "Znaki wieloznaczne są dozwolone."
 
 #. Template: AgentFAQExplorer
 msgid "Advanced Search"
@@ -322,11 +323,11 @@ msgstr "Głosy"
 
 #. Template: AgentFAQPrint
 msgid "Last update"
-msgstr ""
+msgstr "Ostatnia aktualizacja"
 
 #. Template: AgentFAQSearch
 msgid "Keyword"
-msgstr ""
+msgstr "Słowo kluczowe"
 
 #. Template: AgentFAQSearch
 msgid "Vote (e. g. Equals 10 or GreaterThan 60)"
@@ -338,7 +339,7 @@ msgstr ""
 
 #. Template: AgentFAQSearch
 msgid "Approved"
-msgstr ""
+msgstr "Zatwierdzone"
 
 #. Template: AgentFAQSearch
 msgid "Last changed by"
@@ -346,19 +347,19 @@ msgstr "Ostatnio zmienione przez"
 
 #. Template: AgentFAQSearch
 msgid "FAQ Article Create Time (before/after)"
-msgstr ""
+msgstr "FAQ Czas tworzenia zgłoszenia (przed/po)"
 
 #. Template: AgentFAQSearch
 msgid "FAQ Article Create Time (between)"
-msgstr ""
+msgstr "FAQ Czas tworzenia zgłoszenia (pomiędzy)"
 
 #. Template: AgentFAQSearch
 msgid "FAQ Article Change Time (before/after)"
-msgstr ""
+msgstr "FAQ Czas zmiany zgłoszenia (przed/po)"
 
 #. Template: AgentFAQSearch
 msgid "FAQ Article Change Time (between)"
-msgstr ""
+msgstr "FAQ Czas zmiany zgłoszenia (pomiędzy)"
 
 #. Template: AgentFAQSearchOpenSearchDescriptionFulltext
 msgid "FAQFulltext"
@@ -370,7 +371,7 @@ msgstr "Wyszukiwanie FAQ"
 
 #. Template: AgentFAQSearchSmall
 msgid "Profile Selection"
-msgstr ""
+msgstr "Wybór profilu"
 
 #. Template: AgentFAQSearchSmall
 msgid "Vote"
@@ -414,11 +415,11 @@ msgstr ""
 
 #. Template: AgentFAQSearchSmall
 msgid "Date range"
-msgstr ""
+msgstr "Zakres dat"
 
 #. Template: AgentFAQSearchSmall
 msgid "FAQ Article Change Time"
-msgstr ""
+msgstr "FAQ Czas zmiany zgłoszenia"
 
 #. Template: AgentFAQZoom
 msgid "FAQ Information"
@@ -721,11 +722,7 @@ msgid ""
 msgstr ""
 
 #. SysConfig
-msgid ""
-"Defines where the 'Insert FAQ' link will be displayed. Note: "
-"AgentTicketActionCommon includes AgentTicketNote, AgentTicketClose, "
-"AgentTicketFreeText, AgentTicketOwner, AgentTicketPending, "
-"AgentTicketPriority and AgentTicketResponsible."
+msgid "Defines where the 'Insert FAQ' link will be displayed."
 msgstr ""
 
 #. SysConfig

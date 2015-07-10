@@ -667,7 +667,7 @@ msgid "Defines the shown columns in the FAQ search. This option has no effect on
 msgstr ""
 
 #. SysConfig
-msgid "Defines where the 'Insert FAQ' link will be displayed. Note: AgentTicketActionCommon includes AgentTicketNote, AgentTicketClose, AgentTicketFreeText, AgentTicketOwner, AgentTicketPending, AgentTicketPriority and AgentTicketResponsible."
+msgid "Defines where the 'Insert FAQ' link will be displayed."
 msgstr ""
 
 #. SysConfig

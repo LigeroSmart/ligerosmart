@@ -50,8 +50,8 @@ sub Data {
     $Self->{Translation}->{'FAQ language updated!'} = 'Ажуриран ЧПП језик!';
     $Self->{Translation}->{'The name is required!'} = 'Име је обавезно!';
     $Self->{Translation}->{'This language already exists!'} = 'Овај језик већ постоји!';
-    $Self->{Translation}->{'Symptom'} = '';
-    $Self->{Translation}->{'Solution'} = '';
+    $Self->{Translation}->{'Symptom'} = 'Симптом';
+    $Self->{Translation}->{'Solution'} = 'Решење';
 
     # Template: AgentFAQAdd
     $Self->{Translation}->{'Add FAQ Article'} = 'Додај ЧПП чланак';
@@ -111,10 +111,10 @@ sub Data {
     $Self->{Translation}->{'FAQ articles per page'} = 'ЧПП чланака по страни';
 
     # Template: AgentFAQOverviewSmall
-    $Self->{Translation}->{'No FAQ data found.'} = '';
+    $Self->{Translation}->{'No FAQ data found.'} = 'Нису пронађени ЧПП подаци.';
 
     # Template: AgentFAQPrint
-    $Self->{Translation}->{'FAQ-Info'} = '';
+    $Self->{Translation}->{'FAQ-Info'} = 'ЧПП-инфо';
     $Self->{Translation}->{'Votes'} = 'Гласови';
     $Self->{Translation}->{'Last update'} = 'Последње ажурирање';
 
@@ -253,8 +253,7 @@ sub Data {
         '';
     $Self->{Translation}->{'Defines the shown columns in the FAQ search. This option has no effect on the position of the column.'} =
         '';
-    $Self->{Translation}->{'Defines where the \'Insert FAQ\' link will be displayed. Note: AgentTicketActionCommon includes AgentTicketNote, AgentTicketClose, AgentTicketFreeText, AgentTicketOwner, AgentTicketPending, AgentTicketPriority and AgentTicketResponsible.'} =
-        '';
+    $Self->{Translation}->{'Defines where the \'Insert FAQ\' link will be displayed.'} = '';
     $Self->{Translation}->{'Definition of FAQ item free text field.'} = 'Дефиниција поља слободног текста за ЧПП ставку.';
     $Self->{Translation}->{'Delete this FAQ'} = 'Обриши ово ЧПП';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ add screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
@@ -289,8 +288,8 @@ sub Data {
     $Self->{Translation}->{'Enable multiple languages on FAQ module.'} = 'Активирање више језика на ЧПП модулу.';
     $Self->{Translation}->{'Enable voting mechanism on FAQ module.'} = 'Активирање механизма за гласање на ЧПП модулу.';
     $Self->{Translation}->{'FAQ Journal'} = 'ЧПП дневник';
-    $Self->{Translation}->{'FAQ Journal Overview "Small" Limit'} = '';
-    $Self->{Translation}->{'FAQ Overview "Small" Limit'} = '';
+    $Self->{Translation}->{'FAQ Journal Overview "Small" Limit'} = 'Ограничење прегледа ЧПП журнала - "мало"';
+    $Self->{Translation}->{'FAQ Overview "Small" Limit'} = 'Ограничење прегледа ЧПП - "мало"';
     $Self->{Translation}->{'FAQ limit per page for FAQ Journal Overview "Small"'} = '';
     $Self->{Translation}->{'FAQ limit per page for FAQ Overview "Small"'} = '';
     $Self->{Translation}->{'FAQ path separator.'} = 'Разделник путање до ЧПП.';
@@ -303,16 +302,16 @@ sub Data {
     $Self->{Translation}->{'History of this FAQ'} = 'Историјат овог ЧПП';
     $Self->{Translation}->{'Include internal fields on a FAQ based Ticket.'} = '';
     $Self->{Translation}->{'Include the name of each field in a FAQ based Ticket.'} = '';
-    $Self->{Translation}->{'Interfaces where the quick search should be shown.'} = '';
+    $Self->{Translation}->{'Interfaces where the quick search should be shown.'} = 'Интерфејс на ком треба приказати брзу претрагу.';
     $Self->{Translation}->{'Journal'} = 'Дневник';
     $Self->{Translation}->{'Language Management'} = 'Управљање језицима';
     $Self->{Translation}->{'Link another object to this FAQ item'} = 'Повежи објекат са овом ставком ЧПП';
     $Self->{Translation}->{'List of state types which can be used in the agent interface.'} =
-        '';
+        'Листа типова статуса који се могу користити у интерфејсу оператера.';
     $Self->{Translation}->{'List of state types which can be used in the customer interface.'} =
-        '';
+        'Листа типова статуса који се могу користити у интерфејсу корисника.';
     $Self->{Translation}->{'List of state types which can be used in the public interface.'} =
-        '';
+        'Листа типова статуса који се могу користити у јавном интерфејсу.';
     $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the FAQ Explorer result of the agent interface.'} =
         '';
     $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the FAQ Explorer result of the customer interface.'} =
@@ -385,10 +384,10 @@ sub Data {
     $Self->{Translation}->{'Show FAQ Article with HTML.'} = '';
     $Self->{Translation}->{'Show FAQ path yes/no.'} = 'Прикажи путању до ЧПП да/не.';
     $Self->{Translation}->{'Show items of subcategories.'} = 'Прикажи ставке у субкатегоријама.';
-    $Self->{Translation}->{'Show last change items in defined interfaces.'} = '';
-    $Self->{Translation}->{'Show last created items in defined interfaces.'} = '';
-    $Self->{Translation}->{'Show top 10 items in defined interfaces.'} = '';
-    $Self->{Translation}->{'Show voting in defined interfaces.'} = '';
+    $Self->{Translation}->{'Show last change items in defined interfaces.'} = 'Прикажи задње промењене ставке у дефинисаним интерфејсима.';
+    $Self->{Translation}->{'Show last created items in defined interfaces.'} = 'Прикажи задње креиране ставке у дефинисаним интерфејсима.';
+    $Self->{Translation}->{'Show top 10 items in defined interfaces.'} = 'Прикажи првих 10 ставки у дефинисаним интерфејсима.';
+    $Self->{Translation}->{'Show voting in defined interfaces.'} = 'Прикажи гласање у дефинисаним интерфејсима.';
     $Self->{Translation}->{'Shows a link in the menu that allows linking a FAQ with another object in the zoom view of such FAQ of the agent interface.'} =
         '';
     $Self->{Translation}->{'Shows a link in the menu that allows to delete a FAQ in its zoom view in the agent interface.'} =

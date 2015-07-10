@@ -253,8 +253,7 @@ sub Data {
         'A FAQ journal-ban látható oszlopokat definiálja. A paraméter nincs hatással az oszlop pozíciójára.';
     $Self->{Translation}->{'Defines the shown columns in the FAQ search. This option has no effect on the position of the column.'} =
         'A FAQ keresésnél látható oszlopokat definiálja. A paraméter nincs hatással az oszlop pozíciójára.';
-    $Self->{Translation}->{'Defines where the \'Insert FAQ\' link will be displayed. Note: AgentTicketActionCommon includes AgentTicketNote, AgentTicketClose, AgentTicketFreeText, AgentTicketOwner, AgentTicketPending, AgentTicketPriority and AgentTicketResponsible.'} =
-        'Definiálja, hogy a \'Insert FAQ\' link hol látható. Megjegyzés: AgentTicketActionCommon tartalmazza az AgentTicketNote, AgentTicketClose, AgentTicketFreeText, AgentTicketOwner, AgentTicketPending, AgentTicketPriority és  AgentTicketResponsible.';
+    $Self->{Translation}->{'Defines where the \'Insert FAQ\' link will be displayed.'} = '';
     $Self->{Translation}->{'Definition of FAQ item free text field.'} = 'A FAQ cikk szabad-szöveges mezőjét definiálja.';
     $Self->{Translation}->{'Delete this FAQ'} = 'Töröld ezt a FAQ-t';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ add screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =

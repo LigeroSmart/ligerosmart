@@ -17,13 +17,13 @@ sub Data {
     my $Self = shift;
 
     # Template: AAAFAQ
-    $Self->{Translation}->{'internal'} = 'wewnętrzne';
-    $Self->{Translation}->{'public'} = 'publiczne';
+    $Self->{Translation}->{'internal'} = 'wewnętrzny';
+    $Self->{Translation}->{'public'} = 'publiczny';
     $Self->{Translation}->{'external'} = 'zewnętrzne';
     $Self->{Translation}->{'FAQ Number'} = 'Numer FAQ';
-    $Self->{Translation}->{'Latest updated FAQ articles'} = 'ostatnio zmienione artykuły FAQ';
-    $Self->{Translation}->{'Latest created FAQ articles'} = 'ostatnio utworzone artykuły FAQ';
-    $Self->{Translation}->{'Top 10 FAQ articles'} = '10 najlepszych artykułów FAQ';
+    $Self->{Translation}->{'Latest updated FAQ articles'} = 'Ostatnio zaktualizowane informacje FAQ';
+    $Self->{Translation}->{'Latest created FAQ articles'} = 'Ostatnio dodane informacje FAQ';
+    $Self->{Translation}->{'Top 10 FAQ articles'} = 'Top 10 informacji FAQ';
     $Self->{Translation}->{'Subcategory of'} = 'Podkategoria';
     $Self->{Translation}->{'No rate selected!'} = 'Nie wybrałeś oceny!';
     $Self->{Translation}->{'Explorer'} = 'Eksplorer';
@@ -38,7 +38,7 @@ sub Data {
     $Self->{Translation}->{'End year'} = 'Rok końcowy';
     $Self->{Translation}->{'Thanks for your vote!'} = 'Dziękujemy za oddanie głosu!';
     $Self->{Translation}->{'You have already voted!'} = 'Już raz głosowałeś!';
-    $Self->{Translation}->{'FAQ Article Print'} = 'Drukuj artykuł FAQ';
+    $Self->{Translation}->{'FAQ Article Print'} = 'Drukuj informację FAQ';
     $Self->{Translation}->{'FAQ Articles (Top 10)'} = 'Artykuły FAQ (10 najlepszych)';
     $Self->{Translation}->{'FAQ Articles (new created)'} = 'Artykuły FAQ (nowe)';
     $Self->{Translation}->{'FAQ Articles (recently changed)'} = 'Artykuły FAQ (ostatnio zmienione)';
@@ -50,12 +50,12 @@ sub Data {
     $Self->{Translation}->{'FAQ language updated!'} = 'Język FAQ zaktualizowany!';
     $Self->{Translation}->{'The name is required!'} = 'Nazwa jest wymagana!';
     $Self->{Translation}->{'This language already exists!'} = 'Ten język już istnieje!';
-    $Self->{Translation}->{'Symptom'} = '';
-    $Self->{Translation}->{'Solution'} = '';
+    $Self->{Translation}->{'Symptom'} = 'Objaw';
+    $Self->{Translation}->{'Solution'} = 'Rozwiązanie';
 
     # Template: AgentFAQAdd
     $Self->{Translation}->{'Add FAQ Article'} = 'Dodaj artykuł FAQ';
-    $Self->{Translation}->{'Keywords'} = '';
+    $Self->{Translation}->{'Keywords'} = 'słowa kluczowe';
     $Self->{Translation}->{'A category is required.'} = 'Kategoria jest wymagana.';
     $Self->{Translation}->{'Approval'} = 'Zatwierdzenie';
 
@@ -84,7 +84,7 @@ sub Data {
     # Template: AgentFAQExplorer
     $Self->{Translation}->{'FAQ Explorer'} = 'Eksplorer FAQ';
     $Self->{Translation}->{'Quick Search'} = 'Szybkie wyszukiwanie';
-    $Self->{Translation}->{'Wildcards are allowed.'} = '';
+    $Self->{Translation}->{'Wildcards are allowed.'} = 'Znaki wieloznaczne są dozwolone.';
     $Self->{Translation}->{'Advanced Search'} = 'Wyszukiwanie zaawansowane';
     $Self->{Translation}->{'Subcategories'} = 'Podkategorie';
     $Self->{Translation}->{'FAQ Articles'} = 'Artykuły FAQ';
@@ -116,25 +116,25 @@ sub Data {
     # Template: AgentFAQPrint
     $Self->{Translation}->{'FAQ-Info'} = 'Info-FAQ';
     $Self->{Translation}->{'Votes'} = 'Głosy';
-    $Self->{Translation}->{'Last update'} = '';
+    $Self->{Translation}->{'Last update'} = 'Ostatnia aktualizacja';
 
     # Template: AgentFAQSearch
-    $Self->{Translation}->{'Keyword'} = '';
+    $Self->{Translation}->{'Keyword'} = 'Słowo kluczowe';
     $Self->{Translation}->{'Vote (e. g. Equals 10 or GreaterThan 60)'} = '';
     $Self->{Translation}->{'Rate (e. g. Equals 25% or GreaterThan 75%)'} = '';
-    $Self->{Translation}->{'Approved'} = '';
+    $Self->{Translation}->{'Approved'} = 'Zatwierdzone';
     $Self->{Translation}->{'Last changed by'} = 'Ostatnio zmienione przez';
-    $Self->{Translation}->{'FAQ Article Create Time (before/after)'} = '';
-    $Self->{Translation}->{'FAQ Article Create Time (between)'} = '';
-    $Self->{Translation}->{'FAQ Article Change Time (before/after)'} = '';
-    $Self->{Translation}->{'FAQ Article Change Time (between)'} = '';
+    $Self->{Translation}->{'FAQ Article Create Time (before/after)'} = 'FAQ Czas tworzenia zgłoszenia (przed/po)';
+    $Self->{Translation}->{'FAQ Article Create Time (between)'} = 'FAQ Czas tworzenia zgłoszenia (pomiędzy)';
+    $Self->{Translation}->{'FAQ Article Change Time (before/after)'} = 'FAQ Czas zmiany zgłoszenia (przed/po)';
+    $Self->{Translation}->{'FAQ Article Change Time (between)'} = 'FAQ Czas zmiany zgłoszenia (pomiędzy)';
 
     # Template: AgentFAQSearchOpenSearchDescriptionFulltext
     $Self->{Translation}->{'FAQFulltext'} = 'FAQ pełnotekstowo';
 
     # Template: AgentFAQSearchSmall
     $Self->{Translation}->{'FAQ Search'} = 'Wyszukiwanie FAQ';
-    $Self->{Translation}->{'Profile Selection'} = '';
+    $Self->{Translation}->{'Profile Selection'} = 'Wybór profilu';
     $Self->{Translation}->{'Vote'} = '';
     $Self->{Translation}->{'No vote settings'} = '';
     $Self->{Translation}->{'Specific votes'} = '';
@@ -145,8 +145,8 @@ sub Data {
     $Self->{Translation}->{'e. g. Equals 25% or GreaterThan 75%'} = '';
     $Self->{Translation}->{'FAQ Article Create Time'} = '';
     $Self->{Translation}->{'Specific date'} = '';
-    $Self->{Translation}->{'Date range'} = '';
-    $Self->{Translation}->{'FAQ Article Change Time'} = '';
+    $Self->{Translation}->{'Date range'} = 'Zakres dat';
+    $Self->{Translation}->{'FAQ Article Change Time'} = 'FAQ Czas zmiany zgłoszenia';
 
     # Template: AgentFAQZoom
     $Self->{Translation}->{'FAQ Information'} = 'Informacje FAQ';
@@ -253,8 +253,7 @@ sub Data {
         '';
     $Self->{Translation}->{'Defines the shown columns in the FAQ search. This option has no effect on the position of the column.'} =
         '';
-    $Self->{Translation}->{'Defines where the \'Insert FAQ\' link will be displayed. Note: AgentTicketActionCommon includes AgentTicketNote, AgentTicketClose, AgentTicketFreeText, AgentTicketOwner, AgentTicketPending, AgentTicketPriority and AgentTicketResponsible.'} =
-        '';
+    $Self->{Translation}->{'Defines where the \'Insert FAQ\' link will be displayed.'} = '';
     $Self->{Translation}->{'Definition of FAQ item free text field.'} = 'Definicja pola free text pozycji FAQ.';
     $Self->{Translation}->{'Delete this FAQ'} = 'Usuń to FAQ';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ add screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
