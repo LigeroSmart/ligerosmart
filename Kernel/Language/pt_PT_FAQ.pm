@@ -1,5 +1,4 @@
 # --
-# Kernel/Language/pt_PT_FAQ.pm - translation file
 # Copyright (C) 2001-2015 OTRS AG, http://otrs.com/
 # Copyright (C) 2012 FCCN - Rui Francisco <rui.francisco@fccn.pt>
 # --
