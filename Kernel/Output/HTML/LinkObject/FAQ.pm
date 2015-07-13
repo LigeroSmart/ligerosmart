@@ -6,7 +6,7 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package Kernel::Output::HTML::LinkObjectFAQ;
+package Kernel::Output::HTML::LinkObject::FAQ;
 
 use strict;
 use warnings;
@@ -48,15 +48,12 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    # check needed objects
+    # check needed params
     for my $Needed (qw(UserLanguage UserID)) {
         $Self->{$Needed} = $Param{$Needed} || die "Got no $Needed!";
     }
 
-    # get needed objects
-    $Self->{ConfigObject} = $Kernel::OM->Get('Kernel::Config');
-    $Self->{LogObject}    = $Kernel::OM->Get('Kernel::System::Log');
-    $Self->{ParamObject}  = $Kernel::OM->Get('Kernel::System::Web::Request');
+    # TODO: check if the new instance is still needed with the OM!
 
     # We need our own LayoutObject instance to avoid blockdata collisions
     #   with the main page.
@@ -157,7 +154,7 @@ sub TableCreateComplex {
 
     # check needed stuff
     if ( !$Param{ObjectLinkListWithData} || ref $Param{ObjectLinkListWithData} ne 'HASH' ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need ObjectLinkListWithData!',
         );
@@ -219,7 +216,7 @@ sub TableCreateComplex {
     return if !@ItemList;
 
     # define the block data
-    my $FAQHook = $Self->{ConfigObject}->Get('FAQ::FAQHook');
+    my $FAQHook = $Kernel::OM->Get('Kernel::Config')->Get('FAQ::FAQHook');
     my %Block   = (
         Object    => $Self->{ObjectData}->{Object},
         Blockname => $Self->{ObjectData}->{Realname},
@@ -289,14 +286,14 @@ sub TableCreateSimple {
 
     # check needed stuff
     if ( !$Param{ObjectLinkListWithData} || ref $Param{ObjectLinkListWithData} ne 'HASH' ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need ObjectLinkListWithData!',
         );
         return;
     }
 
-    my $FAQHook = $Self->{ConfigObject}->Get('FAQ::FAQHook');
+    my $FAQHook = $Kernel::OM->Get('Kernel::Config')->Get('FAQ::FAQHook');
     my %LinkOutputData;
     for my $LinkType ( sort keys %{ $Param{ObjectLinkListWithData} } ) {
 
@@ -349,13 +346,14 @@ sub ContentStringCreate {
 
     # check needed stuff
     if ( !$Param{ContentData} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need ContentData!',
         );
         return;
     }
 
+    # TODO: check why no return is needed!
     return;
 }
 
@@ -429,7 +427,7 @@ sub SearchOptionList {
     my ( $Self, %Param ) = @_;
 
     # search option list
-    my $FAQHook          = $Self->{ConfigObject}->Get('FAQ::FAQHook');
+    my $FAQHook          = $Kernel::OM->Get('Kernel::Config')->Get('FAQ::FAQHook');
     my @SearchOptionList = (
         {
             Key  => 'Number',
@@ -453,60 +451,29 @@ sub SearchOptionList {
         $Row->{FormKey} = 'SEARCH::' . $Row->{Key};
     }
 
+    # get param object
+    my $ParamObject = $Kernel::OM->Get('Kernel::System::Web::Request');
+
     # add form data and input string
     ROW:
     for my $Row (@SearchOptionList) {
 
-        # prepare text input fields
-        if ( $Row->{Type} eq 'Text' ) {
+        # get form data
+        $Row->{FormData} = $ParamObject->GetParam( Param => $Row->{FormKey} );
 
-            # get form data
-            $Row->{FormData} = $Self->{ParamObject}->GetParam( Param => $Row->{FormKey} );
+        # parse the input text block
+        $Self->{LayoutObject}->Block(
+            Name => 'InputText',
+            Data => {
+                Key   => $Row->{FormKey},
+                Value => $Row->{FormData} || '',
+            },
+        );
 
-            # parse the input text block
-            $Self->{LayoutObject}->Block(
-                Name => 'InputText',
-                Data => {
-                    Key   => $Row->{FormKey},
-                    Value => $Row->{FormData} || '',
-                },
-            );
-
-            # add the input string
-            $Row->{InputStrg} = $Self->{LayoutObject}->Output(
-                TemplateFile => 'LinkObject',
-            );
-
-            next ROW;
-        }
-
-        # prepare list boxes
-        if ( $Row->{Type} eq 'List' ) {
-
-            # get form data
-            my @FormData = $Self->{ParamObject}->GetArray( Param => $Row->{FormKey} );
-            $Row->{FormData} = \@FormData;
-
-            my %ListData;
-            if ( $Row->{Key} eq 'StateIDs' ) {
-
-                # get state list
-                %ListData = $Self->{StateObject}->StateList(
-                    UserID => $Self->{UserID},
-                );
-            }
-
-            # add the input string
-            $Row->{InputStrg} = $Self->{LayoutObject}->BuildSelection(
-                Data       => \%ListData,
-                Name       => $Row->{FormKey},
-                SelectedID => $Row->{FormData},
-                Size       => 3,
-                Multiple   => 1,
-            );
-
-            next ROW;
-        }
+        # add the input string
+        $Row->{InputStrg} = $Self->{LayoutObject}->Output(
+            TemplateFile => 'LinkObject',
+        );
     }
 
     return @SearchOptionList;

@@ -6,10 +6,12 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package Kernel::Output::HTML::PublicHeaderMetaFAQSearch;
+package Kernel::Output::HTML::CustomerHeaderMeta::FAQSearch;
 
 use strict;
 use warnings;
+
+our $ObjectManagerDisabled = 1;
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -18,34 +20,34 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    # get needed objects
-    for (qw(ConfigObject LogObject LayoutObject TimeObject)) {
-        $Self->{$_} = $Param{$_} || die "Got no $_!";
-    }
-
     return $Self;
 }
 
 sub Run {
     my ( $Self, %Param ) = @_;
 
+    # get layout object
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+
     my $Session = '';
-    if ( !$Self->{LayoutObject}->{SessionIDCookie} ) {
-        $Session = ';' . $Self->{LayoutObject}->{SessionName} . '='
-            . $Self->{LayoutObject}->{SessionID};
+    if ( !$LayoutObject->{SessionIDCookie} ) {
+        $Session = ';' . $LayoutObject->{SessionName} . '=' . $LayoutObject->{SessionID};
     }
 
-    # build open search description for FAQ number
-    my $Title = $Self->{ConfigObject}->Get('ProductName');
+    # get config object
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
-    $Title .= ' - Public (' . $Self->{ConfigObject}->Get('FAQ::FAQHook') . ')';
-    $Self->{LayoutObject}->Block(
+    # build open search description for FAQ number
+    my $Title = $ConfigObject->Get('ProductName');
+
+    $Title .= ' - Customer (' . $ConfigObject->Get('FAQ::FAQHook') . ')';
+    $LayoutObject->Block(
         Name => 'MetaLink',
         Data => {
             Rel   => 'search',
             Type  => 'application/opensearchdescription+xml',
             Title => $Title,
-            Href  => $Self->{LayoutObject}->{Baselink}
+            Href  => $LayoutObject->{Baselink}
                 . 'Action='
                 . $Param{Config}->{Action}
                 . ';Subaction=OpenSearchDescriptionFAQNumber' . $Session,
@@ -53,16 +55,16 @@ sub Run {
     );
 
     # build open search description for FAQ full-text
-    my $Fulltext = $Self->{LayoutObject}->{LanguageObject}->Translate('FAQFulltext');
-    $Title = $Self->{ConfigObject}->Get('ProductName');
-    $Title .= ' - Public (' . $Fulltext . ')';
-    $Self->{LayoutObject}->Block(
+    my $Fulltext = $LayoutObject->{LanguageObject}->Translate('FAQFulltext');
+    $Title = $ConfigObject->Get('ProductName');
+    $Title .= ' - Customer (' . $Fulltext . ')';
+    $LayoutObject->Block(
         Name => 'MetaLink',
         Data => {
             Rel   => 'search',
             Type  => 'application/opensearchdescription+xml',
             Title => $Title,
-            Href  => $Self->{LayoutObject}->{Baselink}
+            Href  => $LayoutObject->{Baselink}
                 . 'Action='
                 . $Param{Config}->{Action}
                 . ';Subaction=OpenSearchDescriptionFulltext' . $Session,

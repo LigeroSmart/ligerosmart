@@ -6,12 +6,14 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package Kernel::Output::HTML::DashboardFAQ;
+package Kernel::Output::HTML::Dashboard::FAQ;
 
 use strict;
 use warnings;
 
 use Kernel::System::FAQ;
+
+our $ObjectManagerDisabled = 1;
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -20,25 +22,11 @@ sub new {
     my $Self = {%Param};
     bless( $Self, $Type );
 
-    # get needed objects
-    for my $Object (
-        qw(Config Name ConfigObject LogObject DBObject LayoutObject ParamObject UserID)
-        )
+    # get needed params
+    for my $Needed (qw(Config Name UserID))
     {
-        die "Got no $Object!" if ( !$Self->{$Object} );
+        die "Got no $Needed!" if ( !$Self->{$Needed} );
     }
-
-    $Self->{FAQObject} = Kernel::System::FAQ->new(%Param);
-
-    # set default interface settings
-    $Self->{Interface} = $Self->{FAQObject}->StateTypeGet(
-        Name   => 'internal',
-        UserID => $Self->{UserID},
-    );
-    $Self->{InterfaceStates} = $Self->{FAQObject}->StateTypeList(
-        Types  => $Self->{ConfigObject}->Get('FAQ::Agent::StateTypes'),
-        UserID => $Self->{UserID},
-    );
 
     return $Self;
 }
@@ -60,16 +48,32 @@ sub Config {
 sub Run {
     my ( $Self, %Param ) = @_;
 
-    $Self->{LayoutObject}->FAQShowLatestNewsBox(
-        FAQObject       => $Self->{FAQObject},
+    # get FAQ object
+    my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
+
+    # set default interface settings
+    my $Interface = $FAQObject->StateTypeGet(
+        Name   => 'internal',
+        UserID => $Self->{UserID},
+    );
+    my $InterfaceStates = $FAQObject->StateTypeList(
+        Types  => $Kernel::OM->Get('Kernel::Config')->Get('FAQ::Agent::StateTypes'),
+        UserID => $Self->{UserID},
+    );
+
+    # get layout object
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+
+    $LayoutObject->FAQShowLatestNewsBox(
+        FAQObject       => $FAQObject,
         Type            => $Self->{Config}->{Type},
         Mode            => 'Agent',
         CategoryID      => 0,
-        Interface       => $Self->{Interface},
-        InterfaceStates => $Self->{InterfaceStates},
+        Interface       => $Interface,
+        InterfaceStates => $InterfaceStates,
         UserID          => $Self->{UserID},
     );
-    my $Content = $Self->{LayoutObject}->Output(
+    my $Content = $LayoutObject->Output(
         TemplateFile => 'AgentDashboardFAQOverview',
         Data         => {
             CategoryID   => 0,

@@ -6,10 +6,12 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package Kernel::Output::HTML::OutputFilterFAQ;
+package Kernel::Output::HTML::OutputFilter::FAQ;
 
 use strict;
 use warnings;
+
+our $ObjectManagerDisabled = 1;
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -17,11 +19,6 @@ sub new {
     # allocate new hash for object
     my $Self = {};
     bless( $Self, $Type );
-
-    # get needed objects
-    for my $Object (qw(ParamObject ConfigObject MainObject LogObject LayoutObject)) {
-        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
-    }
 
     return $Self;
 }
@@ -35,26 +32,32 @@ sub Run {
     return if !${ $Param{Data} };
     return if !$Param{TemplateFile};
 
+    # get layout object
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+
     # check permission
-    return if !$Self->{LayoutObject}->{EnvRef}->{'UserIsGroupRo[faq]'};
+    return if !$LayoutObject->{EnvRef}->{'UserIsGroupRo[faq]'};
+
+    # get config object
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
     # get allowed template names
-    my $ValidTemplates = $Self->{ConfigObject}->Get('Frontend::Output::FilterElementPost')->{FAQ}->{Templates};
+    my $ValidTemplates = $ConfigObject->Get('Frontend::Output::FilterElementPost')->{FAQ}->{Templates};
 
     # check template name
     return if !$ValidTemplates->{ $Param{TemplateFile} };
 
     # if no session cookies are used we attach the session as URL parameter
     my $SessionString = '';
-    if ( !$Self->{ConfigObject}->Get('SessionUseCookie') ) {
+    if ( !$ConfigObject->Get('SessionUseCookie') ) {
         my $SessionID = $Param{SessionID}
-            || $Self->{ParamObject}->GetParam( Param => $Self->{ConfigObject}->Get('SessionName') )
+            || $Kernel::OM->Get('Kernel::System::Web::Request')->GetParam( Param => $ConfigObject->Get('SessionName') )
             || '';
-        $SessionString = $Self->{ConfigObject}->Get('SessionName') . '=' . $SessionID . ';';
+        $SessionString = $ConfigObject->Get('SessionName') . '=' . $SessionID . ';';
     }
 
     my $StartPattern    = '<!-- [ ] OutputFilterHook_TicketOptionsEnd [ ] --> .+?';
-    my $FAQTranslatable = $Self->{LayoutObject}->{LanguageObject}->Translate('FAQ');
+    my $FAQTranslatable = $LayoutObject->{LanguageObject}->Translate('FAQ');
 
     # add FAQ link to an existing Options block
     #$FinishPattern will be replaced by $Replace
@@ -68,7 +71,7 @@ END
         ${ $Param{Data} } =~ s{ ($StartPattern) $FinishPattern }{$1$Replace}ixms;
 
         # inject the necessary JS into the template
-        $Self->{LayoutObject}->AddJSOnDocumentComplete( Code => <<"EOF");
+        $LayoutObject->AddJSOnDocumentComplete( Code => <<"EOF");
 /*global FAQ: true */
 FAQ.Agent.TicketCompose.InitFAQTicketCompose(\$('#RichText'));
 \$('#OptionFAQ').bind('click', function (event) {
@@ -83,7 +86,7 @@ EOF
 
     # add FAQ link and its own block, if there no TicketOptions block was called
     $StartPattern = '<!-- [ ] OutputFilterHook_NoTicketOptionsFallback [ ] --> .+?';
-    my $OptionsTranslatable = $Self->{LayoutObject}->{LanguageObject}->Translate('Options');
+    my $OptionsTranslatable = $LayoutObject->{LanguageObject}->Translate('Options');
     my $Replace             = <<"END";
 <!-- OutputFilterHook_NoTicketOptionsFallback -->
                     <label>$OptionsTranslatable:</label>
@@ -94,7 +97,7 @@ EOF
 END
     ${ $Param{Data} } =~ s{ ($StartPattern) }{$Replace}ixms;
 
-    $Self->{LayoutObject}->AddJSOnDocumentComplete( Code => <<"EOF");
+    $LayoutObject->AddJSOnDocumentComplete( Code => <<"EOF");
 /*global FAQ: true */
 FAQ.Agent.TicketCompose.InitFAQTicketCompose(\$('#RichText'));
 \$('#OptionFAQ').bind('click', function (event) {

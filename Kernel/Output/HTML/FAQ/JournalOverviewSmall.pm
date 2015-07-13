@@ -6,10 +6,12 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package Kernel::Output::HTML::FAQJournalOverviewSmall;
+package Kernel::Output::HTML::FAQ::JournalOverviewSmall;
 
 use strict;
 use warnings;
+
+our $ObjectManagerDisabled = 1;
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -18,13 +20,8 @@ sub new {
     my $Self = {%Param};
     bless( $Self, $Type );
 
-    # get needed objects
-    for my $Object (
-        qw(ConfigObject LogObject DBObject LayoutObject UserID UserObject MainObject)
-        )
-    {
-        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
-    }
+    # get UserID param
+    $Self->{UserID} = $Param{UserID} || die "Got no UserID!";
 
     return $Self;
 }
@@ -32,13 +29,10 @@ sub new {
 sub Run {
     my ( $Self, %Param ) = @_;
 
-    my $Output;
-    my @ShowColumns;
-
     # check needed stuff
     for my $Needed (qw(PageShown StartHit)) {
         if ( !$Param{$Needed} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Needed!",
             );
@@ -48,7 +42,7 @@ sub Run {
 
     # need Journal
     if ( !$Param{Journal} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need the Journal!',
         );
@@ -60,6 +54,11 @@ sub Run {
     if ( $Param{Journal} && ref $Param{Journal} eq 'ARRAY' ) {
         @JournalEntries = @{ $Param{Journal} };
     }
+
+    my @ShowColumns;
+
+    # get layout object
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
     # show Journal Entries as rows
     if (@JournalEntries) {
@@ -73,12 +72,12 @@ sub Run {
         if (@ShowColumns) {
 
             # call main block
-            $Self->{LayoutObject}->Block( Name => 'RecordForm' );
+            $LayoutObject->Block( Name => 'RecordForm' );
 
             for my $Column (@ShowColumns) {
 
                 # call header specific block
-                $Self->{LayoutObject}->Block(
+                $LayoutObject->Block(
                     Name => 'Record' . $Column . 'Header',
                     Data => {
                         %Param,
@@ -89,7 +88,10 @@ sub Run {
 
         my $Counter = 0;
 
-        JournalEntry:
+        # get FAQ object
+        my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
+
+        JOURNALENTRY:
         for my $JournalEntry (@JournalEntries) {
             $Counter++;
             if (
@@ -99,21 +101,21 @@ sub Run {
             {
 
                 # get FAQ data for corruption check
-                my %FAQ = $Self->{FAQObject}->FAQGet(
+                my %FAQ = $FAQObject->FAQGet(
                     ItemID     => $JournalEntry->{ItemID},
                     ItemFields => 0,
                     UserID     => $Self->{UserID},
                 );
 
-                $JournalEntry->{CleanSubject} = $Self->{FAQObject}->FAQArticleTitleClean(
+                $JournalEntry->{CleanSubject} = $FAQObject->FAQArticleTitleClean(
                     Title => $FAQ{Title},
                     Size  => $Param{TitleSize},
                 );
 
-                next ID if !%FAQ;
+                next JOURNALENTRY if !%FAQ;
 
                 # build record block
-                $Self->{LayoutObject}->Block(
+                $LayoutObject->Block(
                     Name => 'Record',
                     Data => {
                         %Param,
@@ -124,9 +126,10 @@ sub Run {
 
                 # build column record blocks
                 if (@ShowColumns) {
+
                     COLUMN:
                     for my $Column (@ShowColumns) {
-                        $Self->{LayoutObject}->Block(
+                        $LayoutObject->Block(
                             Name => 'Record' . $Column,
                             Data => {
                                 %Param,
@@ -135,14 +138,14 @@ sub Run {
                         );
 
                         # show links if available
-                        $Self->{LayoutObject}->Block(
+                        $LayoutObject->Block(
                             Name => 'Record' . $Column . 'LinkStart',
                             Data => {
                                 %Param,
                                 %{$JournalEntry},
                             },
                         );
-                        $Self->{LayoutObject}->Block(
+                        $LayoutObject->Block(
                             Name => 'Record' . $Column . 'LinkEnd',
                             Data => {
                                 %Param,
@@ -157,11 +160,11 @@ sub Run {
 
     # otherwise set an No FAQ Journal message
     else {
-        $Self->{LayoutObject}->Block( Name => 'NoFAQFound' );
+        $LayoutObject->Block( Name => 'NoFAQFound' );
     }
 
     # use template
-    $Output .= $Self->{LayoutObject}->Output(
+    my $Output = $LayoutObject->Output(
         TemplateFile => 'AgentFAQJournalOverviewSmall',
         Data         => {
             %Param,

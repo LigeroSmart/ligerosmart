@@ -1,5 +1,4 @@
 # --
-# AgentFAQZoomSmall.tt - provides HTML small for AgentFAQZoom.pm
 # Copyright (C) 2001-2015 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -188,7 +187,7 @@
     [% Translate("or") | html %]
 [% RenderBlockEnd("Or") %]
 
-    <a id="Cancel" class="[% Data.CancelButtonClass | html %]" href="#">[% Translate("Cancel & close window") | html %]</a>
+    <a id="Cancel" class="[% Data.CancelButtonClass | html %]" href="#">[% Translate("Cancel & close") | html %]</a>
 
     <div class="Clear"></div>
     <br />

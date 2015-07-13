@@ -6,14 +6,14 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package Kernel::Output::HTML::FAQOverviewSmall;
+package Kernel::Output::HTML::FAQ::OverviewSmall;
 
 use strict;
 use warnings;
 
-use Kernel::System::DynamicField;
-use Kernel::System::DynamicField::Backend;
 use Kernel::System::VariableCheck qw(:all);
+
+our $ObjectManagerDisabled = 1;
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -22,28 +22,8 @@ sub new {
     my $Self = {%Param};
     bless( $Self, $Type );
 
-    # get needed objects
-    for my $Object (
-        qw(ConfigObject LogObject DBObject LayoutObject UserID UserObject MainObject)
-        )
-    {
-        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
-    }
-
-    $Self->{DynamicFieldObject} = Kernel::System::DynamicField->new(%Param);
-    $Self->{BackendObject}      = Kernel::System::DynamicField::Backend->new(%Param);
-
-    $Self->{MultiLanguage} = $Self->{ConfigObject}->Get('FAQ::MultiLanguage');
-
-    # get dynamic field config for frontend module
-    $Self->{DynamicFieldFilter} = $Self->{ConfigObject}->Get("FAQ::Frontend::OverviewSmall")->{DynamicField};
-
-    # get the dynamic fields for this screen
-    $Self->{DynamicField} = $Self->{DynamicFieldObject}->DynamicFieldListGet(
-        Valid       => 1,
-        ObjectType  => ['FAQ'],
-        FieldFilter => $Self->{DynamicFieldFilter} || {},
-    );
+    # get UserID param
+    $Self->{UserID} = $Param{UserID} || die "Got no UserID!";
 
     return $Self;
 }
@@ -51,13 +31,10 @@ sub new {
 sub Run {
     my ( $Self, %Param ) = @_;
 
-    my $Output;
-    my @ShowColumns;
-
     # check needed stuff
     for my $Needed (qw(PageShown StartHit)) {
         if ( !$Param{$Needed} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Needed!",
             );
@@ -67,7 +44,7 @@ sub Run {
 
     # need FAQIDs
     if ( !$Param{FAQIDs} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need the FAQIDs!',
         );
@@ -80,6 +57,26 @@ sub Run {
         @IDs = @{ $Param{FAQIDs} };
     }
 
+    # get config object
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+
+    my $MultiLanguage = $ConfigObject->Get('FAQ::MultiLanguage');
+
+    # get dynamic field config for frontend module
+    my $DynamicFieldFilter = $ConfigObject->Get("FAQ::Frontend::OverviewSmall")->{DynamicField};
+
+    # get the dynamic fields for this screen
+    my $DynamicField = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldListGet(
+        Valid       => 1,
+        ObjectType  => ['FAQ'],
+        FieldFilter => $DynamicFieldFilter || {},
+    );
+
+    my @ShowColumns;
+
+    # get layout object
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+
     if (@IDs) {
 
         # check ShowColumns parameter
@@ -87,16 +84,19 @@ sub Run {
             @ShowColumns = @{ $Param{ShowColumns} };
         }
 
+        # get dynamic field backend object
+        my $DynamicFieldBackendObject = $Kernel::OM->Get('Kernel::System::DynamicField::Backend');
+
         # build column header blocks
         if (@ShowColumns) {
 
             # call main block
-            $Self->{LayoutObject}->Block( Name => 'RecordForm' );
+            $LayoutObject->Block( Name => 'RecordForm' );
 
             COLUMN:
             for my $Column (@ShowColumns) {
 
-                next COLUMN if ( $Column eq 'Language' && !$Self->{MultiLanguage} );
+                next COLUMN if ( $Column eq 'Language' && !$MultiLanguage );
 
                 # create needed variables
                 my $CSS = 'OverviewHeader';
@@ -128,7 +128,7 @@ sub Run {
                     $OrderBy = 'Up';
                 }
 
-                $Self->{LayoutObject}->Block(
+                $LayoutObject->Block(
                     Name => 'Record' . $Column . 'Header',
                     Data => {
                         %Param,
@@ -141,13 +141,13 @@ sub Run {
             # Dynamic fields
             # cycle trough the activated Dynamic Fields for this screen
             DYNAMICFIELD:
-            for my $DynamicFieldConfig ( @{ $Self->{DynamicField} } ) {
+            for my $DynamicFieldConfig ( @{$DynamicField} ) {
                 next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
 
                 my $Label = $DynamicFieldConfig->{Label};
 
                 # get field sortable condition
-                my $IsSortable = $Self->{BackendObject}->HasBehavior(
+                my $IsSortable = $DynamicFieldBackendObject->HasBehavior(
                     DynamicFieldConfig => $DynamicFieldConfig,
                     Behavior           => 'IsSortable',
                 );
@@ -170,7 +170,7 @@ sub Run {
                         }
                     }
 
-                    $Self->{LayoutObject}->Block(
+                    $LayoutObject->Block(
                         Name => 'RecordDynamicFieldHeader',
                         Data => {
                             %Param,
@@ -178,7 +178,7 @@ sub Run {
                         },
                     );
 
-                    $Self->{LayoutObject}->Block(
+                    $LayoutObject->Block(
                         Name => 'RecordDynamicFieldHeaderSortable',
                         Data => {
                             %Param,
@@ -189,7 +189,7 @@ sub Run {
                     );
 
                     # example of dynamic fields order customization
-                    $Self->{LayoutObject}->Block(
+                    $LayoutObject->Block(
                         Name => 'RecordDynamicField_' . $DynamicFieldConfig->{Name} . 'Header',
                         Data => {
                             %Param,
@@ -197,7 +197,7 @@ sub Run {
                         },
                     );
 
-                    $Self->{LayoutObject}->Block(
+                    $LayoutObject->Block(
                         Name => 'RecordDynamicField_'
                             . $DynamicFieldConfig->{Name}
                             . 'HeaderSortable',
@@ -211,14 +211,14 @@ sub Run {
                 }
                 else {
 
-                    $Self->{LayoutObject}->Block(
+                    $LayoutObject->Block(
                         Name => 'RecordDynamicFieldHeader',
                         Data => {
                             %Param,
                         },
                     );
 
-                    $Self->{LayoutObject}->Block(
+                    $LayoutObject->Block(
                         Name => 'RecordDynamicFieldHeaderNotSortable',
                         Data => {
                             %Param,
@@ -227,14 +227,14 @@ sub Run {
                     );
 
                     # example of dynamic fields order customization
-                    $Self->{LayoutObject}->Block(
+                    $LayoutObject->Block(
                         Name => 'RecordDynamicField_' . $DynamicFieldConfig->{Name} . 'Header',
                         Data => {
                             %Param,
                         },
                     );
 
-                    $Self->{LayoutObject}->Block(
+                    $LayoutObject->Block(
                         Name => 'RecordDynamicField_'
                             . $DynamicFieldConfig->{Name}
                             . 'HeaderNotSortable',
@@ -261,14 +261,17 @@ sub Run {
                 # to store all data
                 my %Data;
 
+                # get FAQ object
+                my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
+
                 # get FAQ data
-                my %FAQ = $Self->{FAQObject}->FAQGet(
+                my %FAQ = $FAQObject->FAQGet(
                     ItemID     => $ID,
                     ItemFields => 0,
                     UserID     => $Self->{UserID},
                 );
 
-                $FAQ{CleanTitle} = $Self->{FAQObject}->FAQArticleTitleClean(
+                $FAQ{CleanTitle} = $FAQObject->FAQArticleTitleClean(
                     Title => $FAQ{Title},
                     Size  => $Param{TitleSize},
                 );
@@ -279,7 +282,7 @@ sub Run {
                 %Data = ( %Data, %FAQ );
 
                 # build record block
-                $Self->{LayoutObject}->Block(
+                $LayoutObject->Block(
                     Name => 'Record',
                     Data => {
                         %Param,
@@ -292,8 +295,10 @@ sub Run {
                     COLUMN:
                     for my $Column (@ShowColumns) {
 
-                        next COLUMN if ( $Column eq 'Language' && !$Self->{MultiLanguage} );
-                        $Self->{LayoutObject}->Block(
+                        # do not show language column if FAQ does not support multiple languages
+                        next COLUMN if ( $Column eq 'Language' && !$MultiLanguage );
+
+                        $LayoutObject->Block(
                             Name => 'Record' . $Column,
                             Data => {
                                 %Param,
@@ -305,14 +310,14 @@ sub Run {
                         next COLUMN if $Param{Frontend} eq 'Customer';
 
                         # show links if available
-                        $Self->{LayoutObject}->Block(
+                        $LayoutObject->Block(
                             Name => 'Record' . $Column . 'LinkStart',
                             Data => {
                                 %Param,
                                 %Data,
                             },
                         );
-                        $Self->{LayoutObject}->Block(
+                        $LayoutObject->Block(
                             Name => 'Record' . $Column . 'LinkEnd',
                             Data => {
                                 %Param,
@@ -325,23 +330,23 @@ sub Run {
                 # Dynamic fields
                 # cycle trough the activated Dynamic Fields for this screen
                 DYNAMICFIELD:
-                for my $DynamicFieldConfig ( @{ $Self->{DynamicField} } ) {
+                for my $DynamicFieldConfig ( @{$DynamicField} ) {
                     next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
 
                     # get field value
-                    my $Value = $Self->{BackendObject}->ValueGet(
+                    my $Value = $DynamicFieldBackendObject->ValueGet(
                         DynamicFieldConfig => $DynamicFieldConfig,
                         ObjectID           => $ID,
                     );
 
-                    my $ValueStrg = $Self->{BackendObject}->DisplayValueRender(
+                    my $ValueStrg = $DynamicFieldBackendObject->DisplayValueRender(
                         DynamicFieldConfig => $DynamicFieldConfig,
                         Value              => $Value,
                         ValueMaxChars      => 20,
-                        LayoutObject       => $Self->{LayoutObject},
+                        LayoutObject       => $LayoutObject,
                     );
 
-                    $Self->{LayoutObject}->Block(
+                    $LayoutObject->Block(
                         Name => 'RecordDynamicField',
                         Data => {
                             Value => $ValueStrg->{Value},
@@ -350,7 +355,7 @@ sub Run {
                     );
 
                     if ( $ValueStrg->{Link} ) {
-                        $Self->{LayoutObject}->Block(
+                        $LayoutObject->Block(
                             Name => 'RecordDynamicFieldLink',
                             Data => {
                                 Value                       => $ValueStrg->{Value},
@@ -361,7 +366,7 @@ sub Run {
                         );
                     }
                     else {
-                        $Self->{LayoutObject}->Block(
+                        $LayoutObject->Block(
                             Name => 'RecordDynamicFieldPlain',
                             Data => {
                                 Value => $ValueStrg->{Value},
@@ -371,7 +376,7 @@ sub Run {
                     }
 
                     # example of dynamic fields order customization
-                    $Self->{LayoutObject}->Block(
+                    $LayoutObject->Block(
                         Name => 'RecordDynamicField_' . $DynamicFieldConfig->{Name},
                         Data => {
                             Value => $ValueStrg->{Value},
@@ -380,7 +385,7 @@ sub Run {
                     );
 
                     if ( $ValueStrg->{Link} ) {
-                        $Self->{LayoutObject}->Block(
+                        $LayoutObject->Block(
                             Name => 'RecordDynamicField_' . $DynamicFieldConfig->{Name} . '_Link',
                             Data => {
                                 Value                       => $ValueStrg->{Value},
@@ -391,7 +396,7 @@ sub Run {
                         );
                     }
                     else {
-                        $Self->{LayoutObject}->Block(
+                        $LayoutObject->Block(
                             Name => 'RecordDynamicField_' . $DynamicFieldConfig->{Name} . '_Plain',
                             Data => {
                                 Value => $ValueStrg->{Value},
@@ -404,11 +409,11 @@ sub Run {
         }
     }
     else {
-        $Self->{LayoutObject}->Block( Name => 'NoFAQFound' );
+        $LayoutObject->Block( Name => 'NoFAQFound' );
     }
 
     # use template
-    $Output .= $Self->{LayoutObject}->Output(
+    my $Output = $LayoutObject->Output(
         TemplateFile => 'AgentFAQOverviewSmall',
         Data         => {
             %Param,

@@ -1,5 +1,4 @@
 # --
-# AgentFAQEdit.tt - provides HTML form for AgentFAQEdit
 # Copyright (C) 2001-2015 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -24,7 +23,7 @@
                     <h1>[% Translate("Edit") | html %]: [% Translate("FAQ") | html %]: [% Data.Number | html %]</h1>
                     <p class="AsteriskExplanation">[% Translate("All fields marked with an asterisk (*) are mandatory.") | html %]</p>
                     <p>
-                        <a href="#" class="CancelClosePopup">[% Translate("Cancel & close window") | html %]</a>
+                        <a href="#" class="CancelClosePopup">[% Translate("Cancel & close") | html %]</a>
                     </p>
                 </div>
                 <div class="Content">
