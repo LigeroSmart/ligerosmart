@@ -6,14 +6,16 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package Kernel::Output::HTML::LayoutFAQ;
+package Kernel::Output::HTML::Layout::FAQ;
 
 use strict;
 use warnings;
 
+our $ObjectManagerDisabled = 1;
+
 =head1 NAME
 
-Kernel::Output::HTML::LayoutFAQ - all FAQ-related HTML functions
+Kernel::Output::HTML::Layout::FAQ - all FAQ-related HTML functions
 
 =head1 SYNOPSIS
 
@@ -45,7 +47,7 @@ sub GetFAQItemVotingRateColor {
         return $Self->FatalError( Message => 'Need rate!' );
     }
     my $CssTmp             = '';
-    my $VotingResultColors = $Self->{ConfigObject}->Get('FAQ::Explorer::ItemList::VotingResultColors');
+    my $VotingResultColors = $Kernel::OM->Get('Kernel::Config')->Get('FAQ::Explorer::ItemList::VotingResultColors');
 
     for my $Key ( sort { $b <=> $a } keys %{$VotingResultColors} ) {
         if ( $Param{Rate} <= $Key ) {
@@ -60,7 +62,7 @@ sub GetFAQItemVotingRateColor {
 Returns a list of FAQ items as sortable list with pagination.
 
 This function is similar to L<Kernel::Output::HTML::LayoutTicket::TicketListShow()>
-in F<Kernel/Output/HTML/LayoutTicket.pm>.
+in F<Kernel/Output/HTML/Layout/Ticket.pm>.
 
     my $Output = $LayoutObject->FAQListShow(
         FAQIDs     => $FAQIDsRef,                         # total list of FAQIDs, that can be listed
@@ -83,50 +85,51 @@ sub FAQListShow {
     my ( $Self, %Param ) = @_;
 
     # take object ref to local, remove it from %Param (prevent memory leak)
-    my $Env = delete $Param{Env};
+    my $Env = $Param{Env};
+    delete $Param{Env};
 
     # lookup latest used view mode
     if ( !$Param{View} && $Self->{ 'UserFAQOverview' . $Env->{Action} } ) {
         $Param{View} = $Self->{ 'UserFAQOverview' . $Env->{Action} };
     }
 
-    # set frontend
-    my $Frontend = $Param{Frontend} || 'Agent';
-
     # set default view mode to 'small'
     my $View = $Param{View} || 'Small';
 
     # store latest view mode
-    $Self->{SessionObject}->UpdateSessionID(
+    $Kernel::OM->Get('Kernel::System::AuthSession')->UpdateSessionID(
         SessionID => $Self->{SessionID},
         Key       => 'UserFAQOverview' . $Env->{Action},
         Value     => $View,
     );
 
+    # get config object
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+
     # get backend from config
-    my $Backends = $Self->{ConfigObject}->Get('FAQ::Frontend::Overview');
+    my $Backends = $ConfigObject->Get('FAQ::Frontend::Overview') || '';
     if ( !$Backends ) {
-        return $Env->{LayoutObject}->FatalError(
+        return $Self->FatalError(
             Message => 'Need config option FAQ::Frontend::Overview',
         );
     }
 
     # check for hash-ref
     if ( ref $Backends ne 'HASH' ) {
-        return $Env->{LayoutObject}->FatalError(
+        return $Self->FatalError(
             Message => 'Config option FAQ::Frontend::Overview needs to be a HASH ref!',
         );
     }
 
     # check for config key
     if ( !$Backends->{$View} ) {
-        return $Env->{LayoutObject}->FatalError(
+        return $Self->FatalError(
             Message => "No config option found for the view '$View'!",
         );
     }
 
-    # nav bar
-    my $StartHit = $Self->{ParamObject}->GetParam(
+    # navigation bar
+    my $StartHit = $Kernel::OM->Get('Kernel::System::Web::Request')->GetParam(
         Param => 'StartHit',
     ) || 1;
 
@@ -144,19 +147,19 @@ sub FAQListShow {
 
     # get data selection
     my %Data;
-    my $Config = $Self->{ConfigObject}->Get('PreferencesGroups');
+    my $Config = $ConfigObject->Get('PreferencesGroups');
     if ( $Config && $Config->{$Group} && $Config->{$Group}->{Data} ) {
         %Data = %{ $Config->{$Group}->{Data} };
     }
 
-    # set page limit and build page nav
+    # set page limit and build page navigation
     my $Limit = $Param{Limit} || 20_000;
-    my %PageNav = $Env->{LayoutObject}->PageNavBar(
+    my %PageNav = $Self->PageNavBar(
         Limit     => $Limit,
         StartHit  => $StartHit,
         PageShown => $PageShown,
         AllHits   => $Param{Total} || 0,
-        Action    => 'Action=' . $Env->{LayoutObject}->{Action},
+        Action    => 'Action=' . $Self->{Action},
         Link      => $Param{LinkPage},
     );
 
@@ -171,8 +174,8 @@ sub FAQListShow {
         Translation => 0,
     );
 
-    # build navbar content
-    $Env->{LayoutObject}->Block(
+    # build navigation bar content
+    $Self->Block(
         Name => 'OverviewNavBar',
         Data => \%Param,
     );
@@ -184,7 +187,7 @@ sub FAQListShow {
 
     # back link
     if ( $Param{LinkBack} ) {
-        $Env->{LayoutObject}->Block(
+        $Self->Block(
             Name => 'OverviewNavBarPageBack',
             Data => {
                 LinkBackID => $LinkBackID,
@@ -203,7 +206,7 @@ sub FAQListShow {
         }
 
         # build filter content
-        $Env->{LayoutObject}->Block(
+        $Self->Block(
             Name => 'OverviewNavBarFilter',
             Data => {
                 %Param,
@@ -216,7 +219,7 @@ sub FAQListShow {
 
             # increment filter count and build filter item
             $Count++;
-            $Env->{LayoutObject}->Block(
+            $Self->Block(
                 Name => 'OverviewNavBarFilterItem',
                 Data => {
                     %Param,
@@ -226,7 +229,7 @@ sub FAQListShow {
 
             # filter is selected
             if ( $Filter->{Filter} eq $Param{Filter} ) {
-                $Env->{LayoutObject}->Block(
+                $Self->Block(
                     Name => 'OverviewNavBarFilterItemSelected',
                     Data => {
                         %Param,
@@ -236,23 +239,22 @@ sub FAQListShow {
 
             }
             else {
-                $Env->{LayoutObject}->Block(
+                $Self->Block(
                     Name => 'OverviewNavBarFilterItemSelectedNot',
                     Data => {
                         %Param,
                         %{$Filter},
                     },
                 );
-
             }
         }
     }
 
-    # loop over configured backends
+    # loop over configured back-ends
     for my $Backend ( sort keys %{$Backends} ) {
 
-        # build navbar view mode
-        $Env->{LayoutObject}->Block(
+        # build navigation bar view mode
+        $Self->Block(
             Name => 'OverviewNavBarViewMode',
             Data => {
                 %Param,
@@ -264,7 +266,7 @@ sub FAQListShow {
 
         # current view is configured in backend
         if ( $View eq $Backend ) {
-            $Env->{LayoutObject}->Block(
+            $Self->Block(
                 Name => 'OverviewNavBarViewModeSelected',
                 Data => {
                     %Param,
@@ -275,7 +277,7 @@ sub FAQListShow {
             );
         }
         else {
-            $Env->{LayoutObject}->Block(
+            $Self->Block(
                 Name => 'OverviewNavBarViewModeNotSelected',
                 Data => {
                     %Param,
@@ -287,9 +289,9 @@ sub FAQListShow {
         }
     }
 
-    # check if page nav is available
+    # check if page navigation is available
     if (%PageNav) {
-        $Env->{LayoutObject}->Block(
+        $Self->Block(
             Name => 'OverviewNavBarPageNavBar',
             Data => \%PageNav,
         );
@@ -297,7 +299,7 @@ sub FAQListShow {
         # don't show context settings in AJAX case (e. g. in customer FAQ history),
         # because the submit with page reload will not work there
         if ( !$Param{AJAX} ) {
-            $Env->{LayoutObject}->Block(
+            $Self->Block(
                 Name => 'ContextSettings',
                 Data => {
                     %PageNav,
@@ -308,7 +310,7 @@ sub FAQListShow {
     }
 
     # build HTML content
-    my $OutputNavBar = $Env->{LayoutObject}->Output(
+    my $OutputNavBar = $Self->Output(
         TemplateFile => 'AgentFAQOverviewNavBar',
         Data         => {
             View => $View,
@@ -319,17 +321,17 @@ sub FAQListShow {
     # create output
     my $OutputRaw = '';
     if ( !$Param{Output} ) {
-        $Env->{LayoutObject}->Print(
+        $Self->Print(
             Output => \$OutputNavBar,
         );
     }
     else {
-        $OutputRaw .= $OutputNavBar;
+        $OutputRaw = $OutputNavBar;
     }
 
     # load module
-    if ( !$Self->{MainObject}->Require( $Backends->{$View}->{Module} ) ) {
-        return $Env->{LayoutObject}->FatalError();
+    if ( !$Kernel::OM->Get('Kernel::System::Main')->Require( $Backends->{$View}->{Module} ) ) {
+        return $Self->FatalError();
     }
 
     # check for backend object
@@ -343,14 +345,14 @@ sub FAQListShow {
         StartHit  => $StartHit,
         PageShown => $PageShown,
         AllHits   => $Param{Total} || 0,
-        Frontend  => $Frontend,
+        Frontend  => $Param{Frontend} || 'Agent',
         Nav       => $Param{Nav} || '',
         TitleSize => $Param{FAQTitleSize},
     );
 
     # create output
     if ( !$Param{Output} ) {
-        $Env->{LayoutObject}->Print(
+        $Self->Print(
             Output => \$Output,
         );
     }
@@ -358,8 +360,8 @@ sub FAQListShow {
         $OutputRaw .= $Output;
     }
 
-    # create overview nav bar
-    $Env->{LayoutObject}->Block(
+    # create overview navigation bar
+    $Self->Block(
         Name => 'OverviewNavBar',
         Data => {%Param},
     );
@@ -389,6 +391,7 @@ If exist ReturnContent parameter it returns the FAQ items fields on a HTML forma
         UserID          => 1,
         ReturnContent   => 1,
     );
+
 =cut
 
 sub FAQContentShow {
@@ -397,7 +400,7 @@ sub FAQContentShow {
     # check parameters
     for my $ParamName (qw(FAQObject FAQData InterfaceStates UserID)) {
         if ( !$Param{$ParamName} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $ParamName!",
             );
@@ -406,19 +409,10 @@ sub FAQContentShow {
     }
 
     # store FAQ object locally
-    $Self->{FAQObject} = $Param{FAQObject};
+    my $FAQObject = $Param{FAQObject};
 
-    # get the internal state type
-    my $InternalStateType = $Self->{FAQObject}->StateTypeGet(
-        Name   => 'internal',
-        UserID => $Param{UserID},
-    );
-
-    # get the internal state type ID
-    my $InternalStateID = $InternalStateType->{StateID};
-
-    # get configuration options for Ticket Compose
-    my $TicketComposeConfig = $Self->{ConfigObject}->Get('FAQ::TicketCompose');
+    # get config object
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
     # get the config of FAQ fields that should be shown
     my %Fields;
@@ -426,13 +420,13 @@ sub FAQContentShow {
     for my $Number ( 1 .. 6 ) {
 
         # get config of FAQ field
-        my $Config = $Self->{ConfigObject}->Get( 'FAQ::Item::Field' . $Number );
+        my $Config = $ConfigObject->Get( 'FAQ::Item::Field' . $Number );
 
         # skip over not shown fields
         next FIELD if !$Config->{Show};
 
         # store only the config of fields that should be shown
-        $Fields{ "Field" . $Number } = $Config;
+        $Fields{"Field$Number"} = $Config;
     }
 
     my $FullContent;
@@ -442,7 +436,7 @@ sub FAQContentShow {
     for my $Field ( sort { $Fields{$a}->{Prio} <=> $Fields{$b}->{Prio} } keys %Fields ) {
 
         # get the state type data of this field
-        my $StateTypeData = $Self->{FAQObject}->StateTypeGet(
+        my $StateTypeData = $FAQObject->StateTypeGet(
             Name   => $Fields{$Field}->{Show},
             UserID => $Param{UserID},
         );
@@ -454,7 +448,7 @@ sub FAQContentShow {
         my $Content = $Param{FAQData}->{$Field} || '';
 
         # remove active HTML content (scripts, applets, etc...)
-        my %SafeContent = $Self->{HTMLUtilsObject}->Safety(
+        my %SafeContent = $Kernel::OM->Get('Kernel::System::HTMLUtils')->Safety(
             String       => $Content,
             NoApplet     => 1,
             NoObject     => 1,
@@ -482,14 +476,14 @@ sub FAQContentShow {
         );
 
         # security="restricted" may break SSO - disable this feature if requested
-        if ( $Self->{ConfigObject}->Get('DisableMSIFrameSecurityRestricted') ) {
+        if ( $ConfigObject->Get('DisableMSIFrameSecurityRestricted') ) {
             $Param{MSSecurityRestricted} = '';
         }
         else {
             $Param{MSSecurityRestricted} = 'security="restricted"';
         }
 
-        if ( $Self->{ConfigObject}->Get('FAQ::Item::HTML') ) {
+        if ( $ConfigObject->Get('FAQ::Item::HTML') ) {
             $Self->Block(
                 Name => 'FAQContentHTML',
                 Data => {
@@ -511,11 +505,20 @@ sub FAQContentShow {
         # store the field to return all FAQ Body
         if ( $Param{ReturnContent} && $Content ) {
 
+            # get the internal state type
+            my $InternalStateType = $FAQObject->StateTypeGet(
+                Name   => 'internal',
+                UserID => $Param{UserID},
+            );
+
             # check if current field is internal
             my $IsInternal;
-            if ( $StateTypeData->{StateID} == $InternalStateID ) {
+            if ( $StateTypeData->{StateID} == $InternalStateType->{StateID} ) {
                 $IsInternal = 1;
             }
+
+            # get configuration options for Ticket Compose
+            my $TicketComposeConfig = $ConfigObject->Get('FAQ::TicketCompose');
 
             # Check if field should be part of the returning string
             if ( $TicketComposeConfig->{IncludeInternal} || !$IsInternal ) {
@@ -560,7 +563,7 @@ sub FAQPathShow {
     # check parameters
     for my $ParamName (qw(FAQObject UserID)) {
         if ( !$Param{$ParamName} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $ParamName!",
             );
@@ -570,34 +573,37 @@ sub FAQPathShow {
 
     # check parameters
     if ( !defined $Param{CategoryID} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need CategoryID!',
         );
         return;
     }
 
-    # store FAQ object locally
-    $Self->{FAQObject} = $Param{FAQObject};
+    # get config object
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
     # output category root
     $Self->Block(
         Name => 'FAQPathCategoryElement',
         Data => {
-            Name       => $Self->{ConfigObject}->Get('FAQ::Default::RootCategoryName'),
+            Name       => $ConfigObject->Get('FAQ::Default::RootCategoryName'),
             CategoryID => 0,
             Nav        => $Param{Nav},
         },
     );
 
     # get Show FAQ Path setting
-    my $ShowPath = $Self->{ConfigObject}->Get('FAQ::Explorer::Path::Show');
+    my $ShowPath = $ConfigObject->Get('FAQ::Explorer::Path::Show');
 
     # do not display the path if setting is off
     return if !$ShowPath;
 
+    # store FAQ object locally
+    my $FAQObject = $Param{FAQObject};
+
     # get category list to construct the path
-    my $CategoryList = $Self->{FAQObject}->FAQPathListGet(
+    my $CategoryList = $FAQObject->FAQPathListGet(
         CategoryID => $Param{CategoryID},
         UserID     => $Param{UserID},
     );
@@ -633,7 +639,7 @@ sub FAQRatingStarsShow {
     # check parameters
     for my $ParamName (qw(VoteResult Votes)) {
         if ( !defined $Param{$ParamName} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $ParamName!",
             );
@@ -685,6 +691,8 @@ sub FAQRatingStarsShow {
         Name => 'RateStarsCount',
         Data => { Stars => $StarCounter },
     );
+
+    return 1;
 }
 
 =item FAQShowLatestNewsBox()
@@ -712,7 +720,7 @@ sub FAQShowLatestNewsBox {
     # check parameters
     for my $ParamName (qw(FAQObject Type Mode Interface InterfaceStates UserID)) {
         if ( !$Param{$ParamName} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $ParamName!",
             );
@@ -722,19 +730,16 @@ sub FAQShowLatestNewsBox {
 
     # check needed stuff
     if ( !defined $Param{CategoryID} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "Need CategoryID!",
         );
         return;
     }
 
-    # store FAQ object locally
-    $Self->{FAQObject} = $Param{FAQObject};
-
     # check type
     if ( $Param{Type} !~ m{ LastCreate | LastChange }xms ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Type must be either LastCreate or LastChange!',
         );
@@ -743,7 +748,7 @@ sub FAQShowLatestNewsBox {
 
     # check mode
     if ( $Param{Mode} !~ m{ Agent | Customer | Public }xms ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Mode must be either Agent, Customer or Public!',
         );
@@ -752,7 +757,7 @@ sub FAQShowLatestNewsBox {
 
     # check CustomerUser
     if ( $Param{Mode} eq 'Customer' && !$Param{CustomerUser} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need CustomerUser!',
         );
@@ -776,18 +781,24 @@ sub FAQShowLatestNewsBox {
 
     my $Result = -1;
 
+    # get config object
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+
     # show last added/updated articles
-    my $Show = $Self->{ConfigObject}->Get("FAQ::Explorer::$Param{Type}::Show");
+    my $Show = $ConfigObject->Get("FAQ::Explorer::$Param{Type}::Show");
     if ( $Show->{ $Param{Interface}->{Name} } ) {
+
+        # store FAQ object locally
+        my $FAQObject = $Param{FAQObject};
 
         # to store search param for categories
         my %CategorySearchParam;
 
         # if subcategories should also be shown
-        if ( $Self->{ConfigObject}->Get("FAQ::Explorer::$Param{Type}::ShowSubCategoryItems") ) {
+        if ( $ConfigObject->Get("FAQ::Explorer::$Param{Type}::ShowSubCategoryItems") ) {
 
             # find the subcategories of this category
-            my $SubCategoryIDsRef = $Self->{FAQObject}->CategorySubCategoryIDList(
+            my $SubCategoryIDsRef = $FAQObject->CategorySubCategoryIDList(
                 ParentID     => $Param{CategoryID},
                 Mode         => $Param{Mode},
                 ItemStates   => $Param{InterfaceStates},
@@ -807,12 +818,12 @@ sub FAQShowLatestNewsBox {
         }
 
         # search the FAQ articles
-        my @ItemIDs = $Self->{FAQObject}->FAQSearch(
+        my @ItemIDs = $FAQObject->FAQSearch(
             States           => $Param{InterfaceStates},
             OrderBy          => [$OrderBy],
             OrderByDirection => ['Down'],
             Interface        => $Param{Interface},
-            Limit            => $Self->{ConfigObject}->Get("FAQ::Explorer::$Param{Type}::Limit") || 5,
+            Limit            => $ConfigObject->Get("FAQ::Explorer::$Param{Type}::Limit") || 5,
             UserID           => $Param{UserID},
             %CategorySearchParam,
         );
@@ -845,7 +856,7 @@ sub FAQShowLatestNewsBox {
             for my $ItemID (@ItemIDs) {
 
                 # get FAQ data
-                my %FAQData = $Self->{FAQObject}->FAQGet(
+                my %FAQData = $FAQObject->FAQGet(
                     ItemID     => $ItemID,
                     ItemFields => 1,
                     UserID     => $Param{UserID},
@@ -890,7 +901,7 @@ sub FAQShowTop10 {
     # check parameters
     for my $ParamName (qw(FAQObject Mode Interface InterfaceStates UserID)) {
         if ( !$Param{$ParamName} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $ParamName!",
             );
@@ -900,7 +911,7 @@ sub FAQShowTop10 {
 
     # check needed stuff
     if ( !defined $Param{CategoryID} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "Need CategoryID!",
         );
@@ -909,7 +920,7 @@ sub FAQShowTop10 {
 
     # check mode
     if ( $Param{Mode} !~ m{ Agent | Customer | Public }xms ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Mode must be either Agent, Customer or Public!',
         );
@@ -918,30 +929,33 @@ sub FAQShowTop10 {
 
     # check CustomerUser
     if ( $Param{Mode} eq 'Customer' && !$Param{CustomerUser} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need CustomerUser!',
         );
         return;
     }
 
-    # store FAQ object locally
-    $Self->{FAQObject} = $Param{FAQObject};
-
     my $Result = -1;
 
+    # get config object
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+
     # show last added/updated articles
-    my $Show = $Self->{ConfigObject}->Get('FAQ::Explorer::Top10::Show');
+    my $Show = $ConfigObject->Get('FAQ::Explorer::Top10::Show');
     if ( $Show->{ $Param{Interface}->{Name} } ) {
+
+        # store FAQ object locally
+        my $FAQObject = $Param{FAQObject};
 
         # to store search param for categories
         my %CategorySearchParam;
 
         # if subcategories should also be shown
-        if ( $Self->{ConfigObject}->Get('FAQ::Explorer::Top10::ShowSubCategoryItems') ) {
+        if ( $ConfigObject->Get('FAQ::Explorer::Top10::ShowSubCategoryItems') ) {
 
             # find the subcategories of this category
-            my $SubCategoryIDsRef = $Self->{FAQObject}->CategorySubCategoryIDList(
+            my $SubCategoryIDsRef = $FAQObject->CategorySubCategoryIDList(
                 ParentID     => $Param{CategoryID},
                 Mode         => $Param{Mode},
                 ItemStates   => $Param{InterfaceStates},
@@ -954,9 +968,9 @@ sub FAQShowTop10 {
         }
 
         # get the top 10 articles for categories with at least ro permissions
-        my $Top10ItemIDsRef = $Self->{FAQObject}->FAQTop10Get(
+        my $Top10ItemIDsRef = $FAQObject->FAQTop10Get(
             Interface => $Param{Interface}->{Name},
-            Limit     => $Self->{ConfigObject}->Get('FAQ::Explorer::Top10::Limit') || 10,
+            Limit     => $ConfigObject->Get('FAQ::Explorer::Top10::Limit') || 10,
             UserID    => $Param{UserID},
             %CategorySearchParam,
         ) || [];
@@ -993,7 +1007,7 @@ sub FAQShowTop10 {
                 $Number++;
 
                 # get FAQ data
-                my %FAQData = $Self->{FAQObject}->FAQGet(
+                my %FAQData = $FAQObject->FAQGet(
                     ItemID     => $Top10Item->{ItemID},
                     ItemFields => 1,
                     UserID     => $Param{UserID},
@@ -1043,7 +1057,7 @@ sub FAQShowQuickSearch {
     # check parameters
     for my $ParamName (qw(Mode Interface InterfaceStates UserID)) {
         if ( !$Param{$ParamName} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $ParamName!",
             );
@@ -1053,7 +1067,7 @@ sub FAQShowQuickSearch {
 
     # check mode
     if ( $Param{Mode} !~ m{ Agent | AgentSmall | Customer | Public }xms ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Mode must be either Agent, Customer or Public!',
         );
@@ -1071,7 +1085,7 @@ sub FAQShowQuickSearch {
 
     # check CustomerUser
     if ( $Param{Mode} eq 'Customer' && !$Param{CustomerUser} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need CustomerUser!',
         );
@@ -1079,7 +1093,7 @@ sub FAQShowQuickSearch {
     }
 
     # show quick search
-    my $Show = $Self->{ConfigObject}->Get('FAQ::Explorer::QuickSearch::Show');
+    my $Show = $Kernel::OM->Get('Kernel::Config')->Get('FAQ::Explorer::QuickSearch::Show');
     if ( $Show->{ $Param{Interface}->{Name} } || $Param{Mode} eq 'AgentSmall' ) {
 
         # call QuickSearch block
