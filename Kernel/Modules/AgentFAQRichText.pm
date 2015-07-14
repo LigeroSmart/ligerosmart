@@ -12,11 +12,8 @@ use strict;
 use warnings;
 
 use MIME::Base64 qw();
-use Kernel::System::FAQ;
-use Kernel::System::CustomerUser;
-use Kernel::System::HTMLUtils;
-use Kernel::System::JSON;
-use Kernel::System::Web::UploadCache;
+
+our $ObjectManagerDisabled = 1;
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -25,89 +22,88 @@ sub new {
     my $Self = {%Param};
     bless( $Self, $Type );
 
-    # check needed objects
-    for my $Needed (qw(ParamObject DBObject LayoutObject LogObject ConfigObject))
-    {
-        if ( !$Self->{$Needed} ) {
-            $Self->{LayoutObject}->FatalError( Message => "Got no $Needed!" );
-        }
-    }
-
-    $Self->{FAQObject}          = Kernel::System::FAQ->new(%Param);
-    $Self->{CustomerUserObject} = Kernel::System::CustomerUser->new(%Param);
-    $Self->{HTMLUtilsObject}    = Kernel::System::HTMLUtils->new(%Param);
-    $Self->{JSONObject}         = Kernel::System::JSON->new(%Param);
-    $Self->{UploadCacheObject}  = Kernel::System::Web::UploadCache->new(%Param);
-
-    # get form id
-    $Self->{FormID} = $Self->{ParamObject}->GetParam( Param => 'FormID' );
-
-    # create form id
-    if ( !$Self->{FormID} ) {
-        $Self->{FormID} = $Self->{UploadCacheObject}->FormIDCreate();
-    }
-
-    $Self->{Config} = $Self->{ConfigObject}->Get("Ticket::Frontend::$Self->{Action}");
-
     return $Self;
 }
 
 sub Run {
     my ( $Self, %Param ) = @_;
 
+    # get needed object
+    my $ParamObject  = $Kernel::OM->Get('Kernel::System::Web::Request');
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+
     # get params
     my %GetParam;
     for my $Key (qw(ItemID)) {
-        $GetParam{$Key} = $Self->{ParamObject}->GetParam( Param => $Key );
+        $GetParam{$Key} = $ParamObject->GetParam( Param => $Key );
         if ( !$GetParam{$Key} ) {
-            return $Self->{LayoutObject}->ErrorScreen(
+            return $LayoutObject->ErrorScreen(
                 Message => "No $Key is given!",
                 Comment => 'Please contact the admin.',
             );
         }
     }
 
+    # get FAQ object
+    my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
+
     # get the requested FAQ item
-    my %FAQItem = $Self->{FAQObject}->FAQGet(
+    my %FAQItem = $FAQObject->FAQGet(
         ItemID     => $GetParam{ItemID},
         ItemFields => 1,
         UserID     => $Self->{UserID},
     );
 
-    my $ScriptAlias = $Self->{ConfigObject}->Get('ScriptAlias') || 'otrs/';
+    # get config object
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+
+    my $ScriptAlias = $ConfigObject->Get('ScriptAlias') || 'otrs/';
     my $URLRegex = '/' . $ScriptAlias . 'index.pl\?Action=AgentFAQZoom;'
         . 'Subaction=DownloadAttachment;ItemID=' . $GetParam{ItemID} . ';FileID=[0-9]+';
     my $ElemRegex = 'src="(' . $URLRegex . ')"';
 
     my @Fields;
 
-    my $Loaded = $Self->{MainObject}->Require(
+    my $Loaded = $Kernel::OM->Get('Kernel::System::Main')->Require(
         'Kernel::Language',
     );
 
     if ( !$Loaded ) {
-        return $Self->{LayoutObject}->ErrorScreen(
+        return $LayoutObject->ErrorScreen(
             Message => 'Can not load LanguageObject!',
             Comment => 'Please contact the admin.',
         );
     }
 
     my $FAQLanguageObject = Kernel::Language->new(
-        %{$Self},
         UserLanguage => $FAQItem{Language},
     );
 
     # get configuration options for Ticket Compose
-    my $TicketComposeConfig = $Self->{ConfigObject}->Get('FAQ::TicketCompose');
+    my $TicketComposeConfig = $ConfigObject->Get('FAQ::TicketCompose');
 
     # get the internal state type
-    my $InternalStateType = $Self->{FAQObject}->StateTypeGet(
+    my $InternalStateType = $FAQObject->StateTypeGet(
         Name   => 'internal',
         UserID => $Self->{UserID},
     );
 
     # get the internal state type ID
     my $InternalStateID = $InternalStateType->{StateID};
+
+    # get upload cache object
+    my $UploadCacheObject = $Kernel::OM->Get('Kernel::System::Web::UploadCache');
+
+    # get form id
+    my $FormID = $ParamObject->GetParam( Param => 'FormID' );
+
+    # create form id
+    if ( !$FormID ) {
+        $FormID = $UploadCacheObject->FormIDCreate();
+    }
+
+    # get log object
+    my $LogObject = $Kernel::OM->Get('Kernel::System::Log');
 
     FIELD:
     for my $Field ( 1 .. 6 ) {
@@ -118,14 +114,14 @@ sub Run {
         my $FieldContent = $FAQItem{ 'Field' . $Field };
 
         # get config of current FAQ field from SysConfig
-        my $FieldConfig = $Self->{ConfigObject}->Get( 'FAQ::Item::Field' . $Field );
+        my $FieldConfig = $ConfigObject->Get( 'FAQ::Item::Field' . $Field );
 
         next FIELD if !$FieldConfig;
         next FIELD if ref $FieldConfig ne 'HASH';
         next FIELD if !$FieldConfig->{Show};
 
         # get the state type data of this field
-        my $StateTypeData = $Self->{FAQObject}->StateTypeGet(
+        my $StateTypeData = $FAQObject->StateTypeGet(
             Name   => $FieldConfig->{Show},
             UserID => $Self->{UserID},
         );
@@ -149,22 +145,22 @@ sub Run {
             # extract the id of the attachment
             my ($FileID) = $URL =~ m{ FileID=([0-9]+) }msx;
 
-            if ( $Self->{ConfigObject}->{Debug} > 0 ) {
-                $Self->{LogObject}->Log(
+            if ( $ConfigObject->{Debug} > 0 ) {
+                $LogObject->Log(
                     Priority => 'debug',
                     Message  => "FileID: $FileID",
                 );
             }
 
             # get the attachment to which the current URL points
-            my %Attachment = $Self->{FAQObject}->AttachmentGet(
+            my %Attachment = $FAQObject->AttachmentGet(
                 ItemID => $GetParam{ItemID},
                 FileID => $FileID,
                 UserID => $Self->{UserID},
             );
 
-            my @AttachmentMeta = $Self->{UploadCacheObject}->FormIDGetAllFilesMeta(
-                FormID => $Self->{FormID},
+            my @AttachmentMeta = $UploadCacheObject->FormIDGetAllFilesMeta(
+                FormID => $FormID,
             );
 
             my $FilenameTmp    = $Attachment{Filename};
@@ -198,25 +194,25 @@ sub Run {
                 delete $Attachment{ContentID};
 
                 # add the attachment to the upload cache of the current ticket
-                $Self->{UploadCacheObject}->FormIDAddFile(
-                    FormID      => $Self->{FormID},
+                $UploadCacheObject->FormIDAddFile(
+                    FormID      => $FormID,
                     Disposition => 'inline',
                     %Attachment,
                 );
             }
             else {
-                $Self->{LogObject}->Log(
+                $LogObject->Log(
                     Priority => 'error',
                     Message  => 'Couldn\'t get FAQ attachment '
                         . "(ItemID: $GetParam{ItemID}, FileID: $FileID)!",
                 );
-                return $Self->{LayoutObject}->ErrorScreen();
+                return $LayoutObject->ErrorScreen();
             }
 
             # get new content id
             my $ContentIDNew = '';
-            @AttachmentMeta = $Self->{UploadCacheObject}->FormIDGetAllFilesMeta(
-                FormID => $Self->{FormID},
+            @AttachmentMeta = $UploadCacheObject->FormIDGetAllFilesMeta(
+                FormID => $FormID,
             );
 
             ATTACHMENT:
@@ -227,11 +223,11 @@ sub Run {
             }
 
             if ( $ContentIDNew eq '' ) {
-                $Self->{LogObject}->Log(
+                $LogObject->Log(
                     Priority => 'error',
                     Message  => "Couldn't determine a new ContentID!",
                 );
-                return $Self->{LayoutObject}->ErrorScreen();
+                return $LayoutObject->ErrorScreen();
             }
 
             # extract the actual MIME type from the content type, which also contains the filename
@@ -243,8 +239,8 @@ sub Run {
             }
 
             # create the new inline image URL
-            my $InlineImage = $Self->{LayoutObject}->{Baselink}
-                . "Action=PictureUpload;FormID=$Self->{FormID};ContentID=$ContentIDNew$Session";
+            my $InlineImage = $LayoutObject->{Baselink}
+                . "Action=PictureUpload;FormID=$FormID;ContentID=$ContentIDNew$Session";
 
             # replace the image URL with the inline image
             $FieldContent =~ s{\Q$URL\E}{$InlineImage}xms;
@@ -266,7 +262,7 @@ sub Run {
     my $FAQHTML = join( '<br />', @Fields );
 
     # get all non-inline attachments of the FAQ item
-    my @Attachments = $Self->{FAQObject}->AttachmentIndex(
+    my @Attachments = $FAQObject->AttachmentIndex(
         ItemID     => $GetParam{ItemID},
         ShowInline => 0,
         UserID     => $Self->{UserID},
@@ -275,7 +271,7 @@ sub Run {
     for my $AttachmentData (@Attachments) {
 
         # get the attachment
-        my %Attachment = $Self->{FAQObject}->AttachmentGet(
+        my %Attachment = $FAQObject->AttachmentGet(
             ItemID => $GetParam{ItemID},
             FileID => $AttachmentData->{FileID},
             UserID => $Self->{UserID},
@@ -284,30 +280,30 @@ sub Run {
         if (%Attachment) {
 
             # add the attachment to the upload cache of the current ticket
-            $Self->{UploadCacheObject}->FormIDAddFile(
-                FormID => $Self->{FormID},
+            $UploadCacheObject->FormIDAddFile(
+                FormID => $FormID,
                 %Attachment,
             );
         }
         else {
-            $Self->{LogObject}->Log(
+            $LogObject->Log(
                 Priority => 'error',
                 Message  => 'Couldn\'t get FAQ attachment '
                     . "(ItemID: $GetParam{ItemID}, FileID: $AttachmentData->{FileID})!",
             );
-            return $Self->{LayoutObject}->ErrorScreen();
+            return $LayoutObject->ErrorScreen();
         }
     }
 
     # send a list of attachments in the upload cache back to the client side JavaScript which
     # renders then the list of currently uploaded attachments
-    my @TicketAttachments = $Self->{UploadCacheObject}->FormIDGetAllFilesMeta(
-        FormID => $Self->{FormID},
+    my @TicketAttachments = $UploadCacheObject->FormIDGetAllFilesMeta(
+        FormID => $FormID,
     );
 
     my @FilteredTicketAttachments;
 
-    if ( $Self->{ConfigObject}->Get('Frontend::RichText') ) {
+    if ( $ConfigObject->Get('Frontend::RichText') ) {
 
         # remove the inline-attachments which shouldn't be shown in the regular attachment list
         ATTACHMENT:
@@ -325,20 +321,20 @@ sub Run {
     }
 
     # create a JSON string
-    my $JSON = $Self->{JSONObject}->Encode(
+    my $JSON = $Kernel::OM->Get('Kernel::System::JSON')->Encode(
         Data => {
             FAQTitle          => $FAQItem{Title},
-            FAQContent        => $Self->{HTMLUtilsObject}->ToAscii( String => $FAQHTML ) || '',
+            FAQContent        => $Kernel::OM->Get('Kernel::System::HTMLUtils')->ToAscii( String => $FAQHTML ) || '',
             FAQHTMLContent    => $FAQHTML,
             TicketAttachments => \@FilteredTicketAttachments,
             Localization      => {
-                Delete => $Self->{LayoutObject}->{LanguageObject}->Translate('Delete'),
+                Delete => $LayoutObject->{LanguageObject}->Translate('Delete'),
             },
         },
     );
 
-    return $Self->{LayoutObject}->Attachment(
-        ContentType => 'application/json; charset=' . $Self->{LayoutObject}->{Charset},
+    return $LayoutObject->Attachment(
+        ContentType => 'application/json; charset=' . $LayoutObject->{Charset},
         Content     => $JSON,
         Type        => 'inline',
         NoCache     => 1,

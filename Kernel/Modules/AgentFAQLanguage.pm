@@ -11,7 +11,7 @@ package Kernel::Modules::AgentFAQLanguage;
 use strict;
 use warnings;
 
-use Kernel::System::FAQ;
+our $ObjectManagerDisabled = 1;
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -20,27 +20,18 @@ sub new {
     my $Self = {%Param};
     bless( $Self, $Type );
 
-    # check needed objects
-    for my $Object (qw(ParamObject DBObject LayoutObject LogObject ConfigObject)) {
-        if ( !$Self->{$Object} ) {
-            $Self->{LayoutObject}->FatalError( Message => "Got no $Object!" );
-        }
-    }
-
-    # create additional objects
-    $Self->{FAQObject} = Kernel::System::FAQ->new(%Param);
-
-    $Self->{MultiLanguage} = $Self->{ConfigObject}->Get('FAQ::MultiLanguage');
-
     return $Self;
 }
 
 sub Run {
     my ( $Self, %Param ) = @_;
 
+    # get layout object
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+
     # permission check
     if ( !$Self->{AccessRw} ) {
-        return $Self->{LayoutObject}->NoPermission(
+        return $LayoutObject->NoPermission(
             Message    => 'You need rw permission!',
             WithHeader => 'yes',
         );
@@ -48,31 +39,37 @@ sub Run {
 
     my %GetParam;
 
+    my $MultiLanguage = $Kernel::OM->Get('Kernel::Config')->Get('FAQ::MultiLanguage');
+
+    # get needed objects
+    my $FAQObject   = $Kernel::OM->Get('Kernel::System::FAQ');
+    my $ParamObject = $Kernel::OM->Get('Kernel::System::Web::Request');
+
     # ------------------------------------------------------------ #
     # change
     # ------------------------------------------------------------ #
-    if ( $Self->{Subaction} eq 'Change' && $Self->{MultiLanguage} ) {
+    if ( $Self->{Subaction} eq 'Change' && $MultiLanguage ) {
 
         # get the LanguageID
-        my $LanguageID = $Self->{ParamObject}->GetParam( Param => 'LanguageID' ) || '';
+        my $LanguageID = $ParamObject->GetParam( Param => 'LanguageID' ) || '';
 
         # check required parameters
         if ( !$LanguageID ) {
-            return $Self->{LayoutObject}->ErrorScreen(
+            return $LayoutObject->ErrorScreen(
                 Message => 'No LanguageID is given!',
                 Comment => 'Please contact the administrator.',
             );
         }
 
         # get language data
-        my %LanguageData = $Self->{FAQObject}->LanguageGet(
+        my %LanguageData = $FAQObject->LanguageGet(
             LanguageID => $LanguageID,
             UserID     => $Self->{UserID},
         );
 
         # header
-        my $Output = $Self->{LayoutObject}->Header();
-        $Output .= $Self->{LayoutObject}->NavigationBar();
+        my $Output = $LayoutObject->Header();
+        $Output .= $LayoutObject->NavigationBar();
 
         # output change language screen
         $Self->_Edit(
@@ -80,7 +77,7 @@ sub Run {
             %LanguageData,
             %GetParam,
         );
-        $Output .= $Self->{LayoutObject}->Output(
+        $Output .= $LayoutObject->Output(
             TemplateFile => 'AgentFAQLanguage',
             Data         => {
                 %Param,
@@ -88,7 +85,7 @@ sub Run {
         );
 
         # footer
-        $Output .= $Self->{LayoutObject}->Footer();
+        $Output .= $LayoutObject->Footer();
 
         return $Output;
     }
@@ -96,20 +93,20 @@ sub Run {
     # ------------------------------------------------------------ #
     # change action
     # ------------------------------------------------------------ #
-    elsif ( $Self->{Subaction} eq 'ChangeAction' && $Self->{MultiLanguage} ) {
+    elsif ( $Self->{Subaction} eq 'ChangeAction' && $MultiLanguage ) {
 
         # challenge token check for write action
-        $Self->{LayoutObject}->ChallengeTokenCheck();
+        $LayoutObject->ChallengeTokenCheck();
 
         # header
-        my $Output = $Self->{LayoutObject}->Header();
-        $Output .= $Self->{LayoutObject}->NavigationBar();
+        my $Output = $LayoutObject->Header();
+        $Output .= $LayoutObject->NavigationBar();
 
         # check for name and language id
         for my $ParamName (qw(LanguageID Name)) {
 
             # store needed parameters in %GetParam to make it re-loadable
-            $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
+            $GetParam{$ParamName} = $ParamObject->GetParam( Param => $ParamName );
 
             if ( !$GetParam{$ParamName} ) {
 
@@ -120,20 +117,20 @@ sub Run {
                     NameServerErrorMessage => 'The name is required!',
                     %GetParam,
                 );
-                $Output .= $Self->{LayoutObject}->Output(
+                $Output .= $LayoutObject->Output(
                     TemplateFile => 'AgentFAQLanguage',
                     Data         => \%Param,
                 );
 
                 # footer
-                $Output .= $Self->{LayoutObject}->Footer();
+                $Output .= $LayoutObject->Footer();
 
                 return $Output;
             }
         }
 
         # check for duplicate language name
-        my $LanguageExistsAlready = $Self->{FAQObject}->LanguageDuplicateCheck(
+        my $LanguageExistsAlready = $FAQObject->LanguageDuplicateCheck(
             Name       => $GetParam{Name},
             LanguageID => $GetParam{LanguageID},
             UserID     => $Self->{UserID},
@@ -149,40 +146,40 @@ sub Run {
                 NameServerErrorMessage => 'This language already exists!',
                 %GetParam,
             );
-            $Output .= $Self->{LayoutObject}->Output(
+            $Output .= $LayoutObject->Output(
                 TemplateFile => 'AgentFAQLanguage',
                 Data         => \%Param,
             );
 
             # footer
-            $Output .= $Self->{LayoutObject}->Footer();
+            $Output .= $LayoutObject->Footer();
 
             return $Output;
         }
 
         # update the language
-        my $LanguageUpdateSuccessful = $Self->{FAQObject}->LanguageUpdate(
+        my $LanguageUpdateSuccessful = $FAQObject->LanguageUpdate(
             %GetParam,
             UserID => $Self->{UserID},
         );
 
         # check error
         if ( !$LanguageUpdateSuccessful ) {
-            return $Self->{LayoutObject}->ErrorScreen();
+            return $LayoutObject->ErrorScreen();
         }
 
         # show overview
         $Self->_Overview();
-        $Output .= $Self->{LayoutObject}->Notify(
+        $Output .= $LayoutObject->Notify(
             Info => 'FAQ language updated!',
         );
-        $Output .= $Self->{LayoutObject}->Output(
+        $Output .= $LayoutObject->Output(
             TemplateFile => 'AgentFAQLanguage',
             Data         => \%Param,
         );
 
         # footer
-        $Output .= $Self->{LayoutObject}->Footer();
+        $Output .= $LayoutObject->Footer();
 
         return $Output;
     }
@@ -190,21 +187,21 @@ sub Run {
     # ------------------------------------------------------------ #
     # add
     # ------------------------------------------------------------ #
-    elsif ( $Self->{Subaction} eq 'Add' && $Self->{MultiLanguage} ) {
+    elsif ( $Self->{Subaction} eq 'Add' && $MultiLanguage ) {
 
         # get the new name
-        $GetParam{Name} = $Self->{ParamObject}->GetParam( Param => 'Name' );
+        $GetParam{Name} = $ParamObject->GetParam( Param => 'Name' );
 
         # header
-        my $Output = $Self->{LayoutObject}->Header();
-        $Output .= $Self->{LayoutObject}->NavigationBar();
+        my $Output = $LayoutObject->Header();
+        $Output .= $LayoutObject->NavigationBar();
 
         # HTML output
         $Self->_Edit(
             Action => 'Add',
             %GetParam,
         );
-        $Output .= $Self->{LayoutObject}->Output(
+        $Output .= $LayoutObject->Output(
             TemplateFile => 'AgentFAQLanguage',
             Data         => {
                 %Param,
@@ -212,7 +209,7 @@ sub Run {
         );
 
         # footer
-        $Output .= $Self->{LayoutObject}->Footer();
+        $Output .= $LayoutObject->Footer();
 
         return $Output;
     }
@@ -220,17 +217,17 @@ sub Run {
     # ------------------------------------------------------------ #
     # add action
     # ------------------------------------------------------------ #
-    elsif ( $Self->{Subaction} eq 'AddAction' && $Self->{MultiLanguage} ) {
+    elsif ( $Self->{Subaction} eq 'AddAction' && $MultiLanguage ) {
 
         # challenge token check for write action
-        $Self->{LayoutObject}->ChallengeTokenCheck();
+        $LayoutObject->ChallengeTokenCheck();
 
         # header
-        my $Output = $Self->{LayoutObject}->Header();
-        $Output .= $Self->{LayoutObject}->NavigationBar();
+        my $Output = $LayoutObject->Header();
+        $Output .= $LayoutObject->NavigationBar();
 
         # get the name
-        $GetParam{Name} = $Self->{ParamObject}->GetParam( Param => 'Name' );
+        $GetParam{Name} = $ParamObject->GetParam( Param => 'Name' );
 
         # check for name
         if ( !$GetParam{Name} ) {
@@ -242,19 +239,19 @@ sub Run {
                 NameServerErrorMessage => 'The name is required!',
                 %GetParam,
             );
-            $Output .= $Self->{LayoutObject}->Output(
+            $Output .= $LayoutObject->Output(
                 TemplateFile => 'AgentFAQLanguage',
                 Data         => \%Param,
             );
 
             # footer
-            $Output .= $Self->{LayoutObject}->Footer();
+            $Output .= $LayoutObject->Footer();
 
             return $Output;
         }
 
         # check for duplicate language name
-        my $LanguageExistsAlready = $Self->{FAQObject}->LanguageDuplicateCheck(
+        my $LanguageExistsAlready = $FAQObject->LanguageDuplicateCheck(
             Name   => $GetParam{Name},
             UserID => $Self->{UserID},
         );
@@ -267,34 +264,34 @@ sub Run {
                 NameServerErrorMessage => "This language already exists!",
                 %GetParam,
             );
-            $Output .= $Self->{LayoutObject}->Output(
+            $Output .= $LayoutObject->Output(
                 TemplateFile => 'AgentFAQLanguage',
                 Data         => \%Param,
             );
 
             # footer
-            $Output .= $Self->{LayoutObject}->Footer();
+            $Output .= $LayoutObject->Footer();
 
             return $Output;
         }
 
         # add the new language
-        my $LanguageAddSuccessful = $Self->{FAQObject}->LanguageAdd(
+        my $LanguageAddSuccessful = $FAQObject->LanguageAdd(
             %GetParam,
             UserID => $Self->{UserID},
         );
 
         # check error
         if ( !$LanguageAddSuccessful ) {
-            return $Self->{LayoutObject}->ErrorScreen();
+            return $LayoutObject->ErrorScreen();
         }
 
         # show overview
-        $Output .= $Self->{LayoutObject}->Notify(
+        $Output .= $LayoutObject->Notify(
             Info => 'FAQ language added!',
         );
         $Self->_Overview();
-        $Output .= $Self->{LayoutObject}->Output(
+        $Output .= $LayoutObject->Output(
             TemplateFile => 'AgentFAQLanguage',
             Data         => {
                 %Param,
@@ -302,7 +299,7 @@ sub Run {
         );
 
         # footer
-        $Output .= $Self->{LayoutObject}->Footer();
+        $Output .= $LayoutObject->Footer();
 
         return $Output;
     }
@@ -310,36 +307,36 @@ sub Run {
     # ------------------------------------------------------------ #
     # delete
     # ------------------------------------------------------------ #
-    elsif ( $Self->{Subaction} eq 'Delete' && $Self->{MultiLanguage} ) {
+    elsif ( $Self->{Subaction} eq 'Delete' && $MultiLanguage ) {
 
         # get the LanguageID
-        my $LanguageID = $Self->{ParamObject}->GetParam( Param => 'LanguageID' ) || '';
+        my $LanguageID = $ParamObject->GetParam( Param => 'LanguageID' ) || '';
 
         # check required parameters
         if ( !$LanguageID ) {
-            return $Self->{LayoutObject}->ErrorScreen(
+            return $LayoutObject->ErrorScreen(
                 Message => 'No LanguageID is given!',
                 Comment => 'Please contact the administrator.',
             );
         }
 
         # get language data
-        my %LanguageData = $Self->{FAQObject}->LanguageGet(
+        my %LanguageData = $FAQObject->LanguageGet(
             LanguageID => $LanguageID,
             UserID     => $Self->{UserID},
         );
 
         if ( !%LanguageData ) {
-            return $Self->{LayoutObject}->ErrorScreen();
+            return $LayoutObject->ErrorScreen();
         }
 
-        my @AffectedItems = $Self->{FAQObject}->FAQSearch(
+        my @AffectedItems = $FAQObject->FAQSearch(
             LanguageIDs => [$LanguageID],
             UserID      => 1,
         );
 
         # call Delete block
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'Delete',
             Data => {%LanguageData},
         );
@@ -353,7 +350,7 @@ sub Run {
             # set the dialog type to have only 1 button: OK
             $DialogType = 'Message';
 
-            $Self->{LayoutObject}->Block(
+            $LayoutObject->Block(
                 Name => 'AffectedItems',
                 Data => {},
             );
@@ -362,7 +359,7 @@ sub Run {
             for my $ItemID (@AffectedItems) {
 
                 # get FAQ article
-                my %FAQData = $Self->{FAQObject}->FAQGet(
+                my %FAQData = $FAQObject->FAQGet(
                     ItemID     => $ItemID,
                     ItemFields => 0,
                     UserID     => $Self->{UserID},
@@ -371,7 +368,7 @@ sub Run {
                 # check FAQ article
                 next ITEMID if !%FAQData;
 
-                $Self->{LayoutObject}->Block(
+                $LayoutObject->Block(
                     Name => 'AffectedItemsRow',
                     Data => {
                         %FAQData,
@@ -381,14 +378,14 @@ sub Run {
             }
         }
         else {
-            $Self->{LayoutObject}->Block(
+            $LayoutObject->Block(
                 Name => 'NoAffectedItems',
                 Data => {%LanguageData},
             );
         }
 
         # output content
-        my $Output .= $Self->{LayoutObject}->Output(
+        my $Output = $LayoutObject->Output(
             TemplateFile => 'AgentFAQLanguage',
             Data         => {},
         );
@@ -400,10 +397,10 @@ sub Run {
         );
 
         # return JSON-String because of AJAX-Mode
-        my $OutputJSON = $Self->{LayoutObject}->JSONEncode( Data => \%Data );
+        my $OutputJSON = $LayoutObject->JSONEncode( Data => \%Data );
 
-        return $Self->{LayoutObject}->Attachment(
-            ContentType => 'application/json; charset=' . $Self->{LayoutObject}->{Charset},
+        return $LayoutObject->Attachment(
+            ContentType => 'application/json; charset=' . $LayoutObject->{Charset},
             Content     => $OutputJSON,
             Type        => 'inline',
             NoCache     => 1,
@@ -413,31 +410,31 @@ sub Run {
     # ------------------------------------------------------------ #
     # delete action
     # ------------------------------------------------------------ #
-    elsif ( $Self->{Subaction} eq 'DeleteAction' && $Self->{MultiLanguage} ) {
+    elsif ( $Self->{Subaction} eq 'DeleteAction' && $MultiLanguage ) {
 
         # get the LanguageID
-        my $LanguageID = $Self->{ParamObject}->GetParam( Param => 'LanguageID' ) || '';
+        my $LanguageID = $ParamObject->GetParam( Param => 'LanguageID' ) || '';
 
         # check required parameters
         if ( !$LanguageID ) {
-            return $Self->{LayoutObject}->ErrorScreen(
+            return $LayoutObject->ErrorScreen(
                 Message => 'No LanguageID is given!',
                 Comment => 'Please contact the administrator.',
             );
         }
 
         # get language data
-        my %LanguageData = $Self->{FAQObject}->LanguageGet(
+        my %LanguageData = $FAQObject->LanguageGet(
             LanguageID => $LanguageID,
             UserID     => $Self->{UserID},
         );
 
         if ( !%LanguageData ) {
-            return $Self->{LayoutObject}->ErrorScreen();
+            return $LayoutObject->ErrorScreen();
         }
 
         # delete the language
-        my $CouldDeleteLanguage = $Self->{FAQObject}->LanguageDelete(
+        my $CouldDeleteLanguage = $FAQObject->LanguageDelete(
             LanguageID => $LanguageID,
             UserID     => $Self->{UserID},
         );
@@ -445,14 +442,14 @@ sub Run {
         if ($CouldDeleteLanguage) {
 
             # redirect to explorer, when the deletion was successful
-            return $Self->{LayoutObject}->Redirect(
+            return $LayoutObject->Redirect(
                 OP => "Action=AgentFAQLanguage",
             );
         }
         else {
 
             # show error message, when delete failed
-            return $Self->{LayoutObject}->ErrorScreen(
+            return $LayoutObject->ErrorScreen(
                 Message => "Was not able to delete the language $LanguageID!",
                 Comment => 'Please contact the administrator.',
             );
@@ -465,12 +462,12 @@ sub Run {
     else {
 
         # header
-        my $Output = $Self->{LayoutObject}->Header();
-        $Output .= $Self->{LayoutObject}->NavigationBar();
+        my $Output = $LayoutObject->Header();
+        $Output .= $LayoutObject->NavigationBar();
 
         # HTML output
         $Self->_Overview();
-        $Output .= $Self->{LayoutObject}->Output(
+        $Output .= $LayoutObject->Output(
             TemplateFile => 'AgentFAQLanguage',
             Data         => {
                 %Param,
@@ -479,7 +476,7 @@ sub Run {
         );
 
         # footer
-        $Output .= $Self->{LayoutObject}->Footer();
+        $Output .= $LayoutObject->Footer();
 
         return $Output;
     }
@@ -488,25 +485,40 @@ sub Run {
 sub _Edit {
     my ( $Self, %Param ) = @_;
 
-    $Self->{LayoutObject}->Block(
+    # get layout object
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+
+    $LayoutObject->Block(
         Name => 'Overview',
         Data => \%Param,
     );
 
-    $Self->{LayoutObject}->Block( Name => 'ActionList' );
-    $Self->{LayoutObject}->Block( Name => 'ActionOverview' );
+    $LayoutObject->Block(
+        Name => 'ActionList',
+        Data => {},
+    );
+    $LayoutObject->Block(
+        Name => 'ActionOverview',
+        Data => {},
+    );
 
-    $Self->{LayoutObject}->Block(
+    $LayoutObject->Block(
         Name => 'OverviewUpdate',
         Data => \%Param,
     );
 
     # shows header
     if ( $Param{Action} eq 'Change' ) {
-        $Self->{LayoutObject}->Block( Name => 'HeaderEdit' );
+        $LayoutObject->Block(
+            Name => 'HeaderEdit',
+            Data => {},
+        );
     }
     else {
-        $Self->{LayoutObject}->Block( Name => 'HeaderAdd' );
+        $LayoutObject->Block(
+            Name => 'HeaderAdd',
+            Data => {},
+        );
     }
 
     return 1;
@@ -517,16 +529,35 @@ sub _Overview {
 
     my $Output = '';
 
-    # output overview blocks
-    $Self->{LayoutObject}->Block( Name => 'Overview' );
+    # get layout object
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
-    if ( $Self->{MultiLanguage} ) {
-        $Self->{LayoutObject}->Block( Name => 'ActionList' );
-        $Self->{LayoutObject}->Block( Name => 'ActionAdd' );
-        $Self->{LayoutObject}->Block( Name => 'OverviewResult' );
+    # output overview blocks
+    $LayoutObject->Block(
+        Name => 'Overview',
+        Data => {},
+    );
+
+    my $MultiLanguage = $Kernel::OM->Get('Kernel::Config')->Get('FAQ::MultiLanguage');
+    if ($MultiLanguage) {
+        $LayoutObject->Block(
+            Name => 'ActionList',
+            Data => {},
+        );
+        $LayoutObject->Block(
+            Name => 'ActionAdd',
+            Data => {},
+        );
+        $LayoutObject->Block(
+            Name => 'OverviewResult',
+            Data => {},
+        );
+
+        # get FAQ object
+        my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
 
         # get languages list
-        my %Languages = $Self->{FAQObject}->LanguageList(
+        my %Languages = $FAQObject->LanguageList(
             UserID => $Self->{UserID},
         );
 
@@ -535,13 +566,13 @@ sub _Overview {
             for my $LanguageID ( sort { $Languages{$a} cmp $Languages{$b} } keys %Languages ) {
 
                 # get languages result
-                my %LanguageData = $Self->{FAQObject}->LanguageGet(
+                my %LanguageData = $FAQObject->LanguageGet(
                     LanguageID => $LanguageID,
                     UserID     => $Self->{UserID},
                 );
 
                 #output results
-                $Self->{LayoutObject}->Block(
+                $LayoutObject->Block(
                     Name => 'OverviewResultRow',
                     Data => {%LanguageData},
                 );
@@ -550,11 +581,17 @@ sub _Overview {
 
         # otherwise a no data found message is displayed
         else {
-            $Self->{LayoutObject}->Block( Name => 'NoDataFoundMsg' );
+            $LayoutObject->Block(
+                Name => 'NoDataFoundMsg',
+                Data => {},
+            );
         }
     }
     else {
-        $Self->{LayoutObject}->Block( Name => 'Disabled' );
+        $LayoutObject->Block(
+            Name => 'Disabled',
+            Data => {},
+        );
     }
 }
 

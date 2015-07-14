@@ -11,7 +11,7 @@ package Kernel::Modules::AgentFAQHistory;
 use strict;
 use warnings;
 
-use Kernel::System::FAQ;
+our $ObjectManagerDisabled = 1;
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -20,28 +20,18 @@ sub new {
     my $Self = {%Param};
     bless( $Self, $Type );
 
-    # check needed objects
-    for my $Object (
-        qw(ParamObject DBObject LayoutObject LogObject UserObject GroupObject ConfigObject)
-        )
-    {
-        if ( !$Self->{$Object} ) {
-            $Self->{LayoutObject}->FatalError( Message => "Got no $Object!" );
-        }
-    }
-
-    # create additional objects
-    $Self->{FAQObject} = Kernel::System::FAQ->new(%Param);
-
     return $Self;
 }
 
 sub Run {
     my ( $Self, %Param ) = @_;
 
+    # get layout object
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+
     # permission check
     if ( !$Self->{AccessRo} ) {
-        return $Self->{LayoutObject}->NoPermission(
+        return $LayoutObject->NoPermission(
             Message    => 'You need ro permission!',
             WithHeader => 'yes',
         );
@@ -51,44 +41,47 @@ sub Run {
     my %GetParam;
 
     # get needed Item id
-    $GetParam{ItemID} = $Self->{ParamObject}->GetParam( Param => 'ItemID' );
+    $GetParam{ItemID} = $Kernel::OM->Get('Kernel::System::Web::Request')->GetParam( Param => 'ItemID' );
 
     # check needed stuff
     if ( !$GetParam{ItemID} ) {
 
         # error page
-        return $Self->{LayoutObject}->ErrorScreen(
+        return $LayoutObject->ErrorScreen(
             Message => "Can't show history, as no ItemID is given!",
             Comment => 'Please contact the administrator.',
         );
     }
 
+    # get FAQ object
+    my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
+
     # get FAQ item data
-    my %FAQData = $Self->{FAQObject}->FAQGet(
+    my %FAQData = $FAQObject->FAQGet(
         ItemID     => $GetParam{ItemID},
         ItemFields => 0,
         UserID     => $Self->{UserID},
     );
     if ( !%FAQData ) {
-        return $Self->{LayoutObject}->ErrorScreen();
+        return $LayoutObject->ErrorScreen();
     }
 
     # check user permission
-    my $Permission = $Self->{FAQObject}->CheckCategoryUserPermission(
+    my $Permission = $FAQObject->CheckCategoryUserPermission(
         UserID     => $Self->{UserID},
         CategoryID => $FAQData{CategoryID},
     );
 
     # show error message
     if ( !$Permission ) {
-        return $Self->{LayoutObject}->NoPermission(
+        return $LayoutObject->NoPermission(
             Message    => 'You have no permission for this category!',
             WithHeader => 'yes',
         );
     }
 
     # get FAQ article history
-    my $History = $Self->{FAQObject}->FAQHistoryGet(
+    my $History = $FAQObject->FAQHistoryGet(
         ItemID => $FAQData{ItemID},
         UserID => $Self->{UserID},
     );
@@ -96,29 +89,29 @@ sub Run {
     for my $HistoryEntry ( @{$History} ) {
 
         # replace ID to full user name on CreatedBy key
-        my %User = $Self->{UserObject}->GetUserData(
+        my %User = $Kernel::OM->Get('Kernel::System::User')->GetUserData(
             UserID => $HistoryEntry->{CreatedBy},
             Cached => 1,
         );
         $HistoryEntry->{CreatedBy} = "$User{UserLogin} ($User{UserFirstname} $User{UserLastname})";
 
         # call Row block
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'Row',
             Data => {
                 %{$HistoryEntry},
-                }
+            },
         );
     }
 
     # output header
-    my $Output = $Self->{LayoutObject}->Header(
+    my $Output = $LayoutObject->Header(
         Type  => 'Small',
         Title => 'FAQHistory',
     );
 
     # start template output
-    $Output .= $Self->{LayoutObject}->Output(
+    $Output .= $LayoutObject->Output(
         TemplateFile => 'AgentFAQHistory',
         Data         => {
             %GetParam,
@@ -127,7 +120,7 @@ sub Run {
     );
 
     # add footer
-    $Output .= $Self->{LayoutObject}->Footer(
+    $Output .= $LayoutObject->Footer(
         Type => 'Small',
     );
 

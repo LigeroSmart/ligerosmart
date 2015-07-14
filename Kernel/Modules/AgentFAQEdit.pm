@@ -11,13 +11,9 @@ package Kernel::Modules::AgentFAQEdit;
 use strict;
 use warnings;
 
-use Kernel::System::FAQ;
-use Kernel::System::Queue;
-use Kernel::System::Web::UploadCache;
-use Kernel::System::Valid;
-use Kernel::System::DynamicField;
-use Kernel::System::DynamicField::Backend;
 use Kernel::System::VariableCheck qw(:all);
+
+our $ObjectManagerDisabled = 1;
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -26,49 +22,11 @@ sub new {
     my $Self = {%Param};
     bless( $Self, $Type );
 
-    # check all needed objects
-    for my $Object (qw(ParamObject DBObject LayoutObject ConfigObject LogObject)) {
-        if ( !$Self->{$Object} ) {
-            $Self->{LayoutObject}->FatalError( Message => "Got no $Object!" );
-        }
-    }
-
-    # create needed objects
-    $Self->{FAQObject}          = Kernel::System::FAQ->new(%Param);
-    $Self->{UploadCacheObject}  = Kernel::System::Web::UploadCache->new(%Param);
-    $Self->{ValidObject}        = Kernel::System::Valid->new(%Param);
-    $Self->{QueueObject}        = Kernel::System::Queue->new(%Param);
-    $Self->{DynamicFieldObject} = Kernel::System::DynamicField->new(%Param);
-    $Self->{BackendObject}      = Kernel::System::DynamicField::Backend->new(%Param);
-
     # get config of frontend module
-    $Self->{Config} = $Self->{ConfigObject}->Get("FAQ::Frontend::$Self->{Action}") || '';
-
-    # get form id
-    $Self->{FormID} = $Self->{ParamObject}->GetParam( Param => 'FormID' );
-
-    # create form id
-    if ( !$Self->{FormID} ) {
-        $Self->{FormID} = $Self->{UploadCacheObject}->FormIDCreate();
-    }
-
-    # get screen type
-    $Self->{ScreenType} = $Self->{ParamObject}->GetParam( Param => 'ScreenType' ) || '';
-
-    # set default interface settings
-    $Self->{Interface} = $Self->{FAQObject}->StateTypeGet(
-        Name   => 'internal',
-        UserID => $Self->{UserID},
-    );
-    $Self->{InterfaceStates} = $Self->{FAQObject}->StateTypeList(
-        Types  => $Self->{ConfigObject}->Get('FAQ::Agent::StateTypes'),
-        UserID => $Self->{UserID},
-    );
-
-    $Self->{MultiLanguage} = $Self->{ConfigObject}->Get('FAQ::MultiLanguage');
+    $Self->{Config} = $Kernel::OM->Get('Kernel::Config')->Get("FAQ::Frontend::$Self->{Action}") || '';
 
     # get the dynamic fields for this screen
-    $Self->{DynamicField} = $Self->{DynamicFieldObject}->DynamicFieldListGet(
+    $Self->{DynamicField} = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldListGet(
         Valid       => 1,
         ObjectType  => 'FAQ',
         FieldFilter => $Self->{Config}->{DynamicField} || {},
@@ -80,13 +38,19 @@ sub new {
 sub Run {
     my ( $Self, %Param ) = @_;
 
+    # get layout object
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+
     # permission check
     if ( !$Self->{AccessRw} ) {
-        return $Self->{LayoutObject}->NoPermission(
+        return $LayoutObject->NoPermission(
             Message    => 'You need rw permission!',
             WithHeader => 'yes',
         );
     }
+
+    # get param object
+    my $ParamObject = $Kernel::OM->Get('Kernel::System::Web::Request');
 
     # get parameters
     my %GetParam;
@@ -94,19 +58,22 @@ sub Run {
         qw(ItemID Title CategoryID StateID LanguageID ValidID Keywords Approved Field1 Field2 Field3 Field4 Field5 Field6)
         )
     {
-        $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
+        $GetParam{$ParamName} = $ParamObject->GetParam( Param => $ParamName );
     }
 
     # check needed stuff
     if ( !$GetParam{ItemID} ) {
-        return $Self->{LayoutObject}->ErrorScreen(
+        return $LayoutObject->ErrorScreen(
             Message => 'No ItemID is given!',
             Comment => 'Please contact the admin.',
         );
     }
 
+    # get FAQ object
+    my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
+
     # get FAQ item data
-    my %FAQData = $Self->{FAQObject}->FAQGet(
+    my %FAQData = $FAQObject->FAQGet(
         ItemID        => $GetParam{ItemID},
         ItemFields    => 1,
         UserID        => $Self->{UserID},
@@ -115,25 +82,31 @@ sub Run {
 
     # check error
     if ( !%FAQData ) {
-        return $Self->{LayoutObject}->ErrorScreen();
+        return $LayoutObject->ErrorScreen();
     }
 
     # check user permission
-    my $Permission = $Self->{FAQObject}->CheckCategoryUserPermission(
+    my $Permission = $FAQObject->CheckCategoryUserPermission(
         UserID     => $Self->{UserID},
         CategoryID => $FAQData{CategoryID},
     );
 
     # show error message
     if ( !$Permission ) {
-        return $Self->{LayoutObject}->NoPermission(
+        return $LayoutObject->NoPermission(
             Message    => 'You have no permission for this category!',
             WithHeader => 'yes',
         );
     }
 
+    # get config object
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+
     # get dynamic field values form http request
     my %DynamicFieldValues;
+
+    # get dynamic field backend object
+    my $DynamicFieldBackendObject = $Kernel::OM->Get('Kernel::System::DynamicField::Backend');
 
     # cycle trough the activated Dynamic Fields for this screen
     DYNAMICFIELD:
@@ -141,12 +114,29 @@ sub Run {
         next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
 
         # extract the dynamic field value form the web request
-        $DynamicFieldValues{ $DynamicFieldConfig->{Name} } = $Self->{BackendObject}->EditFieldValueGet(
+        $DynamicFieldValues{ $DynamicFieldConfig->{Name} } = $DynamicFieldBackendObject->EditFieldValueGet(
             DynamicFieldConfig => $DynamicFieldConfig,
-            ParamObject        => $Self->{ParamObject},
-            LayoutObject       => $Self->{LayoutObject},
+            ParamObject        => $ParamObject,
+            LayoutObject       => $LayoutObject,
         );
     }
+
+    # get upload cache object
+    my $UploadCacheObject = $Kernel::OM->Get('Kernel::System::Web::UploadCache');
+
+    # get form id
+    my $FormID = $ParamObject->GetParam( Param => 'FormID' );
+
+    # create form id
+    if ( !$FormID ) {
+        $FormID = $UploadCacheObject->FormIDCreate();
+    }
+
+    # get screen type
+    my $ScreenType = $ParamObject->GetParam( Param => 'ScreenType' ) || '';
+
+    # get queue object
+    my $QueueObject = $Kernel::OM->Get('Kernel::System::Queue');
 
     # ------------------------------------------------------------ #
     # show the FAQ edit screen
@@ -156,15 +146,15 @@ sub Run {
         my $Output;
 
         # show a pop-up screen
-        if ( $Self->{ScreenType} eq 'Popup' ) {
+        if ( $ScreenType eq 'Popup' ) {
 
             # show the small pop-up screen header
-            $Output = $Self->{LayoutObject}->Header(
+            $Output = $LayoutObject->Header(
                 Type      => 'Small',
                 BodyClass => 'Popup',
             );
 
-            $Self->{LayoutObject}->Block(
+            $LayoutObject->Block(
                 Name => 'StartSmall',
                 Data => {
                     %FAQData,
@@ -176,10 +166,10 @@ sub Run {
         else {
 
             # show the normal screen header with navigation bar
-            $Output = $Self->{LayoutObject}->Header();
-            $Output .= $Self->{LayoutObject}->NavigationBar();
+            $Output = $LayoutObject->Header();
+            $Output .= $LayoutObject->NavigationBar();
 
-            $Self->{LayoutObject}->Block(
+            $LayoutObject->Block(
                 Name => 'StartNormal',
                 Data => {
                     %FAQData,
@@ -188,7 +178,7 @@ sub Run {
         }
 
         # get all existing attachments (without inline attachments)
-        my @ExistingAttachments = $Self->{FAQObject}->AttachmentIndex(
+        my @ExistingAttachments = $FAQObject->AttachmentIndex(
             ItemID     => $GetParam{ItemID},
             ShowInline => 0,
             UserID     => $Self->{UserID},
@@ -198,7 +188,7 @@ sub Run {
         for my $Attachment (@ExistingAttachments) {
 
             # get the existing attachment data
-            my %File = $Self->{FAQObject}->AttachmentGet(
+            my %File = $FAQObject->AttachmentGet(
                 ItemID => $GetParam{ItemID},
                 FileID => $Attachment->{FileID},
                 UserID => $Self->{UserID},
@@ -208,8 +198,8 @@ sub Run {
             my $Disposition = $Attachment->{Inline} ? 'inline' : '';
 
             # add attachment to the upload cache
-            $Self->{UploadCacheObject}->FormIDAddFile(
-                FormID      => $Self->{FormID},
+            $UploadCacheObject->FormIDAddFile(
+                FormID      => $FormID,
                 Filename    => $File{Filename},
                 Content     => $File{Content},
                 ContentType => $File{ContentType},
@@ -218,8 +208,8 @@ sub Run {
         }
 
         # get all attachments meta data from upload cache
-        my @Attachments = $Self->{UploadCacheObject}->FormIDGetAllFilesMeta(
-            FormID => $Self->{FormID},
+        my @Attachments = $UploadCacheObject->FormIDGetAllFilesMeta(
+            FormID => $FormID,
         );
 
         # rewrite old style inline image URLs
@@ -247,30 +237,32 @@ sub Run {
 
             # get field HTML
             $DynamicFieldHTML{ $DynamicFieldConfig->{Name} } =
-                $Self->{BackendObject}->EditFieldRender(
+                $DynamicFieldBackendObject->EditFieldRender(
                 DynamicFieldConfig => $DynamicFieldConfig,
                 Value              => $Value,
                 Mandatory =>
                     $Self->{Config}->{DynamicField}->{ $DynamicFieldConfig->{Name} } == 2,
-                LayoutObject => $Self->{LayoutObject},
-                ParamObject  => $Self->{ParamObject},
+                LayoutObject => $LayoutObject,
+                ParamObject  => $ParamObject,
                 );
         }
 
-        if ( $Self->{ConfigObject}->Get('FAQ::ApprovalRequired') ) {
+        if ( $ConfigObject->Get('FAQ::ApprovalRequired') ) {
 
             # get Approval queue name
-            my $ApprovalQueue = $Self->{ConfigObject}->Get('FAQ::ApprovalQueue') || '';
+            my $ApprovalQueue = $ConfigObject->Get('FAQ::ApprovalQueue') || '';
 
             # check if Approval queue exists
-            my $ApprovalQueueID = $Self->{QueueObject}->QueueLookup( Queue => $ApprovalQueue );
+            my $ApprovalQueueID = $QueueObject->QueueLookup(
+                Queue => $ApprovalQueue,
+            );
 
             # show notification if Approval queue does not exists
             if ( !$ApprovalQueueID ) {
-                $Output .= $Self->{LayoutObject}->Notify(
+                $Output .= $LayoutObject->Notify(
                     Priority => 'Error',
                     Info     => "FAQ Approval is enabled but queue '$ApprovalQueue' does not exists",
-                    Link     => $Self->{LayoutObject}->{Baselink}
+                    Link     => $LayoutObject->{Baselink}
                         . 'Action=AdminSysConfig;Subaction=Edit;'
                         . 'SysConfigSubGroup=Core%3A%3AApproval;SysConfigGroup=FAQ',
                 );
@@ -281,32 +273,32 @@ sub Run {
         $Output .= $Self->_MaskNew(
             %FAQData,
             Attachments      => \@Attachments,
-            ScreenType       => $Self->{ScreenType},
-            FormID           => $Self->{FormID},
+            ScreenType       => $ScreenType,
+            FormID           => $FormID,
             DynamicFieldHTML => \%DynamicFieldHTML,
         );
 
         # show a pop-up screen footer
-        if ( $Self->{ScreenType} eq 'Popup' ) {
+        if ( $ScreenType eq 'Popup' ) {
 
-            $Self->{LayoutObject}->Block(
+            $LayoutObject->Block(
                 Name => 'EndSmall',
                 Data => {},
             );
 
-            $Output .= $Self->{LayoutObject}->Footer( Type => 'Small' );
+            $Output .= $LayoutObject->Footer( Type => 'Small' );
 
         }
 
         # show a normal footer
         else {
 
-            $Self->{LayoutObject}->Block(
+            $LayoutObject->Block(
                 Name => 'EndNormal',
                 Data => {},
             );
 
-            $Output .= $Self->{LayoutObject}->Footer();
+            $Output .= $LayoutObject->Footer();
         }
 
         return $Output;
@@ -318,20 +310,20 @@ sub Run {
     elsif ( $Self->{Subaction} eq 'Save' ) {
 
         # challenge token check for write action
-        $Self->{LayoutObject}->ChallengeTokenCheck();
+        $LayoutObject->ChallengeTokenCheck();
 
         my $Output;
 
         # show a pop-up screen
-        if ( $Self->{ScreenType} eq 'Popup' ) {
+        if ( $ScreenType eq 'Popup' ) {
 
             # show the small pop-up screen header
-            $Output = $Self->{LayoutObject}->Header(
+            $Output = $LayoutObject->Header(
                 Type      => 'Small',
                 BodyClass => 'Popup',
             );
 
-            $Self->{LayoutObject}->Block(
+            $LayoutObject->Block(
                 Name => 'StartSmall',
                 Data => {
                     %FAQData,
@@ -343,10 +335,10 @@ sub Run {
         else {
 
             # show the normal screen header with navigation bar
-            $Output = $Self->{LayoutObject}->Header();
-            $Output .= $Self->{LayoutObject}->NavigationBar();
+            $Output = $LayoutObject->Header();
+            $Output .= $LayoutObject->NavigationBar();
 
-            $Self->{LayoutObject}->Block(
+            $LayoutObject->Block(
                 Name => 'StartNormal',
                 Data => {
                     %FAQData,
@@ -368,13 +360,13 @@ sub Run {
         my @AttachmentIDs = map {
             my ($ID) = $_ =~ m{ \A AttachmentDelete (\d+) \z }xms;
             $ID ? $ID : ();
-        } $Self->{ParamObject}->GetParamNames();
+        } $ParamObject->GetParamNames();
 
         COUNT:
         for my $Count ( reverse sort @AttachmentIDs ) {
 
             # check if the delete button was pressed for this attachment
-            my $Delete = $Self->{ParamObject}->GetParam( Param => "AttachmentDelete$Count" );
+            my $Delete = $ParamObject->GetParam( Param => "AttachmentDelete$Count" );
 
             # check next attachment if it was not pressed
             next COUNT if !$Delete;
@@ -383,27 +375,27 @@ sub Run {
             $Error{Attachment} = 1;
 
             # remove the attachment from the upload cache
-            $Self->{UploadCacheObject}->FormIDRemoveFile(
-                FormID => $Self->{FormID},
+            $UploadCacheObject->FormIDRemoveFile(
+                FormID => $FormID,
                 FileID => $Count,
             );
         }
 
         # check if there was an attachment upload
-        if ( $Self->{ParamObject}->GetParam( Param => 'AttachmentUpload' ) ) {
+        if ( $ParamObject->GetParam( Param => 'AttachmentUpload' ) ) {
 
             # remember that we need to show the page again
             $Error{Attachment} = 1;
 
             # get the uploaded attachment
-            my %UploadStuff = $Self->{ParamObject}->GetUploadAll(
+            my %UploadStuff = $ParamObject->GetUploadAll(
                 Param  => 'FileUpload',
                 Source => 'string',
             );
 
             # add attachment to the upload cache
-            $Self->{UploadCacheObject}->FormIDAddFile(
-                FormID => $Self->{FormID},
+            $UploadCacheObject->FormIDAddFile(
+                FormID => $FormID,
                 %UploadStuff,
             );
         }
@@ -421,15 +413,15 @@ sub Run {
             # do not validate on attachment upload
             if ( !$Error{Attachment} ) {
 
-                $ValidationResult = $Self->{BackendObject}->EditFieldValueValidate(
+                $ValidationResult = $DynamicFieldBackendObject->EditFieldValueValidate(
                     DynamicFieldConfig => $DynamicFieldConfig,
-                    ParamObject        => $Self->{ParamObject},
+                    ParamObject        => $ParamObject,
                     Mandatory =>
                         $Self->{Config}->{DynamicField}->{ $DynamicFieldConfig->{Name} } == 2,
                 );
 
                 if ( !IsHashRefWithData($ValidationResult) ) {
-                    return $Self->{LayoutObject}->ErrorScreen(
+                    return $LayoutObject->ErrorScreen(
                         Message =>
                             "Could not perform validation on field $DynamicFieldConfig->{Label}!",
                         Comment => 'Please contact the admin.',
@@ -444,14 +436,14 @@ sub Run {
 
             # get field HTML
             $DynamicFieldHTML{ $DynamicFieldConfig->{Name} } =
-                $Self->{BackendObject}->EditFieldRender(
+                $DynamicFieldBackendObject->EditFieldRender(
                 DynamicFieldConfig => $DynamicFieldConfig,
                 Mandatory =>
                     $Self->{Config}->{DynamicField}->{ $DynamicFieldConfig->{Name} } == 2,
                 ServerError  => $ValidationResult->{ServerError}  || '',
                 ErrorMessage => $ValidationResult->{ErrorMessage} || '',
-                LayoutObject => $Self->{LayoutObject},
-                ParamObject  => $Self->{ParamObject},
+                LayoutObject => $LayoutObject,
+                ParamObject  => $ParamObject,
                 );
         }
 
@@ -466,26 +458,28 @@ sub Run {
             }
 
             # get all attachments meta data
-            my @Attachments = $Self->{UploadCacheObject}->FormIDGetAllFilesMeta(
-                FormID           => $Self->{FormID},
+            my @Attachments = $UploadCacheObject->FormIDGetAllFilesMeta(
+                FormID           => $FormID,
                 DynamicFieldHTML => \%DynamicFieldHTML,
             );
 
-            if ( $Self->{ConfigObject}->Get('FAQ::ApprovalRequired') ) {
+            if ( $ConfigObject->Get('FAQ::ApprovalRequired') ) {
 
                 # get Approval queue name
-                my $ApprovalQueue = $Self->{ConfigObject}->Get('FAQ::ApprovalQueue') || '';
+                my $ApprovalQueue = $ConfigObject->Get('FAQ::ApprovalQueue') || '';
 
                 # check if Approval queue exists
-                my $ApprovalQueueID = $Self->{QueueObject}->QueueLookup( Queue => $ApprovalQueue );
+                my $ApprovalQueueID = $QueueObject->QueueLookup(
+                    Queue => $ApprovalQueue,
+                );
 
                 # show notification if Approval queue does not exists
                 if ( !$ApprovalQueueID ) {
-                    $Output .= $Self->{LayoutObject}->Notify(
+                    $Output .= $LayoutObject->Notify(
                         Priority => 'Error',
                         Info =>
                             "FAQ Approval is enabled but queue '$ApprovalQueue' does not exists",
-                        Link => $Self->{LayoutObject}->{Baselink}
+                        Link => $LayoutObject->{Baselink}
                             . 'Action=AdminSysConfig;Subaction=Edit;'
                             . 'SysConfigSubGroup=Core%3A%3AApproval;SysConfigGroup=FAQ',
                     );
@@ -497,51 +491,51 @@ sub Run {
                 Attachments => \@Attachments,
                 %GetParam,
                 %Error,
-                ScreenType       => $Self->{ScreenType},
-                FormID           => $Self->{FormID},
+                ScreenType       => $ScreenType,
+                FormID           => $FormID,
                 DynamicFieldHTML => \%DynamicFieldHTML,
             );
 
             # show a pop-up screen footer
-            if ( $Self->{ScreenType} eq 'Popup' ) {
+            if ( $ScreenType eq 'Popup' ) {
 
-                $Self->{LayoutObject}->Block(
+                $LayoutObject->Block(
                     Name => 'EndSmall',
                     Data => {},
                 );
 
-                $Output .= $Self->{LayoutObject}->Footer( Type => 'Small' );
+                $Output .= $LayoutObject->Footer( Type => 'Small' );
 
             }
 
             # show a normal footer
             else {
 
-                $Self->{LayoutObject}->Block(
+                $LayoutObject->Block(
                     Name => 'EndNormal',
                     Data => {},
                 );
 
-                $Output .= $Self->{LayoutObject}->Footer();
+                $Output .= $LayoutObject->Footer();
             }
 
             return $Output;
         }
 
         # update the new FAQ article
-        my $UpdateSuccess = $Self->{FAQObject}->FAQUpdate(
+        my $UpdateSuccess = $FAQObject->FAQUpdate(
             %GetParam,
             UserID => $Self->{UserID},
         );
 
         # show error if FAQ could not be updated
         if ( !$UpdateSuccess ) {
-            return $Self->{LayoutObject}->ErrorScreen();
+            return $LayoutObject->ErrorScreen();
         }
 
         # get all attachments from upload cache
-        my @Attachments = $Self->{UploadCacheObject}->FormIDGetAllFilesData(
-            FormID => $Self->{FormID},
+        my @Attachments = $UploadCacheObject->FormIDGetAllFilesData(
+            FormID => $FormID,
         );
 
         # build a lookup lookup hash of the new attachments
@@ -563,7 +557,7 @@ sub Run {
         }
 
         # get all existing attachments, without inline attachments
-        my @ExistingAttachments = $Self->{FAQObject}->AttachmentIndex(
+        my @ExistingAttachments = $FAQObject->AttachmentIndex(
             ItemID     => $GetParam{ItemID},
             ShowInline => 0,
             UserID     => $Self->{UserID},
@@ -588,7 +582,7 @@ sub Run {
             else {
 
                 # delete the existing attachment
-                my $DeleteSuccessful = $Self->{FAQObject}->AttachmentDelete(
+                my $DeleteSuccessful = $FAQObject->AttachmentDelete(
                     ItemID => $GetParam{ItemID},
                     FileID => $Attachment->{FileID},
                     UserID => $Self->{UserID},
@@ -596,7 +590,7 @@ sub Run {
 
                 # check error
                 if ( !$DeleteSuccessful ) {
-                    return $Self->{LayoutObject}->FatalError();
+                    return $LayoutObject->FatalError();
                 }
             }
         }
@@ -616,23 +610,23 @@ sub Run {
                 my $ContentIDFound;
 
                 # check all fields for content id
-                FIELD:
+                NUMBER:
                 for my $Number ( 1 .. 6 ) {
 
                     # get FAQ field
                     my $Field = $GetParam{ 'Field' . $Number };
 
                     # skip empty fields
-                    next FIELD if !$Field;
+                    next NUMBER if !$Field;
 
                     # skip fields that do not contain the content id
-                    next FIELD if $Field !~ m{ $Attachment->{ContentID} }xms;
+                    next NUMBER if $Field !~ m{ $Attachment->{ContentID} }xms;
 
                     # found the content id
                     $ContentIDFound = 1;
 
                     # we do not need to search further
-                    last FIELD;
+                    last NUMBER;
                 }
 
                 # we do not want to keep this attachment,
@@ -641,7 +635,7 @@ sub Run {
             }
 
             # add attachment
-            my $FileID = $Self->{FAQObject}->AttachmentAdd(
+            my $FileID = $FAQObject->AttachmentAdd(
                 %{$Attachment},
                 ItemID => $GetParam{ItemID},
                 Inline => $Inline,
@@ -650,24 +644,24 @@ sub Run {
 
             # check error
             if ( !$FileID ) {
-                return $Self->{LayoutObject}->FatalError();
+                return $LayoutObject->FatalError();
             }
 
             next ATTACHMENT if !$Inline;
-            next ATTACHMENT if !$Self->{LayoutObject}->{BrowserRichText};
+            next ATTACHMENT if !$LayoutObject->{BrowserRichText};
 
             # rewrite the URLs of the inline images for the uploaded pictures
-            my $Ok = $Self->{FAQObject}->FAQInlineAttachmentURLUpdate(
+            my $OK = $FAQObject->FAQInlineAttachmentURLUpdate(
                 Attachment => $Attachment,
-                FormID     => $Self->{FormID},
+                FormID     => $FormID,
                 ItemID     => $GetParam{ItemID},
                 FileID     => $FileID,
                 UserID     => $Self->{UserID},
             );
 
             # check error
-            if ( !$Ok ) {
-                $Self->{LogObject}->Log(
+            if ( !$OK ) {
+                $Kernel::OM->Get('Kernel::System::Log')->Log(
                     Priority => 'error',
                     Message  => "Could not update the inline image URLs "
                         . "for FAQ Item# '$GetParam{ItemID}'!",
@@ -676,7 +670,7 @@ sub Run {
         }
 
         # delete the upload cache
-        $Self->{UploadCacheObject}->FormIDRemove( FormID => $Self->{FormID} );
+        $UploadCacheObject->FormIDRemove( FormID => $FormID );
 
         # set dynamic fields
         # cycle trough the activated Dynamic Fields for this screen
@@ -688,7 +682,7 @@ sub Run {
             my $ObjectID = $GetParam{ItemID};
 
             # set the value
-            my $Success = $Self->{BackendObject}->ValueSet(
+            my $Success = $DynamicFieldBackendObject->ValueSet(
                 DynamicFieldConfig => $DynamicFieldConfig,
                 ObjectID           => $ObjectID,
                 Value              => $DynamicFieldValues{ $DynamicFieldConfig->{Name} },
@@ -697,13 +691,13 @@ sub Run {
         }
 
         # check if there if we need to close a pop-up screen or not
-        if ( $Self->{ScreenType} eq 'Popup' ) {
-            return $Self->{LayoutObject}->PopupClose(
+        if ( $ScreenType eq 'Popup' ) {
+            return $LayoutObject->PopupClose(
                 URL => "Action=AgentFAQZoom;ItemID=$GetParam{ItemID}",
             );
         }
         else {
-            return $Self->{LayoutObject}->Redirect(
+            return $LayoutObject->Redirect(
                 OP => "Action=AgentFAQZoom;ItemID=$GetParam{ItemID}",
             );
         }
@@ -713,27 +707,36 @@ sub Run {
 sub _MaskNew {
     my ( $Self, %Param ) = @_;
 
+    # get config object
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+
     # get list type
     my $TreeView = 0;
-    if ( $Self->{ConfigObject}->Get('Ticket::Frontend::ListType') eq 'tree' ) {
+    if ( $ConfigObject->Get('Ticket::Frontend::ListType') eq 'tree' ) {
         $TreeView = 1;
     }
 
     # get valid list
-    my %ValidList        = $Self->{ValidObject}->ValidList();
+    my %ValidList        = $Kernel::OM->Get('Kernel::System::Valid')->ValidList();
     my %ValidListReverse = reverse %ValidList;
 
     my %Data;
 
+    # get layout object
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+
     # build valid selection
-    $Data{ValidOption} = $Self->{LayoutObject}->BuildSelection(
+    $Data{ValidOption} = $LayoutObject->BuildSelection(
         Data       => \%ValidList,
         Name       => 'ValidID',
         SelectedID => $Param{ValidID} || $ValidListReverse{valid},
     );
 
+    # get FAQ object
+    my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
+
     # get categories (with category long names) where user has rights
-    my $UserCategoriesLongNames = $Self->{FAQObject}->GetUserCategoriesLongNames(
+    my $UserCategoriesLongNames = $FAQObject->GetUserCategoriesLongNames(
         Type   => 'rw',
         UserID => $Self->{UserID},
     );
@@ -742,7 +745,7 @@ sub _MaskNew {
     $Param{CategoryIDServerError} ||= '';
 
     # build category selection
-    $Data{CategoryOption} = $Self->{LayoutObject}->BuildSelection(
+    $Data{CategoryOption} = $LayoutObject->BuildSelection(
         Data         => $UserCategoriesLongNames,
         Name         => 'CategoryID',
         SelectedID   => $Param{CategoryID},
@@ -753,7 +756,7 @@ sub _MaskNew {
     );
 
     # get the language list
-    my %Languages = $Self->{FAQObject}->LanguageList(
+    my %Languages = $FAQObject->LanguageList(
         UserID => $Self->{UserID},
     );
 
@@ -767,10 +770,12 @@ sub _MaskNew {
     else {
 
         # use the user language, or if not found 'en'
-        $SelectedLanguage = $Self->{LayoutObject}->{UserLanguage} || 'en';
+        $SelectedLanguage = $LayoutObject->{UserLanguage} || 'en';
 
         # get user language ID
-        my $SelectedLanguageID = $Self->{FAQObject}->LanguageLookup( Name => $SelectedLanguage );
+        my $SelectedLanguageID = $FAQObject->LanguageLookup(
+            Name => $SelectedLanguage,
+        );
 
         # check if LanduageID does not exists
         if ( !$SelectedLanguageID ) {
@@ -785,7 +790,7 @@ sub _MaskNew {
     }
 
     # build the language selection
-    $Data{LanguageOption} = $Self->{LayoutObject}->BuildSelection(
+    $Data{LanguageOption} = $LayoutObject->BuildSelection(
         Data          => \%Languages,
         Name          => 'LanguageID',
         SelectedValue => $SelectedLanguage,
@@ -793,7 +798,7 @@ sub _MaskNew {
     );
 
     # get the states list
-    my %States = $Self->{FAQObject}->StateList(
+    my %States = $FAQObject->StateList(
         UserID => $Self->{UserID},
     );
 
@@ -807,24 +812,27 @@ sub _MaskNew {
     else {
 
         # get default state
-        $SelectedState = $Self->{ConfigObject}->Get('FAQ::Default::State') || 'internal (agent)';
+        $SelectedState = $ConfigObject->Get('FAQ::Default::State') || 'internal (agent)';
     }
 
     # build the state selection
-    $Data{StateOption} = $Self->{LayoutObject}->BuildSelection(
+    $Data{StateOption} = $LayoutObject->BuildSelection(
         Data          => \%States,
         Name          => 'StateID',
         SelectedValue => $SelectedState,
         Translation   => 1,
     );
 
+    # get screen type
+    my $ScreenType = $Kernel::OM->Get('Kernel::System::Web::Request')->GetParam( Param => 'ScreenType' ) || '';
+
     my $FieldsetClass = '';
-    if ( $Self->{ScreenType} eq 'Popup' ) {
+    if ( $ScreenType eq 'Popup' ) {
         $FieldsetClass = 'FixedLabel';
     }
 
     # show FAQ edit screen
-    $Self->{LayoutObject}->Block(
+    $LayoutObject->Block(
         Name => 'FAQEdit',
         Data => {
             %Param,
@@ -834,8 +842,9 @@ sub _MaskNew {
     );
 
     # show languages field
-    if ( $Self->{MultiLanguage} ) {
-        $Self->{LayoutObject}->Block(
+    my $MultiLanguage = $ConfigObject->Get('FAQ::MultiLanguage');
+    if ($MultiLanguage) {
+        $LayoutObject->Block(
             Name => 'Language',
             Data => {
                 %Param,
@@ -844,7 +853,7 @@ sub _MaskNew {
         );
     }
     else {
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'NoLanguage',
             Data => {
                 %Param,
@@ -854,22 +863,22 @@ sub _MaskNew {
     }
 
     # show approval field
-    if ( $Self->{ConfigObject}->Get('FAQ::ApprovalRequired') ) {
+    if ( $ConfigObject->Get('FAQ::ApprovalRequired') ) {
 
         # check permission
-        my %Groups = reverse $Self->{GroupObject}->GroupMemberList(
+        my %Groups = reverse $Kernel::OM->Get('Kernel::System::Group')->GroupMemberList(
             UserID => $Self->{UserID},
             Type   => 'ro',
             Result => 'HASH',
         );
 
         # get the FAQ approval group from config
-        my $ApprovalGroup = $Self->{ConfigObject}->Get('FAQ::ApprovalGroup') || '';
+        my $ApprovalGroup = $ConfigObject->Get('FAQ::ApprovalGroup') || '';
 
         # build the approval selection if user is in the approval group
         if ( $Groups{$ApprovalGroup} ) {
 
-            $Data{ApprovalOption} = $Self->{LayoutObject}->BuildSelection(
+            $Data{ApprovalOption} = $LayoutObject->BuildSelection(
                 Name => 'Approved',
                 Data => {
                     0 => 'No',
@@ -877,7 +886,7 @@ sub _MaskNew {
                 },
                 SelectedID => $Param{Approved} || 0,
             );
-            $Self->{LayoutObject}->Block(
+            $LayoutObject->Block(
                 Name => 'Approval',
                 Data => {%Data},
             );
@@ -885,7 +894,7 @@ sub _MaskNew {
     }
 
     # show the attachment upload button
-    $Self->{LayoutObject}->Block(
+    $LayoutObject->Block(
         Name => 'AttachmentUpload',
         Data => {%Param},
     );
@@ -896,35 +905,44 @@ sub _MaskNew {
 
         # do not show inline images as attachments
         # (they have a content id)
-        if ( $Attachment->{ContentID} && $Self->{LayoutObject}->{BrowserRichText} ) {
+        if ( $Attachment->{ContentID} && $LayoutObject->{BrowserRichText} ) {
             next ATTACHMENT;
         }
 
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'Attachment',
             Data => $Attachment,
         );
     }
 
-    # add rich text editor javascript
+    # get config of frontend module
+    my $Config = $ConfigObject->Get("FAQ::Frontend::$Self->{Action}") || '';
+
+    # add rich text editor JavaScript
     # only if activated and the browser can handle it
     # otherwise just a text-area is shown
-    if ( $Self->{LayoutObject}->{BrowserRichText} ) {
+    if ( $LayoutObject->{BrowserRichText} ) {
 
         # use height/width defined for this screen
-        $Param{RichTextHeight} = $Self->{Config}->{RichTextHeight} || 0;
-        $Param{RichTextWidth}  = $Self->{Config}->{RichTextWidth}  || 0;
+        $Param{RichTextHeight} = $Config->{RichTextHeight} || 0;
+        $Param{RichTextWidth}  = $Config->{RichTextWidth}  || 0;
 
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'RichText',
             Data => {%Param},
         );
     }
 
+    # set default interface settings
+    my $InterfaceStates = $FAQObject->StateTypeList(
+        Types  => $ConfigObject->Get('FAQ::Agent::StateTypes'),
+        UserID => $Self->{UserID},
+    );
+
     # show FAQ Content
-    $Self->{LayoutObject}->FAQContentShow(
-        FAQObject       => $Self->{FAQObject},
-        InterfaceStates => $Self->{InterfaceStates},
+    $LayoutObject->FAQContentShow(
+        FAQObject       => $FAQObject,
+        InterfaceStates => $InterfaceStates,
         FAQData         => {%Param},
         UserID          => $Self->{UserID},
     );
@@ -944,7 +962,7 @@ sub _MaskNew {
         # get the HTML strings form $Param
         my $DynamicFieldHTML = $Param{DynamicFieldHTML}->{ $DynamicFieldConfig->{Name} };
 
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'DynamicField',
             Data => {
                 Name  => $DynamicFieldConfig->{Name},
@@ -954,7 +972,7 @@ sub _MaskNew {
         );
 
         # example of dynamic fields order customization
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'DynamicField_' . $DynamicFieldConfig->{Name},
             Data => {
                 Name  => $DynamicFieldConfig->{Name},
@@ -964,20 +982,20 @@ sub _MaskNew {
         );
     }
 
-    if ( $Self->{ScreenType} ne 'Popup' ) {
-        $Self->{LayoutObject}->Block(
+    if ( $ScreenType ne 'Popup' ) {
+        $LayoutObject->Block(
             Name => 'EndNormal',
         );
     }
 
-    if ( $Self->{ScreenType} eq 'Popup' ) {
-        $Self->{LayoutObject}->Block(
+    if ( $ScreenType eq 'Popup' ) {
+        $LayoutObject->Block(
             Name => 'EndSmall',
         );
     }
 
     # generate output
-    return $Self->{LayoutObject}->Output(
+    return $LayoutObject->Output(
         TemplateFile => 'AgentFAQEdit',
         Data         => \%Param,
     );
