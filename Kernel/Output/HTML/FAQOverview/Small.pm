@@ -6,7 +6,7 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package Kernel::Output::HTML::FAQ::OverviewSmall;
+package Kernel::Output::HTML::FAQOverview::Small;
 
 use strict;
 use warnings;

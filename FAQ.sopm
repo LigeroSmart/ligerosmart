@@ -63,9 +63,9 @@
         <File Permission="644" Location="Kernel/Modules/PublicFAQZoom.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/CustomerHeaderMeta/FAQSearch.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/Dashboard/FAQ.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/FAQ/JournalOverviewSmall.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/FAQ/MenuGeneric.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/FAQ/OverviewSmall.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/FAQJournalOverview/Small.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/FAQMenu/Generic.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/FAQOverview/Small.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/HeaderMeta/FAQSearch.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/LayoutFAQ.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/LinkObject/FAQ.pm"/>

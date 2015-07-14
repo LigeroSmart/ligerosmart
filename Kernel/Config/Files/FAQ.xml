@@ -910,7 +910,7 @@ Your OTRS Notification Master
         <SubGroup>Frontend::Agent::FAQOverview</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::Output::HTML::FAQ::OverviewSmall</Item>
+                <Item Key="Module">Kernel::Output::HTML::FAQOverview::Small</Item>
                 <Item Key="Name">Small</Item>
                 <Item Key="NameShort">S</Item>
             </Hash>
@@ -1086,7 +1086,7 @@ Your OTRS Notification Master
         <SubGroup>Frontend::Agent::FAQ::MenuModule</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::Output::HTML::FAQ::MenuGeneric</Item>
+                <Item Key="Module">Kernel::Output::HTML::FAQMenu::Generic</Item>
                 <Item Key="Name">Back</Item>
                 <Item Key="Description" Translatable="1">Back</Item>
                 <Item Key="Action"></Item>
@@ -1101,7 +1101,7 @@ Your OTRS Notification Master
         <SubGroup>Frontend::Agent::FAQ::MenuModule</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::Output::HTML::FAQ::MenuGeneric</Item>
+                <Item Key="Module">Kernel::Output::HTML::FAQMenu::Generic</Item>
                 <Item Key="Name">Edit</Item>
                 <Item Key="Description" Translatable="1">Edit this FAQ</Item>
                 <Item Key="Action">AgentFAQEdit</Item>
@@ -1116,7 +1116,7 @@ Your OTRS Notification Master
         <SubGroup>Frontend::Agent::FAQ::MenuModule</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::Output::HTML::FAQ::MenuGeneric</Item>
+                <Item Key="Module">Kernel::Output::HTML::FAQMenu::Generic</Item>
                 <Item Key="Name">History</Item>
                 <Item Key="Description" Translatable="1">History of this FAQ</Item>
                 <Item Key="Action">AgentFAQHistory</Item>
@@ -1131,7 +1131,7 @@ Your OTRS Notification Master
         <SubGroup>Frontend::Agent::FAQ::MenuModule</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::Output::HTML::FAQ::MenuGeneric</Item>
+                <Item Key="Module">Kernel::Output::HTML::FAQMenu::Generic</Item>
                 <Item Key="Name">Print</Item>
                 <Item Key="Description" Translatable="1">Print this FAQ</Item>
                 <Item Key="Action">AgentFAQPrint</Item>
@@ -1147,7 +1147,7 @@ Your OTRS Notification Master
         <SubGroup>Frontend::Agent::FAQ::MenuModule</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::Output::HTML::FAQ::MenuGeneric</Item>
+                <Item Key="Module">Kernel::Output::HTML::FAQMenu::Generic</Item>
                 <Item Key="Name">Link</Item>
                 <Item Key="Description" Translatable="1">Link another object to this FAQ item</Item>
                 <Item Key="Action">AgentLinkObject</Item>
@@ -1162,7 +1162,7 @@ Your OTRS Notification Master
         <SubGroup>Frontend::Agent::FAQ::MenuModule</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::Output::HTML::FAQ::MenuGeneric</Item>
+                <Item Key="Module">Kernel::Output::HTML::FAQMenu::Generic</Item>
                 <Item Key="Name">Delete</Item>
                 <Item Key="Description" Translatable="1">Delete this FAQ</Item>
                 <Item Key="Action">AgentFAQDelete</Item>
@@ -1482,7 +1482,7 @@ Your OTRS Notification Master
         <SubGroup>Frontend::Agent::FAQJournalOverview</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::Output::HTML::FAQ::JournalOverviewSmall</Item>
+                <Item Key="Module">Kernel::Output::HTML::FAQJournalOverview::Small</Item>
                 <Item Key="Name">Small</Item>
                 <Item Key="NameShort">S</Item>
             </Hash>
