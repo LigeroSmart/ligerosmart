@@ -2,6 +2,7 @@
  - 2015-07-15 Dropped HTML print view in favor of PDF, thanks to S7.
 
 #4.0.3 - 2015-??-??
+ - 2015-07-15 Fixed bug#[11395](http://bugs.otrs.org/show_bug.cgi?id=11395) - Communications error after closing link message in customer interface.
  - 2015-07-10 Updated translations, thanks to all translators.
  - 2015-06-29 Updated settings to FAQ group.
  - 2015-06-29 Fixed bug#[11359](http://bugs.otrs.org/show_bug.cgi?id=11359) - Setting Frontend::Output::FilterElementPost###FAQ AgentTicketActionCommon is not supported.

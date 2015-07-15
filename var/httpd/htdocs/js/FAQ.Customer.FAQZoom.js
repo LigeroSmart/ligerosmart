@@ -1,5 +1,4 @@
 // --
-// FAQ.Customer.FAQZoom.js - provides the special module functions for FAQZoom
 // Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 // --
 // This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -8,6 +7,9 @@
 // --
 
 "use strict";
+
+// TODO: Remove this line and fix Core.
+// nofilter(TidyAll::Plugin::OTRS::JavaScript::ESLint)
 
 var FAQ = FAQ || {};
 FAQ.Customer = FAQ.Customer || {};
@@ -21,18 +23,20 @@ FAQ.Customer = FAQ.Customer || {};
 FAQ.Customer.FAQZoom = (function (TargetNS) {
 
     /**
+     * @name IframeAutoHeight
+     * @memberof FAQ.Customer.FAQZoom
      * @function
-     * @param {jQueryObject} $Iframe The iframe which should be auto-heighted
-     * @return nothing
-     *      This function initializes the special module functions
+     * @param {jQueryObject} $Iframe - The iframe which should be auto-heighted
+     * @description
+     *      Set iframe height automatically based on real content height and default config setting.
      */
-    TargetNS.IframeAutoHeight = function ($Iframe) {
-        if (isJQueryObject($Iframe)) {
+     TargetNS.IframeAutoHeight = function ($Iframe) {
+        var NewHeight = $Iframe
+            .contents()
+            .find('html')
+            .height();
 
-            var NewHeight = $Iframe
-                .contents()
-                .find('html')
-                .height();
+        if (isJQueryObject($Iframe)) {
 
             // IE8 needs some more space due to incorrect height calculation
             if (NewHeight > 0 && $.browser.msie && $.browser.version === '8.0') {
@@ -58,6 +62,8 @@ FAQ.Customer.FAQZoom = (function (TargetNS) {
 
     /**
      * @function
+     * @memberof FAQ.Customer.FAQZoom
+     * @param {jQueryObject} $Message - an FAQ field.
      * @description
      *      This function checks the class of a FAQ field:
      *      user calls this function by clicking on the field head, field gets hidden by removing
@@ -75,13 +81,13 @@ FAQ.Customer.FAQZoom = (function (TargetNS) {
 
     /**
      * @function
+     * @memberof FAQ.Customer.FAQZoom
      * @description
      *      This function binds functions to the 'MessageHeader'
      *      to toggle the visibility of the MessageBody and the reply form.
      */
     TargetNS.Init = function(){
         var $Messages = $('#Messages > li'),
-            $VisibleMessage = $Messages.last(),
             $MessageHeaders = $('.MessageHeader', $Messages);
 
         $MessageHeaders.click(function(Event){
@@ -94,8 +100,7 @@ FAQ.Customer.FAQZoom = (function (TargetNS) {
             $('.FAQMessageBrowser a.Close').on('click', function () {
                 var Data = {
                     Action: 'CustomerFAQZoom',
-                    Subaction: 'BrowserLinkMessage',
-                    ItemID: $('input[name=ItemID]').val()
+                    Subaction: 'BrowserLinkMessage'
                 };
 
                 $('.FAQMessageBrowser').fadeOut("slow");
