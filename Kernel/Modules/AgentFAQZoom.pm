@@ -22,6 +22,19 @@ sub new {
     my $Self = {%Param};
     bless( $Self, $Type );
 
+    my %UserPreferences = $Kernel::OM->Get('Kernel::System::User')->GetPreferences(
+        UserID => $Self->{UserID},
+    );
+
+    if ( !defined $Self->{DoNotShowBrowserLinkMessage} ) {
+        if ( $UserPreferences{UserAgentDoNotShowBrowserLinkMessage} ) {
+            $Self->{DoNotShowBrowserLinkMessage} = 1;
+        }
+        else {
+            $Self->{DoNotShowBrowserLinkMessage} = 0;
+        }
+    }
+
     return $Self;
 }
 
@@ -547,19 +560,6 @@ sub Run {
         }
     }
 
-    my %UserPreferences = $UserObject->GetPreferences(
-        UserID => $Self->{UserID},
-    );
-
-    if ( !defined $Self->{DoNotShowBrowserLinkMessage} ) {
-        if ( $UserPreferences{UserAgentDoNotShowBrowserLinkMessage} ) {
-            $Self->{DoNotShowBrowserLinkMessage} = 1;
-        }
-        else {
-            $Self->{DoNotShowBrowserLinkMessage} = 0;
-        }
-    }
-
     # show message about links in iframes, if user didn't close it already
     if ( !$Self->{DoNotShowBrowserLinkMessage} ) {
         $LayoutObject->Block(
@@ -875,6 +875,8 @@ sub _FAQVoting {
             Data => {%Data},
         );
     }
+
+    return 1;
 }
 
 1;
