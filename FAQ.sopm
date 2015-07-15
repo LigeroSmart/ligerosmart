@@ -88,7 +88,6 @@
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentFAQSearch.tt"/>
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentFAQSearchOpenSearchDescriptionFAQNumber.tt"/>
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentFAQSearchOpenSearchDescriptionFulltext.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentFAQSearchResultPrint.tt"/>
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentFAQSearchSmall.tt"/>
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentFAQZoom.tt"/>
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentFAQZoomSmall.tt"/>

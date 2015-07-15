@@ -26,7 +26,7 @@ sub new {
     $Self->{Config} = $Kernel::OM->Get('Kernel::Config')->Get("FAQ::Frontend::$Self->{Action}");
 
     # get the dynamic fields for ticket object
-    my $DynamicField = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldListGet(
+    $Self->{DynamicField} = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldListGet(
         Valid       => 1,
         ObjectType  => 'FAQ',
         FieldFilter => $Self->{Config}->{DynamicField} || {},

@@ -1,4 +1,5 @@
 #5.0.0.beta1 - 2015-??-??
+ - 2015-07-15 Dropped HTML print view in favor of PDF, thanks to S7.
 
 #4.0.3 - 2015-??-??
  - 2015-07-10 Updated translations, thanks to all translators.

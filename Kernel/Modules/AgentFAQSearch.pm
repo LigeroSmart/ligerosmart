@@ -763,72 +763,47 @@ sub Run {
                     UserID     => $Self->{UserID},
                 );
 
-                # TODO: remove if but leave content
                 # set change date to long format
-                if ($PDFObject) {
-                    my $Changed = $LayoutObject->{LanguageObject}->FormatTimeString(
-                        $FAQData{Changed},
-                        'DateFormat',
-                    );
+                my $Changed = $LayoutObject->{LanguageObject}->FormatTimeString(
+                    $FAQData{Changed},
+                    'DateFormatLong',
+                );
 
-                    # create PDF Rows
-                    my @PDFRow;
-                    push @PDFRow, $FAQData{Number};
-                    push @PDFRow, $FAQData{Title};
-                    push @PDFRow, $FAQData{CategoryName};
+                # create PDF Rows
+                my @PDFRow;
+                push @PDFRow, $FAQData{Number};
+                push @PDFRow, $FAQData{Title};
+                push @PDFRow, $FAQData{CategoryName};
 
-                    # create language row
-                    if ($MultiLanguage) {
-                        push @PDFRow, $FAQData{Language};
-                    }
-
-                    push @PDFRow,  $FAQData{State};
-                    push @PDFRow,  $Changed;
-                    push @PDFData, \@PDFRow;
+                # create language row
+                if ($MultiLanguage) {
+                    push @PDFRow, $FAQData{Language};
                 }
 
-                # TODO: remove else and its content
-                else {
-
-                    # add table block
-                    $LayoutObject->Block(
-                        Name => 'Record',
-                        Data => {%FAQData},
-                    );
-
-                    # add language data
-                    if ($MultiLanguage) {
-                        $LayoutObject->Block(
-                            Name => 'RecordLanguage',
-                            Data => {%FAQData},
-                        );
-                    }
-                }
+                push @PDFRow,  $FAQData{State};
+                push @PDFRow,  $Changed;
+                push @PDFData, \@PDFRow;
             }
 
-            # TODO: remove if but leave content
             # PDF Output
-            if ($PDFObject) {
-                my $Title = $LayoutObject->{LanguageObject}->Translate('FAQ') . ' '
-                    . $LayoutObject->{LanguageObject}->Translate('Search');
-                my $PrintedBy = $LayoutObject->{LanguageObject}->Translate('printed by');
-                my $Page      = $LayoutObject->{LanguageObject}->Translate('Page');
-                my $Time      = $LayoutObject->{Time};
-                my $Url       = '';
-                if ( $ENV{REQUEST_URI} ) {
-                    $Url = $ConfigObject->Get('HttpType') . '://'
-                        . $ConfigObject->Get('FQDN')
-                        . $ENV{REQUEST_URI};
-                }
+            my $Title = $LayoutObject->{LanguageObject}->Translate('FAQ') . ' '
+                . $LayoutObject->{LanguageObject}->Translate('Search');
+            my $PrintedBy = $LayoutObject->{LanguageObject}->Translate('printed by');
+            my $Page      = $LayoutObject->{LanguageObject}->Translate('Page');
+            my $Time      = $LayoutObject->{Time};
 
-                # get maximum number of pages
-                my $MaxPages = $ConfigObject->Get('PDF::MaxPages');
-                if ( !$MaxPages || $MaxPages < 1 || $MaxPages > 1000 ) {
-                    $MaxPages = 100;
-                }
+            # get maximum number of pages
+            my $MaxPages = $ConfigObject->Get('PDF::MaxPages');
+            if ( !$MaxPages || $MaxPages < 1 || $MaxPages > 1000 ) {
+                $MaxPages = 100;
+            }
 
-                # create the header
-                my $CellData;
+            # create the header
+            my $CellData;
+
+            # output 'No Result', if no content was given
+            if (@PDFData) {
+
                 $CellData->[0]->[0]->{Content} = $ConfigObject->Get('FAQ::FAQHook');
                 $CellData->[0]->[0]->{Font}    = 'ProportionalBold';
                 $CellData->[0]->[1]->{Content} = $LayoutObject->{LanguageObject}->Translate('Title');
@@ -863,114 +838,110 @@ sub Run {
                     }
                     $CounterRow++;
                 }
+            }
+            else {
+                $CellData->[0]->[0]->{Content} = $LayoutObject->{LanguageObject}->Translate('No Result!');
 
-                # output 'No Result', if no content was given
-                if ( !$CellData->[0]->[0] ) {
-                    $CellData->[0]->[0]->{Content} = $LayoutObject->{LanguageObject}->Translate('No Result!');
-                }
+            }
 
-                # page params
-                my %PageParam;
-                $PageParam{PageOrientation} = 'landscape';
-                $PageParam{MarginTop}       = 30;
-                $PageParam{MarginRight}     = 40;
-                $PageParam{MarginBottom}    = 40;
-                $PageParam{MarginLeft}      = 40;
-                $PageParam{HeaderRight}     = $Title;
-                $PageParam{FooterLeft}      = $Url;
-                $PageParam{HeadlineLeft}    = $Title;
-                $PageParam{HeadlineRight}   = $PrintedBy . ' '
+            # page params
+            my %PageParam;
+            $PageParam{PageOrientation} = 'landscape';
+            $PageParam{MarginTop}       = 30;
+            $PageParam{MarginRight}     = 40;
+            $PageParam{MarginBottom}    = 40;
+            $PageParam{MarginLeft}      = 40;
+            $PageParam{HeaderRight}     = $Title;
+            $PageParam{HeadlineLeft}    = $Title;
+
+            # table params
+            my %TableParam;
+            $TableParam{CellData}            = $CellData;
+            $TableParam{Type}                = 'Cut';
+            $TableParam{FontSize}            = 6;
+            $TableParam{Border}              = 0;
+            $TableParam{BackgroundColorEven} = '#DDDDDD';
+            $TableParam{Padding}             = 1;
+            $TableParam{PaddingTop}          = 3;
+            $TableParam{PaddingBottom}       = 3;
+
+            # create new PDF document
+            $PDFObject->DocumentNew(
+                Title  => $ConfigObject->Get('Product') . ': ' . $Title,
+                Encode => $LayoutObject->{UserCharset},
+            );
+
+            # start table output
+            $PDFObject->PageNew(
+                %PageParam,
+                FooterRight => $Page . ' 1',
+            );
+
+            $PDFObject->PositionSet(
+                Move => 'relativ',
+                Y    => -6,
+            );
+
+            # output title
+            $PDFObject->Text(
+                Text     => $Title,
+                FontSize => 13,
+            );
+
+            $PDFObject->PositionSet(
+                Move => 'relativ',
+                Y    => -6,
+            );
+
+            # output "printed by"
+            $PDFObject->Text(
+                Text => $PrintedBy . ' '
                     . $Self->{UserFirstname} . ' '
                     . $Self->{UserLastname} . ' ('
-                    . $Self->{UserEmail} . ') '
-                    . $Time;
+                    . $Self->{UserEmail} . ')'
+                    . ', ' . $Time,
+                FontSize => 9,
+            );
 
-                # table params
-                my %TableParam;
-                $TableParam{CellData}            = $CellData;
-                $TableParam{Type}                = 'Cut';
-                $TableParam{FontSize}            = 6;
-                $TableParam{Border}              = 0;
-                $TableParam{BackgroundColorEven} = '#AAAAAA';
-                $TableParam{BackgroundColorOdd}  = '#DDDDDD';
-                $TableParam{Padding}             = 1;
-                $TableParam{PaddingTop}          = 3;
-                $TableParam{PaddingBottom}       = 3;
+            $PDFObject->PositionSet(
+                Move => 'relativ',
+                Y    => -14,
+            );
 
-                # create new PDF document
-                $PDFObject->DocumentNew(
-                    Title  => $ConfigObject->Get('Product') . ': ' . $Title,
-                    Encode => $LayoutObject->{UserCharset},
-                );
+            PAGE:
+            for ( 2 .. $MaxPages ) {
 
-                # start table output
-                $PDFObject->PageNew(
-                    %PageParam,
-                    FooterRight => $Page . ' 1',
-                );
-                PAGE:
-                for ( 2 .. $MaxPages ) {
+                # output table (or a fragment of it)
+                %TableParam = $PDFObject->Table( %TableParam, );
 
-                    # output table (or a fragment of it)
-                    %TableParam = $PDFObject->Table( %TableParam, );
-
-                    # stop output or another page
-                    if ( $TableParam{State} ) {
-                        last PAGE;
-                    }
-                    else {
-                        $PDFObject->PageNew(
-                            %PageParam,
-                            FooterRight => $Page . ' ' . $_,
-                        );
-                    }
+                # stop output or another page
+                if ( $TableParam{State} ) {
+                    last PAGE;
                 }
-
-                # return the PDF document
-                my $Filename = 'FAQ_search';
-                my ( $s, $m, $h, $D, $M, $Y ) = $TimeObject->SystemTime2Date(
-                    SystemTime => $TimeObject->SystemTime(),
-                );
-                $M = sprintf( "%02d", $M );
-                $D = sprintf( "%02d", $D );
-                $h = sprintf( "%02d", $h );
-                $m = sprintf( "%02d", $m );
-                my $PDFString = $PDFObject->DocumentOutput();
-                return $LayoutObject->Attachment(
-                    Filename    => $Filename . "_" . "$Y-$M-$D" . "_" . "$h-$m.pdf",
-                    ContentType => "application/pdf",
-                    Content     => $PDFString,
-                    Type        => 'inline',
-                );
-            }
-
-            # TODO: remove else and its contents as HTML print should not be used anymore
-            else {
-                $Output = $LayoutObject->PrintHeader( Width => 800 );
-                if ( scalar @ViewableFAQIDs == $SearchLimit ) {
-                    $Param{Warning} = '$Text{"Reached max. count of %s search hits!", "'
-                        . $SearchLimit . '"}';
-                }
-
-                # add language header
-                if ($MultiLanguage) {
-                    $LayoutObject->Block(
-                        Name => 'HeaderLanguage',
-                        Data => {},
+                else {
+                    $PDFObject->PageNew(
+                        %PageParam,
+                        FooterRight => $Page . ' ' . $_,
                     );
                 }
-
-                $Output .= $LayoutObject->Output(
-                    TemplateFile => 'AgentFAQSearchResultPrint',
-                    Data         => \%Param,
-                );
-
-                # add footer
-                $Output .= $LayoutObject->PrintFooter();
-
-                # return output
-                return $Output;
             }
+
+            # return the PDF document
+            my $Filename = 'FAQ_search';
+            my ( $s, $m, $h, $D, $M, $Y ) = $TimeObject->SystemTime2Date(
+                SystemTime => $TimeObject->SystemTime(),
+            );
+            $M = sprintf( "%02d", $M );
+            $D = sprintf( "%02d", $D );
+            $h = sprintf( "%02d", $h );
+            $m = sprintf( "%02d", $m );
+            my $PDFString = $PDFObject->DocumentOutput();
+            return $LayoutObject->Attachment(
+                Filename    => $Filename . "_" . "$Y-$M-$D" . "_" . "$h-$m.pdf",
+                ContentType => "application/pdf",
+                Content     => $PDFString,
+                Type        => 'inline',
+            );
         }
         else {
 

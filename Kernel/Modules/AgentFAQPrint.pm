@@ -144,207 +144,130 @@ sub Run {
     # get PDF object
     my $PDFObject = $Kernel::OM->Get('Kernel::System::PDF');
 
-    # TODO: remove if (but leave content)!
     # generate PDF output
-    if ($PDFObject) {
-        my $PrintedBy = $LayoutObject->{LanguageObject}->Translate('printed by');
-        my $Time      = $LayoutObject->{Time};
-        my %Page;
+    my $PrintedBy = $LayoutObject->{LanguageObject}->Translate('printed by');
+    my $Time      = $LayoutObject->{Time};
+    my %Page;
 
-        # get maximum number of pages
-        $Page{MaxPages} = $ConfigObject->Get('PDF::MaxPages');
-        if ( !$Page{MaxPages} || $Page{MaxPages} < 1 || $Page{MaxPages} > 1000 ) {
-            $Page{MaxPages} = 100;
-        }
-        my $HeaderRight  = $ConfigObject->Get('FAQ::FAQHook') . $FAQData{Number};
-        my $HeadlineLeft = $HeaderRight;
-        my $Title        = $HeaderRight;
-        if ( $FAQData{Title} ) {
-            $HeadlineLeft = $FAQData{Title};
-            $Title .= ' / ' . $FAQData{Title};
-        }
+    # get maximum number of pages
+    $Page{MaxPages} = $ConfigObject->Get('PDF::MaxPages');
+    if ( !$Page{MaxPages} || $Page{MaxPages} < 1 || $Page{MaxPages} > 1000 ) {
+        $Page{MaxPages} = 100;
+    }
+    my $HeaderRight  = $ConfigObject->Get('FAQ::FAQHook') . $FAQData{Number};
+    my $HeadlineLeft = $HeaderRight;
+    my $Title        = $HeaderRight;
+    if ( $FAQData{Title} ) {
+        $HeadlineLeft = $FAQData{Title};
+        $Title .= ' / ' . $FAQData{Title};
+    }
 
-        $Page{MarginTop}    = 30;
-        $Page{MarginRight}  = 40;
-        $Page{MarginBottom} = 40;
-        $Page{MarginLeft}   = 40;
-        $Page{HeaderRight}  = $HeaderRight;
-        $Page{FooterLeft}   = '';
-        $Page{PageText}     = $LayoutObject->{LanguageObject}->Translate('Page');
-        $Page{PageCount}    = 1;
+    $Page{MarginTop}    = 30;
+    $Page{MarginRight}  = 40;
+    $Page{MarginBottom} = 40;
+    $Page{MarginLeft}   = 40;
+    $Page{HeaderRight}  = $HeaderRight;
+    $Page{FooterLeft}   = '';
+    $Page{PageText}     = $LayoutObject->{LanguageObject}->Translate('Page');
+    $Page{PageCount}    = 1;
 
-        # create new PDF document
-        $PDFObject->DocumentNew(
-            Title  => $ConfigObject->Get('Product') . ': ' . $Title,
-            Encode => $LayoutObject->{UserCharset},
-        );
+    # create new PDF document
+    $PDFObject->DocumentNew(
+        Title  => $ConfigObject->Get('Product') . ': ' . $Title,
+        Encode => $LayoutObject->{UserCharset},
+    );
 
-        # create first PDF page
-        $PDFObject->PageNew(
-            %Page,
-            FooterRight => $Page{PageText} . ' ' . $Page{PageCount},
-        );
-        $Page{PageCount}++;
+    # create first PDF page
+    $PDFObject->PageNew(
+        %Page,
+        FooterRight => $Page{PageText} . ' ' . $Page{PageCount},
+    );
+    $Page{PageCount}++;
 
-        $PDFObject->PositionSet(
-            Move => 'relativ',
-            Y    => -6,
-        );
+    $PDFObject->PositionSet(
+        Move => 'relativ',
+        Y    => -6,
+    );
 
-        # output title
-        $PDFObject->Text(
-            Text     => $FAQData{Title},
-            FontSize => 13,
-        );
+    # output title
+    $PDFObject->Text(
+        Text     => $FAQData{Title},
+        FontSize => 13,
+    );
 
-        $PDFObject->PositionSet(
-            Move => 'relativ',
-            Y    => -6,
-        );
+    $PDFObject->PositionSet(
+        Move => 'relativ',
+        Y    => -6,
+    );
 
-        # output "printed by"
-        $PDFObject->Text(
-            Text => $PrintedBy . ' '
-                . $Self->{UserFirstname} . ' '
-                . $Self->{UserLastname} . ' ('
-                . $Self->{UserEmail} . ')'
-                . ', ' . $Time,
-            FontSize => 9,
-        );
+    # output "printed by"
+    $PDFObject->Text(
+        Text => $PrintedBy . ' '
+            . $Self->{UserFirstname} . ' '
+            . $Self->{UserLastname} . ' ('
+            . $Self->{UserEmail} . ')'
+            . ', ' . $Time,
+        FontSize => 9,
+    );
 
-        $PDFObject->PositionSet(
-            Move => 'relativ',
-            Y    => -14,
-        );
+    $PDFObject->PositionSet(
+        Move => 'relativ',
+        Y    => -14,
+    );
 
-        # output FAQ information
-        $Self->_PDFOutputFAQHeaderInfo(
+    # output FAQ information
+    $Self->_PDFOutputFAQHeaderInfo(
+        PageData => \%Page,
+        FAQData  => \%FAQData,
+    );
+
+    if ( $FAQData{Keywords} ) {
+        $Self->_PDFOutputKeywords(
             PageData => \%Page,
             FAQData  => \%FAQData,
-        );
-
-        if ( $FAQData{Keywords} ) {
-            $Self->_PDFOutputKeywords(
-                PageData => \%Page,
-                FAQData  => \%FAQData,
-            );
-        }
-
-        # output FAQ dynamic fields
-        $Self->_PDFOutputFAQDynamicFields(
-            PageData => \%Page,
-            FAQData  => \%FAQData,
-        );
-
-        $Self->_PDFOuputFAQContent(
-            PageData => \%Page,
-            FAQData  => \%FAQData,
-        );
-
-        # output linked objects
-        if (%LinkData) {
-            $Self->_PDFOutputLinkedObjects(
-                PageData     => \%Page,
-                LinkData     => \%LinkData,
-                LinkTypeList => \%LinkTypeList,
-            );
-        }
-
-        # get time object
-        my $TimeObject = $Kernel::OM->Get('Kernel::System::Time');
-
-        # return the PDF document
-        my $Filename = 'FAQ_' . $FAQData{Number};
-        my ( $s, $m, $h, $D, $M, $Y ) = $TimeObject->SystemTime2Date(
-            SystemTime => $TimeObject->SystemTime(),
-        );
-        $M = sprintf( "%02d", $M );
-        $D = sprintf( "%02d", $D );
-        $h = sprintf( "%02d", $h );
-        $m = sprintf( "%02d", $m );
-        my $PDFString = $PDFObject->DocumentOutput();
-        return $LayoutObject->Attachment(
-            Filename    => $Filename . "_" . "$Y-$M-$D" . "_" . "$h-$m.pdf",
-            ContentType => "application/pdf",
-            Content     => $PDFString,
-            Type        => 'inline',
         );
     }
 
-    # TODO: remove else including content as HTML print is not needed anymore
-    # generate HTML output
-    else {
+    # output FAQ dynamic fields
+    $Self->_PDFOutputFAQDynamicFields(
+        PageData => \%Page,
+        FAQData  => \%FAQData,
+    );
 
-        # output header
-        $Output .= $LayoutObject->PrintHeader( Value => $FAQData{Number} );
+    $Self->_PDFOuputFAQContent(
+        PageData => \%Page,
+        FAQData  => \%FAQData,
+    );
 
-        # set default interface settings
-        my $InterfaceStates = $FAQObject->StateTypeList(
-            Types  => $ConfigObject->Get('FAQ::Agent::StateTypes'),
-            UserID => $Self->{UserID},
+    # output linked objects
+    if (%LinkData) {
+        $Self->_PDFOutputLinkedObjects(
+            PageData     => \%Page,
+            LinkData     => \%LinkData,
+            LinkTypeList => \%LinkTypeList,
         );
-
-        # show FAQ Content
-        $LayoutObject->FAQContentShow(
-            FAQObject       => $FAQObject,
-            InterfaceStates => $InterfaceStates,
-            FAQData         => {%FAQData},
-            UserID          => $Self->{UserID},
-        );
-
-        if (%LinkData) {
-
-            # output link data
-            $LayoutObject->Block(
-                Name => 'Link',
-            );
-
-            for my $LinkTypeLinkDirection ( sort { lc $a cmp lc $b } keys %LinkData ) {
-
-                # investigate link type name
-                my @LinkData = split q{::}, $LinkTypeLinkDirection;
-
-                # output link type data
-                $LayoutObject->Block(
-                    Name => 'LinkType',
-                    Data => {
-                        LinkTypeName => $LinkTypeList{ $LinkData[0] }->{ $LinkData[1] . 'Name' },
-                    },
-                );
-
-                # extract object list
-                my $ObjectList = $LinkData{$LinkTypeLinkDirection};
-
-                for my $Object ( sort { lc $a cmp lc $b } keys %{$ObjectList} ) {
-
-                    for my $Item ( @{ $ObjectList->{$Object} } ) {
-
-                        # output link type data
-                        $LayoutObject->Block(
-                            Name => 'LinkTypeRow',
-                            Data => {
-                                LinkStrg => $Item->{Title},
-                            },
-                        );
-                    }
-                }
-            }
-        }
-
-        # show FAQ
-        $Output .= $Self->_HTMLMask(
-            FAQID => $GetParam{FAQID},
-            %Param,
-            %UserInfo,
-            %FAQData,
-        );
-
-        # add footer
-        $Output .= $LayoutObject->PrintFooter();
-
-        # return output
-        return $Output;
     }
+
+    # get time object
+    my $TimeObject = $Kernel::OM->Get('Kernel::System::Time');
+
+    # return the PDF document
+    my $Filename = 'FAQ_' . $FAQData{Number};
+    my ( $s, $m, $h, $D, $M, $Y ) = $TimeObject->SystemTime2Date(
+        SystemTime => $TimeObject->SystemTime(),
+    );
+    $M = sprintf( "%02d", $M );
+    $D = sprintf( "%02d", $D );
+    $h = sprintf( "%02d", $h );
+    $m = sprintf( "%02d", $m );
+    my $PDFString = $PDFObject->DocumentOutput();
+    return $LayoutObject->Attachment(
+        Filename    => $Filename . "_" . "$Y-$M-$D" . "_" . "$h-$m.pdf",
+        ContentType => "application/pdf",
+        Content     => $PDFString,
+        Type        => 'inline',
+    );
+
 }
 
 sub _PDFOutputFAQHeaderInfo {
@@ -425,7 +348,7 @@ sub _PDFOutputFAQHeaderInfo {
         Key   => $LayoutObject->{LanguageObject}->Translate('Last update') . ':',
         Value => $LayoutObject->{LanguageObject}->FormatTimeString(
             $FAQData{Changed},
-            'DateFormat',
+            'DateFormatLong',
         ),
     };
 
@@ -456,8 +379,7 @@ sub _PDFOutputFAQHeaderInfo {
     $TableParam{Type}                = 'Cut';
     $TableParam{Border}              = 0;
     $TableParam{FontSize}            = 6;
-    $TableParam{BackgroundColorEven} = '#AAAAAA';
-    $TableParam{BackgroundColorOdd}  = '#DDDDDD';
+    $TableParam{BackgroundColorEven} = '#DDDDDD';
     $TableParam{Padding}             = 1;
     $TableParam{PaddingTop}          = 3;
     $TableParam{PaddingBottom}       = 3;
@@ -919,48 +841,6 @@ sub _PDFOuputFAQContent {
         }
     }
     return 1;
-}
-
-# TODO: this helper function should be also removed
-sub _HTMLMask {
-    my ( $Self, %Param ) = @_;
-
-    # get needed objects
-    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
-    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
-
-    # show Language
-    my $MultiLanguage = $ConfigObject->Get('FAQ::MultiLanguage');
-    if ($MultiLanguage) {
-        $LayoutObject->Block(
-            Name => 'Language',
-            Data => \%Param,
-        );
-    }
-
-    # approval state
-    if ( $ConfigObject->Get('FAQ::ApprovalRequired') ) {
-        $Param{Approval} = $Param{Approved} ? 'Yes' : 'No';
-        $LayoutObject->Block(
-            Name => 'PrintApproval',
-            Data => \%Param,
-        );
-    }
-
-    my $Voting = $ConfigObject->Get('FAQ::Voting');
-
-    # show rating
-    if ($Voting) {
-        $LayoutObject->Block(
-            Name => 'Rating',
-            Data => \%Param,
-        );
-    }
-
-    return $LayoutObject->Output(
-        TemplateFile => 'AgentFAQPrint',
-        Data         => \%Param,
-    );
 }
 
 1;
