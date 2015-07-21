@@ -49,7 +49,6 @@
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentTicketOverviewMedium.tt"/>
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentTicketOverviewPreview.tt"/>
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentTicketPhone.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentTicketPrint.tt"/>
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentTicketZoom.tt"/>
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/CustomerTicketPrint.tt"/>
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/CustomerTicketZoom.tt"/>
