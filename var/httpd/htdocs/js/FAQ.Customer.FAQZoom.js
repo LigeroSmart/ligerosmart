@@ -8,9 +8,6 @@
 
 "use strict";
 
-// TODO: Remove this line and fix Core.
-// nofilter(TidyAll::Plugin::OTRS::JavaScript::ESLint)
-
 var FAQ = FAQ || {};
 FAQ.Customer = FAQ.Customer || {};
 
