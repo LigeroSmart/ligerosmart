@@ -218,6 +218,13 @@
         <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMChangeMyCAB.t"/>
         <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMChangeMyChanges.t"/>
         <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMChangeMyWorkOrders.t"/>
+        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMChangeInvolvedPersons.t"/>
+        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMChangePIR.t"/>
+        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMChangePSA.t"/>
+        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMChangeSchedule.t"/>
+        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMChangeTemplate.t"/>
+        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMChangeZoom.t"/>
+        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMTemplateDelete.t"/>
         <File Permission="644" Location="var/cron/itsmchange_check.dist"/>
         <File Permission="644" Location="var/httpd/htdocs/js/ITSM.Agent.ChangeManagement.Search.js"/>
         <File Permission="644" Location="var/httpd/htdocs/js/ITSM.Agent.ChangeManagement.WorkorderGraph.js"/>
