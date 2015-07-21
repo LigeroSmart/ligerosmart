@@ -115,10 +115,8 @@
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMChangeInvolvedPersons.tt"/>
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMChangeOverviewNavBar.tt"/>
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMChangeOverviewSmall.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMChangePrint.tt"/>
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMChangeReset.tt"/>
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMChangeSearch.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMChangeSearchResultPrint.tt"/>
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMChangeTemplate.tt"/>
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMChangeTimeSlot.tt"/>
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMChangeZoom.tt"/>

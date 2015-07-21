@@ -598,7 +598,7 @@ sub Run {
                 for my $ServiceID ( sort keys %UniqueServiceIDs ) {
 
                     # get service data
-                    my %ServiceData = $Kernel::OM->Get('Kernel::System::service')->ServiceGet(
+                    my %ServiceData = $Kernel::OM->Get('Kernel::System::Service')->ServiceGet(
                         ServiceID => $ServiceID,
                         UserID    => $Self->{UserID},
                     );
@@ -681,9 +681,8 @@ sub Run {
             # to store all data
             my %Info;
 
-            # when there is no PDF-Support, $PDFObject will be undefined
-            my $PDFObject
-                = ( $Kernel::OM->Get('Kernel::Config')->Get('PDF') ) ? $Kernel::OM->Get('Kernel::System::PDF') : undef;
+            # get pdf object
+            my $PDFObject = $Kernel::OM->Get('Kernel::System::PDF');
 
             # to send data to the PDF output
             my @PDFData;
@@ -722,62 +721,51 @@ sub Run {
                         . $User{UserLastname} . ')';
                 }
 
-                if ($PDFObject) {
+                my $ChangeTitle = $LayoutObject->Output(
+                    Template => '[% Data.ChangeTitle | truncate(30) | html %]',
+                    Data     => \%Info,
+                );
 
-                    my $ChangeTitle = $LayoutObject->Output(
-                        Template => '[% Data.ChangeTitle | truncate(30) | html %]',
-                        Data     => \%Info,
-                    );
+                my $PlannedStart = $LayoutObject->Output(
+                    Template => '[% Data.PlannedStartTime | Localize("TimeLong") %]',
+                    Data     => \%Info,
+                );
 
-                    my $PlannedStart = $LayoutObject->Output(
-                        Template => '[% Data.PlannedStartTime | Localize("TimeLong") %]',
-                        Data     => \%Info,
-                    );
+                my $PlannedEnd = $LayoutObject->Output(
+                    Template => '[% Data.PlannedEndTime | Localize("TimeLong") %]',
+                    Data     => \%Info,
+                );
 
-                    my $PlannedEnd = $LayoutObject->Output(
-                        Template => '[% Data.PlannedEndTime | Localize("TimeLong") %]',
-                        Data     => \%Info,
-                    );
-
-                    my @PDFRow;
-                    push @PDFRow,  $Info{ChangeNumber};
-                    push @PDFRow,  $ChangeTitle;
-                    push @PDFRow,  $Info{ChangeBuilder};
-                    push @PDFRow,  $Info{WorkOrderCount};
-                    push @PDFRow,  $Info{ChangeState};
-                    push @PDFRow,  $Info{Priority};
-                    push @PDFRow,  $PlannedStart;
-                    push @PDFRow,  $PlannedEnd;
-                    push @PDFData, \@PDFRow;
-                }
-                else {
-
-                    # add table block
-                    $LayoutObject->Block(
-                        Name => 'Record',
-                        Data => {
-                            %Info,
-                        },
-                    );
-                }
+                my @PDFRow;
+                push @PDFRow,  $Info{ChangeNumber};
+                push @PDFRow,  $ChangeTitle;
+                push @PDFRow,  $Info{ChangeBuilder};
+                push @PDFRow,  $Info{WorkOrderCount};
+                push @PDFRow,  $Info{ChangeState};
+                push @PDFRow,  $Info{Priority};
+                push @PDFRow,  $PlannedStart;
+                push @PDFRow,  $PlannedEnd;
+                push @PDFData, \@PDFRow;
             }
 
             # PDF Output
-            if ($PDFObject) {
-                my $Title = $LayoutObject->{LanguageObject}->Translate('Change') . ' '
-                    . $LayoutObject->{LanguageObject}->Translate('Search');
-                my $PrintedBy = $LayoutObject->{LanguageObject}->Translate('printed by');
-                my $Page      = $LayoutObject->{LanguageObject}->Translate('Page');
-                my $Time      = $LayoutObject->{Time};
+            my $Title = $LayoutObject->{LanguageObject}->Translate('Change') . ' '
+                . $LayoutObject->{LanguageObject}->Translate('Search');
+            my $PrintedBy = $LayoutObject->{LanguageObject}->Translate('printed by');
+            my $Page      = $LayoutObject->{LanguageObject}->Translate('Page');
+            my $Time      = $LayoutObject->{Time};
 
-                # get maximum number of pages
-                my $MaxPages = $ConfigObject->Get('PDF::MaxPages');
-                if ( !$MaxPages || $MaxPages < 1 || $MaxPages > 1000 ) {
-                    $MaxPages = 100;
-                }
+            # get maximum number of pages
+            my $MaxPages = $ConfigObject->Get('PDF::MaxPages');
+            if ( !$MaxPages || $MaxPages < 1 || $MaxPages > 1000 ) {
+                $MaxPages = 100;
+            }
 
-                # create the header
-                my $CellData;
+            # create the header
+            my $CellData;
+
+            # output 'No ticket data found', if no content was given
+            if (@PDFData) {
                 $CellData->[0]->[0]->{Content} = $ConfigObject->Get('ITSMChange::Hook');
                 $CellData->[0]->[0]->{Font}    = 'ProportionalBold';
                 $CellData->[0]->[1]->{Content} = $LayoutObject->{LanguageObject}->Translate('ChangeTitle');
@@ -806,105 +794,109 @@ sub Run {
                     $CounterRow++;
                 }
 
-                # output 'No ticket data found', if no content was given
-                if ( !$CellData->[0]->[0] ) {
-                    $CellData->[0]->[0]->{Content}
-                        = $LayoutObject->{LanguageObject}->Translate('No ticket data found.');
-                }
+            }
+            else {
+                $CellData->[0]->[0]->{Content} = $LayoutObject->{LanguageObject}->Translate('No ticket data found.');
+            }
 
-                # page params
-                my %PageParam;
-                $PageParam{PageOrientation} = 'landscape';
-                $PageParam{MarginTop}       = 30;
-                $PageParam{MarginRight}     = 40;
-                $PageParam{MarginBottom}    = 40;
-                $PageParam{MarginLeft}      = 40;
-                $PageParam{HeaderRight}     = $Title;
-                $PageParam{FooterLeft}      = '';
-                $PageParam{HeadlineLeft}    = $Title;
-                $PageParam{HeadlineRight}   = $PrintedBy . ' '
+            # page params
+            my %PageParam;
+            $PageParam{PageOrientation} = 'landscape';
+            $PageParam{MarginTop}       = 30;
+            $PageParam{MarginRight}     = 40;
+            $PageParam{MarginBottom}    = 40;
+            $PageParam{MarginLeft}      = 40;
+            $PageParam{HeaderRight}     = $Title;
+
+            # table params
+            my %TableParam;
+            $TableParam{CellData}            = $CellData;
+            $TableParam{Type}                = 'Cut';
+            $TableParam{FontSize}            = 6;
+            $TableParam{Border}              = 0;
+            $TableParam{BackgroundColorEven} = '#DDDDDD';
+            $TableParam{Padding}             = 1;
+            $TableParam{PaddingTop}          = 3;
+            $TableParam{PaddingBottom}       = 3;
+
+            # create new pdf document
+            $PDFObject->DocumentNew(
+                Title  => $ConfigObject->Get('Product') . ': ' . $Title,
+                Encode => $LayoutObject->{UserCharset},
+            );
+
+            # start table output
+            $PDFObject->PageNew(
+                %PageParam,
+                FooterRight => $Page . ' 1',
+            );
+
+            $PDFObject->PositionSet(
+                Move => 'relativ',
+                Y    => -6,
+            );
+
+            # output title
+            $PDFObject->Text(
+                Text     => $Title,
+                FontSize => 13,
+            );
+
+            $PDFObject->PositionSet(
+                Move => 'relativ',
+                Y    => -6,
+            );
+
+            # output "printed by"
+            $PDFObject->Text(
+                Text => $PrintedBy . ' '
                     . $Self->{UserFirstname} . ' '
                     . $Self->{UserLastname} . ' ('
                     . $Self->{UserEmail} . ') '
-                    . $Time;
+                    . $Time,
+                FontSize => 9,
+            );
 
-                # table params
-                my %TableParam;
-                $TableParam{CellData}            = $CellData;
-                $TableParam{Type}                = 'Cut';
-                $TableParam{FontSize}            = 6;
-                $TableParam{Border}              = 0;
-                $TableParam{BackgroundColorEven} = '#AAAAAA';
-                $TableParam{BackgroundColorOdd}  = '#DDDDDD';
-                $TableParam{Padding}             = 1;
-                $TableParam{PaddingTop}          = 3;
-                $TableParam{PaddingBottom}       = 3;
+            $PDFObject->PositionSet(
+                Move => 'relativ',
+                Y    => -14,
+            );
 
-                # create new pdf document
-                $PDFObject->DocumentNew(
-                    Title  => $ConfigObject->Get('Product') . ': ' . $Title,
-                    Encode => $LayoutObject->{UserCharset},
-                );
+            PAGE:
+            for my $Count ( 2 .. $MaxPages ) {
 
-                # start table output
-                $PDFObject->PageNew(
-                    %PageParam,
-                    FooterRight => $Page . ' 1',
-                );
-                PAGE:
-                for ( 2 .. $MaxPages ) {
+                # output table (or a fragment of it)
+                %TableParam = $PDFObject->Table( %TableParam, );
 
-                    # output table (or a fragment of it)
-                    %TableParam = $PDFObject->Table( %TableParam, );
-
-                    # stop output or another page
-                    if ( $TableParam{State} ) {
-                        last PAGE;
-                    }
-                    else {
-                        $PDFObject->PageNew(
-                            %PageParam, FooterRight => $Page
-                                . ' '
-                                . $_,
-                        );
-                    }
+                # stop output or another page
+                if ( $TableParam{State} ) {
+                    last PAGE;
                 }
-
-                # return the pdf document
-                my $Filename = 'change_search';
-                my ( $s, $m, $h, $D, $M, $Y ) = $TimeObject->SystemTime2Date(
-                    SystemTime => $TimeObject->SystemTime(),
-                );
-                $M = sprintf( "%02d", $M );
-                $D = sprintf( "%02d", $D );
-                $h = sprintf( "%02d", $h );
-                $m = sprintf( "%02d", $m );
-                my $PDFString = $PDFObject->DocumentOutput();
-                return $LayoutObject->Attachment(
-                    Filename    => $Filename . "_" . "$Y-$M-$D" . "_" . "$h-$m.pdf",
-                    ContentType => "application/pdf",
-                    Content     => $PDFString,
-                    Type        => 'attachment',
-                );
-            }
-            else {
-                my $Output = $LayoutObject->PrintHeader( Width => 800 );
-                if ( @{$ViewableChangeIDs} == $Self->{SearchLimit} ) {
-                    $Param{Warning} = '$Text{"Reached max. count of %s search hits!", "'
-                        . $Self->{SearchLimit} . '"}';
+                else {
+                    $PDFObject->PageNew(
+                        %PageParam, FooterRight => $Page
+                            . ' '
+                            . $Count,
+                    );
                 }
-                $Output .= $LayoutObject->Output(
-                    TemplateFile => 'AgentITSMChangeSearchResultPrint',
-                    Data         => \%Param,
-                );
-
-                # add footer
-                $Output .= $LayoutObject->PrintFooter();
-
-                # return output
-                return $Output;
             }
 
+            # return the pdf document
+            my $Filename = 'change_search';
+            my ( $s, $m, $h, $D, $M, $Y ) = $TimeObject->SystemTime2Date(
+                SystemTime => $TimeObject->SystemTime(),
+            );
+            $M = sprintf( "%02d", $M );
+            $D = sprintf( "%02d", $D );
+            $h = sprintf( "%02d", $h );
+            $m = sprintf( "%02d", $m );
+            my $PDFString = $PDFObject->DocumentOutput();
+            return $LayoutObject->Attachment(
+                Filename    => $Filename . "_" . "$Y-$M-$D" . "_" . "$h-$m.pdf",
+                ContentType => "application/pdf",
+                Content     => $PDFString,
+                Type        => 'inline',
+            );
         }
         else {
 
