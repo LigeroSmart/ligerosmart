@@ -68,4 +68,12 @@
     color: #000;
 }
 
+/**
+ * @subsection  TableSmall
+ */
+
+.TableSmall tbody tr.Invalid {
+    color: #CCC;
+}
+
 } /* end @media */

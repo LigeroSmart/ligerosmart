@@ -64,7 +64,7 @@
             </tr>
 [% RenderBlockEnd("NoDataFoundMsg") %]
 [% RenderBlockStart("Record") %]
-            <tr id="TemplateID_[% Data.TemplateID | html %]">
+            <tr [% IF Data.ValidID != 1 %]class="Invalid"[% END %] id="TemplateID_[% Data.TemplateID | html %]">
 [% RenderBlockStart("RecordTemplateID") %]
                 <td>[% Translate(Data.TemplateID) | html %]</td>
 [% RenderBlockEnd("RecordTemplateID") %]

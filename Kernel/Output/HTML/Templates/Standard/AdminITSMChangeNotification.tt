@@ -52,12 +52,12 @@
                             <th>[% Translate("Rule") | html %]</th>
                             <th>[% Translate("Recipients") | html %]</th>
 #                            <th>[% Translate("Comment") | html %]</th>
-                            <th>[% Translate("valid") | html %]/[% Translate("invalid") | html %]</th>
+                            <th>[% Translate("Validity") | html %]</th>
                         </tr>
                     </thead>
                     <tbody>
 [% RenderBlockStart("OverviewResultRow") %]
-                        <tr>
+                        <tr [% IF Data.ValidID != 1%]class="Invalid"[% END %]>
                             <td><a class="AsBlock" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Change;ID=[% Data.ID | uri %]">[% Data.Name | html %]</a></td>
                             <td>[% Translate(Data.Event) | html %]</td>
                             <td>[% Data.Attribute | html %]</td>
