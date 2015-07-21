@@ -23,7 +23,7 @@ ITSM.Agent.IncidentState = (function (TargetNS) {
 
         Data.Subaction = 'GetServiceIncidentState';
 
-        Core.AJAX.FunctionCall( Core.Config.Get('Baselink'), Data, function (Response) {
+        Core.AJAX.FunctionCall(Core.Config.Get('Baselink'), Data, function (Response) {
 
             // if a service was selected and an incident state was found
             if (Response.CurInciSignal) {

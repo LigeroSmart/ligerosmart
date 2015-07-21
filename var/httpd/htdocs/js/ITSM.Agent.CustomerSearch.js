@@ -32,24 +32,24 @@ ITSM.Agent.CustomerSearch = (function (TargetNS) {
 
         if (isJQueryObject($Element)) {
 
-            Core.UI.Autocomplete.Init(
-                $Element,
-                function (Request, Response) {
-                    var URL = Core.Config.Get('Baselink'), Data = {
-                        Action: 'AgentCustomerSearch',
-                        Term: Request.term,
-                        MaxResults: Core.UI.Autocomplete.GetConfig('MaxResultsDisplayed')
-                    };
+            Core.UI.Autocomplete.Init($Element, function (Request, Response) {
+                    var URL = Core.Config.Get('Baselink'),
+                        Data = {
+                            Action: 'AgentCustomerSearch',
+                            Term: Request.term,
+                            MaxResults: Core.UI.Autocomplete.GetConfig('MaxResultsDisplayed')
+                        };
 
                     $Element.data('AutoCompleteXHR', Core.AJAX.FunctionCall(URL, Data, function (Result) {
-                        var Data = [];
+                        var ValueData = [];
+                        $Element.removeData('AutoCompleteXHR');
                         $.each(Result, function () {
-                            Data.push({
+                            ValueData.push({
                                 label: this.CustomerValue + " (" + this.CustomerKey + ")",
                                 value: this.CustomerValue
                             });
                         });
-                        Response(Data);
+                        Response(ValueData);
                     }));
                 },
                 function (Event, UI) {
