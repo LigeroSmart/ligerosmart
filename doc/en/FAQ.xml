@@ -1561,13 +1561,20 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
             command on the command line:
         </para>
         <screen>
-shell> perl bin/otrs.UnitTest.pl -n FAQ:FAQSearch:GenericInterface/FAQConnector
+shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test FAQ:FAQSearch:GenericInterface/FAQConnector:Console/Command/Admin/FAQ/Import
+        </screen>
+        <para>Selenium unit tests</para>
+        <para>
+            To run the Selenium unit tests, make sure you have a complete Selenium environment setup in your Kernel/Config.pm file and a running a WebDriver.
+        </para>
+        <screen>
+shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test AgentFAQExplorer:AgentFAQLanguage:AgentFAQPrint:AgentFAQSearch:AgentFAQZoom
         </screen>
         <para>Run all available unit tests</para>
         <para>
             To run all available unit tests, use the following command on the command line:
         </para>
-        <screen>shell> perl bin/otrs.UnitTest.pl</screen>
+        <screen>shell> perl bin/otrs.Console.pl Dev::UnitTest::Run</screen>
     </section>
 </chapter>
 
