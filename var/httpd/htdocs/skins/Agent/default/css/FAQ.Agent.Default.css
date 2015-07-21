@@ -103,5 +103,9 @@ fieldset.TableSmall > div.FAQDivider {
     margin-right: auto;
 }
 
+.TableSmall tbody tr.Invalid {
+    color: #CCC;
+}
+
 }
 

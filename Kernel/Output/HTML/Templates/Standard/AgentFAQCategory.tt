@@ -63,7 +63,7 @@
                         </tr>
 [% RenderBlockEnd("NoDataFoundMsg") %]
 [% RenderBlockStart("OverviewResultRow") %]
-                        <tr>
+                        <tr [% IF Data.Valid != 'valid'%]class="Invalid"[% END %] >
                             <td><a class="AsBlock" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Change;CategoryID=[% Data.CategoryID | uri %]">[% Data.Name | html %]</a></td>
                             <td>[% Translate(Data.Valid) | html %]</td>
                             <td class="Center Last">

@@ -94,7 +94,7 @@
         </thead>
         <tbody>
 [% RenderBlockStart("Record") %]
-            <tr id="ItemID_[% Data.ItemID | html %]_[% Data.Counter | html %]" class="MasterAction">
+            <tr id="ItemID_[% Data.ItemID | html %]_[% Data.Counter | html %]" class="MasterAction[% IF Data.ValidID != 1%] Invalid[% END %]" >
 [% RenderBlockStart("RecordNumber") %]
                 <td>
 [% RenderBlockStart("RecordNumberLinkStart") %]
