@@ -10,7 +10,6 @@
     <Description Lang="en">The FAQ/knowledge base.</Description>
     <Description Lang="de">Die FAQ-/Wissensdatenbank.</Description>
     <Filelist>
-        <File Permission="755" Location="bin/otrs.FAQImport.pl"/>
         <File Permission="755" Location="bin/cgi-bin/faq.pl"/>
         <File Permission="755" Location="bin/fcgi-bin/faq.fpl"/>
         <File Permission="644" Location="doc/faq-database.png"/>
@@ -102,6 +101,7 @@
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/PublicFAQSearchOpenSearchDescriptionFullText.tt"/>
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/PublicFAQSearchResultShort.tt"/>
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/PublicFAQZoom.tt"/>
+        <File Permission="644" Location="Kernel/System/Console/Command/Admin/FAQ/Import.pm"/>
         <File Permission="644" Location="Kernel/System/DynamicField/ObjectType/FAQ.pm"/>
         <File Permission="644" Location="Kernel/System/FAQ/Category.pm"/>
         <File Permission="644" Location="Kernel/System/FAQ/Language.pm"/>
@@ -111,6 +111,7 @@
         <File Permission="644" Location="Kernel/System/FAQSearch.pm"/>
         <File Permission="644" Location="Kernel/System/LinkObject/FAQ.pm"/>
         <File Permission="644" Location="Kernel/System/Stats/Static/FAQAccess.pm"/>
+        <File Permission="644" Location="scripts/test/Console/Command/Admin/FAQ/Import.t"/>
         <File Permission="644" Location="scripts/test/FAQ.t"/>
         <File Permission="644" Location="scripts/test/FAQSearch.t"/>
         <File Permission="644" Location="scripts/test/Selenium/Agent/AgentFAQExplorer.t"/>
@@ -118,6 +119,7 @@
         <File Permission="644" Location="scripts/test/Selenium/Agent/AgentFAQPrint.t"/>
         <File Permission="644" Location="scripts/test/Selenium/Agent/AgentFAQZoom.t"/>
         <File Permission="644" Location="scripts/test/Selenium/Agent/AgentFAQSearch.t"/>
+        <File Permission="644" Location="scripts/test/sample/FAQ.csv"/>
         <File Permission="644" Location="scripts/test/sample/FAQ-Test1.doc"/>
         <File Permission="644" Location="scripts/test/sample/FAQ-Test1.pdf"/>
         <File Permission="644" Location="var/httpd/htdocs/js/FAQ.Agent.ConfirmationDialog.js"/>
