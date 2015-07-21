@@ -55,10 +55,8 @@
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AdminSLA.tt"/>
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMCustomerSearch.tt"/>
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMService.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMServicePrint.tt"/>
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMServiceZoom.tt"/>
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMSLA.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMSLAPrint.tt"/>
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMSLAZoom.tt"/>
         <File Permission="644" Location="Kernel/System/Console/Command/Admin/Service/Add.pm"/>
         <File Permission="644" Location="Kernel/System/LinkObject/Service.pm"/>

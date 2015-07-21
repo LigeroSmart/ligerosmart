@@ -19,19 +19,7 @@ $Selenium->RunTest(
     sub {
 
         # get helper object
-        $Kernel::OM->ObjectParamAdd(
-            'Kernel::System::UnitTest::Helper' => {
-                RestoreSystemConfiguration => 1,
-                }
-        );
         my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
-
-        # enable PDF output
-        $Kernel::OM->Get('Kernel::System::SysConfig')->ConfigItemUpdate(
-            Valid => 1,
-            Key   => 'PDF',
-            Value => 1,
-        );
 
         # create and log in test user
         my $TestUserLogin = $Helper->TestUserCreate(
@@ -91,8 +79,17 @@ $Selenium->RunTest(
             "Criticality: 3 normal - found",
         );
 
-        # delete test service
+        # clean up servica data
         my $Success = $Kernel::OM->Get('Kernel::System::DB')->Do(
+            SQL => "DELETE FROM service_preferences WHERE service_id = $ServiceID",
+        );
+        $Self->True(
+            $Success,
+            "Deleted ServicePreferences - $ServiceID",
+        );
+
+        # delete test service
+        $Success = $Kernel::OM->Get('Kernel::System::DB')->Do(
             SQL => "DELETE FROM service WHERE id = $ServiceID",
         );
         $Self->True(

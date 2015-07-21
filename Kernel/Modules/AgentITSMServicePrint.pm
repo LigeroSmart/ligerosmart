@@ -76,119 +76,110 @@ sub Run {
     my $PDFObject = $Kernel::OM->Get('Kernel::System::PDF');
 
     # generate pdf output
-    if ($PDFObject) {
-        my %Page;
+    my %Page;
 
-        # get config object
-        my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+    # get config object
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
-        # get maximum number of pages
-        $Page{MaxPages} = $ConfigObject->Get('PDF::MaxPages');
-        if ( !$Page{MaxPages} || $Page{MaxPages} < 1 || $Page{MaxPages} > 1000 ) {
-            $Page{MaxPages} = 100;
-        }
-        $Page{MarginTop}     = 30;
-        $Page{MarginRight}   = 40;
-        $Page{MarginBottom}  = 40;
-        $Page{MarginLeft}    = 40;
-        $Page{HeaderRight}   = $LayoutObject->{LanguageObject}->Translate('Service');
-        $Page{HeadlineLeft}  = $Service{NameShort};
-        $Page{HeadlineRight} = $LayoutObject->{LanguageObject}->Translate('printed by') . ' '
+    # get maximum number of pages
+    $Page{MaxPages} = $ConfigObject->Get('PDF::MaxPages');
+    if ( !$Page{MaxPages} || $Page{MaxPages} < 1 || $Page{MaxPages} > 1000 ) {
+        $Page{MaxPages} = 100;
+    }
+    $Page{MarginTop}    = 30;
+    $Page{MarginRight}  = 40;
+    $Page{MarginBottom} = 40;
+    $Page{MarginLeft}   = 40;
+    $Page{HeaderRight}  = $LayoutObject->{LanguageObject}->Translate('Service');
+    $Page{PageText}     = $LayoutObject->{LanguageObject}->Translate('Page');
+    $Page{PageCount}    = 1;
+
+    # create new pdf document
+    $PDFObject->DocumentNew(
+        Title  => $ConfigObject->Get('Product') . ': ' . $Service{NameShort},
+        Encode => $LayoutObject->{UserCharset},
+    );
+
+    # create first pdf page
+    $PDFObject->PageNew(
+        %Page,
+        FooterRight => $Page{PageText} . ' ' . $Page{PageCount},
+    );
+    $Page{PageCount}++;
+
+    $PDFObject->PositionSet(
+        Move => 'relativ',
+        Y    => -6,
+    );
+
+    # output title
+    $PDFObject->Text(
+        Text     => $Service{NameShort},
+        FontSize => 13,
+    );
+
+    $PDFObject->PositionSet(
+        Move => 'relativ',
+        Y    => -6,
+    );
+
+    # output "printed by"
+    $PDFObject->Text(
+        Text => $LayoutObject->{LanguageObject}->Translate('printed by') . ' '
             . $Self->{UserFullname} . ' '
-            . $LayoutObject->{Time};
-        $Page{FooterLeft} = '';
-        $Page{PageText}   = $LayoutObject->{LanguageObject}->Translate('Page');
-        $Page{PageCount}  = 1;
+            . $LayoutObject->{Time},
+        FontSize => 9,
+    );
 
-        # create new pdf document
-        $PDFObject->DocumentNew(
-            Title  => $ConfigObject->Get('Product') . ': ' . $Service{NameShort},
-            Encode => $LayoutObject->{UserCharset},
-        );
+    $PDFObject->PositionSet(
+        Move => 'relativ',
+        Y    => -14,
+    );
 
-        # create first pdf page
-        $PDFObject->PageNew(
-            %Page,
-            FooterRight => $Page{PageText} . ' ' . $Page{PageCount},
-        );
-        $Page{PageCount}++;
+    # output general infos
+    $Self->_PDFOutputGeneralInfos(
+        Page    => \%Page,
+        Service => \%Service,
+    );
 
-        # output general infos
-        $Self->_PDFOutputGeneralInfos(
+    # output associated slas
+    if (%SLAList) {
+        $Self->_PDFOutputAssociatedSLAs(
             Page    => \%Page,
-            Service => \%Service,
-        );
-
-        # output associated slas
-        if (%SLAList) {
-            $Self->_PDFOutputAssociatedSLAs(
-                Page    => \%Page,
-                SLAList => \%SLAList,
-            );
-        }
-
-        # output detailed infos
-        $Self->_PDFOutputDetailedInfos(
-            Page    => \%Page,
-            Service => \%Service,
-        );
-
-        # create file name
-        my $Filename = $Kernel::OM->Get('Kernel::System::Main')->FilenameCleanUp(
-            Filename => $Service{NameShort},
-            Type     => 'Attachment',
-        );
-
-        # get time object
-        my $TimeObject = $Kernel::OM->Get('Kernel::System::Time');
-
-        my ( $s, $m, $h, $D, $M, $Y ) = $TimeObject->SystemTime2Date(
-            SystemTime => $TimeObject->SystemTime(),
-        );
-        $M = sprintf( "%02d", $M );
-        $D = sprintf( "%02d", $D );
-        $h = sprintf( "%02d", $h );
-        $m = sprintf( "%02d", $m );
-
-        # return the pdf document
-        return $LayoutObject->Attachment(
-            Filename    => 'service_' . $Filename . "_$Y-$M-$D\_$h-$m.pdf",
-            ContentType => 'application/pdf',
-            Content     => $PDFObject->DocumentOutput(),
-            Type        => 'inline',
+            SLAList => \%SLAList,
         );
     }
 
-    # generate html output
-    else {
+    # output detailed infos
+    $Self->_PDFOutputDetailedInfos(
+        Page    => \%Page,
+        Service => \%Service,
+    );
 
-        # output header
-        my $Output = $LayoutObject->PrintHeader( Value => $Service{NameShort} );
+    # create file name
+    my $Filename = $Kernel::OM->Get('Kernel::System::Main')->FilenameCleanUp(
+        Filename => $Service{NameShort},
+        Type     => 'Attachment',
+    );
 
-        # output associated slas
-        if ( keys %SLAList ) {
-            $LayoutObject->Block( Name => "AssociatedSLAs" );
-            for my $SLAID ( sort keys %SLAList ) {
-                $LayoutObject->Block(
-                    Name => "AssociatedSLAsRow",
-                    Data => {
-                        Name => $SLAList{$SLAID},
-                    },
-                );
-            }
-        }
+    # get time object
+    my $TimeObject = $Kernel::OM->Get('Kernel::System::Time');
 
-        # generate output
-        $Output .= $LayoutObject->Output(
-            TemplateFile => 'AgentITSMServicePrint',
-            Data         => \%Service,
-        );
+    my ( $s, $m, $h, $D, $M, $Y ) = $TimeObject->SystemTime2Date(
+        SystemTime => $TimeObject->SystemTime(),
+    );
+    $M = sprintf( "%02d", $M );
+    $D = sprintf( "%02d", $D );
+    $h = sprintf( "%02d", $h );
+    $m = sprintf( "%02d", $m );
 
-        # add footer
-        $Output .= $LayoutObject->PrintFooter();
-
-        return $Output;
-    }
+    # return the pdf document
+    return $LayoutObject->Attachment(
+        Filename    => 'service_' . $Filename . "_$Y-$M-$D\_$h-$m.pdf",
+        ContentType => 'application/pdf',
+        Content     => $PDFObject->DocumentOutput(),
+        Type        => 'inline',
+    );
 }
 
 sub _PDFOutputGeneralInfos {
@@ -271,8 +262,7 @@ sub _PDFOutputGeneralInfos {
     $TableParam{Type}                 = 'Cut';
     $TableParam{Border}               = 0;
     $TableParam{FontSize}             = 6;
-    $TableParam{BackgroundColorEven}  = '#AAAAAA';
-    $TableParam{BackgroundColorOdd}   = '#DDDDDD';
+    $TableParam{BackgroundColorEven}  = '#DDDDDD';
     $TableParam{Padding}              = 1;
     $TableParam{PaddingTop}           = 3;
     $TableParam{PaddingBottom}        = 3;
