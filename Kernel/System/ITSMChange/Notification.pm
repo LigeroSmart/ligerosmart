@@ -236,7 +236,7 @@ sub NotificationSend {
             $Param{Data}->{WorkOrderAgent} = {
                 $Kernel::OM->Get('Kernel::System::User')->GetUserData(
                     UserID => $WorkOrder->{WorkOrderAgentID},
-                )
+                    )
             };
         }
 
@@ -269,7 +269,7 @@ sub NotificationSend {
             $Param{Data}->{ChangeBuilder} = {
                 $Kernel::OM->Get('Kernel::System::User')->GetUserData(
                     UserID => $Change->{ChangeBuilderID},
-                )
+                    )
             };
         }
 
@@ -277,7 +277,7 @@ sub NotificationSend {
             $Param{Data}->{ChangeManager} = {
                 $Kernel::OM->Get('Kernel::System::User')->GetUserData(
                     UserID => $Change->{ChangeManagerID},
-                )
+                    )
             };
         }
     }

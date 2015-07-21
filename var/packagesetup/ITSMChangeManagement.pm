@@ -1440,44 +1440,50 @@ sub _AddNotifications {
     # define notifications and recipients
     my @Notifications = (
         {
-            Name       => 'requested changes',
-            Attribute  => '',
-            Event      => 'ChangeAdd',
-            ValidID    => 1,
-            Comment    => 'inform recipients that a change was requested',
-            Rule       => '',
-            Message => {
+            Name      => 'requested changes',
+            Attribute => '',
+            Event     => 'ChangeAdd',
+            ValidID   => 1,
+            Comment   => 'inform recipients that a change was requested',
+            Rule      => '',
+            Message   => {
                 Agent => {
                     de => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] neu erstellt',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> wurde neu erstellt.' . $ChangeInfoAgentDe,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] neu erstellt',
+                        Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> wurde neu erstellt.'
+                            . $ChangeInfoAgentDe,
                         ContentType => 'text/plain',
                     },
                     en => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] created',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> was created.' . $ChangeInfoAgentEn,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] created',
+                        Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> was created.'
+                            . $ChangeInfoAgentEn,
                         ContentType => 'text/plain',
                     },
                     nl => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] aangemaakt',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> is aangemaakt.' . $ChangeInfoAgentNl,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] aangemaakt',
+                        Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> is aangemaakt.'
+                            . $ChangeInfoAgentNl,
                         ContentType => 'text/plain',
                     },
                 },
                 Customer => {
                     de => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] neu erstellt',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> wurde neu erstellt.' . $ChangeInfoCustomerDe,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] neu erstellt',
+                        Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> wurde neu erstellt.'
+                            . $ChangeInfoCustomerDe,
                         ContentType => 'text/plain',
                     },
                     en => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] created',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> was created.' . $ChangeInfoCustomerEn,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] created',
+                        Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> was created.'
+                            . $ChangeInfoCustomerEn,
                         ContentType => 'text/plain',
                     },
                     nl => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] aangemaakt',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> is aangemaakt.' . $ChangeInfoCustomerNl,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] aangemaakt',
+                        Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> is aangemaakt.'
+                            . $ChangeInfoCustomerNl,
                         ContentType => 'text/plain',
                     },
                 },
@@ -1485,44 +1491,50 @@ sub _AddNotifications {
             Recipients => [ 'ChangeManager', 'ChangeBuilder' ],
         },
         {
-            Name       => 'pending approval changes',
-            Attribute  => 'ChangeState',
-            Event      => 'ChangeUpdate',
-            ValidID    => 1,
-            Comment    => 'inform recipients that a change waits for approval',
-            Rule       => 'pending approval',
-            Message => {
+            Name      => 'pending approval changes',
+            Attribute => 'ChangeState',
+            Event     => 'ChangeUpdate',
+            ValidID   => 1,
+            Comment   => 'inform recipients that a change waits for approval',
+            Rule      => 'pending approval',
+            Message   => {
                 Agent => {
                     de => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] aktualisiert',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> wurde aktualisiert.' . $ChangeInfoAgentDe,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] aktualisiert',
+                        Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> wurde aktualisiert.'
+                            . $ChangeInfoAgentDe,
                         ContentType => 'text/plain',
                     },
                     en => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] updated',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> was updated.' . $ChangeInfoAgentEn,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] updated',
+                        Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> was updated.'
+                            . $ChangeInfoAgentEn,
                         ContentType => 'text/plain',
                     },
                     nl => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] bijgewerkt',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> is bijgewerkt.' . $ChangeInfoAgentNl,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] bijgewerkt',
+                        Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> is bijgewerkt.'
+                            . $ChangeInfoAgentNl,
                         ContentType => 'text/plain',
                     },
                 },
                 Customer => {
                     de => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] aktualisiert',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> wurde aktualisiert.' . $ChangeInfoCustomerDe,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] aktualisiert',
+                        Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> wurde aktualisiert.'
+                            . $ChangeInfoCustomerDe,
                         ContentType => 'text/plain',
                     },
                     en => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] updated',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> was updated.' . $ChangeInfoCustomerEn,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] updated',
+                        Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> was updated.'
+                            . $ChangeInfoCustomerEn,
                         ContentType => 'text/plain',
                     },
                     nl => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] bijgewerkt',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> is bijgewerkt.' . $ChangeInfoCustomerNl,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] bijgewerkt',
+                        Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> is bijgewerkt.'
+                            . $ChangeInfoCustomerNl,
                         ContentType => 'text/plain',
                     },
                 },
@@ -1530,44 +1542,50 @@ sub _AddNotifications {
             Recipients => [ 'ChangeManager', 'CABCustomers', 'CABAgents' ],
         },
         {
-            Name       => 'pending PIR changes',
-            Attribute  => 'ChangeState',
-            Event      => 'ChangeUpdate',
-            ValidID    => 1,
-            Comment    => 'inform recipients that a change waits for PIR',
-            Rule       => 'pending pir',
-            Message => {
+            Name      => 'pending PIR changes',
+            Attribute => 'ChangeState',
+            Event     => 'ChangeUpdate',
+            ValidID   => 1,
+            Comment   => 'inform recipients that a change waits for PIR',
+            Rule      => 'pending pir',
+            Message   => {
                 Agent => {
                     de => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] aktualisiert',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> wurde aktualisiert.' . $ChangeInfoAgentDe,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] aktualisiert',
+                        Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> wurde aktualisiert.'
+                            . $ChangeInfoAgentDe,
                         ContentType => 'text/plain',
                     },
                     en => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] updated',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> was updated.' . $ChangeInfoAgentEn,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] updated',
+                        Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> was updated.'
+                            . $ChangeInfoAgentEn,
                         ContentType => 'text/plain',
                     },
                     nl => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] bijgewerkt',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> is bijgewerkt.' . $ChangeInfoAgentNl,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] bijgewerkt',
+                        Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> is bijgewerkt.'
+                            . $ChangeInfoAgentNl,
                         ContentType => 'text/plain',
                     },
                 },
                 Customer => {
                     de => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] aktualisiert',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> wurde aktualisiert.' . $ChangeInfoCustomerDe,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] aktualisiert',
+                        Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> wurde aktualisiert.'
+                            . $ChangeInfoCustomerDe,
                         ContentType => 'text/plain',
                     },
                     en => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] updated',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> was updated.' . $ChangeInfoCustomerEn,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] updated',
+                        Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> was updated.'
+                            . $ChangeInfoCustomerEn,
                         ContentType => 'text/plain',
                     },
                     nl => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] bijgewerkt',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> is bijgewerkt.' . $ChangeInfoCustomerNl,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] bijgewerkt',
+                        Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> is bijgewerkt.'
+                            . $ChangeInfoCustomerNl,
                         ContentType => 'text/plain',
                     },
                 },
@@ -1575,44 +1593,50 @@ sub _AddNotifications {
             Recipients => ['ChangeManager'],
         },
         {
-            Name       => 'rejected changes',
-            Attribute  => 'ChangeState',
-            Event      => 'ChangeUpdate',
-            ValidID    => 1,
-            Comment    => 'inform recipients that a change was rejected',
-            Rule       => 'rejected',
-            Message => {
+            Name      => 'rejected changes',
+            Attribute => 'ChangeState',
+            Event     => 'ChangeUpdate',
+            ValidID   => 1,
+            Comment   => 'inform recipients that a change was rejected',
+            Rule      => 'rejected',
+            Message   => {
                 Agent => {
                     de => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] aktualisiert',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> wurde aktualisiert.' . $ChangeInfoAgentDe,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] aktualisiert',
+                        Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> wurde aktualisiert.'
+                            . $ChangeInfoAgentDe,
                         ContentType => 'text/plain',
                     },
                     en => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] updated',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> was updated.' . $ChangeInfoAgentEn,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] updated',
+                        Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> was updated.'
+                            . $ChangeInfoAgentEn,
                         ContentType => 'text/plain',
                     },
                     nl => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] bijgewerkt',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> is bijgewerkt.' . $ChangeInfoAgentNl,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] bijgewerkt',
+                        Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> is bijgewerkt.'
+                            . $ChangeInfoAgentNl,
                         ContentType => 'text/plain',
                     },
                 },
                 Customer => {
                     de => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] aktualisiert',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> wurde aktualisiert.' . $ChangeInfoCustomerDe,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] aktualisiert',
+                        Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> wurde aktualisiert.'
+                            . $ChangeInfoCustomerDe,
                         ContentType => 'text/plain',
                     },
                     en => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] updated',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> was updated.' . $ChangeInfoCustomerEn,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] updated',
+                        Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> was updated.'
+                            . $ChangeInfoCustomerEn,
                         ContentType => 'text/plain',
                     },
                     nl => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] bijgewerkt',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> is bijgewerkt.' . $ChangeInfoCustomerNl,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] bijgewerkt',
+                        Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> is bijgewerkt.'
+                            . $ChangeInfoCustomerNl,
                         ContentType => 'text/plain',
                     },
                 },
@@ -1622,44 +1646,50 @@ sub _AddNotifications {
             ],
         },
         {
-            Name       => 'approved changes',
-            Attribute  => 'ChangeState',
-            Event      => 'ChangeUpdate',
-            ValidID    => 1,
-            Comment    => 'inform recipients that a change was approved',
-            Rule       => 'approved',
-            Message => {
+            Name      => 'approved changes',
+            Attribute => 'ChangeState',
+            Event     => 'ChangeUpdate',
+            ValidID   => 1,
+            Comment   => 'inform recipients that a change was approved',
+            Rule      => 'approved',
+            Message   => {
                 Agent => {
                     de => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] aktualisiert',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> wurde aktualisiert.' . $ChangeInfoAgentDe,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] aktualisiert',
+                        Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> wurde aktualisiert.'
+                            . $ChangeInfoAgentDe,
                         ContentType => 'text/plain',
                     },
                     en => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] updated',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> was updated.' . $ChangeInfoAgentEn,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] updated',
+                        Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> was updated.'
+                            . $ChangeInfoAgentEn,
                         ContentType => 'text/plain',
                     },
                     nl => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] bijgewerkt',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> is bijgewerkt.' . $ChangeInfoAgentNl,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] bijgewerkt',
+                        Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> is bijgewerkt.'
+                            . $ChangeInfoAgentNl,
                         ContentType => 'text/plain',
                     },
                 },
                 Customer => {
                     de => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] aktualisiert',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> wurde aktualisiert.' . $ChangeInfoCustomerDe,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] aktualisiert',
+                        Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> wurde aktualisiert.'
+                            . $ChangeInfoCustomerDe,
                         ContentType => 'text/plain',
                     },
                     en => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] updated',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> was updated.' . $ChangeInfoCustomerEn,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] updated',
+                        Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> was updated.'
+                            . $ChangeInfoCustomerEn,
                         ContentType => 'text/plain',
                     },
                     nl => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] bijgewerkt',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> is bijgewerkt.' . $ChangeInfoCustomerNl,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] bijgewerkt',
+                        Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> is bijgewerkt.'
+                            . $ChangeInfoCustomerNl,
                         ContentType => 'text/plain',
                     },
                 },
@@ -1670,44 +1700,50 @@ sub _AddNotifications {
             ],
         },
         {
-            Name       => 'changes in progress',
-            Attribute  => 'ChangeState',
-            Event      => 'ChangeUpdate',
-            ValidID    => 1,
-            Comment    => 'inform recipients that a change is in progress',
-            Rule       => 'in progress',
-            Message => {
+            Name      => 'changes in progress',
+            Attribute => 'ChangeState',
+            Event     => 'ChangeUpdate',
+            ValidID   => 1,
+            Comment   => 'inform recipients that a change is in progress',
+            Rule      => 'in progress',
+            Message   => {
                 Agent => {
                     de => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] aktualisiert',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> wurde aktualisiert.' . $ChangeInfoAgentDe,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] aktualisiert',
+                        Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> wurde aktualisiert.'
+                            . $ChangeInfoAgentDe,
                         ContentType => 'text/plain',
                     },
                     en => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] updated',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> was updated.' . $ChangeInfoAgentEn,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] updated',
+                        Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> was updated.'
+                            . $ChangeInfoAgentEn,
                         ContentType => 'text/plain',
                     },
                     nl => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] bijgewerkt',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> is bijgewerkt.' . $ChangeInfoAgentNl,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] bijgewerkt',
+                        Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> is bijgewerkt.'
+                            . $ChangeInfoAgentNl,
                         ContentType => 'text/plain',
                     },
                 },
                 Customer => {
                     de => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] aktualisiert',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> wurde aktualisiert.' . $ChangeInfoCustomerDe,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] aktualisiert',
+                        Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> wurde aktualisiert.'
+                            . $ChangeInfoCustomerDe,
                         ContentType => 'text/plain',
                     },
                     en => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] updated',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> was updated.' . $ChangeInfoCustomerEn,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] updated',
+                        Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> was updated.'
+                            . $ChangeInfoCustomerEn,
                         ContentType => 'text/plain',
                     },
                     nl => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] bijgewerkt',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> is bijgewerkt.' . $ChangeInfoCustomerNl,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] bijgewerkt',
+                        Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> is bijgewerkt.'
+                            . $ChangeInfoCustomerNl,
                         ContentType => 'text/plain',
                     },
                 },
@@ -1715,44 +1751,50 @@ sub _AddNotifications {
             Recipients => [ 'ChangeManager', 'WorkOrderAgents' ],
         },
         {
-            Name       => 'successful changes',
-            Attribute  => 'ChangeState',
-            Event      => 'ChangeUpdate',
-            ValidID    => 1,
-            Comment    => 'inform recipients that a change was successful',
-            Rule       => 'successful',
-            Message => {
+            Name      => 'successful changes',
+            Attribute => 'ChangeState',
+            Event     => 'ChangeUpdate',
+            ValidID   => 1,
+            Comment   => 'inform recipients that a change was successful',
+            Rule      => 'successful',
+            Message   => {
                 Agent => {
                     de => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] aktualisiert',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> wurde aktualisiert.' . $ChangeInfoAgentDe,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] aktualisiert',
+                        Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> wurde aktualisiert.'
+                            . $ChangeInfoAgentDe,
                         ContentType => 'text/plain',
                     },
                     en => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] updated',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> was updated.' . $ChangeInfoAgentEn,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] updated',
+                        Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> was updated.'
+                            . $ChangeInfoAgentEn,
                         ContentType => 'text/plain',
                     },
                     nl => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] bijgewerkt',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> is bijgewerkt.' . $ChangeInfoAgentNl,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] bijgewerkt',
+                        Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> is bijgewerkt.'
+                            . $ChangeInfoAgentNl,
                         ContentType => 'text/plain',
                     },
                 },
                 Customer => {
                     de => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] aktualisiert',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> wurde aktualisiert.' . $ChangeInfoCustomerDe,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] aktualisiert',
+                        Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> wurde aktualisiert.'
+                            . $ChangeInfoCustomerDe,
                         ContentType => 'text/plain',
                     },
                     en => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] updated',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> was updated.' . $ChangeInfoCustomerEn,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] updated',
+                        Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> was updated.'
+                            . $ChangeInfoCustomerEn,
                         ContentType => 'text/plain',
                     },
                     nl => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] bijgewerkt',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> is bijgewerkt.' . $ChangeInfoCustomerNl,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] bijgewerkt',
+                        Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> is bijgewerkt.'
+                            . $ChangeInfoCustomerNl,
                         ContentType => 'text/plain',
                     },
                 },
@@ -1762,44 +1804,50 @@ sub _AddNotifications {
             ],
         },
         {
-            Name       => 'failed changes',
-            Attribute  => 'ChangeState',
-            Event      => 'ChangeUpdate',
-            ValidID    => 1,
-            Comment    => 'inform recipients that a change failed',
-            Rule       => 'failed',
-            Message => {
+            Name      => 'failed changes',
+            Attribute => 'ChangeState',
+            Event     => 'ChangeUpdate',
+            ValidID   => 1,
+            Comment   => 'inform recipients that a change failed',
+            Rule      => 'failed',
+            Message   => {
                 Agent => {
                     de => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] aktualisiert',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> wurde aktualisiert.' . $ChangeInfoAgentDe,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] aktualisiert',
+                        Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> wurde aktualisiert.'
+                            . $ChangeInfoAgentDe,
                         ContentType => 'text/plain',
                     },
                     en => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] updated',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> was updated.' . $ChangeInfoAgentEn,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] updated',
+                        Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> was updated.'
+                            . $ChangeInfoAgentEn,
                         ContentType => 'text/plain',
                     },
                     nl => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] bijgewerkt',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> is bijgewerkt.' . $ChangeInfoAgentNl,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] bijgewerkt',
+                        Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> is bijgewerkt.'
+                            . $ChangeInfoAgentNl,
                         ContentType => 'text/plain',
                     },
                 },
                 Customer => {
                     de => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] aktualisiert',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> wurde aktualisiert.' . $ChangeInfoCustomerDe,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] aktualisiert',
+                        Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> wurde aktualisiert.'
+                            . $ChangeInfoCustomerDe,
                         ContentType => 'text/plain',
                     },
                     en => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] updated',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> was updated.' . $ChangeInfoCustomerEn,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] updated',
+                        Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> was updated.'
+                            . $ChangeInfoCustomerEn,
                         ContentType => 'text/plain',
                     },
                     nl => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] bijgewerkt',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> is bijgewerkt.' . $ChangeInfoCustomerNl,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] bijgewerkt',
+                        Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> is bijgewerkt.'
+                            . $ChangeInfoCustomerNl,
                         ContentType => 'text/plain',
                     },
                 },
@@ -1809,44 +1857,50 @@ sub _AddNotifications {
             ],
         },
         {
-            Name       => 'canceled changes',
-            Attribute  => 'ChangeState',
-            Event      => 'ChangeUpdate',
-            ValidID    => 1,
-            Comment    => 'inform recipients that a change was canceled',
-            Rule       => 'canceled',
-            Message => {
+            Name      => 'canceled changes',
+            Attribute => 'ChangeState',
+            Event     => 'ChangeUpdate',
+            ValidID   => 1,
+            Comment   => 'inform recipients that a change was canceled',
+            Rule      => 'canceled',
+            Message   => {
                 Agent => {
                     de => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] aktualisiert',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> wurde aktualisiert.' . $ChangeInfoAgentDe,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] aktualisiert',
+                        Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> wurde aktualisiert.'
+                            . $ChangeInfoAgentDe,
                         ContentType => 'text/plain',
                     },
                     en => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] updated',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> was updated.' . $ChangeInfoAgentEn,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] updated',
+                        Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> was updated.'
+                            . $ChangeInfoAgentEn,
                         ContentType => 'text/plain',
                     },
                     nl => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] bijgewerkt',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> is bijgewerkt.' . $ChangeInfoAgentNl,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] bijgewerkt',
+                        Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> is bijgewerkt.'
+                            . $ChangeInfoAgentNl,
                         ContentType => 'text/plain',
                     },
                 },
                 Customer => {
                     de => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] aktualisiert',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> wurde aktualisiert.' . $ChangeInfoCustomerDe,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] aktualisiert',
+                        Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> wurde aktualisiert.'
+                            . $ChangeInfoCustomerDe,
                         ContentType => 'text/plain',
                     },
                     en => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] updated',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> was updated.' . $ChangeInfoCustomerEn,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] updated',
+                        Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> was updated.'
+                            . $ChangeInfoCustomerEn,
                         ContentType => 'text/plain',
                     },
                     nl => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] bijgewerkt',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> is bijgewerkt.' . $ChangeInfoCustomerNl,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] bijgewerkt',
+                        Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> is bijgewerkt.'
+                            . $ChangeInfoCustomerNl,
                         ContentType => 'text/plain',
                     },
                 },
@@ -1854,44 +1908,50 @@ sub _AddNotifications {
             Recipients => [ 'ChangeBuilder', 'ChangeManager' ],
         },
         {
-            Name       => 'retracted changes',
-            Attribute  => 'ChangeState',
-            Event      => 'ChangeUpdate',
-            ValidID    => 1,
-            Comment    => 'inform recipients that a change was retracted',
-            Rule       => 'retracted',
-            Message => {
+            Name      => 'retracted changes',
+            Attribute => 'ChangeState',
+            Event     => 'ChangeUpdate',
+            ValidID   => 1,
+            Comment   => 'inform recipients that a change was retracted',
+            Rule      => 'retracted',
+            Message   => {
                 Agent => {
                     de => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] aktualisiert',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> wurde aktualisiert.' . $ChangeInfoAgentDe,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] aktualisiert',
+                        Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> wurde aktualisiert.'
+                            . $ChangeInfoAgentDe,
                         ContentType => 'text/plain',
                     },
                     en => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] updated',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> was updated.' . $ChangeInfoAgentEn,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] updated',
+                        Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> was updated.'
+                            . $ChangeInfoAgentEn,
                         ContentType => 'text/plain',
                     },
                     nl => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] bijgewerkt',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> is bijgewerkt.' . $ChangeInfoAgentNl,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] bijgewerkt',
+                        Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> is bijgewerkt.'
+                            . $ChangeInfoAgentNl,
                         ContentType => 'text/plain',
                     },
                 },
                 Customer => {
                     de => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] aktualisiert',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> wurde aktualisiert.' . $ChangeInfoCustomerDe,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] aktualisiert',
+                        Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> wurde aktualisiert.'
+                            . $ChangeInfoCustomerDe,
                         ContentType => 'text/plain',
                     },
                     en => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] updated',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> was updated.' . $ChangeInfoCustomerEn,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] updated',
+                        Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> was updated.'
+                            . $ChangeInfoCustomerEn,
                         ContentType => 'text/plain',
                     },
                     nl => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] bijgewerkt',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> is bijgewerkt.' . $ChangeInfoCustomerNl,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] bijgewerkt',
+                        Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> is bijgewerkt.'
+                            . $ChangeInfoCustomerNl,
                         ContentType => 'text/plain',
                     },
                 },
@@ -1901,44 +1961,50 @@ sub _AddNotifications {
             ],
         },
         {
-            Name       => 'ChangeManager update',
-            Attribute  => 'ChangeManagerID',
-            Event      => 'ChangeUpdate',
-            ValidID    => 1,
-            Comment    => 'inform recipients that the changemanager was replaced',
-            Rule       => '.*',
-            Message => {
+            Name      => 'ChangeManager update',
+            Attribute => 'ChangeManagerID',
+            Event     => 'ChangeUpdate',
+            ValidID   => 1,
+            Comment   => 'inform recipients that the changemanager was replaced',
+            Rule      => '.*',
+            Message   => {
                 Agent => {
                     de => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] aktualisiert',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> wurde aktualisiert.' . $ChangeInfoAgentDe,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] aktualisiert',
+                        Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> wurde aktualisiert.'
+                            . $ChangeInfoAgentDe,
                         ContentType => 'text/plain',
                     },
                     en => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] updated',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> was updated.' . $ChangeInfoAgentEn,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] updated',
+                        Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> was updated.'
+                            . $ChangeInfoAgentEn,
                         ContentType => 'text/plain',
                     },
                     nl => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] bijgewerkt',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> is bijgewerkt.' . $ChangeInfoAgentNl,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] bijgewerkt',
+                        Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> is bijgewerkt.'
+                            . $ChangeInfoAgentNl,
                         ContentType => 'text/plain',
                     },
                 },
                 Customer => {
                     de => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] aktualisiert',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> wurde aktualisiert.' . $ChangeInfoCustomerDe,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] aktualisiert',
+                        Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> wurde aktualisiert.'
+                            . $ChangeInfoCustomerDe,
                         ContentType => 'text/plain',
                     },
                     en => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] updated',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> was updated.' . $ChangeInfoCustomerEn,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] updated',
+                        Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> was updated.'
+                            . $ChangeInfoCustomerEn,
                         ContentType => 'text/plain',
                     },
                     nl => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] bijgewerkt',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> is bijgewerkt.' . $ChangeInfoCustomerNl,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] bijgewerkt',
+                        Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> is bijgewerkt.'
+                            . $ChangeInfoCustomerNl,
                         ContentType => 'text/plain',
                     },
                 },
@@ -1948,44 +2014,50 @@ sub _AddNotifications {
             ],
         },
         {
-            Name       => 'ChangeBuilder update',
-            Attribute  => 'ChangeBuilderID',
-            Event      => 'ChangeUpdate',
-            ValidID    => 1,
-            Comment    => 'inform recipients that the changebuilder was replaced',
-            Rule       => '.*',
-            Message => {
+            Name      => 'ChangeBuilder update',
+            Attribute => 'ChangeBuilderID',
+            Event     => 'ChangeUpdate',
+            ValidID   => 1,
+            Comment   => 'inform recipients that the changebuilder was replaced',
+            Rule      => '.*',
+            Message   => {
                 Agent => {
                     de => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] aktualisiert',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> wurde aktualisiert.' . $ChangeInfoAgentDe,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] aktualisiert',
+                        Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> wurde aktualisiert.'
+                            . $ChangeInfoAgentDe,
                         ContentType => 'text/plain',
                     },
                     en => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] updated',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> was updated.' . $ChangeInfoAgentEn,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] updated',
+                        Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> was updated.'
+                            . $ChangeInfoAgentEn,
                         ContentType => 'text/plain',
                     },
                     nl => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] bijgewerkt',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> is bijgewerkt.' . $ChangeInfoAgentNl,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] bijgewerkt',
+                        Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> is bijgewerkt.'
+                            . $ChangeInfoAgentNl,
                         ContentType => 'text/plain',
                     },
                 },
                 Customer => {
                     de => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] aktualisiert',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> wurde aktualisiert.' . $ChangeInfoCustomerDe,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] aktualisiert',
+                        Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> wurde aktualisiert.'
+                            . $ChangeInfoCustomerDe,
                         ContentType => 'text/plain',
                     },
                     en => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] updated',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> was updated.' . $ChangeInfoCustomerEn,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] updated',
+                        Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> was updated.'
+                            . $ChangeInfoCustomerEn,
                         ContentType => 'text/plain',
                     },
                     nl => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] bijgewerkt',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> is bijgewerkt.' . $ChangeInfoCustomerNl,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] bijgewerkt',
+                        Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> is bijgewerkt.'
+                            . $ChangeInfoCustomerNl,
                         ContentType => 'text/plain',
                     },
                 },
@@ -1995,44 +2067,62 @@ sub _AddNotifications {
             ],
         },
         {
-            Name       => 'new workorder',
-            Attribute  => '',
-            Event      => 'WorkOrderAdd',
-            ValidID    => 1,
-            Comment    => 'inform recipients that a workorder was added',
-            Rule       => '',
-            Message => {
+            Name      => 'new workorder',
+            Attribute => '',
+            Event     => 'WorkOrderAdd',
+            ValidID   => 1,
+            Comment   => 'inform recipients that a workorder was added',
+            Rule      => '',
+            Message   => {
                 Agent => {
                     de => {
-                        Subject     => '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] neu erstellt',
-                        Body        => '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde neu erstellt.' . $WorkOrderInfoAgentDe,
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] neu erstellt',
+                        Body =>
+                            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde neu erstellt.'
+                            . $WorkOrderInfoAgentDe,
                         ContentType => 'text/plain',
                     },
                     en => {
-                        Subject     => '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] created',
-                        Body        => '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> was created.' . $WorkOrderInfoAgentEn,
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] created',
+                        Body =>
+                            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> was created.'
+                            . $WorkOrderInfoAgentEn,
                         ContentType => 'text/plain',
                     },
                     nl => {
-                        Subject     => '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] aangemaakt',
-                        Body        => '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> is aangemaakt.' . $WorkOrderInfoAgentNl,
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] aangemaakt',
+                        Body =>
+                            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> is aangemaakt.'
+                            . $WorkOrderInfoAgentNl,
                         ContentType => 'text/plain',
                     },
                 },
                 Customer => {
                     de => {
-                        Subject     => '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] neu erstellt',
-                        Body        => '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde neu erstellt.' . $WorkOrderInfoCustomerDe,
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] neu erstellt',
+                        Body =>
+                            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde neu erstellt.'
+                            . $WorkOrderInfoCustomerDe,
                         ContentType => 'text/plain',
                     },
                     en => {
-                        Subject     => '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] created',
-                        Body        => '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> was created.' . $WorkOrderInfoCustomerEn,
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] created',
+                        Body =>
+                            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> was created.'
+                            . $WorkOrderInfoCustomerEn,
                         ContentType => 'text/plain',
                     },
                     nl => {
-                        Subject     => '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] aangemaakt',
-                        Body        => '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> is aangemaakt.' . $WorkOrderInfoCustomerNl,
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] aangemaakt',
+                        Body =>
+                            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> is aangemaakt.'
+                            . $WorkOrderInfoCustomerNl,
                         ContentType => 'text/plain',
                     },
                 },
@@ -2042,44 +2132,62 @@ sub _AddNotifications {
             ],
         },
         {
-            Name       => 'updated state for workorder',
-            Attribute  => 'WorkOrderState',
-            Event      => 'WorkOrderUpdate',
-            ValidID    => 1,
-            Comment    => 'inform recipients that a the state of a workorder was changed',
-            Rule       => '.*',
-            Message => {
+            Name      => 'updated state for workorder',
+            Attribute => 'WorkOrderState',
+            Event     => 'WorkOrderUpdate',
+            ValidID   => 1,
+            Comment   => 'inform recipients that a the state of a workorder was changed',
+            Rule      => '.*',
+            Message   => {
                 Agent => {
                     de => {
-                        Subject     => '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] aktualisiert',
-                        Body        => '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde aktualisiert.' . $WorkOrderInfoAgentDe,
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] aktualisiert',
+                        Body =>
+                            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde aktualisiert.'
+                            . $WorkOrderInfoAgentDe,
                         ContentType => 'text/plain',
                     },
                     en => {
-                        Subject     => '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] updated',
-                        Body        => '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> was updated.' . $WorkOrderInfoAgentEn,
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] updated',
+                        Body =>
+                            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> was updated.'
+                            . $WorkOrderInfoAgentEn,
                         ContentType => 'text/plain',
                     },
                     nl => {
-                        Subject     => '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] bijgewerkt',
-                        Body        => '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> is bijgewerkt.' . $WorkOrderInfoAgentNl,
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] bijgewerkt',
+                        Body =>
+                            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> is bijgewerkt.'
+                            . $WorkOrderInfoAgentNl,
                         ContentType => 'text/plain',
                     },
                 },
                 Customer => {
                     de => {
-                        Subject     => '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] aktualisiert',
-                        Body        => '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde aktualisiert.' . $WorkOrderInfoCustomerDe,
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] aktualisiert',
+                        Body =>
+                            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde aktualisiert.'
+                            . $WorkOrderInfoCustomerDe,
                         ContentType => 'text/plain',
                     },
                     en => {
-                        Subject     => '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] updated',
-                        Body        => '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> was updated.' . $WorkOrderInfoCustomerEn,
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] updated',
+                        Body =>
+                            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> was updated.'
+                            . $WorkOrderInfoCustomerEn,
                         ContentType => 'text/plain',
                     },
                     nl => {
-                        Subject     => '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] bijgewerkt',
-                        Body        => '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> is bijgewerkt.' . $WorkOrderInfoCustomerNl,
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] bijgewerkt',
+                        Body =>
+                            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> is bijgewerkt.'
+                            . $WorkOrderInfoCustomerNl,
                         ContentType => 'text/plain',
                     },
                 },
@@ -2089,44 +2197,62 @@ sub _AddNotifications {
             ],
         },
         {
-            Name       => 'updated workorder agent for workorder',
-            Attribute  => 'WorkOrderAgentID',
-            Event      => 'WorkOrderUpdate',
-            ValidID    => 1,
-            Comment    => 'inform recipients that the workorder agent was replaced',
-            Rule       => '.*',
-            Message => {
+            Name      => 'updated workorder agent for workorder',
+            Attribute => 'WorkOrderAgentID',
+            Event     => 'WorkOrderUpdate',
+            ValidID   => 1,
+            Comment   => 'inform recipients that the workorder agent was replaced',
+            Rule      => '.*',
+            Message   => {
                 Agent => {
                     de => {
-                        Subject     => '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] aktualisiert',
-                        Body        => '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde aktualisiert.' . $WorkOrderInfoAgentDe,
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] aktualisiert',
+                        Body =>
+                            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde aktualisiert.'
+                            . $WorkOrderInfoAgentDe,
                         ContentType => 'text/plain',
                     },
                     en => {
-                        Subject     => '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] updated',
-                        Body        => '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> was updated.' . $WorkOrderInfoAgentEn,
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] updated',
+                        Body =>
+                            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> was updated.'
+                            . $WorkOrderInfoAgentEn,
                         ContentType => 'text/plain',
                     },
                     nl => {
-                        Subject     => '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] bijgewerkt',
-                        Body        => '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> is bijgewerkt.' . $WorkOrderInfoAgentNl,
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] bijgewerkt',
+                        Body =>
+                            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> is bijgewerkt.'
+                            . $WorkOrderInfoAgentNl,
                         ContentType => 'text/plain',
                     },
                 },
                 Customer => {
                     de => {
-                        Subject     => '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] aktualisiert',
-                        Body        => '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde aktualisiert.' . $WorkOrderInfoCustomerDe,
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] aktualisiert',
+                        Body =>
+                            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde aktualisiert.'
+                            . $WorkOrderInfoCustomerDe,
                         ContentType => 'text/plain',
                     },
                     en => {
-                        Subject     => '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] updated',
-                        Body        => '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> was updated.' . $WorkOrderInfoCustomerEn,
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] updated',
+                        Body =>
+                            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> was updated.'
+                            . $WorkOrderInfoCustomerEn,
                         ContentType => 'text/plain',
                     },
                     nl => {
-                        Subject     => '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] bijgewerkt',
-                        Body        => '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> is bijgewerkt.' . $WorkOrderInfoCustomerNl,
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] bijgewerkt',
+                        Body =>
+                            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> is bijgewerkt.'
+                            . $WorkOrderInfoCustomerNl,
                         ContentType => 'text/plain',
                     },
                 },
@@ -2136,44 +2262,62 @@ sub _AddNotifications {
             ],
         },
         {
-            Name       => 'ticket linked to change',
-            Attribute  => '',
-            Event      => 'ChangeLinkAdd',
-            ValidID    => 1,
-            Comment    => 'inform recipients that a ticket was linked to the change',
-            Rule       => '',
-            Message => {
+            Name      => 'ticket linked to change',
+            Attribute => '',
+            Event     => 'ChangeLinkAdd',
+            ValidID   => 1,
+            Comment   => 'inform recipients that a ticket was linked to the change',
+            Rule      => '',
+            Message   => {
                 Agent => {
                     de => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] <OTRS_LINK_Object> verknüpft',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> wurde mit einem <OTRS_LINK_Object> verknüpft.' . $ChangeInfoAgentDe,
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] <OTRS_LINK_Object> verknüpft',
+                        Body =>
+                            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> wurde mit einem <OTRS_LINK_Object> verknüpft.'
+                            . $ChangeInfoAgentDe,
                         ContentType => 'text/plain',
                     },
                     en => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] <OTRS_LINK_Object> linked',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> was linked to a <OTRS_LINK_Object> .' . $ChangeInfoAgentEn,
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] <OTRS_LINK_Object> linked',
+                        Body =>
+                            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> was linked to a <OTRS_LINK_Object> .'
+                            . $ChangeInfoAgentEn,
                         ContentType => 'text/plain',
                     },
                     nl => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] <OTRS_LINK_Object> linked',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> is gekoppeld aan een <OTRS_LINK_Object> .' . $ChangeInfoAgentNl,
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] <OTRS_LINK_Object> linked',
+                        Body =>
+                            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> is gekoppeld aan een <OTRS_LINK_Object> .'
+                            . $ChangeInfoAgentNl,
                         ContentType => 'text/plain',
                     },
                 },
                 Customer => {
                     de => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] <OTRS_LINK_Object> verknüpft',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> wurde mit einem <OTRS_LINK_Object> verknüpft.' . $ChangeInfoCustomerDe,
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] <OTRS_LINK_Object> verknüpft',
+                        Body =>
+                            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> wurde mit einem <OTRS_LINK_Object> verknüpft.'
+                            . $ChangeInfoCustomerDe,
                         ContentType => 'text/plain',
                     },
                     en => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] <OTRS_LINK_Object> linked',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> was linked to a <OTRS_LINK_Object> .' . $ChangeInfoCustomerEn,
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] <OTRS_LINK_Object> linked',
+                        Body =>
+                            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> was linked to a <OTRS_LINK_Object> .'
+                            . $ChangeInfoCustomerEn,
                         ContentType => 'text/plain',
                     },
                     nl => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] <OTRS_LINK_Object> gekoppeld',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> is gekoppeld aan een <OTRS_LINK_Object> .' . $ChangeInfoCustomerNl,
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] <OTRS_LINK_Object> gekoppeld',
+                        Body =>
+                            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> is gekoppeld aan een <OTRS_LINK_Object> .'
+                            . $ChangeInfoCustomerNl,
                         ContentType => 'text/plain',
                     },
                 },
@@ -2183,44 +2327,62 @@ sub _AddNotifications {
             ],
         },
         {
-            Name       => 'planned start time of change reached',
-            Attribute  => '',
-            Event      => 'ChangePlannedStartTimeReached',
-            ValidID    => 1,
-            Comment    => 'inform recipients that a change has reached the planned start time',
-            Rule       => '',
-            Message => {
+            Name      => 'planned start time of change reached',
+            Attribute => '',
+            Event     => 'ChangePlannedStartTimeReached',
+            ValidID   => 1,
+            Comment   => 'inform recipients that a change has reached the planned start time',
+            Rule      => '',
+            Message   => {
                 Agent => {
                     de => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] geplante Startzeit erreicht',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> hat die geplante Startzeit erreicht.' . $ChangeInfoAgentDe,
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] geplante Startzeit erreicht',
+                        Body =>
+                            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> hat die geplante Startzeit erreicht.'
+                            . $ChangeInfoAgentDe,
                         ContentType => 'text/plain',
                     },
                     en => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] Planned Start Time reached',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> has reached its Planned Start Time.' . $ChangeInfoAgentEn,
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] Planned Start Time reached',
+                        Body =>
+                            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> has reached its Planned Start Time.'
+                            . $ChangeInfoAgentEn,
                         ContentType => 'text/plain',
                     },
                     nl => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] geplande starttijd bereikt',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> heeft de geplande starttijd bereikt.' . $ChangeInfoAgentNl,
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] geplande starttijd bereikt',
+                        Body =>
+                            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> heeft de geplande starttijd bereikt.'
+                            . $ChangeInfoAgentNl,
                         ContentType => 'text/plain',
                     },
                 },
                 Customer => {
                     de => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] geplante Startzeit erreicht',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> hat die geplante Startzeit erreicht.' . $ChangeInfoCustomerDe,
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] geplante Startzeit erreicht',
+                        Body =>
+                            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> hat die geplante Startzeit erreicht.'
+                            . $ChangeInfoCustomerDe,
                         ContentType => 'text/plain',
                     },
                     en => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] Planned Start Time reached',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> has reached its Planned Start Time.' . $ChangeInfoCustomerEn,
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] Planned Start Time reached',
+                        Body =>
+                            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> has reached its Planned Start Time.'
+                            . $ChangeInfoCustomerEn,
                         ContentType => 'text/plain',
                     },
                     nl => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] geplande starttijd bereikt',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> heeft de geplande starttijd bereikt.' . $ChangeInfoCustomerNl,
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] geplande starttijd bereikt',
+                        Body =>
+                            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> heeft de geplande starttijd bereikt.'
+                            . $ChangeInfoCustomerNl,
                         ContentType => 'text/plain',
                     },
                 },
@@ -2230,44 +2392,62 @@ sub _AddNotifications {
             ],
         },
         {
-            Name       => 'planned end time of change reached',
-            Attribute  => '',
-            Event      => 'ChangePlannedEndTimeReached',
-            ValidID    => 1,
-            Comment    => 'inform recipients that a change has reached the planned end time',
-            Rule       => '',
-            Message => {
+            Name      => 'planned end time of change reached',
+            Attribute => '',
+            Event     => 'ChangePlannedEndTimeReached',
+            ValidID   => 1,
+            Comment   => 'inform recipients that a change has reached the planned end time',
+            Rule      => '',
+            Message   => {
                 Agent => {
                     de => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] geplante Endzeit erreicht',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> hat die geplante Endzeit erreicht.' . $ChangeInfoAgentDe,
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] geplante Endzeit erreicht',
+                        Body =>
+                            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> hat die geplante Endzeit erreicht.'
+                            . $ChangeInfoAgentDe,
                         ContentType => 'text/plain',
                     },
                     en => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] Planned End Time reached',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> has reached its Planned End Time.' . $ChangeInfoAgentEn,
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] Planned End Time reached',
+                        Body =>
+                            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> has reached its Planned End Time.'
+                            . $ChangeInfoAgentEn,
                         ContentType => 'text/plain',
                     },
                     nl => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] geplande eindttijd bereikt',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> heeft de geplande eindtijd bereikt.' . $ChangeInfoAgentNl,
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] geplande eindttijd bereikt',
+                        Body =>
+                            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> heeft de geplande eindtijd bereikt.'
+                            . $ChangeInfoAgentNl,
                         ContentType => 'text/plain',
                     },
                 },
                 Customer => {
                     de => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] geplante Endzeit erreicht',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> hat die geplante Endzeit erreicht.' . $ChangeInfoCustomerDe,
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] geplante Endzeit erreicht',
+                        Body =>
+                            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> hat die geplante Endzeit erreicht.'
+                            . $ChangeInfoCustomerDe,
                         ContentType => 'text/plain',
                     },
                     en => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] Planned End Time reached',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> has reached its Planned End Time.' . $ChangeInfoCustomerEn,
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] Planned End Time reached',
+                        Body =>
+                            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> has reached its Planned End Time.'
+                            . $ChangeInfoCustomerEn,
                         ContentType => 'text/plain',
                     },
                     nl => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] geplande eindtijd bereikt',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> heeft de geplande eindtijd bereikt.' . $ChangeInfoCustomerNl,
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] geplande eindtijd bereikt',
+                        Body =>
+                            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> heeft de geplande eindtijd bereikt.'
+                            . $ChangeInfoCustomerNl,
                         ContentType => 'text/plain',
                     },
                 },
@@ -2277,44 +2457,50 @@ sub _AddNotifications {
             ],
         },
         {
-            Name       => 'actual start time of change reached',
-            Attribute  => '',
-            Event      => 'ChangeActualStartTimeReached',
-            ValidID    => 1,
-            Comment    => 'inform recipients that a change has reached the actual start time',
-            Rule       => '',
-            Message => {
+            Name      => 'actual start time of change reached',
+            Attribute => '',
+            Event     => 'ChangeActualStartTimeReached',
+            ValidID   => 1,
+            Comment   => 'inform recipients that a change has reached the actual start time',
+            Rule      => '',
+            Message   => {
                 Agent => {
                     de => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] begonnen',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> wurde begonnen.' . $ChangeInfoAgentDe,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] begonnen',
+                        Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> wurde begonnen.'
+                            . $ChangeInfoAgentDe,
                         ContentType => 'text/plain',
                     },
                     en => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] started',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> has started.' . $ChangeInfoAgentEn,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] started',
+                        Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> has started.'
+                            . $ChangeInfoAgentEn,
                         ContentType => 'text/plain',
                     },
                     nl => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] gestart',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> is gestart.' . $ChangeInfoAgentNl,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] gestart',
+                        Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> is gestart.'
+                            . $ChangeInfoAgentNl,
                         ContentType => 'text/plain',
                     },
                 },
                 Customer => {
                     de => {
-                        Subject     =>  '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] begonnen',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> wurde begonnen.' . $ChangeInfoCustomerDe,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] begonnen',
+                        Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> wurde begonnen.'
+                            . $ChangeInfoCustomerDe,
                         ContentType => 'text/plain',
                     },
                     en => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] started',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> has started.' . $ChangeInfoCustomerEn,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] started',
+                        Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> has started.'
+                            . $ChangeInfoCustomerEn,
                         ContentType => 'text/plain',
                     },
                     nl => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] gestart',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> is gestart.' . $ChangeInfoCustomerNl,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] gestart',
+                        Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> is gestart.'
+                            . $ChangeInfoCustomerNl,
                         ContentType => 'text/plain',
                     },
                 },
@@ -2324,44 +2510,50 @@ sub _AddNotifications {
             ],
         },
         {
-            Name       => 'actual end time of change reached',
-            Attribute  => '',
-            Event      => 'ChangeActualEndTimeReached',
-            ValidID    => 1,
-            Comment    => 'inform recipients that a change has reached the actual end time',
-            Rule       => '',
-            Message => {
+            Name      => 'actual end time of change reached',
+            Attribute => '',
+            Event     => 'ChangeActualEndTimeReached',
+            ValidID   => 1,
+            Comment   => 'inform recipients that a change has reached the actual end time',
+            Rule      => '',
+            Message   => {
                 Agent => {
                     de => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] abgeschlossen',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> wurde abgeschlossen.' . $ChangeInfoAgentDe,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] abgeschlossen',
+                        Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> wurde abgeschlossen.'
+                            . $ChangeInfoAgentDe,
                         ContentType => 'text/plain',
                     },
                     en => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] finished',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> was finished.' . $ChangeInfoAgentEn,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] finished',
+                        Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> was finished.'
+                            . $ChangeInfoAgentEn,
                         ContentType => 'text/plain',
                     },
                     nl => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] afgerond',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> is afgerond.' . $ChangeInfoAgentNl,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] afgerond',
+                        Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> is afgerond.'
+                            . $ChangeInfoAgentNl,
                         ContentType => 'text/plain',
                     },
                 },
                 Customer => {
                     de => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] abgeschlossen',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> wurde abgeschlossen.' . $ChangeInfoCustomerDe,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] abgeschlossen',
+                        Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> wurde abgeschlossen.'
+                            . $ChangeInfoCustomerDe,
                         ContentType => 'text/plain',
                     },
                     en => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] finished',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> was finished.' . $ChangeInfoCustomerEn,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] finished',
+                        Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> was finished.'
+                            . $ChangeInfoCustomerEn,
                         ContentType => 'text/plain',
                     },
                     nl => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] afgerond',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> is afgerond.' . $ChangeInfoCustomerNl,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] afgerond',
+                        Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> is afgerond.'
+                            . $ChangeInfoCustomerNl,
                         ContentType => 'text/plain',
                     },
                 },
@@ -2371,44 +2563,60 @@ sub _AddNotifications {
             ],
         },
         {
-            Name       => 'requested time of change reached',
-            Attribute  => '',
-            Event      => 'ChangeRequestedTimeReached',
-            ValidID    => 1,
-            Comment    => 'inform recipients that a change has reached the requested time',
-            Rule       => '',
-            Message => {
+            Name      => 'requested time of change reached',
+            Attribute => '',
+            Event     => 'ChangeRequestedTimeReached',
+            ValidID   => 1,
+            Comment   => 'inform recipients that a change has reached the requested time',
+            Rule      => '',
+            Message   => {
                 Agent => {
                     de => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] Gewünschte Fertigstellungszeit erreicht',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> hat die gewünschte Fertigstellungszeit erreicht.' . $ChangeInfoAgentDe,
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] Gewünschte Fertigstellungszeit erreicht',
+                        Body =>
+                            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> hat die gewünschte Fertigstellungszeit erreicht.'
+                            . $ChangeInfoAgentDe,
                         ContentType => 'text/plain',
                     },
                     en => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] requested time reached',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> has reached its requested time.' . $ChangeInfoAgentEn,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] requested time reached',
+                        Body =>
+                            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> has reached its requested time.'
+                            . $ChangeInfoAgentEn,
                         ContentType => 'text/plain',
                     },
                     nl => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] aangevraagd tijdstip bereikt',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> heeft het aangevraagde tijdstip bereikt.' . $ChangeInfoAgentNl,
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] aangevraagd tijdstip bereikt',
+                        Body =>
+                            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> heeft het aangevraagde tijdstip bereikt.'
+                            . $ChangeInfoAgentNl,
                         ContentType => 'text/plain',
                     },
                 },
                 Customer => {
                     de => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] Gewünschte Fertigstellungszeit erreicht',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> hat die gewünschte Fertigstellungszeit erreicht.' . $ChangeInfoCustomerDe,
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] Gewünschte Fertigstellungszeit erreicht',
+                        Body =>
+                            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> hat die gewünschte Fertigstellungszeit erreicht.'
+                            . $ChangeInfoCustomerDe,
                         ContentType => 'text/plain',
                     },
                     en => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] requested time reached',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> has reached its requested time.' . $ChangeInfoCustomerEn,
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] requested time reached',
+                        Body =>
+                            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> has reached its requested time.'
+                            . $ChangeInfoCustomerEn,
                         ContentType => 'text/plain',
                     },
                     nl => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] aangevraagd tijdstip bereikt',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> heeft het aangevraagde tijdstip bereikt.' . $ChangeInfoCustomerNl,
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] aangevraagd tijdstip bereikt',
+                        Body =>
+                            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> heeft het aangevraagde tijdstip bereikt.'
+                            . $ChangeInfoCustomerNl,
                         ContentType => 'text/plain',
                     },
                 },
@@ -2418,44 +2626,62 @@ sub _AddNotifications {
             ],
         },
         {
-            Name       => 'planned start time of workorder reached',
-            Attribute  => '',
-            Event      => 'WorkOrderPlannedStartTimeReached',
-            ValidID    => 1,
-            Comment    => 'inform recipients that a workorder has reached the planned start time',
-            Rule       => '',
-            Message => {
+            Name      => 'planned start time of workorder reached',
+            Attribute => '',
+            Event     => 'WorkOrderPlannedStartTimeReached',
+            ValidID   => 1,
+            Comment   => 'inform recipients that a workorder has reached the planned start time',
+            Rule      => '',
+            Message   => {
                 Agent => {
                     de => {
-                        Subject     => '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] geplante Startzeit erreicht',
-                        Body        => '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> hat die geplante Startzeit erreicht.' . $WorkOrderInfoAgentDe,
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] geplante Startzeit erreicht',
+                        Body =>
+                            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> hat die geplante Startzeit erreicht.'
+                            . $WorkOrderInfoAgentDe,
                         ContentType => 'text/plain',
                     },
                     en => {
-                        Subject     => '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Planned Start Time reached',
-                        Body        => '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> has reached the Planned Start Time.' . $WorkOrderInfoAgentEn,
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Planned Start Time reached',
+                        Body =>
+                            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> has reached the Planned Start Time.'
+                            . $WorkOrderInfoAgentEn,
                         ContentType => 'text/plain',
                     },
                     nl => {
-                        Subject     => '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] geplande starttijd bereikt',
-                        Body        => '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> heeft de geplande starttijd bereikt.' . $WorkOrderInfoAgentNl,
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] geplande starttijd bereikt',
+                        Body =>
+                            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> heeft de geplande starttijd bereikt.'
+                            . $WorkOrderInfoAgentNl,
                         ContentType => 'text/plain',
                     },
                 },
                 Customer => {
                     de => {
-                        Subject     => '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] geplante Startzeit erreicht',
-                        Body        => '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> hat die geplante Startzeit erreicht.' . $WorkOrderInfoCustomerDe,
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] geplante Startzeit erreicht',
+                        Body =>
+                            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> hat die geplante Startzeit erreicht.'
+                            . $WorkOrderInfoCustomerDe,
                         ContentType => 'text/plain',
                     },
                     en => {
-                        Subject     => '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Planned Start Time reached',
-                        Body        => '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> has reached the Planned Start Time.' . $WorkOrderInfoCustomerEn,
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Planned Start Time reached',
+                        Body =>
+                            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> has reached the Planned Start Time.'
+                            . $WorkOrderInfoCustomerEn,
                         ContentType => 'text/plain',
                     },
                     nl => {
-                        Subject     => '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] geplande starttijd bereikt',
-                        Body        => '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> heeft de geplande starttijd bereikt.' . $WorkOrderInfoCustomerNl,
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] geplande starttijd bereikt',
+                        Body =>
+                            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> heeft de geplande starttijd bereikt.'
+                            . $WorkOrderInfoCustomerNl,
                         ContentType => 'text/plain',
                     },
                 },
@@ -2465,44 +2691,62 @@ sub _AddNotifications {
             ],
         },
         {
-            Name       => 'planned end time of workorder reached',
-            Attribute  => '',
-            Event      => 'WorkOrderPlannedEndTimeReached',
-            ValidID    => 1,
-            Comment    => 'inform recipients that a workorder has reached the planned end time',
-            Rule       => '',
-            Message => {
+            Name      => 'planned end time of workorder reached',
+            Attribute => '',
+            Event     => 'WorkOrderPlannedEndTimeReached',
+            ValidID   => 1,
+            Comment   => 'inform recipients that a workorder has reached the planned end time',
+            Rule      => '',
+            Message   => {
                 Agent => {
                     de => {
-                        Subject     => '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] geplante Endzeit erreicht',
-                        Body        => '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> hat die geplante Endzeit erreicht.' . $WorkOrderInfoAgentDe,
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] geplante Endzeit erreicht',
+                        Body =>
+                            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> hat die geplante Endzeit erreicht.'
+                            . $WorkOrderInfoAgentDe,
                         ContentType => 'text/plain',
                     },
                     en => {
-                        Subject     => '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Planned End Time reached.',
-                        Body        => '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> has reached the Planned End Time.' . $WorkOrderInfoAgentEn,
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Planned End Time reached.',
+                        Body =>
+                            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> has reached the Planned End Time.'
+                            . $WorkOrderInfoAgentEn,
                         ContentType => 'text/plain',
                     },
                     nl => {
-                        Subject     => '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] geplande eindttijd bereikt.',
-                        Body        => '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> heeft de geplande eindtijd bereikt.' . $WorkOrderInfoAgentNl,
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] geplande eindttijd bereikt.',
+                        Body =>
+                            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> heeft de geplande eindtijd bereikt.'
+                            . $WorkOrderInfoAgentNl,
                         ContentType => 'text/plain',
                     },
                 },
                 Customer => {
                     de => {
-                        Subject     => '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] geplante Endzeit erreicht',
-                        Body        => '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> hat die geplante Endzeit erreicht.' . $WorkOrderInfoCustomerDe,
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] geplante Endzeit erreicht',
+                        Body =>
+                            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> hat die geplante Endzeit erreicht.'
+                            . $WorkOrderInfoCustomerDe,
                         ContentType => 'text/plain',
                     },
                     en => {
-                        Subject     => '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Planned End Time reached',
-                        Body        => '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> has reached the Planned End Time.' . $WorkOrderInfoCustomerEn,
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Planned End Time reached',
+                        Body =>
+                            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> has reached the Planned End Time.'
+                            . $WorkOrderInfoCustomerEn,
                         ContentType => 'text/plain',
                     },
                     nl => {
-                        Subject     => '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] geplande eindtijd bereikt',
-                        Body        => '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> heeft de geplande eindtijd bereikt.' . $WorkOrderInfoCustomerNl,
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] geplande eindtijd bereikt',
+                        Body =>
+                            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> heeft de geplande eindtijd bereikt.'
+                            . $WorkOrderInfoCustomerNl,
                         ContentType => 'text/plain',
                     },
                 },
@@ -2512,44 +2756,62 @@ sub _AddNotifications {
             ],
         },
         {
-            Name       => 'actual start time of workorder reached',
-            Attribute  => '',
-            Event      => 'WorkOrderActualStartTimeReached',
-            ValidID    => 1,
-            Comment    => 'inform recipients that a workorder has reached the actual start time',
-            Rule       => '',
-            Message => {
+            Name      => 'actual start time of workorder reached',
+            Attribute => '',
+            Event     => 'WorkOrderActualStartTimeReached',
+            ValidID   => 1,
+            Comment   => 'inform recipients that a workorder has reached the actual start time',
+            Rule      => '',
+            Message   => {
                 Agent => {
                     de => {
-                        Subject     =>  '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] begonnen',
-                        Body        => '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde begonnen.' . $WorkOrderInfoAgentDe,
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] begonnen',
+                        Body =>
+                            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde begonnen.'
+                            . $WorkOrderInfoAgentDe,
                         ContentType => 'text/plain',
                     },
                     en => {
-                        Subject     => '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] started',
-                        Body        => '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> has started.' . $WorkOrderInfoAgentEn,
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] started',
+                        Body =>
+                            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> has started.'
+                            . $WorkOrderInfoAgentEn,
                         ContentType => 'text/plain',
                     },
                     nl => {
-                        Subject     => '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] gestart',
-                        Body        => '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> is gestart.' . $WorkOrderInfoAgentNl,
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] gestart',
+                        Body =>
+                            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> is gestart.'
+                            . $WorkOrderInfoAgentNl,
                         ContentType => 'text/plain',
                     },
                 },
                 Customer => {
                     de => {
-                        Subject     => '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] begonnen',
-                        Body        => '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde begonnen.' . $WorkOrderInfoCustomerDe,
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] begonnen',
+                        Body =>
+                            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde begonnen.'
+                            . $WorkOrderInfoCustomerDe,
                         ContentType => 'text/plain',
                     },
                     en => {
-                        Subject     => '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] started',
-                        Body        => '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> has started.' . $WorkOrderInfoCustomerEn,
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] started',
+                        Body =>
+                            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> has started.'
+                            . $WorkOrderInfoCustomerEn,
                         ContentType => 'text/plain',
                     },
                     nl => {
-                        Subject     => '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] gestart',
-                        Body        => '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> is gestart.' . $WorkOrderInfoCustomerNl,
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] gestart',
+                        Body =>
+                            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> is gestart.'
+                            . $WorkOrderInfoCustomerNl,
                         ContentType => 'text/plain',
                     },
                 },
@@ -2559,44 +2821,62 @@ sub _AddNotifications {
             ],
         },
         {
-            Name       => 'actual end time of workorder reached',
-            Attribute  => '',
-            Event      => 'WorkOrderActualEndTimeReached',
-            ValidID    => 1,
-            Comment    => 'inform recipients that a workorder has reached the actual end time',
-            Rule       => '',
-            Message => {
+            Name      => 'actual end time of workorder reached',
+            Attribute => '',
+            Event     => 'WorkOrderActualEndTimeReached',
+            ValidID   => 1,
+            Comment   => 'inform recipients that a workorder has reached the actual end time',
+            Rule      => '',
+            Message   => {
                 Agent => {
                     de => {
-                        Subject     => '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] abgeschlossen',
-                        Body        => '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde abgeschlossen.' . $WorkOrderInfoAgentDe,
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] abgeschlossen',
+                        Body =>
+                            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde abgeschlossen.'
+                            . $WorkOrderInfoAgentDe,
                         ContentType => 'text/plain',
                     },
                     en => {
-                        Subject     => '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] finished',
-                        Body        => '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> was finished.' . $WorkOrderInfoAgentEn,
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] finished',
+                        Body =>
+                            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> was finished.'
+                            . $WorkOrderInfoAgentEn,
                         ContentType => 'text/plain',
                     },
                     nl => {
-                        Subject     => '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] afgerond',
-                        Body        => '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> is afgerond.' . $WorkOrderInfoAgentNl,
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] afgerond',
+                        Body =>
+                            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> is afgerond.'
+                            . $WorkOrderInfoAgentNl,
                         ContentType => 'text/plain',
                     },
                 },
                 Customer => {
                     de => {
-                        Subject     => '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] abgeschlossen',
-                        Body        => '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde abgeschlossen.' . $WorkOrderInfoCustomerDe,
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] abgeschlossen',
+                        Body =>
+                            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde abgeschlossen.'
+                            . $WorkOrderInfoCustomerDe,
                         ContentType => 'text/plain',
                     },
                     en => {
-                        Subject     => '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] finished',
-                        Body        => '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> was finished.' . $WorkOrderInfoCustomerEn,
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] finished',
+                        Body =>
+                            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> was finished.'
+                            . $WorkOrderInfoCustomerEn,
                         ContentType => 'text/plain',
                     },
                     nl => {
-                        Subject     => '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] afgerond',
-                        Body        => '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> is afgerond.' . $WorkOrderInfoCustomerNl,
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] afgerond',
+                        Body =>
+                            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> is afgerond.'
+                            . $WorkOrderInfoCustomerNl,
                         ContentType => 'text/plain',
                     },
                 },
@@ -2606,85 +2886,97 @@ sub _AddNotifications {
             ],
         },
         {
-            Name       => 'action execution successfully',
-            Attribute  => 'ActionResult',
-            Event      => 'ActionExecute',
-            ValidID    => 1,
-            Comment    => 'inform recipients that an action was executed successfully',
-            Rule       => 'successfully',
-            Message => {
+            Name      => 'action execution successfully',
+            Attribute => 'ActionResult',
+            Event     => 'ActionExecute',
+            ValidID   => 1,
+            Comment   => 'inform recipients that an action was executed successfully',
+            Rule      => 'successfully',
+            Message   => {
                 Agent => {
                     de => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] Aktions-Ausführung <OTRS_CONDITION_ActionResult>',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> Aktions-Ausführung <OTRS_CONDITION_ActionResult>.'
-                                        . "\n"
-                                        . "\n"
-                                        . "Change Titel: <OTRS_CHANGE_ChangeTitle>\n"
-                                        . "Aktueller Change Status: <OTRS_CHANGE_ChangeState>\n"
-                                        . "\n"
-                                        . "Condition ID: <OTRS_CONDITION_ConditionID>\n"
-                                        . "Condition Name: <OTRS_CONDITION_ConditionName>\n"
-                                        . "\n"
-                                        . "Action ID: <OTRS_CONDITION_ActionID>\n"
-                                        . "Aktions-Ausführung: <OTRS_CONDITION_ActionResult>\n"
-                                        . "\n"
-                                        . "<OTRS_CONFIG_HttpType>://<OTRS_CONFIG_FQDN>/<OTRS_CONFIG_ScriptAlias>index.pl?Action=AgentITSMChangeZoom;ChangeID=<OTRS_CHANGE_ChangeID>\n"
-                                        . "\n"
-                                        . "Ihr OTRS Notification Master\n",
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] Aktions-Ausführung <OTRS_CONDITION_ActionResult>',
+                        Body =>
+                            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> Aktions-Ausführung <OTRS_CONDITION_ActionResult>.'
+                            . "\n"
+                            . "\n"
+                            . "Change Titel: <OTRS_CHANGE_ChangeTitle>\n"
+                            . "Aktueller Change Status: <OTRS_CHANGE_ChangeState>\n"
+                            . "\n"
+                            . "Condition ID: <OTRS_CONDITION_ConditionID>\n"
+                            . "Condition Name: <OTRS_CONDITION_ConditionName>\n"
+                            . "\n"
+                            . "Action ID: <OTRS_CONDITION_ActionID>\n"
+                            . "Aktions-Ausführung: <OTRS_CONDITION_ActionResult>\n"
+                            . "\n"
+                            . "<OTRS_CONFIG_HttpType>://<OTRS_CONFIG_FQDN>/<OTRS_CONFIG_ScriptAlias>index.pl?Action=AgentITSMChangeZoom;ChangeID=<OTRS_CHANGE_ChangeID>\n"
+                            . "\n"
+                            . "Ihr OTRS Notification Master\n",
                         ContentType => 'text/plain',
                     },
                     en => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] Action execution <OTRS_CONDITION_ActionResult>',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> Action execution <OTRS_CONDITION_ActionResult>.'
-                                        . "\n"
-                                        . "\n"
-                                        . "Change title: <OTRS_CHANGE_ChangeTitle>\n"
-                                        . "Current change state: <OTRS_CHANGE_ChangeState>\n"
-                                        . "\n"
-                                        . "Condition ID: <OTRS_CONDITION_ConditionID>\n"
-                                        . "Condition name: <OTRS_CONDITION_ConditionName>\n"
-                                        . "\n"
-                                        . "Action ID: <OTRS_CONDITION_ActionID>\n"
-                                        . "Action execution: <OTRS_CONDITION_ActionResult>\n"
-                                        . "\n"
-                                        . "<OTRS_CONFIG_HttpType>://<OTRS_CONFIG_FQDN>/<OTRS_CONFIG_ScriptAlias>index.pl?Action=AgentITSMChangeZoom;ChangeID=<OTRS_CHANGE_ChangeID>\n"
-                                        . "\n"
-                                        . "Your OTRS Notification Master\n",
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] Action execution <OTRS_CONDITION_ActionResult>',
+                        Body =>
+                            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> Action execution <OTRS_CONDITION_ActionResult>.'
+                            . "\n"
+                            . "\n"
+                            . "Change title: <OTRS_CHANGE_ChangeTitle>\n"
+                            . "Current change state: <OTRS_CHANGE_ChangeState>\n"
+                            . "\n"
+                            . "Condition ID: <OTRS_CONDITION_ConditionID>\n"
+                            . "Condition name: <OTRS_CONDITION_ConditionName>\n"
+                            . "\n"
+                            . "Action ID: <OTRS_CONDITION_ActionID>\n"
+                            . "Action execution: <OTRS_CONDITION_ActionResult>\n"
+                            . "\n"
+                            . "<OTRS_CONFIG_HttpType>://<OTRS_CONFIG_FQDN>/<OTRS_CONFIG_ScriptAlias>index.pl?Action=AgentITSMChangeZoom;ChangeID=<OTRS_CHANGE_ChangeID>\n"
+                            . "\n"
+                            . "Your OTRS Notification Master\n",
                         ContentType => 'text/plain',
                     },
                     nl => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] Actie uitgevoerd <OTRS_CONDITION_ActionResult>',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> Actie uitgevoerd <OTRS_CONDITION_ActionResult>.'
-                                        . "\n"
-                                        . "\n"
-                                        . "Change-titel: <OTRS_CHANGE_ChangeTitle>\n"
-                                        . "Actuele change-status: <OTRS_CHANGE_ChangeState>\n"
-                                        . "\n"
-                                        . "Conditie-ID: <OTRS_CONDITION_ConditionID>\n"
-                                        . "Conditie naam: <OTRS_CONDITION_ConditionName>\n"
-                                        . "\n"
-                                        . "Actie-ID: <OTRS_CONDITION_ActionID>\n"
-                                        . "Actie resultaat: <OTRS_CONDITION_ActionResult>\n"
-                                        . "\n"
-                                        . "<OTRS_CONFIG_HttpType>://<OTRS_CONFIG_FQDN>/<OTRS_CONFIG_ScriptAlias>index.pl?Action=AgentITSMChangeZoom;ChangeID=<OTRS_CHANGE_ChangeID>\n"
-                                        . "\n",
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] Actie uitgevoerd <OTRS_CONDITION_ActionResult>',
+                        Body =>
+                            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> Actie uitgevoerd <OTRS_CONDITION_ActionResult>.'
+                            . "\n"
+                            . "\n"
+                            . "Change-titel: <OTRS_CHANGE_ChangeTitle>\n"
+                            . "Actuele change-status: <OTRS_CHANGE_ChangeState>\n"
+                            . "\n"
+                            . "Conditie-ID: <OTRS_CONDITION_ConditionID>\n"
+                            . "Conditie naam: <OTRS_CONDITION_ConditionName>\n"
+                            . "\n"
+                            . "Actie-ID: <OTRS_CONDITION_ActionID>\n"
+                            . "Actie resultaat: <OTRS_CONDITION_ActionResult>\n"
+                            . "\n"
+                            . "<OTRS_CONFIG_HttpType>://<OTRS_CONFIG_FQDN>/<OTRS_CONFIG_ScriptAlias>index.pl?Action=AgentITSMChangeZoom;ChangeID=<OTRS_CHANGE_ChangeID>\n"
+                            . "\n",
                         ContentType => 'text/plain',
                     },
                 },
                 Customer => {
                     de => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] Aktions-Ausführung <OTRS_CONDITION_ActionResult>',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> Aktions-Ausführung <OTRS_CONDITION_ActionResult>.',
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] Aktions-Ausführung <OTRS_CONDITION_ActionResult>',
+                        Body =>
+                            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> Aktions-Ausführung <OTRS_CONDITION_ActionResult>.',
                         ContentType => 'text/plain',
                     },
                     en => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] Action execution <OTRS_CONDITION_ActionResult>',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> Action execution <OTRS_CONDITION_ActionResult>.',
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] Action execution <OTRS_CONDITION_ActionResult>',
+                        Body =>
+                            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> Action execution <OTRS_CONDITION_ActionResult>.',
                         ContentType => 'text/plain',
                     },
                     nl => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] Actie uitgevoerd <OTRS_CONDITION_ActionResult>',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> Actie uitgevoerd <OTRS_CONDITION_ActionResult>.',
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] Actie uitgevoerd <OTRS_CONDITION_ActionResult>',
+                        Body =>
+                            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> Actie uitgevoerd <OTRS_CONDITION_ActionResult>.',
                         ContentType => 'text/plain',
                     },
                 },
@@ -2694,85 +2986,97 @@ sub _AddNotifications {
             ],
         },
         {
-            Name       => 'action execution unsuccessfully',
-            Attribute  => 'ActionResult',
-            Event      => 'ActionExecute',
-            ValidID    => 1,
-            Comment    => 'inform recipients that an action was executed unsuccessfully',
-            Rule       => 'unsuccessfully',
-            Message => {
+            Name      => 'action execution unsuccessfully',
+            Attribute => 'ActionResult',
+            Event     => 'ActionExecute',
+            ValidID   => 1,
+            Comment   => 'inform recipients that an action was executed unsuccessfully',
+            Rule      => 'unsuccessfully',
+            Message   => {
                 Agent => {
                     de => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] Aktions-Ausführung <OTRS_CONDITION_ActionResult>',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> Aktions-Ausführung <OTRS_CONDITION_ActionResult>.'
-                                        . "\n"
-                                        . "\n"
-                                        . "Change Titel: <OTRS_CHANGE_ChangeTitle>\n"
-                                        . "Aktueller Change Status: <OTRS_CHANGE_ChangeState>\n"
-                                        . "\n"
-                                        . "Condition ID: <OTRS_CONDITION_ConditionID>\n"
-                                        . "Condition Name: <OTRS_CONDITION_ConditionName>\n"
-                                        . "\n"
-                                        . "Action ID: <OTRS_CONDITION_ActionID>\n"
-                                        . "Aktions-Ausführung: <OTRS_CONDITION_ActionResult>\n"
-                                        . "\n"
-                                        . "<OTRS_CONFIG_HttpType>://<OTRS_CONFIG_FQDN>/<OTRS_CONFIG_ScriptAlias>index.pl?Action=AgentITSMChangeZoom;ChangeID=<OTRS_CHANGE_ChangeID>\n"
-                                        . "\n"
-                                        . "Ihr OTRS Notification Master\n",
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] Aktions-Ausführung <OTRS_CONDITION_ActionResult>',
+                        Body =>
+                            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> Aktions-Ausführung <OTRS_CONDITION_ActionResult>.'
+                            . "\n"
+                            . "\n"
+                            . "Change Titel: <OTRS_CHANGE_ChangeTitle>\n"
+                            . "Aktueller Change Status: <OTRS_CHANGE_ChangeState>\n"
+                            . "\n"
+                            . "Condition ID: <OTRS_CONDITION_ConditionID>\n"
+                            . "Condition Name: <OTRS_CONDITION_ConditionName>\n"
+                            . "\n"
+                            . "Action ID: <OTRS_CONDITION_ActionID>\n"
+                            . "Aktions-Ausführung: <OTRS_CONDITION_ActionResult>\n"
+                            . "\n"
+                            . "<OTRS_CONFIG_HttpType>://<OTRS_CONFIG_FQDN>/<OTRS_CONFIG_ScriptAlias>index.pl?Action=AgentITSMChangeZoom;ChangeID=<OTRS_CHANGE_ChangeID>\n"
+                            . "\n"
+                            . "Ihr OTRS Notification Master\n",
                         ContentType => 'text/plain',
                     },
                     en => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] Action execution <OTRS_CONDITION_ActionResult>',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> Action execution <OTRS_CONDITION_ActionResult>.'
-                                        . "\n"
-                                        . "\n"
-                                        . "Change title: <OTRS_CHANGE_ChangeTitle>\n"
-                                        . "Current change state: <OTRS_CHANGE_ChangeState>\n"
-                                        . "\n"
-                                        . "Condition ID: <OTRS_CONDITION_ConditionID>\n"
-                                        . "Condition name: <OTRS_CONDITION_ConditionName>\n"
-                                        . "\n"
-                                        . "Action ID: <OTRS_CONDITION_ActionID>\n"
-                                        . "Action execution: <OTRS_CONDITION_ActionResult>\n"
-                                        . "\n"
-                                        . "<OTRS_CONFIG_HttpType>://<OTRS_CONFIG_FQDN>/<OTRS_CONFIG_ScriptAlias>index.pl?Action=AgentITSMChangeZoom;ChangeID=<OTRS_CHANGE_ChangeID>\n"
-                                        . "\n"
-                                        . "Your OTRS Notification Master\n",
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] Action execution <OTRS_CONDITION_ActionResult>',
+                        Body =>
+                            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> Action execution <OTRS_CONDITION_ActionResult>.'
+                            . "\n"
+                            . "\n"
+                            . "Change title: <OTRS_CHANGE_ChangeTitle>\n"
+                            . "Current change state: <OTRS_CHANGE_ChangeState>\n"
+                            . "\n"
+                            . "Condition ID: <OTRS_CONDITION_ConditionID>\n"
+                            . "Condition name: <OTRS_CONDITION_ConditionName>\n"
+                            . "\n"
+                            . "Action ID: <OTRS_CONDITION_ActionID>\n"
+                            . "Action execution: <OTRS_CONDITION_ActionResult>\n"
+                            . "\n"
+                            . "<OTRS_CONFIG_HttpType>://<OTRS_CONFIG_FQDN>/<OTRS_CONFIG_ScriptAlias>index.pl?Action=AgentITSMChangeZoom;ChangeID=<OTRS_CHANGE_ChangeID>\n"
+                            . "\n"
+                            . "Your OTRS Notification Master\n",
                         ContentType => 'text/plain',
                     },
                     nl => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] Actie uitgevoerd <OTRS_CONDITION_ActionResult>',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> Actie uitgevoerd <OTRS_CONDITION_ActionResult>.'
-                                        . "\n"
-                                        . "\n"
-                                        . "Change-titel: <OTRS_CHANGE_ChangeTitle>\n"
-                                        . "Actuele change-status: <OTRS_CHANGE_ChangeState>\n"
-                                        . "\n"
-                                        . "Conditie-ID: <OTRS_CONDITION_ConditionID>\n"
-                                        . "Conditie naam: <OTRS_CONDITION_ConditionName>\n"
-                                        . "\n"
-                                        . "Actie-ID: <OTRS_CONDITION_ActionID>\n"
-                                        . "Actie resultaat: <OTRS_CONDITION_ActionResult>\n"
-                                        . "\n"
-                                        . "<OTRS_CONFIG_HttpType>://<OTRS_CONFIG_FQDN>/<OTRS_CONFIG_ScriptAlias>index.pl?Action=AgentITSMChangeZoom;ChangeID=<OTRS_CHANGE_ChangeID>\n"
-                                        . "\n",
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] Actie uitgevoerd <OTRS_CONDITION_ActionResult>',
+                        Body =>
+                            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> Actie uitgevoerd <OTRS_CONDITION_ActionResult>.'
+                            . "\n"
+                            . "\n"
+                            . "Change-titel: <OTRS_CHANGE_ChangeTitle>\n"
+                            . "Actuele change-status: <OTRS_CHANGE_ChangeState>\n"
+                            . "\n"
+                            . "Conditie-ID: <OTRS_CONDITION_ConditionID>\n"
+                            . "Conditie naam: <OTRS_CONDITION_ConditionName>\n"
+                            . "\n"
+                            . "Actie-ID: <OTRS_CONDITION_ActionID>\n"
+                            . "Actie resultaat: <OTRS_CONDITION_ActionResult>\n"
+                            . "\n"
+                            . "<OTRS_CONFIG_HttpType>://<OTRS_CONFIG_FQDN>/<OTRS_CONFIG_ScriptAlias>index.pl?Action=AgentITSMChangeZoom;ChangeID=<OTRS_CHANGE_ChangeID>\n"
+                            . "\n",
                         ContentType => 'text/plain',
                     },
                 },
                 Customer => {
                     de => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] Aktions-Ausführung <OTRS_CONDITION_ActionResult>',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> Aktions-Ausführung <OTRS_CONDITION_ActionResult>.',
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] Aktions-Ausführung <OTRS_CONDITION_ActionResult>',
+                        Body =>
+                            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> Aktions-Ausführung <OTRS_CONDITION_ActionResult>.',
                         ContentType => 'text/plain',
                     },
                     en => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] Action execution <OTRS_CONDITION_ActionResult>',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> Action execution <OTRS_CONDITION_ActionResult>.',
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] Action execution <OTRS_CONDITION_ActionResult>',
+                        Body =>
+                            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> Action execution <OTRS_CONDITION_ActionResult>.',
                         ContentType => 'text/plain',
                     },
                     nl => {
-                        Subject     => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] Actie uitgevoerd <OTRS_CONDITION_ActionResult>',
-                        Body        => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> Actie uitgevoerd <OTRS_CONDITION_ActionResult>.',
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] Actie uitgevoerd <OTRS_CONDITION_ActionResult>',
+                        Body =>
+                            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> Actie uitgevoerd <OTRS_CONDITION_ActionResult>.',
                         ContentType => 'text/plain',
                     },
                 },
@@ -2837,10 +3141,10 @@ sub _MigrateNotifications {
     while ( my @Row = $Kernel::OM->Get('Kernel::System::DB')->FetchrowArray() ) {
 
         push @NotificationRules, {
-            ID           => $Row[0],
-            Name         => $Row[1],
-            Attribute    => $Row[2] // '',
-            Event        => $Row[3],
+            ID        => $Row[0],
+            Name      => $Row[1],
+            Attribute => $Row[2] // '',
+            Event     => $Row[3],
         };
     }
 

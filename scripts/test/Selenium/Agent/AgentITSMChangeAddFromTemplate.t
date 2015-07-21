@@ -37,7 +37,7 @@ $Selenium->RunTest(
             Description   => "Test Description",
             Justification => "Test Justification",
             ChangeStateID => $ChangeStateDataRef->{ItemID},
-            UserID => 1,
+            UserID        => 1,
         );
         $Self->True(
             $ChangeID,
@@ -147,7 +147,7 @@ $Selenium->RunTest(
         # make sure the cache is correct
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => 'ITSMChange*' );
 
-    }
+        }
 );
 
 1;
