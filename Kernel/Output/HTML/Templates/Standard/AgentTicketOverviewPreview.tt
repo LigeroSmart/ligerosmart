@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2015 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/bc2139dd409b8aa286e5bbfe797bf8496a312ab0/Kernel/Output/HTML/Templates/Standard/AgentTicketOverviewPreview.tt
+# $origin: https://github.com/OTRS/otrs/blob/4e73a869d24f37a3b0d27b1f7900eaa9e0f46462/Kernel/Output/HTML/Templates/Standard/AgentTicketOverviewPreview.tt
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -63,6 +63,7 @@
         <div class="Content [% Data.AdditionalClasses | html %]">
 [% RenderBlockStart("InlineActionRow") %]
             <ul class="Actions InlineActions">
+                <li class="ResponsiveActionMenu"><a href="#" id="ResponsiveActionMenu[% Data.TicketID | html %]" title="[% Translate("Open / Close ticket action menu") | html %]"><i class="fa fa-bars"></i></a></li>
 [% RenderBlockStart("InlineActionRowItem") %]
                 <li><a id="[% Data.ID | html %][% Data.TicketID | html %]" class="[% Data.Class | html %]" href="[% Data.Link | Interpolate | html %]" title="[% Data.Description | Interpolate | html %]">[% Data.Name | Interpolate | html %]</a></li>
 [% RenderBlockEnd("InlineActionRowItem") %]
@@ -397,6 +398,15 @@
         }
     });
     Core.UI.Accordion.Init($('.Preview > ul'), 'li h3 a', '.HiddenBlock');
+
+    if ($('body').hasClass('TouchDevice')) {
+        $('ul.InlineActions li:not(.ResponsiveActionMenu)').hide();
+    }
+    $('li.ResponsiveActionMenu').on('click.ToggleResponsiveActionMenu', function () {
+        $(this).siblings().toggle();
+        $(this).toggleClass('Opened')
+        return false;
+    });
 //]]></script>
 [% RenderBlockEnd("DocumentReadyStart") %]
 [% END %]

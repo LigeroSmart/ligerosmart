@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2015 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/bc2139dd409b8aa286e5bbfe797bf8496a312ab0/Kernel/Modules/AgentTicketEmail.pm
+# $origin: https://github.com/OTRS/otrs/blob/4e73a869d24f37a3b0d27b1f7900eaa9e0f46462/Kernel/Modules/AgentTicketEmail.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1048,6 +1048,7 @@ sub Run {
                 && $StateData{TypeName} =~ /^pending/i
                 )
             {
+
                 # get time object
                 my $TimeObject = $Kernel::OM->Get('Kernel::System::Time');
 
@@ -2373,6 +2374,7 @@ sub _MaskEmailNew {
         Data       => $Param{Users},
         SelectedID => $Param{UserSelected},
         Name       => 'NewUserID',
+        Class      => 'Modernize',
     );
 
     my $Config = $Kernel::OM->Get('Kernel::Config')->Get("Ticket::Frontend::$Self->{Action}");
@@ -2381,6 +2383,7 @@ sub _MaskEmailNew {
     $Param{NextStatesStrg} = $LayoutObject->BuildSelection(
         Data          => $Param{NextStates},
         Name          => 'NextStateID',
+        Class         => 'Modernize',
         Translation   => 1,
         SelectedValue => $Param{NextState} || $Config->{StateDefault},
     );
@@ -2398,7 +2401,7 @@ sub _MaskEmailNew {
             Data           => \%NewTo,
             Multiple       => 0,
             Size           => 0,
-            Class          => 'Validate_Required' . ( $Param{Errors}->{DestinationInvalid} || ' ' ),
+            Class          => 'Validate_Required Modernize ' . ( $Param{Errors}->{DestinationInvalid} || ' ' ),
             Name           => 'Dest',
             TreeView       => $TreeView,
             SelectedID     => $Param{FromSelected},
@@ -2408,7 +2411,7 @@ sub _MaskEmailNew {
     else {
         $Param{FromStrg} = $LayoutObject->BuildSelection(
             Data       => \%NewTo,
-            Class      => 'Validate_Required' . $Param{Errors}->{DestinationInvalid} || ' ',
+            Class      => 'Validate_Required Modernize ' . $Param{Errors}->{DestinationInvalid} || ' ',
             Name       => 'Dest',
             TreeView   => $TreeView,
             SelectedID => $Param{FromSelected},
@@ -2613,7 +2616,7 @@ sub _MaskEmailNew {
         $Param{TypeStrg} = $LayoutObject->BuildSelection(
             Data         => $Param{Types},
             Name         => 'TypeID',
-            Class        => 'Validate_Required' . ( $Param{Errors}->{TypeInvalid} || ' ' ),
+            Class        => 'Validate_Required Modernize ' . ( $Param{Errors}->{TypeInvalid} || ' ' ),
             SelectedID   => $Param{TypeID},
             PossibleNone => 1,
             Sort         => 'AlphanumericValue',
@@ -2632,7 +2635,7 @@ sub _MaskEmailNew {
             $Param{ServiceStrg} = $LayoutObject->BuildSelection(
                 Data         => $Param{Services},
                 Name         => 'ServiceID',
-                Class        => 'Validate_Required ' . ( $Param{Errors}->{ServiceInvalid} || ' ' ),
+                Class        => 'Validate_Required Modernize ' . ( $Param{Errors}->{ServiceInvalid} || ' ' ),
                 SelectedID   => $Param{ServiceID},
                 PossibleNone => 1,
                 TreeView     => $TreeView,
@@ -2649,7 +2652,7 @@ sub _MaskEmailNew {
             $Param{ServiceStrg} = $LayoutObject->BuildSelection(
                 Data         => $Param{Services},
                 Name         => 'ServiceID',
-                Class        => $Param{Errors}->{ServiceInvalid} || ' ',
+                Class        => 'Modernize ' . $Param{Errors}->{ServiceInvalid} || ' ',
                 SelectedID   => $Param{ServiceID},
                 PossibleNone => 1,
                 TreeView     => $TreeView,
@@ -2668,7 +2671,7 @@ sub _MaskEmailNew {
                 Data         => $Param{SLAs},
                 Name         => 'SLAID',
                 SelectedID   => $Param{SLAID},
-                Class        => 'Validate_Required ' . ( $Param{Errors}->{SLAInvalid} || ' ' ),
+                Class        => 'Validate_Required Modernize ' . ( $Param{Errors}->{SLAInvalid} || ' ' ),
                 PossibleNone => 1,
                 Sort         => 'AlphanumericValue',
                 Translation  => 0,
@@ -2684,6 +2687,7 @@ sub _MaskEmailNew {
                 Data         => $Param{SLAs},
                 Name         => 'SLAID',
                 SelectedID   => $Param{SLAID},
+                Class        => 'Modernize',
                 PossibleNone => 1,
                 Sort         => 'AlphanumericValue',
                 Translation  => 0,
@@ -2715,6 +2719,7 @@ sub _MaskEmailNew {
             Data       => $Param{StandardTemplates}  || {},
             Name       => 'StandardTemplateID',
             SelectedID => $Param{StandardTemplateID} || '',
+            Class      => 'Modernize',
             PossibleNone => 1,
             Sort         => 'AlphanumericValue',
             Translation  => 1,
@@ -2734,6 +2739,7 @@ sub _MaskEmailNew {
         Data          => $Param{Priorities},
         Name          => 'PriorityID',
         SelectedID    => $Param{PriorityID},
+        Class         => 'Modernize',
         SelectedValue => $Param{Priority},
         Translation   => 1,
     );
@@ -2769,6 +2775,7 @@ sub _MaskEmailNew {
             Data       => $Param{ResponsibleUsers},
             SelectedID => $Param{ResponsibleUserSelected},
             Name       => 'NewResponsibleID',
+            Class      => 'Modernize',
         );
         $LayoutObject->Block(
             Name => 'ResponsibleSelection',

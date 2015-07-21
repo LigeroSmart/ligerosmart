@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2015 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/bc2139dd409b8aa286e5bbfe797bf8496a312ab0/Kernel/Output/HTML/Templates/Standard/AgentTicketZoom.tt
+# $origin: https://github.com/OTRS/otrs/blob/4e73a869d24f37a3b0d27b1f7900eaa9e0f46462/Kernel/Output/HTML/Templates/Standard/AgentTicketZoom.tt
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -128,7 +128,7 @@
 [% RenderBlockEnd("EventTypeFilterDialog") %]
 
 [% RenderBlockStart("Header") %]
-<div class="MainBox ARIARoleMain [% IF Data.UseArticleColors %]UseArticleColors[% END %]">
+<div class="MainBox ARIARoleMain TicketZoom [% IF Data.UseArticleColors %]UseArticleColors[% END %]">
     <div class="ClearLeft"></div>
     <div class="Headline">
         <div class="Flag" title="[% Translate(Data.Priority) | html %]"><span class="PriorityID-[% Data.PriorityID | html %]">[% Translate(Data.Priority) | html %]</span></div>
@@ -537,14 +537,26 @@
 [% RenderBlockEnd("LinkTableSimple") %]
         </div>
         <div class="ContentColumn">
-
             <div class="WidgetSimple">
-                <div class="Content">
-                    <div class="ActionRow">
+                <div class="Content OverflowVisible">
+                    <div class="ActionRow Cluster">
                         <ul class="Actions">
 [% RenderBlockStart("TicketMenu") %]
-                            <li>
-                                <a href="[% Env("Baselink") %][% Data.Link | Interpolate %]" class="[% Data.Class | html %]" [% Data.LinkParam %] title="[% Translate(Data.Description) | html %]">[% Translate(Data.Name) | html %]</a>
+                            <li id="nav-[% Data.Name %]">
+                            [% IF Data.Type == 'Cluster' %]
+                                <span class="[% Data.Class %]" title="[% Translate(Data.Description) | html %]">[% Translate(Data.Name) | html %] <i class="fa fa-caret-down"></i></span>
+                            [% ELSE %]
+                                <a href="[% Env("Baselink") %][% Data.Link | Interpolate %]" class="[% Data.Class %]" [% Data.LinkParam %] title="[% Translate(Data.Description) | html %]">[% Translate(Data.Name) | html %]</a>
+                            [% END %]
+[% RenderBlockStart("TicketMenuSubContainer") %]
+                                <ul id="nav-[% Data.Name %]-container" class="[% Data.Class | html %]">
+[% RenderBlockStart("TicketMenuSubContainerItem") %]
+                                    <li id="nav-[% Data.Name %]">
+                                        <a href="[% Env("Baselink") %][% Data.Link | Interpolate %]" class="[% Data.Class | html %]" [% Data.LinkParam %] title="[% Translate(Data.Description) | html %]">[% Translate(Data.Name) | html %]</a>
+                                    </li>
+[% RenderBlockEnd("TicketMenuSubContainerItem") %]
+                                </ul>
+[% RenderBlockEnd("TicketMenuSubContainer") %]
                             </li>
 [% RenderBlockEnd("TicketMenu") %]
 [% RenderBlockStart("TicketMenuPhoneAsDropdown") %]

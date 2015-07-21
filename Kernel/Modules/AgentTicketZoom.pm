@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2015 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/bc2139dd409b8aa286e5bbfe797bf8496a312ab0/Kernel/Modules/AgentTicketZoom.pm
+# $origin: https://github.com/OTRS/otrs/blob/4e73a869d24f37a3b0d27b1f7900eaa9e0f46462/Kernel/Modules/AgentTicketZoom.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -971,6 +971,9 @@ sub MaskAgentZoom {
     # run ticket menu modules
     if ( ref $ConfigObject->Get('Ticket::Frontend::MenuModule') eq 'HASH' ) {
         my %Menus = %{ $ConfigObject->Get('Ticket::Frontend::MenuModule') };
+        my %MenuClusters;
+        my %ZoomMenuItems;
+
         MENU:
         for my $Menu ( sort keys %Menus ) {
 
@@ -996,10 +999,54 @@ sub MaskAgentZoom {
                 $Item->{Class} = "AsPopup PopupType_$Menus{$Menu}->{PopupType}";
             }
 
+            if ( !$Menus{$Menu}->{ClusterName} ) {
+
+                $ZoomMenuItems{$Menu} = $Item;
+            }
+            else {
+
+                # check the configured priority for this item. The lowest ClusterPriority
+                # within the same cluster wins.
+                my $Priority = $MenuClusters{ $Menus{$Menu}->{ClusterName} }->{Priority};
+                if ( !$Priority || $Priority !~ /^\d{3}$/ || $Priority > $Menus{$Menu}->{ClusterPriority}) {
+                    $Priority = $Menus{$Menu}->{ClusterPriority};
+                }
+                $MenuClusters{ $Menus{$Menu}->{ClusterName} }->{Priority} = $Priority;
+                $MenuClusters{ $Menus{$Menu}->{ClusterName} }->{Items}->{ $Menu } = $Item;
+            }
+        }
+
+        for my $Cluster ( sort keys %MenuClusters ) {
+            $ZoomMenuItems{ $MenuClusters{$Cluster}->{Priority} . $Cluster } = {
+                Name => $Cluster,
+                Type => 'Cluster',
+                Link => '#',
+                Class => 'ClusterLink',
+                Items => $MenuClusters{$Cluster}->{Items},
+            }
+        }
+
+        # display all items
+        for my $Item ( sort keys %ZoomMenuItems ) {
+
             $LayoutObject->Block(
                 Name => 'TicketMenu',
-                Data => $Item,
+                Data => $ZoomMenuItems{$Item},
             );
+
+            if ($ZoomMenuItems{$Item}->{Type} eq 'Cluster') {
+
+                $LayoutObject->Block(
+                    Name => 'TicketMenuSubContainer'
+                );
+
+                for my $SubItem ( sort keys %{ $ZoomMenuItems{$Item}->{Items} } ) {
+                    $LayoutObject->Block(
+                        Name => 'TicketMenuSubContainerItem',
+                        Data => $ZoomMenuItems{$Item}->{Items}->{$SubItem},
+                    );
+                }
+            }
         }
     }
 
@@ -2960,11 +3007,8 @@ sub _ArticleItem {
                 );
 
                 # check for the display of the filesize
-                if ( $Job eq '2-HTML-Viewer' && !%Data ) {
+                if ( $Job eq '2-HTML-Viewer' ) {
                     $Data{DataFileSize} = ", " . $File{Filesize};
-                }
-                elsif ( $Job eq '2-HTML-Viewer' && %Data ) {
-                    $Data{DataFileSize} = ", " . $Data{Filesize};
                 }
                 $LayoutObject->Block(
                     Name => $Data{Block} || 'ArticleAttachmentRowLink',
