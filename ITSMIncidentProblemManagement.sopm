@@ -50,7 +50,6 @@
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentTicketOverviewPreview.tt"/>
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentTicketPhone.tt"/>
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentTicketZoom.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/CustomerTicketPrint.tt"/>
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/CustomerTicketZoom.tt"/>
         <File Permission="644" Location="scripts/test/Selenium/Agent/AgentTicketDecision.t"/>
         <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMReviewRequired.t"/>
