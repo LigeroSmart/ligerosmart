@@ -12,11 +12,9 @@ use strict;
 use warnings;
 
 use MIME::Base64 qw();
-use Kernel::System::FAQ;
-use Kernel::System::CSV;
-use Kernel::System::DynamicField;
-use Kernel::System::DynamicField::Backend;
 use Kernel::System::VariableCheck qw(:all);
+
+our $ObjectManagerDisabled = 1;
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -25,42 +23,17 @@ sub new {
     my $Self = {%Param};
     bless( $Self, $Type );
 
-    # check needed objects
-    for (qw(ParamObject DBObject LayoutObject LogObject ConfigObject)) {
-        if ( !$Self->{$_} ) {
-            $Self->{LayoutObject}->FatalError( Message => "Got no $_!" );
-        }
-    }
-
     # set UserID to root because in public interface there is no user
     $Self->{UserID} = 1;
 
-    # create additional objects
-    $Self->{FAQObject}          = Kernel::System::FAQ->new(%Param);
-    $Self->{CSVObject}          = Kernel::System::CSV->new(%Param);
-    $Self->{DynamicFieldObject} = Kernel::System::DynamicField->new(%Param);
-    $Self->{BackendObject}      = Kernel::System::DynamicField::Backend->new(%Param);
-
     # get config for frontend
-    $Self->{Config} = $Self->{ConfigObject}->Get("FAQ::Frontend::$Self->{Action}");
-
-    # set default interface settings
-    $Self->{Interface} = $Self->{FAQObject}->StateTypeGet(
-        Name   => 'public',
-        UserID => $Self->{UserID},
-    );
-    $Self->{InterfaceStates} = $Self->{FAQObject}->StateTypeList(
-        Types  => $Self->{ConfigObject}->Get('FAQ::Public::StateTypes'),
-        UserID => $Self->{UserID},
-    );
-
-    $Self->{MultiLanguage} = $Self->{ConfigObject}->Get('FAQ::MultiLanguage');
+    $Self->{Config} = $Kernel::OM->Get('Kernel::Config')->Get("FAQ::Frontend::$Self->{Action}");
 
     # get dynamic field config for frontend module
     $Self->{DynamicFieldFilter} = $Self->{Config}->{DynamicField};
 
     # get the dynamic fields for FAQ object
-    $Self->{DynamicField} = $Self->{DynamicFieldObject}->DynamicFieldListGet(
+    $Self->{DynamicField} = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldListGet(
         Valid       => 1,
         ObjectType  => 'FAQ',
         FieldFilter => $Self->{DynamicFieldFilter} || {},
@@ -68,67 +41,19 @@ sub new {
 
     # reduce the dynamic fields to only the ones that are designed for customer interface
     my @CustomerDynamicFields;
-    DYNAMICFIELD:
+    DYNAMICFIELDCONFIG:
     for my $DynamicFieldConfig ( @{ $Self->{DynamicField} } ) {
-        next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
+        next DYNAMICFIELDCONFIG if !IsHashRefWithData($DynamicFieldConfig);
 
-        my $IsCustomerInterfaceCapable = $Self->{BackendObject}->HasBehavior(
+        my $IsCustomerInterfaceCapable = $Kernel::OM->Get('Kernel::System::DynamicField::Backend')->HasBehavior(
             DynamicFieldConfig => $DynamicFieldConfig,
             Behavior           => 'IsCustomerInterfaceCapable',
         );
-        next DYNAMICFIELD if !$IsCustomerInterfaceCapable;
+        next DYNAMICFIELDCONFIG if !$IsCustomerInterfaceCapable;
 
         push @CustomerDynamicFields, $DynamicFieldConfig;
     }
     $Self->{DynamicField} = \@CustomerDynamicFields;
-
-    my $OverviewConfig = $Self->{ConfigObject}->Get("FAQ::Frontend::PublicFAQOverview");
-
-    # get the ticket dynamic fields for overview display
-    $Self->{OverviewDynamicField} = $Self->{DynamicFieldObject}->DynamicFieldListGet(
-        Valid       => 1,
-        ObjectType  => 'FAQ',
-        FieldFilter => $OverviewConfig->{DynamicField} || {},
-    );
-
-    # reduce the dynamic fields to only the ones that are designed for customer interface
-    my @OverviewCustomerDynamicFields;
-    DYNAMICFIELD:
-    for my $DynamicFieldConfig ( @{ $Self->{OverviewDynamicField} } ) {
-        next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
-
-        my $IsCustomerInterfaceCapable = $Self->{BackendObject}->HasBehavior(
-            DynamicFieldConfig => $DynamicFieldConfig,
-            Behavior           => 'IsCustomerInterfaceCapable',
-        );
-        next DYNAMICFIELD if !$IsCustomerInterfaceCapable;
-
-        push @OverviewCustomerDynamicFields, $DynamicFieldConfig;
-    }
-    $Self->{OverviewDynamicField} = \@OverviewCustomerDynamicFields;
-
-    # get the FAQ dynamic fields for CSV display
-    $Self->{CSVDynamicField} = $Self->{DynamicFieldObject}->DynamicFieldListGet(
-        Valid       => 1,
-        ObjectType  => 'FAQ',
-        FieldFilter => $Self->{Config}->{SearchCSVDynamicField} || {},
-    );
-
-    # reduce the dynamic fields to only the ones that are designed for customer interface
-    my @CSVCustomerDynamicFields;
-    DYNAMICFIELD:
-    for my $DynamicFieldConfig ( @{ $Self->{CSVDynamicField} } ) {
-        next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
-
-        my $IsCustomerInterfaceCapable = $Self->{BackendObject}->HasBehavior(
-            DynamicFieldConfig => $DynamicFieldConfig,
-            Behavior           => 'IsCustomerInterfaceCapable',
-        );
-        next DYNAMICFIELD if !$IsCustomerInterfaceCapable;
-
-        push @CSVCustomerDynamicFields, $DynamicFieldConfig;
-    }
-    $Self->{CSVDynamicField} = \@CSVCustomerDynamicFields;
 
     return $Self;
 }
@@ -138,24 +63,33 @@ sub Run {
 
     my $Output;
 
+    # get config from constructor
+    my $Config = $Self->{Config};
+
+    # get param object
+    my $ParamObject = $Kernel::OM->Get('Kernel::System::Web::Request');
+
     # get config data
-    $Self->{StartHit} = int( $Self->{ParamObject}->GetParam( Param => 'StartHit' ) || 1 );
-    $Self->{SearchLimit}     = $Self->{Config}->{SearchLimit}     || 200;
-    $Self->{SearchPageShown} = $Self->{Config}->{SearchPageShown} || 40;
-    $Self->{SortBy} = $Self->{ParamObject}->GetParam( Param => 'SortBy' )
-        || $Self->{Config}->{'SortBy::Default'}
+    my $StartHit = int( $ParamObject->GetParam( Param => 'StartHit' ) || 1 );
+    my $SearchLimit     = $Config->{SearchLimit}     || 200;
+    my $SearchPageShown = $Config->{SearchPageShown} || 40;
+    my $SortBy = $ParamObject->GetParam( Param => 'SortBy' )
+        || $Config->{'SortBy::Default'}
         || 'FAQID';
-    $Self->{OrderBy} = $Self->{ParamObject}->GetParam( Param => 'Order' )
-        || $Self->{Config}->{'Order::Default'}
+    my $OrderBy = $ParamObject->GetParam( Param => 'Order' )
+        || $Config->{'Order::Default'}
         || 'Down';
+
+    # get layout object
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
     # build output for open search description by FAQ number
     if ( $Self->{Subaction} eq 'OpenSearchDescriptionFAQNumber' ) {
-        my $Output = $Self->{LayoutObject}->Output(
+        my $Output = $LayoutObject->Output(
             TemplateFile => 'PublicFAQSearchOpenSearchDescriptionFAQNumber',
             Data         => \%Param,
         );
-        return $Self->{LayoutObject}->Attachment(
+        return $LayoutObject->Attachment(
             Filename    => 'OpenSearchDescriptionFAQNumber.xml',
             ContentType => 'application/opensearchdescription+xml',
             Content     => $Output,
@@ -165,11 +99,11 @@ sub Run {
 
     # build output for open search description by full-text
     if ( $Self->{Subaction} eq 'OpenSearchDescriptionFulltext' ) {
-        my $Output = $Self->{LayoutObject}->Output(
+        my $Output = $LayoutObject->Output(
             TemplateFile => 'PublicFAQSearchOpenSearchDescriptionFullText',
             Data         => \%Param,
         );
-        return $Self->{LayoutObject}->Attachment(
+        return $LayoutObject->Attachment(
             Filename    => 'OpenSearchDescriptionFulltext.xml',
             ContentType => 'application/opensearchdescription+xml',
             Content     => $Output,
@@ -178,7 +112,7 @@ sub Run {
     }
 
     # remember exclude attributes
-    my @Excludes = $Self->{ParamObject}->GetArray( Param => 'Exclude' );
+    my @Excludes = $ParamObject->GetArray( Param => 'Exclude' );
 
     my %GetParam;
 
@@ -197,7 +131,7 @@ sub Run {
     {
 
         # get search string params (get submitted params)
-        $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
+        $GetParam{$ParamName} = $ParamObject->GetParam( Param => $ParamName );
 
         # remove whitespace on the start and end
         if ( $GetParam{$ParamName} ) {
@@ -213,24 +147,27 @@ sub Run {
     }
 
     # get back link
-    $GetParam{SearchBackLink} = $Self->{ParamObject}->GetParam( Param => 'SearchBackLink' ) || '';
+    $GetParam{SearchBackLink} = $ParamObject->GetParam( Param => 'SearchBackLink' ) || '';
     if ( $GetParam{SearchBackLink} ) {
         $GetParam{SearchBackLink} = MIME::Base64::decode_base64( $GetParam{SearchBackLink} );
     }
 
     # show back link
-    $Self->{LayoutObject}->Block(
+    $LayoutObject->Block(
         Name => 'Back',
         Data => {
             %GetParam,
         },
     );
 
+    # get needed object
+    my $DynamicFieldBackendObject = $Kernel::OM->Get('Kernel::System::DynamicField::Backend');
+
     # get array params
     for my $ParamName (qw(CategoryIDs LanguageIDs )) {
 
         # get search array params (get submitted params)
-        my @Array = $Self->{ParamObject}->GetArray( Param => $ParamName );
+        my @Array = $ParamObject->GetArray( Param => $ParamName );
         if (@Array) {
             $GetParam{$ParamName} = \@Array;
 
@@ -242,26 +179,26 @@ sub Run {
 
         # get Dynamic fields from param object
         # cycle through the activated Dynamic Fields for this screen
-        DYNAMICFIELD:
+        DYNAMICFIELDCONFIG:
         for my $DynamicFieldConfig ( @{ $Self->{DynamicField} } ) {
-            next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
+            next DYNAMICFIELDCONFIG if !IsHashRefWithData($DynamicFieldConfig);
 
             # get search field preferences
-            my $SearchFieldPreferences = $Self->{BackendObject}->SearchFieldPreferences(
+            my $SearchFieldPreferences = $DynamicFieldBackendObject->SearchFieldPreferences(
                 DynamicFieldConfig => $DynamicFieldConfig,
             );
 
-            next DYNAMICFIELD if !IsArrayRefWithData($SearchFieldPreferences);
+            next DYNAMICFIELDCONFIG if !IsArrayRefWithData($SearchFieldPreferences);
 
             PREFERENCE:
             for my $Preference ( @{$SearchFieldPreferences} ) {
 
                 # extract the dynamic field value from the web request
-                my $DynamicFieldValue = $Self->{BackendObject}->SearchFieldValueGet(
+                my $DynamicFieldValue = $DynamicFieldBackendObject->SearchFieldValueGet(
                     DynamicFieldConfig     => $DynamicFieldConfig,
-                    ParamObject            => $Self->{ParamObject},
+                    ParamObject            => $ParamObject,
                     ReturnProfileStructure => 1,
-                    LayoutObject           => $Self->{LayoutObject},
+                    LayoutObject           => $LayoutObject,
                     Type                   => $Preference->{Type},
                 );
 
@@ -336,16 +273,16 @@ sub Run {
         $GetParam{ResultForm} = '';
     }
     if ( $GetParam{ResultForm} eq 'Print' ) {
-        $Self->{SearchPageShown} = $Self->{SearchLimit};
+        $SearchPageShown = $SearchLimit;
     }
 
     # check request
     if ( $Self->{Subaction} eq 'OpenSearchDescription' ) {
-        my $Output = $Self->{LayoutObject}->Output(
+        my $Output = $LayoutObject->Output(
             TemplateFile => 'PublicFAQSearchOpenSearchDescription',
             Data         => {%Param},
         );
-        return $Self->{LayoutObject}->Attachment(
+        return $LayoutObject->Attachment(
             Filename    => 'OpenSearchDescription.xml',
             ContentType => 'text/xml',
             Content     => $Output,
@@ -361,23 +298,23 @@ sub Run {
         my %DynamicFieldSearchDisplay;
 
         # cycle through the activated Dynamic Fields for this screen
-        DYNAMICFIELD:
+        DYNAMICFIELDCONFIG:
         for my $DynamicFieldConfig ( @{ $Self->{DynamicField} } ) {
-            next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
+            next DYNAMICFIELDCONFIG if !IsHashRefWithData($DynamicFieldConfig);
 
             # get search field preferences
-            my $SearchFieldPreferences = $Self->{BackendObject}->SearchFieldPreferences(
+            my $SearchFieldPreferences = $DynamicFieldBackendObject->SearchFieldPreferences(
                 DynamicFieldConfig => $DynamicFieldConfig,
             );
 
-            next DYNAMICFIELD if !IsArrayRefWithData($SearchFieldPreferences);
+            next DYNAMICFIELDCONFIG if !IsArrayRefWithData($SearchFieldPreferences);
 
             PREFERENCE:
             for my $Preference ( @{$SearchFieldPreferences} ) {
 
-                my $DynamicFieldValue = $Self->{BackendObject}->SearchFieldValueGet(
+                my $DynamicFieldValue = $DynamicFieldBackendObject->SearchFieldValueGet(
                     DynamicFieldConfig     => $DynamicFieldConfig,
-                    ParamObject            => $Self->{ParamObject},
+                    ParamObject            => $ParamObject,
                     Type                   => $Preference->{Type},
                     ReturnProfileStructure => 1,
                 );
@@ -387,10 +324,10 @@ sub Run {
                 next PREFERENCE if !IsHashRefWithData($DynamicFieldValue);
 
                 # extract the dynamic field value from the profile
-                my $SearchParameter = $Self->{BackendObject}->SearchFieldParameterBuild(
+                my $SearchParameter = $DynamicFieldBackendObject->SearchFieldParameterBuild(
                     DynamicFieldConfig => $DynamicFieldConfig,
                     Profile            => \%GetParam,
-                    LayoutObject       => $Self->{LayoutObject},
+                    LayoutObject       => $LayoutObject,
                     Type               => $Preference->{Type},
                 );
 
@@ -513,19 +450,40 @@ sub Run {
             }
         }
 
+        # get needed objects
+        my $FAQObject    = $Kernel::OM->Get('Kernel::System::FAQ');
+        my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+
+        # set default interface settings
+        my $Interface = $FAQObject->StateTypeGet(
+            Name   => 'public',
+            UserID => $Self->{UserID},
+        );
+        my $InterfaceStates = $FAQObject->StateTypeList(
+            Types  => $ConfigObject->Get('FAQ::Public::StateTypes'),
+            UserID => $Self->{UserID},
+        );
+
         # perform FAQ search
-        my @ViewableFAQIDs = $Self->{FAQObject}->FAQSearch(
-            OrderBy             => [ $Self->{SortBy} ],
-            OrderByDirection    => [ $Self->{OrderBy} ],
-            Limit               => $Self->{SearchLimit},
+        my @ViewableFAQIDs = $FAQObject->FAQSearch(
+            OrderBy             => [$SortBy],
+            OrderByDirection    => [$OrderBy],
+            Limit               => $SearchLimit,
             UserID              => $Self->{UserID},
-            States              => $Self->{InterfaceStates},
-            Interface           => $Self->{Interface},
+            States              => $InterfaceStates,
+            Interface           => $Interface,
             ContentSearchPrefix => '*',
             ContentSearchSuffix => '*',
             %GetParam,
             %DynamicFieldSearchParameters,
         );
+
+        # get multi-language option
+        my $MultiLanguage = $ConfigObject->Get('FAQ::MultiLanguage');
+
+        # get needed objects
+        my $DynamicFieldObject = $Kernel::OM->Get('Kernel::System::DynamicField');
+        my $TimeObject         = $Kernel::OM->Get('Kernel::System::Time');
 
         # CSV output
         if ( $GetParam{ResultForm} eq 'CSV' ) {
@@ -533,10 +491,33 @@ sub Run {
             my @CSVHead;
             my @CSVData;
 
+            # get the FAQ dynamic fields for CSV display
+            my $CSVDynamicField = $DynamicFieldObject->DynamicFieldListGet(
+                Valid       => 1,
+                ObjectType  => 'FAQ',
+                FieldFilter => $Config->{SearchCSVDynamicField} || {},
+            );
+
+            # reduce the dynamic fields to only the ones that are designed for customer interface
+            my @CSVCustomerDynamicFields;
+            DYNAMICFIELDCONFIG:
+            for my $DynamicFieldConfig ( @{$CSVDynamicField} ) {
+                next DYNAMICFIELDCONFIG if !IsHashRefWithData($DynamicFieldConfig);
+
+                my $IsCustomerInterfaceCapable = $DynamicFieldBackendObject->HasBehavior(
+                    DynamicFieldConfig => $DynamicFieldConfig,
+                    Behavior           => 'IsCustomerInterfaceCapable',
+                );
+                next DYNAMICFIELDCONFIG if !$IsCustomerInterfaceCapable;
+
+                push @CSVCustomerDynamicFields, $DynamicFieldConfig;
+            }
+            $CSVDynamicField = \@CSVCustomerDynamicFields;
+
             for my $FAQID (@ViewableFAQIDs) {
 
                 # get FAQ data details
-                my %FAQData = $Self->{FAQObject}->FAQGet(
+                my %FAQData = $FAQObject->FAQGet(
                     ItemID        => $FAQID,
                     ItemFields    => 0,
                     DynamicFields => 1,
@@ -545,9 +526,9 @@ sub Run {
 
                 # get info for CSV output
                 my %CSVInfo = (%FAQData);
-                $CSVInfo{Changed} = $Self->{LayoutObject}->{LanguageObject}->FormatTimeString(
+                $CSVInfo{Changed} = $LayoutObject->{LanguageObject}->FormatTimeString(
                     $FAQData{Changed},
-                    'DateFormat',
+                    'DateFormatLong',
                 );
 
                 # CSV quote
@@ -556,7 +537,7 @@ sub Run {
                     @CSVHead    = qw( FAQNumber Title Category);
 
                     # insert language header
-                    if ( $Self->{MultiLanguage} ) {
+                    if ($MultiLanguage) {
                         push @TmpCSVHead, 'Language';
                         push @CSVHead,    'Language';
                     }
@@ -566,7 +547,7 @@ sub Run {
 
                     # include the selected dynamic fields on CVS results
                     DYNAMICFIELD:
-                    for my $DynamicFieldConfig ( @{ $Self->{CSVDynamicField} } ) {
+                    for my $DynamicFieldConfig ( @{$CSVDynamicField} ) {
                         next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
                         next DYNAMICFIELD if !$DynamicFieldConfig->{Name};
                         next DYNAMICFIELD if $DynamicFieldConfig->{Name} eq '';
@@ -584,7 +565,7 @@ sub Run {
 
                         # loop over the dynamic fields configured for CSV output
                         DYNAMICFIELD:
-                        for my $DynamicFieldConfig ( @{ $Self->{CSVDynamicField} } ) {
+                        for my $DynamicFieldConfig ( @{$CSVDynamicField} ) {
                             next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
                             next DYNAMICFIELD if !$DynamicFieldConfig->{Name};
 
@@ -593,11 +574,11 @@ sub Run {
                             next DYNAMICFIELD if $DynamicFieldConfig->{Name} ne $1;
 
                             # get the value as for print (to correctly display)
-                            my $ValueStrg = $Self->{BackendObject}->DisplayValueRender(
+                            my $ValueStrg = $DynamicFieldBackendObject->DisplayValueRender(
                                 DynamicFieldConfig => $DynamicFieldConfig,
                                 Value              => $CSVInfo{$Header},
                                 HTMLOutput         => 0,
-                                LayoutObject       => $Self->{LayoutObject},
+                                LayoutObject       => $LayoutObject,
                             );
                             push @Data, $ValueStrg->{Value};
 
@@ -629,7 +610,7 @@ sub Run {
                 @CSVHead    = qw(FAQNumber Title Category);
 
                 # insert language header
-                if ( $Self->{MultiLanguage} ) {
+                if ($MultiLanguage) {
                     push @TmpCSVHead, 'Language';
                     push @CSVHead,    'Language';
                 }
@@ -639,7 +620,7 @@ sub Run {
 
                 # include the selected dynamic fields on CSV results
                 DYNAMICFIELD:
-                for my $DynamicFieldConfig ( @{ $Self->{CSVDynamicField} } ) {
+                for my $DynamicFieldConfig ( @{$CSVDynamicField} ) {
                     next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
                     next DYNAMICFIELD if !$DynamicFieldConfig->{Name};
                     next DYNAMICFIELD if $DynamicFieldConfig->{Name} eq '';
@@ -654,15 +635,15 @@ sub Run {
 
                 # replace FAQNumber header with the current FAQHook from config
                 if ( $Header eq 'FAQNumber' ) {
-                    $Header = $Self->{ConfigObject}->Get('FAQ::FAQHook');
+                    $Header = $ConfigObject->Get('FAQ::FAQHook');
                 }
                 else {
-                    $Header = $Self->{LayoutObject}->{LanguageObject}->Translate($Header);
+                    $Header = $LayoutObject->{LanguageObject}->Translate($Header);
                 }
             }
 
             # assemble CSV data
-            my $CSV = $Self->{CSVObject}->Array2CSV(
+            my $CSV = $Kernel::OM->Get('Kernel::System::CSV')->Array2CSV(
                 Head      => \@CSVHead,
                 Data      => \@CSVData,
                 Separator => $Self->{UserCSVSeparator},
@@ -670,70 +651,220 @@ sub Run {
 
             # return CSV to download
             my $CSVFile = 'FAQ_search';
-            my ( $s, $m, $h, $D, $M, $Y ) = $Self->{TimeObject}->SystemTime2Date(
-                SystemTime => $Self->{TimeObject}->SystemTime(),
+            my ( $s, $m, $h, $D, $M, $Y ) = $TimeObject->SystemTime2Date(
+                SystemTime => $TimeObject->SystemTime(),
             );
             $M = sprintf( "%02d", $M );
             $D = sprintf( "%02d", $D );
             $h = sprintf( "%02d", $h );
             $m = sprintf( "%02d", $m );
-            return $Self->{LayoutObject}->Attachment(
+            return $LayoutObject->Attachment(
                 Filename    => $CSVFile . "_" . "$Y-$M-$D" . "_" . "$h-$m.csv",
-                ContentType => "text/csv; charset=" . $Self->{LayoutObject}->{UserCharset},
+                ContentType => "text/csv; charset=" . $LayoutObject->{UserCharset},
                 Content     => $CSV,
             );
         }
         elsif ( $GetParam{ResultForm} eq 'Print' ) {
+
+            # get PDF object
+            my $PDFObject = $Kernel::OM->Get('Kernel::System::PDF');
+
+            my @PDFData;
             for my $FAQID (@ViewableFAQIDs) {
 
                 # get FAQ data details
-                my %FAQData = $Self->{FAQObject}->FAQGet(
+                my %FAQData = $FAQObject->FAQGet(
                     ItemID     => $FAQID,
                     ItemFields => 0,
                     UserID     => $Self->{UserID},
                 );
 
                 # add table block
-                $Self->{LayoutObject}->Block(
+                $LayoutObject->Block(
                     Name => 'Record',
                     Data => {%FAQData},
                 );
 
                 # add language data
-                if ( $Self->{MultiLanguage} ) {
-                    $Self->{LayoutObject}->Block(
+                if ($MultiLanguage) {
+                    $LayoutObject->Block(
                         Name => 'RecordLanguage',
                         Data => {%FAQData},
                     );
                 }
 
-            }
-
-            # output header
-            my $Output = $Self->{LayoutObject}->PrintHeader( Width => 800 );
-            if ( scalar @ViewableFAQIDs == $Self->{SearchLimit} ) {
-                $Param{Warning} = '$Text{"Reached max. count of %s search hits!", "'
-                    . $Self->{SearchLimit} . '"}';
-            }
-
-            # add language header
-            if ( $Self->{MultiLanguage} ) {
-                $Self->{LayoutObject}->Block(
-                    Name => 'HeaderLanguage',
-                    Data => {},
+                # set change date to long format
+                my $Changed = $LayoutObject->{LanguageObject}->FormatTimeString(
+                    $FAQData{Changed},
+                    'DateFormatLong',
                 );
+
+                # create PDF Rows
+                my @PDFRow;
+                push @PDFRow, $FAQData{Number};
+                push @PDFRow, $FAQData{Title};
+                push @PDFRow, $FAQData{CategoryName};
+
+                # create language row
+                if ($MultiLanguage) {
+                    push @PDFRow, $FAQData{Language};
+                }
+
+                push @PDFRow,  $FAQData{State};
+                push @PDFRow,  $Changed;
+                push @PDFData, \@PDFRow;
             }
 
-            $Output .= $Self->{LayoutObject}->Output(
-                TemplateFile => 'PublicFAQSearchResultPrint',
-                Data         => \%Param,
+            # PDF Output
+            my $Title = $LayoutObject->{LanguageObject}->Translate('FAQ') . ' '
+                . $LayoutObject->{LanguageObject}->Translate('Search');
+            my $Page = $LayoutObject->{LanguageObject}->Translate('Page');
+            my $Time = $LayoutObject->{Time};
+
+            # get maximum number of pages
+            my $MaxPages = $ConfigObject->Get('PDF::MaxPages');
+            if ( !$MaxPages || $MaxPages < 1 || $MaxPages > 1000 ) {
+                $MaxPages = 100;
+            }
+
+            my $CellData;
+
+            # output 'No Result', if no content was given
+            if (@PDFData) {
+
+                # create the header
+                $CellData->[0]->[0]->{Content} = $ConfigObject->Get('FAQ::FAQHook');
+                $CellData->[0]->[0]->{Font}    = 'ProportionalBold';
+                $CellData->[0]->[1]->{Content} = $LayoutObject->{LanguageObject}->Translate('Title');
+                $CellData->[0]->[1]->{Font}    = 'ProportionalBold';
+                $CellData->[0]->[2]->{Content} = $LayoutObject->{LanguageObject}->Translate('Category');
+                $CellData->[0]->[2]->{Font}    = 'ProportionalBold';
+
+                # store the correct header index
+                my $NextHeaderIndex = 3;
+
+                # add language header
+                if ($MultiLanguage) {
+                    $CellData->[0]->[3]->{Content} = $LayoutObject->{LanguageObject}->Translate('Language');
+                    $CellData->[0]->[3]->{Font}    = 'ProportionalBold';
+                    $NextHeaderIndex               = 4;
+                }
+
+                $CellData->[0]->[$NextHeaderIndex]->{Content} = $LayoutObject->{LanguageObject}->Translate('State');
+                $CellData->[0]->[$NextHeaderIndex]->{Font}    = 'ProportionalBold';
+
+                $CellData->[0]->[ $NextHeaderIndex + 1 ]->{Content}
+                    = $LayoutObject->{LanguageObject}->Translate('Changed');
+                $CellData->[0]->[ $NextHeaderIndex + 1 ]->{Font} = 'ProportionalBold';
+
+                # create the content array
+                my $CounterRow = 1;
+                for my $Row (@PDFData) {
+                    my $CounterColumn = 0;
+                    for my $Content ( @{$Row} ) {
+                        $CellData->[$CounterRow]->[$CounterColumn]->{Content} = $Content;
+                        $CounterColumn++;
+                    }
+                    $CounterRow++;
+                }
+            }
+            else {
+                $CellData->[0]->[0]->{Content} = $LayoutObject->{LanguageObject}->Translate('No Result!');
+            }
+
+            # page params
+            my %PageParam;
+            $PageParam{PageOrientation} = 'landscape';
+            $PageParam{MarginTop}       = 30;
+            $PageParam{MarginRight}     = 40;
+            $PageParam{MarginBottom}    = 40;
+            $PageParam{MarginLeft}      = 40;
+            $PageParam{HeaderRight}     = $Title;
+
+            # table params
+            my %TableParam;
+            $TableParam{CellData}            = $CellData;
+            $TableParam{Type}                = 'Cut';
+            $TableParam{FontSize}            = 6;
+            $TableParam{Border}              = 0;
+            $TableParam{BackgroundColorEven} = '#DDDDDD';
+            $TableParam{Padding}             = 1;
+            $TableParam{PaddingTop}          = 3;
+            $TableParam{PaddingBottom}       = 3;
+
+            # create new PDF document
+            $PDFObject->DocumentNew(
+                Title  => $ConfigObject->Get('Product') . ': ' . $Title,
+                Encode => $LayoutObject->{UserCharset},
             );
 
-            # add footer
-            $Output .= $Self->{LayoutObject}->PrintFooter();
+            # start table output
+            $PDFObject->PageNew(
+                %PageParam,
+                FooterRight => $Page . ' 1',
+            );
 
-            # return output
-            return $Output;
+            $PDFObject->PositionSet(
+                Move => 'relativ',
+                Y    => -6,
+            );
+
+            # output title
+            $PDFObject->Text(
+                Text     => $Title,
+                FontSize => 13,
+            );
+
+            $PDFObject->PositionSet(
+                Move => 'relativ',
+                Y    => -6,
+            );
+
+            # output "printed by"
+            $PDFObject->Text(
+                Text     => $Time,
+                FontSize => 9,
+            );
+
+            $PDFObject->PositionSet(
+                Move => 'relativ',
+                Y    => -14,
+            );
+
+            PAGE:
+            for my $PageCount ( 2 .. $MaxPages ) {
+
+                # output table (or a fragment of it)
+                %TableParam = $PDFObject->Table( %TableParam, );
+
+                # stop output or another page
+                if ( $TableParam{State} ) {
+                    last PAGE;
+                }
+                else {
+                    $PDFObject->PageNew(
+                        %PageParam,
+                        FooterRight => $Page . ' ' . $PageCount,
+                    );
+                }
+            }
+
+            # return the PDF document
+            my $Filename = 'FAQ_search';
+            my ( $s, $m, $h, $D, $M, $Y ) = $TimeObject->SystemTime2Date(
+                SystemTime => $TimeObject->SystemTime(),
+            );
+            $M = sprintf( "%02d", $M );
+            $D = sprintf( "%02d", $D );
+            $h = sprintf( "%02d", $h );
+            $m = sprintf( "%02d", $m );
+            my $PDFString = $PDFObject->DocumentOutput();
+            return $LayoutObject->Attachment(
+                Filename    => $Filename . "_" . "$Y-$M-$D" . "_" . "$h-$m.pdf",
+                ContentType => "application/pdf",
+                Content     => $PDFString,
+                Type        => 'inline',
+            );
 
         }
 
@@ -745,21 +876,46 @@ sub Run {
             # create back link for FAQ Zoom screen
             my $ZoomBackLink = "Action=PublicFAQSearch;Subaction=Search;"
                 . $Self->{Profile}
-                . "SortBy=$Self->{SortBy};Order=$Self->{OrderBy};StartHit=$Self->{StartHit}";
+                . "SortBy=$SortBy;Order=$OrderBy;StartHit=$StartHit";
 
             # encode back link to Base64 for easy HTML transport
             $ZoomBackLink = MIME::Base64::encode_base64($ZoomBackLink);
 
+            my $OverviewConfig = $ConfigObject->Get("FAQ::Frontend::PublicFAQOverview");
+
+            # get the ticket dynamic fields for overview display
+            my $OverviewDynamicField = $DynamicFieldObject->DynamicFieldListGet(
+                Valid       => 1,
+                ObjectType  => 'FAQ',
+                FieldFilter => $OverviewConfig->{DynamicField} || {},
+            );
+
+            # reduce the dynamic fields to only the ones that are designed for customer interface
+            my @OverviewCustomerDynamicFields;
+            DYNAMICFIELD:
+            for my $DynamicFieldConfig ( @{$OverviewDynamicField} ) {
+                next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
+
+                my $IsCustomerInterfaceCapable = $DynamicFieldBackendObject->HasBehavior(
+                    DynamicFieldConfig => $DynamicFieldConfig,
+                    Behavior           => 'IsCustomerInterfaceCapable',
+                );
+                next DYNAMICFIELD if !$IsCustomerInterfaceCapable;
+
+                push @OverviewCustomerDynamicFields, $DynamicFieldConfig;
+            }
+            $OverviewDynamicField = \@OverviewCustomerDynamicFields;
+
             # Dynamic fields table headers
             # cycle through the activated Dynamic Fields for this screen
             DYNAMICFIELD:
-            for my $DynamicFieldConfig ( @{ $Self->{OverviewDynamicField} } ) {
+            for my $DynamicFieldConfig ( @{$OverviewDynamicField} ) {
                 next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
 
                 my $Label = $DynamicFieldConfig->{Label};
 
                 # get field sortable condition
-                my $IsSortable = $Self->{BackendObject}->HasBehavior(
+                my $IsSortable = $DynamicFieldBackendObject->HasBehavior(
                     DynamicFieldConfig => $DynamicFieldConfig,
                     Behavior           => 'IsSortable',
                 );
@@ -768,9 +924,9 @@ sub Run {
                     my $CSS   = '';
                     my $Order = 'Down';
                     if (
-                        $Self->{SortBy}
+                        $SortBy
                         && (
-                            $Self->{SortBy} eq
+                            $SortBy eq
                             ( 'DynamicField_' . $DynamicFieldConfig->{Name} )
                         )
                         )
@@ -785,7 +941,7 @@ sub Run {
                         }
                     }
 
-                    $Self->{LayoutObject}->Block(
+                    $LayoutObject->Block(
                         Name => 'HeaderDynamicField',
                         Data => {
                             %Param,
@@ -793,7 +949,7 @@ sub Run {
                         },
                     );
 
-                    $Self->{LayoutObject}->Block(
+                    $LayoutObject->Block(
                         Name => 'HeaderDynamicFieldSortable',
                         Data => {
                             %Param,
@@ -805,14 +961,14 @@ sub Run {
                 }
                 else {
 
-                    $Self->{LayoutObject}->Block(
+                    $LayoutObject->Block(
                         Name => 'HeaderDynamicField',
                         Data => {
                             %Param,
                         },
                     );
 
-                    $Self->{LayoutObject}->Block(
+                    $LayoutObject->Block(
                         Name => 'HeaderDynamicFieldNotSortable',
                         Data => {
                             %Param,
@@ -828,26 +984,26 @@ sub Run {
 
                 # build search result
                 if (
-                    $Counter >= $Self->{StartHit}
-                    && $Counter < ( $Self->{SearchPageShown} + $Self->{StartHit} )
+                    $Counter >= $StartHit
+                    && $Counter < ( $SearchPageShown + $StartHit )
                     )
                 {
 
                     # get FAQ data details
-                    my %FAQData = $Self->{FAQObject}->FAQGet(
+                    my %FAQData = $FAQObject->FAQGet(
                         ItemID        => $FAQID,
                         ItemFields    => 0,
                         DynamicFields => 1,
                         UserID        => $Self->{UserID},
                     );
 
-                    $FAQData{CleanTitle} = $Self->{FAQObject}->FAQArticleTitleClean(
+                    $FAQData{CleanTitle} = $FAQObject->FAQArticleTitleClean(
                         Title => $FAQData{Title},
-                        Size  => $Self->{Config}->{TitleSize},
+                        Size  => $Config->{TitleSize},
                     );
 
                     # add blocks to template
-                    $Self->{LayoutObject}->Block(
+                    $LayoutObject->Block(
                         Name => 'Record',
                         Data => {
                             %FAQData,
@@ -856,8 +1012,8 @@ sub Run {
                     );
 
                     # add language data
-                    if ( $Self->{MultiLanguage} ) {
-                        $Self->{LayoutObject}->Block(
+                    if ($MultiLanguage) {
+                        $LayoutObject->Block(
                             Name => 'RecordLanguage',
                             Data => {%FAQData},
                         );
@@ -866,18 +1022,18 @@ sub Run {
                     # Dynamic fields
                     # cycle through the activated Dynamic Fields for this screen
                     DYNAMICFIELD:
-                    for my $DynamicFieldConfig ( @{ $Self->{OverviewDynamicField} } ) {
+                    for my $DynamicFieldConfig ( @{$OverviewDynamicField} ) {
                         next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
 
                         # get field value
-                        my $ValueStrg = $Self->{BackendObject}->DisplayValueRender(
+                        my $ValueStrg = $DynamicFieldBackendObject->DisplayValueRender(
                             DynamicFieldConfig => $DynamicFieldConfig,
                             Value              => $FAQData{ 'DynamicField_' . $DynamicFieldConfig->{Name} },
                             ValueMaxChars      => 20,
-                            LayoutObject       => $Self->{LayoutObject},
+                            LayoutObject       => $LayoutObject,
                         );
 
-                        $Self->{LayoutObject}->Block(
+                        $LayoutObject->Block(
                             Name => 'RecordDynamicField',
                             Data => {
                                 Value => $ValueStrg->{Value},
@@ -891,13 +1047,13 @@ sub Run {
 
         # otherwise show a no data found message
         else {
-            $Self->{LayoutObject}->Block( Name => 'NoDataFoundMsg' );
+            $LayoutObject->Block( Name => 'NoDataFoundMsg' );
         }
 
         # create a lookup table for attribute settings
         my %AttributeMap = (
             Number => {
-                Name         => $Self->{ConfigObject}->Get('FAQ::FAQHook'),
+                Name         => $ConfigObject->Get('FAQ::FAQHook'),
                 Translatable => 0,
             },
             Title => {
@@ -944,7 +1100,7 @@ sub Run {
                 # set attribute name and translate it if applies
                 my $AttributeName = $AttributeMap{$Attribute}->{Name};
                 if ( $AttributeMap{$Attribute}->{Translatable} ) {
-                    $AttributeName = $Self->{LayoutObject}->{LanguageObject}->Translate($AttributeName);
+                    $AttributeName = $LayoutObject->{LanguageObject}->Translate($AttributeName);
                 }
 
                 my $AttributeValue;
@@ -956,7 +1112,7 @@ sub Run {
                     if ( $Attribute eq 'CategoryIDs' ) {
 
                         # get the long name for all public categories
-                        my $CategoryList = $Self->{FAQObject}->GetPublicCategoriesLongNames(
+                        my $CategoryList = $FAQObject->GetPublicCategoriesLongNames(
                             Type   => 'rw',
                             UserID => 1,
                         );
@@ -980,7 +1136,7 @@ sub Run {
                         my @LanguageNames;
                         LANGUAGEID:
                         for my $LanguageID ( @{ $GetParam{$Attribute} } ) {
-                            my $LanguageName = $Self->{FAQObject}->LanguageLookup(
+                            my $LanguageName = $FAQObject->LanguageLookup(
                                 LanguageID => $LanguageID,
                             );
                             next LANGUAGEID if !$LanguageName;
@@ -1000,14 +1156,14 @@ sub Run {
 
                     if ( $GetParam{TimeSearchType} eq 'TimeSlot' ) {
 
-                        my $StartDate = $Self->{LayoutObject}->{LanguageObject}->FormatTimeString(
+                        my $StartDate = $LayoutObject->{LanguageObject}->FormatTimeString(
                             $GetParam{ItemCreateTimeStartYear}
                                 . '-' . $GetParam{ItemCreateTimeStartMonth}
                                 . '-' . $GetParam{ItemCreateTimeStartDay}
                                 . ' 00:00:00', 'DateFormatShort'
                         );
 
-                        my $StopDate = $Self->{LayoutObject}->{LanguageObject}->FormatTimeString(
+                        my $StopDate = $LayoutObject->{LanguageObject}->FormatTimeString(
                             $GetParam{ItemCreateTimeStopYear}
                                 . '-' . $GetParam{ItemCreateTimeStopMonth}
                                 . '-' . $GetParam{ItemCreateTimeStopDay}
@@ -1016,7 +1172,7 @@ sub Run {
 
                         $Attribute      = 'Created between';
                         $AttributeValue = $StartDate . ' '
-                            . $Self->{LayoutObject}->{LanguageObject}->Translate('and') . ' '
+                            . $LayoutObject->{LanguageObject}->Translate('and') . ' '
                             . $StopDate;
                     }
                     else {
@@ -1028,22 +1184,21 @@ sub Run {
 
                         $Attribute      = $Mapping->{ $GetParam{ItemCreateTimePointStart} };
                         $AttributeValue = $GetParam{ItemCreateTimePoint} . ' '
-                            . $Self->{LayoutObject}->{LanguageObject}
-                            ->Get( $GetParam{ItemCreateTimePointFormat} . '(s)' );
+                            . $LayoutObject->{LanguageObject}->Get( $GetParam{ItemCreateTimePointFormat} . '(s)' );
                     }
                 }
                 elsif ( $Attribute eq 'VoteSearchType' ) {
                     next ATTRIBUTE if !$GetParam{VoteSearchOption};
-                    $AttributeValue = $Self->{LayoutObject}->{LanguageObject}->Get( $GetParam{VoteSearchType} ) . ' '
+                    $AttributeValue = $LayoutObject->{LanguageObject}->Get( $GetParam{VoteSearchType} ) . ' '
                         . $GetParam{VoteSearch};
                 }
                 elsif ( $Attribute eq 'RateSearchType' ) {
                     next ATTRIBUTE if !$GetParam{RateSearchOption};
-                    $AttributeValue = $Self->{LayoutObject}->{LanguageObject}->Get( $GetParam{RateSearchType} ) . ' '
+                    $AttributeValue = $LayoutObject->{LanguageObject}->Get( $GetParam{RateSearchType} ) . ' '
                         . $GetParam{RateSearch} . '%';
                 }
 
-                $Self->{LayoutObject}->Block(
+                $LayoutObject->Block(
                     Name => 'SearchTerms',
                     Data => {
                         Attribute => $AttributeName,
@@ -1057,10 +1212,11 @@ sub Run {
         DYNAMICFIELD:
         for my $DynamicFieldConfig ( @{ $Self->{DynamicField} } ) {
             next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
-            next DYNAMICFIELD
-                if !$DynamicFieldSearchDisplay{ 'DynamicField_' . $DynamicFieldConfig->{Name} };
+            if ( !$DynamicFieldSearchDisplay{ 'DynamicField_' . $DynamicFieldConfig->{Name} } ) {
+                next DYNAMICFIELD;
+            }
 
-            $Self->{LayoutObject}->Block(
+            $LayoutObject->Block(
                 Name => 'SearchTerms',
                 Data => {
                     Attribute => $DynamicFieldConfig->{Label},
@@ -1071,20 +1227,20 @@ sub Run {
         }
 
         # build search navigation bar
-        my %PageNav = $Self->{LayoutObject}->PageNavBar(
-            Limit     => $Self->{SearchLimit},
-            StartHit  => $Self->{StartHit},
-            PageShown => $Self->{SearchPageShown},
+        my %PageNav = $LayoutObject->PageNavBar(
+            Limit     => $SearchLimit,
+            StartHit  => $StartHit,
+            PageShown => $SearchPageShown,
             AllHits   => $Counter,
             Action    => "Action=PublicFAQSearch;Subaction=Search",
             Link =>
-                "$Self->{Profile}SortBy=$Self->{SortBy};Order=$Self->{OrderBy};",
+                "$Self->{Profile}SortBy=$SortBy;Order=$OrderBy;",
             IDPrefix => "PublicFAQSearch",
         );
 
         # show footer filter - show only if more the one page is available
-        if ( defined $PageNav{TotalHits} && ( $PageNav{TotalHits} > $Self->{SearchPageShown} ) ) {
-            $Self->{LayoutObject}->Block(
+        if ( defined $PageNav{TotalHits} && ( $PageNav{TotalHits} > $SearchPageShown ) ) {
+            $LayoutObject->Block(
                 Name => 'Pagination',
                 Data => {
                     %Param,
@@ -1094,23 +1250,23 @@ sub Run {
         }
 
         # start HTML page
-        my $Output = $Self->{LayoutObject}->CustomerHeader();
+        my $Output = $LayoutObject->CustomerHeader();
 
         #Set the SortBy Class
         my $SortClass;
 
         # this sets the opposite to the OrderBy parameter
-        if ( $Self->{OrderBy} eq 'Down' ) {
+        if ( $OrderBy eq 'Down' ) {
             $SortClass = 'SortAscending';
         }
-        elsif ( $Self->{OrderBy} eq 'Up' ) {
+        elsif ( $OrderBy eq 'Up' ) {
             $SortClass = 'SortDescending';
         }
 
         # set the SortBy Class to the correct field
         my %CSSSort;
-        my $SortBy = $Self->{SortBy} . 'Sort';
-        $CSSSort{$SortBy} = $SortClass;
+        my $CSSSortBy = $SortBy . 'Sort';
+        $CSSSort{$CSSSortBy} = $SortClass;
 
         my %NewOrder = (
             Down => 'Up',
@@ -1118,30 +1274,30 @@ sub Run {
         );
 
         # show language header
-        if ( $Self->{MultiLanguage} ) {
-            $Self->{LayoutObject}->Block(
+        if ($MultiLanguage) {
+            $LayoutObject->Block(
                 Name => 'HeaderLanguage',
                 Data => {
                     %Param,
                     %CSSSort,
-                    Order => $NewOrder{ $Self->{OrderBy} },
+                    Order => $NewOrder{$OrderBy},
                 },
             );
         }
 
-        $Output .= $Self->{LayoutObject}->Output(
+        $Output .= $LayoutObject->Output(
             TemplateFile => 'PublicFAQSearchResultShort',
             Data         => {
                 %Param,
                 %PageNav,
                 %CSSSort,
-                Order   => $NewOrder{ $Self->{OrderBy} },
+                Order   => $NewOrder{$OrderBy},
                 Profile => $Self->{Profile},
             },
         );
 
         # build footer
-        $Output .= $Self->{LayoutObject}->CustomerFooter();
+        $Output .= $LayoutObject->CustomerFooter();
         return $Output;
     }
 
@@ -1157,7 +1313,7 @@ sub Run {
             next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
 
             # get search field preferences
-            my $SearchFieldPreferences = $Self->{BackendObject}->SearchFieldPreferences(
+            my $SearchFieldPreferences = $DynamicFieldBackendObject->SearchFieldPreferences(
                 DynamicFieldConfig => $DynamicFieldConfig,
             );
 
@@ -1168,13 +1324,12 @@ sub Run {
 
                 # get field HTML
                 $DynamicFieldHTML{ $DynamicFieldConfig->{Name} . $Preference->{Type} }
-                    = $Self->{BackendObject}->SearchFieldRender(
+                    = $DynamicFieldBackendObject->SearchFieldRender(
                     DynamicFieldConfig => $DynamicFieldConfig,
                     Profile            => \%GetParam,
                     DefaultValue =>
-                        $Self->{Config}->{Defaults}->{DynamicField}
-                        ->{ $DynamicFieldConfig->{Name} },
-                    LayoutObject           => $Self->{LayoutObject},
+                        $Config->{Defaults}->{DynamicField}->{ $DynamicFieldConfig->{Name} },
+                    LayoutObject           => $LayoutObject,
                     ConfirmationCheckboxes => 1,
                     Type                   => $Preference->{Type},
                     );
@@ -1182,14 +1337,14 @@ sub Run {
         }
 
         # generate search mask
-        my $Output = $Self->{LayoutObject}->CustomerHeader();
+        my $Output = $LayoutObject->CustomerHeader();
         $Output .= $Self->MaskForm(
             %GetParam,
             Profile          => $Self->{Profile},
             Area             => 'Public',
             DynamicFieldHTML => \%DynamicFieldHTML
         );
-        $Output .= $Self->{LayoutObject}->CustomerFooter();
+        $Output .= $LayoutObject->CustomerFooter();
         return $Output;
     }
 }
@@ -1197,9 +1352,12 @@ sub Run {
 sub MaskForm {
     my ( $Self, %Param ) = @_;
 
+    # get config object
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+
     # get list type
     my $TreeView = 0;
-    if ( $Self->{ConfigObject}->Get('Ticket::Frontend::ListType') eq 'tree' ) {
+    if ( $ConfigObject->Get('Ticket::Frontend::ListType') eq 'tree' ) {
         $TreeView = 1;
     }
 
@@ -1210,20 +1368,26 @@ sub MaskForm {
         CSV    => 'CSV',
     );
 
+    # get layout object
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+
     # build output formats list
-    $Param{ResultFormStrg} = $Self->{LayoutObject}->BuildSelection(
+    $Param{ResultFormStrg} = $LayoutObject->BuildSelection(
         Data       => {%ResultForm},
         Name       => 'ResultForm',
         SelectedID => $Param{ResultForm} || 'Normal',
     );
 
+    # get FAQ object
+    my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
+
     # get languages list
-    my %Languages = $Self->{FAQObject}->LanguageList(
+    my %Languages = $FAQObject->LanguageList(
         UserID => $Self->{UserID},
     );
 
     # build languages output list
-    $Param{LanguagesStrg} = $Self->{LayoutObject}->BuildSelection(
+    $Param{LanguagesStrg} = $LayoutObject->BuildSelection(
         Data       => {%Languages},
         Name       => 'LanguageIDs',
         Multiple   => 1,
@@ -1232,14 +1396,14 @@ sub MaskForm {
     );
 
     # get categories list
-    my $Categories = $Self->{FAQObject}->GetPublicCategoriesLongNames(
+    my $Categories = $FAQObject->GetPublicCategoriesLongNames(
         CustomerUser => $Self->{UserLogin},
         Type         => 'rw',
         UserID       => $Self->{UserID},
     );
 
     # build categories output list
-    $Param{CategoriesStrg} = $Self->{LayoutObject}->BuildSelection(
+    $Param{CategoriesStrg} = $LayoutObject->BuildSelection(
         Data       => $Categories,
         Name       => 'CategoryIDs',
         Multiple   => 1,
@@ -1256,7 +1420,7 @@ sub MaskForm {
         SmallerThanEquals => 'SmallerThanEquals',
     );
 
-    $Param{VoteSearchTypeSelectionString} = $Self->{LayoutObject}->BuildSelection(
+    $Param{VoteSearchTypeSelectionString} = $LayoutObject->BuildSelection(
         Data        => \%VotingOperators,
         Name        => 'VoteSearchType',
         SelectedID  => $Param{VoteSearchType} || '',
@@ -1265,7 +1429,7 @@ sub MaskForm {
         Multiple    => 0,
     );
 
-    $Param{RateSearchTypeSelectionString} = $Self->{LayoutObject}->BuildSelection(
+    $Param{RateSearchTypeSelectionString} = $LayoutObject->BuildSelection(
         Data        => \%VotingOperators,
         Name        => 'RateSearchType',
         SelectedID  => $Param{RateSearchType} || '',
@@ -1273,7 +1437,7 @@ sub MaskForm {
         Translation => 1,
         Multiple    => 0,
     );
-    $Param{RateSearchSelectionString} = $Self->{LayoutObject}->BuildSelection(
+    $Param{RateSearchSelectionString} = $LayoutObject->BuildSelection(
         Data => {
             0   => '0%',
             25  => '25%',
@@ -1289,13 +1453,13 @@ sub MaskForm {
         Multiple    => 0,
     );
 
-    $Param{ItemCreateTimePoint} = $Self->{LayoutObject}->BuildSelection(
+    $Param{ItemCreateTimePoint} = $LayoutObject->BuildSelection(
         Data        => [ 1 .. 59 ],
         Translation => 0,
         Name        => 'ItemCreateTimePoint',
         SelectedID  => $Param{ItemCreateTimePoint},
     );
-    $Param{ItemCreateTimePointStart} = $Self->{LayoutObject}->BuildSelection(
+    $Param{ItemCreateTimePointStart} = $LayoutObject->BuildSelection(
         Data => {
             Last   => 'within the last ...',
             Before => 'more than ... ago',
@@ -1304,7 +1468,7 @@ sub MaskForm {
         Name        => 'ItemCreateTimePointStart',
         SelectedID  => $Param{ItemCreateTimePointStart} || 'Last',
     );
-    $Param{ItemCreateTimePointFormat} = $Self->{LayoutObject}->BuildSelection(
+    $Param{ItemCreateTimePointFormat} = $LayoutObject->BuildSelection(
         Data => {
             minute => 'minute(s)',
             hour   => 'hour(s)',
@@ -1317,67 +1481,69 @@ sub MaskForm {
         Name        => 'ItemCreateTimePointFormat',
         SelectedID  => $Param{ItemCreateTimePointFormat},
     );
-    $Param{ItemCreateTimeStart} = $Self->{LayoutObject}->BuildDateSelection(
+    $Param{ItemCreateTimeStart} = $LayoutObject->BuildDateSelection(
         %Param,
         Prefix   => 'ItemCreateTimeStart',
         Format   => 'DateInputFormat',
         DiffTime => -( ( 60 * 60 * 24 ) * 30 ),
     );
-    $Param{ItemCreateTimeStop} = $Self->{LayoutObject}->BuildDateSelection(
+    $Param{ItemCreateTimeStop} = $LayoutObject->BuildDateSelection(
         %Param,
         Prefix => 'ItemCreateTimeStop',
         Format => 'DateInputFormat',
     );
 
     # HTML search mask output
-    $Self->{LayoutObject}->Block(
+    $LayoutObject->Block(
         Name => 'Search',
         Data => {%Param},
     );
 
     # output Dynamic fields blocks
     # cycle through the activated Dynamic Fields for this screen
-    DYNAMICFIELD:
+    DYNAMICFIELDCONFIG:
     for my $DynamicFieldConfig ( @{ $Self->{DynamicField} } ) {
-        next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
+
+        next DYNAMICFIELDCONFIG if !IsHashRefWithData($DynamicFieldConfig);
 
         # get search field preferences
-        my $SearchFieldPreferences = $Self->{BackendObject}->SearchFieldPreferences(
+        my $SearchFieldPreferences = $Kernel::OM->Get('Kernel::System::DynamicField::Backend')->SearchFieldPreferences(
             DynamicFieldConfig => $DynamicFieldConfig,
         );
 
-        next DYNAMICFIELD if !IsArrayRefWithData($SearchFieldPreferences);
+        next DYNAMICFIELDCONFIG if !IsArrayRefWithData($SearchFieldPreferences);
 
         PREFERENCE:
         for my $Preference ( @{$SearchFieldPreferences} ) {
 
-            # skip fields that HTML could not be retrieved
-            next PREFERENCE if !IsHashRefWithData(
-                $Param{DynamicFieldHTML}->{ $DynamicFieldConfig->{Name} . $Preference->{Type} }
-            );
+            my $DynamicFieldHTML = $Param{DynamicFieldHTML}->{ $DynamicFieldConfig->{Name} . $Preference->{Type} };
 
-            $Self->{LayoutObject}->Block(
+            # skip fields that HTML could not be retrieved
+            next PREFERENCE if !IsHashRefWithData($DynamicFieldHTML);
+
+            $LayoutObject->Block(
                 Name => 'DynamicField',
                 Data => {
-                    Label => $Param{DynamicFieldHTML}
-                        ->{ $DynamicFieldConfig->{Name} . $Preference->{Type} }->{Label},
-                    Field => $Param{DynamicFieldHTML}
-                        ->{ $DynamicFieldConfig->{Name} . $Preference->{Type} }->{Field},
+                    Label => $DynamicFieldHTML->{Label},
+                    Field => $DynamicFieldHTML->{Field},
                 },
             );
         }
     }
 
+    # get multi-language default option
+    my $MultiLanguage = $ConfigObject->Get('FAQ::MultiLanguage');
+
     # show languages select
-    if ( $Self->{MultiLanguage} ) {
-        $Self->{LayoutObject}->Block(
+    if ($MultiLanguage) {
+        $LayoutObject->Block(
             Name => 'Language',
             Data => {%Param},
         );
     }
 
     # HTML search mask output
-    return $Self->{LayoutObject}->Output(
+    return $LayoutObject->Output(
         TemplateFile => 'PublicFAQSearch',
         Data         => {%Param},
     );

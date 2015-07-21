@@ -12,11 +12,9 @@ use strict;
 use warnings;
 
 use MIME::Base64 qw();
-use Kernel::System::FAQ;
-use Kernel::System::Valid;
-use Kernel::System::DynamicField;
-use Kernel::System::DynamicField::Backend;
 use Kernel::System::VariableCheck qw(:all);
+
+our $ObjectManagerDisabled = 1;
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -25,48 +23,8 @@ sub new {
     my $Self = {%Param};
     bless( $Self, $Type );
 
-    # check needed objects
-    for my $Object (
-        qw(ParamObject DBObject LayoutObject LogObject ConfigObject)
-        )
-    {
-        if ( !$Self->{$Object} ) {
-            $Self->{LayoutObject}->FatalError( Message => "Got no $Object!" );
-        }
-    }
-
     # set UserID to root because in public interface there is no user
     $Self->{UserID} = 1;
-
-    # create needed objects
-    $Self->{FAQObject}          = Kernel::System::FAQ->new(%Param);
-    $Self->{ValidObject}        = Kernel::System::Valid->new(%Param);
-    $Self->{DynamicFieldObject} = Kernel::System::DynamicField->new(%Param);
-    $Self->{BackendObject}      = Kernel::System::DynamicField::Backend->new(%Param);
-
-    # get config of frontend module
-    $Self->{Config} = $Self->{ConfigObject}->Get("FAQ::Frontend::$Self->{Action}");
-
-    # set default interface settings
-    $Self->{Interface} = $Self->{FAQObject}->StateTypeGet(
-        Name   => 'public',
-        UserID => $Self->{UserID},
-    );
-    $Self->{InterfaceStates} = $Self->{FAQObject}->StateTypeList(
-        Types  => $Self->{ConfigObject}->Get('FAQ::Public::StateTypes'),
-        UserID => $Self->{UserID},
-    );
-
-    # get default options
-    $Self->{MultiLanguage} = $Self->{ConfigObject}->Get('FAQ::MultiLanguage');
-    $Self->{Voting}        = $Self->{ConfigObject}->Get('FAQ::Voting');
-
-    # get the dynamic fields for this screen
-    $Self->{DynamicField} = $Self->{DynamicFieldObject}->DynamicFieldListGet(
-        Valid       => 1,
-        ObjectType  => 'FAQ',
-        FieldFilter => $Self->{Config}->{DynamicField} || {},
-    );
 
     return $Self;
 }
@@ -74,66 +32,88 @@ sub new {
 sub Run {
     my ( $Self, %Param ) = @_;
 
+    # get param object
+    my $ParamObject = $Kernel::OM->Get('Kernel::System::Web::Request');
+
     # get params
     my %GetParam;
-    $GetParam{ItemID} = $Self->{ParamObject}->GetParam( Param => 'ItemID' );
+    $GetParam{ItemID} = $ParamObject->GetParam( Param => 'ItemID' );
+
+    # get layout object
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
     # check needed stuff
     if ( !$GetParam{ItemID} ) {
-        return $Self->{LayoutObject}->CustomerFatalError( Message => 'Need ItemID!' );
+        return $LayoutObject->CustomerFatalError(
+            Message => 'Need ItemID!',
+        );
     }
 
     # get back link
-    $GetParam{ZoomBackLink} = $Self->{ParamObject}->GetParam( Param => 'ZoomBackLink' ) || '';
+    $GetParam{ZoomBackLink} = $ParamObject->GetParam( Param => 'ZoomBackLink' ) || '';
     if ( $GetParam{ZoomBackLink} ) {
         $GetParam{ZoomBackLink} = MIME::Base64::decode_base64( $GetParam{ZoomBackLink} );
     }
 
+    # get FAQ object
+    my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
+
     # get FAQ item data
-    my %FAQData = $Self->{FAQObject}->FAQGet(
+    my %FAQData = $FAQObject->FAQGet(
         ItemID     => $GetParam{ItemID},
         ItemFields => 1,
         UserID     => $Self->{UserID},
     );
     if ( !%FAQData ) {
-        return $Self->{LayoutObject}->CustomerFatalError();
+        return $LayoutObject->CustomerFatalError();
     }
 
     # get the valid ids
-    my @ValidIDs = $Self->{ValidObject}->ValidIDsGet();
+    my @ValidIDs = $Kernel::OM->Get('Kernel::System::Valid')->ValidIDsGet();
     my %ValidIDLookup = map { $_ => 1 } @ValidIDs;
+
+    # get config object
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+
+    # get interface state list
+    my $InterfaceStates = $FAQObject->StateTypeList(
+        Types  => $ConfigObject->Get('FAQ::Public::StateTypes'),
+        UserID => $Self->{UserID},
+    );
 
     # permission check
     if (
         !$FAQData{Approved}
         || !$ValidIDLookup{ $FAQData{ValidID} }
-        || !$Self->{InterfaceStates}->{ $FAQData{StateTypeID} }
+        || !$InterfaceStates->{ $FAQData{StateTypeID} }
         )
     {
-        return $Self->{LayoutObject}->CustomerNoPermission( WithHeader => 'yes' );
+        return $LayoutObject->CustomerNoPermission(
+            WithHeader => 'yes',
+        );
     }
 
     # ---------------------------------------------------------- #
-    # HTMLView Subaction
+    # HTMLView Sub-action
     # ---------------------------------------------------------- #
     if ( $Self->{Subaction} eq 'HTMLView' ) {
 
         # get params
-        my $Field = $Self->{ParamObject}->GetParam( Param => "Field" );
+        my $Field = $ParamObject->GetParam( Param => "Field" );
 
         # needed params
         for my $Needed (qw( ItemID Field )) {
             if ( !$Needed ) {
-                $Self->{LogObject}->Log(
-                    Message  => "Needed Param: $Needed!",
+                $Kernel::OM->Get('Kernel::System::Log')->Log(
                     Priority => 'error',
+                    Message  => "Needed Param: $Needed!",
                 );
                 return;
             }
         }
 
         # get the Field content
-        my $FieldContent = $Self->{FAQObject}->ItemFieldGet(
+        my $FieldContent = $FAQObject->ItemFieldGet(
             ItemID => $GetParam{ItemID},
             Field  => $Field,
             UserID => $Self->{UserID},
@@ -149,13 +129,12 @@ sub Run {
         }{public.pl?Action=PublicFAQZoom;Subaction=DownloadAttachment;}gxms;
 
         # add needed HTML headers
-        $FieldContent = $Self->{LayoutObject}->{HTMLUtilsObject}->DocumentComplete(
+        $FieldContent = $Kernel::OM->Get('Kernel::System::HTMLUtils')->DocumentComplete(
             String  => $FieldContent,
             Charset => 'utf-8',
         );
 
         # build base URL for inline images
-
         my $SessionID = '';
         if ( $Self->{SessionID} && !$Self->{SessionIDCookie} ) {
             $SessionID = ';' . $Self->{SessionName} . '=' . $Self->{SessionID};
@@ -165,7 +144,7 @@ sub Run {
         }
 
         # return complete HTML as an attachment
-        return $Self->{LayoutObject}->Attachment(
+        return $LayoutObject->Attachment(
             Type        => 'inline',
             ContentType => 'text/html',
             Content     => $FieldContent,
@@ -173,37 +152,47 @@ sub Run {
     }
 
     # ---------------------------------------------------------- #
-    # DownloadAttachment Subaction
+    # DownloadAttachment Sub-action
     # ---------------------------------------------------------- #
     if ( $Self->{Subaction} eq 'DownloadAttachment' ) {
 
         # manage parameters
-        $GetParam{FileID} = $Self->{ParamObject}->GetParam( Param => 'FileID' );
+        $GetParam{FileID} = $ParamObject->GetParam( Param => 'FileID' );
         if ( !defined $GetParam{FileID} ) {
-            return $Self->{LayoutObject}->CustomerFatalError( Message => 'Need FileID' );
+            return $LayoutObject->CustomerFatalError(
+                Message => 'Need FileID',
+            );
         }
 
         # get attachments
-        my %File = $Self->{FAQObject}->AttachmentGet(
+        my %File = $FAQObject->AttachmentGet(
             ItemID => $GetParam{ItemID},
             FileID => $GetParam{FileID},
             UserID => $Self->{UserID},
         );
         if (%File) {
-            return $Self->{LayoutObject}->Attachment(%File);
+            return $LayoutObject->Attachment(
+                %File,
+            );
         }
         else {
-            $Self->{LogObject}->Log(
-                Message  => "No such attachment ($GetParam{FileID})! May be an attack!!!",
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
+                Message  => "No such attachment ($GetParam{FileID})! May be an attack!!!",
             );
-            return $Self->{LayoutObject}->CustomerFatalError();
+            return $LayoutObject->CustomerFatalError();
         }
     }
 
     # output header
-    my $Output = $Self->{LayoutObject}->CustomerHeader(
+    my $Output = $LayoutObject->CustomerHeader(
         Value => $FAQData{Title},
+    );
+
+    # set default interface settings
+    my $Interface = $FAQObject->StateTypeGet(
+        Name   => 'public',
+        UserID => $Self->{UserID},
     );
 
     # prepare fields data
@@ -212,7 +201,7 @@ sub Run {
         next FIELD if !$FAQData{$Field};
 
         # rewrite links to embedded images for public interface
-        if ( $Self->{Interface}->{Name} eq 'public' ) {
+        if ( $Interface->{Name} eq 'public' ) {
 
             # rewrite handle and action
             $FAQData{$Field}
@@ -224,11 +213,11 @@ sub Run {
             }{public.pl?Action=PublicFAQZoom;Subaction=DownloadAttachment;}gxms;
         }
 
-        # no quoting if html view is enabled
-        next FIELD if $Self->{ConfigObject}->Get('FAQ::Item::HTML');
+        # no quoting if HTML view is enabled
+        next FIELD if $ConfigObject->Get('FAQ::Item::HTML');
 
-        # html quoting
-        $FAQData{$Field} = $Self->{LayoutObject}->Ascii2Html(
+        # HTML quoting
+        $FAQData{$Field} = $LayoutObject->Ascii2Html(
             NewLine        => 0,
             Text           => $FAQData{$Field},
             VMax           => 5000,
@@ -238,7 +227,7 @@ sub Run {
     }
 
     # set voting results
-    $Param{VotingResultColor} = $Self->{LayoutObject}->GetFAQItemVotingRateColor(
+    $Param{VotingResultColor} = $LayoutObject->GetFAQItemVotingRateColor(
         Rate => $FAQData{VoteResult},
     );
 
@@ -247,7 +236,7 @@ sub Run {
     }
 
     # show back link
-    $Self->{LayoutObject}->Block(
+    $LayoutObject->Block(
         Name => 'Back',
         Data => {
             %GetParam,
@@ -256,32 +245,38 @@ sub Run {
         },
     );
 
+    # get multi-language option
+    my $MultiLanguage = $ConfigObject->Get('FAQ::MultiLanguage');
+
     # show language
-    if ( $Self->{MultiLanguage} ) {
-        $Self->{LayoutObject}->Block(
+    if ($MultiLanguage) {
+        $LayoutObject->Block(
             Name => 'Language',
             Data => {%FAQData},
         );
     }
 
+    # get voting default option
+    my $Voting = $ConfigObject->Get('FAQ::Voting');
+
     # show votes
-    if ( $Self->{Voting} ) {
+    if ($Voting) {
 
         # always displays Votes result even if its 0
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'ViewVotes',
             Data => {%FAQData},
         );
     }
 
     # show FAQ path
-    my $ShowFAQPath = $Self->{LayoutObject}->FAQPathShow(
-        FAQObject  => $Self->{FAQObject},
+    my $ShowFAQPath = $LayoutObject->FAQPathShow(
+        FAQObject  => $FAQObject,
         CategoryID => $FAQData{CategoryID},
         UserID     => $Self->{UserID},
     );
     if ($ShowFAQPath) {
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'FAQPathItemElement',
             Data => {%FAQData},
         );
@@ -296,7 +291,7 @@ sub Run {
 
         my @Keywords = split /\s+/, $FAQData{Keywords};
         for my $Keyword (@Keywords) {
-            $Self->{LayoutObject}->Block(
+            $LayoutObject->Block(
                 Name => 'Keywords',
                 Data => {
                     Keyword => $Keyword,
@@ -306,15 +301,15 @@ sub Run {
     }
 
     # output rating stars
-    if ( $Self->{Voting} ) {
-        $Self->{LayoutObject}->FAQRatingStarsShow(
+    if ($Voting) {
+        $LayoutObject->FAQRatingStarsShow(
             VoteResult => $FAQData{VoteResult},
             Votes      => $FAQData{Votes},
         );
     }
 
     # output attachments if any
-    my @AttachmentIndex = $Self->{FAQObject}->AttachmentIndex(
+    my @AttachmentIndex = $FAQObject->AttachmentIndex(
         ItemID     => $GetParam{ItemID},
         ShowInline => 0,
         UserID     => $Self->{UserID},
@@ -322,11 +317,11 @@ sub Run {
 
     # output attachments
     if (@AttachmentIndex) {
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'AttachmentHeader',
         );
         for my $Attachment (@AttachmentIndex) {
-            $Self->{LayoutObject}->Block(
+            $LayoutObject->Block(
                 Name => 'AttachmentRow',
                 Data => {
                     %FAQData,
@@ -337,34 +332,47 @@ sub Run {
     }
 
     # show FAQ Content
-    $Self->{LayoutObject}->FAQContentShow(
-        FAQObject       => $Self->{FAQObject},
-        InterfaceStates => $Self->{InterfaceStates},
+    $LayoutObject->FAQContentShow(
+        FAQObject       => $FAQObject,
+        InterfaceStates => $InterfaceStates,
         FAQData         => {%FAQData},
         UserID          => $Self->{UserID},
     );
 
-    # cycle trough the activated Dynamic Fields for ticket object
-    DYNAMICFIELD:
-    for my $DynamicFieldConfig ( @{ $Self->{DynamicField} } ) {
-        next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
+    # get config of frontend module
+    my $Config = $ConfigObject->Get("FAQ::Frontend::$Self->{Action}");
 
-        my $Value = $Self->{BackendObject}->ValueGet(
+    # get the dynamic fields for this screen
+    my $DynamicField = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldListGet(
+        Valid       => 1,
+        ObjectType  => 'FAQ',
+        FieldFilter => $Config->{DynamicField} || {},
+    );
+
+    # get dynamic field backend object
+    my $DynamicFieldBackendObject = $Kernel::OM->Get('Kernel::System::DynamicField::Backend');
+
+    # cycle trough the activated Dynamic Fields for ticket object
+    DYNAMICFIELDCONFIG:
+    for my $DynamicFieldConfig ( @{$DynamicField} ) {
+        next DYNAMICFIELDCONFIG if !IsHashRefWithData($DynamicFieldConfig);
+
+        my $Value = $DynamicFieldBackendObject->ValueGet(
             DynamicFieldConfig => $DynamicFieldConfig,
             ObjectID           => $GetParam{ItemID},
         );
 
         # get print string for this dynamic field
-        my $ValueStrg = $Self->{BackendObject}->DisplayValueRender(
+        my $ValueStrg = $DynamicFieldBackendObject->DisplayValueRender(
             DynamicFieldConfig => $DynamicFieldConfig,
             Value              => $Value,
             ValueMaxChars      => 250,
-            LayoutObject       => $Self->{LayoutObject},
+            LayoutObject       => $LayoutObject,
         );
 
         my $Label = $DynamicFieldConfig->{Label};
 
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'FAQDynamicField',
             Data => {
                 Label => $Label,
@@ -374,7 +382,7 @@ sub Run {
         );
 
         # example of dynamic fields order customization
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'FAQDynamicField_' . $DynamicFieldConfig->{Name},
             Data => {
                 Label => $Label,
@@ -385,14 +393,14 @@ sub Run {
     }
 
     # log access to this FAQ item
-    $Self->{FAQObject}->FAQLogAdd(
-        ItemID    => $Self->{ParamObject}->GetParam( Param => 'ItemID' ),
-        Interface => $Self->{Interface}->{Name},
+    $FAQObject->FAQLogAdd(
+        ItemID    => $ParamObject->GetParam( Param => 'ItemID' ),
+        Interface => $Interface->{Name},
         UserID    => $Self->{UserID},
     );
 
     # start template output
-    $Output .= $Self->{LayoutObject}->Output(
+    $Output .= $LayoutObject->Output(
         TemplateFile => 'PublicFAQZoom',
         Data         => {
             %FAQData,
@@ -402,7 +410,7 @@ sub Run {
     );
 
     # add footer
-    $Output .= $Self->{LayoutObject}->CustomerFooter();
+    $Output .= $LayoutObject->CustomerFooter();
 
     return $Output;
 }

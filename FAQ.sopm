@@ -97,11 +97,9 @@
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/CustomerFAQSearchResultShort.tt"/>
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/CustomerFAQZoom.tt"/>
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/PublicFAQExplorer.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/PublicFAQPrint.tt"/>
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/PublicFAQSearch.tt"/>
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/PublicFAQSearchOpenSearchDescriptionFAQNumber.tt"/>
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/PublicFAQSearchOpenSearchDescriptionFullText.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/PublicFAQSearchResultPrint.tt"/>
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/PublicFAQSearchResultShort.tt"/>
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/PublicFAQZoom.tt"/>
         <File Permission="644" Location="Kernel/System/DynamicField/ObjectType/FAQ.pm"/>
