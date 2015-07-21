@@ -113,6 +113,11 @@
         <File Permission="644" Location="Kernel/System/Stats/Static/FAQAccess.pm"/>
         <File Permission="644" Location="scripts/test/FAQ.t"/>
         <File Permission="644" Location="scripts/test/FAQSearch.t"/>
+        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentFAQExplorer.t"/>
+        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentFAQLanguage.t"/>
+        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentFAQPrint.t"/>
+        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentFAQZoom.t"/>
+        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentFAQSearch.t"/>
         <File Permission="644" Location="scripts/test/sample/FAQ-Test1.doc"/>
         <File Permission="644" Location="scripts/test/sample/FAQ-Test1.pdf"/>
         <File Permission="644" Location="var/httpd/htdocs/js/FAQ.Agent.ConfirmationDialog.js"/>
