@@ -19,22 +19,10 @@ $Selenium->RunTest(
     sub {
 
         # get helper object
-        $Kernel::OM->ObjectParamAdd(
-            'Kernel::System::UnitTest::Helper' => {
-                RestoreSystemConfiguration => 1,
-                }
-        );
         my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 
         # get sysconfig object
         my $SysConfigObject = $Kernel::OM->Get('Kernel::System::SysConfig');
-
-        # enable PDF output
-        $SysConfigObject->ConfigItemUpdate(
-            Valid => 1,
-            Key   => 'PDF',
-            Value => 1
-        );
 
         # create and log in test user
         my $TestUserLogin = $Helper->TestUserCreate(
@@ -161,6 +149,15 @@ $Selenium->RunTest(
         $Self->True(
             $Success,
             "Ticket is deleted - $TicketID"
+        );
+
+        # clean up servica data
+        $Success = $Kernel::OM->Get('Kernel::System::DB')->Do(
+            SQL => "DELETE FROM service_preferences WHERE service_id = $ServiceID",
+        );
+        $Self->True(
+            $Success,
+            "Deleted ServicePreferences - $ServiceID",
         );
 
         # delete test service
