@@ -107,7 +107,7 @@ sub Run {
     # Login name of the current workorder agent
     my $WorkOrderAgent = '-';
     if ( $WorkOrder->{WorkOrderAgentID} ) {
-        $WorkOrderAgent = $Self->{UserObject}->UserLookup(
+        $WorkOrderAgent = $Kernel::OM->Get('Kernel::System::User')->UserLookup(
             UserID => $WorkOrder->{WorkOrderAgentID},
         );
     }

@@ -245,6 +245,16 @@
         <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMTemplateOverview.t"/>
         <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMUserSearch.t"/>
         <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMWorkOrderAddFromTemplate.t"/>
+        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMChangeConditionEdit.t"/>
+        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMWorkOrderTake.t"/>
+        <File Permission="644" Location="scripts/test/Selenium/Output/ITSMChange/MenuGeneric.t"/>
+        <File Permission="644" Location="scripts/test/Selenium/Output/ITSMWorkOrder/MenuGeneric.t"/>
+        <File Permission="644" Location="scripts/test/Selenium/Output/LinkObject/ITSMChange.t"/>
+        <File Permission="644" Location="scripts/test/Selenium/Output/LinkObject/ITSMWorkOrder.t"/>
+        <File Permission="644" Location="scripts/test/Selenium/Output/ToolBar/ChangeManager.t"/>
+        <File Permission="644" Location="scripts/test/Selenium/Output/ToolBar/MyCAB.t"/>
+        <File Permission="644" Location="scripts/test/Selenium/Output/ToolBar/MyChanges.t"/>
+        <File Permission="644" Location="scripts/test/Selenium/Output/ToolBar/MyWorkOrder.t"/>
         <File Permission="644" Location="var/cron/itsmchange_check.dist"/>
         <File Permission="644" Location="var/httpd/htdocs/js/ITSM.Agent.ChangeManagement.Search.js"/>
         <File Permission="644" Location="var/httpd/htdocs/js/ITSM.Agent.ChangeManagement.WorkorderGraph.js"/>
