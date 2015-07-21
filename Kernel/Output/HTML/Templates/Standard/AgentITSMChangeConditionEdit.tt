@@ -22,7 +22,7 @@
             <p>
                 <a href="[% Env("Baselink") %]Action=AgentITSMChangeCondition;ChangeID=[% Data.ChangeID | uri %]">[% Translate("Back") | html %]</a>
                 [% Translate("or") | html %]
-                <a class="CancelClosePopup" href="#">[% Translate("Cancel & close window") | html %]</a>
+                <a class="CancelClosePopup" href="#">[% Translate("Cancel & close") | html %]</a>
             </p>
         </div>
         <div class="Content">

@@ -247,7 +247,7 @@ sub Data {
 
     # Template: AgentITSMChangeCABTemplate
     $Self->{Translation}->{'Save Change CAB as template'} = '';
-    $Self->{Translation}->{'Cancel & close window'} = '';
+    $Self->{Translation}->{'Cancel & close'} = '';
     $Self->{Translation}->{'go to involved persons screen'} = '';
     $Self->{Translation}->{'Template Name'} = '';
     $Self->{Translation}->{'This field is required'} = '';

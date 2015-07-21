@@ -17,7 +17,7 @@
         <div class="Header">
             <h1>[% Translate("Edit") | html %]: [% Translate("Report") | html %] [% Translate("of") | html %] [% Config("ITSMWorkOrder::Hook") %] [% Data.ChangeNumber | html %] - [% Data.WorkOrderNumber | html %]: [% Data.WorkOrderTitle | truncate(60) | html %]</h1>
             <p>
-                <a class="CancelClosePopup" href="#">[% Translate("Cancel & close window") | html %]</a>
+                <a class="CancelClosePopup" href="#">[% Translate("Cancel & close") | html %]</a>
             </p>
         </div>
         <div class="Content">
