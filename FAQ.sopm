@@ -114,6 +114,8 @@
         <File Permission="644" Location="scripts/test/Console/Command/Admin/FAQ/Import.t"/>
         <File Permission="644" Location="scripts/test/FAQ.t"/>
         <File Permission="644" Location="scripts/test/FAQSearch.t"/>
+        <File Permission="644" Location="scripts/test/sample/FAQ-Test1.doc"/>
+        <File Permission="644" Location="scripts/test/sample/FAQ-Test1.pdf"/>
         <File Permission="644" Location="scripts/test/sample/FAQ.csv"/>
         <File Permission="644" Location="scripts/test/Selenium/Agent/AgentFAQAdd.t"/>
         <File Permission="644" Location="scripts/test/Selenium/Agent/AgentFAQCategory.t"/>
@@ -126,8 +128,6 @@
         <File Permission="644" Location="scripts/test/Selenium/Agent/AgentFAQPrint.t"/>
         <File Permission="644" Location="scripts/test/Selenium/Agent/AgentFAQSearch.t"/>
         <File Permission="644" Location="scripts/test/Selenium/Agent/AgentFAQZoom.t"/>
-        <File Permission="644" Location="scripts/test/sample/FAQ-Test1.doc"/>
-        <File Permission="644" Location="scripts/test/sample/FAQ-Test1.pdf"/>
         <File Permission="644" Location="var/httpd/htdocs/js/FAQ.Agent.ConfirmationDialog.js"/>
         <File Permission="644" Location="var/httpd/htdocs/js/FAQ.Agent.FAQZoom.js"/>
         <File Permission="644" Location="var/httpd/htdocs/js/FAQ.Agent.TicketCompose.js"/>
