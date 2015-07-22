@@ -1,4 +1,5 @@
 #5.0.0.beta1 - 2015-??-??
+ - 2015-07-22 Fixed wsdl validation issues.
  - 2015-07-21 Improved visualization of invalid FAQ items and categories in list screens, thanks to S7.
  - 2015-07-15 Dropped HTML print view in favor of PDF, thanks to S7.
 
