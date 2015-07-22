@@ -24,7 +24,7 @@ $Selenium->RunTest(
         # get FAQ object
         my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
 
-        my @FAQIDs;
+        my @FAQs;
 
         # create test FAQs
         for ( 1 .. 5 ) {
@@ -48,7 +48,7 @@ $Selenium->RunTest(
                 FAQTitle => $FAQTitle,
             );
 
-            push @FAQIDs, \%FAQ;
+            push @FAQs, \%FAQ;
         }
 
         # create test user and login
@@ -82,11 +82,10 @@ $Selenium->RunTest(
                 ScreenData => 'Latest created FAQ articles',
             },
             {
-                ScreenData => 'Latest created FAQ articles',
+                ScreenData => 'Latest updated FAQ articles',
             },
         );
 
-        # delete test created FAQs
         for my $Test (@Tests) {
             $Self->True(
                 index( $Selenium->get_page_source(), $Test->{ScreenData} ) > -1,
@@ -101,7 +100,7 @@ $Selenium->RunTest(
         $Selenium->get("${ScriptAlias}index.pl?Action=AgentFAQExplorer;CategoryID=1;SortBy=FAQID;OrderBy=Down");
 
         # check and delete test created FAQs
-        for my $FAQ (@FAQIDs) {
+        for my $FAQ (@FAQs) {
 
             # check if there is test FAQ on screen
             $Self->True(
