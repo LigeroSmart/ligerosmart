@@ -24,6 +24,29 @@ $Selenium->RunTest(
         # get FAQ object
         my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
 
+        my $CategoryID = $FAQObject->CategoryAdd(
+            Name     => 'Category' . $Helper->GetRandomID(),
+            Comment  => 'Some comment',
+            ParentID => 0,
+            ValidID  => 1,
+            UserID   => 1,
+        );
+
+        $Self->True(
+            $CategoryID,
+            "FAQ category is created - $CategoryID",
+        );
+
+        my $GroupID = $Kernel::OM->Get('Kernel::System::Group')->GroupLookup(
+            Group => 'faq',
+        );
+
+        $FAQObject->SetCategoryGroup(
+            CategoryID => $CategoryID,
+            GroupIDs   => [$GroupID],
+            UserID     => 1,
+        );
+
         my @FAQSearch;
 
         # create test FAQs
@@ -34,7 +57,7 @@ $Selenium->RunTest(
                 my $FAQTitle = $Title . $Helper->GetRandomID();
                 my $FAQID    = $FAQObject->FAQAdd(
                     Title      => $FAQTitle,
-                    CategoryID => 1,
+                    CategoryID => $CategoryID,
                     StateID    => 1,
                     LanguageID => 1,
                     ValidID    => 1,
@@ -88,10 +111,13 @@ $Selenium->RunTest(
         }
 
         # add search filter by title and run it
-        $Selenium->find_element( "#Attribute option[value='Title']", 'css' )->click();
-        $Selenium->find_element( ".AddButton",                       'css' )->click();
-        $Selenium->find_element( "Title",                            'name' )->send_keys('FAQ*');
-        $Selenium->find_element( "#SearchFormSubmit",                'css' )->click();
+        $Selenium->find_element( "#Attribute option[value='Title']",         'css' )->click();
+        $Selenium->find_element( ".AddButton",                               'css' )->click();
+        $Selenium->find_element( "Title",                                    'name' )->send_keys('FAQ*');
+        $Selenium->find_element( "#Attribute option[value='CategoryIDs']",   'css' )->click();
+        $Selenium->find_element( ".AddButton",                               'css' )->click();
+        $Selenium->find_element( "#CategoryIDs option[value='$CategoryID']", 'css' )->click();
+        $Selenium->find_element( "#SearchFormSubmit",                        'css' )->click();
 
         # wait until form has loaded, if neccessary
         $Selenium->WaitFor( JavaScript => "return \$('#OverviewBody').length" );
@@ -173,8 +199,19 @@ $Selenium->RunTest(
         # check no data message
         $Selenium->find_element( "#EmptyMessageSmall", 'css' );
         $Self->True(
-            index( $Selenium->get_page_source(), 'No FAQ data found. ' ) == -1,
+            index( $Selenium->get_page_source(), 'No FAQ data found.' ) > -1,
             "No FAQ data found.",
+        );
+
+        # delete test category
+        my $Success = $FAQObject->CategoryDelete(
+            CategoryID => $CategoryID,
+            UserID     => 1,
+        );
+
+        $Self->True(
+            $Success,
+            "FAQ category is deleted - $CategoryID",
         );
 
         # make sure the cache is correct
