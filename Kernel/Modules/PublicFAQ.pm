@@ -29,7 +29,7 @@ sub Run {
     my $Redirect = $ENV{REQUEST_URI};
 
     # get layout object
-    my $LayoutObject = $Kernel::OM->Get('Kernel::Output:HTML::Layout');
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
     if ($Redirect) {
         $Redirect =~ s{PublicFAQ}{PublicFAQZoom}xms;
