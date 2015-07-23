@@ -11,10 +11,7 @@ package Kernel::Output::HTML::Layout::ImportExport;
 use strict;
 use warnings;
 
-our @ObjectDependencies = (
-    'Kernel::System::Log',
-    'Kernel::System::Main',
-);
+our $ObjectManagerDisabled = 1;
 
 =over
 
@@ -121,7 +118,7 @@ sub _ImportExportLoadLayoutBackend {
     if ( !$Kernel::OM->Get('Kernel::System::Main')->Require($GenericModule) ) {
         $LogObject->Log(
             Priority => 'error',
-            Message  => "Can't load backend module $Param{Type}!"
+            Message  => "Can't load backend module $Param{Type}!",
         );
         return;
     }
