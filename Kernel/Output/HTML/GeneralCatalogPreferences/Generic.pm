@@ -11,7 +11,11 @@ package Kernel::Output::HTML::GeneralCatalogPreferences::Generic;
 use strict;
 use warnings;
 
-our $ObjectManagerDisabled = 1;
+our @ObjectDependencies = (
+    'Kernel::System::GeneralCatalog',
+    'Kernel::System::Group',
+    'Kernel::System::Web::Request',
+);
 
 sub new {
     my ( $Type, %Param ) = @_;
