@@ -11,7 +11,13 @@ package Kernel::Output::HTML::ToolBar::MyChanges;
 use strict;
 use warnings;
 
-our $ObjectManagerDisabled = 1;
+our @ObjectDependencies = (
+    'Kernel::Config',
+    'Kernel::Output::HTML::Layout',
+    'Kernel::System::Cache',
+    'Kernel::System::Group',
+    'Kernel::System::ITSMChange',
+);
 
 sub new {
     my ( $Type, %Param ) = @_;

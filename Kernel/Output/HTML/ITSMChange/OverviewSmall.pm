@@ -11,7 +11,17 @@ package Kernel::Output::HTML::ITSMChange::OverviewSmall;
 use strict;
 use warnings;
 
-our $ObjectManagerDisabled = 1;
+our @ObjectDependencies = (
+    'Kernel::Output::HTML::Layout',
+    'Kernel::System::DynamicField',
+    'Kernel::System::DynamicField::Backend',
+    'Kernel::System::ITSMChange',
+    'Kernel::System::ITSMChange::ITSMWorkOrder',
+    'Kernel::System::LinkObject',
+    'Kernel::System::Log',
+    'Kernel::System::Service',
+    'Kernel::System::User',
+);
 
 sub new {
     my ( $Type, %Param ) = @_;

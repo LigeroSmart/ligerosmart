@@ -13,12 +13,7 @@ use warnings;
 
 use POSIX qw(ceil);
 
-our @ObjectDependencies = (
-    'Kernel::Config',
-    'Kernel::System::Web::Request',
-    'Kernel::System::Main',
-    'Kernel::Output::HTML::Layout',
-);
+our $ObjectManagerDisabled = 1;
 
 =over 4
 

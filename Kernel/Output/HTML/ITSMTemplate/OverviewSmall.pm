@@ -11,7 +11,13 @@ package Kernel::Output::HTML::ITSMTemplate::OverviewSmall;
 use strict;
 use warnings;
 
-our $ObjectManagerDisabled = 1;
+our @ObjectDependencies = (
+    'Kernel::Output::HTML::Layout',
+    'Kernel::System::ITSMChange::Template',
+    'Kernel::System::Log',
+    'Kernel::System::User',
+    'Kernel::System::Valid',
+);
 
 sub new {
     my ( $Type, %Param ) = @_;

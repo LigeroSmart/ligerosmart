@@ -11,16 +11,7 @@ package Kernel::Output::HTML::Layout::ITSMChange;
 use strict;
 use warnings;
 
-our @ObjectDependencies = (
-    'Kernel::System::Log',
-    'Kernel::Output::HTML::Layout',
-    'Kernel::System::Time',
-    'Kernel::Config',
-    'Kernel::System::AuthSession',
-    'Kernel::System::Web::Request',
-    'Kernel::System::Main',
-    'Kernel::System::User',
-);
+our $ObjectManagerDisabled = 1;
 
 =over 4
 

@@ -11,7 +11,12 @@ package Kernel::Output::HTML::TicketMenu::ITSMChange;
 use strict;
 use warnings;
 
-our $ObjectManagerDisabled = 1;
+our @ObjectDependencies = (
+    'Kernel::Config',
+    'Kernel::System::Group',
+    'Kernel::System::ITSMChange',
+    'Kernel::System::Log',
+);
 
 sub new {
     my ( $Type, %Param ) = @_;

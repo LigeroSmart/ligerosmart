@@ -14,7 +14,12 @@ use warnings;
 # As of 2010-03-19 this module is unused.
 # But it is kept in the distribution, as it provides useful functionality for future use.
 
-our $ObjectManagerDisabled = 1;
+our @ObjectDependencies = (
+    'Kernel::Config',
+    'Kernel::Output::HTML::Layout',
+    'Kernel::System::ITSMChange',
+    'Kernel::System::Log',
+);
 
 sub new {
     my ( $Type, %Param ) = @_;
