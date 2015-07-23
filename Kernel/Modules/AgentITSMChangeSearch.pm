@@ -1030,6 +1030,9 @@ sub _MaskForm {
     # get param object
     my $ParamObject = $Kernel::OM->Get('Kernel::System::Web::Request');
 
+    # get config object
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+
     my $Profile = $ParamObject->GetParam( Param => 'Profile' ) || '';
     my $EmptySearch = $ParamObject->GetParam( Param => 'EmptySearch' );
     if ( !$Profile ) {
@@ -1124,29 +1127,6 @@ sub _MaskForm {
             Key   => 'WorkOrderReport',
             Value => 'WorkOrder Report',
         },
-    );
-
-    # get config object
-    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
-
-    # get config for frontend
-    $Self->{Config} = $ConfigObject->Get("ITSMChange::Frontend::$Self->{Action}");
-
-    # get dynamic field object
-    my $DynamicFieldObject = $Kernel::OM->Get('Kernel::System::DynamicField');
-
-    # get the dynamic fields for this screen (change dynamic fields)
-    $Self->{DynamicFieldChange} = $DynamicFieldObject->DynamicFieldListGet(
-        Valid       => 1,
-        ObjectType  => 'ITSMChange',
-        FieldFilter => $Self->{Config}->{DynamicField} || {},
-    );
-
-    # get the dynamic fields for this screen (workorder dynamic fields)
-    $Self->{DynamicFieldWorkOrder} = $DynamicFieldObject->DynamicFieldListGet(
-        Valid       => 1,
-        ObjectType  => 'ITSMWorkOrder',
-        FieldFilter => $Self->{Config}->{DynamicField} || {},
     );
 
     # get dynamic field backend object
