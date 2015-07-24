@@ -6,6 +6,7 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
+## no critic (Modules::RequireExplicitPackage)
 use strict;
 use warnings;
 use utf8;
@@ -26,7 +27,7 @@ $Selenium->RunTest(
         );
         my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 
-        # set FAQ dashboard sysconfig param
+        # set FAQ dashboard SysConfig param
         my @FAQDashboard = (
             {
                 Name => 'DashboardBackend###0398-FAQ-LastChange',
@@ -36,7 +37,7 @@ $Selenium->RunTest(
             },
         );
 
-        # get sysconfig object
+        # get SysConfig object
         my $SysConfigObject = $Kernel::OM->Get('Kernel::System::SysConfig');
 
         # set FAQ dashboard modules on default settings
@@ -77,7 +78,7 @@ $Selenium->RunTest(
 
         for my $Test (@FAQDashboard) {
 
-            # disable all dashboard plugins
+            # disable all dashboard plug-ins
             my $Config = $Kernel::OM->Get('Kernel::Config')->Get('DashboardBackend');
             $SysConfigObject->ConfigItemUpdate(
                 Valid => 0,

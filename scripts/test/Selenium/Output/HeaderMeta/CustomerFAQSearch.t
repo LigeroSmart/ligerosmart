@@ -6,6 +6,7 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
+## no critic (Modules::RequireExplicitPackage)
 use strict;
 use warnings;
 use utf8;
@@ -26,7 +27,7 @@ $Selenium->RunTest(
         );
         my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 
-        # activate quicksearch show for agent internface
+        # activate quick-search show for agent interface
         $Kernel::OM->Get('Kernel::System::SysConfig')->ConfigItemUpdate(
             Valid => 1,
             Key   => 'FAQ::Explorer::QuickSearch::Show',
@@ -73,11 +74,11 @@ $Selenium->RunTest(
             "Advanced Search button - found",
         );
 
-        # search test created FAQ in quicksearch
+        # search test created FAQ in quick-search
         $Selenium->find_element("//input[\@id='Search']")->send_keys($FAQTitle);
         $Selenium->find_element("//button[\@value='Search'][\@type='submit']")->click();
 
-        # check for quicksearch result
+        # check for quick-search result
         $Self->True(
             index( $Selenium->get_page_source(), "$FAQTitle" ) > -1,
             "$FAQTitle - found",

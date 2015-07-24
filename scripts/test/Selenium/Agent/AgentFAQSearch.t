@@ -6,6 +6,7 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
+## no critic (Modules::RequireExplicitPackage)
 use strict;
 use warnings;
 use utf8;
@@ -97,7 +98,7 @@ $Selenium->RunTest(
         # navigate to AgentFAQSearch form
         $Selenium->get("${ScriptAlias}index.pl?Action=AgentFAQSearch");
 
-        # wait until form has loaded, if neccessary
+        # wait until form has loaded, if necessary
         $Selenium->WaitFor( JavaScript => "return \$('#SearchProfile').length" );
 
         # check ticket search page
@@ -119,7 +120,7 @@ $Selenium->RunTest(
         $Selenium->find_element( "#CategoryIDs option[value='$CategoryID']", 'css' )->click();
         $Selenium->find_element( "#SearchFormSubmit",                        'css' )->click();
 
-        # wait until form has loaded, if neccessary
+        # wait until form has loaded, if necessary
         $Selenium->WaitFor( JavaScript => "return \$('#OverviewBody').length" );
 
         # check AgentFAQSearch result screen
@@ -141,14 +142,14 @@ $Selenium->RunTest(
         # check 'Change search options' screen
         $Selenium->find_element( "#FAQSearch", 'css' )->click();
 
-        # wait until form has loaded, if neccessary
+        # wait until form has loaded, if necessary
         $Selenium->WaitFor( JavaScript => "return \$('#SearchProfile').length" );
 
         $Selenium->find_element( "Title",             'name' )->clear();
         $Selenium->find_element( "Title",             'name' )->send_keys('FAQChangeSearch*');
         $Selenium->find_element( "#SearchFormSubmit", 'css' )->click();
 
-        # wait until form has loaded, if neccessary
+        # wait until form has loaded, if necessary
         $Selenium->WaitFor( JavaScript => "return \$('#OverviewBody').length" );
 
         # check test FAQs searched by 'FAQChangeSearch*'
@@ -186,14 +187,14 @@ $Selenium->RunTest(
         # check 'Change search options' button again
         $Selenium->find_element( "#FAQSearch", 'css' )->click();
 
-        # wait until form has loaded, if neccessary
+        # wait until form has loaded, if necessary
         $Selenium->WaitFor( JavaScript => "return \$('#SearchProfile').length" );
 
         $Selenium->find_element( "Title",             'name' )->clear();
         $Selenium->find_element( "Title",             'name' )->send_keys('FAQChangeSearch*');
         $Selenium->find_element( "#SearchFormSubmit", 'css' )->click();
 
-        # wait until form has loaded, if neccessary
+        # wait until form has loaded, if necessary
         $Selenium->WaitFor( JavaScript => "return \$('#OverviewBody').length" );
 
         # check no data message

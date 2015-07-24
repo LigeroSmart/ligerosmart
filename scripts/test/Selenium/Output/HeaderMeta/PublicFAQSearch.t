@@ -6,6 +6,7 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
+## no critic (Modules::RequireExplicitPackage)
 use strict;
 use warnings;
 use utf8;
@@ -48,11 +49,11 @@ $Selenium->RunTest(
             "Advanced Search button - found",
         );
 
-        # search test created FAQ in quicksearch
+        # search test created FAQ in quick-search
         $Selenium->find_element("//input[\@id='Search']")->send_keys($FAQTitle);
         $Selenium->find_element("//button[\@value='Search'][\@type='submit']")->click();
 
-        # check for quicksearch result
+        # check for quick-search result
         $Self->True(
             index( $Selenium->get_page_source(), "$FAQTitle" ) > -1,
             "$FAQTitle - found",

@@ -6,6 +6,7 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
+## no critic (Modules::RequireExplicitPackage)
 use strict;
 use warnings;
 use utf8;
@@ -59,7 +60,7 @@ $Selenium->RunTest(
         $Selenium->find_element("//a[contains(\@href, \'Action=AgentFAQDelete;ItemID=$FAQID' )]")->click();
         $Selenium->WaitFor( JavaScript => 'return $("#DialogButton1").length' );
 
-        # verify delete messsage
+        # verify delete message
         $Self->True(
             index( $Selenium->get_page_source(), 'Do you really want to delete this FAQ article?' ) > -1,
             "Delete message - found",
@@ -69,7 +70,7 @@ $Selenium->RunTest(
         $Selenium->find_element( "#DialogButton1", 'css' )->click();
 
         # verify delete action
-        # try to navigate teo AgetnFAQZoom of deleted test FAQ
+        # try to navigate to the AgetnFAQZoom of deleted test FAQ
         $Selenium->get("${ScriptAlias}index.pl?Action=AgentFAQZoom;ItemID=$FAQID;Nav=");
         $Self->True(
             index( $Selenium->get_page_source(), "No such ItemID $FAQID!" ) > -1,

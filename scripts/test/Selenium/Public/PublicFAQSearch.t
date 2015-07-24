@@ -6,6 +6,7 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
+## no critic (Modules::RequireExplicitPackage)
 use strict;
 use warnings;
 use utf8;
@@ -78,7 +79,7 @@ $Selenium->RunTest(
         $Selenium->find_element( "#Title",  'css' )->send_keys('FAQ*');
         $Selenium->find_element( "#Submit", 'css' )->click();
 
-        # wait until form has loaded, if neccessary
+        # wait until form has loaded, if necessary
         $Selenium->WaitFor( JavaScript => "return \$('.Overview').length" );
 
         # check PublicFAQSearch result screen
@@ -103,7 +104,7 @@ $Selenium->RunTest(
         $Selenium->find_element( "#Title",  'css' )->send_keys('FAQChangeSearch*');
         $Selenium->find_element( "#Submit", 'css' )->click();
 
-        # wait until form has loaded, if neccessary
+        # wait until form has loaded, if necessary
         $Selenium->WaitFor( JavaScript => "return \$('.Overview').length" );
 
         # check test FAQs searched by 'FAQChangeSearch*'
@@ -133,7 +134,7 @@ $Selenium->RunTest(
         $Selenium->find_element( "#Title",  'css' )->send_keys( $Helper->GetRandomID() );
         $Selenium->find_element( "#Submit", 'css' )->click();
 
-        # wait until form has loaded, if neccessary
+        # wait until form has loaded, if necessary
         $Selenium->WaitFor( JavaScript => "return \$('.Overview').length" );
 
         # check no data message

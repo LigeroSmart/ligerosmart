@@ -6,6 +6,7 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
+## no critic (Modules::RequireExplicitPackage)
 use strict;
 use warnings;
 use utf8;
@@ -26,7 +27,7 @@ $Selenium->RunTest(
 
         # create test FAQ
         my $FAQTitle    = 'FAQ ' . $Helper->GetRandomID();
-        my $FAQSymptom  = 'Selenium Sypmtom';
+        my $FAQSymptom  = 'Selenium Symptom';
         my $FAQProblem  = 'Selenium Problem';
         my $FAQSolution = 'Selenium Solution';
 

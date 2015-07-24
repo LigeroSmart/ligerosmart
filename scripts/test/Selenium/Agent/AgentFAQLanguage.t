@@ -6,6 +6,7 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
+## no critic (Modules::RequireExplicitPackage)
 use strict;
 use warnings;
 use utf8;
@@ -55,7 +56,7 @@ $Selenium->RunTest(
         # check German Language - 'de'
         $Selenium->find_element( 'de', 'link_text' );
 
-        # add test language - Espanol (es)
+        # add test language - Spanish (es)
         my $FAQLanguage = 'es';
 
         # check if there is 'es - Language' has been added before
@@ -117,7 +118,7 @@ JAVASCRIPT
         $Self->Is(
             $Selenium->find_element( '#Name', 'css' )->get_value(),
             $FAQLanguage,
-            "Stored lanugae name $FAQLanguage - found",
+            "Stored language name $FAQLanguage - found",
         );
 
         # go back on Language overview screen
@@ -131,7 +132,7 @@ JAVASCRIPT
 
             $Selenium->WaitFor( JavaScript => 'return $("#DialogButton1").length' );
 
-            # verify delete messsage
+            # verify delete message
             $Self->True(
                 index( $Selenium->get_page_source(), 'Do you really want to delete this language?' ) > -1,
                 "Delete message - found",
