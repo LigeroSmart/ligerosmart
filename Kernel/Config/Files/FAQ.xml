@@ -681,7 +681,7 @@ Your OTRS Notification Master
         <SubGroup>Frontend::Agent::ModuleMetaHead</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::Output::HTML::HeaderMeta::FAQSearch</Item>
+                <Item Key="Module">Kernel::Output::HTML::HeaderMeta::AgentFAQSearch</Item>
                 <Item Key="Action">AgentFAQSearch</Item>
             </Hash>
         </Setting>
@@ -692,7 +692,7 @@ Your OTRS Notification Master
         <SubGroup>Frontend::Customer::ModuleMetaHead</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::Output::HTML::CustomerHeaderMeta::FAQSearch</Item>
+                <Item Key="Module">Kernel::Output::HTML::HeaderMeta::CustomerFAQSearch</Item>
                 <Item Key="Action">CustomerFAQSearch</Item>
             </Hash>
         </Setting>
@@ -703,7 +703,7 @@ Your OTRS Notification Master
         <SubGroup>Frontend::Public::ModuleMetaHead</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::Output::HTML::PublicHeaderMeta::FAQSearch</Item>
+                <Item Key="Module">Kernel::Output::HTML::HeaderMeta::PublicFAQSearch</Item>
                 <Item Key="Action">PublicFAQSearch</Item>
             </Hash>
         </Setting>
@@ -714,7 +714,7 @@ Your OTRS Notification Master
         <SubGroup>Frontend::Agent</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::Output::HTML::OutputFilter::FAQ</Item>
+                <Item Key="Module">Kernel::Output::HTML::FilterElementPost::FAQ</Item>
                 <Item Key="Debug">0</Item>
                 <Item Key="Templates">
                     <Hash>

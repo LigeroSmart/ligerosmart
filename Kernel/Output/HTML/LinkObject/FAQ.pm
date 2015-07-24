@@ -21,7 +21,7 @@ our @ObjectDependencies = (
 
 =head1 NAME
 
-Kernel::Output::HTML::LinkObjectFAQ - layout backend module
+Kernel::Output::HTML::LinkObject::FAQ - layout backend module
 
 =head1 SYNOPSIS
 
@@ -35,7 +35,7 @@ All layout functions of link object (FAQ)
 
 create an object
 
-    $BackendObject = Kernel::Output::HTML::LinkObjectFAQ->new(
+    $BackendObject = Kernel::Output::HTML::LinkObject::FAQ->new(
         %Param,
     );
 

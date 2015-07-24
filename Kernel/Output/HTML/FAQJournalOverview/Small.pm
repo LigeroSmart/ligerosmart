@@ -11,7 +11,11 @@ package Kernel::Output::HTML::FAQJournalOverview::Small;
 use strict;
 use warnings;
 
-our $ObjectManagerDisabled = 1;
+our @ObjectDependencies = (
+    'Kernel::Output::HTML::Layout',
+    'Kernel::System::FAQ',
+    'Kernel::System::Log',
+);
 
 sub new {
     my ( $Type, %Param ) = @_;

@@ -6,12 +6,16 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package Kernel::Output::HTML::OutputFilter::FAQ;
+package Kernel::Output::HTML::FilterElementPost::FAQ;
 
 use strict;
 use warnings;
 
-our $ObjectManagerDisabled = 1;
+our @ObjectDependencies = (
+    'Kernel::Config',
+    'Kernel::Output::HTML::Layout',
+    'Kernel::System::Web::Request',
+);
 
 sub new {
     my ( $Type, %Param ) = @_;

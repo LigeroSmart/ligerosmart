@@ -11,9 +11,11 @@ package Kernel::Output::HTML::Dashboard::FAQ;
 use strict;
 use warnings;
 
-use Kernel::System::FAQ;
-
-our $ObjectManagerDisabled = 1;
+our @ObjectDependencies = (
+    'Kernel::Config',
+    'Kernel::Output::HTML::Layout',
+    'Kernel::System::FAQ',
+);
 
 sub new {
     my ( $Type, %Param ) = @_;

@@ -11,7 +11,14 @@ package Kernel::Output::HTML::Layout::FAQ;
 use strict;
 use warnings;
 
-our $ObjectManagerDisabled = 1;
+our @ObjectDependencies = (
+    'Kernel::Config',
+    'Kernel::System::AuthSession',
+    'Kernel::System::HTMLUtils',
+    'Kernel::System::Log',
+    'Kernel::System::Main',
+    'Kernel::System::Web::Request',
+);
 
 =head1 NAME
 

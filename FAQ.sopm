@@ -60,16 +60,16 @@
         <File Permission="644" Location="Kernel/Modules/PublicFAQRSS.pm"/>
         <File Permission="644" Location="Kernel/Modules/PublicFAQSearch.pm"/>
         <File Permission="644" Location="Kernel/Modules/PublicFAQZoom.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/CustomerHeaderMeta/FAQSearch.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/Dashboard/FAQ.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/FAQJournalOverview/Small.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/FAQMenu/Generic.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/FAQOverview/Small.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/HeaderMeta/FAQSearch.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/HeaderMeta/AgentFAQSearch.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/HeaderMeta/CustomerFAQSearch.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/HeaderMeta/PublicFAQSearch.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/Layout/FAQ.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/LinkObject/FAQ.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/OutputFilter/FAQ.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/PublicHeaderMeta/FAQSearch.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/FilterElementPost/FAQ.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AAAFAQ.tt"/>
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentFAQAdd.tt"/>
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentDashboardFAQOverview.tt"/>

@@ -6,12 +6,15 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package Kernel::Output::HTML::CustomerHeaderMeta::FAQSearch;
+package Kernel::Output::HTML::HeaderMeta::AgentFAQSearch;
 
 use strict;
 use warnings;
 
-our $ObjectManagerDisabled = 1;
+our @ObjectDependencies = (
+    'Kernel::Config',
+    'Kernel::Output::HTML::Layout',
+);
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -40,16 +43,14 @@ sub Run {
     # build open search description for FAQ number
     my $Title = $ConfigObject->Get('ProductName');
 
-    $Title .= ' - Customer (' . $ConfigObject->Get('FAQ::FAQHook') . ')';
+    $Title .= '(' . $ConfigObject->Get('FAQ::FAQHook') . ')';
     $LayoutObject->Block(
         Name => 'MetaLink',
         Data => {
             Rel   => 'search',
             Type  => 'application/opensearchdescription+xml',
             Title => $Title,
-            Href  => $LayoutObject->{Baselink}
-                . 'Action='
-                . $Param{Config}->{Action}
+            Href  => $LayoutObject->{Baselink} . 'Action=' . $Param{Config}->{Action}
                 . ';Subaction=OpenSearchDescriptionFAQNumber' . $Session,
         },
     );
@@ -57,16 +58,14 @@ sub Run {
     # build open search description for FAQ full-text
     my $Fulltext = $LayoutObject->{LanguageObject}->Translate('FAQFulltext');
     $Title = $ConfigObject->Get('ProductName');
-    $Title .= ' - Customer (' . $Fulltext . ')';
+    $Title .= '(' . $Fulltext . ')';
     $LayoutObject->Block(
         Name => 'MetaLink',
         Data => {
             Rel   => 'search',
             Type  => 'application/opensearchdescription+xml',
             Title => $Title,
-            Href  => $LayoutObject->{Baselink}
-                . 'Action='
-                . $Param{Config}->{Action}
+            Href  => $LayoutObject->{Baselink} . 'Action=' . $Param{Config}->{Action}
                 . ';Subaction=OpenSearchDescriptionFulltext' . $Session,
         },
     );

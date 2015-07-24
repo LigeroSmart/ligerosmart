@@ -13,7 +13,14 @@ use warnings;
 
 use Kernel::System::VariableCheck qw(:all);
 
-our $ObjectManagerDisabled = 1;
+our @ObjectDependencies = (
+    'Kernel::Config',
+    'Kernel::Output::HTML::Layout',
+    'Kernel::System::DynamicField',
+    'Kernel::System::DynamicField::Backend',
+    'Kernel::System::FAQ',
+    'Kernel::System::Log',
+);
 
 sub new {
     my ( $Type, %Param ) = @_;
