@@ -1571,6 +1571,7 @@ shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test FAQ:FAQSearch:GenericI
 shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test AgentFAQExplorer:AgentFAQLanguage:AgentFAQPrint:AgentFAQSearch:AgentFAQZoom
 shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test CustomerFAQExplorer:CustomerFAQPrint:CustomerFAQSearch:CustomerFAQZoom
 shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test PublicFAQExplorer:PublicFAQPrint:PublicFAQRSS:PublicFAQSearch:PublicFAQZoom
+shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test Dashboard/FAQ:FAQJournalOverview/Small:FAQMenu/Generic:FAQOverview/Small:HeaderMeta/AgentFAQSearch:HeaderMeta/CustomerFAQSearch:HeaderMeta/PublicFAQSearch:LinkObject/FAQ
         </screen>
         <para>Run all available unit tests</para>
         <para>

@@ -137,6 +137,14 @@
         <File Permission="644" Location="scripts/test/Selenium/Public/PublicFAQRSS.t"/>
         <File Permission="644" Location="scripts/test/Selenium/Public/PublicFAQSearch.t"/>
         <File Permission="644" Location="scripts/test/Selenium/Public/PublicFAQZoom.t"/>
+        <File Permission="644" Location="scripts/test/Selenium/Output/Dashboard/FAQ.t"/>
+        <File Permission="644" Location="scripts/test/Selenium/Output/FAQJournalOverview/Small.t"/>
+        <File Permission="644" Location="scripts/test/Selenium/Output/FAQMenu/Generic.t"/>
+        <File Permission="644" Location="scripts/test/Selenium/Output/FAQOverview/Small.t"/>
+        <File Permission="644" Location="scripts/test/Selenium/Output/HeaderMeta/AgentFAQSearch.t"/>
+        <File Permission="644" Location="scripts/test/Selenium/Output/HeaderMeta/CustomerFAQSearch.t"/>
+        <File Permission="644" Location="scripts/test/Selenium/Output/HeaderMeta/PublicFAQSearch.t"/>
+        <File Permission="644" Location="scripts/test/Selenium/Output/LinkObject/FAQ.t"/>
         <File Permission="644" Location="var/httpd/htdocs/js/FAQ.Agent.ConfirmationDialog.js"/>
         <File Permission="644" Location="var/httpd/htdocs/js/FAQ.Agent.FAQZoom.js"/>
         <File Permission="644" Location="var/httpd/htdocs/js/FAQ.Agent.TicketCompose.js"/>
