@@ -128,6 +128,10 @@
         <File Permission="644" Location="scripts/test/Selenium/Agent/AgentFAQPrint.t"/>
         <File Permission="644" Location="scripts/test/Selenium/Agent/AgentFAQSearch.t"/>
         <File Permission="644" Location="scripts/test/Selenium/Agent/AgentFAQZoom.t"/>
+        <File Permission="644" Location="scripts/test/Selenium/Customer/CustomerFAQExplorer.t"/>
+        <File Permission="644" Location="scripts/test/Selenium/Customer/CustomerFAQPrint.t"/>
+        <File Permission="644" Location="scripts/test/Selenium/Customer/CustomerFAQSearch.t"/>
+        <File Permission="644" Location="scripts/test/Selenium/Customer/CustomerFAQZoom.t"/>
         <File Permission="644" Location="var/httpd/htdocs/js/FAQ.Agent.ConfirmationDialog.js"/>
         <File Permission="644" Location="var/httpd/htdocs/js/FAQ.Agent.FAQZoom.js"/>
         <File Permission="644" Location="var/httpd/htdocs/js/FAQ.Agent.TicketCompose.js"/>
