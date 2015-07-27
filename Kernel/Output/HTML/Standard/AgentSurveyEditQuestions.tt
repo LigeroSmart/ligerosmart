@@ -1,5 +1,4 @@
 # --
-# AgentSurveyEditQuestions.tt - provides HTML form for AgentSurvey
 # Copyright (C) 2001-2015 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -12,7 +11,7 @@
         <h1>[% Translate("Edit Questions") | html %]: [% Translate(Config("Survey::Hook")) | html %][% Data.SurveyNumber | html %] - [% Data.Title | html %]</h1>
         <p class="AsteriskExplanation">[% Translate("All fields marked with an asterisk (*) are mandatory.") | html %]</p>
         <p>
-            <a class="CancelClosePopup" href="#">[% Translate("Cancel & close window") | html %]</a>
+            <a class="CancelClosePopup" href="#">[% Translate("Cancel & close") | html %]</a>
         </p>
     </div>
     <div class="Content">
@@ -170,7 +169,7 @@
                 </table>
 [% RenderBlockEnd("SurveyQuestionsTable") %]
                 <div class="SpacingTop">
-                    <span class="FieldExplanation">[% Translate("When you finish to edit the survey questions just close this window.") | html %]</span>
+                    <span class="FieldExplanation">[% Translate("When you finish to edit the survey questions just close this screen.") | html %]</span>
                 </div>
             </div>
         </div>
@@ -191,7 +190,7 @@ $('.QuestionDelete').bind('click', function (Event) {
 
     </div>
     <div class="Footer">
-        <button type="submit" class="CancelClosePopup Primary CallForAction" value="[% Translate("Close window") | html %]"><span><i class="fa fa-times"></i> [% Translate("Close window") | html %]</span></button>
+        <button type="submit" class="CancelClosePopup Primary CallForAction" value="[% Translate("Close") | html %]"><span><i class="fa fa-times"></i> [% Translate("Close") | html %]</span></button>
     </div>
 </div>
 [% RenderBlockEnd("SurveyEditQuestions") %]
@@ -202,7 +201,7 @@ $('.QuestionDelete').bind('click', function (Event) {
         <h1>[% Translate("Edit Question") | html %]: [% Translate(Data.Question) | html %]</h1>
         <p class="AsteriskExplanation">[% Translate("All fields marked with an asterisk (*) are mandatory.") | html %]</p>
         <p>
-            <a class="CancelClosePopup" href="#">[% Translate("Cancel & close window") | html %]</a>
+            <a class="CancelClosePopup" href="#">[% Translate("Cancel & close") | html %]</a>
             [% Translate("or") | html %]
             <a href="[% Env("Baselink") %]Action=[% Env("Action") %];SurveyID=[% Data.SurveyID | uri %]" >[% Translate("go back to questions") | html %]</a>
         </p>
@@ -437,7 +436,7 @@ $('.AnswerDelete').bind('click', function (Event) {
             <h1>[% Translate("Edit Answer") | html %]: [% Data.Answer | html %] </h1>
             <p class="AsteriskExplanation">[% Translate("All fields marked with an asterisk (*) are mandatory.") | html %]</p>
             <p>
-                <a class="CancelClosePopup" href="#">[% Translate("Cancel & close window") | html %]</a>
+                <a class="CancelClosePopup" href="#">[% Translate("Cancel & close") | html %]</a>
                 [% Translate("or") | html %]
                 <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=QuestionEdit;QuestionID=[% Data.QuestionID | uri %];SurveyID=[% Data.SurveyID | uri %]">[% Translate("go back to edit question") | html %]</a>
             </p>

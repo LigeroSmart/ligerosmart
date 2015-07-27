@@ -1,5 +1,4 @@
 # --
-# AgentSurveyStats.tt - provides HTML form for AgentSurveyStats
 # Copyright (C) 2001-2015 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -12,7 +11,7 @@
     <div class="Header">
         <h1>[% Translate("Stats Overview of") | html %] : [% Translate(Config("Survey::Hook")) | html %][% Data.SurveyNumber %] - [% Data.Title %] </h1>
         <p>
-            <a class="CancelClosePopup" href="#">[% Translate("Cancel & close window") | html %]</a>
+            <a class="CancelClosePopup" href="#">[% Translate("Cancel & close") | html %]</a>
         </p>
     </div>
     <div class="Content">
@@ -71,7 +70,7 @@
 
     </div>
     <div class="Footer">
-        <button type="submit" class="CancelClosePopup Primary CallForAction" value="[% Translate("Close window") | html %]"><span><i class="fa fa-times"></i> [% Translate("Close window") | html %]</span></button>
+        <button type="submit" class="CancelClosePopup Primary CallForAction" value="[% Translate("Close") | html %]"><span><i class="fa fa-times"></i> [% Translate("Close") | html %]</span></button>
     </div>
 </div>
 [% WRAPPER JSOnDocumentComplete %]
@@ -90,7 +89,7 @@
     <div class="Header">
         <h1>[% Translate("Survey Stat Details") | html %] : [% Translate("Ticket") | html %]#[% Data.TicketNumber %] : [% Config("Survey::Hook") %][% Data.SurveyNumber %] - [% Data.Title %] :  </h1>
         <p>
-            <a class="CancelClosePopup" href="#">[% Translate("Cancel & close window") | html %]</a>
+            <a class="CancelClosePopup" href="#">[% Translate("Cancel & close") | html %]</a>
             [% Translate("or") | html %]
             <a class="HistoryBack" href="[% Env("Baselink") %]Action=[% Env("Action") %];SurveyID=[% Data.SurveyID | uri %]">[% Translate("go back to stats overview") | html %]</a>
         </p>
