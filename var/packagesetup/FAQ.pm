@@ -151,6 +151,7 @@ sub CodeInstall {
     # install stats
     $Kernel::OM->Get('Kernel::System::Stats')->StatsInstall(
         FilePrefix => $Self->{FilePrefix},
+        UserID     => 1,
     );
 
     return 1;
@@ -191,6 +192,7 @@ sub CodeReinstall {
     # install stats
     $Kernel::OM->Get('Kernel::System::Stats')->StatsInstall(
         FilePrefix => $Self->{FilePrefix},
+        UserID     => 1,
     );
 
     # create additional FAQ languages
@@ -213,6 +215,7 @@ sub CodeUpgrade {
     # install stats
     $Kernel::OM->Get('Kernel::System::Stats')->StatsInstall(
         FilePrefix => $Self->{FilePrefix},
+        UserID     => 1,
     );
 
     # create additional FAQ languages
@@ -259,6 +262,23 @@ sub CodeUpgradeFromLowerThan_4_0_1 {    ## no critic
 
     # migrate the DTL Content in the SysConfig
     $Self->_MigrateDTLInSysConfig();
+
+    return 1;
+}
+
+=item CodeUpgradeFromLowerThan_4_0_91()
+
+This function is only executed if the installed module version is smaller than 4.0.91.
+
+my $Result = $CodeObject->CodeUpgradeFromLowerThan_4_0_91();
+
+=cut
+
+sub CodeUpgradeFromLowerThan_4_0_91 {    ## no critic
+    my ( $Self, %Param ) = @_;
+
+    # change configurations to match the new module location.
+    $Self->_MigrateConfigs();
 
     return 1;
 }
@@ -743,7 +763,7 @@ sub _DynamicFieldsDelete {
 
             # check error
             if ( !$Success ) {
-                $Self->{LogObject}->Log(
+                $Kernel::OM->Get('Kernel::System::Log')->Log(
                     Priority => 'error',
                     Message  => "Could not delete dynamic field '$DynamicField->{Name}'!",
                 );
@@ -752,7 +772,7 @@ sub _DynamicFieldsDelete {
 
         # values could not be deleted
         else {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Could not delete values for dynamic field '$DynamicField->{Name}'!",
             );
@@ -804,6 +824,118 @@ sub _MigrateDTLInSysConfig {
             Value => $Setting,
         );
     }
+    return 1;
+}
+
+sub _MigrateConfigs {
+
+    # create needed objects
+    my $SysConfigObject = $Kernel::OM->Get('Kernel::System::SysConfig');
+    my $ConfigObject    = $Kernel::OM->Get('Kernel::Config');
+
+    # migrate FAQ menu modules
+    # get setting content for FAQ menu modules
+    my $Setting = $ConfigObject->Get('FAQ::Frontend::MenuModule');
+
+    MENUMODULE:
+    for my $MenuModule ( sort keys %{$Setting} ) {
+
+        # update module location
+        my $Module = $Setting->{$MenuModule}->{'Module'};
+        if ( $Module !~ m{Kernel::Output::HTML::FAQMenu(\w+)} ) {
+            next MENUMODULE;
+        }
+
+        $Setting->{$MenuModule}->{Module} = "Kernel::Output::HTML::FAQMenu::Generic";
+
+        # set new setting,
+        my $Success = $SysConfigObject->ConfigItemUpdate(
+            Valid => 1,
+            Key   => 'FAQ::Frontend::MenuModule###' . $MenuModule,
+            Value => $Setting->{$MenuModule},
+        );
+    }
+
+    # migrate FAQ config items
+    my @Configs = (
+        {
+            Name       => 'Frontend::HeaderMetaModule',
+            ConfigItem => '3-FAQSearch',
+            Module     => 'Kernel::Output::HTML::HeaderMeta::AgentFAQSearch',
+        },
+        {
+            Name       => 'CustomerFrontend::HeaderMetaModule',
+            ConfigItem => '3-FAQSearch',
+            Module     => 'Kernel::Output::HTML::HeaderMeta::CustomerFAQSearch',
+        },
+        {
+            Name       => 'PublicFrontend::HeaderMetaModule',
+            ConfigItem => '3-FAQSearch',
+            Module     => 'Kernel::Output::HTML::HeaderMeta::PublicFAQSearch',
+        },
+        {
+            Name       => 'Frontend::Output::FilterElementPost',
+            ConfigItem => 'FAQ',
+            Module     => 'Kernel::Output::HTML::FilterElementPost::FAQ',
+        },
+        {
+            Name       => 'FAQ::Frontend::Overview',
+            ConfigItem => 'Small',
+            Module     => 'Kernel::Output::HTML::FAQOverview::Small',
+        },
+        {
+            Name       => 'FAQ::Frontend::JournalOverview',
+            ConfigItem => 'Small',
+            Module     => 'Kernel::Output::HTML::FAQJournalOverview::Small',
+        },
+        {
+            Name       => 'PreferencesGroups',
+            ConfigItem => 'FAQOverviewSmallPageShown',
+            Module     => 'Kernel::Output::HTML::Preferences::Generic',
+        },
+        {
+            Name       => 'PreferencesGroups',
+            ConfigItem => 'FAQJournalOverviewSmallPageShown',
+            Module     => 'Kernel::Output::HTML::Preferences::Generic',
+        },
+        {
+            Name       => 'DashboardBackend',
+            ConfigItem => '0398-FAQ-LastChange',
+            Module     => 'Kernel::Output::HTML::Dashboard::FAQ',
+        },
+        {
+            Name       => 'DashboardBackend',
+            ConfigItem => '0399-FAQ-LastCreate',
+            Module     => 'Kernel::Output::HTML::Dashboard::FAQ',
+        },
+        {
+            Name       => 'Frontend::ToolBarModule',
+            ConfigItem => '90-FAQ::AgentFAQAdd',
+            Module     => 'Kernel::Output::HTML::ToolBar::Link',
+        },
+    );
+
+    CONFIGITEM:
+    for my $Config (@Configs) {
+
+        # get setting content for header meta FAQ search
+        my $Setting = $ConfigObject->Get( $Config->{Name} );
+        next CONFIGITEM if !$Setting;
+
+        my $ConfigItem = $Config->{ConfigItem};
+
+        # set module
+        $Setting->{$ConfigItem}->{'Module'} = $Config->{Module};
+
+        # set new setting,
+        my $Success = $SysConfigObject->ConfigItemUpdate(
+            Valid => 1,
+            Key   => $Config->{Name} . '###' . $ConfigItem,
+            Value => $Setting->{$ConfigItem},
+        );
+
+    }
+
     return 1;
 }
 
