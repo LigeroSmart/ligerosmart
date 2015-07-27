@@ -1,5 +1,4 @@
 // --
-// Survey.Agent.SurveyZoom.js - provides the special module functions for SurveyZoom
 // Copyright (C) 2001-2011 OTRS AG, http://otrs.org/\n";
 // --
 // This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -20,14 +19,18 @@ Survey.Agent = Survey.Agent || {};
  */
 Survey.Agent.SurveyZoom = (function (TargetNS) {
     /**
+     * @name IframeAutoHeight
+     * @memberof Survey.Agent.SurveyZoom
      * @function
-     * @param {jQueryObject} $Iframe The iframe which should be auto-heighted
-     * @return nothing
-     *      This function initializes the special module functions
+     * @param {jQueryObject} $Iframe - The iframe which should be auto-heighted
+     * @description
+     *      Set iframe height automatically based on real content height and default config setting.
      */
     TargetNS.IframeAutoHeight = function ($Iframe) {
+        var NewHeight;
+
         if (isJQueryObject($Iframe)) {
-            var NewHeight = $Iframe.contents().height();
+            NewHeight = $Iframe.contents().height();
             if (!NewHeight || isNaN(NewHeight)) {
                 NewHeight = Core.Config.Get('Survey.HTMLRichTextHeightDefault');
             }
