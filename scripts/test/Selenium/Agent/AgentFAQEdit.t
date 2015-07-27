@@ -37,8 +37,7 @@ $Selenium->RunTest(
         # get test params
         my $FAQTitle = 'FAQ ' . $Helper->GetRandomID();
         my $Test     = {
-            Stored =>
-                {
+            Stored => {
                 Title      => $FAQTitle,
                 CategoryID => 1,
                 StateID    => 1,
@@ -49,9 +48,8 @@ $Selenium->RunTest(
                 Field3     => 'Selenium Solution',
                 Field6     => 'Selenium Comment',
                 ValidID    => 1,
-                },
-            Edited =>
-                {
+            },
+            Edited => {
                 Title      => $FAQTitle . ' Edit',
                 CategoryID => 1,
                 StateID    => 2,
@@ -62,7 +60,7 @@ $Selenium->RunTest(
                 Field3     => 'Selenium Solution Edit',
                 Field6     => 'Selenium Comment Edit',
                 ValidID    => 2,
-                }
+            },
         };
 
         # get FAQ object
@@ -116,7 +114,7 @@ $Selenium->RunTest(
         for my $Stored ( sort keys $Test->{Stored} ) {
             $Self->Is(
                 $Selenium->find_element( '#' . $Stored, 'css' )->get_value(),
-                "$Test->{Stored}{$Stored}",
+                "$Test->{Stored}->{$Stored}",
                 "#$Stored stored value",
             );
         }
@@ -147,7 +145,7 @@ $Selenium->RunTest(
         for my $Edited ( sort keys $Test->{Edited} ) {
             $Self->Is(
                 $Selenium->find_element( '#' . $Edited, 'css' )->get_value(),
-                "$Test->{Edited}{$Edited}",
+                "$Test->{Edited}->{$Edited}",
                 "#$Edited stored value",
             );
         }
