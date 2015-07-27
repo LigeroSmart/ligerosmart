@@ -36,7 +36,7 @@ $Selenium->RunTest(
 
         # get test params
         my $FAQTitle = 'FAQ ' . $Helper->GetRandomID();
-        my $Test     = {
+        my %Test     = (
             Stored => {
                 Title      => $FAQTitle,
                 CategoryID => 1,
@@ -61,23 +61,23 @@ $Selenium->RunTest(
                 Field6     => 'Selenium Comment Edit',
                 ValidID    => 2,
             },
-        };
+        );
 
         # get FAQ object
         my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
 
         # create test FAQ
         my $FAQID = $FAQObject->FAQAdd(
-            Title      => $Test->{Stored}->{Title},
-            CategoryID => $Test->{Stored}->{CategoryID},
-            StateID    => $Test->{Stored}->{StateID},
-            LanguageID => $Test->{Stored}->{LanguageID},
-            Keywords   => $Test->{Stored}->{Keywords},
-            Field1     => $Test->{Stored}->{Field1},
-            Field2     => $Test->{Stored}->{Field2},
-            Field3     => $Test->{Stored}->{Field3},
-            Field6     => $Test->{Stored}->{Field6},
-            ValidID    => $Test->{Stored}->{ValidID},
+            Title      => $Test{Stored}->{Title},
+            CategoryID => $Test{Stored}->{CategoryID},
+            StateID    => $Test{Stored}->{StateID},
+            LanguageID => $Test{Stored}->{LanguageID},
+            Keywords   => $Test{Stored}->{Keywords},
+            Field1     => $Test{Stored}->{Field1},
+            Field2     => $Test{Stored}->{Field2},
+            Field3     => $Test{Stored}->{Field3},
+            Field6     => $Test{Stored}->{Field6},
+            ValidID    => $Test{Stored}->{ValidID},
             UserID     => 1,
         );
 
@@ -111,10 +111,10 @@ $Selenium->RunTest(
         $Selenium->switch_to_window( $Handles->[1] );
 
         # verify stored values
-        for my $Stored ( sort keys $Test->{Stored} ) {
+        for my $Stored ( sort keys %{ $Test{Stored} } ) {
             $Self->Is(
                 $Selenium->find_element( '#' . $Stored, 'css' )->get_value(),
-                "$Test->{Stored}->{$Stored}",
+                "$Test{Stored}->{$Stored}",
                 "#$Stored stored value",
             );
         }
@@ -142,10 +142,10 @@ $Selenium->RunTest(
         $Selenium->switch_to_window( $Handles->[1] );
 
         # verify edited values
-        for my $Edited ( sort keys $Test->{Edited} ) {
+        for my $Edited ( sort keys %{ $Test{Edited} } ) {
             $Self->Is(
                 $Selenium->find_element( '#' . $Edited, 'css' )->get_value(),
-                "$Test->{Edited}->{$Edited}",
+                "$Test{Edited}->{$Edited}",
                 "#$Edited stored value",
             );
         }
