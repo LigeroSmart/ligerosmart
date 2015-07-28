@@ -13,6 +13,8 @@ use warnings;
 
 our @ObjectDependencies = (
     'Kernel::System::DB',
+    'Kernel::Config',
+    'Kernel::System::SysConfig',
 );
 
 =head1 NAME
@@ -115,6 +117,23 @@ sub CodeUpgradeFromBefore_2_0_3 {    ## no critic
     return 1;
 }
 
+=item CodeUpgradeFromLowerThan_4_0_91()
+
+This function is only executed if the installed module version is smaller than 4.0.91.
+
+my $Result = $CodeObject->CodeUpgradeFromLowerThan_4_0_91();
+
+=cut
+
+sub CodeUpgradeFromLowerThan_4_0_91 {    ## no critic
+    my ( $Self, %Param ) = @_;
+
+    # change configurations to match the new module location.
+    $Self->_MigrateConfigs();
+
+    return 1;
+}
+
 =item CodeUninstall()
 
 run the code uninstall part
@@ -145,6 +164,37 @@ sub _FixDatabaseTypo {
         SQL => "UPDATE imexport_format "
             . "SET data_key = 'ColumnSeparator' "
             . "WHERE data_key = 'ColumnSeperator'",
+    );
+
+    return 1;
+}
+
+=item _MigrateConfigs()
+
+change configurations to match the new module location.
+
+    my $Result = $CodeObject->_MigrateConfigs();
+
+=cut
+
+sub _MigrateConfigs {
+
+    # create needed objects
+    my $SysConfigObject = $Kernel::OM->Get('Kernel::System::SysConfig');
+    my $ConfigObject    = $Kernel::OM->Get('Kernel::Config');
+
+    # migrate ImportExport config
+    # get setting content for ImportExport config
+    my $Setting = $ConfigObject->Get('Frontend::Module');
+
+    # update module location
+    $Setting->{'AdminImportExport'}->{NavBarModule}->{Module} = "Kernel::Output::HTML::NavBar::ModuleAdmin";
+
+    # set new setting,
+    my $Success = $SysConfigObject->ConfigItemUpdate(
+        Valid => 1,
+        Key   => 'Frontend::Module###AdminImportExport',
+        Value => $Setting->{'AdminImportExport'},
     );
 
     return 1;
