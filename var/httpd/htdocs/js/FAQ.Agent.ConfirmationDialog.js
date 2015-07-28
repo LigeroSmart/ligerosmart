@@ -1,7 +1,5 @@
 // --
-// FAQ.Agent.ConfirmationDialog.js - provides the special module functions for the
-// confirmation dialogs
-// Copyright (C) 2001-2010 OTRS AG, http://otrs.org/\n";
+// Copyright (C) 2001-2015 OTRS AG, http://otrs.com/
 // --
 // This software comes with ABSOLUTELY NO WARRANTY. For details, see
 // the enclosed file COPYING for license information (AGPL). If you
@@ -22,29 +20,37 @@ FAQ.Agent = FAQ.Agent || {};
 FAQ.Agent.ConfirmationDialog = (function (TargetNS) {
 
     /**
+     * @name DialogData
+     * @memberof FAQ.Agent.ConfirmationDialog
      * @variable
      * @private
-     *     This variable stores the parameters that are passed from the DTL and contain all the data that the dialog needs.
+     * @description
+     *      This variable stores the parameters that are passed from the DTL and contain all the data that the dialog needs.
      */
     var DialogData = [];
 
     /**
+     * @name ShowWaitingDialog
+     * @memberof FAQ.Agent.ConfirmationDialog
      * @function
      * @private
-     * @return nothing
-     * @description Shows waiting dialog until search screen is ready.
+     * @param {String} PositionTop position of the dialog.
+     * @description
+     *      Shows waiting dialog until search screen is ready.
      */
     function ShowWaitingDialog(PositionTop){
         Core.UI.Dialog.ShowContentDialog('<div class="Spacing Center"><span class="AJAXLoader" title="' + Core.Config.Get('LoadingMsg') + '"></span></div>', '', PositionTop, 'Center', true);
     }
 
     /**
+     * @name ShowConfirmationDialog
+     * @memberof FAQ.Agent.ConfirmationDialog
      * @function
-     * @param {EventObject} event object of the clicked element.
-     * @return nothing
-     *      This function shows a confirmation dialog with 2 buttons: Yes and No
+     * @returns {Boolean} false
+     * @description
+     *      This function shows a confirmation dialog with 2 buttons: Yes and No.
      */
-    TargetNS.ShowConfirmationDialog = function (Event) {
+    TargetNS.ShowConfirmationDialog = function () {
 
         var LocalDialogData,
             PositionTop,
@@ -105,10 +111,12 @@ FAQ.Agent.ConfirmationDialog = (function (TargetNS) {
     };
 
     /**
+     * @name BindConfirmationDialog
+     * @memberof FAQ.Agent.ConfirmationDialog
      * @function
-     * @param {EventObject} event object of the clicked element.
-     * @return nothing
-     *      This function shows a confirmation dialog with 2 buttons: Yes and No
+     * @param {Object} Data - The data that should be binded
+     * @description
+     *      This function binds a click event to the defined element
      */
     TargetNS.BindConfirmationDialog = function (Data) {
         DialogData[Data.ElementID] = Data;

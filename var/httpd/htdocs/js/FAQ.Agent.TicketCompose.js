@@ -1,6 +1,5 @@
 // --
-// FAQ.Agent.TicketCompose.js - provides the special module functions for AgentFAQZoom
-// Copyright (C) 2001-2013 OTRS AG, http://otrs.org/\n";
+// Copyright (C) 2001-2015 OTRS AG, http://otrs.com/
 // --
 // This software comes with ABSOLUTELY NO WARRANTY. For details, see
 // the enclosed file COPYING for license information (AGPL). If you
@@ -21,15 +20,23 @@ FAQ.Agent = FAQ.Agent || {};
 FAQ.Agent.TicketCompose = (function (TargetNS) {
 
     /**
+     * @name InitFAQTicketCompose
+     * @memberof FAQ.Agent.TicketCompose
      * @function
      * @param {jQueryObject} $Element The editor
-     * @return nothing
+     * @description
      *      Initialize the needed stuff for the FAQ functionality of the ticket screens.
      */
     TargetNS.InitFAQTicketCompose = function ($Element) {
+
+        // See bug#9116:
+        // In Chrome sometimes the click event is triggered before the focus event
+        // we prevent that by checking EditorGotFocus first
+        var InstanceName = $Element.attr('id'),
+            EditorGotFocus = false;
+
         function GetCursorPosition() {
             var Element = $Element[0],
-                ElementValue = $Element.val(),
                 Range,
                 TextRange,
                 TextRangeDuplicate,
@@ -57,12 +64,6 @@ FAQ.Agent.TicketCompose = (function (TargetNS) {
             });
         }
 
-        // See bug#9116:
-        // In Chrome sometimes the click event is triggered before the focus event
-        // we prevent that by checking EditorGotFocus first
-
-        var InstanceName = $Element.attr('id'),
-            EditorGotFocus = false;
         // Register RTE events for saving the cursor position
         if (typeof CKEDITOR !== 'undefined' && CKEDITOR && CKEDITOR.instances.RichText) {
             // Get last cursor position and save it (on focus we come back to this position)
@@ -107,24 +108,27 @@ FAQ.Agent.TicketCompose = (function (TargetNS) {
     };
 
     /**
+     * @name SetData
+     * @memberof FAQ.Agent.TicketCompose
      * @function
-     * @param {String} Title of a FAQ article to be returned into ticket Subject
-     * @param {String} Fields of a FAQ article and or Link to the public interface in plain text
-     * @param {String} Fields of a FAQ article and or Link to the public interface in HTML
-     * @return nothing
+     * @param {String} FAQTitle of a FAQ article to be returned into ticket Subject
+     * @param {String} FAQContent of a FAQ article and/or Link to the public interface in plain text
+     * @param {String} FAQHTMLContent of a FAQ article and/or Link to the public interface in HTML
+     * @description
      *      Do nothing and show an error message.
      */
     function SetData (FAQTitle, FAQContent, FAQHTMLContent) {
+
+        var $ParentSubject = $('#Subject', parent.document),
+            $ParentBody = $('#RichText', parent.document),
+            ParentBody = $ParentBody[0],
+            ParentBodyValue = $ParentBody.val(),
+            Range,
+            StartRange = 0,
+            EndRange = 0,
+            NewPosition = 0;
+
         if ($('#Subject', parent.document).length && $('#RichText', parent.document).length) {
-            var $ParentSubject = $('#Subject', parent.document),
-                $ParentBody = $('#RichText', parent.document),
-                ParentBody = $ParentBody[0],
-                ParentBodyValue = $ParentBody.val(),
-                Range,
-                StartRange = 0,
-                EndRange = 0,
-                NewPosition = 0,
-                NewHTML;
 
             if (Core.Config.Get('TicketCompose.UpdateArticleSubject') === '1' && $('#UpdateArticleSubjectOption').prop('checked')) {
                 // copy subject
@@ -139,7 +143,7 @@ FAQ.Agent.TicketCompose = (function (TargetNS) {
             // add FAQ text and/or link to WYSIWYG editor in parent window
             if (parent.CKEDITOR && parent.CKEDITOR.instances.RichText) {
                 parent.CKEDITOR.instances.RichText.focus();
-                window.setTimeout( function () {
+                window.setTimeout(function () {
                     // In some circumstances, this command throws an error (although inserting the HTML works)
                     // Because the intended functionality also works, we just wrap it in a try-catch-statement
                     try {
@@ -190,10 +194,11 @@ FAQ.Agent.TicketCompose = (function (TargetNS) {
     }
 
     /**
+     * @name SetText
+     * @memberof FAQ.Agent.TicketCompose
      * @function
-     * @param {Boolean} Setting to add FAQ item text or not
-     * @param {Boolean} Setting to add FAQ item link or not
-     * @return nothing
+     * @param {Boolean} InsertText to add FAQ item text or not
+     * @param {Boolean} InsertLink to add FAQ item link or not
      */
     TargetNS.SetText = function (InsertText, InsertLink) {
         var FAQTitle = $('#FAQTitle').val(),
@@ -201,7 +206,7 @@ FAQ.Agent.TicketCompose = (function (TargetNS) {
         FAQHTMLContent = '',
         FAQLink;
 
-        if ( InsertText === 1 ) {
+        if (InsertText === 1) {
             FAQContent = $('#FAQBody').val();
             FAQHTMLContent = FAQContent;
         }
@@ -210,20 +215,22 @@ FAQ.Agent.TicketCompose = (function (TargetNS) {
             FAQHTMLContent = FAQContent;
         }
 
-        if (InsertLink === 1 ) {
+        if (InsertLink === 1) {
             FAQLink = $('#FAQPublicLink').val();
             FAQContent = FAQContent + '\n' + FAQLink;
             FAQHTMLContent = FAQHTMLContent + '<br/>' + '<a href="' + FAQLink + '">' + FAQTitle + '</a>';
         }
 
-        SetData (FAQTitle, FAQContent, FAQHTMLContent);
+        SetData(FAQTitle, FAQContent, FAQHTMLContent);
     };
 
+
     /**
+     * @name SetFullFAQ
+     * @memberof FAQ.Agent.TicketCompose
      * @function
-     * @param {Boolean} Setting to add FAQ item text or not
-     * @param {Boolean} Setting to add FAQ item link or not
-     * @return nothing
+     * @param {Boolean} InsertText to add FAQ item text or not
+     * @param {Boolean} InsertLink to add FAQ item link or not
      */
     TargetNS.SetFullFAQ = function (InsertText, InsertLink) {
 
@@ -241,12 +248,12 @@ FAQ.Agent.TicketCompose = (function (TargetNS) {
                     FAQHTMLContent = '',
                     FAQLink;
 
-                if ( InsertText === 1 ) {
+                if (InsertText === 1) {
                     FAQContent = Response.FAQContent;
                     FAQHTMLContent = Response.FAQHTMLContent;
                 }
 
-                if (InsertLink === 1 ) {
+                if (InsertLink === 1) {
                     FAQLink = $('#FAQPublicLink').val();
                     FAQContent = FAQContent + '\n' + FAQLink;
                     FAQHTMLContent = FAQHTMLContent + '<br/><br/>' + '<a href="' + FAQLink + '">' + FAQTitle + '</a>';
@@ -257,13 +264,13 @@ FAQ.Agent.TicketCompose = (function (TargetNS) {
                 $('#FileUpload', parent.document).parent().siblings('li').remove();
 
                 // 2nd: add all files based on the metadata returned in Response
-                $(Response.TicketAttachments).each(function(index) {
+                $(Response.TicketAttachments).each(function() {
                     $('#FileUpload', parent.document).before(
                         '<li>' + this.Filename + ' (' + this.Filesize + ')<button type="submit" id="AttachmentDelete' + this.FileID + '" name="AttachmentDelete' + this.FileID + '" value="Delete" class="SpacingLeft">' + Response.Localization.Delete + '</button></li>'
                     );
                 });
 
-                SetData (FAQTitle, FAQContent, FAQHTMLContent);
+                SetData(FAQTitle, FAQContent, FAQHTMLContent);
             },
             'json'
         );
