@@ -638,6 +638,7 @@ sub _Edit {
         Data       => \%ValidList,
         Name       => 'ValidID',
         SelectedID => $Param{ValidID} || $ValidListReverse{valid},
+        Class      => 'Modernize',
     );
 
     # get all valid groups
@@ -655,6 +656,7 @@ sub _Edit {
         Multiple   => 1,
         Class      => 'Validate_Required ' . $Param{PermissionGroupsServerError},
         SelectedID => $Param{PermissionGroups},
+        Class      => 'Modernize',
     );
 
     # get all categories with their long names
@@ -671,6 +673,7 @@ sub _Edit {
         PossibleNone   => 1,
         DisabledBranch => $CategoryTree->{ $Param{CategoryID} } || '',
         Translation    => 0,
+        Class          => 'Modernize',
     );
 
     $LayoutObject->Block(

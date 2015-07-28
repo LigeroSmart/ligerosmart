@@ -1409,6 +1409,7 @@ sub MaskForm {
         Data       => {%ResultForm},
         Name       => 'ResultForm',
         SelectedID => $Param{ResultForm} || 'Normal',
+        Class      => 'Modernize',
     );
 
     # get profiles list
@@ -1423,6 +1424,7 @@ sub MaskForm {
         PossibleNone => 1,
         Name         => 'Profile',
         SelectedID   => $Param{Profile},
+        Class        => 'Modernize',
     );
 
     # get FAQ object
@@ -1438,8 +1440,8 @@ sub MaskForm {
         Data       => {%Languages},
         Name       => 'LanguageIDs',
         Multiple   => 1,
-        Size       => 5,
         SelectedID => $Param{LanguageIDs},
+        Class      => 'Modernize',
     );
 
     # get categories list
@@ -1454,9 +1456,9 @@ sub MaskForm {
         Data       => $Categories,
         Name       => 'CategoryIDs',
         Multiple   => 1,
-        Size       => 5,
         SelectedID => $Param{CategoryIDs},
         TreeView   => $TreeView,
+        Class      => 'Modernize',
     );
 
     my %VotingOperators = (
@@ -1471,18 +1473,18 @@ sub MaskForm {
         Data        => \%VotingOperators,
         Name        => 'VoteSearchType',
         SelectedID  => $Param{VoteSearchType} || '',
-        Size        => 1,
         Translation => 1,
         Multiple    => 0,
+        Class       => 'Modernize',
     );
 
     $Param{RateSearchTypeSelectionString} = $LayoutObject->BuildSelection(
         Data        => \%VotingOperators,
         Name        => 'RateSearchType',
         SelectedID  => $Param{RateSearchType} || '',
-        Size        => 1,
         Translation => 1,
         Multiple    => 0,
+        Class       => 'Modernize',
     );
     $Param{RateSearchSelectionString} = $LayoutObject->BuildSelection(
         Data => {
@@ -1495,9 +1497,9 @@ sub MaskForm {
         Sort        => 'NumericKey',
         Name        => 'RateSearch',
         SelectedID  => $Param{RateSearch} || '',
-        Size        => 1,
         Translation => 0,
         Multiple    => 0,
+        Class       => 'Modernize',
     );
 
     $Param{ItemCreateTimePoint} = $LayoutObject->BuildSelection(

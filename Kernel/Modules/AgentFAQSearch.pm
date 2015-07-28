@@ -1324,11 +1324,13 @@ sub _MaskForm {
         Data     => \@Attributes,
         Name     => 'Attribute',
         Multiple => 0,
+        Class    => 'Modernize',
     );
     $Param{AttributesOrigStrg} = $LayoutObject->BuildSelection(
         Data     => \@Attributes,
         Name     => 'AttributeOrig',
         Multiple => 0,
+        Class    => 'Modernize',
     );
 
     # get FAQ object
@@ -1343,9 +1345,9 @@ sub _MaskForm {
     $Param{LanguagesSelectionStrg} = $LayoutObject->BuildSelection(
         Data       => \%Languages,
         Name       => 'LanguageIDs',
-        Size       => 5,
         Multiple   => 1,
         SelectedID => $GetParam{LanguageIDs} || [],
+        Class      => 'Modernize',
     );
 
     # get categories (with category long names) where user has rights
@@ -1359,10 +1361,10 @@ sub _MaskForm {
         Data        => $UserCategoriesLongNames,
         Name        => 'CategoryIDs',
         SelectedID  => $GetParam{CategoryIDs} || [],
-        Size        => 5,
         Translation => 0,
         Multiple    => 1,
         TreeView    => $TreeView,
+        Class       => 'Modernize',
     );
 
     # get valid list
@@ -1373,9 +1375,9 @@ sub _MaskForm {
         Data        => \%ValidList,
         Name        => 'ValidIDs',
         SelectedID  => $GetParam{ValidIDs} || [],
-        Size        => 5,
         Translation => 0,
         Multiple    => 1,
+        Class       => 'Modernize',
     );
 
     # create a mix of state and state types hash in order to have the state type IDs with state
@@ -1397,9 +1399,9 @@ sub _MaskForm {
         Data        => \%States,
         Name        => 'StateIDs',
         SelectedID  => $GetParam{StateIDs} || [],
-        Size        => 3,
         Translation => 1,
         Multiple    => 1,
+        Class       => 'Modernize',
     );
 
     my %VotingOperators = (
@@ -1414,18 +1416,18 @@ sub _MaskForm {
         Data        => \%VotingOperators,
         Name        => 'VoteSearchType',
         SelectedID  => $GetParam{VoteSearchType} || '',
-        Size        => 1,
         Translation => 1,
         Multiple    => 0,
+        Class       => 'Modernize',
     );
 
     $Param{RateSearchTypeSelectionStrg} = $LayoutObject->BuildSelection(
         Data        => \%VotingOperators,
         Name        => 'RateSearchType',
         SelectedID  => $GetParam{RateSearchType} || '',
-        Size        => 1,
         Translation => 1,
         Multiple    => 0,
+        Class       => 'Modernize',
     );
     $Param{RateSearchSelectionStrg} = $LayoutObject->BuildSelection(
         Data => {
@@ -1438,9 +1440,9 @@ sub _MaskForm {
         Sort        => 'NumericKey',
         Name        => 'RateSearch',
         SelectedID  => $GetParam{RateSearch} || '',
-        Size        => 1,
         Translation => 0,
         Multiple    => 0,
+        Class       => 'Modernize',
     );
 
     $Param{ApprovedStrg} = $LayoutObject->BuildSelection(
@@ -1452,6 +1454,7 @@ sub _MaskForm {
         SelectedID  => $GetParam{ApprovedSearch} || 'Yes',
         Multiple    => 0,
         Translation => 1,
+        Class       => 'Modernize',
     );
 
     # get a list of all users to display
@@ -1486,15 +1489,15 @@ sub _MaskForm {
         Data       => \%ShownUsers,
         Name       => 'CreatedUserIDs',
         Multiple   => 1,
-        Size       => 5,
         SelectedID => $GetParam{CreatedUserIDs},
+        Class      => 'Modernize',
     );
     $Param{LastChangedUserStrg} = $LayoutObject->BuildSelection(
         Data       => \%ShownUsers,
         Name       => 'LastChangedUserIDs',
         Multiple   => 1,
-        Size       => 5,
         SelectedID => $GetParam{LastChangedUserIDs},
+        Class      => 'Modernize',
     );
 
     $Param{ItemCreateTimePointStrg} = $LayoutObject->BuildSelection(
@@ -1588,6 +1591,7 @@ sub _MaskForm {
         Name       => 'Profile',
         ID         => 'SearchProfile',
         SelectedID => $Profile,
+        Class      => 'Modernize',
     );
 
     $Param{ResultFormStrg} = $LayoutObject->BuildSelection(
@@ -1598,6 +1602,7 @@ sub _MaskForm {
         },
         Name       => 'ResultForm',
         SelectedID => $GetParam{ResultForm} || 'Normal',
+        Class      => 'Modernize',
     );
 
     # HTML search mask output

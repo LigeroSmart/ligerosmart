@@ -712,6 +712,7 @@ sub _MaskForm {
         PossibleNone => 1,
         Name         => 'Profile',
         SelectedID   => $Param{Profile},
+        Class        => 'Modernize',
     );
 
     # get FAQ object
@@ -726,9 +727,9 @@ sub _MaskForm {
     $Param{LanguagesSelectionStrg} = $LayoutObject->BuildSelection(
         Data       => \%Languages,
         Name       => 'LanguageIDs',
-        Size       => 5,
         Multiple   => 1,
         SelectedID => $Param{LanguageIDs} || [],
+        Class      => 'Modernize',
     );
 
     # get categories (with category long names) where user has rights
@@ -742,10 +743,10 @@ sub _MaskForm {
         Data        => $UserCategoriesLongNames,
         Name        => 'CategoryIDs',
         SelectedID  => $Param{CategoryIDs} || [],
-        Size        => 5,
         Translation => 0,
         Multiple    => 1,
         TreeView    => $TreeView,
+        Class       => 'Modernize',
     );
 
     # get valid list
@@ -756,9 +757,9 @@ sub _MaskForm {
         Data        => \%ValidList,
         Name        => 'ValidIDs',
         SelectedID  => $Param{ValidIDs} || [],
-        Size        => 5,
         Translation => 0,
         Multiple    => 1,
+        Class       => 'Modernize',
     );
 
     # create a mix of state and state types hash in order to have the state type IDs with state
@@ -780,9 +781,9 @@ sub _MaskForm {
         Data        => \%States,
         Name        => 'StateIDs',
         SelectedID  => $Param{StateIDs} || [],
-        Size        => 3,
         Translation => 1,
         Multiple    => 1,
+        Class       => 'Modernize',
     );
 
     my %VotingOperators = (
@@ -797,18 +798,18 @@ sub _MaskForm {
         Data        => \%VotingOperators,
         Name        => 'VoteSearchType',
         SelectedID  => $Param{VoteSearchType} || '',
-        Size        => 1,
         Translation => 1,
         Multiple    => 0,
+        Class       => 'Modernize',
     );
 
     $Param{RateSearchTypeSelectionStrg} = $LayoutObject->BuildSelection(
         Data        => \%VotingOperators,
         Name        => 'RateSearchType',
         SelectedID  => $Param{RateSearchType} || '',
-        Size        => 1,
         Translation => 1,
         Multiple    => 0,
+        Class       => 'Modernize',
     );
     $Param{RateSearchSelectionStrg} = $LayoutObject->BuildSelection(
         Data => {
@@ -821,9 +822,9 @@ sub _MaskForm {
         Sort        => 'NumericKey',
         Name        => 'RateSearch',
         SelectedID  => $Param{RateSearch} || '',
-        Size        => 1,
         Translation => 0,
         Multiple    => 0,
+        Class       => 'Modernize',
     );
 
     $Param{ApprovedStrg} = $LayoutObject->BuildSelection(
@@ -836,6 +837,7 @@ sub _MaskForm {
         Multiple     => 0,
         Translation  => 1,
         PossibleNone => 1,
+        Class        => 'Modernize',
     );
 
     # get a list of all users to display
@@ -870,15 +872,15 @@ sub _MaskForm {
         Data       => \%ShownUsers,
         Name       => 'CreatedUserIDs',
         Multiple   => 1,
-        Size       => 5,
         SelectedID => $Param{CreatedUserIDs},
+        Class      => 'Modernize',
     );
     $Param{LastChangedUserStrg} = $LayoutObject->BuildSelection(
         Data       => \%ShownUsers,
         Name       => 'LastChangedUserIDs',
         Multiple   => 1,
-        Size       => 5,
         SelectedID => $Param{LastChangedUserIDs},
+        Class      => 'Modernize',
     );
 
     $Param{ItemCreateTimePointStrg} = $LayoutObject->BuildSelection(

@@ -494,6 +494,7 @@ sub _MaskNew {
         Data       => \%ValidList,
         Name       => 'ValidID',
         SelectedID => $Param{ValidID} || $ValidListReverse{valid},
+        Class      => 'Modernize',
     );
 
     # set no server error class as default
@@ -508,6 +509,7 @@ sub _MaskNew {
         Class        => 'Validate_Required ' . $Param{CategoryIDServerError},
         Translation  => 0,
         TreeView     => 1,
+        Class        => 'Modernize',
     );
 
     # get FAQ object
@@ -553,6 +555,7 @@ sub _MaskNew {
         Name          => 'LanguageID',
         SelectedValue => $SelectedLanguage,
         Translation   => 0,
+        Class         => 'Modernize',
     );
 
     # get the states list
@@ -579,6 +582,7 @@ sub _MaskNew {
         Name          => 'StateID',
         SelectedValue => $SelectedState,
         Translation   => 1,
+        Class         => 'Modernize',
     );
 
     # show FAQ add screen
@@ -667,6 +671,7 @@ sub _MaskNew {
                     1 => 'Yes',
                 },
                 SelectedID => $Param{Approved} || 0,
+                Class => 'Modernize',
             );
             $LayoutObject->Block(
                 Name => 'Approval',
