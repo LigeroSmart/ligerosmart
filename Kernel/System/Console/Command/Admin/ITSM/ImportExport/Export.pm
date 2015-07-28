@@ -72,10 +72,10 @@ sub Run {
 
     $Self->Print( "<green>" . ( '-' x 69 ) . "</green>\n" );
     $Self->Print("<green>Success: $Result->{Success} succeeded</green>\n");
-    if ( $Result->{Failed} ){
+    if ( $Result->{Failed} ) {
         $Self->PrintError("$Result->{Failed} failed.\n");
     }
-    else{
+    else {
         $Self->Print("<green>Error: $Result->{Failed} failed.</green>\n");
     }
 

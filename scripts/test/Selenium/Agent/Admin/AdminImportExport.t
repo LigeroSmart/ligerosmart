@@ -310,7 +310,7 @@ $Selenium->RunTest(
             $Success,
             "Export file $ExportFileName - deleted",
         );
-    }
+        }
 );
 
 1;
