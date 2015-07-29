@@ -6,10 +6,16 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package Kernel::Output::HTML::SurveyOverviewSmall;
+package Kernel::Output::HTML::SurveyOverview::Small;
 
 use strict;
 use warnings;
+
+our @ObjectDependencies = (
+    'Kernel::System::Log',
+    'Kernel::Output::HTML::Layout',
+    'Kernel::System::Survey',
+);
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -18,13 +24,8 @@ sub new {
     my $Self = {%Param};
     bless( $Self, $Type );
 
-    # get needed objects
-    for my $Object (
-        qw(ConfigObject LogObject DBObject LayoutObject UserID UserObject MainObject)
-        )
-    {
-        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
-    }
+    # get UserID param
+    $Self->{UserID} = $Param{UserID} || die "Got no UserID!";
 
     return $Self;
 }
@@ -35,7 +36,7 @@ sub Run {
     # check needed stuff
     for my $Needed (qw(PageShown StartHit)) {
         if ( !$Param{$Needed} ) {
-            $Self->{LogObject}->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Needed!",
             );
@@ -45,7 +46,7 @@ sub Run {
 
     # need SurveyIDs
     if ( !$Param{SurveyIDs} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need the SurveyIDs!',
         );
@@ -62,6 +63,9 @@ sub Run {
     }
 
     my $Output = '';
+
+    # get layout object
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
     # show surveys if there are some
     if (@IDs) {
@@ -91,7 +95,7 @@ sub Run {
                 }
 
                 # output each header
-                $Self->{LayoutObject}->Block(
+                $LayoutObject->Block(
                     Name => 'Record' . $Column . 'Header',
                     Data => {
                         %Param,
@@ -104,6 +108,9 @@ sub Run {
 
         my $Counter = 0;
 
+        # get survey object
+        my $SurveyObject = $Kernel::OM->Get('Kernel::System::Survey');
+
         ID:
         for my $ID (@IDs) {
             $Counter++;
@@ -114,7 +121,7 @@ sub Run {
             {
 
                 # get survey data
-                my %Data = $Self->{SurveyObject}->SurveyGet(
+                my %Data = $SurveyObject->SurveyGet(
                     UserID   => $Self->{UserID},
                     SurveyID => $ID,
                 );
@@ -122,7 +129,7 @@ sub Run {
                 next ID if !%Data;
 
                 # build record block
-                $Self->{LayoutObject}->Block(
+                $LayoutObject->Block(
                     Name => 'Record',
                     Data => {
                         %Param,
@@ -134,7 +141,7 @@ sub Run {
                 if (@ShowColumns) {
                     COLUMN:
                     for my $Column (@ShowColumns) {
-                        $Self->{LayoutObject}->Block(
+                        $LayoutObject->Block(
                             Name => 'Record' . $Column,
                             Data => {
                                 %Param,
@@ -143,14 +150,14 @@ sub Run {
                         );
 
                         # show links if available
-                        $Self->{LayoutObject}->Block(
+                        $LayoutObject->Block(
                             Name => 'Record' . $Column . 'LinkStart',
                             Data => {
                                 %Param,
                                 %Data,
                             },
                         );
-                        $Self->{LayoutObject}->Block(
+                        $LayoutObject->Block(
                             Name => 'Record' . $Column . 'LinkEnd',
                             Data => {
                                 %Param,
@@ -165,7 +172,7 @@ sub Run {
 
     # if there are no surveys to show, a no data found message is displayed in the table
     else {
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'NoDataFoundMsg',
             Data => {
                 TotalColumns => scalar @ShowColumns,
@@ -174,7 +181,7 @@ sub Run {
     }
 
     # use template
-    $Output .= $Self->{LayoutObject}->Output(
+    $Output .= $LayoutObject->Output(
         TemplateFile => 'AgentSurveyOverviewSmall',
         Data         => {
             %Param,

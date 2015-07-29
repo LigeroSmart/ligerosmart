@@ -41,6 +41,9 @@
         <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
         <Setting>
             <FrontendModuleReg>
+                <Description Translatable="1">Survey Add Module.</Description>
+                <NavBarName>Survey</NavBarName>
+                <Title>Survey</Title>
                 <NavBar>
                     <Description Translatable="1">New</Description>
                     <Name Translatable="1">New</Name>
@@ -238,7 +241,7 @@ Your OTRS-Team
         <SubGroup>Frontend::Agent::SurveyOverview</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::Output::HTML::SurveyOverviewSmall</Item>
+                <Item Key="Module">Kernel::Output::HTML::SurveyOverview::Small</Item>
                 <Item Key="Name">Small</Item>
                 <Item Key="NameShort">S</Item>
                 <Item Key="PageShown">25</Item>
@@ -314,7 +317,7 @@ Your OTRS-Team
         <SubGroup>Frontend::Agent::Preferences</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::Output::HTML::PreferencesGeneric</Item>
+                <Item Key="Module">Kernel::Output::HTML::Preferences::Generic</Item>
                 <Item Key="Column">Other Settings</Item>
                 <Item Key="Label" Translatable="1">Survey Overview "Small" Limit</Item>
                 <Item Key="Key" Translatable="1">Survey limit per page for Survey Overview "Small"</Item>
@@ -341,7 +344,7 @@ Your OTRS-Team
         <SubGroup>Frontend::Agent::Survey::MenuModule</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::Output::HTML::SurveyMenuGeneric</Item>
+                <Item Key="Module">Kernel::Output::HTML::SurveyMenu::Generic</Item>
                 <Item Key="Name">Back</Item>
                 <Item Key="Description" Translatable="1">Back</Item>
                 <Item Key="Action"></Item>
@@ -356,7 +359,7 @@ Your OTRS-Team
         <SubGroup>Frontend::Agent::Survey::MenuModule</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::Output::HTML::SurveyMenuGeneric</Item>
+                <Item Key="Module">Kernel::Output::HTML::SurveyMenu::Generic</Item>
                 <Item Key="Name">Edit General Info</Item>
                 <Item Key="Description" Translatable="1">Edit Survey General Information</Item>
                 <Item Key="Action">AgentSurveyEdit</Item>
@@ -371,7 +374,7 @@ Your OTRS-Team
         <SubGroup>Frontend::Agent::Survey::MenuModule</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::Output::HTML::SurveyMenuGeneric</Item>
+                <Item Key="Module">Kernel::Output::HTML::SurveyMenu::Generic</Item>
                 <Item Key="Name">Edit Questions</Item>
                 <Item Key="Description" Translatable="1">Edit Survey Questions</Item>
                 <Item Key="Action">AgentSurveyEditQuestions</Item>
@@ -386,7 +389,7 @@ Your OTRS-Team
         <SubGroup>Frontend::Agent::Survey::MenuModule</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::Output::HTML::SurveyMenuGeneric</Item>
+                <Item Key="Module">Kernel::Output::HTML::SurveyMenu::Generic</Item>
                 <Item Key="Name">Stats Details</Item>
                 <Item Key="Description" Translatable="1">Zoom Into Statistics Details</Item>
                 <Item Key="Action">AgentSurveyStats</Item>

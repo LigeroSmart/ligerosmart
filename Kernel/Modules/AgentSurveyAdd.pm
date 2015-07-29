@@ -11,10 +11,7 @@ package Kernel::Modules::AgentSurveyAdd;
 use strict;
 use warnings;
 
-use Kernel::System::Survey;
-use Kernel::System::HTMLUtils;
-use Kernel::System::Type;
-use Kernel::System::Service;
+our $ObjectManagerDisabled = 1;
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -25,20 +22,6 @@ sub new {
 
     # get common objects
     %{$Self} = %Param;
-
-    # check needed objects
-    for my $Object (qw(ParamObject DBObject LayoutObject LogObject ConfigObject)) {
-        if ( !$Self->{$Object} ) {
-            $Self->{LayoutObject}->FatalError( Message => "Got no $Object!" );
-        }
-    }
-    $Self->{SurveyObject}    = Kernel::System::Survey->new( %{$Self} );
-    $Self->{HTMLUtilsObject} = Kernel::System::HTMLUtils->new( %{$Self} );
-    $Self->{TypeObject}      = Kernel::System::Type->new( %{$Self} );
-    $Self->{ServiceObject}   = Kernel::System::Service->new( %{$Self} );
-
-    # get config of frontend module
-    $Self->{Config} = $Self->{ConfigObject}->Get("Survey::Frontend::$Self->{Action}");
 
     return $Self;
 }
@@ -59,8 +42,11 @@ sub Run {
     # ------------------------------------------------------------ #
     elsif ( $Self->{Subaction} eq 'SurveyNew' ) {
 
+        # get param object
+        my $ParamObject = $Kernel::OM->Get('Kernel::System::Web::Request');
+
         # get params
-        my $SurveyID = $Self->{ParamObject}->GetParam( Param => "SurveyID" );
+        my $SurveyID = $ParamObject->GetParam( Param => "SurveyID" );
 
         # get required form elements and errors
         my %ServerError;
@@ -69,7 +55,7 @@ sub Run {
             qw( Title Introduction Description NotificationSender NotificationSubject NotificationBody )
             )
         {
-            $FormElements{$Item} = $Self->{ParamObject}->GetParam( Param => "$Item" );
+            $FormElements{$Item} = $ParamObject->GetParam( Param => "$Item" );
 
             if ( !$FormElements{$Item} ) {
                 $ServerError{ "$Item" . 'ServerError' } = 'ServerError';
@@ -78,10 +64,10 @@ sub Run {
 
         # get array params
         for my $Item (qw(Queues TicketTypeIDs ServiceIDs)) {
-            @{ $FormElements{$Item} } = $Self->{ParamObject}->GetArray( Param => $Item );
+            @{ $FormElements{$Item} } = $ParamObject->GetArray( Param => $Item );
         }
 
-        if ( $Self->{ConfigObject}->Get('Frontend::RichText') ) {
+        if ( $Kernel::OM->Get('Kernel::Config')->Get('Frontend::RichText') ) {
             $FormElements{Introduction}     = "\$html/text\$ $FormElements{Introduction}";
             $FormElements{NotificationBody} = "\$html/text\$ $FormElements{NotificationBody}";
             $FormElements{Description}      = "\$html/text\$ $FormElements{Description}";
@@ -89,12 +75,12 @@ sub Run {
 
         # save if no errors
         if ( !%ServerError ) {
-            my $SurveyID = $Self->{SurveyObject}->SurveyAdd(
+            my $SurveyID = $Kernel::OM->Get('Kernel::System::Survey')->SurveyAdd(
                 %FormElements,
                 UserID => $Self->{UserID},
             );
 
-            return $Self->{LayoutObject}->Redirect(
+            return $Kernel::OM->Get('Kernel::Output::HTML::Layout')->Redirect(
                 OP => "Action=AgentSurveyZoom;SurveyID=$SurveyID",
             );
         }
@@ -120,14 +106,17 @@ sub _SurveyAddMask {
         %FormElements = %{ $Param{FormElements} };
     }
 
-    my $Output = $Self->{LayoutObject}->Header(
+    # get layout object
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+
+    my $Output = $LayoutObject->Header(
         Title => 'Add New Survey',
     );
 
-    $Output .= $Self->{LayoutObject}->NavigationBar();
+    $Output .= $LayoutObject->NavigationBar();
 
-    my %Queues      = $Self->{QueueObject}->GetAllQueues();
-    my $QueueString = $Self->{LayoutObject}->BuildSelection(
+    my %Queues      = $Kernel::OM->Get('Kernel::System::Queue')->GetAllQueues();
+    my $QueueString = $LayoutObject->BuildSelection(
         Data         => \%Queues,
         Name         => 'Queues',
         Size         => 6,
@@ -138,18 +127,20 @@ sub _SurveyAddMask {
         SelectedID   => $FormElements{Queues},
     );
 
+    # get config object
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+
     # check if the for send condition ticket type check is enabled
-    if ( $Self->{ConfigObject}->Get('Survey::CheckSendConditionTicketType') )
-    {
+    if ( $ConfigObject->Get('Survey::CheckSendConditionTicketType') ) {
 
         # get the valid ticket type list
-        my %TicketTypes = $Self->{TypeObject}->TypeList();
+        my %TicketTypes = $Kernel::OM->Get('Kernel::System::Type')->TypeList();
 
         # check if a ticket type is available
         if (%TicketTypes) {
 
             # build ticket type selection
-            my $TicketTypeStrg = $Self->{LayoutObject}->BuildSelection(
+            my $TicketTypeStrg = $LayoutObject->BuildSelection(
                 Data         => \%TicketTypes,
                 Name         => 'TicketTypeIDs',
                 Size         => 6,
@@ -160,7 +151,7 @@ sub _SurveyAddMask {
                 SelectedID   => $FormElements{TicketTypeIDs},
             );
 
-            $Self->{LayoutObject}->Block(
+            $LayoutObject->Block(
                 Name => 'TicketTypes',
                 Data => {
                     TicketTypeStrg => $TicketTypeStrg,
@@ -170,10 +161,10 @@ sub _SurveyAddMask {
     }
 
     # check if the send condition service check is enabled
-    if ( $Self->{ConfigObject}->Get('Survey::CheckSendConditionService') ) {
+    if ( $ConfigObject->Get('Survey::CheckSendConditionService') ) {
 
         # get the valid service list
-        my %Services = $Self->{ServiceObject}->ServiceList(
+        my %Services = $Kernel::OM->Get('Kernel::System::Service')->ServiceList(
             UserID => $Self->{UserID},
         );
 
@@ -181,7 +172,7 @@ sub _SurveyAddMask {
         if (%Services) {
 
             # build service selection
-            my $ServiceStrg = $Self->{LayoutObject}->BuildSelection(
+            my $ServiceStrg = $LayoutObject->BuildSelection(
                 Data         => \%Services,
                 Name         => 'ServiceIDs',
                 Size         => 6,
@@ -192,7 +183,7 @@ sub _SurveyAddMask {
                 SelectedID   => $FormElements{ServiceIDs},
             );
 
-            $Self->{LayoutObject}->Block(
+            $LayoutObject->Block(
                 Name => 'TicketServices',
                 Data => {
                     ServiceStrg => $ServiceStrg,
@@ -209,16 +200,19 @@ sub _SurveyAddMask {
 
     $SurveyElements{NotificationBody} = $FormElements{NotificationBody} ||
         $Param{NotificationBody} ||
-        $Self->{ConfigObject}->Get('Survey::NotificationBody');
+        $ConfigObject->Get('Survey::NotificationBody');
 
     $SurveyElements{Description} = $FormElements{Description} ||
         $Param{Description} ||
         '';
 
     # load rich text editor
-    my $RichTextEditor = $Self->{ConfigObject}->Get('Frontend::RichText');
+    my $RichTextEditor = $ConfigObject->Get('Frontend::RichText');
     if ($RichTextEditor) {
-        $Self->{LayoutObject}->Block( Name => 'RichText' );
+        $LayoutObject->Block(
+            Name => 'RichText',
+            Data => {},
+        );
     }
 
     # convert required elements to RTE
@@ -227,37 +221,36 @@ sub _SurveyAddMask {
         next FIELD if !$SurveyElements{$SurveyField};
 
         # clean HTML
-        my $HTMLContent =
-            $SurveyElements{$SurveyField} =~ s{\A\$html\/text\$\s(.*)}{$1}xms;
+        my $HTMLContent = $SurveyElements{$SurveyField} =~ s{\A\$html\/text\$\s(.*)}{$1}xms;
 
         if ( !$HTMLContent && $RichTextEditor ) {
-            $SurveyElements{$SurveyField} =
-                $Self->{LayoutObject}->Ascii2Html(
+            $SurveyElements{$SurveyField} = $LayoutObject->Ascii2Html(
                 Text           => $SurveyElements{$SurveyField},
                 HTMLResultMode => 1,
-                );
+            );
         }
         elsif ( $HTMLContent && !$RichTextEditor ) {
-            $SurveyElements{$SurveyField} =
-                $Self->{HTMLUtilsObject}->ToAscii( String => $SurveyElements{$SurveyField} );
+            $SurveyElements{$SurveyField} = $Kernel::OM->Get('Kernel::System::HTMLUtils')->ToAscii(
+                String => $SurveyElements{$SurveyField},
+            );
         }
     }
 
-    $Self->{LayoutObject}->Block(
+    $LayoutObject->Block(
         Name => 'Introduction',
         Data => {
             Introduction => $SurveyElements{Introduction},
         },
     );
 
-    $Self->{LayoutObject}->Block(
+    $LayoutObject->Block(
         Name => 'NotificationBody',
         Data => {
             NotificationBody => $SurveyElements{NotificationBody},
         },
     );
 
-    $Self->{LayoutObject}->Block(
+    $LayoutObject->Block(
         Name => 'InternalDescription',
         Data => {
             Description => $SurveyElements{Description},
@@ -269,7 +262,7 @@ sub _SurveyAddMask {
         qw( Title Introduction Description NotificationSender NotificationSubject NotificationBody )
         )
     {
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'GenericError',
             Data => {
                 ItemName => $NeededItem . 'Error',
@@ -278,7 +271,7 @@ sub _SurveyAddMask {
     }
 
     for my $Item ( sort keys %ServerError ) {
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'GenericServerError',
             Data => {
                 ItemName => $Item,
@@ -286,22 +279,22 @@ sub _SurveyAddMask {
         );
     }
 
-    $Output .= $Self->{LayoutObject}->Output(
+    $Output .= $LayoutObject->Output(
         TemplateFile => 'AgentSurveyAdd',
         Data         => {
             %Param,
             QueueString        => $QueueString,
             NotificationSender => $FormElements{NotificationSender}
                 || $Param{NotificationSender}
-                || $Self->{ConfigObject}->Get('Survey::NotificationSender'),
+                || $ConfigObject->Get('Survey::NotificationSender'),
             NotificationSubject => $FormElements{NotificationSubject}
                 || $Param{NotificationSubject}
-                || $Self->{ConfigObject}->Get('Survey::NotificationSubject'),
+                || $ConfigObject->Get('Survey::NotificationSubject'),
             %ServerError,
             %FormElements,
         },
     );
-    $Output .= $Self->{LayoutObject}->Footer();
+    $Output .= $LayoutObject->Footer();
 
     return $Output;
 }

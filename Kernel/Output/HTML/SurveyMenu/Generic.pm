@@ -6,10 +6,16 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package Kernel::Output::HTML::SurveyMenuGeneric;
+package Kernel::Output::HTML::SurveyMenu::Generic;
 
 use strict;
 use warnings;
+
+our @ObjectDependencies = (
+    'Kernel::System::Log',
+    'Kernel::Config',
+    'Kernel::Output::HTML::Layout',
+);
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -18,13 +24,8 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    # check needed objects
-    for my $Object (
-        qw(ConfigObject EncodeObject LogObject DBObject LayoutObject UserID)
-        )
-    {
-        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
-    }
+    # get UserID param
+    $Self->{UserID} = $Param{UserID} || die "Got no UserID!";
 
     return $Self;
 }
@@ -34,7 +35,7 @@ sub Run {
 
     # check needed stuff
     if ( !$Param{Survey} ) {
-        $Self->{LogObject}->Log(
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => 'Need Survey!',
         );
@@ -44,10 +45,16 @@ sub Run {
     # grant access by default
     my $Access = 1;
 
+    # get config object
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+
     # get groups
     my $Action   = $Param{Config}->{Action};
-    my $GroupsRo = $Self->{ConfigObject}->Get('Frontend::Module')->{$Action}->{GroupRo} || [];
-    my $GroupsRw = $Self->{ConfigObject}->Get('Frontend::Module')->{$Action}->{Group} || [];
+    my $GroupsRo = $ConfigObject->Get('Frontend::Module')->{$Action}->{GroupRo} || [];
+    my $GroupsRw = $ConfigObject->Get('Frontend::Module')->{$Action}->{Group} || [];
+
+    # get layout object
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
     # check permission
     if ( $Action && ( @{$GroupsRo} || @{$GroupsRw} ) ) {
@@ -59,8 +66,8 @@ sub Run {
         ROGROUP:
         for my $RoGroup ( @{$GroupsRo} ) {
 
-            next ROGROUP if !$Self->{LayoutObject}->{"UserIsGroupRo[$RoGroup]"};
-            next ROGROUP if $Self->{LayoutObject}->{"UserIsGroupRo[$RoGroup]"} ne 'Yes';
+            next ROGROUP if !$LayoutObject->{"UserIsGroupRo[$RoGroup]"};
+            next ROGROUP if $LayoutObject->{"UserIsGroupRo[$RoGroup]"} ne 'Yes';
 
             # set access
             $Access = 1;
@@ -71,8 +78,8 @@ sub Run {
         RWGROUP:
         for my $RwGroup ( @{$GroupsRw} ) {
 
-            next RWGROUP if !$Self->{LayoutObject}->{"UserIsGroup[$RwGroup]"};
-            next RWGROUP if $Self->{LayoutObject}->{"UserIsGroup[$RwGroup]"} ne 'Yes';
+            next RWGROUP if !$LayoutObject->{"UserIsGroup[$RwGroup]"};
+            next RWGROUP if $LayoutObject->{"UserIsGroup[$RwGroup]"} ne 'Yes';
 
             # set access
             $Access = 1;
@@ -83,7 +90,7 @@ sub Run {
     return $Param{Counter} if !$Access;
 
     # output menu item
-    $Self->{LayoutObject}->Block(
+    $LayoutObject->Block(
         Name => 'MenuItem',
         Data => {
             %Param,

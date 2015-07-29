@@ -38,18 +38,18 @@
         <File Permission="644" Location="Kernel/Modules/AgentSurveyStats.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentSurveyZoom.pm"/>
         <File Permission="644" Location="Kernel/Modules/PublicSurvey.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/LayoutSurvey.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/SurveyMenuGeneric.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/SurveyOverviewSmall.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AAASurvey.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentSurveyAdd.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentSurveyEdit.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentSurveyEditQuestions.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentSurveyOverviewNavBar.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentSurveyOverviewSmall.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentSurveyStats.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentSurveyZoom.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/PublicSurvey.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Layout/Survey.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/SurveyMenu/Generic.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/SurveyOverview/Small.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AAASurvey.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentSurveyAdd.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentSurveyEdit.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentSurveyEditQuestions.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentSurveyOverviewNavBar.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentSurveyOverviewSmall.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentSurveyStats.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentSurveyZoom.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/PublicSurvey.tt"/>
         <File Permission="644" Location="Kernel/System/Survey.pm"/>
         <File Permission="644" Location="Kernel/System/Survey/Answer.pm"/>
         <File Permission="644" Location="Kernel/System/Survey/Question.pm"/>

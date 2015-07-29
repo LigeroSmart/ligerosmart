@@ -6,12 +6,12 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package Kernel::Output::HTML::LayoutSurvey;
+package Kernel::Output::HTML::Layout::Survey;
 
 use strict;
 use warnings;
 
-use Kernel::Output::HTML::Layout;
+our $ObjectManagerDisabled = 1;
 
 =over 4
 
@@ -19,8 +19,8 @@ use Kernel::Output::HTML::Layout;
 
 Returns a list of surveys list with pagination.
 
-This function is similar to L<Kernel::Output::HTML::LayoutTicket::TicketListShow()>
-in F<Kernel/Output/HTML/LayoutTicket.pm>.
+This function is similar to L<Kernel::Output::HTML::Layout::Ticket::TicketListShow()>
+in F<Kernel/Output/HTML/Layout/Ticket.pm>.
 
     my $Output = $LayoutObject->SurveyListShow(
         SurveyIDs  => $SurveyIDsRef,                      # total list of surveys ids, that can be listed
@@ -41,7 +41,8 @@ sub SurveyListShow {
     my ( $Self, %Param ) = @_;
 
     # take object ref to local, remove it from %Param (prevent memory leak)
-    my $Env = delete $Param{Env};
+    my $Env = $Param{Env};
+    delete $Param{Env};
 
     # lookup latest used view mode
     if ( !$Param{View} && $Self->{ 'UserSurveyOverview' . $Env->{Action} } ) {
@@ -51,40 +52,43 @@ sub SurveyListShow {
     # set frontend
     my $Frontend = $Param{Frontend} || 'Agent';
 
-    # set defaut view mode to 'small'
+    # set default view mode to 'small'
     my $View = $Param{View} || 'Small';
 
     # store latest view mode
-    $Self->{SessionObject}->UpdateSessionID(
+    $Kernel::OM->Get('Kernel::System::AuthSession')->UpdateSessionID(
         SessionID => $Self->{SessionID},
         Key       => 'UserSurveyOverview' . $Env->{Action},
         Value     => $View,
     );
 
+    # get needed objects
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+
     # get backend from config
-    my $Backends = $Self->{ConfigObject}->Get('Survey::Frontend::Overview');
+    my $Backends = $ConfigObject->Get('Survey::Frontend::Overview');
     if ( !$Backends ) {
-        return $Env->{LayoutObject}->FatalError(
+        return $Self->FatalError(
             Message => 'Need config option Survey::Frontend::Overview',
         );
     }
 
     # check for hash-ref
     if ( ref $Backends ne 'HASH' ) {
-        return $Env->{LayoutObject}->FatalError(
+        return $Self->FatalError(
             Message => 'Config option Survey::Frontend::Overview needs to be a HASH ref!',
         );
     }
 
     # check for config key
     if ( !$Backends->{$View} ) {
-        return $Env->{LayoutObject}->FatalError(
+        return $Self->FatalError(
             Message => "No config option found for the view '$View'!",
         );
     }
 
-    # nav bar
-    my $StartHit = $Self->{ParamObject}->GetParam(
+    # navigation bar
+    my $StartHit = $Kernel::OM->Get('Kernel::System::Web::Request')->GetParam(
         Param => 'StartHit',
     ) || 1;
 
@@ -102,19 +106,19 @@ sub SurveyListShow {
 
     # get data selection
     my %Data;
-    my $Config = $Self->{ConfigObject}->Get('PreferencesGroups');
+    my $Config = $ConfigObject->Get('PreferencesGroups');
     if ( $Config && $Config->{$Group} && $Config->{$Group}->{Data} ) {
         %Data = %{ $Config->{$Group}->{Data} };
     }
 
-    # set page limit and build page nav
+    # set page limit and build page navigation
     my $Limit = $Param{Limit} || 20_000;
-    my %PageNav = $Env->{LayoutObject}->PageNavBar(
+    my %PageNav = $Self->PageNavBar(
         Limit     => $Limit,
         StartHit  => $StartHit,
         PageShown => $PageShown,
         AllHits   => $Param{Total} || 0,
-        Action    => 'Action=' . $Env->{LayoutObject}->{Action},
+        Action    => 'Action=' . $Self->{Action},
         Link      => $Param{LinkPage},
     );
 
@@ -129,16 +133,16 @@ sub SurveyListShow {
         Data        => \%Data,
     );
 
-    # nav bar at the beginning of a overview
+    # navigation bar at the beginning of a overview
     $Param{View} = $View;
-    $Env->{LayoutObject}->Block(
+    $Self->Block(
         Name => 'OverviewNavBar',
         Data => \%Param,
     );
 
     # back link
     if ( $Param{LinkBack} ) {
-        $Env->{LayoutObject}->Block(
+        $Self->Block(
             Name => 'OverviewNavBarPageBack',
             Data => \%Param,
         );
@@ -154,7 +158,7 @@ sub SurveyListShow {
         }
 
         # build filter content
-        $Env->{LayoutObject}->Block(
+        $Self->Block(
             Name => 'OverviewNavBarFilter',
             Data => {
                 %Param,
@@ -167,7 +171,7 @@ sub SurveyListShow {
 
             # increment filter count and build filter item
             $Count++;
-            $Env->{LayoutObject}->Block(
+            $Self->Block(
                 Name => 'OverviewNavBarFilterItem',
                 Data => {
                     %Param,
@@ -177,7 +181,7 @@ sub SurveyListShow {
 
             # filter is selected
             if ( $Filter->{Filter} eq $Param{Filter} ) {
-                $Env->{LayoutObject}->Block(
+                $Self->Block(
                     Name => 'OverviewNavBarFilterItemSelected',
                     Data => {
                         %Param,
@@ -187,23 +191,22 @@ sub SurveyListShow {
 
             }
             else {
-                $Env->{LayoutObject}->Block(
+                $Self->Block(
                     Name => 'OverviewNavBarFilterItemSelectedNot',
                     Data => {
                         %Param,
                         %{$Filter},
                     },
                 );
-
             }
         }
     }
 
-    # loop over configured backends
+    # loop over configured back-ends
     for my $Backend ( sort keys %{$Backends} ) {
 
-        # build navbar view mode
-        $Env->{LayoutObject}->Block(
+        # build navigation bar view mode
+        $Self->Block(
             Name => 'OverviewNavBarViewMode',
             Data => {
                 %Param,
@@ -215,7 +218,7 @@ sub SurveyListShow {
 
         # current view is configured in backend
         if ( $View eq $Backend ) {
-            $Env->{LayoutObject}->Block(
+            $Self->Block(
                 Name => 'OverviewNavBarViewModeSelected',
                 Data => {
                     %Param,
@@ -226,7 +229,7 @@ sub SurveyListShow {
             );
         }
         else {
-            $Env->{LayoutObject}->Block(
+            $Self->Block(
                 Name => 'OverviewNavBarViewModeNotSelected',
                 Data => {
                     %Param,
@@ -238,9 +241,9 @@ sub SurveyListShow {
         }
     }
 
-    # check if page nav is available
+    # check if page navigation is available
     if (%PageNav) {
-        $Env->{LayoutObject}->Block(
+        $Self->Block(
             Name => 'OverviewNavBarPageNavBar',
             Data => \%PageNav,
         );
@@ -248,7 +251,7 @@ sub SurveyListShow {
         # don't show context settings in AJAX case (e. g. in customer ticket history),
         #   because the submit with page reload will not work there
         if ( !$Param{AJAX} ) {
-            $Env->{LayoutObject}->Block(
+            $Self->Block(
                 Name => 'ContextSettings',
                 Data => {
                     %PageNav,
@@ -258,8 +261,8 @@ sub SurveyListShow {
         }
     }
 
-    # build html content
-    my $OutputNavBar = $Env->{LayoutObject}->Output(
+    # build HTML content
+    my $OutputNavBar = $Self->Output(
         TemplateFile => 'AgentSurveyOverviewNavBar',
         Data         => {%Param},
     );
@@ -267,7 +270,7 @@ sub SurveyListShow {
     # create output
     my $OutputRaw = '';
     if ( !$Param{Output} ) {
-        $Env->{LayoutObject}->Print(
+        $Self->Print(
             Output => \$OutputNavBar,
         );
     }
@@ -276,12 +279,15 @@ sub SurveyListShow {
     }
 
     # load module
-    if ( !$Self->{MainObject}->Require( $Backends->{$View}->{Module} ) ) {
-        return $Env->{LayoutObject}->FatalError();
+    if ( !$Kernel::OM->Get('Kernel::System::Main')->Require( $Backends->{$View}->{Module} ) ) {
+        return $Self->FatalError();
     }
 
     # check for backend object
-    my $Object = $Backends->{$View}->{Module}->new( %{$Env} );
+    my $Object = $Backends->{$View}->{Module}->new(
+        %{$Env},
+        LayoutObject => $Self,
+    );
     return if !$Object;
 
     # run module
@@ -296,7 +302,7 @@ sub SurveyListShow {
 
     # create output
     if ( !$Param{Output} ) {
-        $Env->{LayoutObject}->Print(
+        $Self->Print(
             Output => \$Output,
         );
     }
@@ -304,8 +310,8 @@ sub SurveyListShow {
         $OutputRaw .= $Output;
     }
 
-    # create overview nav bar
-    $Env->{LayoutObject}->Block(
+    # create overview navigation bar
+    $Self->Block(
         Name => 'OverviewNavBar',
         Data => {%Param},
     );

@@ -11,8 +11,7 @@ package Kernel::Modules::AgentSurveyStats;
 use strict;
 use warnings;
 
-use Kernel::System::Survey;
-use Kernel::System::HTMLUtils;
+our $ObjectManagerDisabled = 1;
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -24,17 +23,8 @@ sub new {
     # get common objects
     %{$Self} = %Param;
 
-    # check needed objects
-    for my $Object (qw(ParamObject DBObject LayoutObject LogObject ConfigObject)) {
-        if ( !$Self->{$Object} ) {
-            $Self->{LayoutObject}->FatalError( Message => "Got no $Object!" );
-        }
-    }
-    $Self->{SurveyObject}    = Kernel::System::Survey->new(%Param);
-    $Self->{HTMLUtilsObject} = Kernel::System::HTMLUtils->new(%Param);
-
     # get config of frontend module
-    $Self->{Config} = $Self->{ConfigObject}->Get("Survey::Frontend::$Self->{Action}");
+    $Self->{Config} = $Kernel::OM->Get('Kernel::Config')->Get("Survey::Frontend::$Self->{Action}");
 
     return $Self;
 }
@@ -44,56 +34,84 @@ sub Run {
 
     my $Output;
 
+    # get needed object
+    my $SurveyObject = $Kernel::OM->Get('Kernel::System::Survey');
+    my $ParamObject  = $Kernel::OM->Get('Kernel::System::Web::Request');
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+
+    my $SurveyID  = $ParamObject->GetParam( Param => "SurveyID" )  || '';
+    my $RequestID = $ParamObject->GetParam( Param => "RequestID" ) || '';
+
+    my $SurveyExists = 'no';
+    if ($SurveyID) {
+        $SurveyExists = $SurveyObject->ElementExists(
+            ElementID => $SurveyID,
+            Element   => 'Survey'
+        );
+    }
+
+    my $RequestExists = 'no';
+    if ($SurveyID) {
+        $RequestExists = $SurveyObject->ElementExists(
+            ElementID => $RequestID,
+            Element   => 'Request'
+        );
+    }
+
     # ------------------------------------------------------------ #
     # stats
     # ------------------------------------------------------------ #
     if ( !$Self->{Subaction} ) {
-        my $SurveyID = $Self->{ParamObject}->GetParam( Param => "SurveyID" );
 
         # check if survey exists
-        if (
-            $Self->{SurveyObject}->ElementExists(
-                ElementID => $SurveyID,
-                Element   => 'Survey'
-            ) ne
-            'Yes'
-            )
-        {
+        if ( $SurveyExists ne 'Yes' ) {
 
-            return $Self->{LayoutObject}->NoPermission(
+            return $LayoutObject->NoPermission(
                 Message    => 'You have no permission for this survey!',
                 WithHeader => 'yes',
             );
         }
-        $Output = $Self->{LayoutObject}->Header(
+        $Output = $LayoutObject->Header(
             Title     => 'Stats Overview',
             Type      => 'Small',
             BodyClass => 'Popup',
         );
 
-        my %Survey = $Self->{SurveyObject}->SurveyGet( SurveyID => $SurveyID );
+        my %Survey = $SurveyObject->SurveyGet(
+            SurveyID => $SurveyID,
+        );
 
         # print the main table.
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'Stats',
             Data => {%Survey},
         );
-        my @List = $Self->{SurveyObject}->VoteList( SurveyID => $SurveyID );
+        my @List = $SurveyObject->VoteList(
+            SurveyID => $SurveyID,
+        );
+
+        # get ticket object
+        my $TicketObject = $Kernel::OM->Get('Kernel::System::Ticket');
+
         for my $Vote (@List) {
             $Vote->{SurveyID} = $SurveyID;
-            my %Ticket = $Self->{TicketObject}->TicketGet( TicketID => $Vote->{TicketID} );
+            my %Ticket = $TicketObject->TicketGet(
+                TicketID => $Vote->{TicketID},
+            );
             $Vote->{TicketNumber} = $Ticket{TicketNumber};
-            $Self->{LayoutObject}->Block(
+            $LayoutObject->Block(
                 Name => 'StatsVote',
                 Data => $Vote,
             );
         }
-        $Output .= $Self->{LayoutObject}->Output(
+        $Output .= $LayoutObject->Output(
             TemplateFile => 'AgentSurveyStats',
             Data         => {%Param},
         );
 
-        $Output .= $Self->{LayoutObject}->Footer( Type => 'Small' );
+        $Output .= $LayoutObject->Footer(
+            Type => 'Small',
+        );
 
         return $Output;
     }
@@ -102,47 +120,37 @@ sub Run {
     # stats details
     # ------------------------------------------------------------ #
     elsif ( $Self->{Subaction} eq 'StatsDetail' ) {
-        my $SurveyID     = $Self->{ParamObject}->GetParam( Param => "SurveyID" );
-        my $RequestID    = $Self->{ParamObject}->GetParam( Param => "RequestID" );
-        my $TicketNumber = $Self->{ParamObject}->GetParam( Param => "TicketNumber" );
+        my $TicketNumber = $ParamObject->GetParam( Param => "TicketNumber" );
 
         # check if survey exists
-        if (
-            $Self->{SurveyObject}->ElementExists(
-                ElementID => $SurveyID,
-                Element   => 'Survey'
-            ) ne
-            'Yes'
-            || $Self->{SurveyObject}->ElementExists(
-                ElementID => $RequestID,
-                Element   => 'Request'
-            )
-            ne 'Yes'
-            )
-        {
+        if ( $SurveyExists ne 'Yes' || $RequestExists ne 'Yes' ) {
 
-            return $Self->{LayoutObject}->NoPermission(
+            return $LayoutObject->NoPermission(
                 Message    => 'You have no permission for this survey or stats detail!',
                 WithHeader => 'yes',
             );
         }
-        $Output = $Self->{LayoutObject}->Header(
+        $Output = $LayoutObject->Header(
             Title     => 'Stats Detail',
             Type      => 'Small',
             BodyClass => 'Popup',
         );
 
-        my %Survey = $Self->{SurveyObject}->SurveyGet( SurveyID => $SurveyID );
+        my %Survey = $SurveyObject->SurveyGet(
+            SurveyID => $SurveyID,
+        );
 
         # print the main table.
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'StatsDetail',
             Data => {
                 %Survey,
                 TicketNumber => $TicketNumber,
             },
         );
-        my @QuestionList = $Self->{SurveyObject}->QuestionList( SurveyID => $SurveyID );
+        my @QuestionList = $SurveyObject->QuestionList(
+            SurveyID => $SurveyID,
+        );
         for my $Question (@QuestionList) {
 
             my $Class = '';
@@ -156,7 +164,7 @@ sub Run {
                 $RequiredText = '* ';
             }
 
-            $Self->{LayoutObject}->Block(
+            $LayoutObject->Block(
                 Name => 'StatsDetailQuestion',
                 Data => {
                     %{$Question},
@@ -167,19 +175,21 @@ sub Run {
             my @Answers;
             if ( $Question->{Type} eq 'Radio' || $Question->{Type} eq 'Checkbox' ) {
                 my @AnswerList;
-                @AnswerList = $Self->{SurveyObject}->VoteGet(
+                @AnswerList = $SurveyObject->VoteGet(
                     RequestID  => $RequestID,
                     QuestionID => $Question->{QuestionID},
                 );
                 for my $Row (@AnswerList) {
-                    my %Answer = $Self->{SurveyObject}->AnswerGet( AnswerID => $Row->{VoteValue} );
+                    my %Answer = $SurveyObject->AnswerGet(
+                        AnswerID => $Row->{VoteValue},
+                    );
                     my %Data;
                     $Data{Answer} = $Answer{Answer};
                     push( @Answers, \%Data );
                 }
             }
             elsif ( $Question->{Type} eq 'YesNo' || $Question->{Type} eq 'Textarea' ) {
-                my @List = $Self->{SurveyObject}->VoteGet(
+                my @List = $SurveyObject->VoteGet(
                     RequestID  => $RequestID,
                     QuestionID => $Question->{QuestionID},
                 );
@@ -187,33 +197,36 @@ sub Run {
                 my %Data;
                 $Data{Answer} = $List[0]->{VoteValue};
 
-                # clean html
+                # clean HTML
                 if ( $Question->{Type} eq 'Textarea' && $Data{Answer} ) {
                     $Data{Answer} =~ s{\A\$html\/text\$\s(.*)}{$1}xms;
-                    $Data{Answer} = $Self->{LayoutObject}->Ascii2Html(
+                    $Data{Answer} = $LayoutObject->Ascii2Html(
                         Text           => $Data{Answer},
                         HTMLResultMode => 1,
                     );
-                    $Data{Answer} =
-                        $Self->{HTMLUtilsObject}->ToAscii( String => $Data{Answer} );
+                    $Data{Answer} = $Kernel::OM->Get('Kernel::System::HTMLUtils')->ToAscii(
+                        String => $Data{Answer},
+                    );
                 }
                 push( @Answers, \%Data );
             }
             for my $Row (@Answers) {
-                $Self->{LayoutObject}->Block(
+                $LayoutObject->Block(
                     Name => 'StatsDetailAnswer',
                     Data => {
                         %{$Row},
                         Class => $Class,
-                        }
+                    },
                 );
             }
         }
-        $Output .= $Self->{LayoutObject}->Output(
+        $Output .= $LayoutObject->Output(
             TemplateFile => 'AgentSurveyStats',
             Data         => {%Param},
         );
-        $Output .= $Self->{LayoutObject}->Footer( Type => 'Small' );
+        $Output .= $LayoutObject->Footer(
+            Type => 'Small',
+        );
 
         return $Output;
     }
