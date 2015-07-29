@@ -785,10 +785,10 @@ sub NotificationRuleAdd {
                     );
                     return;
                 }
-
-                # fix some bad stuff from some browsers (Opera)!
-                $Param{Message}->{$Language}->{Body} =~ s/(\n\r|\r\r\n|\r\n|\r)/\n/g;
             }
+
+            # fix some bad stuff from some browsers (Opera)!
+            $Param{Message}->{$Type}->{$Language}->{Body} =~ s/(\n\r|\r\r\n|\r\n|\r)/\n/g;
         }
     }
 
@@ -846,7 +846,7 @@ sub NotificationRuleAdd {
             return if !$Kernel::OM->Get('Kernel::System::DB')->Do(
                 SQL => 'INSERT INTO change_notification_message
                     (notification_id, subject, text, content_type, language, notification_type)
-                    VALUES (?, ?, ?, ?, ?)',
+                    VALUES (?, ?, ?, ?, ?, ?)',
                 Bind => [
                     \$RuleID,
                     \$Message{Subject},
@@ -969,10 +969,10 @@ sub NotificationRuleUpdate {
                     );
                     return;
                 }
-
-                # fix some bad stuff from some browsers (Opera)!
-                $Param{Message}->{$Language}->{Body} =~ s/(\n\r|\r\r\n|\r\n|\r)/\n/g;
             }
+
+            # fix some bad stuff from some browsers (Opera)!
+            $Param{Message}->{$Type}->{$Language}->{Body} =~ s/(\n\r|\r\r\n|\r\n|\r)/\n/g;
         }
     }
 
@@ -1018,7 +1018,7 @@ sub NotificationRuleUpdate {
             return if !$Kernel::OM->Get('Kernel::System::DB')->Do(
                 SQL => 'INSERT INTO change_notification_message
                     (notification_id, subject, text, content_type, language, notification_type)
-                    VALUES (?, ?, ?, ?, ?)',
+                    VALUES (?, ?, ?, ?, ?, ?)',
                 Bind => [
                     \$Param{ID},
                     \$Message{Subject},
