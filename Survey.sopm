@@ -57,6 +57,10 @@
         <File Permission="644" Location="Kernel/System/Survey/Vote.pm"/>
         <File Permission="644" Location="Kernel/System/Ticket/Event/SurveySendRequest.pm"/>
         <File Permission="644" Location="scripts/test/Survey.t"/>
+        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentSurveyAdd.t"/>
+        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentSurveyEdit.t"/>
+        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentSurveyOverview.t"/>
+        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentSurveyZoom.t"/>
         <File Permission="644" Location="var/cron/survey_trigger_send_requests.dist"/>
         <File Permission="644" Location="var/httpd/htdocs/js/Survey.Agent.SurveyZoom.js" />
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/Survey.Agent.Default.css"/>
