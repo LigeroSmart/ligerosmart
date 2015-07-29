@@ -24,8 +24,6 @@ sub Data {
     $Self->{Translation}->{'A condition must have a name!'} = '';
     $Self->{Translation}->{'A template must have a name!'} = '';
     $Self->{Translation}->{'A workorder must have a title!'} = '';
-    $Self->{Translation}->{'ActionExecute::successfully'} = 'Successfully';
-    $Self->{Translation}->{'ActionExecute::unsuccessfully'} = 'Unsuccessfully';
     $Self->{Translation}->{'Add CAB Template'} = '';
     $Self->{Translation}->{'Add Workorder'} = '';
     $Self->{Translation}->{'Add a workorder to the change'} = '';

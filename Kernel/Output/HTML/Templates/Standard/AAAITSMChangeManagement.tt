@@ -15,8 +15,6 @@
 [% Translate("A condition must have a name!") | html %]
 [% Translate("A template must have a name!") | html %]
 [% Translate("A workorder must have a title!") | html %]
-[% Translate("ActionExecute::successfully") | html %]
-[% Translate("ActionExecute::unsuccessfully") | html %]
 [% Translate("Add CAB Template") | html %]
 [% Translate("Add Workorder") | html %]
 [% Translate("Add a workorder to the change") | html %]
