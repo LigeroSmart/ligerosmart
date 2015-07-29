@@ -1,5 +1,5 @@
 // --
-// Copyright (C) 2001-2010 OTRS AG, http://otrs.org/\n";
+// Copyright (C) 2001-2015 OTRS AG, http://otrs.com/
 // --
 // This software comes with ABSOLUTELY NO WARRANTY. For details, see
 // the enclosed file COPYING for license information (AGPL). If you
@@ -38,20 +38,21 @@ ITSM.Agent.CABMemberSearch = (function (TargetNS) {
                     var URL = Core.Config.Get('Baselink'), Data = {
                         Action: 'AgentITSMCABMemberSearch',
                         Term: Request.term + '*',
-                        Groups : Core.Config.Get('CABAutocomplete.Groups') || '',
+                        Groups: Core.Config.Get('CABAutocomplete.Groups') || '',
                         MaxResults: Core.UI.Autocomplete.GetConfig('MaxResultsDisplayed')
                     };
 
                     $Element.data('AutoCompleteXHR', Core.AJAX.FunctionCall(URL, Data, function (Result) {
-                        var Data = [];
+                        var ValueData = [];
+                        $Element.removeData('AutoCompleteXHR');
                         $.each(Result, function () {
-                            Data.push({
+                            ValueData.push({
                                 label: this.UserValue + " (" + this.UserKey + ")",
                                 value: this.UserValue,
                                 type: this.UserType
                             });
                         });
-                        Response(Data);
+                        Response(ValueData);
                     }));
                 },
                 function (Event, UI) {
