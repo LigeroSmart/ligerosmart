@@ -1,5 +1,4 @@
 # --
-# Kernel/System/Stats/Dynamic/TimeAccounting.pm - all advice functions
 # Copyright (C) 2001-2015 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -353,6 +352,16 @@ sub GetStatTable {
     }
 
     return @StatArray;
+}
+
+sub GetStatTablePreview {
+    my ( $Self, %Param ) = @_;
+
+    # TODO: check and implement a faster solution
+    return $Self->GetStatTable(
+        %Param,
+        Preview => 1,
+    );
 }
 
 sub ExportWrapper {
