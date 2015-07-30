@@ -1,6 +1,4 @@
 // --
-// TimeAccounting.Agent.ConfirmationDialog.js - provides the special module functions for the
-// confirmation dialogs
 // Copyright (C) 2001-2015 OTRS AG, http://otrs.com/\n";
 // --
 // This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -13,25 +11,32 @@
 var TimeAccounting = TimeAccounting || {};
 TimeAccounting.Agent = TimeAccounting.Agent || {};
 
+
 /**
- * @namespace
- * @exports TargetNS as TimeAccounting.Agent.ConfirmationDialog
+ * @namespace TimeAccounting.Agent.ConfirmationDialog
+ * @memberof TimeAccounting.Agent
+ * @author OTRS AG
  * @description
  *      This namespace contains the special module functions for ConfirmationDialog.
  */
 TimeAccounting.Agent.ConfirmationDialog = (function (TargetNS) {
 
     /**
-     * @variable
      * @private
-     *     This variable stores the parameters that are passed from the DTL and contain all the data that the dialog needs.
+     * @name DialogData
+     * @memberof TimeAccounting.Agent.ConfirmationDialog
+     * @member {Array}
+     * @description
+     *      This variable stores the parameters that are passed from the DTL and contain all the data that the dialog needs.
      */
     var DialogData = [];
 
     /**
-     * @function
      * @private
-     * @return nothing
+     * @name ShowWaitingDialog
+     * @memberof TimeAccounting.Agent.ConfirmationDialog
+     * @function
+     * @param {String} PositionTop - vertical position of the dialog.
      * @description Shows waiting dialog until search screen is ready.
      */
     function ShowWaitingDialog(PositionTop){
@@ -39,9 +44,12 @@ TimeAccounting.Agent.ConfirmationDialog = (function (TargetNS) {
     }
 
     /**
+     * @name ShowConfirmationDialog
+     * @memberof TimeAccounting.Agent.ConfirmationDialog
      * @function
-     * @param {EventObject} event object of the clicked element.
-     * @return nothing
+     * @returns {Boolean} false.
+     * @param {EventObject} Event - event object of the clicked element.
+     * @description
      *      This function shows a confirmation dialog with 2 buttons: Yes and No or a message dialog with one button: Ok.
      */
     TargetNS.ShowConfirmationDialog = function (Event) {
@@ -105,10 +113,11 @@ TimeAccounting.Agent.ConfirmationDialog = (function (TargetNS) {
     };
 
     /**
+     * @name BindConfirmationDialog
+     * @memberof TimeAccounting.Agent.ConfirmationDialog
      * @function
-     * @param {EventObject} event object of the clicked element.
-     * @return nothing
-     *      This function shows a confirmation dialog with 2 buttons: Yes and No
+     * @param {Object} Data - DialogData.
+     * @description  Binds conformation dialog to an element
      */
     TargetNS.BindConfirmationDialog = function (Data) {
         DialogData[Data.ElementID] = Data;

@@ -1,6 +1,4 @@
 // --
-// TimeAccounting.Agent.EditTimeRecords.js - provides the special module functions for the
-// edit screen
 // Copyright (C) 2001-2015 OTRS AG, http://otrs.com/\n";
 // --
 // This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -14,8 +12,9 @@ var TimeAccounting = TimeAccounting || {};
 TimeAccounting.Agent = TimeAccounting.Agent || {};
 
 /**
- * @namespace
- * @exports TargetNS as TimeAccounting.Agent.EditTimeRecords
+ * @namespace TimeAccounting.Agent.EditTimeRecords
+ * @memberof TimeAccounting.Agent
+ * @author OTRS AG
  * @description
  *      This namespace contains the special module functions for the edit screen.
  */
@@ -36,9 +35,11 @@ TimeAccounting.Agent.EditTimeRecords = (function (TargetNS) {
     }
 
     /**
+     * @name Init
+     * @memberof TimeAccounting.Agent.EditTimeRecords
      * @function
-     * @param {String} The ID of the working unit we are in
-     * @return nothing
+     * @param {String} WorkingUnitID - The ID of the working unit we are in
+     * @description
      *      Fills options of action selection according to selected project
      */
     TargetNS.FillActionList = function (WorkingUnitID) {
@@ -193,7 +194,9 @@ TimeAccounting.Agent.EditTimeRecords = (function (TargetNS) {
            if (FieldValue.match(/^[0-9\.+\- ]+$/)) {
                // Calculation
                try {
+                   /*eslint-disable no-eval */
                    FieldValue = eval(FieldValue);
+                   /*eslint-enable no-eval */
                }
                catch (CalcError) {
                    FieldValue = 0;
@@ -220,7 +223,7 @@ TimeAccounting.Agent.EditTimeRecords = (function (TargetNS) {
             var $StartTime, $EndTime,
                 StartTimeHour, StartTimeMinute, EndTimeHour, EndTimeMinute,
                 StartDate, EndDate, Today,
-                Period, PeriodHour, PeriodMinute;
+                Period;
 
             if ($(this).hasClass('StartTime')) {
                 $StartTime = $(this);
@@ -264,12 +267,14 @@ TimeAccounting.Agent.EditTimeRecords = (function (TargetNS) {
     TargetNS.Autocompletion = true;
 
     /**
+     * @name Init
+     * @memberof TimeAccounting.Agent.EditTimeRecords
      * @function
      * @param {Object} Options the different possible options:
      *                  RemarkRegExpContent - the regular expression for the remark validation check
      *                  Language - object with text translations
      *                  Autocompletion - boolean
-     * @return nothing
+     * @description
      *      This function initializes all needed JS for the Edit screen
      */
     TargetNS.Init = function (Options) {
@@ -309,7 +314,11 @@ TimeAccounting.Agent.EditTimeRecords = (function (TargetNS) {
             return Result;
         });
 
-        Core.Form.Validate.AddRule('Validate_TimeAccounting_Project', { Validate_TimeAccounting_Project: true });
+        Core.Form.Validate.AddRule('Validate_TimeAccounting_Project', {
+            /*eslint-disable camelcase */
+            Validate_TimeAccounting_Project: true
+            /*eslint-enable camelcase */
+        });
 
         // Validates the remarks: depending on the project, remarks must be entered or not
         Core.Form.Validate.AddMethod('Validate_TimeAccounting_Remark', function (Value, Element) {
@@ -324,7 +333,11 @@ TimeAccounting.Agent.EditTimeRecords = (function (TargetNS) {
             return true;
         });
 
-        Core.Form.Validate.AddRule('Validate_TimeAccounting_Remark', { Validate_TimeAccounting_Remark: true });
+        Core.Form.Validate.AddRule('Validate_TimeAccounting_Remark', {
+            /*eslint-disable camelcase */
+            Validate_TimeAccounting_Remark: true
+            /*eslint-enable camelcase */
+        });
 
         // Validates the start time: if a project is given and no time period is given, this field is required
         Core.Form.Validate.AddMethod('Validate_TimeAccounting_StartTime', function (Value, Element) {
@@ -337,7 +350,11 @@ TimeAccounting.Agent.EditTimeRecords = (function (TargetNS) {
             return true;
         });
 
-        Core.Form.Validate.AddRule('Validate_TimeAccounting_StartTime', { Validate_TimeAccounting_StartTime: true });
+        Core.Form.Validate.AddRule('Validate_TimeAccounting_StartTime', {
+            /*eslint-disable camelcase */
+            Validate_TimeAccounting_StartTime: true
+            /*eslint-enable camelcase */
+        });
 
         // Validates the time period: if a project is given and no start time is given, this field is required
         Core.Form.Validate.AddMethod('Validate_TimeAccounting_Period', function (Value, Element) {
@@ -350,7 +367,11 @@ TimeAccounting.Agent.EditTimeRecords = (function (TargetNS) {
             return true;
         });
 
-        Core.Form.Validate.AddRule('Validate_TimeAccounting_Period', { Validate_TimeAccounting_Period: true });
+        Core.Form.Validate.AddRule('Validate_TimeAccounting_Period', {
+            /*eslint-disable camelcase */
+            Validate_TimeAccounting_Period: true
+            /*eslint-enable camelcase */
+        });
 
         // Enable autocompletion, if configured
         TargetNS.Autocompletion = LocalOptions.Autocompletion;
@@ -365,14 +386,17 @@ TimeAccounting.Agent.EditTimeRecords = (function (TargetNS) {
         InitPeriodCalculation();
     };
 
+
     /**
+     * @name MassEntryInit
+     * @memberof TimeAccounting.Agent.EditTimeRecords
      * @function
      * @param {Object} Language object with text translations
-     * @return nothing
+     * @description
      *      This function initializes the javascript for the mass entry functionality
      */
     TargetNS.MassEntryInit = function(Language) {
-        $('#IncompleteWorkingDay-All').unbind('click.SelectAllDays').bind('click.SelectAllDays', function (Event) {
+        $('#IncompleteWorkingDay-All').unbind('click.SelectAllDays').bind('click.SelectAllDays', function () {
             var State = $(this).prop('checked');
             $('ul.IncompleteWorkingDays li input:checkbox').prop('checked', State);
         });
@@ -412,9 +436,9 @@ TimeAccounting.Agent.EditTimeRecords = (function (TargetNS) {
 
                         // collect dates
                         $('ul.IncompleteWorkingDays li input:checkbox:checked').each(function () {
-                            var Date = $(this).attr('name').replace(/IncompleteWorkingDay-/, "");
-                            if (Date !== 'All') {
-                                CollectedDates += Date + '|';
+                            var DateItem = $(this).attr('name').replace(/IncompleteWorkingDay-/, "");
+                            if (DateItem !== 'All') {
+                                CollectedDates += DateItem + '|';
                             }
                         });
                         $('#MassEntry input[name=Dates]').val(CollectedDates);

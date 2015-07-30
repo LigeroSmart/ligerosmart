@@ -1,5 +1,4 @@
 // --
-// TimeAccounting.Agent.EditTimeRecords.UnitTest.js - UnitTests
 // Copyright (C) 2001-2015 OTRS AG, http://otrs.com/\n";
 // --
 // This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -14,16 +13,17 @@ TimeAccounting.Agent = TimeAccounting.Agent || {};
 
 TimeAccounting.Agent.EditTimeRecords = (function (Namespace) {
     Namespace.RunUnitTests = function(){
+        /*
+         * Create a form container for the tests
+         */
+        var $TestForm = $('<form id="TestForm"></form>'),
+            $Table;
+
         module('TimeAccounting.Agent.EditTimeRecords');
         test('client-side time period calculations', function(){
 
             expect(20);
 
-            /*
-             * Create a form container for the tests
-             */
-            var $TestForm = $('<form id="TestForm"></form>'),
-                $Table;
             $TestForm.append('<table><tr><td></td></tr><tr><td></td></tr><tr><td></td></tr></table>');
             $Table = $TestForm.find('tr:eq(0) td');
             $Table.append('<input type="text" value="" id="StartTime1" name="StartTime1" class="StartTime" />');

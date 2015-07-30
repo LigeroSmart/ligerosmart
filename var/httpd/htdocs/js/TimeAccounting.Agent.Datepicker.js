@@ -1,5 +1,4 @@
 // --
-// TimeAccounting.Agent.Datepicker.js - provides the special datepicker functions for TA
 // Copyright (C) 2001-2015 OTRS AG, http://otrs.com/\n";
 // --
 // This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -13,10 +12,11 @@ var TimeAccounting = TimeAccounting || {};
 TimeAccounting.Agent = TimeAccounting.Agent || {};
 
 /**
- * @namespace
- * @exports TargetNS as TimeAccounting.Agent.Datepicker
+ * @namespace TimeAccounting.Agent.Datepicker
+ * @memberof TimeAccounting.Agent
+ * @author OTRS AG
  * @description
- *      This namespace contains the special datepicker functiond for TA.
+ *      This namespace contains the special datepicker function for TA.
  */
 TimeAccounting.Agent.Datepicker = (function (TargetNS) {
 
@@ -26,15 +26,20 @@ TimeAccounting.Agent.Datepicker = (function (TargetNS) {
         DatepickerCount = 0;
 
     if (!Core.Debug.CheckDependency('Core.UI.Datepicker', '$([]).datepicker', 'jQuery UI datepicker')) {
-        return;
+        return false;
     }
 
     /**
-     * @function
      * @private
-     * @param A boolean value
-     * @param {jQueryObject} Element that will be checked
+     * @name CheckDate
+     * @memberof TimeAccounting.Agent.Datepicker
+     * @function
+     * @returns {Object} - array with date data
+     * @param {jQueryObject} DateObject - object that will be checked
      * @description Review if a date object have correct values
+     *      If no callback function for the close is given (via the Button definition),
+     *      the dialog is just closed. Otherwise the defined Close button is triggered,
+     *      which invokes the callback and the closing of the dialog.
      */
     function CheckDate(DateObject) {
         var DayDescription = '',
@@ -72,31 +77,31 @@ TimeAccounting.Agent.Datepicker = (function (TargetNS) {
     }
 
     /**
+     * @name Init
+     * @memberof TimeAccounting.Agent.Datepicker
      * @function
-     * @description
-     *      This function initializes the datepicker on single elements for TA.
-     *      This function is not yet available in the OTRS Core.
-     *      If it will be implemented in OTRS Core we could remove this file here.
      * @param {Object} $Element The jQuery object(s) of a text input field which should get a datepicker.
      * @param {Object} DatepickerOptions Object with two possible keys:
      *                      DateInFuture: true|false,
      *                      WeekDayStart: 0-7 (sunday - saturday)
-     * @return nothing
+     * @description
+     *      This function initializes the datepicker on single elements for TA.
+     *      This function is not yet available in the OTRS Core.
+     *      If it will be implemented in OTRS Core we could remove this file here.
      */
     TargetNS.Init = function ($Element, DatepickerOptions) {
-        function LeadingZero(Number) {
-            if (Number.toString().length === 1) {
-                return '0' + Number;
-            }
-            else {
-                return Number;
-            }
-        }
-
         var $DatepickerElement,
-            Options,
-            I,
-            ErrorMessage;
+            Options;
+
+        // TODO: check if this is still needed
+        // function LeadingZero(Number) {
+        //     if (Number.toString().length === 1) {
+        //         return '0' + Number;
+        //     }
+        //     else {
+        //         return Number;
+        //     }
+        // }
 
         if (typeof LocalizationData === 'undefined') {
             LocalizationData = Core.Config.Get('Datepicker.Localization');
@@ -123,7 +128,7 @@ TimeAccounting.Agent.Datepicker = (function (TargetNS) {
                 isRTL: LocalizationData.IsRTL
         };
 
-        Options.beforeShow = function (Input, Instance) {
+        Options.beforeShow = function (Input) {
             var Value = $(Input).prevAll('input:text').val();
             $(Input).val('');
             return {
@@ -131,7 +136,7 @@ TimeAccounting.Agent.Datepicker = (function (TargetNS) {
             };
         };
 
-        Options.onSelect = function (DateText, Instance) {
+        Options.onSelect = function (DateText) {
             $(this).prevAll('input:text').val(DateText);
         };
 
