@@ -96,18 +96,13 @@
 # Use the HTML5 sandbox attribute to prevent plugins and scripts from being executed in the browser.
 # Use IE's (non-standard) security attribute to achieve something similar in older IE browsers. Append session info to URL because IE will not send cookies.
 # Set 'allow-popups' to allow IE10+ to open links. ref: http://www.w3.org/html/wg/wiki/ChangeProposals/sandbox_allow_popups
-                    <iframe sandbox="allow-same-origin allow-popups" [% Data.MSSecurityRestricted %] class="FAQField" id="IframeFAQ[% Data.Field | html %]" onload="if (typeof FAQ === 'object' && typeof FAQ.Customer === 'object' && typeof FAQ.Customer.FAQZoom === 'object') { FAQ.Customer.FAQZoom.IframeAutoHeight($('#IframeFAQ[% Data.Field | html %]')); };" src="#" data-src="[% Env("Baselink") %]Action=PublicFAQZoom;Subaction=HTMLView;ItemID=[% Data.ItemID | html %];Field=[% Data.Field | html %];"></iframe>
+                    <iframe sandbox="allow-same-origin allow-popups" [% Data.MSSecurityRestricted %] class="FAQField" id="IframeFAQ[% Data.Field | html %]" onload="window.setTimeout( function (){ if (typeof FAQ === 'object' && typeof FAQ.Customer === 'object' && typeof FAQ.Customer.FAQZoom === 'object') { FAQ.Customer.FAQZoom.IframeAutoHeight($('#IframeFAQ[% Data.Field | html %]')); }}, 500);" src="[% Env("Baselink") %]Action=PublicFAQZoom;Subaction=HTMLView;ItemID=[% Data.ItemID | html %];Field=[% Data.Field | html %];"></iframe>
                 </div>
 [% RenderBlockEnd("FAQContentHTML") %]
 [% WRAPPER JSOnDocumentComplete %]
 <script type="text/javascript">//<![CDATA[
     Core.Config.Set('FAQ::Frontend::CustomerHTMLFieldHeightDefault', parseInt("[% Config("FAQ::Frontend::CustomerHTMLFieldHeightDefault") %]" || 0, 10));
     Core.Config.Set('FAQ::Frontend::CustomerHTMLFieldHeightMax', parseInt("[% Config("FAQ::Frontend::CustomerHTMLFieldHeightMax") %]" || 0, 10));
-
-    // copy data-src attribute to src attribute for all iframes to correctly display its contents after JS is fully loaded
-    $('iframe').each(function(){
-        $(this).attr("src", $(this).attr("data-src") );
-    });
 //]]></script>
 [% END %]
 [% RenderBlockStart("FAQContentPlain") %]
