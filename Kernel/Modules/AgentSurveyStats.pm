@@ -51,7 +51,7 @@ sub Run {
     }
 
     my $RequestExists = 'no';
-    if ($SurveyID) {
+    if ($RequestID) {
         $RequestExists = $SurveyObject->ElementExists(
             ElementID => $RequestID,
             Element   => 'Request'
