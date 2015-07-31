@@ -537,6 +537,15 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
             command on the command line:
         </para>
         <screen>shell> perl bin/otrs.UnitTest.pl -n Survey</screen>
+        <para>Selenium unit tests</para>
+        <para>
+            To run the Selenium unit tests, make sure you have a complete Selenium environment setup in your Kernel/Config.pm file and a running a WebDriver.
+        </para>
+        <screen>
+shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test AgentSurveyAdd:AgentSurveyEdit:AgentSurveyEditQuestions:AgentSurveyOverview:AgentSurveyStats:AgentSurveyZoom
+shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test PublicSurvey
+shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test SurveyMenu/Generic:SurveyOverview/Small
+        </screen>
         <para>Run all available unit tests</para>
         <para>
             To run all available unit tests, use the following command on the command line:
