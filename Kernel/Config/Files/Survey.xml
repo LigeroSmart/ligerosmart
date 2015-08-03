@@ -398,4 +398,19 @@ Your OTRS-Team
             </Hash>
         </Setting>
     </ConfigItem>
+    <ConfigItem Name="Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend" Required="0" Valid="0">
+        <Description Translatable="1">Trigger sending delayed survey requests.</Description>
+        <Group>Survey</Group>
+        <SubGroup>Daemon::SchedulerCronTaskManager::Task</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="TaskName">SurveyRequestsSend</Item>
+                <Item Key="Schedule">*/20 * * * *</Item> <!-- default: every 20 min -->
+                <Item Key="Module">Kernel::System::Console::Command::Maint::Survey::RequestsSend</Item>
+                <Item Key="Function">Execute</Item>
+                <Item Key="Params">--force</Item>
+                <Item Key="MaximumParallelInstances">1</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
 </otrs_config>

@@ -10,7 +10,6 @@
     <Description Lang="de">Ein Kundenumfragen Werkzeug.</Description>
     <Description Lang="es">Una herramienta de encuestas a clientes.</Description>
     <Filelist>
-        <File Permission="755" Location="bin/otrs.SurveyTriggerSendRequests.pl"/>
         <File Permission="644" Location="doc/survey-database.png"/>
         <File Permission="644" Location="Kernel/Config/Files/Survey.xml"/>
         <File Permission="644" Location="Kernel/Language/da_Survey.pm"/>
@@ -50,12 +49,14 @@
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentSurveyStats.tt"/>
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentSurveyZoom.tt"/>
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/PublicSurvey.tt"/>
+        <File Permission="644" Location="Kernel/System/Console/Command/Maint/Survey/RequestsSend.pm"/>
         <File Permission="644" Location="Kernel/System/Survey.pm"/>
         <File Permission="644" Location="Kernel/System/Survey/Answer.pm"/>
         <File Permission="644" Location="Kernel/System/Survey/Question.pm"/>
         <File Permission="644" Location="Kernel/System/Survey/Request.pm"/>
         <File Permission="644" Location="Kernel/System/Survey/Vote.pm"/>
         <File Permission="644" Location="Kernel/System/Ticket/Event/SurveySendRequest.pm"/>
+        <File Permission="644" Location="scripts/test/Console/Command/Maint/Survey/RequestsSend.t"/>
         <File Permission="644" Location="scripts/test/Survey.t"/>
         <File Permission="644" Location="scripts/test/Selenium/Agent/AgentSurveyAdd.t"/>
         <File Permission="644" Location="scripts/test/Selenium/Agent/AgentSurveyEdit.t"/>
@@ -66,7 +67,6 @@
         <File Permission="644" Location="scripts/test/Selenium/Output/SurveyMenu/Generic.t"/>
         <File Permission="644" Location="scripts/test/Selenium/Output/SurveyOverview/Small.t"/>
         <File Permission="644" Location="scripts/test/Selenium/Public/PublicSurvey.t"/>
-        <File Permission="644" Location="var/cron/survey_trigger_send_requests.dist"/>
         <File Permission="644" Location="var/httpd/htdocs/js/Survey.Agent.SurveyZoom.js" />
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/Survey.Agent.Default.css"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/css/Survey.Customer.Default.css"/>
