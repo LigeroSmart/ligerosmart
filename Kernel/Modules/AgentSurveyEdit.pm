@@ -155,12 +155,12 @@ sub _SurveyEditMask {
     my $QueueString = $LayoutObject->BuildSelection(
         Data         => \%Queues,
         Name         => 'Queues',
-        Size         => 6,
         Multiple     => 1,
         PossibleNone => 0,
         Sort         => 'AlphanumericValue',
         Translation  => 0,
         SelectedID   => $FormElements{Queues} || $Param{Queues},
+        Class        => 'Modernize',
     );
 
     # get config object
@@ -179,12 +179,12 @@ sub _SurveyEditMask {
             my $TicketTypeStrg = $LayoutObject->BuildSelection(
                 Data         => \%TicketTypes,
                 Name         => 'TicketTypeIDs',
-                Size         => 6,
                 Multiple     => 1,
                 PossibleNone => 0,
                 Sort         => 'AlphanumericValue',
                 Translation  => 0,
                 SelectedID   => $FormElements{TicketTypeIDs} || $Param{TicketTypeIDs},
+                Class        => 'Modernize',
             );
 
             $LayoutObject->Block(
@@ -211,12 +211,12 @@ sub _SurveyEditMask {
             my $ServiceStrg = $LayoutObject->BuildSelection(
                 Data         => \%Services,
                 Name         => 'ServiceIDs',
-                Size         => 6,
                 Multiple     => 1,
                 PossibleNone => 0,
                 Sort         => 'AlphanumericValue',
                 Translation  => 0,
                 SelectedID   => $FormElements{ServiceIDs} || $Param{ServiceIDs},
+                Class        => 'Modernize',
             );
 
             $LayoutObject->Block(

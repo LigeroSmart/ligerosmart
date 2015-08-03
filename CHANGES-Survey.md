@@ -1,4 +1,5 @@
 #5.0.0.beta1 - 2015-??-??
+ - 2015-08-03 Updated look and feel of select controls.
 
 #4.0.1 - 2014-11-25
  - 2014-11-21 Added code to migrate DTL code in SysConfig settings to TT during package update.

@@ -546,6 +546,7 @@ sub _MaskQuestionOverview {
             SelectedValue => 'Yes/No',
             Translation   => 1,
             Title         => $LayoutObject->{LanguageObject}->Translate('Question Type'),
+            Class         => 'Modernize',
         );
 
         $ArrayHashRef = [
@@ -566,6 +567,7 @@ sub _MaskQuestionOverview {
             ID            => 'AnswerRequired',
             SelectedValue => 'Yes',
             Translation   => 1,
+            Class         => 'Modernize',
         );
 
         my $QuestionErrorClass = '';
@@ -756,6 +758,7 @@ sub _MaskQuestionEdit {
         ID            => 'AnswerRequired',
         SelectedValue => 'Yes',
         Translation   => 1,
+        Class         => 'Modernize',
     );
 
     # print the main body
