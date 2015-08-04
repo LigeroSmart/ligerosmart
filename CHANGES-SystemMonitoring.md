@@ -2,8 +2,6 @@
 # CHANGES - change log of the SystemMonitoring module for OTRS
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: CHANGES-SystemMonitoring,v 1.4 2012-08-16 15:29:40 mb Exp $
-# --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
