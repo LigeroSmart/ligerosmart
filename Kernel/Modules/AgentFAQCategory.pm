@@ -654,9 +654,8 @@ sub _Edit {
         Data       => \%Groups,
         Name       => 'PermissionGroups',
         Multiple   => 1,
-        Class      => 'Validate_Required ' . $Param{PermissionGroupsServerError},
+        Class      => 'Validate_Required Modernize ' . $Param{PermissionGroupsServerError},
         SelectedID => $Param{PermissionGroups},
-        Class      => 'Modernize',
     );
 
     # get all categories with their long names

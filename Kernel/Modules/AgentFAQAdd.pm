@@ -506,10 +506,9 @@ sub _MaskNew {
         Name         => 'CategoryID',
         SelectedID   => $Param{CategoryID},
         PossibleNone => 1,
-        Class        => 'Validate_Required ' . $Param{CategoryIDServerError},
+        Class        => 'Validate_Required Modernize ' . $Param{CategoryIDServerError},
         Translation  => 0,
         TreeView     => 1,
-        Class        => 'Modernize',
     );
 
     # get FAQ object
