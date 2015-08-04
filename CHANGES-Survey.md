@@ -1,4 +1,5 @@
 #5.0.0.beta1 - 2015-??-??
+ - 2015-08-03 Added breadcrumbs to question and answer edit screens.
  - 2015-08-03 Updated look and feel of select controls.
 
 #4.0.1 - 2014-11-25

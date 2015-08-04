@@ -915,10 +915,19 @@ sub _MaskAnswerEdit {
         Type      => 'Small',
         BodyClass => 'Popup',
     );
-    my %Answer = $Kernel::OM->Get('Kernel::System::Survey')->AnswerGet(
+
+    # get survey object
+    my $SurveyObject = $Kernel::OM->Get('Kernel::System::Survey');
+
+    my %Answer = $SurveyObject->AnswerGet(
         AnswerID => $Param{AnswerID},
     );
     $Answer{SurveyID} = $Param{SurveyID};
+
+    my %Question = $SurveyObject->QuestionGet(
+        QuestionID => $Param{QuestionID},
+    );
+    $Param{Question} = $Question{Question};
 
     # print the main table.
     $LayoutObject->Block(
@@ -932,7 +941,9 @@ sub _MaskAnswerEdit {
 
     $Output .= $LayoutObject->Output(
         TemplateFile => 'AgentSurveyEditQuestions',
-        Data         => {%Param},
+        Data         => {
+            %Param,
+        },
     );
 
     $Output .= $LayoutObject->Footer(
