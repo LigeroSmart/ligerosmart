@@ -217,6 +217,23 @@ sub CodeUpgradeFromLowerThan_4_0_1 {    ## no critic
     return 1;
 }
 
+=item CodeUpgradeFromLowerThan_4_0_91()
+
+This function is only executed if the installed module version is smaller than 4.0.91.
+
+my $Result = $CodeObject->CodeUpgradeFromLowerThan_4_0_91();
+
+=cut
+
+sub CodeUpgradeFromLowerThan_4_0_91 {    ## no critic
+    my ( $Self, %Param ) = @_;
+
+    # change configurations to match the new module location.
+    $Self->_MigrateConfigs();
+
+    return 1;
+}
+
 =item _Prefill_AnswerRequiredFromSurveyQuestion_2_1_5()
 
 Inserts 0 into all answer_required records of table suvey_question
@@ -312,6 +329,74 @@ sub _MigrateDTLInSysConfig {
             Value => $Setting,
         );
     }
+    return 1;
+}
+
+=item _MigrateConfigs()
+
+change configurations to match the new module location.
+
+    my $Result = $CodeObject->_MigrateConfigs();
+
+=cut
+
+sub _MigrateConfigs {
+
+    # create needed objects
+    my $SysConfigObject = $Kernel::OM->Get('Kernel::System::SysConfig');
+    my $ConfigObject    = $Kernel::OM->Get('Kernel::Config');
+
+    # migrate survey menu module sysconfig
+    # get setting content for survey sysconfig
+    my $Setting = $ConfigObject->Get('Survey::Frontend::MenuModule');
+
+    CONFIGITEM:
+    for my $MenuModule ( sort keys %{$Setting} ) {
+
+        # update module location
+        my $Module = $Setting->{$MenuModule}->{'Module'};
+        if ( $Module !~ m{Kernel::Output::HTML::SurveyMenu(\w+)} ) {
+            next CONFIGITEM;
+        }
+
+        $Setting->{$MenuModule}->{Module} = "Kernel::Output::HTML::SurveyMenu::$1";
+
+        # set new setting
+        my $Success = $SysConfigObject->ConfigItemUpdate(
+            Valid => 1,
+            Key   => 'Survey::Frontend::MenuModule###' . $MenuModule,
+            Value => $Setting->{$MenuModule},
+        );
+    }
+
+    # migrate survey overview small sysconfig
+    # get setting content for survey sysconfig
+    $Setting = $ConfigObject->Get('Survey::Frontend::Overview');
+
+    # update module location
+    $Setting->{'Small'}->{Module} = "Kernel::Output::HTML::SurveyOverview::Small";
+
+    # set new setting
+    my $Success = $SysConfigObject->ConfigItemUpdate(
+        Valid => 1,
+        Key   => 'Survey::Frontend::Overview###Small',
+        Value => $Setting->{'Small'},
+    );
+
+    # migrate survey preference sysconfig
+    # get setting content for survey sysconfig
+    $Setting = $ConfigObject->Get('PreferencesGroups');
+
+    # update module location
+    $Setting->{'SurveyOverviewSmallPageShown'}->{Module} = "Kernel::Output::HTML::Preferences::Generic";
+
+    # set new setting
+    $Success = $SysConfigObject->ConfigItemUpdate(
+        Valid => 1,
+        Key   => 'PreferencesGroups###SurveyOverviewSmallPageShown',
+        Value => $Setting->{'SurveyOverviewSmallPageShown'},
+    );
+
     return 1;
 }
 
