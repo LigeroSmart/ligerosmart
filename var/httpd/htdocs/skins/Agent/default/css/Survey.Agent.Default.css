@@ -176,4 +176,9 @@ div.Textarea {
     background-color: white;
 }
 
+
+.TableSmall tbody tr.Invalid {
+    color: #CCC;
+}
+
 }

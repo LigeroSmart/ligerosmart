@@ -145,7 +145,7 @@
                             <td>
                                 [% Translate(Data.Type) | html %]
                             </td>
-                            <td>
+                            <td class="[% Data.Class | html %]">
                                 [% Translate(Data.Status) | html %]
                             </td>
                             <td>

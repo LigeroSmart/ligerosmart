@@ -86,7 +86,7 @@
             </thead>
             <tbody>
 [% RenderBlockStart("Record") %]
-                <tr class="MasterAction">
+                <tr class="MasterAction [% IF Data.Status == 'Invalid' %]Invalid[% END %]">
 [% RenderBlockStart("RecordNumber") %]
                     <td>
 [% RenderBlockStart("RecordNumberLinkStart") %]
