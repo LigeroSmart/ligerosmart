@@ -6,7 +6,7 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package Kernel::Output::HTML::NotificationTimeAccounting;
+package Kernel::Output::HTML::Notification::TimeAccounting;
 
 use strict;
 use warnings;
@@ -14,6 +14,7 @@ use warnings;
 our @ObjectDependencies = (
     'Kernel::System::Time',
     'Kernel::System::TimeAccounting',
+    'Kernel::Output::HTML::Layout',
 );
 
 sub new {
@@ -23,10 +24,8 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    # get needed objects
-    for my $Needed (qw(LayoutObject UserID)) {
-        $Self->{$Needed} = $Param{$Needed} || die "Got no $Needed!";
-    }
+    # get UserID param
+    $Self->{UserID} = $Param{UserID} || die "Got no UserID!";
 
     return $Self;
 }
@@ -57,9 +56,9 @@ sub Run {
         # redirect if incomplete working day are out of range
         if ( $IncompleteWorkingDays{Warning} ) {
 
-            return $Self->{LayoutObject}->Notify(
+            return $Kernel::OM->Get('Kernel::Output::HTML::Layout')->Notify(
+                Priority => 'Error',
                 Info     => 'Please insert your working hours!',
-                Priority => 'Error'
             );
         }
     }

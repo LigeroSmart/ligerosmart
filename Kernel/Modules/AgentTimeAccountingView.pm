@@ -14,7 +14,7 @@ use warnings;
 use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD check_date);
 use Time::Local;
 
-use Kernel::System::TimeAccounting;
+our $ObjectManagerDisabled = 1;
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -22,18 +22,6 @@ sub new {
     # allocate new hash for object
     my $Self = {%Param};
     bless( $Self, $Type );
-
-    # check needed Objects
-    for my $Needed (
-        qw(ParamObject DBObject ModuleReg LogObject UserObject
-        ConfigObject TicketObject TimeObject GroupObject)
-        )
-    {
-        $Self->{LayoutObject}->FatalError( Message => "Got no $Needed!" ) if !$Self->{$Needed};
-    }
-
-    # create required objects...
-    $Self->{TimeAccountingObject} = Kernel::System::TimeAccounting->new(%Param);
 
     return $Self;
 }
@@ -52,19 +40,28 @@ sub Run {
     # view older day inserts
     # ---------------------------------------------------------- #
 
+    # get layout object
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+
     # permission check
-    return $Self->{LayoutObject}->NoPermission( WithHeader => 'yes' ) if !$Self->{AccessRo};
+    if ( !$Self->{AccessRo} ) {
+        return $LayoutObject->NoPermission(
+            WithHeader => 'yes',
+        );
+    }
 
     # get params
     for my $Parameter (qw(Day Month Year UserID)) {
-        $Param{$Parameter} = $Self->{ParamObject}->GetParam( Param => $Parameter );
+        $Param{$Parameter} = $Kernel::OM->Get('Kernel::System::Web::Request')->GetParam( Param => $Parameter );
     }
 
     # check needed params
     for my $Needed (qw(Day Month Year)) {
         if ( !$Param{$Needed} ) {
 
-            return $Self->{LayoutObject}->ErrorScreen( Message => "View: Need $Needed" );
+            return $LayoutObject->ErrorScreen(
+                Message => "View: Need $Needed",
+            );
         }
     }
 
@@ -76,12 +73,15 @@ sub Run {
     # if no UserID posted use the current user
     $Param{UserID} ||= $Self->{UserID};
 
+    # get time object
+    my $TimeObject = $Kernel::OM->Get('Kernel::System::Time');
+
     # get current date and time
-    my ( $Sec, $Min, $Hour, $Day, $Month, $Year ) = $Self->{TimeObject}->SystemTime2Date(
-        SystemTime => $Self->{TimeObject}->SystemTime(),
+    my ( $Sec, $Min, $Hour, $Day, $Month, $Year ) = $TimeObject->SystemTime2Date(
+        SystemTime => $TimeObject->SystemTime(),
     );
 
-    my $MaxAllowedInsertDays = $Self->{ConfigObject}->Get('TimeAccounting::MaxAllowedInsertDays') || '10';
+    my $MaxAllowedInsertDays = $Kernel::OM->Get('Kernel::Config')->Get('TimeAccounting::MaxAllowedInsertDays') || '10';
     ( $Param{YearAllowed}, $Param{MonthAllowed}, $Param{DayAllowed} )
         = Add_Delta_YMD( $Year, $Month, $Day, 0, 0, -$MaxAllowedInsertDays );
 
@@ -95,20 +95,20 @@ sub Run {
         )
     {
 
-        return $Self->{LayoutObject}->Redirect(
+        return $LayoutObject->Redirect(
             OP =>
-                "Action=AgentTimeAccountingEdit;Year=$Param{Year};Month=$Param{Month};Day=$Param{Day}"
+                "Action=AgentTimeAccountingEdit;Year=$Param{Year};Month=$Param{Month};Day=$Param{Day}",
         );
     }
 
     # show the naming of the agent which time accounting is visited
     if ( $Param{UserID} != $Self->{UserID} ) {
-        my %ShownUsers = $Self->{UserObject}->UserList(
+        my %ShownUsers = $Kernel::OM->Get('Kernel::System::User')->UserList(
             Type  => 'Long',
             Valid => 1
         );
         $Param{User} = $ShownUsers{ $Param{UserID} };
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'User',
             Data => {%Param},
         );
@@ -124,7 +124,7 @@ sub Run {
     ( $Param{YearNext}, $Param{MonthNext}, $Param{DayNext} )
         = Add_Delta_YMD( $Param{Year}, $Param{Month}, $Param{Day}, 0, 0, 1 );
 
-    $Param{DateSelection} = $Self->{LayoutObject}->BuildDateSelection(
+    $Param{DateSelection} = $LayoutObject->BuildDateSelection(
         %Param,
         Prefix   => '',
         Format   => 'DateInputFormat',
@@ -132,9 +132,12 @@ sub Run {
         Class    => $Param{Errors}->{DateInvalid},
     );
 
+    # get time accounting object
+    my $TimeAccountingObject = $Kernel::OM->Get('Kernel::System::TimeAccounting');
+
     # Show Working Units
     # get existing working units
-    my %Data = $Self->{TimeAccountingObject}->WorkingUnitsGet(
+    my %Data = $TimeAccountingObject->WorkingUnitsGet(
         Year   => $Param{Year},
         Month  => $Param{Month},
         Day    => $Param{Day},
@@ -144,8 +147,8 @@ sub Run {
     $Param{Date} = $Data{Date};
 
     # get project and action settings
-    my %Project = $Self->{TimeAccountingObject}->ProjectSettingsGet();
-    my %Action  = $Self->{TimeAccountingObject}->ActionSettingsGet();
+    my %Project = $TimeAccountingObject->ProjectSettingsGet();
+    my %Action  = $TimeAccountingObject->ActionSettingsGet();
 
     # get sick, leave day and overtime
     $Param{Sick}     = $Data{Sick}     ? 'checked' : '';
@@ -158,7 +161,7 @@ sub Run {
 
         for my $UnitRef ( @{$UnitsRef} ) {
 
-            $Self->{LayoutObject}->Block(
+            $LayoutObject->Block(
                 Name => 'Unit',
                 Data => {
                     Project   => $Project{Project}{ $UnitRef->{ProjectID} },
@@ -167,35 +170,40 @@ sub Run {
                     StartTime => $UnitRef->{StartTime},
                     EndTime   => $UnitRef->{EndTime},
                     Period    => $UnitRef->{Period},
-                    }
+                },
             );
         }
 
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'Total',
-            Data => { Total => sprintf( "%.2f", $Data{Total} ) }
+            Data => {
+                Total => sprintf( "%.2f", $Data{Total} ),
+            },
         );
     }
     else {
-        $Self->{LayoutObject}->Block( Name => 'NoDataFound' );
+        $LayoutObject->Block(
+            Name => 'NoDataFound',
+            Data => {},
+        );
     }
 
     if ( $Param{Sick} || $Param{LeaveDay} || $Param{Overtime} ) {
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'OtherTimes',
             Data => {
                 Sick     => $Param{Sick},
                 LeaveDay => $Param{LeaveDay},
                 Overtime => $Param{Overtime},
-                }
+            },
         );
     }
 
-    my %UserData = $Self->{TimeAccountingObject}->UserGet(
+    my %UserData = $TimeAccountingObject->UserGet(
         UserID => $Param{UserID},
     );
 
-    my $Vacation = $Self->{TimeObject}->VacationCheck(
+    my $Vacation = $TimeObject->VacationCheck(
         Year     => $Param{Year},
         Month    => $Param{Month},
         Day      => $Param{Day},
@@ -203,20 +211,24 @@ sub Run {
     );
 
     if ($Vacation) {
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'Vacation',
-            Data => { Vacation => $Vacation },
+            Data => {
+                Vacation => $Vacation,
+            },
         );
     }
 
     # presentation
-    my $Output = $Self->{LayoutObject}->Header( Title => 'View' );
-    $Output .= $Self->{LayoutObject}->NavigationBar();
-    $Output .= $Self->{LayoutObject}->Output(
+    my $Output = $LayoutObject->Header(
+        Title => 'View',
+    );
+    $Output .= $LayoutObject->NavigationBar();
+    $Output .= $LayoutObject->Output(
         Data         => \%Param,
         TemplateFile => 'AgentTimeAccountingView'
     );
-    $Output .= $Self->{LayoutObject}->Footer();
+    $Output .= $LayoutObject->Footer();
 
     return $Output;
 }

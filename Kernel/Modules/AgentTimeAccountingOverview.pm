@@ -14,8 +14,9 @@ use warnings;
 use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD check_date);
 use Time::Local;
 
-use Kernel::System::TimeAccounting;
 use Kernel::System::VariableCheck qw(:all);
+
+our $ObjectManagerDisabled = 1;
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -23,18 +24,6 @@ sub new {
     # allocate new hash for object
     my $Self = {%Param};
     bless( $Self, $Type );
-
-    # check needed Objects
-    for my $Needed (
-        qw(ParamObject DBObject ModuleReg LogObject UserObject
-        ConfigObject TicketObject TimeObject GroupObject)
-        )
-    {
-        $Self->{LayoutObject}->FatalError( Message => "Got no $Needed!" ) if !$Self->{$Needed};
-    }
-
-    # create required objects...
-    $Self->{TimeAccountingObject} = Kernel::System::TimeAccounting->new(%Param);
 
     return $Self;
 }
@@ -49,18 +38,28 @@ sub Run {
     );
     my @WeekdayArray = ( 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun', );
 
+    # get time object
+    my $TimeObject = $Kernel::OM->Get('Kernel::System::Time');
+
     # ---------------------------------------------------------- #
     # overview about the users time accounting
     # ---------------------------------------------------------- #
-    my ( $Sec, $Min, $Hour, $CurrentDay, $Month, $Year ) = $Self->{TimeObject}->SystemTime2Date(
-        SystemTime => $Self->{TimeObject}->SystemTime(),
+    my ( $Sec, $Min, $Hour, $CurrentDay, $Month, $Year ) = $TimeObject->SystemTime2Date(
+        SystemTime => $TimeObject->SystemTime(),
     );
 
+    # get layout object
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+
     # permission check
-    return $Self->{LayoutObject}->NoPermission( WithHeader => 'yes' ) if !$Self->{AccessRo};
+    if ( !$Self->{AccessRo} ) {
+        return $LayoutObject->NoPermission(
+            WithHeader => 'yes',
+        );
+    }
 
     for my $Parameter (qw(Status Day Month Year UserID ProjectStatusShow)) {
-        $Param{$Parameter} = $Self->{ParamObject}->GetParam( Param => $Parameter );
+        $Param{$Parameter} = $Kernel::OM->Get('Kernel::System::Web::Request')->GetParam( Param => $Parameter );
     }
     $Param{Action} = 'AgentTimeAccountingEdit';
 
@@ -70,17 +69,19 @@ sub Run {
     else {
         if ( $Param{UserID} != $Self->{UserID} && !$Self->{AccessRw} ) {
 
-            return $Self->{LayoutObject}->NoPermission( WithHeader => 'yes' );
+            return $LayoutObject->NoPermission(
+                WithHeader => 'yes',
+            );
         }
         $Param{Action} = 'AgentTimeAccountingView';
     }
     if ( $Param{UserID} != $Self->{UserID} ) {
-        my %ShownUsers = $Self->{UserObject}->UserList(
+        my %ShownUsers = $Kernel::OM->Get('Kernel::System::User')->UserList(
             Type  => 'Long',
             Valid => 1
         );
         $Param{User} = $ShownUsers{ $Param{UserID} };
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'User',
             Data => {%Param},
         );
@@ -96,7 +97,7 @@ sub Run {
     }
 
     # store last screen
-    $Self->{SessionObject}->UpdateSessionID(
+    $Kernel::OM->Get('Kernel::System::AuthSession')->UpdateSessionID(
         SessionID => $Self->{SessionID},
         Key       => 'LastScreen',
         Value =>
@@ -112,14 +113,17 @@ sub Run {
     # Overview per day
     my $DaysOfMonth = Days_in_Month( $Param{Year}, $Param{Month} );
 
-    my %UserData = $Self->{TimeAccountingObject}->UserGet(
+    # get time accounting object
+    my $TimeAccountingObject = $Kernel::OM->Get('Kernel::System::TimeAccounting');
+
+    my %UserData = $TimeAccountingObject->UserGet(
         UserID => $Param{UserID},
     );
 
     for my $Day ( 1 .. $DaysOfMonth ) {
         $Param{Day} = sprintf( "%02d", $Day );
         $Param{Weekday} = Day_of_Week( $Param{Year}, $Param{Month}, $Day ) - 1;
-        my $VacationCheck = $Self->{TimeObject}->VacationCheck(
+        my $VacationCheck = $TimeObject->VacationCheck(
             Year     => $Param{Year},
             Month    => $Param{Month},
             Day      => $Day,
@@ -127,19 +131,23 @@ sub Run {
         );
 
         my $Date = sprintf( "%04d-%02d-%02d", $Param{Year}, $Param{Month}, $Day );
-        my $DayStartTime = $Self->{TimeObject}->TimeStamp2SystemTime( String => $Date . ' 00:00:00' );
-        my $DayStopTime  = $Self->{TimeObject}->TimeStamp2SystemTime( String => $Date . ' 23:59:59' );
+        my $DayStartTime = $TimeObject->TimeStamp2SystemTime(
+            String => $Date . ' 00:00:00',
+        );
+        my $DayStopTime = $TimeObject->TimeStamp2SystemTime(
+            String => $Date . ' 23:59:59',
+        );
 
         # add time zone to calculation
         my $UserCalendar = $UserData{Calendar} || '';
-        my $Zone = $Self->{ConfigObject}->Get( "TimeZone::Calendar" . $UserCalendar );
+        my $Zone = $Kernel::OM->Get('Kernel::Config')->Get( "TimeZone::Calendar" . $UserCalendar );
         if ($Zone) {
             my $ZoneSeconds = $Zone * 60 * 60;
             $DayStartTime = $DayStartTime - $ZoneSeconds;
             $DayStopTime  = $DayStopTime - $ZoneSeconds;
         }
 
-        my $ThisDayWorkingTime = $Self->{TimeObject}->WorkingTime(
+        my $ThisDayWorkingTime = $TimeObject->WorkingTime(
             StartTime => $DayStartTime,
             StopTime  => $DayStopTime,
             Calendar  => $UserCalendar,
@@ -159,7 +167,7 @@ sub Run {
             $Param{Class} = 'NonWorkingDay';
         }
 
-        my %Data = $Self->{TimeAccountingObject}->WorkingUnitsGet(
+        my %Data = $TimeAccountingObject->WorkingUnitsGet(
             Year   => $Param{Year},
             Month  => $Param{Month},
             Day    => $Param{Day},
@@ -175,14 +183,14 @@ sub Run {
         $Param{WorkingHours} = $Data{Total} ? sprintf( "%.2f", $Data{Total} ) : '';
 
         $Param{Weekday_to_Text} = $WeekdayArray[ $Param{Weekday} ];
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'Row',
             Data => {%Param},
         );
         $Param{Comment} = '';
     }
 
-    my %UserReport = $Self->{TimeAccountingObject}->UserReporting(
+    my %UserReport = $TimeAccountingObject->UserReporting(
         Year  => $Param{Year},
         Month => $Param{Month},
     );
@@ -197,14 +205,14 @@ sub Run {
     }
 
     if ( $UserData{ShowOvertime} ) {
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'Overtime',
             Data => \%Param,
         );
     }
 
     # Overview per project and action
-    my %ProjectData = $Self->{TimeAccountingObject}->ProjectActionReporting(
+    my %ProjectData = $TimeAccountingObject->ProjectActionReporting(
         Year   => $Param{Year},
         Month  => $Param{Month},
         UserID => $Param{UserID},
@@ -222,15 +230,14 @@ sub Run {
 
         $Param{ShowProjects} = 'Show ' . $Param{ProjectStatusShow} . ' projects';
 
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'ProjectTable',
             Data => {%Param},
         );
 
         PROJECTID:
         for my $ProjectID (
-            sort { $ProjectData{$a}{Name} cmp $ProjectData{$b}{Name} }
-            keys %ProjectData
+            sort { $ProjectData{$a}{Name} cmp $ProjectData{$b}{Name} } keys %ProjectData
             )
         {
             my $ProjectRef = $ProjectData{$ProjectID};
@@ -257,19 +264,19 @@ sub Run {
                     $Param{HoursTotal} = sprintf( "%.2f", $ActionRef->{Total} || 0 );
                     $Total      += $Param{Hours};
                     $TotalTotal += $Param{HoursTotal};
-                    $Self->{LayoutObject}->Block(
+                    $LayoutObject->Block(
                         Name => 'Action',
                         Data => {%Param},
                     );
                     if ( !$Param{Project} ) {
                         $Param{Project} = $ProjectRef->{Name};
-                        my $ProjectDescription = $Self->{LayoutObject}->Ascii2Html(
+                        my $ProjectDescription = $LayoutObject->Ascii2Html(
                             Text           => $ProjectRef->{Description},
                             HTMLResultMode => 1,
                             NewLine        => 50,
                         );
 
-                        $Self->{LayoutObject}->Block(
+                        $LayoutObject->Block(
                             Name => 'Project',
                             Data => {
                                 RowSpan => ( 1 + scalar keys %{$ActionsRef} ),
@@ -278,7 +285,7 @@ sub Run {
                         );
 
                         if ($ProjectDescription) {
-                            $Self->{LayoutObject}->Block(
+                            $LayoutObject->Block(
                                 Name => 'ProjectDescription',
                                 Data => {
                                     ProjectDescription => $ProjectDescription,
@@ -290,7 +297,7 @@ sub Run {
 
                             # persons who are allowed to see the create object link are
                             # allowed to see the project reporting
-                            $Self->{LayoutObject}->Block(
+                            $LayoutObject->Block(
                                 Name => 'ProjectLink',
                                 Data => {
                                     Project   => $ProjectRef->{Name},
@@ -299,7 +306,7 @@ sub Run {
                             );
                         }
                         else {
-                            $Self->{LayoutObject}->Block(
+                            $LayoutObject->Block(
                                 Name => 'ProjectNoLink',
                                 Data => { Project => $ProjectRef->{Name} },
                             );
@@ -312,7 +319,7 @@ sub Run {
                 $Param{HoursTotal} = sprintf( "%.2f", $TotalTotal );
                 $Param{TotalHours}      += $Total;
                 $Param{TotalHoursTotal} += $TotalTotal;
-                $Self->{LayoutObject}->Block(
+                $LayoutObject->Block(
                     Name => 'ActionTotal',
                     Data => {%Param},
                 );
@@ -324,20 +331,22 @@ sub Run {
         if ( defined( $Param{TotalHoursTotal} ) ) {
             $Param{TotalHoursTotal} = sprintf( "%.2f", $Param{TotalHoursTotal} );
         }
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'GrandTotal',
             Data => {%Param},
         );
     }
 
     # build output
-    my $Output = $Self->{LayoutObject}->Header( Title => 'Overview' );
-    $Output .= $Self->{LayoutObject}->NavigationBar();
-    $Output .= $Self->{LayoutObject}->Output(
+    my $Output = $LayoutObject->Header(
+        Title => 'Overview',
+    );
+    $Output .= $LayoutObject->NavigationBar();
+    $Output .= $LayoutObject->Output(
         Data         => \%Param,
         TemplateFile => 'AgentTimeAccountingOverview'
     );
-    $Output .= $Self->{LayoutObject}->Footer();
+    $Output .= $LayoutObject->Footer();
 
     return $Output;
 }
@@ -348,18 +357,22 @@ sub _CheckValidityUserPeriods {
     my %Errors = ();
     my %GetParam;
 
+    # get time object
+    my $TimeObject = $Kernel::OM->Get('Kernel::System::Time');
+
     for ( my $Period = 1; $Period <= $Param{Period}; $Period++ ) {
 
         # check for needed data
         for my $Parameter (qw(DateStart DateEnd LeaveDays)) {
-            $GetParam{$Parameter} = $Self->{ParamObject}->GetParam( Param => $Parameter . "[$Period]" );
+            $GetParam{$Parameter}
+                = $Kernel::OM->Get('Kernel::System::Web::Request')->GetParam( Param => $Parameter . "[$Period]" );
             if ( !$GetParam{$Parameter} ) {
                 $Errors{ $Parameter . '-' . $Period . 'Invalid' }   = 'ServerError';
                 $Errors{ $Parameter . '-' . $Period . 'ErrorType' } = 'MissingValue';
             }
         }
         my ( $Year, $Month, $Day ) = split( '-', $GetParam{DateStart} );
-        my $StartDate = $Self->{TimeObject}->Date2SystemTime(
+        my $StartDate = $TimeObject->Date2SystemTime(
             Year   => $Year,
             Month  => $Month,
             Day    => $Day,
@@ -368,7 +381,7 @@ sub _CheckValidityUserPeriods {
             Second => 0,
         );
         ( $Year, $Month, $Day ) = split( '-', $GetParam{DateEnd} );
-        my $EndDate = $Self->{TimeObject}->Date2SystemTime(
+        my $EndDate = $TimeObject->Date2SystemTime(
             Year   => $Year,
             Month  => $Month,
             Day    => $Day,

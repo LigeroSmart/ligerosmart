@@ -835,8 +835,8 @@ returns:
     %UserData = (
         3 => {
             1 => {
-                DateEnd     => "2012-12-31",
-                DateStart   => "2012-10-01",
+                DateEnd     => "2015-12-31",
+                DateStart   => "2015-01-01",
                 LeaveDays   => "23.00",
                 Overtime    => "0.00",
                 Period      => 1,
@@ -845,8 +845,8 @@ returns:
                 WeeklyHours => "40.00",
             },
             2 => {
-                DateEnd     => "2013-12-31",
-                DateStart   => "2013-01-01",
+                DateEnd     => "2015-12-31",
+                DateStart   => "2015-01-01",
                 LeaveDays   => "23.00",
                 Overtime    => "0.00",
                 Period      => 2,
@@ -857,8 +857,8 @@ returns:
         },
         4 => {
             1 => {
-                DateEnd     => "2013-12-31",
-                DateStart   => "2012-01-01",
+                DateEnd     => "2015-12-31",
+                DateStart   => "2015-01-01",
                 LeaveDays   => "23.00",
                 Overtime    => "0.00",
                 Period      => 1,
@@ -1035,9 +1035,9 @@ sub UserSettingsInsert {
     $Param{UserStatus} = $ConfigObject->Get('TimeAccounting::DefaultUserStatus')    || '1';
     $Param{Overtime}   = $ConfigObject->Get('TimeAccounting::DefaultUserOvertime')  || '0';
     $Param{DateEnd}    = $ConfigObject->Get('TimeAccounting::DefaultUserDateEnd')
-        || '2011-12-31';
+        || '2015-12-31';
     $Param{DateStart} = $ConfigObject->Get('TimeAccounting::DefaultUserDateStart')
-        || '2011-01-01';
+        || '2015-01-01';
     $Param{Description} = $ConfigObject->Get('TimeAccounting::DefaultUserDescription')
         || 'Put your description here.';
 
@@ -1103,16 +1103,16 @@ updates user data in the db
         ShowOvertime  => 1 || 0,
         Period        => {
             1 => {
-                DateStart    => '2010-12-12',
-                DateEnd      => '2010-12-31',
+                DateStart    => '2015-12-12',
+                DateEnd      => '2015-12-31',
                 WeeklyHours  => '38',
                 LeaveDays    => '25',
                 Overtime     => '38',
                 UserStatus   => 1 || 0,
             },
             2 => {
-                DateStart    => '2010-12-12',
-                DateEnd      => '2010-12-31',
+                DateStart    => '2015-12-12',
+                DateEnd      => '2015-12-31',
                 WeeklyHours  => '38',
                 LeaveDays    => '25',
                 Overtime     => '38',
@@ -1558,7 +1558,7 @@ sub WorkingUnitsInsert {
 deletes working units in the db
 
     $TimeAccountingObject->WorkingUnitsDelete(
-        Year   => '2005',
+        Year   => '2015',
         Month  => '7',
         Day    => '13',
         UserID => 123,

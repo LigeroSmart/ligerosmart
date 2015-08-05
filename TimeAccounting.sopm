@@ -28,16 +28,16 @@
         <File Permission="644" Location="Kernel/Modules/AgentTimeAccountingReporting.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentTimeAccountingSetting.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentTimeAccountingView.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AAATimeAccounting.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTimeAccountingDelete.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTimeAccountingEdit.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTimeAccountingOverview.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTimeAccountingReporting.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTimeAccountingReportingProject.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTimeAccountingSetting.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTimeAccountingView.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/NotificationTimeAccounting.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/ToolBarIncompleteWorkingDays.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AAATimeAccounting.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentTimeAccountingDelete.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentTimeAccountingEdit.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentTimeAccountingOverview.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentTimeAccountingReporting.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentTimeAccountingReportingProject.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentTimeAccountingSetting.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentTimeAccountingView.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Notification/TimeAccounting.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm"/>
         <File Permission="644" Location="Kernel/System/TimeAccounting.pm"/>
         <File Permission="644" Location="Kernel/System/Stats/Dynamic/TimeAccounting.pm"/>
         <File Permission="644" Location="scripts/test/TimeAccounting.t"/>

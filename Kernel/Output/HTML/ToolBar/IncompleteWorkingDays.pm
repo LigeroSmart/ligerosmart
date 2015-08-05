@@ -6,12 +6,18 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package Kernel::Output::HTML::ToolBarIncompleteWorkingDays;
+package Kernel::Output::HTML::ToolBar::IncompleteWorkingDays;
 
 use strict;
 use warnings;
 
-use Kernel::System::TimeAccounting;
+our @ObjectDependencies = (
+    'Kernel::Config',
+    'Kernel::System::Group',
+    'Kernel::System::Time',
+    'Kernel::System::TimeAccounting',
+    'Kernel::Output::HTML::Layout',
+);
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -20,19 +26,8 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    # get needed objects
-    for my $Needed (
-        qw(
-        ConfigObject LogObject DBObject TicketObject UserObject GroupObject LayoutObject UserID
-        TimeObject
-        )
-        )
-    {
-        $Self->{$Needed} = $Param{$Needed} || die "Got no $Needed!";
-    }
-
-    # create needed objects
-    $Self->{TimeAccountingObject} = Kernel::System::TimeAccounting->new(%Param);
+    # get UserID param
+    $Self->{UserID} = $Param{UserID} || die "Got no UserID!";
 
     return $Self;
 }
@@ -45,16 +40,21 @@ sub Run {
     my $Group  = 'time_accounting';
 
     # do not show icon if frontend module is not registered
-    return if !$Self->{ConfigObject}->Get('Frontend::Module')->{$Action};
+    return if !$Kernel::OM->Get('Kernel::Config')->Get('Frontend::Module')->{$Action};
+
+    # get group object
+    my $GroupObject = $Kernel::OM->Get('Kernel::System::Group');
 
     # get the group id
-    my $GroupID = $Self->{GroupObject}->GroupLookup( Group => $Group );
+    my $GroupID = $GroupObject->GroupLookup(
+        Group => $Group,
+    );
 
     # deny access, when the group is not found
     return if !$GroupID;
 
     # get user groups, where the user has the appropriate privilege
-    my %Groups = $Self->{GroupObject}->GroupMemberList(
+    my %Groups = $GroupObject->GroupMemberList(
         UserID => $Self->{UserID},
         Type   => 'rw',
         Result => 'HASH',
@@ -63,11 +63,17 @@ sub Run {
     # deny access if the agent doesn't have the appropriate type in the appropriate group
     return if !$Groups{$GroupID};
 
-    my ( $Sec, $Min, $Hour, $Day, $Month, $Year ) = $Self->{TimeObject}->SystemTime2Date(
-        SystemTime => $Self->{TimeObject}->SystemTime(),
+    # get time object
+    my $TimeObject = $Kernel::OM->Get('Kernel::System::Time');
+
+    my ( $Sec, $Min, $Hour, $Day, $Month, $Year ) = $TimeObject->SystemTime2Date(
+        SystemTime => $TimeObject->SystemTime(),
     );
 
-    my %UserCurrentPeriod = $Self->{TimeAccountingObject}->UserCurrentPeriodGet(
+    # get time accounting object
+    my $TimeAccountingObject = $Kernel::OM->Get('Kernel::System::TimeAccounting');
+
+    my %UserCurrentPeriod = $TimeAccountingObject->UserCurrentPeriodGet(
         Year  => $Year,
         Month => $Month,
         Day   => $Day,
@@ -78,7 +84,7 @@ sub Run {
 
     # get the number of incomplete working days
     my $Count                 = 0;
-    my %IncompleteWorkingDays = $Self->{TimeAccountingObject}->WorkingUnitsCompletnessCheck(
+    my %IncompleteWorkingDays = $TimeAccountingObject->WorkingUnitsCompletnessCheck(
         UserID => $Self->{UserID},
     );
 
@@ -106,15 +112,18 @@ sub Run {
         }
     }
 
-    # remove current day because it makes no sense to show the current day as incompleted
+    # remove current day because it makes no sense to show the current day as incomplete
     if ( $Count > 0 ) {
         $Count--;
     }
 
+    # get layout object
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+
     # get ToolBar object parameters
     my $Class = $Param{Config}->{CssClass};
-    my $Text  = $Self->{LayoutObject}->{LanguageObject}->Get('Incomplete working days');
-    my $URL   = $Self->{LayoutObject}->{Baselink};
+    my $Text  = $LayoutObject->{LanguageObject}->Translate('Incomplete working days');
+    my $URL   = $LayoutObject->{Baselink};
     my $Icon  = $Param{Config}->{Icon};
 
     return () if !$Count;

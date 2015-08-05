@@ -329,7 +329,8 @@ $('#NavigationSelect').bind('click', function(){
     TimeAccounting.Agent.EditTimeRecords.ActionListConstraints = [% Data.JSActionListConstraints | html %];
     TimeAccounting.Agent.EditTimeRecords.Init({
         RemarkRegExpContent: "[% Data.RemarkRegExp | html %]",
-        Autocompletion: [% Data.EnableAutocompletion | html %],
+//        TODO: temporary removed
+//        Autocompletion: [% Data.EnableAutocompletion | html %],
         Language: {
             ShowAllItems: [% Translate("Show all items") | JSON %],
             ProjectTitle: [% Translate("Project") | JSON %],

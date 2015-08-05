@@ -223,7 +223,7 @@
         <Group>TimeAccounting</Group>
         <SubGroup>Frontend::Agent</SubGroup>
         <Setting>
-            <String Regex="">2014-01-01</String>
+            <String Regex="">2015-01-01</String>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="TimeAccounting::DefaultUserDateEnd" Required="1" Valid="1">
@@ -231,7 +231,7 @@
         <Group>TimeAccounting</Group>
         <SubGroup>Frontend::Agent</SubGroup>
         <Setting>
-            <String Regex="">2014-12-31</String>
+            <String Regex="">2015-12-31</String>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="TimeAccounting::DefaultUserDescription" Required="1" Valid="1">
@@ -275,7 +275,7 @@
         <SubGroup>Frontend::Agent::ModuleNotify</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::Output::HTML::NotificationTimeAccounting</Item>
+                <Item Key="Module">Kernel::Output::HTML::Notification::TimeAccounting</Item>
             </Hash>
         </Setting>
     </ConfigItem>
@@ -370,7 +370,7 @@
         <SubGroup>Frontend::Agent::ToolBarModule</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::Output::HTML::ToolBarIncompleteWorkingDays</Item>
+                <Item Key="Module">Kernel::Output::HTML::ToolBar::IncompleteWorkingDays</Item>
                 <Item Key="CssClass">IncompleteWorkingDays</Item>
                 <Item Key="Icon">fa fa-clock-o</Item>
             </Hash>

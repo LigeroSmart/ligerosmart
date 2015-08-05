@@ -174,7 +174,7 @@
                 <h2><label for="FilterProjects">[% Translate("Filter for Projects") | html %]</label></h2>
             </div>
             <div class="Content">
-                <input type="text" id="FilterProjects" class="W50pc" name="FilterProjects" value="" title="[% Translate("Filter for Projects") | html %]" />
+                <input type="text" id="FilterProjects" class="FilterBox" placeholder="Just start typing to filter..." name="FilterProjects" value="" title="[% Translate("Filter for Projects") | html %]" />
             </div>
         </div>
 [% RenderBlockEnd("ProjectFilter") %]
@@ -185,7 +185,7 @@
                 <h2><label for="FilterTasks">[% Translate("Filter for Tasks") | html %]</label></h2>
             </div>
             <div class="Content">
-                <input type="text" id="FilterTasks" class="W50pc" name="FilterTasks" value="" title="[% Translate("Filter for Tasks") | html %]" />
+                <input type="text" id="FilterTasks" class="FilterBox" placeholder="Just start typing to filter..." name="FilterTasks" value="" title="[% Translate("Filter for Tasks") | html %]" />
             </div>
         </div>
 [% RenderBlockEnd("TaskFilter") %]
@@ -196,7 +196,7 @@
                 <h2><label for="FilterUsers">[% Translate("Filter for Users") | html %]</label></h2>
             </div>
             <div class="Content">
-                <input type="text" id="FilterUsers" class="W50pc" name="FilterUsers" value="" title="[% Translate("Filter for Users") | html %]" />
+                <input type="text" id="FilterUsers" class="FilterBox" placeholder="Just start typing to filter..." name="FilterUsers" value="" title="[% Translate("Filter for Users") | html %]" />
             </div>
         </div>
 [% RenderBlockEnd("UserFilter") %]
@@ -458,7 +458,7 @@
                         <div class="Clear"></div>
 
                         <div class="Field">
-                            <input type="checkbox" name="CreateProject" id="CreateProject" value="1" title="Translate("Allow project creation") | html %]" [% Data.CreateProject %] />[% Translate("Allow project creation") | html %]
+                            <input type="checkbox" name="CreateProject" id="CreateProject" value="1" title="[% Translate("Allow project creation") | html %]" [% Data.CreateProject %] />[% Translate("Allow project creation") | html %]
                         </div>
                         <div class="Clear"></div>
 
