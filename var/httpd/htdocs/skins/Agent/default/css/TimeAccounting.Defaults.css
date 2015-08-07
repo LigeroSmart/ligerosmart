@@ -43,51 +43,6 @@ div.MonthSelection {
 }
 
 /**
- * @subsection  special overwriting settings for autocompletion button
- */
-
-table#InsertWorkingHours tbody td {
-    white-space: nowrap;
-    height: 35px;
-}
-
-table#InsertWorkingHours tbody td input.ui-widget {
-    height: 17px;
-    padding: 0px;
-    font-size: 12px;
-}
-
-.ui-button-icon-only .ui-button-text {
-    padding: 0 !important;
-    height: 18px !important;
-}
-
-.ui-button .ui-button-text {
-    position: absolute;
-    left: -9999px;
-    top: -9999px;
-}
-
-button.ui-button-icon-only {
-    width: 24px !important;
-    height: 17px;
-    padding: 0px !important;
-    width: 24px !important;
-    box-sizing: initial;
-    vertical-align: top;
-}
-
-.ui-autocomplete .ui-menu-ietm {
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 12px;
-    text-align: left;
-}
-
-.HorizontalScroll {
-    overflow-x: scroll;
-}
-
-/**
  * @subsection  IncompleteWorkingDays select
  */
 #IncompleteWorkingDaysList option[selected=selected] {
@@ -103,11 +58,6 @@ button.ui-button-icon-only {
 
 .ActionSelection {
     width: 300px;
-}
-
-ul.ui-autocomplete.ui-menu {
-    max-height: 300px;
-    overflow-y: auto;
 }
 
 } /* end @media */

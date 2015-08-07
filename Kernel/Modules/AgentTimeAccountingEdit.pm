@@ -757,7 +757,6 @@ sub Run {
     $ErrorIndex = 0;
 
     # build units
-    $Param{"JSProjectList"} = "var JSProjectList = new Array();\n";
     for my $ID ( 1 .. $Param{RecordsNumber} ) {
         $Param{ID} = $ID;
         my $UnitRef   = $Units[$ID];
@@ -780,21 +779,8 @@ sub Run {
             || '';
         $Param{ProjectName} = '';
 
-        # generate JavaScript array which will be output to the template
-        my @JSProjectList;
-        for my $Project ( @{$ProjectList} ) {
-            push @JSProjectList,
-                '{id:' . ( $Project->{Key} || '0' ) . ' , name:\'' . $Project->{Value} . '\'}';
-
-            if ( $Project->{Key} eq $Param{ProjectID} ) {
-                $Param{ProjectName} = $Project->{Value};
-            }
-        }
-        $Param{"JSProjectList"}
-            .= "JSProjectList[$ID] = [" . ( join ', ', @JSProjectList ) . "];\n";
-
-        $Frontend{ProjectOption} = $LayoutObject->BuildSelection(
-            Data        => $ProjectList,
+        # set common params for project selection
+        my %ProjectOptionParams = (
             Name        => "ProjectID[$ID]",
             ID          => "ProjectID$ID",
             Translation => 0,
@@ -802,6 +788,35 @@ sub Run {
                 . ( $Errors{$ErrorIndex}{ProjectIDInvalid} || '' ),
             OnChange => "TimeAccounting.Agent.EditTimeRecords.FillActionList($ID);",
             Title    => $LayoutObject->{LanguageObject}->Translate("Project"),
+        );
+
+        my $Class = '';
+
+        if ( $ConfigObject->Get("TimeAccounting::EnableAutoCompletion") ) {
+
+            # set class (it will be used later for tasks/actions)
+            $Class = 'Modernize';
+
+            # set params for modern inputs
+            $ProjectOptionParams{Data} = $ProjectList->{AllProjects};
+            $ProjectOptionParams{Class} .= $Class;
+            $ProjectOptionParams{Filters} = {
+                LastProjects => {
+                    Name   => $LayoutObject->{LanguageObject}->Translate('Previous Project'),
+                    Values => $ProjectList->{LastProjects},
+                },
+            };
+        }
+        else {
+
+            # set params for traditional selects
+            my @Projects = ( @{ $ProjectList->{LastProjects} }, @{ $ProjectList->{AllProjects} } );
+            $ProjectOptionParams{Data} = \@Projects;
+        }
+
+        # build projects select
+        $Frontend{ProjectOption} = $LayoutObject->BuildSelection(
+            %ProjectOptionParams,
         );
 
         # action list initially only contains empty and selected element as well as elements
@@ -838,7 +853,8 @@ sub Run {
             Class       => 'Validate_DependingRequiredAND Validate_Depending_ProjectID'
                 . $ID
                 . ' ActionSelection '
-                . ( $Errors{$ErrorIndex}{ActionIDInvalid} || '' ),
+                . ( $Errors{$ErrorIndex}{ActionIDInvalid} || '' )
+                . $Class,
             Title => $LayoutObject->{LanguageObject}->Translate("Task"),
         );
 
@@ -1128,6 +1144,7 @@ sub Run {
                 PossibleNone => 1,
                 Title =>
                     $LayoutObject->{LanguageObject}->Translate("Incomplete Working Days"),
+                Class => 'Modernize',
             );
 
             $LayoutObject->Block(
@@ -1177,9 +1194,6 @@ sub Run {
 
     # integrate the handling for required remarks in relation to projects
     $Param{RemarkRegExp} = $Self->_Project2RemarkRegExp();
-
-    # enable auto-completion?
-    $Param{EnableAutocompletion} = $ConfigObject->Get("TimeAccounting::EnableAutoCompletion");
 
     # build output
     my $Output = $LayoutObject->Header(
@@ -1359,14 +1373,6 @@ sub _ActionListConstraints {
 sub _ProjectList {
     my ( $Self, %Param ) = @_;
 
-    # at first a empty line
-    my @List = (
-        {
-            Key   => '',
-            Value => '',
-        },
-    );
-
     # get time accounting object
     my $TimeAccountingObject = $Kernel::OM->Get('Kernel::System::TimeAccounting');
 
@@ -1386,6 +1392,14 @@ sub _ProjectList {
         %{ $Self->{LastProjectsRef} } = map { $_ => 1 } @LastProjects;
     }
 
+    my @LastProjects = (
+        {
+            Key   => '',
+            Value => '',
+        },
+    );
+
+    # add the separator
     PROJECTID:
     for my $ProjectID (
         sort { $Project{Project}{$a} cmp $Project{Project}{$b} }
@@ -1397,18 +1411,33 @@ sub _ProjectList {
             Key   => $ProjectID,
             Value => $Project{Project}{$ProjectID},
         );
-        push @List, \%Hash;
-
-        # at the moment it is not possible mark the selected project
-        # in the favorite list (I think a bug in Build selection?!)
+        push @LastProjects, \%Hash;
     }
 
-    # add the separator
-    push @List, {
-        Key      => '0',
-        Value    => '--------------------',
-        Disabled => 1,
-    };
+    @LastProjects = $Self->_ProjectListConstraints(
+        List       => \@LastProjects,
+        SelectedID => $Param{SelectedID} || '',
+    );
+
+    my @AllProjects;
+
+    # check if AutoCompletion is disabled
+    # in this case a separator is needed betwen two lists of projects (last and all)
+    if ( !$Kernel::OM->Get('Kernel::Config')->Get("TimeAccounting::EnableAutoCompletion") ) {
+        push @LastProjects, {
+            Key      => '0',
+            Value    => '--------------------',
+            Disabled => 1,
+        };
+    }
+    else {
+        @AllProjects = (
+            {
+                Key   => '',
+                Value => '',
+            },
+        );
+    }
 
     # add all allowed projects to the list
     PROJECTID:
@@ -1426,15 +1455,20 @@ sub _ProjectList {
             $Hash{Selected} = 1;
         }
 
-        push @List, \%Hash;
+        push @AllProjects, \%Hash;
     }
 
-    @List = $Self->_ProjectListConstraints(
-        List       => \@List,
+    @AllProjects = $Self->_ProjectListConstraints(
+        List       => \@AllProjects,
         SelectedID => $Param{SelectedID} || '',
     );
 
-    return \@List;
+    my %Projects = (
+        LastProjects => \@LastProjects,
+        AllProjects  => \@AllProjects,
+    );
+
+    return \%Projects;
 }
 
 sub _ProjectListConstraints {

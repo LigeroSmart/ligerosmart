@@ -852,6 +852,7 @@ sub _ProjectSettingsEdit {
         Data       => \%StatusList,
         SelectedID => $ProjectStatus,
         Name       => 'ProjectStatus',
+        Class      => 'Modernize',
     );
 
     $LayoutObject->Block(
@@ -945,6 +946,7 @@ sub _SettingOverview {
                 Translation  => 0,
                 PossibleNone => 0,
                 Title        => $LayoutObject->{LanguageObject}->Translate("New User"),
+                Class        => 'Modernize',
             );
             $LayoutObject->Block(
                 Name => 'ActionAddUser',
@@ -1143,6 +1145,7 @@ sub _TaskSettingsEdit {
         Data       => \%StatusList,
         SelectedID => $TaskStatus,
         Name       => 'TaskStatus',
+        Class      => 'Modernize',
     );
 
     $LayoutObject->Block(
@@ -1242,6 +1245,7 @@ sub _UserSettingsEdit {
         Name        => 'Calendar',
         Translation => 1,
         SelectedID  => $GetParam{Calendar} || $UserData{Calendar} || 0,
+        Class       => 'Modernize',
     );
 
     $Param{Description} = $GetParam{Description} || $UserData{Description} || '';
@@ -1289,6 +1293,7 @@ sub _UserSettingsEdit {
                 Name       => "PeriodStatus[$Period]",
                 ID         => "PeriodStatus-$Period",
                 Title      => $LayoutObject->{LanguageObject}->Translate("Period Status"),
+                Class      => 'Modernize',
             );
 
             $LayoutObject->Block(
@@ -1350,6 +1355,7 @@ sub _UserSettingsEdit {
                     Name       => "PeriodStatus[$Period]",
                     ID         => "PeriodStatus-$Period",
                     Title      => $LayoutObject->{LanguageObject}->Translate("Period Status"),
+                    Class      => 'Modernize',
                 );
 
                 $LayoutObject->Block(

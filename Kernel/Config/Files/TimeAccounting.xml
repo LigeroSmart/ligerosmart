@@ -35,9 +35,6 @@
                 <Loader>
                     <CSS>TimeAccounting.Defaults.css</CSS>
                     <CSS>TimeAccounting.Table.css</CSS>
-                    <JavaScript>thirdparty/jquery-ui-button-1.10.3/jquery-ui-button.js</JavaScript>
-                    <JavaScript>thirdparty/jquery-combobox/jquery-combobox.js</JavaScript>
-                    <JavaScript>Core.UI.ComboBox.js</JavaScript>
                     <JavaScript>TimeAccounting.Agent.ConfirmationDialog.js</JavaScript>
                     <JavaScript>TimeAccounting.Agent.EditTimeRecords.js</JavaScript>
                     <JavaScript>TimeAccounting.Agent.Datepicker.js</JavaScript>
@@ -343,7 +340,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="TimeAccounting::EnableAutoCompletion" Required="0" Valid="1">
-        <Description Translatable="1">If enabled, the dropdown elements in the edit screen are changed to autocompletion fields.</Description>
+        <Description Translatable="1">If enabled, the dropdown elements in the edit screen are changed to modernized autocompletion fields.</Description>
         <Group>TimeAccounting</Group>
         <SubGroup>Frontend::Agent</SubGroup>
         <Setting>

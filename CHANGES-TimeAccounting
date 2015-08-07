@@ -7,6 +7,9 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
+5.0.0.beta1 - 2015-??-??
+ - 2015-08-07 Updated look and feel of select controls, thanks to S7.
+
 4.0.1 - 2014-11-25
  - 2014-11-20 Added Swahili language.
  - 2014-11-20 Synced translation files.

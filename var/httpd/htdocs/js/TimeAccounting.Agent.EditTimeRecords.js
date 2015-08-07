@@ -53,7 +53,6 @@ TimeAccounting.Agent.EditTimeRecords = (function (TargetNS) {
         // remove previous actions, leave first element (empty element)
         $ActionSelection.find('option').filter(':not(:first)').remove();
 
-
         $.each(ActionList, function () {
             var ActionID = this[0],
                 ActionName = this[1];
@@ -84,45 +83,15 @@ TimeAccounting.Agent.EditTimeRecords = (function (TargetNS) {
     };
 
 
-    function InitAutoCompletion(Language) {
-        // Initialize ComboBox on Project dropdown
-        Core.UI.ComboBox.Init('.ProjectSelection', {
-            Class: "Validate_TimeAccounting_Project",
-            Lang: {
-                ShowAllItems: Language.ShowAllItems,
-                InputTitle: Language.ProjectTitle
-            }
-        });
-        // Initialize ComboBox on task dropdown
-        Core.UI.ComboBox.Init('.ActionSelection', {
-            Class: "Validate_DependingRequiredAND",
-            Lang: {
-                ShowAllItems: Language.ShowAllItems,
-                InputTitle: Language.TaskTitle
-            }
-        });
-        // Add special validation class to ActionSelection
-        $('.ActionSelection').next('input:text').each(function () {
-            var ID = this.id.replace('Combo_ActionID', '');
-            $(this).addClass('Validate_Depending_Combo_ProjectID' + ID);
-        });
-        // Remove validation classes from underlying select
-        $('.ProjectSelection').removeClass('Validate_TimeAccounting_Project');
-        $('.ActionSelection').removeClass('Validate_DependingRequiredAND');
-
-        // Copy ServerError classes to according comboboxes
-        $('.ProjectSelection.ServerError').next('input[id^=Combo_]').addClass('ServerError');
-        $('.ActionSelection.ServerError').next('input[id^=Combo_]').addClass('ServerError');
-
-        Core.Form.Validate.Init();
-    }
-
-    function InitAddRow(Language) {
+    function InitAddRow() {
         $('#MoreInputFields').unbind('click.MoreInputFields').bind('click.MoreInputFields', function () {
             var $LastRow = $('#InsertWorkingHours tbody tr.WorkingHours:last'),
-                $NewRow = $LastRow.clone(),
-                NewRowHTML = $NewRow.html(),
+                $NewRow, NewRowHTML,
                 RecordNumber = parseInt($('#RecordsNumber').val(), 10) + 1;
+
+            Core.UI.InputFields.Deactivate($('.WorkingHours'));
+            $NewRow = $LastRow.clone();
+            NewRowHTML = $NewRow.html();
 
             // Now take the last row and replace all numbers with the new record number
             NewRowHTML = NewRowHTML.replace(/ProjectID[0-9]+/g, 'ProjectID' + RecordNumber);
@@ -147,11 +116,6 @@ TimeAccounting.Agent.EditTimeRecords = (function (TargetNS) {
                 .find('input:text').val('').end()
                 .find('select option').prop('selected', false);
 
-            // Remove autocompletion from this row (will be re-initiated later)
-            $NewRow
-                .find('input[id^=Combo_]').remove().end()
-                .find('button[id^=ComboBtn_]').remove();
-
             // Now add this row to the table
             $LastRow.after($NewRow);
 
@@ -163,10 +127,8 @@ TimeAccounting.Agent.EditTimeRecords = (function (TargetNS) {
                 .removeClass('Even')
                 .filter(':odd').addClass('Even');
 
-            // Re-initiate autocompletion combobox
-            if (TargetNS.Autocompletion) {
-                InitAutoCompletion(Language);
-            }
+            // Modernize fields
+            Core.UI.InputFields.Activate($('.WorkingHours'));
         });
     }
 
@@ -264,23 +226,18 @@ TimeAccounting.Agent.EditTimeRecords = (function (TargetNS) {
         });
     }
 
-    TargetNS.Autocompletion = true;
-
     /**
      * @name Init
      * @memberof TimeAccounting.Agent.EditTimeRecords
      * @function
      * @param {Object} Options the different possible options:
      *                  RemarkRegExpContent - the regular expression for the remark validation check
-     *                  Language - object with text translations
-     *                  Autocompletion - boolean
      * @description
      *      This function initializes all needed JS for the Edit screen
      */
     TargetNS.Init = function (Options) {
         var LocalOptions = Options || {},
             RemarkRegExpContent = LocalOptions.RemarkRegExpContent,
-            Language = LocalOptions.Language,
             // Add some special validation methods for the edit screen
             // Define all available elements (only the prefixes) in a row
             ElementPrefixes = ['ProjectID', 'ActionID', 'Remark', 'StartTime', 'EndTime', 'Period'];
@@ -373,14 +330,8 @@ TimeAccounting.Agent.EditTimeRecords = (function (TargetNS) {
             /*eslint-enable camelcase */
         });
 
-        // Enable autocompletion, if configured
-        TargetNS.Autocompletion = LocalOptions.Autocompletion;
-        if (LocalOptions.Autocompletion) {
-            InitAutoCompletion(Language);
-        }
-
         // initiate "more input fields" functionality
-        InitAddRow(Language);
+        InitAddRow();
 
         // initiate period calculation
         InitPeriodCalculation();
