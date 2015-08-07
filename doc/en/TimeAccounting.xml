@@ -591,13 +591,22 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
             command on the command line:
         </para>
         <screen>
-shell> perl bin/otrs.UnitTest.pl -n TimeAccounting
+shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test TimeAccounting
         </screen>
-        <para>Run all available unit tests</para>
+        <para>Selenium unit tests</para>
         <para>
-            To run all available unit tests, use the following command on the command line:
+            To run the Selenium unit tests, make sure you have a complete Selenium environment setup in your Kernel/Config.pm file and a running a WebDriver.
         </para>
-        <screen>shell> perl bin/otrs.UnitTest.pl</screen>
+        <screen>
+<!-- TODO: Do a final review when all tests are added -->
+shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test AgentTimeAccountingEdit:AgentTimeAccountingOverview:AgentTimeAccountingReporting:AgentTimeAccountingSetting:AgentTimeAccountingView
+shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test Notification/TimeAccounting:ToolBar/IncompleteWorkingDays
+         </screen>
+         <para>Run all available unit tests</para>
+         <para>
+             To run all available unit tests, use the following command on the command line:
+         </para>
+        <screen>shell> perl bin/otrs.Console.pl Dev::UnitTest::Run</screen>
     </section>
 </chapter>
 
