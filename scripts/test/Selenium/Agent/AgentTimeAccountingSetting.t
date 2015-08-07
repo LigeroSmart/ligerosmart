@@ -103,18 +103,21 @@ $Selenium->RunTest(
         }
 
         # create test task
-        my $TaskTitle = 'Task ' . $Helper->GetRandomID();
-        $Selenium->find_element( "#Task", 'css' )->send_keys($TaskTitle);
+        my $ActionTitle = 'Task ' . $Helper->GetRandomID();
+        $Selenium->find_element( "#Task", 'css' )->send_keys($ActionTitle);
         $Selenium->find_element("//button[\@value='Submit'][\@type='submit']")->click();
 
         # verify created test task
         $Self->True(
-            index( $Selenium->get_page_source(), $TaskTitle ) > -1,
-            "$TaskTitle - found",
+            index( $Selenium->get_page_source(), $ActionTitle ) > -1,
+            "$ActionTitle - found",
         );
 
         # add test user to time account setting
-        $Selenium->find_element( "#NewUserID option[value='$TestUserID']", 'css' )->click();
+        my $AutoCompleteUser = "$TestUser $TestUser";
+        $Selenium->find_element( "#NewUserID_Search", 'css' )->click();
+        sleep 1;
+        $Selenium->find_element("//*[text()='$AutoCompleteUser']")->click();
         $Selenium->find_element("//button[\@value='New user'][\@type='submit']")->click();
 
         # check edit user page
@@ -159,48 +162,50 @@ $Selenium->RunTest(
         # get DB object
         my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
+        # get DB clean-up data
+        my @DBCleanData = (
+            {
+                Quoted  => $ProjectTitle,
+                Table   => 'time_accounting_project',
+                Where   => 'project',
+                Bind    => '',
+                Message => "$ProjectTitle - deleted",
+            },
+            {
+                Quoted  => $ActionTitle,
+                Table   => 'time_accounting_action',
+                Where   => 'action',
+                Bind    => '',
+                Message => "$ActionTitle - deleted",
+            },
+            {
+                Table   => 'time_accounting_user',
+                Where   => 'user_id',
+                Bind    => $TestUserID,
+                Message => "Test user $TestUserID - removed from accounting setting",
+            },
+            {
+                Table   => 'time_accounting_user_period',
+                Where   => 'user_id',
+                Bind    => $TestUserID,
+                Message => "Test user $TestUserID - removed from accounting period",
+            },
+        );
+
         # clean system from test created data
-        # delete test project
-        my $ProjectTitleQuoted = $DBObject->Quote($ProjectTitle);
-        my $Success            = $DBObject->Do(
-            SQL  => "DELETE FROM time_accounting_project WHERE project = ?",
-            Bind => [ \$ProjectTitleQuoted ],
-        );
-        $Self->True(
-            $Success,
-            "$ProjectTitle - deleted",
-        );
-
-        # delete test task
-        my $TaskTitleQuoted = $DBObject->Quote($TaskTitle);
-        $Success = $DBObject->Do(
-            SQL  => "DELETE FROM time_accounting_action WHERE action = ?",
-            Bind => [ \$TaskTitleQuoted ],
-        );
-        $Self->True(
-            $Success,
-            "$TaskTitle - deleted",
-        );
-
-        # delete test user from accounting user
-        $Success = $DBObject->Do(
-            SQL  => "DELETE FROM time_accounting_user WHERE user_id = ?",
-            Bind => [ \$TestUserID ],
-        );
-        $Self->True(
-            $Success,
-            "Test user $TestUserID - removed from accounting setting",
-        );
-
-        # delete test user from accounting user period
-        $Success = $DBObject->Do(
-            SQL  => "DELETE FROM time_accounting_user_period WHERE user_id = ?",
-            Bind => [ \$TestUserID ],
-        );
-        $Self->True(
-            $Success,
-            "Test user $TestUserID - removed from accounting period",
-        );
+        for my $Delete (@DBCleanData) {
+            if ( $Delete->{Quoted} ) {
+                $Delete->{Bind} = $DBObject->Quote( $Delete->{Quoted} );
+            }
+            my $Success = $DBObject->Do(
+                SQL  => "DELETE FROM $Delete->{Table} WHERE $Delete->{Where} = ?",
+                Bind => [ \$Delete->{Bind} ],
+            );
+            $Self->True(
+                $Success,
+                $Delete->{Message},
+            );
+        }
     }
 );
 
