@@ -247,7 +247,7 @@
                             </td>
                         </tr>
 [% RenderBlockStart("OverviewResultProjectRow") %]
-                        <tr>
+                        <tr [% IF Data.Status == 'invalid'%]class="Invalid"[% END %]>
                             <td><a class="AsBlock" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=EditProject;ID=[% Data.ProjectID | uri %]">[% Data.Project | html %]</a></td>
                             <td title="[% Data.ProjectDescription | html %]">[% Data.ProjectDescription | truncate(40) | html %]</td>
                             <td>[% Translate(Data.Status) | html %]</td>
@@ -296,7 +296,7 @@
                         </tr>
 
 [% RenderBlockStart("OverviewResultSettingRow") %]
-                        <tr>
+                        <tr [% IF Data.Status == 'invalid'%]class="Invalid"[% END %]>
                             <td><a class="AsBlock" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=EditTask;ActionID=[% Data.ActionID | uri %]">[% Data.Action | html %]</a></td>
                             <td>[% Translate(Data.Status) | html %]</td>
                         </tr>
