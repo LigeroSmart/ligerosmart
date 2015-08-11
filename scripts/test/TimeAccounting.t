@@ -414,11 +414,11 @@ my %WorkingUnitsData = $TimeAccountingObject->WorkingUnitsGet(
     UserID => $UserID,
 );
 
-# verify inexistence of the deleted working units
+# verify nonexistence of the deleted working units
 $Self->Is(
     $WorkingUnitsData{Total},
     '0',
-    'Verify inexistence of the deleted working units',
+    'Verify nonexistence of the deleted working units',
 );
 
 # set to invalid all registries used for the tests

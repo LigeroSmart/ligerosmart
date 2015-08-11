@@ -41,7 +41,13 @@
         <File Permission="644" Location="Kernel/System/TimeAccounting.pm"/>
         <File Permission="644" Location="Kernel/System/Stats/Dynamic/TimeAccounting.pm"/>
         <File Permission="644" Location="scripts/test/TimeAccounting.t"/>
+        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentTimeAccountingEdit.t"/>
+        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentTimeAccountingOverview.t"/>
+        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentTimeAccountingReporting.t"/>
         <File Permission="644" Location="scripts/test/Selenium/Agent/AgentTimeAccountingSetting.t"/>
+        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentTimeAccountingView.t"/>
+        <File Permission="644" Location="scripts/test/Selenium/Output/Notification/TimeAccounting.t"/>
+        <File Permission="644" Location="scripts/test/Selenium/Output/ToolBar/IncompleteWorkingDays.t"/>
         <File Permission="644" Location="var/httpd/htdocs/js/TimeAccounting.Agent.ConfirmationDialog.js"/>
         <File Permission="644" Location="var/httpd/htdocs/js/TimeAccounting.Agent.Datepicker.js"/>
         <File Permission="644" Location="var/httpd/htdocs/js/TimeAccounting.Agent.EditTimeRecords.js"/>
