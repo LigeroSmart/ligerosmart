@@ -17,3 +17,5 @@
 [% Translate("Error while inserting multiple dates!") | html %]
 [% Translate("Successfully inserted entries for several dates!") | html %]
 [% Translate("Entered date was invalid! Date was changed to today.") | html %]
+[% Translate("Last Selected Projects.") | html %]
+[% Translate("All Projects.") | html %]
