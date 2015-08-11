@@ -149,6 +149,8 @@ $Selenium->RunTest(
         $Selenium->find_element( "#Description",   'css' )->send_keys($UserDescription);
         $Selenium->find_element( "#ShowOvertime",  'css' )->click();
         $Selenium->find_element( "#CreateProject", 'css' )->click();
+
+        sleep 1;
         $Selenium->find_element("//button[\@value='Submit'][\@type='submit']")->click();
 
         # verify test user setting

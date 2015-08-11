@@ -175,6 +175,7 @@ $Selenium->RunTest(
             '6.00',
             "Period time correctly calculated",
         );
+        sleep 1;
 
         # submit work accounting edit time record
         $Selenium->find_element("//button[\@value='Submit'][\@type='submit']")->click();
