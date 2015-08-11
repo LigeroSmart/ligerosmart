@@ -1,0 +1,32 @@
+1 Update AgentTicketBulk in the framework to be able to load backends
+ * Backends should be loaded early in Run() one within the Do Subaction and one in _Mask()
+ * Backends should provide Display() returning the HTML code and Store() retuning 1 or fail
+ * Backends should be loaded by SysConfig "Ticket::Frontend::BulkModule###-xxx-aaabbbccc"
+ * Custom AgentTicketBulk from the package and its template should be removed (after its functionality is ported into a bulk module)
+
+2 Create new dynamic field driver Kernel/System/DynamicField/Driver/MasterSlave.pm
+ * New driver needs to be based in BaseSelect.pm
+ * New driver should not support ACLs (at the moment)
+ * New Admin module is needed (similar to Dropdown but removing the possible values options, can use same files with commented parts and different names, if so it has to specify in the origin tag)
+ * Move and adapt Kernel/System/MasterSlave.pm functionality to the ValueSet() in the new driver
+ * Move and adapt Kernel/Modules/AgentMasterSlavePrepareTicket.pm functionality to build the possible values list to EditFieldRender() in the driver (take a look at Kernel/Modules/AgentTicketBulk.pm and find similarities take the best of both) Note: Leave the file to just set the field as visible in the Phone and Email screens
+ * Possibly change Kernel/Modules/AgentMasterSlavePrepareTicket.pm to Kernel/Modules/AgentPreMasterSlave.pm or so
+ * Check if Kernel/System/Ticket/Event/MasterSlave.pm really needs to set the dynamic field value again
+
+3 Create a new backend Kernel/System/DynamicField/MasterSlaveBackend.pm
+ * It should contain only EditFieldRederForTicket() or so, the function should behave very similar to EditFieldRender() but it can pass either the Ticket or TicketID to the driver.
+ * The driver should contain a wrapper for EditFieldRederForTicket() that calls EditFieldReder() with the Ticket or TicketID and EditFieldReder() should need to know how to deal with it
+
+4 Cleanup AgentTicketMasterSlave.tt
+ * Uncomment fist commented block
+ * Add MasterSlave title just as another block following the same format
+ * Remove special code for MasterSlave dynamic field, it should use the normal dynamic fields blocks
+
+5 Cleanup AgentTicketMasterSlave.pm
+ * Code to set the config to show the dynamic field should be moved to the pre-action module
+ * Should not create new Language object but use the existing one
+ * Should use EditFieldRederForTicket() for the MasterSlave dynamic filed
+
+6 Cleanup Kernel/System/Ticket/Event/MasterSlave
+ * Better split it into functions by event
+ * Check if it is really needed to set the value here and when is needed (maybe the links are just for AgentTicketPhone and AgentTicketEmail ) set the value again does not make much sense, this might be a remnant of a previous wrong porting
