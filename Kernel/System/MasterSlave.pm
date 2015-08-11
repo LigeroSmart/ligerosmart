@@ -1,5 +1,4 @@
 # --
-# Kernel/System/MasterSlave.pm - to handle ticket master slave tasks
 # Copyright (C) 2001-2015 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
