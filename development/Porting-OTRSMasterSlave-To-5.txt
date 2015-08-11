@@ -30,3 +30,23 @@
 6 Cleanup Kernel/System/Ticket/Event/MasterSlave
  * Better split it into functions by event
  * Check if it is really needed to set the value here and when is needed (maybe the links are just for AgentTicketPhone and AgentTicketEmail ) set the value again does not make much sense, this might be a remnant of a previous wrong porting
+
+7 Add tests
+ * Unit test for dynamic field driver
+  * EditFieldRender()
+  * EditFieldRenderForTicket()
+  * ValueSet() with different scenarios
+ * Unit test for event module
+  * Event DynamicFieldUpdate
+  * Event ArticleSend
+  * Event ArticleCreate
+  * Event TicketStateUpdate
+  * Event TicketPendingTimeUpdate
+  * Event TicketPriorityUpdate
+  * Event TicketOwnerUpdate
+  * Event TicketResponsibleUpdate
+  * Event TicketLockUpdate
+ * Selenium tests (with advanced mode) it should include:
+  * a TicketCreate screen
+  * TicketBulk screen
+  * MasterSlave screen
