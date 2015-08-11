@@ -1,5 +1,4 @@
 # --
-# AgentTicketMasterSlave.tt - provides common HTML form for several masks
 # Copyright (C) 2001-2015 OTRS AG, http://otrs.com/
 # --
 # $origin: https://github.com/OTRS/otrs/blob/60c239c927c6d8cdc985f57af56c42de86cd413a/Kernel/Output/HTML/Standard/AgentTicketActionCommon.tt
@@ -62,14 +61,14 @@
 
 [% RenderBlockStart("TicketBack") %]
             <p>
-                <a class="CancelClosePopup" href="#">[% Translate("Cancel & close window") | html %]</a>
+                <a class="CancelClosePopup" href="#">[% Translate("Cancel & close") | html %]</a>
             </p>
 [% RenderBlockEnd("TicketBack") %]
 [% RenderBlockStart("PropertiesLock") %]
             <p>
                 [% Translate("The ticket has been locked") | html %].
                 <a class="UndoClosePopup" href="[% Env("Baselink") %]Action=AgentTicketLock;Subaction=Unlock;TicketID=[% Data.TicketID %];[% Env("ChallengeTokenParam") | html %]">
-                    [% Translate("Undo & close window") | html %]
+                    [% Translate("Undo & close") | html %]
                 </a>
             </p>
 [% RenderBlockEnd("PropertiesLock") %]
