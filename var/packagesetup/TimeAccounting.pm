@@ -16,6 +16,8 @@ our @ObjectDependencies = (
     'Kernel::System::Group',
     'Kernel::System::SysConfig',
     'Kernel::System::Valid',
+    'Kernel::System::SysConfig',
+    'Kernel::Config',
 );
 
 =head1 NAME
@@ -118,6 +120,23 @@ sub CodeUninstall {
     $Self->_GroupDeactivate(
         Name => 'time_accounting',
     );
+
+    return 1;
+}
+
+=item CodeUpgradeFromLowerThan_4_0_91()
+
+This function is only executed if the installed module version is smaller than 4.0.91.
+
+my $Result = $CodeObject->CodeUpgradeFromLowerThan_4_0_91();
+
+=cut
+
+sub CodeUpgradeFromLowerThan_4_0_91 {    ## no critic
+    my ( $Self, %Param ) = @_;
+
+    # change configurations to match the new module location.
+    $Self->_MigrateConfigs();
 
     return 1;
 }
@@ -267,6 +286,52 @@ sub _GroupDeactivate {
         %GroupData,
         ValidID => $ValidListReverse{invalid},
         UserID  => 1,
+    );
+
+    return 1;
+}
+
+=item _MigrateConfigs()
+
+change configurations to match the new module location.
+
+    my $Result = $CodeObject->_MigrateConfigs();
+
+=cut
+
+sub _MigrateConfigs {
+
+    # create needed objects
+    my $SysConfigObject = $Kernel::OM->Get('Kernel::System::SysConfig');
+    my $ConfigObject    = $Kernel::OM->Get('Kernel::Config');
+
+    # migrate time accounting notification sysconfig
+    # get setting content for time accounting sysconfig
+    my $Setting = $ConfigObject->Get('Frontend::Agent::ModuleNotify');
+
+    # update module location
+    $Setting->{'TimeAccounting'}->{Module} = "Kernel::Output::HTML::Notification::TimeAccounting";
+
+    # set new setting
+    my $Success = $SysConfigObject->ConfigItemUpdate(
+        Valid => 1,
+        Key   => 'Frontend::NotifyModule###888-TimeAccounting',
+        Value => $Setting->{'TimeAccounting'},
+    );
+
+    # migrate time accounting tool bar sysconfig
+    # get setting content for time accounting sysconfig
+    $Setting = $ConfigObject->Get('Frontend::ToolBarModule');
+
+    # update module location
+    $Setting->{'201-TimeAccounting::IncompleteWorkingDays'}->{Module}
+        = "Kernel::Output::HTML::ToolBar::IncompleteWorkingDays";
+
+    # set new setting
+    $Success = $SysConfigObject->ConfigItemUpdate(
+        Valid => 1,
+        Key   => 'Frontend::ToolBarModule###201-TimeAccounting::IncompleteWorkingDays',
+        Value => $Setting->{'201-TimeAccounting::IncompleteWorkingDays'},
     );
 
     return 1;
