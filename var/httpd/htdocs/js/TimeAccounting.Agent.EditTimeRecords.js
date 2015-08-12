@@ -335,6 +335,12 @@ TimeAccounting.Agent.EditTimeRecords = (function (TargetNS) {
 
         // initiate period calculation
         InitPeriodCalculation();
+
+        // Select only one checkbox in the group 'Absence'
+        $(".Absence input:checkbox").click(function () {
+            $(".Absence input:checkbox").prop("checked", false);
+            $(this).prop("checked", true);
+        });
     };
 
 
@@ -374,7 +380,7 @@ TimeAccounting.Agent.EditTimeRecords = (function (TargetNS) {
                         }
 
                         // set absence reason
-                        AbsenceReason = $SelectedRadio.attr('name');
+                        AbsenceReason = $SelectedRadio.data('absence');
                         if (AbsenceReason === 'LeaveDay') {
                             $('#MassEntry input[name=LeaveDay]').val(1);
                         }

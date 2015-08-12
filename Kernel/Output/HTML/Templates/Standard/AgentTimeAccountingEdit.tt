@@ -107,9 +107,9 @@ $('#NavigationSelect').bind('click', function(){
                 <div id="MassEntryConfirmDialog" class="Hidden">
                     <h2>[% Translate("Please choose the reason for your absence for the selected days") | html %].</h2>
                     <ul id="MassEntryConfirmRadio">
-                        <li><input type="radio" name="LeaveDay" id="ConfirmLeaveDay" /><label for="ConfirmLeaveDay">[% Translate("On vacation") | html %]</label></li>
-                        <li><input type="radio" name="Sick" id="ConfirmSick" /><label for="ConfirmSick">[% Translate("On sick leave") | html %]</label></li>
-                        <li><input type="radio" name="Overtime" id="ConfirmOvertime" /><label for="ConfirmOvertime">[% Translate("On overtime leave") | html %]</label></li>
+                        <li><input type="radio" data-absence="LeaveDay" name="Absence[]" id="ConfirmLeaveDay" /><label for="ConfirmLeaveDay">[% Translate("On vacation") | html %]</label></li>
+                        <li><input type="radio" data-absence="Sick" name="Absence[]" id="ConfirmSick" /><label for="ConfirmSick">[% Translate("On sick leave") | html %]</label></li>
+                        <li><input type="radio" data-absence="Overtime" name="Absence[]" id="ConfirmOvertime" /><label for="ConfirmOvertime">[% Translate("On overtime leave") | html %]</label></li>
                     </ul>
                 </div>
 [% WRAPPER JSOnDocumentComplete %]
@@ -295,7 +295,7 @@ $('#NavigationSelect').bind('click', function(){
                         </tbody>
                     </table>
 [% RenderBlockStart("OtherTimes") %]
-                    <div class="SpacingTop">
+                    <div class="SpacingTop Absence">
                         <input type="checkbox" value="1" id="LeaveDay" name="LeaveDay" title="[% Translate("On vacation") | html %]" class="[% Data.LeaveDayInvalid %]" [% Data.LeaveDay %] />
                         <label for="LeaveDay">[% Translate("On vacation") | html %]</label>
                         <div id="LeaveDayServerError" class="TooltipErrorMessage">
