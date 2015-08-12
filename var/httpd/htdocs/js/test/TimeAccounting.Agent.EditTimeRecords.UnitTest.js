@@ -1,5 +1,5 @@
 // --
-// Copyright (C) 2001-2015 OTRS AG, http://otrs.com/\n";
+// Copyright (C) 2001-2015 OTRS AG, http://otrs.com/
 // --
 // This software comes with ABSOLUTELY NO WARRANTY. For details, see
 // the enclosed file COPYING for license information (AGPL). If you
@@ -13,6 +13,7 @@ TimeAccounting.Agent = TimeAccounting.Agent || {};
 
 TimeAccounting.Agent.EditTimeRecords = (function (Namespace) {
     Namespace.RunUnitTests = function(){
+
         /*
          * Create a form container for the tests
          */
@@ -155,6 +156,7 @@ TimeAccounting.Agent.EditTimeRecords = (function (Namespace) {
              */
             $('#TestForm').remove();
         });
+
     };
 
     return Namespace;

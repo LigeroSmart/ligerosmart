@@ -51,7 +51,7 @@
         <File Permission="644" Location="var/httpd/htdocs/js/TimeAccounting.Agent.ConfirmationDialog.js"/>
         <File Permission="644" Location="var/httpd/htdocs/js/TimeAccounting.Agent.Datepicker.js"/>
         <File Permission="644" Location="var/httpd/htdocs/js/TimeAccounting.Agent.EditTimeRecords.js"/>
-        <File Permission="644" Location="var/httpd/htdocs/js/test/JSUnitTest-TimeAccounting.html"/>
+        <File Permission="644" Location="var/httpd/htdocs/js/test/TimeAccounting.Agent.EditTimeRecords.UnitTest.html"/>
         <File Permission="644" Location="var/httpd/htdocs/js/test/TimeAccounting.Agent.EditTimeRecords.UnitTest.js"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/TimeAccounting.Defaults.css"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/TimeAccounting.Table.css"/>
