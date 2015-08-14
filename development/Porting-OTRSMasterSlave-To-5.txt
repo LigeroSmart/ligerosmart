@@ -21,6 +21,7 @@
  * Uncomment fist commented block
  * Add MasterSlave title just as another block following the same format
  * Remove special code for MasterSlave dynamic field, it should use the normal dynamic fields blocks
+ * Or just use an output filter
 
 5 Cleanup AgentTicketMasterSlave.pm
  * Code to set the config to show the dynamic field should be moved to the pre-action module
