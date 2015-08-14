@@ -163,11 +163,11 @@ Mail matches 'FromAddress'?
         <title>Command Line</title>
         <para>
             Whenever you cannot use the Admin Interface for whatever reason, you may use the
-            following command line tool ("bin/otrs.PackageManager.pl") instead.
+            following command line tool ("bin/otrs.Console.pl Admin::Package::Install") instead.
         </para>
         <para>
             <screen>
-shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
+shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
             </screen>
         </para>
     </section>
@@ -307,13 +307,13 @@ shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
             command on the command line:
         </para>
         <screen>
-shell> perl bin/otrs.UnitTest.pl -n SystemMonitoring
+shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test SystemMonitoring
         </screen>
         <para>Run all available unit tests</para>
         <para>
             To run all available unit tests, use the following command on the command line:
         </para>
-        <screen>shell> perl bin/otrs.UnitTest.pl</screen>
+        <screen>shell> perl bin/otrs.Console.pl Dev::UnitTest::Run</screen>
     </section>
 </chapter>
 
