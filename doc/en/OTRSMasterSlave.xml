@@ -222,11 +222,11 @@
         <title>Command Line</title>
         <para>
             Whenever you cannot use the Admin Interface for whatever reason, you may use the
-            following command line tool ("bin/otrs.PackageManager.pl") instead.
+            following command line tool ("bin/otrs.Console.pl Admin::Package::Install") instead.
         </para>
         <para>
             <screen>
-shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
+shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
             </screen>
         </para>
     </section>
