@@ -11,8 +11,7 @@ package Kernel::Modules::AgentMasterSlavePrepareTicket;
 use strict;
 use warnings;
 
-use Kernel::Language;
-use Kernel::System::DynamicField;
+our $ObjectManagerDisabled = 1;
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -20,24 +19,6 @@ sub new {
     # allocate new hash for object
     my $Self = {%Param};
     bless( $Self, $Type );
-
-    # check needed Objects
-    for my $Needed (
-        qw(ParamObject DBObject LayoutObject LogObject ConfigObject TicketObject UserObject UserID)
-        )
-    {
-        if ( !$Self->{$Needed} ) {
-            $Self->{LayoutObject}->FatalError( Message => "Got no $Needed!" );
-        }
-    }
-    $Self->{UserLanguage} = $Self->{LayoutObject}->{UserLanguage}
-        || $Self->{ConfigObject}->Get('DefaultLanguage');
-    $Self->{LanguageObject} = Kernel::Language->new(
-        %Param,
-        UserLanguage => $Self->{UserLanguage}
-    );
-
-    $Self->{DynamicFieldObject} = Kernel::System::DynamicField->new(%Param);
 
     return $Self;
 }
@@ -48,52 +29,60 @@ sub PreRun {
     # do only use this in phone and email ticket
     return if ( $Self->{Action} !~ /^AgentTicket(Email|Phone)$/ );
 
+    # get config object
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+
     # get master/slave dynamic field
-    my $MasterSlaveDynamicField = $Self->{ConfigObject}->Get('MasterSlave::DynamicField') || '';
+    my $MasterSlaveDynamicField = $ConfigObject->Get('MasterSlave::DynamicField') || '';
 
     # return if no config option is used
     return if !$MasterSlaveDynamicField;
 
+    # get dynamic field object
+    my $DynamicFieldObject = $Kernel::OM->Get('Kernel::System::DynamicField');
+
     # get dynamic field config
-    my $DynamicField = $Self->{DynamicFieldObject}->DynamicFieldGet(
+    my $DynamicField = $DynamicFieldObject->DynamicFieldGet(
         Name => $MasterSlaveDynamicField,
     );
 
     # return if no dynamic field config is retrieved
     return if !$DynamicField;
 
-    # find all current open master slave tickets
-    my @TicketIDs = $Self->{TicketObject}->TicketSearch(
+    # get ticket object
+    my $TicketObject = $Kernel::OM->Get('Kernel::System::Ticket');
 
-        # result (required)
+    # find all current open master slave tickets
+    my @TicketIDs = $TicketObject->TicketSearch(
         Result => 'ARRAY',
 
         # master slave dynamic field
         'DynamicField_' . $MasterSlaveDynamicField => {
             Equals => 'Master',
         },
-        StateType => 'Open',
 
-        # result limit
+        StateType  => 'Open',
         Limit      => 60,
         UserID     => $Self->{UserID},
         Permission => 'ro',
     );
 
     # set dynamic field as shown
-    $Self->{ConfigObject}->{"Ticket::Frontend::$Self->{Action}"}->{DynamicField}
-        ->{$MasterSlaveDynamicField} = 1;
+    $ConfigObject->{"Ticket::Frontend::$Self->{Action}"}->{DynamicField}->{$MasterSlaveDynamicField} = 1;
+
+    # get layout Object
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
     # set dynamic field possible values
     $DynamicField->{Config}->{PossibleValues} = {
-        Master => $Self->{LanguageObject}->Get('New Master Ticket'),
+        Master => $LayoutObject->{LanguageObject}->Translate('New Master Ticket'),
     };
     $DynamicField->{Config}->{DefaultValue} = '';
     $DynamicField->{Config}->{PossibleNone} = 1;
 
     TICKET:
     for my $TicketID (@TicketIDs) {
-        my %CurrentTicket = $Self->{TicketObject}->TicketGet(
+        my %CurrentTicket = $TicketObject->TicketGet(
             TicketID      => $TicketID,
             DynamicFields => 1,
         );
@@ -101,15 +90,13 @@ sub PreRun {
         next TICKET if !%CurrentTicket;
 
         # set dynamic field possible values
-        $DynamicField->{Config}->{PossibleValues}{
-            "SlaveOf:$CurrentTicket{TicketNumber}"
-            } =
-            $Self->{LanguageObject}->Get('Slave of Ticket#')
+        $DynamicField->{Config}->{PossibleValues}->{"SlaveOf:$CurrentTicket{TicketNumber}"}
+            = $LayoutObject->{LanguageObject}->Translate('Slave of Ticket#')
             . "$CurrentTicket{TicketNumber}: $CurrentTicket{Title}";
     }
 
     # set new dynamic field values
-    my $SuccessTicketField = $Self->{DynamicFieldObject}->DynamicFieldUpdate(
+    my $SuccessTicketField = $DynamicFieldObject->DynamicFieldUpdate(
         %{$DynamicField},
         Reorder => 0,
         ValidID => 1,
