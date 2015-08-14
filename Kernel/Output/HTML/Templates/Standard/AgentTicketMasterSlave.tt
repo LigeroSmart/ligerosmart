@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2015 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/60c239c927c6d8cdc985f57af56c42de86cd413a/Kernel/Output/HTML/Standard/AgentTicketActionCommon.tt
+# $origin: https://github.com/OTRS/otrs/blob/1212a2e0c6e22c769efbf4dbadf3bcf44b61b868/Kernel/Output/HTML/Templates/Standard/AgentTicketActionCommon.tt
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -11,11 +11,10 @@
 # ---
 # MasterSlave
 # ---
-# this module uses AgentTicketActionCommon as a base, for easy update and framework compatibility
+# This module uses AgentTicketActionCommon as a base, for easy update and framework compatibility
 # special markers has been set along the file to easy spot the differences introduced by
 # OTRSMasterSlave package
 # ---
-
 [% RenderBlockStart("Properties") %]
 
 <form action="[% Env("CGIHandle") %]" method="post" enctype="multipart/form-data" name="compose" id="Compose" class="Validate PreventMultipleSubmits">
@@ -29,33 +28,35 @@
     <div class="LayoutPopup ARIARoleMain">
         <div class="Header">
             <h1>
+[% RenderBlockStart("HeaderAgentTicketFreeText") %]
+[% Translate("Change Free Text of Ticket") | html %]:
+[% RenderBlockEnd("HeaderAgentTicketFreeText") %]
+[% RenderBlockStart("HeaderAgentTicketOwner") %]
+[% Translate("Change Owner of Ticket") | html %]:
+[% RenderBlockEnd("HeaderAgentTicketOwner") %]
+[% RenderBlockStart("HeaderAgentTicketClose") %]
+[% Translate("Close Ticket") | html %]:
+[% RenderBlockEnd("HeaderAgentTicketClose") %]
+[% RenderBlockStart("HeaderAgentTicketNote") %]
+[% Translate("Add Note to Ticket") | html %]:
+[% RenderBlockEnd("HeaderAgentTicketNote") %]
+[% RenderBlockStart("HeaderAgentTicketPending") %]
+[% Translate("Set Pending") | html %]:
+[% RenderBlockEnd("HeaderAgentTicketPending") %]
+[% RenderBlockStart("HeaderAgentTicketPriority") %]
+[% Translate("Change Priority of Ticket") | html %]:
+[% RenderBlockEnd("HeaderAgentTicketPriority") %]
+[% RenderBlockStart("HeaderAgentTicketResponsible") %]
+[% Translate("Change Responsible of Ticket") | html %]:
+[% RenderBlockEnd("HeaderAgentTicketResponsible") %]
 # ---
 # MasterSlave
 # ---
-#[% RenderBlockStart("HeaderAgentTicketFreeText") %]
-#[% Translate("Change Free Text of Ticket") | html %]:
-#[% RenderBlockEnd("HeaderAgentTicketFreeText") %]
-#[% RenderBlockStart("HeaderAgentTicketOwner") %]
-#[% Translate("Change Owner of Ticket") | html %]:
-#[% RenderBlockEnd("HeaderAgentTicketOwner") %]
-#[% RenderBlockStart("HeaderAgentTicketClose") %]
-#[% Translate("Close Ticket") | html %]:
-#[% RenderBlockEnd("HeaderAgentTicketClose") %]
-#[% RenderBlockStart("HeaderAgentTicketNote") %]
-#[% Translate("Add Note to Ticket") | html %]:
-#[% RenderBlockEnd("HeaderAgentTicketNote") %]
-#[% RenderBlockStart("HeaderAgentTicketPending") %]
-#[% Translate("Set Pending") | html %]:
-#[% RenderBlockEnd("HeaderAgentTicketPending") %]
-#[% RenderBlockStart("HeaderAgentTicketPriority") %]
-#[% Translate("Change Priority of Ticket") | html %]:
-#[% RenderBlockEnd("HeaderAgentTicketPriority") %]
-#[% RenderBlockStart("HeaderAgentTicketResponsible") %]
-#[% Translate("Change Responsible of Ticket") | html %]:
-#[% RenderBlockEnd("HeaderAgentTicketResponsible") %]
-#[% Data.TicketNumber %] - [% Data.Title | html %]
-                [% Translate("Manage Master/Slave") | html %] : [% Data.TicketNumber | html %] - [% Data.Title | truncate(60) | html %]
+[% RenderBlockStart("HeaderAgentTicketMasterSlave") %]
+[% Translate("Manage Master/Slave") | html %]
+[% RenderBlockEnd("HeaderAgentTicketMasterSlave") %]
 # ---
+[% Data.TicketNumber %] - [% Data.Title | html %]
             </h1>
             <p class="AsteriskExplanation">[% Translate("All fields marked with an asterisk (*) are mandatory.") | html %]</p>
 
@@ -107,11 +108,28 @@
 [% WRAPPER JSOnDocumentComplete %]
 <script type="text/javascript">//<![CDATA[
 $('#TypeID').bind('change', function (Event) {
-    Core.AJAX.FormUpdate($('#Compose'), 'AJAXUpdate', 'TypeID', [ 'ServiceID', 'SLAID', 'NewOwnerID', 'OldOwnerID', 'NewResponsibleID', 'NewStateID', 'NewPriorityID' [% Data.DynamicFieldNamesStrg %] ]);
+    Core.AJAX.FormUpdate($('#Compose'), 'AJAXUpdate', 'TypeID', [ 'ServiceID', 'SLAID', 'NewOwnerID', 'NewResponsibleID', 'NewStateID', 'NewPriorityID' [% Data.DynamicFieldNamesStrg %] ]);
 });
 //]]></script>
 [% END %]
 [% RenderBlockEnd("Type") %]
+
+[% RenderBlockStart("Queue") %]
+                        <label for="NewQueueID">[% Translate("Queue") | html %]:</label>
+                        <div class="Field">
+                            [% Data.QueuesStrg %]
+                            <div id="NewQueueIDError" class="TooltipErrorMessage" ><p>[% Translate("This field is required.") | html %]</p></div>
+                            <div id="NewQueueIDServerError" class="TooltipErrorMessage"><p>[% Translate("This field is required.") | html %]</p></div>
+                        </div>
+                        <div class="Clear"></div>
+[% WRAPPER JSOnDocumentComplete %]
+<script type="text/javascript">//<![CDATA[
+    $('#NewQueueID').bind('change', function (Event) {
+        Core.AJAX.FormUpdate($('#Compose'), 'AJAXUpdate', 'NewQueueID', [ 'TypeID', 'ServiceID', 'NewOwnerID', 'NewResponsibleID', 'NewStateID', 'NewPriorityID', 'StandardTemplateID' [% Data.DynamicFieldNamesStrg %] ]);
+    });
+//]]></script>
+[% END %]
+[% RenderBlockEnd("Queue") %]
 
 [% RenderBlockStart("Service") %]
                         <label for="ServiceID">[% Translate("Service") | html %]:</label>
@@ -123,7 +141,7 @@ $('#TypeID').bind('change', function (Event) {
 [% WRAPPER JSOnDocumentComplete %]
 <script type="text/javascript">//<![CDATA[
     $('#ServiceID').bind('change', function (Event) {
-        Core.AJAX.FormUpdate($('#Compose'), 'AJAXUpdate', 'ServiceID', [ 'TypeID', 'SLAID', 'NewOwnerID', 'OldOwnerID', 'NewResponsibleID', 'NewStateID', 'NewPriorityID' [% Data.DynamicFieldNamesStrg %] ]);
+        Core.AJAX.FormUpdate($('#Compose'), 'AJAXUpdate', 'ServiceID', [ 'TypeID', 'SLAID', 'NewOwnerID', 'NewResponsibleID', 'NewStateID', 'NewPriorityID' [% Data.DynamicFieldNamesStrg %] ]);
     });
 //]]></script>
 [% END %]
@@ -140,7 +158,7 @@ $('#TypeID').bind('change', function (Event) {
 [% WRAPPER JSOnDocumentComplete %]
 <script type="text/javascript">//<![CDATA[
     $('#ServiceID').bind('change', function (Event) {
-        Core.AJAX.FormUpdate($('#Compose'), 'AJAXUpdate', 'ServiceID', [ 'TypeID', 'SLAID', 'NewOwnerID', 'OldOwnerID', 'NewResponsibleID', 'NewStateID', 'NewPriorityID' [% Data.DynamicFieldNamesStrg %] ]);
+        Core.AJAX.FormUpdate($('#Compose'), 'AJAXUpdate', 'ServiceID', [ 'TypeID', 'SLAID', 'NewOwnerID', 'NewResponsibleID', 'NewStateID', 'NewPriorityID' [% Data.DynamicFieldNamesStrg %] ]);
     });
 //]]></script>
 [% END %]
@@ -155,7 +173,7 @@ $('#TypeID').bind('change', function (Event) {
 [% WRAPPER JSOnDocumentComplete %]
 <script type="text/javascript">//<![CDATA[
     $('#SLAID').bind('change', function (Event) {
-        Core.AJAX.FormUpdate($('#Compose'), 'AJAXUpdate', 'SLAID', [ 'TypeID', 'ServiceID', 'NewOwnerID', 'OldOwnerID', 'NewResponsibleID', 'NewStateID', 'NewPriorityID' [% Data.DynamicFieldNamesStrg %] ]);
+        Core.AJAX.FormUpdate($('#Compose'), 'AJAXUpdate', 'SLAID', [ 'TypeID', 'ServiceID', 'NewOwnerID', 'NewResponsibleID', 'NewStateID', 'NewPriorityID' [% Data.DynamicFieldNamesStrg %] ]);
     });
 //]]></script>
 [% END %]
@@ -172,61 +190,49 @@ $('#TypeID').bind('change', function (Event) {
 [% WRAPPER JSOnDocumentComplete %]
 <script type="text/javascript">//<![CDATA[
     $('#SLAID').bind('change', function (Event) {
-        Core.AJAX.FormUpdate($('#Compose'), 'AJAXUpdate', 'SLAID', [ 'TypeID', 'ServiceID', 'NewOwnerID', 'OldOwnerID', 'NewResponsibleID', 'NewStateID', 'NewPriorityID' [% Data.DynamicFieldNamesStrg %] ]);
+        Core.AJAX.FormUpdate($('#Compose'), 'AJAXUpdate', 'SLAID', [ 'TypeID', 'ServiceID', 'NewOwnerID', 'NewResponsibleID', 'NewStateID', 'NewPriorityID' [% Data.DynamicFieldNamesStrg %] ]);
     });
 //]]></script>
 [% END %]
 [% RenderBlockEnd("SLAMandatory") %]
 
-[% RenderBlockStart("Queue") %]
-                        <label for="NewQueueID">[% Translate("Queue") | html %]:</label>
-                        <div class="Field">
-                            [% Data.QueuesStrg %]
-                            <div id="NewQueueIDError" class="TooltipErrorMessage" ><p>[% Translate("This field is required.") | html %]</p></div>
-                            <div id="NewQueueIDServerError" class="TooltipErrorMessage"><p>[% Translate("This field is required.") | html %]</p></div>
-                        </div>
-                        <div class="Clear"></div>
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-    $('#NewQueueID').bind('change', function (Event) {
-        Core.AJAX.FormUpdate($('#Compose'), 'AJAXUpdate', 'NewQueueID', [ 'TypeID', 'ServiceID', 'NewOwnerID', 'OldOwnerID', 'NewResponsibleID', 'NewStateID', 'NewPriorityID', 'StandardTemplateID' [% Data.DynamicFieldNamesStrg %] ]);
-    });
-//]]></script>
-[% END %]
-[% RenderBlockEnd("Queue") %]
-
 [% RenderBlockStart("Owner") %]
                         <label for="NewOwnerID">[% Translate("New Owner") | html %]:</label>
                         <div class="Field">
-                            <input type="radio" name="NewOwnerType" value="New" title="Select new owner" [% Data.item("NewOwnerType::New") %] />
                             [% Data.OwnerStrg %]
                             <div id="NewOwnerIDServerError" class="TooltipErrorMessage"><p>[% Translate("Please set a new owner!") | html %]</p></div>
                         </div>
                         <div class="Clear"></div>
 
-                        <label for="OldOwnerID">[% Translate("Previous Owner") | html %]:</label>
-                        <div class="Field">
-                            <input type="radio" name="NewOwnerType" value="Old" title="Select old owner" [% Data.item("NewOwnerType::Old") %] />
-                            [% Data.OldOwnerStrg %]
-                            <div id="OldOwnerIDServerError" class="TooltipErrorMessage"><p>[% Translate("Please set a new owner!") | html %]</p></div>
-                        </div>
-                        <div class="Clear"></div>
 [% WRAPPER JSOnDocumentComplete %]
 <script type="text/javascript">//<![CDATA[
     $('#NewOwnerID').bind('change', function (Event) {
-        Core.AJAX.FormUpdate($('#Compose'), 'AJAXUpdate', 'NewOwnerID', [ 'TypeID', 'ServiceID', 'SLAID', 'OldOwnerID', 'NewResponsibleID', 'NewStateID', 'NewPriorityID' [% Data.DynamicFieldNamesStrg %] ]);
-        Core.Agent.TicketAction.SelectRadioButton('New','NewOwnerType');
-    });
-    $('#OldOwnerID').bind('change', function (Event) {
-        Core.AJAX.FormUpdate($('#Compose'), 'AJAXUpdate', 'OldOwnerID', [ 'TypeID', 'ServiceID', 'SLAID', 'NewOwnerID', 'NewResponsibleID', 'NewStateID', 'NewPriorityID' [% Data.DynamicFieldNamesStrg %] ]);
-        Core.Agent.TicketAction.SelectRadioButton('Old','NewOwnerType');
+        Core.AJAX.FormUpdate($('#Compose'), 'AJAXUpdate', 'NewOwnerID', [ 'TypeID', 'ServiceID', 'SLAID', 'NewResponsibleID', 'NewStateID', 'NewPriorityID' [% Data.DynamicFieldNamesStrg %] ]);
     });
 //]]></script>
 [% END %]
 [% RenderBlockEnd("Owner") %]
 
+[% RenderBlockStart("OwnerMandatory") %]
+                        <label class="Mandatory" for="NewOwnerID"><span class="Marker">*</span>[% Translate("New Owner") | html %]:</label>
+                        <div class="Field">
+                            [% Data.OwnerStrg %]
+                            <div id="NewOwnerIDError" class="TooltipErrorMessage"><p>[% Translate("Please set a new owner!") | html %]</p></div>
+                            <div id="NewOwnerIDServerError" class="TooltipErrorMessage"><p>[% Translate("Please set a new owner!") | html %]</p></div>
+                        </div>
+                        <div class="Clear"></div>
+
+[% WRAPPER JSOnDocumentComplete %]
+<script type="text/javascript">//<![CDATA[
+    $('#NewOwnerID').bind('change', function (Event) {
+        Core.AJAX.FormUpdate($('#Compose'), 'AJAXUpdate', 'NewOwnerID', [ 'TypeID', 'ServiceID', 'SLAID', 'NewResponsibleID', 'NewStateID', 'NewPriorityID' [% Data.DynamicFieldNamesStrg %] ]);
+    });
+//]]></script>
+[% END %]
+[% RenderBlockEnd("OwnerMandatory") %]
+
 [% RenderBlockStart("Responsible") %]
-                        <label for="NewResponsibleID">[% Translate("Responsible") | html %]:</label>
+                        <label for="NewResponsibleID">[% Translate("New Responsible") | html %]:</label>
                         <div class="Field">
                             [% Data.ResponsibleStrg %]
                         </div>
@@ -234,7 +240,7 @@ $('#TypeID').bind('change', function (Event) {
 [% WRAPPER JSOnDocumentComplete %]
 <script type="text/javascript">//<![CDATA[
     $('#NewResponsibleID').bind('change', function (Event) {
-        Core.AJAX.FormUpdate($('#Compose'), 'AJAXUpdate', 'NewResponsibleID', [ 'TypeID', 'ServiceID', 'SLAID', 'NewOwnerID', 'OldOwnerID', 'NewStateID', 'NewPriorityID' [% Data.DynamicFieldNamesStrg %] ]);
+        Core.AJAX.FormUpdate($('#Compose'), 'AJAXUpdate', 'NewResponsibleID', [ 'TypeID', 'ServiceID', 'SLAID', 'NewOwnerID', 'NewStateID', 'NewPriorityID' [% Data.DynamicFieldNamesStrg %] ]);
     });
 //]]></script>
 [% END %]
@@ -249,7 +255,7 @@ $('#TypeID').bind('change', function (Event) {
 [% WRAPPER JSOnDocumentComplete %]
 <script type="text/javascript">//<![CDATA[
     $('#NewStateID').bind('change', function (Event) {
-        Core.AJAX.FormUpdate($('#Compose'), 'AJAXUpdate', 'NewStateID', ['TypeID', 'ServiceID', 'SLAID', 'NewOwnerID', 'OldOwnerID', 'NewResponsibleID', 'NewPriorityID' [% Data.DynamicFieldNamesStrg %] ]);
+        Core.AJAX.FormUpdate($('#Compose'), 'AJAXUpdate', 'NewStateID', ['TypeID', 'ServiceID', 'SLAID', 'NewOwnerID', 'NewResponsibleID', 'NewPriorityID' [% Data.DynamicFieldNamesStrg %] ]);
     });
 //]]></script>
 [% END %]
@@ -260,6 +266,7 @@ $('#TypeID').bind('change', function (Event) {
                     [% Data.DateString %]
                             <div id="DayServerError" class="TooltipErrorMessage"><p>[% Translate("Date invalid!") | html %]</p></div>
                             <div id="HourServerError" class="TooltipErrorMessage"><p>[% Translate("Date invalid!") | html %]</p></div>
+                            <p class="FieldExplanation">[% Translate("For all pending* states.") | html %]</p>
                         </div>
                         <div class="Clear"></div>
 [% RenderBlockEnd("StatePending") %]
@@ -274,7 +281,7 @@ $('#TypeID').bind('change', function (Event) {
 [% WRAPPER JSOnDocumentComplete %]
 <script type="text/javascript">//<![CDATA[
     $('#NewPriorityID').bind('change', function (Event) {
-        Core.AJAX.FormUpdate($('#Compose'), 'AJAXUpdate', 'NewPriorityID', ['TypeID', 'ServiceID', 'SLAID', 'NewOwnerID', 'OldOwnerID', 'NewResponsibleID', 'NewStateID' [% Data.DynamicFieldNamesStrg %] ]);
+        Core.AJAX.FormUpdate($('#Compose'), 'AJAXUpdate', 'NewPriorityID', ['TypeID', 'ServiceID', 'SLAID', 'NewOwnerID', 'NewResponsibleID', 'NewStateID' [% Data.DynamicFieldNamesStrg %] ]);
     });
 //]]></script>
 [% END %]
@@ -479,7 +486,7 @@ $('#TypeID').bind('change', function (Event) {
 [% RenderBlockStart("MasterSlave") %]
                             <label for="DynamicField_[% Data.MasterSlaveDynamicField %]">[% Translate("MasterTicket") | html %]:</label>
                             <div class="Field">
-                    [% Data.MasterSlaveStrg %]
+                                [% Data.MasterSlaveStrg %]
                             </div>
                             <div class="Clear"></div>
 [% RenderBlockEnd("MasterSlave") %]
@@ -509,6 +516,18 @@ $('#TypeID').bind('change', function (Event) {
                             </div>
                         </fieldset>
 [% RenderBlockEnd("InformAdditionalAgents") %]
+[% RenderBlockStart("InformAgentsWithoutSelection") %]
+                        <fieldset class="TableLike FixedLabel">
+                            <label>[% Translate("Note will be (also) received by:") | html %]:</label>
+                            <p class="Value">
+                                <input type="hidden" name="UserListWithoutSelection" value="[% Data.UserListWithoutSelection  | html %]" />
+[% RenderBlockStart("InformAgentsWithoutSelectionSingleUser") %]
+                                <span title="[% Data.UserEmail %]">[% Data.UserFullname %]</span>[% RenderBlockStart("InformAgentsWithoutSelectionSingleUserSeparator") %],[% RenderBlockEnd("InformAgentsWithoutSelectionSingleUserSeparator") %]
+[% RenderBlockEnd("InformAgentsWithoutSelectionSingleUser") %]
+                            </p>
+                            <div class="Clear"></div>
+                        </fieldset>
+[% RenderBlockEnd("InformAgentsWithoutSelection") %]
                     </div>
                 </div>
 [% RenderBlockEnd("WidgetArticle") %]
