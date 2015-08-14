@@ -341,11 +341,11 @@
         <title>Command Line</title>
         <para>
             Whenever you cannot use the Admin Interface for whatever reason, you may use the
-            following command line tool ("bin/otrs.PackageManager.pl") instead.
+            following command line tool ("bin/otrs.Console.pl") instead.
         </para>
         <para>
             <screen>
-shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
+shell> bin/otrs.Console.pl Admin::Package::Install -a install -p /path/to/$Name-$Version.opm
             </screen>
         </para>
     </section>
@@ -1609,7 +1609,7 @@ shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test Dashboard/FAQ:FAQJourn
         </para>
         <para>
             <screen>
-shell> $OTRS_HOME/bin/otrs.WebserviceConfig.pl -a write -n GenericInterfaceFAQConnector -f $OTRS_HOME/scripts/webservices/GenericInterfaceFAQConnector.yaml
+shell> bin/otrs.Console.pl Admin::WebService::Add --name GenericInterfaceFAQConnector --source-path scripts/webservices/GenericInterfaceFAQConnector.yaml
             </screen>
         </para>
         <para>
@@ -1677,7 +1677,7 @@ RemoteSystem: ''
         </para>
         <para>
             <screen>
-shell> $OTRS_HOME/bin/otrs.WebserviceConfig.pl -a list
+shell> bin/otrs.Console.pl Admin::WebService::List
             </screen>
         </para>
         <para>
