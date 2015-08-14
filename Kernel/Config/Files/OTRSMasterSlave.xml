@@ -104,7 +104,7 @@
         <SubGroup>Frontend::Agent::Ticket::MenuModule</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::Output::HTML::TicketMenuGeneric</Item>
+                <Item Key="Module">Kernel::Output::HTML::TicketMenu::Generic</Item>
                 <Item Key="Name">MasterSlave</Item>
                 <Item Key="Description" Translatable="1">Change the MasterSlave state of the ticket.</Item>
                 <Item Key="Action">AgentTicketMasterSlave</Item>
@@ -355,7 +355,7 @@
         <SubGroup>Frontend::Agent::Dashboard</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::Output::HTML::DashboardTicketGeneric</Item>
+                <Item Key="Module">Kernel::Output::HTML::Dashboard::TicketGeneric</Item>
                 <Item Key="Title">Master Tickets</Item>
                 <Item Key="Description">All master tickets</Item>
                 <Item Key="Attributes">DynamicField_MasterSlave_Equals=Master;StateType=open;StateType=new;</Item>
