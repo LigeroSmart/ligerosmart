@@ -1391,6 +1391,7 @@ sub MaskForm {
     $Param{LanguagesStrg} = $LayoutObject->BuildSelection(
         Data       => {%Languages},
         Name       => 'LanguageIDs',
+        Size       => 5,
         Multiple   => 1,
         SelectedID => $Param{LanguageIDs},
         Class      => 'Modernize',
@@ -1407,6 +1408,7 @@ sub MaskForm {
     $Param{CategoriesStrg} = $LayoutObject->BuildSelection(
         Data       => $Categories,
         Name       => 'CategoryIDs',
+        Size       => 5,
         Multiple   => 1,
         SelectedID => $Param{CategoryIDs},
         TreeView   => $TreeView,
@@ -1424,6 +1426,7 @@ sub MaskForm {
     $Param{VoteSearchTypeSelectionString} = $LayoutObject->BuildSelection(
         Data        => \%VotingOperators,
         Name        => 'VoteSearchType',
+        Size        => 1,
         SelectedID  => $Param{VoteSearchType} || '',
         Translation => 1,
         Multiple    => 0,
@@ -1433,6 +1436,7 @@ sub MaskForm {
     $Param{RateSearchTypeSelectionString} = $LayoutObject->BuildSelection(
         Data        => \%VotingOperators,
         Name        => 'RateSearchType',
+        Size        => 1,
         SelectedID  => $Param{RateSearchType} || '',
         Translation => 1,
         Multiple    => 0,
@@ -1448,6 +1452,7 @@ sub MaskForm {
         },
         Sort        => 'NumericKey',
         Name        => 'RateSearch',
+        Size        => 1,
         SelectedID  => $Param{RateSearch} || '',
         Translation => 0,
         Multiple    => 0,

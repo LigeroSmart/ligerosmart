@@ -1345,6 +1345,7 @@ sub _MaskForm {
     $Param{LanguagesSelectionStrg} = $LayoutObject->BuildSelection(
         Data       => \%Languages,
         Name       => 'LanguageIDs',
+        Size       => 5,
         Multiple   => 1,
         SelectedID => $GetParam{LanguageIDs} || [],
         Class      => 'Modernize',
@@ -1360,6 +1361,7 @@ sub _MaskForm {
     $Param{CategoriesSelectionStrg} = $LayoutObject->BuildSelection(
         Data        => $UserCategoriesLongNames,
         Name        => 'CategoryIDs',
+        Size        => 5,
         SelectedID  => $GetParam{CategoryIDs} || [],
         Translation => 0,
         Multiple    => 1,
@@ -1374,6 +1376,7 @@ sub _MaskForm {
     $Param{ValidSelectionStrg} = $LayoutObject->BuildSelection(
         Data        => \%ValidList,
         Name        => 'ValidIDs',
+        Size        => 5,
         SelectedID  => $GetParam{ValidIDs} || [],
         Translation => 0,
         Multiple    => 1,
@@ -1398,6 +1401,7 @@ sub _MaskForm {
     $Param{StateSelectionStrg} = $LayoutObject->BuildSelection(
         Data        => \%States,
         Name        => 'StateIDs',
+        Size        => 3,
         SelectedID  => $GetParam{StateIDs} || [],
         Translation => 1,
         Multiple    => 1,
@@ -1415,6 +1419,7 @@ sub _MaskForm {
     $Param{VoteSearchTypeSelectionStrg} = $LayoutObject->BuildSelection(
         Data        => \%VotingOperators,
         Name        => 'VoteSearchType',
+        Size        => 1,
         SelectedID  => $GetParam{VoteSearchType} || '',
         Translation => 1,
         Multiple    => 0,
@@ -1424,6 +1429,7 @@ sub _MaskForm {
     $Param{RateSearchTypeSelectionStrg} = $LayoutObject->BuildSelection(
         Data        => \%VotingOperators,
         Name        => 'RateSearchType',
+        Size        => 1,
         SelectedID  => $GetParam{RateSearchType} || '',
         Translation => 1,
         Multiple    => 0,
@@ -1439,6 +1445,7 @@ sub _MaskForm {
         },
         Sort        => 'NumericKey',
         Name        => 'RateSearch',
+        Size        => 1,
         SelectedID  => $GetParam{RateSearch} || '',
         Translation => 0,
         Multiple    => 0,
@@ -1488,6 +1495,7 @@ sub _MaskForm {
     $Param{CreatedUserStrg} = $LayoutObject->BuildSelection(
         Data       => \%ShownUsers,
         Name       => 'CreatedUserIDs',
+        Size       => 5,
         Multiple   => 1,
         SelectedID => $GetParam{CreatedUserIDs},
         Class      => 'Modernize',
@@ -1495,6 +1503,7 @@ sub _MaskForm {
     $Param{LastChangedUserStrg} = $LayoutObject->BuildSelection(
         Data       => \%ShownUsers,
         Name       => 'LastChangedUserIDs',
+        Size       => 5,
         Multiple   => 1,
         SelectedID => $GetParam{LastChangedUserIDs},
         Class      => 'Modernize',
