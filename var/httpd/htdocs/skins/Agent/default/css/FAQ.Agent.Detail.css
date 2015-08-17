@@ -70,6 +70,17 @@ fieldset .FAQStateName {
     font-weight: bold;
 }
 
+.Visible-ScreenS .RateButtons > li {
+    display: block;
+    margin-top: 5px;
+    margin-bottom: 15px;
+}
+
+.Visible-ScreenS .RateButtons > li span {
+    width: auto !important;
+    float: none !important;
+}
+
 .RateButton {
     position: relative;
     text-align: center;
@@ -148,7 +159,7 @@ fieldset .FAQStateName {
 }
 
 .FAQMessageBrowser p {
-     padding: 5px;
+     padding: 5px 20px;
      background-color: #E8E8E8;
      font-size: 11px;
      text-align: center;
