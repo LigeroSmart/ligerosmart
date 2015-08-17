@@ -119,6 +119,7 @@ sub _SurveyAddMask {
     my $QueueString = $LayoutObject->BuildSelection(
         Data         => \%Queues,
         Name         => 'Queues',
+        Size         => 6,
         Multiple     => 1,
         PossibleNone => 0,
         Sort         => 'AlphanumericValue',
@@ -143,6 +144,7 @@ sub _SurveyAddMask {
             my $TicketTypeStrg = $LayoutObject->BuildSelection(
                 Data         => \%TicketTypes,
                 Name         => 'TicketTypeIDs',
+                Size         => 6,
                 Multiple     => 1,
                 PossibleNone => 0,
                 Sort         => 'AlphanumericValue',
@@ -175,6 +177,7 @@ sub _SurveyAddMask {
             my $ServiceStrg = $LayoutObject->BuildSelection(
                 Data         => \%Services,
                 Name         => 'ServiceIDs',
+                Size         => 6,
                 Multiple     => 1,
                 PossibleNone => 0,
                 Sort         => 'AlphanumericValue',
