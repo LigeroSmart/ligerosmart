@@ -296,7 +296,12 @@ $('#TypeID').bind('change', function (Event) {
                         <div class="WidgetAction Toggle">
                             <a href="#" title="[% Translate("Toggle this widget") | html %]"><i class="fa fa-caret-right"></i><i class="fa fa-caret-down"></i></a>
                         </div>
-                        <h2>[% Translate("Dynamic Fields") | html %]</h2>
+# ---
+# MasterSlave
+# ---
+#                        <h2>[% Translate("Dynamic Fields") | html %]</h2>
+                        <h2>[% Translate("Set Master/Slave Value") | html %]</h2>
+# ---
                     </div>
                     <div class="Content">
                         <fieldset class="TableLike FixedLabel">
@@ -479,19 +484,6 @@ $('#TypeID').bind('change', function (Event) {
                             </div>
                             <div class="Clear"></div>
 [% RenderBlockEnd("TimeUnits") %]
-
-# ---
-# MasterSlave
-# ---
-[% RenderBlockStart("MasterSlave") %]
-                            <label for="DynamicField_[% Data.MasterSlaveDynamicField %]">[% Translate("MasterTicket") | html %]:</label>
-                            <div class="Field">
-                                [% Data.MasterSlaveStrg %]
-                            </div>
-                            <div class="Clear"></div>
-[% RenderBlockEnd("MasterSlave") %]
-# ---
-
                         </fieldset>
 [% RenderBlockStart("InformAdditionalAgents") %]
                         <fieldset class="TableLike FixedLabel">

@@ -251,6 +251,7 @@ sub Run {
 # ---
     # get master/slave dynamic field
     my $MasterSlaveDynamicField = $ConfigObject->Get('MasterSlave::DynamicField') || '';
+    my $MasterSlaveAdvancedEnabled = $ConfigObject->Get('MasterSlave::AdvancedEnabled') || 0;
 # ---
 
     # only screens that add notes can modify Article dynamic fields
@@ -259,10 +260,7 @@ sub Run {
 # ---
 # MasterSlave
 # ---
-        # set master-slave dynamic field
-        if ( $MasterSlaveDynamicField && $Self->{Subaction} eq 'Store' ) {
-            $Config->{DynamicField}->{$MasterSlaveDynamicField} = 1;
-        }
+        $Config->{DynamicField}->{$MasterSlaveDynamicField} = 1;
 #---
     }
 
@@ -509,8 +507,15 @@ sub Run {
 # ---
 # MasterSlave
 # ---
-            next DYNAMICFIELD if $DynamicFieldConfig->{Name} eq $MasterSlaveDynamicField;
+            if (
+                !$MasterSlaveAdvancedEnabled
+                && $DynamicFieldConfig->{Name} eq $MasterSlaveDynamicField
+                )
+            {
+                next DYNAMICFIELD;
+            }
 # ---
+
             my $PossibleValuesFilter;
 
             my $IsACLReducible = $DynamicFieldBackendObject->HasBehavior(
@@ -553,6 +558,16 @@ sub Run {
             }
 
             my $ValidationResult;
+# ---
+# MasterSlave
+# ---
+            if ( $DynamicFieldConfig->{Name} eq $MasterSlaveDynamicField ) {
+               $PossibleValuesFilter = $Self->_GetMasterSlaveData(
+                Ticket => \%Ticket,
+                MasterSlaveDynamicField => $MasterSlaveDynamicField,
+               );
+            }
+# ---
 
             # do not validate on attachment upload
             if ( !$IsUpload ) {
@@ -928,11 +943,6 @@ sub Run {
             # remove pre submitted attachments
             $UploadCacheObject->FormIDRemove( FormID => $FormID );
         }
-# ---
-# MasterSlave
-# ---
-        my $MasterSlaveAdvancedEnabled = $ConfigObject->Get('MasterSlave::AdvancedEnabled') || 0;
-# ---
 
         # set dynamic fields
         # cycle through the activated Dynamic Fields for this screen
@@ -943,22 +953,10 @@ sub Run {
 # MasterSlave
 # ---
             if (
-                $MasterSlaveAdvancedEnabled
-                && $MasterSlaveDynamicField
-                && $DynamicFieldConfig->{Name} eq $MasterSlaveDynamicField,
+                !$MasterSlaveAdvancedEnabled
+                && $DynamicFieldConfig->{Name} eq $MasterSlaveDynamicField
                 )
             {
-                if ( $DynamicFieldValues{$MasterSlaveDynamicField} ) {
-                    $Kernel::OM->Get('Kernel::System::MasterSlave')->MasterSlave(
-                        MasterSlaveDynamicFieldName           => $MasterSlaveDynamicField,
-                        MasterSlaveDynamicFieldValue          => $DynamicFieldValues{$MasterSlaveDynamicField},
-                        TicketID                              => $Self->{TicketID},
-                        UserID                                => $Self->{UserID},
-                        MasterSlaveFollowUpdatedMaster        => $ConfigObject->Get('MasterSlave::FollowUpdatedMaster') || 0,
-                        MasterSlaveKeepParentChildAfterUnset  => $ConfigObject->Get('MasterSlave::KeepParentChildAfterUnset') || 0,
-                        MasterSlaveKeepParentChildAfterUpdate => $ConfigObject->Get('MasterSlave::KeepParentChildAfterUpdate') || 0,
-                    );
-                }
                 next DYNAMICFIELD;
             }
 # ---
@@ -1376,6 +1374,17 @@ sub Run {
         DYNAMICFIELD:
         for my $DynamicFieldConfig ( @{$DynamicField} ) {
             next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
+# ---
+# MasterSlave
+# ---
+            if (
+                !$MasterSlaveAdvancedEnabled
+                && $DynamicFieldConfig->{Name} eq $MasterSlaveDynamicField
+                )
+            {
+                next DYNAMICFIELD;
+            }
+#---
 
             my $PossibleValuesFilter;
 
@@ -1417,6 +1426,16 @@ sub Run {
                     }
                 }
             }
+# ---
+# MasterSlave
+# ---
+            if ( $DynamicFieldConfig->{Name} eq $MasterSlaveDynamicField ) {
+               $PossibleValuesFilter =  $Self->_GetMasterSlaveData(
+                Ticket => \%Ticket,
+                MasterSlaveDynamicField => $MasterSlaveDynamicField,
+               );
+            }
+# ---
 
             # to store dynamic field value from database (or undefined)
             my $Value;
@@ -2381,82 +2400,6 @@ sub _Mask {
             );
         }
     }
-# ---
-# MasterSlave
-# ---
-    # get master/slave dynamic field
-    my $MasterSlaveDynamicField    = $ConfigObject->Get('MasterSlave::DynamicField') || '';
-    my $MasterSlaveAdvancedEnabled = $ConfigObject->Get('MasterSlave::AdvancedEnabled') || 0;
-
-    if ( $MasterSlaveAdvancedEnabled && $MasterSlaveDynamicField ) {
-        my $UnsetMasterSlave  = $ConfigObject->Get('MasterSlave::UnsetMasterSlave') || 0;
-        my $UpdateMasterSlave = $ConfigObject->Get('MasterSlave::UpdateMasterSlave') || 0;
-
-        my %Ticket = $TicketObject->TicketGet(
-            TicketID      => $Self->{TicketID},
-            DynamicFields => 1,
-            UserID        => $Self->{UserID},
-        );
-
-        $Param{MasterSlaveDynamicField} = $MasterSlaveDynamicField;
-        my $TicketMasterSlaveDynamicFieldValue = $Ticket{ 'DynamicField_' . $MasterSlaveDynamicField } || '';
-
-        my %Data;
-        if ( $TicketMasterSlaveDynamicFieldValue ne 'Master' ) {
-            $Data{Master} = $LayoutObject->{LanguageObject}->Translate('New Master Ticket');
-        }
-        if ( $UnsetMasterSlave && $TicketMasterSlaveDynamicFieldValue eq 'Master' ) {
-            $Data{UnsetMaster} = $LayoutObject->{LanguageObject}->Translate('Unset Master Ticket');
-        }
-        if ( $UnsetMasterSlave && $TicketMasterSlaveDynamicFieldValue =~ m{^SlaveOf:(.*?)$}xms ) {
-            $Data{UnsetSlave}  = $LayoutObject->{LanguageObject}->Translate('Unset Slave Ticket');
-        }
-
-        if ( $UpdateMasterSlave ) {
-            my @TicketIDs = $TicketObject->TicketSearch(
-                Result => 'ARRAY',
-
-                # master slave dynamic field
-                'DynamicField_' . $MasterSlaveDynamicField => {
-                    Equals => 'Master',
-                },
-
-                StateType  => 'Open',
-                Limit      => 60,
-                UserID     => $Self->{UserID},
-                Permission => 'ro',
-            );
-
-            TICKET:
-            for my $TicketID (@TicketIDs) {
-                my %CurrentTicket = $TicketObject->TicketGet(
-                    TicketID => $TicketID,
-                );
-
-                next TICKET if !%CurrentTicket;
-                next TICKET if %Ticket && $Ticket{ 'DynamicField_' . $MasterSlaveDynamicField } && $Ticket{ 'DynamicField_' . $MasterSlaveDynamicField } eq "SlaveOf:$CurrentTicket{TicketNumber}";
-                next TICKET if %Ticket && $Ticket{ 'DynamicField_' . $MasterSlaveDynamicField } && $Ticket{TicketID} eq $CurrentTicket{TicketID};
-
-                $Data{"SlaveOf:$CurrentTicket{TicketNumber}"}
-                    = $LayoutObject->{LanguageObject}->Translate('Slave of Ticket#')
-                    ."$CurrentTicket{TicketNumber}: $CurrentTicket{Title}";
-            }
-        }
-        $Param{MasterSlaveStrg} = $LayoutObject->BuildSelection(
-            Data => {
-                '' => '-',
-                %Data,
-            },
-            Name => 'DynamicField_' . $MasterSlaveDynamicField,
-            Translation => 0,
-            SelectedID  => $Param{ResponsibleID},
-        );
-        $LayoutObject->Block(
-            Name => 'MasterSlave',
-            Data => \%Param,
-        );
-    }
-# ---
 
     # End Widget Article
 
@@ -2881,5 +2824,76 @@ sub _GetTypes {
     }
     return \%Type;
 }
+# ---
+# MasterSlave
+# ---
+sub _GetMasterSlaveData {
+    my ($Self, %Param) = @_;
+
+    # get config object
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+
+    my $UnsetMasterSlave  = $ConfigObject->Get('MasterSlave::UnsetMasterSlave') || 0;
+    my $UpdateMasterSlave = $ConfigObject->Get('MasterSlave::UpdateMasterSlave') || 0;
+
+    my %Ticket = %{ $Param{Ticket} };
+    my $MasterSlaveDynamicField = $Param{MasterSlaveDynamicField};
+
+    my $FieldValue = $Ticket{ 'DynamicField_' . $MasterSlaveDynamicField } || '';
+
+    # get layout object
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+
+    my %Data = (
+        '' => '-',
+    );
+
+    if ( $FieldValue ne 'Master' ) {
+        $Data{Master} = $LayoutObject->{LanguageObject}->Translate('New Master Ticket');
+    }
+    if ( $UnsetMasterSlave && $FieldValue eq 'Master' ) {
+        $Data{UnsetMaster} = $LayoutObject->{LanguageObject}->Translate('Unset Master Ticket');
+    }
+    if ( $UnsetMasterSlave && $FieldValue =~ m{^SlaveOf:(.*?)$}xms ) {
+        $Data{UnsetSlave}  = $LayoutObject->{LanguageObject}->Translate('Unset Slave Ticket');
+    }
+
+    # get ticket object
+    my $TicketObject = $Kernel::OM->Get('Kernel::System::Ticket');
+
+    if ( $UpdateMasterSlave ) {
+        my @TicketIDs = $TicketObject->TicketSearch(
+            Result => 'ARRAY',
+
+            # master slave dynamic field
+            'DynamicField_' . $MasterSlaveDynamicField => {
+                Equals => 'Master',
+            },
+
+            StateType  => 'Open',
+            Limit      => 60,
+            UserID     => $Self->{UserID},
+            Permission => 'ro',
+        );
+
+        TICKETID:
+        for my $TicketID (@TicketIDs) {
+            my %CurrentTicket = $TicketObject->TicketGet(
+                TicketID => $TicketID,
+            );
+
+            next TICKETID if !%CurrentTicket;
+            next TICKETID if $FieldValue eq "SlaveOf:$CurrentTicket{TicketNumber}";
+            next TICKETID if $FieldValue && $Ticket{TicketID} eq $CurrentTicket{TicketID};
+
+            $Data{"SlaveOf:$CurrentTicket{TicketNumber}"}
+                = $LayoutObject->{LanguageObject}->Translate('Slave of Ticket#')
+                ."$CurrentTicket{TicketNumber}: $CurrentTicket{Title}";
+        }
+    }
+
+    return \%Data;
+}
+# ---
 
 1;

@@ -14,7 +14,8 @@ use warnings;
 our @ObjectDependencies = (
     'Kernel::Config',
     'Kernel::Output::HTML::Layout',
-    'Kernel::System::MasterSlave',
+    'Kernel::System::DynamicField',
+    'Kernel::System::DynamicField::Backend',
     'Kernel::System::Ticket',
     'Kernel::System::Web::Request',
 );
@@ -32,6 +33,12 @@ sub new {
     $Self->{MasterSlaveDynamicField}    = $ConfigObject->Get('MasterSlave::DynamicField')    || '';
     $Self->{MasterSlaveAdvancedEnabled} = $ConfigObject->Get('MasterSlave::AdvancedEnabled') || 0;
 
+    if ( $Self->{MasterSlaveDynamicField} ) {
+        $Self->{DynamicFieldConfig} = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldGet(
+            Name => $Self->{MasterSlaveDynamicField},
+        );
+    }
+
     return $Self;
 }
 
@@ -42,74 +49,34 @@ sub Display {
     return if !$Self->{MasterSlaveDynamicField};
     return if !$Self->{MasterSlaveAdvancedEnabled};
 
-    # get config object
-    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
-
-    # get master slave config
-    my $UnsetMasterSlave  = $ConfigObject->Get('MasterSlave::UnsetMasterSlave')  || 0;
-    my $UpdateMasterSlave = $ConfigObject->Get('MasterSlave::UpdateMasterSlave') || 0;
-
-    my %Data = (
-        Master => 'New Master Ticket',
-    );
-
-    if ($UnsetMasterSlave) {
-        $Data{UnsetMaster} = 'Unset Master Tickets';
-        $Data{UnsetSlave}  = 'Unset Slave Tickets';
+    my $ServerError;
+    my $ErrorMessage;
+    if ( exists $Param{Errors}->{ $Self->{DynamicFieldConfig}->{Name} } ) {
+        $ServerError  = 1;
+        $ErrorMessage = $Param{Errors}->{ $Self->{DynamicFieldConfig}->{Name} };
     }
 
-    # get ticket object
-    my $TicketObject = $Kernel::OM->Get('Kernel::System::Ticket');
-
-    if ($UpdateMasterSlave) {
-
-        my @TicketIDs = $TicketObject->TicketSearch(
-            Result => 'ARRAY',
-
-            # master slave dynamic field
-            'DynamicField_' . $Self->{MasterSlaveDynamicField} => {
-                Equals => 'Master',
-            },
-
-            StateType  => 'Open',
-            Limit      => 60,
-            UserID     => $Param{UserID},
-            Permission => 'ro',
-        );
-
-        TICKET:
-        for my $TicketID (@TicketIDs) {
-
-            # get each ticket from the search results
-            my %Ticket = $TicketObject->TicketGet(
-                TicketID => $TicketID
-            );
-            next TICKET if !%Ticket;
-
-            $Data{"SlaveOf:$Ticket{TicketNumber}"} = "Slave of Ticket#$Ticket{TicketNumber}: $Ticket{Title}";
-        }
-    }
-
-    # get layout object
-    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
-
-    my $MasterSlaveSelect = $LayoutObject->BuildSelection(
-        Data => {
-            '' => '-',
-            %Data,
-        },
-        Name        => $Self->{MasterSlaveDynamicField},
-        Translation => 0,
-        SelectedID  => $Param{ResponsibleID},
+    my $PossibleValuesFilter = $Self->_GetMasterSlaveData(
+        %Param,
+        MasterSlaveDynamicField => $Self->{MasterSlaveDynamicField},
     );
 
-    my $MasterTicketStr = $LayoutObject->{LanguageObject}->Translate('MasterTicket');
+    # get field HTML
+    my $DynamicFieldHTML = $Kernel::OM->Get('Kernel::System::DynamicField::Backend')->EditFieldRender(
+        DynamicFieldConfig   => $Self->{DynamicFieldConfig},
+        PossibleValuesFilter => $PossibleValuesFilter,
+        ServerError          => $ServerError || '',
+        ErrorMessage         => $ErrorMessage || '',
+        LayoutObject         => $Kernel::OM->Get('Kernel::Output::HTML::Layout'),
+        ParamObject          => $Kernel::OM->Get('Kernel::System::Web::Request'),
+        Mandatory            => 0,
+    );
 
     # indentation here is on purpose so the HTML will look according to the framework
     my $HTMLString = <<"EOF";
-                    <label for=\"$Self->{MasterSlaveDynamicField}\">$MasterTicketStr:</label>
+                    $DynamicFieldHTML->{Label}
                     <div class="Field">
-                        $MasterSlaveSelect
+                        $DynamicFieldHTML->{Field}
                     </div>
                     <div class="Clear"></div>
 EOF
@@ -118,6 +85,32 @@ EOF
 }
 
 sub Validate {
+    my ( $Self, %Param ) = @_;
+
+    # if there is no configured dynamic field or if advanced mode is not enable, there is nothing to do
+    return if !$Self->{MasterSlaveDynamicField};
+    return if !$Self->{MasterSlaveAdvancedEnabled};
+
+    my $PossibleValuesFilter = $Self->_GetMasterSlaveData(
+        %Param,
+        MasterSlaveDynamicField => $Self->{MasterSlaveDynamicField},
+    );
+
+    my $ValidationResult = $Kernel::OM->Get('Kernel::System::DynamicField::Backend')->EditFieldValueValidate(
+        DynamicFieldConfig   => $Self->{DynamicFieldConfig},
+        PossibleValuesFilter => $PossibleValuesFilter,
+        ParamObject          => $Kernel::OM->Get('Kernel::System::Web::Request'),
+        Mandatory            => 1,
+    );
+
+    if ( $ValidationResult->{ServerError} ) {
+        return (
+            {
+                ErrorKey   => $Self->{DynamicFieldConfig}->{Name},
+                ErrorValue => $ValidationResult->{ErrorMessage},
+            }
+        );
+    }
 
     return;
 }
@@ -129,34 +122,82 @@ sub Store {
     return 1 if !$Self->{MasterSlaveDynamicField};
     return 1 if !$Self->{MasterSlaveAdvancedEnabled};
 
-    # get the dynamic field value
-    my $MasterSlaveDynamicFieldValue = $Kernel::OM->Get('Kernel::System::Web::Request')->GetParam(
-        Param => $Self->{MasterSlaveDynamicField}
-    ) || '';
+    # get needed objects
+    my $DynamicFieldBackendObject = $Kernel::OM->Get('Kernel::System::DynamicField::Backend');
 
-    # if there is no value for master slave, there is noting to do
-    return 1 if !$MasterSlaveDynamicFieldValue;
+    # extract the dynamic field value form the web request
+    my $DynamicFieldValue = $DynamicFieldBackendObject->EditFieldValueGet(
+        DynamicFieldConfig => $Self->{DynamicFieldConfig},
+        ParamObject        => $Kernel::OM->Get('Kernel::System::Web::Request'),
+        LayoutObject       => $Kernel::OM->Get('Kernel::Output::HTML::Layout'),
+    );
 
-    # get config object
-    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
-
-    # get master slave settings
-    my $MasterSlaveFollowUpdatedMaster        = $ConfigObject->Get('MasterSlave::FollowUpdatedMaster')        || 0;
-    my $MasterSlaveKeepParentChildAfterUnset  = $ConfigObject->Get('MasterSlave::KeepParentChildAfterUnset')  || 0;
-    my $MasterSlaveKeepParentChildAfterUpdate = $ConfigObject->Get('MasterSlave::KeepParentChildAfterUpdate') || 0;
-
-    # set master slave field
-    $Kernel::OM->Get('Kernel::System::MasterSlave')->MasterSlave(
-        MasterSlaveDynamicFieldName           => $Self->{MasterSlaveDynamicField},
-        MasterSlaveDynamicFieldValue          => $MasterSlaveDynamicFieldValue,
-        TicketID                              => $Param{TicketID},
-        UserID                                => $Param{UserID},
-        MasterSlaveFollowUpdatedMaster        => $MasterSlaveFollowUpdatedMaster,
-        MasterSlaveKeepParentChildAfterUnset  => $MasterSlaveKeepParentChildAfterUnset,
-        MasterSlaveKeepParentChildAfterUpdate => $MasterSlaveKeepParentChildAfterUpdate,
+    # set the value
+    my $Success = $DynamicFieldBackendObject->ValueSet(
+        DynamicFieldConfig => $Self->{DynamicFieldConfig},
+        ObjectID           => $Param{TicketID},
+        Value              => $DynamicFieldValue,
+        UserID             => $Param{UserID},
     );
 
     return 1;
 }
 
+sub _GetMasterSlaveData {
+    my ( $Self, %Param ) = @_;
+
+    # get config object
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+
+    # get master slave config
+    my $UnsetMasterSlave  = $ConfigObject->Get('MasterSlave::UnsetMasterSlave')  || 0;
+    my $UpdateMasterSlave = $ConfigObject->Get('MasterSlave::UpdateMasterSlave') || 0;
+
+    my %Data = (
+        ''     => '-',
+        Master => 'New Master Ticket',
+    );
+
+    if ($UnsetMasterSlave) {
+        $Data{UnsetMaster} = 'Unset Master Tickets';
+        $Data{UnsetSlave}  = 'Unset Slave Tickets';
+    }
+
+    # get needed objects
+    my $TicketObject = $Kernel::OM->Get('Kernel::System::Ticket');
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+
+    if ($UpdateMasterSlave) {
+
+        my @TicketIDs = $TicketObject->TicketSearch(
+            Result => 'ARRAY',
+
+            # master slave dynamic field
+            'DynamicField_' . $Param{MasterSlaveDynamicField} => {
+                Equals => 'Master',
+            },
+
+            StateType  => 'Open',
+            Limit      => 60,
+            UserID     => $Param{UserID},
+            Permission => 'ro',
+        );
+
+        TICKETID:
+        for my $TicketID (@TicketIDs) {
+
+            # get each ticket from the search results
+            my %CurrentTicket = $TicketObject->TicketGet(
+                TicketID => $TicketID
+            );
+            next TICKETID if !%CurrentTicket;
+
+            $Data{"SlaveOf:$CurrentTicket{TicketNumber}"}
+                = $LayoutObject->{LanguageObject}->Translate('Slave of Ticket#')
+                . "$CurrentTicket{TicketNumber}: $CurrentTicket{Title}";
+        }
+    }
+    return \%Data;
+
+}
 1;

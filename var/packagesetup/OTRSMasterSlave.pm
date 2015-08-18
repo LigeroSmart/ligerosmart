@@ -212,13 +212,11 @@ sub _SetDynamicFields {
         $MasterSlaveDynamicField => {
             Name       => $MasterSlaveDynamicField,
             Label      => 'Master Ticket',
-            FieldType  => 'Dropdown',
+            FieldType  => 'MasterSlave',
             ObjectType => 'Ticket',
             Config     => {
-                DefaultValue   => '',
-                PossibleValues => {
-                    Master => 'New Master Ticket',
-                },
+                DefaultValue       => '',
+                PossibleNone       => 1,
                 TranslatableValues => 1,
             },
             InternalField => 1,
@@ -250,8 +248,21 @@ sub _SetDynamicFields {
             # get the dynamic field configuration
             my $DynamicFieldConfig = $Self->{DynamicFieldLookup}->{$NewFieldName};
 
+            my $Update;
+
+            # update field configuration if it was other than MasterSlave (e.g. Dropdown)
+            if ( $DynamicFieldConfig->{FieldType} ne 'MasterSlave' ) {
+                my $ID = $DynamicFieldConfig->{ID};
+                %{$DynamicFieldConfig} = ( %{$DynamicFieldConfig}, %{ $NewDynamicFields{$NewFieldName} } );
+                $Update = 1;
+            }
+
             # if dynamic field exists make sure is valid
             if ( $DynamicFieldConfig->{ValidID} ne '1' ) {
+                $Update = 1;
+            }
+
+            if ($Update) {
 
                 my $Success = $DynamicFieldObject->DynamicFieldUpdate(
                     %{$DynamicFieldConfig},

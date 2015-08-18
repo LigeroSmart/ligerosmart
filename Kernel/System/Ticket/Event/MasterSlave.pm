@@ -44,6 +44,7 @@ sub Run {
                 Priority => 'error',
                 Message  => "Need $_!"
             );
+
             return;
         }
     }
@@ -52,6 +53,7 @@ sub Run {
             Priority => 'error',
             Message  => "Need Data->{TicketID}!"
         );
+
         return;
     }
 
@@ -75,41 +77,43 @@ sub Run {
 
     # link master/slave tickets
     if ( $Param{Event} eq 'TicketDynamicFieldUpdate_' . $MasterSlaveDynamicField ) {
-        if (
-            $Ticket{ 'DynamicField_' . $MasterSlaveDynamicField } &&
-            $Ticket{ 'DynamicField_' . $MasterSlaveDynamicField } =~ /^SlaveOf:(.*?)$/
-            )
-        {
 
-            # lookup to find ticket id
-            my $SourceKey = $TicketObject->TicketIDLookup(
-                TicketNumber => $1,
-                UserID       => $Param{UserID},
-            );
+        # TODO: This seams to be redundant
+        # if (
+        #     $Ticket{ 'DynamicField_' . $MasterSlaveDynamicField } &&
+        #     $Ticket{ 'DynamicField_' . $MasterSlaveDynamicField } =~ /^SlaveOf:(.*?)$/
+        #     )
+        # {
 
-            # create link
-            $LinkObject->LinkAdd(
-                SourceObject => 'Ticket',
-                SourceKey    => $SourceKey,
-                TargetObject => 'Ticket',
-                TargetKey    => $Param{Data}->{TicketID},
-                Type         => 'ParentChild',
-                State        => 'Valid',
-                UserID       => $Param{UserID},
-            );
+        #     # lookup to find ticket id
+        #     my $SourceKey = $TicketObject->TicketIDLookup(
+        #         TicketNumber => $1,
+        #         UserID       => $Param{UserID},
+        #     );
 
-            # update dynamic field value for ticket
-            # get dynamic field config
-            my $DynamicField = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldGet(
-                Name => $MasterSlaveDynamicField,
-            );
-            $Kernel::OM->Get('Kernel::System::DynamicField::Backend')->ValueSet(
-                DynamicFieldConfig => $DynamicField,
-                ObjectID           => $Param{Data}->{TicketID},
-                Value              => $Ticket{ 'DynamicField_' . $MasterSlaveDynamicField },
-                UserID             => $Param{UserID},
-            );
-        }
+        #     # create link
+        #     $LinkObject->LinkAdd(
+        #         SourceObject => 'Ticket',
+        #         SourceKey    => $SourceKey,
+        #         TargetObject => 'Ticket',
+        #         TargetKey    => $Param{Data}->{TicketID},
+        #         Type         => 'ParentChild',
+        #         State        => 'Valid',
+        #         UserID       => $Param{UserID},
+        #     );
+
+        #     # update dynamic field value for ticket
+        #     # get dynamic field config
+        #     my $DynamicField = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldGet(
+        #         Name => $MasterSlaveDynamicField,
+        #     );
+        #     $Kernel::OM->Get('Kernel::System::DynamicField::Backend')->ValueSet(
+        #         DynamicFieldConfig => $DynamicField,
+        #         ObjectID           => $Param{Data}->{TicketID},
+        #         Value              => $Ticket{ 'DynamicField_' . $MasterSlaveDynamicField },
+        #         UserID             => $Param{UserID},
+        #     );
+        # }
         return 1;
     }
 
@@ -128,17 +132,19 @@ sub Run {
         UserID    => $Param{UserID},
     );
     my @TicketIDs;
-    LINK:
+    TICKETID:
     for my $TicketID ( sort keys %Links ) {
-        next LINK if !$Links{$TicketID};
+        next TICKETID if !$Links{$TicketID};
 
         # just take ticket with slave attributes for action
         my %Ticket = $TicketObject->TicketGet(
             TicketID      => $TicketID,
             DynamicFields => 1,
         );
-        next LINK if !$Ticket{ 'DynamicField_' . $MasterSlaveDynamicField };
-        next LINK if $Ticket{ 'DynamicField_' . $MasterSlaveDynamicField } !~ /^SlaveOf:(.*?)$/;
+
+        my $TicketValue = $Ticket{ 'DynamicField_' . $MasterSlaveDynamicField };
+        next TICKETID if !$TicketValue;
+        next TICKETID if $TicketValue !~ /^SlaveOf:(.*?)$/;
 
         # remember ticket id
         push @TicketIDs, $TicketID;
@@ -150,6 +156,7 @@ sub Run {
             Priority => 'notice',
             Message  => "No Slaves of ticket $Ticket{TicketID}!",
         );
+
         return 1;
     }
 
@@ -159,8 +166,10 @@ sub Run {
     # auto response action
     if ( $Param{Event} eq 'ArticleSend' ) {
         my @Index = $TicketObject->ArticleIndex( TicketID => $Param{Data}->{TicketID} );
+
         return 1 if !@Index;
-        my %Article = $TicketObject->ArticleGet( ArticleID => $Index[$#Index] );
+
+        my %Article = $TicketObject->ArticleGet( ArticleID => $Index[-1] );
 
         # check if the send mail is of type forward
         my $IsForward = $Self->_ArticleHistoryTypeGiven(
@@ -170,9 +179,10 @@ sub Run {
             UserID      => $Param{UserID},
         );
 
-        # if the sysconfig is disabled and the new article is an forward article
-        # then we dont want to have the forward for the slave tickets
+        # if the SysConfig is disabled and the new article is an forward article
+        # then we don't want to have the forward for the slave tickets
         my $ForwardSlaves = $ConfigObject->Get('MasterSlave::ForwardSlaves');
+
         return 1 if $IsForward && !$ForwardSlaves;
 
         # mark ticket to prevent a loop
@@ -190,13 +200,16 @@ sub Run {
         # perform action on linked tickets
         TICKETID:
         for my $TicketID (@TicketIDs) {
-            next TICKETID if !$Self->_LoopCheck(
+            my $CheckSuccess = $Self->_LoopCheck(
                 TicketID => $TicketID,
                 UserID   => $Param{UserID},
                 String   => 'MasterTicketAction: ArticleSend',
             );
+            next TICKETID if !$CheckSuccess;
 
-            my %TicketSlave = $TicketObject->TicketGet( TicketID => $TicketID );
+            my %TicketSlave = $TicketObject->TicketGet(
+                TicketID => $TicketID,
+            );
 
             # try to get the customer data of the slave ticket
             my %Customer;
@@ -216,7 +229,7 @@ sub Run {
                 );
 
                 if (@Index) {
-                    $Customer{UserEmail} = $Index[$#Index]{From};
+                    $Customer{UserEmail} = $Index[-1]{From};
                 }
             }
 
@@ -257,8 +270,8 @@ sub Run {
                     $TmpArticleBody   = $Article{Body};
                 }
                 else {
-                    # get body from tmp in oder to get it
-                    # without changes from prev slave tickets
+                    # get body from temporal in oder to get it
+                    # without changes from previous slave tickets
                     $Article{Body} = $TmpArticleBody;
                 }
 
@@ -291,8 +304,10 @@ sub Run {
     # article create
     elsif ( $Param{Event} eq 'ArticleCreate' ) {
         my @Index = $TicketObject->ArticleIndex( TicketID => $Param{Data}->{TicketID} );
+
         return 1 if !@Index;
-        my %Article = $TicketObject->ArticleGet( ArticleID => $Index[$#Index] );
+
+        my %Article = $TicketObject->ArticleGet( ArticleID => $Index[-1] );
 
         # mark ticket to prevent a loop
         $TicketObject->HistoryAdd(
@@ -304,22 +319,25 @@ sub Run {
 
         # do not process email articles (already done in ArticleSend event!)
         if ( $Article{SenderType} eq 'agent' && $Article{ArticleType} eq 'email-external' ) {
+
             return 1;
         }
 
         # set the same state, but only for notes
         if ( $Article{ArticleType} !~ /^note-/i ) {
+
             return 1;
         }
 
         # perform action on linked tickets
         TICKETID:
         for my $TicketID (@TicketIDs) {
-            next TICKETID if !$Self->_LoopCheck(
+            my $CheckSuccess = $Self->_LoopCheck(
                 TicketID => $TicketID,
                 UserID   => $Param{UserID},
                 String   => 'MasterTicketAction: ArticleCreate',
             );
+            next TICKETID if !$CheckSuccess;
 
             # article create
             $TicketObject->ArticleCreate(
@@ -330,6 +348,7 @@ sub Run {
                 UserID         => $Param{UserID},
             );
         }
+
         return 1;
     }
 
@@ -347,11 +366,12 @@ sub Run {
         # perform action on linked tickets
         TICKETID:
         for my $TicketID (@TicketIDs) {
-            next TICKETID if !$Self->_LoopCheck(
+            my $CheckSuccess = $Self->_LoopCheck(
                 TicketID => $TicketID,
                 UserID   => $Param{UserID},
                 String   => 'MasterTicketAction: TicketStateUpdate',
             );
+            next TICKETID if !$CheckSuccess;
 
             # set the same state
             $TicketObject->TicketStateSet(
@@ -360,6 +380,7 @@ sub Run {
                 UserID   => $Param{UserID},
             );
         }
+
         return 1;
     }
 
@@ -377,11 +398,13 @@ sub Run {
         # perform action on linked tickets
         TICKETID:
         for my $TicketID (@TicketIDs) {
-            next TICKETID if !$Self->_LoopCheck(
+            my $CheckSuccess = Self->_LoopCheck(
                 TicketID => $TicketID,
                 UserID   => $Param{UserID},
                 String   => 'MasterTicketAction: TicketPendingTimeUpdate',
             );
+
+            next TICKETID if !$CheckSuccess;
 
             # set the same pending time
             my $TimeStamp = '0000-00-00 00:00:00';
@@ -415,11 +438,12 @@ sub Run {
         # perform action on linked tickets
         TICKETID:
         for my $TicketID (@TicketIDs) {
-            next TICKETID if !$Self->_LoopCheck(
+            my $CheckSuccess = $Self->_LoopCheck(
                 TicketID => $TicketID,
                 UserID   => $Param{UserID},
                 String   => 'MasterTicketAction: TicketPriorityUpdate',
             );
+            next TICKETID if !$CheckSuccess;
 
             # set the same state
             $TicketObject->TicketPrioritySet(
@@ -445,11 +469,12 @@ sub Run {
         # perform action on linked tickets
         TICKETID:
         for my $TicketID (@TicketIDs) {
-            next TICKETID if !$Self->_LoopCheck(
+            my $CheckSuccess = $Self->_LoopCheck(
                 TicketID => $TicketID,
                 UserID   => $Param{UserID},
                 String   => 'MasterTicketAction: TicketOwnerUpdate',
             );
+            next TICKETID if !$CheckSuccess;
 
             # set the same state
             $TicketObject->TicketOwnerSet(
@@ -476,11 +501,12 @@ sub Run {
         # perform action on linked tickets
         TICKETID:
         for my $TicketID (@TicketIDs) {
-            next TICKETID if !$Self->_LoopCheck(
+            my $CheckSuccess = $Self->_LoopCheck(
                 TicketID => $TicketID,
                 UserID   => $Param{UserID},
                 String   => 'MasterTicketAction: TicketResponsibleUpdate',
             );
+            next TICKETID if !$CheckSuccess;
 
             # set the same state
             $TicketObject->TicketResponsibleSet(
@@ -507,11 +533,12 @@ sub Run {
         # perform action on linked tickets
         TICKETID:
         for my $TicketID (@TicketIDs) {
-            next TICKETID if !$Self->_LoopCheck(
+            my $CheckSuccess = $Self->_LoopCheck(
                 TicketID => $TicketID,
                 UserID   => $Param{UserID},
                 String   => 'MasterTicketAction: TicketLockUpdate',
             );
+            next TICKETID if !$CheckSuccess;
 
             # set the same state
             $TicketObject->TicketLockSet(
@@ -530,12 +557,13 @@ sub _LoopCheck {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for (qw(TicketID String UserID)) {
-        if ( !$Param{$_} ) {
+    for my $Needed (qw(TicketID String UserID)) {
+        if ( !$Param{$Needed} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
-                Message  => "Need $_!"
+                Message  => "Need $Needed!"
             );
+
             return;
         }
     }
@@ -564,6 +592,7 @@ sub _LoopCheck {
                     HistoryType  => 'Misc',
                     Name         => "MasterTicketLoop: stopped",
                 );
+
                 return;
             }
         }
@@ -619,14 +648,14 @@ sub _ArticleHistoryTypeGiven {
 
     return $Matched if !IsArrayRefWithData( \@Lines );
 
-    HISTORY:
-    for my $Data ( reverse @Lines ) {
-        next HISTORY if $Data->{ArticleID} != $ArticleID;
-        next HISTORY if $Data->{HistoryType} ne $HistoryType;
+    HISTORYDATA:
+    for my $HistoryData ( reverse @Lines ) {
+        next HISTORYDATA if $HistoryData->{ArticleID} != $ArticleID;
+        next HISTORYDATA if $HistoryData->{HistoryType} ne $HistoryType;
 
         $Matched = 1;
 
-        last HISTORY;
+        last HISTORYDATA;
     }
 
     return $Matched;
