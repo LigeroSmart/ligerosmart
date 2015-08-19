@@ -12,7 +12,9 @@ use strict;
 use warnings;
 
 our @ObjectDependencies = (
+    'Kernel::Config',
     'Kernel::System::DB',
+    'Kernel::System::SysConfig',
 );
 
 =head1 NAME
@@ -103,6 +105,23 @@ sub CodeUpgrade {
     return 1;
 }
 
+=item CodeUpgradeFromLowerThan_4_0_91()
+
+This function is only executed if the installed module version is smaller than 4.0.91.
+
+my $Result = $CodeObject->CodeUpgradeFromLowerThan_4_0_91();
+
+=cut
+
+sub CodeUpgradeFromLowerThan_4_0_91 {    ## no critic
+    my ( $Self, %Param ) = @_;
+
+    # change configurations to match the new module location.
+    $Self->_MigrateConfigs();
+
+    return 1;
+}
+
 =item CodeUninstall()
 
 run the code uninstall part
@@ -170,6 +189,46 @@ sub _MigrateFunctionality {
     $Kernel::OM->Get('Kernel::System::DB')->Do(
         SQL => $Drop,
     );
+
+    return 1;
+}
+
+=item _MigrateConfigs()
+
+change configurations to match the new module location.
+
+    my $Result = $CodeObject->_MigrateConfigs();
+
+=cut
+
+sub _MigrateConfigs {
+
+    # create needed objects
+    my $SysConfigObject = $Kernel::OM->Get('Kernel::System::SysConfig');
+    my $ConfigObject    = $Kernel::OM->Get('Kernel::Config');
+
+    # migrate GeneralCatalog Preferences
+    # get setting content for GeneralCatalog Preferences
+    my $Setting = $ConfigObject->Get('GeneralCatalogPreferences');
+
+    CONFIGITEM:
+    for my $MenuModule ( sort keys %{$Setting} ) {
+
+        # update module location
+        my $Module = $Setting->{$MenuModule}->{'Module'};
+        if ( $Module !~ m{Kernel::Output::HTML::GeneralCatalogPreferences(\w+)} ) {
+            next CONFIGITEM;
+        }
+
+        $Setting->{$MenuModule}->{Module} = "Kernel::Output::HTML::GeneralCatalogPreferences::Generic";
+
+        # set new setting,
+        my $Success = $SysConfigObject->ConfigItemUpdate(
+            Valid => 1,
+            Key   => 'GeneralCatalogPreferences###' . $MenuModule,
+            Value => $Setting->{$MenuModule},
+        );
+    }
 
     return 1;
 }
