@@ -69,10 +69,10 @@ ITSM.Agent.ChangeManagement.NotificationEvent = (function (TargetNS) {
             return false;
         }
 
-        if ( Object.attr('id') === 'AgentLanguageAdd' ) {
+        if (Object.attr('id') === 'AgentLanguageAdd') {
             Type = 'Agent';
         }
-        else if ( Object.attr('id') === 'CustomerLanguageAdd' ) {
+        else if (Object.attr('id') === 'CustomerLanguageAdd') {
             Type = 'Customer';
         }
 
@@ -143,9 +143,11 @@ ITSM.Agent.ChangeManagement.NotificationEvent = (function (TargetNS) {
      *      This function removes a notification event language.
      */
     TargetNS.RemoveLanguage = function (Object) {
-        Object.closest('.NotificationLanguage').remove();
 
         var Type;
+
+        Object.closest('.NotificationLanguage').remove();
+
         if (Object.hasClass('AgentLanguageRemove')) {
             Type = 'Agent';
         }
@@ -185,7 +187,7 @@ ITSM.Agent.ChangeManagement.NotificationEvent = (function (TargetNS) {
         $('#' + Type + 'LanguageAdd').replaceWith($LanguageClone);
 
         // bind click function to add button
-        $( '#' + Type + 'LanguageAdd').off('change.LanguageAdd').on('change.LanguageAdd', function(){
+        $('#' + Type + 'LanguageAdd').off('change.LanguageAdd').on('change.LanguageAdd', function(){
             TargetNS.AddLanguage($(this), $(this).val(), $(this).find('option:selected').text());
             return false;
         });
