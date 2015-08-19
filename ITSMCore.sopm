@@ -379,6 +379,14 @@
         $Kernel::OM->Get($CodeModule)->CodeUpgradeFromLowerThan_4_0_2();
 
     ]]></CodeUpgrade>
+    <CodeUpgrade Type="post" Version="4.0.91"><![CDATA[
+
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
+
+        $Kernel::OM->Get($CodeModule)->CodeUpgradeFromLowerThan_4_0_91();
+
+    ]]></CodeUpgrade>
     <CodeUpgrade Type="post"><![CDATA[
 
         # create the package name
