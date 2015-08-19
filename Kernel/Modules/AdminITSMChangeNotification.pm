@@ -29,7 +29,6 @@ sub new {
 sub Run {
     my ( $Self, %Param ) = @_;
 
-
     # hash with feedback to the user
     my %Notification;
 
@@ -92,7 +91,7 @@ sub Run {
             my @LanguageIDs = $ParamObject->GetArray( Param => $Type . '_LanguageID' );
 
             # get the subject and body for all languages
-            for my $LanguageID ( @LanguageIDs ) {
+            for my $LanguageID (@LanguageIDs) {
 
                 my $Subject = $ParamObject->GetParam( Param => $Type . '_' . $LanguageID . '_Subject' ) || '';
                 my $Body    = $ParamObject->GetParam( Param => $Type . '_' . $LanguageID . '_Body' )    || '';
@@ -171,7 +170,7 @@ sub Run {
             my @LanguageIDs = $ParamObject->GetArray( Param => $Type . '_LanguageID' );
 
             # get the subject and body for all languages
-            for my $LanguageID ( @LanguageIDs ) {
+            for my $LanguageID (@LanguageIDs) {
 
                 my $Subject = $ParamObject->GetParam( Param => $Type . '_' . $LanguageID . '_Subject' ) || '';
                 my $Body    = $ParamObject->GetParam( Param => $Type . '_' . $LanguageID . '_Body' )    || '';
@@ -254,7 +253,7 @@ sub Run {
             ID => $GetParam{ID},
         );
 
-        if ( !IsHashRefWithData( $Data ) ) {
+        if ( !IsHashRefWithData($Data) ) {
             return $LayoutObject->ErrorScreen(
                 Message => "Unknown Notification $GetParam{ID}!",
             );
@@ -430,9 +429,9 @@ sub _Edit {
                 Name => 'NotificationLanguage',
                 Data => {
                     %Param,
-                    Subject            => $Param{Message}->{$Type}->{$LanguageID}->{Subject} || '',
-                    Body               => $Param{Message}->{$Type}->{$LanguageID}->{Body}    || '',
-                    Type               => $Type,
+                    Subject => $Param{Message}->{$Type}->{$LanguageID}->{Subject} || '',
+                    Body    => $Param{Message}->{$Type}->{$LanguageID}->{Body}    || '',
+                    Type    => $Type,
                     LanguageID         => $LanguageID,
                     Language           => $DefaultUsedLanguages{$LanguageID},
                     SubjectServerError => $Param{ $Type . '_' . $LanguageID . '_SubjectServerError' } || '',
@@ -459,7 +458,7 @@ sub _Edit {
         # show language add dropdown
         $Param{LanguageStrg} = $LayoutObject->BuildSelection(
             Data         => \%DefaultUsedLanguages,
-            Name         => $Type .'LanguageAdd',
+            Name         => $Type . 'LanguageAdd',
             Class        => 'LanguageAdd',
             Translation  => 1,
             PossibleNone => 1,
