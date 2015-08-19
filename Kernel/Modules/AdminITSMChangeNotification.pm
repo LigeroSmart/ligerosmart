@@ -213,6 +213,77 @@ sub Run {
         }
     }
 
+    # ------------------------------------------------------------ #
+    # delete
+    # ------------------------------------------------------------ #
+    elsif ( $Self->{Subaction} eq 'Delete' ) {
+
+        # challenge token check for write action
+        $LayoutObject->ChallengeTokenCheck();
+
+        my %GetParam;
+        for my $Parameter (qw(ID)) {
+            $GetParam{$Parameter} = $ParamObject->GetParam( Param => $Parameter ) || '';
+        }
+
+        my $Delete = $NotificationObject->NotificationRuleDelete(
+            ID => $GetParam{ID},
+        );
+        if ( !$Delete ) {
+            return $LayoutObject->ErrorScreen();
+        }
+
+        return $LayoutObject->Redirect( OP => "Action=$Self->{Action}" );
+    }
+
+    # ------------------------------------------------------------ #
+    # NotificationCopy
+    # ------------------------------------------------------------ #
+    elsif ( $Self->{Subaction} eq 'NotificationCopy' ) {
+
+        # challenge token check for write action
+        $LayoutObject->ChallengeTokenCheck();
+
+        my %GetParam;
+        for my $Parameter (qw(ID)) {
+            $GetParam{$Parameter} = $ParamObject->GetParam( Param => $Parameter ) || '';
+        }
+
+        # get Notification data
+        my $Data = $NotificationObject->NotificationRuleGet(
+            ID => $GetParam{ID},
+        );
+
+        if ( !IsHashRefWithData( $Data ) ) {
+            return $LayoutObject->ErrorScreen(
+                Message => "Unknown Notification $GetParam{ID}!",
+            );
+        }
+
+        # create new Notification name
+        my $NotificationName =
+            $Data->{Name}
+            . ' ('
+            . $LayoutObject->{LanguageObject}->Translate('Copy')
+            . ')';
+
+        # otherwise save configuration and return to overview screen
+        my $NewNotificationID = $NotificationObject->NotificationRuleAdd(
+            %{$Data},
+            Name => $NotificationName,
+        );
+
+        # show error if can't create
+        if ( !$NewNotificationID ) {
+            return $LayoutObject->ErrorScreen(
+                Message => "There was an error creating the Notification",
+            );
+        }
+
+        # return to overview
+        return $LayoutObject->Redirect( OP => "Action=$Self->{Action}" );
+    }
+
     # ------------------------------------------------------------
     # overview
     # ------------------------------------------------------------

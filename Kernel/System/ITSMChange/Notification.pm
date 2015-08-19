@@ -1051,6 +1051,54 @@ sub NotificationRuleUpdate {
     return 1;
 }
 
+=item NotificationRuleDelete()
+
+deletes an existing notification rule
+
+    my $Success = $NotificationObject->NotificationRuleDelete(
+        ID => 123,
+    );
+
+=cut
+
+sub NotificationRuleDelete {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    if ( !$Param{ID} ) {
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
+            Priority => 'error',
+            Message  => "Need ID!",
+        );
+        return;
+    }
+
+    # delete change notification recipient entries
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Do(
+        SQL  => 'DELETE FROM change_notification_rec WHERE notification_id = ?',
+        Bind => [ \$Param{ID} ],
+    );
+
+    # delete change notification message data
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Do(
+        SQL  => 'DELETE FROM change_notification_message WHERE notification_id = ?',
+        Bind => [ \$Param{ID} ],
+    );
+
+    # delete change notification
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Do(
+        SQL  => 'DELETE FROM change_notification WHERE id = ?',
+        Bind => [ \$Param{ID} ],
+    );
+
+    # cleanup cache
+    $Kernel::OM->Get('Kernel::System::Cache')->CleanUp(
+        Type => $Self->{CacheType},
+    );
+
+    return 1;
+}
+
 =item NotificationRuleList()
 
 returns an array reference with IDs of all existing notification rules

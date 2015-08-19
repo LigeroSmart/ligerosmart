@@ -158,7 +158,6 @@ ITSM.Agent.ChangeManagement.NotificationEvent = (function (TargetNS) {
         TargetNS.LanguageSelectionRebuild(Type);
     };
 
-
     /**
      * @name LanguageSelectionRebuild
      * @memberof ITSM.Agent.ChangeManagement.NotificationEvent

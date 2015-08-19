@@ -46,13 +46,15 @@
                 <table class="DataTable">
                     <thead>
                         <tr>
-                            <th>[% Translate("Name") | html %]</th>
+                            <th class="W20pc">[% Translate("Name") | html %]</th>
                             <th>[% Translate("Event") | html %]</th>
                             <th>[% Translate("Attribute") | html %]</th>
                             <th>[% Translate("Rule") | html %]</th>
                             <th>[% Translate("Recipients") | html %]</th>
 #                            <th>[% Translate("Comment") | html %]</th>
                             <th>[% Translate("Validity") | html %]</th>
+                            <th class="Center W10pc">[% Translate("Copy") | html %]</th>
+                            <th class="Center W10pc">[% Translate("Delete") | html %]</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -65,12 +67,37 @@
                             <td>[% Data.Recipients | html %]</td>
 #                            <td>[% Data.Comment | truncate(20) | html %]</td>
                             <td>[% Translate(Data.Valid) | html %]</td>
+                            <td class="Center">
+                                <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=NotificationCopy;ID=[% Data.ID | uri %];[% Env("ChallengeTokenParam") | html %]"><i class="fa fa-copy"></i><span class="InvisibleText">[% Translate("Copy") | html %]</span></a>
+                            </td>
+                            <td class="Center">
+                                <a class="TrashCan NotificationDelete" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Delete;ID=[% Data.ID | uri %];[% Env("ChallengeTokenParam") | html %]" title="[% Translate("Delete this notification") | html %]">
+                                    <i class="fa fa-trash-o"></i>
+                                </a>
+                            </td>
                         </tr>
 [% RenderBlockEnd("OverviewResultRow") %]
                     </tbody>
                 </table>
             </div>
         </div>
+
+[% WRAPPER JSOnDocumentComplete %]
+<script type="text/javascript">//<![CDATA[
+$('.NotificationDelete').bind('click', function (Event) {
+
+    if (window.confirm([% Translate("Do you really want to delete this notification?") | JSON %])) {
+        window.location = $(this).attr('href');
+    }
+
+    // don't interfere with MasterAction
+    Event.stopPropagation();
+    Event.preventDefault();
+    return false;
+});
+//]]></script>
+[% END %]
+
 [% RenderBlockEnd("OverviewResult") %]
 
 [% RenderBlockStart("OverviewUpdate") %]
