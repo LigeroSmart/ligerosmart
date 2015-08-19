@@ -17,7 +17,7 @@
 var ITSM = ITSM || {};
 ITSM.Agent = ITSM.Agent || {};
 ITSM.Agent.ChangeManagement = ITSM.Agent.ChangeManagement || {};
-ITSM.Agent.ChangeManagement.WorkorderGraph = ITSM.Agent.ChangeManagement.WorkorderGraph || {};
+// ITSM.Agent.ChangeManagement.WorkorderGraph = ITSM.Agent.ChangeManagement.WorkorderGraph || {};
 
 /**
  * @namespace

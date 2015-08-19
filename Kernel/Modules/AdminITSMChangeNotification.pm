@@ -11,6 +11,9 @@ package Kernel::Modules::AdminITSMChangeNotification;
 use strict;
 use warnings;
 
+use Kernel::System::VariableCheck qw(:all);
+use Kernel::Language qw(Translatable);
+
 our $ObjectManagerDisabled = 1;
 
 sub new {
@@ -26,13 +29,27 @@ sub new {
 sub Run {
     my ( $Self, %Param ) = @_;
 
+
     # hash with feedback to the user
     my %Notification;
 
-    # get needed object
+    # get needed objects
+    my $ConfigObject       = $Kernel::OM->Get('Kernel::Config');
     my $NotificationObject = $Kernel::OM->Get('Kernel::System::ITSMChange::Notification');
     my $ParamObject        = $Kernel::OM->Get('Kernel::System::Web::Request');
     my $LayoutObject       = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+
+    my $RichText = $ConfigObject->Get('Frontend::RichText');
+
+    if ( $RichText && !$ConfigObject->Get("ITSMChange::Frontend::$Self->{Action}")->{RichText} ) {
+        $RichText = 0;
+    }
+
+    # set content type for notifications
+    my $ContentType = 'text/plain';
+    if ($RichText) {
+        $ContentType = 'text/html';
+    }
 
     # ------------------------------------------------------------ #
     # change
@@ -44,6 +61,7 @@ sub Run {
         $Self->_Edit(
             Action      => 'Change',
             ActionLabel => 'Edit',
+            RichText    => $RichText,
             %{$Data},
         );
     }
@@ -56,17 +74,46 @@ sub Run {
         # challenge token check for write action
         $LayoutObject->ChallengeTokenCheck();
 
-        my $Note = '';
         my %GetParam;
+
+        # get scalar parameters
         for my $Param (qw(ID Name EventID Comment ValidID Attribute Rule)) {
             $GetParam{$Param} = $ParamObject->GetParam( Param => $Param ) || '';
         }
 
+        # get array parameters
         $GetParam{RecipientIDs} = [
             $ParamObject->GetArray( Param => 'RecipientIDs' )
         ];
 
-        # update group
+        # get message parameters for agents and customers and each present language
+        for my $Type (qw(Agent Customer)) {
+
+            my @LanguageIDs = $ParamObject->GetArray( Param => $Type . '_LanguageID' );
+
+            # get the subject and body for all languages
+            for my $LanguageID ( @LanguageIDs ) {
+
+                my $Subject = $ParamObject->GetParam( Param => $Type . '_' . $LanguageID . '_Subject' ) || '';
+                my $Body    = $ParamObject->GetParam( Param => $Type . '_' . $LanguageID . '_Body' )    || '';
+
+                $GetParam{Message}->{$Type}->{$LanguageID} = {
+                    Subject     => $Subject,
+                    Body        => $Body,
+                    ContentType => $ContentType,
+                };
+
+                # set server error flag if field is empty
+                if ( !$Subject ) {
+                    $GetParam{ $Type . '_' . $LanguageID . '_SubjectServerError' } = "ServerError";
+                }
+                if ( !$Body ) {
+                    $GetParam{ $Type . '_' . $LanguageID . '_BodyServerError' } = "ServerError";
+                }
+            }
+        }
+
+        # update notification
         if ( $NotificationObject->NotificationRuleUpdate(%GetParam) ) {
             $Self->_Overview();
 
@@ -81,6 +128,7 @@ sub Run {
             $Self->_Edit(
                 Action      => 'Change',
                 ActionLabel => 'Edit',
+                RichText    => $RichText,
                 %GetParam,
             );
         }
@@ -93,6 +141,7 @@ sub Run {
         $Self->_Edit(
             Action      => 'Add',
             ActionLabel => 'Add',
+            RichText    => $RichText,
         );
     }
 
@@ -104,40 +153,64 @@ sub Run {
         # challenge token check for write action
         $LayoutObject->ChallengeTokenCheck();
 
-        my $Note = '';
         my %GetParam;
-        my %Error;
 
-        for my $Param (qw(ID EventID Name Comment ValidID Attribute Rule)) {
+        # get scalar parameters
+        for my $Param (qw(ID Name EventID Comment ValidID Attribute Rule)) {
             $GetParam{$Param} = $ParamObject->GetParam( Param => $Param ) || '';
         }
 
-        if ( !$GetParam{Name} ) {
-
-            $Error{'NameInvalid'} = 'ServerError';
-        }
-
+        # get array parameters
         $GetParam{RecipientIDs} = [
             $ParamObject->GetArray( Param => 'RecipientIDs' )
         ];
 
-        if (%Error) {
+        # get message parameters for agents and customers and each present language
+        for my $Type (qw(Agent Customer)) {
+
+            my @LanguageIDs = $ParamObject->GetArray( Param => $Type . '_LanguageID' );
+
+            # get the subject and body for all languages
+            for my $LanguageID ( @LanguageIDs ) {
+
+                my $Subject = $ParamObject->GetParam( Param => $Type . '_' . $LanguageID . '_Subject' ) || '';
+                my $Body    = $ParamObject->GetParam( Param => $Type . '_' . $LanguageID . '_Body' )    || '';
+
+                $GetParam{Message}->{$Type}->{$LanguageID} = {
+                    Subject     => $Subject,
+                    Body        => $Body,
+                    ContentType => $ContentType,
+                };
+
+                # set server error flag if field is empty
+                if ( !$Subject ) {
+                    $GetParam{ $Type . '_' . $LanguageID . '_SubjectServerError' } = "ServerError";
+                }
+                if ( !$Body ) {
+                    $GetParam{ $Type . '_' . $LanguageID . '_BodyServerError' } = "ServerError";
+                }
+            }
+        }
+
+        # add notification
+        if ( $NotificationObject->NotificationRuleAdd(%GetParam) ) {
+            $Self->_Overview();
+
+            # notification was updated
+            %Notification = ( Info => 'Notification added!' );
+        }
+        else {
+
+            # an error occured -> show notification
+            %Notification = ( Priority => 'Error' );
+
             $Self->_Edit(
                 Action      => 'Add',
                 ActionLabel => 'Add',
+                RichText    => $RichText,
                 %GetParam,
-                %Error,
             );
         }
-
-        # add notification rule
-        if ( my $StateID = $NotificationObject->NotificationRuleAdd(%GetParam) ) {
-            $Self->_Overview();
-
-            # notification was added
-            %Notification = ( Info => 'Notification added!' );
-        }
-
     }
 
     # ------------------------------------------------------------
@@ -165,8 +238,11 @@ sub Run {
 sub _Edit {
     my ( $Self, %Param ) = @_;
 
-    # get layout object
-    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+    # get needed objects
+    my $ConfigObject    = $Kernel::OM->Get('Kernel::Config');
+    my $LayoutObject    = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+    my $HTMLUtilsObject = $Kernel::OM->Get('Kernel::System::HTMLUtils');
+    my $ValidObject     = $Kernel::OM->Get('Kernel::System::Valid');
 
     $LayoutObject->Block(
         Name => 'Overview',
@@ -174,9 +250,6 @@ sub _Edit {
     );
     $LayoutObject->Block( Name => 'ActionList' );
     $LayoutObject->Block( Name => 'ActionOverview' );
-
-    # get valid object
-    my $ValidObject = $Kernel::OM->Get('Kernel::System::Valid');
 
     $Param{ValidOption} = $LayoutObject->BuildSelection(
         Data => {
@@ -203,6 +276,139 @@ sub _Edit {
         Name => 'OverviewUpdate',
         Data => \%Param,
     );
+
+    # add rich text editor
+    if ( $Param{RichText} ) {
+
+        # use height/width defined for this screen
+        my $Config = $ConfigObject->Get("ITSMChange::Frontend::$Self->{Action}");
+        $Param{RichTextHeight} = $Config->{RichTextHeight} || 0;
+        $Param{RichTextWidth}  = $Config->{RichTextWidth}  || 0;
+
+        $LayoutObject->Block(
+            Name => 'RichText',
+            Data => \%Param,
+        );
+    }
+
+    # show differnet widget containers for agent and customer notifications
+    for my $Type (qw(Agent Customer)) {
+
+        # show the widget container for this type
+        $LayoutObject->Block(
+            Name => 'NotificationType',
+            Data => {
+                %Param,
+                Type => $Type,
+            },
+        );
+
+        # get language ids from message parameter, use English if no message is given
+        # make sure English is the first language
+        my @LanguageIDs;
+        if ( IsHashRefWithData( $Param{Message}->{$Type} ) ) {
+            if ( $Param{Message}->{$Type}->{en} ) {
+                push @LanguageIDs, 'en';
+            }
+            LANGUAGEID:
+            for my $LanguageID ( sort keys %{ $Param{Message}->{$Type} } ) {
+                next LANGUAGEID if $LanguageID eq 'en';
+                push @LanguageIDs, $LanguageID;
+            }
+        }
+        else {
+            @LanguageIDs = ('en');
+        }
+
+        my %DefaultUsedLanguages         = %{ $ConfigObject->Get('DefaultUsedLanguages') };
+        my %OriginalDefaultUsedLanguages = %DefaultUsedLanguages;
+
+        for my $LanguageID (@LanguageIDs) {
+
+            # format the content according to the content type
+            if ( $Param{RichText} ) {
+
+                # make sure body is rich text (if body is based on config)
+                if (
+                    $Param{Message}->{$Type}->{$LanguageID}->{ContentType}
+                    && $Param{Message}->{$Type}->{$LanguageID}->{ContentType} =~ m{text\/plain}xmsi
+                    )
+                {
+                    $Param{Message}->{$Type}->{$LanguageID}->{Body} = $HTMLUtilsObject->ToHTML(
+                        String => $Param{Message}->{$Type}->{$LanguageID}->{Body},
+                    );
+                }
+            }
+            else {
+
+                # reformat from HTML to plain
+                if (
+                    $Param{Message}->{$Type}->{$LanguageID}->{ContentType}
+                    && $Param{Message}->{$Type}->{$LanguageID}->{ContentType} =~ m{text\/html}xmsi
+                    && $Param{Message}->{$Type}->{$LanguageID}->{Body}
+                    )
+                {
+                    $Param{Message}->{$Type}->{$LanguageID}->{Body} = $HTMLUtilsObject->ToAscii(
+                        String => $Param{Message}->{$Type}->{$LanguageID}->{Body},
+                    );
+                }
+            }
+
+            # show the notification for this language
+            $LayoutObject->Block(
+                Name => 'NotificationLanguage',
+                Data => {
+                    %Param,
+                    Subject            => $Param{Message}->{$Type}->{$LanguageID}->{Subject} || '',
+                    Body               => $Param{Message}->{$Type}->{$LanguageID}->{Body}    || '',
+                    Type               => $Type,
+                    LanguageID         => $LanguageID,
+                    Language           => $DefaultUsedLanguages{$LanguageID},
+                    SubjectServerError => $Param{ $Type . '_' . $LanguageID . '_SubjectServerError' } || '',
+                    BodyServerError    => $Param{ $Type . '_' . $LanguageID . '_BodyServerError' } || '',
+                },
+            );
+
+            # show the button to remove a notification only if it is not the English notification
+            if ( $LanguageID ne 'en' ) {
+                $LayoutObject->Block(
+                    Name => 'NotificationLanguageRemoveButton',
+                    Data => {
+                        %Param,
+                        LanguageID => $Type . '_' . $LanguageID,
+                        Type       => $Type,
+                    },
+                );
+            }
+
+            # delete language from drop-down list because it is already shown
+            delete $DefaultUsedLanguages{$LanguageID};
+        }
+
+        # show language add dropdown
+        $Param{LanguageStrg} = $LayoutObject->BuildSelection(
+            Data         => \%DefaultUsedLanguages,
+            Name         => $Type .'LanguageAdd',
+            Class        => 'LanguageAdd',
+            Translation  => 1,
+            PossibleNone => 1,
+            HTMLQuote    => 0,
+        );
+        $Param{LanguageOrigStrg} = $LayoutObject->BuildSelection(
+            Data         => \%OriginalDefaultUsedLanguages,
+            Name         => $Type . 'LanguageOrig',
+            Translation  => 1,
+            PossibleNone => 1,
+            HTMLQuote    => 0,
+        );
+        $LayoutObject->Block(
+            Name => 'NotificationLanguageAdd',
+            Data => {
+                %Param,
+                Type => $Type,
+            },
+        );
+    }
 
     return 1;
 }
