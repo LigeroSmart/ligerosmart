@@ -146,6 +146,7 @@ sub CodeInstall {
     # install stats
     $Kernel::OM->Get('Kernel::System::Stats')->StatsInstall(
         FilePrefix => $Self->{FilePrefix},
+        UserID     => 1,
     );
 
     # set default CIP matrix
@@ -192,6 +193,7 @@ sub CodeReinstall {
     # install stats
     $Kernel::OM->Get('Kernel::System::Stats')->StatsInstall(
         FilePrefix => $Self->{FilePrefix},
+        UserID     => 1,
     );
 
     # set default CIP matrix
@@ -217,6 +219,7 @@ sub CodeUpgrade {
     # install stats
     $Kernel::OM->Get('Kernel::System::Stats')->StatsInstall(
         FilePrefix => $Self->{FilePrefix},
+        UserID     => 1,
     );
 
     # set default CIP matrix (this is only done if no matrix exists)
@@ -272,6 +275,9 @@ sub CodeUpgradeFromLowerThan_4_0_91 {    ## no critic
 
     # migrate notifications
     $Self->_MigrateNotifications();
+
+    # change configurations to match the new module location.
+    $Self->_MigrateConfigs();
 
     return 1;
 }
@@ -3350,6 +3356,100 @@ sub _MigrateDTLInSysConfig {
                 Value => $Setting,
             );
         }
+    }
+
+    return 1;
+}
+
+=item _MigrateConfigs()
+
+change configurations to match the new module location.
+
+    my $Result = $CodeObject->_MigrateConfigs();
+
+=cut
+
+sub _MigrateConfigs {
+
+    # create needed objects
+    my $SysConfigObject = $Kernel::OM->Get('Kernel::System::SysConfig');
+    my $ConfigObject    = $Kernel::OM->Get('Kernel::Config');
+
+    # migrate NavBar menu modules
+    # get setting content for NavBar menu modules
+    my $Setting = $ConfigObject->Get('Frontend::Module');
+
+    NAVBARMODULE:
+    for my $ModuleAdmin ( sort keys %{$Setting} ) {
+
+        # update module location
+        my $Module = $Setting->{$ModuleAdmin}->{NavBarModule}->{'Module'} // '';
+
+        if ( $Module !~ m{Kernel::Output::HTML::NavBar(\w+)} ) {
+            next NAVBARMODULE;
+        }
+        $Setting->{$ModuleAdmin}->{NavBarModule}->{'Module'} = "Kernel::Output::HTML::NavBar::ModuleAdmin";
+
+        # set new setting,
+        my $Success = $SysConfigObject->ConfigItemUpdate(
+            Valid => 1,
+            Key   => 'Frontend::Module###' . $ModuleAdmin,
+            Value => $Setting->{$ModuleAdmin},
+        );
+    }
+
+    # migrate ITSM menu modules
+    # get setting content for ITSM menu modules
+    for my $Type (qw(ITSMChange ITSMWorkOrder)) {
+
+        $Setting = $ConfigObject->Get( $Type . '::Frontend::MenuModule' );
+
+        MENUMODULE:
+        for my $MenuModule ( sort keys %{$Setting} ) {
+
+            # update module location
+            my $Module = $Setting->{$MenuModule}->{'Module'};
+
+            if ( $Module !~ m{Kernel::Output::HTML::$Type(\w+)} ) {
+                next MENUMODULE;
+            }
+
+            my $NewMenu = $Type . "::$1";
+            $Module =~ s{Kernel::Output::HTML::$Type(\w+)}{Kernel::Output::HTML::$NewMenu}xmsg;
+
+            $Setting->{$MenuModule}->{'Module'} = $Module;
+
+            # set new setting,
+            my $Success = $SysConfigObject->ConfigItemUpdate(
+                Valid => 1,
+                Key   => $Type . '::Frontend::MenuModule' . '###' . $MenuModule,
+                Value => $Setting->{$MenuModule},
+            );
+        }
+    }
+
+    # migrate ITSM preferences
+    # get setting content for preferences
+    $Setting = $ConfigObject->Get('PreferencesGroups');
+
+    PREFERENCEMODULE:
+    for my $PreferenceModule ( sort keys %{$Setting} ) {
+
+        # update module location
+        my $Module = $Setting->{$PreferenceModule}->{'Module'};
+        if ( $Module !~ m{Kernel::Output::HTML::Preferences(\w+)} ) {
+            next PREFERENCEMODULE;
+        }
+
+        $Module =~ s{Kernel::Output::HTML::Preferences(\w+)}{Kernel::Output::HTML::Preferences::$1}xmsg;
+        $Setting->{$PreferenceModule}->{'Module'} = $Module;
+
+        # set new setting,
+        my $Success = $SysConfigObject->ConfigItemUpdate(
+            Valid => 1,
+            Key   => 'PreferencesGroups###' . $PreferenceModule,
+            Value => $Setting->{$PreferenceModule},
+        );
     }
 
     return 1;
