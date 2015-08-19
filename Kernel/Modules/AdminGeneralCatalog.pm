@@ -173,6 +173,7 @@ sub Run {
             Name       => 'ValidID',
             Data       => \%ValidList,
             SelectedID => $ItemData{ValidID} || $ValidListReverse{valid},
+            Class => 'Modernize',
         );
 
         # output ItemEdit
@@ -227,6 +228,7 @@ sub Run {
                     $ParamItem->{'Option'} = $LayoutObject->BuildSelection(
                         %{ $Preferences{$Item} },
                         %{$ParamItem},
+                        Class => 'Modernize',
                     );
                 }
 
