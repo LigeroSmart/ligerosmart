@@ -57,6 +57,7 @@ create a input string
         Item   => $ItemRef,
         Prefix => 'Prefix::',  # (optional)
         Value  => 'Value',     # (optional)
+        Class  => 'Modernize'  # (optional)
     );
 
 =cut

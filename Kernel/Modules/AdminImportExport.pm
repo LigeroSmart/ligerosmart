@@ -392,6 +392,7 @@ sub Run {
             SelectedID   => $TemplateData->{Object},
             PossibleNone => 1,
             Translation  => 1,
+            Class        => 'Modernize',
         );
 
         # generate FormatOptionStrg
@@ -401,6 +402,7 @@ sub Run {
             SelectedID   => $TemplateData->{Format},
             PossibleNone => 1,
             Translation  => 1,
+            Class        => 'Modernize',
         );
 
         # output overview
@@ -771,6 +773,7 @@ sub Run {
             SelectedID   => $TemplateData->{Object},
             PossibleNone => 1,
             Translation  => 1,
+            Class        => 'Modernize',
         );
 
         # generate FormatOptionStrg
@@ -780,6 +783,7 @@ sub Run {
             SelectedID   => $TemplateData->{Format},
             PossibleNone => 1,
             Translation  => 1,
+            Class        => 'Modernize',
         );
 
         # output overview
@@ -834,6 +838,7 @@ sub Run {
             my $InputString = $LayoutObject->ImportExportFormInputCreate(
                 Item  => $Item,
                 Value => $SearchData->{ $Item->{Key} },
+                Class => 'Modernize',
             );
 
             # output attribute row
@@ -994,6 +999,7 @@ sub Run {
             SelectedID   => $TemplateData->{Object},
             PossibleNone => 1,
             Translation  => 1,
+            Class        => 'Modernize',
         );
 
         # generate FormatOptionStrg
@@ -1003,6 +1009,7 @@ sub Run {
             SelectedID   => $TemplateData->{Format},
             PossibleNone => 1,
             Translation  => 1,
+            Class        => 'Modernize',
         );
 
         # output overview
@@ -1332,6 +1339,7 @@ sub _MaskTemplateEdit1 {
         Name       => 'ValidID',
         Data       => \%ValidList,
         SelectedID => $Param{ValidID} || $ValidListReverse{valid},
+        Class      => 'Modernize',
     );
 
     my $Class = ' Validate_Required ';
@@ -1394,7 +1402,7 @@ sub _MaskTemplateEdit1 {
             SelectedID   => $Param{Object} || '',
             PossibleNone => 1,
             Translation  => 1,
-            Class        => $Class,
+            Class        => $Class . ' Modernize',
         );
 
         $Class = ' Validate_Required ';
@@ -1409,7 +1417,7 @@ sub _MaskTemplateEdit1 {
             SelectedID   => $Param{Format} || '',
             PossibleNone => 1,
             Translation  => 1,
-            Class        => $Class,
+            Class        => $Class . ' Modernize',
         );
 
         $LayoutObject->Block(
@@ -1559,7 +1567,7 @@ sub _MaskTemplateEdit2 {
         # create form input
         my $InputString = $LayoutObject->ImportExportFormInputCreate(
             Item  => $Item,
-            Class => $Class,
+            Class => $Class . ' Modernize',
             Value => $Value,
         );
 
@@ -1693,7 +1701,7 @@ sub _MaskTemplateEdit3 {
         # create form input
         my $InputString = $LayoutObject->ImportExportFormInputCreate(
             Item  => $Item,
-            Class => $Class,
+            Class => $Class . ' Modernize',
             Value => $FormatData->{ $Item->{Key} },
         );
 
