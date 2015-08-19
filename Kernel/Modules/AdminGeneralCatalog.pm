@@ -173,7 +173,7 @@ sub Run {
             Name       => 'ValidID',
             Data       => \%ValidList,
             SelectedID => $ItemData{ValidID} || $ValidListReverse{valid},
-            Class => 'Modernize',
+            Class      => 'Modernize',
         );
 
         # output ItemEdit
