@@ -41,6 +41,9 @@ $Selenium->RunTest(
         $Selenium->find_element( "table thead tr th", 'css' );
         $Selenium->find_element( "table tbody tr td", 'css' );
 
+        # get state machine object
+        my $StateMachineObject = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMStateMachine');
+
         # check for default class state machine
         for my $StateMachine (qw(Change WorkOrder)) {
 
@@ -56,14 +59,13 @@ $Selenium->RunTest(
             $Selenium->find_element( "table thead tr th", 'css' );
             $Selenium->find_element( "table tbody tr td", 'css' );
 
-            my $StateTransitionsRef
-                = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMStateMachine')->StateTransitionList(
-                Class => "ITSM::ChangeManagement::$StateMachine\::State",
-                );
+            my $StateTransitionsRef = $StateMachineObject->StateTransitionList(
+                Class => 'ITSM::ChangeManagement::' . $StateMachine . '::State',
+            );
 
             # check default states and there links
-            for my $StateID ( sort keys $StateTransitionsRef ) {
-                for my $NextStateID ( values $StateTransitionsRef->{$StateID} ) {
+            for my $StateID ( sort keys %{$StateTransitionsRef} ) {
+                for my $NextStateID ( @{ $StateTransitionsRef->{$StateID} } ) {
 
                     $Element = $Selenium->find_element(
                         "//a[contains(\@href, \'StateID=$StateID;NextStateID=$NextStateID' )]"
