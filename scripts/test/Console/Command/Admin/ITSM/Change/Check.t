@@ -25,12 +25,12 @@ $Self->Is(
 );
 
 # check command with option --force
-$ExitCode = $CommandObject->Execute('--force');
+$ExitCode = $CommandObject->Execute('--force-pid');
 
 $Self->Is(
     $ExitCode,
     0,
-    "Option '--force'",
+    "Option '--force-pid'",
 );
 
 1;
