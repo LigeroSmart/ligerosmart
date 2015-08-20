@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2015 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/4e73a869d24f37a3b0d27b1f7900eaa9e0f46462/Kernel/Modules/AgentTicketZoom.pm
+# $origin: https://github.com/OTRS/otrs/blob/ec164a9e564a88191ed1c6cb0eb3f57ffcbb7ef8/Kernel/Modules/AgentTicketZoom.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -41,7 +41,7 @@ sub new {
 
     # Please note: ZoomTimeline is an OTRSBusiness feature
     $Self->{ZoomTimeline} = $ParamObject->GetParam( Param => 'ZoomTimeline' );
-    if ( !$ConfigObject->Get('ChronicalViewEnabled') ) {
+    if ( !$ConfigObject->Get('TimelineViewEnabled') ) {
         $Self->{ZoomTimeline} = 0;
     }
 
@@ -131,7 +131,7 @@ sub new {
     $Self->{DisplaySettings} = $ConfigObject->Get("Ticket::Frontend::AgentTicketZoom");
 
     # this is a mapping of history types which is being used
-    # for the chronical view and its event type filter
+    # for the timeline view and its event type filter
     $Self->{HistoryTypeMapping} = {
         NewTicket                       => 'Ticket Created',
         AddNote                         => 'Note Added',
@@ -174,13 +174,13 @@ sub new {
     # Add custom files to the zoom's frontend module registration on the fly
     #    to avoid conflicts with other modules.
     if (
-        defined $ConfigObject->Get('ChronicalViewEnabled')
-        && $ConfigObject->Get('ChronicalViewEnabled') == 1
+        defined $ConfigObject->Get('TimelineViewEnabled')
+        && $ConfigObject->Get('TimelineViewEnabled') == 1
         )
     {
         my $ZoomFrontendConfiguration = $ConfigObject->Get('Frontend::Module')->{AgentTicketZoom};
         my @CustomJSFiles             = (
-            'Core.Agent.TicketZoom.ChronicalView.js',
+            'Core.Agent.TicketZoom.TimelineView.js',
         );
         push( @{ $ZoomFrontendConfiguration->{Loader}->{JavaScript} || [] }, @CustomJSFiles );
     }
@@ -1008,22 +1008,22 @@ sub MaskAgentZoom {
                 # check the configured priority for this item. The lowest ClusterPriority
                 # within the same cluster wins.
                 my $Priority = $MenuClusters{ $Menus{$Menu}->{ClusterName} }->{Priority};
-                if ( !$Priority || $Priority !~ /^\d{3}$/ || $Priority > $Menus{$Menu}->{ClusterPriority}) {
+                if ( !$Priority || $Priority !~ /^\d{3}$/ || $Priority > $Menus{$Menu}->{ClusterPriority} ) {
                     $Priority = $Menus{$Menu}->{ClusterPriority};
                 }
                 $MenuClusters{ $Menus{$Menu}->{ClusterName} }->{Priority} = $Priority;
-                $MenuClusters{ $Menus{$Menu}->{ClusterName} }->{Items}->{ $Menu } = $Item;
+                $MenuClusters{ $Menus{$Menu}->{ClusterName} }->{Items}->{$Menu} = $Item;
             }
         }
 
         for my $Cluster ( sort keys %MenuClusters ) {
             $ZoomMenuItems{ $MenuClusters{$Cluster}->{Priority} . $Cluster } = {
-                Name => $Cluster,
-                Type => 'Cluster',
-                Link => '#',
+                Name  => $Cluster,
+                Type  => 'Cluster',
+                Link  => '#',
                 Class => 'ClusterLink',
                 Items => $MenuClusters{$Cluster}->{Items},
-            }
+                }
         }
 
         # display all items
@@ -1034,7 +1034,7 @@ sub MaskAgentZoom {
                 Data => $ZoomMenuItems{$Item},
             );
 
-            if ($ZoomMenuItems{$Item}->{Type} eq 'Cluster') {
+            if ( $ZoomMenuItems{$Item}->{Type} eq 'Cluster' ) {
 
                 $LayoutObject->Block(
                     Name => 'TicketMenuSubContainer'
@@ -1959,9 +1959,9 @@ sub _ArticleTree {
     }
     elsif ( $Self->{ZoomTimeline} ) {
 
-        # show trigger for chronical view
+        # show trigger for timeline view
         $LayoutObject->Block(
-            Name => 'Chronical',
+            Name => 'Timeline',
             Data => {
                 %Ticket,
                 ArticleID      => $ArticleID,
@@ -2210,7 +2210,7 @@ sub _ArticleTree {
         );
 
         # get articles for later use
-        my @ChronicalArticleBox = $TicketObject->ArticleContentIndex(
+        my @TimelineArticleBox = $TicketObject->ArticleContentIndex(
             TicketID                   => $Self->{TicketID},
             DynamicFields              => 0,
             UserID                     => $Self->{UserID},
@@ -2218,7 +2218,7 @@ sub _ArticleTree {
         );
 
         my $ArticlesByArticleID = {};
-        for my $Article ( sort @ChronicalArticleBox ) {
+        for my $Article ( sort @TimelineArticleBox ) {
 
             # get attachment index (without attachments)
             my %AtmIndex = $TicketObject->ArticleAttachmentIndex(
@@ -2425,6 +2425,16 @@ sub _ArticleTree {
                 $Item->{HistoryType} = 'ChatInternal';
                 $Item->{Class}       = 'TypeInternal';
             }
+            elsif (
+                $Item->{HistoryType} eq 'Forward'
+                && $Item->{ArticleID}
+                && IsHashRefWithData( $ArticlesByArticleID->{ $Item->{ArticleID} } )
+                && $ArticlesByArticleID->{ $Item->{ArticleID} }->{ArticleType} eq 'email-internal'
+                )
+            {
+
+                $Item->{Class} = 'TypeNoteInternal';
+            }
             elsif ( grep { $_ eq $Item->{HistoryType} } @TypesTicketAction ) {
                 $Item->{Class} = 'TypeTicketAction';
             }
@@ -2590,7 +2600,7 @@ sub _ArticleTree {
         $Param{TicketID} = $Self->{TicketID};
 
         $LayoutObject->Block(
-            Name => 'ChronicalView',
+            Name => 'TimelineView',
             Data => \%Param,
         );
 
@@ -2617,7 +2627,7 @@ sub _ArticleTree {
             );
 
             $LayoutObject->Block(
-                Name => 'ChronicalViewTicketActions',
+                Name => 'TimelineViewTicketActions',
                 Data => {
                     ArticleID => $ArticleID,
                     TicketID  => $Self->{TicketID},
@@ -2633,7 +2643,7 @@ sub _ArticleTree {
                 );
 
                 $LayoutObject->Block(
-                    Name => 'ChronicalViewArticleAttachments',
+                    Name => 'TimelineViewArticleAttachments',
                     Data => {
                         ArticleID   => $ArticleID,
                         Attachments => $ArticleAttachments,
@@ -2741,22 +2751,29 @@ sub _ArticleItem {
         }
     }
 
+    # get cofig object
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+
     # do some strips && quoting
+    my $RecipientDisplayType = $ConfigObject->Get('Ticket::Frontend::DefaultRecipientDisplayType') || 'Realname';
+    my $SenderDisplayType    = $ConfigObject->Get('Ticket::Frontend::DefaultSenderDisplayType')    || 'Realname';
     KEY:
     for my $Key (qw(From To Cc)) {
         next KEY if !$Article{$Key};
+
+        my $DisplayType = $Key eq 'From'             ? $SenderDisplayType : $RecipientDisplayType;
+        my $HiddenType  = $DisplayType eq 'Realname' ? 'Value'            : 'Realname';
         $LayoutObject->Block(
             Name => 'RowRecipient',
             Data => {
-                Key      => $Key,
-                Value    => $Article{$Key},
-                Realname => $Article{ $Key . 'Realname' },
+                Key                  => $Key,
+                Value                => $Article{$Key},
+                Realname             => $Article{ $Key . 'Realname' },
+                ArticleID            => $Article{ArticleID},
+                $HiddenType . Hidden => 'Hidden',
             },
         );
     }
-
-    # get cofig object
-    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
     # show accounted article time
     if (

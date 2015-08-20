@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2015 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/4e73a869d24f37a3b0d27b1f7900eaa9e0f46462/Kernel/Output/HTML/Templates/Standard/CustomerTicketZoom.tt
+# $origin: https://github.com/OTRS/otrs/blob/ec164a9e564a88191ed1c6cb0eb3f57ffcbb7ef8/Kernel/Output/HTML/Templates/Standard/CustomerTicketZoom.tt
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,14 @@
                 [% Data.Title | html %]
             </h2>
             <ul id="TicketOptions">
-
+[% RenderBlockStart("Chat") %]
+                <li>
+                    <a target="_blank" href="[% Env("Baselink") %]Action=CustomerChat;Subaction=CreateChatRequest;TicketID=[% Data.TicketID | uri %];" class="Print" title="[% Translate("Start a chat from this ticket") | html %]">
+                        <i class="fa fa-comments-o"></i>
+                        <span>[% Translate("Start a chat from this ticket") | html %]</span>
+                    </a>
+                </li>
+[% RenderBlockEnd("Chat") %]
 [% RenderBlockStart("Print") %]
                 <li>
                     <a href="[% Env("Baselink") %]Action=CustomerTicketPrint;TicketID=[% Data.TicketID | uri %]" class="Print AsPopup" title="[% Translate("Print") | html %]">
@@ -54,6 +61,7 @@
             <input type="hidden" name="TicketID" value="[% Data.TicketID | html %]" />
             <input type="hidden" name="ArticleID" value="[% Data.ArticleID | html %]" />
             <input type="hidden" name="FormID" value="[% Data.FormID | html %]" />
+            <input type="hidden" name="FromChatID" value="[% Data.FromChatID | html %]" />
             <ul id="Messages">
 [% RenderBlockStart("Article") %]
                 <li class="[% Data.SenderType | html %]-[% Data.ArticleType | html %] [% Data.Class | html %]">
@@ -75,7 +83,11 @@
                         <div class="Details SeperatorRow">
 [% RenderBlockStart("ArticleRow") %]
                             <div>
-                                <div class="Label">[% Translate(Data.Key) | html %]:</div> <span title="[% Data.Value | html %]">[% Data.Realname | html %]</span>
+                                <div class="Label Switchable">[% Translate(Data.Key) | html %]:</div>
+                                <span title="[% Data.Value | html %]">
+                                    <span class="Switch [% Data.ValueHidden | html %]">[% Data.Value | html %]</span>
+                                    <span class="Switch [% Data.RealnameHidden | html %]">[% Data.Realname | html %]</span>
+                                </span>
                                 <div class="Clear"></div>
                             </div>
 [% RenderBlockEnd("ArticleRow") %]
@@ -295,6 +307,13 @@
                         </div>
                     </fieldset>
                     <fieldset class="DontPrint">
+[% RenderBlockStart("ChatProtocol") %]
+                        <div>
+                            <label for="ChatProtocol">[% Translate("Chat Protocol") | html %]:</label>
+[% INCLUDE "ChatDisplay.tt" %]
+                            <br/>
+                        </div>
+[% RenderBlockEnd("ChatProtocol") %]
                         <div id="AttachmentHolder">
                             <label for="Attachment">[% Translate("Attachment") | html %]:</label>
                             <input name="file_upload" title="Attachment" id="Attachment" type="file" size="30" />
