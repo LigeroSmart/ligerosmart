@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2015 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/89bbc5f61d058b922b693de4048c60a0c7d2d073/Kernel/System/SLA.pm
+# $origin: https://github.com/OTRS/otrs/blob/ec164a9e564a88191ed1c6cb0eb3f57ffcbb7ef8/Kernel/System/SLA.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you

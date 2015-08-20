@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2015 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/89bbc5f61d058b922b693de4048c60a0c7d2d073/Kernel/Modules/AdminSLA.pm
+# $origin: https://github.com/OTRS/otrs/blob/ec164a9e564a88191ed1c6cb0eb3f57ffcbb7ef8/Kernel/Modules/AdminSLA.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -363,6 +363,7 @@ sub _MaskNew {
         Translation => 0,
         TreeView    => ( $ListType eq 'tree' ) ? 1 : 0,
         Max         => 200,
+        Class       => 'Modernize',
     );
 # ---
 # ITSM
@@ -392,6 +393,7 @@ sub _MaskNew {
         SelectedID   => $Param{Calendar} || $SLAData{Calendar},
         Translation  => 0,
         PossibleNone => 1,
+        Class        => 'Modernize',
     );
     my %NotifyLevelList = (
         10 => '10%',
@@ -434,6 +436,7 @@ sub _MaskNew {
         Data       => \%ValidList,
         Name       => 'ValidID',
         SelectedID => $Param{ValidID} || $SLAData{ValidID} || $ValidListReverse{valid},
+        Class      => 'Modernize',
     );
 
     # output sla edit
@@ -493,9 +496,14 @@ sub _MaskNew {
                     || ref( $Preferences{$Item}->{Data} ) eq 'HASH'
                     )
                 {
-                    $ParamItem->{'Option'} = $LayoutObject->BuildSelection(
+                    my %BuildSelectionParams = (
                         %{ $Preferences{$Item} },
                         %{$ParamItem},
+                    );
+                    $BuildSelectionParams{Class} = join( ' ', $BuildSelectionParams{Class} // '', 'Modernize' );
+
+                    $ParamItem->{'Option'} = $LayoutObject->BuildSelection(
+                        %BuildSelectionParams,
                     );
                 }
                 $LayoutObject->Block(
