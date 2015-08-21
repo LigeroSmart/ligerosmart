@@ -25,7 +25,7 @@ Restrictions:
 <Title>Monthly overview of all tickets created in the last month per Queue.</Title>
 <UseAsValueSeries Element="QueueIDs" Fixed="1">
 </UseAsValueSeries>
-<UseAsXvalue Element="CreateTime" Fixed="1" TimeRelativeCount="1" TimeRelativeUnit="Month" TimeScaleCount="1">
+<UseAsXvalue Element="CreateTime" TimeRelativeCount="1" TimeRelativeUnit="Month" TimeScaleCount="1">
 <SelectedValues>Day</SelectedValues>
 </UseAsXvalue>
 <Valid>1</Valid>

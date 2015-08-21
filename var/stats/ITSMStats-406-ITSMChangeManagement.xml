@@ -23,7 +23,8 @@
 <SelectedValues>Operational</SelectedValues>
 <SelectedValues>Warning</SelectedValues>
 </UseAsRestriction>
-<UseAsRestriction Element="TimePeriod" Fixed="0" TimeStart="2009-01-01 00:00:00" TimeStop="2037-12-31 23:59:59">
+<UseAsRestriction Element="TimePeriod" TimeRelativeCount="1" TimeRelativeUnit="Month" TimeScaleCount="1">
+<SelectedValues>Day</SelectedValues>
 </UseAsRestriction>
 <UseAsValueSeries Element="CIClassIDs">
 <SelectedValues>Computer</SelectedValues>
