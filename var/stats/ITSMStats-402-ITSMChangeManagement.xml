@@ -5,7 +5,11 @@
 <Description>This reports shows changes that got rejected in the selected time period.</Description>
 <File></File>
 <Format>CSV</Format>
+<Format>Excel</Format>
 <Format>Print</Format>
+<Format>D3::BarChart</Format>
+<Format>D3::LineChart</Format>
+<Format>D3::StackedAreaChart</Format>
 <Object>ITSMChangeManagementHistory</Object>
 <ObjectModule>Kernel::System::Stats::Dynamic::ITSMChangeManagementHistory</ObjectModule>
 <ObjectName>ITSMChangeManagementHistory</ObjectName>

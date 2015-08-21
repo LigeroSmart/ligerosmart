@@ -13,7 +13,11 @@ Restrictions:
     -closed with first customer contact</Description>
 <File></File>
 <Format>CSV</Format>
+<Format>Excel</Format>
 <Format>Print</Format>
+<Format>D3::BarChart</Format>
+<Format>D3::LineChart</Format>
+<Format>D3::StackedAreaChart</Format>
 <Object>ITSMTicketFirstLevelSolutionRate</Object>
 <ObjectModule>Kernel::System::Stats::Dynamic::ITSMTicketFirstLevelSolutionRate</ObjectModule>
 <Permission>stats</Permission>

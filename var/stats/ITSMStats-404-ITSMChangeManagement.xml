@@ -5,7 +5,11 @@
 <Description>This report calculates all tickets of the chosen types and all changes in the system.</Description>
 <File></File>
 <Format>CSV</Format>
+<Format>Excel</Format>
 <Format>Print</Format>
+<Format>D3::BarChart</Format>
+<Format>D3::LineChart</Format>
+<Format>D3::StackedAreaChart</Format>
 <Object>ITSMChangeManagementChangesIncidents</Object>
 <ObjectModule>Kernel::System::Stats::Dynamic::ITSMChangeManagementChangesIncidents</ObjectModule>
 <ObjectName>ITSMChangeManagementChangesIncidents</ObjectName>

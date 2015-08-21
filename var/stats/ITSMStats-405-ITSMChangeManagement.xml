@@ -5,7 +5,11 @@
 <Description>This report calculates the number of 'RfC' tickets per requester.</Description>
 <File></File>
 <Format>CSV</Format>
+<Format>Excel</Format>
 <Format>Print</Format>
+<Format>D3::BarChart</Format>
+<Format>D3::LineChart</Format>
+<Format>D3::StackedAreaChart</Format>
 <Object>ITSMChangeManagementRfcRequester</Object>
 <ObjectModule>Kernel::System::Stats::Dynamic::ITSMChangeManagementRfcRequester</ObjectModule>
 <ObjectName>ITSMChangeManagementRfcRequester</ObjectName>
@@ -15,9 +19,9 @@
 <SumRow>0</SumRow>
 <Title>RfCs per Requester</Title>
 <UseAsValueSeries Element="Requester">
-<SelectedValues>agent_1</SelectedValues>
+<SelectedValues></SelectedValues>
 </UseAsValueSeries>
-<UseAsXvalue Element="TimePeriod" TimeScaleCount="1" TimeStart="2009-01-01 00:00:00" TimeStop="2037-12-31 23:59:59">
+<UseAsXvalue Element="TimePeriod" TimeRelativeCount="1" TimeRelativeUnit="Month" TimeScaleCount="1">
 <SelectedValues>Day</SelectedValues>
 </UseAsXvalue>
 <Valid>1</Valid>

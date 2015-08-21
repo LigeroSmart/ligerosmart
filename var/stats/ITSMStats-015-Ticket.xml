@@ -11,7 +11,11 @@ Restrictions:
     -currently with open as state</Description>
 <File></File>
 <Format>CSV</Format>
+<Format>Excel</Format>
 <Format>Print</Format>
+<Format>D3::BarChart</Format>
+<Format>D3::LineChart</Format>
+<Format>D3::StackedAreaChart</Format>
 <Object>Ticket</Object>
 <ObjectModule>Kernel::System::Stats::Dynamic::Ticket</ObjectModule>
 <Permission>stats</Permission>
