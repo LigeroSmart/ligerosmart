@@ -172,8 +172,22 @@ sub Run {
             }{$1$SessionID}gmsx;
         }
 
+        my $HTMLUtilsObject = $Kernel::OM->Get('Kernel::System::HTMLUtils');
+
+        # convert content to HTML if needed
+        if (
+            $Kernel::OM->Get('Kernel::Config')->Get('FAQ::Item::HTML')
+            && $LayoutObject->{BrowserRichText}
+            && $FAQData{ContentType} ne 'text/html'
+            )
+        {
+            $FieldContent = $HTMLUtilsObject->ToHTML(
+                String => $FieldContent,
+            ) || '';
+        }
+
         # add needed HTML headers
-        $FieldContent = $Kernel::OM->Get('Kernel::System::HTMLUtils')->DocumentComplete(
+        $FieldContent = $HTMLUtilsObject->DocumentComplete(
             String  => $FieldContent,
             Charset => 'utf-8',
         );

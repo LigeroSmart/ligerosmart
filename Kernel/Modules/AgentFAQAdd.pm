@@ -118,6 +118,12 @@ sub Run {
     my $QueueObject  = $Kernel::OM->Get('Kernel::System::Queue');
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
+    # set content type
+    my $ContentType = 'text/plain';
+    if ( $LayoutObject->{BrowserRichText} && $ConfigObject->Get('FAQ::Item::HTML') ) {
+        $ContentType = 'text/html';
+    }
+
     # ------------------------------------------------------------ #
     # show the FAQ add screen
     # ------------------------------------------------------------ #
@@ -175,7 +181,8 @@ sub Run {
             DynamicFieldHTML        => \%DynamicFieldHTML,
 
             # last viewed category from session (written by FAQ explorer)
-            CategoryID => $Self->{LastViewedCategory},
+            CategoryID  => $Self->{LastViewedCategory},
+            ContentType => $ContentType,
         );
 
         # footer
@@ -343,6 +350,7 @@ sub Run {
                 %Error,
                 FormID           => $FormID,
                 DynamicFieldHTML => \%DynamicFieldHTML,
+                ContentType      => $ContentType,
             );
 
             # footer
@@ -354,7 +362,8 @@ sub Run {
         # add the new FAQ article
         my $FAQID = $FAQObject->FAQAdd(
             %GetParam,
-            UserID => $Self->{UserID},
+            ContentType => $ContentType,
+            UserID      => $Self->{UserID},
         );
 
         # show error if FAQ could not be added
@@ -674,7 +683,9 @@ sub _MaskNew {
             );
             $LayoutObject->Block(
                 Name => 'Approval',
-                Data => {%Data},
+                Data => {
+                    %Data,
+                },
             );
         }
     }
@@ -682,7 +693,9 @@ sub _MaskNew {
     # show the attachment upload button
     $LayoutObject->Block(
         Name => 'AttachmentUpload',
-        Data => {%Param},
+        Data => {
+            %Param,
+        },
     );
 
     # show attachments
@@ -707,7 +720,7 @@ sub _MaskNew {
     # add rich text editor JavaScript
     # only if activated and the browser can handle it
     # otherwise just a text-area is shown
-    if ( $LayoutObject->{BrowserRichText} ) {
+    if ( $LayoutObject->{BrowserRichText} && $ConfigObject->Get('FAQ::Item::HTML') ) {
 
         # use height/width defined for this screen
         $Param{RichTextHeight} = $Config->{RichTextHeight} || 0;
@@ -715,7 +728,9 @@ sub _MaskNew {
 
         $LayoutObject->Block(
             Name => 'RichText',
-            Data => {%Param},
+            Data => {
+                %Param,
+            },
         );
     }
 
@@ -729,8 +744,10 @@ sub _MaskNew {
     $LayoutObject->FAQContentShow(
         FAQObject       => $FAQObject,
         InterfaceStates => $InterfaceStates,
-        FAQData         => {%Param},
-        UserID          => $Self->{UserID},
+        FAQData         => {
+            %Param,
+        },
+        UserID => $Self->{UserID},
     );
 
     # Dynamic fields

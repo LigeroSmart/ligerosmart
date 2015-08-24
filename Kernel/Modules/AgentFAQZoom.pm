@@ -143,6 +143,18 @@ sub Run {
             }{$1$SessionID}gmsx;
         }
 
+        # convert content to HTML if needed
+        if (
+            $Kernel::OM->Get('Kernel::Config')->Get('FAQ::Item::HTML')
+            && $LayoutObject->{BrowserRichText}
+            && $FAQData{ContentType} ne 'text/html'
+            )
+        {
+            $FieldContent = $HTMLUtilsObject->ToHTML(
+                String => $FieldContent,
+            ) || '';
+        }
+
         # detect all plain text links and put them into an HTML <a> tag
         $FieldContent = $HTMLUtilsObject->LinkQuote(
             String => $FieldContent,

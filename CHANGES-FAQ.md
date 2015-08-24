@@ -1,4 +1,5 @@
 #5.0.0.beta1 - 2015-??-??
+ - 2015-08-24 Fixed bug#[10719](http://bugs.otrs.org/show_bug.cgi?id=10719) - FAQ without RichTextEditor don't take paragraphes.
  - 2015-07-28 Updated look and feel of select controls.
  - 2015-07-22 Fixed wsdl validation issues.
  - 2015-07-21 Improved visualization of invalid FAQ items and categories in list screens, thanks to S7.

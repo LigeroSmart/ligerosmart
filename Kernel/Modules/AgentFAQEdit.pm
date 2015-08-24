@@ -522,10 +522,17 @@ sub Run {
             return $Output;
         }
 
+        # set the content type
+        my $ContentType = 'text/plain';
+        if ( $LayoutObject->{BrowserRichText} && $ConfigObject->Get('FAQ::Item::HTML') ) {
+            $ContentType = 'text/html';
+        }
+
         # update the new FAQ article
         my $UpdateSuccess = $FAQObject->FAQUpdate(
             %GetParam,
-            UserID => $Self->{UserID},
+            ContentType => $ContentType,
+            UserID      => $Self->{UserID},
         );
 
         # show error if FAQ could not be updated
@@ -925,7 +932,7 @@ sub _MaskNew {
     # add rich text editor JavaScript
     # only if activated and the browser can handle it
     # otherwise just a text-area is shown
-    if ( $LayoutObject->{BrowserRichText} ) {
+    if ( $LayoutObject->{BrowserRichText} && $ConfigObject->Get('FAQ::Item::HTML') ) {
 
         # use height/width defined for this screen
         $Param{RichTextHeight} = $Config->{RichTextHeight} || 0;

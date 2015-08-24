@@ -164,6 +164,7 @@ Returns:
         Field6            => 'Comments',
         Approved          => 1,                              # or 0
         ValidID           => 1,
+        ContentType       => 'text/plain',                  # or 'text/html'
         Valid             => 'valid',
         Keywords          => 'KeyWord1 KeyWord2',
         Votes             => 0,                              # number of votes
@@ -235,7 +236,7 @@ sub FAQGet {
             SQL => '
                 SELECT i.f_name, i.f_language_id, i.f_subject, i.created, i.created_by, i.changed,
                     i.changed_by, i.category_id, i.state_id, c.name, s.name, l.name, i.f_keywords,
-                    i.approved, i.valid_id, i.f_number, st.id, st.name
+                    i.approved, i.valid_id, i.content_type, i.f_number, st.id, st.name
                 FROM faq_item i, faq_category c, faq_state s, faq_state_type st, faq_language l
                 WHERE i.state_id = s.id
                     AND s.type_id = st.id
@@ -271,9 +272,10 @@ sub FAQGet {
                 Keywords      => $Row[12],
                 Approved      => $Row[13],
                 ValidID       => $Row[14],
-                Number        => $Row[15],
-                StateTypeID   => $Row[16],
-                StateTypeName => $Row[17],
+                ContentType   => $Row[15],
+                Number        => $Row[16],
+                StateTypeID   => $Row[17],
+                StateTypeName => $Row[18],
             );
         }
 
@@ -487,21 +489,22 @@ sub ItemFieldGet {
 add an article
 
     my $ItemID = $FAQObject->FAQAdd(
-        Title      => 'Some Text',
-        CategoryID => 1,
-        StateID    => 1,
-        LanguageID => 1,
-        Number     => '13402',          # (optional)
-        Keywords   => 'some keywords',  # (optional)
-        Field1     => 'Symptom...',     # (optional)
-        Field2     => 'Problem...',     # (optional)
-        Field3     => 'Solution...',    # (optional)
-        Field4     => 'Field4...',      # (optional)
-        Field5     => 'Field5...',      # (optional)
-        Field6     => 'Comment...',     # (optional)
-        Approved   => 1,                # (optional)
-        ValidID    => 1,
-        UserID     => 1,
+        Title       => 'Some Text',
+        CategoryID  => 1,
+        StateID     => 1,
+        LanguageID  => 1,
+        Number      => '13402',          # (optional)
+        Keywords    => 'some keywords',  # (optional)
+        Field1      => 'Symptom...',     # (optional)
+        Field2      => 'Problem...',     # (optional)
+        Field3      => 'Solution...',    # (optional)
+        Field4      => 'Field4...',      # (optional)
+        Field5      => 'Field5...',      # (optional)
+        Field6      => 'Comment...',     # (optional)
+        Approved    => 1,                # (optional)
+        ValidID     => 1,
+        ContentType => 'text/plain',     # or 'text/html'
+        UserID      => 1,
     );
 
 Returns:
@@ -517,7 +520,7 @@ sub FAQAdd {
     my $LogObject = $Kernel::OM->Get('Kernel::System::Log');
 
     # check needed stuff
-    for my $Argument (qw(CategoryID StateID LanguageID Title UserID)) {
+    for my $Argument (qw(CategoryID StateID LanguageID Title UserID ContentType)) {
         if ( !$Param{$Argument} ) {
             $LogObject->Log(
                 Priority => 'error',
@@ -576,20 +579,21 @@ sub FAQAdd {
     }
 
     return if !$Kernel::OM->Get('Kernel::System::DB')->Do(
-        SQL => 'INSERT INTO faq_item '
-            . '(f_number, f_name, f_language_id, f_subject, '
-            . 'category_id, state_id, f_keywords, approved, valid_id, '
-            . 'f_field1, f_field2, f_field3, f_field4, f_field5, f_field6, '
-            . 'created, created_by, changed, changed_by)'
-            . 'VALUES ('
-            . '?, ?, ?, ?, '
-            . '?, ?, ?, ?, ?, '
-            . '?, ?, ?, ?, ?, ?, '
-            . 'current_timestamp, ?, current_timestamp, ?)',
+        SQL => '
+            INSERT INTO faq_item
+                (f_number, f_name, f_language_id, f_subject,
+                category_id, state_id, f_keywords, approved, valid_id, content_type,
+                f_field1, f_field2, f_field3, f_field4, f_field5, f_field6,
+                created, created_by, changed, changed_by)
+            VALUES
+                (?, ?, ?, ?,
+                ?, ?, ?, ?, ?, ?,
+                ?, ?, ?, ?, ?, ?,
+                current_timestamp, ?, current_timestamp, ?)',
         Bind => [
             \$Param{Number},     \$Param{Name},    \$Param{LanguageID}, \$Param{Title},
             \$Param{CategoryID}, \$Param{StateID}, \$Param{Keywords},   \$Param{Approved},
-            \$Param{ValidID},
+            \$Param{ValidID},    \$Param{ContentType},
             \$Param{Field1}, \$Param{Field2}, \$Param{Field3},
             \$Param{Field4}, \$Param{Field5}, \$Param{Field6},
             \$Param{UserID}, \$Param{UserID},
@@ -597,37 +601,42 @@ sub FAQAdd {
     );
 
     # build SQL to get the id of the newly inserted FAQ article
-    my $SQL = 'SELECT id FROM faq_item '
-        . 'WHERE f_number = ? '
-        . 'AND f_name = ? '
-        . 'AND f_language_id = ? '
-        . 'AND category_id = ? '
-        . 'AND state_id = ? '
-        . 'AND approved = ? '
-        . 'AND valid_id = ? '
-        . 'AND created_by = ? '
-        . 'AND changed_by = ? ';
+    my $SQL = '
+        SELECT id FROM faq_item
+        WHERE f_number = ?
+            AND f_name = ?
+            AND f_language_id = ?
+            AND category_id = ?
+            AND state_id = ?
+            AND approved = ?
+            AND valid_id = ?
+            AND created_by = ?
+            AND changed_by = ?';
 
     # handle the title
     if ( $Param{Title} ) {
-        $SQL .= 'AND f_subject = ? ';
+        $SQL .= '
+            AND f_subject = ? ';
     }
 
     # additional SQL for the case that the title is an empty string
     # and the database is oracle, which treats empty strings as NULL
     else {
-        $SQL .= 'AND ((f_subject = ?) OR (f_subject IS NULL)) ';
+        $SQL .= '
+            AND ((f_subject = ?) OR (f_subject IS NULL)) ';
     }
 
     # handle the keywords
     if ( $Param{Keywords} ) {
-        $SQL .= 'AND f_keywords = ? ';
+        $SQL .= '
+            AND f_keywords = ? ';
     }
 
     # additional SQL for the case that keywords is an empty string
     # and the database is oracle, which treats empty strings as NULL
     else {
-        $SQL .= 'AND ((f_keywords = ?) OR (f_keywords IS NULL)) ';
+        $SQL .= '
+            AND ((f_keywords = ?) OR (f_keywords IS NULL)) ';
     }
 
     # get database object
@@ -709,11 +718,13 @@ update an article
         LanguageID  => 1,
         Approved    => 1,
         ValidID     => 1,
+        ContentType => 'text/plan',     # or 'text/html'
         Title       => 'Some Text',
         Field1      => 'Problem...',
         Field2      => 'Solution...',
         UserID      => 1,
-        ApprovalOff => 1, (optional, if set to 1 approval is ignored. This is important when called from FAQInlineAttachmentURLUpdate)
+        ApprovalOff => 1,               # optional, (if set to 1 approval is ignored. This is
+                                        #   important when called from FAQInlineAttachmentURLUpdate)
     );
 
 Returns:
@@ -726,7 +737,7 @@ sub FAQUpdate {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Argument (qw(ItemID CategoryID StateID LanguageID Title UserID)) {
+    for my $Argument (qw(ItemID CategoryID StateID LanguageID Title UserID ContentType)) {
         if ( !$Param{$Argument} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
@@ -755,20 +766,19 @@ sub FAQUpdate {
     }
 
     return if !$Kernel::OM->Get('Kernel::System::DB')->Do(
-        SQL => 'UPDATE faq_item SET '
-            . 'f_name = ?, f_language_id = ?, '
-            . 'f_subject = ?, category_id = ?, '
-            . 'state_id = ?, f_keywords = ?, valid_id = ?, '
-            . 'f_field1 = ?, f_field2 = ?, '
-            . 'f_field3 = ?, f_field4 = ?, '
-            . 'f_field5 = ?, f_field6 = ?, '
-            . 'changed = current_timestamp, '
-            . 'changed_by = ? '
-            . 'WHERE id = ?',
+        SQL => '
+            UPDATE faq_item SET
+                f_name = ?, f_language_id = ?, f_subject = ?, category_id = ?,
+                state_id = ?, f_keywords = ?, valid_id = ?, content_type = ?,
+                f_field1 = ?, f_field2 = ?,
+                f_field3 = ?, f_field4 = ?,
+                f_field5 = ?, f_field6 = ?,
+                changed = current_timestamp,
+                changed_by = ?
+            WHERE id = ?',
         Bind => [
-            \$Param{Name},    \$Param{LanguageID},
-            \$Param{Title},   \$Param{CategoryID},
-            \$Param{StateID}, \$Param{Keywords}, \$Param{ValidID},
+            \$Param{Name},    \$Param{LanguageID}, \$Param{Title},   \$Param{CategoryID},
+            \$Param{StateID}, \$Param{Keywords},   \$Param{ValidID}, \$Param{ContentType},
             \$Param{Field1},  \$Param{Field2},
             \$Param{Field3},  \$Param{Field4},
             \$Param{Field5},  \$Param{Field6},

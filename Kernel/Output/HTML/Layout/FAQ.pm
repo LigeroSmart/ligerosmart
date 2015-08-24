@@ -482,15 +482,16 @@ sub FAQContentShow {
             },
         );
 
-        # security="restricted" may break SSO - disable this feature if requested
-        if ( $ConfigObject->Get('DisableMSIFrameSecurityRestricted') ) {
-            $Param{MSSecurityRestricted} = '';
-        }
-        else {
-            $Param{MSSecurityRestricted} = 'security="restricted"';
-        }
+        if ( $ConfigObject->Get('FAQ::Item::HTML') && $Self->{BrowserRichText} ) {
 
-        if ( $ConfigObject->Get('FAQ::Item::HTML') ) {
+            # security="restricted" may break SSO - disable this feature if requested
+            if ( $ConfigObject->Get('DisableMSIFrameSecurityRestricted') ) {
+                $Param{MSSecurityRestricted} = '';
+            }
+            else {
+                $Param{MSSecurityRestricted} = 'security="restricted"';
+            }
+
             $Self->Block(
                 Name => 'FAQContentHTML',
                 Data => {
@@ -501,6 +502,14 @@ sub FAQContentShow {
             );
         }
         else {
+
+            # convert fields ASCII if needed
+            if ( $Param{FAQData}->{ContentType} ne 'text/plain' ) {
+                $Content = $Kernel::OM->Get('Kernel::System::HTMLUtils')->ToAscii(
+                    String => $Content,
+                ) || '';
+            }
+
             $Self->Block(
                 Name => 'FAQContentPlain',
                 Data => {

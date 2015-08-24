@@ -280,6 +280,9 @@ sub CodeUpgradeFromLowerThan_4_0_91 {    ## no critic
     # change configurations to match the new module location.
     $Self->_MigrateConfigs();
 
+    # set content type
+    $Self->_SetContentType();
+
     return 1;
 }
 
@@ -935,6 +938,28 @@ sub _MigrateConfigs {
         );
 
     }
+
+    return 1;
+}
+
+sub _SetContentType {
+
+    # get config object
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+
+    my $ContentType = 'ttext/plain';
+    if ( $ConfigObject->Get('Frontend::RichText') && $ConfigObject->Get('FAQ::Item::HTML') ) {
+        $ContentType = 'text/html';
+    }
+
+    return if !$Kernel::OM->Get('Kernel::System::DB')->Do(
+        SQL => '
+            UPDATE faq_item SET
+            content_type = ?',
+        Bind => [
+            \$ContentType,
+        ],
+    );
 
     return 1;
 }

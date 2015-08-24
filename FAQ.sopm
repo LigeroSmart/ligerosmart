@@ -263,6 +263,7 @@
             <Column Name="category_id" Required="true" Type="SMALLINT"/>
             <Column Name="approved" Required="true" Default="1" Type="SMALLINT"/>
             <Column Name="valid_id" Required="true" Default="1" Type="SMALLINT"/>
+            <Column Name="content_type" Required="true" Default="text/html" Size="250" Type="VARCHAR"/>
             <Column Name="f_keywords" Required="false" Size="400" Type="VARCHAR"/>
             <Column Name="f_field1" Required="false" Size="20000" Type="VARCHAR"/>
             <Column Name="f_field2" Required="false" Size="20000" Type="VARCHAR"/>
@@ -454,6 +455,9 @@
             <IndexCreate Name="faq_voting_item_id">
                 <IndexColumn Name="item_id"/>
             </IndexCreate>
+        </TableAlter>
+        <TableAlter Name="faq_item" Version="4.0.91">
+            <ColumnAdd Name="content_type" Required="true" Default="text/html" Size="250" Type="VARCHAR"/>
         </TableAlter>
     </DatabaseUpgrade>
     <DatabaseUninstall Type="pre">
