@@ -408,8 +408,12 @@ Your OTRS-Team
                 <Item Key="Schedule">*/20 * * * *</Item> <!-- default: every 20 min -->
                 <Item Key="Module">Kernel::System::Console::Command::Maint::Survey::RequestsSend</Item>
                 <Item Key="Function">Execute</Item>
-                <Item Key="Params">--force</Item>
                 <Item Key="MaximumParallelInstances">1</Item>
+                <Item Key="Params">
+                    <Array>
+                        <Item>--force</Item>
+                    </Array>
+                </Item>
             </Hash>
         </Setting>
     </ConfigItem>
