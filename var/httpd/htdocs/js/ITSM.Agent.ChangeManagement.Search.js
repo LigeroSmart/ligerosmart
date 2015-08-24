@@ -19,17 +19,20 @@ ITSM.Agent = ITSM.Agent || {};
 ITSM.Agent.ChangeManagement = ITSM.Agent.ChangeManagement || {};
 
 /**
- * @namespace
- * @exports TargetNS as Core.Agent.Search
+ * @namespace ITSM.Agent.ChangeManagement.Search
+ * @memberof ITSM.Agent.ChangeManagement
+ * @author OTRS AG
  * @description
- *      This namespace contains the special module functions for the search.
+ *      This namespace contains the special module functions for the ChangeManagement search.
  */
 ITSM.Agent.ChangeManagement.Search = (function (TargetNS) {
 
     /**
+     * @name AdditionalAttributeSelectionRebuild
+     * @memberof ITSM.Agent.ChangeManagement.Search
      * @function
-     * @return nothing
-     *      This function rebuild attribute selection, only show available attributes.
+     * @description
+            This function rebuilds the selection dropdown after choosing or deleting an additional selection.
      */
     TargetNS.AdditionalAttributeSelectionRebuild = function () {
 
@@ -78,7 +81,7 @@ ITSM.Agent.ChangeManagement.Search = (function (TargetNS) {
                 $(this).removeClass('ITSMCustomerSearch');
                 $(this).attr('id', InputID);
                 $(this).prev().attr('id', InputID + 'Selected');
-                ITSM.Agent.CustomerSearch.Init( $( '#' + Core.App.EscapeSelector(InputID) ) );
+                ITSM.Agent.CustomerSearch.Init($('#' + Core.App.EscapeSelector(InputID)));
 
                 // prevent dialog closure when select a customer from the list
                 $('ul.ui-autocomplete').bind('click', function(Event){
@@ -93,7 +96,7 @@ ITSM.Agent.ChangeManagement.Search = (function (TargetNS) {
                 $(this).removeClass('ITSMUserSearch');
                 $(this).attr('id', InputID);
                 $(this).prev().attr('id', InputID + 'Selected');
-                ITSM.Agent.UserSearch.Init( $( '#' + Core.App.EscapeSelector(InputID) ) );
+                ITSM.Agent.UserSearch.Init($('#' + Core.App.EscapeSelector(InputID)));
 
                 // prevent dialog closure when select a customer from the list
                 $('ul.ui-autocomplete').bind('click', function(Event){
@@ -189,19 +192,19 @@ ITSM.Agent.ChangeManagement.Search = (function (TargetNS) {
                 $Element;
 
             // those with ID's are used for searching
-            if ( $(this).attr('id') ) {
+            if ($(this).attr('id')) {
                     // substring "Label" (e.g. first five characters ) from the
                     // label id, use the remaining name as name string for accessing
                     // the form input's value
                     ElementName = $(this).attr('id').substring(5);
-                    $Element = $('#SearchForm input[name='+ElementName+']');
+                    $Element = $('#SearchForm input[name=' + ElementName + ']');
                     // If there's no input element with the selected name
                     // find the next "select" element and use that one for checking
                     if (!$Element.length) {
                         $Element = $(this).next().find('select');
                     }
                     if ($Element.length) {
-                        if ( $Element.val() && $Element.val() !== '' ) {
+                        if ($Element.val() && $Element.val() !== '') {
                             SearchValueFlag = true;
                         }
                     }
@@ -318,7 +321,7 @@ ITSM.Agent.ChangeManagement.Search = (function (TargetNS) {
 
                     // remember shown attributes
                     $('#SearchInsert label').each(function () {
-                        if ( $(this).attr('id') ) {
+                        if ($(this).attr('id')) {
                             ShownAttributes = ShownAttributes + ';' + $(this).attr('id');
                         }
                     });
@@ -444,7 +447,6 @@ ITSM.Agent.ChangeManagement.Search = (function (TargetNS) {
 
                         // hide profile link
                         $('#SearchProfileAsLink').hide();
-
                     }
 
                     Event.preventDefault();
