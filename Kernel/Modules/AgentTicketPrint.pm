@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2015 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/ec164a9e564a88191ed1c6cb0eb3f57ffcbb7ef8/Kernel/Modules/AgentTicketPrint.pm
+# $origin: https://github.com/OTRS/otrs/blob/c3f1c524bea483efa162a2c8eafc73dd738376dc/Kernel/Modules/AgentTicketPrint.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -278,10 +278,30 @@ sub Run {
         ResponsibleData => \%ResponsibleInfo,
     );
 
+    $PDFObject->PositionSet(
+        Move => 'relativ',
+        Y    => -6,
+    );
+
+    $PDFObject->HLine(
+        Color     => '#aaa',
+        LineWidth => 0.5,
+    );
+
     # output ticket dynamic fields
     $Self->_PDFOutputTicketDynamicFields(
         PageData   => \%Page,
         TicketData => \%Ticket,
+    );
+
+    $PDFObject->PositionSet(
+        Move => 'relativ',
+        Y    => -6,
+    );
+
+    $PDFObject->HLine(
+        Color     => '#aaa',
+        LineWidth => 0.5,
     );
 
     # output linked objects
@@ -540,7 +560,7 @@ sub _PDFOutputTicketInfos {
     $TableParam{Type}                = 'Cut';
     $TableParam{Border}              = 0;
     $TableParam{FontSize}            = 7;
-    $TableParam{BackgroundColorEven} = '#DDDDDD';
+    $TableParam{BackgroundColorEven} = '#F2F2F2';
     $TableParam{Padding}             = 6;
     $TableParam{PaddingTop}          = 3;
     $TableParam{PaddingBottom}       = 3;
@@ -629,16 +649,16 @@ sub _PDFOutputLinkedObjects {
     # set new position
     $PDFObject->PositionSet(
         Move => 'relativ',
-        Y    => -15,
+        Y    => -10,
     );
 
     # output headline
     $PDFObject->Text(
         Text     => $LayoutObject->{LanguageObject}->Translate('Linked Objects'),
-        Height   => 7,
+        Height   => 10,
         Type     => 'Cut',
-        Font     => 'ProportionalBoldItalic',
-        FontSize => 7,
+        Font     => 'Proportional',
+        FontSize => 9,
         Color    => '#666666',
     );
 
@@ -652,7 +672,6 @@ sub _PDFOutputLinkedObjects {
     $TableParam{Type}            = 'Cut';
     $TableParam{Border}          = 0;
     $TableParam{FontSize}        = 6;
-    $TableParam{BackgroundColor} = '#DDDDDD';
     $TableParam{Padding}         = 1;
     $TableParam{PaddingTop}      = 3;
     $TableParam{PaddingBottom}   = 3;
@@ -761,16 +780,16 @@ sub _PDFOutputTicketDynamicFields {
         # set new position
         $PDFObject->PositionSet(
             Move => 'relativ',
-            Y    => -15,
+            Y    => -10,
         );
 
         # output headline
         $PDFObject->Text(
             Text     => $LayoutObject->{LanguageObject}->Translate('Ticket Dynamic Fields'),
-            Height   => 7,
+            Height   => 10,
             Type     => 'Cut',
-            Font     => 'ProportionalBoldItalic',
-            FontSize => 7,
+            Font     => 'Proportional',
+            FontSize => 8,
             Color    => '#666666',
         );
 
@@ -784,7 +803,6 @@ sub _PDFOutputTicketDynamicFields {
         $TableParam{Type}            = 'Cut';
         $TableParam{Border}          = 0;
         $TableParam{FontSize}        = 6;
-        $TableParam{BackgroundColor} = '#DDDDDD';
         $TableParam{Padding}         = 1;
         $TableParam{PaddingTop}      = 3;
         $TableParam{PaddingBottom}   = 3;
@@ -864,16 +882,27 @@ sub _PDFOutputCustomerInfos {
         # set new position
         $PDFObject->PositionSet(
             Move => 'relativ',
-            Y    => -15,
+            Y    => -10,
+        );
+
+        $PDFObject->HLine(
+            Color     => '#aaa',
+            LineWidth => 0.5,
+        );
+
+        # set new position
+        $PDFObject->PositionSet(
+            Move => 'relativ',
+            Y    => -4,
         );
 
         # output headline
         $PDFObject->Text(
             Text     => $LayoutObject->{LanguageObject}->Translate('Customer Information'),
-            Height   => 7,
+            Height   => 10,
             Type     => 'Cut',
-            Font     => 'ProportionalBoldItalic',
-            FontSize => 7,
+            Font     => 'Proportional',
+            FontSize => 8,
             Color    => '#666666',
         );
 
@@ -887,7 +916,6 @@ sub _PDFOutputCustomerInfos {
         $TableParam{Type}            = 'Cut';
         $TableParam{Border}          = 0;
         $TableParam{FontSize}        = 6;
-        $TableParam{BackgroundColor} = '#DDDDDD';
         $TableParam{Padding}         = 1;
         $TableParam{PaddingTop}      = 3;
         $TableParam{PaddingBottom}   = 3;
@@ -936,26 +964,6 @@ sub _PDFOutputArticles {
 
     my $ArticleCounter = 1;
     for my $ArticleTmp ( @{ $Param{ArticleData} } ) {
-        if ( $ArticleCounter == 1 ) {
-            $PDFObject->PositionSet(
-                Move => 'relativ',
-                Y    => -15,
-            );
-
-            # output headline
-            $PDFObject->Text(
-                Text     => $LayoutObject->{LanguageObject}->Translate('Articles'),
-                Height   => 7,
-                Type     => 'Cut',
-                Font     => 'ProportionalBoldItalic',
-                FontSize => 7,
-                Color    => '#666666',
-            );
-            $PDFObject->PositionSet(
-                Move => 'relativ',
-                Y    => 2,
-            );
-        }
 
         my %Article = %{$ArticleTmp};
 
@@ -991,11 +999,11 @@ sub _PDFOutputArticles {
 
         # article number tag
         $PDFObject->Text(
-            Text     => '    # ' . $ArticleCounter,
-            Height   => 7,
+            Text     => $LayoutObject->{LanguageObject}->Translate('Article') . ' #' . $ArticleCounter,
+            Height   => 10,
             Type     => 'Cut',
-            Font     => 'ProportionalBoldItalic',
-            FontSize => 7,
+            Font     => 'Proportional',
+            FontSize => 8,
             Color    => '#666666',
         );
 
@@ -1085,11 +1093,20 @@ sub _PDFOutputArticles {
             Y    => -6,
         );
 
+        $PDFObject->HLine(
+            Color     => '#aaa',
+            LineWidth => 0.5,
+        );
+
+        $PDFObject->PositionSet(
+            Move => 'relativ',
+            Y    => -6,
+        );
+
         # table params (article infos)
         $TableParam1{Type}            = 'Cut';
         $TableParam1{Border}          = 0;
         $TableParam1{FontSize}        = 6;
-        $TableParam1{BackgroundColor} = '#DDDDDD';
         $TableParam1{Padding}         = 1;
         $TableParam1{PaddingTop}      = 3;
         $TableParam1{PaddingBottom}   = 3;
@@ -1144,10 +1161,10 @@ sub _PDFOutputArticles {
         $TableParam2{Border}                  = 0;
         $TableParam2{Font}                    = 'Monospaced';
         $TableParam2{FontSize}                = 7;
-        $TableParam2{BackgroundColor}         = '#DDDDDD';
+        $TableParam2{BackgroundColor}         = '#f2f2f2';
         $TableParam2{Padding}                 = 4;
-        $TableParam2{PaddingTop}              = 8;
-        $TableParam2{PaddingBottom}           = 8;
+        $TableParam2{PaddingTop}              = 4;
+        $TableParam2{PaddingBottom}           = 4;
 
         # output table (article body)
         PAGE:
