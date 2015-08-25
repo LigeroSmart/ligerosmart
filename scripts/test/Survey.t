@@ -24,6 +24,11 @@ $ConfigObject->Set(
     Value => 'Kernel::System::Email::DoNotSendEmail',
 );
 
+$ConfigObject->Set(
+    Key   => 'Survey::SendInHoursAfterClose',
+    Value => 0,
+);
+
 # get database object
 my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
