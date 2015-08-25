@@ -4542,6 +4542,16 @@
             </Hash>
         </Setting>
     </ConfigItem>
+    <ConfigItem Name="Frontend::Search::JavaScript###Change" Required="0" Valid="1">
+        <Description Translatable="1">JavaScript function for the search frontend.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::SearchRouter</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="^(?:Agent|Admin)ITSM(Change|WorkOrder|TemplateOverview)">ITSM.Agent.ChangeManagement.Search.OpenSearchDialog('AgentITSMChangeSearch')</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeSearch###SearchCSVData" Required="1" Valid="1">
         <Description Translatable="1">Data used to export the search result in CSV format.</Description>
         <Group>ITSM Change Management</Group>
