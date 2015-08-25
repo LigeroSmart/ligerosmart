@@ -38,28 +38,30 @@ $Selenium->RunTest(
         my $FAQTitle = 'FAQ ' . $Helper->GetRandomID();
         my %Test     = (
             Stored => {
-                Title      => $FAQTitle,
-                CategoryID => 1,
-                StateID    => 1,
-                LanguageID => 1,
-                Keywords   => 'Selenium Keywords',
-                Field1     => 'Selenium Symptom',
-                Field2     => 'Selenium Problem',
-                Field3     => 'Selenium Solution',
-                Field6     => 'Selenium Comment',
-                ValidID    => 1,
+                Title       => $FAQTitle,
+                CategoryID  => 1,
+                StateID     => 1,
+                LanguageID  => 1,
+                Keywords    => 'Selenium Keywords',
+                Field1      => 'Selenium Symptom',
+                Field2      => 'Selenium Problem',
+                Field3      => 'Selenium Solution',
+                Field6      => 'Selenium Comment',
+                ContentType => 'text/html',
+                ValidID     => 1,
             },
             Edited => {
-                Title      => $FAQTitle . ' Edit',
-                CategoryID => 1,
-                StateID    => 2,
-                LanguageID => 2,
-                Keywords   => 'Selenium Keywords Edit',
-                Field1     => 'Selenium Symptom Edit',
-                Field2     => 'Selenium Problem Edit',
-                Field3     => 'Selenium Solution Edit',
-                Field6     => 'Selenium Comment Edit',
-                ValidID    => 2,
+                Title       => $FAQTitle . ' Edit',
+                CategoryID  => 1,
+                StateID     => 2,
+                LanguageID  => 2,
+                Keywords    => 'Selenium Keywords Edit',
+                Field1      => 'Selenium Symptom Edit',
+                Field2      => 'Selenium Problem Edit',
+                Field3      => 'Selenium Solution Edit',
+                Field6      => 'Selenium Comment Edit',
+                ContentType => 'text/html',
+                ValidID     => 2,
             },
         );
 
@@ -68,17 +70,8 @@ $Selenium->RunTest(
 
         # create test FAQ
         my $FAQID = $FAQObject->FAQAdd(
-            Title      => $Test{Stored}->{Title},
-            CategoryID => $Test{Stored}->{CategoryID},
-            StateID    => $Test{Stored}->{StateID},
-            LanguageID => $Test{Stored}->{LanguageID},
-            Keywords   => $Test{Stored}->{Keywords},
-            Field1     => $Test{Stored}->{Field1},
-            Field2     => $Test{Stored}->{Field2},
-            Field3     => $Test{Stored}->{Field3},
-            Field6     => $Test{Stored}->{Field6},
-            ValidID    => $Test{Stored}->{ValidID},
-            UserID     => 1,
+            %{ $Test{Stored} },
+            UserID => 1,
         );
 
         # create test user and login

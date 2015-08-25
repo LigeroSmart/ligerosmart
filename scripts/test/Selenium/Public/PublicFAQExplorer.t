@@ -30,13 +30,14 @@ $Selenium->RunTest(
         for ( 1 .. 5 ) {
             my $FAQTitle = 'FAQ ' . $Helper->GetRandomID();
             my $FAQID    = $FAQObject->FAQAdd(
-                Title      => $FAQTitle,
-                CategoryID => 1,
-                StateID    => 3,
-                LanguageID => 1,
-                Approved   => 1,
-                ValidID    => 1,
-                UserID     => 1,
+                Title       => $FAQTitle,
+                CategoryID  => 1,
+                StateID     => 3,
+                LanguageID  => 1,
+                Approved    => 1,
+                ValidID     => 1,
+                UserID      => 1,
+                ContentType => 'text/html',
             );
 
             $Self->True(

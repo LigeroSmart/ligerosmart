@@ -57,13 +57,14 @@ $Selenium->RunTest(
                 # add test FAQ
                 my $FAQTitle = $Title . $Helper->GetRandomID();
                 my $FAQID    = $FAQObject->FAQAdd(
-                    Title      => $FAQTitle,
-                    CategoryID => $CategoryID,
-                    StateID    => 1,
-                    LanguageID => 1,
-                    ValidID    => 1,
-                    UserID     => 1,
-                    Approved   => 1,
+                    Title       => $FAQTitle,
+                    CategoryID  => $CategoryID,
+                    StateID     => 1,
+                    LanguageID  => 1,
+                    ValidID     => 1,
+                    UserID      => 1,
+                    Approved    => 1,
+                    ContentType => 'text/html',
                 );
 
                 $Self->True(

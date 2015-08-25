@@ -40,14 +40,15 @@ my @AddedFAQs;
 
 # add some FAQs
 my %FAQAddTemplate = (
-    Title      => "Some Text $RandomID",
-    CategoryID => 1,
-    StateID    => 1,
-    LanguageID => 1,
-    Keywords   => $RandomID,
-    Field1     => 'Problem...',
-    Field2     => 'Solution...',
-    UserID     => 1,
+    Title       => "Some Text $RandomID",
+    CategoryID  => 1,
+    StateID     => 1,
+    LanguageID  => 1,
+    Keywords    => $RandomID,
+    Field1      => 'Problem...',
+    Field2      => 'Solution...',
+    UserID      => 1,
+    ContentType => 'text/html',
 );
 
 # freeze time
@@ -483,14 +484,15 @@ for my $Test (@Tests) {
 
 # update FAQs
 my %FAQUpdateTemplate = (
-    Title      => "New Text $RandomID",
-    CategoryID => 1,
-    StateID    => 1,
-    LanguageID => 1,
-    Keywords   => $RandomID,
-    Field1     => 'Problem...',
-    Field2     => 'Solution...',
-    UserID     => 1,
+    Title       => "New Text $RandomID",
+    CategoryID  => 1,
+    StateID     => 1,
+    LanguageID  => 1,
+    Keywords    => $RandomID,
+    Field1      => 'Problem...',
+    Field2      => 'Solution...',
+    UserID      => 1,
+    ContentType => 'text/html',
 );
 
 # add 1 minute to frozen time
@@ -841,15 +843,16 @@ $Self->True(
 );
 {
     my $FAQID1 = $FAQObject->FAQAdd(
-        CategoryID => 1,
-        StateID    => 2,
-        LanguageID => 2,
-        Approved   => 1,
-        Title      => 'Some Text2',
-        Keywords   => 'some keywords2',
-        Field1     => 'Problem...2',
-        Field2     => 'Solution found...2',
-        UserID     => 1,
+        CategoryID  => 1,
+        StateID     => 2,
+        LanguageID  => 2,
+        Approved    => 1,
+        Title       => 'Some Text2',
+        Keywords    => 'some keywords2',
+        Field1      => 'Problem...2',
+        Field2      => 'Solution found...2',
+        UserID      => 1,
+        ContentType => 'text/html',
     );
 
     $Self->True(
@@ -858,14 +861,15 @@ $Self->True(
     );
 
     my $FAQID2 = $FAQObject->FAQAdd(
-        Title      => 'Title',
-        CategoryID => 1,
-        StateID    => 1,
-        LanguageID => 1,
-        Keywords   => '',
-        Field1     => 'Problem Description 1...',
-        Field2     => 'Solution not found1...',
-        UserID     => 1,
+        Title       => 'Title',
+        CategoryID  => 1,
+        StateID     => 1,
+        LanguageID  => 1,
+        Keywords    => '',
+        Field1      => 'Problem Description 1...',
+        Field2      => 'Solution not found1...',
+        UserID      => 1,
+        ContentType => 'text/html',
     );
 
     $Self->True(

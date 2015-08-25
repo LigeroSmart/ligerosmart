@@ -18,14 +18,15 @@ my $FAQObject   = $Kernel::OM->Get('Kernel::System::FAQ');
 my $CacheObject = $Kernel::OM->Get('Kernel::System::Cache');
 
 my $FAQID = $FAQObject->FAQAdd(
-    Title      => 'Some Text',
-    CategoryID => 1,
-    StateID    => 1,
-    LanguageID => 1,
-    Keywords   => 'some keywords',
-    Field1     => 'Problem...',
-    Field2     => 'Solution...',
-    UserID     => 1,
+    Title       => 'Some Text',
+    CategoryID  => 1,
+    StateID     => 1,
+    LanguageID  => 1,
+    Keywords    => 'some keywords',
+    Field1      => 'Problem...',
+    Field2      => 'Solution...',
+    ContentType => 'text/html',
+    UserID      => 1,
 );
 
 $Self->True(
@@ -40,13 +41,14 @@ my %FAQ = $FAQObject->FAQGet(
 );
 
 my %FAQTest = (
-    Title      => 'Some Text',
-    CategoryID => 1,
-    StateID    => 1,
-    LanguageID => 1,
-    Keywords   => 'some keywords',
-    Field1     => 'Problem...',
-    Field2     => 'Solution...',
+    Title       => 'Some Text',
+    CategoryID  => 1,
+    StateID     => 1,
+    LanguageID  => 1,
+    Keywords    => 'some keywords',
+    Field1      => 'Problem...',
+    Field2      => 'Solution...',
+    ContentType => 'text/html',
 );
 
 for my $Test ( sort keys %FAQTest ) {
@@ -58,16 +60,17 @@ for my $Test ( sort keys %FAQTest ) {
 }
 
 my $FAQUpdate = $FAQObject->FAQUpdate(
-    ItemID     => $FAQID,
-    CategoryID => 1,
-    StateID    => 2,
-    LanguageID => 2,
-    Approved   => 1,
-    Title      => 'Some Text2',
-    Keywords   => 'some keywords2',
-    Field1     => 'Problem...2',
-    Field2     => 'Solution found...2',
-    UserID     => 1,
+    ItemID      => $FAQID,
+    CategoryID  => 1,
+    StateID     => 2,
+    LanguageID  => 2,
+    Approved    => 1,
+    Title       => 'Some Text2',
+    Keywords    => 'some keywords2',
+    Field1      => 'Problem...2',
+    Field2      => 'Solution found...2',
+    UserID      => 1,
+    ContentType => 'text/plain',
 );
 
 %FAQ = $FAQObject->FAQGet(
@@ -77,13 +80,14 @@ my $FAQUpdate = $FAQObject->FAQUpdate(
 );
 
 %FAQTest = (
-    Title      => 'Some Text2',
-    CategoryID => 1,
-    StateID    => 2,
-    LanguageID => 2,
-    Keywords   => 'some keywords2',
-    Field1     => 'Problem...2',
-    Field2     => 'Solution found...2',
+    Title       => 'Some Text2',
+    CategoryID  => 1,
+    StateID     => 2,
+    LanguageID  => 2,
+    Keywords    => 'some keywords2',
+    Field1      => 'Problem...2',
+    Field2      => 'Solution found...2',
+    ContentType => 'text/plain',
 );
 
 for my $Test ( sort keys %FAQTest ) {
@@ -123,14 +127,15 @@ $Self->Is(
 );
 
 my $FAQID2 = $FAQObject->FAQAdd(
-    Title      => 'Title',
-    CategoryID => 1,
-    StateID    => 1,
-    LanguageID => 1,
-    Keywords   => '',
-    Field1     => 'Problem Description 1...',
-    Field2     => 'Solution not found1...',
-    UserID     => 1,
+    Title       => 'Title',
+    CategoryID  => 1,
+    StateID     => 1,
+    LanguageID  => 1,
+    Keywords    => '',
+    Field1      => 'Problem Description 1...',
+    Field2      => 'Solution not found1...',
+    ContentType => 'text/html',
+    UserID      => 1,
 );
 
 $Self->True(
@@ -406,7 +411,8 @@ $FAQID = $FAQObject->FAQAdd(
     LanguageID => 1,
     Keywords   => 'some keywords',
     %TestFields,
-    UserID => 1,
+    ContentType => 'text/html',
+    UserID      => 1,
 );
 
 $Self->True(
@@ -497,7 +503,8 @@ $FAQUpdate = $FAQObject->FAQUpdate(
     LanguageID => 1,
     Keywords   => 'some keywords',
     %UpdatedTestFields,
-    UserID => 1,
+    ContentType => 'text/html',
+    UserID      => 1,
 );
 
 $Self->True(
@@ -537,7 +544,8 @@ $FAQID = $FAQObject->FAQAdd(
     LanguageID => 1,
     Keywords   => 'some keywords',
     %TestFields,
-    UserID => 1,
+    ContentType => 'text/html',
+    UserID      => 1,
 );
 
 # check that cache is clean

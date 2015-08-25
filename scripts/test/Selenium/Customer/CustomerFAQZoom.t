@@ -33,17 +33,18 @@ $Selenium->RunTest(
         my $FAQSolution = 'Selenium Solution';
 
         my $FAQID = $FAQObject->FAQAdd(
-            Title      => $FAQTitle,
-            CategoryID => 1,
-            StateID    => 1,
-            LanguageID => 1,
-            Keywords   => 'SeleniumKeywords',
-            Field1     => $FAQSymptom,
-            Field2     => $FAQProblem,
-            Field3     => $FAQSolution,
-            Approved   => 1,
-            ValidID    => 1,
-            UserID     => 1,
+            Title       => $FAQTitle,
+            CategoryID  => 1,
+            StateID     => 1,
+            LanguageID  => 1,
+            Keywords    => 'SeleniumKeywords',
+            Field1      => $FAQSymptom,
+            Field2      => $FAQProblem,
+            Field3      => $FAQSolution,
+            Approved    => 1,
+            ValidID     => 1,
+            UserID      => 1,
+            ContentType => 'text/html',
         );
         $Self->True(
             $FAQID,

@@ -1905,6 +1905,7 @@ shell> bin/otrs.Console.pl Admin::WebService::List
             <VoteResult>?</VoteResult>
             <Votes>?</Votes>
             <StateTypeName>?</StateTypeName>
+            <ContentType>?</ContentType>
             <!--Zero or more repetitions:-->
             <Attachment>
                <Filename>?</Filename>
@@ -1954,6 +1955,7 @@ shell> bin/otrs.Console.pl Admin::WebService::List
             <Changed>2010-11-02 08:06:43</Changed>
             <ChangedBy>1</ChangedBy>
             <Name>1288706803-91.878184450707</Name>
+            <ContentType>text/html</ContentType>
              <Attachment>
                 <Content>...==</Content>
                 <ContentType>text/plain</ContentType>
@@ -1997,6 +1999,7 @@ shell> bin/otrs.Console.pl Admin::WebService::List
             <Changed>2010-11-02 02:06:43</Changed>
             <ChangedBy>1</ChangedBy>
             <Name>1288706803-91.878184450707</Name>
+            <ContentType>text/html</ContentType>
           </FAQItem>
       </PublicFAQGetResponse>
                 ]]>

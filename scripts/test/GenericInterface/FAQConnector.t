@@ -109,15 +109,16 @@ $Self->True(
 );
 
 my $FAQIDOne = $FAQObject->FAQAdd(
-    Title      => 'Title FAQ ' . $RandomID . 'One' . $WebserviceName,
-    CategoryID => $CategoryIDOne,
-    StateID    => $PublicStateID,
-    LanguageID => 1,
-    Keywords   => 'some keywords',
-    Field1     => 'Problem...',
-    Field2     => 'Solution...',
-    UserID     => $UserID,
-    Approved   => 1,
+    Title       => 'Title FAQ ' . $RandomID . 'One' . $WebserviceName,
+    CategoryID  => $CategoryIDOne,
+    StateID     => $PublicStateID,
+    LanguageID  => 1,
+    Keywords    => 'some keywords',
+    Field1      => 'Problem...',
+    Field2      => 'Solution...',
+    UserID      => $UserID,
+    ContentType => 'text/html',
+    Approved    => 1,
 );
 
 $Self->True(
@@ -126,15 +127,16 @@ $Self->True(
 );
 
 my $FAQIDTwo = $FAQObject->FAQAdd(
-    Title      => 'Title FAQ ' . $RandomID . ' Two' . $WebserviceName,
-    CategoryID => $CategoryIDThree,
-    StateID    => $PublicStateID,
-    LanguageID => 1,
-    Keywords   => '',
-    Field1     => 'Problem Description 1...',
-    Field2     => 'Solution not found1...',
-    UserID     => $UserID,
-    Approved   => 1,
+    Title       => 'Title FAQ ' . $RandomID . ' Two' . $WebserviceName,
+    CategoryID  => $CategoryIDThree,
+    StateID     => $PublicStateID,
+    LanguageID  => 1,
+    Keywords    => '',
+    Field1      => 'Problem Description 1...',
+    Field2      => 'Solution not found1...',
+    UserID      => $UserID,
+    ContentType => 'text/plain',
+    Approved    => 1,
 );
 
 $Self->True(
@@ -143,15 +145,16 @@ $Self->True(
 );
 
 my $FAQIDThree = $FAQObject->FAQAdd(
-    Title      => 'Title 使用下列语言 Three' . $WebserviceName,
-    CategoryID => $CategoryIDFour,
-    StateID    => $PublicStateID,
-    LanguageID => 1,
-    Keywords   => '',
-    Field1     => 'Look for me ' . $RandomID . ' on the search',
-    Field2     => 'Solution not found1...',
-    UserID     => $UserID,
-    Approved   => 1,
+    Title       => 'Title 使用下列语言 Three' . $WebserviceName,
+    CategoryID  => $CategoryIDFour,
+    StateID     => $PublicStateID,
+    LanguageID  => 1,
+    Keywords    => '',
+    Field1      => 'Look for me ' . $RandomID . ' on the search',
+    Field2      => 'Solution not found1...',
+    UserID      => $UserID,
+    ContentType => 'text/html',
+    Approved    => 1,
 );
 
 $Self->True(
@@ -188,15 +191,16 @@ for my $File (qw(bin txt)) {
 }
 
 my $FAQIDFour = $FAQObject->FAQAdd(
-    Title      => 'Title FAQ ' . $RandomID . ' Языковые Four' . $WebserviceName,
-    CategoryID => $CategoryIDFour,
-    StateID    => $PublicStateID,
-    LanguageID => 1,
-    Keywords   => '',
-    Field1     => 'Problem Description 1...',
-    Field2     => 'Solution not found1...',
-    UserID     => 1,
-    Approved   => 1,
+    Title       => 'Title FAQ ' . $RandomID . ' Языковые Four' . $WebserviceName,
+    CategoryID  => $CategoryIDFour,
+    StateID     => $PublicStateID,
+    LanguageID  => 1,
+    Keywords    => '',
+    Field1      => 'Problem Description 1...',
+    Field2      => 'Solution not found1...',
+    UserID      => 1,
+    ContentType => 'text/html',
+    Approved    => 1,
 );
 
 $Self->True(

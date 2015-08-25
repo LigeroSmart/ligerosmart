@@ -61,36 +61,67 @@
       <xsd:element name="PublicFAQGetResponse">
         <xsd:complexType>
           <xsd:sequence>
-            <xsd:element maxOccurs="1" minOccurs="1" name="Approved" type="xsd:positiveInteger"/>
-            <xsd:element maxOccurs="1" minOccurs="1" name="CategoryID" type="xsd:int"/>
-            <xsd:element maxOccurs="1" minOccurs="1" name="CategoryName" type="xsd:string"/>
-            <xsd:element maxOccurs="1" minOccurs="1" name="CategoryShortName" type="xsd:string"/>
-            <xsd:element maxOccurs="1" minOccurs="1" name="Changed" type="xsd:dateTime"/>
-            <xsd:element maxOccurs="1" minOccurs="1" name="ChangedBy" type="xsd:string"/>
-            <xsd:element maxOccurs="1" minOccurs="1" name="Created" type="xsd:dateTime"/>
-            <xsd:element maxOccurs="1" minOccurs="1" name="CreatedBy" type="xsd:string"/>
-            <xsd:element maxOccurs="1" minOccurs="1" name="FAQID" type="xsd:positiveInteger"/>
-            <xsd:element maxOccurs="1" minOccurs="1" name="Field1" type="xsd:string"/>
-            <xsd:element maxOccurs="1" minOccurs="1" name="Field2" type="xsd:string"/>
-            <xsd:element maxOccurs="1" minOccurs="1" name="Field3" type="xsd:string"/>
-            <xsd:element maxOccurs="1" minOccurs="1" name="Field4" type="xsd:string"/>
-            <xsd:element maxOccurs="1" minOccurs="1" name="Field5" type="xsd:string"/>
-            <xsd:element maxOccurs="1" minOccurs="1" name="Field6" type="xsd:string"/>
-            <xsd:element maxOccurs="1" minOccurs="1" name="ID" type="xsd:positiveInteger"/>
-            <xsd:element maxOccurs="1" minOccurs="1" name="ItemID" type="xsd:positiveInteger"/>
-            <xsd:element maxOccurs="1" minOccurs="1" name="Keywords" type="xsd:string"/>
-            <xsd:element maxOccurs="1" minOccurs="1" name="Language" type="xsd:string"/>
-            <xsd:element maxOccurs="1" minOccurs="1" name="LanguageID" type="xsd:positiveInteger"/>
-            <xsd:element maxOccurs="1" minOccurs="1" name="Name" type="xsd:string"/>
-            <xsd:element maxOccurs="1" minOccurs="1" name="Number" type="xsd:long"/>
-            <xsd:element maxOccurs="1" minOccurs="1" name="State" type="xsd:string"/>
-            <xsd:element maxOccurs="1" minOccurs="1" name="StateID" type="xsd:int"/>
-            <xsd:element maxOccurs="1" minOccurs="1" name="StateTypeID" type="xsd:int"/>
-            <xsd:element maxOccurs="1" minOccurs="1" name="Title" type="xsd:string"/>
-            <xsd:element maxOccurs="1" minOccurs="1" name="VoteResult" type="xsd:float"/>
-            <xsd:element maxOccurs="1" minOccurs="1" name="Votes" type="xsd:positiveInteger"/>
-            <xsd:element maxOccurs="1" minOccurs="1" name="StateTypeName" type="xsd:string"/>
-            <xsd:element maxOccurs="unbounded" minOccurs="0" name="Attachment" type="tns:OTRS_FAQ_Attachment"/>
+          	<xsd:element maxOccurs="1" minOccurs="1" name="Approved"
+          		type="xsd:positiveInteger" />
+          	<xsd:element maxOccurs="1" minOccurs="1" name="CategoryID"
+          		type="xsd:int" />
+          	<xsd:element maxOccurs="1" minOccurs="1"
+          		name="CategoryName" type="xsd:string" />
+          	<xsd:element maxOccurs="1" minOccurs="1"
+          		name="CategoryShortName" type="xsd:string" />
+          	<xsd:element maxOccurs="1" minOccurs="1" name="Changed"
+          		type="xsd:dateTime" />
+          	<xsd:element maxOccurs="1" minOccurs="1" name="ChangedBy"
+          		type="xsd:string" />
+          	<xsd:element maxOccurs="1" minOccurs="1" name="Created"
+          		type="xsd:dateTime" />
+          	<xsd:element maxOccurs="1" minOccurs="1" name="CreatedBy"
+          		type="xsd:string" />
+          	<xsd:element maxOccurs="1" minOccurs="1" name="FAQID"
+          		type="xsd:positiveInteger" />
+          	<xsd:element maxOccurs="1" minOccurs="1" name="Field1"
+          		type="xsd:string" />
+          	<xsd:element maxOccurs="1" minOccurs="1" name="Field2"
+          		type="xsd:string" />
+          	<xsd:element maxOccurs="1" minOccurs="1" name="Field3"
+          		type="xsd:string" />
+          	<xsd:element maxOccurs="1" minOccurs="1" name="Field4"
+          		type="xsd:string" />
+          	<xsd:element maxOccurs="1" minOccurs="1" name="Field5"
+          		type="xsd:string" />
+          	<xsd:element maxOccurs="1" minOccurs="1" name="Field6"
+          		type="xsd:string" />
+          	<xsd:element maxOccurs="1" minOccurs="1" name="ID"
+          		type="xsd:positiveInteger" />
+          	<xsd:element maxOccurs="1" minOccurs="1" name="ItemID"
+          		type="xsd:positiveInteger" />
+          	<xsd:element maxOccurs="1" minOccurs="1" name="Keywords"
+          		type="xsd:string" />
+          	<xsd:element maxOccurs="1" minOccurs="1" name="Language"
+          		type="xsd:string" />
+          	<xsd:element maxOccurs="1" minOccurs="1" name="LanguageID"
+          		type="xsd:positiveInteger" />
+          	<xsd:element maxOccurs="1" minOccurs="1" name="Name"
+          		type="xsd:string" />
+          	<xsd:element maxOccurs="1" minOccurs="1" name="Number"
+          		type="xsd:long" />
+          	<xsd:element maxOccurs="1" minOccurs="1" name="State"
+          		type="xsd:string" />
+          	<xsd:element maxOccurs="1" minOccurs="1" name="StateID"
+          		type="xsd:int" />
+          	<xsd:element maxOccurs="1" minOccurs="1"
+          		name="StateTypeID" type="xsd:int" />
+          	<xsd:element maxOccurs="1" minOccurs="1" name="Title"
+          		type="xsd:string" />
+          	<xsd:element maxOccurs="1" minOccurs="1" name="VoteResult"
+          		type="xsd:float" />
+          	<xsd:element maxOccurs="1" minOccurs="1" name="Votes"
+          		type="xsd:positiveInteger" />
+          	<xsd:element maxOccurs="1" minOccurs="1"
+          		name="StateTypeName" type="xsd:string" />
+          	<xsd:element name="ContentType" type="xsd:string" minOccurs="1" maxOccurs="1"></xsd:element>
+          	<xsd:element maxOccurs="unbounded" minOccurs="0"
+          		name="Attachment" type="tns:OTRS_FAQ_Attachment" />
           </xsd:sequence>
         </xsd:complexType>
       </xsd:element>

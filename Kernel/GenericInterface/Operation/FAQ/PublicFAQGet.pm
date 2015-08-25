@@ -104,11 +104,12 @@ perform PublicFAQGet Operation. This will return a Public FAQ entry.
                     StateTypeID       => 1,
                     StateTypeName     => 'internal',                     # or 'external' or 'public'
                     CreatedBy         => 1,
-                    Changed          => '2011-01-05 21:53:50',
+                    Changed           => '2011-01-05 21:53:50',
                     ChangedBy         => '1',
                     Created           => '2011-01-05 21:53:50',
                     Name              => '1294286030-31.1697297104732',  # FAQ Article name or
                                                                          # systemtime + '-' + random number
+                    ContentType       => 'text/html',
                     Attachment => {
                         {
                             Filesize    => '540286',                # file size in bytes

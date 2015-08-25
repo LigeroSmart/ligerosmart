@@ -25,12 +25,13 @@ $Selenium->RunTest(
         # create test FAQ
         my $FAQTitle = 'FAQ ' . $Helper->GetRandomID();
         my $FAQID    = $Kernel::OM->Get('Kernel::System::FAQ')->FAQAdd(
-            Title      => $FAQTitle,
-            CategoryID => 1,
-            StateID    => 1,
-            LanguageID => 1,
-            ValidID    => 1,
-            UserID     => 1,
+            Title       => $FAQTitle,
+            CategoryID  => 1,
+            StateID     => 1,
+            LanguageID  => 1,
+            ValidID     => 1,
+            UserID      => 1,
+            ContentType => 'text/plain',
         );
 
         # create test user and login
