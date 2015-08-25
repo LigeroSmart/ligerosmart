@@ -14,6 +14,7 @@ use warnings;
 use base qw(Kernel::System::Console::BaseCommand);
 
 our @ObjectDependencies = (
+    'Kernel::System::Main',
     'Kernel::System::Ticket',
 );
 
@@ -29,7 +30,7 @@ sub Configure {
         ValueRegex  => qr/.*/smx,
     );
     $Self->AddOption(
-        Name        => 'aschecker',
+        Name        => 'as-checker',
         Description => "Runs the script as Nagioschecker.",
         Required    => 0,
         HasValue    => 0,
@@ -57,14 +58,19 @@ sub PreRun {
 
     # read config file
     my %Config;
-    open( my $IN, '<', $Self->{ConfigFile} ) || die "ERROR: Can't open $Self->{ConfigFile}: $!\n";    ## no critic
-    my $Content = '';
-    while (<$IN>) {
-        $Content .= $_;
-    }
-    if ( !eval $Content ) {                                                                           ## no critic
-        $Self->PrintError("ERROR: Invalid config file $Self->{ConfigFile}: $@\n");
+    my $Content      = '';
+    my $ContentArray = $Kernel::OM->Get('Kernel::System::Main')->FileRead(
+        Location => $Self->{ConfigFile},
+        Result   => 'ARRAY',
+    );
 
+    for my $Line ( @{$ContentArray} ) {
+        $Content .= $Line;
+    }
+
+    if ( !eval $Content ) {    ## no critic
+
+        $Self->PrintError("ERROR: Invalid config file $Self->{ConfigFile}: $@\n");
         return;
     }
 
@@ -77,7 +83,7 @@ sub PreRun {
 sub Run {
     my ( $Self, %Param ) = @_;
 
-    $Self->Print("<yellow>Meaningful start message...</yellow>\n");
+    $Self->Print("<yellow>Starting ticket count check...</yellow>\n");
 
     # read configuration
     my %Config = %{ $Self->{Config} || {} };
@@ -91,7 +97,7 @@ sub Run {
     );
 
     # no checker mode
-    if ( !$Self->GetOption('aschecker') ) {
+    if ( !$Self->GetOption('as-checker') ) {
         $Self->Print("$TicketCount\n");
 
         $Self->ExitCodeOk();

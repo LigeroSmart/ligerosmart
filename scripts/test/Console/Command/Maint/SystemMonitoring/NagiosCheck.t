@@ -15,9 +15,9 @@ use vars (qw($Self));
 
 my $CommandObject = $Kernel::OM->Get('Kernel::System::Console::Command::Maint::SystemMonitoring::NagiosCheck');
 
-my $ConfigFile = $Kernel::OM->Get('Kernel::Config')->Get('Home') . '/Kernel/Config/NagiosCheck.pm.example';
+my $ConfigFile = $Kernel::OM->Get('Kernel::Config')->Get('Home') . '/scripts/test/sample/NagiosCheckTesting.pm';
 
-my $ExitCode = $CommandObject->Execute( '--config-file', $ConfigFile, '--aschecker', '--verbose', );
+my $ExitCode = $CommandObject->Execute( '--config-file', $ConfigFile, '--as-checker', '--verbose', );
 
 $Self->Is(
     $ExitCode,

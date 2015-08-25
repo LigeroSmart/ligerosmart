@@ -20,6 +20,7 @@
         <File Permission="644" Location="scripts/test/Console/Command/Maint/SystemMonitoring/NagiosCheck.t"/>
         <File Permission="644" Location="scripts/test/Console/Command/Maint/SystemMonitoring/NagiosCheckTicketCount.t"/>
         <File Permission="644" Location="scripts/test/SystemMonitoring.t"/>
+        <File Permission="644" Location="scripts/test/sample/NagiosCheckTesting.pm"/>
         <File Permission="644" Location="scripts/test/sample/SystemMonitoring1.box"/>
         <File Permission="644" Location="scripts/test/sample/SystemMonitoring2.box"/>
         <File Permission="644" Location="var/packagesetup/SystemMonitoring.pm"/>
