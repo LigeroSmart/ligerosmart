@@ -30,7 +30,9 @@ ITSM.Agent.ChangeManagement.Search = (function (TargetNS) {
     /**
      * @name AdditionalAttributeSelectionRebuild
      * @memberof ITSM.Agent.ChangeManagement.Search
+     * @author OTRS AG
      * @function
+     * @returns {Boolean} Returns true.
      * @description
             This function rebuilds the selection dropdown after choosing or deleting an additional selection.
      */
@@ -51,10 +53,13 @@ ITSM.Agent.ChangeManagement.Search = (function (TargetNS) {
     };
 
     /**
+     * @name SearchAttributeAdd
+     * @memberof ITSM.Agent.ChangeManagement.Search
+     * @author OTRS AG
      * @function
      * @param {String} of attribute to add.
-     * @return nothing
-     *      This function adds one attributes for search.
+     * @description
+            This function adds one attributes for the search.
      */
     TargetNS.SearchAttributeAdd = function (Attribute) {
         var $Label = $('#SearchAttributesHidden label#Label' + Attribute);
