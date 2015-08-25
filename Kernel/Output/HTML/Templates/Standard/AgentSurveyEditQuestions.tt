@@ -19,14 +19,14 @@
         <div class="Header">
         </div>
 
-[% RenderBlockStart("SurveyAddQuestion") %]
-
         <ul class="BreadCrumb">
             <li>[% Translate("You are here") | html %]:</li>
             <li>
                 [% Translate("Survey Questions") | html %]</a>
             </li>
         </ul>
+
+[% RenderBlockStart("SurveyAddQuestion") %]
 
         <div class="WidgetSimple SpacingTop SpacingBottomMedium">
             <div class="Header">
