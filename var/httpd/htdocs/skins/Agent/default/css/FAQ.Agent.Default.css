@@ -50,35 +50,6 @@ ul.FAQMiniList span {
     font-size: 10px;
 }
 
-
-/**
- * @subsection Category path
- */
-
-.FAQPathCategory {
-    margin-bottom: 13px !important;
-    height: auto;
-    min-height: 25px;
-    margin: 0 -1px;
-    background: #e5e6e6;
-    position: relative;
-    overflow: hidden;
-}
-
-.FAQPathCategory h3 {
-    font-size: 12px;
-    padding-left: 5px;
-    padding-top: 7px;
-}
-
-.FAQPathCategory h3 > a:last-of-type {
-    font-weight: bold;
-}
-
-.FAQPathCategory h3 > span:last-child {
-    display: none;
-}
-
 iframe.TextOption.FAQ {
     width: 900px;
     min-height: 600px;

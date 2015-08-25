@@ -105,14 +105,6 @@
             </Hash>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="FAQ::Explorer::Path::Separator" Required="1" Valid="1">
-        <Description Translatable="1">FAQ path separator.</Description>
-        <Group>FAQ</Group>
-        <SubGroup>Core::Explorer</SubGroup>
-        <Setting>
-            <String>»</String>
-        </Setting>
-    </ConfigItem>
     <ConfigItem Name="FAQ::Explorer::QuickSearch::Show" Required="1" Valid="1">
         <Description Translatable="1">Interfaces where the quick search should be shown.</Description>
         <Group>FAQ</Group>

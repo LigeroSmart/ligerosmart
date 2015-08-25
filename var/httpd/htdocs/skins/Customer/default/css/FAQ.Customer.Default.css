@@ -162,40 +162,135 @@ ul.FAQMiniList span {
 }
 
 /**
- * @subsection Category path
+ * @subsection  Bread crumb
  */
-.FAQPathCategory {
-    padding: 4px 8px 4px;
-    color: #6A6A6A;
-    background: #eeeeee;
-    border-color: #E9E9E9;
-    border-image: none;
-    border-style: solid;
-    border-width: 1px;
+
+.BreadCrumb {
+    list-style-type: none;
+    margin: 10px 0px 15px 0px;
+    padding: 10px;
+    background: #eee;
     position: relative;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    padding-left: 10px;
+    padding-right: 15px;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
-.FAQPathCategory.FAQZoom {
-    margin-right: 5px;
+.RTL .BreadCrumb {
+    padding-right: 10px;
+    padding-left: 15px;
 }
 
-.FAQPathCategory a {
+.BreadCrumb li {
+    display: inline-block;
+    margin: 0px 2px 0px 2px;
+    padding-left: 35px;
     color: #777;
+    position: relative;
 }
 
-.FAQPathCategory a:hover {
-    color: #444;
+.BreadCrumb li:first-child {
+    padding-left: 20px;
 }
 
-.FAQPathCategory h3 > a:last-of-type {
-    font-weight: bold;
-    color: #444;
+.RTL .BreadCrumb li {
+    padding-left: 0px;
+    padding-right: 35px;
 }
 
-.FAQPathCategory h3 > span:last-child {
+.BreadCrumb li:first-child:after,
+.BreadCrumb li:first-child:before {
     display: none;
+}
+
+.BreadCrumb a {
+    color: #000;
+    padding: 0px 2px;
+}
+
+.BreadCrumb a:hover {
+    border-bottom: 2px solid #FF9922;
+}
+
+.BreadCrumb:before,
+.BreadCrumb:after {
+    top: 50%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+    border-width: 17px;
+    margin-top: -17px;
+}
+
+.BreadCrumb:before {
+    left: 0px;
+    border-color: rgba(255, 255, 255, 0);
+    border-left-color: #fff;
+}
+
+.RTL .BreadCrumb:before {
+    border-right-color: #fff;
+    border-left-color: transparent;
+    left: auto;
+    right: 0px;
+}
+
+.BreadCrumb:after {
+    right: -15px;
+    border-color: rgba(238, 238, 238, 0);
+    border-left-color: #eee;
+    background: #fff;
+}
+
+.RTL .BreadCrumb:after {
+    left: -15px;
+    right: auto;
+    border-right-color: #eee;
+    border-left-color: transparent;
+}
+
+.BreadCrumb li:before,
+.BreadCrumb li:after {
+    top: 50%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+    border-width: 20px;
+    margin-top: -20px;
+}
+
+.BreadCrumb li:after {
+    left: 0px;
+    border-color: rgba(255, 255, 255, 0);
+    border-left-color: #fff;
+}
+
+.RTL .BreadCrumb li:after {
+    border-left-color: transparent;
+    border-right-color: #fff;
+    left: auto;
+    right: 0px;
+}
+
+.BreadCrumb li:before {
+    left: -5px;
+    border-color: rgba(238, 238, 238, 0);
+    border-left-color: #eee;
+    z-index: 99;
+}
+
+.RTL .BreadCrumb li:before {
+    left: auto;
+    right: -5px;
+    border-right-color: #eee;
+    border-left-color: transparent;
 }
 
 iframe.FAQField {

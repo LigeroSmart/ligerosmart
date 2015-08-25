@@ -13,16 +13,15 @@
             <h1>[% Translate("FAQ Explorer") | html %]</h1>
         </div>
 
-        <div class="FAQPathCategory">
-            <h3>
+        <ul class="BreadCrumb">
 [% RenderBlockStart("FAQPathCategoryElement") %]
+            <li>
                 <a href="[% Env("Baselink") %]Action=PublicFAQExplorer;CategoryID=[% Data.CategoryID | uri %]">
                     [% Data.Name | html %]
                 </a>
-                <span>[% Config("FAQ::Explorer::Path::Separator") %]</span>
+            <li>
 [% RenderBlockEnd("FAQPathCategoryElement") %]
-            </h3>
-        </div>
+        </ul>
         <div class="Clear"></div>
 
         <div class="LayoutFixedSidebar SidebarLast">
