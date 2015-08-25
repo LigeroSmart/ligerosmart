@@ -27,8 +27,11 @@
 %Config = (
    Search => {
 
+      # ticket id
+      TicketID => 1,
+
        # tickets created in the last 120 minutes
-       TicketCreateTimeNewerMinutes => 120,
+#       TicketCreateTimeNewerMinutes => 120,
 
        # ticket number as STRING or as ARRAYREF
 #        TicketNumber => '%123546%',
@@ -68,9 +71,9 @@
 # min_crit_treshold > Number of tickets -> ALARM
 # max_warn_treshold < Number of tickets -> ALARM
 
-   min_warn_treshold => 5,
+   min_warn_treshold => 0,
    max_warn_treshold => 10,
-   min_crit_treshold => 2,
+   min_crit_treshold => 0,
    max_crit_treshold => 20,
 
 # Information used by Nagios
