@@ -14,6 +14,7 @@ use warnings;
 use base qw(Kernel::System::Console::BaseCommand);
 
 our @ObjectDependencies = (
+    'Kernel::Config',
     'Kernel::System::CSV',
     'Kernel::System::DB',
     'Kernel::System::FAQ',
@@ -210,21 +211,31 @@ sub Run {
             }
         }
 
+        # get config object
+        my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+
+        # set content type
+        my $ContentType = 'text/plain';
+        if ( $ConfigObject->Get('Frontend::RichText') && $ConfigObject->Get('FAQ::Item::HTML') ) {
+            $ContentType = 'text/html';
+        }
+
         # add FAQ article
         my $FAQID = $FAQObject->FAQAdd(
-            Title      => $Title,
-            CategoryID => $CategoryID,
-            StateID    => $StateID,
-            LanguageID => $LanguageID{$Language},
-            Field1     => $Field1,
-            Field2     => $Field2,
-            Field3     => $Field3,
-            Field4     => $Field4,
-            Field5     => $Field5,
-            Field6     => $Field6,
-            Keywords   => $Keywords || '',
-            Approved   => 1,
-            UserID     => 1,
+            Title       => $Title,
+            CategoryID  => $CategoryID,
+            StateID     => $StateID,
+            LanguageID  => $LanguageID{$Language},
+            Field1      => $Field1,
+            Field2      => $Field2,
+            Field3      => $Field3,
+            Field4      => $Field4,
+            Field5      => $Field5,
+            Field6      => $Field6,
+            Keywords    => $Keywords || '',
+            Approved    => 1,
+            UserID      => 1,
+            ContentType => $ContentType,
         );
 
         # check success
