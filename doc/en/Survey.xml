@@ -131,6 +131,11 @@ shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
     <title>Configuration</title>
     <para>The package can be configured via the SysConfig in the Admin Interface. The following configuration options are available:</para>
     <section>
+        <title>Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend.</title>
+        <para>Group: Survey, Subgroup: Daemon::SchedulerCronTaskManager::Task.</para>
+        <para>Trigger sending delayed survey requests.</para>
+    </section>
+    <section>
         <title>Frontend::Module###AgentSurveyAdd.</title>
         <para>Group: Survey, Subgroup: Frontend::Agent::ModuleRegistration.</para>
         <para>Frontend module registration for survey add in the agent interface.</para>
