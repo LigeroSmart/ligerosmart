@@ -180,39 +180,29 @@ shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
     <title>Configuration</title>
     <para>The package can be configured via the SysConfig in the Admin Interface. The following configuration options are available:</para>
     <section>
-        <title>PostMaster::PreFilterModule###1-SystemMonitoring.</title>
-        <para>Group: SystemMonitoring, Subgroup: Core::PostMaster.</para>
-        <para>Basic mail interface to System Monitoring Suites. Use this block if the filter should run AFTER PostMasterFilter.</para>
-    </section>
-    <section>
-        <title>PostMaster::PreFilterModule###00-SystemMonitoring.</title>
-        <para>Group: SystemMonitoring, Subgroup: Core::PostMaster.</para>
-        <para>Basic mail interface to System Monitoring Suites. Use this block if the filter should run BEFORE PostMasterFilter.</para>
-    </section>
-    <section>
-        <title>SystemMonitoring::SetIncidentState.</title>
-        <para>Group: SystemMonitoring, Subgroup: Core::ConfigItem.</para>
-        <para>Set the incident state of a CI automatically when a system monitoring email arrives.</para>
-    </section>
-    <section>
-        <title>SystemMonitoring::LinkTicketWithCI.</title>
-        <para>Group: SystemMonitoring, Subgroup: Core::ConfigItem.</para>
-        <para>Link an already opened incident ticket with the affected CI. This is only possible when a subsequent system monitoring email arrives.</para>
-    </section>
-    <section>
         <title>Nagios::Acknowledge::FreeField::Host.</title>
         <para>Group: SystemMonitoring, Subgroup: Nagios::Acknowledge.</para>
-        <para>Name of TicketFreeField for Host.</para>
+        <para>Name of the Dynamic Field for Host.</para>
     </section>
     <section>
         <title>Nagios::Acknowledge::FreeField::Service.</title>
         <para>Group: SystemMonitoring, Subgroup: Nagios::Acknowledge.</para>
-        <para>Name of TicketFreeField for Service.</para>
+        <para>Name of the Dynamic Field for Service.</para>
     </section>
     <section>
-        <title>Nagios::Acknowledge::Type.</title>
+        <title>Nagios::Acknowledge::HTTP::Password.</title>
         <para>Group: SystemMonitoring, Subgroup: Nagios::Acknowledge.</para>
-        <para>Define Nagios acknowledge type.</para>
+        <para>The http acknowledge password.</para>
+    </section>
+    <section>
+        <title>Nagios::Acknowledge::HTTP::URL.</title>
+        <para>Group: SystemMonitoring, Subgroup: Nagios::Acknowledge.</para>
+        <para>The http acknowledge url.</para>
+    </section>
+    <section>
+        <title>Nagios::Acknowledge::HTTP::User.</title>
+        <para>Group: SystemMonitoring, Subgroup: Nagios::Acknowledge.</para>
+        <para>The http acknowledge user.</para>
     </section>
     <section>
         <title>Nagios::Acknowledge::NamedPipe::CMD.</title>
@@ -230,24 +220,34 @@ shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
         <para>Named pipe acknowledge format for service.</para>
     </section>
     <section>
+        <title>Nagios::Acknowledge::Type.</title>
+        <para>Group: SystemMonitoring, Subgroup: Nagios::Acknowledge.</para>
+        <para>Define Nagios acknowledge type.</para>
+    </section>
+    <section>
+        <title>PostMaster::PreFilterModule###00-SystemMonitoring.</title>
+        <para>Group: SystemMonitoring, Subgroup: Core::PostMaster.</para>
+        <para>Basic mail interface to System Monitoring Suites. Use this block if the filter should run BEFORE PostMasterFilter.</para>
+    </section>
+    <section>
+        <title>PostMaster::PreFilterModule###1-SystemMonitoring.</title>
+        <para>Group: SystemMonitoring, Subgroup: Core::PostMaster.</para>
+        <para>Basic mail interface to System Monitoring Suites. Use this block if the filter should run AFTER PostMasterFilter.</para>
+    </section>
+    <section>
+        <title>SystemMonitoring::LinkTicketWithCI.</title>
+        <para>Group: SystemMonitoring, Subgroup: Core::ConfigItem.</para>
+        <para>Link an already opened incident ticket with the affected CI. This is only possible when a subsequent system monitoring email arrives.</para>
+    </section>
+    <section>
+        <title>SystemMonitoring::SetIncidentState.</title>
+        <para>Group: SystemMonitoring, Subgroup: Core::ConfigItem.</para>
+        <para>Set the incident state of a CI automatically when a system monitoring email arrives.</para>
+    </section>
+    <section>
         <title>Ticket::EventModulePost###9-NagiosAcknowledge.</title>
         <para>Group: SystemMonitoring, Subgroup: Nagios::Acknowledge.</para>
         <para>Ticket event module to send an acknowlage to Nagios.</para>
-    </section>
-    <section>
-        <title>Nagios::Acknowledge::HTTP::URL.</title>
-        <para>Group: SystemMonitoring, Subgroup: Nagios::Acknowledge.</para>
-        <para>The http acknowledge url.</para>
-    </section>
-    <section>
-        <title>Nagios::Acknowledge::HTTP::User.</title>
-        <para>Group: SystemMonitoring, Subgroup: Nagios::Acknowledge.</para>
-        <para>The http acknowledge user.</para>
-    </section>
-    <section>
-        <title>Nagios::Acknowledge::HTTP::Password.</title>
-        <para>Group: SystemMonitoring, Subgroup: Nagios::Acknowledge.</para>
-        <para>The http acknowledge password.</para>
     </section>
 </chapter>
 
