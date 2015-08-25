@@ -307,7 +307,7 @@ shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
             command on the command line:
         </para>
         <screen>
-shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test SystemMonitoring
+shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test SystemMonitoring:NagiosCheck:NagiosCheckTicketCount
         </screen>
         <para>Run all available unit tests</para>
         <para>
