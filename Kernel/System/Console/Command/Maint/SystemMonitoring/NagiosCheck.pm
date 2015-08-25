@@ -53,38 +53,22 @@ sub PreRun {
     $Self->{ConfigFile} = $Self->GetOption('config-file') || '';
 
     if ( !$Self->{ConfigFile} ) {
-        $Self->PrintError("ERROR: Need --config-file CONFIGFILE\n");
+        die "ERROR: Need --config-file CONFIGFILE\n";
 
-        return;
     }
     elsif ( !-e $Self->{ConfigFile} ) {
-        $Self->PrintError("ERROR: No such file $Self->{ConfigFile}\n");
-
-        return;
+        die "ERROR: No such file $Self->{ConfigFile}\n";
     }
 
-    # read config file
-    my %Config;
-    my $Content      = '';
-    my $ContentArray = $Kernel::OM->Get('Kernel::System::Main')->FileRead(
-        Location => $Self->{ConfigFile},
-        Result   => 'ARRAY',
-    );
-
-    for my $Line ( @{$ContentArray} ) {
-        $Content .= $Line;
-    }
-
-    if ( !eval $Content ) {    ## no critic
-
-        $Self->PrintError("ERROR: Invalid config file $Self->{ConfigFile}: $@\n");
-        return;
+    my %Config = do $Self->{ConfigFile};
+    if ( !%Config ) {
+        die "ERROR: Invalid config file $Self->{ConfigFile}: $@\n";
     }
 
     # store config for use it later
     $Self->{Config} = \%Config;
 
-    return;
+    return 1;
 }
 
 sub Run {
