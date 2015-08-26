@@ -70,22 +70,20 @@ $Selenium->RunTest(
         my $FAQComment  = 'Selenium Comment';
 
         # create test FAQ
-        $Selenium->find_element( "#Title",                        'css' )->send_keys($FAQTitle);
-        $Selenium->find_element( "#Keywords",                     'css' )->send_keys('Selenium');
-        $Selenium->find_element( "#CategoryID option[value='1']", 'css' )->click();
-        $Selenium->find_element( "#StateID option[value='2']",    'css' )->click();
-        $Selenium->find_element( "#ValidID option[value='1']",    'css' )->click();
-        $Selenium->find_element( "#LanguageID option[value='1']", 'css' )->click();
-        $Selenium->find_element( "#Field1",                       'css' )->send_keys($FAQSymptom);
-        $Selenium->find_element( "#Field2",                       'css' )->send_keys($FAQProblem);
-        $Selenium->find_element( "#Field3",                       'css' )->send_keys($FAQSolution);
-        $Selenium->find_element( "#Field6",                       'css' )->send_keys($FAQComment);
-        $Selenium->find_element( "#FAQSubmit",                    'css' )->click();
+        $Selenium->find_element( "#Title",    'css' )->send_keys($FAQTitle);
+        $Selenium->find_element( "#Keywords", 'css' )->send_keys('Selenium');
+        $Selenium->execute_script("\$('#CategoryID').val('1').trigger('redraw.InputField').trigger('change');");
+        $Selenium->execute_script("\$('#StateID').val('2').trigger('redraw.InputField').trigger('change');");
+        $Selenium->execute_script("\$('#ValidID').val('1').trigger('redraw.InputField').trigger('change');");
+        $Selenium->execute_script("\$('#LanguageID').val('1').trigger('redraw.InputField').trigger('change');");
+        $Selenium->find_element( "#Field1",    'css' )->send_keys($FAQSymptom);
+        $Selenium->find_element( "#Field2",    'css' )->send_keys($FAQProblem);
+        $Selenium->find_element( "#Field3",    'css' )->send_keys($FAQSolution);
+        $Selenium->find_element( "#Field6",    'css' )->send_keys($FAQComment);
+        $Selenium->find_element( "#FAQSubmit", 'css' )->click();
 
         # wait for submit action if necessary
-        $Selenium->WaitFor( JavaScript => "return \$('div.FAQPathCategory').length" );
-
-        my $Handles = $Selenium->get_window_handles();
+        $Selenium->WaitFor( JavaScript => "return \$('ul.BreadCrumb').length" );
 
         # verify test FAQ is created
         $Self->True(
@@ -93,39 +91,11 @@ $Selenium->RunTest(
             "$FAQTitle - found",
         );
 
-        my @Tests = (
-            {
-                Iframe  => 'IframeFAQField1',
-                FAQData => $FAQSymptom,
-            },
-            {
-                Iframe  => 'IframeFAQField2',
-                FAQData => $FAQProblem,
-            },
-            {
-                Iframe  => 'IframeFAQField3',
-                FAQData => $FAQSolution,
-            },
-            {
-                Iframe  => 'IframeFAQField6',
-                FAQData => $FAQComment,
-            },
-
-        );
-
-        for my $Test (@Tests) {
-
-            # switch to FAQ symptom iframe and verify its values
-            $Selenium->switch_to_frame( $Test->{Iframe} );
-
-            # wait to switch on iframe
-            sleep 2;
-
+        for my $Test ( $FAQSymptom, $FAQProblem, $FAQSolution, $FAQComment ) {
             $Self->True(
-                index( $Selenium->get_page_source(), $Test->{FAQData} ) > -1,
-                "$Test->{FAQData} - found",
+                index( $Selenium->get_page_source(), $Test ) > -1,
+                "$Test - found",
             );
-            $Selenium->switch_to_window( $Handles->[0] );
         }
 
         # get DB object

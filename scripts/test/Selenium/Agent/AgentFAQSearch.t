@@ -113,13 +113,17 @@ $Selenium->RunTest(
         }
 
         # add search filter by title and run it
-        $Selenium->find_element( "#Attribute option[value='Title']",         'css' )->click();
-        $Selenium->find_element( ".AddButton",                               'css' )->click();
-        $Selenium->find_element( "Title",                                    'name' )->send_keys('FAQ*');
-        $Selenium->find_element( "#Attribute option[value='CategoryIDs']",   'css' )->click();
-        $Selenium->find_element( ".AddButton",                               'css' )->click();
-        $Selenium->find_element( "#CategoryIDs option[value='$CategoryID']", 'css' )->click();
-        $Selenium->find_element( "#SearchFormSubmit",                        'css' )->click();
+        $Selenium->execute_script("\$('#Attribute').val('Title').trigger('redraw.InputField').trigger('change');");
+        $Selenium->find_element( ".AddButton", 'css' )->click();
+        $Selenium->find_element( "Title",      'name' )->send_keys('FAQ*');
+        $Selenium->execute_script(
+            "\$('#Attribute').val('CategoryIDs').trigger('redraw.InputField').trigger('change');"
+        );
+        $Selenium->find_element( ".AddButton", 'css' )->click();
+        $Selenium->execute_script(
+            "\$('#CategoryIDs').val('$CategoryID').trigger('redraw.InputField').trigger('change');"
+        );
+        $Selenium->find_element( "#SearchFormSubmit", 'css' )->click();
 
         # wait until form has loaded, if necessary
         $Selenium->WaitFor( JavaScript => "return \$('#OverviewBody').length" );

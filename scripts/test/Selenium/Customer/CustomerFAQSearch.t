@@ -138,10 +138,12 @@ $Selenium->RunTest(
         # check 'Change search options' screen
         $Selenium->find_element("//a[contains(\@href, \'Action=CustomerFAQSearch;Subaction=LoadProfile' )]")->click();
 
-        $Selenium->find_element( "#Title",                                   'css' )->clear();
-        $Selenium->find_element( "#Title",                                   'css' )->send_keys('FAQChangeSearch*');
-        $Selenium->find_element( "#CategoryIDs option[value='$CategoryID']", 'css' )->click();
-        $Selenium->find_element( "#Submit",                                  'css' )->click();
+        $Selenium->find_element( "#Title", 'css' )->clear();
+        $Selenium->find_element( "#Title", 'css' )->send_keys('FAQChangeSearch*');
+        $Selenium->execute_script(
+            "\$('#CategoryIDs').val('$CategoryID').trigger('redraw.InputField').trigger('change');"
+        );
+        $Selenium->find_element( "#Submit", 'css' )->click();
 
         # wait until form has loaded, if necessary
         $Selenium->WaitFor( JavaScript => "return \$('.Overview').length" );

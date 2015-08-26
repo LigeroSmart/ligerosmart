@@ -72,8 +72,6 @@ $Selenium->RunTest(
             "FAQ data is found on screen - FAQ Information",
         );
 
-        my $Handles = $Selenium->get_window_handles();
-
         # verify test FAQ is created
         $Self->True(
             index( $Selenium->get_page_source(), $FAQTitle ) > -1,
@@ -94,6 +92,8 @@ $Selenium->RunTest(
                 FAQData => $FAQSolution,
             },
         );
+
+        my $Handles = $Selenium->get_window_handles();
 
         # check test created FAQ values
         for my $Test (@Tests) {

@@ -59,10 +59,10 @@ $Selenium->RunTest(
 
         # create test category
         my $CategoryName = 'Category ' . $Helper->GetRandomID();
-        $Selenium->find_element( "#Name",                               'css' )->send_keys($CategoryName);
-        $Selenium->find_element( "#PermissionGroups option[value='4']", 'css' )->click();
-        $Selenium->find_element( "#ValidID option[value='1']",          'css' )->click();
-        $Selenium->find_element( "#Comment",                            'css' )->send_keys('Selenium Category');
+        $Selenium->find_element( "#Name", 'css' )->send_keys($CategoryName);
+        $Selenium->execute_script("\$('#PermissionGroups').val('4').trigger('redraw.InputField').trigger('change');");
+        $Selenium->execute_script("\$('#ValidID').val('1').trigger('redraw.InputField').trigger('change');");
+        $Selenium->find_element( "#Comment", 'css' )->send_keys('Selenium Category');
         $Selenium->find_element("//button[\@value='Submit'][\@type='submit']")->click();
 
         # verify test category is created

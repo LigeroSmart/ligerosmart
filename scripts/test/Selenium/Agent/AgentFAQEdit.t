@@ -105,23 +105,25 @@ $Selenium->RunTest(
 
         # verify stored values
         for my $Stored ( sort keys %{ $Test{Stored} } ) {
-            $Self->Is(
-                $Selenium->find_element( '#' . $Stored, 'css' )->get_value(),
-                "$Test{Stored}->{$Stored}",
-                "#$Stored stored value",
-            );
+            if ( $Stored ne 'ContentType' ) {
+                $Self->Is(
+                    $Selenium->find_element( '#' . $Stored, 'css' )->get_value(),
+                    "$Test{Stored}->{$Stored}",
+                    "#$Stored stored value",
+                );
+            }
         }
 
         # edit test FAQ
-        $Selenium->find_element( "#Title",                        'css' )->send_keys(' Edit');
-        $Selenium->find_element( "#StateID option[value='2']",    'css' )->click();
-        $Selenium->find_element( "#LanguageID option[value='2']", 'css' )->click();
-        $Selenium->find_element( "#Keywords",                     'css' )->send_keys(' Edit');
-        $Selenium->find_element( "#Field1",                       'css' )->send_keys(' Edit');
-        $Selenium->find_element( "#Field2",                       'css' )->send_keys(' Edit');
-        $Selenium->find_element( "#Field3",                       'css' )->send_keys(' Edit');
-        $Selenium->find_element( "#Field6",                       'css' )->send_keys(' Edit');
-        $Selenium->find_element( "#ValidID option[value='2']",    'css' )->click();
+        $Selenium->find_element( "#Title", 'css' )->send_keys(' Edit');
+        $Selenium->execute_script("\$('#StateID').val('2').trigger('redraw.InputField').trigger('change');");
+        $Selenium->execute_script("\$('#LanguageID').val('2').trigger('redraw.InputField').trigger('change');");
+        $Selenium->find_element( "#Keywords", 'css' )->send_keys(' Edit');
+        $Selenium->find_element( "#Field1",   'css' )->send_keys(' Edit');
+        $Selenium->find_element( "#Field2",   'css' )->send_keys(' Edit');
+        $Selenium->find_element( "#Field3",   'css' )->send_keys(' Edit');
+        $Selenium->find_element( "#Field6",   'css' )->send_keys(' Edit');
+        $Selenium->execute_script("\$('#ValidID').val('2').trigger('redraw.InputField').trigger('change');");
 
         # submit and switch back window
         $Selenium->find_element( "#FAQSubmit", 'css' )->click();
@@ -136,11 +138,13 @@ $Selenium->RunTest(
 
         # verify edited values
         for my $Edited ( sort keys %{ $Test{Edited} } ) {
-            $Self->Is(
-                $Selenium->find_element( '#' . $Edited, 'css' )->get_value(),
-                "$Test{Edited}->{$Edited}",
-                "#$Edited stored value",
-            );
+            if ( $Edited ne 'ContentType' ) {
+                $Self->Is(
+                    $Selenium->find_element( '#' . $Edited, 'css' )->get_value(),
+                    "$Test{Edited}->{$Edited}",
+                    "#$Edited stored value",
+                );
+            }
         }
 
         # delete test created FAQ

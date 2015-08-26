@@ -83,8 +83,6 @@ $Selenium->RunTest(
             );
         }
 
-        my $Handles = $Selenium->get_window_handles();
-
         # verify test FAQ is created
         $Self->True(
             index( $Selenium->get_page_source(), $FAQTitle ) > -1,
@@ -110,6 +108,8 @@ $Selenium->RunTest(
             },
 
         );
+
+        my $Handles = $Selenium->get_window_handles();
 
         for my $Test (@Tests) {
 
