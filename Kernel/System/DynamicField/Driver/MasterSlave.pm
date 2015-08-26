@@ -294,7 +294,7 @@ sub _HandleLinks {
         if (
             $OldValue
             && $OldValue =~ /^SlaveOf:(.*?)$/
-            && !$$MasterSlaveKeepParentChildAfterUnset
+            && !$MasterSlaveKeepParentChildAfterUnset
             )
         {
             my $SourceKey = $TicketObject->TicketIDLookup(
