@@ -208,7 +208,8 @@
             </div>
             <div class="Content">
                 <ul>
-                    <li>[% Translate("Required fields are marked with a \"*\".") | html %]</li>
+                    <li class="Reference">[% Translate("Required fields are marked with a \"*\".") | html %]</li>
+                    <li class="Reference">[% Translate("Time Periods can not be deleted") | html %]</li>
                 </ul>
             </div>
         </div>
