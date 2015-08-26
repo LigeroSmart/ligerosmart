@@ -72,54 +72,12 @@ sub Run {
     # get master/slave dynamic field
     my $MasterSlaveDynamicField = $ConfigObject->Get('MasterSlave::DynamicField');
 
-    # get link object
-    my $LinkObject = $Kernel::OM->Get('Kernel::System::LinkObject');
-
-    # link master/slave tickets
-    if ( $Param{Event} eq 'TicketDynamicFieldUpdate_' . $MasterSlaveDynamicField ) {
-
-        # TODO: This seams to be redundant
-        # if (
-        #     $Ticket{ 'DynamicField_' . $MasterSlaveDynamicField } &&
-        #     $Ticket{ 'DynamicField_' . $MasterSlaveDynamicField } =~ /^SlaveOf:(.*?)$/
-        #     )
-        # {
-
-        #     # lookup to find ticket id
-        #     my $SourceKey = $TicketObject->TicketIDLookup(
-        #         TicketNumber => $1,
-        #         UserID       => $Param{UserID},
-        #     );
-
-        #     # create link
-        #     $LinkObject->LinkAdd(
-        #         SourceObject => 'Ticket',
-        #         SourceKey    => $SourceKey,
-        #         TargetObject => 'Ticket',
-        #         TargetKey    => $Param{Data}->{TicketID},
-        #         Type         => 'ParentChild',
-        #         State        => 'Valid',
-        #         UserID       => $Param{UserID},
-        #     );
-
-        #     # update dynamic field value for ticket
-        #     # get dynamic field config
-        #     my $DynamicField = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldGet(
-        #         Name => $MasterSlaveDynamicField,
-        #     );
-        #     $Kernel::OM->Get('Kernel::System::DynamicField::Backend')->ValueSet(
-        #         DynamicFieldConfig => $DynamicField,
-        #         ObjectID           => $Param{Data}->{TicketID},
-        #         Value              => $Ticket{ 'DynamicField_' . $MasterSlaveDynamicField },
-        #         UserID             => $Param{UserID},
-        #     );
-        # }
-        return 1;
-    }
-
     # check if it's a master/slave ticket
     return 1 if !$Ticket{ 'DynamicField_' . $MasterSlaveDynamicField };
     return 1 if $Ticket{ 'DynamicField_' . $MasterSlaveDynamicField } !~ /^(master|yes)$/i;
+
+    # get link object
+    my $LinkObject = $Kernel::OM->Get('Kernel::System::LinkObject');
 
     # find slaves
     my %Links = $LinkObject->LinkKeyList(
