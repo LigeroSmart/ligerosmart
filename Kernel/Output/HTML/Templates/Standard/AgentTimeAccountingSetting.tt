@@ -207,10 +207,12 @@
                 <h2>[% Translate("Reference") | html %]</h2>
             </div>
             <div class="Content">
-                <ul>
-                    <li class="Reference">[% Translate("Required fields are marked with a \"*\".") | html %]</li>
-                    <li class="Reference">[% Translate("Time Periods can not be deleted") | html %]</li>
-                </ul>
+                <p class="FieldExplanation">
+                    [% Translate("Required fields are marked with a \"*\".") | html %]
+                </p>
+                <p class="FieldExplanation">
+                    [% Translate("Time periods can not be deleted.") | html %]
+                </p>
             </div>
         </div>
 [% RenderBlockEnd("Reference") %]

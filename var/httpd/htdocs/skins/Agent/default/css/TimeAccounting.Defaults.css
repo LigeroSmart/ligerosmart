@@ -60,11 +60,4 @@ div.MonthSelection {
     width: 300px;
 }
 
-/**
- * @subsection  User settings reference
- */
-li.Reference{
-    margin-bottom: 10px;
-}
-
 } /* end @media */
