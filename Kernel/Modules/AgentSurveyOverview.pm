@@ -124,7 +124,7 @@ sub Run {
 
     # show config item list
     $Output .= $LayoutObject->SurveyListShow(
-        SurveyIDs   => [@SurveyIDs],
+        SurveyIDs   => \@SurveyIDs,
         Total       => scalar @SurveyIDs,
         View        => $View,
         FilterLink  => $LinkFilter,
