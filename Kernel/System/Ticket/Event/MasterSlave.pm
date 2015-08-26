@@ -356,7 +356,7 @@ sub Run {
         # perform action on linked tickets
         TICKETID:
         for my $TicketID (@TicketIDs) {
-            my $CheckSuccess = Self->_LoopCheck(
+            my $CheckSuccess = $Self->_LoopCheck(
                 TicketID => $TicketID,
                 UserID   => $Param{UserID},
                 String   => 'MasterTicketAction: TicketPendingTimeUpdate',
