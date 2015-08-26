@@ -86,8 +86,8 @@
                 </tr>
 [% RenderBlockEnd("NoDataFoundMsg") %]
 [% RenderBlockStart("Record") %]
-                <tr title="[% Data.TicketNumber | html %]">
-                    <td class="FAQNumber"><a href="[% Env("Baselink") %]Action=CustomerFAQZoom;ItemID=[% Data.FAQID | uri %]">[% Data.Number | html %]</a></td>
+                <tr class="MasterAction" title="[% Data.TicketNumber | html %]">
+                    <td class="FAQNumber"><a href="[% Env("Baselink") %]Action=CustomerFAQZoom;ItemID=[% Data.FAQID | uri %]" class="MasterActionLink">[% Data.Number | html %]</a></td>
                     <td class="Title" title="[% Data.Ttitle %]">[% Data.CleanTitle| html %]</td>
                     <td class="Category">[% Data.CategoryName | truncate(60) | html %]</td>
 [% RenderBlockStart("RecordLanguage") %]
@@ -120,7 +120,14 @@
 </div>
 
 [% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">
-    Core.Customer.ClickableRow();
-</script>
+<script type="text/javascript">//<![CDATA[
+    $('.MasterAction').bind('click', function (Event) {
+        var $MasterActionLink = $(this).find('.MasterActionLink');
+        // only act if the link was not clicked directly
+        if (Event.target !== $MasterActionLink.get(0)) {
+            window.location = $MasterActionLink.attr('href');
+            return false;
+        }
+    });
+//]]></script>
 [% END %]
