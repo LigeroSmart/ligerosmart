@@ -65,10 +65,10 @@ $Selenium->RunTest(
 
         # create test survey
         my $SurveyTitle = 'Survey ' . $Helper->GetRandomID();
-        $Selenium->find_element( "#Title",                    'css' )->send_keys($SurveyTitle);
-        $Selenium->find_element( "#Introduction",             'css' )->send_keys('Selenium Introduction');
-        $Selenium->find_element( "#Queues option[value='1']", 'css' )->click();
-        $Selenium->find_element( "#Description",              'css' )->send_keys('Selenium Description');
+        $Selenium->find_element( "#Title",        'css' )->send_keys($SurveyTitle);
+        $Selenium->find_element( "#Introduction", 'css' )->send_keys('Selenium Introduction');
+        $Selenium->execute_script("\$('#Queue_Search').val('2||Raw').trigger('redraw.InputField').trigger('change');");
+        $Selenium->find_element( "#Description", 'css' )->send_keys('Selenium Description');
         $Selenium->find_element("//button[\@value='Create'][\@type='submit']")->click();
 
         # check for test created survey values
