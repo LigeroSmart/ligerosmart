@@ -305,34 +305,40 @@ sub _MigrateConfigs {
     my $SysConfigObject = $Kernel::OM->Get('Kernel::System::SysConfig');
     my $ConfigObject    = $Kernel::OM->Get('Kernel::Config');
 
-    # migrate time accounting notification sysconfig
-    # get setting content for time accounting sysconfig
+    # migrate time accounting notification SysConfig
+    # get setting content for time accounting SysConfig
     my $Setting = $ConfigObject->Get('Frontend::Agent::ModuleNotify');
 
-    # update module location
-    $Setting->{'TimeAccounting'}->{Module} = "Kernel::Output::HTML::Notification::TimeAccounting";
+    if ( $Setting->{'TimeAccounting'}->{Module} ) {
 
-    # set new setting
-    my $Success = $SysConfigObject->ConfigItemUpdate(
-        Valid => 1,
-        Key   => 'Frontend::NotifyModule###888-TimeAccounting',
-        Value => $Setting->{'TimeAccounting'},
-    );
+        # update module location
+        $Setting->{'TimeAccounting'}->{Module} = "Kernel::Output::HTML::Notification::TimeAccounting";
 
-    # migrate time accounting tool bar sysconfig
-    # get setting content for time accounting sysconfig
+        # set new setting
+        my $Success = $SysConfigObject->ConfigItemUpdate(
+            Valid => 1,
+            Key   => 'Frontend::NotifyModule###888-TimeAccounting',
+            Value => $Setting->{'TimeAccounting'},
+        );
+    }
+
+    # migrate time accounting tool bar SysConfig
+    # get setting content for time accounting SysConfig
     $Setting = $ConfigObject->Get('Frontend::ToolBarModule');
 
-    # update module location
-    $Setting->{'201-TimeAccounting::IncompleteWorkingDays'}->{Module}
-        = "Kernel::Output::HTML::ToolBar::IncompleteWorkingDays";
+    if ( $Setting->{'201-TimeAccounting::IncompleteWorkingDays'}->{Module} ) {
 
-    # set new setting
-    $Success = $SysConfigObject->ConfigItemUpdate(
-        Valid => 1,
-        Key   => 'Frontend::ToolBarModule###201-TimeAccounting::IncompleteWorkingDays',
-        Value => $Setting->{'201-TimeAccounting::IncompleteWorkingDays'},
-    );
+        # update module location
+        $Setting->{'201-TimeAccounting::IncompleteWorkingDays'}->{Module}
+            = "Kernel::Output::HTML::ToolBar::IncompleteWorkingDays";
+
+        # set new setting
+        my $Success = $SysConfigObject->ConfigItemUpdate(
+            Valid => 1,
+            Key   => 'Frontend::ToolBarModule###201-TimeAccounting::IncompleteWorkingDays',
+            Value => $Setting->{'201-TimeAccounting::IncompleteWorkingDays'},
+        );
+    }
 
     return 1;
 }
