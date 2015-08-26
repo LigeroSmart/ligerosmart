@@ -102,7 +102,8 @@ $Selenium->RunTest(
             # add question
             $Selenium->find_element( "#Question", 'css' )->send_keys( $Questions->{Name} );
             $Selenium->execute_script(
-                "\$('#Type').val('$Questions->{Type}').trigger('redraw.InputField').trigger('change');");
+                "\$('#Type').val('$Questions->{Type}').trigger('redraw.InputField').trigger('change');"
+            );
             $Selenium->find_element("//button[\@value='Add'][\@type='submit']")->click();
 
             # add answers for radio and checkbox questions
