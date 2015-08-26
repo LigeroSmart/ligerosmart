@@ -926,6 +926,7 @@ sub _MigrateConfigs {
         next CONFIGITEM if !$Setting;
 
         my $ConfigItem = $Config->{ConfigItem};
+        next CONFIGITEM if !$Setting->{$ConfigItem}->{'Module'};
 
         # set module
         $Setting->{$ConfigItem}->{'Module'} = $Config->{Module};
