@@ -355,6 +355,8 @@ sub _MigrateConfigs {
 
         # update module location
         my $Module = $Setting->{$MenuModule}->{'Module'};
+        next CONFIGITEM if !$Module;
+
         if ( $Module !~ m{Kernel::Output::HTML::SurveyMenu(\w+)} ) {
             next CONFIGITEM;
         }
@@ -369,33 +371,39 @@ sub _MigrateConfigs {
         );
     }
 
-    # migrate survey overview small sysconfig
-    # get setting content for survey sysconfig
+    # migrate survey overview small SysConfig
+    # get setting content for survey SysConfig
     $Setting = $ConfigObject->Get('Survey::Frontend::Overview');
 
-    # update module location
-    $Setting->{'Small'}->{Module} = "Kernel::Output::HTML::SurveyOverview::Small";
+    if ( $Setting->{'Small'}->{Module} ) {
 
-    # set new setting
-    my $Success = $SysConfigObject->ConfigItemUpdate(
-        Valid => 1,
-        Key   => 'Survey::Frontend::Overview###Small',
-        Value => $Setting->{'Small'},
-    );
+        # update module location
+        $Setting->{'Small'}->{Module} = "Kernel::Output::HTML::SurveyOverview::Small";
 
-    # migrate survey preference sysconfig
-    # get setting content for survey sysconfig
+        # set new setting
+        my $Success = $SysConfigObject->ConfigItemUpdate(
+            Valid => 1,
+            Key   => 'Survey::Frontend::Overview###Small',
+            Value => $Setting->{'Small'},
+        );
+    }
+
+    # migrate survey preference SysConfig
+    # get setting content for survey SysConfig
     $Setting = $ConfigObject->Get('PreferencesGroups');
 
-    # update module location
-    $Setting->{'SurveyOverviewSmallPageShown'}->{Module} = "Kernel::Output::HTML::Preferences::Generic";
+    if ( $Setting->{'SurveyOverviewSmallPageShown'}->{Module} ) {
 
-    # set new setting
-    $Success = $SysConfigObject->ConfigItemUpdate(
-        Valid => 1,
-        Key   => 'PreferencesGroups###SurveyOverviewSmallPageShown',
-        Value => $Setting->{'SurveyOverviewSmallPageShown'},
-    );
+        # update module location
+        $Setting->{'SurveyOverviewSmallPageShown'}->{Module} = "Kernel::Output::HTML::Preferences::Generic";
+
+        # set new setting
+        my $Success = $SysConfigObject->ConfigItemUpdate(
+            Valid => 1,
+            Key   => 'PreferencesGroups###SurveyOverviewSmallPageShown',
+            Value => $Setting->{'SurveyOverviewSmallPageShown'},
+        );
+    }
 
     return 1;
 }
