@@ -107,6 +107,11 @@ tr.MasterAction td.RowSpan {
     vertical-align: top;
 }
 
+td.RowSpan{
+    border-bottom: 1px dotted #ccc;
+    background-color: white !important;
+}
+
 .DataTable a.DatepickerIcon i {
     color: #000;
     margin-left: 2px;
