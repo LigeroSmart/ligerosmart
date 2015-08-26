@@ -204,7 +204,7 @@ sub _SetDynamicFields {
     # get config object
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
-    # get dynamic field names from sysconfig
+    # get dynamic field names from SysConfig
     my $MasterSlaveDynamicField = $ConfigObject->Get('MasterSlave::DynamicField') || 'MasterSlave';
 
     # set attributes of new dynamic fields
@@ -347,7 +347,7 @@ sub _MigrateOTRSMasterSlave {
     # get config object
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
-    # get dynamic field names from sysconfig
+    # get dynamic field names from SysConfig
     my $MasterSlaveDynamicField = $ConfigObject->Get('MasterSlave::DynamicField')
         || 'MasterSlave';
 
@@ -389,7 +389,7 @@ sub _MigrateOTRSMasterSlave {
     # get dynamic field object
     my $DynamicFieldObject = $Kernel::OM->Get('Kernel::System::DynamicField');
 
-    # try to get the dynamic field  data (for fieldorder etc.)
+    # try to get the dynamic field  data (for field order etc.)
     my $OldDynamicField = $DynamicFieldObject->DynamicFieldGet(
         ID => $OldMasterSlaveDynamicFieldID,
     );
@@ -400,19 +400,19 @@ sub _MigrateOTRSMasterSlave {
     # and return the result of this function
     return 0 if !$DynamicFieldObject->DynamicFieldUpdate(
         %{$OldDynamicField},
-        Name      => $MasterSlaveDynamicField,
-        Label     => 'Master Ticket',
-        FieldType => 'Dropdown',
-        Config    => {
-            DefaultValue   => '',
-            PossibleValues => {
-                Master => 'New Master Ticket',
-            },
+        Name       => $MasterSlaveDynamicField,
+        Label      => 'Master Ticket',
+        FieldType  => 'MasterSlave',
+        ObjectType => 'Ticket',
+        Config     => {
+            DefaultValue       => '',
+            PossibleNone       => 1,
             TranslatableValues => 1,
         },
-        ValidID => 1,
-        Reorder => 0,
-        UserID  => 1,
+        InternalField => 1,
+        ValidID       => 1,
+        Reorder       => 0,
+        UserID        => 1,
     );
 
     # update InternalField value manually since API does not support internal_field update
@@ -483,8 +483,11 @@ sub _MigrateMasterSlaveData {
 
     # get all the slave ticket ids we have to update
     $DBObject->Prepare(
-        SQL =>
-            "SELECT dfv.object_id FROM dynamic_field_value dfv WHERE dfv.value_text = 'Slave' AND dfv.field_id = ?",
+        SQL => "
+            SELECT dfv.object_id
+            FROM dynamic_field_value dfv
+            WHERE dfv.value_text = 'Slave'
+                AND dfv.field_id = ?",
         Bind  => [ \$Param{DynamicFieldID} ],
         Limit => 50,
     );
@@ -516,7 +519,7 @@ sub _MigrateMasterSlaveData {
         );
 
         # check what tickets might be the master
-        my @ParentTicketIDs = keys %{ $LinkListWithData->{Ticket}{ParentChild}{Source} };
+        my @ParentTicketIDs = keys %{ $LinkListWithData->{Ticket}->{ParentChild}->{Source} };
 
         my $TicketNumber;
 
@@ -525,9 +528,12 @@ sub _MigrateMasterSlaveData {
         if ($#ParentTicketIDs) {
 
             $DBObject->Prepare(
-                SQL =>
-                    "SELECT dfv.object_id FROM dynamic_field_value dfv WHERE dfv.value_text = 'Master' AND dfv.field_id = ?"
-                    . 'AND dfv.object_id IN ('
+                SQL => "
+                    SELECT dfv.object_id
+                    FROM dynamic_field_value dfv
+                    WHERE dfv.value_text = 'Master'
+                        AND dfv.field_id = ?
+                        AND dfv.object_id IN ("
                     . join( ',', map { $DBObject->Quote($_) } @ParentTicketIDs )
                     . ')',
                 Bind  => [ \$Param{DynamicFieldID} ],
@@ -606,7 +612,7 @@ sub _RemoveDynamicFields {
     # get config object
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
-    # get dynamic field names from sysconfig
+    # get dynamic field names from SysConfig
     my $MasterSlaveDynamicField = $ConfigObject->Get('MasterSlave::DynamicField') || 'MasterSlave';
 
     # check if dynamic field already exists
@@ -666,7 +672,7 @@ sub _RemoveDynamicFields {
 sub _SetDashboardConfig {
     my ( $Self, %Param ) = @_;
 
-    # get dynamic field names from sysconfig
+    # get dynamic field names from SysConfig
     my $MasterSlaveDynamicField = $Kernel::OM->Get('Kernel::Config')->Get('MasterSlave::DynamicField') || 'MasterSlave';
 
     # if MasterSlave dynamic field is 'MasterSlave' the config is already set, nothing else to do
@@ -700,7 +706,7 @@ sub _SetDashboardConfig {
         Attributes  => 'DynamicField_' . $MasterSlaveDynamicField . '_Like=Slave*;',
     );
 
-    # get sysconfig object
+    # get SysConfig object
     my $SysConfigObject = $Kernel::OM->Get('Kernel::System::SysConfig');
 
     # write configurations
