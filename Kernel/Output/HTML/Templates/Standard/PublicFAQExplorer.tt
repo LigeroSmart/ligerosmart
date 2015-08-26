@@ -65,7 +65,7 @@
                     <div class="Header">
                         <h3>[% Translate(Data.Header) | html %]</h3>
 [% RenderBlockStart("InfoBoxFAQMiniListNewsRSS") %]
-                        <a href="[% Env("Baselink") %]Action=PublicFAQRSS;Type=[% Data.Type | uri %]" title="[% Translate(Data.Title) | html %]" class="RSSIcon AsBlock"><i class="fa fa-rss"></i></a>
+                        <a target="_blank" href="[% Env("Baselink") %]Action=PublicFAQRSS;Type=[% Data.Type | uri %]" title="[% Translate(Data.Title) | html %]" class="RSSIcon AsBlock"><i class="fa fa-rss"></i></a>
 [% RenderBlockEnd("InfoBoxFAQMiniListNewsRSS") %]
                         <div class="Clear"></div>
                     </div>
