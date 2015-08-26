@@ -63,7 +63,7 @@
                         <input type="hidden" name="Group" value="[% Data.Group | html %]"/>
                         <input type="hidden" name="RedirectURL" value="[% Data.RequestedURL | html %]"/>
                         <fieldset class="TableLike">
-                            <label for="[% Data.PreferencesKey | html %]">[% Translate("Max. shown Surveys per page") | html %]:</label>
+                            <label for="[% Data.PreferencesKey | html %]">[% Translate("Max. shown surveys per page") | html %]:</label>
                             <div class="Field">
                                 [% Data.PageShownString %]
                             </div>
