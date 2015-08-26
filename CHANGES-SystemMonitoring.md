@@ -1,4 +1,4 @@
-# 5.0.0.beta1 - 2015-??-??
+#5.0.0.beta1 - 2015-??-??
  - 2015-08-24 Moved bin scripts to console commands.
 
 #4.0.1 - 2014-2014-11-25
