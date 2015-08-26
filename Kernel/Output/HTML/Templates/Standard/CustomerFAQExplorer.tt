@@ -21,6 +21,9 @@
                 </a>
             </li>
 [% RenderBlockEnd("FAQPathCategoryElement") %]
+[% RenderBlockStart("FAQPathCategoryElementNoLink") %]
+            <li>[% Data.Name | html %]</li>
+[% RenderBlockEnd("FAQPathCategoryElementNoLink") %]
         </ul>
         <div class="Clear"></div>
 

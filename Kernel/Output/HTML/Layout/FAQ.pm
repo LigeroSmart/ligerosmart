@@ -599,9 +599,14 @@ sub FAQPathShow {
     # get config object
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
+    my $Block = 'FAQPathCategoryElement';
+    if ( $Param{CategoryID} eq '0' ) {
+        $Block = 'FAQPathCategoryElementNoLink';
+    }
+
     # output category root
     $Self->Block(
-        Name => 'FAQPathCategoryElement',
+        Name => $Block,
         Data => {
             Name       => $ConfigObject->Get('FAQ::Default::RootCategoryName'),
             CategoryID => 0,
@@ -626,8 +631,14 @@ sub FAQPathShow {
 
     # output subcategories
     for my $CategoryData ( @{$CategoryList} ) {
+
+        my $Block = 'FAQPathCategoryElement';
+        if ( $CategoryData->{CategoryID} == $CategoryList->[-1]->{CategoryID} ) {
+            $Block = 'FAQPathCategoryElementNoLink';
+        }
+
         $Self->Block(
-            Name => 'FAQPathCategoryElement',
+            Name => $Block,
             Data => {
                 Nav => $Param{Nav},
                 %{$CategoryData},
