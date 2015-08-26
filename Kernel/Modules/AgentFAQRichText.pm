@@ -102,9 +102,6 @@ sub Run {
         $FormID = $UploadCacheObject->FormIDCreate();
     }
 
-    # get log object
-    my $LogObject = $Kernel::OM->Get('Kernel::System::Log');
-
     FIELD:
     for my $Field ( 1 .. 6 ) {
 
@@ -146,7 +143,7 @@ sub Run {
             my ($FileID) = $URL =~ m{ FileID=([0-9]+) }msx;
 
             if ( $ConfigObject->{Debug} > 0 ) {
-                $LogObject->Log(
+                $Kernel::OM->Get('Kernel::System::Log')->Log(
                     Priority => 'debug',
                     Message  => "FileID: $FileID",
                 );
@@ -201,7 +198,7 @@ sub Run {
                 );
             }
             else {
-                $LogObject->Log(
+                $Kernel::OM->Get('Kernel::System::Log')->Log(
                     Priority => 'error',
                     Message  => 'Couldn\'t get FAQ attachment '
                         . "(ItemID: $GetParam{ItemID}, FileID: $FileID)!",
@@ -223,7 +220,7 @@ sub Run {
             }
 
             if ( $ContentIDNew eq '' ) {
-                $LogObject->Log(
+                $Kernel::OM->Get('Kernel::System::Log')->Log(
                     Priority => 'error',
                     Message  => "Couldn't determine a new ContentID!",
                 );
@@ -286,7 +283,7 @@ sub Run {
             );
         }
         else {
-            $LogObject->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => 'Couldn\'t get FAQ attachment '
                     . "(ItemID: $GetParam{ItemID}, FileID: $AttachmentData->{FileID})!",

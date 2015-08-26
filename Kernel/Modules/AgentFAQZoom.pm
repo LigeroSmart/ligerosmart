@@ -99,8 +99,7 @@ sub Run {
         );
     }
 
-    # get needed objects
-    my $LogObject       = $Kernel::OM->Get('Kernel::System::Log');
+    # get HTML utils object
     my $HTMLUtilsObject = $Kernel::OM->Get('Kernel::System::HTMLUtils');
 
     # ---------------------------------------------------------- #
@@ -114,7 +113,7 @@ sub Run {
         # needed params
         for my $Needed (qw( ItemID Field )) {
             if ( !$Needed ) {
-                $LogObject->Log(
+                $Kernel::OM->Get('Kernel::System::Log')->Log(
                     Message  => "Needed Param: $Needed!",
                     Priority => 'error',
                 );
@@ -203,7 +202,7 @@ sub Run {
             return $LayoutObject->Attachment(%File);
         }
         else {
-            $LogObject->Log(
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Message  => "No such attachment ($GetParam{FileID})! May be an attack!!!",
                 Priority => 'error',
             );
