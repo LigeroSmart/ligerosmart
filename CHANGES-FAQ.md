@@ -1,4 +1,7 @@
-#5.0.0.beta1 - 2015-??-??
+#5.0.0.beta2 2015-??-??
+
+#5.0.0.beta1 2015-09-01
+ - 2015-08-26 Initial version for OTRS 5
  - 2015-08-25 Fixed bug#[11445](http://bugs.otrs.org/show_bug.cgi?id=11445) - Search results in Public and Customer interface can be sorted only by FAQID.
  - 2015-08-24 Fixed bug#[10719](http://bugs.otrs.org/show_bug.cgi?id=10719) - FAQ without RichTextEditor don't take paragraphes.
  - 2015-07-28 Updated look and feel of select controls.
