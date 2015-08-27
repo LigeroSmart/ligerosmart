@@ -1,4 +1,7 @@
-#5.0.0.beta1 - 2015-??-??
+#5.0.0.beta2 2015-??-??
+
+#5.0.0.beta1 2015-09-01
+ - 2015-08-26 Initial version for OTRS 5
  - 2015-08-03 Added breadcrumbs to question and answer edit screens.
  - 2015-08-03 Updated look and feel of select controls.
 
