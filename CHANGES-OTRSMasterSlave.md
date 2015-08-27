@@ -1,4 +1,4 @@
-#4.0.2 2015-??-??
+#5.0.0.beta1 2015-??-??
 - 2015-04-29 Fixed POD for Kernel::System::MasterSlave::new()
 
 #4.0.1 2014-11-25
