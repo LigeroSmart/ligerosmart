@@ -146,7 +146,7 @@
         <section>
             <title>Bulk Action</title>
             <para>
-                If Advanced mode is enabled, bulk action screen enables the "Master Ticket"" field
+                If Advanced mode is enabled, bulk action screen enables the "Master Ticket field
                 to allow the change of the MasterSlave status.
             </para>
         </section>
@@ -154,7 +154,7 @@
     <section>
         <title>Replace customer's from Master ticket</title>
         <para>
-            when a new article is created on the Master ticket, the Slave tickets replicates the
+            When a new article is created on the Master ticket, the Slave tickets replicates the
             article using the customer from the Master and not the own from the Slave.
         </para>
         <para>
