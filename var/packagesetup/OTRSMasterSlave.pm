@@ -78,6 +78,13 @@ sub new {
         }
     }
 
+    # always discard the config object before package code is executed,
+    # to make sure that the config object will be created newly, so that it
+    # will use the recently written new config from the package
+    $Kernel::OM->ObjectsDiscard(
+        Objects => ['Kernel::Config'],
+    );
+
     # get dynamic fields list
     $Self->{DynamicFieldsList} = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldListGet(
         Valid      => 0,
@@ -667,6 +674,11 @@ sub _RemoveDynamicFields {
             );
         }
     }
+
+    # discard config object and dynamic field backend to prevent error messages due missing driver
+    $Kernel::OM->ObjectsDiscard(
+        Objects => [ 'Kernel::Config', 'Kernel::System::DynamicField::Backend' ],
+    );
 
     # disable dynamic field for ticket zoom
     # get old configuration
