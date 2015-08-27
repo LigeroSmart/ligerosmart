@@ -1,4 +1,7 @@
-#5.0.0.beta1 - 2015-??-??
+#5.0.0.beta2 2015-??-??
+
+#5.0.0.beta1 2015-09-01
+ - 2015-08-26 Initial version for OTRS 5
  - 2015-08-24 Moved bin scripts to console commands.
 
 #4.0.1 - 2014-2014-11-25
