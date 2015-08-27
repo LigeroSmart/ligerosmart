@@ -675,6 +675,23 @@ sub _RemoveDynamicFields {
         }
     }
 
+    # disable SysConfig settings
+    $Kernel::OM->Get('Kernel::System::SysConfig')->ConfigItemUpdate(
+        Valid => 0,
+        Key   => 'DynamicFields::Driver###MasterSlave',
+        Value => {
+            DisplayName  => 'Master / Slave',
+            Module       => 'Kernel::System::DynamicField::Driver::MasterSlave',
+            ConfigDialog => 'AdminDynamicFieldMasterSlave',
+            DisabledAdd  => 1,
+        },
+    );
+    $Kernel::OM->Get('Kernel::System::SysConfig')->ConfigItemUpdate(
+        Valid => 0,
+        Key   => 'PreApplicationModule###AgentPreMasterSlave',
+        Value => 'Kernel::Modules::AgentPreMasterSlave',
+    );
+
     # discard config object and dynamic field backend to prevent error messages due missing driver
     $Kernel::OM->ObjectsDiscard(
         Objects => [ 'Kernel::Config', 'Kernel::System::DynamicField::Backend' ],
