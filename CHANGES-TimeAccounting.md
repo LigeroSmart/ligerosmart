@@ -1,4 +1,7 @@
-#5.0.0.beta1 - 2015-??-??
+#5.0.0.beta2 2015-??-??
+
+#5.0.0.beta1 2015-09-01
+ - 2015-08-26 Initial version for OTRS 5
  - 2015-08-12 Improved usability of absence controls, thanks to S7.
  - 2015-08-07 Improved visualization of invalid elements, thanks to S7.
  - 2015-08-07 Updated look and feel of select controls, thanks to S7.
