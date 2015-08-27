@@ -260,7 +260,9 @@ sub Run {
 # ---
 # MasterSlave
 # ---
-        $Config->{DynamicField}->{$MasterSlaveDynamicField} = 1;
+        if ($MasterSlaveAdvancedEnabled) {
+            $Config->{DynamicField}->{$MasterSlaveDynamicField} = 1;
+        }
 #---
     }
 
