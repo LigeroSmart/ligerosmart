@@ -182,6 +182,23 @@ sub CodeUpgrade125 {
     return 1;
 }
 
+=item CodeUpgradeFromLowerThan_4_0_91()
+
+This function is only executed if the installed module version is smaller than 4.0.91.
+
+my $Result = $CodeObject->CodeUpgradeFromLowerThan_4_0_91();
+
+=cut
+
+sub CodeUpgradeFromLowerThan_4_0_91 {    ## no critic
+    my ( $Self, %Param ) = @_;
+
+    # change configurations to match the new module location.
+    $Self->_MigrateConfigs();
+
+    return 1;
+}
+
 =item CodeUninstall()
 
 run the code uninstall part
@@ -561,8 +578,8 @@ sub _MigrateMasterSlaveData {
             );
         }
         else {
-            $TicketNumber = $LinkListWithData->{Ticket}{ParentChild}{Source}{ $ParentTicketIDs[0] }
-                {TicketNumber};
+            $TicketNumber
+                = $LinkListWithData->{Ticket}->{ParentChild}->{Source}->{ $ParentTicketIDs[0] }->{TicketNumber};
         }
 
         # update the dynamic field value to valid
@@ -730,6 +747,50 @@ sub _SetDashboardConfig {
     return 1;
 }
 
+sub _MigrateConfigs {
+
+    # create needed objects
+    my $SysConfigObject = $Kernel::OM->Get('Kernel::System::SysConfig');
+    my $ConfigObject    = $Kernel::OM->Get('Kernel::Config');
+
+    # migrate master slave ticket menu SysConfig
+    # get setting content for master slave SysConfig
+    my $Setting = $ConfigObject->Get('Ticket::Frontend::MenuModule');
+
+    if ( $Setting->{'480-MasterSlave'}->{Module} ) {
+
+        # update module location
+        $Setting->{'480-MasterSlave'}->{Module} = "Kernel::Output::HTML::TicketMenu::Generic";
+
+        # set new setting
+        my $Success = $SysConfigObject->ConfigItemUpdate(
+            Valid => 1,
+            Key   => 'Ticket::Frontend::MenuModule###480-MasterSlave',
+            Value => $Setting->{'480-MasterSlave'},
+        );
+    }
+
+    # migrate master slave dashboard SysConfig
+    # get setting content for master slave SysConfig
+    $Setting = $ConfigObject->Get('DashboardBackend');
+
+    BACKEND:
+    for my $Backend (qw(0900-TicketMaster 0910-TicketSlave)) {
+        next BACKEND if !$Setting->{$Backend}->{Module};
+
+        # update module location
+        $Setting->{$Backend}->{Module} = "Kernel::Output::HTML::Dashboard::TicketGeneric";
+
+        # set new setting
+        my $Success = $SysConfigObject->ConfigItemUpdate(
+            Valid => 1,
+            Key   => "DashboardBackend###$Backend",
+            Value => $Setting->{$Backend},
+        );
+    }
+
+    return 1;
+}
 1;
 
 =back
