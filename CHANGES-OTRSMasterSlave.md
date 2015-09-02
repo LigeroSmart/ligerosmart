@@ -1,4 +1,5 @@
 #5.0.0.beta2 2015-??-??
+ - 2015-09-01 Activated settings to keep parent-child links when Master/Slave status is unset or changed, thanks to S7.
 
 #5.0.0.beta1 2015-09-01
  - 2015-08-26 Initial version for OTRS 5

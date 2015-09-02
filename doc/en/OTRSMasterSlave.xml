@@ -126,7 +126,7 @@
         </itemizedlist>
         <note>
             <para>
-                Above features can be enabled or disabled on sysconfig, for more information take a look in the
+                Above features can be enabled or disabled on SysConfig, for more information take a look in the
                 "Configuration" chapter.
             </para>
         </note>
@@ -285,6 +285,16 @@ shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
         <title>MasterSlave::ForwardSlaves.</title>
         <para>Group: MasterSlave, Subgroup: Core::MasterSlave.</para>
         <para>Enable the feature to forward articles from type 'forward' of a master ticket to the customers of the slave tickets. By default (disabled) it will not forward articles from type 'forward' to the slave tickets.</para>
+    </section>
+    <section>
+        <title>MasterSlave::KeepParentChildAfterUnset.</title>
+        <para>Group: MasterSlave, Subgroup: Core::MasterSlave.</para>
+        <para>Enable the feature to keep parent-child link after unset of the MasterSlave state in the advanced MasterSlave mode.</para>
+    </section>
+    <section>
+        <title>MasterSlave::KeepParentChildAfterUpdate.</title>
+        <para>Group: MasterSlave, Subgroup: Core::MasterSlave.</para>
+        <para>Enable the feature to keep parent-child link after change of the MasterSlave state in the advanced MasterSlave mode.</para>
     </section>
     <section>
         <title>MasterSlave::UnsetMasterSlave.</title>
