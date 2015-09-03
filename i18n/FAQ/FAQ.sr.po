@@ -5,9 +5,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-07-10 17:18+0000\n"
-"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
-"Language-Team: Serbian (http://www.transifex.com/p/OTRS/language/sr/)\n"
+"PO-Revision-Date: 2015-09-01 16:46+0000\n"
+"Last-Translator: Милорад Јовановић <j.milorad@gmail.com>\n"
+"Language-Team: Serbian (http://www.transifex.com/otrs/OTRS/language/sr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -524,7 +524,7 @@ msgstr "Само ЧПП чланци креирани између"
 
 #. Template: CustomerFAQSearch
 msgid "Search-Profile as Template?"
-msgstr ""
+msgstr "Профил претраге као шаблон?"
 
 #. Template: CustomerFAQZoom
 msgid "Article Number"
@@ -606,87 +606,87 @@ msgstr "Одређује да ли наслов ЧПП треба да буде 
 
 #. SysConfig
 msgid "Defines an overview module to show the small view of a FAQ journal."
-msgstr ""
+msgstr "Дефинише модул прегледа за мали приказ ЧПП дневника. "
 
 #. SysConfig
 msgid "Defines an overview module to show the small view of a FAQ list."
-msgstr ""
+msgstr "Дефинише модул прегледа за мали приказ ЧПП листе. "
 
 #. SysConfig
 msgid ""
 "Defines the default FAQ attribute for FAQ sorting in a FAQ search of the "
 "agent interface."
-msgstr ""
+msgstr "Дефинише подразумевани атрибут за сортирање ЧПП у претрази ЧПП  у интерфејсу  оператера."
 
 #. SysConfig
 msgid ""
 "Defines the default FAQ attribute for FAQ sorting in a FAQ search of the "
 "customer interface."
-msgstr ""
+msgstr "Дефинише подразумевани атрибут за сортирање ЧПП у претрази ЧПП  у интерфејсу  корисника."
 
 #. SysConfig
 msgid ""
 "Defines the default FAQ attribute for FAQ sorting in a FAQ search of the "
 "public interface."
-msgstr ""
+msgstr "Дефинише подразумевани атрибут за сортирање ЧПП у претрази ЧПП  у јавном интерфејсу."
 
 #. SysConfig
 msgid ""
 "Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the"
 " agent interface."
-msgstr ""
+msgstr "Дефинише подразумевани атрибут за сортирање ЧПП у ЧПП истраживачу у интерфејсу оператера."
 
 #. SysConfig
 msgid ""
 "Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the"
 " customer interface."
-msgstr ""
+msgstr "Дефинише подразумевани атрибут за сортирање ЧПП у ЧПП истраживачу у интерфејсу корисника."
 
 #. SysConfig
 msgid ""
 "Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the"
 " public interface."
-msgstr ""
+msgstr "Дефинише подразумевани атрибут за сортирање ЧПП у ЧПП истраживачу у јавном интерфејсу."
 
 #. SysConfig
 msgid ""
 "Defines the default FAQ order in the FAQ Explorer result of the agent "
 "interface. Up: oldest on top. Down: latest on top."
-msgstr ""
+msgstr "Дефинише подразумевани редослед ЧПП у резултатима ЧПП истраживача  у интерфејсу опрератера. Горе: Најстарији на врху. Доле: Најновије на врху."
 
 #. SysConfig
 msgid ""
 "Defines the default FAQ order in the FAQ Explorer result of the customer "
 "interface. Up: oldest on top. Down: latest on top."
-msgstr ""
+msgstr "Дефинише подразумевани редослед ЧПП у резултатима ЧПП истраживача у интерфејсу корисника. Горе: Најстарији на врху. Доле: Најновије на врху."
 
 #. SysConfig
 msgid ""
 "Defines the default FAQ order in the FAQ Explorer result of the public "
 "interface. Up: oldest on top. Down: latest on top."
-msgstr ""
+msgstr "Дефинише подразумевани редослед ЧПП у резултатима ЧПП истраживача у јавном интерфејсу. Горе: Најстарији на врху. Доле: Најновије на врху."
 
 #. SysConfig
 msgid ""
 "Defines the default FAQ order of a search result in the agent interface. Up:"
 " oldest on top. Down: latest on top."
-msgstr ""
+msgstr "Дефинише подразумевани редослед ЧПП у резултатима претраге у интерфејсу опрератера. Горе: Најстарији на врху. Доле: Најновије на врху."
 
 #. SysConfig
 msgid ""
 "Defines the default FAQ order of a search result in the customer interface. "
 "Up: oldest on top. Down: latest on top."
-msgstr ""
+msgstr "Дефинише подразумевани редослед ЧПП у резултатима претраге у интерфејсу корисника. Горе: Најстарији на врху. Доле: Најновије на врху."
 
 #. SysConfig
 msgid ""
 "Defines the default FAQ order of a search result in the public interface. "
 "Up: oldest on top. Down: latest on top."
-msgstr ""
+msgstr "Дефинише подразумевани редослед ЧПП у резултатима претраге у јавном интерфејсу. Горе: Најстарији на врху. Доле: Најновије на врху."
 
 #. SysConfig
 msgid "Defines the default shown FAQ search attribute for FAQ search screen."
-msgstr ""
+msgstr "Дефинише подразумевани приказани ЧПП атрибут претраге за ЧПП прозор за претрагу. "
 
 #. SysConfig
 msgid ""
@@ -707,23 +707,23 @@ msgstr ""
 msgid ""
 "Defines the shown columns in the FAQ Explorer. This option has no effect on "
 "the position of the column."
-msgstr ""
+msgstr "Дефинише приказане колоне у ЧПП истраживачу. Ова опције нема утицај на позиције колона."
 
 #. SysConfig
 msgid ""
 "Defines the shown columns in the FAQ journal. This option has no effect on "
 "the position of the column."
-msgstr ""
+msgstr "Дефинише приказане колоне у ЧПП дневнику. Ова опције нема утицај на позиције колона."
 
 #. SysConfig
 msgid ""
 "Defines the shown columns in the FAQ search. This option has no effect on "
 "the position of the column."
-msgstr ""
+msgstr "Дефинише приказане колоне у ЧПП претрази. Ова опције нема утицај на позиције колона."
 
 #. SysConfig
 msgid "Defines where the 'Insert FAQ' link will be displayed."
-msgstr ""
+msgstr "Дефинише где ће „убаци ЧПП” веза бити приказана."
 
 #. SysConfig
 msgid "Definition of FAQ item free text field."
@@ -737,88 +737,88 @@ msgstr "Обриши ово ЧПП"
 msgid ""
 "Dynamic fields shown in the FAQ add screen of the agent interface. Possible "
 "settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
-msgstr ""
+msgstr "Динамичка поља приказана на екрану додавања ЧПП у интерфејсу оператера. Могућа подешавања: 0 = Онемогућено, 1 = Омогућено, 2 = Омогућено и неопходно."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ edit screen of the agent interface. Possible"
 " settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
-msgstr ""
+msgstr "Динамичка поља приказана на екрану измене ЧПП у интерфејсу оператера. Могућа подешавања: 0 = Онемогућено, 1 = Омогућено, 2 = Омогућено и неопходно."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ overview screen of the customer interface. "
 "Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
-msgstr ""
+msgstr "Динамичка поља приказана на екрану прегледа ЧПП у интерфејсу корисника. Могућа подешавања: 0 = Онемогућено, 1 = Омогућено, 2 = Омогућено и неопходно."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ overview screen of the public interface. "
 "Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
-msgstr ""
+msgstr "Динамичка поља приказана на екрану прегледа ЧПП у јавном интерфејсу. Могућа подешавања: 0 = Онемогућено, 1 = Омогућено, 2 = Омогућено и неопходно."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ print screen of the agent interface. "
 "Possible settings: 0 = Disabled, 1 = Enabled."
-msgstr ""
+msgstr "Динамичка поља приказана на екрану за штампу ЧПП у интерфејсу оператера. Могућа подешавања: 0 = Онемогућено, 1 = Омогућено."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ print screen of the customer interface. "
 "Possible settings: 0 = Disabled, 1 = Enabled."
-msgstr ""
+msgstr "Динамичка поља приказана на екрану за штампу ЧПП у интерфејсу корисника. Могућа подешавања: 0 = Онемогућено, 1 = Омогућено."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ print screen of the public interface. "
 "Possible settings: 0 = Disabled, 1 = Enabled."
-msgstr ""
+msgstr "Динамичка поља приказана на екрану за штампу ЧПП у јавном интерфејсу. Могућа подешавања: 0 = Онемогућено, 1 = Омогућено."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ search screen of the agent interface. "
 "Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and shown by "
 "default."
-msgstr ""
+msgstr "Динамичка поља приказана на екрану претраге ЧПП у интерфејсу оператера. Могућа подешавања: 0 = Онемогућено, 1 = Омогућено, 2 = Омогућено и подразумевано се приказује."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ search screen of the customer interface. "
 "Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and shown by "
 "default."
-msgstr ""
+msgstr "Динамичка поља приказана на екрану претраге ЧПП у интерфејсу корисника. Могућа подешавања: 0 = Онемогућено, 1 = Омогућено, 2 = Омогућено и подразумевано се приказује."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ search screen of the public interface. "
 "Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and shown by "
 "default."
-msgstr ""
+msgstr "Динамичка поља приказана на екрану претраге ЧПП у јавном интерфејсу. Могућа подешавања: 0 = Онемогућено, 1 = Омогућено, 2 = Омогућено и подразумевано се приказује."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ small format overview screen of the agent "
 "interface. Possible settings: 0 = Disabled, 1 = Enabled."
-msgstr ""
+msgstr "Динамичка поља приказана на екрану прегледа ЧПП малог формата у интерфејсу оператера. Могућа подешавања: 0 = Онемогућено, 1 = Омогућено."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ zoom screen of the agent interface. Possible"
 " settings: 0 = Disabled, 1 = Enabled."
-msgstr ""
+msgstr "Динамичка поља приказана на екрану детаљног прегледа ЧПП у интерфејсу оператера. Могућа подешавања: 0 = Онемогућено, 1 = Омогућено."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ zoom screen of the customer interface. "
 "Possible settings: 0 = Disabled, 1 = Enabled."
-msgstr ""
+msgstr "Динамичка поља приказана на екрану детаљног прегледа ЧПП у интерфејсу корисника. Могућа подешавања: 0 = Онемогућено, 1 = Омогућено."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ zoom screen of the public interface. "
 "Possible settings: 0 = Disabled, 1 = Enabled."
-msgstr ""
+msgstr "Динамичка поља приказана на екрану детаљног прегледа ЧПП у јавном интерфејсу. Могућа подешавања: 0 = Онемогућено, 1 = Омогућено."
 
 #. SysConfig
 msgid "Edit this FAQ"
@@ -862,15 +862,15 @@ msgstr ""
 
 #. SysConfig
 msgid "FAQ-Area"
-msgstr ""
+msgstr "ЧПП простор"
 
 #. SysConfig
 msgid "Field4"
-msgstr ""
+msgstr "Поље4"
 
 #. SysConfig
 msgid "Field5"
-msgstr ""
+msgstr "Поље5"
 
 #. SysConfig
 msgid "Frontend module registration for the public interface."
@@ -924,19 +924,19 @@ msgstr "Листа типова статуса који се могу корис
 msgid ""
 "Maximum number of FAQ articles to be displayed in the FAQ Explorer result of"
 " the agent interface."
-msgstr ""
+msgstr "Максимални број ЧПП чланака који ће бити приказани у резултату ЧПП истраживача у интерфејсу оператера."
 
 #. SysConfig
 msgid ""
 "Maximum number of FAQ articles to be displayed in the FAQ Explorer result of"
 " the customer interface."
-msgstr ""
+msgstr "Максимални број ЧПП чланака који ће бити приказани у резултату ЧПП истраживача у интерфејсу корисника."
 
 #. SysConfig
 msgid ""
 "Maximum number of FAQ articles to be displayed in the FAQ Explorer result of"
 " the public interface."
-msgstr ""
+msgstr "Максимални број ЧПП чланака који ће бити приказани у резултату ЧПП истраживача у јавном интерфејсу."
 
 #. SysConfig
 msgid ""
@@ -948,19 +948,19 @@ msgstr ""
 msgid ""
 "Maximum number of FAQ articles to be displayed in the result of a search in "
 "the agent interface."
-msgstr ""
+msgstr "Максимални број ЧПП чланака који ће бити приказани у резултату претраге у интерфејсу оператера."
 
 #. SysConfig
 msgid ""
 "Maximum number of FAQ articles to be displayed in the result of a search in "
 "the customer interface."
-msgstr ""
+msgstr "Максимални број ЧПП чланака који ће бити приказани у резултату претраге у интерфејсу корисника."
 
 #. SysConfig
 msgid ""
 "Maximum number of FAQ articles to be displayed in the result of a search in "
 "the public interface."
-msgstr ""
+msgstr "Максимални број ЧПП чланака који ће бити приказани у резултату претраге у јавном интерфејсу."
 
 #. SysConfig
 msgid ""
@@ -1132,7 +1132,7 @@ msgstr ""
 
 #. SysConfig
 msgid "Show FAQ Article with HTML."
-msgstr ""
+msgstr "Приказ ЧПП чланци као „HTML”."
 
 #. SysConfig
 msgid "Show FAQ path yes/no."
@@ -1162,37 +1162,37 @@ msgstr "Прикажи гласање у дефинисаним интерфеј
 msgid ""
 "Shows a link in the menu that allows linking a FAQ with another object in "
 "the zoom view of such FAQ of the agent interface."
-msgstr ""
+msgstr "У менију приказује везу која омогићава повезивање ЧПП са другим објектом у детаљном приказу тог ЧПП у оператерском интерфејсу."
 
 #. SysConfig
 msgid ""
 "Shows a link in the menu that allows to delete a FAQ in its zoom view in the"
 " agent interface."
-msgstr ""
+msgstr "У менију приказује везу која омогићава брисање ЧПП у детаљном приказу оператерског интерфејса."
 
 #. SysConfig
 msgid ""
 "Shows a link in the menu to access the history of a FAQ in its zoom view of "
 "the agent interface."
-msgstr ""
+msgstr "У менију приказује везу за приступ историјату ЧПП у детаљном приказу оператерског интерфејса."
 
 #. SysConfig
 msgid ""
 "Shows a link in the menu to edit a FAQ in the its zoom view of the agent "
 "interface."
-msgstr ""
+msgstr "У менију приказује везу за измену ЧПП у детаљном приказу оператерског интерфејса."
 
 #. SysConfig
 msgid ""
 "Shows a link in the menu to go back in the FAQ zoom view of the agent "
 "interface."
-msgstr ""
+msgstr "У менију приказује везу за повратак у детаљни приказ ЧПП у оператерском интерфејсу."
 
 #. SysConfig
 msgid ""
 "Shows a link in the menu to print a FAQ in the its zoom view of the agent "
 "interface."
-msgstr ""
+msgstr "У менију приказује везу за штампање ЧПП у детаљном приказу оператерског интерфејса."
 
 #. SysConfig
 msgid "The identifier for a FAQ, e.g. FAQ#, KB#, MyFAQ#. The default is FAQ#."
@@ -1224,8 +1224,8 @@ msgstr ""
 
 #. SysConfig
 msgid "Ticket body for approval of FAQ article."
-msgstr ""
+msgstr "Садржај тикета за одобравање ЧПП чланака."
 
 #. SysConfig
 msgid "Ticket subject for approval of FAQ article."
-msgstr ""
+msgstr "Предмет тикета за одобравање ЧПП чланака."

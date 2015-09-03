@@ -50,7 +50,7 @@ sub Data {
     $Self->{Translation}->{'The name is required!'} = 'El nombre es imprescindible.';
     $Self->{Translation}->{'This language already exists!'} = 'Este idioma ya existe.';
     $Self->{Translation}->{'Symptom'} = 'Síntoma';
-    $Self->{Translation}->{'Solution'} = 'Solución';
+    $Self->{Translation}->{'Solution'} = 'Solución ';
 
     # Template: AgentFAQAdd
     $Self->{Translation}->{'Add FAQ Article'} = 'Añadir artículo FAQ.';
@@ -123,10 +123,10 @@ sub Data {
     $Self->{Translation}->{'Rate (e. g. Equals 25% or GreaterThan 75%)'} = 'Califica (Ejm. Igual a 25% o mayor a 75%)';
     $Self->{Translation}->{'Approved'} = 'Aprobado';
     $Self->{Translation}->{'Last changed by'} = 'Ultimo cambio por';
-    $Self->{Translation}->{'FAQ Article Create Time (before/after)'} = 'Tiempo de Creación del Artículo FAQ (antes/después)';
-    $Self->{Translation}->{'FAQ Article Create Time (between)'} = 'Tiempo ';
-    $Self->{Translation}->{'FAQ Article Change Time (before/after)'} = 'Tiempo de Modificación del Artículo FAQ (antes/después)';
-    $Self->{Translation}->{'FAQ Article Change Time (between)'} = 'Tiempo de Modificación del Artículo FAQ (entre)';
+    $Self->{Translation}->{'FAQ Article Create Time (before/after)'} = 'Tiempo de Creación de Artículos FAQ (antes / después)';
+    $Self->{Translation}->{'FAQ Article Create Time (between)'} = 'Tiempo de Creación del Articulo FAQ (entre)';
+    $Self->{Translation}->{'FAQ Article Change Time (before/after)'} = 'Tiempo de Actualización del Articulo FAQ (antes/después)';
+    $Self->{Translation}->{'FAQ Article Change Time (between)'} = 'Tiempo de Actualización del Articulo FAQ (entre)';
 
     # Template: AgentFAQSearchOpenSearchDescriptionFulltext
     $Self->{Translation}->{'FAQFulltext'} = 'Texto completo FAQ';
@@ -136,16 +136,16 @@ sub Data {
     $Self->{Translation}->{'Profile Selection'} = 'Selección de perfil ';
     $Self->{Translation}->{'Vote'} = 'Voto';
     $Self->{Translation}->{'No vote settings'} = 'Sin configuración de votación';
-    $Self->{Translation}->{'Specific votes'} = 'Votos especóificos';
-    $Self->{Translation}->{'e. g. Equals 10 or GreaterThan 60'} = 'e.g. Igual a 10 o MayorQue 60';
+    $Self->{Translation}->{'Specific votes'} = 'Votos específicos';
+    $Self->{Translation}->{'e. g. Equals 10 or GreaterThan 60'} = 'Ej. Igual a 10 o mayor a 60';
     $Self->{Translation}->{'Rate'} = 'Valoración';
     $Self->{Translation}->{'No rate settings'} = 'Sin configuración de valoración';
     $Self->{Translation}->{'Specific rate'} = 'Valoración específica';
-    $Self->{Translation}->{'e. g. Equals 25% or GreaterThan 75%'} = 'e.g. Igual a 25% o Mayor Que 75%';
-    $Self->{Translation}->{'FAQ Article Create Time'} = 'Tiempo de creación del artículo FAQ';
+    $Self->{Translation}->{'e. g. Equals 25% or GreaterThan 75%'} = 'ejm: Igual a 25% o mayor que 75%';
+    $Self->{Translation}->{'FAQ Article Create Time'} = 'Tiempo de Creación del Artículo FAQ';
     $Self->{Translation}->{'Specific date'} = 'Fecha específica';
-    $Self->{Translation}->{'Date range'} = 'Rango de fechas';
-    $Self->{Translation}->{'FAQ Article Change Time'} = 'Tiempo de modificación del artículo FAQ';
+    $Self->{Translation}->{'Date range'} = 'Rango de fecha';
+    $Self->{Translation}->{'FAQ Article Change Time'} = 'Tiempo de Actualización del Artículo FAQ';
 
     # Template: AgentFAQZoom
     $Self->{Translation}->{'FAQ Information'} = 'Información FAQ';
@@ -162,24 +162,24 @@ sub Data {
     $Self->{Translation}->{'very helpful'} = 'muy útil';
 
     # Template: AgentFAQZoomSmall
-    $Self->{Translation}->{'Add FAQ title to article subject'} = 'Agregar el título del FAQ al asunto del artículo';
+    $Self->{Translation}->{'Add FAQ title to article subject'} = 'Agregar titulo de FAQ a asunto del artículo';
     $Self->{Translation}->{'Insert FAQ Text'} = 'Insertar Texto de la FAQ';
-    $Self->{Translation}->{'Insert Full FAQ'} = 'Insertar FAQ Completo';
+    $Self->{Translation}->{'Insert Full FAQ'} = 'Insertar FAQ completo';
     $Self->{Translation}->{'Insert FAQ Link'} = 'Insertar Enlace a la FAQ';
     $Self->{Translation}->{'Insert FAQ Text & Link'} = 'Insertar texto y Enlace a la FAQ';
-    $Self->{Translation}->{'Insert Full FAQ & Link'} = 'Insertar FAQ Completo & Enlace';
+    $Self->{Translation}->{'Insert Full FAQ & Link'} = 'Insertar FAQ completo y enlace';
 
     # Template: CustomerFAQExplorer
     $Self->{Translation}->{'No FAQ articles found.'} = 'No se encontraron artículos FAQ';
 
     # Template: CustomerFAQSearch
     $Self->{Translation}->{'Fulltext search in FAQ articles (e. g. "John*n" or "Will*")'} = 'Búsqueda de texto completo en artículos FAQ (ej: "John*n" o "Will*")';
-    $Self->{Translation}->{'Vote restrictions'} = 'Restricciones de votación';
-    $Self->{Translation}->{'Only FAQ articles with votes...'} = 'Únicamente artículos FAQ con votos...';
+    $Self->{Translation}->{'Vote restrictions'} = 'Restricciones de voto';
+    $Self->{Translation}->{'Only FAQ articles with votes...'} = 'Sólo artículos FAQ con votos...';
     $Self->{Translation}->{'Rate restrictions'} = 'Restricciones de valoración';
     $Self->{Translation}->{'Only FAQ articles with rate...'} = 'Solo artículos FAQ con valoración...';
-    $Self->{Translation}->{'Only FAQ articles created'} = 'únicamente artículos FAQ creados';
-    $Self->{Translation}->{'Only FAQ articles created between'} = 'Únicamente artículos FAQ creados entre';
+    $Self->{Translation}->{'Only FAQ articles created'} = 'Sólo Artículos FAQ creados';
+    $Self->{Translation}->{'Only FAQ articles created between'} = 'Sólo Artículos FAQ creados entre';
     $Self->{Translation}->{'Search-Profile as Template?'} = '¿Perfil de búsqueda como plantilla?';
 
     # Template: CustomerFAQZoom
@@ -294,8 +294,8 @@ sub Data {
     $Self->{Translation}->{'FAQ path separator.'} = 'Separador de la ruta de FAQ.';
     $Self->{Translation}->{'FAQ search backend router of the agent interface.'} = 'Encaminador para la búsqueda de FAQ en la interfaz del agente.';
     $Self->{Translation}->{'FAQ-Area'} = 'Área-FAQ';
-    $Self->{Translation}->{'Field4'} = '';
-    $Self->{Translation}->{'Field5'} = '';
+    $Self->{Translation}->{'Field4'} = 'Campo4';
+    $Self->{Translation}->{'Field5'} = 'Campo5';
     $Self->{Translation}->{'Frontend module registration for the public interface.'} = 'Registro de módulo "Frontend" en la interfaz pública.';
     $Self->{Translation}->{'Group for the approval of FAQ articles.'} = 'Grupo para la aprobación de los artículos FAQ.';
     $Self->{Translation}->{'History of this FAQ'} = 'Historia de este artículo FAQ';

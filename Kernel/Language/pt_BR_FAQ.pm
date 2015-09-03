@@ -19,12 +19,12 @@ sub Data {
     $Self->{Translation}->{'internal'} = 'interno';
     $Self->{Translation}->{'public'} = 'público';
     $Self->{Translation}->{'external'} = 'externo';
-    $Self->{Translation}->{'FAQ Number'} = 'Número do FAQ';
-    $Self->{Translation}->{'Latest updated FAQ articles'} = 'Artigos modificados recentemente';
-    $Self->{Translation}->{'Latest created FAQ articles'} = 'Últimos artigos adicionados';
-    $Self->{Translation}->{'Top 10 FAQ articles'} = 'Os 10 artigos mais acessados';
+    $Self->{Translation}->{'FAQ Number'} = 'Número da FAQ';
+    $Self->{Translation}->{'Latest updated FAQ articles'} = 'Artigos da FAQ atualizados recentemente.';
+    $Self->{Translation}->{'Latest created FAQ articles'} = 'Artigos da FAQ criados recentemente.';
+    $Self->{Translation}->{'Top 10 FAQ articles'} = 'Top 10 artigos da FAQ';
     $Self->{Translation}->{'Subcategory of'} = 'Subcategoria de';
-    $Self->{Translation}->{'No rate selected!'} = 'Selecione a pontuação!';
+    $Self->{Translation}->{'No rate selected!'} = 'Nenhuma pontuação selecionada!';
     $Self->{Translation}->{'Explorer'} = 'Explorador';
     $Self->{Translation}->{'public (all)'} = 'público (todos)';
     $Self->{Translation}->{'external (customer)'} = 'externo (cliente)';
@@ -37,16 +37,16 @@ sub Data {
     $Self->{Translation}->{'End year'} = 'Ano de término';
     $Self->{Translation}->{'Thanks for your vote!'} = 'Obrigado por seu voto!';
     $Self->{Translation}->{'You have already voted!'} = 'Você já votou!';
-    $Self->{Translation}->{'FAQ Article Print'} = 'Imprimir Artigo FAQ';
-    $Self->{Translation}->{'FAQ Articles (Top 10)'} = 'Artigos FAQ (Top 10)';
-    $Self->{Translation}->{'FAQ Articles (new created)'} = 'Artigos FAQ (criado novo)';
-    $Self->{Translation}->{'FAQ Articles (recently changed)'} = 'Artigos FAQ (alterados recentemente)';
-    $Self->{Translation}->{'FAQ category updated!'} = 'Categoria FAQ atualizada!';
-    $Self->{Translation}->{'FAQ category added!'} = 'Categoria FAQ adicionada!';
+    $Self->{Translation}->{'FAQ Article Print'} = 'Imprimir artigo da FAQ';
+    $Self->{Translation}->{'FAQ Articles (Top 10)'} = 'Artigos da FAQ (Top 10)';
+    $Self->{Translation}->{'FAQ Articles (new created)'} = 'Artigos da FAQ (recém criados)';
+    $Self->{Translation}->{'FAQ Articles (recently changed)'} = 'Artigos da FAQ (alterados recentemente)';
+    $Self->{Translation}->{'FAQ category updated!'} = 'Categoria de FAQ atualizada!';
+    $Self->{Translation}->{'FAQ category added!'} = 'Categoria de FAQ adicionada!';
     $Self->{Translation}->{'A category should have a name!'} = 'Uma categoria precisa ter um nome!';
     $Self->{Translation}->{'This category already exists'} = 'Esta categoria já existe!';
-    $Self->{Translation}->{'FAQ language added!'} = 'Idioma FAQ adicionado!';
-    $Self->{Translation}->{'FAQ language updated!'} = 'Idioma FAQ atualizado!';
+    $Self->{Translation}->{'FAQ language added!'} = 'Idioma de FAQ adicionado!';
+    $Self->{Translation}->{'FAQ language updated!'} = 'Idioma de FAQ atualizado!';
     $Self->{Translation}->{'The name is required!'} = 'O nome é obrigatório!';
     $Self->{Translation}->{'This language already exists!'} = 'Esse idioma já existe!';
     $Self->{Translation}->{'Symptom'} = 'Sintoma';
@@ -55,16 +55,16 @@ sub Data {
     # Template: AgentFAQAdd
     $Self->{Translation}->{'Add FAQ Article'} = 'Adicionar Artigo de FAQ';
     $Self->{Translation}->{'Keywords'} = 'Palavras-chave';
-    $Self->{Translation}->{'A category is required.'} = 'A categoria é necessária.';
+    $Self->{Translation}->{'A category is required.'} = 'Uma categoria é necessária.';
     $Self->{Translation}->{'Approval'} = 'Aprovação';
 
     # Template: AgentFAQCategory
     $Self->{Translation}->{'FAQ Category Management'} = 'Gerenciamento de Categoria de FAQ';
     $Self->{Translation}->{'Add category'} = 'Adicionar categoria';
-    $Self->{Translation}->{'Delete Category'} = 'Excluir Categoria';
+    $Self->{Translation}->{'Delete Category'} = 'Excluir categoria';
     $Self->{Translation}->{'Ok'} = 'Ok';
-    $Self->{Translation}->{'Add Category'} = 'Adicionar Categoria';
-    $Self->{Translation}->{'Edit Category'} = 'Alterar Categoria';
+    $Self->{Translation}->{'Add Category'} = 'Adicionar categoria';
+    $Self->{Translation}->{'Edit Category'} = 'Alterar categoria';
     $Self->{Translation}->{'Please select at least one permission group.'} = 'Por favor, selecione pelo menos um grupo de permissão.';
     $Self->{Translation}->{'Agent groups that can access articles in this category.'} = 'Grupos de atendentes que podem acessar artigos nesta categoria.';
     $Self->{Translation}->{'Will be shown as comment in Explorer.'} = 'Será exibido como comentário no Explorador';
@@ -245,14 +245,14 @@ sub Data {
     $Self->{Translation}->{'Defines the information to be inserted in a FAQ based Ticket. "Full FAQ" includes text, attachments and inline images.'} =
         'Define a informação a ser inserida no chamado baseado em FAQ. "Todo o FAQ" inclui texto, anexos e imagens embutidas.';
     $Self->{Translation}->{'Defines the parameters for the dashboard backend. "Limit" defines the number of entries displayed by default. "Group" is used to restrict access to the plugin (e. g. Group: admin;group1;group2;). "Default" indicates if the plugin is enabled by default or if the user needs to enable it manually.'} =
-        '';
+        'Define os parâmetros para o backend do dashboard. "Limite" define o número de entradas exibidas por padrão. "Grupo" é usado para restringir o acesso ao plugin (ex.: Grupo: admin, grupo1, grupo2). "Padrão" indica se o plugin é habilitado por padrão ou se o usuário precisa habilitá-lo manualmente.';
     $Self->{Translation}->{'Defines the shown columns in the FAQ Explorer. This option has no effect on the position of the column.'} =
         'Define as colunas mostradas no Gerenciador FAQ. Esta opção não tem efeito sobre a posição da coluna.';
     $Self->{Translation}->{'Defines the shown columns in the FAQ journal. This option has no effect on the position of the column.'} =
         'Define as colunas mostradas no jornal FAQ. Esta opção não tem efeito sobre a posição da coluna.';
     $Self->{Translation}->{'Defines the shown columns in the FAQ search. This option has no effect on the position of the column.'} =
         'Define as colunas mostradas na pesquisa FAQ. Esta opção não tem efeito sobre a posição da coluna.';
-    $Self->{Translation}->{'Defines where the \'Insert FAQ\' link will be displayed.'} = '';
+    $Self->{Translation}->{'Defines where the \'Insert FAQ\' link will be displayed.'} = 'Define onde o link "Inserir FAQ" será exibido.';
     $Self->{Translation}->{'Definition of FAQ item free text field.'} = 'Definição de campos de texto livre.';
     $Self->{Translation}->{'Delete this FAQ'} = 'Excluir este FAQ!';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ add screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
@@ -294,8 +294,8 @@ sub Data {
     $Self->{Translation}->{'FAQ path separator.'} = 'Delimitador de caminho FAQ.';
     $Self->{Translation}->{'FAQ search backend router of the agent interface.'} = 'FAQ busca servidor roteador da interface do atendente.';
     $Self->{Translation}->{'FAQ-Area'} = 'Área FAQ';
-    $Self->{Translation}->{'Field4'} = '';
-    $Self->{Translation}->{'Field5'} = '';
+    $Self->{Translation}->{'Field4'} = 'Campo4';
+    $Self->{Translation}->{'Field5'} = 'Campo5';
     $Self->{Translation}->{'Frontend module registration for the public interface.'} = 'Frontend de registo do módulo para a interface pública.';
     $Self->{Translation}->{'Group for the approval of FAQ articles.'} = 'Grupo para a aprovação dos artigos FAQ.';
     $Self->{Translation}->{'History of this FAQ'} = 'Histórico deste FAQ';

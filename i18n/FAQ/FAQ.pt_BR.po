@@ -1,15 +1,17 @@
 # 
 # Translators:
 # José Junior <joserribeiro26@gmail.com>, 2014
+# Leandro Guimarães Faria Corcete DUTRA <l@dutras.org>, 2015
 # Marcos Aurélio Silvério <maureliosilverio@gmail.com>, 2014
 # Murilo Moreira de Oliveira <murilo.moreira@gmail.com>, 2014-2015
+# Samuel Diniz Casimiro <nedmaj@yahoo.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-07-10 17:18+0000\n"
-"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
-"Language-Team: Portuguese (Brazil) (http://www.transifex.com/p/OTRS/language/pt_BR/)\n"
+"PO-Revision-Date: 2015-07-29 14:08+0000\n"
+"Last-Translator: Samuel Diniz Casimiro <nedmaj@yahoo.com>\n"
+"Language-Team: Portuguese (Brazil) (http://www.transifex.com/otrs/OTRS/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -30,19 +32,19 @@ msgstr "externo"
 
 #. Template: AAAFAQ
 msgid "FAQ Number"
-msgstr "Número do FAQ"
+msgstr "Número da FAQ"
 
 #. Template: AAAFAQ
 msgid "Latest updated FAQ articles"
-msgstr "Artigos modificados recentemente"
+msgstr "Artigos da FAQ atualizados recentemente."
 
 #. Template: AAAFAQ
 msgid "Latest created FAQ articles"
-msgstr "Últimos artigos adicionados"
+msgstr "Artigos da FAQ criados recentemente."
 
 #. Template: AAAFAQ
 msgid "Top 10 FAQ articles"
-msgstr "Os 10 artigos mais acessados"
+msgstr "Top 10 artigos da FAQ"
 
 #. Template: AAAFAQ
 msgid "Subcategory of"
@@ -50,7 +52,7 @@ msgstr "Subcategoria de"
 
 #. Template: AAAFAQ
 msgid "No rate selected!"
-msgstr "Selecione a pontuação!"
+msgstr "Nenhuma pontuação selecionada!"
 
 #. Template: AAAFAQ
 msgid "Explorer"
@@ -102,27 +104,27 @@ msgstr "Você já votou!"
 
 #. Template: AAAFAQ
 msgid "FAQ Article Print"
-msgstr "Imprimir Artigo FAQ"
+msgstr "Imprimir artigo da FAQ"
 
 #. Template: AAAFAQ
 msgid "FAQ Articles (Top 10)"
-msgstr "Artigos FAQ (Top 10)"
+msgstr "Artigos da FAQ (Top 10)"
 
 #. Template: AAAFAQ
 msgid "FAQ Articles (new created)"
-msgstr "Artigos FAQ (criado novo)"
+msgstr "Artigos da FAQ (recém criados)"
 
 #. Template: AAAFAQ
 msgid "FAQ Articles (recently changed)"
-msgstr "Artigos FAQ (alterados recentemente)"
+msgstr "Artigos da FAQ (alterados recentemente)"
 
 #. Template: AAAFAQ
 msgid "FAQ category updated!"
-msgstr "Categoria FAQ atualizada!"
+msgstr "Categoria de FAQ atualizada!"
 
 #. Template: AAAFAQ
 msgid "FAQ category added!"
-msgstr "Categoria FAQ adicionada!"
+msgstr "Categoria de FAQ adicionada!"
 
 #. Template: AAAFAQ
 msgid "A category should have a name!"
@@ -134,11 +136,11 @@ msgstr "Esta categoria já existe!"
 
 #. Template: AAAFAQ
 msgid "FAQ language added!"
-msgstr "Idioma FAQ adicionado!"
+msgstr "Idioma de FAQ adicionado!"
 
 #. Template: AAAFAQ
 msgid "FAQ language updated!"
-msgstr "Idioma FAQ atualizado!"
+msgstr "Idioma de FAQ atualizado!"
 
 #. Template: AAAFAQ
 msgid "The name is required!"
@@ -166,7 +168,7 @@ msgstr "Palavras-chave"
 
 #. Template: AgentFAQAdd
 msgid "A category is required."
-msgstr "A categoria é necessária."
+msgstr "Uma categoria é necessária."
 
 #. Template: AgentFAQAdd
 msgid "Approval"
@@ -182,7 +184,7 @@ msgstr "Adicionar categoria"
 
 #. Template: AgentFAQCategory
 msgid "Delete Category"
-msgstr "Excluir Categoria"
+msgstr "Excluir categoria"
 
 #. Template: AgentFAQCategory
 msgid "Ok"
@@ -190,11 +192,11 @@ msgstr "Ok"
 
 #. Template: AgentFAQCategory
 msgid "Add Category"
-msgstr "Adicionar Categoria"
+msgstr "Adicionar categoria"
 
 #. Template: AgentFAQCategory
 msgid "Edit Category"
-msgstr "Alterar Categoria"
+msgstr "Alterar categoria"
 
 #. Template: AgentFAQCategory
 msgid "Please select at least one permission group."
@@ -703,7 +705,7 @@ msgid ""
 " to the plugin (e. g. Group: admin;group1;group2;). \"Default\" indicates if"
 " the plugin is enabled by default or if the user needs to enable it "
 "manually."
-msgstr ""
+msgstr "Define os parâmetros para o backend do dashboard. \"Limite\" define o número de entradas exibidas por padrão. \"Grupo\" é usado para restringir o acesso ao plugin (ex.: Grupo: admin, grupo1, grupo2). \"Padrão\" indica se o plugin é habilitado por padrão ou se o usuário precisa habilitá-lo manualmente."
 
 #. SysConfig
 msgid ""
@@ -725,7 +727,7 @@ msgstr "Define as colunas mostradas na pesquisa FAQ. Esta opção não tem efeit
 
 #. SysConfig
 msgid "Defines where the 'Insert FAQ' link will be displayed."
-msgstr ""
+msgstr "Define onde o link \"Inserir FAQ\" será exibido."
 
 #. SysConfig
 msgid "Definition of FAQ item free text field."
@@ -868,11 +870,11 @@ msgstr "Área FAQ"
 
 #. SysConfig
 msgid "Field4"
-msgstr ""
+msgstr "Campo4"
 
 #. SysConfig
 msgid "Field5"
-msgstr ""
+msgstr "Campo5"
 
 #. SysConfig
 msgid "Frontend module registration for the public interface."

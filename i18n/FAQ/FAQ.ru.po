@@ -6,9 +6,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-07-10 17:18+0000\n"
-"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
-"Language-Team: Russian (http://www.transifex.com/p/OTRS/language/ru/)\n"
+"PO-Revision-Date: 2015-07-13 12:56+0000\n"
+"Last-Translator: Yuri Kolesniov <ynkolesnikov@gmail.com>\n"
+"Language-Team: Russian (http://www.transifex.com/otrs/OTRS/language/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -724,7 +724,7 @@ msgstr "Задает перечень колонок, отображаемых �
 
 #. SysConfig
 msgid "Defines where the 'Insert FAQ' link will be displayed."
-msgstr ""
+msgstr "Определяет, где будет отображаться ссылка \"Вставить из FAQ\"/'Insert FAQ'"
 
 #. SysConfig
 msgid "Definition of FAQ item free text field."
