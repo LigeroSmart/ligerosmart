@@ -209,7 +209,7 @@ sub Run {
     my $TemplateSelectionString = $LayoutObject->BuildSelection(
         Name         => 'TemplateID',
         Data         => $TemplateList,
-        Class        => 'Validate_Required ' . ( $ValidationError{TemplateIDServerError} || '' ),
+        Class        => 'Modernize Validate_Required ' . ( $ValidationError{TemplateIDServerError} || '' ),
         TreeView     => 1,
         PossibleNone => 1,
     );
@@ -228,7 +228,7 @@ sub Run {
             },
         ],
         SelectedID => $GetParam{MoveTimeType} || 'PlannedStartTime',
-        Class => 'Validate_Required ' . ( $ValidationError{MoveTimeTypeInvalid} || '' ),
+        Class      => 'Modernize Validate_Required ' . ( $ValidationError{MoveTimeTypeInvalid} || '' ),
     );
 
     # time period that can be selected from the GUI
@@ -267,8 +267,9 @@ sub Run {
 
     # build the WorkOrderType dropdown
     $GetParam{WorkOrderTypeStrg} = $LayoutObject->BuildSelection(
-        Name => 'WorkOrderTypeID',
-        Data => $WorkOrderTypeList,
+        Name  => 'WorkOrderTypeID',
+        Data  => $WorkOrderTypeList,
+        Class => 'Modernize',
     );
 
     # get form id

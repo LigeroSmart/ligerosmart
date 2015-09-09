@@ -88,11 +88,10 @@ sub Run {
     # Build drop-down for the class selection on the left side.
     my @ArrHashRef;
     for my $Class ( sort keys %{ $Self->{ConfigByClass} } ) {
-        push @ArrHashRef,
-            {
+        push @ArrHashRef, {
             Key   => $Class,
             Value => $Class,
-            };
+        };
     }
 
     # get layout object
@@ -102,7 +101,7 @@ sub Run {
         Name         => 'Class',
         Data         => \@ArrHashRef,
         SelectedID   => $GetParam{Class},
-        Class        => 'Validate_Required W100pc ' . ( $Error{ClassInvalid} || '' ),
+        Class        => 'Modernize Validate_Required W100pc ' . ( $Error{ClassInvalid} || '' ),
         PossibleNone => 1,
         Translation  => 0,
     );
@@ -221,6 +220,7 @@ sub _StateTransitionUpdatePageGet {
         Data       => $AllStatesArrayHashRef,
         Name       => 'NewNextStateID',
         SelectedID => $Param{NextStateID},
+        Class      => 'Modernize',
     );
 
     $LayoutObject->Block(
@@ -275,7 +275,7 @@ sub _StateTransitionAddPageGet {
         Name         => 'StateID',
         SelectedID   => $Param{StateID},
         PossibleNone => 1,
-        Class        => 'Validate_Required ' . ( $Param{StateInvalid} || '' ),
+        Class        => 'Modernize Validate_Required ' . ( $Param{StateInvalid} || '' ),
     );
 
     # dropdown menu, where the next state can be selected for addition
@@ -288,7 +288,7 @@ sub _StateTransitionAddPageGet {
         Name         => 'NextStateID',
         SelectedID   => $Param{NextStateID},
         PossibleNone => 1,
-        Class        => 'Validate_Required ' . ( $Param{NextStateInvalid} || '' ),
+        Class        => 'Modernize Validate_Required ' . ( $Param{NextStateInvalid} || '' ),
     );
 
     $LayoutObject->Block(

@@ -300,6 +300,7 @@ sub Run {
         ],
         Name       => 'MoveTimeType',
         SelectedID => $GetParam{MoveTimeType},
+        Class      => 'Modernize',
     );
 
     # time period that can be selected from the GUI

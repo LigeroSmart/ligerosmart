@@ -516,6 +516,7 @@ sub Run {
                     SelectedID  => $SelectedPriority,
                     Translation => 1,
                     Max         => 100,
+                    Class       => 'Modernize',
                 },
             ],
         );
@@ -583,6 +584,7 @@ sub Run {
         Data       => $Categories,
         Name       => 'CategoryID',
         SelectedID => $Param{CategoryID},
+        Class      => 'Modernize',
     );
 
     # create dropdown for the impact
@@ -596,6 +598,7 @@ sub Run {
         Data       => $Impacts,
         Name       => 'ImpactID',
         SelectedID => $Param{ImpactID},
+        Class      => 'Modernize',
     );
 
     # create dropdown for priority,
@@ -614,6 +617,7 @@ sub Run {
         Data       => $Priorities,
         Name       => 'PriorityID',
         SelectedID => $SelectedPriority,
+        Class      => 'Modernize',
     );
 
     # cycle trough the activated Dynamic Fields for this screen

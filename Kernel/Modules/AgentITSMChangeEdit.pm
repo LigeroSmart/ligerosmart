@@ -507,6 +507,7 @@ sub Run {
                     SelectedID  => $SelectedPriority,
                     Translation => 1,
                     Max         => 100,
+                    Class       => 'Modernize',
                 },
             ],
         );
@@ -599,6 +600,7 @@ sub Run {
             Data       => $ChangePossibleStates,
             Name       => 'ChangeStateID',
             SelectedID => $GetParam{ChangeStateID},
+            Class      => 'Modernize',
         );
 
         # show change state dropdown
@@ -653,6 +655,7 @@ sub Run {
         Data       => $Categories,
         Name       => 'CategoryID',
         SelectedID => $GetParam{CategoryID} || $Change->{CategoryID},
+        Class      => 'Modernize',
     );
 
     # create dropdown for the impact
@@ -666,6 +669,7 @@ sub Run {
         Data       => $Impacts,
         Name       => 'ImpactID',
         SelectedID => $GetParam{ImpactID} || $Change->{ImpactID},
+        Class      => 'Modernize',
     );
 
     # create dropdown for priority,
@@ -678,6 +682,7 @@ sub Run {
         Data       => $Priorities,
         Name       => 'PriorityID',
         SelectedID => $GetParam{PriorityID} || $Change->{PriorityID},
+        Class      => 'Modernize',
     );
 
     # cycle trough the activated Dynamic Fields for this screen

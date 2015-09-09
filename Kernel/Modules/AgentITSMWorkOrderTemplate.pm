@@ -295,6 +295,7 @@ sub Run {
         Name       => 'ValidID',
         SelectedID => $GetParam{ValidID} || ( $ValidObject->ValidIDsGet() )[0],
         Sort       => 'NumericKey',
+        Class      => 'Modernize',
     );
 
     # build selection string for state reset
@@ -305,6 +306,7 @@ sub Run {
         },
         Name       => 'StateReset',
         SelectedID => $GetParam{StateReset} // 1,
+        Class      => 'Modernize',
     );
 
     # show dropdowns only if this workorder was created from a template
@@ -318,6 +320,7 @@ sub Run {
             },
             Name       => 'OverwriteTemplate',
             SelectedID => $GetParam{OverwriteTemplate} // 1,
+            Class      => 'Modernize',
         );
 
         # show overwrite original template dropdown
@@ -337,6 +340,7 @@ sub Run {
             },
             Name       => 'DeleteWorkOrder',
             SelectedID => $GetParam{DeleteWorkOrder} // 1,
+            Class      => 'Modernize',
         );
 
         # show delete WorkOrder dropdown

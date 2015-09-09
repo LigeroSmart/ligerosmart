@@ -551,6 +551,7 @@ sub Run {
         Data       => $WorkOrderPossibleStates,
         Name       => 'WorkOrderStateID',
         SelectedID => $WorkOrder->{WorkOrderStateID},
+        Class      => 'Modernize',
     );
 
     # show state dropdown

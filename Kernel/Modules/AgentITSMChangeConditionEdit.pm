@@ -788,6 +788,7 @@ sub Run {
         SelectedID  => $ConditionData{ValidID} || ( $ValidObject->ValidIDsGet() )[0],
         Sort        => 'NumericKey',
         Translation => 1,
+        Class       => 'Modernize',
     );
 
     # add the validation error messages

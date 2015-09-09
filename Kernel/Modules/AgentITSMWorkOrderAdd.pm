@@ -439,8 +439,9 @@ sub Run {
 
     # build the WorkOrderType dropdown
     $GetParam{WorkOrderTypeStrg} = $LayoutObject->BuildSelection(
-        Name => 'WorkOrderTypeID',
-        Data => $WorkOrderTypeList,
+        Name  => 'WorkOrderTypeID',
+        Data  => $WorkOrderTypeList,
+        Class => 'Modernize',
     );
 
     # cycle trough the activated Dynamic Fields for this screen

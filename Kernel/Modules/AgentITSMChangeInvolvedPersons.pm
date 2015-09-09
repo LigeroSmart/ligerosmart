@@ -412,6 +412,7 @@ sub Run {
         Name         => 'TemplateID',
         Data         => $TemplateList,
         PossibleNone => 1,
+        Class        => 'Modernize',
     );
 
     # show block with template dropdown
