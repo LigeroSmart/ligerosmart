@@ -349,9 +349,10 @@ sub _MaskNew {
 
     # build the type dropdown
     $ServiceData{TypeOptionStrg} = $LayoutObject->BuildSelection(
-        Data => $TypeList,
-        Name => 'TypeID',
+        Data       => $TypeList,
+        Name       => 'TypeID',
         SelectedID => $Param{TypeID} || $ServiceData{TypeID},
+        Class      => 'Modernize',
     );
 
     # build the criticality dropdown
@@ -359,6 +360,7 @@ sub _MaskNew {
         Data       => $Self->{CriticalityList},
         Name       => 'Criticality',
         SelectedID => $Param{Criticality} || $ServiceData{Criticality},
+        Class      => 'Modernize',
     );
 # ---
 
