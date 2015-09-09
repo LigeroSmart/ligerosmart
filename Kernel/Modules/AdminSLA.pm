@@ -376,6 +376,7 @@ sub _MaskNew {
             Data       => $TypeList,
             Name       => 'TypeID',
             SelectedID => $SLAData{TypeID},
+            Class      => 'Modernize',
         );
 # ---
 
