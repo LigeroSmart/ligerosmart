@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2015 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/c3f1c524bea483efa162a2c8eafc73dd738376dc/Kernel/Modules/AgentTicketZoom.pm
+# $origin: https://github.com/OTRS/otrs/blob/821f442970f3b791c5940993496bd2b23ab139d6/Kernel/Modules/AgentTicketZoom.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -787,6 +787,7 @@ sub MaskAgentZoom {
     }
 
     my $ArticleIDFound = 0;
+    ARTICLE:
     for my $Article (@ArticleBox) {
 
         if ( $ConfigObject->Get('Ticket::Frontend::ZoomExpandSort') eq 'reverse' ) {
@@ -797,9 +798,12 @@ sub MaskAgentZoom {
         }
 
         $Article->{Count} = $Count;
-        if ( $Self->{ArticleID} && $Self->{ArticleID} == $Article->{ArticleID} ) {
-            $ArticleIDFound = 1;
-        }
+
+        next ARTICLE if !$Self->{ArticleID};
+        next ARTICLE if !$Article->{ArticleID};
+        next ARTICLE if $Self->{ArticleID} ne $Article->{ArticleID};
+
+        $ArticleIDFound = 1;
     }
 
     my %ArticleFlags = $TicketObject->ArticleFlagsOfTicketGet(
@@ -1823,6 +1827,7 @@ sub MaskAgentZoom {
                 Multiple    => 1,
                 Sort        => 'AlphanumericValue',
                 Name        => 'EventTypeFilter',
+                Class       => 'Modernize',
             );
 
             $LayoutObject->Block(
@@ -1845,6 +1850,7 @@ sub MaskAgentZoom {
                 Multiple    => 1,
                 Sort        => 'AlphanumericValue',
                 Name        => 'ArticleTypeFilter',
+                Class       => 'Modernize',
             );
 
             # get sender types
@@ -1860,6 +1866,7 @@ sub MaskAgentZoom {
                 Multiple    => 1,
                 Sort        => 'AlphanumericValue',
                 Name        => 'ArticleSenderTypeFilter',
+                Class       => 'Modernize',
             );
 
             # Ticket ID

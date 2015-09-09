@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2015 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/c3f1c524bea483efa162a2c8eafc73dd738376dc/Kernel/Output/HTML/Templates/Standard/AgentTicketActionCommon.tt
+# $origin: https://github.com/OTRS/otrs/blob/821f442970f3b791c5940993496bd2b23ab139d6/Kernel/Output/HTML/Templates/Standard/AgentTicketActionCommon.tt
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -28,25 +28,25 @@
         <div class="Header">
             <h1>
 [% RenderBlockStart("HeaderAgentTicketFreeText") %]
-[% Translate("Change Free Text of Ticket") | html %]:
+[% Translate("Change Free Text of %s%s", Config('Ticket::Hook'), Data.TicketNumber) | html %]
 [% RenderBlockEnd("HeaderAgentTicketFreeText") %]
 [% RenderBlockStart("HeaderAgentTicketOwner") %]
-[% Translate("Change Owner of Ticket") | html %]:
+[% Translate("Change Owner of %s%s", Config('Ticket::Hook'), Data.TicketNumber) | html %]
 [% RenderBlockEnd("HeaderAgentTicketOwner") %]
 [% RenderBlockStart("HeaderAgentTicketClose") %]
-[% Translate("Close Ticket") | html %]:
+[% Translate("Close %s%s", Config('Ticket::Hook'), Data.TicketNumber) | html %]
 [% RenderBlockEnd("HeaderAgentTicketClose") %]
 [% RenderBlockStart("HeaderAgentTicketNote") %]
-[% Translate("Add Note to Ticket") | html %]:
+[% Translate("Add Note to %s%s", Config('Ticket::Hook'), Data.TicketNumber) | html %]
 [% RenderBlockEnd("HeaderAgentTicketNote") %]
 [% RenderBlockStart("HeaderAgentTicketPending") %]
-[% Translate("Set Pending") | html %]:
+[% Translate("Set Pending Time for %s%s", Config('Ticket::Hook'), Data.TicketNumber) | html %]
 [% RenderBlockEnd("HeaderAgentTicketPending") %]
 [% RenderBlockStart("HeaderAgentTicketPriority") %]
-[% Translate("Change Priority of Ticket") | html %]:
+[% Translate("Change Priority of %s%s", Config('Ticket::Hook'), Data.TicketNumber) | html %]
 [% RenderBlockEnd("HeaderAgentTicketPriority") %]
 [% RenderBlockStart("HeaderAgentTicketResponsible") %]
-[% Translate("Change Responsible of Ticket") | html %]:
+[% Translate("Change Responsible of %s%s", Config('Ticket::Hook'), Data.TicketNumber) | html %]
 [% RenderBlockEnd("HeaderAgentTicketResponsible") %]
 # ---
 # ITSM
@@ -58,7 +58,7 @@
                 [% Translate("Change ITSM fields of ticket") | html %]
 [% RenderBlockEnd("HeaderAgentTicketAddtlITSMField") %]
 # ---
-[% Data.TicketNumber %] - [% Data.Title | html %]
+                 &mdash; [% Data.Title | html %]
             </h1>
             <p class="AsteriskExplanation">[% Translate("All fields marked with an asterisk (*) are mandatory.") | html %]</p>
 

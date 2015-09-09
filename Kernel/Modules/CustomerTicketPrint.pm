@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2015 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/c3f1c524bea483efa162a2c8eafc73dd738376dc/Kernel/Modules/CustomerTicketPrint.pm
+# $origin: https://github.com/OTRS/otrs/blob/821f442970f3b791c5940993496bd2b23ab139d6/Kernel/Modules/CustomerTicketPrint.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -537,12 +537,12 @@ sub _PDFOutputTicketDynamicFields {
         );
 
         # table params
-        $TableParam{Type}            = 'Cut';
-        $TableParam{Border}          = 0;
-        $TableParam{FontSize}        = 6;
-        $TableParam{Padding}         = 1;
-        $TableParam{PaddingTop}      = 3;
-        $TableParam{PaddingBottom}   = 3;
+        $TableParam{Type}          = 'Cut';
+        $TableParam{Border}        = 0;
+        $TableParam{FontSize}      = 6;
+        $TableParam{Padding}       = 1;
+        $TableParam{PaddingTop}    = 3;
+        $TableParam{PaddingBottom} = 3;
 
         # output table
         PAGE:
@@ -637,12 +637,12 @@ sub _PDFOutputCustomerInfos {
         );
 
         # table params
-        $TableParam{Type}            = 'Cut';
-        $TableParam{Border}          = 0;
-        $TableParam{FontSize}        = 6;
-        $TableParam{Padding}         = 1;
-        $TableParam{PaddingTop}      = 3;
-        $TableParam{PaddingBottom}   = 3;
+        $TableParam{Type}          = 'Cut';
+        $TableParam{Border}        = 0;
+        $TableParam{FontSize}      = 6;
+        $TableParam{Padding}       = 1;
+        $TableParam{PaddingTop}    = 3;
+        $TableParam{PaddingBottom} = 3;
 
         # output table
         PAGE:
@@ -822,12 +822,12 @@ sub _PDFOutputArticles {
         );
 
         # table params (article infos)
-        $TableParam1{Type}            = 'Cut';
-        $TableParam1{Border}          = 0;
-        $TableParam1{FontSize}        = 6;
-        $TableParam1{Padding}         = 1;
-        $TableParam1{PaddingTop}      = 3;
-        $TableParam1{PaddingBottom}   = 3;
+        $TableParam1{Type}          = 'Cut';
+        $TableParam1{Border}        = 0;
+        $TableParam1{FontSize}      = 6;
+        $TableParam1{Padding}       = 1;
+        $TableParam1{PaddingTop}    = 3;
+        $TableParam1{PaddingBottom} = 3;
 
         # output table (article infos)
         PAGE:
