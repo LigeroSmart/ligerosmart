@@ -63,10 +63,10 @@ $Selenium->RunTest(
         # create real test catalog class
         my $CatalogClassDsc  = "CatalogClassDsc" . $Helper->GetRandomID();
         my $CatalogClassName = "CatalogClassName" . $Helper->GetRandomID();
-        $Selenium->find_element( "#ClassDsc",                  'css' )->send_keys($CatalogClassDsc);
-        $Selenium->find_element( "#Name",                      'css' )->send_keys($CatalogClassName);
-        $Selenium->find_element( "#Comment",                   'css' )->send_keys("Selenium catalog class");
-        $Selenium->find_element( "#ValidID option[value='1']", 'css' )->click();
+        $Selenium->find_element( "#ClassDsc", 'css' )->send_keys($CatalogClassDsc);
+        $Selenium->find_element( "#Name",     'css' )->send_keys($CatalogClassName);
+        $Selenium->find_element( "#Comment",  'css' )->send_keys("Selenium catalog class");
+        $Selenium->execute_script("\$('#ValidID').val('1').trigger('redraw.InputField').trigger('change');");
         $Selenium->find_element("//button[\@value='Submit'][\@type='submit']")->click();
 
         # click "Go to overview"
@@ -111,9 +111,9 @@ $Selenium->RunTest(
 
         # create real test catalog item
         my $CatalogClassItem = "CatalogClassItem" . $Helper->GetRandomID();
-        $Selenium->find_element( "#Name",                      'css' )->send_keys($CatalogClassItem);
-        $Selenium->find_element( "#Comment",                   'css' )->send_keys("Selenium catalog item");
-        $Selenium->find_element( "#ValidID option[value='1']", 'css' )->click();
+        $Selenium->find_element( "#Name",    'css' )->send_keys($CatalogClassItem);
+        $Selenium->find_element( "#Comment", 'css' )->send_keys("Selenium catalog item");
+        $Selenium->execute_script("\$('#ValidID').val('1').trigger('redraw.InputField').trigger('change');");
         $Selenium->find_element("//button[\@value='Submit'][\@type='submit']")->click();
 
         # get test catalog items IDs
@@ -193,7 +193,7 @@ $Selenium->RunTest(
 
         # clean up cache
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => 'GeneralCatalog' );
-        }
+    }
 );
 
 1;
