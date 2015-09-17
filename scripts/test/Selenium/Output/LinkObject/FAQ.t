@@ -77,6 +77,7 @@ $Selenium->RunTest(
         $Selenium->switch_to_window( $Handles->[0] );
 
         # verify FAQ link
+        $Selenium->get("${ScriptAlias}index.pl?Action=AgentFAQZoom;ItemID=$FAQIDs[0]");
         $Self->True(
             index( $Selenium->get_page_source(), $FAQTitles[1] ) > -1,
             "Test ticket title $FAQTitles[1] - found",
@@ -96,6 +97,7 @@ $Selenium->RunTest(
         $Selenium->switch_to_window( $Handles->[0] );
 
         # verify that link has been removed
+        $Selenium->get("${ScriptAlias}index.pl?Action=AgentFAQZoom;ItemID=$FAQIDs[0]");
         $Self->True(
             index( $Selenium->get_page_source(), $FAQTitles[1] ) == -1,
             "$FAQTitles[1] - not found",
