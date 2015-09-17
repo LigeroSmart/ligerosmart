@@ -97,13 +97,11 @@ $Selenium->RunTest(
         # navigate to AgentTicketSearch
         $Selenium->get("${ScriptAlias}index.pl?Action=AgentTicketSearch");
 
-        # wait until form has loaded, if neccessary
+        # wait until form has loaded, if necessary
         $Selenium->WaitFor( JavaScript => "return typeof(\$) === 'function' && \$('#SearchProfile').length" );
 
         # search test created tickets by title
-        $Selenium->find_element( "#Attribute_Search", 'css' )->click();
-        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("a.jstree-anchor:visible").length' );
-        $Selenium->find_element("//*[text()='Title']")->click();
+        $Selenium->execute_script("\$('#Attribute').val('Title').trigger('redraw.InputField').trigger('change');");
         $Selenium->find_element( ".AddButton", 'css' )->click();
         $Selenium->find_element( "Title",      'name' )->send_keys($TicketTitle);
         $Selenium->find_element("//button[\@id='SearchFormSubmit'][\@value='Run search']")->click();
@@ -119,9 +117,9 @@ $Selenium->RunTest(
         $Selenium->WaitFor( WindowCount => 2 );
 
         # set test ticket as master ticket
-        $Selenium->find_element( "#DynamicField_MasterSlave_Search", 'css' )->click();
-        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("a.jstree-anchor:visible").length' );
-        $Selenium->find_element("//*[text()='New Master Ticket']")->click();
+        $Selenium->execute_script(
+            "\$('#DynamicField_MasterSlave').val('Master').trigger('redraw.InputField').trigger('change');"
+        );
         $Selenium->find_element("//button[\@id='submitRichText'][\@type='submit']")->click();
 
         $Selenium->switch_to_window( $Handles->[0] );
@@ -140,9 +138,9 @@ $Selenium->RunTest(
 
         # set test tickets as slave tickets
         my $SlaveAutoComplete = "Slave of Ticket#$TicketNumbers[0]: $TicketTitle";
-        $Selenium->find_element( "#DynamicField_MasterSlave_Search", 'css' )->click();
-        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("a.jstree-anchor:visible").length' );
-        $Selenium->find_element("//*[text()='$SlaveAutoComplete']")->click();
+        $Selenium->execute_script(
+            "\$('#DynamicField_MasterSlave').val('SlaveOf:$TicketNumbers[0]').trigger('redraw.InputField').trigger('change');"
+        );
         $Selenium->find_element("//button[\@id='submitRichText'][\@type='submit']")->click();
 
         $Selenium->switch_to_window( $Handles->[0] );

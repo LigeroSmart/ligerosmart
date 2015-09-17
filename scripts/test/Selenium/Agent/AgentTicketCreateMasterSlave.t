@@ -68,7 +68,7 @@ $Selenium->RunTest(
         );
 
         # add test customer for testing
-        my $TestCustomerPhone = $Helper->TestCustomerUserCreate();
+        my $TestCustomerLoginPhone = $Helper->TestCustomerUserCreate();
 
         # get script alias
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
@@ -78,17 +78,17 @@ $Selenium->RunTest(
 
         # create master test phone ticket
         my $AutoCompleteStringPhone
-            = "\"$TestCustomerPhone $TestCustomerPhone\" <$TestCustomerPhone\@localunittest.com> ($TestCustomerPhone)";
+            = "\"$TestCustomerLoginPhone $TestCustomerLoginPhone\" <$TestCustomerLoginPhone\@localunittest.com> ($TestCustomerLoginPhone)";
         my $MasterTicketSubject = "Master Ticket";
-        $Selenium->find_element( "#FromCustomer", 'css' )->send_keys($TestCustomerPhone);
-        $Selenium->WaitFor( JavaScript => 'return $("li.ui-menu-item:visible").length' );
+        $Selenium->find_element( "#FromCustomer", 'css' )->send_keys($TestCustomerLoginPhone);
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("li.ui-menu-item:visible").length' );
         $Selenium->find_element("//*[text()='$AutoCompleteStringPhone']")->click();
         $Selenium->execute_script("\$('#Dest').val('2||Raw').trigger('redraw.InputField').trigger('change');");
-        $Selenium->find_element( "#Subject",                         'css' )->send_keys($MasterTicketSubject);
-        $Selenium->find_element( "#RichText",                        'css' )->send_keys('Selenium body test');
-        $Selenium->find_element( "#DynamicField_MasterSlave_Search", 'css' )->click();
-        $Selenium->WaitFor( JavaScript => 'return $("a.jstree-anchor:visible").length' );
-        $Selenium->find_element("//*[text()='New Master Ticket']")->click();
+        $Selenium->find_element( "#Subject",  'css' )->send_keys($MasterTicketSubject);
+        $Selenium->find_element( "#RichText", 'css' )->send_keys('Selenium body test');
+        $Selenium->execute_script(
+            "\$('#DynamicField_MasterSlave').val('Master').trigger('redraw.InputField').trigger('change');"
+        );
         $Selenium->find_element("//button[\@id='submitRichText'][\@type='submit']")->click();
 
         # Wait until form has loaded, if necessary
@@ -98,46 +98,41 @@ $Selenium->RunTest(
         my $TicketObject = $Kernel::OM->Get('Kernel::System::Ticket');
 
         # get master test phone ticket data
-        my %MasterTicketIDs = $TicketObject->TicketSearch(
+        my ( $MasterTicketID, $MasterTicketNumber ) = $TicketObject->TicketSearch(
             Result         => 'HASH',
             Limit          => 1,
-            CustomerUserID => $TestCustomerPhone,
+            CustomerUserID => $TestCustomerLoginPhone,
         );
-        my $MasterTicketNumber = (%MasterTicketIDs)[1];
-        my $MasterTicketID     = (%MasterTicketIDs)[0];
 
         # add new test customer for testing
-        my $TestCustomerEmail = $Helper->TestCustomerUserCreate();
+        my $TestCustomerLoginsEmail = $Helper->TestCustomerUserCreate();
 
         # navigate to AgentTicketEmail screen
         $Selenium->get("${ScriptAlias}index.pl?Action=AgentTicketEmail");
 
         # create slave test email ticket
         my $AutoCompleteStringEmail
-            = "\"$TestCustomerEmail $TestCustomerEmail\" <$TestCustomerEmail\@localunittest.com> ($TestCustomerEmail)";
-        my $SlaveAutoComplete = "Slave of Ticket#$MasterTicketNumber: $MasterTicketSubject";
+            = "\"$TestCustomerLoginsEmail $TestCustomerLoginsEmail\" <$TestCustomerLoginsEmail\@localunittest.com> ($TestCustomerLoginsEmail)";
         $Selenium->execute_script("\$('#Dest').val('2||Raw').trigger('redraw.InputField').trigger('change');");
-        $Selenium->find_element( "#ToCustomer", 'css' )->send_keys($TestCustomerEmail);
-        $Selenium->WaitFor( JavaScript => 'return $("li.ui-menu-item:visible").length' );
+        $Selenium->find_element( "#ToCustomer", 'css' )->send_keys($TestCustomerLoginsEmail);
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("li.ui-menu-item:visible").length' );
         $Selenium->find_element("//*[text()='$AutoCompleteStringEmail']")->click();
-        $Selenium->find_element( "#Subject",                         'css' )->send_keys('Slave Ticket');
-        $Selenium->find_element( "#RichText",                        'css' )->send_keys('Selenium body test');
-        $Selenium->find_element( "#DynamicField_MasterSlave_Search", 'css' )->click();
-        $Selenium->WaitFor( JavaScript => 'return $("a.jstree-anchor:visible").length' );
-        $Selenium->find_element("//*[text()='$SlaveAutoComplete']")->click();
+        $Selenium->find_element( "#Subject",  'css' )->send_keys('Slave Ticket');
+        $Selenium->find_element( "#RichText", 'css' )->send_keys('Selenium body test');
+        $Selenium->execute_script(
+            "\$('#DynamicField_MasterSlave').val('SlaveOf:$MasterTicketNumber').trigger('redraw.InputField').trigger('change');"
+        );
         $Selenium->find_element("//button[\@id='submitRichText'][\@type='submit']")->click();
 
         # Wait until form has loaded, if necessary
         $Selenium->WaitFor( JavaScript => 'return $("form").length' );
 
         # get slave test email ticket data
-        my %SlaveTicketIDs = $TicketObject->TicketSearch(
+        my ( $SlaveTicketID, $SlaveTicketNumber ) = $TicketObject->TicketSearch(
             Result         => 'HASH',
             Limit          => 1,
-            CustomerUserID => $TestCustomerEmail,
+            CustomerUserID => $TestCustomerLoginsEmail,
         );
-        my $SlaveTicketNumber = (%SlaveTicketIDs)[1];
-        my $SlaveTicketID     = (%SlaveTicketIDs)[0];
 
         # navigate to ticket zoom page of created master test ticket
         $Selenium->get("${ScriptAlias}index.pl?Action=AgentTicketZoom;TicketID=$MasterTicketID");
