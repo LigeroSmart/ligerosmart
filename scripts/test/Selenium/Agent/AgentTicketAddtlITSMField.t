@@ -87,6 +87,9 @@ $Selenium->RunTest(
         # switch back to zoom view
         $Selenium->switch_to_window( $Handles->[0] );
 
+        # force sub menus to be visible in order to be able to click one of the links
+        $Selenium->execute_script("\$('.Cluster ul ul').addClass('ForceVisible');");
+
         # click on history link and switch window
         $Selenium->find_element("//*[text()='History']")->click();
         $Handles = $Selenium->get_window_handles();
@@ -114,7 +117,7 @@ $Selenium->RunTest(
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp(
             Type => 'Ticket',
         );
-        }
+    }
 );
 
 1;

@@ -77,12 +77,16 @@ $Selenium->RunTest(
         }
 
         # change decision result and date
-        $Selenium->find_element( "#DynamicField_ITSMDecisionResult option[value='Rejected']", 'css' )->click();
-        $Selenium->find_element( "#DynamicField_ITSMDecisionDateUsed",                        'css' )->click();
+        $Selenium->execute_script(
+            "\$('#DynamicField_ITSMDecisionResult').val('Rejected').trigger('redraw.InputField').trigger('change');");
+        $Selenium->find_element( "#DynamicField_ITSMDecisionDateUsed", 'css' )->click();
         $Selenium->find_element("//button[\@type='submit']")->click();
 
         # switch back to zoom view
         $Selenium->switch_to_window( $Handles->[0] );
+
+        # force sub menus to be visible in order to be able to click one of the links
+        $Selenium->execute_script("\$('.Cluster ul ul').addClass('ForceVisible');");
 
         # click on history link and switch window
         $Selenium->find_element("//*[text()='History']")->click();
@@ -111,7 +115,7 @@ $Selenium->RunTest(
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp(
             Type => 'Ticket',
         );
-        }
+    }
 );
 
 1;

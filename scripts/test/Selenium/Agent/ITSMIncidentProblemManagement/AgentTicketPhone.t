@@ -110,17 +110,17 @@ $Selenium->RunTest(
 
         # test phone ticket ITSM features and create test ticket
         my $AutoCompleteString = "\"$TestCustomer $TestCustomer\" <$TestCustomer\@localhost.com> ($TestCustomer)";
-        $Selenium->find_element( "#TypeID option[value='1']", 'css' )->click();
-        $Selenium->find_element( "#FromCustomer",             'css' )->send_keys($TestCustomer);
+        $Selenium->execute_script("\$('#TypeID').val('1').trigger('redraw.InputField').trigger('change');");
+        $Selenium->find_element( "#FromCustomer", 'css' )->send_keys($TestCustomer);
         $Selenium->WaitFor( JavaScript => 'return $("li.ui-menu-item:visible").length' );
 
         $Selenium->find_element("//*[text()='$AutoCompleteString']")->click();
         $Selenium->WaitFor( JavaScript => 'return $("#ServiceIncidentState").length' );
 
-        $Selenium->find_element( "#Subject",                              'css' )->send_keys("Selenium Ticket");
-        $Selenium->find_element( "#RichText",                             'css' )->send_keys("Selenium body test");
-        $Selenium->find_element( "#Dest option[value='2||Raw']",          'css' )->click();
-        $Selenium->find_element( "#ServiceID option[value='$ServiceID']", 'css' )->click();
+        $Selenium->find_element( "#Subject",  'css' )->send_keys("Selenium Ticket");
+        $Selenium->find_element( "#RichText", 'css' )->send_keys("Selenium body test");
+        $Selenium->execute_script("\$('#Dest').val('2||Raw').trigger('redraw.InputField').trigger('change');");
+        $Selenium->execute_script("\$('#ServiceID').val('$ServiceID').trigger('redraw.InputField').trigger('change');");
         $Selenium->WaitFor( JavaScript => "return \$('#PriorityID option[value=\"4\"]').length;" );
 
         # check for service incident state field
@@ -134,7 +134,9 @@ $Selenium->RunTest(
             '4',
             "#PriorityID stored value",
         );
-        $Selenium->find_element( "#DynamicField_ITSMImpact option[value='1 very low']", 'css' )->click();
+
+        $Selenium->execute_script(
+            "\$('#DynamicField_ITSMImpact').val('1 very low').trigger('redraw.InputField').trigger('change');");
         $Selenium->WaitFor( JavaScript => "return \$('#PriorityID option[value=\"3\"]').length;" );
 
         $Self->Is(
@@ -164,9 +166,13 @@ $Selenium->RunTest(
 
         # navigate to AgentTicketZoom of created test ticket and click on history
         $Selenium->get("${ScriptAlias}index.pl?Action=AgentTicketZoom;TicketID=$TicketID");
+
+        # force sub menus to be visible in order to be able to click one of the links
+        $Selenium->execute_script("\$('.Cluster ul ul').addClass('ForceVisible');");
+
+        # click on history and switch window
         $Selenium->find_element("//*[text()='History']")->click();
 
-        # switch to history window
         my $Handles = $Selenium->get_window_handles();
         $Selenium->switch_to_window( $Handles->[1] );
 
@@ -200,6 +206,15 @@ $Selenium->RunTest(
             "Delete service-customer connection",
         );
 
+        # delete test service preferences
+        $Success = $DBObject->Do(
+            SQL => "DELETE FROM service_preferences WHERE service_id = $ServiceID",
+        );
+        $Self->True(
+            $Success,
+            "Deleted Service preferences - $ServiceID",
+        );
+
         # delete created test service
         $Success = $DBObject->Do(
             SQL => "DELETE FROM service WHERE id = $ServiceID",
@@ -229,7 +244,7 @@ $Selenium->RunTest(
                 Type => $Cache,
             );
         }
-        }
+    }
 );
 
 1;
