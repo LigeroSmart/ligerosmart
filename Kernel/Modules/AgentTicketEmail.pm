@@ -2410,7 +2410,7 @@ sub _MaskEmailNew {
     else {
         $Param{FromStrg} = $LayoutObject->BuildSelection(
             Data       => \%NewTo,
-            Class      => 'Validate_Required Modernize ' . $Param{Errors}->{DestinationInvalid} || ' ',
+            Class      => 'Validate_Required Modernize ' . ( $Param{Errors}->{DestinationInvalid} || ' ' ),
             Name       => 'Dest',
             TreeView   => $TreeView,
             SelectedID => $Param{FromSelected},
@@ -2651,7 +2651,7 @@ sub _MaskEmailNew {
             $Param{ServiceStrg} = $LayoutObject->BuildSelection(
                 Data         => $Param{Services},
                 Name         => 'ServiceID',
-                Class        => 'Modernize ' . $Param{Errors}->{ServiceInvalid} || ' ',
+                Class        => 'Modernize ' . ( $Param{Errors}->{ServiceInvalid} || ' ' ),
                 SelectedID   => $Param{ServiceID},
                 PossibleNone => 1,
                 TreeView     => $TreeView,
