@@ -59,8 +59,20 @@ $Selenium->RunTest(
             "Link to AgentITSMServiceZoom for Service ID $ServiceID - found",
         );
 
+        # get DB object
+        my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
+        # delete test service preferences
+        my $Success = $DBObject->Do(
+            SQL => "DELETE FROM service_preferences WHERE service_id = $ServiceID",
+        );
+        $Self->True(
+            $Success,
+            "Deleted Service preferences - $ServiceID",
+        );
+
         # delete test service
-        my $Success = $Kernel::OM->Get('Kernel::System::DB')->Do(
+        $Success = $Kernel::OM->Get('Kernel::System::DB')->Do(
             SQL => "DELETE FROM service WHERE id = $ServiceID",
         );
         $Self->True(
@@ -72,7 +84,7 @@ $Selenium->RunTest(
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp(
             Type => 'Service'
         );
-        }
+    }
 );
 
 1;
