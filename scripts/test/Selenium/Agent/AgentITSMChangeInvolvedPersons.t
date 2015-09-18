@@ -179,15 +179,15 @@ $Selenium->RunTest(
 
         # check history log to verify change involved persons
         $Self->True(
-            index( $Selenium->get_page_source(), "\"CAB Agents\", \"$TestUserCAB\"" ) > -1,
+            index( $Selenium->get_page_source(), "CAB Agents: New: $TestUserCAB &lt;- Old: -" ) > -1,
             "Change in agent CAB - success",
         );
         $Self->True(
-            index( $Selenium->get_page_source(), "\"CAB Customers\", \"$TestCustomer\"" ) > -1,
+            index( $Selenium->get_page_source(), "CAB Customers: New: $TestCustomer &lt;- Old: -" ) > -1,
             "Change in customer CAB - success",
         );
         $Self->True(
-            index( $Selenium->get_page_source(), "\"Change Manager\", \"$TestUserLogin" ) > -1,
+            index( $Selenium->get_page_source(), "Change Manager: New: $TestUserLogin" ) > -1,
             "Change in manager - success",
         );
 
@@ -203,7 +203,7 @@ $Selenium->RunTest(
 
         # make sure the cache is correct
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => 'ITSMChange*' );
-        }
+    }
 
 );
 

@@ -99,8 +99,9 @@ $Selenium->RunTest(
         }
 
         # create new change from test template
-        $Selenium->find_element( "#TemplateID option[value='$TemplateID']", 'css' )->click();
-        $Selenium->find_element( "#SubmitAddTemplate",                      'css' )->click();
+        $Selenium->execute_script(
+            "\$('#TemplateID').val('$TemplateID').trigger('redraw.InputField').trigger('change');");
+        $Selenium->find_element( "#SubmitAddTemplate", 'css' )->click();
 
         # check change values created from test template
         $Self->True(
@@ -147,7 +148,7 @@ $Selenium->RunTest(
         # make sure the cache is correct
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => 'ITSMChange*' );
 
-        }
+    }
 );
 
 1;

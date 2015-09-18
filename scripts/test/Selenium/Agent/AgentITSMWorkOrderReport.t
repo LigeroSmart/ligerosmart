@@ -114,8 +114,9 @@ $Selenium->RunTest(
 
             # input text in report and select next work order state
             $Selenium->find_element( "#RichText", 'css' )->send_keys(" $WorkOrderState");
-            $Selenium->find_element( "#WorkOrderStateID option[value='$WorkOrderStateDataRef->{ItemID}']", 'css' )
-                ->click();
+            $Selenium->execute_script(
+                "\$('#WorkOrderStateID').val('$WorkOrderStateDataRef->{ItemID}').trigger('redraw.InputField').trigger('change');"
+            );
 
             # submit and switch back window
             $Selenium->find_element( "#SubmitWorkOrderEditReport", 'css' )->click();
@@ -163,7 +164,7 @@ $Selenium->RunTest(
 
         # make sure cache is correct
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => 'ITSMChange*' );
-        }
+    }
 );
 
 1;

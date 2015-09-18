@@ -156,13 +156,15 @@ $Selenium->RunTest(
         $Handles = $Selenium->get_window_handles();
         $Selenium->switch_to_window( $Handles->[1] );
 
-        $Selenium->find_element( "#ImpactID option[value='$CatalogImpactDataRef->{ItemID}']", 'css' )->click();
+        $Selenium->execute_script(
+            "\$('#ImpactID').val('$CatalogImpactDataRef->{ItemID}').trigger('redraw.InputField').trigger('change');");
 
         # submit and change window
         $Selenium->find_element("//button[\@value='Submit'][\@type='submit']")->click();
         $Selenium->switch_to_window( $Handles->[0] );
 
         # check for expected chage state to verify test condition
+
         $Self->True(
             index( $Selenium->get_page_source(), 'Successful' ) > -1,
             "Successful state - found",
@@ -192,7 +194,7 @@ $Selenium->RunTest(
         # make sure cache is correct
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => 'ITSMChange*' );
 
-        }
+    }
 );
 
 1;

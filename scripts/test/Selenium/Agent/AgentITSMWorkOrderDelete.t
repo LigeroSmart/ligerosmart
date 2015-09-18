@@ -99,7 +99,7 @@ $Selenium->RunTest(
 
         # verify work order deletion
         $Self->True(
-            index( $Selenium->get_page_source(), "Workorder (ID=\"$WorkOrderID) deleted" ) > -1,
+            index( $Selenium->get_page_source(), "Workorder (ID=$WorkOrderID) deleted" ) > -1,
             "Work Order $WorkOrderID - deleted",
         );
 
@@ -115,7 +115,7 @@ $Selenium->RunTest(
 
         # make sure cache is correct
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => 'ITSMChange*' );
-        }
+    }
 );
 
 1;

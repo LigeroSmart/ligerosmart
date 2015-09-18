@@ -135,12 +135,14 @@ $Selenium->RunTest(
         );
 
         # edit fields and submit
-        $Selenium->find_element( "#ChangeTitle",                            'css' )->send_keys(" edit");
-        $Selenium->find_element( "#RichText1",                              'css' )->send_keys(" edit");
-        $Selenium->find_element( "#RichText2",                              'css' )->send_keys(" edit");
-        $Selenium->find_element( "#CategoryID option[value='$EditIDs[0]']", 'css' )->click();
-        $Selenium->find_element( "#ImpactID option[value='$EditIDs[1]']",   'css' )->click();
-        $Selenium->find_element( "#PriorityID option[value='$EditIDs[2]']", 'css' )->click();
+        $Selenium->find_element( "#ChangeTitle", 'css' )->send_keys(" edit");
+        $Selenium->find_element( "#RichText1",   'css' )->send_keys(" edit");
+        $Selenium->find_element( "#RichText2",   'css' )->send_keys(" edit");
+        $Selenium->execute_script(
+            "\$('#CategoryID').val('$EditIDs[0]').trigger('redraw.InputField').trigger('change');");
+        $Selenium->execute_script("\$('#ImpactID').val('$EditIDs[1]').trigger('redraw.InputField').trigger('change');");
+        $Selenium->execute_script(
+            "\$('#PriorityID').val('$EditIDs[2]').trigger('redraw.InputField').trigger('change');");
         $Selenium->find_element("//button[\@value='Submit'][\@type='submit']")->click();
 
         # switch back window
@@ -196,7 +198,7 @@ $Selenium->RunTest(
 
         # make sure cache is correct
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => 'ITSMChange*' );
-        }
+    }
 
 );
 

@@ -74,22 +74,20 @@ $Selenium->RunTest(
 
         # check for history values upon test change creation
         $Self->True(
-            index( $Selenium->get_page_source(), "New Change (ID=\"$ChangeID)" ) > -1,
+            index( $Selenium->get_page_source(), "New Change (ID=$ChangeID)" ) > -1,
             "New Change (ID=\"$ChangeID) - found",
         );
         $Self->True(
             index(
-                $Selenium->get_page_source(),
-                "&quot;Description&quot;, &quot;Test Description&quot;, &quot;-: New:  &lt;- Old: "
+                $Selenium->get_page_source(), "Description: New: Test Description &lt;- Old: -"
                 ) > -1,
-            "\"Description\", \"Test Description\", \"-: New:  <- Old: - found",
+            "Description: New: Test Description <- Old: - found",
         );
         $Self->True(
             index(
-                $Selenium->get_page_source(),
-                "&quot;Justification&quot;, &quot;Test Justification&quot;, &quot;-: New:  &lt;- Old: "
+                $Selenium->get_page_source(), "Justification: New: Test Justification &lt;- Old: -"
                 ) > -1,
-            "\"Justification\", \"Test Justification\", \"-: New:  <- Old: - found",
+            "Justification: New: Test Justification <- Old:- found",
         );
 
         # delete test created change
@@ -104,7 +102,7 @@ $Selenium->RunTest(
 
         # make sure cache is correct
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => 'ITSMChange*' );
-        }
+    }
 );
 
 1;

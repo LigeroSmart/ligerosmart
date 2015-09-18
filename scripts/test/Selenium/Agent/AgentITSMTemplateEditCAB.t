@@ -156,7 +156,8 @@ $Selenium->RunTest(
         $Selenium->find_element("//*[text()='$AutoCompleteStringManager']")->click();
 
         # test edited CAB template
-        $Selenium->find_element( "#TemplateID option[value='$TemplateID']", 'css' )->click();
+        $Selenium->execute_script(
+            "\$('#TemplateID').val('$TemplateID').trigger('redraw.InputField').trigger('change');");
         $Selenium->find_element("//button[\@type='submit'][\@name='AddCABTemplate']")->click();
 
         # verify that both user and customer are loaded from edited test CAB template
@@ -191,7 +192,7 @@ $Selenium->RunTest(
 
         # make sure cache is correct
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => 'ITSMChange*' );
-        }
+    }
 );
 
 1;

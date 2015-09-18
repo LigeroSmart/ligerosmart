@@ -128,8 +128,9 @@ $Selenium->RunTest(
         }
 
         # select test created work order template and submit
-        $Selenium->find_element( "#TemplateID option[value='$TemplateID']", 'css' )->click();
-        $Selenium->find_element( "#SubmitTemplate",                         'css' )->click();
+        $Selenium->execute_script(
+            "\$('#TemplateID').val('$TemplateID').trigger('redraw.InputField').trigger('change');");
+        $Selenium->find_element( "#SubmitTemplate", 'css' )->click();
 
         $Selenium->switch_to_window( $Handles->[0] );
 
@@ -176,7 +177,7 @@ $Selenium->RunTest(
 
         # make sure the cache is correct
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => 'ITSMChange*' );
-        }
+    }
 );
 
 1;

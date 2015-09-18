@@ -106,11 +106,10 @@ $Selenium->RunTest(
         $Handles = $Selenium->get_window_handles();
         $Selenium->switch_to_window( $Handles->[1] );
 
-        # verify move time slot change
-        my $ExpectedStartMessage
-            = "(ID=\"$WorkOrderID\", \"Planned Start\", \"2010-10-12 00:00:00\", \"2009-10-12 00:00:01)";
-        my $ExpectedEndMessage
-            = "(ID=\"$WorkOrderID\", \"Planned End\", \"2010-10-15 14:59:59\", \"2009-10-15 15:00:00)";
+        # verify    move time slot change
+        sleep 15;
+        my $ExpectedStartMessage = "(ID=$WorkOrderID) Planned Start: New: 2009-10-12 00:00:01 &lt;- Old: -";
+        my $ExpectedEndMessage   = "(ID=$WorkOrderID) Planned End: New: 2009-10-15 15:00:00 &lt;- Old: -";
         $Self->True(
             index( $Selenium->get_page_source(), $ExpectedStartMessage ) > -1,
             "$ExpectedStartMessage - found",
@@ -142,7 +141,7 @@ $Selenium->RunTest(
 
         # make sure the cache is correct
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => 'ITSMChange*' );
-        }
+    }
 
 );
 
