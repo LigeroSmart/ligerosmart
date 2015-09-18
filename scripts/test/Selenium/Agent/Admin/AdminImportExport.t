@@ -97,10 +97,11 @@ $Selenium->RunTest(
             $Element->is_displayed();
         }
         my $ImportExportName = "ImportExport" . $Helper->GetRandomID();
-        $Selenium->find_element( "#Name",                                  'css' )->send_keys($ImportExportName);
-        $Selenium->find_element( "#Object option[value='ITSMConfigItem']", 'css' )->click();
-        $Selenium->find_element( "#Format option[value='CSV']",            'css' )->click();
-        $Selenium->find_element( "#Comment",                               'css' )->send_keys('SeleniumTest');
+        $Selenium->find_element( "#Name", 'css' )->send_keys($ImportExportName);
+        $Selenium->execute_script(
+            "\$('#Object').val('ITSMConfigItem').trigger('redraw.InputField').trigger('change');");
+        $Selenium->execute_script("\$('#Format').val('CSV').trigger('redraw.InputField').trigger('change');");
+        $Selenium->find_element( "#Comment", 'css' )->send_keys('SeleniumTest');
         $Selenium->find_element("//button[\@value='SubmitNext'][\@type='submit']")->click();
 
         # check and inpot step 2 of 5 screen
@@ -112,7 +113,8 @@ $Selenium->RunTest(
             $Element->is_enabled();
             $Element->is_displayed();
         }
-        $Selenium->find_element( "#ClassID option[value='$LocationConfigItemID']", 'css' )->click();
+        $Selenium->execute_script(
+            "\$('#ClassID').val('$LocationConfigItemID').trigger('redraw.InputField').trigger('change');");
         $Selenium->find_element("//button[\@value='SubmitNext'][\@type='submit']")->click();
 
         # check and input step 3 of 5 screen
@@ -124,7 +126,8 @@ $Selenium->RunTest(
             $Element->is_enabled();
             $Element->is_displayed();
         }
-        $Selenium->find_element( "#ColumnSeparator option[value='Comma']", 'css' )->click();
+        $Selenium->execute_script(
+            "\$('#ColumnSeparator').val('Comma').trigger('redraw.InputField').trigger('change');");
         $Selenium->find_element("//button[\@value='SubmitNext'][\@type='submit']")->click();
 
         # check and input step 4 of 5 screen
@@ -182,8 +185,9 @@ $Selenium->RunTest(
         $Selenium->find_element( "#RestrictExport", 'css' )->click();
         $Selenium->find_element( "#Number",         'css' )->send_keys($ConfigItemNumber);
         $Selenium->find_element( "#Name",           'css' )->send_keys($VersionName);
-        $Selenium->find_element( "#DeplStateIDs option[value='$ProductionDeplStateID']", 'css' )->click();
-        $Selenium->find_element( "#InciStateIDs option[value='1']",                      'css' )->click();
+        $Selenium->execute_script(
+            "\$('#DeplStateIDs').val('$ProductionDeplStateID').trigger('redraw.InputField').trigger('change');");
+        $Selenium->execute_script("\$('#InciStateIDs').val('1').trigger('redraw.InputField').trigger('change');");
         $Selenium->find_element("//button[\@value='SubmitNext'][\@type='submit']")->click();
 
         # get needed objects
@@ -310,7 +314,7 @@ $Selenium->RunTest(
             $Success,
             "Export file $ExportFileName - deleted",
         );
-        }
+    }
 );
 
 1;
