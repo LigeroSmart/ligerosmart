@@ -1826,7 +1826,9 @@
 
         {
             # cleanup stats list
-            $Kernel::OM->Get('Kernel::System::Stats')->StatsCleanUp();
+            $Kernel::OM->Get('Kernel::System::Stats')->StatsCleanUp(
+                UserID => 1,
+            );
         }
 
     ]]></CodeUninstall>
