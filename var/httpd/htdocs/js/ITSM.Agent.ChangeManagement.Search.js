@@ -39,15 +39,19 @@ ITSM.Agent.ChangeManagement.Search = (function (TargetNS) {
     TargetNS.AdditionalAttributeSelectionRebuild = function () {
 
         // get original selection with all possible fields and clone it
-        var $AttributeClone = $('#AttributeOrig').clone().attr('id', 'Attribute');
+        var $AttributeClone = $('#AttributeOrig option').clone(),
+            $AttributeSelection = $('#Attribute').empty(),
+            Value;
 
         // strip all already used attributes
-        $AttributeClone.find('option').each(function () {
-            $('#SearchInsert label#' + 'Label' + $(this).attr('value')).remove();
+        $AttributeClone.each(function () {
+            Value = Core.App.EscapeSelector($(this).attr('value'));
+            if (!$('#SearchInsert label#Label' + Value).length) {
+                $AttributeSelection.append($(this));
+            }
         });
 
-        // replace selection with original selection
-        $('#Attribute').replaceWith($AttributeClone);
+        $AttributeSelection.trigger('redraw.InputField');
 
         return true;
     };
@@ -70,7 +74,7 @@ ITSM.Agent.ChangeManagement.Search = (function (TargetNS) {
             $Label.next().clone().appendTo('#SearchInsert')
 
                 // bind click function to remove button now
-                .find('.Remove').bind('click', function () {
+                .find('.RemoveButton').bind('click', function () {
                     var $Element = $(this).parent();
                     TargetNS.SearchAttributeRemove($Element);
 
@@ -110,6 +114,9 @@ ITSM.Agent.ChangeManagement.Search = (function (TargetNS) {
                 });
             });
 
+            // Modernize fields
+            Core.UI.InputFields.Activate($('#SearchInsert'));
+
             // Register event for tree selection dialog
             Core.UI.TreeSelection.InitTreeSelection();
 
@@ -132,33 +139,6 @@ ITSM.Agent.ChangeManagement.Search = (function (TargetNS) {
         $Element.prev().prev().remove();
         $Element.prev().remove();
         $Element.remove();
-    };
-
-    /**
-     * @function
-     * @return nothing
-     *      This function rebuild attribute selection, only show available attributes.
-     */
-    TargetNS.AdditionalAttributeSelectionRebuild = function () {
-
-        // get original selection
-        var $AttributeClone = $('#AttributeOrig').clone();
-        $AttributeClone.attr('id', 'Attribute');
-
-        // strip all already used attributes
-        $AttributeClone.find('option').each(function () {
-            var $Attribute = $(this);
-            $('#SearchInsert label').each(function () {
-                if ($(this).attr('id') === 'Label' + $Attribute.attr('value')) {
-                    $Attribute.remove();
-                }
-            });
-        });
-
-        // replace selection with original selection
-        $('#Attribute').replaceWith($AttributeClone);
-
-        return true;
     };
 
     /**
@@ -292,14 +272,16 @@ ITSM.Agent.ChangeManagement.Search = (function (TargetNS) {
                     $('#SaveProfile').prop('checked', false);
                 }
 
+                Core.UI.InputFields.Activate($('.Dialog:visible'));
+
                 // register add of attribute
-                $('.Add').bind('click', function () {
+                $('.AddButton').bind('click', function () {
                     var Attribute = $('#Attribute').val();
                     TargetNS.SearchAttributeAdd(Attribute);
                     TargetNS.AdditionalAttributeSelectionRebuild();
 
                     // Register event for tree selection dialog
-                    $('.ShowTreeSelection').unbind('click').bind('click', function (Event) {
+                    $('.ShowTreeSelection').unbind('click').bind('click', function () {
                         Core.UI.TreeSelection.ShowTreeSelection($(this));
                         return false;
                     });
