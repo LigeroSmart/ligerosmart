@@ -1372,11 +1372,13 @@ sub _MaskForm {
         Data     => \@Attributes,
         Name     => 'Attribute',
         Multiple => 0,
+        Class    => 'Modernize',
     );
     $Param{AttributesOrigStrg} = $LayoutObject->BuildSelection(
         Data     => \@Attributes,
         Name     => 'AttributeOrig',
         Multiple => 0,
+        Class    => 'Modernize',
     );
 
     # Get a complete list of users
@@ -1396,6 +1398,7 @@ sub _MaskForm {
         Multiple   => 1,
         Size       => 5,
         SelectedID => $Param{CreateBy},
+        Class      => 'Modernize',
     );
 
     # build change manager dropdown
@@ -1405,6 +1408,7 @@ sub _MaskForm {
         Multiple   => 1,
         Size       => 5,
         SelectedID => $Param{ChangeManagerIDs},
+        Class      => 'Modernize',
     );
 
     # build change builder dropdown
@@ -1414,6 +1418,7 @@ sub _MaskForm {
         Multiple   => 1,
         Size       => 5,
         SelectedID => $Param{ChangeBuilderIDs},
+        Class      => 'Modernize',
     );
 
     # get change object
@@ -1430,6 +1435,7 @@ sub _MaskForm {
         Multiple   => 1,
         Size       => 5,
         SelectedID => $Param{CategoryIDs},
+        Class      => 'Modernize',
     );
 
     # get possible Change Impacts
@@ -1443,6 +1449,7 @@ sub _MaskForm {
         Multiple   => 1,
         Size       => 5,
         SelectedID => $Param{ImpactIDs},
+        Class      => 'Modernize',
     );
 
     # get possible Change Priorities
@@ -1456,6 +1463,7 @@ sub _MaskForm {
         Multiple   => 1,
         Size       => 5,
         SelectedID => $Param{PriorityIDs},
+        Class      => 'Modernize',
     );
 
     # get change states
@@ -1468,6 +1476,7 @@ sub _MaskForm {
         Multiple   => 1,
         Size       => 5,
         SelectedID => $Param{ChangeStateIDs},
+        Class      => 'Modernize',
     );
 
     # get workorder agents
@@ -1477,6 +1486,7 @@ sub _MaskForm {
         Multiple   => 1,
         Size       => 5,
         SelectedID => $Param{WorkOrderAgentIDs},
+        Class      => 'Modernize',
     );
 
     # get work order object
@@ -1492,6 +1502,7 @@ sub _MaskForm {
         Multiple   => 1,
         Size       => 5,
         SelectedID => $Param{WorkOrderStateIDs},
+        Class      => 'Modernize',
     );
 
     # get workorder types
@@ -1504,6 +1515,7 @@ sub _MaskForm {
         Multiple   => 1,
         Size       => 5,
         SelectedID => $Param{WorkOrderTypeIDs},
+        Class      => 'Modernize',
     );
 
     # set result output formats
@@ -1515,6 +1527,7 @@ sub _MaskForm {
         },
         Name       => 'ResultForm',
         SelectedID => $Param{ResultForm} || 'Normal',
+        Class      => 'Modernize',
     );
 
     my %Profiles = $SearchProfileObject->SearchProfileList(
@@ -1534,6 +1547,7 @@ sub _MaskForm {
         Name       => 'Profile',
         ID         => 'SearchProfile',
         SelectedID => $Profile,
+        # Do not modernize this field as this causes problems with the automatic focussing of the first element.
     );
 
     # html search mask output
