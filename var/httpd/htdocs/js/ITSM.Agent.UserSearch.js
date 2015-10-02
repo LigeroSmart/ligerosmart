@@ -77,6 +77,7 @@ ITSM.Agent.UserSearch = (function (TargetNS) {
         $(window).on('beforeunload.UserSearch', function () {
             // escape possible colons (:) in element id because jQuery can not handle it in id attribute selectors
             $('#' + Core.App.EscapeSelector($Element.attr('id')) + 'Selected').val('');
+            return;
         });
     };
 
