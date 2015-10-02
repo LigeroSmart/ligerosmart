@@ -74,7 +74,7 @@ ITSM.Agent.UserSearch = (function (TargetNS) {
         }
 
         // On unload remove old selected data. If the page is reloaded (with F5) this data stays in the field and invokes an ajax request otherwise
-        $(window).bind('unload', function () {
+        $(window).on('beforeunload.UserSearch', function () {
             // escape possible colons (:) in element id because jQuery can not handle it in id attribute selectors
             $('#' + Core.App.EscapeSelector($Element.attr('id')) + 'Selected').val('');
         });
