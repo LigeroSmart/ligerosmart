@@ -8,6 +8,7 @@
 
 use strict;
 use warnings;
+
 use utf8;
 
 use vars (qw($Self));
@@ -45,7 +46,7 @@ $Selenium->RunTest(
                 $Element->is_displayed();
             }
         }
-        }
+    }
 );
 
 1;

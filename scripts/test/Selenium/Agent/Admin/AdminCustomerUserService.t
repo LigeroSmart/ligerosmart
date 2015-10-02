@@ -10,6 +10,7 @@
 
 use strict;
 use warnings;
+
 use utf8;
 
 use vars (qw($Self));
@@ -155,13 +156,12 @@ $Selenium->RunTest(
         }
 
         # make sure the cache is correct.
-        for my $Cache (qw( CustomerUser Service )) {
+        for my $Cache (qw(CustomerUser Service)) {
             $Kernel::OM->Get('Kernel::System::Cache')->CleanUp(
                 Type => $Cache,
             );
         }
     }
-
 );
 
 1;
