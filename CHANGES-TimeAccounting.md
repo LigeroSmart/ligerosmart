@@ -1,4 +1,7 @@
-#5.0.0.beta2 2015-??-??
+#5.0.0.rc1 2015-??-??
+ - 2015-10-06 Added Galician language, thanks to the translation team.
+ - 2015-10-06 Added Malay language, thanks to the translation team.
+ - 2015-10-06 Added Serbian language, thanks to the translation team.
 
 #5.0.0.beta1 2015-09-01
  - 2015-08-26 Initial version for OTRS 5
