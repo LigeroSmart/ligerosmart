@@ -26,6 +26,8 @@ sub Data {
     $Self->{Translation}->{'Error while inserting multiple dates!'} = 'Si è verificato un errore nell\'inserimento di date multiple!';
     $Self->{Translation}->{'Successfully inserted entries for several dates!'} = 'Inserimento di date multiple avvenuto con successo!';
     $Self->{Translation}->{'Entered date was invalid! Date was changed to today.'} = 'La data inserita non è valida! E\' stata impostata la data di oggi.';
+    $Self->{Translation}->{'Last Selected Projects.'} = '';
+    $Self->{Translation}->{'All Projects.'} = '';
 
     # Template: AgentTimeAccountingDelete
     $Self->{Translation}->{'Do you really want to delete the Time Accounting of this day?'} =
@@ -121,9 +123,9 @@ sub Data {
     $Self->{Translation}->{'Project report'} = 'Riassunto progetto';
     $Self->{Translation}->{'Go to reporting overview'} = 'Vai al riepilogo di reportistica';
     $Self->{Translation}->{'Currently only active users in this project are shown. To change this behavior, please update setting:'} =
-        '';
+        'Vengono mostrati solo gli utenti attivi di questo progetto. Per cambiare questo comportaento aggiornare il parametro: ';
     $Self->{Translation}->{'Currently all time accounting users are shown. To change this behavior, please update setting:'} =
-        '';
+        'Vengono mostrati tutti gli utenti per la rendicontazione tempo. Per cambiare questo comportamento aggiornare il parametro:';
 
     # Template: AgentTimeAccountingSetting
     $Self->{Translation}->{'Edit Time Accounting Project Settings'} = 'Modificare le configurazioni di gestione del tempo del progetto.';
@@ -139,6 +141,7 @@ sub Data {
     $Self->{Translation}->{'Filter for Projects'} = 'Filtro per progetti';
     $Self->{Translation}->{'Filter for Tasks'} = 'Filtro per compiti';
     $Self->{Translation}->{'Filter for Users'} = 'Filtro per utenti';
+    $Self->{Translation}->{'Time periods can not be deleted.'} = '';
     $Self->{Translation}->{'Project List'} = 'Elenco dei progetti';
     $Self->{Translation}->{'Task List'} = 'Elenco dei compiti';
     $Self->{Translation}->{'Add Task'} = 'Aggiungere compito';
@@ -171,6 +174,19 @@ sub Data {
     $Self->{Translation}->{'View of '} = 'Visualizzazione di  ';
     $Self->{Translation}->{'No data found for this day.'} = 'Nessun dato trovato per questo giorno.';
 
+    # Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+    $Self->{Translation}->{'Last Projects'} = '';
+    $Self->{Translation}->{'Incomplete Working Days'} = '';
+    $Self->{Translation}->{'Last Selected Projects'} = '';
+    $Self->{Translation}->{'All Projects'} = '';
+
+    # Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+    $Self->{Translation}->{'New User'} = '';
+    $Self->{Translation}->{'Period Status'} = '';
+
+    # Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
+    $Self->{Translation}->{'Incomplete working days'} = '';
+
     # SysConfig
     $Self->{Translation}->{'Agent interface notification module to see the number of incomplete working days for the user.'} =
         'Modulo di notifica dell\'interfaccia agente per vedere il numero di giorni lavorativi incompleti per l\'utente';
@@ -194,8 +210,12 @@ sub Data {
     $Self->{Translation}->{'For how many days ago you can insert working units.'} = 'Numero massimo di giorni nel passato in cui è possibile inserire le unità di lavoro.';
     $Self->{Translation}->{'If enabled, only users that has added working time to the selected project are shown.'} =
         'Se abilitato, mostra solo gli utenti che hanno aggiunto voci di tempo lavoro al progetto selezionato.';
-    $Self->{Translation}->{'If enabled, the dropdown elements in the edit screen are changed to autocompletion fields.'} =
-        'Se abilitato, modifica gli elementi nella schermata di modifica a campi con completamento automatico.';
+    $Self->{Translation}->{'If enabled, the dropdown elements in the edit screen are changed to modernized autocompletion fields.'} =
+        '';
+    $Self->{Translation}->{'If enabled, the filter for the previous projects can be used instead two list of projects (last and all ones). It could be used only if TimeAccounting::EnableAutoCompletion is enabled.'} =
+        '';
+    $Self->{Translation}->{'If enabled, the filter for the previous projects is active by default if there are the previous projects. It could be used only if EnableAutoCompletion and TimeAccounting::UseFilter are enabled.'} =
+        '';
     $Self->{Translation}->{'If enabled, the user is allowed to enter "on vacation leave", "on sick leave" and "on overtime leave" to multiple dates at once.'} =
         'Se abilitato, è possibile per gli utenti inserire i campi "periodo di vacanza", "periodo di malattia" e "straordinario" con date multiple.';
     $Self->{Translation}->{'Maximum number of working days after which the working units have to be inserted.'} =

@@ -1,4 +1,5 @@
 #5.0.0.rc1 2015-??-??
+ - 2015-10-07 Updated translation files, thanks to all translators.
  - 2015-10-06 Added Galician language, thanks to the translation team.
  - 2015-10-06 Added Malay language, thanks to the translation team.
  - 2015-10-06 Added Serbian language, thanks to the translation team.

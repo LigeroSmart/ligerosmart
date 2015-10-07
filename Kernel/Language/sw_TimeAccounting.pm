@@ -26,6 +26,8 @@ sub Data {
     $Self->{Translation}->{'Error while inserting multiple dates!'} = 'Kosa katika kuingiza tarehe zaidi ya moja!';
     $Self->{Translation}->{'Successfully inserted entries for several dates!'} = 'Maingizo yaliyofanikiwa kwa tarehe zaidi ya moja!';
     $Self->{Translation}->{'Entered date was invalid! Date was changed to today.'} = 'Ingizo la tarehe ni batili! Tarehe imebadilishwa leo.';
+    $Self->{Translation}->{'Last Selected Projects.'} = '';
+    $Self->{Translation}->{'All Projects.'} = '';
 
     # Template: AgentTimeAccountingDelete
     $Self->{Translation}->{'Do you really want to delete the Time Accounting of this day?'} =
@@ -121,9 +123,9 @@ sub Data {
     $Self->{Translation}->{'Project report'} = 'Ripoti ya mradi';
     $Self->{Translation}->{'Go to reporting overview'} = 'Nenda kwenye mapitio ya uarifu';
     $Self->{Translation}->{'Currently only active users in this project are shown. To change this behavior, please update setting:'} =
-        '';
+        'Kwa sasa watumiaji amilifu tu katika mradi huu wataonyeshwa. Kubadilisha tabia hii, tafadhali sasisha mpangalio.';
     $Self->{Translation}->{'Currently all time accounting users are shown. To change this behavior, please update setting:'} =
-        '';
+        'Kwa sasa watumiaji wote wa muda uliohesabika wataonyeshwa. Kubadilisha tabia hii, tafadhali sasisha mpangalio.';
 
     # Template: AgentTimeAccountingSetting
     $Self->{Translation}->{'Edit Time Accounting Project Settings'} = 'Hariri Uhasibu wa Muda kwenye mipangilio ya mradi';
@@ -139,6 +141,7 @@ sub Data {
     $Self->{Translation}->{'Filter for Projects'} = 'Kichujio cha Miradi';
     $Self->{Translation}->{'Filter for Tasks'} = 'Kichujio cha kazi';
     $Self->{Translation}->{'Filter for Users'} = 'Kichujio cha Watumiaji';
+    $Self->{Translation}->{'Time periods can not be deleted.'} = '';
     $Self->{Translation}->{'Project List'} = 'Orodha ya miradi';
     $Self->{Translation}->{'Task List'} = 'Orodha ya kazi';
     $Self->{Translation}->{'Add Task'} = 'Ongeza kazi';
@@ -171,6 +174,19 @@ sub Data {
     $Self->{Translation}->{'View of '} = 'Muonekano wa';
     $Self->{Translation}->{'No data found for this day.'} = 'Hakuna data zilizopatikana kwa siku hii';
 
+    # Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+    $Self->{Translation}->{'Last Projects'} = '';
+    $Self->{Translation}->{'Incomplete Working Days'} = '';
+    $Self->{Translation}->{'Last Selected Projects'} = '';
+    $Self->{Translation}->{'All Projects'} = '';
+
+    # Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+    $Self->{Translation}->{'New User'} = '';
+    $Self->{Translation}->{'Period Status'} = '';
+
+    # Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
+    $Self->{Translation}->{'Incomplete working days'} = '';
+
     # SysConfig
     $Self->{Translation}->{'Agent interface notification module to see the number of incomplete working days for the user.'} =
         'Moduli ya taarifa kwa kiolesura cha wakala kuona idadi ya siku za kazi za mtumiaji zisizo kamili.';
@@ -194,8 +210,12 @@ sub Data {
     $Self->{Translation}->{'For how many days ago you can insert working units.'} = 'Kwa siku ngapi zilizopita unaweza kuingiza vitengo vya kazi.';
     $Self->{Translation}->{'If enabled, only users that has added working time to the selected project are shown.'} =
         'Kama imewezeshwa, watumiaji walioweka muda wa kazi kwa mradi uliochaguliwa ndio wataonyeshwa';
-    $Self->{Translation}->{'If enabled, the dropdown elements in the edit screen are changed to autocompletion fields.'} =
-        'Kama imewezeshwa, elementi za kushuka chini kwenye skrini ya kuhariri zinajikamilisha moja kwa moja.';
+    $Self->{Translation}->{'If enabled, the dropdown elements in the edit screen are changed to modernized autocompletion fields.'} =
+        '';
+    $Self->{Translation}->{'If enabled, the filter for the previous projects can be used instead two list of projects (last and all ones). It could be used only if TimeAccounting::EnableAutoCompletion is enabled.'} =
+        '';
+    $Self->{Translation}->{'If enabled, the filter for the previous projects is active by default if there are the previous projects. It could be used only if EnableAutoCompletion and TimeAccounting::UseFilter are enabled.'} =
+        '';
     $Self->{Translation}->{'If enabled, the user is allowed to enter "on vacation leave", "on sick leave" and "on overtime leave" to multiple dates at once.'} =
         'Kama imewezeshwa, mtumiaji anaruhusiwa kuingiza "kwenye likizo", "kwenye likizo ya wagonjwa", "kwenye likizo ya siku za nyongeza" kwa tarehe zaidi ya moja kwa mkupuo.';
     $Self->{Translation}->{'Maximum number of working days after which the working units have to be inserted.'} =

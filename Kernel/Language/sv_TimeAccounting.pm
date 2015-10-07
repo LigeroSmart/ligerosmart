@@ -18,7 +18,7 @@ sub Data {
     # Template: AAATimeAccounting
     $Self->{Translation}->{'Time Accounting'} = '';
     $Self->{Translation}->{'Show valid projects'} = '';
-    $Self->{Translation}->{'Show all projects'} = '';
+    $Self->{Translation}->{'Show all projects'} = 'Visa alla projekt';
     $Self->{Translation}->{'TimeAccounting'} = '';
     $Self->{Translation}->{'Reporting'} = '';
     $Self->{Translation}->{'Please insert your working hours!'} = '';
@@ -26,6 +26,8 @@ sub Data {
     $Self->{Translation}->{'Error while inserting multiple dates!'} = '';
     $Self->{Translation}->{'Successfully inserted entries for several dates!'} = '';
     $Self->{Translation}->{'Entered date was invalid! Date was changed to today.'} = '';
+    $Self->{Translation}->{'Last Selected Projects.'} = '';
+    $Self->{Translation}->{'All Projects.'} = '';
 
     # Template: AgentTimeAccountingDelete
     $Self->{Translation}->{'Do you really want to delete the Time Accounting of this day?'} =
@@ -33,7 +35,7 @@ sub Data {
 
     # Template: AgentTimeAccountingEdit
     $Self->{Translation}->{'Edit Time Record'} = '';
-    $Self->{Translation}->{'Go to settings'} = '';
+    $Self->{Translation}->{'Go to settings'} = 'Gå till inställningar';
     $Self->{Translation}->{'Date Navigation'} = '';
     $Self->{Translation}->{'Previous day'} = '';
     $Self->{Translation}->{'Next day'} = '';
@@ -44,7 +46,7 @@ sub Data {
     $Self->{Translation}->{'Please choose the reason for your absence for the selected days'} =
         '';
     $Self->{Translation}->{'On vacation'} = 'På semester';
-    $Self->{Translation}->{'On sick leave'} = '';
+    $Self->{Translation}->{'On sick leave'} = 'Sjukledig';
     $Self->{Translation}->{'On overtime leave'} = '';
     $Self->{Translation}->{'Please choose at least one day!'} = '';
     $Self->{Translation}->{'Please choose a reason for absence!'} = '';
@@ -61,7 +63,7 @@ sub Data {
         '';
     $Self->{Translation}->{'Invalid format! Please enter a time with the format HH:MM.'} = '';
     $Self->{Translation}->{'24:00 is only permitted as end time.'} = '';
-    $Self->{Translation}->{'Invalid time! A day has only 24 hours.'} = '';
+    $Self->{Translation}->{'Invalid time! A day has only 24 hours.'} = 'Ogiltig tid! Ett dygn har bara 24 timmar.';
     $Self->{Translation}->{'End Time'} = '';
     $Self->{Translation}->{'End time must be after start time.'} = '';
     $Self->{Translation}->{'Repeated hours are not allowed. End time matches another interval.'} =
@@ -139,6 +141,7 @@ sub Data {
     $Self->{Translation}->{'Filter for Projects'} = '';
     $Self->{Translation}->{'Filter for Tasks'} = '';
     $Self->{Translation}->{'Filter for Users'} = '';
+    $Self->{Translation}->{'Time periods can not be deleted.'} = '';
     $Self->{Translation}->{'Project List'} = '';
     $Self->{Translation}->{'Task List'} = '';
     $Self->{Translation}->{'Add Task'} = '';
@@ -171,6 +174,19 @@ sub Data {
     $Self->{Translation}->{'View of '} = '';
     $Self->{Translation}->{'No data found for this day.'} = '';
 
+    # Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+    $Self->{Translation}->{'Last Projects'} = '';
+    $Self->{Translation}->{'Incomplete Working Days'} = '';
+    $Self->{Translation}->{'Last Selected Projects'} = '';
+    $Self->{Translation}->{'All Projects'} = '';
+
+    # Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+    $Self->{Translation}->{'New User'} = '';
+    $Self->{Translation}->{'Period Status'} = '';
+
+    # Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
+    $Self->{Translation}->{'Incomplete working days'} = '';
+
     # SysConfig
     $Self->{Translation}->{'Agent interface notification module to see the number of incomplete working days for the user.'} =
         '';
@@ -194,7 +210,11 @@ sub Data {
     $Self->{Translation}->{'For how many days ago you can insert working units.'} = '';
     $Self->{Translation}->{'If enabled, only users that has added working time to the selected project are shown.'} =
         '';
-    $Self->{Translation}->{'If enabled, the dropdown elements in the edit screen are changed to autocompletion fields.'} =
+    $Self->{Translation}->{'If enabled, the dropdown elements in the edit screen are changed to modernized autocompletion fields.'} =
+        '';
+    $Self->{Translation}->{'If enabled, the filter for the previous projects can be used instead two list of projects (last and all ones). It could be used only if TimeAccounting::EnableAutoCompletion is enabled.'} =
+        '';
+    $Self->{Translation}->{'If enabled, the filter for the previous projects is active by default if there are the previous projects. It could be used only if EnableAutoCompletion and TimeAccounting::UseFilter are enabled.'} =
         '';
     $Self->{Translation}->{'If enabled, the user is allowed to enter "on vacation leave", "on sick leave" and "on overtime leave" to multiple dates at once.'} =
         '';

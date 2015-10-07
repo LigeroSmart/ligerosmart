@@ -50,6 +50,14 @@ msgstr ""
 msgid "Entered date was invalid! Date was changed to today."
 msgstr ""
 
+#. Template: AAATimeAccounting
+msgid "Last Selected Projects."
+msgstr ""
+
+#. Template: AAATimeAccounting
+msgid "All Projects."
+msgstr ""
+
 #. Template: AgentTimeAccountingDelete
 msgid "Do you really want to delete the Time Accounting of this day?"
 msgstr ""
@@ -423,6 +431,10 @@ msgid "Filter for Users"
 msgstr ""
 
 #. Template: AgentTimeAccountingSetting
+msgid "Time periods can not be deleted."
+msgstr ""
+
+#. Template: AgentTimeAccountingSetting
 msgid "Project List"
 msgstr ""
 
@@ -534,6 +546,34 @@ msgstr ""
 msgid "No data found for this day."
 msgstr ""
 
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Last Projects"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Incomplete Working Days"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Last Selected Projects"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "All Projects"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "New User"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Period Status"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
+msgid "Incomplete working days"
+msgstr ""
+
 #. SysConfig
 msgid "Agent interface notification module to see the number of incomplete working days for the user."
 msgstr ""
@@ -607,7 +647,15 @@ msgid "If enabled, only users that has added working time to the selected projec
 msgstr ""
 
 #. SysConfig
-msgid "If enabled, the dropdown elements in the edit screen are changed to autocompletion fields."
+msgid "If enabled, the dropdown elements in the edit screen are changed to modernized autocompletion fields."
+msgstr ""
+
+#. SysConfig
+msgid "If enabled, the filter for the previous projects can be used instead two list of projects (last and all ones). It could be used only if TimeAccounting::EnableAutoCompletion is enabled."
+msgstr ""
+
+#. SysConfig
+msgid "If enabled, the filter for the previous projects is active by default if there are the previous projects. It could be used only if EnableAutoCompletion and TimeAccounting::UseFilter are enabled."
 msgstr ""
 
 #. SysConfig

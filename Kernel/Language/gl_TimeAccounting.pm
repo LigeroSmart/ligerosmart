@@ -26,6 +26,8 @@ sub Data {
     $Self->{Translation}->{'Error while inserting multiple dates!'} = 'Erro mentres introducíanse datas múltiples!';
     $Self->{Translation}->{'Successfully inserted entries for several dates!'} = 'Entradas satisfactoriamente introducidas para varias datas!';
     $Self->{Translation}->{'Entered date was invalid! Date was changed to today.'} = 'Data introducida foi invalida! A data foi cambiada a hoxe.';
+    $Self->{Translation}->{'Last Selected Projects.'} = '';
+    $Self->{Translation}->{'All Projects.'} = '';
 
     # Template: AgentTimeAccountingDelete
     $Self->{Translation}->{'Do you really want to delete the Time Accounting of this day?'} =
@@ -139,6 +141,7 @@ sub Data {
     $Self->{Translation}->{'Filter for Projects'} = 'Filtrar por proxectos';
     $Self->{Translation}->{'Filter for Tasks'} = 'Filtrar por tarefas';
     $Self->{Translation}->{'Filter for Users'} = 'Filtrar por usuarios';
+    $Self->{Translation}->{'Time periods can not be deleted.'} = '';
     $Self->{Translation}->{'Project List'} = 'Lista de proxectos';
     $Self->{Translation}->{'Task List'} = 'Lista de tarefas';
     $Self->{Translation}->{'Add Task'} = 'Engadir unha tarefa';
@@ -171,6 +174,19 @@ sub Data {
     $Self->{Translation}->{'View of '} = 'Vista de';
     $Self->{Translation}->{'No data found for this day.'} = 'Non se atoparon datos para este día.';
 
+    # Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+    $Self->{Translation}->{'Last Projects'} = '';
+    $Self->{Translation}->{'Incomplete Working Days'} = '';
+    $Self->{Translation}->{'Last Selected Projects'} = '';
+    $Self->{Translation}->{'All Projects'} = '';
+
+    # Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+    $Self->{Translation}->{'New User'} = '';
+    $Self->{Translation}->{'Period Status'} = '';
+
+    # Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
+    $Self->{Translation}->{'Incomplete working days'} = '';
+
     # SysConfig
     $Self->{Translation}->{'Agent interface notification module to see the number of incomplete working days for the user.'} =
         'Módulo notificación interface de axente para ver o número de días de traballo incompletos para o usuario.';
@@ -194,8 +210,12 @@ sub Data {
     $Self->{Translation}->{'For how many days ago you can insert working units.'} = 'Por cantos días atrás pode insertar unidades de traballo.';
     $Self->{Translation}->{'If enabled, only users that has added working time to the selected project are shown.'} =
         'Se habilitado, só usuarios que engadiron tempo de traballo ao proxecto seleccionado son mostrados.';
-    $Self->{Translation}->{'If enabled, the dropdown elements in the edit screen are changed to autocompletion fields.'} =
-        'Se habilitado, os elementos do despregable na pantalla editar son cambiados por campos autocompletables.';
+    $Self->{Translation}->{'If enabled, the dropdown elements in the edit screen are changed to modernized autocompletion fields.'} =
+        '';
+    $Self->{Translation}->{'If enabled, the filter for the previous projects can be used instead two list of projects (last and all ones). It could be used only if TimeAccounting::EnableAutoCompletion is enabled.'} =
+        '';
+    $Self->{Translation}->{'If enabled, the filter for the previous projects is active by default if there are the previous projects. It could be used only if EnableAutoCompletion and TimeAccounting::UseFilter are enabled.'} =
+        '';
     $Self->{Translation}->{'If enabled, the user is allowed to enter "on vacation leave", "on sick leave" and "on overtime leave" to multiple dates at once.'} =
         'Se habilitado, ao usuario permiteselle introducir "permiso de vacacións" , "permiso por enfermidade" e "permiso por exceso de tempo" para multiples datas dunha vez.';
     $Self->{Translation}->{'Maximum number of working days after which the working units have to be inserted.'} =

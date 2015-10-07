@@ -1,6 +1,7 @@
 # 
 # Translators:
-# Ettore Atalan <atalanttore@googlemail.com>, 2014
+# Ettore Atalan <atalanttore@googlemail.com>, 2014-2015
+# Mainboarder, 2014
 # mathiasbraeunling <mathias.braeunling@otrs.com>, 2014
 # ru_otrs <robert.ullrich@otrs.com>, 2014
 # ru_otrs <robert.ullrich@otrs.com>, 2014
@@ -8,9 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2014-11-21 02:50+0000\n"
+"PO-Revision-Date: 2015-10-07 18:43+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
-"Language-Team: German (http://www.transifex.com/projects/p/OTRS/language/de/)\n"
+"Language-Team: German (http://www.transifex.com/otrs/OTRS/language/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -56,6 +57,14 @@ msgstr "Daten für mehrere Tage erfolgreich erfasst!"
 #. Template: AAATimeAccounting
 msgid "Entered date was invalid! Date was changed to today."
 msgstr "Eingegebenes Datum ungültig! Datum wurde auf 'heute' geändert."
+
+#. Template: AAATimeAccounting
+msgid "Last Selected Projects."
+msgstr ""
+
+#. Template: AAATimeAccounting
+msgid "All Projects."
+msgstr ""
 
 #. Template: AgentTimeAccountingDelete
 msgid "Do you really want to delete the Time Accounting of this day?"
@@ -371,19 +380,19 @@ msgstr "Projektübersicht"
 
 #. Template: AgentTimeAccountingReportingProject
 msgid "Go to reporting overview"
-msgstr "Gehe zur Berichterstattungsübersicht"
+msgstr "Zur Berichterstattungsübersicht gehen"
 
 #. Template: AgentTimeAccountingReportingProject
 msgid ""
 "Currently only active users in this project are shown. To change this "
 "behavior, please update setting:"
-msgstr ""
+msgstr "Derzeit werden in diesem Projekt nur aktive Benutzer angezeigt. Um diese Einstellung zu ändern, bearbeiten Sie bitte:"
 
 #. Template: AgentTimeAccountingReportingProject
 msgid ""
 "Currently all time accounting users are shown. To change this behavior, "
 "please update setting:"
-msgstr ""
+msgstr "Derzeit werden alle zeiterfassenden Benutzer angezeigt. Um diese Einstellung zu ändern, bearbeiten Sie bitte:"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Edit Time Accounting Project Settings"
@@ -395,7 +404,7 @@ msgstr "Projekt hinzufügen"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Go to settings overview"
-msgstr "Gehe zur Einstellungsübersicht"
+msgstr "Zur Einstellungsübersicht gehen"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Add Project"
@@ -433,6 +442,10 @@ msgstr "Filter für Tätigkeiten"
 #. Template: AgentTimeAccountingSetting
 msgid "Filter for Users"
 msgstr "Filter für Benutzer"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Time periods can not be deleted."
+msgstr ""
 
 #. Template: AgentTimeAccountingSetting
 msgid "Project List"
@@ -547,6 +560,34 @@ msgstr "Ansicht von"
 msgid "No data found for this day."
 msgstr "Kein Eintrag für diesen Tag gefunden."
 
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Last Projects"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Incomplete Working Days"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Last Selected Projects"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "All Projects"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "New User"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Period Status"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
+msgid "Incomplete working days"
+msgstr ""
+
 #. SysConfig
 msgid ""
 "Agent interface notification module to see the number of incomplete working "
@@ -631,8 +672,22 @@ msgstr "Wenn aktiviert, werden nur User angezeigt die Arbeitszeiten zu dem gewä
 #. SysConfig
 msgid ""
 "If enabled, the dropdown elements in the edit screen are changed to "
-"autocompletion fields."
-msgstr "Aktiviert die Autocompletion auf den Eingabefeldern im Bearbeiten-Bereich."
+"modernized autocompletion fields."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"If enabled, the filter for the previous projects can be used instead two "
+"list of projects (last and all ones). It could be used only if "
+"TimeAccounting::EnableAutoCompletion is enabled."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"If enabled, the filter for the previous projects is active by default if "
+"there are the previous projects. It could be used only if "
+"EnableAutoCompletion and TimeAccounting::UseFilter are enabled."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -691,7 +746,7 @@ msgstr "Zeitabrechnung Bearbeitung."
 
 #. SysConfig
 msgid "Time accounting overview."
-msgstr "Zeitabrechnung Übersicht."
+msgstr "Zeitabrechnungsübersicht."
 
 #. SysConfig
 msgid "Time accounting reporting."

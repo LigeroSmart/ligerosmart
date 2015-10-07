@@ -26,6 +26,8 @@ sub Data {
     $Self->{Translation}->{'Error while inserting multiple dates!'} = '複数日を入力中にエラーが発生しました !';
     $Self->{Translation}->{'Successfully inserted entries for several dates!'} = '複数日にわたる稼働実績の入力に成功しました !';
     $Self->{Translation}->{'Entered date was invalid! Date was changed to today.'} = '入力された日付は不正です ! 日付は本日に変更されました';
+    $Self->{Translation}->{'Last Selected Projects.'} = '';
+    $Self->{Translation}->{'All Projects.'} = '';
 
     # Template: AgentTimeAccountingDelete
     $Self->{Translation}->{'Do you really want to delete the Time Accounting of this day?'} =
@@ -121,9 +123,9 @@ sub Data {
     $Self->{Translation}->{'Project report'} = 'プロジェクト・レポート';
     $Self->{Translation}->{'Go to reporting overview'} = '報告の概要に移動する';
     $Self->{Translation}->{'Currently only active users in this project are shown. To change this behavior, please update setting:'} =
-        '';
+        '本プロジェクトのアクティブユーザーのみ表示しています、変更するには設定を更新してください。';
     $Self->{Translation}->{'Currently all time accounting users are shown. To change this behavior, please update setting:'} =
-        '';
+        'すべてのタイムアカウントユーザーを表示しています、変更するには設定を更新してください。';
 
     # Template: AgentTimeAccountingSetting
     $Self->{Translation}->{'Edit Time Accounting Project Settings'} = '時間会計 プロジェクト設定の編集';
@@ -139,6 +141,7 @@ sub Data {
     $Self->{Translation}->{'Filter for Projects'} = 'プロジェクトの絞り込み';
     $Self->{Translation}->{'Filter for Tasks'} = 'タスクの絞り込み';
     $Self->{Translation}->{'Filter for Users'} = 'ユーザの絞り込み';
+    $Self->{Translation}->{'Time periods can not be deleted.'} = '';
     $Self->{Translation}->{'Project List'} = 'プロジェクト一覧';
     $Self->{Translation}->{'Task List'} = 'タスク一覧';
     $Self->{Translation}->{'Add Task'} = '新規タスクの追加';
@@ -171,6 +174,19 @@ sub Data {
     $Self->{Translation}->{'View of '} = '一覧';
     $Self->{Translation}->{'No data found for this day.'} = '該当するデータがありません。';
 
+    # Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+    $Self->{Translation}->{'Last Projects'} = '';
+    $Self->{Translation}->{'Incomplete Working Days'} = '';
+    $Self->{Translation}->{'Last Selected Projects'} = '';
+    $Self->{Translation}->{'All Projects'} = '';
+
+    # Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+    $Self->{Translation}->{'New User'} = '';
+    $Self->{Translation}->{'Period Status'} = '';
+
+    # Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
+    $Self->{Translation}->{'Incomplete working days'} = '';
+
     # SysConfig
     $Self->{Translation}->{'Agent interface notification module to see the number of incomplete working days for the user.'} =
         'ユーザの不完全な稼働日数をカウントし通知するエージェント・インターフェイスです。';
@@ -194,8 +210,12 @@ sub Data {
     $Self->{Translation}->{'For how many days ago you can insert working units.'} = '何日前からワーキング・ユニットの新規登録が可能であるかの設定です。';
     $Self->{Translation}->{'If enabled, only users that has added working time to the selected project are shown.'} =
         '有効時には、該当のプロジェクトに稼働時間を投入しているユーザーのみ表示されます';
-    $Self->{Translation}->{'If enabled, the dropdown elements in the edit screen are changed to autocompletion fields.'} =
-        'この項目を「許可」にすると、編集画面内のプルダウンメニューをオートコンプリート機能付きのフォームに変更します。';
+    $Self->{Translation}->{'If enabled, the dropdown elements in the edit screen are changed to modernized autocompletion fields.'} =
+        '';
+    $Self->{Translation}->{'If enabled, the filter for the previous projects can be used instead two list of projects (last and all ones). It could be used only if TimeAccounting::EnableAutoCompletion is enabled.'} =
+        '';
+    $Self->{Translation}->{'If enabled, the filter for the previous projects is active by default if there are the previous projects. It could be used only if EnableAutoCompletion and TimeAccounting::UseFilter are enabled.'} =
+        '';
     $Self->{Translation}->{'If enabled, the user is allowed to enter "on vacation leave", "on sick leave" and "on overtime leave" to multiple dates at once.'} =
         '有効にすれば一回の編集で、複数の日に渡り「休暇」「病欠」「代休」が選択できます';
     $Self->{Translation}->{'Maximum number of working days after which the working units have to be inserted.'} =

@@ -26,6 +26,8 @@ sub Data {
     $Self->{Translation}->{'Error while inserting multiple dates!'} = 'Fehler bei der Eingabe für mehrere Tage!';
     $Self->{Translation}->{'Successfully inserted entries for several dates!'} = 'Daten für mehrere Tage erfolgreich erfasst!';
     $Self->{Translation}->{'Entered date was invalid! Date was changed to today.'} = 'Eingegebenes Datum ungültig! Datum wurde auf \'heute\' geändert.';
+    $Self->{Translation}->{'Last Selected Projects.'} = '';
+    $Self->{Translation}->{'All Projects.'} = '';
 
     # Template: AgentTimeAccountingDelete
     $Self->{Translation}->{'Do you really want to delete the Time Accounting of this day?'} =
@@ -119,16 +121,16 @@ sub Data {
 
     # Template: AgentTimeAccountingReportingProject
     $Self->{Translation}->{'Project report'} = 'Projektübersicht';
-    $Self->{Translation}->{'Go to reporting overview'} = 'Gehe zur Berichterstattungsübersicht';
+    $Self->{Translation}->{'Go to reporting overview'} = 'Zur Berichterstattungsübersicht gehen';
     $Self->{Translation}->{'Currently only active users in this project are shown. To change this behavior, please update setting:'} =
-        '';
+        'Derzeit werden in diesem Projekt nur aktive Benutzer angezeigt. Um diese Einstellung zu ändern, bearbeiten Sie bitte:';
     $Self->{Translation}->{'Currently all time accounting users are shown. To change this behavior, please update setting:'} =
-        '';
+        'Derzeit werden alle zeiterfassenden Benutzer angezeigt. Um diese Einstellung zu ändern, bearbeiten Sie bitte:';
 
     # Template: AgentTimeAccountingSetting
     $Self->{Translation}->{'Edit Time Accounting Project Settings'} = 'Zeitabrechnung-Projekteinstellungen bearbeiten';
     $Self->{Translation}->{'Add project'} = 'Projekt hinzufügen';
-    $Self->{Translation}->{'Go to settings overview'} = 'Gehe zur Einstellungsübersicht';
+    $Self->{Translation}->{'Go to settings overview'} = 'Zur Einstellungsübersicht gehen';
     $Self->{Translation}->{'Add Project'} = 'Projekt hinzufügen';
     $Self->{Translation}->{'Edit Project Settings'} = 'Projekteinstellungen bearbeiten';
     $Self->{Translation}->{'There is already a project with this name. Please, choose a different one.'} =
@@ -139,6 +141,7 @@ sub Data {
     $Self->{Translation}->{'Filter for Projects'} = 'Filter für Projekte';
     $Self->{Translation}->{'Filter for Tasks'} = 'Filter für Tätigkeiten';
     $Self->{Translation}->{'Filter for Users'} = 'Filter für Benutzer';
+    $Self->{Translation}->{'Time periods can not be deleted.'} = '';
     $Self->{Translation}->{'Project List'} = 'Projektliste';
     $Self->{Translation}->{'Task List'} = 'Tätigkeitsliste';
     $Self->{Translation}->{'Add Task'} = 'Tätigkeit hinzufügen';
@@ -171,6 +174,19 @@ sub Data {
     $Self->{Translation}->{'View of '} = 'Ansicht von';
     $Self->{Translation}->{'No data found for this day.'} = 'Kein Eintrag für diesen Tag gefunden.';
 
+    # Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+    $Self->{Translation}->{'Last Projects'} = '';
+    $Self->{Translation}->{'Incomplete Working Days'} = '';
+    $Self->{Translation}->{'Last Selected Projects'} = '';
+    $Self->{Translation}->{'All Projects'} = '';
+
+    # Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+    $Self->{Translation}->{'New User'} = '';
+    $Self->{Translation}->{'Period Status'} = '';
+
+    # Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
+    $Self->{Translation}->{'Incomplete working days'} = '';
+
     # SysConfig
     $Self->{Translation}->{'Agent interface notification module to see the number of incomplete working days for the user.'} =
         'Modul zum Anzeigen der Anzahl der unvollständigen Arbeitstage des Benutzers.';
@@ -194,8 +210,12 @@ sub Data {
     $Self->{Translation}->{'For how many days ago you can insert working units.'} = 'Legt fest, bis wann man in ältere Zeiteinträge bearbeiten kann (z. B. 10 Tage zurückliegend).';
     $Self->{Translation}->{'If enabled, only users that has added working time to the selected project are shown.'} =
         'Wenn aktiviert, werden nur User angezeigt die Arbeitszeiten zu dem gewählten Projekt hinzugefügt haben.';
-    $Self->{Translation}->{'If enabled, the dropdown elements in the edit screen are changed to autocompletion fields.'} =
-        'Aktiviert die Autocompletion auf den Eingabefeldern im Bearbeiten-Bereich.';
+    $Self->{Translation}->{'If enabled, the dropdown elements in the edit screen are changed to modernized autocompletion fields.'} =
+        '';
+    $Self->{Translation}->{'If enabled, the filter for the previous projects can be used instead two list of projects (last and all ones). It could be used only if TimeAccounting::EnableAutoCompletion is enabled.'} =
+        '';
+    $Self->{Translation}->{'If enabled, the filter for the previous projects is active by default if there are the previous projects. It could be used only if EnableAutoCompletion and TimeAccounting::UseFilter are enabled.'} =
+        '';
     $Self->{Translation}->{'If enabled, the user is allowed to enter "on vacation leave", "on sick leave" and "on overtime leave" to multiple dates at once.'} =
         'Wenn aktiviert,  können Benutzer "im Urlaub", "Erkrankt" und "Überstunden" an mehreren Tagen auf einmal setzen.';
     $Self->{Translation}->{'Maximum number of working days after which the working units have to be inserted.'} =
@@ -213,7 +233,7 @@ sub Data {
     $Self->{Translation}->{'This notification module gives a warning if there are too many incomplete working days.'} =
         'Modul, dass den Agent im Notification-Bereich des Agent-Interfaces darüber informiert, wenn schon zu lange keine Stunden mehr eingetragen wurden.';
     $Self->{Translation}->{'Time accounting edit.'} = 'Zeitabrechnung Bearbeitung.';
-    $Self->{Translation}->{'Time accounting overview.'} = 'Zeitabrechnung Übersicht.';
+    $Self->{Translation}->{'Time accounting overview.'} = 'Zeitabrechnungsübersicht.';
     $Self->{Translation}->{'Time accounting reporting.'} = 'Zeitabrechnung Berichterstattung.';
     $Self->{Translation}->{'Time accounting settings.'} = 'Zeitabrechnung Einstellungen.';
     $Self->{Translation}->{'Time accounting view.'} = 'Zeitabrechnung Ansicht.';

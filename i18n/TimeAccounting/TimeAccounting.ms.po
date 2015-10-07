@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-10-01 03:12+0000\n"
-"Last-Translator: KENNY CHEAH <otrssdnbhd@gmail.com>\n"
+"PO-Revision-Date: 2015-10-07 18:43+0000\n"
+"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Malay (http://www.transifex.com/otrs/OTRS/language/ms/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -53,6 +53,14 @@ msgstr "Berjaya dimasukkan penyertaan untuk beberapa tarikh!"
 #. Template: AAATimeAccounting
 msgid "Entered date was invalid! Date was changed to today."
 msgstr "Tarikh yang dimasukkan tidak sah! Tarikh telah ditukar kepada hari ini."
+
+#. Template: AAATimeAccounting
+msgid "Last Selected Projects."
+msgstr ""
+
+#. Template: AAATimeAccounting
+msgid "All Projects."
+msgstr ""
 
 #. Template: AgentTimeAccountingDelete
 msgid "Do you really want to delete the Time Accounting of this day?"
@@ -432,6 +440,10 @@ msgid "Filter for Users"
 msgstr "Tapis bagi pengguna"
 
 #. Template: AgentTimeAccountingSetting
+msgid "Time periods can not be deleted."
+msgstr ""
+
+#. Template: AgentTimeAccountingSetting
 msgid "Project List"
 msgstr "Senarai projek"
 
@@ -544,6 +556,34 @@ msgstr "Pandangan"
 msgid "No data found for this day."
 msgstr "Tiada data dijumpai pada hari ini."
 
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Last Projects"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Incomplete Working Days"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Last Selected Projects"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "All Projects"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "New User"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Period Status"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
+msgid "Incomplete working days"
+msgstr ""
+
 #. SysConfig
 msgid ""
 "Agent interface notification module to see the number of incomplete working "
@@ -628,8 +668,22 @@ msgstr "Jika dibolehkan, hanya pengguna yang telah ditambah masa kerja untuk pro
 #. SysConfig
 msgid ""
 "If enabled, the dropdown elements in the edit screen are changed to "
-"autocompletion fields."
-msgstr "Jika dibolehkan, unsur-unsur kotak pilihan dalam skrin sunting ditukar kepada bidang penyiapan secara automatik ."
+"modernized autocompletion fields."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"If enabled, the filter for the previous projects can be used instead two "
+"list of projects (last and all ones). It could be used only if "
+"TimeAccounting::EnableAutoCompletion is enabled."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"If enabled, the filter for the previous projects is active by default if "
+"there are the previous projects. It could be used only if "
+"EnableAutoCompletion and TimeAccounting::UseFilter are enabled."
+msgstr ""
 
 #. SysConfig
 msgid ""
