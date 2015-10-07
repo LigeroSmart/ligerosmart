@@ -135,6 +135,11 @@ $Selenium->RunTest(
         # navigate to AgentTimeAccountingEdit
         $Selenium->get("${ScriptAlias}index.pl?Action=AgentTimeAccountingEdit");
 
+        # wait until form has loaded, if necessary
+        $Selenium->WaitFor(
+            JavaScript => "return typeof(\$) === 'function' && \$('#DeleteTimeAccountingEntry').length"
+        );
+
         # add additional row
         $Selenium->find_element("//button[\@id='MoreInputFields'][\@type='button']")->click();
 
@@ -159,11 +164,10 @@ $Selenium->RunTest(
         }
 
         # edit time accounting for test created user
-        $Selenium->find_element( "#ProjectID1_Search", 'css' )->click();
-        sleep 1;
-        $Selenium->find_element("//*[text()='$ProjectTitle']")->click();
-        $Selenium->find_element( "#ActionID1_Search", 'css' )->click();
-        sleep 1;
+        $Selenium->execute_script(
+            "\$('#ProjectID1').val('$ProjectID').trigger('redraw.InputField').trigger('change');"
+        );
+        $Selenium->execute_script("\$('#ActionID1').val('$ActionID').trigger('redraw.InputField').trigger('change');");
         $Selenium->find_element("//*[text()='$ActionTitle']")->click();
         $Selenium->find_element( "#StartTime1", 'css' )->send_keys('10:00');
         $Selenium->find_element( "#EndTime1",   'css' )->send_keys('16:00');

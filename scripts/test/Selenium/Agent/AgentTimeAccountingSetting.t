@@ -114,11 +114,13 @@ $Selenium->RunTest(
             "$ActionTitle - found",
         );
 
+        # wait until form has loaded, if necessary
+        $Selenium->WaitFor( JavaScript => "return typeof(\$) === 'function' && \$('#NewUserID').length" );
+
         # add test user to time account setting
-        my $AutoCompleteUser = "$TestUser $TestUser";
-        $Selenium->find_element( "#NewUserID_Search", 'css' )->click();
-        sleep 1;
-        $Selenium->find_element("//*[text()='$AutoCompleteUser']")->click();
+        $Selenium->execute_script(
+            "\$('#NewUserID').val('$TestUserID').trigger('redraw.InputField').trigger('change');"
+        );
         $Selenium->find_element("//button[\@value='New user'][\@type='submit']")->click();
 
         # check edit user page
