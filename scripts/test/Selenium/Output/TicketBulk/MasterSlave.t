@@ -116,6 +116,11 @@ $Selenium->RunTest(
         $Selenium->switch_to_window( $Handles->[1] );
         $Selenium->WaitFor( WindowCount => 2 );
 
+        # wait until form has loaded, if necessary
+        $Selenium->WaitFor(
+            JavaScript => "return typeof(\$) === 'function' && \$('#DynamicField_MasterSlave').length"
+        );
+
         # set test ticket as master ticket
         $Selenium->execute_script(
             "\$('#DynamicField_MasterSlave').val('Master').trigger('redraw.InputField').trigger('change');"
@@ -135,6 +140,11 @@ $Selenium->RunTest(
         $Handles = $Selenium->get_window_handles();
         $Selenium->switch_to_window( $Handles->[1] );
         $Selenium->WaitFor( WindowCount => 2 );
+
+        # wait until form has loaded, if necessary
+        $Selenium->WaitFor(
+            JavaScript => "return typeof(\$) === 'function' && \$('#DynamicField_MasterSlave').length"
+        );
 
         # set test tickets as slave tickets
         my $SlaveAutoComplete = "Slave of Ticket#$TicketNumbers[0]: $TicketTitle";

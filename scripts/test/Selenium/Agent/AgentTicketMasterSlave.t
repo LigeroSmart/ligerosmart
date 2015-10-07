@@ -115,9 +115,9 @@ $Selenium->RunTest(
         }
 
         # set first test ticket as master ticket
-        $Selenium->find_element( "#DynamicField_MasterSlave_Search", 'css' )->click();
-        $Selenium->WaitFor( JavaScript => 'return $("a.jstree-anchor:visible").length' );
-        $Selenium->find_element("//*[text()='New Master Ticket']")->click();
+        $Selenium->execute_script(
+            "\$('#DynamicField_MasterSlave').val('Master').trigger('redraw.InputField').trigger('change');"
+        );
         $Selenium->find_element( "#RichText", 'css' )->send_keys('Selenium Master Ticket');
         $Selenium->find_element("//button[\@id='submitRichText'][\@type='submit']")->click();
 
@@ -141,10 +141,9 @@ $Selenium->RunTest(
         $Handles = $Selenium->get_window_handles();
         $Selenium->switch_to_window( $Handles->[1] );
 
-        my $SlaveAutoComplete = "Slave of Ticket#$TicketNumbers[0]: Selenium Ticket";
-        $Selenium->find_element( "#DynamicField_MasterSlave_Search", 'css' )->click();
-        $Selenium->WaitFor( JavaScript => 'return $("a.jstree-anchor:visible").length' );
-        $Selenium->find_element("//*[text()='$SlaveAutoComplete']")->click();
+        $Selenium->execute_script(
+            "\$('#DynamicField_MasterSlave').val('SlaveOf:$TicketNumbers[0]').trigger('redraw.InputField').trigger('change');"
+        );
         $Selenium->find_element( "#RichText", 'css' )->send_keys('Selenium Slave Ticket');
         $Selenium->find_element("//button[\@id='submitRichText'][\@type='submit']")->click();
 
