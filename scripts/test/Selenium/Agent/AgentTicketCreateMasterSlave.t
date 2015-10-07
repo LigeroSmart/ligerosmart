@@ -76,6 +76,11 @@ $Selenium->RunTest(
         # navigate to AgentTicketPhone screen
         $Selenium->get("${ScriptAlias}index.pl?Action=AgentTicketPhone");
 
+        # wait until form has loaded, if necessary
+        $Selenium->WaitFor(
+            JavaScript => "return typeof(\$) === 'function' && \$('#DynamicField_MasterSlave').length"
+        );
+
         # create master test phone ticket
         my $AutoCompleteStringPhone
             = "\"$TestCustomerLoginPhone $TestCustomerLoginPhone\" <$TestCustomerLoginPhone\@localunittest.com> ($TestCustomerLoginPhone)";
@@ -109,6 +114,11 @@ $Selenium->RunTest(
 
         # navigate to AgentTicketEmail screen
         $Selenium->get("${ScriptAlias}index.pl?Action=AgentTicketEmail");
+
+        # wait until form has loaded, if necessary
+        $Selenium->WaitFor(
+            JavaScript => "return typeof(\$) === 'function' && \$('#DynamicField_MasterSlave').length"
+        );
 
         # create slave test email ticket
         my $AutoCompleteStringEmail
