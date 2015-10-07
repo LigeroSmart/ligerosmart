@@ -105,14 +105,12 @@
 <!-- *************** -->
 <chapter>
     <title>Installation</title>
-    <para>
-        The following instructions explain how to install the package.
-    </para>
+    <para>The following instructions explain how to install the package.</para>
     <section>
         <title>Admin Interface</title>
         <para>
-            Please use the following URL to install the package utilizing the admin interface
-            (please note that you need to be in the admin group).
+            Please use the following URL to install the package utilizing the Admin Interface
+            (please note that you need to be in the "admin" group).
         </para>
         <para>
             <ulink url="http://localhost/otrs/index.pl?Action=AdminPackageManager">
@@ -124,11 +122,11 @@
         <title>Command Line</title>
         <para>
             Whenever you cannot use the Admin Interface for whatever reason, you may use the
-            following command line tool ("bin/otrs.PackageManager.pl") instead.
+            following command line tool ("bin/otrs.Console.pl Admin::Package::Install") instead.
         </para>
         <para>
             <screen>
-shell> bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
+shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
             </screen>
         </para>
     </section>
@@ -259,7 +257,7 @@ $Self->{'CloneDB::TargetDBSettings'} =  {
                     </para>
                 </listitem>
                 <listitem>
-                    <para>Run the <filename>bin/otrs.CloneDB.pl</filename> script.</para>
+                    <para>Run the <filename>bin/otrs.Console.pl Maint::Database::Clone --clone</filename> console command.</para>
                 </listitem>
                 <listitem>
                     <para>Verify the result.</para>
@@ -279,9 +277,6 @@ $Self->{'CloneDB::TargetDBSettings'} =  {
     <title>Technical Implementation Details</title>
     <section>
         <title>OTRS Clone DB</title>
-        <para>
-            <filename>bin/otrs.CloneDB.pl</filename>: This is the script that triggers the cloning of the databases.
-        </para>
         <para>
             <filename>Kernel/Config/Files/OTRSCloneDB.xml</filename>: Holds all the needed settings for this package.
         </para>
@@ -305,12 +300,14 @@ $Self->{'CloneDB::TargetDBSettings'} =  {
             <filename>Kernel/System/CloneDB/Driver/postgresql</filename>: Implement Backend functions for postgresql
             database.
         </para>
-
+        <para>
+            <filename>Kernel/System/Console/Command/Maint/Database/Clone.pm</filename>: This is the console command that triggers the cloning of the databases.
+        </para>
     </section>
 </chapter>
 
 <!-- *********** -->
-<!-- 8. Filelist -->
+<!-- 8. File List -->
 <!-- *********** -->
 <chapter>
     <title>File List</title>
@@ -336,40 +333,10 @@ $Self->{'CloneDB::TargetDBSettings'} =  {
             each example.
         </para>
     </section>
-<!-- No Unit Tests
-   <section>
-        <title>Unit Test</title>
-        <para>
-            To ensure the quality of the module, several so-called unit tests were created, to test
-            the functionalities of this module. These unit tests can be run via command line.
-        </para>
-        <para>
-            ATTENTION: Please never run unit tests on a productive system, since the added test
-            data to the system will no longer be removed. Always use a test system.
-        </para>
-        <para>Run the package specific unit tests</para>
-        <para>
-            To run only the unit test which will be delivered with this package, use the following
-            command on the command line:
-        </para>
-        <para>
-            <screen>
-shell> perl bin/otrs.UnitTest.pl -n OTRSCloneDB
-            </screen>
-        </para>
-        <para>Run all available unit tests</para>
-        <para>
-            To run all available unit tests, use the following command on the command line:
-        </para>
-        <para>
-            <screen>shell> perl bin/otrs.UnitTest.pl</screen>
-        </para>
-    </section>
--->
 </chapter>
 
 <!-- ************* -->
-<!-- 10. Changelog -->
+<!-- 10. Change Log -->
 <!-- ************* -->
 <chapter>
     <title>Change Log</title>

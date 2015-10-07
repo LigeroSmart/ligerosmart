@@ -1,5 +1,4 @@
 # --
-# Kernel/System/CloneDB/Backend.pm - Interface for CloneDB backends
 # Copyright (C) 2001-2015 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
