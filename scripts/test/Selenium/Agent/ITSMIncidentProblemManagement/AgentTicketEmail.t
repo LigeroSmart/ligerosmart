@@ -135,7 +135,8 @@ $Selenium->RunTest(
             "#PriorityID stored value",
         );
         $Selenium->execute_script(
-            "\$('#DynamicField_ITSMImpact').val('1 very low').trigger('redraw.InputField').trigger('change');");
+            "\$('#DynamicField_ITSMImpact').val('1 very low').trigger('redraw.InputField').trigger('change');"
+        );
         $Selenium->WaitFor( JavaScript => "return \$('#PriorityID option[value=\"3\"]').length;" );
 
         $Self->Is(
@@ -255,7 +256,7 @@ $Selenium->RunTest(
                 Type => $Cache,
             );
         }
-    }
+        }
 );
 
 1;

@@ -94,7 +94,8 @@ $Selenium->RunTest(
 
         # close ticket and set review required
         $Selenium->execute_script(
-            "\$('#DynamicField_ITSMReviewRequired').val('Yes').trigger('redraw.InputField').trigger('change');");
+            "\$('#DynamicField_ITSMReviewRequired').val('Yes').trigger('redraw.InputField').trigger('change');"
+        );
         $Selenium->find_element( "#Subject",  'css' )->send_keys('Selenium Test');
         $Selenium->find_element( "#RichText", 'css' )->send_keys('ReviewRequired');
         $Selenium->find_element("//button[\@type='submit']")->click();
@@ -111,7 +112,8 @@ $Selenium->RunTest(
 
         # close ticket and set review required
         $Selenium->execute_script(
-            "\$('#DynamicField_ITSMReviewRequired').val('Yes').trigger('redraw.InputField').trigger('change');");
+            "\$('#DynamicField_ITSMReviewRequired').val('Yes').trigger('redraw.InputField').trigger('change');"
+        );
         $Selenium->find_element( "#Subject",  'css' )->send_keys('Selenium Test');
         $Selenium->find_element( "#RichText", 'css' )->send_keys('ReviewRequired');
         $Selenium->find_element("//button[\@type='submit']")->click();
@@ -124,7 +126,8 @@ $Selenium->RunTest(
         # select review required and title search field
         my $ReviewRequiredID = "Search_DynamicField_ITSMReviewRequired";
         $Selenium->execute_script(
-            "\$('#Attribute').val('$ReviewRequiredID').trigger('redraw.InputField').trigger('change');");
+            "\$('#Attribute').val('$ReviewRequiredID').trigger('redraw.InputField').trigger('change');"
+        );
         $Selenium->find_element( ".AddButton", 'css' )->click();
         $Selenium->execute_script("\$('#Attribute').val('Title').trigger('redraw.InputField').trigger('change');");
         $Selenium->find_element( ".AddButton", 'css' )->click();
@@ -132,7 +135,8 @@ $Selenium->RunTest(
         # search tickets by review required and ticket title
         $Selenium->find_element("//input[\@name='Title']")->send_keys($TicketTitle);
         $Selenium->execute_script(
-            "\$('#$ReviewRequiredID').val('Yes').trigger('redraw.InputField').trigger('change');");
+            "\$('#$ReviewRequiredID').val('Yes').trigger('redraw.InputField').trigger('change');"
+        );
         $Selenium->find_element( "#SearchFormSubmit", 'css' )->click();
 
         # wait for search to complete
@@ -162,7 +166,7 @@ $Selenium->RunTest(
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp(
             Type => 'Ticket',
         );
-    }
+        }
 );
 
 1;

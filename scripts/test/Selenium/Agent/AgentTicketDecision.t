@@ -78,7 +78,8 @@ $Selenium->RunTest(
 
         # change decision result and date
         $Selenium->execute_script(
-            "\$('#DynamicField_ITSMDecisionResult').val('Rejected').trigger('redraw.InputField').trigger('change');");
+            "\$('#DynamicField_ITSMDecisionResult').val('Rejected').trigger('redraw.InputField').trigger('change');"
+        );
         $Selenium->find_element( "#DynamicField_ITSMDecisionDateUsed", 'css' )->click();
         $Selenium->find_element("//button[\@type='submit']")->click();
 
@@ -115,7 +116,7 @@ $Selenium->RunTest(
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp(
             Type => 'Ticket',
         );
-    }
+        }
 );
 
 1;
