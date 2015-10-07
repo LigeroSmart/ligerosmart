@@ -9,9 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-07-10 17:18+0000\n"
+"PO-Revision-Date: 2015-10-07 18:17+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
-"Language-Team: Swahili (http://www.transifex.com/p/OTRS/language/sw/)\n"
+"Language-Team: Swahili (http://www.transifex.com/otrs/OTRS/language/sw/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -264,6 +264,10 @@ msgstr "Makala ya Maswali"
 msgid "No subcategories found."
 msgstr "Hakuna vijisehemu vilivyopatikana."
 
+#. Template: AgentFAQHistory
+msgid "History of"
+msgstr "Historia ya"
+
 #. Template: AgentFAQJournalOverviewSmall
 msgid "No FAQ Journal data found."
 msgstr "Data za jarida la maswali hazijapatikana."
@@ -316,18 +320,6 @@ msgstr "Makala ya maswali kwa ukurasa"
 #. Template: AgentFAQOverviewSmall
 msgid "No FAQ data found."
 msgstr "Hakuna data za maswali"
-
-#. Template: AgentFAQPrint
-msgid "FAQ-Info"
-msgstr "Taarifa ya maswali"
-
-#. Template: AgentFAQPrint
-msgid "Votes"
-msgstr "Kura"
-
-#. Template: AgentFAQPrint
-msgid "Last update"
-msgstr "Mabadiliko ya mwisho"
 
 #. Template: AgentFAQSearch
 msgid "Keyword"
@@ -438,6 +430,10 @@ msgid "out of 5"
 msgstr "Kati ya 5"
 
 #. Template: AgentFAQZoom
+msgid "Votes"
+msgstr "Kura"
+
+#. Template: AgentFAQZoom
 msgid "No votes found!"
 msgstr "Hakuna Kura zilizopatika"
 
@@ -545,6 +541,26 @@ msgstr "Umma"
 #. Template: PublicFAQSearchResultShort
 msgid "Back to FAQ Explorer"
 msgstr "Back to FAQ mchunguzi"
+
+#. Perl Module: Kernel/Modules/AgentFAQJournal.pm
+msgid "FAQ Journal"
+msgstr "Jarida la maswali"
+
+#. Perl Module: Kernel/Modules/AgentFAQPrint.pm
+msgid "Last update"
+msgstr "Mabadiliko ya mwisho"
+
+#. Perl Module: Kernel/Modules/AgentFAQPrint.pm
+msgid "FAQ Dynamic Fields"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "No Result!"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
+msgid "This article is empty!"
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -837,10 +853,6 @@ msgid "Enable voting mechanism on FAQ module."
 msgstr "Wezesha "
 
 #. SysConfig
-msgid "FAQ Journal"
-msgstr "Jarida la maswali"
-
-#. SysConfig
 msgid "FAQ Journal Overview \"Small\" Limit"
 msgstr " Kikomo \"kidogo\" cha mapitio ya jarida la maswali yaliyoulizwa mara kwa mara"
 
@@ -855,10 +867,6 @@ msgstr "Upeo wa maswali yanayoulizwa mara kwa mara kwa ukurasa kwa mapitio ya ja
 #. SysConfig
 msgid "FAQ limit per page for FAQ Overview \"Small\""
 msgstr "Upeo wa maswali yanayoulizwa mara kwa mara kwa ukurasa kwa mapitio  ya maswali yanayoulizwa mara kwa mara. ''Ndogo''."
-
-#. SysConfig
-msgid "FAQ path separator."
-msgstr "Kitenganishi cha njia ya maswali yaliyoulizwa mara kwa mara. "
 
 #. SysConfig
 msgid "FAQ search backend router of the agent interface."

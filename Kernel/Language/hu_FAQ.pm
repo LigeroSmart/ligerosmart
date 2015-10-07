@@ -89,6 +89,9 @@ sub Data {
     $Self->{Translation}->{'FAQ Articles'} = 'GyIK bejegyzések';
     $Self->{Translation}->{'No subcategories found.'} = 'Nem találhatók alkategóriák.';
 
+    # Template: AgentFAQHistory
+    $Self->{Translation}->{'History of'} = 'Előzmények';
+
     # Template: AgentFAQJournalOverviewSmall
     $Self->{Translation}->{'No FAQ Journal data found.'} = 'Nem találhatók GyIK napló adatok.';
 
@@ -111,11 +114,6 @@ sub Data {
 
     # Template: AgentFAQOverviewSmall
     $Self->{Translation}->{'No FAQ data found.'} = 'Nem találhatók GyIK adatok.';
-
-    # Template: AgentFAQPrint
-    $Self->{Translation}->{'FAQ-Info'} = 'GyIK információk';
-    $Self->{Translation}->{'Votes'} = 'Szavazatok';
-    $Self->{Translation}->{'Last update'} = 'Utolsó frissítés';
 
     # Template: AgentFAQSearch
     $Self->{Translation}->{'Keyword'} = 'Kulcsszó';
@@ -151,6 +149,7 @@ sub Data {
     $Self->{Translation}->{'FAQ Information'} = 'GyIK információk';
     $Self->{Translation}->{'Rating'} = 'Értékelés';
     $Self->{Translation}->{'out of 5'} = '5-ből';
+    $Self->{Translation}->{'Votes'} = 'Szavazatok';
     $Self->{Translation}->{'No votes found!'} = 'Nem találhatók szavazatok!';
     $Self->{Translation}->{'No votes found! Be the first one to rate this FAQ article.'} = 'Nem találhatók szavazatok! Legyen az első, aki értékeli ezt a GyIK bejegyzést.';
     $Self->{Translation}->{'Download Attachment'} = 'Melléklet letöltése';
@@ -191,6 +190,19 @@ sub Data {
 
     # Template: PublicFAQSearchResultShort
     $Self->{Translation}->{'Back to FAQ Explorer'} = 'Vissza a GyIK böngészőhöz';
+
+    # Perl Module: Kernel/Modules/AgentFAQJournal.pm
+    $Self->{Translation}->{'FAQ Journal'} = 'GyIK napló';
+
+    # Perl Module: Kernel/Modules/AgentFAQPrint.pm
+    $Self->{Translation}->{'Last update'} = 'Utolsó frissítés';
+    $Self->{Translation}->{'FAQ Dynamic Fields'} = '';
+
+    # Perl Module: Kernel/Modules/AgentFAQSearch.pm
+    $Self->{Translation}->{'No Result!'} = '';
+
+    # Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
+    $Self->{Translation}->{'This article is empty!'} = '';
 
     # SysConfig
     $Self->{Translation}->{'A filter for HTML output to add links behind a defined string. The element Image allows two input kinds. First the name of an image (e.g. faq.png). In this case the OTRS image path will be used. The second possibility is to insert the link to the image.'} =
@@ -286,12 +298,10 @@ sub Data {
     $Self->{Translation}->{'Edit this FAQ'} = 'A GyIK szerkesztése';
     $Self->{Translation}->{'Enable multiple languages on FAQ module.'} = 'Több nyelv engedélyezése a GyIK modulban.';
     $Self->{Translation}->{'Enable voting mechanism on FAQ module.'} = 'Szavazási mechanizmus engedélyezése a GyIK modulban.';
-    $Self->{Translation}->{'FAQ Journal'} = 'GyIK napló';
     $Self->{Translation}->{'FAQ Journal Overview "Small" Limit'} = 'GyIK napló áttekintő „kis” korlát';
     $Self->{Translation}->{'FAQ Overview "Small" Limit'} = 'GyIK áttekintő „kis” korlát';
     $Self->{Translation}->{'FAQ limit per page for FAQ Journal Overview "Small"'} = 'Oldalankénti GyIK korlát a „kis” GyIK napló áttekintőnél';
     $Self->{Translation}->{'FAQ limit per page for FAQ Overview "Small"'} = 'Oldalankénti GyIK korlát a „kis” GyIK áttekintőnél';
-    $Self->{Translation}->{'FAQ path separator.'} = 'GyIK útvonal elválasztó.';
     $Self->{Translation}->{'FAQ search backend router of the agent interface.'} = 'Az ügyintézői felület GyIK keresési háttérprogram útválasztója.';
     $Self->{Translation}->{'FAQ-Area'} = 'GyIK-terület';
     $Self->{Translation}->{'Field4'} = '4. mező';

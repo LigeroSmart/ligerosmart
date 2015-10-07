@@ -254,6 +254,10 @@ msgstr ""
 msgid "No subcategories found."
 msgstr ""
 
+#. Template: AgentFAQHistory
+msgid "History of"
+msgstr ""
+
 #. Template: AgentFAQJournalOverviewSmall
 msgid "No FAQ Journal data found."
 msgstr ""
@@ -304,18 +308,6 @@ msgstr ""
 
 #. Template: AgentFAQOverviewSmall
 msgid "No FAQ data found."
-msgstr ""
-
-#. Template: AgentFAQPrint
-msgid "FAQ-Info"
-msgstr ""
-
-#. Template: AgentFAQPrint
-msgid "Votes"
-msgstr ""
-
-#. Template: AgentFAQPrint
-msgid "Last update"
 msgstr ""
 
 #. Template: AgentFAQSearch
@@ -427,6 +419,10 @@ msgid "out of 5"
 msgstr ""
 
 #. Template: AgentFAQZoom
+msgid "Votes"
+msgstr ""
+
+#. Template: AgentFAQZoom
 msgid "No votes found!"
 msgstr ""
 
@@ -528,6 +524,26 @@ msgstr ""
 
 #. Template: PublicFAQSearchResultShort
 msgid "Back to FAQ Explorer"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQJournal.pm
+msgid "FAQ Journal"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQPrint.pm
+msgid "Last update"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQPrint.pm
+msgid "FAQ Dynamic Fields"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "No Result!"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
+msgid "This article is empty!"
 msgstr ""
 
 #. SysConfig
@@ -747,10 +763,6 @@ msgid "Enable voting mechanism on FAQ module."
 msgstr ""
 
 #. SysConfig
-msgid "FAQ Journal"
-msgstr ""
-
-#. SysConfig
 msgid "FAQ Journal Overview \"Small\" Limit"
 msgstr ""
 
@@ -764,10 +776,6 @@ msgstr ""
 
 #. SysConfig
 msgid "FAQ limit per page for FAQ Overview \"Small\""
-msgstr ""
-
-#. SysConfig
-msgid "FAQ path separator."
 msgstr ""
 
 #. SysConfig

@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-10-06 15:54+0000\n"
-"Last-Translator: KENNY CHEAH <otrssdnbhd@gmail.com>\n"
+"PO-Revision-Date: 2015-10-07 18:17+0000\n"
+"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Malay (http://www.transifex.com/otrs/OTRS/language/ms/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -260,6 +260,10 @@ msgstr "Artiket FAQ"
 msgid "No subcategories found."
 msgstr "Tiada sub-kategori ditemui."
 
+#. Template: AgentFAQHistory
+msgid "History of"
+msgstr "Sejarah untuk"
+
 #. Template: AgentFAQJournalOverviewSmall
 msgid "No FAQ Journal data found."
 msgstr "Tiada data Jurnal FAQ ditemui."
@@ -312,18 +316,6 @@ msgstr "Artikel FAQ per muka surat"
 #. Template: AgentFAQOverviewSmall
 msgid "No FAQ data found."
 msgstr "Tiada data FAQ ditemui."
-
-#. Template: AgentFAQPrint
-msgid "FAQ-Info"
-msgstr "Informasi FAQ"
-
-#. Template: AgentFAQPrint
-msgid "Votes"
-msgstr "Undian"
-
-#. Template: AgentFAQPrint
-msgid "Last update"
-msgstr "Kemaskini kali terakhir"
 
 #. Template: AgentFAQSearch
 msgid "Keyword"
@@ -434,6 +426,10 @@ msgid "out of 5"
 msgstr "daripada 5"
 
 #. Template: AgentFAQZoom
+msgid "Votes"
+msgstr "Undian"
+
+#. Template: AgentFAQZoom
 msgid "No votes found!"
 msgstr "Tiada undian ditemui!"
 
@@ -541,6 +537,26 @@ msgstr "Umum"
 #. Template: PublicFAQSearchResultShort
 msgid "Back to FAQ Explorer"
 msgstr "Balik kepada peneroka FAQ"
+
+#. Perl Module: Kernel/Modules/AgentFAQJournal.pm
+msgid "FAQ Journal"
+msgstr "jurnal FAQ"
+
+#. Perl Module: Kernel/Modules/AgentFAQPrint.pm
+msgid "Last update"
+msgstr "Kemaskini kali terakhir"
+
+#. Perl Module: Kernel/Modules/AgentFAQPrint.pm
+msgid "FAQ Dynamic Fields"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "No Result!"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
+msgid "This article is empty!"
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -833,10 +849,6 @@ msgid "Enable voting mechanism on FAQ module."
 msgstr "Aktifkan undian mekanisma pada modul FAQ."
 
 #. SysConfig
-msgid "FAQ Journal"
-msgstr "jurnal FAQ"
-
-#. SysConfig
 msgid "FAQ Journal Overview \"Small\" Limit"
 msgstr "Jurnal FAQ lihat semula \"Kecil\" had"
 
@@ -851,10 +863,6 @@ msgstr "Soalan Lazim had bagi setiap halaman untuk Tinjauan Jurnal FAQ \"Kecil\"
 #. SysConfig
 msgid "FAQ limit per page for FAQ Overview \"Small\""
 msgstr "Had FAQ setiap halaman untuk Tinjauan FAQ \"Kecil\"."
-
-#. SysConfig
-msgid "FAQ path separator."
-msgstr "Laluan pemisah FAQ."
 
 #. SysConfig
 msgid "FAQ search backend router of the agent interface."

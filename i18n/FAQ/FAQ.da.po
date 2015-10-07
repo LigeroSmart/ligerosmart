@@ -4,9 +4,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-07-10 17:18+0000\n"
+"PO-Revision-Date: 2015-10-07 18:17+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
-"Language-Team: Danish (http://www.transifex.com/p/OTRS/language/da/)\n"
+"Language-Team: Danish (http://www.transifex.com/otrs/OTRS/language/da/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -259,6 +259,10 @@ msgstr ""
 msgid "No subcategories found."
 msgstr ""
 
+#. Template: AgentFAQHistory
+msgid "History of"
+msgstr "Historik af"
+
 #. Template: AgentFAQJournalOverviewSmall
 msgid "No FAQ Journal data found."
 msgstr ""
@@ -310,18 +314,6 @@ msgstr ""
 
 #. Template: AgentFAQOverviewSmall
 msgid "No FAQ data found."
-msgstr ""
-
-#. Template: AgentFAQPrint
-msgid "FAQ-Info"
-msgstr ""
-
-#. Template: AgentFAQPrint
-msgid "Votes"
-msgstr "Stemmer"
-
-#. Template: AgentFAQPrint
-msgid "Last update"
 msgstr ""
 
 #. Template: AgentFAQSearch
@@ -433,6 +425,10 @@ msgid "out of 5"
 msgstr ""
 
 #. Template: AgentFAQZoom
+msgid "Votes"
+msgstr "Stemmer"
+
+#. Template: AgentFAQZoom
 msgid "No votes found!"
 msgstr ""
 
@@ -539,6 +535,26 @@ msgstr ""
 
 #. Template: PublicFAQSearchResultShort
 msgid "Back to FAQ Explorer"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQJournal.pm
+msgid "FAQ Journal"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQPrint.pm
+msgid "Last update"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQPrint.pm
+msgid "FAQ Dynamic Fields"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "No Result!"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
+msgid "This article is empty!"
 msgstr ""
 
 #. SysConfig
@@ -832,10 +848,6 @@ msgid "Enable voting mechanism on FAQ module."
 msgstr ""
 
 #. SysConfig
-msgid "FAQ Journal"
-msgstr ""
-
-#. SysConfig
 msgid "FAQ Journal Overview \"Small\" Limit"
 msgstr ""
 
@@ -849,10 +861,6 @@ msgstr ""
 
 #. SysConfig
 msgid "FAQ limit per page for FAQ Overview \"Small\""
-msgstr ""
-
-#. SysConfig
-msgid "FAQ path separator."
 msgstr ""
 
 #. SysConfig

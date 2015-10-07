@@ -89,6 +89,9 @@ sub Data {
     $Self->{Translation}->{'FAQ Articles'} = 'Ofte Stilte Spørsmål';
     $Self->{Translation}->{'No subcategories found.'} = 'Ingen underkategorier funnet';
 
+    # Template: AgentFAQHistory
+    $Self->{Translation}->{'History of'} = 'Historikk for';
+
     # Template: AgentFAQJournalOverviewSmall
     $Self->{Translation}->{'No FAQ Journal data found.'} = '';
 
@@ -111,11 +114,6 @@ sub Data {
 
     # Template: AgentFAQOverviewSmall
     $Self->{Translation}->{'No FAQ data found.'} = 'Ingen artikler funnet';
-
-    # Template: AgentFAQPrint
-    $Self->{Translation}->{'FAQ-Info'} = '';
-    $Self->{Translation}->{'Votes'} = 'Stemmer';
-    $Self->{Translation}->{'Last update'} = '';
 
     # Template: AgentFAQSearch
     $Self->{Translation}->{'Keyword'} = '';
@@ -151,6 +149,7 @@ sub Data {
     $Self->{Translation}->{'FAQ Information'} = 'Info om OSS';
     $Self->{Translation}->{'Rating'} = 'Rating';
     $Self->{Translation}->{'out of 5'} = 'av 5';
+    $Self->{Translation}->{'Votes'} = 'Stemmer';
     $Self->{Translation}->{'No votes found!'} = 'Ingen stemmer funnet!';
     $Self->{Translation}->{'No votes found! Be the first one to rate this FAQ article.'} = 'Ingen stemmer avgitt! Bli den første til å stemme på denne artikkelen.';
     $Self->{Translation}->{'Download Attachment'} = 'Last ned vedlegg';
@@ -191,6 +190,19 @@ sub Data {
 
     # Template: PublicFAQSearchResultShort
     $Self->{Translation}->{'Back to FAQ Explorer'} = '';
+
+    # Perl Module: Kernel/Modules/AgentFAQJournal.pm
+    $Self->{Translation}->{'FAQ Journal'} = 'OSS-journal';
+
+    # Perl Module: Kernel/Modules/AgentFAQPrint.pm
+    $Self->{Translation}->{'Last update'} = '';
+    $Self->{Translation}->{'FAQ Dynamic Fields'} = '';
+
+    # Perl Module: Kernel/Modules/AgentFAQSearch.pm
+    $Self->{Translation}->{'No Result!'} = '';
+
+    # Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
+    $Self->{Translation}->{'This article is empty!'} = '';
 
     # SysConfig
     $Self->{Translation}->{'A filter for HTML output to add links behind a defined string. The element Image allows two input kinds. First the name of an image (e.g. faq.png). In this case the OTRS image path will be used. The second possibility is to insert the link to the image.'} =
@@ -286,12 +298,10 @@ sub Data {
     $Self->{Translation}->{'Edit this FAQ'} = 'Endre denne artikkelen';
     $Self->{Translation}->{'Enable multiple languages on FAQ module.'} = '';
     $Self->{Translation}->{'Enable voting mechanism on FAQ module.'} = '';
-    $Self->{Translation}->{'FAQ Journal'} = 'OSS-journal';
     $Self->{Translation}->{'FAQ Journal Overview "Small" Limit'} = '';
     $Self->{Translation}->{'FAQ Overview "Small" Limit'} = '';
     $Self->{Translation}->{'FAQ limit per page for FAQ Journal Overview "Small"'} = '';
     $Self->{Translation}->{'FAQ limit per page for FAQ Overview "Small"'} = '';
-    $Self->{Translation}->{'FAQ path separator.'} = 'Separator for OSS-sti';
     $Self->{Translation}->{'FAQ search backend router of the agent interface.'} = '';
     $Self->{Translation}->{'FAQ-Area'} = 'OSS-område';
     $Self->{Translation}->{'Field4'} = 'Felt 4';

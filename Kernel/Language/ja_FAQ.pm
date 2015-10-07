@@ -89,6 +89,9 @@ sub Data {
     $Self->{Translation}->{'FAQ Articles'} = 'FAQ項目';
     $Self->{Translation}->{'No subcategories found.'} = '子カテゴリはありません。';
 
+    # Template: AgentFAQHistory
+    $Self->{Translation}->{'History of'} = '履歴: ';
+
     # Template: AgentFAQJournalOverviewSmall
     $Self->{Translation}->{'No FAQ Journal data found.'} = 'ジャーナルの情報がありません。';
 
@@ -111,11 +114,6 @@ sub Data {
 
     # Template: AgentFAQOverviewSmall
     $Self->{Translation}->{'No FAQ data found.'} = 'FAQデータはありません。';
-
-    # Template: AgentFAQPrint
-    $Self->{Translation}->{'FAQ-Info'} = 'FAQ情報';
-    $Self->{Translation}->{'Votes'} = 'Votes';
-    $Self->{Translation}->{'Last update'} = '最終更新日';
 
     # Template: AgentFAQSearch
     $Self->{Translation}->{'Keyword'} = 'キーワード';
@@ -151,6 +149,7 @@ sub Data {
     $Self->{Translation}->{'FAQ Information'} = 'FAQ情報';
     $Self->{Translation}->{'Rating'} = 'レーティング';
     $Self->{Translation}->{'out of 5'} = '5つ星のうち';
+    $Self->{Translation}->{'Votes'} = 'Votes';
     $Self->{Translation}->{'No votes found!'} = '投票はありません。';
     $Self->{Translation}->{'No votes found! Be the first one to rate this FAQ article.'} = '投票はありません。この記事に始めて評価を投票しましょう。';
     $Self->{Translation}->{'Download Attachment'} = '添付ファイルをダウンロード';
@@ -191,6 +190,19 @@ sub Data {
 
     # Template: PublicFAQSearchResultShort
     $Self->{Translation}->{'Back to FAQ Explorer'} = 'FAQエクスプローラーに戻る';
+
+    # Perl Module: Kernel/Modules/AgentFAQJournal.pm
+    $Self->{Translation}->{'FAQ Journal'} = 'FAQ ジャーナル';
+
+    # Perl Module: Kernel/Modules/AgentFAQPrint.pm
+    $Self->{Translation}->{'Last update'} = '最終更新日';
+    $Self->{Translation}->{'FAQ Dynamic Fields'} = '';
+
+    # Perl Module: Kernel/Modules/AgentFAQSearch.pm
+    $Self->{Translation}->{'No Result!'} = '';
+
+    # Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
+    $Self->{Translation}->{'This article is empty!'} = '';
 
     # SysConfig
     $Self->{Translation}->{'A filter for HTML output to add links behind a defined string. The element Image allows two input kinds. First the name of an image (e.g. faq.png). In this case the OTRS image path will be used. The second possibility is to insert the link to the image.'} =
@@ -286,12 +298,10 @@ sub Data {
     $Self->{Translation}->{'Edit this FAQ'} = 'この記事を編集';
     $Self->{Translation}->{'Enable multiple languages on FAQ module.'} = '多言語を有効にする';
     $Self->{Translation}->{'Enable voting mechanism on FAQ module.'} = '評価の機能を有効にする';
-    $Self->{Translation}->{'FAQ Journal'} = 'FAQ ジャーナル';
     $Self->{Translation}->{'FAQ Journal Overview "Small" Limit'} = 'FAQジャーナル一覧(S)の表示数';
     $Self->{Translation}->{'FAQ Overview "Small" Limit'} = 'FAQ一覧(S)の表示数';
     $Self->{Translation}->{'FAQ limit per page for FAQ Journal Overview "Small"'} = 'FAQジャーナル一覧(S)の1ページ毎の表示数';
     $Self->{Translation}->{'FAQ limit per page for FAQ Overview "Small"'} = 'FAQ一覧(S)の1ページ毎の表示数';
-    $Self->{Translation}->{'FAQ path separator.'} = 'パスインフォを使用する際のセパレータ文字（例：\'/\'）';
     $Self->{Translation}->{'FAQ search backend router of the agent interface.'} = '担当者インターフェイスにおける、FAQ検索のバックエンドルータ';
     $Self->{Translation}->{'FAQ-Area'} = ' FAQ エリア';
     $Self->{Translation}->{'Field4'} = 'Field4';

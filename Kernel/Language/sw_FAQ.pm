@@ -89,6 +89,9 @@ sub Data {
     $Self->{Translation}->{'FAQ Articles'} = 'Makala ya Maswali';
     $Self->{Translation}->{'No subcategories found.'} = 'Hakuna vijisehemu vilivyopatikana.';
 
+    # Template: AgentFAQHistory
+    $Self->{Translation}->{'History of'} = 'Historia ya';
+
     # Template: AgentFAQJournalOverviewSmall
     $Self->{Translation}->{'No FAQ Journal data found.'} = 'Data za jarida la maswali hazijapatikana.';
 
@@ -111,11 +114,6 @@ sub Data {
 
     # Template: AgentFAQOverviewSmall
     $Self->{Translation}->{'No FAQ data found.'} = 'Hakuna data za maswali';
-
-    # Template: AgentFAQPrint
-    $Self->{Translation}->{'FAQ-Info'} = 'Taarifa ya maswali';
-    $Self->{Translation}->{'Votes'} = 'Kura';
-    $Self->{Translation}->{'Last update'} = 'Mabadiliko ya mwisho';
 
     # Template: AgentFAQSearch
     $Self->{Translation}->{'Keyword'} = 'Neno kuu';
@@ -151,6 +149,7 @@ sub Data {
     $Self->{Translation}->{'FAQ Information'} = 'Habari za Maswali';
     $Self->{Translation}->{'Rating'} = 'Thaminisha';
     $Self->{Translation}->{'out of 5'} = 'Kati ya 5';
+    $Self->{Translation}->{'Votes'} = 'Kura';
     $Self->{Translation}->{'No votes found!'} = 'Hakuna Kura zilizopatika';
     $Self->{Translation}->{'No votes found! Be the first one to rate this FAQ article.'} = 'Hakuna kura. Kuwa wa kwanza kuthaminisha makala hii ya maswali.';
     $Self->{Translation}->{'Download Attachment'} = 'Download Kiambatanishwa';
@@ -191,6 +190,19 @@ sub Data {
 
     # Template: PublicFAQSearchResultShort
     $Self->{Translation}->{'Back to FAQ Explorer'} = 'Back to FAQ mchunguzi';
+
+    # Perl Module: Kernel/Modules/AgentFAQJournal.pm
+    $Self->{Translation}->{'FAQ Journal'} = 'Jarida la maswali';
+
+    # Perl Module: Kernel/Modules/AgentFAQPrint.pm
+    $Self->{Translation}->{'Last update'} = 'Mabadiliko ya mwisho';
+    $Self->{Translation}->{'FAQ Dynamic Fields'} = '';
+
+    # Perl Module: Kernel/Modules/AgentFAQSearch.pm
+    $Self->{Translation}->{'No Result!'} = '';
+
+    # Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
+    $Self->{Translation}->{'This article is empty!'} = '';
 
     # SysConfig
     $Self->{Translation}->{'A filter for HTML output to add links behind a defined string. The element Image allows two input kinds. First the name of an image (e.g. faq.png). In this case the OTRS image path will be used. The second possibility is to insert the link to the image.'} =
@@ -286,12 +298,10 @@ sub Data {
     $Self->{Translation}->{'Edit this FAQ'} = 'Hariri makala hii';
     $Self->{Translation}->{'Enable multiple languages on FAQ module.'} = 'Wezesha Lugha nyingi nyingi katika maswali haya.';
     $Self->{Translation}->{'Enable voting mechanism on FAQ module.'} = 'Wezesha ';
-    $Self->{Translation}->{'FAQ Journal'} = 'Jarida la maswali';
     $Self->{Translation}->{'FAQ Journal Overview "Small" Limit'} = ' Kikomo "kidogo" cha mapitio ya jarida la maswali yaliyoulizwa mara kwa mara';
     $Self->{Translation}->{'FAQ Overview "Small" Limit'} = 'Kikomo "kidogo" cha mapitio ya maswali yaliyoulizwa mara kwa mara.';
     $Self->{Translation}->{'FAQ limit per page for FAQ Journal Overview "Small"'} = 'Upeo wa maswali yanayoulizwa mara kwa mara kwa ukurasa kwa mapitio ya jarida ya maswali yanayoulizwa mara kwa mara. \'\'Ndogo\'\'.';
     $Self->{Translation}->{'FAQ limit per page for FAQ Overview "Small"'} = 'Upeo wa maswali yanayoulizwa mara kwa mara kwa ukurasa kwa mapitio  ya maswali yanayoulizwa mara kwa mara. \'\'Ndogo\'\'.';
-    $Self->{Translation}->{'FAQ path separator.'} = 'Kitenganishi cha njia ya maswali yaliyoulizwa mara kwa mara. ';
     $Self->{Translation}->{'FAQ search backend router of the agent interface.'} = 'Maswali yanayoulizwa mara kwa mara tafuta backend ruta ya kiolesura cha wakala.';
     $Self->{Translation}->{'FAQ-Area'} = 'Sehemu ya maswali';
     $Self->{Translation}->{'Field4'} = 'Sehemu4';

@@ -89,6 +89,9 @@ sub Data {
     $Self->{Translation}->{'FAQ Articles'} = 'Artículos FAQ';
     $Self->{Translation}->{'No subcategories found.'} = 'No se encontraron subcategorías.';
 
+    # Template: AgentFAQHistory
+    $Self->{Translation}->{'History of'} = 'Historial de';
+
     # Template: AgentFAQJournalOverviewSmall
     $Self->{Translation}->{'No FAQ Journal data found.'} = 'No se encontraron datos en la Bitácora FAQ';
 
@@ -111,11 +114,6 @@ sub Data {
 
     # Template: AgentFAQOverviewSmall
     $Self->{Translation}->{'No FAQ data found.'} = 'No se encontraron datos de FAQ.';
-
-    # Template: AgentFAQPrint
-    $Self->{Translation}->{'FAQ-Info'} = 'Información-FAQ';
-    $Self->{Translation}->{'Votes'} = 'Votos';
-    $Self->{Translation}->{'Last update'} = 'Ultima actualización';
 
     # Template: AgentFAQSearch
     $Self->{Translation}->{'Keyword'} = 'Palabra clave';
@@ -151,6 +149,7 @@ sub Data {
     $Self->{Translation}->{'FAQ Information'} = 'Información FAQ';
     $Self->{Translation}->{'Rating'} = 'Puntuación';
     $Self->{Translation}->{'out of 5'} = 'de 5';
+    $Self->{Translation}->{'Votes'} = 'Votos';
     $Self->{Translation}->{'No votes found!'} = '¡No se encontró ningún voto!';
     $Self->{Translation}->{'No votes found! Be the first one to rate this FAQ article.'} = 'No se encontró ningún voto. Sea el primero en valorar este artículo FAQ';
     $Self->{Translation}->{'Download Attachment'} = 'Descargar Adjunto';
@@ -192,6 +191,19 @@ sub Data {
     # Template: PublicFAQSearchResultShort
     $Self->{Translation}->{'Back to FAQ Explorer'} = 'Regresar al Explorador de FAQ';
 
+    # Perl Module: Kernel/Modules/AgentFAQJournal.pm
+    $Self->{Translation}->{'FAQ Journal'} = 'Bitácora de FAQ';
+
+    # Perl Module: Kernel/Modules/AgentFAQPrint.pm
+    $Self->{Translation}->{'Last update'} = 'Ultima actualización';
+    $Self->{Translation}->{'FAQ Dynamic Fields'} = '';
+
+    # Perl Module: Kernel/Modules/AgentFAQSearch.pm
+    $Self->{Translation}->{'No Result!'} = '';
+
+    # Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
+    $Self->{Translation}->{'This article is empty!'} = '';
+
     # SysConfig
     $Self->{Translation}->{'A filter for HTML output to add links behind a defined string. The element Image allows two input kinds. First the name of an image (e.g. faq.png). In this case the OTRS image path will be used. The second possibility is to insert the link to the image.'} =
         'Filtro para el HTML resultante para añadir enlaces a una cadena determinada. El elemento Imagen contempla dos tipos de registros. El primero es el nombre de una imagen (por ejemplo faq.png). En este caso se utilizará la ruta de imágenes de OTRS. La segunda posibilidad es insertar el enlace a la imagen..';
@@ -202,16 +214,16 @@ sub Data {
     $Self->{Translation}->{'Default category name.'} = 'Nombre predeterminado de la categoría';
     $Self->{Translation}->{'Default language for FAQ articles on single language mode.'} = 'Idioma por omisión para los artículos FAQ en modo idioma único';
     $Self->{Translation}->{'Default maximum size of the titles in a FAQ article to be shown.'} =
-        '';
+        'Máximo tamaño por defecto a mostrar de los títulos en un artículo FAQ.';
     $Self->{Translation}->{'Default priority of tickets for the approval of FAQ articles.'} =
         'Prioridad por omisión de los tickets para aprobación de los artículos FAQ.';
     $Self->{Translation}->{'Default state for FAQ entry.'} = 'Estado por omisión para los artículos FAQ.';
     $Self->{Translation}->{'Default state of tickets for the approval of FAQ articles.'} = 'Estado por omisión de los tickets para aprobación de los artículos FAQ.';
-    $Self->{Translation}->{'Default type of tickets for the approval of FAQ articles.'} = '';
+    $Self->{Translation}->{'Default type of tickets for the approval of FAQ articles.'} = 'Tipo por defecto de los tickets para aprobación de artículos FAQ.';
     $Self->{Translation}->{'Default value for the Action parameter for the public frontend. The Action parameter is used in the scripts of the system.'} =
         'Valor por omisión para el parámetro "Action" para la interfaz pública. El parámetro "Action" se usa en los "scripts" del sistema.';
     $Self->{Translation}->{'Define if the FAQ title should be concatenated to article subject.'} =
-        '';
+        'Define si el título del FAQ debe estar concatenado al asunto del artículo.';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ journal.'} =
         'Define un módulo de vista general para mostrar la vista pequeña de la bitácora de FAQ';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ list.'} =
@@ -241,9 +253,9 @@ sub Data {
     $Self->{Translation}->{'Defines the default FAQ order of a search result in the public interface. Up: oldest on top. Down: latest on top.'} =
         'Define el orden por omisión de los resultados de una búsqueda en la interface pública. Arriba: los más antiguos en la parte superior. Abajo: los últimos en la parte superior.';
     $Self->{Translation}->{'Defines the default shown FAQ search attribute for FAQ search screen.'} =
-        '';
+        'Define el atributo de búsqueda de FAQ mostrado por defecto en la pantalla de búsqueda de FAQ.';
     $Self->{Translation}->{'Defines the information to be inserted in a FAQ based Ticket. "Full FAQ" includes text, attachments and inline images.'} =
-        '';
+        'Define la información a insertar en un FAQ basado en un ticket. "FAQ completo" incluye texto, adjuntos e imágenes incrustadas.';
     $Self->{Translation}->{'Defines the parameters for the dashboard backend. "Limit" defines the number of entries displayed by default. "Group" is used to restrict access to the plugin (e. g. Group: admin;group1;group2;). "Default" indicates if the plugin is enabled by default or if the user needs to enable it manually.'} =
         '';
     $Self->{Translation}->{'Defines the shown columns in the FAQ Explorer. This option has no effect on the position of the column.'} =
@@ -286,12 +298,10 @@ sub Data {
     $Self->{Translation}->{'Edit this FAQ'} = 'Editar este artículo FAQ';
     $Self->{Translation}->{'Enable multiple languages on FAQ module.'} = 'Habilitar múltiples idiomas en el módulo FAQ';
     $Self->{Translation}->{'Enable voting mechanism on FAQ module.'} = 'Habilitar el mecanismo de votación en el módulo FAQ';
-    $Self->{Translation}->{'FAQ Journal'} = 'Bitácora de FAQ';
     $Self->{Translation}->{'FAQ Journal Overview "Small" Limit'} = 'Límite para la vista general «pequeña» de la Bitácora de FAQ';
     $Self->{Translation}->{'FAQ Overview "Small" Limit'} = 'Límite para la vista general «pequeña» de FAQ';
     $Self->{Translation}->{'FAQ limit per page for FAQ Journal Overview "Small"'} = 'Límite de FAQ por página para la vista general «pequeña» de la Bitácora de FAQ';
     $Self->{Translation}->{'FAQ limit per page for FAQ Overview "Small"'} = 'Límite de FAQ por página para la vista general «pequeña» de FAQ';
-    $Self->{Translation}->{'FAQ path separator.'} = 'Separador de la ruta de FAQ.';
     $Self->{Translation}->{'FAQ search backend router of the agent interface.'} = 'Encaminador para la búsqueda de FAQ en la interfaz del agente.';
     $Self->{Translation}->{'FAQ-Area'} = 'Área-FAQ';
     $Self->{Translation}->{'Field4'} = 'Campo4';

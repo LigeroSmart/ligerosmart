@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-09-03 12:33+0000\n"
-"Last-Translator: Alexandr <fatpiga@mail.ru>\n"
+"PO-Revision-Date: 2015-10-07 18:17+0000\n"
+"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Russian (http://www.transifex.com/otrs/OTRS/language/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -262,6 +262,10 @@ msgstr "Статьи FAQ"
 msgid "No subcategories found."
 msgstr "Подразделы не найдены."
 
+#. Template: AgentFAQHistory
+msgid "History of"
+msgstr "История для"
+
 #. Template: AgentFAQJournalOverviewSmall
 msgid "No FAQ Journal data found."
 msgstr "Данных журнала FAQ нет."
@@ -314,18 +318,6 @@ msgstr "Количество статей на страницу"
 #. Template: AgentFAQOverviewSmall
 msgid "No FAQ data found."
 msgstr "Данные FAQ не найдены."
-
-#. Template: AgentFAQPrint
-msgid "FAQ-Info"
-msgstr "Информация FAQ"
-
-#. Template: AgentFAQPrint
-msgid "Votes"
-msgstr "Голоса"
-
-#. Template: AgentFAQPrint
-msgid "Last update"
-msgstr "Последнее обновление"
 
 #. Template: AgentFAQSearch
 msgid "Keyword"
@@ -436,6 +428,10 @@ msgid "out of 5"
 msgstr "из 5"
 
 #. Template: AgentFAQZoom
+msgid "Votes"
+msgstr "Голоса"
+
+#. Template: AgentFAQZoom
 msgid "No votes found!"
 msgstr "Голосов не найдено!"
 
@@ -543,6 +539,26 @@ msgstr "Общедоступное"
 #. Template: PublicFAQSearchResultShort
 msgid "Back to FAQ Explorer"
 msgstr "Вернуться в обзор FAQ"
+
+#. Perl Module: Kernel/Modules/AgentFAQJournal.pm
+msgid "FAQ Journal"
+msgstr "Журнал FAQ"
+
+#. Perl Module: Kernel/Modules/AgentFAQPrint.pm
+msgid "Last update"
+msgstr "Последнее обновление"
+
+#. Perl Module: Kernel/Modules/AgentFAQPrint.pm
+msgid "FAQ Dynamic Fields"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "No Result!"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
+msgid "This article is empty!"
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -835,10 +851,6 @@ msgid "Enable voting mechanism on FAQ module."
 msgstr "Разрешить функцию оценки в модуле FAQ."
 
 #. SysConfig
-msgid "FAQ Journal"
-msgstr "Журнал FAQ"
-
-#. SysConfig
 msgid "FAQ Journal Overview \"Small\" Limit"
 msgstr "Количество статей, отображаемых при просмотре Журнала FAQ в \"Small\" формате"
 
@@ -853,10 +865,6 @@ msgstr "Количество статей при просмотре Журнал
 #. SysConfig
 msgid "FAQ limit per page for FAQ Overview \"Small\""
 msgstr "Количество статей, отображаемых при просмотре Журнала FAQ в \"Small\" формате на страницу"
-
-#. SysConfig
-msgid "FAQ path separator."
-msgstr "Разделитель пути FAQ."
 
 #. SysConfig
 msgid "FAQ search backend router of the agent interface."

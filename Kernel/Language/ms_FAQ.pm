@@ -89,6 +89,9 @@ sub Data {
     $Self->{Translation}->{'FAQ Articles'} = 'Artiket FAQ';
     $Self->{Translation}->{'No subcategories found.'} = 'Tiada sub-kategori ditemui.';
 
+    # Template: AgentFAQHistory
+    $Self->{Translation}->{'History of'} = 'Sejarah untuk';
+
     # Template: AgentFAQJournalOverviewSmall
     $Self->{Translation}->{'No FAQ Journal data found.'} = 'Tiada data Jurnal FAQ ditemui.';
 
@@ -111,11 +114,6 @@ sub Data {
 
     # Template: AgentFAQOverviewSmall
     $Self->{Translation}->{'No FAQ data found.'} = 'Tiada data FAQ ditemui.';
-
-    # Template: AgentFAQPrint
-    $Self->{Translation}->{'FAQ-Info'} = 'Informasi FAQ';
-    $Self->{Translation}->{'Votes'} = 'Undian';
-    $Self->{Translation}->{'Last update'} = 'Kemaskini kali terakhir';
 
     # Template: AgentFAQSearch
     $Self->{Translation}->{'Keyword'} = 'Kata kunci';
@@ -151,6 +149,7 @@ sub Data {
     $Self->{Translation}->{'FAQ Information'} = 'Informasi FAQ';
     $Self->{Translation}->{'Rating'} = 'Menilai';
     $Self->{Translation}->{'out of 5'} = 'daripada 5';
+    $Self->{Translation}->{'Votes'} = 'Undian';
     $Self->{Translation}->{'No votes found!'} = 'Tiada undian ditemui!';
     $Self->{Translation}->{'No votes found! Be the first one to rate this FAQ article.'} = 'Tiada undian ditemui! Jadilah orang pertama menilai aritl FAQ ini.';
     $Self->{Translation}->{'Download Attachment'} = 'Muat turun lampiran';
@@ -191,6 +190,19 @@ sub Data {
 
     # Template: PublicFAQSearchResultShort
     $Self->{Translation}->{'Back to FAQ Explorer'} = 'Balik kepada peneroka FAQ';
+
+    # Perl Module: Kernel/Modules/AgentFAQJournal.pm
+    $Self->{Translation}->{'FAQ Journal'} = 'jurnal FAQ';
+
+    # Perl Module: Kernel/Modules/AgentFAQPrint.pm
+    $Self->{Translation}->{'Last update'} = 'Kemaskini kali terakhir';
+    $Self->{Translation}->{'FAQ Dynamic Fields'} = '';
+
+    # Perl Module: Kernel/Modules/AgentFAQSearch.pm
+    $Self->{Translation}->{'No Result!'} = '';
+
+    # Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
+    $Self->{Translation}->{'This article is empty!'} = '';
 
     # SysConfig
     $Self->{Translation}->{'A filter for HTML output to add links behind a defined string. The element Image allows two input kinds. First the name of an image (e.g. faq.png). In this case the OTRS image path will be used. The second possibility is to insert the link to the image.'} =
@@ -286,12 +298,10 @@ sub Data {
     $Self->{Translation}->{'Edit this FAQ'} = 'Audit FAQ ini';
     $Self->{Translation}->{'Enable multiple languages on FAQ module.'} = 'Aktifkan pelbagai bahasa pada modul FAQ.';
     $Self->{Translation}->{'Enable voting mechanism on FAQ module.'} = 'Aktifkan undian mekanisma pada modul FAQ.';
-    $Self->{Translation}->{'FAQ Journal'} = 'jurnal FAQ';
     $Self->{Translation}->{'FAQ Journal Overview "Small" Limit'} = 'Jurnal FAQ lihat semula "Kecil" had';
     $Self->{Translation}->{'FAQ Overview "Small" Limit'} = 'Lihat semula FAQ had "kecil"';
     $Self->{Translation}->{'FAQ limit per page for FAQ Journal Overview "Small"'} = 'Soalan Lazim had bagi setiap halaman untuk Tinjauan Jurnal FAQ "Kecil".';
     $Self->{Translation}->{'FAQ limit per page for FAQ Overview "Small"'} = 'Had FAQ setiap halaman untuk Tinjauan FAQ "Kecil".';
-    $Self->{Translation}->{'FAQ path separator.'} = 'Laluan pemisah FAQ.';
     $Self->{Translation}->{'FAQ search backend router of the agent interface.'} = 'Carian Soalan Lazim backend router muka ejen.';
     $Self->{Translation}->{'FAQ-Area'} = 'Kawasan FAQ';
     $Self->{Translation}->{'Field4'} = 'Medan4';

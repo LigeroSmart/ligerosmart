@@ -89,6 +89,9 @@ sub Data {
     $Self->{Translation}->{'FAQ Articles'} = 'Статьи FAQ';
     $Self->{Translation}->{'No subcategories found.'} = 'Подразделы не найдены.';
 
+    # Template: AgentFAQHistory
+    $Self->{Translation}->{'History of'} = 'История для';
+
     # Template: AgentFAQJournalOverviewSmall
     $Self->{Translation}->{'No FAQ Journal data found.'} = 'Данных журнала FAQ нет.';
 
@@ -111,11 +114,6 @@ sub Data {
 
     # Template: AgentFAQOverviewSmall
     $Self->{Translation}->{'No FAQ data found.'} = 'Данные FAQ не найдены.';
-
-    # Template: AgentFAQPrint
-    $Self->{Translation}->{'FAQ-Info'} = 'Информация FAQ';
-    $Self->{Translation}->{'Votes'} = 'Голоса';
-    $Self->{Translation}->{'Last update'} = 'Последнее обновление';
 
     # Template: AgentFAQSearch
     $Self->{Translation}->{'Keyword'} = 'Ключевое слово';
@@ -151,6 +149,7 @@ sub Data {
     $Self->{Translation}->{'FAQ Information'} = 'Информация FAQ';
     $Self->{Translation}->{'Rating'} = 'Оценка';
     $Self->{Translation}->{'out of 5'} = 'из 5';
+    $Self->{Translation}->{'Votes'} = 'Голоса';
     $Self->{Translation}->{'No votes found!'} = 'Голосов не найдено!';
     $Self->{Translation}->{'No votes found! Be the first one to rate this FAQ article.'} = 'Оценок не найдено! Оцените эту статью FAQ первым.';
     $Self->{Translation}->{'Download Attachment'} = 'Скачать вложение';
@@ -191,6 +190,19 @@ sub Data {
 
     # Template: PublicFAQSearchResultShort
     $Self->{Translation}->{'Back to FAQ Explorer'} = 'Вернуться в обзор FAQ';
+
+    # Perl Module: Kernel/Modules/AgentFAQJournal.pm
+    $Self->{Translation}->{'FAQ Journal'} = 'Журнал FAQ';
+
+    # Perl Module: Kernel/Modules/AgentFAQPrint.pm
+    $Self->{Translation}->{'Last update'} = 'Последнее обновление';
+    $Self->{Translation}->{'FAQ Dynamic Fields'} = '';
+
+    # Perl Module: Kernel/Modules/AgentFAQSearch.pm
+    $Self->{Translation}->{'No Result!'} = '';
+
+    # Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
+    $Self->{Translation}->{'This article is empty!'} = '';
 
     # SysConfig
     $Self->{Translation}->{'A filter for HTML output to add links behind a defined string. The element Image allows two input kinds. First the name of an image (e.g. faq.png). In this case the OTRS image path will be used. The second possibility is to insert the link to the image.'} =
@@ -286,12 +298,10 @@ sub Data {
     $Self->{Translation}->{'Edit this FAQ'} = 'Изменить этот FAQ';
     $Self->{Translation}->{'Enable multiple languages on FAQ module.'} = 'Разрешить многоязычность в модуле FAQ.';
     $Self->{Translation}->{'Enable voting mechanism on FAQ module.'} = 'Разрешить функцию оценки в модуле FAQ.';
-    $Self->{Translation}->{'FAQ Journal'} = 'Журнал FAQ';
     $Self->{Translation}->{'FAQ Journal Overview "Small" Limit'} = 'Количество статей, отображаемых при просмотре Журнала FAQ в "Small" формате';
     $Self->{Translation}->{'FAQ Overview "Small" Limit'} = 'Количество статей, отображаемых при просмотре Обзора FAQ в "Small" формате';
     $Self->{Translation}->{'FAQ limit per page for FAQ Journal Overview "Small"'} = 'Количество статей при просмотре Журнала FAQ в "Small" формате на страницу';
     $Self->{Translation}->{'FAQ limit per page for FAQ Overview "Small"'} = 'Количество статей, отображаемых при просмотре Журнала FAQ в "Small" формате на страницу';
-    $Self->{Translation}->{'FAQ path separator.'} = 'Разделитель пути FAQ.';
     $Self->{Translation}->{'FAQ search backend router of the agent interface.'} = 'Включить и настроить модуль поиска FAQ для интерфейса агента.';
     $Self->{Translation}->{'FAQ-Area'} = 'Область FAQ';
     $Self->{Translation}->{'Field4'} = 'Поле4';

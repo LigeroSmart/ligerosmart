@@ -89,6 +89,9 @@ sub Data {
     $Self->{Translation}->{'FAQ Articles'} = 'ЧПП чланци';
     $Self->{Translation}->{'No subcategories found.'} = 'Подкатегорије нису пронађене.';
 
+    # Template: AgentFAQHistory
+    $Self->{Translation}->{'History of'} = 'Историја од';
+
     # Template: AgentFAQJournalOverviewSmall
     $Self->{Translation}->{'No FAQ Journal data found.'} = 'Нису пронађени подаци ЧПП дневника.';
 
@@ -111,11 +114,6 @@ sub Data {
 
     # Template: AgentFAQOverviewSmall
     $Self->{Translation}->{'No FAQ data found.'} = 'Нису пронађени ЧПП подаци.';
-
-    # Template: AgentFAQPrint
-    $Self->{Translation}->{'FAQ-Info'} = 'ЧПП-инфо';
-    $Self->{Translation}->{'Votes'} = 'Гласови';
-    $Self->{Translation}->{'Last update'} = 'Последње ажурирање';
 
     # Template: AgentFAQSearch
     $Self->{Translation}->{'Keyword'} = 'Кључна реч';
@@ -151,6 +149,7 @@ sub Data {
     $Self->{Translation}->{'FAQ Information'} = 'ЧПП информација';
     $Self->{Translation}->{'Rating'} = 'Оцењивање';
     $Self->{Translation}->{'out of 5'} = 'од 5';
+    $Self->{Translation}->{'Votes'} = 'Гласови';
     $Self->{Translation}->{'No votes found!'} = 'Гласови нису пронађени!';
     $Self->{Translation}->{'No votes found! Be the first one to rate this FAQ article.'} = 'Гласови нису пронађени! Будите први који ће оценити овај ЧПП чланак!';
     $Self->{Translation}->{'Download Attachment'} = 'Преузми прилог';
@@ -191,6 +190,19 @@ sub Data {
 
     # Template: PublicFAQSearchResultShort
     $Self->{Translation}->{'Back to FAQ Explorer'} = 'Нназад на ЧПП Истраживач';
+
+    # Perl Module: Kernel/Modules/AgentFAQJournal.pm
+    $Self->{Translation}->{'FAQ Journal'} = 'ЧПП дневник';
+
+    # Perl Module: Kernel/Modules/AgentFAQPrint.pm
+    $Self->{Translation}->{'Last update'} = 'Последње ажурирање';
+    $Self->{Translation}->{'FAQ Dynamic Fields'} = '';
+
+    # Perl Module: Kernel/Modules/AgentFAQSearch.pm
+    $Self->{Translation}->{'No Result!'} = '';
+
+    # Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
+    $Self->{Translation}->{'This article is empty!'} = '';
 
     # SysConfig
     $Self->{Translation}->{'A filter for HTML output to add links behind a defined string. The element Image allows two input kinds. First the name of an image (e.g. faq.png). In this case the OTRS image path will be used. The second possibility is to insert the link to the image.'} =
@@ -286,12 +298,10 @@ sub Data {
     $Self->{Translation}->{'Edit this FAQ'} = 'Уреди ово ЧПП';
     $Self->{Translation}->{'Enable multiple languages on FAQ module.'} = 'Активирање више језика на ЧПП модулу.';
     $Self->{Translation}->{'Enable voting mechanism on FAQ module.'} = 'Активирање механизма за гласање на ЧПП модулу.';
-    $Self->{Translation}->{'FAQ Journal'} = 'ЧПП дневник';
     $Self->{Translation}->{'FAQ Journal Overview "Small" Limit'} = 'Ограничење прегледа ЧПП журнала - "мало"';
     $Self->{Translation}->{'FAQ Overview "Small" Limit'} = 'Ограничење прегледа ЧПП - "мало"';
     $Self->{Translation}->{'FAQ limit per page for FAQ Journal Overview "Small"'} = 'Ограничење броја ЧПП по страни за преглед ЧПП дневника - "мало"';
     $Self->{Translation}->{'FAQ limit per page for FAQ Overview "Small"'} = 'Ограничење броја ЧПП по страни за преглед ЧПП - "мало"';
-    $Self->{Translation}->{'FAQ path separator.'} = 'Разделник путање до ЧПП.';
     $Self->{Translation}->{'FAQ search backend router of the agent interface.'} = 'ЧППпретрага позадинског рутера у интерфејсу оператера.';
     $Self->{Translation}->{'FAQ-Area'} = 'ЧПП простор';
     $Self->{Translation}->{'Field4'} = 'Поље4';

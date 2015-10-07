@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-09-04 06:17+0000\n"
-"Last-Translator: David Van Uffelen <david.van.uffelen@bnl.yusen-logistics.com>\n"
+"PO-Revision-Date: 2015-10-07 18:17+0000\n"
+"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Dutch (http://www.transifex.com/otrs/OTRS/language/nl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -262,6 +262,10 @@ msgstr "Artikelen"
 msgid "No subcategories found."
 msgstr "Geen subcategoriën gevonden."
 
+#. Template: AgentFAQHistory
+msgid "History of"
+msgstr "Geschiedenis van"
+
 #. Template: AgentFAQJournalOverviewSmall
 msgid "No FAQ Journal data found."
 msgstr "Geen data gevonden."
@@ -314,18 +318,6 @@ msgstr "Aantal artikelen per pagina"
 #. Template: AgentFAQOverviewSmall
 msgid "No FAQ data found."
 msgstr "Geen FAQ data gevonden."
-
-#. Template: AgentFAQPrint
-msgid "FAQ-Info"
-msgstr "FAQ Informatie"
-
-#. Template: AgentFAQPrint
-msgid "Votes"
-msgstr "Stemmen"
-
-#. Template: AgentFAQPrint
-msgid "Last update"
-msgstr "Laatste update"
 
 #. Template: AgentFAQSearch
 msgid "Keyword"
@@ -436,6 +428,10 @@ msgid "out of 5"
 msgstr "van 5"
 
 #. Template: AgentFAQZoom
+msgid "Votes"
+msgstr "Stemmen"
+
+#. Template: AgentFAQZoom
 msgid "No votes found!"
 msgstr "Geen stemmen gevonden"
 
@@ -543,6 +539,26 @@ msgstr "Openbaar"
 #. Template: PublicFAQSearchResultShort
 msgid "Back to FAQ Explorer"
 msgstr "Terug naar de FAQ Verkenner"
+
+#. Perl Module: Kernel/Modules/AgentFAQJournal.pm
+msgid "FAQ Journal"
+msgstr "FAQ journaal"
+
+#. Perl Module: Kernel/Modules/AgentFAQPrint.pm
+msgid "Last update"
+msgstr "Laatste update"
+
+#. Perl Module: Kernel/Modules/AgentFAQPrint.pm
+msgid "FAQ Dynamic Fields"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "No Result!"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
+msgid "This article is empty!"
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -835,10 +851,6 @@ msgid "Enable voting mechanism on FAQ module."
 msgstr ""
 
 #. SysConfig
-msgid "FAQ Journal"
-msgstr "FAQ journaal"
-
-#. SysConfig
 msgid "FAQ Journal Overview \"Small\" Limit"
 msgstr ""
 
@@ -852,10 +864,6 @@ msgstr ""
 
 #. SysConfig
 msgid "FAQ limit per page for FAQ Overview \"Small\""
-msgstr ""
-
-#. SysConfig
-msgid "FAQ path separator."
 msgstr ""
 
 #. SysConfig

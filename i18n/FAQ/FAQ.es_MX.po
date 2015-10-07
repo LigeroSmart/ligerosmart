@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-09-10 21:21+0000\n"
-"Last-Translator: David Bautista <david.bautista@certicamara.com>\n"
+"PO-Revision-Date: 2015-10-07 18:17+0000\n"
+"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Spanish (Mexico) (http://www.transifex.com/otrs/OTRS/language/es_MX/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -263,6 +263,10 @@ msgstr "Artículos FAQ"
 msgid "No subcategories found."
 msgstr "No se encontraron subcategorías."
 
+#. Template: AgentFAQHistory
+msgid "History of"
+msgstr "Historia de"
+
 #. Template: AgentFAQJournalOverviewSmall
 msgid "No FAQ Journal data found."
 msgstr "No se encontraron datos en la Bitácora FAQ"
@@ -315,18 +319,6 @@ msgstr "Artículos FAQ por página"
 #. Template: AgentFAQOverviewSmall
 msgid "No FAQ data found."
 msgstr "No se encontraron datos de FAQ."
-
-#. Template: AgentFAQPrint
-msgid "FAQ-Info"
-msgstr "Información-FAQ"
-
-#. Template: AgentFAQPrint
-msgid "Votes"
-msgstr "Votos"
-
-#. Template: AgentFAQPrint
-msgid "Last update"
-msgstr "Última Actualización"
 
 #. Template: AgentFAQSearch
 msgid "Keyword"
@@ -437,6 +429,10 @@ msgid "out of 5"
 msgstr "de 5"
 
 #. Template: AgentFAQZoom
+msgid "Votes"
+msgstr "Votos"
+
+#. Template: AgentFAQZoom
 msgid "No votes found!"
 msgstr "¡No se encontró ningún voto!"
 
@@ -544,6 +540,26 @@ msgstr "Público"
 #. Template: PublicFAQSearchResultShort
 msgid "Back to FAQ Explorer"
 msgstr "Regresar al Explorador de FAQ"
+
+#. Perl Module: Kernel/Modules/AgentFAQJournal.pm
+msgid "FAQ Journal"
+msgstr "Bitácora de FAQ"
+
+#. Perl Module: Kernel/Modules/AgentFAQPrint.pm
+msgid "Last update"
+msgstr "Última Actualización"
+
+#. Perl Module: Kernel/Modules/AgentFAQPrint.pm
+msgid "FAQ Dynamic Fields"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "No Result!"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
+msgid "This article is empty!"
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -836,10 +852,6 @@ msgid "Enable voting mechanism on FAQ module."
 msgstr "Habilitar el mecanismo de votación en el módulo FAQ"
 
 #. SysConfig
-msgid "FAQ Journal"
-msgstr "Bitácora de FAQ"
-
-#. SysConfig
 msgid "FAQ Journal Overview \"Small\" Limit"
 msgstr "Límite para la vista general «pequeña» de la Bitácora de FAQ"
 
@@ -854,10 +866,6 @@ msgstr "Límite de FAQ por página para la vista general «pequeña» de la Bit�
 #. SysConfig
 msgid "FAQ limit per page for FAQ Overview \"Small\""
 msgstr "Límite de FAQ por página para la vista general «pequeña» de FAQ"
-
-#. SysConfig
-msgid "FAQ path separator."
-msgstr "Separador de la ruta de FAQ."
 
 #. SysConfig
 msgid "FAQ search backend router of the agent interface."
