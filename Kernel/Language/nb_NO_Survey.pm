@@ -57,31 +57,32 @@ sub Data {
 
     # Template: AgentSurveyEditQuestions
     $Self->{Translation}->{'Edit Questions'} = 'Rediger spørsmål';
+    $Self->{Translation}->{'Survey Questions'} = 'Spørsmål til spørreundersøkelsen';
     $Self->{Translation}->{'Add Question'} = 'Legg til spørsmål';
     $Self->{Translation}->{'Type the question'} = 'Skriv inn spørsmålet';
     $Self->{Translation}->{'Answer required'} = '';
-    $Self->{Translation}->{'Survey Questions'} = 'Spørsmål til spørreundersøkelsen';
     $Self->{Translation}->{'No questions saved for this survey.'} = 'Ingen spørsmål lagret for denne spørreundersøkelsen.';
     $Self->{Translation}->{'Question'} = 'Spørsmål';
     $Self->{Translation}->{'Answer Required'} = '';
-    $Self->{Translation}->{'When you finish to edit the survey questions just close this window.'} =
+    $Self->{Translation}->{'When you finish to edit the survey questions just close this screen.'} =
         '';
     $Self->{Translation}->{'Do you really want to delete this question? ALL associated data will be LOST!'} =
         '';
     $Self->{Translation}->{'Edit Question'} = 'Rediger spørsmål';
     $Self->{Translation}->{'go back to questions'} = 'tilbake til spørsmålene';
+    $Self->{Translation}->{'Question:'} = '';
     $Self->{Translation}->{'Possible Answers For'} = 'Mulige svaralternativer for';
     $Self->{Translation}->{'Add Answer'} = 'Legg til svaralternativer';
     $Self->{Translation}->{'No answers saved for this question.'} = '';
     $Self->{Translation}->{'Do you really want to delete this answer?'} = '';
     $Self->{Translation}->{'This doesn\'t have several answers, a textarea will be displayed.'} =
         'Dette spørsmålet har ikke mulighet for svaralternativer. Her vil det kun bli vist en tekstboks.';
-    $Self->{Translation}->{'Go back'} = 'Gå tilbake';
     $Self->{Translation}->{'Edit Answer'} = 'Rediger svar';
     $Self->{Translation}->{'go back to edit question'} = 'gå tilbake for å redigere spørsmål';
+    $Self->{Translation}->{'Answer:'} = '';
 
     # Template: AgentSurveyOverviewNavBar
-    $Self->{Translation}->{'Max. shown Surveys per page'} = 'Max antall spørreundersøkelser pr side';
+    $Self->{Translation}->{'Max. shown surveys per page'} = '';
 
     # Template: AgentSurveyOverviewSmall
     $Self->{Translation}->{'Notification Sender'} = 'Avsender av varsel-e-post';
@@ -166,6 +167,7 @@ sub Data {
         '';
     $Self->{Translation}->{'Shows a link in the menu to zoom into the survey statistics details in its zoom view of the agent interface.'} =
         '';
+    $Self->{Translation}->{'Survey Add Module.'} = '';
     $Self->{Translation}->{'Survey Edit Module.'} = '';
     $Self->{Translation}->{'Survey Overview "Small" Limit'} = '';
     $Self->{Translation}->{'Survey Stats Module.'} = '';
@@ -176,6 +178,7 @@ sub Data {
         'Standard identifikator for en undersøklse, f.eks. Spørreundersøkelse#, MinSpørreundersøkelse#. Standard er Survey#.';
     $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket is closed.'} =
         '';
+    $Self->{Translation}->{'Trigger sending delayed survey requests.'} = '';
     $Self->{Translation}->{'Zoom Into Statistics Details'} = '';
 
 }

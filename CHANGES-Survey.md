@@ -1,9 +1,9 @@
 #5.0.0.rc1 2015-??-??
+ - 2015-10-07 Updated translations, thanks to all translators
  - 2015-10-06 Added French language, thanks to the translation team.
  - 2015-10-06 Added Galician language, thanks to the translation team.
  - 2015-10-06 Added Hungarian language, thanks to the translation team.
  - 2015-10-06 Added Vietnamese language, thanks to the translation team.
- - 2015-10-06 Updated translations, thanks to all translators
 
 #5.0.0.beta1 2015-09-01
  - 2015-08-26 Initial version for OTRS 5

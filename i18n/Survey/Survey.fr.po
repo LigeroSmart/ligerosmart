@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-09-03 13:43+0000\n"
-"Last-Translator: Gaudin vincent <vincent.gaudin@cprpsncf.fr>\n"
+"PO-Revision-Date: 2015-10-07 18:36+0000\n"
+"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: French (http://www.transifex.com/otrs/OTRS/language/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -157,6 +157,10 @@ msgid "Edit Questions"
 msgstr "Modifier Questions"
 
 #. Template: AgentSurveyEditQuestions
+msgid "Survey Questions"
+msgstr "Questions Enquêtes"
+
+#. Template: AgentSurveyEditQuestions
 msgid "Add Question"
 msgstr "Ajouter Questions"
 
@@ -167,10 +171,6 @@ msgstr "Entrer la question"
 #. Template: AgentSurveyEditQuestions
 msgid "Answer required"
 msgstr "Réponse requise"
-
-#. Template: AgentSurveyEditQuestions
-msgid "Survey Questions"
-msgstr "Questions Enquêtes"
 
 #. Template: AgentSurveyEditQuestions
 msgid "No questions saved for this survey."
@@ -185,8 +185,8 @@ msgid "Answer Required"
 msgstr "Réponse requise"
 
 #. Template: AgentSurveyEditQuestions
-msgid "When you finish to edit the survey questions just close this window."
-msgstr "Après avoir terminé le sondage vous pouvez fermer la fenêtre."
+msgid "When you finish to edit the survey questions just close this screen."
+msgstr ""
 
 #. Template: AgentSurveyEditQuestions
 msgid ""
@@ -201,6 +201,10 @@ msgstr "Modifier Question"
 #. Template: AgentSurveyEditQuestions
 msgid "go back to questions"
 msgstr "Retour aux Questions"
+
+#. Template: AgentSurveyEditQuestions
+msgid "Question:"
+msgstr ""
 
 #. Template: AgentSurveyEditQuestions
 msgid "Possible Answers For"
@@ -223,10 +227,6 @@ msgid "This doesn't have several answers, a textarea will be displayed."
 msgstr "il n'y a pas de réponses possible, une zone de texte sera affiché."
 
 #. Template: AgentSurveyEditQuestions
-msgid "Go back"
-msgstr "Retour"
-
-#. Template: AgentSurveyEditQuestions
 msgid "Edit Answer"
 msgstr "Modifier Réponse"
 
@@ -234,9 +234,13 @@ msgstr "Modifier Réponse"
 msgid "go back to edit question"
 msgstr "Retour à la modification des questions."
 
+#. Template: AgentSurveyEditQuestions
+msgid "Answer:"
+msgstr ""
+
 #. Template: AgentSurveyOverviewNavBar
-msgid "Max. shown Surveys per page"
-msgstr "Maximum Sondage affiché par page"
+msgid "Max. shown surveys per page"
+msgstr ""
 
 #. Template: AgentSurveyOverviewSmall
 msgid "Notification Sender"
@@ -472,6 +476,10 @@ msgid ""
 msgstr ""
 
 #. SysConfig
+msgid "Survey Add Module."
+msgstr ""
+
+#. SysConfig
 msgid "Survey Edit Module."
 msgstr "Module d'édition d'enquête."
 
@@ -505,6 +513,10 @@ msgstr "L'identifiant pour une enquête. par ex. Survey#, MySurvey#. par défaut
 msgid ""
 "Ticket event module to send automatically survey email requests to customers"
 " if a ticket is closed."
+msgstr ""
+
+#. SysConfig
+msgid "Trigger sending delayed survey requests."
 msgstr ""
 
 #. SysConfig

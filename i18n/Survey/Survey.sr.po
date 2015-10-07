@@ -5,9 +5,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2014-10-02 01:04+0000\n"
-"Last-Translator: Милорад Јовановић <j.milorad@gmail.com>\n"
-"Language-Team: Serbian (http://www.transifex.com/projects/p/OTRS/language/sr/)\n"
+"PO-Revision-Date: 2015-10-07 18:36+0000\n"
+"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
+"Language-Team: Serbian (http://www.transifex.com/otrs/OTRS/language/sr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -155,6 +155,10 @@ msgid "Edit Questions"
 msgstr "Уреди питања"
 
 #. Template: AgentSurveyEditQuestions
+msgid "Survey Questions"
+msgstr "Анкетна питања"
+
+#. Template: AgentSurveyEditQuestions
 msgid "Add Question"
 msgstr "Додај питање"
 
@@ -165,10 +169,6 @@ msgstr "Унеси питање"
 #. Template: AgentSurveyEditQuestions
 msgid "Answer required"
 msgstr "Обавезан одговор"
-
-#. Template: AgentSurveyEditQuestions
-msgid "Survey Questions"
-msgstr "Анкетна питања"
 
 #. Template: AgentSurveyEditQuestions
 msgid "No questions saved for this survey."
@@ -183,8 +183,8 @@ msgid "Answer Required"
 msgstr "Обавезан одговор"
 
 #. Template: AgentSurveyEditQuestions
-msgid "When you finish to edit the survey questions just close this window."
-msgstr "Када завршите са уређивањем анкетних питања само затзворите овај прозор."
+msgid "When you finish to edit the survey questions just close this screen."
+msgstr ""
 
 #. Template: AgentSurveyEditQuestions
 msgid ""
@@ -199,6 +199,10 @@ msgstr "Уреди питање"
 #. Template: AgentSurveyEditQuestions
 msgid "go back to questions"
 msgstr "назад на питања"
+
+#. Template: AgentSurveyEditQuestions
+msgid "Question:"
+msgstr ""
 
 #. Template: AgentSurveyEditQuestions
 msgid "Possible Answers For"
@@ -221,10 +225,6 @@ msgid "This doesn't have several answers, a textarea will be displayed."
 msgstr "Ово нема више одговора, простор за текст ће бити приказан."
 
 #. Template: AgentSurveyEditQuestions
-msgid "Go back"
-msgstr "Иди назад"
-
-#. Template: AgentSurveyEditQuestions
 msgid "Edit Answer"
 msgstr "Уреди одговор"
 
@@ -232,9 +232,13 @@ msgstr "Уреди одговор"
 msgid "go back to edit question"
 msgstr "назад на уређивање питања"
 
+#. Template: AgentSurveyEditQuestions
+msgid "Answer:"
+msgstr ""
+
 #. Template: AgentSurveyOverviewNavBar
-msgid "Max. shown Surveys per page"
-msgstr "Макс. приказаних анкета по страни"
+msgid "Max. shown surveys per page"
+msgstr ""
 
 #. Template: AgentSurveyOverviewSmall
 msgid "Notification Sender"
@@ -470,6 +474,10 @@ msgid ""
 msgstr "У менију приказује везу за детаљни приказ статистике анкете у детаљном приказу на оператерском интерфејсу."
 
 #. SysConfig
+msgid "Survey Add Module."
+msgstr ""
+
+#. SysConfig
 msgid "Survey Edit Module."
 msgstr "Модул за уређивање анкете."
 
@@ -504,6 +512,10 @@ msgid ""
 "Ticket event module to send automatically survey email requests to customers"
 " if a ticket is closed."
 msgstr "Модул догађаја на тикету за аутоматско слање имејла о истраживању корисницима ако је тикет затворен."
+
+#. SysConfig
+msgid "Trigger sending delayed survey requests."
+msgstr ""
 
 #. SysConfig
 msgid "Zoom Into Statistics Details"

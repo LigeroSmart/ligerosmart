@@ -16,7 +16,7 @@ sub Data {
     my $Self = shift;
 
     # Template: AAASurvey
-    $Self->{Translation}->{'- Change Status -'} = 'Zmień status';
+    $Self->{Translation}->{'- Change Status -'} = '- Zmień status -';
     $Self->{Translation}->{'Add New Survey'} = 'Dodaj nową ankietę';
     $Self->{Translation}->{'Survey Edit'} = 'Edycja ankiety';
     $Self->{Translation}->{'Survey Edit Questions'} = 'Edycja pytań ankiety';
@@ -57,31 +57,32 @@ sub Data {
 
     # Template: AgentSurveyEditQuestions
     $Self->{Translation}->{'Edit Questions'} = 'Edytuj pytania';
+    $Self->{Translation}->{'Survey Questions'} = 'Pytania ankiety';
     $Self->{Translation}->{'Add Question'} = 'Dodaj pytanie';
     $Self->{Translation}->{'Type the question'} = 'Wprowadź pytanie';
     $Self->{Translation}->{'Answer required'} = '';
-    $Self->{Translation}->{'Survey Questions'} = 'Pytania ankiety';
     $Self->{Translation}->{'No questions saved for this survey.'} = 'Brak pytań zapisanych w tej ankiecie.';
     $Self->{Translation}->{'Question'} = 'Pytanie';
     $Self->{Translation}->{'Answer Required'} = '';
-    $Self->{Translation}->{'When you finish to edit the survey questions just close this window.'} =
+    $Self->{Translation}->{'When you finish to edit the survey questions just close this screen.'} =
         '';
     $Self->{Translation}->{'Do you really want to delete this question? ALL associated data will be LOST!'} =
         '';
     $Self->{Translation}->{'Edit Question'} = 'Edytuj pytanie';
     $Self->{Translation}->{'go back to questions'} = 'powrót do pytań';
+    $Self->{Translation}->{'Question:'} = '';
     $Self->{Translation}->{'Possible Answers For'} = 'Możliwe odpowiedzi do';
     $Self->{Translation}->{'Add Answer'} = 'Dodaj odpowiedź';
     $Self->{Translation}->{'No answers saved for this question.'} = '';
     $Self->{Translation}->{'Do you really want to delete this answer?'} = '';
     $Self->{Translation}->{'This doesn\'t have several answers, a textarea will be displayed.'} =
         'Nie posiada wielu odpowiedzi, będzie wyświetlane pole tekstowe.';
-    $Self->{Translation}->{'Go back'} = 'Wstecz';
     $Self->{Translation}->{'Edit Answer'} = 'Edytuj odpowiedź';
     $Self->{Translation}->{'go back to edit question'} = 'powrót do edycji pytania';
+    $Self->{Translation}->{'Answer:'} = '';
 
     # Template: AgentSurveyOverviewNavBar
-    $Self->{Translation}->{'Max. shown Surveys per page'} = 'Maks. liczba wyświetlanych ankiet na stronę';
+    $Self->{Translation}->{'Max. shown surveys per page'} = '';
 
     # Template: AgentSurveyOverviewSmall
     $Self->{Translation}->{'Notification Sender'} = 'Nadawca powiadomienia';
@@ -166,6 +167,7 @@ sub Data {
         '';
     $Self->{Translation}->{'Shows a link in the menu to zoom into the survey statistics details in its zoom view of the agent interface.'} =
         '';
+    $Self->{Translation}->{'Survey Add Module.'} = '';
     $Self->{Translation}->{'Survey Edit Module.'} = '';
     $Self->{Translation}->{'Survey Overview "Small" Limit'} = 'Limit "małego" przeglądu ankiet';
     $Self->{Translation}->{'Survey Stats Module.'} = '';
@@ -176,6 +178,7 @@ sub Data {
         'Identyfikacja dla ankiety, np. Survey#, MySurvey#. Domyślnie: Survey#.';
     $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket is closed.'} =
         'Zdarzenie zgłoszenia wysyła automatycznie e-maila z prośbą o wypełnienie ankiety po zamknięciu zgłoszenia.';
+    $Self->{Translation}->{'Trigger sending delayed survey requests.'} = '';
     $Self->{Translation}->{'Zoom Into Statistics Details'} = '';
 
 }

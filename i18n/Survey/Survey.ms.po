@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-09-28 08:40+0000\n"
-"Last-Translator: KENNY CHEAH <otrssdnbhd@gmail.com>\n"
+"PO-Revision-Date: 2015-10-07 18:36+0000\n"
+"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Malay (http://www.transifex.com/otrs/OTRS/language/ms/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -155,6 +155,10 @@ msgid "Edit Questions"
 msgstr "Edit Soalan"
 
 #. Template: AgentSurveyEditQuestions
+msgid "Survey Questions"
+msgstr "Penyiasatan Soalan"
+
+#. Template: AgentSurveyEditQuestions
 msgid "Add Question"
 msgstr "Tambah Soalan"
 
@@ -165,10 +169,6 @@ msgstr "Taip soalan"
 #. Template: AgentSurveyEditQuestions
 msgid "Answer required"
 msgstr "Jawapan diperlukan"
-
-#. Template: AgentSurveyEditQuestions
-msgid "Survey Questions"
-msgstr "Penyiasatan Soalan"
 
 #. Template: AgentSurveyEditQuestions
 msgid "No questions saved for this survey."
@@ -183,8 +183,8 @@ msgid "Answer Required"
 msgstr "Jawapan diperlukan"
 
 #. Template: AgentSurveyEditQuestions
-msgid "When you finish to edit the survey questions just close this window."
-msgstr "Apabila anda sudah selesai mengubah soalan kaji selidik hanya tutup tetingkap ini."
+msgid "When you finish to edit the survey questions just close this screen."
+msgstr ""
 
 #. Template: AgentSurveyEditQuestions
 msgid ""
@@ -199,6 +199,10 @@ msgstr "Edit Soalan"
 #. Template: AgentSurveyEditQuestions
 msgid "go back to questions"
 msgstr "kembali kepada soalan-soalan"
+
+#. Template: AgentSurveyEditQuestions
+msgid "Question:"
+msgstr ""
 
 #. Template: AgentSurveyEditQuestions
 msgid "Possible Answers For"
@@ -221,10 +225,6 @@ msgid "This doesn't have several answers, a textarea will be displayed."
 msgstr "Ini tidak mempunyai beberapa jawapan, textarea akan dipaparkan."
 
 #. Template: AgentSurveyEditQuestions
-msgid "Go back"
-msgstr "Kembali"
-
-#. Template: AgentSurveyEditQuestions
 msgid "Edit Answer"
 msgstr "Edit Jawapan"
 
@@ -232,9 +232,13 @@ msgstr "Edit Jawapan"
 msgid "go back to edit question"
 msgstr "kembali untuk mengedit soalan"
 
+#. Template: AgentSurveyEditQuestions
+msgid "Answer:"
+msgstr ""
+
 #. Template: AgentSurveyOverviewNavBar
-msgid "Max. shown Surveys per page"
-msgstr "Max. Ukur ditunjukkan setiap halaman"
+msgid "Max. shown surveys per page"
+msgstr ""
 
 #. Template: AgentSurveyOverviewSmall
 msgid "Notification Sender"
@@ -470,6 +474,10 @@ msgid ""
 msgstr "Menunjukkan pautan dalam menu untuk zum maklumat statistik kaji selidik dalam paparan zum antara muka ejen."
 
 #. SysConfig
+msgid "Survey Add Module."
+msgstr ""
+
+#. SysConfig
 msgid "Survey Edit Module."
 msgstr "Kaji selidik suntingan modul"
 
@@ -504,6 +512,10 @@ msgid ""
 "Ticket event module to send automatically survey email requests to customers"
 " if a ticket is closed."
 msgstr "Tiket modul acara untuk menghantar permintaan e-mel secara automatik kaji selidik kepada pelanggan jika tiket ditutup."
+
+#. SysConfig
+msgid "Trigger sending delayed survey requests."
+msgstr ""
 
 #. SysConfig
 msgid "Zoom Into Statistics Details"

@@ -57,31 +57,32 @@ sub Data {
 
     # Template: AgentSurveyEditQuestions
     $Self->{Translation}->{'Edit Questions'} = '編輯問題';
+    $Self->{Translation}->{'Survey Questions'} = '調查問題';
     $Self->{Translation}->{'Add Question'} = '添加問題';
     $Self->{Translation}->{'Type the question'} = '問題類型';
     $Self->{Translation}->{'Answer required'} = '需要回答';
-    $Self->{Translation}->{'Survey Questions'} = '調查問題';
     $Self->{Translation}->{'No questions saved for this survey.'} = '這個調查没有保存的問題。';
     $Self->{Translation}->{'Question'} = '問題';
     $Self->{Translation}->{'Answer Required'} = '必須回答';
-    $Self->{Translation}->{'When you finish to edit the survey questions just close this window.'} =
+    $Self->{Translation}->{'When you finish to edit the survey questions just close this screen.'} =
         '';
     $Self->{Translation}->{'Do you really want to delete this question? ALL associated data will be LOST!'} =
         '';
     $Self->{Translation}->{'Edit Question'} = '編輯問題';
     $Self->{Translation}->{'go back to questions'} = '返回問題';
+    $Self->{Translation}->{'Question:'} = '';
     $Self->{Translation}->{'Possible Answers For'} = '可選的回答';
     $Self->{Translation}->{'Add Answer'} = '添加回答';
     $Self->{Translation}->{'No answers saved for this question.'} = '';
     $Self->{Translation}->{'Do you really want to delete this answer?'} = '';
     $Self->{Translation}->{'This doesn\'t have several answers, a textarea will be displayed.'} =
         '';
-    $Self->{Translation}->{'Go back'} = '返回';
     $Self->{Translation}->{'Edit Answer'} = '編輯回答';
     $Self->{Translation}->{'go back to edit question'} = '返回到編輯問題';
+    $Self->{Translation}->{'Answer:'} = '';
 
     # Template: AgentSurveyOverviewNavBar
-    $Self->{Translation}->{'Max. shown Surveys per page'} = '每頁顯示調查的最大數';
+    $Self->{Translation}->{'Max. shown surveys per page'} = '';
 
     # Template: AgentSurveyOverviewSmall
     $Self->{Translation}->{'Notification Sender'} = '通知發送者';
@@ -166,6 +167,7 @@ sub Data {
         '';
     $Self->{Translation}->{'Shows a link in the menu to zoom into the survey statistics details in its zoom view of the agent interface.'} =
         '';
+    $Self->{Translation}->{'Survey Add Module.'} = '';
     $Self->{Translation}->{'Survey Edit Module.'} = '';
     $Self->{Translation}->{'Survey Overview "Small" Limit'} = '';
     $Self->{Translation}->{'Survey Stats Module.'} = '';
@@ -176,6 +178,7 @@ sub Data {
         '';
     $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket is closed.'} =
         '';
+    $Self->{Translation}->{'Trigger sending delayed survey requests.'} = '';
     $Self->{Translation}->{'Zoom Into Statistics Details'} = '';
 
 }

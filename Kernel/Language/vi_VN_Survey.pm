@@ -57,31 +57,32 @@ sub Data {
 
     # Template: AgentSurveyEditQuestions
     $Self->{Translation}->{'Edit Questions'} = 'Sửa câu hỏi';
+    $Self->{Translation}->{'Survey Questions'} = 'Câu hỏi khảo sát';
     $Self->{Translation}->{'Add Question'} = 'Thêm câu hỏi';
     $Self->{Translation}->{'Type the question'} = 'Nhập câu hỏi';
     $Self->{Translation}->{'Answer required'} = 'Yêu cầu phải trả lời';
-    $Self->{Translation}->{'Survey Questions'} = 'Câu hỏi khảo sát';
     $Self->{Translation}->{'No questions saved for this survey.'} = 'Không có câu hỏi nào được lưu cho khảo sát này.';
     $Self->{Translation}->{'Question'} = 'Câu hỏi';
     $Self->{Translation}->{'Answer Required'} = 'Yêu cầu phải trả lời';
-    $Self->{Translation}->{'When you finish to edit the survey questions just close this window.'} =
-        'Khi bạn hoàn tất việc sửa câu hỏi khảo sát, chỉ cần đóng cửa sổ này.';
+    $Self->{Translation}->{'When you finish to edit the survey questions just close this screen.'} =
+        '';
     $Self->{Translation}->{'Do you really want to delete this question? ALL associated data will be LOST!'} =
         'Bạn có thật sự muốn xoá câu hỏi này? TẤT CẢ các dữ liệu liên quan sẽ bị MẤT!';
     $Self->{Translation}->{'Edit Question'} = 'Sửa câu hỏi';
     $Self->{Translation}->{'go back to questions'} = 'quay lại';
+    $Self->{Translation}->{'Question:'} = '';
     $Self->{Translation}->{'Possible Answers For'} = 'Đáp án có thể cho';
     $Self->{Translation}->{'Add Answer'} = 'Thêm đáp án';
     $Self->{Translation}->{'No answers saved for this question.'} = 'Không có đáp án nào được lưu cho câu hỏi này.';
     $Self->{Translation}->{'Do you really want to delete this answer?'} = 'Bạn có thật sự muốn xoá đáp án?';
     $Self->{Translation}->{'This doesn\'t have several answers, a textarea will be displayed.'} =
         'Câu hỏi này không có đáp án, một khung soạn thảo sẽ được hiển thị.';
-    $Self->{Translation}->{'Go back'} = 'Quay lại';
     $Self->{Translation}->{'Edit Answer'} = 'Sửa đáp án';
     $Self->{Translation}->{'go back to edit question'} = 'quay về sửa câu hỏi';
+    $Self->{Translation}->{'Answer:'} = '';
 
     # Template: AgentSurveyOverviewNavBar
-    $Self->{Translation}->{'Max. shown Surveys per page'} = 'Số khảo sát tối đa hiển thị trên một trang';
+    $Self->{Translation}->{'Max. shown surveys per page'} = '';
 
     # Template: AgentSurveyOverviewSmall
     $Self->{Translation}->{'Notification Sender'} = 'Người gửi thông báo';
@@ -166,6 +167,7 @@ sub Data {
         'Hiển thị liên kết trong trình đơn để quay lại trong khi xem chi tiết khảo sát ở giao diện điều hành viên.';
     $Self->{Translation}->{'Shows a link in the menu to zoom into the survey statistics details in its zoom view of the agent interface.'} =
         'Hiển thị liên kết trong trình đơn để xem thống kê chi tiết của khảo sát trong khi xem chi tiết khảo sát ở giao diện điều hành viên.';
+    $Self->{Translation}->{'Survey Add Module.'} = '';
     $Self->{Translation}->{'Survey Edit Module.'} = 'Mô-đun sửa khảo sát.';
     $Self->{Translation}->{'Survey Overview "Small" Limit'} = 'Giới hạn danh sách khảo sát tổng quát';
     $Self->{Translation}->{'Survey Stats Module.'} = 'Mô-đun thống kê khảo sát.';
@@ -176,6 +178,7 @@ sub Data {
         'Định danh cho khảo sát, ví dụ: Khảo sát#, Khảo sát của tôi#. Ngầm định là Khảo sát#.';
     $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket is closed.'} =
         'Mô-đun bắt sự kiện của phiếu yêu cầu để gửi email yêu cầu tự động đến khách hàng nếu phiếu yêu cầu được đóng.';
+    $Self->{Translation}->{'Trigger sending delayed survey requests.'} = '';
     $Self->{Translation}->{'Zoom Into Statistics Details'} = 'Xem thống kê chi tiết';
 
 }

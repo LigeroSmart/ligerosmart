@@ -57,31 +57,32 @@ sub Data {
 
     # Template: AgentSurveyEditQuestions
     $Self->{Translation}->{'Edit Questions'} = 'Modifica le domande';
+    $Self->{Translation}->{'Survey Questions'} = 'Voci del Sondaggio';
     $Self->{Translation}->{'Add Question'} = 'Aggiungi domanda';
     $Self->{Translation}->{'Type the question'} = 'Inserisci la domanda';
     $Self->{Translation}->{'Answer required'} = '';
-    $Self->{Translation}->{'Survey Questions'} = 'Voci del Sondaggio';
     $Self->{Translation}->{'No questions saved for this survey.'} = 'Non ci sono voci per questo sondaggio';
     $Self->{Translation}->{'Question'} = 'Domanda';
     $Self->{Translation}->{'Answer Required'} = '';
-    $Self->{Translation}->{'When you finish to edit the survey questions just close this window.'} =
+    $Self->{Translation}->{'When you finish to edit the survey questions just close this screen.'} =
         '';
     $Self->{Translation}->{'Do you really want to delete this question? ALL associated data will be LOST!'} =
         '';
     $Self->{Translation}->{'Edit Question'} = 'Modifica domanda';
     $Self->{Translation}->{'go back to questions'} = 'Ritorna alle domande';
+    $Self->{Translation}->{'Question:'} = '';
     $Self->{Translation}->{'Possible Answers For'} = 'Possibili risposte';
     $Self->{Translation}->{'Add Answer'} = 'Aggiungi risposta';
     $Self->{Translation}->{'No answers saved for this question.'} = '';
     $Self->{Translation}->{'Do you really want to delete this answer?'} = '';
     $Self->{Translation}->{'This doesn\'t have several answers, a textarea will be displayed.'} =
         'Non sono previste risposte multiple, il destinatario inserisce del testo libero';
-    $Self->{Translation}->{'Go back'} = 'Indietro';
     $Self->{Translation}->{'Edit Answer'} = 'Modifica risposta';
     $Self->{Translation}->{'go back to edit question'} = 'Ritorna a modificare le domande';
+    $Self->{Translation}->{'Answer:'} = '';
 
     # Template: AgentSurveyOverviewNavBar
-    $Self->{Translation}->{'Max. shown Surveys per page'} = 'Numero massimo di sondaggi per pagina';
+    $Self->{Translation}->{'Max. shown surveys per page'} = '';
 
     # Template: AgentSurveyOverviewSmall
     $Self->{Translation}->{'Notification Sender'} = 'Mittente del sondaggio';
@@ -166,6 +167,7 @@ sub Data {
         '';
     $Self->{Translation}->{'Shows a link in the menu to zoom into the survey statistics details in its zoom view of the agent interface.'} =
         '';
+    $Self->{Translation}->{'Survey Add Module.'} = '';
     $Self->{Translation}->{'Survey Edit Module.'} = '';
     $Self->{Translation}->{'Survey Overview "Small" Limit'} = 'Limite per visualizzazione "compatta".';
     $Self->{Translation}->{'Survey Stats Module.'} = '';
@@ -176,6 +178,7 @@ sub Data {
         'Identificativo per il sondaggio, per esempio Sondaggio#, Inchiesta#. Il default Sondaggio#.';
     $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket is closed.'} =
         '';
+    $Self->{Translation}->{'Trigger sending delayed survey requests.'} = '';
     $Self->{Translation}->{'Zoom Into Statistics Details'} = '';
 
 }

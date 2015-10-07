@@ -57,31 +57,32 @@ sub Data {
 
     # Template: AgentSurveyEditQuestions
     $Self->{Translation}->{'Edit Questions'} = 'Hariri maswali';
+    $Self->{Translation}->{'Survey Questions'} = 'Maswali ya tafiti';
     $Self->{Translation}->{'Add Question'} = 'Ongeza swali';
     $Self->{Translation}->{'Type the question'} = 'Chapa swali';
     $Self->{Translation}->{'Answer required'} = 'Jibu linahitajika';
-    $Self->{Translation}->{'Survey Questions'} = 'Maswali ya tafiti';
     $Self->{Translation}->{'No questions saved for this survey.'} = 'Hakuna maswali yaliyo hifadhiwa kwa hii tafiti';
     $Self->{Translation}->{'Question'} = 'Swali';
     $Self->{Translation}->{'Answer Required'} = 'Jibu linahitajika';
-    $Self->{Translation}->{'When you finish to edit the survey questions just close this window.'} =
-        'Ukimaliza kuhariri tafiti ya maswali funga ukurasa';
+    $Self->{Translation}->{'When you finish to edit the survey questions just close this screen.'} =
+        '';
     $Self->{Translation}->{'Do you really want to delete this question? ALL associated data will be LOST!'} =
         'Je unataka kufuta hili swali? Data zote zita POTEA!';
     $Self->{Translation}->{'Edit Question'} = 'Hariri swali';
     $Self->{Translation}->{'go back to questions'} = 'rudi kwenye maswali';
+    $Self->{Translation}->{'Question:'} = '';
     $Self->{Translation}->{'Possible Answers For'} = 'Majibu yawezekana kwa';
     $Self->{Translation}->{'Add Answer'} = 'Ongeza jibu';
     $Self->{Translation}->{'No answers saved for this question.'} = 'Hakuna majibu yaliyohifadhiwa kwa hili swali';
     $Self->{Translation}->{'Do you really want to delete this answer?'} = 'Je unataka kufuta hili jibu?';
     $Self->{Translation}->{'This doesn\'t have several answers, a textarea will be displayed.'} =
         'Hili halina majibu mengi, sehemu ya nakala itaonyeshwa.';
-    $Self->{Translation}->{'Go back'} = 'Rudi nyuma';
     $Self->{Translation}->{'Edit Answer'} = 'Hariri jibu';
     $Self->{Translation}->{'go back to edit question'} = 'Rudi nyuma kuhariri swali';
+    $Self->{Translation}->{'Answer:'} = '';
 
     # Template: AgentSurveyOverviewNavBar
-    $Self->{Translation}->{'Max. shown Surveys per page'} = 'Upeo wa juu wa tafiti zilizo onyeshwa kwa kurasa';
+    $Self->{Translation}->{'Max. shown surveys per page'} = '';
 
     # Template: AgentSurveyOverviewSmall
     $Self->{Translation}->{'Notification Sender'} = 'Mtumaji taarifa';
@@ -166,6 +167,7 @@ sub Data {
         'Inaonyesha kiungo katika menyu ili kurudi katika muonekano uliokuzwa wa kiolesura cha wakala.';
     $Self->{Translation}->{'Shows a link in the menu to zoom into the survey statistics details in its zoom view of the agent interface.'} =
         'Inaonyesha kiungo katika menyu ili kukuza maelezo ya takwimu za utafiti katika muonekano uliokuzwa wa kiolesura cha wakala.';
+    $Self->{Translation}->{'Survey Add Module.'} = '';
     $Self->{Translation}->{'Survey Edit Module.'} = 'Moduli ya kuhariri savei.';
     $Self->{Translation}->{'Survey Overview "Small" Limit'} = 'Mapitio ya savei kikomo "cha chini"';
     $Self->{Translation}->{'Survey Stats Module.'} = 'Moduli ya takwimu za savei.';
@@ -176,6 +178,7 @@ sub Data {
         'Kitambulisho cha utafiti, mf. Utafiti#, Utafiti wangu#. Chaguo-msingi ni Utafiti#.';
     $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket is closed.'} =
         'Moduli ya tukio la tiketi kwa ajili ya kutuma barua pepe za maombi ya tafiti moja kwa moja kwa wateja kama tiketi imefungwa.';
+    $Self->{Translation}->{'Trigger sending delayed survey requests.'} = '';
     $Self->{Translation}->{'Zoom Into Statistics Details'} = 'Kuza maelezo ya takwimu';
 
 }

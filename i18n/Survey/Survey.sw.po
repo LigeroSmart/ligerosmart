@@ -5,9 +5,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2014-10-14 07:51+0000\n"
-"Last-Translator: Silvanus Silvester Swai <ssw@nrd.no>\n"
-"Language-Team: Swahili (http://www.transifex.com/projects/p/OTRS/language/sw/)\n"
+"PO-Revision-Date: 2015-10-07 18:36+0000\n"
+"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
+"Language-Team: Swahili (http://www.transifex.com/otrs/OTRS/language/sw/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -155,6 +155,10 @@ msgid "Edit Questions"
 msgstr "Hariri maswali"
 
 #. Template: AgentSurveyEditQuestions
+msgid "Survey Questions"
+msgstr "Maswali ya tafiti"
+
+#. Template: AgentSurveyEditQuestions
 msgid "Add Question"
 msgstr "Ongeza swali"
 
@@ -165,10 +169,6 @@ msgstr "Chapa swali"
 #. Template: AgentSurveyEditQuestions
 msgid "Answer required"
 msgstr "Jibu linahitajika"
-
-#. Template: AgentSurveyEditQuestions
-msgid "Survey Questions"
-msgstr "Maswali ya tafiti"
 
 #. Template: AgentSurveyEditQuestions
 msgid "No questions saved for this survey."
@@ -183,8 +183,8 @@ msgid "Answer Required"
 msgstr "Jibu linahitajika"
 
 #. Template: AgentSurveyEditQuestions
-msgid "When you finish to edit the survey questions just close this window."
-msgstr "Ukimaliza kuhariri tafiti ya maswali funga ukurasa"
+msgid "When you finish to edit the survey questions just close this screen."
+msgstr ""
 
 #. Template: AgentSurveyEditQuestions
 msgid ""
@@ -199,6 +199,10 @@ msgstr "Hariri swali"
 #. Template: AgentSurveyEditQuestions
 msgid "go back to questions"
 msgstr "rudi kwenye maswali"
+
+#. Template: AgentSurveyEditQuestions
+msgid "Question:"
+msgstr ""
 
 #. Template: AgentSurveyEditQuestions
 msgid "Possible Answers For"
@@ -221,10 +225,6 @@ msgid "This doesn't have several answers, a textarea will be displayed."
 msgstr "Hili halina majibu mengi, sehemu ya nakala itaonyeshwa."
 
 #. Template: AgentSurveyEditQuestions
-msgid "Go back"
-msgstr "Rudi nyuma"
-
-#. Template: AgentSurveyEditQuestions
 msgid "Edit Answer"
 msgstr "Hariri jibu"
 
@@ -232,9 +232,13 @@ msgstr "Hariri jibu"
 msgid "go back to edit question"
 msgstr "Rudi nyuma kuhariri swali"
 
+#. Template: AgentSurveyEditQuestions
+msgid "Answer:"
+msgstr ""
+
 #. Template: AgentSurveyOverviewNavBar
-msgid "Max. shown Surveys per page"
-msgstr "Upeo wa juu wa tafiti zilizo onyeshwa kwa kurasa"
+msgid "Max. shown surveys per page"
+msgstr ""
 
 #. Template: AgentSurveyOverviewSmall
 msgid "Notification Sender"
@@ -470,6 +474,10 @@ msgid ""
 msgstr "Inaonyesha kiungo katika menyu ili kukuza maelezo ya takwimu za utafiti katika muonekano uliokuzwa wa kiolesura cha wakala."
 
 #. SysConfig
+msgid "Survey Add Module."
+msgstr ""
+
+#. SysConfig
 msgid "Survey Edit Module."
 msgstr "Moduli ya kuhariri savei."
 
@@ -504,6 +512,10 @@ msgid ""
 "Ticket event module to send automatically survey email requests to customers"
 " if a ticket is closed."
 msgstr "Moduli ya tukio la tiketi kwa ajili ya kutuma barua pepe za maombi ya tafiti moja kwa moja kwa wateja kama tiketi imefungwa."
+
+#. SysConfig
+msgid "Trigger sending delayed survey requests."
+msgstr ""
 
 #. SysConfig
 msgid "Zoom Into Statistics Details"

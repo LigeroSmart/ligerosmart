@@ -57,31 +57,32 @@ sub Data {
 
     # Template: AgentSurveyEditQuestions
     $Self->{Translation}->{'Edit Questions'} = 'Edit Soalan';
+    $Self->{Translation}->{'Survey Questions'} = 'Penyiasatan Soalan';
     $Self->{Translation}->{'Add Question'} = 'Tambah Soalan';
     $Self->{Translation}->{'Type the question'} = 'Taip soalan';
     $Self->{Translation}->{'Answer required'} = 'Jawapan diperlukan';
-    $Self->{Translation}->{'Survey Questions'} = 'Penyiasatan Soalan';
     $Self->{Translation}->{'No questions saved for this survey.'} = 'Tiada soalan yang disimpan untuk kajian ini.';
     $Self->{Translation}->{'Question'} = 'Soalan';
     $Self->{Translation}->{'Answer Required'} = 'Jawapan diperlukan';
-    $Self->{Translation}->{'When you finish to edit the survey questions just close this window.'} =
-        'Apabila anda sudah selesai mengubah soalan kaji selidik hanya tutup tetingkap ini.';
+    $Self->{Translation}->{'When you finish to edit the survey questions just close this screen.'} =
+        '';
     $Self->{Translation}->{'Do you really want to delete this question? ALL associated data will be LOST!'} =
         'Adakah anda benar-benar ingin memadam soalan ini? SEMUA data berkaitan akan HILANG!';
     $Self->{Translation}->{'Edit Question'} = 'Edit Soalan';
     $Self->{Translation}->{'go back to questions'} = 'kembali kepada soalan-soalan';
+    $Self->{Translation}->{'Question:'} = '';
     $Self->{Translation}->{'Possible Answers For'} = 'Jawapan Kemungkinan Untuk';
     $Self->{Translation}->{'Add Answer'} = 'Tambah Jawab';
     $Self->{Translation}->{'No answers saved for this question.'} = 'Tiada jawapan yang disimpan untuk soalan ini.';
     $Self->{Translation}->{'Do you really want to delete this answer?'} = 'Adakah anda benar-benar ingin memadam jawapan ini?';
     $Self->{Translation}->{'This doesn\'t have several answers, a textarea will be displayed.'} =
         'Ini tidak mempunyai beberapa jawapan, textarea akan dipaparkan.';
-    $Self->{Translation}->{'Go back'} = 'Kembali';
     $Self->{Translation}->{'Edit Answer'} = 'Edit Jawapan';
     $Self->{Translation}->{'go back to edit question'} = 'kembali untuk mengedit soalan';
+    $Self->{Translation}->{'Answer:'} = '';
 
     # Template: AgentSurveyOverviewNavBar
-    $Self->{Translation}->{'Max. shown Surveys per page'} = 'Max. Ukur ditunjukkan setiap halaman';
+    $Self->{Translation}->{'Max. shown surveys per page'} = '';
 
     # Template: AgentSurveyOverviewSmall
     $Self->{Translation}->{'Notification Sender'} = 'Pemberitahuan Pengirim';
@@ -166,6 +167,7 @@ sub Data {
         'Menunjukkan pautan dalam menu untuk kembali ke paparan zum kaji selidik antara muka ejen.';
     $Self->{Translation}->{'Shows a link in the menu to zoom into the survey statistics details in its zoom view of the agent interface.'} =
         'Menunjukkan pautan dalam menu untuk zum maklumat statistik kaji selidik dalam paparan zum antara muka ejen.';
+    $Self->{Translation}->{'Survey Add Module.'} = '';
     $Self->{Translation}->{'Survey Edit Module.'} = 'Kaji selidik suntingan modul';
     $Self->{Translation}->{'Survey Overview "Small" Limit'} = 'Ukur Tinjauan Had "Kecil"';
     $Self->{Translation}->{'Survey Stats Module.'} = 'Kaji selidik Modul Statistik';
@@ -176,6 +178,7 @@ sub Data {
         'Pengecam untuk kaji selidik, misalnya Penyiasatan # MySurvey #. Lalai adalah Penyiasatan#.';
     $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket is closed.'} =
         'Tiket modul acara untuk menghantar permintaan e-mel secara automatik kaji selidik kepada pelanggan jika tiket ditutup.';
+    $Self->{Translation}->{'Trigger sending delayed survey requests.'} = '';
     $Self->{Translation}->{'Zoom Into Statistics Details'} = 'Zum pada maklumat statistik';
 
 }

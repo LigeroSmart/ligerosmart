@@ -57,31 +57,32 @@ sub Data {
 
     # Template: AgentSurveyEditQuestions
     $Self->{Translation}->{'Edit Questions'} = 'Kérdések szerkesztése';
+    $Self->{Translation}->{'Survey Questions'} = 'Kérdőív kérdések';
     $Self->{Translation}->{'Add Question'} = 'Kérdés hozzáadása';
     $Self->{Translation}->{'Type the question'} = 'Gépelje be a kérdést';
     $Self->{Translation}->{'Answer required'} = 'Válasz kötelező';
-    $Self->{Translation}->{'Survey Questions'} = 'Kérdőív kérdések';
     $Self->{Translation}->{'No questions saved for this survey.'} = 'Nincsenek kérdések elmentve ehhez a kérdőívhez.';
     $Self->{Translation}->{'Question'} = 'Kérdés';
     $Self->{Translation}->{'Answer Required'} = 'Válasz kötelező';
-    $Self->{Translation}->{'When you finish to edit the survey questions just close this window.'} =
-        'Amikor befejezte a kérdőív kérdéseinek szerkesztését, akkor egyszerűen zárja be ezt az ablakot.';
+    $Self->{Translation}->{'When you finish to edit the survey questions just close this screen.'} =
+        '';
     $Self->{Translation}->{'Do you really want to delete this question? ALL associated data will be LOST!'} =
         'Valóban törölni szeretné ezt a kérdést? MINDEN kapcsolódó adat el fog VESZNI!';
     $Self->{Translation}->{'Edit Question'} = 'Kérdés szerkesztése';
     $Self->{Translation}->{'go back to questions'} = 'vissza a kérdésekhez';
+    $Self->{Translation}->{'Question:'} = '';
     $Self->{Translation}->{'Possible Answers For'} = 'Lehetséges válaszok a következőhöz';
     $Self->{Translation}->{'Add Answer'} = 'Válasz hozzáadása';
     $Self->{Translation}->{'No answers saved for this question.'} = 'Nincsenek válaszok elmentve ehhez a kérdéshez.';
     $Self->{Translation}->{'Do you really want to delete this answer?'} = 'Valóban törölni szeretné ezt a választ?';
     $Self->{Translation}->{'This doesn\'t have several answers, a textarea will be displayed.'} =
         'Ennek nincs több válasza, egy szövegdoboz lesz megjelenítve.';
-    $Self->{Translation}->{'Go back'} = 'Vissza';
     $Self->{Translation}->{'Edit Answer'} = 'Válasz szerkesztése';
     $Self->{Translation}->{'go back to edit question'} = 'vissza a kérdés szerkesztéséhez';
+    $Self->{Translation}->{'Answer:'} = '';
 
     # Template: AgentSurveyOverviewNavBar
-    $Self->{Translation}->{'Max. shown Surveys per page'} = 'Oldalanként megjelenített legtöbb kérdőív';
+    $Self->{Translation}->{'Max. shown surveys per page'} = '';
 
     # Template: AgentSurveyOverviewSmall
     $Self->{Translation}->{'Notification Sender'} = 'Értesítés küldője';
@@ -166,6 +167,7 @@ sub Data {
         'Egy hivatkozást jelenít meg a menüben az ügyintézői felület kérdőív nagyítási nézetébe való visszatéréshez.';
     $Self->{Translation}->{'Shows a link in the menu to zoom into the survey statistics details in its zoom view of the agent interface.'} =
         'Egy hivatkozást jelenít meg a menüben egy kérdőív statisztika részleteibe való nagyításhoz az ügyintézői felületen az elem nagyítási nézetében.';
+    $Self->{Translation}->{'Survey Add Module.'} = '';
     $Self->{Translation}->{'Survey Edit Module.'} = 'Kérdőív szerkesztés modul.';
     $Self->{Translation}->{'Survey Overview "Small" Limit'} = 'Kérdőív áttekintő „kis” korlát';
     $Self->{Translation}->{'Survey Stats Module.'} = 'Kérdőív statisztikák modul.';
@@ -176,6 +178,7 @@ sub Data {
         'Egy kérdőív azonosítója, például Survey#, MySurvey#. Az alapértelmezett: Survey#.';
     $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket is closed.'} =
         'Jegy esemény modul automatikus kérdőív e-mail kérések küldéséhez az ügyfeleknek, ha egy jegy le van zárva.';
+    $Self->{Translation}->{'Trigger sending delayed survey requests.'} = '';
     $Self->{Translation}->{'Zoom Into Statistics Details'} = 'Nagyítás a statisztikák részleteibe';
 
 }

@@ -41,11 +41,11 @@ sub Data {
     $Self->{Translation}->{'Stats Detail'} = '統計の詳細';
     $Self->{Translation}->{'Stats Details'} = '統計の詳細';
     $Self->{Translation}->{'You have already answered the survey.'} = '調査に回答済みです。';
-    $Self->{Translation}->{'Survey#'} = '';
+    $Self->{Translation}->{'Survey#'} = '統計#';
     $Self->{Translation}->{'- No queue selected -'} = 'キューが選択されていません';
     $Self->{Translation}->{'Master'} = 'マスター';
-    $Self->{Translation}->{'New Status'} = '';
-    $Self->{Translation}->{'Question Type'} = '';
+    $Self->{Translation}->{'New Status'} = '新しい状況';
+    $Self->{Translation}->{'Question Type'} = '質問タイプ';
 
     # Template: AgentSurveyAdd
     $Self->{Translation}->{'Create New Survey'} = '新規調査の作成';
@@ -57,31 +57,32 @@ sub Data {
 
     # Template: AgentSurveyEditQuestions
     $Self->{Translation}->{'Edit Questions'} = '質問の編集';
+    $Self->{Translation}->{'Survey Questions'} = '調査質問';
     $Self->{Translation}->{'Add Question'} = '質問の追加';
     $Self->{Translation}->{'Type the question'} = '質問の入力';
     $Self->{Translation}->{'Answer required'} = '回答必須です';
-    $Self->{Translation}->{'Survey Questions'} = '調査質問';
     $Self->{Translation}->{'No questions saved for this survey.'} = 'この調査に対する質問が保存されていません。';
     $Self->{Translation}->{'Question'} = '質問';
     $Self->{Translation}->{'Answer Required'} = '回答が必須の項目です';
-    $Self->{Translation}->{'When you finish to edit the survey questions just close this window.'} =
+    $Self->{Translation}->{'When you finish to edit the survey questions just close this screen.'} =
         '';
     $Self->{Translation}->{'Do you really want to delete this question? ALL associated data will be LOST!'} =
-        '';
+        'この質問を本当に削除してもいいですか？　関連しているすべてのデーターが失われます!';
     $Self->{Translation}->{'Edit Question'} = '質問編集';
     $Self->{Translation}->{'go back to questions'} = '質問へ戻る';
+    $Self->{Translation}->{'Question:'} = '';
     $Self->{Translation}->{'Possible Answers For'} = '選択肢';
     $Self->{Translation}->{'Add Answer'} = '回答の追加';
-    $Self->{Translation}->{'No answers saved for this question.'} = '';
-    $Self->{Translation}->{'Do you really want to delete this answer?'} = '';
+    $Self->{Translation}->{'No answers saved for this question.'} = 'この質問への回答はまだありません';
+    $Self->{Translation}->{'Do you really want to delete this answer?'} = '本当にこの答えを削除してもいいですか？';
     $Self->{Translation}->{'This doesn\'t have several answers, a textarea will be displayed.'} =
         'この質問には選択肢がありません。テキストエリアが表示されます。';
-    $Self->{Translation}->{'Go back'} = '戻る';
     $Self->{Translation}->{'Edit Answer'} = '回答の編集';
     $Self->{Translation}->{'go back to edit question'} = '質問の編集に戻る';
+    $Self->{Translation}->{'Answer:'} = '';
 
     # Template: AgentSurveyOverviewNavBar
-    $Self->{Translation}->{'Max. shown Surveys per page'} = '1ページに表示する調査の最大数';
+    $Self->{Translation}->{'Max. shown surveys per page'} = '';
 
     # Template: AgentSurveyOverviewSmall
     $Self->{Translation}->{'Notification Sender'} = '通知の送信者';
@@ -141,15 +142,15 @@ sub Data {
     $Self->{Translation}->{'Edit Survey Questions'} = '統計の設問を編集する';
     $Self->{Translation}->{'Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time.'} =
         '公開インターフェースにおいて、顧客が2度回答しようとした際に、これまでの回答データを表示するShowVoteData画面を有効にするか否か';
-    $Self->{Translation}->{'Enable or disable the send condition check for the service.'} = '';
+    $Self->{Translation}->{'Enable or disable the send condition check for the service.'} = 'サービスの送信条件を有効または無効にする。';
     $Self->{Translation}->{'Enable or disable the send condition check for the ticket type.'} =
-        '';
+        'ティケットタイプの送信条件を有効または無効にする。';
     $Self->{Translation}->{'Frontend module registration for survey add in the agent interface.'} =
-        '';
+        '担当者インタフェースの統計フロントエンド・モジュールの登録です。';
     $Self->{Translation}->{'Frontend module registration for survey edit in the agent interface.'} =
-        '';
+        '担当者インタフェースの統計の変更画面フロントエンド・モジュールの登録です。';
     $Self->{Translation}->{'Frontend module registration for survey stats in the agent interface.'} =
-        '';
+        '担当者インタフェースの統計状況フロントエンド・モジュールの登録です。';
     $Self->{Translation}->{'Frontend module registration for survey zoom in the agent interface.'} =
         '担当者インターフェースの調査拡大に対するフロントエンド・モジュールの登録です。';
     $Self->{Translation}->{'Frontend module registration for the PublicSurvey object in the public Survey area.'} =
@@ -159,13 +160,14 @@ sub Data {
         '調査一覧 (Small) の (調査が表示される) ページに対するパラメータ';
     $Self->{Translation}->{'Public Survey.'} = '公開インターフェースのPublicSurveyオブジェクトに対するフロントエンドモジュール登録です。';
     $Self->{Translation}->{'Shows a link in the menu to edit a survey in its zoom view of the agent interface.'} =
-        '';
+        '担当者インタフェースの統計ズームビューで編集リンクをメニューを表示する。';
     $Self->{Translation}->{'Shows a link in the menu to edit survey questions in its zoom view of the agent interface.'} =
-        '';
+        '担当者インタフェースの統計質問ズームビューでの編集リンクをメニューに表示する。';
     $Self->{Translation}->{'Shows a link in the menu to go back in the survey zoom view of the agent interface.'} =
-        '';
+        '担当者インタフェースのズームビューで表示している統計の編集リンクをメニューを表示する。';
     $Self->{Translation}->{'Shows a link in the menu to zoom into the survey statistics details in its zoom view of the agent interface.'} =
-        '';
+        '担当者インタフェースのズームビューで表示している統計の編集リンクをメニューを表示する。';
+    $Self->{Translation}->{'Survey Add Module.'} = '';
     $Self->{Translation}->{'Survey Edit Module.'} = '統計編集モジュール';
     $Self->{Translation}->{'Survey Overview "Small" Limit'} = '調査一覧(S)の表示数';
     $Self->{Translation}->{'Survey Stats Module.'} = '統計調査モジュール';
@@ -176,6 +178,7 @@ sub Data {
         '例えばSurvey#, MySurvey#などのチケットの識別子です。デフォルトはSurvey#です。';
     $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket is closed.'} =
         'チケットが完了した際に、顧客に自動的に調査メールを送信するチケットイベントモジュール。';
+    $Self->{Translation}->{'Trigger sending delayed survey requests.'} = '';
     $Self->{Translation}->{'Zoom Into Statistics Details'} = '統計調査の詳細にズームする';
 
 }

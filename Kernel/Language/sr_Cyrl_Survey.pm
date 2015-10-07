@@ -57,31 +57,32 @@ sub Data {
 
     # Template: AgentSurveyEditQuestions
     $Self->{Translation}->{'Edit Questions'} = 'Уреди питања';
+    $Self->{Translation}->{'Survey Questions'} = 'Анкетна питања';
     $Self->{Translation}->{'Add Question'} = 'Додај питање';
     $Self->{Translation}->{'Type the question'} = 'Унеси питање';
     $Self->{Translation}->{'Answer required'} = 'Обавезан одговор';
-    $Self->{Translation}->{'Survey Questions'} = 'Анкетна питања';
     $Self->{Translation}->{'No questions saved for this survey.'} = 'За ову анкету нису сачувана питања.';
     $Self->{Translation}->{'Question'} = 'Питање';
     $Self->{Translation}->{'Answer Required'} = 'Обавезан одговор';
-    $Self->{Translation}->{'When you finish to edit the survey questions just close this window.'} =
-        'Када завршите са уређивањем анкетних питања само затзворите овај прозор.';
+    $Self->{Translation}->{'When you finish to edit the survey questions just close this screen.'} =
+        '';
     $Self->{Translation}->{'Do you really want to delete this question? ALL associated data will be LOST!'} =
         'Да ли заиста желите да обришете ово питање? Сви повезани подаци ће бити ИЗГУБЉЕНИ!';
     $Self->{Translation}->{'Edit Question'} = 'Уреди питање';
     $Self->{Translation}->{'go back to questions'} = 'назад на питања';
+    $Self->{Translation}->{'Question:'} = '';
     $Self->{Translation}->{'Possible Answers For'} = 'Могући одговори за';
     $Self->{Translation}->{'Add Answer'} = 'Додај одговор';
     $Self->{Translation}->{'No answers saved for this question.'} = 'За ово питање није сачуван одговор.';
     $Self->{Translation}->{'Do you really want to delete this answer?'} = 'Да ли заиста желите да избришете овај одговор?';
     $Self->{Translation}->{'This doesn\'t have several answers, a textarea will be displayed.'} =
         'Ово нема више одговора, простор за текст ће бити приказан.';
-    $Self->{Translation}->{'Go back'} = 'Иди назад';
     $Self->{Translation}->{'Edit Answer'} = 'Уреди одговор';
     $Self->{Translation}->{'go back to edit question'} = 'назад на уређивање питања';
+    $Self->{Translation}->{'Answer:'} = '';
 
     # Template: AgentSurveyOverviewNavBar
-    $Self->{Translation}->{'Max. shown Surveys per page'} = 'Макс. приказаних анкета по страни';
+    $Self->{Translation}->{'Max. shown surveys per page'} = '';
 
     # Template: AgentSurveyOverviewSmall
     $Self->{Translation}->{'Notification Sender'} = 'Пошиљаоц обавештења';
@@ -166,6 +167,7 @@ sub Data {
         'У менију приказује везу за повратак у детаљни приказ анкете у оператерском интерфејсу.';
     $Self->{Translation}->{'Shows a link in the menu to zoom into the survey statistics details in its zoom view of the agent interface.'} =
         'У менију приказује везу за детаљни приказ статистике анкете у детаљном приказу на оператерском интерфејсу.';
+    $Self->{Translation}->{'Survey Add Module.'} = '';
     $Self->{Translation}->{'Survey Edit Module.'} = 'Модул за уређивање анкете.';
     $Self->{Translation}->{'Survey Overview "Small" Limit'} = 'Ограничење прегледа анкете - "мало"';
     $Self->{Translation}->{'Survey Stats Module.'} = 'Модул за статистику анкете.';
@@ -176,6 +178,7 @@ sub Data {
         'Идентификатор за анкету, нпр Survey#, MySurvey#. Подразумевано је Survey#.';
     $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket is closed.'} =
         'Модул догађаја на тикету за аутоматско слање имејла о истраживању корисницима ако је тикет затворен.';
+    $Self->{Translation}->{'Trigger sending delayed survey requests.'} = '';
     $Self->{Translation}->{'Zoom Into Statistics Details'} = 'Детаљни приказ статистике';
 
 }

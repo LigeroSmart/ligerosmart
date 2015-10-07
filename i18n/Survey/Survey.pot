@@ -151,6 +151,10 @@ msgid "Edit Questions"
 msgstr ""
 
 #. Template: AgentSurveyEditQuestions
+msgid "Survey Questions"
+msgstr ""
+
+#. Template: AgentSurveyEditQuestions
 msgid "Add Question"
 msgstr ""
 
@@ -160,10 +164,6 @@ msgstr ""
 
 #. Template: AgentSurveyEditQuestions
 msgid "Answer required"
-msgstr ""
-
-#. Template: AgentSurveyEditQuestions
-msgid "Survey Questions"
 msgstr ""
 
 #. Template: AgentSurveyEditQuestions
@@ -179,7 +179,7 @@ msgid "Answer Required"
 msgstr ""
 
 #. Template: AgentSurveyEditQuestions
-msgid "When you finish to edit the survey questions just close this window."
+msgid "When you finish to edit the survey questions just close this screen."
 msgstr ""
 
 #. Template: AgentSurveyEditQuestions
@@ -192,6 +192,10 @@ msgstr ""
 
 #. Template: AgentSurveyEditQuestions
 msgid "go back to questions"
+msgstr ""
+
+#. Template: AgentSurveyEditQuestions
+msgid "Question:"
 msgstr ""
 
 #. Template: AgentSurveyEditQuestions
@@ -215,10 +219,6 @@ msgid "This doesn't have several answers, a textarea will be displayed."
 msgstr ""
 
 #. Template: AgentSurveyEditQuestions
-msgid "Go back"
-msgstr ""
-
-#. Template: AgentSurveyEditQuestions
 msgid "Edit Answer"
 msgstr ""
 
@@ -226,8 +226,12 @@ msgstr ""
 msgid "go back to edit question"
 msgstr ""
 
+#. Template: AgentSurveyEditQuestions
+msgid "Answer:"
+msgstr ""
+
 #. Template: AgentSurveyOverviewNavBar
-msgid "Max. shown Surveys per page"
+msgid "Max. shown surveys per page"
 msgstr ""
 
 #. Template: AgentSurveyOverviewSmall
@@ -439,6 +443,10 @@ msgid "Shows a link in the menu to zoom into the survey statistics details in it
 msgstr ""
 
 #. SysConfig
+msgid "Survey Add Module."
+msgstr ""
+
+#. SysConfig
 msgid "Survey Edit Module."
 msgstr ""
 
@@ -468,6 +476,10 @@ msgstr ""
 
 #. SysConfig
 msgid "Ticket event module to send automatically survey email requests to customers if a ticket is closed."
+msgstr ""
+
+#. SysConfig
+msgid "Trigger sending delayed survey requests."
 msgstr ""
 
 #. SysConfig
