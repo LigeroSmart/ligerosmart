@@ -2,14 +2,15 @@
 # Translators:
 # Carlos Rodríguez <carlos.rodriguez@otrs.com>, 2014-2015
 # Carlos Rodríguez <carlos.rodriguez@otrs.com>, 2014
+# David Bautista <david.bautista@certicamara.com>, 2015
 # Leonel Vazquez <leonel.vazquez@otrs.com>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-07-10 17:18+0000\n"
-"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
-"Language-Team: Spanish (Mexico) (http://www.transifex.com/p/OTRS/language/es_MX/)\n"
+"PO-Revision-Date: 2015-09-10 21:21+0000\n"
+"Last-Translator: David Bautista <david.bautista@certicamara.com>\n"
+"Language-Team: Spanish (Mexico) (http://www.transifex.com/otrs/OTRS/language/es_MX/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -30,19 +31,19 @@ msgstr "externo"
 
 #. Template: AAAFAQ
 msgid "FAQ Number"
-msgstr "Número de FAQ"
+msgstr "Número de artículo FAQ"
 
 #. Template: AAAFAQ
 msgid "Latest updated FAQ articles"
-msgstr "Ultimos artículos modificados"
+msgstr "Últimos artículos FAQ modificados"
 
 #. Template: AAAFAQ
 msgid "Latest created FAQ articles"
-msgstr "Ultimos artículos creados"
+msgstr "Últimos artículos FAQ creados"
 
 #. Template: AAAFAQ
 msgid "Top 10 FAQ articles"
-msgstr "Top 10 de artículos"
+msgstr "Top 10 de artículos FAQ"
 
 #. Template: AAAFAQ
 msgid "Subcategory of"
@@ -452,7 +453,7 @@ msgid ""
 "To open links in the following description blocks, you might need to press "
 "Ctrl or Cmd or Shift key while clicking the link (depending on your browser "
 "and OS)."
-msgstr ""
+msgstr "Para abrir los enlaces de las siguientes descripciones, puede necesitar presionar la tecla Ctrl, Cmd o Shift mientras hace clic en el enlace (dependiendo del navegador y SO que esté utilizando)"
 
 #. Template: AgentFAQZoom
 msgid ""
@@ -578,7 +579,7 @@ msgstr "Idioma por omisión para los artículos FAQ en modo idioma único"
 
 #. SysConfig
 msgid "Default maximum size of the titles in a FAQ article to be shown."
-msgstr ""
+msgstr "Máximo tamaño por defecto a mostrar de los títulos en un artículo FAQ."
 
 #. SysConfig
 msgid "Default priority of tickets for the approval of FAQ articles."
@@ -594,7 +595,7 @@ msgstr "Estado por omisión de los tickets para aprobación de los artículos FA
 
 #. SysConfig
 msgid "Default type of tickets for the approval of FAQ articles."
-msgstr ""
+msgstr "Tipo por defecto de los tickets para aprobación de artículos FAQ."
 
 #. SysConfig
 msgid ""
@@ -604,7 +605,7 @@ msgstr "Valor por omisión para el parámetro \"Action\" para la interfaz públi
 
 #. SysConfig
 msgid "Define if the FAQ title should be concatenated to article subject."
-msgstr ""
+msgstr "Define si el título del FAQ debe estar concatenado al asunto del artículo."
 
 #. SysConfig
 msgid "Defines an overview module to show the small view of a FAQ journal."
@@ -688,13 +689,13 @@ msgstr "Define el orden por omisión de los resultados de una búsqueda en la in
 
 #. SysConfig
 msgid "Defines the default shown FAQ search attribute for FAQ search screen."
-msgstr ""
+msgstr "Define el atributo de búsqueda de FAQ mostrado por defecto en la pantalla de búsqueda de FAQ."
 
 #. SysConfig
 msgid ""
 "Defines the information to be inserted in a FAQ based Ticket. \"Full FAQ\" "
 "includes text, attachments and inline images."
-msgstr ""
+msgstr "Define la información a insertar en un FAQ basado en un ticket. \"FAQ completo\" incluye texto, adjuntos e imágenes incrustadas."
 
 #. SysConfig
 msgid ""

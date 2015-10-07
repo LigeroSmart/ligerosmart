@@ -2,14 +2,16 @@
 # Translators:
 # Giulio <giulio.compagnone@gmail.com>, 2014
 # Luca Maranzano <liuk@linux.it>, 2014
+# Marthe Ngo Temb <ngotemb@gmail.com>, 2015
 # Nicola Biada <nicola.biada@wuerth-phoenix.com>, 2014
+# Paolo <paolo.larcheri@gmail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-07-10 17:18+0000\n"
-"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
-"Language-Team: Italian (http://www.transifex.com/p/OTRS/language/it/)\n"
+"PO-Revision-Date: 2015-09-04 14:06+0000\n"
+"Last-Translator: Marthe Ngo Temb <ngotemb@gmail.com>\n"
+"Language-Team: Italian (http://www.transifex.com/otrs/OTRS/language/it/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -154,7 +156,7 @@ msgstr ""
 
 #. Template: AAAFAQ
 msgid "Solution"
-msgstr ""
+msgstr "Soluzione"
 
 #. Template: AgentFAQAdd
 msgid "Add FAQ Article"
@@ -578,7 +580,7 @@ msgstr "Lingua predefinita per gli articoli  FAQ per la modalità singola lingua
 
 #. SysConfig
 msgid "Default maximum size of the titles in a FAQ article to be shown."
-msgstr ""
+msgstr "Default numero di catteri del titolo di una FAQ da visualizzare"
 
 #. SysConfig
 msgid "Default priority of tickets for the approval of FAQ articles."
@@ -608,7 +610,7 @@ msgstr "Definisce se il titolo FAQ dovrebbe essere concatenato con l'oggetto del
 
 #. SysConfig
 msgid "Defines an overview module to show the small view of a FAQ journal."
-msgstr ""
+msgstr "Definisce un modulo panoramica per mostrare una vista abbreviata di una lista di FAQ."
 
 #. SysConfig
 msgid "Defines an overview module to show the small view of a FAQ list."
@@ -721,19 +723,19 @@ msgstr ""
 msgid ""
 "Defines the shown columns in the FAQ search. This option has no effect on "
 "the position of the column."
-msgstr ""
+msgstr "Definisce le colonne visibili nella ricerca FAQ. Questa opzione non ha effetto nella posizione della colonna."
 
 #. SysConfig
 msgid "Defines where the 'Insert FAQ' link will be displayed."
-msgstr ""
+msgstr "Definisce dove verrà visualizzato il collegamento 'Inserisci FAQ'."
 
 #. SysConfig
 msgid "Definition of FAQ item free text field."
-msgstr ""
+msgstr "Definizione del campo testo libero delle FAQ"
 
 #. SysConfig
 msgid "Delete this FAQ"
-msgstr ""
+msgstr "Elimina questa FAQ"
 
 #. SysConfig
 msgid ""
@@ -824,15 +826,15 @@ msgstr ""
 
 #. SysConfig
 msgid "Edit this FAQ"
-msgstr ""
+msgstr "Modifica questa FAQ"
 
 #. SysConfig
 msgid "Enable multiple languages on FAQ module."
-msgstr ""
+msgstr "Abilita più lingue nel modulo FAQ."
 
 #. SysConfig
 msgid "Enable voting mechanism on FAQ module."
-msgstr ""
+msgstr "Abilita meccanismo di voto nel modulo FAQ."
 
 #. SysConfig
 msgid "FAQ Journal"
@@ -884,7 +886,7 @@ msgstr ""
 
 #. SysConfig
 msgid "History of this FAQ"
-msgstr ""
+msgstr "Storico di questa FAQ"
 
 #. SysConfig
 msgid "Include internal fields on a FAQ based Ticket."

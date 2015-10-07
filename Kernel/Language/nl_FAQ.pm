@@ -49,7 +49,7 @@ sub Data {
     $Self->{Translation}->{'FAQ language updated!'} = 'Taal bijgewerkt';
     $Self->{Translation}->{'The name is required!'} = 'De naam is verplicht.';
     $Self->{Translation}->{'This language already exists!'} = 'Deze taal bestaat al.';
-    $Self->{Translation}->{'Symptom'} = '';
+    $Self->{Translation}->{'Symptom'} = 'Symptoom';
     $Self->{Translation}->{'Solution'} = 'Oplossing';
 
     # Template: AgentFAQAdd
@@ -119,33 +119,33 @@ sub Data {
 
     # Template: AgentFAQSearch
     $Self->{Translation}->{'Keyword'} = 'Trefwoorden';
-    $Self->{Translation}->{'Vote (e. g. Equals 10 or GreaterThan 60)'} = '';
-    $Self->{Translation}->{'Rate (e. g. Equals 25% or GreaterThan 75%)'} = '';
+    $Self->{Translation}->{'Vote (e. g. Equals 10 or GreaterThan 60)'} = 'Stem (bijv. gelijk aan 10 of groter dan 60)';
+    $Self->{Translation}->{'Rate (e. g. Equals 25% or GreaterThan 75%)'} = 'Verhouding (vb: Gelijk aan 25% of Groter dan 75%)';
     $Self->{Translation}->{'Approved'} = 'Aangenomen';
     $Self->{Translation}->{'Last changed by'} = 'Laatst gewijzigd door';
-    $Self->{Translation}->{'FAQ Article Create Time (before/after)'} = '';
-    $Self->{Translation}->{'FAQ Article Create Time (between)'} = '';
-    $Self->{Translation}->{'FAQ Article Change Time (before/after)'} = '';
-    $Self->{Translation}->{'FAQ Article Change Time (between)'} = '';
+    $Self->{Translation}->{'FAQ Article Create Time (before/after)'} = 'FAQ Article Create Time (voor/na)';
+    $Self->{Translation}->{'FAQ Article Create Time (between)'} = 'FAQ Article Create Time (tussen)';
+    $Self->{Translation}->{'FAQ Article Change Time (before/after)'} = 'FAQ Article Change Time (voor/na)';
+    $Self->{Translation}->{'FAQ Article Change Time (between)'} = 'FAQ Article Change Time (tussen)';
 
     # Template: AgentFAQSearchOpenSearchDescriptionFulltext
     $Self->{Translation}->{'FAQFulltext'} = 'Zoeken in FAQ';
 
     # Template: AgentFAQSearchSmall
     $Self->{Translation}->{'FAQ Search'} = 'FAQ zoeken';
-    $Self->{Translation}->{'Profile Selection'} = '';
+    $Self->{Translation}->{'Profile Selection'} = 'Profiel selectie';
     $Self->{Translation}->{'Vote'} = 'Stem';
-    $Self->{Translation}->{'No vote settings'} = '';
-    $Self->{Translation}->{'Specific votes'} = '';
-    $Self->{Translation}->{'e. g. Equals 10 or GreaterThan 60'} = '';
-    $Self->{Translation}->{'Rate'} = '';
-    $Self->{Translation}->{'No rate settings'} = '';
-    $Self->{Translation}->{'Specific rate'} = '';
-    $Self->{Translation}->{'e. g. Equals 25% or GreaterThan 75%'} = '';
-    $Self->{Translation}->{'FAQ Article Create Time'} = '';
-    $Self->{Translation}->{'Specific date'} = '';
-    $Self->{Translation}->{'Date range'} = '';
-    $Self->{Translation}->{'FAQ Article Change Time'} = '';
+    $Self->{Translation}->{'No vote settings'} = 'Geen instellingen om te stemmen';
+    $Self->{Translation}->{'Specific votes'} = 'Specifieke stemmen';
+    $Self->{Translation}->{'e. g. Equals 10 or GreaterThan 60'} = 'vb: Gelijk aan 10 of Groter Dan 60';
+    $Self->{Translation}->{'Rate'} = 'Beoordeling';
+    $Self->{Translation}->{'No rate settings'} = 'Geen beoordeling instellingen';
+    $Self->{Translation}->{'Specific rate'} = 'Specifieke beoordeling';
+    $Self->{Translation}->{'e. g. Equals 25% or GreaterThan 75%'} = 'bijv. gelijk 25% of groter dan 75%';
+    $Self->{Translation}->{'FAQ Article Create Time'} = 'FAQ Article Create Time';
+    $Self->{Translation}->{'Specific date'} = 'Specifieke datum';
+    $Self->{Translation}->{'Date range'} = 'Datum range';
+    $Self->{Translation}->{'FAQ Article Change Time'} = 'FAQ Article Change Time';
 
     # Template: AgentFAQZoom
     $Self->{Translation}->{'FAQ Information'} = 'Informatie';
@@ -155,47 +155,47 @@ sub Data {
     $Self->{Translation}->{'No votes found! Be the first one to rate this FAQ article.'} = 'Geen stemmen gevonden. Wees de eerste om dit artikel te beoordelen.';
     $Self->{Translation}->{'Download Attachment'} = 'Sla bijlage op';
     $Self->{Translation}->{'To open links in the following description blocks, you might need to press Ctrl or Cmd or Shift key while clicking the link (depending on your browser and OS).'} =
-        '';
+        'Om de links in de omschrijvingen te openen is het mogelijk dat u Ctrl of Cmd of Shift moet indrukken terwijl u op de link klikt (afhankelijk van uw browser en besturingssysteem).';
     $Self->{Translation}->{'How helpful was this article? Please give us your rating and help to improve the FAQ Database. Thank You!'} =
         'Hielp dit artikel bij het beantwoorden van uw vraag?';
     $Self->{Translation}->{'not helpful'} = 'helemaal niet';
     $Self->{Translation}->{'very helpful'} = 'heel erg';
 
     # Template: AgentFAQZoomSmall
-    $Self->{Translation}->{'Add FAQ title to article subject'} = '';
+    $Self->{Translation}->{'Add FAQ title to article subject'} = 'FAQ titel toevoegen aan onderwerp van het artikel';
     $Self->{Translation}->{'Insert FAQ Text'} = 'Voeg FAQ tekst in';
-    $Self->{Translation}->{'Insert Full FAQ'} = '';
+    $Self->{Translation}->{'Insert Full FAQ'} = 'Volledige FAQ invoegen';
     $Self->{Translation}->{'Insert FAQ Link'} = 'Voeg link naar FAQ in';
     $Self->{Translation}->{'Insert FAQ Text & Link'} = 'Voeg FAQ tekst en link in';
-    $Self->{Translation}->{'Insert Full FAQ & Link'} = '';
+    $Self->{Translation}->{'Insert Full FAQ & Link'} = 'Volledige FAQ & Link invoegen';
 
     # Template: CustomerFAQExplorer
     $Self->{Translation}->{'No FAQ articles found.'} = 'Geen artikelen gevonden.';
 
     # Template: CustomerFAQSearch
     $Self->{Translation}->{'Fulltext search in FAQ articles (e. g. "John*n" or "Will*")'} = 'Zoeken in tekst van artikelen (bijv. "Jans*en" of "Print*")';
-    $Self->{Translation}->{'Vote restrictions'} = '';
-    $Self->{Translation}->{'Only FAQ articles with votes...'} = '';
-    $Self->{Translation}->{'Rate restrictions'} = '';
-    $Self->{Translation}->{'Only FAQ articles with rate...'} = '';
-    $Self->{Translation}->{'Only FAQ articles created'} = '';
-    $Self->{Translation}->{'Only FAQ articles created between'} = '';
-    $Self->{Translation}->{'Search-Profile as Template?'} = '';
+    $Self->{Translation}->{'Vote restrictions'} = 'Stemmingsbeperkingen';
+    $Self->{Translation}->{'Only FAQ articles with votes...'} = 'Alleen FAQ artikelen waarop gestemd werd...';
+    $Self->{Translation}->{'Rate restrictions'} = 'Beperkingen van beoordelingen';
+    $Self->{Translation}->{'Only FAQ articles with rate...'} = 'Alleen FAQ artikelen met een beoordeling ...';
+    $Self->{Translation}->{'Only FAQ articles created'} = 'Alleen FAQ artikels die aangemaakt werden';
+    $Self->{Translation}->{'Only FAQ articles created between'} = 'Alleen FAQ artikel die aangemaakt werden tussen';
+    $Self->{Translation}->{'Search-Profile as Template?'} = 'Zoek-Profiel als template?';
 
     # Template: CustomerFAQZoom
-    $Self->{Translation}->{'Article Number'} = '';
+    $Self->{Translation}->{'Article Number'} = 'Artikelnummer';
     $Self->{Translation}->{'Search for articles with keyword'} = 'Zoek op artikelen met trefwoord';
 
     # Template: PublicFAQSearchOpenSearchDescriptionFAQNumber
     $Self->{Translation}->{'Public'} = 'Openbaar';
 
     # Template: PublicFAQSearchResultShort
-    $Self->{Translation}->{'Back to FAQ Explorer'} = '';
+    $Self->{Translation}->{'Back to FAQ Explorer'} = 'Terug naar de FAQ Verkenner';
 
     # SysConfig
     $Self->{Translation}->{'A filter for HTML output to add links behind a defined string. The element Image allows two input kinds. First the name of an image (e.g. faq.png). In this case the OTRS image path will be used. The second possibility is to insert the link to the image.'} =
         '';
-    $Self->{Translation}->{'CSS color for the voting result.'} = '';
+    $Self->{Translation}->{'CSS color for the voting result.'} = 'CSS kleur voor de stemmingsuitslag.';
     $Self->{Translation}->{'Cache Time To Leave for FAQ items.'} = '';
     $Self->{Translation}->{'Category Management'} = 'Beheer categoriën';
     $Self->{Translation}->{'Decimal places of the voting result.'} = '';
@@ -204,9 +204,9 @@ sub Data {
     $Self->{Translation}->{'Default maximum size of the titles in a FAQ article to be shown.'} =
         '';
     $Self->{Translation}->{'Default priority of tickets for the approval of FAQ articles.'} =
-        '';
-    $Self->{Translation}->{'Default state for FAQ entry.'} = '';
-    $Self->{Translation}->{'Default state of tickets for the approval of FAQ articles.'} = '';
+        'Standaard prioriteit van tickets voor goedkeuring van FAQ artikels.';
+    $Self->{Translation}->{'Default state for FAQ entry.'} = 'Standaard status voor FAQ artikels';
+    $Self->{Translation}->{'Default state of tickets for the approval of FAQ articles.'} = 'Standaard status van het ticket voor het goedkeuren van FAQ artikels.';
     $Self->{Translation}->{'Default type of tickets for the approval of FAQ articles.'} = '';
     $Self->{Translation}->{'Default value for the Action parameter for the public frontend. The Action parameter is used in the scripts of the system.'} =
         '';

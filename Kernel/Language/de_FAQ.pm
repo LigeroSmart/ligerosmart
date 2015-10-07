@@ -245,7 +245,7 @@ sub Data {
     $Self->{Translation}->{'Defines the information to be inserted in a FAQ based Ticket. "Full FAQ" includes text, attachments and inline images.'} =
         'Definiert die Informationen, welche in ein FAQ-basierendes Ticket eingegeben werden. "Komplette FAQ" beinhaltet den Text, Anhänge und Inline-Bilder.';
     $Self->{Translation}->{'Defines the parameters for the dashboard backend. "Limit" defines the number of entries displayed by default. "Group" is used to restrict access to the plugin (e. g. Group: admin;group1;group2;). "Default" indicates if the plugin is enabled by default or if the user needs to enable it manually.'} =
-        'Definiert die Parameter für das Dashboard Backend. "Limit" definiert die Anzahl der Einträge, die standardmäßig angezeigt werden. "Group" wird verwendet um den Zugriff auf das Plugin zu begrenzen (bspw. Group: admin;group1;group2;). "Default" steuert ob das Plugin standardmäßig aktiviert ist oder ob der User es manuell aktivieren muss.';
+        'Definiert die Parameter für das Übersichtsseiten-Backend. "Limit" definiert die Anzahl der Einträge, die standardmäßig angezeigt werden. "Group" wird verwendet, um den Zugriff auf das Plugin zu begrenzen (bspw. Group: admin;group1;group2;). "Default" steuert, ob das Plugin standardmäßig aktiviert ist oder ob der User es manuell aktivieren muss.';
     $Self->{Translation}->{'Defines the shown columns in the FAQ Explorer. This option has no effect on the position of the column.'} =
         'Definert die angezeigten Spalten im FAQ-Explorer. Diese Option hat keine Auswirkung auf die Position der Spalten.';
     $Self->{Translation}->{'Defines the shown columns in the FAQ journal. This option has no effect on the position of the column.'} =

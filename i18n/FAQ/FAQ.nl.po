@@ -1,13 +1,15 @@
 # 
 # Translators:
+# David Van Uffelen <david.van.uffelen@bnl.yusen-logistics.com>, 2015
 # Denis Paciorkowski <denispaciorkowski@gmail.com>, 2015
+# Peter van Beugen <peter@tda.nl>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-07-10 17:18+0000\n"
-"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
-"Language-Team: Dutch (http://www.transifex.com/p/OTRS/language/nl/)\n"
+"PO-Revision-Date: 2015-09-04 06:17+0000\n"
+"Last-Translator: David Van Uffelen <david.van.uffelen@bnl.yusen-logistics.com>\n"
+"Language-Team: Dutch (http://www.transifex.com/otrs/OTRS/language/nl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -148,7 +150,7 @@ msgstr "Deze taal bestaat al."
 
 #. Template: AAAFAQ
 msgid "Symptom"
-msgstr ""
+msgstr "Symptoom"
 
 #. Template: AAAFAQ
 msgid "Solution"
@@ -331,11 +333,11 @@ msgstr "Trefwoorden"
 
 #. Template: AgentFAQSearch
 msgid "Vote (e. g. Equals 10 or GreaterThan 60)"
-msgstr ""
+msgstr "Stem (bijv. gelijk aan 10 of groter dan 60)"
 
 #. Template: AgentFAQSearch
 msgid "Rate (e. g. Equals 25% or GreaterThan 75%)"
-msgstr ""
+msgstr "Verhouding (vb: Gelijk aan 25% of Groter dan 75%)"
 
 #. Template: AgentFAQSearch
 msgid "Approved"
@@ -347,19 +349,19 @@ msgstr "Laatst gewijzigd door"
 
 #. Template: AgentFAQSearch
 msgid "FAQ Article Create Time (before/after)"
-msgstr ""
+msgstr "FAQ Article Create Time (voor/na)"
 
 #. Template: AgentFAQSearch
 msgid "FAQ Article Create Time (between)"
-msgstr ""
+msgstr "FAQ Article Create Time (tussen)"
 
 #. Template: AgentFAQSearch
 msgid "FAQ Article Change Time (before/after)"
-msgstr ""
+msgstr "FAQ Article Change Time (voor/na)"
 
 #. Template: AgentFAQSearch
 msgid "FAQ Article Change Time (between)"
-msgstr ""
+msgstr "FAQ Article Change Time (tussen)"
 
 #. Template: AgentFAQSearchOpenSearchDescriptionFulltext
 msgid "FAQFulltext"
@@ -371,7 +373,7 @@ msgstr "FAQ zoeken"
 
 #. Template: AgentFAQSearchSmall
 msgid "Profile Selection"
-msgstr ""
+msgstr "Profiel selectie"
 
 #. Template: AgentFAQSearchSmall
 msgid "Vote"
@@ -379,47 +381,47 @@ msgstr "Stem"
 
 #. Template: AgentFAQSearchSmall
 msgid "No vote settings"
-msgstr ""
+msgstr "Geen instellingen om te stemmen"
 
 #. Template: AgentFAQSearchSmall
 msgid "Specific votes"
-msgstr ""
+msgstr "Specifieke stemmen"
 
 #. Template: AgentFAQSearchSmall
 msgid "e. g. Equals 10 or GreaterThan 60"
-msgstr ""
+msgstr "vb: Gelijk aan 10 of Groter Dan 60"
 
 #. Template: AgentFAQSearchSmall
 msgid "Rate"
-msgstr ""
+msgstr "Beoordeling"
 
 #. Template: AgentFAQSearchSmall
 msgid "No rate settings"
-msgstr ""
+msgstr "Geen beoordeling instellingen"
 
 #. Template: AgentFAQSearchSmall
 msgid "Specific rate"
-msgstr ""
+msgstr "Specifieke beoordeling"
 
 #. Template: AgentFAQSearchSmall
 msgid "e. g. Equals 25% or GreaterThan 75%"
-msgstr ""
+msgstr "bijv. gelijk 25% of groter dan 75%"
 
 #. Template: AgentFAQSearchSmall
 msgid "FAQ Article Create Time"
-msgstr ""
+msgstr "FAQ Article Create Time"
 
 #. Template: AgentFAQSearchSmall
 msgid "Specific date"
-msgstr ""
+msgstr "Specifieke datum"
 
 #. Template: AgentFAQSearchSmall
 msgid "Date range"
-msgstr ""
+msgstr "Datum range"
 
 #. Template: AgentFAQSearchSmall
 msgid "FAQ Article Change Time"
-msgstr ""
+msgstr "FAQ Article Change Time"
 
 #. Template: AgentFAQZoom
 msgid "FAQ Information"
@@ -450,7 +452,7 @@ msgid ""
 "To open links in the following description blocks, you might need to press "
 "Ctrl or Cmd or Shift key while clicking the link (depending on your browser "
 "and OS)."
-msgstr ""
+msgstr "Om de links in de omschrijvingen te openen is het mogelijk dat u Ctrl of Cmd of Shift moet indrukken terwijl u op de link klikt (afhankelijk van uw browser en besturingssysteem)."
 
 #. Template: AgentFAQZoom
 msgid ""
@@ -468,7 +470,7 @@ msgstr "heel erg"
 
 #. Template: AgentFAQZoomSmall
 msgid "Add FAQ title to article subject"
-msgstr ""
+msgstr "FAQ titel toevoegen aan onderwerp van het artikel"
 
 #. Template: AgentFAQZoomSmall
 msgid "Insert FAQ Text"
@@ -476,7 +478,7 @@ msgstr "Voeg FAQ tekst in"
 
 #. Template: AgentFAQZoomSmall
 msgid "Insert Full FAQ"
-msgstr ""
+msgstr "Volledige FAQ invoegen"
 
 #. Template: AgentFAQZoomSmall
 msgid "Insert FAQ Link"
@@ -488,7 +490,7 @@ msgstr "Voeg FAQ tekst en link in"
 
 #. Template: AgentFAQZoomSmall
 msgid "Insert Full FAQ & Link"
-msgstr ""
+msgstr "Volledige FAQ & Link invoegen"
 
 #. Template: CustomerFAQExplorer
 msgid "No FAQ articles found."
@@ -500,35 +502,35 @@ msgstr "Zoeken in tekst van artikelen (bijv. \"Jans*en\" of \"Print*\")"
 
 #. Template: CustomerFAQSearch
 msgid "Vote restrictions"
-msgstr ""
+msgstr "Stemmingsbeperkingen"
 
 #. Template: CustomerFAQSearch
 msgid "Only FAQ articles with votes..."
-msgstr ""
+msgstr "Alleen FAQ artikelen waarop gestemd werd..."
 
 #. Template: CustomerFAQSearch
 msgid "Rate restrictions"
-msgstr ""
+msgstr "Beperkingen van beoordelingen"
 
 #. Template: CustomerFAQSearch
 msgid "Only FAQ articles with rate..."
-msgstr ""
+msgstr "Alleen FAQ artikelen met een beoordeling ..."
 
 #. Template: CustomerFAQSearch
 msgid "Only FAQ articles created"
-msgstr ""
+msgstr "Alleen FAQ artikels die aangemaakt werden"
 
 #. Template: CustomerFAQSearch
 msgid "Only FAQ articles created between"
-msgstr ""
+msgstr "Alleen FAQ artikel die aangemaakt werden tussen"
 
 #. Template: CustomerFAQSearch
 msgid "Search-Profile as Template?"
-msgstr ""
+msgstr "Zoek-Profiel als template?"
 
 #. Template: CustomerFAQZoom
 msgid "Article Number"
-msgstr ""
+msgstr "Artikelnummer"
 
 #. Template: CustomerFAQZoom
 msgid "Search for articles with keyword"
@@ -540,7 +542,7 @@ msgstr "Openbaar"
 
 #. Template: PublicFAQSearchResultShort
 msgid "Back to FAQ Explorer"
-msgstr ""
+msgstr "Terug naar de FAQ Verkenner"
 
 #. SysConfig
 msgid ""
@@ -552,7 +554,7 @@ msgstr ""
 
 #. SysConfig
 msgid "CSS color for the voting result."
-msgstr ""
+msgstr "CSS kleur voor de stemmingsuitslag."
 
 #. SysConfig
 msgid "Cache Time To Leave for FAQ items."
@@ -580,15 +582,15 @@ msgstr ""
 
 #. SysConfig
 msgid "Default priority of tickets for the approval of FAQ articles."
-msgstr ""
+msgstr "Standaard prioriteit van tickets voor goedkeuring van FAQ artikels."
 
 #. SysConfig
 msgid "Default state for FAQ entry."
-msgstr ""
+msgstr "Standaard status voor FAQ artikels"
 
 #. SysConfig
 msgid "Default state of tickets for the approval of FAQ articles."
-msgstr ""
+msgstr "Standaard status van het ticket voor het goedkeuren van FAQ artikels."
 
 #. SysConfig
 msgid "Default type of tickets for the approval of FAQ articles."

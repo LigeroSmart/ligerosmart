@@ -19,10 +19,10 @@ sub Data {
     $Self->{Translation}->{'internal'} = 'interno';
     $Self->{Translation}->{'public'} = 'público';
     $Self->{Translation}->{'external'} = 'externo';
-    $Self->{Translation}->{'FAQ Number'} = 'Número de FAQ';
-    $Self->{Translation}->{'Latest updated FAQ articles'} = 'Ultimos artículos modificados';
-    $Self->{Translation}->{'Latest created FAQ articles'} = 'Ultimos artículos creados';
-    $Self->{Translation}->{'Top 10 FAQ articles'} = 'Top 10 de artículos';
+    $Self->{Translation}->{'FAQ Number'} = 'Número de artículo FAQ';
+    $Self->{Translation}->{'Latest updated FAQ articles'} = 'Últimos artículos FAQ modificados';
+    $Self->{Translation}->{'Latest created FAQ articles'} = 'Últimos artículos FAQ creados';
+    $Self->{Translation}->{'Top 10 FAQ articles'} = 'Top 10 de artículos FAQ';
     $Self->{Translation}->{'Subcategory of'} = 'Subcategoría de';
     $Self->{Translation}->{'No rate selected!'} = '¡No se ha seleccionado ninguna puntuación!';
     $Self->{Translation}->{'Explorer'} = 'Explorador';
@@ -155,7 +155,7 @@ sub Data {
     $Self->{Translation}->{'No votes found! Be the first one to rate this FAQ article.'} = 'No se encontró ningún voto. Sea el primero en valorar este artículo FAQ';
     $Self->{Translation}->{'Download Attachment'} = 'Descargar Adjunto';
     $Self->{Translation}->{'To open links in the following description blocks, you might need to press Ctrl or Cmd or Shift key while clicking the link (depending on your browser and OS).'} =
-        '';
+        'Para abrir los enlaces de las siguientes descripciones, puede necesitar presionar la tecla Ctrl, Cmd o Shift mientras hace clic en el enlace (dependiendo del navegador y SO que esté utilizando)';
     $Self->{Translation}->{'How helpful was this article? Please give us your rating and help to improve the FAQ Database. Thank You!'} =
         '¿Cómo de útil fue este artículo? Por favor, dénos su puntuación y ayude a mejorar la base de datos de FAQ. Gracias.';
     $Self->{Translation}->{'not helpful'} = 'poco útil';
@@ -202,16 +202,16 @@ sub Data {
     $Self->{Translation}->{'Default category name.'} = 'Nombre predeterminado de la categoría';
     $Self->{Translation}->{'Default language for FAQ articles on single language mode.'} = 'Idioma por omisión para los artículos FAQ en modo idioma único';
     $Self->{Translation}->{'Default maximum size of the titles in a FAQ article to be shown.'} =
-        '';
+        'Máximo tamaño por defecto a mostrar de los títulos en un artículo FAQ.';
     $Self->{Translation}->{'Default priority of tickets for the approval of FAQ articles.'} =
         'Prioridad por omisión de los tickets para aprobación de los artículos FAQ.';
     $Self->{Translation}->{'Default state for FAQ entry.'} = 'Estado por omisión para los artículos FAQ.';
     $Self->{Translation}->{'Default state of tickets for the approval of FAQ articles.'} = 'Estado por omisión de los tickets para aprobación de los artículos FAQ.';
-    $Self->{Translation}->{'Default type of tickets for the approval of FAQ articles.'} = '';
+    $Self->{Translation}->{'Default type of tickets for the approval of FAQ articles.'} = 'Tipo por defecto de los tickets para aprobación de artículos FAQ.';
     $Self->{Translation}->{'Default value for the Action parameter for the public frontend. The Action parameter is used in the scripts of the system.'} =
         'Valor por omisión para el parámetro "Action" para la interfaz pública. El parámetro "Action" se usa en los "scripts" del sistema.';
     $Self->{Translation}->{'Define if the FAQ title should be concatenated to article subject.'} =
-        '';
+        'Define si el título del FAQ debe estar concatenado al asunto del artículo.';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ journal.'} =
         'Define un módulo de vista general para mostrar la vista pequeña de la bitácora de FAQ';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ list.'} =
@@ -241,9 +241,9 @@ sub Data {
     $Self->{Translation}->{'Defines the default FAQ order of a search result in the public interface. Up: oldest on top. Down: latest on top.'} =
         'Define el orden por omisión de los resultados de una búsqueda en la interface pública. Arriba: los más antiguos en la parte superior. Abajo: los últimos en la parte superior.';
     $Self->{Translation}->{'Defines the default shown FAQ search attribute for FAQ search screen.'} =
-        '';
+        'Define el atributo de búsqueda de FAQ mostrado por defecto en la pantalla de búsqueda de FAQ.';
     $Self->{Translation}->{'Defines the information to be inserted in a FAQ based Ticket. "Full FAQ" includes text, attachments and inline images.'} =
-        '';
+        'Define la información a insertar en un FAQ basado en un ticket. "FAQ completo" incluye texto, adjuntos e imágenes incrustadas.';
     $Self->{Translation}->{'Defines the parameters for the dashboard backend. "Limit" defines the number of entries displayed by default. "Group" is used to restrict access to the plugin (e. g. Group: admin;group1;group2;). "Default" indicates if the plugin is enabled by default or if the user needs to enable it manually.'} =
         '';
     $Self->{Translation}->{'Defines the shown columns in the FAQ Explorer. This option has no effect on the position of the column.'} =

@@ -1,12 +1,13 @@
 # 
 # Translators:
+# KENNY CHEAH <otrssdnbhd@gmail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-07-10 17:18+0000\n"
-"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
-"Language-Team: Malay (http://www.transifex.com/p/OTRS/language/ms/)\n"
+"PO-Revision-Date: 2015-10-06 15:54+0000\n"
+"Last-Translator: KENNY CHEAH <otrssdnbhd@gmail.com>\n"
+"Language-Team: Malay (http://www.transifex.com/otrs/OTRS/language/ms/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -51,7 +52,7 @@ msgstr "Tiada kadar dipilih!"
 
 #. Template: AAAFAQ
 msgid "Explorer"
-msgstr ""
+msgstr "Peneroka"
 
 #. Template: AAAFAQ
 msgid "public (all)"
@@ -147,11 +148,11 @@ msgstr "Bahasa ini sudah wujud!"
 
 #. Template: AAAFAQ
 msgid "Symptom"
-msgstr ""
+msgstr "Simptom"
 
 #. Template: AAAFAQ
 msgid "Solution"
-msgstr ""
+msgstr "Penyelesaian"
 
 #. Template: AgentFAQAdd
 msgid "Add FAQ Article"
@@ -159,7 +160,7 @@ msgstr "Tambah artikel FAQ"
 
 #. Template: AgentFAQAdd
 msgid "Keywords"
-msgstr ""
+msgstr "Kata kunci"
 
 #. Template: AgentFAQAdd
 msgid "A category is required."
@@ -241,7 +242,7 @@ msgstr "Carian Pantas"
 
 #. Template: AgentFAQExplorer
 msgid "Wildcards are allowed."
-msgstr ""
+msgstr "Wildcards adalah dibenarkan."
 
 #. Template: AgentFAQExplorer
 msgid "Advanced Search"
@@ -322,23 +323,23 @@ msgstr "Undian"
 
 #. Template: AgentFAQPrint
 msgid "Last update"
-msgstr ""
+msgstr "Kemaskini kali terakhir"
 
 #. Template: AgentFAQSearch
 msgid "Keyword"
-msgstr ""
+msgstr "Kata kunci"
 
 #. Template: AgentFAQSearch
 msgid "Vote (e. g. Equals 10 or GreaterThan 60)"
-msgstr ""
+msgstr "Undi (contoh: Bersamaan 10 atau lebih besar daripada 60)"
 
 #. Template: AgentFAQSearch
 msgid "Rate (e. g. Equals 25% or GreaterThan 75%)"
-msgstr ""
+msgstr "Kadar (contoh: Bersamaan 25% atau lebih besar daripada 75%)"
 
 #. Template: AgentFAQSearch
 msgid "Approved"
-msgstr ""
+msgstr "Diluluskan"
 
 #. Template: AgentFAQSearch
 msgid "Last changed by"
@@ -346,19 +347,19 @@ msgstr "Terakhir diubah oleh"
 
 #. Template: AgentFAQSearch
 msgid "FAQ Article Create Time (before/after)"
-msgstr ""
+msgstr "Waktu cipta artikel FAQ (sebelum/selepas)"
 
 #. Template: AgentFAQSearch
 msgid "FAQ Article Create Time (between)"
-msgstr ""
+msgstr "Waktu cipta artikel FAQ (di antara)"
 
 #. Template: AgentFAQSearch
 msgid "FAQ Article Change Time (before/after)"
-msgstr ""
+msgstr "Waktu perubahan artikel FAQ (sebelum/selepas)"
 
 #. Template: AgentFAQSearch
 msgid "FAQ Article Change Time (between)"
-msgstr ""
+msgstr "Waktu perubahan artikel FAQ (di antara)"
 
 #. Template: AgentFAQSearchOpenSearchDescriptionFulltext
 msgid "FAQFulltext"
@@ -370,55 +371,55 @@ msgstr "Carian FAQ"
 
 #. Template: AgentFAQSearchSmall
 msgid "Profile Selection"
-msgstr ""
+msgstr "Pilihan profil"
 
 #. Template: AgentFAQSearchSmall
 msgid "Vote"
-msgstr ""
+msgstr "Undi"
 
 #. Template: AgentFAQSearchSmall
 msgid "No vote settings"
-msgstr ""
+msgstr "Tiada tetapan undi"
 
 #. Template: AgentFAQSearchSmall
 msgid "Specific votes"
-msgstr ""
+msgstr "Undi spesifik"
 
 #. Template: AgentFAQSearchSmall
 msgid "e. g. Equals 10 or GreaterThan 60"
-msgstr ""
+msgstr "contoh: Sama dengan 10 atau Lebih besar daripada 60"
 
 #. Template: AgentFAQSearchSmall
 msgid "Rate"
-msgstr ""
+msgstr "Kadar"
 
 #. Template: AgentFAQSearchSmall
 msgid "No rate settings"
-msgstr ""
+msgstr "Tiada tetapan kadar"
 
 #. Template: AgentFAQSearchSmall
 msgid "Specific rate"
-msgstr ""
+msgstr "Kadar spesifik"
 
 #. Template: AgentFAQSearchSmall
 msgid "e. g. Equals 25% or GreaterThan 75%"
-msgstr ""
+msgstr "contoh: Sama dengan 25% atau lebih besar daripada 75%"
 
 #. Template: AgentFAQSearchSmall
 msgid "FAQ Article Create Time"
-msgstr ""
+msgstr "Waktu cipta artikel FAQ"
 
 #. Template: AgentFAQSearchSmall
 msgid "Specific date"
-msgstr ""
+msgstr "Tarikh spesifik"
 
 #. Template: AgentFAQSearchSmall
 msgid "Date range"
-msgstr ""
+msgstr "Jarak tarikh"
 
 #. Template: AgentFAQSearchSmall
 msgid "FAQ Article Change Time"
-msgstr ""
+msgstr "Waktu perubahan artikel FAQ"
 
 #. Template: AgentFAQZoom
 msgid "FAQ Information"
@@ -449,7 +450,7 @@ msgid ""
 "To open links in the following description blocks, you might need to press "
 "Ctrl or Cmd or Shift key while clicking the link (depending on your browser "
 "and OS)."
-msgstr ""
+msgstr "Untuk membuka pautan dalam keterangan blok berikut, anda mungkin perlu menekan kekunci Ctrl atau Cmd atau Shift semasa menekan pautan (bergantung kepada pelayar dan sistem operasi anda)."
 
 #. Template: AgentFAQZoom
 msgid ""
@@ -467,7 +468,7 @@ msgstr "Sangat membantu"
 
 #. Template: AgentFAQZoomSmall
 msgid "Add FAQ title to article subject"
-msgstr ""
+msgstr "Tambah tajuk FAQ pada subjek artikel"
 
 #. Template: AgentFAQZoomSmall
 msgid "Insert FAQ Text"
@@ -475,7 +476,7 @@ msgstr "Masuk Teks FAQ"
 
 #. Template: AgentFAQZoomSmall
 msgid "Insert Full FAQ"
-msgstr ""
+msgstr "Masukkan FAQ penuh"
 
 #. Template: AgentFAQZoomSmall
 msgid "Insert FAQ Link"
@@ -487,7 +488,7 @@ msgstr "Masuk Teks FAQ & Pautan"
 
 #. Template: AgentFAQZoomSmall
 msgid "Insert Full FAQ & Link"
-msgstr ""
+msgstr "Masukkan FAQ penuh dan pautan"
 
 #. Template: CustomerFAQExplorer
 msgid "No FAQ articles found."
@@ -499,31 +500,31 @@ msgstr "Carian Teks penuh dalam artikel FAQ (contoh. \"John*n\" or \"Will*\")"
 
 #. Template: CustomerFAQSearch
 msgid "Vote restrictions"
-msgstr ""
+msgstr "Sekatan undi"
 
 #. Template: CustomerFAQSearch
 msgid "Only FAQ articles with votes..."
-msgstr ""
+msgstr "Hanya artikel FAQ berserta undi"
 
 #. Template: CustomerFAQSearch
 msgid "Rate restrictions"
-msgstr ""
+msgstr "Sekatan kadar"
 
 #. Template: CustomerFAQSearch
 msgid "Only FAQ articles with rate..."
-msgstr ""
+msgstr "Hanya artikel FAQ berserta kadar"
 
 #. Template: CustomerFAQSearch
 msgid "Only FAQ articles created"
-msgstr ""
+msgstr "Hanya artikel FAQ yang dicipta"
 
 #. Template: CustomerFAQSearch
 msgid "Only FAQ articles created between"
-msgstr ""
+msgstr "Hanya artikel FAQ yang dicipta di antara"
 
 #. Template: CustomerFAQSearch
 msgid "Search-Profile as Template?"
-msgstr ""
+msgstr "Carian berprofil sebagai templat?"
 
 #. Template: CustomerFAQZoom
 msgid "Article Number"
@@ -539,7 +540,7 @@ msgstr "Umum"
 
 #. Template: PublicFAQSearchResultShort
 msgid "Back to FAQ Explorer"
-msgstr ""
+msgstr "Balik kepada peneroka FAQ"
 
 #. SysConfig
 msgid ""
@@ -555,7 +556,7 @@ msgstr "Warna CSS untuk keputusan undian."
 
 #. SysConfig
 msgid "Cache Time To Leave for FAQ items."
-msgstr ""
+msgstr "Waktu cache untuk meninggalkan bagi item FAQ"
 
 #. SysConfig
 msgid "Category Management"
@@ -575,7 +576,7 @@ msgstr "Bahasa sedia ada untuk artikel FAQ pada satu mod bahasa."
 
 #. SysConfig
 msgid "Default maximum size of the titles in a FAQ article to be shown."
-msgstr ""
+msgstr "Saiz maksimum tetapan awal daripada tajuk dalam artikel FAQ untuk ditunjukkan."
 
 #. SysConfig
 msgid "Default priority of tickets for the approval of FAQ articles."
@@ -591,7 +592,7 @@ msgstr "Keadaan sedia ada tiket untuk pengesahan daripada artikel FAQ."
 
 #. SysConfig
 msgid "Default type of tickets for the approval of FAQ articles."
-msgstr ""
+msgstr "Jenis tetapan awal tiket untuk kelulusan artikel FAQ."
 
 #. SysConfig
 msgid ""
@@ -601,7 +602,7 @@ msgstr "Nilai sedia ada untuk tindakan parameter kepada depanakhir umum. Tindaka
 
 #. SysConfig
 msgid "Define if the FAQ title should be concatenated to article subject."
-msgstr ""
+msgstr "Tentukan jika tajuk FAQ perlu dirangkaikan kepada artikel subjek."
 
 #. SysConfig
 msgid "Defines an overview module to show the small view of a FAQ journal."
@@ -639,13 +640,13 @@ msgstr "Kenalpasti sifat sedia ada FAQ menyusun dalam carian FAQ daripada ejen i
 msgid ""
 "Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the"
 " customer interface."
-msgstr ""
+msgstr "Mentakrifkan tetapan awal sifat FAQ untuk susunan FAQ dalam peneroka FAQ antara muka pelanggan"
 
 #. SysConfig
 msgid ""
 "Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the"
 " public interface."
-msgstr ""
+msgstr "Mentakrifkan tetapan awal sifat FAQ untuk susunan FAQ dalam peneroka FAQ antara muka orang awam"
 
 #. SysConfig
 msgid ""
@@ -865,11 +866,11 @@ msgstr "Kawasan FAQ"
 
 #. SysConfig
 msgid "Field4"
-msgstr ""
+msgstr "Medan4"
 
 #. SysConfig
 msgid "Field5"
-msgstr ""
+msgstr "Medan5"
 
 #. SysConfig
 msgid "Frontend module registration for the public interface."
@@ -893,7 +894,7 @@ msgstr "Termasuk nama setiap bidang dalam Tiket berasaskan FAQ."
 
 #. SysConfig
 msgid "Interfaces where the quick search should be shown."
-msgstr ""
+msgstr "Antara muka di mana carian cepat hendaklah ditunjukkan."
 
 #. SysConfig
 msgid "Journal"
@@ -909,15 +910,15 @@ msgstr "FAQ pautan ini kepada objek lain"
 
 #. SysConfig
 msgid "List of state types which can be used in the agent interface."
-msgstr ""
+msgstr "Senarai jenis keadaan yang boleh digunakan dalam ruang antara muka ejen."
 
 #. SysConfig
 msgid "List of state types which can be used in the customer interface."
-msgstr ""
+msgstr "Senarai jenis keadaan yang boleh digunakan dalam ruang antara muka pelanggan."
 
 #. SysConfig
 msgid "List of state types which can be used in the public interface."
-msgstr ""
+msgstr "Senarai jenis keadaan yang boleh digunakan dalam antara muka awam."
 
 #. SysConfig
 msgid ""

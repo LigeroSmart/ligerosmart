@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-09-01 16:46+0000\n"
+"PO-Revision-Date: 2015-09-13 09:12+0000\n"
 "Last-Translator: Милорад Јовановић <j.milorad@gmail.com>\n"
 "Language-Team: Serbian (http://www.transifex.com/otrs/OTRS/language/sr/)\n"
 "MIME-Version: 1.0\n"
@@ -52,7 +52,7 @@ msgstr "Није изабрана ни једна оцена!"
 
 #. Template: AAAFAQ
 msgid "Explorer"
-msgstr ""
+msgstr "Истраживач"
 
 #. Template: AAAFAQ
 msgid "public (all)"
@@ -60,7 +60,7 @@ msgstr "јавно (све)"
 
 #. Template: AAAFAQ
 msgid "external (customer)"
-msgstr "екстерно (корисник)"
+msgstr "екстерно (клијент)"
 
 #. Template: AAAFAQ
 msgid "internal (agent)"
@@ -192,7 +192,7 @@ msgstr "Додај категорију"
 
 #. Template: AgentFAQCategory
 msgid "Edit Category"
-msgstr "Уреди категорију"
+msgstr "Измени категорију"
 
 #. Template: AgentFAQCategory
 msgid "Please select at least one permission group."
@@ -204,7 +204,7 @@ msgstr "Групе оператера које могу приступити ч�
 
 #. Template: AgentFAQCategory
 msgid "Will be shown as comment in Explorer."
-msgstr ""
+msgstr "Биће приказано као коментар у Истраживачу."
 
 #. Template: AgentFAQCategory
 msgid "Do you really want to delete this category?"
@@ -234,7 +234,7 @@ msgstr "ЧПП"
 
 #. Template: AgentFAQExplorer
 msgid "FAQ Explorer"
-msgstr ""
+msgstr "ЧПП Истраживач"
 
 #. Template: AgentFAQExplorer
 msgid "Quick Search"
@@ -262,7 +262,7 @@ msgstr "Подкатегорије нису пронађене."
 
 #. Template: AgentFAQJournalOverviewSmall
 msgid "No FAQ Journal data found."
-msgstr ""
+msgstr "Нису пронађени подаци ЧПП дневника."
 
 #. Template: AgentFAQLanguage
 msgid "FAQ Language Management"
@@ -331,11 +331,11 @@ msgstr "Кључна реч"
 
 #. Template: AgentFAQSearch
 msgid "Vote (e. g. Equals 10 or GreaterThan 60)"
-msgstr ""
+msgstr "Гласај (нпр једнако 10 или веће од 60)"
 
 #. Template: AgentFAQSearch
 msgid "Rate (e. g. Equals 25% or GreaterThan 75%)"
-msgstr ""
+msgstr "Оцени (нпр једнако 25% или веће од 75%)"
 
 #. Template: AgentFAQSearch
 msgid "Approved"
@@ -363,7 +363,7 @@ msgstr "Време промене ЧПП чланка (између)"
 
 #. Template: AgentFAQSearchOpenSearchDescriptionFulltext
 msgid "FAQFulltext"
-msgstr ""
+msgstr "ЧПП комплетан текст"
 
 #. Template: AgentFAQSearchSmall
 msgid "FAQ Search"
@@ -387,7 +387,7 @@ msgstr "Специфични гласови"
 
 #. Template: AgentFAQSearchSmall
 msgid "e. g. Equals 10 or GreaterThan 60"
-msgstr ""
+msgstr "нпр једнако 10 или веће од 60"
 
 #. Template: AgentFAQSearchSmall
 msgid "Rate"
@@ -403,7 +403,7 @@ msgstr "Специфична оцена"
 
 #. Template: AgentFAQSearchSmall
 msgid "e. g. Equals 25% or GreaterThan 75%"
-msgstr ""
+msgstr "нпр једнако 25% или веће од 75%"
 
 #. Template: AgentFAQSearchSmall
 msgid "FAQ Article Create Time"
@@ -450,7 +450,7 @@ msgid ""
 "To open links in the following description blocks, you might need to press "
 "Ctrl or Cmd or Shift key while clicking the link (depending on your browser "
 "and OS)."
-msgstr ""
+msgstr "Да бисте отворили везе у следећим блоковима описа, можда ћете требати да притиснете „Ctrl” или „Cmd” или „Shift” тастер док истовремено кликнете на везу (зависи од вашег ОС и прегледача)."
 
 #. Template: AgentFAQZoom
 msgid ""
@@ -496,7 +496,7 @@ msgstr "Нису пронађени ЧПП чланци."
 
 #. Template: CustomerFAQSearch
 msgid "Fulltext search in FAQ articles (e. g. \"John*n\" or \"Will*\")"
-msgstr ""
+msgstr "Потпуна текстуална претрага у ЧПП чланцима (нпр. \"John*n\" или \"Will*\")"
 
 #. Template: CustomerFAQSearch
 msgid "Vote restrictions"
@@ -540,7 +540,7 @@ msgstr "Јавно"
 
 #. Template: PublicFAQSearchResultShort
 msgid "Back to FAQ Explorer"
-msgstr ""
+msgstr "Нназад на ЧПП Истраживач"
 
 #. SysConfig
 msgid ""
@@ -548,7 +548,7 @@ msgid ""
 "Image allows two input kinds. First the name of an image (e.g. faq.png). In "
 "this case the OTRS image path will be used. The second possibility is to "
 "insert the link to the image."
-msgstr ""
+msgstr "Филтер за „HTML” излаз за додавање везе иза дефинисаног низа знакова. Елемент слика дозвољава два начина уноса. Први је назив слике (нпр faq.png). у овом случају биће коришћена „OTRS” путања до слике.  Друга могућност је унос везе до слике."
 
 #. SysConfig
 msgid "CSS color for the voting result."
@@ -692,7 +692,7 @@ msgstr "Дефинише подразумевани приказани ЧПП а
 msgid ""
 "Defines the information to be inserted in a FAQ based Ticket. \"Full FAQ\" "
 "includes text, attachments and inline images."
-msgstr ""
+msgstr "Одређује информације које ће бити убачене у ЧПП базирани тикет. „Комплетан ЧПП” укључује текст, прилоге и уметнуте слике."
 
 #. SysConfig
 msgid ""
@@ -701,7 +701,7 @@ msgid ""
 " to the plugin (e. g. Group: admin;group1;group2;). \"Default\" indicates if"
 " the plugin is enabled by default or if the user needs to enable it "
 "manually."
-msgstr ""
+msgstr "Дефинише позадинске параметре за контролну таблу. \"Лимит\" дефинише број подрезумевано приказаних уноса. \"Група\" се користи да ограничи приступ додатку (нпр. Група: admin;group1;group2;).\"Подразумевано\" указује на то да ли је додатак подразумевано активиран или да је потребно да га корисник мануелно активира."
 
 #. SysConfig
 msgid ""
@@ -846,11 +846,11 @@ msgstr "Ограничење прегледа ЧПП - \"мало\""
 
 #. SysConfig
 msgid "FAQ limit per page for FAQ Journal Overview \"Small\""
-msgstr ""
+msgstr "Ограничење броја ЧПП по страни за преглед ЧПП дневника - \"мало\""
 
 #. SysConfig
 msgid "FAQ limit per page for FAQ Overview \"Small\""
-msgstr ""
+msgstr "Ограничење броја ЧПП по страни за преглед ЧПП - \"мало\""
 
 #. SysConfig
 msgid "FAQ path separator."
@@ -858,7 +858,7 @@ msgstr "Разделник путање до ЧПП."
 
 #. SysConfig
 msgid "FAQ search backend router of the agent interface."
-msgstr ""
+msgstr "ЧППпретрага позадинског рутера у интерфејсу оператера."
 
 #. SysConfig
 msgid "FAQ-Area"
@@ -874,7 +874,7 @@ msgstr "Поље5"
 
 #. SysConfig
 msgid "Frontend module registration for the public interface."
-msgstr ""
+msgstr "Регистрација приступног модула за јавни интерфејс."
 
 #. SysConfig
 msgid "Group for the approval of FAQ articles."
@@ -886,11 +886,11 @@ msgstr "Историјат овог ЧПП"
 
 #. SysConfig
 msgid "Include internal fields on a FAQ based Ticket."
-msgstr ""
+msgstr "Укључи интерна поља у ЧПП базиран тикет."
 
 #. SysConfig
 msgid "Include the name of each field in a FAQ based Ticket."
-msgstr ""
+msgstr "Укључи назив сваког поља у ЧПП базиран тикет."
 
 #. SysConfig
 msgid "Interfaces where the quick search should be shown."
@@ -942,7 +942,7 @@ msgstr "Максимални број ЧПП чланака који ће бит
 msgid ""
 "Maximum number of FAQ articles to be displayed in the FAQ journal in the "
 "agent interface."
-msgstr ""
+msgstr "Максимални број ЧПП чланака који ће бити приказани у ЧПП дневнику у интерфејсу оператера."
 
 #. SysConfig
 msgid ""
@@ -966,59 +966,59 @@ msgstr "Максимални број ЧПП чланака који ће бит
 msgid ""
 "Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer "
 "in the agent interface."
-msgstr ""
+msgstr "Максимална дужина наслова у ЧПП чланаку који ће бити приказани у ЧПП истраживачу у интерфејсу оператера."
 
 #. SysConfig
 msgid ""
 "Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer "
 "in the customer interface."
-msgstr ""
+msgstr "Максимална дужина наслова у ЧПП чланаку који ће бити приказани у ЧПП истраживачу у интерфејсу клијента."
 
 #. SysConfig
 msgid ""
 "Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer "
 "in the public interface."
-msgstr ""
+msgstr "Максимална дужина наслова у ЧПП чланаку који ће бити приказани у ЧПП истраживачу у јавном интерфејсу."
 
 #. SysConfig
 msgid ""
 "Maximum size of the titles in a FAQ article to be shown in the FAQ Search in"
 " the agent interface."
-msgstr ""
+msgstr "Максимална дужина наслова у ЧПП чланаку који ће бити приказани у ЧПП претрази у интерфејсу оператера."
 
 #. SysConfig
 msgid ""
 "Maximum size of the titles in a FAQ article to be shown in the FAQ Search in"
 " the customer interface."
-msgstr ""
+msgstr "Максимална дужина наслова у ЧПП чланаку који ће бити приказани у ЧПП претрази у интерфејсу клијента."
 
 #. SysConfig
 msgid ""
 "Maximum size of the titles in a FAQ article to be shown in the FAQ Search in"
 " the public interface."
-msgstr ""
+msgstr "Максимална дужина наслова у ЧПП чланаку који ће бити приказани у ЧПП претрази у јавном интерфејсу."
 
 #. SysConfig
 msgid ""
 "Maximum size of the titles in a FAQ article to be shown in the FAQ journal "
 "in the agent interface."
-msgstr ""
+msgstr "Максимална дужина наслова у ЧПП чланаку који ће бити приказани у ЧПП дневнику у интерфејсу оператера."
 
 #. SysConfig
 msgid ""
 "Module to generate HTML OpenSearch profile for short FAQ search in the "
 "public interface."
-msgstr ""
+msgstr "Модул за генерисање „HTML OpenSearch” профила за кратку ЧПП претрагу у јавном профилу."
 
 #. SysConfig
 msgid ""
 "Module to generate HTML OpenSearch profile for short faq search in the "
 "customer interface."
-msgstr ""
+msgstr "Модул за генерисање „HTML OpenSearch” профила за кратку ЧПП претрагу у профилу клијента."
 
 #. SysConfig
 msgid "Module to generate html OpenSearch profile for short faq search."
-msgstr ""
+msgstr "Модул за генерисање „HTML OpenSearch” профила за кратку ЧПП претрагу."
 
 #. SysConfig
 msgid "New FAQ Article"
@@ -1032,25 +1032,25 @@ msgstr "Нови ЧПП чланци требају бити одобрени п
 msgid ""
 "Number of FAQ articles to be displayed in the FAQ Explorer of the customer "
 "interface."
-msgstr ""
+msgstr "Број ЧПП чланака који ће бити приказани у ЧПП Истраживачу у интерфејсу клијента."
 
 #. SysConfig
 msgid ""
 "Number of FAQ articles to be displayed in the FAQ Explorer of the public "
 "interface."
-msgstr ""
+msgstr "Број ЧПП чланака који ће бити приказани у ЧПП Истраживачу у јавном интерфејсу."
 
 #. SysConfig
 msgid ""
 "Number of FAQ articles to be displayed on each page of a search result in "
 "the customer interface."
-msgstr ""
+msgstr "Број ЧПП чланака који ће бити приказани на свакој страни резултата претраге у интерфејсу клијента."
 
 #. SysConfig
 msgid ""
 "Number of FAQ articles to be displayed on each page of a search result in "
 "the public interface."
-msgstr ""
+msgstr "Број ЧПП чланака који ће бити приказани на свакој страни резултата претраге у јавном интерфејсу."
 
 #. SysConfig
 msgid "Number of shown items in last changes."
@@ -1068,13 +1068,13 @@ msgstr "Број приказаних ставки у \"првих 10\" ."
 msgid ""
 "Parameters for the pages (in which the FAQ items are shown) of the small FAQ"
 " journal overview."
-msgstr ""
+msgstr "Параметри страница (на којима су ЧПП ставке приказане) на малом приказу прегледа ЧПП дневника."
 
 #. SysConfig
 msgid ""
 "Parameters for the pages (in which the FAQ items are shown) of the small FAQ"
 " overview."
-msgstr ""
+msgstr "Параметри страница (на којима су видљиве ЧПП ставке) смањеног прегледа ЧПП."
 
 #. SysConfig
 msgid "Print this FAQ"
@@ -1202,25 +1202,25 @@ msgstr ""
 msgid ""
 "This setting defines that a 'FAQ' object can be linked with other 'FAQ' "
 "objects using the 'Normal' link type."
-msgstr ""
+msgstr "Ово подешавање дефинише да ЧПП објект може да се повеже са другим ЧПП објектима користећи „нормалну” везу."
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'FAQ' object can be linked with other 'FAQ' "
 "objects using the 'ParentChild' link type."
-msgstr ""
+msgstr "Ово подешавање дефинише да ЧПП објект може да се повеже са другим ЧПП објектима користећи везу типа „родитељ/потомак”."
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'FAQ' object can be linked with other 'Ticket' "
 "objects using the 'Normal' link type."
-msgstr ""
+msgstr "Ово подешавање дефинише да ЧПП објект може да се повеже са другим тикет објектима користећи „нормалну” везу."
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'FAQ' object can be linked with other 'Ticket' "
 "objects using the 'ParentChild' link type."
-msgstr ""
+msgstr "Ово подешавање дефинише да ЧПП објект може да се повеже са другим тикет објектима користећи везу типа „родитељ/потомак”."
 
 #. SysConfig
 msgid "Ticket body for approval of FAQ article."

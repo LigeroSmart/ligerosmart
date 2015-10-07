@@ -16,10 +16,10 @@ sub Data {
     my $Self = shift;
 
     # Template: AAAFAQ
-    $Self->{Translation}->{'internal'} = '';
-    $Self->{Translation}->{'public'} = '';
-    $Self->{Translation}->{'external'} = '';
-    $Self->{Translation}->{'FAQ Number'} = '';
+    $Self->{Translation}->{'internal'} = 'внутрішній';
+    $Self->{Translation}->{'public'} = 'Публичне';
+    $Self->{Translation}->{'external'} = 'Зовнiшний';
+    $Self->{Translation}->{'FAQ Number'} = 'FAQ  кількість';
     $Self->{Translation}->{'Latest updated FAQ articles'} = 'Остання змінена стаття';
     $Self->{Translation}->{'Latest created FAQ articles'} = 'Остання створена стаття';
     $Self->{Translation}->{'Top 10 FAQ articles'} = 'Топ 10 статтей';

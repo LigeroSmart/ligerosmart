@@ -50,7 +50,7 @@ sub Data {
     $Self->{Translation}->{'The name is required!'} = 'Il nome è obbligatorio!';
     $Self->{Translation}->{'This language already exists!'} = 'Linguaggio esistente!';
     $Self->{Translation}->{'Symptom'} = '';
-    $Self->{Translation}->{'Solution'} = '';
+    $Self->{Translation}->{'Solution'} = 'Soluzione';
 
     # Template: AgentFAQAdd
     $Self->{Translation}->{'Add FAQ Article'} = 'Aggiungere articolo FAQ';
@@ -202,7 +202,7 @@ sub Data {
     $Self->{Translation}->{'Default category name.'} = 'Nome Predefinito della categoria.';
     $Self->{Translation}->{'Default language for FAQ articles on single language mode.'} = 'Lingua predefinita per gli articoli  FAQ per la modalità singola lingua.';
     $Self->{Translation}->{'Default maximum size of the titles in a FAQ article to be shown.'} =
-        '';
+        'Default numero di catteri del titolo di una FAQ da visualizzare';
     $Self->{Translation}->{'Default priority of tickets for the approval of FAQ articles.'} =
         'Priorità predefinita dei ticket per l\'approvazione di articoli FAQ.';
     $Self->{Translation}->{'Default state for FAQ entry.'} = 'Stato di default per la voce delle FAQ.';
@@ -213,7 +213,7 @@ sub Data {
     $Self->{Translation}->{'Define if the FAQ title should be concatenated to article subject.'} =
         'Definisce se il titolo FAQ dovrebbe essere concatenato con l\'oggetto dell\'articolo.';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ journal.'} =
-        '';
+        'Definisce un modulo panoramica per mostrare una vista abbreviata di una lista di FAQ.';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ list.'} =
         'Definisce un modulo panoramica per mostrare la vista piccola di una lista di FAQ.';
     $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in a FAQ search of the agent interface.'} =
@@ -251,10 +251,10 @@ sub Data {
     $Self->{Translation}->{'Defines the shown columns in the FAQ journal. This option has no effect on the position of the column.'} =
         '';
     $Self->{Translation}->{'Defines the shown columns in the FAQ search. This option has no effect on the position of the column.'} =
-        '';
-    $Self->{Translation}->{'Defines where the \'Insert FAQ\' link will be displayed.'} = '';
-    $Self->{Translation}->{'Definition of FAQ item free text field.'} = '';
-    $Self->{Translation}->{'Delete this FAQ'} = '';
+        'Definisce le colonne visibili nella ricerca FAQ. Questa opzione non ha effetto nella posizione della colonna.';
+    $Self->{Translation}->{'Defines where the \'Insert FAQ\' link will be displayed.'} = 'Definisce dove verrà visualizzato il collegamento \'Inserisci FAQ\'.';
+    $Self->{Translation}->{'Definition of FAQ item free text field.'} = 'Definizione del campo testo libero delle FAQ';
+    $Self->{Translation}->{'Delete this FAQ'} = 'Elimina questa FAQ';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ add screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
         '';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ edit screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
@@ -283,9 +283,9 @@ sub Data {
         '';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ zoom screen of the public interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
         '';
-    $Self->{Translation}->{'Edit this FAQ'} = '';
-    $Self->{Translation}->{'Enable multiple languages on FAQ module.'} = '';
-    $Self->{Translation}->{'Enable voting mechanism on FAQ module.'} = '';
+    $Self->{Translation}->{'Edit this FAQ'} = 'Modifica questa FAQ';
+    $Self->{Translation}->{'Enable multiple languages on FAQ module.'} = 'Abilita più lingue nel modulo FAQ.';
+    $Self->{Translation}->{'Enable voting mechanism on FAQ module.'} = 'Abilita meccanismo di voto nel modulo FAQ.';
     $Self->{Translation}->{'FAQ Journal'} = '';
     $Self->{Translation}->{'FAQ Journal Overview "Small" Limit'} = '';
     $Self->{Translation}->{'FAQ Overview "Small" Limit'} = '';
@@ -298,7 +298,7 @@ sub Data {
     $Self->{Translation}->{'Field5'} = '';
     $Self->{Translation}->{'Frontend module registration for the public interface.'} = '';
     $Self->{Translation}->{'Group for the approval of FAQ articles.'} = '';
-    $Self->{Translation}->{'History of this FAQ'} = '';
+    $Self->{Translation}->{'History of this FAQ'} = 'Storico di questa FAQ';
     $Self->{Translation}->{'Include internal fields on a FAQ based Ticket.'} = '';
     $Self->{Translation}->{'Include the name of each field in a FAQ based Ticket.'} = '';
     $Self->{Translation}->{'Interfaces where the quick search should be shown.'} = '';
