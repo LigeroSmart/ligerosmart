@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-09-11 00:44+0000\n"
-"Last-Translator: Ettore Atalan <atalanttore@googlemail.com>\n"
+"PO-Revision-Date: 2015-10-07 03:44+0000\n"
+"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: German (http://www.transifex.com/otrs/OTRS/language/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -95,16 +95,16 @@ msgstr "Aktiviere den Modus das Slave Tickets dem Master Ticket im erweiterten M
 
 #. SysConfig
 msgid ""
-"Enable the feature to forward articles of a master ticket to the customers "
-"of the slave tickets. By default (disabled) it will not forward anything to "
-"the slave tickets."
-msgstr "Aktivieren Sie dieses Feature um Artikel eines Master-Tickets an die Kunden der Slave-Tickets weiterzuleiten. Standardmäßig (deaktiviert) wird nichts an die Slave-Tickets weitergeleitet."
-
-#. SysConfig
-msgid ""
 "Enable the feature to change the MasterSlave state of a ticket in the "
 "advanced MasterSlave mode."
 msgstr "Aktiviere den Modus um den MasterSlave Status eines Tickets im erweiterten MasterSlave Modus zu ändern."
+
+#. SysConfig
+msgid ""
+"Enable the feature to forward articles from type 'forward' of a master "
+"ticket to the customers of the slave tickets. By default (disabled) it will "
+"not forward articles from type 'forward' to the slave tickets."
+msgstr ""
 
 #. SysConfig
 msgid ""

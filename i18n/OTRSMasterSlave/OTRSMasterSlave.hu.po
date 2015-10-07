@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-07-12 21:31+0000\n"
-"Last-Translator: Balázs Úr <urbalazs@gmail.com>\n"
+"PO-Revision-Date: 2015-10-07 03:44+0000\n"
+"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Hungarian (http://www.transifex.com/otrs/OTRS/language/hu/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -92,16 +92,16 @@ msgstr "Engedélyezze a tulajdonságot, hogy az alárendelt jegyek a mesterjegye
 
 #. SysConfig
 msgid ""
-"Enable the feature to forward articles of a master ticket to the customers "
-"of the slave tickets. By default (disabled) it will not forward anything to "
-"the slave tickets."
-msgstr "Engedélyezze a tulajdonságot egy mesterjegy bejegyzéseinek továbbításához az alárendelt jegyek ügyfeleihez. Alapértelmezetten (letiltva) semmit sem fog továbbítani az alárendelt jegyekhez."
-
-#. SysConfig
-msgid ""
 "Enable the feature to change the MasterSlave state of a ticket in the "
 "advanced MasterSlave mode."
 msgstr "Engedélyezze a tulajdonságot egy jegy mester-alárendelt állapotának megváltoztatásához a speciális mester-alárendelt módban."
+
+#. SysConfig
+msgid ""
+"Enable the feature to forward articles from type 'forward' of a master "
+"ticket to the customers of the slave tickets. By default (disabled) it will "
+"not forward articles from type 'forward' to the slave tickets."
+msgstr ""
 
 #. SysConfig
 msgid ""

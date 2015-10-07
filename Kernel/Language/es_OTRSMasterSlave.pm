@@ -52,10 +52,10 @@ sub Data {
     $Self->{Translation}->{'If a note is added by an agent, sets the state of the ticket in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Si una nota es añadida por un agente, fija el estado del ticket en en la pantalla de ticket Maestro-Esclavo en la vista detallada de dicho ticket en la interfaz del agente.';
     $Self->{Translation}->{'Parameters for the dashboard backend of the master tickets overview of the agent interface. "Limit" is the number of entries shown by default. "Group" is used to restrict the access to the plugin (e. g. Group: admin;group1;group2;). "Default" determines if the plugin is enabled by default or if the user needs to enable it manually. "CacheTTLLocal" is the cache time in minutes for the plugin.'} =
-        '';
+        'Parámetros de el dashboard backend de la vista de los tickets maestros de la interfaz del agente. "Limite" es el numero de entradas a mostrar por defecto. "Grupo" es usado para restringir el acceso a el plugin (E.J. Grupo: admin;grupo1;grupo2;). "Defecto" determina si el plugin es activado por defecto ó si el usuario necesita activarlo manualmente. "CacheTTLLocal" es hora cache en minutos para el plugin.';
     $Self->{Translation}->{'Parameters for the dashboard backend of the slave tickets overview of the agent interface. "Limit" is the number of entries shown by default. "Group" is used to restrict the access to the plugin (e. g. Group: admin;group1;group2;). "Default" determines if the plugin is enabled by default or if the user needs to enable it manually. "CacheTTLLocal" is the cache time in minutes for the plugin.'} =
-        '';
-    $Self->{Translation}->{'Registration of the ticket event module.'} = 'Registro del móduo de evento para tickets.';
+        'Parametros del backend del panel principal de la vista del ticket esclavo del interface del agente. "Limite" es el número de entrada mostradas por defecto. "Grupo"es usado para restringir el acceso al plugin (Ejm. Grupo: admin;group1;group2;). "Defecto" determina si el plugin es habilitado por defecto o si el usuario necesita habilitarlo manualmente. "CacheTTLLocal" es el tiempo de cache en minutos para el plugin';
+    $Self->{Translation}->{'Registration of the ticket event module.'} = 'Registro del módulo de evento de tickets.';
     $Self->{Translation}->{'Required permissions to use the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Permisos requeridos para usar la pantalla Maestro-Esclavo de un ticket, en la vista detallada de dicho ticket de la interfaz del agente.';
     $Self->{Translation}->{'Sets the default body text for notes added in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
@@ -81,7 +81,7 @@ sub Data {
     $Self->{Translation}->{'Shows the title fields in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Muestra los campos título en la pantalla Maestro-Esclavo en la vista detallada de dicho ticket de la interfaz del agente.';
     $Self->{Translation}->{'Specifies the different article types where the real name from Master ticket will be replaced with the one in the Slave ticket.'} =
-        '';
+        'Especificar los diferentes tipos de artículos donde el verdadero nombre del tickey maestro será reemplazado con el del ticket esclavo.';
     $Self->{Translation}->{'This module is preparing master/slave pulldown in email and phone ticket.'} =
         'Este módulo prepara el contenido para el selector de Maestro-Eslcavo en las pantallas de ticket telefónico y de correo.';
 
