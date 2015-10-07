@@ -10,9 +10,15 @@
     <Description Lang="de">Enthält "Ticket Master/Slave" Funktionalität.</Description>
     <Filelist>
         <File Permission="644" Location="Kernel/Config/Files/OTRSMasterSlave.xml"/>
+        <File Permission="644" Location="Kernel/Language/cs_OTRSMasterSlave.pm"/>
         <File Permission="644" Location="Kernel/Language/de_OTRSMasterSlave.pm"/>
         <File Permission="644" Location="Kernel/Language/es_OTRSMasterSlave.pm"/>
         <File Permission="644" Location="Kernel/Language/es_MX_OTRSMasterSlave.pm"/>
+        <File Permission="644" Location="Kernel/Language/hu_OTRSMasterSlave.pm"/>
+        <File Permission="644" Location="Kernel/Language/pt_BR_OTRSMasterSlave.pm"/>
+        <File Permission="644" Location="Kernel/Language/ru_OTRSMasterSlave.pm"/>
+        <File Permission="644" Location="Kernel/Language/sr_Cyrl_OTRSMasterSlave.pm"/>
+        <File Permission="644" Location="Kernel/Language/sw_OTRSMasterSlave.pm"/>
         <File Permission="644" Location="Kernel/Modules/AdminDynamicFieldMasterSlave.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentPreMasterSlave.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentTicketMasterSlave.pm"/>

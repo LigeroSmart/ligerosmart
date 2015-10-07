@@ -1,4 +1,10 @@
 #5.0.0.beta2 2015-??-??
+ - 2015-10-06 Added Czech language, thanks to the translation team.
+ - 2015-10-06 Added Hungarian language, thanks to the translation team.
+ - 2015-10-06 Added Portuguese (Brazil) language, thanks to the translation team.
+ - 2015-10-06 Added Russian language, thanks to the translation team.
+ - 2015-10-06 Added Serbian language, thanks to the translation team.
+ - 2015-10-06 Added Swahili language, thanks to the translation team.
  - 2015-09-01 Activated settings to keep parent-child links when Master/Slave status is unset or changed, thanks to S7.
 
 #5.0.0.beta1 2015-09-01
