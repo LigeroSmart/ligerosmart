@@ -15,11 +15,26 @@ use utf8;
 sub Data {
     my $Self = shift;
 
-    # Template: AgentTicketBulk
-    $Self->{Translation}->{'MasterTicket'} = 'Mesterjegy';
-
     # Template: AgentTicketMasterSlave
+    $Self->{Translation}->{'Change Free Text of Ticket'} = 'Jegy szabad szövegének módosítása';
+    $Self->{Translation}->{'Change Owner of Ticket'} = 'Jegy tulajdonosának módosítása';
+    $Self->{Translation}->{'Close Ticket'} = 'Jegy lezárása';
+    $Self->{Translation}->{'Add Note to Ticket'} = 'Jegyzet hozzáadása a jegyhez';
+    $Self->{Translation}->{'Set Pending'} = 'Várakozás beállítása';
+    $Self->{Translation}->{'Change Priority of Ticket'} = 'Jegy prioritásának módosítása';
+    $Self->{Translation}->{'Change Responsible of Ticket'} = 'Jegy felelősének módosítása';
     $Self->{Translation}->{'Manage Master/Slave'} = 'Mester/alárendelt kezelése';
+    $Self->{Translation}->{'Set Master/Slave Value'} = '';
+    $Self->{Translation}->{'Inform Agent'} = 'Ügyintéző értesítése';
+    $Self->{Translation}->{'Optional'} = 'Opcionális';
+    $Self->{Translation}->{'Inform involved Agents'} = 'Részt vevő ügyintézők értesítése';
+    $Self->{Translation}->{'Note will be (also) received by:'} = 'Jegyzet (is) fogadásra kerül ettől:';
+
+    # Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
+    $Self->{Translation}->{'New Master Ticket'} = '';
+    $Self->{Translation}->{'Unset Master Ticket'} = '';
+    $Self->{Translation}->{'Unset Slave Ticket'} = '';
+    $Self->{Translation}->{'Slave of Ticket#'} = '';
 
     # SysConfig
     $Self->{Translation}->{'Allows adding notes in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
@@ -47,10 +62,16 @@ sub Data {
         'Engedélyezze a tulajdonságot egy jegy mester-alárendelt állapotának megváltoztatásához a speciális mester-alárendelt módban.';
     $Self->{Translation}->{'Enable the feature to forward articles from type \'forward\' of a master ticket to the customers of the slave tickets. By default (disabled) it will not forward articles from type \'forward\' to the slave tickets.'} =
         '';
+    $Self->{Translation}->{'Enable the feature to keep parent-child link after change of the MasterSlave state in the advanced MasterSlave mode.'} =
+        '';
+    $Self->{Translation}->{'Enable the feature to keep parent-child link after unset of the MasterSlave state in the advanced MasterSlave mode.'} =
+        '';
     $Self->{Translation}->{'Enable the feature to unset the MasterSlave state of a ticket in the advanced MasterSlave mode.'} =
         'Engedélyezze a tulajdonságot egy jegy mester-alárendelt állapotának törléséhez a speciális mester-alárendelt módban.';
     $Self->{Translation}->{'If a note is added by an agent, sets the state of the ticket in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Ha egy ügyintéző hozzáadott egy megjegyzést, akkor beállítja a jegy állapotát egy nagyított jegynek a jegy mester-alárendelt képernyőjén az ügyintézői felületen.';
+    $Self->{Translation}->{'Master / Slave'} = '';
+    $Self->{Translation}->{'MasterSlave module for Ticket Bulk feature.'} = '';
     $Self->{Translation}->{'Parameters for the dashboard backend of the master tickets overview of the agent interface. "Limit" is the number of entries shown by default. "Group" is used to restrict the access to the plugin (e. g. Group: admin;group1;group2;). "Default" determines if the plugin is enabled by default or if the user needs to enable it manually. "CacheTTLLocal" is the cache time in minutes for the plugin.'} =
         'Paraméterek az ügyintézői felület mesterjegyei áttekintőjének vezérlőpult háttérprogramjához. A „Korlát” az alapértelmezetten megjelenített bejegyzések száma. A „Csoport” használható a hozzáférés korlátozásához a bővítményre (például Csoport: admin;csoport1;csoport2;). Az „Alapértelmezett” jelzi, ha a bővítmény alapértelmezetten engedélyezve van, vagy ha a felhasználónak kézzel kell engedélyeznie azt. A „CacheTTLLocal” a bővítmény gyorsítótár ideje percben.';
     $Self->{Translation}->{'Parameters for the dashboard backend of the slave tickets overview of the agent interface. "Limit" is the number of entries shown by default. "Group" is used to restrict the access to the plugin (e. g. Group: admin;group1;group2;). "Default" determines if the plugin is enabled by default or if the user needs to enable it manually. "CacheTTLLocal" is the cache time in minutes for the plugin.'} =
@@ -82,8 +103,8 @@ sub Data {
         'Megjeleníti a címmezőket egy nagyított jegynek a jegy mester-alárendelt képernyőjén az ügyintézői felületen.';
     $Self->{Translation}->{'Specifies the different article types where the real name from Master ticket will be replaced with the one in the Slave ticket.'} =
         'Megadja a különböző bejegyzéstípusokat, ahol a mesterjegyben lévő valódi név ki lesz cserélve az alárendelt jegyben lévővel.';
-    $Self->{Translation}->{'This module is preparing master/slave pulldown in email and phone ticket.'} =
-        'Ez a modul előkészíti a mester/alárendelt lekérést az e-mail és telefonos jegyben.';
+    $Self->{Translation}->{'This module activates Master/Slave field in new email and phone ticket screens.'} =
+        '';
 
 }
 

@@ -15,11 +15,26 @@ use utf8;
 sub Data {
     my $Self = shift;
 
-    # Template: AgentTicketBulk
-    $Self->{Translation}->{'MasterTicket'} = 'ChamadoMaster';
-
     # Template: AgentTicketMasterSlave
+    $Self->{Translation}->{'Change Free Text of Ticket'} = 'Alterar os campos livres do chamado';
+    $Self->{Translation}->{'Change Owner of Ticket'} = 'Alterar o proprietário do chamado';
+    $Self->{Translation}->{'Close Ticket'} = 'Fechar Chamado';
+    $Self->{Translation}->{'Add Note to Ticket'} = 'Adicionar Nota ao Chamado';
+    $Self->{Translation}->{'Set Pending'} = 'Configurar como Pendente';
+    $Self->{Translation}->{'Change Priority of Ticket'} = 'Alterar a Prioridade do Chamado';
+    $Self->{Translation}->{'Change Responsible of Ticket'} = 'Alterar o Responsável pelo Chamado';
     $Self->{Translation}->{'Manage Master/Slave'} = 'Gerenciar Master/Slave';
+    $Self->{Translation}->{'Set Master/Slave Value'} = '';
+    $Self->{Translation}->{'Inform Agent'} = 'Informar Atendente';
+    $Self->{Translation}->{'Optional'} = 'Opcional';
+    $Self->{Translation}->{'Inform involved Agents'} = 'Informar aos atendentes envolvidos';
+    $Self->{Translation}->{'Note will be (also) received by:'} = '';
+
+    # Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
+    $Self->{Translation}->{'New Master Ticket'} = '';
+    $Self->{Translation}->{'Unset Master Ticket'} = '';
+    $Self->{Translation}->{'Unset Slave Ticket'} = '';
+    $Self->{Translation}->{'Slave of Ticket#'} = '';
 
     # SysConfig
     $Self->{Translation}->{'Allows adding notes in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
@@ -47,10 +62,16 @@ sub Data {
         'Habilita o recurso que permite alterar o estado de MasterSlave de um ticket no modo avançado de MasterSlave.';
     $Self->{Translation}->{'Enable the feature to forward articles from type \'forward\' of a master ticket to the customers of the slave tickets. By default (disabled) it will not forward articles from type \'forward\' to the slave tickets.'} =
         '';
+    $Self->{Translation}->{'Enable the feature to keep parent-child link after change of the MasterSlave state in the advanced MasterSlave mode.'} =
+        '';
+    $Self->{Translation}->{'Enable the feature to keep parent-child link after unset of the MasterSlave state in the advanced MasterSlave mode.'} =
+        '';
     $Self->{Translation}->{'Enable the feature to unset the MasterSlave state of a ticket in the advanced MasterSlave mode.'} =
         'Habilita o recurso que permite retornar o estado de MasterSlave de um ticket no modo avançado de MasterSlave.';
     $Self->{Translation}->{'If a note is added by an agent, sets the state of the ticket in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Se uma nota for adicionada por um agente, define o estado do ticket na tela de MasterSlave de um ticket detalhado na interface de agente.';
+    $Self->{Translation}->{'Master / Slave'} = '';
+    $Self->{Translation}->{'MasterSlave module for Ticket Bulk feature.'} = '';
     $Self->{Translation}->{'Parameters for the dashboard backend of the master tickets overview of the agent interface. "Limit" is the number of entries shown by default. "Group" is used to restrict the access to the plugin (e. g. Group: admin;group1;group2;). "Default" determines if the plugin is enabled by default or if the user needs to enable it manually. "CacheTTLLocal" is the cache time in minutes for the plugin.'} =
         'Parâmetros para o backend do painel de visão geral de tickets mestre da interface de agente. "Limite" é a quantidade de registros exibida por padrão. "Grupo" é usado para restringir o acesso ao plugin (ex.: Grupo: admin;grupo1;grupo2). "Padrão" determina se o plugin é habilitado por padrão ou se o usuário precisa habilitá-lo manualmente. "CacheTTLLocal" é o tempo de cache em minutos para o plugin.';
     $Self->{Translation}->{'Parameters for the dashboard backend of the slave tickets overview of the agent interface. "Limit" is the number of entries shown by default. "Group" is used to restrict the access to the plugin (e. g. Group: admin;group1;group2;). "Default" determines if the plugin is enabled by default or if the user needs to enable it manually. "CacheTTLLocal" is the cache time in minutes for the plugin.'} =
@@ -82,8 +103,8 @@ sub Data {
         'Exibe o campo de título na tela MasterSlave de ticket de um ticket detalhado na interface de agente.';
     $Self->{Translation}->{'Specifies the different article types where the real name from Master ticket will be replaced with the one in the Slave ticket.'} =
         'Especifica os diferentes tipos de artigo onde o nome real do ticket Master será substituído com o nome do ticket escravo.';
-    $Self->{Translation}->{'This module is preparing master/slave pulldown in email and phone ticket.'} =
-        'Este módulo está preparando a lista de seleção master/slave em novo chamado via fone ou email.';
+    $Self->{Translation}->{'This module activates Master/Slave field in new email and phone ticket screens.'} =
+        '';
 
 }
 

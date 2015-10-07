@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-10-07 03:44+0000\n"
+"PO-Revision-Date: 2015-10-07 18:52+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Serbian (http://www.transifex.com/otrs/OTRS/language/sr/)\n"
 "MIME-Version: 1.0\n"
@@ -14,13 +14,73 @@ msgstr ""
 "Language: sr\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-#. Template: AgentTicketBulk
-msgid "MasterTicket"
-msgstr "Главни тикет"
+#. Template: AgentTicketMasterSlave
+msgid "Change Free Text of Ticket"
+msgstr "Промени \"слободан\" текст тикета"
+
+#. Template: AgentTicketMasterSlave
+msgid "Change Owner of Ticket"
+msgstr "Промени власника тикета"
+
+#. Template: AgentTicketMasterSlave
+msgid "Close Ticket"
+msgstr "Затвори тикет"
+
+#. Template: AgentTicketMasterSlave
+msgid "Add Note to Ticket"
+msgstr "Додај напомену уз тикет"
+
+#. Template: AgentTicketMasterSlave
+msgid "Set Pending"
+msgstr "Стави на чекање"
+
+#. Template: AgentTicketMasterSlave
+msgid "Change Priority of Ticket"
+msgstr "Промени приоритет тикета"
+
+#. Template: AgentTicketMasterSlave
+msgid "Change Responsible of Ticket"
+msgstr "Промени одговорног за тикет"
 
 #. Template: AgentTicketMasterSlave
 msgid "Manage Master/Slave"
 msgstr "Управљање Главни/Зависни"
+
+#. Template: AgentTicketMasterSlave
+msgid "Set Master/Slave Value"
+msgstr ""
+
+#. Template: AgentTicketMasterSlave
+msgid "Inform Agent"
+msgstr "Обавести оператера"
+
+#. Template: AgentTicketMasterSlave
+msgid "Optional"
+msgstr "Опциони"
+
+#. Template: AgentTicketMasterSlave
+msgid "Inform involved Agents"
+msgstr "Обавести релевантне оператере"
+
+#. Template: AgentTicketMasterSlave
+msgid "Note will be (also) received by:"
+msgstr "Напомену ће (такође) примити:"
+
+#. Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
+msgid "New Master Ticket"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
+msgid "Unset Master Ticket"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
+msgid "Unset Slave Ticket"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
+msgid "Slave of Ticket#"
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -105,6 +165,18 @@ msgstr ""
 
 #. SysConfig
 msgid ""
+"Enable the feature to keep parent-child link after change of the MasterSlave"
+" state in the advanced MasterSlave mode."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Enable the feature to keep parent-child link after unset of the MasterSlave "
+"state in the advanced MasterSlave mode."
+msgstr ""
+
+#. SysConfig
+msgid ""
 "Enable the feature to unset the MasterSlave state of a ticket in the "
 "advanced MasterSlave mode."
 msgstr "Активирање функције за искључење статуса тикета Главни/Зависни  у напредном Главни/Зависни моду."
@@ -114,6 +186,14 @@ msgid ""
 "If a note is added by an agent, sets the state of the ticket in the ticket "
 "MasterSlave screen of a zoomed ticket in the agent interface."
 msgstr "Ако је оператер додао напомену, подешава статус тикета на екрану Главни/Зависни тикета на детаљном приказу у интерфејсу оператера."
+
+#. SysConfig
+msgid "Master / Slave"
+msgstr ""
+
+#. SysConfig
+msgid "MasterSlave module for Ticket Bulk feature."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -220,5 +300,6 @@ msgstr "Наводи разне типове чланака где ће ства
 
 #. SysConfig
 msgid ""
-"This module is preparing master/slave pulldown in email and phone ticket."
-msgstr "Овај модул припрема главни/зависни падајући мени у имејл и телефонским тикетима."
+"This module activates Master/Slave field in new email and phone ticket "
+"screens."
+msgstr ""

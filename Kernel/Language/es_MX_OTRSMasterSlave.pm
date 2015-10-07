@@ -15,11 +15,26 @@ use utf8;
 sub Data {
     my $Self = shift;
 
-    # Template: AgentTicketBulk
-    $Self->{Translation}->{'MasterTicket'} = 'Ticket Maestro';
-
     # Template: AgentTicketMasterSlave
+    $Self->{Translation}->{'Change Free Text of Ticket'} = 'Modificar los Campos Libres del Ticket';
+    $Self->{Translation}->{'Change Owner of Ticket'} = 'Cambiar el Propietario del Ticket';
+    $Self->{Translation}->{'Close Ticket'} = 'Cerrar Ticket';
+    $Self->{Translation}->{'Add Note to Ticket'} = 'Agregarle una Nota al Ticket';
+    $Self->{Translation}->{'Set Pending'} = 'Establecer como pendiente';
+    $Self->{Translation}->{'Change Priority of Ticket'} = 'Cambiar la Prioridad del Ticket';
+    $Self->{Translation}->{'Change Responsible of Ticket'} = 'Cambiar el Responsable del Ticket';
     $Self->{Translation}->{'Manage Master/Slave'} = 'Gestión Maestro/Escalvo';
+    $Self->{Translation}->{'Set Master/Slave Value'} = '';
+    $Self->{Translation}->{'Inform Agent'} = 'Notificar a Agente';
+    $Self->{Translation}->{'Optional'} = 'Opcional';
+    $Self->{Translation}->{'Inform involved Agents'} = 'Notificar a Agentes involucrados';
+    $Self->{Translation}->{'Note will be (also) received by:'} = '';
+
+    # Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
+    $Self->{Translation}->{'New Master Ticket'} = '';
+    $Self->{Translation}->{'Unset Master Ticket'} = '';
+    $Self->{Translation}->{'Unset Slave Ticket'} = '';
+    $Self->{Translation}->{'Slave of Ticket#'} = '';
 
     # SysConfig
     $Self->{Translation}->{'Allows adding notes in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
@@ -47,10 +62,16 @@ sub Data {
         'Activa la funcionalidad para cambiar el estado Maestro-Esclavo de un ticket en el modo avanzado para Maestro-Esclavo.';
     $Self->{Translation}->{'Enable the feature to forward articles from type \'forward\' of a master ticket to the customers of the slave tickets. By default (disabled) it will not forward articles from type \'forward\' to the slave tickets.'} =
         '';
+    $Self->{Translation}->{'Enable the feature to keep parent-child link after change of the MasterSlave state in the advanced MasterSlave mode.'} =
+        '';
+    $Self->{Translation}->{'Enable the feature to keep parent-child link after unset of the MasterSlave state in the advanced MasterSlave mode.'} =
+        '';
     $Self->{Translation}->{'Enable the feature to unset the MasterSlave state of a ticket in the advanced MasterSlave mode.'} =
         'Activa la funcionalidad para suprimir el estado Maestro-Esclavo de un ticket en el modo avanzado para Maestro-Esclavo.';
     $Self->{Translation}->{'If a note is added by an agent, sets the state of the ticket in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Si una nota es añadida por un agente, fija el estado del ticket en en la pantalla de ticket Maestro-Esclavo en la vista detallada de dicho ticket en la interfaz del agente.';
+    $Self->{Translation}->{'Master / Slave'} = '';
+    $Self->{Translation}->{'MasterSlave module for Ticket Bulk feature.'} = '';
     $Self->{Translation}->{'Parameters for the dashboard backend of the master tickets overview of the agent interface. "Limit" is the number of entries shown by default. "Group" is used to restrict the access to the plugin (e. g. Group: admin;group1;group2;). "Default" determines if the plugin is enabled by default or if the user needs to enable it manually. "CacheTTLLocal" is the cache time in minutes for the plugin.'} =
         '';
     $Self->{Translation}->{'Parameters for the dashboard backend of the slave tickets overview of the agent interface. "Limit" is the number of entries shown by default. "Group" is used to restrict the access to the plugin (e. g. Group: admin;group1;group2;). "Default" determines if the plugin is enabled by default or if the user needs to enable it manually. "CacheTTLLocal" is the cache time in minutes for the plugin.'} =
@@ -82,8 +103,8 @@ sub Data {
         'Muestra los campos título en la pantalla Maestro-Esclavo en la vista detallada de dicho ticket de la interfaz del agente.';
     $Self->{Translation}->{'Specifies the different article types where the real name from Master ticket will be replaced with the one in the Slave ticket.'} =
         '';
-    $Self->{Translation}->{'This module is preparing master/slave pulldown in email and phone ticket.'} =
-        'Este módulo prepara el contenido para el selector de Maestro-Eslcavo en las pantallas de ticket telefónico y de correo.';
+    $Self->{Translation}->{'This module activates Master/Slave field in new email and phone ticket screens.'} =
+        '';
 
 }
 

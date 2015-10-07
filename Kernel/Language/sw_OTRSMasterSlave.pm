@@ -15,11 +15,26 @@ use utf8;
 sub Data {
     my $Self = shift;
 
-    # Template: AgentTicketBulk
-    $Self->{Translation}->{'MasterTicket'} = 'Tiketi kuu';
-
     # Template: AgentTicketMasterSlave
+    $Self->{Translation}->{'Change Free Text of Ticket'} = 'Badili matini huru kwa ajili ya tiketi';
+    $Self->{Translation}->{'Change Owner of Ticket'} = 'Badili mmiliki wa tiketi';
+    $Self->{Translation}->{'Close Ticket'} = 'Funga tiketi';
+    $Self->{Translation}->{'Add Note to Ticket'} = 'Ongeza kidokezo katika tiketi ';
+    $Self->{Translation}->{'Set Pending'} = 'Weka kusubiri';
+    $Self->{Translation}->{'Change Priority of Ticket'} = 'Badili kipaumbele cha tiketi.';
+    $Self->{Translation}->{'Change Responsible of Ticket'} = 'Badili uhusika wa tiketi.';
     $Self->{Translation}->{'Manage Master/Slave'} = 'Simamia Mkuu/mtumwa';
+    $Self->{Translation}->{'Set Master/Slave Value'} = '';
+    $Self->{Translation}->{'Inform Agent'} = 'Mtaarifu wakala';
+    $Self->{Translation}->{'Optional'} = 'Ya hiari';
+    $Self->{Translation}->{'Inform involved Agents'} = 'Taarifu mawakala wanaohusika';
+    $Self->{Translation}->{'Note will be (also) received by:'} = '';
+
+    # Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
+    $Self->{Translation}->{'New Master Ticket'} = '';
+    $Self->{Translation}->{'Unset Master Ticket'} = '';
+    $Self->{Translation}->{'Unset Slave Ticket'} = '';
+    $Self->{Translation}->{'Slave of Ticket#'} = '';
 
     # SysConfig
     $Self->{Translation}->{'Allows adding notes in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
@@ -47,10 +62,16 @@ sub Data {
         'Wezesha kipengele cha kubadilisha hali ya mkuumtumwa ya tiketi katika hali ya juu ya mkuumtumwa.';
     $Self->{Translation}->{'Enable the feature to forward articles from type \'forward\' of a master ticket to the customers of the slave tickets. By default (disabled) it will not forward articles from type \'forward\' to the slave tickets.'} =
         '';
+    $Self->{Translation}->{'Enable the feature to keep parent-child link after change of the MasterSlave state in the advanced MasterSlave mode.'} =
+        '';
+    $Self->{Translation}->{'Enable the feature to keep parent-child link after unset of the MasterSlave state in the advanced MasterSlave mode.'} =
+        '';
     $Self->{Translation}->{'Enable the feature to unset the MasterSlave state of a ticket in the advanced MasterSlave mode.'} =
         'Wezesha kipengele ambacho hakitoweka hali ya mkuumtumwa ya tiketi katika hali ya juu ya mkuumtumwa.';
     $Self->{Translation}->{'If a note is added by an agent, sets the state of the ticket in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Kama kidokezo kimeongezwa na wakala, inaweka hali ya tiketi katika skrini ya mkuumtumwa ya tiketi ya tiketi iliyokuzwa katika kiolesura cha wakala.';
+    $Self->{Translation}->{'Master / Slave'} = '';
+    $Self->{Translation}->{'MasterSlave module for Ticket Bulk feature.'} = '';
     $Self->{Translation}->{'Parameters for the dashboard backend of the master tickets overview of the agent interface. "Limit" is the number of entries shown by default. "Group" is used to restrict the access to the plugin (e. g. Group: admin;group1;group2;). "Default" determines if the plugin is enabled by default or if the user needs to enable it manually. "CacheTTLLocal" is the cache time in minutes for the plugin.'} =
         'Parameta kwa backend ya dasibodi ya mapitio ya tiketi kuu ya kiolesura cha wakala. \'\'Kikomo\'\' ni namba ya vipengee halisi vinavyoonyeshwa kwa mchaguo-halisi. \'\'Kikundi\'\' kinatumika kuzuia kufikia kuchomeka (mfano Kikundi:Utawala;kikundi cha 1;kikundi cha 2;). \'\'Chaguo-msingi\'\' inahakiki kama mchomeko umewezeshwa kwa mchaguo-msingi au kama mtumizi anahitaji kuwezesha kwa mkono. \'\'HifadhimudaTTLKiambo\'\' ni muda wa hifadhi muda katika dakika kwa mchomeko.';
     $Self->{Translation}->{'Parameters for the dashboard backend of the slave tickets overview of the agent interface. "Limit" is the number of entries shown by default. "Group" is used to restrict the access to the plugin (e. g. Group: admin;group1;group2;). "Default" determines if the plugin is enabled by default or if the user needs to enable it manually. "CacheTTLLocal" is the cache time in minutes for the plugin.'} =
@@ -82,8 +103,8 @@ sub Data {
         'Inaonyesha kichwa cha habari katika skrini ya tiketi mkuumtumwa ya tiketi iliyokuzwa katika kiolesura cha wakala.';
     $Self->{Translation}->{'Specifies the different article types where the real name from Master ticket will be replaced with the one in the Slave ticket.'} =
         'Inabainisha aina mbalimbali za makala ambazo majina yake ya ukweli kutoka tiketi kuu yatabadilishwa na mojawapo katika tiketi tumwa.';
-    $Self->{Translation}->{'This module is preparing master/slave pulldown in email and phone ticket.'} =
-        'Hiki kipimo kinaandaa kuvutwa chini kwa mkuu/mtumwa katika barua pepe na tiketi za simu.';
+    $Self->{Translation}->{'This module activates Master/Slave field in new email and phone ticket screens.'} =
+        '';
 
 }
 

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-10-07 03:44+0000\n"
+"PO-Revision-Date: 2015-10-07 18:52+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Russian (http://www.transifex.com/otrs/OTRS/language/ru/)\n"
 "MIME-Version: 1.0\n"
@@ -14,13 +14,73 @@ msgstr ""
 "Language: ru\n"
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
 
-#. Template: AgentTicketBulk
-msgid "MasterTicket"
-msgstr "Главная заявка"
+#. Template: AgentTicketMasterSlave
+msgid "Change Free Text of Ticket"
+msgstr "Изменить свободный текст заявки"
+
+#. Template: AgentTicketMasterSlave
+msgid "Change Owner of Ticket"
+msgstr "Изменить владельца заявки"
+
+#. Template: AgentTicketMasterSlave
+msgid "Close Ticket"
+msgstr "Закрыть заявку"
+
+#. Template: AgentTicketMasterSlave
+msgid "Add Note to Ticket"
+msgstr "Добавить заметку к заявке"
+
+#. Template: AgentTicketMasterSlave
+msgid "Set Pending"
+msgstr "Поставить в ожидание"
+
+#. Template: AgentTicketMasterSlave
+msgid "Change Priority of Ticket"
+msgstr "Изменить приоритет заявки"
+
+#. Template: AgentTicketMasterSlave
+msgid "Change Responsible of Ticket"
+msgstr "Изменить ответственного заявки"
 
 #. Template: AgentTicketMasterSlave
 msgid "Manage Master/Slave"
 msgstr "Управление Master/Slave"
+
+#. Template: AgentTicketMasterSlave
+msgid "Set Master/Slave Value"
+msgstr ""
+
+#. Template: AgentTicketMasterSlave
+msgid "Inform Agent"
+msgstr "Уведомить агента"
+
+#. Template: AgentTicketMasterSlave
+msgid "Optional"
+msgstr "Необязательно"
+
+#. Template: AgentTicketMasterSlave
+msgid "Inform involved Agents"
+msgstr "Уведомить участвующих агентов"
+
+#. Template: AgentTicketMasterSlave
+msgid "Note will be (also) received by:"
+msgstr "Сообщение будет (также) получено:"
+
+#. Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
+msgid "New Master Ticket"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
+msgid "Unset Master Ticket"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
+msgid "Unset Slave Ticket"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
+msgid "Slave of Ticket#"
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -105,6 +165,18 @@ msgstr ""
 
 #. SysConfig
 msgid ""
+"Enable the feature to keep parent-child link after change of the MasterSlave"
+" state in the advanced MasterSlave mode."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Enable the feature to keep parent-child link after unset of the MasterSlave "
+"state in the advanced MasterSlave mode."
+msgstr ""
+
+#. SysConfig
+msgid ""
 "Enable the feature to unset the MasterSlave state of a ticket in the "
 "advanced MasterSlave mode."
 msgstr "Задает возможность сбросить установленное состояние MasterSlave заявки в расширенном режиме."
@@ -114,6 +186,14 @@ msgid ""
 "If a note is added by an agent, sets the state of the ticket in the ticket "
 "MasterSlave screen of a zoomed ticket in the agent interface."
 msgstr "Если сообщение/заметка добавлена агентом, задает состояние заявки на экране MasterSlave  в интерфейсе агента."
+
+#. SysConfig
+msgid "Master / Slave"
+msgstr ""
+
+#. SysConfig
+msgid "MasterSlave module for Ticket Bulk feature."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -220,5 +300,6 @@ msgstr "Задает различные типы сообщений/замето
 
 #. SysConfig
 msgid ""
-"This module is preparing master/slave pulldown in email and phone ticket."
-msgstr "Этот модуль включает возможность выбора master/slave опции на экране создания заявки, на основе телефонного звонка или письма клиента агентом."
+"This module activates Master/Slave field in new email and phone ticket "
+"screens."
+msgstr ""

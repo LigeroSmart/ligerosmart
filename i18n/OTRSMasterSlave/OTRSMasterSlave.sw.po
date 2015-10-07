@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-10-07 03:44+0000\n"
+"PO-Revision-Date: 2015-10-07 18:52+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Swahili (http://www.transifex.com/otrs/OTRS/language/sw/)\n"
 "MIME-Version: 1.0\n"
@@ -15,13 +15,73 @@ msgstr ""
 "Language: sw\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#. Template: AgentTicketBulk
-msgid "MasterTicket"
-msgstr "Tiketi kuu"
+#. Template: AgentTicketMasterSlave
+msgid "Change Free Text of Ticket"
+msgstr "Badili matini huru kwa ajili ya tiketi"
+
+#. Template: AgentTicketMasterSlave
+msgid "Change Owner of Ticket"
+msgstr "Badili mmiliki wa tiketi"
+
+#. Template: AgentTicketMasterSlave
+msgid "Close Ticket"
+msgstr "Funga tiketi"
+
+#. Template: AgentTicketMasterSlave
+msgid "Add Note to Ticket"
+msgstr "Ongeza kidokezo katika tiketi "
+
+#. Template: AgentTicketMasterSlave
+msgid "Set Pending"
+msgstr "Weka kusubiri"
+
+#. Template: AgentTicketMasterSlave
+msgid "Change Priority of Ticket"
+msgstr "Badili kipaumbele cha tiketi."
+
+#. Template: AgentTicketMasterSlave
+msgid "Change Responsible of Ticket"
+msgstr "Badili uhusika wa tiketi."
 
 #. Template: AgentTicketMasterSlave
 msgid "Manage Master/Slave"
 msgstr "Simamia Mkuu/mtumwa"
+
+#. Template: AgentTicketMasterSlave
+msgid "Set Master/Slave Value"
+msgstr ""
+
+#. Template: AgentTicketMasterSlave
+msgid "Inform Agent"
+msgstr "Mtaarifu wakala"
+
+#. Template: AgentTicketMasterSlave
+msgid "Optional"
+msgstr "Ya hiari"
+
+#. Template: AgentTicketMasterSlave
+msgid "Inform involved Agents"
+msgstr "Taarifu mawakala wanaohusika"
+
+#. Template: AgentTicketMasterSlave
+msgid "Note will be (also) received by:"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
+msgid "New Master Ticket"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
+msgid "Unset Master Ticket"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
+msgid "Unset Slave Ticket"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
+msgid "Slave of Ticket#"
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -106,6 +166,18 @@ msgstr ""
 
 #. SysConfig
 msgid ""
+"Enable the feature to keep parent-child link after change of the MasterSlave"
+" state in the advanced MasterSlave mode."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Enable the feature to keep parent-child link after unset of the MasterSlave "
+"state in the advanced MasterSlave mode."
+msgstr ""
+
+#. SysConfig
+msgid ""
 "Enable the feature to unset the MasterSlave state of a ticket in the "
 "advanced MasterSlave mode."
 msgstr "Wezesha kipengele ambacho hakitoweka hali ya mkuumtumwa ya tiketi katika hali ya juu ya mkuumtumwa."
@@ -115,6 +187,14 @@ msgid ""
 "If a note is added by an agent, sets the state of the ticket in the ticket "
 "MasterSlave screen of a zoomed ticket in the agent interface."
 msgstr "Kama kidokezo kimeongezwa na wakala, inaweka hali ya tiketi katika skrini ya mkuumtumwa ya tiketi ya tiketi iliyokuzwa katika kiolesura cha wakala."
+
+#. SysConfig
+msgid "Master / Slave"
+msgstr ""
+
+#. SysConfig
+msgid "MasterSlave module for Ticket Bulk feature."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -221,5 +301,6 @@ msgstr "Inabainisha aina mbalimbali za makala ambazo majina yake ya ukweli kutok
 
 #. SysConfig
 msgid ""
-"This module is preparing master/slave pulldown in email and phone ticket."
-msgstr "Hiki kipimo kinaandaa kuvutwa chini kwa mkuu/mtumwa katika barua pepe na tiketi za simu."
+"This module activates Master/Slave field in new email and phone ticket "
+"screens."
+msgstr ""
