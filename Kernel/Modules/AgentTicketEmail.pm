@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2015 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/50b6fe3ac88506d889d74b4aa892e420e53fcd0c/Kernel/Modules/AgentTicketEmail.pm
+# $origin: https://github.com/OTRS/otrs/blob/06e2c63e16f31e3b6ed26ce6349eb408d568ca67/Kernel/Modules/AgentTicketEmail.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -36,6 +36,14 @@ sub new {
         FieldFilter => $Config->{DynamicField} || {},
     );
 
+    # get form id
+    $Self->{FormID} = $Kernel::OM->Get('Kernel::System::Web::Request')->GetParam( Param => 'FormID' );
+
+    # create form id
+    if ( !$Self->{FormID} ) {
+        $Self->{FormID} = $Kernel::OM->Get('Kernel::System::Web::UploadCache')->FormIDCreate();
+    }
+
     return $Self;
 }
 
@@ -56,16 +64,8 @@ sub Run {
     # get param object
     my $ParamObject = $Kernel::OM->Get('Kernel::System::Web::Request');
 
-    # get form id
-    my $FormID = $ParamObject->GetParam( Param => 'FormID' );
-
     # get upload cache object
     my $UploadCacheObject = $Kernel::OM->Get('Kernel::System::Web::UploadCache');
-
-    # create form id
-    if ( !$FormID ) {
-        $FormID = $UploadCacheObject->FormIDCreate();
-    }
 
     # get needed objects
     my $TicketObject = $Kernel::OM->Get('Kernel::System::Ticket');
@@ -793,7 +793,7 @@ sub Run {
             next COUNT if !$Delete;
             $Error{AttachmentDelete} = 1;
             $UploadCacheObject->FormIDRemoveFile(
-                FormID => $FormID,
+                FormID => $Self->{FormID},
                 FileID => $Count,
             );
             $IsUpload = 1;
@@ -808,7 +808,7 @@ sub Run {
                 Param => 'FileUpload',
             );
             $UploadCacheObject->FormIDAddFile(
-                FormID      => $FormID,
+                FormID      => $Self->{FormID},
                 Disposition => 'attachment',
                 %UploadStuff,
             );
@@ -908,7 +908,7 @@ sub Run {
 
         # get all attachments meta data
         my @Attachments = $UploadCacheObject->FormIDGetAllFilesMeta(
-            FormID => $FormID,
+            FormID => $Self->{FormID},
         );
 
         # get customer user object
@@ -1330,7 +1330,7 @@ sub Run {
 
         # get pre loaded attachment
         @Attachments = $UploadCacheObject->FormIDGetAllFilesData(
-            FormID => $FormID,
+            FormID => $Self->{FormID},
         );
 
         # get submit attachment
@@ -1447,7 +1447,7 @@ sub Run {
         }
 
         # remove pre-submitted attachments
-        $UploadCacheObject->FormIDRemove( FormID => $FormID );
+        $UploadCacheObject->FormIDRemove( FormID => $Self->{FormID} );
 
         # set owner (if new user id is given)
         if ($NewUserID) {
@@ -1521,7 +1521,7 @@ sub Run {
             # get the temporarily links
             my $TempLinkList = $Kernel::OM->Get('Kernel::System::LinkObject')->LinkList(
                 Object => 'Ticket',
-                Key    => $FormID,
+                Key    => $Self->{FormID},
                 State  => 'Temporary',
                 UserID => $Self->{UserID},
             );
@@ -1545,7 +1545,7 @@ sub Run {
                                 # delete the temp link
                                 $Kernel::OM->Get('Kernel::System::LinkObject')->LinkDelete(
                                     Object1 => 'Ticket',
-                                    Key1    => $FormID,
+                                    Key1    => $Self->{FormID},
                                     Object2 => $TargetObjectOrg,
                                     Key2    => $TargetKeyOrg,
                                     Type    => $Type,
@@ -1791,7 +1791,7 @@ sub Run {
 
             # remove all attachments from the Upload cache
             my $RemoveSuccess = $UploadCacheObject->FormIDRemove(
-                FormID => $FormID,
+                FormID => $Self->{FormID},
             );
             if ( !$RemoveSuccess ) {
                 $Kernel::OM->Get('Kernel::System::Log')->Log(
@@ -1820,7 +1820,7 @@ sub Run {
                 for ( sort keys %AllStdAttachments ) {
                     my %AttachmentsData = $StdAttachmentObject->StdAttachmentGet( ID => $_ );
                     $UploadCacheObject->FormIDAddFile(
-                        FormID      => $FormID,
+                        FormID      => $Self->{FormID},
                         Disposition => 'attachment',
                         %AttachmentsData,
                     );
@@ -1829,7 +1829,7 @@ sub Run {
                 # send a list of attachments in the upload cache back to the clientside JavaScript
                 # which renders then the list of currently uploaded attachments
                 @TicketAttachments = $UploadCacheObject->FormIDGetAllFilesMeta(
-                    FormID => $FormID,
+                    FormID => $Self->{FormID},
                 );
             }
 
@@ -2340,15 +2340,7 @@ sub _GetStandardTemplates {
 sub _MaskEmailNew {
     my ( $Self, %Param ) = @_;
 
-    # get form id
-    my $FormID = $Kernel::OM->Get('Kernel::System::Web::Request')->GetParam( Param => 'FormID' );
-
-    # create form id
-    if ( !$FormID ) {
-        $FormID = $Kernel::OM->Get('Kernel::System::Web::UploadCache')->FormIDCreate();
-    }
-
-    $Param{FormID} = $FormID;
+    $Param{FormID} = $Self->{FormID};
 
     # get config object
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');

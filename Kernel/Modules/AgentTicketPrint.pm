@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2015 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/50b6fe3ac88506d889d74b4aa892e420e53fcd0c/Kernel/Modules/AgentTicketPrint.pm
+# $origin: https://github.com/OTRS/otrs/blob/06e2c63e16f31e3b6ed26ce6349eb408d568ca67/Kernel/Modules/AgentTicketPrint.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -468,6 +468,15 @@ sub _PDFOutputTicketInfos {
             ),
         },
     ];
+
+    # show created by if different then User ID 1
+    if ( $Ticket{CreateBy} > 1 ) {
+        my $Row = {
+            Key   => $LayoutObject->{LanguageObject}->Translate('Created by'),
+            Value => $Kernel::OM->Get('Kernel::System::User')->UserName( UserID => $Ticket{CreateBy} ),
+        };
+        push( @{$TableRight}, $Row );
+    }
 
     if ( $ConfigObject->Get('Ticket::Frontend::AccountTime') ) {
         my $Row = {

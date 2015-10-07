@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2015 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/50b6fe3ac88506d889d74b4aa892e420e53fcd0c/Kernel/Modules/AgentTicketZoom.pm
+# $origin: https://github.com/OTRS/otrs/blob/06e2c63e16f31e3b6ed26ce6349eb408d568ca67/Kernel/Modules/AgentTicketZoom.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -137,6 +137,7 @@ sub new {
         AddNote                         => 'Note Added',
         AddNoteCustomer                 => 'Note Added (Customer)',
         EmailAgent                      => 'Outgoing Email',
+        EmailAgentInternal              => 'Outgoing Email (internal)',
         EmailCustomer                   => 'Incoming Customer Email',
         TicketDynamicFieldUpdate        => 'Dynamic Field Updated',
         PhoneCallAgent                  => 'Outgoing Phone Call',
@@ -2313,6 +2314,7 @@ sub _ArticleTree {
         my @TypesInternal = qw(
             AddNote
             ChatInternal
+            EmailAgentInternal
         );
 
         # outgoing types
@@ -2411,6 +2413,18 @@ sub _ArticleTree {
                 # We fake a custom history type because external notes from customers still
                 # have the history type 'AddNote' which does not allow for distinguishing.
                 $Item->{HistoryType} = 'AddNoteCustomer';
+            }
+
+            # special treatment for internal emails
+            elsif (
+                $Item->{ArticleID}
+                && $Item->{HistoryType} eq 'EmailAgent'
+                && IsHashRefWithData( $ArticlesByArticleID->{ $Item->{ArticleID} } )
+                && $ArticlesByArticleID->{ $Item->{ArticleID} }->{ArticleType} eq 'email-internal'
+                )
+            {
+                $Item->{Class}       = 'TypeNoteInternal';
+                $Item->{HistoryType} = 'EmailAgentInternal';
             }
 
             # special treatment for certain types, e.g. external notes from customers

@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2015 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/50b6fe3ac88506d889d74b4aa892e420e53fcd0c/Kernel/Output/HTML/Templates/Standard/CustomerTicketZoom.tt
+# $origin: https://github.com/OTRS/otrs/blob/06e2c63e16f31e3b6ed26ce6349eb408d568ca67/Kernel/Output/HTML/Templates/Standard/CustomerTicketZoom.tt
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -44,7 +44,7 @@
 
 [% RenderBlockStart("Expand") %]
                 <li>
-                    <a href="[% Env("Baselink") %]Action=CustomerTicketZoom;TicketID=[% Data.TicketID | uri %];ZoomExpand=[% Data.ZoomExpand | uri %]" class="ZoomExpand Expand[% Data.ExpandOption %]"} title="[% Translate(Data.ExpandText) | html %]">
+                    <a href="[% Env("Baselink") %]Action=CustomerTicketZoom;TicketID=[% Data.TicketID | uri %];ZoomExpand=[% Data.ZoomExpand | uri %]" class="ZoomExpand Expand[% Data.ExpandOption %]" title="[% Translate(Data.ExpandText) | html %]">
                         <i class="fa fa-bars"></i>
                         <i class="fa fa-minus"></i>
                         <span>[% Translate(Data.ExpandText) | html %]</span>
