@@ -79,6 +79,7 @@ sub new {
                 Priority => 'error',
                 Message  => "Can't load Clone DB backend module for DBMS $DBType!",
             );
+
             return;
         }
 
@@ -102,6 +103,7 @@ sub new {
                 Priority => 'error',
                 Message  => "Couldn't create a backend object for DBMS $DBType!",
             );
+
             return;
         }
 
@@ -129,8 +131,9 @@ sub CreateTargetDBConnection {
     if ( !$Param{TargetDBSettings} ) {
         $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
-            Message  => "Need TargetDBSettings!"
+            Message  => "Need TargetDBSettings!",
         );
+
         return;
     }
 
@@ -142,8 +145,9 @@ sub CreateTargetDBConnection {
         if ( !$Param{TargetDBSettings}->{$Needed} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
-                Message  => "Need $Needed in TargetDBSettings!"
+                Message  => "Need $Needed in TargetDBSettings!",
             );
+
             return;
         }
     }
@@ -154,8 +158,9 @@ sub CreateTargetDBConnection {
     if ( !$Self->{$CloneDBBackend} ) {
         $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
-            Message  => "Backend $Param{TargetDBSettings}->{TargetDatabaseType} is invalid!"
+            Message  => "Backend $Param{TargetDBSettings}->{TargetDatabaseType} is invalid!",
         );
+
         return;
     }
 
@@ -184,8 +189,9 @@ sub DataTransfer {
     if ( !$Param{TargetDBObject} ) {
         $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
-            Message  => "Need TargetDBObject!"
+            Message  => "Need TargetDBObject!",
         );
+
         return;
     }
 
@@ -195,8 +201,9 @@ sub DataTransfer {
     if ( !$Self->{$SourceDBBackend} ) {
         $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
-            Message  => "Backend " . $Kernel::OM->Get('Kernel::System::DB')->{'DB::Type'} . " is invalid!"
+            Message  => "Backend " . $Kernel::OM->Get('Kernel::System::DB')->{'DB::Type'} . " is invalid!",
         );
+
         return;
     }
 
@@ -206,8 +213,9 @@ sub DataTransfer {
     if ( !$Self->{$TargetDBBackend} ) {
         $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
-            Message  => "Backend $Param{TargetDBObject}->{'DB::Type'} is invalid!"
+            Message  => "Backend $Param{TargetDBObject}->{'DB::Type'} is invalid!",
         );
+
         return;
     }
 
@@ -239,8 +247,9 @@ sub SanityChecks {
     if ( !$Param{TargetDBObject} ) {
         $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
-            Message  => "Need TargetDBObject!"
+            Message  => "Need TargetDBObject!",
         );
+
         return;
     }
 
@@ -250,8 +259,9 @@ sub SanityChecks {
     if ( !$Self->{$CloneDBBackend} ) {
         $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
-            Message  => "Backend " . $Kernel::OM->Get('Kernel::System::DB')->{'DB::Type'} . " is invalid!"
+            Message  => "Backend " . $Kernel::OM->Get('Kernel::System::DB')->{'DB::Type'} . " is invalid!",
         );
+
         return;
     }
 
@@ -272,8 +282,9 @@ sub _GenerateTargetStructuresSQL {
     if ( !$Param{TargetDBObject} ) {
         $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
-            Message  => "Need TargetDBObject!"
+            Message  => "Need TargetDBObject!",
         );
+
         return;
     }
 
@@ -391,7 +402,7 @@ sub PopulateTargetStructuresPre {
     if ( !$Param{TargetDBObject} ) {
         $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
-            Message  => "Need TargetDBObject!"
+            Message  => "Need TargetDBObject!",
         );
         return;
     }
@@ -424,7 +435,7 @@ sub PopulateTargetStructuresPost {
         if ( !$Param{$Needed} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
-                Message  => "Need $Needed!"
+                Message  => "Need $Needed!",
             );
             return;
         }
@@ -446,7 +457,7 @@ sub PopulateTargetStructuresPost {
     return 1;
 }
 
-sub PrintWithTime {
+sub PrintWithTime {    ## no critic
     my $Self = shift;
 
     # get time object
@@ -457,6 +468,8 @@ sub PrintWithTime {
     );
 
     print "[$TimeStamp] ", @_;
+
+    return 1;
 }
 
 =back

@@ -50,8 +50,9 @@ sub CreateTargetDBConnection {
         if ( !$Param{$Needed} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
-                Message  => "Need $Needed for external DB settings!"
+                Message  => "Need $Needed for external DB settings!",
             );
+
             return;
         }
     }
@@ -77,8 +78,9 @@ sub CreateTargetDBConnection {
     if ( !$TargetDBObject ) {
         $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
-            Message  => "Could not connect to target DB!"
+            Message  => "Could not connect to target DB!",
         );
+
         return;
     }
 
@@ -95,8 +97,9 @@ sub TablesList {
     if ( !$Param{DBObject} ) {
         $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
-            Message  => "Need DBObject!"
+            Message  => "Need DBObject!",
         );
+
         return;
     }
 
@@ -104,13 +107,14 @@ sub TablesList {
         SQL => "
             SELECT table_name
             FROM user_tables
-            ORDER BY table_name ASC"
+            ORDER BY table_name ASC",
     ) || die @!;
 
     my @Result;
     while ( my @Row = $Param{DBObject}->FetchrowArray() ) {
         push @Result, $Row[0];
     }
+
     return @Result;
 }
 
@@ -127,6 +131,7 @@ sub ColumnsList {
                 Priority => 'error',
                 Message  => "Need $Needed!"
             );
+
             return;
         }
     }
@@ -144,6 +149,7 @@ sub ColumnsList {
     while ( my @Row = $Param{DBObject}->FetchrowArray() ) {
         push @Result, $Row[0];
     }
+
     return @Result;
 }
 
@@ -158,8 +164,9 @@ sub ResetAutoIncrementField {
         if ( !$Param{$Needed} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
-                Message  => "Need $Needed!"
+                Message  => "Need $Needed!",
             );
+
             return;
         }
     }

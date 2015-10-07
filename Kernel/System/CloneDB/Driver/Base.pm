@@ -85,7 +85,7 @@ sub SanityChecks {
     if ( !$Param{TargetDBObject} ) {
         $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
-            Message  => "Need TargetDBObject!"
+            Message  => "Need TargetDBObject!",
         );
         return;
     }
@@ -97,7 +97,7 @@ sub SanityChecks {
     if ( $SourceDBObject->{DSN} eq $Param{TargetDBObject}->{DSN} ) {
         $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
-            Message  => "Source and target database DSN are the same!"
+            Message  => "Source and target database DSN are the same!",
         );
         return;
     }
@@ -129,7 +129,7 @@ sub SanityChecks {
         if ( !defined $TargetRowCount ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
-                Message  => "Required table '$Table' does not seem to exist in the target database!"
+                Message  => "Required table '$Table' does not seem to exist in the target database!",
             );
             return;
         }
@@ -138,7 +138,7 @@ sub SanityChecks {
         if ( $TargetRowCount > 0 ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
-                Message  => "Table '$Table' in the target database already contains data!"
+                Message  => "Table '$Table' in the target database already contains data!",
             );
             return;
         }
@@ -158,7 +158,7 @@ sub RowCount {
         if ( !$Param{$Needed} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
-                Message  => "Need $Needed!"
+                Message  => "Need $Needed!",
             );
             return;
         }
@@ -189,7 +189,7 @@ sub DataTransfer {
         if ( !$Param{$Needed} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
-                Message  => "Need $Needed!"
+                Message  => "Need $Needed!",
             );
             return;
         }
@@ -198,7 +198,7 @@ sub DataTransfer {
     # get config object
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
-    # get logfile location
+    # get log file location
     my $LogFile = $ConfigObject->Get('CloneDB::LogFile');
 
     # file handle
@@ -227,7 +227,7 @@ sub DataTransfer {
             $Self->PrintWithTime("Checking table $Table...\n") if $Param{DryRun};
         }
         else {
-            $Self->PrintWithTime("Converting table $Table...\n")
+            $Self->PrintWithTime("Converting table $Table...\n");
         }
 
         # Get the list of columns of this table to be able to
@@ -304,21 +304,22 @@ sub DataTransfer {
                         .
                         " $ColumnValue is replaced by : $TmpResult . \n\n";
 
-                    # open logfile
+                    # open log file
                     if ( !open $FH, '>>', $LogFile ) {    ## no critic
 
                         # print write error
                         print STDERR "\n Can't write $LogFile: $! \n";
+
                         return;
                     }
 
-                    # switch filehandle to utf8 mode if utf-8 is used
+                    # switch file handle to utf8 mode if utf-8 is used
                     binmode $FH, ':utf8';                 ## no critic
 
                     # write on log file
                     print $FH $ReplacementMessage;
 
-                    # close the filehandle
+                    # close the file handle
                     close $FH;
 
                     # set new vale on Row result from DB
@@ -409,7 +410,7 @@ sub DataTransfer {
     return 1;
 }
 
-sub PrintWithTime {
+sub PrintWithTime {    ## no critic
     my $Self = shift;
 
     my $TimeStamp = $Kernel::OM->Get('Kernel::System::Time')->SystemTime2TimeStamp(
@@ -417,6 +418,8 @@ sub PrintWithTime {
     );
 
     print "[$TimeStamp] ", @_;
+
+    return 1;
 }
 
 1;
