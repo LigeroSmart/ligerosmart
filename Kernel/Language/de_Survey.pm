@@ -31,7 +31,7 @@ sub Data {
     $Self->{Translation}->{'Checkbox (List)'} = 'Kontrollkästchen (Liste)';
     $Self->{Translation}->{'Radio'} = 'Optionsschalter';
     $Self->{Translation}->{'Radio (List)'} = 'Optionsschalter (Liste)';
-    $Self->{Translation}->{'Stats Overview'} = 'Statistik Übersicht';
+    $Self->{Translation}->{'Stats Overview'} = 'Statistikübersicht';
     $Self->{Translation}->{'Survey Description'} = 'Umfrage Beschreibung';
     $Self->{Translation}->{'Survey Introduction'} = 'Umfrage Einleitung';
     $Self->{Translation}->{'Yes/No'} = 'Ja/Nein';
@@ -167,10 +167,10 @@ sub Data {
     $Self->{Translation}->{'Shows a link in the menu to zoom into the survey statistics details in its zoom view of the agent interface.'} =
         'Zeigt einen Link im Menü in Zoom-Ansicht der Agenten-Oberfläche an, mit dem die Details einer Umfrage angezeigt werden können.';
     $Self->{Translation}->{'Survey Edit Module.'} = 'Umfrage bearbeiten';
-    $Self->{Translation}->{'Survey Overview "Small" Limit'} = 'Umfrageübersicht Limit';
+    $Self->{Translation}->{'Survey Overview "Small" Limit'} = 'Umfrageübersicht "Kleines" Limit';
     $Self->{Translation}->{'Survey Stats Module.'} = 'Umfragestatistikmodul.';
     $Self->{Translation}->{'Survey Zoom Module.'} = 'Umfragedetailansichtmodul.';
-    $Self->{Translation}->{'Survey limit per page for Survey Overview "Small"'} = 'Umfrage-Limit pro Seite in der Umfrageübersicht';
+    $Self->{Translation}->{'Survey limit per page for Survey Overview "Small"'} = 'Umfragelimit pro Seite in der "kleinen" Umfrageübersicht';
     $Self->{Translation}->{'Surveys will not be sent to the configured email addresses.'} = 'Umfragen werden nicht an die konfigurierten E-Mail-Adressen gesendet.';
     $Self->{Translation}->{'The identifier for a survey, e.g. Survey#, MySurvey#. The default is Survey#.'} =
         'Die eindeutige Bezeichnung für eine Umfrage, z. B. Survey# oder MySurvey#. Standard ist Survey#.';
