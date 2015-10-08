@@ -94,10 +94,10 @@ $Selenium->RunTest(
         $Selenium->execute_script(
             "\$('#DynamicField_MasterSlave').val('Master').trigger('redraw.InputField').trigger('change');"
         );
-        $Selenium->find_element("//button[\@id='submitRichText'][\@type='submit']")->click();
+        $Selenium->find_element( "#Subject", 'css' )->submit();
 
         # Wait until form has loaded, if necessary
-        $Selenium->WaitFor( JavaScript => 'return $("form").length' );
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("form").length' );
 
         # get ticket object
         my $TicketObject = $Kernel::OM->Get('Kernel::System::Ticket');
@@ -132,10 +132,10 @@ $Selenium->RunTest(
         $Selenium->execute_script(
             "\$('#DynamicField_MasterSlave').val('SlaveOf:$MasterTicketNumber').trigger('redraw.InputField').trigger('change');"
         );
-        $Selenium->find_element("//button[\@id='submitRichText'][\@type='submit']")->click();
+        $Selenium->find_element( "#Subject", 'css' )->submit();
 
         # Wait until form has loaded, if necessary
-        $Selenium->WaitFor( JavaScript => 'return $("form").length' );
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("form").length' );
 
         # get slave test email ticket data
         my ( $SlaveTicketID, $SlaveTicketNumber ) = $TicketObject->TicketSearch(
