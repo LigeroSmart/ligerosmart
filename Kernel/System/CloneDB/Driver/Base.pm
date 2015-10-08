@@ -64,7 +64,9 @@ sub new {
         qw(BlobColumns CheckEncodingColumns)
         )
     {
-        die "Got no $Needed!" if !$Param{$Needed};
+        if ( !$Param{$Needed} ) {
+            die "Got no $Needed!";
+        }
 
         $Self->{$Needed} = $Param{$Needed};
     }
@@ -224,7 +226,7 @@ sub DataTransfer {
         }
 
         if ( $Param{DryRun} ) {
-            $Self->PrintWithTime("Checking table $Table...\n") if $Param{DryRun};
+            $Self->PrintWithTime("Checking table $Table...\n");
         }
         else {
             $Self->PrintWithTime("Converting table $Table...\n");
@@ -370,7 +372,9 @@ sub DataTransfer {
             }
             my @Bind = map { \$_ } @Row;
 
-            print "    Inserting $Counter of $RowCount\n" if $Counter % 1000 == 0;
+            if ( $Counter % 1000 == 0 ) {
+                print "    Inserting $Counter of $RowCount\n";
+            }
 
             my $Success = $Param{TargetDBObject}->Do(
                 SQL  => $SQL,

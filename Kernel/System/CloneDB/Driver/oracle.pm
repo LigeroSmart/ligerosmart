@@ -58,10 +58,14 @@ sub CreateTargetDBConnection {
     }
 
     # set default sid
-    $Param{TargetDatabaseSID} = 'XE' if !defined $Param{TargetDatabaseSID};
+    if ( !defined $Param{TargetDatabaseSID} ) {
+        $Param{TargetDatabaseSID} = 'XE';
+    }
 
     # set default sid
-    $Param{TargetDatabasePort} = '1521' if !defined $Param{TargetDatabasePort};
+    if ( !defined $Param{TargetDatabasePort} ) {
+        $Param{TargetDatabasePort} = '1521';
+    }
 
     # include DSN for target DB
     $Param{TargetDatabaseDSN} =

@@ -58,7 +58,9 @@ sub CreateTargetDBConnection {
     }
 
     # set default driver
-    $Param{TargetDatabaseDriver} = 'SQL Server' if !defined $Param{TargetDatabaseDriver};
+    if ( !defined $Param{TargetDatabaseDriver} ) {
+        $Param{TargetDatabaseDriver} = 'SQL Server';
+    }
 
     # include DSN for target DB
     $Param{TargetDatabaseDSN} =
