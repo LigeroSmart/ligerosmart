@@ -32,14 +32,6 @@ EOF
     $Self->Description($Description);
 
     $Self->AddOption(
-        Name        => 'clone',
-        Description => "Clone the data into the target database.",
-        Required    => 0,
-        HasValue    => 0,
-        ValueRegex  => qr/.*/smx,
-    );
-
-    $Self->AddOption(
         Name        => 'force',
         Description => "Continue even if there are errors while writing the data.",
         Required    => 0,
@@ -60,11 +52,6 @@ EOF
 
 sub PreRun {
     my ( $Self, %Param ) = @_;
-
-    # check for at least a valid option
-    if ( !$Self->GetOption('clone') && !$Self->GetOption('dry-run') ) {
-        die "clone or dry-run options are needed. \n";
-    }
 
     my $SourceDBObject = $Kernel::OM->Get('Kernel::System::DB')
         || die "Could not connect to source DB";
@@ -94,7 +81,6 @@ sub Run {
     $Self->Print("<yellow>Meaningful start message...</yellow>\n");
 
     my %Options;
-    $Options{'clone'}   = $Self->GetOption('clone');
     $Options{'force'}   = $Self->GetOption('force');
     $Options{'dry-run'} = $Self->GetOption('dry-run');
 
@@ -104,39 +90,37 @@ sub Run {
     # get clone DB object
     my $CloneDBBackendObject = $Kernel::OM->Get('Kernel::System::CloneDB::Backend');
 
-    if ( defined $Options{clone} || defined $Options{'dry-run'} ) {
-        if ( !defined $Options{'dry-run'} ) {
-            $CloneDBBackendObject->PopulateTargetStructuresPre(
-                TargetDBObject => $TargetDBObject,
-            );
-        }
+    if ( !defined $Options{'dry-run'} ) {
+        $CloneDBBackendObject->PopulateTargetStructuresPre(
+            TargetDBObject => $TargetDBObject,
+        );
+    }
 
-        my $SanityResult = $CloneDBBackendObject->SanityChecks(
+    my $SanityResult = $CloneDBBackendObject->SanityChecks(
+        TargetDBObject => $TargetDBObject,
+        DryRun         => $Options{'dry-run'} || '',
+    );
+    if ($SanityResult) {
+        my $DataTransferResult = $CloneDBBackendObject->DataTransfer(
             TargetDBObject => $TargetDBObject,
             DryRun         => $Options{'dry-run'} || '',
+            Force          => $Options{'force'} || '',
         );
-        if ($SanityResult) {
-            my $DataTransferResult = $CloneDBBackendObject->DataTransfer(
-                TargetDBObject => $TargetDBObject,
-                DryRun         => $Options{'dry-run'} || '',
-                Force          => $Options{force} || '',
-            );
 
-            if ( !$DataTransferResult ) {
-                $Self->Print("Was not possible to complete the data transfer. \n");
-                return $Self->ExitCodeError();
-            }
-
-            if ( $DataTransferResult eq 2 ) {
-                $Self->Print("Dry run successfully finished.\n");
-            }
+        if ( !$DataTransferResult ) {
+            $Self->Print("Was not possible to complete the data transfer. \n");
+            return $Self->ExitCodeError();
         }
 
-        if ( !defined $Options{'dry-run'} ) {
-            $CloneDBBackendObject->PopulateTargetStructuresPost(
-                TargetDBObject => $TargetDBObject,
-            );
+        if ( $DataTransferResult eq 2 ) {
+            $Self->Print("Dry run successfully finished.\n");
         }
+    }
+
+    if ( !defined $Options{'dry-run'} ) {
+        $CloneDBBackendObject->PopulateTargetStructuresPost(
+            TargetDBObject => $TargetDBObject,
+        );
     }
 
     $Self->Print("<green>Done.</green>\n");
