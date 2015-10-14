@@ -94,7 +94,8 @@ $Selenium->RunTest(
         $Selenium->execute_script(
             "\$('#DynamicField_MasterSlave').val('Master').trigger('redraw.InputField').trigger('change');"
         );
-        $Selenium->find_element( "#Subject", 'css' )->submit();
+        $Selenium->find_element( "#RichText", 'css' )->click();
+        $Selenium->find_element( "#Subject",  'css' )->submit();
 
         # Wait until form has loaded, if necessary
         $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("form").length' );
@@ -107,6 +108,17 @@ $Selenium->RunTest(
             Result         => 'HASH',
             Limit          => 1,
             CustomerUserID => $TestCustomerLoginPhone,
+        );
+
+        $Self->IsNot(
+            $MasterTicketID,
+            undef,
+            "Master TicketID should not be undef",
+        );
+        $Self->IsNot(
+            $MasterTicketNumber,
+            undef,
+            "Master TicketNumber should not be undef",
         );
 
         # add new test customer for testing
@@ -132,7 +144,8 @@ $Selenium->RunTest(
         $Selenium->execute_script(
             "\$('#DynamicField_MasterSlave').val('SlaveOf:$MasterTicketNumber').trigger('redraw.InputField').trigger('change');"
         );
-        $Selenium->find_element( "#Subject", 'css' )->submit();
+        $Selenium->find_element( "#RichText", 'css' )->click();
+        $Selenium->find_element( "#Subject",  'css' )->submit();
 
         # Wait until form has loaded, if necessary
         $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("form").length' );
@@ -144,8 +157,22 @@ $Selenium->RunTest(
             CustomerUserID => $TestCustomerLoginsEmail,
         );
 
+        $Self->IsNot(
+            $SlaveTicketID,
+            undef,
+            "Slave TicketID should not be undef",
+        );
+        $Self->IsNot(
+            $SlaveTicketNumber,
+            undef,
+            "Slave TicketNumber should not be undef",
+        );
+
         # navigate to ticket zoom page of created master test ticket
         $Selenium->get("${ScriptAlias}index.pl?Action=AgentTicketZoom;TicketID=$MasterTicketID");
+
+        # Wait until form has loaded, if necessary
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("form").length' );
 
         # verify master-slave ticket link
         $Self->True(
@@ -164,6 +191,9 @@ $Selenium->RunTest(
 
         # navigate to ticket zoom page of created slave test ticket
         $Selenium->get("${ScriptAlias}index.pl?Action=AgentTicketZoom;TicketID=$SlaveTicketID");
+
+        # Wait until form has loaded, if necessary
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("form").length' );
 
         # verify slave-master ticket link
         $Self->True(
