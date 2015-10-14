@@ -1,4 +1,6 @@
-#5.0.1 2015-??-??
+#5.0.2 2015-??-??
+
+#5.0.1 2015-10-20
  - 2015-10-13 Updated translation files, thanks to all translators.
 
 #5.0.0.beta1 2015-09-01
