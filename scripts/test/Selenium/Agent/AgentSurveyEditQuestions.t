@@ -99,6 +99,11 @@ $Selenium->RunTest(
         my $Success;
         for my $Questions (@Test) {
 
+            # wait until form has loaded, if necessary
+            $Selenium->WaitFor(
+                JavaScript => "return typeof(\$) === 'function' && \$('#AnswerRequired').length"
+            );
+
             # add question
             $Selenium->find_element( "#Question", 'css' )->send_keys( $Questions->{Name} );
             $Selenium->execute_script(
@@ -121,10 +126,25 @@ $Selenium->RunTest(
 
                 # click on test created question
                 $Selenium->find_element( $Questions->{Name}, 'link_text' )->click();
-                $Selenium->find_element( "#Answer",          'css' )->send_keys( $Questions->{Answer1} );
+
+                # wait until form has loaded, if necessary
+                $Selenium->WaitFor(
+                    JavaScript => "return typeof(\$) === 'function' && \$('#Answer').length"
+                );
+                $Selenium->find_element( "#Answer", 'css' )->send_keys( $Questions->{Answer1} );
                 $Selenium->find_element("//button[\@value='Add'][\@type='submit']")->click();
+
+                # wait until form has loaded, if necessary
+                $Selenium->WaitFor(
+                    JavaScript => "return typeof(\$) === 'function' && \$('#Answer').length"
+                );
                 $Selenium->find_element( "#Answer", 'css' )->send_keys( $Questions->{Answer2} );
                 $Selenium->find_element("//button[\@value='Add'][\@type='submit']")->click();
+
+                # wait until form has loaded, if necessary
+                $Selenium->WaitFor(
+                    JavaScript => "return typeof(\$) === 'function' && \$('#Answer').length"
+                );
 
                 # return back to add question screen
                 $Selenium->find_element("//button[\@value='Go back'][\@type='submit']")->click();
