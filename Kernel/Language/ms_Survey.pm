@@ -65,12 +65,12 @@ sub Data {
     $Self->{Translation}->{'Question'} = 'Soalan';
     $Self->{Translation}->{'Answer Required'} = 'Jawapan diperlukan';
     $Self->{Translation}->{'When you finish to edit the survey questions just close this screen.'} =
-        '';
+        'Apabila anda sudah selesai mengubah soalan kaji selidik hanya tutup skrin ini.';
     $Self->{Translation}->{'Do you really want to delete this question? ALL associated data will be LOST!'} =
         'Adakah anda benar-benar ingin memadam soalan ini? SEMUA data berkaitan akan HILANG!';
     $Self->{Translation}->{'Edit Question'} = 'Edit Soalan';
     $Self->{Translation}->{'go back to questions'} = 'kembali kepada soalan-soalan';
-    $Self->{Translation}->{'Question:'} = '';
+    $Self->{Translation}->{'Question:'} = 'Soalan:';
     $Self->{Translation}->{'Possible Answers For'} = 'Jawapan Kemungkinan Untuk';
     $Self->{Translation}->{'Add Answer'} = 'Tambah Jawab';
     $Self->{Translation}->{'No answers saved for this question.'} = 'Tiada jawapan yang disimpan untuk soalan ini.';
@@ -79,10 +79,10 @@ sub Data {
         'Ini tidak mempunyai beberapa jawapan, textarea akan dipaparkan.';
     $Self->{Translation}->{'Edit Answer'} = 'Edit Jawapan';
     $Self->{Translation}->{'go back to edit question'} = 'kembali untuk mengedit soalan';
-    $Self->{Translation}->{'Answer:'} = '';
+    $Self->{Translation}->{'Answer:'} = 'Jawapan:';
 
     # Template: AgentSurveyOverviewNavBar
-    $Self->{Translation}->{'Max. shown surveys per page'} = '';
+    $Self->{Translation}->{'Max. shown surveys per page'} = 'Maksimum soal selidik ditunjukkan setiap halaman';
 
     # Template: AgentSurveyOverviewSmall
     $Self->{Translation}->{'Notification Sender'} = 'Pemberitahuan Pengirim';
@@ -167,7 +167,7 @@ sub Data {
         'Menunjukkan pautan dalam menu untuk kembali ke paparan zum kaji selidik antara muka ejen.';
     $Self->{Translation}->{'Shows a link in the menu to zoom into the survey statistics details in its zoom view of the agent interface.'} =
         'Menunjukkan pautan dalam menu untuk zum maklumat statistik kaji selidik dalam paparan zum antara muka ejen.';
-    $Self->{Translation}->{'Survey Add Module.'} = '';
+    $Self->{Translation}->{'Survey Add Module.'} = 'Modul Tambah Soal Selidik';
     $Self->{Translation}->{'Survey Edit Module.'} = 'Kaji selidik suntingan modul';
     $Self->{Translation}->{'Survey Overview "Small" Limit'} = 'Ukur Tinjauan Had "Kecil"';
     $Self->{Translation}->{'Survey Stats Module.'} = 'Kaji selidik Modul Statistik';
@@ -178,7 +178,7 @@ sub Data {
         'Pengecam untuk kaji selidik, misalnya Penyiasatan # MySurvey #. Lalai adalah Penyiasatan#.';
     $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket is closed.'} =
         'Tiket modul acara untuk menghantar permintaan e-mel secara automatik kaji selidik kepada pelanggan jika tiket ditutup.';
-    $Self->{Translation}->{'Trigger sending delayed survey requests.'} = '';
+    $Self->{Translation}->{'Trigger sending delayed survey requests.'} = 'Pencetus menghantar permohonan soal selidik ditangguhkan';
     $Self->{Translation}->{'Zoom Into Statistics Details'} = 'Zum pada maklumat statistik';
 
 }

@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-10-07 18:36+0000\n"
-"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
+"PO-Revision-Date: 2015-10-09 03:38+0000\n"
+"Last-Translator: KENNY CHEAH <otrssdnbhd@gmail.com>\n"
 "Language-Team: Malay (http://www.transifex.com/otrs/OTRS/language/ms/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -184,7 +184,7 @@ msgstr "Jawapan diperlukan"
 
 #. Template: AgentSurveyEditQuestions
 msgid "When you finish to edit the survey questions just close this screen."
-msgstr ""
+msgstr "Apabila anda sudah selesai mengubah soalan kaji selidik hanya tutup skrin ini."
 
 #. Template: AgentSurveyEditQuestions
 msgid ""
@@ -202,7 +202,7 @@ msgstr "kembali kepada soalan-soalan"
 
 #. Template: AgentSurveyEditQuestions
 msgid "Question:"
-msgstr ""
+msgstr "Soalan:"
 
 #. Template: AgentSurveyEditQuestions
 msgid "Possible Answers For"
@@ -234,11 +234,11 @@ msgstr "kembali untuk mengedit soalan"
 
 #. Template: AgentSurveyEditQuestions
 msgid "Answer:"
-msgstr ""
+msgstr "Jawapan:"
 
 #. Template: AgentSurveyOverviewNavBar
 msgid "Max. shown surveys per page"
-msgstr ""
+msgstr "Maksimum soal selidik ditunjukkan setiap halaman"
 
 #. Template: AgentSurveyOverviewSmall
 msgid "Notification Sender"
@@ -475,7 +475,7 @@ msgstr "Menunjukkan pautan dalam menu untuk zum maklumat statistik kaji selidik 
 
 #. SysConfig
 msgid "Survey Add Module."
-msgstr ""
+msgstr "Modul Tambah Soal Selidik"
 
 #. SysConfig
 msgid "Survey Edit Module."
@@ -515,7 +515,7 @@ msgstr "Tiket modul acara untuk menghantar permintaan e-mel secara automatik kaj
 
 #. SysConfig
 msgid "Trigger sending delayed survey requests."
-msgstr ""
+msgstr "Pencetus menghantar permohonan soal selidik ditangguhkan"
 
 #. SysConfig
 msgid "Zoom Into Statistics Details"

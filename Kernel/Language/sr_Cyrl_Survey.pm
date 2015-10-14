@@ -23,7 +23,7 @@ sub Data {
     $Self->{Translation}->{'Question Edit'} = 'Уреди питање';
     $Self->{Translation}->{'Answer Edit'} = 'Уреди одговор';
     $Self->{Translation}->{'Can\'t set new status! No questions defined.'} = 'Не може се поставити нови статус! Нема дефинисаних питања.';
-    $Self->{Translation}->{'Status changed.'} = 'Статус промењен';
+    $Self->{Translation}->{'Status changed.'} = 'Статус промењен.';
     $Self->{Translation}->{'Thank you for your feedback.'} = 'Хвала на вашим одговорима.';
     $Self->{Translation}->{'The survey is finished.'} = 'Аанкета је завршена.';
     $Self->{Translation}->{'Complete'} = 'Комплетно';
@@ -65,24 +65,24 @@ sub Data {
     $Self->{Translation}->{'Question'} = 'Питање';
     $Self->{Translation}->{'Answer Required'} = 'Обавезан одговор';
     $Self->{Translation}->{'When you finish to edit the survey questions just close this screen.'} =
-        '';
+        'Када завршите са уређивањем анкетних питања само затзворите овај прозор.';
     $Self->{Translation}->{'Do you really want to delete this question? ALL associated data will be LOST!'} =
-        'Да ли заиста желите да обришете ово питање? Сви повезани подаци ће бити ИЗГУБЉЕНИ!';
+        'Да ли заиста желите да обришете ово питање? СВИ повезани подаци ће бити ИЗГУБЉЕНИ!';
     $Self->{Translation}->{'Edit Question'} = 'Уреди питање';
     $Self->{Translation}->{'go back to questions'} = 'назад на питања';
-    $Self->{Translation}->{'Question:'} = '';
+    $Self->{Translation}->{'Question:'} = 'Питање:';
     $Self->{Translation}->{'Possible Answers For'} = 'Могући одговори за';
     $Self->{Translation}->{'Add Answer'} = 'Додај одговор';
-    $Self->{Translation}->{'No answers saved for this question.'} = 'За ово питање није сачуван одговор.';
+    $Self->{Translation}->{'No answers saved for this question.'} = 'За ово питање нису сачувани одговори.';
     $Self->{Translation}->{'Do you really want to delete this answer?'} = 'Да ли заиста желите да избришете овај одговор?';
     $Self->{Translation}->{'This doesn\'t have several answers, a textarea will be displayed.'} =
         'Ово нема више одговора, простор за текст ће бити приказан.';
     $Self->{Translation}->{'Edit Answer'} = 'Уреди одговор';
     $Self->{Translation}->{'go back to edit question'} = 'назад на уређивање питања';
-    $Self->{Translation}->{'Answer:'} = '';
+    $Self->{Translation}->{'Answer:'} = 'Одговор:';
 
     # Template: AgentSurveyOverviewNavBar
-    $Self->{Translation}->{'Max. shown surveys per page'} = '';
+    $Self->{Translation}->{'Max. shown surveys per page'} = 'Максимум приказаних анкета по страни';
 
     # Template: AgentSurveyOverviewSmall
     $Self->{Translation}->{'Notification Sender'} = 'Пошиљаоц обавештења';
@@ -116,10 +116,10 @@ sub Data {
     $Self->{Translation}->{'Survey Title'} = 'Наслов анкете';
 
     # SysConfig
-    $Self->{Translation}->{'A Survey Module.'} = 'Анкетни модул';
+    $Self->{Translation}->{'A Survey Module.'} = 'Анкетни модул.';
     $Self->{Translation}->{'A module to edit survey questions.'} = 'Модул за уређивање анкетних питања.';
     $Self->{Translation}->{'All parameters for the Survey object in the agent interface.'} =
-        'Сви параметри Објекта анкете у оператерском интерфејсу.';
+        'Сви параметри Објекта анкете у интерфејсу оператера.';
     $Self->{Translation}->{'Amount of days after sending a survey mail in which no new survey requests are sent to the same customer. Selecting 0 will always send the survey mail.'} =
         'Број дана после слања имејла о анкети у ком истом кориснику неће бити слани нови захтеви. Ако изаберете 0 имејл о анкети се увек шаље.';
     $Self->{Translation}->{'Default body for the notification email to customers about new survey.'} =
@@ -138,47 +138,47 @@ sub Data {
         'Дефинише подразумевану висину оквира за приказ текста  за детаљни приказ елемената анкете.';
     $Self->{Translation}->{'Defines the shown columns in the survey overview. This option has no effect on the position of the columns.'} =
         'Дефинише приказане колоне у прегледу анкете. Ова опције нема утицај на позиције колона.';
-    $Self->{Translation}->{'Edit Survey General Information'} = 'Уреди опште информације оистраживању';
+    $Self->{Translation}->{'Edit Survey General Information'} = 'Уреди опште информације о истраживању';
     $Self->{Translation}->{'Edit Survey Questions'} = 'Уреди анкетна питања';
     $Self->{Translation}->{'Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time.'} =
         'Укључи или искључи приказ екрана за гласање на јавном интерфејсу ради приказа резултата поједине анкете када корисник покуша да одговори на упитник по други пут.';
-    $Self->{Translation}->{'Enable or disable the send condition check for the service.'} = 'Уклључи или искључи проверу статуса слања за услугу.';
+    $Self->{Translation}->{'Enable or disable the send condition check for the service.'} = 'Укључи или искључи проверу статуса слања за услугу.';
     $Self->{Translation}->{'Enable or disable the send condition check for the ticket type.'} =
-        'Уклључи или искључи проверу статуса слања за тип тикета.';
+        'Укључи или искључи проверу статуса слања за тип тикета.';
     $Self->{Translation}->{'Frontend module registration for survey add in the agent interface.'} =
-        'Регистрација "Frontend" модула за додавање анкете у оператерском интерфејсу.';
+        'Регистрација "Frontend" модула за додавање анкете у интерфејсу оператера.';
     $Self->{Translation}->{'Frontend module registration for survey edit in the agent interface.'} =
-        'Регистрација "Frontend" модула за уређивање анкете у оператерском интерфејсу.';
+        'Регистрација "Frontend" модула за измене анкете у интерфејсу оператера.';
     $Self->{Translation}->{'Frontend module registration for survey stats in the agent interface.'} =
-        'Регистрација "Frontend" модула за статистику анкете у оператерском интерфејсу.';
+        'Регистрација "Frontend" модула за статистику анкете у интерфејсу оператера.';
     $Self->{Translation}->{'Frontend module registration for survey zoom in the agent interface.'} =
-        'Регистрација "Frontend" модула за детаљни приказ анкете у оператерском интерфејсу.';
+        'Регистрација "Frontend" модула за детаљни приказ анкете у интерфејсу оператера.';
     $Self->{Translation}->{'Frontend module registration for the PublicSurvey object in the public Survey area.'} =
         'Регистрација "Frontend" модула за јавне анкетне објекте анкете у простору јавних анкета.';
     $Self->{Translation}->{'If this regex matches, no customer survey will be sent.'} = 'Ако се овај израз поклапа, анкета неће бити послата кориснику.';
     $Self->{Translation}->{'Parameters for the pages (in which the surveys are shown) of the small survey overview.'} =
         'Параметри страница (на којима су анкете видљиве) на малом приказу прегледа анкета.';
-    $Self->{Translation}->{'Public Survey.'} = 'Јавна анкета';
+    $Self->{Translation}->{'Public Survey.'} = 'Јавна анкета.';
     $Self->{Translation}->{'Shows a link in the menu to edit a survey in its zoom view of the agent interface.'} =
-        'У менију приказује везу за уређивање анкете у детаљном приказу оператерског интерфејса.';
+        'У менију приказује везу за уређивање анкете у детаљном приказу интерфејса оператера.';
     $Self->{Translation}->{'Shows a link in the menu to edit survey questions in its zoom view of the agent interface.'} =
-        'У менију приказује везу за уређивање анкетних питања у детаљном приказу оператерског интерфејса.';
+        'У менију приказује везу за уређивање анкетних питања у детаљном приказу интерфејса оператера.';
     $Self->{Translation}->{'Shows a link in the menu to go back in the survey zoom view of the agent interface.'} =
-        'У менију приказује везу за повратак у детаљни приказ анкете у оператерском интерфејсу.';
+        'У менију приказује везу за повратак у детаљни приказ анкете у интерфејсу оператера.';
     $Self->{Translation}->{'Shows a link in the menu to zoom into the survey statistics details in its zoom view of the agent interface.'} =
-        'У менију приказује везу за детаљни приказ статистике анкете у детаљном приказу на оператерском интерфејсу.';
-    $Self->{Translation}->{'Survey Add Module.'} = '';
+        'У менију приказује везу за детаљни приказ статистике анкете у детаљном приказу на интерфејсу оператера.';
+    $Self->{Translation}->{'Survey Add Module.'} = 'Модул за додавање анкете.';
     $Self->{Translation}->{'Survey Edit Module.'} = 'Модул за уређивање анкете.';
-    $Self->{Translation}->{'Survey Overview "Small" Limit'} = 'Ограничење прегледа анкете - "мало"';
+    $Self->{Translation}->{'Survey Overview "Small" Limit'} = 'Ограничење прегледа анкете - „мало”';
     $Self->{Translation}->{'Survey Stats Module.'} = 'Модул за статистику анкете.';
     $Self->{Translation}->{'Survey Zoom Module.'} = 'Модул за детаљни приказ анкете.';
-    $Self->{Translation}->{'Survey limit per page for Survey Overview "Small"'} = 'Ограничење броја анкета по страни за преглед - "мало"';
+    $Self->{Translation}->{'Survey limit per page for Survey Overview "Small"'} = 'Ограничење броја анкета по страни за преглед - „мало”';
     $Self->{Translation}->{'Surveys will not be sent to the configured email addresses.'} = 'Анкета неће бити послата на подешену имејл адресу.';
     $Self->{Translation}->{'The identifier for a survey, e.g. Survey#, MySurvey#. The default is Survey#.'} =
         'Идентификатор за анкету, нпр Survey#, MySurvey#. Подразумевано је Survey#.';
     $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket is closed.'} =
         'Модул догађаја на тикету за аутоматско слање имејла о истраживању корисницима ако је тикет затворен.';
-    $Self->{Translation}->{'Trigger sending delayed survey requests.'} = '';
+    $Self->{Translation}->{'Trigger sending delayed survey requests.'} = 'Окидач одложеног слања захтева за акнету.';
     $Self->{Translation}->{'Zoom Into Statistics Details'} = 'Детаљни приказ статистике';
 
 }

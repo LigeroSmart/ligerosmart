@@ -65,12 +65,12 @@ sub Data {
     $Self->{Translation}->{'Question'} = 'Вопрос';
     $Self->{Translation}->{'Answer Required'} = 'Требуются Ответы';
     $Self->{Translation}->{'When you finish to edit the survey questions just close this screen.'} =
-        '';
+        'По окончании редактирования вопросов опроса просто закройте этот экран.';
     $Self->{Translation}->{'Do you really want to delete this question? ALL associated data will be LOST!'} =
         'ы действительно хотите удалить этот вопрос?  ВСЕ связанные данные будут ПОТЕРЯНЫ!';
     $Self->{Translation}->{'Edit Question'} = 'Редактировать вопрос';
     $Self->{Translation}->{'go back to questions'} = 'назад к вопросам';
-    $Self->{Translation}->{'Question:'} = '';
+    $Self->{Translation}->{'Question:'} = 'Вопрос:';
     $Self->{Translation}->{'Possible Answers For'} = 'Возможные ответы для';
     $Self->{Translation}->{'Add Answer'} = 'Добавить ответ';
     $Self->{Translation}->{'No answers saved for this question.'} = 'Не заданы варианты ответов для этого вопроса.';
@@ -79,10 +79,10 @@ sub Data {
         'Этот вопрос не предусматривает несколько ответов, будет показано текстовое/textarea поле.';
     $Self->{Translation}->{'Edit Answer'} = 'Редактировать ответ';
     $Self->{Translation}->{'go back to edit question'} = 'назад к редактированию вопроса';
-    $Self->{Translation}->{'Answer:'} = '';
+    $Self->{Translation}->{'Answer:'} = 'Ответ:';
 
     # Template: AgentSurveyOverviewNavBar
-    $Self->{Translation}->{'Max. shown surveys per page'} = '';
+    $Self->{Translation}->{'Max. shown surveys per page'} = 'Макс. кол-во опросов на страницу';
 
     # Template: AgentSurveyOverviewSmall
     $Self->{Translation}->{'Notification Sender'} = 'Отправитель уведомления';
@@ -167,7 +167,7 @@ sub Data {
         'Показывает пункт меню, позволяющий вернуться назад при просмотре опроса в интерфейсе агента.';
     $Self->{Translation}->{'Shows a link in the menu to zoom into the survey statistics details in its zoom view of the agent interface.'} =
         'Показывает пункт меню, позволяющий увидеть подробности отчета об опросе при его детальном просмотре в интерфейсе агента.';
-    $Self->{Translation}->{'Survey Add Module.'} = '';
+    $Self->{Translation}->{'Survey Add Module.'} = 'Модуль Добавления опроса.';
     $Self->{Translation}->{'Survey Edit Module.'} = 'Модуль редактирования опроса.';
     $Self->{Translation}->{'Survey Overview "Small" Limit'} = 'Количество записей, отображаемых при просмотре опросов в "Small" формате';
     $Self->{Translation}->{'Survey Stats Module.'} = 'Модуль построения отчетов об опросах.';
@@ -178,7 +178,7 @@ sub Data {
         'Обозначение для идентификации опроса, например, Опрос№, Survey#, MySurvey#. По умолчанию Survey#.';
     $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket is closed.'} =
         'Модуль управления событием для заявки, автоматически отправляющий письмо клиенту с опросом, при закрытии заявки.';
-    $Self->{Translation}->{'Trigger sending delayed survey requests.'} = '';
+    $Self->{Translation}->{'Trigger sending delayed survey requests.'} = 'Триггер отправки задержанных запросов на опрос.';
     $Self->{Translation}->{'Zoom Into Statistics Details'} = 'Подробная информация по статистике';
 
 }
