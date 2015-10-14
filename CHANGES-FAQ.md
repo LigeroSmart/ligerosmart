@@ -1,5 +1,5 @@
-#5.0.0.rc1 2015-??-??
- - 2015-10-6 Updated translation files, thanks to all translators.
+#5.0.1 2015-??-??
+ - 2015-10-13 Updated translation files, thanks to all translators.
 
 #5.0.0.beta1 2015-09-01
  - 2015-08-26 Initial version for OTRS 5

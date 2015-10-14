@@ -243,15 +243,15 @@ sub Data {
     $Self->{Translation}->{'Defines the default FAQ order in the FAQ Explorer result of the agent interface. Up: oldest on top. Down: latest on top.'} =
         '';
     $Self->{Translation}->{'Defines the default FAQ order in the FAQ Explorer result of the customer interface. Up: oldest on top. Down: latest on top.'} =
-        'Definisce l\'ordine FAQ predefinito nel risultato FAQ Explorer dell\'interfaccia cliente. Up: più antico sulla parte superiore. Giù: più recente in cima.';
+        'Definisce l\'ordine FAQ predefinito nel risultato FAQ Explorer dell\'interfaccia cliente. Su: meno recente sulla parte superiore. Giù: più recente in cima.';
     $Self->{Translation}->{'Defines the default FAQ order in the FAQ Explorer result of the public interface. Up: oldest on top. Down: latest on top.'} =
-        '';
+        'Definisce l\'ordine FAQ predefinito nel risultato FAQ Explorer dell\'interfaccia pubblica. Su: meno recente in cima. Giù: più recente in cima.';
     $Self->{Translation}->{'Defines the default FAQ order of a search result in the agent interface. Up: oldest on top. Down: latest on top.'} =
-        '';
+        'Definisce l\'ordine FAQ predefinito nel risultato della ricerca nell\'interfaccia agente. Su: meno recente in cima. Giù: più recente in cima.';
     $Self->{Translation}->{'Defines the default FAQ order of a search result in the customer interface. Up: oldest on top. Down: latest on top.'} =
-        '';
+        'Definisce l\'ordine FAQ predefinito nel risultato della ricerca nell\'interfaccia cliente. Su: meno recente in cima. Giù: più recente in cima.';
     $Self->{Translation}->{'Defines the default FAQ order of a search result in the public interface. Up: oldest on top. Down: latest on top.'} =
-        '';
+        'Definisce l\'ordine FAQ predefinito nel risultato della ricerca nell\'interfaccia pubblica. Su: meno recente in cima. Giù: più recente in cima.';
     $Self->{Translation}->{'Defines the default shown FAQ search attribute for FAQ search screen.'} =
         '';
     $Self->{Translation}->{'Defines the information to be inserted in a FAQ based Ticket. "Full FAQ" includes text, attachments and inline images.'} =

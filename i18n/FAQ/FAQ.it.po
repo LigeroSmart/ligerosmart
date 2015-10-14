@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-10-07 18:17+0000\n"
-"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
+"PO-Revision-Date: 2015-10-11 21:51+0000\n"
+"Last-Translator: Marthe Ngo Temb <ngotemb@gmail.com>\n"
 "Language-Team: Italian (http://www.transifex.com/otrs/OTRS/language/it/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -678,31 +678,31 @@ msgstr ""
 msgid ""
 "Defines the default FAQ order in the FAQ Explorer result of the customer "
 "interface. Up: oldest on top. Down: latest on top."
-msgstr "Definisce l'ordine FAQ predefinito nel risultato FAQ Explorer dell'interfaccia cliente. Up: più antico sulla parte superiore. Giù: più recente in cima."
+msgstr "Definisce l'ordine FAQ predefinito nel risultato FAQ Explorer dell'interfaccia cliente. Su: meno recente sulla parte superiore. Giù: più recente in cima."
 
 #. SysConfig
 msgid ""
 "Defines the default FAQ order in the FAQ Explorer result of the public "
 "interface. Up: oldest on top. Down: latest on top."
-msgstr ""
+msgstr "Definisce l'ordine FAQ predefinito nel risultato FAQ Explorer dell'interfaccia pubblica. Su: meno recente in cima. Giù: più recente in cima."
 
 #. SysConfig
 msgid ""
 "Defines the default FAQ order of a search result in the agent interface. Up:"
 " oldest on top. Down: latest on top."
-msgstr ""
+msgstr "Definisce l'ordine FAQ predefinito nel risultato della ricerca nell'interfaccia agente. Su: meno recente in cima. Giù: più recente in cima."
 
 #. SysConfig
 msgid ""
 "Defines the default FAQ order of a search result in the customer interface. "
 "Up: oldest on top. Down: latest on top."
-msgstr ""
+msgstr "Definisce l'ordine FAQ predefinito nel risultato della ricerca nell'interfaccia cliente. Su: meno recente in cima. Giù: più recente in cima."
 
 #. SysConfig
 msgid ""
 "Defines the default FAQ order of a search result in the public interface. "
 "Up: oldest on top. Down: latest on top."
-msgstr ""
+msgstr "Definisce l'ordine FAQ predefinito nel risultato della ricerca nell'interfaccia pubblica. Su: meno recente in cima. Giù: più recente in cima."
 
 #. SysConfig
 msgid "Defines the default shown FAQ search attribute for FAQ search screen."

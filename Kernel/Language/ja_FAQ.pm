@@ -241,17 +241,17 @@ sub Data {
     $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the public interface.'} =
         '公開画面（FAQ一覧）における、FAQ検索結果並び替えに利用する属性順の既定値を定義します。';
     $Self->{Translation}->{'Defines the default FAQ order in the FAQ Explorer result of the agent interface. Up: oldest on top. Down: latest on top.'} =
-        '担当者インターフェイスにおける、FAQ一覧の表示順の既定値を定義します。\'Up\'→古い順 / \'Down\'→新しい順';
+        '担当者インターフェイスにおける、FAQ一覧の表示順の既定値を定義します。Up: 古い順 / Down: 新しい順';
     $Self->{Translation}->{'Defines the default FAQ order in the FAQ Explorer result of the customer interface. Up: oldest on top. Down: latest on top.'} =
-        '顧客用画面における、FAQ一覧の表示順の既定値を定義します。\'Up\'→古い順 / \'Down\'→新しい順';
+        '顧客用画面における、FAQ一覧の表示順の既定値を定義します。Up: 古い順 / Down: 新しい順';
     $Self->{Translation}->{'Defines the default FAQ order in the FAQ Explorer result of the public interface. Up: oldest on top. Down: latest on top.'} =
-        '公開画面における、FAQ一覧の表示順の既定値を定義します。\'Up\'→古い順 / \'Down\'→新しい順';
+        '公開画面における、FAQ一覧の表示順の既定値を定義します。Up: 古い順 / Down: 新しい順';
     $Self->{Translation}->{'Defines the default FAQ order of a search result in the agent interface. Up: oldest on top. Down: latest on top.'} =
-        '担当者インターフェイス（FAQ一覧）における、FAQ検索結果並び順の既定値を定義します。\'Up\'→古い順 / \'Down\'→新しい順';
+        '担当者インターフェイス（FAQ一覧）における、FAQ検索結果並び順の既定値を定義します。Up: 古い順 / Down: 新しい順';
     $Self->{Translation}->{'Defines the default FAQ order of a search result in the customer interface. Up: oldest on top. Down: latest on top.'} =
-        '顧客用画面における、FAQ検索結果並び順の既定値を定義します。\'Up\'→古い順 / \'Down\'→新しい順';
+        '顧客用画面における、FAQ検索結果並び順の既定値を定義します。Up: 古い順 / Down: 新しい順';
     $Self->{Translation}->{'Defines the default FAQ order of a search result in the public interface. Up: oldest on top. Down: latest on top.'} =
-        '公開画面における、FAQ検索結果並び順の既定値を定義します。\'Up\'→古い順 / \'Down\'→新しい順';
+        '公開画面における、FAQ検索結果並び順の既定値を定義します。Up: 古い順 / Down: 新しい順';
     $Self->{Translation}->{'Defines the default shown FAQ search attribute for FAQ search screen.'} =
         'FAQ 検索画面に表示されるFAQ 検索属性のデフォルト値を定義する。';
     $Self->{Translation}->{'Defines the information to be inserted in a FAQ based Ticket. "Full FAQ" includes text, attachments and inline images.'} =

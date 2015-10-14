@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-10-07 18:17+0000\n"
-"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
+"PO-Revision-Date: 2015-10-11 00:30+0000\n"
+"Last-Translator: Norihiro Tanaka <noritnk@kcn.ne.jp>\n"
 "Language-Team: Japanese (http://www.transifex.com/otrs/OTRS/language/ja/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -669,37 +669,37 @@ msgstr "公開画面（FAQ一覧）における、FAQ検索結果並び替えに
 msgid ""
 "Defines the default FAQ order in the FAQ Explorer result of the agent "
 "interface. Up: oldest on top. Down: latest on top."
-msgstr "担当者インターフェイスにおける、FAQ一覧の表示順の既定値を定義します。'Up'→古い順 / 'Down'→新しい順"
+msgstr "担当者インターフェイスにおける、FAQ一覧の表示順の既定値を定義します。Up: 古い順 / Down: 新しい順"
 
 #. SysConfig
 msgid ""
 "Defines the default FAQ order in the FAQ Explorer result of the customer "
 "interface. Up: oldest on top. Down: latest on top."
-msgstr "顧客用画面における、FAQ一覧の表示順の既定値を定義します。'Up'→古い順 / 'Down'→新しい順"
+msgstr "顧客用画面における、FAQ一覧の表示順の既定値を定義します。Up: 古い順 / Down: 新しい順"
 
 #. SysConfig
 msgid ""
 "Defines the default FAQ order in the FAQ Explorer result of the public "
 "interface. Up: oldest on top. Down: latest on top."
-msgstr "公開画面における、FAQ一覧の表示順の既定値を定義します。'Up'→古い順 / 'Down'→新しい順"
+msgstr "公開画面における、FAQ一覧の表示順の既定値を定義します。Up: 古い順 / Down: 新しい順"
 
 #. SysConfig
 msgid ""
 "Defines the default FAQ order of a search result in the agent interface. Up:"
 " oldest on top. Down: latest on top."
-msgstr "担当者インターフェイス（FAQ一覧）における、FAQ検索結果並び順の既定値を定義します。'Up'→古い順 / 'Down'→新しい順"
+msgstr "担当者インターフェイス（FAQ一覧）における、FAQ検索結果並び順の既定値を定義します。Up: 古い順 / Down: 新しい順"
 
 #. SysConfig
 msgid ""
 "Defines the default FAQ order of a search result in the customer interface. "
 "Up: oldest on top. Down: latest on top."
-msgstr "顧客用画面における、FAQ検索結果並び順の既定値を定義します。'Up'→古い順 / 'Down'→新しい順"
+msgstr "顧客用画面における、FAQ検索結果並び順の既定値を定義します。Up: 古い順 / Down: 新しい順"
 
 #. SysConfig
 msgid ""
 "Defines the default FAQ order of a search result in the public interface. "
 "Up: oldest on top. Down: latest on top."
-msgstr "公開画面における、FAQ検索結果並び順の既定値を定義します。'Up'→古い順 / 'Down'→新しい順"
+msgstr "公開画面における、FAQ検索結果並び順の既定値を定義します。Up: 古い順 / Down: 新しい順"
 
 #. SysConfig
 msgid "Defines the default shown FAQ search attribute for FAQ search screen."
