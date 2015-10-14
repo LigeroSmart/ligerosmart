@@ -1,12 +1,12 @@
 # 
 # Translators:
-# Yuri Kolesniov <ynkolesnikov@gmail.com>, 2014
+# Yuri Kolesniov <ynkolesnikov@gmail.com>, 2014-2015
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-10-07 18:52+0000\n"
-"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
+"PO-Revision-Date: 2015-10-08 06:42+0000\n"
+"Last-Translator: Yuri Kolesniov <ynkolesnikov@gmail.com>\n"
 "Language-Team: Russian (http://www.transifex.com/otrs/OTRS/language/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -48,7 +48,7 @@ msgstr "Управление Master/Slave"
 
 #. Template: AgentTicketMasterSlave
 msgid "Set Master/Slave Value"
-msgstr ""
+msgstr "Установить значение Master/Slave"
 
 #. Template: AgentTicketMasterSlave
 msgid "Inform Agent"
@@ -68,19 +68,19 @@ msgstr "Сообщение будет (также) получено:"
 
 #. Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
 msgid "New Master Ticket"
-msgstr ""
+msgstr "Новая Master заявка"
 
 #. Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
 msgid "Unset Master Ticket"
-msgstr ""
+msgstr "Снять значение Master заявка"
 
 #. Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
 msgid "Unset Slave Ticket"
-msgstr ""
+msgstr "Снять значение Slave заявка"
 
 #. Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
 msgid "Slave of Ticket#"
-msgstr ""
+msgstr "Slave от Заявки#"
 
 #. SysConfig
 msgid ""
@@ -161,19 +161,19 @@ msgid ""
 "Enable the feature to forward articles from type 'forward' of a master "
 "ticket to the customers of the slave tickets. By default (disabled) it will "
 "not forward articles from type 'forward' to the slave tickets."
-msgstr ""
+msgstr "Включает возможность пересылки сообщений/заметок при пересылке главной заявки  клиентам подчиненных заявок. По умолчанию (выключено) в подчиненные заявки ничего не пересылается."
 
 #. SysConfig
 msgid ""
 "Enable the feature to keep parent-child link after change of the MasterSlave"
 " state in the advanced MasterSlave mode."
-msgstr ""
+msgstr "Включает возможность сохранить связь родитель-потомок для заявок, после изменения признака MasterSlave в расширенном режиме MasterSlave."
 
 #. SysConfig
 msgid ""
 "Enable the feature to keep parent-child link after unset of the MasterSlave "
 "state in the advanced MasterSlave mode."
-msgstr ""
+msgstr "Включает возможность сохранить связь родитель-потомок для заявок, после снятия признака MasterSlave в расширенном режиме MasterSlave."
 
 #. SysConfig
 msgid ""
@@ -189,11 +189,11 @@ msgstr "Если сообщение/заметка добавлена агент
 
 #. SysConfig
 msgid "Master / Slave"
-msgstr ""
+msgstr "Master / Slave"
 
 #. SysConfig
 msgid "MasterSlave module for Ticket Bulk feature."
-msgstr ""
+msgstr "MasterSlave модуль для функции Массовое действие."
 
 #. SysConfig
 msgid ""
@@ -302,4 +302,4 @@ msgstr "Задает различные типы сообщений/замето
 msgid ""
 "This module activates Master/Slave field in new email and phone ticket "
 "screens."
-msgstr ""
+msgstr "Этот модуль включает возможность выбора master/slave опции на экране создания заявки, на основе телефонного звонка или письма клиента агентом."

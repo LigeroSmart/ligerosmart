@@ -24,17 +24,17 @@ sub Data {
     $Self->{Translation}->{'Change Priority of Ticket'} = 'Изменить приоритет заявки';
     $Self->{Translation}->{'Change Responsible of Ticket'} = 'Изменить ответственного заявки';
     $Self->{Translation}->{'Manage Master/Slave'} = 'Управление Master/Slave';
-    $Self->{Translation}->{'Set Master/Slave Value'} = '';
+    $Self->{Translation}->{'Set Master/Slave Value'} = 'Установить значение Master/Slave';
     $Self->{Translation}->{'Inform Agent'} = 'Уведомить агента';
     $Self->{Translation}->{'Optional'} = 'Необязательно';
     $Self->{Translation}->{'Inform involved Agents'} = 'Уведомить участвующих агентов';
     $Self->{Translation}->{'Note will be (also) received by:'} = 'Сообщение будет (также) получено:';
 
     # Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
-    $Self->{Translation}->{'New Master Ticket'} = '';
-    $Self->{Translation}->{'Unset Master Ticket'} = '';
-    $Self->{Translation}->{'Unset Slave Ticket'} = '';
-    $Self->{Translation}->{'Slave of Ticket#'} = '';
+    $Self->{Translation}->{'New Master Ticket'} = 'Новая Master заявка';
+    $Self->{Translation}->{'Unset Master Ticket'} = 'Снять значение Master заявка';
+    $Self->{Translation}->{'Unset Slave Ticket'} = 'Снять значение Slave заявка';
+    $Self->{Translation}->{'Slave of Ticket#'} = 'Slave от Заявки#';
 
     # SysConfig
     $Self->{Translation}->{'Allows adding notes in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
@@ -61,17 +61,17 @@ sub Data {
     $Self->{Translation}->{'Enable the feature to change the MasterSlave state of a ticket in the advanced MasterSlave mode.'} =
         'Включает возможность изменения состояния MasterSlave заявки в расширенном режиме.';
     $Self->{Translation}->{'Enable the feature to forward articles from type \'forward\' of a master ticket to the customers of the slave tickets. By default (disabled) it will not forward articles from type \'forward\' to the slave tickets.'} =
-        '';
+        'Включает возможность пересылки сообщений/заметок при пересылке главной заявки  клиентам подчиненных заявок. По умолчанию (выключено) в подчиненные заявки ничего не пересылается.';
     $Self->{Translation}->{'Enable the feature to keep parent-child link after change of the MasterSlave state in the advanced MasterSlave mode.'} =
-        '';
+        'Включает возможность сохранить связь родитель-потомок для заявок, после изменения признака MasterSlave в расширенном режиме MasterSlave.';
     $Self->{Translation}->{'Enable the feature to keep parent-child link after unset of the MasterSlave state in the advanced MasterSlave mode.'} =
-        '';
+        'Включает возможность сохранить связь родитель-потомок для заявок, после снятия признака MasterSlave в расширенном режиме MasterSlave.';
     $Self->{Translation}->{'Enable the feature to unset the MasterSlave state of a ticket in the advanced MasterSlave mode.'} =
         'Задает возможность сбросить установленное состояние MasterSlave заявки в расширенном режиме.';
     $Self->{Translation}->{'If a note is added by an agent, sets the state of the ticket in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Если сообщение/заметка добавлена агентом, задает состояние заявки на экране MasterSlave  в интерфейсе агента.';
-    $Self->{Translation}->{'Master / Slave'} = '';
-    $Self->{Translation}->{'MasterSlave module for Ticket Bulk feature.'} = '';
+    $Self->{Translation}->{'Master / Slave'} = 'Master / Slave';
+    $Self->{Translation}->{'MasterSlave module for Ticket Bulk feature.'} = 'MasterSlave модуль для функции Массовое действие.';
     $Self->{Translation}->{'Parameters for the dashboard backend of the master tickets overview of the agent interface. "Limit" is the number of entries shown by default. "Group" is used to restrict the access to the plugin (e. g. Group: admin;group1;group2;). "Default" determines if the plugin is enabled by default or if the user needs to enable it manually. "CacheTTLLocal" is the cache time in minutes for the plugin.'} =
         'Параметры для раздела Дайджеста с информацией о master заявках в интерфейсе агента. "Group" используется для ограничения доступа к разделу (например, Group: admin;group1;group2;). "Default" - задает, будет ли раздел доступен по умолчанию или агент должен активировать его вручную. "CacheTTLLocal" - время обновления кэша в минутах для этого раздела.';
     $Self->{Translation}->{'Parameters for the dashboard backend of the slave tickets overview of the agent interface. "Limit" is the number of entries shown by default. "Group" is used to restrict the access to the plugin (e. g. Group: admin;group1;group2;). "Default" determines if the plugin is enabled by default or if the user needs to enable it manually. "CacheTTLLocal" is the cache time in minutes for the plugin.'} =
@@ -104,7 +104,7 @@ sub Data {
     $Self->{Translation}->{'Specifies the different article types where the real name from Master ticket will be replaced with the one in the Slave ticket.'} =
         'Задает различные типы сообщений/заметок для случая замены реального имени из главной заявки в таким же в подчиненной.';
     $Self->{Translation}->{'This module activates Master/Slave field in new email and phone ticket screens.'} =
-        '';
+        'Этот модуль включает возможность выбора master/slave опции на экране создания заявки, на основе телефонного звонка или письма клиента агентом.';
 
 }
 
