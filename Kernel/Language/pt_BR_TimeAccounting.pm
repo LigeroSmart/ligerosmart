@@ -26,8 +26,8 @@ sub Data {
     $Self->{Translation}->{'Error while inserting multiple dates!'} = 'Erro ao inserir múltiplas datas!';
     $Self->{Translation}->{'Successfully inserted entries for several dates!'} = 'Entrada de várias datas inserida com sucesso!';
     $Self->{Translation}->{'Entered date was invalid! Date was changed to today.'} = 'Data inserida é inválida! Data foi alterada para hoje.';
-    $Self->{Translation}->{'Last Selected Projects.'} = '';
-    $Self->{Translation}->{'All Projects.'} = '';
+    $Self->{Translation}->{'Last Selected Projects.'} = 'Últimos projetos selecionados';
+    $Self->{Translation}->{'All Projects.'} = 'Todos os projetos';
 
     # Template: AgentTimeAccountingDelete
     $Self->{Translation}->{'Do you really want to delete the Time Accounting of this day?'} =
@@ -141,7 +141,7 @@ sub Data {
     $Self->{Translation}->{'Filter for Projects'} = 'Filtrar por Projetos';
     $Self->{Translation}->{'Filter for Tasks'} = 'Filtrar for Tarefas';
     $Self->{Translation}->{'Filter for Users'} = 'Filtrar por usuários';
-    $Self->{Translation}->{'Time periods can not be deleted.'} = '';
+    $Self->{Translation}->{'Time periods can not be deleted.'} = 'Períodos de tempo não podem ser excluídos.';
     $Self->{Translation}->{'Project List'} = 'Lista de projetos';
     $Self->{Translation}->{'Task List'} = 'Lista de tarefas';
     $Self->{Translation}->{'Add Task'} = 'Adicionar tarefa';
@@ -175,17 +175,17 @@ sub Data {
     $Self->{Translation}->{'No data found for this day.'} = 'Não foram encontrados dados para este dia.';
 
     # Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
-    $Self->{Translation}->{'Last Projects'} = '';
-    $Self->{Translation}->{'Incomplete Working Days'} = '';
-    $Self->{Translation}->{'Last Selected Projects'} = '';
-    $Self->{Translation}->{'All Projects'} = '';
+    $Self->{Translation}->{'Last Projects'} = 'Últimos projetos';
+    $Self->{Translation}->{'Incomplete Working Days'} = 'Dias de trabalhos incompletos';
+    $Self->{Translation}->{'Last Selected Projects'} = 'Últimos projetos selecionados';
+    $Self->{Translation}->{'All Projects'} = 'Todos os projetos';
 
     # Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
-    $Self->{Translation}->{'New User'} = '';
-    $Self->{Translation}->{'Period Status'} = '';
+    $Self->{Translation}->{'New User'} = 'Novo usuário';
+    $Self->{Translation}->{'Period Status'} = 'Estado do período';
 
     # Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
-    $Self->{Translation}->{'Incomplete working days'} = '';
+    $Self->{Translation}->{'Incomplete working days'} = 'Dias de trabalhos incompletos';
 
     # SysConfig
     $Self->{Translation}->{'Agent interface notification module to see the number of incomplete working days for the user.'} =
@@ -211,7 +211,7 @@ sub Data {
     $Self->{Translation}->{'If enabled, only users that has added working time to the selected project are shown.'} =
         'Se ativado, somente os usuários que adicionou tempo de trabalho ao o projeto selecionado serão exibidos.';
     $Self->{Translation}->{'If enabled, the dropdown elements in the edit screen are changed to modernized autocompletion fields.'} =
-        '';
+        'Se ativado, os elementos suspensos na tela de edição são modificadas para campos de autocompletar modernizados.';
     $Self->{Translation}->{'If enabled, the filter for the previous projects can be used instead two list of projects (last and all ones). It could be used only if TimeAccounting::EnableAutoCompletion is enabled.'} =
         '';
     $Self->{Translation}->{'If enabled, the filter for the previous projects is active by default if there are the previous projects. It could be used only if EnableAutoCompletion and TimeAccounting::UseFilter are enabled.'} =

@@ -26,8 +26,8 @@ sub Data {
     $Self->{Translation}->{'Error while inserting multiple dates!'} = 'Грешка при уносу више датума!';
     $Self->{Translation}->{'Successfully inserted entries for several dates!'} = 'Успешно убачени уноси за више датума!';
     $Self->{Translation}->{'Entered date was invalid! Date was changed to today.'} = 'Унети датум је неважећи. Датум је промењен на данашњи!';
-    $Self->{Translation}->{'Last Selected Projects.'} = '';
-    $Self->{Translation}->{'All Projects.'} = '';
+    $Self->{Translation}->{'Last Selected Projects.'} = 'Последњи изабрани пројекти.';
+    $Self->{Translation}->{'All Projects.'} = 'Сви пројекти.';
 
     # Template: AgentTimeAccountingDelete
     $Self->{Translation}->{'Do you really want to delete the Time Accounting of this day?'} =
@@ -44,7 +44,7 @@ sub Data {
     $Self->{Translation}->{'Select all days'} = 'Селектуј све дане';
     $Self->{Translation}->{'Mass entry'} = 'Масовни унос';
     $Self->{Translation}->{'Please choose the reason for your absence for the selected days'} =
-        'Молимо Вас изаберите разлог вашег одсуства за селектоване дане';
+        'Молимо Вас изаберите разлог вашег одсуства за изабране дане';
     $Self->{Translation}->{'On vacation'} = 'На одмору';
     $Self->{Translation}->{'On sick leave'} = 'На боловању';
     $Self->{Translation}->{'On overtime leave'} = 'Слободни дан';
@@ -109,7 +109,7 @@ sub Data {
     # Template: AgentTimeAccountingReporting
     $Self->{Translation}->{'Time reporting'} = 'Извештавање о времену';
     $Self->{Translation}->{'Month Navigation'} = 'Навигација по месецима';
-    $Self->{Translation}->{'Go to date'} = 'Иди на дан';
+    $Self->{Translation}->{'Go to date'} = 'Иди на датум';
     $Self->{Translation}->{'User reports'} = 'Кориснички извештаји';
     $Self->{Translation}->{'Monthly total'} = 'Месечни збир';
     $Self->{Translation}->{'Lifetime total'} = 'Свега до сада';
@@ -128,11 +128,11 @@ sub Data {
         'Тренутно су приказани сви корисници обрачуна времена. За промену оваквог понашања, молимо ажурирајте подешавања:';
 
     # Template: AgentTimeAccountingSetting
-    $Self->{Translation}->{'Edit Time Accounting Project Settings'} = 'Измени подешавања Пројекта обрачунавања времена';
+    $Self->{Translation}->{'Edit Time Accounting Project Settings'} = 'Измени подешавања обрачунавања времена Пројекта';
     $Self->{Translation}->{'Add project'} = 'Додај пројекат';
     $Self->{Translation}->{'Go to settings overview'} = 'Иди на преглед подешавања';
     $Self->{Translation}->{'Add Project'} = 'Додај Пројекат';
-    $Self->{Translation}->{'Edit Project Settings'} = 'Ажурирај Пројектна Подешавања';
+    $Self->{Translation}->{'Edit Project Settings'} = 'Измени подешавања Пројекта';
     $Self->{Translation}->{'There is already a project with this name. Please, choose a different one.'} =
         'Већ постоји пројекат са тим именом. Молимо вас, изаберите неко друго.';
     $Self->{Translation}->{'Edit Time Accounting Settings'} = 'Измени подешавања обрачунавања времена';
@@ -141,7 +141,7 @@ sub Data {
     $Self->{Translation}->{'Filter for Projects'} = 'Филтрирај по пројекту';
     $Self->{Translation}->{'Filter for Tasks'} = 'Филтрирај по задатку';
     $Self->{Translation}->{'Filter for Users'} = 'Филтрирај по кориснику';
-    $Self->{Translation}->{'Time periods can not be deleted.'} = '';
+    $Self->{Translation}->{'Time periods can not be deleted.'} = 'Временски периоди се не могу обрисати.';
     $Self->{Translation}->{'Project List'} = 'Листа Пројеката';
     $Self->{Translation}->{'Task List'} = 'Листа Задатака';
     $Self->{Translation}->{'Add Task'} = 'Додај Задатак';
@@ -160,7 +160,7 @@ sub Data {
     $Self->{Translation}->{'Hours per Week'} = 'Сати по недељи';
     $Self->{Translation}->{'Authorized Overtime'} = 'Дозвољено прековремено';
     $Self->{Translation}->{'Start Date'} = 'Датум почетка';
-    $Self->{Translation}->{'Please insert a valid date.'} = 'Молимо да оунесете важећи датум.';
+    $Self->{Translation}->{'Please insert a valid date.'} = 'Молимо да унесете важећи датум.';
     $Self->{Translation}->{'End Date'} = 'Датум завршетка';
     $Self->{Translation}->{'Period end must be after period begin.'} = 'Крај периода мора бити после почетка периода.';
     $Self->{Translation}->{'Leave Days'} = 'Дани одмора';
@@ -171,21 +171,21 @@ sub Data {
 
     # Template: AgentTimeAccountingView
     $Self->{Translation}->{'View Time Record'} = 'Преглед временског записа';
-    $Self->{Translation}->{'View of '} = 'Преглед';
+    $Self->{Translation}->{'View of '} = 'Приказ';
     $Self->{Translation}->{'No data found for this day.'} = 'Нема података за овај дан.';
 
     # Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
-    $Self->{Translation}->{'Last Projects'} = '';
-    $Self->{Translation}->{'Incomplete Working Days'} = '';
-    $Self->{Translation}->{'Last Selected Projects'} = '';
-    $Self->{Translation}->{'All Projects'} = '';
+    $Self->{Translation}->{'Last Projects'} = 'Последњи Пројекти';
+    $Self->{Translation}->{'Incomplete Working Days'} = 'Непотпуни радни дани';
+    $Self->{Translation}->{'Last Selected Projects'} = 'Последњи изабрани пројекти';
+    $Self->{Translation}->{'All Projects'} = 'Сви пројекти';
 
     # Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
-    $Self->{Translation}->{'New User'} = '';
-    $Self->{Translation}->{'Period Status'} = '';
+    $Self->{Translation}->{'New User'} = 'Нови корисник';
+    $Self->{Translation}->{'Period Status'} = 'Статус периода';
 
     # Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
-    $Self->{Translation}->{'Incomplete working days'} = '';
+    $Self->{Translation}->{'Incomplete working days'} = 'Непотпуни радни дани';
 
     # SysConfig
     $Self->{Translation}->{'Agent interface notification module to see the number of incomplete working days for the user.'} =
@@ -211,11 +211,11 @@ sub Data {
     $Self->{Translation}->{'If enabled, only users that has added working time to the selected project are shown.'} =
         'Ако је активирано, приказани су само корисници који су додали радно време у изабрани пројекат.';
     $Self->{Translation}->{'If enabled, the dropdown elements in the edit screen are changed to modernized autocompletion fields.'} =
-        '';
+        'Ако је активирано, падајући елементи на екрану за измену се мењају у модернизована самодовршавајућа поља.';
     $Self->{Translation}->{'If enabled, the filter for the previous projects can be used instead two list of projects (last and all ones). It could be used only if TimeAccounting::EnableAutoCompletion is enabled.'} =
-        '';
+        'Ако је активирано, филтер претходних пројеката се може користити уместо две листе пројеката (последњи и сви). Може се користити само ако је „TimeAccounting::EnableAutoCompletion” активирано.';
     $Self->{Translation}->{'If enabled, the filter for the previous projects is active by default if there are the previous projects. It could be used only if EnableAutoCompletion and TimeAccounting::UseFilter are enabled.'} =
-        '';
+        'Ако је активирано, филтер претходних пројеката је подразумевано активан ако има пројеката од пре. Може се користити само ако је „EnableAutoCompletion” и „TimeAccounting::UseFilter” активирано.';
     $Self->{Translation}->{'If enabled, the user is allowed to enter "on vacation leave", "on sick leave" and "on overtime leave" to multiple dates at once.'} =
         'Ако је активирано, кориснику је дозвољено да унесе „на одмору”, „на боловању” и „на слободним данима” на више датума одједном.';
     $Self->{Translation}->{'Maximum number of working days after which the working units have to be inserted.'} =
@@ -229,15 +229,15 @@ sub Data {
         'Регуларни изрази за ограничавање листе акција према изабраним корисничким групама. Кључ садржи регуларни израз за пројект(е), у садржају је регуларни израз за групе.';
     $Self->{Translation}->{'Specifies if working hours can be inserted without start and end times.'} =
         'Одређује да ли радни сати могу да се унесу без времена почетка и завршетка.';
-    $Self->{Translation}->{'This module forces inserts in TimeAccounting.'} = 'Овај модул намеће инос у обрачун времена.';
+    $Self->{Translation}->{'This module forces inserts in TimeAccounting.'} = 'Овај модул намеће унос у обрачун времена.';
     $Self->{Translation}->{'This notification module gives a warning if there are too many incomplete working days.'} =
         'Овај модул за обавештавање даје упозорење ако има превише некомплетних радних дана.';
-    $Self->{Translation}->{'Time accounting edit.'} = 'Измене обрачунавања времена';
-    $Self->{Translation}->{'Time accounting overview.'} = 'Преглед обрачунавања времена';
-    $Self->{Translation}->{'Time accounting reporting.'} = 'Извештаји обрачунавања времена';
-    $Self->{Translation}->{'Time accounting settings.'} = 'Подешавања обрачунавања времена';
-    $Self->{Translation}->{'Time accounting view.'} = 'Преглед обрачунавања времена';
-    $Self->{Translation}->{'Time accounting.'} = 'Обрачунавање времена';
+    $Self->{Translation}->{'Time accounting edit.'} = 'Измене обрачунавања времена.';
+    $Self->{Translation}->{'Time accounting overview.'} = 'Преглед обрачунавања времена.';
+    $Self->{Translation}->{'Time accounting reporting.'} = 'Извештаји обрачунавања времена.';
+    $Self->{Translation}->{'Time accounting settings.'} = 'Подешавања обрачунавања времена.';
+    $Self->{Translation}->{'Time accounting view.'} = 'Преглед обрачунавања времена.';
+    $Self->{Translation}->{'Time accounting.'} = 'Обрачунавање времена.';
     $Self->{Translation}->{'To use if some actions reduced the working hours (for example, if only half of the traveling time is paid Key => traveling; Content => 50).'} =
         'За употребу ако неке акције смањују радне сате (на пример, ако се плаћа само пола времена путовања Кључ => путовање; Садржај => 50).';
 

@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-10-07 18:43+0000\n"
-"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
+"PO-Revision-Date: 2015-10-08 08:10+0000\n"
+"Last-Translator: Милорад Јовановић <j.milorad@gmail.com>\n"
 "Language-Team: Serbian (http://www.transifex.com/otrs/OTRS/language/sr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -57,11 +57,11 @@ msgstr "Унети датум је неважећи. Датум је проме�
 
 #. Template: AAATimeAccounting
 msgid "Last Selected Projects."
-msgstr ""
+msgstr "Последњи изабрани пројекти."
 
 #. Template: AAATimeAccounting
 msgid "All Projects."
-msgstr ""
+msgstr "Сви пројекти."
 
 #. Template: AgentTimeAccountingDelete
 msgid "Do you really want to delete the Time Accounting of this day?"
@@ -105,7 +105,7 @@ msgstr "Масовни унос"
 
 #. Template: AgentTimeAccountingEdit
 msgid "Please choose the reason for your absence for the selected days"
-msgstr "Молимо Вас изаберите разлог вашег одсуства за селектоване дане"
+msgstr "Молимо Вас изаберите разлог вашег одсуства за изабране дане"
 
 #. Template: AgentTimeAccountingEdit
 msgid "On vacation"
@@ -337,7 +337,7 @@ msgstr "Навигација по месецима"
 
 #. Template: AgentTimeAccountingReporting
 msgid "Go to date"
-msgstr "Иди на дан"
+msgstr "Иди на датум"
 
 #. Template: AgentTimeAccountingReporting
 msgid "User reports"
@@ -393,7 +393,7 @@ msgstr "Тренутно су приказани сви корисници об�
 
 #. Template: AgentTimeAccountingSetting
 msgid "Edit Time Accounting Project Settings"
-msgstr "Измени подешавања Пројекта обрачунавања времена"
+msgstr "Измени подешавања обрачунавања времена Пројекта"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Add project"
@@ -409,7 +409,7 @@ msgstr "Додај Пројекат"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Edit Project Settings"
-msgstr "Ажурирај Пројектна Подешавања"
+msgstr "Измени подешавања Пројекта"
 
 #. Template: AgentTimeAccountingSetting
 msgid ""
@@ -442,7 +442,7 @@ msgstr "Филтрирај по кориснику"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Time periods can not be deleted."
-msgstr ""
+msgstr "Временски периоди се не могу обрисати."
 
 #. Template: AgentTimeAccountingSetting
 msgid "Project List"
@@ -515,7 +515,7 @@ msgstr "Датум почетка"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Please insert a valid date."
-msgstr "Молимо да оунесете важећи датум."
+msgstr "Молимо да унесете важећи датум."
 
 #. Template: AgentTimeAccountingSetting
 msgid "End Date"
@@ -551,7 +551,7 @@ msgstr "Преглед временског записа"
 
 #. Template: AgentTimeAccountingView
 msgid "View of "
-msgstr "Преглед"
+msgstr "Приказ"
 
 #. Template: AgentTimeAccountingView
 msgid "No data found for this day."
@@ -559,31 +559,31 @@ msgstr "Нема података за овај дан."
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Last Projects"
-msgstr ""
+msgstr "Последњи Пројекти"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Incomplete Working Days"
-msgstr ""
+msgstr "Непотпуни радни дани"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Last Selected Projects"
-msgstr ""
+msgstr "Последњи изабрани пројекти"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "All Projects"
-msgstr ""
+msgstr "Сви пројекти"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "New User"
-msgstr ""
+msgstr "Нови корисник"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "Period Status"
-msgstr ""
+msgstr "Статус периода"
 
 #. Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
 msgid "Incomplete working days"
-msgstr ""
+msgstr "Непотпуни радни дани"
 
 #. SysConfig
 msgid ""
@@ -670,21 +670,21 @@ msgstr "Ако је активирано, приказани су само ко�
 msgid ""
 "If enabled, the dropdown elements in the edit screen are changed to "
 "modernized autocompletion fields."
-msgstr ""
+msgstr "Ако је активирано, падајући елементи на екрану за измену се мењају у модернизована самодовршавајућа поља."
 
 #. SysConfig
 msgid ""
 "If enabled, the filter for the previous projects can be used instead two "
 "list of projects (last and all ones). It could be used only if "
 "TimeAccounting::EnableAutoCompletion is enabled."
-msgstr ""
+msgstr "Ако је активирано, филтер претходних пројеката се може користити уместо две листе пројеката (последњи и сви). Може се користити само ако је „TimeAccounting::EnableAutoCompletion” активирано."
 
 #. SysConfig
 msgid ""
 "If enabled, the filter for the previous projects is active by default if "
 "there are the previous projects. It could be used only if "
 "EnableAutoCompletion and TimeAccounting::UseFilter are enabled."
-msgstr ""
+msgstr "Ако је активирано, филтер претходних пројеката је подразумевано активан ако има пројеката од пре. Може се користити само ако је „EnableAutoCompletion” и „TimeAccounting::UseFilter” активирано."
 
 #. SysConfig
 msgid ""
@@ -729,7 +729,7 @@ msgstr "Одређује да ли радни сати могу да се уне
 
 #. SysConfig
 msgid "This module forces inserts in TimeAccounting."
-msgstr "Овај модул намеће инос у обрачун времена."
+msgstr "Овај модул намеће унос у обрачун времена."
 
 #. SysConfig
 msgid ""
@@ -739,27 +739,27 @@ msgstr "Овај модул за обавештавање даје упозор�
 
 #. SysConfig
 msgid "Time accounting edit."
-msgstr "Измене обрачунавања времена"
+msgstr "Измене обрачунавања времена."
 
 #. SysConfig
 msgid "Time accounting overview."
-msgstr "Преглед обрачунавања времена"
+msgstr "Преглед обрачунавања времена."
 
 #. SysConfig
 msgid "Time accounting reporting."
-msgstr "Извештаји обрачунавања времена"
+msgstr "Извештаји обрачунавања времена."
 
 #. SysConfig
 msgid "Time accounting settings."
-msgstr "Подешавања обрачунавања времена"
+msgstr "Подешавања обрачунавања времена."
 
 #. SysConfig
 msgid "Time accounting view."
-msgstr "Преглед обрачунавања времена"
+msgstr "Преглед обрачунавања времена."
 
 #. SysConfig
 msgid "Time accounting."
-msgstr "Обрачунавање времена"
+msgstr "Обрачунавање времена."
 
 #. SysConfig
 msgid ""

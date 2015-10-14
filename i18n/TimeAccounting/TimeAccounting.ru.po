@@ -2,13 +2,13 @@
 # Translators:
 # Yuri Kolesniov <ynkolesnikov@gmail.com>, 2014
 # Yuri Kolesniov <ynkolesnikov@gmail.com>, 2014
-# Yuri Kolesniov <ynkolesnikov@gmail.com>, 2014
+# Yuri Kolesniov <ynkolesnikov@gmail.com>, 2014-2015
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-10-07 18:43+0000\n"
-"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
+"PO-Revision-Date: 2015-10-08 06:30+0000\n"
+"Last-Translator: Yuri Kolesniov <ynkolesnikov@gmail.com>\n"
 "Language-Team: Russian (http://www.transifex.com/otrs/OTRS/language/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -58,11 +58,11 @@ msgstr "Введенная дата неверна! Заменена на тек
 
 #. Template: AAATimeAccounting
 msgid "Last Selected Projects."
-msgstr ""
+msgstr "Последние выбранные проекты."
 
 #. Template: AAATimeAccounting
 msgid "All Projects."
-msgstr ""
+msgstr "Все проекты."
 
 #. Template: AgentTimeAccountingDelete
 msgid "Do you really want to delete the Time Accounting of this day?"
@@ -443,7 +443,7 @@ msgstr "Фильтр для пользователей"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Time periods can not be deleted."
-msgstr ""
+msgstr "Периоды времени не могут быть удалены."
 
 #. Template: AgentTimeAccountingSetting
 msgid "Project List"
@@ -560,31 +560,31 @@ msgstr "Для этого дня данные не найдены."
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Last Projects"
-msgstr ""
+msgstr "Последние проекты."
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Incomplete Working Days"
-msgstr ""
+msgstr "Неполные рабочие дни"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Last Selected Projects"
-msgstr ""
+msgstr "Последние выбранные проекты"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "All Projects"
-msgstr ""
+msgstr "Все проекты"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "New User"
-msgstr ""
+msgstr "Новый пользователь"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "Period Status"
-msgstr ""
+msgstr "Статус периода"
 
 #. Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
 msgid "Incomplete working days"
-msgstr ""
+msgstr "Неполные рабочие дни"
 
 #. SysConfig
 msgid ""
@@ -671,21 +671,21 @@ msgstr "Если включено, отображаются только пол�
 msgid ""
 "If enabled, the dropdown elements in the edit screen are changed to "
 "modernized autocompletion fields."
-msgstr ""
+msgstr "Если включено, выпадающие поля списка на экране редактирования преобразуются в модернизированные поля автозавершения."
 
 #. SysConfig
 msgid ""
 "If enabled, the filter for the previous projects can be used instead two "
 "list of projects (last and all ones). It could be used only if "
 "TimeAccounting::EnableAutoCompletion is enabled."
-msgstr ""
+msgstr "Если включено, то фильтр для предыдущих проектов может быть использован вместо двух списков (последних и всех проектов). Это доступно только если параметр TimeAccounting::EnableAutoCompletion активирован."
 
 #. SysConfig
 msgid ""
 "If enabled, the filter for the previous projects is active by default if "
 "there are the previous projects. It could be used only if "
 "EnableAutoCompletion and TimeAccounting::UseFilter are enabled."
-msgstr ""
+msgstr "Если включено, то фильтр для предыдущих проектов включен по умолчанию при наличие предыдущих проектов. Это доступно только если параметры EnableAutoCompletion и TimeAccounting::UseFilter активированы."
 
 #. SysConfig
 msgid ""
