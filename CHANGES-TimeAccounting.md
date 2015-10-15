@@ -1,4 +1,6 @@
-#5.0.1 2015-??-??
+#5.0.2 2015-??-??
+
+#5.0.1 2015-10-20
  - 2015-10-13 Updated translation files, thanks to all translators.
  - 2015-10-06 Added Galician language, thanks to the translation team.
  - 2015-10-06 Added Malay language, thanks to the translation team.
@@ -28,7 +30,7 @@
  - 2014-09-25 Added Spanish (Mexico) translation.
  - 2014-09-25 Added Swedish translation, thanks to andreasberger.
  - 2014-09-25 Added Russian translation, thanks to ynkolesnikov.
- - 2014-09-23 Updated Brazilian Portuguese language, thanks to JosÈ Junior.
+ - 2014-09-23 Updated Brazilian Portuguese language, thanks to Jos√© Junior.
  - 2014-09-19 Changed API "UserID" parameter is now required for WorkingUnitsCompletnessCheck(), WorkingUnitsGet(), WorkingUnitsInsert(),WorkingUnitsDelete() and LastProjectOfUser(),
  - 2014-09-18 Fixed bug#[10494](http://bugs.otrs.org/show_bug.cgi?id=10494) - Today's Entry does not become available at the time expected on OTRS with timezone offset.
  - 2014-04-23 Fixed bug#[10486](http://bugs.otrs.org/show_bug.cgi?id=10486) - Can not insert a new entry with just using period.
@@ -51,7 +53,7 @@
 
 #2.1.2 - 2012-07-10
  - 2012-04-17 Added Italian translation, thanks to Massimo Bianchi.
- - 2012-02-14 Added Hungarian translation, thanks to BÈla Cs·bi.
+ - 2012-02-14 Added Hungarian translation, thanks to B√©la Cs√°bi.
 
 #2.1.1 - 2012-02-14
  - First stable release for OTRS 3.1.x.
@@ -69,7 +71,7 @@
 #2.0.2 - 2011-10-14
  - 2011-09-28 Added Danish translation, thanks to Frank Kristensen!
  - 2011-06-27 Fixed bug#[7383](http://bugs.otrs.org/show_bug.cgi?id=7383) - Setting "Allow project creation" for a user won't allow creation of new Projects.
- - 2011-05-19 Added Portuguese Brazilian translation, thanks to AndrÈ Luis, Guilherme Nascimento and Bruno Coelho.
+ - 2011-05-19 Added Portuguese Brazilian translation, thanks to Andr√© Luis, Guilherme Nascimento and Bruno Coelho.
  - 2011-04-05 Fixed bug#[7179](http://bugs.otrs.org/show_bug.cgi?id=7179) - MasterAction causes browser problem.
 
 #2.0.1 - 2011-03-15
