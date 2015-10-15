@@ -1,4 +1,6 @@
-#5.0.1 2015-??-??
+#5.0.2 2015-??-??
+
+#5.0.1 2015-10-20
  - 2015-10-13 Updated translations, thanks to all translators.
  - 2015-10-06 Added Czech language, thanks to the translation team.
  - 2015-10-06 Added Hungarian language, thanks to the translation team.
