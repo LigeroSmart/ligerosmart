@@ -105,9 +105,10 @@ $Selenium->RunTest(
 
         # get master test phone ticket data
         my ( $MasterTicketID, $MasterTicketNumber ) = $TicketObject->TicketSearch(
-            Result         => 'HASH',
-            Limit          => 1,
-            CustomerUserID => $TestCustomerLoginPhone,
+            Result            => 'HASH',
+            Limit             => 1,
+            CustomerUserLogin => $TestCustomerLoginPhone,
+            UserID            => 1,
         );
 
         $Self->IsNot(
@@ -152,9 +153,10 @@ $Selenium->RunTest(
 
         # get slave test email ticket data
         my ( $SlaveTicketID, $SlaveTicketNumber ) = $TicketObject->TicketSearch(
-            Result         => 'HASH',
-            Limit          => 1,
-            CustomerUserID => $TestCustomerLoginsEmail,
+            Result            => 'HASH',
+            Limit             => 1,
+            CustomerUserLogin => $TestCustomerLoginsEmail,
+            UserID            => 1,
         );
 
         $Self->IsNot(
