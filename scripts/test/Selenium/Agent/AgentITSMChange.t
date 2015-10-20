@@ -68,6 +68,9 @@ $Selenium->RunTest(
             # navigate to AgentITSMChange screen
             $Selenium->get("${ScriptAlias}index.pl?Action=AgentITSMChange;SortBy=ChangeNumber;OrderBy=Down");
 
+            # wait for screen to load
+            $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("div.ControlRow").length' );
+
             if ( $ChangeState eq 'pending approval' ) {
 
                 # click on appropriate filter
@@ -116,8 +119,7 @@ $Selenium->RunTest(
 
         # make sure the cache is correct
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => 'ITSMChange*' );
-        }
-
+    }
 );
 
 1;
