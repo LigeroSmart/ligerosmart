@@ -81,7 +81,7 @@ $Selenium->RunTest(
         }
 
         # input change title and number as search param and run it
-        $Selenium->find_element("//button[\@value='Add'][\@type='button']")->click();
+        $Selenium->find_element("//a[\@class='AddButton']")->click();
         $Selenium->find_element( "ChangeNumber", 'name' )->send_keys( $ChangeData->{ChangeNumber} );
         $Selenium->find_element( "ChangeTitle",  'name' )->send_keys( $ChangeData->{ChangeTitle} );
         $Selenium->find_element( "ChangeTitle",  'name' )->submit();
@@ -125,8 +125,7 @@ $Selenium->RunTest(
 
         # make sure the cache is correct
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => 'ITSMChange*' );
-        }
-
+    }
 );
 
 1;

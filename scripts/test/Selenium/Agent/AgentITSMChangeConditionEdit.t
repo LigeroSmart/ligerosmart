@@ -101,21 +101,45 @@ $Selenium->RunTest(
         # add new expresion
         # in change object for test change, look for priority value of '2 low'
         $Selenium->find_element("//button[\@name='AddExpression'][\@type='submit']")->click();
-        $Selenium->find_element( "#ExpressionID-NEW-ObjectID option[value='1']",         'css' )->click();
+        $Selenium->find_element( "#ExpressionID-NEW-ObjectID option[value='1']", 'css' )->click();
+
+        # wait for ajax response to fill next dropdown list with more than 1 value
+        $Selenium->WaitFor( JavaScript => "return \$('#ExpressionID-NEW-Selector option').length > 1;" );
         $Selenium->find_element( "#ExpressionID-NEW-Selector option[value='$ChangeID']", 'css' )->click();
+
+        # wait for ajax response to fill next dropdown list with more than 1 value
+        $Selenium->WaitFor( JavaScript => "return \$('#ExpressionID-NEW-AttributeID option').length > 1;" );
         $Selenium->find_element( "#ExpressionID-NEW-AttributeID option[value='$ExpresionAttributeID']", 'css' )
             ->click();
+
+        # wait for ajax response to fill next dropdown list with more than 1 value
+        $Selenium->WaitFor( JavaScript => "return \$('#ExpressionID-NEW-OperatorID option').length > 1;" );
         $Selenium->find_element( "#ExpressionID-NEW-OperatorID option[value='1']", 'css' )->click();
+
+        # wait for ajax response to fill next dropdown list with more than 1 value
+        $Selenium->WaitFor( JavaScript => "return \$('#ExpressionID-NEW-CompareValue option').length > 1;" );
         $Selenium->find_element( "#ExpressionID-NEW-CompareValue option[value='$PriorityDataRef->{ItemID}']", 'css' )
             ->click();
 
         # add new action
         # in change object for test change, set change state on 'Approved'
         $Selenium->find_element("//button[\@name='AddAction'][\@type='submit']")->click();
-        $Selenium->find_element( "#ActionID-NEW-ObjectID option[value='1']",                     'css' )->click();
-        $Selenium->find_element( "#ActionID-NEW-Selector option[value='$ChangeID']",             'css' )->click();
+        $Selenium->find_element( "#ActionID-NEW-ObjectID option[value='1']", 'css' )->click();
+
+        # wait for ajax response to fill next dropdown list with more than 1 value
+        $Selenium->WaitFor( JavaScript => "return \$('#ActionID-NEW-Selector option').length > 1;" );
+        $Selenium->find_element( "#ActionID-NEW-Selector option[value='$ChangeID']", 'css' )->click();
+
+        # wait for ajax response to fill next dropdown list with more than 1 value
+        $Selenium->WaitFor( JavaScript => "return \$('#ActionID-NEW-AttributeID option').length > 1;" );
         $Selenium->find_element( "#ActionID-NEW-AttributeID option[value='$ActionAttributeID']", 'css' )->click();
-        $Selenium->find_element( "#ActionID-NEW-OperatorID option[value='$ActionOperatorID']",   'css' )->click();
+
+        # wait for ajax response to fill next dropdown list with more than 1 value
+        $Selenium->WaitFor( JavaScript => "return \$('#ActionID-NEW-OperatorID option').length > 1;" );
+        $Selenium->find_element( "#ActionID-NEW-OperatorID option[value='$ActionOperatorID']", 'css' )->click();
+
+        # wait for ajax response to fill next dropdown list with more than 1 value
+        $Selenium->WaitFor( JavaScript => "return \$('#ActionID-NEW-ActionValue option').length > 1;" );
         $Selenium->find_element(
             "#ActionID-NEW-ActionValue option[value='$ConditionChangeStateDataRef->{ItemID}']",
             'css'
@@ -141,7 +165,7 @@ $Selenium->RunTest(
 
         # make sure cache is correct
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => 'ITSMChange*' );
-        }
+    }
 );
 
 1;
