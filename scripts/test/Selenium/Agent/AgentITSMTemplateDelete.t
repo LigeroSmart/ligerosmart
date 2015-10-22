@@ -99,7 +99,8 @@ $Selenium->RunTest(
         # click to delete test template
         $Selenium->find_element( "#DeleteTemplateID$TemplateID", 'css' )->click();
 
-        # confirm delete action
+        # wait for confirm button to show up and confirm delete action
+        $Selenium->WaitFor( JavaScript => "return \$('#DialogButton1').length;" );
         $Selenium->find_element( "#DialogButton1", 'css' )->click();
 
         # navigate to AgentITSMChangeAddFromTemplate screen

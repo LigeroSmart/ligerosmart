@@ -189,7 +189,10 @@ $Selenium->RunTest(
 
             # click to delete test template
             $Selenium->find_element( "#DeleteTemplateID$TemplateIDs[$Index]", 'css' )->click();
-            $Selenium->find_element( "#DialogButton1",                        'css' )->click();
+
+            # wait for confirm button to show up and confirm delete action
+            $Selenium->WaitFor( JavaScript => "return \$('#DialogButton1').length;" );
+            $Selenium->find_element( "#DialogButton1", 'css' )->click();
 
             $Index++;
         }
