@@ -91,7 +91,8 @@ $Selenium->RunTest(
         $Selenium->switch_to_window( $Handles->[1] );
 
         # check manager change
-        my $ExpectedManagerMessage = "\"Change Manager\", \"$TestUserLogin";
+        my $ExpectedManagerMessage = "Change Manager: New: $TestUserLogin";
+
         $Self->True(
             index( $Selenium->get_page_source(), $ExpectedManagerMessage ) > -1,
             "$ExpectedManagerMessage - found",
@@ -109,7 +110,7 @@ $Selenium->RunTest(
 
         # make sure the cache is correct
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => 'ITSMChange*' );
-        }
+    }
 );
 
 1;

@@ -82,13 +82,8 @@ $Selenium->RunTest(
         $Selenium->find_element("//a[contains(\@href, \'Action=AgentITSMWorkOrderDelete;WorkOrderID=$WorkOrderID')]")
             ->click();
 
-        # verify delete screen
-        $Self->True(
-            index( $Selenium->get_page_source(), "Do you really want to delete this workorder?" ) > -1,
-            "'Do you really want to delete this workorder?' - found",
-        );
-
-        # execute delete
+        # wait for confirm button to show up and confirm delete action
+        $Selenium->WaitFor( JavaScript => "return \$('#DialogButton1').length;" );
         $Selenium->find_element( "#DialogButton1", 'css' )->click();
 
         # click on 'History' and switch window
