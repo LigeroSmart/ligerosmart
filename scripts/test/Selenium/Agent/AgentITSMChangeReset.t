@@ -29,13 +29,13 @@ $Selenium->RunTest(
         # get sysconfig object
         my $SysConfigObject = $Kernel::OM->Get('Kernel::System::SysConfig');
 
-        # get change delete menu module default sysconfig
+        # get change reset menu module default sysconfig
         my %ChangeResetMenu = $SysConfigObject->ConfigItemGet(
             Name    => 'ITSMChange::Frontend::MenuModule###110-ChangeReset',
             Default => 1,
         );
 
-        # set change delete menu module to valid
+        # set change reset menu module to valid
         my %ChangeResetMenuUpdate = map { $_->{Key} => $_->{Content} }
             grep { defined $_->{Key} } @{ $ChangeResetMenu{Setting}->[1]->{Hash}->[1]->{Item} };
 
@@ -52,7 +52,7 @@ $Selenium->RunTest(
                 'itsm-change-builder'
             ],
             'NavBarName' => 'ITSM Change',
-            'Title'      => 'Reset'
+            'Title'      => 'Reset',
         );
 
         # set AgemtITSMChangeReset frontend module on valid
@@ -112,6 +112,8 @@ $Selenium->RunTest(
             WorkOrderTitle   => $WorkOrderTitleRandom,
             Instruction      => 'Selenium Test Work Order',
             WorkOrderStateID => $WorkOrderStateIDs[1],
+            PlannedStartTime => '2027-10-12 00:00:01',
+            PlannedEndTime   => '2027-10-15 15:00:00',
             PlannedEffort    => 10,
             UserID           => 1,
         );
@@ -140,11 +142,8 @@ $Selenium->RunTest(
         # click on 'Reset'
         $Selenium->find_element("//a[contains(\@href, \'Action=AgentITSMChangeReset;ChangeID=$ChangeID')]")->click();
 
-        # verify delete message and confirm action
-        $Self->True(
-            index( $Selenium->get_page_source(), 'Do you really want to reset this change?' ) > -1,
-            "'Do you really want to reset this change?' - found",
-        );
+        # wait for confirm button to show up and confirm delete action
+        $Selenium->WaitFor( JavaScript => "return \$('#DialogButton1').length;" );
         $Selenium->find_element( "#DialogButton1", 'css' )->click();
 
         # click on 'History' and switch window
