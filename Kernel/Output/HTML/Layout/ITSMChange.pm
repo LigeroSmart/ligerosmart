@@ -97,6 +97,11 @@ sub ITSMChangeBuildWorkOrderGraph {
         );
     }
 
+    # set time attributes to empty string if not defined
+    for my $TimeAttribute (qw(PlannedStartTime PlannedEndTime ActualStartTime ActualEndTime)) {
+         $Time{$TimeAttribute} //= '';
+    }
+
     # get smallest start time
     if ( !$Time{StartTime} ) {
         $Time{StartTime} = ( $Time{PlannedStartTime} lt $Time{ActualStartTime} )
