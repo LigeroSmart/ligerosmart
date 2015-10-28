@@ -109,7 +109,8 @@ $Selenium->RunTest(
 
         # select test created ticket to link with test created work order
         $Selenium->execute_script(
-            "\$('#TargetIdentifier').val('Ticket').trigger('redraw.InputField').trigger('change');");
+            "\$('#TargetIdentifier').val('Ticket').trigger('redraw.InputField').trigger('change');"
+        );
         $Selenium->find_element("//input[\@name='SEARCH::TicketNumber']")->send_keys($TicketNumber);
         $Selenium->find_element("//button[\@value='Search'][\@type='submit']")->click();
         $Selenium->WaitFor( JavaScript => "return \$('input#LinkTargetKeys').length" );
@@ -179,7 +180,7 @@ $Selenium->RunTest(
 
         # make sure cache is correct
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => 'ITSMChange*' );
-    }
+        }
 );
 
 1;

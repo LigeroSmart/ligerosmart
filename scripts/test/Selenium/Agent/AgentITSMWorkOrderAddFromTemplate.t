@@ -131,7 +131,8 @@ $Selenium->RunTest(
 
         # select test created work order template and submit
         $Selenium->execute_script(
-            "\$('#TemplateID').val('$TemplateID').trigger('redraw.InputField').trigger('change');");
+            "\$('#TemplateID').val('$TemplateID').trigger('redraw.InputField').trigger('change');"
+        );
 
         $Selenium->WaitFor( JavaScript => "return \$('#SubmitTemplate').length > 1;" );
         $Selenium->find_element( "#SubmitTemplate", 'css' )->click();
@@ -181,7 +182,7 @@ $Selenium->RunTest(
 
         # make sure the cache is correct
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => 'ITSMChange*' );
-    }
+        }
 );
 
 1;

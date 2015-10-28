@@ -194,7 +194,8 @@ $Selenium->RunTest(
         $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("body").length' );
 
         $Selenium->execute_script(
-            "\$('#ImpactID').val('$CatalogImpactDataRef->{ItemID}').trigger('redraw.InputField').trigger('change');");
+            "\$('#ImpactID').val('$CatalogImpactDataRef->{ItemID}').trigger('redraw.InputField').trigger('change');"
+        );
 
         # submit and change window
         $Selenium->find_element("//button[\@value='Submit'][\@type='submit']")->click();
@@ -231,7 +232,7 @@ $Selenium->RunTest(
         # make sure cache is correct
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => 'ITSMChange*' );
 
-    }
+        }
 );
 
 1;

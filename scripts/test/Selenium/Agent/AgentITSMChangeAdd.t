@@ -80,9 +80,11 @@ $Selenium->RunTest(
         $Selenium->find_element( "#RichText1",   'css' )->send_keys('SeleniumDescription');
         $Selenium->find_element( "#RichText2",   'css' )->send_keys('SeleniumJustification');
         $Selenium->execute_script(
-            "\$('#CategoryID').val('$CategoryDataRef->{ItemID}').trigger('redraw.InputField').trigger('change');");
+            "\$('#CategoryID').val('$CategoryDataRef->{ItemID}').trigger('redraw.InputField').trigger('change');"
+        );
         $Selenium->execute_script(
-            "\$('#ImpactID').val('$ImpactDataRef->{ItemID}').trigger('redraw.InputField').trigger('change');");
+            "\$('#ImpactID').val('$ImpactDataRef->{ItemID}').trigger('redraw.InputField').trigger('change');"
+        );
         $Selenium->find_element( "#SubmitChangeAdd", 'css' )->click();
 
         # check created test change values
@@ -129,7 +131,7 @@ $Selenium->RunTest(
 
         # make sure the cache is correct
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => 'ITSMChange*' );
-    }
+        }
 );
 
 1;

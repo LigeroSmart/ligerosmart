@@ -160,7 +160,8 @@ $Selenium->RunTest(
 
         # import CAB from template
         $Selenium->execute_script(
-            "\$('#TemplateID').val('$CABTemplateID').trigger('redraw.InputField').trigger('change');");
+            "\$('#TemplateID').val('$CABTemplateID').trigger('redraw.InputField').trigger('change');"
+        );
         $Selenium->find_element("//button[\@value='Apply Template'][\@type='submit']")->click();
 
         # verify CAB user applied from template
@@ -191,7 +192,7 @@ $Selenium->RunTest(
 
         # make sure the cache is correct
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => 'ITSMChange*' );
-    }
+        }
 
 );
 
