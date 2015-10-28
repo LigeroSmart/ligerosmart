@@ -54,11 +54,13 @@ $Selenium->RunTest(
         # create test work order
         my $WorkOrderTitleRandom = 'Selenium Work Order ' . $Helper->GetRandomID();
         my $WorkOrderID          = $WorkOrderObject->WorkOrderAdd(
-            ChangeID       => $ChangeIDs[0],
-            WorkOrderTitle => $WorkOrderTitleRandom,
-            Instruction    => 'Selenium Test Work Order',
-            PlannedEffort  => 10,
-            UserID         => 1,
+            ChangeID         => $ChangeIDs[0],
+            WorkOrderTitle   => $WorkOrderTitleRandom,
+            Instruction      => 'Selenium Test Work Order',
+            PlannedStartTime => '2027-10-12 00:00:01',
+            PlannedEndTime   => '2027-10-15 15:00:00',
+            PlannedEffort    => 10,
+            UserID           => 1,
         );
         $Self->True(
             $WorkOrderID,
@@ -75,7 +77,7 @@ $Selenium->RunTest(
             TemplateType => 'ITSMWorkOrder',
             WorkOrderID  => $WorkOrderID,
             ValidID      => 1,
-            UserID       => 1
+            UserID       => 1,
         );
 
         # create test template from test work order
@@ -130,6 +132,8 @@ $Selenium->RunTest(
         # select test created work order template and submit
         $Selenium->execute_script(
             "\$('#TemplateID').val('$TemplateID').trigger('redraw.InputField').trigger('change');");
+
+        $Selenium->WaitFor( JavaScript => "return \$('#SubmitTemplate').length > 1;" );
         $Selenium->find_element( "#SubmitTemplate", 'css' )->click();
 
         $Selenium->switch_to_window( $Handles->[0] );
