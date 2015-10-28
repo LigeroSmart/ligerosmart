@@ -95,6 +95,9 @@ $Selenium->RunTest(
                 $Selenium->find_element("//a[contains(\@href, \'Filter=$ChangeState' )]")->click();
             }
 
+            # wait until page has loaded, if neccessary
+            $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("body").length' );
+
             # check screen
             $Selenium->find_element( "table",             'css' );
             $Selenium->find_element( "table thead tr th", 'css' );
