@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2015 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/e6906917b7ccb47870d12f8ae743a05cb633318f/Kernel/Modules/AgentTicketPrint.pm
+# $origin: https://github.com/OTRS/otrs/blob/a11f0d7a1ed0174e796a11c9998cdb112d0624be/Kernel/Modules/AgentTicketPrint.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -275,11 +275,6 @@ sub Run {
         Y    => -6,
     );
 
-    $PDFObject->HLine(
-        Color     => '#aaa',
-        LineWidth => 0.5,
-    );
-
     # output ticket dynamic fields
     $Self->_PDFOutputTicketDynamicFields(
         PageData   => \%Page,
@@ -289,11 +284,6 @@ sub Run {
     $PDFObject->PositionSet(
         Move => 'relativ',
         Y    => -6,
-    );
-
-    $PDFObject->HLine(
-        Color     => '#aaa',
-        LineWidth => 0.5,
     );
 
     # output linked objects
@@ -647,6 +637,11 @@ sub _PDFOutputLinkedObjects {
     # get PDF object
     my $PDFObject = $Kernel::OM->Get('Kernel::System::PDF');
 
+    $PDFObject->HLine(
+        Color     => '#aaa',
+        LineWidth => 0.5,
+    );
+
     # set new position
     $PDFObject->PositionSet(
         Move => 'relativ',
@@ -777,6 +772,11 @@ sub _PDFOutputTicketDynamicFields {
 
         # get PDF object
         my $PDFObject = $Kernel::OM->Get('Kernel::System::PDF');
+
+        $PDFObject->HLine(
+            Color     => '#aaa',
+            LineWidth => 0.5,
+        );
 
         # set new position
         $PDFObject->PositionSet(
