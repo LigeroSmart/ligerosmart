@@ -61,6 +61,9 @@ $Selenium->RunTest(
         # navigate to AgentITSMChangeZoom of created test change
         $Selenium->get("${ScriptAlias}index.pl?Action=AgentITSMChangeZoom;ChangeID=$ChangeID");
 
+        # wait until page has loaded, if neccessary
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("body").length' );
+
         # click on 'Conditions' and switch screens
         $Selenium->find_element("//a[contains(\@href, \'Action=AgentITSMChangeCondition;ChangeID=$ChangeID' )]")
             ->click();
@@ -148,6 +151,9 @@ $Selenium->RunTest(
 
         $Selenium->find_element("//button[\@value='Submit'][\@type='submit']")->click();
 
+        # wait until page has loaded, if neccessary
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("body").length' );
+
         # check screen
         $Selenium->find_element( "table",             'css' );
         $Selenium->find_element( "table thead tr th", 'css' );
@@ -162,6 +168,9 @@ $Selenium->RunTest(
         # close and switch window
         $Selenium->find_element( ".CancelClosePopup", 'css' )->click();
         $Selenium->switch_to_window( $Handles->[0] );
+
+        # wait until page has loaded, if neccessary
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("body").length' );
 
         # check test change state
         $Self->True(
@@ -180,6 +189,9 @@ $Selenium->RunTest(
 
         $Handles = $Selenium->get_window_handles();
         $Selenium->switch_to_window( $Handles->[1] );
+
+        # wait until page has loaded, if neccessary
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("body").length' );
 
         $Selenium->execute_script(
             "\$('#ImpactID').val('$CatalogImpactDataRef->{ItemID}').trigger('redraw.InputField').trigger('change');");
