@@ -497,10 +497,11 @@ sub Run {
 
     # show FAQ path
     my $ShowFAQPath = $LayoutObject->FAQPathShow(
-        FAQObject  => $FAQObject,
-        CategoryID => $FAQData{CategoryID},
-        UserID     => $Self->{UserID},
-        Nav        => $Nav,
+        FAQObject   => $FAQObject,
+        CategoryID  => $FAQData{CategoryID},
+        UserID      => $Self->{UserID},
+        PathForItem => 1,
+        Nav         => $Nav,
     );
     if ($ShowFAQPath) {
         $LayoutObject->Block(

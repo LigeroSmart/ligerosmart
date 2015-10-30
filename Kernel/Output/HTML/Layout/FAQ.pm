@@ -568,6 +568,7 @@ and returns the value 1.
         FAQObject   => $FAQObject,                   # needed for core module interaction
         CategoryID  => 5,
         UserID      => 1,
+        PathForItem => 1,                            # optional (default 0)
         Nav         => 'none',                       # optional
     );
 
@@ -586,6 +587,8 @@ sub FAQPathShow {
             return;
         }
     }
+
+    $Param{PathForItem} ||= 0;
 
     # check parameters
     if ( !defined $Param{CategoryID} ) {
@@ -632,8 +635,12 @@ sub FAQPathShow {
     # output subcategories
     for my $CategoryData ( @{$CategoryList} ) {
 
-        my $Block = 'FAQPathCategoryElement';
-        if ( $CategoryData->{CategoryID} == $CategoryList->[-1]->{CategoryID} ) {
+        $Block = 'FAQPathCategoryElement';
+        if (
+            $CategoryData->{CategoryID} == $CategoryList->[-1]->{CategoryID}
+            && !$Param{PathForItem}
+            )
+        {
             $Block = 'FAQPathCategoryElementNoLink';
         }
 
