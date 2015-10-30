@@ -1,4 +1,5 @@
 #5.0.2 2015-??-??
+ - 2015-10-30 Fixed bug#[11195](http://bugs.otrs.org/show_bug.cgi?id=11195) - FAQ-Zoom Template contains unused links to ticket zoom.
  - 2015-10-30 Fixed bug#[11580](http://bugs.otrs.org/show_bug.cgi?id=11580) - FAQ bread crumb navigation is wrong / missing the actual item category.
 
 #5.0.1 2015-10-20

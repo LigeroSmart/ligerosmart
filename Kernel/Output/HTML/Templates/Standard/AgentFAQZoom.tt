@@ -240,7 +240,7 @@
                 <div class="WidgetSimple">
                     <div class="Header">
                         <div class="WidgetAction Toggle">
-                            <a href="[% Env("Baselink") %]Action=AgentTicketZoom;TicketID=[% Data.TicketID | uri %];ArticleID=[% Data.ArticleID | uri %]" title="[% Translate("Show or hide the content") | html %]"><i class="fa fa-caret-right"></i><i class="fa fa-caret-down"></i></a>
+                            <a href="#" title="[% Translate("Show or hide the content") | html %]"><i class="fa fa-caret-right"></i><i class="fa fa-caret-down"></i></a>
                         </div>
                         <h2>
                             [% Translate(Data.Caption) | html %]
@@ -278,7 +278,7 @@
                 <div class="WidgetSimple">
                     <div class="Header">
                         <div class="WidgetAction Toggle">
-                            <a href="[% Env("Baselink") %]Action=AgentTicketZoom;TicketID=[% Data.TicketID | uri %];ArticleID=[% Data.ArticleID | uri %]" title="[% Translate("Show or hide the content") | html %]"><i class="fa fa-caret-right"></i><i class="fa fa-caret-down"></i></a>
+                            <a href="#" title="[% Translate("Show or hide the content") | html %]"><i class="fa fa-caret-right"></i><i class="fa fa-caret-down"></i></a>
                         </div>
                         <h2>[% Translate("Rating") | html %]</h2>
                     </div>
