@@ -77,6 +77,7 @@
         <File Permission="644" Location="scripts/test/Selenium/Agent/Admin/AdminCustomerUserService.t"/>
         <File Permission="644" Location="scripts/test/Selenium/Agent/Admin/AdminITSMCIPAllocate.t"/>
         <File Permission="644" Location="scripts/test/Selenium/Agent/AgentStatistics/Add.t"/>
+        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentStatistics/Import.t"/>
         <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMService.t"/>
         <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMServiceZoom.t"/>
         <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMServicePrint.t"/>
