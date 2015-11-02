@@ -117,7 +117,7 @@ $Selenium->RunTest(
 
             $Self->True(
                 $SLAID,
-                "SLA $SLAID has been created."
+                "SLA $SLAID has been created.",
             );
 
             push @SLAIDs, $SLAID;
