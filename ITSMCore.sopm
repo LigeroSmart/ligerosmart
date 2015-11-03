@@ -85,6 +85,8 @@
         <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMSLAPrint.t"/>
         <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMSLAZoom.t"/>
         <File Permission="644" Location="scripts/test/Selenium/Agent/AgentTicketService.t"/>
+        <File Permission="644" Location="scripts/test/Selenium/Output/NavBar/AgentTicketService.t"/>
+        <File Permission="644" Location="scripts/test/Selenium/Output/ToolBar/TicketService.t"/>
         <File Permission="644" Location="var/httpd/htdocs/js/ITSM.Agent.CustomerSearch.js"/>
         <File Permission="644" Location="var/httpd/htdocs/js/ITSM.Agent.IncidentState.js"/>
         <File Permission="644" Location="var/httpd/htdocs/js/ITSM.Agent.Zoom.js"/>
