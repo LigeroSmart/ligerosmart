@@ -201,7 +201,7 @@ $Selenium->RunTest(
         $Selenium->find_element("//button[\@value='Submit'][\@type='submit']")->click();
         $Selenium->switch_to_window( $Handles->[0] );
 
-        # check for expected chage state to verify test condition
+        # check for expected change state to verify test condition
 
         $Self->True(
             index( $Selenium->get_page_source(), 'Successful' ) > -1,
@@ -231,8 +231,7 @@ $Selenium->RunTest(
 
         # make sure cache is correct
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => 'ITSMChange*' );
-
-        }
+    }
 );
 
 1;
