@@ -108,7 +108,7 @@ sub CodeInstall {
     # install stats
     $Kernel::OM->Get('Kernel::System::Stats')->StatsInstall(
         FilePrefix => $Self->{FilePrefix},
-        UserID => 1,
+        UserID     => 1,
     );
 
     return 1;
@@ -128,7 +128,7 @@ sub CodeReinstall {
     # install stats
     $Kernel::OM->Get('Kernel::System::Stats')->StatsInstall(
         FilePrefix => $Self->{FilePrefix},
-        UserID => 1,
+        UserID     => 1,
     );
 
     return 1;
@@ -148,7 +148,7 @@ sub CodeUpgrade {
     # install stats
     $Kernel::OM->Get('Kernel::System::Stats')->StatsInstall(
         FilePrefix => $Self->{FilePrefix},
-        UserID => 1,
+        UserID     => 1,
     );
 
     return 1;
@@ -168,7 +168,7 @@ sub CodeUninstall {
     # uninstall stats
     $Kernel::OM->Get('Kernel::System::Stats')->StatsUninstall(
         FilePrefix => $Self->{FilePrefix},
-        UserID => 1,
+        UserID     => 1,
     );
 
     return 1;
