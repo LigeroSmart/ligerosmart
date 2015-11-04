@@ -1047,7 +1047,7 @@ sub Run {
             $DynamicFieldBackendObject->ValueSet(
                 DynamicFieldConfig => $CriticalityDynamicFieldConfig,
                 ObjectID           => $Self->{TicketID},
-                Value              => $ReverseCriticalityPossibleValues{ $Service{Criticality} },
+                Value              => $ReverseCriticalityPossibleValues{ $Service{Criticality} || '' },
                 UserID             => $Self->{UserID},
             );
         }
