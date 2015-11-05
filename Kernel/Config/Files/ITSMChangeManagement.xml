@@ -1432,7 +1432,10 @@
                 <Item Key="Schedule">*/10 * * * *</Item> <!-- Default every 10 mins -->
                 <Item Key="Module">Kernel::System::Console::Command::Admin::ITSM::Change::Check</Item>
                 <Item Key="Function">Execute</Item>
-                <Item Key="Params"></Item>
+                <Item Key="Params">
+                    <Array>
+                    </Array>
+                </Item>
                 <Item Key="MaximumParallelInstances">1</Item>
             </Hash>
         </Setting>
