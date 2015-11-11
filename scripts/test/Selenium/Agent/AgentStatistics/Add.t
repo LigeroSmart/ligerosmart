@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2015 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/a11f0d7a1ed0174e796a11c9998cdb112d0624be/scripts/test/Selenium/Agent/AgentStatistics/Add.t
+# $origin: https://github.com/OTRS/otrs/blob/3c4aa330b3e6be53d2ebefbe8b69c760d8623ba9/scripts/test/Selenium/Agent/AgentStatistics/Add.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -131,19 +131,19 @@ $Selenium->RunTest(
 
         # check link 'DynamicMatrix'
         $Self->True(
-            $Selenium->find_element("//li[contains(\@data-statistic-preselection, \'DynamicMatrix\' )]"),
+            $Selenium->find_element("//a[contains(\@data-statistic-preselection, \'DynamicMatrix\' )]"),
             "There is a link for adding 'DynamicMatrix' statistics",
         );
 
         # check link 'DynamicList'
         $Self->True(
-            $Selenium->find_element("//li[contains(\@data-statistic-preselection, \'DynamicList\' )]"),
+            $Selenium->find_element("//a[contains(\@data-statistic-preselection, \'DynamicList\' )]"),
             "There is a link for adding 'DynamicList' statistics",
         );
 
         # check link 'Static'
         $Self->True(
-            $Selenium->find_element("//li[contains(\@data-statistic-preselection, \'Static\' )]"),
+            $Selenium->find_element("//a[contains(\@data-statistic-preselection, \'Static\' )]"),
             "There is a link for adding 'Static' statistics",
         );
 
@@ -224,7 +224,7 @@ $Selenium->RunTest(
             $Selenium->get("${ScriptAlias}index.pl?Action=AgentStatistics;Subaction=Add");
 
             # add new statistics
-            $Selenium->find_element("//li[contains(\@data-statistic-preselection, \'$StatsData->{Type}\' )]")->click();
+            $Selenium->find_element("//a[contains(\@data-statistic-preselection, \'$StatsData->{Type}\' )]")->click();
             $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#Title").length' );
 
             my $Description = 'Description ' . $StatsData->{Title};
