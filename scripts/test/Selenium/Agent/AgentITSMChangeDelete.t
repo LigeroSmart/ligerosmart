@@ -119,11 +119,8 @@ $Selenium->RunTest(
         # click on 'Delete'
         $Selenium->find_element("//a[contains(\@href, \'Action=AgentITSMChangeDelete;ChangeID=$ChangeID')]")->click();
 
-        # verify delete message and confirm action
-        $Self->True(
-            index( $Selenium->get_page_source(), 'Do you really want to delete this change?' ) > -1,
-            "'Do you really want to delete this change?' - found",
-        );
+        # wait for confirm button to show up and confirm delete action
+        $Selenium->WaitFor( JavaScript => "return \$('#DialogButton1').length;" );
         $Selenium->find_element( "#DialogButton1", 'css' )->click();
 
         # navigate to AgentITSMChange screen with requested filter and ordered down
@@ -139,8 +136,7 @@ $Selenium->RunTest(
 
         # make sure cache is correct
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => 'ITSMChange*' );
-        }
-
+    }
 );
 
 1;
