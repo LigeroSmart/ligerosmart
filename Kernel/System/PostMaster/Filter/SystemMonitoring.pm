@@ -448,7 +448,7 @@ sub _TicketUpdate {
                 SystemTime => $TimeObject->SystemTime()
                     + $Self->{Config}->{ClosePendingTime},
             );
-            $Param->{GetParam}->{'X-OTRS-State-PendingTime'} = $TimeStamp;
+            $Param->{GetParam}->{'X-OTRS-FollowUp-State-PendingTime'} = $TimeStamp;
         }
 
         # set log message
