@@ -469,11 +469,24 @@ sub Run {
             my @CSVHead;
             my @CSVData;
 
+            # get all change dynamic fields that are configured for the search csv output
+            my %FieldFilter;
+            FIELD:
+            for my $Field ( @{ $Self->{Config}->{SearchCSVData} } ) {
+                if ( $Field =~ m{ \A DynamicField_ ( [a-zA-Z\d]+ ) \z }xms ) {
+                    $FieldFilter{$1} = 1;
+                }
+            }
+
+            # get all dynamic fields for ITSMChange with the selected field filter
+            my $DynamicFieldsITSMChange = $DynamicFieldObject->DynamicFieldListGet(
+                Valid       => 1,
+                ObjectType  => 'ITSMChange',
+                FieldFilter => \%FieldFilter,
+            );
+
             ID:
             for my $ChangeID ( @{$ViewableChangeIDs} ) {
-
-                # to store all data
-                my %Info;
 
                 # to store data of sub-elements
                 my %SubElementData;
@@ -486,10 +499,8 @@ sub Run {
 
                 next ID if !$Change;
 
-                # add change data,
-                # ( let workorder data overwrite
-                # some change attributes, i.e. PlannedStartTime, etc... )
-                %Info = ( %{$Change}, %Info );
+                # to store all data
+                my %Info = %{$Change};
 
                 # get user data for needed user types
                 USERTYPE:
@@ -502,8 +513,7 @@ sub Run {
 
                     # get user data
                     my %User = $UserObject->GetUserData(
-                        UserID =>
-                            $Change->{ $UserType . 'ID' } || $Info{ $UserType . 'ID' },
+                        UserID => $Change->{ $UserType . 'ID' } || $Info{ $UserType . 'ID' },
                         Cached => 1,
                     );
 
@@ -630,6 +640,32 @@ sub Run {
 
                 my @Data;
                 for my $Header (@CSVHead) {
+
+                    # if the column is a dynamic field
+                    if ( $Header =~ m{ \A DynamicField_ ( [a-zA-Z\d]+ ) \z }xms ) {
+
+                        my $DynamicFieldName = $1;
+
+                        DYNAMICFIELD:
+                        for my $DynamicFieldConfig ( @{$DynamicFieldsITSMChange} ) {
+
+                            next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
+                            next DYNAMICFIELD if $DynamicFieldConfig->{Name} ne $DynamicFieldName;
+
+                            # get print string for this dynamic field
+                            my $Value = $DynamicFieldBackendObject->DisplayValueRender(
+                                DynamicFieldConfig => $DynamicFieldConfig,
+                                Value              => $Info{$Header},
+                                ValueMaxChars      => 100,
+                                LayoutObject       => $LayoutObject,
+                            );
+
+                            $Info{$Header} = $Value->{Value};
+
+                            last DYNAMICFIELD;
+                        }
+                    }
+
                     push @Data, $Info{$Header};
                 }
                 push @CSVData, \@Data;
