@@ -325,10 +325,10 @@ sub Run {
     # security="restricted" may break SSO - disable this feature if requested
     my $MSSecurityRestricted;
     if ( $ConfigObject->Get('DisableMSIFrameSecurityRestricted') ) {
-        $Param{MSSecurityRestricted} = '';
+        $MSSecurityRestricted = '';
     }
     else {
-        $Param{MSSecurityRestricted} = 'security="restricted"';
+        $MSSecurityRestricted = 'security="restricted"';
     }
 
     # show the HTML field blocks as iframes
