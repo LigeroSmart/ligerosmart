@@ -232,27 +232,12 @@ sub Run {
             # split the content by %%
             my @Values = split( /%%/, $Data{Content} );
 
-            $Data{Content} = '';
-
-            # clean the values
-            for my $Value (@Values) {
-                if ( $Data{Content} ) {
-                    $Data{Content} .= '", ';
-                }
-
-                $Data{Content} .= qq{"$Value};
-            }
-
-            # we need at least a double quote
-            if ( !$Data{Content} ) {
-                $Data{Content} = '" ';
-            }
-
             # show 'nice' output with variable substitution
             # sample input:
             # ChangeHistory::ChangeLinkAdd", "Ticket", "1
             $Data{Content} = $LayoutObject->{LanguageObject}->Translate(
-                'WorkOrderHistory::' . $Data{HistoryType} . '", ' . $Data{Content}
+                'WorkOrderHistory::' . $Data{HistoryType},
+                @Values,
             );
 
             # remove not needed place holder
