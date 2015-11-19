@@ -68,7 +68,9 @@ sub Run {
     }
 
     # get the event id, for looking up the list of relevant rules
-    my $EventID = $Kernel::OM->Get('Kernel::System::ITSMChange::History')->HistoryTypeLookup( HistoryType => $Event );
+    my $EventID = $Kernel::OM->Get('Kernel::System::ITSMChange::History')->HistoryTypeLookup(
+        HistoryType => $Event,
+    );
     if ( !$EventID ) {
         $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
@@ -99,7 +101,7 @@ sub Run {
     );
 
     # loop over the notification rules and check the condition
-    RULE_ID:
+    RULEID:
     for my $RuleID ( @{$NotificationRuleIDs} ) {
         my $Rule = $Kernel::OM->Get('Kernel::System::ITSMChange::Notification')->NotificationRuleGet(
             ID => $RuleID,
@@ -112,7 +114,7 @@ sub Run {
 
         # no notification if the attribute is not relevant
         if ( $Attribute && !exists $Param{Data}->{$Attribute} ) {
-            next RULE_ID;
+            next RULEID;
         }
 
         # in case of an update, check whether the attribute has changed
@@ -126,7 +128,7 @@ sub Run {
                 Old => $OldData->{$Attribute},
             );
 
-            next RULE_ID if !$HasChanged;
+            next RULEID if !$HasChanged;
         }
 
         # get the string to match against
@@ -152,7 +154,7 @@ sub Run {
             && $NewFieldContent !~ m/^$Rule->{Rule}$/
             )
         {
-            next RULE_ID;
+            next RULEID;
         }
 
         # determine list of agents and customers
@@ -166,7 +168,7 @@ sub Run {
             UserID      => $Param{UserID},
         );
 
-        next RULE_ID if !$AgentAndCustomerIDs;
+        next RULEID if !$AgentAndCustomerIDs;
 
         $Kernel::OM->Get('Kernel::System::ITSMChange::Notification')->NotificationSend(
             %{$AgentAndCustomerIDs},
