@@ -11,6 +11,8 @@ package Kernel::System::ITSMChange::Notification;
 use strict;
 use warnings;
 
+use Storable;
+
 use Kernel::System::VariableCheck qw(:all);
 
 use Kernel::Language;
@@ -607,10 +609,14 @@ sub NotificationRuleGet {
     # check the cache
     my $CacheKey = 'NotificationRuleGet::ID::' . $Param{ID};
     my $Cache    = $Kernel::OM->Get('Kernel::System::Cache')->Get(
-        Type => $Self->{CacheType},
-        Key  => $CacheKey,
+        Type           => $Self->{CacheType},
+        Key            => $CacheKey,
+        CacheInMemory  => 1,
+        CacheInBackend => 0,
     );
-    return $Cache if $Cache;
+
+    # return a clone of the cache, as the caller should not be able to change the cache
+    return Storable::dclone( $Cache ) if $Cache;
 
     # do sql query
     return if !$Kernel::OM->Get('Kernel::System::DB')->Prepare(
@@ -686,13 +692,19 @@ sub NotificationRuleGet {
 
     # save values in cache
     $Kernel::OM->Get('Kernel::System::Cache')->Set(
-        Type  => $Self->{CacheType},
-        Key   => $CacheKey,
-        Value => \%NotificationRule,
-        TTL   => $Self->{CacheTTL},
+        Type           => $Self->{CacheType},
+        Key            => $CacheKey,
+
+        # make a local copy of the notification data to avoid it being altered in-memory later
+        Value          => { %NotificationRule },
+
+        CacheInMemory  => 1,
+        CacheInBackend => 0,
+        TTL            => $Self->{CacheTTL},
     );
 
-    return \%NotificationRule;
+    # return a clone of the cache, as the caller should not be able to change the cache
+    return Storable::dclone( \%NotificationRule );
 }
 
 =item NotificationRuleAdd()
