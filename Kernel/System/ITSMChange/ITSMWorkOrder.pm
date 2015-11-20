@@ -1674,14 +1674,18 @@ sub WorkOrderDelete {
     my @Attachments = $Self->WorkOrderAttachmentList(
         WorkOrderID => $Param{WorkOrderID},
     );
+
     for my $Filename (@Attachments) {
-        return if !$Self->WorkOrderAttachmentDelete(
+
+        my $DeleteSuccess = $Self->WorkOrderAttachmentDelete(
             ChangeID       => $WorkOrderData->{ChangeID},
             WorkOrderID    => $Param{WorkOrderID},
             Filename       => $Filename,
             AttachmentType => 'WorkOrder',
             UserID         => $Param{UserID},
         );
+
+        return if !$DeleteSuccess;
     }
 
     # get the list of report attachments and delete them
@@ -1689,13 +1693,16 @@ sub WorkOrderDelete {
         WorkOrderID => $Param{WorkOrderID},
     );
     for my $Filename (@ReportAttachments) {
-        return if !$Self->WorkOrderAttachmentDelete(
+
+        my $DeleteSuccess = $Self->WorkOrderAttachmentDelete(
             ChangeID       => $WorkOrderData->{ChangeID},
             WorkOrderID    => $Param{WorkOrderID},
             Filename       => $Filename,
             AttachmentType => 'WorkOrderReport',
             UserID         => $Param{UserID},
         );
+
+        return if !$DeleteSuccess;
     }
 
     # get all dynamic fields for the object type ITSMWorkOrder

@@ -2328,12 +2328,14 @@ sub ChangeDelete {
 
         # delete the workorders
         for my $WorkOrderID ( @{ $ChangeData->{WorkOrderIDs} } ) {
-            return
-                if !$Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderDelete(
+
+            my $DeleteSuccess = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderDelete(
                 WorkOrderID  => $WorkOrderID,
                 NoNumberCalc => 1,
                 UserID       => $Param{UserID},
-                );
+            );
+
+            return if !$DeleteSuccess;
         }
     }
 
