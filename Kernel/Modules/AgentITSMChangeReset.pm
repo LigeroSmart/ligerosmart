@@ -11,6 +11,8 @@ package Kernel::Modules::AgentITSMChangeReset;
 use strict;
 use warnings;
 
+use Kernel::System::VariableCheck qw(:all);
+
 our $ObjectManagerDisabled = 1;
 
 sub new {
@@ -96,8 +98,32 @@ sub Run {
         );
         my $WorkOrderStartStateID = $NextWorkOrderStateIDs->[0];
 
+        # get all dynamic fields for the object type ITSMWorkOrder
+        my $DynamicFieldListWorkOrder = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldListGet(
+            ObjectType => 'ITSMWorkOrder',
+            Valid      => 0,
+        );
+
         # reset WorkOrders
         for my $WorkOrderID ( @{ $Change->{WorkOrderIDs} } ) {
+
+            # delete dynamicfield values for this workorder
+            DYNAMICFIELD:
+            for my $DynamicFieldConfig ( @{$DynamicFieldListWorkOrder} ) {
+
+                next DYNAMICFIELD if !$DynamicFieldConfig;
+                next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
+                next DYNAMICFIELD if !$DynamicFieldConfig->{Name};
+                next DYNAMICFIELD if !IsHashRefWithData( $DynamicFieldConfig->{Config} );
+
+                $Kernel::OM->Get('Kernel::System::DynamicField::Backend')->ValueDelete(
+                    DynamicFieldConfig => $DynamicFieldConfig,
+                    ObjectID           => $WorkOrderID,
+                    UserID             => $Self->{UserID},
+                );
+            }
+
+            # reset workorder
             my $CouldUpdateWorkOrder = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder')->WorkOrderUpdate(
                 WorkOrderID        => $WorkOrderID,
                 WorkOrderStateID   => $WorkOrderStartStateID,
@@ -116,6 +142,28 @@ sub Run {
                     Comment => 'Please contact the admin.',
                 );
             }
+        }
+
+        # get all dynamic fields for the object type ITSMChange
+        my $DynamicFieldListChange = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldListGet(
+            ObjectType => 'ITSMChange',
+            Valid      => 0,
+        );
+
+        # delete dynamicfield values for this change
+        DYNAMICFIELD:
+        for my $DynamicFieldConfig ( @{$DynamicFieldListChange} ) {
+
+            next DYNAMICFIELD if !$DynamicFieldConfig;
+            next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
+            next DYNAMICFIELD if !$DynamicFieldConfig->{Name};
+            next DYNAMICFIELD if !IsHashRefWithData( $DynamicFieldConfig->{Config} );
+
+            $Kernel::OM->Get('Kernel::System::DynamicField::Backend')->ValueDelete(
+                DynamicFieldConfig => $DynamicFieldConfig,
+                ObjectID           => $ChangeID,
+                UserID             => $Self->{UserID},
+            );
         }
 
         # reset Change
