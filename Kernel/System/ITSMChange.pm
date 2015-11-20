@@ -2346,14 +2346,14 @@ sub ChangeDelete {
     );
 
     # get all dynamic fields for the object type ITSMChange
-    my $DynamicFieldListTicket = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldListGet(
+    my $DynamicFieldList = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldListGet(
         ObjectType => 'ITSMChange',
         Valid      => 0,
     );
 
     # delete dynamicfield values for this change
     DYNAMICFIELD:
-    for my $DynamicFieldConfig ( @{$DynamicFieldListTicket} ) {
+    for my $DynamicFieldConfig ( @{$DynamicFieldList} ) {
 
         next DYNAMICFIELD if !$DynamicFieldConfig;
         next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);

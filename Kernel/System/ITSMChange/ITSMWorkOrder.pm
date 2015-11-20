@@ -1706,14 +1706,14 @@ sub WorkOrderDelete {
     }
 
     # get all dynamic fields for the object type ITSMWorkOrder
-    my $DynamicFieldListTicket = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldListGet(
+    my $DynamicFieldList = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldListGet(
         ObjectType => 'ITSMWorkOrder',
         Valid      => 0,
     );
 
     # delete dynamicfield values for this workorder
     DYNAMICFIELD:
-    for my $DynamicFieldConfig ( @{$DynamicFieldListTicket} ) {
+    for my $DynamicFieldConfig ( @{$DynamicFieldList} ) {
 
         next DYNAMICFIELD if !$DynamicFieldConfig;
         next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
