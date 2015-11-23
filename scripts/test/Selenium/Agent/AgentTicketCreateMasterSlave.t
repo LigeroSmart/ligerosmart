@@ -55,7 +55,11 @@ $Selenium->RunTest(
             Key   => 'Ticket::Type',
             Value => 0
         );
-
+        $SysConfigObject->ConfigItemUpdate(
+            Valid => 1,
+            Key   => 'CheckEmailAddresses',
+            Value => 0
+        );
         # create test user and login
         my $TestUserLogin = $Helper->TestUserCreate(
             Groups => [ 'admin', 'users' ],
