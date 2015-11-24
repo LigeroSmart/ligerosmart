@@ -333,15 +333,10 @@ sub Run {
 
             if ( $GetParam{DynamicField_ITSMImpact} ) {
 
-                # get possible values for impact
-                my $ImpactPossibleValues = $DynamicFieldBackendObject->PossibleValuesGet(
-                    DynamicFieldConfig => $ImpactDynamicFieldConfig,
-                );
-
                 # get priority
                 $GetParam{PriorityIDFromImpact} = $Kernel::OM->Get('Kernel::System::ITSMCIPAllocate')->PriorityAllocationGet(
                     Criticality => $Service{Criticality},
-                    Impact      => $ImpactPossibleValues->{ $GetParam{DynamicField_ITSMImpact} } || $GetParam{DynamicField_ITSMImpact},
+                    Impact      => $GetParam{DynamicField_ITSMImpact},
                 );
 
                 if ( $GetParam{PriorityIDFromImpact} ) {
