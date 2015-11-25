@@ -1,4 +1,6 @@
-#5.0.2 2015-??-??
+#5.0.3 2015-??-??
+
+#5.0.2 2015-12-01
  - 2015-11-25 Updated translations, thanks to all translators.
  - 2015-11-24 Fixed bug#[11564](http://bugs.otrs.org/show_bug.cgi?id=11564) - FAQ SearchResults will not displayed.
  - 2015-11-24 Fixed bug#[11687](http://bugs.otrs.org/show_bug.cgi?id=11687) - XSS injection vulnerability in modules AgentFAQSearch and AgentFAQSearchSmall on parameter profile.
