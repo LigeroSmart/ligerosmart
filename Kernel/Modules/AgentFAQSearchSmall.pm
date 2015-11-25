@@ -588,13 +588,13 @@ sub Run {
             . ';View=' . $LayoutObject->LinkEncode($View)
             . ';SortBy=' . $LayoutObject->LinkEncode($SortBy)
             . ';OrderBy=' . $LayoutObject->LinkEncode($OrderBy)
-            . ';Profile=' . $Profile . ';TakeLastSearch=1;Subaction=Search'
+            . ';Profile=' . $LayoutObject->LinkEncode($Profile) . ';TakeLastSearch=1;Subaction=Search'
             . ';Nav=' . $Nav
             . ';';
         my $LinkSort = 'Filter='
             . $LayoutObject->LinkEncode($Filter)
             . ';View=' . $LayoutObject->LinkEncode($View)
-            . ';Profile=' . $Profile . ';TakeLastSearch=1;Subaction=Search'
+            . ';Profile=' . $LayoutObject->LinkEncode($Profile) . ';TakeLastSearch=1;Subaction=Search'
             . ';Nav=' . $Nav
 
             . ';';

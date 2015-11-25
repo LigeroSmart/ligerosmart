@@ -962,12 +962,12 @@ sub Run {
                 . ';View=' . $LayoutObject->LinkEncode($View)
                 . ';SortBy=' . $LayoutObject->LinkEncode($SortBy)
                 . ';OrderBy=' . $LayoutObject->LinkEncode($OrderBy)
-                . ';Profile=' . $Profile . ';TakeLastSearch=1;Subaction=Search'
+                . ';Profile=' . $LayoutObject->LinkEncode($Profile) . ';TakeLastSearch=1;Subaction=Search'
                 . ';';
             my $LinkSort = 'Filter='
                 . $LayoutObject->LinkEncode($Filter)
                 . ';View=' . $LayoutObject->LinkEncode($View)
-                . ';Profile=' . $Profile . ';TakeLastSearch=1;Subaction=Search'
+                . ';Profile=' . $LayoutObject->LinkEncode($Profile) . ';TakeLastSearch=1;Subaction=Search'
                 . ';';
             my $LinkFilter = 'TakeLastSearch=1;Subaction=Search;Profile='
                 . $LayoutObject->LinkEncode($Profile)
@@ -979,7 +979,7 @@ sub Run {
             my $FilterLink = 'SortBy=' . $LayoutObject->LinkEncode($SortBy)
                 . ';OrderBy=' . $LayoutObject->LinkEncode($OrderBy)
                 . ';View=' . $LayoutObject->LinkEncode($View)
-                . ';Profile=' . $Profile . ';TakeLastSearch=1;Subaction=Search'
+                . ';Profile=' . $LayoutObject->LinkEncode($Profile) . ';TakeLastSearch=1;Subaction=Search'
                 . ';';
 
             # find out which columns should be shown

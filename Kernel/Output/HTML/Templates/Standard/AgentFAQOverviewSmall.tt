@@ -24,43 +24,43 @@
             <tr>
 [% RenderBlockStart("RecordNumberHeader") %]
                 <th class="FAQNumber [% Data.CSS | html %]">
-                    <a href="[% Env("Baselink") %]Action=[% Env("Action") %];[% Data.LinkSort %];SortBy=FAQID;OrderBy=[% Data.OrderBy | uri %]">[% Config("FAQ::FAQHook") %]</a>
+                    <a href="[% Env("Baselink") %]Action=[% Env("Action") %];[% Data.LinkSort | uri %];SortBy=FAQID;OrderBy=[% Data.OrderBy | uri %]">[% Config("FAQ::FAQHook") %]</a>
                 </th>
 [% RenderBlockEnd("RecordNumberHeader") %]
 [% RenderBlockStart("RecordTitleHeader") %]
                 <th class="Title [% Data.CSS | html %]">
-                    <a href="[% Env("Baselink") %]Action=[% Env("Action") %];[% Data.LinkSort %];SortBy=Title;OrderBy=[% Data.OrderBy | uri %]">[% Translate("Title") | html %]</a>
+                    <a href="[% Env("Baselink") %]Action=[% Env("Action") %];[% Data.LinkSort | uri %];SortBy=Title;OrderBy=[% Data.OrderBy | uri %]">[% Translate("Title") | html %]</a>
                 </th>
 [% RenderBlockEnd("RecordTitleHeader") %]
 [% RenderBlockStart("RecordCategoryHeader") %]
                 <th class="Category [% Data.CSS | html %]">
-                    <a href="[% Env("Baselink") %]Action=[% Env("Action") %];[% Data.LinkSort %];SortBy=Category;OrderBy=[% Data.OrderBy | uri %]">[% Translate("Category") | html %]</a>
+                    <a href="[% Env("Baselink") %]Action=[% Env("Action") %];[% Data.LinkSort | uri %];SortBy=Category;OrderBy=[% Data.OrderBy | uri %]">[% Translate("Category") | html %]</a>
                 </th>
 [% RenderBlockEnd("RecordCategoryHeader") %]
 [% RenderBlockStart("RecordLanguageHeader") %]
                 <th class="Language [% Data.CSS | html %]">
-                    <a href="[% Env("Baselink") %]Action=[% Env("Action") %];[% Data.LinkSort %];SortBy=Language;OrderBy=[% Data.OrderBy | uri %]">[% Translate("Language") | html %]</a>
+                    <a href="[% Env("Baselink") %]Action=[% Env("Action") %];[% Data.LinkSort | uri %];SortBy=Language;OrderBy=[% Data.OrderBy | uri %]">[% Translate("Language") | html %]</a>
                 </th>
 [% RenderBlockEnd("RecordLanguageHeader") %]
 [% RenderBlockStart("RecordStateHeader") %]
                 <th class="State [% Data.CSS | html %]">
-                    <a href="[% Env("Baselink") %]Action=[% Env("Action") %];[% Data.LinkSort %];SortBy=State;OrderBy=[% Data.OrderBy | uri %]">[% Translate("State") | html %]</a>
+                    <a href="[% Env("Baselink") %]Action=[% Env("Action") %];[% Data.LinkSort | uri %];SortBy=State;OrderBy=[% Data.OrderBy | uri %]">[% Translate("State") | html %]</a>
                 </th>
 [% RenderBlockEnd("RecordStateHeader") %]
 [% RenderBlockStart("RecordValidHeader") %]
                 <th class="State [% Data.CSS | html %]">
-                    <a href="[% Env("Baselink") %]Action=[% Env("Action") %];[% Data.LinkSort %];SortBy=Valid;OrderBy=[% Data.OrderBy | uri %]">[% Translate("Validity") | html %]</a>
+                    <a href="[% Env("Baselink") %]Action=[% Env("Action") %];[% Data.LinkSort | uri %];SortBy=Valid;OrderBy=[% Data.OrderBy | uri %]">[% Translate("Validity") | html %]</a>
                 </th>
 [% RenderBlockEnd("RecordValidHeader") %]
 [% RenderBlockStart("RecordChangedHeader") %]
                 <th class="Changed [% Data.CSS | html %]">
-                    <a href="[% Env("Baselink") %]Action=[% Env("Action") %];[% Data.LinkSort %];SortBy=Changed;OrderBy=[% Data.OrderBy | uri %]">[% Translate("Changed") | html %]</a>
+                    <a href="[% Env("Baselink") %]Action=[% Env("Action") %];[% Data.LinkSort | uri %];SortBy=Changed;OrderBy=[% Data.OrderBy | uri %]">[% Translate("Changed") | html %]</a>
                 </th>
 [% RenderBlockEnd("RecordChangedHeader") %]
 [% RenderBlockStart("RecordDynamicFieldHeader") %]
                 <th class="DynamicField [% Data.CSS | html %]">
 [% RenderBlockStart("RecordDynamicFieldHeaderSortable") %]
-                    <a href="[% Env("Baselink") %]Action=[% Env("Action") %];[% Data.LinkSort %];SortBy=DynamicField_[% Data.DynamicFieldName | uri %];OrderBy=[% Data.OrderBy | uri %]">[% Translate(Data.Label) | html %]</a>
+                    <a href="[% Env("Baselink") %]Action=[% Env("Action") %];[% Data.LinkSort | uri %];SortBy=DynamicField_[% Data.DynamicFieldName | uri %];OrderBy=[% Data.OrderBy | uri %]">[% Translate(Data.Label) | html %]</a>
 [% RenderBlockEnd("RecordDynamicFieldHeaderSortable") %]
 [% RenderBlockStart("RecordDynamicFieldHeaderNotSortable") %]
                     <span>[% Translate(Data.Label) | html %]</span>
@@ -73,7 +73,7 @@
 #[% RenderBlockStart("RecordDynamicField_Field1Header") %]
 #                <th class="DynamicField [% Data.CSS | html %]">
 #[% RenderBlockStart("RecordDynamicField_Field1HeaderSortable") %]
-#                    <a href="[% Env("Baselink") %]Action=[% Env("Action") %];[% Data.LinkSort %];SortBy=DynamicField_[% Data.DynamicFieldName | uri %];OrderBy=[% Data.OrderBy | uri %]">[% Translate(Data.Label) | html %]</a>
+#                    <a href="[% Env("Baselink") %]Action=[% Env("Action") %];[% Data.LinkSort | uri %];SortBy=DynamicField_[% Data.DynamicFieldName | uri %];OrderBy=[% Data.OrderBy | uri %]">[% Translate(Data.Label) | html %]</a>
 #[% RenderBlockEnd("RecordDynamicField_Field1HeaderSortable") %]
 #[% RenderBlockStart("RecordDynamicField_Field1HeaderNotSortable") %]
 #                    <span>[% Translate(Data.Label) | html %]</span>
@@ -83,7 +83,7 @@
 #[% RenderBlockStart("RecordDynamicField_Field2Header") %]
 #                <th class="DynamicField [% Data.CSS | html %]">
 #[% RenderBlockStart("RecordDynamicField_Field2HeaderSortable") %]
-#                    <a href="[% Env("Baselink") %]Action=[% Env("Action") %];[% Data.LinkSort %];SortBy=DynamicField_[% Data.DynamicFieldName | uri %];OrderBy=[% Data.OrderBy | uri %]">[% Translate(Data.Label) | html %]</a>
+#                    <a href="[% Env("Baselink") %]Action=[% Env("Action") %];[% Data.LinkSort | uri %];SortBy=DynamicField_[% Data.DynamicFieldName | uri %];OrderBy=[% Data.OrderBy | uri %]">[% Translate(Data.Label) | html %]</a>
 #[% RenderBlockEnd("RecordDynamicField_Field2HeaderSortable") %]
 #[% RenderBlockStart("RecordDynamicField_Field2HeaderNotSortable") %]
 #                    <span>[% Translate(Data.Label) | html %]</span>
