@@ -23,7 +23,7 @@ sub new {
     bless( $Self, $Type );
 
     # get config for frontend
-    $Self->{Config} = $Kernel::OM->Get('Kernel::Config')->Get("FAQ::Frontend::$Self->{Action}");
+    $Self->{Config} = $Kernel::OM->Get('Kernel::Config')->Get("FAQ::Frontend::AgentFAQSearch");
 
     # get the dynamic fields for FAQ object
     $Self->{DynamicField} = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldListGet(
