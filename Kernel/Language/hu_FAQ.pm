@@ -127,7 +127,7 @@ sub Data {
     $Self->{Translation}->{'FAQ Article Change Time (between)'} = 'GyIK bejegyzés módosítási ideje (között)';
 
     # Template: AgentFAQSearchOpenSearchDescriptionFulltext
-    $Self->{Translation}->{'FAQFulltext'} = 'GyIK szabad szavas';
+    $Self->{Translation}->{'FAQFulltext'} = 'GyIK szabad-szavas';
 
     # Template: AgentFAQSearchSmall
     $Self->{Translation}->{'FAQ Search'} = 'GyIK keresés';
@@ -148,7 +148,7 @@ sub Data {
     # Template: AgentFAQZoom
     $Self->{Translation}->{'FAQ Information'} = 'GyIK információk';
     $Self->{Translation}->{'Rating'} = 'Értékelés';
-    $Self->{Translation}->{'out of 5'} = '5-ből';
+    $Self->{Translation}->{'out of 5'} = 'az 5-ből';
     $Self->{Translation}->{'Votes'} = 'Szavazatok';
     $Self->{Translation}->{'No votes found!'} = 'Nem találhatók szavazatok!';
     $Self->{Translation}->{'No votes found! Be the first one to rate this FAQ article.'} = 'Nem találhatók szavazatok! Legyen az első, aki értékeli ezt a GyIK bejegyzést.';
@@ -196,13 +196,13 @@ sub Data {
 
     # Perl Module: Kernel/Modules/AgentFAQPrint.pm
     $Self->{Translation}->{'Last update'} = 'Utolsó frissítés';
-    $Self->{Translation}->{'FAQ Dynamic Fields'} = '';
+    $Self->{Translation}->{'FAQ Dynamic Fields'} = 'GyIK dinamikus mezők';
 
     # Perl Module: Kernel/Modules/AgentFAQSearch.pm
-    $Self->{Translation}->{'No Result!'} = '';
+    $Self->{Translation}->{'No Result!'} = 'Nincs találat!';
 
     # Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
-    $Self->{Translation}->{'This article is empty!'} = '';
+    $Self->{Translation}->{'This article is empty!'} = 'Ez a bejegyzés üres!';
 
     # SysConfig
     $Self->{Translation}->{'A filter for HTML output to add links behind a defined string. The element Image allows two input kinds. First the name of an image (e.g. faq.png). In this case the OTRS image path will be used. The second possibility is to insert the link to the image.'} =

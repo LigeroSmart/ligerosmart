@@ -24,7 +24,7 @@ sub Data {
     $Self->{Translation}->{'Latest created FAQ articles'} = 'Senast skapade FAQ-artiklar';
     $Self->{Translation}->{'Top 10 FAQ articles'} = 'Topp 10 FAQ-artiklar';
     $Self->{Translation}->{'Subcategory of'} = 'Underkategori till';
-    $Self->{Translation}->{'No rate selected!'} = '';
+    $Self->{Translation}->{'No rate selected!'} = 'Inget betyg satt!';
     $Self->{Translation}->{'Explorer'} = 'Utforskare';
     $Self->{Translation}->{'public (all)'} = 'offentlig (alla)';
     $Self->{Translation}->{'external (customer)'} = 'extern (kunder)';
@@ -49,7 +49,7 @@ sub Data {
     $Self->{Translation}->{'FAQ language updated!'} = 'FAQ-språk uppdaterat!';
     $Self->{Translation}->{'The name is required!'} = 'Namn krävs!';
     $Self->{Translation}->{'This language already exists!'} = 'Detta språk finns redan!';
-    $Self->{Translation}->{'Symptom'} = '';
+    $Self->{Translation}->{'Symptom'} = 'Symptom';
     $Self->{Translation}->{'Solution'} = 'Lösning';
 
     # Template: AgentFAQAdd
@@ -70,9 +70,9 @@ sub Data {
     $Self->{Translation}->{'Will be shown as comment in Explorer.'} = 'Visas som kommentar i Utforskaren.';
     $Self->{Translation}->{'Do you really want to delete this category?'} = 'Vill du verkligen ta bort denna kategori?';
     $Self->{Translation}->{'You can not delete this category. It is used in at least one FAQ article and/or is parent of at least one other category'} =
-        '';
-    $Self->{Translation}->{'This category is used in the following FAQ article(s)'} = '';
-    $Self->{Translation}->{'This category is parent of the following subcategories'} = '';
+        'Du kan inte ta bort denna kategorin. Det används av minst en FAQ-artikel!';
+    $Self->{Translation}->{'This category is used in the following FAQ article(s)'} = 'Denna kategori används av följande FAQ-artiklar';
+    $Self->{Translation}->{'This category is parent of the following subcategories'} = 'Denna kategori är förälder för följande underkategroier';
 
     # Template: AgentFAQDelete
     $Self->{Translation}->{'Do you really want to delete this FAQ article?'} = 'Vill du verkligen ta bort denna FAQ-artikel?';
@@ -93,7 +93,7 @@ sub Data {
     $Self->{Translation}->{'History of'} = 'Historik för';
 
     # Template: AgentFAQJournalOverviewSmall
-    $Self->{Translation}->{'No FAQ Journal data found.'} = '';
+    $Self->{Translation}->{'No FAQ Journal data found.'} = 'Det finns ingen data i FAQ-loggboken';
 
     # Template: AgentFAQLanguage
     $Self->{Translation}->{'FAQ Language Management'} = 'FAQ språkhantering';
@@ -106,7 +106,7 @@ sub Data {
     $Self->{Translation}->{'Do you really want to delete this language?'} = 'Vill du verkligen ta bort detta språk?';
     $Self->{Translation}->{'You can not delete this language. It is used in at least one FAQ article!'} =
         'Du kan inte ta bort detta språk. Det används i minst en FAQ-artikel!';
-    $Self->{Translation}->{'This language is used in the following FAQ Article(s)'} = '';
+    $Self->{Translation}->{'This language is used in the following FAQ Article(s)'} = 'Detta språk används av följande FAQ-artiklar';
 
     # Template: AgentFAQOverviewNavBar
     $Self->{Translation}->{'Context Settings'} = 'Anpassa vy';
@@ -117,8 +117,8 @@ sub Data {
 
     # Template: AgentFAQSearch
     $Self->{Translation}->{'Keyword'} = 'Nyckelord';
-    $Self->{Translation}->{'Vote (e. g. Equals 10 or GreaterThan 60)'} = '';
-    $Self->{Translation}->{'Rate (e. g. Equals 25% or GreaterThan 75%)'} = '';
+    $Self->{Translation}->{'Vote (e. g. Equals 10 or GreaterThan 60)'} = 'Röster (ex. lika med 10 eller fler än 60)';
+    $Self->{Translation}->{'Rate (e. g. Equals 25% or GreaterThan 75%)'} = 'Betyg (ex. lika med 25% eller mer än 75%)';
     $Self->{Translation}->{'Approved'} = 'Godkänd';
     $Self->{Translation}->{'Last changed by'} = 'Senast ändrad av';
     $Self->{Translation}->{'FAQ Article Create Time (before/after)'} = '';
@@ -192,14 +192,14 @@ sub Data {
     $Self->{Translation}->{'Back to FAQ Explorer'} = 'Tillbaka till FAQ-utforskaren';
 
     # Perl Module: Kernel/Modules/AgentFAQJournal.pm
-    $Self->{Translation}->{'FAQ Journal'} = 'FAQ Journal';
+    $Self->{Translation}->{'FAQ Journal'} = 'FAQ-loggboken';
 
     # Perl Module: Kernel/Modules/AgentFAQPrint.pm
     $Self->{Translation}->{'Last update'} = 'Senast uppdaterad';
     $Self->{Translation}->{'FAQ Dynamic Fields'} = '';
 
     # Perl Module: Kernel/Modules/AgentFAQSearch.pm
-    $Self->{Translation}->{'No Result!'} = '';
+    $Self->{Translation}->{'No Result!'} = 'Inget resultat!';
 
     # Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
     $Self->{Translation}->{'This article is empty!'} = '';
@@ -312,7 +312,7 @@ sub Data {
     $Self->{Translation}->{'Include internal fields on a FAQ based Ticket.'} = '';
     $Self->{Translation}->{'Include the name of each field in a FAQ based Ticket.'} = '';
     $Self->{Translation}->{'Interfaces where the quick search should be shown.'} = '';
-    $Self->{Translation}->{'Journal'} = 'Journal';
+    $Self->{Translation}->{'Journal'} = 'Loggbok';
     $Self->{Translation}->{'Language Management'} = 'Språkhantering';
     $Self->{Translation}->{'Link another object to this FAQ item'} = 'Länka ett annat objekt till denna FAQ-artikel';
     $Self->{Translation}->{'List of state types which can be used in the agent interface.'} =

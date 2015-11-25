@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-10-07 18:17+0000\n"
-"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
+"PO-Revision-Date: 2015-10-18 23:34+0000\n"
+"Last-Translator: Balázs Úr <urbalazs@gmail.com>\n"
 "Language-Team: Hungarian (http://www.transifex.com/otrs/OTRS/language/hu/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -355,7 +355,7 @@ msgstr "GyIK bejegyzés módosítási ideje (között)"
 
 #. Template: AgentFAQSearchOpenSearchDescriptionFulltext
 msgid "FAQFulltext"
-msgstr "GyIK szabad szavas"
+msgstr "GyIK szabad-szavas"
 
 #. Template: AgentFAQSearchSmall
 msgid "FAQ Search"
@@ -423,7 +423,7 @@ msgstr "Értékelés"
 
 #. Template: AgentFAQZoom
 msgid "out of 5"
-msgstr "5-ből"
+msgstr "az 5-ből"
 
 #. Template: AgentFAQZoom
 msgid "Votes"
@@ -548,15 +548,15 @@ msgstr "Utolsó frissítés"
 
 #. Perl Module: Kernel/Modules/AgentFAQPrint.pm
 msgid "FAQ Dynamic Fields"
-msgstr ""
+msgstr "GyIK dinamikus mezők"
 
 #. Perl Module: Kernel/Modules/AgentFAQSearch.pm
 msgid "No Result!"
-msgstr ""
+msgstr "Nincs találat!"
 
 #. Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
 msgid "This article is empty!"
-msgstr ""
+msgstr "Ez a bejegyzés üres!"
 
 #. SysConfig
 msgid ""

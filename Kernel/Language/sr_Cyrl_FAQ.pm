@@ -377,19 +377,19 @@ sub Data {
     $Self->{Translation}->{'Rates for voting. Key must be in percent.'} = 'Оцене за гласање. Кључ мора бити у процентима.';
     $Self->{Translation}->{'Search FAQ'} = 'Претражи ЧПП';
     $Self->{Translation}->{'Set the default height (in pixels) of inline HTML fields in AgentFAQZoom.'} =
-        '';
+        'Подеси подразумевану висину (у пикселима) инлине HTML поља у AgentFAQZoom.';
     $Self->{Translation}->{'Set the default height (in pixels) of inline HTML fields in CustomerFAQZoom (and PublicFAQZoom).'} =
-        '';
+        'Подеси подразумевану висину (у пикселима) инлине HTML поља у CustomerFAQZoom (и PublicFAQZoom).';
     $Self->{Translation}->{'Set the maximum height (in pixels) of inline HTML fields in AgentFAQZoom.'} =
-        '';
+        'Подеси максималну висину (у пикселима) инлине HTML поља у AgentFAQZoom.';
     $Self->{Translation}->{'Set the maximum height (in pixels) of inline HTML fields in CustomerFAQZoom (and PublicFAQZoom).'} =
-        '';
+        'Подеси максималну висину (у пикселима) инлине HTML поља у CustomerFAQZoom (и PublicFAQZoom).';
     $Self->{Translation}->{'Show "Insert FAQ Link" Button in AgentFAQZoomSmall for public FAQ Articles.'} =
-        '';
+        'Прикажи "Убаци ЧПП линк" дугме у AgentFAQZoomSmall за јавне ЧПП артикле.';
     $Self->{Translation}->{'Show "Insert FAQ Text & Link" / "Insert Full FAQ & Link" Button in AgentFAQZoomSmall for public FAQ Articles.'} =
-        '';
+        'Прикажи "Убаци ЧПП Текст и Линк" / "Убаци Цео ЧПП и Линк" дугме у AgentFAQZoomSmall за јавне ЧПП артикле.';
     $Self->{Translation}->{'Show "Insert FAQ Text" / "Insert Full FAQ" Button in AgentFAQZoomSmall.'} =
-        '';
+        'Прикажи "Убаци ЧПП текст" / "Убаци Цео ЧПП" дугме у AgentFAQZoomSmall.';
     $Self->{Translation}->{'Show FAQ Article with HTML.'} = 'Приказ ЧПП чланци као „HTML”.';
     $Self->{Translation}->{'Show FAQ path yes/no.'} = 'Прикажи путању до ЧПП да/не.';
     $Self->{Translation}->{'Show items of subcategories.'} = 'Прикажи ставке у субкатегоријама.';

@@ -26,9 +26,9 @@ sub Data {
     $Self->{Translation}->{'Subcategory of'} = 'Підкатегорії';
     $Self->{Translation}->{'No rate selected!'} = 'Немає обраної категорії!';
     $Self->{Translation}->{'Explorer'} = 'Провідник';
-    $Self->{Translation}->{'public (all)'} = '';
-    $Self->{Translation}->{'external (customer)'} = '';
-    $Self->{Translation}->{'internal (agent)'} = '';
+    $Self->{Translation}->{'public (all)'} = 'Загальнодоступне';
+    $Self->{Translation}->{'external (customer)'} = 'відкрите (клієнтам)';
+    $Self->{Translation}->{'internal (agent)'} = 'відкрите (агентам)';
     $Self->{Translation}->{'Start day'} = 'Початок доби';
     $Self->{Translation}->{'Start month'} = 'Початок місяця';
     $Self->{Translation}->{'Start year'} = 'Початок року';
@@ -37,24 +37,24 @@ sub Data {
     $Self->{Translation}->{'End year'} = 'Кінець року';
     $Self->{Translation}->{'Thanks for your vote!'} = 'Дякуємо, за те, що проголосували!';
     $Self->{Translation}->{'You have already voted!'} = 'Ви вже голосували!';
-    $Self->{Translation}->{'FAQ Article Print'} = '';
-    $Self->{Translation}->{'FAQ Articles (Top 10)'} = '';
-    $Self->{Translation}->{'FAQ Articles (new created)'} = '';
-    $Self->{Translation}->{'FAQ Articles (recently changed)'} = '';
-    $Self->{Translation}->{'FAQ category updated!'} = '';
-    $Self->{Translation}->{'FAQ category added!'} = '';
-    $Self->{Translation}->{'A category should have a name!'} = '';
-    $Self->{Translation}->{'This category already exists'} = '';
-    $Self->{Translation}->{'FAQ language added!'} = '';
-    $Self->{Translation}->{'FAQ language updated!'} = '';
-    $Self->{Translation}->{'The name is required!'} = '';
-    $Self->{Translation}->{'This language already exists!'} = '';
-    $Self->{Translation}->{'Symptom'} = '';
-    $Self->{Translation}->{'Solution'} = '';
+    $Self->{Translation}->{'FAQ Article Print'} = 'Надрукувати статтю довідника';
+    $Self->{Translation}->{'FAQ Articles (Top 10)'} = 'Довідник (найкращі 10 статтей)';
+    $Self->{Translation}->{'FAQ Articles (new created)'} = 'Довідник (нові статті)';
+    $Self->{Translation}->{'FAQ Articles (recently changed)'} = 'Довідник (недавно змінені статті)';
+    $Self->{Translation}->{'FAQ category updated!'} = 'Оновленні категорії довідника.';
+    $Self->{Translation}->{'FAQ category added!'} = 'Додані категорії довідникаа.';
+    $Self->{Translation}->{'A category should have a name!'} = 'Категорія повинна мати назву!';
+    $Self->{Translation}->{'This category already exists'} = 'Дана категорія уже існує.';
+    $Self->{Translation}->{'FAQ language added!'} = 'Додано мову довідки!';
+    $Self->{Translation}->{'FAQ language updated!'} = 'Оновлено мову довідки!';
+    $Self->{Translation}->{'The name is required!'} = 'Необхідно ввести назву!';
+    $Self->{Translation}->{'This language already exists!'} = 'Ця мова вже існує!';
+    $Self->{Translation}->{'Symptom'} = 'Симптоми';
+    $Self->{Translation}->{'Solution'} = 'Рішення';
 
     # Template: AgentFAQAdd
-    $Self->{Translation}->{'Add FAQ Article'} = '';
-    $Self->{Translation}->{'Keywords'} = '';
+    $Self->{Translation}->{'Add FAQ Article'} = 'Добавити артикул довідника';
+    $Self->{Translation}->{'Keywords'} = 'Ключові слова';
     $Self->{Translation}->{'A category is required.'} = '';
     $Self->{Translation}->{'Approval'} = 'Уточнить смысл и изменить(Approval)';
 

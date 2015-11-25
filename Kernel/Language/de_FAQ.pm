@@ -199,10 +199,10 @@ sub Data {
     $Self->{Translation}->{'FAQ Dynamic Fields'} = '';
 
     # Perl Module: Kernel/Modules/AgentFAQSearch.pm
-    $Self->{Translation}->{'No Result!'} = '';
+    $Self->{Translation}->{'No Result!'} = 'Kein Ergebnis!';
 
     # Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
-    $Self->{Translation}->{'This article is empty!'} = '';
+    $Self->{Translation}->{'This article is empty!'} = 'Dieser Artikel ist leer!';
 
     # SysConfig
     $Self->{Translation}->{'A filter for HTML output to add links behind a defined string. The element Image allows two input kinds. First the name of an image (e.g. faq.png). In this case the OTRS image path will be used. The second possibility is to insert the link to the image.'} =

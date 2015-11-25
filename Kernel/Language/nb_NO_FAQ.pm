@@ -16,16 +16,16 @@ sub Data {
     my $Self = shift;
 
     # Template: AAAFAQ
-    $Self->{Translation}->{'internal'} = 'internt';
-    $Self->{Translation}->{'public'} = 'publiseres';
-    $Self->{Translation}->{'external'} = 'eksternt';
+    $Self->{Translation}->{'internal'} = 'intern';
+    $Self->{Translation}->{'public'} = 'offentlig';
+    $Self->{Translation}->{'external'} = 'ekstern';
     $Self->{Translation}->{'FAQ Number'} = 'OSS-nummer';
     $Self->{Translation}->{'Latest updated FAQ articles'} = 'Sist oppdaterte OSS-artikler';
     $Self->{Translation}->{'Latest created FAQ articles'} = 'Sist opprettede OSS-artikler';
     $Self->{Translation}->{'Top 10 FAQ articles'} = 'Topp 10 OSS';
     $Self->{Translation}->{'Subcategory of'} = '';
     $Self->{Translation}->{'No rate selected!'} = 'Ingen rating valgt';
-    $Self->{Translation}->{'Explorer'} = '';
+    $Self->{Translation}->{'Explorer'} = 'Utforsk';
     $Self->{Translation}->{'public (all)'} = 'offentlig (alle)';
     $Self->{Translation}->{'external (customer)'} = 'kun til kunder';
     $Self->{Translation}->{'internal (agent)'} = 'kun internt (agenter)';
@@ -49,7 +49,7 @@ sub Data {
     $Self->{Translation}->{'FAQ language updated!'} = 'OSS-språk oppdatert!';
     $Self->{Translation}->{'The name is required!'} = 'Navn er påkrevd!';
     $Self->{Translation}->{'This language already exists!'} = 'Dette språket finnes allerede!';
-    $Self->{Translation}->{'Symptom'} = '';
+    $Self->{Translation}->{'Symptom'} = 'Symptom';
     $Self->{Translation}->{'Solution'} = 'Løsning';
 
     # Template: AgentFAQAdd
@@ -103,26 +103,26 @@ sub Data {
     $Self->{Translation}->{'Delete Language %s'} = 'Slett språk %s';
     $Self->{Translation}->{'Add Language'} = 'Legg til språk';
     $Self->{Translation}->{'Edit Language'} = 'Endre språk';
-    $Self->{Translation}->{'Do you really want to delete this language?'} = '';
+    $Self->{Translation}->{'Do you really want to delete this language?'} = 'Vil du virkelig fjerne dette språket?';
     $Self->{Translation}->{'You can not delete this language. It is used in at least one FAQ article!'} =
-        '';
+        'Du kan ikke slette dette språket. Det er brukt i minst en OSS artikkel!';
     $Self->{Translation}->{'This language is used in the following FAQ Article(s)'} = '';
 
     # Template: AgentFAQOverviewNavBar
     $Self->{Translation}->{'Context Settings'} = 'Kontekstvalg';
-    $Self->{Translation}->{'FAQ articles per page'} = '';
+    $Self->{Translation}->{'FAQ articles per page'} = 'OSS artikler per side';
 
     # Template: AgentFAQOverviewSmall
     $Self->{Translation}->{'No FAQ data found.'} = 'Ingen artikler funnet';
 
     # Template: AgentFAQSearch
-    $Self->{Translation}->{'Keyword'} = '';
+    $Self->{Translation}->{'Keyword'} = 'Nøkkelord';
     $Self->{Translation}->{'Vote (e. g. Equals 10 or GreaterThan 60)'} = '';
     $Self->{Translation}->{'Rate (e. g. Equals 25% or GreaterThan 75%)'} = '';
-    $Self->{Translation}->{'Approved'} = '';
+    $Self->{Translation}->{'Approved'} = 'Godkjent';
     $Self->{Translation}->{'Last changed by'} = 'Sist endret av';
-    $Self->{Translation}->{'FAQ Article Create Time (before/after)'} = '';
-    $Self->{Translation}->{'FAQ Article Create Time (between)'} = '';
+    $Self->{Translation}->{'FAQ Article Create Time (before/after)'} = 'Opprettelsestidspunkt for OSS artikkelen (før/etter)';
+    $Self->{Translation}->{'FAQ Article Create Time (between)'} = 'Opprettelsestidspunkt for OSS artikkelen (mellom)';
     $Self->{Translation}->{'FAQ Article Change Time (before/after)'} = '';
     $Self->{Translation}->{'FAQ Article Change Time (between)'} = '';
 
@@ -132,16 +132,16 @@ sub Data {
     # Template: AgentFAQSearchSmall
     $Self->{Translation}->{'FAQ Search'} = 'OSS-søk';
     $Self->{Translation}->{'Profile Selection'} = '';
-    $Self->{Translation}->{'Vote'} = '';
-    $Self->{Translation}->{'No vote settings'} = '';
-    $Self->{Translation}->{'Specific votes'} = '';
+    $Self->{Translation}->{'Vote'} = 'Stem';
+    $Self->{Translation}->{'No vote settings'} = 'Ingen stemmeinnstillinger';
+    $Self->{Translation}->{'Specific votes'} = 'Spesifikk notis';
     $Self->{Translation}->{'e. g. Equals 10 or GreaterThan 60'} = '';
-    $Self->{Translation}->{'Rate'} = '';
-    $Self->{Translation}->{'No rate settings'} = '';
+    $Self->{Translation}->{'Rate'} = 'Ranger';
+    $Self->{Translation}->{'No rate settings'} = 'Ingen rangeringsinnstillinger';
     $Self->{Translation}->{'Specific rate'} = '';
     $Self->{Translation}->{'e. g. Equals 25% or GreaterThan 75%'} = '';
     $Self->{Translation}->{'FAQ Article Create Time'} = '';
-    $Self->{Translation}->{'Specific date'} = '';
+    $Self->{Translation}->{'Specific date'} = 'Spesifikk dato';
     $Self->{Translation}->{'Date range'} = '';
     $Self->{Translation}->{'FAQ Article Change Time'} = '';
 
@@ -174,35 +174,35 @@ sub Data {
     # Template: CustomerFAQSearch
     $Self->{Translation}->{'Fulltext search in FAQ articles (e. g. "John*n" or "Will*")'} = 'Fulltekstsøk i OSS-artikler (f.eks. "Ol*" eller "Andreas*n"';
     $Self->{Translation}->{'Vote restrictions'} = '';
-    $Self->{Translation}->{'Only FAQ articles with votes...'} = '';
+    $Self->{Translation}->{'Only FAQ articles with votes...'} = 'Bare OSS artikler med stemmer...';
     $Self->{Translation}->{'Rate restrictions'} = '';
-    $Self->{Translation}->{'Only FAQ articles with rate...'} = '';
+    $Self->{Translation}->{'Only FAQ articles with rate...'} = 'Bare OSS artikler med rangeringer...';
     $Self->{Translation}->{'Only FAQ articles created'} = '';
     $Self->{Translation}->{'Only FAQ articles created between'} = '';
     $Self->{Translation}->{'Search-Profile as Template?'} = '';
 
     # Template: CustomerFAQZoom
-    $Self->{Translation}->{'Article Number'} = '';
+    $Self->{Translation}->{'Article Number'} = 'Artikkelnummer';
     $Self->{Translation}->{'Search for articles with keyword'} = 'Søk etter artikler med nøkkelord';
 
     # Template: PublicFAQSearchOpenSearchDescriptionFAQNumber
-    $Self->{Translation}->{'Public'} = '';
+    $Self->{Translation}->{'Public'} = 'Offentlig';
 
     # Template: PublicFAQSearchResultShort
-    $Self->{Translation}->{'Back to FAQ Explorer'} = '';
+    $Self->{Translation}->{'Back to FAQ Explorer'} = 'Tilbake til OSS utforskeren';
 
     # Perl Module: Kernel/Modules/AgentFAQJournal.pm
     $Self->{Translation}->{'FAQ Journal'} = 'OSS-journal';
 
     # Perl Module: Kernel/Modules/AgentFAQPrint.pm
-    $Self->{Translation}->{'Last update'} = '';
+    $Self->{Translation}->{'Last update'} = 'Sist oppdatert';
     $Self->{Translation}->{'FAQ Dynamic Fields'} = '';
 
     # Perl Module: Kernel/Modules/AgentFAQSearch.pm
-    $Self->{Translation}->{'No Result!'} = '';
+    $Self->{Translation}->{'No Result!'} = 'Ingen resultater';
 
     # Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
-    $Self->{Translation}->{'This article is empty!'} = '';
+    $Self->{Translation}->{'This article is empty!'} = 'Denne artikkelen er tom!';
 
     # SysConfig
     $Self->{Translation}->{'A filter for HTML output to add links behind a defined string. The element Image allows two input kinds. First the name of an image (e.g. faq.png). In this case the OTRS image path will be used. The second possibility is to insert the link to the image.'} =
@@ -312,7 +312,7 @@ sub Data {
     $Self->{Translation}->{'Include internal fields on a FAQ based Ticket.'} = '';
     $Self->{Translation}->{'Include the name of each field in a FAQ based Ticket.'} = '';
     $Self->{Translation}->{'Interfaces where the quick search should be shown.'} = '';
-    $Self->{Translation}->{'Journal'} = '';
+    $Self->{Translation}->{'Journal'} = 'Journal';
     $Self->{Translation}->{'Language Management'} = 'Språkoppsett';
     $Self->{Translation}->{'Link another object to this FAQ item'} = 'Lenk opp et annet objekt til denne artikkelen';
     $Self->{Translation}->{'List of state types which can be used in the agent interface.'} =
@@ -375,7 +375,7 @@ sub Data {
     $Self->{Translation}->{'Print this FAQ'} = 'Skriv ut denne artikkelen';
     $Self->{Translation}->{'Queue for the approval of FAQ articles.'} = 'Kø for godkjenning av OSS-artikler.';
     $Self->{Translation}->{'Rates for voting. Key must be in percent.'} = 'Rater for avstemming. Nøkkel må være i prosent.';
-    $Self->{Translation}->{'Search FAQ'} = '';
+    $Self->{Translation}->{'Search FAQ'} = 'Søk i OSS';
     $Self->{Translation}->{'Set the default height (in pixels) of inline HTML fields in AgentFAQZoom.'} =
         '';
     $Self->{Translation}->{'Set the default height (in pixels) of inline HTML fields in CustomerFAQZoom (and PublicFAQZoom).'} =

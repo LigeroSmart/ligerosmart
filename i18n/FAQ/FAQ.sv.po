@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-10-07 18:17+0000\n"
-"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
+"PO-Revision-Date: 2015-10-26 14:28+0000\n"
+"Last-Translator: Anthon Nilsson <superdos@gmail.com>\n"
 "Language-Team: Swedish (http://www.transifex.com/otrs/OTRS/language/sv/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -50,7 +50,7 @@ msgstr "Underkategori till"
 
 #. Template: AAAFAQ
 msgid "No rate selected!"
-msgstr ""
+msgstr "Inget betyg satt!"
 
 #. Template: AAAFAQ
 msgid "Explorer"
@@ -150,7 +150,7 @@ msgstr "Detta språk finns redan!"
 
 #. Template: AAAFAQ
 msgid "Symptom"
-msgstr ""
+msgstr "Symptom"
 
 #. Template: AAAFAQ
 msgid "Solution"
@@ -216,15 +216,15 @@ msgstr "Vill du verkligen ta bort denna kategori?"
 msgid ""
 "You can not delete this category. It is used in at least one FAQ article "
 "and/or is parent of at least one other category"
-msgstr ""
+msgstr "Du kan inte ta bort denna kategorin. Det används av minst en FAQ-artikel!"
 
 #. Template: AgentFAQCategory
 msgid "This category is used in the following FAQ article(s)"
-msgstr ""
+msgstr "Denna kategori används av följande FAQ-artiklar"
 
 #. Template: AgentFAQCategory
 msgid "This category is parent of the following subcategories"
-msgstr ""
+msgstr "Denna kategori är förälder för följande underkategroier"
 
 #. Template: AgentFAQDelete
 msgid "Do you really want to delete this FAQ article?"
@@ -268,7 +268,7 @@ msgstr "Historik för"
 
 #. Template: AgentFAQJournalOverviewSmall
 msgid "No FAQ Journal data found."
-msgstr ""
+msgstr "Det finns ingen data i FAQ-loggboken"
 
 #. Template: AgentFAQLanguage
 msgid "FAQ Language Management"
@@ -305,7 +305,7 @@ msgstr "Du kan inte ta bort detta språk. Det används i minst en FAQ-artikel!"
 
 #. Template: AgentFAQLanguage
 msgid "This language is used in the following FAQ Article(s)"
-msgstr ""
+msgstr "Detta språk används av följande FAQ-artiklar"
 
 #. Template: AgentFAQOverviewNavBar
 msgid "Context Settings"
@@ -325,11 +325,11 @@ msgstr "Nyckelord"
 
 #. Template: AgentFAQSearch
 msgid "Vote (e. g. Equals 10 or GreaterThan 60)"
-msgstr ""
+msgstr "Röster (ex. lika med 10 eller fler än 60)"
 
 #. Template: AgentFAQSearch
 msgid "Rate (e. g. Equals 25% or GreaterThan 75%)"
-msgstr ""
+msgstr "Betyg (ex. lika med 25% eller mer än 75%)"
 
 #. Template: AgentFAQSearch
 msgid "Approved"
@@ -542,7 +542,7 @@ msgstr "Tillbaka till FAQ-utforskaren"
 
 #. Perl Module: Kernel/Modules/AgentFAQJournal.pm
 msgid "FAQ Journal"
-msgstr "FAQ Journal"
+msgstr "FAQ-loggboken"
 
 #. Perl Module: Kernel/Modules/AgentFAQPrint.pm
 msgid "Last update"
@@ -554,7 +554,7 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentFAQSearch.pm
 msgid "No Result!"
-msgstr ""
+msgstr "Inget resultat!"
 
 #. Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
 msgid "This article is empty!"
@@ -908,7 +908,7 @@ msgstr ""
 
 #. SysConfig
 msgid "Journal"
-msgstr "Journal"
+msgstr "Loggbok"
 
 #. SysConfig
 msgid "Language Management"

@@ -1,12 +1,13 @@
 # 
 # Translators:
 # Alexander <korsikov@rbcgrp.com>, 2015
+# Свистун Роман <svystun09@gmail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-10-07 18:17+0000\n"
-"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
+"PO-Revision-Date: 2015-10-24 09:12+0000\n"
+"Last-Translator: Свистун Роман <svystun09@gmail.com>\n"
 "Language-Team: Ukrainian (http://www.transifex.com/otrs/OTRS/language/uk/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -56,15 +57,15 @@ msgstr "Провідник"
 
 #. Template: AAAFAQ
 msgid "public (all)"
-msgstr ""
+msgstr "Загальнодоступне"
 
 #. Template: AAAFAQ
 msgid "external (customer)"
-msgstr ""
+msgstr "відкрите (клієнтам)"
 
 #. Template: AAAFAQ
 msgid "internal (agent)"
-msgstr ""
+msgstr "відкрите (агентам)"
 
 #. Template: AAAFAQ
 msgid "Start day"
@@ -100,67 +101,67 @@ msgstr "Ви вже голосували!"
 
 #. Template: AAAFAQ
 msgid "FAQ Article Print"
-msgstr ""
+msgstr "Надрукувати статтю довідника"
 
 #. Template: AAAFAQ
 msgid "FAQ Articles (Top 10)"
-msgstr ""
+msgstr "Довідник (найкращі 10 статтей)"
 
 #. Template: AAAFAQ
 msgid "FAQ Articles (new created)"
-msgstr ""
+msgstr "Довідник (нові статті)"
 
 #. Template: AAAFAQ
 msgid "FAQ Articles (recently changed)"
-msgstr ""
+msgstr "Довідник (недавно змінені статті)"
 
 #. Template: AAAFAQ
 msgid "FAQ category updated!"
-msgstr ""
+msgstr "Оновленні категорії довідника."
 
 #. Template: AAAFAQ
 msgid "FAQ category added!"
-msgstr ""
+msgstr "Додані категорії довідникаа."
 
 #. Template: AAAFAQ
 msgid "A category should have a name!"
-msgstr ""
+msgstr "Категорія повинна мати назву!"
 
 #. Template: AAAFAQ
 msgid "This category already exists"
-msgstr ""
+msgstr "Дана категорія уже існує."
 
 #. Template: AAAFAQ
 msgid "FAQ language added!"
-msgstr ""
+msgstr "Додано мову довідки!"
 
 #. Template: AAAFAQ
 msgid "FAQ language updated!"
-msgstr ""
+msgstr "Оновлено мову довідки!"
 
 #. Template: AAAFAQ
 msgid "The name is required!"
-msgstr ""
+msgstr "Необхідно ввести назву!"
 
 #. Template: AAAFAQ
 msgid "This language already exists!"
-msgstr ""
+msgstr "Ця мова вже існує!"
 
 #. Template: AAAFAQ
 msgid "Symptom"
-msgstr ""
+msgstr "Симптоми"
 
 #. Template: AAAFAQ
 msgid "Solution"
-msgstr ""
+msgstr "Рішення"
 
 #. Template: AgentFAQAdd
 msgid "Add FAQ Article"
-msgstr ""
+msgstr "Добавити артикул довідника"
 
 #. Template: AgentFAQAdd
 msgid "Keywords"
-msgstr ""
+msgstr "Ключові слова"
 
 #. Template: AgentFAQAdd
 msgid "A category is required."

@@ -1,12 +1,13 @@
 # 
 # Translators:
 # Kenneth Nilssen <inactive+kennethnilssen@transifex.com>, 2015
+# LarsMagnusHerland <lars.magnus@herland.priv.no>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-10-07 18:17+0000\n"
-"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
+"PO-Revision-Date: 2015-10-23 20:08+0000\n"
+"Last-Translator: LarsMagnusHerland <lars.magnus@herland.priv.no>\n"
 "Language-Team: Norwegian Bokmål (Norway) (http://www.transifex.com/otrs/OTRS/language/nb_NO/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -16,15 +17,15 @@ msgstr ""
 
 #. Template: AAAFAQ
 msgid "internal"
-msgstr "internt"
+msgstr "intern"
 
 #. Template: AAAFAQ
 msgid "public"
-msgstr "publiseres"
+msgstr "offentlig"
 
 #. Template: AAAFAQ
 msgid "external"
-msgstr "eksternt"
+msgstr "ekstern"
 
 #. Template: AAAFAQ
 msgid "FAQ Number"
@@ -52,7 +53,7 @@ msgstr "Ingen rating valgt"
 
 #. Template: AAAFAQ
 msgid "Explorer"
-msgstr ""
+msgstr "Utforsk"
 
 #. Template: AAAFAQ
 msgid "public (all)"
@@ -148,7 +149,7 @@ msgstr "Dette språket finnes allerede!"
 
 #. Template: AAAFAQ
 msgid "Symptom"
-msgstr ""
+msgstr "Symptom"
 
 #. Template: AAAFAQ
 msgid "Solution"
@@ -294,12 +295,12 @@ msgstr "Endre språk"
 
 #. Template: AgentFAQLanguage
 msgid "Do you really want to delete this language?"
-msgstr ""
+msgstr "Vil du virkelig fjerne dette språket?"
 
 #. Template: AgentFAQLanguage
 msgid ""
 "You can not delete this language. It is used in at least one FAQ article!"
-msgstr ""
+msgstr "Du kan ikke slette dette språket. Det er brukt i minst en OSS artikkel!"
 
 #. Template: AgentFAQLanguage
 msgid "This language is used in the following FAQ Article(s)"
@@ -311,7 +312,7 @@ msgstr "Kontekstvalg"
 
 #. Template: AgentFAQOverviewNavBar
 msgid "FAQ articles per page"
-msgstr ""
+msgstr "OSS artikler per side"
 
 #. Template: AgentFAQOverviewSmall
 msgid "No FAQ data found."
@@ -319,7 +320,7 @@ msgstr "Ingen artikler funnet"
 
 #. Template: AgentFAQSearch
 msgid "Keyword"
-msgstr ""
+msgstr "Nøkkelord"
 
 #. Template: AgentFAQSearch
 msgid "Vote (e. g. Equals 10 or GreaterThan 60)"
@@ -331,7 +332,7 @@ msgstr ""
 
 #. Template: AgentFAQSearch
 msgid "Approved"
-msgstr ""
+msgstr "Godkjent"
 
 #. Template: AgentFAQSearch
 msgid "Last changed by"
@@ -339,11 +340,11 @@ msgstr "Sist endret av"
 
 #. Template: AgentFAQSearch
 msgid "FAQ Article Create Time (before/after)"
-msgstr ""
+msgstr "Opprettelsestidspunkt for OSS artikkelen (før/etter)"
 
 #. Template: AgentFAQSearch
 msgid "FAQ Article Create Time (between)"
-msgstr ""
+msgstr "Opprettelsestidspunkt for OSS artikkelen (mellom)"
 
 #. Template: AgentFAQSearch
 msgid "FAQ Article Change Time (before/after)"
@@ -367,15 +368,15 @@ msgstr ""
 
 #. Template: AgentFAQSearchSmall
 msgid "Vote"
-msgstr ""
+msgstr "Stem"
 
 #. Template: AgentFAQSearchSmall
 msgid "No vote settings"
-msgstr ""
+msgstr "Ingen stemmeinnstillinger"
 
 #. Template: AgentFAQSearchSmall
 msgid "Specific votes"
-msgstr ""
+msgstr "Spesifikk notis"
 
 #. Template: AgentFAQSearchSmall
 msgid "e. g. Equals 10 or GreaterThan 60"
@@ -383,11 +384,11 @@ msgstr ""
 
 #. Template: AgentFAQSearchSmall
 msgid "Rate"
-msgstr ""
+msgstr "Ranger"
 
 #. Template: AgentFAQSearchSmall
 msgid "No rate settings"
-msgstr ""
+msgstr "Ingen rangeringsinnstillinger"
 
 #. Template: AgentFAQSearchSmall
 msgid "Specific rate"
@@ -403,7 +404,7 @@ msgstr ""
 
 #. Template: AgentFAQSearchSmall
 msgid "Specific date"
-msgstr ""
+msgstr "Spesifikk dato"
 
 #. Template: AgentFAQSearchSmall
 msgid "Date range"
@@ -500,7 +501,7 @@ msgstr ""
 
 #. Template: CustomerFAQSearch
 msgid "Only FAQ articles with votes..."
-msgstr ""
+msgstr "Bare OSS artikler med stemmer..."
 
 #. Template: CustomerFAQSearch
 msgid "Rate restrictions"
@@ -508,7 +509,7 @@ msgstr ""
 
 #. Template: CustomerFAQSearch
 msgid "Only FAQ articles with rate..."
-msgstr ""
+msgstr "Bare OSS artikler med rangeringer..."
 
 #. Template: CustomerFAQSearch
 msgid "Only FAQ articles created"
@@ -524,7 +525,7 @@ msgstr ""
 
 #. Template: CustomerFAQZoom
 msgid "Article Number"
-msgstr ""
+msgstr "Artikkelnummer"
 
 #. Template: CustomerFAQZoom
 msgid "Search for articles with keyword"
@@ -532,11 +533,11 @@ msgstr "Søk etter artikler med nøkkelord"
 
 #. Template: PublicFAQSearchOpenSearchDescriptionFAQNumber
 msgid "Public"
-msgstr ""
+msgstr "Offentlig"
 
 #. Template: PublicFAQSearchResultShort
 msgid "Back to FAQ Explorer"
-msgstr ""
+msgstr "Tilbake til OSS utforskeren"
 
 #. Perl Module: Kernel/Modules/AgentFAQJournal.pm
 msgid "FAQ Journal"
@@ -544,7 +545,7 @@ msgstr "OSS-journal"
 
 #. Perl Module: Kernel/Modules/AgentFAQPrint.pm
 msgid "Last update"
-msgstr ""
+msgstr "Sist oppdatert"
 
 #. Perl Module: Kernel/Modules/AgentFAQPrint.pm
 msgid "FAQ Dynamic Fields"
@@ -552,11 +553,11 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentFAQSearch.pm
 msgid "No Result!"
-msgstr ""
+msgstr "Ingen resultater"
 
 #. Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
 msgid "This article is empty!"
-msgstr ""
+msgstr "Denne artikkelen er tom!"
 
 #. SysConfig
 msgid ""
@@ -906,7 +907,7 @@ msgstr ""
 
 #. SysConfig
 msgid "Journal"
-msgstr ""
+msgstr "Journal"
 
 #. SysConfig
 msgid "Language Management"
@@ -1098,7 +1099,7 @@ msgstr "Rater for avstemming. Nøkkel må være i prosent."
 
 #. SysConfig
 msgid "Search FAQ"
-msgstr ""
+msgstr "Søk i OSS"
 
 #. SysConfig
 msgid ""
