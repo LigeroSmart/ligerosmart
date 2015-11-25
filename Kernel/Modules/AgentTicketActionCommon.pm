@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2015 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/98efdc8f5c060e95c5dbef44f02a14a91eac28a2/Kernel/Modules/AgentTicketActionCommon.pm
+# $origin: https://github.com/OTRS/otrs/blob/b7a4076884bb82cc9f1b2b91afb62a836cabbe51/Kernel/Modules/AgentTicketActionCommon.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1470,14 +1470,9 @@ sub Run {
         # set Body var to calculated content
         $GetParam{Body} = $Body;
 
-        if ( $Self->{ReplyToArticle} && $Config->{Subject} ) {
-            my $TicketSubjectRe = $ConfigObject->Get('Ticket::SubjectRe');
-            if ($TicketSubjectRe) {
-                $GetParam{Subject} = $TicketSubjectRe . ': ' . $Self->{ReplyToArticleContent}{Subject};
-            }
-            else {
-                $GetParam{Subject} = 'Re: ' . $Self->{ReplyToArticleContent}{Subject};
-            }
+        if ( $Self->{ReplyToArticle} ) {
+            my $TicketSubjectRe = $ConfigObject->Get('Ticket::SubjectRe') || 'Re';
+            $GetParam{Subject} = $TicketSubjectRe . ': ' . $Self->{ReplyToArticleContent}{Subject};
         }
         elsif ( !defined $GetParam{Subject} && $Config->{Subject} ) {
             $GetParam{Subject} = $LayoutObject->Output(

@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2015 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/98efdc8f5c060e95c5dbef44f02a14a91eac28a2/Kernel/Output/HTML/Templates/Standard/AgentTicketActionCommon.tt
+# $origin: https://github.com/OTRS/otrs/blob/b7a4076884bb82cc9f1b2b91afb62a836cabbe51/Kernel/Output/HTML/Templates/Standard/AgentTicketActionCommon.tt
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -448,12 +448,12 @@ $('#TypeID').bind('change', function (Event) {
 [% RenderBlockStart("InformAgentsWithoutSelection") %]
                         <fieldset class="TableLike FixedLabel">
                             <label>[% Translate("Text will also be received by:") | html %]:</label>
-                            <p class="Value">
+                            <div class="Field">
                                 <input type="hidden" name="UserListWithoutSelection" value="[% Data.UserListWithoutSelection  | html %]" />
 [% RenderBlockStart("InformAgentsWithoutSelectionSingleUser") %]
                                 <span title="[% Data.UserEmail %]">[% Data.UserFullname %]</span>[% RenderBlockStart("InformAgentsWithoutSelectionSingleUserSeparator") %],[% RenderBlockEnd("InformAgentsWithoutSelectionSingleUserSeparator") %]
 [% RenderBlockEnd("InformAgentsWithoutSelectionSingleUser") %]
-                            </p>
+                            </div>
                             <div class="Clear"></div>
                         </fieldset>
 [% RenderBlockEnd("InformAgentsWithoutSelection") %]
