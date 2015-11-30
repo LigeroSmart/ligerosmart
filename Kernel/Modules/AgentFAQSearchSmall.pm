@@ -230,8 +230,14 @@ sub Run {
         my $SessionObject = $Kernel::OM->Get('Kernel::System::AuthSession');
 
         # store last overview screen
-        my $URL = "Action=AgentFAQSearchSmall;Subaction=Search;Profile=$Profile;SortBy=$SortBy"
-            . ";OrderBy=$OrderBy;TakeLastSearch=1;StartHit=$StartHit;Nav=$Nav";
+        my $URL = "Action=AgentFAQSearchSmall;Subaction=Search"
+            . ";Profile=" . $LayoutObject->LinkEncode($Profile)
+            . ";SortBy=" . $LayoutObject->LinkEncode($SortBy)
+            . ";OrderBy=" . $LayoutObject->LinkEncode($OrderBy)
+            . ";TakeLastSearch=1"
+            . ";StartHit=" . $LayoutObject->LinkEncode($StartHit)
+            . ";Nav=$Nav";
+
         $SessionObject->UpdateSessionID(
             SessionID => $Self->{SessionID},
             Key       => 'LastScreenOverview',
