@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2015 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/b7a4076884bb82cc9f1b2b91afb62a836cabbe51/scripts/test/Selenium/Agent/AgentTicketService.t
+# $origin: https://github.com/OTRS/otrs/blob/b89bda8550373565cc0a2ca9bf16d920002ad138/scripts/test/Selenium/Agent/AgentTicketService.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -71,7 +71,7 @@ $Selenium->RunTest(
 
         # create service for test
         my $ServiceName = 'Service' . $Helper->GetRandomID();
-        my $ServiceID  = $Kernel::OM->Get('Kernel::System::Service')->ServiceAdd(
+        my $ServiceID   = $Kernel::OM->Get('Kernel::System::Service')->ServiceAdd(
             Name    => $ServiceName,
             ValidID => 1,
             Comment => 'Selenium Test',
