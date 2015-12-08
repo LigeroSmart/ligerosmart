@@ -134,7 +134,8 @@ $Selenium->RunTest(
         $Selenium->switch_to_window( $Handles->[1] );
 
         # check for take work order history message
-        my $ExpectedTakeWorkOrderMessage = "WorkOrderHistory::WorkOrderUpdate\", \"Workorder Agent\", \"$TestUserLogin";
+        my $ExpectedTakeWorkOrderMessage = "Workorder Agent: New: $TestUserLogin";
+
         $Self->True(
             index( $Selenium->get_page_source(), $ExpectedTakeWorkOrderMessage ) > -1,
             "$ExpectedTakeWorkOrderMessage - found",

@@ -131,7 +131,7 @@ $Selenium->RunTest(
             $Selenium->switch_to_window( $Handles->[1] );
 
             # verify report change
-            my $ReportUpdateMessage = "\"Workorder State\", \"$WorkOrderState (ID=$WorkOrderStateDataRef->{ItemID})\"";
+            my $ReportUpdateMessage = "Workorder State: New: $WorkOrderState (ID=$WorkOrderStateDataRef->{ItemID})";
             $Self->True(
                 index( $Selenium->get_page_source(), $ReportUpdateMessage ) > -1,
                 "$ReportUpdateMessage - found",
