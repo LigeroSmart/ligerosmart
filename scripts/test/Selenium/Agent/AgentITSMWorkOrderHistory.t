@@ -93,24 +93,24 @@ $Selenium->RunTest(
 
         # check for history values upon test change creation
         $Self->True(
-            index( $Selenium->get_page_source(), "WorkOrderHistory::WorkOrderAdd\", \"$WorkOrderID" ) > -1,
-            "WorkOrderHistory::WorkOrderAdd\", \"$WorkOrderID - found",
+            index( $Selenium->get_page_source(), "New Workorder (ID=$WorkOrderID)" ) > -1,
+            "New Workorder (ID=$WorkOrderID) - found",
         );
         $Self->True(
-            index(
-                $Selenium->get_page_source(),
-                "WorkOrderHistory::WorkOrderUpdate\", \"Instruction\", \"$WorkOrderInstruction\""
-                ) > -1,
-            "WorkOrderHistory::WorkOrderUpdate\", \"Instruction\", \"$WorkOrderInstruction\" - found",
+            index( $Selenium->get_page_source(), "Instruction: New: $WorkOrderInstruction &lt;- Old: -" ) > -1,
+            "Instruction: New: $WorkOrderInstruction &lt;- Old: - found",
         );
         $Self->True(
-            index( $Selenium->get_page_source(), "WorkOrderHistory::WorkOrderUpdate\", \"Planned Effort\", \"10\"" )
-                > -1,
-            "WorkOrderHistory::WorkOrderUpdate\", \"Planned Effort\", \"10\" - found",
+            index( $Selenium->get_page_source(), "Planned Effort: New: 10 &lt;- Old: 0.00" ) > -1,
+            "Planned Effort: New: 10 &lt;- Old: 0.00 - found",
         );
+
+        # cut off the workorder title after 30 characters and add [...]
+        my $WorkOrderTitleTruncated = substr($WorkOrderTitleRandom, 0, 30) . '[...]';
+
         $Self->True(
-            index( $Selenium->get_page_source(), "WorkOrderHistory::WorkOrderUpdate\", \"Workorder Title\"" ) > -1,
-            "WorkOrderHistory::WorkOrderUpdate\", \"Workorder Title\" - found",
+            index( $Selenium->get_page_source(), "Workorder Title: New: $WorkOrderTitleTruncated &lt;- Old: -" ) > -1,
+            "Workorder Title: New: $WorkOrderTitleTruncated &lt;- Old: - found",
         );
 
         # delete test created work order
