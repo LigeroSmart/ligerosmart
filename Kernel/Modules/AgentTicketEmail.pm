@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2015 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/b7a4076884bb82cc9f1b2b91afb62a836cabbe51/Kernel/Modules/AgentTicketEmail.pm
+# $origin: https://github.com/OTRS/otrs/blob/b89bda8550373565cc0a2ca9bf16d920002ad138/Kernel/Modules/AgentTicketEmail.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -2093,6 +2093,7 @@ sub _GetUsers {
     # workflow
     my $ACL = $TicketObject->TicketAcl(
         %Param,
+        Action        => $Self->{Action},
         ReturnType    => 'Ticket',
         ReturnSubType => 'Owner',
         Data          => \%ShownUsers,
@@ -2155,6 +2156,7 @@ sub _GetResponsibles {
     # workflow
     my $ACL = $TicketObject->TicketAcl(
         %Param,
+        Action        => $Self->{Action},
         ReturnType    => 'Ticket',
         ReturnSubType => 'Responsible',
         Data          => \%ShownUsers,

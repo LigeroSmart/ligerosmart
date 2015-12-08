@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2015 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/b7a4076884bb82cc9f1b2b91afb62a836cabbe51/Kernel/Modules/AgentTicketActionCommon.pm
+# $origin: https://github.com/OTRS/otrs/blob/b89bda8550373565cc0a2ca9bf16d920002ad138/Kernel/Modules/AgentTicketActionCommon.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1815,6 +1815,7 @@ sub _Mask {
 
         my $ACL = $TicketObject->TicketAcl(
             %Ticket,
+            Action        => $Self->{Action},
             ReturnType    => 'Ticket',
             ReturnSubType => 'NewOwner',
             Data          => \%ShownUsers,
@@ -1859,6 +1860,7 @@ sub _Mask {
 
         my $OldOwnerACL = $TicketObject->TicketAcl(
             %Ticket,
+            Action        => $Self->{Action},
             ReturnType    => 'Ticket',
             ReturnSubType => 'OldOwner',
             Data          => \%OldOwnersShown,
@@ -1917,6 +1919,7 @@ sub _Mask {
 
         my $ACL = $TicketObject->TicketAcl(
             %Ticket,
+            Action        => $Self->{Action},
             ReturnType    => 'Ticket',
             ReturnSubType => 'Responsible',
             Data          => \%ShownUsers,
@@ -2583,6 +2586,7 @@ sub _GetResponsible {
     # workflow
     my $ACL = $TicketObject->TicketAcl(
         %Param,
+        Action        => $Self->{Action},
         ReturnType    => 'Ticket',
         ReturnSubType => 'Responsible',
         Data          => \%ShownUsers,
@@ -2627,6 +2631,7 @@ sub _GetOwners {
     # workflow
     my $ACL = $TicketObject->TicketAcl(
         %Param,
+        Action        => $Self->{Action},
         ReturnType    => 'Ticket',
         ReturnSubType => 'NewOwner',
         Data          => \%ShownUsers,
@@ -2661,6 +2666,7 @@ sub _GetOldOwners {
     # workflow
     my $ACL = $TicketObject->TicketAcl(
         %Param,
+        Action        => $Self->{Action},
         ReturnType    => 'Ticket',
         ReturnSubType => 'OldOwner',
         Data          => \%UserHash,
