@@ -264,16 +264,7 @@ $Selenium->RunTest(
 
         # select Exported file and start importing
         $Selenium->find_element("//input[contains(\@name, \'SourceFile' )]")->send_keys($ExportLocation);
-        $Selenium->find_element("//button[\@value='Start Import'][\@type='submit']")->click();
-
-        # wait for Import if necessary
-        ACTIVESLEEP:
-        for my $Second ( 1 .. 20 ) {
-            if ( index( $Selenium->get_page_source(), "Import summary for ITSMConfigItem" ) > -1, ) {
-                last ACTIVESLEEP;
-            }
-            sleep 1;
-        }
+        $Selenium->find_element("//button[\@value='Start Import'][\@type='submit']")->VerifiedClick();
 
         # check for expected outcome
         $Self->True(
