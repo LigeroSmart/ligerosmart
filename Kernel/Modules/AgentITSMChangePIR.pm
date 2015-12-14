@@ -178,12 +178,15 @@ sub Run {
         $Self->{Filter} = $FilterName;
     }
     else {
+        # limit to configured states
+        my @WorkOrderStates = keys %Filters;
 
         # add default filter
         $Filters{All} = {
             Name   => 'All',
             Prio   => 1000,
             Search => {
+                WorkOrderStates  => \@WorkOrderStates,
                 WorkOrderTypes   => \@WorkOrderTypes,
                 OrderBy          => \@SortByArray,
                 OrderByDirection => \@OrderByArray,
