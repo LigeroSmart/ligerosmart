@@ -172,14 +172,14 @@ sub Run {
     if ( scalar keys %Filters == 1 ) {
 
         # get the name of the only filter
-        my ($FilterName) = keys %Filters;
+        my ($FilterName) = sort keys %Filters;
 
         # activate this filter
         $Self->{Filter} = $FilterName;
     }
     else {
         # limit to configured states
-        my @WorkOrderStates = keys %Filters;
+        my @WorkOrderStates = sort keys %Filters;
 
         # add default filter
         $Filters{All} = {
