@@ -1,5 +1,5 @@
 # --
-# Copyright (C) 2001-2015 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2016 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -106,7 +106,7 @@ $Selenium->RunTest(
         );
 
         # cut off the workorder title after 30 characters and add [...]
-        my $WorkOrderTitleTruncated = substr($WorkOrderTitleRandom, 0, 30) . '[...]';
+        my $WorkOrderTitleTruncated = substr( $WorkOrderTitleRandom, 0, 30 ) . '[...]';
 
         $Self->True(
             index( $Selenium->get_page_source(), "Workorder Title: New: $WorkOrderTitleTruncated &lt;- Old: -" ) > -1,

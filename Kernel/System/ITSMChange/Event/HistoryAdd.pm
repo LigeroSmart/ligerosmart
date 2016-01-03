@@ -1,5 +1,5 @@
 # --
-# Copyright (C) 2001-2015 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2016 OTRS AG, http://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -99,8 +99,8 @@ sub Run {
 
             # The history of CAB updates is not tracked here,
             # but in the handler for ChangeCABUpdate.
-            next FIELD if $Field eq 'CABAgents';             # change
-            next FIELD if $Field eq 'CABCustomers';          # change
+            next FIELD if $Field eq 'CABAgents';       # change
+            next FIELD if $Field eq 'CABCustomers';    # change
 
             # special handling for accounted time
             if ( $Type eq 'WorkOrder' && $Field eq 'AccountedTime' ) {
@@ -220,7 +220,7 @@ sub Run {
 
     # handle link events
     elsif (
-        $Event    eq 'ChangeLinkAdd'
+        $Event eq 'ChangeLinkAdd'
         || $Event eq 'ChangeLinkDelete'
         || $Event eq 'WorkOrderLinkAdd'
         || $Event eq 'WorkOrderLinkDelete'
@@ -253,7 +253,7 @@ sub Run {
 
     # handle attachment events
     elsif (
-        $Event    eq 'ChangeAttachmentAdd'
+        $Event eq 'ChangeAttachmentAdd'
         || $Event eq 'ChangeAttachmentDelete'
         || $Event eq 'WorkOrderAttachmentAdd'
         || $Event eq 'WorkOrderAttachmentDelete'
