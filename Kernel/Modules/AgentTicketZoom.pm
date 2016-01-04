@@ -258,6 +258,7 @@ sub Run {
     );
 
     my %AclAction = %PossibleActions;
+
     if ($ACL) {
         %AclAction = $TicketObject->TicketAclActionData();
     }
@@ -1145,9 +1146,7 @@ sub MaskAgentZoom {
             Data => {
                 %Ticket,
                 %Service,
-                Name          => $Service{Name},
                 CurInciSignal => $InciSignals{ $Service{CurInciStateType} },
-                State         => $Service{CurInciState},
                 %AclAction,
             },
         );

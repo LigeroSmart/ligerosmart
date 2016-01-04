@@ -228,9 +228,9 @@
                         <label>[% Translate("Service Incident State") | html %]:</label>
                         <div class="Value">
                             <div class="Flag Small">
-                                <span class="[% Data.CurInciSignal | html %]" title="[% Translate(Data.State) | html %]"></span>
+                                <span class="[% Data.CurInciSignal | html %]" title="[% Translate(Data.CurInciState) | html %]"></span>
                             </div>
-                            <span>[% Translate(Data.State) | html %]</span>
+                            <span>[% Translate(Data.CurInciState) | html %]</span>
                         </div>
 # ---
                         <div class="Clear"></div>
