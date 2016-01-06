@@ -1,12 +1,13 @@
 # 
 # Translators:
+# Gaudin vincent <vincent.gaudin@cprpsncf.fr>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-04-27 10:55+0000\n"
-"Last-Translator: Martin Gruner <martin.gruner@otrs.com>\n"
-"Language-Team: French (http://www.transifex.com/projects/p/OTRS/language/fr/)\n"
+"PO-Revision-Date: 2015-09-03 12:58+0000\n"
+"Last-Translator: Gaudin vincent <vincent.gaudin@cprpsncf.fr>\n"
+"Language-Team: French (http://www.transifex.com/otrs/OTRS/language/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -143,11 +144,11 @@ msgstr "Criticité <-> Impact <-> Priorité"
 
 #. Template: AdminITSMCIPAllocate
 msgid "Manage the priority result of combinating Criticality <-> Impact."
-msgstr ""
+msgstr "Gestion de la priorité par combinaison Criticité <-> Impact"
 
 #. Template: AdminITSMCIPAllocate
 msgid "Priority allocation"
-msgstr ""
+msgstr "Attribution de priorité"
 
 #. Template: AdminSLA
 msgid "Minimum Time Between Incidents"
@@ -159,7 +160,7 @@ msgstr "Criticité"
 
 #. Template: AgentITSMSLAPrint
 msgid "SLA-Info"
-msgstr ""
+msgstr "SLA-info"
 
 #. Template: AgentITSMSLAPrint
 msgid "Last changed"
@@ -171,7 +172,7 @@ msgstr "Dernière modification par"
 
 #. Template: AgentITSMSLAZoom
 msgid "SLA Information"
-msgstr ""
+msgstr "Information SLA"
 
 #. Template: AgentITSMSLAZoom
 msgid "Associated Services"
@@ -179,7 +180,7 @@ msgstr "Services associés"
 
 #. Template: AgentITSMServicePrint
 msgid "Service-Info"
-msgstr ""
+msgstr "Service-info"
 
 #. Template: AgentITSMServicePrint
 msgid "Current Incident State"
@@ -191,11 +192,11 @@ msgstr "SLAs associées"
 
 #. Template: AgentITSMServiceZoom
 msgid "Service Information"
-msgstr ""
+msgstr "Information service"
 
 #. Template: AgentITSMServiceZoom
 msgid "Current incident state"
-msgstr ""
+msgstr "Etat actuel de l'incident"
 
 #. SysConfig
 msgid ""
@@ -241,7 +242,7 @@ msgstr ""
 
 #. SysConfig
 msgid "Manage priority matrix."
-msgstr ""
+msgstr "Gestion de la matrice de priorité"
 
 #. SysConfig
 msgid "Module to show back link in service menu."
@@ -265,7 +266,7 @@ msgstr ""
 
 #. SysConfig
 msgid "Parameters for the incident states in the preference view."
-msgstr ""
+msgstr "Paramètres des états d'incident dans les préférences de visualisation"
 
 #. SysConfig
 msgid ""
@@ -288,19 +289,19 @@ msgstr ""
 msgid ""
 "This setting defines that a 'ITSMChange' object can be linked with 'Ticket' "
 "objects using the 'Normal' link type."
-msgstr ""
+msgstr "Ce paramétrage défini qu'un objet 'ITSMChange' peut être lié avec un objet 'Ticket' en utilisant un type de lien 'Normal'"
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'ITSMConfigItem' object can be linked with 'FAQ'"
 " objects using the 'Normal' link type."
-msgstr ""
+msgstr "Ce paramétrage défini qu'un objet 'ITSMConfigItem' peut être lié avec un objet 'FAQ' en utilisant un type de lien 'Normal'"
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'ITSMConfigItem' object can be linked with 'FAQ'"
 " objects using the 'ParentChild' link type."
-msgstr ""
+msgstr "Ce paramétrage défini qu'un objet 'ITSMConfigItem' peut être lié avec un objet 'FAQ' en utilisant un type de lien 'ParentEnfant'"
 
 #. SysConfig
 msgid ""
@@ -384,7 +385,7 @@ msgstr ""
 msgid ""
 "This setting defines that a 'ITSMWorkOrder' object can be linked with "
 "'ITSMConfigItem' objects using the 'Normal' link type."
-msgstr ""
+msgstr "Ce paramétrage défini qu'un objet 'ITSMWorkOrder' peut être lié avec un objet 'ITSMConfigItem' en utilisant un type de lien 'Normal'"
 
 #. SysConfig
 msgid ""
@@ -396,25 +397,25 @@ msgstr ""
 msgid ""
 "This setting defines that a 'ITSMWorkOrder' object can be linked with "
 "'Service' objects using the 'Normal' link type."
-msgstr ""
+msgstr "Ce paramétrage défini qu'un objet 'ITSMWorkOrder' peut être lié avec un objet 'Service' en utilisant un type de lien 'Normal'"
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'ITSMWorkOrder' object can be linked with "
 "'Ticket' objects using the 'Normal' link type."
-msgstr ""
+msgstr "Ce paramétrage défini qu'un objet 'ITSMWorkOrder' peut être lié avec un objet 'Ticket' en utilisant un type de lien 'Normal'"
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'Service' object can be linked with 'FAQ' "
 "objects using the 'Normal' link type."
-msgstr ""
+msgstr "Ce paramétrage défini qu'un objet 'Service' peut être lié avec un objet 'FAQ' en utilisant un type de lien 'Normal'"
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'Service' object can be linked with 'FAQ' "
 "objects using the 'ParentChild' link type."
-msgstr ""
+msgstr "Ce paramétrage défini qu'un objet 'Service' peut être lié avec un objet 'FAQ' en utilisant un type de lien 'ParentEnfant'"
 
 #. SysConfig
 msgid ""
@@ -460,4 +461,4 @@ msgstr ""
 
 #. SysConfig
 msgid "Width of ITSM textareas."
-msgstr ""
+msgstr "Largeur des zones de texte ITSM"

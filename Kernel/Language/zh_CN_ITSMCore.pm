@@ -60,23 +60,19 @@ sub Data {
     # Template: AdminService
     $Self->{Translation}->{'Criticality'} = '重要';
 
-    # Template: AgentITSMSLAPrint
-    $Self->{Translation}->{'SLA-Info'} = 'SLA信息';
-    $Self->{Translation}->{'Last changed'} = '上次修改于';
-    $Self->{Translation}->{'Last changed by'} = '上次修改人';
-
     # Template: AgentITSMSLAZoom
     $Self->{Translation}->{'SLA Information'} = 'SLA信息';
+    $Self->{Translation}->{'Last changed'} = '上次修改于';
+    $Self->{Translation}->{'Last changed by'} = '上次修改人';
     $Self->{Translation}->{'Associated Services'} = '关联的服务';
-
-    # Template: AgentITSMServicePrint
-    $Self->{Translation}->{'Service-Info'} = '服务信息';
-    $Self->{Translation}->{'Current Incident State'} = '当前故障状态';
-    $Self->{Translation}->{'Associated SLAs'} = '关联的SLAs';
 
     # Template: AgentITSMServiceZoom
     $Self->{Translation}->{'Service Information'} = '服务信息';
     $Self->{Translation}->{'Current incident state'} = '当前故障状态';
+    $Self->{Translation}->{'Associated SLAs'} = '关联的SLAs';
+
+    # Perl Module: Kernel/Modules/AgentITSMServicePrint.pm
+    $Self->{Translation}->{'Current Incident State'} = '当前故障状态';
 
     # SysConfig
     $Self->{Translation}->{'Frontend module registration for the AdminITSMCIPAllocate configuration in the admin area.'} =

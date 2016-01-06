@@ -60,23 +60,19 @@ sub Data {
     # Template: AdminService
     $Self->{Translation}->{'Criticality'} = 'Критичность';
 
-    # Template: AgentITSMSLAPrint
-    $Self->{Translation}->{'SLA-Info'} = 'Информация об SLA';
-    $Self->{Translation}->{'Last changed'} = 'Дата изменения';
-    $Self->{Translation}->{'Last changed by'} = 'Кем изменено';
-
     # Template: AgentITSMSLAZoom
     $Self->{Translation}->{'SLA Information'} = 'Информация об SLA';
+    $Self->{Translation}->{'Last changed'} = 'Дата изменения';
+    $Self->{Translation}->{'Last changed by'} = 'Кем изменено';
     $Self->{Translation}->{'Associated Services'} = 'Связанные сервисы';
-
-    # Template: AgentITSMServicePrint
-    $Self->{Translation}->{'Service-Info'} = 'Информация о Сервисе';
-    $Self->{Translation}->{'Current Incident State'} = 'Текущее состояние инцидента';
-    $Self->{Translation}->{'Associated SLAs'} = 'Связанные SLA';
 
     # Template: AgentITSMServiceZoom
     $Self->{Translation}->{'Service Information'} = 'Информация о Сервисе';
     $Self->{Translation}->{'Current incident state'} = 'Текущее состояние инцидента';
+    $Self->{Translation}->{'Associated SLAs'} = 'Связанные SLA';
+
+    # Perl Module: Kernel/Modules/AgentITSMServicePrint.pm
+    $Self->{Translation}->{'Current Incident State'} = 'Текущее состояние инцидента';
 
     # SysConfig
     $Self->{Translation}->{'Frontend module registration for the AdminITSMCIPAllocate configuration in the admin area.'} =

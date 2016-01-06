@@ -60,23 +60,19 @@ sub Data {
     # Template: AdminService
     $Self->{Translation}->{'Criticality'} = 'Umuhimu';
 
-    # Template: AgentITSMSLAPrint
-    $Self->{Translation}->{'SLA-Info'} = 'Taarifa za SLA';
-    $Self->{Translation}->{'Last changed'} = 'Mwisho kubadilishwa';
-    $Self->{Translation}->{'Last changed by'} = 'Mwsho kubadilishwa na';
-
     # Template: AgentITSMSLAZoom
     $Self->{Translation}->{'SLA Information'} = 'Taarifa za SLA';
+    $Self->{Translation}->{'Last changed'} = 'Mwisho kubadilishwa';
+    $Self->{Translation}->{'Last changed by'} = 'Mwsho kubadilishwa na';
     $Self->{Translation}->{'Associated Services'} = 'Huduma zinazohusika';
-
-    # Template: AgentITSMServicePrint
-    $Self->{Translation}->{'Service-Info'} = 'Taarifa za huduma';
-    $Self->{Translation}->{'Current Incident State'} = 'Hali ya tukio la sasa';
-    $Self->{Translation}->{'Associated SLAs'} = 'SLA zinazohusika';
 
     # Template: AgentITSMServiceZoom
     $Self->{Translation}->{'Service Information'} = 'Taarifa za huduma';
     $Self->{Translation}->{'Current incident state'} = 'Hali ya tukio la sasa';
+    $Self->{Translation}->{'Associated SLAs'} = 'SLA zinazohusika';
+
+    # Perl Module: Kernel/Modules/AgentITSMServicePrint.pm
+    $Self->{Translation}->{'Current Incident State'} = 'Hali ya tukio la sasa';
 
     # SysConfig
     $Self->{Translation}->{'Frontend module registration for the AdminITSMCIPAllocate configuration in the admin area.'} =

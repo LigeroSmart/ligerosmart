@@ -51,8 +51,8 @@ sub Data {
     # Template: AdminITSMCIPAllocate
     $Self->{Translation}->{'Criticality <-> Impact <-> Priority'} = 'Criticité <-> Impact <-> Priorité';
     $Self->{Translation}->{'Manage the priority result of combinating Criticality <-> Impact.'} =
-        '';
-    $Self->{Translation}->{'Priority allocation'} = '';
+        'Gestion de la priorité par combinaison Criticité <-> Impact';
+    $Self->{Translation}->{'Priority allocation'} = 'Attribution de priorité';
 
     # Template: AdminSLA
     $Self->{Translation}->{'Minimum Time Between Incidents'} = 'Temps minimal entre les incidents';
@@ -60,23 +60,19 @@ sub Data {
     # Template: AdminService
     $Self->{Translation}->{'Criticality'} = 'Criticité';
 
-    # Template: AgentITSMSLAPrint
-    $Self->{Translation}->{'SLA-Info'} = '';
+    # Template: AgentITSMSLAZoom
+    $Self->{Translation}->{'SLA Information'} = 'Information SLA';
     $Self->{Translation}->{'Last changed'} = 'Dernière modification';
     $Self->{Translation}->{'Last changed by'} = 'Dernière modification par';
-
-    # Template: AgentITSMSLAZoom
-    $Self->{Translation}->{'SLA Information'} = '';
     $Self->{Translation}->{'Associated Services'} = 'Services associés';
 
-    # Template: AgentITSMServicePrint
-    $Self->{Translation}->{'Service-Info'} = '';
-    $Self->{Translation}->{'Current Incident State'} = 'Etat actuel d\'incident';
+    # Template: AgentITSMServiceZoom
+    $Self->{Translation}->{'Service Information'} = 'Information service';
+    $Self->{Translation}->{'Current incident state'} = 'Etat actuel de l\'incident';
     $Self->{Translation}->{'Associated SLAs'} = 'SLAs associées';
 
-    # Template: AgentITSMServiceZoom
-    $Self->{Translation}->{'Service Information'} = '';
-    $Self->{Translation}->{'Current incident state'} = '';
+    # Perl Module: Kernel/Modules/AgentITSMServicePrint.pm
+    $Self->{Translation}->{'Current Incident State'} = 'Etat actuel d\'incident';
 
     # SysConfig
     $Self->{Translation}->{'Frontend module registration for the AdminITSMCIPAllocate configuration in the admin area.'} =
@@ -93,21 +89,21 @@ sub Data {
         '';
     $Self->{Translation}->{'Frontend module registration for the AgentITSMServiceZoom object in the agent interface.'} =
         '';
-    $Self->{Translation}->{'Manage priority matrix.'} = '';
+    $Self->{Translation}->{'Manage priority matrix.'} = 'Gestion de la matrice de priorité';
     $Self->{Translation}->{'Module to show back link in service menu.'} = '';
     $Self->{Translation}->{'Module to show back link in sla menu.'} = '';
     $Self->{Translation}->{'Module to show print link in service menu.'} = '';
     $Self->{Translation}->{'Module to show print link in sla menu.'} = '';
     $Self->{Translation}->{'Module to show the link link in service menu.'} = '';
-    $Self->{Translation}->{'Parameters for the incident states in the preference view.'} = '';
+    $Self->{Translation}->{'Parameters for the incident states in the preference view.'} = 'Paramètres des états d\'incident dans les préférences de visualisation';
     $Self->{Translation}->{'Set the type and direction of links to be used to calculate the incident state. The key is the name of the link type (as defined in LinkObject::Type), and the value is the direction of the IncidentLinkType that should be followed to calculate the incident state. For example if the IncidentLinkType is set to \'DependsOn\', and the Direction is \'Source\', only \'Depends on\' links will be followed (and not the opposite link \'Required for\') to calculate the incident state. You can add more link types ad directions as you like, e.g. \'Includes\' with the direction \'Target\'. All link types defined in the sysconfig options LinkObject::Type are possible and the direction can be \'Source\', \'Target\', or \'Both\'. IMPORTANT: AFTER YOU MAKE CHANGES TO THIS SYSCONFIG OPTION YOU NEED TO RUN THE SCRIPT bin/otrs.ITSMConfigItemIncidentStateRecalculate.pl SO THAT ALL INCIDENT STATES WILL BE RECALCULATED BASED ON THE NEW SETTINGS!'} =
         '';
     $Self->{Translation}->{'This setting defines that a \'ITSMChange\' object can be linked with \'Ticket\' objects using the \'Normal\' link type.'} =
-        '';
+        'Ce paramétrage défini qu\'un objet \'ITSMChange\' peut être lié avec un objet \'Ticket\' en utilisant un type de lien \'Normal\'';
     $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with \'FAQ\' objects using the \'Normal\' link type.'} =
-        '';
+        'Ce paramétrage défini qu\'un objet \'ITSMConfigItem\' peut être lié avec un objet \'FAQ\' en utilisant un type de lien \'Normal\'';
     $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with \'FAQ\' objects using the \'ParentChild\' link type.'} =
-        '';
+        'Ce paramétrage défini qu\'un objet \'ITSMConfigItem\' peut être lié avec un objet \'FAQ\' en utilisant un type de lien \'ParentEnfant\'';
     $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with \'FAQ\' objects using the \'RelevantTo\' link type.'} =
         '';
     $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with \'Service\' objects using the \'AlternativeTo\' link type.'} =
@@ -135,17 +131,17 @@ sub Data {
     $Self->{Translation}->{'This setting defines that a \'ITSMWorkOrder\' object can be linked with \'ITSMConfigItem\' objects using the \'DependsOn\' link type.'} =
         '';
     $Self->{Translation}->{'This setting defines that a \'ITSMWorkOrder\' object can be linked with \'ITSMConfigItem\' objects using the \'Normal\' link type.'} =
-        '';
+        'Ce paramétrage défini qu\'un objet \'ITSMWorkOrder\' peut être lié avec un objet \'ITSMConfigItem\' en utilisant un type de lien \'Normal\'';
     $Self->{Translation}->{'This setting defines that a \'ITSMWorkOrder\' object can be linked with \'Service\' objects using the \'DependsOn\' link type.'} =
         '';
     $Self->{Translation}->{'This setting defines that a \'ITSMWorkOrder\' object can be linked with \'Service\' objects using the \'Normal\' link type.'} =
-        '';
+        'Ce paramétrage défini qu\'un objet \'ITSMWorkOrder\' peut être lié avec un objet \'Service\' en utilisant un type de lien \'Normal\'';
     $Self->{Translation}->{'This setting defines that a \'ITSMWorkOrder\' object can be linked with \'Ticket\' objects using the \'Normal\' link type.'} =
-        '';
+        'Ce paramétrage défini qu\'un objet \'ITSMWorkOrder\' peut être lié avec un objet \'Ticket\' en utilisant un type de lien \'Normal\'';
     $Self->{Translation}->{'This setting defines that a \'Service\' object can be linked with \'FAQ\' objects using the \'Normal\' link type.'} =
-        '';
+        'Ce paramétrage défini qu\'un objet \'Service\' peut être lié avec un objet \'FAQ\' en utilisant un type de lien \'Normal\'';
     $Self->{Translation}->{'This setting defines that a \'Service\' object can be linked with \'FAQ\' objects using the \'ParentChild\' link type.'} =
-        '';
+        'Ce paramétrage défini qu\'un objet \'Service\' peut être lié avec un objet \'FAQ\' en utilisant un type de lien \'ParentEnfant\'';
     $Self->{Translation}->{'This setting defines that a \'Service\' object can be linked with \'FAQ\' objects using the \'RelevantTo\' link type.'} =
         '';
     $Self->{Translation}->{'This setting defines the link type \'AlternativeTo\'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link.'} =
@@ -158,7 +154,7 @@ sub Data {
         '';
     $Self->{Translation}->{'This setting defines the link type \'RelevantTo\'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link.'} =
         '';
-    $Self->{Translation}->{'Width of ITSM textareas.'} = '';
+    $Self->{Translation}->{'Width of ITSM textareas.'} = 'Largeur des zones de texte ITSM';
 
 }
 

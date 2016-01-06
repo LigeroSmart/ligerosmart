@@ -1,12 +1,13 @@
 # 
 # Translators:
+# Jerzy Ruszczak <orcio6@o2.pl>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-04-27 10:55+0000\n"
-"Last-Translator: Martin Gruner <martin.gruner@otrs.com>\n"
-"Language-Team: Polish (http://www.transifex.com/projects/p/OTRS/language/pl/)\n"
+"PO-Revision-Date: 2015-12-08 12:55+0000\n"
+"Last-Translator: Jerzy Ruszczak <orcio6@o2.pl>\n"
+"Language-Team: Polish (http://www.transifex.com/otrs/OTRS/language/pl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -23,15 +24,15 @@ msgstr "Dostępność"
 
 #. Template: AAAITSMCore
 msgid "Back End"
-msgstr "Backend"
+msgstr "Zaplecze"
 
 #. Template: AAAITSMCore
 msgid "Connected to"
-msgstr "Podłączone do"
+msgstr "Połączone z"
 
 #. Template: AAAITSMCore
 msgid "Current State"
-msgstr "Aktualny stan"
+msgstr "Bieżący Stan"
 
 #. Template: AAAITSMCore
 msgid "Demonstration"
@@ -43,7 +44,7 @@ msgstr "Zależne od"
 
 #. Template: AAAITSMCore
 msgid "End User Service"
-msgstr "Usługa użytkownika końcowego"
+msgstr "Usługa Użytkownika Końcowego"
 
 #. Template: AAAITSMCore
 msgid "Errors"
@@ -131,7 +132,7 @@ msgstr "Transakcje"
 
 #. Template: AAAITSMCore
 msgid "Underpinning Contract"
-msgstr ""
+msgstr "Podstawy Umowy"
 
 #. Template: AAAITSMCore
 msgid "allocation"
@@ -245,27 +246,27 @@ msgstr "Zarządzaj macierzą priorytetów."
 
 #. SysConfig
 msgid "Module to show back link in service menu."
-msgstr ""
+msgstr "Moduł pokazywania linku powrotu w menu serwisowym."
 
 #. SysConfig
 msgid "Module to show back link in sla menu."
-msgstr ""
+msgstr "Moduł pokazywania linku powrotu w menu SLA."
 
 #. SysConfig
 msgid "Module to show print link in service menu."
-msgstr ""
+msgstr "Moduł pokazywania linku drukowania w menu serwisowym."
 
 #. SysConfig
 msgid "Module to show print link in sla menu."
-msgstr ""
+msgstr "Moduł pokazywania linku drukowania w menu SLA."
 
 #. SysConfig
 msgid "Module to show the link link in service menu."
-msgstr ""
+msgstr "Moduł pokazywania linku w menu serwisowym."
 
 #. SysConfig
 msgid "Parameters for the incident states in the preference view."
-msgstr ""
+msgstr "Parametry dla stanów zdarzeń w widoku preferencji."
 
 #. SysConfig
 msgid ""

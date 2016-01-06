@@ -18,12 +18,12 @@ sub Data {
     # Template: AAAITSMCore
     $Self->{Translation}->{'Alternative to'} = 'Alternatywa dla';
     $Self->{Translation}->{'Availability'} = 'Dostępność';
-    $Self->{Translation}->{'Back End'} = 'Backend';
-    $Self->{Translation}->{'Connected to'} = 'Podłączone do';
-    $Self->{Translation}->{'Current State'} = 'Aktualny stan';
+    $Self->{Translation}->{'Back End'} = 'Zaplecze';
+    $Self->{Translation}->{'Connected to'} = 'Połączone z';
+    $Self->{Translation}->{'Current State'} = 'Bieżący Stan';
     $Self->{Translation}->{'Demonstration'} = 'Demonstracja';
     $Self->{Translation}->{'Depends on'} = 'Zależne od';
-    $Self->{Translation}->{'End User Service'} = 'Usługa użytkownika końcowego';
+    $Self->{Translation}->{'End User Service'} = 'Usługa Użytkownika Końcowego';
     $Self->{Translation}->{'Errors'} = 'Błędy';
     $Self->{Translation}->{'Front End'} = 'Frontend';
     $Self->{Translation}->{'IT Management'} = 'IT zarządzanie';
@@ -45,7 +45,7 @@ sub Data {
     $Self->{Translation}->{'Service-Area'} = 'Sekcja serwisowa';
     $Self->{Translation}->{'Training'} = 'Trening';
     $Self->{Translation}->{'Transactions'} = 'Transakcje';
-    $Self->{Translation}->{'Underpinning Contract'} = '';
+    $Self->{Translation}->{'Underpinning Contract'} = 'Podstawy Umowy';
     $Self->{Translation}->{'allocation'} = 'alokacja';
 
     # Template: AdminITSMCIPAllocate
@@ -60,23 +60,19 @@ sub Data {
     # Template: AdminService
     $Self->{Translation}->{'Criticality'} = 'Krytyczność';
 
-    # Template: AgentITSMSLAPrint
-    $Self->{Translation}->{'SLA-Info'} = 'SLA-Info';
-    $Self->{Translation}->{'Last changed'} = 'Ostatnia zmiana';
-    $Self->{Translation}->{'Last changed by'} = 'Ostatnio zmienione przez';
-
     # Template: AgentITSMSLAZoom
     $Self->{Translation}->{'SLA Information'} = 'Informacje SLA';
+    $Self->{Translation}->{'Last changed'} = 'Ostatnia zmiana';
+    $Self->{Translation}->{'Last changed by'} = 'Ostatnio zmienione przez';
     $Self->{Translation}->{'Associated Services'} = 'Połączone usługi';
-
-    # Template: AgentITSMServicePrint
-    $Self->{Translation}->{'Service-Info'} = 'Usługa-Info';
-    $Self->{Translation}->{'Current Incident State'} = 'Aktualny stan';
-    $Self->{Translation}->{'Associated SLAs'} = 'Połączone SLA';
 
     # Template: AgentITSMServiceZoom
     $Self->{Translation}->{'Service Information'} = 'Informacje o usłudze';
     $Self->{Translation}->{'Current incident state'} = 'Aktualny stan';
+    $Self->{Translation}->{'Associated SLAs'} = 'Połączone SLA';
+
+    # Perl Module: Kernel/Modules/AgentITSMServicePrint.pm
+    $Self->{Translation}->{'Current Incident State'} = 'Aktualny stan';
 
     # SysConfig
     $Self->{Translation}->{'Frontend module registration for the AdminITSMCIPAllocate configuration in the admin area.'} =
@@ -94,12 +90,12 @@ sub Data {
     $Self->{Translation}->{'Frontend module registration for the AgentITSMServiceZoom object in the agent interface.'} =
         '';
     $Self->{Translation}->{'Manage priority matrix.'} = 'Zarządzaj macierzą priorytetów.';
-    $Self->{Translation}->{'Module to show back link in service menu.'} = '';
-    $Self->{Translation}->{'Module to show back link in sla menu.'} = '';
-    $Self->{Translation}->{'Module to show print link in service menu.'} = '';
-    $Self->{Translation}->{'Module to show print link in sla menu.'} = '';
-    $Self->{Translation}->{'Module to show the link link in service menu.'} = '';
-    $Self->{Translation}->{'Parameters for the incident states in the preference view.'} = '';
+    $Self->{Translation}->{'Module to show back link in service menu.'} = 'Moduł pokazywania linku powrotu w menu serwisowym.';
+    $Self->{Translation}->{'Module to show back link in sla menu.'} = 'Moduł pokazywania linku powrotu w menu SLA.';
+    $Self->{Translation}->{'Module to show print link in service menu.'} = 'Moduł pokazywania linku drukowania w menu serwisowym.';
+    $Self->{Translation}->{'Module to show print link in sla menu.'} = 'Moduł pokazywania linku drukowania w menu SLA.';
+    $Self->{Translation}->{'Module to show the link link in service menu.'} = 'Moduł pokazywania linku w menu serwisowym.';
+    $Self->{Translation}->{'Parameters for the incident states in the preference view.'} = 'Parametry dla stanów zdarzeń w widoku preferencji.';
     $Self->{Translation}->{'Set the type and direction of links to be used to calculate the incident state. The key is the name of the link type (as defined in LinkObject::Type), and the value is the direction of the IncidentLinkType that should be followed to calculate the incident state. For example if the IncidentLinkType is set to \'DependsOn\', and the Direction is \'Source\', only \'Depends on\' links will be followed (and not the opposite link \'Required for\') to calculate the incident state. You can add more link types ad directions as you like, e.g. \'Includes\' with the direction \'Target\'. All link types defined in the sysconfig options LinkObject::Type are possible and the direction can be \'Source\', \'Target\', or \'Both\'. IMPORTANT: AFTER YOU MAKE CHANGES TO THIS SYSCONFIG OPTION YOU NEED TO RUN THE SCRIPT bin/otrs.ITSMConfigItemIncidentStateRecalculate.pl SO THAT ALL INCIDENT STATES WILL BE RECALCULATED BASED ON THE NEW SETTINGS!'} =
         '';
     $Self->{Translation}->{'This setting defines that a \'ITSMChange\' object can be linked with \'Ticket\' objects using the \'Normal\' link type.'} =

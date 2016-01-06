@@ -52,7 +52,7 @@ sub Data {
     $Self->{Translation}->{'Criticality <-> Impact <-> Priority'} = 'Kritičnost<->Vliv<->Priorita';
     $Self->{Translation}->{'Manage the priority result of combinating Criticality <-> Impact.'} =
         '';
-    $Self->{Translation}->{'Priority allocation'} = '';
+    $Self->{Translation}->{'Priority allocation'} = 'Alokace priorit';
 
     # Template: AdminSLA
     $Self->{Translation}->{'Minimum Time Between Incidents'} = 'Minimální čas mezi incidenty';
@@ -60,23 +60,19 @@ sub Data {
     # Template: AdminService
     $Self->{Translation}->{'Criticality'} = 'Kritičnost';
 
-    # Template: AgentITSMSLAPrint
-    $Self->{Translation}->{'SLA-Info'} = 'SLA-Info';
-    $Self->{Translation}->{'Last changed'} = 'Naposledy změněn';
-    $Self->{Translation}->{'Last changed by'} = 'Naposledy změnil';
-
     # Template: AgentITSMSLAZoom
     $Self->{Translation}->{'SLA Information'} = 'SLA Informace';
+    $Self->{Translation}->{'Last changed'} = 'Naposledy změněn';
+    $Self->{Translation}->{'Last changed by'} = 'Naposledy změnil';
     $Self->{Translation}->{'Associated Services'} = 'Přiřazené Služby';
-
-    # Template: AgentITSMServicePrint
-    $Self->{Translation}->{'Service-Info'} = '';
-    $Self->{Translation}->{'Current Incident State'} = 'Současný Stav Incidentu';
-    $Self->{Translation}->{'Associated SLAs'} = 'Přiřazené SLA smlouvy';
 
     # Template: AgentITSMServiceZoom
     $Self->{Translation}->{'Service Information'} = '';
     $Self->{Translation}->{'Current incident state'} = '';
+    $Self->{Translation}->{'Associated SLAs'} = 'Přiřazené SLA smlouvy';
+
+    # Perl Module: Kernel/Modules/AgentITSMServicePrint.pm
+    $Self->{Translation}->{'Current Incident State'} = 'Současný Stav Incidentu';
 
     # SysConfig
     $Self->{Translation}->{'Frontend module registration for the AdminITSMCIPAllocate configuration in the admin area.'} =

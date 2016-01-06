@@ -154,36 +154,20 @@ msgstr ""
 msgid "Criticality"
 msgstr ""
 
-#. Template: AgentITSMSLAPrint
-msgid "SLA-Info"
-msgstr ""
-
-#. Template: AgentITSMSLAPrint
-msgid "Last changed"
-msgstr ""
-
-#. Template: AgentITSMSLAPrint
-msgid "Last changed by"
-msgstr ""
-
 #. Template: AgentITSMSLAZoom
 msgid "SLA Information"
 msgstr ""
 
 #. Template: AgentITSMSLAZoom
+msgid "Last changed"
+msgstr ""
+
+#. Template: AgentITSMSLAZoom
+msgid "Last changed by"
+msgstr ""
+
+#. Template: AgentITSMSLAZoom
 msgid "Associated Services"
-msgstr ""
-
-#. Template: AgentITSMServicePrint
-msgid "Service-Info"
-msgstr ""
-
-#. Template: AgentITSMServicePrint
-msgid "Current Incident State"
-msgstr ""
-
-#. Template: AgentITSMServicePrint
-msgid "Associated SLAs"
 msgstr ""
 
 #. Template: AgentITSMServiceZoom
@@ -192,6 +176,14 @@ msgstr ""
 
 #. Template: AgentITSMServiceZoom
 msgid "Current incident state"
+msgstr ""
+
+#. Template: AgentITSMServiceZoom
+msgid "Associated SLAs"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMServicePrint.pm
+msgid "Current Incident State"
 msgstr ""
 
 #. SysConfig

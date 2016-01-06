@@ -60,23 +60,19 @@ sub Data {
     # Template: AdminService
     $Self->{Translation}->{'Criticality'} = 'Kritikal';
 
-    # Template: AgentITSMSLAPrint
-    $Self->{Translation}->{'SLA-Info'} = 'SLA-Info';
-    $Self->{Translation}->{'Last changed'} = 'diubah buat kali terakhir';
-    $Self->{Translation}->{'Last changed by'} = 'Kali terakhir diubah semasa';
-
     # Template: AgentITSMSLAZoom
     $Self->{Translation}->{'SLA Information'} = 'SLA-Informasi';
+    $Self->{Translation}->{'Last changed'} = 'Kali terakhir diubah';
+    $Self->{Translation}->{'Last changed by'} = 'Kali terakhir diubah semasa';
     $Self->{Translation}->{'Associated Services'} = 'Perkhidmatan Bersekutu';
-
-    # Template: AgentITSMServicePrint
-    $Self->{Translation}->{'Service-Info'} = 'Info Perkhidmatan';
-    $Self->{Translation}->{'Current Incident State'} = 'Insiden status semasa';
-    $Self->{Translation}->{'Associated SLAs'} = 'SLA Bersekutu';
 
     # Template: AgentITSMServiceZoom
     $Self->{Translation}->{'Service Information'} = 'Informasi Servis';
     $Self->{Translation}->{'Current incident state'} = 'Kejadian keadaan semasa';
+    $Self->{Translation}->{'Associated SLAs'} = 'SLA Bersekutu';
+
+    # Perl Module: Kernel/Modules/AgentITSMServicePrint.pm
+    $Self->{Translation}->{'Current Incident State'} = 'Insiden status semasa';
 
     # SysConfig
     $Self->{Translation}->{'Frontend module registration for the AdminITSMCIPAllocate configuration in the admin area.'} =
@@ -101,7 +97,7 @@ sub Data {
     $Self->{Translation}->{'Module to show the link link in service menu.'} = 'Modul untuk menunjukkan pautan pautan dalam menu perkhidmatan.';
     $Self->{Translation}->{'Parameters for the incident states in the preference view.'} = 'Parameter untuk keadaan insiden memandangkan keutamaan.';
     $Self->{Translation}->{'Set the type and direction of links to be used to calculate the incident state. The key is the name of the link type (as defined in LinkObject::Type), and the value is the direction of the IncidentLinkType that should be followed to calculate the incident state. For example if the IncidentLinkType is set to \'DependsOn\', and the Direction is \'Source\', only \'Depends on\' links will be followed (and not the opposite link \'Required for\') to calculate the incident state. You can add more link types ad directions as you like, e.g. \'Includes\' with the direction \'Target\'. All link types defined in the sysconfig options LinkObject::Type are possible and the direction can be \'Source\', \'Target\', or \'Both\'. IMPORTANT: AFTER YOU MAKE CHANGES TO THIS SYSCONFIG OPTION YOU NEED TO RUN THE SCRIPT bin/otrs.ITSMConfigItemIncidentStateRecalculate.pl SO THAT ALL INCIDENT STATES WILL BE RECALCULATED BASED ON THE NEW SETTINGS!'} =
-        '';
+        'Menetapkan jenis dan arah pautan yang digunakan untuk mengira keadaan insiden. Kuncinya adalah nama jenis link (sebagaimana ditakrifkan dalam PautanObjek::Jenis) , dan nilai adalah arah JenisPautanInsiden yang perlu diikuti untuk mengira keadaan insiden itu. Sebagai contoh jika JenisPautanInsiden ditetapkan kepada \' Bergantung Kepada \', dan Arah adalah \' Sumber\' , hanya \' Bergantung Kepada \' pautan akan diikuti (dan bukan pautan bertentangan \' Yang diperlukan untuk\' ) untuk mengira keadaan insiden. Anda boleh menambah lebih banyak arahan jenis pautan yang anda suka, contohnya \' Termasuk\' dengan arah \' Sasaran \'. Semua jenis pautan yang ditakrifkan dalam pilihan konfigsis PautanObjek::Jenis adalah mungkin dan arahnya mungkin \' Sumber \', \' Sasaran \', atau \' Kedua-dua\' . PENTING: SELEPAS ANDA MEMBUAT PERUBAHAN KEPADA TETAPAN KONFIGSIS ANDA PERLU MENJALANKAN SKRIP bin / otrs.ITSMKonfigurasiKiraansemulaKeadaanInsidenItem.pl SUPAYA SEMUA KEADAAN INSIDEN akan dikira semula BERDASARKAN TETAPAN BARU!';
     $Self->{Translation}->{'This setting defines that a \'ITSMChange\' object can be linked with \'Ticket\' objects using the \'Normal\' link type.'} =
         'Tetapan ini mentakrifkan bahawa \'Ubah ITSM\' objek boleh dikaitkan dengan \'Tiket \' objek menggunakan \'Normal\'  jenis pautan.';
     $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with \'FAQ\' objects using the \'Normal\' link type.'} =

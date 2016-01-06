@@ -1,12 +1,14 @@
 # 
 # Translators:
+# Marthe Ngo Temb <ngotemb@gmail.com>, 2015
+# Vincenzo Reale <vinx.reale@gmail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-04-27 10:55+0000\n"
-"Last-Translator: Martin Gruner <martin.gruner@otrs.com>\n"
-"Language-Team: Italian (http://www.transifex.com/projects/p/OTRS/language/it/)\n"
+"PO-Revision-Date: 2015-12-13 12:03+0000\n"
+"Last-Translator: Vincenzo Reale <vinx.reale@gmail.com>\n"
+"Language-Team: Italian (http://www.transifex.com/otrs/OTRS/language/it/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -23,7 +25,7 @@ msgstr "Disponibilità"
 
 #. Template: AAAITSMCore
 msgid "Back End"
-msgstr "Back End"
+msgstr "Motore"
 
 #. Template: AAAITSMCore
 msgid "Connected to"
@@ -31,7 +33,7 @@ msgstr "Connesso a"
 
 #. Template: AAAITSMCore
 msgid "Current State"
-msgstr "Stato Attuale"
+msgstr "Stato attuale"
 
 #. Template: AAAITSMCore
 msgid "Demonstration"
@@ -43,7 +45,7 @@ msgstr "Depende da"
 
 #. Template: AAAITSMCore
 msgid "End User Service"
-msgstr "Servizio Utente Finale"
+msgstr "Servizio utente finale"
 
 #. Template: AAAITSMCore
 msgid "Errors"
@@ -51,7 +53,7 @@ msgstr "Errori"
 
 #. Template: AAAITSMCore
 msgid "Front End"
-msgstr "Front End"
+msgstr "Interfaccia"
 
 #. Template: AAAITSMCore
 msgid "IT Management"
@@ -67,7 +69,7 @@ msgstr "Impatto"
 
 #. Template: AAAITSMCore
 msgid "Incident State"
-msgstr "Stato dell'Incidente"
+msgstr "Stato dell'incidente"
 
 #. Template: AAAITSMCore
 msgid "Includes"
@@ -87,7 +89,7 @@ msgstr "Progetto"
 
 #. Template: AAAITSMCore
 msgid "Recovery Time"
-msgstr "Tempo di Recupero"
+msgstr "Tempo di ripristino"
 
 #. Template: AAAITSMCore
 msgid "Relevant to"
@@ -103,23 +105,23 @@ msgstr "Richiesto per"
 
 #. Template: AAAITSMCore
 msgid "Resolution Rate"
-msgstr "Tasso di Risoluzione"
+msgstr "Velocità di risoluzione"
 
 #. Template: AAAITSMCore
 msgid "Response Time"
-msgstr "Tempo di Risposta"
+msgstr "Tempo di risposta"
 
 #. Template: AAAITSMCore
 msgid "SLA Overview"
-msgstr "Descrizione dello SLA"
+msgstr "Descrizione SLA"
 
 #. Template: AAAITSMCore
 msgid "Service Overview"
-msgstr "Descrizione del Servizio"
+msgstr "Descrizione del servizio"
 
 #. Template: AAAITSMCore
 msgid "Service-Area"
-msgstr "Area-di-Servizio"
+msgstr "Servizio-Area"
 
 #. Template: AAAITSMCore
 msgid "Training"
@@ -131,11 +133,11 @@ msgstr "Transazioni"
 
 #. Template: AAAITSMCore
 msgid "Underpinning Contract"
-msgstr "Underpinning Contract"
+msgstr ""
 
 #. Template: AAAITSMCore
 msgid "allocation"
-msgstr "assegnare"
+msgstr "assegnazione"
 
 #. Template: AdminITSMCIPAllocate
 msgid "Criticality <-> Impact <-> Priority"
@@ -143,23 +145,23 @@ msgstr "Urgenza <-> Impatto <-> Priorità"
 
 #. Template: AdminITSMCIPAllocate
 msgid "Manage the priority result of combinating Criticality <-> Impact."
-msgstr ""
+msgstr "Gestisce il risultato di priorità della combinazione Criticità <-> Impatto."
 
 #. Template: AdminITSMCIPAllocate
 msgid "Priority allocation"
-msgstr ""
+msgstr "Assegnazione prioritaria"
 
 #. Template: AdminSLA
 msgid "Minimum Time Between Incidents"
-msgstr "Minimo Tempo Tra Incidenti"
+msgstr "Tempo minimo tra incidenti"
 
 #. Template: AdminService
 msgid "Criticality"
-msgstr "Urgenzia"
+msgstr "Urgenza"
 
 #. Template: AgentITSMSLAPrint
 msgid "SLA-Info"
-msgstr ""
+msgstr "SLA-Informazioni"
 
 #. Template: AgentITSMSLAPrint
 msgid "Last changed"
@@ -171,31 +173,31 @@ msgstr "Ultima modifica effettuata da"
 
 #. Template: AgentITSMSLAZoom
 msgid "SLA Information"
-msgstr ""
+msgstr "Informazioni sulle SLA"
 
 #. Template: AgentITSMSLAZoom
 msgid "Associated Services"
-msgstr "Servizi Associati"
+msgstr "Servizi associati"
 
 #. Template: AgentITSMServicePrint
 msgid "Service-Info"
-msgstr ""
+msgstr "Servizio-Informazioni"
 
 #. Template: AgentITSMServicePrint
 msgid "Current Incident State"
-msgstr "Stato Attuale dell'Incidente"
+msgstr "Stato attuale dell'Incidente"
 
 #. Template: AgentITSMServicePrint
 msgid "Associated SLAs"
-msgstr "SLAs Associati"
+msgstr "SLA associati"
 
 #. Template: AgentITSMServiceZoom
 msgid "Service Information"
-msgstr ""
+msgstr "Informazioni sul servizio"
 
 #. Template: AgentITSMServiceZoom
 msgid "Current incident state"
-msgstr ""
+msgstr "Stato attuale dell'incidente"
 
 #. SysConfig
 msgid ""
@@ -241,7 +243,7 @@ msgstr ""
 
 #. SysConfig
 msgid "Manage priority matrix."
-msgstr ""
+msgstr "Gestione della matrice delle priorità."
 
 #. SysConfig
 msgid "Module to show back link in service menu."
@@ -265,7 +267,7 @@ msgstr ""
 
 #. SysConfig
 msgid "Parameters for the incident states in the preference view."
-msgstr ""
+msgstr "Parametri per gli stati dell'incidente nella vista delle preferenze."
 
 #. SysConfig
 msgid ""
@@ -288,61 +290,61 @@ msgstr ""
 msgid ""
 "This setting defines that a 'ITSMChange' object can be linked with 'Ticket' "
 "objects using the 'Normal' link type."
-msgstr ""
+msgstr "Questa impostazione stabilisce che un oggetto 'ITSMChange' può essere collegato con oggetti 'Ticket' usando il tipo di collegamento 'Normale'."
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'ITSMConfigItem' object can be linked with 'FAQ'"
 " objects using the 'Normal' link type."
-msgstr ""
+msgstr "Questa impostazione stabilisce che un oggetto 'ITSMConfigItem' può essere collegato con oggetti 'FAQ' usando il tipo di collegamento 'Normale'."
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'ITSMConfigItem' object can be linked with 'FAQ'"
 " objects using the 'ParentChild' link type."
-msgstr ""
+msgstr "Questa impostazione stabilisce che un oggetto 'ITSMConfigItem' può essere collegato con oggetti 'FAQ' usando il tipo di collegamento 'PadreFiglio'."
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'ITSMConfigItem' object can be linked with 'FAQ'"
 " objects using the 'RelevantTo' link type."
-msgstr ""
+msgstr "Questa impostazione definisce che un oggetto 'ITSMConfigItem' può essere collegato con oggetti 'FAQ' usando il tipo di collegamento 'ImportantePer'."
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'ITSMConfigItem' object can be linked with "
 "'Service' objects using the 'AlternativeTo' link type."
-msgstr ""
+msgstr "Questa impostazione definisce che un oggetto 'ITSMConfigItem' può essere collegato con oggetti 'Servizio' usando il tipo di collegamento 'AlternativoA'."
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'ITSMConfigItem' object can be linked with "
 "'Service' objects using the 'DependsOn' link type."
-msgstr ""
+msgstr "Questa impostazione definisce che un oggetto 'ITSMConfigItem' può essere collegato con oggetti 'Servizio' usando il tipo di collegamento 'DipendeDa'."
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'ITSMConfigItem' object can be linked with "
 "'Service' objects using the 'RelevantTo' link type."
-msgstr ""
+msgstr "Questa impostazione definisce che un oggetto 'ITSMConfigItem' può essere collegato con oggetti 'Servizio' usando il tipo di collegamento 'ImportantePer'."
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'ITSMConfigItem' object can be linked with "
 "'Ticket' objects using the 'AlternativeTo' link type."
-msgstr ""
+msgstr "Questa impostazione definisce che un oggetto 'ITSMConfigItem' può essere collegato con oggetti 'Ticket' usando il tipo di collegamento 'AlternativoA'."
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'ITSMConfigItem' object can be linked with "
 "'Ticket' objects using the 'DependsOn' link type."
-msgstr ""
+msgstr "Questa impostazione definisce che un oggetto 'ITSMConfigItem' può essere collegato con oggetti 'Ticket' usando il tipo di collegamento 'DipendeDa'."
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'ITSMConfigItem' object can be linked with "
 "'Ticket' objects using the 'RelevantTo' link type."
-msgstr ""
+msgstr "Questa impostazione definisce che un oggetto 'ITSMConfigItem' può essere collegato con oggetti 'Ticket' usando il tipo di collegamento 'ImportantePer'."
 
 #. SysConfig
 msgid ""
@@ -408,7 +410,7 @@ msgstr ""
 msgid ""
 "This setting defines that a 'Service' object can be linked with 'FAQ' "
 "objects using the 'Normal' link type."
-msgstr ""
+msgstr "Questa impostazione definisce che un oggetto 'Servizio' può essere collegato con oggetti 'FAQ' usando il tipo di collegamento 'Normale'."
 
 #. SysConfig
 msgid ""
@@ -420,7 +422,7 @@ msgstr ""
 msgid ""
 "This setting defines that a 'Service' object can be linked with 'FAQ' "
 "objects using the 'RelevantTo' link type."
-msgstr ""
+msgstr "Questa impostazione definisce che un oggetto 'Servizio' può essere collegato con oggetti 'FAQ' usando il tipo di collegamento 'ImportantePer'."
 
 #. SysConfig
 msgid ""
@@ -460,4 +462,4 @@ msgstr ""
 
 #. SysConfig
 msgid "Width of ITSM textareas."
-msgstr ""
+msgstr "Larghezza dei campi di testo di ITSM"

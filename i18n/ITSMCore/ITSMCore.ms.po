@@ -1,12 +1,13 @@
 # 
 # Translators:
+# KENNY CHEAH <otrssdnbhd@gmail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-04-27 10:55+0000\n"
-"Last-Translator: Martin Gruner <martin.gruner@otrs.com>\n"
-"Language-Team: Malay (http://www.transifex.com/projects/p/OTRS/language/ms/)\n"
+"PO-Revision-Date: 2015-10-07 01:16+0000\n"
+"Last-Translator: KENNY CHEAH <otrssdnbhd@gmail.com>\n"
+"Language-Team: Malay (http://www.transifex.com/otrs/OTRS/language/ms/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -163,7 +164,7 @@ msgstr "SLA-Info"
 
 #. Template: AgentITSMSLAPrint
 msgid "Last changed"
-msgstr "diubah buat kali terakhir"
+msgstr "Kali terakhir diubah"
 
 #. Template: AgentITSMSLAPrint
 msgid "Last changed by"
@@ -282,7 +283,7 @@ msgid ""
 " MAKE CHANGES TO THIS SYSCONFIG OPTION YOU NEED TO RUN THE SCRIPT "
 "bin/otrs.ITSMConfigItemIncidentStateRecalculate.pl SO THAT ALL INCIDENT "
 "STATES WILL BE RECALCULATED BASED ON THE NEW SETTINGS!"
-msgstr ""
+msgstr "Menetapkan jenis dan arah pautan yang digunakan untuk mengira keadaan insiden. Kuncinya adalah nama jenis link (sebagaimana ditakrifkan dalam PautanObjek::Jenis) , dan nilai adalah arah JenisPautanInsiden yang perlu diikuti untuk mengira keadaan insiden itu. Sebagai contoh jika JenisPautanInsiden ditetapkan kepada ' Bergantung Kepada ', dan Arah adalah ' Sumber' , hanya ' Bergantung Kepada ' pautan akan diikuti (dan bukan pautan bertentangan ' Yang diperlukan untuk' ) untuk mengira keadaan insiden. Anda boleh menambah lebih banyak arahan jenis pautan yang anda suka, contohnya ' Termasuk' dengan arah ' Sasaran '. Semua jenis pautan yang ditakrifkan dalam pilihan konfigsis PautanObjek::Jenis adalah mungkin dan arahnya mungkin ' Sumber ', ' Sasaran ', atau ' Kedua-dua' . PENTING: SELEPAS ANDA MEMBUAT PERUBAHAN KEPADA TETAPAN KONFIGSIS ANDA PERLU MENJALANKAN SKRIP bin / otrs.ITSMKonfigurasiKiraansemulaKeadaanInsidenItem.pl SUPAYA SEMUA KEADAAN INSIDEN akan dikira semula BERDASARKAN TETAPAN BARU!"
 
 #. SysConfig
 msgid ""
