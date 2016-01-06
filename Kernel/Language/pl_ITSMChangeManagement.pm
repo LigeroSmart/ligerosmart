@@ -16,16 +16,14 @@ sub Data {
     my $Self = shift;
 
     # Template: AAAITSMChangeManagement
-    $Self->{Translation}->{'ITSMChange'} = 'Zmiana';
-    $Self->{Translation}->{'ITSMChanges'} = 'Zmiany';
-    $Self->{Translation}->{'ITSM Changes'} = 'Zmiany';
+    $Self->{Translation}->{'ITSMChange'} = 'ZmianaITSM';
+    $Self->{Translation}->{'ITSMChanges'} = 'ZmianyITSM';
+    $Self->{Translation}->{'ITSM Changes'} = 'Zmiany ITSM';
     $Self->{Translation}->{'workorder'} = 'zadanie';
     $Self->{Translation}->{'A change must have a title!'} = 'Zmiana musi posiadać tytuł!';
     $Self->{Translation}->{'A condition must have a name!'} = 'Warunek musi posiadań nazwę!';
     $Self->{Translation}->{'A template must have a name!'} = 'Szablon musi posiadać nazwę!';
     $Self->{Translation}->{'A workorder must have a title!'} = 'Zadanie musi posiadać tytuł!';
-    $Self->{Translation}->{'ActionExecute::successfully'} = 'pomyślnie';
-    $Self->{Translation}->{'ActionExecute::unsuccessfully'} = 'niepomyślnie';
     $Self->{Translation}->{'Add CAB Template'} = 'Dodaj szablon CAB';
     $Self->{Translation}->{'Add Workorder'} = 'Dodaj zadanie';
     $Self->{Translation}->{'Add a workorder to the change'} = 'Dodaj zadanie do zmiany';
@@ -108,7 +106,7 @@ sub Data {
     $Self->{Translation}->{'The planned start time is invalid!'} = 'Planowany czas rozpoczęcia jest niepoprawny!';
     $Self->{Translation}->{'The planned time is invalid!'} = 'Planowany czas jest niepoprawny!';
     $Self->{Translation}->{'The requested time is invalid!'} = 'Żądany czas jest niepoprawny!';
-    $Self->{Translation}->{'New (from template)'} = '';
+    $Self->{Translation}->{'New (from template)'} = 'Nowy (z szablonu)';
     $Self->{Translation}->{'Add from template'} = '';
     $Self->{Translation}->{'Add Workorder (from template)'} = '';
     $Self->{Translation}->{'Add a workorder (from template) to the change'} = '';
@@ -189,7 +187,6 @@ sub Data {
     $Self->{Translation}->{'ITSM ChangeManagement Notification Management'} = 'Zarządzanie powiadomieniami zmian ITSM';
     $Self->{Translation}->{'Add Notification Rule'} = 'Dodaj regułę powiadamiania';
     $Self->{Translation}->{'Rule'} = 'Reguła';
-    $Self->{Translation}->{'Recipients'} = '';
     $Self->{Translation}->{'A notification should have a name!'} = 'Powiadomiene powinno mieć nazwę!';
     $Self->{Translation}->{'Name is required.'} = 'Nazwa jest wymagana.';
 
@@ -201,13 +198,14 @@ sub Data {
     $Self->{Translation}->{'Catalog Class'} = 'Klasa katalogu';
     $Self->{Translation}->{'Object Name'} = 'Nazwa obiektu';
     $Self->{Translation}->{'Overview over state transitions for'} = 'Przegląd przejść stanów dla';
-    $Self->{Translation}->{'Delete this state transition'} = '';
+    $Self->{Translation}->{'Delete this state transition'} = 'Usuń to przejście między stanami';
     $Self->{Translation}->{'Add a new state transition for'} = 'Dodaj nowe przejście stanu dla';
     $Self->{Translation}->{'Please select a state!'} = 'Zaznacz stan!';
     $Self->{Translation}->{'Please select a next state!'} = 'Zaznacz następny stan!';
     $Self->{Translation}->{'Edit a state transition for'} = 'Edytuj przejście stanu dla';
     $Self->{Translation}->{'Do you really want to delete the state transition'} = 'Czy na pewno chcesz usunąć przejście stanu';
     $Self->{Translation}->{'from'} = 'od';
+    $Self->{Translation}->{'to'} = '';
 
     # Template: AgentITSMChangeAdd
     $Self->{Translation}->{'Add Change'} = 'Dodaj zmianę';
@@ -256,6 +254,7 @@ sub Data {
     $Self->{Translation}->{'Do you really want to delete this change?'} = '';
 
     # Template: AgentITSMChangeHistory
+    $Self->{Translation}->{'History of'} = '';
     $Self->{Translation}->{'Workorder'} = 'Zadanie';
     $Self->{Translation}->{'Show details'} = 'Pokaż szczegóły';
     $Self->{Translation}->{'Show workorder'} = 'Pokaż zadanie';
@@ -298,9 +297,6 @@ sub Data {
     $Self->{Translation}->{'ActualStartTime'} = 'Rzeczywisty start';
     $Self->{Translation}->{'ActualEndTime'} = 'Rzeczywisty koniec';
 
-    # Template: AgentITSMChangePrint
-    $Self->{Translation}->{'ITSM Workorder'} = 'Zadanie';
-
     # Template: AgentITSMChangeReset
     $Self->{Translation}->{'Do you really want to reset this change?'} = '';
 
@@ -309,14 +305,12 @@ sub Data {
     $Self->{Translation}->{'CABAgent'} = 'CAB Agent';
     $Self->{Translation}->{'e.g.'} = 'np.';
     $Self->{Translation}->{'CABCustomer'} = 'CAB Klient';
+    $Self->{Translation}->{'ITSM Workorder'} = 'Zadanie';
     $Self->{Translation}->{'Instruction'} = 'Instrukcja';
     $Self->{Translation}->{'Report'} = 'Raport';
     $Self->{Translation}->{'Change Category'} = 'Kategoria zmiany';
     $Self->{Translation}->{'(before/after)'} = '(przed/po)';
     $Self->{Translation}->{'(between)'} = '(pomiędzy)';
-
-    # Template: AgentITSMChangeSearchResultPrint
-    $Self->{Translation}->{'WorkOrders'} = 'Zadania';
 
     # Template: AgentITSMChangeTemplate
     $Self->{Translation}->{'Save Change as Template'} = 'Zapisz zmianę jako szablon';
@@ -347,7 +341,7 @@ sub Data {
     $Self->{Translation}->{'Do you really want to delete this template?'} = 'Czy na pewno chcesz usunąć ten szablon?';
 
     # Template: AgentITSMTemplateEditCAB
-    $Self->{Translation}->{'Edit CAB Template'} = '';
+    $Self->{Translation}->{'Edit CAB Template'} = 'Edytuj szablon CAB';
 
     # Template: AgentITSMTemplateEditContent
     $Self->{Translation}->{'This will create a new change from this template, so you can edit and save it.'} =
@@ -408,12 +402,26 @@ sub Data {
     # Template: AgentITSMWorkOrderZoom
     $Self->{Translation}->{'Workorder Information'} = 'Zadanie-informacje';
 
+    # Perl Module: Kernel/Modules/AgentITSMChangePIR.pm
+    $Self->{Translation}->{'PIR'} = '';
+
+    # Perl Module: Kernel/Modules/AgentITSMChangePSA.pm
+    $Self->{Translation}->{'PSA'} = '';
+
+    # Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
+    $Self->{Translation}->{'WorkOrders'} = 'Zadania';
+
+    # Perl Module: Kernel/Modules/AgentITSMWorkOrderHistory.pm
+    $Self->{Translation}->{'WorkOrderHistory::'} = '';
+
+    # Perl Module: Kernel/Output/HTML/ToolBar/MyWorkOrders.pm
+    $Self->{Translation}->{'My Work Orders'} = '';
+
     # SysConfig
     $Self->{Translation}->{'A list of the agents who have permission to take workorders. Key is a login name. Content is 0 or 1.'} =
         '';
     $Self->{Translation}->{'A list of workorder states, at which the ActualStartTime of a workorder will be set if it was empty at this point.'} =
         '';
-    $Self->{Translation}->{'Admin of notification rules.'} = 'Administracja regułami powiadomień';
     $Self->{Translation}->{'Admin of the CIP matrix.'} = 'Zarządzanie macierzą KWP';
     $Self->{Translation}->{'Admin of the state machine.'} = 'Zarządzanie maszyną stanów';
     $Self->{Translation}->{'Agent interface notification module to see the number of change advisory boards.'} =
@@ -434,6 +442,7 @@ sub Data {
     $Self->{Translation}->{'Change search backend router of the agent interface.'} = '';
     $Self->{Translation}->{'Configures how often the notifications are sent when planned the start time or other time values have been reached/passed.'} =
         '';
+    $Self->{Translation}->{'Create and manage ITSM Change Management notifications.'} = '';
     $Self->{Translation}->{'Default type for a workorder. This entry must exist in general catalog class \'ITSM::ChangeManagement::WorkOrder::Type\'.'} =
         '';
     $Self->{Translation}->{'Define the signals for each workorder state.'} = '';
@@ -632,6 +641,7 @@ sub Data {
         '';
     $Self->{Translation}->{'DynamicField event module to handle the update of conditions if dynamic fields are added, updated or deleted.'} =
         '';
+    $Self->{Translation}->{'ITSM Change Management Notifications'} = '';
     $Self->{Translation}->{'ITSM event module deletes the history of changes.'} = '';
     $Self->{Translation}->{'ITSM event module that cleans up conditions.'} = '';
     $Self->{Translation}->{'ITSM event module that deletes the cache for a toolbar.'} = '';
@@ -661,7 +671,6 @@ sub Data {
         '';
     $Self->{Translation}->{'Module to show a link to create a change from this ticket. The ticket will be automatically linked with the new change.'} =
         '';
-    $Self->{Translation}->{'Notification (ITSM Change Management)'} = 'Powiadomienia zmian ITSM';
     $Self->{Translation}->{'Only users of these groups have the permission to use the ticket types as defined in "ITSMChange::AddChangeLinkTicketTypes" if the feature "Ticket::Acl::Module###200-Ticket::Acl::Module" is enabled.'} =
         '';
     $Self->{Translation}->{'Parameters for the UserCreateWorkOrderNextMask object in the preference view of the agent interface.'} =
@@ -714,6 +723,8 @@ sub Data {
     $Self->{Translation}->{'Required privileges to view the list of own changes.'} = '';
     $Self->{Translation}->{'Required privileges to view the list of own workorders.'} = '';
     $Self->{Translation}->{'Required privileges to write a report for the workorder.'} = '';
+    $Self->{Translation}->{'Run task to check if specific times have been in reached in changes and workorders.'} =
+        '';
     $Self->{Translation}->{'Screen after creating a workorder'} = '';
     $Self->{Translation}->{'Selects the change number generator module. "AutoIncrement" increments the change number, the SystemID and the counter are used with SystemID.counter format (e.g. 100118, 100119). With "Date", the change numbers will be generated by the current date and a counter; this format looks like Year.Month.Day.counter, e.g. 2010062400001, 2010062400002. With "DateChecksum", the counter will be appended as checksum to the string of date plus the SystemID. The checksum will be rotated on a daily basis. This format looks like Year.Month.Day.SystemID.Counter.CheckSum, e.g. 2010062410000017, 2010062410000026.'} =
         '';
@@ -782,7 +793,7 @@ sub Data {
     $Self->{Translation}->{'This ACL module restricts the usuage of the ticket types that are defined in the sysconfig option \'ITSMChange::AddChangeLinkTicketTypes\', to users of the groups as defined in "ITSMChange::RestrictTicketTypes::Groups". As this ACL could collide with other ACLs which are also related to the ticket type, this sysconfig option is disabled by default and should only be activated if needed.'} =
         '';
     $Self->{Translation}->{'Types of tickets, where in the ticket zoom view a link to add a change will be displayed.'} =
-        '';
+        'Typy zgłoszeń dla których na ekranie szczegółów zgłoszenia wyświetlony będzie link tworzący zmianę';
 
 }
 

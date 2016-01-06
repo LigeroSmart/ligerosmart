@@ -24,8 +24,6 @@ sub Data {
     $Self->{Translation}->{'A condition must have a name!'} = 'هر شرط باید دارای نام باشد!';
     $Self->{Translation}->{'A template must have a name!'} = 'قالب باید دارای نام باشد!';
     $Self->{Translation}->{'A workorder must have a title!'} = 'هر دستور کار باید دارای عنوان باشد!';
-    $Self->{Translation}->{'ActionExecute::successfully'} = 'با موفقیت';
-    $Self->{Translation}->{'ActionExecute::unsuccessfully'} = 'عدم موفقیت';
     $Self->{Translation}->{'Add CAB Template'} = 'افزودن قالب برای هیئت مشاوران';
     $Self->{Translation}->{'Add Workorder'} = 'افزودن دستور کار';
     $Self->{Translation}->{'Add a workorder to the change'} = 'افزودن یک دستور کار به تغییر';
@@ -189,7 +187,6 @@ sub Data {
     $Self->{Translation}->{'ITSM ChangeManagement Notification Management'} = 'مدیریت اعلان مربوط به مدیریت تغییرات در ITSM';
     $Self->{Translation}->{'Add Notification Rule'} = 'افزودن قاعده اعلان';
     $Self->{Translation}->{'Rule'} = 'قاعده';
-    $Self->{Translation}->{'Recipients'} = '';
     $Self->{Translation}->{'A notification should have a name!'} = 'اعلان باید دارای نام باشد!';
     $Self->{Translation}->{'Name is required.'} = 'نام مورد نیاز است.';
 
@@ -208,6 +205,7 @@ sub Data {
     $Self->{Translation}->{'Edit a state transition for'} = 'ویرایش یک انتقال وضعیت برای';
     $Self->{Translation}->{'Do you really want to delete the state transition'} = 'آیا از حذف انتقال وضعیت مطمئن هستید؟';
     $Self->{Translation}->{'from'} = 'از';
+    $Self->{Translation}->{'to'} = '';
 
     # Template: AgentITSMChangeAdd
     $Self->{Translation}->{'Add Change'} = 'افزودن تغییر';
@@ -256,6 +254,7 @@ sub Data {
     $Self->{Translation}->{'Do you really want to delete this change?'} = '';
 
     # Template: AgentITSMChangeHistory
+    $Self->{Translation}->{'History of'} = '';
     $Self->{Translation}->{'Workorder'} = 'دستور کار';
     $Self->{Translation}->{'Show details'} = 'نمایش جزئیات';
     $Self->{Translation}->{'Show workorder'} = 'نمایش دستور کارها';
@@ -298,9 +297,6 @@ sub Data {
     $Self->{Translation}->{'ActualStartTime'} = 'زمان آغاز در عمل';
     $Self->{Translation}->{'ActualEndTime'} = 'زمان خاتمه در عمل';
 
-    # Template: AgentITSMChangePrint
-    $Self->{Translation}->{'ITSM Workorder'} = 'دستور کار';
-
     # Template: AgentITSMChangeReset
     $Self->{Translation}->{'Do you really want to reset this change?'} = '';
 
@@ -309,14 +305,12 @@ sub Data {
     $Self->{Translation}->{'CABAgent'} = 'کارشناس هیئت مشاور تغییر';
     $Self->{Translation}->{'e.g.'} = 'به عنوان مثال';
     $Self->{Translation}->{'CABCustomer'} = 'هیئت مشاور تغییر - مشترک';
+    $Self->{Translation}->{'ITSM Workorder'} = 'دستور کار';
     $Self->{Translation}->{'Instruction'} = 'دستورالعمل';
     $Self->{Translation}->{'Report'} = 'گزارش';
     $Self->{Translation}->{'Change Category'} = 'تغییر طبقه‌بندی';
     $Self->{Translation}->{'(before/after)'} = 'قبل از/بعد از';
     $Self->{Translation}->{'(between)'} = 'بین';
-
-    # Template: AgentITSMChangeSearchResultPrint
-    $Self->{Translation}->{'WorkOrders'} = 'دستور کارها';
 
     # Template: AgentITSMChangeTemplate
     $Self->{Translation}->{'Save Change as Template'} = 'ذخیره تغییر به عنوان قالب';
@@ -408,12 +402,26 @@ sub Data {
     # Template: AgentITSMWorkOrderZoom
     $Self->{Translation}->{'Workorder Information'} = 'اطلاعات قالب کار';
 
+    # Perl Module: Kernel/Modules/AgentITSMChangePIR.pm
+    $Self->{Translation}->{'PIR'} = '';
+
+    # Perl Module: Kernel/Modules/AgentITSMChangePSA.pm
+    $Self->{Translation}->{'PSA'} = '';
+
+    # Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
+    $Self->{Translation}->{'WorkOrders'} = 'دستور کارها';
+
+    # Perl Module: Kernel/Modules/AgentITSMWorkOrderHistory.pm
+    $Self->{Translation}->{'WorkOrderHistory::'} = '';
+
+    # Perl Module: Kernel/Output/HTML/ToolBar/MyWorkOrders.pm
+    $Self->{Translation}->{'My Work Orders'} = '';
+
     # SysConfig
     $Self->{Translation}->{'A list of the agents who have permission to take workorders. Key is a login name. Content is 0 or 1.'} =
         'فهرست کارشناسانی که اجازه دسترسی برای گرفتن دستور کار را دارا هستند. کلید یک نام برای ورود است. محتوا 0 یا 1 است.';
     $Self->{Translation}->{'A list of workorder states, at which the ActualStartTime of a workorder will be set if it was empty at this point.'} =
         'فهرستی از وضعیت‌های دستور کار که در صورتی در اینجا وارد نشود، به عنوان زمان واقعی آغاز مشخص خواهد شد.';
-    $Self->{Translation}->{'Admin of notification rules.'} = 'مدیر قواعد اعلان';
     $Self->{Translation}->{'Admin of the CIP matrix.'} = 'مدیر ماتریس اهمیت <-> اثر <-> الویت';
     $Self->{Translation}->{'Admin of the state machine.'} = 'مدیر ماشین وضعیت';
     $Self->{Translation}->{'Agent interface notification module to see the number of change advisory boards.'} =
@@ -434,6 +442,7 @@ sub Data {
     $Self->{Translation}->{'Change search backend router of the agent interface.'} = 'تغییر مسیریاب جستجو در رابط کاربری کارشناس';
     $Self->{Translation}->{'Configures how often the notifications are sent when planned the start time or other time values have been reached/passed.'} =
         '';
+    $Self->{Translation}->{'Create and manage ITSM Change Management notifications.'} = '';
     $Self->{Translation}->{'Default type for a workorder. This entry must exist in general catalog class \'ITSM::ChangeManagement::WorkOrder::Type\'.'} =
         '';
     $Self->{Translation}->{'Define the signals for each workorder state.'} = 'تعریف علائم برای هر وضعیت دستور کار';
@@ -632,6 +641,7 @@ sub Data {
         '';
     $Self->{Translation}->{'DynamicField event module to handle the update of conditions if dynamic fields are added, updated or deleted.'} =
         '';
+    $Self->{Translation}->{'ITSM Change Management Notifications'} = '';
     $Self->{Translation}->{'ITSM event module deletes the history of changes.'} = '';
     $Self->{Translation}->{'ITSM event module that cleans up conditions.'} = '';
     $Self->{Translation}->{'ITSM event module that deletes the cache for a toolbar.'} = '';
@@ -661,7 +671,6 @@ sub Data {
         '';
     $Self->{Translation}->{'Module to show a link to create a change from this ticket. The ticket will be automatically linked with the new change.'} =
         '';
-    $Self->{Translation}->{'Notification (ITSM Change Management)'} = 'اعلان (مدیریت تغییرات)';
     $Self->{Translation}->{'Only users of these groups have the permission to use the ticket types as defined in "ITSMChange::AddChangeLinkTicketTypes" if the feature "Ticket::Acl::Module###200-Ticket::Acl::Module" is enabled.'} =
         '';
     $Self->{Translation}->{'Parameters for the UserCreateWorkOrderNextMask object in the preference view of the agent interface.'} =
@@ -714,6 +723,8 @@ sub Data {
     $Self->{Translation}->{'Required privileges to view the list of own changes.'} = '';
     $Self->{Translation}->{'Required privileges to view the list of own workorders.'} = '';
     $Self->{Translation}->{'Required privileges to write a report for the workorder.'} = '';
+    $Self->{Translation}->{'Run task to check if specific times have been in reached in changes and workorders.'} =
+        '';
     $Self->{Translation}->{'Screen after creating a workorder'} = '';
     $Self->{Translation}->{'Selects the change number generator module. "AutoIncrement" increments the change number, the SystemID and the counter are used with SystemID.counter format (e.g. 100118, 100119). With "Date", the change numbers will be generated by the current date and a counter; this format looks like Year.Month.Day.counter, e.g. 2010062400001, 2010062400002. With "DateChecksum", the counter will be appended as checksum to the string of date plus the SystemID. The checksum will be rotated on a daily basis. This format looks like Year.Month.Day.SystemID.Counter.CheckSum, e.g. 2010062410000017, 2010062410000026.'} =
         '';

@@ -24,8 +24,6 @@ sub Data {
     $Self->{Translation}->{'A condition must have a name!'} = 'Sharti lazima liwe na jina!';
     $Self->{Translation}->{'A template must have a name!'} = 'Kiolezo lazima kiwe na jina!';
     $Self->{Translation}->{'A workorder must have a title!'} = 'Oda ya kazi lazima iwe na kichwa cha habari!';
-    $Self->{Translation}->{'ActionExecute::successfully'} = 'TekelezaKitendo::kwamafanikio';
-    $Self->{Translation}->{'ActionExecute::unsuccessfully'} = 'TekelezaKitendo::pasipomafanikio';
     $Self->{Translation}->{'Add CAB Template'} = 'Ongeza kiolezo cha CAB';
     $Self->{Translation}->{'Add Workorder'} = 'Ongeza Oda ya kazi';
     $Self->{Translation}->{'Add a workorder to the change'} = 'Ongeza  oda ya kazi kwenye mabadiliko';
@@ -189,7 +187,6 @@ sub Data {
     $Self->{Translation}->{'ITSM ChangeManagement Notification Management'} = 'Usimamizi wa Taarifa za ITSM UsimamiziMabadiliko';
     $Self->{Translation}->{'Add Notification Rule'} = 'Ongeza Sheria ya Taarifa';
     $Self->{Translation}->{'Rule'} = 'Sheria';
-    $Self->{Translation}->{'Recipients'} = 'Wapokeaji';
     $Self->{Translation}->{'A notification should have a name!'} = 'Taarifa lazima iwe na jina!';
     $Self->{Translation}->{'Name is required.'} = 'Jina linatakiwa.';
 
@@ -208,6 +205,7 @@ sub Data {
     $Self->{Translation}->{'Edit a state transition for'} = 'Hariri hali ya mpito ya';
     $Self->{Translation}->{'Do you really want to delete the state transition'} = 'Kweli unataka kufuta hali ya mpito';
     $Self->{Translation}->{'from'} = 'kutoka';
+    $Self->{Translation}->{'to'} = '';
 
     # Template: AgentITSMChangeAdd
     $Self->{Translation}->{'Add Change'} = 'Ongeza Mabadiliko';
@@ -256,6 +254,7 @@ sub Data {
     $Self->{Translation}->{'Do you really want to delete this change?'} = 'Kweli unataka kufuta mabadiliko haya?';
 
     # Template: AgentITSMChangeHistory
+    $Self->{Translation}->{'History of'} = '';
     $Self->{Translation}->{'Workorder'} = 'Oda ya kazi';
     $Self->{Translation}->{'Show details'} = 'Onyesha undani';
     $Self->{Translation}->{'Show workorder'} = 'Onyesha oda ya kazi';
@@ -298,9 +297,6 @@ sub Data {
     $Self->{Translation}->{'ActualStartTime'} = 'MudaHalisiKuanza';
     $Self->{Translation}->{'ActualEndTime'} = 'MudaHalisiKumaliza';
 
-    # Template: AgentITSMChangePrint
-    $Self->{Translation}->{'ITSM Workorder'} = 'Oda ya kazi ya ITSM';
-
     # Template: AgentITSMChangeReset
     $Self->{Translation}->{'Do you really want to reset this change?'} = 'Kweli unataka kuweka upya mabadiliko haya?';
 
@@ -309,14 +305,12 @@ sub Data {
     $Self->{Translation}->{'CABAgent'} = 'WakalaCAB';
     $Self->{Translation}->{'e.g.'} = 'mf.';
     $Self->{Translation}->{'CABCustomer'} = 'MtejaCAB';
+    $Self->{Translation}->{'ITSM Workorder'} = 'Oda ya kazi ya ITSM';
     $Self->{Translation}->{'Instruction'} = 'Melekezo';
     $Self->{Translation}->{'Report'} = 'Ripoti';
     $Self->{Translation}->{'Change Category'} = 'Badili Kategoria';
     $Self->{Translation}->{'(before/after)'} = '(kabla/baada)';
     $Self->{Translation}->{'(between)'} = '(katikati)';
-
-    # Template: AgentITSMChangeSearchResultPrint
-    $Self->{Translation}->{'WorkOrders'} = 'Oda za kazi';
 
     # Template: AgentITSMChangeTemplate
     $Self->{Translation}->{'Save Change as Template'} = 'Hifadhi Mabadiliko kama Kiolezo';
@@ -408,12 +402,26 @@ sub Data {
     # Template: AgentITSMWorkOrderZoom
     $Self->{Translation}->{'Workorder Information'} = 'Taarifa ya Oda ya kazi';
 
+    # Perl Module: Kernel/Modules/AgentITSMChangePIR.pm
+    $Self->{Translation}->{'PIR'} = '';
+
+    # Perl Module: Kernel/Modules/AgentITSMChangePSA.pm
+    $Self->{Translation}->{'PSA'} = '';
+
+    # Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
+    $Self->{Translation}->{'WorkOrders'} = 'Oda za kazi';
+
+    # Perl Module: Kernel/Modules/AgentITSMWorkOrderHistory.pm
+    $Self->{Translation}->{'WorkOrderHistory::'} = '';
+
+    # Perl Module: Kernel/Output/HTML/ToolBar/MyWorkOrders.pm
+    $Self->{Translation}->{'My Work Orders'} = '';
+
     # SysConfig
     $Self->{Translation}->{'A list of the agents who have permission to take workorders. Key is a login name. Content is 0 or 1.'} =
         'Orodha ya mawakala wenye ruhusa ya kuchukua oda za kazi. Muhimu ni jina la kuingia. Iliyomo ni 0 au 1.';
     $Self->{Translation}->{'A list of workorder states, at which the ActualStartTime of a workorder will be set if it was empty at this point.'} =
         'Orodha ya hali za oda ya kazi, ambapo MudaHalisiKuanza wa oda ya kazi utasetiwa kama ulikuwa wazi katika pointi hii.';
-    $Self->{Translation}->{'Admin of notification rules.'} = 'Sheria za taarifa za msimamizi.';
     $Self->{Translation}->{'Admin of the CIP matrix.'} = 'Msimamizi wa matriki ya CIP.';
     $Self->{Translation}->{'Admin of the state machine.'} = 'Msimamizi wa mashine ya hali.';
     $Self->{Translation}->{'Agent interface notification module to see the number of change advisory boards.'} =
@@ -434,6 +442,7 @@ sub Data {
     $Self->{Translation}->{'Change search backend router of the agent interface.'} = 'Kipanga njia cha mazingira ya nyuma ya kiolesura cha wakala cha kutafuta mabadiliko.';
     $Self->{Translation}->{'Configures how often the notifications are sent when planned the start time or other time values have been reached/passed.'} =
         'Ina sanidi ni kwa mara ngapi taarifa zinatumwa pale muda uliopangwa wa kuanza au mida mingine inapofikiwa/kupitwa.';
+    $Self->{Translation}->{'Create and manage ITSM Change Management notifications.'} = '';
     $Self->{Translation}->{'Default type for a workorder. This entry must exist in general catalog class \'ITSM::ChangeManagement::WorkOrder::Type\'.'} =
         'Chaguo-msingi la aina ya oda ya kazi. Hili ingizo lazima liwepo katika tabaka la katalogi la ujumla \'ITSM::UsimamiziMabadiliko::Oda ya Kazi::Aina\' .';
     $Self->{Translation}->{'Define the signals for each workorder state.'} = 'Fafanua ishara kwa kila hali ya oda ya kazi.';
@@ -632,6 +641,7 @@ sub Data {
         'Sehemu zinazobadilika zilizoonyeshwa kwenye skrini ya kuza oda za kazi ya kiolesura cha wakala. Mipango iwezekayo: 0 = Lemazwa, 1 = Wezeshwa, 2 = Wezeshwa na Inatakiwa.';
     $Self->{Translation}->{'DynamicField event module to handle the update of conditions if dynamic fields are added, updated or deleted.'} =
         'Moduli ya matukio ya SehemuZinazobadilika kushughulikia usasishaji wa masharti kama sehemu zinazobadilika zimeongezwa, zimesasishwa au kufutwa.';
+    $Self->{Translation}->{'ITSM Change Management Notifications'} = '';
     $Self->{Translation}->{'ITSM event module deletes the history of changes.'} = 'Moduli ya matukio ya ITSM inafuta historia ya mabadiliko.';
     $Self->{Translation}->{'ITSM event module that cleans up conditions.'} = 'Moduli ya matukio ya ITSM inaondoa masharti.';
     $Self->{Translation}->{'ITSM event module that deletes the cache for a toolbar.'} = 'Moduli ya matukio ya ITSM inafuta hifadhi muda ya mwambaa zana.';
@@ -661,7 +671,6 @@ sub Data {
         'Moduli ya kukagua kama wakala yumo kwenye orodha ya usanidi.';
     $Self->{Translation}->{'Module to show a link to create a change from this ticket. The ticket will be automatically linked with the new change.'} =
         'Moduli ya kuonyesha kiungo cha kutengeneza mabadiliko kutoka kwenye hii tiketi. Tiketi itaunganishwa kiotomatiki na mabadiliko mapya.';
-    $Self->{Translation}->{'Notification (ITSM Change Management)'} = 'Taarifa (Usimamizi wa Mabadiliko ya ITSM)';
     $Self->{Translation}->{'Only users of these groups have the permission to use the ticket types as defined in "ITSMChange::AddChangeLinkTicketTypes" if the feature "Ticket::Acl::Module###200-Ticket::Acl::Module" is enabled.'} =
         'Watumiaji wa makundi haya tu wana ruhusa ya kutumia aina hii ya tiketi kama ilivyofafanuliwa katika "Badiliko la ITSM::Ongeza aina za tiketi za kiungo cha badiliko" kama kipengele "Tiketi::Acl::Moduli###200-Tiketi::Acl::Moduli" kimewezeshwa.';
     $Self->{Translation}->{'Parameters for the UserCreateWorkOrderNextMask object in the preference view of the agent interface.'} =
@@ -714,6 +723,8 @@ sub Data {
     $Self->{Translation}->{'Required privileges to view the list of own changes.'} = 'Upendeleo unaotakiwa ili kuona orodha ya mabadiliko yako.';
     $Self->{Translation}->{'Required privileges to view the list of own workorders.'} = 'Upendeleo unaotakiwa ili kuona orodha ya oda zako za kazi.';
     $Self->{Translation}->{'Required privileges to write a report for the workorder.'} = 'Upendeleo unaotakiwa ili kuandika ripoti ya oda ya kazi.';
+    $Self->{Translation}->{'Run task to check if specific times have been in reached in changes and workorders.'} =
+        '';
     $Self->{Translation}->{'Screen after creating a workorder'} = 'Skrini baada ya kutengeneza oda ya kazi.';
     $Self->{Translation}->{'Selects the change number generator module. "AutoIncrement" increments the change number, the SystemID and the counter are used with SystemID.counter format (e.g. 100118, 100119). With "Date", the change numbers will be generated by the current date and a counter; this format looks like Year.Month.Day.counter, e.g. 2010062400001, 2010062400002. With "DateChecksum", the counter will be appended as checksum to the string of date plus the SystemID. The checksum will be rotated on a daily basis. This format looks like Year.Month.Day.SystemID.Counter.CheckSum, e.g. 2010062410000017, 2010062410000026.'} =
         'Chagua module ya kutengeneza namba ya badiliko. "Kuongezeka kwa otomatiki" inaongeza namba ya badiliko, kitambulisho cha mfumo na kihesabuji zinatumika na kitambulisho cha mfumo.umbizo la kihesabuji (mfano 100118, 100119). Na "Tarehe" namba za mabadiliko zitatengenezwa na tarehe ya sasa na kihesabuji; Umbizo linafanana kama hivi Mwaka.Mwezi.Siku.Kitambulisho cha mfumo.Kihesabuji mfano 2010062400001, 2010062400002. Na "Kuangalia jumla kwa tarehe"  kihesabuji kitaambatanishwa kama kiangaliaji jumla kwenye tungo ya tarehe na kitambulisho. Kiangalia jumla kitazungushwa kwa mishingi ya kila siku. Umbizo litafanana kama hivi Mwaka.Mwezi.Siku.Kitambulisho cha mfumo.Kihesabuji mfano 2010062410000017, 2010062410000026.';

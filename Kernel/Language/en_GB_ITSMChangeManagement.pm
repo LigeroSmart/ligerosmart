@@ -24,8 +24,6 @@ sub Data {
     $Self->{Translation}->{'A condition must have a name!'} = '';
     $Self->{Translation}->{'A template must have a name!'} = '';
     $Self->{Translation}->{'A workorder must have a title!'} = '';
-    $Self->{Translation}->{'ActionExecute::successfully'} = 'Successfully';
-    $Self->{Translation}->{'ActionExecute::unsuccessfully'} = 'Unsuccessfully';
     $Self->{Translation}->{'Add CAB Template'} = '';
     $Self->{Translation}->{'Add Workorder'} = '';
     $Self->{Translation}->{'Add a workorder to the change'} = '';
@@ -189,7 +187,6 @@ sub Data {
     $Self->{Translation}->{'ITSM ChangeManagement Notification Management'} = '';
     $Self->{Translation}->{'Add Notification Rule'} = '';
     $Self->{Translation}->{'Rule'} = '';
-    $Self->{Translation}->{'Recipients'} = '';
     $Self->{Translation}->{'A notification should have a name!'} = '';
     $Self->{Translation}->{'Name is required.'} = '';
 
@@ -208,6 +205,7 @@ sub Data {
     $Self->{Translation}->{'Edit a state transition for'} = '';
     $Self->{Translation}->{'Do you really want to delete the state transition'} = '';
     $Self->{Translation}->{'from'} = '';
+    $Self->{Translation}->{'to'} = '';
 
     # Template: AgentITSMChangeAdd
     $Self->{Translation}->{'Add Change'} = '';
@@ -256,6 +254,7 @@ sub Data {
     $Self->{Translation}->{'Do you really want to delete this change?'} = '';
 
     # Template: AgentITSMChangeHistory
+    $Self->{Translation}->{'History of'} = '';
     $Self->{Translation}->{'Workorder'} = '';
     $Self->{Translation}->{'Show details'} = '';
     $Self->{Translation}->{'Show workorder'} = '';
@@ -298,9 +297,6 @@ sub Data {
     $Self->{Translation}->{'ActualStartTime'} = 'Actual Start';
     $Self->{Translation}->{'ActualEndTime'} = 'Actual End';
 
-    # Template: AgentITSMChangePrint
-    $Self->{Translation}->{'ITSM Workorder'} = 'Workorder';
-
     # Template: AgentITSMChangeReset
     $Self->{Translation}->{'Do you really want to reset this change?'} = '';
 
@@ -309,14 +305,12 @@ sub Data {
     $Self->{Translation}->{'CABAgent'} = 'CAB Agent';
     $Self->{Translation}->{'e.g.'} = '';
     $Self->{Translation}->{'CABCustomer'} = 'CAB Customer';
+    $Self->{Translation}->{'ITSM Workorder'} = 'Workorder';
     $Self->{Translation}->{'Instruction'} = 'Instruction';
     $Self->{Translation}->{'Report'} = 'Report';
     $Self->{Translation}->{'Change Category'} = '';
     $Self->{Translation}->{'(before/after)'} = '';
     $Self->{Translation}->{'(between)'} = '';
-
-    # Template: AgentITSMChangeSearchResultPrint
-    $Self->{Translation}->{'WorkOrders'} = '';
 
     # Template: AgentITSMChangeTemplate
     $Self->{Translation}->{'Save Change as Template'} = '';
@@ -408,12 +402,26 @@ sub Data {
     # Template: AgentITSMWorkOrderZoom
     $Self->{Translation}->{'Workorder Information'} = '';
 
+    # Perl Module: Kernel/Modules/AgentITSMChangePIR.pm
+    $Self->{Translation}->{'PIR'} = '';
+
+    # Perl Module: Kernel/Modules/AgentITSMChangePSA.pm
+    $Self->{Translation}->{'PSA'} = '';
+
+    # Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
+    $Self->{Translation}->{'WorkOrders'} = '';
+
+    # Perl Module: Kernel/Modules/AgentITSMWorkOrderHistory.pm
+    $Self->{Translation}->{'WorkOrderHistory::'} = '';
+
+    # Perl Module: Kernel/Output/HTML/ToolBar/MyWorkOrders.pm
+    $Self->{Translation}->{'My Work Orders'} = '';
+
     # SysConfig
     $Self->{Translation}->{'A list of the agents who have permission to take workorders. Key is a login name. Content is 0 or 1.'} =
         '';
     $Self->{Translation}->{'A list of workorder states, at which the ActualStartTime of a workorder will be set if it was empty at this point.'} =
         '';
-    $Self->{Translation}->{'Admin of notification rules.'} = '';
     $Self->{Translation}->{'Admin of the CIP matrix.'} = '';
     $Self->{Translation}->{'Admin of the state machine.'} = '';
     $Self->{Translation}->{'Agent interface notification module to see the number of change advisory boards.'} =
@@ -434,6 +442,7 @@ sub Data {
     $Self->{Translation}->{'Change search backend router of the agent interface.'} = '';
     $Self->{Translation}->{'Configures how often the notifications are sent when planned the start time or other time values have been reached/passed.'} =
         '';
+    $Self->{Translation}->{'Create and manage ITSM Change Management notifications.'} = '';
     $Self->{Translation}->{'Default type for a workorder. This entry must exist in general catalog class \'ITSM::ChangeManagement::WorkOrder::Type\'.'} =
         '';
     $Self->{Translation}->{'Define the signals for each workorder state.'} = '';
@@ -632,6 +641,7 @@ sub Data {
         '';
     $Self->{Translation}->{'DynamicField event module to handle the update of conditions if dynamic fields are added, updated or deleted.'} =
         '';
+    $Self->{Translation}->{'ITSM Change Management Notifications'} = '';
     $Self->{Translation}->{'ITSM event module deletes the history of changes.'} = '';
     $Self->{Translation}->{'ITSM event module that cleans up conditions.'} = '';
     $Self->{Translation}->{'ITSM event module that deletes the cache for a toolbar.'} = '';
@@ -661,7 +671,6 @@ sub Data {
         '';
     $Self->{Translation}->{'Module to show a link to create a change from this ticket. The ticket will be automatically linked with the new change.'} =
         '';
-    $Self->{Translation}->{'Notification (ITSM Change Management)'} = '';
     $Self->{Translation}->{'Only users of these groups have the permission to use the ticket types as defined in "ITSMChange::AddChangeLinkTicketTypes" if the feature "Ticket::Acl::Module###200-Ticket::Acl::Module" is enabled.'} =
         '';
     $Self->{Translation}->{'Parameters for the UserCreateWorkOrderNextMask object in the preference view of the agent interface.'} =
@@ -714,6 +723,8 @@ sub Data {
     $Self->{Translation}->{'Required privileges to view the list of own changes.'} = '';
     $Self->{Translation}->{'Required privileges to view the list of own workorders.'} = '';
     $Self->{Translation}->{'Required privileges to write a report for the workorder.'} = '';
+    $Self->{Translation}->{'Run task to check if specific times have been in reached in changes and workorders.'} =
+        '';
     $Self->{Translation}->{'Screen after creating a workorder'} = '';
     $Self->{Translation}->{'Selects the change number generator module. "AutoIncrement" increments the change number, the SystemID and the counter are used with SystemID.counter format (e.g. 100118, 100119). With "Date", the change numbers will be generated by the current date and a counter; this format looks like Year.Month.Day.counter, e.g. 2010062400001, 2010062400002. With "DateChecksum", the counter will be appended as checksum to the string of date plus the SystemID. The checksum will be rotated on a daily basis. This format looks like Year.Month.Day.SystemID.Counter.CheckSum, e.g. 2010062410000017, 2010062410000026.'} =
         '';

@@ -1,13 +1,14 @@
 # 
 # Translators:
+# Hisatoshi Onishi <hisatoshi.onishi@gmail.com>, 2015
 # Kentaro Hori <kentaro0919@gmail.com>, 2014-2015
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-04-27 10:55+0000\n"
-"Last-Translator: Martin Gruner <martin.gruner@otrs.com>\n"
-"Language-Team: Japanese (http://www.transifex.com/projects/p/OTRS/language/ja/)\n"
+"PO-Revision-Date: 2015-09-20 22:49+0000\n"
+"Last-Translator: Hisatoshi Onishi <hisatoshi.onishi@gmail.com>\n"
+"Language-Team: Japanese (http://www.transifex.com/otrs/OTRS/language/ja/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -328,7 +329,7 @@ msgstr ""
 
 #. Template: AAAITSMChangeManagement
 msgid "Save Change CAB as Template"
-msgstr ""
+msgstr "CABの修正をテンプレートとして保存する"
 
 #. Template: AAAITSMChangeManagement
 msgid "Save change as a template"
@@ -800,7 +801,7 @@ msgstr ""
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "Duplicate name:"
-msgstr ""
+msgstr "名前を複製"
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "This name is already used by another condition."
@@ -820,7 +821,7 @@ msgstr ""
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "Expressions"
-msgstr ""
+msgstr "期限"
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "Selector"
@@ -844,7 +845,7 @@ msgstr ""
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "Delete Action"
-msgstr ""
+msgstr "アクションの削除"
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "No Actions found."
@@ -852,7 +853,7 @@ msgstr ""
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "Add new action"
-msgstr ""
+msgstr "新しいアクションの追加"
 
 #. Template: AgentITSMChangeDelete
 msgid "Do you really want to delete this change?"
@@ -876,7 +877,7 @@ msgstr "詳細な履歴情報："
 
 #. Template: AgentITSMChangeHistoryZoom
 msgid "Modified"
-msgstr ""
+msgstr "更新"
 
 #. Template: AgentITSMChangeHistoryZoom
 msgid "Old Value"
@@ -1000,15 +1001,15 @@ msgstr ""
 
 #. Template: AgentITSMChangeSearch
 msgid "(e.g. 10*5155 or 105658*)"
-msgstr ""
+msgstr "例: 10*5155 または 105658*"
 
 #. Template: AgentITSMChangeSearch
 msgid "CABAgent"
-msgstr ""
+msgstr "CABエージェント"
 
 #. Template: AgentITSMChangeSearch
 msgid "e.g."
-msgstr ""
+msgstr "例: "
 
 #. Template: AgentITSMChangeSearch
 msgid "CABCustomer"
@@ -1020,19 +1021,19 @@ msgstr ""
 
 #. Template: AgentITSMChangeSearch
 msgid "Report"
-msgstr ""
+msgstr "レポート"
 
 #. Template: AgentITSMChangeSearch
 msgid "Change Category"
-msgstr ""
+msgstr "カテゴリを変更"
 
 #. Template: AgentITSMChangeSearch
 msgid "(before/after)"
-msgstr ""
+msgstr "(前／後)"
 
 #. Template: AgentITSMChangeSearch
 msgid "(between)"
-msgstr ""
+msgstr "(期間中)"
 
 #. Template: AgentITSMChangeSearchResultPrint
 msgid "WorkOrders"
@@ -1040,19 +1041,19 @@ msgstr "作業オーダー"
 
 #. Template: AgentITSMChangeTemplate
 msgid "Save Change as Template"
-msgstr ""
+msgstr "変更をテンプレートとして保存する"
 
 #. Template: AgentITSMChangeTemplate
 msgid "A template should have a name!"
-msgstr ""
+msgstr "「テンプレート名」は必須項目です。"
 
 #. Template: AgentITSMChangeTemplate
 msgid "The template name is required."
-msgstr ""
+msgstr "テンプレート名は入力必須です。"
 
 #. Template: AgentITSMChangeTemplate
 msgid "Reset States"
-msgstr ""
+msgstr "状態をリセット"
 
 #. Template: AgentITSMChangeTemplate
 msgid "Overwrite original template"
@@ -1119,7 +1120,7 @@ msgstr ""
 
 #. Template: AgentITSMTemplateEditCAB
 msgid "Edit CAB Template"
-msgstr ""
+msgstr "CABテンプレートを編集"
 
 #. Template: AgentITSMTemplateEditContent
 msgid ""
@@ -1155,7 +1156,7 @@ msgstr ""
 
 #. Template: AgentITSMTemplateOverviewSmall
 msgid "TemplateID"
-msgstr ""
+msgstr "テンプレートID"
 
 #. Template: AgentITSMTemplateOverviewSmall
 msgid "Edit Content"
@@ -1183,7 +1184,7 @@ msgstr ""
 
 #. Template: AgentITSMTemplateOverviewSmall
 msgid "Delete Template"
-msgstr ""
+msgstr "テンプレートを削除"
 
 #. Template: AgentITSMWorkOrderAdd
 msgid "Add Workorder to"
@@ -1199,7 +1200,7 @@ msgstr ""
 
 #. Template: AgentITSMWorkOrderAdd
 msgid "Invalid format."
-msgstr ""
+msgstr "不正なフォーマットです"
 
 #. Template: AgentITSMWorkOrderAddFromTemplate
 msgid "Select Workorder Template"
@@ -2331,7 +2332,7 @@ msgstr ""
 msgid ""
 "Shows a link in the menu to add a work order in the change zoom view of the "
 "agent interface."
-msgstr ""
+msgstr "担当者インタフェースの変更管理ズーム・ビューで、ワークオーダーを追加するためのリンクをメニューに表示します。"
 
 #. SysConfig
 msgid ""
@@ -2343,7 +2344,7 @@ msgstr ""
 msgid ""
 "Shows a link in the menu to delete a work order in its zoom view of the "
 "agent interface."
-msgstr ""
+msgstr "担当者インタフェースの変更管理ズーム・ビューで、ワークオーダーを削除するためのリンクをメニューに表示します。"
 
 #. SysConfig
 msgid ""
@@ -2355,7 +2356,7 @@ msgstr ""
 msgid ""
 "Shows a link in the menu to edit a work order in the its zoom view of the "
 "agent interface."
-msgstr ""
+msgstr "担当者インタフェースの変更管理ズーム・ビューで、ワークオーダーを編集するためのリンクをメニューに表示します。"
 
 #. SysConfig
 msgid ""
@@ -2367,7 +2368,7 @@ msgstr ""
 msgid ""
 "Shows a link in the menu to go back in the work order zoom view of the agent"
 " interface."
-msgstr ""
+msgstr "担当者インタフェースの変更管理ズーム・ビューで、ワークオーダー画面に戻るためのリンクをメニューに表示します。"
 
 #. SysConfig
 msgid ""
@@ -2379,13 +2380,13 @@ msgstr ""
 msgid ""
 "Shows a link in the menu to print a work order in the its zoom view of the "
 "agent interface."
-msgstr ""
+msgstr "担当者インタフェースの変更管理ズーム・ビューで、ワークオーダーを印刷するためのリンクをメニューに表示します。"
 
 #. SysConfig
 msgid ""
 "Shows a link in the menu to reset a change and its workorders in its zoom "
 "view of the agent interface."
-msgstr ""
+msgstr "担当者インタフェースの変更管理ズーム・ビューで、変更内容をリセットするためのリンクをメニューに表示します。"
 
 #. SysConfig
 msgid "Shows the change history (reverse ordered) in the agent interface."
@@ -2393,7 +2394,7 @@ msgstr ""
 
 #. SysConfig
 msgid "State Machine"
-msgstr ""
+msgstr "状態管理"
 
 #. SysConfig
 msgid ""

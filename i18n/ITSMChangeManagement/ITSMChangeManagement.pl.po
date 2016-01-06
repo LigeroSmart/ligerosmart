@@ -1,12 +1,14 @@
 # 
 # Translators:
+# Jerzy Ruszczak <orcio6@o2.pl>, 2015
+# Michał Kiełkowski <michal.kielkowski@lhsystems.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-04-27 10:55+0000\n"
-"Last-Translator: Martin Gruner <martin.gruner@otrs.com>\n"
-"Language-Team: Polish (http://www.transifex.com/projects/p/OTRS/language/pl/)\n"
+"PO-Revision-Date: 2015-09-03 11:53+0000\n"
+"Last-Translator: Michał Kiełkowski <michal.kielkowski@lhsystems.com>\n"
+"Language-Team: Polish (http://www.transifex.com/otrs/OTRS/language/pl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -15,15 +17,15 @@ msgstr ""
 
 #. Template: AAAITSMChangeManagement
 msgid "ITSMChange"
-msgstr "Zmiana"
+msgstr "ZmianaITSM"
 
 #. Template: AAAITSMChangeManagement
 msgid "ITSMChanges"
-msgstr "Zmiany"
+msgstr "ZmianyITSM"
 
 #. Template: AAAITSMChangeManagement
 msgid "ITSM Changes"
-msgstr "Zmiany"
+msgstr "Zmiany ITSM"
 
 #. Template: AAAITSMChangeManagement
 msgid "workorder"
@@ -375,7 +377,7 @@ msgstr "Żądany czas jest niepoprawny!"
 
 #. Template: AAAITSMChangeManagement
 msgid "New (from template)"
-msgstr ""
+msgstr "Nowy (z szablonu)"
 
 #. Template: AAAITSMChangeManagement
 msgid "Add from template"
@@ -655,7 +657,7 @@ msgstr "Reguła"
 
 #. Template: AdminITSMChangeNotification
 msgid "Recipients"
-msgstr ""
+msgstr "Odbiorcy"
 
 #. Template: AdminITSMChangeNotification
 msgid "A notification should have a name!"
@@ -695,7 +697,7 @@ msgstr "Przegląd przejść stanów dla"
 
 #. Template: AdminITSMStateMachine
 msgid "Delete this state transition"
-msgstr ""
+msgstr "Usuń to przejście między stanami"
 
 #. Template: AdminITSMStateMachine
 msgid "Add a new state transition for"
@@ -1118,7 +1120,7 @@ msgstr "Czy na pewno chcesz usunąć ten szablon?"
 
 #. Template: AgentITSMTemplateEditCAB
 msgid "Edit CAB Template"
-msgstr ""
+msgstr "Edytuj szablon CAB"
 
 #. Template: AgentITSMTemplateEditContent
 msgid ""
@@ -2426,4 +2428,4 @@ msgstr ""
 msgid ""
 "Types of tickets, where in the ticket zoom view a link to add a change will "
 "be displayed."
-msgstr ""
+msgstr "Typy zgłoszeń dla których na ekranie szczegółów zgłoszenia wyświetlony będzie link tworzący zmianę"
