@@ -257,7 +257,12 @@ $Self->{'CloneDB::TargetDBSettings'} =  {
                     </para>
                 </listitem>
                 <listitem>
-                    <para>Run the <filename>bin/otrs.Console.pl Maint::Database::Clone --clone</filename> console command.</para>
+                    <para>Run the <filename>bin/otrs.Console.pl Maint::Database::Clone</filename> console command.</para>
+                    <para>
+                        It strongly recommended to do a read and check test before actually migrate the data, this can be done with the
+                        "--dry-run" option as:
+                        <filename>perl bin/otrs.Console.pl Maint::Database::Clone --dry-run</filename>
+                     </para>
                 </listitem>
                 <listitem>
                     <para>Verify the result.</para>
