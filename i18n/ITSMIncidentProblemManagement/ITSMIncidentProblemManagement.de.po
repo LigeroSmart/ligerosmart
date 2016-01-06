@@ -1,5 +1,6 @@
 # 
 # Translators:
+# Daniel Friedlmaier <daniel@friedlmaier.net>, 2015
 # ru_otrs <robert.ullrich@otrs.com>, 2014
 # Udo Bretz, 2014
 # Udo Bretz, 2014
@@ -7,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-04-27 10:55+0000\n"
-"Last-Translator: Martin Gruner <martin.gruner@otrs.com>\n"
-"Language-Team: German (http://www.transifex.com/projects/p/OTRS/language/de/)\n"
+"PO-Revision-Date: 2015-06-23 19:31+0000\n"
+"Last-Translator: Daniel Friedlmaier <daniel@friedlmaier.net>\n"
+"Language-Team: German (http://www.transifex.com/otrs/OTRS/language/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -22,7 +23,7 @@ msgstr "Entscheidung an Ticket hängen"
 
 #. Template: AAAITSMIncidentProblemManagement
 msgid "Decision Date"
-msgstr "Entscheidungsdatum"
+msgstr "Entscheidung"
 
 #. Template: AAAITSMIncidentProblemManagement
 msgid "Decision Result"

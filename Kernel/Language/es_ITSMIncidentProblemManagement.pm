@@ -27,9 +27,9 @@ sub Data {
     $Self->{Translation}->{'closed with workaround'} = 'Cerrado con solución provisional';
 
     # Template: AgentTicketActionCommon
-    $Self->{Translation}->{'Change Decision of Ticket'} = '';
+    $Self->{Translation}->{'Change Decision of Ticket'} = 'Cambiar Decisión del Ticket';
     $Self->{Translation}->{'Change ITSM fields of ticket'} = 'Modificar campos ITSM del ticket';
-    $Self->{Translation}->{'Service Incident State'} = '';
+    $Self->{Translation}->{'Service Incident State'} = 'Estado de Incidente del Servicio';
 
     # Template: AgentTicketEmail
     $Self->{Translation}->{'Link ticket'} = 'Vincular ticket';
@@ -52,7 +52,7 @@ sub Data {
     $Self->{Translation}->{'Defines if a ticket lock is required in the decision screen of the agent interface (if the ticket isn\'t locked yet, the ticket gets locked and the current agent will be set automatically as its owner).'} =
         'Determina si es necesario que el ticket esté bloqueado para acceder a la ventana de decisión de la interfaz del agente (si el ticket no está bloqueado aún, se bloquea y el agente actual se convertirá automáticamente en su propietario).';
     $Self->{Translation}->{'Defines if the service incident state should be shown during service selection in the agent interface.'} =
-        '';
+        'Define si el estado de la incidencia en el servicio debe ser mostrado durante la selección del servicio en la interfaz del agente.';
     $Self->{Translation}->{'Defines the default body of a note in the additional ITSM field screen of the agent interface.'} =
         'Define el texto por default de una nota, en la ventana de campos ITSM adicionales de la interfaz del agente.';
     $Self->{Translation}->{'Defines the default body of a note in the decision screen of the agent interface.'} =
@@ -86,13 +86,13 @@ sub Data {
     $Self->{Translation}->{'Defines the next state of a ticket after adding a note, in the decision screen of the agent interface.'} =
         'Define el siguiente estado de un ticket, luego de agregar una nota en la ventana de decisión de la interfaz del agente.';
     $Self->{Translation}->{'Dynamic fields shown in the additional ITSM field screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        '';
+        'Campos dinámicos mostrados en pantalla de Campos ITSM adicionales en la interfaz de Agente. Configuración posible: 0 = Deshabilitado, 1 = Habilitado, 2 = Habilitado y requerido';
     $Self->{Translation}->{'Dynamic fields shown in the decision screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        '';
+        'Campos dinámicos mostrados en pantalla de Desición en la interfaz de Agente. Configuración posible: 0 = Deshabilitado, 1 = Habilitado, 2 = Habilitado y requerido';
     $Self->{Translation}->{'Dynamic fields shown in the ticket search screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        '';
+        'Campos dinámicos mostrados en pantalla de Búsqueda de Tickets en la interfaz de Agente. Configuración posible: 0 = Deshabilitado, 1 = Habilitado';
     $Self->{Translation}->{'Dynamic fields shown in the ticket zoom screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        '';
+        'Campos dinámicos mostrados en pantalla de Resumen del Ticket en la interfaz de Agente. Configuración posible: 0 = Deshabilitado, 1 = Habilitado.';
     $Self->{Translation}->{'Enables the stats module to generate statistics about the average of ITSM ticket first level solution rate.'} =
         'Habilita, en el módulo de estadísticas, la generación de estadísticas acerca del tasa promedio de solución de primer nivel de tickets ITSM.';
     $Self->{Translation}->{'Enables the stats module to generate statistics about the average of ITSM ticket solution.'} =

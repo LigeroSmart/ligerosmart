@@ -16,7 +16,7 @@ sub Data {
     my $Self = shift;
 
     # Template: AAAITSMIncidentProblemManagement
-    $Self->{Translation}->{'Add decision to ticket'} = 'チケットに決断を追加する';
+    $Self->{Translation}->{'Add decision to ticket'} = 'チケットに決定を追加する';
     $Self->{Translation}->{'Decision Date'} = '決定日付';
     $Self->{Translation}->{'Decision Result'} = '決定結果';
     $Self->{Translation}->{'Due Date'} = '対応期限';

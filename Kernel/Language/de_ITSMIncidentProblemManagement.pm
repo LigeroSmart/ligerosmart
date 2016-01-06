@@ -17,7 +17,7 @@ sub Data {
 
     # Template: AAAITSMIncidentProblemManagement
     $Self->{Translation}->{'Add decision to ticket'} = 'Entscheidung an Ticket hängen';
-    $Self->{Translation}->{'Decision Date'} = 'Entscheidungsdatum';
+    $Self->{Translation}->{'Decision Date'} = 'Entscheidung';
     $Self->{Translation}->{'Decision Result'} = 'Entscheidung';
     $Self->{Translation}->{'Due Date'} = 'Fälligkeitsdatum';
     $Self->{Translation}->{'Reason'} = 'Begründung';

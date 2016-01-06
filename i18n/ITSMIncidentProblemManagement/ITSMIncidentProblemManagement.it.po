@@ -1,12 +1,13 @@
 # 
 # Translators:
+# Vincenzo Reale <vinx.reale@gmail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-04-27 10:55+0000\n"
-"Last-Translator: Martin Gruner <martin.gruner@otrs.com>\n"
-"Language-Team: Italian (http://www.transifex.com/projects/p/OTRS/language/it/)\n"
+"PO-Revision-Date: 2015-12-06 09:17+0000\n"
+"Last-Translator: Vincenzo Reale <vinx.reale@gmail.com>\n"
+"Language-Team: Italian (http://www.transifex.com/otrs/OTRS/language/it/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -15,19 +16,19 @@ msgstr ""
 
 #. Template: AAAITSMIncidentProblemManagement
 msgid "Add decision to ticket"
-msgstr "Aggiungi una Approvazione al Ticket"
+msgstr "Aggiungi approvazione al ticket"
 
 #. Template: AAAITSMIncidentProblemManagement
 msgid "Decision Date"
-msgstr "Data di Approvazione"
+msgstr "Data di approvazione"
 
 #. Template: AAAITSMIncidentProblemManagement
 msgid "Decision Result"
-msgstr "Risultato della Approvazione"
+msgstr "Risultato approvazione"
 
 #. Template: AAAITSMIncidentProblemManagement
 msgid "Due Date"
-msgstr ""
+msgstr "Data di scadenza"
 
 #. Template: AAAITSMIncidentProblemManagement
 msgid "Reason"
@@ -43,7 +44,7 @@ msgstr "Data iniziale di riparazione"
 
 #. Template: AAAITSMIncidentProblemManagement
 msgid "Review Required"
-msgstr "Richiesta Revisione"
+msgstr "Richiesta revisione"
 
 #. Template: AAAITSMIncidentProblemManagement
 msgid "closed with workaround"
@@ -63,7 +64,7 @@ msgstr ""
 
 #. Template: AgentTicketEmail
 msgid "Link ticket"
-msgstr ""
+msgstr "Collega ticket"
 
 #. Template: AgentTicketOverviewPreview
 msgid "Criticality"
@@ -89,7 +90,7 @@ msgstr ""
 
 #. SysConfig
 msgid "Allows adding notes in the decision screen of the agent interface."
-msgstr ""
+msgstr "Consente di aggiungere note nella schermata di decisione dell'interfaccia agente."
 
 #. SysConfig
 msgid "Change the ITSM fields!"

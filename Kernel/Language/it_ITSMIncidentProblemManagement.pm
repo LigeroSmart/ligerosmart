@@ -16,14 +16,14 @@ sub Data {
     my $Self = shift;
 
     # Template: AAAITSMIncidentProblemManagement
-    $Self->{Translation}->{'Add decision to ticket'} = 'Aggiungi una Approvazione al Ticket';
-    $Self->{Translation}->{'Decision Date'} = 'Data di Approvazione';
-    $Self->{Translation}->{'Decision Result'} = 'Risultato della Approvazione';
-    $Self->{Translation}->{'Due Date'} = '';
+    $Self->{Translation}->{'Add decision to ticket'} = 'Aggiungi approvazione al ticket';
+    $Self->{Translation}->{'Decision Date'} = 'Data di approvazione';
+    $Self->{Translation}->{'Decision Result'} = 'Risultato approvazione';
+    $Self->{Translation}->{'Due Date'} = 'Data di scadenza';
     $Self->{Translation}->{'Reason'} = 'Motivo';
     $Self->{Translation}->{'Recovery Start Time'} = 'Data iniziale di recupero';
     $Self->{Translation}->{'Repair Start Time'} = 'Data iniziale di riparazione';
-    $Self->{Translation}->{'Review Required'} = 'Richiesta Revisione';
+    $Self->{Translation}->{'Review Required'} = 'Richiesta revisione';
     $Self->{Translation}->{'closed with workaround'} = 'chiuso con soluzione tampone (workaround)';
 
     # Template: AgentTicketActionCommon
@@ -32,7 +32,7 @@ sub Data {
     $Self->{Translation}->{'Service Incident State'} = '';
 
     # Template: AgentTicketEmail
-    $Self->{Translation}->{'Link ticket'} = '';
+    $Self->{Translation}->{'Link ticket'} = 'Collega ticket';
 
     # Template: AgentTicketOverviewPreview
     $Self->{Translation}->{'Criticality'} = 'Urgenzia';
@@ -44,7 +44,7 @@ sub Data {
     $Self->{Translation}->{'Allows adding notes in the additional ITSM field screen of the agent interface.'} =
         '';
     $Self->{Translation}->{'Allows adding notes in the decision screen of the agent interface.'} =
-        '';
+        'Consente di aggiungere note nella schermata di decisione dell\'interfaccia agente.';
     $Self->{Translation}->{'Change the ITSM fields!'} = 'Cambia i campi ITSM!';
     $Self->{Translation}->{'Decision'} = 'Approvazione';
     $Self->{Translation}->{'Defines if a ticket lock is required in the additional ITSM field screen of the agent interface (if the ticket isn\'t locked yet, the ticket gets locked and the current agent will be set automatically as its owner).'} =
