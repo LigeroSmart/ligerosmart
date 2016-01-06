@@ -1,12 +1,13 @@
 # 
 # Translators:
+# KENNY CHEAH <otrssdnbhd@gmail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-04-27 10:55+0000\n"
-"Last-Translator: Martin Gruner <martin.gruner@otrs.com>\n"
-"Language-Team: Malay (http://www.transifex.com/projects/p/OTRS/language/ms/)\n"
+"PO-Revision-Date: 2015-10-09 08:02+0000\n"
+"Last-Translator: KENNY CHEAH <otrssdnbhd@gmail.com>\n"
+"Language-Team: Malay (http://www.transifex.com/otrs/OTRS/language/ms/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -51,23 +52,23 @@ msgstr "Termasuk Kolum Kepala"
 
 #. Template: AAAImportExport
 msgid "Import summary for"
-msgstr ""
+msgstr "Import ringkasan untuk"
 
 #. Template: AAAImportExport
 msgid "Imported records"
-msgstr ""
+msgstr "Rekod yang diimport"
 
 #. Template: AAAImportExport
 msgid "Exported records"
-msgstr ""
+msgstr "Rekod yang dieksport"
 
 #. Template: AAAImportExport
 msgid "Records"
-msgstr ""
+msgstr "Rekod-rekod"
 
 #. Template: AAAImportExport
 msgid "Skipped"
-msgstr ""
+msgstr "Melangkaui"
 
 #. Template: AdminImportExport
 msgid "Import/Export Management"
@@ -95,7 +96,7 @@ msgstr "Audit informasi biasa"
 
 #. Template: AdminImportExport
 msgid "Name is required!"
-msgstr ""
+msgstr "Nama dikehendaki!"
 
 #. Template: AdminImportExport
 msgid "Object is required!"
@@ -115,7 +116,7 @@ msgstr "Audit informasi format"
 
 #. Template: AdminImportExport
 msgid "is required!"
-msgstr ""
+msgstr "diperlukan!"
 
 #. Template: AdminImportExport
 msgid "Edit mapping information"
@@ -147,19 +148,19 @@ msgstr "Sumber fail"
 
 #. Template: AdminImportExport
 msgid "Success"
-msgstr ""
+msgstr "Berjaya"
 
 #. Template: AdminImportExport
 msgid "Failed"
-msgstr ""
+msgstr "Gagal"
 
 #. Template: AdminImportExport
 msgid "Duplicate names"
-msgstr ""
+msgstr "Menyalin nama-nama"
 
 #. Template: AdminImportExport
 msgid "Last processed line number of import file"
-msgstr ""
+msgstr "Nombor baris terakhir diproses fail import"
 
 #. Template: AdminImportExport
 msgid "Ok"

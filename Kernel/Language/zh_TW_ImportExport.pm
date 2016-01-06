@@ -26,8 +26,8 @@ sub Data {
     $Self->{Translation}->{'Tabulator (TAB)'} = '制表鍵 (TAB)';
     $Self->{Translation}->{'Include Column Headers'} = '包括列標題';
     $Self->{Translation}->{'Import summary for'} = '導入總結';
-    $Self->{Translation}->{'Imported records'} = '導入紀錄';
-    $Self->{Translation}->{'Exported records'} = '導出紀錄';
+    $Self->{Translation}->{'Imported records'} = '已導入紀錄';
+    $Self->{Translation}->{'Exported records'} = '已導出紀錄';
     $Self->{Translation}->{'Records'} = '紀錄';
     $Self->{Translation}->{'Skipped'} = '跳過的';
 
@@ -38,12 +38,12 @@ sub Data {
     $Self->{Translation}->{'Start Export'} = '開始導出';
     $Self->{Translation}->{'Step'} = '步驟';
     $Self->{Translation}->{'Edit common information'} = '編輯共用信息';
-    $Self->{Translation}->{'Name is required!'} = '';
+    $Self->{Translation}->{'Name is required!'} = '名稱是必需的！';
     $Self->{Translation}->{'Object is required!'} = '對象是必需的！';
     $Self->{Translation}->{'Format is required!'} = '格式是必需的';
     $Self->{Translation}->{'Edit object information'} = '編輯對象信息';
     $Self->{Translation}->{'Edit format information'} = '編輯格式信息';
-    $Self->{Translation}->{'is required!'} = '';
+    $Self->{Translation}->{'is required!'} = '必需的';
     $Self->{Translation}->{'Edit mapping information'} = '編輯映射信息';
     $Self->{Translation}->{'No map elements found.'} = '沒有找到映射的字段';
     $Self->{Translation}->{'Add Mapping Element'} = '添加映射字段';

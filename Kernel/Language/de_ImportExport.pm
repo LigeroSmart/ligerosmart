@@ -60,7 +60,7 @@ sub Data {
     # SysConfig
     $Self->{Translation}->{'Format backend module registration for the import/export module.'} =
         'Format-Backend Modul-Registration des Import/Export Moduls.';
-    $Self->{Translation}->{'Import and export object information.'} = 'Impotieren und Exportieren von Objekt-Informationen.';
+    $Self->{Translation}->{'Import and export object information.'} = 'Importieren und Exportieren von Objekt-Informationen.';
     $Self->{Translation}->{'Import/Export'} = 'Import/Export';
 
 }

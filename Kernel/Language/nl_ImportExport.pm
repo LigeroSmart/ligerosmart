@@ -29,7 +29,7 @@ sub Data {
     $Self->{Translation}->{'Imported records'} = '';
     $Self->{Translation}->{'Exported records'} = '';
     $Self->{Translation}->{'Records'} = '';
-    $Self->{Translation}->{'Skipped'} = '';
+    $Self->{Translation}->{'Skipped'} = 'Overgeslagen';
 
     # Template: AdminImportExport
     $Self->{Translation}->{'Import/Export Management'} = 'Import/Export beheer';
@@ -43,7 +43,7 @@ sub Data {
     $Self->{Translation}->{'Format is required!'} = 'Formaat is verplicht.';
     $Self->{Translation}->{'Edit object information'} = 'Object-informatie bewerken';
     $Self->{Translation}->{'Edit format information'} = 'Format-informationen bewerken';
-    $Self->{Translation}->{'is required!'} = '';
+    $Self->{Translation}->{'is required!'} = 'is verplicht!';
     $Self->{Translation}->{'Edit mapping information'} = 'Mapping-informatie bewerken';
     $Self->{Translation}->{'No map elements found.'} = 'Geen elementen gevonden.';
     $Self->{Translation}->{'Add Mapping Element'} = '';
@@ -51,7 +51,7 @@ sub Data {
     $Self->{Translation}->{'Restrict export per search'} = 'Beperk export tot zoekopdracht';
     $Self->{Translation}->{'Import information'} = 'Import-informatie';
     $Self->{Translation}->{'Source File'} = 'Bronbestand';
-    $Self->{Translation}->{'Success'} = '';
+    $Self->{Translation}->{'Success'} = 'Succes';
     $Self->{Translation}->{'Failed'} = '';
     $Self->{Translation}->{'Duplicate names'} = '';
     $Self->{Translation}->{'Last processed line number of import file'} = '';

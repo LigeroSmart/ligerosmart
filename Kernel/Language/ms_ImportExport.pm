@@ -25,11 +25,11 @@ sub Data {
     $Self->{Translation}->{'Semicolon (;)'} = 'Semikolon (;)';
     $Self->{Translation}->{'Tabulator (TAB)'} = 'Tabulator (TAB)';
     $Self->{Translation}->{'Include Column Headers'} = 'Termasuk Kolum Kepala';
-    $Self->{Translation}->{'Import summary for'} = '';
-    $Self->{Translation}->{'Imported records'} = '';
-    $Self->{Translation}->{'Exported records'} = '';
-    $Self->{Translation}->{'Records'} = '';
-    $Self->{Translation}->{'Skipped'} = '';
+    $Self->{Translation}->{'Import summary for'} = 'Import ringkasan untuk';
+    $Self->{Translation}->{'Imported records'} = 'Rekod yang diimport';
+    $Self->{Translation}->{'Exported records'} = 'Rekod yang dieksport';
+    $Self->{Translation}->{'Records'} = 'Rekod-rekod';
+    $Self->{Translation}->{'Skipped'} = 'Melangkaui';
 
     # Template: AdminImportExport
     $Self->{Translation}->{'Import/Export Management'} = 'Pengurusan Import/Eksport';
@@ -38,12 +38,12 @@ sub Data {
     $Self->{Translation}->{'Start Export'} = 'Mula eksport';
     $Self->{Translation}->{'Step'} = 'Langkah';
     $Self->{Translation}->{'Edit common information'} = 'Audit informasi biasa';
-    $Self->{Translation}->{'Name is required!'} = '';
+    $Self->{Translation}->{'Name is required!'} = 'Nama dikehendaki!';
     $Self->{Translation}->{'Object is required!'} = 'Objek adalah diperlukan!';
     $Self->{Translation}->{'Format is required!'} = 'Format adalah diperlukan!';
     $Self->{Translation}->{'Edit object information'} = 'Audit informasi objek';
     $Self->{Translation}->{'Edit format information'} = 'Audit informasi format';
-    $Self->{Translation}->{'is required!'} = '';
+    $Self->{Translation}->{'is required!'} = 'diperlukan!';
     $Self->{Translation}->{'Edit mapping information'} = 'Audit informasi peta';
     $Self->{Translation}->{'No map elements found.'} = 'Tiada elemen peta ditemui.';
     $Self->{Translation}->{'Add Mapping Element'} = 'Tambah elemen peta';
@@ -51,10 +51,10 @@ sub Data {
     $Self->{Translation}->{'Restrict export per search'} = 'Dilarang eksport per carian';
     $Self->{Translation}->{'Import information'} = 'Informasi import';
     $Self->{Translation}->{'Source File'} = 'Sumber fail';
-    $Self->{Translation}->{'Success'} = '';
-    $Self->{Translation}->{'Failed'} = '';
-    $Self->{Translation}->{'Duplicate names'} = '';
-    $Self->{Translation}->{'Last processed line number of import file'} = '';
+    $Self->{Translation}->{'Success'} = 'Berjaya';
+    $Self->{Translation}->{'Failed'} = 'Gagal';
+    $Self->{Translation}->{'Duplicate names'} = 'Menyalin nama-nama';
+    $Self->{Translation}->{'Last processed line number of import file'} = 'Nombor baris terakhir diproses fail import';
     $Self->{Translation}->{'Ok'} = 'Ok';
 
     # SysConfig

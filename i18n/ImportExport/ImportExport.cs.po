@@ -1,12 +1,13 @@
 # 
 # Translators:
+# Jan Řežab <honza@rezab.eu>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-04-27 10:55+0000\n"
-"Last-Translator: Martin Gruner <martin.gruner@otrs.com>\n"
-"Language-Team: Czech (http://www.transifex.com/projects/p/OTRS/language/cs/)\n"
+"PO-Revision-Date: 2015-09-03 12:17+0000\n"
+"Last-Translator: Jan Řežab <honza@rezab.eu>\n"
+"Language-Team: Czech (http://www.transifex.com/otrs/OTRS/language/cs/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -63,11 +64,11 @@ msgstr ""
 
 #. Template: AAAImportExport
 msgid "Records"
-msgstr ""
+msgstr "Záznamů"
 
 #. Template: AAAImportExport
 msgid "Skipped"
-msgstr ""
+msgstr "Přeskočeno"
 
 #. Template: AdminImportExport
 msgid "Import/Export Management"
@@ -147,15 +148,15 @@ msgstr "Zdrojový Soubor"
 
 #. Template: AdminImportExport
 msgid "Success"
-msgstr ""
+msgstr "Úspěšně"
 
 #. Template: AdminImportExport
 msgid "Failed"
-msgstr ""
+msgstr "Neúspěšně"
 
 #. Template: AdminImportExport
 msgid "Duplicate names"
-msgstr ""
+msgstr "Duplicitní jména"
 
 #. Template: AdminImportExport
 msgid "Last processed line number of import file"

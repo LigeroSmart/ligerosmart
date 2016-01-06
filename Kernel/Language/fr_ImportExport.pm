@@ -37,17 +37,17 @@ sub Data {
     $Self->{Translation}->{'Start Import'} = 'Démarrer Import';
     $Self->{Translation}->{'Start Export'} = 'Démarrer Export';
     $Self->{Translation}->{'Step'} = 'Etape';
-    $Self->{Translation}->{'Edit common information'} = 'Editer les informations communes';
+    $Self->{Translation}->{'Edit common information'} = 'Éditer les informations communes';
     $Self->{Translation}->{'Name is required!'} = 'Un Nom est requis!';
     $Self->{Translation}->{'Object is required!'} = 'Un Objet est requis!';
     $Self->{Translation}->{'Format is required!'} = 'Un Format est requis!';
-    $Self->{Translation}->{'Edit object information'} = 'Editer les informations de l\'objet';
-    $Self->{Translation}->{'Edit format information'} = 'Editer les informations de format';
+    $Self->{Translation}->{'Edit object information'} = 'Éditer les informations de l\'objet';
+    $Self->{Translation}->{'Edit format information'} = 'Éditer les informations de format';
     $Self->{Translation}->{'is required!'} = 'est requis !';
-    $Self->{Translation}->{'Edit mapping information'} = 'Editer les informations de mappage';
-    $Self->{Translation}->{'No map elements found.'} = '';
-    $Self->{Translation}->{'Add Mapping Element'} = '';
-    $Self->{Translation}->{'Edit search information'} = 'Editer les informations de recherche';
+    $Self->{Translation}->{'Edit mapping information'} = 'Éditer les informations de mappage';
+    $Self->{Translation}->{'No map elements found.'} = 'Aucun élément de mappage trouvé';
+    $Self->{Translation}->{'Add Mapping Element'} = 'Ajouter un élément de mappage';
+    $Self->{Translation}->{'Edit search information'} = 'Éditer les informations de recherche';
     $Self->{Translation}->{'Restrict export per search'} = 'Restreindre l\'export par recherche';
     $Self->{Translation}->{'Import information'} = 'Informations d\'import';
     $Self->{Translation}->{'Source File'} = 'Fichier Source';
@@ -59,7 +59,7 @@ sub Data {
 
     # SysConfig
     $Self->{Translation}->{'Format backend module registration for the import/export module.'} =
-        '';
+        'Enregistrement en arrière plan du module d\'import/export';
     $Self->{Translation}->{'Import and export object information.'} = 'Importer et exporter des informations d\'objet';
     $Self->{Translation}->{'Import/Export'} = 'Importer/Exporter';
 

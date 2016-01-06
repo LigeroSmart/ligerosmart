@@ -26,7 +26,7 @@ sub Data {
     $Self->{Translation}->{'Tabulator (TAB)'} = 'Tabulatore (TAB)';
     $Self->{Translation}->{'Include Column Headers'} = 'Includi le Colonne di Intestazione';
     $Self->{Translation}->{'Import summary for'} = 'Importa il sommario per';
-    $Self->{Translation}->{'Imported records'} = 'Importa voci';
+    $Self->{Translation}->{'Imported records'} = 'Voci importate';
     $Self->{Translation}->{'Exported records'} = 'Esporta voci';
     $Self->{Translation}->{'Records'} = 'Voci';
     $Self->{Translation}->{'Skipped'} = 'Saltato';
@@ -34,8 +34,8 @@ sub Data {
     # Template: AdminImportExport
     $Self->{Translation}->{'Import/Export Management'} = 'Gestione Importazione/Esportazione';
     $Self->{Translation}->{'Create a template to import and export object information.'} = 'Crea un template per importare ed esportare le informazioni degli oggetti.';
-    $Self->{Translation}->{'Start Import'} = 'Iniziare Importazione';
-    $Self->{Translation}->{'Start Export'} = 'Iniziare Esportazione';
+    $Self->{Translation}->{'Start Import'} = 'Inizia Importazione';
+    $Self->{Translation}->{'Start Export'} = 'Inizia Esportazione';
     $Self->{Translation}->{'Step'} = 'Passo';
     $Self->{Translation}->{'Edit common information'} = 'Modifica informazioni comuni';
     $Self->{Translation}->{'Name is required!'} = 'Il nome è obbligatorio!';
@@ -59,7 +59,7 @@ sub Data {
 
     # SysConfig
     $Self->{Translation}->{'Format backend module registration for the import/export module.'} =
-        '';
+        'Registrazione del modulo di backend del formato per il modulo di importazione/esportazione.';
     $Self->{Translation}->{'Import and export object information.'} = 'Importa ed esporta le informazioni sull\'oggetto.';
     $Self->{Translation}->{'Import/Export'} = 'Importare/Esportare';
 
