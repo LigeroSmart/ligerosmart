@@ -100,7 +100,7 @@ sub Validate {
         DynamicFieldConfig   => $Self->{DynamicFieldConfig},
         PossibleValuesFilter => $PossibleValuesFilter,
         ParamObject          => $Kernel::OM->Get('Kernel::System::Web::Request'),
-        Mandatory            => 1,
+        Mandatory            => 0,
     );
 
     if ( $ValidationResult->{ServerError} ) {
