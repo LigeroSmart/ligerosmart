@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2016 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/b89bda8550373565cc0a2ca9bf16d920002ad138/Kernel/Output/HTML/Templates/Standard/AgentTicketZoom.tt
+# $origin: https://github.com/OTRS/otrs/blob/29b250b6c4057288aff280f95e945a1b0400221d/Kernel/Output/HTML/Templates/Standard/AgentTicketZoom.tt
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -162,7 +162,9 @@
 [% RenderBlockEnd("ArchiveFlag") %]
 [% RenderBlockStart("Type") %]
                         <label>[% Translate("Type") | html %]:</label>
-                        <p class="Value" title="[% Data.Type | html %]">[% Data.Type | html %]</p>
+                        <p class="Value FixedValueSmall" title="[% Data.Type | html %]">[% Data.Type | html %]
+                            [% IF Data.Valid != 1 %] <em class="Error">[% Translate("Note: Type is invalid!") | html %]</em> [% END %]
+                        </p>
                         <div class="Clear"></div>
 [% RenderBlockEnd("Type") %]
 
@@ -1034,7 +1036,7 @@ var TicketID    = [% Data.TicketID | JSON %],
             'is_important' : [% Item.ArticleData.ArticleIsImportant | JSON %],
             'is_seen' : [% Item.ArticleData.ArticleIsSeen | JSON %],
             'text'   : [% IF Item.IsChatArticle %][% Item.ArticleData.BodyChat | JSON %][% ELSE %][% Item.ArticleData.Body | truncate(650) | JSON %][% END %],
-            'text_long' : [% IF Item.IsChatArticle %][% Item.ArticleData.Body %][% ELSE %][% IF !Item.ArticleData.AttachmentIDOfHTMLBody %][% Item.ArticleData.Body | JSON %][% ELSE %]""[% END %][% END %],
+            'text_long' : [% IF Item.IsChatArticle %][% JSON(Item.ArticleData.ChatMessages) %][% ELSE %][% IF !Item.ArticleData.AttachmentIDOfHTMLBody %][% Item.ArticleData.Body | JSON %][% ELSE %]""[% END %][% END %],
             'attachment_id' : [% Item.ArticleData.AttachmentIDOfHTMLBody | JSON %],
             'iframe_html' : '<iframe sandbox="allow-same-origin allow-popups" data-url="[% Env("Baselink") %]Action=AgentTicketAttachment;Subaction=HTMLView;ArticleID=[% Item.ArticleID | html %];FileID=[% Item.ArticleData.AttachmentIDOfHTMLBody | html %];[% Env("SessionName") | html %]=[% Env("SessionID") | html %]" [% Data.MSSecurityRestricted %] width="100%" frameborder="0" id="Iframe[% Item.ArticleID | html %]" class="TimelineArticleiFrame" src=""></iframe>'
         [% END %]

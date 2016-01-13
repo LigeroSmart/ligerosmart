@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2016 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/b89bda8550373565cc0a2ca9bf16d920002ad138/Kernel/Modules/AgentTicketZoom.pm
+# $origin: https://github.com/OTRS/otrs/blob/29b250b6c4057288aff280f95e945a1b0400221d/Kernel/Modules/AgentTicketZoom.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -258,7 +258,6 @@ sub Run {
     );
 
     my %AclAction = %PossibleActions;
-
     if ($ACL) {
         %AclAction = $TicketObject->TicketAclActionData();
     }
@@ -1111,9 +1110,18 @@ sub MaskAgentZoom {
 
     # ticket type
     if ( $ConfigObject->Get('Ticket::Type') ) {
+
+        my %Type = $Kernel::OM->Get('Kernel::System::Type')->TypeGet(
+            ID => $Ticket{TypeID},
+        );
+
         $LayoutObject->Block(
             Name => 'Type',
-            Data => { %Ticket, %AclAction },
+            Data => {
+                Valid => $Type{ValidID},
+                %Ticket,
+                %AclAction
+            },
         );
     }
 
@@ -2511,6 +2519,11 @@ sub _ArticleTree {
                     my $ChatMessages = $Kernel::OM->Get('Kernel::System::JSON')->Decode(
                         Data => $Item->{ArticleData}->{Body},
                     );
+
+                    for my $ChatMessage (@{ $ChatMessages // [] }) {
+                        $ChatMessage->{CreateTime} = $LayoutObject->{LanguageObject}->FormatTimeString( $ChatMessage->{CreateTime}, 'DateFormat' );
+                    }
+                    $Item->{ArticleData}->{ChatMessages} = $ChatMessages;
 
                     my $ItemCounter = 0;
 
