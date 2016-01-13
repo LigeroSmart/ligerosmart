@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2016 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/b89bda8550373565cc0a2ca9bf16d920002ad138/scripts/test/Selenium/Output/ToolBar/TicketService.t
+# $origin: https://github.com/OTRS/otrs/blob/29b250b6c4057288aff280f95e945a1b0400221d/scripts/test/Selenium/Output/ToolBar/TicketService.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -28,27 +28,33 @@ $Selenium->RunTest(
         );
         my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 
+        # get config object
+        my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+
         # enable tool bar AgentTicketService
         my %AgentTicketQueue = (
-            CssClass => "ServiceView",
-            Icon     => "fa fa-wrench",
-            Module   => "Kernel::Output::HTML::ToolBar::TicketService",
-            Priority => "1030035",
+            CssClass => 'ServiceView',
+            Icon     => 'fa fa-wrench',
+            Module   => 'Kernel::Output::HTML::ToolBar::TicketService',
+            Priority => '1030035',
         );
 
-        $Kernel::OM->Get('Kernel::Config')->Set(
+        $ConfigObject->Set(
             Key   => 'Frontend::ToolBarModule###10-Ticket::AgentTicketQueue',
             Value => \%AgentTicketQueue,
         );
 
-        $Kernel::OM->Get('Kernel::System::SysConfig')->ConfigItemUpdate(
+        # get sysconfig object
+        my $SysConfigObject = $Kernel::OM->Get('Kernel::System::SysConfig');
+
+        $SysConfigObject->ConfigItemUpdate(
             Valid => 1,
             Key   => 'Frontend::ToolBarModule###10-Ticket::AgentTicketQueue',
             Value => \%AgentTicketQueue
         );
 
         # allows defining services and SLAs for tickets
-        $Kernel::OM->Get('Kernel::System::SysConfig')->ConfigItemUpdate(
+        $SysConfigObject->ConfigItemUpdate(
             Valid => 1,
             Key   => 'Ticket::Service',
             Value => 1
@@ -74,7 +80,7 @@ $Selenium->RunTest(
         );
 
         # create test service
-        my $ServiceName = "Selenium" . $Helper->GetRandomID();
+        my $ServiceName = 'Selenium' . $Helper->GetRandomID();
         my $ServiceID   = $Kernel::OM->Get('Kernel::System::Service')->ServiceAdd(
             Name    => $ServiceName,
 # ---
@@ -85,6 +91,11 @@ $Selenium->RunTest(
 # ---
             ValidID => 1,
             UserID  => 1,
+        );
+
+        $Self->True(
+            $ServiceID,
+            "Service is created - ID $ServiceID"
         );
 
         # get ticket object
@@ -98,23 +109,28 @@ $Selenium->RunTest(
             Priority      => '3 normal',
             State         => 'open',
             CustomerID    => 'SeleniumCustomerID',
-            CustomerUser  => "test\@localhost.com",
+            CustomerUser  => 'test@localhost.com',
             ServiceID     => $ServiceID,
             OwnerID       => 1,
             UserID        => $TestUserID,
             ResponsibleID => 1,
         );
 
+        $Self->True(
+            $TicketID,
+            "Ticket is created - ID $TicketID"
+        );
+
         # set test user 'My Service' preferences to test service
-        $Selenium->find_element("//a[contains(\@href, \'Action=AgentPreferences' )]")->click();
+        $Selenium->find_element("//a[contains(\@href, \'Action=AgentPreferences' )]")->VerifiedClick();
         $Selenium->execute_script("\$('#ServiceID').val('$ServiceID').trigger('redraw.InputField').trigger('change');");
-        $Selenium->find_element( "#ServiceIDUpdate", 'css' )->click();
+        $Selenium->find_element( "#ServiceIDUpdate", 'css' )->VerifiedClick();
 
         # click on tool bar AgentTicketService
-        $Selenium->find_element("//a[contains(\@title, \'Tickets in MyServices:\' )]")->click();
+        $Selenium->find_element("//a[contains(\@title, \'Tickets in MyServices:\' )]")->VerifiedClick();
 
         # verify that test is on the correct screen
-        my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
+        my $ScriptAlias = $ConfigObject->Get('ScriptAlias');
         my $ExpectedURL = "${ScriptAlias}index.pl?Action=AgentTicketService";
 
         $Self->True(
@@ -129,7 +145,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $Success,
-            "Delete ticket - $TicketID"
+            "Ticket is deleted- $TicketID"
         );
 
         # get DB object
@@ -150,13 +166,19 @@ $Selenium->RunTest(
         );
         $Self->True(
             $Success,
-            "Deleted Service - $ServiceID",
+            "Service is deleted - ID $ServiceID",
         );
 
-        # make sure cache is correct
-        $Kernel::OM->Get('Kernel::System::Cache')->CleanUp(
-            Type => 'Service'
-        );
+        # make sure the cache is correct
+        for my $Cache (
+            qw (Ticket Service)
+            )
+        {
+            $Kernel::OM->Get('Kernel::System::Cache')->CleanUp(
+                Type => $Cache,
+            );
+        }
+
     }
 );
 
