@@ -25,7 +25,6 @@ sub Data {
     $Self->{Translation}->{'Change Responsible of Ticket'} = 'Промени одговорног за тикет';
     $Self->{Translation}->{'Manage Master/Slave'} = 'Управљање Главни/Зависни';
     $Self->{Translation}->{'Set Master/Slave Value'} = 'Подеси Главни/Зависни вредност';
-    $Self->{Translation}->{'Inform Agent'} = 'Обавести оператера';
     $Self->{Translation}->{'Optional'} = 'Опциони';
     $Self->{Translation}->{'Inform involved Agents'} = 'Обавести релевантне оператере';
     $Self->{Translation}->{'Note will be (also) received by:'} = 'Напомену ће (такође) примити:';

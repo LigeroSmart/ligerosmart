@@ -25,7 +25,6 @@ sub Data {
     $Self->{Translation}->{'Change Responsible of Ticket'} = 'Cambiar el responsable del ticket';
     $Self->{Translation}->{'Manage Master/Slave'} = 'Gestión Maestro/Escalvo';
     $Self->{Translation}->{'Set Master/Slave Value'} = '';
-    $Self->{Translation}->{'Inform Agent'} = 'Informar al agente';
     $Self->{Translation}->{'Optional'} = 'Opcional';
     $Self->{Translation}->{'Inform involved Agents'} = 'Informar a los agentes involucrados';
     $Self->{Translation}->{'Note will be (also) received by:'} = 'La nota será recibida (también) por:';

@@ -24,16 +24,15 @@ sub Data {
     $Self->{Translation}->{'Change Priority of Ticket'} = 'Alterar a Prioridade do Chamado';
     $Self->{Translation}->{'Change Responsible of Ticket'} = 'Alterar o Responsável pelo Chamado';
     $Self->{Translation}->{'Manage Master/Slave'} = 'Gerenciar Master/Slave';
-    $Self->{Translation}->{'Set Master/Slave Value'} = '';
-    $Self->{Translation}->{'Inform Agent'} = 'Informar Atendente';
+    $Self->{Translation}->{'Set Master/Slave Value'} = 'Configurar Valor Mestre/Escravo';
     $Self->{Translation}->{'Optional'} = 'Opcional';
     $Self->{Translation}->{'Inform involved Agents'} = 'Informar aos atendentes envolvidos';
-    $Self->{Translation}->{'Note will be (also) received by:'} = '';
+    $Self->{Translation}->{'Note will be (also) received by:'} = 'Nota será recebida (também) por:';
 
     # Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
-    $Self->{Translation}->{'New Master Ticket'} = '';
-    $Self->{Translation}->{'Unset Master Ticket'} = '';
-    $Self->{Translation}->{'Unset Slave Ticket'} = '';
+    $Self->{Translation}->{'New Master Ticket'} = 'Novo Chamado Mestre';
+    $Self->{Translation}->{'Unset Master Ticket'} = 'Desfazer Chamado Mestre';
+    $Self->{Translation}->{'Unset Slave Ticket'} = 'Desfazer Chamado Escravo';
     $Self->{Translation}->{'Slave of Ticket#'} = '';
 
     # SysConfig

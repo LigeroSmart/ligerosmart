@@ -3,12 +3,13 @@
 # Carlos Javier García Cárdenas <carlos.garcia@otrs.com>, 2014
 # Ettore Atalan <atalanttore@googlemail.com>, 2014-2015
 # mathiasbraeunling <mathias.braeunling@otrs.com>, 2014
-# ru_otrs <robert.ullrich@otrs.com>, 2014
+# ru_otrs <robert.ullrich@otrs.com>, 2014-2015
+# Rudy R <rudy.rohde@googlemail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-10-07 18:52+0000\n"
+"PO-Revision-Date: 2016-01-14 04:23+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: German (http://www.transifex.com/otrs/OTRS/language/de/)\n"
 "MIME-Version: 1.0\n"
@@ -51,11 +52,7 @@ msgstr "Master/Slave verwalten"
 
 #. Template: AgentTicketMasterSlave
 msgid "Set Master/Slave Value"
-msgstr ""
-
-#. Template: AgentTicketMasterSlave
-msgid "Inform Agent"
-msgstr "Agenten informieren"
+msgstr "Master/Slave Wert festlegen"
 
 #. Template: AgentTicketMasterSlave
 msgid "Optional"
@@ -71,19 +68,19 @@ msgstr "Die Notiz wird (auch) gesendet an:"
 
 #. Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
 msgid "New Master Ticket"
-msgstr ""
+msgstr "Neues Master Ticket"
 
 #. Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
 msgid "Unset Master Ticket"
-msgstr ""
+msgstr "Aufheben des Master Tickets"
 
 #. Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
 msgid "Unset Slave Ticket"
-msgstr ""
+msgstr "Aufheben des Slave Tickets"
 
 #. Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
 msgid "Slave of Ticket#"
-msgstr ""
+msgstr "Slave von Ticket"
 
 #. SysConfig
 msgid ""
@@ -164,19 +161,19 @@ msgid ""
 "Enable the feature to forward articles from type 'forward' of a master "
 "ticket to the customers of the slave tickets. By default (disabled) it will "
 "not forward articles from type 'forward' to the slave tickets."
-msgstr ""
+msgstr "Aktiviert die Funktion zum Weiterleiten von Artikeln des Typs 'Weiterleiten' zu den Kunden des Slave Tickets. Standardmäßig (deaktiviert) werden keine Artikel des Typs 'Weiterleiten' an die Slave Tickets weitergeleitet."
 
 #. SysConfig
 msgid ""
 "Enable the feature to keep parent-child link after change of the MasterSlave"
 " state in the advanced MasterSlave mode."
-msgstr ""
+msgstr "Aktiviert im die Funktion im erweiterten MasterSlave Verhalten eine Eltern-Kind-Beziehung nach dem Ändern des MasterSlave Status zu behalten."
 
 #. SysConfig
 msgid ""
 "Enable the feature to keep parent-child link after unset of the MasterSlave "
 "state in the advanced MasterSlave mode."
-msgstr ""
+msgstr "Aktiviert im die Funktion im erweiterten MasterSlave Verhalten eine Eltern-Kind-Beziehung nach dem Auflösen des MasterSlave Status zu behalten."
 
 #. SysConfig
 msgid ""
@@ -192,11 +189,11 @@ msgstr "Ermöglicht das Ändern des TIcket Status, beim Hinzufügen einer Notiz 
 
 #. SysConfig
 msgid "Master / Slave"
-msgstr ""
+msgstr "Master / Slave"
 
 #. SysConfig
 msgid "MasterSlave module for Ticket Bulk feature."
-msgstr ""
+msgstr "MasterSlave Modul für die Funktion von Sammelaktionen"
 
 #. SysConfig
 msgid ""
@@ -305,4 +302,4 @@ msgstr "Definiert die verschiedene Artikeltypen in denen der reale Name des Mast
 msgid ""
 "This module activates Master/Slave field in new email and phone ticket "
 "screens."
-msgstr ""
+msgstr "Dieses Modul aktiviert das Master/Slave Feld in der Anzeige für ein neues Email- oder Telefon-Ticket."

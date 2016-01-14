@@ -25,7 +25,6 @@ sub Data {
     $Self->{Translation}->{'Change Responsible of Ticket'} = 'Badili uhusika wa tiketi.';
     $Self->{Translation}->{'Manage Master/Slave'} = 'Simamia Mkuu/mtumwa';
     $Self->{Translation}->{'Set Master/Slave Value'} = '';
-    $Self->{Translation}->{'Inform Agent'} = 'Mtaarifu wakala';
     $Self->{Translation}->{'Optional'} = 'Ya hiari';
     $Self->{Translation}->{'Inform involved Agents'} = 'Taarifu mawakala wanaohusika';
     $Self->{Translation}->{'Note will be (also) received by:'} = '';

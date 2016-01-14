@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-10-07 18:52+0000\n"
+"PO-Revision-Date: 2016-01-14 04:23+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Swahili (http://www.transifex.com/otrs/OTRS/language/sw/)\n"
 "MIME-Version: 1.0\n"
@@ -50,10 +50,6 @@ msgstr "Simamia Mkuu/mtumwa"
 #. Template: AgentTicketMasterSlave
 msgid "Set Master/Slave Value"
 msgstr ""
-
-#. Template: AgentTicketMasterSlave
-msgid "Inform Agent"
-msgstr "Mtaarifu wakala"
 
 #. Template: AgentTicketMasterSlave
 msgid "Optional"

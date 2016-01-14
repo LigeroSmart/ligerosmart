@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-10-07 18:52+0000\n"
+"PO-Revision-Date: 2016-01-14 04:23+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Hungarian (http://www.transifex.com/otrs/OTRS/language/hu/)\n"
 "MIME-Version: 1.0\n"
@@ -48,11 +48,7 @@ msgstr "Mester/alárendelt kezelése"
 
 #. Template: AgentTicketMasterSlave
 msgid "Set Master/Slave Value"
-msgstr ""
-
-#. Template: AgentTicketMasterSlave
-msgid "Inform Agent"
-msgstr "Ügyintéző értesítése"
+msgstr "Mester/alárendelt érték beállítása"
 
 #. Template: AgentTicketMasterSlave
 msgid "Optional"
@@ -68,19 +64,19 @@ msgstr "Jegyzet (is) fogadásra kerül ettől:"
 
 #. Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
 msgid "New Master Ticket"
-msgstr ""
+msgstr "Új mesterjegy"
 
 #. Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
 msgid "Unset Master Ticket"
-msgstr ""
+msgstr "Mesterjegy törlése"
 
 #. Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
 msgid "Unset Slave Ticket"
-msgstr ""
+msgstr "Alárendelt jegy törlése"
 
 #. Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
 msgid "Slave of Ticket#"
-msgstr ""
+msgstr "Jegy# alárendeltje"
 
 #. SysConfig
 msgid ""
@@ -161,19 +157,19 @@ msgid ""
 "Enable the feature to forward articles from type 'forward' of a master "
 "ticket to the customers of the slave tickets. By default (disabled) it will "
 "not forward articles from type 'forward' to the slave tickets."
-msgstr ""
+msgstr "Engedélyezze a tulajdonságot a bejegyzések továbbításához egy mesterjegy „továbbítás” típusából az alárendelt jegyek ügyfeleihez. Alapértelmezetten (letiltva) nem fog bejegyzéseket továbbítani a „továbbítás” típusból az alárendelt jegyekhez."
 
 #. SysConfig
 msgid ""
 "Enable the feature to keep parent-child link after change of the MasterSlave"
 " state in the advanced MasterSlave mode."
-msgstr ""
+msgstr "Engedélyezze a tulajdonságot a szülő-gyermek kapcsolat megtartásához a mester-alárendelt állapot megváltoztatása után a speciális mester-alárendelt módban."
 
 #. SysConfig
 msgid ""
 "Enable the feature to keep parent-child link after unset of the MasterSlave "
 "state in the advanced MasterSlave mode."
-msgstr ""
+msgstr "Engedélyezze a tulajdonságot a szülő-gyermek kapcsolat megtartásához a mester-alárendelt állapot törlése után a speciális mester-alárendelt módban."
 
 #. SysConfig
 msgid ""
@@ -189,11 +185,11 @@ msgstr "Ha egy ügyintéző hozzáadott egy megjegyzést, akkor beállítja a je
 
 #. SysConfig
 msgid "Master / Slave"
-msgstr ""
+msgstr "Mester / alárendelt"
 
 #. SysConfig
 msgid "MasterSlave module for Ticket Bulk feature."
-msgstr ""
+msgstr "Mester-alárendelt modul a jegy tömeges szolgáltatásához."
 
 #. SysConfig
 msgid ""
@@ -302,4 +298,4 @@ msgstr "Megadja a különböző bejegyzéstípusokat, ahol a mesterjegyben lév�
 msgid ""
 "This module activates Master/Slave field in new email and phone ticket "
 "screens."
-msgstr ""
+msgstr "Ez a modul bekapcsolja a mester/alárendelt mezőt az új e-mail és telefonos jegy képernyőkön."

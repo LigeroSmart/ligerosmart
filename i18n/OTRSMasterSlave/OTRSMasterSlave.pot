@@ -47,10 +47,6 @@ msgid "Set Master/Slave Value"
 msgstr ""
 
 #. Template: AgentTicketMasterSlave
-msgid "Inform Agent"
-msgstr ""
-
-#. Template: AgentTicketMasterSlave
 msgid "Optional"
 msgstr ""
 
