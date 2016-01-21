@@ -48,7 +48,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $FAQID,
-            "FAQ is created - $FAQID",
+            "FAQ is created - ID $FAQID",
         );
 
         # create and login test customer
@@ -64,7 +64,7 @@ $Selenium->RunTest(
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
         # navigate to CustomerFAQZoom screen of created test FAQ
-        $Selenium->get("${ScriptAlias}customer.pl?Action=CustomerFAQZoom;ItemID=$FAQID");
+        $Selenium->VerifiedGet("${ScriptAlias}customer.pl?Action=CustomerFAQZoom;ItemID=$FAQID");
 
         # check page
         $Self->True(
@@ -75,7 +75,7 @@ $Selenium->RunTest(
         # verify test FAQ is created
         $Self->True(
             index( $Selenium->get_page_source(), $FAQTitle ) > -1,
-            "$FAQTitle - found",
+            "$FAQTitle is found",
         );
 
         my @Tests = (
@@ -106,37 +106,37 @@ $Selenium->RunTest(
 
             $Self->True(
                 index( $Selenium->get_page_source(), $Test->{FAQData} ) > -1,
-                "$Test->{FAQData} - found",
+                "$Test->{FAQData} is found",
             );
             $Selenium->switch_to_window( $Handles->[0] );
         }
 
         $Self->True(
             index( $Selenium->get_page_source(), 'SeleniumKeywords' ) > -1,
-            "FAQ 'SeleniumKeywords' value - found",
+            "FAQ 'SeleniumKeywords' value is found",
         );
         $Self->True(
             index( $Selenium->get_page_source(), 'external (customer)' ) > -1,
-            "FAQ state value - found",
+            "FAQ state value is found",
         );
         $Self->True(
             index( $Selenium->get_page_source(), '0 out of 5' ) > -1,
-            "FAQ default vote value - found",
+            "FAQ default vote value is found",
         );
 
         # vote 5 stars for FAQ
         my $VoteElement = $Selenium->find_element( "#RateButton100", 'css' );
         $Selenium->find_child_element( $VoteElement, ".RateButton", 'css' )->click();
-        $Selenium->find_element("//button[\@id='RateSubmitButton'][\@type='submit']")->click();
+        $Selenium->find_element("//button[\@id='RateSubmitButton'][\@type='submit']")->VerifiedClick();
 
         # check vote message
         $Self->True(
             index( $Selenium->get_page_source(), 'Thanks for your vote!' ) > -1,
-            "FAQ vote message - found",
+            "FAQ vote message is found",
         );
         $Self->True(
             index( $Selenium->get_page_source(), '5 out of 5' ) > -1,
-            "FAQ vote value - found",
+            "FAQ vote value is found",
         );
 
         # delete test created FAQ
@@ -146,7 +146,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $Success,
-            "FAQ is deleted - $FAQID",
+            "FAQ is deleted - ID $FAQID",
         );
 
         # make sure the cache is correct

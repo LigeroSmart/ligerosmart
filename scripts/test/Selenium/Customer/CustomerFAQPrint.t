@@ -47,7 +47,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $FAQID,
-            "FAQ is created - $FAQID",
+            "FAQ is created - ID $FAQID",
         );
 
         # create and login test customer
@@ -91,7 +91,7 @@ $Selenium->RunTest(
         for my $Test (@Tests) {
             $Self->True(
                 index( $Selenium->get_page_source(), $Test->{FAQData} ) > -1,
-                "$Test->{FAQData} - found on print screen",
+                "$Test->{FAQData} is found on print screen",
             );
         }
 
@@ -102,7 +102,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $Success,
-            "FAQ is deleted - $FAQID",
+            "FAQ is deleted - ID $FAQID",
         );
 
         # make sure the cache is correct

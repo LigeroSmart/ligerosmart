@@ -96,7 +96,7 @@ $Selenium->RunTest(
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
         # navigate to CustomerFAQSearch form
-        $Selenium->get("${ScriptAlias}customer.pl?Action=CustomerFAQSearch");
+        $Selenium->VerifiedGet("${ScriptAlias}customer.pl?Action=CustomerFAQSearch");
 
         # check ticket search page
         for my $ID (
@@ -114,10 +114,7 @@ $Selenium->RunTest(
 
         # search FAQ by title and run it
         $Selenium->find_element( "#Title",  'css' )->send_keys('FAQ*');
-        $Selenium->find_element( "#Submit", 'css' )->click();
-
-        # wait until form has loaded, if necessary
-        $Selenium->WaitFor( JavaScript => "return \$('.Overview').length" );
+        $Selenium->find_element( "#Submit", 'css' )->VerifiedClick();
 
         # check CustomerFAQSearch result screen
         $Selenium->find_element( "table",             'css' );
@@ -131,22 +128,20 @@ $Selenium->RunTest(
             # check if there is test FAQ on screen
             $Self->True(
                 index( $Selenium->get_page_source(), $FAQ->{FAQTitle} ) > -1,
-                "$FAQ->{FAQTitle} - found",
+                "$FAQ->{FAQTitle} is found",
             );
         }
 
         # check 'Change search options' screen
-        $Selenium->find_element("//a[contains(\@href, \'Action=CustomerFAQSearch;Subaction=LoadProfile' )]")->click();
+        $Selenium->find_element("//a[contains(\@href, \'Action=CustomerFAQSearch;Subaction=LoadProfile' )]")
+            ->VerifiedClick();
 
         $Selenium->find_element( "#Title", 'css' )->clear();
         $Selenium->find_element( "#Title", 'css' )->send_keys('FAQChangeSearch*');
         $Selenium->execute_script(
             "\$('#CategoryIDs').val('$CategoryID').trigger('redraw.InputField').trigger('change');"
         );
-        $Selenium->find_element( "#Submit", 'css' )->click();
-
-        # wait until form has loaded, if necessary
-        $Selenium->WaitFor( JavaScript => "return \$('.Overview').length" );
+        $Selenium->find_element( "#Submit", 'css' )->VerifiedClick();
 
         # check test FAQs searched by 'FAQChangeSearch*'
         # delete test FAQs after checking
@@ -165,7 +160,7 @@ $Selenium->RunTest(
                 # check if there is no test FAQSearch* on screen
                 $Self->True(
                     index( $Selenium->get_page_source(), $FAQ->{FAQTitle} ) == -1,
-                    "$FAQ->{FAQTitle} - not found",
+                    "$FAQ->{FAQTitle} is not found",
                 );
             }
 
@@ -175,20 +170,18 @@ $Selenium->RunTest(
             );
             $Self->True(
                 $Success,
-                "FAQ is deleted - $FAQ->{FAQTitle}",
+                "FAQ is deleted - ID $FAQ->{FAQID}",
             );
 
         }
 
         # check 'Change search options' button again
-        $Selenium->find_element("//a[contains(\@href, \'Action=CustomerFAQSearch;Subaction=LoadProfile' )]")->click();
+        $Selenium->find_element("//a[contains(\@href, \'Action=CustomerFAQSearch;Subaction=LoadProfile' )]")
+            ->VerifiedClick();
 
         $Selenium->find_element( "#Title",  'css' )->clear();
         $Selenium->find_element( "#Title",  'css' )->send_keys( $Helper->GetRandomID() );
-        $Selenium->find_element( "#Submit", 'css' )->click();
-
-        # wait until form has loaded, if necessary
-        $Selenium->WaitFor( JavaScript => "return \$('.Overview').length" );
+        $Selenium->find_element( "#Submit", 'css' )->VerifiedClick();
 
         # check no data message
         $Selenium->find_element( "#EmptyMessage", 'css' );
@@ -204,7 +197,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $Success,
-            "FAQ category is deleted - $CategoryID",
+            "FAQ category is deleted - ID $CategoryID",
         );
 
         # make sure the cache is correct
