@@ -55,7 +55,7 @@ $Selenium->RunTest(
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
         # navigate to PublicFAQZoom screen of created test FAQ
-        $Selenium->get("${ScriptAlias}public.pl?Action=PublicFAQZoom;ItemID=$FAQID");
+        $Selenium->VerifiedGet("${ScriptAlias}public.pl?Action=PublicFAQZoom;ItemID=$FAQID");
 
         # check page
         $Self->True(

@@ -57,7 +57,7 @@ $Selenium->RunTest(
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
         # navigate to PublicFAQExplorer screen
-        $Selenium->get("${ScriptAlias}public.pl?Action=PublicFAQExplorer");
+        $Selenium->VerifiedGet("${ScriptAlias}public.pl?Action=PublicFAQExplorer");
 
         # check PublicFAQExplorer screen
         $Selenium->find_element( "table",             'css' );
@@ -85,10 +85,12 @@ $Selenium->RunTest(
         }
 
         # click on 'Misc', go on subcategory screen
-        $Selenium->find_element( 'Misc', 'link_text' )->click();
+        $Selenium->find_element( 'Misc', 'link_text' )->VerifiedClick();
 
         # order FAQ item per FAQID by Down
-        $Selenium->get("${ScriptAlias}public.pl?Action=PublicFAQExplorer;CategoryID=1;SortBy=FAQID;OrderBy=Down");
+        $Selenium->VerifiedGet(
+            "${ScriptAlias}public.pl?Action=PublicFAQExplorer;CategoryID=1;SortBy=FAQID;OrderBy=Down"
+        );
 
         # check and delete test created FAQs
         for my $FAQ (@FAQIDs) {

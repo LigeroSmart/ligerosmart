@@ -60,7 +60,7 @@ $Selenium->RunTest(
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
         # navigate to PublicFAQSearch form
-        $Selenium->get("${ScriptAlias}public.pl?Action=PublicFAQSearch");
+        $Selenium->VerifiedGet("${ScriptAlias}public.pl?Action=PublicFAQSearch");
 
         # check ticket search page
         for my $ID (
@@ -78,10 +78,7 @@ $Selenium->RunTest(
 
         # search FAQ by title and run it
         $Selenium->find_element( "#Title",  'css' )->send_keys('FAQ*');
-        $Selenium->find_element( "#Submit", 'css' )->click();
-
-        # wait until form has loaded, if necessary
-        $Selenium->WaitFor( JavaScript => "return \$('.Overview').length" );
+        $Selenium->find_element( "#Submit", 'css' )->VerifiedClick();
 
         # check PublicFAQSearch result screen
         $Selenium->find_element( "table",             'css' );
@@ -100,13 +97,10 @@ $Selenium->RunTest(
         }
 
         # check 'Change search options' screen
-        $Selenium->find_element("//a[contains(\@href, \'public.pl?Action=PublicFAQSearch' )]")->click();
+        $Selenium->find_element("//a[contains(\@href, \'public.pl?Action=PublicFAQSearch' )]")->VerifiedClick();
         $Selenium->find_element( "#Title",  'css' )->clear();
         $Selenium->find_element( "#Title",  'css' )->send_keys('FAQChangeSearch*');
-        $Selenium->find_element( "#Submit", 'css' )->click();
-
-        # wait until form has loaded, if necessary
-        $Selenium->WaitFor( JavaScript => "return \$('.Overview').length" );
+        $Selenium->find_element( "#Submit", 'css' )->VerifiedClick();
 
         # check test FAQs searched by 'FAQChangeSearch*'
         for my $FAQ (@FAQSearch) {
@@ -130,13 +124,10 @@ $Selenium->RunTest(
         }
 
         # check 'Change search options' button again
-        $Selenium->find_element("//a[contains(\@href, \'public.pl?Action=PublicFAQSearch' )]")->click();
+        $Selenium->find_element("//a[contains(\@href, \'public.pl?Action=PublicFAQSearch' )]")->VerifiedClick();
         $Selenium->find_element( "#Title",  'css' )->clear();
         $Selenium->find_element( "#Title",  'css' )->send_keys( $Helper->GetRandomID() );
-        $Selenium->find_element( "#Submit", 'css' )->click();
-
-        # wait until form has loaded, if necessary
-        $Selenium->WaitFor( JavaScript => "return \$('.Overview').length" );
+        $Selenium->find_element( "#Submit", 'css' )->VerifiedClick();
 
         # check no data message
         $Selenium->find_element( "#EmptyMessage", 'css' );
