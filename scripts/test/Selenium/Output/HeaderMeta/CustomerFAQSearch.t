@@ -49,40 +49,42 @@ $Selenium->RunTest(
             UserID      => 1,
             ContentType => 'text/html',
         );
+        $Self->True(
+            $FAQID,
+            "Test FAQ item is created - ID $FAQID",
+        );
 
         # create and login test customer
         my $TestCustomerUserLogin = $Helper->TestCustomerUserCreate(
             Groups => [ 'admin', 'faq', 'faq_admin' ],
         ) || die "Did not get test user";
-        +
-            $Selenium->Login(
+
+        $Selenium->Login(
             Type     => 'Customer',
             User     => $TestCustomerUserLogin,
             Password => $TestCustomerUserLogin,
-            );
-        +
+        );
 
-            # get script alias
-            my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
-        +
+        # get script alias
+        my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
-            # navigate to CustomerFAQExplorer screen of created test FAQ
-            $Selenium->get("${ScriptAlias}customer.pl?Action=CustomerFAQExplorer");
+        # navigate to CustomerFAQExplorer screen of created test FAQ
+        $Selenium->VerifiedGet("${ScriptAlias}customer.pl?Action=CustomerFAQExplorer");
 
         # check for 'Advanced Search' button
         $Self->True(
             index( $Selenium->get_page_source(), "Action=CustomerFAQSearch" ) > -1,
-            "Advanced Search button - found",
+            "Advanced Search button is found",
         );
 
         # search test created FAQ in quick-search
         $Selenium->find_element("//input[\@id='Search']")->send_keys($FAQTitle);
-        $Selenium->find_element("//button[\@value='Search'][\@type='submit']")->click();
+        $Selenium->find_element("//button[\@value='Search'][\@type='submit']")->VerifiedClick();
 
         # check for quick-search result
         $Self->True(
             index( $Selenium->get_page_source(), "$FAQTitle" ) > -1,
-            "$FAQTitle - found",
+            "$FAQTitle is found",
         );
 
         # delete test created FAQ
@@ -92,7 +94,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $Success,
-            "$FAQTitle - deleted",
+            "Test FAQ item is deleted - ID $FAQID",
         );
 
         # make sure the cache is correct

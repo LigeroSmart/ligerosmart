@@ -36,6 +36,10 @@ $Selenium->RunTest(
             UserID      => 1,
             ContentType => 'text/html',
         );
+        $Self->True(
+            $FAQID,
+            "Test FAQ item is created - ID $FAQID",
+        );
 
         # create test user and login
         my $TestUserLogin = $Helper->TestUserCreate(
@@ -52,20 +56,20 @@ $Selenium->RunTest(
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
         # navigate to AgentFAQJournal screen
-        $Selenium->get("${ScriptAlias}index.pl?Action=AgentFAQJournal");
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentFAQJournal");
 
         # check for Journal Overview columns
         for my $Columns ( 'FAQ#', 'Title', 'Category', 'Action', 'Time' ) {
             $Self->True(
                 index( $Selenium->get_page_source(), $Columns ) > -1,
-                "Column $Columns - found",
+                "Column $Columns is found",
             );
         }
 
         # check for test created FAQ
         $Self->True(
             index( $Selenium->get_page_source(), "$FAQTitle" ) > -1,
-            "$FAQTitle - found",
+            "$FAQTitle is found",
         );
 
         # delete test created FAQ
@@ -75,7 +79,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $Success,
-            "FAQ $FAQTitle - deleted",
+            "Test FAQ item is deleted - ID $FAQID",
         );
 
         # make sure the cache is correct

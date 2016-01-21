@@ -62,6 +62,10 @@ $Selenium->RunTest(
             UserID      => 1,
             ContentType => 'text/html',
         );
+        $Self->True(
+            $FAQID,
+            "Test FAQ item is created - ID $FAQID",
+        );
 
         # create test user and login
         my $TestUserLogin = $Helper->TestUserCreate(
@@ -93,18 +97,18 @@ $Selenium->RunTest(
             );
 
             # navigate to dashboard screen
-            $Selenium->get("${ScriptAlias}index.pl?Action=AgentDashboard");
+            $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentDashboard");
 
             # check title for test created FAQ
             $Self->True(
                 index( $Selenium->get_page_source(), $FAQTitle ) > -1,
-                "Test FAQ title - found",
+                "Test FAQ title is found",
             );
 
             # check link for test created FAQ
             $Self->True(
                 index( $Selenium->get_page_source(), "${ScriptAlias}index.pl?Action=AgentFAQZoom;ItemID=$FAQID" ) > -1,
-                "Test FAQ link - found",
+                "Test FAQ link is found",
             );
         }
 
@@ -115,7 +119,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $Success,
-            "$FAQTitle - deleted",
+            "Test FAQ item is deleted - ID $FAQID",
         );
 
         # make sure the cache is correct

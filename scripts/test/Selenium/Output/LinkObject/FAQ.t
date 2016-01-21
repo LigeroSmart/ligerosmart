@@ -39,6 +39,12 @@ $Selenium->RunTest(
                 UserID      => 1,
                 ContentType => 'text/html',
             );
+
+            $Self->True(
+                $FAQID,
+                "Test FAQ item is created - ID $FAQID",
+            );
+
             push @FAQIDs,    $FAQID;
             push @FAQTitles, $FAQTitle;
         }
@@ -58,61 +64,72 @@ $Selenium->RunTest(
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
         # navigate to AgentFAQZoom of created FAQ
-        $Selenium->get("${ScriptAlias}index.pl?Action=AgentFAQZoom;ItemID=$FAQIDs[0]");
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentFAQZoom;ItemID=$FAQIDs[0]");
 
-        # click on 'Link' and switch window
+        # click on 'Link'
         $Selenium->find_element("//a[contains(\@href, \'Action=AgentLinkObject;SourceObject=FAQ' )]")->click();
 
+        # switch to link object window
+        $Selenium->WaitFor( WindowCount => 2 );
         my $Handles = $Selenium->get_window_handles();
         $Selenium->switch_to_window( $Handles->[1] );
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("body").length' );
 
         # link two test created FAQs
         $Selenium->find_element("//input[\@name='SEARCH::Title']")->send_keys( $FAQTitles[1] );
-        $Selenium->find_element("//button[\@value='Search'][\@type='submit']")->click();
-        $Selenium->WaitFor( JavaScript => "return \$('input#LinkTargetKeys').length" );
+        $Selenium->find_element("//button[\@value='Search'][\@type='submit']")->VerifiedClick();
 
         $Selenium->find_element("//input[\@id='LinkTargetKeys']")->click();
-        $Selenium->find_element("//button[\@id='AddLinks'][\@type='submit']")->click();
+        $Selenium->find_element("//button[\@id='AddLinks'][\@type='submit']")->VerifiedClick();
         $Selenium->find_element("//a[contains(\@href, \'Subaction=Close' )]")->click();
+
+        # back to AgentFAQZoom
+        $Selenium->WaitFor( WindowCount => 1 );
         $Selenium->switch_to_window( $Handles->[0] );
 
         # verify FAQ link
-        $Selenium->get("${ScriptAlias}index.pl?Action=AgentFAQZoom;ItemID=$FAQIDs[0]");
+        $Selenium->VerifiedRefresh();
         $Self->True(
             index( $Selenium->get_page_source(), $FAQTitles[1] ) > -1,
-            "Test ticket title $FAQTitles[1] - found",
+            "Test ticket title $FAQTitles[1] is found",
         );
 
         # click on 'Link' and switch screens
-        $Selenium->find_element("//a[contains(\@href, \'Action=AgentLinkObject;SourceObject=FAQ' )]")->click();
+        $Selenium->find_element("//a[contains(\@href, \'Action=AgentLinkObject;SourceObject=FAQ' )]")->VerifiedClick();
 
+        # switch to link object window
+        $Selenium->WaitFor( WindowCount => 2 );
         $Handles = $Selenium->get_window_handles();
         $Selenium->switch_to_window( $Handles->[1] );
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("body").length' );
 
         # delete link relation
-        $Selenium->find_element("//a[contains(\@href, \'Subaction=LinkDelete' )]")->click();
+        $Selenium->find_element("//a[contains(\@href, \'Subaction=LinkDelete' )]")->VerifiedClick();
         $Selenium->find_element("//input[\@id='SelectAllLinks0']")->click();
-        $Selenium->find_element("//button[\@type='submit']")->click();
+        $Selenium->find_element("//button[\@type='submit']")->VerifiedClick();
         $Selenium->find_element("//a[contains(\@href, \'Subaction=Close' )]")->click();
+
+        # back to AgentFAQZoom
+        $Selenium->WaitFor( WindowCount => 1 );
         $Selenium->switch_to_window( $Handles->[0] );
 
         # verify that link has been removed
-        $Selenium->get("${ScriptAlias}index.pl?Action=AgentFAQZoom;ItemID=$FAQIDs[0]");
+        $Selenium->VerifiedRefresh();
         $Self->True(
             index( $Selenium->get_page_source(), $FAQTitles[1] ) == -1,
-            "$FAQTitles[1] - not found",
+            "$FAQTitles[1] is not found",
         );
 
         # delete test created FAQs
         my $Success;
-        for my $FAQDelete (@FAQIDs) {
+        for my $FAQID (@FAQIDs) {
             $Success = $FAQObject->FAQDelete(
-                ItemID => $FAQDelete,
+                ItemID => $FAQID,
                 UserID => 1,
             );
             $Self->True(
                 $Success,
-                "FAQ ID $FAQDelete - deleted",
+                "Test FAQ item is deleted - ID $FAQID",
             );
         }
 

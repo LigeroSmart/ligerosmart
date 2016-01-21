@@ -34,6 +34,11 @@ $Selenium->RunTest(
             UserID   => 1,
         );
 
+        $Self->True(
+            $CategoryID,
+            "FAQ category is created - ID $CategoryID",
+        );
+
         # set test FAQ category permission
         my $GroupID = $Kernel::OM->Get('Kernel::System::Group')->GroupLookup(
             Group => 'faq',
@@ -56,6 +61,10 @@ $Selenium->RunTest(
             UserID      => 1,
             ContentType => 'text/html',
         );
+        $Self->True(
+            $FAQID,
+            "Test FAQ item is created - ID $FAQID",
+        );
 
         # create test user and login
         my $TestUserLogin = $Helper->TestUserCreate(
@@ -72,20 +81,20 @@ $Selenium->RunTest(
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
         # navigate to AgentFAQExplorer screen for test FAQ category
-        $Selenium->get("${ScriptAlias}index.pl?Action=AgentFAQExplorer;CategoryID=$CategoryID;Nav=");
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentFAQExplorer;CategoryID=$CategoryID;Nav=");
 
         # check overview screen
         for my $Columns ( 'FAQ#', 'Title', 'Language', 'State', 'Validity' ) {
             $Self->True(
                 index( $Selenium->get_page_source(), $Columns ) > -1,
-                "Column $Columns - found",
+                "Column $Columns is found",
             );
         }
 
         # check for test created FAQ
         $Self->True(
             index( $Selenium->get_page_source(), "$FAQTitle" ) > -1,
-            "$FAQTitle - found",
+            "$FAQTitle is found",
         );
 
         # delete test created FAQ category
@@ -95,7 +104,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $Success,
-            "Category ID $CategoryID - deleted",
+            "Category is deleted - ID $CategoryID",
         );
 
         # delete test created FAQ
@@ -105,7 +114,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $Success,
-            "$FAQTitle - deleted",
+            "Test FAQ item is deleted - ID $FAQID",
         );
 
         # make sure the cache is correct

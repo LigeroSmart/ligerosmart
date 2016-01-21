@@ -36,6 +36,10 @@ $Selenium->RunTest(
             UserID      => 1,
             ContentType => 'text/html',
         );
+        $Self->True(
+            $FAQID,
+            "Test FAQ item is created - ID $FAQID",
+        );
 
         # create test user and login
         my $TestUserLogin = $Helper->TestUserCreate(
@@ -52,7 +56,7 @@ $Selenium->RunTest(
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
         # navigate to AgentFAQZoom of created FAQ
-        $Selenium->get("${ScriptAlias}index.pl?Action=AgentFAQZoom;ItemID=$FAQID");
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentFAQZoom;ItemID=$FAQID");
 
         # create menu module test params
         my @MenuModule = (
@@ -82,7 +86,7 @@ $Selenium->RunTest(
         for my $FAQZoomMenuModule (@MenuModule) {
             $Self->True(
                 $Selenium->find_element("//a[contains(\@href, \'Action=$FAQZoomMenuModule->{Action}' )]"),
-                "FAQ menu $FAQZoomMenuModule->{Name} - found"
+                "FAQ menu $FAQZoomMenuModule->{Name} is found"
             );
         }
 
@@ -93,7 +97,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $Success,
-            "$FAQTitle - deleted",
+            "Test FAQ item is deleted - ID $FAQID",
         );
 
         # make sure the cache is correct
