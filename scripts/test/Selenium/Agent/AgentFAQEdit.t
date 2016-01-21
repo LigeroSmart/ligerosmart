@@ -74,6 +74,11 @@ $Selenium->RunTest(
             UserID => 1,
         );
 
+        $Self->True(
+            $FAQID,
+            "FAQ is created - ID $FAQID",
+        );
+
         # create test user and login
         my $TestUserLogin = $Helper->TestUserCreate(
             Groups => [ 'admin', 'users', 'faq' ],
@@ -89,19 +94,23 @@ $Selenium->RunTest(
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
         # navigate to AgentFAQZoom of created test FAQ
-        $Selenium->get("${ScriptAlias}index.pl?Action=AgentFAQZoom;ItemID=$FAQID;Nav=");
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentFAQZoom;ItemID=$FAQID;Nav=");
 
         # verify its right screen
         $Self->True(
             index( $Selenium->get_page_source(), $FAQTitle ) > -1,
-            "$FAQTitle - found",
+            "$FAQTitle is found",
         );
 
         # click on 'Edit' and switch window
         $Selenium->find_element("//a[contains(\@href, \'Action=AgentFAQEdit;ItemID=$FAQID' )]")->click();
 
+        $Selenium->WaitFor( WindowCount => 2 );
         my $Handles = $Selenium->get_window_handles();
         $Selenium->switch_to_window( $Handles->[1] );
+
+        # wait until page has loaded, if necessary
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#Title").length' );
 
         # verify stored values
         for my $Stored ( sort keys %{ $Test{Stored} } ) {
@@ -126,15 +135,19 @@ $Selenium->RunTest(
         $Selenium->execute_script("\$('#ValidID').val('2').trigger('redraw.InputField').trigger('change');");
 
         # submit and switch back window
-        $Selenium->find_element( "#FAQSubmit", 'css' )->click();
+        $Selenium->find_element( "#FAQSubmit", 'css' )->VerifiedClick();
         $Selenium->switch_to_window( $Handles->[0] );
         $Selenium->WaitFor( WindowCount => 1 );
 
         # click on 'Edit' and switch window
         $Selenium->find_element("//a[contains(\@href, \'Action=AgentFAQEdit;ItemID=$FAQID' )]")->click();
 
+        $Selenium->WaitFor( WindowCount => 2 );
         $Handles = $Selenium->get_window_handles();
         $Selenium->switch_to_window( $Handles->[1] );
+
+        # wait until page has loaded, if necessary
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#Title").length' );
 
         # verify edited values
         for my $Edited ( sort keys %{ $Test{Edited} } ) {
@@ -147,6 +160,9 @@ $Selenium->RunTest(
             }
         }
 
+        # close 'Edit' pop-up window
+        $Selenium->find_element( ".CancelClosePopup", 'css' )->click();
+
         # delete test created FAQ
         my $Success = $FAQObject->FAQDelete(
             ItemID => $FAQID,
@@ -154,7 +170,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $Success,
-            "$FAQTitle - deleted",
+            "FAQ item is deleted - ID $FAQID",
         );
 
         # make sure the cache is correct

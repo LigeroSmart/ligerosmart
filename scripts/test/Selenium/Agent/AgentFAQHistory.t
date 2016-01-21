@@ -53,29 +53,44 @@ $Selenium->RunTest(
             ContentType => 'text/html',
         );
 
+        $Self->True(
+            $FAQID,
+            "FAQ is created - ID $FAQID",
+        );
+
         # get script alias
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
         # navigate to AgentFAQZoom screen of created test FAQ
-        $Selenium->get("${ScriptAlias}index.pl?Action=AgentFAQZoom;ItemID=$FAQID;Nav=");
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentFAQZoom;ItemID=$FAQID;Nav=");
 
         # verify its right screen
         $Self->True(
             index( $Selenium->get_page_source(), $FAQTitle ) > -1,
-            "$FAQTitle - found",
+            "$FAQTitle is found",
         );
 
         # click on 'History' and switch window
         $Selenium->find_element("//a[contains(\@href, \'Action=AgentFAQHistory;ItemID=$FAQID' )]")->click();
 
+        $Selenium->WaitFor( WindowCount => 2 );
         my $Handles = $Selenium->get_window_handles();
         $Selenium->switch_to_window( $Handles->[1] );
+
+        # wait until page has loaded, if necessary
+        $Selenium->WaitFor(
+            JavaScript =>
+                'return typeof($) === "function" && $(".WidgetSimple").length;'
+        );
 
         # verify history message
         $Self->True(
             index( $Selenium->get_page_source(), "$TestUserLogin ($TestUserLogin $TestUserLogin)" ) > -1,
-            "History entry - found",
+            "History entry is found",
         );
+
+        # close 'History' pop-up window
+        $Selenium->find_element( ".CancelClosePopup", 'css' )->click();
 
         # delete test created FAQ
         my $Success = $FAQObject->FAQDelete(
@@ -84,7 +99,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $Success,
-            "$FAQTitle - deleted",
+            "FAQ item is deleted - $FAQID",
         );
 
         # make sure the cache is correct

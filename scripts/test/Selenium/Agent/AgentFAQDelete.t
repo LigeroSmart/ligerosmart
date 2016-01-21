@@ -34,6 +34,11 @@ $Selenium->RunTest(
             ContentType => 'text/plain',
         );
 
+        $Self->True(
+            $FAQID,
+            "FAQ item is created - ID $FAQID",
+        );
+
         # create test user and login
         my $TestUserLogin = $Helper->TestUserCreate(
             Groups => [ 'admin', 'users', 'faq', 'faq_admin' ],
@@ -49,12 +54,12 @@ $Selenium->RunTest(
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
         # navigate to AgentFAQZoom screen of created test FAQ
-        $Selenium->get("${ScriptAlias}index.pl?Action=AgentFAQZoom;ItemID=$FAQID;Nav=");
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentFAQZoom;ItemID=$FAQID;Nav=");
 
         # verify its right screen
         $Self->True(
             index( $Selenium->get_page_source(), $FAQTitle ) > -1,
-            "$FAQTitle - found",
+            "$FAQTitle is found",
         );
 
         # click on 'Delete'
@@ -64,15 +69,15 @@ $Selenium->RunTest(
         # verify delete message
         $Self->True(
             index( $Selenium->get_page_source(), 'Do you really want to delete this FAQ article?' ) > -1,
-            "Delete message - found",
+            "Delete message is found",
         );
 
         # execute delete
-        $Selenium->find_element( "#DialogButton1", 'css' )->click();
+        $Selenium->find_element( "#DialogButton1", 'css' )->VerifiedClick();
 
         # verify delete action
         # try to navigate to the AgetnFAQZoom of deleted test FAQ
-        $Selenium->get("${ScriptAlias}index.pl?Action=AgentFAQZoom;ItemID=$FAQID;Nav=");
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentFAQZoom;ItemID=$FAQID;Nav=");
         $Self->True(
             index( $Selenium->get_page_source(), "No such ItemID $FAQID!" ) > -1,
             "Delete action - success",

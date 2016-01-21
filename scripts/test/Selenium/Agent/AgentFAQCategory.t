@@ -37,7 +37,7 @@ $Selenium->RunTest(
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
         # navigate to AgentFAQCategory
-        $Selenium->get("${ScriptAlias}index.pl?Action=AgentFAQCategory");
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentFAQCategory");
 
         # check AgentFAQCategory screen
         $Selenium->find_element( "table",             'css' );
@@ -45,7 +45,7 @@ $Selenium->RunTest(
         $Selenium->find_element( "table tbody tr td", 'css' );
 
         # click on 'Add category'
-        $Selenium->find_element("//a[contains(\@href, \'Action=AgentFAQCategory;Subaction=Add' )]")->click();
+        $Selenium->find_element("//a[contains(\@href, \'Action=AgentFAQCategory;Subaction=Add' )]")->VerifiedClick();
 
         # check page
         for my $ID (
@@ -63,12 +63,12 @@ $Selenium->RunTest(
         $Selenium->execute_script("\$('#PermissionGroups').val('4').trigger('redraw.InputField').trigger('change');");
         $Selenium->execute_script("\$('#ValidID').val('1').trigger('redraw.InputField').trigger('change');");
         $Selenium->find_element( "#Comment", 'css' )->send_keys('Selenium Category');
-        $Selenium->find_element("//button[\@value='Submit'][\@type='submit']")->click();
+        $Selenium->find_element("//button[\@value='Submit'][\@type='submit']")->VerifiedClick();
 
         # verify test category is created
         $Self->True(
             index( $Selenium->get_page_source(), $CategoryName ) > -1,
-            "$CategoryName - found",
+            "$CategoryName is found",
         );
 
         # get DB object
@@ -88,7 +88,7 @@ $Selenium->RunTest(
         # click on delete icon
         $Selenium->find_element( "#DeleteCategoryID$CategoryID", 'css' )->click();
         $Selenium->WaitFor( JavaScript => 'return $("#DialogButton1").length' );
-        $Selenium->find_element( "#DialogButton1", 'css' )->click();
+        $Selenium->find_element( "#DialogButton1", 'css' )->VerifiedClick();
 
         # wait until delete dialog has closed
         $Selenium->WaitFor( JavaScript => "return !\$('#DialogButton1').length" );
@@ -96,7 +96,7 @@ $Selenium->RunTest(
         # verify test created category is deleted
         $Self->True(
             index( $Selenium->get_page_source(), $CategoryName ) == -1,
-            "$CategoryName - not found",
+            "$CategoryName is not found",
         );
 
         # make sure the cache is correct

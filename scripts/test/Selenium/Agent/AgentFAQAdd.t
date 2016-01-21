@@ -49,7 +49,7 @@ $Selenium->RunTest(
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
         # navigate to AgentFAQAdd
-        $Selenium->get("${ScriptAlias}index.pl?Action=AgentFAQAdd");
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentFAQAdd");
 
         # check page
         for my $ID (
@@ -76,25 +76,22 @@ $Selenium->RunTest(
         $Selenium->execute_script("\$('#StateID').val('2').trigger('redraw.InputField').trigger('change');");
         $Selenium->execute_script("\$('#ValidID').val('1').trigger('redraw.InputField').trigger('change');");
         $Selenium->execute_script("\$('#LanguageID').val('1').trigger('redraw.InputField').trigger('change');");
-        $Selenium->find_element( "#Field1",    'css' )->send_keys($FAQSymptom);
-        $Selenium->find_element( "#Field2",    'css' )->send_keys($FAQProblem);
-        $Selenium->find_element( "#Field3",    'css' )->send_keys($FAQSolution);
-        $Selenium->find_element( "#Field6",    'css' )->send_keys($FAQComment);
-        $Selenium->find_element( "#FAQSubmit", 'css' )->click();
-
-        # wait for submit action if necessary
-        $Selenium->WaitFor( JavaScript => "return \$('ul.BreadCrumb').length" );
+        $Selenium->find_element( "#Field1", 'css' )->send_keys($FAQSymptom);
+        $Selenium->find_element( "#Field2", 'css' )->send_keys($FAQProblem);
+        $Selenium->find_element( "#Field3", 'css' )->send_keys($FAQSolution);
+        $Selenium->find_element( "#Field6", 'css' )->send_keys($FAQComment);
+        $Selenium->find_element( "#Title",  'css' )->VerifiedSubmit();
 
         # verify test FAQ is created
         $Self->True(
             index( $Selenium->get_page_source(), $FAQTitle ) > -1,
-            "$FAQTitle - found",
+            "$FAQTitle is found",
         );
 
         for my $Test ( $FAQSymptom, $FAQProblem, $FAQSolution, $FAQComment ) {
             $Self->True(
                 index( $Selenium->get_page_source(), $Test ) > -1,
-                "$Test - found",
+                "$Test is found",
             );
         }
 
@@ -119,7 +116,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $Success,
-            "$FAQTitle - deleted",
+            "$FAQID is deleted - ID $FAQID",
         );
 
         # make sure the cache is correct

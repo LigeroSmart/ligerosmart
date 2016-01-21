@@ -42,7 +42,7 @@ $Selenium->RunTest(
 
             $Self->True(
                 $FAQID,
-                "FAQ is created - $FAQID",
+                "FAQ is created - ID $FAQID",
             );
 
             my %FAQ = (
@@ -68,7 +68,7 @@ $Selenium->RunTest(
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
         # navigate to AgentFAQExplorer screen of created test FAQ
-        $Selenium->get("${ScriptAlias}index.pl?Action=AgentFAQExplorer");
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentFAQExplorer");
 
         # check AgentFAQExplorer screen
         $Selenium->find_element( "table",             'css' );
@@ -91,15 +91,15 @@ $Selenium->RunTest(
         for my $Test (@Tests) {
             $Self->True(
                 index( $Selenium->get_page_source(), $Test->{ScreenData} ) > -1,
-                "$Test->{ScreenData} - found",
+                "$Test->{ScreenData} is found",
             );
         }
 
         # click on 'Misc', go on subcategory screen
-        $Selenium->find_element( 'Misc', 'link_text' )->click();
+        $Selenium->find_element( 'Misc', 'link_text' )->VerifiedClick();
 
         # order FAQ item per FAQID by Down
-        $Selenium->get("${ScriptAlias}index.pl?Action=AgentFAQExplorer;CategoryID=1;SortBy=FAQID;OrderBy=Down");
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentFAQExplorer;CategoryID=1;SortBy=FAQID;OrderBy=Down");
 
         # check and delete test created FAQs
         for my $FAQ (@FAQs) {
@@ -107,7 +107,7 @@ $Selenium->RunTest(
             # check if there is test FAQ on screen
             $Self->True(
                 index( $Selenium->get_page_source(), $FAQ->{FAQTitle} ) > -1,
-                "$FAQ->{FAQTitle} - found",
+                "$FAQ->{FAQTitle} is found",
             );
 
             my $Success = $FAQObject->FAQDelete(
@@ -116,7 +116,7 @@ $Selenium->RunTest(
             );
             $Self->True(
                 $Success,
-                "FAQ is deleted - $FAQ->{FAQTitle}",
+                "FAQ is deleted - ID $FAQ->{FAQID}",
             );
         }
 
