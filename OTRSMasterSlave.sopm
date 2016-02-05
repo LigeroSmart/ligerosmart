@@ -30,6 +30,8 @@
         <File Permission="644" Location="scripts/test/Selenium/Agent/AgentTicketCreateMasterSlave.t"/>
         <File Permission="644" Location="scripts/test/Selenium/Agent/AgentTicketMasterSlave.t"/>
         <File Permission="644" Location="scripts/test/Selenium/Output/TicketBulk/MasterSlave.t"/>
+        <File Permission="644" Location="scripts/test/DynamicField/MasterSlave/EditFieldRender.t"/>
+        <File Permission="644" Location="scripts/test/DynamicField/MasterSlave/ValueSet.t"/>
         <File Permission="644" Location="var/packagesetup/OTRSMasterSlave.pm"/>
     </Filelist>
     <CodeInstall Type="post"><![CDATA[
