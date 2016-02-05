@@ -1,4 +1,6 @@
-#5.0.2 2015-??-??
+#5.0.3 2016-??-??
+
+#5.0.2 2016-01-19
  - 2016-01-13 Updated translations, thanks to all translators.
  - 2016-01-11 Fixed bug#[11788](http://bugs.otrs.org/show_bug.cgi?id=11788) - OTRSMasterSlave Advanced Mode makes "Master Ticket" mandatory in Bulk Action.
 
