@@ -128,7 +128,7 @@ $Selenium->RunTest(
         $Selenium->find_element("//button[\@id='submitRichText'][\@type='submit']")->click();
 
         $Selenium->switch_to_window( $Handles->[0] );
-         $Selenium->WaitFor( WindowCount => 1 );
+        $Selenium->WaitFor( WindowCount => 1 );
 
         # navigate to history view of created master test ticket
         $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentTicketHistory;TicketID=$TicketIDs[0]");
