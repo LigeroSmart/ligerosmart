@@ -20,6 +20,7 @@
         <File Permission="644" Location="Kernel/System/CloneDB/Driver/oracle.pm"/>
         <File Permission="644" Location="Kernel/System/CloneDB/Driver/mssql.pm"/>
         <File Permission="644" Location="Kernel/System/Console/Command/Maint/Database/Clone.pm"/>
+        <File Permission="644" Location="scripts/test/Console/Command/Maint/Database/Clone.t"/>
         <File Permission="644" Location="Kernel/Config/Files/OTRSCloneDB.xml"/>
     </Filelist>
     <IntroInstall Type="pre" Title="Install Information" Lang="en"><![CDATA[
