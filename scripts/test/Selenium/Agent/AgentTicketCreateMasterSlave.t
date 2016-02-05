@@ -79,12 +79,7 @@ $Selenium->RunTest(
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
         # navigate to AgentTicketPhone screen
-        $Selenium->get("${ScriptAlias}index.pl?Action=AgentTicketPhone");
-
-        # wait until form has loaded, if necessary
-        $Selenium->WaitFor(
-            JavaScript => "return typeof(\$) === 'function' && \$('#DynamicField_MasterSlave').length"
-        );
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentTicketPhone");
 
         # create master test phone ticket
         my $AutoCompleteStringPhone
@@ -100,10 +95,7 @@ $Selenium->RunTest(
             "\$('#DynamicField_MasterSlave').val('Master').trigger('redraw.InputField').trigger('change');"
         );
         $Selenium->find_element( "#RichText", 'css' )->click();
-        $Selenium->find_element( "#Subject",  'css' )->submit();
-
-        # Wait until form has loaded, if necessary
-        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("form").length' );
+        $Selenium->find_element( "#Subject",  'css' )->VerifiedSubmit();
 
         # get ticket object
         my $TicketObject = $Kernel::OM->Get('Kernel::System::Ticket');
@@ -131,12 +123,7 @@ $Selenium->RunTest(
         my $TestCustomerLoginsEmail = $Helper->TestCustomerUserCreate();
 
         # navigate to AgentTicketEmail screen
-        $Selenium->get("${ScriptAlias}index.pl?Action=AgentTicketEmail");
-
-        # wait until form has loaded, if necessary
-        $Selenium->WaitFor(
-            JavaScript => "return typeof(\$) === 'function' && \$('#DynamicField_MasterSlave').length"
-        );
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentTicketEmail");
 
         # create slave test email ticket
         my $AutoCompleteStringEmail
@@ -151,10 +138,7 @@ $Selenium->RunTest(
             "\$('#DynamicField_MasterSlave').val('SlaveOf:$MasterTicketNumber').trigger('redraw.InputField').trigger('change');"
         );
         $Selenium->find_element( "#RichText", 'css' )->click();
-        $Selenium->find_element( "#Subject",  'css' )->submit();
-
-        # Wait until form has loaded, if necessary
-        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("form").length' );
+        $Selenium->find_element( "#Subject",  'css' )->VerifiedSubmit();
 
         # get slave test email ticket data
         my ( $SlaveTicketID, $SlaveTicketNumber ) = $TicketObject->TicketSearch(
@@ -176,10 +160,7 @@ $Selenium->RunTest(
         );
 
         # navigate to ticket zoom page of created master test ticket
-        $Selenium->get("${ScriptAlias}index.pl?Action=AgentTicketZoom;TicketID=$MasterTicketID");
-
-        # Wait until form has loaded, if necessary
-        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("form").length' );
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentTicketZoom;TicketID=$MasterTicketID");
 
         # verify master-slave ticket link
         $Self->True(
@@ -188,7 +169,7 @@ $Selenium->RunTest(
         );
 
         # navigate to history view of created master test ticket
-        $Selenium->get("${ScriptAlias}index.pl?Action=AgentTicketHistory;TicketID=$MasterTicketID");
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentTicketHistory;TicketID=$MasterTicketID");
 
         # verify dynamic field master ticket update
         $Self->True(
@@ -197,10 +178,7 @@ $Selenium->RunTest(
         );
 
         # navigate to ticket zoom page of created slave test ticket
-        $Selenium->get("${ScriptAlias}index.pl?Action=AgentTicketZoom;TicketID=$SlaveTicketID");
-
-        # Wait until form has loaded, if necessary
-        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("form").length' );
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentTicketZoom;TicketID=$SlaveTicketID");
 
         # verify slave-master ticket link
         $Self->True(
@@ -209,7 +187,7 @@ $Selenium->RunTest(
         );
 
         # navigate to history view of created slave test ticket
-        $Selenium->get("${ScriptAlias}index.pl?Action=AgentTicketHistory;TicketID=$SlaveTicketID");
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentTicketHistory;TicketID=$SlaveTicketID");
 
         # verify dynamic field slave ticket update
         $Self->True(

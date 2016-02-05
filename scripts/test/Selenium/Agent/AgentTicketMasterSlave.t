@@ -96,13 +96,19 @@ $Selenium->RunTest(
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
         # navigate to ticket zoom page of first created test ticket
-        $Selenium->get("${ScriptAlias}index.pl?Action=AgentTicketZoom;TicketID=$TicketIDs[0]");
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentTicketZoom;TicketID=$TicketIDs[0]");
 
         # click on MasterSlave and switch window
         $Selenium->find_element("//a[contains(\@href, \'Action=AgentTicketMasterSlave' )]")->click();
 
+        $Selenium->WaitFor( WindowCount => 2 );
         my $Handles = $Selenium->get_window_handles();
         $Selenium->switch_to_window( $Handles->[1] );
+
+        # wait until form has loaded, if necessary
+        $Selenium->WaitFor(
+            JavaScript => "return typeof(\$) === 'function' && \$('#DynamicField_MasterSlave').length"
+        );
 
         # check AgentTicketMasterSlave screen
         for my $ID (
@@ -122,9 +128,10 @@ $Selenium->RunTest(
         $Selenium->find_element("//button[\@id='submitRichText'][\@type='submit']")->click();
 
         $Selenium->switch_to_window( $Handles->[0] );
+         $Selenium->WaitFor( WindowCount => 1 );
 
         # navigate to history view of created master test ticket
-        $Selenium->get("${ScriptAlias}index.pl?Action=AgentTicketHistory;TicketID=$TicketIDs[0]");
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentTicketHistory;TicketID=$TicketIDs[0]");
 
         # verify dynamic field master ticket update
         $Self->True(
@@ -133,13 +140,19 @@ $Selenium->RunTest(
         );
 
         # navigate to ticket zoom page of second created test ticket
-        $Selenium->get("${ScriptAlias}index.pl?Action=AgentTicketZoom;TicketID=$TicketIDs[1]");
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentTicketZoom;TicketID=$TicketIDs[1]");
 
         # click on MasterSlave and switch window
         $Selenium->find_element("//a[contains(\@href, \'Action=AgentTicketMasterSlave' )]")->click();
 
+        $Selenium->WaitFor( WindowCount => 2 );
         $Handles = $Selenium->get_window_handles();
         $Selenium->switch_to_window( $Handles->[1] );
+
+        # wait until form has loaded, if necessary
+        $Selenium->WaitFor(
+            JavaScript => "return typeof(\$) === 'function' && \$('#DynamicField_MasterSlave').length"
+        );
 
         $Selenium->execute_script(
             "\$('#DynamicField_MasterSlave').val('SlaveOf:$TicketNumbers[0]').trigger('redraw.InputField').trigger('change');"
@@ -148,9 +161,10 @@ $Selenium->RunTest(
         $Selenium->find_element("//button[\@id='submitRichText'][\@type='submit']")->click();
 
         $Selenium->switch_to_window( $Handles->[0] );
+        $Selenium->WaitFor( WindowCount => 1 );
 
         # navigate to history view of created slave test ticket
-        $Selenium->get("${ScriptAlias}index.pl?Action=AgentTicketHistory;TicketID=$TicketIDs[1]");
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentTicketHistory;TicketID=$TicketIDs[1]");
 
         # verify dynamic field slave ticket update
         $Self->True(
