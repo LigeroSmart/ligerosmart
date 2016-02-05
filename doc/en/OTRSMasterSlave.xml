@@ -688,6 +688,16 @@ shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
             ATTENTION: Please never run unit tests on a productive system, since the added test data
             to the system will no longer be removed. Always use a test system.
         </para>
+        <para>Run the package specific unit tests</para>
+        <para>
+            To run only the unit test which will be delivered with this package, use the following
+            command on the command line:
+        </para>
+         <para>
+            <screen>
+shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test DynamicField/MasterSlave/EditFieldRender:DynamicField/MasterSlave/ValueSet:Ticket/Event/MasterSlave
+            </screen>
+        </para>
         <para>Selenium unit tests</para>
         <para>
             To run the Selenium unit tests, make sure you have a complete Selenium environment setup in your Kernel/Config.pm file and a running a WebDriver.
