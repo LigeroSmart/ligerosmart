@@ -40,7 +40,7 @@ $Selenium->RunTest(
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
         # navigate to AgentFAQLanguage screen of created test FAQ
-        $Selenium->get("${ScriptAlias}index.pl?Action=AgentFAQLanguage");
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentFAQLanguage");
 
         # check add button
         $Selenium->find_element("//a[contains(\@href, \'Action=AgentFAQLanguage;Subaction=Add' )]");
@@ -65,7 +65,7 @@ $Selenium->RunTest(
             UserID => 1,
         );
 
-        $Selenium->find_element("//a[contains(\@href, \'Action=AgentFAQLanguage;Subaction=Add' )]")->click();
+        $Selenium->find_element("//a[contains(\@href, \'Action=AgentFAQLanguage;Subaction=Add' )]")->VerifiedClick();
 
         if ($Exists) {
             $Selenium->find_element( "#Name", 'css' )->send_keys($FAQLanguage);
@@ -96,7 +96,7 @@ JAVASCRIPT
         }
         else {
             $Selenium->find_element( "#Name", 'css' )->send_keys($FAQLanguage);
-            $Selenium->find_element( "#Name", 'css' )->submit();
+            $Selenium->find_element( "#Name", 'css' )->VerifiedSubmit();
         }
 
         $Selenium->WaitFor( JavaScript => 'return $(".DataTable").length' );
@@ -113,7 +113,7 @@ JAVASCRIPT
         );
 
         # check added 'test' language
-        $Selenium->find_element( "$FAQLanguage", 'link_text' )->click();
+        $Selenium->find_element( "$FAQLanguage", 'link_text' )->VerifiedClick();
 
         $Self->Is(
             $Selenium->find_element( '#Name', 'css' )->get_value(),
@@ -122,7 +122,7 @@ JAVASCRIPT
         );
 
         # go back on Language overview screen
-        $Selenium->find_element( 'Cancel', 'link_text' )->click();
+        $Selenium->find_element( 'Cancel', 'link_text' )->VerifiedClick();
 
         # if case test language was created in the test, delete it
         if ( !$Exists ) {
@@ -139,7 +139,7 @@ JAVASCRIPT
             );
 
             # execute delete
-            $Selenium->find_element( "#DialogButton1", 'css' )->click();
+            $Selenium->find_element( "#DialogButton1", 'css' )->VerifiedClick();
 
             # verify test FAQ has been deleted
             $Self->True(

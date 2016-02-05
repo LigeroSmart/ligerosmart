@@ -36,6 +36,10 @@ $Selenium->RunTest(
             UserID      => 1,
             ContentType => 'text/html',
         );
+        $Self->True(
+            $FAQID,
+            "FAQ item is created - ID $FAQID",
+        );
 
         # create test user and login
         my $TestUserLogin = $Helper->TestUserCreate(
@@ -52,7 +56,7 @@ $Selenium->RunTest(
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
         # navigate to AgentFAQJournal screen
-        $Selenium->get("${ScriptAlias}index.pl?Action=AgentFAQJournal");
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentFAQJournal");
 
         # check AgentFAQJournal screen
         $Selenium->find_element( "table",             'css' );
@@ -62,11 +66,11 @@ $Selenium->RunTest(
         # check for test created FAQ
         $Self->True(
             index( $Selenium->get_page_source(), "$FAQTitle" ) > -1,
-            "$FAQTitle - found",
+            "$FAQTitle is found",
         );
 
         # click on test created FAQ
-        $Selenium->find_element("//div[\@title='$FAQTitle']")->click();
+        $Selenium->find_element("//div[\@title='$FAQTitle']")->VerifiedClick();
 
         # verify we are in AgentFAQZoom screen
         my $URLAction = $Selenium->get_current_url();
@@ -83,7 +87,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $Success,
-            "$FAQTitle - deleted",
+            "FAQ item is deleted - ID $FAQID",
         );
 
         # make sure the cache is correct

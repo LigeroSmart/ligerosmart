@@ -35,7 +35,7 @@ $Selenium->RunTest(
 
         $Self->True(
             $CategoryID,
-            "FAQ category is created - $CategoryID",
+            "FAQ category is created - ID $CategoryID",
         );
 
         my $GroupID = $Kernel::OM->Get('Kernel::System::Group')->GroupLookup(
@@ -68,7 +68,7 @@ $Selenium->RunTest(
 
                 $Self->True(
                     $FAQID,
-                    "FAQ is created - $FAQID",
+                    "FAQ item is created - ID $FAQID",
                 );
 
                 my %FAQ = (
@@ -97,7 +97,7 @@ $Selenium->RunTest(
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
         # navigate to AgentFAQSearch form
-        $Selenium->get("${ScriptAlias}index.pl?Action=AgentFAQSearch");
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentFAQSearch");
 
         # wait until form has loaded, if necessary
         $Selenium->WaitFor( JavaScript => "return \$('#SearchProfile').length" );
@@ -123,10 +123,7 @@ $Selenium->RunTest(
         $Selenium->execute_script(
             "\$('#CategoryIDs').val('$CategoryID').trigger('redraw.InputField').trigger('change');"
         );
-        $Selenium->find_element( "#SearchFormSubmit", 'css' )->click();
-
-        # wait until form has loaded, if necessary
-        $Selenium->WaitFor( JavaScript => "return \$('#OverviewBody').length" );
+        $Selenium->find_element( "#SearchFormSubmit", 'css' )->VerifiedClick();
 
         # check AgentFAQSearch result screen
         $Selenium->find_element( "table",             'css' );
@@ -145,17 +142,14 @@ $Selenium->RunTest(
         }
 
         # check 'Change search options' screen
-        $Selenium->find_element( "#FAQSearch", 'css' )->click();
+        $Selenium->find_element( "#FAQSearch", 'css' )->VerifiedClick();
 
         # wait until form has loaded, if necessary
         $Selenium->WaitFor( JavaScript => "return \$('#SearchProfile').length" );
 
         $Selenium->find_element( "Title",             'name' )->clear();
         $Selenium->find_element( "Title",             'name' )->send_keys('FAQChangeSearch*');
-        $Selenium->find_element( "#SearchFormSubmit", 'css' )->click();
-
-        # wait until form has loaded, if necessary
-        $Selenium->WaitFor( JavaScript => "return \$('#OverviewBody').length" );
+        $Selenium->find_element( "#SearchFormSubmit", 'css' )->VerifiedClick();
 
         # check test FAQs searched by 'FAQChangeSearch*'
         # delete test FAQs after checking
@@ -166,7 +160,7 @@ $Selenium->RunTest(
                 # check if there is test FAQChangeSearch* on screen
                 $Self->True(
                     index( $Selenium->get_page_source(), $FAQ->{FAQTitle} ) > -1,
-                    "$FAQ->{FAQTitle} - found",
+                    "$FAQ->{FAQTitle} is found",
                 );
             }
             else {
@@ -174,7 +168,7 @@ $Selenium->RunTest(
                 # check if there is no test FAQSearch* on screen
                 $Self->True(
                     index( $Selenium->get_page_source(), $FAQ->{FAQTitle} ) == -1,
-                    "$FAQ->{FAQTitle} - not found",
+                    "$FAQ->{FAQTitle} is not found",
                 );
             }
 
@@ -184,23 +178,20 @@ $Selenium->RunTest(
             );
             $Self->True(
                 $Success,
-                "FAQ is deleted - $FAQ->{FAQTitle}",
+                "FAQ is deleted - ID $FAQ->{FAQID}",
             );
 
         }
 
         # check 'Change search options' button again
-        $Selenium->find_element( "#FAQSearch", 'css' )->click();
+        $Selenium->find_element( "#FAQSearch", 'css' )->VerifiedClick();
 
         # wait until form has loaded, if necessary
         $Selenium->WaitFor( JavaScript => "return \$('#SearchProfile').length" );
 
         $Selenium->find_element( "Title",             'name' )->clear();
         $Selenium->find_element( "Title",             'name' )->send_keys('FAQChangeSearch*');
-        $Selenium->find_element( "#SearchFormSubmit", 'css' )->click();
-
-        # wait until form has loaded, if necessary
-        $Selenium->WaitFor( JavaScript => "return \$('#OverviewBody').length" );
+        $Selenium->find_element( "#SearchFormSubmit", 'css' )->VerifiedClick();
 
         # check no data message
         $Selenium->find_element( "#EmptyMessageSmall", 'css' );
@@ -217,7 +208,7 @@ $Selenium->RunTest(
 
         $Self->True(
             $Success,
-            "FAQ category is deleted - $CategoryID",
+            "FAQ category is deleted - ID $CategoryID",
         );
 
         # make sure the cache is correct

@@ -48,6 +48,11 @@ $Selenium->RunTest(
             ContentType => 'text/html',
         );
 
+        $Self->True(
+            $FAQID,
+            "FAQ item is created - ID $FAQID",
+        );
+
         # create test user and login
         my $TestUserLogin = $Helper->TestUserCreate(
             Groups => [ 'admin', 'users', 'faq', 'faq_admin' ],
@@ -63,7 +68,7 @@ $Selenium->RunTest(
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
         # navigate to AgentFAQZoom screen of created test FAQ
-        $Selenium->get("${ScriptAlias}index.pl?Action=AgentFAQZoom;ItemID=$FAQID");
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentFAQZoom;ItemID=$FAQID");
 
         # check page
         for my $ID (
@@ -86,7 +91,7 @@ $Selenium->RunTest(
         # verify test FAQ is created
         $Self->True(
             index( $Selenium->get_page_source(), $FAQTitle ) > -1,
-            "$FAQTitle - found",
+            "$FAQTitle is found",
         );
 
         my @Tests = (
@@ -121,7 +126,7 @@ $Selenium->RunTest(
 
             $Self->True(
                 index( $Selenium->get_page_source(), $Test->{FAQData} ) > -1,
-                "$Test->{FAQData} - found",
+                "$Test->{FAQData} is found",
             );
             $Selenium->switch_to_window( $Handles->[0] );
         }
@@ -132,7 +137,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $Success,
-            "FAQ is deleted - $FAQID",
+            "FAQ is deleted - ID $FAQID",
         );
 
         # make sure the cache is correct
