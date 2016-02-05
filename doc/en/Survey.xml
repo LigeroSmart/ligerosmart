@@ -541,7 +541,9 @@ shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
             To run only the unit test which will be delivered with this package, use the following
             command on the command line:
         </para>
-        <screen>shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test Survey:RequestsSend</screen>
+        <screen>
+shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test Survey:RequestsSend
+        </screen>
         <para>Selenium unit tests</para>
         <para>
             To run the Selenium unit tests, make sure you have a complete Selenium environment setup in your Kernel/Config.pm file and a running a WebDriver.
