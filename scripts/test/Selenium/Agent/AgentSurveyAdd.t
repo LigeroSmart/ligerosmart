@@ -51,7 +51,7 @@ $Selenium->RunTest(
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
         # navigate to AgentSurveyAdd
-        $Selenium->get("${ScriptAlias}index.pl?Action=AgentSurveyAdd");
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentSurveyAdd");
 
         # check page
         for my $ID (
@@ -69,12 +69,12 @@ $Selenium->RunTest(
         $Selenium->find_element( "#Introduction", 'css' )->send_keys('Selenium Introduction');
         $Selenium->execute_script("\$('#Queue_Search').val('2||Raw').trigger('redraw.InputField').trigger('change');");
         $Selenium->find_element( "#Description", 'css' )->send_keys('Selenium Description');
-        $Selenium->find_element("//button[\@value='Create'][\@type='submit']")->click();
+        $Selenium->find_element("//button[\@value='Create'][\@type='submit']")->VerifiedClick();
 
         # check for test created survey values
         $Self->True(
             index( $Selenium->get_page_source(), $SurveyTitle ) > -1,
-            "$SurveyTitle title - found"
+            "$SurveyTitle title is found"
         );
 
         # delete test created survey
@@ -97,7 +97,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $Success,
-            "Survey-Queue for $SurveyTitle- deleted",
+            "Survey-Queue for $SurveyTitle is deleted",
         );
 
         $Success = $DBObject->Do(
@@ -106,7 +106,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $Success,
-            "$SurveyTitle - deleted",
+            "$SurveyTitle is deleted",
         );
     }
 );

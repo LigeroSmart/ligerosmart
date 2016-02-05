@@ -30,12 +30,12 @@ $Selenium->RunTest(
             Description         => 'Survey Description',
             NotificationSender  => 'svik@example.com',
             NotificationSubject => 'Survey Notification Subject',
-            NotificationBody    => 'Survey Notifiation Body',
+            NotificationBody    => 'Survey Notification Body',
             Queues              => [2],
         );
         $Self->True(
             $SurveyID,
-            "Survey ID $SurveyID - created",
+            "Survey ID $SurveyID is created",
         );
 
         # create test user and login
@@ -53,20 +53,20 @@ $Selenium->RunTest(
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
         # navigate to AgentSurveyOverview of created test survey
-        $Selenium->get("${ScriptAlias}index.pl?Action=AgentSurveyOverview;SurveyID=$SurveyID");
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentSurveyOverview;SurveyID=$SurveyID");
 
         # check overview screen
         for my $Columns ( 'Survey#', 'Title', 'Status', 'Created' ) {
             $Self->True(
                 index( $Selenium->get_page_source(), $Columns ) > -1,
-                "Column $Columns - found",
+                "Column $Columns is found",
             );
         }
 
         # check for test created survey
         $Self->True(
             index( $Selenium->get_page_source(), "$SurveyTitle" ) > -1,
-            "$SurveyTitle - found",
+            "$SurveyTitle is found",
         );
 
         # get DB object
@@ -79,7 +79,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $Success,
-            "Survey-Queue for $SurveyTitle- deleted",
+            "Survey-Queue for $SurveyTitle is deleted",
         );
 
         # delete test created survey
@@ -89,7 +89,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $Success,
-            "$SurveyTitle - deleted",
+            "$SurveyTitle is deleted",
         );
     }
 );

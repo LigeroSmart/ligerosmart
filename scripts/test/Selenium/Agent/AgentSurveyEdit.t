@@ -42,7 +42,7 @@ $Selenium->RunTest(
         my $Description         = 'Survey Description';
         my $NotificationSender  = 'quality@example.com';
         my $NotificationSubject = 'Survey Notification Subject';
-        my $NotificationBody    = 'Survey Notifiation Body';
+        my $NotificationBody    = 'Survey Notification Body';
 
         my $SurveyID = $Kernel::OM->Get('Kernel::System::Survey')->SurveyAdd(
             UserID              => 1,
@@ -56,7 +56,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $SurveyID,
-            "Survey ID $SurveyID - created",
+            "Survey ID $SurveyID is created",
         );
 
         # create test user and login
@@ -74,13 +74,17 @@ $Selenium->RunTest(
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
         # navigate to AgentSurveyZoom of created test survey
-        $Selenium->get("${ScriptAlias}index.pl?Action=AgentSurveyZoom;SurveyID=$SurveyID");
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentSurveyZoom;SurveyID=$SurveyID");
 
         # click on 'Edit General Info' and switch screen
         $Selenium->find_element( "#Menu010-EditGeneralInfo", 'css' )->click();
 
+        $Selenium->WaitFor( WindowCount => 2 );
         my $Handles = $Selenium->get_window_handles();
         $Selenium->switch_to_window( $Handles->[1] );
+
+        # wait until page has loaded, if necessary
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#Title").length' );
 
         # get test params
         my @Test = (
@@ -131,13 +135,19 @@ $Selenium->RunTest(
 
         # submit updates and switch back window
         $Selenium->find_element("//button[\@value='Update'][\@type='submit']")->click();
+
+        $Selenium->WaitFor( WindowCount => 1 );
         $Selenium->switch_to_window( $Handles->[0] );
 
         # click on 'Edit General Info' again and switch window
         $Selenium->find_element( "#Menu010-EditGeneralInfo", 'css' )->click();
 
+        $Selenium->WaitFor( WindowCount => 2 );
         $Handles = $Selenium->get_window_handles();
         $Selenium->switch_to_window( $Handles->[1] );
+
+        # wait until page has loaded, if necessary
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#Title").length' );
 
         # check edited values
         for my $SurveryEdited (@Test) {
@@ -159,7 +169,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $Success,
-            "Survey-Queue for $SurveyTitle- deleted",
+            "Survey-Queue for $SurveyTitle is deleted",
         );
 
         # delete test created survey
@@ -169,7 +179,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $Success,
-            "$SurveyTitle - deleted",
+            "$SurveyTitle is deleted",
         );
     }
 );

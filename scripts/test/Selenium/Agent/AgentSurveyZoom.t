@@ -42,7 +42,7 @@ $Selenium->RunTest(
         my $Description         = 'Survey Description';
         my $NotificationSender  = 'quality@example.com';
         my $NotificationSubject = 'Survey Notification Subject';
-        my $NotificationBody    = 'Survey Notifiation Body';
+        my $NotificationBody    = 'Survey Notification Body';
 
         my $SurveyID = $Kernel::OM->Get('Kernel::System::Survey')->SurveyAdd(
             UserID              => 1,
@@ -56,7 +56,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $SurveyID,
-            "Survey ID $SurveyID - created",
+            "Survey ID $SurveyID is created",
         );
 
         # create test user and login
@@ -74,7 +74,7 @@ $Selenium->RunTest(
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
         # navigate to AgentSurveyZoom of created test survey
-        $Selenium->get("${ScriptAlias}index.pl?Action=AgentSurveyZoom;SurveyID=$SurveyID");
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentSurveyZoom;SurveyID=$SurveyID");
 
         # check page
         for my $ID (
@@ -91,7 +91,7 @@ $Selenium->RunTest(
         for my $SurveyCheck (@Values) {
             $Self->True(
                 index( $Selenium->get_page_source(), "$SurveyCheck" ) > -1,
-                "$SurveyCheck - found",
+                "$SurveyCheck is found",
             );
         }
 
@@ -105,7 +105,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $Success,
-            "Survey-Queue for $SurveyTitle- deleted",
+            "Survey-Queue for $SurveyTitle is deleted",
         );
 
         # delete test created survey
@@ -115,7 +115,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $Success,
-            "$SurveyTitle - deleted",
+            "$SurveyTitle is deleted",
         );
 
     }

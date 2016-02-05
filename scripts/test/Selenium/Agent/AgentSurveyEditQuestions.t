@@ -30,12 +30,12 @@ $Selenium->RunTest(
             Description         => 'Survey Description',
             NotificationSender  => 'svik@example.com',
             NotificationSubject => 'Survey Notification Subject',
-            NotificationBody    => 'Survey Notifiation Body',
+            NotificationBody    => 'Survey Notification Body',
             Queues              => [2],
         );
         $Self->True(
             $SurveyID,
-            "Survey ID $SurveyID - created",
+            "Survey ID $SurveyID is created",
         );
 
         # create test user and login
@@ -53,13 +53,17 @@ $Selenium->RunTest(
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
         # navigate to AgentSurveyZoom of created test survey
-        $Selenium->get("${ScriptAlias}index.pl?Action=AgentSurveyZoom;SurveyID=$SurveyID");
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentSurveyZoom;SurveyID=$SurveyID");
 
         # click on 'Edit Questions' and switch screen
         $Selenium->find_element( "#Menu020-EditQuestions", 'css' )->click();
 
+        $Selenium->WaitFor( WindowCount => 2 );
         my $Handles = $Selenium->get_window_handles();
         $Selenium->switch_to_window( $Handles->[1] );
+
+        # wait until page has loaded, if necessary
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#AnswerRequired").length' );
 
         # check page
         for my $ID (
@@ -99,17 +103,12 @@ $Selenium->RunTest(
         my $Success;
         for my $Questions (@Test) {
 
-            # wait until form has loaded, if necessary
-            $Selenium->WaitFor(
-                JavaScript => "return typeof(\$) === 'function' && \$('#AnswerRequired').length"
-            );
-
             # add question
             $Selenium->find_element( "#Question", 'css' )->send_keys( $Questions->{Name} );
             $Selenium->execute_script(
                 "\$('#Type').val('$Questions->{Type}').trigger('redraw.InputField').trigger('change');"
             );
-            $Selenium->find_element("//button[\@value='Add'][\@type='submit']")->click();
+            $Selenium->find_element("//button[\@value='Add'][\@type='submit']")->VerifiedClick();
 
             # add answers for radio and checkbox questions
             if (
@@ -121,40 +120,27 @@ $Selenium->RunTest(
                 # verify question is in incomplete state
                 $Self->True(
                     index( $Selenium->get_text("//div[\@class='Content']"), 'Incomplete' ) > -1,
-                    "$Questions->{Name} - incomplete",
+                    "$Questions->{Name} is incomplete",
                 );
 
                 # click on test created question
-                $Selenium->find_element( $Questions->{Name}, 'link_text' )->click();
+                $Selenium->find_element( $Questions->{Name}, 'link_text' )->VerifiedClick();
 
-                # wait until form has loaded, if necessary
-                $Selenium->WaitFor(
-                    JavaScript => "return typeof(\$) === 'function' && \$('#Answer').length"
-                );
                 $Selenium->find_element( "#Answer", 'css' )->send_keys( $Questions->{Answer1} );
-                $Selenium->find_element("//button[\@value='Add'][\@type='submit']")->click();
+                $Selenium->find_element("//button[\@value='Add'][\@type='submit']")->VerifiedClick();
 
-                # wait until form has loaded, if necessary
-                $Selenium->WaitFor(
-                    JavaScript => "return typeof(\$) === 'function' && \$('#Answer').length"
-                );
                 $Selenium->find_element( "#Answer", 'css' )->send_keys( $Questions->{Answer2} );
-                $Selenium->find_element("//button[\@value='Add'][\@type='submit']")->click();
-
-                # wait until form has loaded, if necessary
-                $Selenium->WaitFor(
-                    JavaScript => "return typeof(\$) === 'function' && \$('#Answer').length"
-                );
+                $Selenium->find_element("//button[\@value='Add'][\@type='submit']")->VerifiedClick();
 
                 # return back to add question screen
-                $Selenium->find_element("//button[\@value='Go back'][\@type='submit']")->click();
+                $Selenium->find_element("//button[\@value='Go back'][\@type='submit']")->VerifiedClick();
 
             }
 
             # verify question is in complete state
             $Self->True(
                 index( $Selenium->get_text("//div[\@class='Content']"), 'Complete' ) > -1,
-                "$Questions->{Name} - completed",
+                "$Questions->{Name} is completed",
             );
 
             # click on delete icon
@@ -175,7 +161,7 @@ JAVASCRIPT
 
             $Self->True(
                 index( $Selenium->get_page_source(), $Questions->{Name} ) == -1,
-                "$Questions->{Name} - deleted",
+                "$Questions->{Name} is deleted",
             );
 
         }
@@ -190,7 +176,7 @@ JAVASCRIPT
         );
         $Self->True(
             $Success,
-            "Survey-Queue for $SurveyTitle- deleted",
+            "Survey-Queue for $SurveyTitle is deleted",
         );
 
         # delete test created survey
@@ -200,7 +186,7 @@ JAVASCRIPT
         );
         $Self->True(
             $Success,
-            "$SurveyTitle - deleted",
+            "$SurveyTitle is deleted",
         );
     }
 );

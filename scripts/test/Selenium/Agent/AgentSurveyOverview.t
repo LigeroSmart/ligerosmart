@@ -30,12 +30,12 @@ $Selenium->RunTest(
             Description         => 'Survey Description',
             NotificationSender  => 'quality@example.com',
             NotificationSubject => 'Survey Notification Subject',
-            NotificationBody    => 'Survey Notifiation Body',
+            NotificationBody    => 'Survey Notification Body',
             Queues              => [2],
         );
         $Self->True(
             $SurveyID,
-            "Survey ID $SurveyID - created",
+            "Survey ID $SurveyID is created",
         );
 
         # create test user and login
@@ -53,7 +53,7 @@ $Selenium->RunTest(
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
         # navigate to AgentSurveyOverview of created test survey
-        $Selenium->get("${ScriptAlias}index.pl?Action=AgentSurveyOverview");
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentSurveyOverview");
 
         # check screen
         $Selenium->find_element( "table",             'css' );
@@ -63,11 +63,11 @@ $Selenium->RunTest(
         # check for test created survey
         $Self->True(
             index( $Selenium->get_page_source(), "$SurveyTitle" ) > -1,
-            "$SurveyTitle - found",
+            "$SurveyTitle is found",
         );
 
         # click on test created survey
-        $Selenium->find_element("//div[\@title='$SurveyTitle']")->click();
+        $Selenium->find_element("//div[\@title='$SurveyTitle']")->VerifiedClick();
 
         # verify we are in AgentSurveyZoom screen
         my $URLAction = $Selenium->get_current_url();
@@ -87,7 +87,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $Success,
-            "Survey-Queue for $SurveyTitle- deleted",
+            "Survey-Queue for $SurveyTitle is deleted",
         );
 
         # delete test created survey
@@ -97,7 +97,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $Success,
-            "$SurveyTitle - deleted",
+            "$SurveyTitle is deleted",
         );
     }
 );

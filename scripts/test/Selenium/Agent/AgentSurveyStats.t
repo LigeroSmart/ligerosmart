@@ -53,12 +53,12 @@ $Selenium->RunTest(
             Description         => 'Survey Description',
             NotificationSender  => 'quality@unittest.com',
             NotificationSubject => 'Survey Notification Subject',
-            NotificationBody    => 'Survey Notifiation Body',
+            NotificationBody    => 'Survey Notification Body',
             Queues              => [2],
         );
         $Self->True(
             $SurveyID,
-            "Survey ID $SurveyID - created",
+            "Survey ID $SurveyID is created",
         );
 
         # add question to test survey
@@ -96,10 +96,10 @@ $Selenium->RunTest(
         );
         $Self->True(
             $TicketID,
-            "Ticket ID $TicketID - created",
+            "Ticket ID $TicketID is created",
         );
 
-        # add artice to test created ticket
+        # add article to test created ticket
         my $ArticleID = $TicketObject->ArticleCreate(
             TicketID       => $TicketID,
             ArticleType    => 'note-internal',
@@ -118,7 +118,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $TicketID,
-            "Artile ID $ArticleID - created",
+            "Article ID $ArticleID is created",
         );
 
         # send survey request
@@ -127,7 +127,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $Request,
-            "Survey request - sent",
+            "Survey request is sent",
         );
 
         # get DB object
@@ -147,11 +147,11 @@ $Selenium->RunTest(
         my $ScriptAlias = $ConfigObject->Get('ScriptAlias');
 
         # navigate to PublicSurvey of created test survey
-        $Selenium->get("${ScriptAlias}public.pl?Action=PublicSurvey;PublicSurveyKey=$PublicSurveyKey");
+        $Selenium->VerifiedGet("${ScriptAlias}public.pl?Action=PublicSurvey;PublicSurveyKey=$PublicSurveyKey");
 
         # select yes as answer
         $Selenium->find_element("//input[\@value='Yes'][\@type='radio']")->click();
-        $Selenium->find_element("//button[\@value='Finish'][\@type='submit']")->click();
+        $Selenium->find_element("//button[\@value='Finish'][\@type='submit']")->VerifiedClick();
 
         # create test user and login
         my $TestUserLogin = $Helper->TestUserCreate(
@@ -165,13 +165,17 @@ $Selenium->RunTest(
         );
 
         # navigate to AgentSurveyZoom of created test survey
-        $Selenium->get("${ScriptAlias}index.pl?Action=AgentSurveyZoom;SurveyID=$SurveyID");
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentSurveyZoom;SurveyID=$SurveyID");
 
         # click on 'Stats Details' and switch window
         $Selenium->find_element( "#Menu030-StatsDetails", 'css' )->click();
 
+        $Selenium->WaitFor( WindowCount => 2 );
         my $Handles = $Selenium->get_window_handles();
         $Selenium->switch_to_window( $Handles->[1] );
+
+        # wait until page has loaded, if necessary
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $(".SeeDetails").length' );
 
         # check screen
         $Selenium->find_element( "table",             'css' );
@@ -181,20 +185,20 @@ $Selenium->RunTest(
         # verify stats are for right ticket
         $Self->True(
             index( $Selenium->get_page_source(), $TicketNumber ) > -1,
-            "Ticket number $TicketNumber - found",
+            "Ticket number $TicketNumber is found",
         );
 
         # click to see details of stats
-        $Selenium->find_element( ".SeeDetails", 'css' )->click();
+        $Selenium->find_element( ".SeeDetails", 'css' )->VerifiedClick();
 
         # verify question values
         $Self->True(
             index( $Selenium->get_page_source(), $QuestionName ) > -1,
-            "$QuestionName - found",
+            "$QuestionName is found",
         );
         $Self->True(
             index( $Selenium->get_page_source(), 'Yes' ) > -1,
-            "Answer 'Yes' - found",
+            "Answer 'Yes' is found",
         );
 
         # get test question ID
@@ -258,7 +262,7 @@ $Selenium->RunTest(
             );
             $Self->True(
                 $Success,
-                "$Delete->{Name} for $SurveyTitle - deleted",
+                "$Delete->{Name} for $SurveyTitle is deleted",
             );
         }
     }

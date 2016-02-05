@@ -30,12 +30,12 @@ $Selenium->RunTest(
             Description         => 'Survey Description',
             NotificationSender  => 'svik@example.com',
             NotificationSubject => 'Survey Notification Subject',
-            NotificationBody    => 'Survey Notifiation Body',
+            NotificationBody    => 'Survey Notification Body',
             Queues              => [2],
         );
         $Self->True(
             $SurveyID,
-            "Survey ID $SurveyID - created",
+            "Survey ID $SurveyID is created",
         );
 
         # create test user and login
@@ -53,7 +53,7 @@ $Selenium->RunTest(
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
         # navigate to AgentSurveyZoom of created test survey
-        $Selenium->get("${ScriptAlias}index.pl?Action=AgentSurveyZoom;SurveyID=$SurveyID");
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentSurveyZoom;SurveyID=$SurveyID");
 
         # create menu module test params
         my @MenuModule = (
@@ -79,7 +79,7 @@ $Selenium->RunTest(
         for my $SurveyMenu (@MenuModule) {
             $Self->True(
                 $Selenium->find_element( "#$SurveyMenu->{ID}", 'css' ),
-                "Survey menu $SurveyMenu->{Name} - found"
+                "Survey menu $SurveyMenu->{Name} is found"
             );
         }
 
@@ -93,7 +93,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $Success,
-            "Survey-Queue for $SurveyTitle- deleted",
+            "Survey-Queue for $SurveyTitle is deleted",
         );
 
         # delete test created survey
@@ -103,7 +103,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $Success,
-            "$SurveyTitle - deleted",
+            "$SurveyTitle is deleted",
         );
     }
 );

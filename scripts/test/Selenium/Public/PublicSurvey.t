@@ -63,12 +63,12 @@ $Selenium->RunTest(
             Description         => $SurveryDescription,
             NotificationSender  => 'quality@unittest.com',
             NotificationSubject => 'Survey Notification Subject',
-            NotificationBody    => 'Survey Notifiation Body',
+            NotificationBody    => 'Survey Notification Body',
             Queues              => [2],
         );
         $Self->True(
             $SurveyID,
-            "Survey ID $SurveyID - created",
+            "Survey ID $SurveyID is created",
         );
 
         # get question data
@@ -159,7 +159,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $StatusSet,
-            "Survey master status - set",
+            "Survey master status is set",
         );
 
         # get ticket object
@@ -181,10 +181,10 @@ $Selenium->RunTest(
         );
         $Self->True(
             $TicketID,
-            "Ticket ID $TicketID - created",
+            "Ticket ID $TicketID is created",
         );
 
-        # add artice to test created ticket
+        # add article to test created ticket
         my $ArticleID = $TicketObject->ArticleCreate(
             TicketID       => $TicketID,
             ArticleType    => 'note-internal',
@@ -203,7 +203,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $TicketID,
-            "Artile ID $ArticleID - created",
+            "Article ID $ArticleID is created",
         );
 
         # send survey request
@@ -212,7 +212,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $Request,
-            "Survey request - sent",
+            "Survey request is sent",
         );
 
         # get public survey key from test survey request
@@ -229,7 +229,7 @@ $Selenium->RunTest(
         my $ScriptAlias = $ConfigObject->Get('ScriptAlias');
 
         # navigate to PublicSurvey of created test survey
-        $Selenium->get("${ScriptAlias}public.pl?Action=PublicSurvey;PublicSurveyKey=$PublicSurveyKey");
+        $Selenium->VerifiedGet("${ScriptAlias}public.pl?Action=PublicSurvey;PublicSurveyKey=$PublicSurveyKey");
 
         # get test data
         my @Test = (
@@ -262,14 +262,14 @@ $Selenium->RunTest(
                 for ( @{ $CheckValue->{Value} } ) {
                     $Self->True(
                         index( $Selenium->get_page_source(), $_ ) > -1,
-                        "$CheckValue->{Name} $_ - found",
+                        "$CheckValue->{Name} $_ is found",
                     );
                 }
             }
             else {
                 $Self->True(
                     index( $Selenium->get_page_source(), $CheckValue->{Value} ) > -1,
-                    "$CheckValue->{Name} $CheckValue->{Value} - found",
+                    "$CheckValue->{Name} $CheckValue->{Value} is found",
                 );
             }
         }
@@ -306,14 +306,14 @@ $Selenium->RunTest(
         }
 
         # submit vote
-        $Selenium->find_element("//button[\@value='Finish'][\@type='submit']")->click();
+        $Selenium->find_element("//button[\@value='Finish'][\@type='submit']")->VerifiedClick();
 
         # verify post vote messages
         my $PostVote = [ "Survey Information", "Thank you for your feedback.", "The survey is finished." ];
         for my $PostVoteMessage ( @{$PostVote} ) {
             $Self->True(
                 index( $Selenium->get_page_source(), $PostVoteMessage ) > -1,
-                "'$PostVoteMessage' message - found",
+                "'$PostVoteMessage' message is found",
             );
         }
 
@@ -329,22 +329,26 @@ $Selenium->RunTest(
         );
 
         # navigate to AgentSurveyZoom of created test survey
-        $Selenium->get("${ScriptAlias}index.pl?Action=AgentSurveyZoom;SurveyID=$SurveyID");
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentSurveyZoom;SurveyID=$SurveyID");
 
         # click on 'Stats Details' and switch window
         $Selenium->find_element( "#Menu030-StatsDetails", 'css' )->click();
 
+        $Selenium->WaitFor( WindowCount => 2 );
         my $Handles = $Selenium->get_window_handles();
         $Selenium->switch_to_window( $Handles->[1] );
 
+        # wait until page has loaded, if necessary
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $(".SeeDetails").length' );
+
         # click to see details of stats
-        $Selenium->find_element( ".SeeDetails", 'css' )->click();
+        $Selenium->find_element( ".SeeDetails", 'css' )->VerifiedClick();
 
         # verify vote details
         for my $VoteDetails (@VoteData) {
             $Self->True(
                 index( $Selenium->get_page_source(), $VoteDetails->{Check} ) > -1,
-                "Vote $VoteDetails->{Check} - found",
+                "Vote $VoteDetails->{Check} is found",
             );
         }
 
@@ -402,7 +406,7 @@ $Selenium->RunTest(
                 );
                 $Self->True(
                     $Success,
-                    "$Delete->{Name} for $SurveyTitle - deleted",
+                    "$Delete->{Name} for $SurveyTitle is deleted",
                 );
 
             }
@@ -413,7 +417,7 @@ $Selenium->RunTest(
                 );
                 $Self->True(
                     $Success,
-                    "$Delete->{Name} for $SurveyTitle - deleted",
+                    "$Delete->{Name} for $SurveyTitle is deleted",
                 );
             }
         }
@@ -425,7 +429,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $Success,
-            "Ticket ID $TicketID - deleted",
+            "Ticket ID $TicketID is deleted",
         );
     }
 );
