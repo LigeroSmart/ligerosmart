@@ -6,6 +6,7 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
+## no critic (Modules::RequireExplicitPackage)
 use strict;
 use warnings;
 use utf8;
@@ -49,36 +50,22 @@ my $MasterSlaveDynamicFieldData = $DynamicFieldObject->DynamicFieldGet(
 );
 
 # create new user
-my $TestUser   = 'User' . $RandomID;
-my $TestUserID = $UserObject->UserAdd(
-    UserFirstname => $TestUser,
-    UserLastname  => $TestUser,
-    UserLogin     => $TestUser,
-    UserPw        => $TestUser,
-    UserEmail     => $TestUser . '@localunittest.com',
-    ValidID       => 1,
-    ChangeUserID  => 1,
+my $TestUserLogin = $HelperObject->TestUserCreate(
+    Groups => [ 'admin', 'users' ],
+    Language => 'en'
 );
 $Self->True(
-    $TestUserID,
-    "UserAdd() $TestUser",
+    $TestUserLogin,
+    "UserAdd() $TestUserLogin",
 );
 
 # create new customer user
-my $TestCustomerUser   = 'CustomerUser' . $RandomID;
-my $TestCustomerUserID = $CustomerUserObject->CustomerUserAdd(
-    Source         => 'CustomerUser',
-    UserFirstname  => $TestCustomerUser,
-    UserLastname   => $TestCustomerUser,
-    UserCustomerID => $TestCustomerUser,
-    UserLogin      => $TestCustomerUser,
-    UserEmail      => $TestCustomerUser . '@localunittest.com',
-    ValidID        => 1,
-    UserID         => 1,
+my $TestCustomerUserLogin = $HelperObject->TestCustomerUserCreate(
+    Language => 'en',
 );
 $Self->True(
-    $TestCustomerUserID,
-    "CustomerUserAdd() $TestCustomerUser",
+    $TestCustomerUserLogin,
+    "CustomerUserAdd() $TestCustomerUserLogin",
 );
 
 # create first test ticket
@@ -90,10 +77,11 @@ my $MasterTicketID     = $TicketObject->TicketCreate(
     Lock         => 'unlock',
     Priority     => '3 normal',
     State        => 'new',
-    CustomerNo   => $TestCustomerUser,
-    CustomerUser => $TestCustomerUser . '@localunittest.com',
-    OwnerID      => 1,
-    UserID       => 1,
+    CustomerNo   => $TestCustomerUserLogin,
+    CustomerUser => $TestCustomerUserLogin,
+    ,
+    OwnerID => 1,
+    UserID  => 1,
 );
 $Self->True(
     $MasterTicketID,
@@ -142,8 +130,8 @@ my $SlaveTicketID     = $TicketObject->TicketCreate(
     Lock         => 'unlock',
     Priority     => '3 normal',
     State        => 'new',
-    CustomerID   => $TestCustomerUserID,
-    CustomerUser => $TestCustomerUser . '@localunittest.com',
+    CustomerID   => $TestCustomerUserLogin,
+    CustomerUser => $TestCustomerUserLogin . '@localunittest.com',
     OwnerID      => 1,
     UserID       => 1,
 );
@@ -218,7 +206,7 @@ my @MasterHistoryLines = $TicketObject->HistoryGet(
     TicketID => $MasterTicketID,
     UserID   => 1,
 );
-my $MasterLastHistoryEntry = $MasterHistoryLines[ @MasterHistoryLines - 1 ];
+my $MasterLastHistoryEntry = $MasterHistoryLines[-1];
 
 # verify master ticket article is created
 $Self->IsDeeply(
@@ -232,7 +220,7 @@ my @SlaveHistoryLines = $TicketObject->HistoryGet(
     TicketID => $SlaveTicketID,
     UserID   => 1,
 );
-my $SlaveLastHistoryEntry = $SlaveHistoryLines[ @SlaveHistoryLines - 1 ];
+my $SlaveLastHistoryEntry = $SlaveHistoryLines[-1];
 
 # verify slave ticket article tried to send
 $Self->IsDeeply(
@@ -267,7 +255,7 @@ $Self->True(
     TicketID => $MasterTicketID,
     UserID   => 1,
 );
-$MasterLastHistoryEntry = $MasterHistoryLines[ @MasterHistoryLines - 1 ];
+$MasterLastHistoryEntry = $MasterHistoryLines[-1];
 
 # verify master ticket article is created
 $Self->IsDeeply(
@@ -281,7 +269,7 @@ $Self->IsDeeply(
     TicketID => $SlaveTicketID,
     UserID   => 1,
 );
-$SlaveLastHistoryEntry = $SlaveHistoryLines[ @SlaveHistoryLines - 1 ];
+$SlaveLastHistoryEntry = $SlaveHistoryLines[-1];
 
 # verify slave ticket article is created
 $Self->IsDeeply(
@@ -310,7 +298,7 @@ $Self->True(
     TicketID => $MasterTicketID,
     UserID   => 1,
 );
-$MasterLastHistoryEntry = $MasterHistoryLines[ @MasterHistoryLines - 1 ];
+$MasterLastHistoryEntry = $MasterHistoryLines[-1];
 
 # verify master ticket state is updated
 $Self->IsDeeply(
@@ -355,7 +343,7 @@ $Self->True(
     TicketID => $MasterTicketID,
     UserID   => 1,
 );
-$MasterLastHistoryEntry = $MasterHistoryLines[ @MasterHistoryLines - 1 ];
+$MasterLastHistoryEntry = $MasterHistoryLines[-1];
 
 # verify master ticket pending time is updated
 $Self->IsDeeply(
@@ -369,7 +357,7 @@ $Self->IsDeeply(
     TicketID => $SlaveTicketID,
     UserID   => 1,
 );
-$SlaveLastHistoryEntry = $SlaveHistoryLines[ @SlaveHistoryLines - 1 ];
+$SlaveLastHistoryEntry = $SlaveHistoryLines[-1];
 
 # verify slave ticket pending time is updated
 $Self->IsDeeply(
@@ -398,7 +386,7 @@ $Self->True(
     TicketID => $MasterTicketID,
     UserID   => 1,
 );
-$MasterLastHistoryEntry = $MasterHistoryLines[ @MasterHistoryLines - 1 ];
+$MasterLastHistoryEntry = $MasterHistoryLines[-1];
 
 # verify master ticket priority is updated
 $Self->IsDeeply(
@@ -425,12 +413,12 @@ $Self->IsDeeply(
 # change master ticket owner
 $Success = $TicketObject->TicketOwnerSet(
     TicketID => $MasterTicketID,
-    NewUser  => $TestUser,
+    NewUser  => $TestUserLogin,
     UserID   => 1,
 );
 $Self->True(
     $Success,
-    "TicketOwnerSet() MasterTicket owner updated - $TestUser",
+    "TicketOwnerSet() MasterTicket owner updated - $TestUserLogin",
 );
 
 # get master ticket history
@@ -438,7 +426,7 @@ $Self->True(
     TicketID => $MasterTicketID,
     UserID   => 1,
 );
-$MasterLastHistoryEntry = $MasterHistoryLines[ @MasterHistoryLines - 1 ];
+$MasterLastHistoryEntry = $MasterHistoryLines[-1];
 
 # verify master ticket owner is updated
 $Self->IsDeeply(
@@ -454,7 +442,7 @@ $Self->IsDeeply(
 );
 $Self->IsDeeply(
     $SlaveTicketData{Owner},
-    $TestUser,
+    $TestUserLogin,
     "SlaveTicket owner updated - ",
 );
 
@@ -465,12 +453,12 @@ $Self->IsDeeply(
 # set new responsible user for master ticket
 $Success = $TicketObject->TicketResponsibleSet(
     TicketID => $MasterTicketID,
-    NewUser  => $TestUser,
+    NewUser  => $TestUserLogin,
     UserID   => 1,
 );
 $Self->True(
     $Success,
-    "TicketResponsibleSet() MasterTicket responsible updated - $TestUser",
+    "TicketResponsibleSet() MasterTicket responsible updated - $TestUserLogin",
 );
 
 # get master ticket history
@@ -478,7 +466,7 @@ $Self->True(
     TicketID => $MasterTicketID,
     UserID   => 1,
 );
-$MasterLastHistoryEntry = $MasterHistoryLines[ @MasterHistoryLines - 1 ];
+$MasterLastHistoryEntry = $MasterHistoryLines[-1];
 
 # verify master ticket responsible user is updated
 $Self->IsDeeply(
@@ -494,7 +482,7 @@ $Self->IsDeeply(
 );
 $Self->IsDeeply(
     $SlaveTicketData{Responsible},
-    $TestUser,
+    $TestUserLogin,
     "SlaveTicket responsible updated - ",
 );
 
@@ -518,7 +506,7 @@ $Self->True(
     TicketID => $MasterTicketID,
     UserID   => 1,
 );
-$MasterLastHistoryEntry = $MasterHistoryLines[ @MasterHistoryLines - 1 ];
+$MasterLastHistoryEntry = $MasterHistoryLines[-1];
 
 # verify master ticket is locked
 $Self->IsDeeply(
