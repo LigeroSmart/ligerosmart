@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2016 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/29b250b6c4057288aff280f95e945a1b0400221d/scripts/test/Ticket.t
+# $origin: https://github.com/OTRS/otrs/blob/505acab1c49f09f41282956e530fdcb96d0a4bce/scripts/test/Ticket.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -108,9 +108,11 @@ $Self->Is(
     '',
     'TicketGet() (SLAID)',
 );
+
+my $DefaultTicketType = $Kernel::OM->Get('Kernel::Config')->Get('Ticket::Type::Default');
 $Self->Is(
     $Ticket{TypeID},
-    '1',
+    $TypeObject->TypeLookup( Type => $DefaultTicketType ),
     'TicketGet() (TypeID)',
 );
 $Self->Is(

@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2016 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/29b250b6c4057288aff280f95e945a1b0400221d/scripts/test/SLA.t
+# $origin: https://github.com/OTRS/otrs/blob/505acab1c49f09f41282956e530fdcb96d0a4bce/scripts/test/SLA.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,10 +18,17 @@ use Kernel::System::VariableCheck qw(:all);
 
 # get needed objects
 my $ConfigObject  = $Kernel::OM->Get('Kernel::Config');
-my $HelperObject  = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 my $ServiceObject = $Kernel::OM->Get('Kernel::System::Service');
 my $SLAObject     = $Kernel::OM->Get('Kernel::System::SLA');
 my $UserObject    = $Kernel::OM->Get('Kernel::System::User');
+
+# get helper object
+$Kernel::OM->ObjectParamAdd(
+    'Kernel::System::UnitTest::Helper' => {
+        RestoreDatabase => 1,
+    },
+);
+my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 
 # ------------------------------------------------------------ #
 # make preparations
@@ -44,7 +51,7 @@ my @UserIDs;
         my $UserID = $UserObject->UserAdd(
             UserFirstname => 'SLA' . $Counter,
             UserLastname  => 'UnitTest',
-            UserLogin     => 'UnitTest-SLA-' . $Counter . int rand 1_000_000,
+            UserLogin     => 'UnitTest-SLA-' . $Counter . $Helper->GetRandomID(),
             UserEmail     => 'UnitTest-SLA-' . $Counter . '@localhost',
             ValidID       => 1,
             ChangeUserID  => 1,
@@ -63,7 +70,7 @@ my @UserIDs;
 # create needed random service names
 my @SLAName;
 for my $Counter ( 1 .. 10 ) {
-    push @SLAName, 'UnitTest' . int rand 1_000_000;
+    push @SLAName, 'UnitTest' . $Helper->GetRandomID();
 }
 
 # create some test services
@@ -72,7 +79,7 @@ for my $Counter ( 1 .. 3 ) {
 
     # add a service
     my $ServiceID = $ServiceObject->ServiceAdd(
-        Name    => 'UnitTest-SLA' . int rand 1_000_000,
+        Name    => 'UnitTest-SLA' . $Helper->GetRandomID(),
         ValidID => 1,
         UserID  => 1,
 # ---
@@ -86,7 +93,7 @@ for my $Counter ( 1 .. 3 ) {
     push @ServiceIDs, $ServiceID;
 }
 
-# get original sla list for later checks
+# get original SLA list for later checks
 my %SLAListOriginal = $SLAObject->SLAList(
     Valid  => 0,
     UserID => 1,
@@ -98,7 +105,7 @@ my %SLAListOriginal = $SLAObject->SLAList(
 
 my $ItemData = [
 
-    # this sla is NOT complete and must not be added
+    # this SLA is NOT complete and must not be added
     {
         Add => {
             ValidID => 1,
@@ -111,7 +118,7 @@ my $ItemData = [
         },
     },
 
-    # this sla is NOT complete and must not be added
+    # this SLA is NOT complete and must not be added
     {
         Add => {
             Name   => $SLAName[0],
@@ -124,7 +131,7 @@ my $ItemData = [
         },
     },
 
-    # this sla is NOT complete and must not be added
+    # this SLA is NOT complete and must not be added
     {
         Add => {
             Name    => $SLAName[0],
@@ -139,7 +146,7 @@ my $ItemData = [
 # ---
 # ITSM
 # ---
-    # this sla is NOT complete and must not be added
+    # this SLA is NOT complete and must not be added
     {
         Add => {
             Name    => $SLAName[0],
@@ -194,7 +201,7 @@ my $ItemData = [
         },
     },
 
-    # this sla must be inserted sucessfully
+    # this SLA must be inserted successfully
     {
         Add => {
             Name    => $SLAName[0],
@@ -228,7 +235,7 @@ my $ItemData = [
         },
     },
 
-    # this sla have the same name as one test before and must not be added
+    # this SLA have the same name as one test before and must not be added
     {
         Add => {
             Name    => $SLAName[0],
@@ -242,7 +249,7 @@ my $ItemData = [
         },
     },
 
-    # the sla one add-test before must be NOT updated (sla is NOT complete)
+    # the SLA one add-test before must be NOT updated (SLA is NOT complete)
     {
         Update => {
             ValidID => 1,
@@ -255,7 +262,7 @@ my $ItemData = [
         },
     },
 
-    # the sla one add-test before must be NOT updated (sla is NOT complete)
+    # the SLA one add-test before must be NOT updated (SLA is NOT complete)
     {
         Update => {
             Name   => $SLAName[0] . 'UPDATE1',
@@ -268,7 +275,7 @@ my $ItemData = [
         },
     },
 
-    # the sla one add-test before must be NOT updated (sla is NOT complete)
+    # the SLA one add-test before must be NOT updated (SLA is NOT complete)
     {
         Update => {
             Name    => $SLAName[0] . 'UPDATE1',
@@ -281,7 +288,7 @@ my $ItemData = [
         },
     },
 
-    # the sla one add-test before must be NOT updated (service ids must be an array reference)
+    # the SLA one add-test before must be NOT updated (service ids must be an array reference)
     {
         Update => {
             ServiceIDs => \do {'Dummy'},
@@ -296,7 +303,7 @@ my $ItemData = [
         },
     },
 
-    # the sla one add-test before must be NOT updated (service ids must be an array reference)
+    # the SLA one add-test before must be NOT updated (service ids must be an array reference)
     {
         Update => {
             ServiceIDs => '',
@@ -311,7 +318,7 @@ my $ItemData = [
         },
     },
 
-    # the sla one add-test before must be NOT updated (service ids must be an array reference)
+    # the SLA one add-test before must be NOT updated (service ids must be an array reference)
     {
         Update => {
             ServiceIDs => {},
@@ -326,7 +333,7 @@ my $ItemData = [
         },
     },
 
-    # this sla must be inserted sucessfully (check the returned service id array)
+    # this SLA must be inserted successfully (check the returned service id array)
     {
         Add => {
             ServiceIDs => [ $ServiceIDs[0] ],
@@ -361,7 +368,7 @@ my $ItemData = [
         },
     },
 
-    # this sla must be inserted sucessfully (check the sorting of the returned service id array)
+    # this SLA must be inserted successfully (check the sorting of the returned service id array)
     {
         Add => {
             ServiceIDs => [ $ServiceIDs[1], $ServiceIDs[0] ],
@@ -410,7 +417,7 @@ my $ItemData = [
         },
     },
 
-    # this sla must be inserted sucessfully
+    # this SLA must be inserted successfully
     {
         Add => {
             ServiceIDs          => [ $ServiceIDs[1], $ServiceIDs[2], $ServiceIDs[0] ],
@@ -453,7 +460,7 @@ my $ItemData = [
         },
     },
 
-    # the sla one add-test before must be NOT updated (sla update arguments NOT complete)
+    # the SLA one add-test before must be NOT updated (SLA update arguments NOT complete)
     {
         Update => {
             ValidID => 1,
@@ -466,7 +473,7 @@ my $ItemData = [
         },
     },
 
-    # the sla one add-test before must be NOT updated (sla update arguments NOT complete)
+    # the SLA one add-test before must be NOT updated (SLA update arguments NOT complete)
     {
         Update => {
             Name   => $SLAName[3] . 'UPDATE1',
@@ -479,7 +486,7 @@ my $ItemData = [
         },
     },
 
-    # the sla one add-test before must be NOT updated (sla update arguments NOT complete)
+    # the SLA one add-test before must be NOT updated (SLA update arguments NOT complete)
     {
         Update => {
             Name    => $SLAName[3] . 'UPDATE1',
@@ -492,7 +499,7 @@ my $ItemData = [
         },
     },
 
-    # the sla one add-test before must be updated (sla update arguments are complete)
+    # the SLA one add-test before must be updated (SLA update arguments are complete)
     {
         Update => {
             ServiceIDs          => [],
@@ -535,7 +542,7 @@ my $ItemData = [
         },
     },
 
-    # the sla one add-test before must be updated (sla update arguments are complete)
+    # the SLA one add-test before must be updated (SLA update arguments are complete)
     {
         Update => {
             ServiceIDs          => [ $ServiceIDs[2] ],
@@ -578,7 +585,7 @@ my $ItemData = [
         },
     },
 
-    # this sla must be inserted sucessfully (check string cleaner function)
+    # this SLA must be inserted successfully (check string cleaner function)
     {
         Add => {
             ServiceIDs => [ $ServiceIDs[0] ],
@@ -614,7 +621,7 @@ my $ItemData = [
         },
     },
 
-    # the sla one add-test before must be updated sucessfully (check string cleaner function)
+    # the SLA one add-test before must be updated successfully (check string cleaner function)
     {
         Update => {
             ServiceIDs => [ $ServiceIDs[1] ],
@@ -650,7 +657,7 @@ my $ItemData = [
         },
     },
 
-    # this sla must be inserted sucessfully (unicode checks)
+    # this SLA must be inserted successfully (Unicode checks)
     {
         Add => {
             Name    => $SLAName[5] . ' ϒ ϡ Ʃ Ϟ ',
@@ -685,7 +692,7 @@ my $ItemData = [
         },
     },
 
-    # the sla one add-test before must be updated sucessfully (unicode checks)
+    # the SLA one add-test before must be updated successfully (Unicode checks)
     {
         Update => {
             Name    => $SLAName[5] . ' ϒ ϡ Ʃ Ϟ UPDATE1',
@@ -720,7 +727,7 @@ my $ItemData = [
         },
     },
 
-    # this sla must be inserted sucessfully (special character checks)
+    # this SLA must be inserted successfully (special character checks)
     {
         Add => {
             ServiceIDs => [],
@@ -756,7 +763,7 @@ my $ItemData = [
         },
     },
 
-    # the sla one add-test before must be updated sucessfully (special character checks)
+    # the SLA one add-test before must be updated successfully (special character checks)
     {
         Update => {
             ServiceIDs => [],
@@ -805,10 +812,10 @@ for my $Item ( @{$ItemData} ) {
 
     if ( $Item->{Add} ) {
 
-        # add new sla
+        # add new SLA
         my $SLAID = $SLAObject->SLAAdd( %{ $Item->{Add} } );
 
-        # check if sla was added successfully or not
+        # check if SLA was added successfully or not
         if ( $Item->{AddGet} ) {
 
             $Self->True(
@@ -818,7 +825,7 @@ for my $Item ( @{$ItemData} ) {
 
             if ($SLAID) {
 
-                # lookup sla name
+                # lookup SLA name
                 my $SLAName = $SLAObject->SLALookup( SLAID => $SLAID );
 
                 # lookup test
@@ -828,7 +835,7 @@ for my $Item ( @{$ItemData} ) {
                     "Test $TestCount: SLALookup() - lookup",
                 );
 
-                # reverse lookup the sla id
+                # reverse lookup the SLA id
                 my $SLAIDNew = $SLAObject->SLALookup( Name => $SLAName || '' );
 
                 # reverse lookup test
@@ -838,7 +845,7 @@ for my $Item ( @{$ItemData} ) {
                     "Test $TestCount: SLALookup() - reverse lookup",
                 );
 
-                # set last sla id variable
+                # set last SLA id variable
                 $LastAddedSLAID = $SLAID;
 
                 # increment the added counter
@@ -852,14 +859,14 @@ for my $Item ( @{$ItemData} ) {
             );
         }
 
-        # get sla data to check the values after creation of the sla
+        # get SLA data to check the values after creation of the SLA
         my %SLAGet = $SLAObject->SLAGet(
             SLAID  => $SLAID,
             UserID => $Item->{Add}->{UserID},
             Cache  => 1,
         );
 
-        # check sla data after creation of the sla
+        # check SLA data after creation of the SLA
         for my $SLAAttribute ( sort keys %{ $Item->{AddGet} } ) {
 
             # check attributes
@@ -873,7 +880,7 @@ for my $Item ( @{$ItemData} ) {
 
     if ( $Item->{Update} ) {
 
-        # check last sla id varaible
+        # check last SLA id variable
         if ( !$LastAddedSLAID ) {
             $Self->False(
                 1,
@@ -881,13 +888,13 @@ for my $Item ( @{$ItemData} ) {
             );
         }
 
-        # update the sla
+        # update the SLA
         my $UpdateSucess = $SLAObject->SLAUpdate(
             %{ $Item->{Update} },
             SLAID => $LastAddedSLAID,
         );
 
-        # check if sla was updated successfully or not
+        # check if SLA was updated successfully or not
         if ( $Item->{UpdateGet} ) {
             $Self->True(
                 $UpdateSucess,
@@ -901,13 +908,13 @@ for my $Item ( @{$ItemData} ) {
             );
         }
 
-        # get sla data to check the values after the update
+        # get SLA data to check the values after the update
         my %SLAGet2 = $SLAObject->SLAGet(
             SLAID  => $LastAddedSLAID,
             UserID => $Item->{Update}->{UserID},
         );
 
-        # check sla data after update
+        # check SLA data after update
         for my $SLAAttribute ( sort keys %{ $Item->{UpdateGet} } ) {
 
             # check attributes
@@ -918,7 +925,7 @@ for my $Item ( @{$ItemData} ) {
             );
         }
 
-        # lookup sla name
+        # lookup SLA name
         my $SLAName = $SLAObject->SLALookup( SLAID => $SLAGet2{SLAID} );
 
         # lookup test
@@ -928,7 +935,7 @@ for my $Item ( @{$ItemData} ) {
             "Test $TestCount: SLALookup() - lookup",
         );
 
-        # reverse lookup the sla id
+        # reverse lookup the SLA id
         my $SLAIDNew = $SLAObject->SLALookup( Name => $SLAName || '' );
 
         # reverse lookup test
@@ -970,5 +977,7 @@ $Self->Is(
     $AddedCounter  || '',
     "Test $TestCount: SLAList()",
 );
+
+# cleanup is done by RestoreDatabase
 
 1;
