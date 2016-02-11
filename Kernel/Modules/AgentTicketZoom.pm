@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2016 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/29b250b6c4057288aff280f95e945a1b0400221d/Kernel/Modules/AgentTicketZoom.pm
+# $origin: https://github.com/OTRS/otrs/blob/505acab1c49f09f41282956e530fdcb96d0a4bce/Kernel/Modules/AgentTicketZoom.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1041,7 +1041,10 @@ sub MaskAgentZoom {
             if ( $ZoomMenuItems{$Item}->{Type} eq 'Cluster' ) {
 
                 $LayoutObject->Block(
-                    Name => 'TicketMenuSubContainer'
+                    Name => 'TicketMenuSubContainer',
+                    Data => {
+                        Name => $ZoomMenuItems{$Item}->{Name},
+                    },
                 );
 
                 for my $SubItem ( sort keys %{ $ZoomMenuItems{$Item}->{Items} } ) {
@@ -2520,8 +2523,9 @@ sub _ArticleTree {
                         Data => $Item->{ArticleData}->{Body},
                     );
 
-                    for my $ChatMessage (@{ $ChatMessages // [] }) {
-                        $ChatMessage->{CreateTime} = $LayoutObject->{LanguageObject}->FormatTimeString( $ChatMessage->{CreateTime}, 'DateFormat' );
+                    for my $ChatMessage ( @{ $ChatMessages // [] } ) {
+                        $ChatMessage->{CreateTime} = $LayoutObject->{LanguageObject}
+                            ->FormatTimeString( $ChatMessage->{CreateTime}, 'DateFormat' );
                     }
                     $Item->{ArticleData}->{ChatMessages} = $ChatMessages;
 
