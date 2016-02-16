@@ -46,11 +46,21 @@ $Selenium->RunTest(
             ClassID => $LocationConfigItemID,
         );
 
+        $Self->True(
+            $ConfigItemNumber,
+            "ConfigItem number is created - $ConfigItemNumber",
+        );
+
         # add 'Location' test ConfigItem
         my $ConfigItemID = $ConfigItemObject->ConfigItemAdd(
             Number  => $ConfigItemNumber,
             ClassID => $LocationConfigItemID,
             UserID  => 1,
+        );
+
+        $Self->True(
+            $ConfigItemID,
+            "ConfigItem 'Location' is created - ID $ConfigItemID",
         );
 
         # add a new version
@@ -62,6 +72,11 @@ $Selenium->RunTest(
             InciStateID  => 1,
             UserID       => 1,
             ConfigItemID => $ConfigItemID,
+        );
+
+        $Self->True(
+            $VersionID,
+            "Test version of the ConfigItem is created - ID $VersionID",
         );
 
         # create test user and login
@@ -76,8 +91,8 @@ $Selenium->RunTest(
         );
 
         # navigate to AdminImportExport screen
-        my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
-        $Selenium->get("${ScriptAlias}index.pl?Action=AdminImportExport");
+        my $ScriptAlias = $ConfigObject->Get('ScriptAlias');
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AdminImportExport");
 
         # check screen
         $Selenium->find_element( "table",             'css' );
@@ -85,7 +100,7 @@ $Selenium->RunTest(
         $Selenium->find_element( "table tbody tr td", 'css' );
 
         # click on 'Add template'
-        $Selenium->find_element("//a[contains(\@href, \'Action=AdminImportExport;Subaction=TemplateEdit' )]")->click();
+        $Selenium->find_element("//a[contains(\@href, \'Action=AdminImportExport;Subaction=TemplateEdit' )]")->VerifiedClick();
 
         # check and input step 1 of 5 screen
         for my $StepOneID (
@@ -103,9 +118,9 @@ $Selenium->RunTest(
         );
         $Selenium->execute_script("\$('#Format').val('CSV').trigger('redraw.InputField').trigger('change');");
         $Selenium->find_element( "#Comment", 'css' )->send_keys('SeleniumTest');
-        $Selenium->find_element("//button[\@value='SubmitNext'][\@type='submit']")->click();
+        $Selenium->find_element("//button[\@value='SubmitNext'][\@type='submit']")->VerifiedClick();
 
-        # check and inpot step 2 of 5 screen
+        # check and input step 2 of 5 screen
         for my $StepTwoID (
             qw(ClassID CountMax EmptyFieldsLeaveTheOldValues)
             )
@@ -117,7 +132,7 @@ $Selenium->RunTest(
         $Selenium->execute_script(
             "\$('#ClassID').val('$LocationConfigItemID').trigger('redraw.InputField').trigger('change');"
         );
-        $Selenium->find_element("//button[\@value='SubmitNext'][\@type='submit']")->click();
+        $Selenium->find_element("//button[\@value='SubmitNext'][\@type='submit']")->VerifiedClick();
 
         # check and input step 3 of 5 screen
         for my $StepThreeID (
@@ -131,10 +146,10 @@ $Selenium->RunTest(
         $Selenium->execute_script(
             "\$('#ColumnSeparator').val('Comma').trigger('redraw.InputField').trigger('change');"
         );
-        $Selenium->find_element("//button[\@value='SubmitNext'][\@type='submit']")->click();
+        $Selenium->find_element("//button[\@value='SubmitNext'][\@type='submit']")->VerifiedClick();
 
         # check and input step 4 of 5 screen
-        $Selenium->find_element( "#MappingAdd", 'css' )->click();
+        $Selenium->find_element( "#MappingAdd", 'css' )->VerifiedClick();
         for my $StepFourID (
             qw(Key Identifier)
             )
@@ -161,17 +176,17 @@ $Selenium->RunTest(
         $Selenium->find_element(".//*[\@id='Object::0::Key']/option[2]")->click();
 
         # add and select 'Name' mapping element
-        $Selenium->find_element( "#MappingAdd", 'css' )->click();
+        $Selenium->find_element( "#MappingAdd", 'css' )->VerifiedClick();
         $Selenium->find_element(".//*[\@id='Object::1::Key']/option[3]")->click();
 
         # add and select 'Deployment State' mapping element
-        $Selenium->find_element( "#MappingAdd", 'css' )->click();
+        $Selenium->find_element( "#MappingAdd", 'css' )->VerifiedClick();
         $Selenium->find_element(".//*[\@id='Object::2::Key']/option[4]")->click();
 
         # add and select 'Incident State' mapping element
-        $Selenium->find_element( "#MappingAdd", 'css' )->click();
+        $Selenium->find_element( "#MappingAdd", 'css' )->VerifiedClick();
         $Selenium->find_element(".//*[\@id='Object::3::Key']/option[5]")->click();
-        $Selenium->find_element("//button[\@value='SubmitNext'][\@type='submit']")->click();
+        $Selenium->find_element("//button[\@value='SubmitNext'][\@type='submit']")->VerifiedClick();
 
         # check step 5 of 5 screen
         for my $StepFourID (
@@ -192,7 +207,7 @@ $Selenium->RunTest(
             "\$('#DeplStateIDs').val('$ProductionDeplStateID').trigger('redraw.InputField').trigger('change');"
         );
         $Selenium->execute_script("\$('#InciStateIDs').val('1').trigger('redraw.InputField').trigger('change');");
-        $Selenium->find_element("//button[\@value='SubmitNext'][\@type='submit']")->click();
+        $Selenium->find_element("//button[\@value='SubmitNext'][\@type='submit']")->VerifiedClick();
 
         # get needed objects
         my $ImportExportObject = $Kernel::OM->Get('Kernel::System::ImportExport');
@@ -212,10 +227,10 @@ $Selenium->RunTest(
         }
 
         # navigate to test created ConfigItem and verify it
-        $Selenium->get("${ScriptAlias}index.pl?Action=AgentITSMConfigItemZoom;ConfigItemID=$ConfigItemID");
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentITSMConfigItemZoom;ConfigItemID=$ConfigItemID");
         $Self->True(
             index( $Selenium->get_page_source(), $VersionName ) > -1,
-            "Test config item name $VersionName - found",
+            "Test ConfigItem name $VersionName - found",
         );
 
         # export created test template
@@ -225,20 +240,27 @@ $Selenium->RunTest(
         );
 
         # delete created test ConfigItem, so it can be imported back
-        my $Success = $ConfigItemObject->ConfigItemDelete(
+        $ConfigItemObject->ConfigItemDelete(
             ConfigItemID => $ConfigItemID,
             UserID       => 1,
         );
-        $Self->True(
-            $Success,
-            "Deleted ConfigItemID - $ConfigItemID",
+
+        my $ConfigItem = $ConfigItemObject->ConfigItemGet(
+            ConfigItemID => $ConfigItemID,
+            Cache        => 0,
         );
 
-        # refresh screen and verify that test ConfigItem is deleted
-        $Selenium->refresh();
+        # check if ConfigItem is deleted
+        $Self->False(
+            $ConfigItem,
+            "ConfigItem is deleted - ID $ConfigItemID",
+        );
+
+        # refresh screen and verify that test ConfigItem does not exist anymore
+        $Selenium->VerifiedRefresh();
         $Self->True(
-            index( $Selenium->get_page_source(), $VersionName ) == -1,
-            "Test config item name $VersionName - not found",
+            index( $Selenium->get_page_source(), "Can\'t show item, no access rights for ConfigItem are given!" ) > -1,
+            "Test ConfigItem name $VersionName is not found",
         );
 
         # get main object
@@ -247,7 +269,7 @@ $Selenium->RunTest(
         # create test Exported file to a system
         my $ExportFileName = "ITSMExport" . $Helper->GetRandomID() . ".csv";
         my $ExportLocation = $ConfigObject->Get('Home') . "/var/tmp/" . $ExportFileName;
-        $Success = $MainObject->FileWrite(
+        my $Success = $MainObject->FileWrite(
             Location   => $ExportLocation,
             Content    => \$ExportResultRef->{DestinationContent}->[0],
             Mode       => 'utf8',
@@ -256,15 +278,15 @@ $Selenium->RunTest(
         );
         $Self->True(
             $Success,
-            "Export file $ExportFileName - created",
+            "Export file $ExportFileName is created",
         );
 
         # navigate to AdminImportExport screen
-        $Selenium->get("${ScriptAlias}index.pl?Action=AdminImportExport");
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AdminImportExport");
 
         # click on 'Import'
         $Selenium->find_element("//a[contains(\@href, \'Subaction=ImportInformation;TemplateID=$TemplateID' )]")
-            ->click();
+            ->VerifiedClick();
 
         # select Exported file and start importing
         $Selenium->find_element("//input[contains(\@name, \'SourceFile' )]")->send_keys($ExportLocation);
@@ -278,17 +300,17 @@ $Selenium->RunTest(
 
         # navigate to imported test created ConfigItem and verify it
         my $ImportedConfigItemID = $ConfigItemID + 1;
-        $Selenium->get("${ScriptAlias}index.pl?Action=AgentITSMConfigItemZoom;ConfigItemID=$ImportedConfigItemID");
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentITSMConfigItemZoom;ConfigItemID=$ImportedConfigItemID");
         $Self->True(
             index( $Selenium->get_page_source(), $VersionName ) > -1,
-            "Test config item name $VersionName - found",
+            "Test ConfigItem name $VersionName is found",
         );
 
         # navigate to AdminImportExport screen
-        $Selenium->get("${ScriptAlias}index.pl?Action=AdminImportExport");
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AdminImportExport");
 
         # click to delete test template
-        $Selenium->find_element( "#DeleteTemplateID$TemplateID", 'css' )->click();
+        $Selenium->find_element( "#DeleteTemplateID$TemplateID", 'css' )->VerifiedClick();
 
         # delete test imported ConfigItem
         $Success = $ConfigItemObject->ConfigItemDelete(
@@ -297,7 +319,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $Success,
-            "Deleted ConfigItemID - $ImportedConfigItemID",
+            "ConfigItem is deleted - ID $ImportedConfigItemID",
         );
 
         # delete test Exported file from system
@@ -307,8 +329,9 @@ $Selenium->RunTest(
         );
         $Self->True(
             $Success,
-            "Export file $ExportFileName - deleted",
+            "Export file $ExportFileName is deleted",
         );
+
         }
 );
 
