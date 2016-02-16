@@ -887,6 +887,12 @@ my $ServiceID = $ServiceObject->ServiceAdd(
     Name    => 'Service' . $Helper->GetRandomID(),
     ValidID => 1,
     Comment => 'Unit Test Comment',
+# ---
+# ITSM
+# ---
+    TypeID      => 1,
+    Criticality => '3 normal',
+# ---
     UserID  => 1,
 );
 
