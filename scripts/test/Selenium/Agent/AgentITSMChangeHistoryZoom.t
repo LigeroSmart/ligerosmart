@@ -41,7 +41,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $ChangeID,
-            "Change in Pending PIR state - created",
+            "Change in Pending PIR state is created",
         );
 
         # create and log in test user
@@ -59,30 +59,34 @@ $Selenium->RunTest(
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
         # navigate to AgentITSMChangeZoom of created test change
-        $Selenium->get("${ScriptAlias}index.pl?Action=AgentITSMChangeZoom;ChangeID=$ChangeID");
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentITSMChangeZoom;ChangeID=$ChangeID");
 
         # click on 'Edit' and switch screens
         $Selenium->find_element("//a[contains(\@href, \'Action=AgentITSMChangeHistory;ChangeID=$ChangeID' )]")->click();
 
+        $Selenium->WaitFor( WindowCount => 2 );
         my $Handles = $Selenium->get_window_handles();
         $Selenium->switch_to_window( $Handles->[1] );
 
+        # wait until page has loaded, if necessary
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $(".CancelClosePopup").length' );
+
         # click on history show details to check AgentITSMChangeHistoryZoom screen
         $Selenium->find_element("//a[contains(\@href, \'Action=AgentITSMChangeHistoryZoom;HistoryEntryID=' )]")
-            ->click();
+            ->VerifiedClick();
 
         # check AgentITSMChangeHistoryZoom values
         $Self->True(
             index( $Selenium->get_page_source(), "Detailed history information of ChangeUpdate" ) > -1,
-            "Detailed history information of ChangeUpdate - found",
+            "Detailed history information of ChangeUpdate is found",
         );
         $Self->True(
             index( $Selenium->get_page_source(), "ChangeTitle" ) > -1,
-            "ChangeTitle - found",
+            "ChangeTitle is found",
         );
         $Self->True(
             index( $Selenium->get_page_source(), $ChangeTitleRandom ) > -1,
-            "$ChangeTitleRandom - found",
+            "$ChangeTitleRandom is found",
         );
 
         # delete test created change
@@ -92,12 +96,12 @@ $Selenium->RunTest(
         );
         $Self->True(
             $Success,
-            "$ChangeTitleRandom - deleted",
+            "$ChangeTitleRandom is deleted",
         );
 
         # make sure cache is correct
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => 'ITSMChange*' );
-        }
+    }
 );
 
 1;

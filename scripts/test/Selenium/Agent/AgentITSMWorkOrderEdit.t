@@ -53,7 +53,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $ChangeID,
-            "$ChangeTitleRandom - created",
+            "$ChangeTitleRandom is created",
         );
 
         # get work order object
@@ -71,7 +71,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $ChangeID,
-            "$WorkOrderTitleRandom - created",
+            "$WorkOrderTitleRandom is created",
         );
 
         # create and log in test user
@@ -89,14 +89,18 @@ $Selenium->RunTest(
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
         # navigate to AgentITSMWorkOrderZoom for test created work order
-        $Selenium->get("${ScriptAlias}index.pl?Action=AgentITSMWorkOrderZoom;WorkOrderID=$WorkOrderID");
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentITSMWorkOrderZoom;WorkOrderID=$WorkOrderID");
 
         # click on 'Edit' and switch window
         $Selenium->find_element("//a[contains(\@href, \'Action=AgentITSMWorkOrderEdit;WorkOrderID=$WorkOrderID')]")
             ->click();
 
+        $Selenium->WaitFor( WindowCount => 2 );
         my $Handles = $Selenium->get_window_handles();
         $Selenium->switch_to_window( $Handles->[1] );
+
+        # wait until page has loaded, if necessary
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#WorkOrderTitle").length' );
 
         # check stored values
         $Self->Is(
@@ -118,18 +122,24 @@ $Selenium->RunTest(
         # edit work order and submit
         $Selenium->find_element( "#WorkOrderTitle",      'css' )->send_keys(" Edit");
         $Selenium->find_element( "#RichText",            'css' )->send_keys(" Edit");
-        $Selenium->find_element( "#PlannedEffort",       'css' )->send_keys("1");
+        $Selenium->find_element( "#PlannedEffort",       'css' )->clear();
+        $Selenium->find_element( "#PlannedEffort",       'css' )->send_keys("11.00");
         $Selenium->find_element( "#SubmitWorkOrderEdit", 'css' )->click();
 
         # switch back window
+        $Selenium->WaitFor( WindowCount => 1 );
         $Selenium->switch_to_window( $Handles->[0] );
 
         # click on 'Edit' and switch window
         $Selenium->find_element("//a[contains(\@href, \'Action=AgentITSMWorkOrderEdit;WorkOrderID=$WorkOrderID')]")
             ->click();
 
+        $Selenium->WaitFor( WindowCount => 2 );
         $Handles = $Selenium->get_window_handles();
         $Selenium->switch_to_window( $Handles->[1] );
+
+        # wait until page has loaded, if necessary
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#WorkOrderTitle").length' );
 
         # check edited values
         $Self->Is(
@@ -144,7 +154,7 @@ $Selenium->RunTest(
         );
         $Self->Is(
             $Selenium->find_element( '#PlannedEffort', 'css' )->get_value(),
-            '10.001',
+            '11.00',
             "#PlannedEffort edited value",
         );
 
@@ -155,7 +165,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $Success,
-            "$WorkOrderTitleRandom - deleted",
+            "$WorkOrderTitleRandom is deleted",
         );
 
         # delete test created change
@@ -165,12 +175,12 @@ $Selenium->RunTest(
         );
         $Self->True(
             $Success,
-            "$ChangeTitleRandom - deleted",
+            "$ChangeTitleRandom is deleted",
         );
 
         # make sure cache is correct
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => 'ITSMChange*' );
-        }
+    }
 );
 
 1;

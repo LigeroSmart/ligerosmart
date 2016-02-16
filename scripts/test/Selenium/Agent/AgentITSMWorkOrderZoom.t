@@ -41,7 +41,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $ChangeID,
-            "$ChangeTitleRandom - created",
+            "$ChangeTitleRandom is created",
         );
 
         # get work order object
@@ -58,7 +58,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $ChangeID,
-            "$WorkOrderTitleRandom - created",
+            "$WorkOrderTitleRandom is created",
         );
 
         # create and log in test user
@@ -76,7 +76,7 @@ $Selenium->RunTest(
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
         # navigate to AgentITSMWorkOrderZoom for test created work order
-        $Selenium->get("${ScriptAlias}index.pl?Action=AgentITSMWorkOrderZoom;WorkOrderID=$WorkOrderID");
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentITSMWorkOrderZoom;WorkOrderID=$WorkOrderID");
 
         # verify its right screen
         $Self->True(
@@ -102,7 +102,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $Success,
-            "$WorkOrderTitleRandom - deleted",
+            "$WorkOrderTitleRandom is deleted",
         );
 
         # delete created test change
@@ -112,12 +112,12 @@ $Selenium->RunTest(
         );
         $Self->True(
             $Success,
-            "$ChangeTitleRandom - deleted",
+            "$ChangeTitleRandom is deleted",
         );
 
         # make sure the cache is correct
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => 'ITSMChange*' );
-        }
+    }
 );
 
 1;

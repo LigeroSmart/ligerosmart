@@ -62,41 +62,35 @@ $Selenium->RunTest(
             );
             $Self->True(
                 $ChangeID,
-                "Change in $ChangeState state - created",
+                "Change in $ChangeState state is created",
             );
 
             # navigate to AgentITSMChange screen
-            $Selenium->get("${ScriptAlias}index.pl?Action=AgentITSMChange;SortBy=ChangeNumber;OrderBy=Down");
-
-            # wait for screen to load
-            $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("div.ControlRow").length' );
+            $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentITSMChange;SortBy=ChangeNumber;OrderBy=Down");
 
             if ( $ChangeState eq 'pending approval' ) {
 
                 # click on appropriate filter
-                $Selenium->find_element("//a[contains(\@href, \'Filter=pending%20approval' )]")->click();
+                $Selenium->find_element("//a[contains(\@href, \'Filter=pending%20approval' )]")->VerifiedClick();
 
             }
             elsif ( $ChangeState eq 'in progress' ) {
 
                 # click on appropriate filter
-                $Selenium->find_element("//a[contains(\@href, \'Filter=in%20progress' )]")->click();
+                $Selenium->find_element("//a[contains(\@href, \'Filter=in%20progress' )]")->VerifiedClick();
 
             }
             elsif ( $ChangeState eq 'pending pir' ) {
 
                 # click on appropriate filter
-                $Selenium->find_element("//a[contains(\@href, \'Filter=pending%20pir' )]")->click();
+                $Selenium->find_element("//a[contains(\@href, \'Filter=pending%20pir' )]")->VerifiedClick();
 
             }
             else {
 
                 # click on appropriate filter
-                $Selenium->find_element("//a[contains(\@href, \'Filter=$ChangeState' )]")->click();
+                $Selenium->find_element("//a[contains(\@href, \'Filter=$ChangeState' )]")->VerifiedClick();
             }
-
-            # wait until page has loaded, if neccessary
-            $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("body").length' );
 
             # check screen
             $Selenium->find_element( "table",             'css' );
@@ -106,7 +100,7 @@ $Selenium->RunTest(
             # check for test created change
             $Self->True(
                 index( $Selenium->get_page_source(), $ChangeTitleRandom ) > -1,
-                "$ChangeTitleRandom - found",
+                "$ChangeTitleRandom is found",
             );
 
             # delete created test change
@@ -116,13 +110,13 @@ $Selenium->RunTest(
             );
             $Self->True(
                 $Success,
-                "$ChangeTitleRandom - deleted",
+                "$ChangeTitleRandom is deleted",
             );
         }
 
         # make sure the cache is correct
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => 'ITSMChange*' );
-        }
+    }
 );
 
 1;

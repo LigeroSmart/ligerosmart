@@ -45,13 +45,13 @@ $Selenium->RunTest(
         my $ChangeID          = $ChangeObject->ChangeAdd(
             ChangeTitle   => $ChangeTitleRandom,
             Description   => 'Selenium Test Description',
-            Justification => 'Seleniun Test Justification',
+            Justification => 'Selenium Test Justification',
             ChangeStateID => $ChangeStateDataRef->{ItemID},
             UserID        => $TestUserID,
         );
         $Self->True(
             $ChangeID,
-            "$ChangeTitleRandom - created",
+            "$ChangeTitleRandom is created",
         );
 
         # log in test user
@@ -73,12 +73,12 @@ $Selenium->RunTest(
         );
         $Self->True(
             $Success,
-            "$ChangeTitleRandom - deleted",
+            "$ChangeTitleRandom is deleted",
         );
 
         # make sure cache is correct
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => 'ITSMChange*' );
-        }
+    }
 );
 
 1;

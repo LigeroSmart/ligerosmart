@@ -41,7 +41,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $ChangeID,
-            "$ChangeTitleRandom - created",
+            "$ChangeTitleRandom is created",
         );
 
         # get work order object
@@ -59,7 +59,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $ChangeID,
-            "$WorkOrderTitleRandom - created",
+            "$WorkOrderTitleRandom is created",
         );
 
         # create and log in test user
@@ -77,14 +77,18 @@ $Selenium->RunTest(
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
         # navigate to AgentITSMWorkOrderZoom for test created work order
-        $Selenium->get("${ScriptAlias}index.pl?Action=AgentITSMWorkOrderZoom;WorkOrderID=$WorkOrderID");
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentITSMWorkOrderZoom;WorkOrderID=$WorkOrderID");
 
         # click on 'History' and switch window
         $Selenium->find_element("//a[contains(\@href, \'Action=AgentITSMWorkOrderHistory;WorkOrderID=$WorkOrderID')]")
             ->click();
 
+        $Selenium->WaitFor( WindowCount => 2 );
         my $Handles = $Selenium->get_window_handles();
         $Selenium->switch_to_window( $Handles->[1] );
+
+        # wait until page has loaded, if necessary
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $(".CancelClosePopup").length' );
 
         # check screen
         $Selenium->find_element( "table",             'css' );
@@ -94,15 +98,15 @@ $Selenium->RunTest(
         # check for history values upon test change creation
         $Self->True(
             index( $Selenium->get_page_source(), "New Workorder (ID=$WorkOrderID)" ) > -1,
-            "New Workorder (ID=$WorkOrderID) - found",
+            "New Workorder (ID=$WorkOrderID) is found",
         );
         $Self->True(
             index( $Selenium->get_page_source(), "Instruction: New: $WorkOrderInstruction &lt;- Old: -" ) > -1,
-            "Instruction: New: $WorkOrderInstruction &lt;- Old: - found",
+            "Instruction: New: $WorkOrderInstruction &lt;- Old: is found",
         );
         $Self->True(
             index( $Selenium->get_page_source(), "Planned Effort: New: 10 &lt;- Old: 0.00" ) > -1,
-            "Planned Effort: New: 10 &lt;- Old: 0.00 - found",
+            "Planned Effort: New: 10 &lt;- Old: 0.00 is found",
         );
 
         # cut off the workorder title after 30 characters and add [...]
@@ -110,7 +114,7 @@ $Selenium->RunTest(
 
         $Self->True(
             index( $Selenium->get_page_source(), "Workorder Title: New: $WorkOrderTitleTruncated &lt;- Old: -" ) > -1,
-            "Workorder Title: New: $WorkOrderTitleTruncated &lt;- Old: - found",
+            "Workorder Title: New: $WorkOrderTitleTruncated &lt;- Old: is found",
         );
 
         # delete test created work order
@@ -120,7 +124,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $Success,
-            "$WorkOrderTitleRandom - deleted",
+            "$WorkOrderTitleRandom is deleted",
         );
 
         # delete test created change
@@ -130,12 +134,12 @@ $Selenium->RunTest(
         );
         $Self->True(
             $Success,
-            "$ChangeTitleRandom - deleted",
+            "$ChangeTitleRandom is deleted",
         );
 
         # make sure cache is correct
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => 'ITSMChange*' );
-        }
+    }
 );
 
 1;

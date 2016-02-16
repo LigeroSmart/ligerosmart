@@ -55,7 +55,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $ChangeID,
-            "$ChangeTitleRandom - created",
+            "$ChangeTitleRandom is created",
         );
 
         # get template object
@@ -89,7 +89,7 @@ $Selenium->RunTest(
             );
             $Self->True(
                 $TemplateID,
-                "Change Template $TemplateID - created",
+                "Change Template ID $TemplateID is created",
             );
 
             push @TemplateIDs,   $TemplateID;
@@ -110,7 +110,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $WorkOrderID,
-            "$WorkOrderTitleRandom - created",
+            "$WorkOrderTitleRandom is created",
         );
 
         my $TemplateNameRandom = 'Template ITSMWorkOrder ' . $Helper->GetRandomID();
@@ -135,7 +135,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $TemplateID,
-            "Change Template $TemplateID - created",
+            "Change Template ID $TemplateID is created",
         );
 
         push @TemplateIDs,   $TemplateID;
@@ -159,7 +159,7 @@ $Selenium->RunTest(
         for my $TemplateCheck (qw(ITSMChange CAB ITSMWorkOrder)) {
 
             # navigate to AgentITSMTemplateOverview order down with appropriate filter
-            $Selenium->get(
+            $Selenium->VerifiedGet(
                 "${ScriptAlias}index.pl?Action=AgentITSMTemplateOverview;SortBy=TemplateID;OrderBy=Down;Filter=$TemplateCheck"
             );
 
@@ -171,7 +171,7 @@ $Selenium->RunTest(
             # check for expected test template
             $Self->True(
                 index( $Selenium->get_page_source(), $TemplateNames[$Index] ) > -1,
-                "$TemplateNames[$Index] - found",
+                "$TemplateNames[$Index] is found",
             );
 
             # check for edit template link
@@ -192,7 +192,7 @@ $Selenium->RunTest(
 
             # wait for confirm button to show up and confirm delete action
             $Selenium->WaitFor( JavaScript => "return \$('#DialogButton1').length;" );
-            $Selenium->find_element( "#DialogButton1", 'css' )->click();
+            $Selenium->find_element( "#DialogButton1", 'css' )->VerifiedClick();
 
             $Index++;
         }
@@ -204,7 +204,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $Success,
-            "Work Order ID $WorkOrderID - deleted",
+            "$WorkOrderTitleRandom is deleted",
         );
 
         # delete test created change
@@ -214,12 +214,12 @@ $Selenium->RunTest(
         );
         $Self->True(
             $Success,
-            "Change ID $ChangeID - deleted",
+            "$ChangeTitleRandom is deleted",
         );
 
         # make sure the cache is correct
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => 'ITSMChange*' );
-        }
+    }
 );
 
 1;

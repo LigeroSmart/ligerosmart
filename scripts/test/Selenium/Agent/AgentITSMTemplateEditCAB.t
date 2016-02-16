@@ -41,7 +41,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $ChangeID,
-            "$ChangeTitleRandom - created",
+            "$ChangeTitleRandom is created",
         );
 
         # get template object
@@ -70,7 +70,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $TemplateID,
-            "Change Template $TemplateID - created",
+            "Change Template ID $TemplateID is created",
         );
 
         # create test CAB user
@@ -109,15 +109,19 @@ $Selenium->RunTest(
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
         # navigate to AgentITSMTemplateOverview screen
-        $Selenium->get(
+        $Selenium->VerifiedGet(
             "${ScriptAlias}index.pl?Action=AgentITSMTemplateOverview;SortBy=TemplateID;OrderBy=Down;Filter=CAB"
         );
 
         # click on 'Edit Content' for test created CAB template and switch window
-        $Selenium->get("${ScriptAlias}index.pl?Action=AgentITSMTemplateEditCAB;TemplateID=$TemplateID");
+        $Selenium->find_element("//a[contains(\@href, \'AgentITSMTemplateEditCAB;TemplateID=$TemplateID' )]")->click();
 
+        $Selenium->WaitFor( WindowCount => 2 );
         my $Handles = $Selenium->get_window_handles();
         $Selenium->switch_to_window( $Handles->[1] );
+
+        # wait until page has loaded, if necessary
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#NewCABMember").length' );
 
         # add test created CAB user to test CAB template
         my $AutoCompleteStringCABUser
@@ -127,6 +131,8 @@ $Selenium->RunTest(
         $Selenium->find_element("//*[text()='$AutoCompleteStringCABUser']")->click();
         $Selenium->find_element("//button[\@type='submit'][\@name='AddCABMember']")->click();
 
+        $Selenium->WaitFor( JavaScript => "return typeof(\$) === 'function' && \$('#CABAgents$TestUserCABID').length" );
+
         # add test created CAB customer to test CAB template
         my $AutoCompleteStringCABCustomer
             = "\"$TestCustomerCAB $TestCustomerCAB\" <$TestCustomerCAB\@localunittest.com> ($TestCustomerCAB)";
@@ -135,18 +141,29 @@ $Selenium->RunTest(
         $Selenium->find_element("//*[text()='$AutoCompleteStringCABCustomer']")->click();
         $Selenium->find_element("//button[\@type='submit'][\@name='AddCABMember']")->click();
 
+        $Selenium->WaitFor(
+            JavaScript => "return typeof(\$) === 'function' && \$('#CABCustomers$TestCustomerCAB').length"
+        );
+
         # save edited CAB template and switch window
         $Selenium->find_element("//button[\@type='submit'][\@name='Submit']")->click();
+
+        $Selenium->WaitFor( WindowCount => 1 );
         $Selenium->switch_to_window( $Handles->[0] );
 
         # navigate to created test change
-        $Selenium->get("${ScriptAlias}index.pl?Action=AgentITSMChangeZoom;ChangeID=$ChangeID");
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentITSMChangeZoom;ChangeID=$ChangeID");
 
         # click on 'Involed Persons' and switch window
-        $Selenium->get("${ScriptAlias}index.pl?Action=AgentITSMChangeInvolvedPersons;ChangeID=$ChangeID");
+        $Selenium->find_element("//a[contains(\@href, \'AgentITSMChangeInvolvedPersons;ChangeID=$ChangeID' )]")
+            ->click();
 
+        $Selenium->WaitFor( WindowCount => 2 );
         $Handles = $Selenium->get_window_handles();
         $Selenium->switch_to_window( $Handles->[1] );
+
+        # wait until page has loaded, if necessary
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#ChangeManager").length' );
 
         # input change manager
         my $AutoCompleteStringManager
@@ -178,7 +195,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $Success,
-            "$TemplateNameRandom edit - deleted",
+            "$TemplateNameRandom edit is deleted",
         );
 
         # delete test created change
@@ -188,12 +205,12 @@ $Selenium->RunTest(
         );
         $Self->True(
             $Success,
-            "$ChangeTitleRandom - deleted",
+            "$ChangeTitleRandom is deleted",
         );
 
         # make sure cache is correct
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => 'ITSMChange*' );
-        }
+    }
 );
 
 1;

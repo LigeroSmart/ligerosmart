@@ -33,8 +33,11 @@ $Selenium->RunTest(
             Value => 0,
         );
 
+        # get general catalog object
+        my $GeneralCatalogObject = $Kernel::OM->Get('Kernel::System::GeneralCatalog');
+
         # get change state data
-        my $ChangeStateDataRef = $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemGet(
+        my $ChangeStateDataRef = $GeneralCatalogObject->ItemGet(
             Class => 'ITSM::ChangeManagement::Change::State',
             Name  => 'pending pir',
         );
@@ -53,7 +56,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $ChangeID,
-            "Change in Pending PIR state - created",
+            "Change in Pending PIR state is created",
         );
 
         # create and log in test user
@@ -71,16 +74,17 @@ $Selenium->RunTest(
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
         # navigate to AgentITSMChangeZoom of created test change
-        $Selenium->get("${ScriptAlias}index.pl?Action=AgentITSMChangeZoom;ChangeID=$ChangeID");
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentITSMChangeZoom;ChangeID=$ChangeID");
 
         # click on 'Edit' and switch screens
         $Selenium->find_element("//a[contains(\@href, \'Action=AgentITSMChangeEdit;ChangeID=$ChangeID' )]")->click();
 
+        $Selenium->WaitFor( WindowCount => 2 );
         my $Handles = $Selenium->get_window_handles();
         $Selenium->switch_to_window( $Handles->[1] );
 
-        # get general catalog object
-        my $GeneralCatalogObject = $Kernel::OM->Get('Kernel::System::GeneralCatalog');
+        # wait until page has loaded, if necessary
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#ChangeTitle").length' );
 
         # get general catalog category, impact and priority ID for '3 normal'
         my @StoredIDs;
@@ -148,13 +152,18 @@ $Selenium->RunTest(
         $Selenium->find_element("//button[\@value='Submit'][\@type='submit']")->click();
 
         # switch back window
+        $Selenium->WaitFor( WindowCount => 1 );
         $Selenium->switch_to_window( $Handles->[0] );
 
         # click on 'Edit' and switch screens
         $Selenium->find_element("//a[contains(\@href, \'Action=AgentITSMChangeEdit;ChangeID=$ChangeID' )]")->click();
 
+        $Selenium->WaitFor( WindowCount => 2 );
         $Handles = $Selenium->get_window_handles();
         $Selenium->switch_to_window( $Handles->[1] );
+
+        # wait until page has loaded, if necessary
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#ChangeTitle").length' );
 
         # check edited values
         $Self->Is(
@@ -195,12 +204,12 @@ $Selenium->RunTest(
         );
         $Self->True(
             $Success,
-            "$ChangeTitleRandom edit - deleted",
+            "$ChangeTitleRandom edit is deleted",
         );
 
         # make sure cache is correct
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => 'ITSMChange*' );
-        }
+    }
 
 );
 

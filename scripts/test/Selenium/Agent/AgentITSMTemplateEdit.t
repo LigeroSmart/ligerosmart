@@ -41,7 +41,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $ChangeID,
-            "$ChangeTitleRandom - created",
+            "$ChangeTitleRandom is created",
         );
 
         # get template object
@@ -70,7 +70,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $TemplateID,
-            "Change Template $TemplateID - created",
+            "Change Template ID $TemplateID is created",
         );
 
         # create and log in test user
@@ -88,15 +88,19 @@ $Selenium->RunTest(
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
         # navigate to AgentITSMTemplateOverview screen
-        $Selenium->get(
+        $Selenium->VerifiedGet(
             "${ScriptAlias}index.pl?Action=AgentITSMTemplateOverview;SortBy=TemplateID;OrderBy=Down;Filter=ITSMChange"
         );
 
         # click on test template and switch window
-        $Selenium->get("${ScriptAlias}index.pl?Action=AgentITSMTemplateEdit;TemplateID=$TemplateID");
+        $Selenium->find_element("//a[contains(\@href, \'AgentITSMTemplateEdit;TemplateID=$TemplateID' )]")->click();
 
+        $Selenium->WaitFor( WindowCount => 2 );
         my $Handles = $Selenium->get_window_handles();
         $Selenium->switch_to_window( $Handles->[1] );
+
+        # wait until page has loaded, if necessary
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#TemplateName").length' );
 
         # check stored values
         $Self->Is(
@@ -115,13 +119,18 @@ $Selenium->RunTest(
         $Selenium->find_element( "#Comment",      'css' )->send_keys(" Edit");
         $Selenium->find_element("//button[\@id='submitEditTemplate'][\@type='submit']")->click();
 
+        $Selenium->WaitFor( WindowCount => 1 );
         $Selenium->switch_to_window( $Handles->[0] );
 
         # click on edited test template and switch window
-        $Selenium->get("${ScriptAlias}index.pl?Action=AgentITSMTemplateEdit;TemplateID=$TemplateID");
+        $Selenium->find_element("//a[contains(\@href, \'AgentITSMTemplateEdit;TemplateID=$TemplateID' )]")->click();
 
+        $Selenium->WaitFor( WindowCount => 2 );
         $Handles = $Selenium->get_window_handles();
         $Selenium->switch_to_window( $Handles->[1] );
+
+        # wait until page has loaded, if necessary
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#TemplateName").length' );
 
         # check edited values
         $Self->Is(
@@ -142,7 +151,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $Success,
-            "$TemplateNameRandom edit - deleted",
+            "$TemplateNameRandom edit is deleted",
         );
 
         # delete test created change
@@ -152,12 +161,12 @@ $Selenium->RunTest(
         );
         $Self->True(
             $Success,
-            "$ChangeTitleRandom - deleted",
+            "$ChangeTitleRandom is deleted",
         );
 
         # make sure cache is correct
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => 'ITSMChange*' );
-        }
+    }
 );
 
 1;

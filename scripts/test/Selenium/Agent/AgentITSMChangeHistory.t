@@ -41,7 +41,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $ChangeID,
-            "Change in Pending PIR state - created",
+            "Change in Pending PIR state is created",
         );
 
         # create and log in test user
@@ -59,13 +59,17 @@ $Selenium->RunTest(
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
         # navigate to AgentITSMChangeZoom of created test change
-        $Selenium->get("${ScriptAlias}index.pl?Action=AgentITSMChangeZoom;ChangeID=$ChangeID");
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentITSMChangeZoom;ChangeID=$ChangeID");
 
         # click on 'Edit' and switch screens
         $Selenium->find_element("//a[contains(\@href, \'Action=AgentITSMChangeHistory;ChangeID=$ChangeID' )]")->click();
 
+        $Selenium->WaitFor( WindowCount => 2 );
         my $Handles = $Selenium->get_window_handles();
         $Selenium->switch_to_window( $Handles->[1] );
+
+        # wait until page has loaded, if necessary
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $(".CancelClosePopup").length' );
 
         # check screen
         $Selenium->find_element( "table",             'css' );
@@ -75,13 +79,13 @@ $Selenium->RunTest(
         # check for history values upon test change creation
         $Self->True(
             index( $Selenium->get_page_source(), "New Change (ID=$ChangeID)" ) > -1,
-            "New Change (ID=\"$ChangeID) - found",
+            "New Change (ID=\"$ChangeID) is found",
         );
         $Self->True(
             index(
                 $Selenium->get_page_source(), "Description: New: Test Description &lt;- Old: -"
                 ) > -1,
-            "Description: New: Test Description <- Old: - found",
+            "Description: New: Test Description <- Old: is found",
         );
         $Self->True(
             index(
@@ -97,12 +101,12 @@ $Selenium->RunTest(
         );
         $Self->True(
             $Success,
-            "$ChangeTitleRandom - deleted",
+            "$ChangeTitleRandom is deleted",
         );
 
         # make sure cache is correct
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => 'ITSMChange*' );
-        }
+    }
 );
 
 1;

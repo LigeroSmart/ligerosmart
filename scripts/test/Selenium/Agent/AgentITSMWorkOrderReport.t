@@ -56,7 +56,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $ChangeID,
-            "$ChangeTitleRandom - created",
+            "$ChangeTitleRandom is created",
         );
 
         # get work order object
@@ -73,7 +73,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $ChangeID,
-            "$WorkOrderTitleRandom - created",
+            "$WorkOrderTitleRandom is created",
         );
 
         # create and log in test user
@@ -91,7 +91,7 @@ $Selenium->RunTest(
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
         # navigate to AgentITSMWorkOrderZoom for test created work order
-        $Selenium->get("${ScriptAlias}index.pl?Action=AgentITSMWorkOrderZoom;WorkOrderID=$WorkOrderID");
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentITSMWorkOrderZoom;WorkOrderID=$WorkOrderID");
 
         # get work order states
         my @WorkOrderStates = ( 'Accepted', 'Ready', 'In Progress', 'closed' );
@@ -103,8 +103,14 @@ $Selenium->RunTest(
                 "//a[contains(\@href, \'Action=AgentITSMWorkOrderReport;WorkOrderID=$WorkOrderID')]"
             )->click();
 
+            $Selenium->WaitFor( WindowCount => 2 );
             my $Handles = $Selenium->get_window_handles();
             $Selenium->switch_to_window( $Handles->[1] );
+
+            # wait until page has loaded, if necessary
+            $Selenium->WaitFor(
+                JavaScript => 'return typeof($) === "function" && $("#SubmitWorkOrderEditReport").length'
+            );
 
             # get work order state data
             my $WorkOrderStateDataRef = $GeneralCatalogObject->ItemGet(
@@ -120,6 +126,8 @@ $Selenium->RunTest(
 
             # submit and switch back window
             $Selenium->find_element( "#SubmitWorkOrderEditReport", 'css' )->click();
+
+            $Selenium->WaitFor( WindowCount => 1 );
             $Selenium->switch_to_window( $Handles->[0] );
 
             # click on 'History' and switch window
@@ -127,18 +135,24 @@ $Selenium->RunTest(
                 "//a[contains(\@href, \'Action=AgentITSMWorkOrderHistory;WorkOrderID=$WorkOrderID')]"
             )->click();
 
+            $Selenium->WaitFor( WindowCount => 2 );
             $Handles = $Selenium->get_window_handles();
             $Selenium->switch_to_window( $Handles->[1] );
+
+            # wait until page has loaded, if necessary
+            $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $(".CancelClosePopup").length' );
 
             # verify report change
             my $ReportUpdateMessage = "Workorder State: New: $WorkOrderState (ID=$WorkOrderStateDataRef->{ItemID})";
             $Self->True(
                 index( $Selenium->get_page_source(), $ReportUpdateMessage ) > -1,
-                "$ReportUpdateMessage - found",
+                "$ReportUpdateMessage is found",
             );
 
             # close history pop up and switch window
             $Selenium->find_element( ".CancelClosePopup", 'css' )->click();
+
+            $Selenium->WaitFor( WindowCount => 1 );
             $Selenium->switch_to_window( $Handles->[0] );
         }
 
@@ -149,7 +163,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $Success,
-            "$WorkOrderTitleRandom - deleted",
+            "$WorkOrderTitleRandom is deleted",
         );
 
         # delete test created change
@@ -159,12 +173,12 @@ $Selenium->RunTest(
         );
         $Self->True(
             $Success,
-            "$ChangeTitleRandom - deleted",
+            "$ChangeTitleRandom is deleted",
         );
 
         # make sure cache is correct
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => 'ITSMChange*' );
-        }
+    }
 );
 
 1;

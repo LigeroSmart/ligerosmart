@@ -53,7 +53,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $ChangeID,
-            "$ChangeTitleRandom - created",
+            "$ChangeTitleRandom is created",
         );
 
         # create and log in test user
@@ -71,13 +71,17 @@ $Selenium->RunTest(
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
         # navigate to AgentITSMChangeZoom for test created change
-        $Selenium->get("${ScriptAlias}index.pl?Action=AgentITSMChangeZoom;ChangeID=$ChangeID");
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentITSMChangeZoom;ChangeID=$ChangeID");
 
         # click 'Add WorkOrder' and switch window
         $Selenium->find_element("//a[contains(\@href, \'Action=AgentITSMWorkOrderAdd;ChangeID=$ChangeID')]")->click();
 
+        $Selenium->WaitFor( WindowCount => 2 );
         my $Handles = $Selenium->get_window_handles();
         $Selenium->switch_to_window( $Handles->[1] );
+
+        # wait until page has loaded, if necessary
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#WorkOrderTitle").length' );
 
         # check page
         for my $ID (
@@ -96,16 +100,17 @@ $Selenium->RunTest(
         $Selenium->find_element( "#RichText",           'css' )->send_keys('Selenium WorkOrder Instructions');
         $Selenium->find_element( "#SubmitWorkOrderAdd", 'css' )->click();
 
+        $Selenium->WaitFor( WindowCount => 1 );
         $Selenium->switch_to_window( $Handles->[0] );
 
         # check created test work order values
         $Self->True(
             index( $Selenium->get_page_source(), $WorkOrderTitleRandom ) > -1,
-            "$WorkOrderTitleRandom - found",
+            "$WorkOrderTitleRandom is found",
         );
         $Self->True(
             index( $Selenium->get_page_source(), $ChangeTitleRandom ) > -1,
-            "$ChangeTitleRandom - found",
+            "$ChangeTitleRandom is found",
         );
 
         # get DB object
@@ -129,7 +134,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $Success,
-            "$WorkOrderTitleRandom - deleted",
+            "$WorkOrderTitleRandom is deleted",
         );
 
         # delete test created change
@@ -139,12 +144,12 @@ $Selenium->RunTest(
         );
         $Self->True(
             $Success,
-            "$ChangeTitleRandom - deleted",
+            "$ChangeTitleRandom is deleted",
         );
 
         # make sure cache is correct
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => 'ITSMChange*' );
-        }
+    }
 );
 
 1;

@@ -47,8 +47,8 @@ $Selenium->RunTest(
         # get script alias
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
-        # naviage to AgentITSMChangeAdd screen
-        $Selenium->get("${ScriptAlias}index.pl?Action=AgentITSMChangeAdd");
+        # navigate to AgentITSMChangeAdd screen
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentITSMChangeAdd");
 
         # check page
         for my $ID (
@@ -62,14 +62,17 @@ $Selenium->RunTest(
             $Element->is_displayed();
         }
 
+        # get general catalog object
+        my $GeneraCatalogObject = $Kernel::OM->Get('Kernel::System::GeneralCatalog');
+
         # get category ID '5 very high'
-        my $CategoryDataRef = $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemGet(
+        my $CategoryDataRef = $GeneraCatalogObject->ItemGet(
             Class => 'ITSM::ChangeManagement::Category',
             Name  => '5 very high',
         );
 
         # get impact ID '4 very high'
-        my $ImpactDataRef = $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemGet(
+        my $ImpactDataRef = $GeneraCatalogObject->ItemGet(
             Class => 'ITSM::ChangeManagement::Impact',
             Name  => '4 high',
         );
@@ -85,24 +88,24 @@ $Selenium->RunTest(
         $Selenium->execute_script(
             "\$('#ImpactID').val('$ImpactDataRef->{ItemID}').trigger('redraw.InputField').trigger('change');"
         );
-        $Selenium->find_element( "#SubmitChangeAdd", 'css' )->click();
+        $Selenium->find_element( "#SubmitChangeAdd", 'css' )->VerifiedClick();
 
         # check created test change values
         $Self->True(
             index( $Selenium->get_page_source(), $ChangeTitleRandom ) > -1,
-            "$ChangeTitleRandom - found",
+            "$ChangeTitleRandom is found",
         );
         $Self->True(
             $Selenium->execute_script(
                 "return \$('p:contains(5 very high)').length"
             ),
-            "Test Change value category 5 very high - found",
+            "Test Change value category 5 very high is found",
         );
         $Self->True(
             $Selenium->execute_script(
                 "return \$('p:contains(4 high)').length"
             ),
-            "Test Change value impact 4 high - found",
+            "Test Change value impact 4 high is found",
         );
 
         # get DB object
@@ -126,12 +129,12 @@ $Selenium->RunTest(
         );
         $Self->True(
             $Success,
-            "$ChangeTitleRandom - deleted",
+            "$ChangeTitleRandom is deleted",
         );
 
         # make sure the cache is correct
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => 'ITSMChange*' );
-        }
+    }
 );
 
 1;

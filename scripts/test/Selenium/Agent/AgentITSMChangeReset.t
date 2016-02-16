@@ -65,7 +65,7 @@ $Selenium->RunTest(
         # get general catalog object
         my $GeneralCatalogObject = $Kernel::OM->Get('Kernel::System::GeneralCatalog');
 
-        # get change state datas
+        # get change state data
         my @ChangeStateIDs;
         for my $ChangeState (qw(requested approved)) {
             my $ChangeStateDataRef = $GeneralCatalogObject->ItemGet(
@@ -89,10 +89,10 @@ $Selenium->RunTest(
         );
         $Self->True(
             $ChangeID,
-            "$ChangeTitleRandom - created",
+            "$ChangeTitleRandom is created",
         );
 
-        # get work order state datas
+        # get work order state data
         my @WorkOrderStateIDs;
         for my $WorkOrderState (qw(Created Accepted)) {
             my $WorkOrderStateDataRef = $GeneralCatalogObject->ItemGet(
@@ -119,7 +119,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $ChangeID,
-            "$WorkOrderTitleRandom - created",
+            "$WorkOrderTitleRandom is created",
         );
 
         # create and log in test user
@@ -137,20 +137,24 @@ $Selenium->RunTest(
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
         # navigate to AgentITSMChangeZoom of created test change
-        $Selenium->get("${ScriptAlias}index.pl?Action=AgentITSMChangeZoom;ChangeID=$ChangeID");
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentITSMChangeZoom;ChangeID=$ChangeID");
 
         # click on 'Reset'
         $Selenium->find_element("//a[contains(\@href, \'Action=AgentITSMChangeReset;ChangeID=$ChangeID')]")->click();
 
         # wait for confirm button to show up and confirm delete action
         $Selenium->WaitFor( JavaScript => "return \$('#DialogButton1').length;" );
-        $Selenium->find_element( "#DialogButton1", 'css' )->click();
+        $Selenium->find_element( "#DialogButton1", 'css' )->VerifiedClick();
 
         # click on 'History' and switch window
         $Selenium->find_element("//a[contains(\@href, \'Action=AgentITSMChangeHistory;ChangeID=$ChangeID')]")->click();
 
+        $Selenium->WaitFor( WindowCount => 2 );
         my $Handles = $Selenium->get_window_handles();
         $Selenium->switch_to_window( $Handles->[1] );
+
+        # wait until page has loaded, if necessary
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $(".CancelClosePopup").length' );
 
         # verify that change state is reseted
         my $WorkOrderResetMessage
@@ -159,11 +163,11 @@ $Selenium->RunTest(
             = "Change State: New: Requested (ID=$ChangeStateIDs[0]) &lt;- Old: Approved (ID=$ChangeStateIDs[1])";
         $Self->True(
             index( $Selenium->get_page_source(), $WorkOrderResetMessage ) > -1,
-            "$WorkOrderResetMessage - found",
+            "$WorkOrderResetMessage is found",
         );
         $Self->True(
             index( $Selenium->get_page_source(), $ChangeResetMessage ) > -1,
-            "$ChangeResetMessage - found",
+            "$ChangeResetMessage is found",
         );
 
         # delete test created work order
@@ -173,7 +177,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $Success,
-            "$WorkOrderTitleRandom - deleted",
+            "$WorkOrderTitleRandom is deleted",
         );
 
         # delete test created change
@@ -183,12 +187,12 @@ $Selenium->RunTest(
         );
         $Self->True(
             $Success,
-            "$ChangeTitleRandom - deleted",
+            "$ChangeTitleRandom is deleted",
         );
 
         # make sure cache is correct
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => 'ITSMChange*' );
-        }
+    }
 );
 
 1;

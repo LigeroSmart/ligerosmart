@@ -35,13 +35,13 @@ $Selenium->RunTest(
         my $ChangeID          = $ChangeObject->ChangeAdd(
             ChangeTitle   => $ChangeTitleRandom,
             Description   => 'Selenium Test Description',
-            Justification => 'Seleniun Test Justification',
+            Justification => 'Selenium Test Justification',
             ChangeStateID => $ChangeStateDataRef->{ItemID},
             UserID        => 1,
         );
         $Self->True(
             $ChangeID,
-            "$ChangeTitleRandom - created",
+            "$ChangeTitleRandom is created",
         );
 
         # get work order object
@@ -58,7 +58,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $ChangeID,
-            "$WorkOrderTitleRandom - created",
+            "$WorkOrderTitleRandom is created",
         );
 
         # get ticket object
@@ -80,7 +80,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $TicketID,
-            "Ticket ID $TicketID - created",
+            "Ticket ID $TicketID is created",
         );
 
         # create and log in test user
@@ -98,14 +98,18 @@ $Selenium->RunTest(
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
         # navigate to AgentITSMWorkOrderZoom of created test work order
-        $Selenium->get("${ScriptAlias}index.pl?Action=AgentITSMWorkOrderZoom;WorkOrderID=$WorkOrderID");
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentITSMWorkOrderZoom;WorkOrderID=$WorkOrderID");
 
         # click on 'Link' and switch screens
         $Selenium->find_element("//a[contains(\@href, \'Action=AgentLinkObject;SourceObject=ITSMWorkOrder' )]")
             ->click();
 
+        $Selenium->WaitFor( WindowCount => 2 );
         my $Handles = $Selenium->get_window_handles();
         $Selenium->switch_to_window( $Handles->[1] );
+
+        # wait until page has loaded, if necessary
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#SubmitSelect").length' );
 
         # select test created ticket to link with test created work order
         $Selenium->execute_script(
@@ -116,36 +120,43 @@ $Selenium->RunTest(
         $Selenium->WaitFor( JavaScript => "return \$('input#LinkTargetKeys').length" );
 
         $Selenium->find_element("//input[\@id='LinkTargetKeys']")->click();
-        $Selenium->find_element("//button[\@id='AddLinks'][\@type='submit']")->click();
+        $Selenium->find_element("//button[\@id='AddLinks'][\@type='submit']")->VerifiedClick();
         $Selenium->find_element( "#LinkAddCloseLink", 'css' )->click();
 
+        $Selenium->WaitFor( WindowCount => 1 );
         $Selenium->switch_to_window( $Handles->[0] );
 
         # verify test work order is linked with test ticket
         $Self->True(
             index( $Selenium->get_page_source(), $TicketNumber ) > -1,
-            "Test ticket number $TicketNumber - found",
+            "Test ticket number $TicketNumber is found",
         );
 
         # click on 'Link' and switch screens
         $Selenium->find_element("//a[contains(\@href, \'Action=AgentLinkObject;SourceObject=ITSMWorkOrder' )]")
             ->click();
 
+        $Selenium->WaitFor( WindowCount => 2 );
         $Handles = $Selenium->get_window_handles();
         $Selenium->switch_to_window( $Handles->[1] );
 
+        # wait until page has loaded, if necessary
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#SubmitSelect").length' );
+
         # delete link relation
-        $Selenium->find_element("//a[contains(\@href, \'Subaction=LinkDelete' )]")->click();
+        $Selenium->find_element("//a[contains(\@href, \'Subaction=LinkDelete' )]")->VerifiedClick();
         $Selenium->find_element("//input[\@id='LinkDeleteIdentifier']")->click();
-        $Selenium->find_element("//button[\@type='submit']")->click();
+        $Selenium->find_element("//button[\@type='submit']")->VerifiedClick();
 
         $Selenium->find_element("//a[contains(\@href, \'Action=AgentLinkObject;Subaction=Close' )]")->click();
+
+        $Selenium->WaitFor( WindowCount => 1 );
         $Selenium->switch_to_window( $Handles->[0] );
 
         # verify that link has been removed
         $Self->True(
             index( $Selenium->get_page_source(), $TicketNumber ) == -1,
-            "Test ticket number $TicketNumber - found",
+            "Test ticket number $TicketNumber is found",
         );
 
         # delete test created work order
@@ -155,7 +166,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $Success,
-            "$WorkOrderTitleRandom - deleted",
+            "$WorkOrderTitleRandom is deleted",
         );
 
         # delete test created change
@@ -165,7 +176,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $Success,
-            "$ChangeTitleRandom - deleted",
+            "$ChangeTitleRandom is deleted",
         );
 
         # delete test created ticket
@@ -175,12 +186,12 @@ $Selenium->RunTest(
         );
         $Self->True(
             $Success,
-            "Ticket ID $TicketID - deleted",
+            "Ticket ID $TicketID is deleted",
         );
 
         # make sure cache is correct
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => 'ITSMChange*' );
-        }
+    }
 );
 
 1;

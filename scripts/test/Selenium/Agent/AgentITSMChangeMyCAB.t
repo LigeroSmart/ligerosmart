@@ -64,35 +64,20 @@ $Selenium->RunTest(
             );
             $Self->True(
                 $ChangeID,
-                "Change in $ChangeState state - created",
+                "Change in $ChangeState state is created",
             );
 
             # navigate to AgentITSMChangeMyCAB screen
-            $Selenium->get("${ScriptAlias}index.pl?Action=AgentITSMChangeMyCAB;SortBy=ChangeNumber;OrderBy=Down");
+            $Selenium->VerifiedGet(
+                "${ScriptAlias}index.pl?Action=AgentITSMChangeMyCAB;SortBy=ChangeNumber;OrderBy=Down"
+            );
 
-            if ( $ChangeState eq 'pending approval' ) {
+            # replace 'space' with '%20' in string, if needed, so we can use it as a filter param
+            my $FilterChangeState = $ChangeState;
+            $FilterChangeState =~ s/ /%20/g;
 
-                # click on appropriate filter
-                $Selenium->find_element("//a[contains(\@href, \'Filter=pending%20approval' )]")->click();
-
-            }
-            elsif ( $ChangeState eq 'in progress' ) {
-
-                # click on appropriate filter
-                $Selenium->find_element("//a[contains(\@href, \'Filter=in%20progress' )]")->click();
-
-            }
-            elsif ( $ChangeState eq 'pending pir' ) {
-
-                # click on appropriate filter
-                $Selenium->find_element("//a[contains(\@href, \'Filter=pending%20pir' )]")->click();
-
-            }
-            else {
-
-                # click on appropriate filter
-                $Selenium->find_element("//a[contains(\@href, \'Filter=$ChangeState' )]")->click();
-            }
+            # click on appropriate filter
+            $Selenium->find_element("//a[contains(\@href, \'Filter=$FilterChangeState' )]")->VerifiedClick();
 
             # check screen
             $Selenium->find_element( "table",             'css' );
@@ -102,7 +87,7 @@ $Selenium->RunTest(
             # check for test created change
             $Self->True(
                 index( $Selenium->get_page_source(), $ChangeTitleRandom ) > -1,
-                "$ChangeTitleRandom - found",
+                "$ChangeTitleRandom is found",
             );
 
             # delete created test change
@@ -112,13 +97,13 @@ $Selenium->RunTest(
             );
             $Self->True(
                 $Success,
-                "$ChangeTitleRandom - deleted",
+                "$ChangeTitleRandom is deleted",
             );
         }
 
         # make sure the cache is correct
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => 'ITSMChange*' );
-        }
+    }
 
 );
 

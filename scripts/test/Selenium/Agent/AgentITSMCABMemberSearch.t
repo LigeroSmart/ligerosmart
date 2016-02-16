@@ -41,7 +41,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $ChangeID,
-            "$ChangeTitleRandom - created",
+            "$ChangeTitleRandom is created",
         );
 
         # create and log in builder user
@@ -66,7 +66,7 @@ $Selenium->RunTest(
         # create test CAB user
         my $TestUserCAB = $Helper->TestUserCreate(
             Groups => [ 'admin', 'itsm-change', 'itsm-change-manager' ],
-        );
+        ) || die "Did not get test builder user";
 
         # get test CAB user ID
         my $TestUserCABID = $UserObject->UserLookup(
@@ -80,14 +80,18 @@ $Selenium->RunTest(
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
         # navigate to AgentITSMChangeZoom screen
-        $Selenium->get("${ScriptAlias}index.pl?Action=AgentITSMChangeZoom;ChangeID=$ChangeID");
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentITSMChangeZoom;ChangeID=$ChangeID");
 
         # click on 'Involved Persons' and switch window
         $Selenium->find_element("//a[contains(\@href, \'Action=AgentITSMChangeInvolvedPersons;ChangeID=$ChangeID')]")
             ->click();
 
+        $Selenium->WaitFor( WindowCount => 2 );
         my $Handles = $Selenium->get_window_handles();
         $Selenium->switch_to_window( $Handles->[1] );
+
+        # wait until page has loaded, if necessary
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#ChangeManager").length' );
 
         # input change manager
         my $AutoCompleteStringManager
@@ -116,13 +120,13 @@ $Selenium->RunTest(
             $Selenium->execute_script(
                 "return \$('table.DataTable tr td:contains($TestUserCAB)').length"
             ),
-            "CAB autocompleted $TestUserCAB - found",
+            "CAB autocompleted $TestUserCAB is found",
         );
         $Self->True(
             $Selenium->execute_script(
                 "return \$('table.DataTable tr td:contains($TestCustomerCAB)').length"
             ),
-            "CAB autocompleted $TestCustomerCAB - found",
+            "CAB autocompleted $TestCustomerCAB is found",
         );
 
         # delete created test change
@@ -132,12 +136,12 @@ $Selenium->RunTest(
         );
         $Self->True(
             $Success,
-            "$ChangeTitleRandom - deleted",
+            "$ChangeTitleRandom is deleted",
         );
 
         # make sure the cache is correct
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => 'ITSMChange*' );
-        }
+    }
 );
 
 1;

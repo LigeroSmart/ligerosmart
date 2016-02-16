@@ -18,11 +18,12 @@ my $Selenium = $Kernel::OM->Get('Kernel::System::UnitTest::Selenium');
 $Selenium->RunTest(
     sub {
 
-        # get helper object
-        my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
+        # get needed objects
+        my $Helper               = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
+        my $GeneralCatalogObject = $Kernel::OM->Get('Kernel::System::GeneralCatalog');
 
         # get change state data
-        my $ChangeStateDataRef = $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemGet(
+        my $ChangeStateDataRef = $GeneralCatalogObject->ItemGet(
             Class => 'ITSM::ChangeManagement::Change::State',
             Name  => 'pending pir',
         );
@@ -41,7 +42,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $ChangeID,
-            "Change in Pending PIR state - created",
+            "Change in Pending PIR state is created",
         );
 
         # create and log in test user
@@ -59,20 +60,21 @@ $Selenium->RunTest(
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
         # navigate to AgentITSMChangeZoom of created test change
-        $Selenium->get("${ScriptAlias}index.pl?Action=AgentITSMChangeZoom;ChangeID=$ChangeID");
-
-        # wait until page has loaded, if neccessary
-        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("body").length' );
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentITSMChangeZoom;ChangeID=$ChangeID");
 
         # click on 'Conditions' and switch screens
         $Selenium->find_element("//a[contains(\@href, \'Action=AgentITSMChangeCondition;ChangeID=$ChangeID' )]")
             ->click();
 
+        $Selenium->WaitFor( WindowCount => 2 );
         my $Handles = $Selenium->get_window_handles();
         $Selenium->switch_to_window( $Handles->[1] );
 
+        # wait until page has loaded, if necessary
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $(".CancelClosePopup").length' );
+
         # click 'Add new condition'
-        $Selenium->find_element("//button[\@name='AddCondition'][\@type='submit']")->click();
+        $Selenium->find_element("//button[\@name='AddCondition'][\@type='submit']")->VerifiedClick();
 
         # create test condition
         my $ConditionNameRandom = "Condition " . $Helper->GetRandomID();
@@ -86,7 +88,7 @@ $Selenium->RunTest(
         my $ExpresionAttributeID = $ConditionObject->AttributeLookup(
             Name => 'ImpactID',
         );
-        my $ImpactDataRef = $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemGet(
+        my $ImpactDataRef = $GeneralCatalogObject->ItemGet(
             Class => 'ITSM::ChangeManagement::Impact',
             Name  => '4 high',
         );
@@ -96,12 +98,12 @@ $Selenium->RunTest(
         my $ActionOperatorID = $ConditionObject->OperatorLookup(
             Name => 'set',
         );
-        my $ConditionChangeStateDataRef = $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemGet(
+        my $ConditionChangeStateDataRef = $GeneralCatalogObject->ItemGet(
             Class => 'ITSM::ChangeManagement::Change::State',
             Name  => 'successful',
         );
 
-        # add new expresion
+        # add new expression
         # in change object for test change, look for impact value of '4 high'
         $Selenium->find_element("//button[\@name='AddExpression'][\@type='submit']")->click();
         $Selenium->find_element( "#ExpressionID-NEW-ObjectID option[value='1']", 'css' )->click();
@@ -149,10 +151,7 @@ $Selenium->RunTest(
             'css'
         )->click();
 
-        $Selenium->find_element("//button[\@value='Submit'][\@type='submit']")->click();
-
-        # wait until page has loaded, if neccessary
-        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("body").length' );
+        $Selenium->find_element("//button[\@value='Submit'][\@type='submit']")->VerifiedClick();
 
         # check screen
         $Selenium->find_element( "table",             'css' );
@@ -162,24 +161,26 @@ $Selenium->RunTest(
         # verify created condition name value
         $Self->True(
             index( $Selenium->get_page_source(), $ConditionNameRandom ) > -1,
-            "$ConditionNameRandom - found",
+            "$ConditionNameRandom is found",
         );
 
         # close and switch window
         $Selenium->find_element( ".CancelClosePopup", 'css' )->click();
+
+        $Selenium->WaitFor( WindowCount => 1 );
         $Selenium->switch_to_window( $Handles->[0] );
 
-        # wait until page has loaded, if neccessary
+        # wait until page has loaded, if necessary
         $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("body").length' );
 
         # check test change state
         $Self->True(
             index( $Selenium->get_page_source(), 'Pending PIR' ) > -1,
-            "Pending PIR state - found",
+            "Pending PIR state is found",
         );
 
         # get general catalog impact ID '4 very high'
-        my $CatalogImpactDataRef = $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemGet(
+        my $CatalogImpactDataRef = $GeneralCatalogObject->ItemGet(
             Class => 'ITSM::ChangeManagement::Impact',
             Name  => '4 high',
         );
@@ -187,10 +188,11 @@ $Selenium->RunTest(
         # click to edit change and set its impact on '4 high' to trigger condition
         $Selenium->find_element("//a[contains(\@href, \'Action=AgentITSMChangeEdit;ChangeID=$ChangeID' )]")->click();
 
+        $Selenium->WaitFor( WindowCount => 2 );
         $Handles = $Selenium->get_window_handles();
         $Selenium->switch_to_window( $Handles->[1] );
 
-        # wait until page has loaded, if neccessary
+        # wait until page has loaded, if necessary
         $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("body").length' );
 
         $Selenium->execute_script(
@@ -199,25 +201,28 @@ $Selenium->RunTest(
 
         # submit and change window
         $Selenium->find_element("//button[\@value='Submit'][\@type='submit']")->click();
+
+        $Selenium->WaitFor( WindowCount => 1 );
         $Selenium->switch_to_window( $Handles->[0] );
 
         # check for expected change state to verify test condition
 
         $Self->True(
             index( $Selenium->get_page_source(), 'Successful' ) > -1,
-            "Successful state - found",
+            "Successful state is found",
         );
 
         # click on 'Conditions' and switch window
         $Selenium->find_element("//a[contains(\@href, \'Action=AgentITSMChangeCondition;ChangeID=$ChangeID' )]")
             ->click();
 
+        $Selenium->WaitFor( WindowCount => 2 );
         $Handles = $Selenium->get_window_handles();
         $Selenium->switch_to_window( $Handles->[1] );
 
         # click to delete test condition
         $Selenium->find_element("//a[contains(\@href, \'Action=AgentITSMChangeCondition;ChangeID=$ChangeID' )]")
-            ->click();
+            ->VerifiedClick();
 
         # delete test created change
         my $Success = $ChangeObject->ChangeDelete(
@@ -226,12 +231,12 @@ $Selenium->RunTest(
         );
         $Self->True(
             $Success,
-            "$ChangeTitleRandom - deleted",
+            "$ChangeTitleRandom is deleted",
         );
 
         # make sure cache is correct
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => 'ITSMChange*' );
-        }
+    }
 );
 
 1;

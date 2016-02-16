@@ -43,7 +43,7 @@ $Selenium->RunTest(
             );
             $Self->True(
                 $ChangeID,
-                "Change ID $ChangeID in requested state - created",
+                "$ChangeTitleRandom is created",
             );
             push @ChangeIDs, $ChangeID;
         }
@@ -64,7 +64,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $WorkOrderID,
-            "$WorkOrderTitleRandom ID $WorkOrderID - created",
+            "$WorkOrderTitleRandom ID $WorkOrderID is created",
         );
 
         # get template object
@@ -91,7 +91,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $TemplateID,
-            "Work Order Template $TemplateID - created",
+            "Work Order Template ID $TemplateID is created",
         );
 
         # create and log in test user
@@ -109,15 +109,19 @@ $Selenium->RunTest(
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
         # navigate to AgentITSMChangeZoom for second test created change
-        $Selenium->get("${ScriptAlias}index.pl?Action=AgentITSMChangeZoom;ChangeID=$ChangeIDs[1]");
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentITSMChangeZoom;ChangeID=$ChangeIDs[1]");
 
         # click on 'Add Workorder (from template)' and switch window
         $Selenium->find_element(
             "//a[contains(\@href, \'Action=AgentITSMWorkOrderAddFromTemplate;ChangeID=$ChangeIDs[1]')]"
         )->click();
 
+        $Selenium->WaitFor( WindowCount => 2 );
         my $Handles = $Selenium->get_window_handles();
         $Selenium->switch_to_window( $Handles->[1] );
+
+        # wait until page has loaded, if necessary
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#TemplateID").length' );
 
         # check page
         for my $ID (
@@ -133,16 +137,15 @@ $Selenium->RunTest(
         $Selenium->execute_script(
             "\$('#TemplateID').val('$TemplateID').trigger('redraw.InputField').trigger('change');"
         );
-
-        $Selenium->WaitFor( JavaScript => "return \$('#SubmitTemplate').length > 1;" );
         $Selenium->find_element( "#SubmitTemplate", 'css' )->click();
 
+        $Selenium->WaitFor( WindowCount => 1 );
         $Selenium->switch_to_window( $Handles->[0] );
 
         # check work order values created from test template
         $Self->True(
             index( $Selenium->get_page_source(), $WorkOrderTitleRandom ) > -1,
-            "$WorkOrderTitleRandom - found",
+            "$WorkOrderTitleRandom is found",
         );
 
         # delete test created work orders
@@ -154,7 +157,7 @@ $Selenium->RunTest(
             );
             $Self->True(
                 $Success,
-                "Work Order ID $WorkOrderDelete - deleted",
+                "Work Order ID $WorkOrderDelete is deleted",
             );
         }
 
@@ -166,7 +169,7 @@ $Selenium->RunTest(
             );
             $Self->True(
                 $Success,
-                "Change ID $ChangeDelete - deleted",
+                "Change ID $ChangeDelete is deleted",
             );
         }
 
@@ -177,12 +180,12 @@ $Selenium->RunTest(
         );
         $Self->True(
             $Success,
-            "Template ID $TemplateID - deleted",
+            "Template ID $TemplateID is deleted",
         );
 
         # make sure the cache is correct
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => 'ITSMChange*' );
-        }
+    }
 );
 
 1;

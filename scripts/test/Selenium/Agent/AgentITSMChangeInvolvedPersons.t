@@ -43,7 +43,7 @@ $Selenium->RunTest(
         # create test CAB user
         my $TestUserCAB = $Helper->TestUserCreate(
             Groups => [ 'admin', 'itsm-change', 'itsm-change-manager' ],
-        );
+        ) || die "Did not get test builder user";
 
         # get test CAB user ID
         my $TestUserCABID = $UserObject->UserLookup(
@@ -70,7 +70,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $ChangeID,
-            "$ChangeTitleRandom - created",
+            "$ChangeTitleRandom is created",
         );
 
         # create test customer user
@@ -80,14 +80,18 @@ $Selenium->RunTest(
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
         # navigate to AgentITSMChangeZoom screen
-        $Selenium->get("${ScriptAlias}index.pl?Action=AgentITSMChangeZoom;ChangeID=$ChangeID");
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentITSMChangeZoom;ChangeID=$ChangeID");
 
         # click on 'Involved Persons' and switch window
         $Selenium->find_element("//a[contains(\@href, \'Action=AgentITSMChangeInvolvedPersons;ChangeID=$ChangeID')]")
             ->click();
 
+        $Selenium->WaitFor( WindowCount => 2 );
         my $Handles = $Selenium->get_window_handles();
         $Selenium->switch_to_window( $Handles->[1] );
+
+        # wait until page has loaded, if necessary
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#ChangeManager").length' );
 
         # check page
         for my $ID (
@@ -110,7 +114,7 @@ $Selenium->RunTest(
 
         # check client validation
         $Selenium->find_element( "#ChangeManager", 'css' )->clear();
-        $Selenium->find_element( "#ChangeManager", 'css' )->submit();
+        $Selenium->find_element( "#ChangeManager", 'css' )->VerifiedSubmit();
         $Self->Is(
             $Selenium->execute_script(
                 "return \$('#ChangeManager').hasClass('Error')"
@@ -131,7 +135,7 @@ $Selenium->RunTest(
         $Selenium->find_element( "#NewCABMember", 'css' )->send_keys("$TestUserCAB");
         $Selenium->WaitFor( JavaScript => 'return $("li.ui-menu-item:visible").length' );
         $Selenium->find_element("//*[text()='$AutoCompleteStringCAB']")->click();
-        $Selenium->find_element("//button[\@type='submit'][\@name='AddCABMember']")->click();
+        $Selenium->find_element("//button[\@type='submit'][\@name='AddCABMember']")->VerifiedClick();
 
         # input change customer CAB
         my $AutoCompleteStringCustomer
@@ -139,43 +143,49 @@ $Selenium->RunTest(
         $Selenium->find_element( "#NewCABMember", 'css' )->send_keys("$TestCustomer");
         $Selenium->WaitFor( JavaScript => 'return $("li.ui-menu-item:visible").length' );
         $Selenium->find_element("//*[text()='$AutoCompleteStringCustomer']")->click();
-        $Selenium->find_element("//button[\@type='submit'][\@name='AddCABMember']")->click();
+        $Selenium->find_element("//button[\@type='submit'][\@name='AddCABMember']")->VerifiedClick();
 
         # search if data is in the table
         $Self->True(
             $Selenium->execute_script(
                 "return \$('table.DataTable tr td:contains($TestUserCAB)').length"
             ),
-            "$TestUserCAB - found",
+            "$TestUserCAB is found",
         );
         $Self->True(
             $Selenium->execute_script(
                 "return \$('table.DataTable tr td:contains($TestCustomer)').length"
             ),
-            "$TestCustomer - found",
+            "$TestCustomer is found",
         );
 
         # test delete CAB button
-        $Selenium->find_element( "#CABAgents$TestUserCABID", 'css' )->click();
+        $Selenium->find_element( "#CABAgents$TestUserCABID", 'css' )->VerifiedClick();
         $Self->False(
             $Selenium->execute_script(
                 "return \$('table.DataTable tr td:contains($TestUserCAB)').length"
             ),
-            "$TestUserCAB - not found",
+            "$TestUserCAB is not found",
         );
 
         # press button submit
         $Selenium->find_element("//button[\@value='Submit'][\@type='submit']")->click();
 
-        # back to previus window
+        # back to previous window
+        $Selenium->WaitFor( WindowCount => 1 );
         $Selenium->switch_to_window( $Handles->[0] );
 
         # click on 'History'
         $Selenium->find_element(
             "//a[contains(\@href, \'/otrs/index.pl?Action=AgentITSMChangeHistory;ChangeID=$ChangeID' )]"
         )->click();
+
+        $Selenium->WaitFor( WindowCount => 2 );
         $Handles = $Selenium->get_window_handles();
         $Selenium->switch_to_window( $Handles->[1] );
+
+        # wait until page has loaded, if necessary
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $(".CancelClosePopup").length' );
 
         # check history log to verify change involved persons
         $Self->True(
@@ -198,12 +208,12 @@ $Selenium->RunTest(
         );
         $Self->True(
             $Success,
-            "$ChangeTitleRandom - deleted",
+            "$ChangeTitleRandom is deleted",
         );
 
         # make sure the cache is correct
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => 'ITSMChange*' );
-        }
+    }
 
 );
 

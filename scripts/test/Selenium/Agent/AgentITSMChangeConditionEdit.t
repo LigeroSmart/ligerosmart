@@ -18,11 +18,12 @@ my $Selenium = $Kernel::OM->Get('Kernel::System::UnitTest::Selenium');
 $Selenium->RunTest(
     sub {
 
-        # get helper object
-        my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
+        # get needed objects
+        my $Helper               = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
+        my $GeneralCatalogObject = $Kernel::OM->Get('Kernel::System::GeneralCatalog');
 
         # get change state data
-        my $ChangeStateDataRef = $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemGet(
+        my $ChangeStateDataRef = $GeneralCatalogObject->ItemGet(
             Class => 'ITSM::ChangeManagement::Change::State',
             Name  => 'requested',
         );
@@ -41,7 +42,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $ChangeID,
-            "$ChangeTitleRandom - created",
+            "$ChangeTitleRandom is created",
         );
 
         # create and log in test user
@@ -59,17 +60,21 @@ $Selenium->RunTest(
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
         # navigate to AgentITSMChangeZoom of created test change
-        $Selenium->get("${ScriptAlias}index.pl?Action=AgentITSMChangeZoom;ChangeID=$ChangeID");
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentITSMChangeZoom;ChangeID=$ChangeID");
 
         # click on 'Conditions' and switch screens
         $Selenium->find_element("//a[contains(\@href, \'Action=AgentITSMChangeCondition;ChangeID=$ChangeID' )]")
             ->click();
 
+        $Selenium->WaitFor( WindowCount => 2 );
         my $Handles = $Selenium->get_window_handles();
         $Selenium->switch_to_window( $Handles->[1] );
 
+        # wait until page has loaded, if necessary
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $(".CancelClosePopup").length' );
+
         # click 'Add new condition'
-        $Selenium->find_element("//button[\@name='AddCondition'][\@type='submit']")->click();
+        $Selenium->find_element("//button[\@name='AddCondition'][\@type='submit']")->VerifiedClick();
 
         # create test condition
         my $ConditionNameRandom = "Condition " . $Helper->GetRandomID();
@@ -83,7 +88,7 @@ $Selenium->RunTest(
         my $ExpresionAttributeID = $ConditionObject->AttributeLookup(
             Name => 'PriorityID',
         );
-        my $PriorityDataRef = $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemGet(
+        my $PriorityDataRef = $GeneralCatalogObject->ItemGet(
             Class => 'ITSM::ChangeManagement::Priority',
             Name  => '2 low',
         );
@@ -93,12 +98,12 @@ $Selenium->RunTest(
         my $ActionOperatorID = $ConditionObject->OperatorLookup(
             Name => 'set',
         );
-        my $ConditionChangeStateDataRef = $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemGet(
+        my $ConditionChangeStateDataRef = $GeneralCatalogObject->ItemGet(
             Class => 'ITSM::ChangeManagement::Change::State',
             Name  => 'approved',
         );
 
-        # add new expresion
+        # add new expression
         # in change object for test change, look for priority value of '2 low'
         $Selenium->find_element("//button[\@name='AddExpression'][\@type='submit']")->click();
         $Selenium->find_element( "#ExpressionID-NEW-ObjectID option[value='1']", 'css' )->click();
@@ -121,9 +126,8 @@ $Selenium->RunTest(
         $Selenium->find_element( "#ExpressionID-NEW-CompareValue option[value='$PriorityDataRef->{ItemID}']", 'css' )
             ->click();
 
-        # add new action
-        # in change object for test change, set change state on 'Approved'
-        $Selenium->find_element("//button[\@name='AddAction'][\@type='submit']")->click();
+        # add new action in change object for test change, set change state on 'Approved'
+        $Selenium->find_element("//button[\@name='AddAction'][\@type='submit']")->VerifiedClick();
         $Selenium->find_element( "#ActionID-NEW-ObjectID option[value='1']", 'css' )->click();
 
         # wait for ajax response to fill next dropdown list with more than 1 value
@@ -145,12 +149,12 @@ $Selenium->RunTest(
             'css'
         )->click();
 
-        $Selenium->find_element("//button[\@value='Submit'][\@type='submit']")->click();
+        $Selenium->find_element("//button[\@value='Submit'][\@type='submit']")->VerifiedClick();
 
         # verify created condition name value
         $Self->True(
             index( $Selenium->get_page_source(), $ConditionNameRandom ) > -1,
-            "$ConditionNameRandom - found",
+            "$ConditionNameRandom is found",
         );
 
         # delete test created change
@@ -160,12 +164,12 @@ $Selenium->RunTest(
         );
         $Self->True(
             $Success,
-            "$ChangeTitleRandom - deleted",
+            "$ChangeTitleRandom is deleted",
         );
 
         # make sure cache is correct
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => 'ITSMChange*' );
-        }
+    }
 );
 
 1;

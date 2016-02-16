@@ -41,7 +41,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $ChangeID,
-            "Change in successful state - created",
+            "Change in successful state is created",
         );
 
         # get template object
@@ -68,7 +68,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $TemplateID,
-            "Change Template $TemplateID - created",
+            "Change Template $TemplateID is created",
         );
 
         # create and log in test user
@@ -86,7 +86,7 @@ $Selenium->RunTest(
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
         # navigate to AgentITSMChangeAddFromTemplate screen
-        $Selenium->get("${ScriptAlias}index.pl?Action=AgentITSMChangeAddFromTemplate");
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentITSMChangeAddFromTemplate");
 
         # check page
         for my $ID (
@@ -102,12 +102,12 @@ $Selenium->RunTest(
         $Selenium->execute_script(
             "\$('#TemplateID').val('$TemplateID').trigger('redraw.InputField').trigger('change');"
         );
-        $Selenium->find_element( "#SubmitAddTemplate", 'css' )->click();
+        $Selenium->find_element( "#SubmitAddTemplate", 'css' )->VerifiedClick();
 
         # check change values created from test template
         $Self->True(
             index( $Selenium->get_page_source(), $ChangeTitleRandom ) > -1,
-            "$ChangeTitleRandom - found",
+            "$ChangeTitleRandom is found",
         );
 
         # get DB object
@@ -131,7 +131,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $Success,
-            "$TemplateNameRandom - deleted"
+            "$TemplateNameRandom is deleted"
         );
 
         # delete test changes
@@ -142,14 +142,14 @@ $Selenium->RunTest(
             );
             $Self->True(
                 $Success,
-                "ITSMChange $ChangeDelete - deleted",
+                "ITSMChange $ChangeDelete is deleted",
             );
         }
 
         # make sure the cache is correct
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => 'ITSMChange*' );
 
-        }
+    }
 );
 
 1;

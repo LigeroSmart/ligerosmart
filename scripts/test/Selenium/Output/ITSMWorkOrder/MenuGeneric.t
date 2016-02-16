@@ -35,13 +35,13 @@ $Selenium->RunTest(
         my $ChangeID          = $ChangeObject->ChangeAdd(
             ChangeTitle   => $ChangeTitleRandom,
             Description   => 'Selenium Test Description',
-            Justification => 'Seleniun Test Justification',
+            Justification => 'Selenium Test Justification',
             ChangeStateID => $ChangeStateDataRef->{ItemID},
             UserID        => 1,
         );
         $Self->True(
             $ChangeID,
-            "$ChangeTitleRandom - created",
+            "$ChangeTitleRandom is created",
         );
 
         # get work order object
@@ -58,7 +58,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $ChangeID,
-            "$WorkOrderTitleRandom - created",
+            "$WorkOrderTitleRandom is created",
         );
 
         # create and log in test user
@@ -76,7 +76,7 @@ $Selenium->RunTest(
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
         # navigate to AgentITSMWorkOrderZoom of created test work order
-        $Selenium->get("${ScriptAlias}index.pl?Action=AgentITSMWorkOrderZoom;WorkOrderID=$WorkOrderID");
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentITSMWorkOrderZoom;WorkOrderID=$WorkOrderID");
 
         # create menu module test params
         my @MenuModule = (
@@ -122,7 +122,7 @@ $Selenium->RunTest(
         for my $WorkOrderZoomMenuModule (@MenuModule) {
             $Self->True(
                 $Selenium->find_element("//a[contains(\@href, \'Action=$WorkOrderZoomMenuModule->{Action}' )]"),
-                "Change menu $WorkOrderZoomMenuModule->{Name} - found"
+                "Change menu $WorkOrderZoomMenuModule->{Name} is found"
             );
         }
 
@@ -133,7 +133,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $Success,
-            "$WorkOrderTitleRandom - deleted",
+            "$WorkOrderTitleRandom is deleted",
         );
 
         # delete test created change
@@ -143,12 +143,12 @@ $Selenium->RunTest(
         );
         $Self->True(
             $Success,
-            "$ChangeTitleRandom - deleted",
+            "$ChangeTitleRandom is deleted",
         );
 
         # make sure cache is correct
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => 'ITSMChange*' );
-        }
+    }
 );
 
 1;

@@ -41,7 +41,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $ChangeID,
-            "$ChangeTitleRandom - created",
+            "$ChangeTitleRandom is created",
         );
 
         # get template object
@@ -71,7 +71,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $TemplateID,
-            "Change Template $TemplateID - created",
+            "Change Template ID $TemplateID is created",
         );
 
         # create and log in test user
@@ -89,39 +89,42 @@ $Selenium->RunTest(
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
         # navigate to AgentITSMTemplateOverview screen
-        $Selenium->get(
+        $Selenium->VerifiedGet(
             "${ScriptAlias}index.pl?Action=AgentITSMTemplateOverview;SortBy=TemplateID;OrderBy=Down;Filter=ITSMChange"
         );
 
         # click on 'Edit Content' for test created change template
         $Selenium->find_element( "#EditContentTemplateID$TemplateID", 'css' )->click();
 
+        # wait for dialog window to load, if necessary
+        $Selenium->WaitFor( JavaScript => "return \$('#DialogButton1').length;" );
+
         # verify edit content values
         $Self->True(
             index( $Selenium->get_page_source(), "$TemplateNameRandom" ) > -1,
-            "$TemplateNameRandom - found",
+            "$TemplateNameRandom is found",
         );
         $Self->True(
             index( $Selenium->get_page_source(), "$TemplateComment" ) > -1,
-            "$TemplateComment - found",
+            "$TemplateComment is found",
         );
         $Self->True(
             index(
                 $Selenium->get_page_source(),
                 "This will create a new change from this template, so you can edit and save it."
                 ) > -1,
-            "'This will create a new change from this template, so you can edit and save it.' - found",
+            "'This will create a new change from this template, so you can edit and save it.' is found",
         );
         $Self->True(
             index(
                 $Selenium->get_page_source(),
                 "The new change will be deleted automatically after it has been saved as template."
                 ) > -1,
-            "'The new change will be deleted automatically after it has been saved as template.' - found",
+            "'The new change will be deleted automatically after it has been saved as template.' is found",
         );
 
         # create new change from test template
-        $Selenium->find_element( "#DialogButton1", 'css' )->click();
+        $Selenium->find_element( "#DialogButton1", 'css' )->VerifiedClick();
 
         # get new change ID created from test template
         my $ChangeFromTemplateID = $ChangeID++;
@@ -135,7 +138,7 @@ $Selenium->RunTest(
         # verify new change values
         $Self->True(
             index( $Selenium->get_page_source(), $ChangeFromTemplate->{ChangeTitle} ) > -1,
-            "$ChangeFromTemplate->{ChangeTitle} - found",
+            "$ChangeFromTemplate->{ChangeTitle} is found",
         );
 
         # delete test template
@@ -145,7 +148,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $Success,
-            "$TemplateNameRandom edit - deleted",
+            "$TemplateNameRandom edit is deleted",
         );
 
         # delete test created changes
@@ -156,13 +159,13 @@ $Selenium->RunTest(
             );
             $Self->True(
                 $Success,
-                "Change ID $ChangeDelete - deleted",
+                "$ChangeTitleRandom is deleted",
             );
         }
 
         # make sure cache is correct
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => 'ITSMChange*' );
-        }
+    }
 );
 
 1;

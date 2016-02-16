@@ -41,7 +41,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $ChangeID,
-            "$ChangeTitleRandom - created",
+            "$ChangeTitleRandom is created",
         );
 
         # get test created change data
@@ -65,10 +65,10 @@ $Selenium->RunTest(
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
         # click on AgentITSMChangeSearch
-        $Selenium->get("${ScriptAlias}index.pl?Action=AgentITSMChangeSearch");
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentITSMChangeSearch");
 
-        # Wait until form has loaded, if neccessary
-        $Selenium->WaitFor( JavaScript => "return \$('#SearchProfile').length" );
+        # wait until form and overlay has loaded, if necessary
+        $Selenium->WaitFor( JavaScript => "return typeof(\$) === 'function' && \$('#SearchProfile').length" );
 
         # check change search page
         for my $ID (
@@ -84,33 +84,27 @@ $Selenium->RunTest(
         $Selenium->find_element("//a[\@class='AddButton']")->click();
         $Selenium->find_element( "ChangeNumber", 'name' )->send_keys( $ChangeData->{ChangeNumber} );
         $Selenium->find_element( "ChangeTitle",  'name' )->send_keys( $ChangeData->{ChangeTitle} );
-        $Selenium->find_element( "ChangeTitle",  'name' )->submit();
-
-        # Wait until form has loaded, if neccessary
-        $Selenium->WaitFor( JavaScript => "return \$('div#OverviewBody').length" );
+        $Selenium->find_element( "ChangeTitle",  'name' )->VerifiedSubmit();
 
         # check for expected result
         $Self->True(
             index( $Selenium->get_page_source(), $ChangeTitleRandom ) > -1,
-            "$ChangeTitleRandom - found",
+            "$ChangeTitleRandom is found",
         );
 
         # input wrong search parameters, result should be 'No data found'
-        $Selenium->get("${ScriptAlias}index.pl?Action=AgentITSMChangeSearch");
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentITSMChangeSearch");
 
-        # Wait until form has loaded, if neccessary
-        $Selenium->WaitFor( JavaScript => "return \$('#SearchProfile').length" );
+        # wait until form and overlay has loaded, if necessary
+        $Selenium->WaitFor( JavaScript => "return typeof(\$) === 'function' && \$('#SearchProfile').length" );
 
         $Selenium->find_element( "ChangeNumber", 'name' )->send_keys("123455678");
-        $Selenium->find_element( "ChangeNumber", 'name' )->submit();
-
-        # Wait until form has loaded, if neccessary
-        $Selenium->WaitFor( JavaScript => "return \$('div#OverviewBody').length" );
+        $Selenium->find_element( "ChangeNumber", 'name' )->VerifiedSubmit();
 
         # check for expected result
         $Self->True(
             index( $Selenium->get_page_source(), "No data found." ) > -1,
-            "Change - not found",
+            "Change is not found",
         );
 
         # delete created test change
@@ -120,12 +114,12 @@ $Selenium->RunTest(
         );
         $Self->True(
             $Success,
-            "$ChangeTitleRandom - deleted",
+            "$ChangeTitleRandom is deleted",
         );
 
         # make sure the cache is correct
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => 'ITSMChange*' );
-        }
+    }
 );
 
 1;

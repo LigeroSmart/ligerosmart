@@ -41,7 +41,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $ChangeID,
-            "$ChangeTitleRandom - created",
+            "$ChangeTitleRandom is created",
         );
 
         # create and log in test user
@@ -59,14 +59,18 @@ $Selenium->RunTest(
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
         # navigate to AgentITSMChangeZoom screen
-        $Selenium->get("${ScriptAlias}index.pl?Action=AgentITSMChangeZoom;ChangeID=$ChangeID");
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentITSMChangeZoom;ChangeID=$ChangeID");
 
         # click on template and switch screens
         $Selenium->find_element("//a[contains(\@href, \'Action=AgentITSMChangeTemplate;ChangeID=$ChangeID' )]")
             ->click();
 
+        $Selenium->WaitFor( WindowCount => 2 );
         my $Handles = $Selenium->get_window_handles();
         $Selenium->switch_to_window( $Handles->[1] );
+
+        # wait until page has loaded, if necessary
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#TemplateName").length' );
 
         # check page
         for my $ID (qw(TemplateName Comment StateReset ValidID SubmitAddTemplate))
@@ -82,17 +86,18 @@ $Selenium->RunTest(
         $Selenium->find_element( "#Comment",           'css' )->send_keys("SeleniumComment");
         $Selenium->find_element( "#SubmitAddTemplate", 'css' )->click();
 
+        $Selenium->WaitFor( WindowCount => 1 );
         $Selenium->switch_to_window( $Handles->[0] );
 
         # navigate to ITSMChangeTemplateOverview screen
-        $Selenium->get(
+        $Selenium->VerifiedGet(
             "${ScriptAlias}index.pl?Action=AgentITSMTemplateOverview;SortBy=TemplateID;OrderBy=Up;Filter=ITSMChange"
         );
 
         # check for test created change
         $Self->True(
             index( $Selenium->get_page_source(), $TemplateNameRandom ) > -1,
-            "$TemplateNameRandom - found",
+            "$TemplateNameRandom is found",
         );
 
         # delete created test change
@@ -102,7 +107,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $Success,
-            "$ChangeTitleRandom - deleted",
+            "$ChangeTitleRandom is deleted",
         );
 
         # get DB object
@@ -119,22 +124,19 @@ $Selenium->RunTest(
             $TemplateID = $Row[0];
         }
 
-        # get template object
-        my $TemplateObject = $Kernel::OM->Get('Kernel::System::ITSMChange::Template');
-
         # delete created test template
-        $Success = $TemplateObject->TemplateDelete(
+        $Success = $Kernel::OM->Get('Kernel::System::ITSMChange::Template')->TemplateDelete(
             TemplateID => $TemplateID,
             UserID     => 1,
         );
         $Self->True(
             $Success,
-            "Template ID $TemplateID - deleted",
+            "Template ID $TemplateID is deleted",
         );
 
         # make sure the cache is correct
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => 'ITSMChange*' );
-        }
+    }
 );
 
 1;

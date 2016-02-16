@@ -85,7 +85,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $ChangeID,
-            "$ChangeTitleRandom - created",
+            "$ChangeTitleRandom is created",
         );
 
         # create and log in test user
@@ -103,40 +103,41 @@ $Selenium->RunTest(
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
         # navigate to AgentITSMChange screen with requested filter and ordered down
-        $Selenium->get(
+        $Selenium->VerifiedGet(
             "${ScriptAlias}index.pl?Action=AgentITSMChange;SortBy=ChangeNumber;OrderBy=Down;View=;Filter=requested"
         );
 
         # verify that test created change is present
         $Self->True(
             index( $Selenium->get_page_source(), $ChangeTitleRandom ) > -1,
-            "$ChangeTitleRandom - found",
+            "$ChangeTitleRandom is found",
         );
 
         # click on test created change
-        $Selenium->find_element("//a[contains(\@href, \'Action=AgentITSMChangeZoom;ChangeID=$ChangeID')]")->click();
+        $Selenium->find_element("//a[contains(\@href, \'Action=AgentITSMChangeZoom;ChangeID=$ChangeID')]")
+            ->VerifiedClick();
 
         # click on 'Delete'
         $Selenium->find_element("//a[contains(\@href, \'Action=AgentITSMChangeDelete;ChangeID=$ChangeID')]")->click();
 
         # wait for confirm button to show up and confirm delete action
         $Selenium->WaitFor( JavaScript => "return \$('#DialogButton1').length;" );
-        $Selenium->find_element( "#DialogButton1", 'css' )->click();
+        $Selenium->find_element( "#DialogButton1", 'css' )->VerifiedClick();
 
         # navigate to AgentITSMChange screen with requested filter and ordered down
-        $Selenium->get(
+        $Selenium->VerifiedGet(
             "${ScriptAlias}index.pl?Action=AgentITSMChange;SortBy=ChangeNumber;OrderBy=Down;View=;Filter=requested"
         );
 
         # verify that test created change is deleted
         $Self->True(
             index( $Selenium->get_page_source(), $ChangeTitleRandom ) == -1,
-            "$ChangeTitleRandom - not found",
+            "$ChangeTitleRandom is not found",
         );
 
         # make sure cache is correct
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => 'ITSMChange*' );
-        }
+    }
 );
 
 1;
