@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2016 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/505acab1c49f09f41282956e530fdcb96d0a4bce/scripts/test/GenericInterface/Operation/Ticket/TicketSearch.t
+# $origin: https://github.com/OTRS/otrs/blob/08ba2549510228a7c05d75c9c4034c83c8651025/scripts/test/GenericInterface/Operation/Ticket/TicketSearch.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -762,23 +762,7 @@ $Self->True(
 );
 
 # get remote host with some precautions for certain unit test systems
-my $Host;
-my $FQDN = $ConfigObject->Get('FQDN');
-
-# try to resolve FAQN host
-if ( $FQDN ne 'yourhost.example.com' && gethostbyname($FQDN) ) {
-    $Host = $FQDN;
-}
-
-# try to resolve localhost instead
-if ( !$Host && gethostbyname('localhost') ) {
-    $Host = 'localhost';
-}
-
-# use hard coded localhost IP address
-if ( !$Host ) {
-    $Host = '127.0.0.1';
-}
+my $Host = $HelperObject->GetTestHTTPHostname();
 
 # prepare webservice config
 my $RemoteSystem =
