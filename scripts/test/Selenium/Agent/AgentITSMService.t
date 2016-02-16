@@ -42,11 +42,16 @@ $Selenium->RunTest(
             TypeID      => 2,
             Criticality => '3 normal',
         );
+        $Self->True(
+            $ServiceID,
+            "Service is created - ID $ServiceID",
+        );
 
+        # get script alias
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
         # navigate to AgentITSMService screen
-        $Selenium->get("${ScriptAlias}index.pl?Action=AgentITSMService");
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentITSMService");
 
         # check overview screen
         $Selenium->find_element( "table",             'css' );
@@ -68,23 +73,23 @@ $Selenium->RunTest(
         );
         $Self->True(
             $Success,
-            "Deleted Service preferences - $ServiceID",
+            "Service preferences is deleted - ID $ServiceID",
         );
 
         # delete test service
-        $Success = $Kernel::OM->Get('Kernel::System::DB')->Do(
+        $Success = $DBObject->Do(
             SQL => "DELETE FROM service WHERE id = $ServiceID",
         );
         $Self->True(
             $Success,
-            "Deleted Service - $ServiceID",
+            "Service is deleted - ID $ServiceID",
         );
 
         # make sure cache is correct
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp(
             Type => 'Service'
         );
-        }
+    }
 );
 
 1;

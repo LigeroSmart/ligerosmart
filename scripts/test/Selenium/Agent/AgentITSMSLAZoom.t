@@ -44,25 +44,30 @@ $Selenium->RunTest(
             TypeID            => 2,
             UserID            => 1,
         );
+        $Self->True(
+            $SLAID,
+            "SLA is created - ID $SLAID",
+        );
 
+        # get script alias
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
         # navigate to AgentITSMSLAZoom screen with no SLAID, expecting error message screen
-        $Selenium->get("${ScriptAlias}index.pl?Action=AgentITSMSLAZoom;SLAID=");
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentITSMSLAZoom;SLAID=");
         $Self->True(
             index( $Selenium->get_page_source(), 'No SLAID is given!' ) > -1,
             "Error message without SLA ID - found",
         );
 
         # navigate to AgentITSMSLAZoom screen with wrong SLAID, expecting error message screen
-        $Selenium->get("${ScriptAlias}index.pl?Action=AgentITSMSLAZoom;SLAID=asd");
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentITSMSLAZoom;SLAID=asd");
         $Self->True(
             index( $Selenium->get_page_source(), 'SLAID asd not found in database!' ) > -1,
             "Error message with wrong SLA ID - found",
         );
 
         # navigate to AgentITSMSLAZoom screen with correct SLAID
-        $Selenium->get("${ScriptAlias}index.pl?Action=AgentITSMSLAZoom;SLAID=$SLAID");
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentITSMSLAZoom;SLAID=$SLAID");
 
         # check for AgentITSMSLAZoom fields
         my @ElementList = ( 'ContentColumn', 'SidebarColumn' );
@@ -91,14 +96,14 @@ $Selenium->RunTest(
         );
         $Self->True(
             $Success,
-            "Deleted SLA - $SLAID",
+            "SLA is deleted - ID $SLAID",
         );
 
         # make sure cache is correct
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp(
             Type => 'SLA'
         );
-        }
+    }
 );
 
 1;

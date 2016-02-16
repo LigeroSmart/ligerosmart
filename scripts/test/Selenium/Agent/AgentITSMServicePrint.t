@@ -42,11 +42,16 @@ $Selenium->RunTest(
             TypeID      => 2,
             Criticality => '3 normal',
         );
+        $Self->True(
+            $ServiceID,
+            "Service is created - ID $ServiceID",
+        );
 
+        # get script alias
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
         # navigate to AgentITSMServiceZoom screen
-        $Selenium->get("${ScriptAlias}index.pl?Action=AgentITSMServiceZoom;ServiceID=$ServiceID");
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentITSMServiceZoom;ServiceID=$ServiceID");
 
         # click on print
         $Selenium->find_element("//a[contains(\@href, \'Action=AgentITSMServicePrint;ServiceID=$ServiceID\' )]")
@@ -79,22 +84,25 @@ $Selenium->RunTest(
             "Criticality: 3 normal - found",
         );
 
-        # clean up servica data
-        my $Success = $Kernel::OM->Get('Kernel::System::DB')->Do(
+        # get DB object
+        my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
+        # clean up service data
+        my $Success = $DBObject->Do(
             SQL => "DELETE FROM service_preferences WHERE service_id = $ServiceID",
         );
         $Self->True(
             $Success,
-            "Deleted ServicePreferences - $ServiceID",
+            "Service preferences is deleted - ID $ServiceID",
         );
 
         # delete test service
-        $Success = $Kernel::OM->Get('Kernel::System::DB')->Do(
+        $Success = $DBObject->Do(
             SQL => "DELETE FROM service WHERE id = $ServiceID",
         );
         $Self->True(
             $Success,
-            "Deleted Service - $ServiceID",
+            "Service is deleted - ID $ServiceID",
         );
 
         # make sure cache is correct
@@ -102,7 +110,7 @@ $Selenium->RunTest(
             Type => 'Service'
         );
 
-        }
+    }
 );
 
 1;

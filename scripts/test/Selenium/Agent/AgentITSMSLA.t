@@ -41,11 +41,16 @@ $Selenium->RunTest(
             TypeID  => 2,
             UserID  => 1,
         );
+        $Self->True(
+            $SLAID,
+            "SLA is created - ID $SLAID",
+        );
 
+        # get script alias
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
         # navigate to AgentITSMSLA screen
-        $Selenium->get("${ScriptAlias}index.pl?Action=AgentITSMSLA");
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentITSMSLA");
 
         # check overview screen
         $Selenium->find_element( "table",             'css' );
@@ -64,14 +69,14 @@ $Selenium->RunTest(
         );
         $Self->True(
             $Success,
-            "Deleted SLA - $SLAID",
+            "SLA is deleted - ID $SLAID",
         );
 
         # make sure cache is correct
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp(
             Type => 'SLA'
         );
-        }
+    }
 );
 
 1;

@@ -42,25 +42,30 @@ $Selenium->RunTest(
             TypeID      => 2,
             Criticality => '3 normal',
         );
+        $Self->True(
+            $ServiceID,
+            "Service is created - ID $ServiceID",
+        );
 
+        # get script alias
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
         # navigate to AgentITSMServiceZoom screen with no ServiceID, expecting error message screen
-        $Selenium->get("${ScriptAlias}index.pl?Action=AgentITSMServiceZoom;ServiceID=");
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentITSMServiceZoom;ServiceID=");
         $Self->True(
             index( $Selenium->get_page_source(), 'No ServiceID is given!' ) > -1,
             "Error message without service ID - found",
         );
 
         # navigate to AgentITSMServiceZoom screen with wrong ServiceID, expecting error message screen
-        $Selenium->get("${ScriptAlias}index.pl?Action=AgentITSMServiceZoom;ServiceID=asd");
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentITSMServiceZoom;ServiceID=asd");
         $Self->True(
             index( $Selenium->get_page_source(), 'ServiceID asd not found in database!' ) > -1,
             "Error message with wrong service ID - found",
         );
 
         # navigate to AgentITSMServiceZoom screen with correct ServiceID
-        $Selenium->get("${ScriptAlias}index.pl?Action=AgentITSMServiceZoom;ServiceID=$ServiceID");
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentITSMServiceZoom;ServiceID=$ServiceID");
 
         # check for AgentITSMServiceZoom fields
         my @ElementList = ( 'ContentColumn', 'SidebarColumn' );
@@ -83,7 +88,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $Success,
-            "Deleted Service preferences - $ServiceID",
+            "Service preferences is deleted - ID $ServiceID",
         );
 
         # delete test service
@@ -92,14 +97,14 @@ $Selenium->RunTest(
         );
         $Self->True(
             $Success,
-            "Deleted Service - $ServiceID",
+            "Service is deleted - ID $ServiceID",
         );
 
         # make sure cache is correct
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp(
             Type => 'Service'
         );
-        }
+    }
 );
 
 1;

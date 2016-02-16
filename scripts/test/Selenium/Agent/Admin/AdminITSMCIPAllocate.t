@@ -33,9 +33,11 @@ $Selenium->RunTest(
             Password => $TestUserLogin,
         );
 
-        # navigate to AdminITSMCIPAllocate screen
+        # get script alias
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
-        $Selenium->get("${ScriptAlias}index.pl?Action=AdminITSMCIPAllocate");
+
+        # navigate to AdminITSMCIPAllocate screen
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AdminITSMCIPAllocate");
 
         # check for Criticality <-> Impact fields
         my @Priority = (qw(1verylow 2low 3normal 4high 5veryhigh));
