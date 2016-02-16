@@ -57,7 +57,7 @@
         <File Permission="644" Location="scripts/test/Selenium/Agent/AgentTicketEmail.t"/>
         <File Permission="644" Location="scripts/test/Selenium/Agent/AgentTicketPhone.t"/>
         <File Permission="644" Location="scripts/test/Selenium/Agent/AgentTicketPrint.t"/>
-        <File Permission="644" Location="scripts/test/Selenium/Agent/CustomerTicketPrint.t"/>
+        <File Permission="644" Location="scripts/test/Selenium/Customer/CustomerTicketPrint.t"/>
         <File Permission="644" Location="Kernel/Output/HTML/TicketOverview/Medium.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/TicketOverview/Preview.pm"/>
         <File Permission="644" Location="Kernel/System/Stats/Dynamic/ITSMTicketFirstLevelSolutionRate.pm"/>

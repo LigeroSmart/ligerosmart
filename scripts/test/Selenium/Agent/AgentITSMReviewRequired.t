@@ -26,11 +26,8 @@ $Selenium->RunTest(
         );
         my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 
-        # get sysconfig object
-        my $SysConfigObject = $Kernel::OM->Get('Kernel::System::SysConfig');
-
         # do not check RichText
-        $SysConfigObject->ConfigItemUpdate(
+        $Kernel::OM->Get('Kernel::System::SysConfig')->ConfigItemUpdate(
             Valid => 1,
             Key   => 'Frontend::RichText',
             Value => 0
@@ -75,22 +72,28 @@ $Selenium->RunTest(
             );
             $Self->True(
                 $TicketID,
-                "Ticket is created - $TicketID",
+                "Ticket is created - ID $TicketID",
             );
             push @TicketIDs,     $TicketID;
             push @TicketNumbers, $TicketNumber;
         }
 
-        # naviage to zoom view of first created test ticket
+        # get script alias
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
-        $Selenium->get("${ScriptAlias}index.pl?Action=AgentTicketZoom;TicketID=$TicketIDs[0]");
+
+        # navigate to zoom view of first created test ticket
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentTicketZoom;TicketID=$TicketIDs[0]");
 
         # set review required via Close menu
         $Selenium->find_element("//a[contains(\@href, \'Action=AgentTicketClose;TicketID=$TicketIDs[0]' )]")->click();
 
         # switch to Close window
+        $Selenium->WaitFor( WindowCount => 2 );
         my $Handles = $Selenium->get_window_handles();
         $Selenium->switch_to_window( $Handles->[1] );
+
+        # wait until page has loaded, if necessary
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#Subject").length' );
 
         # close ticket and set review required
         $Selenium->execute_script(
@@ -99,16 +102,22 @@ $Selenium->RunTest(
         $Selenium->find_element( "#Subject",  'css' )->send_keys('Selenium Test');
         $Selenium->find_element( "#RichText", 'css' )->send_keys('ReviewRequired');
         $Selenium->find_element("//button[\@type='submit']")->click();
+
+        $Selenium->WaitFor( WindowCount => 1 );
         $Selenium->switch_to_window( $Handles->[0] );
 
         # navigate to zoom view of second created test ticket
-        $Selenium->get("${ScriptAlias}index.pl?Action=AgentTicketZoom;TicketID=$TicketIDs[1]");
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentTicketZoom;TicketID=$TicketIDs[1]");
 
         # set review required via Close menu
         $Selenium->find_element("//a[contains(\@href, \'Action=AgentTicketClose;TicketID=$TicketIDs[1]' )]")->click();
 
+        $Selenium->WaitFor( WindowCount => 2 );
         $Handles = $Selenium->get_window_handles();
         $Selenium->switch_to_window( $Handles->[1] );
+
+        # wait until page has loaded, if necessary
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#Subject").length' );
 
         # close ticket and set review required
         $Selenium->execute_script(
@@ -117,6 +126,8 @@ $Selenium->RunTest(
         $Selenium->find_element( "#Subject",  'css' )->send_keys('Selenium Test');
         $Selenium->find_element( "#RichText", 'css' )->send_keys('ReviewRequired');
         $Selenium->find_element("//button[\@type='submit']")->click();
+
+        $Selenium->WaitFor( WindowCount => 1 );
         $Selenium->switch_to_window( $Handles->[0] );
 
         # click on search
@@ -137,10 +148,7 @@ $Selenium->RunTest(
         $Selenium->execute_script(
             "\$('#$ReviewRequiredID').val('Yes').trigger('redraw.InputField').trigger('change');"
         );
-        $Selenium->find_element( "#SearchFormSubmit", 'css' )->click();
-
-        # wait for search to complete
-        $Selenium->WaitFor( JavaScript => 'return $(".TicketNumber").length' );
+        $Selenium->find_element( "#SearchFormSubmit", 'css' )->VerifiedClick();
 
         # check for test created tickets on screen
         for my $Ticket (@TicketNumbers) {
@@ -158,15 +166,15 @@ $Selenium->RunTest(
             );
             $Self->True(
                 $Success,
-                "Delete ticket - $TicketDelete"
+                "Ticket is deleted - ID $TicketDelete"
             );
         }
 
-        # make sure the cache is correct.
+        # make sure the cache is correct
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp(
             Type => 'Ticket',
         );
-        }
+    }
 );
 
 1;

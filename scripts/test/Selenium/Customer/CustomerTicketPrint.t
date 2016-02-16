@@ -21,13 +21,9 @@ $Selenium->RunTest(
         # get helper object
         my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 
-        # get sysconfig object
-        my $SysConfigObject = $Kernel::OM->Get('Kernel::System::SysConfig');
-
         # create test customer user and login
         my $TestCustomerUserLogin = $Helper->TestCustomerUserCreate(
-            Groups => ['itsm-service'],
-        ) || die "Did not get test user";
+        ) || die "Did not get test customer user";
 
         $Selenium->Login(
             Type     => 'Customer',
@@ -52,14 +48,15 @@ $Selenium->RunTest(
             Criticality => $ITSMCriticality,
             UserID      => 1,
         );
-
-        # get ITSMCIPAllocate object
-        my $CIPAllocateObject = $Kernel::OM->Get('Kernel::System::ITSMCIPAllocate');
+        $Self->True(
+            $ServiceID,
+            "Service is created - ID $ServiceID",
+        );
 
         # set ITSMImpact to '3 normal' and get priority
         # expected value is '4 high', it will be checked in AgentTicketPrint screen
         my $ITSMImpact = '3 normal';
-        my $PriorityID = $CIPAllocateObject->PriorityAllocationGet(
+        my $PriorityID = $Kernel::OM->Get('Kernel::System::ITSMCIPAllocate')->PriorityAllocationGet(
             Criticality => $ITSMCriticality,
             Impact      => $ITSMImpact,
         );
@@ -82,6 +79,10 @@ $Selenium->RunTest(
             CustomerUser => "$TestCustomerUserLogin\@localhost.com",
             OwnerID      => 1,
             UserID       => 1,
+        );
+        $Self->True(
+            $TicketID,
+            "Ticket is created - ID $TicketID",
         );
 
         # get needed objects
@@ -109,10 +110,11 @@ $Selenium->RunTest(
             UserID             => 1,
         );
 
+        # get script alias
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
         # navigate to CustomerTicketZoom screen
-        $Selenium->get("${ScriptAlias}customer.pl?Action=CustomerTicketZoom;TicketNumber=$TicketNumber");
+        $Selenium->VerifiedGet("${ScriptAlias}customer.pl?Action=CustomerTicketZoom;TicketNumber=$TicketNumber");
 
         # click on print menu item
         $Selenium->find_element("//a[contains(\@href, \'Action=CustomerTicketPrint;TicketID=$TicketID\' )]")->click();
@@ -164,16 +166,16 @@ $Selenium->RunTest(
         );
         $Self->True(
             $Success,
-            "Deleted Service - $ServiceID",
+            "Service is deleted - ID $ServiceID",
         );
 
-        # make sure the cache is correct.
+        # make sure the cache is correct
         for my $Cache (qw (Ticket Service)) {
             $Kernel::OM->Get('Kernel::System::Cache')->CleanUp(
                 Type => $Cache,
             );
         }
-        }
+    }
 );
 
 1;

@@ -156,6 +156,10 @@ $Selenium->RunTest(
             Criticality => '5 very high',
             UserID      => $TestUserID,
         );
+        $Self->True(
+            $ServiceID,
+            "Service is created - ID $ServiceID",
+        );
 
         # link test service with test customer
         $ServiceObject->CustomerUserServiceMemberAdd(
@@ -267,8 +271,12 @@ $Selenium->RunTest(
         # click on history and switch window
         $Selenium->find_element("//*[text()='History']")->click();
 
+        $Selenium->WaitFor( WindowCount => 2 );
         my $Handles = $Selenium->get_window_handles();
         $Selenium->switch_to_window( $Handles->[1] );
+
+        # wait until page has loaded, if necessary
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $(".CancelClosePopup").length' );
 
         # check for ITSM updated fields
         for my $UpdateText (qw(Impact Criticality)) {
@@ -306,7 +314,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $Success,
-            "Deleted Service preferences - $ServiceID",
+            "Service preferences is deleted - ID $ServiceID",
         );
 
         # delete created test service
@@ -315,7 +323,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $Success,
-            "Delete service ID - $ServiceID",
+            "Service is deleted - ID $ServiceID",
         );
 # ---
 
