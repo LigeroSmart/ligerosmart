@@ -32,12 +32,14 @@ $Selenium->RunTest(
             Password => $TestUserLogin,
         );
 
-        # navigate to AdminGeneralCatalog screen
+        # get script alias
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
-        $Selenium->get("${ScriptAlias}index.pl?Action=AdminGeneralCatalog");
+
+        # navigate to AdminGeneralCatalog screen
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AdminGeneralCatalog");
 
         # click "Add Catalog Class"
-        $Selenium->find_element("//button[\@value='Add'][\@type='submit']")->click();
+        $Selenium->find_element("//button[\@value='Add'][\@type='submit']")->VerifiedClick();
 
         # check for input fields
         for my $ID (
@@ -51,7 +53,7 @@ $Selenium->RunTest(
 
         # check client side validation
         $Selenium->find_element( "#Name", 'css' )->clear();
-        $Selenium->find_element( "#Name", 'css' )->submit();
+        $Selenium->find_element( "#Name", 'css' )->VerifiedSubmit();
         $Self->Is(
             $Selenium->execute_script(
                 "return \$('#Name').hasClass('Error')"
@@ -67,10 +69,10 @@ $Selenium->RunTest(
         $Selenium->find_element( "#Name",     'css' )->send_keys($CatalogClassName);
         $Selenium->find_element( "#Comment",  'css' )->send_keys("Selenium catalog class");
         $Selenium->execute_script("\$('#ValidID').val('1').trigger('redraw.InputField').trigger('change');");
-        $Selenium->find_element("//button[\@value='Submit'][\@type='submit']")->click();
+        $Selenium->find_element("//button[\@value='Submit'][\@type='submit']")->VerifiedClick();
 
         # click "Go to overview"
-        $Selenium->find_element("//a[contains(\@href, \'Action=AdminGeneralCatalog' )]")->click();
+        $Selenium->find_element("//a[contains(\@href, \'Action=AdminGeneralCatalog' )]")->VerifiedClick();
 
         # check for created test catalog class in AdminGeneralCatalog screen and click on it
         $Self->True(
@@ -79,14 +81,14 @@ $Selenium->RunTest(
         );
         $Selenium->find_element(
             "//a[contains(\@href, \'Action=AdminGeneralCatalog;Subaction=ItemList;Class=$CatalogClassDsc' )]"
-        )->click();
+        )->VerifiedClick();
 
         # click "Add Catalog Item"
-        $Selenium->find_element("//button[\@value='Add'][\@type='submit']")->click();
+        $Selenium->find_element("//button[\@value='Add'][\@type='submit']")->VerifiedClick();
 
         # check client side validation
         $Selenium->find_element( "#Name", 'css' )->clear();
-        $Selenium->find_element( "#Name", 'css' )->submit();
+        $Selenium->find_element( "#Name", 'css' )->VerifiedSubmit();
         $Self->Is(
             $Selenium->execute_script(
                 "return \$('#Name').hasClass('Error')"
@@ -97,7 +99,7 @@ $Selenium->RunTest(
 
         # try to create catalog item that already exists
         $Selenium->find_element( "#Name", 'css' )->send_keys($CatalogClassName);
-        $Selenium->find_element("//button[\@value='Submit'][\@type='submit']")->click();
+        $Selenium->find_element("//button[\@value='Submit'][\@type='submit']")->VerifiedClick();
 
         # verify error message
         $Self->True(
@@ -106,15 +108,17 @@ $Selenium->RunTest(
         );
 
         # return back to test catalog class screen and click on "Add Catalog Item"
-        $Selenium->get("${ScriptAlias}index.pl?Action=AdminGeneralCatalog;Subaction=ItemList;Class=$CatalogClassDsc");
-        $Selenium->find_element("//button[\@value='Add'][\@type='submit']")->click();
+        $Selenium->VerifiedGet(
+            "${ScriptAlias}index.pl?Action=AdminGeneralCatalog;Subaction=ItemList;Class=$CatalogClassDsc"
+        );
+        $Selenium->find_element("//button[\@value='Add'][\@type='submit']")->VerifiedClick();
 
         # create real test catalog item
         my $CatalogClassItem = "CatalogClassItem" . $Helper->GetRandomID();
         $Selenium->find_element( "#Name",    'css' )->send_keys($CatalogClassItem);
         $Selenium->find_element( "#Comment", 'css' )->send_keys("Selenium catalog item");
         $Selenium->execute_script("\$('#ValidID').val('1').trigger('redraw.InputField').trigger('change');");
-        $Selenium->find_element("//button[\@value='Submit'][\@type='submit']")->click();
+        $Selenium->find_element("//button[\@value='Submit'][\@type='submit']")->VerifiedClick();
 
         # get test catalog items IDs
         my @CatalogItemIDs;
@@ -134,7 +138,7 @@ $Selenium->RunTest(
         );
         $Selenium->find_element(
             "//a[contains(\@href, \'Action=AdminGeneralCatalog;Subaction=ItemEdit;ItemID=$CatalogItemIDs[1]' )]"
-        )->click();
+        )->VerifiedClick();
 
         # check new test catalog item values
         $Self->Is(
@@ -153,10 +157,10 @@ $Selenium->RunTest(
         $Selenium->find_element( "#Name",    'css' )->clear();
         $Selenium->find_element( "#Name",    'css' )->send_keys($EditCatalogClassItem);
         $Selenium->find_element( "#Comment", 'css' )->send_keys(" edit");
-        $Selenium->find_element("//button[\@value='Submit'][\@type='submit']")->click();
+        $Selenium->find_element("//button[\@value='Submit'][\@type='submit']")->VerifiedClick();
 
         # check edited test catalog item values
-        $Selenium->find_element( $EditCatalogClassItem, 'link_text' )->click();
+        $Selenium->find_element( $EditCatalogClassItem, 'link_text' )->VerifiedClick();
         $Self->Is(
             $Selenium->find_element( '#Name', 'css' )->get_value(),
             $EditCatalogClassItem,
@@ -168,11 +172,11 @@ $Selenium->RunTest(
             "#Comment updated value",
         );
 
+        # get DB object
+        my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
         # delete created test catalog class
         for my $CatalogItem (@CatalogItemIDs) {
-
-            # get DB object
-            my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
             my $Success = $DBObject->Do(
                 SQL => "DELETE FROM general_catalog_preferences WHERE general_catalog_id = $CatalogItem",
@@ -182,7 +186,7 @@ $Selenium->RunTest(
                 "CatalogItemID $CatalogItem preference - deleted",
             );
 
-            $Success = $Kernel::OM->Get('Kernel::System::DB')->Do(
+            $Success = $DBObject->Do(
                 SQL => "DELETE FROM general_catalog WHERE id = $CatalogItem",
             );
             $Self->True(
@@ -193,7 +197,7 @@ $Selenium->RunTest(
 
         # clean up cache
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => 'GeneralCatalog' );
-        }
+    }
 );
 
 1;

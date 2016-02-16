@@ -48,6 +48,7 @@ $Selenium->RunTest(
             Password => $TestUserLogin,
         );
 
+        # get script alias
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
         # ---------------------------------------------------- #
@@ -55,19 +56,15 @@ $Selenium->RunTest(
         # ---------------------------------------------------- #
 
         # navigate to AdminGeneralCatalog screen
-        $Selenium->get("${ScriptAlias}index.pl?Action=AdminGeneralCatalog");
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AdminGeneralCatalog");
 
         # click "Add Catalog Class"
-        $Selenium->find_element("//button[\@value='Add'][\@type='submit']")->click();
+        $Selenium->find_element("//button[\@value='Add'][\@type='submit']")->VerifiedClick();
 
         # verify that general catalog preference Comment2 is not present while invalid
-        my $Success;
-        eval {
-            $Success = $Selenium->find_element( "#Comment2", 'css' )->is_enabled();
-        };
-        $Self->False(
-            $Success,
-            "#Comment2 in not enabled!",
+        $Self->True(
+            index( $Selenium->get_page_source(), "#Comment2" ) == -1,
+            "#Comment2 is not enabled!",
         );
 
         # get general catalog preference Comment2 default sysconfig
@@ -87,13 +84,13 @@ $Selenium->RunTest(
         );
 
         # refresh screen for sysconfig update to take effect
-        $Selenium->refresh();
+        $Selenium->VerifiedRefresh();
 
         # verify that general catalog preference Comment2 is present while valid
-        $Success = $Selenium->find_element( "#Comment2", 'css' )->is_enabled();
+        my $Success = $Selenium->find_element( "#Comment2", 'css' )->is_enabled();
         $Self->True(
             $Success,
-            "#Comment2 in enabled!",
+            "#Comment2 is enabled!",
         );
 
         # create real test catalog class
@@ -103,10 +100,10 @@ $Selenium->RunTest(
         $Selenium->find_element( "#Name",     'css' )->send_keys($CatalogClassName);
         $Selenium->find_element( "#Comment",  'css' )->send_keys("Selenium catalog class");
         $Selenium->execute_script("\$('#ValidID').val('1').trigger('redraw.InputField').trigger('change');");
-        $Selenium->find_element("//button[\@value='Submit'][\@type='submit']")->click();
+        $Selenium->find_element("//button[\@value='Submit'][\@type='submit']")->VerifiedClick();
 
         # click "Add Catalog Item"
-        $Selenium->find_element("//button[\@value='Add'][\@type='submit']")->click();
+        $Selenium->find_element("//button[\@value='Add'][\@type='submit']")->VerifiedClick();
 
         # create real test catalog item
         my $CatalogClassItem = "CatalogClassItem" . $Helper->GetRandomID();
@@ -116,7 +113,7 @@ $Selenium->RunTest(
 
         # set included queue attribute Comment2
         $Selenium->find_element( "#Comment2", 'css' )->send_keys('GeneralCatalogPreferencesGeneric Comment2');
-        $Selenium->find_element("//button[\@value='Submit'][\@type='submit']")->click();
+        $Selenium->find_element("//button[\@value='Submit'][\@type='submit']")->VerifiedClick();
 
         # get test catalog items IDs
         my @CatalogItemIDs;
@@ -132,7 +129,7 @@ $Selenium->RunTest(
         # check new test catalog item Comment2 value
         $Selenium->find_element(
             "//a[contains(\@href, \'Action=AdminGeneralCatalog;Subaction=ItemEdit;ItemID=$CatalogItemIDs[1]' )]"
-        )->click();
+        )->VerifiedClick();
 
         $Self->Is(
             $Selenium->find_element( '#Comment2', 'css' )->get_value(),
@@ -144,10 +141,10 @@ $Selenium->RunTest(
         my $UpdateComment2 = "Updated comment for GeneralCatalogPreferencesGeneric Comment2";
         $Selenium->find_element( "#Comment2", 'css' )->clear();
         $Selenium->find_element( "#Comment2", 'css' )->send_keys($UpdateComment2);
-        $Selenium->find_element("//button[\@value='Submit'][\@type='submit']")->click();
+        $Selenium->find_element("//button[\@value='Submit'][\@type='submit']")->VerifiedClick();
 
         # check updated Comment2 value
-        $Selenium->find_element( $CatalogClassItem, 'link_text' )->click();
+        $Selenium->find_element( $CatalogClassItem, 'link_text' )->VerifiedClick();
         $Self->Is(
             $Selenium->find_element( '#Comment2', 'css' )->get_value(),
             $UpdateComment2,
@@ -159,22 +156,18 @@ $Selenium->RunTest(
         # ---------------------------------------------------- #
 
         # navigate to AdminGeneralCatalog screen
-        $Selenium->get("${ScriptAlias}index.pl?Action=AdminGeneralCatalog");
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AdminGeneralCatalog");
 
         # click on test CatalogClass
-        $Selenium->find_element( $CatalogClassDsc, 'link_text' )->click();
+        $Selenium->find_element( $CatalogClassDsc, 'link_text' )->VerifiedClick();
 
         # click "Add Catalog Item"
-        $Selenium->find_element("//button[\@value='Add'][\@type='submit']")->click();
+        $Selenium->find_element("//button[\@value='Add'][\@type='submit']")->VerifiedClick();
 
-        # verify that general catalog preference Permission is not present while invalid
-        $Success = 0;
-        eval {
-            $Success = $Selenium->find_element( "#Permission", 'css' )->is_enabled();
-        };
-        $Self->False(
-            $Success,
-            "#Permissions in not enabled!",
+        # verify that general catalog preference Permissions is not present while invalid
+        $Self->True(
+            index( $Selenium->get_page_source(), "#Permission_Search" ) == -1,
+            "#Permissions is not enabled!",
         );
 
         # get general catalog preference Permission default sysconfig
@@ -197,13 +190,13 @@ $Selenium->RunTest(
         );
 
         # refresh screen for sysconfig update to take effect
-        $Selenium->refresh();
+        $Selenium->VerifiedRefresh();
 
-        # verify that general catalog preference Permission is present while valid
-        $Success = $Selenium->find_element( "#Permission", 'css' )->is_enabled();
+        # verify that general catalog preference Permissions is present while valid
+        $Success = $Selenium->find_element( "#Permission_Search", 'css' )->is_enabled();
         $Self->True(
             $Success,
-            "#Permissions in enabled!",
+            "#Permissions is enabled!",
         );
 
         # get DB object
@@ -230,7 +223,7 @@ $Selenium->RunTest(
 
         # clean up cache
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => 'GeneralCatalog' );
-        }
+    }
 );
 
 1;
