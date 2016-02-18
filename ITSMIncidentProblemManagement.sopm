@@ -51,6 +51,7 @@
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentTicketPhone.tt"/>
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentTicketZoom.tt"/>
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/CustomerTicketZoom.tt"/>
+        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentTicketPhone/ServiceDropdown.t"/>
         <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMReviewRequired.t"/>
         <File Permission="644" Location="scripts/test/Selenium/Agent/AgentTicketAddtlITSMField.t"/>
         <File Permission="644" Location="scripts/test/Selenium/Agent/AgentTicketDecision.t"/>
