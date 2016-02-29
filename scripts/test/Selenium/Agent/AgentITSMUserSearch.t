@@ -23,7 +23,7 @@ $Selenium->RunTest(
 
         # get change state data
         my $ChangeDataRef = $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemGet(
-            Class => 'ITSM::ChangeManagement::Change::State ',
+            Class => 'ITSM::ChangeManagement::Change::State',
             Name  => 'requested',
         );
 

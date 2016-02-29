@@ -113,13 +113,15 @@ $Selenium->RunTest(
             );
 
             # get work order state data
+            my $ItemGetState          = lc $WorkOrderState;
             my $WorkOrderStateDataRef = $GeneralCatalogObject->ItemGet(
                 Class => 'ITSM::ChangeManagement::WorkOrder::State',
-                Name  => $WorkOrderState,
+                Name  => $ItemGetState,
             );
 
             # input text in report and select next work order state
-            $Selenium->find_element( "#RichText", 'css' )->send_keys(" $WorkOrderState");
+            $Selenium->find_element( "#RichText", 'css' )->clear();
+            $Selenium->find_element( "#RichText", 'css' )->send_keys("$WorkOrderState");
             $Selenium->execute_script(
                 "\$('#WorkOrderStateID').val('$WorkOrderStateDataRef->{ItemID}').trigger('redraw.InputField').trigger('change');"
             );
