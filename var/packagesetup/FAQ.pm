@@ -318,6 +318,7 @@ sub CodeUninstall {
     # uninstall stats
     $Kernel::OM->Get('Kernel::System::Stats')->StatsUninstall(
         FilePrefix => $Self->{FilePrefix},
+        UserID     => 1,
     );
 
     # delete all links with FAQ articles
