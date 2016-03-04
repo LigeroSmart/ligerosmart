@@ -71,7 +71,8 @@ $Selenium->RunTest(
 
         # wait until page has loaded, if necessary
         $Selenium->WaitFor(
-            JavaScript => 'return typeof($) === "function" && $("#DynamicField_ITSMDecisionResult").length' );
+            JavaScript => 'return typeof($) === "function" && $("#DynamicField_ITSMDecisionResult").length'
+        );
 
         # check screen
         for my $ID (
@@ -128,7 +129,7 @@ $Selenium->RunTest(
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp(
             Type => 'Ticket',
         );
-    }
+        }
 );
 
 1;
