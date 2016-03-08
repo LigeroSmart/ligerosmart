@@ -15,6 +15,13 @@ use vars qw($Self);
 
 use Data::Dumper;
 
+$Kernel::OM->ObjectParamAdd(
+    'Kernel::System::UnitTest::Helper' => {
+        RestoreDatabase => 1,
+    },
+);
+my $HelperObject = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
+
 # create local config object
 my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
@@ -29,16 +36,6 @@ $ConfigObject->Set(
     Value => 0,
 );
 
-# get database object
-my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
-
-# cleanup system
-$DBObject->Do(
-    SQL => "DELETE FROM survey_request WHERE send_to LIKE '\%\@unittest.com\%'",
-);
-
-# get helper object
-my $HelperObject = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 
 # Freeze Time
 $HelperObject->FixedTimeSet();
@@ -947,25 +944,6 @@ $Self->True(
     "SurveySearch() with sort",
 );
 
-# cleanup system
-$DBObject->Do(
-    SQL => "DELETE FROM survey_request WHERE send_to LIKE '\%\@unittest.com\%'",
-);
-
-# set as invalid the test type
-$TypeObject->TypeUpdate(
-    ID      => $TicketTypeID,
-    Name    => 'Unit Test New Type' . int rand 10000,
-    ValidID => 2,
-    UserID  => 1,
-);
-
-# set as invalid the test service
-$ServiceObject->ServiceUpdate(
-    ServiceID => $ServiceID,
-    Name      => 'Unit Test New Service' . int rand 10000,
-    ValidID   => 2,
-    UserID    => 1,
-);
+# cleanup is done by RestoreDatabase
 
 1;
