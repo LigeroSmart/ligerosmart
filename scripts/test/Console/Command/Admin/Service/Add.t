@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2016 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/08ba2549510228a7c05d75c9c4034c83c8651025/scripts/test/Console/Command/Admin/Service/Add.t
+# $origin: https://github.com/OTRS/otrs/blob/6aafb6d5e6200b11df567d35cf59287ffe2b3aae/scripts/test/Console/Command/Admin/Service/Add.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,9 +18,16 @@ my $CommandObject = $Kernel::OM->Get('Kernel::System::Console::Command::Admin::S
 
 my ( $Result, $ExitCode );
 
-my $HelperObject = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
-my $RandomName   = $HelperObject->GetRandomID();
-my $RandomName2  = $HelperObject->GetRandomID();
+# get helper object
+$Kernel::OM->ObjectParamAdd(
+    'Kernel::System::UnitTest::Helper' => {
+        RestoreDatabase => 1,
+    },
+);
+my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
+
+my $ParentServiceName = "ParentService" . $Helper->GetRandomID();
+my $ChildServiceName  = "ChildService" . $Helper->GetRandomID();
 
 # try to execute command without any options
 $ExitCode = $CommandObject->Execute();
@@ -34,66 +41,54 @@ $Self->Is(
 # ---
 # ITSM
 # ---
-#$ExitCode = $CommandObject->Execute( '--name', $RandomName );
-$ExitCode = $CommandObject->Execute( '--name', $RandomName, '--criticality', '3 normal', '--type', 'Demonstration' );
+#$ExitCode = $CommandObject->Execute( '--name', $ParentServiceName );
+$ExitCode = $CommandObject->Execute( '--name', $ParentServiceName, '--criticality', '3 normal', '--type', 'Demonstration' );
 # ---
 $Self->Is(
     $ExitCode,
     0,
-    "Minimum options",
+    "Minimum options ( the service is added - $ParentServiceName )",
 );
 
 # same again (should fail because already exists)
 # ---
 # ITSM
 # ---
-#$ExitCode = $CommandObject->Execute( '--name', $RandomName );
-$ExitCode = $CommandObject->Execute( '--name', $RandomName, '--criticality', '3 normal', '--type', 'Demonstration' );
+#$ExitCode = $CommandObject->Execute( '--name', $ParentServiceName );
+$ExitCode = $CommandObject->Execute( '--name', $ParentServiceName, '--criticality', '3 normal', '--type', 'Demonstration' );
 # ---
 $Self->Is(
     $ExitCode,
     1,
-    "Minimum options (already exists)",
+    "Minimum options ( service $ParentServiceName already exists )",
 );
 
 # invalid parent
 # ---
 # ITSM
 # ---
-#$ExitCode = $CommandObject->Execute( '--name', $RandomName2, '--parent-name', $RandomName2 );
-$ExitCode = $CommandObject->Execute( '--name', $RandomName2, '--parent-name', $RandomName2, '--criticality', '3 normal', '--type', 'Demonstration' );
+#$ExitCode = $CommandObject->Execute( '--name', $ChildServiceName, '--parent-name', $ChildServiceName );
+$ExitCode = $CommandObject->Execute( '--name', $ChildServiceName, '--parent-name', $ChildServiceName, '--criticality', '3 normal', '--type', 'Demonstration' );
 # ---
 $Self->Is(
     $ExitCode,
     1,
-    "Parent does not exist",
+    "Parent service $ChildServiceName does not exist",
 );
 
 # valid parent
 # ---
 # ITSM
 # ---
-#$ExitCode = $CommandObject->Execute( '--name', $RandomName2, '--parent-name', $RandomName );
-$ExitCode = $CommandObject->Execute( '--name', $RandomName2, '--parent-name', $RandomName, '--criticality', '3 normal', '--type', 'Demonstration' );
+#$ExitCode = $CommandObject->Execute( '--name', $ChildServiceName, '--parent-name', $ParentServiceName );
+$ExitCode = $CommandObject->Execute( '--name', $ChildServiceName, '--parent-name', $ParentServiceName, '--criticality', '3 normal', '--type', 'Demonstration' );
 # ---
 $Self->Is(
     $ExitCode,
     0,
-    "Existing parent",
+    "Existing parent ( service is added - $ChildServiceName )",
 );
 
-# delete services
-my $Success = $Kernel::OM->Get('Kernel::System::DB')->Do(
-    SQL => "DELETE FROM service WHERE name = '$RandomName' OR name = '${RandomName}::${RandomName2}'",
-);
-$Self->True(
-    $Success,
-    "ServiceDelete - $RandomName/$RandomName2",
-);
-
-# Make sure the cache is correct.
-$Kernel::OM->Get('Kernel::System::Cache')->CleanUp(
-    Type => 'Service',
-);
+# cleanup is done by RestoreDatabase
 
 1;

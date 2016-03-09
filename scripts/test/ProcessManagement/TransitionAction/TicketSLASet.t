@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2016 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/08ba2549510228a7c05d75c9c4034c83c8651025/scripts/test/ProcessManagement/TransitionAction/TicketSLASet.t
+# $origin: https://github.com/OTRS/otrs/blob/6aafb6d5e6200b11df567d35cf59287ffe2b3aae/scripts/test/ProcessManagement/TransitionAction/TicketSLASet.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,25 +17,30 @@ use vars (qw($Self));
 use Kernel::System::VariableCheck qw(:all);
 
 # get needed objects
-my $ConfigObject  = $Kernel::OM->Get('Kernel::Config');
-my $HelperObject  = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 my $ServiceObject = $Kernel::OM->Get('Kernel::System::Service');
 my $SLAObject     = $Kernel::OM->Get('Kernel::System::SLA');
 my $TicketObject  = $Kernel::OM->Get('Kernel::System::Ticket');
-my $UserObject    = $Kernel::OM->Get('Kernel::System::User');
 my $ModuleObject  = $Kernel::OM->Get('Kernel::System::ProcessManagement::TransitionAction::TicketSLASet');
+
+# get helper object
+$Kernel::OM->ObjectParamAdd(
+    'Kernel::System::UnitTest::Helper' => {
+        RestoreDatabase => 1,
+    },
+);
+my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 
 # define variables
 my $UserID     = 1;
 my $ModuleName = 'TicketSLASet';
-my $RandomID   = $HelperObject->GetRandomID();
+my $RandomID   = $Helper->GetRandomID();
 
 # add a customer user
-my $TestCustomerUserLogin = $HelperObject->TestCustomerUserCreate();
+my $TestCustomerUserLogin = $Helper->TestCustomerUserCreate();
 
 # set user details
-my $TestUserLogin = $HelperObject->TestUserCreate();
-my $TestUserID    = $UserObject->UserLookup(
+my $TestUserLogin = $Helper->TestUserCreate();
+my $TestUserID    = $Kernel::OM->Get('Kernel::System::User')->UserLookup(
     UserLogin => $TestUserLogin,
 );
 
@@ -147,73 +152,39 @@ $Self->True(
 # ----------------------------------------
 # Create a test tickets
 # ----------------------------------------
-my $TicketID1 = $TicketObject->TicketCreate(
-    TN            => undef,
-    Title         => $SLAs[0]->{SLAID},
-    QueueID       => 1,
-    Lock          => 'unlock',
-    Priority      => '3 normal',
-    StateID       => 1,
-    TypeID        => 1,
-    Service       => $Services[0]->{Name},
-    SLA           => undef,
-    CustomerID    => undef,
-    CustomerUser  => $TestCustomerUserLogin,
-    OwnerID       => 1,
-    ResponsibleID => 1,
-    ArchiveFlag   => undef,
-    UserID        => $UserID,
-);
+my @TicketData;
+for my $Item ( 0 .. 1 ) {
+    my $TicketID = $TicketObject->TicketCreate(
+        Title => ( $Item == 0 ) ? $SLAs[0]->{SLAID} : 'test',
+        QueueID       => 1,
+        Lock          => 'unlock',
+        Priority      => '3 normal',
+        StateID       => 1,
+        TypeID        => 1,
+        Service       => ( $Item == 0 ) ? $Services[0]->{Name} : undef,
+        CustomerUser  => ( $Item == 0 ) ? $TestCustomerUserLogin : undef,
+        OwnerID       => 1,
+        ResponsibleID => 1,
+        UserID        => $UserID,
+    );
 
-# sanity checks
-$Self->True(
-    $TicketID1,
-    "TicketCreate() - $TicketID1",
-);
+    # sanity checks
+    $Self->True(
+        $TicketID,
+        "TicketCreate() - $TicketID",
+    );
 
-my %Ticket1 = $TicketObject->TicketGet(
-    TicketID => $TicketID1,
-    UserID   => $UserID,
-);
-$Self->True(
-    IsHashRefWithData( \%Ticket1 ),
-    "TicketGet() - Get Ticket with ID $TicketID1.",
-);
+    my %Ticket = $TicketObject->TicketGet(
+        TicketID => $TicketID,
+        UserID   => $UserID,
+    );
+    $Self->True(
+        IsHashRefWithData( \%Ticket ),
+        "TicketGet() - Get Ticket with ID $TicketID.",
+    );
 
-my $TicketID2 = $TicketObject->TicketCreate(
-    TN            => undef,
-    Title         => 'test',
-    QueueID       => 1,
-    Lock          => 'unlock',
-    Priority      => '3 normal',
-    StateID       => 1,
-    TypeID        => 1,
-    Service       => undef,
-    SLA           => undef,
-    CustomerID    => undef,
-    CustomerUser  => undef,
-    OwnerID       => 1,
-    ResponsibleID => 1,
-    ArchiveFlag   => undef,
-    UserID        => $UserID,
-);
-
-# sanity checks
-$Self->True(
-    $TicketID2,
-    "TicketCreate() - $TicketID2",
-);
-
-my %Ticket2 = $TicketObject->TicketGet(
-    TicketID => $TicketID2,
-    UserID   => $UserID,
-);
-$Self->True(
-    IsHashRefWithData( \%Ticket2 ),
-    "TicketGet() - Get Ticket with ID $TicketID2.",
-);
-
-# ----------------------------------------
+    push @TicketData, \%Ticket;
+}
 
 # Run() tests
 my @Tests = (
@@ -226,7 +197,7 @@ my @Tests = (
         Name   => 'No UserID',
         Config => {
             UserID => undef,
-            Ticket => \%Ticket1,
+            Ticket => $TicketData[0],
             Config => {
                 CustomerID => 'test',
             },
@@ -248,7 +219,7 @@ my @Tests = (
         Name   => 'No Config',
         Config => {
             UserID => $UserID,
-            Ticket => \%Ticket1,
+            Ticket => $TicketData[0],
             Config => {},
         },
         Success => 0,
@@ -257,7 +228,7 @@ my @Tests = (
         Name   => 'Wrong Config',
         Config => {
             UserID => $UserID,
-            Ticket => \%Ticket1,
+            Ticket => $TicketData[0],
             Config => {
                 NoAgentNotify => 0,
             },
@@ -279,7 +250,7 @@ my @Tests = (
         Name   => 'Wrong Config Format',
         Config => {
             UserID => $UserID,
-            Ticket => \%Ticket1,
+            Ticket => $TicketData[0],
             Config => 1,
         },
         Success => 0,
@@ -288,7 +259,7 @@ my @Tests = (
         Name   => 'Wrong SLA',
         Config => {
             UserID => $UserID,
-            Ticket => \%Ticket1,
+            Ticket => $TicketData[0],
             Config => {
                 SLA => 'NotExisting' . $RandomID,
             },
@@ -299,7 +270,7 @@ my @Tests = (
         Name   => 'Wrong SLAID',
         Config => {
             UserID => $UserID,
-            Ticket => \%Ticket1,
+            Ticket => $TicketData[0],
             Config => {
                 SLAID => 'NotExisting' . $RandomID,
             },
@@ -310,7 +281,7 @@ my @Tests = (
         Name   => 'Not assigned SLA',
         Config => {
             UserID => $UserID,
-            Ticket => \%Ticket1,
+            Ticket => $TicketData[0],
             Config => {
                 SLA => $SLAs[2]->{Name},
             },
@@ -321,7 +292,7 @@ my @Tests = (
         Name   => 'Not Assigned SLAID',
         Config => {
             UserID => $UserID,
-            Ticket => \%Ticket1,
+            Ticket => $TicketData[0],
             Config => {
                 SLAID => $SLAs[2]->{SLAID},
             },
@@ -332,7 +303,7 @@ my @Tests = (
         Name   => "Ticket without service with SLA $SLAs[0]->{Name}",
         Config => {
             UserID => $UserID,
-            Ticket => \%Ticket2,
+            Ticket => $TicketData[1],
             Config => {
                 SLAID => $SLAs[0]->{Name},
             },
@@ -343,7 +314,7 @@ my @Tests = (
         Name   => "Ticket without service with SLAID $SLAs[1]->{Name}",
         Config => {
             UserID => $UserID,
-            Ticket => \%Ticket2,
+            Ticket => $TicketData[1],
             Config => {
                 SLAID => $SLAs[0]->{SLAID},
             },
@@ -354,7 +325,7 @@ my @Tests = (
         Name   => "Correct SLA $SLAs[0]->{Name}",
         Config => {
             UserID => $UserID,
-            Ticket => \%Ticket1,
+            Ticket => $TicketData[0],
             Config => {
                 SLA => $SLAs[0]->{Name},
             },
@@ -365,7 +336,7 @@ my @Tests = (
         Name   => "Correct SLA $SLAs[1]->{Name}",
         Config => {
             UserID => $UserID,
-            Ticket => \%Ticket1,
+            Ticket => $TicketData[0],
             Config => {
                 SLA => $SLAs[1]->{Name},
             },
@@ -376,7 +347,7 @@ my @Tests = (
         Name   => "Correct SLAID $SLAs[0]->{Name}",
         Config => {
             UserID => $UserID,
-            Ticket => \%Ticket1,
+            Ticket => $TicketData[0],
             Config => {
                 SLAID => $SLAs[0]->{SLAID},
             },
@@ -387,7 +358,7 @@ my @Tests = (
         Name   => "Correct SLAID $SLAs[1]->{Name}",
         Config => {
             UserID => $UserID,
-            Ticket => \%Ticket1,
+            Ticket => $TicketData[0],
             Config => {
                 SLAID => $SLAs[0]->{SLAID},
             },
@@ -398,7 +369,7 @@ my @Tests = (
         Name   => "Correct Ticket->Title",
         Config => {
             UserID => $UserID,
-            Ticket => \%Ticket1,
+            Ticket => $TicketData[0],
             Config => {
                 SLAID => '<OTRS_TICKET_Title>',
             },
@@ -409,7 +380,7 @@ my @Tests = (
         Name   => "Correct Ticket->NotExisting",
         Config => {
             UserID => $UserID,
-            Ticket => \%Ticket1,
+            Ticket => $TicketData[0],
             Config => {
                 SLAID => '<OTRS_TICKET_NotExisting>',
             },
@@ -420,7 +391,7 @@ my @Tests = (
         Name   => "Correct Using Different UserID",
         Config => {
             UserID => $UserID,
-            Ticket => \%Ticket1,
+            Ticket => $TicketData[0],
             Config => {
                 SLA    => $SLAs[0]->{Name},
                 UserID => $TestUserID,
@@ -447,13 +418,13 @@ for my $Test (@Tests) {
 
         $Self->True(
             $Success,
-            "$ModuleName Run() - Test:'$Test->{Name}' | excecuted with True"
+            "$ModuleName Run() - Test:'$Test->{Name}' | executed with True"
         );
 
         # get ticket
-        my $TicketID = $TicketID1;
-        if ( $Test->{Config}->{Ticket}->{TicketID} eq $TicketID2 ) {
-            $TicketID = $TicketID2;
+        my $TicketID = $TicketData[0]->{TicketID};
+        if ( $Test->{Config}->{Ticket}->{TicketID} eq $TicketData[1]->{TicketID} ) {
+            $TicketID = $TicketData[1]->{TicketID};
         }
         my %Ticket = $TicketObject->TicketGet(
             TicketID => $TicketID,
@@ -508,57 +479,6 @@ for my $Test (@Tests) {
     }
 }
 
-#-----------------------------------------
-# Destructors to remove our Testitems
-# ----------------------------------------
-
-# Tickets
-my $Delete = $TicketObject->TicketDelete(
-    TicketID => $TicketID1,
-    UserID   => 1,
-);
-$Self->True(
-    $Delete,
-    "TicketDelete() - $TicketID2",
-);
-
-$Delete = $TicketObject->TicketDelete(
-    TicketID => $TicketID1,
-    UserID   => 1,
-);
-$Self->True(
-    $Delete,
-    "TicketDelete() - $TicketID2",
-);
-
-# SLA
-for my $SLAData (@SLAs) {
-    my $Success = $SLAObject->SLAUpdate(
-        %{$SLAData},
-        ValidID => 2,
-    );
-
-    # sanity test
-    $Self->True(
-        $Success,
-        "SLAUpdate() for $SLAData->{Name}, Set SLA to invalid with true",
-    );
-}
-
-# Services
-for my $ServiceData (@Services) {
-    my $Success = $ServiceObject->ServiceUpdate(
-        %{$ServiceData},
-        ValidID => 2,
-    );
-
-    # sanity test
-    $Self->True(
-        $Success,
-        "ServiceUpdate() for $ServiceData->{Name}, Set service to invalid with true",
-    );
-}
-
-# ----------------------------------------
+# cleanup is done by RestoreDatabase.
 
 1;
