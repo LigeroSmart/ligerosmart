@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2016 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/505acab1c49f09f41282956e530fdcb96d0a4bce/Kernel/Modules/AgentTicketActionCommon.pm
+# $origin: https://github.com/OTRS/otrs/blob/6aafb6d5e6200b11df567d35cf59287ffe2b3aae/Kernel/Modules/AgentTicketActionCommon.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -13,6 +13,7 @@ package Kernel::Modules::AgentTicketActionCommon;
 use strict;
 use warnings;
 
+use Kernel::Language qw(Translatable);
 use Kernel::System::EmailParser;
 use Kernel::System::VariableCheck qw(:all);
 
@@ -99,7 +100,7 @@ sub Run {
     # error screen, don't show ticket
     if ( !$Access ) {
         return $LayoutObject->NoPermission(
-            Message    => "You need $Config->{Permission} permissions!",
+            Message => $LayoutObject->{LanguageObject}->Translate( 'You need %s permissions!', $Config->{Permission} ),
             WithHeader => 'yes',
         );
     }
@@ -914,16 +915,18 @@ sub Run {
             # get involved user list
             my @InvolvedUserID = $ParamObject->GetArray( Param => 'InvolvedUserID' );
 
+            if ( $Self->{Config}->{InformAgent} ) {
+                push @NotifyUserIDs, @InformUserID;
+            }
+
+            if ( $Self->{Config}->{InvolvedAgent} ) {
+                push @NotifyUserIDs, @InvolvedUserID;
+            }
+
             if ( $Self->{ReplyToArticle} ) {
-                @NotifyUserIDs = (
-                    @UserListWithoutSelection,
-                    @InformUserID,
-                    @InvolvedUserID,
-                );
+                push @NotifyUserIDs, @UserListWithoutSelection;
             }
-            else {
-                @NotifyUserIDs = ( @InformUserID, @InvolvedUserID );
-            }
+
             $ArticleID = $TicketObject->ArticleCreate(
                 TicketID                        => $Self->{TicketID},
                 SenderType                      => 'agent',
@@ -1117,6 +1120,7 @@ sub Run {
         }
 
         my $QueueID = $GetParam{NewQueueID} || $Ticket{QueueID};
+        my $StateID = $GetParam{NewStateID} || $Ticket{StateID};
 
         # convert dynamic field values into a structure for ACLs
         my %DynamicFieldACLParameters;
@@ -1137,16 +1141,19 @@ sub Run {
         my $Owners = $Self->_GetOwners(
             %GetParam,
             QueueID  => $QueueID,
+            StateID  => $StateID,
             AllUsers => $GetParam{OwnerAll},
         );
         my $OldOwners = $Self->_GetOldOwners(
             %GetParam,
             QueueID  => $QueueID,
+            StateID  => $StateID,
             AllUsers => $GetParam{OwnerAll},
         );
         my $ResponsibleUsers = $Self->_GetResponsible(
             %GetParam,
             QueueID  => $QueueID,
+            StateID  => $StateID,
             AllUsers => $GetParam{OwnerAll},
         );
         my $Priorities = $Self->_GetPriorities(
@@ -1156,11 +1163,13 @@ sub Run {
             %GetParam,
             CustomerUserID => $CustomerUser,
             QueueID        => $QueueID,
+            StateID        => $StateID,
         );
         my $Types = $Self->_GetTypes(
             %GetParam,
             CustomerUserID => $CustomerUser,
             QueueID        => $QueueID,
+            StateID        => $StateID,
         );
 
         # reset previous ServiceID to reset SLA-List if no service is selected
@@ -1171,12 +1180,14 @@ sub Run {
             %GetParam,
             CustomerUserID => $CustomerUser,
             QueueID        => $QueueID,
+            StateID        => $StateID,
             ServiceID      => $ServiceID,
         );
         my $NextStates = $Self->_GetNextStates(
             %GetParam,
             CustomerUserID => $CustomerUser || '',
-            QueueID => $QueueID,
+            QueueID        => $QueueID,
+            StateID        => $StateID,
         );
 
         # update Dynamic Fields Possible Values via AJAX

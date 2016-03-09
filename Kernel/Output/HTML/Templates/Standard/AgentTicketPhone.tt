@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2016 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/505acab1c49f09f41282956e530fdcb96d0a4bce/Kernel/Output/HTML/Templates/Standard/AgentTicketPhone.tt
+# $origin: https://github.com/OTRS/otrs/blob/6aafb6d5e6200b11df567d35cf59287ffe2b3aae/Kernel/Output/HTML/Templates/Standard/AgentTicketPhone.tt
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -586,6 +586,7 @@
                     </fieldset>
                 </form>
             </div>
+            <div class="Clear"></div>
         </div>
         <div id="CustomerTickets"></div>
     </div>

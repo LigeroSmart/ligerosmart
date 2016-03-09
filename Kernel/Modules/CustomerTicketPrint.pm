@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2016 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/505acab1c49f09f41282956e530fdcb96d0a4bce/Kernel/Modules/CustomerTicketPrint.pm
+# $origin: https://github.com/OTRS/otrs/blob/6aafb6d5e6200b11df567d35cf59287ffe2b3aae/Kernel/Modules/CustomerTicketPrint.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -116,10 +116,15 @@ sub Run {
         $Ticket{PendingUntil} = '-';
     }
 
-    my $PDFObject = $Kernel::OM->Get('Kernel::System::PDF');
+    # get needed objects
+    my $TimeObject = $Kernel::OM->Get('Kernel::System::Time');
+    my $PDFObject  = $Kernel::OM->Get('Kernel::System::PDF');
 
     my $PrintedBy = $LayoutObject->{LanguageObject}->Translate('printed by');
-    my $Time      = $LayoutObject->{Time};
+    my $Time      = $LayoutObject->{LanguageObject}->FormatTimeString(
+        $TimeObject->CurrentTimestamp(),
+        'DateFormat',
+    );
     my %Page;
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
@@ -228,8 +233,7 @@ sub Run {
     );
 
     # return the pdf document
-    my $TimeObject = $Kernel::OM->Get('Kernel::System::Time');
-    my $Filename   = 'Ticket_' . $Ticket{TicketNumber};
+    my $Filename = 'Ticket_' . $Ticket{TicketNumber};
     my ( $s, $m, $h, $D, $M, $Y ) = $TimeObject->SystemTime2Date(
         SystemTime => $TimeObject->SystemTime(),
     );
@@ -858,7 +862,8 @@ sub _PDFOutputArticles {
             my $Lines;
             if ( IsArrayRefWithData( $Article{Body} ) ) {
                 for my $Line ( @{ $Article{Body} } ) {
-                    my $CreateTime = $LayoutObject->{LanguageObject}->FormatTimeString( $Line->{CreateTime}, 'DateFormat' );
+                    my $CreateTime
+                        = $LayoutObject->{LanguageObject}->FormatTimeString( $Line->{CreateTime}, 'DateFormat' );
                     if ( $Line->{SystemGenerated} ) {
                         $Lines .= '[' . $CreateTime . '] ' . $Line->{MessageText} . "\n";
                     }

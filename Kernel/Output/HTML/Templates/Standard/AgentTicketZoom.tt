@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2016 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/505acab1c49f09f41282956e530fdcb96d0a4bce/Kernel/Output/HTML/Templates/Standard/AgentTicketZoom.tt
+# $origin: https://github.com/OTRS/otrs/blob/6aafb6d5e6200b11df567d35cf59287ffe2b3aae/Kernel/Output/HTML/Templates/Standard/AgentTicketZoom.tt
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1029,6 +1029,8 @@ var TicketID    = [% Data.TicketID | JSON %],
         'is_chat'       : [% Item.IsChatArticle | JSON %],
         'article_data'  : {
         [% IF Item.ArticleID %]
+            'sender_type' : [% Item.ArticleData.SenderType | html | JSON %],
+            'article_type' : [% Item.ArticleData.ArticleType | html | JSON %],
             'subject': [% Item.ArticleData.Subject | html | JSON %],
             'from'   : [% Item.ArticleData.From | html | JSON %],
             'to'     : [% Item.ArticleData.To | html | JSON %],

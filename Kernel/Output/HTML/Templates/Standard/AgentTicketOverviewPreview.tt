@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2016 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/505acab1c49f09f41282956e530fdcb96d0a4bce/Kernel/Output/HTML/Templates/Standard/AgentTicketOverviewPreview.tt
+# $origin: https://github.com/OTRS/otrs/blob/6aafb6d5e6200b11df567d35cf59287ffe2b3aae/Kernel/Output/HTML/Templates/Standard/AgentTicketOverviewPreview.tt
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -65,7 +65,7 @@
             <ul class="Actions InlineActions">
                 <li class="ResponsiveActionMenu"><a href="#" id="ResponsiveActionMenu[% Data.TicketID | html %]" title="[% Translate("Open / Close ticket action menu") | html %]"><i class="fa fa-bars"></i></a></li>
 [% RenderBlockStart("InlineActionRowItem") %]
-                <li><a id="[% Data.ID | html %][% Data.TicketID | html %]" class="[% Data.Class | html %]" href="[% Data.Link | Interpolate | html %]" title="[% Data.Description | Interpolate | html %]">[% Data.Name | Interpolate | html %]</a></li>
+                <li><a id="[% Data.ID | html %][% Data.TicketID | html %]" class="[% Data.Class | html %]" href="[% Data.Link | Interpolate | html %]" title="[% Translate(Data.Description) | html %]">[% Translate(Data.Name) | html %]</a></li>
 [% RenderBlockEnd("InlineActionRowItem") %]
 [% RenderBlockStart("InlineActionRowItemHTML") %]
                 [% Data.HTML %]
