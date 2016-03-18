@@ -357,11 +357,18 @@ sub ChangeUpdate {
         );
     }
 
-    # when CIP is given, then look up the ID
+    # when CIP is given, then look up the ID,
+    # otherwise look up the names, this is needed for the notification rules
     for my $Type (qw(Category Impact Priority)) {
         if ( $Param{$Type} ) {
             $Param{"${Type}ID"} = $Self->ChangeCIPLookup(
                 CIP  => $Param{$Type},
+                Type => $Type,
+            );
+        }
+        elsif ( $Param{"${Type}ID"} ) {
+            $Param{$Type} = $Self->ChangeCIPLookup(
+                ID   => $Param{"${Type}ID"},
                 Type => $Type,
             );
         }
