@@ -270,10 +270,6 @@ sub Run {
                     elsif ( $Menus{$Menu}->{Target} eq 'Back' ) {
                         $Menus{$Menu}->{MenuClass} = 'HistoryBack';
                     }
-                    elsif ( $Menus{$Menu}->{Target} eq 'ConfirmationDialog' ) {
-                        $Menus{$Menu}->{MenuClass} = 'AsConfirmationDialog';
-                    }
-
                 }
 
                 # run module
