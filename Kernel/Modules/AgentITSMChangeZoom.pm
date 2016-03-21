@@ -252,7 +252,6 @@ sub Run {
                     elsif ( $Menus{$Menu}->{Target} eq 'Back' ) {
                         $Menus{$Menu}->{MenuClass} = 'HistoryBack';
                     }
-
                 }
 
                 # run module
