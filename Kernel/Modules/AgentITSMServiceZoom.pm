@@ -141,6 +141,8 @@ sub Run {
     my $LinkTableStrg = $LayoutObject->LinkObjectTableCreate(
         LinkListWithData => $LinkListWithData,
         ViewMode         => $LinkTableViewMode,
+        Object           => 'Service',
+        Key              => $ServiceID,
     );
 
     # output the link table
