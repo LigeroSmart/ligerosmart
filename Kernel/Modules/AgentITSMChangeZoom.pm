@@ -764,6 +764,8 @@ sub Run {
     my $LinkTableStrg = $LayoutObject->LinkObjectTableCreate(
         LinkListWithData => $LinkListWithData,
         ViewMode         => $LinkTableViewMode,
+        Object           => 'ITSMChange',
+        Key              => $ChangeID,
     );
 
     # output the link table

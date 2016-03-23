@@ -579,6 +579,8 @@ sub Run {
     my $LinkTableStrg = $LayoutObject->LinkObjectTableCreate(
         LinkListWithData => $LinkListWithData,
         ViewMode         => $LinkTableViewMode,
+        Object           => 'ITSMWorkOrder',
+        Key              => $WorkOrderID,
     );
 
     # output the link table
