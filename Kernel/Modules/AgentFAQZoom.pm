@@ -689,6 +689,8 @@ sub Run {
         my $LinkTableStrg = $LayoutObject->LinkObjectTableCreate(
             LinkListWithData => $LinkListWithData,
             ViewMode         => $LinkTableViewMode,
+            Object           => 'FAQ',
+            Key              => $GetParam{ItemID},
         );
 
         # output the link table
