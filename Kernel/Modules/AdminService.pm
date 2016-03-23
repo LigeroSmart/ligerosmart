@@ -40,7 +40,6 @@ sub Run {
 # ITSM
 # ---
     my $DynamicFieldObject   = $Kernel::OM->Get('Kernel::System::DynamicField');
-    my $GeneralCatalogObject = $Kernel::OM->Get('Kernel::System::GeneralCatalog');
 
     # get the dynamic field for ITSMCriticality
     my $DynamicFieldConfigArrayRef = $DynamicFieldObject->DynamicFieldListGet(
