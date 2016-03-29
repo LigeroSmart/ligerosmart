@@ -109,7 +109,7 @@ $Selenium->RunTest(
 
             # wait until page has loaded, if necessary
             $Selenium->WaitFor(
-                JavaScript => 'return typeof($) === "function" && $("#SubmitWorkOrderEditReport").length'
+                JavaScript => 'return typeof($) === "function" && $("#SubmitWorkOrderEditReport").length;'
             );
 
             # get work order state data
@@ -142,7 +142,7 @@ $Selenium->RunTest(
             $Selenium->switch_to_window( $Handles->[1] );
 
             # wait until page has loaded, if necessary
-            $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $(".CancelClosePopup").length' );
+            $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $(".CancelClosePopup").length;' );
 
             # verify report change
             my $ReportUpdateMessage = "Workorder State: New: $WorkOrderState (ID=$WorkOrderStateDataRef->{ItemID})";
