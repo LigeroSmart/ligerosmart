@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2016 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/6aafb6d5e6200b11df567d35cf59287ffe2b3aae/Kernel/Modules/AgentTicketPhone.pm
+# $origin: https://github.com/OTRS/otrs/blob/068da228cd7064844e1ace7e0eaa3b63999934a5/Kernel/Modules/AgentTicketPhone.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -280,7 +280,7 @@ sub Run {
     if ( $GetParam{FromChatID} ) {
         if ( !$ConfigObject->Get('ChatEngine::Active') ) {
             return $LayoutObject->FatalError(
-                Message => "Chat is not active.",
+                Message => Translatable('Chat is not active.'),
             );
         }
 
@@ -294,7 +294,7 @@ sub Run {
 
         if ( !%ChatParticipant ) {
             return $LayoutObject->FatalError(
-                Message => "No permission.",
+                Message => Translatable('No permission.'),
             );
         }
 
@@ -307,7 +307,8 @@ sub Run {
         # Check if observer
         if ( $PermissionLevel ne 'Owner' && $PermissionLevel ne 'Participant' ) {
             return $LayoutObject->FatalError(
-                Message => "No permission. $PermissionLevel",
+                Message => Translatable('No permission.'),
+                Comment => $PermissionLevel,
             );
         }
     }
@@ -2142,8 +2143,8 @@ sub Run {
     }
     else {
         return $LayoutObject->ErrorScreen(
-            Message => 'No Subaction!!',
-            Comment => 'Please contact your administrator',
+            Message => Translatable('No Subaction!'),
+            Comment => Translatable('Please contact your administrator'),
         );
     }
 }

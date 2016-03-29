@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2016 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/6aafb6d5e6200b11df567d35cf59287ffe2b3aae/scripts/test/Selenium/Agent/AgentTicketActionCommonACL.t
+# $origin: https://github.com/OTRS/otrs/blob/068da228cd7064844e1ace7e0eaa3b63999934a5/scripts/test/Selenium/Agent/AgentTicketActionCommonACL.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -91,8 +91,10 @@ EOF
         # after login, we need to navigate to the ACL deployment to make the imported ACL work
         $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AdminACL;Subaction=ACLDeploy");
         $Self->False(
-            index( $Selenium->get_page_source(),
-                'ACL information from database is not in sync with the system configuration, please deploy all ACLs.' )
+            index(
+                $Selenium->get_page_source(),
+                'ACL information from database is not in sync with the system configuration, please deploy all ACLs.'
+                )
                 > -1,
             "ACL deployment successful."
         );
@@ -216,8 +218,10 @@ EOF
         # deploy again after we deleted the test acl
         $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AdminACL;Subaction=ACLDeploy");
         $Self->False(
-            index( $Selenium->get_page_source(),
-                'ACL information from database is not in sync with the system configuration, please deploy all ACLs.' )
+            index(
+                $Selenium->get_page_source(),
+                'ACL information from database is not in sync with the system configuration, please deploy all ACLs.'
+                )
                 > -1,
             "ACL deployment successful."
         );

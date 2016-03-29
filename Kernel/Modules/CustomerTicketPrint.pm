@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2016 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/6aafb6d5e6200b11df567d35cf59287ffe2b3aae/Kernel/Modules/CustomerTicketPrint.pm
+# $origin: https://github.com/OTRS/otrs/blob/068da228cd7064844e1ace7e0eaa3b63999934a5/Kernel/Modules/CustomerTicketPrint.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -14,6 +14,7 @@ use strict;
 use warnings;
 
 use Kernel::System::VariableCheck qw(:all);
+use Kernel::Language qw(Translatable);
 
 our $ObjectManagerDisabled = 1;
 
@@ -36,14 +37,18 @@ sub Run {
 
     # check needed stuff
     if ( !$Self->{TicketID} ) {
-        return $LayoutObject->ErrorScreen( Message => 'Need TicketID!' );
+        return $LayoutObject->ErrorScreen(
+            Message => Translatable('Need TicketID!'),
+        );
     }
 
     my $TicketObject = $Kernel::OM->Get('Kernel::System::Ticket');
 
     $QueueID = $TicketObject->TicketQueueID( TicketID => $Self->{TicketID} );
     if ( !$QueueID ) {
-        return $LayoutObject->ErrorScreen( Message => 'Need TicketID!' );
+        return $LayoutObject->ErrorScreen(
+            Message => Translatable('Need TicketID!'),
+        );
     }
 
     # check permissions

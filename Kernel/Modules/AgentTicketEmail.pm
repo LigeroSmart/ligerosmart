@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2016 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/6aafb6d5e6200b11df567d35cf59287ffe2b3aae/Kernel/Modules/AgentTicketEmail.pm
+# $origin: https://github.com/OTRS/otrs/blob/068da228cd7064844e1ace7e0eaa3b63999934a5/Kernel/Modules/AgentTicketEmail.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,6 +17,7 @@ use warnings;
 use Mail::Address;
 
 use Kernel::System::VariableCheck qw(:all);
+use Kernel::Language qw(Translatable);
 
 our $ObjectManagerDisabled = 1;
 
@@ -875,8 +876,9 @@ sub Run {
                 if ( !IsHashRefWithData($ValidationResult) ) {
                     return $LayoutObject->ErrorScreen(
                         Message =>
-                            "Could not perform validation on field $DynamicFieldConfig->{Label}!",
-                        Comment => 'Please contact the admin.',
+                            $LayoutObject->{LanguageObject}
+                            ->Translate( 'Could not perform validation on field %s!', $DynamicFieldConfig->{Label} ),
+                        Comment => Translatable('Please contact the admin.'),
                     );
                 }
 
@@ -2022,8 +2024,8 @@ sub Run {
     }
     else {
         return $LayoutObject->ErrorScreen(
-            Message => 'No Subaction!',
-            Comment => 'Please contact your administrator',
+            Message => Translatable('No Subaction!'),
+            Comment => Translatable('Please contact your administrator'),
         );
     }
 }
