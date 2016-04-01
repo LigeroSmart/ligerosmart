@@ -80,8 +80,16 @@ $Selenium->RunTest(
             $Element->is_displayed();
         }
 
-        for my $Source ( 'FAQ Information', 'Linked Objects' )
-        {
+        my $LinkTableViewMode = $Kernel::OM->Get('Kernel::Config')->Get('LinkObject::ViewMode');
+
+        my @FAQWidgets = ( 'FAQ Information' );
+
+        # only check the linked objects widget for the simple view mode here
+        if ( $LinkTableViewMode eq 'Simple' ) {
+            push @FAQWidgets, 'Linked Objects';
+        }
+
+        for my $Source (@FAQWidgets) {
             $Self->True(
                 index( $Selenium->get_page_source(), $Source ) > -1,
                 "FAQ data is found on screen- $Source",
