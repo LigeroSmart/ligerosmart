@@ -78,12 +78,14 @@
         <File Permission="644" Location="scripts/test/Selenium/Agent/Admin/AdminITSMCIPAllocate.t"/>
         <File Permission="644" Location="scripts/test/Selenium/Agent/AgentStatistics/Add.t"/>
         <File Permission="644" Location="scripts/test/Selenium/Agent/AgentStatistics/Import.t"/>
+        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentTicketPhone/ServiceDropdown.t"/>
         <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMService.t"/>
         <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMServicePrint.t"/>
         <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMServiceZoom.t"/>
         <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMSLA.t"/>
         <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMSLAPrint.t"/>
         <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMSLAZoom.t"/>
+        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentTicketActionCommonACL.t"/>
         <File Permission="644" Location="scripts/test/Selenium/Agent/AgentTicketService.t"/>
         <File Permission="644" Location="scripts/test/Selenium/Output/NavBar/AgentTicketService.t"/>
         <File Permission="644" Location="scripts/test/Selenium/Output/Preferences/Agent/CustomService.t"/>
