@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2016 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/1212a2e0c6e22c769efbf4dbadf3bcf44b61b868/Kernel/Output/HTML/Templates/Standard/AgentTicketActionCommon.tt
+# $origin: https://github.com/OTRS/otrs/blob/d29ce846afdfb52eebed219c0671bfcc0d75e5c9/Kernel/Output/HTML/Templates/Standard/AgentTicketActionCommon.tt
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -29,34 +29,34 @@
         <div class="Header">
             <h1>
 [% RenderBlockStart("HeaderAgentTicketFreeText") %]
-[% Translate("Change Free Text of Ticket") | html %]:
+[% Translate("Change Free Text of %s%s", Config('Ticket::Hook'), Data.TicketNumber) | html %]
 [% RenderBlockEnd("HeaderAgentTicketFreeText") %]
 [% RenderBlockStart("HeaderAgentTicketOwner") %]
-[% Translate("Change Owner of Ticket") | html %]:
+[% Translate("Change Owner of %s%s", Config('Ticket::Hook'), Data.TicketNumber) | html %]
 [% RenderBlockEnd("HeaderAgentTicketOwner") %]
 [% RenderBlockStart("HeaderAgentTicketClose") %]
-[% Translate("Close Ticket") | html %]:
+[% Translate("Close %s%s", Config('Ticket::Hook'), Data.TicketNumber) | html %]
 [% RenderBlockEnd("HeaderAgentTicketClose") %]
 [% RenderBlockStart("HeaderAgentTicketNote") %]
-[% Translate("Add Note to Ticket") | html %]:
+[% Translate("Add Note to %s%s", Config('Ticket::Hook'), Data.TicketNumber) | html %]
 [% RenderBlockEnd("HeaderAgentTicketNote") %]
 [% RenderBlockStart("HeaderAgentTicketPending") %]
-[% Translate("Set Pending") | html %]:
+[% Translate("Set Pending Time for %s%s", Config('Ticket::Hook'), Data.TicketNumber) | html %]
 [% RenderBlockEnd("HeaderAgentTicketPending") %]
 [% RenderBlockStart("HeaderAgentTicketPriority") %]
-[% Translate("Change Priority of Ticket") | html %]:
+[% Translate("Change Priority of %s%s", Config('Ticket::Hook'), Data.TicketNumber) | html %]
 [% RenderBlockEnd("HeaderAgentTicketPriority") %]
 [% RenderBlockStart("HeaderAgentTicketResponsible") %]
-[% Translate("Change Responsible of Ticket") | html %]:
+[% Translate("Change Responsible of %s%s", Config('Ticket::Hook'), Data.TicketNumber) | html %]
 [% RenderBlockEnd("HeaderAgentTicketResponsible") %]
 # ---
 # MasterSlave
 # ---
 [% RenderBlockStart("HeaderAgentTicketMasterSlave") %]
-[% Translate("Manage Master/Slave") | html %]
+[% Translate("Manage Master/Slave status for %s%s", Config('Ticket::Hook'), Data.TicketNumber) | html %]
 [% RenderBlockEnd("HeaderAgentTicketMasterSlave") %]
 # ---
-[% Data.TicketNumber %] - [% Data.Title | html %]
+                 &mdash; [% Data.Title | html %]
             </h1>
             <p class="AsteriskExplanation">[% Translate("All fields marked with an asterisk (*) are mandatory.") | html %]</p>
 
@@ -361,6 +361,44 @@ $('#TypeID').bind('change', function (Event) {
                             </div>
                             <div class="Clear"></div>
 [% END %]
+                        </fieldset>
+[% RenderBlockStart("InformAdditionalAgents") %]
+                        <fieldset class="TableLike FixedLabel">
+[% RenderBlockStart("InformAgent") %]
+                            <label for="InformUserID">[% Translate("Inform agents") | html %]:</label>
+                            <div class="Field">
+                            [% Data.OptionStrg %]
+                            </div>
+                            <div class="Clear"></div>
+[% RenderBlockEnd("InformAgent") %]
+[% RenderBlockStart("InvolvedAgent") %]
+                            <label for="InvolvedUserID">[% Translate("Inform involved agents") | html %]:</label>
+                            <div class="Field">
+                            [% Data.InvolvedAgentStrg %]
+                            </div>
+                            <div class="Clear"></div>
+[% RenderBlockEnd("InvolvedAgent") %]
+                            <div class="Field">
+                                <p class="FieldExplanation">
+                                    [% Translate("Here you can select additional agents which should receive a notification regarding the new article.") %]
+                                </p>
+                            </div>
+                        </fieldset>
+[% RenderBlockEnd("InformAdditionalAgents") %]
+[% RenderBlockStart("InformAgentsWithoutSelection") %]
+                        <fieldset class="TableLike FixedLabel">
+                            <label>[% Translate("Text will also be received by:") | html %]:</label>
+                            <div class="Field">
+                                <input type="hidden" name="UserListWithoutSelection" value="[% Data.UserListWithoutSelection  | html %]" />
+[% RenderBlockStart("InformAgentsWithoutSelectionSingleUser") %]
+                                <span title="[% Data.UserEmail %]">[% Data.UserFullname %]</span>[% RenderBlockStart("InformAgentsWithoutSelectionSingleUserSeparator") %],[% RenderBlockEnd("InformAgentsWithoutSelectionSingleUserSeparator") %]
+[% RenderBlockEnd("InformAgentsWithoutSelectionSingleUser") %]
+                            </div>
+                            <div class="Clear"></div>
+                        </fieldset>
+[% RenderBlockEnd("InformAgentsWithoutSelection") %]
+
+                        <fieldset class="TableLike FixedLabel">
 [% RenderBlockStart("SubjectLabel") %]
                             <label for="Subject">[% Translate("Subject") | html %]:</label>
 [% RenderBlockEnd("SubjectLabel") %]
@@ -401,7 +439,9 @@ $('#TypeID').bind('change', function (Event) {
 [% WRAPPER JSOnDocumentComplete %]
 <script type="text/javascript">//<![CDATA[
     $('#StandardTemplateID').bind('change', function (Event) {
-        Core.AJAX.FormUpdate($('#Compose'), 'AJAXUpdate', 'StandardTemplateID', ['RichTextField']);
+        Core.Agent.TicketAction.ConfirmTemplateOverwrite('RichText', $(this), function () {
+            Core.AJAX.FormUpdate($('#Compose'), 'AJAXUpdate', 'StandardTemplateID', ['RichTextField']);
+        });
         return false;
     });
 //]]></script>
@@ -485,41 +525,6 @@ $('#TypeID').bind('change', function (Event) {
                             <div class="Clear"></div>
 [% RenderBlockEnd("TimeUnits") %]
                         </fieldset>
-[% RenderBlockStart("InformAdditionalAgents") %]
-                        <fieldset class="TableLike FixedLabel">
-[% RenderBlockStart("InformAgent") %]
-                            <label for="InformUserID">[% Translate("Inform Agent") | html %]: ([% Translate("Optional") | html %])</label>
-                            <div class="Field">
-                            [% Data.OptionStrg %]
-                            </div>
-                            <div class="Clear"></div>
-[% RenderBlockEnd("InformAgent") %]
-[% RenderBlockStart("InvolvedAgent") %]
-                            <label for="InvolvedUserID">[% Translate("Inform involved Agents") | html %]:</label>
-                            <div class="Field">
-                            [% Data.InvolvedAgentStrg %]
-                            </div>
-                            <div class="Clear"></div>
-[% RenderBlockEnd("InvolvedAgent") %]
-                            <div class="Field">
-                                <p class="FieldExplanation">
-                                    [% Translate("Here you can select additional agents which should receive a notification regarding the new article.") %]
-                                </p>
-                            </div>
-                        </fieldset>
-[% RenderBlockEnd("InformAdditionalAgents") %]
-[% RenderBlockStart("InformAgentsWithoutSelection") %]
-                        <fieldset class="TableLike FixedLabel">
-                            <label>[% Translate("Note will be (also) received by:") | html %]:</label>
-                            <p class="Value">
-                                <input type="hidden" name="UserListWithoutSelection" value="[% Data.UserListWithoutSelection  | html %]" />
-[% RenderBlockStart("InformAgentsWithoutSelectionSingleUser") %]
-                                <span title="[% Data.UserEmail %]">[% Data.UserFullname %]</span>[% RenderBlockStart("InformAgentsWithoutSelectionSingleUserSeparator") %],[% RenderBlockEnd("InformAgentsWithoutSelectionSingleUserSeparator") %]
-[% RenderBlockEnd("InformAgentsWithoutSelectionSingleUser") %]
-                            </p>
-                            <div class="Clear"></div>
-                        </fieldset>
-[% RenderBlockEnd("InformAgentsWithoutSelection") %]
                     </div>
                 </div>
 [% RenderBlockEnd("WidgetArticle") %]
