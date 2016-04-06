@@ -1,4 +1,5 @@
 #5.0.2 2015-??-??
+ - 2016-04-05 Fixed typo in AgentTimeAccoutning.tt, thanks to Úr Balázs.
 
 #5.0.1 2015-10-20
  - 2015-10-13 Updated translation files, thanks to all translators.

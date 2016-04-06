@@ -187,7 +187,7 @@ $('#NavigationSelect').bind('click', function(){
                                 </td>
                                 <td>
                                     <input type="text" name="Remark[[% Data.ID | html %]]" id="Remark[% Data.ID | html %]" class="Validate_TimeAccounting_Remark [% Data.RemarkInvalid | html %]" value="[% Data.Remark | html %]" size="35" title="[% Translate("Remark") | html %]" />
-                                    <div id="Remark[% Data.ID | html %]Error" class="TooltipErrorMessage"><p>[% Translate("Please add a remark with more than 8 characters!.") | html %]</p></div>
+                                    <div id="Remark[% Data.ID | html %]Error" class="TooltipErrorMessage"><p>[% Translate("Please add a remark with more than 8 characters!") | html %]</p></div>
                                     <div id="Remark[% Data.ID | html %]ServerError" class="TooltipErrorMessage">
                                         <p>[% Translate("This field is required.") | html %]</p>
                                     </div>
