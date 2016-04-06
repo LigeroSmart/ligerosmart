@@ -147,7 +147,7 @@ $Selenium->RunTest(
         my $ScriptAlias = $ConfigObject->Get('ScriptAlias');
 
         # navigate to AgentTimeAccountingOverview
-        $Selenium->get("${ScriptAlias}index.pl?Action=AgentTimeAccountingOverview;");
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentTimeAccountingOverview;");
 
         # check page layout
         $Selenium->find_element( "table",             'css' );
@@ -164,7 +164,7 @@ $Selenium->RunTest(
         for my $Check (@Test) {
             $Self->True(
                 index( $Selenium->get_page_source(), $Check ) > -1,
-                "$Check - found",
+                "$Check is found",
             );
         }
 
@@ -178,32 +178,32 @@ $Selenium->RunTest(
                 Table   => 'time_accounting_project',
                 Where   => 'project',
                 Bind    => '',
-                Message => "$ProjectTitle - deleted",
+                Message => "$ProjectTitle is deleted",
             },
             {
                 Quoted  => $ActionTitle,
                 Table   => 'time_accounting_action',
                 Where   => 'action',
                 Bind    => '',
-                Message => "$ActionTitle - deleted",
+                Message => "$ActionTitle is deleted",
             },
             {
                 Table   => 'time_accounting_table',
                 Where   => 'user_id',
                 Bind    => $TestUserID,
-                Message => "Test user $TestUserID - removed from accounting table",
+                Message => "Test user $TestUserID is removed from accounting table",
             },
             {
                 Table   => 'time_accounting_user',
                 Where   => 'user_id',
                 Bind    => $TestUserID,
-                Message => "Test user $TestUserID - removed from accounting setting",
+                Message => "Test user $TestUserID is removed from accounting setting",
             },
             {
                 Table   => 'time_accounting_user_period',
                 Where   => 'user_id',
                 Bind    => $TestUserID,
-                Message => "Test user $TestUserID - removed from accounting period",
+                Message => "Test user $TestUserID is removed from accounting period",
             },
         );
 

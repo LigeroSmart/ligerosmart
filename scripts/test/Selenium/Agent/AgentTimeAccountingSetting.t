@@ -45,7 +45,7 @@ $Selenium->RunTest(
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
         # navigate to AgentTimeAccountingSetting
-        $Selenium->get("${ScriptAlias}index.pl?Action=AgentTimeAccountingSetting");
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentTimeAccountingSetting");
 
         # check time account setting page IDs
         for my $SettingPageID (
@@ -67,7 +67,7 @@ $Selenium->RunTest(
         }
 
         # click on 'Add project'
-        $Selenium->find_element("//button[\@value='Add'][\@type='submit']")->click();
+        $Selenium->find_element("//button[\@value='Add'][\@type='submit']")->VerifiedClick();
 
         # check project page IDs
         for my $ProjectPageID (qw(Project ProjectDescription ProjectStatus))
@@ -82,18 +82,18 @@ $Selenium->RunTest(
         my $ProjectDescription = 'Selenium test project';
         $Selenium->find_element( "#Project",            'css' )->send_keys($ProjectTitle);
         $Selenium->find_element( "#ProjectDescription", 'css' )->send_keys($ProjectDescription);
-        $Selenium->find_element("//button[\@value='Submit'][\@type='submit']")->click();
+        $Selenium->find_element("//button[\@value='Submit'][\@type='submit']")->VerifiedClick();
 
         # verify created test project
         for my $ProjectVerify ( $ProjectTitle, $ProjectDescription ) {
             $Self->True(
                 index( $Selenium->get_page_source(), $ProjectVerify ) > -1,
-                "$ProjectVerify - found",
+                "$ProjectVerify is found",
             );
         }
 
         # click on 'Add task'
-        $Selenium->find_element("//button[\@value='Add task'][\@type='submit']")->click();
+        $Selenium->find_element("//button[\@value='Add task'][\@type='submit']")->VerifiedClick();
 
         # check task page IDs
         for my $TaskPageID (qw(Task TaskStatus))
@@ -106,22 +106,19 @@ $Selenium->RunTest(
         # create test task
         my $ActionTitle = 'Task ' . $Helper->GetRandomID();
         $Selenium->find_element( "#Task", 'css' )->send_keys($ActionTitle);
-        $Selenium->find_element("//button[\@value='Submit'][\@type='submit']")->click();
+        $Selenium->find_element("//button[\@value='Submit'][\@type='submit']")->VerifiedClick();
 
         # verify created test task
         $Self->True(
             index( $Selenium->get_page_source(), $ActionTitle ) > -1,
-            "$ActionTitle - found",
+            "$ActionTitle is found",
         );
-
-        # wait until form has loaded, if necessary
-        $Selenium->WaitFor( JavaScript => "return typeof(\$) === 'function' && \$('#NewUserID').length" );
 
         # add test user to time account setting
         $Selenium->execute_script(
             "\$('#NewUserID').val('$TestUserID').trigger('redraw.InputField').trigger('change');"
         );
-        $Selenium->find_element("//button[\@value='New user'][\@type='submit']")->click();
+        $Selenium->find_element("//button[\@value='New user'][\@type='submit']")->VerifiedClick();
 
         # check edit user page
         for my $EditUserPageID (
@@ -135,7 +132,7 @@ $Selenium->RunTest(
         }
 
         # click 'Add time period'
-        $Selenium->find_element("//button[\@value='Add time period'][\@type='submit']")->click();
+        $Selenium->find_element("//button[\@value='Add time period'][\@type='submit']")->VerifiedClick();
 
         # check for new added time period fields
         for my $NewTimePeriodID (qw(DateStart-2 DateEnd-2 LeaveDays-2 WeeklyHours-2 Overtime-2 PeriodStatus-2))
@@ -152,15 +149,14 @@ $Selenium->RunTest(
         $Selenium->find_element( "#ShowOvertime",  'css' )->click();
         $Selenium->find_element( "#CreateProject", 'css' )->click();
 
-        sleep 1;
-        $Selenium->find_element("//button[\@value='Submit'][\@type='submit']")->click();
+        $Selenium->find_element("//button[\@value='Submit'][\@type='submit']")->VerifiedClick();
 
         # verify test user setting
         my $SettingUser = "$TestUser $TestUser ($TestUser)";
         for my $SettingUserVerify ( $SettingUser, $UserDescription ) {
             $Self->True(
                 index( $Selenium->get_page_source(), $SettingUserVerify ) > -1,
-                "$SettingUserVerify - found",
+                "$SettingUserVerify is found",
             );
         }
 
@@ -174,26 +170,26 @@ $Selenium->RunTest(
                 Table   => 'time_accounting_project',
                 Where   => 'project',
                 Bind    => '',
-                Message => "$ProjectTitle - deleted",
+                Message => "$ProjectTitle is deleted",
             },
             {
                 Quoted  => $ActionTitle,
                 Table   => 'time_accounting_action',
                 Where   => 'action',
                 Bind    => '',
-                Message => "$ActionTitle - deleted",
+                Message => "$ActionTitle is deleted",
             },
             {
                 Table   => 'time_accounting_user',
                 Where   => 'user_id',
                 Bind    => $TestUserID,
-                Message => "Test user $TestUserID - removed from accounting setting",
+                Message => "Test user $TestUserID is removed from accounting setting",
             },
             {
                 Table   => 'time_accounting_user_period',
                 Where   => 'user_id',
                 Bind    => $TestUserID,
-                Message => "Test user $TestUserID - removed from accounting period",
+                Message => "Test user $TestUserID is removed from accounting period",
             },
         );
 

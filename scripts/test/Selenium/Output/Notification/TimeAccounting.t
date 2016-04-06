@@ -148,14 +148,11 @@ $Selenium->RunTest(
             Password => $TestUserLogin,
         );
 
-        # get script alias
-        my $ScriptAlias = $ConfigObject->Get('ScriptAlias');
-
         # verify there is notification message
         my $NotificationMessage = 'Please insert your working hours!';
         $Self->True(
             index( $Selenium->get_page_source(), $NotificationMessage ) > -1,
-            "$NotificationMessage - found",
+            "$NotificationMessage is found",
         );
 
         # get DB object
@@ -168,32 +165,32 @@ $Selenium->RunTest(
                 Table   => 'time_accounting_project',
                 Where   => 'project',
                 Bind    => '',
-                Message => "$ProjectTitle - deleted",
+                Message => "$ProjectTitle is deleted",
             },
             {
                 Quoted  => $ActionTitle,
                 Table   => 'time_accounting_action',
                 Where   => 'action',
                 Bind    => '',
-                Message => "$ActionTitle - deleted",
+                Message => "$ActionTitle is deleted",
             },
             {
                 Table   => 'time_accounting_table',
                 Where   => 'user_id',
                 Bind    => $TestUserID,
-                Message => "Test user $TestUserID - removed from accounting table",
+                Message => "Test user $TestUserID is removed from accounting table",
             },
             {
                 Table   => 'time_accounting_user',
                 Where   => 'user_id',
                 Bind    => $TestUserID,
-                Message => "Test user $TestUserID - removed from accounting setting",
+                Message => "Test user $TestUserID is removed from accounting setting",
             },
             {
                 Table   => 'time_accounting_user_period',
                 Where   => 'user_id',
                 Bind    => $TestUserID,
-                Message => "Test user $TestUserID - removed from accounting period",
+                Message => "Test user $TestUserID is removed from accounting period",
             },
         );
 
