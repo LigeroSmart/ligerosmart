@@ -255,12 +255,12 @@
         <File Permission="644" Location="scripts/test/Selenium/Output/ToolBar/MyWorkOrder.t"/>
         <File Permission="644" Location="scripts/test/Console/Command/Admin/ITSM/Change/Delete.t"/>
         <File Permission="644" Location="scripts/test/Console/Command/Admin/ITSM/Change/Check.t"/>
+        <File Permission="644" Location="var/httpd/htdocs/js/ITSM.Agent.CABMemberSearch.js"/>
+        <File Permission="644" Location="var/httpd/htdocs/js/ITSM.Agent.ChangeManagement.NotificationEvent.js"/>
         <File Permission="644" Location="var/httpd/htdocs/js/ITSM.Agent.ChangeManagement.Search.js"/>
         <File Permission="644" Location="var/httpd/htdocs/js/ITSM.Agent.ChangeManagement.WorkorderGraph.js"/>
         <File Permission="644" Location="var/httpd/htdocs/js/ITSM.Agent.ChangeManagement.Zoom.js"/>
         <File Permission="644" Location="var/httpd/htdocs/js/ITSM.Agent.ConfirmationDialog.js"/>
-        <File Permission="644" Location="var/httpd/htdocs/js/ITSM.Agent.CABMemberSearch.js"/>
-        <File Permission="644" Location="var/httpd/htdocs/js/ITSM.Agent.ChangeManagement.NotificationEvent.js"/>
         <File Permission="644" Location="var/httpd/htdocs/js/ITSM.Agent.UserSearch.js"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/ITSM.ChangeManagement.Default.css"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/ITSM.ChangeManagement.Responsive.css"/>
