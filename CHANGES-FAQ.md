@@ -1,4 +1,5 @@
 #5.0.3 2015-??-??
+ - 2016-04-22 Fixed bug#[12028](http://bugs.otrs.org/show_bug.cgi?id=12028) - FAQ update 4 to 5 items with just an HTML table are set as plain text instead of HTML.
 
 #5.0.2 2015-12-01
  - 2015-11-25 Updated translations, thanks to all translators.

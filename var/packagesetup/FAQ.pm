@@ -997,7 +997,7 @@ sub _SetContentType {
 
             next FIELD if !$FieldContent;
 
-            if ( $FieldContent =~ m{(?: <br\s*/> | </li> | </ol> | </ul> )}msx ) {
+            if ( $FieldContent =~ m{(?: <br\s*/> | </li> | </ol> | </ul> | </table> | </tr> | </td> | </div> | </o> | </i> | </div> | </span> | </h\d> | </p> | </pre> )}msx ) {
                 $DeterminedContentType = 'text/html';
                 last FIELD;
             }
