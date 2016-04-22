@@ -13,7 +13,16 @@ use warnings;
 # declare externally defined variables to avoid errors under 'use strict'
 use vars qw($Self);
 
-my $RandomNumber = int( rand(10000) );
+# get helper object
+$Kernel::OM->ObjectParamAdd(
+    'Kernel::System::UnitTest::Helper' => {
+        RestoreDatabase => 1,
+    },
+);
+my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
+
+my $RandomNumber = substr( $Helper->GetRandomNumber(), -5, 5 );
+$RandomNumber =~ s/^0//;
 
 # data for the new action (task)
 my %NewActionData = (
@@ -159,7 +168,8 @@ $Self->True(
     'Insert time period for test user settings into database',
 );
 
-$RandomNumber = int( rand(100) );
+$RandomNumber = substr( $Helper->GetRandomNumber(), -3, 3 );
+$RandomNumber =~ s/^0//;
 
 # update user data
 $Update = $TimeAccountingObject->UserSettingsUpdate(
@@ -459,5 +469,7 @@ $TimeAccountingObject->UserSettingsUpdate(
         },
     },
 );
+
+# cleanup is done by RestoreDatabase.
 
 1;
