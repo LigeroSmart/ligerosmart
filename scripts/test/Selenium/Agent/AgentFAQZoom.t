@@ -82,7 +82,7 @@ $Selenium->RunTest(
 
         my $LinkTableViewMode = $Kernel::OM->Get('Kernel::Config')->Get('LinkObject::ViewMode');
 
-        my @FAQWidgets = ( 'FAQ Information' );
+        my @FAQWidgets = ('FAQ Information');
 
         # only check the linked objects widget for the simple view mode here
         if ( $LinkTableViewMode eq 'Simple' ) {

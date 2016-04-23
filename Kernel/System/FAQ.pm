@@ -2119,6 +2119,149 @@ sub FAQArticleTitleClean {
     return $Title;
 }
 
+=item FAQContentTypeSet()
+
+Sets the content type of 1, some or all FAQ items, by a given parameter or determined by the FAQ item content
+
+    my $Success = $FAQObject->FAQContentTypeSet(
+        FAQItemIDs  => [ 1, 2, 3 ],             # optional,
+        ContentType => 'some content type',     # optional,
+    );
+
+=cut
+
+sub FAQContentTypeSet {
+    my ( $Self, %Param ) = @_;
+
+    if ( $Param{FAQItemIDs} && !IsArrayRefWithData( $Param{FAQItemIDs} ) ) {
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
+            Priority => 'error',
+            Message  => "Invalid FAQItemIDs format!",
+        );
+
+        return;
+    }
+
+    # Get config object.
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+
+    my $ContentType = $Param{ContentType} || '';
+
+    # Get default content type from the config if it was not given.
+    if ( !$ContentType ) {
+
+        $ContentType = 'text/plain';
+        if ( $ConfigObject->Get('Frontend::RichText') && $ConfigObject->Get('FAQ::Item::HTML') ) {
+            $ContentType = 'text/html';
+        }
+    }
+
+    # SQL to set the content type (default or given).
+    my $SQL = '
+        UPDATE faq_item
+        SET faq_item.content_type = ?';
+
+    # Get FAQ item IDs from the param.
+    my @FAQItemIDs = @{ $Param{FAQItemIDs} // [] };
+
+    # Restrict to only given FAQ item IDs (if any).
+    if (@FAQItemIDs) {
+
+        my $IDString = join ',', @FAQItemIDs;
+
+        $SQL .= "
+            WHERE faq_item.id IN ($IDString)";
+    }
+
+    # Get DB object.
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
+    # Set the content type either by the given param or according to the system settings.
+    return if !$DBObject->Do(
+        SQL  => $SQL,
+        Bind => [
+            \$ContentType,
+        ],
+    );
+
+    # No need to go further if content type was given (it was already set).
+    if ( $Param{ContentType} ) {
+
+        # Delete cache
+        $Kernel::OM->Get('Kernel::System::Cache')->CleanUp(
+            Type => 'FAQ',
+        );
+
+        return 1
+    }
+
+    # Otherwise content type has to be determined by the FAQ item content.
+
+    # Get all FAQIDs (if no faq item was given).
+    if ( !@FAQItemIDs ) {
+        return if !$DBObject->Prepare(
+            SQL => '
+                SELECT DISTINCT(faq_item.id)
+                FROM faq_item
+                ORDER BY id ASC',
+        );
+
+        while ( my @Row = $DBObject->FetchrowArray() ) {
+            push @FAQItemIDs, $Row[0];
+        }
+    }
+
+    # Loop trough the FAQ items.
+    ITEMID:
+    for my $ItemID (@FAQItemIDs) {
+        my $DeterminedContentType = 'text/plain';
+
+        # Get the contents of each field
+        FIELD:
+        for my $Field (qw(Field1 Field2 Field3 Field4 Field5 Field6)) {
+
+            my $FieldContent = $Self->ItemFieldGet(
+                ItemID => $ItemID,
+                Field  => $Field,
+                UserID => 1,
+            );
+
+            next FIELD if !$FieldContent;
+
+            # if field content seams to be HTML set the content type to HTML
+            if (
+                $FieldContent
+                =~ m{(?: <br\s*/> | </li> | </ol> | </ul> | </table> | </tr> | </td> | </div> | </o> | </i> | </span> | </h\d> | </p> | </pre> )}msx
+                )
+            {
+                $DeterminedContentType = 'text/html';
+                last FIELD;
+            }
+        }
+
+        next ITEMID if $DeterminedContentType eq $ContentType;
+
+        # Set the content type according to the field content.
+        return if !$DBObject->Do(
+            SQL => '
+                UPDATE faq_item
+                SET faq_item.content_type = ?
+                WHERE faq_item.id =?',
+            Bind => [
+                \$DeterminedContentType,
+                \$ItemID,
+            ],
+        );
+    }
+
+    # Delete cache
+    $Kernel::OM->Get('Kernel::System::Cache')->CleanUp(
+        Type => 'FAQ',
+    );
+
+    return 1;
+}
+
 =begin Internal:
 
 =item _FAQApprovalUpdate()

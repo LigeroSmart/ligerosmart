@@ -1561,7 +1561,7 @@ shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
             command on the command line:
         </para>
         <screen>
-shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test FAQ:FAQSearch:GenericInterface/FAQConnector:Console/Command/Admin/FAQ/Import
+shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test FAQ:FAQSearch:GenericInterface/FAQConnector:Console/Command/Admin/FAQ/Import:Console/Command/Maint/FAQ/ContentTypeSet
         </screen>
         <para>Selenium unit tests</para>
         <para>

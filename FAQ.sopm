@@ -15,6 +15,10 @@
         <File Permission="644" Location="doc/faq-database.png"/>
         <File Permission="644" Location="Kernel/Config/Files/FAQ.xml"/>
         <File Permission="644" Location="Kernel/cpan-lib/XML/RSS/SimpleGen.pm"/>
+        <File Permission="644" Location="Kernel/GenericInterface/Operation/FAQ/PublicCategoryList.pm"/>
+        <File Permission="644" Location="Kernel/GenericInterface/Operation/FAQ/LanguageList.pm"/>
+        <File Permission="644" Location="Kernel/GenericInterface/Operation/FAQ/PublicFAQSearch.pm"/>
+        <File Permission="644" Location="Kernel/GenericInterface/Operation/FAQ/PublicFAQGet.pm"/>
         <File Permission="644" Location="Kernel/Language/da_FAQ.pm"/>
         <File Permission="644" Location="Kernel/Language/de_FAQ.pm"/>
         <File Permission="644" Location="Kernel/Language/es_FAQ.pm"/>
@@ -102,6 +106,7 @@
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/PublicFAQSearchResultShort.tt"/>
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/PublicFAQZoom.tt"/>
         <File Permission="644" Location="Kernel/System/Console/Command/Admin/FAQ/Import.pm"/>
+        <File Permission="644" Location="Kernel/System/Console/Command/Maint/FAQ/ContentTypeSet.pm"/>
         <File Permission="644" Location="Kernel/System/DynamicField/ObjectType/FAQ.pm"/>
         <File Permission="644" Location="Kernel/System/FAQ/Category.pm"/>
         <File Permission="644" Location="Kernel/System/FAQ/Language.pm"/>
@@ -112,11 +117,16 @@
         <File Permission="644" Location="Kernel/System/LinkObject/FAQ.pm"/>
         <File Permission="644" Location="Kernel/System/Stats/Static/FAQAccess.pm"/>
         <File Permission="644" Location="scripts/test/Console/Command/Admin/FAQ/Import.t"/>
+        <File Permission="644" Location="scripts/webservices/GenericFAQConnectorSOAP.yml"/>
+        <File Permission="644" Location="scripts/test/Console/Command/Maint/FAQ/ContentTypeSet.t"/>
         <File Permission="644" Location="scripts/test/FAQ.t"/>
         <File Permission="644" Location="scripts/test/FAQSearch.t"/>
+        <File Permission="644" Location="scripts/test/GenericInterface/FAQConnector.t"/>
         <File Permission="644" Location="scripts/test/sample/FAQ-Test1.doc"/>
         <File Permission="644" Location="scripts/test/sample/FAQ-Test1.pdf"/>
         <File Permission="644" Location="scripts/test/sample/FAQ.csv"/>
+        <File Permission="644" Location="scripts/test/sample/GenericInterface/FAQ/GI-FAQ-Test-utf8-1.bin"/>
+        <File Permission="644" Location="scripts/test/sample/GenericInterface/FAQ/GI-FAQ-Test-utf8-1.txt"/>
         <File Permission="644" Location="scripts/test/Selenium/Agent/AgentFAQAdd.t"/>
         <File Permission="644" Location="scripts/test/Selenium/Agent/AgentFAQCategory.t"/>
         <File Permission="644" Location="scripts/test/Selenium/Agent/AgentFAQDelete.t"/>
@@ -158,14 +168,6 @@
         <File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/css/FAQ.FAQZoom.css"/>
         <File Permission="644" Location="var/packagesetup/FAQ.pm"/>
         <File Permission="644" Location="var/stats/FAQ-FAQAccess.xml"/>
-        <File Permission="644" Location="Kernel/GenericInterface/Operation/FAQ/PublicCategoryList.pm"/>
-        <File Permission="644" Location="Kernel/GenericInterface/Operation/FAQ/LanguageList.pm"/>
-        <File Permission="644" Location="Kernel/GenericInterface/Operation/FAQ/PublicFAQSearch.pm"/>
-        <File Permission="644" Location="Kernel/GenericInterface/Operation/FAQ/PublicFAQGet.pm"/>
-        <File Permission="644" Location="scripts/webservices/GenericFAQConnectorSOAP.yml"/>
-        <File Permission="644" Location="scripts/test/GenericInterface/FAQConnector.t"/>
-        <File Permission="644" Location="scripts/test/sample/GenericInterface/FAQ/GI-FAQ-Test-utf8-1.bin"/>
-        <File Permission="644" Location="scripts/test/sample/GenericInterface/FAQ/GI-FAQ-Test-utf8-1.txt"/>
     </Filelist>
     <DatabaseInstall Type="post">
         <TableCreate Name="faq_language">
