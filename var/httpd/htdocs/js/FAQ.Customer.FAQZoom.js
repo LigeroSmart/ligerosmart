@@ -28,30 +28,30 @@ FAQ.Customer.FAQZoom = (function (TargetNS) {
      *      Set iframe height automatically based on real content height and default config setting.
      */
      TargetNS.IframeAutoHeight = function ($Iframe) {
-        var NewHeight = $Iframe
-            .contents()
-            .find('html')
-            .height();
+        var NewHeight;
 
         if (isJQueryObject($Iframe)) {
+            // slightly change the width of the iframe to not be exactly 100% width anymore
+            // this prevents a double horizontal scrollbar (from iframe and surrounding div)
+            $Iframe.width($Iframe.width() - 2);
 
-            // IE8 needs some more space due to incorrect height calculation
-            if (NewHeight > 0 && $.browser.msie && $.browser.version === '8.0') {
-                NewHeight = NewHeight + 4;
-            }
+            NewHeight = $Iframe.contents().find('body').height();
 
             // if the iFrames height is 0, we collapse the widget
             if (NewHeight === 0) {
-                $Iframe.closest('li.Customer').removeClass('Visible');
-            }
-
-            if (!NewHeight || isNaN(NewHeight)) {
-                NewHeight = Core.Config.Get('FAQ::Frontend::CustomerHTMLFieldHeightDefault');
+                $Iframe.closest('.WidgetSimple').removeClass('Expanded').addClass('Collapsed');
+            } else if (!NewHeight || isNaN(NewHeight)) {
+                NewHeight = Core.Config.Get('FAQ::Frontend::AgentHTMLFieldHeightDefault');
             }
             else {
-                if (NewHeight > Core.Config.Get('FAQ::Frontend::CustomerHTMLFieldHeightMax')) {
-                    NewHeight = Core.Config.Get('FAQ::Frontend::CustomerHTMLFieldHeightMax');
+                if (NewHeight > Core.Config.Get('FAQ::Frontend::AgentHTMLFieldHeightMax')) {
+                    NewHeight = Core.Config.Get('FAQ::Frontend::AgentHTMLFieldHeightMax');
                 }
+            }
+
+            // add delta for scrollbar
+            if (NewHeight > 0) {
+                NewHeight = parseInt(NewHeight, 10) + 25;
             }
             $Iframe.height(NewHeight + 'px');
         }

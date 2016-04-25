@@ -484,20 +484,11 @@ sub FAQContentShow {
 
         if ( $ConfigObject->Get('FAQ::Item::HTML') && $Self->{BrowserRichText} ) {
 
-            # security="restricted" may break SSO - disable this feature if requested
-            if ( $ConfigObject->Get('DisableMSIFrameSecurityRestricted') ) {
-                $Param{MSSecurityRestricted} = '';
-            }
-            else {
-                $Param{MSSecurityRestricted} = 'security="restricted"';
-            }
-
             $Self->Block(
                 Name => 'FAQContentHTML',
                 Data => {
                     ItemID               => $Param{FAQData}->{ItemID},
                     Field                => $Field,
-                    MSSecurityRestricted => $Param{MSSecurityRestricted},
                 },
             );
         }
