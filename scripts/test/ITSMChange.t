@@ -39,6 +39,14 @@ my $DBObject             = $Kernel::OM->Get('Kernel::System::DB');
 my $WorkOrderObject      = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder');
 my $ChangeObject         = $Kernel::OM->Get('Kernel::System::ITSMChange');
 
+# get helper object
+$Kernel::OM->ObjectParamAdd(
+    'Kernel::System::UnitTest::Helper' => {
+        RestoreDatabase => 1,
+    },
+);
+my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
+
 # test if change object was created successfully
 $Self->True(
     $ChangeObject,
@@ -49,6 +57,10 @@ $Self->Is(
     'Kernel::System::ITSMChange',
     "Test " . $TestCount++ . ' - class of change object',
 );
+
+# define needed variable
+my $RandomID     = $Helper->GetRandomID();
+my $RandomNumber = $Helper->GetRandomNumber();
 
 # ------------------------------------------------------------ #
 # create needed users and customer users
@@ -74,7 +86,7 @@ for my $Counter ( 1 .. 3 ) {
     my $UserID = $UserObject->UserAdd(
         UserFirstname => 'ITSMChange' . $Counter,
         UserLastname  => 'UnitTest',
-        UserLogin     => 'UnitTest-ITSMChange-' . $Counter . int rand 1_000_000,
+        UserLogin     => 'UnitTest-ITSMChange-' . $Counter . $RandomID,
         UserEmail     => 'UnitTest-ITSMChange-' . $Counter . '@localhost',
         ValidID       => $ValidObject->ValidLookup( Valid => 'valid' ),
         ChangeUserID  => 1,
@@ -86,11 +98,11 @@ for my $Counter ( 1 .. 3 ) {
         Source         => 'CustomerUser',
         UserFirstname  => 'ITSMChangeCustomer' . $Counter,
         UserLastname   => 'UnitTestCustomer',
-        UserCustomerID => 'UCT' . $Counter . int rand 1_000_000,
-        UserLogin      => 'UnitTest-ITSMChange-Customer-' . $Counter . int rand 1_000_000,
+        UserCustomerID => 'UCT' . $Counter . $RandomID,
+        UserLogin      => 'UnitTest-ITSMChange-Customer-' . $Counter . $RandomID,
         UserEmail      => 'UnitTest-ITSMChange-Customer-'
             . $Counter
-            . int( rand 1_000_000 )
+            . $RandomID
             . '@localhost',
         ValidID => $ValidObject->ValidLookup( Valid => 'valid' ),
         UserID  => 1,
@@ -108,7 +120,7 @@ for ( 1 .. 2 ) {
     for my $LoopProtectionCounter ( 1 .. 100 ) {
 
         # create a random user id
-        my $TempNonExistingUserID = int rand 1_000_000;
+        my $TempNonExistingUserID = $RandomID;
 
         # check if random user id exists already
         my %UserData = $UserObject->GetUserData(
@@ -150,7 +162,7 @@ my $OriginalDynamicFields = $DynamicFieldObject->DynamicFieldListGet(
     Valid => 0,
 );
 
-my $UniqueNamePrefix = 'UnitTestChange' . int rand 1_000_000;
+my $UniqueNamePrefix = 'UnitTestChange' . $RandomID;
 
 # create some dynamic fields for changes (and for workorders)
 my @DynamicFields = (
@@ -578,14 +590,14 @@ my $DefaultPriority = $CIPAllocateObject->PriorityAllocationGet(
 # store current TestCount for better test case recognition
 my $TestCountMisc = $TestCount;
 
-# An unique indentifier, so that data from different test runs
+# An unique identifier, so that data from different test runs
 # won't be mixed up. The string is formated to a constant length,
 # as the conversion to plain text with ToAscii() depends on the string length.
 my $UniqueSignature = sprintf 'UnitTest-ITSMChange-%06d-%010d',
-    int( rand 1_000_000 ),
+    $RandomNumber,
     time();
 my $NoWildcardsTestTitle = sprintf 'UnitTest-ITSMChange-NoWildcards-%06d-%010d',
-    int( rand 1_000_000 ),
+    $RandomNumber,
     time();
 
 my @ChangeTests = (
@@ -2196,7 +2208,7 @@ my @ChangeTests = (
 
     # Test for ChangeCABUpdate and ChangeCABGet
     {
-        Description => 'Test checks deaktivated CABAgents param for ChangeCABUpdate.',
+        Description => 'Test checks deactivated CABAgents param for ChangeCABUpdate.',
         SourceData  => {
             ChangeAdd => {
                 UserID => $UserIDs[0],
@@ -2350,7 +2362,7 @@ my @ChangeTests = (
         },
     },
 
-    # Test for ChangeCABDelete - in the executiion of the, no ChangeID will be given
+    # Test for ChangeCABDelete - in the execution of the, no ChangeID will be given
     {
         Description => 'Test checks ChangeCABDelete with invalid params.',
         SourceData  => {
@@ -2772,7 +2784,7 @@ for my $Test (@ChangeTests) {
                 "Test $TestCount: |- Get change returns undef.",
             );
 
-            # check if we excpected to fail
+            # check if we expected to fail
             if ( $Test->{Fails} ) {
                 $Self->Is(
                     !defined $ChangeData,
@@ -6047,7 +6059,7 @@ my $ChangeIDForChangePossibleStateGet = $ChangeObject->ChangeAdd(
     UserID => 1,
 );
 
-# Get posssible states...
+# Get possible states...
 my $PossibleStatesUsingChangeID = $ChangeObject->ChangePossibleStatesGet(
     ChangeID => $ChangeIDForChangePossibleStateGet,
     UserID   => 1,
@@ -6076,7 +6088,7 @@ $Self->True(
     "Test $TestNumber State change"
 );
 
-# Get posssible states...
+# Get possible states...
 $PossibleStatesUsingChangeID = $ChangeObject->ChangePossibleStatesGet(
     ChangeID => $ChangeIDForChangePossibleStateGet,
     UserID   => 1,
@@ -6103,7 +6115,7 @@ $Self->True(
     "Test $TestNumber State change"
 );
 
-# Get posssible states...
+# Get possible states...
 $PossibleStatesUsingChangeID = $ChangeObject->ChangePossibleStatesGet(
     ChangeID => $ChangeIDForChangePossibleStateGet,
     UserID   => 1,
@@ -6130,7 +6142,7 @@ $Self->True(
     "Test $TestNumber State change"
 );
 
-# Get posssible states...
+# Get possible states...
 $PossibleStatesUsingChangeID = $ChangeObject->ChangePossibleStatesGet(
     ChangeID => $ChangeIDForChangePossibleStateGet,
     UserID   => 1,
@@ -6349,7 +6361,7 @@ for my $Type (qw(Category Impact Priority)) {
 
 my ($AttachmentTestChangeID) = @{ $Label2ChangeIDs{Attachment} };
 
-# verify that initialy no attachment exists
+# verify that initially no attachment exists
 my @AttachmentList = $ChangeObject->ChangeAttachmentList(
     ChangeID => $AttachmentTestChangeID,
 );
@@ -6541,37 +6553,7 @@ for my $TestFile (@TestFileList) {
     }
 }
 
-# ------------------------------------------------------------ #
-# clean the system
-# ------------------------------------------------------------ #
-
-# disable email checks to change the newly added users
-$CheckEmailAddressesOrg = $ConfigObject->Get('CheckEmailAddresses');
-if ( !defined $CheckEmailAddressesOrg ) {
-    $CheckEmailAddressesOrg = 1;
-}
-$ConfigObject->Set(
-    Key   => 'CheckEmailAddresses',
-    Value => 0,
-);
-
-# set unittest users invalid
-for my $UnittestUserID (@UserIDs) {
-
-    # get user data
-    my %User = $UserObject->GetUserData(
-        UserID => $UnittestUserID,
-    );
-
-    # update user
-    $UserObject->UserUpdate(
-        %User,
-        ValidID      => $ValidObject->ValidLookup( Valid => 'invalid' ),
-        ChangeUserID => 1,
-    );
-}
-
-# delete the test changes
+# check for change delete
 my $DeleteTestCount = 1;
 for my $ChangeID ( sort keys %TestedChangeID ) {
 
@@ -6600,41 +6582,13 @@ continue {
     $DeleteTestCount++;
 }
 
-# delete dynamic fields that have been created for this test
-for my $DynamicFieldID (@DynamicFieldIDs) {
-
-    my $Success = $DynamicFieldObject->DynamicFieldDelete(
-        ID     => $DynamicFieldID,
-        UserID => 1,
-    );
-
-    $Self->True(
-        $Success,
-        "DynamicFieldDelete() deleted DynamicField $DynamicFieldID",
-    );
-}
-
-# restore original dynamic fields order
-for my $DynamicField ( @{$OriginalDynamicFields} ) {
-
-    my $Success = $DynamicFieldObject->DynamicFieldUpdate(
-        %{$DynamicField},
-        Reorder => 0,
-        UserID  => 1,
-    );
-
-    # check if update (restore) was successful
-    $Self->True(
-        $Success,
-        "Restored Original Dynamic Field  - for FieldID $DynamicField->{ID}",
-    );
-}
-
-# restore original email check param
+# set SendNotifications to it's original value
 $ConfigObject->Set(
-    Key   => 'CheckEmailAddresses',
-    Value => $CheckEmailAddressesOrg,
+    Key   => 'ITSMChange::SendNotifications',
+    Value => $SendNotificationsOrg,
 );
+
+# cleanup is done by RestoreDatabase
 
 =over 4
 
@@ -6706,12 +6660,6 @@ sub SetTimes {
     return 1;
 }
 
-# set SendNotifications to it's original value
-$ConfigObject->Set(
-    Key   => 'ITSMChange::SendNotifications',
-    Value => $SendNotificationsOrg,
-);
-
 =over 4
 
 =item _TestPossibleStates()
@@ -6719,7 +6667,7 @@ $ConfigObject->Set(
 Internal use only!
 Runs a series of tests for ChangePossibleStatesGet() by using a ChangeID as argument
 
-    _TestPosssibleStates(
+    _TestPossibleStates(
         State                 => 'In Progress',                 # State name to be displayed on the tests
         PossibleStates        => $PossibleStates,               # The result from ChangePossibleStatesGet()
         PossibleDefaultStates => \@PossibleStatesForInProgress, # Array to possible state to compare
@@ -6764,7 +6712,7 @@ sub _TestPossibleStates {
             "Possible States Test $TestNumber: |- match default states from $State State.",
         );
 
-        # Check if the state name is not repeted
+        # Check if the state name is not repeated
         $Self->False(
             $SecondHashRef,
             "Possible States Test $TestNumber: |- states form $State match only once"

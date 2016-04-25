@@ -30,6 +30,14 @@ my $GeneralCatalogObject = $Kernel::OM->Get('Kernel::System::GeneralCatalog');
 my $ChangeObject         = $Kernel::OM->Get('Kernel::System::ITSMChange');
 my $WorkOrderObject      = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder');
 
+# get helper object
+$Kernel::OM->ObjectParamAdd(
+    'Kernel::System::UnitTest::Helper' => {
+        RestoreDatabase => 1,
+    },
+);
+my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
+
 # test if workorder object was created successfully
 $Self->True(
     $WorkOrderObject,
@@ -52,12 +60,16 @@ $Self->Is(
     "Test " . $TestCount++ . ' - class of change object',
 );
 
+# define needed variable
+my $RandomID = $Helper->GetRandomID();
+my $RandomNumber = substr( $Helper->GetRandomNumber(), -7, 7 );
+
 # ------------------------------------------------------------ #
 # create needed users
 # ------------------------------------------------------------ #
 my @UserIDs;               # a list of existing and valid user ids
 my @InvalidUserIDs;        # a list of existing but invalid user ids
-my @NonExistingUserIDs;    # a list of non-existion user ids
+my @NonExistingUserIDs;    # a list of non-existing user ids
 
 # disable email checks to create new user
 my $CheckEmailAddressesOrg = $ConfigObject->Get('CheckEmailAddresses');
@@ -75,7 +87,7 @@ for my $Counter ( 1 .. 3 ) {
     my $UserID = $UserObject->UserAdd(
         UserFirstname => 'ITSMChange::ITSMWorkOrder' . $Counter,
         UserLastname  => 'UnitTest',
-        UserLogin     => 'UnitTest-ITSMChange::ITSMWorkOrder-' . $Counter . int rand 1_000_000,
+        UserLogin     => 'UnitTest-ITSMChange::ITSMWorkOrder-' . $Counter . $RandomID,
         UserEmail     => 'UnitTest-ITSMChange::ITSMWorkOrder-' . $Counter . '@localhost',
         ValidID       => $ValidObject->ValidLookup( Valid => 'valid' ),
         ChangeUserID  => 1,
@@ -92,7 +104,7 @@ for ( 1 .. 2 ) {
     for my $LoopProtectionCounter ( 1 .. 100 ) {
 
         # create a random user id
-        my $TempNonExistingUserID = int rand 1_000_000;
+        my $TempNonExistingUserID = $RandomID;
 
         # check if random user id exists already
         my %UserData = $UserObject->GetUserData(
@@ -134,7 +146,7 @@ my $OriginalDynamicFields = $DynamicFieldObject->DynamicFieldListGet(
     Valid => 0,
 );
 
-my $UniqueNamePrefix = 'UnitTestWorkorder' . int rand 1_000_000;
+my $UniqueNamePrefix = 'UnitTestWorkorder' . $RandomID;
 
 # create some dynamic fields for workorders
 my @DynamicFields = (
@@ -433,11 +445,11 @@ for my $TypeID (@SortedTypeIDs) {
 # store current TestCount for better test case recognition
 my $TestCountMisc = $TestCount;
 
-# An unique indentifier, so that data from different test runs
+# An unique identifier, so that data from different test runs
 # won't be mixed up. The string is formated to a constant length,
 # as the conversion to plain text with ToAscii() depends on the string length.
 my $UniqueSignature = sprintf 'UnitTest-ITSMChange::ITSMWorkOrder-%06d-%010d',
-    int( rand 1_000_000 ),
+    $RandomNumber,
     time();
 
 my @ChangeTests = (
@@ -609,7 +621,7 @@ for my $Test (@ChangeTests) {
                 "Test $TestCount: |- Get change returns undef.",
             );
 
-            # check if we excpected to fail
+            # check if we expected to fail
             if ( $Test->{Fails} ) {
                 $Self->Is(
                     !defined $ChangeData,
@@ -2110,7 +2122,7 @@ for my $Test (@WorkOrderTests) {
                 "Test $TestCount: |- Get change returns undef.",
             );
 
-            # check if we excpected to fail
+            # check if we expected to fail
             if ( $Test->{Fails} ) {
                 $Self->Is(
                     !defined $WorkOrderData,
@@ -4699,7 +4711,7 @@ my $WorkOrderIDForAttachmentTest = $WorkOrderObject->WorkOrderAdd(
 push @{ $IDsToDelete{Change} },    $ChangeIDForAttachmentTest;
 push @{ $IDsToDelete{WorkOrder} }, $WorkOrderIDForAttachmentTest;
 
-# verify that initialy no attachment exists
+# verify that initially no attachment exists
 my @AttachmentList = $WorkOrderObject->WorkOrderAttachmentList(
     WorkOrderID => $WorkOrderIDForAttachmentTest,
     UserID      => 1,
@@ -4877,43 +4889,7 @@ for my $TestFile (@TestFileList) {
     );
 }
 
-# ------------------------------------------------------------ #
-# clean the system
-# ------------------------------------------------------------ #
-
-# disable email checks to change the newly added users
-$CheckEmailAddressesOrg = $ConfigObject->Get('CheckEmailAddresses');
-if ( !defined $CheckEmailAddressesOrg ) {
-    $CheckEmailAddressesOrg = 1;
-}
-$ConfigObject->Set(
-    Key   => 'CheckEmailAddresses',
-    Value => 0,
-);
-
-# set unittest users invalid
-for my $UnittestUserID (@UserIDs) {
-
-    # get user data
-    my %User = $UserObject->GetUserData(
-        UserID => $UnittestUserID,
-    );
-
-    # update user
-    $UserObject->UserUpdate(
-        %User,
-        ValidID      => $ValidObject->ValidLookup( Valid => 'invalid' ),
-        ChangeUserID => 1,
-    );
-}
-
-# restore original email check param
-$ConfigObject->Set(
-    Key   => 'CheckEmailAddresses',
-    Value => $CheckEmailAddressesOrg,
-);
-
-# delete the test workorders
+# check for workorder delete
 my $DeleteTestCount = 1;
 for my $WorkOrderID ( @{ $IDsToDelete{WorkOrder} }, keys %TestedWorkOrderID ) {
     my $Success = $WorkOrderObject->WorkOrderDelete(
@@ -4942,62 +4918,7 @@ continue {
     $DeleteTestCount++;
 }
 
-# delete the test changes
-for my $ChangeID ( @{ $IDsToDelete{Change} }, keys %TestedChangeID ) {
-    my $DeleteOk = $ChangeObject->ChangeDelete(
-        ChangeID => $ChangeID,
-        UserID   => 1,
-    );
-    $Self->True(
-        $DeleteOk,
-        "DeleteTest $DeleteTestCount - ChangeDelete() (ChangeID=$ChangeID)",
-    );
-
-    # double check if change is really deleted
-    my $ChangeData = $ChangeObject->ChangeGet(
-        ChangeID => $ChangeID,
-        UserID   => 1,
-        Cache    => 0,
-    );
-
-    $Self->False(
-        $ChangeData->{ChangeID},
-        "DeleteTest $DeleteTestCount - double check (ChangeID=$ChangeID)",
-    );
-}
-continue {
-    $DeleteTestCount++;
-}
-
-# delete dynamic fields that have been created for this test
-for my $DynamicFieldID (@DynamicFieldIDs) {
-
-    my $Success = $DynamicFieldObject->DynamicFieldDelete(
-        ID     => $DynamicFieldID,
-        UserID => 1,
-    );
-
-    $Self->True(
-        $Success,
-        "DynamicFieldDelete() deleted DynamicField $DynamicFieldID",
-    );
-}
-
-# restore original dynamic fields order
-for my $DynamicField ( @{$OriginalDynamicFields} ) {
-
-    my $Success = $DynamicFieldObject->DynamicFieldUpdate(
-        %{$DynamicField},
-        Reorder => 0,
-        UserID  => 1,
-    );
-
-    # check if update (restore) was successful
-    $Self->True(
-        $Success,
-        "Restored Original Dynamic Field  - for FieldID $DynamicField->{ID}",
-    );
-}
+# cleanup is done by RestoreDatabase
 
 # set SendNotifications to it's original value
 $ConfigObject->Set(

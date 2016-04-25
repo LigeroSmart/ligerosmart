@@ -121,7 +121,7 @@ my %DefaultWorkOrderStateTransitions = (
 );
 
 # ------------------------------------------------------------ #
-# state transistion get end states tests
+# state transition get end states tests
 # ------------------------------------------------------------ #
 
 {
@@ -208,7 +208,7 @@ my %DefaultWorkOrderStateTransitions = (
 }
 
 # ------------------------------------------------------------ #
-# state transistion add, update and delete tests
+# state transition add, update and delete tests
 # ------------------------------------------------------------ #
 
 {

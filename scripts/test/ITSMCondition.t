@@ -29,6 +29,14 @@ my $ConditionObject = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMConditio
 my $ChangeObject    = $Kernel::OM->Get('Kernel::System::ITSMChange');
 my $WorkOrderObject = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder');
 
+# get helper object
+$Kernel::OM->ObjectParamAdd(
+    'Kernel::System::UnitTest::Helper' => {
+        RestoreDatabase => 1,
+    },
+);
+my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
+
 # test if change object was created successfully
 $Self->True(
     $ChangeObject,
@@ -53,6 +61,9 @@ $ConfigObject->Set(
     Key   => 'ITSMChange::SendNotifications',
     Value => 0,
 );
+
+# define needed variable
+my $RandomID = $Helper->GetRandomID();
 
 # ------------------------------------------------------------ #
 # test Condition API
@@ -186,7 +197,7 @@ for my $ChangeID (@ChangeIDs) {
     for my $ConditionCounter ( 0 .. 5 ) {
 
         # build condition name
-        my $ConditionName = "UnitTestConditionName_${ChangeID}_" . int rand 1_000_000;
+        my $ConditionName = "UnitTestConditionName_${ChangeID}_" . $ConditionCounter . $RandomID;
 
         # add a condition
         my $ConditionID = $ConditionObject->ConditionAdd(
@@ -391,7 +402,7 @@ for my $Counter ( 1 .. 3 ) {
 
     # add new objects
     my $ObjectID = $ConditionObject->ObjectAdd(
-        Name   => 'ObjectName' . $Counter . int rand 1_000_000,
+        Name   => 'ObjectName' . $Counter . $RandomID,
         UserID => 1,
     );
 
@@ -424,7 +435,7 @@ $Self->Is(
 );
 
 # check update of condition object
-my $ConditionObjectNewName = 'UnitTestUpdate' . int rand 1_000_000;
+my $ConditionObjectNewName = 'UnitTestUpdate' . $RandomID;
 $Self->True(
     $ConditionObject->ObjectUpdate(
         ObjectID => $ConditionObjectCreated[0],
@@ -503,7 +514,7 @@ for my $Counter ( 1 .. 3 ) {
     # add new objects
     my $AttributeID = $ConditionObject->AttributeAdd(
         UserID => 1,
-        Name   => 'AttributeName' . $Counter . int rand 1_000_000,
+        Name   => 'AttributeName' . $Counter . $RandomID,
     );
 
     # check on return value
@@ -535,7 +546,7 @@ $Self->Is(
 );
 
 # check update of attribute object
-my $ConditionAttributeNewName = 'UnitTestUpdate' . int rand 1_000_000;
+my $ConditionAttributeNewName = 'UnitTestUpdate' . $RandomID;
 $Self->True(
     $ConditionObject->AttributeUpdate(
         UserID      => 1,
@@ -623,7 +634,7 @@ for my $Counter ( 1 .. 3 ) {
     # add new objects
     my $OperatorID = $ConditionObject->OperatorAdd(
         UserID => 1,
-        Name   => 'OperatorName' . $Counter . int rand 1_000_000,
+        Name   => 'OperatorName' . $Counter . $RandomID,
     );
 
     # check on return value
@@ -655,7 +666,7 @@ $Self->Is(
 );
 
 # check update of operator object
-my $ConditionOperatorNewName = 'UnitTestUpdate' . int rand 1_000_000;
+my $ConditionOperatorNewName = 'UnitTestUpdate' . $RandomID;
 $Self->True(
     $ConditionObject->OperatorUpdate(
         UserID     => 1,
@@ -790,7 +801,7 @@ my @ExpressionTests = (
 
                 # static fields
                 Selector     => $ChangeIDs[0],
-                CompareValue => 'NewDummyCompareValue' . int rand 1_000_000,
+                CompareValue => 'NewDummyCompareValue' . $RandomID,
                 UserID       => 1,
             },
         },
@@ -943,7 +954,7 @@ my @ExpressionTests = (
                 # static fields
                 ConditionID  => $ConditionIDs[0],
                 Selector     => $ChangeIDs[0],
-                CompareValue => $ChangeTitles[0] . int rand 1_000_000,
+                CompareValue => $ChangeTitles[0] . $RandomID,
                 UserID       => 1,
             },
         },
@@ -1427,7 +1438,7 @@ my @ExpressionTests = (
                 # static fields
                 ConditionID  => $ConditionIDs[2],
                 Selector     => $WorkOrderIDs[0],
-                CompareValue => 'Not A Valid Value ' . int rand 1_000_000,
+                CompareValue => 'Not A Valid Value ' . $RandomID,
                 UserID       => 1,
             },
         },
@@ -1455,7 +1466,7 @@ my @ExpressionTests = (
                 # static fields
                 ConditionID  => $ConditionIDs[2],
                 Selector     => $WorkOrderIDs[0],
-                CompareValue => 'Not A Valid Value ' . int rand 1_000_000,
+                CompareValue => 'Not A Valid Value ' . $RandomID,
                 UserID       => 1,
             },
         },
@@ -1665,7 +1676,7 @@ for my $ExpressionTest (@ExpressionTests) {
             STATICFIELD:
             for my $StaticField (@StaticFields) {
 
-                # ommit static field if it is not set
+                # omit static field if it is not set
                 next STATICFIELD if !exists $ExpressionAddSourceData{$StaticField}
                     || !defined $ExpressionAddSourceData{$StaticField};
 
@@ -1677,7 +1688,7 @@ for my $ExpressionTest (@ExpressionTests) {
             EXPRESSIONADDVALUE:
             for my $ExpressionAddValue ( sort keys %ExpressionAddSourceData ) {
 
-                # ommit static fields
+                # omit static fields
                 next EXPRESSIONADDVALUE if grep { $_ eq $ExpressionAddValue } @StaticFields;
 
                 # get values for fields
@@ -1741,7 +1752,7 @@ for my $ExpressionTest (@ExpressionTests) {
             STATICFIELD:
             for my $StaticField (@StaticFields) {
 
-                # ommit static field if it is not set
+                # omit static field if it is not set
                 next STATICFIELD if !$ExpressionUpdateSourceData{$StaticField};
 
                 # safe data
@@ -1752,7 +1763,7 @@ for my $ExpressionTest (@ExpressionTests) {
             EXPRESSIONUPDATEVALUE:
             for my $ExpressionUpdateValue ( sort keys %ExpressionUpdateSourceData ) {
 
-                # ommit static fields
+                # omit static fields
                 next EXPRESSIONUPDATEVALUE if grep { $_ eq $ExpressionUpdateValue } @StaticFields;
 
                 # get values for fields
@@ -1817,10 +1828,10 @@ for my $ConditionID (@ConditionIDs) {
     EXPRESSIONTEST:
     for my $ExpressionTest (@ExpressionTests) {
 
-        # ommit test case if no source data is available
+        # omit test case if no source data is available
         next EXPRESSIONTEST if !$ExpressionTest->{SourceData};
 
-        # ommit test case if no expression shoul be added
+        # omit test case if no expression should be added
         next EXPRESSIONTEST if !$ExpressionTest->{SourceData}->{ExpressionAdd};
 
         $ExpressionTestCount++
@@ -1921,7 +1932,7 @@ for my $ExpressionCounter ( 0 .. ( scalar @ExpressionIDs - 1 ) ) {
         $Self->False(
             $ConditionObject->ExpressionMatch(
                 ExpressionID      => $ExpressionID,
-                AttributesChanged => { $ObjectName . 'UT' . int rand 1_000 => [$AttributeName] },
+                AttributesChanged => { $ObjectName . 'UT' . $RandomID => [$AttributeName] },
                 UserID            => 1,
                 )
                 || 0,
@@ -1932,7 +1943,7 @@ for my $ExpressionCounter ( 0 .. ( scalar @ExpressionIDs - 1 ) ) {
         $Self->False(
             $ConditionObject->ExpressionMatch(
                 ExpressionID      => $ExpressionID,
-                AttributesChanged => { $ObjectName => [ $AttributeName . 'UT' . int rand 1_000 ] },
+                AttributesChanged => { $ObjectName => [ $AttributeName . 'UT' . $RandomID ] },
                 UserID            => 1,
                 )
                 || 0,
@@ -1996,7 +2007,7 @@ my @ActionTests = (
                 # static fields
                 ConditionID => $ConditionIDs[1],
                 Selector    => $ChangeIDs[0],
-                ActionValue => 'New Change Title' . int rand 1_000,
+                ActionValue => 'New Change Title' . $RandomID,
                 UserID      => 1,
             },
         },
@@ -2122,7 +2133,7 @@ my @ActionTests = (
                 # static fields
                 ConditionID => $ConditionIDs[0],
                 Selector    => $WorkOrderIDs[0],
-                ActionValue => 'New WorkOrderTitle Title' . int rand 1_000,
+                ActionValue => 'New WorkOrderTitle Title' . $RandomID,
                 UserID      => 1,
             },
         },
@@ -2316,7 +2327,7 @@ for my $ActionID (@ActionIDs) {
     );
 }
 
-# delete created conditions
+# check for condition delete
 for my $ConditionID (@ConditionIDs) {
 
     my $DeleteSuccess = $ConditionObject->ConditionDelete(
@@ -2342,34 +2353,13 @@ for my $ConditionID (@ConditionIDs) {
     );
 }
 
-# delete created changes
-for my $ChangeID (@ChangeIDs) {
-    $Self->True(
-        $ChangeObject->ChangeDelete(
-            ChangeID => $ChangeID,
-            UserID   => 1,
-        ),
-        'Test ' . $TestCount++ . " - ChangeDelete -> ChangeID: $ChangeID",
-    );
-
-    # double check if change is really deleted
-    my $ChangeData = $ChangeObject->ChangeGet(
-        ChangeID => $ChangeID,
-        UserID   => 1,
-    );
-
-    $Self->Is(
-        undef,
-        $ChangeData->{ChangeID},
-        'Test' . $TestCount++ . ': ChangeDelete() - double check',
-    );
-}
-
 # set SendNotifications to it's original value
 $ConfigObject->Set(
     Key   => 'ITSMChange::SendNotifications',
     Value => $SendNotificationsOrg,
 );
+
+# cleanup is done by RestoreDatabase
 
 sub _ActionAdd {
     my $ActionData = shift;
@@ -2386,7 +2376,7 @@ sub _ActionAdd {
     STATICFIELD:
     for my $StaticField (@StaticFields) {
 
-        # ommit static field if it is not set
+        # omit static field if it is not set
         next STATICFIELD if !exists $ActionData->{$StaticField};
         next STATICFIELD if !defined $ActionData->{$StaticField};
 
@@ -2398,7 +2388,7 @@ sub _ActionAdd {
     ACTIONADDVALUE:
     for my $ActionAddValue ( sort keys %{$ActionData} ) {
 
-        # ommit static fields
+        # omit static fields
         next ACTIONADDVALUE if grep { $_ eq $ActionAddValue } @StaticFields;
 
         # get values for fields

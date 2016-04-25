@@ -38,6 +38,14 @@ my $WorkOrderObject    = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkO
 my $TemplateObject     = $Kernel::OM->Get('Kernel::System::ITSMChange::Template');
 my $HTMLUtilsObject    = $Kernel::OM->Get('Kernel::System::HTMLUtils');
 
+# get helper object
+$Kernel::OM->ObjectParamAdd(
+    'Kernel::System::UnitTest::Helper' => {
+        RestoreDatabase => 1,
+    },
+);
+my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
+
 # test if change object was created successfully
 $Self->True(
     $TemplateObject,
@@ -48,6 +56,10 @@ $Self->Is(
     'Kernel::System::ITSMChange::Template',
     "Test " . $TestCount++ . ' - class of template object',
 );
+
+# define needed variable
+my $RandomID     = $Helper->GetRandomID();
+my $RandomNumber = $Helper->GetRandomNumber();
 
 # ------------------------------------------------------------ #
 # create needed users and customer users
@@ -71,11 +83,11 @@ for my $Counter ( 1 .. 3 ) {
         Source         => 'CustomerUser',
         UserFirstname  => 'ITSMChangeCustomer' . $Counter,
         UserLastname   => 'UnitTestCustomer',
-        UserCustomerID => 'UCT' . $Counter . int rand 1_000_000,
-        UserLogin      => 'UnitTest-ITSMTemplate-Customer-' . $Counter . int rand 1_000_000,
+        UserCustomerID => 'UCT' . $Counter . $RandomID,
+        UserLogin      => 'UnitTest-ITSMTemplate-Customer-' . $Counter . $RandomID,
         UserEmail      => 'UnitTest-ITSMTemplate-Customer-'
             . $Counter
-            . int( rand 1_000_000 )
+            . $RandomID
             . '@localhost',
         ValidID => $ValidObject->ValidLookup( Valid => 'valid' ),
         UserID  => 1,
@@ -179,11 +191,11 @@ $Self->False(
 # store current TestCount for better test case recognition
 my $TestCountMisc = $TestCount;
 
-# An unique indentifier, so that data from different test runs
+# An unique identifier, so that data from different test runs
 # won't be mixed up. The string is formated to a constant length,
 # as the conversion to plain text with ToAscii() depends on the string length.
 my $UniqueSignature = sprintf 'UnitTest-ITSMTemplate-%06d_%010d',
-    int( rand 1_000_000 ),
+    $RandomNumber,
     time();
 
 my %ChangeDefinitions = (
@@ -415,7 +427,7 @@ my %ConditionDefinitions = (
             # static fields
             #ConditionID  => ..., # This is filled by following code
             Selector    => $CreatedChangeID{BaseChange},
-            ActionValue => 'New Change Title' . $UniqueSignature . int rand 1_000,
+            ActionValue => 'New Change Title' . $UniqueSignature . $RandomID,
             UserID      => 1,
             }
     },
@@ -899,31 +911,7 @@ continue {
     $TestCount++;
 }
 
-# delete the test changes
-for my $ChangeID ( @ChangeIDs, values %CreatedChangeID ) {
-    my $DeleteOk = $ChangeObject->ChangeDelete(
-        ChangeID => $ChangeID,
-        UserID   => 1,
-    );
-    $Self->True(
-        $DeleteOk,
-        "Test $TestCount: ChangeDelete()"
-    );
-
-    # double check if change is really deleted
-    my $ChangeData = $ChangeObject->ChangeGet(
-        ChangeID => $ChangeID,
-        UserID   => 1,
-    );
-
-    $Self->False(
-        $ChangeData->{ChangeID},
-        "Test $TestCount: ChangeDelete() - double check",
-    );
-}
-continue {
-    $TestCount++;
-}
+# cleanup is done by RestoreDatabase
 
 sub _ActionAdd {
     my ( $ActionData, $ConditionID ) = @_;
@@ -940,7 +928,7 @@ sub _ActionAdd {
     STATICFIELD:
     for my $StaticField (@StaticFields) {
 
-        # ommit static field if it is not set
+        # omit static field if it is not set
         next STATICFIELD if !exists $ActionData->{$StaticField};
         next STATICFIELD if !defined $ActionData->{$StaticField};
 
@@ -952,7 +940,7 @@ sub _ActionAdd {
     ACTIONADDVALUE:
     for my $ActionAddValue ( sort keys %{$ActionData} ) {
 
-        # ommit static fields
+        # omit static fields
         next ACTIONADDVALUE if grep { $_ eq $ActionAddValue } @StaticFields;
 
         # get values for fields
@@ -1016,7 +1004,7 @@ sub _ExpressionAdd {
     STATICFIELD:
     for my $StaticField (@StaticFields) {
 
-        # ommit static field if it is not set
+        # omit static field if it is not set
         next STATICFIELD if !exists $ExpressionAddSourceData{$StaticField}
             || !defined $ExpressionAddSourceData{$StaticField};
 
@@ -1028,7 +1016,7 @@ sub _ExpressionAdd {
     EXPRESSIONADDVALUE:
     for my $ExpressionAddValue ( sort keys %ExpressionAddSourceData ) {
 
-        # ommit static fields
+        # omit static fields
         next EXPRESSIONADDVALUE if grep { $_ eq $ExpressionAddValue } @StaticFields;
 
         # get values for fields
