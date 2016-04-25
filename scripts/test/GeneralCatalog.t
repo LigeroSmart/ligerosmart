@@ -12,13 +12,21 @@ use utf8;
 
 use vars qw($Self);
 
-use Kernel::System::GeneralCatalog;
-use Kernel::System::User;
-
 # create local objects
 my $ConfigObject         = $Kernel::OM->Get('Kernel::Config');
 my $GeneralCatalogObject = $Kernel::OM->Get('Kernel::System::GeneralCatalog');
 my $UserObject           = $Kernel::OM->Get('Kernel::System::User');
+
+# get helper object
+$Kernel::OM->ObjectParamAdd(
+    'Kernel::System::UnitTest::Helper' => {
+        RestoreDatabase => 1,
+    },
+);
+my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
+
+# define needed variable
+my $RandomID = $Helper->GetRandomID();
 
 # ------------------------------------------------------------ #
 # make preparations
@@ -41,7 +49,7 @@ my @UserIDs;
         my $UserID = $UserObject->UserAdd(
             UserFirstname => 'GeneralCatalog' . $Counter,
             UserLastname  => 'UnitTest',
-            UserLogin     => 'UnitTest-GeneralCatalog-' . $Counter . int rand 1_000_000,
+            UserLogin     => 'UnitTest-GeneralCatalog-' . $Counter . $RandomID,
             UserEmail     => 'UnitTest-GeneralCatalog-' . $Counter . '@localhost',
             ValidID       => 1,
             ChangeUserID  => 1,
@@ -62,7 +70,7 @@ my @ClassRand;
 
 for my $Counter ( 1 .. 3 ) {
 
-    push @ClassRand, int rand 1_000_000;
+    push @ClassRand, $Helper->GetRandomNumber();
 }
 
 # store original general catalog permission preferences setting
@@ -119,7 +127,7 @@ my $ItemData = [
         },
     },
 
-    # this item must be inserted sucessfully
+    # this item must be inserted successfully
     {
         Add => {
             Class   => 'UnitTest::TestClass' . $ClassRand[0],
@@ -159,7 +167,7 @@ my $ItemData = [
         },
     },
 
-    # this item must be inserted sucessfully
+    # this item must be inserted successfully
     {
         Add => {
             Class   => 'UnitTest::TestClass' . $ClassRand[0],
@@ -244,7 +252,7 @@ my $ItemData = [
         },
     },
 
-    # this template must be inserted sucessfully (check string cleaner function)
+    # this template must be inserted successfully (check string cleaner function)
     {
         Add => {
             Class   => " \t \n \r Unit Test :: Test Class \t \n \r " . $ClassRand[0],
@@ -263,7 +271,7 @@ my $ItemData = [
         },
     },
 
-    # the item one add-test before must be updated sucessfully (check string cleaner function)
+    # the item one add-test before must be updated successfully (check string cleaner function)
     {
         Update => {
             Name    => " \t \n \r Test Item UPDATE1 \t \n \r ",
@@ -280,7 +288,7 @@ my $ItemData = [
         },
     },
 
-    # this item must be inserted sucessfully (unicode checks)
+    # this item must be inserted successfully (unicode checks)
     {
         Add => {
             Class   => 'UnitTest::TestClass©' . $ClassRand[1],
@@ -299,7 +307,7 @@ my $ItemData = [
         },
     },
 
-    # the item one add-test before must be updated sucessfully (unicode checks)
+    # the item one add-test before must be updated successfully (unicode checks)
     {
         Update => {
             Name    => 'Test Item Ʃ ɤ UPDATE1',
@@ -316,7 +324,7 @@ my $ItemData = [
         },
     },
 
-    # this item must be inserted sucessfully (a second item with Functionality 'test1')
+    # this item must be inserted successfully (a second item with Functionality 'test1')
     {
         Add => {
             Class   => 'UnitTest::TestClass' . $ClassRand[0],
@@ -350,7 +358,7 @@ my $ItemData = [
         },
     },
 
-    # this item must be inserted sucessfully (special character checks)
+    # this item must be inserted successfully (special character checks)
     {
         Add => {
             Class   => 'UnitTest::TestClass[test]%*\\' . $ClassRand[1],
@@ -369,7 +377,7 @@ my $ItemData = [
         },
     },
 
-    # the item one add-test before must be updated sucessfully (special character checks)
+    # the item one add-test before must be updated successfully (special character checks)
     {
         Update => {
             Name    => ' [test]%*\\ Test Item UPDATE1 [test]%*\\ ',
@@ -386,7 +394,7 @@ my $ItemData = [
         },
     },
 
-    # this item must be inserted sucessfully
+    # this item must be inserted successfully
     {
         Add => {
             Class   => 'UnitTest::TestClass' . $ClassRand[0],
@@ -456,7 +464,7 @@ my $ItemData = [
         },
     },
 
-    # the item one add-test before must be updated sucessfully (updating name to number zero (0) )
+    # the item one add-test before must be updated successfully (updating name to number zero (0) )
     {
         Update => {
             Name    => '0',
@@ -473,7 +481,7 @@ my $ItemData = [
         },
     },
 
-    # the item one add-test before must not be updated sucessfully
+    # the item one add-test before must not be updated successfully
     # (empty string as name is not allowed )
     {
         Update => {
@@ -559,7 +567,7 @@ for my $Item ( @{$ItemData} ) {
 
     if ( $Item->{Update} ) {
 
-        # check last item id varaible
+        # check last item id variable
         if ( !$LastAddedItemID ) {
             $Self->False(
                 1,
@@ -1064,14 +1072,12 @@ for my $Class (@ExistingClasses) {
     $TestCount++;
 }
 
-# ------------------------------------------------------------ #
-# cleanup
-# ------------------------------------------------------------ #
-
 # restore original general catalog permission preferences setting
 $ConfigObject->Set(
     Key   => 'GeneralCatalogPreferences###Permissions',
     Value => $GeneralCatalogPreferencesPermissionsOrg,
 );
+
+# cleanup is done by RestoreDatabase
 
 1;
