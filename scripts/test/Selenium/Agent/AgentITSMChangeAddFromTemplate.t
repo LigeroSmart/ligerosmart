@@ -116,7 +116,10 @@ $Selenium->RunTest(
         # get created test change ID
         my $ChangeQuoted = $DBObject->Quote($ChangeTitleRandom);
         $DBObject->Prepare(
-            SQL  => "SELECT id FROM change_item WHERE title = ?",
+            SQL  => "SELECT id
+                FROM change_item
+                WHERE title = ?
+                AND id != $ChangeID",
             Bind => [ \$ChangeQuoted ]
         );
         my $CreatedChangeID;
