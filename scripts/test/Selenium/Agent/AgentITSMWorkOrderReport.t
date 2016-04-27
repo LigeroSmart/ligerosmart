@@ -98,6 +98,8 @@ $Selenium->RunTest(
 
         for my $WorkOrderState (@WorkOrderStates) {
 
+            sleep(5);
+
             # click on 'Report' and switch window
             $Selenium->find_element(
                 "//a[contains(\@href, \'Action=AgentITSMWorkOrderReport;WorkOrderID=$WorkOrderID')]"
@@ -132,10 +134,12 @@ $Selenium->RunTest(
             $Selenium->WaitFor( WindowCount => 1 );
             $Selenium->switch_to_window( $Handles->[0] );
 
+            sleep(5);
+
             # click on 'History' and switch window
             $Selenium->find_element(
                 "//a[contains(\@href, \'Action=AgentITSMWorkOrderHistory;WorkOrderID=$WorkOrderID')]"
-            )->click();
+            )->VerifiedClick();
 
             $Selenium->WaitFor( WindowCount => 2 );
             $Handles = $Selenium->get_window_handles();
