@@ -223,7 +223,7 @@ $Selenium->RunTest(
 
         # clean up cache
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => 'GeneralCatalog' );
-        }
+    }
 );
 
 1;
