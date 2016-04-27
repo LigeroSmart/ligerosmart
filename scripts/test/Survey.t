@@ -36,7 +36,6 @@ $ConfigObject->Set(
     Value => 0,
 );
 
-
 # Freeze Time
 $HelperObject->FixedTimeSet();
 $Self->True(
