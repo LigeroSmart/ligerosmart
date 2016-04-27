@@ -487,8 +487,8 @@ sub FAQContentShow {
             $Self->Block(
                 Name => 'FAQContentHTML',
                 Data => {
-                    ItemID               => $Param{FAQData}->{ItemID},
-                    Field                => $Field,
+                    ItemID => $Param{FAQData}->{ItemID},
+                    Field  => $Field,
                 },
             );
         }
