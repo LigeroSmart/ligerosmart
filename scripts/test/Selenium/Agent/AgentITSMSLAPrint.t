@@ -102,7 +102,7 @@ $Selenium->RunTest(
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp(
             Type => 'SLA'
         );
-    }
+        }
 );
 
 1;
