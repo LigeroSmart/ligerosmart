@@ -94,7 +94,7 @@ $Selenium->RunTest(
 
         # get work order state data
         my @WorkOrderStateIDs;
-        for my $WorkOrderState (qw(Created Accepted)) {
+        for my $WorkOrderState (qw(created accepted)) {
             my $WorkOrderStateDataRef = $GeneralCatalogObject->ItemGet(
                 Class => 'ITSM::ChangeManagement::WorkOrder::State',
                 Name  => $WorkOrderState,
