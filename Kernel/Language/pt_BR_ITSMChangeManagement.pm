@@ -224,7 +224,6 @@ sub Data {
     # Template: AgentITSMChangeCABTemplate
     $Self->{Translation}->{'Save Change CAB as template'} = 'Salvar CCM da Mudança como modelo';
     $Self->{Translation}->{'go to involved persons screen'} = 'ir para a tela "Pessoas Envolvidas"';
-    $Self->{Translation}->{'This field is required'} = 'Este campo é obrigatório';
     $Self->{Translation}->{'Invalid Name'} = 'Nome inválido';
 
     # Template: AgentITSMChangeCondition
@@ -422,6 +421,8 @@ sub Data {
         'Uma lista dos agentes que têm permissão para ter Ordens de Serviço.Chave é um nome de login.O conteúdo é 0 ou 1';
     $Self->{Translation}->{'A list of workorder states, at which the ActualStartTime of a workorder will be set if it was empty at this point.'} =
         'Uma lista de estados de Ordem de Serviço, em que a hora de início real de uma Ordem de Serviço será definido se ele estava vazio neste momento.';
+    $Self->{Translation}->{'Add a change from template.'} = '';
+    $Self->{Translation}->{'Add a change.'} = '';
     $Self->{Translation}->{'Admin of the CIP matrix.'} = 'Gerenciar matriz CIP.';
     $Self->{Translation}->{'Admin of the state machine.'} = 'Gerenciar máquina de estado.';
     $Self->{Translation}->{'Agent interface notification module to see the number of change advisory boards.'} =
@@ -436,12 +437,19 @@ sub Data {
         'Tempo de cache, em minutos, para as barras de ferramentas de gerenciamento de mudanças. Padrão: 3 horas (180 minutos).';
     $Self->{Translation}->{'Cache time in minutes for the change management. Default: 5 days (7200 minutes).'} =
         'Tempo de cache, em minutos, para o gerenciamento de mudanças. Padrão: 5 dias (7200 minutos).';
+    $Self->{Translation}->{'Change History.'} = '';
+    $Self->{Translation}->{'Change Involved Persons.'} = '';
     $Self->{Translation}->{'Change Overview "Small" Limit'} = 'Limite para a visão de mudanças "pequeno"';
+    $Self->{Translation}->{'Change Print.'} = '';
+    $Self->{Translation}->{'Change Schedule.'} = '';
+    $Self->{Translation}->{'Change Zoom.'} = '';
     $Self->{Translation}->{'Change and WorkOrder templates edited by this user.'} = 'Modelos de Mudança e Ordem de Serviço editadas por este usuário.';
     $Self->{Translation}->{'Change limit per page for Change Overview "Small"'} = 'Limite para a página visão de mudanças "pequeno"';
     $Self->{Translation}->{'Change search backend router of the agent interface.'} = 'Alterar busca apoiadas do roteador do agente de interface';
+    $Self->{Translation}->{'Change-Area'} = '';
     $Self->{Translation}->{'Configures how often the notifications are sent when planned the start time or other time values have been reached/passed.'} =
         'Configura a freqüência com que as notificações são enviadas quando o tempo previsto de início ou outros valores de tempo ter sido atingido/passou.';
+    $Self->{Translation}->{'Create a change (from template) from this ticket!'} = '';
     $Self->{Translation}->{'Create and manage ITSM Change Management notifications.'} = '';
     $Self->{Translation}->{'Default type for a workorder. This entry must exist in general catalog class \'ITSM::ChangeManagement::WorkOrder::Type\'.'} =
         'Tipo padrão de Ordem de Serviço.Esta entrada deve existir na classe catálogo geral \'ITSM::Gestão da Mudança::Ordem de Serviço::Tipo\'.';
@@ -609,6 +617,9 @@ sub Data {
     $Self->{Translation}->{'Defines the workorder types that will be used to show the PIR overview.'} =
         'Define os tipos de ordem de serviço que será usado como filtros para mostrar na visão global da RPI.';
     $Self->{Translation}->{'Defines whether notifications should be sent.'} = 'Define se as notificações devem ser enviadas.';
+    $Self->{Translation}->{'Delete Change'} = '';
+    $Self->{Translation}->{'Delete a change.'} = '';
+    $Self->{Translation}->{'Details of a change history entry.'} = '';
     $Self->{Translation}->{'Determines if an agent can exchange the X-axis of a stat if he generates one.'} =
         'Determina se um atendente pode trocar o eixo X de uma estatística se ele gere um.';
     $Self->{Translation}->{'Determines if the common stats module may generate stats about changes done for config item classes.'} =
@@ -641,7 +652,23 @@ sub Data {
         'Campos dinâmicos exibidos na tela de detalhes da ordem de serviço da interface de atendente. Configurações possíveis: 0 = Desabilitado, 1 = Habilitado.';
     $Self->{Translation}->{'DynamicField event module to handle the update of conditions if dynamic fields are added, updated or deleted.'} =
         'Módulo de evento DynamicField para lidar com atualização de condições se campos dinâmicos forem adicionados, atualizados ou excluídos.';
+    $Self->{Translation}->{'Edit a change.'} = '';
+    $Self->{Translation}->{'Forward schedule of changes. Overview over approved changes.'} =
+        '';
+    $Self->{Translation}->{'ITSM Change CAB Templates.'} = '';
+    $Self->{Translation}->{'ITSM Change Condition Edit.'} = '';
+    $Self->{Translation}->{'ITSM Change Condition Overview.'} = '';
     $Self->{Translation}->{'ITSM Change Management Notifications'} = '';
+    $Self->{Translation}->{'ITSM Change Manager Overview.'} = '';
+    $Self->{Translation}->{'ITSM Change PIR Overview.'} = '';
+    $Self->{Translation}->{'ITSM MyCAB Overview.'} = '';
+    $Self->{Translation}->{'ITSM MyChanges Overview.'} = '';
+    $Self->{Translation}->{'ITSM MyWorkorders Overview.'} = '';
+    $Self->{Translation}->{'ITSM Template Delete.'} = '';
+    $Self->{Translation}->{'ITSM Template Edit CAB.'} = '';
+    $Self->{Translation}->{'ITSM Template Edit Content.'} = '';
+    $Self->{Translation}->{'ITSM Template Edit.'} = '';
+    $Self->{Translation}->{'ITSM Template Overview.'} = '';
     $Self->{Translation}->{'ITSM event module deletes the history of changes.'} = 'Módulo de evento ITSM apaga o histórico de mudanças.';
     $Self->{Translation}->{'ITSM event module that cleans up conditions.'} = 'Módulo de evento ITSM que limpa condições.';
     $Self->{Translation}->{'ITSM event module that deletes the cache for a toolbar.'} = 'Módulo de evento ITSM para excluir o cache de uma barra de tarefa.';
@@ -659,6 +686,8 @@ sub Data {
         'Se a freqüência é \'regular \', você pode configurar quantas vezes as notificações são enviados (a cada X horas).';
     $Self->{Translation}->{'Logfile for the ITSM change counter. This file is used for creating the change numbers.'} =
         'Arquivo de log para o contador de mudança ITSM. Este arquivo é usado para criar os números de mudança.';
+    $Self->{Translation}->{'Lookup of CAB members for autocompletion.'} = '';
+    $Self->{Translation}->{'Lookup of agents, used for autocompletion.'} = '';
     $Self->{Translation}->{'Module to check if WorkOrderAdd or WorkOrderAddFromTemplate should be permitted.'} =
         'Módulo para verificar se WorkOrderAdd ou WorkOrderAddFromTemplate devem ser permitidos.';
     $Self->{Translation}->{'Module to check the CAB members.'} = 'Módulo para verificar os membros do CCM.';
@@ -671,14 +700,19 @@ sub Data {
         'Módulo para verificar se o atendente está contido na lista configurada.';
     $Self->{Translation}->{'Module to show a link to create a change from this ticket. The ticket will be automatically linked with the new change.'} =
         'Módulo para mostrar um link para criar uma mudança a partir deste chamado. O chamado será automaticamente ligado com a nova mudança.';
+    $Self->{Translation}->{'Move Time Slot.'} = '';
     $Self->{Translation}->{'Only users of these groups have the permission to use the ticket types as defined in "ITSMChange::AddChangeLinkTicketTypes" if the feature "Ticket::Acl::Module###200-Ticket::Acl::Module" is enabled.'} =
         'Somente usuários desses grupos têm permissão para usar os tipos de chamados, tal como definido em "MudançaITSM:TiposChamadosAdicionarLinkMudança" se o recurso "Chamado::ACL:: Módulo###200-Chamado::ACL::Módulo" é habilitado..';
+    $Self->{Translation}->{'Overview over all Changes.'} = '';
     $Self->{Translation}->{'Parameters for the UserCreateWorkOrderNextMask object in the preference view of the agent interface.'} =
         'Parâmetros para o objeto UserCreateWorkOrderNextMask na tela de preferências da interface de atendente.';
     $Self->{Translation}->{'Parameters for the pages (in which the changes are shown) of the small change overview.'} =
         'Parâmetros para as páginas (em que as mudanças são mostradas) da pequena visão global de mudança.';
     $Self->{Translation}->{'Presents a link in the menu to show the involved persons in a change, in the zoom view of such change in the agent interface.'} =
         'Apresenta um link no menu para mostrar as pessoas envolvidas em uma mudança, em vista a ampliar essa mudança na interface do atendente.';
+    $Self->{Translation}->{'Projected Service Availability (PSA)'} = '';
+    $Self->{Translation}->{'Projected Service Availability (PSA) of changes. Overview of approved changes and their services.'} =
+        '';
     $Self->{Translation}->{'Required privileges in order for an agent to take a workorder.'} =
         'Privilégios necessários a fim de um agente ter uma ordem de serviço.';
     $Self->{Translation}->{'Required privileges to access the overview of all changes.'} = 'Privilégios necessários para acessar a visão global de todas as alterações.';
@@ -723,9 +757,12 @@ sub Data {
     $Self->{Translation}->{'Required privileges to view the list of own changes.'} = 'Privilégios necessários para visualizar a lista de mudanças próprias.';
     $Self->{Translation}->{'Required privileges to view the list of own workorders.'} = 'Privilégios necessários para visualizar a lista de ordem de serviço própria.';
     $Self->{Translation}->{'Required privileges to write a report for the workorder.'} = 'Privilégios necessários para escrever um relatório para a ordem de serviço.';
+    $Self->{Translation}->{'Reset a change and its workorders.'} = '';
+    $Self->{Translation}->{'Reset change and its workorders'} = '';
     $Self->{Translation}->{'Run task to check if specific times have been in reached in changes and workorders.'} =
         '';
     $Self->{Translation}->{'Screen after creating a workorder'} = 'Tela Após Criar Ordem de Serviço';
+    $Self->{Translation}->{'Search Changes.'} = '';
     $Self->{Translation}->{'Selects the change number generator module. "AutoIncrement" increments the change number, the SystemID and the counter are used with SystemID.counter format (e.g. 100118, 100119). With "Date", the change numbers will be generated by the current date and a counter; this format looks like Year.Month.Day.counter, e.g. 2010062400001, 2010062400002. With "DateChecksum", the counter will be appended as checksum to the string of date plus the SystemID. The checksum will be rotated on a daily basis. This format looks like Year.Month.Day.SystemID.Counter.CheckSum, e.g. 2010062410000017, 2010062410000026.'} =
         'Seleciona o módulo gerador do número da mudança. "AutoIncremento" incrementa o número da mudança: SystemID e contador são usados no formato SystemID.Contador (ex. 100118, 100119). Ao escolher "Data", os números das mudanças serão gerados pela junção da data atual com o Contador: o formato é Ano.Mês.Dia.Contador (ex. 2010062400001, 2010062400002). Com "DateChecksum", o contador será anexado como soma de verificação para a sequência de data mais SystemID. A soma de verificação vai ser rodada numa base diária. O formato é Ano.Mês.Dia.SystemID.Contador.CheckSum (ex. 2010062410000017, 2010062410000026).';
     $Self->{Translation}->{'Set the default height (in pixels) of inline HTML fields in AgentITSMChangeZoom and AgentITSMWorkOrderZoom.'} =
@@ -786,6 +823,8 @@ sub Data {
     $Self->{Translation}->{'State Machine'} = 'Máquina de Estado';
     $Self->{Translation}->{'Stores change and workorder ids and their corresponding template id, while a user is editing a template.'} =
         'Armazena IDs de mudança e ordens de serviço e suas correspondentes IDs de modelo, enquanto um usuário está editando o modelo.';
+    $Self->{Translation}->{'Take Workorder.'} = '';
+    $Self->{Translation}->{'Template.'} = '';
     $Self->{Translation}->{'The identifier for a change, e.g. Change#, MyChange#. The default is Change#.'} =
         'O identificador de uma Mudança, por exemplo, Mudança#,Minha mudança#. O padrão é Mudança#.';
     $Self->{Translation}->{'The identifier for a workorder, e.g. Workorder#, MyWorkorder#. The default is Workorder#.'} =
@@ -794,6 +833,17 @@ sub Data {
         'Este módulo ACL restringe o uso dos tipos de chamado definidos na opção sysconfig \'ITSMChange::AddChangeLinkTicketTypes\' para usuários dos grupos definidos em "ITSMChange::RestrictTicketTypes::Groups". Como esta ACL pode chocar com outras ACLs também relacionadas com o tipo do chamado, este parâmetro de configuração está desabilitado por padrão e deve ser ativado apenas se necessário.';
     $Self->{Translation}->{'Types of tickets, where in the ticket zoom view a link to add a change will be displayed.'} =
         'Tipos de chamados, onde no chamado amplia sua visualização de um link para adicionar uma mudança será exibida.';
+    $Self->{Translation}->{'Workorder Add (from template).'} = '';
+    $Self->{Translation}->{'Workorder Add.'} = '';
+    $Self->{Translation}->{'Workorder Agent.'} = '';
+    $Self->{Translation}->{'Workorder Delete.'} = '';
+    $Self->{Translation}->{'Workorder Edit.'} = '';
+    $Self->{Translation}->{'Workorder History Zoom.'} = '';
+    $Self->{Translation}->{'Workorder History.'} = '';
+    $Self->{Translation}->{'Workorder Report.'} = '';
+    $Self->{Translation}->{'Workorder Zoom.'} = '';
+    $Self->{Translation}->{'once'} = '';
+    $Self->{Translation}->{'regularly'} = '';
 
 }
 
