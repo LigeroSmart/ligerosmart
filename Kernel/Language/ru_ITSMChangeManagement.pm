@@ -422,7 +422,7 @@ sub Data {
     $Self->{Translation}->{'A list of workorder states, at which the ActualStartTime of a workorder will be set if it was empty at this point.'} =
         'Список состояний задачи в которых фактическое время начала задачи может быть задано, если еще пусто к этому моменту.';
     $Self->{Translation}->{'Add a change from template.'} = '';
-    $Self->{Translation}->{'Add a change.'} = '';
+    $Self->{Translation}->{'Add a change.'} = 'Добавить изменения';
     $Self->{Translation}->{'Admin of the CIP matrix.'} = 'Управление матрицей CIP';
     $Self->{Translation}->{'Admin of the state machine.'} = 'Управление машиной состояний';
     $Self->{Translation}->{'Agent interface notification module to see the number of change advisory boards.'} =

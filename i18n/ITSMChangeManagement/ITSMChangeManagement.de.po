@@ -12,9 +12,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-12-31 10:46+0000\n"
-"Last-Translator: Rudy R <rudy.rohde@googlemail.com>\n"
+"POT-Creation-Date: 2016-04-29 13:18+0000\n"
+"PO-Revision-Date: 2016-04-29 11:19+0000\n"
+"Last-Translator: Udo Bretz\n"
 "Language-Team: German (http://www.transifex.com/otrs/OTRS/language/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -53,14 +53,6 @@ msgstr "Eine Vorlage benötigt einen Namen!"
 #. Template: AAAITSMChangeManagement
 msgid "A workorder must have a title!"
 msgstr "Eine Workorder benötigt einen Titel!"
-
-#. Template: AAAITSMChangeManagement
-msgid "ActionExecute::successfully"
-msgstr "erfolgreich"
-
-#. Template: AAAITSMChangeManagement
-msgid "ActionExecute::unsuccessfully"
-msgstr "nicht erfolgreich"
 
 #. Template: AAAITSMChangeManagement
 msgid "Add CAB Template"
@@ -663,10 +655,6 @@ msgid "Rule"
 msgstr "Regel"
 
 #. Template: AdminITSMChangeNotification
-msgid "Recipients"
-msgstr "Empfänger"
-
-#. Template: AdminITSMChangeNotification
 msgid "A notification should have a name!"
 msgstr "Eine Benachrichtigung benötigt einen Namen!"
 
@@ -730,6 +718,10 @@ msgstr "Wollen Sie diesen Status-Übergang wirklich löschen?"
 msgid "from"
 msgstr "von"
 
+#. Template: AdminITSMStateMachine
+msgid "to"
+msgstr ""
+
 #. Template: AgentITSMChangeAdd
 msgid "Add Change"
 msgstr "Change hinzufügen"
@@ -777,10 +769,6 @@ msgstr "Diesen Change als Vorlage speichern"
 #. Template: AgentITSMChangeCABTemplate
 msgid "go to involved persons screen"
 msgstr "gehe zum Screen \"Beteiligte Personen\""
-
-#. Template: AgentITSMChangeCABTemplate
-msgid "This field is required"
-msgstr "Dieses Feld ist erforderlich"
 
 #. Template: AgentITSMChangeCABTemplate
 msgid "Invalid Name"
@@ -865,6 +853,10 @@ msgstr "Füge eine neue Aktion hinzu"
 #. Template: AgentITSMChangeDelete
 msgid "Do you really want to delete this change?"
 msgstr "Möchten Sie diesen Change wirklich löschen?"
+
+#. Template: AgentITSMChangeHistory
+msgid "History of"
+msgstr ""
 
 #. Template: AgentITSMChangeHistory
 msgid "Workorder"
@@ -998,10 +990,6 @@ msgstr "Tatsächlicher Start"
 msgid "ActualEndTime"
 msgstr "Tatsächliches Ende"
 
-#. Template: AgentITSMChangePrint
-msgid "ITSM Workorder"
-msgstr "Workorder"
-
 #. Template: AgentITSMChangeReset
 msgid "Do you really want to reset this change?"
 msgstr "Möchten Sie diesen Change wirklich zurücksetzen?"
@@ -1023,6 +1011,10 @@ msgid "CABCustomer"
 msgstr "CAB Kunde"
 
 #. Template: AgentITSMChangeSearch
+msgid "ITSM Workorder"
+msgstr "Workorder"
+
+#. Template: AgentITSMChangeSearch
 msgid "Instruction"
 msgstr "Anweisung"
 
@@ -1041,10 +1033,6 @@ msgstr "(vor/nach)"
 #. Template: AgentITSMChangeSearch
 msgid "(between)"
 msgstr "(zwischen)"
-
-#. Template: AgentITSMChangeSearchResultPrint
-msgid "WorkOrders"
-msgstr "Workorder"
 
 #. Template: AgentITSMChangeTemplate
 msgid "Save Change as Template"
@@ -1264,6 +1252,26 @@ msgstr "Löschen der Original-Workorder (und der umgebenden Changes)"
 msgid "Workorder Information"
 msgstr "Workorder-Informationen"
 
+#. Perl Module: Kernel/Modules/AgentITSMChangePIR.pm
+msgid "PIR"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePSA.pm
+msgid "PSA"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
+msgid "WorkOrders"
+msgstr "Workorder"
+
+#. Perl Module: Kernel/Modules/AgentITSMWorkOrderHistory.pm
+msgid "WorkOrderHistory::"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/ToolBar/MyWorkOrders.pm
+msgid "My Work Orders"
+msgstr ""
+
 #. SysConfig
 msgid ""
 "A list of the agents who have permission to take workorders. Key is a login "
@@ -1277,8 +1285,12 @@ msgid ""
 msgstr "Eine Liste von Workorder-States bei denen die ActualStartTime einer Workorder gesetzt wird, wenn diese vorher nicht gesetzt war."
 
 #. SysConfig
-msgid "Admin of notification rules."
-msgstr "Admin der Notification-Regeln."
+msgid "Add a change from template."
+msgstr ""
+
+#. SysConfig
+msgid "Add a change."
+msgstr ""
 
 #. SysConfig
 msgid "Admin of the CIP matrix."
@@ -1321,8 +1333,28 @@ msgid ""
 msgstr "Cache-Zeit in Minuten für die Change Management. Standard: 5 Tage (7200 Minuten)."
 
 #. SysConfig
+msgid "Change History."
+msgstr ""
+
+#. SysConfig
+msgid "Change Involved Persons."
+msgstr ""
+
+#. SysConfig
 msgid "Change Overview \"Small\" Limit"
 msgstr "Change Übersicht Anzeige Limit für \"Small\""
+
+#. SysConfig
+msgid "Change Print."
+msgstr ""
+
+#. SysConfig
+msgid "Change Schedule."
+msgstr ""
+
+#. SysConfig
+msgid "Change Zoom."
+msgstr ""
 
 #. SysConfig
 msgid "Change and WorkOrder templates edited by this user."
@@ -1337,10 +1369,22 @@ msgid "Change search backend router of the agent interface."
 msgstr "Such-Backend-Router für die Change-Suche in der Agenten-Ansicht."
 
 #. SysConfig
+msgid "Change-Area"
+msgstr ""
+
+#. SysConfig
 msgid ""
 "Configures how often the notifications are sent when planned the start time "
 "or other time values have been reached/passed."
 msgstr "Konfiguration wie häufig Benachrichtungen verschickt werden wenn die geplante Startzeit oder andere Zeiten erreicht wurden bzw. schon vorbei sind."
+
+#. SysConfig
+msgid "Create a change (from template) from this ticket!"
+msgstr ""
+
+#. SysConfig
+msgid "Create and manage ITSM Change Management notifications."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -1842,6 +1886,18 @@ msgid "Defines whether notifications should be sent."
 msgstr "Wenn Benachrichtigungen versendet werden sollen."
 
 #. SysConfig
+msgid "Delete Change"
+msgstr ""
+
+#. SysConfig
+msgid "Delete a change."
+msgstr ""
+
+#. SysConfig
+msgid "Details of a change history entry."
+msgstr ""
+
+#. SysConfig
 msgid ""
 "Determines if an agent can exchange the X-axis of a stat if he generates "
 "one."
@@ -1937,6 +1993,70 @@ msgid ""
 msgstr "Dynamische Felder Event-Modul zur Behandlung der Bedingungen wenn Dynamische Felder hinzugefügt, geändert oder gelöscht werden."
 
 #. SysConfig
+msgid "Edit a change."
+msgstr ""
+
+#. SysConfig
+msgid "Forward schedule of changes. Overview over approved changes."
+msgstr ""
+
+#. SysConfig
+msgid "ITSM Change CAB Templates."
+msgstr ""
+
+#. SysConfig
+msgid "ITSM Change Condition Edit."
+msgstr ""
+
+#. SysConfig
+msgid "ITSM Change Condition Overview."
+msgstr ""
+
+#. SysConfig
+msgid "ITSM Change Management Notifications"
+msgstr ""
+
+#. SysConfig
+msgid "ITSM Change Manager Overview."
+msgstr ""
+
+#. SysConfig
+msgid "ITSM Change PIR Overview."
+msgstr ""
+
+#. SysConfig
+msgid "ITSM MyCAB Overview."
+msgstr ""
+
+#. SysConfig
+msgid "ITSM MyChanges Overview."
+msgstr ""
+
+#. SysConfig
+msgid "ITSM MyWorkorders Overview."
+msgstr ""
+
+#. SysConfig
+msgid "ITSM Template Delete."
+msgstr ""
+
+#. SysConfig
+msgid "ITSM Template Edit CAB."
+msgstr ""
+
+#. SysConfig
+msgid "ITSM Template Edit Content."
+msgstr ""
+
+#. SysConfig
+msgid "ITSM Template Edit."
+msgstr ""
+
+#. SysConfig
+msgid "ITSM Template Overview."
+msgstr ""
+
+#. SysConfig
 msgid "ITSM event module deletes the history of changes."
 msgstr "ITSM Event Modul löscht die Historie von Changes."
 
@@ -1993,6 +2113,14 @@ msgid ""
 msgstr "Pfad und Verzeichnis zur Logdatei für den ITSM Change-Counter. Diese Datei hilft bei der Erzeugung von Change-Nummern."
 
 #. SysConfig
+msgid "Lookup of CAB members for autocompletion."
+msgstr ""
+
+#. SysConfig
+msgid "Lookup of agents, used for autocompletion."
+msgstr ""
+
+#. SysConfig
 msgid ""
 "Module to check if WorkOrderAdd or WorkOrderAddFromTemplate should be "
 "permitted."
@@ -2033,8 +2161,8 @@ msgid ""
 msgstr "Mit diesem Modul wird ein Link im Menü der Ticketansicht angezeigt, mit dem ein Change erstellt werden kann. Das Ticket wird automatisch mit dem neu erstellten Change verlinkt."
 
 #. SysConfig
-msgid "Notification (ITSM Change Management)"
-msgstr "Benachrichtigung (ITSM Change Management)"
+msgid "Move Time Slot."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -2042,6 +2170,10 @@ msgid ""
 "defined in \"ITSMChange::AddChangeLinkTicketTypes\" if the feature "
 "\"Ticket::Acl::Module###200-Ticket::Acl::Module\" is enabled."
 msgstr "Nur die Mitglieder dieser Gruppen haben die Erlaubnis die Ticket-Typen zu verwenden, die in \"ITSMChange::AddChangeLinkTicketTypes\" definiert sind, wenn das Feature \"Ticket::Acl::Module###200-Ticket::Acl::Module\" aktiviert ist."
+
+#. SysConfig
+msgid "Overview over all Changes."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -2060,6 +2192,16 @@ msgid ""
 "Presents a link in the menu to show the involved persons in a change, in the"
 " zoom view of such change in the agent interface."
 msgstr "Zeigt in der \"Change Zoom\" Ansicht der Agenten-Oberfläche einen  Menu Link der es erlaubt die eingebundenen Agenten anzuzeigen."
+
+#. SysConfig
+msgid "Projected Service Availability (PSA)"
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Projected Service Availability (PSA) of changes. Overview of approved "
+"changes and their services."
+msgstr ""
 
 #. SysConfig
 msgid "Required privileges in order for an agent to take a workorder."
@@ -2215,8 +2357,26 @@ msgid "Required privileges to write a report for the workorder."
 msgstr "Benötigtes Recht zum Verfassen eines Berichtes für eine Workorder."
 
 #. SysConfig
+msgid "Reset a change and its workorders."
+msgstr ""
+
+#. SysConfig
+msgid "Reset change and its workorders"
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Run task to check if specific times have been in reached in changes and "
+"workorders."
+msgstr ""
+
+#. SysConfig
 msgid "Screen after creating a workorder"
 msgstr "Ansicht nach Workorder-Erstellung"
+
+#. SysConfig
+msgid "Search Changes."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -2410,6 +2570,14 @@ msgid ""
 msgstr "Speichert Change und Workorder ID und die zugehörige Vorlagen ID während ein Benutzer das Template bearbeitet."
 
 #. SysConfig
+msgid "Take Workorder."
+msgstr ""
+
+#. SysConfig
+msgid "Template."
+msgstr ""
+
+#. SysConfig
 msgid ""
 "The identifier for a change, e.g. Change#, MyChange#. The default is "
 "Change#."
@@ -2436,3 +2604,47 @@ msgid ""
 "Types of tickets, where in the ticket zoom view a link to add a change will "
 "be displayed."
 msgstr "Typen der Tickets, in denen im Ticket-Zoom ein Link angezeigt wird, um einen Change zu erstellen."
+
+#. SysConfig
+msgid "Workorder Add (from template)."
+msgstr ""
+
+#. SysConfig
+msgid "Workorder Add."
+msgstr ""
+
+#. SysConfig
+msgid "Workorder Agent."
+msgstr ""
+
+#. SysConfig
+msgid "Workorder Delete."
+msgstr ""
+
+#. SysConfig
+msgid "Workorder Edit."
+msgstr ""
+
+#. SysConfig
+msgid "Workorder History Zoom."
+msgstr ""
+
+#. SysConfig
+msgid "Workorder History."
+msgstr ""
+
+#. SysConfig
+msgid "Workorder Report."
+msgstr ""
+
+#. SysConfig
+msgid "Workorder Zoom."
+msgstr ""
+
+#. SysConfig
+msgid "once"
+msgstr ""
+
+#. SysConfig
+msgid "regularly"
+msgstr ""

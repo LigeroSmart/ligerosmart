@@ -1,713 +1,714 @@
 # 
 # Translators:
+# Balázs Úr <urbalazs@gmail.com>, 2014-2016
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2016-04-29 13:18+0000\n"
 "PO-Revision-Date: 2016-04-29 11:19+0000\n"
 "Last-Translator: Udo Bretz\n"
-"Language-Team: English (Canada) (http://www.transifex.com/otrs/OTRS/language/en_CA/)\n"
+"Language-Team: Hungarian (http://www.transifex.com/otrs/OTRS/language/hu/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: en_CA\n"
+"Language: hu\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. Template: AAAITSMChangeManagement
 msgid "ITSMChange"
-msgstr "Change"
+msgstr "ITSM változás"
 
 #. Template: AAAITSMChangeManagement
 msgid "ITSMChanges"
-msgstr "Changes"
+msgstr "ITSM változások"
 
 #. Template: AAAITSMChangeManagement
 msgid "ITSM Changes"
-msgstr "Changes"
+msgstr "ITSM változások"
 
 #. Template: AAAITSMChangeManagement
 msgid "workorder"
-msgstr "Workorder"
+msgstr "munkamegrendelés"
 
 #. Template: AAAITSMChangeManagement
 msgid "A change must have a title!"
-msgstr ""
+msgstr "A változásnak rendelkeznie kell egy címmel!"
 
 #. Template: AAAITSMChangeManagement
 msgid "A condition must have a name!"
-msgstr ""
+msgstr "A feltételnek rendelkeznie kell egy névvel!"
 
 #. Template: AAAITSMChangeManagement
 msgid "A template must have a name!"
-msgstr ""
+msgstr "A sablonnak rendelkeznie kell egy névvel!"
 
 #. Template: AAAITSMChangeManagement
 msgid "A workorder must have a title!"
-msgstr ""
+msgstr "A munkamegrendelésnek rendelkeznie kell egy címmel!"
 
 #. Template: AAAITSMChangeManagement
 msgid "Add CAB Template"
-msgstr ""
+msgstr "CAB sablon hozzáadása"
 
 #. Template: AAAITSMChangeManagement
 msgid "Add Workorder"
-msgstr ""
+msgstr "Munkamegrendelés hozzáadása"
 
 #. Template: AAAITSMChangeManagement
 msgid "Add a workorder to the change"
-msgstr ""
+msgstr "Egy munkamegrendelés hozzáadása a változáshoz"
 
 #. Template: AAAITSMChangeManagement
 msgid "Add new condition and action pair"
-msgstr ""
+msgstr "Új feltétel és művelet pár hozzáadása"
 
 #. Template: AAAITSMChangeManagement
 msgid "Agent interface module to show the ChangeManager overview icon."
-msgstr ""
+msgstr "Ügyintézői felület modul a változásmenedzser áttekintő ikonjának megjelenítéséhez."
 
 #. Template: AAAITSMChangeManagement
 msgid "Agent interface module to show the MyCAB overview icon."
-msgstr ""
+msgstr "Ügyintézői felület modul a saját CAB áttekintő ikonjának megjelenítéséhez."
 
 #. Template: AAAITSMChangeManagement
 msgid "Agent interface module to show the MyChanges overview icon."
-msgstr ""
+msgstr "Ügyintézői felület modul a saját változások áttekintő ikonjának megjelenítéséhez."
 
 #. Template: AAAITSMChangeManagement
 msgid "Agent interface module to show the MyWorkOrders overview icon."
-msgstr ""
+msgstr "Ügyintézői felület modul a saját munkamegrendelések áttekintő ikonjának megjelenítéséhez."
 
 #. Template: AAAITSMChangeManagement
 msgid "CABAgents"
-msgstr "CAB Agents"
+msgstr "CAB ügyintézők"
 
 #. Template: AAAITSMChangeManagement
 msgid "CABCustomers"
-msgstr "CAB Customers"
+msgstr "CAB ügyfelek"
 
 #. Template: AAAITSMChangeManagement
 msgid "Change Overview"
-msgstr ""
+msgstr "Változás áttekintő"
 
 #. Template: AAAITSMChangeManagement
 msgid "Change Schedule"
-msgstr ""
+msgstr "Változásütemezés"
 
 #. Template: AAAITSMChangeManagement
 msgid "Change involved persons of the change"
-msgstr ""
+msgstr "A változás résztvevő személyeinek módosítása"
 
 #. Template: AAAITSMChangeManagement
 msgid "ChangeHistory::ActionAdd"
-msgstr "%s: %s"
+msgstr "Változás előzmények::Hozzáadás művelet"
 
 #. Template: AAAITSMChangeManagement
 msgid "ChangeHistory::ActionAddID"
-msgstr "New Action (ID=%s)"
+msgstr "Változás előzmények::Azonosító hozzáadása művelet"
 
 #. Template: AAAITSMChangeManagement
 msgid "ChangeHistory::ActionDelete"
-msgstr "Action (ID=%s) deleted"
+msgstr "Változás előzmények::Törlés művelet"
 
 #. Template: AAAITSMChangeManagement
 msgid "ChangeHistory::ActionDeleteAll"
-msgstr "All Actions of Condition (ID=%s) deleted"
+msgstr "Változás előzmények::Összes törlése művelet"
 
 #. Template: AAAITSMChangeManagement
 msgid "ChangeHistory::ActionExecute"
-msgstr "Action (ID=%s) executed: %s"
+msgstr "Változás előzmények::Végrehajtás művelet"
 
 #. Template: AAAITSMChangeManagement
 msgid "ChangeHistory::ActionUpdate"
-msgstr "%s (Action ID=%s): New: %s <- Old: %s"
+msgstr "Változás előzmények::Frissítés művelet"
 
 #. Template: AAAITSMChangeManagement
 msgid "ChangeHistory::ChangeActualEndTimeReached"
-msgstr "Change (ID=%s) reached actual end time."
+msgstr "Változás előzmények::Változás tényleges befejezési ideje elérve"
 
 #. Template: AAAITSMChangeManagement
 msgid "ChangeHistory::ChangeActualStartTimeReached"
-msgstr "Change (ID=%s) reached actual start time."
+msgstr "Változás előzmények::Változás tényleges kezdési ideje elérve"
 
 #. Template: AAAITSMChangeManagement
 msgid "ChangeHistory::ChangeAdd"
-msgstr "New Change (ID=%s)"
+msgstr "Változás előzmények::Változás hozzáadás"
 
 #. Template: AAAITSMChangeManagement
 msgid "ChangeHistory::ChangeAttachmentAdd"
-msgstr "New Attachment: %s"
+msgstr "Változás előzmények::Változásmelléklet hozzáadás"
 
 #. Template: AAAITSMChangeManagement
 msgid "ChangeHistory::ChangeAttachmentDelete"
-msgstr "Deleted Attachment %s"
+msgstr "Változás előzmények::Változásmelléklet törlés"
 
 #. Template: AAAITSMChangeManagement
 msgid "ChangeHistory::ChangeCABDelete"
-msgstr "CAB Deleted %s"
+msgstr "Változás előzmények::Változás CAB törlés"
 
 #. Template: AAAITSMChangeManagement
 msgid "ChangeHistory::ChangeCABUpdate"
-msgstr "%s: New: %s <- Old: %s"
+msgstr "Változás előzmények::Változás CAB frissítés"
 
 #. Template: AAAITSMChangeManagement
 msgid "ChangeHistory::ChangeLinkAdd"
-msgstr "Link to %s (ID=%s) added"
+msgstr "Változás előzmények::Változás-hivatkozás hozzáadás"
 
 #. Template: AAAITSMChangeManagement
 msgid "ChangeHistory::ChangeLinkDelete"
-msgstr "Link to %s (ID=%s) deleted"
+msgstr "Változás előzmények::Változás-hivatkozás törlés"
 
 #. Template: AAAITSMChangeManagement
 msgid "ChangeHistory::ChangeNotificationSent"
-msgstr "Notification sent to %s (Event: %s)"
+msgstr "Változás előzmények::Változásértesítés küldés"
 
 #. Template: AAAITSMChangeManagement
 msgid "ChangeHistory::ChangePlannedEndTimeReached"
-msgstr "Change (ID=%s) reached planned end time."
+msgstr "Változás előzmények::Változás tervezett befejezési ideje elérve"
 
 #. Template: AAAITSMChangeManagement
 msgid "ChangeHistory::ChangePlannedStartTimeReached"
-msgstr "Change (ID=%s) reached planned start time."
+msgstr "Változás előzmények::Változás tervezett kezdési ideje elérve"
 
 #. Template: AAAITSMChangeManagement
 msgid "ChangeHistory::ChangeRequestedTimeReached"
-msgstr "Change (ID=%s) reached requested time."
+msgstr "Változás előzmények::Változás kért ideje elérve"
 
 #. Template: AAAITSMChangeManagement
 msgid "ChangeHistory::ChangeUpdate"
-msgstr "%s: New: %s <- Old: %s"
+msgstr "Változás előzmények::Változás frissítés"
 
 #. Template: AAAITSMChangeManagement
 msgid "ChangeHistory::ConditionAdd"
-msgstr "%s: %s"
+msgstr "Változás előzmények::Feltétel hozzáadás"
 
 #. Template: AAAITSMChangeManagement
 msgid "ChangeHistory::ConditionAddID"
-msgstr "New Condition (ID=%s)"
+msgstr "Változás előzmények::Feltétel azonosító hozzáadás"
 
 #. Template: AAAITSMChangeManagement
 msgid "ChangeHistory::ConditionDelete"
-msgstr "Condition (ID=%s) deleted"
+msgstr "Változás előzmények::Feltétel törlés"
 
 #. Template: AAAITSMChangeManagement
 msgid "ChangeHistory::ConditionDeleteAll"
-msgstr "All Conditions of Change (ID=%s) deleted"
+msgstr "Változás előzmények::Feltétel összes törlés"
 
 #. Template: AAAITSMChangeManagement
 msgid "ChangeHistory::ConditionUpdate"
-msgstr "%s (Condition ID=%s): New: %s <- Old: %s"
+msgstr "Változás előzmények::Feltétel frissítés"
 
 #. Template: AAAITSMChangeManagement
 msgid "ChangeHistory::ExpressionAdd"
-msgstr "%s: %s"
+msgstr "Változás előzmények::Kifejezés hozzáadás"
 
 #. Template: AAAITSMChangeManagement
 msgid "ChangeHistory::ExpressionAddID"
-msgstr "New Expression (ID=%s)"
+msgstr "Változás előzmények::Kifejezés azonosító hozzáadás"
 
 #. Template: AAAITSMChangeManagement
 msgid "ChangeHistory::ExpressionDelete"
-msgstr "Expression (ID=%s) deleted"
+msgstr "Változás előzmények::Kifejezés törlés"
 
 #. Template: AAAITSMChangeManagement
 msgid "ChangeHistory::ExpressionDeleteAll"
-msgstr "All Expressions of Condition (ID=%s) deleted"
+msgstr "Változás előzmények::Kifejezés összes törlés"
 
 #. Template: AAAITSMChangeManagement
 msgid "ChangeHistory::ExpressionUpdate"
-msgstr "%s (Expression ID=%s): New: %s <- Old: %s"
+msgstr "Változás előzmények::Kifejezés frissítés"
 
 #. Template: AAAITSMChangeManagement
 msgid "ChangeNumber"
-msgstr "Change Number"
+msgstr "Változásszám"
 
 #. Template: AAAITSMChangeManagement
 msgid "Condition Edit"
-msgstr ""
+msgstr "Feltétel szerkesztés"
 
 #. Template: AAAITSMChangeManagement
 msgid "Create Change"
-msgstr ""
+msgstr "Változás létrehozása"
 
 #. Template: AAAITSMChangeManagement
 msgid "Create a change from this ticket!"
-msgstr ""
+msgstr "Változás létrehozása ebből a jegyből!"
 
 #. Template: AAAITSMChangeManagement
 msgid "Delete Workorder"
-msgstr ""
+msgstr "Munkamegrendelés törlése"
 
 #. Template: AAAITSMChangeManagement
 msgid "Edit the change"
-msgstr ""
+msgstr "A változás szerkesztése"
 
 #. Template: AAAITSMChangeManagement
 msgid "Edit the conditions of the change"
-msgstr ""
+msgstr "A változás feltételeinek szerkesztése"
 
 #. Template: AAAITSMChangeManagement
 msgid "Edit the workorder"
-msgstr ""
+msgstr "A munkamegrendelés szerkesztése"
 
 #. Template: AAAITSMChangeManagement
 msgid "Expression"
-msgstr ""
+msgstr "Kifejezés"
 
 #. Template: AAAITSMChangeManagement
 msgid "Full-Text Search in Change and Workorder"
-msgstr ""
+msgstr "Szabad-szavas keresés a változásban és a munkamegrendelésben"
 
 #. Template: AAAITSMChangeManagement
 msgid "ITSMCondition"
-msgstr "Condition"
+msgstr "ITSM feltétel"
 
 #. Template: AAAITSMChangeManagement
 msgid "ITSMWorkOrder"
-msgstr "Workorder"
+msgstr "ITSM munkamegrendelés"
 
 #. Template: AAAITSMChangeManagement
 msgid "Link another object to the change"
-msgstr ""
+msgstr "Másik objektum hozzákapcsolása a változáshoz"
 
 #. Template: AAAITSMChangeManagement
 msgid "Link another object to the workorder"
-msgstr ""
+msgstr "Másik objektum hozzákapcsolása a munkamegrendeléshez"
 
 #. Template: AAAITSMChangeManagement
 msgid "Move all workorders in time"
-msgstr ""
+msgstr "Minden munkamegrendelés áthelyezése az időben"
 
 #. Template: AAAITSMChangeManagement
 msgid "My CABs"
-msgstr ""
+msgstr "Saját CAB-ok"
 
 #. Template: AAAITSMChangeManagement
 msgid "My Changes"
-msgstr ""
+msgstr "Saját változások"
 
 #. Template: AAAITSMChangeManagement
 msgid "My Workorders"
-msgstr ""
+msgstr "Saját munkamegrendelések"
 
 #. Template: AAAITSMChangeManagement
 msgid "No XXX settings"
-msgstr "No '%s' settings"
+msgstr "Nincsenek XXX beállítások"
 
 #. Template: AAAITSMChangeManagement
 msgid "PIR (Post Implementation Review)"
-msgstr ""
+msgstr "PIR (megvalósítás utáni vizsgálat)"
 
 #. Template: AAAITSMChangeManagement
 msgid "PSA (Projected Service Availability)"
-msgstr ""
+msgstr "PSA (vetített szolgáltatás elérhetőség)"
 
 #. Template: AAAITSMChangeManagement
 msgid "Please select first a catalog class!"
-msgstr ""
+msgstr "Először válasszon egy katalógusosztályt!"
 
 #. Template: AAAITSMChangeManagement
 msgid "Print the change"
-msgstr ""
+msgstr "A változás nyomtatása"
 
 #. Template: AAAITSMChangeManagement
 msgid "Print the workorder"
-msgstr ""
+msgstr "A munkamegrendelés nyomtatása"
 
 #. Template: AAAITSMChangeManagement
 msgid "RequestedTime"
-msgstr "Requested Time"
+msgstr "Kért idő"
 
 #. Template: AAAITSMChangeManagement
 msgid "Save Change CAB as Template"
-msgstr ""
+msgstr "Változás CAB mentése sablonként"
 
 #. Template: AAAITSMChangeManagement
 msgid "Save change as a template"
-msgstr ""
+msgstr "Változás mentése sablonként"
 
 #. Template: AAAITSMChangeManagement
 msgid "Save workorder as a template"
-msgstr ""
+msgstr "Munkamegrendelés mentése sablonként"
 
 #. Template: AAAITSMChangeManagement
 msgid "Search Changes"
-msgstr ""
+msgstr "Változások keresése"
 
 #. Template: AAAITSMChangeManagement
 msgid "Set the agent for the workorder"
-msgstr ""
+msgstr "Az ügyintéző beállítása a munkamegrendeléshez"
 
 #. Template: AAAITSMChangeManagement
 msgid "Take Workorder"
-msgstr ""
+msgstr "Munkamegrendelés felvétele"
 
 #. Template: AAAITSMChangeManagement
 msgid "Take the workorder"
-msgstr ""
+msgstr "A munkamegrendelés felvétele"
 
 #. Template: AAAITSMChangeManagement
 msgid "Template Overview"
-msgstr ""
+msgstr "Sablon áttekintő"
 
 #. Template: AAAITSMChangeManagement
 msgid "The planned end time is invalid!"
-msgstr ""
+msgstr "A tervezett befejezési idő érvénytelen!"
 
 #. Template: AAAITSMChangeManagement
 msgid "The planned start time is invalid!"
-msgstr ""
+msgstr "A tervezett kezdési idő érvénytelen!"
 
 #. Template: AAAITSMChangeManagement
 msgid "The planned time is invalid!"
-msgstr ""
+msgstr "A tervezett idő érvénytelen!"
 
 #. Template: AAAITSMChangeManagement
 msgid "The requested time is invalid!"
-msgstr ""
+msgstr "A kért idő érvénytelen!"
 
 #. Template: AAAITSMChangeManagement
 msgid "New (from template)"
-msgstr ""
+msgstr "Új (sablonból)"
 
 #. Template: AAAITSMChangeManagement
 msgid "Add from template"
-msgstr ""
+msgstr "Hozzáadás sablonból"
 
 #. Template: AAAITSMChangeManagement
 msgid "Add Workorder (from template)"
-msgstr ""
+msgstr "Munkamegrendelés hozzáadása (sablonból)"
 
 #. Template: AAAITSMChangeManagement
 msgid "Add a workorder (from template) to the change"
-msgstr ""
+msgstr "Egy munkamegrendelés hozzáadása (sablonból) a változáshoz"
 
 #. Template: AAAITSMChangeManagement
 msgid "WorkOrderHistory::WorkOrderActualEndTimeReached"
-msgstr "Workorder (ID=%s) reached actual end time."
+msgstr "Munkamegrendelés előzmények::Munkamegrendelés tényleges befejezési ideje elérve"
 
 #. Template: AAAITSMChangeManagement
 msgid "WorkOrderHistory::WorkOrderActualEndTimeReachedWithWorkOrderID"
-msgstr "Workorder (ID=%s) reached actual end time."
+msgstr "Munkamegrendelés előzmények::Munkamegrendelés tényleges befejezési ideje elérve munkamegrendelés-azonosítóval"
 
 #. Template: AAAITSMChangeManagement
 msgid "WorkOrderHistory::WorkOrderActualStartTimeReached"
-msgstr "Workorder (ID=%s) reached actual start time."
+msgstr "Munkamegrendelés előzmények::Munkamegrendelés tényleges kezdési ideje elérve"
 
 #. Template: AAAITSMChangeManagement
 msgid "WorkOrderHistory::WorkOrderActualStartTimeReachedWithWorkOrderID"
-msgstr "Workorder (ID=%s) reached actual start time."
+msgstr "Munkamegrendelés előzmények::Munkamegrendelés tényleges kezdési ideje elérve munkamegrendelés-azonosítóval"
 
 #. Template: AAAITSMChangeManagement
 msgid "WorkOrderHistory::WorkOrderAdd"
-msgstr "New Workorder (ID=%s)"
+msgstr "Munkamegrendelés előzmények::Munkamegrendelés hozzáadás"
 
 #. Template: AAAITSMChangeManagement
 msgid "WorkOrderHistory::WorkOrderAddWithWorkOrderID"
-msgstr "New Workorder (ID=%s)"
+msgstr "Munkamegrendelés előzmények::Munkamegrendelés hozzáadás munkamegrendelés-azonosítóval"
 
 #. Template: AAAITSMChangeManagement
 msgid "WorkOrderHistory::WorkOrderAttachmentAdd"
-msgstr "New Attachment for WorkOrder: %s"
+msgstr "Munkamegrendelés előzmények::Munkamegrendelés melléklet hozzáadás"
 
 #. Template: AAAITSMChangeManagement
 msgid "WorkOrderHistory::WorkOrderAttachmentAddWithWorkOrderID"
-msgstr "(ID=%s) New Attachment for WorkOrder: %s"
+msgstr "Munkamegrendelés előzmények::Munkamegrendelés melléklet hozzáadás munkamegrendelés-azonosítóval"
 
 #. Template: AAAITSMChangeManagement
 msgid "WorkOrderHistory::WorkOrderAttachmentDelete"
-msgstr "Deleted Attachment from WorkOrder: %s"
+msgstr "Munkamegrendelés előzmények::Munkamegrendelés melléklet törlés"
 
 #. Template: AAAITSMChangeManagement
 msgid "WorkOrderHistory::WorkOrderAttachmentDeleteWithWorkOrderID"
-msgstr "(ID=%s) Deleted Attachment from WorkOrder: %s"
+msgstr "Munkamegrendelés előzmények::Munkamegrendelés melléklet törlés munkamegrendelés-azonosítóval"
 
 #. Template: AAAITSMChangeManagement
 msgid "WorkOrderHistory::WorkOrderReportAttachmentAdd"
-msgstr "New Report Attachment for WorkOrder: %s"
+msgstr "Munkamegrendelés előzmények::Munkamegrendelés jelentés melléklet hozzáadás"
 
 #. Template: AAAITSMChangeManagement
 msgid "WorkOrderHistory::WorkOrderReportAttachmentAddWithWorkOrderID"
-msgstr "(ID=%s) New Report Attachment for WorkOrder: %s"
+msgstr "Munkamegrendelés előzmények::Munkamegrendelés jelentés melléklet hozzáadás munkamegrendelés-azonosítóval"
 
 #. Template: AAAITSMChangeManagement
 msgid "WorkOrderHistory::WorkOrderReportAttachmentDelete"
-msgstr "Deleted Report Attachment from WorkOrder: %s"
+msgstr "Munkamegrendelés előzmények::Munkamegrendelés jelentés melléklet törlés"
 
 #. Template: AAAITSMChangeManagement
 msgid "WorkOrderHistory::WorkOrderReportAttachmentDeleteWithWorkOrderID"
-msgstr "(ID=%s) Deleted Report Attachment from WorkOrder: %s"
+msgstr "Munkamegrendelés előzmények::Munkamegrendelés jelentés melléklet törlés munkamegrendelés-azonosítóval"
 
 #. Template: AAAITSMChangeManagement
 msgid "WorkOrderHistory::WorkOrderDelete"
-msgstr "Workorder (ID=%s) deleted"
+msgstr "Munkamegrendelés előzmények::Munkamegrendelés törlés"
 
 #. Template: AAAITSMChangeManagement
 msgid "WorkOrderHistory::WorkOrderDeleteWithWorkOrderID"
-msgstr "Workorder (ID=%s) deleted"
+msgstr "Munkamegrendelés előzmények::Munkamegrendelés törlés munkamegrendelés-azonosítóval"
 
 #. Template: AAAITSMChangeManagement
 msgid "WorkOrderHistory::WorkOrderLinkAdd"
-msgstr "Link to %s (ID=%s) added"
+msgstr "Munkamegrendelés előzmények::Munkamegrendelés hivatkozás hozzáadás"
 
 #. Template: AAAITSMChangeManagement
 msgid "WorkOrderHistory::WorkOrderLinkAddWithWorkOrderID"
-msgstr "(ID=%s) Link to %s (ID=%s) added"
+msgstr "Munkamegrendelés előzmények::Munkamegrendelés hivatkozás hozzáadás munkamegrendelés-azonosítóval"
 
 #. Template: AAAITSMChangeManagement
 msgid "WorkOrderHistory::WorkOrderLinkDelete"
-msgstr "Link to %s (ID=%s) deleted"
+msgstr "Munkamegrendelés előzmények::Munkamegrendelés hivatkozás törlés"
 
 #. Template: AAAITSMChangeManagement
 msgid "WorkOrderHistory::WorkOrderLinkDeleteWithWorkOrderID"
-msgstr "(ID=%s) Link to %s (ID=%s) deleted"
+msgstr "Munkamegrendelés előzmények::Munkamegrendelés hivatkozás törlés munkamegrendelés-azonosítóval"
 
 #. Template: AAAITSMChangeManagement
 msgid "WorkOrderHistory::WorkOrderNotificationSent"
-msgstr "Notification sent to %s (Event: %s)"
+msgstr "Munkamegrendelés előzmények::Munkamegrendelés értesítés küldés"
 
 #. Template: AAAITSMChangeManagement
 msgid "WorkOrderHistory::WorkOrderNotificationSentWithWorkOrderID"
-msgstr "(ID=%s) Notification sent to %s (Event: %s)"
+msgstr "Munkamegrendelés előzmények::Munkamegrendelés értesítés küldés munkamegrendelés-azonosítóval"
 
 #. Template: AAAITSMChangeManagement
 msgid "WorkOrderHistory::WorkOrderPlannedEndTimeReached"
-msgstr "Workorder (ID=%s) reached planned end time."
+msgstr "Munkamegrendelés előzmények::Munkamegrendelés tervezett befejezési ideje elérve"
 
 #. Template: AAAITSMChangeManagement
 msgid "WorkOrderHistory::WorkOrderPlannedEndTimeReachedWithWorkOrderID"
-msgstr "Workorder (ID=%s) reached planned end time."
+msgstr "Munkamegrendelés előzmények::Munkamegrendelés tervezett befejezési ideje elérve munkamegrendelés-azonosítóval"
 
 #. Template: AAAITSMChangeManagement
 msgid "WorkOrderHistory::WorkOrderPlannedStartTimeReached"
-msgstr "Workorder (ID=%s) reached planned start time."
+msgstr "Munkamegrendelés előzmények::Munkamegrendelés tervezett kezdési ideje elérve"
 
 #. Template: AAAITSMChangeManagement
 msgid "WorkOrderHistory::WorkOrderPlannedStartTimeReachedWithWorkOrderID"
-msgstr "Workorder (ID=%s) reached planned start time."
+msgstr "Munkamegrendelés előzmények::Munkamegrendelés tervezett kezdési ideje elérve munkamegrendelés-azonosítóval"
 
 #. Template: AAAITSMChangeManagement
 msgid "WorkOrderHistory::WorkOrderUpdate"
-msgstr "%s: New: %s <- Old: %s"
+msgstr "Munkamegrendelés előzmények::Munkamegrendelés frissítés"
 
 #. Template: AAAITSMChangeManagement
 msgid "WorkOrderHistory::WorkOrderUpdateWithWorkOrderID"
-msgstr "(ID=%s) %s: New: %s <- Old: %s"
+msgstr "Munkamegrendelés előzmények::Munkamegrendelés frissítés munkamegrendelés-azonosítóval"
 
 #. Template: AAAITSMChangeManagement
 msgid "WorkOrderNumber"
-msgstr "Workorder Number"
+msgstr "Munkamegrendelés-szám"
 
 #. Template: AAAITSMChangeManagement
 msgid "accepted"
-msgstr "Accepted"
+msgstr "elfogadva"
 
 #. Template: AAAITSMChangeManagement
 msgid "any"
-msgstr ""
+msgstr "bármely"
 
 #. Template: AAAITSMChangeManagement
 msgid "approval"
-msgstr "Approval"
+msgstr "jóváhagyás"
 
 #. Template: AAAITSMChangeManagement
 msgid "approved"
-msgstr "Approved"
+msgstr "jóváhagyva"
 
 #. Template: AAAITSMChangeManagement
 msgid "backout"
-msgstr "Backout Plan"
+msgstr "visszalépés"
 
 #. Template: AAAITSMChangeManagement
 msgid "begins with"
-msgstr ""
+msgstr "ezzel kezdődik"
 
 #. Template: AAAITSMChangeManagement
 msgid "canceled"
-msgstr "Canceled"
+msgstr "megszakítva"
 
 #. Template: AAAITSMChangeManagement
 msgid "contains"
-msgstr ""
+msgstr "tartalmazza"
 
 #. Template: AAAITSMChangeManagement
 msgid "created"
-msgstr "Created"
+msgstr "létrehozva"
 
 #. Template: AAAITSMChangeManagement
 msgid "decision"
-msgstr "Decision"
+msgstr "döntés"
 
 #. Template: AAAITSMChangeManagement
 msgid "ends with"
-msgstr ""
+msgstr "ezzel végződik"
 
 #. Template: AAAITSMChangeManagement
 msgid "failed"
-msgstr "Failed"
+msgstr "sikertelen"
 
 #. Template: AAAITSMChangeManagement
 msgid "in progress"
-msgstr "In Progress"
+msgstr "folyamatban"
 
 #. Template: AAAITSMChangeManagement
 msgid "is"
-msgstr ""
+msgstr "egyenlő"
 
 #. Template: AAAITSMChangeManagement
 msgid "is after"
-msgstr ""
+msgstr "ez után"
 
 #. Template: AAAITSMChangeManagement
 msgid "is before"
-msgstr ""
+msgstr "ez előtt"
 
 #. Template: AAAITSMChangeManagement
 msgid "is empty"
-msgstr ""
+msgstr "üres"
 
 #. Template: AAAITSMChangeManagement
 msgid "is greater than"
-msgstr ""
+msgstr "nagyobb mint"
 
 #. Template: AAAITSMChangeManagement
 msgid "is less than"
-msgstr ""
+msgstr "kisebb mint"
 
 #. Template: AAAITSMChangeManagement
 msgid "is not"
-msgstr ""
+msgstr "nem"
 
 #. Template: AAAITSMChangeManagement
 msgid "is not empty"
-msgstr ""
+msgstr "nem üres"
 
 #. Template: AAAITSMChangeManagement
 msgid "not contains"
-msgstr "does not contain"
+msgstr "nem tartalmazza"
 
 #. Template: AAAITSMChangeManagement
 msgid "pending approval"
-msgstr "Pending Approval"
+msgstr "jóváhagyásra vár"
 
 #. Template: AAAITSMChangeManagement
 msgid "pending pir"
-msgstr "Pending PIR"
+msgstr "függőben lévő PIR"
 
 #. Template: AAAITSMChangeManagement
 msgid "pir"
-msgstr "PIR (Post Implementation Review)"
+msgstr "PIR"
 
 #. Template: AAAITSMChangeManagement
 msgid "ready"
-msgstr "Ready"
+msgstr "kész"
 
 #. Template: AAAITSMChangeManagement
 msgid "rejected"
-msgstr "Rejected"
+msgstr "visszautasítva"
 
 #. Template: AAAITSMChangeManagement
 msgid "requested"
-msgstr "Requested"
+msgstr "kérve"
 
 #. Template: AAAITSMChangeManagement
 msgid "retracted"
-msgstr "Retracted"
+msgstr "visszavonva"
 
 #. Template: AAAITSMChangeManagement
 msgid "set"
-msgstr ""
+msgstr "beállítva"
 
 #. Template: AAAITSMChangeManagement
 msgid "successful"
-msgstr "Successful"
+msgstr "sikeres"
 
 #. Template: AdminITSMChangeCIPAllocate
 msgid "Category <-> Impact <-> Priority"
-msgstr ""
+msgstr "Kategória <-> Hatás <-> Prioritás"
 
 #. Template: AdminITSMChangeCIPAllocate
 msgid "Manage the priority result of combinating Category <-> Impact."
-msgstr ""
+msgstr "A Kategória <-> Hatás összetétel prioritás eredményének kezelése."
 
 #. Template: AdminITSMChangeCIPAllocate
 msgid "Priority allocation"
-msgstr ""
+msgstr "Prioritás lefoglalás"
 
 #. Template: AdminITSMChangeNotification
 msgid "ITSM ChangeManagement Notification Management"
-msgstr ""
+msgstr "ITSM változásmenedzsment értesítés kezelés"
 
 #. Template: AdminITSMChangeNotification
 msgid "Add Notification Rule"
-msgstr ""
+msgstr "Értesítési szabály hozzáadása"
 
 #. Template: AdminITSMChangeNotification
 msgid "Rule"
-msgstr ""
+msgstr "Szabály"
 
 #. Template: AdminITSMChangeNotification
 msgid "A notification should have a name!"
-msgstr ""
+msgstr "Az értesítésnek rendelkeznie kell egy névvel!"
 
 #. Template: AdminITSMChangeNotification
 msgid "Name is required."
-msgstr ""
+msgstr "A név kötelező."
 
 #. Template: AdminITSMStateMachine
 msgid "Admin State Machine"
-msgstr ""
+msgstr "Adminisztrátori állapotgép"
 
 #. Template: AdminITSMStateMachine
 msgid "Select a catalog class!"
-msgstr ""
+msgstr "Válasszon egy katalógusosztályt!"
 
 #. Template: AdminITSMStateMachine
 msgid "A catalog class is required!"
-msgstr ""
+msgstr "A katalógusosztály kötelező!"
 
 #. Template: AdminITSMStateMachine
 msgid "Add a state transition"
-msgstr ""
+msgstr "Egy állapotátmenet hozzáadása"
 
 #. Template: AdminITSMStateMachine
 msgid "Catalog Class"
-msgstr ""
+msgstr "Katalógusosztály"
 
 #. Template: AdminITSMStateMachine
 msgid "Object Name"
-msgstr ""
+msgstr "Objektumnév"
 
 #. Template: AdminITSMStateMachine
 msgid "Overview over state transitions for"
-msgstr ""
+msgstr "Állapotátmenetek áttekintése ennél:"
 
 #. Template: AdminITSMStateMachine
 msgid "Delete this state transition"
-msgstr ""
+msgstr "Az állapotátmenet törlése"
 
 #. Template: AdminITSMStateMachine
 msgid "Add a new state transition for"
-msgstr ""
+msgstr "Egy új állapotátmenet hozzáadása ehhez:"
 
 #. Template: AdminITSMStateMachine
 msgid "Please select a state!"
-msgstr ""
+msgstr "Válasszon egy állapotot!"
 
 #. Template: AdminITSMStateMachine
 msgid "Please select a next state!"
-msgstr ""
+msgstr "Válasszon egy következő állapotot!"
 
 #. Template: AdminITSMStateMachine
 msgid "Edit a state transition for"
-msgstr ""
+msgstr "Egy állapotátmenet szerkesztése ennél:"
 
 #. Template: AdminITSMStateMachine
 msgid "Do you really want to delete the state transition"
-msgstr ""
+msgstr "Valóban törölni szeretné az állapotátmenetet"
 
 #. Template: AdminITSMStateMachine
 msgid "from"
-msgstr ""
+msgstr "ettől:"
 
 #. Template: AdminITSMStateMachine
 msgid "to"
@@ -715,135 +716,135 @@ msgstr ""
 
 #. Template: AgentITSMChangeAdd
 msgid "Add Change"
-msgstr ""
+msgstr "Változás hozzáadása"
 
 #. Template: AgentITSMChangeAdd
 msgid "ITSM Change"
-msgstr "Change"
+msgstr "ITSM változás"
 
 #. Template: AgentITSMChangeAdd
 msgid "Justification"
-msgstr "Justification"
+msgstr "Indoklás"
 
 #. Template: AgentITSMChangeAdd
 msgid "Input invalid."
-msgstr ""
+msgstr "Érvénytelen bemenet."
 
 #. Template: AgentITSMChangeAdd
 msgid "Impact"
-msgstr "Impact"
+msgstr "Hatás"
 
 #. Template: AgentITSMChangeAdd
 msgid "Requested Date"
-msgstr ""
+msgstr "Kért dátum"
 
 #. Template: AgentITSMChangeAddFromTemplate
 msgid "Select Change Template"
-msgstr ""
+msgstr "Változássablon kiválasztása"
 
 #. Template: AgentITSMChangeAddFromTemplate
 msgid "Time type"
-msgstr ""
+msgstr "Időtípus"
 
 #. Template: AgentITSMChangeAddFromTemplate
 msgid "Invalid time type."
-msgstr ""
+msgstr "Érvénytelen időtípus."
 
 #. Template: AgentITSMChangeAddFromTemplate
 msgid "New time"
-msgstr ""
+msgstr "Új idő"
 
 #. Template: AgentITSMChangeCABTemplate
 msgid "Save Change CAB as template"
-msgstr ""
+msgstr "Változás CAB mentése sablonként"
 
 #. Template: AgentITSMChangeCABTemplate
 msgid "go to involved persons screen"
-msgstr ""
+msgstr "ugrás a résztvevő személyek képernyőjéhez"
 
 #. Template: AgentITSMChangeCABTemplate
 msgid "Invalid Name"
-msgstr ""
+msgstr "Érvénytelen név"
 
 #. Template: AgentITSMChangeCondition
 msgid "Conditions and Actions"
-msgstr ""
+msgstr "Feltételek és műveletek"
 
 #. Template: AgentITSMChangeCondition
 msgid "Delete Condition"
-msgstr ""
+msgstr "Feltétel törlése"
 
 #. Template: AgentITSMChangeCondition
 msgid "Add new condition"
-msgstr ""
+msgstr "Új feltétel hozzáadása"
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "Need a valid name."
-msgstr ""
+msgstr "Egy érvényes név szükséges."
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "A a valid name is needed."
-msgstr ""
+msgstr "Egy érvényes név szükséges."
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "Duplicate name:"
-msgstr ""
+msgstr "Név kettőzése:"
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "This name is already used by another condition."
-msgstr ""
+msgstr "Ezt a nevet már egy másik feltétel használja."
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "Matching"
-msgstr ""
+msgstr "Illeszkedés"
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "Any expression (OR)"
-msgstr ""
+msgstr "Bármely kifejezés (VAGY)"
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "All expressions (AND)"
-msgstr ""
+msgstr "Minden kifejezés (ÉS)"
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "Expressions"
-msgstr ""
+msgstr "Kifejezések"
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "Selector"
-msgstr ""
+msgstr "Kiválasztó"
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "Operator"
-msgstr ""
+msgstr "Művelet"
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "Delete Expression"
-msgstr ""
+msgstr "Kifejezés törlése"
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "No Expressions found."
-msgstr ""
+msgstr "Nem találhatók kifejezések."
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "Add new expression"
-msgstr ""
+msgstr "Új kifejezés hozzáadása"
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "Delete Action"
-msgstr ""
+msgstr "Művelet törlése"
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "No Actions found."
-msgstr ""
+msgstr "Nem találhatók műveletek."
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "Add new action"
-msgstr ""
+msgstr "Új művelet hozzáadása"
 
 #. Template: AgentITSMChangeDelete
 msgid "Do you really want to delete this change?"
-msgstr ""
+msgstr "Valóban törölni szeretné ezt a változást?"
 
 #. Template: AgentITSMChangeHistory
 msgid "History of"
@@ -851,397 +852,397 @@ msgstr ""
 
 #. Template: AgentITSMChangeHistory
 msgid "Workorder"
-msgstr ""
+msgstr "Munkamegrendelés"
 
 #. Template: AgentITSMChangeHistory
 msgid "Show details"
-msgstr ""
+msgstr "Részletek megjelenítése"
 
 #. Template: AgentITSMChangeHistory
 msgid "Show workorder"
-msgstr ""
+msgstr "Munkamegrendelés megjelenítése"
 
 #. Template: AgentITSMChangeHistoryZoom
 msgid "Detailed history information of"
-msgstr ""
+msgstr "Részletes előzmény információk:"
 
 #. Template: AgentITSMChangeHistoryZoom
 msgid "Modified"
-msgstr ""
+msgstr "Módosítva"
 
 #. Template: AgentITSMChangeHistoryZoom
 msgid "Old Value"
-msgstr ""
+msgstr "Régi érték"
 
 #. Template: AgentITSMChangeHistoryZoom
 msgid "New Value"
-msgstr ""
+msgstr "Új érték"
 
 #. Template: AgentITSMChangeInvolvedPersons
 msgid "Involved Persons"
-msgstr ""
+msgstr "Résztvevő személyek"
 
 #. Template: AgentITSMChangeInvolvedPersons
 msgid "ChangeManager"
-msgstr "Change Manager"
+msgstr "Változásmenedzser"
 
 #. Template: AgentITSMChangeInvolvedPersons
 msgid "User invalid."
-msgstr ""
+msgstr "Érvénytelen felhasználó."
 
 #. Template: AgentITSMChangeInvolvedPersons
 msgid "ChangeBuilder"
-msgstr "Change Builder"
+msgstr "Változásösszeállító"
 
 #. Template: AgentITSMChangeInvolvedPersons
 msgid "Change Advisory Board"
-msgstr ""
+msgstr "Változásmenedzsment-tanács"
 
 #. Template: AgentITSMChangeInvolvedPersons
 msgid "CAB Template"
-msgstr ""
+msgstr "CAB sablon"
 
 #. Template: AgentITSMChangeInvolvedPersons
 msgid "Apply Template"
-msgstr ""
+msgstr "Sablon alkalmazása"
 
 #. Template: AgentITSMChangeInvolvedPersons
 msgid "NewTemplate"
-msgstr ""
+msgstr "Új sablon"
 
 #. Template: AgentITSMChangeInvolvedPersons
 msgid "Save this CAB as template"
-msgstr ""
+msgstr "A CAB mentése sablonként"
 
 #. Template: AgentITSMChangeInvolvedPersons
 msgid "Add to CAB"
-msgstr ""
+msgstr "Hozzáadás CAB-hoz"
 
 #. Template: AgentITSMChangeInvolvedPersons
 msgid "Invalid User"
-msgstr ""
+msgstr "Érvénytelen felhasználó"
 
 #. Template: AgentITSMChangeInvolvedPersons
 msgid "Current CAB"
-msgstr ""
+msgstr "Jelenlegi CAB"
 
 #. Template: AgentITSMChangeOverviewNavBar
 msgid "Context Settings"
-msgstr ""
+msgstr "Környezet beállítások"
 
 #. Template: AgentITSMChangeOverviewNavBar
 msgid "Changes per page"
-msgstr ""
+msgstr "Oldalankénti változások"
 
 #. Template: AgentITSMChangeOverviewSmall
 msgid "WorkOrderTitle"
-msgstr "Workorder Title"
+msgstr "Munkamegrendelés cím"
 
 #. Template: AgentITSMChangeOverviewSmall
 msgid "ChangeTitle"
-msgstr "Change Title"
+msgstr "Változáscím"
 
 #. Template: AgentITSMChangeOverviewSmall
 msgid "WorkOrderAgent"
-msgstr "Workorder Agent"
+msgstr "Munkamegrendelés ügyintéző"
 
 #. Template: AgentITSMChangeOverviewSmall
 msgid "Workorders"
-msgstr ""
+msgstr "Munkamegrendelések"
 
 #. Template: AgentITSMChangeOverviewSmall
 msgid "ChangeState"
-msgstr "Change State"
+msgstr "Változásállapot"
 
 #. Template: AgentITSMChangeOverviewSmall
 msgid "WorkOrderState"
-msgstr "Workorder State"
+msgstr "Munkamegrendelés-állapot"
 
 #. Template: AgentITSMChangeOverviewSmall
 msgid "WorkOrderType"
-msgstr "Workorder Type"
+msgstr "Munkamegrendelés-típus"
 
 #. Template: AgentITSMChangeOverviewSmall
 msgid "Requested Time"
-msgstr ""
+msgstr "Kért idő"
 
 #. Template: AgentITSMChangeOverviewSmall
 msgid "PlannedStartTime"
-msgstr "Planned Start"
+msgstr "Tervezett kezdési idő"
 
 #. Template: AgentITSMChangeOverviewSmall
 msgid "PlannedEndTime"
-msgstr "Planned End"
+msgstr "Tervezett befejezési idő"
 
 #. Template: AgentITSMChangeOverviewSmall
 msgid "ActualStartTime"
-msgstr "Actual Start"
+msgstr "Tényleges kezdési idő"
 
 #. Template: AgentITSMChangeOverviewSmall
 msgid "ActualEndTime"
-msgstr "Actual End"
+msgstr "Tényleges befejezési idő"
 
 #. Template: AgentITSMChangeReset
 msgid "Do you really want to reset this change?"
-msgstr ""
+msgstr "Valóban vissza szeretné állítani ezt a változást?"
 
 #. Template: AgentITSMChangeSearch
 msgid "(e.g. 10*5155 or 105658*)"
-msgstr ""
+msgstr "(például 10*5155 vagy 105658*)"
 
 #. Template: AgentITSMChangeSearch
 msgid "CABAgent"
-msgstr "CAB Agent"
+msgstr "CAB ügyintéző"
 
 #. Template: AgentITSMChangeSearch
 msgid "e.g."
-msgstr ""
+msgstr "például"
 
 #. Template: AgentITSMChangeSearch
 msgid "CABCustomer"
-msgstr "CAB Customer"
+msgstr "CAB ügyfél"
 
 #. Template: AgentITSMChangeSearch
 msgid "ITSM Workorder"
-msgstr "Workorder"
+msgstr "ITSM munkamegrendelés"
 
 #. Template: AgentITSMChangeSearch
 msgid "Instruction"
-msgstr "Instruction"
+msgstr "Utasítás"
 
 #. Template: AgentITSMChangeSearch
 msgid "Report"
-msgstr "Report"
+msgstr "Jelentés"
 
 #. Template: AgentITSMChangeSearch
 msgid "Change Category"
-msgstr ""
+msgstr "Kategória módosítása"
 
 #. Template: AgentITSMChangeSearch
 msgid "(before/after)"
-msgstr ""
+msgstr "(előtt/után)"
 
 #. Template: AgentITSMChangeSearch
 msgid "(between)"
-msgstr ""
+msgstr "(között)"
 
 #. Template: AgentITSMChangeTemplate
 msgid "Save Change as Template"
-msgstr ""
+msgstr "Változás mentése sablonként"
 
 #. Template: AgentITSMChangeTemplate
 msgid "A template should have a name!"
-msgstr ""
+msgstr "A sablonnak rendelkeznie kell egy névvel!"
 
 #. Template: AgentITSMChangeTemplate
 msgid "The template name is required."
-msgstr ""
+msgstr "A sablonnév kötelező."
 
 #. Template: AgentITSMChangeTemplate
 msgid "Reset States"
-msgstr ""
+msgstr "Állapotok visszaállítása"
 
 #. Template: AgentITSMChangeTemplate
 msgid "Overwrite original template"
-msgstr ""
+msgstr "Eredeti sablon felülírása"
 
 #. Template: AgentITSMChangeTemplate
 msgid "Delete original change"
-msgstr ""
+msgstr "Eredeti változás törlése"
 
 #. Template: AgentITSMChangeTimeSlot
 msgid "Move Time Slot"
-msgstr ""
+msgstr "Időrés áthelyezése"
 
 #. Template: AgentITSMChangeZoom
 msgid "Change Information"
-msgstr ""
+msgstr "Változás információk"
 
 #. Template: AgentITSMChangeZoom
 msgid "PlannedEffort"
-msgstr "Planned Effort"
+msgstr "Tervezett ráfordítás"
 
 #. Template: AgentITSMChangeZoom
 msgid "Change Initiator(s)"
-msgstr ""
+msgstr "Változáskezdeményezők"
 
 #. Template: AgentITSMChangeZoom
 msgid "Change Manager"
-msgstr ""
+msgstr "Változásmenedzser"
 
 #. Template: AgentITSMChangeZoom
 msgid "Change Builder"
-msgstr ""
+msgstr "Változásösszeállító"
 
 #. Template: AgentITSMChangeZoom
 msgid "CAB"
-msgstr ""
+msgstr "CAB"
 
 #. Template: AgentITSMChangeZoom
 msgid "Last changed"
-msgstr ""
+msgstr "Utoljára módosítva"
 
 #. Template: AgentITSMChangeZoom
 msgid "Last changed by"
-msgstr ""
+msgstr "Utoljára módosította"
 
 #. Template: AgentITSMChangeZoom
 msgid "Ok"
-msgstr ""
+msgstr "OK"
 
 #. Template: AgentITSMChangeZoom
 msgid ""
 "To open links in the following description blocks, you might need to press "
 "Ctrl or Cmd or Shift key while clicking the link (depending on your browser "
 "and OS)."
-msgstr ""
+msgstr "A következő leírásblokkokban lévő hivatkozások megnyitásához lehet, hogy meg kell nyomnia a Ctrl vagy a Cmd vagy a Shift billentyűt, miközben a hivatkozásra kattint (a böngészőjétől és az operációs rendszerétől függően)."
 
 #. Template: AgentITSMChangeZoom
 msgid "Download Attachment"
-msgstr ""
+msgstr "Melléklet letöltése"
 
 #. Template: AgentITSMTemplateDelete
 msgid "Do you really want to delete this template?"
-msgstr ""
+msgstr "Valóban törölni szeretné ezt a sablont?"
 
 #. Template: AgentITSMTemplateEditCAB
 msgid "Edit CAB Template"
-msgstr ""
+msgstr "CAB sablon szerkesztése"
 
 #. Template: AgentITSMTemplateEditContent
 msgid ""
 "This will create a new change from this template, so you can edit and save "
 "it."
-msgstr ""
+msgstr "Ez létre fog hozni egy új változást ebből a sablonból, így szerkesztheti és elmentheti azt."
 
 #. Template: AgentITSMTemplateEditContent
 msgid ""
 "The new change will be deleted automatically after it has been saved as "
 "template."
-msgstr ""
+msgstr "Az új változás automatikusan törölve lesz, miután mentésre került sablonként."
 
 #. Template: AgentITSMTemplateEditContent
 msgid ""
 "This will create a new workorder from this template, so you can edit and "
 "save it."
-msgstr ""
+msgstr "Ez létre fog hozni egy új munkamegrendelést ebből a sablonból, így szerkesztheti és elmentheti azt."
 
 #. Template: AgentITSMTemplateEditContent
 msgid "A temporary change will be created which contains the workorder."
-msgstr ""
+msgstr "Egy ideiglenes változás lesz létrehozva, amely tartalmazza a munkamegrendelést."
 
 #. Template: AgentITSMTemplateEditContent
 msgid ""
 "The temporary change and new workorder will be deleted automatically after "
 "the workorder has been saved as template."
-msgstr ""
+msgstr "Az ideiglenes változás és az új munkamegrendelés automatikusan törölve lesz, miután a munkamegrendelés mentésre került sablonként."
 
 #. Template: AgentITSMTemplateEditContent
 msgid "Do you want to proceed?"
-msgstr ""
+msgstr "Szeretné folytatni?"
 
 #. Template: AgentITSMTemplateOverviewSmall
 msgid "TemplateID"
-msgstr ""
+msgstr "Sablon-azonosító"
 
 #. Template: AgentITSMTemplateOverviewSmall
 msgid "Edit Content"
-msgstr ""
+msgstr "Tartalom szerkesztése"
 
 #. Template: AgentITSMTemplateOverviewSmall
 msgid "CreateBy"
-msgstr "Created by"
+msgstr "Létrehozta"
 
 #. Template: AgentITSMTemplateOverviewSmall
 msgid "CreateTime"
-msgstr "Created"
+msgstr "Létrehozás ideje"
 
 #. Template: AgentITSMTemplateOverviewSmall
 msgid "ChangeBy"
-msgstr "Changed by"
+msgstr "Módosította"
 
 #. Template: AgentITSMTemplateOverviewSmall
 msgid "ChangeTime"
-msgstr "Changed"
+msgstr "Módosítás ideje"
 
 #. Template: AgentITSMTemplateOverviewSmall
 msgid "Edit Template Content"
-msgstr ""
+msgstr "Sablontartalom szerkesztése"
 
 #. Template: AgentITSMTemplateOverviewSmall
 msgid "Delete Template"
-msgstr ""
+msgstr "Sablon törlése"
 
 #. Template: AgentITSMWorkOrderAdd
 msgid "Add Workorder to"
-msgstr ""
+msgstr "Munkamegrendelés hozzáadása ehhez:"
 
 #. Template: AgentITSMWorkOrderAdd
 msgid "Invalid workorder type."
-msgstr ""
+msgstr "Érvénytelen munkamegrendelés-típus."
 
 #. Template: AgentITSMWorkOrderAdd
 msgid "The planned start time must be before the planned end time!"
-msgstr ""
+msgstr "A tervezett kezdési időnek a tervezett befejezési idő előtt kell lennie!"
 
 #. Template: AgentITSMWorkOrderAdd
 msgid "Invalid format."
-msgstr ""
+msgstr "Érvénytelen formátum."
 
 #. Template: AgentITSMWorkOrderAddFromTemplate
 msgid "Select Workorder Template"
-msgstr ""
+msgstr "Munkamegrendelés-sablon kiválasztása"
 
 #. Template: AgentITSMWorkOrderDelete
 msgid "Do you really want to delete this workorder?"
-msgstr ""
+msgstr "Valóban törölni szeretné ezt a munkamegrendelést?"
 
 #. Template: AgentITSMWorkOrderDelete
 msgid ""
 "You can not delete this Workorder. It is used in at least one Condition!"
-msgstr ""
+msgstr "Nem törölheti ezt a munkamegrendelést. Legalább egy feltételben használják!"
 
 #. Template: AgentITSMWorkOrderDelete
 msgid "This Workorder is used in the following Condition(s)"
-msgstr ""
+msgstr "Ezt a munkamegrendelést a következő feltételekben használják"
 
 #. Template: AgentITSMWorkOrderEdit
 msgid "Move following workorders accordingly"
-msgstr ""
+msgstr "A követő munkamegrendelések áthelyezése eszerint"
 
 #. Template: AgentITSMWorkOrderEdit
 msgid ""
 "If the planned end time of this workorder is changed, the planned start "
 "times of all following workorders will be changed accordingly"
-msgstr ""
+msgstr "Ha ennek a munkamegrendelésnek megváltozik a tervezett befejezési ideje, akkor az összes azt követő munkamegrendelés tervezett kezdési ideje is meg fog változni eszerint"
 
 #. Template: AgentITSMWorkOrderReport
 msgid "The actual start time must be before the actual end time!"
-msgstr ""
+msgstr "A tényleges kezdési időnek a tényleges befejezési idő előtt kell lennie!"
 
 #. Template: AgentITSMWorkOrderReport
 msgid "The actual start time must be set, when the actual end time is set!"
-msgstr ""
+msgstr "A tényleges kezdési időnek beállítva kell lennie, amikor a tényleges befejezési idő be van állítva!"
 
 #. Template: AgentITSMWorkOrderTake
 msgid "Current Agent"
-msgstr ""
+msgstr "Jelenlegi ügyintéző"
 
 #. Template: AgentITSMWorkOrderTake
 msgid "Do you really want to take this workorder?"
-msgstr ""
+msgstr "Valóban fel szeretné vennie ezt a munkamegrendelést?"
 
 #. Template: AgentITSMWorkOrderTemplate
 msgid "Save Workorder as Template"
-msgstr ""
+msgstr "Munkamegrendelés mentése sablonként"
 
 #. Template: AgentITSMWorkOrderTemplate
 msgid "Delete original workorder (and surrounding change)"
-msgstr ""
+msgstr "Eredeti munkamegrendelés (és a környező változás) törlése"
 
 #. Template: AgentITSMWorkOrderZoom
 msgid "Workorder Information"
-msgstr ""
+msgstr "Munkamegrendelés-információk"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangePIR.pm
 msgid "PIR"
@@ -1253,7 +1254,7 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
 msgid "WorkOrders"
-msgstr ""
+msgstr "Munkamegrendelések"
 
 #. Perl Module: Kernel/Modules/AgentITSMWorkOrderHistory.pm
 msgid "WorkOrderHistory::"
@@ -1267,13 +1268,13 @@ msgstr ""
 msgid ""
 "A list of the agents who have permission to take workorders. Key is a login "
 "name. Content is 0 or 1."
-msgstr ""
+msgstr "Azon ügyintézők listája, akik jogosultsággal rendelkeznek a munkamegrendelések felvételéhez. A kulcs a bejelentkezési név. A tartalom 0 vagy 1."
 
 #. SysConfig
 msgid ""
 "A list of workorder states, at which the ActualStartTime of a workorder will"
 " be set if it was empty at this point."
-msgstr ""
+msgstr "Azon munkamegrendelés-állapotok listája, amelyeknél egy munkamegrendelés tényleges kezdési ideje be lesz állítva, ha az üres ennél a pontnál."
 
 #. SysConfig
 msgid "Add a change from template."
@@ -1285,43 +1286,43 @@ msgstr ""
 
 #. SysConfig
 msgid "Admin of the CIP matrix."
-msgstr ""
+msgstr "A CIP mátrix adminisztrátora."
 
 #. SysConfig
 msgid "Admin of the state machine."
-msgstr ""
+msgstr "Az állapotgép adminisztrátora."
 
 #. SysConfig
 msgid ""
 "Agent interface notification module to see the number of change advisory "
 "boards."
-msgstr ""
+msgstr "Ügyintézői felület értesítési modul a változásmenedzsment-tanácsok számának megtekintéséhez."
 
 #. SysConfig
 msgid ""
 "Agent interface notification module to see the number of changes managed by "
 "the user."
-msgstr ""
+msgstr "Ügyintézői felület értesítési modul a felhasználó által kezelt változások számának megtekintéséhez."
 
 #. SysConfig
 msgid "Agent interface notification module to see the number of changes."
-msgstr ""
+msgstr "Ügyintézői felület értesítési modul a változások számának megtekintéséhez."
 
 #. SysConfig
 msgid "Agent interface notification module to see the number of work orders."
-msgstr ""
+msgstr "Ügyintézői felület értesítési modul a munkamegrendelések számának megtekintéséhez."
 
 #. SysConfig
 msgid ""
 "Cache time in minutes for the change management toolbars. Default: 3 hours "
 "(180 minutes)."
-msgstr ""
+msgstr "Gyorsítótár idő percben a változásmenedzsment eszköztárnál. Alapértelmezett: 3 óra (180 perc)."
 
 #. SysConfig
 msgid ""
 "Cache time in minutes for the change management. Default: 5 days (7200 "
 "minutes)."
-msgstr ""
+msgstr "Gyorsítótár idő percben a változásmenedzsmentnél. Alapértelmezett: 5 nap (7200 perc)."
 
 #. SysConfig
 msgid "Change History."
@@ -1333,7 +1334,7 @@ msgstr ""
 
 #. SysConfig
 msgid "Change Overview \"Small\" Limit"
-msgstr ""
+msgstr "Változás áttekintő „kis” korlát"
 
 #. SysConfig
 msgid "Change Print."
@@ -1349,15 +1350,15 @@ msgstr ""
 
 #. SysConfig
 msgid "Change and WorkOrder templates edited by this user."
-msgstr ""
+msgstr "A felhasználó által szerkesztett változás és munkamegrendelés sablonok."
 
 #. SysConfig
 msgid "Change limit per page for Change Overview \"Small\""
-msgstr ""
+msgstr "Oldalankénti változás korlát a „kis” változás áttekintőnél"
 
 #. SysConfig
 msgid "Change search backend router of the agent interface."
-msgstr ""
+msgstr "Az ügyintézői felület változás keresési háttérprogram útválasztója."
 
 #. SysConfig
 msgid "Change-Area"
@@ -1367,7 +1368,7 @@ msgstr ""
 msgid ""
 "Configures how often the notifications are sent when planned the start time "
 "or other time values have been reached/passed."
-msgstr ""
+msgstr "Beállítja, hogy milyen gyakran legyenek elküldve az értesítések, amikor elérik/átadják a tervezett kezdési időt vagy más időértékeket."
 
 #. SysConfig
 msgid "Create a change (from template) from this ticket!"
@@ -1381,395 +1382,395 @@ msgstr ""
 msgid ""
 "Default type for a workorder. This entry must exist in general catalog class"
 " 'ITSM::ChangeManagement::WorkOrder::Type'."
-msgstr ""
+msgstr "Egy munkamegrendelés alapértelmezett típusa. Ennek a bejegyzésnek léteznie kell az „ITSM::ChangeManagement::WorkOrder::Type” általános katalógus osztályban."
 
 #. SysConfig
 msgid "Define the signals for each workorder state."
-msgstr ""
+msgstr "A szignálok meghatározása minden munkamegrendelés-állapotnál."
 
 #. SysConfig
 msgid "Defines an overview module to show the small view of a change list."
-msgstr ""
+msgstr "Egy áttekintő modult határoz meg egy változáslista kis nézetének megjelenítéséhez."
 
 #. SysConfig
 msgid "Defines an overview module to show the small view of a template list."
-msgstr ""
+msgstr "Egy áttekintő modult határoz meg egy sablonlista kis nézetének megjelenítéséhez."
 
 #. SysConfig
 msgid "Defines if it will be possible to print the accounted time."
-msgstr ""
+msgstr "Meghatározza, hogy lehetséges lesz-e kinyomtatni az elszámolt időt."
 
 #. SysConfig
 msgid "Defines if it will be possible to print the planned effort."
-msgstr ""
+msgstr "Meghatározza, hogy lehetséges lesz-e kinyomtatni a tervezett ráfordítást."
 
 #. SysConfig
 msgid ""
 "Defines if reachable (as defined by the state machine) change end states "
 "should be allowed if a change is in a locked state."
-msgstr ""
+msgstr "Meghatározza, hogy az elérhető (ahogy az állapotgép meghatározta) változás befejezési állapotait el kell-e fogadni, ha egy változás zárolt állapotban van."
 
 #. SysConfig
 msgid ""
 "Defines if reachable (as defined by the state machine) workorder end states "
 "should be allowed if a workorder is in a locked state."
-msgstr ""
+msgstr "Meghatározza, hogy az elérhető (ahogy az állapotgép meghatározta) munkamegrendelés befejezési állapotait el kell-e fogadni, ha egy munkamegrendelés zárolt állapotban van."
 
 #. SysConfig
 msgid "Defines if the accounted time should be shown."
-msgstr ""
+msgstr "Meghatározza, hogy az elszámolt időt meg kell-e jeleníteni."
 
 #. SysConfig
 msgid "Defines if the actual start and end times should be set."
-msgstr ""
+msgstr "Meghatározza, hogy a tényleges kezdési és befejezési időket be kell-e állítani."
 
 #. SysConfig
 msgid ""
 "Defines if the change search and the workorder search functions could use "
 "the mirror DB."
-msgstr ""
+msgstr "Meghatározza, hogy a változáskeresés és a munkamegrendelés-keresés funkciók használhatják-e a tükör adatbázist."
 
 #. SysConfig
 msgid "Defines if the change state can be set in AgentITSMChangeEdit."
-msgstr ""
+msgstr "Meghatározza, hogy a változás állapota beállítható-e az AgentITSMChangeEdit beállításban."
 
 #. SysConfig
 msgid "Defines if the planned effort should be shown."
-msgstr ""
+msgstr "Meghatározza, hogy a tervezett ráfordítást meg kell-e jeleníteni."
 
 #. SysConfig
 msgid "Defines if the requested date should be print by customer."
-msgstr ""
+msgstr "Meghatározza, hogy a kért dátumot ügyfél szerint kell-e kinyomtatni."
 
 #. SysConfig
 msgid "Defines if the requested date should be searched by customer."
-msgstr ""
+msgstr "Meghatározza, hogy a kért dátumot ügyfél szerint kell-e keresni."
 
 #. SysConfig
 msgid "Defines if the requested date should be set by customer."
-msgstr ""
+msgstr "Meghatározza, hogy a kért dátumot ügyfél szerint kell-e beállítani."
 
 #. SysConfig
 msgid "Defines if the requested date should be shown by customer."
-msgstr ""
+msgstr "Meghatározza, hogy a kért dátumot ügyfél szerint kell-e megjeleníteni."
 
 #. SysConfig
 msgid "Defines if the workorder state should be shown."
-msgstr ""
+msgstr "Meghatározza, hogy a munkamegrendelés állapotát meg kell-e jeleníteni."
 
 #. SysConfig
 msgid "Defines if the workorder title should be shown."
-msgstr ""
+msgstr "Meghatározza, hogy a munkamegrendelés címét meg kell-e jeleníteni."
 
 #. SysConfig
 msgid "Defines shown graph attributes."
-msgstr ""
+msgstr "Meghatározza a megjelenített grafikonattribútumokat."
 
 #. SysConfig
 msgid ""
 "Defines that only changes containing Workorders linked with services, which "
 "the customer user has permission to use will be shown. Any other changes "
 "will not be displayed."
-msgstr ""
+msgstr "Meghatározza, hogy csak azok a szolgáltatásokkal összekapcsolt munkamegrendeléseket tartalmazó változások lesznek megjelenítve, amelyekre az ügyfélfelhasználónak használati jogosultsága van. Minden egyéb változás nem kerül megjelenítésre."
 
 #. SysConfig
 msgid "Defines the change states that will be allowed to delete."
-msgstr ""
+msgstr "Meghatározza azokat a változásállapotokat, amelyek engedélyezettek lesznek törlésre."
 
 #. SysConfig
 msgid ""
 "Defines the change states that will be used as filters in the Change PSA "
 "overview."
-msgstr ""
+msgstr "Meghatározza azokat a változásállapotokat, amelyek szűrőkként lesznek használva a változás PSA áttekintőjében."
 
 #. SysConfig
 msgid ""
 "Defines the change states that will be used as filters in the Change "
 "Schedule overview."
-msgstr ""
+msgstr "Meghatározza azokat a változásállapotokat, amelyek szűrőkként lesznek használva a változásütemezés áttekintőjében."
 
 #. SysConfig
 msgid ""
 "Defines the change states that will be used as filters in the MyCAB "
 "overview."
-msgstr ""
+msgstr "Meghatározza azokat a változásállapotokat, amelyek szűrőkként lesznek használva a saját CAB áttekintőjében."
 
 #. SysConfig
 msgid ""
 "Defines the change states that will be used as filters in the MyChanges "
 "overview."
-msgstr ""
+msgstr "Meghatározza azokat a változásállapotokat, amelyek szűrőkként lesznek használva a saját változások áttekintőjében."
 
 #. SysConfig
 msgid ""
 "Defines the change states that will be used as filters in the change manager"
 " overview."
-msgstr ""
+msgstr "Meghatározza azokat a változásállapotokat, amelyek szűrőkként lesznek használva a változáskezelő áttekintőjében."
 
 #. SysConfig
 msgid ""
 "Defines the change states that will be used as filters in the change "
 "overview."
-msgstr ""
+msgstr "Meghatározza azokat a változásállapotokat, amelyek szűrőkként lesznek használva a változás áttekintőjében."
 
 #. SysConfig
 msgid ""
 "Defines the change states that will be used as filters in the customer "
 "change schedule overview."
-msgstr ""
+msgstr "Meghatározza azokat a változásállapotokat, amelyek szűrőkként lesznek használva az ügyfél változásütemezés áttekintőjében."
 
 #. SysConfig
 msgid ""
 "Defines the default change title for a dummy change which is needed to edit "
 "a workorder template."
-msgstr ""
+msgstr "Meghatározza egy üres változás alapértelmezett változáscímét, amely egy munkamegrendelés-sablon szerkesztéséhez szükséges."
 
 #. SysConfig
 msgid "Defines the default sort criteria in the change PSA overview."
-msgstr ""
+msgstr "Meghatározza az alapértelmezett rendezési feltételt a változás PSA áttekintőjében."
 
 #. SysConfig
 msgid "Defines the default sort criteria in the change manager overview."
-msgstr ""
+msgstr "Meghatározza az alapértelmezett rendezési feltételt a változásmenedzser áttekintőjében."
 
 #. SysConfig
 msgid "Defines the default sort criteria in the change overview."
-msgstr ""
+msgstr "Meghatározza az alapértelmezett rendezési feltételt a változás áttekintőjében."
 
 #. SysConfig
 msgid "Defines the default sort criteria in the change schedule overview."
-msgstr ""
+msgstr "Meghatározza az alapértelmezett rendezési feltételt a változásütemezés áttekintőjében."
 
 #. SysConfig
 msgid ""
 "Defines the default sort criteria of the changes in the MyCAB overview."
-msgstr ""
+msgstr "Meghatározza a változások alapértelmezett rendezési feltételét a saját CAB áttekintőjében."
 
 #. SysConfig
 msgid ""
 "Defines the default sort criteria of the changes in the MyChanges overview."
-msgstr ""
+msgstr "Meghatározza a változások alapértelmezett rendezési feltételét a saját változások áttekintőjében."
 
 #. SysConfig
 msgid ""
 "Defines the default sort criteria of the changes in the MyWorkorders "
 "overview."
-msgstr ""
+msgstr "Meghatározza a változások alapértelmezett rendezési feltételét a saját munkamegrendelések áttekintőjében."
 
 #. SysConfig
 msgid "Defines the default sort criteria of the changes in the PIR overview."
-msgstr ""
+msgstr "Meghatározza a változások alapértelmezett rendezési feltételét a PIR áttekintőjében."
 
 #. SysConfig
 msgid ""
 "Defines the default sort criteria of the changes in the customer change "
 "schedule overview."
-msgstr ""
+msgstr "Meghatározza a változások alapértelmezett rendezési feltételét az ügyfél változásütemezés áttekintőjében."
 
 #. SysConfig
 msgid ""
 "Defines the default sort criteria of the changes in the template overview."
-msgstr ""
+msgstr "Meghatározza a változások alapértelmezett rendezési feltételét a sablon áttekintőjében."
 
 #. SysConfig
 msgid "Defines the default sort order in the MyCAB overview."
-msgstr ""
+msgstr "Meghatározza az alapértelmezett rendezési sorrendet a saját CAB áttekintőjében."
 
 #. SysConfig
 msgid "Defines the default sort order in the MyChanges overview."
-msgstr ""
+msgstr "Meghatározza az alapértelmezett rendezési sorrendet a saját változások áttekintőjében."
 
 #. SysConfig
 msgid "Defines the default sort order in the MyWorkorders overview."
-msgstr ""
+msgstr "Meghatározza az alapértelmezett rendezési sorrendet a saját munkamegrendelések áttekintőjében."
 
 #. SysConfig
 msgid "Defines the default sort order in the PIR overview."
-msgstr ""
+msgstr "Meghatározza az alapértelmezett rendezési sorrendet a PIR áttekintőjében."
 
 #. SysConfig
 msgid "Defines the default sort order in the change PSA overview."
-msgstr ""
+msgstr "Meghatározza az alapértelmezett rendezési sorrendet a változás PSA áttekintőjében."
 
 #. SysConfig
 msgid "Defines the default sort order in the change manager overview."
-msgstr ""
+msgstr "Meghatározza az alapértelmezett rendezési sorrendet a változásmenedzser áttekintőjében."
 
 #. SysConfig
 msgid "Defines the default sort order in the change overview."
-msgstr ""
+msgstr "Meghatározza az alapértelmezett rendezési sorrendet a változás áttekintőjében."
 
 #. SysConfig
 msgid "Defines the default sort order in the change schedule overview."
-msgstr ""
+msgstr "Meghatározza az alapértelmezett rendezési sorrendet a változásütemezés áttekintőjében."
 
 #. SysConfig
 msgid ""
 "Defines the default sort order in the customer change schedule overview."
-msgstr ""
+msgstr "Meghatározza az alapértelmezett rendezési sorrendet az ügyfél változásütemezés áttekintőjében."
 
 #. SysConfig
 msgid "Defines the default sort order in the template overview."
-msgstr ""
+msgstr "Meghatározza az alapértelmezett rendezési sorrendet a sablon áttekintőjében."
 
 #. SysConfig
 msgid "Defines the default value for the category of a change."
-msgstr ""
+msgstr "Meghatározza egy változás kategóriájának alapértelmezett értékét."
 
 #. SysConfig
 msgid "Defines the default value for the impact of a change."
-msgstr ""
+msgstr "Meghatározza egy változás hatásának alapértelmezett értékét."
 
 #. SysConfig
 msgid ""
 "Defines the field type of CompareValue fields for change attributes used in "
 "AgentITSMChangeConditionEdit. Valid values are Selection, Text and Date. If "
 "a type is not defined, the field will not be shown."
-msgstr ""
+msgstr "Meghatározza az „Összehasonlítás érték” mezők mezőtípusát az AgentITSMChangeConditionEdit osztályban használt változás attribútumainál. Az érvényes értékek: Selection, Text és Date. Ha a típus nincs meghatározva, akkor a mező nem lesz látható."
 
 #. SysConfig
 msgid ""
 "Defines the field type of CompareValue fields for workorder attributes used "
 "in AgentITSMChangeConditionEdit. Valid values are Selection, Text and Date. "
 "If a type is not defined, the field will not be shown."
-msgstr ""
+msgstr "Meghatározza az „Összehasonlítás érték” mezők mezőtípusát az AgentITSMChangeConditionEdit osztályban használt munkamegrendelés attribútumainál. Az érvényes értékek: Selection, Text és Date. Ha a típus nincs meghatározva, akkor a mező nem lesz látható."
 
 #. SysConfig
 msgid ""
 "Defines the object attributes that are selectable for change objects in "
 "AgentITSMChangeConditionEdit."
-msgstr ""
+msgstr "Meghatározza azokat az objektumattribútumokat, amelyek kiválaszthatók a változásobjektumoknál az AgentITSMChangeConditionEdit osztályban."
 
 #. SysConfig
 msgid ""
 "Defines the object attributes that are selectable for workorder objects in "
 "AgentITSMChangeConditionEdit."
-msgstr ""
+msgstr "Meghatározza azokat az objektumattribútumokat, amelyek kiválaszthatók a munkamegrendelés objektumoknál az AgentITSMChangeConditionEdit osztályban."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute AccountedTime in"
 " AgentITSMChangeConditionEdit."
-msgstr ""
+msgstr "Meghatározza azokat az operátorokat, amelyek kiválaszthatók az „Elszámolt idő” attribútumnál az AgentITSMChangeConditionEdit osztályban."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute ActualEndTime in"
 " AgentITSMChangeConditionEdit."
-msgstr ""
+msgstr "Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Tényleges befejetési idő” attribútumnál az AgentITSMChangeConditionEdit osztályban."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute ActualStartTime "
 "in AgentITSMChangeConditionEdit."
-msgstr ""
+msgstr "Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Tényleges kezdési idő” attribútumnál az AgentITSMChangeConditionEdit osztályban."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute CategoryID in "
 "AgentITSMChangeConditionEdit."
-msgstr ""
+msgstr "Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Kategória-azonosító” attribútumnál az AgentITSMChangeConditionEdit osztályban."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute ChangeBuilderID "
 "in AgentITSMChangeConditionEdit."
-msgstr ""
+msgstr "Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Változásösszeállító-azonosító” attribútumnál az AgentITSMChangeConditionEdit osztályban."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute ChangeManagerID "
 "in AgentITSMChangeConditionEdit."
-msgstr ""
+msgstr "Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Változásmenedzser-azonosító” attribútumnál az AgentITSMChangeConditionEdit osztályban."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute ChangeStateID in"
 " AgentITSMChangeConditionEdit."
-msgstr ""
+msgstr "Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Változásállapot-azonosító” attribútumnál az AgentITSMChangeConditionEdit osztályban."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute ChangeTitle in "
 "AgentITSMChangeConditionEdit."
-msgstr ""
+msgstr "Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Változáscím” attribútumnál az AgentITSMChangeConditionEdit osztályban."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute DynamicField in "
 "AgentITSMChangeConditionEdit."
-msgstr ""
+msgstr "Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Dinamikus mező” attribútumnál az AgentITSMChangeConditionEdit osztályban."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute ImpactID in "
 "AgentITSMChangeConditionEdit."
-msgstr ""
+msgstr "Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Hatásazonosító” attribútumnál az AgentITSMChangeConditionEdit osztályban."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute PlannedEffort in"
 " AgentITSMChangeConditionEdit."
-msgstr ""
+msgstr "Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Tervezett ráfordítás” attribútumnál az AgentITSMChangeConditionEdit osztályban."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute PlannedEndTime "
 "in AgentITSMChangeConditionEdit."
-msgstr ""
+msgstr "Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Tervezett befejezési idő” attribútumnál az AgentITSMChangeConditionEdit osztályban."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute PlannedStartTime"
 " in AgentITSMChangeConditionEdit."
-msgstr ""
+msgstr "Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Tervezett kezdési idő” attribútumnál az AgentITSMChangeConditionEdit osztályban."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute PriorityID in "
 "AgentITSMChangeConditionEdit."
-msgstr ""
+msgstr "Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Prioritás-azonosító” attribútumnál az AgentITSMChangeConditionEdit osztályban."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute RequestedTime in"
 " AgentITSMChangeConditionEdit."
-msgstr ""
+msgstr "Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Kért idő” attribútumnál az AgentITSMChangeConditionEdit osztályban."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute WorkOrderAgentID"
 " in AgentITSMChangeConditionEdit."
-msgstr ""
+msgstr "Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Munkamegrendelés ügyintéző-azonosító” attribútumnál az AgentITSMChangeConditionEdit osztályban."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute WorkOrderNumber "
 "in AgentITSMChangeConditionEdit."
-msgstr ""
+msgstr "Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Munkamegrendelés-szám” attribútumnál az AgentITSMChangeConditionEdit osztályban."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute WorkOrderStateID"
 " in AgentITSMChangeConditionEdit."
-msgstr ""
+msgstr "Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Munkamegrendelésállapot-azonosító” attribútumnál az AgentITSMChangeConditionEdit osztályban."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute WorkOrderTitle "
 "in AgentITSMChangeConditionEdit."
-msgstr ""
+msgstr "Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Munkamegrendelés-cím” attribútumnál az AgentITSMChangeConditionEdit osztályban."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute WorkOrderTypeID "
 "in AgentITSMChangeConditionEdit."
-msgstr ""
+msgstr "Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Munkamegrendeléstípus-azonosító” attribútumnál az AgentITSMChangeConditionEdit osztályban."
 
 #. SysConfig
 msgid ""
 "Defines the period (in years), in which start and end times can be selected."
-msgstr ""
+msgstr "Meghatározza (években) azt az időszakot, amelyben a kezdési és befejezési idők kiválaszthatók."
 
 #. SysConfig
 msgid ""
@@ -1777,104 +1778,104 @@ msgid ""
 "graph in the change zoom. To show workorder dynamic fields in the tooltip, "
 "they must be specified like DynamicField_WorkOrderFieldName1, "
 "DynamicField_WorkOrderFieldName2, etc."
-msgstr ""
+msgstr "Meghatározza egy munkamegrendelés megjelenített attribútumait a változásnagyításban lévő munkamegrendelés-grafikon buboréksúgójában. Ahhoz, hogy a munkamegrendelés dinamikus mezői megjelenjenek a buboréksúgóban, meg kell adni azokat a következőképpen: DynamicField_WorkOrderFieldName1, DynamicField_WorkOrderFieldName2, stb."
 
 #. SysConfig
 msgid ""
 "Defines the shown columns in the Change PSA overview. This option has no "
 "effect on the position of the column."
-msgstr ""
+msgstr "Meghatározza a megjelenített oszlopokat a változás PSA áttekintőjében. Ennek a beállításnak nincs hatása az oszlop helyzetére."
 
 #. SysConfig
 msgid ""
 "Defines the shown columns in the Change Schedule overview. This option has "
 "no effect on the position of the column."
-msgstr ""
+msgstr "Meghatározza a megjelenített oszlopokat a változásütemezés áttekintőjében. Ennek a beállításnak nincs hatása az oszlop helyzetére."
 
 #. SysConfig
 msgid ""
 "Defines the shown columns in the MyCAB overview. This option has no effect "
 "on the position of the column."
-msgstr ""
+msgstr "Meghatározza a megjelenített oszlopokat a saját CAB áttekintőjében. Ennek a beállításnak nincs hatása az oszlop helyzetére."
 
 #. SysConfig
 msgid ""
 "Defines the shown columns in the MyChanges overview. This option has no "
 "effect on the position of the column."
-msgstr ""
+msgstr "Meghatározza a megjelenített oszlopokat a saját változások áttekintőjében. Ennek a beállításnak nincs hatása az oszlop helyzetére."
 
 #. SysConfig
 msgid ""
 "Defines the shown columns in the MyWorkorders overview. This option has no "
 "effect on the position of the column."
-msgstr ""
+msgstr "Meghatározza a megjelenített oszlopokat a saját munkamegrendelések áttekintőjében. Ennek a beállításnak nincs hatása az oszlop helyzetére."
 
 #. SysConfig
 msgid ""
 "Defines the shown columns in the PIR overview. This option has no effect on "
 "the position of the column."
-msgstr ""
+msgstr "Meghatározza a megjelenített oszlopokat a PIR áttekintőjében. Ennek a beállításnak nincs hatása az oszlop helyzetére."
 
 #. SysConfig
 msgid ""
 "Defines the shown columns in the change manager overview. This option has no"
 " effect on the position of the column."
-msgstr ""
+msgstr "Meghatározza a megjelenített oszlopokat a változásmenedzser áttekintőjében. Ennek a beállításnak nincs hatása az oszlop helyzetére."
 
 #. SysConfig
 msgid ""
 "Defines the shown columns in the change overview. This option has no effect "
 "on the position of the column."
-msgstr ""
+msgstr "Meghatározza a megjelenített oszlopokat a változás áttekintőjében. Ennek a beállításnak nincs hatása az oszlop helyzetére."
 
 #. SysConfig
 msgid ""
 "Defines the shown columns in the change search. This option has no effect on"
 " the position of the column."
-msgstr ""
+msgstr "Meghatározza a megjelenített oszlopokat a változáskeresőben. Ennek a beállításnak nincs hatása az oszlop helyzetére."
 
 #. SysConfig
 msgid ""
 "Defines the shown columns in the customer change schedule overview. This "
 "option has no effect on the position of the column."
-msgstr ""
+msgstr "Meghatározza a megjelenített oszlopokat az ügyfél változásütemezés áttekintőjében. Ennek a beállításnak nincs hatása az oszlop helyzetére."
 
 #. SysConfig
 msgid ""
 "Defines the shown columns in the template overview. This option has no "
 "effect on the position of the column."
-msgstr ""
+msgstr "Meghatározza a megjelenített oszlopokat a sablon áttekintőjében. Ennek a beállításnak nincs hatása az oszlop helyzetére."
 
 #. SysConfig
 msgid "Defines the signals for each ITSMChange state."
-msgstr ""
+msgstr "Meghatározza a szignálokat minden egyes ITSMChange állapothoz."
 
 #. SysConfig
 msgid ""
 "Defines the template types that will be used as filters in the template "
 "overview."
-msgstr ""
+msgstr "Meghatározza azokat a sablontípusokat, amelyek szűrőkként lesznek használva a sablon áttekintőjében."
 
 #. SysConfig
 msgid ""
 "Defines the workorder states that will be used as filters in the "
 "MyWorkorders overview."
-msgstr ""
+msgstr "Meghatározza azokat a munkamegrendelés-állapotokat, amelyek szűrőkként lesznek használva a saját munkamegrendelések áttekintőjében."
 
 #. SysConfig
 msgid ""
 "Defines the workorder states that will be used as filters in the PIR "
 "overview."
-msgstr ""
+msgstr "Meghatározza azokat a munkamegrendelés-állapotokat, amelyek szűrőkként lesznek használva a PIR áttekintőjében."
 
 #. SysConfig
 msgid ""
 "Defines the workorder types that will be used to show the PIR overview."
-msgstr ""
+msgstr "Meghatározza azokat a munkamegrendelés-típusokat, amelyek a PIR áttekintő megjelenítéshez lesznek használva."
 
 #. SysConfig
 msgid "Defines whether notifications should be sent."
-msgstr ""
+msgstr "Meghatározza, hogy az értesítéseket el kell-e küldeni."
 
 #. SysConfig
 msgid "Delete Change"
@@ -1892,96 +1893,96 @@ msgstr ""
 msgid ""
 "Determines if an agent can exchange the X-axis of a stat if he generates "
 "one."
-msgstr ""
+msgstr "Meghatározza, hogy egy ügyintéző kicserélheti-e egy statisztika X-tengelyét, ha létrehozott egyet."
 
 #. SysConfig
 msgid ""
 "Determines if the common stats module may generate stats about changes done "
 "for config item classes."
-msgstr ""
+msgstr "Meghatározza, hogy a közös statisztikák modul előállíthat-e statisztikákat az elvégzett változásokról a konfigurációelem osztályoknál."
 
 #. SysConfig
 msgid ""
 "Determines if the common stats module may generate stats about changes "
 "regarding change state updates within a timeperiod."
-msgstr ""
+msgstr "Meghatározza, hogy a közös statisztikák modul előállíthat-e statisztikákat egy időszakon belüli változásállapot frissítésekre vonatkozó változásokról."
 
 #. SysConfig
 msgid ""
 "Determines if the common stats module may generate stats about changes "
 "regarding the relation between changes and incident tickets."
-msgstr ""
+msgstr "Meghatározza, hogy a közös statisztikák modul előállíthat-e statisztikákat a változások és incidensjegyek közötti kapcsolatra vonatkozó változásokról."
 
 #. SysConfig
 msgid ""
 "Determines if the common stats module may generate stats about changes."
-msgstr ""
+msgstr "Meghatározza, hogy a közös statisztikák modul előállíthat-e statisztikákat a változásokról."
 
 #. SysConfig
 msgid ""
 "Determines if the common stats module may generate stats about the number of"
 " Rfc tickets a requester created."
-msgstr ""
+msgstr "Meghatározza, hogy a közös statisztikák modul előállíthat-e statisztikákat egy kérő által létrehozott Rfc jegyek számáról."
 
 #. SysConfig
 msgid ""
 "Dynamic fields (for changes and workorders) shown in the change print screen"
 " of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled."
-msgstr ""
+msgstr "Az ügyintézői felület változás nyomtatás képernyőjén megjelenített dinamikus mezők (változásokhoz és munkamegrendelésekhez). Lehetséges beállítások: 0 = Letiltva, 1 = Engedélyezve."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the change add screen of the agent interface. "
 "Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
-msgstr ""
+msgstr "Az ügyintézői felület változás hozzáadás képernyőjén megjelenített dinamikus mezők. Lehetséges beállítások: 0 = Letiltva, 1 = Engedélyezve, 2 = Engedélyezve és kötelező."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the change edit screen of the agent interface. "
 "Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
-msgstr ""
+msgstr "Az ügyintézői felület változás szerkesztés képernyőjén megjelenített dinamikus mezők. Lehetséges beállítások: 0 = Letiltva, 1 = Engedélyezve, 2 = Engedélyezve és kötelező."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the change search screen of the agent interface. "
 "Possible settings: 0 = Disabled, 1 = Enabled."
-msgstr ""
+msgstr "Az ügyintézői felület változás keresés képernyőjén megjelenített dinamikus mezők. Lehetséges beállítások: 0 = Letiltva, 1 = Engedélyezve."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the change zoom screen of the agent interface. "
 "Possible settings: 0 = Disabled, 1 = Enabled."
-msgstr ""
+msgstr "Az ügyintézői felület változás nagyítás képernyőjén megjelenített dinamikus mezők. Lehetséges beállítások: 0 = Letiltva, 1 = Engedélyezve."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the workorder add screen of the agent interface. "
 "Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
-msgstr ""
+msgstr "Az ügyintézői felület munkamegrendelés hozzáadás képernyőjén megjelenített dinamikus mezők. Lehetséges beállítások: 0 = Letiltva, 1 = Engedélyezve, 2 = Engedélyezve és kötelező."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the workorder edit screen of the agent interface. "
 "Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
-msgstr ""
+msgstr "Az ügyintézői felület munkamegrendelés szerkesztés képernyőjén megjelenített dinamikus mezők. Lehetséges beállítások: 0 = Letiltva, 1 = Engedélyezve, 2 = Engedélyezve és kötelező."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the workorder report screen of the agent interface. "
 "Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
-msgstr ""
+msgstr "Az ügyintézői felület munkamegrendelés jelentés képernyőjén megjelenített dinamikus mezők. Lehetséges beállítások: 0 = Letiltva, 1 = Engedélyezve, 2 = Engedélyezve és kötelező."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the workorder zoom screen of the agent interface. "
 "Possible settings: 0 = Disabled, 1 = Enabled."
-msgstr ""
+msgstr "Az ügyintézői felület munkamegrendelés nagyítás képernyőjén megjelenített dinamikus mezők. Lehetséges beállítások: 0 = Letiltva, 1 = Engedélyezve."
 
 #. SysConfig
 msgid ""
 "DynamicField event module to handle the update of conditions if dynamic "
 "fields are added, updated or deleted."
-msgstr ""
+msgstr "Dinamikus mező eseménymodul a feltételek frissítésének kezeléséhez, ha dinamikus mezők kerülnek hozzáadásra, frissítésre vagy törlésre."
 
 #. SysConfig
 msgid "Edit a change."
@@ -2049,59 +2050,59 @@ msgstr ""
 
 #. SysConfig
 msgid "ITSM event module deletes the history of changes."
-msgstr ""
+msgstr "ITSM eseménymodul, amely törli a változások előzményeit."
 
 #. SysConfig
 msgid "ITSM event module that cleans up conditions."
-msgstr ""
+msgstr "ITSM eseménymodul, amely törli a feltételeket."
 
 #. SysConfig
 msgid "ITSM event module that deletes the cache for a toolbar."
-msgstr ""
+msgstr "ITSM eseménymodul, amely törli a gyorsítótárat egy eszköztárnál."
 
 #. SysConfig
 msgid "ITSM event module that matches conditions and executes actions."
-msgstr ""
+msgstr "ITSM eseménymodul, amely feltételeket illeszt és műveleteket hajt végre."
 
 #. SysConfig
 msgid "ITSM event module that sends notifications."
-msgstr ""
+msgstr "ITSM eseménymodul, amely értesítéseket küld."
 
 #. SysConfig
 msgid "ITSM event module that updates the history of changes."
-msgstr ""
+msgstr "ITSM eseménymodul, amely frissíti a változások előzményeit."
 
 #. SysConfig
 msgid "ITSM event module to recalculate the workorder numbers."
-msgstr ""
+msgstr "ITSM eseménymodul a munkamegrendelés számainak újraszámolásához."
 
 #. SysConfig
 msgid "ITSM event module to set the actual start and end times of workorders."
-msgstr ""
+msgstr "ITSM eseménymodul a munkamegrendelések tényleges kezdési és befejezési idejének beállításához."
 
 #. SysConfig
 msgid "ITSM event module updates the history of changes."
-msgstr ""
+msgstr "ITSM eseménymodul, amely frissíti a változások előzményeit."
 
 #. SysConfig
 msgid "ITSM event module updates the history of conditions."
-msgstr ""
+msgstr "ITSM eseménymodul, amely frissíti a feltételek előzményeit."
 
 #. SysConfig
 msgid "ITSM event module updates the history of workorders."
-msgstr ""
+msgstr "ITSM eseménymodul, amely frissíti a munkamegrendelések előzményeit."
 
 #. SysConfig
 msgid ""
 "If frequency is 'regularly', you can configure how often the notications are"
 " sent (every X hours)."
-msgstr ""
+msgstr "Ha a gyakoriság „rendszeresen”, akkor beállíthatja, hogy az értesítések milyen gyakran legyenek elküldve (minden X. órában)."
 
 #. SysConfig
 msgid ""
 "Logfile for the ITSM change counter. This file is used for creating the "
 "change numbers."
-msgstr ""
+msgstr "Naplófájl az ITSM változásszámlálóhoz. Ezt a fájlt a változásszámok létrehozásához használják."
 
 #. SysConfig
 msgid "Lookup of CAB members for autocompletion."
@@ -2115,41 +2116,41 @@ msgstr ""
 msgid ""
 "Module to check if WorkOrderAdd or WorkOrderAddFromTemplate should be "
 "permitted."
-msgstr ""
+msgstr "Egy modul annak ellenőrzéséhez, hogy a „Munkamegrendelés hozzáadása” vagy a „Munkamegrendelés hozzáadása sablonból” osztályokat engedélyezni kell-e."
 
 #. SysConfig
 msgid "Module to check the CAB members."
-msgstr ""
+msgstr "Egy modul a CAB-tagok ellenőrzéséhez."
 
 #. SysConfig
 msgid "Module to check the agent."
-msgstr ""
+msgstr "Egy modul az ügyintéző ellenőrzéséhez."
 
 #. SysConfig
 msgid "Module to check the change builder."
-msgstr ""
+msgstr "Egy modul a változásösszeállító ellenőrzéséhez."
 
 #. SysConfig
 msgid "Module to check the change manager."
-msgstr ""
+msgstr "Egy modul a változásmenedzser ellenőrzéséhez."
 
 #. SysConfig
 msgid "Module to check the workorder agent."
-msgstr ""
+msgstr "Egy modul a munkamegrendelés ügyintézőjének ellenőrzéséhez."
 
 #. SysConfig
 msgid "Module to check whether no workorder agent is set."
-msgstr ""
+msgstr "Egy modul annak ellenőrzéséhez, hogy van-e munkamegrendelés-ügyintéző beállítva."
 
 #. SysConfig
 msgid "Module to check whether the agent is contained in the configured list."
-msgstr ""
+msgstr "Egy modul annak ellenőrzéséhez, hogy az ügyintézőt tartalmazza-e a beállítási lista."
 
 #. SysConfig
 msgid ""
 "Module to show a link to create a change from this ticket. The ticket will "
 "be automatically linked with the new change."
-msgstr ""
+msgstr "Egy modul egy hivatkozás megjelenítéséhez, amely egy változás létrehozására mutat ebből a jegyből. A jegy automatikusan össze lesz kapcsolva az új változással."
 
 #. SysConfig
 msgid "Move Time Slot."
@@ -2160,7 +2161,7 @@ msgid ""
 "Only users of these groups have the permission to use the ticket types as "
 "defined in \"ITSMChange::AddChangeLinkTicketTypes\" if the feature "
 "\"Ticket::Acl::Module###200-Ticket::Acl::Module\" is enabled."
-msgstr ""
+msgstr "Csak ezen csoportok felhasználóinak van jogosultsága az „ITSMChange::AddChangeLinkTicketTypes” beállításban meghatározott jegytípusok használatára, ha a „Ticket::Acl::Module###200-Ticket::Acl::Module” szolgáltatás engedélyezve van."
 
 #. SysConfig
 msgid "Overview over all Changes."
@@ -2170,19 +2171,19 @@ msgstr ""
 msgid ""
 "Parameters for the UserCreateWorkOrderNextMask object in the preference view"
 " of the agent interface."
-msgstr ""
+msgstr "A UserCreateWorkOrderNextMask objektum paraméterei az ügyintézői felület beállítás nézetében."
 
 #. SysConfig
 msgid ""
 "Parameters for the pages (in which the changes are shown) of the small "
 "change overview."
-msgstr ""
+msgstr "Paraméterek a kis változás áttekintő oldalaihoz (amelyekben a változások megjelennek)."
 
 #. SysConfig
 msgid ""
 "Presents a link in the menu to show the involved persons in a change, in the"
 " zoom view of such change in the agent interface."
-msgstr ""
+msgstr "Egy hivatkozást jelenít meg a menüben egy változásban érintett személyek megjelenítéséhez az ilyen változás nagyítás nézetében az ügyintézői felületen."
 
 #. SysConfig
 msgid "Projected Service Availability (PSA)"
@@ -2196,156 +2197,156 @@ msgstr ""
 
 #. SysConfig
 msgid "Required privileges in order for an agent to take a workorder."
-msgstr ""
+msgstr "A szükséges jogosultságok annak érdekében, hogy egy ügyintéző felvehessen egy munkamegrendelést."
 
 #. SysConfig
 msgid "Required privileges to access the overview of all changes."
-msgstr ""
+msgstr "A szükséges jogosultságok az összes változás áttekintőjének hozzáféréséhez."
 
 #. SysConfig
 msgid "Required privileges to add a workorder."
-msgstr ""
+msgstr "A szükséges jogosultságok egy munkamegrendelés hozzáadásához."
 
 #. SysConfig
 msgid "Required privileges to change the workorder agent."
-msgstr ""
+msgstr "A szükséges jogosultságok egy munkamegrendelés ügyintézőjének megváltoztatásához."
 
 #. SysConfig
 msgid "Required privileges to create a template from a change."
-msgstr ""
+msgstr "A szükséges jogosultságok egy sablon létrehozásához egy változásból."
 
 #. SysConfig
 msgid "Required privileges to create a template from a changes' CAB."
-msgstr ""
+msgstr "A szükséges jogosultságok egy sablon létrehozásához a változások CAB-jából."
 
 #. SysConfig
 msgid "Required privileges to create a template from a workorder."
-msgstr ""
+msgstr "A szükséges jogosultságok egy sablon létrehozásához egy munkamegrendelésből."
 
 #. SysConfig
 msgid "Required privileges to create changes from templates."
-msgstr ""
+msgstr "A szükséges jogosultságok változások létrehozásához sablonokból."
 
 #. SysConfig
 msgid "Required privileges to create changes."
-msgstr ""
+msgstr "A szükséges jogosultságok változások létrehozásához."
 
 #. SysConfig
 msgid "Required privileges to delete a template."
-msgstr ""
+msgstr "A szükséges jogosultságok egy sablon törléséhez."
 
 #. SysConfig
 msgid "Required privileges to delete a workorder."
-msgstr ""
+msgstr "A szükséges jogosultságok egy munkamegrendelés törléséhez."
 
 #. SysConfig
 msgid "Required privileges to delete changes."
-msgstr ""
+msgstr "A szükséges jogosultságok változások törléséhez."
 
 #. SysConfig
 msgid "Required privileges to edit a template."
-msgstr ""
+msgstr "A szükséges jogosultságok egy sablon szerkesztéséhez."
 
 #. SysConfig
 msgid "Required privileges to edit a workorder."
-msgstr ""
+msgstr "A szükséges jogosultságok egy munkamegrendelés szerkesztéséhez."
 
 #. SysConfig
 msgid "Required privileges to edit changes."
-msgstr ""
+msgstr "A szükséges jogosultságok változások szerkesztéséhez."
 
 #. SysConfig
 msgid "Required privileges to edit the conditions of changes."
-msgstr ""
+msgstr "A szükséges jogosultságok változások feltételeinek szerkesztéséhez."
 
 #. SysConfig
 msgid "Required privileges to edit the content of a template."
-msgstr ""
+msgstr "A szükséges jogosultságok egy sablon tartalmának szerkesztéséhez."
 
 #. SysConfig
 msgid "Required privileges to edit the involved persons of a change."
-msgstr ""
+msgstr "A szükséges jogosultságok egy változásban érintett személyek szerkesztéséhez."
 
 #. SysConfig
 msgid "Required privileges to move changes in time."
-msgstr ""
+msgstr "A szükséges jogosultságok a változások áthelyezéséhez az időben."
 
 #. SysConfig
 msgid "Required privileges to print a change."
-msgstr ""
+msgstr "A szükséges jogosultságok egy változás kinyomtatásához."
 
 #. SysConfig
 msgid "Required privileges to reset changes."
-msgstr ""
+msgstr "A szükséges jogosultságok változások visszaállításához."
 
 #. SysConfig
 msgid "Required privileges to view a workorder."
-msgstr ""
+msgstr "A szükséges jogosultságok egy munkamegrendelés megtekintéséhez."
 
 #. SysConfig
 msgid "Required privileges to view changes."
-msgstr ""
+msgstr "A szükséges jogosultságok változások megtekintéséhez."
 
 #. SysConfig
 msgid ""
 "Required privileges to view list of changes where the user is a CAB member."
-msgstr ""
+msgstr "A szükséges jogosultságok azon változások listájának megtekintéséhez, ahol a felhasználó egy CAB-tag."
 
 #. SysConfig
 msgid ""
 "Required privileges to view list of changes where the user is the change "
 "manager."
-msgstr ""
+msgstr "A szükséges jogosultságok azon változások listájának megtekintéséhez, ahol a felhasználó a változásmenedzser."
 
 #. SysConfig
 msgid "Required privileges to view overview over all templates."
-msgstr ""
+msgstr "A szükséges jogosultságok az összes sablon áttekintőjének megtekintéséhez."
 
 #. SysConfig
 msgid "Required privileges to view the conditions of changes."
-msgstr ""
+msgstr "A szükséges jogosultságok változások feltételeinek megtekintéséhez."
 
 #. SysConfig
 msgid "Required privileges to view the history of a change."
-msgstr ""
+msgstr "A szükséges jogosultságok egy változás előzményeinek megtekintéséhez."
 
 #. SysConfig
 msgid "Required privileges to view the history of a workorder."
-msgstr ""
+msgstr "A szükséges jogosultságok egy munkamegrendelés előzményeinek megtekintéséhez."
 
 #. SysConfig
 msgid "Required privileges to view the history zoom of a change."
-msgstr ""
+msgstr "A szükséges jogosultságok egy változás előzményei nagyításának megtekintéséhez."
 
 #. SysConfig
 msgid "Required privileges to view the history zoom of a workorder."
-msgstr ""
+msgstr "A szükséges jogosultságok egy munkamegrendelés előzményei nagyításának megtekintéséhez."
 
 #. SysConfig
 msgid "Required privileges to view the list of Change Schedule."
-msgstr ""
+msgstr "A szükséges jogosultságok a változásütemezés listájának megtekintéséhez."
 
 #. SysConfig
 msgid "Required privileges to view the list of change PSA."
-msgstr ""
+msgstr "A szükséges jogosultságok a változás PSA listájának megtekintéséhez."
 
 #. SysConfig
 msgid ""
 "Required privileges to view the list of changes with an upcoming PIR (Post "
 "Implementation Review)."
-msgstr ""
+msgstr "A szükséges jogosultságok egy közelgő PIR-rel (megvalósítás utáni vizsgálattal) rendelkező változások listájának megtekintéséhez."
 
 #. SysConfig
 msgid "Required privileges to view the list of own changes."
-msgstr ""
+msgstr "A szükséges jogosultságok a saját változások listájának megtekintéséhez."
 
 #. SysConfig
 msgid "Required privileges to view the list of own workorders."
-msgstr ""
+msgstr "A szükséges jogosultságok a saját munkamegrendelések listájának megtekintéséhez."
 
 #. SysConfig
 msgid "Required privileges to write a report for the workorder."
-msgstr ""
+msgstr "A szükséges jogosultságok egy jelentés írásához a munkamegrendelésnél."
 
 #. SysConfig
 msgid "Reset a change and its workorders."
@@ -2363,7 +2364,7 @@ msgstr ""
 
 #. SysConfig
 msgid "Screen after creating a workorder"
-msgstr ""
+msgstr "Egy munkamegrendelés létrehozása utáni képernyő"
 
 #. SysConfig
 msgid "Search Changes."
@@ -2380,185 +2381,185 @@ msgid ""
 "date plus the SystemID. The checksum will be rotated on a daily basis. This "
 "format looks like Year.Month.Day.SystemID.Counter.CheckSum, e.g. "
 "2010062410000017, 2010062410000026."
-msgstr ""
+msgstr "Kiválasztja a változásszám előállító modult. Az „AutoIncrement” növeli a változásszámot, ahol a rendszer-azonosítót és a számlálót a RendszerID.számláló formátummal használja (például 100118, 100119). A „Date” értékkel a változásszámokat az aktuális dátum és a számláló fogja előállítani. A formátum így néz ki: Év.Hónap.Nap.számláló (például 2010062400001, 2010062400002). A „DateChecksum” használatával a számláló ellenőrzőösszegként lesz hozzáfűzve a dátum és a rendszer-azonosító szövegéhez. Az ellenőrzőösszeg naponta fog átfordulni. A formátum így néz ki: Év.Hónap.Nap.RendszerID.Számláló.EllÖsszeg (például 2010062410000017, 2010062410000026)."
 
 #. SysConfig
 msgid ""
 "Set the default height (in pixels) of inline HTML fields in "
 "AgentITSMChangeZoom and AgentITSMWorkOrderZoom."
-msgstr ""
+msgstr "A beágyazott HTML mezők alapértelmezett magasságának beállítása (képpontban) az AgentITSMChangeZoom és az AgentITSMWorkOrderZoom felületen."
 
 #. SysConfig
 msgid ""
 "Set the maximum height (in pixels) of inline HTML fields in "
 "AgentITSMChangeZoom and AgentITSMWorkOrderZoom."
-msgstr ""
+msgstr "A beágyazott HTML mezők legnagyobb magasságának beállítása (képpontban) az AgentITSMChangeZoom és az AgentITSMWorkOrderZoom felületen."
 
 #. SysConfig
 msgid ""
 "Sets the minimal change counter size (if \"AutoIncrement\" was selected as "
 "ITSMChange::NumberGenerator). Default is 5, this means the counter starts "
 "from 10000."
-msgstr ""
+msgstr "Beállítja a legkisebb változásszámláló méretet (ha „AutoIncrement” lett kiválasztva ITSM változás::Számelőállítóként) Az alapértelmezett 5, amely azt jelenti, hogy a számláló 10000-től fog indulni."
 
 #. SysConfig
 msgid "Sets up the state machine for changes."
-msgstr ""
+msgstr "Beállítja az állapotgépet a változásoknál."
 
 #. SysConfig
 msgid "Sets up the state machine for workorders."
-msgstr ""
+msgstr "Beállítja az állapotgépet a munkamegrendeléseknél."
 
 #. SysConfig
 msgid "Show this screen after I created a new workorder"
-msgstr ""
+msgstr "Ezen képernyő megjelenítése egy új munkamegrendelés létrehozása után"
 
 #. SysConfig
 msgid ""
 "Shows a checkbox in the AgentITSMWorkOrderEdit screen that defines if the "
 "the following workorders should also be moved if a workorder is modified and"
 " the planned end time has changed."
-msgstr ""
+msgstr "Egy jelölőnégyzetet jelenít meg az AgentITSMWorkOrderEdit képernyőn, amely azt határozza meg, hogy a következő munkamegrendeléseket is át kell-e helyezni, ha egy munkamegrendelés módosult és a tervezett befejezési idő megváltozott."
 
 #. SysConfig
 msgid ""
 "Shows a link in the menu that allows changing the work order agent, in the "
 "zoom view of such work order of the agent interface."
-msgstr ""
+msgstr "Egy hivatkozást jelenít meg a menüben, amely lehetővé teszi a munkamegrendelés ügyintézőjének megváltoztatását az ügyintézői felületnek az ilyen munkamegrendelés nagyítási nézetén."
 
 #. SysConfig
 msgid ""
 "Shows a link in the menu that allows defining a change as a template in the "
 "zoom view of the change, in the agent interface."
-msgstr ""
+msgstr "Egy hivatkozást jelenít meg a menüben, amely lehetővé teszi egy változás sablonként való meghatározását a változás nagyítás nézetében az ügyintézői felületen."
 
 #. SysConfig
 msgid ""
 "Shows a link in the menu that allows defining a work order as a template in "
 "the zoom view of the work order, in the agent interface."
-msgstr ""
+msgstr "Egy hivatkozást jelenít meg a menüben, amely lehetővé teszi egy munkamegrendelés sablonként való meghatározását a munkamegrendelés nagyítás nézetében az ügyintézői felületen."
 
 #. SysConfig
 msgid ""
 "Shows a link in the menu that allows editing the report of a workd order, in"
 " the zoom view of such work order of the agent interface."
-msgstr ""
+msgstr "Egy hivatkozást jelenít meg a menüben, amely lehetővé teszi egy munkamegrendelés jelentésének szerkesztését az ügyintézői felületnek az ilyen munkamegrendelés nagyítási nézetén."
 
 #. SysConfig
 msgid ""
 "Shows a link in the menu that allows linking a change with another object in"
 " the change zoom view of the agent interface."
-msgstr ""
+msgstr "Egy hivatkozást jelenít meg a menüben, amely lehetővé teszi egy változás összekapcsolását egy másik objektummal az ügyintézői felület változás nagyítás nézetében."
 
 #. SysConfig
 msgid ""
 "Shows a link in the menu that allows linking a work order with another "
 "object in the zoom view of such work order of the agent interface."
-msgstr ""
+msgstr "Egy hivatkozást jelenít meg a menüben, amely lehetővé teszi egy munkamegrendelés hozzákapcsolását egy másik objektumhoz az ügyintézői felületnek az ilyen munkamegrendelés nagyítási nézetén."
 
 #. SysConfig
 msgid ""
 "Shows a link in the menu that allows moving the time slot of a change in its"
 " zoom view of the agent interface."
-msgstr ""
+msgstr "Egy hivatkozást jelenít meg a menüben, amely lehetővé teszi egy változás időrésének áthelyezését az ügyintézői felületen az elem nagyítási nézetében."
 
 #. SysConfig
 msgid ""
 "Shows a link in the menu that allows taking a work order in the its zoom "
 "view of the agent interface."
-msgstr ""
+msgstr "Egy hivatkozást jelenít meg a menüben, amely lehetővé teszi egy munkamegrendelés felvételét az ügyintézői felületen az elem nagyítási nézetében."
 
 #. SysConfig
 msgid ""
 "Shows a link in the menu to access the conditions of a change in the its "
 "zoom view of the agent interface."
-msgstr ""
+msgstr "Egy hivatkozást jelenít meg a menüben egy változás feltételeinek eléréséhez az ügyintézői felületen az elem nagyítási nézetében."
 
 #. SysConfig
 msgid ""
 "Shows a link in the menu to access the history of a change in the its zoom "
 "view of the agent interface."
-msgstr ""
+msgstr "Egy hivatkozást jelenít meg a menüben egy változás előzményeinek eléréséhez az ügyintézői felületen az elem nagyítási nézetében."
 
 #. SysConfig
 msgid ""
 "Shows a link in the menu to access the history of a work order in the its "
 "zoom view of the agent interface."
-msgstr ""
+msgstr "Egy hivatkozást jelenít meg a menüben egy munkamegrendelés előzményeinek eléréséhez az ügyintézői felületen az elem nagyítási nézetében."
 
 #. SysConfig
 msgid ""
 "Shows a link in the menu to add a work order in the change zoom view of the "
 "agent interface."
-msgstr ""
+msgstr "Egy hivatkozást jelenít meg a menüben egy munkamegrendelés hozzáadásához az ügyintézői felület változás nagyítás nézetében."
 
 #. SysConfig
 msgid ""
 "Shows a link in the menu to delete a change in its zoom view of the agent "
 "interface."
-msgstr ""
+msgstr "Egy hivatkozást jelenít meg a menüben egy változás törléséhez az ügyintézői felületen az elem nagyítási nézetében."
 
 #. SysConfig
 msgid ""
 "Shows a link in the menu to delete a work order in its zoom view of the "
 "agent interface."
-msgstr ""
+msgstr "Egy hivatkozást jelenít meg a menüben egy munkamegrendelés törléséhez az ügyintézői felületen az elem nagyítási nézetében."
 
 #. SysConfig
 msgid ""
 "Shows a link in the menu to edit a change in the its zoom view of the agent "
 "interface."
-msgstr ""
+msgstr "Egy hivatkozást jelenít meg a menüben egy változás szerkesztéséhez az ügyintézői felületen az elem nagyítási nézetében."
 
 #. SysConfig
 msgid ""
 "Shows a link in the menu to edit a work order in the its zoom view of the "
 "agent interface."
-msgstr ""
+msgstr "Egy hivatkozást jelenít meg a menüben egy munkamegrendelés szerkesztéséhez az ügyintézői felületen az elem nagyítási nézetében."
 
 #. SysConfig
 msgid ""
 "Shows a link in the menu to go back in the change zoom view of the agent "
 "interface."
-msgstr ""
+msgstr "Egy hivatkozást jelenít meg a menüben az ügyintézői felület változás nagyítási nézetébe való visszatéréshez."
 
 #. SysConfig
 msgid ""
 "Shows a link in the menu to go back in the work order zoom view of the agent"
 " interface."
-msgstr ""
+msgstr "Egy hivatkozást jelenít meg a menüben az ügyintézői felület munkamegrendelés nagyítási nézetébe való visszatéréshez."
 
 #. SysConfig
 msgid ""
 "Shows a link in the menu to print a change in the its zoom view of the agent"
 " interface."
-msgstr ""
+msgstr "Egy hivatkozást jelenít meg a menüben egy változás nyomtatásához az ügyintézői felületen az elem nagyítási nézetében."
 
 #. SysConfig
 msgid ""
 "Shows a link in the menu to print a work order in the its zoom view of the "
 "agent interface."
-msgstr ""
+msgstr "Egy hivatkozást jelenít meg a menüben egy munkamegrendelés nyomtatásához az ügyintézői felületen az elem nagyítási nézetében."
 
 #. SysConfig
 msgid ""
 "Shows a link in the menu to reset a change and its workorders in its zoom "
 "view of the agent interface."
-msgstr ""
+msgstr "Egy hivatkozást jelenít meg a menüben egy változás és annak munkamegrendelései visszaállításához az ügyintézői felületen az elem nagyítási nézetében."
 
 #. SysConfig
 msgid "Shows the change history (reverse ordered) in the agent interface."
-msgstr ""
+msgstr "Megjeleníti a változás előzményeit (fordított sorrendben) az ügyintézői felületen."
 
 #. SysConfig
 msgid "State Machine"
-msgstr ""
+msgstr "Állapotgép"
 
 #. SysConfig
 msgid ""
 "Stores change and workorder ids and their corresponding template id, while a"
 " user is editing a template."
-msgstr ""
+msgstr "Változás- és munkamegrendelés-azonosítókat, valamint a nekik megfelelő sablonazonosítót tárolja, miközben egy felhasználó szerkeszt egy sablont."
 
 #. SysConfig
 msgid "Take Workorder."
@@ -2572,13 +2573,13 @@ msgstr ""
 msgid ""
 "The identifier for a change, e.g. Change#, MyChange#. The default is "
 "Change#."
-msgstr ""
+msgstr "Egy változás azonosítója, például Change#, MyChange#. Az alapértelmezett: Change#."
 
 #. SysConfig
 msgid ""
 "The identifier for a workorder, e.g. Workorder#, MyWorkorder#. The default "
 "is Workorder#."
-msgstr ""
+msgstr "Egy munkamegrendelés azonosítója, például Workorder#, MyWorkorder#. Az alapértelmezett: Workorder#."
 
 #. SysConfig
 msgid ""
@@ -2588,13 +2589,13 @@ msgid ""
 "this ACL could collide with other ACLs which are also related to the ticket "
 "type, this sysconfig option is disabled by default and should only be "
 "activated if needed."
-msgstr ""
+msgstr "Ez az ACL modul korlátozza az „ITSMChange::AddChangeLinkTicketTypes” rendszerbeállítási lehetőségben meghatározott jegytípusok használatát az „ITSMChange::RestrictTicketTypes::Groups” csoportban meghatározott felhasználókra. Mivel ez az ACL ütközhet más olyan ACL-ekkel, amelyek szintén a jegytípussal vannak összefüggésben, ezért ez a rendszerbeállítási lehetőség alapértelmezetten le van tiltva, és csak akkor kell aktiválni, ha szükséges."
 
 #. SysConfig
 msgid ""
 "Types of tickets, where in the ticket zoom view a link to add a change will "
 "be displayed."
-msgstr ""
+msgstr "Jegyek típusai, ahol a jegy nagyítás nézetben egy változás hozzáadására mutató hivatkozás lesz megjelenítve."
 
 #. SysConfig
 msgid "Workorder Add (from template)."

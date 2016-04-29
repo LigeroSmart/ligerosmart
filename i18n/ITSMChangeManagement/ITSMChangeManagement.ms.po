@@ -1,12 +1,12 @@
 # 
 # Translators:
-# KENNY CHEAH <otrssdnbhd@gmail.com>, 2015
+# OTRS SDN BHD <otrssdnbhd@gmail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-10-16 03:50+0000\n"
-"Last-Translator: KENNY CHEAH <otrssdnbhd@gmail.com>\n"
+"POT-Creation-Date: 2016-04-29 13:18+0000\n"
+"PO-Revision-Date: 2016-04-29 11:19+0000\n"
+"Last-Translator: Udo Bretz\n"
 "Language-Team: Malay (http://www.transifex.com/otrs/OTRS/language/ms/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -45,14 +45,6 @@ msgstr "Templat mesti mempunyai nama!"
 #. Template: AAAITSMChangeManagement
 msgid "A workorder must have a title!"
 msgstr "Urutankerja mesti mempunyai tajuk!"
-
-#. Template: AAAITSMChangeManagement
-msgid "ActionExecute::successfully"
-msgstr "berjaya"
-
-#. Template: AAAITSMChangeManagement
-msgid "ActionExecute::unsuccessfully"
-msgstr "tidak berjaya"
 
 #. Template: AAAITSMChangeManagement
 msgid "Add CAB Template"
@@ -655,10 +647,6 @@ msgid "Rule"
 msgstr "Peraturan"
 
 #. Template: AdminITSMChangeNotification
-msgid "Recipients"
-msgstr "Penerima-penerima"
-
-#. Template: AdminITSMChangeNotification
 msgid "A notification should have a name!"
 msgstr "Pemberitahuan memerlukan nama!"
 
@@ -722,6 +710,10 @@ msgstr "Adakah anda mahu memadam status peralihan ini benar-benar?"
 msgid "from"
 msgstr "von"
 
+#. Template: AdminITSMStateMachine
+msgid "to"
+msgstr ""
+
 #. Template: AgentITSMChangeAdd
 msgid "Add Change"
 msgstr "Tukar Tambah"
@@ -769,10 +761,6 @@ msgstr "Ini perubahan sebagai templat"
 #. Template: AgentITSMChangeCABTemplate
 msgid "go to involved persons screen"
 msgstr "pergi kepada orang-orang skrin terlibat"
-
-#. Template: AgentITSMChangeCABTemplate
-msgid "This field is required"
-msgstr "Bidang ini diperlukan"
 
 #. Template: AgentITSMChangeCABTemplate
 msgid "Invalid Name"
@@ -857,6 +845,10 @@ msgstr "Tambah tindakan baru"
 #. Template: AgentITSMChangeDelete
 msgid "Do you really want to delete this change?"
 msgstr "Adakah anda benar-benar mahu untuk memadam perubahan ini?"
+
+#. Template: AgentITSMChangeHistory
+msgid "History of"
+msgstr ""
 
 #. Template: AgentITSMChangeHistory
 msgid "Workorder"
@@ -990,10 +982,6 @@ msgstr "Masa Mula Sebenar"
 msgid "ActualEndTime"
 msgstr "Masa Tamat Sebenar"
 
-#. Template: AgentITSMChangePrint
-msgid "ITSM Workorder"
-msgstr "Perintah Kerja"
-
 #. Template: AgentITSMChangeReset
 msgid "Do you really want to reset this change?"
 msgstr "Adakah anda benar-benar mahu untuk menetapkan semula perubahan ini?"
@@ -1015,6 +1003,10 @@ msgid "CABCustomer"
 msgstr "CAB Pelanggan"
 
 #. Template: AgentITSMChangeSearch
+msgid "ITSM Workorder"
+msgstr "Perintah Kerja"
+
+#. Template: AgentITSMChangeSearch
 msgid "Instruction"
 msgstr "Arahan"
 
@@ -1033,10 +1025,6 @@ msgstr "(sebelum/selepas)"
 #. Template: AgentITSMChangeSearch
 msgid "(between)"
 msgstr "(diantara)"
-
-#. Template: AgentITSMChangeSearchResultPrint
-msgid "WorkOrders"
-msgstr "Perintah Kerja"
 
 #. Template: AgentITSMChangeTemplate
 msgid "Save Change as Template"
@@ -1256,6 +1244,26 @@ msgstr "Padam aturan kerja asal (dan perubahan sekeliling)"
 msgid "Workorder Information"
 msgstr "Informasi Perintah Kerja"
 
+#. Perl Module: Kernel/Modules/AgentITSMChangePIR.pm
+msgid "PIR"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePSA.pm
+msgid "PSA"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
+msgid "WorkOrders"
+msgstr "Perintah Kerja"
+
+#. Perl Module: Kernel/Modules/AgentITSMWorkOrderHistory.pm
+msgid "WorkOrderHistory::"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/ToolBar/MyWorkOrders.pm
+msgid "My Work Orders"
+msgstr ""
+
 #. SysConfig
 msgid ""
 "A list of the agents who have permission to take workorders. Key is a login "
@@ -1269,8 +1277,12 @@ msgid ""
 msgstr "Satu senarai status pesanan kerja, di mana Masa Mula sebenar perintah kerja akan ditetapkan jika ia adalah kosong pada ketika ini."
 
 #. SysConfig
-msgid "Admin of notification rules."
-msgstr "Admin peraturan pemberitahuan"
+msgid "Add a change from template."
+msgstr ""
+
+#. SysConfig
+msgid "Add a change."
+msgstr ""
 
 #. SysConfig
 msgid "Admin of the CIP matrix."
@@ -1313,8 +1325,28 @@ msgid ""
 msgstr "Waktu cache dalam minit untuk pengurusan change. Lalai: 5 hari (7200 minit)."
 
 #. SysConfig
+msgid "Change History."
+msgstr ""
+
+#. SysConfig
+msgid "Change Involved Persons."
+msgstr ""
+
+#. SysConfig
 msgid "Change Overview \"Small\" Limit"
 msgstr "Tinjauan Change Had \"Kecil\""
+
+#. SysConfig
+msgid "Change Print."
+msgstr ""
+
+#. SysConfig
+msgid "Change Schedule."
+msgstr ""
+
+#. SysConfig
+msgid "Change Zoom."
+msgstr ""
 
 #. SysConfig
 msgid "Change and WorkOrder templates edited by this user."
@@ -1329,10 +1361,22 @@ msgid "Change search backend router of the agent interface."
 msgstr "Tukar router carian backend antara muka ejen."
 
 #. SysConfig
+msgid "Change-Area"
+msgstr ""
+
+#. SysConfig
 msgid ""
 "Configures how often the notifications are sent when planned the start time "
 "or other time values have been reached/passed."
 msgstr "Dikonfigurasi berapa kerap pemberitahuan akan dihantar apabila merancang masa mula atau nilai masa lain telah mencapai / diluluskan."
+
+#. SysConfig
+msgid "Create a change (from template) from this ticket!"
+msgstr ""
+
+#. SysConfig
+msgid "Create and manage ITSM Change Management notifications."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -1834,6 +1878,18 @@ msgid "Defines whether notifications should be sent."
 msgstr "Mentakrifkan sama ada pemberitahuan hendaklah dihantar."
 
 #. SysConfig
+msgid "Delete Change"
+msgstr ""
+
+#. SysConfig
+msgid "Delete a change."
+msgstr ""
+
+#. SysConfig
+msgid "Details of a change history entry."
+msgstr ""
+
+#. SysConfig
 msgid ""
 "Determines if an agent can exchange the X-axis of a stat if he generates "
 "one."
@@ -1929,6 +1985,70 @@ msgid ""
 msgstr "Modul acara MedanDinamik untuk mengendalikan maklumat keadaan jika medan dinamik ditambah, dikemaskini atau dihapuskan."
 
 #. SysConfig
+msgid "Edit a change."
+msgstr ""
+
+#. SysConfig
+msgid "Forward schedule of changes. Overview over approved changes."
+msgstr ""
+
+#. SysConfig
+msgid "ITSM Change CAB Templates."
+msgstr ""
+
+#. SysConfig
+msgid "ITSM Change Condition Edit."
+msgstr ""
+
+#. SysConfig
+msgid "ITSM Change Condition Overview."
+msgstr ""
+
+#. SysConfig
+msgid "ITSM Change Management Notifications"
+msgstr ""
+
+#. SysConfig
+msgid "ITSM Change Manager Overview."
+msgstr ""
+
+#. SysConfig
+msgid "ITSM Change PIR Overview."
+msgstr ""
+
+#. SysConfig
+msgid "ITSM MyCAB Overview."
+msgstr ""
+
+#. SysConfig
+msgid "ITSM MyChanges Overview."
+msgstr ""
+
+#. SysConfig
+msgid "ITSM MyWorkorders Overview."
+msgstr ""
+
+#. SysConfig
+msgid "ITSM Template Delete."
+msgstr ""
+
+#. SysConfig
+msgid "ITSM Template Edit CAB."
+msgstr ""
+
+#. SysConfig
+msgid "ITSM Template Edit Content."
+msgstr ""
+
+#. SysConfig
+msgid "ITSM Template Edit."
+msgstr ""
+
+#. SysConfig
+msgid "ITSM Template Overview."
+msgstr ""
+
+#. SysConfig
 msgid "ITSM event module deletes the history of changes."
 msgstr "ITSM modul acara memadam sejarah perubahan."
 
@@ -1985,6 +2105,14 @@ msgid ""
 msgstr "Fail Log untuk kaunter perubahan ITSM. Fail ini digunakan untuk mewujudkan nombor perubahan."
 
 #. SysConfig
+msgid "Lookup of CAB members for autocompletion."
+msgstr ""
+
+#. SysConfig
+msgid "Lookup of agents, used for autocompletion."
+msgstr ""
+
+#. SysConfig
 msgid ""
 "Module to check if WorkOrderAdd or WorkOrderAddFromTemplate should be "
 "permitted."
@@ -2025,8 +2153,8 @@ msgid ""
 msgstr "Modul untuk menunjukkan pautan untuk membuat perubahan dari tiket ini. Tiket akan secara automatik dikaitkan dengan perubahan baru."
 
 #. SysConfig
-msgid "Notification (ITSM Change Management)"
-msgstr "Pemberitahuan (Pengurusan Perubahan ITSM)"
+msgid "Move Time Slot."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -2034,6 +2162,10 @@ msgid ""
 "defined in \"ITSMChange::AddChangeLinkTicketTypes\" if the feature "
 "\"Ticket::Acl::Module###200-Ticket::Acl::Module\" is enabled."
 msgstr "Hanya pengguna kumpulan-kumpulan ini mempunyai kebenaran untuk menggunakan jenis tiket seperti yang ditakrifkan dalam \"ITSMChange :: AddChangeLinkTicketTypes\" jika ciri \"Tiket :: ACL :: Modul # # # 200-Tiket :: ACL :: Modul\" diaktifkan."
+
+#. SysConfig
+msgid "Overview over all Changes."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -2052,6 +2184,16 @@ msgid ""
 "Presents a link in the menu to show the involved persons in a change, in the"
 " zoom view of such change in the agent interface."
 msgstr "Hadir pautan dalam menu untuk menunjukkan orang-orang yang terlibat dalam perubahan, dalam pandangan zoom perubahan dalam antara muka ejen"
+
+#. SysConfig
+msgid "Projected Service Availability (PSA)"
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Projected Service Availability (PSA) of changes. Overview of approved "
+"changes and their services."
+msgstr ""
 
 #. SysConfig
 msgid "Required privileges in order for an agent to take a workorder."
@@ -2207,8 +2349,26 @@ msgid "Required privileges to write a report for the workorder."
 msgstr "Keistimewaan yang diperlukan untuk menulis laporan untuk mendapatkan perintah kerja."
 
 #. SysConfig
+msgid "Reset a change and its workorders."
+msgstr ""
+
+#. SysConfig
+msgid "Reset change and its workorders"
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Run task to check if specific times have been in reached in changes and "
+"workorders."
+msgstr ""
+
+#. SysConfig
 msgid "Screen after creating a workorder"
 msgstr "Skrin selepas mencipta urutankerja."
+
+#. SysConfig
+msgid "Search Changes."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -2402,6 +2562,14 @@ msgid ""
 msgstr "Simpan change dan urutankerja ids dan id templat sepadan, sementara pengguna mengedit templat."
 
 #. SysConfig
+msgid "Take Workorder."
+msgstr ""
+
+#. SysConfig
+msgid "Template."
+msgstr ""
+
+#. SysConfig
 msgid ""
 "The identifier for a change, e.g. Change#, MyChange#. The default is "
 "Change#."
@@ -2428,3 +2596,47 @@ msgid ""
 "Types of tickets, where in the ticket zoom view a link to add a change will "
 "be displayed."
 msgstr "Jenis-jenis tiket, di mana dalam zoom tiket melihat pautan untuk menambah perubahan akan dipaparkan."
+
+#. SysConfig
+msgid "Workorder Add (from template)."
+msgstr ""
+
+#. SysConfig
+msgid "Workorder Add."
+msgstr ""
+
+#. SysConfig
+msgid "Workorder Agent."
+msgstr ""
+
+#. SysConfig
+msgid "Workorder Delete."
+msgstr ""
+
+#. SysConfig
+msgid "Workorder Edit."
+msgstr ""
+
+#. SysConfig
+msgid "Workorder History Zoom."
+msgstr ""
+
+#. SysConfig
+msgid "Workorder History."
+msgstr ""
+
+#. SysConfig
+msgid "Workorder Report."
+msgstr ""
+
+#. SysConfig
+msgid "Workorder Zoom."
+msgstr ""
+
+#. SysConfig
+msgid "once"
+msgstr ""
+
+#. SysConfig
+msgid "regularly"
+msgstr ""
