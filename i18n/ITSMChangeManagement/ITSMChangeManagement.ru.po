@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-04-29 13:18+0000\n"
-"PO-Revision-Date: 2016-04-29 11:21+0000\n"
+"POT-Creation-Date: 2016-04-29 13:25+0000\n"
+"PO-Revision-Date: 2016-04-29 11:24+0000\n"
 "Last-Translator: Sergey Stepanov <Stepanov.SA@bashkortostan.ru>\n"
 "Language-Team: Russian (http://www.transifex.com/otrs/OTRS/language/ru/)\n"
 "MIME-Version: 1.0\n"
@@ -713,7 +713,7 @@ msgstr "из"
 
 #. Template: AdminITSMStateMachine
 msgid "to"
-msgstr ""
+msgstr "по"
 
 #. Template: AgentITSMChangeAdd
 msgid "Add Change"
@@ -849,7 +849,7 @@ msgstr "Вы действительно желаете удалить это и�
 
 #. Template: AgentITSMChangeHistory
 msgid "History of"
-msgstr ""
+msgstr "История для"
 
 #. Template: AgentITSMChangeHistory
 msgid "Workorder"
@@ -1247,11 +1247,11 @@ msgstr "Информация о задаче"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangePIR.pm
 msgid "PIR"
-msgstr ""
+msgstr "PIR"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangePSA.pm
 msgid "PSA"
-msgstr ""
+msgstr "PSA"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
 msgid "WorkOrders"
@@ -1263,7 +1263,7 @@ msgstr ""
 
 #. Perl Module: Kernel/Output/HTML/ToolBar/MyWorkOrders.pm
 msgid "My Work Orders"
-msgstr ""
+msgstr "Мои Задачи"
 
 #. SysConfig
 msgid ""
@@ -1327,7 +1327,7 @@ msgstr "Время кэширования в минутах для управл�
 
 #. SysConfig
 msgid "Change History."
-msgstr ""
+msgstr "История изменений."
 
 #. SysConfig
 msgid "Change Involved Persons."
@@ -1343,7 +1343,7 @@ msgstr ""
 
 #. SysConfig
 msgid "Change Schedule."
-msgstr ""
+msgstr "Изменение расписания."
 
 #. SysConfig
 msgid "Change Zoom."
@@ -1363,7 +1363,7 @@ msgstr "Изменить источник поиска (backend) в интерф
 
 #. SysConfig
 msgid "Change-Area"
-msgstr ""
+msgstr "Область изменений"
 
 #. SysConfig
 msgid ""
@@ -1880,11 +1880,11 @@ msgstr "Задает, следует ли отправлять уведомле�
 
 #. SysConfig
 msgid "Delete Change"
-msgstr ""
+msgstr "Удалить изменение"
 
 #. SysConfig
 msgid "Delete a change."
-msgstr ""
+msgstr "Удалить изменение."
 
 #. SysConfig
 msgid "Details of a change history entry."
@@ -1987,7 +1987,7 @@ msgstr "Модуль управления событиями для динами
 
 #. SysConfig
 msgid "Edit a change."
-msgstr ""
+msgstr "Редактировать изменение."
 
 #. SysConfig
 msgid "Forward schedule of changes. Overview over approved changes."
@@ -2568,7 +2568,7 @@ msgstr ""
 
 #. SysConfig
 msgid "Template."
-msgstr ""
+msgstr "Шаблон."
 
 #. SysConfig
 msgid ""

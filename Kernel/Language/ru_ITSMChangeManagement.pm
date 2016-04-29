@@ -205,7 +205,7 @@ sub Data {
     $Self->{Translation}->{'Edit a state transition for'} = 'Редактировать состояние перехода для';
     $Self->{Translation}->{'Do you really want to delete the state transition'} = 'Вы действительно хототе удалить состояние перехода';
     $Self->{Translation}->{'from'} = 'из';
-    $Self->{Translation}->{'to'} = '';
+    $Self->{Translation}->{'to'} = 'по';
 
     # Template: AgentITSMChangeAdd
     $Self->{Translation}->{'Add Change'} = 'Добавить изменение';
@@ -253,7 +253,7 @@ sub Data {
     $Self->{Translation}->{'Do you really want to delete this change?'} = 'Вы действительно желаете удалить это изменение?';
 
     # Template: AgentITSMChangeHistory
-    $Self->{Translation}->{'History of'} = '';
+    $Self->{Translation}->{'History of'} = 'История для';
     $Self->{Translation}->{'Workorder'} = 'Задача';
     $Self->{Translation}->{'Show details'} = 'Показать подробно';
     $Self->{Translation}->{'Show workorder'} = 'Показать задачу';
@@ -402,10 +402,10 @@ sub Data {
     $Self->{Translation}->{'Workorder Information'} = 'Информация о задаче';
 
     # Perl Module: Kernel/Modules/AgentITSMChangePIR.pm
-    $Self->{Translation}->{'PIR'} = '';
+    $Self->{Translation}->{'PIR'} = 'PIR';
 
     # Perl Module: Kernel/Modules/AgentITSMChangePSA.pm
-    $Self->{Translation}->{'PSA'} = '';
+    $Self->{Translation}->{'PSA'} = 'PSA';
 
     # Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
     $Self->{Translation}->{'WorkOrders'} = 'Задачи';
@@ -414,7 +414,7 @@ sub Data {
     $Self->{Translation}->{'WorkOrderHistory::'} = '';
 
     # Perl Module: Kernel/Output/HTML/ToolBar/MyWorkOrders.pm
-    $Self->{Translation}->{'My Work Orders'} = '';
+    $Self->{Translation}->{'My Work Orders'} = 'Мои Задачи';
 
     # SysConfig
     $Self->{Translation}->{'A list of the agents who have permission to take workorders. Key is a login name. Content is 0 or 1.'} =
@@ -437,16 +437,16 @@ sub Data {
         'Время кэширования в минутах для панели управления изменениями. По умолчанию: 3 часа (180 минут).';
     $Self->{Translation}->{'Cache time in minutes for the change management. Default: 5 days (7200 minutes).'} =
         'Время кэширования в минутах для управлени изменениями. По умолчанию: 5 дней (7200 минут).';
-    $Self->{Translation}->{'Change History.'} = '';
+    $Self->{Translation}->{'Change History.'} = 'История изменений.';
     $Self->{Translation}->{'Change Involved Persons.'} = '';
     $Self->{Translation}->{'Change Overview "Small" Limit'} = 'Изменить количество строк/записей при просмотре изменений в формате Small.';
     $Self->{Translation}->{'Change Print.'} = '';
-    $Self->{Translation}->{'Change Schedule.'} = '';
+    $Self->{Translation}->{'Change Schedule.'} = 'Изменение расписания.';
     $Self->{Translation}->{'Change Zoom.'} = '';
     $Self->{Translation}->{'Change and WorkOrder templates edited by this user.'} = 'Шаблоны Изменения и Задачи отредактированные пользователем.';
     $Self->{Translation}->{'Change limit per page for Change Overview "Small"'} = 'Изменить количество записей на странице при просмотре изменений в формате Small.';
     $Self->{Translation}->{'Change search backend router of the agent interface.'} = 'Изменить источник поиска (backend) в интерфейсе агента.';
-    $Self->{Translation}->{'Change-Area'} = '';
+    $Self->{Translation}->{'Change-Area'} = 'Область изменений';
     $Self->{Translation}->{'Configures how often the notifications are sent when planned the start time or other time values have been reached/passed.'} =
         'Задает частоту отправки уведомлений, когда запланированное время начала или другие времеНные значения достигнуты/прошли.';
     $Self->{Translation}->{'Create a change (from template) from this ticket!'} = '';
@@ -617,8 +617,8 @@ sub Data {
     $Self->{Translation}->{'Defines the workorder types that will be used to show the PIR overview.'} =
         'Задает типы задач, которые будут использоваться при просмотре PIR.';
     $Self->{Translation}->{'Defines whether notifications should be sent.'} = 'Задает, следует ли отправлять уведомления.';
-    $Self->{Translation}->{'Delete Change'} = '';
-    $Self->{Translation}->{'Delete a change.'} = '';
+    $Self->{Translation}->{'Delete Change'} = 'Удалить изменение';
+    $Self->{Translation}->{'Delete a change.'} = 'Удалить изменение.';
     $Self->{Translation}->{'Details of a change history entry.'} = '';
     $Self->{Translation}->{'Determines if an agent can exchange the X-axis of a stat if he generates one.'} =
         'Задает возможность агенту поменять ось Х на графике при его создании.';
@@ -652,7 +652,7 @@ sub Data {
         'Динамические поля отображаемые на экране просмотра задачи в интерфейсе агента. Возможные значения: 0 = не показывать, 1 = показывать.';
     $Self->{Translation}->{'DynamicField event module to handle the update of conditions if dynamic fields are added, updated or deleted.'} =
         'Модуль управления событиями для динамических полей при изменении Условий, если динамические поля добавляются, изменяются или удаляются.';
-    $Self->{Translation}->{'Edit a change.'} = '';
+    $Self->{Translation}->{'Edit a change.'} = 'Редактировать изменение.';
     $Self->{Translation}->{'Forward schedule of changes. Overview over approved changes.'} =
         '';
     $Self->{Translation}->{'ITSM Change CAB Templates.'} = '';
@@ -824,7 +824,7 @@ sub Data {
     $Self->{Translation}->{'Stores change and workorder ids and their corresponding template id, while a user is editing a template.'} =
         'Сохраняет идентфикаторы - id\'s изменениия и задачи и их соответствующие идентификаторы шаблонов во время редактирования их пользователем.';
     $Self->{Translation}->{'Take Workorder.'} = '';
-    $Self->{Translation}->{'Template.'} = '';
+    $Self->{Translation}->{'Template.'} = 'Шаблон.';
     $Self->{Translation}->{'The identifier for a change, e.g. Change#, MyChange#. The default is Change#.'} =
         'Индентификатор для изменения, например Change#, MyChange#. The default is Change#.';
     $Self->{Translation}->{'The identifier for a workorder, e.g. Workorder#, MyWorkorder#. The default is Workorder#.'} =

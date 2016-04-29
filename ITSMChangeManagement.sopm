@@ -22,6 +22,7 @@
         <File Permission="644" Location="Kernel/Language/en_ITSMChangeManagement.pm"/>
         <File Permission="644" Location="Kernel/Language/es_ITSMChangeManagement.pm"/>
         <File Permission="644" Location="Kernel/Language/fa_ITSMChangeManagement.pm"/>
+        <File Permission="644" Location="Kernel/Language/hu_ITSMChangeManagement.pm"/>
         <File Permission="644" Location="Kernel/Language/ja_ITSMChangeManagement.pm"/>
         <File Permission="644" Location="Kernel/Language/ms_ITSMChangeManagement.pm"/>
         <File Permission="644" Location="Kernel/Language/nb_NO_ITSMChangeManagement.pm"/>
