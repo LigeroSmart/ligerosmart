@@ -11,6 +11,7 @@ package Kernel::Modules::AgentTimeAccountingSetting;
 use strict;
 use warnings;
 
+use Kernel::Language qw(Translatable);
 use Time::Local;
 
 our $ObjectManagerDisabled = 1;
@@ -86,7 +87,8 @@ sub Run {
             if ( !$TimeAccountingObject->UserSettingsUpdate(%GetParam) ) {
 
                 return $LayoutObject->ErrorScreen(
-                    Message => 'Unable to update user settings! Please contact your administrator.',
+                    Message => Translatable('Unable to update user settings!'),
+                    Comment => Translatable('Please contact your administrator.'),
                 );
             }
             if ( $ParamObject->GetParam( Param => 'AddPeriod' ) ) {
@@ -174,7 +176,7 @@ sub Run {
                 my $Output = $LayoutObject->Header();
                 $Output .= $LayoutObject->NavigationBar();
                 $Output .= $LayoutObject->Notify(
-                    Info => 'Project added!',
+                    Info => Translatable('Project added!'),
                 );
                 $Output .= $LayoutObject->Output(
                     TemplateFile => 'AgentTimeAccountingSetting',
@@ -288,7 +290,7 @@ sub Run {
                 my $Output = $LayoutObject->Header();
                 $Output .= $LayoutObject->NavigationBar();
                 $Output .= $LayoutObject->Notify(
-                    Info => 'Project updated!',
+                    Info => Translatable('Project updated!'),
                 );
                 $Output .= $LayoutObject->Output(
                     TemplateFile => 'AgentTimeAccountingSetting',
@@ -396,7 +398,7 @@ sub Run {
                 my $Output = $LayoutObject->Header();
                 $Output .= $LayoutObject->NavigationBar();
                 $Output .= $LayoutObject->Notify(
-                    Info => 'Task added!',
+                    Info => Translatable('Task added!'),
                 );
                 $Output .= $LayoutObject->Output(
                     TemplateFile => 'AgentTimeAccountingSetting',
@@ -518,7 +520,7 @@ sub Run {
                 my $Output = $LayoutObject->Header();
                 $Output .= $LayoutObject->NavigationBar();
                 $Output .= $LayoutObject->Notify(
-                    Info => 'Task updated!',
+                    Info => Translatable('Task updated!'),
                 );
                 $Output .= $LayoutObject->Output(
                     TemplateFile => 'AgentTimeAccountingSetting',
@@ -572,7 +574,7 @@ sub Run {
         if ( !$NewUserID ) {
 
             return $LayoutObject->ErrorScreen(
-                Message => 'The UserID is not valid!',
+                Message => Translatable('The UserID is not valid!'),
             );
         }
 
@@ -592,7 +594,7 @@ sub Run {
             if ( !$Success ) {
 
                 return $LayoutObject->ErrorScreen(
-                    Message => 'Can\'t insert user data!',
+                    Message => Translatable('Can\'t insert user data!'),
                 );
             }
 
@@ -652,7 +654,7 @@ sub Run {
         if ( !$ID ) {
 
             return $LayoutObject->ErrorScreen(
-                Message => 'The UserID is not valid!',
+                Message => Translatable('The UserID is not valid!'),
             );
         }
 
@@ -670,7 +672,8 @@ sub Run {
             if ( !$Success ) {
 
                 return $LayoutObject->ErrorScreen(
-                    Message => 'Unable to add time period! Please contact your administrator.',
+                    Message => Translatable('Unable to add time period!'),
+                    Comment => Translatable('Please contact your administrator.'),
                 );
             }
         }
@@ -737,7 +740,7 @@ sub Run {
     # build output
     $Self->_SettingOverview();
     my $Output = $LayoutObject->Header(
-        Title => 'Setting',
+        Title => Translatable('Setting'),
     );
     $Output .= $LayoutObject->NavigationBar();
 
@@ -745,10 +748,10 @@ sub Run {
     if ($Note) {
         $Output .= $Note eq 'EditUser'
             ? $LayoutObject->Notify(
-            Info => 'User updated!',
+            Info => Translatable('User updated!'),
             )
             : $LayoutObject->Notify(
-            Info => 'User added!',
+            Info => Translatable('User added!'),
             );
     }
 
@@ -839,8 +842,8 @@ sub _ProjectSettingsEdit {
 
     # define status list
     my %StatusList = (
-        1 => 'valid',
-        0 => 'invalid',
+        1 => Translatable('valid'),
+        0 => Translatable('invalid'),
     );
 
     my $ProjectStatus = 1;
@@ -983,8 +986,8 @@ sub _SettingOverview {
 
     # define status list
     my %StatusList = (
-        1 => 'valid',
-        0 => 'invalid',
+        1 => Translatable('valid'),
+        0 => Translatable('invalid'),
     );
 
     # show list of available projects (if any)
@@ -1132,8 +1135,8 @@ sub _TaskSettingsEdit {
 
     # define status list
     my %StatusList = (
-        1 => 'valid',
-        0 => 'invalid',
+        1 => Translatable('valid'),
+        0 => Translatable('invalid'),
     );
 
     my $TaskStatus = 1;
@@ -1217,8 +1220,8 @@ sub _UserSettingsEdit {
 
     # define status list
     my %StatusList = (
-        1 => 'valid',
-        0 => 'invalid',
+        1 => Translatable('valid'),
+        0 => Translatable('invalid'),
     );
 
     # get config object

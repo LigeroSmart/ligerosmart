@@ -12,6 +12,7 @@ use strict;
 use warnings;
 
 use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD check_date);
+use Kernel::Language qw(Translatable);
 use Time::Local;
 
 use Kernel::System::VariableCheck qw(:all);
@@ -68,7 +69,7 @@ sub Run {
         if ( !$Param{ProjectID} ) {
 
             return $LayoutObject->ErrorScreen(
-                Message => 'ReportingProject: Need ProjectID'
+                Message => Translatable('ReportingProject: Need ProjectID')
             );
         }
 
@@ -261,7 +262,7 @@ sub Run {
 
         # build output
         my $Output = $LayoutObject->Header(
-            Title => 'ReportingProject',
+            Title => Translatable('Reporting Project'),
         );
         $Output .= $LayoutObject->NavigationBar();
         $Output .= $LayoutObject->Output(
@@ -517,7 +518,7 @@ sub Run {
 
     # build output
     my $Output = $LayoutObject->Header(
-        Title => 'Reporting',
+        Title => Translatable('Reporting'),
     );
     $Output .= $LayoutObject->NavigationBar();
     $Output .= $LayoutObject->Output(

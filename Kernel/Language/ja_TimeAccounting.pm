@@ -15,20 +15,6 @@ use utf8;
 sub Data {
     my $Self = shift;
 
-    # Template: AAATimeAccounting
-    $Self->{Translation}->{'Time Accounting'} = 'タイムアカウンティング';
-    $Self->{Translation}->{'Show valid projects'} = '有効なプロジェクトを表示する';
-    $Self->{Translation}->{'Show all projects'} = 'すべてのプロジェクトを表示する';
-    $Self->{Translation}->{'TimeAccounting'} = 'タイムアカウンティング';
-    $Self->{Translation}->{'Reporting'} = '報告する';
-    $Self->{Translation}->{'Please insert your working hours!'} = '勤務実績を入力してください';
-    $Self->{Translation}->{'Successful insert!'} = '入力に成功しました!';
-    $Self->{Translation}->{'Error while inserting multiple dates!'} = '複数日を入力中にエラーが発生しました !';
-    $Self->{Translation}->{'Successfully inserted entries for several dates!'} = '複数日にわたる稼働実績の入力に成功しました !';
-    $Self->{Translation}->{'Entered date was invalid! Date was changed to today.'} = '入力された日付は不正です ! 日付は本日に変更されました';
-    $Self->{Translation}->{'Last Selected Projects.'} = '';
-    $Self->{Translation}->{'All Projects.'} = '';
-
     # Template: AgentTimeAccountingDelete
     $Self->{Translation}->{'Do you really want to delete the Time Accounting of this day?'} =
         '本当に該当日の情報を削除しますか？';
@@ -56,14 +42,14 @@ sub Data {
     $Self->{Translation}->{'Project'} = 'プロジェクト';
     $Self->{Translation}->{'Task'} = 'タスク';
     $Self->{Translation}->{'Remark'} = '注釈';
-    $Self->{Translation}->{'Please add a remark with more than 8 characters!.'} = '8文字以上の注釈を追加してください。';
+    $Self->{Translation}->{'Please add a remark with more than 8 characters!'} = '';
     $Self->{Translation}->{'Start Time'} = 'スタート時間';
     $Self->{Translation}->{'Negative times are not allowed.'} = '－（マイナス）の時間は入力できません';
     $Self->{Translation}->{'Repeated hours are not allowed. Start time matches another interval.'} =
         '繰り返された時間は許可されません。開始時刻は別の間隔と一致します。';
     $Self->{Translation}->{'Invalid format! Please enter a time with the format HH:MM.'} = '不正なフォーマットです! 時間の入力はHH:MMのフォーマットに従ってください';
     $Self->{Translation}->{'24:00 is only permitted as end time.'} = '24:00は終了時間としてのみ入力可能です';
-    $Self->{Translation}->{'Invalid time! A day has only 24 hours.'} = '不正な時間です! 一日は24です';
+    $Self->{Translation}->{'Invalid time! A day has only 24 hours.'} = '不正な時間です! 1日は24時間です';
     $Self->{Translation}->{'End Time'} = '終了時間';
     $Self->{Translation}->{'End time must be after start time.'} = '終了時間の前に開始時間を設定することはできません。';
     $Self->{Translation}->{'Repeated hours are not allowed. End time matches another interval.'} =
@@ -141,7 +127,7 @@ sub Data {
     $Self->{Translation}->{'Filter for Projects'} = 'プロジェクトの絞り込み';
     $Self->{Translation}->{'Filter for Tasks'} = 'タスクの絞り込み';
     $Self->{Translation}->{'Filter for Users'} = 'ユーザの絞り込み';
-    $Self->{Translation}->{'Time periods can not be deleted.'} = '';
+    $Self->{Translation}->{'Time periods can not be deleted.'} = '時間は削除できません';
     $Self->{Translation}->{'Project List'} = 'プロジェクト一覧';
     $Self->{Translation}->{'Task List'} = 'タスク一覧';
     $Self->{Translation}->{'Add Task'} = '新規タスクの追加';
@@ -175,17 +161,48 @@ sub Data {
     $Self->{Translation}->{'No data found for this day.'} = '該当するデータがありません。';
 
     # Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
-    $Self->{Translation}->{'Last Projects'} = '';
-    $Self->{Translation}->{'Incomplete Working Days'} = '';
-    $Self->{Translation}->{'Last Selected Projects'} = '';
-    $Self->{Translation}->{'All Projects'} = '';
+    $Self->{Translation}->{'Can\'t insert Working Units!'} = '';
+    $Self->{Translation}->{'Last Projects'} = '前プロジェクト';
+    $Self->{Translation}->{'Can\'t save settings, because a day has only 24 hours!'} = '';
+    $Self->{Translation}->{'Can\'t delete Working Units!'} = '';
+    $Self->{Translation}->{'This Date is out of limit, but you haven\'t insert this day yet, so you get one(!) chance to insert'} =
+        '';
+    $Self->{Translation}->{'Incomplete Working Days'} = '未完了の可動日';
+    $Self->{Translation}->{'Please insert your working hours!'} = '勤務実績を入力してください';
+    $Self->{Translation}->{'Successful insert!'} = '入力に成功しました!';
+    $Self->{Translation}->{'Error while inserting multiple dates!'} = '複数日を入力中にエラーが発生しました !';
+    $Self->{Translation}->{'Successfully inserted entries for several dates!'} = '複数日にわたる稼働実績の入力に成功しました !';
+    $Self->{Translation}->{'Entered date was invalid! Date was changed to today.'} = '入力された日付は不正です ! 日付は本日に変更されました';
+    $Self->{Translation}->{'No time period configured, or the specified date is outside of the defined time periods. Please contact the time accounting admin to update your time periods!'} =
+        '';
+    $Self->{Translation}->{'Last Selected Projects'} = '前回選択されたプロジェクト';
+    $Self->{Translation}->{'All Projects'} = '全プロジェクト';
+
+    # Perl Module: Kernel/Modules/AgentTimeAccountingReporting.pm
+    $Self->{Translation}->{'ReportingProject: Need ProjectID'} = '';
+    $Self->{Translation}->{'Reporting Project'} = '';
+    $Self->{Translation}->{'Reporting'} = '報告する';
 
     # Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
-    $Self->{Translation}->{'New User'} = '';
-    $Self->{Translation}->{'Period Status'} = '';
+    $Self->{Translation}->{'Unable to update user settings!'} = '';
+    $Self->{Translation}->{'Please contact your administrator.'} = 'システム管理者に連絡してください。';
+    $Self->{Translation}->{'Project added!'} = '';
+    $Self->{Translation}->{'Project updated!'} = '';
+    $Self->{Translation}->{'Task added!'} = '';
+    $Self->{Translation}->{'Task updated!'} = '';
+    $Self->{Translation}->{'The UserID is not valid!'} = '';
+    $Self->{Translation}->{'Can\'t insert user data!'} = '';
+    $Self->{Translation}->{'Unable to add time period!'} = '';
+    $Self->{Translation}->{'User updated!'} = '';
+    $Self->{Translation}->{'User added!'} = '';
+    $Self->{Translation}->{'New User'} = '新規ユーザー';
+    $Self->{Translation}->{'Period Status'} = '期間の状態';
+
+    # Perl Module: Kernel/Modules/AgentTimeAccountingView.pm
+    $Self->{Translation}->{'View: Need %s!'} = '';
 
     # Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
-    $Self->{Translation}->{'Incomplete working days'} = '';
+    $Self->{Translation}->{'Incomplete working days'} = '未完了の可動日';
 
     # SysConfig
     $Self->{Translation}->{'Agent interface notification module to see the number of incomplete working days for the user.'} =
@@ -205,24 +222,25 @@ sub Data {
         '「注釈」エントリーを必要とする項目を定義します。 もしプロジェクト名がここで設定した正規表現にマッチする場合、「注釈｝は必須項目となります。※正規表現にはSMXパラメータを使います。';
     $Self->{Translation}->{'Determines if the statistics module may generate time accounting information.'} =
         '統計モジュールがタイムアカウンティング情報を生成するか選択してください';
-    $Self->{Translation}->{'Edit time accounting settings'} = '時間会計の設定を編集';
-    $Self->{Translation}->{'Edit time record'} = 'タイムレコードを編集';
+    $Self->{Translation}->{'Edit time accounting settings.'} = '';
+    $Self->{Translation}->{'Edit time record.'} = '';
     $Self->{Translation}->{'For how many days ago you can insert working units.'} = '何日前からワーキング・ユニットの新規登録が可能であるかの設定です。';
     $Self->{Translation}->{'If enabled, only users that has added working time to the selected project are shown.'} =
         '有効時には、該当のプロジェクトに稼働時間を投入しているユーザーのみ表示されます';
     $Self->{Translation}->{'If enabled, the dropdown elements in the edit screen are changed to modernized autocompletion fields.'} =
-        '';
+        '有効時には、編集画面のドロップダウンエレメントは自動フィールドに置き換えられます。';
     $Self->{Translation}->{'If enabled, the filter for the previous projects can be used instead two list of projects (last and all ones). It could be used only if TimeAccounting::EnableAutoCompletion is enabled.'} =
-        '';
+        '有効時には以前のプロジェクトフィルターを選択することが可能です(通常は前回およびすべて)。この項目は TimeAccounting::EnableAutoCompletion が有効になっている時のみ利用可能';
     $Self->{Translation}->{'If enabled, the filter for the previous projects is active by default if there are the previous projects. It could be used only if EnableAutoCompletion and TimeAccounting::UseFilter are enabled.'} =
-        '';
+        '有効時には「以前のプロジェクト」が存在する時は、以前のプロジェクトフィルターがデフォルト値になります。この項目は TimeAccounting::UseFilter が有効になっている時のみ利用可能';
     $Self->{Translation}->{'If enabled, the user is allowed to enter "on vacation leave", "on sick leave" and "on overtime leave" to multiple dates at once.'} =
         '有効にすれば一回の編集で、複数の日に渡り「休暇」「病欠」「代休」が選択できます';
     $Self->{Translation}->{'Maximum number of working days after which the working units have to be inserted.'} =
         '1つ以上のワーキング・ユニットを設定すべき最大の稼働日数。';
     $Self->{Translation}->{'Maximum number of working days without working units entry after which a warning will be shown.'} =
         '警告が表示されることなくエントリ出来る、営業日の最大日数。';
-    $Self->{Translation}->{'Project time reporting'} = 'プロジェクト別時間会計レポート';
+    $Self->{Translation}->{'Overview.'} = '';
+    $Self->{Translation}->{'Project time reporting.'} = '';
     $Self->{Translation}->{'Regular expressions for constraining action list according to selected project. Key contains regular expression for project(s), content contains regular expressions for action(s).'} =
         'プロジェクトによって行動リストを絞り込むための正規表現。「鍵」ではプロジェクトに対する正規表現を、「内容」では`行動`に対する正規表現を指定する。';
     $Self->{Translation}->{'Regular expressions for constraining project list according to user groups. Key contains regular expression for project(s), content contains comma separated list of groups.'} =

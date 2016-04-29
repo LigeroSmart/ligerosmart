@@ -60,7 +60,7 @@ sub Run {
         if ( !$Param{$Needed} ) {
 
             return $LayoutObject->ErrorScreen(
-                Message => "View: Need $Needed",
+                Message => $LayoutObject->{LanguageObject}->Translate( 'View: Need %s!', $Needed ),
             );
         }
     }

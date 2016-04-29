@@ -11,6 +11,8 @@ package Kernel::Output::HTML::Notification::TimeAccounting;
 use strict;
 use warnings;
 
+use Kernel::Language qw(Translatable);
+
 our @ObjectDependencies = (
     'Kernel::System::Time',
     'Kernel::System::TimeAccounting',
@@ -58,7 +60,7 @@ sub Run {
 
             return $Kernel::OM->Get('Kernel::Output::HTML::Layout')->Notify(
                 Priority => 'Error',
-                Info     => 'Please insert your working hours!',
+                Info     => Translatable('Please insert your working hours!'),
             );
         }
     }

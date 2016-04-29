@@ -15,20 +15,6 @@ use utf8;
 sub Data {
     my $Self = shift;
 
-    # Template: AAATimeAccounting
-    $Self->{Translation}->{'Time Accounting'} = '';
-    $Self->{Translation}->{'Show valid projects'} = '';
-    $Self->{Translation}->{'Show all projects'} = 'Visa alla projekt';
-    $Self->{Translation}->{'TimeAccounting'} = '';
-    $Self->{Translation}->{'Reporting'} = '';
-    $Self->{Translation}->{'Please insert your working hours!'} = '';
-    $Self->{Translation}->{'Successful insert!'} = '';
-    $Self->{Translation}->{'Error while inserting multiple dates!'} = '';
-    $Self->{Translation}->{'Successfully inserted entries for several dates!'} = '';
-    $Self->{Translation}->{'Entered date was invalid! Date was changed to today.'} = '';
-    $Self->{Translation}->{'Last Selected Projects.'} = '';
-    $Self->{Translation}->{'All Projects.'} = '';
-
     # Template: AgentTimeAccountingDelete
     $Self->{Translation}->{'Do you really want to delete the Time Accounting of this day?'} =
         '';
@@ -36,32 +22,32 @@ sub Data {
     # Template: AgentTimeAccountingEdit
     $Self->{Translation}->{'Edit Time Record'} = '';
     $Self->{Translation}->{'Go to settings'} = 'Gå till inställningar';
-    $Self->{Translation}->{'Date Navigation'} = '';
-    $Self->{Translation}->{'Previous day'} = '';
-    $Self->{Translation}->{'Next day'} = '';
-    $Self->{Translation}->{'Go to this date'} = '';
+    $Self->{Translation}->{'Date Navigation'} = 'Datum-navigering';
+    $Self->{Translation}->{'Previous day'} = 'Föregående dag';
+    $Self->{Translation}->{'Next day'} = 'Nästkommande dag';
+    $Self->{Translation}->{'Go to this date'} = 'Gå till det här datumet';
     $Self->{Translation}->{'Days without entries'} = '';
-    $Self->{Translation}->{'Select all days'} = '';
+    $Self->{Translation}->{'Select all days'} = 'Välj alla dagar';
     $Self->{Translation}->{'Mass entry'} = '';
     $Self->{Translation}->{'Please choose the reason for your absence for the selected days'} =
         '';
     $Self->{Translation}->{'On vacation'} = 'På semester';
     $Self->{Translation}->{'On sick leave'} = 'Sjukledig';
     $Self->{Translation}->{'On overtime leave'} = '';
-    $Self->{Translation}->{'Please choose at least one day!'} = '';
-    $Self->{Translation}->{'Please choose a reason for absence!'} = '';
+    $Self->{Translation}->{'Please choose at least one day!'} = 'Vänligen välj åtminstone en dag!';
+    $Self->{Translation}->{'Please choose a reason for absence!'} = 'Vänligen välj en anledning för frånvaro!';
     $Self->{Translation}->{'Mass Entry'} = '';
     $Self->{Translation}->{'Required fields are marked with a "*".'} = '';
     $Self->{Translation}->{'You have to fill in start and end time or a time period.'} = '';
-    $Self->{Translation}->{'Project'} = '';
-    $Self->{Translation}->{'Task'} = '';
-    $Self->{Translation}->{'Remark'} = '';
-    $Self->{Translation}->{'Please add a remark with more than 8 characters!.'} = '';
-    $Self->{Translation}->{'Start Time'} = '';
-    $Self->{Translation}->{'Negative times are not allowed.'} = '';
+    $Self->{Translation}->{'Project'} = 'Projekt';
+    $Self->{Translation}->{'Task'} = 'Uppdrag';
+    $Self->{Translation}->{'Remark'} = 'Anmärk';
+    $Self->{Translation}->{'Please add a remark with more than 8 characters!'} = '';
+    $Self->{Translation}->{'Start Time'} = 'Starttid';
+    $Self->{Translation}->{'Negative times are not allowed.'} = 'Negativa tider är inte tillåtna.';
     $Self->{Translation}->{'Repeated hours are not allowed. Start time matches another interval.'} =
         '';
-    $Self->{Translation}->{'Invalid format! Please enter a time with the format HH:MM.'} = '';
+    $Self->{Translation}->{'Invalid format! Please enter a time with the format HH:MM.'} = 'Ogiltigt format! Vänligen fyll i en tid med formatet HH:MM.';
     $Self->{Translation}->{'24:00 is only permitted as end time.'} = '';
     $Self->{Translation}->{'Invalid time! A day has only 24 hours.'} = 'Ogiltig tid! Ett dygn har bara 24 timmar.';
     $Self->{Translation}->{'End Time'} = '';
@@ -175,14 +161,45 @@ sub Data {
     $Self->{Translation}->{'No data found for this day.'} = '';
 
     # Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+    $Self->{Translation}->{'Can\'t insert Working Units!'} = '';
     $Self->{Translation}->{'Last Projects'} = '';
+    $Self->{Translation}->{'Can\'t save settings, because a day has only 24 hours!'} = '';
+    $Self->{Translation}->{'Can\'t delete Working Units!'} = '';
+    $Self->{Translation}->{'This Date is out of limit, but you haven\'t insert this day yet, so you get one(!) chance to insert'} =
+        '';
     $Self->{Translation}->{'Incomplete Working Days'} = '';
+    $Self->{Translation}->{'Please insert your working hours!'} = 'Var vänlig fyll i dina arbetstimmar!';
+    $Self->{Translation}->{'Successful insert!'} = '';
+    $Self->{Translation}->{'Error while inserting multiple dates!'} = '';
+    $Self->{Translation}->{'Successfully inserted entries for several dates!'} = '';
+    $Self->{Translation}->{'Entered date was invalid! Date was changed to today.'} = '';
+    $Self->{Translation}->{'No time period configured, or the specified date is outside of the defined time periods. Please contact the time accounting admin to update your time periods!'} =
+        '';
     $Self->{Translation}->{'Last Selected Projects'} = '';
     $Self->{Translation}->{'All Projects'} = '';
 
+    # Perl Module: Kernel/Modules/AgentTimeAccountingReporting.pm
+    $Self->{Translation}->{'ReportingProject: Need ProjectID'} = '';
+    $Self->{Translation}->{'Reporting Project'} = '';
+    $Self->{Translation}->{'Reporting'} = 'Rapportering';
+
     # Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+    $Self->{Translation}->{'Unable to update user settings!'} = '';
+    $Self->{Translation}->{'Please contact your administrator.'} = '';
+    $Self->{Translation}->{'Project added!'} = '';
+    $Self->{Translation}->{'Project updated!'} = '';
+    $Self->{Translation}->{'Task added!'} = '';
+    $Self->{Translation}->{'Task updated!'} = '';
+    $Self->{Translation}->{'The UserID is not valid!'} = '';
+    $Self->{Translation}->{'Can\'t insert user data!'} = '';
+    $Self->{Translation}->{'Unable to add time period!'} = '';
+    $Self->{Translation}->{'User updated!'} = '';
+    $Self->{Translation}->{'User added!'} = '';
     $Self->{Translation}->{'New User'} = '';
     $Self->{Translation}->{'Period Status'} = '';
+
+    # Perl Module: Kernel/Modules/AgentTimeAccountingView.pm
+    $Self->{Translation}->{'View: Need %s!'} = '';
 
     # Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
     $Self->{Translation}->{'Incomplete working days'} = '';
@@ -205,8 +222,8 @@ sub Data {
         '';
     $Self->{Translation}->{'Determines if the statistics module may generate time accounting information.'} =
         '';
-    $Self->{Translation}->{'Edit time accounting settings'} = '';
-    $Self->{Translation}->{'Edit time record'} = '';
+    $Self->{Translation}->{'Edit time accounting settings.'} = '';
+    $Self->{Translation}->{'Edit time record.'} = '';
     $Self->{Translation}->{'For how many days ago you can insert working units.'} = '';
     $Self->{Translation}->{'If enabled, only users that has added working time to the selected project are shown.'} =
         '';
@@ -222,7 +239,8 @@ sub Data {
         '';
     $Self->{Translation}->{'Maximum number of working days without working units entry after which a warning will be shown.'} =
         '';
-    $Self->{Translation}->{'Project time reporting'} = '';
+    $Self->{Translation}->{'Overview.'} = '';
+    $Self->{Translation}->{'Project time reporting.'} = '';
     $Self->{Translation}->{'Regular expressions for constraining action list according to selected project. Key contains regular expression for project(s), content contains regular expressions for action(s).'} =
         '';
     $Self->{Translation}->{'Regular expressions for constraining project list according to user groups. Key contains regular expression for project(s), content contains comma separated list of groups.'} =

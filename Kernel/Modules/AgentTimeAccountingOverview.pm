@@ -12,6 +12,7 @@ use strict;
 use warnings;
 
 use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD check_date);
+use Kernel::Language qw(Translatable);
 use Time::Local;
 
 use Kernel::System::VariableCheck qw(:all);
@@ -175,9 +176,9 @@ sub Run {
         );
 
         $Param{Comment} = $Data{Sick}
-            ? 'Sick leave'
-            : $Data{LeaveDay} ? 'On vacation'
-            : $Data{Overtime} ? 'On overtime leave'
+            ? Translatable('Sick leave')
+            : $Data{LeaveDay} ? Translatable('On vacation')
+            : $Data{Overtime} ? Translatable('On overtime leave')
             :                   '';
 
         $Param{WorkingHours} = $Data{Total} ? sprintf( "%.2f", $Data{Total} ) : '';
@@ -339,7 +340,7 @@ sub Run {
 
     # build output
     my $Output = $LayoutObject->Header(
-        Title => 'Overview',
+        Title => Translatable('Overview'),
     );
     $Output .= $LayoutObject->NavigationBar();
     $Output .= $LayoutObject->Output(

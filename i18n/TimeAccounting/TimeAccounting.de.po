@@ -2,69 +2,24 @@
 # Translators:
 # Ettore Atalan <atalanttore@googlemail.com>, 2014-2015
 # Mainboarder, 2014
+# Martin Gruner <martin.gruner@otrs.com>, 2016
 # mathiasbraeunling <mathias.braeunling@otrs.com>, 2014
+# ru_otrs <robert.ullrich@otrs.com>, 2014-2015
+# Rudy R <rudy.rohde@googlemail.com>, 2015
 # ru_otrs <robert.ullrich@otrs.com>, 2014
-# ru_otrs <robert.ullrich@otrs.com>, 2014
+# Tamer Kor <tk@kor.de>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-10-07 18:43+0000\n"
-"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
+"POT-Creation-Date: 2016-04-29 14:04+0000\n"
+"PO-Revision-Date: 2016-04-29 12:12+0000\n"
+"Last-Translator: Martin Gruner <martin.gruner@otrs.com>\n"
 "Language-Team: German (http://www.transifex.com/otrs/OTRS/language/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: de\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-
-#. Template: AAATimeAccounting
-msgid "Time Accounting"
-msgstr "Zeitabrechnung"
-
-#. Template: AAATimeAccounting
-msgid "Show valid projects"
-msgstr "Gültige Projekte anzeigen"
-
-#. Template: AAATimeAccounting
-msgid "Show all projects"
-msgstr "Alle Projekte anzeigen"
-
-#. Template: AAATimeAccounting
-msgid "TimeAccounting"
-msgstr "ZeitAbrechnung"
-
-#. Template: AAATimeAccounting
-msgid "Reporting"
-msgstr "Berichterstattung"
-
-#. Template: AAATimeAccounting
-msgid "Please insert your working hours!"
-msgstr "Bitte die Arbeitsstunden eintragen!"
-
-#. Template: AAATimeAccounting
-msgid "Successful insert!"
-msgstr "Eingaben gespeichert!"
-
-#. Template: AAATimeAccounting
-msgid "Error while inserting multiple dates!"
-msgstr "Fehler bei der Eingabe für mehrere Tage!"
-
-#. Template: AAATimeAccounting
-msgid "Successfully inserted entries for several dates!"
-msgstr "Daten für mehrere Tage erfolgreich erfasst!"
-
-#. Template: AAATimeAccounting
-msgid "Entered date was invalid! Date was changed to today."
-msgstr "Eingegebenes Datum ungültig! Datum wurde auf 'heute' geändert."
-
-#. Template: AAATimeAccounting
-msgid "Last Selected Projects."
-msgstr ""
-
-#. Template: AAATimeAccounting
-msgid "All Projects."
-msgstr ""
 
 #. Template: AgentTimeAccountingDelete
 msgid "Do you really want to delete the Time Accounting of this day?"
@@ -155,8 +110,8 @@ msgid "Remark"
 msgstr "Anmerkung"
 
 #. Template: AgentTimeAccountingEdit
-msgid "Please add a remark with more than 8 characters!."
-msgstr "Bitte geben Sie eine Anmerkung mit mindestens 8 Zeichen Länge ein."
+msgid "Please add a remark with more than 8 characters!"
+msgstr "Bitte geben Sie eine Anmerkung von mehr als 8 Zeichen Länge ein!"
 
 #. Template: AgentTimeAccountingEdit
 msgid "Start Time"
@@ -445,7 +400,7 @@ msgstr "Filter für Benutzer"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Time periods can not be deleted."
-msgstr ""
+msgstr "Zeitfenster können nicht gelöscht werden."
 
 #. Template: AgentTimeAccountingSetting
 msgid "Project List"
@@ -561,32 +516,137 @@ msgid "No data found for this day."
 msgstr "Kein Eintrag für diesen Tag gefunden."
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Can't insert Working Units!"
+msgstr "Kann Arbeitseinheiten nicht einfügen!"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Last Projects"
+msgstr "Letzte Projekte"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Can't save settings, because a day has only 24 hours!"
+msgstr "Ungültige Angabe. Ein Tag hat nur 24 Stunden."
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Can't delete Working Units!"
+msgstr "Kann Arbeitseinheiten nicht löschen!"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid ""
+"This Date is out of limit, but you haven't insert this day yet, so you get "
+"one(!) chance to insert"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Incomplete Working Days"
-msgstr ""
+msgstr "Unvollständige Arbeitstage"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Please insert your working hours!"
+msgstr "Bitte die Arbeitsstunden eintragen!"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Successful insert!"
+msgstr "Eingaben gespeichert!"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Error while inserting multiple dates!"
+msgstr "Fehler bei der Eingabe für mehrere Tage!"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Successfully inserted entries for several dates!"
+msgstr "Daten für mehrere Tage erfolgreich erfasst!"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Entered date was invalid! Date was changed to today."
+msgstr "Eingegebenes Datum ungültig! Datum wurde auf 'heute' geändert."
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid ""
+"No time period configured, or the specified date is outside of the defined "
+"time periods. Please contact the time accounting admin to update your time "
+"periods!"
+msgstr "Es ist keine Zeitperiode konfiguriert, oder das angegebene Datum liegt außerhalb der konfigurierten Zeitperioden. Bitte kontaktieren Sie ihren Zeiterfassungs-Administrator, um die Zeitperioden zu aktualisieren."
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Last Selected Projects"
-msgstr ""
+msgstr "Zuletzt ausgewählte Projekte"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "All Projects"
-msgstr ""
+msgstr "Alle Projekte"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingReporting.pm
+msgid "ReportingProject: Need ProjectID"
+msgstr "Berichtsprojekt: Benötige ProjectID"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingReporting.pm
+msgid "Reporting Project"
+msgstr "Berichtsprojekt"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingReporting.pm
+msgid "Reporting"
+msgstr "Berichterstattung"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Unable to update user settings!"
+msgstr "Benutzereinstellungen können nicht aktualisiert werden!"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Please contact your administrator."
+msgstr "Bitte kontaktieren Sie Ihren Administrator."
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Project added!"
+msgstr "Projekt hinzugefügt!"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Project updated!"
+msgstr "Projekt aktualisiert"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Task added!"
+msgstr "Aufgabe hinzugefügt!"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Task updated!"
+msgstr "Aufgabe aktualisiert!"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "The UserID is not valid!"
+msgstr "Die UserID ist ungültig!"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Can't insert user data!"
+msgstr "Kann Benutzerdaten nicht einfügen!"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Unable to add time period!"
+msgstr "Kann Zeitperiode nicht hinzufügen!"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "User updated!"
+msgstr "Benutzer aktualisiert!"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "User added!"
+msgstr "Benutzer hinzugefügt!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "New User"
-msgstr ""
+msgstr "Neuer Benutzer"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "Period Status"
-msgstr ""
+msgstr "Status des Zeitraums"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingView.pm
+msgid "View: Need %s!"
+msgstr "Ansicht: Benötige %s!"
 
 #. Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
 msgid "Incomplete working days"
-msgstr ""
+msgstr "Unvollständige Arbeitstage"
 
 #. SysConfig
 msgid ""
@@ -652,12 +712,12 @@ msgid ""
 msgstr "Bestimmt, ob das Statistik-Modul Informationen zur Zeitabrechnung generieren kann."
 
 #. SysConfig
-msgid "Edit time accounting settings"
-msgstr "Zeitabrechnungseinstellungen bearbeiten"
+msgid "Edit time accounting settings."
+msgstr "Zeiterfassungs-Einstellungen bearbeiten."
 
 #. SysConfig
-msgid "Edit time record"
-msgstr "Zeiterfassung bearbeiten"
+msgid "Edit time record."
+msgstr "Zeit-Datensatz bearbeiten."
 
 #. SysConfig
 msgid "For how many days ago you can insert working units."
@@ -673,21 +733,21 @@ msgstr "Wenn aktiviert, werden nur User angezeigt die Arbeitszeiten zu dem gewä
 msgid ""
 "If enabled, the dropdown elements in the edit screen are changed to "
 "modernized autocompletion fields."
-msgstr ""
+msgstr "Wenn aktiviert werden die Dropdown-Felder im der Editier-Oberfläche in der neuen Form als Feld mit Auto-Vervollständigen angezeigt."
 
 #. SysConfig
 msgid ""
 "If enabled, the filter for the previous projects can be used instead two "
 "list of projects (last and all ones). It could be used only if "
 "TimeAccounting::EnableAutoCompletion is enabled."
-msgstr ""
+msgstr "Der Filter bei vorherigen Projekten kann bei Aktivierung genutzt werden, anstelle das zwei Projekt Listen (letzte und alle) genutzt werden. Es kann allerdings nur genutzt werden wenn TimeAccounting::EnableAutoCompletion aktiviert ist."
 
 #. SysConfig
 msgid ""
 "If enabled, the filter for the previous projects is active by default if "
 "there are the previous projects. It could be used only if "
 "EnableAutoCompletion and TimeAccounting::UseFilter are enabled."
-msgstr ""
+msgstr "Bei Aktivierung ist der Filter der vorherigen Projekte standardmässig aktiv falls vorherige Projekte vorhanden sind. Er kann nur genutzt werden wenn EnableAutoCompletion und  TimeAccounting::UseFilter aktiviert sind."
 
 #. SysConfig
 msgid ""
@@ -708,8 +768,12 @@ msgid ""
 msgstr "Maximale Anzahl von Arbeitstagen ohne Arbeitszeiteinträge nach denen eine Warnung angezeigt wird."
 
 #. SysConfig
-msgid "Project time reporting"
-msgstr "Projekt-Zeitberichterstattung"
+msgid "Overview."
+msgstr "Übersicht."
+
+#. SysConfig
+msgid "Project time reporting."
+msgstr "Projekt-Zeit-Reporting."
 
 #. SysConfig
 msgid ""

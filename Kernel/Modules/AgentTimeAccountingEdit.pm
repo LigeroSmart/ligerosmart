@@ -12,6 +12,7 @@ use strict;
 use warnings;
 
 use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD check_date);
+use Kernel::Language qw(Translatable);
 use Time::Local;
 
 our $ObjectManagerDisabled = 1;
@@ -383,7 +384,7 @@ sub Run {
                     )
                 {
                     return $LayoutObject->ErrorScreen(
-                        Message => 'Can\'t insert Working Units!',
+                        Message => Translatable('Can\'t insert Working Units!'),
                     );
                 }
                 $Param{SuccessfulInsert} = 1;
@@ -667,7 +668,7 @@ sub Run {
                 if ( !$TimeAccountingObject->WorkingUnitsInsert(%Data) ) {
 
                     return $LayoutObject->ErrorScreen(
-                        Message => 'Can\'t insert Working Units!',
+                        Message => Translatable('Can\'t insert Working Units!'),
                     );
                 }
                 $Param{SuccessfulInsert} = 1;
@@ -1028,7 +1029,7 @@ sub Run {
     # validity checks start
     my $ErrorNote;
     if ( $Param{Total} && $Param{Total} > 24 ) {
-        $ErrorNote = 'Can\'t save settings, because a day has only 24 hours!';
+        $ErrorNote = Translatable('Can\'t save settings, because a day has only 24 hours!');
     }
     elsif ( $Param{InsertWorkingUnits} && $Param{Total} && $Param{Total} > 16 ) {
         $Param{BlockName} = 'More16HoursMessage';
@@ -1044,7 +1045,7 @@ sub Run {
             )
         {
             return $LayoutObject->ErrorScreen(
-                Message => 'Can\'t delete Working Units!',
+                Message => Translatable('Can\'t delete Working Units!'),
             );
         }
     }
@@ -1085,7 +1086,9 @@ sub Run {
                 Name => 'Readonly',
                 Data => {
                     Description =>
-                        'This Date is out of limit, but you haven\'t insert this day yet, so you get one(!) chance to insert',
+                        Translatable(
+                        'This Date is out of limit, but you haven\'t insert this day yet, so you get one(!) chance to insert'
+                        ),
                 },
             );
         }
@@ -1229,7 +1232,7 @@ sub Run {
     else {
         if ( $IncompleteWorkingDays{Warning} ) {
             $Output .= $LayoutObject->Notify(
-                Info     => 'Please insert your working hours!',
+                Info     => Translatable('Please insert your working hours!'),
                 Priority => 'Error',
             );
         }
@@ -1244,27 +1247,27 @@ sub Run {
     elsif ( defined $Param{SuccessfulInsert} )
     {
         $Output .= $LayoutObject->Notify(
-            Info => 'Successful insert!',
+            Info => Translatable('Successful insert!'),
         );
     }
 
     # show mass entry notification
     if ( $Param{Notification} eq 'Error' ) {
         $Output .= $LayoutObject->Notify(
-            Info     => 'Error while inserting multiple dates!',
+            Info     => Translatable('Error while inserting multiple dates!'),
             Priority => 'Error',
         );
     }
     elsif ( $Param{Notification} eq 'Successful' ) {
         $Output .= $LayoutObject->Notify(
-            Info => 'Successfully inserted entries for several dates!',
+            Info => Translatable('Successfully inserted entries for several dates!'),
         );
     }
 
     # show notification if wrong date was selected
     if ( $Param{WrongDate} ) {
         $Output .= $LayoutObject->Notify(
-            Info     => 'Entered date was invalid! Date was changed to today.',
+            Info     => Translatable('Entered date was invalid! Date was changed to today.'),
             Priority => 'Error',
         );
     }
@@ -1306,8 +1309,9 @@ sub _FirstUserRedirect {
     }
 
     return $LayoutObject->ErrorScreen(
-        Message => "No time period configured, or the specified date is outside of the defined "
-            . "time periods. Please contact the time accounting admin to update your time periods!",
+        Message => Translatable(
+            'No time period configured, or the specified date is outside of the defined time periods. Please contact the time accounting admin to update your time periods!'
+        ),
     );
 }
 

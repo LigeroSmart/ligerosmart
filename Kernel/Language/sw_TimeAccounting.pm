@@ -15,20 +15,6 @@ use utf8;
 sub Data {
     my $Self = shift;
 
-    # Template: AAATimeAccounting
-    $Self->{Translation}->{'Time Accounting'} = 'Uhasibu wa muda';
-    $Self->{Translation}->{'Show valid projects'} = 'Onyesha miradi iliyo halali';
-    $Self->{Translation}->{'Show all projects'} = 'Onyesha miradi yote';
-    $Self->{Translation}->{'TimeAccounting'} = 'Uhasibu wa muda';
-    $Self->{Translation}->{'Reporting'} = 'Uarifu';
-    $Self->{Translation}->{'Please insert your working hours!'} = 'Tafadhali ingiza massaa ya kazi!';
-    $Self->{Translation}->{'Successful insert!'} = 'Ingizo limefanikiwa';
-    $Self->{Translation}->{'Error while inserting multiple dates!'} = 'Kosa katika kuingiza tarehe zaidi ya moja!';
-    $Self->{Translation}->{'Successfully inserted entries for several dates!'} = 'Maingizo yaliyofanikiwa kwa tarehe zaidi ya moja!';
-    $Self->{Translation}->{'Entered date was invalid! Date was changed to today.'} = 'Ingizo la tarehe ni batili! Tarehe imebadilishwa leo.';
-    $Self->{Translation}->{'Last Selected Projects.'} = '';
-    $Self->{Translation}->{'All Projects.'} = '';
-
     # Template: AgentTimeAccountingDelete
     $Self->{Translation}->{'Do you really want to delete the Time Accounting of this day?'} =
         'Je unataka kufuta Uhasibu wa Muda kwa siku ya leo?';
@@ -56,7 +42,7 @@ sub Data {
     $Self->{Translation}->{'Project'} = 'Mradi';
     $Self->{Translation}->{'Task'} = 'Kazi';
     $Self->{Translation}->{'Remark'} = 'Maoni';
-    $Self->{Translation}->{'Please add a remark with more than 8 characters!.'} = 'Tafadhali weka maoni yenye zaidi ya herufi 8!.';
+    $Self->{Translation}->{'Please add a remark with more than 8 characters!'} = '';
     $Self->{Translation}->{'Start Time'} = 'Muda wa Kuanza';
     $Self->{Translation}->{'Negative times are not allowed.'} = 'Muda hasi hauruhusiwi.';
     $Self->{Translation}->{'Repeated hours are not allowed. Start time matches another interval.'} =
@@ -175,14 +161,45 @@ sub Data {
     $Self->{Translation}->{'No data found for this day.'} = 'Hakuna data zilizopatikana kwa siku hii';
 
     # Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+    $Self->{Translation}->{'Can\'t insert Working Units!'} = '';
     $Self->{Translation}->{'Last Projects'} = '';
+    $Self->{Translation}->{'Can\'t save settings, because a day has only 24 hours!'} = '';
+    $Self->{Translation}->{'Can\'t delete Working Units!'} = '';
+    $Self->{Translation}->{'This Date is out of limit, but you haven\'t insert this day yet, so you get one(!) chance to insert'} =
+        '';
     $Self->{Translation}->{'Incomplete Working Days'} = '';
+    $Self->{Translation}->{'Please insert your working hours!'} = 'Tafadhali ingiza massaa ya kazi!';
+    $Self->{Translation}->{'Successful insert!'} = 'Ingizo limefanikiwa';
+    $Self->{Translation}->{'Error while inserting multiple dates!'} = 'Kosa katika kuingiza tarehe zaidi ya moja!';
+    $Self->{Translation}->{'Successfully inserted entries for several dates!'} = 'Maingizo yaliyofanikiwa kwa tarehe zaidi ya moja!';
+    $Self->{Translation}->{'Entered date was invalid! Date was changed to today.'} = 'Ingizo la tarehe ni batili! Tarehe imebadilishwa leo.';
+    $Self->{Translation}->{'No time period configured, or the specified date is outside of the defined time periods. Please contact the time accounting admin to update your time periods!'} =
+        '';
     $Self->{Translation}->{'Last Selected Projects'} = '';
     $Self->{Translation}->{'All Projects'} = '';
 
+    # Perl Module: Kernel/Modules/AgentTimeAccountingReporting.pm
+    $Self->{Translation}->{'ReportingProject: Need ProjectID'} = '';
+    $Self->{Translation}->{'Reporting Project'} = '';
+    $Self->{Translation}->{'Reporting'} = 'Uarifu';
+
     # Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+    $Self->{Translation}->{'Unable to update user settings!'} = '';
+    $Self->{Translation}->{'Please contact your administrator.'} = 'Tafadhali wasiliana na mtawala.';
+    $Self->{Translation}->{'Project added!'} = '';
+    $Self->{Translation}->{'Project updated!'} = '';
+    $Self->{Translation}->{'Task added!'} = '';
+    $Self->{Translation}->{'Task updated!'} = '';
+    $Self->{Translation}->{'The UserID is not valid!'} = '';
+    $Self->{Translation}->{'Can\'t insert user data!'} = '';
+    $Self->{Translation}->{'Unable to add time period!'} = '';
+    $Self->{Translation}->{'User updated!'} = '';
+    $Self->{Translation}->{'User added!'} = '';
     $Self->{Translation}->{'New User'} = '';
     $Self->{Translation}->{'Period Status'} = '';
+
+    # Perl Module: Kernel/Modules/AgentTimeAccountingView.pm
+    $Self->{Translation}->{'View: Need %s!'} = '';
 
     # Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
     $Self->{Translation}->{'Incomplete working days'} = '';
@@ -205,8 +222,8 @@ sub Data {
         'Inafafanua miradi ambayo maoni yanahitajika. Kama RegExp inafanana katika mradi, unatakiwa kuweka maoni pia. RegExp inatumia parameta ya smx';
     $Self->{Translation}->{'Determines if the statistics module may generate time accounting information.'} =
         'Inahakiki kama moduli ya takwimu inaweza kutengeneza taarifa ya uhasibu wa muda.';
-    $Self->{Translation}->{'Edit time accounting settings'} = 'Hariri mpangilio wa uhasibu wa muda';
-    $Self->{Translation}->{'Edit time record'} = 'Hariri rekodi ya muda';
+    $Self->{Translation}->{'Edit time accounting settings.'} = '';
+    $Self->{Translation}->{'Edit time record.'} = '';
     $Self->{Translation}->{'For how many days ago you can insert working units.'} = 'Kwa siku ngapi zilizopita unaweza kuingiza vitengo vya kazi.';
     $Self->{Translation}->{'If enabled, only users that has added working time to the selected project are shown.'} =
         'Kama imewezeshwa, watumiaji walioweka muda wa kazi kwa mradi uliochaguliwa ndio wataonyeshwa';
@@ -222,7 +239,8 @@ sub Data {
         'Kima cha juu cha siku za kazi baada ya vitengo vya kazi kuingizwa.';
     $Self->{Translation}->{'Maximum number of working days without working units entry after which a warning will be shown.'} =
         'Kima cha juu cha siku za kazi bila ya vitengo vya kazi kuingizwa ambavyo  onyo litaonyeshwa.';
-    $Self->{Translation}->{'Project time reporting'} = 'Uarifu wa muda wa mradi';
+    $Self->{Translation}->{'Overview.'} = '';
+    $Self->{Translation}->{'Project time reporting.'} = '';
     $Self->{Translation}->{'Regular expressions for constraining action list according to selected project. Key contains regular expression for project(s), content contains regular expressions for action(s).'} =
         'Maneno ya kawaida yanayo kwamisha orodha ya vitendo kwa mradi uliochaguliwa. Ufunguo una maneno ya kawaida ya mradi (miradi), maudhui yana maneno ya kawaida ya kitendo (vitendo). ';
     $Self->{Translation}->{'Regular expressions for constraining project list according to user groups. Key contains regular expression for project(s), content contains comma separated list of groups.'} =

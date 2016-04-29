@@ -15,20 +15,6 @@ use utf8;
 sub Data {
     my $Self = shift;
 
-    # Template: AAATimeAccounting
-    $Self->{Translation}->{'Time Accounting'} = 'Обрачунавање времена';
-    $Self->{Translation}->{'Show valid projects'} = 'Прикажи валидне пројекте';
-    $Self->{Translation}->{'Show all projects'} = 'Прикажи све пројекте';
-    $Self->{Translation}->{'TimeAccounting'} = 'Обрачунавање времена';
-    $Self->{Translation}->{'Reporting'} = 'Извештавање';
-    $Self->{Translation}->{'Please insert your working hours!'} = 'Молимо Вас унесите ваше радне сате!';
-    $Self->{Translation}->{'Successful insert!'} = 'Додавање успешно!';
-    $Self->{Translation}->{'Error while inserting multiple dates!'} = 'Грешка при уносу више датума!';
-    $Self->{Translation}->{'Successfully inserted entries for several dates!'} = 'Успешно убачени уноси за више датума!';
-    $Self->{Translation}->{'Entered date was invalid! Date was changed to today.'} = 'Унети датум је неважећи. Датум је промењен на данашњи!';
-    $Self->{Translation}->{'Last Selected Projects.'} = 'Последњи изабрани пројекти.';
-    $Self->{Translation}->{'All Projects.'} = 'Сви пројекти.';
-
     # Template: AgentTimeAccountingDelete
     $Self->{Translation}->{'Do you really want to delete the Time Accounting of this day?'} =
         'Да ли заиста желите да обришете обрачун времена за овај дан?';
@@ -56,7 +42,7 @@ sub Data {
     $Self->{Translation}->{'Project'} = 'Пројекат';
     $Self->{Translation}->{'Task'} = 'Задатак';
     $Self->{Translation}->{'Remark'} = 'Напомена';
-    $Self->{Translation}->{'Please add a remark with more than 8 characters!.'} = 'Напомена треба да садржи више од 8 карактера!';
+    $Self->{Translation}->{'Please add a remark with more than 8 characters!'} = '';
     $Self->{Translation}->{'Start Time'} = 'Време почетка';
     $Self->{Translation}->{'Negative times are not allowed.'} = 'Негативна времена нису дозвољена.';
     $Self->{Translation}->{'Repeated hours are not allowed. Start time matches another interval.'} =
@@ -175,14 +161,45 @@ sub Data {
     $Self->{Translation}->{'No data found for this day.'} = 'Нема података за овај дан.';
 
     # Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+    $Self->{Translation}->{'Can\'t insert Working Units!'} = '';
     $Self->{Translation}->{'Last Projects'} = 'Последњи Пројекти';
+    $Self->{Translation}->{'Can\'t save settings, because a day has only 24 hours!'} = '';
+    $Self->{Translation}->{'Can\'t delete Working Units!'} = '';
+    $Self->{Translation}->{'This Date is out of limit, but you haven\'t insert this day yet, so you get one(!) chance to insert'} =
+        '';
     $Self->{Translation}->{'Incomplete Working Days'} = 'Непотпуни радни дани';
+    $Self->{Translation}->{'Please insert your working hours!'} = 'Молимо Вас унесите ваше радне сате!';
+    $Self->{Translation}->{'Successful insert!'} = 'Додавање успешно!';
+    $Self->{Translation}->{'Error while inserting multiple dates!'} = 'Грешка при уносу више датума!';
+    $Self->{Translation}->{'Successfully inserted entries for several dates!'} = 'Успешно убачени уноси за више датума!';
+    $Self->{Translation}->{'Entered date was invalid! Date was changed to today.'} = 'Унети датум је неважећи. Датум је промењен на данашњи!';
+    $Self->{Translation}->{'No time period configured, or the specified date is outside of the defined time periods. Please contact the time accounting admin to update your time periods!'} =
+        '';
     $Self->{Translation}->{'Last Selected Projects'} = 'Последњи изабрани пројекти';
     $Self->{Translation}->{'All Projects'} = 'Сви пројекти';
 
+    # Perl Module: Kernel/Modules/AgentTimeAccountingReporting.pm
+    $Self->{Translation}->{'ReportingProject: Need ProjectID'} = '';
+    $Self->{Translation}->{'Reporting Project'} = '';
+    $Self->{Translation}->{'Reporting'} = 'Извештавање';
+
     # Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+    $Self->{Translation}->{'Unable to update user settings!'} = '';
+    $Self->{Translation}->{'Please contact your administrator.'} = 'Молимо, контактирајте вашег администратора.';
+    $Self->{Translation}->{'Project added!'} = '';
+    $Self->{Translation}->{'Project updated!'} = '';
+    $Self->{Translation}->{'Task added!'} = '';
+    $Self->{Translation}->{'Task updated!'} = '';
+    $Self->{Translation}->{'The UserID is not valid!'} = '';
+    $Self->{Translation}->{'Can\'t insert user data!'} = '';
+    $Self->{Translation}->{'Unable to add time period!'} = '';
+    $Self->{Translation}->{'User updated!'} = '';
+    $Self->{Translation}->{'User added!'} = '';
     $Self->{Translation}->{'New User'} = 'Нови корисник';
     $Self->{Translation}->{'Period Status'} = 'Статус периода';
+
+    # Perl Module: Kernel/Modules/AgentTimeAccountingView.pm
+    $Self->{Translation}->{'View: Need %s!'} = '';
 
     # Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
     $Self->{Translation}->{'Incomplete working days'} = 'Непотпуни радни дани';
@@ -205,8 +222,8 @@ sub Data {
         'Одређује пројекте за које је напомена обавезна. Ако се „RegExp” поклопи на пројекту, морате текође унети напомену. „RegExp” користи „smx” параметар.';
     $Self->{Translation}->{'Determines if the statistics module may generate time accounting information.'} =
         'Одређује да ли статистички модул може генерисати информације о обрачуну времена.';
-    $Self->{Translation}->{'Edit time accounting settings'} = 'Измени подешавања обрачунавања времена';
-    $Self->{Translation}->{'Edit time record'} = 'Измени временски запис';
+    $Self->{Translation}->{'Edit time accounting settings.'} = '';
+    $Self->{Translation}->{'Edit time record.'} = '';
     $Self->{Translation}->{'For how many days ago you can insert working units.'} = 'За колико дана уназад можете унети радне јединице.';
     $Self->{Translation}->{'If enabled, only users that has added working time to the selected project are shown.'} =
         'Ако је активирано, приказани су само корисници који су додали радно време у изабрани пројекат.';
@@ -222,7 +239,8 @@ sub Data {
         'Максимални број радних дана после ког треба додати радне јединице.';
     $Self->{Translation}->{'Maximum number of working days without working units entry after which a warning will be shown.'} =
         'Максимални број радних дана без уноса радних јединица после ког ће бити приказано упозорење.';
-    $Self->{Translation}->{'Project time reporting'} = 'Извештавање времену о пројекта';
+    $Self->{Translation}->{'Overview.'} = '';
+    $Self->{Translation}->{'Project time reporting.'} = '';
     $Self->{Translation}->{'Regular expressions for constraining action list according to selected project. Key contains regular expression for project(s), content contains regular expressions for action(s).'} =
         'Регуларни изрази за ограничавање листе акција према изабраним пројектима. Кључ садржи регуларни израз за пројект(е), у садржају је регуларни израз за акцију(е).';
     $Self->{Translation}->{'Regular expressions for constraining project list according to user groups. Key contains regular expression for project(s), content contains comma separated list of groups.'} =

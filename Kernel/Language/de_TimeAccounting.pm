@@ -15,20 +15,6 @@ use utf8;
 sub Data {
     my $Self = shift;
 
-    # Template: AAATimeAccounting
-    $Self->{Translation}->{'Time Accounting'} = 'Zeitabrechnung';
-    $Self->{Translation}->{'Show valid projects'} = 'Gültige Projekte anzeigen';
-    $Self->{Translation}->{'Show all projects'} = 'Alle Projekte anzeigen';
-    $Self->{Translation}->{'TimeAccounting'} = 'ZeitAbrechnung';
-    $Self->{Translation}->{'Reporting'} = 'Berichterstattung';
-    $Self->{Translation}->{'Please insert your working hours!'} = 'Bitte die Arbeitsstunden eintragen!';
-    $Self->{Translation}->{'Successful insert!'} = 'Eingaben gespeichert!';
-    $Self->{Translation}->{'Error while inserting multiple dates!'} = 'Fehler bei der Eingabe für mehrere Tage!';
-    $Self->{Translation}->{'Successfully inserted entries for several dates!'} = 'Daten für mehrere Tage erfolgreich erfasst!';
-    $Self->{Translation}->{'Entered date was invalid! Date was changed to today.'} = 'Eingegebenes Datum ungültig! Datum wurde auf \'heute\' geändert.';
-    $Self->{Translation}->{'Last Selected Projects.'} = '';
-    $Self->{Translation}->{'All Projects.'} = '';
-
     # Template: AgentTimeAccountingDelete
     $Self->{Translation}->{'Do you really want to delete the Time Accounting of this day?'} =
         'Möchten Sie wirklich den Eintrag für den aktuellen Tag löschen?';
@@ -56,7 +42,7 @@ sub Data {
     $Self->{Translation}->{'Project'} = 'Projekt';
     $Self->{Translation}->{'Task'} = 'Tätigkeit';
     $Self->{Translation}->{'Remark'} = 'Anmerkung';
-    $Self->{Translation}->{'Please add a remark with more than 8 characters!.'} = 'Bitte geben Sie eine Anmerkung mit mindestens 8 Zeichen Länge ein.';
+    $Self->{Translation}->{'Please add a remark with more than 8 characters!'} = 'Bitte geben Sie eine Anmerkung von mehr als 8 Zeichen Länge ein!';
     $Self->{Translation}->{'Start Time'} = 'Startzeit';
     $Self->{Translation}->{'Negative times are not allowed.'} = 'Negative Angaben sind nicht erlaubt.';
     $Self->{Translation}->{'Repeated hours are not allowed. Start time matches another interval.'} =
@@ -141,7 +127,7 @@ sub Data {
     $Self->{Translation}->{'Filter for Projects'} = 'Filter für Projekte';
     $Self->{Translation}->{'Filter for Tasks'} = 'Filter für Tätigkeiten';
     $Self->{Translation}->{'Filter for Users'} = 'Filter für Benutzer';
-    $Self->{Translation}->{'Time periods can not be deleted.'} = '';
+    $Self->{Translation}->{'Time periods can not be deleted.'} = 'Zeitfenster können nicht gelöscht werden.';
     $Self->{Translation}->{'Project List'} = 'Projektliste';
     $Self->{Translation}->{'Task List'} = 'Tätigkeitsliste';
     $Self->{Translation}->{'Add Task'} = 'Tätigkeit hinzufügen';
@@ -175,17 +161,48 @@ sub Data {
     $Self->{Translation}->{'No data found for this day.'} = 'Kein Eintrag für diesen Tag gefunden.';
 
     # Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
-    $Self->{Translation}->{'Last Projects'} = '';
-    $Self->{Translation}->{'Incomplete Working Days'} = '';
-    $Self->{Translation}->{'Last Selected Projects'} = '';
-    $Self->{Translation}->{'All Projects'} = '';
+    $Self->{Translation}->{'Can\'t insert Working Units!'} = 'Kann Arbeitseinheiten nicht einfügen!';
+    $Self->{Translation}->{'Last Projects'} = 'Letzte Projekte';
+    $Self->{Translation}->{'Can\'t save settings, because a day has only 24 hours!'} = 'Ungültige Angabe. Ein Tag hat nur 24 Stunden.';
+    $Self->{Translation}->{'Can\'t delete Working Units!'} = 'Kann Arbeitseinheiten nicht löschen!';
+    $Self->{Translation}->{'This Date is out of limit, but you haven\'t insert this day yet, so you get one(!) chance to insert'} =
+        '';
+    $Self->{Translation}->{'Incomplete Working Days'} = 'Unvollständige Arbeitstage';
+    $Self->{Translation}->{'Please insert your working hours!'} = 'Bitte die Arbeitsstunden eintragen!';
+    $Self->{Translation}->{'Successful insert!'} = 'Eingaben gespeichert!';
+    $Self->{Translation}->{'Error while inserting multiple dates!'} = 'Fehler bei der Eingabe für mehrere Tage!';
+    $Self->{Translation}->{'Successfully inserted entries for several dates!'} = 'Daten für mehrere Tage erfolgreich erfasst!';
+    $Self->{Translation}->{'Entered date was invalid! Date was changed to today.'} = 'Eingegebenes Datum ungültig! Datum wurde auf \'heute\' geändert.';
+    $Self->{Translation}->{'No time period configured, or the specified date is outside of the defined time periods. Please contact the time accounting admin to update your time periods!'} =
+        'Es ist keine Zeitperiode konfiguriert, oder das angegebene Datum liegt außerhalb der konfigurierten Zeitperioden. Bitte kontaktieren Sie ihren Zeiterfassungs-Administrator, um die Zeitperioden zu aktualisieren.';
+    $Self->{Translation}->{'Last Selected Projects'} = 'Zuletzt ausgewählte Projekte';
+    $Self->{Translation}->{'All Projects'} = 'Alle Projekte';
+
+    # Perl Module: Kernel/Modules/AgentTimeAccountingReporting.pm
+    $Self->{Translation}->{'ReportingProject: Need ProjectID'} = 'Berichtsprojekt: Benötige ProjectID';
+    $Self->{Translation}->{'Reporting Project'} = 'Berichtsprojekt';
+    $Self->{Translation}->{'Reporting'} = 'Berichterstattung';
 
     # Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
-    $Self->{Translation}->{'New User'} = '';
-    $Self->{Translation}->{'Period Status'} = '';
+    $Self->{Translation}->{'Unable to update user settings!'} = 'Benutzereinstellungen können nicht aktualisiert werden!';
+    $Self->{Translation}->{'Please contact your administrator.'} = 'Bitte kontaktieren Sie Ihren Administrator.';
+    $Self->{Translation}->{'Project added!'} = 'Projekt hinzugefügt!';
+    $Self->{Translation}->{'Project updated!'} = 'Projekt aktualisiert';
+    $Self->{Translation}->{'Task added!'} = 'Aufgabe hinzugefügt!';
+    $Self->{Translation}->{'Task updated!'} = 'Aufgabe aktualisiert!';
+    $Self->{Translation}->{'The UserID is not valid!'} = 'Die UserID ist ungültig!';
+    $Self->{Translation}->{'Can\'t insert user data!'} = 'Kann Benutzerdaten nicht einfügen!';
+    $Self->{Translation}->{'Unable to add time period!'} = 'Kann Zeitperiode nicht hinzufügen!';
+    $Self->{Translation}->{'User updated!'} = 'Benutzer aktualisiert!';
+    $Self->{Translation}->{'User added!'} = 'Benutzer hinzugefügt!';
+    $Self->{Translation}->{'New User'} = 'Neuer Benutzer';
+    $Self->{Translation}->{'Period Status'} = 'Status des Zeitraums';
+
+    # Perl Module: Kernel/Modules/AgentTimeAccountingView.pm
+    $Self->{Translation}->{'View: Need %s!'} = 'Ansicht: Benötige %s!';
 
     # Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
-    $Self->{Translation}->{'Incomplete working days'} = '';
+    $Self->{Translation}->{'Incomplete working days'} = 'Unvollständige Arbeitstage';
 
     # SysConfig
     $Self->{Translation}->{'Agent interface notification module to see the number of incomplete working days for the user.'} =
@@ -205,24 +222,25 @@ sub Data {
         'Innerhalb dieser Konfigurationsoption kann eine RegExp definiert werden, die festlegt, bei welchen Projekten eine Bemerkung eingetragen werden muss (die RegExp arbeitet mit smx-Parametern).';
     $Self->{Translation}->{'Determines if the statistics module may generate time accounting information.'} =
         'Bestimmt, ob das Statistik-Modul Informationen zur Zeitabrechnung generieren kann.';
-    $Self->{Translation}->{'Edit time accounting settings'} = 'Zeitabrechnungseinstellungen bearbeiten';
-    $Self->{Translation}->{'Edit time record'} = 'Zeiterfassung bearbeiten';
+    $Self->{Translation}->{'Edit time accounting settings.'} = 'Zeiterfassungs-Einstellungen bearbeiten.';
+    $Self->{Translation}->{'Edit time record.'} = 'Zeit-Datensatz bearbeiten.';
     $Self->{Translation}->{'For how many days ago you can insert working units.'} = 'Legt fest, bis wann man in ältere Zeiteinträge bearbeiten kann (z. B. 10 Tage zurückliegend).';
     $Self->{Translation}->{'If enabled, only users that has added working time to the selected project are shown.'} =
         'Wenn aktiviert, werden nur User angezeigt die Arbeitszeiten zu dem gewählten Projekt hinzugefügt haben.';
     $Self->{Translation}->{'If enabled, the dropdown elements in the edit screen are changed to modernized autocompletion fields.'} =
-        '';
+        'Wenn aktiviert werden die Dropdown-Felder im der Editier-Oberfläche in der neuen Form als Feld mit Auto-Vervollständigen angezeigt.';
     $Self->{Translation}->{'If enabled, the filter for the previous projects can be used instead two list of projects (last and all ones). It could be used only if TimeAccounting::EnableAutoCompletion is enabled.'} =
-        '';
+        'Der Filter bei vorherigen Projekten kann bei Aktivierung genutzt werden, anstelle das zwei Projekt Listen (letzte und alle) genutzt werden. Es kann allerdings nur genutzt werden wenn TimeAccounting::EnableAutoCompletion aktiviert ist.';
     $Self->{Translation}->{'If enabled, the filter for the previous projects is active by default if there are the previous projects. It could be used only if EnableAutoCompletion and TimeAccounting::UseFilter are enabled.'} =
-        '';
+        'Bei Aktivierung ist der Filter der vorherigen Projekte standardmässig aktiv falls vorherige Projekte vorhanden sind. Er kann nur genutzt werden wenn EnableAutoCompletion und  TimeAccounting::UseFilter aktiviert sind.';
     $Self->{Translation}->{'If enabled, the user is allowed to enter "on vacation leave", "on sick leave" and "on overtime leave" to multiple dates at once.'} =
         'Wenn aktiviert,  können Benutzer "im Urlaub", "Erkrankt" und "Überstunden" an mehreren Tagen auf einmal setzen.';
     $Self->{Translation}->{'Maximum number of working days after which the working units have to be inserted.'} =
         'Maximale Anzahl von Arbeitstagen, nach der die Arbeitszeit eingetragen werden muss.';
     $Self->{Translation}->{'Maximum number of working days without working units entry after which a warning will be shown.'} =
         'Maximale Anzahl von Arbeitstagen ohne Arbeitszeiteinträge nach denen eine Warnung angezeigt wird.';
-    $Self->{Translation}->{'Project time reporting'} = 'Projekt-Zeitberichterstattung';
+    $Self->{Translation}->{'Overview.'} = 'Übersicht.';
+    $Self->{Translation}->{'Project time reporting.'} = 'Projekt-Zeit-Reporting.';
     $Self->{Translation}->{'Regular expressions for constraining action list according to selected project. Key contains regular expression for project(s), content contains regular expressions for action(s).'} =
         'Regulärer Ausdruck, um die Liste der Tätigkeiten bezüglich des ausgewählten Projekts einzuschränken. Der Schlüssel enthält einen Regulären Ausdruck für Projekte, der Wert einen Regulären Ausdruck für die Tätigkeiten.';
     $Self->{Translation}->{'Regular expressions for constraining project list according to user groups. Key contains regular expression for project(s), content contains comma separated list of groups.'} =

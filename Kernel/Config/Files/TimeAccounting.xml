@@ -10,7 +10,7 @@
                 <GroupRo>time_accounting</GroupRo>
                 <Description Translatable="1">Time accounting edit.</Description>
                 <NavBarName>TimeAccounting</NavBarName>
-                <Title>Edit</Title>
+                <Title Translatable="1">Edit</Title>
                 <NavBar>
                     <Description Translatable="1">Time accounting.</Description>
                     <Name>Time Accounting</Name>
@@ -23,7 +23,7 @@
                 </NavBar>
                 <NavBar>
                     <GroupRo>time_accounting</GroupRo>
-                    <Description Translatable="1">Edit time record</Description>
+                    <Description Translatable="1">Edit time record.</Description>
                     <Name>Edit</Name>
                     <Link>Action=AgentTimeAccountingEdit</Link>
                     <Type></Type>
@@ -52,10 +52,10 @@
                 <GroupRo>time_accounting</GroupRo>
                 <Description Translatable="1">Time accounting overview.</Description>
                 <NavBarName>TimeAccounting</NavBarName>
-                <Title>Overview</Title>
+                <Title Translatable="1">Overview</Title>
                 <NavBar>
                     <GroupRo>time_accounting</GroupRo>
-                    <Description Translatable="1">Overview</Description>
+                    <Description Translatable="1">Overview.</Description>
                     <Name>Overview</Name>
                     <Link>Action=AgentTimeAccountingOverview</Link>
                     <Type></Type>
@@ -81,10 +81,10 @@
                 <GroupRo>time_accounting</GroupRo>
                 <Description Translatable="1">Time accounting settings.</Description>
                 <NavBarName>TimeAccounting</NavBarName>
-                <Title>Settings</Title>
+                <Title Translatable="1">Settings</Title>
                 <NavBar>
                     <Group>time_accounting</Group>
-                    <Description Translatable="1">Edit time accounting settings</Description>
+                    <Description Translatable="1">Edit time accounting settings.</Description>
                     <Name>Settings</Name>
                     <Link>Action=AgentTimeAccountingSetting</Link>
                     <Type></Type>
@@ -111,10 +111,10 @@
                 <GroupRo>time_accounting</GroupRo>
                 <Description Translatable="1">Time accounting reporting.</Description>
                 <NavBarName>TimeAccounting</NavBarName>
-                <Title>Reporting</Title>
+                <Title Translatable="1">Reporting</Title>
                 <NavBar>
                     <Group>time_accounting</Group>
-                    <Description Translatable="1">Project time reporting</Description>
+                    <Description Translatable="1">Project time reporting.</Description>
                     <Name>Reporting</Name>
                     <Link>Action=AgentTimeAccountingReporting</Link>
                     <Type></Type>
@@ -140,7 +140,7 @@
                 <GroupRo>time_accounting</GroupRo>
                 <Description Translatable="1">Time accounting view.</Description>
                 <NavBarName>TimeAccounting</NavBarName>
-                <Title>View</Title>
+                <Title Translatable="1">View</Title>
                 <NavBar>
                     <GroupRo>time_accounting</GroupRo>
                 </NavBar>
@@ -167,8 +167,8 @@
         <SubGroup>Frontend::Agent::TimeAccounting::ViewSetting</SubGroup>
         <Setting>
             <Option SelectedID="1">
-                <Item Key="0">invalid</Item>
-                <Item Key="1">valid</Item>
+                <Item Key="0" Translatable="1">invalid</Item>
+                <Item Key="1" Translatable="1">valid</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -186,8 +186,8 @@
         <SubGroup>Frontend::Agent::TimeAccounting::ViewSetting</SubGroup>
         <Setting>
             <Option SelectedID="1">
-                <Item Key="0">invalid</Item>
-                <Item Key="1">valid</Item>
+                <Item Key="0" Translatable="1">invalid</Item>
+                <Item Key="1" Translatable="1">valid</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -245,8 +245,8 @@
         <SubGroup>Frontend::Agent::TimeAccounting::ViewSetting</SubGroup>
         <Setting>
             <Option SelectedID="1">
-                <Item Key="0">invalid</Item>
-                <Item Key="1">valid</Item>
+                <Item Key="0" Translatable="1">invalid</Item>
+                <Item Key="1" Translatable="1">valid</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -300,8 +300,8 @@
         <SubGroup>Frontend::Agent::TimeAccounting::ViewEdit</SubGroup>
         <Setting>
             <Option SelectedID="1">
-                <Item Key="0">No</Item>
-                <Item Key="1">Yes</Item>
+                <Item Key="0" Translatable="1">No</Item>
+                <Item Key="1" Translatable="1">Yes</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -345,8 +345,8 @@
         <SubGroup>Frontend::Agent::TimeAccounting::ViewEdit</SubGroup>
         <Setting>
             <Option SelectedID="1">
-                <Item Key="0">No</Item>
-                <Item Key="1">Yes</Item>
+                <Item Key="0" Translatable="1">No</Item>
+                <Item Key="1" Translatable="1">Yes</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -356,8 +356,8 @@
         <SubGroup>Frontend::Agent::TimeAccounting::ViewEdit</SubGroup>
         <Setting>
             <Option SelectedID="0">
-                <Item Key="0">No</Item>
-                <Item Key="1">Yes</Item>
+                <Item Key="0" Translatable="1">No</Item>
+                <Item Key="1" Translatable="1">Yes</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -367,8 +367,8 @@
         <SubGroup>Frontend::Agent::TimeAccounting::ViewEdit</SubGroup>
         <Setting>
             <Option SelectedID="0">
-                <Item Key="0">No</Item>
-                <Item Key="1">Yes</Item>
+                <Item Key="0" Translatable="1">No</Item>
+                <Item Key="1" Translatable="1">Yes</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -378,8 +378,8 @@
         <SubGroup>Frontend::Agent::TimeAccounting::ViewEdit</SubGroup>
         <Setting>
             <Option SelectedID="0">
-                <Item Key="0">No</Item>
-                <Item Key="1">Yes</Item>
+                <Item Key="0" Translatable="1">No</Item>
+                <Item Key="1" Translatable="1">Yes</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -411,8 +411,8 @@
         <SubGroup>Frontend::Agent::TimeAccoutning::ViewReportingProject</SubGroup>
         <Setting>
             <Option SelectedID="1">
-                <Item Key="0">No</Item>
-                <Item Key="1">Yes</Item>
+                <Item Key="0" Translatable="1">No</Item>
+                <Item Key="1" Translatable="1">Yes</Item>
             </Option>
         </Setting>
     </ConfigItem>

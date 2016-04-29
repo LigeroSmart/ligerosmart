@@ -32,7 +32,6 @@
         <File Permission="644" Location="Kernel/Modules/AgentTimeAccountingReporting.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentTimeAccountingSetting.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentTimeAccountingView.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AAATimeAccounting.tt"/>
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentTimeAccountingDelete.tt"/>
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentTimeAccountingEdit.tt"/>
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentTimeAccountingOverview.tt"/>

@@ -15,18 +15,6 @@ use utf8;
 sub Data {
     my $Self = shift;
 
-    # Template: AAATimeAccounting
-    $Self->{Translation}->{'Time Accounting'} = '';
-    $Self->{Translation}->{'Show valid projects'} = '';
-    $Self->{Translation}->{'Show all projects'} = '';
-    $Self->{Translation}->{'TimeAccounting'} = '';
-    $Self->{Translation}->{'Reporting'} = '';
-    $Self->{Translation}->{'Please insert your working hours!'} = '';
-    $Self->{Translation}->{'Successful insert!'} = '';
-    $Self->{Translation}->{'Error while inserting multiple dates!'} = '';
-    $Self->{Translation}->{'Successfully inserted entries for several dates!'} = '';
-    $Self->{Translation}->{'Entered date was invalid! Date was changed to today.'} = '';
-
     # Template: AgentTimeAccountingDelete
     $Self->{Translation}->{'Do you really want to delete the Time Accounting of this day?'} =
         'Vil du virkelig slette tidsregnskabet for denne dag?';
@@ -54,7 +42,7 @@ sub Data {
     $Self->{Translation}->{'Project'} = 'Projekt';
     $Self->{Translation}->{'Task'} = 'Opgave';
     $Self->{Translation}->{'Remark'} = 'Bemærkning';
-    $Self->{Translation}->{'Please add a remark with more than 8 characters!.'} = 'Tilføj venligst en bemærkning med mere end 8 tegn!';
+    $Self->{Translation}->{'Please add a remark with more than 8 characters!'} = '';
     $Self->{Translation}->{'Start Time'} = '';
     $Self->{Translation}->{'Negative times are not allowed.'} = 'Negativ tid er ikke tilladt.';
     $Self->{Translation}->{'Repeated hours are not allowed. Start time matches another interval.'} =
@@ -139,6 +127,7 @@ sub Data {
     $Self->{Translation}->{'Filter for Projects'} = 'Filtrér projekter';
     $Self->{Translation}->{'Filter for Tasks'} = 'Filtrér opgaver';
     $Self->{Translation}->{'Filter for Users'} = 'Filtrér brugere';
+    $Self->{Translation}->{'Time periods can not be deleted.'} = '';
     $Self->{Translation}->{'Project List'} = 'Projektliste';
     $Self->{Translation}->{'Task List'} = 'Opgaveliste';
     $Self->{Translation}->{'Add Task'} = 'Tilføj opgave';
@@ -171,6 +160,50 @@ sub Data {
     $Self->{Translation}->{'View of '} = 'Se ';
     $Self->{Translation}->{'No data found for this day.'} = 'Der er ikke fundet data for denne dag.';
 
+    # Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+    $Self->{Translation}->{'Can\'t insert Working Units!'} = '';
+    $Self->{Translation}->{'Last Projects'} = '';
+    $Self->{Translation}->{'Can\'t save settings, because a day has only 24 hours!'} = '';
+    $Self->{Translation}->{'Can\'t delete Working Units!'} = '';
+    $Self->{Translation}->{'This Date is out of limit, but you haven\'t insert this day yet, so you get one(!) chance to insert'} =
+        '';
+    $Self->{Translation}->{'Incomplete Working Days'} = '';
+    $Self->{Translation}->{'Please insert your working hours!'} = '';
+    $Self->{Translation}->{'Successful insert!'} = '';
+    $Self->{Translation}->{'Error while inserting multiple dates!'} = '';
+    $Self->{Translation}->{'Successfully inserted entries for several dates!'} = '';
+    $Self->{Translation}->{'Entered date was invalid! Date was changed to today.'} = '';
+    $Self->{Translation}->{'No time period configured, or the specified date is outside of the defined time periods. Please contact the time accounting admin to update your time periods!'} =
+        '';
+    $Self->{Translation}->{'Last Selected Projects'} = '';
+    $Self->{Translation}->{'All Projects'} = '';
+
+    # Perl Module: Kernel/Modules/AgentTimeAccountingReporting.pm
+    $Self->{Translation}->{'ReportingProject: Need ProjectID'} = '';
+    $Self->{Translation}->{'Reporting Project'} = '';
+    $Self->{Translation}->{'Reporting'} = 'Reportering';
+
+    # Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+    $Self->{Translation}->{'Unable to update user settings!'} = '';
+    $Self->{Translation}->{'Please contact your administrator.'} = 'Kontakt din administrator.';
+    $Self->{Translation}->{'Project added!'} = '';
+    $Self->{Translation}->{'Project updated!'} = '';
+    $Self->{Translation}->{'Task added!'} = '';
+    $Self->{Translation}->{'Task updated!'} = '';
+    $Self->{Translation}->{'The UserID is not valid!'} = '';
+    $Self->{Translation}->{'Can\'t insert user data!'} = '';
+    $Self->{Translation}->{'Unable to add time period!'} = '';
+    $Self->{Translation}->{'User updated!'} = '';
+    $Self->{Translation}->{'User added!'} = '';
+    $Self->{Translation}->{'New User'} = '';
+    $Self->{Translation}->{'Period Status'} = '';
+
+    # Perl Module: Kernel/Modules/AgentTimeAccountingView.pm
+    $Self->{Translation}->{'View: Need %s!'} = '';
+
+    # Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
+    $Self->{Translation}->{'Incomplete working days'} = '';
+
     # SysConfig
     $Self->{Translation}->{'Agent interface notification module to see the number of incomplete working days for the user.'} =
         'Agent interface-notificationsmodulet skal se antallet af uafsluttede arbejdsdage for brugeren.';
@@ -189,20 +222,25 @@ sub Data {
         'Definerer de projekter, for hvilke en bemærkning er påkrævet. Hvis RegExp matcher på projektet, skal du også indføje en bemærkning. RegExp bruger smx parameteret.';
     $Self->{Translation}->{'Determines if the statistics module may generate time accounting information.'} =
         '';
-    $Self->{Translation}->{'Edit time accounting settings'} = 'Rediger indstillinger for tidsregistrering';
-    $Self->{Translation}->{'Edit time record'} = 'Rediger tidsoptegnelse';
+    $Self->{Translation}->{'Edit time accounting settings.'} = '';
+    $Self->{Translation}->{'Edit time record.'} = '';
     $Self->{Translation}->{'For how many days ago you can insert working units.'} = 'Angiver for hvor mange dage, du kan indsætte arbejdsenheder.';
     $Self->{Translation}->{'If enabled, only users that has added working time to the selected project are shown.'} =
         '';
-    $Self->{Translation}->{'If enabled, the dropdown elements in the edit screen are changed to autocompletion fields.'} =
-        'Hvis denne er aktiveret, ændres dropdown-elementerne på redigeringsskærmbilledet til autofuldføringsfelter.';
+    $Self->{Translation}->{'If enabled, the dropdown elements in the edit screen are changed to modernized autocompletion fields.'} =
+        '';
+    $Self->{Translation}->{'If enabled, the filter for the previous projects can be used instead two list of projects (last and all ones). It could be used only if TimeAccounting::EnableAutoCompletion is enabled.'} =
+        '';
+    $Self->{Translation}->{'If enabled, the filter for the previous projects is active by default if there are the previous projects. It could be used only if EnableAutoCompletion and TimeAccounting::UseFilter are enabled.'} =
+        '';
     $Self->{Translation}->{'If enabled, the user is allowed to enter "on vacation leave", "on sick leave" and "on overtime leave" to multiple dates at once.'} =
         '';
     $Self->{Translation}->{'Maximum number of working days after which the working units have to be inserted.'} =
         'Maksimalt antal af arbejdsdage efter hvilket arbejdsenhederne skal indsættes.';
     $Self->{Translation}->{'Maximum number of working days without working units entry after which a warning will be shown.'} =
         '';
-    $Self->{Translation}->{'Project time reporting'} = 'Projekttidsrapportering';
+    $Self->{Translation}->{'Overview.'} = '';
+    $Self->{Translation}->{'Project time reporting.'} = '';
     $Self->{Translation}->{'Regular expressions for constraining action list according to selected project. Key contains regular expression for project(s), content contains regular expressions for action(s).'} =
         'Regulære udtryk for begrænsning af handlingsliste ifølge det valgte projekt. Nøglen indeholder et regulært udtryk for projekt(er), indholdet rummer regulære udtryk for handling(er).';
     $Self->{Translation}->{'Regular expressions for constraining project list according to user groups. Key contains regular expression for project(s), content contains comma separated list of groups.'} =

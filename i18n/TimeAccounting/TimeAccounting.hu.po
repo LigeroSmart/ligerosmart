@@ -4,63 +4,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-10-07 18:43+0000\n"
-"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
+"POT-Creation-Date: 2016-04-29 14:04+0000\n"
+"PO-Revision-Date: 2016-04-29 12:06+0000\n"
+"Last-Translator: Martin Gruner <martin.gruner@otrs.com>\n"
 "Language-Team: Hungarian (http://www.transifex.com/otrs/OTRS/language/hu/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: hu\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-
-#. Template: AAATimeAccounting
-msgid "Time Accounting"
-msgstr "Időelszámolás"
-
-#. Template: AAATimeAccounting
-msgid "Show valid projects"
-msgstr "Érvényes projektek megjelenítése"
-
-#. Template: AAATimeAccounting
-msgid "Show all projects"
-msgstr "Minden projekt megjelenítése"
-
-#. Template: AAATimeAccounting
-msgid "TimeAccounting"
-msgstr "Időelszámolás"
-
-#. Template: AAATimeAccounting
-msgid "Reporting"
-msgstr "Jelentés"
-
-#. Template: AAATimeAccounting
-msgid "Please insert your working hours!"
-msgstr "Illessze be a munkaidejét!"
-
-#. Template: AAATimeAccounting
-msgid "Successful insert!"
-msgstr "Sikeres beillesztés!"
-
-#. Template: AAATimeAccounting
-msgid "Error while inserting multiple dates!"
-msgstr "Hiba történt több dátum beillesztése közben!"
-
-#. Template: AAATimeAccounting
-msgid "Successfully inserted entries for several dates!"
-msgstr "A bejegyzések sikeresen beillesztve a különböző dátumokhoz!"
-
-#. Template: AAATimeAccounting
-msgid "Entered date was invalid! Date was changed to today."
-msgstr "A megadott dátum érvénytelen volt! A dátum a mai napra lett módosítva."
-
-#. Template: AAATimeAccounting
-msgid "Last Selected Projects."
-msgstr ""
-
-#. Template: AAATimeAccounting
-msgid "All Projects."
-msgstr ""
 
 #. Template: AgentTimeAccountingDelete
 msgid "Do you really want to delete the Time Accounting of this day?"
@@ -151,8 +103,8 @@ msgid "Remark"
 msgstr "Észrevétel"
 
 #. Template: AgentTimeAccountingEdit
-msgid "Please add a remark with more than 8 characters!."
-msgstr "Adjon hozzá egy 8 karakternél hosszabb észrevételt!"
+msgid "Please add a remark with more than 8 characters!"
+msgstr ""
 
 #. Template: AgentTimeAccountingEdit
 msgid "Start Time"
@@ -441,7 +393,7 @@ msgstr "Felhasználók szűrése"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Time periods can not be deleted."
-msgstr ""
+msgstr "Az időszakok nem törölhetők."
 
 #. Template: AgentTimeAccountingSetting
 msgid "Project List"
@@ -557,32 +509,137 @@ msgid "No data found for this day."
 msgstr "Nem található adat erre a napra."
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Can't insert Working Units!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Last Projects"
+msgstr "Legutóbbi projektek"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Can't save settings, because a day has only 24 hours!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Can't delete Working Units!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid ""
+"This Date is out of limit, but you haven't insert this day yet, so you get "
+"one(!) chance to insert"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Incomplete Working Days"
+msgstr "Befejezetlen munkanapok"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Please insert your working hours!"
+msgstr "Illessze be a munkaidejét!"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Successful insert!"
+msgstr "Sikeres beillesztés!"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Error while inserting multiple dates!"
+msgstr "Hiba történt több dátum beillesztése közben!"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Successfully inserted entries for several dates!"
+msgstr "A bejegyzések sikeresen beillesztve a különböző dátumokhoz!"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Entered date was invalid! Date was changed to today."
+msgstr "A megadott dátum érvénytelen volt! A dátum a mai napra lett módosítva."
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid ""
+"No time period configured, or the specified date is outside of the defined "
+"time periods. Please contact the time accounting admin to update your time "
+"periods!"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Last Selected Projects"
-msgstr ""
+msgstr "Legutóbb kiválasztott projektek"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "All Projects"
+msgstr "Minden projekt"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingReporting.pm
+msgid "ReportingProject: Need ProjectID"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingReporting.pm
+msgid "Reporting Project"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingReporting.pm
+msgid "Reporting"
+msgstr "Jelentés"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Unable to update user settings!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Please contact your administrator."
+msgstr "Lépjen kapcsolatba az adminisztrátorral."
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Project added!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Project updated!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Task added!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Task updated!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "The UserID is not valid!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Can't insert user data!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Unable to add time period!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "User updated!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "User added!"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "New User"
-msgstr ""
+msgstr "Új felhasználó"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "Period Status"
+msgstr "Időszak állapot"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingView.pm
+msgid "View: Need %s!"
 msgstr ""
 
 #. Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
 msgid "Incomplete working days"
-msgstr ""
+msgstr "Befejezetlen munkanapok"
 
 #. SysConfig
 msgid ""
@@ -648,12 +705,12 @@ msgid ""
 msgstr "Meghatározza, hogy a statisztika modul előállíthat-e időelszámolási információkat."
 
 #. SysConfig
-msgid "Edit time accounting settings"
-msgstr "Időelszámolási beállítások szerkesztése"
+msgid "Edit time accounting settings."
+msgstr ""
 
 #. SysConfig
-msgid "Edit time record"
-msgstr "Időfeljegyzés szerkesztése"
+msgid "Edit time record."
+msgstr ""
 
 #. SysConfig
 msgid "For how many days ago you can insert working units."
@@ -669,21 +726,21 @@ msgstr "Ha engedélyezve van, akkor csak azok a felhasználók lesznek megjelen�
 msgid ""
 "If enabled, the dropdown elements in the edit screen are changed to "
 "modernized autocompletion fields."
-msgstr ""
+msgstr "Ha engedélyezve van, akkor a szerkesztési képernyőn lévő lenyíló elemek korszerűsített automatikusan kiegészített mezőkre lesznek megváltoztatva."
 
 #. SysConfig
 msgid ""
 "If enabled, the filter for the previous projects can be used instead two "
 "list of projects (last and all ones). It could be used only if "
 "TimeAccounting::EnableAutoCompletion is enabled."
-msgstr ""
+msgstr "Ha engedélyezve van, akkor az előző projektek szűrője használható a projektek két listája helyett (legutóbbi és összes). Csak akkor használható, ha a TimeAccounting::EnableAutoCompletion engedélyezve van."
 
 #. SysConfig
 msgid ""
 "If enabled, the filter for the previous projects is active by default if "
 "there are the previous projects. It could be used only if "
 "EnableAutoCompletion and TimeAccounting::UseFilter are enabled."
-msgstr ""
+msgstr "Ha engedélyezve van, akkor az előző projektek szűrője alapértelmezetten be van kapcsolva, ha vannak előző projektek. Csak akkor használható, ha az EnableAutoCompletion és a TimeAccounting::UseFilter engedélyezve van."
 
 #. SysConfig
 msgid ""
@@ -704,8 +761,12 @@ msgid ""
 msgstr "A munkaegységek bejegyzés nélküli munkanapok legnagyobb száma, amelyek után egy figyelmeztetés lesz megjelenítve."
 
 #. SysConfig
-msgid "Project time reporting"
-msgstr "Projekt időjelentése"
+msgid "Overview."
+msgstr ""
+
+#. SysConfig
+msgid "Project time reporting."
+msgstr ""
 
 #. SysConfig
 msgid ""

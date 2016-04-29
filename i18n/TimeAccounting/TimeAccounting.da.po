@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-10-07 18:43+0000\n"
+"POT-Creation-Date: 2016-04-29 14:04+0000\n"
+"PO-Revision-Date: 2016-04-29 12:06+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Danish (http://www.transifex.com/otrs/OTRS/language/da/)\n"
 "MIME-Version: 1.0\n"
@@ -12,54 +12,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: da\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-
-#. Template: AAATimeAccounting
-msgid "Time Accounting"
-msgstr ""
-
-#. Template: AAATimeAccounting
-msgid "Show valid projects"
-msgstr ""
-
-#. Template: AAATimeAccounting
-msgid "Show all projects"
-msgstr ""
-
-#. Template: AAATimeAccounting
-msgid "TimeAccounting"
-msgstr ""
-
-#. Template: AAATimeAccounting
-msgid "Reporting"
-msgstr "Reportering"
-
-#. Template: AAATimeAccounting
-msgid "Please insert your working hours!"
-msgstr ""
-
-#. Template: AAATimeAccounting
-msgid "Successful insert!"
-msgstr ""
-
-#. Template: AAATimeAccounting
-msgid "Error while inserting multiple dates!"
-msgstr ""
-
-#. Template: AAATimeAccounting
-msgid "Successfully inserted entries for several dates!"
-msgstr ""
-
-#. Template: AAATimeAccounting
-msgid "Entered date was invalid! Date was changed to today."
-msgstr ""
-
-#. Template: AAATimeAccounting
-msgid "Last Selected Projects."
-msgstr ""
-
-#. Template: AAATimeAccounting
-msgid "All Projects."
-msgstr ""
 
 #. Template: AgentTimeAccountingDelete
 msgid "Do you really want to delete the Time Accounting of this day?"
@@ -150,8 +102,8 @@ msgid "Remark"
 msgstr "Bemærkning"
 
 #. Template: AgentTimeAccountingEdit
-msgid "Please add a remark with more than 8 characters!."
-msgstr "Tilføj venligst en bemærkning med mere end 8 tegn!"
+msgid "Please add a remark with more than 8 characters!"
+msgstr ""
 
 #. Template: AgentTimeAccountingEdit
 msgid "Start Time"
@@ -556,11 +508,56 @@ msgid "No data found for this day."
 msgstr "Der er ikke fundet data for denne dag."
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Can't insert Working Units!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Last Projects"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Can't save settings, because a day has only 24 hours!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Can't delete Working Units!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid ""
+"This Date is out of limit, but you haven't insert this day yet, so you get "
+"one(!) chance to insert"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Incomplete Working Days"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Please insert your working hours!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Successful insert!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Error while inserting multiple dates!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Successfully inserted entries for several dates!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid "Entered date was invalid! Date was changed to today."
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid ""
+"No time period configured, or the specified date is outside of the defined "
+"time periods. Please contact the time accounting admin to update your time "
+"periods!"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
@@ -571,12 +568,72 @@ msgstr ""
 msgid "All Projects"
 msgstr ""
 
+#. Perl Module: Kernel/Modules/AgentTimeAccountingReporting.pm
+msgid "ReportingProject: Need ProjectID"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingReporting.pm
+msgid "Reporting Project"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingReporting.pm
+msgid "Reporting"
+msgstr "Reportering"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Unable to update user settings!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Please contact your administrator."
+msgstr "Kontakt din administrator."
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Project added!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Project updated!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Task added!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Task updated!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "The UserID is not valid!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Can't insert user data!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Unable to add time period!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "User updated!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "User added!"
+msgstr ""
+
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "New User"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "Period Status"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingView.pm
+msgid "View: Need %s!"
 msgstr ""
 
 #. Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
@@ -647,12 +704,12 @@ msgid ""
 msgstr ""
 
 #. SysConfig
-msgid "Edit time accounting settings"
-msgstr "Rediger indstillinger for tidsregistrering"
+msgid "Edit time accounting settings."
+msgstr ""
 
 #. SysConfig
-msgid "Edit time record"
-msgstr "Rediger tidsoptegnelse"
+msgid "Edit time record."
+msgstr ""
 
 #. SysConfig
 msgid "For how many days ago you can insert working units."
@@ -703,8 +760,12 @@ msgid ""
 msgstr ""
 
 #. SysConfig
-msgid "Project time reporting"
-msgstr "Projekttidsrapportering"
+msgid "Overview."
+msgstr ""
+
+#. SysConfig
+msgid "Project time reporting."
+msgstr ""
 
 #. SysConfig
 msgid ""
