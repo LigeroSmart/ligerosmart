@@ -8,6 +8,7 @@
     <License>GNU AFFERO GENERAL PUBLIC LICENSE Version 3, November 2007</License>
     <Description Lang="en">A Time Registration Module.</Description>
     <Description Lang="de">Ein Zeiterfassungsmodul.</Description>
+    <Description Lang="hu">Egy munkaidő nyilvántartás modul.</Description>
     <Filelist>
         <File Permission="644" Location="doc/timeaccounting-database.png"/>
         <File Permission="644" Location="Kernel/Config/Files/TimeAccounting.xml"/>
@@ -225,6 +226,19 @@
         <br>
 
     ]]></IntroInstall>
+    <IntroInstall Type="pre" Title="Telepítési információk" Lang="hu"><![CDATA[
+
+        <br>
+        <b>ÜDVÖZÖLJÜK</b>
+        <br>
+        <br>
+        Ön a TimeAccounting OTRS csomag telepítésére készül.<br>
+        <br>
+        <br>
+        ((enjoy))<br>
+        <br>
+
+    ]]></IntroInstall>
     <IntroInstall Type="post" Title="Installation Information" Lang="en"><![CDATA[
 
         <br>
@@ -273,6 +287,22 @@
         <br>
 
     ]]></IntroInstall>
+    <IntroInstall Type="post" Title="Telepítési információk" Lang="hu"><![CDATA[
+
+        <br>
+        <b>FIGYELMEZTETÉS</b>
+        <br>
+        <br>
+        Annak érdekében, hogy hozzáférést adjon a felhasználók számára az időelszámolás modulhoz, hozzá kell adnia őket a „time_accounting” csoporthoz tagként.
+        <br>
+        <br>
+        Azok a menüpontok, amelyeket ez a csomag adott hozzá, azután lesznek láthatóak, miután ismét bejelentkezik a rendszerbe.
+        <br>
+        <br>
+        ((enjoy))<br>
+        <br>
+
+    ]]></IntroInstall>
     <IntroUpgrade Type="pre" Title="Upgrade Information" Lang="en"><![CDATA[
 
         <br>
@@ -306,6 +336,19 @@
         <br>
         <br>
         Ud. está a punto de actualizar el paquete Contabilidad de Tiempo de OTRS.<br>
+        <br>
+        <br>
+        ((enjoy))<br>
+        <br>
+
+    ]]></IntroUpgrade>
+    <IntroUpgrade Type="pre" Title="Frissítési információk" Lang="hu"><![CDATA[
+
+        <br>
+        <b>ÜDVÖZÖLJÜK</b>
+        <br>
+        <br>
+        Ön a TimeAccounting OTRS csomag frissítésére készül.<br>
         <br>
         <br>
         ((enjoy))<br>
@@ -360,6 +403,24 @@
         <br>
         El grupo 'time_accounting' que se dió de alta durante la instalación del paquete, se desactivará.
         Es posible reactivar dicho grupo en el área de administración.
+        <br>
+        <br>
+        ((enjoy))<br>
+        <br>
+
+    ]]></IntroUninstall>
+    <IntroUninstall Type="pre" Title="Eltávolítási információk" Lang="hu"><![CDATA[
+
+        <br>
+        <b>FIGYELEM</b>
+        <br>
+        <br>
+        Ha eltávolítja ezt a csomagot, akkor a telepítés során létrehozott összes adatbázistábla törlésre kerül.
+        Az ezekben a táblákban lévő összes adat visszavonhatatlanul el fog veszni!
+        <br>
+        <br>
+        A csomagtelepítés során létrehozott „time_accounting” csoport ki lesz kapcsolva.
+        Ezt a csoportot az adminisztrációs területen tudja ismét bekapcsolni.
         <br>
         <br>
         ((enjoy))<br>
