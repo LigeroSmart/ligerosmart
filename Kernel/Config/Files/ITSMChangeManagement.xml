@@ -71,7 +71,7 @@
         <Setting>
             <FrontendModuleReg>
                 <GroupRo>itsm-change</GroupRo>
-                <Description>Lookup of CAB members for autocompletion</Description>
+                <Description Translatable="1">Lookup of CAB members for autocompletion.</Description>
                 <Title>CAB Member Search</Title>
             </FrontendModuleReg>
         </Setting>
@@ -83,11 +83,11 @@
         <Setting>
             <FrontendModuleReg>
                 <GroupRo>itsm-change</GroupRo>
-                <Description>Overview over all Changes</Description>
+                <Description Translatable="1">Overview over all Changes.</Description>
                 <NavBarName>ITSM Change</NavBarName>
                 <Title>ITSM Changes</Title>
                 <NavBar>
-                    <Description>Change-Area</Description>
+                    <Description Translatable="1">Change-Area</Description>
                     <Name>ITSM Changes</Name>
                     <Type>Menu</Type>
                     <Block>ItemArea</Block>
@@ -97,7 +97,7 @@
                     <Prio>3400</Prio>
                 </NavBar>
                 <NavBar>
-                    <Description>Change Overview</Description>
+                    <Description Translatable="1">Change Overview</Description>
                     <Name>Overview</Name>
                     <Link>Action=AgentITSMChange</Link>
                     <Type></Type>
@@ -119,11 +119,11 @@
         <Setting>
             <FrontendModuleReg>
                 <GroupRo>itsm-change-manager</GroupRo>
-                <Description>Add a change</Description>
+                <Description Translatable="1">Add a change.</Description>
                 <Title>Add</Title>
                 <NavBarName>ITSM Change</NavBarName>
                 <NavBar>
-                    <Description>New</Description>
+                    <Description Translatable="1">New</Description>
                     <Name>New</Name>
                     <Link>Action=AgentITSMChangeAdd</Link>
                     <Type></Type>
@@ -143,11 +143,11 @@
             <FrontendModuleReg>
                 <GroupRo>itsm-change-builder</GroupRo>
                 <GroupRo>itsm-change-manager</GroupRo>
-                <Description>Add a change from template</Description>
+                <Description Translatable="1">Add a change from template.</Description>
                 <Title>Add from template</Title>
                 <NavBarName>ITSM Change</NavBarName>
                 <NavBar>
-                    <Description>New (from template)</Description>
+                    <Description Translatable="1">New (from template)</Description>
                     <Name>New (from template)</Name>
                     <Link>Action=AgentITSMChangeAddFromTemplate</Link>
                     <Type></Type>
@@ -166,7 +166,7 @@
         <Setting>
             <FrontendModuleReg>
                 <GroupRo>itsm-change</GroupRo>
-                <Description>ITSM Change CAB Templates</Description>
+                <Description Translatable="1">ITSM Change CAB Templates.</Description>
                 <Title>Change CAB Templates</Title>
                 <NavBarName>ITSM Change</NavBarName>
             </FrontendModuleReg>
@@ -179,7 +179,7 @@
         <Setting>
             <FrontendModuleReg>
                 <GroupRo>itsm-change</GroupRo>
-                <Description>ITSM Change Condition Overview.</Description>
+                <Description Translatable="1">ITSM Change Condition Overview.</Description>
                 <Title>Condition Overview</Title>
                 <NavBarName>ITSM Change</NavBarName>
             </FrontendModuleReg>
@@ -192,7 +192,7 @@
         <Setting>
             <FrontendModuleReg>
                 <GroupRo>itsm-change</GroupRo>
-                <Description>ITSM Change Condition Edit.</Description>
+                <Description Translatable="1">ITSM Change Condition Edit.</Description>
                 <Title>Condition Edit</Title>
                 <NavBarName>ITSM Change</NavBarName>
                 <Loader>
@@ -208,7 +208,7 @@
         <Setting>
             <FrontendModuleReg>
                 <GroupRo>itsm-change</GroupRo>
-                <Description>Edit a change</Description>
+                <Description Translatable="1">Edit a change.</Description>
                 <Title>Edit</Title>
                 <NavBarName>ITSM Change</NavBarName>
             </FrontendModuleReg>
@@ -221,7 +221,7 @@
         <Setting>
             <FrontendModuleReg>
                 <GroupRo>itsm-change-manager</GroupRo>
-                <Description>Delete a change</Description>
+                <Description Translatable="1">Delete a change.</Description>
                 <Title>Delete</Title>
                 <NavBarName>ITSM Change</NavBarName>
             </FrontendModuleReg>
@@ -234,7 +234,7 @@
         <Setting>
             <FrontendModuleReg>
                 <GroupRo>itsm-change</GroupRo>
-                <Description>Change History</Description>
+                <Description Translatable="1">Change History.</Description>
                 <Title>History</Title>
                 <NavBarName>ITSM Change</NavBarName>
             </FrontendModuleReg>
@@ -247,7 +247,7 @@
         <Setting>
             <FrontendModuleReg>
                 <GroupRo>itsm-change</GroupRo>
-                <Description>Details of a change history entry</Description>
+                <Description Translatable="1">Details of a change history entry.</Description>
                 <Title>HistoryZoom</Title>
                 <NavBarName>ITSM Change</NavBarName>
             </FrontendModuleReg>
@@ -260,7 +260,7 @@
         <Setting>
             <FrontendModuleReg>
                 <GroupRo>itsm-change</GroupRo>
-                <Description>Change Involved Persons</Description>
+                <Description Translatable="1">Change Involved Persons.</Description>
                 <Title>Involved Persons</Title>
                 <NavBarName>ITSM Change</NavBarName>
             </FrontendModuleReg>
@@ -273,7 +273,7 @@
         <Setting>
             <FrontendModuleReg>
                 <GroupRo>itsm-change-manager</GroupRo>
-                <Description>ITSM Change Manager Overview</Description>
+                <Description Translatable="1">ITSM Change Manager Overview.</Description>
                 <NavBarName>ITSM Change</NavBarName>
                 <Title>ITSM Change</Title>
                 <Loader>
@@ -289,7 +289,7 @@
         <Setting>
             <FrontendModuleReg>
                 <GroupRo>itsm-change</GroupRo>
-                <Description>ITSM MyCAB Overview</Description>
+                <Description Translatable="1">ITSM MyCAB Overview.</Description>
                 <NavBarName>ITSM Change</NavBarName>
                 <Title>ITSM Change</Title>
                 <Loader>
@@ -306,7 +306,7 @@
             <FrontendModuleReg>
                 <GroupRo>itsm-change-builder</GroupRo>
                 <GroupRo>itsm-change-manager</GroupRo>
-                <Description>ITSM MyChanges Overview</Description>
+                <Description Translatable="1">ITSM MyChanges Overview.</Description>
                 <NavBarName>ITSM Change</NavBarName>
                 <Title>ITSM Change</Title>
                 <Loader>
@@ -322,7 +322,7 @@
         <Setting>
             <FrontendModuleReg>
                 <GroupRo>itsm-change</GroupRo>
-                <Description>ITSM MyWorkorders Overview</Description>
+                <Description Translatable="1">ITSM MyWorkorders Overview.</Description>
                 <NavBarName>ITSM Change</NavBarName>
                 <Title>ITSM Change</Title>
                 <Loader>
@@ -338,11 +338,11 @@
         <Setting>
             <FrontendModuleReg>
                 <GroupRo>itsm-change</GroupRo>
-                <Description>ITSM Change PIR Overview</Description>
+                <Description Translatable="1">ITSM Change PIR Overview.</Description>
                 <NavBarName>ITSM Change</NavBarName>
                 <Title>ITSM Change</Title>
                 <NavBar>
-                    <Description>PIR (Post Implementation Review)</Description>
+                    <Description Translatable="1">PIR (Post Implementation Review)</Description>
                     <Name>PIR</Name>
                     <Link>Action=AgentITSMChangePIR</Link>
                     <Type></Type>
@@ -364,7 +364,7 @@
         <Setting>
             <FrontendModuleReg>
                 <GroupRo>itsm-change</GroupRo>
-                <Description>Change Print</Description>
+                <Description Translatable="1">Change Print.</Description>
                 <Title>Print</Title>
                 <NavBarName>ITSM Change</NavBarName>
             </FrontendModuleReg>
@@ -377,11 +377,11 @@
         <Setting>
             <FrontendModuleReg>
                 <GroupRo>itsm-change</GroupRo>
-                <Description>Projected Service Availability (PSA) of changes. Overview of approved changes and their services.</Description>
+                <Description Translatable="1">Projected Service Availability (PSA) of changes. Overview of approved changes and their services.</Description>
                 <NavBarName>ITSM Change</NavBarName>
                 <Title>PSA</Title>
                 <NavBar>
-                    <Description>Projected Service Availability (PSA)</Description>
+                    <Description Translatable="1">Projected Service Availability (PSA)</Description>
                     <Name>Projected Service Availability</Name>
                     <Link>Action=AgentITSMChangePSA</Link>
                     <Type></Type>
@@ -403,7 +403,7 @@
         <Setting>
             <FrontendModuleReg>
                 <GroupRo>itsm-change-builder</GroupRo>
-                <Description>Reset a change and its workorders</Description>
+                <Description Translatable="1">Reset a change and its workorders.</Description>
                 <Title>Reset</Title>
                 <NavBarName>ITSM Change</NavBarName>
             </FrontendModuleReg>
@@ -416,11 +416,11 @@
         <Setting>
             <FrontendModuleReg>
                 <GroupRo>itsm-change</GroupRo>
-                <Description>Forward schedule of changes. Overview over approved changes.</Description>
+                <Description Translatable="1">Forward schedule of changes. Overview over approved changes.</Description>
                 <NavBarName>ITSM Change</NavBarName>
                 <Title>Change Schedule</Title>
                 <NavBar>
-                    <Description>Change Schedule</Description>
+                    <Description Translatable="1">Change Schedule</Description>
                     <Name>Schedule</Name>
                     <Link>Action=AgentITSMChangeSchedule</Link>
                     <Type></Type>
@@ -439,11 +439,11 @@
         <Setting>
             <FrontendModuleReg>
                 <GroupRo>itsm-change</GroupRo>
-                <Description>Search Changes</Description>
+                <Description Translatable="1">Search Changes.</Description>
                 <Title>Search</Title>
                 <NavBarName>ITSM Change</NavBarName>
                 <NavBar>
-                    <Description>Search Changes</Description>
+                    <Description Translatable="1">Search Changes</Description>
                     <Name>Search</Name>
                     <Link>Action=AgentITSMChangeSearch</Link>
                     <LinkOption>onclick="ITSM.Agent.ChangeManagement.Search.OpenSearchDialog('AgentITSMChangeSearch'); if (event.stopPropagation) { event.stopPropagation(); } else { window.event.cancelBubble = true; } return false;"</LinkOption>
@@ -463,7 +463,7 @@
         <Setting>
             <FrontendModuleReg>
                 <GroupRo>itsm-change</GroupRo>
-                <Description>Template</Description>
+                <Description Translatable="1">Template.</Description>
                 <Title>Template</Title>
                 <NavBarName>ITSM Change</NavBarName>
             </FrontendModuleReg>
@@ -476,7 +476,7 @@
         <Setting>
             <FrontendModuleReg>
                 <GroupRo>itsm-change</GroupRo>
-                <Description>Move Time Slot</Description>
+                <Description Translatable="1">Move Time Slot.</Description>
                 <Title>Time Slot</Title>
                 <NavBarName>ITSM Change</NavBarName>
             </FrontendModuleReg>
@@ -489,7 +489,7 @@
         <Setting>
             <FrontendModuleReg>
                 <GroupRo>itsm-change</GroupRo>
-                <Description>Change Zoom</Description>
+                <Description Translatable="1">Change Zoom.</Description>
                 <Title>Zoom</Title>
                 <NavBarName>ITSM Change</NavBarName>
                 <Loader>
@@ -513,7 +513,7 @@
             <FrontendModuleReg>
                 <GroupRo>itsm-change-builder</GroupRo>
                 <GroupRo>itsm-change-manager</GroupRo>
-                <Description>ITSM Template Delete</Description>
+                <Description Translatable="1">ITSM Template Delete.</Description>
                 <Title>ITSM Change</Title>
             </FrontendModuleReg>
         </Setting>
@@ -526,7 +526,7 @@
             <FrontendModuleReg>
                 <GroupRo>itsm-change-builder</GroupRo>
                 <GroupRo>itsm-change-manager</GroupRo>
-                <Description>ITSM Template Edit</Description>
+                <Description Translatable="1">ITSM Template Edit.</Description>
                 <Title>ITSM Change</Title>
             </FrontendModuleReg>
         </Setting>
@@ -539,7 +539,7 @@
             <FrontendModuleReg>
                 <GroupRo>itsm-change-builder</GroupRo>
                 <GroupRo>itsm-change-manager</GroupRo>
-                <Description>ITSM Template Edit CAB</Description>
+                <Description Translatable="1">ITSM Template Edit CAB.</Description>
                 <Title>ITSM Change</Title>
             </FrontendModuleReg>
         </Setting>
@@ -552,7 +552,7 @@
             <FrontendModuleReg>
                 <GroupRo>itsm-change-builder</GroupRo>
                 <GroupRo>itsm-change-manager</GroupRo>
-                <Description>ITSM Template Edit Content</Description>
+                <Description Translatable="1">ITSM Template Edit Content.</Description>
                 <Title>ITSM Change</Title>
             </FrontendModuleReg>
         </Setting>
@@ -565,11 +565,11 @@
             <FrontendModuleReg>
                 <GroupRo>itsm-change-builder</GroupRo>
                 <GroupRo>itsm-change-manager</GroupRo>
-                <Description>ITSM Template Overview</Description>
+                <Description Translatable="1">ITSM Template Overview.</Description>
                 <NavBarName>ITSM Change</NavBarName>
                 <Title>ITSM Change</Title>
                 <NavBar>
-                    <Description>Template Overview</Description>
+                    <Description Translatable="1">Template Overview</Description>
                     <Name>Templates</Name>
                     <Link>Action=AgentITSMTemplateOverview</Link>
                     <Type></Type>
@@ -592,7 +592,7 @@
         <Setting>
             <FrontendModuleReg>
                 <GroupRo>itsm-change</GroupRo>
-                <Description>Lookup of agents, used for autocompletion</Description>
+                <Description Translatable="1">Lookup of agents, used for autocompletion.</Description>
                 <Title>UserSearch</Title>
                 <NavBarName>ITSM Change</NavBarName>
             </FrontendModuleReg>
@@ -605,7 +605,7 @@
         <Setting>
             <FrontendModuleReg>
                 <GroupRo>itsm-change</GroupRo>
-                <Description>Workorder Add</Description>
+                <Description Translatable="1">Workorder Add.</Description>
                 <Title>Add</Title>
                 <NavBarName>ITSM Change</NavBarName>
             </FrontendModuleReg>
@@ -618,7 +618,7 @@
         <Setting>
             <FrontendModuleReg>
                 <GroupRo>itsm-change</GroupRo>
-                <Description>Workorder Add (from template)</Description>
+                <Description Translatable="1">Workorder Add (from template).</Description>
                 <Title>Add</Title>
                 <NavBarName>ITSM Change</NavBarName>
             </FrontendModuleReg>
@@ -631,7 +631,7 @@
         <Setting>
             <FrontendModuleReg>
                 <GroupRo>itsm-change</GroupRo>
-                <Description>Workorder Agent</Description>
+                <Description Translatable="1">Workorder Agent.</Description>
                 <Title>Agent</Title>
                 <NavBarName>ITSM Change</NavBarName>
             </FrontendModuleReg>
@@ -644,7 +644,7 @@
         <Setting>
             <FrontendModuleReg>
                 <GroupRo>itsm-change</GroupRo>
-                <Description>Workorder Delete</Description>
+                <Description Translatable="1">Workorder Delete.</Description>
                 <Title>Delete</Title>
                 <NavBarName>ITSM Change</NavBarName>
             </FrontendModuleReg>
@@ -657,7 +657,7 @@
         <Setting>
             <FrontendModuleReg>
                 <GroupRo>itsm-change</GroupRo>
-                <Description>Workorder Edit</Description>
+                <Description Translatable="1">Workorder Edit.</Description>
                 <Title>Edit</Title>
                 <NavBarName>ITSM Change</NavBarName>
             </FrontendModuleReg>
@@ -670,7 +670,7 @@
         <Setting>
             <FrontendModuleReg>
                 <GroupRo>itsm-change</GroupRo>
-                <Description>Workorder History</Description>
+                <Description Translatable="1">Workorder History.</Description>
                 <Title>History</Title>
                 <NavBarName>ITSM Change</NavBarName>
             </FrontendModuleReg>
@@ -683,7 +683,7 @@
         <Setting>
             <FrontendModuleReg>
                 <GroupRo>itsm-change</GroupRo>
-                <Description>Workorder History Zoom</Description>
+                <Description Translatable="1">Workorder History Zoom.</Description>
                 <Title>HistoryZoom</Title>
                 <NavBarName>ITSM Change</NavBarName>
             </FrontendModuleReg>
@@ -696,7 +696,7 @@
         <Setting>
             <FrontendModuleReg>
                 <GroupRo>itsm-change</GroupRo>
-                <Description>Workorder Report</Description>
+                <Description Translatable="1">Workorder Report.</Description>
                 <Title>Report</Title>
                 <NavBarName>ITSM Change</NavBarName>
             </FrontendModuleReg>
@@ -709,7 +709,7 @@
         <Setting>
             <FrontendModuleReg>
                 <GroupRo>itsm-change</GroupRo>
-                <Description>Take Workorder</Description>
+                <Description Translatable="1">Take Workorder.</Description>
                 <Title>Take Workorder</Title>
                 <NavBarName>ITSM Change</NavBarName>
             </FrontendModuleReg>
@@ -722,7 +722,7 @@
         <Setting>
             <FrontendModuleReg>
                 <GroupRo>itsm-change</GroupRo>
-                <Description>Template</Description>
+                <Description Translatable="1">Template.</Description>
                 <Title>Template</Title>
                 <NavBarName>ITSM Change</NavBarName>
             </FrontendModuleReg>
@@ -735,7 +735,7 @@
         <Setting>
             <FrontendModuleReg>
                 <GroupRo>itsm-change</GroupRo>
-                <Description>Workorder Zoom</Description>
+                <Description Translatable="1">Workorder Zoom.</Description>
                 <Title>Zoom</Title>
                 <NavBarName>ITSM Change</NavBarName>
                 <Loader>
@@ -754,11 +754,11 @@
         <SubGroup>Frontend::Customer::ModuleRegistration</SubGroup>
         <Setting>
             <FrontendModuleReg>
-                <Description>Change Schedule</Description>
+                <Description Translatable="1">Change Schedule.</Description>
                 <NavBarName>ITSM Change</NavBarName>
                 <Title>Change Schedule</Title>
                 <NavBar>
-                    <Description>Change Schedule</Description>
+                    <Description Translatable="1">Change Schedule</Description>
                     <Name>Change Schedule</Name>
                     <Block></Block>
                     <Type></Type>
@@ -860,7 +860,7 @@
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::TicketMenu::ITSMChange</Item>
                 <Item Key="Name">Create Change</Item>
-                <Item Key="Description">Create a change from this ticket!</Item>
+                <Item Key="Description" Translatable="1">Create a change from this ticket!</Item>
                 <Item Key="Action">AgentITSMChangeAdd</Item>
                 <Item Key="Link">Action=AgentITSMChangeAdd;TicketID=[% Data.TicketID | html %]</Item>
             </Hash>
@@ -874,7 +874,7 @@
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::TicketMenu::ITSMChange</Item>
                 <Item Key="Name">Create Change (from template)</Item>
-                <Item Key="Description">Create a change (from template) from this ticket!</Item>
+                <Item Key="Description" Translatable="1">Create a change (from template) from this ticket!</Item>
                 <Item Key="Action">AgentITSMChangeAddFromTemplate</Item>
                 <Item Key="Link">Action=AgentITSMChangeAddFromTemplate;TicketID=[% Data.TicketID | html %]</Item>
             </Hash>
@@ -888,7 +888,7 @@
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::ITSMChange::MenuGeneric</Item>
                 <Item Key="Name">Back</Item>
-                <Item Key="Description">Back</Item>
+                <Item Key="Description" Translatable="1">Back</Item>
                 <Item Key="Action"></Item>
                 <Item Key="Link">[% Env("LastScreenChanges") %]</Item>
                 <Item Key="Target">Back</Item>
@@ -903,7 +903,7 @@
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::ITSMChange::MenuGeneric</Item>
                 <Item Key="Name">History</Item>
-                <Item Key="Description">History</Item>
+                <Item Key="Description" Translatable="1">History</Item>
                 <Item Key="Action">AgentITSMChangeHistory</Item>
                 <Item Key="Link">Action=AgentITSMChangeHistory;ChangeID=[% Data.ChangeID | html %]</Item>
                 <Item Key="Target">PopUp</Item>
@@ -918,7 +918,7 @@
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::ITSMChange::MenuGeneric</Item>
                 <Item Key="Name">Print</Item>
-                <Item Key="Description">Print the change</Item>
+                <Item Key="Description" Translatable="1">Print the change</Item>
                 <Item Key="Action">AgentITSMChangePrint</Item>
                 <Item Key="Link">Action=AgentITSMChangePrint;ChangeID=[% Data.ChangeID | html %]</Item>
                 <Item Key="LinkParam">target="print_change"</Item>
@@ -934,7 +934,7 @@
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::ITSMChange::MenuGeneric</Item>
                 <Item Key="Name">Edit</Item>
-                <Item Key="Description">Edit the change</Item>
+                <Item Key="Description" Translatable="1">Edit the change</Item>
                 <Item Key="Action">AgentITSMChangeEdit</Item>
                 <Item Key="Link">Action=AgentITSMChangeEdit;ChangeID=[% Data.ChangeID | html %]</Item>
                 <Item Key="Target">PopUp</Item>
@@ -949,7 +949,7 @@
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::ITSMChange::MenuGeneric</Item>
                 <Item Key="Name">Involved Persons</Item>
-                <Item Key="Description">Change involved persons of the change</Item>
+                <Item Key="Description" Translatable="1">Change involved persons of the change</Item>
                 <Item Key="Action">AgentITSMChangeInvolvedPersons</Item>
                 <Item Key="Link">Action=AgentITSMChangeInvolvedPersons;ChangeID=[% Data.ChangeID | html %]</Item>
                 <Item Key="Target">PopUp</Item>
@@ -964,7 +964,7 @@
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::ITSMChange::MenuGeneric</Item>
                 <Item Key="Name">Add Workorder</Item>
-                <Item Key="Description">Add a workorder to the change</Item>
+                <Item Key="Description" Translatable="1">Add a workorder to the change</Item>
                 <Item Key="Action">AgentITSMWorkOrderAdd</Item>
                 <Item Key="Link">Action=AgentITSMWorkOrderAdd;ChangeID=[% Data.ChangeID | html %]</Item>
                 <Item Key="Target">PopUp</Item>
@@ -979,7 +979,7 @@
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::ITSMChange::MenuGeneric</Item>
                 <Item Key="Name">Add Workorder (from template)</Item>
-                <Item Key="Description">Add a workorder (from template) to the change</Item>
+                <Item Key="Description" Translatable="1">Add a workorder (from template) to the change</Item>
                 <Item Key="Action">AgentITSMWorkOrderAddFromTemplate</Item>
                 <Item Key="Link">Action=AgentITSMWorkOrderAddFromTemplate;ChangeID=[% Data.ChangeID | html %]</Item>
                 <Item Key="Target">PopUp</Item>
@@ -994,7 +994,7 @@
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::ITSMChange::MenuGeneric</Item>
                 <Item Key="Name">Conditions</Item>
-                <Item Key="Description">Edit the conditions of the change</Item>
+                <Item Key="Description" Translatable="1">Edit the conditions of the change</Item>
                 <Item Key="Action">AgentITSMChangeCondition</Item>
                 <Item Key="Link">Action=AgentITSMChangeCondition;ChangeID=[% Data.ChangeID | html %]</Item>
                 <Item Key="Target">PopUp</Item>
@@ -1009,7 +1009,7 @@
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::ITSMChange::MenuGeneric</Item>
                 <Item Key="Name">Link</Item>
-                <Item Key="Description">Link another object to the change</Item>
+                <Item Key="Description" Translatable="1">Link another object to the change</Item>
                 <Item Key="Action">AgentLinkObject</Item>
                 <Item Key="Link">Action=AgentLinkObject;SourceObject=ITSMChange;SourceKey=[% Data.ChangeID | html %]</Item>
                 <Item Key="Target">PopUp</Item>
@@ -1024,7 +1024,7 @@
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::ITSMChange::MenuTimeSlot</Item>
                 <Item Key="Name">Move Time Slot</Item>
-                <Item Key="Description">Move all workorders in time</Item>
+                <Item Key="Description" Translatable="1">Move all workorders in time</Item>
                 <Item Key="Action">AgentITSMChangeTimeSlot</Item>
                 <Item Key="Link">Action=AgentITSMChangeTimeSlot;ChangeID=[% Data.ChangeID | html %]</Item>
                 <Item Key="Target">PopUp</Item>
@@ -1039,7 +1039,7 @@
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::ITSMChange::MenuGeneric</Item>
                 <Item Key="Name">Template</Item>
-                <Item Key="Description">Save change as a template</Item>
+                <Item Key="Description" Translatable="1">Save change as a template</Item>
                 <Item Key="Action">AgentITSMChangeTemplate</Item>
                 <Item Key="Link">Action=AgentITSMChangeTemplate;ChangeID=[% Data.ChangeID | html %]</Item>
                 <Item Key="Target">PopUp</Item>
@@ -1054,7 +1054,7 @@
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::ITSMChange::MenuChangeDelete</Item>
                 <Item Key="Name">Delete</Item>
-                <Item Key="Description">Delete Change</Item>
+                <Item Key="Description" Translatable="1">Delete Change</Item>
                 <Item Key="Action">AgentITSMChangeDelete</Item>
                 <Item Key="Link">Action=AgentITSMChangeDelete;ChangeID=[% Data.ChangeID | html %]</Item>
                 <Item Key="Target">ConfirmationDialog</Item>
@@ -1073,7 +1073,7 @@
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::ITSMChange::MenuGeneric</Item>
                 <Item Key="Name">Reset</Item>
-                <Item Key="Description">Reset change and its workorders</Item>
+                <Item Key="Description" Translatable="1">Reset change and its workorders</Item>
                 <Item Key="Action">AgentITSMChangeReset</Item>
                 <Item Key="Link">Action=AgentITSMChangeReset;ChangeID=[% Data.ChangeID | html %]</Item>
                 <Item Key="Target">ConfirmationDialog</Item>
@@ -1092,7 +1092,7 @@
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::ITSMWorkOrder::MenuGeneric</Item>
                 <Item Key="Name">Back</Item>
-                <Item Key="Description">Back</Item>
+                <Item Key="Description" Translatable="1">Back</Item>
                 <Item Key="Action"></Item>
                 <Item Key="Link">[% Env("LastScreenWorkOrders") %]</Item>
                 <Item Key="Target">Back</Item>
@@ -1107,7 +1107,7 @@
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::ITSMWorkOrder::MenuGeneric</Item>
                 <Item Key="Name">History</Item>
-                <Item Key="Description">History</Item>
+                <Item Key="Description" Translatable="1">History</Item>
                 <Item Key="Action">AgentITSMWorkOrderHistory</Item>
                 <Item Key="Link">Action=AgentITSMWorkOrderHistory;WorkOrderID=[% Data.WorkOrderID | html %]</Item>
                 <Item Key="Target">PopUp</Item>
@@ -1122,7 +1122,7 @@
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::ITSMWorkOrder::MenuGeneric</Item>
                 <Item Key="Name">Print</Item>
-                <Item Key="Description">Print the workorder</Item>
+                <Item Key="Description" Translatable="1">Print the workorder</Item>
                 <Item Key="Action">AgentITSMChangePrint</Item>
                 <Item Key="Link">Action=AgentITSMChangePrint;WorkOrderID=[% Data.WorkOrderID | html %]</Item>
                 <Item Key="Target">PopUp</Item>
@@ -1137,7 +1137,7 @@
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::ITSMWorkOrder::MenuWithPermissionFromChange</Item>
                 <Item Key="Name">Edit</Item>
-                <Item Key="Description">Edit the workorder</Item>
+                <Item Key="Description" Translatable="1">Edit the workorder</Item>
                 <Item Key="Action">AgentITSMWorkOrderEdit</Item>
                 <Item Key="Link">Action=AgentITSMWorkOrderEdit;WorkOrderID=[% Data.WorkOrderID | html %]</Item>
                 <Item Key="Target">PopUp</Item>
@@ -1152,7 +1152,7 @@
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::ITSMWorkOrder::MenuWithTakePermission</Item>
                 <Item Key="Name">Take Workorder</Item>
-                <Item Key="Description">Take the workorder</Item>
+                <Item Key="Description" Translatable="1">Take the workorder</Item>
                 <Item Key="Action">AgentITSMWorkOrderTake</Item>
                 <Item Key="Link">Action=AgentITSMWorkOrderTake;WorkOrderID=[% Data.WorkOrderID | html %]</Item>
                 <Item Key="Target">ConfirmationDialog</Item>
@@ -1171,7 +1171,7 @@
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::ITSMWorkOrder::MenuWithPermissionFromChange</Item>
                 <Item Key="Name">WorkOrderAgent</Item>
-                <Item Key="Description">Set the agent for the workorder</Item>
+                <Item Key="Description" Translatable="1">Set the agent for the workorder</Item>
                 <Item Key="Action">AgentITSMWorkOrderAgent</Item>
                 <Item Key="Link">Action=AgentITSMWorkOrderAgent;WorkOrderID=[% Data.WorkOrderID | html %]</Item>
                 <Item Key="Target">PopUp</Item>
@@ -1186,7 +1186,7 @@
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::ITSMWorkOrder::MenuGeneric</Item>
                 <Item Key="Name">Report</Item>
-                <Item Key="Description">Report</Item>
+                <Item Key="Description" Translatable="1">Report</Item>
                 <Item Key="Action">AgentITSMWorkOrderReport</Item>
                 <Item Key="Link">Action=AgentITSMWorkOrderReport;WorkOrderID=[% Data.WorkOrderID | html %]</Item>
                 <Item Key="Target">PopUp</Item>
@@ -1201,7 +1201,7 @@
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::ITSMWorkOrder::MenuGeneric</Item>
                 <Item Key="Name">Link</Item>
-                <Item Key="Description">Link another object to the workorder</Item>
+                <Item Key="Description" Translatable="1">Link another object to the workorder</Item>
                 <Item Key="Action">AgentLinkObject</Item>
                 <Item Key="Link">Action=AgentLinkObject;SourceObject=ITSMWorkOrder;SourceKey=[% Data.WorkOrderID | html %]</Item>
                 <Item Key="Target">PopUp</Item>
@@ -1216,7 +1216,7 @@
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::ITSMWorkOrder::MenuWithPermissionFromChange</Item>
                 <Item Key="Name">Template</Item>
-                <Item Key="Description">Save workorder as a template</Item>
+                <Item Key="Description" Translatable="1">Save workorder as a template</Item>
                 <Item Key="Action">AgentITSMWorkOrderTemplate</Item>
                 <Item Key="Link">Action=AgentITSMWorkOrderTemplate;WorkOrderID=[% Data.WorkOrderID | html %]</Item>
                 <Item Key="Target">PopUp</Item>
@@ -1231,7 +1231,7 @@
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::ITSMWorkOrder::MenuWithPermissionFromChange</Item>
                 <Item Key="Name">Delete</Item>
-                <Item Key="Description">Delete Workorder</Item>
+                <Item Key="Description" Translatable="1">Delete Workorder</Item>
                 <Item Key="Action">AgentITSMWorkOrderDelete</Item>
                 <Item Key="Link">Action=AgentITSMWorkOrderDelete;WorkOrderID=[% Data.WorkOrderID | html %]</Item>
                 <Item Key="Target">ConfirmationDialog</Item>
@@ -1520,8 +1520,8 @@
         <SubGroup>Core::MirrorDB</SubGroup>
         <Setting>
             <Option SelectedID="0">
-                <Item Key="0">No</Item>
-                <Item Key="1">Yes</Item>
+                <Item Key="0" Translatable="1">No</Item>
+                <Item Key="1" Translatable="1">Yes</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -1609,8 +1609,8 @@
         <SubGroup>Core::ITSMChange</SubGroup>
         <Setting>
             <Option SelectedID="1">
-                <Item Key="0">No</Item>
-                <Item Key="1">Yes</Item>
+                <Item Key="0" Translatable="1">No</Item>
+                <Item Key="1" Translatable="1">Yes</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -2733,8 +2733,8 @@
         <SubGroup>Frontend::Agent::ViewChangeOverview</SubGroup>
         <Setting>
             <Option SelectedID="Up">
-                <Item Key="Down">Down</Item>
-                <Item Key="Up">Up</Item>
+                <Item Key="Down" Translatable="1">Down</Item>
+                <Item Key="Up" Translatable="1">Up</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -2811,8 +2811,8 @@
         <SubGroup>Frontend::Agent::ViewChangeAdd</SubGroup>
         <Setting>
             <Option SelectedID="1">
-                <Item Key="0">No</Item>
-                <Item Key="1">Yes</Item>
+                <Item Key="0" Translatable="1">No</Item>
+                <Item Key="1" Translatable="1">Yes</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -2890,8 +2890,8 @@
         <SubGroup>Frontend::Agent::ViewChangeEdit</SubGroup>
         <Setting>
             <Option SelectedID="1">
-                <Item Key="0">No</Item>
-                <Item Key="1">Yes</Item>
+                <Item Key="0" Translatable="1">No</Item>
+                <Item Key="1" Translatable="1">Yes</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -2901,8 +2901,8 @@
         <SubGroup>Frontend::Agent::ViewChangeEdit</SubGroup>
         <Setting>
             <Option SelectedID="0">
-                <Item Key="0">No</Item>
-                <Item Key="1">Yes</Item>
+                <Item Key="0" Translatable="1">No</Item>
+                <Item Key="1" Translatable="1">Yes</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -2931,8 +2931,8 @@
         <SubGroup>Frontend::Agent::ViewChangePSAOverview</SubGroup>
         <Setting>
             <Option SelectedID="Up">
-                <Item Key="Down">Down</Item>
-                <Item Key="Up">Up</Item>
+                <Item Key="Down" Translatable="1">Down</Item>
+                <Item Key="Up" Translatable="1">Up</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -3019,8 +3019,8 @@
         <SubGroup>Frontend::Agent::ViewChangeScheduleOverview</SubGroup>
         <Setting>
             <Option SelectedID="Up">
-                <Item Key="Down">Down</Item>
-                <Item Key="Up">Up</Item>
+                <Item Key="Down" Translatable="1">Down</Item>
+                <Item Key="Up" Translatable="1">Up</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -3127,8 +3127,8 @@
         <SubGroup>Frontend::Agent::ViewChangeManagerOverview</SubGroup>
         <Setting>
             <Option SelectedID="Up">
-                <Item Key="Down">Down</Item>
-                <Item Key="Up">Up</Item>
+                <Item Key="Down" Translatable="1">Down</Item>
+                <Item Key="Up" Translatable="1">Up</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -3211,8 +3211,8 @@
         <SubGroup>Frontend::Agent::ViewMyCABOverview</SubGroup>
         <Setting>
             <Option SelectedID="Up">
-                <Item Key="Down">Down</Item>
-                <Item Key="Up">Up</Item>
+                <Item Key="Down" Translatable="1">Down</Item>
+                <Item Key="Up" Translatable="1">Up</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -3308,8 +3308,8 @@
         <SubGroup>Frontend::Agent::ViewMyChangesOverview</SubGroup>
         <Setting>
             <Option SelectedID="Up">
-                <Item Key="Down">Down</Item>
-                <Item Key="Up">Up</Item>
+                <Item Key="Down" Translatable="1">Down</Item>
+                <Item Key="Up" Translatable="1">Up</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -3378,8 +3378,8 @@
         <SubGroup>Frontend::Agent::ViewMyWorkOrdersOverview</SubGroup>
         <Setting>
             <Option SelectedID="Up">
-                <Item Key="Down">Down</Item>
-                <Item Key="Up">Up</Item>
+                <Item Key="Down" Translatable="1">Down</Item>
+                <Item Key="Up" Translatable="1">Up</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -3468,8 +3468,8 @@
         <SubGroup>Frontend::Agent::ViewPIROverview</SubGroup>
         <Setting>
             <Option SelectedID="Up">
-                <Item Key="Down">Down</Item>
-                <Item Key="Up">Up</Item>
+                <Item Key="Down" Translatable="1">Down</Item>
+                <Item Key="Up" Translatable="1">Up</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -3583,8 +3583,8 @@
         <SubGroup>Frontend::Agent::ViewChangePrint</SubGroup>
         <Setting>
             <Option SelectedID="1">
-                <Item Key="0">No</Item>
-                <Item Key="1">Yes</Item>
+                <Item Key="0" Translatable="1">No</Item>
+                <Item Key="1" Translatable="1">Yes</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -3602,8 +3602,8 @@
         <SubGroup>Frontend::Agent::ViewChangePrint</SubGroup>
         <Setting>
             <Option SelectedID="1">
-                <Item Key="0">No</Item>
-                <Item Key="1">Yes</Item>
+                <Item Key="0" Translatable="1">No</Item>
+                <Item Key="1" Translatable="1">Yes</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -3613,8 +3613,8 @@
         <SubGroup>Frontend::Agent::ViewChangePrint</SubGroup>
         <Setting>
             <Option SelectedID="1">
-                <Item Key="0">No</Item>
-                <Item Key="1">Yes</Item>
+                <Item Key="0" Translatable="1">No</Item>
+                <Item Key="1" Translatable="1">Yes</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -3633,8 +3633,8 @@
         <SubGroup>Frontend::Agent::ViewChangeSearch</SubGroup>
         <Setting>
             <Option SelectedID="1">
-                <Item Key="0">No</Item>
-                <Item Key="1">Yes</Item>
+                <Item Key="0" Translatable="1">No</Item>
+                <Item Key="1" Translatable="1">Yes</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -3698,8 +3698,8 @@
         <SubGroup>Frontend::Agent::ViewChangeZoom</SubGroup>
         <Setting>
             <Option SelectedID="1">
-                <Item Key="0">No</Item>
-                <Item Key="1">Yes</Item>
+                <Item Key="0" Translatable="1">No</Item>
+                <Item Key="1" Translatable="1">Yes</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -3717,8 +3717,8 @@
         <SubGroup>Frontend::Agent::ViewChangeZoom</SubGroup>
         <Setting>
             <Option SelectedID="1">
-                <Item Key="0">No</Item>
-                <Item Key="1">Yes</Item>
+                <Item Key="0" Translatable="1">No</Item>
+                <Item Key="1" Translatable="1">Yes</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -3728,8 +3728,8 @@
         <SubGroup>Frontend::Agent::ViewChangeZoom</SubGroup>
         <Setting>
             <Option SelectedID="1">
-                <Item Key="0">No</Item>
-                <Item Key="1">Yes</Item>
+                <Item Key="0" Translatable="1">No</Item>
+                <Item Key="1" Translatable="1">Yes</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -3739,8 +3739,8 @@
         <SubGroup>Frontend::Agent::ViewChangeZoom</SubGroup>
         <Setting>
             <Option SelectedID="0">
-                <Item Key="0">No</Item>
-                <Item Key="1">Yes</Item>
+                <Item Key="0" Translatable="1">No</Item>
+                <Item Key="1" Translatable="1">Yes</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -3750,8 +3750,8 @@
         <SubGroup>Frontend::Agent::ViewChangeZoom</SubGroup>
         <Setting>
             <Option SelectedID="0">
-                <Item Key="0">No</Item>
-                <Item Key="1">Yes</Item>
+                <Item Key="0" Translatable="1">No</Item>
+                <Item Key="1" Translatable="1">Yes</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -3866,8 +3866,8 @@
         <SubGroup>Frontend::Agent::ViewTemplateOverview</SubGroup>
         <Setting>
             <Option SelectedID="Up">
-                <Item Key="Down">Down</Item>
-                <Item Key="Up">Up</Item>
+                <Item Key="Down" Translatable="1">Down</Item>
+                <Item Key="Up" Translatable="1">Up</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -3935,8 +3935,8 @@
         <SubGroup>Frontend::Agent::ViewWorkOrderAdd</SubGroup>
         <Setting>
             <Option SelectedID="1">
-                <Item Key="0">No</Item>
-                <Item Key="1">Yes</Item>
+                <Item Key="0" Translatable="1">No</Item>
+                <Item Key="1" Translatable="1">Yes</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -3987,8 +3987,8 @@
         <SubGroup>Frontend::Agent::ViewWorkOrderEdit</SubGroup>
         <Setting>
             <Option SelectedID="1">
-                <Item Key="0">No</Item>
-                <Item Key="1">Yes</Item>
+                <Item Key="0" Translatable="1">No</Item>
+                <Item Key="1" Translatable="1">Yes</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -3998,8 +3998,8 @@
         <SubGroup>Frontend::Agent::ViewWorkOrderEdit</SubGroup>
         <Setting>
             <Option SelectedID="1">
-                <Item Key="0">No</Item>
-                <Item Key="1">Yes</Item>
+                <Item Key="0" Translatable="1">No</Item>
+                <Item Key="1" Translatable="1">Yes</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -4025,8 +4025,8 @@
         <SubGroup>Frontend::Agent::ViewWorkOrderReport</SubGroup>
         <Setting>
             <Option SelectedID="1">
-                <Item Key="0">No</Item>
-                <Item Key="1">Yes</Item>
+                <Item Key="0" Translatable="1">No</Item>
+                <Item Key="1" Translatable="1">Yes</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -4036,8 +4036,8 @@
         <SubGroup>Frontend::Agent::ViewWorkOrderReport</SubGroup>
         <Setting>
             <Option SelectedID="0">
-                <Item Key="0">No</Item>
-                <Item Key="1">Yes</Item>
+                <Item Key="0" Translatable="1">No</Item>
+                <Item Key="1" Translatable="1">Yes</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -4080,8 +4080,8 @@
         <SubGroup>Frontend::Agent::ViewWorkOrderZoom</SubGroup>
         <Setting>
             <Option SelectedID="1">
-                <Item Key="0">No</Item>
-                <Item Key="1">Yes</Item>
+                <Item Key="0" Translatable="1">No</Item>
+                <Item Key="1" Translatable="1">Yes</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -4099,8 +4099,8 @@
         <SubGroup>Frontend::Agent::ViewWorkOrderZoom</SubGroup>
         <Setting>
             <Option SelectedID="1">
-                <Item Key="0">No</Item>
-                <Item Key="1">Yes</Item>
+                <Item Key="0" Translatable="1">No</Item>
+                <Item Key="1" Translatable="1">Yes</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -4131,8 +4131,8 @@
         <SubGroup>Frontend::Customer::ViewChangeScheduleOverview</SubGroup>
         <Setting>
             <Option SelectedID="Up">
-                <Item Key="Down">Down</Item>
-                <Item Key="Up">Up</Item>
+                <Item Key="Down" Translatable="1">Down</Item>
+                <Item Key="Up" Translatable="1">Up</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -4170,8 +4170,8 @@
         <SubGroup>Frontend::Customer::ViewChangeScheduleOverview</SubGroup>
         <Setting>
             <Option SelectedID="1">
-                <Item Key="0">No</Item>
-                <Item Key="1">Yes</Item>
+                <Item Key="0" Translatable="1">No</Item>
+                <Item Key="1" Translatable="1">Yes</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -4367,8 +4367,8 @@
         <SubGroup>Core::Notifications</SubGroup>
         <Setting>
             <Option SelectedID="1">
-                <Item Key="0">No</Item>
-                <Item Key="1">Yes</Item>
+                <Item Key="0" Translatable="1">No</Item>
+                <Item Key="1" Translatable="1">Yes</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -4378,8 +4378,8 @@
         <SubGroup>Core::Notifications</SubGroup>
         <Setting>
             <Option SelectedID="once">
-                <Item Key="once">once</Item>
-                <Item Key="regularly">regularly</Item>
+                <Item Key="once" Translatable="1">once</Item>
+                <Item Key="regularly" Translatable="1">regularly</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -4397,8 +4397,8 @@
         <SubGroup>Frontend::Agent::Stats</SubGroup>
         <Setting>
             <Option SelectedID="1">
-                <Item Key="0">No</Item>
-                <Item Key="1">Yes</Item>
+                <Item Key="0" Translatable="1">No</Item>
+                <Item Key="1" Translatable="1">Yes</Item>
             </Option>
         </Setting>
     </ConfigItem>
