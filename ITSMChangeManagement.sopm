@@ -11,6 +11,7 @@
     <Description Lang="en">The OTRS::ITSM Change Management package.</Description>
     <Description Lang="de">Das OTRS::ITSM Change Management Paket.</Description>
     <Description Lang="es">El paquete OTRS::ITSM Change Management.</Description>
+    <Description Lang="hu">Az OTRS::ITSM változásmenedzsment csomag.</Description>
     <Filelist>
         <File Permission="644" Location="doc/itsm-change-management-database.dia"/>
         <File Permission="644" Location="doc/itsm-change-management-database.png"/>
@@ -1885,6 +1886,24 @@
         ((enjoy))<br/>
         <br/>
     ]]></IntroInstall>
+    <IntroInstall Type="pre" Title="Telepítési információk" Lang="hu"><![CDATA[
+
+        <br/>
+        <strong>ÜDVÖZÖLJÜK</strong>
+        <br/>
+        <br/>
+        Ön az ITSMChangeManagement OTRS csomag telepítésére készül.<br/>
+        <br/>
+        <br/>
+        <strong>SZÜKSÉGES OTRS CSOMAGOK</strong>
+        <ul>
+        <li>ITSMCore 5.0.6</li>
+        </ul>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+
+    ]]></IntroInstall>
     <IntroInstall Type="post" Title="Installation Information" Lang="en"><![CDATA[
 
         <br/>
@@ -1927,6 +1946,22 @@
         <br/>
         <br/>
         Los elementos del menu que fueron agregados por este paquete ser&aacute;n visibles despu&eacute;s de que cierre y abra su sesi&oacute;n de nuevo.
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+
+    ]]></IntroInstall>
+    <IntroInstall Type="post" Title="Telepítési információk" Lang="hu"><![CDATA[
+
+        <br/>
+        <strong>FIGYELMEZTETÉS</strong>
+        <br/>
+        <br/>
+        Annak érdekében, hogy hozzáférést adjon a felhasználók számára a változás menühöz, hozzá kell adnia őket az „itsm-change” csoporthoz tagként.
+        <br/>
+        <br/>
+        Azok a menüpontok, amelyeket ez a csomag adott hozzá, azután lesznek láthatóak, miután ismét bejelentkezik a rendszerbe.
         <br/>
         <br/>
         ((enjoy))<br/>
@@ -1981,6 +2016,24 @@
         <strong>PAQUETES OTRS REQUERIDOS</strong>
         <ul>
         <li>ITSMCore 5.0.10</li>
+        </ul>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+
+    ]]></IntroUpgrade>
+    <IntroUpgrade Type="pre" Title="Frissítési információk" Lang="hu"><![CDATA[
+
+        <br/>
+        <strong>ÜDVÖZÖLJÜK</strong>
+        <br/>
+        <br/>
+        Ön az ITSMChangeManagement OTRS csomag frissítésére készül.<br/>
+        <br/>
+        <br/>
+        <strong>SZÜKSÉGES OTRS CSOMAGOK</strong>
+        <ul>
+        <li>ITSMCore 5.0.6</li>
         </ul>
         <br/>
         ((enjoy))<br/>
@@ -2053,6 +2106,30 @@
         <br/>
         <br/>
         Si usted desinstala este paquete, las estad&iacute;sticas que est&aacute;n asociadas a &eacute;l ya no estar&aacute;n disponibles.
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+
+    ]]></IntroUninstall>
+    <IntroUninstall Type="pre" Title="Eltávolítási információk" Lang="hu"><![CDATA[
+
+        <br/>
+        <strong>FIGYELEM</strong>
+        <br/>
+        <br/>
+        Ha eltávolítja ezt a csomagot, akkor a telepítés során létrehozott összes adatbázistábla törlésre kerül.
+        Az ezekben a táblákban lévő összes adat visszavonhatatlanul el fog veszni!
+        <br/>
+        <br/>
+        A csomagtelepítés során létrehozott „itsm-change”, „itsm-change-builder” és „itsm-change-manager” csoport ki lesz kapcsolva.
+        Ezeket a csoportokat az adminisztrációs területen tudja ismét bekapcsolni.
+        <br/>
+        <br/>
+        A változás objektumokra és a munkamegrendelés objektumokra mutató összes hivatkozás visszavonhatatlanul törölve lesz!
+        <br/>
+        <br/>
+        Az ehhez a csomaghoz hozzárendelt statisztikák többé nem lesznek elérhetők, ha a csomag eltávolításra kerül.
         <br/>
         <br/>
         ((enjoy))<br/>
