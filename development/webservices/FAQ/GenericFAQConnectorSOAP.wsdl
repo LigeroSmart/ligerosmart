@@ -127,10 +127,17 @@
       </xsd:element>
       <xsd:complexType name="OTRS_FAQ_Attachment">
         <xsd:sequence>
-          <xsd:element maxOccurs="1" minOccurs="1" name="Filename" type="xsd:string"/>
-          <xsd:element maxOccurs="1" minOccurs="1" name="Filesize" type="xsd:long"/>
-          <xsd:element maxOccurs="1" minOccurs="1" name="ContentType" type="xsd:string"/>
-          <xsd:element maxOccurs="1" minOccurs="1" name="Content" type="xsd:base64Binary"/>
+        	<xsd:element maxOccurs="1" minOccurs="1" name="Filename"
+        		type="xsd:string" />
+        	<xsd:element maxOccurs="1" minOccurs="1" name="Filesize"
+        		type="xsd:long" />
+        	<xsd:element maxOccurs="1" minOccurs="1" name="ContentType"
+        		type="xsd:string" />
+        	<xsd:element maxOccurs="1" minOccurs="1" name="Content"
+        		type="xsd:base64Binary" />
+        	<xsd:element name="Inline" type="xsd:positiveInteger"
+        		minOccurs="1" maxOccurs="1">
+        	</xsd:element>
         </xsd:sequence>
       </xsd:complexType>
     </xsd:schema>

@@ -115,13 +115,15 @@ perform PublicFAQGet Operation. This will return a Public FAQ entry.
                             Filesize    => '540286',                # file size in bytes
                             ContentType => 'image/jpeg',
                             Filename    => 'Error.jpg',
-                            Content     => '...'                    # base64 content
+                            Content     => '...',                   # base64 content
+                            Inline      => 0,                       # specify if is an inline attachment
                         },
                         {
                             Filesize    => '540286',                # file size in bytes
                             ContentType => 'image/jpeg',
                             Filename    => 'Pencil.jpg',
-                            Content     => '...'                    # base64 content
+                            Content     => '...',                   # base64 content
+                            Inline      => 1,                       # specify if is an inline attachment
                         },
                     },
                 },
@@ -264,13 +266,15 @@ sub Run {
 
                     # convert content to base64
                     $File{Content} = encode_base64( $File{Content} );
+                    $File{Inline}  = $Attachment->{Inline};
                 }
                 else {
                     %File = (
                         Filename    => $Attachment->{Filename},
                         ContentType => $Attachment->{ContentType},
                         Filesize    => $Attachment->{Filesize},
-                        Content     => ''
+                        Content     => '',
+                        Inline      => $Attachment->{Inline},
                     );
                 }
                 push @Attachments, {%File};

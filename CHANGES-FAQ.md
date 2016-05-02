@@ -1,4 +1,5 @@
 #5.0.3 2015-??-??
+ - 2016-05-02 Added Inline attribute to the retrieved attachments using Generic Interface PublicFAQGet operation, thanks to Esteban Marin.
  - 2016-04-22 Fixed bug#[12028](http://bugs.otrs.org/show_bug.cgi?id=12028) - FAQ update 4 to 5 items with just an HTML table are set as plain text instead of HTML.
 
 #5.0.2 2015-12-01
