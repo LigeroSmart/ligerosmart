@@ -2159,7 +2159,7 @@ sub FAQContentTypeSet {
     # SQL to set the content type (default or given).
     my $SQL = '
         UPDATE faq_item
-        SET faq_item.content_type = ?';
+        SET content_type = ?';
 
     # Get FAQ item IDs from the param.
     my @FAQItemIDs = @{ $Param{FAQItemIDs} // [] };
@@ -2170,7 +2170,7 @@ sub FAQContentTypeSet {
         my $IDString = join ',', @FAQItemIDs;
 
         $SQL .= "
-            WHERE faq_item.id IN ($IDString)";
+            WHERE id IN ($IDString)";
     }
 
     # Get DB object.
@@ -2245,8 +2245,8 @@ sub FAQContentTypeSet {
         return if !$DBObject->Do(
             SQL => '
                 UPDATE faq_item
-                SET faq_item.content_type = ?
-                WHERE faq_item.id =?',
+                SET content_type = ?
+                WHERE id =?',
             Bind => [
                 \$DeterminedContentType,
                 \$ItemID,
