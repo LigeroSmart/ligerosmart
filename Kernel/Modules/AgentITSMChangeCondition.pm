@@ -11,6 +11,8 @@ package Kernel::Modules::AgentITSMChangeCondition;
 use strict;
 use warnings;
 
+use Kernel::Language qw(Translatable);
+
 our $ObjectManagerDisabled = 1;
 
 sub new {
@@ -41,8 +43,8 @@ sub Run {
     # check needed stuff
     if ( !$GetParam{ChangeID} ) {
         return $LayoutObject->ErrorScreen(
-            Message => 'No ChangeID is given!',
-            Comment => 'Please contact the admin.',
+            Message => Translatable('No ChangeID is given!'),
+            Comment => Translatable('Please contact the admin.'),
         );
     }
 
@@ -63,7 +65,9 @@ sub Run {
     # error screen
     if ( !$Access ) {
         return $LayoutObject->NoPermission(
-            Message    => "You need $Self->{Config}->{Permission} permissions!",
+            Message    => $LayoutObject->{LanguageObject}->Translate(
+                'You need %s permissions!', $Self->{Config}->{Permission}
+            ),
             WithHeader => 'yes',
         );
     }
@@ -77,8 +81,8 @@ sub Run {
     # check if change is found
     if ( !$ChangeData ) {
         return $LayoutObject->ErrorScreen(
-            Message => "Change '$GetParam{ChangeID}' not found in database!",
-            Comment => 'Please contact the admin.',
+            Message => $LayoutObject->{LanguageObject}->Translate( 'Change "%s" not found in database!', $GetParam{ChangeID} ),
+            Comment => Translatable('Please contact the admin.'),
         );
     }
 
@@ -118,8 +122,8 @@ sub Run {
             # check error
             if ( !$Success ) {
                 return $LayoutObject->ErrorScreen(
-                    Message => "Could not delete ConditionID $ConditionID!",
-                    Comment => 'Please contact the admin.',
+                    Message => $LayoutObject->{LanguageObject}->Translate( 'Could not delete ConditionID %s!', $ConditionID ),
+                    Comment => Translatable('Please contact the admin.'),
                 );
             }
 
@@ -163,7 +167,7 @@ sub Run {
 
     # output header
     my $Output = $LayoutObject->Header(
-        Title => 'Overview',
+        Title => Translatable('Overview'),
         Type  => 'Small',
     );
 

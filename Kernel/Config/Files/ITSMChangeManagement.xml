@@ -8,7 +8,7 @@
             <FrontendModuleReg>
                 <Group>admin</Group>
                 <Description Translatable="1">Admin of the CIP matrix.</Description>
-                <Title>Category &lt;-&gt; Impact &lt;-&gt; Priority</Title>
+                <Title Translatable="1">Category &lt;-&gt; Impact &lt;-&gt; Priority</Title>
                 <NavBarName>Admin</NavBarName>
                 <NavBarModule>
                     <Module>Kernel::Output::HTML::NavBar::ModuleAdmin</Module>
@@ -30,7 +30,7 @@
             <FrontendModuleReg>
                 <Group>admin</Group>
                 <Description Translatable="1">Create and manage ITSM Change Management notifications.</Description>
-                <Title>ITSM Change notification rules</Title>
+                <Title Translatable="1">ITSM Change notification rules</Title>
                 <NavBarName>Admin</NavBarName>
                 <NavBarModule>
                     <Module>Kernel::Output::HTML::NavBar::ModuleAdmin</Module>
@@ -53,7 +53,7 @@
             <FrontendModuleReg>
                 <Group>admin</Group>
                 <Description Translatable="1">Admin of the state machine.</Description>
-                <Title>State Machine</Title>
+                <Title Translatable="1">State Machine</Title>
                 <NavBarName>Admin</NavBarName>
                 <NavBarModule>
                     <Module>Kernel::Output::HTML::NavBar::ModuleAdmin</Module>
@@ -72,7 +72,7 @@
             <FrontendModuleReg>
                 <GroupRo>itsm-change</GroupRo>
                 <Description Translatable="1">Lookup of CAB members for autocompletion.</Description>
-                <Title>CAB Member Search</Title>
+                <Title Translatable="1">CAB Member Search</Title>
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
@@ -85,9 +85,9 @@
                 <GroupRo>itsm-change</GroupRo>
                 <Description Translatable="1">Overview over all Changes.</Description>
                 <NavBarName>ITSM Change</NavBarName>
-                <Title>ITSM Changes</Title>
+                <Title Translatable="1">ITSM Changes</Title>
                 <NavBar>
-                    <Description Translatable="1">Change-Area</Description>
+                    <Description Translatable="1">Change area.</Description>
                     <Name>ITSM Changes</Name>
                     <Type>Menu</Type>
                     <Block>ItemArea</Block>
@@ -97,7 +97,7 @@
                     <Prio>3400</Prio>
                 </NavBar>
                 <NavBar>
-                    <Description Translatable="1">Change Overview</Description>
+                    <Description Translatable="1">Change Overview.</Description>
                     <Name>Overview</Name>
                     <Link>Action=AgentITSMChange</Link>
                     <Type></Type>
@@ -167,7 +167,7 @@
             <FrontendModuleReg>
                 <GroupRo>itsm-change</GroupRo>
                 <Description Translatable="1">ITSM Change CAB Templates.</Description>
-                <Title>Change CAB Templates</Title>
+                <Title Translatable="1">Change CAB Templates</Title>
                 <NavBarName>ITSM Change</NavBarName>
             </FrontendModuleReg>
         </Setting>
@@ -180,7 +180,7 @@
             <FrontendModuleReg>
                 <GroupRo>itsm-change</GroupRo>
                 <Description Translatable="1">ITSM Change Condition Overview.</Description>
-                <Title>Condition Overview</Title>
+                <Title Translatable="1">Condition Overview</Title>
                 <NavBarName>ITSM Change</NavBarName>
             </FrontendModuleReg>
         </Setting>
@@ -193,7 +193,7 @@
             <FrontendModuleReg>
                 <GroupRo>itsm-change</GroupRo>
                 <Description Translatable="1">ITSM Change Condition Edit.</Description>
-                <Title>Condition Edit</Title>
+                <Title Translatable="1">Condition Edit</Title>
                 <NavBarName>ITSM Change</NavBarName>
                 <Loader>
                     <CSS>ITSM.Table.css</CSS>
@@ -209,7 +209,7 @@
             <FrontendModuleReg>
                 <GroupRo>itsm-change</GroupRo>
                 <Description Translatable="1">Edit a change.</Description>
-                <Title>Edit</Title>
+                <Title Translatable="1">Edit</Title>
                 <NavBarName>ITSM Change</NavBarName>
             </FrontendModuleReg>
         </Setting>
@@ -222,7 +222,7 @@
             <FrontendModuleReg>
                 <GroupRo>itsm-change-manager</GroupRo>
                 <Description Translatable="1">Delete a change.</Description>
-                <Title>Delete</Title>
+                <Title Translatable="1">Delete</Title>
                 <NavBarName>ITSM Change</NavBarName>
             </FrontendModuleReg>
         </Setting>
@@ -235,7 +235,7 @@
             <FrontendModuleReg>
                 <GroupRo>itsm-change</GroupRo>
                 <Description Translatable="1">Change History.</Description>
-                <Title>History</Title>
+                <Title Translatable="1">History</Title>
                 <NavBarName>ITSM Change</NavBarName>
             </FrontendModuleReg>
         </Setting>
@@ -248,7 +248,7 @@
             <FrontendModuleReg>
                 <GroupRo>itsm-change</GroupRo>
                 <Description Translatable="1">Details of a change history entry.</Description>
-                <Title>HistoryZoom</Title>
+                <Title Translatable="1">History Zoom</Title>
                 <NavBarName>ITSM Change</NavBarName>
             </FrontendModuleReg>
         </Setting>
@@ -261,7 +261,7 @@
             <FrontendModuleReg>
                 <GroupRo>itsm-change</GroupRo>
                 <Description Translatable="1">Change Involved Persons.</Description>
-                <Title>Involved Persons</Title>
+                <Title Translatable="1">Involved Persons</Title>
                 <NavBarName>ITSM Change</NavBarName>
             </FrontendModuleReg>
         </Setting>
@@ -275,7 +275,7 @@
                 <GroupRo>itsm-change-manager</GroupRo>
                 <Description Translatable="1">ITSM Change Manager Overview.</Description>
                 <NavBarName>ITSM Change</NavBarName>
-                <Title>ITSM Change</Title>
+                <Title Translatable="1">ITSM Change</Title>
                 <Loader>
                     <CSS>ITSM.Agent.Default.css</CSS>
                 </Loader>
@@ -291,7 +291,7 @@
                 <GroupRo>itsm-change</GroupRo>
                 <Description Translatable="1">ITSM MyCAB Overview.</Description>
                 <NavBarName>ITSM Change</NavBarName>
-                <Title>ITSM Change</Title>
+                <Title Translatable="1">ITSM Change</Title>
                 <Loader>
                     <CSS>ITSM.Agent.Default.css</CSS>
                 </Loader>
@@ -308,7 +308,7 @@
                 <GroupRo>itsm-change-manager</GroupRo>
                 <Description Translatable="1">ITSM MyChanges Overview.</Description>
                 <NavBarName>ITSM Change</NavBarName>
-                <Title>ITSM Change</Title>
+                <Title Translatable="1">ITSM Change</Title>
                 <Loader>
                     <CSS>ITSM.Agent.Default.css</CSS>
                 </Loader>
@@ -324,7 +324,7 @@
                 <GroupRo>itsm-change</GroupRo>
                 <Description Translatable="1">ITSM MyWorkorders Overview.</Description>
                 <NavBarName>ITSM Change</NavBarName>
-                <Title>ITSM Change</Title>
+                <Title Translatable="1">ITSM Change</Title>
                 <Loader>
                     <CSS>ITSM.Agent.Default.css</CSS>
                 </Loader>
@@ -340,7 +340,7 @@
                 <GroupRo>itsm-change</GroupRo>
                 <Description Translatable="1">ITSM Change PIR Overview.</Description>
                 <NavBarName>ITSM Change</NavBarName>
-                <Title>ITSM Change</Title>
+                <Title Translatable="1">ITSM Change</Title>
                 <NavBar>
                     <Description Translatable="1">PIR (Post Implementation Review)</Description>
                     <Name>PIR</Name>
@@ -365,7 +365,7 @@
             <FrontendModuleReg>
                 <GroupRo>itsm-change</GroupRo>
                 <Description Translatable="1">Change Print.</Description>
-                <Title>Print</Title>
+                <Title Translatable="1">Print</Title>
                 <NavBarName>ITSM Change</NavBarName>
             </FrontendModuleReg>
         </Setting>
@@ -379,7 +379,7 @@
                 <GroupRo>itsm-change</GroupRo>
                 <Description Translatable="1">Projected Service Availability (PSA) of changes. Overview of approved changes and their services.</Description>
                 <NavBarName>ITSM Change</NavBarName>
-                <Title>PSA</Title>
+                <Title Translatable="1">PSA</Title>
                 <NavBar>
                     <Description Translatable="1">Projected Service Availability (PSA)</Description>
                     <Name>Projected Service Availability</Name>
@@ -404,7 +404,7 @@
             <FrontendModuleReg>
                 <GroupRo>itsm-change-builder</GroupRo>
                 <Description Translatable="1">Reset a change and its workorders.</Description>
-                <Title>Reset</Title>
+                <Title Translatable="1">Reset</Title>
                 <NavBarName>ITSM Change</NavBarName>
             </FrontendModuleReg>
         </Setting>
@@ -418,7 +418,7 @@
                 <GroupRo>itsm-change</GroupRo>
                 <Description Translatable="1">Forward schedule of changes. Overview over approved changes.</Description>
                 <NavBarName>ITSM Change</NavBarName>
-                <Title>Change Schedule</Title>
+                <Title Translatable="1">Change Schedule</Title>
                 <NavBar>
                     <Description Translatable="1">Change Schedule</Description>
                     <Name>Schedule</Name>
@@ -440,7 +440,7 @@
             <FrontendModuleReg>
                 <GroupRo>itsm-change</GroupRo>
                 <Description Translatable="1">Search Changes.</Description>
-                <Title>Search</Title>
+                <Title Translatable="1">Search</Title>
                 <NavBarName>ITSM Change</NavBarName>
                 <NavBar>
                     <Description Translatable="1">Search Changes</Description>
@@ -464,7 +464,7 @@
             <FrontendModuleReg>
                 <GroupRo>itsm-change</GroupRo>
                 <Description Translatable="1">Template.</Description>
-                <Title>Template</Title>
+                <Title Translatable="1">Template</Title>
                 <NavBarName>ITSM Change</NavBarName>
             </FrontendModuleReg>
         </Setting>
@@ -477,7 +477,7 @@
             <FrontendModuleReg>
                 <GroupRo>itsm-change</GroupRo>
                 <Description Translatable="1">Move Time Slot.</Description>
-                <Title>Time Slot</Title>
+                <Title Translatable="1">Time Slot</Title>
                 <NavBarName>ITSM Change</NavBarName>
             </FrontendModuleReg>
         </Setting>
@@ -490,7 +490,7 @@
             <FrontendModuleReg>
                 <GroupRo>itsm-change</GroupRo>
                 <Description Translatable="1">Change Zoom.</Description>
-                <Title>Zoom</Title>
+                <Title Translatable="1">Zoom</Title>
                 <NavBarName>ITSM Change</NavBarName>
                 <Loader>
                     <CSS>ITSM.Agent.Default.css</CSS>
@@ -514,7 +514,7 @@
                 <GroupRo>itsm-change-builder</GroupRo>
                 <GroupRo>itsm-change-manager</GroupRo>
                 <Description Translatable="1">ITSM Template Delete.</Description>
-                <Title>ITSM Change</Title>
+                <Title Translatable="1">ITSM Change</Title>
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
@@ -527,7 +527,7 @@
                 <GroupRo>itsm-change-builder</GroupRo>
                 <GroupRo>itsm-change-manager</GroupRo>
                 <Description Translatable="1">ITSM Template Edit.</Description>
-                <Title>ITSM Change</Title>
+                <Title Translatable="1">ITSM Change</Title>
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
@@ -540,7 +540,7 @@
                 <GroupRo>itsm-change-builder</GroupRo>
                 <GroupRo>itsm-change-manager</GroupRo>
                 <Description Translatable="1">ITSM Template Edit CAB.</Description>
-                <Title>ITSM Change</Title>
+                <Title Translatable="1">ITSM Change</Title>
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
@@ -553,7 +553,7 @@
                 <GroupRo>itsm-change-builder</GroupRo>
                 <GroupRo>itsm-change-manager</GroupRo>
                 <Description Translatable="1">ITSM Template Edit Content.</Description>
-                <Title>ITSM Change</Title>
+                <Title Translatable="1">ITSM Change</Title>
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
@@ -567,7 +567,7 @@
                 <GroupRo>itsm-change-manager</GroupRo>
                 <Description Translatable="1">ITSM Template Overview.</Description>
                 <NavBarName>ITSM Change</NavBarName>
-                <Title>ITSM Change</Title>
+                <Title Translatable="1">ITSM Change</Title>
                 <NavBar>
                     <Description Translatable="1">Template Overview</Description>
                     <Name>Templates</Name>
@@ -593,7 +593,7 @@
             <FrontendModuleReg>
                 <GroupRo>itsm-change</GroupRo>
                 <Description Translatable="1">Lookup of agents, used for autocompletion.</Description>
-                <Title>UserSearch</Title>
+                <Title Translatable="1">User Search</Title>
                 <NavBarName>ITSM Change</NavBarName>
             </FrontendModuleReg>
         </Setting>
@@ -606,7 +606,7 @@
             <FrontendModuleReg>
                 <GroupRo>itsm-change</GroupRo>
                 <Description Translatable="1">Workorder Add.</Description>
-                <Title>Add</Title>
+                <Title Translatable="1">Add</Title>
                 <NavBarName>ITSM Change</NavBarName>
             </FrontendModuleReg>
         </Setting>
@@ -619,7 +619,7 @@
             <FrontendModuleReg>
                 <GroupRo>itsm-change</GroupRo>
                 <Description Translatable="1">Workorder Add (from template).</Description>
-                <Title>Add</Title>
+                <Title Translatable="1">Add</Title>
                 <NavBarName>ITSM Change</NavBarName>
             </FrontendModuleReg>
         </Setting>
@@ -632,7 +632,7 @@
             <FrontendModuleReg>
                 <GroupRo>itsm-change</GroupRo>
                 <Description Translatable="1">Workorder Agent.</Description>
-                <Title>Agent</Title>
+                <Title Translatable="1">Agent</Title>
                 <NavBarName>ITSM Change</NavBarName>
             </FrontendModuleReg>
         </Setting>
@@ -645,7 +645,7 @@
             <FrontendModuleReg>
                 <GroupRo>itsm-change</GroupRo>
                 <Description Translatable="1">Workorder Delete.</Description>
-                <Title>Delete</Title>
+                <Title Translatable="1">Delete</Title>
                 <NavBarName>ITSM Change</NavBarName>
             </FrontendModuleReg>
         </Setting>
@@ -658,7 +658,7 @@
             <FrontendModuleReg>
                 <GroupRo>itsm-change</GroupRo>
                 <Description Translatable="1">Workorder Edit.</Description>
-                <Title>Edit</Title>
+                <Title Translatable="1">Edit</Title>
                 <NavBarName>ITSM Change</NavBarName>
             </FrontendModuleReg>
         </Setting>
@@ -671,7 +671,7 @@
             <FrontendModuleReg>
                 <GroupRo>itsm-change</GroupRo>
                 <Description Translatable="1">Workorder History.</Description>
-                <Title>History</Title>
+                <Title Translatable="1">History</Title>
                 <NavBarName>ITSM Change</NavBarName>
             </FrontendModuleReg>
         </Setting>
@@ -684,7 +684,7 @@
             <FrontendModuleReg>
                 <GroupRo>itsm-change</GroupRo>
                 <Description Translatable="1">Workorder History Zoom.</Description>
-                <Title>HistoryZoom</Title>
+                <Title Translatable="1">History Zoom</Title>
                 <NavBarName>ITSM Change</NavBarName>
             </FrontendModuleReg>
         </Setting>
@@ -697,7 +697,7 @@
             <FrontendModuleReg>
                 <GroupRo>itsm-change</GroupRo>
                 <Description Translatable="1">Workorder Report.</Description>
-                <Title>Report</Title>
+                <Title Translatable="1">Report</Title>
                 <NavBarName>ITSM Change</NavBarName>
             </FrontendModuleReg>
         </Setting>
@@ -710,7 +710,7 @@
             <FrontendModuleReg>
                 <GroupRo>itsm-change</GroupRo>
                 <Description Translatable="1">Take Workorder.</Description>
-                <Title>Take Workorder</Title>
+                <Title Translatable="1">Take Workorder</Title>
                 <NavBarName>ITSM Change</NavBarName>
             </FrontendModuleReg>
         </Setting>
@@ -723,7 +723,7 @@
             <FrontendModuleReg>
                 <GroupRo>itsm-change</GroupRo>
                 <Description Translatable="1">Template.</Description>
-                <Title>Template</Title>
+                <Title Translatable="1">Template</Title>
                 <NavBarName>ITSM Change</NavBarName>
             </FrontendModuleReg>
         </Setting>
@@ -736,7 +736,7 @@
             <FrontendModuleReg>
                 <GroupRo>itsm-change</GroupRo>
                 <Description Translatable="1">Workorder Zoom.</Description>
-                <Title>Zoom</Title>
+                <Title Translatable="1">Zoom</Title>
                 <NavBarName>ITSM Change</NavBarName>
                 <Loader>
                     <CSS>ITSM.Agent.Default.css</CSS>
@@ -756,7 +756,7 @@
             <FrontendModuleReg>
                 <Description Translatable="1">Change Schedule.</Description>
                 <NavBarName>ITSM Change</NavBarName>
-                <Title>Change Schedule</Title>
+                <Title Translatable="1">Change Schedule</Title>
                 <NavBar>
                     <Description Translatable="1">Change Schedule</Description>
                     <Name>Change Schedule</Name>
@@ -2638,8 +2638,8 @@
         <SubGroup>Core::ITSMWorkOrder</SubGroup>
         <Setting>
             <Option SelectedID="1">
-                <Item Key="0">No</Item>
-                <Item Key="1">Yes</Item>
+                <Item Key="0" Translatable="1">No</Item>
+                <Item Key="1" Translatable="1">Yes</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -2703,8 +2703,8 @@
         <SubGroup>Frontend::Agent::ViewHistory</SubGroup>
         <Setting>
             <Option SelectedID="normal">
-                <Item Key="reverse">reverse</Item>
-                <Item Key="normal">normal</Item>
+                <Item Key="reverse" Translatable="1">reverse</Item>
+                <Item Key="normal" Translatable="1">normal</Item>
             </Option>
         </Setting>
     </ConfigItem>

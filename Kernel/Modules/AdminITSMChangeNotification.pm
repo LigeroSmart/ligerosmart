@@ -117,7 +117,9 @@ sub Run {
             $Self->_Overview();
 
             # notification was updated
-            %Notification = ( Info => 'Notification updated!' );
+            %Notification = (
+                Info => Translatable('Notification updated!'),
+            );
         }
         else {
 
@@ -196,7 +198,9 @@ sub Run {
             $Self->_Overview();
 
             # notification was updated
-            %Notification = ( Info => 'Notification added!' );
+            %Notification = (
+                Info => Translatable('Notification added!'),
+            );
         }
         else {
 
@@ -255,7 +259,7 @@ sub Run {
 
         if ( !IsHashRefWithData($Data) ) {
             return $LayoutObject->ErrorScreen(
-                Message => "Unknown Notification $GetParam{ID}!",
+                Message => $LayoutObject->{LanguageObject}->Translate( 'Unknown notification %s!', $GetParam{ID} ),
             );
         }
 
@@ -275,7 +279,7 @@ sub Run {
         # show error if can't create
         if ( !$NewNotificationID ) {
             return $LayoutObject->ErrorScreen(
-                Message => "There was an error creating the Notification",
+                Message => Translatable('There was an error creating the notification.'),
             );
         }
 

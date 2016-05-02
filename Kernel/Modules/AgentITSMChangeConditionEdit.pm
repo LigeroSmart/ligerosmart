@@ -11,6 +11,8 @@ package Kernel::Modules::AgentITSMChangeConditionEdit;
 use strict;
 use warnings;
 
+use Kernel::Language qw(Translatable);
+
 our $ObjectManagerDisabled = 1;
 
 sub new {
@@ -47,8 +49,8 @@ sub Run {
     for my $Needed (qw(ChangeID ConditionID)) {
         if ( !$GetParam{$Needed} ) {
             $LayoutObject->ErrorScreen(
-                Message => "No $Needed is given!",
-                Comment => 'Please contact the admin.',
+                Message => $LayoutObject->{LanguageObject}->Translate( 'No %s is given!', $Needed ),
+                Comment => Translatable('Please contact the admin.'),
             );
             return;
         }
@@ -71,7 +73,9 @@ sub Run {
     # error screen
     if ( !$Access ) {
         return $LayoutObject->NoPermission(
-            Message    => "You need $Self->{Config}->{Permission} permissions!",
+            Message    => $LayoutObject->{LanguageObject}->Translate(
+                'You need %s permissions!', $Self->{Config}->{Permission}
+            ),
             WithHeader => 'yes',
         );
     }
@@ -85,8 +89,8 @@ sub Run {
     # check if change exists
     if ( !$ChangeData ) {
         return $LayoutObject->ErrorScreen(
-            Message => "Change '$GetParam{ChangeID}' not found in database!",
-            Comment => 'Please contact the admin.',
+            Message => $LayoutObject->{LanguageObject}->Translate( 'Change "%s" not found in database!', $GetParam{ChangeID} ),
+            Comment => Translatable('Please contact the admin.'),
         );
     }
 
@@ -169,8 +173,8 @@ sub Run {
                 # check error
                 if ( !$GetParam{ConditionID} ) {
                     $LayoutObject->ErrorScreen(
-                        Message => 'Could not create new condition!',
-                        Comment => 'Please contact the admin.',
+                        Message => Translatable('Could not create new condition!'),
+                        Comment => Translatable('Please contact the admin.'),
                     );
                     return;
                 }
@@ -192,8 +196,10 @@ sub Run {
                 # check error
                 if ( !$Success ) {
                     $LayoutObject->ErrorScreen(
-                        Message => "Could not update ConditionID $GetParam{ConditionID}!",
-                        Comment => 'Please contact the admin.',
+                        Message => $LayoutObject->{LanguageObject}->Translate(
+                            'Could not update ConditionID %s!', $GetParam{ConditionID}
+                        ),
+                        Comment => Translatable('Please contact the admin.'),
                     );
                     return;
                 }
@@ -242,8 +248,10 @@ sub Run {
                     # check error
                     if ( !$Success ) {
                         return $LayoutObject->ErrorScreen(
-                            Message => "Could not update ExpressionID $ExpressionID!",
-                            Comment => 'Please contact the admin.',
+                            Message => $LayoutObject->{LanguageObject}->Translate(
+                                'Could not update ExpressionID %s!', $ExpressionID
+                            ),
+                            Comment => Translatable('Please contact the admin.'),
                         );
                     }
                 }
@@ -289,8 +297,8 @@ sub Run {
                 # check error
                 if ( !$ExpressionID ) {
                     return $LayoutObject->ErrorScreen(
-                        Message => "Could not add new Expression!",
-                        Comment => 'Please contact the admin.',
+                        Message => Translatable('Could not add new Expression!'),
+                        Comment => Translatable('Please contact the admin.'),
                     );
                 }
             }
@@ -336,8 +344,8 @@ sub Run {
                     # check error
                     if ( !$Success ) {
                         return $LayoutObject->ErrorScreen(
-                            Message => "Could not update ActionID $ActionID!",
-                            Comment => 'Please contact the admin.',
+                            Message => $LayoutObject->{LanguageObject}->Translate( 'Could not update ActionID %s!', $ActionID ),
+                            Comment => Translatable('Please contact the admin.'),
                         );
                     }
                 }
@@ -381,8 +389,8 @@ sub Run {
                 # check error
                 if ( !$ActionID ) {
                     return $LayoutObject->ErrorScreen(
-                        Message => "Could not add new Action!",
-                        Comment => 'Please contact the admin.',
+                        Message => Translatable('Could not add new Action!'),
+                        Comment => Translatable('Please contact the admin.'),
                     );
                 }
             }
@@ -426,8 +434,10 @@ sub Run {
                 # check error
                 if ( !$Success ) {
                     return $LayoutObject->ErrorScreen(
-                        Message => "Could not delete ExpressionID $GetParam{DeleteExpressionID}!",
-                        Comment => 'Please contact the admin.',
+                        Message => $LayoutObject->{LanguageObject}->Translate(
+                            'Could not delete ExpressionID %s!', $GetParam{DeleteExpressionID}
+                        ),
+                        Comment => Translatable('Please contact the admin.'),
                     );
                 }
 
@@ -450,8 +460,10 @@ sub Run {
                 # check error
                 if ( !$Success ) {
                     return $LayoutObject->ErrorScreen(
-                        Message => "Could not delete ActionID $GetParam{DeleteActionID}!",
-                        Comment => 'Please contact the admin.',
+                        Message => $LayoutObject->{LanguageObject}->Translate(
+                            'Could not delete ActionID %s!', $GetParam{DeleteActionID}
+                        ),
+                        Comment => Translatable('Please contact the admin.'),
                     );
                 }
 
@@ -700,7 +712,9 @@ sub Run {
 
             # show error for unknown field type
             else {
-                $HTMLString = "<span><b>Error: Unknown field type '$FieldType'!</b></span>";
+                $HTMLString = '<span><b>'
+                    . $LayoutObject->{LanguageObject}->Translate( 'Error: Unknown field type "%s"!', $FieldType )
+                    . '</b></span>';
             }
         }
 
@@ -735,9 +749,12 @@ sub Run {
         # check if the condition belongs to the given change
         if ( $Condition->{ChangeID} ne $GetParam{ChangeID} ) {
             return $LayoutObject->ErrorScreen(
-                Message => "ConditionID $ConditionData{ConditionID} does not belong to"
-                    . " the given ChangeID $GetParam{ChangeID}!",
-                Comment => 'Please contact the administrator.',
+                Message => $LayoutObject->{LanguageObject}->Translate(
+                    'ConditionID %s does not belong to the given ChangeID %s!',
+                    $ConditionData{ConditionID},
+                    $GetParam{ChangeID}
+                ),
+                Comment => Translatable('Please contact the administrator.'),
             );
         }
 

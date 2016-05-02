@@ -11,6 +11,8 @@ package Kernel::Modules::AgentITSMChangeCABTemplate;
 use strict;
 use warnings;
 
+use Kernel::Language qw(Translatable);
+
 our $ObjectManagerDisabled = 1;
 
 sub new {
@@ -38,8 +40,8 @@ sub Run {
     # check needed stuff
     if ( !$ChangeID ) {
         return $LayoutObject->ErrorScreen(
-            Message => 'No ChangeID is given!',
-            Comment => 'Please contact the admin.',
+            Message => Translatable('No ChangeID is given!'),
+            Comment => Translatable('Please contact the admin.'),
         );
     }
 
@@ -60,7 +62,9 @@ sub Run {
     # error screen
     if ( !$Access ) {
         return $LayoutObject->NoPermission(
-            Message    => "You need $Self->{Config}->{Permission} permissions!",
+            Message => $LayoutObject->{LanguageObject}->Translate(
+                'You need %s permissions!', $Self->{Config}->{Permission}
+            ),
             WithHeader => 'yes',
         );
     }
@@ -74,8 +78,8 @@ sub Run {
     # error screen
     if ( !$Change ) {
         return $LayoutObject->ErrorScreen(
-            Message => "No change found for change ID $ChangeID.",
-            Comment => 'Please contact the admin.',
+            Message => $LayoutObject->{LanguageObject}->Translate( 'No change found for changeID %s.', $ChangeID ),
+            Comment => Translatable('Please contact the admin.'),
         );
     }
 
@@ -111,8 +115,10 @@ sub Run {
             # show error message
             if ( !$TemplateContent ) {
                 return $LayoutObject->ErrorScreen(
-                    Message => "The CAB of change '$ChangeID' could not be serialized.",
-                    Comment => 'Please contact the admin.',
+                    Message => $LayoutObject->{LanguageObject}->Translate(
+                        'The CAB of change "%s" could not be serialized.', $ChangeID
+                    ),
+                    Comment => Translatable('Please contact the admin.'),
                 );
             }
 
@@ -129,8 +135,8 @@ sub Run {
             # show error message
             if ( !$TemplateID ) {
                 return $LayoutObject->ErrorScreen(
-                    Message => "Could not add the template.",
-                    Comment => 'Please contact the admin.',
+                    Message => Translatable('Could not add the template.'),
+                    Comment => Translatable('Please contact the admin.'),
                 );
             }
 
@@ -143,7 +149,7 @@ sub Run {
 
     # output header
     my $Output = $LayoutObject->Header(
-        Title => 'Template',
+        Title => Translatable('Template'),
         Type  => 'Small',
     );
 

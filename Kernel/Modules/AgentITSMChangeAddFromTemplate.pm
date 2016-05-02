@@ -11,6 +11,8 @@ package Kernel::Modules::AgentITSMChangeAddFromTemplate;
 use strict;
 use warnings;
 
+use Kernel::Language qw(Translatable);
+
 our $ObjectManagerDisabled = 1;
 
 sub new {
@@ -45,7 +47,7 @@ sub Run {
     # error screen
     if ( !$Access ) {
         return $LayoutObject->NoPermission(
-            Message    => "You need $Self->{Config}->{Permission} permissions!",
+            Message    => $LayoutObject->{LanguageObject}->Translate( 'You need %s permissions!', $Self->{Config}->{Permission} ),
             WithHeader => 'yes',
         );
     }
@@ -88,8 +90,10 @@ sub Run {
 
             # show error message
             return $LayoutObject->ErrorScreen(
-                Message => "Ticket with TicketID $GetParam{TicketID} does not exist!",
-                Comment => 'Please contact the admin.',
+                Message => $LayoutObject->{LanguageObject}->Translate(
+                    'Ticket with TicketID %s does not exist!', $GetParam{TicketID}
+                ),
+                Comment => Translatable('Please contact the admin.'),
             );
         }
 
@@ -105,7 +109,7 @@ sub Run {
         {
 
             # set error message
-            my $Message = "Missing sysconfig option 'ITSMChange::AddChangeLinkTicketTypes'!";
+            my $Message = Translatable('Missing sysconfig option "ITSMChange::AddChangeLinkTicketTypes"!');
 
             # log error
             $LogObject->Log(
@@ -116,7 +120,7 @@ sub Run {
             # show error message
             return $LayoutObject->ErrorScreen(
                 Message => $Message,
-                Comment => 'Please contact the admin.',
+                Comment => Translatable('Please contact the admin.'),
             );
         }
 
@@ -140,7 +144,7 @@ sub Run {
             # show error message
             return $LayoutObject->ErrorScreen(
                 Message => $Message,
-                Comment => 'Please contact the admin.',
+                Comment => Translatable('Please contact the admin.'),
             );
         }
     }
@@ -223,8 +227,8 @@ sub Run {
 
                 # show error message, when adding failed
                 return $LayoutObject->ErrorScreen(
-                    Message => 'Was not able to create change from template!',
-                    Comment => 'Please contact the admin.',
+                    Message => Translatable('Was not able to create change from template!'),
+                    Comment => Translatable('Please contact the admin.'),
                 );
             }
 
@@ -258,7 +262,7 @@ sub Run {
                     # show error message
                     return $LayoutObject->ErrorScreen(
                         Message => $Message,
-                        Comment => 'Please contact the admin.',
+                        Comment => Translatable('Please contact the admin.'),
                     );
                 }
             }

@@ -11,6 +11,8 @@ package Kernel::Modules::AgentITSMChangeDelete;
 use strict;
 use warnings;
 
+use Kernel::Language qw(Translatable);
+
 our $ObjectManagerDisabled = 1;
 
 sub new {
@@ -35,8 +37,8 @@ sub Run {
     # check needed stuff
     if ( !$ChangeID ) {
         return $LayoutObject->ErrorScreen(
-            Message => 'No ChangeID is given!',
-            Comment => 'Please contact the admin.',
+            Message => Translatable('No ChangeID is given!'),
+            Comment => Translatable('Please contact the admin.'),
         );
     }
 
@@ -57,7 +59,7 @@ sub Run {
     # error screen
     if ( !$Access ) {
         return $LayoutObject->NoPermission(
-            Message    => "You need $Self->{Config}->{Permission} permissions!",
+            Message    => $LayoutObject->{LanguageObject}->Translate( 'You need %s permissions!', $Self->{Config}->{Permission} ),
             WithHeader => 'yes',
         );
     }
@@ -71,8 +73,8 @@ sub Run {
     # check if change is found
     if ( !$Change ) {
         return $LayoutObject->ErrorScreen(
-            Message => "Change '$ChangeID' not found in database!",
-            Comment => 'Please contact the admin.',
+            Message => $LayoutObject->{LanguageObject}->Translate( 'Change "%s" not found in database!', $ChangeID ),
+            Comment => Translatable('Please contact the admin.'),
         );
     }
 
@@ -82,8 +84,10 @@ sub Run {
     # only allow deletion if change is in one of the allowed change states
     if ( !$AllowedChangeStates{ $Change->{ChangeState} } ) {
         return $LayoutObject->ErrorScreen(
-            Message => "Change '$ChangeID' does not have an allowed change state to be deleted!",
-            Comment => 'Please contact the admin.',
+            Message => $LayoutObject->{LanguageObject}->Translate(
+                'Change "%s" does not have an allowed change state to be deleted!', $ChangeID
+            ),
+            Comment => Translatable('Please contact the admin.'),
         );
     }
 
@@ -106,8 +110,8 @@ sub Run {
 
             # show error message, when delete failed
             return $LayoutObject->ErrorScreen(
-                Message => "Was not able to delete the change ID $ChangeID!",
-                Comment => 'Please contact the administrator.',
+                Message => $LayoutObject->{LanguageObject}->Translate( 'Was not able to delete the changeID %s!', $ChangeID ),
+                Comment => Translatable('Please contact the administrator.'),
             );
         }
     }

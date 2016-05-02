@@ -12,6 +12,7 @@ use strict;
 use warnings;
 
 use List::Util qw(max);
+use Kernel::Language qw(Translatable);
 use Kernel::System::VariableCheck qw(:all);
 
 our $ObjectManagerDisabled = 1;
@@ -63,7 +64,7 @@ sub Run {
         # error screen
         if ( !$Access ) {
             return $LayoutObject->NoPermission(
-                Message    => "You need $Self->{Config}->{Permission} permissions!",
+                Message    => $LayoutObject->{LanguageObject}->Translate( 'You need %s permissions!', $Self->{Config}->{Permission} ),
                 WithHeader => 'yes',
             );
         }
@@ -77,8 +78,8 @@ sub Run {
         # check error
         if ( !$WorkOrder ) {
             return $LayoutObject->ErrorScreen(
-                Message => "WorkOrder '$WorkOrderID' not found in database!",
-                Comment => 'Please contact the admin.',
+                Message => $LayoutObject->{LanguageObject}->Translate( 'WorkOrder "%s" not found in database!', $WorkOrderID ),
+                Comment => Translatable('Please contact the admin.'),
             );
         }
 
@@ -89,8 +90,8 @@ sub Run {
 
             # error page
             return $LayoutObject->ErrorScreen(
-                Message => "Can't create output, as the workorder is not attached to a change!",
-                Comment => 'Please contact the admin.',
+                Message => Translatable('Can\'t create output, as the workorder is not attached to a change!'),
+                Comment => Translatable('Please contact the admin.'),
             );
         }
     }
@@ -103,8 +104,8 @@ sub Run {
 
             # error page
             return $LayoutObject->ErrorScreen(
-                Message => "Can't create output, as no ChangeID is given!",
-                Comment => 'Please contact the admin.',
+                Message => Translatable('Can\'t create output, as no ChangeID is given!'),
+                Comment => Translatable('Please contact the admin.'),
             );
         }
 
@@ -119,7 +120,7 @@ sub Run {
         # error screen
         if ( !$Access ) {
             return $LayoutObject->NoPermission(
-                Message    => "You need $Self->{Config}->{Permission} permissions!",
+                Message    => $LayoutObject->{LanguageObject}->Translate( 'You need %s permissions!', $Self->{Config}->{Permission} ),
                 WithHeader => 'yes',
             );
         }
@@ -134,8 +135,8 @@ sub Run {
     # check error
     if ( !$Change ) {
         return $LayoutObject->ErrorScreen(
-            Message => "Change '$ChangeID' not found in database!",
-            Comment => 'Please contact the admin.',
+            Message => $LayoutObject->{LanguageObject}->Translate( 'Change "%s" not found in database!', $ChangeID ),
+            Comment => Translatable('Please contact the admin.'),
         );
     }
 
@@ -188,7 +189,7 @@ sub Run {
         $Output .= $Self->_OutputHeadline(
             HeaderArea     => $HeaderArea,
             HeaderValue    => $HeaderValue,
-            Title          => $Change->{ChangeTitle} || 'unknown change title',
+            Title          => $Change->{ChangeTitle} || Translatable('unknown change title'),
             TemplatePrefix => 'Change',
         );
 
@@ -298,8 +299,8 @@ sub Run {
             # check error
             if ( !$WorkOrder ) {
                 return $LayoutObject->ErrorScreen(
-                    Message => "WorkOrder '$WorkOrderID' not found in database!",
-                    Comment => 'Please contact the admin.',
+                    Message => $LayoutObject->{LanguageObject}->Translate( 'WorkOrder "%s" not found in database!', $WorkOrderID ),
+                    Comment => Translatable('Please contact the admin.'),
                 );
             }
 
@@ -338,8 +339,8 @@ sub Run {
         # check error
         if ( !$WorkOrder ) {
             return $LayoutObject->ErrorScreen(
-                Message => "WorkOrder '$WorkOrderID' not found in database!",
-                Comment => 'Please contact the admin.',
+                Message => $LayoutObject->{LanguageObject}->Translate( 'WorkOrder "%s" not found in database!', $WorkOrderID ),
+                Comment => Translatable('Please contact the admin.'),
             );
         }
 
@@ -350,7 +351,7 @@ sub Run {
         $Output .= $Self->_OutputHeadline(
             HeaderArea     => $HeaderArea,
             HeaderValue    => $HeaderValue,
-            Title          => $WorkOrder->{WorkOrderTitle} || 'unknown workorder title',
+            Title          => $WorkOrder->{WorkOrderTitle} || Translatable('unknown workorder title'),
             TemplatePrefix => 'WorkOrder',
         );
 
@@ -1255,9 +1256,7 @@ sub _OutputWorkOrderOverview {
     # output headline for the section
     my $Translation = $LayoutObject->{LanguageObject};
     my $SectionTitle =
-        $Translation->Get('ITSM Workorder')
-        . ' ' . $Translation->Get('Overview')
-        . ' (' . scalar @{ $Param{WorkOrderOverview} } . ')';
+        $Translation->Translate( 'ITSM Workorder Overview (%s)', scalar @{ $Param{WorkOrderOverview} } );
     $PDFObject->Text(
         Text     => $SectionTitle,
         Height   => 7,
@@ -1288,27 +1287,27 @@ sub _OutputWorkOrderOverview {
             },
             {
                 Font    => 'ProportionalBold',
-                Content => $Translation->Get('Title'),
+                Content => $Translation->Translate('Title'),
             },
             {
                 Font    => 'ProportionalBold',
-                Content => $Translation->Get('State'),
+                Content => $Translation->Translate('State'),
             },
             {
                 Font    => 'ProportionalBold',
-                Content => $Translation->Get('PlannedStartTime'),
+                Content => $Translation->Translate('PlannedStartTime'),
             },
             {
                 Font    => 'ProportionalBold',
-                Content => $Translation->Get('PlannedEndTime'),
+                Content => $Translation->Translate('PlannedEndTime'),
             },
             {
                 Font    => 'ProportionalBold',
-                Content => $Translation->Get('ActualStartTime'),
+                Content => $Translation->Translate('ActualStartTime'),
             },
             {
                 Font    => 'ProportionalBold',
-                Content => $Translation->Get('ActualEndTime'),
+                Content => $Translation->Translate('ActualEndTime'),
             },
         ];
 

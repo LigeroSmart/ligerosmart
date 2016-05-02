@@ -45,7 +45,7 @@ sub Run {
     # error screen
     if ( !$Access ) {
         return $LayoutObject->NoPermission(
-            Message    => "You need $Self->{Config}->{Permission} permissions!",
+            Message    => $LayoutObject->{LanguageObject}->Translate( 'You need %s permissions!', $Self->{Config}->{Permission} ),
             WithHeader => 'yes',
         );
     }
@@ -170,7 +170,9 @@ sub Run {
 
     # check if filter is valid
     if ( !$Filters{ $Self->{Filter} } ) {
-        $LayoutObject->FatalError( Message => "Invalid Filter: $Self->{Filter}!" );
+        $LayoutObject->FatalError(
+            Message => $LayoutObject->{LanguageObject}->Translate( 'Invalid Filter: %s!', $Self->{Filter} ),
+        );
     }
 
     # search changes which match the selected filter
@@ -222,8 +224,7 @@ sub Run {
         Filters    => \%NavBarFilter,
         FilterLink => $LinkFilter,
 
-        TitleName => $LayoutObject->{LanguageObject}->Translate('Overview')
-            . ': ' . $LayoutObject->{LanguageObject}->Translate('Change Schedule'),
+        TitleName => $LayoutObject->{LanguageObject}->Translate('Overview: Change Schedule'),
 
         TitleValue => $Self->{Filter},
 

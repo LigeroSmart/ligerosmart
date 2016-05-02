@@ -11,6 +11,7 @@ package Kernel::Modules::AgentITSMChangeEdit;
 use strict;
 use warnings;
 
+use Kernel::Language qw(Translatable);
 use Kernel::System::VariableCheck qw(:all);
 
 our $ObjectManagerDisabled = 1;
@@ -40,8 +41,8 @@ sub Run {
     # check needed stuff
     if ( !$ChangeID ) {
         return $LayoutObject->ErrorScreen(
-            Message => 'No ChangeID is given!',
-            Comment => 'Please contact the admin.',
+            Message => Translatable('No ChangeID is given!'),
+            Comment => Translatable('Please contact the admin.'),
         );
     }
 
@@ -65,7 +66,7 @@ sub Run {
     # error screen
     if ( !$Access ) {
         return $LayoutObject->NoPermission(
-            Message    => "You need $Self->{Config}->{Permission} permissions!",
+            Message    => $LayoutObject->{LanguageObject}->Translate( 'You need %s permissions!', $Self->{Config}->{Permission} ),
             WithHeader => 'yes',
         );
     }
@@ -79,8 +80,8 @@ sub Run {
     # check if change is found
     if ( !$Change ) {
         return $LayoutObject->ErrorScreen(
-            Message => "Change '$ChangeID' not found in database!",
-            Comment => 'Please contact the admin.',
+            Message => $LayoutObject->{LanguageObject}->Translate( 'Change "%s" not found in database!', $ChangeID ),
+            Comment => Translatable('Please contact the admin.'),
         );
     }
 
@@ -236,9 +237,10 @@ sub Run {
 
             if ( !IsHashRefWithData($ValidationResult) ) {
                 return $LayoutObject->ErrorScreen(
-                    Message =>
-                        "Could not perform validation on field $DynamicFieldConfig->{Label}!",
-                    Comment => 'Please contact the admin.',
+                    Message => $LayoutObject->{LanguageObject}->Translate(
+                        'Could not perform validation on field %s!', $DynamicFieldConfig->{Label}
+                    ),
+                    Comment => Translatable('Please contact the admin.'),
                 );
             }
 
@@ -475,8 +477,8 @@ sub Run {
 
                 # show error message
                 return $LayoutObject->ErrorScreen(
-                    Message => "Was not able to update Change $ChangeID!",
-                    Comment => 'Please contact the admin.',
+                    Message => $LayoutObject->{LanguageObject}->Translate( 'Was not able to update Change!', $ChangeID ),
+                    Comment => Translatable('Please contact the admin.'),
                 );
             }
         }
@@ -614,7 +616,7 @@ sub Run {
 
     # output header
     my $Output = $LayoutObject->Header(
-        Title => 'Edit',
+        Title => Translatable('Edit'),
         Type  => 'Small',
     );
 

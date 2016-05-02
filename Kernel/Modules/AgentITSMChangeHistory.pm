@@ -11,6 +11,8 @@ package Kernel::Modules::AgentITSMChangeHistory;
 use strict;
 use warnings;
 
+use Kernel::Language qw(Translatable);
+
 our $ObjectManagerDisabled = 1;
 
 sub new {
@@ -37,8 +39,8 @@ sub Run {
 
         # error page
         return $LayoutObject->ErrorScreen(
-            Message => "Can't show history, as no ChangeID is given!",
-            Comment => 'Please contact the administrator.',
+            Message => Translatable('Can\'t show history, as no ChangeID is given!'),
+            Comment => Translatable('Please contact the administrator.'),
         );
     }
 
@@ -60,7 +62,7 @@ sub Run {
     # error screen
     if ( !$Access ) {
         return $LayoutObject->NoPermission(
-            Message    => "You need $Self->{Config}->{Permission} permissions!",
+            Message    => $LayoutObject->{LanguageObject}->Translate( 'You need %s permissions!', $Self->{Config}->{Permission} ),
             WithHeader => 'yes',
         );
     }
@@ -74,8 +76,8 @@ sub Run {
     # check error
     if ( !$Change ) {
         return $LayoutObject->ErrorScreen(
-            Message => "Change '$ChangeID' not found in the data base!",
-            Comment => 'Please contact the administrator.',
+            Message => $LayoutObject->{LanguageObject}->Translate( 'Change "%s" not found in the database!', $ChangeID ),
+            Comment => Translatable('Please contact the administrator.'),
         );
     }
 
@@ -273,8 +275,8 @@ sub Run {
                             }
                             else {
                                 return $LayoutObject->ErrorScreen(
-                                    Message => "Unknown type '$Type' encountered!",
-                                    Comment => 'Please contact the administrator.',
+                                    Message => $LayoutObject->{LanguageObject}->Translate( 'Unknown type "%s" encountered!', $Type ),
+                                    Comment => Translatable('Please contact the administrator.'),
                                 );
                             }
 
@@ -496,7 +498,7 @@ sub Run {
     # output header
     my $Output = $LayoutObject->Header(
         Type  => 'Small',
-        Title => 'ChangeHistory',
+        Title => Translatable('Change History'),
     );
 
     # start template output
