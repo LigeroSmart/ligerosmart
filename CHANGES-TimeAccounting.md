@@ -1,4 +1,6 @@
 #5.0.2 2015-??-??
+ - 2016-05-06 Fixed bug#[11780](http://bugs.otrs.org/show_bug.cgi?id=11780) - I get error 500 after upgrade OTRS from 4 to 5.
+ - 2016-04-29 Marked strings as translatable thanks to Úr Balázs.
  - 2016-04-05 Fixed typo in AgentTimeAccoutning.tt, thanks to Úr Balázs.
 
 #5.0.1 2015-10-20

@@ -833,7 +833,7 @@ sub Run {
         # configured for selected project
         # if no constraints are configured, all actions will be displayed
         my $ActionData = $Self->_ActionListConstraints(
-            ProjectID => $UnitRef->{ProjectID} || $ServerErrorData{$ErrorIndex}{ProjectID},
+            ProjectID => $UnitRef->{ProjectID} || $ServerErrorData{$ErrorIndex}->{ProjectID},
             ProjectList           => $ProjectList,
             ActionList            => \%ActionList,
             ActionListConstraints => $ActionListConstraints,
@@ -1341,7 +1341,7 @@ sub _ActionListConstraints {
         my $ProjectName;
 
         PROJECT:
-        for my $Project ( @{ $Param{ProjectList} } ) {
+        for my $Project ( @{ $Param{ProjectList}->{AllProjects} } ) {
             if ( $Project->{Key} eq $Param{ProjectID} ) {
                 $ProjectName = $Project->{Value};
                 last PROJECT;
