@@ -106,6 +106,13 @@
                             [% Data.MinTimeBetweenIncidents | html %] [% Translate("minutes") | html %]
                         </div>
                         <div class="Clear"></div>
+
+                        <label>[% Translate("Comment") | html %]: </label>
+                        <div class="Field">
+                            [% Data.Comment | html %]
+                        </div>
+                        <div class="Clear"></div>
+
                     </fieldset>
                 </div>
             </div>

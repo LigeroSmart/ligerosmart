@@ -18,6 +18,7 @@
                     <thead>
                         <tr>
                             <th>[% Translate("SLA") | html %]</th>
+                            <th>[% Translate("Comment") | html %]</th>
                             <th>[% Translate("Type") | html %]</th>
                             <th>[% Translate("Changed") | html %]</th>
                         </tr>
@@ -30,6 +31,7 @@
                                     [% Data.Name | html %]
                                 </a>
                             </td>
+                            <td>[% Data.Comment | html %]</td>
                             <td>[% Translate(Data.Type) | html %]</td>
                             <td>[% Data.ChangeTime | Localize("TimeLong") %]</td>
                         </tr>

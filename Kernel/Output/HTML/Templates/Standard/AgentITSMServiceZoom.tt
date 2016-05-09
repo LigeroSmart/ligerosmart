@@ -106,6 +106,13 @@
                             [% Translate(Data.Criticality) | html %]
                         </div>
                         <div class="Clear"></div>
+
+                        <label title="[% Translate("Comment") | html %]">[% Translate("Comment") | html %]: </label>
+                        <div class="Field">
+                            [% Translate(Data.Comment) | html %]
+                        </div>
+                        <div class="Clear"></div>
+
                     </fieldset>
                 </div>
             </div>
