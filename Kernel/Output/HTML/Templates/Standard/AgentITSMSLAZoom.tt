@@ -131,6 +131,7 @@
                             <tr>
                                 <th>[% Translate("State") | html %]</th>
                                 <th>[% Translate("Service") | html %]</th>
+                                <th>[% Translate("Comment") | html %]</th>
                                 <th>[% Translate("Type") | html %]</th>
                                 <th>[% Translate("Criticality") | html %]</th>
                                 <th>[% Translate("Changed") | html %]</th>
@@ -149,6 +150,7 @@
                                         [% Data.Name | html %]
                                     </a>
                                 </td>
+                                <td title="[% Data.Comment | html %]">[% Data.Comment | truncate(100) | html %]</td>
                                 <td>[% Translate(Data.Type) | html %]</td>
                                 <td>[% Translate(Data.Criticality) | html %]</td>
                                 <td>[% Data.ChangeTime | Localize("TimeLong") %]</td>

@@ -130,6 +130,7 @@
                         <thead>
                             <tr>
                                 <th>[% Translate("SLA") | html %]</th>
+                                <th>[% Translate("Comment") | html %]</th>
                                 <th>[% Translate("Type") | html %]</th>
                                 <th>[% Translate("Changed") | html %]</th>
                             </tr>
@@ -137,7 +138,12 @@
                         <tbody>
 [% RenderBlockStart("SLARow") %]
                             <tr>
-                                <td><a class="AsBlock" href="[% Env("Baselink") %]Action=AgentITSMSLAZoom;SLAID=[% Data.SLAID | uri %]">[% Data.Name | html %]</a></td>
+                                <td>
+                                    <a class="AsBlock" href="[% Env("Baselink") %]Action=AgentITSMSLAZoom;SLAID=[% Data.SLAID | uri %]">
+                                        [% Data.Name | html %]
+                                    </a>
+                                </td>
+                                <td title="[% Data.Comment | html %]">[% Data.Comment | truncate(100) | html %]</td>
                                 <td>[% Translate(Data.Type) | html %]</td>
                                 <td>[% Data.ChangeTime | Localize("TimeLong") %]</td>
                             </tr>

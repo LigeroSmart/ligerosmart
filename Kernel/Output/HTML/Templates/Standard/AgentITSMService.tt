@@ -39,7 +39,7 @@
                                     [% Data.Name | html %]
                                 </a>
                             </td>
-                            <td>[% Translate(Data.Comment) | html %]</td>
+                            <td title="[% Data.Comment | html %]">[% Data.Comment | truncate(100) | html %]</td>
                             <td>[% Translate(Data.Type) | html %]</td>
                             <td>[% Translate(Data.Criticality) | html %]</td>
                             <td>[% Data.ChangeTime | Localize("TimeLong") %]</td>
