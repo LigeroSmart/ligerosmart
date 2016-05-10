@@ -1113,6 +1113,8 @@ When no change id or change number is found, then the undefined value is returne
         ChangeNumber => '2009091742000465',
     );
 
+    or
+
     my $ChangeNumber = $ChangeObject->ChangeLookup(
         ChangeID => 42,
     );
