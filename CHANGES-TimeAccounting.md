@@ -1,7 +1,7 @@
 #5.0.3 2016-??-??
 
 
-#5.0.2 2016-05-10
+#5.0.2 2016-05-17
  - 2016-05-06 Fixed bug#[11780](http://bugs.otrs.org/show_bug.cgi?id=11780) - Internal Server Error on Task (Activity) constrains.
  - 2016-04-29 Updated translations, thanks to all translators.
  - 2016-04-29 Marked strings as translatable thanks to Úr Balázs.
