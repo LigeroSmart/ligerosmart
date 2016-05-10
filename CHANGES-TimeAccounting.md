@@ -1,5 +1,8 @@
-#5.0.2 2015-??-??
- - 2016-05-06 Fixed bug#[11780](http://bugs.otrs.org/show_bug.cgi?id=11780) - I get error 500 after upgrade OTRS from 4 to 5.
+#5.0.3 2016-??-??
+
+
+#5.0.2 2016-05-10
+ - 2016-05-06 Fixed bug#[11780](http://bugs.otrs.org/show_bug.cgi?id=11780) - Internal Server Error on Task (Activity) constrains.
  - 2016-04-29 Updated translations, thanks to all translators.
  - 2016-04-29 Marked strings as translatable thanks to Úr Balázs.
  - 2016-04-05 Fixed typo in AgentTimeAccoutning.tt, thanks to Úr Balázs.
