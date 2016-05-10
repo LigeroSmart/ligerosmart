@@ -3,12 +3,13 @@
 # andreasberger <andreas.berger@hagfors.se>, 2014
 # andreasberger <andreas.berger@hagfors.se>, 2014
 # Anthon Nilsson <superdos@gmail.com>, 2015
+# Mikael Mattsson <sprouts@tnorala.net>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-10-26 14:28+0000\n"
-"Last-Translator: Anthon Nilsson <superdos@gmail.com>\n"
+"POT-Creation-Date: 2016-05-10 11:49+0000\n"
+"PO-Revision-Date: 2016-05-10 16:53+0000\n"
+"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Swedish (http://www.transifex.com/otrs/OTRS/language/sv/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -341,23 +342,23 @@ msgstr "Senast ändrad av"
 
 #. Template: AgentFAQSearch
 msgid "FAQ Article Create Time (before/after)"
-msgstr ""
+msgstr "FAQ-Artikel Skapad Tid (före/efter)"
 
 #. Template: AgentFAQSearch
 msgid "FAQ Article Create Time (between)"
-msgstr ""
+msgstr "FAQ-Artikel Skapad Tid (mellan)"
 
 #. Template: AgentFAQSearch
 msgid "FAQ Article Change Time (before/after)"
-msgstr ""
+msgstr "FAQ Artikel Ändrad Tid (före/efter)"
 
 #. Template: AgentFAQSearch
 msgid "FAQ Article Change Time (between)"
-msgstr ""
+msgstr "FAQ-Artikel Ändrad Tid (mellan)"
 
 #. Template: AgentFAQSearchOpenSearchDescriptionFulltext
 msgid "FAQFulltext"
-msgstr ""
+msgstr "FAQ-Fulltext"
 
 #. Template: AgentFAQSearchSmall
 msgid "FAQ Search"
@@ -365,7 +366,7 @@ msgstr "FAQ sök"
 
 #. Template: AgentFAQSearchSmall
 msgid "Profile Selection"
-msgstr ""
+msgstr "Profilval"
 
 #. Template: AgentFAQSearchSmall
 msgid "Vote"
@@ -401,15 +402,7 @@ msgstr "e.g. Lika med 25% eller StörreÄn 75%"
 
 #. Template: AgentFAQSearchSmall
 msgid "FAQ Article Create Time"
-msgstr ""
-
-#. Template: AgentFAQSearchSmall
-msgid "Specific date"
-msgstr "Specifikt datum"
-
-#. Template: AgentFAQSearchSmall
-msgid "Date range"
-msgstr "Datumintervall"
+msgstr "FAQ-Artikel Skapad Tid"
 
 #. Template: AgentFAQSearchSmall
 msgid "FAQ Article Change Time"
@@ -448,7 +441,7 @@ msgid ""
 "To open links in the following description blocks, you might need to press "
 "Ctrl or Cmd or Shift key while clicking the link (depending on your browser "
 "and OS)."
-msgstr ""
+msgstr "För att öppna länkar i följande beskrivningsblock behöver du kanske trycka <Ctrl> eller <Cmd> eller <Shift> medan du klickar på länken (beroende på vilken webbläsare eller operativsystem du har)."
 
 #. Template: AgentFAQZoom
 msgid ""
@@ -550,7 +543,7 @@ msgstr "Senast uppdaterad"
 
 #. Perl Module: Kernel/Modules/AgentFAQPrint.pm
 msgid "FAQ Dynamic Fields"
-msgstr ""
+msgstr "FAQ Dynamiska Fält"
 
 #. Perl Module: Kernel/Modules/AgentFAQSearch.pm
 msgid "No Result!"
@@ -558,7 +551,7 @@ msgstr "Inget resultat!"
 
 #. Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
 msgid "This article is empty!"
-msgstr ""
+msgstr "Den här artikeln är tom!"
 
 #. SysConfig
 msgid ""
@@ -1238,4 +1231,8 @@ msgstr ""
 
 #. SysConfig
 msgid "Ticket subject for approval of FAQ article."
+msgstr ""
+
+#. SysConfig
+msgid "Toolbar Item for a shortcut."
 msgstr ""

@@ -4,11 +4,13 @@
 # Carlos Rodríguez <carlos.rodriguez@otrs.com>, 2014
 # David Bautista <david.bautista@certicamara.com>, 2015
 # Leonel Vazquez <leonel.vazquez@otrs.com>, 2014
+# Luis Armando Medina <lamedina@gmail.com>, 2016
+# Luis Medina <luis.medina@sacc.com.mx>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-10-07 18:17+0000\n"
+"POT-Creation-Date: 2016-05-10 11:49+0000\n"
+"PO-Revision-Date: 2016-05-10 16:53+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Spanish (Mexico) (http://www.transifex.com/otrs/OTRS/language/es_MX/)\n"
 "MIME-Version: 1.0\n"
@@ -405,14 +407,6 @@ msgid "FAQ Article Create Time"
 msgstr "Tiempo de creación del artículo FAQ"
 
 #. Template: AgentFAQSearchSmall
-msgid "Specific date"
-msgstr "Fecha específica"
-
-#. Template: AgentFAQSearchSmall
-msgid "Date range"
-msgstr "Rango de fechas"
-
-#. Template: AgentFAQSearchSmall
 msgid "FAQ Article Change Time"
 msgstr "Tiempo de modificación del artículo FAQ"
 
@@ -551,15 +545,15 @@ msgstr "Última Actualización"
 
 #. Perl Module: Kernel/Modules/AgentFAQPrint.pm
 msgid "FAQ Dynamic Fields"
-msgstr ""
+msgstr "Campos Dinámicos para FAQ"
 
 #. Perl Module: Kernel/Modules/AgentFAQSearch.pm
 msgid "No Result!"
-msgstr ""
+msgstr "Sin Resultados!"
 
 #. Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
 msgid "This article is empty!"
-msgstr ""
+msgstr "Este artículo esta vació!"
 
 #. SysConfig
 msgid ""
@@ -720,7 +714,7 @@ msgid ""
 " to the plugin (e. g. Group: admin;group1;group2;). \"Default\" indicates if"
 " the plugin is enabled by default or if the user needs to enable it "
 "manually."
-msgstr ""
+msgstr "Define los parámetros para el backend del panel principal. \"Limit\" define el número de entradas mostradas por defecto. \"Group\" se usa para restringir el acceso al plugin (por ejemplo, Grupo: admin;grupo1;grupo2;). \"Default\" indica si el plugin está habilitado por defecto o si el usuario necesita habilitarlo manualmente."
 
 #. SysConfig
 msgid ""
@@ -742,7 +736,7 @@ msgstr "Define las columnas que se mostrarán en la búsqueda de FAQ. Esta opci�
 
 #. SysConfig
 msgid "Defines where the 'Insert FAQ' link will be displayed."
-msgstr ""
+msgstr "Definir donde será mostrado el enlace 'Insertar FAQ'"
 
 #. SysConfig
 msgid "Definition of FAQ item free text field."
@@ -756,88 +750,88 @@ msgstr "Borrar este artículo FAQ"
 msgid ""
 "Dynamic fields shown in the FAQ add screen of the agent interface. Possible "
 "settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
-msgstr ""
+msgstr "Campos dinámicos mostrados en la pantalla de FAQ agregar de la interfaz del agente. Valores posibles 0=Desactivado, 1=Activado, 2=Activado y requerido."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ edit screen of the agent interface. Possible"
 " settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
-msgstr ""
+msgstr "Campos dinámicos mostrados en la pantalla de FAQ editar de la interfaz del agente. Valores posibles 0=Desactivado, 1=Activado, 2=Activado y requerido."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ overview screen of the customer interface. "
 "Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
-msgstr ""
+msgstr "Campos dinámicos mostrados en la pantalla de FAQ resumen de la interfaz del cliente. Valores posibles 0=Desactivado, 1=Activado, 2=Activado y requerido."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ overview screen of the public interface. "
 "Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
-msgstr ""
+msgstr "Campos dinámicos mostrados en la pantalla de FAQ resumen de la interfaz pública. Valores posibles 0=Desactivado, 1=Activado, 2=Activado y requerido."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ print screen of the agent interface. "
 "Possible settings: 0 = Disabled, 1 = Enabled."
-msgstr ""
+msgstr "Campos dinámicos mostrados en la pantalla de FAQ imprimir de la interfaz del agente. Valores posibles 0=Desactivado, 1=Activado, 2=Activado y requerido."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ print screen of the customer interface. "
 "Possible settings: 0 = Disabled, 1 = Enabled."
-msgstr ""
+msgstr "Campos dinámicos mostrados en la pantalla de FAQ imprimir de la interfaz del cliente. Valores posibles 0=Desactivado, 1=Activado."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ print screen of the public interface. "
 "Possible settings: 0 = Disabled, 1 = Enabled."
-msgstr ""
+msgstr "Campos dinámicos mostrados en la pantalla de FAQ imprimir de la interfaz pública. Valores posibles 0=Desactivado, 1=Activado."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ search screen of the agent interface. "
 "Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and shown by "
 "default."
-msgstr ""
+msgstr "Campos dinámicos mostrados en la pantalla de FAQ buscar de la interfaz del agente. Valores posibles 0=Desactivado, 1=Activado, 2=Activado y mostrado como predefinido."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ search screen of the customer interface. "
 "Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and shown by "
 "default."
-msgstr ""
+msgstr "Campos dinámicos mostrados en la pantalla de FAQ buscar de la interfaz del cliente. Valores posibles 0=Desactivado, 1=Activado, 2=Activado y mostrado como predefinido."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ search screen of the public interface. "
 "Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and shown by "
 "default."
-msgstr ""
+msgstr "Campos dinámicos mostrados en la pantalla de FAQ buscar de la interfaz pública. Valores posibles 0=Desactivado, 1=Activado, 2=Activado y mostrado como predefinido."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ small format overview screen of the agent "
 "interface. Possible settings: 0 = Disabled, 1 = Enabled."
-msgstr ""
+msgstr "Campos dinámicos mostrados en la pantalla de FAQ de formato pequeño de la interfaz del agente. Valores posibles 0=Desactivado, 1=Activado."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ zoom screen of the agent interface. Possible"
 " settings: 0 = Disabled, 1 = Enabled."
-msgstr ""
+msgstr "Campos dinámicos mostrados en la pantalla de FAQ de acercamiento de la interfaz del agente. Valores posibles 0=Desactivado, 1=Activado."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ zoom screen of the customer interface. "
 "Possible settings: 0 = Disabled, 1 = Enabled."
-msgstr ""
+msgstr "Campos dinámicos mostrados en la pantalla de FAQ  de acercamiento de la interfaz del cliente. Valores posibles 0=Desactivado, 1=Activado."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ zoom screen of the public interface. "
 "Possible settings: 0 = Disabled, 1 = Enabled."
-msgstr ""
+msgstr "Campos dinámicos mostrados en la pantalla de FAQ de acercamiento de la interfaz pública. Valores posibles 0=Desactivado, 1=Activado."
 
 #. SysConfig
 msgid "Edit this FAQ"
@@ -877,11 +871,11 @@ msgstr "Área-FAQ"
 
 #. SysConfig
 msgid "Field4"
-msgstr ""
+msgstr "Campo4"
 
 #. SysConfig
 msgid "Field5"
-msgstr ""
+msgstr "Campo5"
 
 #. SysConfig
 msgid "Frontend module registration for the public interface."
@@ -905,7 +899,7 @@ msgstr "Incluir el nombre de cada campo en los tickets basados en un artículo F
 
 #. SysConfig
 msgid "Interfaces where the quick search should be shown."
-msgstr ""
+msgstr "Interfaces donde se debe mostrar la búsqueda rápida."
 
 #. SysConfig
 msgid "Journal"
@@ -921,15 +915,15 @@ msgstr "Enlazar otro objecto a este artículo FAQ"
 
 #. SysConfig
 msgid "List of state types which can be used in the agent interface."
-msgstr ""
+msgstr "Lista los tipos de estados que pueden ser usados en la interfaz del agente."
 
 #. SysConfig
 msgid "List of state types which can be used in the customer interface."
-msgstr ""
+msgstr "Lista los tipos de estados que pueden ser usados en la interfaz del cliente."
 
 #. SysConfig
 msgid "List of state types which can be used in the public interface."
-msgstr ""
+msgstr "Lista los tipos de estados que pueden ser usados en la interfaz pública."
 
 #. SysConfig
 msgid ""
@@ -977,55 +971,55 @@ msgstr "Número máximo de artículos FAQ a mostrar como resultado de una búsqu
 msgid ""
 "Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer "
 "in the agent interface."
-msgstr ""
+msgstr "Tamaño máximo del título en un artículo  FAQ a ser mostrado en el Explorador de FAQs que se muestra en la interfaz del agente."
 
 #. SysConfig
 msgid ""
 "Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer "
 "in the customer interface."
-msgstr ""
+msgstr "Tamaño máximo del título en un artículo  FAQ a ser mostrado en el Explorador de FAQs que se muestra en la interfaz del cliente."
 
 #. SysConfig
 msgid ""
 "Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer "
 "in the public interface."
-msgstr ""
+msgstr "Tamaño máximo del título en un artículo  FAQ a ser mostrado en el Explorador de FAQs que se muestra en la interfaz al público."
 
 #. SysConfig
 msgid ""
 "Maximum size of the titles in a FAQ article to be shown in the FAQ Search in"
 " the agent interface."
-msgstr ""
+msgstr "Tamaño máximo del título en un artículo  FAQ a ser mostrado en el Buscador de FAQs que se muestra en la interfaz del agente."
 
 #. SysConfig
 msgid ""
 "Maximum size of the titles in a FAQ article to be shown in the FAQ Search in"
 " the customer interface."
-msgstr ""
+msgstr "Tamaño máximo del título en un artículo  FAQ a ser mostrado en el Buscador de FAQs que se muestra en la interfaz del cliente."
 
 #. SysConfig
 msgid ""
 "Maximum size of the titles in a FAQ article to be shown in the FAQ Search in"
 " the public interface."
-msgstr ""
+msgstr "Tamaño máximo del título en un artículo  FAQ a ser mostrado en el Buscador de FAQs que se muestra en la interfaz al público."
 
 #. SysConfig
 msgid ""
 "Maximum size of the titles in a FAQ article to be shown in the FAQ journal "
 "in the agent interface."
-msgstr ""
+msgstr "Tamaño máximo del título en un artículo  FAQ a ser mostrado en el Diario de Navegación de FAQs que se muestra en la interfaz del agente."
 
 #. SysConfig
 msgid ""
 "Module to generate HTML OpenSearch profile for short FAQ search in the "
 "public interface."
-msgstr ""
+msgstr "Módulo para generar el perfil HTML OpenSearch para la búsqueda corta de las FAQ en la interfaz pública."
 
 #. SysConfig
 msgid ""
 "Module to generate HTML OpenSearch profile for short faq search in the "
 "customer interface."
-msgstr ""
+msgstr "Módulo para generar el perfil HTML OpenSearch para la búsqueda corta de las FAQ en la interfaz del cliente."
 
 #. SysConfig
 msgid "Module to generate html OpenSearch profile for short faq search."
@@ -1135,11 +1129,11 @@ msgstr "Mostrar botón «Insertar enlace a FAQ» en AgentFAQZoomSmall para los a
 msgid ""
 "Show \"Insert FAQ Text & Link\" / \"Insert Full FAQ & Link\" Button in "
 "AgentFAQZoomSmall for public FAQ Articles."
-msgstr ""
+msgstr "Mostrar botones \"Insertar Texto y Enlace de la FAQ\" / \"Insertar FAQ Completa y Enlace\" en AgentFAQZoomSmall para las entradas públicas de las FAQ."
 
 #. SysConfig
 msgid "Show \"Insert FAQ Text\" / \"Insert Full FAQ\" Button in AgentFAQZoomSmall."
-msgstr ""
+msgstr "Mostrar el botón \"Insertar Texto de la FAQ\" / \"Intertar FAQ Completa\" en AgentFAQZoomSmall."
 
 #. SysConfig
 msgid "Show FAQ Article with HTML."
@@ -1240,3 +1234,7 @@ msgstr "Cuerpo del ticket para aprobación de artículos FAQ."
 #. SysConfig
 msgid "Ticket subject for approval of FAQ article."
 msgstr "Asunto del ticket para aprobación de artículos FAQ."
+
+#. SysConfig
+msgid "Toolbar Item for a shortcut."
+msgstr "Elemento de la barra de herramientas para un atajo (shortcut)."

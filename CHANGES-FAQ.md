@@ -1,4 +1,5 @@
 #5.0.3 2015-??-??
+ - 2016-05-10 Updated translations, thanks to all translators.
  - 2016-05-02 Added Inline attribute to the retrieved attachments using Generic Interface PublicFAQGet operation, thanks to Esteban Marin.
  - 2016-05-01 Fixed problem with the link object widget check, if a other package change de default link object viewmode.
  - 2016-04-25 Fixed bug#[11729](http://bugs.otrs.org/show_bug.cgi?id=11729) - FAQ zoom elements are not collapsed correctly in IE if iframes are empty.

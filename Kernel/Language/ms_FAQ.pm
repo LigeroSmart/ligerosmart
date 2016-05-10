@@ -141,8 +141,6 @@ sub Data {
     $Self->{Translation}->{'Specific rate'} = 'Kadar spesifik';
     $Self->{Translation}->{'e. g. Equals 25% or GreaterThan 75%'} = 'contoh: Sama dengan 25% atau lebih besar daripada 75%';
     $Self->{Translation}->{'FAQ Article Create Time'} = 'Waktu cipta artikel FAQ';
-    $Self->{Translation}->{'Specific date'} = 'Tarikh spesifik';
-    $Self->{Translation}->{'Date range'} = 'Jarak tarikh';
     $Self->{Translation}->{'FAQ Article Change Time'} = 'Waktu perubahan artikel FAQ';
 
     # Template: AgentFAQZoom
@@ -421,6 +419,7 @@ sub Data {
         'Tetapan ini mentakrifkan bahawa objek \'FAQ\' boleh dipaut dengan \'Tiket\' lain menggunakan jenis pautan \'ParentChild\'.';
     $Self->{Translation}->{'Ticket body for approval of FAQ article.'} = 'Badan tiket untuk melepaskan artikel FAQ.';
     $Self->{Translation}->{'Ticket subject for approval of FAQ article.'} = 'Tertakluk kepada tiket untuk melepaskan artikel FAQ.';
+    $Self->{Translation}->{'Toolbar Item for a shortcut.'} = 'Item Toolbar untuk jalan pintas.';
 
 }
 

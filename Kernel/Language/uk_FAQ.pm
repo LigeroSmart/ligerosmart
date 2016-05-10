@@ -17,9 +17,9 @@ sub Data {
 
     # Template: AAAFAQ
     $Self->{Translation}->{'internal'} = 'внутрішній';
-    $Self->{Translation}->{'public'} = 'Публичне';
-    $Self->{Translation}->{'external'} = 'Зовнiшний';
-    $Self->{Translation}->{'FAQ Number'} = 'FAQ  кількість';
+    $Self->{Translation}->{'public'} = 'публічне';
+    $Self->{Translation}->{'external'} = 'зовнiшнє';
+    $Self->{Translation}->{'FAQ Number'} = 'Номер FAQ';
     $Self->{Translation}->{'Latest updated FAQ articles'} = 'Остання змінена стаття';
     $Self->{Translation}->{'Latest created FAQ articles'} = 'Остання створена стаття';
     $Self->{Translation}->{'Top 10 FAQ articles'} = 'Топ 10 статтей';
@@ -141,8 +141,6 @@ sub Data {
     $Self->{Translation}->{'Specific rate'} = '';
     $Self->{Translation}->{'e. g. Equals 25% or GreaterThan 75%'} = '';
     $Self->{Translation}->{'FAQ Article Create Time'} = '';
-    $Self->{Translation}->{'Specific date'} = '';
-    $Self->{Translation}->{'Date range'} = '';
     $Self->{Translation}->{'FAQ Article Change Time'} = '';
 
     # Template: AgentFAQZoom
@@ -421,6 +419,7 @@ sub Data {
         '';
     $Self->{Translation}->{'Ticket body for approval of FAQ article.'} = '';
     $Self->{Translation}->{'Ticket subject for approval of FAQ article.'} = '';
+    $Self->{Translation}->{'Toolbar Item for a shortcut.'} = '';
 
 }
 

@@ -1,16 +1,17 @@
 # 
 # Translators:
+# Felipe Braga <fbobraga@gmail.com>, 2015-2016
 # José Junior <joserribeiro26@gmail.com>, 2014
 # Leandro Guimarães Faria Corcete DUTRA <l@dutras.org>, 2015
-# Marcos Aurélio Silvério <maureliosilverio@gmail.com>, 2014
+# Marcos Aurélio Silvério <marcos.aurelio@infracerta.com.br>, 2014
 # Murilo Moreira de Oliveira <murilo.moreira@gmail.com>, 2014-2015
 # Samuel Diniz Casimiro <nedmaj@yahoo.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-10-09 18:00+0000\n"
-"Last-Translator: Samuel Diniz Casimiro <nedmaj@yahoo.com>\n"
+"POT-Creation-Date: 2016-05-10 11:49+0000\n"
+"PO-Revision-Date: 2016-05-10 16:53+0000\n"
+"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/otrs/OTRS/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -56,7 +57,7 @@ msgstr "Nenhuma pontuação selecionada!"
 
 #. Template: AAAFAQ
 msgid "Explorer"
-msgstr "Explorador"
+msgstr "Explorar"
 
 #. Template: AAAFAQ
 msgid "public (all)"
@@ -208,7 +209,7 @@ msgstr "Grupos de atendentes que podem acessar artigos nesta categoria."
 
 #. Template: AgentFAQCategory
 msgid "Will be shown as comment in Explorer."
-msgstr "Será exibido como comentário no Explorador"
+msgstr "Será exibido como comentário na lista de entradas da FAQ"
 
 #. Template: AgentFAQCategory
 msgid "Do you really want to delete this category?"
@@ -238,7 +239,7 @@ msgstr "FAQ"
 
 #. Template: AgentFAQExplorer
 msgid "FAQ Explorer"
-msgstr "Explorador FAQ"
+msgstr "Explorar a FAQ"
 
 #. Template: AgentFAQExplorer
 msgid "Quick Search"
@@ -406,14 +407,6 @@ msgid "FAQ Article Create Time"
 msgstr "Horário de criação de artigo de FAQ"
 
 #. Template: AgentFAQSearchSmall
-msgid "Specific date"
-msgstr "Data específica"
-
-#. Template: AgentFAQSearchSmall
-msgid "Date range"
-msgstr "Período de data"
-
-#. Template: AgentFAQSearchSmall
 msgid "FAQ Article Change Time"
 msgstr "Horário de alteração de artigo de FAQ"
 
@@ -540,7 +533,7 @@ msgstr "Público"
 
 #. Template: PublicFAQSearchResultShort
 msgid "Back to FAQ Explorer"
-msgstr "Voltar para o Explorador FAQ"
+msgstr "Voltar para a lista de entradas da FAQ"
 
 #. Perl Module: Kernel/Modules/AgentFAQJournal.pm
 msgid "FAQ Journal"
@@ -978,19 +971,19 @@ msgstr "O número máximo de artigos FAQ para ser exibido no resultado de uma pe
 msgid ""
 "Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer "
 "in the agent interface."
-msgstr "Tamanho máximo de títulos em um artigo FAQ a serem exibidos no Explorador FAQ da interface de atendente."
+msgstr "Tamanho máximo de títulos em um artigo FAQ a serem exibidos na lista de entradas da FAQ da interface de atendente."
 
 #. SysConfig
 msgid ""
 "Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer "
 "in the customer interface."
-msgstr "Tamanho máximo de títulos em um artigo FAQ a serem exibidos no Explorador FAQ da interface de cliente."
+msgstr "Tamanho máximo de títulos em um artigo FAQ a serem exibidos na lista de entradas da FAQ da interface de cliente."
 
 #. SysConfig
 msgid ""
 "Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer "
 "in the public interface."
-msgstr "Tamanho máximo de títulos em um artigo FAQ a serem exibidos no Explorador FAQ da interface pública."
+msgstr "Tamanho máximo de títulos em um artigo FAQ a serem exibidos na lista de entradas da FAQ da interface pública."
 
 #. SysConfig
 msgid ""
@@ -1044,13 +1037,13 @@ msgstr "Novos artigos FAQ precisam de aprovação antes de ser publicados."
 msgid ""
 "Number of FAQ articles to be displayed in the FAQ Explorer of the customer "
 "interface."
-msgstr "Número de artigos FAQ para ser exibido no Gerenciador FAQ do interface do cliente"
+msgstr "Número de artigos FAQ para ser exibido no Gerenciador FAQ da interface do cliente"
 
 #. SysConfig
 msgid ""
 "Number of FAQ articles to be displayed in the FAQ Explorer of the public "
 "interface."
-msgstr "Número de artigos FAQ para ser exibido no Gerenciador FAQ do interface publica"
+msgstr "Número de artigos FAQ para ser exibido no Gerenciador FAQ da interface publica"
 
 #. SysConfig
 msgid ""
@@ -1241,3 +1234,7 @@ msgstr "Corpo do chamado para aprovação de um artigo FAQ."
 #. SysConfig
 msgid "Ticket subject for approval of FAQ article."
 msgstr "O assunto do chamado para aprovação de um artigo FAQ."
+
+#. SysConfig
+msgid "Toolbar Item for a shortcut."
+msgstr ""

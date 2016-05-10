@@ -1,10 +1,12 @@
 # 
 # Translators:
+# Tukea <nokoa@live.fi>, 2016
+# Markus Hynnä <markus.hynna@mynamaki.fi>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-10-07 18:17+0000\n"
+"POT-Creation-Date: 2016-05-10 11:49+0000\n"
+"PO-Revision-Date: 2016-05-10 16:53+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Finnish (http://www.transifex.com/otrs/OTRS/language/fi/)\n"
 "MIME-Version: 1.0\n"
@@ -27,7 +29,7 @@ msgstr "ulkoinen"
 
 #. Template: AAAFAQ
 msgid "FAQ Number"
-msgstr "FAQ-numero"
+msgstr "UKK numero"
 
 #. Template: AAAFAQ
 msgid "Latest updated FAQ articles"
@@ -51,7 +53,7 @@ msgstr "Ei valittua arviota"
 
 #. Template: AAAFAQ
 msgid "Explorer"
-msgstr ""
+msgstr "Selain"
 
 #. Template: AAAFAQ
 msgid "public (all)"
@@ -151,15 +153,15 @@ msgstr ""
 
 #. Template: AAAFAQ
 msgid "Solution"
-msgstr ""
+msgstr "Ratkaisu"
 
 #. Template: AgentFAQAdd
 msgid "Add FAQ Article"
-msgstr "Lisää FAQ artikkeli"
+msgstr "Lisää UKK artikkeli"
 
 #. Template: AgentFAQAdd
 msgid "Keywords"
-msgstr ""
+msgstr "Hakusanat"
 
 #. Template: AgentFAQAdd
 msgid "A category is required."
@@ -171,7 +173,7 @@ msgstr "Hyväksyntä"
 
 #. Template: AgentFAQCategory
 msgid "FAQ Category Management"
-msgstr "FAQ:n Kategorioiden hallinta"
+msgstr "UKK kategorioiden hallinta"
 
 #. Template: AgentFAQCategory
 msgid "Add category"
@@ -229,7 +231,7 @@ msgstr "Haluatko varmasti poistaa tämän artikkelin?"
 
 #. Template: AgentFAQEdit
 msgid "FAQ"
-msgstr "FAQ"
+msgstr "UKK"
 
 #. Template: AgentFAQExplorer
 msgid "FAQ Explorer"
@@ -269,7 +271,7 @@ msgstr ""
 
 #. Template: AgentFAQLanguage
 msgid "FAQ Language Management"
-msgstr "FAQ:n kielten hallinta"
+msgstr "UKK kielten hallinta"
 
 #. Template: AgentFAQLanguage
 msgid "Use this feature if you want to work with multiple languges."
@@ -318,7 +320,7 @@ msgstr "Yhtään artikkelia ei löytynyt"
 
 #. Template: AgentFAQSearch
 msgid "Keyword"
-msgstr ""
+msgstr "Hakusana"
 
 #. Template: AgentFAQSearch
 msgid "Vote (e. g. Equals 10 or GreaterThan 60)"
@@ -358,7 +360,7 @@ msgstr ""
 
 #. Template: AgentFAQSearchSmall
 msgid "FAQ Search"
-msgstr "FAQ haku"
+msgstr "UKK haku"
 
 #. Template: AgentFAQSearchSmall
 msgid "Profile Selection"
@@ -401,20 +403,12 @@ msgid "FAQ Article Create Time"
 msgstr ""
 
 #. Template: AgentFAQSearchSmall
-msgid "Specific date"
-msgstr ""
-
-#. Template: AgentFAQSearchSmall
-msgid "Date range"
-msgstr ""
-
-#. Template: AgentFAQSearchSmall
 msgid "FAQ Article Change Time"
 msgstr ""
 
 #. Template: AgentFAQZoom
 msgid "FAQ Information"
-msgstr "FAQ-informaatio"
+msgstr "UKK tiedot"
 
 #. Template: AgentFAQZoom
 msgid "Rating"
@@ -451,7 +445,7 @@ msgstr ""
 msgid ""
 "How helpful was this article? Please give us your rating and help to improve"
 " the FAQ Database. Thank You!"
-msgstr "Kuinka hyödyllinen tämä artikkeli oli? Arvostele artikkeli, jotta voimme kehittää FAQ-tietokantaamme. Kiitos!"
+msgstr "Kuinka hyödyllinen tämä artikkeli oli? Arvostele artikkeli, jotta voimme kehittää UKK-tietokantaamme. Kiitos!"
 
 #. Template: AgentFAQZoom
 msgid "not helpful"
@@ -467,7 +461,7 @@ msgstr ""
 
 #. Template: AgentFAQZoomSmall
 msgid "Insert FAQ Text"
-msgstr "Lisää FAQ-teksti"
+msgstr "Lisää UKK teksti"
 
 #. Template: AgentFAQZoomSmall
 msgid "Insert Full FAQ"
@@ -475,11 +469,11 @@ msgstr ""
 
 #. Template: AgentFAQZoomSmall
 msgid "Insert FAQ Link"
-msgstr "Lisää FAQ-linkki"
+msgstr "Lisää UKK linkki"
 
 #. Template: AgentFAQZoomSmall
 msgid "Insert FAQ Text & Link"
-msgstr "Lisää FAQ-teksti ja -linkki"
+msgstr "Lisää UKK teksti ja linkki"
 
 #. Template: AgentFAQZoomSmall
 msgid "Insert Full FAQ & Link"
@@ -527,7 +521,7 @@ msgstr ""
 
 #. Template: CustomerFAQZoom
 msgid "Search for articles with keyword"
-msgstr ""
+msgstr "Etsi artikkeleja hakusanalla"
 
 #. Template: PublicFAQSearchOpenSearchDescriptionFAQNumber
 msgid "Public"
@@ -539,7 +533,7 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentFAQJournal.pm
 msgid "FAQ Journal"
-msgstr ""
+msgstr "UKK aikajärjestys"
 
 #. Perl Module: Kernel/Modules/AgentFAQPrint.pm
 msgid "Last update"
@@ -905,7 +899,7 @@ msgstr ""
 
 #. SysConfig
 msgid "Journal"
-msgstr ""
+msgstr "Aikajärjestys"
 
 #. SysConfig
 msgid "Language Management"
@@ -1029,7 +1023,7 @@ msgstr ""
 
 #. SysConfig
 msgid "New FAQ Article"
-msgstr ""
+msgstr "Uusi artikkeli"
 
 #. SysConfig
 msgid "New FAQ articles need approval before they get published."
@@ -1085,7 +1079,7 @@ msgstr ""
 
 #. SysConfig
 msgid "Print this FAQ"
-msgstr ""
+msgstr "Tulosta artikkeli"
 
 #. SysConfig
 msgid "Queue for the approval of FAQ articles."
@@ -1235,4 +1229,8 @@ msgstr ""
 
 #. SysConfig
 msgid "Ticket subject for approval of FAQ article."
+msgstr ""
+
+#. SysConfig
+msgid "Toolbar Item for a shortcut."
 msgstr ""

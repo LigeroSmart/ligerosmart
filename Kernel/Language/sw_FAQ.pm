@@ -141,8 +141,6 @@ sub Data {
     $Self->{Translation}->{'Specific rate'} = 'Kiwango maalum';
     $Self->{Translation}->{'e. g. Equals 25% or GreaterThan 75%'} = 'Mfano Sawa na 25% au Zaidi ya 75%';
     $Self->{Translation}->{'FAQ Article Create Time'} = 'Muda wa kutengeneza makala ya maswali';
-    $Self->{Translation}->{'Specific date'} = 'Tarehe maalum';
-    $Self->{Translation}->{'Date range'} = 'tarehe mbalimbali';
     $Self->{Translation}->{'FAQ Article Change Time'} = 'Muda wa kubadili makala ya maswali';
 
     # Template: AgentFAQZoom
@@ -421,6 +419,7 @@ sub Data {
         'Mpangilio huu unafafanua kwamba kipengele cha maswali yanayoulizwa mara kwa mara kinaweza kuunganishwa na kipengele kingine cha tiketi kwa kutumia aina ya kiunganishi kizazi.';
     $Self->{Translation}->{'Ticket body for approval of FAQ article.'} = 'Kiini cha tiketi kwa Idhini ya makala ya maswali yanayoulizwa mara kwa mara.';
     $Self->{Translation}->{'Ticket subject for approval of FAQ article.'} = 'Somo la tiketi kwa Idhini ya makala ya maswali yanayoulizwa mara kwa mara.';
+    $Self->{Translation}->{'Toolbar Item for a shortcut.'} = 'Kipengele cha mwambaa zana kwa ajili ya mkato.';
 
 }
 

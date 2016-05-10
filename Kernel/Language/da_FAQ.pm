@@ -16,19 +16,19 @@ sub Data {
     my $Self = shift;
 
     # Template: AAAFAQ
-    $Self->{Translation}->{'internal'} = '';
-    $Self->{Translation}->{'public'} = '';
-    $Self->{Translation}->{'external'} = '';
-    $Self->{Translation}->{'FAQ Number'} = '';
+    $Self->{Translation}->{'internal'} = 'intern';
+    $Self->{Translation}->{'public'} = 'offentlig';
+    $Self->{Translation}->{'external'} = 'ekstern';
+    $Self->{Translation}->{'FAQ Number'} = 'FAQ Nummer';
     $Self->{Translation}->{'Latest updated FAQ articles'} = 'Sidst ændrede artikler';
     $Self->{Translation}->{'Latest created FAQ articles'} = 'Nyeste artikler';
     $Self->{Translation}->{'Top 10 FAQ articles'} = 'Top 10 artikler';
     $Self->{Translation}->{'Subcategory of'} = 'Underkategori af';
     $Self->{Translation}->{'No rate selected!'} = 'Ingen rate valgt!';
     $Self->{Translation}->{'Explorer'} = '';
-    $Self->{Translation}->{'public (all)'} = '';
-    $Self->{Translation}->{'external (customer)'} = '';
-    $Self->{Translation}->{'internal (agent)'} = '';
+    $Self->{Translation}->{'public (all)'} = 'offentlig (alle)';
+    $Self->{Translation}->{'external (customer)'} = 'ekstern (kunde)';
+    $Self->{Translation}->{'internal (agent)'} = 'intern (agent)';
     $Self->{Translation}->{'Start day'} = 'Start dag';
     $Self->{Translation}->{'Start month'} = 'Start måned';
     $Self->{Translation}->{'Start year'} = 'Start år';
@@ -62,7 +62,7 @@ sub Data {
     $Self->{Translation}->{'FAQ Category Management'} = '';
     $Self->{Translation}->{'Add category'} = '';
     $Self->{Translation}->{'Delete Category'} = '';
-    $Self->{Translation}->{'Ok'} = '';
+    $Self->{Translation}->{'Ok'} = 'Ok';
     $Self->{Translation}->{'Add Category'} = '';
     $Self->{Translation}->{'Edit Category'} = '';
     $Self->{Translation}->{'Please select at least one permission group.'} = '';
@@ -141,8 +141,6 @@ sub Data {
     $Self->{Translation}->{'Specific rate'} = '';
     $Self->{Translation}->{'e. g. Equals 25% or GreaterThan 75%'} = '';
     $Self->{Translation}->{'FAQ Article Create Time'} = '';
-    $Self->{Translation}->{'Specific date'} = '';
-    $Self->{Translation}->{'Date range'} = '';
     $Self->{Translation}->{'FAQ Article Change Time'} = '';
 
     # Template: AgentFAQZoom
@@ -421,6 +419,7 @@ sub Data {
         '';
     $Self->{Translation}->{'Ticket body for approval of FAQ article.'} = '';
     $Self->{Translation}->{'Ticket subject for approval of FAQ article.'} = '';
+    $Self->{Translation}->{'Toolbar Item for a shortcut.'} = '';
 
 }
 

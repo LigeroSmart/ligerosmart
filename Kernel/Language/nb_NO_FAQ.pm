@@ -141,8 +141,6 @@ sub Data {
     $Self->{Translation}->{'Specific rate'} = '';
     $Self->{Translation}->{'e. g. Equals 25% or GreaterThan 75%'} = '';
     $Self->{Translation}->{'FAQ Article Create Time'} = '';
-    $Self->{Translation}->{'Specific date'} = 'Spesifikk dato';
-    $Self->{Translation}->{'Date range'} = '';
     $Self->{Translation}->{'FAQ Article Change Time'} = '';
 
     # Template: AgentFAQZoom
@@ -421,6 +419,7 @@ sub Data {
         'Denne innstillingen definerer at en OSS-artikkel kan lenkes til andre saker med "Foreldre/Barn"-lenketype.';
     $Self->{Translation}->{'Ticket body for approval of FAQ article.'} = 'Saksinnhold for godkjenning av OSS-artikler.';
     $Self->{Translation}->{'Ticket subject for approval of FAQ article.'} = 'Saksemne for godkjenning av OSS-artikler.';
+    $Self->{Translation}->{'Toolbar Item for a shortcut.'} = '';
 
 }
 

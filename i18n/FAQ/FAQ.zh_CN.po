@@ -1,13 +1,14 @@
 # 
 # Translators:
 # 文浩坚 <never.min@gmail.com>, 2015
+# 光中 杨 <yangkwch@163.com>, 2016
 # 文浩坚 <never.min@gmail.com>, 2015
 # 陈德文 <sggggy@gmail.com>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-10-07 18:17+0000\n"
+"POT-Creation-Date: 2016-05-10 11:49+0000\n"
+"PO-Revision-Date: 2016-05-10 16:53+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/otrs/OTRS/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
@@ -126,7 +127,7 @@ msgstr "FAQ类别已添加!"
 
 #. Template: AAAFAQ
 msgid "A category should have a name!"
-msgstr "必需输入类别名称!"
+msgstr "必须输入类别名称!"
 
 #. Template: AAAFAQ
 msgid "This category already exists"
@@ -150,11 +151,11 @@ msgstr "该语言已经存在!"
 
 #. Template: AAAFAQ
 msgid "Symptom"
-msgstr ""
+msgstr "症状"
 
 #. Template: AAAFAQ
 msgid "Solution"
-msgstr ""
+msgstr "解决方案"
 
 #. Template: AgentFAQAdd
 msgid "Add FAQ Article"
@@ -186,7 +187,7 @@ msgstr "删除类别"
 
 #. Template: AgentFAQCategory
 msgid "Ok"
-msgstr "Ok"
+msgstr "确定"
 
 #. Template: AgentFAQCategory
 msgid "Add Category"
@@ -349,11 +350,11 @@ msgstr "FAQ文章创建时间(绝对)"
 
 #. Template: AgentFAQSearch
 msgid "FAQ Article Change Time (before/after)"
-msgstr "FAQ文章创建时间(相对)"
+msgstr "FAQ文章修改时间(相对)"
 
 #. Template: AgentFAQSearch
 msgid "FAQ Article Change Time (between)"
-msgstr "FAQ文章创建时间(绝对)"
+msgstr "FAQ文章修改时间(绝对)"
 
 #. Template: AgentFAQSearchOpenSearchDescriptionFulltext
 msgid "FAQFulltext"
@@ -365,7 +366,7 @@ msgstr "FAQ搜索"
 
 #. Template: AgentFAQSearchSmall
 msgid "Profile Selection"
-msgstr ""
+msgstr "配置选择"
 
 #. Template: AgentFAQSearchSmall
 msgid "Vote"
@@ -373,15 +374,15 @@ msgstr "投票"
 
 #. Template: AgentFAQSearchSmall
 msgid "No vote settings"
-msgstr ""
+msgstr "无投票设置"
 
 #. Template: AgentFAQSearchSmall
 msgid "Specific votes"
-msgstr ""
+msgstr "指定投票"
 
 #. Template: AgentFAQSearchSmall
 msgid "e. g. Equals 10 or GreaterThan 60"
-msgstr ""
+msgstr "例如：等于10或者大于60"
 
 #. Template: AgentFAQSearchSmall
 msgid "Rate"
@@ -389,27 +390,19 @@ msgstr "评分"
 
 #. Template: AgentFAQSearchSmall
 msgid "No rate settings"
-msgstr ""
+msgstr "无评分设置"
 
 #. Template: AgentFAQSearchSmall
 msgid "Specific rate"
-msgstr ""
+msgstr "指定评分"
 
 #. Template: AgentFAQSearchSmall
 msgid "e. g. Equals 25% or GreaterThan 75%"
-msgstr ""
+msgstr "例如：等于25%或大于75%"
 
 #. Template: AgentFAQSearchSmall
 msgid "FAQ Article Create Time"
 msgstr "FAQ文章创建时间"
-
-#. Template: AgentFAQSearchSmall
-msgid "Specific date"
-msgstr ""
-
-#. Template: AgentFAQSearchSmall
-msgid "Date range"
-msgstr "日期范围"
 
 #. Template: AgentFAQSearchSmall
 msgid "FAQ Article Change Time"
@@ -421,7 +414,7 @@ msgstr "FAQ详细信息"
 
 #. Template: AgentFAQZoom
 msgid "Rating"
-msgstr "投票"
+msgstr "评分"
 
 #. Template: AgentFAQZoom
 msgid "out of 5"
@@ -448,13 +441,13 @@ msgid ""
 "To open links in the following description blocks, you might need to press "
 "Ctrl or Cmd or Shift key while clicking the link (depending on your browser "
 "and OS)."
-msgstr ""
+msgstr "要打开下面描述中的链接，你可能需要在单击链接的同时按住 Ctrl 或 Cmd 或 Shift 键 （取决于您的浏览器和操作系统 ）。"
 
 #. Template: AgentFAQZoom
 msgid ""
 "How helpful was this article? Please give us your rating and help to improve"
 " the FAQ Database. Thank You!"
-msgstr "此文档对您有帮助吗？请给出您的评价，谢谢！"
+msgstr "此文档对您有帮助吗？请给出您的评价，帮助我们完善知识库，谢谢！"
 
 #. Template: AgentFAQZoom
 msgid "not helpful"
@@ -466,7 +459,7 @@ msgstr "很有帮助"
 
 #. Template: AgentFAQZoomSmall
 msgid "Add FAQ title to article subject"
-msgstr ""
+msgstr "增加FAQ标题到文章主题中"
 
 #. Template: AgentFAQZoomSmall
 msgid "Insert FAQ Text"
@@ -474,7 +467,7 @@ msgstr "插入FAQ文本"
 
 #. Template: AgentFAQZoomSmall
 msgid "Insert Full FAQ"
-msgstr "插入FAQ"
+msgstr "插入完整FAQ"
 
 #. Template: AgentFAQZoomSmall
 msgid "Insert FAQ Link"
@@ -486,51 +479,51 @@ msgstr "插入FAQ正文和链接"
 
 #. Template: AgentFAQZoomSmall
 msgid "Insert Full FAQ & Link"
-msgstr "插入FAQ和链接"
+msgstr "插入完整FAQ和链接"
 
 #. Template: CustomerFAQExplorer
 msgid "No FAQ articles found."
-msgstr ""
+msgstr "未找到FAQ文章。"
 
 #. Template: CustomerFAQSearch
 msgid "Fulltext search in FAQ articles (e. g. \"John*n\" or \"Will*\")"
-msgstr ""
+msgstr "在FAQ中进行全文本搜索（例如：“John*n”或“Will*”）"
 
 #. Template: CustomerFAQSearch
 msgid "Vote restrictions"
-msgstr ""
+msgstr "投票限制条件"
 
 #. Template: CustomerFAQSearch
 msgid "Only FAQ articles with votes..."
-msgstr ""
+msgstr "仅FAQ文章的投票数……"
 
 #. Template: CustomerFAQSearch
 msgid "Rate restrictions"
-msgstr ""
+msgstr "评分限制条件"
 
 #. Template: CustomerFAQSearch
 msgid "Only FAQ articles with rate..."
-msgstr ""
+msgstr "仅FAQ文章的评分……"
 
 #. Template: CustomerFAQSearch
 msgid "Only FAQ articles created"
-msgstr ""
+msgstr "仅FAQ文章的创建时间"
 
 #. Template: CustomerFAQSearch
 msgid "Only FAQ articles created between"
-msgstr ""
+msgstr "仅在以下时间段创建的FAQ文章"
 
 #. Template: CustomerFAQSearch
 msgid "Search-Profile as Template?"
-msgstr "搜索配置作为模板？"
+msgstr "将搜索配置设置为模板？"
 
 #. Template: CustomerFAQZoom
 msgid "Article Number"
-msgstr ""
+msgstr "文章编号"
 
 #. Template: CustomerFAQZoom
 msgid "Search for articles with keyword"
-msgstr ""
+msgstr "使用关键字搜索文章"
 
 #. Template: PublicFAQSearchOpenSearchDescriptionFAQNumber
 msgid "Public"
@@ -538,7 +531,7 @@ msgstr "公开"
 
 #. Template: PublicFAQSearchResultShort
 msgid "Back to FAQ Explorer"
-msgstr ""
+msgstr "返回FAQ浏览器"
 
 #. Perl Module: Kernel/Modules/AgentFAQJournal.pm
 msgid "FAQ Journal"
@@ -550,15 +543,15 @@ msgstr "上次更新"
 
 #. Perl Module: Kernel/Modules/AgentFAQPrint.pm
 msgid "FAQ Dynamic Fields"
-msgstr ""
+msgstr "FAQ动态字段"
 
 #. Perl Module: Kernel/Modules/AgentFAQSearch.pm
 msgid "No Result!"
-msgstr ""
+msgstr "无结果！"
 
 #. Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
 msgid "This article is empty!"
-msgstr ""
+msgstr "文章无内容！"
 
 #. SysConfig
 msgid ""
@@ -566,15 +559,15 @@ msgid ""
 "Image allows two input kinds. First the name of an image (e.g. faq.png). In "
 "this case the OTRS image path will be used. The second possibility is to "
 "insert the link to the image."
-msgstr ""
+msgstr "在HTML输出结果中为预定义字符串添加链接的过滤器。图像元素允许两种输入方式：第一种是用图像的名称（如faq.png），在这种情况下会使用OTRS的图像路径；第二种是插入图像的链接。"
 
 #. SysConfig
 msgid "CSS color for the voting result."
-msgstr ""
+msgstr "投票结果的CSS颜色"
 
 #. SysConfig
 msgid "Cache Time To Leave for FAQ items."
-msgstr ""
+msgstr "FAQ文章不再显示的时间"
 
 #. SysConfig
 msgid "Category Management"
@@ -582,135 +575,135 @@ msgstr "管理类别"
 
 #. SysConfig
 msgid "Decimal places of the voting result."
-msgstr "以十分制显示评分结果."
+msgstr "以十分制显示评分结果。"
 
 #. SysConfig
 msgid "Default category name."
-msgstr "默认的目录名."
+msgstr "默认的目录名。"
 
 #. SysConfig
 msgid "Default language for FAQ articles on single language mode."
-msgstr ""
+msgstr "单语言模式下FAQ文章的默认语言。"
 
 #. SysConfig
 msgid "Default maximum size of the titles in a FAQ article to be shown."
-msgstr ""
+msgstr "显示FAQ文章的默认最大数量。"
 
 #. SysConfig
 msgid "Default priority of tickets for the approval of FAQ articles."
-msgstr "FAQ 文章批准请求的 Ticket 的优先级."
+msgstr "FAQ 文章审批请求工单的优先级。"
 
 #. SysConfig
 msgid "Default state for FAQ entry."
-msgstr "默认的 FAQ 统计条目."
+msgstr "FAQ文章的默认状态。"
 
 #. SysConfig
 msgid "Default state of tickets for the approval of FAQ articles."
-msgstr "FAQ 文章批准请求的 Ticket 的默认状态."
+msgstr "FAQ 文章请求批准的工单的默认状态。"
 
 #. SysConfig
 msgid "Default type of tickets for the approval of FAQ articles."
-msgstr ""
+msgstr "FAQ 文章请求批准的工单的默认类型。"
 
 #. SysConfig
 msgid ""
 "Default value for the Action parameter for the public frontend. The Action "
 "parameter is used in the scripts of the system."
-msgstr ""
+msgstr "公共前端界面指令参数的默认值，指令参数用于系统脚本。"
 
 #. SysConfig
 msgid "Define if the FAQ title should be concatenated to article subject."
-msgstr ""
+msgstr "定义FAQ标题是否要加上文章主题。"
 
 #. SysConfig
 msgid "Defines an overview module to show the small view of a FAQ journal."
-msgstr ""
+msgstr "定义一个显示FAQ日志简洁视图的概述模块。"
 
 #. SysConfig
 msgid "Defines an overview module to show the small view of a FAQ list."
-msgstr ""
+msgstr "定义一个显示FAQ列表简洁视图的概述模块。"
 
 #. SysConfig
 msgid ""
 "Defines the default FAQ attribute for FAQ sorting in a FAQ search of the "
 "agent interface."
-msgstr ""
+msgstr "定义在服务人员界面的FAQ搜索结果中排序的默认FAQ属性。"
 
 #. SysConfig
 msgid ""
 "Defines the default FAQ attribute for FAQ sorting in a FAQ search of the "
 "customer interface."
-msgstr ""
+msgstr "定义在客户界面的FAQ搜索结果中排序的默认FAQ属性。"
 
 #. SysConfig
 msgid ""
 "Defines the default FAQ attribute for FAQ sorting in a FAQ search of the "
 "public interface."
-msgstr ""
+msgstr "定义在公共界面的FAQ搜索结果中排序的默认FAQ属性。"
 
 #. SysConfig
 msgid ""
 "Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the"
 " agent interface."
-msgstr ""
+msgstr "定义在服务人员界面的FAQ浏览器中排序的默认FAQ属性。"
 
 #. SysConfig
 msgid ""
 "Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the"
 " customer interface."
-msgstr ""
+msgstr "定义在客户界面的FAQ浏览器中排序的默认FAQ属性。"
 
 #. SysConfig
 msgid ""
 "Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the"
 " public interface."
-msgstr ""
+msgstr "定义在公共界面的FAQ浏览器中排序的默认FAQ属性。"
 
 #. SysConfig
 msgid ""
 "Defines the default FAQ order in the FAQ Explorer result of the agent "
 "interface. Up: oldest on top. Down: latest on top."
-msgstr ""
+msgstr "定义在服务人员界面的FAQ浏览器中显示FAQ的顺序。向上：最早的在最上面，向下：最新的在最上面。"
 
 #. SysConfig
 msgid ""
 "Defines the default FAQ order in the FAQ Explorer result of the customer "
 "interface. Up: oldest on top. Down: latest on top."
-msgstr ""
+msgstr "定义在客户界面的FAQ浏览器中显示FAQ的顺序。向上：最早的在最上面，向下：最新的在最上面。"
 
 #. SysConfig
 msgid ""
 "Defines the default FAQ order in the FAQ Explorer result of the public "
 "interface. Up: oldest on top. Down: latest on top."
-msgstr ""
+msgstr "定义在公共界面的FAQ浏览器中显示FAQ的顺序。向上：最早的在最上面，向下：最新的在最上面。"
 
 #. SysConfig
 msgid ""
 "Defines the default FAQ order of a search result in the agent interface. Up:"
 " oldest on top. Down: latest on top."
-msgstr ""
+msgstr "定义在服务人员界面的FAQ搜索结果中的显示顺序。向上：最早的在最上面，向下：最新的在最上面。"
 
 #. SysConfig
 msgid ""
 "Defines the default FAQ order of a search result in the customer interface. "
 "Up: oldest on top. Down: latest on top."
-msgstr ""
+msgstr "定义在客户界面的FAQ搜索结果中的显示顺序。向上：最早的在最上面，向下：最新的在最上面。"
 
 #. SysConfig
 msgid ""
 "Defines the default FAQ order of a search result in the public interface. "
 "Up: oldest on top. Down: latest on top."
-msgstr ""
+msgstr "定义在公共界面的FAQ搜索结果中的显示顺序。向上：最早的在最上面，向下：最新的在最上面。"
 
 #. SysConfig
 msgid "Defines the default shown FAQ search attribute for FAQ search screen."
-msgstr ""
+msgstr "定义FAQ搜索窗口中默认的用于搜索的FAQ属性。"
 
 #. SysConfig
 msgid ""
 "Defines the information to be inserted in a FAQ based Ticket. \"Full FAQ\" "
 "includes text, attachments and inline images."
-msgstr ""
+msgstr "定义基于FAQ的工单中要插入的信息。“完整FAQ”包括文本、附件和内嵌图像。"
 
 #. SysConfig
 msgid ""
@@ -719,124 +712,124 @@ msgid ""
 " to the plugin (e. g. Group: admin;group1;group2;). \"Default\" indicates if"
 " the plugin is enabled by default or if the user needs to enable it "
 "manually."
-msgstr ""
+msgstr "定义仪表板的后端参数。“限制”定义默认显示条目的数量。“组”用于控制能访问此模块的组（如：admin;group1;group2组）。“默认”表示此模块默认为可用或需要用户手动启用。"
 
 #. SysConfig
 msgid ""
 "Defines the shown columns in the FAQ Explorer. This option has no effect on "
 "the position of the column."
-msgstr ""
+msgstr "定义在FAQ浏览器中要显示的列。这个选项不会影响列的位置。"
 
 #. SysConfig
 msgid ""
 "Defines the shown columns in the FAQ journal. This option has no effect on "
 "the position of the column."
-msgstr ""
+msgstr "定义在FAQ日志中要显示的列。这个选项不会影响列的位置。"
 
 #. SysConfig
 msgid ""
 "Defines the shown columns in the FAQ search. This option has no effect on "
 "the position of the column."
-msgstr ""
+msgstr "定义在FAQ搜索结果中要显示的列。这个选项不会影响列的位置。"
 
 #. SysConfig
 msgid "Defines where the 'Insert FAQ' link will be displayed."
-msgstr ""
+msgstr "定义“插入FAQ”链接在何处显示。"
 
 #. SysConfig
 msgid "Definition of FAQ item free text field."
-msgstr "定义 FAQ 项目的不受限文字字段."
+msgstr "定义 FAQ 条目的不受限文字字段."
 
 #. SysConfig
 msgid "Delete this FAQ"
-msgstr "删除FAQ"
+msgstr "删除这篇FAQ"
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ add screen of the agent interface. Possible "
 "settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
-msgstr ""
+msgstr "服务人员界面中添加FAQ时动态字段显示设置，可用值为：0 = 禁用，1 = 启用，2 = 启用且必填"
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ edit screen of the agent interface. Possible"
 " settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
-msgstr ""
+msgstr "服务人员界面中编辑FAQ时动态字段显示设置，可用值为：0 = 禁用，1 = 启用，2 = 启用且必填"
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ overview screen of the customer interface. "
 "Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
-msgstr ""
+msgstr "客户界面中添加FAQ时动态字段显示设置，可用值为：0 = 禁用，1 = 启用，2 = 启用且必填"
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ overview screen of the public interface. "
 "Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
-msgstr ""
+msgstr "客户界面中编辑FAQ时动态字段显示设置，可用值为：0 = 禁用，1 = 启用，2 = 启用且必填"
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ print screen of the agent interface. "
 "Possible settings: 0 = Disabled, 1 = Enabled."
-msgstr ""
+msgstr "服务人员界面中打印FAQ时动态字段显示设置，可用值为：0 = 禁用，1 = 启用"
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ print screen of the customer interface. "
 "Possible settings: 0 = Disabled, 1 = Enabled."
-msgstr ""
+msgstr "客户界面中打印FAQ时动态字段显示设置，可用值为：0 = 禁用，1 = 启用"
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ print screen of the public interface. "
 "Possible settings: 0 = Disabled, 1 = Enabled."
-msgstr ""
+msgstr "公共界面中打印FAQ时动态字段显示设置，可用值为：0 = 禁用，1 = 启用"
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ search screen of the agent interface. "
 "Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and shown by "
 "default."
-msgstr ""
+msgstr "服务人员界面中搜索FAQ时动态字段显示设置，可用值为：0 = 禁用，1 = 启用，2 = 启用且默认显示"
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ search screen of the customer interface. "
 "Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and shown by "
 "default."
-msgstr ""
+msgstr "客户界面中搜索FAQ时动态字段显示设置，可用值为：0 = 禁用，1 = 启用，2 = 启用且默认显示"
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ search screen of the public interface. "
 "Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and shown by "
 "default."
-msgstr ""
+msgstr "公共界面中搜索FAQ时动态字段显示设置，可用值为：0 = 禁用，1 = 启用，2 = 启用且默认显示"
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ small format overview screen of the agent "
 "interface. Possible settings: 0 = Disabled, 1 = Enabled."
-msgstr ""
+msgstr "服务人员界面中，FAQ概览视图显示时动态字段显示设置，可用值为：0 = 禁用，1 = 启用"
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ zoom screen of the agent interface. Possible"
 " settings: 0 = Disabled, 1 = Enabled."
-msgstr ""
+msgstr "服务人员界面中，FAQ详情窗口显示时动态字段显示设置，可用值为：0 = 禁用，1 = 启用"
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ zoom screen of the customer interface. "
 "Possible settings: 0 = Disabled, 1 = Enabled."
-msgstr ""
+msgstr "客户界面中，FAQ详情窗口显示时动态字段显示设置，可用值为：0 = 禁用，1 = 启用"
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ zoom screen of the public interface. "
 "Possible settings: 0 = Disabled, 1 = Enabled."
-msgstr ""
+msgstr "公共界面中，FAQ详情窗口显示时动态字段显示设置，可用值为：0 = 禁用，1 = 启用"
 
 #. SysConfig
 msgid "Edit this FAQ"
@@ -844,47 +837,47 @@ msgstr "编辑FAQ"
 
 #. SysConfig
 msgid "Enable multiple languages on FAQ module."
-msgstr ""
+msgstr "在FAQ模块中启用多种语言。"
 
 #. SysConfig
 msgid "Enable voting mechanism on FAQ module."
-msgstr ""
+msgstr "在FAQ模块中启用投票机制。"
 
 #. SysConfig
 msgid "FAQ Journal Overview \"Small\" Limit"
-msgstr ""
+msgstr "FAQ日志概览“简洁视图”限制"
 
 #. SysConfig
 msgid "FAQ Overview \"Small\" Limit"
-msgstr ""
+msgstr "FAQ概览“简洁视图”限制"
 
 #. SysConfig
 msgid "FAQ limit per page for FAQ Journal Overview \"Small\""
-msgstr ""
+msgstr "FAQ日志概览“简洁视图”中每页显示的FAQ数量"
 
 #. SysConfig
 msgid "FAQ limit per page for FAQ Overview \"Small\""
-msgstr ""
+msgstr "FAQ概览“简洁视图”中每页显示的FAQ数量"
 
 #. SysConfig
 msgid "FAQ search backend router of the agent interface."
-msgstr ""
+msgstr "服务人员界面中，FAQ搜索的后台选项。"
 
 #. SysConfig
 msgid "FAQ-Area"
-msgstr ""
+msgstr "FAQ领域"
 
 #. SysConfig
 msgid "Field4"
-msgstr ""
+msgstr "字段4"
 
 #. SysConfig
 msgid "Field5"
-msgstr ""
+msgstr "字段5"
 
 #. SysConfig
 msgid "Frontend module registration for the public interface."
-msgstr ""
+msgstr "公共界面的前端模块注册"
 
 #. SysConfig
 msgid "Group for the approval of FAQ articles."
@@ -892,19 +885,19 @@ msgstr "批准 FAQ 文章请求的群组."
 
 #. SysConfig
 msgid "History of this FAQ"
-msgstr "FAQ文章历史信息"
+msgstr "FAQ文章的历史信息"
 
 #. SysConfig
 msgid "Include internal fields on a FAQ based Ticket."
-msgstr ""
+msgstr "在基于FAQ文章的工单中包含内部字段"
 
 #. SysConfig
 msgid "Include the name of each field in a FAQ based Ticket."
-msgstr ""
+msgstr "在基于FAQ文章的工单中包含每个字段的名称"
 
 #. SysConfig
 msgid "Interfaces where the quick search should be shown."
-msgstr ""
+msgstr "快速搜索时显示的界面"
 
 #. SysConfig
 msgid "Journal"
@@ -916,119 +909,119 @@ msgstr "管理语言"
 
 #. SysConfig
 msgid "Link another object to this FAQ item"
-msgstr "链接对象至FAQ"
+msgstr "链接对象到这个FAQ条目"
 
 #. SysConfig
 msgid "List of state types which can be used in the agent interface."
-msgstr ""
+msgstr "在服务人员界面中能够使用的状态类型列表。"
 
 #. SysConfig
 msgid "List of state types which can be used in the customer interface."
-msgstr ""
+msgstr "在客户界面中能够使用的状态类型列表。"
 
 #. SysConfig
 msgid "List of state types which can be used in the public interface."
-msgstr ""
+msgstr "在公共界面中能够使用的状态类型列表。"
 
 #. SysConfig
 msgid ""
 "Maximum number of FAQ articles to be displayed in the FAQ Explorer result of"
 " the agent interface."
-msgstr ""
+msgstr "在服务人员界面中，FAQ浏览器能够显示FAQ文章的最大数量。"
 
 #. SysConfig
 msgid ""
 "Maximum number of FAQ articles to be displayed in the FAQ Explorer result of"
 " the customer interface."
-msgstr ""
+msgstr "在客户界面中，FAQ浏览器能够显示FAQ文章的最大数量。"
 
 #. SysConfig
 msgid ""
 "Maximum number of FAQ articles to be displayed in the FAQ Explorer result of"
 " the public interface."
-msgstr ""
+msgstr "在公共界面中，FAQ浏览器能够显示FAQ文章的最大数量。"
 
 #. SysConfig
 msgid ""
 "Maximum number of FAQ articles to be displayed in the FAQ journal in the "
 "agent interface."
-msgstr ""
+msgstr "在服务人员界面中，FAQ日志能够显示FAQ文章的最大数量。"
 
 #. SysConfig
 msgid ""
 "Maximum number of FAQ articles to be displayed in the result of a search in "
 "the agent interface."
-msgstr ""
+msgstr "在服务人员界面中，FAQ搜索结果能够显示的最大数量。"
 
 #. SysConfig
 msgid ""
 "Maximum number of FAQ articles to be displayed in the result of a search in "
 "the customer interface."
-msgstr ""
+msgstr "在客户界面中，FAQ搜索结果能够显示的最大数量。"
 
 #. SysConfig
 msgid ""
 "Maximum number of FAQ articles to be displayed in the result of a search in "
 "the public interface."
-msgstr ""
+msgstr "在公共界面中，FAQ搜索结果能够显示的最大数量。"
 
 #. SysConfig
 msgid ""
 "Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer "
 "in the agent interface."
-msgstr ""
+msgstr "在服务人员界面中，FAQ浏览器显示FAQ文章标题的最长字符数。"
 
 #. SysConfig
 msgid ""
 "Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer "
 "in the customer interface."
-msgstr ""
+msgstr "在客户界面中，FAQ浏览器显示FAQ文章标题的最长字符数。"
 
 #. SysConfig
 msgid ""
 "Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer "
 "in the public interface."
-msgstr ""
+msgstr "在公共界面中，FAQ浏览器显示FAQ文章标题的最长字符数。"
 
 #. SysConfig
 msgid ""
 "Maximum size of the titles in a FAQ article to be shown in the FAQ Search in"
 " the agent interface."
-msgstr ""
+msgstr "在服务人员界面中，FAQ搜索结果显示FAQ文章标题的最长字符数。"
 
 #. SysConfig
 msgid ""
 "Maximum size of the titles in a FAQ article to be shown in the FAQ Search in"
 " the customer interface."
-msgstr ""
+msgstr "在客户界面中，FAQ搜索结果显示FAQ文章标题的最长字符数。"
 
 #. SysConfig
 msgid ""
 "Maximum size of the titles in a FAQ article to be shown in the FAQ Search in"
 " the public interface."
-msgstr ""
+msgstr "在公共界面中，FAQ搜索结果显示FAQ文章标题的最长字符数。"
 
 #. SysConfig
 msgid ""
 "Maximum size of the titles in a FAQ article to be shown in the FAQ journal "
 "in the agent interface."
-msgstr ""
+msgstr "在服务人员界面中，FAQ日志视图显示FAQ文章标题的最长字符数。"
 
 #. SysConfig
 msgid ""
 "Module to generate HTML OpenSearch profile for short FAQ search in the "
 "public interface."
-msgstr ""
+msgstr "在公共界面中，为优化FAQ搜索用于生成HTML开放搜索（OpenSearch）配置的模块。"
 
 #. SysConfig
 msgid ""
 "Module to generate HTML OpenSearch profile for short faq search in the "
 "customer interface."
-msgstr ""
+msgstr "在客户界面中，为优化FAQ搜索用于生成HTML开放搜索（OpenSearch）配置的模块。"
 
 #. SysConfig
 msgid "Module to generate html OpenSearch profile for short faq search."
-msgstr ""
+msgstr "在服务人员界面中，为优化FAQ搜索用于生成HTML开放搜索（OpenSearch）配置的模块。"
 
 #. SysConfig
 msgid "New FAQ Article"
@@ -1036,67 +1029,67 @@ msgstr "创建FAQ文章"
 
 #. SysConfig
 msgid "New FAQ articles need approval before they get published."
-msgstr ""
+msgstr "新建的FAQ文章在发布之前需要审批。"
 
 #. SysConfig
 msgid ""
 "Number of FAQ articles to be displayed in the FAQ Explorer of the customer "
 "interface."
-msgstr ""
+msgstr "在客户界面中，FAQ浏览器视图显示的FAQ文章数量。"
 
 #. SysConfig
 msgid ""
 "Number of FAQ articles to be displayed in the FAQ Explorer of the public "
 "interface."
-msgstr ""
+msgstr "在公共界面中，FAQ浏览器视图显示的FAQ文章数量。"
 
 #. SysConfig
 msgid ""
 "Number of FAQ articles to be displayed on each page of a search result in "
 "the customer interface."
-msgstr ""
+msgstr "在客户界面中，FAQ搜索结果每页显示的FAQ文章数量。"
 
 #. SysConfig
 msgid ""
 "Number of FAQ articles to be displayed on each page of a search result in "
 "the public interface."
-msgstr ""
+msgstr "在公共界面中，FAQ搜索结果每页显示的FAQ文章数量。"
 
 #. SysConfig
 msgid "Number of shown items in last changes."
-msgstr "显示最近更改项目的数量."
+msgstr "显示最近更改条目的数量."
 
 #. SysConfig
 msgid "Number of shown items in last created."
-msgstr "显示最新创建项目的数量."
+msgstr "显示最新创建条目的数量."
 
 #. SysConfig
 msgid "Number of shown items in the top 10 feature."
-msgstr "显示点击量前十位项目的数量."
+msgstr "按Top10格式显示的条目数."
 
 #. SysConfig
 msgid ""
 "Parameters for the pages (in which the FAQ items are shown) of the small FAQ"
 " journal overview."
-msgstr ""
+msgstr "显示FAQ条目的微型FAQ日志概览的页面参数。"
 
 #. SysConfig
 msgid ""
 "Parameters for the pages (in which the FAQ items are shown) of the small FAQ"
 " overview."
-msgstr ""
+msgstr "显示FAQ条目的FAQ概览简洁视图的页面参数。"
 
 #. SysConfig
 msgid "Print this FAQ"
-msgstr "打印FAQ"
+msgstr "打印这篇FAQ"
 
 #. SysConfig
 msgid "Queue for the approval of FAQ articles."
-msgstr "批准 FAQ 文章请求的队列."
+msgstr "审批 FAQ 文章的队列."
 
 #. SysConfig
 msgid "Rates for voting. Key must be in percent."
-msgstr "好评率, 键值必须在百分比以内."
+msgstr "好评率, 键值必须以百分比表示."
 
 #. SysConfig
 msgid "Search FAQ"
@@ -1105,40 +1098,40 @@ msgstr "搜索FAQ"
 #. SysConfig
 msgid ""
 "Set the default height (in pixels) of inline HTML fields in AgentFAQZoom."
-msgstr ""
+msgstr "在”AgentFAQZoom“中，设置内置HTML字段的默认高度（单位：像素）。"
 
 #. SysConfig
 msgid ""
 "Set the default height (in pixels) of inline HTML fields in CustomerFAQZoom "
 "(and PublicFAQZoom)."
-msgstr ""
+msgstr "在”CustomerFAQZoom（和PublicFAQZoom）“中，设置内置HTML字段的默认高度（按像素）。"
 
 #. SysConfig
 msgid ""
 "Set the maximum height (in pixels) of inline HTML fields in AgentFAQZoom."
-msgstr ""
+msgstr "在”AgentFAQZoom“中，设置内置HTML字段的最大高度（按像素）。"
 
 #. SysConfig
 msgid ""
 "Set the maximum height (in pixels) of inline HTML fields in CustomerFAQZoom "
 "(and PublicFAQZoom)."
-msgstr ""
+msgstr "在”CustomerFAQZoom（和PublicFAQZoom）“中，设置内置HTML字段的最大高度（按像素）。"
 
 #. SysConfig
 msgid ""
 "Show \"Insert FAQ Link\" Button in AgentFAQZoomSmall for public FAQ "
 "Articles."
-msgstr ""
+msgstr "对于公开的FAQ文章，在“AgentFAQZoomSmall”中显示“插入FAQ链接\"按钮。"
 
 #. SysConfig
 msgid ""
 "Show \"Insert FAQ Text & Link\" / \"Insert Full FAQ & Link\" Button in "
 "AgentFAQZoomSmall for public FAQ Articles."
-msgstr ""
+msgstr "对于公开的FAQ文章，在“AgentFAQZoomSmall”中显示“插入FAQ文本和链接\"/\"插入完整FAQ和链接\"按钮。"
 
 #. SysConfig
 msgid "Show \"Insert FAQ Text\" / \"Insert Full FAQ\" Button in AgentFAQZoomSmall."
-msgstr ""
+msgstr "在“AgentFAQZoomSmall”中显示“插入FAQ文本\"/\"插入完整FAQ\"按钮。"
 
 #. SysConfig
 msgid "Show FAQ Article with HTML."
@@ -1154,55 +1147,55 @@ msgstr "显示子目录的数量."
 
 #. SysConfig
 msgid "Show last change items in defined interfaces."
-msgstr "在介面上显示最近更改的项目."
+msgstr "在定义的界面上显示最近更改的条目."
 
 #. SysConfig
 msgid "Show last created items in defined interfaces."
-msgstr "在介面上显示最新创建的项目."
+msgstr "在定义的界面上显示最新创建的条目."
 
 #. SysConfig
 msgid "Show top 10 items in defined interfaces."
-msgstr "在介面上显示点击量前十位."
+msgstr "在定义的界面上显示点击量前十位."
 
 #. SysConfig
 msgid "Show voting in defined interfaces."
-msgstr "定义显示评分的介面."
+msgstr "在定义的界面上显示文章评分。"
 
 #. SysConfig
 msgid ""
 "Shows a link in the menu that allows linking a FAQ with another object in "
 "the zoom view of such FAQ of the agent interface."
-msgstr ""
+msgstr "在服务人员界面中，在该FAQ详情窗口菜单中显示允许将FAQ链接到另一个对象的链接。"
 
 #. SysConfig
 msgid ""
 "Shows a link in the menu that allows to delete a FAQ in its zoom view in the"
 " agent interface."
-msgstr ""
+msgstr "在服务人员界面中，在该FAQ的详情窗口菜单中显示允许删除FAQ的链接。"
 
 #. SysConfig
 msgid ""
 "Shows a link in the menu to access the history of a FAQ in its zoom view of "
 "the agent interface."
-msgstr ""
+msgstr "在服务人员界面中，在该FAQ的详情窗口菜单中显示访问FAQ历史的链接。"
 
 #. SysConfig
 msgid ""
 "Shows a link in the menu to edit a FAQ in the its zoom view of the agent "
 "interface."
-msgstr ""
+msgstr "在服务人员界面中，在该FAQ的详情窗口菜单中显示编辑FAQ的链接。"
 
 #. SysConfig
 msgid ""
 "Shows a link in the menu to go back in the FAQ zoom view of the agent "
 "interface."
-msgstr ""
+msgstr "在服务人员界面中，在该FAQ的详情窗口菜单中显示后退的链接。"
 
 #. SysConfig
 msgid ""
 "Shows a link in the menu to print a FAQ in the its zoom view of the agent "
 "interface."
-msgstr ""
+msgstr "在服务人员界面的详情窗口菜单中，显示打印FAQ的链接。"
 
 #. SysConfig
 msgid "The identifier for a FAQ, e.g. FAQ#, KB#, MyFAQ#. The default is FAQ#."
@@ -1212,30 +1205,34 @@ msgstr "FAQ 的标识符, 例如 (常见问题)FAQ#, (知识库)KB#, 默认为 F
 msgid ""
 "This setting defines that a 'FAQ' object can be linked with other 'FAQ' "
 "objects using the 'Normal' link type."
-msgstr ""
+msgstr "该设置定义了一个能通过“普通（Normal）”的链接类型与其他FAQ对象连接的FAQ对象。"
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'FAQ' object can be linked with other 'FAQ' "
 "objects using the 'ParentChild' link type."
-msgstr ""
+msgstr "该设置定义了一个能通过“父子（ParentChild）”的链接类型与其他FAQ对象连接的FAQ对象。"
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'FAQ' object can be linked with other 'Ticket' "
 "objects using the 'Normal' link type."
-msgstr ""
+msgstr "该设置定义了一个能通过“普通（Normal）”的链接类型与其他工单对象连接的FAQ对象。"
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'FAQ' object can be linked with other 'Ticket' "
 "objects using the 'ParentChild' link type."
-msgstr ""
+msgstr "该设置定义了一个能通过“父子（ParentChild）”的链接类型与其他工单对象连接的FAQ对象。"
 
 #. SysConfig
 msgid "Ticket body for approval of FAQ article."
-msgstr "FAQ 文章批准请求的 Ticket 内容."
+msgstr "FAQ 文章审批请求的工单正文。"
 
 #. SysConfig
 msgid "Ticket subject for approval of FAQ article."
-msgstr "FAQ 文章批准请求的 Ticket 主题."
+msgstr "FAQ 文章审批请求的工单标题。"
+
+#. SysConfig
+msgid "Toolbar Item for a shortcut."
+msgstr ""

@@ -141,8 +141,6 @@ sub Data {
     $Self->{Translation}->{'Specific rate'} = 'Adott értékelés';
     $Self->{Translation}->{'e. g. Equals 25% or GreaterThan 75%'} = 'például Equals 25% vagy GreaterThan 75%';
     $Self->{Translation}->{'FAQ Article Create Time'} = 'GyIK bejegyzés létrehozási ideje';
-    $Self->{Translation}->{'Specific date'} = 'Adott dátum';
-    $Self->{Translation}->{'Date range'} = 'Dátumtartomány';
     $Self->{Translation}->{'FAQ Article Change Time'} = 'GyIK bejegyzés módosítási ideje';
 
     # Template: AgentFAQZoom
@@ -421,6 +419,7 @@ sub Data {
         'Ez a beállítás határozza meg, hogy egy „FAQ” objektum összeköthető-e más „Ticket” objektumokkal a „ParentChild” hivatkozástípus használatával.';
     $Self->{Translation}->{'Ticket body for approval of FAQ article.'} = 'Jegy törzse egy GyIK bejegyzés jóváhagyásához.';
     $Self->{Translation}->{'Ticket subject for approval of FAQ article.'} = 'Jegy tárgya egy GyIK bejegyzés jóváhagyásához.';
+    $Self->{Translation}->{'Toolbar Item for a shortcut.'} = 'Eszköztárelem egy gyorsbillentyűhöz.';
 
 }
 

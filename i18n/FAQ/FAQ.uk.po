@@ -1,13 +1,14 @@
 # 
 # Translators:
 # Alexander <korsikov@rbcgrp.com>, 2015
+# Vira Motorko <ato4ka@i.ua>, 2015
 # Свистун Роман <svystun09@gmail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-10-24 09:12+0000\n"
-"Last-Translator: Свистун Роман <svystun09@gmail.com>\n"
+"POT-Creation-Date: 2016-05-10 11:49+0000\n"
+"PO-Revision-Date: 2016-05-10 16:53+0000\n"
+"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Ukrainian (http://www.transifex.com/otrs/OTRS/language/uk/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -21,15 +22,15 @@ msgstr "внутрішній"
 
 #. Template: AAAFAQ
 msgid "public"
-msgstr "Публичне"
+msgstr "публічне"
 
 #. Template: AAAFAQ
 msgid "external"
-msgstr "Зовнiшний"
+msgstr "зовнiшнє"
 
 #. Template: AAAFAQ
 msgid "FAQ Number"
-msgstr "FAQ  кількість"
+msgstr "Номер FAQ"
 
 #. Template: AAAFAQ
 msgid "Latest updated FAQ articles"
@@ -400,14 +401,6 @@ msgstr ""
 
 #. Template: AgentFAQSearchSmall
 msgid "FAQ Article Create Time"
-msgstr ""
-
-#. Template: AgentFAQSearchSmall
-msgid "Specific date"
-msgstr ""
-
-#. Template: AgentFAQSearchSmall
-msgid "Date range"
 msgstr ""
 
 #. Template: AgentFAQSearchSmall
@@ -1237,4 +1230,8 @@ msgstr ""
 
 #. SysConfig
 msgid "Ticket subject for approval of FAQ article."
+msgstr ""
+
+#. SysConfig
+msgid "Toolbar Item for a shortcut."
 msgstr ""

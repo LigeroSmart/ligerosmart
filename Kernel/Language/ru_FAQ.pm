@@ -141,8 +141,6 @@ sub Data {
     $Self->{Translation}->{'Specific rate'} = 'Опредеделенные оценки';
     $Self->{Translation}->{'e. g. Equals 25% or GreaterThan 75%'} = 'например, равно 25% или более чем 75%';
     $Self->{Translation}->{'FAQ Article Create Time'} = 'Время создания статьи FAQ';
-    $Self->{Translation}->{'Specific date'} = 'Определенная дата';
-    $Self->{Translation}->{'Date range'} = 'Диапазон дат';
     $Self->{Translation}->{'FAQ Article Change Time'} = 'Время изменения статьи FAQ';
 
     # Template: AgentFAQZoom
@@ -421,6 +419,7 @@ sub Data {
         'Этот параметр задает возможность связать объект \'FAQ\' с другими объектами типа "Заявка" используя тип связи \'ParentChild\'.';
     $Self->{Translation}->{'Ticket body for approval of FAQ article.'} = 'Тело заявки на одобрение статьи FAQ.';
     $Self->{Translation}->{'Ticket subject for approval of FAQ article.'} = 'Тема заявки на одобрение статьи FAQ.';
+    $Self->{Translation}->{'Toolbar Item for a shortcut.'} = 'Описание ярлыка(иконки) для навигационной панели.';
 
 }
 

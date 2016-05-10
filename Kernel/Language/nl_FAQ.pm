@@ -141,8 +141,6 @@ sub Data {
     $Self->{Translation}->{'Specific rate'} = 'Specifieke beoordeling';
     $Self->{Translation}->{'e. g. Equals 25% or GreaterThan 75%'} = 'bijv. gelijk 25% of groter dan 75%';
     $Self->{Translation}->{'FAQ Article Create Time'} = 'FAQ Article Create Time';
-    $Self->{Translation}->{'Specific date'} = 'Specifieke datum';
-    $Self->{Translation}->{'Date range'} = 'Datum range';
     $Self->{Translation}->{'FAQ Article Change Time'} = 'FAQ Article Change Time';
 
     # Template: AgentFAQZoom
@@ -421,6 +419,7 @@ sub Data {
         '';
     $Self->{Translation}->{'Ticket body for approval of FAQ article.'} = '';
     $Self->{Translation}->{'Ticket subject for approval of FAQ article.'} = '';
+    $Self->{Translation}->{'Toolbar Item for a shortcut.'} = '';
 
 }
 

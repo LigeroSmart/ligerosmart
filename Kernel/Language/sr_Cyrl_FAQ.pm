@@ -141,8 +141,6 @@ sub Data {
     $Self->{Translation}->{'Specific rate'} = 'Специфична оцена';
     $Self->{Translation}->{'e. g. Equals 25% or GreaterThan 75%'} = 'нпр једнако 25% или веће од 75%';
     $Self->{Translation}->{'FAQ Article Create Time'} = 'Време креирања ЧПП чланка';
-    $Self->{Translation}->{'Specific date'} = 'Специфичан датум';
-    $Self->{Translation}->{'Date range'} = 'Распон датума';
     $Self->{Translation}->{'FAQ Article Change Time'} = 'Време промене ЧПП чланка';
 
     # Template: AgentFAQZoom
@@ -173,7 +171,7 @@ sub Data {
 
     # Template: CustomerFAQSearch
     $Self->{Translation}->{'Fulltext search in FAQ articles (e. g. "John*n" or "Will*")'} = 'Потпуна текстуална претрага у ЧПП чланцима (нпр. "John*n" или "Will*")';
-    $Self->{Translation}->{'Vote restrictions'} = 'Огранјчења гласања';
+    $Self->{Translation}->{'Vote restrictions'} = 'Ограничења гласања';
     $Self->{Translation}->{'Only FAQ articles with votes...'} = 'Само ЧПП чланци са гласовима...';
     $Self->{Translation}->{'Rate restrictions'} = 'Ограничења оцењивања';
     $Self->{Translation}->{'Only FAQ articles with rate...'} = 'Само ЧПП чланци са оценом...';
@@ -208,7 +206,7 @@ sub Data {
     $Self->{Translation}->{'A filter for HTML output to add links behind a defined string. The element Image allows two input kinds. First the name of an image (e.g. faq.png). In this case the OTRS image path will be used. The second possibility is to insert the link to the image.'} =
         'Филтер за „HTML” излаз за додавање везе иза дефинисаног низа знакова. Елемент слика дозвољава два начина уноса. Први је назив слике (нпр faq.png). у овом случају биће коришћена „OTRS” путања до слике.  Друга могућност је унос везе до слике.';
     $Self->{Translation}->{'CSS color for the voting result.'} = 'CSS боја за резултат гласања.';
-    $Self->{Translation}->{'Cache Time To Leave for FAQ items.'} = '';
+    $Self->{Translation}->{'Cache Time To Leave for FAQ items.'} = 'Време ослобађања кеша за ЧПП ставке.';
     $Self->{Translation}->{'Category Management'} = 'Управљање категоријама';
     $Self->{Translation}->{'Decimal places of the voting result.'} = 'Број децимала у резултату гласања.';
     $Self->{Translation}->{'Default category name.'} = 'Назив подразумеване категорије.';
@@ -421,6 +419,7 @@ sub Data {
         'Ово подешавање дефинише да ЧПП објект може да се повеже са другим тикет објектима користећи везу типа „родитељ/потомак”.';
     $Self->{Translation}->{'Ticket body for approval of FAQ article.'} = 'Садржај тикета за одобравање ЧПП чланака.';
     $Self->{Translation}->{'Ticket subject for approval of FAQ article.'} = 'Предмет тикета за одобравање ЧПП чланака.';
+    $Self->{Translation}->{'Toolbar Item for a shortcut.'} = 'Ставка алатне линије за скраћеницу.';
 
 }
 
