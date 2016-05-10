@@ -88,7 +88,7 @@ sub Run {
             # we do not track the user id
             next FIELD if $Field eq 'UserID';
 
-            # we do not the "plain" columns, only the non-plain columns
+            # we do not track the "plain" columns, only the non-plain columns
             next FIELD if $Field eq 'JustificationPlain';    # change
             next FIELD if $Field eq 'DescriptionPlain';      # change
             next FIELD if $Field eq 'ReportPlain';           # workorder
