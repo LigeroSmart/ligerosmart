@@ -1,7 +1,7 @@
 #5.0.4 2016-??-??
 
 
-#5.0.3 2016-05-10
+#5.0.3 2016-05-17
  - 2016-05-10 Updated translations, thanks to all translators.
  - 2016-05-02 Added Inline attribute to the retrieved attachments using Generic Interface PublicFAQGet operation, thanks to Esteban Marin.
  - 2016-05-01 Fixed problem with the link object widget check, if a other package change de default link object viewmode.
