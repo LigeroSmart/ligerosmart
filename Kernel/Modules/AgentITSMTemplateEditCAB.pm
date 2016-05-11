@@ -11,6 +11,8 @@ package Kernel::Modules::AgentITSMTemplateEditCAB;
 use strict;
 use warnings;
 
+use Kernel::Language qw(Translatable);
+
 our $ObjectManagerDisabled = 1;
 
 ## nofilter(TidyAll::Plugin::OTRS::Perl::Dumper)
@@ -45,7 +47,7 @@ sub Run {
     # error screen
     if ( !$Access ) {
         return $LayoutObject->NoPermission(
-            Message    => "You need $Self->{Config}->{Permission} permission!",
+            Message    => $LayoutObject->{LanguageObject}->Translate( 'You need %s permission!', $Self->{Config}->{Permission} ),
             WithHeader => 'yes',
         );
     }
@@ -62,8 +64,8 @@ sub Run {
     # check needed stuff
     if ( !$GetParam{TemplateID} ) {
         return $LayoutObject->ErrorScreen(
-            Message => 'No TemplateID is given!',
-            Comment => 'Please contact the admin.',
+            Message => Translatable('No TemplateID is given!'),
+            Comment => Translatable('Please contact the admin.'),
         );
     }
 
@@ -79,8 +81,8 @@ sub Run {
     # check error
     if ( !$Template ) {
         return $LayoutObject->ErrorScreen(
-            Message => "Template '$GetParam{TemplateID}' not found in database!",
-            Comment => 'Please contact the admin.',
+            Message => $LayoutObject->{LanguageObject}->Translate( 'Template "%s" not found in database!', $GetParam{TemplateID} ),
+            Comment => Translatable('Please contact the admin.'),
         );
     }
 
@@ -171,8 +173,8 @@ sub Run {
 
             # show error message
             return $LayoutObject->ErrorScreen(
-                Message => "Was not able to update Template '$GetParam{TemplateID}'!",
-                Comment => 'Please contact the admin.',
+                Message => $LayoutObject->{LanguageObject}->Translate( 'Was not able to update Template "%s"!', $GetParam{TemplateID} ),
+                Comment => Translatable('Please contact the admin.'),
             );
         }
     }
@@ -245,7 +247,7 @@ sub Run {
 
     # output header and navigation
     my $Output = $LayoutObject->Header(
-        Title => 'Edit CAB Template',
+        Title => Translatable('Edit CAB Template'),
         Type  => 'Small',
     );
 

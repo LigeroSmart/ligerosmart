@@ -42,7 +42,7 @@ sub Run {
     # error screen
     if ( !$Access ) {
         return $LayoutObject->NoPermission(
-            Message    => "You need $Self->{Config}->{Permission} permissions!",
+            Message    => $LayoutObject->{LanguageObject}->Translate( 'You need %s permissions!', $Self->{Config}->{Permission} ),
             WithHeader => 'yes',
         );
     }
@@ -164,7 +164,9 @@ sub Run {
 
     # check if filter is valid
     if ( !$Filters{ $Self->{Filter} } ) {
-        $LayoutObject->FatalError( Message => "Invalid Filter: $Self->{Filter}!" );
+        $LayoutObject->FatalError(
+            Message => $LayoutObject->{LanguageObject}->Translate( 'Invalid Filter: %s!', $Self->{Filter} ),
+        );
     }
 
     # search templates which match the selected filter
@@ -211,8 +213,7 @@ sub Run {
         Filters     => \%NavBarFilter,
         FilterLink  => $LinkFilter,
 
-        TitleName => $LayoutObject->{LanguageObject}->Translate('Overview')
-            . ': ' . $LayoutObject->{LanguageObject}->Translate('Template'),
+        TitleName => $LayoutObject->{LanguageObject}->Translate('Overview: Template'),
 
         TitleValue => $Filters{ $Self->{Filter} }->{Name},
 

@@ -11,6 +11,8 @@ package Kernel::Modules::AgentITSMChangeTemplate;
 use strict;
 use warnings;
 
+use Kernel::Language qw(Translatable);
+
 our $ObjectManagerDisabled = 1;
 
 sub new {
@@ -36,8 +38,8 @@ sub Run {
     # check needed stuff
     if ( !$ChangeID ) {
         return $LayoutObject->ErrorScreen(
-            Message => 'No ChangeID is given!',
-            Comment => 'Please contact the administrator.',
+            Message => Translatable('No ChangeID is given!'),
+            Comment => Translatable('Please contact the administrator.'),
         );
     }
 
@@ -58,7 +60,7 @@ sub Run {
     # error screen
     if ( !$Access ) {
         return $LayoutObject->NoPermission(
-            Message    => "You need $Self->{Config}->{Permission} permissions!",
+            Message    => $LayoutObject->{LanguageObject}->Translate( 'You need %s permissions!', $Self->{Config}->{Permission} ),
             WithHeader => 'yes',
         );
     }
@@ -72,8 +74,8 @@ sub Run {
     # error screen
     if ( !$Change ) {
         return $LayoutObject->ErrorScreen(
-            Message => "No change found for change ID $ChangeID.",
-            Comment => 'Please contact the administrator.',
+            Message => $LayoutObject->{LanguageObject}->Translate( 'No change found for changeID %s.', $ChangeID ),
+            Comment => Translatable('Please contact the administrator.'),
         );
     }
 
@@ -154,8 +156,8 @@ sub Run {
             # show error message
             if ( !$TemplateContent ) {
                 return $LayoutObject->ErrorScreen(
-                    Message => "The change '$ChangeID' could not be serialized.",
-                    Comment => 'Please contact the administrator.',
+                    Message => $LayoutObject->{LanguageObject}->Translate( 'The change "%s" could not be serialized.', $ChangeID ),
+                    Comment => Translatable('Please contact the administrator.'),
                 );
             }
 
@@ -174,8 +176,8 @@ sub Run {
                 # show error message
                 if ( !$UpdateSuccess ) {
                     return $LayoutObject->ErrorScreen(
-                        Message => "Could not update the template '$TemplateID'.",
-                        Comment => 'Please contact the administrator.',
+                        Message => $LayoutObject->{LanguageObject}->Translate( 'Could not update the template "%s".', $TemplateID ),
+                        Comment => Translatable('Please contact the administrator.'),
                     );
                 }
             }
@@ -193,8 +195,8 @@ sub Run {
                 # show error message
                 if ( !$TemplateID ) {
                     return $LayoutObject->ErrorScreen(
-                        Message => "Could not add the template.",
-                        Comment => 'Please contact the administrator.',
+                        Message => Translatable('Could not add the template.'),
+                        Comment => Translatable('Please contact the administrator.'),
                     );
                 }
             }
@@ -214,8 +216,8 @@ sub Run {
                 # show error message
                 if ( !$DeleteSuccess ) {
                     return $LayoutObject->ErrorScreen(
-                        Message => "Could not delete change '$ChangeID'.",
-                        Comment => 'Please contact the administrator.',
+                        Message => $LayoutObject->{LanguageObject}->Translate( 'Could not delete change "%s".', $ChangeID ),
+                        Comment => Translatable('Please contact the administrator.'),
                     );
                 }
 
@@ -254,7 +256,7 @@ sub Run {
     # output header
     my $Output = $LayoutObject->Header(
         Type  => 'Small',
-        Title => 'Template',
+        Title => Translatable('Template'),
     );
 
     # get valid object
@@ -274,8 +276,8 @@ sub Run {
     # build selection string for state reset
     my $StateResetSelectionString = $LayoutObject->BuildSelection(
         Data => {
-            0 => 'No',
-            1 => 'Yes',
+            0 => Translatable('No'),
+            1 => Translatable('Yes'),
         },
         Name       => 'StateReset',
         SelectedID => $GetParam{StateReset} // 1,
@@ -288,8 +290,8 @@ sub Run {
         # build selection string for template overwrite, default is yes
         my $OverwriteTemplateSelectionString = $LayoutObject->BuildSelection(
             Data => {
-                0 => 'No',
-                1 => 'Yes',
+                0 => Translatable('No'),
+                1 => Translatable('Yes'),
             },
             Name       => 'OverwriteTemplate',
             SelectedID => $GetParam{OverwriteTemplate} // 1,
@@ -308,8 +310,8 @@ sub Run {
         # build selection string for delete change
         my $DeleteChangeSelectionString = $LayoutObject->BuildSelection(
             Data => {
-                0 => 'No',
-                1 => 'Yes',
+                0 => Translatable('No'),
+                1 => Translatable('Yes'),
             },
             Name       => 'DeleteChange',
             SelectedID => $GetParam{DeleteChange} // 1,

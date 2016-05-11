@@ -11,6 +11,8 @@ package Kernel::Modules::AgentITSMWorkOrderAddFromTemplate;
 use strict;
 use warnings;
 
+use Kernel::Language qw(Translatable);
+
 our $ObjectManagerDisabled = 1;
 
 sub new {
@@ -36,8 +38,8 @@ sub Run {
     # check needed stuff
     if ( !$ChangeID ) {
         return $LayoutObject->ErrorScreen(
-            Message => 'No ChangeID is given!',
-            Comment => 'Please contact the admin.',
+            Message => Translatable('No ChangeID is given!'),
+            Comment => Translatable('Please contact the admin.'),
         );
     }
 
@@ -59,7 +61,9 @@ sub Run {
     # error screen
     if ( !$Access ) {
         return $LayoutObject->NoPermission(
-            Message    => "You need $Self->{Config}->{Permission} permissions on the change!",
+            Message    => $LayoutObject->{LanguageObject}->Translate(
+                'You need %s permissions on the change!', $Self->{Config}->{Permission}
+            ),
             WithHeader => 'yes',
         );
     }
@@ -73,8 +77,8 @@ sub Run {
     # check error
     if ( !$Change ) {
         return $LayoutObject->ErrorScreen(
-            Message => "Change '$ChangeID' not found in database!",
-            Comment => 'Please contact the admin.',
+            Message => $LayoutObject->{LanguageObject}->Translate( 'Change "%s" not found in database!', $ChangeID ),
+            Comment => Translatable('Please contact the admin.'),
         );
     }
 
@@ -177,8 +181,8 @@ sub Run {
 
                 # show error message, when adding failed
                 return $LayoutObject->ErrorScreen(
-                    Message => 'Was not able to create workorder from template!',
-                    Comment => 'Please contact the admin.',
+                    Message => Translatable('Was not able to create workorder from template!'),
+                    Comment => Translatable('Please contact the admin.'),
                 );
             }
 
@@ -220,11 +224,11 @@ sub Run {
         Data => [
             {
                 Key   => 'PlannedStartTime',
-                Value => 'PlannedStartTime'
+                Value => Translatable('Planned Start Time')
             },
             {
                 Key   => 'PlannedEndTime',
-                Value => 'PlannedEndTime'
+                Value => Translatable('Planned End Time')
             },
         ],
         SelectedID => $GetParam{MoveTimeType} || 'PlannedStartTime',
@@ -246,7 +250,7 @@ sub Run {
 
     # output header
     my $Output = $LayoutObject->Header(
-        Title => 'Add',
+        Title => Translatable('Add'),
         Type  => 'Small',
     );
 

@@ -11,6 +11,8 @@ package Kernel::Modules::AgentITSMWorkOrderHistoryZoom;
 use strict;
 use warnings;
 
+use Kernel::Language qw(Translatable);
+
 our $ObjectManagerDisabled = 1;
 
 sub new {
@@ -37,8 +39,8 @@ sub Run {
 
         # error page
         return $LayoutObject->ErrorScreen(
-            Message => "Can't show history zoom, no HistoryEntryID is given!",
-            Comment => 'Please contact the administrator.',
+            Message => Translatable('Can\'t show history zoom, no HistoryEntryID is given!'),
+            Comment => Translatable('Please contact the administrator.'),
         );
     }
 
@@ -50,8 +52,10 @@ sub Run {
 
     if ( !$HistoryEntry ) {
         return $LayoutObject->ErrorScreen(
-            Message => "HistoryEntry '$HistoryEntryID' not found in the data base!",
-            Comment => 'Please contact the administrator.',
+            Message => $LayoutObject->{LanguageObject}->Translate(
+                'History entry "%s" not found in the database!', $HistoryEntryID
+            ),
+            Comment => Translatable('Please contact the administrator.'),
         );
     }
 
@@ -72,7 +76,7 @@ sub Run {
     # error screen
     if ( !$Access ) {
         return $LayoutObject->NoPermission(
-            Message    => "You need $Self->{Config}->{Permission} permissions!",
+            Message    => $LayoutObject->{LanguageObject}->Translate( 'You need %s permissions!', $Self->{Config}->{Permission} ),
             WithHeader => 'yes',
         );
     }
@@ -86,8 +90,10 @@ sub Run {
     # check error
     if ( !$WorkOrder ) {
         return $LayoutObject->ErrorScreen(
-            Message => "WorkOrder '$HistoryEntry->{WorkOrderID}' not found in the data base!",
-            Comment => 'Please contact the administrator.',
+            Message => $LayoutObject->{LanguageObject}->Translate(
+                'WorkOrder "%s" not found in the database!', $HistoryEntry->{WorkOrderID}
+            ),
+            Comment => Translatable('Please contact the administrator.'),
         );
     }
 
@@ -100,8 +106,8 @@ sub Run {
     # check error
     if ( !$WorkOrder ) {
         return $LayoutObject->ErrorScreen(
-            Message => "Change '$HistoryEntry->{ChangeID}' not found in the data base!",
-            Comment => 'Please contact the administrator.',
+            Message => $LayoutObject->{LanguageObject}->Translate( 'Change "%s" not found in the database!', $HistoryEntry->{ChangeID} ),
+            Comment => Translatable('Please contact the administrator.'),
         );
     }
 
@@ -113,7 +119,7 @@ sub Run {
     # output header
     my $Output = $LayoutObject->Header(
         Type  => 'Small',
-        Title => 'WorkOrderHistoryZoom',
+        Title => Translatable('WorkOrder History Zoom'),
     );
 
     # start template output

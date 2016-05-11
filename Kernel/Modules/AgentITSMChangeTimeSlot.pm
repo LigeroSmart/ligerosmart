@@ -11,6 +11,8 @@ package Kernel::Modules::AgentITSMChangeTimeSlot;
 use strict;
 use warnings;
 
+use Kernel::Language qw(Translatable);
+
 our $ObjectManagerDisabled = 1;
 
 sub new {
@@ -36,8 +38,8 @@ sub Run {
     # check needed stuff
     if ( !$ChangeID ) {
         return $LayoutObject->ErrorScreen(
-            Message => 'No ChangeID is given!',
-            Comment => 'Please contact the admin.',
+            Message => Translatable('No ChangeID is given!'),
+            Comment => Translatable('Please contact the admin.'),
         );
     }
 
@@ -59,7 +61,7 @@ sub Run {
     # error screen
     if ( !$Access ) {
         return $LayoutObject->NoPermission(
-            Message    => "You need $Self->{Config}->{Permission} permissions!",
+            Message    => $LayoutObject->{LanguageObject}->Translate( 'You need %s permissions!', $Self->{Config}->{Permission} ),
             WithHeader => 'yes',
         );
     }
@@ -73,24 +75,24 @@ sub Run {
     # check if change is found
     if ( !$Change ) {
         return $LayoutObject->ErrorScreen(
-            Message => "Change '$ChangeID' not found in database!",
-            Comment => 'Please contact the admin.',
+            Message => $LayoutObject->{LanguageObject}->Translate( 'Change "%s" not found in database!', $ChangeID ),
+            Comment => Translatable('Please contact the admin.'),
         );
     }
 
     # Moving is possible only when there are workorders.
     if ( !$Change->{WorkOrderCount} ) {
         return $LayoutObject->ErrorScreen(
-            Message => "The change can't be moved, as it has no workorders.",
-            Comment => 'Add a workorder first.',
+            Message => Translatable('The change can\'t be moved, as it has no workorders.'),
+            Comment => Translatable('Add a workorder first.'),
         );
     }
 
     # Moving is allowed only when there the change has not started yet.
     if ( $Change->{ActualStartTime} ) {
         return $LayoutObject->ErrorScreen(
-            Message => "Can't move a change which already has started!",
-            Comment => 'Please move the individual workorders instead.',
+            Message => Translatable('Can\'t move a change which already has started!'),
+            Comment => Translatable('Please move the individual workorders instead.'),
         );
     }
 
@@ -179,8 +181,8 @@ sub Run {
 
                 # show error message
                 return $LayoutObject->ErrorScreen(
-                    Message => "The current $MoveTimeType could not be determined.",
-                    Comment => "The $MoveTimeType of all workorders has to be defined.",
+                    Message => $LayoutObject->{LanguageObject}->Translate( 'The current %s could not be determined.', $MoveTimeType ),
+                    Comment => $LayoutObject->{LanguageObject}->Translate( 'The %s of all workorders has to be defined.', $MoveTimeType ),
                 );
             }
 
@@ -291,11 +293,11 @@ sub Run {
         Data => [
             {
                 Key   => 'PlannedStartTime',
-                Value => 'PlannedStartTime'
+                Value => Translatable('Planned Start Time')
             },
             {
                 Key   => 'PlannedEndTime',
-                Value => 'PlannedEndTime'
+                Value => Translatable('Planned End Time')
             },
         ],
         Name       => 'MoveTimeType',
@@ -318,7 +320,7 @@ sub Run {
 
     # output header
     my $Output = $LayoutObject->Header(
-        Title => 'Move Time Slot',
+        Title => Translatable('Move Time Slot'),
         Type  => 'Small',
     );
 
@@ -348,6 +350,7 @@ sub _MoveWorkOrders {
 
     # get work order object
     my $WorkOrderObject = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder');
+    my $LayoutObject    = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
     # determine the new times
     WORKORDERID:
@@ -409,9 +412,9 @@ sub _MoveWorkOrders {
                 $Param{ChangeNumber},
                 $WorkOrderID2Number{ $UpdateParams->{WorkOrderID} };
 
-            return $Kernel::OM->Get('Kernel::Output::HTML::Layout')->ErrorScreen(
-                Message => "Was not able to move time slot for workorder #$Number!",
-                Comment => 'Please contact the admin.',
+            return $LayoutObject->ErrorScreen(
+                Message => $LayoutObject->{LanguageObject}->Translate( 'Was not able to move time slot for workorder #%s!', $Number ),
+                Comment => Translatable('Please contact the admin.'),
             );
         }
     }

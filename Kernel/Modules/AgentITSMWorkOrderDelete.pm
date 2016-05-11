@@ -11,6 +11,8 @@ package Kernel::Modules::AgentITSMWorkOrderDelete;
 use strict;
 use warnings;
 
+use Kernel::Language qw(Translatable);
+
 our $ObjectManagerDisabled = 1;
 
 sub new {
@@ -35,8 +37,8 @@ sub Run {
     # check needed stuff
     if ( !$WorkOrderID ) {
         return $LayoutObject->ErrorScreen(
-            Message => 'No WorkOrderID is given!',
-            Comment => 'Please contact the administrator.',
+            Message => Translatable('No WorkOrderID is given!'),
+            Comment => Translatable('Please contact the administrator.'),
         );
     }
 
@@ -52,8 +54,8 @@ sub Run {
     # check error
     if ( !$WorkOrder ) {
         return $LayoutObject->ErrorScreen(
-            Message => "WorkOrder '$WorkOrderID' not found in database!",
-            Comment => 'Please contact the administrator.',
+            Message => $LayoutObject->{LanguageObject}->Translate( 'WorkOrder "%s" not found in database!', $WorkOrderID ),
+            Comment => Translatable('Please contact the administrator.'),
         );
     }
 
@@ -75,7 +77,9 @@ sub Run {
     # error screen, don't show workorder delete mask
     if ( !$Access ) {
         return $LayoutObject->NoPermission(
-            Message    => "You need $Self->{Config}->{Permission} permissions on the change!",
+            Message    => $LayoutObject->{LanguageObject}->Translate(
+                'You need %s permissions on the change!', $Self->{Config}->{Permission}
+            ),
             WithHeader => 'yes',
         );
     }
@@ -99,8 +103,10 @@ sub Run {
 
             # show error message, when delete failed
             return $LayoutObject->ErrorScreen(
-                Message => "Was not able to delete the workorder $WorkOrder->{WorkOrderID}!",
-                Comment => 'Please contact the administrator.',
+                Message => $LayoutObject->{LanguageObject}->Translate(
+                    'Was not able to delete the workorder %s!', $WorkOrder->{WorkOrderID}
+                ),
+                Comment => Translatable('Please contact the administrator.'),
             );
         }
     }
@@ -114,8 +120,8 @@ sub Run {
     # check if change is found
     if ( !$Change ) {
         return $LayoutObject->ErrorScreen(
-            Message => "Could not find Change for WorkOrder $WorkOrderID!",
-            Comment => 'Please contact the administrator.',
+            Message => $LayoutObject->{LanguageObject}->Translate( 'Could not find Change for WorkOrder %s!', $WorkOrderID ),
+            Comment => Translatable('Please contact the administrator.'),
         );
     }
 

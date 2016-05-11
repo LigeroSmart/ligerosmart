@@ -11,6 +11,8 @@ package Kernel::Modules::AgentITSMTemplateEdit;
 use strict;
 use warnings;
 
+use Kernel::Language qw(Translatable);
+
 our $ObjectManagerDisabled = 1;
 
 sub new {
@@ -42,7 +44,7 @@ sub Run {
     # error screen
     if ( !$Access ) {
         return $LayoutObject->NoPermission(
-            Message    => "You need $Self->{Config}->{Permission} permission!",
+            Message    => $LayoutObject->{LanguageObject}->Translate( 'You need %s permission!', $Self->{Config}->{Permission} ),
             WithHeader => 'yes',
         );
     }
@@ -56,8 +58,8 @@ sub Run {
     # check needed stuff
     if ( !$TemplateID ) {
         return $LayoutObject->ErrorScreen(
-            Message => 'No TemplateID is given!',
-            Comment => 'Please contact the administrator.',
+            Message => Translatable('No TemplateID is given!'),
+            Comment => Translatable('Please contact the administrator.'),
         );
     }
 
@@ -73,8 +75,8 @@ sub Run {
     # check error
     if ( !$Template ) {
         return $LayoutObject->ErrorScreen(
-            Message => "Template '$TemplateID' not found in database!",
-            Comment => 'Please contact the administrator.',
+            Message => $LayoutObject->{LanguageObject}->Translate( 'Template "%s" not found in database!', $TemplateID ),
+            Comment => Translatable('Please contact the administrator.'),
         );
     }
 
@@ -112,8 +114,8 @@ sub Run {
 
                 # show error message
                 return $LayoutObject->ErrorScreen(
-                    Message => "Was not able to update Template $TemplateID!",
-                    Comment => 'Please contact the administrator.',
+                    Message => $LayoutObject->{LanguageObject}->Translate( 'Was not able to update Template %s!', $TemplateID ),
+                    Comment => Translatable('Please contact the administrator.'),
                 );
             }
         }

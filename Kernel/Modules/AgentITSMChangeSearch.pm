@@ -11,6 +11,7 @@ package Kernel::Modules::AgentITSMChangeSearch;
 use strict;
 use warnings;
 
+use Kernel::Language qw(Translatable);
 use Kernel::System::VariableCheck qw(:all);
 
 our $ObjectManagerDisabled = 1;
@@ -786,8 +787,7 @@ sub Run {
             }
 
             # PDF Output
-            my $Title = $LayoutObject->{LanguageObject}->Translate('Change') . ' '
-                . $LayoutObject->{LanguageObject}->Translate('Search');
+            my $Title = $LayoutObject->{LanguageObject}->Translate('Change Search');
             my $PrintedBy = $LayoutObject->{LanguageObject}->Translate('printed by');
             my $Page      = $LayoutObject->{LanguageObject}->Translate('Page');
             my $Time      = $LayoutObject->{Time};
@@ -992,7 +992,7 @@ sub Run {
                 LinkFilter   => $LinkFilter,
                 LinkBack     => $LinkBack,
                 Profile      => $Self->{Profile},
-                TitleName    => 'Change Search Result',
+                TitleName    => $LayoutObject->{LanguageObject}->Translate('Change Search Result'),
                 ShowColumns  => \@ShowColumns,
                 SortBy       => $LayoutObject->Ascii2Html( Text => $Self->{SortBy} ),
                 OrderBy      => $LayoutObject->Ascii2Html( Text => $Self->{OrderBy} ),
@@ -1125,23 +1125,23 @@ sub _MaskForm {
     my @Attributes = (
         {
             Key   => 'ChangeNumber',
-            Value => 'Change Number',
+            Value => Translatable('Change Number'),
         },
         {
             Key   => 'ChangeTitle',
-            Value => 'Change Title',
+            Value => Translatable('Change Title'),
         },
         {
             Key   => 'WorkOrderTitle',
-            Value => 'Work Order Title',
+            Value => Translatable('Work Order Title'),
         },
         {
             Key   => 'CABAgent',
-            Value => 'CAB Agent',
+            Value => Translatable('CAB Agent'),
         },
         {
             Key   => 'CABCustomer',
-            Value => 'CAB Customer',
+            Value => Translatable('CAB Customer'),
         },
         {
             Key      => '',
@@ -1150,19 +1150,19 @@ sub _MaskForm {
         },
         {
             Key   => 'Description',
-            Value => 'Change Description',
+            Value => Translatable('Change Description'),
         },
         {
             Key   => 'Justification',
-            Value => 'Change Justification',
+            Value => Translatable('Change Justification'),
         },
         {
             Key   => 'WorkOrderInstruction',
-            Value => 'WorkOrder Instruction',
+            Value => Translatable('WorkOrder Instruction'),
         },
         {
             Key   => 'WorkOrderReport',
-            Value => 'WorkOrder Report',
+            Value => Translatable('WorkOrder Report'),
         },
     );
 
@@ -1303,43 +1303,43 @@ sub _MaskForm {
     push @Attributes, (
         {
             Key   => 'PriorityIDs',
-            Value => 'Change Priority',
+            Value => Translatable('Change Priority'),
         },
         {
             Key   => 'ImpactIDs',
-            Value => 'Change Impact',
+            Value => Translatable('Change Impact'),
         },
         {
             Key   => 'CategoryIDs',
-            Value => 'Change Category',
+            Value => Translatable('Change Category'),
         },
         {
             Key   => 'ChangeStateIDs',
-            Value => 'Change State',
+            Value => Translatable('Change State'),
         },
         {
             Key   => 'ChangeManagerIDs',
-            Value => 'Change Manager',
+            Value => Translatable('Change Manager'),
         },
         {
             Key   => 'ChangeBuilderIDs',
-            Value => 'Change Builder',
+            Value => Translatable('Change Builder'),
         },
         {
             Key   => 'CreateBy',
-            Value => 'Created By',
+            Value => Translatable('Created By'),
         },
         {
             Key   => 'WorkOrderStateIDs',
-            Value => 'WorkOrder State',
+            Value => Translatable('WorkOrder State'),
         },
         {
             Key   => 'WorkOrderTypeIDs',
-            Value => 'WorkOrder Type',
+            Value => Translatable('WorkOrder Type'),
         },
         {
             Key   => 'WorkOrderAgentIDs',
-            Value => 'WorkOrder Agent',
+            Value => Translatable('WorkOrder Agent'),
         },
         {
             Key      => '',
@@ -1352,31 +1352,31 @@ sub _MaskForm {
     my @TimeTypes = (
         {
             Prefix => 'Requested',
-            Title  => 'Requested Date',
+            Title  => Translatable('Requested Date'),
         },
         {
             Prefix => 'PlannedStart',
-            Title  => 'PlannedStartTime',
+            Title  => Translatable('Planned Start Time'),
         },
         {
             Prefix => 'PlannedEnd',
-            Title  => 'PlannedEndTime',
+            Title  => Translatable('Planned End Time'),
         },
         {
             Prefix => 'ActualStart',
-            Title  => 'ActualStartTime',
+            Title  => Translatable('Actual Start Time'),
         },
         {
             Prefix => 'ActualEnd',
-            Title  => 'ActualEndTime',
+            Title  => Translatable('Actual End Time'),
         },
         {
             Prefix => 'Create',
-            Title  => 'CreateTime',
+            Title  => Translatable('Create Time'),
         },
         {
             Prefix => 'Change',
-            Title  => 'ChangeTime',
+            Title  => Translatable('Change Time'),
         },
     );
 
@@ -1558,9 +1558,9 @@ sub _MaskForm {
     # set result output formats
     $Param{ResultFormStrg} = $LayoutObject->BuildSelection(
         Data => {
-            Normal => 'Normal',
-            Print  => 'Print',
-            CSV    => 'CSV',
+            Normal => Translatable('Normal'),
+            Print  => Translatable('Print'),
+            CSV    => Translatable('CSV'),
         },
         Name       => 'ResultForm',
         SelectedID => $Param{ResultForm} || 'Normal',
@@ -1623,8 +1623,8 @@ sub _MaskForm {
 
         $TimeSelectionData{TimePointStart} = $LayoutObject->BuildSelection(
             Data => {
-                'Last'   => 'last',
-                'Before' => 'before',
+                'Last'   => Translatable('last'),
+                'Before' => Translatable('before'),
             },
             Name       => $Prefix . 'TimePointStart',
             SelectedID => $Param{ $Prefix . 'TimePointStart' } || 'Last',
@@ -1632,12 +1632,12 @@ sub _MaskForm {
 
         $TimeSelectionData{TimePointFormat} = $LayoutObject->BuildSelection(
             Data => {
-                minute => 'minute(s)',
-                hour   => 'hour(s)',
-                day    => 'day(s)',
-                week   => 'week(s)',
-                month  => 'month(s)',
-                year   => 'year(s)',
+                minute => Translatable('minute(s)'),
+                hour   => Translatable('hour(s)'),
+                day    => Translatable('day(s)'),
+                week   => Translatable('week(s)'),
+                month  => Translatable('month(s)'),
+                year   => Translatable('year(s)'),
             },
             Name       => $Prefix . 'TimePointFormat',
             SelectedID => $Param{ $Prefix . 'TimePointFormat' },

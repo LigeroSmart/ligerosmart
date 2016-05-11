@@ -11,6 +11,8 @@ package Kernel::Modules::AgentITSMTemplateEditContent;
 use strict;
 use warnings;
 
+use Kernel::Language qw(Translatable);
+
 our $ObjectManagerDisabled = 1;
 
 sub new {
@@ -45,7 +47,7 @@ sub Run {
     # error screen
     if ( !$Access ) {
         return $LayoutObject->NoPermission(
-            Message    => "You need $Self->{Config}->{Permission} permission!",
+            Message    => $LayoutObject->{LanguageObject}->Translate( 'You need %s permission!', $Self->{Config}->{Permission} ),
             WithHeader => 'yes',
         );
     }
@@ -56,8 +58,8 @@ sub Run {
     # check needed stuff
     if ( !$TemplateID ) {
         return $LayoutObject->ErrorScreen(
-            Message => 'No TemplateID is given!',
-            Comment => 'Please contact the admin.',
+            Message => Translatable('No TemplateID is given!'),
+            Comment => Translatable('Please contact the admin.'),
         );
     }
 
@@ -73,8 +75,8 @@ sub Run {
     # check error
     if ( !$Template ) {
         return $LayoutObject->ErrorScreen(
-            Message => "Template '$TemplateID' not found in database!",
-            Comment => 'Please contact the admin.',
+            Message => $LayoutObject->{LanguageObject}->Translate( 'Template "%s" not found in database!', $TemplateID ),
+            Comment => Translatable('Please contact the admin.'),
         );
     }
 
@@ -118,8 +120,8 @@ sub Run {
             if ( !$ChangeID ) {
 
                 return $LayoutObject->ErrorScreen(
-                    Message => 'Was not able to create change from template!',
-                    Comment => 'Please contact the admin.',
+                    Message => Translatable('Was not able to create change from template!'),
+                    Comment => Translatable('Please contact the admin.'),
                 );
             }
 
@@ -157,8 +159,8 @@ sub Run {
             # show error message, when adding failed
             if ( !$ChangeID ) {
                 return $LayoutObject->ErrorScreen(
-                    Message => 'Was not able to create change!',
-                    Comment => 'Please contact the admin.',
+                    Message => Translatable('Was not able to create change!'),
+                    Comment => Translatable('Please contact the admin.'),
                 );
             }
 
@@ -176,8 +178,8 @@ sub Run {
 
                 # show error message, when adding failed
                 return $LayoutObject->ErrorScreen(
-                    Message => 'Was not able to create workorder from template!',
-                    Comment => 'Please contact the admin.',
+                    Message => Translatable('Was not able to create workorder from template!'),
+                    Comment => Translatable('Please contact the admin.'),
                 );
             }
 

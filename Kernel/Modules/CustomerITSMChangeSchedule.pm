@@ -11,6 +11,8 @@ package Kernel::Modules::CustomerITSMChangeSchedule;
 use strict;
 use warnings;
 
+use Kernel::Language qw(Translatable);
+
 our $ObjectManagerDisabled = 1;
 
 sub new {
@@ -38,7 +40,9 @@ sub Run {
         )
         )
     {
-        my $Output = $LayoutObject->CustomerHeader( Title => 'Error' );
+        my $Output = $LayoutObject->CustomerHeader(
+            Title => Translatable('Error'),
+        );
         $Output .= $LayoutObject->CustomerError();
         $Output .= $LayoutObject->CustomerFooter();
         return $Output;
@@ -46,8 +50,12 @@ sub Run {
 
     # check needed CustomerID
     if ( !$Self->{UserCustomerID} ) {
-        my $Output = $LayoutObject->CustomerHeader( Title => 'Error' );
-        $Output .= $LayoutObject->CustomerError( Message => 'Need CustomerID!' );
+        my $Output = $LayoutObject->CustomerHeader(
+            Title => Translatable('Error'),
+        );
+        $Output .= $LayoutObject->CustomerError(
+            Message => Translatable('Need CustomerID!'),
+        );
         $Output .= $LayoutObject->CustomerFooter();
         return $Output;
     }
@@ -179,7 +187,9 @@ sub Run {
 
     # check if filter is valid
     if ( !$Filters{ $Self->{Filter} } ) {
-        $LayoutObject->FatalError( Message => "Invalid Filter: $Self->{Filter}!" );
+        $LayoutObject->FatalError(
+            Message => $LayoutObject->{LanguageObject}->Translate( 'Invalid Filter: %s!', $Self->{Filter} ),
+        );
     }
 
     # search changes which match the selected filter
