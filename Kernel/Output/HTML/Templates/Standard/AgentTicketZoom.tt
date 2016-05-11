@@ -1040,7 +1040,7 @@ var TicketID    = [% Data.TicketID | JSON %],
             'text'   : [% IF Item.IsChatArticle %][% Item.ArticleData.BodyChat | JSON %][% ELSE %][% Item.ArticleData.Body | truncate(650) | JSON %][% END %],
             'text_long' : [% IF Item.IsChatArticle %][% JSON(Item.ArticleData.ChatMessages) %][% ELSE %][% IF !Item.ArticleData.AttachmentIDOfHTMLBody %][% Item.ArticleData.Body | JSON %][% ELSE %]""[% END %][% END %],
             'attachment_id' : [% Item.ArticleData.AttachmentIDOfHTMLBody | JSON %],
-            'iframe_html' : '<iframe sandbox="allow-same-origin allow-popups allow-popups-to-escape-sandbox" data-url="[% Env("Baselink") %]Action=AgentTicketAttachment;Subaction=HTMLView;ArticleID=[% Item.ArticleID | html %];FileID=[% Item.ArticleData.AttachmentIDOfHTMLBody | html %];[% Env("SessionName") | html %]=[% Env("SessionID") | html %]" [% Data.MSSecurityRestricted %] width="100%" frameborder="0" id="Iframe[% Item.ArticleID | html %]" class="TimelineArticleiFrame" src=""></iframe>'
+            'iframe_html' : '<iframe sandbox="allow-same-origin allow-popups ms-allow-popups allow-popups-to-escape-sandbox" data-url="[% Env("Baselink") %]Action=AgentTicketAttachment;Subaction=HTMLView;ArticleID=[% Item.ArticleID | html %];FileID=[% Item.ArticleData.AttachmentIDOfHTMLBody | html %];[% Env("SessionName") | html %]=[% Env("SessionID") | html %]" width="100%" frameborder="0" id="Iframe[% Item.ArticleID | html %]" class="TimelineArticleiFrame" src=""></iframe>'
         [% END %]
         }
     }[% IF !loop.last %],[% END %]
@@ -1099,7 +1099,7 @@ Core.Agent.TicketZoom.TimelineView.Init(TicketID, ListObjects, ArticleID);
 [% RenderBlockStart("ArticleDynamicField") %]
                     <label>[% Translate(Data.Label) | html %]:</label>
 [% RenderBlockStart("ArticleDynamicFieldLink") %]
-                    <p class="Value" title="[% Data.Title %]"><a href="[% Data.Link | Interpolate %]" target="_blank" class="DynamicFieldLink">[% Data.Value %]</a></p>
+                    <p class="Value" title="[% Data.Title %]"><a href="[% Data.Link | Interpolate %]"[% IF Data.EnableLinkPreview %] data-trigger="floater"[% END %] target="_blank" class="DynamicFieldLink">[% Data.Value %]</a></p>
 [% RenderBlockEnd("ArticleDynamicFieldLink") %]
 [% RenderBlockStart("ArticleDynamicFieldPlain") %]
                     <p class="Value" title="[% Data.Title %]">[% Data.Value %]</p>
@@ -1134,7 +1134,7 @@ Core.Agent.TicketZoom.TimelineView.Init(TicketID, ListObjects, ArticleID);
 # show article options like signed, crypted, ...
 [% RenderBlockStart("ArticleOption") %]
                     <label>[% Translate(Data.Key) | html %]:</label>
-                    <div title="[% Data.Value | html %]" class="[% Data.Result | html %] Value">[% Data.Value | html %]</div>
+                    <div title="[% Data.Value | html %]" class="[% Data.Result | html %] Value">[% Translate(Data.Value) | html %]</div>
                     <div class="Clear"></div>
 [% RenderBlockEnd("ArticleOption") %]
 
@@ -1168,7 +1168,8 @@ Core.Agent.TicketZoom.TimelineView.Init(TicketID, ListObjects, ArticleID);
 [% RenderBlockEnd("ArticleAttachment") %]
                 </fieldset>
             </div>
-            <div class="ArticleMailContent">
+            <div class="ArticleMailContent[% IF Data.ArticleMetaData && Data.ArticleMetaData.size() %] WithMeta[% END %]">
+
 [% RenderBlockStart("BodyPlain") %]
 [% Data.BodyNote %]
                 <div class="ArticleBody">
@@ -1205,12 +1206,25 @@ function CheckIFrameHeight(IFrameID) {
 # Use the HTML5 sandbox attribute to prevent plugins and scripts from being executed in the browser.
 # Use IE's (non-standard) security attribute to achieve something similar in older IE browsers. Append session info to URL because IE will not send cookies.
 # Set 'allow-popups' to allow IE10+ to open links. ref: http://www.w3.org/html/wg/wiki/ChangeProposals/sandbox_allow_popups
-                    <iframe sandbox="allow-same-origin allow-popups allow-popups-to-escape-sandbox" [% Data.MSSecurityRestricted %]  width="100%" frameborder="0" id="Iframe[% Data.ArticleID | html %]" onload="window.setTimeout( function (){ CheckIFrameHeight('Iframe[% Data.ArticleID | html %]'); }, 500);" src="[% Env("Baselink") %]Action=AgentTicketAttachment;Subaction=HTMLView;ArticleID=[% Data.ArticleID | html %];FileID=[% Data.AttachmentIDOfHTMLBody | html %];[% Env("SessionName") | html %]=[% Env("SessionID") | html %]"></iframe>
+                    <iframe sandbox="allow-same-origin allow-popups ms-allow-popups allow-popups-to-escape-sandbox" width="100%" frameborder="0" id="Iframe[% Data.ArticleID | html %]" onload="window.setTimeout( function (){ CheckIFrameHeight('Iframe[% Data.ArticleID | html %]'); }, 500);" src="[% Env("Baselink") %]Action=AgentTicketAttachment;Subaction=HTMLView;ArticleID=[% Data.ArticleID | html %];FileID=[% Data.AttachmentIDOfHTMLBody | html %];[% Env("SessionName") | html %]=[% Env("SessionID") | html %]"></iframe>
                 </div>
 [% RenderBlockEnd("BodyHTML") %]
 [% RenderBlockStart("BodyChat") %]
 [% INCLUDE "ChatDisplay.tt" %]
 [% RenderBlockEnd("BodyChat") %]
+
+            [% IF Data.ArticleMetaData && Data.ArticleMetaData.size() %]
+                <div class="ArticleMeta">
+                [% FOREACH Entry IN Data.ArticleMetaData %]
+                    <h2>[% Entry.Name | html %]</h2>
+                    <ul>
+                    [% FOREACH Item IN Entry.Matches %]
+                        <li><a href="[% Item.URL | html %]"[% IF Item.EnableLinkPreview %] data-trigger="floater"[% END %] target="[% Item.Target | html %]">[% Item.Text | truncate(100) | html %]</a></li>
+                    [% END %]
+                    </ul>
+                [% END %]
+                </div>
+            [% END %]
             </div>
         </div>
     </div>
@@ -1272,6 +1286,31 @@ function CheckIFrameHeight(IFrameID) {
 
         return false;
     });
+
+    if (typeof Core.UI.Floater !== 'undefined') {
+        Core.UI.Floater.Init();
+    }
+
 //]]></script>
 [% END %]
 [% RenderBlockEnd("TicketZoomInit") %]
+
+<div class="MetaFloater Hidden">
+    <a href="#" class="Scale" title="[% Translate('Scale preview content') | html %]" style="display: none;">
+        <i class="fa fa-search-plus"></i>
+    </a>
+    <a href="#" class="Open" target="_blank" title="[% Translate('Open URL in new tab') | html %]" style="display: none;">
+        <i class="fa fa-external-link"></i>
+    </a>
+    <a href="#" class="Close" title="[% Translate('Close preview') | html %]">
+        <i class="fa fa-times"></i>
+    </a>
+    <i class="fa fa-spinner fa-spin"></i>
+    <div class="NoPreview">
+        <i class="fa fa-warning"></i>
+        [% Translate("OTRS can't provide a preview of this website because it seems as if it didn't allow to be embedded.") | html %]
+    </div>
+    <div class="Content" style="display: none;">
+        <iframe sandbox="allow-scripts allow-forms"></iframe>
+    </div>
+</div>
