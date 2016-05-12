@@ -14,27 +14,37 @@ use vars qw($Self);
 
 use Data::Dumper;
 
-my $ConfigObject        = $Kernel::OM->Get('Kernel::Config');
+# get needed objects
 my $MainObject          = $Kernel::OM->Get('Kernel::System::Main');
 my $ImportExportObject  = $Kernel::OM->Get('Kernel::System::ImportExport');
 my $FormatBackendObject = $Kernel::OM->Get('Kernel::System::ImportExport::FormatBackend::CSV');
+
+# get helper object
+$Kernel::OM->ObjectParamAdd(
+    'Kernel::System::UnitTest::Helper' => {
+        RestoreDatabase => 1,
+    },
+);
+my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 
 # ------------------------------------------------------------ #
 # make preparations
 # ------------------------------------------------------------ #
 
 # get home directory
-$Self->{Home} = $ConfigObject->Get('Home');
+$Self->{Home} = $Kernel::OM->Get('Kernel::Config')->Get('Home');
 
 # add some test templates for later checks
 my @TemplateIDs;
 for ( 1 .. 30 ) {
 
+    my $RandomID = $Helper->GetRandomID();
+
     # add a test template for later checks
     my $TemplateID = $ImportExportObject->TemplateAdd(
-        Object  => 'UnitTest' . int rand 1_000_000,
+        Object  => 'UnitTest' . $RandomID,
         Format  => 'CSV',
-        Name    => 'UnitTest' . int rand 1_000_000,
+        Name    => 'UnitTest' . $RandomID,
         ValidID => 1,
         UserID  => 1,
     );
@@ -1940,14 +1950,6 @@ continue {
     $TestCount++;
 }
 
-# ------------------------------------------------------------ #
-# clean the system
-# ------------------------------------------------------------ #
-
-# delete the test templates
-$ImportExportObject->TemplateDelete(
-    TemplateID => \@TemplateIDs,
-    UserID     => 1,
-);
+# cleanup is done by RestoreDatabase.
 
 1;

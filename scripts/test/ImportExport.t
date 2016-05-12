@@ -12,9 +12,11 @@ use utf8;
 
 use vars qw($Self);
 
+# get needed objects
 my $ConfigObject       = $Kernel::OM->Get('Kernel::Config');
 my $UserObject         = $Kernel::OM->Get('Kernel::System::User');
 my $ImportExportObject = $Kernel::OM->Get('Kernel::System::ImportExport');
+my $Helper             = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 
 # ------------------------------------------------------------ #
 # make preparations
@@ -39,7 +41,7 @@ my @UserIDs;
         my $UserID = $UserObject->UserAdd(
             UserFirstname => 'ImportExport' . $Counter,
             UserLastname  => 'UnitTest',
-            UserLogin     => 'UnitTest-ImportExport-' . $Counter . int rand 1_000_000,
+            UserLogin     => 'UnitTest-ImportExport-' . $Counter . $Helper->GetRandomID(),
             UserEmail     => 'UnitTest-ImportExport-' . $Counter . '@localhost',
             ValidID       => 1,
             ChangeUserID  => 1,
@@ -61,12 +63,12 @@ my @TemplateName;
 
 for my $Counter ( 1 .. 5 ) {
 
-    push @TemplateName, 'UnitTest' . int rand 1_000_000;
+    push @TemplateName, 'UnitTest' . $Helper->GetRandomID();
 }
 
 # create needed random object names
 my @ObjectName;
-push @ObjectName, 'UnitTest' . int rand 1_000_000;
+push @ObjectName, 'UnitTest' . $Helper->GetRandomID();
 
 # create needed format names
 my @FormatName = ('CSV');
@@ -138,7 +140,7 @@ my $ItemData = [
         },
     },
 
-    # this template must be inserted sucessfully
+    # this template must be inserted successfully
     {
         Add => {
             Object  => $ObjectName[0],
@@ -169,7 +171,7 @@ my $ItemData = [
         },
     },
 
-    # this template must be inserted sucessfully
+    # this template must be inserted successfully
     {
         Add => {
             Object  => $ObjectName[0],
@@ -248,7 +250,7 @@ my $ItemData = [
         },
     },
 
-    # this template must be inserted sucessfully (check string cleaner function)
+    # this template must be inserted successfully (check string cleaner function)
     {
         Add => {
             Object  => " \t \n \r " . $ObjectName[0] . " \t \n \r ",
@@ -286,7 +288,7 @@ my $ItemData = [
         },
     },
 
-    # this template must be inserted sucessfully (unicode checks)
+    # this template must be inserted successfully (Unicode checks)
     {
         Add => {
             Object  => ' ƕ Ƙ ' . $ObjectName[0] . ' Ƶ ƻ ',
@@ -359,7 +361,7 @@ for my $Item ( @{$ItemData} ) {
 
     if ( $Item->{Update} ) {
 
-        # check last template id varaible
+        # check last template id variable
         if ( !$AddedTemplateIDs[-1] ) {
             $Self->False(
                 1,
@@ -487,7 +489,7 @@ my $TemplateDelete1List2 = $ImportExportObject->TemplateList(
     UserID => 1,
 );
 
-# list must have one more element
+# list must have one element more
 $Self->True(
     scalar @{$TemplateDelete1List1} eq ( scalar @{$TemplateDelete1List2} ) - 1,
     "Test $TestCount: TemplateDelete() - number of listed elements",
@@ -499,7 +501,7 @@ my $TemplateDelete1 = $ImportExportObject->TemplateDelete(
     UserID     => 1,
 );
 
-# list must be successfull
+# list must be successful
 $Self->True(
     $TemplateDelete1,
     "Test $TestCount: TemplateDelete()",
@@ -520,7 +522,7 @@ $Self->True(
 $TestCount++;
 
 # ------------------------------------------------------------ #
-# TemplateDelete test 2 (delete all unittest templates)
+# TemplateDelete test 2 (delete all unit test templates)
 # ------------------------------------------------------------ #
 
 for my $TemplateID (@AddedTemplateIDs) {
@@ -561,7 +563,6 @@ my $ObjectListOrg =
     $ConfigObject->Get('ImportExport::ObjectBackendRegistration');
 
 # set test list
-
 $ConfigObject->Set(
     Key   => 'ImportExport::ObjectBackendRegistration',
     Value => $ObjectList1TestList,
@@ -595,7 +596,6 @@ $Self->True(
 );
 
 # restore original object list
-
 $ConfigObject->Set(
     Key   => 'ImportExport::ObjectBackendRegistration',
     Value => $ObjectListOrg,
@@ -624,7 +624,6 @@ my $FormatListOrg =
     $ConfigObject->Get('ImportExport::FormatBackendRegistration');
 
 # set test list
-
 $ConfigObject->Set(
     Key   => 'ImportExport::FormatBackendRegistration',
     Value => $FormatList1TestList,
@@ -658,12 +657,9 @@ $Self->True(
 );
 
 # restore original format list
-
 $ConfigObject->Set(
     Key   => 'ImportExport::FormatBackendRegistration',
     Value => $FormatListOrg,
 );
-
-$TestCount++;
 
 1;

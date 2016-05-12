@@ -14,8 +14,17 @@ use utf8;
 use vars (qw($Self));
 use File::Path qw(rmtree);
 
-my $CommandObject = $Kernel::OM->Get('Kernel::System::Console::Command::Admin::ITSM::ImportExport::Import');
-my $HelperObject  = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
+# get needed objects
+my $CommandObject      = $Kernel::OM->Get('Kernel::System::Console::Command::Admin::ITSM::ImportExport::Import');
+my $ImportExportObject = $Kernel::OM->Get('Kernel::System::ImportExport');
+
+# get helper object
+$Kernel::OM->ObjectParamAdd(
+    'Kernel::System::UnitTest::Helper' => {
+        RestoreDatabase => 1,
+    },
+);
+my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 
 # test command without --template-number option
 my $ExitCode = $CommandObject->Execute();
@@ -26,16 +35,13 @@ $Self->Is(
     "No --template-number  - exit code",
 );
 
-# get ImportExport object
-my $ImportExportObject = $Kernel::OM->Get('Kernel::System::ImportExport');
-
 # add test template
 my $TemplateID = $ImportExportObject->TemplateAdd(
     Object  => 'ITSMConfigItem',
     Format  => 'CSV',
-    Name    => 'Template' . $HelperObject->GetRandomID(),
+    Name    => 'Template' . $Helper->GetRandomID(),
     ValidID => 1,
-    Comment => 'Comment',                                   # (optional)
+    Comment => 'Comment',
     UserID  => 1,
 );
 
@@ -44,11 +50,8 @@ $Self->True(
     "Import/Export template is created - $TemplateID",
 );
 
-# get general catalog object
-my $GeneralCatalogObject = $Kernel::OM->Get('Kernel::System::GeneralCatalog');
-
 # get 'Hardware' catalog class ID
-my $ConfigItemDataRef = $GeneralCatalogObject->ItemGet(
+my $ConfigItemDataRef = $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemGet(
     Class => 'ITSM::ConfigItem::Class',
     Name  => 'Hardware',
 );
@@ -123,8 +126,7 @@ my $SourcePath
     = $Kernel::OM->Get('Kernel::Config')->Get('Home') . "/scripts/test/sample/ImportExport/TemplateExport.csv";
 
 # test command with wrong template number
-$ExitCode
-    = $CommandObject->Execute( '--template-number', $HelperObject->GetRandomID(), $SourcePath . 'TemplateExport.csv' );
+$ExitCode = $CommandObject->Execute( '--template-number', $Helper->GetRandomID(), $SourcePath . 'TemplateExport.csv' );
 
 $Self->Is(
     $ExitCode,
@@ -150,9 +152,8 @@ $Self->Is(
     "Option - --template-number option and Source argument",
 );
 
-# get config item object
-my $ConfigItemObject = $Kernel::OM->Get('Kernel::System::ITSMConfigItem');
-my $ConfigItemIDs    = $ConfigItemObject->ConfigItemSearchExtended(
+# get config item IDs
+my $ConfigItemIDs = $Kernel::OM->Get('Kernel::System::ITSMConfigItem')->ConfigItemSearchExtended(
     Name => 'TestConfigItem*'
 );
 my $NumConfigItemImported = scalar @{$ConfigItemIDs};
@@ -163,28 +164,6 @@ $Self->True(
     "There are $NumConfigItemImported imported config items",
 );
 
-# clean up test data
-# delete test template
-$Success = $ImportExportObject->TemplateDelete(
-    TemplateID => $TemplateID,
-    UserID     => 1,
-);
-
-$Self->True(
-    $Success,
-    "Test template is deleted - $TemplateID",
-);
-
-# delete test config items
-for my $ConfigItemID ( @{$ConfigItemIDs} ) {
-    my $Success = $ConfigItemObject->ConfigItemDelete(
-        ConfigItemID => $ConfigItemID,
-        UserID       => 1,
-    );
-    $Self->True(
-        $Success,
-        "Configitem is deleted - $ConfigItemID",
-    );
-}
+# cleanup is done by RestoreDatabase.
 
 1;
