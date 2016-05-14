@@ -1667,10 +1667,16 @@ sub ProjectActionReporting {
         WHERE project_id != -1
             AND time_start >= ?
             AND time_start <= ?';
+    @Bind = ( \$SQLDateStart, \$SQLDate );
+
+    if ( $Param{UserID} ) {
+        $SQL .= ' AND user_id = ?';
+        push @Bind, \$Param{UserID};
+    }
 
     $DBObject->Prepare(
         SQL  => $SQL,
-        Bind => [ \$SQLDateStart, \$SQLDate ],
+        Bind => \@Bind,
     );
 
     # fetch the data

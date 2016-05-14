@@ -1,5 +1,5 @@
 #5.0.3 2016-??-??
-
+ - 2016-05-13 Fixed bug#[12076](http://bugs.otrs.org/show_bug.cgi?id=12076) - "User's project overview" wrong "Monthly" hours and protect list.
 
 #5.0.2 2016-05-17
  - 2016-05-06 Fixed bug#[11780](http://bugs.otrs.org/show_bug.cgi?id=11780) - Internal Server Error on Task (Activity) constrains.
