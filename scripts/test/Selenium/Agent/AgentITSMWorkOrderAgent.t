@@ -98,9 +98,18 @@ $Selenium->RunTest(
         my $AutoCompleteStringUser
             = "\"$TestUserLogin $TestUserLogin\" <$TestUserLogin\@localunittest.com> ($TestUserID)";
         $Selenium->find_element( "#User", 'css' )->send_keys("$TestUserLogin");
+
+        sleep(5);
+
         $Selenium->WaitFor( JavaScript => 'return $("li.ui-menu-item:visible").length' );
+
         $Selenium->find_element("//*[text()='$AutoCompleteStringUser']")->click();
+
+        sleep(5);
+
         $Selenium->find_element("//button[\@value='Submit'][\@type='submit']")->click();
+
+        sleep(5);
 
         $Selenium->WaitFor( WindowCount => 1 );
         $Selenium->switch_to_window( $Handles->[0] );
