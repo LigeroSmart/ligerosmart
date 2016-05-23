@@ -81,8 +81,13 @@ $Selenium->RunTest(
         my $AutoCompleteStringManager
             = "\"$TestUserLogin $TestUserLogin\" <$TestUserLogin\@localunittest.com> ($TestUserID)";
         $Selenium->find_element( "#ChangeManager", 'css' )->send_keys("$TestUserLogin");
+
+        sleep(5);
+
         $Selenium->WaitFor( JavaScript => 'return $("li.ui-menu-item:visible").length' );
         $Selenium->find_element("//*[text()='$AutoCompleteStringManager']")->click();
+
+        sleep(5);
 
         # submit and switch window
         $Selenium->find_element("//button[\@type='submit'][\@value='Submit']")->click();

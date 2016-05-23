@@ -76,6 +76,8 @@ $Selenium->RunTest(
         # navigate to AgentITSMChangeZoom of created test change
         $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentITSMChangeZoom;ChangeID=$ChangeID");
 
+        sleep(5);
+
         # click on 'Edit' and switch screens
         $Selenium->find_element("//a[contains(\@href, \'Action=AgentITSMChangeEdit;ChangeID=$ChangeID' )]")->click();
 
