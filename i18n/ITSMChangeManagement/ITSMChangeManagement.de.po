@@ -12,8 +12,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-04-29 13:18+0000\n"
-"PO-Revision-Date: 2016-04-29 11:19+0000\n"
+"POT-Creation-Date: 2016-05-24 22:01+0000\n"
+"PO-Revision-Date: 2016-05-24 20:01+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: German (http://www.transifex.com/otrs/OTRS/language/de/)\n"
 "MIME-Version: 1.0\n"
@@ -720,7 +720,7 @@ msgstr "von"
 
 #. Template: AdminITSMStateMachine
 msgid "to"
-msgstr ""
+msgstr "bis"
 
 #. Template: AgentITSMChangeAdd
 msgid "Add Change"
@@ -791,8 +791,8 @@ msgid "Need a valid name."
 msgstr "Ein gültiger Name ist erforderlich."
 
 #. Template: AgentITSMChangeConditionEdit
-msgid "A a valid name is needed."
-msgstr "Ein gültiger Name ist erforderlich."
+msgid "A valid name is needed."
+msgstr ""
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "Duplicate name:"
@@ -856,7 +856,7 @@ msgstr "Möchten Sie diesen Change wirklich löschen?"
 
 #. Template: AgentITSMChangeHistory
 msgid "History of"
-msgstr ""
+msgstr "Änderungsverlauf von"
 
 #. Template: AgentITSMChangeHistory
 msgid "Workorder"
@@ -1252,37 +1252,465 @@ msgstr "Löschen der Original-Workorder (und der umgebenden Changes)"
 msgid "Workorder Information"
 msgstr "Workorder-Informationen"
 
+#. Perl Module: Kernel/Modules/AdminITSMChangeNotification.pm
+msgid "Unknown notification %s!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AdminITSMChangeNotification.pm
+msgid "There was an error creating the notification."
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChange.pm
+msgid "Overview: ITSM Changes"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeAdd.pm
+msgid "Ticket with TicketID %s does not exist!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeAdd.pm
+msgid "Missing sysconfig option \"ITSMChange::AddChangeLinkTicketTypes\"!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeAdd.pm
+msgid "Was not able to add change!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeAddFromTemplate.pm
+msgid "Was not able to create change from template!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeCABTemplate.pm
+msgid "No ChangeID is given!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeCABTemplate.pm
+msgid "No change found for changeID %s."
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeCABTemplate.pm
+msgid "The CAB of change \"%s\" could not be serialized."
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeCABTemplate.pm
+msgid "Could not add the template."
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeCondition.pm
+msgid "Change \"%s\" not found in database!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeCondition.pm
+msgid "Could not delete ConditionID %s!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
+msgid "No %s is given!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
+msgid "Could not create new condition!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
+msgid "Could not update ConditionID %s!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
+msgid "Could not update ExpressionID %s!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
+msgid "Could not add new Expression!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
+msgid "Could not update ActionID %s!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
+msgid "Could not add new Action!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
+msgid "Could not delete ExpressionID %s!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
+msgid "Could not delete ActionID %s!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
+msgid "Error: Unknown field type \"%s\"!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
+msgid "ConditionID %s does not belong to the given ChangeID %s!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
+msgid "Please contact the administrator."
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeDelete.pm
+msgid "Change \"%s\" does not have an allowed change state to be deleted!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeDelete.pm
+msgid "Was not able to delete the changeID %s!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeEdit.pm
+msgid "Was not able to update Change!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeHistory.pm
+msgid "Can't show history, as no ChangeID is given!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeHistory.pm
+msgid "Change \"%s\" not found in the database!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeHistory.pm
+msgid "Unknown type \"%s\" encountered!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeHistory.pm
+msgid "Change History"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeHistoryZoom.pm
+msgid "Can't show history zoom, no HistoryEntryID is given!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeHistoryZoom.pm
+msgid "HistoryEntry \"%s\" not found in database!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeInvolvedPersons.pm
+msgid "Was not able to update Change CAB for Change %s!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeInvolvedPersons.pm
+msgid "Was not able to update Change %s!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeManager.pm
+msgid "Overview: ChangeManager"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeMyCAB.pm
+msgid "Overview: My CAB"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeMyChanges.pm
+msgid "Overview: My Changes"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeMyWorkOrders.pm
+msgid "Overview: My Workorders"
+msgstr ""
+
 #. Perl Module: Kernel/Modules/AgentITSMChangePIR.pm
-msgid "PIR"
+msgid "Overview: PIR"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentITSMChangePSA.pm
-msgid "PSA"
+msgid "Overview: PSA"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "WorkOrder \"%s\" not found in database!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "Can't create output, as the workorder is not attached to a change!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "Can't create output, as no ChangeID is given!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "unknown change title"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "unknown workorder title"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "ITSM Workorder Overview (%s)"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeReset.pm
+msgid "Was not able to reset WorkOrder %s of Change %s!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeReset.pm
+msgid "Was not able to reset Change %s!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeSchedule.pm
+msgid "Overview: Change Schedule"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
+msgid "Change Search"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
 msgid "WorkOrders"
 msgstr "Workorder"
 
+#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
+msgid "Change Search Result"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
+msgid "Change Number"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
+msgid "Change Title"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
+msgid "Work Order Title"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
+msgid "CAB Agent"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
+msgid "CAB Customer"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
+msgid "Change Description"
+msgstr "Änderungsbeschreibung"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
+msgid "Change Justification"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
+msgid "WorkOrder Instruction"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
+msgid "WorkOrder Report"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
+msgid "Change Priority"
+msgstr "Änderungspriorität"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
+msgid "Change Impact"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
+msgid "Change State"
+msgstr "Änderungsstatus"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
+msgid "Created By"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
+msgid "WorkOrder State"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
+msgid "WorkOrder Type"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
+msgid "WorkOrder Agent"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
+msgid "Planned Start Time"
+msgstr "Geplante Startzeit"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
+msgid "Planned End Time"
+msgstr "Geplante Endzeit"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
+msgid "Actual Start Time"
+msgstr "Tatsächliche Startzeit"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
+msgid "Actual End Time"
+msgstr "Tatsächliche Endzeit"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
+msgid "Change Time"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
+msgid "before"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeTemplate.pm
+msgid "The change \"%s\" could not be serialized."
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeTemplate.pm
+msgid "Could not update the template \"%s\"."
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeTemplate.pm
+msgid "Could not delete change \"%s\"."
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeTimeSlot.pm
+msgid "The change can't be moved, as it has no workorders."
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeTimeSlot.pm
+msgid "Add a workorder first."
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeTimeSlot.pm
+msgid "Can't move a change which already has started!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeTimeSlot.pm
+msgid "Please move the individual workorders instead."
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeTimeSlot.pm
+msgid "The current %s could not be determined."
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeTimeSlot.pm
+msgid "The %s of all workorders has to be defined."
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeTimeSlot.pm
+msgid "Was not able to move time slot for workorder #%s!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMTemplateDelete.pm
+msgid "You need %s permission!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMTemplateDelete.pm
+msgid "No TemplateID is given!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMTemplateDelete.pm
+msgid "Template \"%s\" not found in database!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMTemplateDelete.pm
+msgid "Was not able to delete the template %s!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMTemplateEdit.pm
+msgid "Was not able to update Template %s!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMTemplateEditCAB.pm
+msgid "Was not able to update Template \"%s\"!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMTemplateEditContent.pm
+msgid "Was not able to create change!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMTemplateEditContent.pm
+msgid "Was not able to create workorder from template!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMTemplateOverview.pm
+msgid "Overview: Template"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMWorkOrderAdd.pm
+msgid "You need %s permissions on the change!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMWorkOrderAdd.pm
+msgid "Was not able to add workorder!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMWorkOrderAgent.pm
+msgid "No WorkOrderID is given!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMWorkOrderAgent.pm
+msgid "Was not able to set the workorder agent of the workorder \"%s\" to empty!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMWorkOrderAgent.pm
+msgid "Was not able to update the workorder \"%s\"!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMWorkOrderAgent.pm
+msgid "Could not find Change for WorkOrder %s!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMWorkOrderDelete.pm
+msgid "Was not able to delete the workorder %s!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMWorkOrderEdit.pm
+msgid "Was not able to update WorkOrder %s!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMWorkOrderHistory.pm
+msgid "Can't show history, as no WorkOrderID is given!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMWorkOrderHistory.pm
+msgid "WorkOrder \"%s\" not found in the database!"
+msgstr ""
+
 #. Perl Module: Kernel/Modules/AgentITSMWorkOrderHistory.pm
 msgid "WorkOrderHistory::"
 msgstr ""
 
+#. Perl Module: Kernel/Modules/AgentITSMWorkOrderHistory.pm
+msgid "WorkOrder History"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMWorkOrderHistoryZoom.pm
+msgid "History entry \"%s\" not found in the database!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMWorkOrderHistoryZoom.pm
+msgid "WorkOrder History Zoom"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMWorkOrderTake.pm
+msgid "Was not able to take the workorder %s!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMWorkOrderTemplate.pm
+msgid "The workorder \"%s\" could not be serialized."
+msgstr ""
+
 #. Perl Module: Kernel/Output/HTML/ToolBar/MyWorkOrders.pm
 msgid "My Work Orders"
-msgstr ""
+msgstr "Meine Arbeitsaufträge"
 
 #. SysConfig
 msgid ""
 "A list of the agents who have permission to take workorders. Key is a login "
 "name. Content is 0 or 1."
-msgstr "Eine Liste der Agenten, die Zugriff auf Workorders haben. Key ist der Login-Name. Content ist 0 oder 1"
+msgstr ""
 
 #. SysConfig
 msgid ""
 "A list of workorder states, at which the ActualStartTime of a workorder will"
 " be set if it was empty at this point."
-msgstr "Eine Liste von Workorder-States bei denen die ActualStartTime einer Workorder gesetzt wird, wenn diese vorher nicht gesetzt war."
+msgstr ""
 
 #. SysConfig
 msgid "Add a change from template."
@@ -1294,43 +1722,51 @@ msgstr ""
 
 #. SysConfig
 msgid "Admin of the CIP matrix."
-msgstr "Admin der CIP-Matrix."
+msgstr ""
 
 #. SysConfig
 msgid "Admin of the state machine."
-msgstr "Admin der State Machine"
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Agent interface notification module to see the number of change advisory "
 "boards."
-msgstr "Agenten-Ansicht Benachrichtigung-Modul um die Zahl der Change-Advisory-Boards anzuzeigen."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Agent interface notification module to see the number of changes managed by "
 "the user."
-msgstr "Agenten-Ansicht Benachrichtigung-Modul um die Zahl der Changes anzuzeigen die vom Benutzer verwaltet werden."
+msgstr ""
 
 #. SysConfig
 msgid "Agent interface notification module to see the number of changes."
-msgstr "Agenten-Ansicht Benachrichtigung-Modul um die Zahl der Changes anzuzeigen."
+msgstr ""
 
 #. SysConfig
-msgid "Agent interface notification module to see the number of work orders."
-msgstr "Agenten-Ansicht Benachrichtigung-Modul um die Zahl der Workorder anzuzeigen."
+msgid "Agent interface notification module to see the number of workorders."
+msgstr ""
+
+#. SysConfig
+msgid "CAB Member Search"
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Cache time in minutes for the change management toolbars. Default: 3 hours "
 "(180 minutes)."
-msgstr "Cache-Zeit in Minuten für die Change Management Werkzeugleiste. Standard: 3 Stunden (180 Minuten)"
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Cache time in minutes for the change management. Default: 5 days (7200 "
 "minutes)."
-msgstr "Cache-Zeit in Minuten für die Change Management. Standard: 5 Tage (7200 Minuten)."
+msgstr ""
+
+#. SysConfig
+msgid "Change CAB Templates"
+msgstr ""
 
 #. SysConfig
 msgid "Change History."
@@ -1342,7 +1778,11 @@ msgstr ""
 
 #. SysConfig
 msgid "Change Overview \"Small\" Limit"
-msgstr "Change Übersicht Anzeige Limit für \"Small\""
+msgstr ""
+
+#. SysConfig
+msgid "Change Overview."
+msgstr ""
 
 #. SysConfig
 msgid "Change Print."
@@ -1358,25 +1798,29 @@ msgstr ""
 
 #. SysConfig
 msgid "Change and WorkOrder templates edited by this user."
-msgstr "Änderungs- und Arbeitsauftragsvorlagen geändert von diesem Benutzer."
+msgstr ""
+
+#. SysConfig
+msgid "Change area."
+msgstr ""
 
 #. SysConfig
 msgid "Change limit per page for Change Overview \"Small\""
-msgstr "Anzeige Limit pro Seite für Changes in der kleinen Ansicht \"S\""
+msgstr ""
 
 #. SysConfig
 msgid "Change search backend router of the agent interface."
-msgstr "Such-Backend-Router für die Change-Suche in der Agenten-Ansicht."
+msgstr ""
 
 #. SysConfig
-msgid "Change-Area"
+msgid "Condition Overview"
 msgstr ""
 
 #. SysConfig
 msgid ""
 "Configures how often the notifications are sent when planned the start time "
 "or other time values have been reached/passed."
-msgstr "Konfiguration wie häufig Benachrichtungen verschickt werden wenn die geplante Startzeit oder andere Zeiten erreicht wurden bzw. schon vorbei sind."
+msgstr ""
 
 #. SysConfig
 msgid "Create a change (from template) from this ticket!"
@@ -1390,395 +1834,395 @@ msgstr ""
 msgid ""
 "Default type for a workorder. This entry must exist in general catalog class"
 " 'ITSM::ChangeManagement::WorkOrder::Type'."
-msgstr "Standard-Typ für eine Workorder. Dieser Eintrag muss in der General Catalog Klasse 'ITSM::ChangeManagement::WorkOrder::Type' existieren."
+msgstr ""
 
 #. SysConfig
 msgid "Define the signals for each workorder state."
-msgstr "Definieren eines Signals für einen Workorder-Status."
+msgstr ""
 
 #. SysConfig
 msgid "Defines an overview module to show the small view of a change list."
-msgstr "Definiert das Übersichtsmodul um die Small-Ansicht einer Change-Liste anzuzeigen."
+msgstr ""
 
 #. SysConfig
 msgid "Defines an overview module to show the small view of a template list."
-msgstr "Definiert das Übersichtsmodul um die Small-Ansicht einer Template-Liste anzuzeigen."
+msgstr ""
 
 #. SysConfig
 msgid "Defines if it will be possible to print the accounted time."
-msgstr "Definiert ob die erfasste Zeit ausgedruckt werden kann."
+msgstr ""
 
 #. SysConfig
 msgid "Defines if it will be possible to print the planned effort."
-msgstr "Definiert ob der geplante Aufwand ausgedruckt werden kann."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines if reachable (as defined by the state machine) change end states "
 "should be allowed if a change is in a locked state."
-msgstr "Definiert ob nachfolgende Endzustände für Changes (wie in der State Machine definiert) auch dann erlaubt sind, wenn sich der Change im gesperrten Zustand befindet."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines if reachable (as defined by the state machine) workorder end states "
 "should be allowed if a workorder is in a locked state."
-msgstr "Definiert ob nachfolgende Endzustände für Workorder (wie in der State Machine definiert) auch dann erlaubt sind, wenn sich deie Workorder im gesperrten Zustand befindet."
+msgstr ""
 
 #. SysConfig
 msgid "Defines if the accounted time should be shown."
-msgstr "Soll die gebuchte Zeit angezeigt werden."
+msgstr ""
 
 #. SysConfig
 msgid "Defines if the actual start and end times should be set."
-msgstr "Wenn der tatsächliche Start- und Endzeitpunkt gesetzt werden soll."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines if the change search and the workorder search functions could use "
 "the mirror DB."
-msgstr "Definiert ob die Change-Suche und Workorder-Suche die Spiegeldatenbank benutzen kann."
+msgstr ""
 
 #. SysConfig
 msgid "Defines if the change state can be set in AgentITSMChangeEdit."
-msgstr "Definiert ob der Change-Status in AgentITSMChangeEdit gesetzt werden kann."
+msgstr ""
 
 #. SysConfig
 msgid "Defines if the planned effort should be shown."
-msgstr "Soll der geplante Aufwand angezeigt werden."
+msgstr ""
 
 #. SysConfig
 msgid "Defines if the requested date should be print by customer."
-msgstr "Definiert ob das Anfragedatum für den Kunden gedruckt werden soll."
+msgstr ""
 
 #. SysConfig
 msgid "Defines if the requested date should be searched by customer."
-msgstr "Soll der Wunschtermin des Kunden gesucht werden können."
+msgstr ""
 
 #. SysConfig
 msgid "Defines if the requested date should be set by customer."
-msgstr "Definiert ob das Anfragedatum vom Kunden ausgefüllt werden soll."
+msgstr ""
 
 #. SysConfig
 msgid "Defines if the requested date should be shown by customer."
-msgstr "Soll der Wunschtermin des Kunden angezeigt werden."
+msgstr ""
 
 #. SysConfig
 msgid "Defines if the workorder state should be shown."
-msgstr "Soll der Status der Workorder angezeigt werden."
+msgstr ""
 
 #. SysConfig
 msgid "Defines if the workorder title should be shown."
-msgstr "Soll der Titel der Workorder angezeigt werden."
+msgstr ""
 
 #. SysConfig
 msgid "Defines shown graph attributes."
-msgstr "Definiert Attribute für die Anzeige des Graphen."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines that only changes containing Workorders linked with services, which "
 "the customer user has permission to use will be shown. Any other changes "
 "will not be displayed."
-msgstr "Definiert das nur Changes angezeigt werden, die Workorders enthalten, die mit Services verlinkt sind, für die der Kunden-Benutzer eine Berechtigung hat. Andere Changes werden nicht angezeigt."
+msgstr ""
 
 #. SysConfig
 msgid "Defines the change states that will be allowed to delete."
-msgstr "Definiert den Änderungsstatus welcher das löschen ermöglicht."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the change states that will be used as filters in the Change PSA "
 "overview."
-msgstr "Definiert die Change-States die als Filter in der Change PSA-Übersicht verwendet werden."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the change states that will be used as filters in the Change "
 "Schedule overview."
-msgstr "Definiert die Change-States die als Filter in der Change Schedule-Übersicht verwendet werden."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the change states that will be used as filters in the MyCAB "
 "overview."
-msgstr "Definiert die Change-States die als Filter in der MyCAB-Übersicht verwendet werden."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the change states that will be used as filters in the MyChanges "
 "overview."
-msgstr "Definiert die Change-States die als Filter in der MyChanges-Übersicht verwendet werden."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the change states that will be used as filters in the change manager"
 " overview."
-msgstr "Definiert die Change-States die als Filter in der Change-Manager-Übersicht verwendet werden."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the change states that will be used as filters in the change "
 "overview."
-msgstr "Definiert die Change-States die als Filter in der Change-Übersicht verwendet werden."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the change states that will be used as filters in the customer "
 "change schedule overview."
-msgstr "Definiert die Change-States die als Filter in der Kunden-Ansicht \"Change Schedule\" verwendet werden."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the default change title for a dummy change which is needed to edit "
 "a workorder template."
-msgstr "Definiert den Standard-Titel für einen Dummy-Change welcher benötigt wird um eine Workorder-Vorlage zu editieren."
+msgstr ""
 
 #. SysConfig
 msgid "Defines the default sort criteria in the change PSA overview."
-msgstr "Standard Sortierung der Changes in der Change PSA-Übersicht."
+msgstr ""
 
 #. SysConfig
 msgid "Defines the default sort criteria in the change manager overview."
-msgstr "Standard Sortierung der Changes in der Change-Manager-Übersicht."
+msgstr ""
 
 #. SysConfig
 msgid "Defines the default sort criteria in the change overview."
-msgstr "Standard Sortierung der Changes in der Change-Übersicht."
+msgstr ""
 
 #. SysConfig
 msgid "Defines the default sort criteria in the change schedule overview."
-msgstr "Standard Sortierung der Changes in der Change Schedule-Übersicht."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the default sort criteria of the changes in the MyCAB overview."
-msgstr "Standard Sortierung der Changes in der MyCAB-Übersicht."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the default sort criteria of the changes in the MyChanges overview."
-msgstr "Standard Sortierung der Changes in der MyChanges-Übersicht."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the default sort criteria of the changes in the MyWorkorders "
 "overview."
-msgstr "Standard Sortierung der Changes in der MyWorkorders-Übersicht."
+msgstr ""
 
 #. SysConfig
 msgid "Defines the default sort criteria of the changes in the PIR overview."
-msgstr "Standard Sortierung der Changes in der PIR-Übersicht."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the default sort criteria of the changes in the customer change "
 "schedule overview."
-msgstr "Standard Sortierung der Changes in der Kunden-Ansicht \"Change Schedule\"."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the default sort criteria of the changes in the template overview."
-msgstr "Standard Sortierung der Templates in der Template-Übersicht."
+msgstr ""
 
 #. SysConfig
 msgid "Defines the default sort order in the MyCAB overview."
-msgstr "Standard Reihenfolge der Changes in der MyCAB-Übersicht."
+msgstr ""
 
 #. SysConfig
 msgid "Defines the default sort order in the MyChanges overview."
-msgstr "Standard Reihenfolge der Changes in der MyChanges-Übersicht."
+msgstr ""
 
 #. SysConfig
 msgid "Defines the default sort order in the MyWorkorders overview."
-msgstr "Standard Reihenfolge der Workorders in der MyWorkorders-Übersicht."
+msgstr ""
 
 #. SysConfig
 msgid "Defines the default sort order in the PIR overview."
-msgstr "Standard Reihenfolge der Changes in der PIR-Übersicht."
+msgstr ""
 
 #. SysConfig
 msgid "Defines the default sort order in the change PSA overview."
-msgstr "Standard Reihenfolge der Changes in der Change PSA-Übersicht."
+msgstr ""
 
 #. SysConfig
 msgid "Defines the default sort order in the change manager overview."
-msgstr "Standard Reihenfolge der Changes in der Change-Manager-Übersicht."
+msgstr ""
 
 #. SysConfig
 msgid "Defines the default sort order in the change overview."
-msgstr "Definiert die Standard Sortierung in der Änderungsübersicht."
+msgstr ""
 
 #. SysConfig
 msgid "Defines the default sort order in the change schedule overview."
-msgstr "Standard Reihenfolge der Changes in der Change Schedule-Übersicht."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the default sort order in the customer change schedule overview."
-msgstr "Standard Reihenfolge der Changes in der Kunden-Ansicht \"Change Schedule\"."
+msgstr ""
 
 #. SysConfig
 msgid "Defines the default sort order in the template overview."
-msgstr "Standard Reihenfolge der Templates in der Template-Übersicht."
+msgstr ""
 
 #. SysConfig
 msgid "Defines the default value for the category of a change."
-msgstr "Der Standard-Wert für die Kategorie eines Changes."
+msgstr ""
 
 #. SysConfig
 msgid "Defines the default value for the impact of a change."
-msgstr "Der Standard-Wert für die Auswirkung eines Changes."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the field type of CompareValue fields for change attributes used in "
 "AgentITSMChangeConditionEdit. Valid values are Selection, Text and Date. If "
 "a type is not defined, the field will not be shown."
-msgstr "Definiert den Feld-Typ für CompareValue Felder für Change-Attribute in AgentITSMChangeConditionEdit. Gültige Werte sind Selection, Text und Date. Wenn kein Typ definiert ist, dann wird das feld nicht angezeigt."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the field type of CompareValue fields for workorder attributes used "
 "in AgentITSMChangeConditionEdit. Valid values are Selection, Text and Date. "
 "If a type is not defined, the field will not be shown."
-msgstr "Definiert den Feld-Typ für CompareValue Felder für Workorder-Attribute in AgentITSMChangeConditionEdit. Gültige Werte sind Selection, Text und Date. Wenn kein Typ definiert ist, dann wird das feld nicht angezeigt."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the object attributes that are selectable for change objects in "
 "AgentITSMChangeConditionEdit."
-msgstr "Definiert die Objekt-Attribute die für Change-Objekte in AgentITSMChangeConditionEdit ausgewählt werden können."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the object attributes that are selectable for workorder objects in "
 "AgentITSMChangeConditionEdit."
-msgstr "Definiert die Objekt-Attribute die für Workorder-Objekte in AgentITSMChangeConditionEdit ausgewählt werden können."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute AccountedTime in"
 " AgentITSMChangeConditionEdit."
-msgstr "Definiert die Operatoren die für das Attribut AccountedTime in AgentITSMChangeConditionEdit ausgewählt werden können."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute ActualEndTime in"
 " AgentITSMChangeConditionEdit."
-msgstr "Definiert die Operatoren die für das Attribut ActualEndTime in AgentITSMChangeConditionEdit ausgewählt werden können."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute ActualStartTime "
 "in AgentITSMChangeConditionEdit."
-msgstr "Definiert die Operatoren die für das Attribut ActualStartTime in AgentITSMChangeConditionEdit ausgewählt werden können."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute CategoryID in "
 "AgentITSMChangeConditionEdit."
-msgstr "Definiert die Operatoren die für das Attribut CategoryID in AgentITSMChangeConditionEdit ausgewählt werden können."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute ChangeBuilderID "
 "in AgentITSMChangeConditionEdit."
-msgstr "Definiert die Operatoren die für das Attribut ChangeBuilderID in AgentITSMChangeConditionEdit ausgewählt werden können."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute ChangeManagerID "
 "in AgentITSMChangeConditionEdit."
-msgstr "Definiert die Operatoren die für das Attribut ChangeManagerID in AgentITSMChangeConditionEdit ausgewählt werden können."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute ChangeStateID in"
 " AgentITSMChangeConditionEdit."
-msgstr "Definiert die Operatoren die für das Attribut ChangeStateID in AgentITSMChangeConditionEdit ausgewählt werden können."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute ChangeTitle in "
 "AgentITSMChangeConditionEdit."
-msgstr "Definiert die Operatoren die für das Attribut ChangeTitle in AgentITSMChangeConditionEdit ausgewählt werden können."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute DynamicField in "
 "AgentITSMChangeConditionEdit."
-msgstr "Definiert die Operatoren die für Dynamische Felder in AgentITSMChangeConditionEdit ausgewählt werden können."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute ImpactID in "
 "AgentITSMChangeConditionEdit."
-msgstr "Definiert die Operatoren die für das Attribut ImpactID in AgentITSMChangeConditionEdit ausgewählt werden können."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute PlannedEffort in"
 " AgentITSMChangeConditionEdit."
-msgstr "Definiert die Operatoren die für das Attribut PlannedEffort in AgentITSMChangeConditionEdit ausgewählt werden können."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute PlannedEndTime "
 "in AgentITSMChangeConditionEdit."
-msgstr "Definiert die Operatoren die für das Attribut PlannedEndTime in AgentITSMChangeConditionEdit ausgewählt werden können."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute PlannedStartTime"
 " in AgentITSMChangeConditionEdit."
-msgstr "Definiert die Operatoren die für das Attribut PlannedStartTime in AgentITSMChangeConditionEdit ausgewählt werden können."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute PriorityID in "
 "AgentITSMChangeConditionEdit."
-msgstr "Definiert die Operatoren die für das Attribut PriorityID in AgentITSMChangeConditionEdit ausgewählt werden können."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute RequestedTime in"
 " AgentITSMChangeConditionEdit."
-msgstr "Definiert die Operatoren die für das Attribut RequestedTime in AgentITSMChangeConditionEdit ausgewählt werden können."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute WorkOrderAgentID"
 " in AgentITSMChangeConditionEdit."
-msgstr "Definiert die Operatoren die für das Attribut WorkOrderAgentID in AgentITSMChangeConditionEdit ausgewählt werden können."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute WorkOrderNumber "
 "in AgentITSMChangeConditionEdit."
-msgstr "Definiert die Operatoren die für das Attribut WorkOrderNumber in AgentITSMChangeConditionEdit ausgewählt werden können."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute WorkOrderStateID"
 " in AgentITSMChangeConditionEdit."
-msgstr "Definiert die Operatoren die für das Attribut WorkOrderStateID in AgentITSMChangeConditionEdit ausgewählt werden können."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute WorkOrderTitle "
 "in AgentITSMChangeConditionEdit."
-msgstr "Definiert die Operatoren die für das Attribut WorkOrderTitle in AgentITSMChangeConditionEdit ausgewählt werden können."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute WorkOrderTypeID "
 "in AgentITSMChangeConditionEdit."
-msgstr "Definiert die Operatoren die für das Attribut WorkOrderTypeID in AgentITSMChangeConditionEdit ausgewählt werden können."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the period (in years), in which start and end times can be selected."
-msgstr "Definiert den Zeitraum (in Jahren) in welcher Start- und Endzeiten gewählt werden können."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -1786,104 +2230,104 @@ msgid ""
 "graph in the change zoom. To show workorder dynamic fields in the tooltip, "
 "they must be specified like DynamicField_WorkOrderFieldName1, "
 "DynamicField_WorkOrderFieldName2, etc."
-msgstr "Definiert die Attribute einer Workorder die in der \"Change Zoom\" Ansicht als Kurzinfo zum Workorder Balken angezeigt werden. Um Dynamische felder der Workorder anzuzeigen, müssen dies als DynamicField_WorkOrderFieldName1, DynamicField_WorkOrderFieldName2, etc. angegeben werden."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the shown columns in the Change PSA overview. This option has no "
 "effect on the position of the column."
-msgstr "Definiert die angezeigten Tabellenspalten in der Change PSA-Übersicht. Diese Option hat keinen Effekt auf die Position der Spalten."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the shown columns in the Change Schedule overview. This option has "
 "no effect on the position of the column."
-msgstr "Definiert die angezeigten Tabellenspalten in der Change Schedule-Übersicht. Diese Option hat keinen Effekt auf die Position der Spalten."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the shown columns in the MyCAB overview. This option has no effect "
 "on the position of the column."
-msgstr "Definiert die angezeigten Tabellenspalten in der MyCAB-Übersicht. Diese Option hat keinen Effekt auf die Position der Spalten."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the shown columns in the MyChanges overview. This option has no "
 "effect on the position of the column."
-msgstr "Definiert die angezeigten Tabellenspalten in der MyChanges-Übersicht. Diese Option hat keinen Effekt auf die Position der Spalten."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the shown columns in the MyWorkorders overview. This option has no "
 "effect on the position of the column."
-msgstr "Definiert die angezeigten Tabellenspalten in der MyWorkorders-Übersicht. Diese Option hat keinen Effekt auf die Position der Spalten."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the shown columns in the PIR overview. This option has no effect on "
 "the position of the column."
-msgstr "Definiert die angezeigten Tabellenspalten in der PIR-Übersicht. Diese Option hat keinen Effekt auf die Position der Spalten."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the shown columns in the change manager overview. This option has no"
 " effect on the position of the column."
-msgstr "Definiert die angezeigten Tabellenspalten in der Change-Manager-Übersicht. Diese Option hat keinen Effekt auf die Position der Spalten."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the shown columns in the change overview. This option has no effect "
 "on the position of the column."
-msgstr "Definiert die angezeigten Tabellenspalten in der Change-Übersicht. Diese Option hat keinen Effekt auf die Position der Spalten."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the shown columns in the change search. This option has no effect on"
 " the position of the column."
-msgstr "Definiert die angezeigten Tabellenspalten im Suchergebniss. Diese Option hat keinen Effekt auf die Position der Spalten."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the shown columns in the customer change schedule overview. This "
 "option has no effect on the position of the column."
-msgstr "Definiert die angezeigten Tabellenspalten in der Kunden-Ansicht \"Change Schedule\". Diese Option hat keinen Effekt auf die Position der Spalten."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the shown columns in the template overview. This option has no "
 "effect on the position of the column."
-msgstr "Definiert die angezeigten Tabellenspalten in der Template-Übersicht. Diese Option hat keinen Effekt auf die Position der Spalten."
+msgstr ""
 
 #. SysConfig
 msgid "Defines the signals for each ITSMChange state."
-msgstr "Definieren eines Signals für einen ITSMChange-Status."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the template types that will be used as filters in the template "
 "overview."
-msgstr "Definiert die TemplateTypen die als Filter in der Template-Übersicht verwendet werden."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the workorder states that will be used as filters in the "
 "MyWorkorders overview."
-msgstr "Definiert die Workorder-States die als Filter in der MyWorkorders-Übersicht verwendet werden."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the workorder states that will be used as filters in the PIR "
 "overview."
-msgstr "Definiert die Workorder-States die als Filter in der PIR-Übersicht verwendet werden."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the workorder types that will be used to show the PIR overview."
-msgstr "Definiert die Workorder-Typen die für die PIR-Übersicht verwendet werden."
+msgstr ""
 
 #. SysConfig
 msgid "Defines whether notifications should be sent."
-msgstr "Wenn Benachrichtigungen versendet werden sollen."
+msgstr ""
 
 #. SysConfig
 msgid "Delete Change"
@@ -1901,96 +2345,96 @@ msgstr ""
 msgid ""
 "Determines if an agent can exchange the X-axis of a stat if he generates "
 "one."
-msgstr "Wenn diese Option aktiviert wird, hat der Agent die Möglichkeit beim Generieren einer Statistik die beiden Achsen zu vertauschen."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Determines if the common stats module may generate stats about changes done "
 "for config item classes."
-msgstr "Hier können Sie festlegen, ob das Statistik-Modul auch allgemeine Statistiken über die Anzahl der durchgeführten Changes nach CI-Klasse generieren darf."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Determines if the common stats module may generate stats about changes "
 "regarding change state updates within a timeperiod."
-msgstr "Hier können Sie festlegen, ob das Statistik-Modul auch allgemeine Statistiken über Changes bzgl. Status-Updates innerhalb einer Zeitperiode generieren darf."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Determines if the common stats module may generate stats about changes "
 "regarding the relation between changes and incident tickets."
-msgstr "Hier können Sie festlegen, ob das Statistik-Modul auch allgemeine Statistiken über Changes bzgl. dem Zusammenhang zwischen Changes und Vorfalls-Tickets generieren darf."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Determines if the common stats module may generate stats about changes."
-msgstr "Hier können Sie festlegen, ob das Statistik-Modul auch allgemeine Statistiken über Changes generieren darf."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Determines if the common stats module may generate stats about the number of"
 " Rfc tickets a requester created."
-msgstr "Hier können Sie festlegen, ob das Statistik-Modul auch allgemeine Statistiken über die Anzahl von RfC-Tickets, die von Benutzern erzeugt wurden, generieren darf."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Dynamic fields (for changes and workorders) shown in the change print screen"
 " of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled."
-msgstr "Dynamische Felder (für Changes und Workorder) die in der Oberfläche \"Change drucken\" in der Agenten-Oberfläche angezeigt werden. Mögliche Einstellungen: 0 = deaktiviert, 1 = aktiviert."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the change add screen of the agent interface. "
 "Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
-msgstr "Dynamische Felder die in der Oberfläche \"Change hinzufügen\" in der Agenten-Oberfläche angezeigt werden. Mögliche Einstellungen: 0 = deaktiviert, 1 = aktiviert, 2 = aktiviert und benötigt."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the change edit screen of the agent interface. "
 "Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
-msgstr "Dynamische Felder die in der Oberfläche \"Change bearbeiten\" in der Agenten-Oberfläche angezeigt werden. Mögliche Einstellungen: 0 = deaktiviert, 1 = aktiviert, 2 = aktiviert und benötigt."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the change search screen of the agent interface. "
 "Possible settings: 0 = Disabled, 1 = Enabled."
-msgstr "Dynamische Felder die in der Oberfläche \"Change suchen\" in der Agenten-Oberfläche angezeigt werden. Mögliche Einstellungen: 0 = deaktiviert, 1 = aktiviert."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the change zoom screen of the agent interface. "
 "Possible settings: 0 = Disabled, 1 = Enabled."
-msgstr "Dynamische Felder die in der Oberfläche \"Change Zoom\" in der Agenten-Oberfläche angezeigt werden. Mögliche Einstellungen: 0 = deaktiviert, 1 = aktiviert."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the workorder add screen of the agent interface. "
 "Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
-msgstr "Dynamische Felder die in der Oberfläche \"Workorder hinzufügen\" in der Agenten-Oberfläche angezeigt werden. Mögliche Einstellungen: 0 = deaktiviert, 1 = aktiviert,  2 = aktiviert und benötigt."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the workorder edit screen of the agent interface. "
 "Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
-msgstr "Dynamische Felder die in der Oberfläche \"Workorder bearbeiten\" in der Agenten-Oberfläche angezeigt werden. Mögliche Einstellungen: 0 = deaktiviert, 1 = aktiviert,  2 = aktiviert und benötigt."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the workorder report screen of the agent interface. "
 "Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
-msgstr "Dynamische Felder die in der Oberfläche \"Workorder Bericht\" in der Agenten-Oberfläche angezeigt werden. Mögliche Einstellungen: 0 = deaktiviert, 1 = aktiviert,  2 = aktiviert und benötigt."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the workorder zoom screen of the agent interface. "
 "Possible settings: 0 = Disabled, 1 = Enabled."
-msgstr "Dynamische Felder die in der Oberfläche \"Workorder Zoom\" in der Agenten-Oberfläche angezeigt werden. Mögliche Einstellungen: 0 = deaktiviert, 1 = aktiviert."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "DynamicField event module to handle the update of conditions if dynamic "
 "fields are added, updated or deleted."
-msgstr "Dynamische Felder Event-Modul zur Behandlung der Bedingungen wenn Dynamische Felder hinzugefügt, geändert oder gelöscht werden."
+msgstr ""
 
 #. SysConfig
 msgid "Edit a change."
@@ -1998,6 +2442,10 @@ msgstr ""
 
 #. SysConfig
 msgid "Forward schedule of changes. Overview over approved changes."
+msgstr ""
+
+#. SysConfig
+msgid "History Zoom"
 msgstr ""
 
 #. SysConfig
@@ -2022,6 +2470,10 @@ msgstr ""
 
 #. SysConfig
 msgid "ITSM Change PIR Overview."
+msgstr ""
+
+#. SysConfig
+msgid "ITSM Change notification rules"
 msgstr ""
 
 #. SysConfig
@@ -2057,60 +2509,56 @@ msgid "ITSM Template Overview."
 msgstr ""
 
 #. SysConfig
-msgid "ITSM event module deletes the history of changes."
-msgstr "ITSM Event Modul löscht die Historie von Changes."
-
-#. SysConfig
 msgid "ITSM event module that cleans up conditions."
-msgstr "ITSM Event Modul zum Aufräumen von Conditions."
+msgstr ""
 
 #. SysConfig
 msgid "ITSM event module that deletes the cache for a toolbar."
-msgstr "ITSM-Ereignismodul, das den Cache für eine Werkzeugleiste löscht."
+msgstr ""
+
+#. SysConfig
+msgid "ITSM event module that deletes the history of changes."
+msgstr ""
 
 #. SysConfig
 msgid "ITSM event module that matches conditions and executes actions."
-msgstr "ITSM Event Modul zum Überprüfen von Conditions und zum Ausführen von Actions."
+msgstr ""
 
 #. SysConfig
 msgid "ITSM event module that sends notifications."
-msgstr "ITSM Event Modul zum Senden von Benachrichtigungen."
+msgstr ""
 
 #. SysConfig
 msgid "ITSM event module that updates the history of changes."
-msgstr "ITSM Event Modul aktualisiert die Historie von Changes."
+msgstr ""
+
+#. SysConfig
+msgid "ITSM event module that updates the history of conditions."
+msgstr ""
+
+#. SysConfig
+msgid "ITSM event module that updates the history of workorders."
+msgstr ""
 
 #. SysConfig
 msgid "ITSM event module to recalculate the workorder numbers."
-msgstr "ITSM Event Modul, das die Workorder Nummern neu berechnet."
+msgstr ""
 
 #. SysConfig
 msgid "ITSM event module to set the actual start and end times of workorders."
-msgstr "ITSM Event Modul, das die ActualStart und ActualEnd Zeiten von Workorders setzt."
-
-#. SysConfig
-msgid "ITSM event module updates the history of changes."
-msgstr "ITSM-Ereignismodul, das die Chronik der Änderungen aktualisiert."
-
-#. SysConfig
-msgid "ITSM event module updates the history of conditions."
-msgstr "ITSM Event Modul aktualisiert die Historie von Conditions."
-
-#. SysConfig
-msgid "ITSM event module updates the history of workorders."
-msgstr "ITSM Event Modul aktualisiert die Historie von Workorders."
+msgstr ""
 
 #. SysConfig
 msgid ""
-"If frequency is 'regularly', you can configure how often the notications are"
-" sent (every X hours)."
-msgstr "Wenn die Häufigkeit auf 'regularly' eingestellt ist, können Sie hier einstellen, nach wievielen Stunden eine erneute Erinnerung verschickt werden soll."
+"If frequency is 'regularly', you can configure how often the notifications "
+"are sent (every X hours)."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Logfile for the ITSM change counter. This file is used for creating the "
 "change numbers."
-msgstr "Pfad und Verzeichnis zur Logdatei für den ITSM Change-Counter. Diese Datei hilft bei der Erzeugung von Change-Nummern."
+msgstr ""
 
 #. SysConfig
 msgid "Lookup of CAB members for autocompletion."
@@ -2124,41 +2572,41 @@ msgstr ""
 msgid ""
 "Module to check if WorkOrderAdd or WorkOrderAddFromTemplate should be "
 "permitted."
-msgstr "Modul zur Prüfung ob WorkOrderAdd oder WorkOrderAddFromTemplate erlaubt ist."
+msgstr ""
 
 #. SysConfig
 msgid "Module to check the CAB members."
-msgstr "Modul zum Überprüfen des Agenten im CAB."
+msgstr ""
 
 #. SysConfig
 msgid "Module to check the agent."
-msgstr "Modul zum Überprüfen des Agenten."
+msgstr ""
 
 #. SysConfig
 msgid "Module to check the change builder."
-msgstr "Modul zum Überprüfen des Change Builders."
+msgstr ""
 
 #. SysConfig
 msgid "Module to check the change manager."
-msgstr "Modul zum Überprüfen des Change Managers."
+msgstr ""
 
 #. SysConfig
 msgid "Module to check the workorder agent."
-msgstr "Modul zum Überprüfen des Workorder-Agenten."
+msgstr ""
 
 #. SysConfig
 msgid "Module to check whether no workorder agent is set."
-msgstr "Modul zum Überprüfen ob es keinen Agenten für die Workorder gibt."
+msgstr ""
 
 #. SysConfig
 msgid "Module to check whether the agent is contained in the configured list."
-msgstr "Modul zum Überprüfen ob der Agent in der konfigurierten Liste enthalten ist."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Module to show a link to create a change from this ticket. The ticket will "
 "be automatically linked with the new change."
-msgstr "Mit diesem Modul wird ein Link im Menü der Ticketansicht angezeigt, mit dem ein Change erstellt werden kann. Das Ticket wird automatisch mit dem neu erstellten Change verlinkt."
+msgstr ""
 
 #. SysConfig
 msgid "Move Time Slot."
@@ -2169,29 +2617,33 @@ msgid ""
 "Only users of these groups have the permission to use the ticket types as "
 "defined in \"ITSMChange::AddChangeLinkTicketTypes\" if the feature "
 "\"Ticket::Acl::Module###200-Ticket::Acl::Module\" is enabled."
-msgstr "Nur die Mitglieder dieser Gruppen haben die Erlaubnis die Ticket-Typen zu verwenden, die in \"ITSMChange::AddChangeLinkTicketTypes\" definiert sind, wenn das Feature \"Ticket::Acl::Module###200-Ticket::Acl::Module\" aktiviert ist."
+msgstr ""
 
 #. SysConfig
 msgid "Overview over all Changes."
 msgstr ""
 
 #. SysConfig
+msgid "PSA"
+msgstr ""
+
+#. SysConfig
 msgid ""
 "Parameters for the UserCreateWorkOrderNextMask object in the preference view"
 " of the agent interface."
-msgstr "Parameter für das UserCreateWorkOrderNextMask Objekt in den Benutzereinstellungen der Agenten-Oberfläche."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Parameters for the pages (in which the changes are shown) of the small "
 "change overview."
-msgstr "Parameter für die Change Übersichts-Anzeige in der Anzeige-Variante \"S\"."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Presents a link in the menu to show the involved persons in a change, in the"
 " zoom view of such change in the agent interface."
-msgstr "Zeigt in der \"Change Zoom\" Ansicht der Agenten-Oberfläche einen  Menu Link der es erlaubt die eingebundenen Agenten anzuzeigen."
+msgstr ""
 
 #. SysConfig
 msgid "Projected Service Availability (PSA)"
@@ -2205,156 +2657,156 @@ msgstr ""
 
 #. SysConfig
 msgid "Required privileges in order for an agent to take a workorder."
-msgstr "Benötigtes Recht zum Übernehmen einer Workorder."
+msgstr ""
 
 #. SysConfig
 msgid "Required privileges to access the overview of all changes."
-msgstr "Erforderliche Berechtigungen, um auf die Übersicht aller Änderungen zuzugreifen."
+msgstr ""
 
 #. SysConfig
 msgid "Required privileges to add a workorder."
-msgstr "Benötigtes Recht zum Löschen einer Workorder."
+msgstr ""
 
 #. SysConfig
 msgid "Required privileges to change the workorder agent."
-msgstr "Benötigtes Recht zum Ändern des Agenten einer Workorder."
+msgstr ""
 
 #. SysConfig
 msgid "Required privileges to create a template from a change."
-msgstr "Benötigtes Recht um eine Vorlage aus einem Change zu erstellen."
+msgstr ""
 
 #. SysConfig
 msgid "Required privileges to create a template from a changes' CAB."
-msgstr "Benötigtes Recht um eine Vorlage aus einem CAB eines Change zu erstellen."
+msgstr ""
 
 #. SysConfig
 msgid "Required privileges to create a template from a workorder."
-msgstr "Benötigtes Recht um eine Vorlage aus einer Workorder zu erstellen."
+msgstr ""
 
 #. SysConfig
 msgid "Required privileges to create changes from templates."
-msgstr "Erforderliche Berechtigungen, um Änderungen aus Vorlagen zu erstellen."
+msgstr ""
 
 #. SysConfig
 msgid "Required privileges to create changes."
-msgstr "Benötigtes Recht zum Erstellen von Changes."
+msgstr ""
 
 #. SysConfig
 msgid "Required privileges to delete a template."
-msgstr "Benötigtes Recht zum Löschen einer Vorlage."
+msgstr ""
 
 #. SysConfig
 msgid "Required privileges to delete a workorder."
-msgstr "Benötigtes Recht zum Löschen einer Workorder."
+msgstr ""
 
 #. SysConfig
 msgid "Required privileges to delete changes."
-msgstr "Benötigtes Recht zum Löschen von Changes."
+msgstr ""
 
 #. SysConfig
 msgid "Required privileges to edit a template."
-msgstr "Benötigtes Recht zum Ändern einer Vorlage."
+msgstr ""
 
 #. SysConfig
 msgid "Required privileges to edit a workorder."
-msgstr "Benötigtes Recht zum Ändern einer Workorder."
+msgstr ""
 
 #. SysConfig
 msgid "Required privileges to edit changes."
-msgstr "Benötigtes Recht zum Bearbeiten von Changes."
+msgstr ""
 
 #. SysConfig
 msgid "Required privileges to edit the conditions of changes."
-msgstr "Benötigtes Recht zum Bearbeiten der Condition von Changes."
+msgstr ""
 
 #. SysConfig
 msgid "Required privileges to edit the content of a template."
-msgstr "Benötigtes Recht zum Ändern des Inhalts einer Vorlage."
+msgstr ""
 
 #. SysConfig
 msgid "Required privileges to edit the involved persons of a change."
-msgstr "Benötigtes Recht zum Ändern der beteiligten Personen."
+msgstr ""
 
 #. SysConfig
 msgid "Required privileges to move changes in time."
-msgstr "Benötigtes Recht zum zeitlichen Verschieben von Changes."
+msgstr ""
 
 #. SysConfig
 msgid "Required privileges to print a change."
-msgstr "Benötigtes Recht zum Drucken von Changes."
+msgstr ""
 
 #. SysConfig
 msgid "Required privileges to reset changes."
-msgstr "Benötigtes Recht zum Zurücksetzen von Changes."
+msgstr ""
 
 #. SysConfig
 msgid "Required privileges to view a workorder."
-msgstr "Benötigtes Recht zum Betrachten einer Workorder."
+msgstr ""
 
 #. SysConfig
 msgid "Required privileges to view changes."
-msgstr "Benötigtes Recht zum Ansehen von Changes."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Required privileges to view list of changes where the user is a CAB member."
-msgstr "Benötigtes Recht zum Einsehen der Liste der Changes bei denen der Benutzer Mitglied des CABs ist."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Required privileges to view list of changes where the user is the change "
 "manager."
-msgstr "Benötigtes Recht zum Einsehen der Liste der Changes bei denen der Benutzer change manager ist."
+msgstr ""
 
 #. SysConfig
 msgid "Required privileges to view overview over all templates."
-msgstr "Benötigtes Recht zum Einsehen der Liste von Vorlagen."
+msgstr ""
 
 #. SysConfig
 msgid "Required privileges to view the conditions of changes."
-msgstr "Benötigtes Recht zum Betrachten der Conditions von Changes."
+msgstr ""
 
 #. SysConfig
 msgid "Required privileges to view the history of a change."
-msgstr "Benötigtes Recht zum Einsehen der Historie eines Change."
+msgstr ""
 
 #. SysConfig
 msgid "Required privileges to view the history of a workorder."
-msgstr "Benötigtes Recht zum Betrachten der Historie einer Workorder."
+msgstr ""
 
 #. SysConfig
 msgid "Required privileges to view the history zoom of a change."
-msgstr "Benötigtes Recht zum Einsehen der Historiendetails eines Changes."
+msgstr ""
 
 #. SysConfig
 msgid "Required privileges to view the history zoom of a workorder."
-msgstr "Benötigtes Recht zum Betrachten der Historiendetails einer Workorder."
+msgstr ""
 
 #. SysConfig
 msgid "Required privileges to view the list of Change Schedule."
-msgstr "Benötigtes Recht zum Einsehen der Change Schedule-Übersicht."
+msgstr ""
 
 #. SysConfig
 msgid "Required privileges to view the list of change PSA."
-msgstr "Benötigtes Recht zum Einsehen der Change PSA-Übersicht."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Required privileges to view the list of changes with an upcoming PIR (Post "
 "Implementation Review)."
-msgstr "Benötigtes Recht zum Einsehen der Liste von Changes mit einem anstehenden PIR (Post Implementation Review)."
+msgstr ""
 
 #. SysConfig
 msgid "Required privileges to view the list of own changes."
-msgstr "Benötigtes Recht zum Einsehen der Liste der eigenen Changes."
+msgstr ""
 
 #. SysConfig
 msgid "Required privileges to view the list of own workorders."
-msgstr "Benötigtes Recht zum Einsehen der Liste von eigenen Workorders."
+msgstr ""
 
 #. SysConfig
 msgid "Required privileges to write a report for the workorder."
-msgstr "Benötigtes Recht zum Verfassen eines Berichtes für eine Workorder."
+msgstr ""
 
 #. SysConfig
 msgid "Reset a change and its workorders."
@@ -2366,13 +2818,13 @@ msgstr ""
 
 #. SysConfig
 msgid ""
-"Run task to check if specific times have been in reached in changes and "
+"Run task to check if specific times have been reached in changes and "
 "workorders."
 msgstr ""
 
 #. SysConfig
 msgid "Screen after creating a workorder"
-msgstr "Ansicht nach Workorder-Erstellung"
+msgstr ""
 
 #. SysConfig
 msgid "Search Changes."
@@ -2389,185 +2841,185 @@ msgid ""
 "date plus the SystemID. The checksum will be rotated on a daily basis. This "
 "format looks like Year.Month.Day.SystemID.Counter.CheckSum, e.g. "
 "2010062410000017, 2010062410000026."
-msgstr "Definiert das Change Nummer Generierung Modul. \"AutoIncrement\" erhöht die Change Nummer fortlaufend, dieses Format stellt sich als SystemID.Zähler dar (z.B. 100118, 100119). Mit \"Datum\" werden die Change Nummern aus dem aktuellen Datum und einem Zähler generiert, dieses Format stellt sich als Jahr.Monat.Tag.Zähler dar, z.B. 2010062400001, 2010062400002. Mit \"DataChecksum\" hängt der Zähler eine Prüfziffer an den Wert an zuzüglich der SystemID. Die Prüfziffer ändert sich täglich, dieses Format stellt sich als Jahr.Monat.Tag.SystemID.Zähler.Prüfziffer dar, z.B. 2010062410000017, 2010062410000026."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Set the default height (in pixels) of inline HTML fields in "
 "AgentITSMChangeZoom and AgentITSMWorkOrderZoom."
-msgstr "Definiert die maximale Höhe (in Pixel) für Inline-HTML-Felder in  AgentITSMChangeZoom und AgentITSMWorkOrderZoom."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Set the maximum height (in pixels) of inline HTML fields in "
 "AgentITSMChangeZoom and AgentITSMWorkOrderZoom."
-msgstr "Definiert die maximale Höhe (in Pixel) für Inline-HTML-Felder in  AgentITSMChangeZoom und AgentITSMWorkOrderZoom."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Sets the minimal change counter size (if \"AutoIncrement\" was selected as "
 "ITSMChange::NumberGenerator). Default is 5, this means the counter starts "
 "from 10000."
-msgstr "Definiert die minimale Zählergröße für Changes (wenn \"AutoIncrement\" unter ITSMChange::NumberGenerator ausgewählt wurde). Standard ist 5, d.h. der Zähler startet mit 10000."
+msgstr ""
 
 #. SysConfig
 msgid "Sets up the state machine for changes."
-msgstr "Konfiguration für die State Machine für Changes."
+msgstr ""
 
 #. SysConfig
 msgid "Sets up the state machine for workorders."
-msgstr "Konfiguration für die State Machine für Workorders."
+msgstr ""
 
 #. SysConfig
 msgid "Show this screen after I created a new workorder"
-msgstr "Diese Ansicht nach dem Erstellen einer Workorder anzeigen"
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Shows a checkbox in the AgentITSMWorkOrderEdit screen that defines if the "
 "the following workorders should also be moved if a workorder is modified and"
 " the planned end time has changed."
-msgstr "Zeigt in der \"Workorder bearbeiten\" Ansicht der Agenten-Oberfläche einen  Checkbox die es erlaubt die nachfolgenden Workorder zu verschieben falls die bearbeitete Workorder verändert wurde und der geplante Fertigstellungstermin sich geändert hat."
+msgstr ""
 
 #. SysConfig
 msgid ""
-"Shows a link in the menu that allows changing the work order agent, in the "
-"zoom view of such work order of the agent interface."
-msgstr "Zeigt in der \"Workorder Zoom\" Ansicht der Agenten-Oberfläche einen  Menu Link der es erlaubt den Workorder-Agenten zu ändern"
+"Shows a link in the menu that allows changing the workorder agent, in the "
+"zoom view of such workorder of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Shows a link in the menu that allows defining a change as a template in the "
 "zoom view of the change, in the agent interface."
-msgstr "Zeigt in der \"Change Zoom\" Ansicht der Agenten-Oberfläche einen  Menu Link der es erlaubt den Change als Vorlage zu speichern."
+msgstr ""
 
 #. SysConfig
 msgid ""
-"Shows a link in the menu that allows defining a work order as a template in "
-"the zoom view of the work order, in the agent interface."
-msgstr "Zeigt in der \"Workorder Zoom\" Ansicht der Agenten-Oberfläche einen  Menu Link der es erlaubt die Workorder als Vorlage zu speichern."
+"Shows a link in the menu that allows defining a workorder as a template in "
+"the zoom view of the workorder, in the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
-"Shows a link in the menu that allows editing the report of a workd order, in"
-" the zoom view of such work order of the agent interface."
-msgstr "Zeigt in der \"Workorder Zoom\" Ansicht der Agenten-Oberfläche einen  Menu Link der es erlaubt den Workorder-Bericht zu bearbeiten."
+"Shows a link in the menu that allows editing the report of a workorder, in "
+"the zoom view of such workorder of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Shows a link in the menu that allows linking a change with another object in"
 " the change zoom view of the agent interface."
-msgstr "Zeigt in der \"Change Zoom\" Ansicht der Agenten-Oberfläche einen  Menu Link der es erlaubt den Change mit einem anderen Objekt zu verknüpfen."
+msgstr ""
 
 #. SysConfig
 msgid ""
-"Shows a link in the menu that allows linking a work order with another "
-"object in the zoom view of such work order of the agent interface."
-msgstr "Zeigt in der \"Workorder Zoom\" Ansicht der Agenten-Oberfläche einen  Menu Link der es erlaubt die Workorder mit einem anderen Objekt zu verknüpfen."
+"Shows a link in the menu that allows linking a workorder with another object"
+" in the zoom view of such workorder of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Shows a link in the menu that allows moving the time slot of a change in its"
 " zoom view of the agent interface."
-msgstr "Zeigt in der Change Zoom Ansicht des Agenten-Interfaces einen Menu Link zum Ändern des Zeitfensters."
+msgstr ""
 
 #. SysConfig
 msgid ""
-"Shows a link in the menu that allows taking a work order in the its zoom "
-"view of the agent interface."
-msgstr "Zeigt in der Workorder Zoom Ansicht des Agenten-Interfaces einen Menu Link zum Übernehmen."
+"Shows a link in the menu that allows taking a workorder in the its zoom view"
+" of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Shows a link in the menu to access the conditions of a change in the its "
 "zoom view of the agent interface."
-msgstr "Zeigt in der Change Zoom Ansicht des Agenten-Interfaces einen Menu Link zum Zugriff auf die Bedingungen."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Shows a link in the menu to access the history of a change in the its zoom "
 "view of the agent interface."
-msgstr "Zeigt in der Change Zoom Ansicht des Agenten-Interfaces einen Menu Link zum Zugriff auf die Historie."
+msgstr ""
 
 #. SysConfig
 msgid ""
-"Shows a link in the menu to access the history of a work order in the its "
+"Shows a link in the menu to access the history of a workorder in the its "
 "zoom view of the agent interface."
-msgstr "Zeigt in der Workorder Zoom Ansicht des Agenten-Interfaces einen Menu Link zum Zugriff auf die Historie."
+msgstr ""
 
 #. SysConfig
 msgid ""
-"Shows a link in the menu to add a work order in the change zoom view of the "
+"Shows a link in the menu to add a workorder in the change zoom view of the "
 "agent interface."
-msgstr "Zeigt in der Workorder Zoom Ansicht des Agenten-Interfaces einen Menu Link zum Hinzufügen."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Shows a link in the menu to delete a change in its zoom view of the agent "
 "interface."
-msgstr "Zeigt in der Change Zoom Ansicht des Agenten-Interfaces einen Menu Link zum Löschen."
+msgstr ""
 
 #. SysConfig
 msgid ""
-"Shows a link in the menu to delete a work order in its zoom view of the "
-"agent interface."
-msgstr "Zeigt in der Workorder Zoom Ansicht des Agenten-Interfaces einen Menu Link zum Löschen."
+"Shows a link in the menu to delete a workorder in its zoom view of the agent"
+" interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Shows a link in the menu to edit a change in the its zoom view of the agent "
 "interface."
-msgstr "Zeigt in der Change Zoom Ansicht des Agenten-Interfaces einen Menu Link zum Bearbeiten."
+msgstr ""
 
 #. SysConfig
 msgid ""
-"Shows a link in the menu to edit a work order in the its zoom view of the "
+"Shows a link in the menu to edit a workorder in the its zoom view of the "
 "agent interface."
-msgstr "Zeigt in der Workorder Zoom Ansicht des Agenten-Interfaces einen Menu Link zum Bearbeiten."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Shows a link in the menu to go back in the change zoom view of the agent "
 "interface."
-msgstr "Zeigt in der Change Zoom Ansicht des Agenten-Interfaces einen Menu Link zum Zurückgehen."
+msgstr ""
 
 #. SysConfig
 msgid ""
-"Shows a link in the menu to go back in the work order zoom view of the agent"
-" interface."
-msgstr "Zeigt in der Workorder Zoom Ansicht des Agenten-Interfaces einen Menu Link zum Zurückgehen."
+"Shows a link in the menu to go back in the workorder zoom view of the agent "
+"interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Shows a link in the menu to print a change in the its zoom view of the agent"
 " interface."
-msgstr "Zeigt in der \"Change Zoom\" Ansicht der Agenten-Oberfläche einen  Menu Link der es erlaubt den Change auszudrucken."
+msgstr ""
 
 #. SysConfig
 msgid ""
-"Shows a link in the menu to print a work order in the its zoom view of the "
+"Shows a link in the menu to print a workorder in the its zoom view of the "
 "agent interface."
-msgstr "Zeigt in der \"Workorder Zoom\" Ansicht der Agenten-Oberfläche einen  Menu Link der es erlaubt die Workorder auszudrucken."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Shows a link in the menu to reset a change and its workorders in its zoom "
 "view of the agent interface."
-msgstr "Zeigt in der \"Change Zoom\" Ansicht der Agenten-Oberfläche einen  Menu Link der es erlaubt den Change und seine Workorders zurückzusetzen."
+msgstr ""
 
 #. SysConfig
 msgid "Shows the change history (reverse ordered) in the agent interface."
-msgstr "Zeigt in Änderungschronik (umgekehrte Reihenfolge) in der Agentenoberfläche an."
+msgstr ""
 
 #. SysConfig
 msgid "State Machine"
-msgstr "State Machine"
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Stores change and workorder ids and their corresponding template id, while a"
 " user is editing a template."
-msgstr "Speichert Change und Workorder ID und die zugehörige Vorlagen ID während ein Benutzer das Template bearbeitet."
+msgstr ""
 
 #. SysConfig
 msgid "Take Workorder."
@@ -2581,13 +3033,13 @@ msgstr ""
 msgid ""
 "The identifier for a change, e.g. Change#, MyChange#. The default is "
 "Change#."
-msgstr "Change-Identifikator, z. B. Change#, MeinChange#. Als Standard wird Change# verwendet."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "The identifier for a workorder, e.g. Workorder#, MyWorkorder#. The default "
 "is Workorder#."
-msgstr "Workorder-Identifikator, z. B. Workorder#, MeineWorkorder#. Als Standard wird Workorder# verwendet."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -2597,13 +3049,21 @@ msgid ""
 "this ACL could collide with other ACLs which are also related to the ticket "
 "type, this sysconfig option is disabled by default and should only be "
 "activated if needed."
-msgstr "Dieses ACL Modul beschränkt die Nutzung von Tickettypen welche in der Systemkonfiguration unter \"ITSMChange::AddChangeLinkTicketTypes\" definiert sind, zu den Nutzern der Gruppen aus \"ITSMChange::RestrictTicketTypes::Groups\". Weil diese ACL mit anderen ACL's, welche gebunden an den Tickettypen sind, kollidieren könnte, ist diese Option standardmäßig deaktiviert und sollte nur nach Bedarf aktiviert werden. "
+msgstr ""
+
+#. SysConfig
+msgid "Time Slot"
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Types of tickets, where in the ticket zoom view a link to add a change will "
 "be displayed."
-msgstr "Typen der Tickets, in denen im Ticket-Zoom ein Link angezeigt wird, um einen Change zu erstellen."
+msgstr ""
+
+#. SysConfig
+msgid "User Search"
+msgstr ""
 
 #. SysConfig
 msgid "Workorder Add (from template)."
