@@ -1,11 +1,11 @@
 # 
 # Translators:
-# Jerzy Ruszczak <orcio6@o2.pl>, 2015
+# Jerzy Ruszczak <orcio6@o2.pl>, 2015-2016
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-12-08 12:55+0000\n"
+"PO-Revision-Date: 2016-05-05 11:33+0000\n"
 "Last-Translator: Jerzy Ruszczak <orcio6@o2.pl>\n"
 "Language-Team: Polish (http://www.transifex.com/otrs/OTRS/language/pl/)\n"
 "MIME-Version: 1.0\n"
@@ -116,7 +116,7 @@ msgstr "Przegląd SLA"
 
 #. Template: AAAITSMCore
 msgid "Service Overview"
-msgstr "Przegląd usługi"
+msgstr "Przegląd usług"
 
 #. Template: AAAITSMCore
 msgid "Service-Area"
@@ -184,7 +184,7 @@ msgstr "Usługa-Info"
 
 #. Template: AgentITSMServicePrint
 msgid "Current Incident State"
-msgstr "Aktualny stan"
+msgstr "Aktualny stan incydentu"
 
 #. Template: AgentITSMServicePrint
 msgid "Associated SLAs"
@@ -196,7 +196,7 @@ msgstr "Informacje o usłudze"
 
 #. Template: AgentITSMServiceZoom
 msgid "Current incident state"
-msgstr "Aktualny stan"
+msgstr "Aktualny stan incydentu"
 
 #. SysConfig
 msgid ""

@@ -1,12 +1,12 @@
 # 
 # Translators:
 # Marthe Ngo Temb <ngotemb@gmail.com>, 2015
-# Vincenzo Reale <vinx.reale@gmail.com>, 2015
+# Vincenzo Reale <vinx.reale@gmail.com>, 2015-2016
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-12-13 12:03+0000\n"
+"PO-Revision-Date: 2016-04-30 07:28+0000\n"
 "Last-Translator: Vincenzo Reale <vinx.reale@gmail.com>\n"
 "Language-Team: Italian (http://www.transifex.com/otrs/OTRS/language/it/)\n"
 "MIME-Version: 1.0\n"
@@ -247,23 +247,23 @@ msgstr "Gestione della matrice delle priorità."
 
 #. SysConfig
 msgid "Module to show back link in service menu."
-msgstr ""
+msgstr "Modulo per mostrare il collegamento indietro nel menu di servizio."
 
 #. SysConfig
 msgid "Module to show back link in sla menu."
-msgstr ""
+msgstr "Modulo per mostrare il collegamento indietro nel menu sla."
 
 #. SysConfig
 msgid "Module to show print link in service menu."
-msgstr ""
+msgstr "Modulo per mostrare il collegamento stampa nel menu di servizio."
 
 #. SysConfig
 msgid "Module to show print link in sla menu."
-msgstr ""
+msgstr "Modulo per mostrare il collegamento stampa nel menu sla."
 
 #. SysConfig
 msgid "Module to show the link link in service menu."
-msgstr ""
+msgstr "Modulo per mostrare il collegamento collega nel menu di servizio."
 
 #. SysConfig
 msgid "Parameters for the incident states in the preference view."

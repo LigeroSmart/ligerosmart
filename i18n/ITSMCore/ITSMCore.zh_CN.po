@@ -5,9 +5,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-04-27 10:55+0000\n"
-"Last-Translator: Martin Gruner <martin.gruner@otrs.com>\n"
-"Language-Team: Chinese (China) (http://www.transifex.com/projects/p/OTRS/language/zh_CN/)\n"
+"PO-Revision-Date: 2016-03-17 13:06+0000\n"
+"Last-Translator: 汇民 王 <whuim@163.com>\n"
+"Language-Team: Chinese (China) (http://www.transifex.com/otrs/OTRS/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -16,7 +16,7 @@ msgstr ""
 
 #. Template: AAAITSMCore
 msgid "Alternative to"
-msgstr "可供选择"
+msgstr "替代"
 
 #. Template: AAAITSMCore
 msgid "Availability"
@@ -28,7 +28,7 @@ msgstr "后端"
 
 #. Template: AAAITSMCore
 msgid "Connected to"
-msgstr "连接"
+msgstr "连接到"
 
 #. Template: AAAITSMCore
 msgid "Current State"
@@ -92,7 +92,7 @@ msgstr "恢复时间"
 
 #. Template: AAAITSMCore
 msgid "Relevant to"
-msgstr "相关"
+msgstr "关联"
 
 #. Template: AAAITSMCore
 msgid "Reporting"
@@ -100,7 +100,7 @@ msgstr "报告"
 
 #. Template: AAAITSMCore
 msgid "Required for"
-msgstr "需要"
+msgstr "被...需要"
 
 #. Template: AAAITSMCore
 msgid "Resolution Rate"
@@ -112,11 +112,11 @@ msgstr "响应时间"
 
 #. Template: AAAITSMCore
 msgid "SLA Overview"
-msgstr "SLA概述"
+msgstr "SLA概览"
 
 #. Template: AAAITSMCore
 msgid "Service Overview"
-msgstr "服务概述"
+msgstr "服务概览"
 
 #. Template: AAAITSMCore
 msgid "Service-Area"
@@ -132,7 +132,7 @@ msgstr "交易"
 
 #. Template: AAAITSMCore
 msgid "Underpinning Contract"
-msgstr "依据合同"
+msgstr "支持合同"
 
 #. Template: AAAITSMCore
 msgid "allocation"
@@ -140,11 +140,11 @@ msgstr "分配"
 
 #. Template: AdminITSMCIPAllocate
 msgid "Criticality <-> Impact <-> Priority"
-msgstr "重要 <-> 影响 <-> 优先级"
+msgstr "紧急度 <-> 影响 <-> 优先级"
 
 #. Template: AdminITSMCIPAllocate
 msgid "Manage the priority result of combinating Criticality <-> Impact."
-msgstr "\"重要 <-> 影响\"之间的组合决定优先级"
+msgstr "\"紧急度 <-> 影响\"之间的组合决定优先级"
 
 #. Template: AdminITSMCIPAllocate
 msgid "Priority allocation"
@@ -156,7 +156,7 @@ msgstr "故障间最短时间"
 
 #. Template: AdminService
 msgid "Criticality"
-msgstr "重要"
+msgstr "紧急度"
 
 #. Template: AgentITSMSLAPrint
 msgid "SLA-Info"
@@ -188,7 +188,7 @@ msgstr "当前故障状态"
 
 #. Template: AgentITSMServicePrint
 msgid "Associated SLAs"
-msgstr "关联的SLAs"
+msgstr "关联的SLA"
 
 #. Template: AgentITSMServiceZoom
 msgid "Service Information"
@@ -202,71 +202,71 @@ msgstr "当前故障状态"
 msgid ""
 "Frontend module registration for the AdminITSMCIPAllocate configuration in "
 "the admin area."
-msgstr ""
+msgstr "为系统管理区中的 AdminITSMCIPAllocate 配置注册前端模块。"
 
 #. SysConfig
 msgid ""
 "Frontend module registration for the AgentITSMSLA object in the agent "
 "interface."
-msgstr ""
+msgstr "为服务人员界面中的 AgentITSMSLA 对象注册前端模块。"
 
 #. SysConfig
 msgid ""
 "Frontend module registration for the AgentITSMSLAPrint object in the agent "
 "interface."
-msgstr ""
+msgstr "为服务人员界面中的 AgentITSMSLAPrint 对象注册前端模块。"
 
 #. SysConfig
 msgid ""
 "Frontend module registration for the AgentITSMSLAZoom object in the agent "
 "interface."
-msgstr ""
+msgstr "为服务人员界面中的 AgentITSMSLAZoom 对象注册前端模块。"
 
 #. SysConfig
 msgid ""
 "Frontend module registration for the AgentITSMService object in the agent "
 "interface."
-msgstr ""
+msgstr "为服务人员界面中的 AgentITSMService 对象注册前端模块。"
 
 #. SysConfig
 msgid ""
 "Frontend module registration for the AgentITSMServicePrint object in the "
 "agent interface."
-msgstr ""
+msgstr "为服务人员界面中的 AgentITSMServicePrint 对象注册前端模块。"
 
 #. SysConfig
 msgid ""
 "Frontend module registration for the AgentITSMServiceZoom object in the "
 "agent interface."
-msgstr ""
+msgstr "为服务人员界面中的 AgentITSMServiceZoom 对象注册前端模块。"
 
 #. SysConfig
 msgid "Manage priority matrix."
-msgstr "管理优先级矩阵"
+msgstr "管理优先级矩阵。"
 
 #. SysConfig
 msgid "Module to show back link in service menu."
-msgstr ""
+msgstr "服务菜单中显示后退链接的模块。"
 
 #. SysConfig
 msgid "Module to show back link in sla menu."
-msgstr ""
+msgstr "SLA菜单中显示后退链接的模块。"
 
 #. SysConfig
 msgid "Module to show print link in service menu."
-msgstr ""
+msgstr "服务菜单中显示打印链接的模块。"
 
 #. SysConfig
 msgid "Module to show print link in sla menu."
-msgstr ""
+msgstr "SLA菜单中显示打印链接的模块。"
 
 #. SysConfig
 msgid "Module to show the link link in service menu."
-msgstr ""
+msgstr "服务菜单中显示当前链接的链接的模块。"
 
 #. SysConfig
 msgid "Parameters for the incident states in the preference view."
-msgstr ""
+msgstr "选项视图中用于表示故障状态的参数。"
 
 #. SysConfig
 msgid ""
@@ -283,145 +283,145 @@ msgid ""
 " MAKE CHANGES TO THIS SYSCONFIG OPTION YOU NEED TO RUN THE SCRIPT "
 "bin/otrs.ITSMConfigItemIncidentStateRecalculate.pl SO THAT ALL INCIDENT "
 "STATES WILL BE RECALCULATED BASED ON THE NEW SETTINGS!"
-msgstr ""
+msgstr "设置链接的类型和方向以便计算故障状态。键是链接类型的名称（在LinkObject::Type中定义），值是IncidentLinkType（故障链接类型）的方向以计算故障状态。示例：如果IncidentLinkType（故障链接类型）设为“DependsOn（依赖）”，方向是Source（源），只有“依赖”链接（而不是链接类型为“被...需要”的链接）才用来计算故障状态。可以根据需要添加更多的链接类型和方向，如方向为“目标”的“Includes（包含）”链接。所有在系统配置选项的LinkObject::Type中定义的链接类型都可以使用，方向只可以是“Source（源）”、“Target（目标）”或“Both（源和目标都是）”。重要：在更改了系统配置选项后，需要运行脚本bin/otrs.ITSMConfigItemIncidentStateRecalculate.pl，才能按新的设置重新计算故障状态。"
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'ITSMChange' object can be linked with 'Ticket' "
 "objects using the 'Normal' link type."
-msgstr ""
+msgstr "这个设置定义了一个“ITSMChange（变更）”对象能够以链接类型“普通”链接到工单。"
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'ITSMConfigItem' object can be linked with 'FAQ'"
 " objects using the 'Normal' link type."
-msgstr ""
+msgstr "这个设置定义了一个ITSMConfigItem（配置项）对象能够以链接类型“普通”链接到FAQ知识库。"
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'ITSMConfigItem' object can be linked with 'FAQ'"
 " objects using the 'ParentChild' link type."
-msgstr ""
+msgstr "这个设置定义了一个ITSMConfigItem（配置项）对象能够以链接类型“父子”链接到FAQ知识库。"
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'ITSMConfigItem' object can be linked with 'FAQ'"
 " objects using the 'RelevantTo' link type."
-msgstr ""
+msgstr "这个设置定义了一个ITSMConfigItem（配置项）对象能够以链接类型“关联”链接到FAQ知识库。"
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'ITSMConfigItem' object can be linked with "
 "'Service' objects using the 'AlternativeTo' link type."
-msgstr ""
+msgstr "这个设置定义了一个ITSMConfigItem（配置项）对象能够以链接类型“备选”链接到FAQ知识库。"
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'ITSMConfigItem' object can be linked with "
 "'Service' objects using the 'DependsOn' link type."
-msgstr ""
+msgstr "这个设置定义了一个ITSMConfigItem（配置项）对象能够以链接类型“依赖”链接到“服务”。"
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'ITSMConfigItem' object can be linked with "
 "'Service' objects using the 'RelevantTo' link type."
-msgstr ""
+msgstr "这个设置定义了一个ITSMConfigItem（配置项）对象能够以链接类型“关联”链接到“服务”。"
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'ITSMConfigItem' object can be linked with "
 "'Ticket' objects using the 'AlternativeTo' link type."
-msgstr ""
+msgstr "这个设置定义了一个ITSMConfigItem（配置项）对象能够以链接类型“备选”链接到“服务”。"
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'ITSMConfigItem' object can be linked with "
 "'Ticket' objects using the 'DependsOn' link type."
-msgstr ""
+msgstr "这个设置定义了一个ITSMConfigItem（配置项）对象能够以链接类型“依赖”链接到“服务”。"
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'ITSMConfigItem' object can be linked with "
 "'Ticket' objects using the 'RelevantTo' link type."
-msgstr ""
+msgstr "这个设置定义了一个ITSMConfigItem（配置项）对象能够以链接类型“关联”链接到工单。"
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'ITSMConfigItem' object can be linked with other"
 " 'ITSMConfigItem' objects using the 'AlternativeTo' link type."
-msgstr ""
+msgstr "这个设置定义了一个ITSMConfigItem（配置项）对象能够以链接类型“备选”链接到另一配置项。"
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'ITSMConfigItem' object can be linked with other"
 " 'ITSMConfigItem' objects using the 'ConnectedTo' link type."
-msgstr ""
+msgstr "这个设置定义了一个ITSMConfigItem（配置项）对象能够以链接类型“连接到”链接到另一配置项。"
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'ITSMConfigItem' object can be linked with other"
 " 'ITSMConfigItem' objects using the 'DependsOn' link type."
-msgstr ""
+msgstr "这个设置定义了一个ITSMConfigItem（配置项）对象能够以链接类型“依赖”链接到另一配置项。"
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'ITSMConfigItem' object can be linked with other"
 " 'ITSMConfigItem' objects using the 'Includes' link type."
-msgstr ""
+msgstr "这个设置定义了一个ITSMConfigItem（配置项）对象能够以链接类型“包含”链接到另一配置项。"
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'ITSMConfigItem' object can be linked with other"
 " 'ITSMConfigItem' objects using the 'RelevantTo' link type."
-msgstr ""
+msgstr "这个设置定义了一个ITSMConfigItem（配置项）对象能够以链接类型“关联”链接到另一配置项。"
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'ITSMWorkOrder' object can be linked with "
 "'ITSMConfigItem' objects using the 'DependsOn' link type."
-msgstr ""
+msgstr "这个设置定义了一个ITSMWorkOrder（工作指令）对象能够以链接类型“依赖”链接到配置项。"
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'ITSMWorkOrder' object can be linked with "
 "'ITSMConfigItem' objects using the 'Normal' link type."
-msgstr ""
+msgstr "这个设置定义了一个ITSMWorkOrder（工作指令）对象能够以链接类型“普通”链接到配置项。"
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'ITSMWorkOrder' object can be linked with "
 "'Service' objects using the 'DependsOn' link type."
-msgstr ""
+msgstr "这个设置定义了一个ITSMWorkOrder（工作指令）对象能够以链接类型“依赖”链接到“服务”。"
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'ITSMWorkOrder' object can be linked with "
 "'Service' objects using the 'Normal' link type."
-msgstr ""
+msgstr "这个设置定义了一个ITSMWorkOrder（工作指令）对象能够以链接类型“普通”链接到“服务”。"
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'ITSMWorkOrder' object can be linked with "
 "'Ticket' objects using the 'Normal' link type."
-msgstr ""
+msgstr "这个设置定义了一个ITSMWorkOrder（工作指令）对象能够以链接类型“普通”链接到工单。"
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'Service' object can be linked with 'FAQ' "
 "objects using the 'Normal' link type."
-msgstr ""
+msgstr "这个设置定义了一个“服务”对象能够以链接类型“普通”链接到FAQ知识库。"
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'Service' object can be linked with 'FAQ' "
 "objects using the 'ParentChild' link type."
-msgstr ""
+msgstr "这个设置定义了一个“服务”对象能够以链接类型“父子”链接到FAQ知识库。"
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'Service' object can be linked with 'FAQ' "
 "objects using the 'RelevantTo' link type."
-msgstr ""
+msgstr "这个设置定义了一个“服务”对象能够以链接类型“关联”链接到FAQ知识库。"
 
 #. SysConfig
 msgid ""
@@ -429,36 +429,36 @@ msgid ""
 "the target name contain the same value, the resulting link is a non-"
 "directional one. If the values are different, the resulting link is a "
 "directional link."
-msgstr ""
+msgstr "这个设置定义了链接类型“替代”。如果源和目标名称相同，则产生的链接是无方向性的链接。如果源和目标的值不同，则产生的链接是方向性的链接。"
 
 #. SysConfig
 msgid ""
 "This setting defines the link type 'ConnectedTo'. If the source name and the"
 " target name contain the same value, the resulting link is a non-directional"
 " one. If the values are different, the resulting link is a directional link."
-msgstr ""
+msgstr "这个设置定义了链接类型“连接到”。如果源和目标名称相同，则产生的链接是无方向性的链接。如果源和目标的值不同，则产生的链接是方向性的链接。"
 
 #. SysConfig
 msgid ""
 "This setting defines the link type 'DependsOn'. If the source name and the "
 "target name contain the same value, the resulting link is a non-directional "
 "one. If the values are different, the resulting link is a directional link."
-msgstr ""
+msgstr "这个设置定义了链接类型“依赖”。如果源和目标名称相同，则产生的链接是无方向性的链接。如果源和目标的值不同，则产生的链接是方向性的链接。"
 
 #. SysConfig
 msgid ""
 "This setting defines the link type 'Includes'. If the source name and the "
 "target name contain the same value, the resulting link is a non-directional "
 "one. If the values are different, the resulting link is a directional link."
-msgstr ""
+msgstr "这个设置定义了链接类型“包含”。如果源和目标名称相同，则产生的链接是无方向性的链接。如果源和目标的值不同，则产生的链接是方向性的链接。"
 
 #. SysConfig
 msgid ""
 "This setting defines the link type 'RelevantTo'. If the source name and the "
 "target name contain the same value, the resulting link is a non-directional "
 "one. If the values are different, the resulting link is a directional link."
-msgstr ""
+msgstr "这个设置定义了链接类型“关联”。如果源和目标名称相同，则产生的链接是无方向性的链接。如果源和目标的值不同，则产生的链接是方向性的链接。"
 
 #. SysConfig
 msgid "Width of ITSM textareas."
-msgstr ""
+msgstr "ITSM模块中文本输入区域的宽度。"
