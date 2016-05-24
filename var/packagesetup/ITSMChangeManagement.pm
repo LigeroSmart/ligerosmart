@@ -1303,7 +1303,7 @@ Add ChangeManagement specific notifications.
 sub _AddNotifications {
     my ($Self) = @_;
 
-    # Set up some standard texts for English, German, and Dutch, Change and WorkOrder, agent and customer
+    # Set up some standard texts for English, German, Hungarian and Dutch, Change and WorkOrder, agent and customer
     # The customer texts provide no link.
 
     # Change info for agents (en)
@@ -1316,15 +1316,15 @@ sub _AddNotifications {
         . "\n"
         . "<OTRS_CONFIG_HttpType>://<OTRS_CONFIG_FQDN>/<OTRS_CONFIG_ScriptAlias>index.pl?Action=AgentITSMChangeZoom;ChangeID=<OTRS_CHANGE_ChangeID>\n"
         . "\n"
-        . "Your OTRS Notification Master\n";
+        . "-- <OTRS_CONFIG_NotificationSenderName>\n";
 
-    # Change info for Customers (en)
+    # Change info for customers (en)
     my $ChangeInfoCustomerEn = "\n"
         . "\n"
         . "Change title: <OTRS_CHANGE_ChangeTitle>\n"
         . "Current change state: <OTRS_CHANGE_ChangeState>\n"
         . "\n"
-        . "Your OTRS Notification Master\n";
+        . "-- <OTRS_CONFIG_NotificationSenderName>\n";
 
     # Change info for agents (de)
     my $ChangeInfoAgentDe = "\n"
@@ -1336,15 +1336,35 @@ sub _AddNotifications {
         . "\n"
         . "<OTRS_CONFIG_HttpType>://<OTRS_CONFIG_FQDN>/<OTRS_CONFIG_ScriptAlias>index.pl?Action=AgentITSMChangeZoom;ChangeID=<OTRS_CHANGE_ChangeID>\n"
         . "\n"
-        . "Ihr OTRS Notification Master\n";
+        . "-- <OTRS_CONFIG_NotificationSenderName>\n";
 
-    # Change info for Customers (de)
+    # Change info for customers (de)
     my $ChangeInfoCustomerDe = "\n"
         . "\n"
         . "Change Titel: <OTRS_CHANGE_ChangeTitle>\n"
         . "Aktueller Change Status: <OTRS_CHANGE_ChangeState>\n"
         . "\n"
-        . "Ihr OTRS Notification Master\n";
+        . "-- <OTRS_CONFIG_NotificationSenderName>\n";
+
+    # Change info for agents (hu)
+    my $ChangeInfoAgentHu = "\n"
+        . "\n"
+        . "Változáscím: <OTRS_CHANGE_ChangeTitle>\n"
+        . "Változás-összeállító: <OTRS_CHANGE_ChangeBuilder>\n"
+        . "Változásmenedzser: <OTRS_CHANGE_ChangeManager>\n"
+        . "Jelenlegi változásállapot: <OTRS_CHANGE_ChangeState>\n"
+        . "\n"
+        . "<OTRS_CONFIG_HttpType>://<OTRS_CONFIG_FQDN>/<OTRS_CONFIG_ScriptAlias>index.pl?Action=AgentITSMChangeZoom;ChangeID=<OTRS_CHANGE_ChangeID>\n"
+        . "\n"
+        . "-- <OTRS_CONFIG_NotificationSenderName>\n";
+
+    # Change info for customers (hu)
+    my $ChangeInfoCustomerHu = "\n"
+        . "\n"
+        . "Változáscím: <OTRS_CHANGE_ChangeTitle>\n"
+        . "Jelenlegi változásállapot: <OTRS_CHANGE_ChangeState>\n"
+        . "\n"
+        . "-- <OTRS_CONFIG_NotificationSenderName>\n";
 
     # Change info for agents (nl)
     my $ChangeInfoAgentNl = "\n"
@@ -1355,14 +1375,16 @@ sub _AddNotifications {
         . "Actuele change-status: <OTRS_CHANGE_ChangeState>\n"
         . "\n"
         . "<OTRS_CONFIG_HttpType>://<OTRS_CONFIG_FQDN>/<OTRS_CONFIG_ScriptAlias>index.pl?Action=AgentITSMChangeZoom;ChangeID=<OTRS_CHANGE_ChangeID>\n"
-        . "\n";
+        . "\n"
+        . "-- <OTRS_CONFIG_NotificationSenderName>\n";
 
-    # Change info for Customers (nl)
+    # Change info for customers (nl)
     my $ChangeInfoCustomerNl = "\n"
         . "\n"
         . "Change-titel: <OTRS_CHANGE_ChangeTitle>\n"
         . "Actuele change-status: <OTRS_CHANGE_ChangeState>\n"
-        . "\n";
+        . "\n"
+        . "-- <OTRS_CONFIG_NotificationSenderName>\n";
 
     # Workorder info for customers (en)
     my $WorkOrderInfoCustomerEn = "\n"
@@ -1375,7 +1397,7 @@ sub _AddNotifications {
         . "Workorder agent: <OTRS_WORKORDER_WorkOrderAgent>\n"
         . "Current workorder state: <OTRS_WORKORDER_WorkOrderState>\n"
         . "\n"
-        . "Your OTRS Notification Master\n";
+        . "-- <OTRS_CONFIG_NotificationSenderName>\n";
 
     # Workorder info for agents (en)
     my $WorkOrderInfoAgentEn = "\n"
@@ -1389,7 +1411,7 @@ sub _AddNotifications {
         . "\n"
         . "<OTRS_CONFIG_HttpType>://<OTRS_CONFIG_FQDN>/<OTRS_CONFIG_ScriptAlias>index.pl?Action=AgentITSMWorkOrderZoom;WorkOrderID=<OTRS_WORKORDER_WorkOrderID>\n"
         . "\n"
-        . "Your OTRS Notification Master\n";
+        . "-- <OTRS_CONFIG_NotificationSenderName>\n";
 
     # Workorder info for agents (de)
     my $WorkOrderInfoAgentDe = "\n"
@@ -1404,7 +1426,7 @@ sub _AddNotifications {
         . "\n"
         . "<OTRS_CONFIG_HttpType>://<OTRS_CONFIG_FQDN>/<OTRS_CONFIG_ScriptAlias>index.pl?Action=AgentITSMWorkOrderZoom;WorkOrderID=<OTRS_WORKORDER_WorkOrderID>\n"
         . "\n"
-        . "Ihr OTRS Notification Master\n";
+        . "-- <OTRS_CONFIG_NotificationSenderName>\n";
 
     # Workorder info for customers (de)
     my $WorkOrderInfoCustomerDe = "\n"
@@ -1416,7 +1438,34 @@ sub _AddNotifications {
         . "Workorder Typ: <OTRS_WORKORDER_WorkOrderType>\n"
         . "Aktueller Workorder Status: <OTRS_WORKORDER_WorkOrderState>\n"
         . "\n"
-        . "Ihr OTRS Notification Master\n";
+        . "-- <OTRS_CONFIG_NotificationSenderName>\n";
+
+    # Workorder info for customers (hu)
+    my $WorkOrderInfoCustomerHu = "\n"
+        . "\n"
+        . "Változáscím: <OTRS_CHANGE_ChangeTitle>\n"
+        . "Jelenlegi változásállapot: <OTRS_CHANGE_ChangeState>\n"
+        . "\n"
+        . "Munkamegrendelés-cím: <OTRS_WORKORDER_WorkOrderTitle>\n"
+        . "Munkamegrendelés-típus: <OTRS_WORKORDER_WorkOrderType>\n"
+        . "Munkamegrendelés-ügyintéző: <OTRS_WORKORDER_WorkOrderAgent>\n"
+        . "Jelenlegi munkamegrendelés-állapot: <OTRS_WORKORDER_WorkOrderState>\n"
+        . "\n"
+        . "-- <OTRS_CONFIG_NotificationSenderName>\n";
+
+    # Workorder info for agents (hu)
+    my $WorkOrderInfoAgentHu = "\n"
+        . "\n"
+        . "Változáscím: <OTRS_CHANGE_ChangeTitle>\n"
+        . "Jelenlegi változásállapot: <OTRS_CHANGE_ChangeState>\n"
+        . "\n"
+        . "Munkamegrendelés-cím: <OTRS_WORKORDER_WorkOrderTitle>\n"
+        . "Munkamegrendelés-típus: <OTRS_WORKORDER_WorkOrderType>\n"
+        . "Jelenlegi munkamegrendelés-állapot: <OTRS_WORKORDER_WorkOrderState>\n"
+        . "\n"
+        . "<OTRS_CONFIG_HttpType>://<OTRS_CONFIG_FQDN>/<OTRS_CONFIG_ScriptAlias>index.pl?Action=AgentITSMWorkOrderZoom;WorkOrderID=<OTRS_WORKORDER_WorkOrderID>\n"
+        . "\n"
+        . "-- <OTRS_CONFIG_NotificationSenderName>\n";
 
     # Workorder info for agents (nl)
     my $WorkOrderInfoAgentNl = "\n"
@@ -1430,7 +1479,8 @@ sub _AddNotifications {
         . "Actuele Work Order-status: <OTRS_WORKORDER_WorkOrderState>\n"
         . "\n"
         . "<OTRS_CONFIG_HttpType>://<OTRS_CONFIG_FQDN>/<OTRS_CONFIG_ScriptAlias>index.pl?Action=AgentITSMWorkOrderZoom;WorkOrderID=<OTRS_WORKORDER_WorkOrderID>\n"
-        . "\n";
+        . "\n"
+        . "-- <OTRS_CONFIG_NotificationSenderName>\n";
 
     # Workorder info for customers (nl)
     my $WorkOrderInfoCustomerNl = "\n"
@@ -1441,7 +1491,8 @@ sub _AddNotifications {
         . "Work Order-titel: <OTRS_WORKORDER_WorkOrderTitle>\n"
         . "Work Order-type: <OTRS_WORKORDER_WorkOrderType>\n"
         . "Actuele Work Order-status: <OTRS_WORKORDER_WorkOrderState>\n"
-        . "\n";
+        . "\n"
+        . "-- <OTRS_CONFIG_NotificationSenderName>\n";
 
     # define notifications and recipients
     my @Notifications = (
@@ -1466,6 +1517,12 @@ sub _AddNotifications {
                             . $ChangeInfoAgentEn,
                         ContentType => 'text/plain',
                     },
+                    hu => {
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] létrehozva',
+                        Body    => 'Létrejött a következő változás: <OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>.'
+                            . $ChangeInfoAgentHu,
+                        ContentType => 'text/plain',
+                    },
                     nl => {
                         Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] aangemaakt',
                         Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> is aangemaakt.'
@@ -1484,6 +1541,12 @@ sub _AddNotifications {
                         Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] created',
                         Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> was created.'
                             . $ChangeInfoCustomerEn,
+                        ContentType => 'text/plain',
+                    },
+                    hu => {
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] létrehozva',
+                        Body    => 'Létrejött a következő változás: <OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>.'
+                            . $ChangeInfoCustomerHu,
                         ContentType => 'text/plain',
                     },
                     nl => {
@@ -1517,6 +1580,12 @@ sub _AddNotifications {
                             . $ChangeInfoAgentEn,
                         ContentType => 'text/plain',
                     },
+                    hu => {
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] frissítve',
+                        Body    => 'Frissült a következő változás: <OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>.'
+                            . $ChangeInfoAgentHu,
+                        ContentType => 'text/plain',
+                    },
                     nl => {
                         Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] bijgewerkt',
                         Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> is bijgewerkt.'
@@ -1535,6 +1604,12 @@ sub _AddNotifications {
                         Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] updated',
                         Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> was updated.'
                             . $ChangeInfoCustomerEn,
+                        ContentType => 'text/plain',
+                    },
+                    hu => {
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] frissítve',
+                        Body    => 'Frissült a következő változás: <OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>.'
+                            . $ChangeInfoCustomerHu,
                         ContentType => 'text/plain',
                     },
                     nl => {
@@ -1568,6 +1643,12 @@ sub _AddNotifications {
                             . $ChangeInfoAgentEn,
                         ContentType => 'text/plain',
                     },
+                    hu => {
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] frissítve',
+                        Body    => 'Frissült a következő változás: <OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>.'
+                            . $ChangeInfoAgentHu,
+                        ContentType => 'text/plain',
+                    },
                     nl => {
                         Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] bijgewerkt',
                         Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> is bijgewerkt.'
@@ -1586,6 +1667,12 @@ sub _AddNotifications {
                         Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] updated',
                         Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> was updated.'
                             . $ChangeInfoCustomerEn,
+                        ContentType => 'text/plain',
+                    },
+                    hu => {
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] frissítve',
+                        Body    => 'Frissült a következő változás: <OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>.'
+                            . $ChangeInfoCustomerHu,
                         ContentType => 'text/plain',
                     },
                     nl => {
@@ -1619,6 +1706,12 @@ sub _AddNotifications {
                             . $ChangeInfoAgentEn,
                         ContentType => 'text/plain',
                     },
+                    hu => {
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] frissítve',
+                        Body    => 'Frissült a következő változás: <OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>.'
+                            . $ChangeInfoAgentHu,
+                        ContentType => 'text/plain',
+                    },
                     nl => {
                         Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] bijgewerkt',
                         Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> is bijgewerkt.'
@@ -1637,6 +1730,12 @@ sub _AddNotifications {
                         Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] updated',
                         Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> was updated.'
                             . $ChangeInfoCustomerEn,
+                        ContentType => 'text/plain',
+                    },
+                    hu => {
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] frissítve',
+                        Body    => 'Frissült a következő változás: <OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>.'
+                            . $ChangeInfoCustomerHu,
                         ContentType => 'text/plain',
                     },
                     nl => {
@@ -1672,6 +1771,12 @@ sub _AddNotifications {
                             . $ChangeInfoAgentEn,
                         ContentType => 'text/plain',
                     },
+                    hu => {
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] frissítve',
+                        Body    => 'Frissült a következő változás: <OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>.'
+                            . $ChangeInfoAgentHu,
+                        ContentType => 'text/plain',
+                    },
                     nl => {
                         Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] bijgewerkt',
                         Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> is bijgewerkt.'
@@ -1690,6 +1795,12 @@ sub _AddNotifications {
                         Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] updated',
                         Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> was updated.'
                             . $ChangeInfoCustomerEn,
+                        ContentType => 'text/plain',
+                    },
+                    hu => {
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] frissítve',
+                        Body    => 'Frissült a következő változás: <OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>.'
+                            . $ChangeInfoCustomerHu,
                         ContentType => 'text/plain',
                     },
                     nl => {
@@ -1726,6 +1837,12 @@ sub _AddNotifications {
                             . $ChangeInfoAgentEn,
                         ContentType => 'text/plain',
                     },
+                    hu => {
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] frissítve',
+                        Body    => 'Frissült a következő változás: <OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>.'
+                            . $ChangeInfoAgentHu,
+                        ContentType => 'text/plain',
+                    },
                     nl => {
                         Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] bijgewerkt',
                         Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> is bijgewerkt.'
@@ -1744,6 +1861,12 @@ sub _AddNotifications {
                         Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] updated',
                         Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> was updated.'
                             . $ChangeInfoCustomerEn,
+                        ContentType => 'text/plain',
+                    },
+                    hu => {
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] frissítve',
+                        Body    => 'Frissült a következő változás: <OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>.'
+                            . $ChangeInfoCustomerHu,
                         ContentType => 'text/plain',
                     },
                     nl => {
@@ -1777,6 +1900,12 @@ sub _AddNotifications {
                             . $ChangeInfoAgentEn,
                         ContentType => 'text/plain',
                     },
+                    hu => {
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] frissítve',
+                        Body    => 'Frissült a következő változás: <OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>.'
+                            . $ChangeInfoAgentHu,
+                        ContentType => 'text/plain',
+                    },
                     nl => {
                         Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] bijgewerkt',
                         Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> is bijgewerkt.'
@@ -1795,6 +1924,12 @@ sub _AddNotifications {
                         Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] updated',
                         Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> was updated.'
                             . $ChangeInfoCustomerEn,
+                        ContentType => 'text/plain',
+                    },
+                    hu => {
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] frissítve',
+                        Body    => 'Frissült a következő változás: <OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>.'
+                            . $ChangeInfoCustomerHu,
                         ContentType => 'text/plain',
                     },
                     nl => {
@@ -1830,6 +1965,12 @@ sub _AddNotifications {
                             . $ChangeInfoAgentEn,
                         ContentType => 'text/plain',
                     },
+                    hu => {
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] frissítve',
+                        Body    => 'Frissült a következő változás: <OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>.'
+                            . $ChangeInfoAgentHu,
+                        ContentType => 'text/plain',
+                    },
                     nl => {
                         Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] bijgewerkt',
                         Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> is bijgewerkt.'
@@ -1848,6 +1989,12 @@ sub _AddNotifications {
                         Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] updated',
                         Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> was updated.'
                             . $ChangeInfoCustomerEn,
+                        ContentType => 'text/plain',
+                    },
+                    hu => {
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] frissítve',
+                        Body    => 'Frissült a következő változás: <OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>.'
+                            . $ChangeInfoCustomerHu,
                         ContentType => 'text/plain',
                     },
                     nl => {
@@ -1883,6 +2030,12 @@ sub _AddNotifications {
                             . $ChangeInfoAgentEn,
                         ContentType => 'text/plain',
                     },
+                    hu => {
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] frissítve',
+                        Body    => 'Frissült a következő változás: <OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>.'
+                            . $ChangeInfoAgentHu,
+                        ContentType => 'text/plain',
+                    },
                     nl => {
                         Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] bijgewerkt',
                         Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> is bijgewerkt.'
@@ -1901,6 +2054,12 @@ sub _AddNotifications {
                         Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] updated',
                         Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> was updated.'
                             . $ChangeInfoCustomerEn,
+                        ContentType => 'text/plain',
+                    },
+                    hu => {
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] frissítve',
+                        Body    => 'Frissült a következő változás: <OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>.'
+                            . $ChangeInfoCustomerHu,
                         ContentType => 'text/plain',
                     },
                     nl => {
@@ -1934,6 +2093,12 @@ sub _AddNotifications {
                             . $ChangeInfoAgentEn,
                         ContentType => 'text/plain',
                     },
+                    hu => {
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] frissítve',
+                        Body    => 'Frissült a következő változás: <OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>.'
+                            . $ChangeInfoAgentHu,
+                        ContentType => 'text/plain',
+                    },
                     nl => {
                         Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] bijgewerkt',
                         Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> is bijgewerkt.'
@@ -1952,6 +2117,12 @@ sub _AddNotifications {
                         Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] updated',
                         Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> was updated.'
                             . $ChangeInfoCustomerEn,
+                        ContentType => 'text/plain',
+                    },
+                    hu => {
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] frissítve',
+                        Body    => 'Frissült a következő változás: <OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>.'
+                            . $ChangeInfoCustomerHu,
                         ContentType => 'text/plain',
                     },
                     nl => {
@@ -1987,6 +2158,12 @@ sub _AddNotifications {
                             . $ChangeInfoAgentEn,
                         ContentType => 'text/plain',
                     },
+                    hu => {
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] frissítve',
+                        Body    => 'Frissült a következő változás: <OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>.'
+                            . $ChangeInfoAgentHu,
+                        ContentType => 'text/plain',
+                    },
                     nl => {
                         Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] bijgewerkt',
                         Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> is bijgewerkt.'
@@ -2005,6 +2182,12 @@ sub _AddNotifications {
                         Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] updated',
                         Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> was updated.'
                             . $ChangeInfoCustomerEn,
+                        ContentType => 'text/plain',
+                    },
+                    hu => {
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] frissítve',
+                        Body    => 'Frissült a következő változás: <OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>.'
+                            . $ChangeInfoCustomerHu,
                         ContentType => 'text/plain',
                     },
                     nl => {
@@ -2040,6 +2223,12 @@ sub _AddNotifications {
                             . $ChangeInfoAgentEn,
                         ContentType => 'text/plain',
                     },
+                    hu => {
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] frissítve',
+                        Body    => 'Frissült a következő változás: <OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>.'
+                            . $ChangeInfoAgentHu,
+                        ContentType => 'text/plain',
+                    },
                     nl => {
                         Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] bijgewerkt',
                         Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> is bijgewerkt.'
@@ -2058,6 +2247,12 @@ sub _AddNotifications {
                         Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] updated',
                         Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> was updated.'
                             . $ChangeInfoCustomerEn,
+                        ContentType => 'text/plain',
+                    },
+                    hu => {
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] frissítve',
+                        Body    => 'Frissült a következő változás: <OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>.'
+                            . $ChangeInfoCustomerHu,
                         ContentType => 'text/plain',
                     },
                     nl => {
@@ -2097,6 +2292,14 @@ sub _AddNotifications {
                             . $WorkOrderInfoAgentEn,
                         ContentType => 'text/plain',
                     },
+                    hu => {
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] létrehozva',
+                        Body =>
+                            'Létrejött a következő munkamegrendelés: <OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>.'
+                            . $WorkOrderInfoAgentHu,
+                        ContentType => 'text/plain',
+                    },
                     nl => {
                         Subject =>
                             '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] aangemaakt',
@@ -2121,6 +2324,14 @@ sub _AddNotifications {
                         Body =>
                             '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> was created.'
                             . $WorkOrderInfoCustomerEn,
+                        ContentType => 'text/plain',
+                    },
+                    hu => {
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] létrehozva',
+                        Body =>
+                            'Létrejött a következő munkamegrendelés: <OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>.'
+                            . $WorkOrderInfoCustomerHu,
                         ContentType => 'text/plain',
                     },
                     nl => {
@@ -2162,6 +2373,14 @@ sub _AddNotifications {
                             . $WorkOrderInfoAgentEn,
                         ContentType => 'text/plain',
                     },
+                    hu => {
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] frissítve',
+                        Body =>
+                            'Frissült a következő munkamegrendelés: <OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>.'
+                            . $WorkOrderInfoAgentHu,
+                        ContentType => 'text/plain',
+                    },
                     nl => {
                         Subject =>
                             '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] bijgewerkt',
@@ -2186,6 +2405,14 @@ sub _AddNotifications {
                         Body =>
                             '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> was updated.'
                             . $WorkOrderInfoCustomerEn,
+                        ContentType => 'text/plain',
+                    },
+                    hu => {
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] frissítve',
+                        Body =>
+                            'Frissült a következő munkamegrendelés: <OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>.'
+                            . $WorkOrderInfoCustomerHu,
                         ContentType => 'text/plain',
                     },
                     nl => {
@@ -2227,6 +2454,14 @@ sub _AddNotifications {
                             . $WorkOrderInfoAgentEn,
                         ContentType => 'text/plain',
                     },
+                    hu => {
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] frissítve',
+                        Body =>
+                            'Frissült a következő munkamegrendelés: <OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>.'
+                            . $WorkOrderInfoAgentHu,
+                        ContentType => 'text/plain',
+                    },
                     nl => {
                         Subject =>
                             '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] bijgewerkt',
@@ -2251,6 +2486,14 @@ sub _AddNotifications {
                         Body =>
                             '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> was updated.'
                             . $WorkOrderInfoCustomerEn,
+                        ContentType => 'text/plain',
+                    },
+                    hu => {
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] frissítve',
+                        Body =>
+                            'Frissült a következő munkamegrendelés: <OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>.'
+                            . $WorkOrderInfoCustomerHu,
                         ContentType => 'text/plain',
                     },
                     nl => {
@@ -2292,6 +2535,14 @@ sub _AddNotifications {
                             . $ChangeInfoAgentEn,
                         ContentType => 'text/plain',
                     },
+                    hu => {
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] <OTRS_LINK_Object> összekapcsolva',
+                        Body =>
+                            'A(z) <OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> változást összekapcsolták egy <OTRS_LINK_Object> objektummal.'
+                            . $ChangeInfoAgentHu,
+                        ContentType => 'text/plain',
+                    },
                     nl => {
                         Subject =>
                             '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] <OTRS_LINK_Object> linked',
@@ -2316,6 +2567,14 @@ sub _AddNotifications {
                         Body =>
                             '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> was linked to a <OTRS_LINK_Object> .'
                             . $ChangeInfoCustomerEn,
+                        ContentType => 'text/plain',
+                    },
+                    hu => {
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] <OTRS_LINK_Object> összekapcsolva',
+                        Body =>
+                            'A(z) <OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> változást összekapcsolták egy <OTRS_LINK_Object> objektummal.'
+                            . $ChangeInfoCustomerHu,
                         ContentType => 'text/plain',
                     },
                     nl => {
@@ -2357,6 +2616,14 @@ sub _AddNotifications {
                             . $ChangeInfoAgentEn,
                         ContentType => 'text/plain',
                     },
+                    hu => {
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] tervezett kezdési idő elérve',
+                        Body =>
+                            'A(z) <OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> változás elérte a tervezett kezdési idejét.'
+                            . $ChangeInfoAgentHu,
+                        ContentType => 'text/plain',
+                    },
                     nl => {
                         Subject =>
                             '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] geplande starttijd bereikt',
@@ -2381,6 +2648,14 @@ sub _AddNotifications {
                         Body =>
                             '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> has reached its Planned Start Time.'
                             . $ChangeInfoCustomerEn,
+                        ContentType => 'text/plain',
+                    },
+                    hu => {
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] tervezett kezdési idő elérve',
+                        Body =>
+                            'A(z) <OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> változás elérte a tervezett kezdési idejét.'
+                            . $ChangeInfoCustomerHu,
                         ContentType => 'text/plain',
                     },
                     nl => {
@@ -2422,6 +2697,14 @@ sub _AddNotifications {
                             . $ChangeInfoAgentEn,
                         ContentType => 'text/plain',
                     },
+                    hu => {
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] tervezett befejezési idő elérve',
+                        Body =>
+                            'A(z) <OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> változás elérte a tervezett befejezési idejét.'
+                            . $ChangeInfoAgentHu,
+                        ContentType => 'text/plain',
+                    },
                     nl => {
                         Subject =>
                             '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] geplande eindttijd bereikt',
@@ -2446,6 +2729,14 @@ sub _AddNotifications {
                         Body =>
                             '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> has reached its Planned End Time.'
                             . $ChangeInfoCustomerEn,
+                        ContentType => 'text/plain',
+                    },
+                    hu => {
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] tervezett befejezési idő elérve',
+                        Body =>
+                            'A(z) <OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> változás elérte a tervezett befejezési idejét.'
+                            . $ChangeInfoCustomerHu,
                         ContentType => 'text/plain',
                     },
                     nl => {
@@ -2483,6 +2774,12 @@ sub _AddNotifications {
                             . $ChangeInfoAgentEn,
                         ContentType => 'text/plain',
                     },
+                    hu => {
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] elkezdődött',
+                        Body    => 'Elkezdődött a következő változás: <OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>.'
+                            . $ChangeInfoAgentHu,
+                        ContentType => 'text/plain',
+                    },
                     nl => {
                         Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] gestart',
                         Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> is gestart.'
@@ -2501,6 +2798,12 @@ sub _AddNotifications {
                         Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] started',
                         Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> has started.'
                             . $ChangeInfoCustomerEn,
+                        ContentType => 'text/plain',
+                    },
+                    hu => {
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] elkezdődött',
+                        Body    => 'Elkezdődött a következő változás: <OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>.'
+                            . $ChangeInfoCustomerHu,
                         ContentType => 'text/plain',
                     },
                     nl => {
@@ -2536,6 +2839,12 @@ sub _AddNotifications {
                             . $ChangeInfoAgentEn,
                         ContentType => 'text/plain',
                     },
+                    hu => {
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] befejeződött',
+                        Body    => 'Befejeződött a következő változás: <OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>.'
+                            . $ChangeInfoAgentHu,
+                        ContentType => 'text/plain',
+                    },
                     nl => {
                         Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] afgerond',
                         Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> is afgerond.'
@@ -2554,6 +2863,12 @@ sub _AddNotifications {
                         Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] finished',
                         Body    => '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> was finished.'
                             . $ChangeInfoCustomerEn,
+                        ContentType => 'text/plain',
+                    },
+                    hu => {
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] befejeződött',
+                        Body    => 'Befejeződött a következő változás: <OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>.'
+                            . $ChangeInfoCustomerHu,
                         ContentType => 'text/plain',
                     },
                     nl => {
@@ -2592,6 +2907,13 @@ sub _AddNotifications {
                             . $ChangeInfoAgentEn,
                         ContentType => 'text/plain',
                     },
+                    hu => {
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] kért idő elérve',
+                        Body =>
+                            'A(z) <OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> változás elérte a kért idejét.'
+                            . $ChangeInfoAgentHu,
+                        ContentType => 'text/plain',
+                    },
                     nl => {
                         Subject =>
                             '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] aangevraagd tijdstip bereikt',
@@ -2615,6 +2937,13 @@ sub _AddNotifications {
                         Body =>
                             '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> has reached its requested time.'
                             . $ChangeInfoCustomerEn,
+                        ContentType => 'text/plain',
+                    },
+                    hu => {
+                        Subject => '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] kért idő elérve',
+                        Body =>
+                            'A(z) <OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> változás elérte a kért idejét.'
+                            . $ChangeInfoCustomerHu,
                         ContentType => 'text/plain',
                     },
                     nl => {
@@ -2656,6 +2985,14 @@ sub _AddNotifications {
                             . $WorkOrderInfoAgentEn,
                         ContentType => 'text/plain',
                     },
+                    hu => {
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] tervezett kezdési idő elérve',
+                        Body =>
+                            'A(z) <OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> munkamegrendelés elérte a tervezett kezdési idejét.'
+                            . $WorkOrderInfoAgentHu,
+                        ContentType => 'text/plain',
+                    },
                     nl => {
                         Subject =>
                             '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] geplande starttijd bereikt',
@@ -2680,6 +3017,14 @@ sub _AddNotifications {
                         Body =>
                             '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> has reached the Planned Start Time.'
                             . $WorkOrderInfoCustomerEn,
+                        ContentType => 'text/plain',
+                    },
+                    hu => {
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] tervezett kezdési idő elérve',
+                        Body =>
+                            'A(z) <OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> munkamegrendelés elérte a tervezett kezdési idejét.'
+                            . $WorkOrderInfoCustomerHu,
                         ContentType => 'text/plain',
                     },
                     nl => {
@@ -2715,15 +3060,23 @@ sub _AddNotifications {
                     },
                     en => {
                         Subject =>
-                            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Planned End Time reached.',
+                            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Planned End Time reached',
                         Body =>
                             '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> has reached the Planned End Time.'
                             . $WorkOrderInfoAgentEn,
                         ContentType => 'text/plain',
                     },
+                    hu => {
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] tervezett befejezési idő elérve',
+                        Body =>
+                            'A(z) <OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> munkamegrendelés elérte a tervezett befejezési idejét.'
+                            . $WorkOrderInfoAgentHu,
+                        ContentType => 'text/plain',
+                    },
                     nl => {
                         Subject =>
-                            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] geplande eindttijd bereikt.',
+                            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] geplande eindttijd bereikt',
                         Body =>
                             '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> heeft de geplande eindtijd bereikt.'
                             . $WorkOrderInfoAgentNl,
@@ -2745,6 +3098,14 @@ sub _AddNotifications {
                         Body =>
                             '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> has reached the Planned End Time.'
                             . $WorkOrderInfoCustomerEn,
+                        ContentType => 'text/plain',
+                    },
+                    hu => {
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] tervezett befejezési idő elérve',
+                        Body =>
+                            'A(z) <OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> munkamegrendelés elérte a tervezett befejezési idejét.'
+                            . $WorkOrderInfoCustomerHu,
                         ContentType => 'text/plain',
                     },
                     nl => {
@@ -2786,6 +3147,14 @@ sub _AddNotifications {
                             . $WorkOrderInfoAgentEn,
                         ContentType => 'text/plain',
                     },
+                    hu => {
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] elkezdődött',
+                        Body =>
+                            'Elkezdődött a következő munkamegrendelés: <OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>.'
+                            . $WorkOrderInfoAgentHu,
+                        ContentType => 'text/plain',
+                    },
                     nl => {
                         Subject =>
                             '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] gestart',
@@ -2810,6 +3179,14 @@ sub _AddNotifications {
                         Body =>
                             '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> has started.'
                             . $WorkOrderInfoCustomerEn,
+                        ContentType => 'text/plain',
+                    },
+                    hu => {
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] elkezdődött',
+                        Body =>
+                            'Elkezdődött a következő munkamegrendelés: <OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>.'
+                            . $WorkOrderInfoCustomerHu,
                         ContentType => 'text/plain',
                     },
                     nl => {
@@ -2851,6 +3228,14 @@ sub _AddNotifications {
                             . $WorkOrderInfoAgentEn,
                         ContentType => 'text/plain',
                     },
+                    hu => {
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] befejeződött',
+                        Body =>
+                            'Befejeződött a következő munkamegrendelés: <OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>.'
+                            . $WorkOrderInfoAgentHu,
+                        ContentType => 'text/plain',
+                    },
                     nl => {
                         Subject =>
                             '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] afgerond',
@@ -2875,6 +3260,14 @@ sub _AddNotifications {
                         Body =>
                             '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> was finished.'
                             . $WorkOrderInfoCustomerEn,
+                        ContentType => 'text/plain',
+                    },
+                    hu => {
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] befejeződött',
+                        Body =>
+                            'Befejeződött a következő munkamegrendelés: <OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>.'
+                            . $WorkOrderInfoCustomerHu,
                         ContentType => 'text/plain',
                     },
                     nl => {
@@ -2918,7 +3311,7 @@ sub _AddNotifications {
                             . "\n"
                             . "<OTRS_CONFIG_HttpType>://<OTRS_CONFIG_FQDN>/<OTRS_CONFIG_ScriptAlias>index.pl?Action=AgentITSMChangeZoom;ChangeID=<OTRS_CHANGE_ChangeID>\n"
                             . "\n"
-                            . "Ihr OTRS Notification Master\n",
+                            . "-- <OTRS_CONFIG_NotificationSenderName>\n",
                         ContentType => 'text/plain',
                     },
                     en => {
@@ -2939,7 +3332,28 @@ sub _AddNotifications {
                             . "\n"
                             . "<OTRS_CONFIG_HttpType>://<OTRS_CONFIG_FQDN>/<OTRS_CONFIG_ScriptAlias>index.pl?Action=AgentITSMChangeZoom;ChangeID=<OTRS_CHANGE_ChangeID>\n"
                             . "\n"
-                            . "Your OTRS Notification Master\n",
+                            . "-- <OTRS_CONFIG_NotificationSenderName>\n",
+                        ContentType => 'text/plain',
+                    },
+                    hu => {
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] művelet-végrehajtás: <OTRS_CONDITION_ActionResult>',
+                        Body =>
+                            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> művelet-végrehajtás: <OTRS_CONDITION_ActionResult>.'
+                            . "\n"
+                            . "\n"
+                            . "Változáscím: <OTRS_CHANGE_ChangeTitle>\n"
+                            . "Jelenlegi változásállapot: <OTRS_CHANGE_ChangeState>\n"
+                            . "\n"
+                            . "Feltételazonosító: <OTRS_CONDITION_ConditionID>\n"
+                            . "Feltételnév: <OTRS_CONDITION_ConditionName>\n"
+                            . "\n"
+                            . "Műveletazonosító: <OTRS_CONDITION_ActionID>\n"
+                            . "Művelet-végrehajtás: <OTRS_CONDITION_ActionResult>\n"
+                            . "\n"
+                            . "<OTRS_CONFIG_HttpType>://<OTRS_CONFIG_FQDN>/<OTRS_CONFIG_ScriptAlias>index.pl?Action=AgentITSMChangeZoom;ChangeID=<OTRS_CHANGE_ChangeID>\n"
+                            . "\n"
+                            . "-- <OTRS_CONFIG_NotificationSenderName>\n",
                         ContentType => 'text/plain',
                     },
                     nl => {
@@ -2959,7 +3373,8 @@ sub _AddNotifications {
                             . "Actie resultaat: <OTRS_CONDITION_ActionResult>\n"
                             . "\n"
                             . "<OTRS_CONFIG_HttpType>://<OTRS_CONFIG_FQDN>/<OTRS_CONFIG_ScriptAlias>index.pl?Action=AgentITSMChangeZoom;ChangeID=<OTRS_CHANGE_ChangeID>\n"
-                            . "\n",
+                            . "\n"
+                            . "-- <OTRS_CONFIG_NotificationSenderName>\n",
                         ContentType => 'text/plain',
                     },
                 },
@@ -2976,6 +3391,13 @@ sub _AddNotifications {
                             '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] Action execution <OTRS_CONDITION_ActionResult>',
                         Body =>
                             '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> Action execution <OTRS_CONDITION_ActionResult>.',
+                        ContentType => 'text/plain',
+                    },
+                    hu => {
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] művelet-végrehajtás: <OTRS_CONDITION_ActionResult>',
+                        Body =>
+                            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> művelet-végrehajtás: <OTRS_CONDITION_ActionResult>.',
                         ContentType => 'text/plain',
                     },
                     nl => {
@@ -3018,7 +3440,7 @@ sub _AddNotifications {
                             . "\n"
                             . "<OTRS_CONFIG_HttpType>://<OTRS_CONFIG_FQDN>/<OTRS_CONFIG_ScriptAlias>index.pl?Action=AgentITSMChangeZoom;ChangeID=<OTRS_CHANGE_ChangeID>\n"
                             . "\n"
-                            . "Ihr OTRS Notification Master\n",
+                            . "-- <OTRS_CONFIG_NotificationSenderName>\n",
                         ContentType => 'text/plain',
                     },
                     en => {
@@ -3039,7 +3461,28 @@ sub _AddNotifications {
                             . "\n"
                             . "<OTRS_CONFIG_HttpType>://<OTRS_CONFIG_FQDN>/<OTRS_CONFIG_ScriptAlias>index.pl?Action=AgentITSMChangeZoom;ChangeID=<OTRS_CHANGE_ChangeID>\n"
                             . "\n"
-                            . "Your OTRS Notification Master\n",
+                            . "-- <OTRS_CONFIG_NotificationSenderName>\n",
+                        ContentType => 'text/plain',
+                    },
+                    hu => {
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] művelet-végrehajtás: <OTRS_CONDITION_ActionResult>',
+                        Body =>
+                            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> művelet-végrehajtás: <OTRS_CONDITION_ActionResult>.'
+                            . "\n"
+                            . "\n"
+                            . "Változáscím: <OTRS_CHANGE_ChangeTitle>\n"
+                            . "Jelenlegi változásállapot: <OTRS_CHANGE_ChangeState>\n"
+                            . "\n"
+                            . "Feltételazonosító: <OTRS_CONDITION_ConditionID>\n"
+                            . "Feltételnév: <OTRS_CONDITION_ConditionName>\n"
+                            . "\n"
+                            . "Műveletazonosító: <OTRS_CONDITION_ActionID>\n"
+                            . "Művelet-végrehajtás: <OTRS_CONDITION_ActionResult>\n"
+                            . "\n"
+                            . "<OTRS_CONFIG_HttpType>://<OTRS_CONFIG_FQDN>/<OTRS_CONFIG_ScriptAlias>index.pl?Action=AgentITSMChangeZoom;ChangeID=<OTRS_CHANGE_ChangeID>\n"
+                            . "\n"
+                            . "-- <OTRS_CONFIG_NotificationSenderName>\n",
                         ContentType => 'text/plain',
                     },
                     nl => {
@@ -3059,7 +3502,8 @@ sub _AddNotifications {
                             . "Actie resultaat: <OTRS_CONDITION_ActionResult>\n"
                             . "\n"
                             . "<OTRS_CONFIG_HttpType>://<OTRS_CONFIG_FQDN>/<OTRS_CONFIG_ScriptAlias>index.pl?Action=AgentITSMChangeZoom;ChangeID=<OTRS_CHANGE_ChangeID>\n"
-                            . "\n",
+                            . "\n"
+                            . "-- <OTRS_CONFIG_NotificationSenderName>\n",
                         ContentType => 'text/plain',
                     },
                 },
@@ -3076,6 +3520,13 @@ sub _AddNotifications {
                             '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] Action execution <OTRS_CONDITION_ActionResult>',
                         Body =>
                             '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> Action execution <OTRS_CONDITION_ActionResult>.',
+                        ContentType => 'text/plain',
+                    },
+                    hu => {
+                        Subject =>
+                            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] művelet-végrehajtás: <OTRS_CONDITION_ActionResult>',
+                        Body =>
+                            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> művelet-végrehajtás: <OTRS_CONDITION_ActionResult>.',
                         ContentType => 'text/plain',
                     },
                     nl => {
