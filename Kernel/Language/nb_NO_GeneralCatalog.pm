@@ -24,16 +24,6 @@ sub Data {
     $Self->{Translation}->{'Add Catalog Class'} = 'Legg til katalog-klasse';
     $Self->{Translation}->{'Catalog Class'} = 'Katalog-klasse';
 
-    # SysConfig
-    $Self->{Translation}->{'Create and manage the General Catalog.'} = 'Opprett og administrér den generelle katalogen';
-    $Self->{Translation}->{'Frontend module registration for the AdminGeneralCatalog configuration in the admin area.'} =
-        'Forsidemodul-registrering for AdminGeneralCatalog-oppsett i admin-delen.';
-    $Self->{Translation}->{'General Catalog'} = 'Generell Katalog';
-    $Self->{Translation}->{'Parameters for the example comment 2 of the general catalog attributes.'} =
-        'Parametre for eksempelkommentar 2 i attributtene for generell katalog';
-    $Self->{Translation}->{'Parameters for the example permission groups of the general catalog attributes.'} =
-        'Parametere for tilgangsgruppe-eksempel i attributtene for generell katalog.';
-
 }
 
 1;

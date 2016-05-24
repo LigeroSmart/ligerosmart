@@ -24,16 +24,6 @@ sub Data {
     $Self->{Translation}->{'Add Catalog Class'} = '添加新目錄類別';
     $Self->{Translation}->{'Catalog Class'} = '目錄類別';
 
-    # SysConfig
-    $Self->{Translation}->{'Create and manage the General Catalog.'} = '創建和管理目錄';
-    $Self->{Translation}->{'Frontend module registration for the AdminGeneralCatalog configuration in the admin area.'} =
-        '';
-    $Self->{Translation}->{'General Catalog'} = '目錄';
-    $Self->{Translation}->{'Parameters for the example comment 2 of the general catalog attributes.'} =
-        '';
-    $Self->{Translation}->{'Parameters for the example permission groups of the general catalog attributes.'} =
-        '';
-
 }
 
 1;

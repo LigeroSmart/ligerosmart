@@ -24,16 +24,6 @@ sub Data {
     $Self->{Translation}->{'Add Catalog Class'} = 'Dodaj klasę katalogu';
     $Self->{Translation}->{'Catalog Class'} = 'Klasa katalogu';
 
-    # SysConfig
-    $Self->{Translation}->{'Create and manage the General Catalog.'} = 'Utwórz i zarządzaj katalogiem głównym.';
-    $Self->{Translation}->{'Frontend module registration for the AdminGeneralCatalog configuration in the admin area.'} =
-        'Rejestracja modułu frontend do konfiguracji modułu AdminGeneralCatalog w panelu administratora.';
-    $Self->{Translation}->{'General Catalog'} = 'Katalog główny';
-    $Self->{Translation}->{'Parameters for the example comment 2 of the general catalog attributes.'} =
-        'Parametry do przykładowego komentarza 2 atrybutów katalogu generalnego.';
-    $Self->{Translation}->{'Parameters for the example permission groups of the general catalog attributes.'} =
-        'Parametry dla przykładowych grup uprawnień atrybutów katalogu głównego.';
-
 }
 
 1;

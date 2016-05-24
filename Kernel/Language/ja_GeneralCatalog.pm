@@ -24,16 +24,6 @@ sub Data {
     $Self->{Translation}->{'Add Catalog Class'} = 'カタログクラスを追加';
     $Self->{Translation}->{'Catalog Class'} = 'カタログクラス';
 
-    # SysConfig
-    $Self->{Translation}->{'Create and manage the General Catalog.'} = 'ジェネラルカタログの作成と管理';
-    $Self->{Translation}->{'Frontend module registration for the AdminGeneralCatalog configuration in the admin area.'} =
-        '管理エリアでのAdminGeneralCatalogのフロントエンドモジュールの登録';
-    $Self->{Translation}->{'General Catalog'} = 'ジェネラルカタログ';
-    $Self->{Translation}->{'Parameters for the example comment 2 of the general catalog attributes.'} =
-        'ジェネラルカタログ属性のコメント例 2　の設定値';
-    $Self->{Translation}->{'Parameters for the example permission groups of the general catalog attributes.'} =
-        'ジェネラルカタログ属性のパーミッショングループ　の設定値';
-
 }
 
 1;
