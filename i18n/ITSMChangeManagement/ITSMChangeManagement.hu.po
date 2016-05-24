@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2016-04-29 13:25+0000\n"
-"PO-Revision-Date: 2016-04-29 11:21+0000\n"
-"Last-Translator: Udo Bretz\n"
+"PO-Revision-Date: 2016-05-18 16:29+0000\n"
+"Last-Translator: Balázs Úr <urbalazs@gmail.com>\n"
 "Language-Team: Hungarian (http://www.transifex.com/otrs/OTRS/language/hu/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -268,11 +268,11 @@ msgstr "ITSM munkamegrendelés"
 
 #. Template: AAAITSMChangeManagement
 msgid "Link another object to the change"
-msgstr "Másik objektum hozzákapcsolása a változáshoz"
+msgstr "Másik objektum összekapcsolása a változással"
 
 #. Template: AAAITSMChangeManagement
 msgid "Link another object to the workorder"
-msgstr "Másik objektum hozzákapcsolása a munkamegrendeléshez"
+msgstr "Másik objektum összekapcsolása a munkamegrendeléssel"
 
 #. Template: AAAITSMChangeManagement
 msgid "Move all workorders in time"
@@ -1246,11 +1246,11 @@ msgstr "Munkamegrendelés-információk"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangePIR.pm
 msgid "PIR"
-msgstr ""
+msgstr "PIR"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangePSA.pm
 msgid "PSA"
-msgstr ""
+msgstr "PSA"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
 msgid "WorkOrders"
@@ -1258,11 +1258,11 @@ msgstr "Munkamegrendelések"
 
 #. Perl Module: Kernel/Modules/AgentITSMWorkOrderHistory.pm
 msgid "WorkOrderHistory::"
-msgstr ""
+msgstr "WorkOrderHistory::"
 
 #. Perl Module: Kernel/Output/HTML/ToolBar/MyWorkOrders.pm
 msgid "My Work Orders"
-msgstr ""
+msgstr "Saját munkamegrendelések"
 
 #. SysConfig
 msgid ""
@@ -1278,11 +1278,11 @@ msgstr "Azon munkamegrendelés-állapotok listája, amelyeknél egy munkamegrend
 
 #. SysConfig
 msgid "Add a change from template."
-msgstr ""
+msgstr "Egy változás hozzáadása sablonból."
 
 #. SysConfig
 msgid "Add a change."
-msgstr ""
+msgstr "Egy változás hozzáadása."
 
 #. SysConfig
 msgid "Admin of the CIP matrix."
@@ -1326,11 +1326,11 @@ msgstr "Gyorsítótár idő percben a változásmenedzsmentnél. Alapértelmezet
 
 #. SysConfig
 msgid "Change History."
-msgstr ""
+msgstr "Változástörténet."
 
 #. SysConfig
 msgid "Change Involved Persons."
-msgstr ""
+msgstr "Résztvevő személyek megváltoztatása."
 
 #. SysConfig
 msgid "Change Overview \"Small\" Limit"
@@ -1338,15 +1338,15 @@ msgstr "Változás áttekintő „kis” korlát"
 
 #. SysConfig
 msgid "Change Print."
-msgstr ""
+msgstr "Változásnyomtatás."
 
 #. SysConfig
 msgid "Change Schedule."
-msgstr ""
+msgstr "Változásütemezés."
 
 #. SysConfig
 msgid "Change Zoom."
-msgstr ""
+msgstr "Változásnagyítás."
 
 #. SysConfig
 msgid "Change and WorkOrder templates edited by this user."
@@ -1362,7 +1362,7 @@ msgstr "Az ügyintézői felület változás keresési háttérprogram útválas
 
 #. SysConfig
 msgid "Change-Area"
-msgstr ""
+msgstr "Változásterület"
 
 #. SysConfig
 msgid ""
@@ -1372,11 +1372,11 @@ msgstr "Beállítja, hogy milyen gyakran legyenek elküldve az értesítések, a
 
 #. SysConfig
 msgid "Create a change (from template) from this ticket!"
-msgstr ""
+msgstr "Változás létrehozása (sablonból) ebből a jegyből!"
 
 #. SysConfig
 msgid "Create and manage ITSM Change Management notifications."
-msgstr ""
+msgstr "ITSM változásmenedzsment értesítések létrehozása és kezelése."
 
 #. SysConfig
 msgid ""
@@ -1879,15 +1879,15 @@ msgstr "Meghatározza, hogy az értesítéseket el kell-e küldeni."
 
 #. SysConfig
 msgid "Delete Change"
-msgstr ""
+msgstr "Változás törlése"
 
 #. SysConfig
 msgid "Delete a change."
-msgstr ""
+msgstr "Egy változás törlése."
 
 #. SysConfig
 msgid "Details of a change history entry."
-msgstr ""
+msgstr "Egy változástörténet-bejegyzés részletei."
 
 #. SysConfig
 msgid ""
@@ -1986,67 +1986,67 @@ msgstr "Dinamikus mező eseménymodul a feltételek frissítésének kezeléséh
 
 #. SysConfig
 msgid "Edit a change."
-msgstr ""
+msgstr "Egy változás szerkesztése."
 
 #. SysConfig
 msgid "Forward schedule of changes. Overview over approved changes."
-msgstr ""
+msgstr "Változások előre ütemezése. A jóváhagyott változások áttekintése."
 
 #. SysConfig
 msgid "ITSM Change CAB Templates."
-msgstr ""
+msgstr "ITSM változás CAB sablonok."
 
 #. SysConfig
 msgid "ITSM Change Condition Edit."
-msgstr ""
+msgstr "ITSM változásfeltétel szerkesztés."
 
 #. SysConfig
 msgid "ITSM Change Condition Overview."
-msgstr ""
+msgstr "ITSM változásfeltétel áttekintés."
 
 #. SysConfig
 msgid "ITSM Change Management Notifications"
-msgstr ""
+msgstr "ITSM változásmenedzsment értesítések"
 
 #. SysConfig
 msgid "ITSM Change Manager Overview."
-msgstr ""
+msgstr "ITSM változásmenedzser áttekintés."
 
 #. SysConfig
 msgid "ITSM Change PIR Overview."
-msgstr ""
+msgstr "ITSM változás PIR áttekintés."
 
 #. SysConfig
 msgid "ITSM MyCAB Overview."
-msgstr ""
+msgstr "ITSM saját CAB áttekintés."
 
 #. SysConfig
 msgid "ITSM MyChanges Overview."
-msgstr ""
+msgstr "ITSM saját változások áttekintés."
 
 #. SysConfig
 msgid "ITSM MyWorkorders Overview."
-msgstr ""
+msgstr "ITSM saját munkamegrendelések áttekintés."
 
 #. SysConfig
 msgid "ITSM Template Delete."
-msgstr ""
+msgstr "ITSM sablon törlés."
 
 #. SysConfig
 msgid "ITSM Template Edit CAB."
-msgstr ""
+msgstr "ITSM sablon szerkesztés CAB."
 
 #. SysConfig
 msgid "ITSM Template Edit Content."
-msgstr ""
+msgstr "ITSM sablon szerkesztés tartalom."
 
 #. SysConfig
 msgid "ITSM Template Edit."
-msgstr ""
+msgstr "ITSM sablon szerkesztés."
 
 #. SysConfig
 msgid "ITSM Template Overview."
-msgstr ""
+msgstr "ITSM sablon áttekintés."
 
 #. SysConfig
 msgid "ITSM event module deletes the history of changes."
@@ -2106,11 +2106,11 @@ msgstr "Naplófájl az ITSM változásszámlálóhoz. Ezt a fájlt a változáss
 
 #. SysConfig
 msgid "Lookup of CAB members for autocompletion."
-msgstr ""
+msgstr "CAB-tagok kikeresése az automatikus kiegészítéshez."
 
 #. SysConfig
 msgid "Lookup of agents, used for autocompletion."
-msgstr ""
+msgstr "Ügyintézők kikeresése az automatikus kiegészítés használatához."
 
 #. SysConfig
 msgid ""
@@ -2154,7 +2154,7 @@ msgstr "Egy modul egy hivatkozás megjelenítéséhez, amely egy változás lét
 
 #. SysConfig
 msgid "Move Time Slot."
-msgstr ""
+msgstr "Időrés áthelyezése."
 
 #. SysConfig
 msgid ""
@@ -2165,7 +2165,7 @@ msgstr "Csak ezen csoportok felhasználóinak van jogosultsága az „ITSMChange
 
 #. SysConfig
 msgid "Overview over all Changes."
-msgstr ""
+msgstr "Az összes változás áttekintése."
 
 #. SysConfig
 msgid ""
@@ -2187,13 +2187,13 @@ msgstr "Egy hivatkozást jelenít meg a menüben egy változásban érintett sze
 
 #. SysConfig
 msgid "Projected Service Availability (PSA)"
-msgstr ""
+msgstr "Tervezett szolgáltatáselérhetőség (PSA)"
 
 #. SysConfig
 msgid ""
 "Projected Service Availability (PSA) of changes. Overview of approved "
 "changes and their services."
-msgstr ""
+msgstr "A változás tervezett szolgáltatáselérhetősége (PSA). A jóváhagyott változások és azok szolgáltatásainak áttekintése."
 
 #. SysConfig
 msgid "Required privileges in order for an agent to take a workorder."
@@ -2350,17 +2350,17 @@ msgstr "A szükséges jogosultságok egy jelentés írásához a munkamegrendel�
 
 #. SysConfig
 msgid "Reset a change and its workorders."
-msgstr ""
+msgstr "Egy változás és a munkamegrendeléseinek visszaállítása."
 
 #. SysConfig
 msgid "Reset change and its workorders"
-msgstr ""
+msgstr "Változás és munkamegrendeléseinek visszaállítása"
 
 #. SysConfig
 msgid ""
 "Run task to check if specific times have been in reached in changes and "
 "workorders."
-msgstr ""
+msgstr "Feladat futtatása annak ellenőrzéséhez, hogy a meghatározott időpontokat elérték-e a változásokban és a munkamegrendelésekben."
 
 #. SysConfig
 msgid "Screen after creating a workorder"
@@ -2368,7 +2368,7 @@ msgstr "Egy munkamegrendelés létrehozása utáni képernyő"
 
 #. SysConfig
 msgid "Search Changes."
-msgstr ""
+msgstr "Változások keresése."
 
 #. SysConfig
 msgid ""
@@ -2455,7 +2455,7 @@ msgstr "Egy hivatkozást jelenít meg a menüben, amely lehetővé teszi egy vá
 msgid ""
 "Shows a link in the menu that allows linking a work order with another "
 "object in the zoom view of such work order of the agent interface."
-msgstr "Egy hivatkozást jelenít meg a menüben, amely lehetővé teszi egy munkamegrendelés hozzákapcsolását egy másik objektumhoz az ügyintézői felületnek az ilyen munkamegrendelés nagyítási nézetén."
+msgstr "Egy hivatkozást jelenít meg a menüben, amely lehetővé teszi egy munkamegrendelés összekapcsolását egy másik objektummal az ügyintézői felületnek az ilyen munkamegrendelés nagyítási nézetén."
 
 #. SysConfig
 msgid ""
@@ -2563,11 +2563,11 @@ msgstr "Változás- és munkamegrendelés-azonosítókat, valamint a nekik megfe
 
 #. SysConfig
 msgid "Take Workorder."
-msgstr ""
+msgstr "Munkamegrendelés felvétele."
 
 #. SysConfig
 msgid "Template."
-msgstr ""
+msgstr "Sablon."
 
 #. SysConfig
 msgid ""
@@ -2599,44 +2599,44 @@ msgstr "Jegyek típusai, ahol a jegy nagyítás nézetben egy változás hozzáa
 
 #. SysConfig
 msgid "Workorder Add (from template)."
-msgstr ""
+msgstr "Munkamegrendelés hozzáadása (sablonból)."
 
 #. SysConfig
 msgid "Workorder Add."
-msgstr ""
+msgstr "Munkamegrendelés hozzáadása."
 
 #. SysConfig
 msgid "Workorder Agent."
-msgstr ""
+msgstr "Munkamegrendelés ügyintézője."
 
 #. SysConfig
 msgid "Workorder Delete."
-msgstr ""
+msgstr "Munkamegrendelés törlése."
 
 #. SysConfig
 msgid "Workorder Edit."
-msgstr ""
+msgstr "Munkamegrendelés szerkesztése."
 
 #. SysConfig
 msgid "Workorder History Zoom."
-msgstr ""
+msgstr "Munkamegrendelés előzményeinek nagyítása."
 
 #. SysConfig
 msgid "Workorder History."
-msgstr ""
+msgstr "Munkamegrendelés előzményei."
 
 #. SysConfig
 msgid "Workorder Report."
-msgstr ""
+msgstr "Munkamegrendelés jelentése."
 
 #. SysConfig
 msgid "Workorder Zoom."
-msgstr ""
+msgstr "Munkamegrendelés nagyítása."
 
 #. SysConfig
 msgid "once"
-msgstr ""
+msgstr "egyszer"
 
 #. SysConfig
 msgid "regularly"
-msgstr ""
+msgstr "rendszeresen"

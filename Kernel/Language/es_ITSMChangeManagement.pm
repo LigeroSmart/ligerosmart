@@ -233,7 +233,7 @@ sub Data {
 
     # Template: AgentITSMChangeConditionEdit
     $Self->{Translation}->{'Need a valid name.'} = 'Se requiere un Nombre válido';
-    $Self->{Translation}->{'A a valid name is needed.'} = 'Un Nombre válido es requerido.';
+    $Self->{Translation}->{'A valid name is needed.'} = '';
     $Self->{Translation}->{'Duplicate name:'} = 'Nombre duplicado:';
     $Self->{Translation}->{'This name is already used by another condition.'} = 'Este nombre esta siendo usado por otra Condición.';
     $Self->{Translation}->{'Matching'} = 'Coincidentes';
@@ -401,449 +401,197 @@ sub Data {
     # Template: AgentITSMWorkOrderZoom
     $Self->{Translation}->{'Workorder Information'} = 'Información de la Orden de Trabajo';
 
+    # Perl Module: Kernel/Modules/AdminITSMChangeNotification.pm
+    $Self->{Translation}->{'Unknown notification %s!'} = '';
+    $Self->{Translation}->{'There was an error creating the notification.'} = '';
+
+    # Perl Module: Kernel/Modules/AgentITSMChange.pm
+    $Self->{Translation}->{'Overview: ITSM Changes'} = '';
+
+    # Perl Module: Kernel/Modules/AgentITSMChangeAdd.pm
+    $Self->{Translation}->{'Ticket with TicketID %s does not exist!'} = '';
+    $Self->{Translation}->{'Missing sysconfig option "ITSMChange::AddChangeLinkTicketTypes"!'} =
+        '';
+    $Self->{Translation}->{'Was not able to add change!'} = '';
+
+    # Perl Module: Kernel/Modules/AgentITSMChangeAddFromTemplate.pm
+    $Self->{Translation}->{'Was not able to create change from template!'} = '';
+
+    # Perl Module: Kernel/Modules/AgentITSMChangeCABTemplate.pm
+    $Self->{Translation}->{'No ChangeID is given!'} = '';
+    $Self->{Translation}->{'No change found for changeID %s.'} = '';
+    $Self->{Translation}->{'The CAB of change "%s" could not be serialized.'} = '';
+    $Self->{Translation}->{'Could not add the template.'} = '';
+
+    # Perl Module: Kernel/Modules/AgentITSMChangeCondition.pm
+    $Self->{Translation}->{'Change "%s" not found in database!'} = '';
+    $Self->{Translation}->{'Could not delete ConditionID %s!'} = '';
+
+    # Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
+    $Self->{Translation}->{'No %s is given!'} = '';
+    $Self->{Translation}->{'Could not create new condition!'} = '';
+    $Self->{Translation}->{'Could not update ConditionID %s!'} = '';
+    $Self->{Translation}->{'Could not update ExpressionID %s!'} = '';
+    $Self->{Translation}->{'Could not add new Expression!'} = '';
+    $Self->{Translation}->{'Could not update ActionID %s!'} = '';
+    $Self->{Translation}->{'Could not add new Action!'} = '';
+    $Self->{Translation}->{'Could not delete ExpressionID %s!'} = '';
+    $Self->{Translation}->{'Could not delete ActionID %s!'} = '';
+    $Self->{Translation}->{'Error: Unknown field type "%s"!'} = '';
+    $Self->{Translation}->{'ConditionID %s does not belong to the given ChangeID %s!'} = '';
+    $Self->{Translation}->{'Please contact the administrator.'} = '';
+
+    # Perl Module: Kernel/Modules/AgentITSMChangeDelete.pm
+    $Self->{Translation}->{'Change "%s" does not have an allowed change state to be deleted!'} =
+        '';
+    $Self->{Translation}->{'Was not able to delete the changeID %s!'} = '';
+
+    # Perl Module: Kernel/Modules/AgentITSMChangeEdit.pm
+    $Self->{Translation}->{'Was not able to update Change!'} = '';
+
+    # Perl Module: Kernel/Modules/AgentITSMChangeHistory.pm
+    $Self->{Translation}->{'Can\'t show history, as no ChangeID is given!'} = '';
+    $Self->{Translation}->{'Change "%s" not found in the database!'} = '';
+    $Self->{Translation}->{'Unknown type "%s" encountered!'} = '';
+    $Self->{Translation}->{'Change History'} = '';
+
+    # Perl Module: Kernel/Modules/AgentITSMChangeHistoryZoom.pm
+    $Self->{Translation}->{'Can\'t show history zoom, no HistoryEntryID is given!'} = '';
+    $Self->{Translation}->{'HistoryEntry "%s" not found in database!'} = '';
+
+    # Perl Module: Kernel/Modules/AgentITSMChangeInvolvedPersons.pm
+    $Self->{Translation}->{'Was not able to update Change CAB for Change %s!'} = '';
+    $Self->{Translation}->{'Was not able to update Change %s!'} = '';
+
+    # Perl Module: Kernel/Modules/AgentITSMChangeManager.pm
+    $Self->{Translation}->{'Overview: ChangeManager'} = '';
+
+    # Perl Module: Kernel/Modules/AgentITSMChangeMyCAB.pm
+    $Self->{Translation}->{'Overview: My CAB'} = '';
+
+    # Perl Module: Kernel/Modules/AgentITSMChangeMyChanges.pm
+    $Self->{Translation}->{'Overview: My Changes'} = '';
+
+    # Perl Module: Kernel/Modules/AgentITSMChangeMyWorkOrders.pm
+    $Self->{Translation}->{'Overview: My Workorders'} = '';
+
     # Perl Module: Kernel/Modules/AgentITSMChangePIR.pm
-    $Self->{Translation}->{'PIR'} = '';
+    $Self->{Translation}->{'Overview: PIR'} = '';
 
     # Perl Module: Kernel/Modules/AgentITSMChangePSA.pm
-    $Self->{Translation}->{'PSA'} = '';
+    $Self->{Translation}->{'Overview: PSA'} = '';
+
+    # Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+    $Self->{Translation}->{'WorkOrder "%s" not found in database!'} = '';
+    $Self->{Translation}->{'Can\'t create output, as the workorder is not attached to a change!'} =
+        '';
+    $Self->{Translation}->{'Can\'t create output, as no ChangeID is given!'} = '';
+    $Self->{Translation}->{'unknown change title'} = '';
+    $Self->{Translation}->{'unknown workorder title'} = '';
+    $Self->{Translation}->{'ITSM Workorder Overview (%s)'} = '';
+
+    # Perl Module: Kernel/Modules/AgentITSMChangeReset.pm
+    $Self->{Translation}->{'Was not able to reset WorkOrder %s of Change %s!'} = '';
+    $Self->{Translation}->{'Was not able to reset Change %s!'} = '';
+
+    # Perl Module: Kernel/Modules/AgentITSMChangeSchedule.pm
+    $Self->{Translation}->{'Overview: Change Schedule'} = '';
 
     # Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
+    $Self->{Translation}->{'Change Search'} = '';
     $Self->{Translation}->{'WorkOrders'} = 'Orden de Trabajo';
+    $Self->{Translation}->{'Change Search Result'} = '';
+    $Self->{Translation}->{'Change Number'} = '';
+    $Self->{Translation}->{'Change Title'} = '';
+    $Self->{Translation}->{'Work Order Title'} = '';
+    $Self->{Translation}->{'CAB Agent'} = '';
+    $Self->{Translation}->{'CAB Customer'} = '';
+    $Self->{Translation}->{'Change Description'} = '';
+    $Self->{Translation}->{'Change Justification'} = '';
+    $Self->{Translation}->{'WorkOrder Instruction'} = '';
+    $Self->{Translation}->{'WorkOrder Report'} = '';
+    $Self->{Translation}->{'Change Priority'} = '';
+    $Self->{Translation}->{'Change Impact'} = '';
+    $Self->{Translation}->{'Change State'} = '';
+    $Self->{Translation}->{'Created By'} = '';
+    $Self->{Translation}->{'WorkOrder State'} = '';
+    $Self->{Translation}->{'WorkOrder Type'} = '';
+    $Self->{Translation}->{'WorkOrder Agent'} = '';
+    $Self->{Translation}->{'Planned Start Time'} = '';
+    $Self->{Translation}->{'Planned End Time'} = '';
+    $Self->{Translation}->{'Actual Start Time'} = '';
+    $Self->{Translation}->{'Actual End Time'} = '';
+    $Self->{Translation}->{'Change Time'} = '';
+    $Self->{Translation}->{'before'} = '';
+
+    # Perl Module: Kernel/Modules/AgentITSMChangeTemplate.pm
+    $Self->{Translation}->{'The change "%s" could not be serialized.'} = '';
+    $Self->{Translation}->{'Could not update the template "%s".'} = '';
+    $Self->{Translation}->{'Could not delete change "%s".'} = '';
+
+    # Perl Module: Kernel/Modules/AgentITSMChangeTimeSlot.pm
+    $Self->{Translation}->{'The change can\'t be moved, as it has no workorders.'} = '';
+    $Self->{Translation}->{'Add a workorder first.'} = '';
+    $Self->{Translation}->{'Can\'t move a change which already has started!'} = '';
+    $Self->{Translation}->{'Please move the individual workorders instead.'} = '';
+    $Self->{Translation}->{'The current %s could not be determined.'} = '';
+    $Self->{Translation}->{'The %s of all workorders has to be defined.'} = '';
+    $Self->{Translation}->{'Was not able to move time slot for workorder #%s!'} = '';
+
+    # Perl Module: Kernel/Modules/AgentITSMTemplateDelete.pm
+    $Self->{Translation}->{'You need %s permission!'} = '';
+    $Self->{Translation}->{'No TemplateID is given!'} = '';
+    $Self->{Translation}->{'Template "%s" not found in database!'} = '';
+    $Self->{Translation}->{'Was not able to delete the template %s!'} = '';
+
+    # Perl Module: Kernel/Modules/AgentITSMTemplateEdit.pm
+    $Self->{Translation}->{'Was not able to update Template %s!'} = '';
+
+    # Perl Module: Kernel/Modules/AgentITSMTemplateEditCAB.pm
+    $Self->{Translation}->{'Was not able to update Template "%s"!'} = '';
+
+    # Perl Module: Kernel/Modules/AgentITSMTemplateEditContent.pm
+    $Self->{Translation}->{'Was not able to create change!'} = '';
+    $Self->{Translation}->{'Was not able to create workorder from template!'} = '';
+
+    # Perl Module: Kernel/Modules/AgentITSMTemplateOverview.pm
+    $Self->{Translation}->{'Overview: Template'} = '';
+
+    # Perl Module: Kernel/Modules/AgentITSMWorkOrderAdd.pm
+    $Self->{Translation}->{'You need %s permissions on the change!'} = '';
+    $Self->{Translation}->{'Was not able to add workorder!'} = '';
+
+    # Perl Module: Kernel/Modules/AgentITSMWorkOrderAgent.pm
+    $Self->{Translation}->{'No WorkOrderID is given!'} = '';
+    $Self->{Translation}->{'Was not able to set the workorder agent of the workorder "%s" to empty!'} =
+        '';
+    $Self->{Translation}->{'Was not able to update the workorder "%s"!'} = '';
+    $Self->{Translation}->{'Could not find Change for WorkOrder %s!'} = '';
+
+    # Perl Module: Kernel/Modules/AgentITSMWorkOrderDelete.pm
+    $Self->{Translation}->{'Was not able to delete the workorder %s!'} = '';
+
+    # Perl Module: Kernel/Modules/AgentITSMWorkOrderEdit.pm
+    $Self->{Translation}->{'Was not able to update WorkOrder %s!'} = '';
 
     # Perl Module: Kernel/Modules/AgentITSMWorkOrderHistory.pm
+    $Self->{Translation}->{'Can\'t show history, as no WorkOrderID is given!'} = '';
+    $Self->{Translation}->{'WorkOrder "%s" not found in the database!'} = '';
     $Self->{Translation}->{'WorkOrderHistory::'} = '';
+    $Self->{Translation}->{'WorkOrder History'} = '';
+
+    # Perl Module: Kernel/Modules/AgentITSMWorkOrderHistoryZoom.pm
+    $Self->{Translation}->{'History entry "%s" not found in the database!'} = '';
+    $Self->{Translation}->{'WorkOrder History Zoom'} = '';
+
+    # Perl Module: Kernel/Modules/AgentITSMWorkOrderTake.pm
+    $Self->{Translation}->{'Was not able to take the workorder %s!'} = '';
+
+    # Perl Module: Kernel/Modules/AgentITSMWorkOrderTemplate.pm
+    $Self->{Translation}->{'The workorder "%s" could not be serialized.'} = '';
 
     # Perl Module: Kernel/Output/HTML/ToolBar/MyWorkOrders.pm
     $Self->{Translation}->{'My Work Orders'} = '';
-
-    # SysConfig
-    $Self->{Translation}->{'A list of the agents who have permission to take workorders. Key is a login name. Content is 0 or 1.'} =
-        'Una lista de los agentes que tienen permiso para tomar órdenes de trabajo. Key es un nombre de inicio de sesión y Content puede ser 0 ó 1.';
-    $Self->{Translation}->{'A list of workorder states, at which the ActualStartTime of a workorder will be set if it was empty at this point.'} =
-        'Una lista de estados para las órdenes de trabajo, misma que será asignada a ActualStartTime, si para este punto seguía vacío.';
-    $Self->{Translation}->{'Add a change from template.'} = '';
-    $Self->{Translation}->{'Add a change.'} = '';
-    $Self->{Translation}->{'Admin of the CIP matrix.'} = 'Administrar la matriz CIP.';
-    $Self->{Translation}->{'Admin of the state machine.'} = 'Administrar la máquina de estados.';
-    $Self->{Translation}->{'Agent interface notification module to see the number of change advisory boards.'} =
-        'Módulo de notificación de la interface del Agente para mostrar el número de change advisory boards.';
-    $Self->{Translation}->{'Agent interface notification module to see the number of changes managed by the user.'} =
-        'Módulo de notificación de la interface del Agente para mostrar el número de  cambios administrados por el usuario.';
-    $Self->{Translation}->{'Agent interface notification module to see the number of changes.'} =
-        'Módulo de notificación de la interface del Agente para mostrar el número de cambios.';
-    $Self->{Translation}->{'Agent interface notification module to see the number of work orders.'} =
-        'Módulo de notificación de la interface del Agente para mostrar el número de órdenes de trabajo.';
-    $Self->{Translation}->{'Cache time in minutes for the change management toolbars. Default: 3 hours (180 minutes).'} =
-        'Tiempo caché en minutos para las barras de tareas de gestión del cambio. Por defecto:  3 horas (180 minutos).';
-    $Self->{Translation}->{'Cache time in minutes for the change management. Default: 5 days (7200 minutes).'} =
-        'Tiempo caché en minutos para la gestión del cambio. Por defecto: 5 días (7200 minutos).';
-    $Self->{Translation}->{'Change History.'} = '';
-    $Self->{Translation}->{'Change Involved Persons.'} = '';
-    $Self->{Translation}->{'Change Overview "Small" Limit'} = 'Cambie Límite Vista General "Pequeña"';
-    $Self->{Translation}->{'Change Print.'} = '';
-    $Self->{Translation}->{'Change Schedule.'} = '';
-    $Self->{Translation}->{'Change Zoom.'} = '';
-    $Self->{Translation}->{'Change and WorkOrder templates edited by this user.'} = 'Plantillas de Cambio y OrdenTrabajo editadas por este usuario.';
-    $Self->{Translation}->{'Change limit per page for Change Overview "Small"'} = '';
-    $Self->{Translation}->{'Change search backend router of the agent interface.'} = '';
-    $Self->{Translation}->{'Change-Area'} = '';
-    $Self->{Translation}->{'Configures how often the notifications are sent when planned the start time or other time values have been reached/passed.'} =
-        'Configura el intervalo de envío de notificaciones cuando alguno de los valores del tiempo, como la fecha de inicio planeada, se alcanzan/sobrepasan.';
-    $Self->{Translation}->{'Create a change (from template) from this ticket!'} = '';
-    $Self->{Translation}->{'Create and manage ITSM Change Management notifications.'} = '';
-    $Self->{Translation}->{'Default type for a workorder. This entry must exist in general catalog class \'ITSM::ChangeManagement::WorkOrder::Type\'.'} =
-        'Tipo default para las órdenes de trabajo. Este registro debe existir en la clase \'ITSM::ChangeManagement::WorkOrder::Type\' del catálogo general.';
-    $Self->{Translation}->{'Define the signals for each workorder state.'} = 'Define las señales para cada estado de las órdenes de trabajo.';
-    $Self->{Translation}->{'Defines an overview module to show the small view of a change list.'} =
-        'Define un módulo de resumen para mostrar la vista pequeña de una lista de cambios.';
-    $Self->{Translation}->{'Defines an overview module to show the small view of a template list.'} =
-        'Define un módulo de resumen para mostrar la vista pequeña de una lista de plantillas.';
-    $Self->{Translation}->{'Defines if it will be possible to print the accounted time.'} = 'Define si será posible imprimir el tiempo contabilizado.';
-    $Self->{Translation}->{'Defines if it will be possible to print the planned effort.'} = 'Define si será posible imprimir el esfuerzo planeado.';
-    $Self->{Translation}->{'Defines if reachable (as defined by the state machine) change end states should be allowed if a change is in a locked state.'} =
-        '';
-    $Self->{Translation}->{'Defines if reachable (as defined by the state machine) workorder end states should be allowed if a workorder is in a locked state.'} =
-        '';
-    $Self->{Translation}->{'Defines if the accounted time should be shown.'} = 'Determina si el tiempo contabilizado debe mostrarse.';
-    $Self->{Translation}->{'Defines if the actual start and end times should be set.'} = 'Determina si las fechas de inicio y finalización reales deben fijarse.';
-    $Self->{Translation}->{'Defines if the change search and the workorder search functions could use the mirror DB.'} =
-        '';
-    $Self->{Translation}->{'Defines if the change state can be set in AgentITSMChangeEdit.'} =
-        'Define si el estado de un cambio puede determinarse en AgentITSMChangeEdit.';
-    $Self->{Translation}->{'Defines if the planned effort should be shown.'} = 'Determina si el esfuerzo planeado debe mostrarse.';
-    $Self->{Translation}->{'Defines if the requested date should be print by customer.'} = 'Define si la fecha solicitada debe imprimirse por cliente.';
-    $Self->{Translation}->{'Defines if the requested date should be searched by customer.'} =
-        'Define si la fecha solicitada debe buscarse por cliente.';
-    $Self->{Translation}->{'Defines if the requested date should be set by customer.'} = 'Define si la fecha solicitada debe registrarse para cada cliente.';
-    $Self->{Translation}->{'Defines if the requested date should be shown by customer.'} = 'Define si la fecha solicitada debe mostrarse por cliente.';
-    $Self->{Translation}->{'Defines if the workorder state should be shown.'} = 'Determina si el estado de la orden de trabajo debe mostrarse.';
-    $Self->{Translation}->{'Defines if the workorder title should be shown.'} = 'Determina si el título de la orden de trabajo debe mostrarse.';
-    $Self->{Translation}->{'Defines shown graph attributes.'} = 'Define los atributos mostrados en las gráficas.';
-    $Self->{Translation}->{'Defines that only changes containing Workorders linked with services, which the customer user has permission to use will be shown. Any other changes will not be displayed.'} =
-        'Define que únicamente se mostrarán los cambios que contienen órdenes de trabajo, vinculadas con servicios, que el cliente tiene permiso de usar. El resto de los cambios no se desplegará.';
-    $Self->{Translation}->{'Defines the change states that will be allowed to delete.'} = 'Define los estados de cambio que se permitirán eliminar.';
-    $Self->{Translation}->{'Defines the change states that will be used as filters in the Change PSA overview.'} =
-        'Define los estados de los cambios que serán utilizados como filtros en la vista de resumen de la PSA de los cambios.';
-    $Self->{Translation}->{'Defines the change states that will be used as filters in the Change Schedule overview.'} =
-        'Define los estados de los cambios que serán utilizados como filtros en la vista de resumen de la agenda de los cambios.';
-    $Self->{Translation}->{'Defines the change states that will be used as filters in the MyCAB overview.'} =
-        'Define los estados de los cambios que serán utilizados como filtros en la vista de resumen de MyCAB.';
-    $Self->{Translation}->{'Defines the change states that will be used as filters in the MyChanges overview.'} =
-        'Define los estados de los cambios que serán utilizados como filtros en la vista de resumen de MyChanges.';
-    $Self->{Translation}->{'Defines the change states that will be used as filters in the change manager overview.'} =
-        'Define los estados de los cambios que serán utilizados como filtros en la vista de resumen de la gestión de cambios.';
-    $Self->{Translation}->{'Defines the change states that will be used as filters in the change overview.'} =
-        'Define los estados de los cambios que serán usados como filtros en los resúmenes de dichos cambios.';
-    $Self->{Translation}->{'Defines the change states that will be used as filters in the customer change schedule overview.'} =
-        'Define los estados de los cambios que serán utilizados como filtros en la vista de resumen de edición de la agenda, en la interfaz del cliente.';
-    $Self->{Translation}->{'Defines the default change title for a dummy change which is needed to edit a workorder template.'} =
-        'Define el título por defecto de un cambio que será utilizado para un cambio temporal, el cual se necesita para editar una plantilla de orden de trabajo.';
-    $Self->{Translation}->{'Defines the default sort criteria in the change PSA overview.'} =
-        'Define el criterio de ordenamiento por default para la vista de resumem de la PSA de los cambios.';
-    $Self->{Translation}->{'Defines the default sort criteria in the change manager overview.'} =
-        'Define el criterio de ordenamiento por default para la vista de resumem del administrador de los cambios.';
-    $Self->{Translation}->{'Defines the default sort criteria in the change overview.'} = 'Define el criterio de ordenamiento por default para la vista de resumem de los cambios.';
-    $Self->{Translation}->{'Defines the default sort criteria in the change schedule overview.'} =
-        'Define el criterio de ordenamiento por default para la vista de resumem de la agenda de los cambios.';
-    $Self->{Translation}->{'Defines the default sort criteria of the changes in the MyCAB overview.'} =
-        'Define el criterio de ordenamiento por default de los cambios para la vista de resumem de MyCAB.';
-    $Self->{Translation}->{'Defines the default sort criteria of the changes in the MyChanges overview.'} =
-        'Define el criterio de ordenamiento por default de los cambios para la vista de resumem de MyChanges.';
-    $Self->{Translation}->{'Defines the default sort criteria of the changes in the MyWorkorders overview.'} =
-        'Define el criterio de ordenamiento por default de los cambios para la vista de resumem de MyWorkorders.';
-    $Self->{Translation}->{'Defines the default sort criteria of the changes in the PIR overview.'} =
-        'Define el criterio de ordenamiento por default de los cambios para la vista de resumem de las PIR.';
-    $Self->{Translation}->{'Defines the default sort criteria of the changes in the customer change schedule overview.'} =
-        'Define el criterio de ordenamiento por default de los cambios para la vista de resumem de edición de la agenda, en la interfaz del cliente.';
-    $Self->{Translation}->{'Defines the default sort criteria of the changes in the template overview.'} =
-        'Define el criterio de ordenamiento por default de los cambios para la vista de resumem de las plantillas.';
-    $Self->{Translation}->{'Defines the default sort order in the MyCAB overview.'} = 'Define el parámetro de ordenamiento por default para la vista de resumem de MyCAB.';
-    $Self->{Translation}->{'Defines the default sort order in the MyChanges overview.'} = 'Define el parámetro de ordenamiento por default para la vista de resumem de MyChanges.';
-    $Self->{Translation}->{'Defines the default sort order in the MyWorkorders overview.'} =
-        'Define el parámetro de ordenamiento por default para la vista de resumem de MyWorkorders.';
-    $Self->{Translation}->{'Defines the default sort order in the PIR overview.'} = 'Define el parámetro de ordenamiento por default para la vista de resumem de las PIR.';
-    $Self->{Translation}->{'Defines the default sort order in the change PSA overview.'} = 'Define el parámetro de ordenamiento por default para la vista de resumem de la PSA de los cambios.';
-    $Self->{Translation}->{'Defines the default sort order in the change manager overview.'} =
-        'Define el parámetro de ordenamiento por default para la vista de resumem de la agenda de los cambios.';
-    $Self->{Translation}->{'Defines the default sort order in the change overview.'} = 'Define el parámetro de ordenamiento por default en la vista de resumen de los cambios.';
-    $Self->{Translation}->{'Defines the default sort order in the change schedule overview.'} =
-        'Define el parámetro de ordenamiento por default para la vista de resumem de la agenda de los cambios.';
-    $Self->{Translation}->{'Defines the default sort order in the customer change schedule overview.'} =
-        'Define el parámetro de ordenamiento por default para la vista de resumem de edición de la angenda, en la interfaz del cliente.';
-    $Self->{Translation}->{'Defines the default sort order in the template overview.'} = 'Define el parámetro de ordenamiento por default para la vista de resumem de las plantillas.';
-    $Self->{Translation}->{'Defines the default value for the category of a change.'} = 'Define el valor por default de la categoría de los cambios.';
-    $Self->{Translation}->{'Defines the default value for the impact of a change.'} = 'Define el valor por default del impacto de los cambios.';
-    $Self->{Translation}->{'Defines the field type of CompareValue fields for change attributes used in AgentITSMChangeConditionEdit. Valid values are Selection, Text and Date. If a type is not defined, the field will not be shown.'} =
-        'Define el tipo de campo para los CompareValue de los atributos de un cambio en AgentITSMChangeConditionEdit. Los valores posibles son: Selección, Texto y Fecha. Si el tipo no está definido, el campo no se mostrará.';
-    $Self->{Translation}->{'Defines the field type of CompareValue fields for workorder attributes used in AgentITSMChangeConditionEdit. Valid values are Selection, Text and Date. If a type is not defined, the field will not be shown.'} =
-        'Define el tipo de campo para los CompareValue de los atributos de una orden de trabajo en AgentITSMChangeConditionEdit. Los valores posibles son: Selección, Texto y Fecha. Si el tipo no está definido, el campo no se mostrará.';
-    $Self->{Translation}->{'Defines the object attributes that are selectable for change objects in AgentITSMChangeConditionEdit.'} =
-        'Define los atributos elegibles para los cambios en AgentITSMChangeConditionEdit.';
-    $Self->{Translation}->{'Defines the object attributes that are selectable for workorder objects in AgentITSMChangeConditionEdit.'} =
-        'Define los atributos elegibles para las órdenes de trabajo en AgentITSMChangeConditionEdit.';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute AccountedTime in AgentITSMChangeConditionEdit.'} =
-        'Define los operadores elegibles para el atributo AccountedTime en AgentITSMChangeConditionEdit.';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute ActualEndTime in AgentITSMChangeConditionEdit.'} =
-        'Define los operadores elegibles para el atributo ActualEndTime en AgentITSMChangeConditionEdit.';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute ActualStartTime in AgentITSMChangeConditionEdit.'} =
-        'Define los operadores elegibles para el atributo ActualStartTime en AgentITSMChangeConditionEdit.';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute CategoryID in AgentITSMChangeConditionEdit.'} =
-        'Define los operadores elegibles para el atributo CategoryID en AgentITSMChangeConditionEdit.';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute ChangeBuilderID in AgentITSMChangeConditionEdit.'} =
-        'Define los operadores elegibles para el atributo ChangeBuilderID en AgentITSMChangeConditionEdit.';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute ChangeManagerID in AgentITSMChangeConditionEdit.'} =
-        'Define los operadores elegibles para el atributo ChangeManagerID en AgentITSMChangeConditionEdit.';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute ChangeStateID in AgentITSMChangeConditionEdit.'} =
-        'Define los operadores elegibles para el atributo ChangeStateID en AgentITSMChangeConditionEdit.';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute ChangeTitle in AgentITSMChangeConditionEdit.'} =
-        'Define los operadores elegibles para el atributo ChangeTitle en AgentITSMChangeConditionEdit.';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute DynamicField in AgentITSMChangeConditionEdit.'} =
-        '';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute ImpactID in AgentITSMChangeConditionEdit.'} =
-        'Define los operadores elegibles para el atributo ImpactID en AgentITSMChangeConditionEdit.';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute PlannedEffort in AgentITSMChangeConditionEdit.'} =
-        'Define los operadores elegibles para el atributo PlannedEffort en AgentITSMChangeConditionEdit.';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute PlannedEndTime in AgentITSMChangeConditionEdit.'} =
-        'Define los operadores elegibles para el atributo PlannedEndTime en AgentITSMChangeConditionEdit.';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute PlannedStartTime in AgentITSMChangeConditionEdit.'} =
-        'Define los operadores elegibles para el atributo PlannedStartTime en AgentITSMChangeConditionEdit.';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute PriorityID in AgentITSMChangeConditionEdit.'} =
-        'Define los operadores elegibles para el atributo PriorityID en AgentITSMChangeConditionEdit.';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute RequestedTime in AgentITSMChangeConditionEdit.'} =
-        'Define los operadores elegibles para el atributo RequestedTime en AgentITSMChangeConditionEdit.';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute WorkOrderAgentID in AgentITSMChangeConditionEdit.'} =
-        'Define los operadores elegibles para el atributo WorkOrderAgentID en AgentITSMChangeConditionEdit.';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute WorkOrderNumber in AgentITSMChangeConditionEdit.'} =
-        'Define los operadores elegibles para el atributo WorkOrderNumber en AgentITSMChangeConditionEdit.';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute WorkOrderStateID in AgentITSMChangeConditionEdit.'} =
-        'Define los operadores elegibles para el atributo WorkOrderStateID en AgentITSMChangeConditionEdit.';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute WorkOrderTitle in AgentITSMChangeConditionEdit.'} =
-        'Define los operadores elegibles para el atributo WorkOrderTitle en AgentITSMChangeConditionEdit.';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute WorkOrderTypeID in AgentITSMChangeConditionEdit.'} =
-        'Define los operadores elegibles para el atributo WorkOrderTypeID en AgentITSMChangeConditionEdit.';
-    $Self->{Translation}->{'Defines the period (in years), in which start and end times can be selected.'} =
-        'Define el periodo (en años) en el que las fechas de inicio y finalización pueden seleccionarse.';
-    $Self->{Translation}->{'Defines the shown attributes of a workorder in the tooltip of the workorder graph in the change zoom. To show workorder dynamic fields in the tooltip, they must be specified like DynamicField_WorkOrderFieldName1, DynamicField_WorkOrderFieldName2, etc.'} =
-        '';
-    $Self->{Translation}->{'Defines the shown columns in the Change PSA overview. This option has no effect on the position of the column.'} =
-        'Define las columnas mostradas en la vista de resumen de la PSA de los cambios, sin que esto tenga efecto en la posición de las mismas.';
-    $Self->{Translation}->{'Defines the shown columns in the Change Schedule overview. This option has no effect on the position of the column.'} =
-        'Define las columnas mostradas en la vista de resumen de la agenda de los cambios, sin que esto tenga efecto en la posición de las mismas.';
-    $Self->{Translation}->{'Defines the shown columns in the MyCAB overview. This option has no effect on the position of the column.'} =
-        'Define las columnas mostradas en la vista de resumen de MyCAB, sin que esto tenga efecto en la posición de las mismas.';
-    $Self->{Translation}->{'Defines the shown columns in the MyChanges overview. This option has no effect on the position of the column.'} =
-        'Define las columnas mostradas en la vista de resumen de MyChanges, sin que esto tenga efecto en la posición de las mismas.';
-    $Self->{Translation}->{'Defines the shown columns in the MyWorkorders overview. This option has no effect on the position of the column.'} =
-        'Define las columnas mostradas en la vista de resumen de MyWorkorders, sin que esto tenga efecto en la posición de las mismas.';
-    $Self->{Translation}->{'Defines the shown columns in the PIR overview. This option has no effect on the position of the column.'} =
-        'Define las columnas mostradas en la vista de resumen de las PIR, sin que esto tenga efecto en la posición de las mismas.';
-    $Self->{Translation}->{'Defines the shown columns in the change manager overview. This option has no effect on the position of the column.'} =
-        'Define las columnas mostradas en la vista de resumen del administrador de los cambios, sin que esto tenga efecto en la posición de las mismas.';
-    $Self->{Translation}->{'Defines the shown columns in the change overview. This option has no effect on the position of the column.'} =
-        'Define las columnas mostradas en la vista de resumen de los cambios, sin que esto tenga efecto en la posición de las mismas.';
-    $Self->{Translation}->{'Defines the shown columns in the change search. This option has no effect on the position of the column.'} =
-        'Define las columnas mostradas en la búsqueda de cambios, sin que esto tenga efecto en la posición de las mismas.';
-    $Self->{Translation}->{'Defines the shown columns in the customer change schedule overview. This option has no effect on the position of the column.'} =
-        'Define las columnas mostradas en la vista de resumen de edición de la angenda de la interfaz del cliente, sin que esto tenga efecto en la posición de las mismas.';
-    $Self->{Translation}->{'Defines the shown columns in the template overview. This option has no effect on the position of the column.'} =
-        'Define las columnas mostradas en la vista de resumen de las plantillas, sin que esto tenga efecto en la posición de las mismas.';
-    $Self->{Translation}->{'Defines the signals for each ITSMChange state.'} = 'Define las señales para cada uno de los estado de los cambios ITSM.';
-    $Self->{Translation}->{'Defines the template types that will be used as filters in the template overview.'} =
-        'Define los tipos de plantilla que serán utilizados como filtros en la vista de resumen de las plantillas.';
-    $Self->{Translation}->{'Defines the workorder states that will be used as filters in the MyWorkorders overview.'} =
-        'Define los estados de las órdenes de trabajo que serán utilizados como filtros en la vista de resumen de MyWorkorders.';
-    $Self->{Translation}->{'Defines the workorder states that will be used as filters in the PIR overview.'} =
-        'Define los estados de las órdenes de trabajo que serán utilizados como filtros en la vista de resumen de las PIR.';
-    $Self->{Translation}->{'Defines the workorder types that will be used to show the PIR overview.'} =
-        'Define los tipos de órdenes de trabajo que se usarán en la vista de resumen de las PIR.';
-    $Self->{Translation}->{'Defines whether notifications should be sent.'} = 'Determina si deben enviarse notificaciones.';
-    $Self->{Translation}->{'Delete Change'} = '';
-    $Self->{Translation}->{'Delete a change.'} = '';
-    $Self->{Translation}->{'Details of a change history entry.'} = '';
-    $Self->{Translation}->{'Determines if an agent can exchange the X-axis of a stat if he generates one.'} =
-        'Determina si, al crear una estadística, es posible que los agentes intercambien las X-axis de las mismas.';
-    $Self->{Translation}->{'Determines if the common stats module may generate stats about changes done for config item classes.'} =
-        'Determina si el módulo comun de estadísticas debe generar estadísticas sobre cambios hechos a clases de elementos de configuración.';
-    $Self->{Translation}->{'Determines if the common stats module may generate stats about changes regarding change state updates within a timeperiod.'} =
-        'Determina si el módulo comun de estadísticas debe generar estadísticas sobre los cambios, respecto a las actualizaciones de estado de los cambios en un periodo determinado.';
-    $Self->{Translation}->{'Determines if the common stats module may generate stats about changes regarding the relation between changes and incident tickets.'} =
-        'Determina si el módulo comun de estadísticas debe generar estadísticas sobre los cambios, respecto a la relación entre los cambios y los tickets de tipo incidente.';
-    $Self->{Translation}->{'Determines if the common stats module may generate stats about changes.'} =
-        'Determina si el módulo comun de estadísticas debe generar estadísticas sobre los cambios.';
-    $Self->{Translation}->{'Determines if the common stats module may generate stats about the number of Rfc tickets a requester created.'} =
-        'Determina si el módulo comun de estadísticas debe generar estadísticas sobre el número de tickets Rfc que una persona creó.';
-    $Self->{Translation}->{'Dynamic fields (for changes and workorders) shown in the change print screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        '';
-    $Self->{Translation}->{'Dynamic fields shown in the change add screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        '';
-    $Self->{Translation}->{'Dynamic fields shown in the change edit screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        '';
-    $Self->{Translation}->{'Dynamic fields shown in the change search screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        '';
-    $Self->{Translation}->{'Dynamic fields shown in the change zoom screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        '';
-    $Self->{Translation}->{'Dynamic fields shown in the workorder add screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        '';
-    $Self->{Translation}->{'Dynamic fields shown in the workorder edit screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        '';
-    $Self->{Translation}->{'Dynamic fields shown in the workorder report screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        '';
-    $Self->{Translation}->{'Dynamic fields shown in the workorder zoom screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        '';
-    $Self->{Translation}->{'DynamicField event module to handle the update of conditions if dynamic fields are added, updated or deleted.'} =
-        '';
-    $Self->{Translation}->{'Edit a change.'} = '';
-    $Self->{Translation}->{'Forward schedule of changes. Overview over approved changes.'} =
-        '';
-    $Self->{Translation}->{'ITSM Change CAB Templates.'} = '';
-    $Self->{Translation}->{'ITSM Change Condition Edit.'} = '';
-    $Self->{Translation}->{'ITSM Change Condition Overview.'} = '';
-    $Self->{Translation}->{'ITSM Change Management Notifications'} = '';
-    $Self->{Translation}->{'ITSM Change Manager Overview.'} = '';
-    $Self->{Translation}->{'ITSM Change PIR Overview.'} = '';
-    $Self->{Translation}->{'ITSM MyCAB Overview.'} = '';
-    $Self->{Translation}->{'ITSM MyChanges Overview.'} = '';
-    $Self->{Translation}->{'ITSM MyWorkorders Overview.'} = '';
-    $Self->{Translation}->{'ITSM Template Delete.'} = '';
-    $Self->{Translation}->{'ITSM Template Edit CAB.'} = '';
-    $Self->{Translation}->{'ITSM Template Edit Content.'} = '';
-    $Self->{Translation}->{'ITSM Template Edit.'} = '';
-    $Self->{Translation}->{'ITSM Template Overview.'} = '';
-    $Self->{Translation}->{'ITSM event module deletes the history of changes.'} = 'Módulo de eventos para ITSM que elimina el historial de cambios.';
-    $Self->{Translation}->{'ITSM event module that cleans up conditions.'} = 'Módulo de eventos para ITSM que elimina condiciones.';
-    $Self->{Translation}->{'ITSM event module that deletes the cache for a toolbar.'} = '';
-    $Self->{Translation}->{'ITSM event module that matches conditions and executes actions.'} =
-        'Módulo de eventos para ITSM que verifica condiciones y ejecuta acciones.';
-    $Self->{Translation}->{'ITSM event module that sends notifications.'} = 'Módulo de eventos para ITSM para enviar notificaciones.';
-    $Self->{Translation}->{'ITSM event module that updates the history of changes.'} = 'Módulo de eventos para ITSM que actualiza la historia de los cambios.';
-    $Self->{Translation}->{'ITSM event module to recalculate the workorder numbers.'} = 'Módulo de eventos para ITSM que recalcula los números de las órdenes de trabajo.';
-    $Self->{Translation}->{'ITSM event module to set the actual start and end times of workorders.'} =
-        'Módulo de eventos para ITSM para definir las fechas de inicio y finalización reales de las órdenes de trabajo.';
-    $Self->{Translation}->{'ITSM event module updates the history of changes.'} = '';
-    $Self->{Translation}->{'ITSM event module updates the history of conditions.'} = 'Módulo de eventos para ITSM que actualiza la historia de las condiciones.';
-    $Self->{Translation}->{'ITSM event module updates the history of workorders.'} = '';
-    $Self->{Translation}->{'If frequency is \'regularly\', you can configure how often the notications are sent (every X hours).'} =
-        'Si la frecuencia de envío de notificaciones es \'regularmente\', es posible configurar un número de horas para el mismo fin.';
-    $Self->{Translation}->{'Logfile for the ITSM change counter. This file is used for creating the change numbers.'} =
-        'Log para el contador de los cambios ITSM. Este archivo se usa para crear los números de cambios.';
-    $Self->{Translation}->{'Lookup of CAB members for autocompletion.'} = '';
-    $Self->{Translation}->{'Lookup of agents, used for autocompletion.'} = '';
-    $Self->{Translation}->{'Module to check if WorkOrderAdd or WorkOrderAddFromTemplate should be permitted.'} =
-        '';
-    $Self->{Translation}->{'Module to check the CAB members.'} = 'Módulo para verificar los miembros del CAB.';
-    $Self->{Translation}->{'Module to check the agent.'} = 'Módulo para verificar el agente.';
-    $Self->{Translation}->{'Module to check the change builder.'} = 'Módulo para verificar el creador de los cambios.';
-    $Self->{Translation}->{'Module to check the change manager.'} = 'Módulo para verificar el administrador de los cambios.';
-    $Self->{Translation}->{'Module to check the workorder agent.'} = 'Módulo para verificar el agente de la orden de trabajo.';
-    $Self->{Translation}->{'Module to check whether no workorder agent is set.'} = 'Módulo para verificar si el agente de una orden de trabajo se ha establecido.';
-    $Self->{Translation}->{'Module to check whether the agent is contained in the configured list.'} =
-        'Módulo para verificar si el agente está incluido en la lista de configuración.';
-    $Self->{Translation}->{'Module to show a link to create a change from this ticket. The ticket will be automatically linked with the new change.'} =
-        'Módulo que muestra un vínculo para crear un cambio de este ticket. El ticket se vinculará automaticamente con el cambio nuevo.';
-    $Self->{Translation}->{'Move Time Slot.'} = '';
-    $Self->{Translation}->{'Only users of these groups have the permission to use the ticket types as defined in "ITSMChange::AddChangeLinkTicketTypes" if the feature "Ticket::Acl::Module###200-Ticket::Acl::Module" is enabled.'} =
-        'Sólo los usuarios que pertenezcan a estos grupos tendrán permiso de usar los tipos de tickets, tal y como se define en "ITSMChange::AddChangeLinkTicketTypes" si la funcionalidad "Ticket::Acl::Module###200-Ticket::Acl::Module" está habilitada.';
-    $Self->{Translation}->{'Overview over all Changes.'} = '';
-    $Self->{Translation}->{'Parameters for the UserCreateWorkOrderNextMask object in the preference view of the agent interface.'} =
-        '';
-    $Self->{Translation}->{'Parameters for the pages (in which the changes are shown) of the small change overview.'} =
-        '';
-    $Self->{Translation}->{'Presents a link in the menu to show the involved persons in a change, in the zoom view of such change in the agent interface.'} =
-        'Presenta un vínculo en el menú para mostrar a las personas involucradas en un cambio, en la vista detallada de dicho cambio de la interfaz del agente.';
-    $Self->{Translation}->{'Projected Service Availability (PSA)'} = '';
-    $Self->{Translation}->{'Projected Service Availability (PSA) of changes. Overview of approved changes and their services.'} =
-        '';
-    $Self->{Translation}->{'Required privileges in order for an agent to take a workorder.'} =
-        'Privilegios necesarios para que un agente tome una orden de trabajo.';
-    $Self->{Translation}->{'Required privileges to access the overview of all changes.'} = 'Permisos necesarios para acceder a la vista de resumen de todos los cambios.';
-    $Self->{Translation}->{'Required privileges to add a workorder.'} = 'Privilegios necesarios para agregar una orden de trabajo.';
-    $Self->{Translation}->{'Required privileges to change the workorder agent.'} = 'Privilegios necesarios para modificar el agente de una orden de trabajo.';
-    $Self->{Translation}->{'Required privileges to create a template from a change.'} = 'Privilegios necesarios para crear una plantilla a partir de un cambio.';
-    $Self->{Translation}->{'Required privileges to create a template from a changes\' CAB.'} =
-        'Privilegios necesarios para crear una platilla a partir de un CAB de cambios.';
-    $Self->{Translation}->{'Required privileges to create a template from a workorder.'} = 'Privilegios necesarios para crear una plantilla a partir de una orden de trabajo.';
-    $Self->{Translation}->{'Required privileges to create changes from templates.'} = 'Privilegios requeridos para crear cambios basados en plantillas.';
-    $Self->{Translation}->{'Required privileges to create changes.'} = 'Privilegios necesarios para crear cambios.';
-    $Self->{Translation}->{'Required privileges to delete a template.'} = 'Privilegios necesarios para eliminar una plantilla.';
-    $Self->{Translation}->{'Required privileges to delete a workorder.'} = 'Privilegios necesarios para eliminar una orden de trabajo.';
-    $Self->{Translation}->{'Required privileges to delete changes.'} = 'Privilegios requeridos para eliminar cambios.';
-    $Self->{Translation}->{'Required privileges to edit a template.'} = 'Privilegios necesarios para modificar una plantilla.';
-    $Self->{Translation}->{'Required privileges to edit a workorder.'} = 'Privilegios necesarios para modificar una orden de trabajo.';
-    $Self->{Translation}->{'Required privileges to edit changes.'} = 'Privilegios necesarios para modificar cambios.';
-    $Self->{Translation}->{'Required privileges to edit the conditions of changes.'} = 'Privilegios necesarios para modificar las condiciones de los cambios.';
-    $Self->{Translation}->{'Required privileges to edit the content of a template.'} = 'Privilegios requeridos para editar el contenido de una plantilla.';
-    $Self->{Translation}->{'Required privileges to edit the involved persons of a change.'} =
-        'Privilegios necesarios para modificar la lista de personas involucradas en un cambio.';
-    $Self->{Translation}->{'Required privileges to move changes in time.'} = 'Privilegios necesarios para mover cambios en el tiempo.';
-    $Self->{Translation}->{'Required privileges to print a change.'} = 'Privilegios necesarios para imprimir un cambio.';
-    $Self->{Translation}->{'Required privileges to reset changes.'} = 'Privilegios requeridos para reajustar cambios.';
-    $Self->{Translation}->{'Required privileges to view a workorder.'} = 'Privilegios necesarios para ver una orden de trabajo.';
-    $Self->{Translation}->{'Required privileges to view changes.'} = 'Privilegios necesarios para ver los cambios.';
-    $Self->{Translation}->{'Required privileges to view list of changes where the user is a CAB member.'} =
-        'Privilegios necesarios para ver la lista de los cambios, donde el usuario es un miembro del CAB.';
-    $Self->{Translation}->{'Required privileges to view list of changes where the user is the change manager.'} =
-        'Privilegios necesarios para ver la lista de los cambios, donde el usuario es el administrador de cambios.';
-    $Self->{Translation}->{'Required privileges to view overview over all templates.'} = 'Permisos necesarios para acceder a la vista de resumen de todas las plantillas.';
-    $Self->{Translation}->{'Required privileges to view the conditions of changes.'} = 'Privilegios necesarios para ver las condiciones de los cambios.';
-    $Self->{Translation}->{'Required privileges to view the history of a change.'} = 'Privilegios necesarios para ver la historia de los cambios.';
-    $Self->{Translation}->{'Required privileges to view the history of a workorder.'} = 'Privilegios necesarios para ver la historia de una orden de trabajo.';
-    $Self->{Translation}->{'Required privileges to view the history zoom of a change.'} = 'Privilegios necesarios para acceder a la vista detallada de la historia de los cambios.';
-    $Self->{Translation}->{'Required privileges to view the history zoom of a workorder.'} =
-        'Privilegios necesarios para ver la vista detallada de la historia de una orden de trabajo.';
-    $Self->{Translation}->{'Required privileges to view the list of Change Schedule.'} = 'Privilegios necesarios para ver la lista de la agenda de los cambios.';
-    $Self->{Translation}->{'Required privileges to view the list of change PSA.'} = 'Privilegios necesarios para ver la lista de la PSA de los cambios.';
-    $Self->{Translation}->{'Required privileges to view the list of changes with an upcoming PIR (Post Implementation Review).'} =
-        'Privilegios necesarios para ver la lista de cambios con un PIR (Revisión Post Implementación) próximo.';
-    $Self->{Translation}->{'Required privileges to view the list of own changes.'} = 'Privilegios necesarios para ver una lista de mis cambios propios.';
-    $Self->{Translation}->{'Required privileges to view the list of own workorders.'} = 'Privilegios necesarios para ver una lista de mis órdenes de trabajo propias.';
-    $Self->{Translation}->{'Required privileges to write a report for the workorder.'} = 'Privilegios necesarios para hacer un reporte de una orden de trabajo.';
-    $Self->{Translation}->{'Reset a change and its workorders.'} = '';
-    $Self->{Translation}->{'Reset change and its workorders'} = '';
-    $Self->{Translation}->{'Run task to check if specific times have been in reached in changes and workorders.'} =
-        '';
-    $Self->{Translation}->{'Screen after creating a workorder'} = 'Pantalla posterior a la creación de una orden de trabajo';
-    $Self->{Translation}->{'Search Changes.'} = '';
-    $Self->{Translation}->{'Selects the change number generator module. "AutoIncrement" increments the change number, the SystemID and the counter are used with SystemID.counter format (e.g. 100118, 100119). With "Date", the change numbers will be generated by the current date and a counter; this format looks like Year.Month.Day.counter, e.g. 2010062400001, 2010062400002. With "DateChecksum", the counter will be appended as checksum to the string of date plus the SystemID. The checksum will be rotated on a daily basis. This format looks like Year.Month.Day.SystemID.Counter.CheckSum, e.g. 2010062410000017, 2010062410000026.'} =
-        '';
-    $Self->{Translation}->{'Set the default height (in pixels) of inline HTML fields in AgentITSMChangeZoom and AgentITSMWorkOrderZoom.'} =
-        '';
-    $Self->{Translation}->{'Set the maximum height (in pixels) of inline HTML fields in AgentITSMChangeZoom and AgentITSMWorkOrderZoom.'} =
-        '';
-    $Self->{Translation}->{'Sets the minimal change counter size (if "AutoIncrement" was selected as ITSMChange::NumberGenerator). Default is 5, this means the counter starts from 10000.'} =
-        '';
-    $Self->{Translation}->{'Sets up the state machine for changes.'} = 'Configura la máquina de estados para los cambios.';
-    $Self->{Translation}->{'Sets up the state machine for workorders.'} = 'Configura la máquina de estados para las órdenes de trabajo';
-    $Self->{Translation}->{'Show this screen after I created a new workorder'} = 'Mostrar esta pantalla después de crear una nueva orden de trabajo';
-    $Self->{Translation}->{'Shows a checkbox in the AgentITSMWorkOrderEdit screen that defines if the the following workorders should also be moved if a workorder is modified and the planned end time has changed.'} =
-        '';
-    $Self->{Translation}->{'Shows a link in the menu that allows changing the work order agent, in the zoom view of such work order of the agent interface.'} =
-        'Muestra un vínculo en el menú que permite cambiar el agente de la orden de trabajo, en la vista detallada de dicha orden de trabajo de la interfaz del agente';
-    $Self->{Translation}->{'Shows a link in the menu that allows defining a change as a template in the zoom view of the change, in the agent interface.'} =
-        'Muestra un vínculo en el menú que permite definir un cambio como una plantilla, en la vista detallada de dicho cambio, en la interfaz del agente.';
-    $Self->{Translation}->{'Shows a link in the menu that allows defining a work order as a template in the zoom view of the work order, in the agent interface.'} =
-        'Muestra un vínculo en el menú que permite definir una orden de trabajo como una plantilla, en la vista detallada de dicha orden de trabajo, en la interfaz del agente.';
-    $Self->{Translation}->{'Shows a link in the menu that allows editing the report of a workd order, in the zoom view of such work order of the agent interface.'} =
-        'Muestra un vínculo en el menú que permite editar el reporte de una orden de trabajo, en la vista detallada de dicha orden de trabajo, en la interfaz del agente';
-    $Self->{Translation}->{'Shows a link in the menu that allows linking a change with another object in the change zoom view of the agent interface.'} =
-        'Muestra un link en el menú para vincular un cambio con otro objeto, en la vista detallada de dicho cambio de la interfaz del agente.';
-    $Self->{Translation}->{'Shows a link in the menu that allows linking a work order with another object in the zoom view of such work order of the agent interface.'} =
-        'Muestra un link en el menú para vincular una orden de trabajo con otro objeto, en la vista detallada de dicha orden de trabajo de la interfaz del agente.';
-    $Self->{Translation}->{'Shows a link in the menu that allows moving the time slot of a change in its zoom view of the agent interface.'} =
-        'Muestra un vínculo en el menú que permite mover el periodo de tiempo de un cambio, en su vista detallada de la interfaz del agente.';
-    $Self->{Translation}->{'Shows a link in the menu that allows taking a work order in the its zoom view of the agent interface.'} =
-        'Muestra un vínculo en el menú que permite tomar una orden de trabajo en su vista detallada, en la interfaz del agente.';
-    $Self->{Translation}->{'Shows a link in the menu to access the conditions of a change in the its zoom view of the agent interface.'} =
-        'Muestra un vínculo en el menú para acceder a las condiciones de un cambio en su vista detallada de la interfaz del agente.';
-    $Self->{Translation}->{'Shows a link in the menu to access the history of a change in the its zoom view of the agent interface.'} =
-        'Muestra un link en el menú para acceder a la historia de un cambio en su vista detallada, en la interfaz del agente.';
-    $Self->{Translation}->{'Shows a link in the menu to access the history of a work order in the its zoom view of the agent interface.'} =
-        'Muestra un link en el menú para acceder a la historia de una orden de trabajo en su vista detallada, en la interfaz del agente.';
-    $Self->{Translation}->{'Shows a link in the menu to add a work order in the change zoom view of the agent interface.'} =
-        'Muestra un vínculo en el menú para agregar una orden de trabajo en la vista detallada de un cambio, en la interfaz del agente.';
-    $Self->{Translation}->{'Shows a link in the menu to delete a change in its zoom view of the agent interface.'} =
-        'Muestra un vínculo en el menú para eliminar un cambio en la vista de zoom o en la interfaz de agente.';
-    $Self->{Translation}->{'Shows a link in the menu to delete a work order in its zoom view of the agent interface.'} =
-        'Muestra un vínculo en el menú para eliminar una orden de trabajo en su vista detallada de un cambio, en la interfaz del agente.';
-    $Self->{Translation}->{'Shows a link in the menu to edit a change in the its zoom view of the agent interface.'} =
-        'Muestra un link en el menú para editar un cambio en su vista detallada, en la interfaz del agente.';
-    $Self->{Translation}->{'Shows a link in the menu to edit a work order in the its zoom view of the agent interface.'} =
-        'Muestra un link en el menú para editar una orden de trabajo en su vista detallada, en la interfaz del agente.';
-    $Self->{Translation}->{'Shows a link in the menu to go back in the change zoom view of the agent interface.'} =
-        'Muestra un link en el menú para regresar en la vista detallada de un cambio de la interfaz del agente.';
-    $Self->{Translation}->{'Shows a link in the menu to go back in the work order zoom view of the agent interface.'} =
-        'Muestra un link en el menú para regresar en la vista detallada de una orden de trabajo de la interfaz del agente.';
-    $Self->{Translation}->{'Shows a link in the menu to print a change in the its zoom view of the agent interface.'} =
-        'Muestra un link en el menú para imprimir un cambio en su vista detallada, en la interfaz del agente.';
-    $Self->{Translation}->{'Shows a link in the menu to print a work order in the its zoom view of the agent interface.'} =
-        'Muestra un link en el menú para imprimir una orden de trabajo en su vista detallada, en la interfaz del agente.';
-    $Self->{Translation}->{'Shows a link in the menu to reset a change and its workorders in its zoom view of the agent interface.'} =
-        'Muestra un vínculo en el menú para reajustar un cambio y sus ordenes de trabajo en la vista de zoom o en la interfaz de agente.';
-    $Self->{Translation}->{'Shows the change history (reverse ordered) in the agent interface.'} =
-        'Muestra la historia del cambio (ordenado inversamente) en la interfaz del agente.';
-    $Self->{Translation}->{'State Machine'} = 'Máquina de Estados';
-    $Self->{Translation}->{'Stores change and workorder ids and their corresponding template id, while a user is editing a template.'} =
-        '';
-    $Self->{Translation}->{'Take Workorder.'} = '';
-    $Self->{Translation}->{'Template.'} = '';
-    $Self->{Translation}->{'The identifier for a change, e.g. Change#, MyChange#. The default is Change#.'} =
-        'Identificador de un cambio, por ejemplo: Cambio#, MiCambio#. El default es Change#.';
-    $Self->{Translation}->{'The identifier for a workorder, e.g. Workorder#, MyWorkorder#. The default is Workorder#.'} =
-        'Identificador de una orden de trabajo, por ejemplo: OrdenDeTrabajo#, MiOrdenDeTrabajo#. El default es Workorder#.';
-    $Self->{Translation}->{'This ACL module restricts the usuage of the ticket types that are defined in the sysconfig option \'ITSMChange::AddChangeLinkTicketTypes\', to users of the groups as defined in "ITSMChange::RestrictTicketTypes::Groups". As this ACL could collide with other ACLs which are also related to the ticket type, this sysconfig option is disabled by default and should only be activated if needed.'} =
-        '';
-    $Self->{Translation}->{'Types of tickets, where in the ticket zoom view a link to add a change will be displayed.'} =
-        'Tipos de tickets en cuya vista detallada aparecerá un vínculo para agregar un cambio.';
-    $Self->{Translation}->{'Workorder Add (from template).'} = '';
-    $Self->{Translation}->{'Workorder Add.'} = '';
-    $Self->{Translation}->{'Workorder Agent.'} = '';
-    $Self->{Translation}->{'Workorder Delete.'} = '';
-    $Self->{Translation}->{'Workorder Edit.'} = '';
-    $Self->{Translation}->{'Workorder History Zoom.'} = '';
-    $Self->{Translation}->{'Workorder History.'} = '';
-    $Self->{Translation}->{'Workorder Report.'} = '';
-    $Self->{Translation}->{'Workorder Zoom.'} = '';
-    $Self->{Translation}->{'once'} = '';
-    $Self->{Translation}->{'regularly'} = '';
 
 }
 

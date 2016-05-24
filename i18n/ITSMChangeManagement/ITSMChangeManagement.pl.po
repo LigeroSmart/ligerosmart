@@ -1,13 +1,13 @@
 # 
 # Translators:
-# Jerzy Ruszczak <orcio6@o2.pl>, 2015
+# Jerzy Ruszczak <orcio6@o2.pl>, 2015-2016
 # Michał Kiełkowski <michal.kielkowski@lhsystems.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-04-29 13:18+0000\n"
-"PO-Revision-Date: 2016-04-29 11:19+0000\n"
-"Last-Translator: Udo Bretz\n"
+"POT-Creation-Date: 2016-04-29 13:25+0000\n"
+"PO-Revision-Date: 2016-05-09 11:10+0000\n"
+"Last-Translator: Jerzy Ruszczak <orcio6@o2.pl>\n"
 "Language-Team: Polish (http://www.transifex.com/otrs/OTRS/language/pl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -105,7 +105,7 @@ msgstr "%s: %s"
 
 #. Template: AAAITSMChangeManagement
 msgid "ChangeHistory::ActionAddID"
-msgstr "Nowa akcja (ID=%s)"
+msgstr "ChangeHistory::ActionAddID"
 
 #. Template: AAAITSMChangeManagement
 msgid "ChangeHistory::ActionDelete"
@@ -185,7 +185,7 @@ msgstr "%s: %s"
 
 #. Template: AAAITSMChangeManagement
 msgid "ChangeHistory::ConditionAddID"
-msgstr "Nowy warunek (ID=%s)"
+msgstr "ChangeHistory::ConditionAddID"
 
 #. Template: AAAITSMChangeManagement
 msgid "ChangeHistory::ConditionDelete"
@@ -205,7 +205,7 @@ msgstr "%s: %s"
 
 #. Template: AAAITSMChangeManagement
 msgid "ChangeHistory::ExpressionAddID"
-msgstr "Nowe wyrażenie (ID=%s)"
+msgstr "ChangeHistory::ExpressionAddID"
 
 #. Template: AAAITSMChangeManagement
 msgid "ChangeHistory::ExpressionDelete"
@@ -389,7 +389,7 @@ msgstr "Zadanie (ID=%s) osiągnęło rzeczywisty czas końca."
 
 #. Template: AAAITSMChangeManagement
 msgid "WorkOrderHistory::WorkOrderActualEndTimeReachedWithWorkOrderID"
-msgstr "Zadanie (ID=%s) osiągnęło rzeczywisty czas końca."
+msgstr "WorkOrderHistory::WorkOrderActualEndTimeReachedWithWorkOrderID"
 
 #. Template: AAAITSMChangeManagement
 msgid "WorkOrderHistory::WorkOrderActualStartTimeReached"
@@ -397,7 +397,7 @@ msgstr "Zadanie (ID=%s) osiągnęło rzeczywisty czas startu."
 
 #. Template: AAAITSMChangeManagement
 msgid "WorkOrderHistory::WorkOrderActualStartTimeReachedWithWorkOrderID"
-msgstr "Zadanie (ID=%s) osiągnęło rzeczywisty czas startu."
+msgstr "WorkOrderHistory::WorkOrderActualStartTimeReachedWithWorkOrderID"
 
 #. Template: AAAITSMChangeManagement
 msgid "WorkOrderHistory::WorkOrderAdd"
@@ -405,7 +405,7 @@ msgstr "Nowe zadanie (ID=%s)"
 
 #. Template: AAAITSMChangeManagement
 msgid "WorkOrderHistory::WorkOrderAddWithWorkOrderID"
-msgstr "Nowe zadanie (ID=%s)"
+msgstr "WorkOrderHistory::WorkOrderAddWithWorkOrderID"
 
 #. Template: AAAITSMChangeManagement
 msgid "WorkOrderHistory::WorkOrderAttachmentAdd"
@@ -413,7 +413,7 @@ msgstr "(ID=%s) Nowy załącznik do zadania: %s"
 
 #. Template: AAAITSMChangeManagement
 msgid "WorkOrderHistory::WorkOrderAttachmentAddWithWorkOrderID"
-msgstr "(ID=%s) Nowy załącznik do zadania: %s"
+msgstr "WorkOrderHistory::WorkOrderAttachmentAddWithWorkOrderID"
 
 #. Template: AAAITSMChangeManagement
 msgid "WorkOrderHistory::WorkOrderAttachmentDelete"
@@ -421,7 +421,7 @@ msgstr "Usunięty załącznik z zadania: %s"
 
 #. Template: AAAITSMChangeManagement
 msgid "WorkOrderHistory::WorkOrderAttachmentDeleteWithWorkOrderID"
-msgstr "(ID=%s) Usunięty załącznik z zadania: %s"
+msgstr "WorkOrderHistory::WorkOrderAttachmentDeleteWithWorkOrderID"
 
 #. Template: AAAITSMChangeManagement
 msgid "WorkOrderHistory::WorkOrderReportAttachmentAdd"
@@ -429,7 +429,7 @@ msgstr ""
 
 #. Template: AAAITSMChangeManagement
 msgid "WorkOrderHistory::WorkOrderReportAttachmentAddWithWorkOrderID"
-msgstr ""
+msgstr "WorkOrderHistory::WorkOrderReportAttachmentAddWithWorkOrderID"
 
 #. Template: AAAITSMChangeManagement
 msgid "WorkOrderHistory::WorkOrderReportAttachmentDelete"
@@ -437,7 +437,7 @@ msgstr ""
 
 #. Template: AAAITSMChangeManagement
 msgid "WorkOrderHistory::WorkOrderReportAttachmentDeleteWithWorkOrderID"
-msgstr ""
+msgstr "WorkOrderHistory::WorkOrderReportAttachmentDeleteWithWorkOrderID"
 
 #. Template: AAAITSMChangeManagement
 msgid "WorkOrderHistory::WorkOrderDelete"
@@ -445,7 +445,7 @@ msgstr "Zadanie (ID=%s) usunięte"
 
 #. Template: AAAITSMChangeManagement
 msgid "WorkOrderHistory::WorkOrderDeleteWithWorkOrderID"
-msgstr "Zadanie (ID=%s) usunięte"
+msgstr "WorkOrderHistory::WorkOrderDeleteWithWorkOrderID"
 
 #. Template: AAAITSMChangeManagement
 msgid "WorkOrderHistory::WorkOrderLinkAdd"
@@ -453,7 +453,7 @@ msgstr "Utworzony odnośnik do %s (ID=%s)"
 
 #. Template: AAAITSMChangeManagement
 msgid "WorkOrderHistory::WorkOrderLinkAddWithWorkOrderID"
-msgstr "(ID=%s) Utworzony odnośnik do %s (ID=%s)"
+msgstr "WorkOrderHistory::WorkOrderLinkAddWithWorkOrderID"
 
 #. Template: AAAITSMChangeManagement
 msgid "WorkOrderHistory::WorkOrderLinkDelete"
@@ -461,7 +461,7 @@ msgstr "Usynięty odnośnik do %s (ID=%s)"
 
 #. Template: AAAITSMChangeManagement
 msgid "WorkOrderHistory::WorkOrderLinkDeleteWithWorkOrderID"
-msgstr "(ID=%s) Usunięty odnośnik do %s (ID=%s)"
+msgstr "WorkOrderHistory::WorkOrderLinkDeleteWithWorkOrderID"
 
 #. Template: AAAITSMChangeManagement
 msgid "WorkOrderHistory::WorkOrderNotificationSent"
@@ -469,7 +469,7 @@ msgstr "Powiadomienie wysłane do %s (Zdarzenie: %s)"
 
 #. Template: AAAITSMChangeManagement
 msgid "WorkOrderHistory::WorkOrderNotificationSentWithWorkOrderID"
-msgstr "(ID=%s) Powiadomienie wysłane do %s (Zdarzenie: %s)"
+msgstr "WorkOrderHistory::WorkOrderNotificationSentWithWorkOrderID"
 
 #. Template: AAAITSMChangeManagement
 msgid "WorkOrderHistory::WorkOrderPlannedEndTimeReached"
@@ -493,7 +493,7 @@ msgstr "%s: Nowe: %s <- Stare: %s"
 
 #. Template: AAAITSMChangeManagement
 msgid "WorkOrderHistory::WorkOrderUpdateWithWorkOrderID"
-msgstr "(ID=%s) %s: Nowe: %s <- Stare: %s"
+msgstr "WorkOrderHistory::WorkOrderUpdateWithWorkOrderID"
 
 #. Template: AAAITSMChangeManagement
 msgid "WorkOrderNumber"
@@ -653,7 +653,7 @@ msgstr "Powiadomiene powinno mieć nazwę!"
 
 #. Template: AdminITSMChangeNotification
 msgid "Name is required."
-msgstr "Nazwa jest wymagana."
+msgstr "Imię i nazwisko są wymagane."
 
 #. Template: AdminITSMStateMachine
 msgid "Admin State Machine"
@@ -713,7 +713,7 @@ msgstr "od"
 
 #. Template: AdminITSMStateMachine
 msgid "to"
-msgstr ""
+msgstr "do"
 
 #. Template: AgentITSMChangeAdd
 msgid "Add Change"
@@ -849,7 +849,7 @@ msgstr ""
 
 #. Template: AgentITSMChangeHistory
 msgid "History of"
-msgstr ""
+msgstr "Historia"
 
 #. Template: AgentITSMChangeHistory
 msgid "Workorder"
@@ -1343,7 +1343,7 @@ msgstr ""
 
 #. SysConfig
 msgid "Change Schedule."
-msgstr ""
+msgstr "Harmonogram zmiany."
 
 #. SysConfig
 msgid "Change Zoom."
