@@ -1,13 +1,13 @@
 # 
 # Translators:
-# Yuri Kolesniov <ynkolesnikov@gmail.com>, 2014
+# Yuri Kolesniov <ynkolesnikov@gmail.com>, 2014-2015
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-05-06 12:53+0000\n"
+"POT-Creation-Date: 2016-05-24 12:15+0000\n"
+"PO-Revision-Date: 2016-05-24 10:15+0000\n"
 "Last-Translator: Udo Bretz\n"
-"Language-Team: Russian (http://www.transifex.com/projects/p/OTRS/language/ru/)\n"
+"Language-Team: Russian (http://www.transifex.com/otrs/OTRS/language/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -33,34 +33,3 @@ msgstr "Добавление класса каталога"
 #. Template: AdminGeneralCatalog
 msgid "Catalog Class"
 msgstr "Класс каталога"
-
-#. SysConfig
-msgid "Create and manage the General Catalog."
-msgstr "Создание и управление Общим каталогом"
-
-#. SysConfig
-msgid ""
-"Display a warning and prevent search when using stop words within fulltext "
-"search."
-msgstr ""
-
-#. SysConfig
-msgid ""
-"Frontend module registration for the AdminGeneralCatalog configuration in "
-"the admin area."
-msgstr "Module registration для конфигурации AdminGeneralCatalog в панели администратора."
-
-#. SysConfig
-msgid "General Catalog"
-msgstr "Общий каталог"
-
-#. SysConfig
-msgid ""
-"Parameters for the example comment 2 of the general catalog attributes."
-msgstr "Добавление дополнительного комментария к атрибутам Общего каталога"
-
-#. SysConfig
-msgid ""
-"Parameters for the example permission groups of the general catalog "
-"attributes."
-msgstr "Параметры для примерных групповых прав для атрибутов Общего каталога"
