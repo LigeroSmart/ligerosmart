@@ -4,10 +4,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-04-27 10:47+0000\n"
-"Last-Translator: Martin Gruner <martin.gruner@otrs.com>\n"
-"Language-Team: Russian (http://www.transifex.com/projects/p/OTRS/language/ru/)\n"
+"POT-Creation-Date: 2016-05-24 21:40+0000\n"
+"PO-Revision-Date: 2016-05-24 19:41+0000\n"
+"Last-Translator: Udo Bretz\n"
+"Language-Team: Russian (http://www.transifex.com/otrs/OTRS/language/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -158,37 +158,21 @@ msgstr "Минимальное время между инцидентами"
 msgid "Criticality"
 msgstr "Критичность"
 
-#. Template: AgentITSMSLAPrint
-msgid "SLA-Info"
-msgstr "Информация об SLA"
-
-#. Template: AgentITSMSLAPrint
-msgid "Last changed"
-msgstr "Дата изменения"
-
-#. Template: AgentITSMSLAPrint
-msgid "Last changed by"
-msgstr "Кем изменено"
-
 #. Template: AgentITSMSLAZoom
 msgid "SLA Information"
 msgstr "Информация об SLA"
 
 #. Template: AgentITSMSLAZoom
+msgid "Last changed"
+msgstr "Дата изменения"
+
+#. Template: AgentITSMSLAZoom
+msgid "Last changed by"
+msgstr "Кем изменено"
+
+#. Template: AgentITSMSLAZoom
 msgid "Associated Services"
 msgstr "Связанные сервисы"
-
-#. Template: AgentITSMServicePrint
-msgid "Service-Info"
-msgstr "Информация о Сервисе"
-
-#. Template: AgentITSMServicePrint
-msgid "Current Incident State"
-msgstr "Текущее состояние инцидента"
-
-#. Template: AgentITSMServicePrint
-msgid "Associated SLAs"
-msgstr "Связанные SLA"
 
 #. Template: AgentITSMServiceZoom
 msgid "Service Information"
@@ -196,6 +180,14 @@ msgstr "Информация о Сервисе"
 
 #. Template: AgentITSMServiceZoom
 msgid "Current incident state"
+msgstr "Текущее состояние инцидента"
+
+#. Template: AgentITSMServiceZoom
+msgid "Associated SLAs"
+msgstr "Связанные SLA"
+
+#. Perl Module: Kernel/Modules/AgentITSMServicePrint.pm
+msgid "Current Incident State"
 msgstr "Текущее состояние инцидента"
 
 #. SysConfig

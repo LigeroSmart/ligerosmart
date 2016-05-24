@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-08-14 11:44+0000\n"
+"POT-Creation-Date: 2016-05-24 21:40+0000\n"
+"PO-Revision-Date: 2016-05-24 19:41+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: Czech (http://www.transifex.com/otrs/OTRS/language/cs/)\n"
 "MIME-Version: 1.0\n"
@@ -158,37 +158,21 @@ msgstr "Minimální čas mezi incidenty"
 msgid "Criticality"
 msgstr "Kritičnost"
 
-#. Template: AgentITSMSLAPrint
-msgid "SLA-Info"
-msgstr "SLA-Info"
-
-#. Template: AgentITSMSLAPrint
-msgid "Last changed"
-msgstr "Naposledy změněn"
-
-#. Template: AgentITSMSLAPrint
-msgid "Last changed by"
-msgstr "Naposledy změnil"
-
 #. Template: AgentITSMSLAZoom
 msgid "SLA Information"
 msgstr "SLA Informace"
 
 #. Template: AgentITSMSLAZoom
+msgid "Last changed"
+msgstr "Naposledy změněn"
+
+#. Template: AgentITSMSLAZoom
+msgid "Last changed by"
+msgstr "Naposledy změnil"
+
+#. Template: AgentITSMSLAZoom
 msgid "Associated Services"
 msgstr "Přiřazené Služby"
-
-#. Template: AgentITSMServicePrint
-msgid "Service-Info"
-msgstr ""
-
-#. Template: AgentITSMServicePrint
-msgid "Current Incident State"
-msgstr "Současný Stav Incidentu"
-
-#. Template: AgentITSMServicePrint
-msgid "Associated SLAs"
-msgstr "Přiřazené SLA smlouvy"
 
 #. Template: AgentITSMServiceZoom
 msgid "Service Information"
@@ -197,6 +181,14 @@ msgstr ""
 #. Template: AgentITSMServiceZoom
 msgid "Current incident state"
 msgstr ""
+
+#. Template: AgentITSMServiceZoom
+msgid "Associated SLAs"
+msgstr "Přiřazené SLA smlouvy"
+
+#. Perl Module: Kernel/Modules/AgentITSMServicePrint.pm
+msgid "Current Incident State"
+msgstr "Současný Stav Incidentu"
 
 #. SysConfig
 msgid ""
