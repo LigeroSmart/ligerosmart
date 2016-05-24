@@ -5,9 +5,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-11-25 08:11+0000\n"
-"Last-Translator: Hisatoshi Onishi <hisatoshi.onishi@gmail.com>\n"
+"POT-Creation-Date: 2016-05-24 21:48+0000\n"
+"PO-Revision-Date: 2016-05-24 19:49+0000\n"
+"Last-Translator: Udo Bretz\n"
 "Language-Team: Japanese (http://www.transifex.com/otrs/OTRS/language/ja/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -82,6 +82,10 @@ msgstr "決定を追加する！"
 #. SysConfig
 msgid "Additional ITSM Fields"
 msgstr "追加のITSM項目"
+
+#. SysConfig
+msgid "Additional ITSM ticket fields."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -380,4 +384,8 @@ msgstr ""
 
 #. SysConfig
 msgid "Shows the title fields in the decision screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Ticket decision."
 msgstr ""

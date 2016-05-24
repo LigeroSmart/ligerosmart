@@ -7,9 +7,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2016-01-06 22:37+0000\n"
-"Last-Translator: ru_otrs <robert.ullrich@otrs.com>\n"
+"POT-Creation-Date: 2016-05-24 21:48+0000\n"
+"PO-Revision-Date: 2016-05-24 19:49+0000\n"
+"Last-Translator: Udo Bretz\n"
 "Language-Team: German (http://www.transifex.com/otrs/OTRS/language/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -84,6 +84,10 @@ msgstr "Hinzufügen einer Entscheidung!"
 #. SysConfig
 msgid "Additional ITSM Fields"
 msgstr "Zusätzliche ITSM Felder"
+
+#. SysConfig
+msgid "Additional ITSM ticket fields."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -383,3 +387,7 @@ msgstr "Zeigt den Ticket-Titel in der zusätzliche ITSM-Felder-Oberfläche für 
 #. SysConfig
 msgid "Shows the title fields in the decision screen of the agent interface."
 msgstr "Zeigt den Ticket-Titel in der Entscheidungs-Oberfläche für Tickets im Agentenbereich."
+
+#. SysConfig
+msgid "Ticket decision."
+msgstr ""

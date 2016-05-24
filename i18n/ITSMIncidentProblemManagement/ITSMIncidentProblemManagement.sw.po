@@ -4,10 +4,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-04-27 10:55+0000\n"
-"Last-Translator: Martin Gruner <martin.gruner@otrs.com>\n"
-"Language-Team: Swahili (http://www.transifex.com/projects/p/OTRS/language/sw/)\n"
+"POT-Creation-Date: 2016-05-24 21:48+0000\n"
+"PO-Revision-Date: 2016-05-24 19:49+0000\n"
+"Last-Translator: Udo Bretz\n"
+"Language-Team: Swahili (http://www.transifex.com/otrs/OTRS/language/sw/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -81,6 +81,10 @@ msgstr "Ongeza uamuzi!"
 #. SysConfig
 msgid "Additional ITSM Fields"
 msgstr "Uga zilizoongezwa Za ITSM"
+
+#. SysConfig
+msgid "Additional ITSM ticket fields."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -380,3 +384,7 @@ msgstr "Inyesha uga za kichwa cha habari katika skrini ya uga wa ITSM ulioongezw
 #. SysConfig
 msgid "Shows the title fields in the decision screen of the agent interface."
 msgstr "Inyesha uga wa kichwa cha habari katika skrini ya maamzi ya kiolesura cha wakala."
+
+#. SysConfig
+msgid "Ticket decision."
+msgstr ""
