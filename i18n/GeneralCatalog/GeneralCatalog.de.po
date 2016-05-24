@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-05-24 12:15+0000\n"
-"PO-Revision-Date: 2016-05-24 10:15+0000\n"
+"POT-Creation-Date: 2016-05-24 21:36+0000\n"
+"PO-Revision-Date: 2016-05-24 19:38+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: German (http://www.transifex.com/otrs/OTRS/language/de/)\n"
 "MIME-Version: 1.0\n"
@@ -32,3 +32,28 @@ msgstr "Katalog-Klasse hinzufügen"
 #. Template: AdminGeneralCatalog
 msgid "Catalog Class"
 msgstr "Katalog-Klasse"
+
+#. SysConfig
+msgid "Create and manage the General Catalog."
+msgstr "General-Katalog erstellen und verwalten."
+
+#. SysConfig
+msgid ""
+"Frontend module registration for the AdminGeneralCatalog configuration in "
+"the admin area."
+msgstr "Frontendmodul-Registration der AdminGeneralCatalog Konfiguration im Admin-Bereich."
+
+#. SysConfig
+msgid "General Catalog"
+msgstr "General-Katalog"
+
+#. SysConfig
+msgid ""
+"Parameters for the example comment 2 of the general catalog attributes."
+msgstr "Parameter für den Beispiel-Kommentar 2 der General-Katalog-Attribute."
+
+#. SysConfig
+msgid ""
+"Parameters for the example permission groups of the general catalog "
+"attributes."
+msgstr "Parameter für die zugriffsberechtigte Gruppe der General-Katalog-Attribute."

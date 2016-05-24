@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-05-24 12:15+0000\n"
-"PO-Revision-Date: 2016-05-24 10:15+0000\n"
+"POT-Creation-Date: 2016-05-24 21:36+0000\n"
+"PO-Revision-Date: 2016-05-24 19:38+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: Czech (http://www.transifex.com/otrs/OTRS/language/cs/)\n"
 "MIME-Version: 1.0\n"
@@ -34,3 +34,28 @@ msgstr "Přidat třídu Katalogu"
 #. Template: AdminGeneralCatalog
 msgid "Catalog Class"
 msgstr "Třídy Katalogu"
+
+#. SysConfig
+msgid "Create and manage the General Catalog."
+msgstr "Vytvořit a spravovat hlavní katalog"
+
+#. SysConfig
+msgid ""
+"Frontend module registration for the AdminGeneralCatalog configuration in "
+"the admin area."
+msgstr "Frontendová registrace modulu pro konfiguraci hlavního katalogu v administrativní oblasti."
+
+#. SysConfig
+msgid "General Catalog"
+msgstr "Hlavní Katalog"
+
+#. SysConfig
+msgid ""
+"Parameters for the example comment 2 of the general catalog attributes."
+msgstr "Příklad parametrů pro komentář 2 obecných atributů katalogu"
+
+#. SysConfig
+msgid ""
+"Parameters for the example permission groups of the general catalog "
+"attributes."
+msgstr "Parametry skupiny pro příklad oprávnění obecných atributů katalogu"

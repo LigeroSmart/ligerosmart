@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-05-24 12:15+0000\n"
-"PO-Revision-Date: 2016-05-24 10:15+0000\n"
+"POT-Creation-Date: 2016-05-24 21:36+0000\n"
+"PO-Revision-Date: 2016-05-24 19:38+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: Japanese (http://www.transifex.com/otrs/OTRS/language/ja/)\n"
 "MIME-Version: 1.0\n"
@@ -33,3 +33,28 @@ msgstr "カタログクラスを追加"
 #. Template: AdminGeneralCatalog
 msgid "Catalog Class"
 msgstr "カタログクラス"
+
+#. SysConfig
+msgid "Create and manage the General Catalog."
+msgstr "ジェネラルカタログの作成と管理"
+
+#. SysConfig
+msgid ""
+"Frontend module registration for the AdminGeneralCatalog configuration in "
+"the admin area."
+msgstr "管理エリアでのAdminGeneralCatalogのフロントエンドモジュールの登録"
+
+#. SysConfig
+msgid "General Catalog"
+msgstr "ジェネラルカタログ"
+
+#. SysConfig
+msgid ""
+"Parameters for the example comment 2 of the general catalog attributes."
+msgstr "ジェネラルカタログ属性のコメント例 2　の設定値"
+
+#. SysConfig
+msgid ""
+"Parameters for the example permission groups of the general catalog "
+"attributes."
+msgstr "ジェネラルカタログ属性のパーミッショングループ　の設定値"

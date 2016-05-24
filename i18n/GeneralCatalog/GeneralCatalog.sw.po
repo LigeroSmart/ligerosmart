@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-05-24 12:15+0000\n"
-"PO-Revision-Date: 2016-05-24 10:15+0000\n"
+"POT-Creation-Date: 2016-05-24 21:36+0000\n"
+"PO-Revision-Date: 2016-05-24 19:38+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: Swahili (http://www.transifex.com/otrs/OTRS/language/sw/)\n"
 "MIME-Version: 1.0\n"
@@ -33,3 +33,28 @@ msgstr "Ongeza tabaka la katalogi"
 #. Template: AdminGeneralCatalog
 msgid "Catalog Class"
 msgstr "Tabaka la katalogi"
+
+#. SysConfig
+msgid "Create and manage the General Catalog."
+msgstr "Tengeneza na simamia Katalogi ya ujumla."
+
+#. SysConfig
+msgid ""
+"Frontend module registration for the AdminGeneralCatalog configuration in "
+"the admin area."
+msgstr "Usajili wa moduli ya mazingira ya mbele kwa usanidi wa katalogi ya ujumla ya msimamizi katika eneo la usimamizi."
+
+#. SysConfig
+msgid "General Catalog"
+msgstr "Katalogi ya ujumla"
+
+#. SysConfig
+msgid ""
+"Parameters for the example comment 2 of the general catalog attributes."
+msgstr "Vigezo kwa mfano Maoni 2 ya sifa za katalogi za ujumla."
+
+#. SysConfig
+msgid ""
+"Parameters for the example permission groups of the general catalog "
+"attributes."
+msgstr "Vigezo kwa mfano ruhusa za vikundi kwa sifa za katalogi za ujumla."
