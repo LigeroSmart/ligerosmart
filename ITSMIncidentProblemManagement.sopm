@@ -11,6 +11,7 @@
     <Description Lang="en">The OTRS::ITSM Incident and Problem Management package.</Description>
     <Description Lang="de">Das OTRS::ITSM Incident und Problem Management Paket.</Description>
     <Description Lang="es">Paquete Incident and Problem Management de OTRS::ITSM.</Description>
+    <Description Lang="hu">Az OTRS::ITSM incidens- és problémamenedzsment csomag.</Description>
     <Filelist>
         <File Permission="644" Location="Kernel/Config/Files/ITSMTicket.xml"/>
         <File Permission="644" Location="Kernel/Config/Files/TicketITSMTicket.xml"/>
@@ -249,6 +250,24 @@
         <br/>
 
     ]]></IntroInstall>
+    <IntroInstall Type="pre" Title="Telepítési információk" Lang="hu"><![CDATA[
+
+        <br/>
+        <strong>ÜDVÖZÖLJÜK</strong>
+        <br/>
+        <br/>
+        Ön az ITSMIncidentProblemManagement OTRS csomag telepítésére készül.<br/>
+        <br/>
+        <br/>
+        <strong>SZÜKSÉGES OTRS CSOMAGOK</strong>
+        <ul>
+        <li>ITSMCore 5.0.10</li>
+        </ul>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+
+    ]]></IntroInstall>
     <IntroUpgrade Type="pre" Title="Upgrade Information" Lang="en"><![CDATA[
 
         <br/>
@@ -303,6 +322,24 @@
         <br/>
 
     ]]></IntroUpgrade>
+    <IntroUpgrade Type="pre" Title="Frissítési információk" Lang="hu"><![CDATA[
+
+        <br/>
+        <strong>ÜDVÖZÖLJÜK</strong>
+        <br/>
+        <br/>
+        Ön az ITSMIncidentProblemManagement OTRS csomag frissítésére készül.<br/>
+        <br/>
+        <br/>
+        <strong>SZÜKSÉGES OTRS CSOMAGOK</strong>
+        <ul>
+        <li>ITSMCore 5.0.10</li>
+        </ul>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+
+    ]]></IntroUpgrade>
     <IntroUninstall Type="pre" Title="Uninstallation Information" Lang="en"><![CDATA[
 
         <br/>
@@ -348,6 +385,23 @@
         <br/>
         <br/>
         Las estadísticas asociadas a este paquete no estarán disponibles si desinstala el paquete.
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+
+    ]]></IntroUninstall>
+    <IntroUninstall Type="pre" Title="Eltávolítási információk" Lang="hu"><![CDATA[
+
+        <br/>
+        <strong>FIGYELEM</strong>
+        <br/>
+        <br/>
+        Ha eltávolítja ezt a csomagot, akkor a telepítés során hozzáadott jegytípusok és állapotok ki lesznek kapcsolva.
+        Ezek az adminisztrációs területen kapcsolhatók be ismét.
+        <br/>
+        <br/>
+        Az ehhez a csomaghoz hozzárendelt statisztikák többé nem lesznek elérhetők, ha a csomagot eltávolítják.
         <br/>
         <br/>
         ((enjoy))<br/>

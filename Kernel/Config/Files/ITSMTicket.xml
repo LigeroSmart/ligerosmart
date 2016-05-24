@@ -6,8 +6,8 @@
         <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
         <Setting>
             <FrontendModuleReg>
-                <Description>Additional ITSM Ticket Fields</Description>
-                <Title>Additional ITSM Fields</Title>
+                <Description Translatable="1">Additional ITSM ticket fields.</Description>
+                <Title Translatable="1">Additional ITSM Fields</Title>
                 <NavBarName>Ticket</NavBarName>
                 <Loader>
                     <JavaScript>Core.Agent.TicketAction.js</JavaScript>
@@ -21,8 +21,8 @@
         <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
         <Setting>
             <FrontendModuleReg>
-                <Description>Ticket Decision</Description>
-                <Title>Decision</Title>
+                <Description Translatable="1">Ticket decision.</Description>
+                <Title Translatable="1">Decision</Title>
                 <NavBarName>Ticket</NavBarName>
                 <Loader>
                     <JavaScript>Core.Agent.TicketAction.js</JavaScript>
