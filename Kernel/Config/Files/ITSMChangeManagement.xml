@@ -801,7 +801,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Frontend::ToolBarModule###103-ITSMChangeManagement::MyWorkOrders" Required="0" Valid="1">
-        <Description Translatable="1">Agent interface notification module to see the number of work orders.</Description>
+        <Description Translatable="1">Agent interface notification module to see the number of workorders.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ToolBarModule</SubGroup>
         <Setting>
@@ -957,7 +957,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::MenuModule###050-WorkOrderAdd" Required="0" Valid="1">
-        <Description Translatable="1">Shows a link in the menu to add a work order in the change zoom view of the agent interface.</Description>
+        <Description Translatable="1">Shows a link in the menu to add a workorder in the change zoom view of the agent interface.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMChange::MenuModule</SubGroup>
         <Setting>
@@ -972,7 +972,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::MenuModule###055-WorkOrderAddFromTemplate" Required="0" Valid="1">
-        <Description Translatable="1">Shows a link in the menu to add a work order in the change zoom view of the agent interface.</Description>
+        <Description Translatable="1">Shows a link in the menu to add a workorder in the change zoom view of the agent interface.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMChange::MenuModule</SubGroup>
         <Setting>
@@ -1085,7 +1085,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMWorkOrder::Frontend::MenuModule###000-Back" Required="0" Valid="1">
-        <Description Translatable="1">Shows a link in the menu to go back in the work order zoom view of the agent interface.</Description>
+        <Description Translatable="1">Shows a link in the menu to go back in the workorder zoom view of the agent interface.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMWorkOrder::MenuModule</SubGroup>
         <Setting>
@@ -1100,7 +1100,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMWorkOrder::Frontend::MenuModule###010-History" Required="0" Valid="1">
-        <Description Translatable="1">Shows a link in the menu to access the history of a work order in the its zoom view of the agent interface.</Description>
+        <Description Translatable="1">Shows a link in the menu to access the history of a workorder in the its zoom view of the agent interface.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMWorkOrder::MenuModule</SubGroup>
         <Setting>
@@ -1115,7 +1115,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMWorkOrder::Frontend::MenuModule###020-Print" Required="0" Valid="1">
-        <Description Translatable="1">Shows a link in the menu to print a work order in the its zoom view of the agent interface.</Description>
+        <Description Translatable="1">Shows a link in the menu to print a workorder in the its zoom view of the agent interface.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMWorkOrder::MenuModule</SubGroup>
         <Setting>
@@ -1130,7 +1130,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMWorkOrder::Frontend::MenuModule###030-Edit" Required="0" Valid="1">
-        <Description Translatable="1">Shows a link in the menu to edit a work order in the its zoom view of the agent interface.</Description>
+        <Description Translatable="1">Shows a link in the menu to edit a workorder in the its zoom view of the agent interface.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMWorkOrder::MenuModule</SubGroup>
         <Setting>
@@ -1145,7 +1145,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMWorkOrder::Frontend::MenuModule###035-Take" Required="0" Valid="1">
-        <Description Translatable="1">Shows a link in the menu that allows taking a work order in the its zoom view of the agent interface.</Description>
+        <Description Translatable="1">Shows a link in the menu that allows taking a workorder in the its zoom view of the agent interface.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMWorkOrder::MenuModule</SubGroup>
         <Setting>
@@ -1164,7 +1164,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMWorkOrder::Frontend::MenuModule###040-WorkOrderAgent" Required="0" Valid="1">
-        <Description Translatable="1">Shows a link in the menu that allows changing the work order agent, in the zoom view of such work order of the agent interface.</Description>
+        <Description Translatable="1">Shows a link in the menu that allows changing the workorder agent, in the zoom view of such workorder of the agent interface.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMWorkOrder::MenuModule</SubGroup>
         <Setting>
@@ -1179,7 +1179,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMWorkOrder::Frontend::MenuModule###050-Report" Required="0" Valid="1">
-        <Description Translatable="1">Shows a link in the menu that allows editing the report of a workd order, in the zoom view of such work order of the agent interface.</Description>
+        <Description Translatable="1">Shows a link in the menu that allows editing the report of a workorder, in the zoom view of such workorder of the agent interface.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMWorkOrder::MenuModule</SubGroup>
         <Setting>
@@ -1194,7 +1194,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMWorkOrder::Frontend::MenuModule###060-Link" Required="0" Valid="1">
-        <Description Translatable="1">Shows a link in the menu that allows linking a work order with another object in the zoom view of such work order of the agent interface.</Description>
+        <Description Translatable="1">Shows a link in the menu that allows linking a workorder with another object in the zoom view of such workorder of the agent interface.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMWorkOrder::MenuModule</SubGroup>
         <Setting>
@@ -1209,7 +1209,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMWorkOrder::Frontend::MenuModule###080-Template" Required="0" Valid="1">
-        <Description Translatable="1">Shows a link in the menu that allows defining a work order as a template in the zoom view of the work order, in the agent interface.</Description>
+        <Description Translatable="1">Shows a link in the menu that allows defining a workorder as a template in the zoom view of the workorder, in the agent interface.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMWorkOrder::MenuModule</SubGroup>
         <Setting>
@@ -1224,7 +1224,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMWorkOrder::Frontend::MenuModule###090-WorkOrderDelete" Required="0" Valid="1">
-        <Description Translatable="1">Shows a link in the menu to delete a work order in its zoom view of the agent interface.</Description>
+        <Description Translatable="1">Shows a link in the menu to delete a workorder in its zoom view of the agent interface.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMWorkOrder::MenuModule</SubGroup>
         <Setting>
@@ -1339,7 +1339,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMChange::EventModule###91-HistoryDelete" Required="0" Valid="1">
-        <Description Translatable="1">ITSM event module deletes the history of changes.</Description>
+        <Description Translatable="1">ITSM event module that deletes the history of changes.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Core::ITSMChange::Event</SubGroup>
         <Setting>
@@ -1375,7 +1375,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMWorkOrder::EventModule###03-HistoryAdd" Required="0" Valid="1">
-        <Description Translatable="1">ITSM event module updates the history of workorders.</Description>
+        <Description Translatable="1">ITSM event module that updates the history of workorders.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Core::ITSMWorkOrder::Event</SubGroup>
         <Setting>
@@ -1423,7 +1423,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Daemon::SchedulerCronTaskManager::Task###ITSMChangesCheck" Required="0" Valid="1">
-        <Description Translatable="1">Run task to check if specific times have been in reached in changes and workorders.</Description>
+        <Description Translatable="1">Run task to check if specific times have been reached in changes and workorders.</Description>
         <Group>Daemon</Group>
         <SubGroup>Daemon::SchedulerCronTaskManager::Task</SubGroup>
         <Setting>
@@ -1443,7 +1443,7 @@
 
     <!-- TODO: Check if this needs to be updated and / or renamed (no cronjobs anymore) -->
     <ConfigItem Name="ITSMChangeCronjob::EventModule###01-HistoryAdd" Required="0" Valid="1">
-        <Description Translatable="1">ITSM event module updates the history of changes.</Description>
+        <Description Translatable="1">ITSM event module that updates the history of changes.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Core::ITSMChangeCronjob::Event</SubGroup>
         <Setting>
@@ -1479,7 +1479,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMChangeManagementNotification::EventModule###01-HistoryAdd" Required="0" Valid="1">
-        <Description Translatable="1">ITSM event module updates the history of changes.</Description>
+        <Description Translatable="1">ITSM event module that updates the history of changes.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Core::ITSMChange::Event</SubGroup>
         <Setting>
@@ -1491,7 +1491,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMCondition::EventModule###01-HistoryAdd" Required="0" Valid="1">
-        <Description Translatable="1">ITSM event module updates the history of conditions.</Description>
+        <Description Translatable="1">ITSM event module that updates the history of conditions.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Core::ITSMCondition::Event</SubGroup>
         <Setting>
@@ -4384,7 +4384,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMChange::TimeReachedNotifications###Hours" Required="0" Valid="1">
-        <Description Translatable="1">If frequency is 'regularly', you can configure how often the notications are sent (every X hours).</Description>
+        <Description Translatable="1">If frequency is 'regularly', you can configure how often the notifications are sent (every X hours).</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Core::Notifications</SubGroup>
         <Setting>

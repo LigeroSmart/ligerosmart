@@ -41,7 +41,7 @@
                             <input type="text" id="Name" name="Name" value="[% Data.Name | html %]" class="W50pc Validate_Required [% Data.InvalidName | html %] [% Data.DuplicateName | html %]" maxlength="250" />
                             <div id="NameError" class="TooltipErrorMessage" ><p>[% Translate("Need a valid name.") | html %]</p></div>
 [% RenderBlockStart("InvalidName") %]
-                            <div id="NameServerError" class="TooltipErrorMessage"><p>[% Translate("A a valid name is needed.") | html %]</p></div>
+                            <div id="NameServerError" class="TooltipErrorMessage"><p>[% Translate("A valid name is needed.") | html %]</p></div>
 [% RenderBlockEnd("InvalidName") %]
 [% RenderBlockStart("DuplicateName") %]
                             <div id="NameServerError" class="TooltipErrorMessage"><p>[% Translate("Duplicate name:") | html %] '[% Data.Name | html %]'. [% Translate("This name is already used by another condition.") | html %]</p></div>
