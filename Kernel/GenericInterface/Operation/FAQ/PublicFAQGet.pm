@@ -117,6 +117,7 @@ perform PublicFAQGet Operation. This will return a Public FAQ entry.
                             Filename    => 'Error.jpg',
                             Content     => '...',                   # base64 content
                             Inline      => 0,                       # specify if is an inline attachment
+                            FileID      => 34                       # FileID for relation with rich text content
                         },
                         {
                             Filesize    => '540286',                # file size in bytes
@@ -124,6 +125,7 @@ perform PublicFAQGet Operation. This will return a Public FAQ entry.
                             Filename    => 'Pencil.jpg',
                             Content     => '...',                   # base64 content
                             Inline      => 1,                       # specify if is an inline attachment
+                            FileID      => 35                       # FileID for relation with rich text content
                         },
                     },
                 },
@@ -267,6 +269,7 @@ sub Run {
                     # convert content to base64
                     $File{Content} = encode_base64( $File{Content} );
                     $File{Inline}  = $Attachment->{Inline};
+                    $File{FileID}  = $Attachment->{FileID};
                 }
                 else {
                     %File = (
@@ -275,6 +278,7 @@ sub Run {
                         Filesize    => $Attachment->{Filesize},
                         Content     => '',
                         Inline      => $Attachment->{Inline},
+                        FileID      => $Attachment->{FileID}
                     );
                 }
                 push @Attachments, {%File};

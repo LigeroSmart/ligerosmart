@@ -1913,6 +1913,7 @@ shell> bin/otrs.Console.pl Admin::WebService::List
                <ContentType>?</ContentType>
                <Content>cid:1269416154096</Content>
                <Inline>?</Inline>
+               <FileID>?</FileID>
             </Attachment>
          </FAQItem>
       </PublicFAQGetResponse>
@@ -1963,6 +1964,7 @@ shell> bin/otrs.Console.pl Admin::WebService::List
                 <Filename>Details.txt</Filename>
                 <Filesize>296</Filesize>
                <Inline>0</Inline>
+               <FileID>34</FileID>
              </Attachment>
              <Attachment>
                 <Content>...==</Content>
@@ -1970,6 +1972,7 @@ shell> bin/otrs.Console.pl Admin::WebService::List
                 <Filename>Text.bin</Filename>
                 <Filesize>980</Filesize>
                <Inline>0</Inline>
+               <FileID>35</FileID>
              </Attachment>
           </FAQItem>
           <FAQItem>
