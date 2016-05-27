@@ -273,6 +273,7 @@ for my $Attachment (@Index) {
     # convert content to base64
     $File{Content} = encode_base64( $File{Content} );
     $File{Inline}  = $Attachment->{Inline};
+    $File{FileID}  = $Attachment->{FileID};
 
     push @AttachmentsThree, {%File};
 }
