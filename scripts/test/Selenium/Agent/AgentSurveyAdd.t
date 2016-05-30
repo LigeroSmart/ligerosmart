@@ -69,7 +69,7 @@ $Selenium->RunTest(
         $Selenium->find_element( "#Introduction", 'css' )->send_keys('Selenium Introduction');
         $Selenium->execute_script("\$('#Queue_Search').val('2||Raw').trigger('redraw.InputField').trigger('change');");
         $Selenium->find_element( "#Description", 'css' )->send_keys('Selenium Description');
-        $Selenium->find_element("//button[\@value='Create'][\@type='submit']")->VerifiedClick();
+        $Selenium->find_element("//button[\@value='Create'][\@type='submit']")->VerifiedSubmit();
 
         # check for test created survey values
         $Self->True(
