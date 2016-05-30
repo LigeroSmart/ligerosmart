@@ -82,17 +82,17 @@ $Selenium->RunTest(
             = "\"$TestUserLogin $TestUserLogin\" <$TestUserLogin\@localunittest.com> ($TestUserID)";
         $Selenium->find_element( "#ChangeManager", 'css' )->send_keys("$TestUserLogin");
 
-        sleep(5);
-
         $Selenium->WaitFor( JavaScript => 'return $("li.ui-menu-item:visible").length' );
         $Selenium->find_element("//*[text()='$AutoCompleteStringManager']")->click();
-
-        sleep(5);
 
         # submit and switch window
         $Selenium->find_element("//button[\@type='submit'][\@value='Submit']")->click();
         $Selenium->WaitFor( WindowCount => 1 );
         $Selenium->switch_to_window( $Handles->[0] );
+
+        sleep(1);
+
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("body").length' );
 
         # click on 'History' and switch window
         $Selenium->find_element("//a[contains(\@href, \'Action=AgentITSMChangeHistory;ChangeID=$ChangeID')]")->click();
