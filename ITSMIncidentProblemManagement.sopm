@@ -40,6 +40,7 @@
         <File Permission="644" Location="Kernel/Modules/AgentTicketEmail.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentTicketPhone.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentTicketPrint.pm"/>
+        <File Permission="644" Location="Kernel/Modules/AgentTicketProcess.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentTicketZoom.pm"/>
         <File Permission="644" Location="Kernel/Modules/CustomerTicketPrint.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AAAITSMIncidentProblemManagement.tt"/>
