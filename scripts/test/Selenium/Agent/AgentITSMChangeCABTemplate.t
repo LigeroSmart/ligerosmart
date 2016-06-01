@@ -90,12 +90,12 @@ $Selenium->RunTest(
         # prepare CAB for test template
         my $AutoCompleteManagerUser
             = "\"$TestUserLogin $TestUserLogin\" <$TestUserLogin\@localunittest.com> ($TestUserLoginID)";
-        $Selenium->find_element( "#ChangeManager", 'css' )->send_keys($TestUserLogin);
+        $Selenium->execute_script( "\$('#ChangeManager').autocomplete('search', '$TestUserLogin') ");
         $Selenium->WaitFor( JavaScript => 'return $("li.ui-menu-item:visible").length' );
         $Selenium->find_element("//*[text()='$AutoCompleteManagerUser']")->click();
 
         my $AutoCompleteCABUser = "\"$TestCABUser $TestCABUser\" <$TestCABUser\@localunittest.com> ($TestCABUserID)";
-        $Selenium->find_element( "#NewCABMember", 'css' )->send_keys($TestCABUser);
+        $Selenium->execute_script( "\$('#NewCABMember').autocomplete('search', '$TestCABUser') ");
         $Selenium->WaitFor( JavaScript => 'return $("li.ui-menu-item:visible").length' );
         $Selenium->find_element("//*[text()='$AutoCompleteCABUser']")->click();
         $Selenium->find_element( "#AddCABMember", 'css' )->click();
