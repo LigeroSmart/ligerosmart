@@ -80,7 +80,7 @@ $Selenium->RunTest(
         # input change manager
         my $AutoCompleteStringManager
             = "\"$TestUserLogin $TestUserLogin\" <$TestUserLogin\@localunittest.com> ($TestUserID)";
-        $Selenium->find_element( "#ChangeManager", 'css' )->send_keys("$TestUserLogin");
+        $Selenium->execute_script( "\$('#ChangeManager').autocomplete('search', '$TestUserLogin') ");
 
         $Selenium->WaitFor( JavaScript => 'return $("li.ui-menu-item:visible").length' );
         $Selenium->find_element("//*[text()='$AutoCompleteStringManager']")->click();

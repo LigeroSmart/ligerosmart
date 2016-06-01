@@ -126,13 +126,13 @@ $Selenium->RunTest(
         # input change manager
         my $AutoCompleteStringManager
             = "\"$TestUserLogin $TestUserLogin\" <$TestUserLogin\@localunittest.com> ($TestUserID)";
-        $Selenium->find_element( "#ChangeManager", 'css' )->send_keys("$TestUserLogin");
+        $Selenium->execute_script( "\$('#ChangeManager').autocomplete('search', '$TestUserLogin') ");
         $Selenium->WaitFor( JavaScript => 'return $("li.ui-menu-item:visible").length' );
         $Selenium->find_element("//*[text()='$AutoCompleteStringManager']")->click();
 
         # input change agent CAB
         my $AutoCompleteStringCAB = "\"$TestUserCAB $TestUserCAB\" <$TestUserCAB\@localunittest.com> ($TestUserCABID)";
-        $Selenium->find_element( "#NewCABMember", 'css' )->send_keys("$TestUserCAB");
+        $Selenium->execute_script( "\$('#NewCABMember').autocomplete('search', '$TestUserCAB') ");
         $Selenium->WaitFor( JavaScript => 'return $("li.ui-menu-item:visible").length' );
         $Selenium->find_element("//*[text()='$AutoCompleteStringCAB']")->click();
         $Selenium->find_element("//button[\@type='submit'][\@name='AddCABMember']")->VerifiedClick();
@@ -140,7 +140,7 @@ $Selenium->RunTest(
         # input change customer CAB
         my $AutoCompleteStringCustomer
             = "\"$TestCustomer $TestCustomer\" <$TestCustomer\@localunittest.com> ($TestCustomer)";
-        $Selenium->find_element( "#NewCABMember", 'css' )->send_keys("$TestCustomer");
+        $Selenium->execute_script( "\$('#NewCABMember').autocomplete('search', '$TestCustomer') ");
         $Selenium->WaitFor( JavaScript => 'return $("li.ui-menu-item:visible").length' );
         $Selenium->find_element("//*[text()='$AutoCompleteStringCustomer']")->click();
         $Selenium->find_element("//button[\@type='submit'][\@name='AddCABMember']")->VerifiedClick();
