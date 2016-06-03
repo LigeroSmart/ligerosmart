@@ -8,7 +8,7 @@
             <FrontendModuleReg>
                 <Group>admin</Group>
                 <Description Translatable="1">Manage priority matrix.</Description>
-                <Title>Criticality &lt;-&gt; Impact &lt;-&gt; Priority</Title>
+                <Title Translatable="1">Criticality &lt;-&gt; Impact &lt;-&gt; Priority</Title>
                 <NavBarName>Admin</NavBarName>
                 <NavBarModule>
                     <Module>Kernel::Output::HTML::NavBar::ModuleAdmin</Module>
@@ -28,7 +28,7 @@
         <SubGroup>Core::ITSMCore</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="DependsOn">Both</Item>
+                <Item Key="DependsOn" Translatable="1">Both</Item>
             </Hash>
         </Setting>
     </ConfigItem>
@@ -38,8 +38,8 @@
         <SubGroup>Core::LinkObject</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="SourceName">Alternative to</Item>
-                <Item Key="TargetName">Alternative to</Item>
+                <Item Key="SourceName" Translatable="1">Alternative to</Item>
+                <Item Key="TargetName" Translatable="1">Alternative to</Item>
             </Hash>
         </Setting>
     </ConfigItem>
@@ -49,8 +49,8 @@
         <SubGroup>Core::LinkObject</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="SourceName">Connected to</Item>
-                <Item Key="TargetName">Connected to</Item>
+                <Item Key="SourceName" Translatable="1">Connected to</Item>
+                <Item Key="TargetName" Translatable="1">Connected to</Item>
             </Hash>
         </Setting>
     </ConfigItem>
@@ -60,8 +60,8 @@
         <SubGroup>Core::LinkObject</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="SourceName">Depends on</Item>
-                <Item Key="TargetName">Required for</Item>
+                <Item Key="SourceName" Translatable="1">Depends on</Item>
+                <Item Key="TargetName" Translatable="1">Required for</Item>
             </Hash>
         </Setting>
     </ConfigItem>
@@ -71,8 +71,8 @@
         <SubGroup>Core::LinkObject</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="SourceName">Includes</Item>
-                <Item Key="TargetName">Part of</Item>
+                <Item Key="SourceName" Translatable="1">Includes</Item>
+                <Item Key="TargetName" Translatable="1">Part of</Item>
             </Hash>
         </Setting>
     </ConfigItem>
@@ -82,8 +82,8 @@
         <SubGroup>Core::LinkObject</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="SourceName">Relevant to</Item>
-                <Item Key="TargetName">Relevant to</Item>
+                <Item Key="SourceName" Translatable="1">Relevant to</Item>
+                <Item Key="TargetName" Translatable="1">Relevant to</Item>
             </Hash>
         </Setting>
     </ConfigItem>
@@ -380,13 +380,13 @@
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::GeneralCatalogPreferences::Generic</Item>
                 <Item Key="Class">ITSM::Core::IncidentState</Item>
-                <Item Key="Label">Incident State Type</Item>
-                <Item Key="Desc">Incident State Type.</Item>
+                <Item Key="Label" Translatable="1">Incident State Type</Item>
+                <Item Key="Desc" Translatable="1">Incident State Type.</Item>
                 <Item Key="Data">
                     <Hash>
-                        <Item Key="warning">Warning</Item>
-                        <Item Key="operational">Operational</Item>
-                        <Item Key="incident">Incident</Item>
+                        <Item Key="warning" Translatable="1">Warning</Item>
+                        <Item Key="operational" Translatable="1">Operational</Item>
+                        <Item Key="incident" Translatable="1">Incident</Item>
                     </Hash>
                 </Item>
                 <Item Key="PrefKey">Functionality</Item>

@@ -14,8 +14,8 @@
         <SubGroup>Core::LinkObject</SubGroup>
         <Setting>
             <Option SelectedID="Complex">
-                <Item Key="Simple">Simple</Item>
-                <Item Key="Complex">Complex</Item>
+                <Item Key="Simple" Translatable="1">Simple</Item>
+                <Item Key="Complex" Translatable="1">Complex</Item>
             </Option>
         </Setting>
     </ConfigItem>

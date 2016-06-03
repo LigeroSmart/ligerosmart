@@ -8,11 +8,11 @@
             <FrontendModuleReg>
                 <Group>itsm-service</Group>
                 <GroupRo>itsm-service</GroupRo>
-                <Description>ITSM Service Overview</Description>
+                <Description Translatable="1">ITSM Service Overview.</Description>
                 <NavBarName>Service</NavBarName>
-                <Title>Service</Title>
+                <Title Translatable="1">Service</Title>
                 <NavBar>
-                    <Description>Service-Area</Description>
+                    <Description Translatable="1">Service-Area</Description>
                     <Name>Services</Name>
                     <Type>Menu</Type>
                     <Block>ItemArea</Block>
@@ -22,7 +22,7 @@
                     <Prio>3100</Prio>
                 </NavBar>
                 <NavBar>
-                    <Description>Service Overview</Description>
+                    <Description Translatable="1">Service Overview</Description>
                     <Name>Service</Name>
                     <Link>Action=AgentITSMService</Link>
                     <Type></Type>
@@ -41,11 +41,11 @@
         <Setting>
             <FrontendModuleReg>
                 <GroupRo>itsm-service</GroupRo>
-                <Description>ITSM SLA Overview</Description>
+                <Description Translatable="1">ITSM SLA Overview.</Description>
                 <NavBarName>Service</NavBarName>
-                <Title>SLA</Title>
+                <Title Translatable="1">SLA</Title>
                 <NavBar>
-                    <Description>SLA Overview</Description>
+                    <Description Translatable="1">SLA Overview</Description>
                     <Name>SLA</Name>
                     <Link>Action=AgentITSMSLA</Link>
                     <Type></Type>
@@ -64,8 +64,8 @@
         <Setting>
             <FrontendModuleReg>
                 <GroupRo>itsm-service</GroupRo>
-                <Description>Service Zoom</Description>
-                <Title>Zoom</Title>
+                <Description Translatable="1">Service Zoom.</Description>
+                <Title Translatable="1">Zoom</Title>
                 <NavBarName>Service</NavBarName>
             </FrontendModuleReg>
         </Setting>
@@ -77,8 +77,8 @@
         <Setting>
             <FrontendModuleReg>
                 <GroupRo>itsm-service</GroupRo>
-                <Description>Service Print</Description>
-                <Title>Print</Title>
+                <Description Translatable="1">Service Print.</Description>
+                <Title Translatable="1">Print</Title>
                 <NavBarName>Service</NavBarName>
             </FrontendModuleReg>
         </Setting>
@@ -90,8 +90,8 @@
         <Setting>
             <FrontendModuleReg>
                 <GroupRo>itsm-service</GroupRo>
-                <Description>SLA Zoom</Description>
-                <Title>Zoom</Title>
+                <Description Translatable="1">SLA Zoom.</Description>
+                <Title Translatable="1">Zoom</Title>
                 <NavBarName>Service</NavBarName>
             </FrontendModuleReg>
         </Setting>
@@ -103,8 +103,8 @@
         <Setting>
             <FrontendModuleReg>
                 <GroupRo>itsm-service</GroupRo>
-                <Description>SLA Print</Description>
-                <Title>Print</Title>
+                <Description Translatable="1">SLA Print.</Description>
+                <Title Translatable="1">Print</Title>
                 <NavBarName>Service</NavBarName>
             </FrontendModuleReg>
         </Setting>
@@ -118,7 +118,7 @@
                 <Item Key="Module">Kernel::Output::HTML::ITSMServiceMenu::Generic</Item>
                 <Item Key="Name">Back</Item>
                 <Item Key="Target">Back</Item>
-                <Item Key="Description">Back</Item>
+                <Item Key="Description" Translatable="1">Back</Item>
                 <Item Key="Action"></Item>
                 <Item Key="Link">Action=AgentITSMService</Item>
             </Hash>
@@ -147,7 +147,7 @@
                 <Item Key="Module">Kernel::Output::HTML::ITSMServiceMenu::Link</Item>
                 <Item Key="Name">Link</Item>
                 <Item Key="Target">PopUp</Item>
-                <Item Key="Description">Link</Item>
+                <Item Key="Description" Translatable="1">Link</Item>
                 <Item Key="Action">AgentITSMService</Item>
                 <Item Key="Link">Action=AgentLinkObject;SourceObject=Service;SourceKey=[% Data.ServiceID | html %]</Item>
             </Hash>
@@ -162,7 +162,7 @@
                 <Item Key="Module">Kernel::Output::HTML::ITSMSLAMenu::Generic</Item>
                 <Item Key="Name">Back</Item>
                 <Item Key="Target">Back</Item>
-                <Item Key="Description">Back</Item>
+                <Item Key="Description" Translatable="1">Back</Item>
                 <Item Key="Action"></Item>
                 <Item Key="Link">Action=AgentITSMSLA</Item>
             </Hash>
@@ -176,7 +176,7 @@
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::ITSMSLAMenu::Generic</Item>
                 <Item Key="Name">Print</Item>
-                <Item Key="Description">Print</Item>
+                <Item Key="Description" Translatable="1">Print</Item>
                 <Item Key="Action">AgentITSMSLAPrint</Item>
                 <Item Key="Link">Action=AgentITSMSLAPrint;SLAID=[% Data.SLAID | html %]</Item>
             </Hash>
