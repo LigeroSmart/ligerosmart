@@ -22,6 +22,7 @@
         <File Permission="644" Location="Kernel/Language/es_ITSMIncidentProblemManagement.pm"/>
         <File Permission="644" Location="Kernel/Language/fa_ITSMIncidentProblemManagement.pm"/>
         <File Permission="644" Location="Kernel/Language/fr_ITSMIncidentProblemManagement.pm"/>
+        <File Permission="644" Location="Kernel/Language/hu_ITSMIncidentProblemManagement.pm"/>
         <File Permission="644" Location="Kernel/Language/it_ITSMIncidentProblemManagement.pm"/>
         <File Permission="644" Location="Kernel/Language/ja_ITSMIncidentProblemManagement.pm"/>
         <File Permission="644" Location="Kernel/Language/ms_ITSMIncidentProblemManagement.pm"/>

@@ -41,7 +41,7 @@ sub Data {
     # SysConfig
     $Self->{Translation}->{'Add a decision!'} = 'Добавить решение';
     $Self->{Translation}->{'Additional ITSM Fields'} = 'Дополнительные ITSM поля';
-    $Self->{Translation}->{'Additional ITSM ticket fields.'} = '';
+    $Self->{Translation}->{'Additional ITSM ticket fields.'} = 'Дополнительные ITSM поля заявки.';
     $Self->{Translation}->{'Allows adding notes in the additional ITSM field screen of the agent interface.'} =
         'Разрешает добавить заметку на экране Дополнительные ITSM поля в интерфейсе агента';
     $Self->{Translation}->{'Allows adding notes in the decision screen of the agent interface.'} =
@@ -142,7 +142,7 @@ sub Data {
         'Показывает поле Тема на экране Дополнительные ITSM поля в интерфейсе агента.';
     $Self->{Translation}->{'Shows the title fields in the decision screen of the agent interface.'} =
         'Показывает поле Тема на экране Решение в интерфейсе агента.';
-    $Self->{Translation}->{'Ticket decision.'} = '';
+    $Self->{Translation}->{'Ticket decision.'} = 'Решение по заявке.';
 
 }
 
