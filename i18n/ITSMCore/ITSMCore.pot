@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ITSMCore\n"
-"POT-Creation-Date: 2016-05-24 21:40+0000\n"
+"POT-Creation-Date: 2016-06-03 17:40+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -187,6 +187,10 @@ msgid "Current Incident State"
 msgstr ""
 
 #. SysConfig
+msgid "Both"
+msgstr ""
+
+#. SysConfig
 msgid "Frontend module registration for the AdminITSMCIPAllocate configuration in the admin area."
 msgstr ""
 
@@ -215,6 +219,26 @@ msgid "Frontend module registration for the AgentITSMServiceZoom object in the a
 msgstr ""
 
 #. SysConfig
+msgid "ITSM SLA Overview."
+msgstr ""
+
+#. SysConfig
+msgid "ITSM Service Overview."
+msgstr ""
+
+#. SysConfig
+msgid "Incident"
+msgstr ""
+
+#. SysConfig
+msgid "Incident State Type"
+msgstr ""
+
+#. SysConfig
+msgid "Incident State Type."
+msgstr ""
+
+#. SysConfig
 msgid "Manage priority matrix."
 msgstr ""
 
@@ -239,7 +263,27 @@ msgid "Module to show the link link in service menu."
 msgstr ""
 
 #. SysConfig
+msgid "Operational"
+msgstr ""
+
+#. SysConfig
 msgid "Parameters for the incident states in the preference view."
+msgstr ""
+
+#. SysConfig
+msgid "SLA Print."
+msgstr ""
+
+#. SysConfig
+msgid "SLA Zoom."
+msgstr ""
+
+#. SysConfig
+msgid "Service Print."
+msgstr ""
+
+#. SysConfig
+msgid "Service Zoom."
 msgstr ""
 
 #. SysConfig

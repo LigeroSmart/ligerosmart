@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-05-24 21:40+0000\n"
-"PO-Revision-Date: 2016-05-24 19:41+0000\n"
+"POT-Creation-Date: 2016-06-03 17:40+0000\n"
+"PO-Revision-Date: 2016-06-03 15:41+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: Italian (http://www.transifex.com/otrs/OTRS/language/it/)\n"
 "MIME-Version: 1.0\n"
@@ -192,6 +192,10 @@ msgid "Current Incident State"
 msgstr "Stato attuale dell'Incidente"
 
 #. SysConfig
+msgid "Both"
+msgstr ""
+
+#. SysConfig
 msgid ""
 "Frontend module registration for the AdminITSMCIPAllocate configuration in "
 "the admin area."
@@ -234,31 +238,71 @@ msgid ""
 msgstr ""
 
 #. SysConfig
-msgid "Manage priority matrix."
+msgid "ITSM SLA Overview."
 msgstr ""
+
+#. SysConfig
+msgid "ITSM Service Overview."
+msgstr ""
+
+#. SysConfig
+msgid "Incident"
+msgstr ""
+
+#. SysConfig
+msgid "Incident State Type"
+msgstr ""
+
+#. SysConfig
+msgid "Incident State Type."
+msgstr ""
+
+#. SysConfig
+msgid "Manage priority matrix."
+msgstr "Gestione della matrice delle priorità."
 
 #. SysConfig
 msgid "Module to show back link in service menu."
-msgstr ""
+msgstr "Modulo per mostrare il collegamento indietro nel menu di servizio."
 
 #. SysConfig
 msgid "Module to show back link in sla menu."
-msgstr ""
+msgstr "Modulo per mostrare il collegamento indietro nel menu sla."
 
 #. SysConfig
 msgid "Module to show print link in service menu."
-msgstr ""
+msgstr "Modulo per mostrare il collegamento stampa nel menu di servizio."
 
 #. SysConfig
 msgid "Module to show print link in sla menu."
-msgstr ""
+msgstr "Modulo per mostrare il collegamento stampa nel menu sla."
 
 #. SysConfig
 msgid "Module to show the link link in service menu."
+msgstr "Modulo per mostrare il collegamento collega nel menu di servizio."
+
+#. SysConfig
+msgid "Operational"
 msgstr ""
 
 #. SysConfig
 msgid "Parameters for the incident states in the preference view."
+msgstr "Parametri per gli stati dell'incidente nella vista delle preferenze."
+
+#. SysConfig
+msgid "SLA Print."
+msgstr ""
+
+#. SysConfig
+msgid "SLA Zoom."
+msgstr ""
+
+#. SysConfig
+msgid "Service Print."
+msgstr ""
+
+#. SysConfig
+msgid "Service Zoom."
 msgstr ""
 
 #. SysConfig
@@ -282,61 +326,61 @@ msgstr ""
 msgid ""
 "This setting defines that a 'ITSMChange' object can be linked with 'Ticket' "
 "objects using the 'Normal' link type."
-msgstr ""
+msgstr "Questa impostazione stabilisce che un oggetto 'ITSMChange' può essere collegato con oggetti 'Ticket' usando il tipo di collegamento 'Normale'."
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'ITSMConfigItem' object can be linked with 'FAQ'"
 " objects using the 'Normal' link type."
-msgstr ""
+msgstr "Questa impostazione stabilisce che un oggetto 'ITSMConfigItem' può essere collegato con oggetti 'FAQ' usando il tipo di collegamento 'Normale'."
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'ITSMConfigItem' object can be linked with 'FAQ'"
 " objects using the 'ParentChild' link type."
-msgstr ""
+msgstr "Questa impostazione stabilisce che un oggetto 'ITSMConfigItem' può essere collegato con oggetti 'FAQ' usando il tipo di collegamento 'PadreFiglio'."
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'ITSMConfigItem' object can be linked with 'FAQ'"
 " objects using the 'RelevantTo' link type."
-msgstr ""
+msgstr "Questa impostazione definisce che un oggetto 'ITSMConfigItem' può essere collegato con oggetti 'FAQ' usando il tipo di collegamento 'ImportantePer'."
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'ITSMConfigItem' object can be linked with "
 "'Service' objects using the 'AlternativeTo' link type."
-msgstr ""
+msgstr "Questa impostazione definisce che un oggetto 'ITSMConfigItem' può essere collegato con oggetti 'Servizio' usando il tipo di collegamento 'AlternativoA'."
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'ITSMConfigItem' object can be linked with "
 "'Service' objects using the 'DependsOn' link type."
-msgstr ""
+msgstr "Questa impostazione definisce che un oggetto 'ITSMConfigItem' può essere collegato con oggetti 'Servizio' usando il tipo di collegamento 'DipendeDa'."
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'ITSMConfigItem' object can be linked with "
 "'Service' objects using the 'RelevantTo' link type."
-msgstr ""
+msgstr "Questa impostazione definisce che un oggetto 'ITSMConfigItem' può essere collegato con oggetti 'Servizio' usando il tipo di collegamento 'ImportantePer'."
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'ITSMConfigItem' object can be linked with "
 "'Ticket' objects using the 'AlternativeTo' link type."
-msgstr ""
+msgstr "Questa impostazione definisce che un oggetto 'ITSMConfigItem' può essere collegato con oggetti 'Ticket' usando il tipo di collegamento 'AlternativoA'."
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'ITSMConfigItem' object can be linked with "
 "'Ticket' objects using the 'DependsOn' link type."
-msgstr ""
+msgstr "Questa impostazione definisce che un oggetto 'ITSMConfigItem' può essere collegato con oggetti 'Ticket' usando il tipo di collegamento 'DipendeDa'."
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'ITSMConfigItem' object can be linked with "
 "'Ticket' objects using the 'RelevantTo' link type."
-msgstr ""
+msgstr "Questa impostazione definisce che un oggetto 'ITSMConfigItem' può essere collegato con oggetti 'Ticket' usando il tipo di collegamento 'ImportantePer'."
 
 #. SysConfig
 msgid ""
@@ -402,7 +446,7 @@ msgstr ""
 msgid ""
 "This setting defines that a 'Service' object can be linked with 'FAQ' "
 "objects using the 'Normal' link type."
-msgstr ""
+msgstr "Questa impostazione definisce che un oggetto 'Servizio' può essere collegato con oggetti 'FAQ' usando il tipo di collegamento 'Normale'."
 
 #. SysConfig
 msgid ""
@@ -414,7 +458,7 @@ msgstr ""
 msgid ""
 "This setting defines that a 'Service' object can be linked with 'FAQ' "
 "objects using the 'RelevantTo' link type."
-msgstr ""
+msgstr "Questa impostazione definisce che un oggetto 'Servizio' può essere collegato con oggetti 'FAQ' usando il tipo di collegamento 'ImportantePer'."
 
 #. SysConfig
 msgid ""
@@ -454,4 +498,4 @@ msgstr ""
 
 #. SysConfig
 msgid "Width of ITSM textareas."
-msgstr ""
+msgstr "Larghezza dei campi di testo di ITSM"

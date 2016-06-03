@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-05-24 21:40+0000\n"
-"PO-Revision-Date: 2016-05-24 19:41+0000\n"
+"POT-Creation-Date: 2016-06-03 17:40+0000\n"
+"PO-Revision-Date: 2016-06-03 15:41+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: Swahili (http://www.transifex.com/otrs/OTRS/language/sw/)\n"
 "MIME-Version: 1.0\n"
@@ -191,6 +191,10 @@ msgid "Current Incident State"
 msgstr "Hali ya tukio la sasa"
 
 #. SysConfig
+msgid "Both"
+msgstr ""
+
+#. SysConfig
 msgid ""
 "Frontend module registration for the AdminITSMCIPAllocate configuration in "
 "the admin area."
@@ -233,6 +237,26 @@ msgid ""
 msgstr "Usajili wa moduli ya mazingira ya mbele kwa kipengee cha kukuzwa kwa huduma cha ITSMSLA cha wakala katika kiolesura cha wakala."
 
 #. SysConfig
+msgid "ITSM SLA Overview."
+msgstr ""
+
+#. SysConfig
+msgid "ITSM Service Overview."
+msgstr ""
+
+#. SysConfig
+msgid "Incident"
+msgstr ""
+
+#. SysConfig
+msgid "Incident State Type"
+msgstr ""
+
+#. SysConfig
+msgid "Incident State Type."
+msgstr ""
+
+#. SysConfig
 msgid "Manage priority matrix."
 msgstr "Simamia matriki ya kipaumbele."
 
@@ -257,8 +281,28 @@ msgid "Module to show the link link in service menu."
 msgstr "Moduli ya kuonyesha kiungo cha kiungo katika menyu ya huduma."
 
 #. SysConfig
+msgid "Operational"
+msgstr ""
+
+#. SysConfig
 msgid "Parameters for the incident states in the preference view."
 msgstr "Vigezo ya hali ya matukio katika mandhari ya mapendeleo."
+
+#. SysConfig
+msgid "SLA Print."
+msgstr ""
+
+#. SysConfig
+msgid "SLA Zoom."
+msgstr ""
+
+#. SysConfig
+msgid "Service Print."
+msgstr ""
+
+#. SysConfig
+msgid "Service Zoom."
+msgstr ""
 
 #. SysConfig
 msgid ""

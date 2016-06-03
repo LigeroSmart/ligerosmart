@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-05-24 21:40+0000\n"
-"PO-Revision-Date: 2016-05-24 19:41+0000\n"
+"POT-Creation-Date: 2016-06-03 17:40+0000\n"
+"PO-Revision-Date: 2016-06-03 15:41+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: Persian (http://www.transifex.com/otrs/OTRS/language/fa/)\n"
 "MIME-Version: 1.0\n"
@@ -190,73 +190,117 @@ msgid "Current Incident State"
 msgstr "وضعیت جاری رخداد"
 
 #. SysConfig
+msgid "Both"
+msgstr ""
+
+#. SysConfig
 msgid ""
 "Frontend module registration for the AdminITSMCIPAllocate configuration in "
 "the admin area."
-msgstr ""
+msgstr "ثبت ماژول برای پیکربندی AdminITSMCIPAllocate در بخش مدیریت"
 
 #. SysConfig
 msgid ""
 "Frontend module registration for the AgentITSMSLA object in the agent "
 "interface."
-msgstr ""
+msgstr "ثبت ماژول برای پیکربندی آبجکت AgentITSMSLA در واسط کاربری کارشناس"
 
 #. SysConfig
 msgid ""
 "Frontend module registration for the AgentITSMSLAPrint object in the agent "
 "interface."
-msgstr ""
+msgstr "ثبت ماژول برای پیکربندی آبجکت AgentITSMSLAPrint در واسط کاربری کارشناس"
 
 #. SysConfig
 msgid ""
 "Frontend module registration for the AgentITSMSLAZoom object in the agent "
 "interface."
-msgstr ""
+msgstr "ثبت ماژول برای پیکربندی آبجکت AgentITSMSLAZoom در واسط کاربری کارشناس"
 
 #. SysConfig
 msgid ""
 "Frontend module registration for the AgentITSMService object in the agent "
 "interface."
-msgstr ""
+msgstr "ثبت ماژول برای پیکربندی آبجکت AgentITSMService در واسط کاربری کارشناس"
 
 #. SysConfig
 msgid ""
 "Frontend module registration for the AgentITSMServicePrint object in the "
 "agent interface."
-msgstr ""
+msgstr "ثبت ماژول برای پیکربندی آبجکت AgentITSMServicePrint در واسط کاربری کارشناس"
 
 #. SysConfig
 msgid ""
 "Frontend module registration for the AgentITSMServiceZoom object in the "
 "agent interface."
+msgstr "ثبت ماژول برای پیکربندی آبجکت AgentITSMServiceZoom در واسط کاربری کارشناس"
+
+#. SysConfig
+msgid "ITSM SLA Overview."
+msgstr ""
+
+#. SysConfig
+msgid "ITSM Service Overview."
+msgstr ""
+
+#. SysConfig
+msgid "Incident"
+msgstr ""
+
+#. SysConfig
+msgid "Incident State Type"
+msgstr ""
+
+#. SysConfig
+msgid "Incident State Type."
 msgstr ""
 
 #. SysConfig
 msgid "Manage priority matrix."
-msgstr ""
+msgstr "مدیریت ماتریس الویت"
 
 #. SysConfig
 msgid "Module to show back link in service menu."
-msgstr ""
+msgstr "ماژولی برای نمایش لینک بازگشت در منوی سرویس"
 
 #. SysConfig
 msgid "Module to show back link in sla menu."
-msgstr ""
+msgstr "ماژولی برای نمایش لینک بازگشت در منوی SLA"
 
 #. SysConfig
 msgid "Module to show print link in service menu."
-msgstr ""
+msgstr "ماژولی برای نمایش لینک چاپ در منوی سرویس"
 
 #. SysConfig
 msgid "Module to show print link in sla menu."
-msgstr ""
+msgstr "ماژولی برای نمایش لینک چاپ در منوی SLA"
 
 #. SysConfig
 msgid "Module to show the link link in service menu."
 msgstr ""
 
 #. SysConfig
+msgid "Operational"
+msgstr ""
+
+#. SysConfig
 msgid "Parameters for the incident states in the preference view."
+msgstr "پارامترهایی برای وضعیت‌های رخداد در نمای تنظیمات شخصی"
+
+#. SysConfig
+msgid "SLA Print."
+msgstr ""
+
+#. SysConfig
+msgid "SLA Zoom."
+msgstr ""
+
+#. SysConfig
+msgid "Service Print."
+msgstr ""
+
+#. SysConfig
+msgid "Service Zoom."
 msgstr ""
 
 #. SysConfig
@@ -452,4 +496,4 @@ msgstr ""
 
 #. SysConfig
 msgid "Width of ITSM textareas."
-msgstr ""
+msgstr "اندازه عرض کنترل‌های ورود متن ITSM"

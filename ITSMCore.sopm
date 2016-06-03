@@ -25,6 +25,7 @@
         <File Permission="644" Location="Kernel/Language/es_ITSMCore.pm"/>
         <File Permission="644" Location="Kernel/Language/fa_ITSMCore.pm"/>
         <File Permission="644" Location="Kernel/Language/fr_ITSMCore.pm"/>
+        <File Permission="644" Location="Kernel/Language/hu_ITSMCore.pm"/>
         <File Permission="644" Location="Kernel/Language/it_ITSMCore.pm"/>
         <File Permission="644" Location="Kernel/Language/ja_ITSMCore.pm"/>
         <File Permission="644" Location="Kernel/Language/ms_ITSMCore.pm"/>

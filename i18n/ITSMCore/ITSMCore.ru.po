@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-05-24 21:40+0000\n"
-"PO-Revision-Date: 2016-06-01 18:43+0000\n"
+"POT-Creation-Date: 2016-06-03 17:40+0000\n"
+"PO-Revision-Date: 2016-06-03 15:41+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: Russian (http://www.transifex.com/otrs/OTRS/language/ru/)\n"
 "MIME-Version: 1.0\n"
@@ -191,6 +191,10 @@ msgid "Current Incident State"
 msgstr "Текущее состояние инцидента"
 
 #. SysConfig
+msgid "Both"
+msgstr ""
+
+#. SysConfig
 msgid ""
 "Frontend module registration for the AdminITSMCIPAllocate configuration in "
 "the admin area."
@@ -233,6 +237,26 @@ msgid ""
 msgstr "Frontend module registration для объекта AgentITSMServiceZoom в панели администратора."
 
 #. SysConfig
+msgid "ITSM SLA Overview."
+msgstr ""
+
+#. SysConfig
+msgid "ITSM Service Overview."
+msgstr ""
+
+#. SysConfig
+msgid "Incident"
+msgstr ""
+
+#. SysConfig
+msgid "Incident State Type"
+msgstr ""
+
+#. SysConfig
+msgid "Incident State Type."
+msgstr ""
+
+#. SysConfig
 msgid "Manage priority matrix."
 msgstr "Управление матрицей приоритетов"
 
@@ -257,8 +281,28 @@ msgid "Module to show the link link in service menu."
 msgstr "Показать кнопку Связать/Link в меню Сервис"
 
 #. SysConfig
+msgid "Operational"
+msgstr ""
+
+#. SysConfig
 msgid "Parameters for the incident states in the preference view."
 msgstr "Параметры для состояния инцидента в preference view."
+
+#. SysConfig
+msgid "SLA Print."
+msgstr ""
+
+#. SysConfig
+msgid "SLA Zoom."
+msgstr ""
+
+#. SysConfig
+msgid "Service Print."
+msgstr ""
+
+#. SysConfig
+msgid "Service Zoom."
+msgstr ""
 
 #. SysConfig
 msgid ""

@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-05-24 21:40+0000\n"
-"PO-Revision-Date: 2016-05-24 19:41+0000\n"
+"POT-Creation-Date: 2016-06-03 17:40+0000\n"
+"PO-Revision-Date: 2016-06-03 15:41+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/otrs/OTRS/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
@@ -191,6 +191,10 @@ msgid "Current Incident State"
 msgstr "当前故障状态"
 
 #. SysConfig
+msgid "Both"
+msgstr ""
+
+#. SysConfig
 msgid ""
 "Frontend module registration for the AdminITSMCIPAllocate configuration in "
 "the admin area."
@@ -233,6 +237,26 @@ msgid ""
 msgstr "为服务人员界面中的 AgentITSMServiceZoom 对象注册前端模块。"
 
 #. SysConfig
+msgid "ITSM SLA Overview."
+msgstr ""
+
+#. SysConfig
+msgid "ITSM Service Overview."
+msgstr ""
+
+#. SysConfig
+msgid "Incident"
+msgstr ""
+
+#. SysConfig
+msgid "Incident State Type"
+msgstr ""
+
+#. SysConfig
+msgid "Incident State Type."
+msgstr ""
+
+#. SysConfig
 msgid "Manage priority matrix."
 msgstr "管理优先级矩阵。"
 
@@ -257,8 +281,28 @@ msgid "Module to show the link link in service menu."
 msgstr "服务菜单中显示当前链接的链接的模块。"
 
 #. SysConfig
+msgid "Operational"
+msgstr ""
+
+#. SysConfig
 msgid "Parameters for the incident states in the preference view."
 msgstr "选项视图中用于表示故障状态的参数。"
+
+#. SysConfig
+msgid "SLA Print."
+msgstr ""
+
+#. SysConfig
+msgid "SLA Zoom."
+msgstr ""
+
+#. SysConfig
+msgid "Service Print."
+msgstr ""
+
+#. SysConfig
+msgid "Service Zoom."
+msgstr ""
 
 #. SysConfig
 msgid ""

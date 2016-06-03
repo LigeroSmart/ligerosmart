@@ -75,27 +75,38 @@ sub Data {
     $Self->{Translation}->{'Current Incident State'} = 'Tilstand på nåværende hendelse';
 
     # SysConfig
+    $Self->{Translation}->{'Both'} = '';
     $Self->{Translation}->{'Frontend module registration for the AdminITSMCIPAllocate configuration in the admin area.'} =
-        '';
+        'Registrering av frontend-modul for konfigurasjon av AdminITSMCIPAllocate i admin-området.';
     $Self->{Translation}->{'Frontend module registration for the AgentITSMSLA object in the agent interface.'} =
-        '';
+        'Registrering av frontend-modul for AgentITSMSLA-objektet i saksbehandler-delen';
     $Self->{Translation}->{'Frontend module registration for the AgentITSMSLAPrint object in the agent interface.'} =
-        '';
+        'Registrering av frontend-modul for AgentITSMSLAPrint-objektet i saksbehandler-delen';
     $Self->{Translation}->{'Frontend module registration for the AgentITSMSLAZoom object in the agent interface.'} =
-        '';
+        'Registrering av frontend-modul for AgentITSMSLAZoom-objektet i saksbehandler-delen';
     $Self->{Translation}->{'Frontend module registration for the AgentITSMService object in the agent interface.'} =
-        '';
+        'Registrering av frontend-modul for AgentITSMService-objektet i saksbehandler-delen';
     $Self->{Translation}->{'Frontend module registration for the AgentITSMServicePrint object in the agent interface.'} =
-        '';
+        'Registrering av frontend-modul for AgentITSMServicePrint-objektet i saksbehandler-delen';
     $Self->{Translation}->{'Frontend module registration for the AgentITSMServiceZoom object in the agent interface.'} =
-        '';
-    $Self->{Translation}->{'Manage priority matrix.'} = '';
-    $Self->{Translation}->{'Module to show back link in service menu.'} = '';
-    $Self->{Translation}->{'Module to show back link in sla menu.'} = '';
-    $Self->{Translation}->{'Module to show print link in service menu.'} = '';
-    $Self->{Translation}->{'Module to show print link in sla menu.'} = '';
-    $Self->{Translation}->{'Module to show the link link in service menu.'} = '';
-    $Self->{Translation}->{'Parameters for the incident states in the preference view.'} = '';
+        'Registrering av frontend-modul for AgentITSMServiceZoom-objektet i saksbehandler-delen';
+    $Self->{Translation}->{'ITSM SLA Overview.'} = '';
+    $Self->{Translation}->{'ITSM Service Overview.'} = '';
+    $Self->{Translation}->{'Incident'} = '';
+    $Self->{Translation}->{'Incident State Type'} = '';
+    $Self->{Translation}->{'Incident State Type.'} = '';
+    $Self->{Translation}->{'Manage priority matrix.'} = 'Administrér prioritetsmatrise';
+    $Self->{Translation}->{'Module to show back link in service menu.'} = 'Modul som viser tilbake-lenken i tjenestemenyen';
+    $Self->{Translation}->{'Module to show back link in sla menu.'} = 'Modul som viser tilbake-lenken i SLA-menyen';
+    $Self->{Translation}->{'Module to show print link in service menu.'} = 'Modul som viser skriv-ut-lenken i tjenestemenyen';
+    $Self->{Translation}->{'Module to show print link in sla menu.'} = 'Modul som viser skriv-ut-lenken i SLA-menyen';
+    $Self->{Translation}->{'Module to show the link link in service menu.'} = 'Modul som viser lenke-lenken i tjeneste-menyen';
+    $Self->{Translation}->{'Operational'} = '';
+    $Self->{Translation}->{'Parameters for the incident states in the preference view.'} = 'Parametre for hendelsestilstander i valgvisningen';
+    $Self->{Translation}->{'SLA Print.'} = '';
+    $Self->{Translation}->{'SLA Zoom.'} = '';
+    $Self->{Translation}->{'Service Print.'} = '';
+    $Self->{Translation}->{'Service Zoom.'} = '';
     $Self->{Translation}->{'Set the type and direction of links to be used to calculate the incident state. The key is the name of the link type (as defined in LinkObject::Type), and the value is the direction of the IncidentLinkType that should be followed to calculate the incident state. For example if the IncidentLinkType is set to \'DependsOn\', and the Direction is \'Source\', only \'Depends on\' links will be followed (and not the opposite link \'Required for\') to calculate the incident state. You can add more link types ad directions as you like, e.g. \'Includes\' with the direction \'Target\'. All link types defined in the sysconfig options LinkObject::Type are possible and the direction can be \'Source\', \'Target\', or \'Both\'. IMPORTANT: AFTER YOU MAKE CHANGES TO THIS SYSCONFIG OPTION YOU NEED TO RUN THE SCRIPT bin/otrs.ITSMConfigItemIncidentStateRecalculate.pl SO THAT ALL INCIDENT STATES WILL BE RECALCULATED BASED ON THE NEW SETTINGS!'} =
         '';
     $Self->{Translation}->{'This setting defines that a \'ITSMChange\' object can be linked with \'Ticket\' objects using the \'Normal\' link type.'} =
@@ -154,7 +165,7 @@ sub Data {
         '';
     $Self->{Translation}->{'This setting defines the link type \'RelevantTo\'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link.'} =
         '';
-    $Self->{Translation}->{'Width of ITSM textareas.'} = '';
+    $Self->{Translation}->{'Width of ITSM textareas.'} = 'Bredde på ITSM sine tekstområder.';
 
 }
 

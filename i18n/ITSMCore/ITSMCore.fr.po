@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-05-24 21:40+0000\n"
-"PO-Revision-Date: 2016-05-24 19:41+0000\n"
+"POT-Creation-Date: 2016-06-03 17:40+0000\n"
+"PO-Revision-Date: 2016-06-03 15:41+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: French (http://www.transifex.com/otrs/OTRS/language/fr/)\n"
 "MIME-Version: 1.0\n"
@@ -191,6 +191,10 @@ msgid "Current Incident State"
 msgstr "Etat actuel d'incident"
 
 #. SysConfig
+msgid "Both"
+msgstr ""
+
+#. SysConfig
 msgid ""
 "Frontend module registration for the AdminITSMCIPAllocate configuration in "
 "the admin area."
@@ -233,8 +237,28 @@ msgid ""
 msgstr ""
 
 #. SysConfig
-msgid "Manage priority matrix."
+msgid "ITSM SLA Overview."
 msgstr ""
+
+#. SysConfig
+msgid "ITSM Service Overview."
+msgstr ""
+
+#. SysConfig
+msgid "Incident"
+msgstr ""
+
+#. SysConfig
+msgid "Incident State Type"
+msgstr ""
+
+#. SysConfig
+msgid "Incident State Type."
+msgstr ""
+
+#. SysConfig
+msgid "Manage priority matrix."
+msgstr "Gestion de la matrice de priorité"
 
 #. SysConfig
 msgid "Module to show back link in service menu."
@@ -257,7 +281,27 @@ msgid "Module to show the link link in service menu."
 msgstr ""
 
 #. SysConfig
+msgid "Operational"
+msgstr ""
+
+#. SysConfig
 msgid "Parameters for the incident states in the preference view."
+msgstr "Paramètres des états d'incident dans les préférences de visualisation"
+
+#. SysConfig
+msgid "SLA Print."
+msgstr ""
+
+#. SysConfig
+msgid "SLA Zoom."
+msgstr ""
+
+#. SysConfig
+msgid "Service Print."
+msgstr ""
+
+#. SysConfig
+msgid "Service Zoom."
 msgstr ""
 
 #. SysConfig
@@ -281,19 +325,19 @@ msgstr ""
 msgid ""
 "This setting defines that a 'ITSMChange' object can be linked with 'Ticket' "
 "objects using the 'Normal' link type."
-msgstr ""
+msgstr "Ce paramétrage défini qu'un objet 'ITSMChange' peut être lié avec un objet 'Ticket' en utilisant un type de lien 'Normal'"
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'ITSMConfigItem' object can be linked with 'FAQ'"
 " objects using the 'Normal' link type."
-msgstr ""
+msgstr "Ce paramétrage défini qu'un objet 'ITSMConfigItem' peut être lié avec un objet 'FAQ' en utilisant un type de lien 'Normal'"
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'ITSMConfigItem' object can be linked with 'FAQ'"
 " objects using the 'ParentChild' link type."
-msgstr ""
+msgstr "Ce paramétrage défini qu'un objet 'ITSMConfigItem' peut être lié avec un objet 'FAQ' en utilisant un type de lien 'ParentEnfant'"
 
 #. SysConfig
 msgid ""
@@ -377,7 +421,7 @@ msgstr ""
 msgid ""
 "This setting defines that a 'ITSMWorkOrder' object can be linked with "
 "'ITSMConfigItem' objects using the 'Normal' link type."
-msgstr ""
+msgstr "Ce paramétrage défini qu'un objet 'ITSMWorkOrder' peut être lié avec un objet 'ITSMConfigItem' en utilisant un type de lien 'Normal'"
 
 #. SysConfig
 msgid ""
@@ -389,25 +433,25 @@ msgstr ""
 msgid ""
 "This setting defines that a 'ITSMWorkOrder' object can be linked with "
 "'Service' objects using the 'Normal' link type."
-msgstr ""
+msgstr "Ce paramétrage défini qu'un objet 'ITSMWorkOrder' peut être lié avec un objet 'Service' en utilisant un type de lien 'Normal'"
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'ITSMWorkOrder' object can be linked with "
 "'Ticket' objects using the 'Normal' link type."
-msgstr ""
+msgstr "Ce paramétrage défini qu'un objet 'ITSMWorkOrder' peut être lié avec un objet 'Ticket' en utilisant un type de lien 'Normal'"
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'Service' object can be linked with 'FAQ' "
 "objects using the 'Normal' link type."
-msgstr ""
+msgstr "Ce paramétrage défini qu'un objet 'Service' peut être lié avec un objet 'FAQ' en utilisant un type de lien 'Normal'"
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'Service' object can be linked with 'FAQ' "
 "objects using the 'ParentChild' link type."
-msgstr ""
+msgstr "Ce paramétrage défini qu'un objet 'Service' peut être lié avec un objet 'FAQ' en utilisant un type de lien 'ParentEnfant'"
 
 #. SysConfig
 msgid ""
@@ -453,4 +497,4 @@ msgstr ""
 
 #. SysConfig
 msgid "Width of ITSM textareas."
-msgstr ""
+msgstr "Largeur des zones de texte ITSM"

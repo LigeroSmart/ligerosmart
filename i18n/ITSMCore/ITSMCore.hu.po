@@ -1,86 +1,86 @@
 # 
 # Translators:
-# Jan Řežab <honza@rezab.eu>, 2015
+# Balázs Úr <urbalazs@gmail.com>, 2014-2016
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2016-06-03 17:40+0000\n"
 "PO-Revision-Date: 2016-06-03 15:41+0000\n"
 "Last-Translator: Udo Bretz\n"
-"Language-Team: Czech (http://www.transifex.com/otrs/OTRS/language/cs/)\n"
+"Language-Team: Hungarian (http://www.transifex.com/otrs/OTRS/language/hu/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: cs\n"
-"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"Language: hu\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. Template: AAAITSMCore
 msgid "Alternative to"
-msgstr "Alternativní k"
+msgstr "Alternatíva erre"
 
 #. Template: AAAITSMCore
 msgid "Availability"
-msgstr "Dostupnost"
+msgstr "Elérhetőség"
 
 #. Template: AAAITSMCore
 msgid "Back End"
-msgstr "Základní rozhraní/Backend"
+msgstr "Háttérprogram"
 
 #. Template: AAAITSMCore
 msgid "Connected to"
-msgstr "Spojen s"
+msgstr "Csatlakoztatva ide"
 
 #. Template: AAAITSMCore
 msgid "Current State"
-msgstr "Současný Stav"
+msgstr "Jelenlegi állapot"
 
 #. Template: AAAITSMCore
 msgid "Demonstration"
-msgstr "Ukázka"
+msgstr "Bemutató"
 
 #. Template: AAAITSMCore
 msgid "Depends on"
-msgstr "Závisí na"
+msgstr "Ettől függ"
 
 #. Template: AAAITSMCore
 msgid "End User Service"
-msgstr "Služby koncovým uživatelům"
+msgstr "Végfelhasználói szolgáltatás"
 
 #. Template: AAAITSMCore
 msgid "Errors"
-msgstr "Chyby"
+msgstr "Hibák"
 
 #. Template: AAAITSMCore
 msgid "Front End"
-msgstr "Zákaznické rozhraní/Frontend"
+msgstr "Előtétprogram"
 
 #. Template: AAAITSMCore
 msgid "IT Management"
-msgstr "Řízení IT"
+msgstr "IT menedzsment"
 
 #. Template: AAAITSMCore
 msgid "IT Operational"
-msgstr "IT Operace"
+msgstr "IT üzemeltetés"
 
 #. Template: AAAITSMCore
 msgid "Impact"
-msgstr "Vliv"
+msgstr "Hatás"
 
 #. Template: AAAITSMCore
 msgid "Incident State"
-msgstr "Stav Incidentu"
+msgstr "Incidensállapot"
 
 #. Template: AAAITSMCore
 msgid "Includes"
-msgstr "Zahrnuje"
+msgstr "Tartalmazza"
 
 #. Template: AAAITSMCore
 msgid "Other"
-msgstr "Další"
+msgstr "Egyéb"
 
 #. Template: AAAITSMCore
 msgid "Part of"
-msgstr "Část z"
+msgstr "Része ennek"
 
 #. Template: AAAITSMCore
 msgid "Project"
@@ -88,107 +88,107 @@ msgstr "Projekt"
 
 #. Template: AAAITSMCore
 msgid "Recovery Time"
-msgstr "Čas obnovy"
+msgstr "Helyreállítási idő"
 
 #. Template: AAAITSMCore
 msgid "Relevant to"
-msgstr "Relevantní k"
+msgstr "Releváns ezzel"
 
 #. Template: AAAITSMCore
 msgid "Reporting"
-msgstr "Reporting"
+msgstr "Jelentés"
 
 #. Template: AAAITSMCore
 msgid "Required for"
-msgstr "Požadovaný pro"
+msgstr "Szükséges ehhez"
 
 #. Template: AAAITSMCore
 msgid "Resolution Rate"
-msgstr "Čas řešeni"
+msgstr "Felbontási arány"
 
 #. Template: AAAITSMCore
 msgid "Response Time"
-msgstr "Čas odpovědi"
+msgstr "Válaszidő"
 
 #. Template: AAAITSMCore
 msgid "SLA Overview"
-msgstr "SLA Přehled"
+msgstr "SLA áttekintés"
 
 #. Template: AAAITSMCore
 msgid "Service Overview"
-msgstr "Přehled Služby"
+msgstr "Szolgáltatás áttekintés"
 
 #. Template: AAAITSMCore
 msgid "Service-Area"
-msgstr "Prostor Údržby"
+msgstr "Szolgáltatás terület"
 
 #. Template: AAAITSMCore
 msgid "Training"
-msgstr "Školení"
+msgstr "Kiképzés"
 
 #. Template: AAAITSMCore
 msgid "Transactions"
-msgstr "Transakce"
+msgstr "Tranzakciók"
 
 #. Template: AAAITSMCore
 msgid "Underpinning Contract"
-msgstr "Základní smlouva"
+msgstr "Megalapozó szerződés"
 
 #. Template: AAAITSMCore
 msgid "allocation"
-msgstr "přidělit"
+msgstr "lefoglalás"
 
 #. Template: AdminITSMCIPAllocate
 msgid "Criticality <-> Impact <-> Priority"
-msgstr "Kritičnost<->Vliv<->Priorita"
+msgstr "Kritikusság <-> Hatás <-> Prioritás"
 
 #. Template: AdminITSMCIPAllocate
 msgid "Manage the priority result of combinating Criticality <-> Impact."
-msgstr ""
+msgstr "A Kritikusság <-> Hatás összetétel prioritás eredményének kezelése."
 
 #. Template: AdminITSMCIPAllocate
 msgid "Priority allocation"
-msgstr "Alokace priorit"
+msgstr "Prioritás lefoglalás"
 
 #. Template: AdminSLA
 msgid "Minimum Time Between Incidents"
-msgstr "Minimální čas mezi incidenty"
+msgstr "Az incidensek közti legkisebb idő"
 
 #. Template: AdminService
 msgid "Criticality"
-msgstr "Kritičnost"
+msgstr "Kritikusság"
 
 #. Template: AgentITSMSLAZoom
 msgid "SLA Information"
-msgstr "SLA Informace"
+msgstr "SLA információk"
 
 #. Template: AgentITSMSLAZoom
 msgid "Last changed"
-msgstr "Naposledy změněn"
+msgstr "Utolsó módosítás"
 
 #. Template: AgentITSMSLAZoom
 msgid "Last changed by"
-msgstr "Naposledy změnil"
+msgstr "Utoljára módosította"
 
 #. Template: AgentITSMSLAZoom
 msgid "Associated Services"
-msgstr "Přiřazené Služby"
+msgstr "Hozzárendelt szolgáltatások"
 
 #. Template: AgentITSMServiceZoom
 msgid "Service Information"
-msgstr ""
+msgstr "Szolgáltatás információk"
 
 #. Template: AgentITSMServiceZoom
 msgid "Current incident state"
-msgstr ""
+msgstr "Jelenlegi incidensállapot"
 
 #. Template: AgentITSMServiceZoom
 msgid "Associated SLAs"
-msgstr "Přiřazené SLA smlouvy"
+msgstr "Hozzárendelt SLA-k"
 
 #. Perl Module: Kernel/Modules/AgentITSMServicePrint.pm
 msgid "Current Incident State"
-msgstr "Současný Stav Incidentu"
+msgstr "Jelenlegi incidensállapot"
 
 #. SysConfig
 msgid "Both"
@@ -198,43 +198,43 @@ msgstr ""
 msgid ""
 "Frontend module registration for the AdminITSMCIPAllocate configuration in "
 "the admin area."
-msgstr ""
+msgstr "Előtétprogram modul regisztráció az adminisztrációs területen lévő AdminITSMCIPAllocate beállításhoz."
 
 #. SysConfig
 msgid ""
 "Frontend module registration for the AgentITSMSLA object in the agent "
 "interface."
-msgstr ""
+msgstr "Előtétprogram modul regisztráció az ügyintézői felületen lévő AgentITSMSLA objektumhoz."
 
 #. SysConfig
 msgid ""
 "Frontend module registration for the AgentITSMSLAPrint object in the agent "
 "interface."
-msgstr ""
+msgstr "Előtétprogram modul regisztráció az ügyintézői felületen lévő AgentITSMSLAPrint objektumhoz."
 
 #. SysConfig
 msgid ""
 "Frontend module registration for the AgentITSMSLAZoom object in the agent "
 "interface."
-msgstr ""
+msgstr "Előtétprogram modul regisztráció az ügyintézői felületen lévő AgentITSMSLAZoom objektumhoz."
 
 #. SysConfig
 msgid ""
 "Frontend module registration for the AgentITSMService object in the agent "
 "interface."
-msgstr ""
+msgstr "Előtétprogram modul regisztráció az ügyintézői felületen lévő AgentITSMService objektumhoz."
 
 #. SysConfig
 msgid ""
 "Frontend module registration for the AgentITSMServicePrint object in the "
 "agent interface."
-msgstr ""
+msgstr "Előtétprogram modul regisztráció az ügyintézői felületen lévő AgentITSMServicePrint objektumhoz."
 
 #. SysConfig
 msgid ""
 "Frontend module registration for the AgentITSMServiceZoom object in the "
 "agent interface."
-msgstr ""
+msgstr "Előtétprogram modul regisztráció az ügyintézői felületen lévő AgentITSMServiceZoom objektumhoz."
 
 #. SysConfig
 msgid "ITSM SLA Overview."
@@ -258,27 +258,27 @@ msgstr ""
 
 #. SysConfig
 msgid "Manage priority matrix."
-msgstr ""
+msgstr "Prioritásmátrix kezelése."
 
 #. SysConfig
 msgid "Module to show back link in service menu."
-msgstr ""
+msgstr "Egy modul visszamutató hivatkozás megjelenítéséhez a szolgáltatás menüben."
 
 #. SysConfig
 msgid "Module to show back link in sla menu."
-msgstr ""
+msgstr "Egy modul visszamutató hivatkozás megjelenítéséhez az SLA menüben."
 
 #. SysConfig
 msgid "Module to show print link in service menu."
-msgstr ""
+msgstr "Egy modul nyomtatási hivatkozás megjelenítéséhez a szolgáltatás menüben."
 
 #. SysConfig
 msgid "Module to show print link in sla menu."
-msgstr ""
+msgstr "Egy modul nyomtatási hivatkozás megjelenítéséhez az SLA menüben."
 
 #. SysConfig
 msgid "Module to show the link link in service menu."
-msgstr ""
+msgstr "Egy modul a hivatkozás megjelenítéséhez a szolgáltatás menüben."
 
 #. SysConfig
 msgid "Operational"
@@ -286,7 +286,7 @@ msgstr ""
 
 #. SysConfig
 msgid "Parameters for the incident states in the preference view."
-msgstr ""
+msgstr "Paraméterek az incidensállapotokhoz a beállítások nézetben."
 
 #. SysConfig
 msgid "SLA Print."
@@ -319,145 +319,145 @@ msgid ""
 " MAKE CHANGES TO THIS SYSCONFIG OPTION YOU NEED TO RUN THE SCRIPT "
 "bin/otrs.ITSMConfigItemIncidentStateRecalculate.pl SO THAT ALL INCIDENT "
 "STATES WILL BE RECALCULATED BASED ON THE NEW SETTINGS!"
-msgstr ""
+msgstr "Állítsa be a hivatkozások típusát és irányát, hogy használható legyen az  incidensállapot kiszámításához. A kulcs a hivatkozástípus neve (ahogy a LinkObject::Type értékében van meghatározva), és az érték az IncidentLinkType iránya, amelyet követnie kell az incidensállapot kiszámításához. Például ha az IncidentLinkType „DependsOn” értékre van állítva, és az irány „Source”, akkor csak a „Depends on” hivatkozások lesznek követve (és nem az ellentétes „Required for” hivatkozás) az incidensállapot kiszámításához. Hozzáadhat további hivatkozástípusokat és irányokat, ahogy csak szeretné, például „Includes” a „Target” iránnyal. Minden LinkObject::Type rendszerbeállítási lehetőségben meghatározott hivatkozástípus lehetséges, és az irány „Source”, „Target” vagy „Both” lehet. FONTOS: MIUTÁN MÓDOSÍTÁSOKAT HAJTOTT VÉGRE EZEN A RENDSZERBEÁLLÍTÁSON, LE KELL FUTTATNIA A bin/otrs.ITSMConfigItemIncidentStateRecalculate.pl PARANCSFÁJLT AZÉRT, HOGY MINDEN INCIDENSÁLLAPOT ÚJRA KISZÁMÍTÁSRA KERÜLJÖN AZ ÚJ BEÁLLÍTÁSOK ALAPJÁN!"
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'ITSMChange' object can be linked with 'Ticket' "
 "objects using the 'Normal' link type."
-msgstr ""
+msgstr "Ez a beállítás határozza meg, hogy egy „ITSMChange” objektum összeköthető-e a „Ticket” objektumokkal a „Normal” hivatkozástípus használatával."
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'ITSMConfigItem' object can be linked with 'FAQ'"
 " objects using the 'Normal' link type."
-msgstr ""
+msgstr "Ez a beállítás határozza meg, hogy egy „ITSMConfigItem” objektum összeköthető-e a „FAQ” objektumokkal a „Normal” hivatkozástípus használatával."
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'ITSMConfigItem' object can be linked with 'FAQ'"
 " objects using the 'ParentChild' link type."
-msgstr ""
+msgstr "Ez a beállítás határozza meg, hogy egy „ITSMConfigItem” objektum összeköthető-e a „FAQ” objektumokkal a „ParentChild” hivatkozástípus használatával."
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'ITSMConfigItem' object can be linked with 'FAQ'"
 " objects using the 'RelevantTo' link type."
-msgstr ""
+msgstr "Ez a beállítás határozza meg, hogy egy „ITSMConfigItem” objektum összeköthető-e a „FAQ” objektumokkal a „RelevantTo” hivatkozástípus használatával."
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'ITSMConfigItem' object can be linked with "
 "'Service' objects using the 'AlternativeTo' link type."
-msgstr ""
+msgstr "Ez a beállítás határozza meg, hogy egy „ITSMConfigItem” objektum összeköthető-e a „Service” objektumokkal az „AlternativeTo” hivatkozástípus használatával."
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'ITSMConfigItem' object can be linked with "
 "'Service' objects using the 'DependsOn' link type."
-msgstr ""
+msgstr "Ez a beállítás határozza meg, hogy egy „ITSMConfigItem” objektum összeköthető-e a „Service” objektumokkal a „DependsOn” hivatkozástípus használatával."
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'ITSMConfigItem' object can be linked with "
 "'Service' objects using the 'RelevantTo' link type."
-msgstr ""
+msgstr "Ez a beállítás határozza meg, hogy egy „ITSMConfigItem” objektum összeköthető-e a „Service” objektumokkal a „RelevantTo” hivatkozástípus használatával."
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'ITSMConfigItem' object can be linked with "
 "'Ticket' objects using the 'AlternativeTo' link type."
-msgstr ""
+msgstr "Ez a beállítás határozza meg, hogy egy „ITSMConfigItem” objektum összeköthető-e a „Ticket” objektumokkal az „AlternativeTo” hivatkozástípus használatával."
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'ITSMConfigItem' object can be linked with "
 "'Ticket' objects using the 'DependsOn' link type."
-msgstr ""
+msgstr "Ez a beállítás határozza meg, hogy egy „ITSMConfigItem” objektum összeköthető-e a „Ticket” objektumokkal a „DependsOn” hivatkozástípus használatával."
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'ITSMConfigItem' object can be linked with "
 "'Ticket' objects using the 'RelevantTo' link type."
-msgstr ""
+msgstr "Ez a beállítás határozza meg, hogy egy „ITSMConfigItem” objektum összeköthető-e a „Ticket” objektumokkal a „RelevantTo” hivatkozástípus használatával."
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'ITSMConfigItem' object can be linked with other"
 " 'ITSMConfigItem' objects using the 'AlternativeTo' link type."
-msgstr ""
+msgstr "Ez a beállítás határozza meg, hogy egy „ITSMConfigItem” objektum összeköthető-e más „ITSMConfigItem” objektumokkal az „AlternativeTo” hivatkozástípus használatával."
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'ITSMConfigItem' object can be linked with other"
 " 'ITSMConfigItem' objects using the 'ConnectedTo' link type."
-msgstr ""
+msgstr "Ez a beállítás határozza meg, hogy egy „ITSMConfigItem” objektum összeköthető-e más „ITSMConfigItem” objektumokkal a „ConnectedTo” hivatkozástípus használatával."
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'ITSMConfigItem' object can be linked with other"
 " 'ITSMConfigItem' objects using the 'DependsOn' link type."
-msgstr ""
+msgstr "Ez a beállítás határozza meg, hogy egy „ITSMConfigItem” objektum összeköthető-e más „ITSMConfigItem” objektumokkal a „DependsOn” hivatkozástípus használatával."
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'ITSMConfigItem' object can be linked with other"
 " 'ITSMConfigItem' objects using the 'Includes' link type."
-msgstr ""
+msgstr "Ez a beállítás határozza meg, hogy egy „ITSMConfigItem” objektum összeköthető-e más „ITSMConfigItem” objektumokkal az „Includes” hivatkozástípus használatával."
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'ITSMConfigItem' object can be linked with other"
 " 'ITSMConfigItem' objects using the 'RelevantTo' link type."
-msgstr ""
+msgstr "Ez a beállítás határozza meg, hogy egy „ITSMConfigItem” objektum összeköthető-e más „ITSMConfigItem” objektumokkal a „RelevantTo” hivatkozástípus használatával."
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'ITSMWorkOrder' object can be linked with "
 "'ITSMConfigItem' objects using the 'DependsOn' link type."
-msgstr ""
+msgstr "Ez a beállítás határozza meg, hogy egy „ITSMWorkOrder” objektum összeköthető-e az „ITSMConfigItem” objektumokkal a „DependsOn” hivatkozástípus használatával."
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'ITSMWorkOrder' object can be linked with "
 "'ITSMConfigItem' objects using the 'Normal' link type."
-msgstr ""
+msgstr "Ez a beállítás határozza meg, hogy egy „ITSMWorkOrder” objektum összeköthető-e az „ITSMConfigItem” objektumokkal a „Normal” hivatkozástípus használatával."
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'ITSMWorkOrder' object can be linked with "
 "'Service' objects using the 'DependsOn' link type."
-msgstr ""
+msgstr "Ez a beállítás határozza meg, hogy egy „ITSMWorkOrder” objektum összeköthető-e a „Service” objektumokkal a „DependsOn” hivatkozástípus használatával."
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'ITSMWorkOrder' object can be linked with "
 "'Service' objects using the 'Normal' link type."
-msgstr ""
+msgstr "Ez a beállítás határozza meg, hogy egy „ITSMWorkOrder” objektum összeköthető-e a „Service” objektumokkal a „Normal” hivatkozástípus használatával."
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'ITSMWorkOrder' object can be linked with "
 "'Ticket' objects using the 'Normal' link type."
-msgstr ""
+msgstr "Ez a beállítás határozza meg, hogy egy „ITSMWorkOrder” objektum összeköthető-e a „Ticket” objektumokkal a „Normal” hivatkozástípus használatával."
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'Service' object can be linked with 'FAQ' "
 "objects using the 'Normal' link type."
-msgstr ""
+msgstr "Ez a beállítás határozza meg, hogy egy „Service” objektum összeköthető-e a „FAQ” objektumokkal a „Normal” hivatkozástípus használatával."
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'Service' object can be linked with 'FAQ' "
 "objects using the 'ParentChild' link type."
-msgstr ""
+msgstr "Ez a beállítás határozza meg, hogy egy „Service” objektum összeköthető-e a „FAQ” objektumokkal a „ParentChild” hivatkozástípus használatával."
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'Service' object can be linked with 'FAQ' "
 "objects using the 'RelevantTo' link type."
-msgstr ""
+msgstr "Ez a beállítás határozza meg, hogy egy „Service” objektum összeköthető-e a „FAQ” objektumokkal a „RelevantTo” hivatkozástípus használatával."
 
 #. SysConfig
 msgid ""
@@ -465,36 +465,36 @@ msgid ""
 "the target name contain the same value, the resulting link is a non-"
 "directional one. If the values are different, the resulting link is a "
 "directional link."
-msgstr ""
+msgstr "Ez a beállítás határozza meg az „AlternativeTo” hivatkozástípust. Ha a forrásnév a célnév ugyanazt az értéket tartalmazza, akkor az eredményül kapott hivatkozás nem lesz irányított. Ha az értékek eltérnek, akkor az eredményül kapott hivatkozás irányított hivatkozás lesz."
 
 #. SysConfig
 msgid ""
 "This setting defines the link type 'ConnectedTo'. If the source name and the"
 " target name contain the same value, the resulting link is a non-directional"
 " one. If the values are different, the resulting link is a directional link."
-msgstr ""
+msgstr "Ez a beállítás határozza meg a „ConnectedTo” hivatkozástípust. Ha a forrásnév a célnév ugyanazt az értéket tartalmazza, akkor az eredményül kapott hivatkozás nem lesz irányított. Ha az értékek eltérnek, akkor az eredményül kapott hivatkozás irányított hivatkozás lesz."
 
 #. SysConfig
 msgid ""
 "This setting defines the link type 'DependsOn'. If the source name and the "
 "target name contain the same value, the resulting link is a non-directional "
 "one. If the values are different, the resulting link is a directional link."
-msgstr ""
+msgstr "Ez a beállítás határozza meg a „DependsOn” hivatkozástípust. Ha a forrásnév a célnév ugyanazt az értéket tartalmazza, akkor az eredményül kapott hivatkozás nem lesz irányított. Ha az értékek eltérnek, akkor az eredményül kapott hivatkozás irányított hivatkozás lesz."
 
 #. SysConfig
 msgid ""
 "This setting defines the link type 'Includes'. If the source name and the "
 "target name contain the same value, the resulting link is a non-directional "
 "one. If the values are different, the resulting link is a directional link."
-msgstr ""
+msgstr "Ez a beállítás határozza meg az „Includes” hivatkozástípust. Ha a forrásnév a célnév ugyanazt az értéket tartalmazza, akkor az eredményül kapott hivatkozás nem lesz irányított. Ha az értékek eltérnek, akkor az eredményül kapott hivatkozás irányított hivatkozás lesz."
 
 #. SysConfig
 msgid ""
 "This setting defines the link type 'RelevantTo'. If the source name and the "
 "target name contain the same value, the resulting link is a non-directional "
 "one. If the values are different, the resulting link is a directional link."
-msgstr ""
+msgstr "Ez a beállítás határozza meg a „RelevantTo” hivatkozástípust. Ha a forrásnév a célnév ugyanazt az értéket tartalmazza, akkor az eredményül kapott hivatkozás nem lesz irányított. Ha az értékek eltérnek, akkor az eredményül kapott hivatkozás irányított hivatkozás lesz."
 
 #. SysConfig
 msgid "Width of ITSM textareas."
-msgstr ""
+msgstr "Az ITSM szövegdobozok szélessége."

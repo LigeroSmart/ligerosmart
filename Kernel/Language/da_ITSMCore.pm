@@ -75,6 +75,7 @@ sub Data {
     $Self->{Translation}->{'Current Incident State'} = 'Nuværende Incident tilstand';
 
     # SysConfig
+    $Self->{Translation}->{'Both'} = '';
     $Self->{Translation}->{'Frontend module registration for the AdminITSMCIPAllocate configuration in the admin area.'} =
         '';
     $Self->{Translation}->{'Frontend module registration for the AgentITSMSLA object in the agent interface.'} =
@@ -89,13 +90,23 @@ sub Data {
         '';
     $Self->{Translation}->{'Frontend module registration for the AgentITSMServiceZoom object in the agent interface.'} =
         '';
+    $Self->{Translation}->{'ITSM SLA Overview.'} = '';
+    $Self->{Translation}->{'ITSM Service Overview.'} = '';
+    $Self->{Translation}->{'Incident'} = '';
+    $Self->{Translation}->{'Incident State Type'} = '';
+    $Self->{Translation}->{'Incident State Type.'} = '';
     $Self->{Translation}->{'Manage priority matrix.'} = '';
     $Self->{Translation}->{'Module to show back link in service menu.'} = '';
     $Self->{Translation}->{'Module to show back link in sla menu.'} = '';
     $Self->{Translation}->{'Module to show print link in service menu.'} = '';
     $Self->{Translation}->{'Module to show print link in sla menu.'} = '';
     $Self->{Translation}->{'Module to show the link link in service menu.'} = '';
+    $Self->{Translation}->{'Operational'} = '';
     $Self->{Translation}->{'Parameters for the incident states in the preference view.'} = '';
+    $Self->{Translation}->{'SLA Print.'} = '';
+    $Self->{Translation}->{'SLA Zoom.'} = '';
+    $Self->{Translation}->{'Service Print.'} = '';
+    $Self->{Translation}->{'Service Zoom.'} = '';
     $Self->{Translation}->{'Set the type and direction of links to be used to calculate the incident state. The key is the name of the link type (as defined in LinkObject::Type), and the value is the direction of the IncidentLinkType that should be followed to calculate the incident state. For example if the IncidentLinkType is set to \'DependsOn\', and the Direction is \'Source\', only \'Depends on\' links will be followed (and not the opposite link \'Required for\') to calculate the incident state. You can add more link types ad directions as you like, e.g. \'Includes\' with the direction \'Target\'. All link types defined in the sysconfig options LinkObject::Type are possible and the direction can be \'Source\', \'Target\', or \'Both\'. IMPORTANT: AFTER YOU MAKE CHANGES TO THIS SYSCONFIG OPTION YOU NEED TO RUN THE SCRIPT bin/otrs.ITSMConfigItemIncidentStateRecalculate.pl SO THAT ALL INCIDENT STATES WILL BE RECALCULATED BASED ON THE NEW SETTINGS!'} =
         '';
     $Self->{Translation}->{'This setting defines that a \'ITSMChange\' object can be linked with \'Ticket\' objects using the \'Normal\' link type.'} =
