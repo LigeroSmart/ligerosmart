@@ -1,90 +1,90 @@
 # 
 # Translators:
-# Duilio Poggi Oneto <duiliopoggio@gmail.com>, 2015
+# Balázs Úr <urbalazs@gmail.com>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2016-06-03 20:11+0000\n"
 "PO-Revision-Date: 2016-06-03 18:14+0000\n"
 "Last-Translator: Udo Bretz\n"
-"Language-Team: Spanish (http://www.transifex.com/otrs/OTRS/language/es/)\n"
+"Language-Team: Hungarian (http://www.transifex.com/otrs/OTRS/language/hu/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: es\n"
+"Language: hu\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. Template: AAAImportExport
 msgid "Add mapping template"
-msgstr "Añadir plantilla de mapeo"
+msgstr "Leképezési sablon hozzáadása"
 
 #. Template: AAAImportExport
 msgid "Charset"
-msgstr "Juego de caracteres"
+msgstr "Karakterkészlet"
 
 #. Template: AAAImportExport
 msgid "Colon (:)"
-msgstr "Dos puntos (:)"
+msgstr "Kettőspont (:)"
 
 #. Template: AAAImportExport
 msgid "Column"
-msgstr "Columna"
+msgstr "Oszlop"
 
 #. Template: AAAImportExport
 msgid "Column Separator"
-msgstr "Separador de Columna"
+msgstr "Oszlopelválasztó"
 
 #. Template: AAAImportExport
 msgid "Dot (.)"
-msgstr "Punto (.)"
+msgstr "Pont (.)"
 
 #. Template: AAAImportExport
 msgid "Semicolon (;)"
-msgstr "Punto y Coma (;)"
+msgstr "Pontosvessző (;)"
 
 #. Template: AAAImportExport
 msgid "Tabulator (TAB)"
-msgstr "Tabulador (TAB)"
+msgstr "Tabulátor (TAB)"
 
 #. Template: AAAImportExport
 msgid "Include Column Headers"
-msgstr "Incluir Cabecera de la Columna"
+msgstr "Oszlopfejlécek felvétele"
 
 #. Template: AAAImportExport
 msgid "Import summary for"
-msgstr "Importar resumen para"
+msgstr "Importálási összegzés ehhez"
 
 #. Template: AAAImportExport
 msgid "Imported records"
-msgstr "Registros importados"
+msgstr "Importált rekordok"
 
 #. Template: AAAImportExport
 msgid "Exported records"
-msgstr "Registros exportados"
+msgstr "Exportált rekordok"
 
 #. Template: AAAImportExport
 msgid "Records"
-msgstr "Registros"
+msgstr "Rekordok"
 
 #. Template: AAAImportExport
 msgid "Skipped"
-msgstr "Saltado"
+msgstr "Kihagyva"
 
 #. Template: AdminImportExport
 msgid "Import/Export Management"
-msgstr "Gestión de Importación/Exportación"
+msgstr "Importálás/exportálás kezelés"
 
 #. Template: AdminImportExport
 msgid "Create a template to import and export object information."
-msgstr "Crear una plantilla para importar y exportar informacion del objeto."
+msgstr "Sablon létrehozása objektuminformációk importálásához és exportálásához."
 
 #. Template: AdminImportExport
 msgid "Start Import"
-msgstr "Iniciar Importación"
+msgstr "Importálás indítása"
 
 #. Template: AdminImportExport
 msgid "Start Export"
-msgstr "Iniciar Exportación"
+msgstr "Exportálás indítása"
 
 #. Template: AdminImportExport
 msgid "Step 1 of 5 - Edit common information"
@@ -92,15 +92,15 @@ msgstr ""
 
 #. Template: AdminImportExport
 msgid "Name is required!"
-msgstr "El nombre es requerido"
+msgstr "A név kötelező!"
 
 #. Template: AdminImportExport
 msgid "Object is required!"
-msgstr "¡Debe especificar Objeto!"
+msgstr "Az objektum kötelező!"
 
 #. Template: AdminImportExport
 msgid "Format is required!"
-msgstr "¡Debe especificar Formato!"
+msgstr "A formátum kötelező!"
 
 #. Template: AdminImportExport
 msgid "Step 2 of 5 - Edit object information"
@@ -112,7 +112,7 @@ msgstr ""
 
 #. Template: AdminImportExport
 msgid "is required!"
-msgstr "¡es requerido!"
+msgstr "kötelező!"
 
 #. Template: AdminImportExport
 msgid "Step 4 of 5 - Edit mapping information"
@@ -120,11 +120,11 @@ msgstr ""
 
 #. Template: AdminImportExport
 msgid "No map elements found."
-msgstr "No se encontraron elementos de mapeo."
+msgstr "Nem találhatók térképelemek."
 
 #. Template: AdminImportExport
 msgid "Add Mapping Element"
-msgstr "Añadir Mapeo de Elementos"
+msgstr "Leképezési elemek hozzáadása"
 
 #. Template: AdminImportExport
 msgid "Step 5 of 5 - Edit search information"
@@ -132,35 +132,35 @@ msgstr ""
 
 #. Template: AdminImportExport
 msgid "Restrict export per search"
-msgstr "Restringir exportación por búsqueda"
+msgstr "Exportálás korlátozása keresésenként"
 
 #. Template: AdminImportExport
 msgid "Import information"
-msgstr "Importar información"
+msgstr "Importálási információk"
 
 #. Template: AdminImportExport
 msgid "Source File"
-msgstr "Archivo origen"
+msgstr "Forrásfájl"
 
 #. Template: AdminImportExport
 msgid "Success"
-msgstr "Éxito"
+msgstr "Sikeres"
 
 #. Template: AdminImportExport
 msgid "Failed"
-msgstr "Fracasado"
+msgstr "Sikertelen"
 
 #. Template: AdminImportExport
 msgid "Duplicate names"
-msgstr "Nombres duplicados"
+msgstr "Nevek kettőzése"
 
 #. Template: AdminImportExport
 msgid "Last processed line number of import file"
-msgstr "Última número de línea procesada del archivo importar"
+msgstr "Az importfájl utolsó feldolgozott sorszáma"
 
 #. Template: AdminImportExport
 msgid "Ok"
-msgstr "Ok"
+msgstr "OK"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "No object backend found!"
@@ -220,12 +220,12 @@ msgstr ""
 
 #. SysConfig
 msgid "Format backend module registration for the import/export module."
-msgstr "Registro de módulo de formato backend para el módulo import/export."
+msgstr "Formátum háttérprogram modul regisztráció az importálás/exportálás modulhoz."
 
 #. SysConfig
 msgid "Import and export object information."
-msgstr "Importar y exportar información de objetos."
+msgstr "Objektuminformációk importálása és exportálása."
 
 #. SysConfig
 msgid "Import/Export"
-msgstr "Importar/Exportar"
+msgstr "Importálás/exportálás"

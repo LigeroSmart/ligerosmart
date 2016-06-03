@@ -6,7 +6,7 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package Kernel::Language::cs_ImportExport;
+package Kernel::Language::sv_ImportExport;
 
 use strict;
 use warnings;
@@ -16,43 +16,43 @@ sub Data {
     my $Self = shift;
 
     # Template: AAAImportExport
-    $Self->{Translation}->{'Add mapping template'} = 'Nová šablona zobrazení';
-    $Self->{Translation}->{'Charset'} = 'Znaková sada';
-    $Self->{Translation}->{'Colon (:)'} = 'Dvojtečka (:)';
-    $Self->{Translation}->{'Column'} = 'Sloupec';
-    $Self->{Translation}->{'Column Separator'} = 'Oddělovač Sloupců';
-    $Self->{Translation}->{'Dot (.)'} = 'Tečka (.)';
-    $Self->{Translation}->{'Semicolon (;)'} = 'Středník (;)';
-    $Self->{Translation}->{'Tabulator (TAB)'} = 'Tabulátor (TAB)';
+    $Self->{Translation}->{'Add mapping template'} = '';
+    $Self->{Translation}->{'Charset'} = 'Teckenkodning';
+    $Self->{Translation}->{'Colon (:)'} = 'Kolon (:)';
+    $Self->{Translation}->{'Column'} = 'Kolumn';
+    $Self->{Translation}->{'Column Separator'} = 'Kolumn-avskiljare';
+    $Self->{Translation}->{'Dot (.)'} = 'Punkt (.)';
+    $Self->{Translation}->{'Semicolon (;)'} = 'Semikolon (;)';
+    $Self->{Translation}->{'Tabulator (TAB)'} = '';
     $Self->{Translation}->{'Include Column Headers'} = '';
-    $Self->{Translation}->{'Import summary for'} = '';
-    $Self->{Translation}->{'Imported records'} = '';
-    $Self->{Translation}->{'Exported records'} = '';
-    $Self->{Translation}->{'Records'} = 'Záznamů';
-    $Self->{Translation}->{'Skipped'} = 'Přeskočeno';
+    $Self->{Translation}->{'Import summary for'} = 'Importsummering för';
+    $Self->{Translation}->{'Imported records'} = 'Importerade poster';
+    $Self->{Translation}->{'Exported records'} = 'Exporterade poster';
+    $Self->{Translation}->{'Records'} = 'Poster';
+    $Self->{Translation}->{'Skipped'} = 'Hoppade över';
 
     # Template: AdminImportExport
-    $Self->{Translation}->{'Import/Export Management'} = 'Import/Export Správa';
-    $Self->{Translation}->{'Create a template to import and export object information.'} = '';
-    $Self->{Translation}->{'Start Import'} = 'Zahájit Import';
-    $Self->{Translation}->{'Start Export'} = 'Zahájit Export';
+    $Self->{Translation}->{'Import/Export Management'} = 'Hantering av Import/Export';
+    $Self->{Translation}->{'Create a template to import and export object information.'} = 'Skapa en mall för att importera och exportera objektinformation.';
+    $Self->{Translation}->{'Start Import'} = 'Starta import';
+    $Self->{Translation}->{'Start Export'} = 'Starta export';
     $Self->{Translation}->{'Step 1 of 5 - Edit common information'} = '';
-    $Self->{Translation}->{'Name is required!'} = '';
-    $Self->{Translation}->{'Object is required!'} = '';
-    $Self->{Translation}->{'Format is required!'} = '';
+    $Self->{Translation}->{'Name is required!'} = 'Namn krävs!';
+    $Self->{Translation}->{'Object is required!'} = 'Objekt krävs!';
+    $Self->{Translation}->{'Format is required!'} = 'Format krävs!';
     $Self->{Translation}->{'Step 2 of 5 - Edit object information'} = '';
     $Self->{Translation}->{'Step 3 of 5'} = '';
-    $Self->{Translation}->{'is required!'} = '';
+    $Self->{Translation}->{'is required!'} = 'krävs!';
     $Self->{Translation}->{'Step 4 of 5 - Edit mapping information'} = '';
     $Self->{Translation}->{'No map elements found.'} = '';
     $Self->{Translation}->{'Add Mapping Element'} = '';
     $Self->{Translation}->{'Step 5 of 5 - Edit search information'} = '';
-    $Self->{Translation}->{'Restrict export per search'} = 'Omezit Export vyhledáváním';
-    $Self->{Translation}->{'Import information'} = 'Informace o Importu';
-    $Self->{Translation}->{'Source File'} = 'Zdrojový Soubor';
-    $Self->{Translation}->{'Success'} = 'Úspěšně';
-    $Self->{Translation}->{'Failed'} = 'Neúspěšně';
-    $Self->{Translation}->{'Duplicate names'} = 'Duplicitní jména';
+    $Self->{Translation}->{'Restrict export per search'} = '';
+    $Self->{Translation}->{'Import information'} = 'Importinformation';
+    $Self->{Translation}->{'Source File'} = 'Källfil';
+    $Self->{Translation}->{'Success'} = 'Lyckad';
+    $Self->{Translation}->{'Failed'} = 'Misslyckad';
+    $Self->{Translation}->{'Duplicate names'} = 'Upprepa namn';
     $Self->{Translation}->{'Last processed line number of import file'} = '';
     $Self->{Translation}->{'Ok'} = 'Ok';
 
@@ -75,7 +75,7 @@ sub Data {
     # SysConfig
     $Self->{Translation}->{'Format backend module registration for the import/export module.'} =
         '';
-    $Self->{Translation}->{'Import and export object information.'} = '';
+    $Self->{Translation}->{'Import and export object information.'} = 'Importera och exportera objektinformation.';
     $Self->{Translation}->{'Import/Export'} = 'Import/Export';
 
 }

@@ -4,9 +4,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-09-03 16:12+0000\n"
-"Last-Translator: Howard Fung <howardlababy@gmail.com>\n"
+"POT-Creation-Date: 2016-06-03 20:11+0000\n"
+"PO-Revision-Date: 2016-06-03 18:14+0000\n"
+"Last-Translator: Udo Bretz\n"
 "Language-Team: Chinese (Taiwan) (http://www.transifex.com/otrs/OTRS/language/zh_TW/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -87,12 +87,8 @@ msgid "Start Export"
 msgstr "開始導出"
 
 #. Template: AdminImportExport
-msgid "Step"
-msgstr "步驟"
-
-#. Template: AdminImportExport
-msgid "Edit common information"
-msgstr "編輯共用信息"
+msgid "Step 1 of 5 - Edit common information"
+msgstr ""
 
 #. Template: AdminImportExport
 msgid "Name is required!"
@@ -107,20 +103,20 @@ msgid "Format is required!"
 msgstr "格式是必需的"
 
 #. Template: AdminImportExport
-msgid "Edit object information"
-msgstr "編輯對象信息"
+msgid "Step 2 of 5 - Edit object information"
+msgstr ""
 
 #. Template: AdminImportExport
-msgid "Edit format information"
-msgstr "編輯格式信息"
+msgid "Step 3 of 5"
+msgstr ""
 
 #. Template: AdminImportExport
 msgid "is required!"
 msgstr "必需的"
 
 #. Template: AdminImportExport
-msgid "Edit mapping information"
-msgstr "編輯映射信息"
+msgid "Step 4 of 5 - Edit mapping information"
+msgstr ""
 
 #. Template: AdminImportExport
 msgid "No map elements found."
@@ -131,8 +127,8 @@ msgid "Add Mapping Element"
 msgstr "添加映射字段"
 
 #. Template: AdminImportExport
-msgid "Edit search information"
-msgstr "編輯搜索信息"
+msgid "Step 5 of 5 - Edit search information"
+msgstr ""
 
 #. Template: AdminImportExport
 msgid "Restrict export per search"
@@ -165,6 +161,62 @@ msgstr "導入文件最後處理的行數"
 #. Template: AdminImportExport
 msgid "Ok"
 msgstr "Ok"
+
+#. Perl Module: Kernel/Modules/AdminImportExport.pm
+msgid "No object backend found!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AdminImportExport.pm
+msgid "No format backend found!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AdminImportExport.pm
+msgid "Template not found!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AdminImportExport.pm
+msgid "Can't insert/update template!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AdminImportExport.pm
+msgid "Needed TemplateID!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AdminImportExport.pm
+msgid "Error occurred. Import impossible! See Syslog for details."
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AdminImportExport.pm
+msgid "Error occurred. Export impossible! See Syslog for details."
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AdminImportExport.pm
+msgid "number"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AdminImportExport.pm
+msgid "number bigger than zero"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AdminImportExport.pm
+msgid "integer"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AdminImportExport.pm
+msgid "integer bigger than zero"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AdminImportExport.pm
+msgid "Element required, please insert data"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AdminImportExport.pm
+msgid "Invalid data, please insert a valid %s"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AdminImportExport.pm
+msgid "Format not found!"
+msgstr ""
 
 #. SysConfig
 msgid "Format backend module registration for the import/export module."

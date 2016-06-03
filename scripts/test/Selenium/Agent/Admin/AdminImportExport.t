@@ -100,7 +100,8 @@ $Selenium->RunTest(
         $Selenium->find_element( "table tbody tr td", 'css' );
 
         # click on 'Add template'
-        $Selenium->find_element("//a[contains(\@href, \'Action=AdminImportExport;Subaction=TemplateEdit' )]")->VerifiedClick();
+        $Selenium->find_element("//a[contains(\@href, \'Action=AdminImportExport;Subaction=TemplateEdit' )]")
+            ->VerifiedClick();
 
         # check and input step 1 of 5 screen
         for my $StepOneID (
@@ -269,7 +270,7 @@ $Selenium->RunTest(
         # create test Exported file to a system
         my $ExportFileName = "ITSMExport" . $Helper->GetRandomID() . ".csv";
         my $ExportLocation = $ConfigObject->Get('Home') . "/var/tmp/" . $ExportFileName;
-        my $Success = $MainObject->FileWrite(
+        my $Success        = $MainObject->FileWrite(
             Location   => $ExportLocation,
             Content    => \$ExportResultRef->{DestinationContent}->[0],
             Mode       => 'utf8',
@@ -300,7 +301,9 @@ $Selenium->RunTest(
 
         # navigate to imported test created ConfigItem and verify it
         my $ImportedConfigItemID = $ConfigItemID + 1;
-        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentITSMConfigItemZoom;ConfigItemID=$ImportedConfigItemID");
+        $Selenium->VerifiedGet(
+            "${ScriptAlias}index.pl?Action=AgentITSMConfigItemZoom;ConfigItemID=$ImportedConfigItemID"
+        );
         $Self->True(
             index( $Selenium->get_page_source(), $VersionName ) > -1,
             "Test ConfigItem name $VersionName is found",

@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ImportExport\n"
-"POT-Creation-Date: 2016-05-24 22:04+0000\n"
+"POT-Creation-Date: 2016-06-03 20:11+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -83,11 +83,7 @@ msgid "Start Export"
 msgstr ""
 
 #. Template: AdminImportExport
-msgid "Step"
-msgstr ""
-
-#. Template: AdminImportExport
-msgid "Edit common information"
+msgid "Step 1 of 5 - Edit common information"
 msgstr ""
 
 #. Template: AdminImportExport
@@ -103,11 +99,11 @@ msgid "Format is required!"
 msgstr ""
 
 #. Template: AdminImportExport
-msgid "Edit object information"
+msgid "Step 2 of 5 - Edit object information"
 msgstr ""
 
 #. Template: AdminImportExport
-msgid "Edit format information"
+msgid "Step 3 of 5"
 msgstr ""
 
 #. Template: AdminImportExport
@@ -115,7 +111,7 @@ msgid "is required!"
 msgstr ""
 
 #. Template: AdminImportExport
-msgid "Edit mapping information"
+msgid "Step 4 of 5 - Edit mapping information"
 msgstr ""
 
 #. Template: AdminImportExport
@@ -127,7 +123,7 @@ msgid "Add Mapping Element"
 msgstr ""
 
 #. Template: AdminImportExport
-msgid "Edit search information"
+msgid "Step 5 of 5 - Edit search information"
 msgstr ""
 
 #. Template: AdminImportExport
@@ -160,6 +156,62 @@ msgstr ""
 
 #. Template: AdminImportExport
 msgid "Ok"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AdminImportExport.pm
+msgid "No object backend found!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AdminImportExport.pm
+msgid "No format backend found!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AdminImportExport.pm
+msgid "Template not found!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AdminImportExport.pm
+msgid "Can't insert/update template!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AdminImportExport.pm
+msgid "Needed TemplateID!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AdminImportExport.pm
+msgid "Error occurred. Import impossible! See Syslog for details."
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AdminImportExport.pm
+msgid "Error occurred. Export impossible! See Syslog for details."
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AdminImportExport.pm
+msgid "number"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AdminImportExport.pm
+msgid "number bigger than zero"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AdminImportExport.pm
+msgid "integer"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AdminImportExport.pm
+msgid "integer bigger than zero"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AdminImportExport.pm
+msgid "Element required, please insert data"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AdminImportExport.pm
+msgid "Invalid data, please insert a valid %s"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AdminImportExport.pm
+msgid "Format not found!"
 msgstr ""
 
 #. SysConfig

@@ -36,18 +36,17 @@ sub Data {
     $Self->{Translation}->{'Create a template to import and export object information.'} = 'Créer un modèle pour importer et exporter les informations d\'objet';
     $Self->{Translation}->{'Start Import'} = 'Démarrer Import';
     $Self->{Translation}->{'Start Export'} = 'Démarrer Export';
-    $Self->{Translation}->{'Step'} = 'Etape';
-    $Self->{Translation}->{'Edit common information'} = 'Éditer les informations communes';
+    $Self->{Translation}->{'Step 1 of 5 - Edit common information'} = '';
     $Self->{Translation}->{'Name is required!'} = 'Un Nom est requis!';
     $Self->{Translation}->{'Object is required!'} = 'Un Objet est requis!';
     $Self->{Translation}->{'Format is required!'} = 'Un Format est requis!';
-    $Self->{Translation}->{'Edit object information'} = 'Éditer les informations de l\'objet';
-    $Self->{Translation}->{'Edit format information'} = 'Éditer les informations de format';
+    $Self->{Translation}->{'Step 2 of 5 - Edit object information'} = '';
+    $Self->{Translation}->{'Step 3 of 5'} = '';
     $Self->{Translation}->{'is required!'} = 'est requis !';
-    $Self->{Translation}->{'Edit mapping information'} = 'Éditer les informations de mappage';
+    $Self->{Translation}->{'Step 4 of 5 - Edit mapping information'} = '';
     $Self->{Translation}->{'No map elements found.'} = 'Aucun élément de mappage trouvé';
     $Self->{Translation}->{'Add Mapping Element'} = 'Ajouter un élément de mappage';
-    $Self->{Translation}->{'Edit search information'} = 'Éditer les informations de recherche';
+    $Self->{Translation}->{'Step 5 of 5 - Edit search information'} = '';
     $Self->{Translation}->{'Restrict export per search'} = 'Restreindre l\'export par recherche';
     $Self->{Translation}->{'Import information'} = 'Informations d\'import';
     $Self->{Translation}->{'Source File'} = 'Fichier Source';
@@ -56,6 +55,22 @@ sub Data {
     $Self->{Translation}->{'Duplicate names'} = 'Noms en double';
     $Self->{Translation}->{'Last processed line number of import file'} = 'Numéro de la dernière ligne traitée dans le fichier d\'import';
     $Self->{Translation}->{'Ok'} = 'Ok';
+
+    # Perl Module: Kernel/Modules/AdminImportExport.pm
+    $Self->{Translation}->{'No object backend found!'} = '';
+    $Self->{Translation}->{'No format backend found!'} = '';
+    $Self->{Translation}->{'Template not found!'} = '';
+    $Self->{Translation}->{'Can\'t insert/update template!'} = '';
+    $Self->{Translation}->{'Needed TemplateID!'} = '';
+    $Self->{Translation}->{'Error occurred. Import impossible! See Syslog for details.'} = '';
+    $Self->{Translation}->{'Error occurred. Export impossible! See Syslog for details.'} = '';
+    $Self->{Translation}->{'number'} = '';
+    $Self->{Translation}->{'number bigger than zero'} = '';
+    $Self->{Translation}->{'integer'} = '';
+    $Self->{Translation}->{'integer bigger than zero'} = '';
+    $Self->{Translation}->{'Element required, please insert data'} = '';
+    $Self->{Translation}->{'Invalid data, please insert a valid %s'} = '';
+    $Self->{Translation}->{'Format not found!'} = '';
 
     # SysConfig
     $Self->{Translation}->{'Format backend module registration for the import/export module.'} =

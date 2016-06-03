@@ -1,90 +1,90 @@
 # 
 # Translators:
-# Duilio Poggi Oneto <duiliopoggio@gmail.com>, 2015
+# Милорад Јовановић <j.milorad@gmail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2016-06-03 20:11+0000\n"
 "PO-Revision-Date: 2016-06-03 18:14+0000\n"
 "Last-Translator: Udo Bretz\n"
-"Language-Team: Spanish (http://www.transifex.com/otrs/OTRS/language/es/)\n"
+"Language-Team: Serbian (http://www.transifex.com/otrs/OTRS/language/sr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: es\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: sr\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #. Template: AAAImportExport
 msgid "Add mapping template"
-msgstr "Añadir plantilla de mapeo"
+msgstr "Додај шаблон за мапирање"
 
 #. Template: AAAImportExport
 msgid "Charset"
-msgstr "Juego de caracteres"
+msgstr "Карактерсет"
 
 #. Template: AAAImportExport
 msgid "Colon (:)"
-msgstr "Dos puntos (:)"
+msgstr "Двотачка (:)"
 
 #. Template: AAAImportExport
 msgid "Column"
-msgstr "Columna"
+msgstr "Колона"
 
 #. Template: AAAImportExport
 msgid "Column Separator"
-msgstr "Separador de Columna"
+msgstr "Сепаратор колона"
 
 #. Template: AAAImportExport
 msgid "Dot (.)"
-msgstr "Punto (.)"
+msgstr "Тачка (.)"
 
 #. Template: AAAImportExport
 msgid "Semicolon (;)"
-msgstr "Punto y Coma (;)"
+msgstr "Тачка и запета (;)"
 
 #. Template: AAAImportExport
 msgid "Tabulator (TAB)"
-msgstr "Tabulador (TAB)"
+msgstr "Табулатор (TAB)"
 
 #. Template: AAAImportExport
 msgid "Include Column Headers"
-msgstr "Incluir Cabecera de la Columna"
+msgstr "Укључи наслове колона"
 
 #. Template: AAAImportExport
 msgid "Import summary for"
-msgstr "Importar resumen para"
+msgstr "Резиме увоза за"
 
 #. Template: AAAImportExport
 msgid "Imported records"
-msgstr "Registros importados"
+msgstr "Увезени записи"
 
 #. Template: AAAImportExport
 msgid "Exported records"
-msgstr "Registros exportados"
+msgstr "Извезени записи"
 
 #. Template: AAAImportExport
 msgid "Records"
-msgstr "Registros"
+msgstr "Записи"
 
 #. Template: AAAImportExport
 msgid "Skipped"
-msgstr "Saltado"
+msgstr "Прескочено"
 
 #. Template: AdminImportExport
 msgid "Import/Export Management"
-msgstr "Gestión de Importación/Exportación"
+msgstr "Увоз/Извоз управљање"
 
 #. Template: AdminImportExport
 msgid "Create a template to import and export object information."
-msgstr "Crear una plantilla para importar y exportar informacion del objeto."
+msgstr "Креирај шаблон за увоз и извоз информација о објекту."
 
 #. Template: AdminImportExport
 msgid "Start Import"
-msgstr "Iniciar Importación"
+msgstr "Почни увоз"
 
 #. Template: AdminImportExport
 msgid "Start Export"
-msgstr "Iniciar Exportación"
+msgstr "Почни извоз"
 
 #. Template: AdminImportExport
 msgid "Step 1 of 5 - Edit common information"
@@ -92,15 +92,15 @@ msgstr ""
 
 #. Template: AdminImportExport
 msgid "Name is required!"
-msgstr "El nombre es requerido"
+msgstr "Име је обавезно!"
 
 #. Template: AdminImportExport
 msgid "Object is required!"
-msgstr "¡Debe especificar Objeto!"
+msgstr "Објект је обавезан!"
 
 #. Template: AdminImportExport
 msgid "Format is required!"
-msgstr "¡Debe especificar Formato!"
+msgstr "Формат је обавезан!"
 
 #. Template: AdminImportExport
 msgid "Step 2 of 5 - Edit object information"
@@ -112,7 +112,7 @@ msgstr ""
 
 #. Template: AdminImportExport
 msgid "is required!"
-msgstr "¡es requerido!"
+msgstr "је обавезно!"
 
 #. Template: AdminImportExport
 msgid "Step 4 of 5 - Edit mapping information"
@@ -120,11 +120,11 @@ msgstr ""
 
 #. Template: AdminImportExport
 msgid "No map elements found."
-msgstr "No se encontraron elementos de mapeo."
+msgstr "Ниједан елемент мапе није пронађен."
 
 #. Template: AdminImportExport
 msgid "Add Mapping Element"
-msgstr "Añadir Mapeo de Elementos"
+msgstr "Додај елемент за мапирање"
 
 #. Template: AdminImportExport
 msgid "Step 5 of 5 - Edit search information"
@@ -132,35 +132,35 @@ msgstr ""
 
 #. Template: AdminImportExport
 msgid "Restrict export per search"
-msgstr "Restringir exportación por búsqueda"
+msgstr "Ограничење извоза по претрази"
 
 #. Template: AdminImportExport
 msgid "Import information"
-msgstr "Importar información"
+msgstr "Увоз информација"
 
 #. Template: AdminImportExport
 msgid "Source File"
-msgstr "Archivo origen"
+msgstr "Изворна датотека"
 
 #. Template: AdminImportExport
 msgid "Success"
-msgstr "Éxito"
+msgstr "Успешно"
 
 #. Template: AdminImportExport
 msgid "Failed"
-msgstr "Fracasado"
+msgstr "Неуспешно"
 
 #. Template: AdminImportExport
 msgid "Duplicate names"
-msgstr "Nombres duplicados"
+msgstr "Дупликат имена"
 
 #. Template: AdminImportExport
 msgid "Last processed line number of import file"
-msgstr "Última número de línea procesada del archivo importar"
+msgstr "Број последње обрађене линије увезене датотеке"
 
 #. Template: AdminImportExport
 msgid "Ok"
-msgstr "Ok"
+msgstr "У реду"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "No object backend found!"
@@ -220,12 +220,12 @@ msgstr ""
 
 #. SysConfig
 msgid "Format backend module registration for the import/export module."
-msgstr "Registro de módulo de formato backend para el módulo import/export."
+msgstr "Формат регистрације „backend” модула за увоз/извоз модул."
 
 #. SysConfig
 msgid "Import and export object information."
-msgstr "Importar y exportar información de objetos."
+msgstr "Информације о увозу и извозу објеката"
 
 #. SysConfig
 msgid "Import/Export"
-msgstr "Importar/Exportar"
+msgstr "Увоз/Извоз"

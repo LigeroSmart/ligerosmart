@@ -6,7 +6,7 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package Kernel::Language::cs_ImportExport;
+package Kernel::Language::id_ImportExport;
 
 use strict;
 use warnings;
@@ -16,26 +16,26 @@ sub Data {
     my $Self = shift;
 
     # Template: AAAImportExport
-    $Self->{Translation}->{'Add mapping template'} = 'Nová šablona zobrazení';
-    $Self->{Translation}->{'Charset'} = 'Znaková sada';
-    $Self->{Translation}->{'Colon (:)'} = 'Dvojtečka (:)';
-    $Self->{Translation}->{'Column'} = 'Sloupec';
-    $Self->{Translation}->{'Column Separator'} = 'Oddělovač Sloupců';
-    $Self->{Translation}->{'Dot (.)'} = 'Tečka (.)';
-    $Self->{Translation}->{'Semicolon (;)'} = 'Středník (;)';
-    $Self->{Translation}->{'Tabulator (TAB)'} = 'Tabulátor (TAB)';
+    $Self->{Translation}->{'Add mapping template'} = 'Tilføj Mapping-Template';
+    $Self->{Translation}->{'Charset'} = 'Tegnsæt';
+    $Self->{Translation}->{'Colon (:)'} = 'Kolon (:)';
+    $Self->{Translation}->{'Column'} = 'Kolonne';
+    $Self->{Translation}->{'Column Separator'} = '';
+    $Self->{Translation}->{'Dot (.)'} = 'Punktum (.)';
+    $Self->{Translation}->{'Semicolon (;)'} = 'Semikolon (;)';
+    $Self->{Translation}->{'Tabulator (TAB)'} = 'Tabulator (TAB)';
     $Self->{Translation}->{'Include Column Headers'} = '';
     $Self->{Translation}->{'Import summary for'} = '';
     $Self->{Translation}->{'Imported records'} = '';
     $Self->{Translation}->{'Exported records'} = '';
-    $Self->{Translation}->{'Records'} = 'Záznamů';
-    $Self->{Translation}->{'Skipped'} = 'Přeskočeno';
+    $Self->{Translation}->{'Records'} = '';
+    $Self->{Translation}->{'Skipped'} = '';
 
     # Template: AdminImportExport
-    $Self->{Translation}->{'Import/Export Management'} = 'Import/Export Správa';
+    $Self->{Translation}->{'Import/Export Management'} = 'Import/Ekport styring';
     $Self->{Translation}->{'Create a template to import and export object information.'} = '';
-    $Self->{Translation}->{'Start Import'} = 'Zahájit Import';
-    $Self->{Translation}->{'Start Export'} = 'Zahájit Export';
+    $Self->{Translation}->{'Start Import'} = 'Start import';
+    $Self->{Translation}->{'Start Export'} = 'Start ekport';
     $Self->{Translation}->{'Step 1 of 5 - Edit common information'} = '';
     $Self->{Translation}->{'Name is required!'} = '';
     $Self->{Translation}->{'Object is required!'} = '';
@@ -47,12 +47,12 @@ sub Data {
     $Self->{Translation}->{'No map elements found.'} = '';
     $Self->{Translation}->{'Add Mapping Element'} = '';
     $Self->{Translation}->{'Step 5 of 5 - Edit search information'} = '';
-    $Self->{Translation}->{'Restrict export per search'} = 'Omezit Export vyhledáváním';
-    $Self->{Translation}->{'Import information'} = 'Informace o Importu';
-    $Self->{Translation}->{'Source File'} = 'Zdrojový Soubor';
-    $Self->{Translation}->{'Success'} = 'Úspěšně';
-    $Self->{Translation}->{'Failed'} = 'Neúspěšně';
-    $Self->{Translation}->{'Duplicate names'} = 'Duplicitní jména';
+    $Self->{Translation}->{'Restrict export per search'} = 'Begræns ekport pr. søgning';
+    $Self->{Translation}->{'Import information'} = 'Import information';
+    $Self->{Translation}->{'Source File'} = 'Kilde fil';
+    $Self->{Translation}->{'Success'} = '';
+    $Self->{Translation}->{'Failed'} = '';
+    $Self->{Translation}->{'Duplicate names'} = '';
     $Self->{Translation}->{'Last processed line number of import file'} = '';
     $Self->{Translation}->{'Ok'} = 'Ok';
 
@@ -76,7 +76,7 @@ sub Data {
     $Self->{Translation}->{'Format backend module registration for the import/export module.'} =
         '';
     $Self->{Translation}->{'Import and export object information.'} = '';
-    $Self->{Translation}->{'Import/Export'} = 'Import/Export';
+    $Self->{Translation}->{'Import/Export'} = 'Import/Ekport';
 
 }
 

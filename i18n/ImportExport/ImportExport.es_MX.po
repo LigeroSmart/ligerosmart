@@ -1,34 +1,34 @@
 # 
 # Translators:
-# Duilio Poggi Oneto <duiliopoggio@gmail.com>, 2015
+# Luis Armando Medina <lamedina@gmail.com>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2016-06-03 20:11+0000\n"
 "PO-Revision-Date: 2016-06-03 18:14+0000\n"
 "Last-Translator: Udo Bretz\n"
-"Language-Team: Spanish (http://www.transifex.com/otrs/OTRS/language/es/)\n"
+"Language-Team: Spanish (Mexico) (http://www.transifex.com/otrs/OTRS/language/es_MX/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: es\n"
+"Language: es_MX\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. Template: AAAImportExport
 msgid "Add mapping template"
-msgstr "Añadir plantilla de mapeo"
+msgstr "Agregar plantilla de mapeo"
 
 #. Template: AAAImportExport
 msgid "Charset"
-msgstr "Juego de caracteres"
+msgstr "Conjunto de Caracteres"
 
 #. Template: AAAImportExport
 msgid "Colon (:)"
-msgstr "Dos puntos (:)"
+msgstr "Dos Puntos (:)"
 
 #. Template: AAAImportExport
 msgid "Column"
-msgstr "Columna"
+msgstr "Calumna"
 
 #. Template: AAAImportExport
 msgid "Column Separator"
@@ -40,7 +40,7 @@ msgstr "Punto (.)"
 
 #. Template: AAAImportExport
 msgid "Semicolon (;)"
-msgstr "Punto y Coma (;)"
+msgstr "Punto y coma (;)"
 
 #. Template: AAAImportExport
 msgid "Tabulator (TAB)"
@@ -48,7 +48,7 @@ msgstr "Tabulador (TAB)"
 
 #. Template: AAAImportExport
 msgid "Include Column Headers"
-msgstr "Incluir Cabecera de la Columna"
+msgstr "Incluir Cabecera de Columnas"
 
 #. Template: AAAImportExport
 msgid "Import summary for"
@@ -68,7 +68,7 @@ msgstr "Registros"
 
 #. Template: AAAImportExport
 msgid "Skipped"
-msgstr "Saltado"
+msgstr "Omitido"
 
 #. Template: AdminImportExport
 msgid "Import/Export Management"
@@ -76,7 +76,7 @@ msgstr "Gestión de Importación/Exportación"
 
 #. Template: AdminImportExport
 msgid "Create a template to import and export object information."
-msgstr "Crear una plantilla para importar y exportar informacion del objeto."
+msgstr "Crear una plantilla para importar y exportar información de objetos."
 
 #. Template: AdminImportExport
 msgid "Start Import"
@@ -92,15 +92,15 @@ msgstr ""
 
 #. Template: AdminImportExport
 msgid "Name is required!"
-msgstr "El nombre es requerido"
+msgstr "Es requerido un nombre!"
 
 #. Template: AdminImportExport
 msgid "Object is required!"
-msgstr "¡Debe especificar Objeto!"
+msgstr "Es requerido un objeto!"
 
 #. Template: AdminImportExport
 msgid "Format is required!"
-msgstr "¡Debe especificar Formato!"
+msgstr "Es requerido un formato."
 
 #. Template: AdminImportExport
 msgid "Step 2 of 5 - Edit object information"
@@ -112,7 +112,7 @@ msgstr ""
 
 #. Template: AdminImportExport
 msgid "is required!"
-msgstr "¡es requerido!"
+msgstr "es requerido!"
 
 #. Template: AdminImportExport
 msgid "Step 4 of 5 - Edit mapping information"
@@ -120,11 +120,11 @@ msgstr ""
 
 #. Template: AdminImportExport
 msgid "No map elements found."
-msgstr "No se encontraron elementos de mapeo."
+msgstr "No se han encontrado mapas."
 
 #. Template: AdminImportExport
 msgid "Add Mapping Element"
-msgstr "Añadir Mapeo de Elementos"
+msgstr "Agregar un Elemento de Mapeo"
 
 #. Template: AdminImportExport
 msgid "Step 5 of 5 - Edit search information"
@@ -132,15 +132,15 @@ msgstr ""
 
 #. Template: AdminImportExport
 msgid "Restrict export per search"
-msgstr "Restringir exportación por búsqueda"
+msgstr "Restringir la exportación a la búsqueda"
 
 #. Template: AdminImportExport
 msgid "Import information"
-msgstr "Importar información"
+msgstr "Información de importación"
 
 #. Template: AdminImportExport
 msgid "Source File"
-msgstr "Archivo origen"
+msgstr "Archivo Fuente"
 
 #. Template: AdminImportExport
 msgid "Success"
@@ -148,7 +148,7 @@ msgstr "Éxito"
 
 #. Template: AdminImportExport
 msgid "Failed"
-msgstr "Fracasado"
+msgstr "Falló"
 
 #. Template: AdminImportExport
 msgid "Duplicate names"
@@ -156,11 +156,11 @@ msgstr "Nombres duplicados"
 
 #. Template: AdminImportExport
 msgid "Last processed line number of import file"
-msgstr "Última número de línea procesada del archivo importar"
+msgstr "Último número de línea procesada del archivo a importar"
 
 #. Template: AdminImportExport
 msgid "Ok"
-msgstr "Ok"
+msgstr "Aceptar"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "No object backend found!"
@@ -220,11 +220,11 @@ msgstr ""
 
 #. SysConfig
 msgid "Format backend module registration for the import/export module."
-msgstr "Registro de módulo de formato backend para el módulo import/export."
+msgstr "Formato del módulo administrativo de registro para el módulo de importación/exportación."
 
 #. SysConfig
 msgid "Import and export object information."
-msgstr "Importar y exportar información de objetos."
+msgstr "Importar y exportar información de un objeto."
 
 #. SysConfig
 msgid "Import/Export"

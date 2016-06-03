@@ -1577,10 +1577,12 @@ sub _MaskTemplateEdit2 {
     $JSClass{Integer}               = 'Validate_NumberInteger';
     $JSClass{IntegerBiggerThanZero} = 'Validate_NumberIntegerBiggerThanZero';
 
-    $PredefinedErrorMessages{Number}                = $LayoutObject->{LanguageObject}->Translate('number');
-    $PredefinedErrorMessages{NumberBiggerThanZero}  = $LayoutObject->{LanguageObject}->Translate('number bigger than zero');
-    $PredefinedErrorMessages{Integer}               = $LayoutObject->{LanguageObject}->Translate('integer');
-    $PredefinedErrorMessages{IntegerBiggerThanZero} = $LayoutObject->{LanguageObject}->Translate('integer bigger than zero');
+    $PredefinedErrorMessages{Number} = $LayoutObject->{LanguageObject}->Translate('number');
+    $PredefinedErrorMessages{NumberBiggerThanZero}
+        = $LayoutObject->{LanguageObject}->Translate('number bigger than zero');
+    $PredefinedErrorMessages{Integer} = $LayoutObject->{LanguageObject}->Translate('integer');
+    $PredefinedErrorMessages{IntegerBiggerThanZero}
+        = $LayoutObject->{LanguageObject}->Translate('integer bigger than zero');
 
     # output object attributes
     for my $Item ( @{$ObjectAttributeList} ) {
@@ -1593,14 +1595,14 @@ sub _MaskTemplateEdit2 {
 
         if ( $Item->{Input}->{Required} ) {
             $Class        = 'Validate_Required';
-            $ErrorMessage = $LayoutObject->{LanguageObject}->Translate( 'Element required, please insert data' );
+            $ErrorMessage = $LayoutObject->{LanguageObject}->Translate('Element required, please insert data');
         }
 
         if ( $Item->{Input}->{DataType} ) {
             $Class .= " $JSClass{ $Item->{Input}->{DataType} }";
             $ErrorMessage = $LayoutObject->{LanguageObject}->Translate(
                 'Invalid data, please insert a valid %s',
-                $PredefinedErrorMessages{$Item->{Input}->{DataType}}
+                $PredefinedErrorMessages{ $Item->{Input}->{DataType} }
             );
         }
 

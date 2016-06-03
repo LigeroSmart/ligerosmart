@@ -1,90 +1,92 @@
 # 
 # Translators:
-# Duilio Poggi Oneto <duiliopoggio@gmail.com>, 2015
+# Alexandru <lec@bibi.ro>, 2016
+# Dragos Ungureanu <dragos@voipmonitoring.net>, 2015
+# Toader Lucia Andreea <lucia.toader@qwerty.solutions>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2016-06-03 20:11+0000\n"
 "PO-Revision-Date: 2016-06-03 18:14+0000\n"
 "Last-Translator: Udo Bretz\n"
-"Language-Team: Spanish (http://www.transifex.com/otrs/OTRS/language/es/)\n"
+"Language-Team: Romanian (http://www.transifex.com/otrs/OTRS/language/ro/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: es\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: ro\n"
+"Plural-Forms: nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?2:1));\n"
 
 #. Template: AAAImportExport
 msgid "Add mapping template"
-msgstr "Añadir plantilla de mapeo"
+msgstr "Adaugă șablon asocieri"
 
 #. Template: AAAImportExport
 msgid "Charset"
-msgstr "Juego de caracteres"
+msgstr "Set de caractere"
 
 #. Template: AAAImportExport
 msgid "Colon (:)"
-msgstr "Dos puntos (:)"
+msgstr "Două puncte (:)"
 
 #. Template: AAAImportExport
 msgid "Column"
-msgstr "Columna"
+msgstr "Coloană"
 
 #. Template: AAAImportExport
 msgid "Column Separator"
-msgstr "Separador de Columna"
+msgstr "Separator de coloană"
 
 #. Template: AAAImportExport
 msgid "Dot (.)"
-msgstr "Punto (.)"
+msgstr "Punct (.)"
 
 #. Template: AAAImportExport
 msgid "Semicolon (;)"
-msgstr "Punto y Coma (;)"
+msgstr "Punct și virgulă (;)"
 
 #. Template: AAAImportExport
 msgid "Tabulator (TAB)"
-msgstr "Tabulador (TAB)"
+msgstr "Tabulator (TAB)"
 
 #. Template: AAAImportExport
 msgid "Include Column Headers"
-msgstr "Incluir Cabecera de la Columna"
+msgstr "Include capul de tabel"
 
 #. Template: AAAImportExport
 msgid "Import summary for"
-msgstr "Importar resumen para"
+msgstr "Importă sumarul pentru"
 
 #. Template: AAAImportExport
 msgid "Imported records"
-msgstr "Registros importados"
+msgstr "Înregistrări importate"
 
 #. Template: AAAImportExport
 msgid "Exported records"
-msgstr "Registros exportados"
+msgstr "Înregistrări exportate"
 
 #. Template: AAAImportExport
 msgid "Records"
-msgstr "Registros"
+msgstr "Înregistrări"
 
 #. Template: AAAImportExport
 msgid "Skipped"
-msgstr "Saltado"
+msgstr "Sărit"
 
 #. Template: AdminImportExport
 msgid "Import/Export Management"
-msgstr "Gestión de Importación/Exportación"
+msgstr "Management import/export"
 
 #. Template: AdminImportExport
 msgid "Create a template to import and export object information."
-msgstr "Crear una plantilla para importar y exportar informacion del objeto."
+msgstr "Crează un șablon pentru import/export informații obiecte."
 
 #. Template: AdminImportExport
 msgid "Start Import"
-msgstr "Iniciar Importación"
+msgstr "Start Import"
 
 #. Template: AdminImportExport
 msgid "Start Export"
-msgstr "Iniciar Exportación"
+msgstr "Start Export"
 
 #. Template: AdminImportExport
 msgid "Step 1 of 5 - Edit common information"
@@ -92,15 +94,15 @@ msgstr ""
 
 #. Template: AdminImportExport
 msgid "Name is required!"
-msgstr "El nombre es requerido"
+msgstr "Este necesara introducerea numelui!"
 
 #. Template: AdminImportExport
 msgid "Object is required!"
-msgstr "¡Debe especificar Objeto!"
+msgstr "Obiectul este cerut!"
 
 #. Template: AdminImportExport
 msgid "Format is required!"
-msgstr "¡Debe especificar Formato!"
+msgstr "Formatul este cerut!"
 
 #. Template: AdminImportExport
 msgid "Step 2 of 5 - Edit object information"
@@ -112,7 +114,7 @@ msgstr ""
 
 #. Template: AdminImportExport
 msgid "is required!"
-msgstr "¡es requerido!"
+msgstr "este obligatoriu!"
 
 #. Template: AdminImportExport
 msgid "Step 4 of 5 - Edit mapping information"
@@ -120,11 +122,11 @@ msgstr ""
 
 #. Template: AdminImportExport
 msgid "No map elements found."
-msgstr "No se encontraron elementos de mapeo."
+msgstr "Nu au fost găsite elemente de asociere."
 
 #. Template: AdminImportExport
 msgid "Add Mapping Element"
-msgstr "Añadir Mapeo de Elementos"
+msgstr "Adaugă element de asociere"
 
 #. Template: AdminImportExport
 msgid "Step 5 of 5 - Edit search information"
@@ -132,31 +134,31 @@ msgstr ""
 
 #. Template: AdminImportExport
 msgid "Restrict export per search"
-msgstr "Restringir exportación por búsqueda"
+msgstr "Limitează exportul la rezultatele căutarii"
 
 #. Template: AdminImportExport
 msgid "Import information"
-msgstr "Importar información"
+msgstr "Importă informațiile"
 
 #. Template: AdminImportExport
 msgid "Source File"
-msgstr "Archivo origen"
+msgstr "Fișier sursă"
 
 #. Template: AdminImportExport
 msgid "Success"
-msgstr "Éxito"
+msgstr "Succes"
 
 #. Template: AdminImportExport
 msgid "Failed"
-msgstr "Fracasado"
+msgstr "Nereușit"
 
 #. Template: AdminImportExport
 msgid "Duplicate names"
-msgstr "Nombres duplicados"
+msgstr "Nume duplicate"
 
 #. Template: AdminImportExport
 msgid "Last processed line number of import file"
-msgstr "Última número de línea procesada del archivo importar"
+msgstr "Numărul ultimei linii procesate din fișierul de import"
 
 #. Template: AdminImportExport
 msgid "Ok"
@@ -220,12 +222,12 @@ msgstr ""
 
 #. SysConfig
 msgid "Format backend module registration for the import/export module."
-msgstr "Registro de módulo de formato backend para el módulo import/export."
+msgstr ""
 
 #. SysConfig
 msgid "Import and export object information."
-msgstr "Importar y exportar información de objetos."
+msgstr "Informații de import/export ale obiectului."
 
 #. SysConfig
 msgid "Import/Export"
-msgstr "Importar/Exportar"
+msgstr "Import/Export"

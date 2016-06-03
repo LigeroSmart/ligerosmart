@@ -6,7 +6,7 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package Kernel::Language::zh_CN_ImportExport;
+package Kernel::Language::ro_ImportExport;
 
 use strict;
 use warnings;

@@ -36,18 +36,17 @@ sub Data {
     $Self->{Translation}->{'Create a template to import and export object information.'} = 'ساخت قالبی برای ورود و صدور اطلاعات آبجکت';
     $Self->{Translation}->{'Start Import'} = 'شروع عملیات ورود';
     $Self->{Translation}->{'Start Export'} = 'شروع عملیات صدور';
-    $Self->{Translation}->{'Step'} = 'گام';
-    $Self->{Translation}->{'Edit common information'} = 'ویرایش اطلاعات عمومی';
+    $Self->{Translation}->{'Step 1 of 5 - Edit common information'} = '';
     $Self->{Translation}->{'Name is required!'} = '';
     $Self->{Translation}->{'Object is required!'} = 'آبجکت مورد نیاز است!';
     $Self->{Translation}->{'Format is required!'} = 'قالب‌بندی مورد نیاز است!';
-    $Self->{Translation}->{'Edit object information'} = 'ویرایش اطلاعات آبجکتی';
-    $Self->{Translation}->{'Edit format information'} = 'ویرایش اطلاعات قالب‌بندی';
+    $Self->{Translation}->{'Step 2 of 5 - Edit object information'} = '';
+    $Self->{Translation}->{'Step 3 of 5'} = '';
     $Self->{Translation}->{'is required!'} = '';
-    $Self->{Translation}->{'Edit mapping information'} = 'ویرایش اطلاعات نگاشت';
+    $Self->{Translation}->{'Step 4 of 5 - Edit mapping information'} = '';
     $Self->{Translation}->{'No map elements found.'} = 'هیچ عنصر نگاشتی یافت نشد.';
     $Self->{Translation}->{'Add Mapping Element'} = 'افزودن عنصر نگاشت';
-    $Self->{Translation}->{'Edit search information'} = 'ویرایش اطلاعات جستجو';
+    $Self->{Translation}->{'Step 5 of 5 - Edit search information'} = '';
     $Self->{Translation}->{'Restrict export per search'} = 'محدودسازی عملیات صدور به ازای جستجو';
     $Self->{Translation}->{'Import information'} = 'ورود اطلاعات';
     $Self->{Translation}->{'Source File'} = 'فایل منبع';
@@ -56,6 +55,22 @@ sub Data {
     $Self->{Translation}->{'Duplicate names'} = '';
     $Self->{Translation}->{'Last processed line number of import file'} = '';
     $Self->{Translation}->{'Ok'} = 'تایید';
+
+    # Perl Module: Kernel/Modules/AdminImportExport.pm
+    $Self->{Translation}->{'No object backend found!'} = '';
+    $Self->{Translation}->{'No format backend found!'} = '';
+    $Self->{Translation}->{'Template not found!'} = '';
+    $Self->{Translation}->{'Can\'t insert/update template!'} = '';
+    $Self->{Translation}->{'Needed TemplateID!'} = '';
+    $Self->{Translation}->{'Error occurred. Import impossible! See Syslog for details.'} = '';
+    $Self->{Translation}->{'Error occurred. Export impossible! See Syslog for details.'} = '';
+    $Self->{Translation}->{'number'} = '';
+    $Self->{Translation}->{'number bigger than zero'} = '';
+    $Self->{Translation}->{'integer'} = '';
+    $Self->{Translation}->{'integer bigger than zero'} = '';
+    $Self->{Translation}->{'Element required, please insert data'} = '';
+    $Self->{Translation}->{'Invalid data, please insert a valid %s'} = '';
+    $Self->{Translation}->{'Format not found!'} = '';
 
     # SysConfig
     $Self->{Translation}->{'Format backend module registration for the import/export module.'} =
