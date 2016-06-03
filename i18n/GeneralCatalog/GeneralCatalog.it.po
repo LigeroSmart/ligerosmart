@@ -2,11 +2,12 @@
 # Translators:
 # Giulio <giulio.compagnone@gmail.com>, 2014
 # Luca Maranzano <liuk@linux.it>, 2014
+# Udo Bretz, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-05-24 21:36+0000\n"
-"PO-Revision-Date: 2016-05-24 19:38+0000\n"
+"POT-Creation-Date: 2016-06-03 17:12+0000\n"
+"PO-Revision-Date: 2016-06-03 15:19+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: Italian (http://www.transifex.com/otrs/OTRS/language/it/)\n"
 "MIME-Version: 1.0\n"
@@ -34,6 +35,10 @@ msgstr "Aggiungi Classe al Catalogo"
 #. Template: AdminGeneralCatalog
 msgid "Catalog Class"
 msgstr "Classe di Catalogo"
+
+#. SysConfig
+msgid "Admin."
+msgstr "Admin."
 
 #. SysConfig
 msgid "Create and manage the General Catalog."

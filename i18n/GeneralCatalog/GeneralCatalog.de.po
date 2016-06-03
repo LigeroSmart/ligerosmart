@@ -1,10 +1,11 @@
 # 
 # Translators:
+# Udo Bretz, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-05-24 21:36+0000\n"
-"PO-Revision-Date: 2016-05-24 19:38+0000\n"
+"POT-Creation-Date: 2016-06-03 17:12+0000\n"
+"PO-Revision-Date: 2016-06-03 15:22+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: German (http://www.transifex.com/otrs/OTRS/language/de/)\n"
 "MIME-Version: 1.0\n"
@@ -32,6 +33,10 @@ msgstr "Katalog-Klasse hinzufügen"
 #. Template: AdminGeneralCatalog
 msgid "Catalog Class"
 msgstr "Katalog-Klasse"
+
+#. SysConfig
+msgid "Admin."
+msgstr "Admin."
 
 #. SysConfig
 msgid "Create and manage the General Catalog."
