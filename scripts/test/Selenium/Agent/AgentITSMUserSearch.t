@@ -80,7 +80,7 @@ $Selenium->RunTest(
         # input change manager
         my $AutoCompleteStringManager
             = "\"$TestUserLogin $TestUserLogin\" <$TestUserLogin\@localunittest.com> ($TestUserID)";
-        $Selenium->execute_script( "\$('#ChangeManager').autocomplete('search', '$TestUserLogin') ");
+        $Selenium->execute_script("\$('#ChangeManager').autocomplete('search', '$TestUserLogin') ");
 
         $Selenium->WaitFor( JavaScript => 'return $("li.ui-menu-item:visible").length' );
         $Selenium->find_element("//*[text()='$AutoCompleteStringManager']")->click();
@@ -124,7 +124,7 @@ $Selenium->RunTest(
 
         # make sure the cache is correct
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => 'ITSMChange*' );
-    }
+        }
 );
 
 1;

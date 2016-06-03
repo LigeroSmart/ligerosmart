@@ -126,7 +126,7 @@ $Selenium->RunTest(
         # add test created CAB user to test CAB template
         my $AutoCompleteStringCABUser
             = "\"$TestUserCAB $TestUserCAB\" <$TestUserCAB\@localunittest.com> ($TestUserCABID)";
-        $Selenium->execute_script( "\$('#NewCABMember').autocomplete('search', '$TestUserCAB') ");
+        $Selenium->execute_script("\$('#NewCABMember').autocomplete('search', '$TestUserCAB') ");
         $Selenium->WaitFor( JavaScript => 'return $("li.ui-menu-item:visible").length' );
         $Selenium->find_element("//*[text()='$AutoCompleteStringCABUser']")->click();
         $Selenium->find_element("//button[\@type='submit'][\@name='AddCABMember']")->click();
@@ -136,7 +136,7 @@ $Selenium->RunTest(
         # add test created CAB customer to test CAB template
         my $AutoCompleteStringCABCustomer
             = "\"$TestCustomerCAB $TestCustomerCAB\" <$TestCustomerCAB\@localunittest.com> ($TestCustomerCAB)";
-        $Selenium->execute_script( "\$('#NewCABMember').autocomplete('search', '$TestCustomerCAB') ");
+        $Selenium->execute_script("\$('#NewCABMember').autocomplete('search', '$TestCustomerCAB') ");
         $Selenium->WaitFor( JavaScript => 'return $("li.ui-menu-item:visible").length' );
         $Selenium->find_element("//*[text()='$AutoCompleteStringCABCustomer']")->click();
         $Selenium->find_element("//button[\@type='submit'][\@name='AddCABMember']")->click();
@@ -168,7 +168,7 @@ $Selenium->RunTest(
         # input change manager
         my $AutoCompleteStringManager
             = "\"$TestUserLogin $TestUserLogin\" <$TestUserLogin\@localunittest.com> ($TestUserID)";
-        $Selenium->execute_script( "\$('#ChangeManager').autocomplete('search', '$TestUserLogin') ");
+        $Selenium->execute_script("\$('#ChangeManager').autocomplete('search', '$TestUserLogin') ");
         $Selenium->WaitFor( JavaScript => 'return $("li.ui-menu-item:visible").length' );
         $Selenium->find_element("//*[text()='$AutoCompleteStringManager']")->click();
 
@@ -210,7 +210,7 @@ $Selenium->RunTest(
 
         # make sure cache is correct
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => 'ITSMChange*' );
-    }
+        }
 );
 
 1;

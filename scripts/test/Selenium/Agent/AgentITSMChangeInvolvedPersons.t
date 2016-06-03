@@ -126,13 +126,13 @@ $Selenium->RunTest(
         # input change manager
         my $AutoCompleteStringManager
             = "\"$TestUserLogin $TestUserLogin\" <$TestUserLogin\@localunittest.com> ($TestUserID)";
-        $Selenium->execute_script( "\$('#ChangeManager').autocomplete('search', '$TestUserLogin') ");
+        $Selenium->execute_script("\$('#ChangeManager').autocomplete('search', '$TestUserLogin') ");
         $Selenium->WaitFor( JavaScript => 'return $("li.ui-menu-item:visible").length' );
         $Selenium->find_element("//*[text()='$AutoCompleteStringManager']")->click();
 
         # input change agent CAB
         my $AutoCompleteStringCAB = "\"$TestUserCAB $TestUserCAB\" <$TestUserCAB\@localunittest.com> ($TestUserCABID)";
-        $Selenium->execute_script( "\$('#NewCABMember').autocomplete('search', '$TestUserCAB') ");
+        $Selenium->execute_script("\$('#NewCABMember').autocomplete('search', '$TestUserCAB') ");
         $Selenium->WaitFor( JavaScript => 'return $("li.ui-menu-item:visible").length' );
         $Selenium->find_element("//*[text()='$AutoCompleteStringCAB']")->click();
         $Selenium->find_element("//button[\@type='submit'][\@name='AddCABMember']")->VerifiedClick();
@@ -140,7 +140,7 @@ $Selenium->RunTest(
         # input change customer CAB
         my $AutoCompleteStringCustomer
             = "\"$TestCustomer $TestCustomer\" <$TestCustomer\@localunittest.com> ($TestCustomer)";
-        $Selenium->execute_script( "\$('#NewCABMember').autocomplete('search', '$TestCustomer') ");
+        $Selenium->execute_script("\$('#NewCABMember').autocomplete('search', '$TestCustomer') ");
         $Selenium->WaitFor( JavaScript => 'return $("li.ui-menu-item:visible").length' );
         $Selenium->find_element("//*[text()='$AutoCompleteStringCustomer']")->click();
         $Selenium->find_element("//button[\@type='submit'][\@name='AddCABMember']")->VerifiedClick();
@@ -213,7 +213,7 @@ $Selenium->RunTest(
 
         # make sure the cache is correct
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => 'ITSMChange*' );
-    }
+        }
 
 );
 

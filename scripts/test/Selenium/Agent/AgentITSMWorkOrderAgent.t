@@ -97,7 +97,7 @@ $Selenium->RunTest(
         # input work order agent
         my $AutoCompleteStringUser
             = "\"$TestUserLogin $TestUserLogin\" <$TestUserLogin\@localunittest.com> ($TestUserID)";
-        $Selenium->execute_script( "\$('#User').autocomplete('search', '$TestUserLogin') ");
+        $Selenium->execute_script("\$('#User').autocomplete('search', '$TestUserLogin') ");
         $Selenium->WaitFor( JavaScript => 'return $("li.ui-menu-item:visible").length' );
         $Selenium->find_element("//*[text()='$AutoCompleteStringUser']")->click();
         $Selenium->find_element("//button[\@value='Submit'][\@type='submit']")->click();
@@ -146,7 +146,7 @@ $Selenium->RunTest(
 
         # make sure cache is correct
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => 'ITSMChange*' );
-    }
+        }
 );
 
 1;

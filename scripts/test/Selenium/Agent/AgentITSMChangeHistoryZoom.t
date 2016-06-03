@@ -33,9 +33,11 @@ $Selenium->RunTest(
         # create test change, we need a long description and justification to show the history details
         my $ChangeTitleRandom = 'ITSMChange ' . $Helper->GetRandomID();
         my $ChangeID          = $ChangeObject->ChangeAdd(
-            ChangeTitle   => $ChangeTitleRandom,
-            Description   => "Test Description with a very very very very very very very very very very very very very very very very long text",
-            Justification => "Test Justification with a very very very very very very very very very very very very very very very very long text",
+            ChangeTitle => $ChangeTitleRandom,
+            Description =>
+                "Test Description with a very very very very very very very very very very very very very very very very long text",
+            Justification =>
+                "Test Justification with a very very very very very very very very very very very very very very very very long text",
             ChangeStateID => $ChangeStateDataRef->{ItemID},
             UserID        => 1,
         );
@@ -62,7 +64,8 @@ $Selenium->RunTest(
         $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentITSMChangeZoom;ChangeID=$ChangeID");
 
         # click on 'Edit' and switch screens
-        $Selenium->find_element("//a[contains(\@href, \'Action=AgentITSMChangeHistory;ChangeID=$ChangeID' )]")->VerifiedClick();
+        $Selenium->find_element("//a[contains(\@href, \'Action=AgentITSMChangeHistory;ChangeID=$ChangeID' )]")
+            ->VerifiedClick();
 
         $Selenium->WaitFor( WindowCount => 2 );
         my $Handles = $Selenium->get_window_handles();
@@ -72,7 +75,8 @@ $Selenium->RunTest(
         $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $(".CancelClosePopup").length' );
 
         # click on history show details to check AgentITSMChangeHistoryZoom screen
-        $Selenium->find_element("//a[contains(\@href, \'Action=AgentITSMChangeHistoryZoom;HistoryEntryID=' )]")->VerifiedClick();
+        $Selenium->find_element("//a[contains(\@href, \'Action=AgentITSMChangeHistoryZoom;HistoryEntryID=' )]")
+            ->VerifiedClick();
 
         # check AgentITSMChangeHistoryZoom values
         $Self->True(
@@ -96,7 +100,7 @@ $Selenium->RunTest(
 
         # make sure cache is correct
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => 'ITSMChange*' );
-    }
+        }
 );
 
 1;

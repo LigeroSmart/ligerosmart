@@ -116,7 +116,7 @@ $Selenium->RunTest(
         # get created test change ID
         my $ChangeQuoted = $DBObject->Quote($ChangeTitleRandom);
         $DBObject->Prepare(
-            SQL  => "SELECT id
+            SQL => "SELECT id
                 FROM change_item
                 WHERE title = ?
                 AND id != $ChangeID",
@@ -152,7 +152,7 @@ $Selenium->RunTest(
         # make sure the cache is correct
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => 'ITSMChange*' );
 
-    }
+        }
 );
 
 1;

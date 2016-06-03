@@ -98,8 +98,6 @@ $Selenium->RunTest(
 
         for my $WorkOrderState (@WorkOrderStates) {
 
-            sleep(5);
-
             # click on 'Report' and switch window
             $Selenium->find_element(
                 "//a[contains(\@href, \'Action=AgentITSMWorkOrderReport;WorkOrderID=$WorkOrderID')]"
@@ -134,7 +132,7 @@ $Selenium->RunTest(
             $Selenium->WaitFor( WindowCount => 1 );
             $Selenium->switch_to_window( $Handles->[0] );
 
-            sleep(5);
+            sleep(1);
 
             # click on 'History' and switch window
             $Selenium->find_element(
@@ -184,7 +182,7 @@ $Selenium->RunTest(
 
         # make sure cache is correct
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => 'ITSMChange*' );
-    }
+        }
 );
 
 1;

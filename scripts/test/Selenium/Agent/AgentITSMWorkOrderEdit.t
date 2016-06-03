@@ -130,6 +130,10 @@ $Selenium->RunTest(
         $Selenium->WaitFor( WindowCount => 1 );
         $Selenium->switch_to_window( $Handles->[0] );
 
+        sleep(1);
+
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("body").length' );
+
         # click on 'Edit' and switch window
         $Selenium->find_element("//a[contains(\@href, \'Action=AgentITSMWorkOrderEdit;WorkOrderID=$WorkOrderID')]")
             ->click();
@@ -180,7 +184,7 @@ $Selenium->RunTest(
 
         # make sure cache is correct
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => 'ITSMChange*' );
-    }
+        }
 );
 
 1;
