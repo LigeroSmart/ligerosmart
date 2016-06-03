@@ -25,14 +25,15 @@ sub Data {
     $Self->{Translation}->{'Catalog Class'} = '目录类';
 
     # SysConfig
-    $Self->{Translation}->{'Create and manage the General Catalog.'} = '';
+    $Self->{Translation}->{'Admin.'} = '';
+    $Self->{Translation}->{'Create and manage the General Catalog.'} = '创建和管理目录';
     $Self->{Translation}->{'Frontend module registration for the AdminGeneralCatalog configuration in the admin area.'} =
-        '';
-    $Self->{Translation}->{'General Catalog'} = '';
+        '在系统管理中注册目录管理模块AdminGeneralCatalog的前端模块。';
+    $Self->{Translation}->{'General Catalog'} = '目录';
     $Self->{Translation}->{'Parameters for the example comment 2 of the general catalog attributes.'} =
-        '';
+        '目录属性样例-注释2的参数设置。';
     $Self->{Translation}->{'Parameters for the example permission groups of the general catalog attributes.'} =
-        '';
+        '目录属性样例-权限组的参数。';
 
 }
 

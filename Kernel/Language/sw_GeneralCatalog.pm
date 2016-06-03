@@ -25,14 +25,15 @@ sub Data {
     $Self->{Translation}->{'Catalog Class'} = 'Tabaka la katalogi';
 
     # SysConfig
-    $Self->{Translation}->{'Create and manage the General Catalog.'} = '';
+    $Self->{Translation}->{'Admin.'} = '';
+    $Self->{Translation}->{'Create and manage the General Catalog.'} = 'Tengeneza na simamia Katalogi ya ujumla.';
     $Self->{Translation}->{'Frontend module registration for the AdminGeneralCatalog configuration in the admin area.'} =
-        '';
-    $Self->{Translation}->{'General Catalog'} = '';
+        'Usajili wa moduli ya mazingira ya mbele kwa usanidi wa katalogi ya ujumla ya msimamizi katika eneo la usimamizi.';
+    $Self->{Translation}->{'General Catalog'} = 'Katalogi ya ujumla';
     $Self->{Translation}->{'Parameters for the example comment 2 of the general catalog attributes.'} =
-        '';
+        'Vigezo kwa mfano Maoni 2 ya sifa za katalogi za ujumla.';
     $Self->{Translation}->{'Parameters for the example permission groups of the general catalog attributes.'} =
-        '';
+        'Vigezo kwa mfano ruhusa za vikundi kwa sifa za katalogi za ujumla.';
 
 }
 

@@ -22,6 +22,7 @@
         <File Permission="644" Location="Kernel/Language/es_GeneralCatalog.pm"/>
         <File Permission="644" Location="Kernel/Language/fa_GeneralCatalog.pm"/>
         <File Permission="644" Location="Kernel/Language/fr_GeneralCatalog.pm"/>
+        <File Permission="644" Location="Kernel/Language/hu_GeneralCatalog.pm"/>
         <File Permission="644" Location="Kernel/Language/it_GeneralCatalog.pm"/>
         <File Permission="644" Location="Kernel/Language/ja_GeneralCatalog.pm"/>
         <File Permission="644" Location="Kernel/Language/ms_GeneralCatalog.pm"/>

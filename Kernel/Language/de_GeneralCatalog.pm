@@ -25,14 +25,15 @@ sub Data {
     $Self->{Translation}->{'Catalog Class'} = 'Katalog-Klasse';
 
     # SysConfig
-    $Self->{Translation}->{'Create and manage the General Catalog.'} = '';
+    $Self->{Translation}->{'Admin.'} = '';
+    $Self->{Translation}->{'Create and manage the General Catalog.'} = 'General-Katalog erstellen und verwalten.';
     $Self->{Translation}->{'Frontend module registration for the AdminGeneralCatalog configuration in the admin area.'} =
-        '';
-    $Self->{Translation}->{'General Catalog'} = '';
+        'Frontendmodul-Registration der AdminGeneralCatalog Konfiguration im Admin-Bereich.';
+    $Self->{Translation}->{'General Catalog'} = 'General-Katalog';
     $Self->{Translation}->{'Parameters for the example comment 2 of the general catalog attributes.'} =
-        '';
+        'Parameter für den Beispiel-Kommentar 2 der General-Katalog-Attribute.';
     $Self->{Translation}->{'Parameters for the example permission groups of the general catalog attributes.'} =
-        '';
+        'Parameter für die zugriffsberechtigte Gruppe der General-Katalog-Attribute.';
 
 }
 
