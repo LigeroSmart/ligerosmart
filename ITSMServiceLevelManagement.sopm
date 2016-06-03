@@ -11,6 +11,7 @@
     <Description Lang="en">The OTRS::ITSM Service Level Management package.</Description>
     <Description Lang="de">Das OTRS::ITSM Service Level Management Paket.</Description>
     <Description Lang="es">El paquete OTRS::ITSM Service Level Management.</Description>
+    <Description Lang="hu">Az OTRS::ITSM szolgáltatásszint-menedzsment csomag.</Description>
     <Filelist>
         <File Permission="644" Location="var/stats/ITSMStats-001-Ticket.xml"/>
         <File Permission="644" Location="var/stats/ITSMStats-002-Ticket.xml"/>
@@ -154,6 +155,24 @@
         <br/>
 
     ]]></IntroInstall>
+    <IntroInstall Type="pre" Title="Telepítési információk" Lang="hu"><![CDATA[
+
+        <br/>
+        <strong>ÜDVÖZÖLJÜK</strong>
+        <br/>
+        <br/>
+        Ön az ITSMServiceLevelManagement OTRS csomag telepítésére készül.<br/>
+        <br/>
+        <br/>
+        <strong>SZÜKSÉGES OTRS CSOMAGOK</strong>
+        <ul>
+        <li>ITSMCore 5.0.10</li>
+        </ul>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+
+    ]]></IntroInstall>
     <IntroInstall Type="post" Title="Installation Information" Lang="en"><![CDATA[
 
         <br/>
@@ -187,6 +206,19 @@
         <br/>
         <br/>
         Las estadísticas que serán instaladas mediante este paquete estarán disponibles en el menú 'Stats'.
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+
+    ]]></IntroInstall>
+    <IntroInstall Type="post" Title="Telepítési információk" Lang="hu"><![CDATA[
+
+        <br/>
+        <strong>FIGYELMEZTETÉS</strong>
+        <br/>
+        <br/>
+        A csomag által telepített statisztikák a „Statisztikák” menüpontban lesznek elérhetők.
         <br/>
         <br/>
         ((enjoy))<br/>
@@ -247,6 +279,24 @@
         <br/>
 
     ]]></IntroUpgrade>
+    <IntroUpgrade Type="pre" Title="Frissítési információk" Lang="hu"><![CDATA[
+
+        <br/>
+        <strong>ÜDVÖZÖLJÜK</strong>
+        <br/>
+        <br/>
+        Ön az ITSMServiceLevelManagement OTRS csomag frissítésére készül.<br/>
+        <br/>
+        <br/>
+        <strong>SZÜKSÉGES OTRS CSOMAGOK</strong>
+        <ul>
+        <li>ITSMCore 5.0.10</li>
+        </ul>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+
+    ]]></IntroUpgrade>
     <IntroUninstall Type="pre" Title="Uninstallation Information" Lang="en"><![CDATA[
 
         <br/>
@@ -280,6 +330,19 @@
         <br/>
         <br/>
         Las estadísticas asociadas a este paquete no estarán disponibles si desinstala el paquete.
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+
+    ]]></IntroUninstall>
+    <IntroUninstall Type="pre" Title="Eltávolítási információk" Lang="hu"><![CDATA[
+
+        <br/>
+        <strong>FIGYELEM</strong>
+        <br/>
+        <br/>
+        Az ehhez a csomaghoz hozzárendelt statisztikák többé nem lesznek elérhetők, ha a csomag eltávolításra kerül.
         <br/>
         <br/>
         ((enjoy))<br/>
