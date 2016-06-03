@@ -7,8 +7,8 @@
         <Setting>
             <FrontendModuleReg>
                 <Group>admin</Group>
-                <Description>Admin</Description>
-                <Title>General Catalog</Title>
+                <Description Translatable="1">Admin.</Description>
+                <Title Translatable="1">General Catalog</Title>
                 <NavBarName>Admin</NavBarName>
                 <NavBarModule>
                     <Module>Kernel::Output::HTML::NavBar::ModuleAdmin</Module>
