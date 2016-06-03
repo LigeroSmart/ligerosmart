@@ -11,6 +11,8 @@ package Kernel::Modules::AdminImportExport;
 use strict;
 use warnings;
 
+use Kernel::Language qw(Translatable);
+
 our $ObjectManagerDisabled = 1;
 
 sub new {
@@ -40,7 +42,9 @@ sub Run {
         my $ObjectList = $ImportExportObject->ObjectList();
 
         if ( !$ObjectList ) {
-            $LayoutObject->FatalError( Message => 'No object backend found!' );
+            $LayoutObject->FatalError(
+                Message => Translatable('No object backend found!'),
+            );
             return;
         }
 
@@ -48,7 +52,9 @@ sub Run {
         my $FormatList = $ImportExportObject->FormatList();
 
         if ( !$FormatList ) {
-            $LayoutObject->FatalError( Message => 'No format backend found!' );
+            $LayoutObject->FatalError(
+                Message => Translatable('No format backend found!'),
+            );
             return;
         }
 
@@ -77,7 +83,9 @@ sub Run {
             );
 
             if ( !$TemplateData->{TemplateID} ) {
-                $LayoutObject->FatalError( Message => 'Template not found!' );
+                $LayoutObject->FatalError(
+                    Message => Translatable('Template not found!'),
+                );
                 return;
             }
 
@@ -148,7 +156,9 @@ sub Run {
         }
 
         if ( !$Success ) {
-            $LayoutObject->FatalError( Message => "Can't insert/update template!" );
+            $LayoutObject->FatalError(
+                Message => Translatable('Can\'t insert/update template!'),
+            );
             return;
         }
 
@@ -167,7 +177,9 @@ sub Run {
         my $ObjectList = $ImportExportObject->ObjectList();
 
         if ( !$ObjectList ) {
-            $LayoutObject->FatalError( Message => 'No object backend found!' );
+            $LayoutObject->FatalError(
+                Message => Translatable('No object backend found!'),
+            );
             return;
         }
 
@@ -175,7 +187,9 @@ sub Run {
         my $FormatList = $ImportExportObject->FormatList();
 
         if ( !$FormatList ) {
-            $LayoutObject->FatalError( Message => 'No format backend found!' );
+            $LayoutObject->FatalError(
+                Message => Translatable('No format backend found!'),
+            );
             return;
         }
 
@@ -183,7 +197,9 @@ sub Run {
         my $TemplateID = $ParamObject->GetParam( Param => 'TemplateID' );
 
         if ( !$TemplateID ) {
-            $LayoutObject->FatalError( Message => 'Needed TemplateID!' );
+            $LayoutObject->FatalError(
+                Message => Translatable('Needed TemplateID!'),
+            );
             return;
         }
 
@@ -270,7 +286,9 @@ sub Run {
         my $ObjectList = $ImportExportObject->ObjectList();
 
         if ( !$ObjectList ) {
-            $LayoutObject->FatalError( Message => 'No object backend found!' );
+            $LayoutObject->FatalError(
+                Message => Translatable('No object backend found!'),
+            );
             return;
         }
 
@@ -278,7 +296,9 @@ sub Run {
         my $FormatList = $ImportExportObject->FormatList();
 
         if ( !$FormatList ) {
-            $LayoutObject->FatalError( Message => 'No format backend found!' );
+            $LayoutObject->FatalError(
+                Message => Translatable('No format backend found!'),
+            );
             return;
         }
 
@@ -286,7 +306,9 @@ sub Run {
         my $TemplateID = $ParamObject->GetParam( Param => 'TemplateID' );
 
         if ( !$TemplateID ) {
-            $LayoutObject->FatalError( Message => 'Needed TemplateID!' );
+            $LayoutObject->FatalError(
+                Message => Translatable('Needed TemplateID!'),
+            );
             return;
         }
 
@@ -358,7 +380,9 @@ sub Run {
         my $ObjectList = $ImportExportObject->ObjectList();
 
         if ( !$ObjectList ) {
-            $LayoutObject->FatalError( Message => 'No object backend found!' );
+            $LayoutObject->FatalError(
+                Message => Translatable('No object backend found!'),
+            );
             return;
         }
 
@@ -366,7 +390,9 @@ sub Run {
         my $FormatList = $ImportExportObject->FormatList();
 
         if ( !$FormatList ) {
-            $LayoutObject->FatalError( Message => 'No format backend found!' );
+            $LayoutObject->FatalError(
+                Message => Translatable('No format backend found!'),
+            );
             return;
         }
 
@@ -381,7 +407,9 @@ sub Run {
         );
 
         if ( !$TemplateData->{TemplateID} ) {
-            $LayoutObject->FatalError( Message => 'Template not found!' );
+            $LayoutObject->FatalError(
+                Message => Translatable('Template not found!'),
+            );
             return;
         }
 
@@ -739,7 +767,9 @@ sub Run {
         my $ObjectList = $ImportExportObject->ObjectList();
 
         if ( !$ObjectList ) {
-            $LayoutObject->FatalError( Message => 'No object backend found!' );
+            $LayoutObject->FatalError(
+                Message => Translatable('No object backend found!'),
+            );
             return;
         }
 
@@ -747,7 +777,9 @@ sub Run {
         my $FormatList = $ImportExportObject->FormatList();
 
         if ( !$FormatList ) {
-            $LayoutObject->FatalError( Message => 'No format backend found!' );
+            $LayoutObject->FatalError(
+                Message => Translatable('No format backend found!'),
+            );
             return;
         }
 
@@ -762,7 +794,9 @@ sub Run {
         );
 
         if ( !$TemplateData->{TemplateID} ) {
-            $LayoutObject->FatalError( Message => 'Template not found!' );
+            $LayoutObject->FatalError(
+                Message => Translatable('Template not found!'),
+            );
             return;
         }
 
@@ -965,7 +999,9 @@ sub Run {
         my $ObjectList = $ImportExportObject->ObjectList();
 
         if ( !$ObjectList ) {
-            $LayoutObject->FatalError( Message => 'No object backend found!' );
+            $LayoutObject->FatalError(
+                Message => Translatable('No object backend found!'),
+            );
             return;
         }
 
@@ -973,7 +1009,9 @@ sub Run {
         my $FormatList = $ImportExportObject->FormatList();
 
         if ( !$FormatList ) {
-            $LayoutObject->FatalError( Message => 'No format backend found!' );
+            $LayoutObject->FatalError(
+                Message => Translatable('No format backend found!'),
+            );
             return;
         }
 
@@ -988,7 +1026,9 @@ sub Run {
         );
 
         if ( !$TemplateData->{TemplateID} ) {
-            $LayoutObject->FatalError( Message => 'Template not found!' );
+            $LayoutObject->FatalError(
+                Message => Translatable('Template not found!'),
+            );
             return;
         }
 
@@ -1063,7 +1103,9 @@ sub Run {
         );
 
         if ( !$TemplateData->{TemplateID} ) {
-            $LayoutObject->FatalError( Message => 'Template not found!' );
+            $LayoutObject->FatalError(
+                Message => Translatable('Template not found!'),
+            );
             return;
         }
 
@@ -1084,7 +1126,7 @@ sub Run {
 
         if ( !$Result ) {
             $LayoutObject->FatalError(
-                Message => 'Error occurred. Import impossible! See Syslog for details.',
+                Message => Translatable('Error occurred. Import impossible! See Syslog for details.'),
             );
             return;
         }
@@ -1172,7 +1214,9 @@ sub Run {
         );
 
         if ( !$TemplateData->{TemplateID} ) {
-            $LayoutObject->FatalError( Message => 'Template not found!' );
+            $LayoutObject->FatalError(
+                Message => Translatable('Template not found!'),
+            );
             return;
         }
 
@@ -1184,7 +1228,7 @@ sub Run {
 
         if ( !$Result ) {
             $LayoutObject->FatalError(
-                Message => 'Error occurred. Export impossible! See Syslog for details.',
+                Message => Translatable('Error occurred. Export impossible! See Syslog for details.'),
             );
             return;
         }
@@ -1208,7 +1252,9 @@ sub Run {
         my $ObjectList = $ImportExportObject->ObjectList();
 
         if ( !$ObjectList ) {
-            $LayoutObject->FatalError( Message => 'No object backend found!' );
+            $LayoutObject->FatalError(
+                Message => Translatable('No object backend found!'),
+            );
             return;
         }
 
@@ -1216,7 +1262,9 @@ sub Run {
         my $FormatList = $ImportExportObject->FormatList();
 
         if ( !$FormatList ) {
-            $LayoutObject->FatalError( Message => 'No format backend found!' );
+            $LayoutObject->FatalError(
+                Message => Translatable('No format backend found!'),
+            );
             return;
         }
 
@@ -1377,7 +1425,9 @@ sub _MaskTemplateEdit1 {
         my $ObjectList = $ImportExportObject->ObjectList();
 
         if ( !$ObjectList ) {
-            $LayoutObject->FatalError( Message => 'No object backend found!' );
+            $LayoutObject->FatalError(
+                Message => Translatable('No object backend found!'),
+            );
             return;
         }
 
@@ -1385,7 +1435,9 @@ sub _MaskTemplateEdit1 {
         my $FormatList = $ImportExportObject->FormatList();
 
         if ( !$FormatList ) {
-            $LayoutObject->FatalError( Message => 'No format backend found!' );
+            $LayoutObject->FatalError(
+                Message => Translatable('No format backend found!'),
+            );
             return;
         }
 
@@ -1464,7 +1516,9 @@ sub _MaskTemplateEdit2 {
         $TemplateID = $Param{TemplateID};
     }
     else {
-        $LayoutObject->FatalError( Message => 'Needed TemplateID!' );
+        $LayoutObject->FatalError(
+            Message => Translatable('Needed TemplateID!'),
+        );
         return;
     }
 
@@ -1479,7 +1533,9 @@ sub _MaskTemplateEdit2 {
     );
 
     if ( !$TemplateData->{TemplateID} ) {
-        $LayoutObject->FatalError( Message => 'Template not found!' );
+        $LayoutObject->FatalError(
+            Message => Translatable('Template not found!'),
+        );
         return;
     }
 
@@ -1521,10 +1577,10 @@ sub _MaskTemplateEdit2 {
     $JSClass{Integer}               = 'Validate_NumberInteger';
     $JSClass{IntegerBiggerThanZero} = 'Validate_NumberIntegerBiggerThanZero';
 
-    $PredefinedErrorMessages{Number}                = 'number';
-    $PredefinedErrorMessages{NumberBiggerThanZero}  = 'number bigger than zero';
-    $PredefinedErrorMessages{Integer}               = 'integer';
-    $PredefinedErrorMessages{IntegerBiggerThanZero} = 'integer bigger than zero';
+    $PredefinedErrorMessages{Number}                = $LayoutObject->{LanguageObject}->Translate('number');
+    $PredefinedErrorMessages{NumberBiggerThanZero}  = $LayoutObject->{LanguageObject}->Translate('number bigger than zero');
+    $PredefinedErrorMessages{Integer}               = $LayoutObject->{LanguageObject}->Translate('integer');
+    $PredefinedErrorMessages{IntegerBiggerThanZero} = $LayoutObject->{LanguageObject}->Translate('integer bigger than zero');
 
     # output object attributes
     for my $Item ( @{$ObjectAttributeList} ) {
@@ -1537,13 +1593,15 @@ sub _MaskTemplateEdit2 {
 
         if ( $Item->{Input}->{Required} ) {
             $Class        = 'Validate_Required';
-            $ErrorMessage = 'Element required, please insert data';
+            $ErrorMessage = $LayoutObject->{LanguageObject}->Translate( 'Element required, please insert data' );
         }
 
         if ( $Item->{Input}->{DataType} ) {
             $Class .= " $JSClass{ $Item->{Input}->{DataType} }";
-            $ErrorMessage = 'Invalid data, please insert a valid ';
-            $ErrorMessage .= "$PredefinedErrorMessages{$Item->{Input}->{DataType}}";
+            $ErrorMessage = $LayoutObject->{LanguageObject}->Translate(
+                'Invalid data, please insert a valid %s',
+                $PredefinedErrorMessages{$Item->{Input}->{DataType}}
+            );
         }
 
         # get data from form or from database
@@ -1624,7 +1682,9 @@ sub _MaskTemplateEdit3 {
     my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
     if ( !$TemplateID ) {
-        $LayoutObject->FatalError( Message => 'Template not found!' );
+        $LayoutObject->FatalError(
+            Message => Translatable('Template not found!'),
+        );
         return;
     }
 
@@ -1639,7 +1699,9 @@ sub _MaskTemplateEdit3 {
     );
 
     if ( !$TemplateData->{TemplateID} ) {
-        $LayoutObject->FatalError( Message => 'Template not found!' );
+        $LayoutObject->FatalError(
+            Message => Translatable('Template not found!'),
+        );
         return;
     }
 
@@ -1673,7 +1735,9 @@ sub _MaskTemplateEdit3 {
     );
 
     if ( !$FormatData ) {
-        $LayoutObject->FatalError( Message => 'Format not found!' );
+        $LayoutObject->FatalError(
+            Message => Translatable('Format not found!'),
+        );
         return;
     }
 

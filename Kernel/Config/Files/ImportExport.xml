@@ -8,7 +8,7 @@
             <FrontendModuleReg>
                 <Group>admin</Group>
                 <Description Translatable="1">Import and export object information.</Description>
-                <Title>Import/Export</Title>
+                <Title Translatable="1">Import/Export</Title>
                 <NavBarName>Admin</NavBarName>
                 <NavBarModule>
                     <Module>Kernel::Output::HTML::NavBar::ModuleAdmin</Module>

@@ -10,6 +10,7 @@
     <Description Lang="en">The ImportExport package.</Description>
     <Description Lang="de">Das ImportExport Paket.</Description>
     <Description Lang="es">El paquete ImportExport.</Description>
+    <Description Lang="hu">Az ImportExport csomag.</Description>
     <Filelist>
         <File Permission="644" Location="doc/import-export-database.dia"/>
         <File Permission="644" Location="doc/import-export-database.png"/>
@@ -229,6 +230,20 @@
         <br/>
         ((enjoy))<br/>
         <br/>
+
+    ]]></IntroUninstall>
+    <IntroUninstall Type="pre" Title="Eltávolítási információk" Lang="hu"><![CDATA[
+
+        </br>
+        <strong>FIGYELEM</strong>
+        </br>
+        </br>
+        Ha eltávolítja ezt a csomagot, akkor a telepítés során létrehozott összes adatbázistábla törlésre kerül.
+        Az ezekben a táblákban lévő összes adat visszavonhatatlanul el fog veszni!
+        </br>
+        </br>
+        ((enjoy))</br>
+        </br>
 
     ]]></IntroUninstall>
 </otrs_package>
