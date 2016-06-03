@@ -10,6 +10,7 @@
     <License>GNU AFFERO GENERAL PUBLIC LICENSE Version 3, November 2007</License>
     <Description Lang="en">The OTRS::ITSM Core package.</Description>
     <Description Lang="de">Das OTRS::ITSM Core Paket.</Description>
+    <Description Lang="hu">Az OTRS::ITSM alapcsomag.</Description>
     <Filelist>
         <File Permission="644" Location="doc/itsm-core-database.dia"/>
         <File Permission="644" Location="doc/itsm-core-database.png"/>
@@ -473,6 +474,25 @@
         <br/>
 
     ]]></IntroInstall>
+    <IntroInstall Type="pre" Title="Telepítési információk" Lang="hu"><![CDATA[
+
+        <br/>
+        <strong>ÜDVÖZÖLJÜK</strong>
+        <br/>
+        <br/>
+        Ön az ITSMCore OTRS csomag telepítésére készül.<br/>
+        <br/>
+        <br/>
+        <strong>SZÜKSÉGES OTRS CSOMAGOK</strong>
+        <ul>
+        <li>GeneralCatalog 5.0.10</li>
+        </ul>
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+
+    ]]></IntroInstall>
     <IntroInstall Type="post" Title="Installation Information" Lang="en"><![CDATA[
 
         <br/>
@@ -514,6 +534,22 @@
         Para poder permitir el acceso a los usuarios al menu de servicios, usted necesita agregarlos como miembros del grupo 'itsm-service'.<br/>
         <br/>
         Los elementos del menu que fueron agregados por este packete serán visibles despues de que cierre y abra su sesion de nuevo.
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+
+    ]]></IntroInstall>
+    <IntroInstall Type="post" Title="Telepítési információk" Lang="hu"><![CDATA[
+
+        <br/>
+        <strong>FIGYELMEZTETÉS</strong>
+        <br/>
+        <br/>
+        Annak érdekében, hogy hozzáférést adjon a felhasználók számára a szolgáltatás menühöz, hozzá kell adnia őket az „itsm-service” csoporthoz tagként.
+        <br/>
+        <br/>
+        Azok a menüpontok, amelyeket ez a csomag adott hozzá, azután lesznek láthatóak, miután ismét bejelentkezik a rendszerbe.
         <br/>
         <br/>
         ((enjoy))<br/>
@@ -578,6 +614,25 @@
         <br/>
 
     ]]></IntroUpgrade>
+    <IntroUpgrade Type="pre" Title="Frissítési információk" Lang="hu"><![CDATA[
+
+        <br/>
+        <strong>ÜDVÖZÖLJÜK</strong>
+        <br/>
+        <br/>
+        Ön az ITSMCore OTRS csomag frissítésére készül.<br/>
+        <br/>
+        <br/>
+        <strong>SZÜKSÉGES OTRS CSOMAGOK</strong>
+        <ul>
+        <li>GeneralCatalog 5.0.10</li>
+        </ul>
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+
+    ]]></IntroUpgrade>
     <IntroUninstall Type="pre" Title="Uninstallation Information" Lang="en"><![CDATA[
 
         <br/>
@@ -626,6 +681,24 @@
         <br/>
         El grupo 'itsm-service' que fue creado durante la instalación será desactivado.
         Usted puede activar este grupo de nuevo en el area de admin.
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+
+    ]]></IntroUninstall>
+    <IntroUninstall Type="pre" Title="Eltávolítási információk" Lang="hu"><![CDATA[
+
+        <br/>
+        <strong>FIGYELEM</strong>
+        <br/>
+        <br/>
+        Ha eltávolítja ezt a csomagot, akkor a telepítés során létrehozott összes adatbázistábla törlésre kerül.
+        Az ezekben a táblákban lévő összes adat visszavonhatatlanul el fog veszni!
+        <br/>
+        <br/>
+        A csomagtelepítés során létrehozott „itsm-service” csoport ki lesz kapcsolva.
+        Ezt a csoportot az adminisztrációs területen tudja ismét bekapcsolni.
         <br/>
         <br/>
         ((enjoy))<br/>
