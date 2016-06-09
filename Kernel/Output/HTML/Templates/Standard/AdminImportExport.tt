@@ -247,7 +247,7 @@
 
 [% RenderBlockStart("TemplateEdit3") %]
             <div class="Header">
-                <h2>[% Translate("Step 3 of 5" - Edit format information") | html %]:</h2>
+                <h2>[% Translate("Step 3 of 5 - Edit format information") | html %]:</h2>
             </div>
             <div class="Content">
                 <form action="[% Env("CGIHandle") %]" method="post" class="Validate PreventMultipleSubmits">
