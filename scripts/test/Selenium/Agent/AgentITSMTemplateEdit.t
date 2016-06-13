@@ -122,6 +122,8 @@ $Selenium->RunTest(
         $Selenium->WaitFor( WindowCount => 1 );
         $Selenium->switch_to_window( $Handles->[0] );
 
+        sleep(1);
+
         # click on edited test template and switch window
         $Selenium->find_element("//a[contains(\@href, \'AgentITSMTemplateEdit;TemplateID=$TemplateID' )]")->click();
 

@@ -151,6 +151,8 @@ $Selenium->RunTest(
         $Selenium->WaitFor( WindowCount => 1 );
         $Selenium->switch_to_window( $Handles->[0] );
 
+        sleep(1);
+
         # navigate to created test change
         $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentITSMChangeZoom;ChangeID=$ChangeID");
 

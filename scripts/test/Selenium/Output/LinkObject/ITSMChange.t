@@ -105,6 +105,10 @@ $Selenium->RunTest(
         $Selenium->WaitFor( WindowCount => 1 );
         $Selenium->switch_to_window( $Handles->[0] );
 
+        sleep(1);
+
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("body").length' );
+
         # verify test change is linked with test ticket
         $Self->True(
             index( $Selenium->get_page_source(), $TicketNumber ) > -1,
@@ -130,6 +134,10 @@ $Selenium->RunTest(
 
         $Selenium->WaitFor( WindowCount => 1 );
         $Selenium->switch_to_window( $Handles->[0] );
+
+        sleep(1);
+
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("body").length' );
 
         # verify that link has been removed
         $Self->True(

@@ -89,6 +89,8 @@ $Selenium->RunTest(
         $Selenium->WaitFor( WindowCount => 1 );
         $Selenium->switch_to_window( $Handles->[0] );
 
+        sleep(1);
+
         # navigate to ITSMChangeTemplateOverview screen
         $Selenium->VerifiedGet(
             "${ScriptAlias}index.pl?Action=AgentITSMTemplateOverview;SortBy=TemplateID;OrderBy=Up;Filter=ITSMChange"

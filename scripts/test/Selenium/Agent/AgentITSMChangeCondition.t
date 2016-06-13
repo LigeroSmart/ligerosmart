@@ -170,6 +170,8 @@ $Selenium->RunTest(
         $Selenium->WaitFor( WindowCount => 1 );
         $Selenium->switch_to_window( $Handles->[0] );
 
+        sleep(1);
+
         # wait until page has loaded, if necessary
         $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("body").length' );
 
@@ -204,6 +206,8 @@ $Selenium->RunTest(
 
         $Selenium->WaitFor( WindowCount => 1 );
         $Selenium->switch_to_window( $Handles->[0] );
+
+        sleep(1);
 
         # check for expected change state to verify test condition
 

@@ -107,6 +107,10 @@ $Selenium->RunTest(
         $Selenium->WaitFor( WindowCount => 1 );
         $Selenium->switch_to_window( $Handles->[0] );
 
+        sleep(1);
+
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("body").length' );
+
         # navigate to ITSMChangeTemplateOverview screen
         $Selenium->VerifiedGet(
             "${ScriptAlias}index.pl?Action=AgentITSMTemplateOverview;SortBy=TemplateID;OrderBy=Up;Filter=ITSMWorkOrder"

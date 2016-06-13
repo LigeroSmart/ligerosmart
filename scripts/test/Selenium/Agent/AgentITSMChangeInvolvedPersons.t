@@ -175,6 +175,8 @@ $Selenium->RunTest(
         $Selenium->WaitFor( WindowCount => 1 );
         $Selenium->switch_to_window( $Handles->[0] );
 
+        sleep(1);
+
         # click on 'History'
         $Selenium->find_element(
             "//a[contains(\@href, \'/otrs/index.pl?Action=AgentITSMChangeHistory;ChangeID=$ChangeID' )]"

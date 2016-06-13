@@ -142,6 +142,10 @@ $Selenium->RunTest(
         $Selenium->WaitFor( WindowCount => 1 );
         $Selenium->switch_to_window( $Handles->[0] );
 
+        sleep(1);
+
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("body").length' );
+
         # check work order values created from test template
         $Self->True(
             index( $Selenium->get_page_source(), $WorkOrderTitleRandom ) > -1,
