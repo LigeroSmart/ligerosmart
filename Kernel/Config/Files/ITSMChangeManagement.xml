@@ -88,7 +88,7 @@
                 <Title Translatable="1">ITSM Changes</Title>
                 <NavBar>
                     <Description Translatable="1">Change area.</Description>
-                    <Name>ITSM Changes</Name>
+                    <Name Translatable="1">ITSM Changes</Name>
                     <Type>Menu</Type>
                     <Block>ItemArea</Block>
                     <Link>Action=AgentITSMChange</Link>
@@ -98,7 +98,7 @@
                 </NavBar>
                 <NavBar>
                     <Description Translatable="1">Change Overview.</Description>
-                    <Name>Overview</Name>
+                    <Name Translatable="1">Overview</Name>
                     <Link>Action=AgentITSMChange</Link>
                     <Type></Type>
                     <Block></Block>
@@ -124,7 +124,7 @@
                 <NavBarName>ITSM Change</NavBarName>
                 <NavBar>
                     <Description Translatable="1">New</Description>
-                    <Name>New</Name>
+                    <Name Translatable="1">New</Name>
                     <Link>Action=AgentITSMChangeAdd</Link>
                     <Type></Type>
                     <Block></Block>
@@ -148,7 +148,7 @@
                 <NavBarName>ITSM Change</NavBarName>
                 <NavBar>
                     <Description Translatable="1">New (from template)</Description>
-                    <Name>New (from template)</Name>
+                    <Name Translatable="1">New (from template)</Name>
                     <Link>Action=AgentITSMChangeAddFromTemplate</Link>
                     <Type></Type>
                     <Block></Block>
@@ -343,7 +343,7 @@
                 <Title Translatable="1">ITSM Change</Title>
                 <NavBar>
                     <Description Translatable="1">PIR (Post Implementation Review)</Description>
-                    <Name>PIR</Name>
+                    <Name Translatable="1">PIR</Name>
                     <Link>Action=AgentITSMChangePIR</Link>
                     <Type></Type>
                     <Block></Block>
@@ -382,7 +382,7 @@
                 <Title Translatable="1">PSA</Title>
                 <NavBar>
                     <Description Translatable="1">Projected Service Availability (PSA)</Description>
-                    <Name>Projected Service Availability</Name>
+                    <Name Translatable="1">Projected Service Availability</Name>
                     <Link>Action=AgentITSMChangePSA</Link>
                     <Type></Type>
                     <Block></Block>
@@ -421,7 +421,7 @@
                 <Title Translatable="1">Change Schedule</Title>
                 <NavBar>
                     <Description Translatable="1">Change Schedule</Description>
-                    <Name>Schedule</Name>
+                    <Name Translatable="1">Schedule</Name>
                     <Link>Action=AgentITSMChangeSchedule</Link>
                     <Type></Type>
                     <Block></Block>
@@ -444,7 +444,7 @@
                 <NavBarName>ITSM Change</NavBarName>
                 <NavBar>
                     <Description Translatable="1">Search Changes</Description>
-                    <Name>Search</Name>
+                    <Name Translatable="1">Search</Name>
                     <Link>Action=AgentITSMChangeSearch</Link>
                     <LinkOption>onclick="ITSM.Agent.ChangeManagement.Search.OpenSearchDialog('AgentITSMChangeSearch'); if (event.stopPropagation) { event.stopPropagation(); } else { window.event.cancelBubble = true; } return false;"</LinkOption>
                     <NavBar>ITSM Change</NavBar>
@@ -570,7 +570,7 @@
                 <Title Translatable="1">ITSM Change</Title>
                 <NavBar>
                     <Description Translatable="1">Template Overview</Description>
-                    <Name>Templates</Name>
+                    <Name Translatable="1">Templates</Name>
                     <Link>Action=AgentITSMTemplateOverview</Link>
                     <Type></Type>
                     <Block></Block>
@@ -759,7 +759,7 @@
                 <Title Translatable="1">Change Schedule</Title>
                 <NavBar>
                     <Description Translatable="1">Change Schedule</Description>
-                    <Name>Change Schedule</Name>
+                    <Name Translatable="1">Change Schedule</Name>
                     <Block></Block>
                     <Type></Type>
                     <NavBar></NavBar>

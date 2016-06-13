@@ -64,7 +64,7 @@
                         </tbody>
                     </table>
                     <div class="SpacingTop">
-                        <button type="submit" class="Primary">[% Translate("Submit") | html %]</button>
+                        <button type="submit" class="CallForAction Primary"><span>[% Translate("Submit") | html %]</span></button>
                     </div>
                 </form>
             </div>

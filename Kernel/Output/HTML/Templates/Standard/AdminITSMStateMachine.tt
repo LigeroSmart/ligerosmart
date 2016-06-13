@@ -25,7 +25,7 @@
                             <div>[% Data.ClassSelectionString %]</div>
                             <div id="ClassError" class="TooltipErrorMessage"><p>[% Translate("Select a catalog class!") | html %]</p></div>
                             <div id="ClassServerError" class="TooltipErrorMessage"><p>[% Translate("A catalog class is required!") | html %]</p></div>
-                            <button class="CallForAction Plus" type="submit" value="[% Translate("Add") | html %]">
+                            <button class="CallForAction Fullsize Center" type="submit" value="[% Translate("Add") | html %]">
                                 <span>[% Translate("Add a state transition") | html %]</span>
                             </button>
                         </form>
@@ -33,7 +33,7 @@
 [% RenderBlockEnd("ActionAddState") %]
 [% RenderBlockStart("ActionOverview") %]
                     <li>
-                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %]" class="CallForAction"><span>[% Translate("Go to overview") | html %]</span></a>
+                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %]" class="CallForAction Fullsize Center"><span>[% Translate("Go to overview") | html %]</span></a>
                     </li>
 [% RenderBlockEnd("ActionOverview") %]
                 </ul>
@@ -171,7 +171,7 @@
                         <div class="Clear"></div>
 
                         <div class="Field SpacingTop">
-                            <button class="Primary" type="submit" id="SubmitUpdate" value="[% Translate("Save") | html %]">[% Translate("Save") | html %]</button>
+                            <button class="Primary CallForAction" type="submit" id="SubmitUpdate" value="[% Translate("Save") | html %]"><span>[% Translate("Save") | html %]</span></button>
                             [% Translate("or") | html %]
                             <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Class=[% Data.Class | uri %]">[% Translate("Cancel") | html %]</a>
                         </div>
@@ -187,9 +187,9 @@
             </div>
             <div class="Content">
                 <p class="Center">
-                    [% Translate("Do you really want to delete the state transition") | html %]
-                    [% Translate("from") | html %] <strong>[% Translate(Data.StateName) | html %]</strong>
-                    [% Translate("to") | html %] <strong>[% Translate(Data.NextStateName) | html %]</strong> ?
+                    [% Translate("Do you really want to delete the state transition") | html %]:
+                    <strong>[% Translate(Data.StateName) | html %]</strong> &#8594;
+                    <strong>[% Translate(Data.NextStateName) | html %]</strong>?
                 </p>
 
                 <fieldset class="TableLike">
