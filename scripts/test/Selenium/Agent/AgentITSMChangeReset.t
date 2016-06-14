@@ -142,9 +142,14 @@ $Selenium->RunTest(
         # click on 'Reset'
         $Selenium->find_element("//a[contains(\@href, \'Action=AgentITSMChangeReset;ChangeID=$ChangeID')]")->click();
 
-        # wait for confirm button to show up and confirm delete action
-        $Selenium->WaitFor( JavaScript => "return \$('#DialogButton1').length;" );
-        $Selenium->find_element( "#DialogButton1", 'css' )->VerifiedClick();
+        # wait for confirm button to show up and confirm reset action
+        $Selenium->WaitFor( JavaScript => "return \$('.Dialog button.Primary.CallForAction:visible').length;" );
+        $Selenium->find_element( ".Dialog button.Primary.CallForAction", 'css' )->VerifiedClick();
+
+        sleep(1);
+
+        # # wait until page has loaded, if necessary
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("body").length' );
 
         # click on 'History' and switch window
         $Selenium->find_element("//a[contains(\@href, \'Action=AgentITSMChangeHistory;ChangeID=$ChangeID')]")->click();
