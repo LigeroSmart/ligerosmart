@@ -21,8 +21,7 @@ $Kernel::OM->ObjectParamAdd(
 );
 my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 
-my $RandomNumber = substr( $Helper->GetRandomNumber(), -5, 5 );
-$RandomNumber =~ s/^0//;
+my $RandomNumber = int substr $Helper->GetRandomNumber(), -5, 5;
 
 # data for the new action (task)
 my %NewActionData = (
@@ -168,8 +167,7 @@ $Self->True(
     'Insert time period for test user settings into database',
 );
 
-$RandomNumber = substr( $Helper->GetRandomNumber(), -3, 3 );
-$RandomNumber =~ s/^0//;
+$RandomNumber = int substr $Helper->GetRandomNumber(), -3, 3;
 
 # update user data
 $Update = $TimeAccountingObject->UserSettingsUpdate(
