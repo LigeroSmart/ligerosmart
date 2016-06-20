@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2016 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/068da228cd7064844e1ace7e0eaa3b63999934a5/Kernel/Output/HTML/Templates/Standard/AgentTicketZoom.tt
+# $origin: https://github.com/OTRS/otrs/blob/6f9a6349dda49b071e87dcf0ff2c2c199c2b2ec4/Kernel/Output/HTML/Templates/Standard/AgentTicketZoom.tt
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -681,10 +681,10 @@ $('.ShowFieldInfoOverlay').bind('click', function() {
 [% RenderBlockStart("NextActivityDialogs") %]
                 <div class="LightRow Bottom">
                     <ul class="Actions">
-                        <li><strong>[% Data.ActivityName | html %]:</strong></li>
+                        <li><strong>[% Translate(Data.ActivityName) | html %]:</strong></li>
 [% RenderBlockStart("ActivityDialog") %]
                         <li>
-                            <a title="[% Data.Name | html %]" class="AsPopup PopupType_TicketAction" href="[% Env("Baselink") %]Action=AgentTicketProcess;Subaction=DisplayActivityDialog;TicketID=[% Data.TicketID | uri %];ProcessEntityID=[% Data.ProcessEntityID | uri %];ActivityDialogEntityID=[% Data.ActivityDialogEntityID | uri %]">[% Data.Name | html %]</a>
+                            <a title="[% Translate(Data.Name) | html %]" class="AsPopup PopupType_TicketAction" href="[% Env("Baselink") %]Action=AgentTicketProcess;Subaction=DisplayActivityDialog;TicketID=[% Data.TicketID | uri %];ProcessEntityID=[% Data.ProcessEntityID | uri %];ActivityDialogEntityID=[% Data.ActivityDialogEntityID | uri %]">[% Translate(Data.Name) | html %]</a>
                         </li>
 [% RenderBlockEnd("ActivityDialog") %]
                     </ul>
