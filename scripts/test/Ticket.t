@@ -42,7 +42,7 @@ my $TicketID = $TicketObject->TicketCreate(
     Priority     => '3 normal',
     State        => 'closed successful',
     CustomerNo   => '123465',
-    CustomerUser => 'customer@example.com',
+    CustomerUser => 'unittest@otrs.com',
     OwnerID      => 1,
     UserID       => 1,
 );
@@ -143,7 +143,7 @@ my $TicketIDCreatedBy = $TicketObject->TicketCreate(
     Priority     => '3 normal',
     State        => 'closed successful',
     CustomerNo   => '123465',
-    CustomerUser => 'customer@example.com',
+    CustomerUser => 'unittest@otrs.com',
     OwnerID      => 1,
     UserID       => $TestUserID,
 );
@@ -226,7 +226,6 @@ If you feel the urge to write Perl modules, perlnewmod will give you good advice
 ' x 200
     ),    # create a really big string by concatenating 200 times
 
-    #    MessageID => '<asdasdasd.123@example.com>',
     ContentType    => 'text/plain; charset=ISO-8859-15',
     HistoryType    => 'OwnerUpdate',
     HistoryComment => 'Some free text!',
@@ -1553,7 +1552,7 @@ my $TicketIDSortOrder1 = $TicketObject->TicketCreate(
     Priority     => '3 normal',
     State        => 'new',
     CustomerNo   => $CustomerNo,
-    CustomerUser => 'customer@example.com',
+    CustomerUser => 'unittest@otrs.com',
     OwnerID      => 1,
     UserID       => 1,
 );
@@ -1573,7 +1572,7 @@ my $TicketIDSortOrder2 = $TicketObject->TicketCreate(
     Priority     => '3 normal',
     State        => 'new',
     CustomerNo   => $CustomerNo,
-    CustomerUser => 'customer@example.com',
+    CustomerUser => 'unittest@otrs.com',
     OwnerID      => 1,
     UserID       => 1,
 );
@@ -1605,7 +1604,7 @@ my @TicketIDsSortOrder = $TicketObject->TicketSearch(
     Title        => '%sort/order by test%',
     Queues       => ['Raw'],
     CustomerID   => $CustomerNo,
-    CustomerUser => 'customer@example.com',
+    CustomerUser => 'unittest@otrs.com',
     OrderBy      => [ 'Down', 'Up' ],
     SortBy       => [ 'Priority', 'Age' ],
     UserID       => 1,
@@ -1624,7 +1623,7 @@ $Self->Is(
     Title        => '%sort/order by test%',
     Queues       => ['Raw'],
     CustomerID   => $CustomerNo,
-    CustomerUser => 'customer@example.com',
+    CustomerUser => 'unittest@otrs.com',
     OrderBy      => [ 'Down', 'Down' ],
     SortBy       => [ 'Priority', 'Age' ],
     UserID       => 1,
@@ -1642,7 +1641,7 @@ $Self->Is(
     Title        => '%sort/order by test%',
     Queues       => ['Raw'],
     CustomerID   => $CustomerNo,
-    CustomerUser => 'customer@example.com',
+    CustomerUser => 'unittest@otrs.com',
     OrderBy      => [ 'Down', ],
     SortBy       => ['Changed'],
     UserID       => 1,
@@ -1661,7 +1660,7 @@ $Self->Is(
     Title        => '%sort/order by test%',
     Queues       => ['Raw'],
     CustomerID   => $CustomerNo,
-    CustomerUser => 'customer@example.com',
+    CustomerUser => 'unittest@otrs.com',
     OrderBy      => [ 'Up', ],
     SortBy       => [ 'Changed', ],
     UserID       => 1,
@@ -1681,7 +1680,7 @@ my $TicketIDSortOrder3 = $TicketObject->TicketCreate(
     Priority     => '4 high',
     State        => 'new',
     CustomerNo   => $CustomerNo,
-    CustomerUser => 'customer@example.com',
+    CustomerUser => 'unittest@otrs.com',
     OwnerID      => 1,
     UserID       => 1,
 );
@@ -1696,7 +1695,7 @@ my $TicketIDSortOrder4 = $TicketObject->TicketCreate(
     Priority     => '4 high',
     State        => 'new',
     CustomerNo   => $CustomerNo,
-    CustomerUser => 'customer@example.com',
+    CustomerUser => 'unittest@otrs.com',
     OwnerID      => 1,
     UserID       => 1,
 );
@@ -1707,7 +1706,7 @@ my $TicketIDSortOrder4 = $TicketObject->TicketCreate(
     Title        => '%sort/order by test%',
     Queues       => ['Raw'],
     CustomerID   => $CustomerNo,
-    CustomerUser => 'customer@example.com',
+    CustomerUser => 'unittest@otrs.com',
     OrderBy      => [ 'Down', 'Down' ],
     SortBy       => [ 'Priority', 'Age' ],
     UserID       => 1,
@@ -1725,7 +1724,7 @@ $Self->Is(
     Title        => '%sort/order by test%',
     Queues       => ['Raw'],
     CustomerID   => $CustomerNo,
-    CustomerUser => 'customer@example.com',
+    CustomerUser => 'unittest@otrs.com',
     OrderBy      => [ 'Up', 'Down' ],
     SortBy       => [ 'Priority', 'Age' ],
     UserID       => 1,
@@ -1743,7 +1742,7 @@ $Self->Is(
     Title        => '%sort/order by test%',
     Queues       => ['Raw'],
     CustomerID   => $CustomerNo,
-    CustomerUser => 'customer@example.com',
+    CustomerUser => 'unittest@otrs.com',
     OrderBy      => 'Down',
     SortBy       => 'Age',
     UserID       => 1,
@@ -1761,7 +1760,7 @@ $Self->Is(
     Title        => '%sort/order by test%',
     Queues       => ['Raw'],
     CustomerID   => $CustomerNo,
-    CustomerUser => 'customer@example.com',
+    CustomerUser => 'unittest@otrs.com',
     OrderBy      => 'Up',
     SortBy       => 'Age',
     UserID       => 1,
@@ -1778,7 +1777,7 @@ $Count = $TicketObject->TicketSearch(
     Title        => '%sort/order by test%',
     Queues       => ['Raw'],
     CustomerID   => $CustomerNo,
-    CustomerUser => 'customer@example.com',
+    CustomerUser => 'unittest@otrs.com',
     UserID       => 1,
     Limit        => 1,
 );
@@ -1832,7 +1831,7 @@ $TicketID = $TicketObject->TicketCreate(
     Priority     => '3 normal',
     State        => 'new',
     CustomerID   => '123465',
-    CustomerUser => 'customer@example.com',
+    CustomerUser => 'unittest@otrs.com',
     OwnerID      => 1,
     UserID       => 1,
 );
@@ -2202,6 +2201,17 @@ for my $SearchParam (qw(ArticleCreateTime TicketCreateTime TicketPendingTime)) {
     }
 }
 
-# cleanup is done by RestoreDatabase
+# cleanup is done by RestoreDatabase but we need to delete the tickets to cleanup the filesystem too
+my @DeleteTicketList = $TicketObject->TicketSearch(
+    Result            => 'ARRAY',
+    CustomerUserLogin => 'unittest@otrs.com',
+    UserID            => 1,
+);
+for my $TicketID (@DeleteTicketList) {
+    $TicketObject->TicketDelete(
+        TicketID => $TicketID,
+        UserID   => 1,
+    );
+}
 
 1;
