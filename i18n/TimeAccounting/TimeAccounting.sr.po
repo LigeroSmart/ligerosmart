@@ -1,13 +1,13 @@
 # 
 # Translators:
 # Jaroslav Balaz <balazj315@gmail.com>, 2014
-# Милорад Јовановић <j.milorad@gmail.com>, 2015
+# Милорад Јовановић <j.milorad@gmail.com>, 2015-2016
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-04-29 14:04+0000\n"
-"PO-Revision-Date: 2016-04-29 12:06+0000\n"
-"Last-Translator: Martin Gruner <martin.gruner@otrs.com>\n"
+"POT-Creation-Date: 2016-05-10 12:24+0000\n"
+"PO-Revision-Date: 2016-06-16 16:56+0000\n"
+"Last-Translator: Милорад Јовановић <j.milorad@gmail.com>\n"
 "Language-Team: Serbian (http://www.transifex.com/otrs/OTRS/language/sr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -69,7 +69,7 @@ msgstr "На боловању"
 
 #. Template: AgentTimeAccountingEdit
 msgid "On overtime leave"
-msgstr "Слободни дан"
+msgstr "Слободни дани"
 
 #. Template: AgentTimeAccountingEdit
 msgid "Please choose at least one day!"
@@ -77,7 +77,7 @@ msgstr "Молимо Вас изаберите бар један дан!"
 
 #. Template: AgentTimeAccountingEdit
 msgid "Please choose a reason for absence!"
-msgstr "Молимо Вас изаберите разлог вашег одсуства"
+msgstr "Молимо Вас изаберите разлог вашег одсуства!"
 
 #. Template: AgentTimeAccountingEdit
 msgid "Mass Entry"
@@ -105,7 +105,7 @@ msgstr "Напомена"
 
 #. Template: AgentTimeAccountingEdit
 msgid "Please add a remark with more than 8 characters!"
-msgstr ""
+msgstr "Молимо да додате напомену дужу од 8 карактера!"
 
 #. Template: AgentTimeAccountingEdit
 msgid "Start Time"
@@ -121,7 +121,7 @@ msgstr "Понављање сати није дозвољено. Време по
 
 #. Template: AgentTimeAccountingEdit
 msgid "Invalid format! Please enter a time with the format HH:MM."
-msgstr "Неисправан формат! Молимо да унесете време у формату HH:MM."
+msgstr "Неисправан формат! Молимо да унесете време у формату „HH:MM”."
 
 #. Template: AgentTimeAccountingEdit
 msgid "24:00 is only permitted as end time."
@@ -153,7 +153,7 @@ msgstr "Исправан период мора бити већи од нуле."
 
 #. Template: AgentTimeAccountingEdit
 msgid "Invalid period! Negative periods are not allowed."
-msgstr "Неисправан период! Негативан период није дозвољен."
+msgstr "Неисправан период! Негативни периоди нису дозвољени."
 
 #. Template: AgentTimeAccountingEdit
 msgid "Add one row"
@@ -253,7 +253,7 @@ msgstr "Следећи месец"
 
 #. Template: AgentTimeAccountingOverview
 msgid "Weekday"
-msgstr "Викенд"
+msgstr "Радни дан"
 
 #. Template: AgentTimeAccountingOverview
 msgid "Working Hours"
@@ -382,15 +382,15 @@ msgstr "Нови корисник"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Filter for Projects"
-msgstr "Филтрирај по пројекту"
+msgstr "Филтер за пројекте"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Filter for Tasks"
-msgstr "Филтрирај по задатку"
+msgstr "Филтер за задатке"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Filter for Users"
-msgstr "Филтрирај по кориснику"
+msgstr "Филтер за кориснике"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Time periods can not be deleted."
@@ -410,7 +410,7 @@ msgstr "Додај Задатак"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Edit Task Settings"
-msgstr "Измени подешавања задатка"
+msgstr "Уреди подешавања задатка"
 
 #. Template: AgentTimeAccountingSetting
 msgid ""
@@ -427,7 +427,7 @@ msgstr "Нова корисничка подешавања"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Edit User Settings"
-msgstr "Измени корисничка подешавања"
+msgstr "Уреди корисничка подешавања"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Comments"
@@ -479,7 +479,7 @@ msgstr "Крај периода мора бити после почетка пе
 
 #. Template: AgentTimeAccountingSetting
 msgid "Leave Days"
-msgstr "Дани одмора"
+msgstr "Дани одсуства"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Weekly Hours"
@@ -499,7 +499,7 @@ msgstr "Додај временски период"
 
 #. Template: AgentTimeAccountingView
 msgid "View Time Record"
-msgstr "Преглед временског записа"
+msgstr "Приказ временског записа"
 
 #. Template: AgentTimeAccountingView
 msgid "View of "
@@ -511,7 +511,7 @@ msgstr "Нема података за овај дан."
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Can't insert Working Units!"
-msgstr ""
+msgstr "Радне јединице се не могу унети!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Last Projects"
@@ -519,17 +519,17 @@ msgstr "Последњи Пројекти"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Can't save settings, because a day has only 24 hours!"
-msgstr ""
+msgstr "Не могу да сачувам подешавања јер дан има само 24 сата!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Can't delete Working Units!"
-msgstr ""
+msgstr "Радне јединице се не могу обрисати!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid ""
 "This Date is out of limit, but you haven't insert this day yet, so you get "
 "one(!) chance to insert"
-msgstr ""
+msgstr "Овај датум је изван граница али га нисте још увек унели, па имате још једну(!) шансу за унос"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Incomplete Working Days"
@@ -537,11 +537,11 @@ msgstr "Непотпуни радни дани"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Please insert your working hours!"
-msgstr "Молимо Вас унесите ваше радне сате!"
+msgstr "Молимо Вас унесите ваше радно време!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Successful insert!"
-msgstr "Додавање успешно!"
+msgstr "Успешно додавање!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Error while inserting multiple dates!"
@@ -560,7 +560,7 @@ msgid ""
 "No time period configured, or the specified date is outside of the defined "
 "time periods. Please contact the time accounting admin to update your time "
 "periods!"
-msgstr ""
+msgstr "Није конфигурисан временски период или је наведени датум ван дефинисаних временских периода. Молимо да контактирате администратора обрачуна времена за ажурирање временских периода!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Last Selected Projects"
@@ -572,11 +572,11 @@ msgstr "Сви пројекти"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingReporting.pm
 msgid "ReportingProject: Need ProjectID"
-msgstr ""
+msgstr "Извештавање о пројекту: Неопходан је ИД пројекта"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingReporting.pm
 msgid "Reporting Project"
-msgstr ""
+msgstr "Извештавање о пројекту"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingReporting.pm
 msgid "Reporting"
@@ -584,7 +584,7 @@ msgstr "Извештавање"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "Unable to update user settings!"
-msgstr ""
+msgstr "Корисничка подешавања се не могу ажурирати!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "Please contact your administrator."
@@ -592,39 +592,39 @@ msgstr "Молимо, контактирајте вашег администра
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "Project added!"
-msgstr ""
+msgstr "Додат пројекат!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "Project updated!"
-msgstr ""
+msgstr "Ажуриран пројекат!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "Task added!"
-msgstr ""
+msgstr "Додат задатак!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "Task updated!"
-msgstr ""
+msgstr "Ажуриран задатак!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "The UserID is not valid!"
-msgstr ""
+msgstr "ИД корисника није важећи!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "Can't insert user data!"
-msgstr ""
+msgstr "Кориснички подаци се не могу унети!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "Unable to add time period!"
-msgstr ""
+msgstr "Временски период се не може додати!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "User updated!"
-msgstr ""
+msgstr "Ажуриран корисник!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "User added!"
-msgstr ""
+msgstr "Додат корисник!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "New User"
@@ -636,7 +636,7 @@ msgstr "Статус периода"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingView.pm
 msgid "View: Need %s!"
-msgstr ""
+msgstr "Приказ: Потребно %s!"
 
 #. Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
 msgid "Incomplete working days"
@@ -670,7 +670,7 @@ msgstr "Подразумевано подешавање за опис."
 
 #. SysConfig
 msgid "Default setting for leave days."
-msgstr "Подразумевано подешавање за дане одмора."
+msgstr "Подразумевано подешавање за дане одсуства."
 
 #. SysConfig
 msgid "Default setting for overtime."
@@ -707,11 +707,11 @@ msgstr "Одређује да ли статистички модул може г
 
 #. SysConfig
 msgid "Edit time accounting settings."
-msgstr ""
+msgstr "Измени подешавања обрачунавања времена."
 
 #. SysConfig
 msgid "Edit time record."
-msgstr ""
+msgstr "Измени временски запис."
 
 #. SysConfig
 msgid "For how many days ago you can insert working units."
@@ -763,11 +763,11 @@ msgstr "Максимални број радних дана без уноса р
 
 #. SysConfig
 msgid "Overview."
-msgstr ""
+msgstr "Преглед."
 
 #. SysConfig
 msgid "Project time reporting."
-msgstr ""
+msgstr "Извештавање о времену пројекта."
 
 #. SysConfig
 msgid ""

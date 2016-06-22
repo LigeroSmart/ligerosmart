@@ -42,7 +42,7 @@ sub Data {
     $Self->{Translation}->{'Project'} = 'Progetto';
     $Self->{Translation}->{'Task'} = 'Compito';
     $Self->{Translation}->{'Remark'} = 'Commento';
-    $Self->{Translation}->{'Please add a remark with more than 8 characters!'} = '';
+    $Self->{Translation}->{'Please add a remark with more than 8 characters!'} = 'Aggiungere un commento con più di 8 caratteri!';
     $Self->{Translation}->{'Start Time'} = 'Istante di Inizio';
     $Self->{Translation}->{'Negative times are not allowed.'} = 'Non possono essere inseriti valori negativi.';
     $Self->{Translation}->{'Repeated hours are not allowed. Start time matches another interval.'} =

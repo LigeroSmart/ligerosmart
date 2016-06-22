@@ -1,13 +1,13 @@
 # 
 # Translators:
-# Hisatoshi Onishi <hisatoshi.onishi@gmail.com>, 2015
+# Hisatoshi Onishi <hisatoshi.onishi@gmail.com>, 2015-2016
 # Kentaro Hori <kentaro0919@gmail.com>, 2014,2016
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-04-29 14:04+0000\n"
-"PO-Revision-Date: 2016-04-29 12:06+0000\n"
-"Last-Translator: Martin Gruner <martin.gruner@otrs.com>\n"
+"POT-Creation-Date: 2016-05-10 12:24+0000\n"
+"PO-Revision-Date: 2016-06-22 06:23+0000\n"
+"Last-Translator: Hisatoshi Onishi <hisatoshi.onishi@gmail.com>\n"
 "Language-Team: Japanese (http://www.transifex.com/otrs/OTRS/language/ja/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -105,7 +105,7 @@ msgstr "注釈"
 
 #. Template: AgentTimeAccountingEdit
 msgid "Please add a remark with more than 8 characters!"
-msgstr ""
+msgstr "8文字以上の注釈を追加してください。"
 
 #. Template: AgentTimeAccountingEdit
 msgid "Start Time"
@@ -511,7 +511,7 @@ msgstr "該当するデータがありません。"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Can't insert Working Units!"
-msgstr ""
+msgstr "工数を挿入できません！"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Last Projects"
@@ -519,17 +519,17 @@ msgstr "前プロジェクト"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Can't save settings, because a day has only 24 hours!"
-msgstr ""
+msgstr "不正な時間です! 1日は24時間です"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Can't delete Working Units!"
-msgstr ""
+msgstr "工数を削除できません！"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid ""
 "This Date is out of limit, but you haven't insert this day yet, so you get "
 "one(!) chance to insert"
-msgstr ""
+msgstr "入力された日付は期間外ですので、挿入する事はできませんでした。もう一度(!)日付を入力してください。"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Incomplete Working Days"
@@ -560,7 +560,7 @@ msgid ""
 "No time period configured, or the specified date is outside of the defined "
 "time periods. Please contact the time accounting admin to update your time "
 "periods!"
-msgstr ""
+msgstr "期間が未設定であるか、指定された日付が期間外です。工数管理責任者の方に期間の見直しなどについてご相談ください。"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Last Selected Projects"
@@ -572,11 +572,11 @@ msgstr "全プロジェクト"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingReporting.pm
 msgid "ReportingProject: Need ProjectID"
-msgstr ""
+msgstr "ReportingProject: プロジェクトIDの入力が必要です。"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingReporting.pm
 msgid "Reporting Project"
-msgstr ""
+msgstr "プロジェクトを報告する"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingReporting.pm
 msgid "Reporting"
@@ -584,7 +584,7 @@ msgstr "報告する"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "Unable to update user settings!"
-msgstr ""
+msgstr "ユーザー設定を更新できません！"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "Please contact your administrator."
@@ -592,39 +592,39 @@ msgstr "システム管理者に連絡してください。"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "Project added!"
-msgstr ""
+msgstr "プロジェクトを追加しました！"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "Project updated!"
-msgstr ""
+msgstr "プロジェクトを更新しました！"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "Task added!"
-msgstr ""
+msgstr "タスクを追加しました！"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "Task updated!"
-msgstr ""
+msgstr "タスクを更新しました！"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "The UserID is not valid!"
-msgstr ""
+msgstr "UserID が無効です！"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "Can't insert user data!"
-msgstr ""
+msgstr "ユーザーデータが挿入できません！"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "Unable to add time period!"
-msgstr ""
+msgstr "期間を追加できません！"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "User updated!"
-msgstr ""
+msgstr "ユーザーを更新しました！"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "User added!"
-msgstr ""
+msgstr "ユーザーを追加しました！"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "New User"
@@ -636,7 +636,7 @@ msgstr "期間の状態"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingView.pm
 msgid "View: Need %s!"
-msgstr ""
+msgstr "注目！： %s の入力が必要です。"
 
 #. Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
 msgid "Incomplete working days"
@@ -707,11 +707,11 @@ msgstr "統計モジュールがタイムアカウンティング情報を生成
 
 #. SysConfig
 msgid "Edit time accounting settings."
-msgstr ""
+msgstr "時間会計の設定を編集"
 
 #. SysConfig
 msgid "Edit time record."
-msgstr ""
+msgstr "タイムレコードを編集"
 
 #. SysConfig
 msgid "For how many days ago you can insert working units."
@@ -763,11 +763,11 @@ msgstr "警告が表示されることなくエントリ出来る、営業日の
 
 #. SysConfig
 msgid "Overview."
-msgstr ""
+msgstr "概要"
 
 #. SysConfig
 msgid "Project time reporting."
-msgstr ""
+msgstr "プロジェクト別時間会計レポート"
 
 #. SysConfig
 msgid ""

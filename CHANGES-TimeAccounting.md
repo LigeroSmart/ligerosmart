@@ -1,4 +1,5 @@
 #5.0.3 2016-??-??
+ - 2016-06-22 Updated translation files, thanks to all translators.
  - 2016-05-13 Fixed bug#[12076](http://bugs.otrs.org/show_bug.cgi?id=12076) - "User's project overview" wrong "Monthly" hours and project list.
 
 #5.0.2 2016-05-17

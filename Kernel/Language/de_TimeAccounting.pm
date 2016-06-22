@@ -17,7 +17,7 @@ sub Data {
 
     # Template: AgentTimeAccountingDelete
     $Self->{Translation}->{'Do you really want to delete the Time Accounting of this day?'} =
-        'Möchten Sie wirklich den Eintrag für den aktuellen Tag löschen?';
+        'Möchten Sie wirklich die Zeiterfassung für den aktuellen Tag löschen?';
 
     # Template: AgentTimeAccountingEdit
     $Self->{Translation}->{'Edit Time Record'} = 'Zeitabrechnung bearbeiten';
@@ -87,7 +87,7 @@ sub Data {
     $Self->{Translation}->{'Weekday'} = 'Wochentag';
     $Self->{Translation}->{'Working Hours'} = 'Arbeitsstunden';
     $Self->{Translation}->{'Total worked hours'} = 'Arbeitsstunden (gesamt)';
-    $Self->{Translation}->{'User\'s project overview'} = 'Nutzerberichte';
+    $Self->{Translation}->{'User\'s project overview'} = 'Projektübersicht des Benutzers';
     $Self->{Translation}->{'Hours (monthly)'} = 'Stunden (im Monat)';
     $Self->{Translation}->{'Hours (Lifetime)'} = 'Stunden (gesamt)';
     $Self->{Translation}->{'Grand total'} = 'Summe';
@@ -166,7 +166,7 @@ sub Data {
     $Self->{Translation}->{'Can\'t save settings, because a day has only 24 hours!'} = 'Ungültige Angabe. Ein Tag hat nur 24 Stunden.';
     $Self->{Translation}->{'Can\'t delete Working Units!'} = 'Kann Arbeitseinheiten nicht löschen!';
     $Self->{Translation}->{'This Date is out of limit, but you haven\'t insert this day yet, so you get one(!) chance to insert'} =
-        '';
+        'Dieses Datum ist außerhalb des Grenzwertes, aber Sie haben diesen Tag bis jetzt noch nicht eingefügt, also bekommen Sie dafür eine(!) Chance.';
     $Self->{Translation}->{'Incomplete Working Days'} = 'Unvollständige Arbeitstage';
     $Self->{Translation}->{'Please insert your working hours!'} = 'Bitte die Arbeitsstunden eintragen!';
     $Self->{Translation}->{'Successful insert!'} = 'Eingaben gespeichert!';
