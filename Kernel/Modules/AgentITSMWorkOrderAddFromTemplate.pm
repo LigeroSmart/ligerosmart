@@ -61,7 +61,7 @@ sub Run {
     # error screen
     if ( !$Access ) {
         return $LayoutObject->NoPermission(
-            Message    => $LayoutObject->{LanguageObject}->Translate(
+            Message => $LayoutObject->{LanguageObject}->Translate(
                 'You need %s permissions on the change!', $Self->{Config}->{Permission}
             ),
             WithHeader => 'yes',

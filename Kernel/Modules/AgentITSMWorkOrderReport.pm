@@ -62,7 +62,8 @@ sub Run {
     # error screen
     if ( !$Access ) {
         return $LayoutObject->NoPermission(
-            Message    => $LayoutObject->{LanguageObject}->Translate( 'You need %s permissions!', $Self->{Config}->{Permission} ),
+            Message =>
+                $LayoutObject->{LanguageObject}->Translate( 'You need %s permissions!', $Self->{Config}->{Permission} ),
             WithHeader => 'yes',
         );
     }
@@ -76,7 +77,8 @@ sub Run {
     # check error
     if ( !$WorkOrder ) {
         return $LayoutObject->ErrorScreen(
-            Message => $LayoutObject->{LanguageObject}->Translate( 'WorkOrder "%s" not found in database!', $WorkOrderID ),
+            Message =>
+                $LayoutObject->{LanguageObject}->Translate( 'WorkOrder "%s" not found in database!', $WorkOrderID ),
             Comment => Translatable('Please contact the admin.'),
         );
     }
@@ -457,7 +459,8 @@ sub Run {
 
                 # show error message
                 return $LayoutObject->ErrorScreen(
-                    Message => $LayoutObject->{LanguageObject}->Translate( 'Was not able to update WorkOrder %s!', $WorkOrderID ),
+                    Message => $LayoutObject->{LanguageObject}
+                        ->Translate( 'Was not able to update WorkOrder %s!', $WorkOrderID ),
                     Comment => Translatable('Please contact the admin.'),
                 );
             }
@@ -531,7 +534,8 @@ sub Run {
     # no change found
     if ( !$Change ) {
         return $LayoutObject->ErrorScreen(
-            Message => $LayoutObject->{LanguageObject}->Translate( 'Could not find Change for WorkOrder %s!', $WorkOrderID ),
+            Message =>
+                $LayoutObject->{LanguageObject}->Translate( 'Could not find Change for WorkOrder %s!', $WorkOrderID ),
             Comment => Translatable('Please contact the admin.'),
         );
     }

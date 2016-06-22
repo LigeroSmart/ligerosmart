@@ -76,7 +76,8 @@ sub Run {
     # error screen
     if ( !$Access ) {
         return $LayoutObject->NoPermission(
-            Message    => $LayoutObject->{LanguageObject}->Translate( 'You need %s permissions!', $Self->{Config}->{Permission} ),
+            Message =>
+                $LayoutObject->{LanguageObject}->Translate( 'You need %s permissions!', $Self->{Config}->{Permission} ),
             WithHeader => 'yes',
         );
     }
@@ -106,7 +107,8 @@ sub Run {
     # check error
     if ( !$WorkOrder ) {
         return $LayoutObject->ErrorScreen(
-            Message => $LayoutObject->{LanguageObject}->Translate( 'Change "%s" not found in the database!', $HistoryEntry->{ChangeID} ),
+            Message => $LayoutObject->{LanguageObject}
+                ->Translate( 'Change "%s" not found in the database!', $HistoryEntry->{ChangeID} ),
             Comment => Translatable('Please contact the administrator.'),
         );
     }

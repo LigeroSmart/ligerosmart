@@ -73,7 +73,7 @@ sub Run {
     # error screen
     if ( !$Access ) {
         return $LayoutObject->NoPermission(
-            Message    => $LayoutObject->{LanguageObject}->Translate(
+            Message => $LayoutObject->{LanguageObject}->Translate(
                 'You need %s permissions!', $Self->{Config}->{Permission}
             ),
             WithHeader => 'yes',
@@ -89,7 +89,8 @@ sub Run {
     # check if change exists
     if ( !$ChangeData ) {
         return $LayoutObject->ErrorScreen(
-            Message => $LayoutObject->{LanguageObject}->Translate( 'Change "%s" not found in database!', $GetParam{ChangeID} ),
+            Message =>
+                $LayoutObject->{LanguageObject}->Translate( 'Change "%s" not found in database!', $GetParam{ChangeID} ),
             Comment => Translatable('Please contact the admin.'),
         );
     }
@@ -344,7 +345,8 @@ sub Run {
                     # check error
                     if ( !$Success ) {
                         return $LayoutObject->ErrorScreen(
-                            Message => $LayoutObject->{LanguageObject}->Translate( 'Could not update ActionID %s!', $ActionID ),
+                            Message => $LayoutObject->{LanguageObject}
+                                ->Translate( 'Could not update ActionID %s!', $ActionID ),
                             Comment => Translatable('Please contact the admin.'),
                         );
                     }

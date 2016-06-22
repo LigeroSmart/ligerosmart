@@ -64,7 +64,8 @@ sub Run {
         # error screen
         if ( !$Access ) {
             return $LayoutObject->NoPermission(
-                Message    => $LayoutObject->{LanguageObject}->Translate( 'You need %s permissions!', $Self->{Config}->{Permission} ),
+                Message => $LayoutObject->{LanguageObject}
+                    ->Translate( 'You need %s permissions!', $Self->{Config}->{Permission} ),
                 WithHeader => 'yes',
             );
         }
@@ -78,7 +79,8 @@ sub Run {
         # check error
         if ( !$WorkOrder ) {
             return $LayoutObject->ErrorScreen(
-                Message => $LayoutObject->{LanguageObject}->Translate( 'WorkOrder "%s" not found in database!', $WorkOrderID ),
+                Message =>
+                    $LayoutObject->{LanguageObject}->Translate( 'WorkOrder "%s" not found in database!', $WorkOrderID ),
                 Comment => Translatable('Please contact the admin.'),
             );
         }
@@ -120,7 +122,8 @@ sub Run {
         # error screen
         if ( !$Access ) {
             return $LayoutObject->NoPermission(
-                Message    => $LayoutObject->{LanguageObject}->Translate( 'You need %s permissions!', $Self->{Config}->{Permission} ),
+                Message => $LayoutObject->{LanguageObject}
+                    ->Translate( 'You need %s permissions!', $Self->{Config}->{Permission} ),
                 WithHeader => 'yes',
             );
         }
@@ -299,7 +302,8 @@ sub Run {
             # check error
             if ( !$WorkOrder ) {
                 return $LayoutObject->ErrorScreen(
-                    Message => $LayoutObject->{LanguageObject}->Translate( 'WorkOrder "%s" not found in database!', $WorkOrderID ),
+                    Message => $LayoutObject->{LanguageObject}
+                        ->Translate( 'WorkOrder "%s" not found in database!', $WorkOrderID ),
                     Comment => Translatable('Please contact the admin.'),
                 );
             }
@@ -339,7 +343,8 @@ sub Run {
         # check error
         if ( !$WorkOrder ) {
             return $LayoutObject->ErrorScreen(
-                Message => $LayoutObject->{LanguageObject}->Translate( 'WorkOrder "%s" not found in database!', $WorkOrderID ),
+                Message =>
+                    $LayoutObject->{LanguageObject}->Translate( 'WorkOrder "%s" not found in database!', $WorkOrderID ),
                 Comment => Translatable('Please contact the admin.'),
             );
         }

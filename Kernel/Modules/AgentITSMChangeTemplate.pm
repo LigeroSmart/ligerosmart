@@ -60,7 +60,8 @@ sub Run {
     # error screen
     if ( !$Access ) {
         return $LayoutObject->NoPermission(
-            Message    => $LayoutObject->{LanguageObject}->Translate( 'You need %s permissions!', $Self->{Config}->{Permission} ),
+            Message =>
+                $LayoutObject->{LanguageObject}->Translate( 'You need %s permissions!', $Self->{Config}->{Permission} ),
             WithHeader => 'yes',
         );
     }
@@ -156,7 +157,8 @@ sub Run {
             # show error message
             if ( !$TemplateContent ) {
                 return $LayoutObject->ErrorScreen(
-                    Message => $LayoutObject->{LanguageObject}->Translate( 'The change "%s" could not be serialized.', $ChangeID ),
+                    Message => $LayoutObject->{LanguageObject}
+                        ->Translate( 'The change "%s" could not be serialized.', $ChangeID ),
                     Comment => Translatable('Please contact the administrator.'),
                 );
             }
@@ -176,7 +178,8 @@ sub Run {
                 # show error message
                 if ( !$UpdateSuccess ) {
                     return $LayoutObject->ErrorScreen(
-                        Message => $LayoutObject->{LanguageObject}->Translate( 'Could not update the template "%s".', $TemplateID ),
+                        Message => $LayoutObject->{LanguageObject}
+                            ->Translate( 'Could not update the template "%s".', $TemplateID ),
                         Comment => Translatable('Please contact the administrator.'),
                     );
                 }
@@ -216,7 +219,8 @@ sub Run {
                 # show error message
                 if ( !$DeleteSuccess ) {
                     return $LayoutObject->ErrorScreen(
-                        Message => $LayoutObject->{LanguageObject}->Translate( 'Could not delete change "%s".', $ChangeID ),
+                        Message =>
+                            $LayoutObject->{LanguageObject}->Translate( 'Could not delete change "%s".', $ChangeID ),
                         Comment => Translatable('Please contact the administrator.'),
                     );
                 }

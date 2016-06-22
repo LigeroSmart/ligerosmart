@@ -44,7 +44,8 @@ sub Run {
     # error screen
     if ( !$Access ) {
         return $LayoutObject->NoPermission(
-            Message    => $LayoutObject->{LanguageObject}->Translate( 'You need %s permission!', $Self->{Config}->{Permission} ),
+            Message =>
+                $LayoutObject->{LanguageObject}->Translate( 'You need %s permission!', $Self->{Config}->{Permission} ),
             WithHeader => 'yes',
         );
     }
@@ -72,7 +73,8 @@ sub Run {
     # check error
     if ( !$Template ) {
         return $LayoutObject->ErrorScreen(
-            Message => $LayoutObject->{LanguageObject}->Translate( 'Template "%s" not found in database!', $TemplateID ),
+            Message =>
+                $LayoutObject->{LanguageObject}->Translate( 'Template "%s" not found in database!', $TemplateID ),
             Comment => Translatable('Please contact the admin.'),
         );
     }
@@ -95,7 +97,8 @@ sub Run {
 
             # show error message, when delete failed
             return $LayoutObject->ErrorScreen(
-                Message => $LayoutObject->{LanguageObject}->Translate( 'Was not able to delete the template %s!', $TemplateID ),
+                Message => $LayoutObject->{LanguageObject}
+                    ->Translate( 'Was not able to delete the template %s!', $TemplateID ),
                 Comment => Translatable('Please contact the admin.'),
             );
         }

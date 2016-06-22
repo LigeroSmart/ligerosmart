@@ -787,7 +787,7 @@ sub Run {
             }
 
             # PDF Output
-            my $Title = $LayoutObject->{LanguageObject}->Translate('Change Search');
+            my $Title     = $LayoutObject->{LanguageObject}->Translate('Change Search');
             my $PrintedBy = $LayoutObject->{LanguageObject}->Translate('printed by');
             my $Page      = $LayoutObject->{LanguageObject}->Translate('Page');
             my $Time      = $LayoutObject->{Time};

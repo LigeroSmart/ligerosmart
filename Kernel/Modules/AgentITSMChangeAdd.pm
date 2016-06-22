@@ -49,7 +49,8 @@ sub Run {
     # error screen
     if ( !$Access ) {
         return $LayoutObject->NoPermission(
-            Message    => $LayoutObject->{LanguageObject}->Translate( 'You need %s permissions!', $Self->{Config}->{Permission} ),
+            Message =>
+                $LayoutObject->{LanguageObject}->Translate( 'You need %s permissions!', $Self->{Config}->{Permission} ),
             WithHeader => 'yes',
         );
     }
@@ -445,7 +446,7 @@ sub Run {
                                 . "Filename=$CachedAttachment->{Filename};ChangeID=$ChangeID";
 
                             # replace urls
-                            $ChangeData->{Description} =~ s{$Search}{$Replace}xms;
+                            $ChangeData->{Description}   =~ s{$Search}{$Replace}xms;
                             $ChangeData->{Justification} =~ s{$Search}{$Replace}xms;
 
                             # update change

@@ -61,7 +61,8 @@ sub Run {
     # error screen
     if ( !$Access ) {
         return $LayoutObject->NoPermission(
-            Message    => $LayoutObject->{LanguageObject}->Translate( 'You need %s permissions!', $Self->{Config}->{Permission} ),
+            Message =>
+                $LayoutObject->{LanguageObject}->Translate( 'You need %s permissions!', $Self->{Config}->{Permission} ),
             WithHeader => 'yes',
         );
     }
@@ -181,8 +182,10 @@ sub Run {
 
                 # show error message
                 return $LayoutObject->ErrorScreen(
-                    Message => $LayoutObject->{LanguageObject}->Translate( 'The current %s could not be determined.', $MoveTimeType ),
-                    Comment => $LayoutObject->{LanguageObject}->Translate( 'The %s of all workorders has to be defined.', $MoveTimeType ),
+                    Message => $LayoutObject->{LanguageObject}
+                        ->Translate( 'The current %s could not be determined.', $MoveTimeType ),
+                    Comment => $LayoutObject->{LanguageObject}
+                        ->Translate( 'The %s of all workorders has to be defined.', $MoveTimeType ),
                 );
             }
 
@@ -413,7 +416,8 @@ sub _MoveWorkOrders {
                 $WorkOrderID2Number{ $UpdateParams->{WorkOrderID} };
 
             return $LayoutObject->ErrorScreen(
-                Message => $LayoutObject->{LanguageObject}->Translate( 'Was not able to move time slot for workorder #%s!', $Number ),
+                Message => $LayoutObject->{LanguageObject}
+                    ->Translate( 'Was not able to move time slot for workorder #%s!', $Number ),
                 Comment => Translatable('Please contact the admin.'),
             );
         }

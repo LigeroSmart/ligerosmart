@@ -59,7 +59,8 @@ sub Run {
     # error screen
     if ( !$Access ) {
         return $LayoutObject->NoPermission(
-            Message    => $LayoutObject->{LanguageObject}->Translate( 'You need %s permissions!', $Self->{Config}->{Permission} ),
+            Message =>
+                $LayoutObject->{LanguageObject}->Translate( 'You need %s permissions!', $Self->{Config}->{Permission} ),
             WithHeader => 'yes',
         );
     }
@@ -110,7 +111,8 @@ sub Run {
 
             # show error message, when delete failed
             return $LayoutObject->ErrorScreen(
-                Message => $LayoutObject->{LanguageObject}->Translate( 'Was not able to delete the changeID %s!', $ChangeID ),
+                Message =>
+                    $LayoutObject->{LanguageObject}->Translate( 'Was not able to delete the changeID %s!', $ChangeID ),
                 Comment => Translatable('Please contact the administrator.'),
             );
         }

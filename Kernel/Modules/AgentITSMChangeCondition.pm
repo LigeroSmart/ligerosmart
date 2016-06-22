@@ -65,7 +65,7 @@ sub Run {
     # error screen
     if ( !$Access ) {
         return $LayoutObject->NoPermission(
-            Message    => $LayoutObject->{LanguageObject}->Translate(
+            Message => $LayoutObject->{LanguageObject}->Translate(
                 'You need %s permissions!', $Self->{Config}->{Permission}
             ),
             WithHeader => 'yes',
@@ -81,7 +81,8 @@ sub Run {
     # check if change is found
     if ( !$ChangeData ) {
         return $LayoutObject->ErrorScreen(
-            Message => $LayoutObject->{LanguageObject}->Translate( 'Change "%s" not found in database!', $GetParam{ChangeID} ),
+            Message =>
+                $LayoutObject->{LanguageObject}->Translate( 'Change "%s" not found in database!', $GetParam{ChangeID} ),
             Comment => Translatable('Please contact the admin.'),
         );
     }
@@ -122,7 +123,8 @@ sub Run {
             # check error
             if ( !$Success ) {
                 return $LayoutObject->ErrorScreen(
-                    Message => $LayoutObject->{LanguageObject}->Translate( 'Could not delete ConditionID %s!', $ConditionID ),
+                    Message =>
+                        $LayoutObject->{LanguageObject}->Translate( 'Could not delete ConditionID %s!', $ConditionID ),
                     Comment => Translatable('Please contact the admin.'),
                 );
             }

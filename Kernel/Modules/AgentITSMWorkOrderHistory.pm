@@ -62,7 +62,8 @@ sub Run {
     # error screen
     if ( !$Access ) {
         return $LayoutObject->NoPermission(
-            Message    => $LayoutObject->{LanguageObject}->Translate( 'You need %s permissions!', $Self->{Config}->{Permission} ),
+            Message =>
+                $LayoutObject->{LanguageObject}->Translate( 'You need %s permissions!', $Self->{Config}->{Permission} ),
             WithHeader => 'yes',
         );
     }
@@ -76,7 +77,8 @@ sub Run {
     # check error
     if ( !$WorkOrder ) {
         return $LayoutObject->ErrorScreen(
-            Message => $LayoutObject->{LanguageObject}->Translate( 'WorkOrder "%s" not found in the database!', $WorkOrderID ),
+            Message =>
+                $LayoutObject->{LanguageObject}->Translate( 'WorkOrder "%s" not found in the database!', $WorkOrderID ),
             Comment => Translatable('Please contact the administrator.'),
         );
     }
@@ -90,7 +92,8 @@ sub Run {
     # check error
     if ( !$Change ) {
         return $LayoutObject->ErrorScreen(
-            Message => $LayoutObject->{LanguageObject}->Translate( 'Change "%s" not found in the database!', $WorkOrder->{ChangeID} ),
+            Message => $LayoutObject->{LanguageObject}
+                ->Translate( 'Change "%s" not found in the database!', $WorkOrder->{ChangeID} ),
             Comment => Translatable('Please contact the administrator.'),
         );
     }
@@ -167,7 +170,8 @@ sub Run {
                             }
                             else {
                                 return $LayoutObject->ErrorScreen(
-                                    Message => $LayoutObject->{LanguageObject}->Translate( 'Unknown type "%s" encountered!', $Type ),
+                                    Message => $LayoutObject->{LanguageObject}
+                                        ->Translate( 'Unknown type "%s" encountered!', $Type ),
                                     Comment => Translatable('Please contact the administrator.'),
                                 );
                             }

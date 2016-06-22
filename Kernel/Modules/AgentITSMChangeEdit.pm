@@ -66,7 +66,8 @@ sub Run {
     # error screen
     if ( !$Access ) {
         return $LayoutObject->NoPermission(
-            Message    => $LayoutObject->{LanguageObject}->Translate( 'You need %s permissions!', $Self->{Config}->{Permission} ),
+            Message =>
+                $LayoutObject->{LanguageObject}->Translate( 'You need %s permissions!', $Self->{Config}->{Permission} ),
             WithHeader => 'yes',
         );
     }
@@ -443,7 +444,7 @@ sub Run {
                         . "Filename=$Attachment->{Filename};ChangeID=$ChangeID";
 
                     # replace urls
-                    $GetParam{Description} =~ s{$Search}{$Replace}xms;
+                    $GetParam{Description}   =~ s{$Search}{$Replace}xms;
                     $GetParam{Justification} =~ s{$Search}{$Replace}xms;
 
                     # update change
@@ -477,7 +478,8 @@ sub Run {
 
                 # show error message
                 return $LayoutObject->ErrorScreen(
-                    Message => $LayoutObject->{LanguageObject}->Translate( 'Was not able to update Change!', $ChangeID ),
+                    Message =>
+                        $LayoutObject->{LanguageObject}->Translate( 'Was not able to update Change!', $ChangeID ),
                     Comment => Translatable('Please contact the admin.'),
                 );
             }

@@ -62,7 +62,8 @@ sub Run {
     # error screen
     if ( !$Access ) {
         return $LayoutObject->NoPermission(
-            Message    => $LayoutObject->{LanguageObject}->Translate( 'You need %s permissions!', $Self->{Config}->{Permission} ),
+            Message =>
+                $LayoutObject->{LanguageObject}->Translate( 'You need %s permissions!', $Self->{Config}->{Permission} ),
             WithHeader => 'yes',
         );
     }
@@ -76,7 +77,8 @@ sub Run {
     # check error
     if ( !$Change ) {
         return $LayoutObject->ErrorScreen(
-            Message => $LayoutObject->{LanguageObject}->Translate( 'Change "%s" not found in the database!', $ChangeID ),
+            Message =>
+                $LayoutObject->{LanguageObject}->Translate( 'Change "%s" not found in the database!', $ChangeID ),
             Comment => Translatable('Please contact the administrator.'),
         );
     }
@@ -199,7 +201,7 @@ sub Run {
                                 );
                             }
                             elsif (
-                                $Type eq 'WorkOrderAgent'
+                                $Type    eq 'WorkOrderAgent'
                                 || $Type eq 'ChangeBuilder'
                                 || $Type eq 'ChangeManager'
                                 )
@@ -212,7 +214,7 @@ sub Run {
                                 $TranslationNeeded = 0;
                             }
                             elsif (
-                                $Type eq 'Category'
+                                $Type    eq 'Category'
                                 || $Type eq 'Impact'
                                 || $Type eq 'Priority'
                                 )
@@ -275,7 +277,8 @@ sub Run {
                             }
                             else {
                                 return $LayoutObject->ErrorScreen(
-                                    Message => $LayoutObject->{LanguageObject}->Translate( 'Unknown type "%s" encountered!', $Type ),
+                                    Message => $LayoutObject->{LanguageObject}
+                                        ->Translate( 'Unknown type "%s" encountered!', $Type ),
                                     Comment => Translatable('Please contact the administrator.'),
                                 );
                             }
@@ -313,7 +316,7 @@ sub Run {
                         $HistoryEntry->{$ContentNewOrOld} = join ',', @UserLogins;
                     }
                     elsif (
-                        $HistoryEntry->{Fieldname} eq 'ExpressionConjunction'
+                        $HistoryEntry->{Fieldname}    eq 'ExpressionConjunction'
                         || $HistoryEntry->{Fieldname} eq 'Name'
                         || $HistoryEntry->{Fieldname} eq 'Comment'
                         || $HistoryEntry->{Fieldname} eq 'Selector'
@@ -363,7 +366,7 @@ sub Run {
 
             # add the ID of the Condition, Expression or Action that was updated
             if (
-                $HistoryType eq 'ConditionUpdate'
+                $HistoryType    eq 'ConditionUpdate'
                 || $HistoryType eq 'ExpressionUpdate'
                 || $HistoryType eq 'ActionUpdate'
                 )
