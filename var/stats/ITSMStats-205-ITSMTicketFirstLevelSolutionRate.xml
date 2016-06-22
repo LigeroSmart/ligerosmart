@@ -2,7 +2,7 @@
 
 <otrs_stats>
 <Cache>0</Cache>
-<Description>Monthly overview of first level solution rate per queue in the last month.
+<Description>Monthly overview of first level solution rate per Queue in the last month.
 
 X-Axis: Days of the month
 Y-Axis: Queue
@@ -24,7 +24,7 @@ Restrictions:
 <StatType>dynamic</StatType>
 <SumCol>1</SumCol>
 <SumRow>1</SumRow>
-<Title>Monthly overview of first level solution rate per queue in the last month.</Title>
+<Title>Monthly overview of first level solution rate per Queue in the last month.</Title>
 <UseAsRestriction Element="StateIDs" Fixed="1">
 <SelectedValues>2</SelectedValues>
 <SelectedValues>10</SelectedValues>

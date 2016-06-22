@@ -2,7 +2,7 @@
 
 <otrs_stats>
 <Cache>0</Cache>
-<Description>This reports shows changes that got rejected in the selected time period.</Description>
+<Description>This report shows changes that got rejected in the selected time period.</Description>
 <File></File>
 <Format>CSV</Format>
 <Format>Excel</Format>

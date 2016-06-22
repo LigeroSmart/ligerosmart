@@ -2,7 +2,7 @@
 
 <otrs_stats>
 <Cache>0</Cache>
-<Description>This reports calculates the changes done for config items of a specific config item class.</Description>
+<Description>This report calculates the changes done for config items of a specific config item class.</Description>
 <File></File>
 <Format>CSV</Format>
 <Format>Excel</Format>

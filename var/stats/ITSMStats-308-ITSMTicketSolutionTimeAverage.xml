@@ -8,7 +8,7 @@ X-Axis: Ticket-Type
 Y-Axis: Queue
 
 Restrictions:
-    -created in a specific time period
+    -created in the past month
     -a closed state</Description>
 <File></File>
 <Format>CSV</Format>

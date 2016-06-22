@@ -2,7 +2,7 @@
 
 <otrs_stats>
 <Cache>0</Cache>
-<Description>Count all changes for the selected change state in the the selected time period.</Description>
+<Description>Count all changes for the selected change state in the selected time period.</Description>
 <File></File>
 <Format>CSV</Format>
 <Format>Excel</Format>

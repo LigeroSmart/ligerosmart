@@ -2,7 +2,7 @@
 
 <otrs_stats>
 <Cache>0</Cache>
-<Description>Average solution time per Ticket-Type and Sevice for all tickets ever created.
+<Description>Average solution time for all tickets ever created per Ticket-Type and Service.
 
 X-Axis: Ticket-Type
 Y-Axis: Service
@@ -22,7 +22,7 @@ Restrictions:
 <StatType>dynamic</StatType>
 <SumCol>0</SumCol>
 <SumRow>0</SumRow>
-<Title>Average solution time per Ticket-Type and Sevice for all tickets ever created.</Title>
+<Title>Average solution time for all tickets ever created per Ticket-Type and Service.</Title>
 <UseAsRestriction Element="StateIDs" Fixed="1">
 <SelectedValues>2</SelectedValues>
 <SelectedValues>10</SelectedValues>
