@@ -1,4 +1,5 @@
 #5.0.4 2016-??-??
+ - 2016-06-27 Fixed issue with not correctly quoted search parameters.
  - 2016-05-02 Added FileID attribute to the retrieved attachments using Generic Interface PublicFAQGet operation, thanks to Esteban Marin.
 
 #5.0.3 2016-05-17

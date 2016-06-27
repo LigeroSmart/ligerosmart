@@ -119,6 +119,7 @@
         <File Permission="644" Location="scripts/test/Console/Command/Admin/FAQ/Import.t"/>
         <File Permission="644" Location="scripts/webservices/GenericFAQConnectorSOAP.yml"/>
         <File Permission="644" Location="scripts/test/Console/Command/Maint/FAQ/ContentTypeSet.t"/>
+        <File Permission="644" Location="scripts/test/FAQSearch/InConditionGet.t"/>
         <File Permission="644" Location="scripts/test/FAQ.t"/>
         <File Permission="644" Location="scripts/test/FAQSearch.t"/>
         <File Permission="644" Location="scripts/test/GenericInterface/FAQConnector.t"/>

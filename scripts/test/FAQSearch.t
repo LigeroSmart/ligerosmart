@@ -480,6 +480,58 @@ for my $Test (@Tests) {
     );
 }
 
+# other tests
+@Tests = (
+    {
+        Name   => 'States Hash Correct IDs',
+        Config => {
+            %SearchConfigTemplate,
+            States => {
+                1 => 'Internal',
+                2 => 'External',
+                3 => 'Public',
+            },
+        },
+        ExpectedResults => [ $AddedFAQs[0], $AddedFAQs[1] ],
+    },
+    {
+        Name   => 'States Hash Incorrect IDs (Float)',
+        Config => {
+            %SearchConfigTemplate,
+            States => {
+                1.1 => 'Internal',
+                2.2 => 'External',
+                3.3 => 'Public',
+            },
+        },
+        ExpectedResults => [],
+    },
+    {
+        Name   => 'States Hash Incorrect IDs (String)',
+        Config => {
+            %SearchConfigTemplate,
+            States => {
+                'Internal' => 'Internal',
+                'External' => 'External',
+                'Public'   => 'Public',
+            },
+        },
+        ExpectedResults => [],
+    },
+
+);
+
+# execute the tests
+for my $Test (@Tests) {
+    my @FAQIDs = $FAQObject->FAQSearch( %{ $Test->{Config} } );
+
+    $Self->IsDeeply(
+        \@FAQIDs,
+        $Test->{ExpectedResults},
+        "$Test->{Name} FAQSearch()",
+    );
+}
+
 # time based tests
 
 # update FAQs
@@ -751,12 +803,9 @@ for my $Test (@Tests) {
         Name   => 'Wrong LastChangedUserIDs Format',
         Config => {
             %SearchConfigTemplate,
-            CreatedUserIDs => $AddedUsers[2],
+            LastChangedUserIDs => $AddedUsers[2],
         },
-        ExpectedResults => [
-            $AddedFAQs[0],
-            $AddedFAQs[1],
-        ],
+        ExpectedResults => [],
     },
 );
 
