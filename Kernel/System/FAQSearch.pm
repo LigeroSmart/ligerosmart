@@ -11,6 +11,8 @@ package Kernel::System::FAQSearch;
 use strict;
 use warnings;
 
+use Kernel::System::VariableCheck qw(:all);
+
 our @ObjectDependencies = (
     'Kernel::Config',
     'Kernel::System::DB',
@@ -217,21 +219,6 @@ sub FAQSearch {
         Result => 'vrate',
     );
 
-    # check types of given arguments
-    ARGUMENT:
-    for my $Key (qw(LanguageIDs CategoryIDs ValidIDs CreatedUserIDs LastChangedUserIDs)) {
-
-        next ARGUMENT if !$Param{$Key};
-        next ARGUMENT if ref $Param{$Key} eq 'ARRAY' && @{ $Param{$Key} };
-
-        # log error
-        $Kernel::OM->Get('Kernel::System::Log')->Log(
-            Priority => 'error',
-            Message  => "The given param '$Key' is invalid or an empty array reference!",
-        );
-        return;
-    }
-
     # get database object
     my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
@@ -239,6 +226,17 @@ sub FAQSearch {
     ARGUMENT:
     for my $Key (qw(LanguageIDs CategoryIDs ValidIDs CreatedUserIDs LastChangedUserIDs)) {
         next ARGUMENT if !$Param{$Key};
+
+        if ( !IsArrayRefWithData( $Param{$Key} ) ) {
+
+            # log error
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
+                Priority => 'error',
+                Message  => "The given param '$Key' is invalid or an empty array reference!",
+            );
+
+            return;
+        }
 
         # quote elements
         for my $Element ( @{ $Param{$Key} } ) {
@@ -1064,7 +1062,7 @@ sub _InConditionGet {
         return;
     }
 
-    if ( !$Param{IDRef} || ref $Param{IDRef} ne 'ARRAY' || !@{ $Param{IDRef} } ) {
+    if ( !IsArrayRefWithData( $Param{IDRef} ) ) {
         $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "Need IDRef!",
