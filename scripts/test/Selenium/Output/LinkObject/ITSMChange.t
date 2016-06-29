@@ -95,6 +95,9 @@ $Selenium->RunTest(
 
         # select test created ticket to link with test created change
         $Selenium->find_element("//input[\@name='SEARCH::TicketNumber']")->send_keys($TicketNumber);
+
+        sleep(2);
+
         $Selenium->find_element("//button[\@value='Search'][\@type='submit']")->click();
         $Selenium->WaitFor( JavaScript => "return \$('input#LinkTargetKeys').length" );
 
@@ -104,8 +107,6 @@ $Selenium->RunTest(
 
         $Selenium->WaitFor( WindowCount => 1 );
         $Selenium->switch_to_window( $Handles->[0] );
-
-        sleep(1);
 
         $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("body").length' );
 
@@ -128,14 +129,13 @@ $Selenium->RunTest(
         # delete link relation
         $Selenium->find_element("//a[contains(\@href, \'Subaction=LinkDelete' )]")->VerifiedClick();
         $Selenium->find_element("//input[\@id='LinkDeleteIdentifier']")->click();
+
         $Selenium->find_element("//button[\@type='submit']")->VerifiedClick();
 
         $Selenium->find_element("//a[contains(\@href, \'Action=AgentLinkObject;Subaction=Close' )]")->click();
 
         $Selenium->WaitFor( WindowCount => 1 );
         $Selenium->switch_to_window( $Handles->[0] );
-
-        sleep(1);
 
         $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("body").length' );
 

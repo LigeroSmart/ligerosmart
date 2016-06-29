@@ -115,6 +115,9 @@ $Selenium->RunTest(
         $Selenium->execute_script(
             "\$('#TargetIdentifier').val('Ticket').trigger('redraw.InputField').trigger('change');"
         );
+
+        sleep(2);
+
         $Selenium->find_element("//input[\@name='SEARCH::TicketNumber']")->send_keys($TicketNumber);
         $Selenium->find_element("//button[\@value='Search'][\@type='submit']")->click();
         $Selenium->WaitFor( JavaScript => "return \$('input#LinkTargetKeys').length" );
