@@ -126,6 +126,8 @@ $Selenium->RunTest(
         # wait until page has loaded, if necessary
         $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#SubmitSelect").length' );
 
+        sleep(2);
+
         # delete link relation
         $Selenium->find_element("//a[contains(\@href, \'Subaction=LinkDelete' )]")->VerifiedClick();
         $Selenium->find_element("//input[\@id='LinkDeleteIdentifier']")->click();
