@@ -108,6 +108,8 @@ $Selenium->RunTest(
         $Selenium->WaitFor( WindowCount => 1 );
         $Selenium->switch_to_window( $Handles->[0] );
 
+        sleep(2);
+
         $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("body").length' );
 
         # verify test change is linked with test ticket
