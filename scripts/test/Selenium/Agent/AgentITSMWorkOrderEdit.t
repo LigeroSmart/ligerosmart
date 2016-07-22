@@ -145,6 +145,8 @@ $Selenium->RunTest(
         # wait until page has loaded, if necessary
         $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#WorkOrderTitle").length' );
 
+        sleep 1;
+
         # check edited values
         $Self->Is(
             $Selenium->find_element( '#WorkOrderTitle', 'css' )->get_value(),
