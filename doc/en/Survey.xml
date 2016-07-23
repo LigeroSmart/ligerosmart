@@ -542,7 +542,7 @@ shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
             command on the command line:
         </para>
         <screen>
-shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test Survey:RequestsSend
+shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test Survey:GetRequestRecipient:RequestsSend
         </screen>
         <para>Selenium unit tests</para>
         <para>

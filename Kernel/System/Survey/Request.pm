@@ -282,47 +282,13 @@ sub RequestSend {
     # filter for new rich text content
     $Body =~ s/&lt;OTRS_PublicSurveyKey&gt;/$PublicSurveyKey/gi;
 
-    my $ToString = $CustomerUser{UserEmail};
+    # Get request recipient.
+    my $To = $Self->_GetRequestRecipient(
+        UserEmail => $CustomerUser{UserEmail} // '',
+        TicketID => $Param{TicketID},
+    );
 
-    if ( !$ToString ) {
-        my %Article = $TicketObject->ArticleLastCustomerArticle(
-            TicketID => $Param{TicketID},
-        );
-        if ( $Article{SenderType} eq 'agent' ) {
-            $ToString = $Article{To};
-        }
-        else {
-            $ToString = $Article{From};
-        }
-    }
-
-    # parse the to string
-    my $To;
-    for my $ToParser ( Mail::Address->parse($ToString) ) {
-        $To = $ToParser->address();
-    }
-
-    # return if no to is found
     return if !$To;
-
-    # check if it's a valid email address (min is needed)
-    return if $To !~ /@/;
-
-    # convert to lower cases
-    $To = lc $To;
-
-    # check recipient blacklist
-    my $RecipientBlacklist = $ConfigObject->Get('Survey::NotificationRecipientBlacklist');
-    if (
-        defined $RecipientBlacklist
-        && ref $RecipientBlacklist eq 'ARRAY'
-        && @{$RecipientBlacklist}
-        )
-    {
-        for my $Recipient ( @{$RecipientBlacklist} ) {
-            return if defined $Recipient && length $Recipient && $To eq $Recipient;
-        }
-    }
 
     # check if not survey should be send
     my $SendNoSurveyRegExp = $ConfigObject->Get('Survey::SendNoSurveyRegExp');
@@ -562,6 +528,83 @@ sub RequestCount {
     }
 
     return $RequestCount;
+}
+
+=begin Internal:
+
+=cut
+
+=item _GetRequestRecipient()
+
+Extracts and checks the recipient for the request.
+
+    my $Recipient = $SurveyObject->_GetRequestRecipient(
+        UserEmail => 'User <user@example.com>',     # optional
+        TicketID  => 123,                           # optional
+    )
+
+Returns:
+
+    $Recipient = 'user@example.com';    # or false in case of an error.
+
+=cut
+
+sub _GetRequestRecipient {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    if ( !$Param{UserEmail} && !$Param{TicketID} ) {
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
+            Priority => 'error',
+            Message  => "Need UserEmail or TicketID",
+        );
+
+        return;
+    }
+
+    my $ToString = $Param{UserEmail};
+
+    if ( !$ToString ) {
+        my %Article = $Kernel::OM->Get('Kernel::System::Ticket')->ArticleLastCustomerArticle(
+            TicketID => $Param{TicketID},
+        );
+        if ( %Article && $Article{SenderType} eq 'agent' ) {
+            $ToString = $Article{To};
+        }
+        else {
+            $ToString = $Article{From};
+        }
+    }
+
+    # parse the to string
+    my $To;
+    for my $ToParser ( Mail::Address->parse($ToString) ) {
+        $To = $ToParser->address();
+    }
+
+    # return if no to is found
+    return if !$To;
+
+    # check if it's a valid email address (min is needed)
+    return if $To !~ /@/;
+
+    # convert to lower cases
+    $To = lc $To;
+
+    # check recipient blacklist
+    my $RecipientBlacklist = $Kernel::OM->Get('Kernel::Config')->Get('Survey::NotificationRecipientBlacklist');
+    if (
+        defined $RecipientBlacklist
+        && ref $RecipientBlacklist eq 'ARRAY'
+        && @{$RecipientBlacklist}
+        )
+    {
+        for my $Recipient ( @{$RecipientBlacklist} ) {
+            return if defined $Recipient && length $Recipient && $To eq lc $Recipient;
+        }
+    }
+
+    return $To;
 }
 
 1;
