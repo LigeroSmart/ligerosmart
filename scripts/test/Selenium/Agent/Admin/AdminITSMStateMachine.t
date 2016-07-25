@@ -34,7 +34,7 @@ $Selenium->RunTest(
 
         # navigate to AdminITSMStateMachine screen
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
-        $Selenium->get("${ScriptAlias}index.pl?Action=AdminITSMStateMachine");
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AdminITSMStateMachine");
 
         # check screen
         $Selenium->find_element( "table",             'css' );
@@ -76,7 +76,7 @@ $Selenium->RunTest(
             }
 
             # return back to AdminITSMStateMachine overview scrreen
-            $Selenium->get("${ScriptAlias}index.pl?Action=AdminITSMStateMachine");
+            $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AdminITSMStateMachine");
         }
         }
 );

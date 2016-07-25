@@ -34,7 +34,7 @@ $Selenium->RunTest(
 
         # navigate to AdminITSMChangeCIPAllocate screen
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
-        $Selenium->get("${ScriptAlias}index.pl?Action=AdminITSMChangeCIPAllocate");
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AdminITSMChangeCIPAllocate");
 
         # get general catalog object
         my $GeneralCatalogObject = $Kernel::OM->Get('Kernel::System::GeneralCatalog');
