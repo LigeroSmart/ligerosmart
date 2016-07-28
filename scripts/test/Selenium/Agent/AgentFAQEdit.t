@@ -135,9 +135,9 @@ $Selenium->RunTest(
         $Selenium->execute_script("\$('#ValidID').val('2').trigger('redraw.InputField').trigger('change');");
 
         # submit and switch back window
-        $Selenium->find_element( "#FAQSubmit", 'css' )->VerifiedClick();
-        $Selenium->switch_to_window( $Handles->[0] );
+        $Selenium->find_element( "#FAQSubmit", 'css' )->click();
         $Selenium->WaitFor( WindowCount => 1 );
+        $Selenium->switch_to_window( $Handles->[0] );
 
         # click on 'Edit' and switch window
         $Selenium->find_element("//a[contains(\@href, \'Action=AgentFAQEdit;ItemID=$FAQID' )]")->click();
