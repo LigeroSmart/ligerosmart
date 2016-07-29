@@ -52,29 +52,29 @@
     <section>
         <title>Time Accounting Overview</title>
         <para>
-            It Displays for the current logged user, a summary of its own working hours per day
+            It displays for the current logged user a summary of its own working hours per day
             (month based), vacation days summary, sick leave days, and the distribution of its
-            working ours on each project and tasks.
+            working hours on each project and tasks.
         </para>
     </section>
     <section>
         <title>Time Accounting Edit</title>
         <para>
-            Allows to set working hours, vacation, sick leaves and overtime leaves on a day basis,
-            the working ours can be set by defining the start and the end dates, or a period of
+            Allows to set working hours, vacation, sick leaves and overtime leaves on a day basis.
+            The working hours can be set by defining the start and the end dates, or a period of
             time.
         </para>
         <para>
-            The working hours can be registered per project and task, pre-filled selection lists are
+            The working hours can be registered per project and task. Pre-filled selection lists are
             used to speedup the register process and prevent typos.
         </para>
     </section>
     <section>
         <title>Time Accounting Reporting</title>
         <para>
-            Designed for administrators and managers, shows an monthly based timing information
+            Designed for administrators and managers, shows a monthly based timing information
             summary for each registered user (working hours, overtime leave, sick leave and
-            vacations). As well timing information summary for each project and tasks (the time
+            vacations), as well as timing information summary for each project and tasks (the time
             spend on each).
         </para>
     </section>
@@ -82,7 +82,7 @@
         <title>Time Accounting Settings</title>
         <para>
             Also designed for administrators and managers, it allows the creation of multiple
-            projects and tasks. It also enable the assignment of the users defining their working
+            projects and tasks. It also enables the assignment of the users defining their working
             calendar, working periods (begin date, end date, number of vacation days, hours per week
             and allowed overtime hours).
         </para>
@@ -105,7 +105,7 @@
         <para>
             A counter displaying the number of days without registering the working hours can be set
             in the upper part of the screen (similar to Locked tickets counter or Responsible
-            tickets counter), when clicking on the icon, agents are redirected to the Time
+            tickets counter). When clicking on the icon, agents are redirected to the Time
             Accounting Edit screen, to fill the missing records.
         </para>
     </section>
@@ -376,7 +376,7 @@ shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
 <chapter>
     <title>Usage</title>
     <para>
-        This package adds a new group called "time_accouting", depending on the permission over this
+        This package adds a new group called "time_accouting". Depending on the permission over this
         group, agents are allowed to execute certain actions, in general having "rw" permission
         allows agents to use all screens while "ro" permissions only allows access to personal
         overview (Time Accounting Overview) and working hours registration (Time Accounting Edit)
@@ -503,7 +503,7 @@ shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
         <para>This example shows how to register the working hours in time accounting.</para>
         <note>
             <para>
-                A previously added user to time accounting is needed for this example, this user
+                A previously added user to time accounting is needed for this example. This user
                 needs also at least "ro" permissions over "time_accouting" group.
             </para>
         </note>
@@ -515,7 +515,7 @@ shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
                     Navigate to the desired date by using the left and right arrows in the "Date
                     Navigation" widget located in the sidebar, at the left part of the screen
                     (navigation is automatic by clicking the arrows). Alternatively a date can be
-                    defined with the controls below, click on "Submit" button within the widget to
+                    defined with the controls below. Click on "Submit" button within the widget to
                     go to the selected date.
                 </para>
             </listitem>
@@ -532,13 +532,13 @@ shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
             </listitem>
             <listitem>
                 <para>
-                    Now fill the working hours it can be done by setting the "Start" and "End" times
+                    Now fill the working hours. It can be done by setting the "Start" and "End" times
                     in "HH:MM" format or register the period of time in the proper column.
                 </para>
                 <example>
                     <title>Setting Working Hours For Two And A Half Hours</title>
                     <para>
-                        Lets think that the working hours took place from 11:00 AM to 01:30 PM,
+                        Lets think that the working hours took place from 11:00 AM to 01:30 PM.
                         Set 11:00 for the "Start" column and 13:30 for the "End" column, or
                         alternatively to this, just set 2.5 (two and a half hours) in the "Period"
                         column.
@@ -547,7 +547,7 @@ shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
             </listitem>
             <listitem>
                 <para>
-                    After setting working hours in one or more rows make sue the "Total" (in the
+                    After setting working hours in one or more rows, make sure the "Total" (in the
                     table footer) has the expected value, the sum of all working hours. Then click
                     on "Submit" button on the lower part of the screen.
                 </para>
@@ -586,7 +586,7 @@ shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
     <section>
         <title>Test Cases</title>
         <para>
-            To test this package please follow the examples described in the Usage section, all the
+            To test this package please follow the examples described in the "Usage" section. All the
             tests cases should return the expected results defined at the beginning of each example.
         </para>
     </section>
