@@ -91,7 +91,7 @@ JAVASCRIPT
             );
 
             # go back on Language overview screen
-            $Selenium->get("${ScriptAlias}index.pl?Action=AgentFAQLanguage");
+            $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentFAQLanguage");
 
         }
         else {
