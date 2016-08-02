@@ -90,7 +90,7 @@ $Selenium->RunTest(
         );
 
         # close 'History' pop-up window
-        $Selenium->find_element( ".CancelClosePopup", 'css' )->VerifiedClick();
+        $Selenium->close();
 
         # delete test created FAQ
         my $Success = $FAQObject->FAQDelete(
