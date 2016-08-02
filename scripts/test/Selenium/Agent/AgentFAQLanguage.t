@@ -81,7 +81,7 @@ $Selenium->RunTest(
 JAVASCRIPT
             $Selenium->execute_script($CheckConfirmJS);
 
-            $Selenium->find_element( "#Name", 'css' )->submit();
+            $Selenium->find_element( "#Name", 'css' )->VerifiedSubmit();
             $Self->Is(
                 $Selenium->execute_script(
                     "return \$('#Name').hasClass('ServerError')"
