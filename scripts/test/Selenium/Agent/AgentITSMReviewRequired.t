@@ -30,7 +30,7 @@ $Selenium->RunTest(
         $Kernel::OM->Get('Kernel::System::SysConfig')->ConfigItemUpdate(
             Valid => 1,
             Key   => 'Frontend::RichText',
-            Value => 0
+            Value => 0,
         );
 
         # create and log in test user
@@ -106,7 +106,7 @@ $Selenium->RunTest(
         $Selenium->WaitFor( WindowCount => 1 );
         $Selenium->switch_to_window( $Handles->[0] );
 
-        sleep(1);
+        sleep 2;
 
         # navigate to zoom view of second created test ticket
         $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentTicketZoom;TicketID=$TicketIDs[1]");
@@ -131,6 +131,8 @@ $Selenium->RunTest(
 
         $Selenium->WaitFor( WindowCount => 1 );
         $Selenium->switch_to_window( $Handles->[0] );
+
+        sleep 2;
 
         # click on search
         $Selenium->find_element( "#GlobalSearchNav", 'css' )->click();
