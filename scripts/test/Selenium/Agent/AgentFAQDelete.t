@@ -63,7 +63,7 @@ $Selenium->RunTest(
         );
 
         # click on 'Delete'
-        $Selenium->find_element("//a[contains(\@href, \'Action=AgentFAQDelete;ItemID=$FAQID' )]")->click();
+        $Selenium->find_element("//a[contains(\@href, \'Action=AgentFAQDelete;ItemID=$FAQID' )]")->VerifiedClick();
         $Selenium->WaitFor( JavaScript => 'return $("#DialogButton1").length' );
 
         # verify delete message

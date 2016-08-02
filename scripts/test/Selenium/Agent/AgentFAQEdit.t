@@ -103,7 +103,7 @@ $Selenium->RunTest(
         );
 
         # click on 'Edit' and switch window
-        $Selenium->find_element("//a[contains(\@href, \'Action=AgentFAQEdit;ItemID=$FAQID' )]")->click();
+        $Selenium->find_element("//a[contains(\@href, \'Action=AgentFAQEdit;ItemID=$FAQID' )]")->VerifiedClick();
 
         $Selenium->WaitFor( WindowCount => 2 );
         my $Handles = $Selenium->get_window_handles();
@@ -140,7 +140,7 @@ $Selenium->RunTest(
         $Selenium->switch_to_window( $Handles->[0] );
 
         # click on 'Edit' and switch window
-        $Selenium->find_element("//a[contains(\@href, \'Action=AgentFAQEdit;ItemID=$FAQID' )]")->click();
+        $Selenium->find_element("//a[contains(\@href, \'Action=AgentFAQEdit;ItemID=$FAQID' )]")->VerifiedClick();
 
         $Selenium->WaitFor( WindowCount => 2 );
         $Handles = $Selenium->get_window_handles();
@@ -161,7 +161,7 @@ $Selenium->RunTest(
         }
 
         # close 'Edit' pop-up window
-        $Selenium->find_element( ".CancelClosePopup", 'css' )->click();
+        $Selenium->find_element( ".CancelClosePopup", 'css' )->VerifiedClick();
 
         # delete test created FAQ
         my $Success = $FAQObject->FAQDelete(

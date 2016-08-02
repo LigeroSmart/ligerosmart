@@ -126,7 +126,7 @@ $Selenium->RunTest(
 
         # vote 5 stars for FAQ
         my $VoteElement = $Selenium->find_element( "#RateButton100", 'css' );
-        $Selenium->find_child_element( $VoteElement, ".RateButton", 'css' )->click();
+        $Selenium->find_child_element( $VoteElement, ".RateButton", 'css' )->VerifiedClick();
         $Selenium->find_element("//button[\@id='RateSubmitButton'][\@type='submit']")->VerifiedClick();
 
         # check vote message

@@ -86,7 +86,7 @@ $Selenium->RunTest(
         }
 
         # click on delete icon
-        $Selenium->find_element( "#DeleteCategoryID$CategoryID", 'css' )->click();
+        $Selenium->find_element( "#DeleteCategoryID$CategoryID", 'css' )->VerifiedClick();
         $Selenium->WaitFor( JavaScript => 'return $("#DialogButton1").length' );
         $Selenium->find_element( "#DialogButton1", 'css' )->VerifiedClick();
 

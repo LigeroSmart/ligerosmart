@@ -71,7 +71,7 @@ $Selenium->RunTest(
         );
 
         # click on 'History' and switch window
-        $Selenium->find_element("//a[contains(\@href, \'Action=AgentFAQHistory;ItemID=$FAQID' )]")->click();
+        $Selenium->find_element("//a[contains(\@href, \'Action=AgentFAQHistory;ItemID=$FAQID' )]")->VerifiedClick();
 
         $Selenium->WaitFor( WindowCount => 2 );
         my $Handles = $Selenium->get_window_handles();
@@ -90,7 +90,7 @@ $Selenium->RunTest(
         );
 
         # close 'History' pop-up window
-        $Selenium->find_element( ".CancelClosePopup", 'css' )->click();
+        $Selenium->find_element( ".CancelClosePopup", 'css' )->VerifiedClick();
 
         # delete test created FAQ
         my $Success = $FAQObject->FAQDelete(

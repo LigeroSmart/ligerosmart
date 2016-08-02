@@ -128,7 +128,7 @@ JAVASCRIPT
         if ( !$Exists ) {
 
             # delete 'test' language
-            $Selenium->find_element( "#DeleteLanguageID$LanguageID", 'css' )->click();
+            $Selenium->find_element( "#DeleteLanguageID$LanguageID", 'css' )->VerifiedClick();
 
             $Selenium->WaitFor( JavaScript => 'return $("#DialogButton1").length' );
 

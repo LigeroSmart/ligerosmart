@@ -67,7 +67,7 @@ $Selenium->RunTest(
         $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentFAQZoom;ItemID=$FAQIDs[0]");
 
         # click on 'Link'
-        $Selenium->find_element("//a[contains(\@href, \'Action=AgentLinkObject;SourceObject=FAQ' )]")->click();
+        $Selenium->find_element("//a[contains(\@href, \'Action=AgentLinkObject;SourceObject=FAQ' )]")->VerifiedClick();
 
         # switch to link object window
         $Selenium->WaitFor( WindowCount => 2 );
@@ -79,9 +79,9 @@ $Selenium->RunTest(
         $Selenium->find_element("//input[\@name='SEARCH::Title']")->send_keys( $FAQTitles[1] );
         $Selenium->find_element("//button[\@value='Search'][\@type='submit']")->VerifiedClick();
 
-        $Selenium->find_element("//input[\@id='LinkTargetKeys']")->click();
+        $Selenium->find_element("//input[\@id='LinkTargetKeys']")->VerifiedClick();
         $Selenium->find_element("//button[\@id='AddLinks'][\@type='submit']")->VerifiedClick();
-        $Selenium->find_element("//a[contains(\@href, \'Subaction=Close' )]")->click();
+        $Selenium->close();
 
         # back to AgentFAQZoom
         $Selenium->WaitFor( WindowCount => 1 );
@@ -105,9 +105,9 @@ $Selenium->RunTest(
 
         # delete link relation
         $Selenium->find_element("//a[contains(\@href, \'Subaction=LinkDelete' )]")->VerifiedClick();
-        $Selenium->find_element("//input[\@id='SelectAllLinks0']")->click();
+        $Selenium->find_element("//input[\@id='SelectAllLinks0']")->VerifiedClick();
         $Selenium->find_element("//button[\@type='submit']")->VerifiedClick();
-        $Selenium->find_element("//a[contains(\@href, \'Subaction=Close' )]")->click();
+        $Selenium->close();
 
         # back to AgentFAQZoom
         $Selenium->WaitFor( WindowCount => 1 );
