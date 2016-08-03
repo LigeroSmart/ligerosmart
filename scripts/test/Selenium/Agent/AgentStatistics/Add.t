@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2016 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/da2fe02e38cb3f7ad446c2044867e594f377c48c/scripts/test/Selenium/Agent/AgentStatistics/Add.t
+# $origin: https://github.com/OTRS/otrs/blob/4616595618dcb7cc05a474fe9d5b74c30d49b96e/scripts/test/Selenium/Agent/AgentStatistics/Add.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -225,7 +225,8 @@ $Selenium->RunTest(
             $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentStatistics;Subaction=Add");
 
             # add new statistics
-            $Selenium->find_element("//a[contains(\@data-statistic-preselection, \'$StatsData->{Type}\' )]")->click();
+            $Selenium->find_element("//a[contains(\@data-statistic-preselection, \'$StatsData->{Type}\' )]")
+                ->VerifiedClick();
             $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#Title").length' );
 
             my $Description = 'Description ' . $StatsData->{Title};
@@ -239,7 +240,7 @@ $Selenium->RunTest(
             $Selenium->find_element("//button[\@value='Save'][\@type='submit']")->VerifiedClick();
 
             # check X-axis configuration dialog
-            $Selenium->find_element( ".EditXAxis", 'css' )->click();
+            $Selenium->find_element( ".EditXAxis", 'css' )->VerifiedClick();
             if ( $StatsData->{Object} ne 'Kernel::System::Stats::Dynamic::TicketList' ) {
                 $Selenium->execute_script(
                     "\$('#EditDialog select').val('$StatsData->{XAxis}').trigger('redraw.InputField').trigger('change');"
@@ -248,7 +249,7 @@ $Selenium->RunTest(
             $Selenium->find_element( "#DialogButton1", 'css' )->VerifiedClick();
 
             # check Y-axis configuration dialog
-            $Selenium->find_element( ".EditYAxis", 'css' )->click();
+            $Selenium->find_element( ".EditYAxis", 'css' )->VerifiedClick();
             $Selenium->execute_script(
                 "\$('#EditDialog select').val('$StatsData->{YAxis}').trigger('redraw.InputField').trigger('change');"
             );
@@ -268,7 +269,7 @@ $Selenium->RunTest(
             $Selenium->find_element( "#DialogButton1", 'css' )->VerifiedClick();
 
             # check Restrictions configuration dialog
-            $Selenium->find_element( ".EditRestrictions", 'css' )->click();
+            $Selenium->find_element( ".EditRestrictions", 'css' )->VerifiedClick();
             $Selenium->execute_script(
                 "\$('#EditDialog select option[value=\"$StatsData->{RestrictionID}\"]').prop('selected', true).trigger('redraw.InputField').trigger('change');"
             );
@@ -285,7 +286,7 @@ $Selenium->RunTest(
             $Selenium->find_element( "#DialogButton1", 'css' )->VerifiedClick();
 
             # change preview format to Print
-            $Selenium->find_element("//button[contains(\@data-format, \'Print')]")->click();
+            $Selenium->find_element("//button[contains(\@data-format, \'Print')]")->VerifiedClick();
             $Self->True(
                 $Selenium->execute_script("return \$('#PreviewContentPrint').css('display')") eq 'block',
                 "Print format is displayed",
@@ -300,7 +301,8 @@ $Selenium->RunTest(
             for my $StatsFormat (@StatsFormat) {
 
                 # change preview format
-                $Selenium->find_element("//button[contains(\@data-format, \'$StatsFormat->{Format}')]")->click();
+                $Selenium->find_element("//button[contains(\@data-format, \'$StatsFormat->{Format}')]")
+                    ->VerifiedClick();
                 $Self->True(
                     $Selenium->execute_script("return \$('#$StatsFormat->{PreviewContent}').css('display')") eq 'block',
                     "StackedArea format is displayed",

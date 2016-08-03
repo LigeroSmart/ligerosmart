@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2016 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/da2fe02e38cb3f7ad446c2044867e594f377c48c/scripts/test/Selenium/Agent/Admin/AdminCustomerUserService.t
+# $origin: https://github.com/OTRS/otrs/blob/4616595618dcb7cc05a474fe9d5b74c30d49b96e/scripts/test/Selenium/Agent/Admin/AdminCustomerUserService.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -113,7 +113,7 @@ $Selenium->RunTest(
 
         # allocate test service to test customer user
         $Selenium->find_element("//a[contains(\@href, \'CustomerUserLogin=$CustomerUserName' )]")->VerifiedClick();
-        $Selenium->find_element("//input[\@value='$ServiceID']")->click();
+        $Selenium->find_element("//input[\@value='$ServiceID']")->VerifiedClick();
         $Selenium->find_element("//button[\@value='Submit'][\@type='submit']")->VerifiedClick();
 
         # check test customer user allocation to test service
@@ -126,7 +126,7 @@ $Selenium->RunTest(
         );
 
         # remove test customer user allocations from test service
-        $Selenium->find_element("//input[\@value=\"$CustomerUserName\"]")->click();
+        $Selenium->find_element("//input[\@value=\"$CustomerUserName\"]")->VerifiedClick();
         $Selenium->find_element("//button[\@value='Submit'][\@type='submit']")->VerifiedClick();
 
         # check if there is any test service allocation towards test customer user
