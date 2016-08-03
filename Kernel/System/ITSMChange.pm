@@ -3358,7 +3358,7 @@ sub _CheckChangeParams {
 
         # check the maximum length of description and justification
         if (
-            $Argument    eq 'Description'
+            $Argument eq 'Description'
             || $Argument eq 'DescriptionPlain'
             || $Argument eq 'Justification'
             || $Argument eq 'JustificationPlain'

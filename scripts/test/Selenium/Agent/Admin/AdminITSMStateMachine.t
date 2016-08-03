@@ -78,7 +78,7 @@ $Selenium->RunTest(
             # return back to AdminITSMStateMachine overview scrreen
             $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AdminITSMStateMachine");
         }
-        }
+    }
 );
 
 1;

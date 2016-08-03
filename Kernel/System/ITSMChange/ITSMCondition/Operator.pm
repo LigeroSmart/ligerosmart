@@ -1241,7 +1241,7 @@ sub _OperatorSet {
 
         # check objects
         return 1 if !$ActionObjects;
-        return if ref $ActionObjects ne 'ARRAY';
+        return   if ref $ActionObjects ne 'ARRAY';
 
         # execute actions for all objects
         $Result = $BackendObject->$Sub(

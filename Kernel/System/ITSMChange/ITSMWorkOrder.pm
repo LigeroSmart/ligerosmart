@@ -1303,7 +1303,7 @@ sub WorkOrderSearch {
         if (
             $Self->{DBType} eq 'oracle'
             && (
-                $StringParam    eq 'Instruction'
+                $StringParam eq 'Instruction'
                 || $StringParam eq 'Report'
                 || $StringParam eq 'ChangeDescription'
                 || $StringParam eq 'ChangeJustification'
@@ -3122,7 +3122,7 @@ sub _CheckWorkOrderParams {
 
         # check the maximum length of description and justification
         if (
-            $Argument    eq 'Instruction'
+            $Argument eq 'Instruction'
             || $Argument eq 'InstructionPlain'
             || $Argument eq 'Report'
             || $Argument eq 'ReportPlain'
@@ -3329,7 +3329,7 @@ sub _CheckTimestamps {
 
             # remove all non-digit characters
             $StartTime =~ s{ \D }{}xmsg;
-            $EndTime   =~ s{ \D }{}xmsg;
+            $EndTime =~ s{ \D }{}xmsg;
 
             # start time must be smaller than end time
             if ( $StartTime >= $EndTime ) {

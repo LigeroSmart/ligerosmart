@@ -66,7 +66,7 @@ $Selenium->RunTest(
                 $Element->is_displayed();
             }
         }
-        }
+    }
 );
 
 1;

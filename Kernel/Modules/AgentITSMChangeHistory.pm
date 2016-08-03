@@ -201,7 +201,7 @@ sub Run {
                                 );
                             }
                             elsif (
-                                $Type    eq 'WorkOrderAgent'
+                                $Type eq 'WorkOrderAgent'
                                 || $Type eq 'ChangeBuilder'
                                 || $Type eq 'ChangeManager'
                                 )
@@ -214,7 +214,7 @@ sub Run {
                                 $TranslationNeeded = 0;
                             }
                             elsif (
-                                $Type    eq 'Category'
+                                $Type eq 'Category'
                                 || $Type eq 'Impact'
                                 || $Type eq 'Priority'
                                 )
@@ -316,7 +316,7 @@ sub Run {
                         $HistoryEntry->{$ContentNewOrOld} = join ',', @UserLogins;
                     }
                     elsif (
-                        $HistoryEntry->{Fieldname}    eq 'ExpressionConjunction'
+                        $HistoryEntry->{Fieldname} eq 'ExpressionConjunction'
                         || $HistoryEntry->{Fieldname} eq 'Name'
                         || $HistoryEntry->{Fieldname} eq 'Comment'
                         || $HistoryEntry->{Fieldname} eq 'Selector'
@@ -366,7 +366,7 @@ sub Run {
 
             # add the ID of the Condition, Expression or Action that was updated
             if (
-                $HistoryType    eq 'ConditionUpdate'
+                $HistoryType eq 'ConditionUpdate'
                 || $HistoryType eq 'ExpressionUpdate'
                 || $HistoryType eq 'ActionUpdate'
                 )
