@@ -118,9 +118,9 @@ $Selenium->RunTest(
             ->VerifiedClick();
 
         # click on 'Delete'
-        $Selenium->find_element("//a[contains(\@href, \'Action=AgentITSMChangeDelete;ChangeID=$ChangeID')]")->VerifiedClick();
+        $Selenium->find_element("//a[contains(\@href, \'Action=AgentITSMChangeDelete;ChangeID=$ChangeID')]")->click();
 
-        sleep(2);
+        sleep 2;
 
         # wait for confirm button to show up and confirm delete action
         $Selenium->WaitFor( JavaScript => "return \$('.Dialog button.Primary.CallForAction:visible').length;" );
@@ -139,7 +139,7 @@ $Selenium->RunTest(
 
         # make sure cache is correct
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => 'ITSMChange*' );
-        }
+    }
 );
 
 1;
