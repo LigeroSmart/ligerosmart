@@ -225,11 +225,11 @@
                         <a href="[% Env("Baselink") %][% Data.Link | Interpolate %]" id="Menu[% Data.MenuID | html %]" class="[% Data.MenuClass | html %]" title="[% Translate(Data.Description) | html %]">[% Translate(Data.Name) | html %]</a>
                     </li>
 
-[% RenderBlockStart("ShowConfirmationDialog") %]
+[% RenderBlockStart("ShowConfirmDialog") %]
 [% WRAPPER JSOnDocumentComplete %]
 <script type="text/javascript">//<![CDATA[
 /*global ITSM: true */
-    ITSM.Agent.ConfirmationDialog.BindConfirmationDialog({
+    ITSM.Agent.ConfirmDialog.BindConfirmDialog({
         ElementID:                  'Menu[% Data.MenuID %]',
         ElementSelector:            '[% Data.ElementSelector | Interpolate %]',
         DialogContentQueryString:   '[% Data.DialogContentQueryString | Interpolate %]',
@@ -243,7 +243,7 @@
     });
 //]]></script>
 [% END %]
-[% RenderBlockEnd("ShowConfirmationDialog") %]
+[% RenderBlockEnd("ShowConfirmDialog") %]
 
 [% RenderBlockEnd("MenuItem") %]
 [% RenderBlockEnd("Menu") %]

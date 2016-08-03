@@ -282,6 +282,23 @@ sub CodeUpgradeFromLowerThan_4_0_91 {    ## no critic
     return 1;
 }
 
+=item CodeUpgradeFromLowerThan_5_0_12()
+
+This function is only executed if the installed module version is smaller than 5.0.12.
+
+my $Result = $CodeObject->CodeUpgradeFromLowerThan_5_0_12();
+
+=cut
+
+sub CodeUpgradeFromLowerThan_5_0_12 {    ## no critic
+    my ( $Self, %Param ) = @_;
+
+    # change configurations to match a new JavaScript file location
+    $Self->_MigrateConfigsFromLowerThan_5_0_12();
+
+    return 1;
+}
+
 =item CodeUninstall()
 
 run the code uninstall part
@@ -3929,6 +3946,88 @@ sub _MigrateConfigs {
             Key   => 'PreferencesGroups###' . $PreferenceModule,
             Value => $Setting->{$PreferenceModule},
         );
+    }
+
+    return 1;
+}
+
+=item _MigrateConfigsFromLowerThan_5_0_12()
+
+change configurations to match the new file location.
+
+    my $Result = $CodeObject->_MigrateConfigsFromLowerThan_5_0_12();
+
+=cut
+
+sub _MigrateConfigsFromLowerThan_5_0_12 {
+
+    # create needed objects
+    my $SysConfigObject = $Kernel::OM->Get('Kernel::System::SysConfig');
+    my $ConfigObject    = $Kernel::OM->Get('Kernel::Config');
+
+    # get setting content for all frontend modules
+    my $FrontendConfig = $ConfigObject->Get('Frontend::Module');
+
+    FRONTENDMODULE:
+    for my $Module ( sort keys %{$FrontendConfig} ) {
+
+        next FRONTENDMODULE if !$FrontendConfig->{$Module}->{Loader};
+        next FRONTENDMODULE if !$FrontendConfig->{$Module}->{Loader}->{JavaScript};
+        next FRONTENDMODULE if !@{ $FrontendConfig->{$Module}->{Loader}->{JavaScript} };
+
+        # check if setting contains the file ITSM.Agent.ConfirmationDialog.js
+        next FRONTENDMODULE if !grep { $_ eq 'ITSM.Agent.ConfirmationDialog.js' } @{ $FrontendConfig->{$Module}->{Loader}->{JavaScript} };
+
+        # build new settings with renamed Javascript file
+        my @NewJavascriptLoaderSettings;
+        for my $LoaderSetting ( @{ $FrontendConfig->{$Module}->{Loader}->{JavaScript} } ) {
+            if ( $LoaderSetting eq 'ITSM.Agent.ConfirmationDialog.js' ) {
+                # change the setting (rename the file)
+                push @NewJavascriptLoaderSettings, 'ITSM.Agent.ConfirmDialog.js';
+            }
+            else {
+                # use the original setting
+                push @NewJavascriptLoaderSettings, $LoaderSetting;
+            }
+        }
+
+        # change the JS loader settings
+        $FrontendConfig->{$Module}->{Loader}->{JavaScript} = \@NewJavascriptLoaderSettings;
+
+        # set new setting
+        my $Success = $SysConfigObject->ConfigItemUpdate(
+            Valid => 1,
+            Key   => 'Frontend::Module###' . $Module,
+            Value => $FrontendConfig->{$Module},
+        );
+    }
+
+    # migrate ITSM menu modules
+    # get setting content for ITSM menu modules
+    for my $Type (qw(ITSMChange ITSMWorkOrder)) {
+
+        # get menu module setting
+        my $Setting = $ConfigObject->Get( $Type . '::Frontend::MenuModule' );
+
+        MENUMODULE:
+        for my $MenuModule ( sort keys %{$Setting} ) {
+
+            # get target setting
+            my $Target = $Setting->{$MenuModule}->{'Target'};
+
+            # check for the old name
+            next MENUMODULE if $Target ne 'ConfirmationDialog';
+
+            # update to new name
+            $Setting->{$MenuModule}->{'Target'} = 'ConfirmDialog';
+
+            # set new setting
+            my $Success = $SysConfigObject->ConfigItemUpdate(
+                Valid => 1,
+                Key   => $Type . '::Frontend::MenuModule' . '###' . $MenuModule,
+                Value => $Setting->{$MenuModule},
+            );
+        }
     }
 
     return 1;

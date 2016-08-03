@@ -500,7 +500,7 @@
                     <CSS>ITSM.ChangeManagement.RTEContent.css</CSS>
                     <JavaScript>ITSM.Agent.ChangeManagement.WorkorderGraph.js</JavaScript>
                     <JavaScript>ITSM.Agent.ChangeManagement.Zoom.js</JavaScript>
-                    <JavaScript>ITSM.Agent.ConfirmationDialog.js</JavaScript>
+                    <JavaScript>ITSM.Agent.ConfirmDialog.js</JavaScript>
                 </Loader>
             </FrontendModuleReg>
         </Setting>
@@ -580,7 +580,7 @@
                 </NavBar>
                 <Loader>
                     <CSS>ITSM.ChangeManagement.Default.css</CSS>
-                    <JavaScript>ITSM.Agent.ConfirmationDialog.js</JavaScript>
+                    <JavaScript>ITSM.Agent.ConfirmDialog.js</JavaScript>
                 </Loader>
             </FrontendModuleReg>
         </Setting>
@@ -743,7 +743,7 @@
                     <CSS>ITSM.ChangeManagement.Default.css</CSS>
                     <CSS>ITSM.ChangeManagement.RTEContent.css</CSS>
                     <JavaScript>ITSM.Agent.ChangeManagement.Zoom.js</JavaScript>
-                    <JavaScript>ITSM.Agent.ConfirmationDialog.js</JavaScript>
+                    <JavaScript>ITSM.Agent.ConfirmDialog.js</JavaScript>
                 </Loader>
             </FrontendModuleReg>
         </Setting>
@@ -1057,7 +1057,7 @@
                 <Item Key="Description" Translatable="1">Delete Change</Item>
                 <Item Key="Action">AgentITSMChangeDelete</Item>
                 <Item Key="Link">Action=AgentITSMChangeDelete;ChangeID=[% Data.ChangeID | html %]</Item>
-                <Item Key="Target">ConfirmationDialog</Item>
+                <Item Key="Target">ConfirmDialog</Item>
                 <Item Key="ElementSelector">#Menu[% Data.MenuID | html %]</Item>
                 <Item Key="DialogContentQueryString">Action=AgentITSMChangeDelete;ChangeID=[% Data.ChangeID | html %]</Item>
                 <Item Key="ConfirmedActionQueryString">Action=AgentITSMChangeDelete;Subaction=ChangeDelete;ChangeID=[% Data.ChangeID | html %]</Item>
@@ -1076,7 +1076,7 @@
                 <Item Key="Description" Translatable="1">Reset change and its workorders</Item>
                 <Item Key="Action">AgentITSMChangeReset</Item>
                 <Item Key="Link">Action=AgentITSMChangeReset;ChangeID=[% Data.ChangeID | html %]</Item>
-                <Item Key="Target">ConfirmationDialog</Item>
+                <Item Key="Target">ConfirmDialog</Item>
                 <Item Key="ElementSelector">#Menu[% Data.MenuID | html %]</Item>
                 <Item Key="DialogContentQueryString">Action=AgentITSMChangeReset;ChangeID=[% Data.ChangeID | html %]</Item>
                 <Item Key="ConfirmedActionQueryString">Action=AgentITSMChangeReset;Subaction=Reset;ChangeID=[% Data.ChangeID | html %]</Item>
@@ -1155,7 +1155,7 @@
                 <Item Key="Description" Translatable="1">Take the workorder</Item>
                 <Item Key="Action">AgentITSMWorkOrderTake</Item>
                 <Item Key="Link">Action=AgentITSMWorkOrderTake;WorkOrderID=[% Data.WorkOrderID | html %]</Item>
-                <Item Key="Target">ConfirmationDialog</Item>
+                <Item Key="Target">ConfirmDialog</Item>
                 <Item Key="ElementSelector">#Menu[% Data.MenuID | html %]</Item>
                 <Item Key="DialogContentQueryString">Action=AgentITSMWorkOrderTake;WorkOrderID=[% Data.WorkOrderID | html %]</Item>
                 <Item Key="ConfirmedActionQueryString">Action=AgentITSMWorkOrderTake;Subaction=WorkOrderTake;WorkOrderID=[% Data.WorkOrderID | html %]</Item>
@@ -1234,7 +1234,7 @@
                 <Item Key="Description" Translatable="1">Delete Workorder</Item>
                 <Item Key="Action">AgentITSMWorkOrderDelete</Item>
                 <Item Key="Link">Action=AgentITSMWorkOrderDelete;WorkOrderID=[% Data.WorkOrderID | html %]</Item>
-                <Item Key="Target">ConfirmationDialog</Item>
+                <Item Key="Target">ConfirmDialog</Item>
                 <Item Key="ElementSelector">#Menu[% Data.MenuID | html %]</Item>
                 <Item Key="DialogContentQueryString">Action=AgentITSMWorkOrderDelete;WorkOrderID=[% Data.WorkOrderID | html %]</Item>
                 <Item Key="ConfirmedActionQueryString">Action=AgentITSMWorkOrderDelete;Subaction=WorkOrderDelete;WorkOrderID=[% Data.WorkOrderID | html %]</Item>

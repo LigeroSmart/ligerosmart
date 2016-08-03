@@ -106,7 +106,7 @@
 [% WRAPPER JSOnDocumentComplete %]
 <script type="text/javascript">//<![CDATA[
 /*global ITSM: true */
-    ITSM.Agent.ConfirmationDialog.BindConfirmationDialog({
+    ITSM.Agent.ConfirmDialog.BindConfirmDialog({
         ElementID:                  'EditContentTemplateID[% Data.TemplateID | html %]',
         ElementSelector:            '#EditContentTemplateID[% Data.TemplateID | html %]',
         DialogContentQueryString:   'Action=AgentITSMTemplateEditContent;Subaction=TemplateEditContentShowDialog;TemplateID=[% Data.TemplateID | uri %]',
@@ -142,7 +142,7 @@
 [% WRAPPER JSOnDocumentComplete %]
 <script type="text/javascript">//<![CDATA[
 /*global ITSM: true */
-    ITSM.Agent.ConfirmationDialog.BindConfirmationDialog({
+    ITSM.Agent.ConfirmDialog.BindConfirmDialog({
         ElementID:                  'DeleteTemplateID[% Data.TemplateID | html %]',
         ElementSelector:            '#DeleteTemplateID[% Data.TemplateID | html %]',
         DialogContentQueryString:   'Action=AgentITSMTemplateDelete;TemplateID=[% Data.TemplateID | uri %]',
