@@ -3959,7 +3959,7 @@ change configurations to match the new file location.
 
 =cut
 
-sub _MigrateConfigsFromLowerThan_5_0_12 {
+sub _MigrateConfigsFromLowerThan_5_0_12 {    ## no critic
 
     # create needed objects
     my $SysConfigObject = $Kernel::OM->Get('Kernel::System::SysConfig');
@@ -3976,12 +3976,15 @@ sub _MigrateConfigsFromLowerThan_5_0_12 {
         next FRONTENDMODULE if !@{ $FrontendConfig->{$Module}->{Loader}->{JavaScript} };
 
         # check if setting contains the file ITSM.Agent.ConfirmationDialog.js
-        next FRONTENDMODULE if !grep { $_ eq 'ITSM.Agent.ConfirmationDialog.js' } @{ $FrontendConfig->{$Module}->{Loader}->{JavaScript} };
+        next FRONTENDMODULE
+            if !grep { $_ eq 'ITSM.Agent.ConfirmationDialog.js' }
+            @{ $FrontendConfig->{$Module}->{Loader}->{JavaScript} };
 
         # build new settings with renamed Javascript file
         my @NewJavascriptLoaderSettings;
         for my $LoaderSetting ( @{ $FrontendConfig->{$Module}->{Loader}->{JavaScript} } ) {
             if ( $LoaderSetting eq 'ITSM.Agent.ConfirmationDialog.js' ) {
+
                 # change the setting (rename the file)
                 push @NewJavascriptLoaderSettings, 'ITSM.Agent.ConfirmDialog.js';
             }
