@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2016 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/da2fe02e38cb3f7ad446c2044867e594f377c48c/Kernel/Output/HTML/Templates/Standard/AgentTicketZoom.tt
+# $origin: https://github.com/OTRS/otrs/blob/4616595618dcb7cc05a474fe9d5b74c30d49b96e/Kernel/Output/HTML/Templates/Standard/AgentTicketZoom.tt
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -133,7 +133,7 @@
     <div class="Headline">
         <div class="Flag" title="[% Translate(Data.Priority) | html %]"><span class="PriorityID-[% Data.PriorityID | html %]">[% Translate(Data.Priority) | html %]</span></div>
         <h1>
-            [% Data.Hook %][% Data.TicketNumber %] &mdash; [% Data.Title | html %]
+            [% Data.Hook %][% Config('Ticket::HookDivider') %][% Data.TicketNumber %] &mdash; [% Data.Title | html %]
         </h1>
     </div>
 
@@ -661,7 +661,7 @@ $('.ShowFieldInfoOverlay').bind('click', function() {
         Buttons: [
             {
                 Type: 'Close',
-                Label: [% Translate("Close") | JSON %],
+                Label: [% Translate("Close dialog") | JSON %],
                 Function: function() {
                     Core.UI.Dialog.CloseDialog($('.Dialog:visible'));
                     Core.Form.EnableForm($('form[name="compose"]'));
