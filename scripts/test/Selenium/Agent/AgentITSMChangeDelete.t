@@ -120,21 +120,19 @@ $Selenium->RunTest(
         # click on 'Delete'
         $Selenium->find_element("//a[contains(\@href, \'Action=AgentITSMChangeDelete;ChangeID=$ChangeID')]")->click();
 
-        sleep 2;
-
         # wait for confirm button to show up and confirm delete action
         $Selenium->WaitFor( JavaScript => "return \$('.Dialog button.Primary.CallForAction:visible').length;" );
         $Selenium->find_element( ".Dialog button.Primary.CallForAction", 'css' )->VerifiedClick();
 
-        # navigate to AgentITSMChange screen with requested filter and ordered down
-        $Selenium->VerifiedGet(
-            "${ScriptAlias}index.pl?Action=AgentITSMChange;SortBy=ChangeNumber;OrderBy=Down;View=;Filter=requested"
+        # get the change number of the deleted change (must not exist)
+        my $ChangeNumber = $ChangeObject->ChangeLookup(
+            ChangeID => $ChangeID,
         );
 
         # verify that test created change is deleted
-        $Self->True(
-            index( $Selenium->get_page_source(), $ChangeTitleRandom ) == -1,
-            "$ChangeTitleRandom is not found",
+        $Self->False(
+            $ChangeNumber,
+            "$ChangeTitleRandom successfully deleted",
         );
 
         # make sure cache is correct
