@@ -61,6 +61,13 @@ $Selenium->RunTest(
             Value => 0
         );
 
+        # do not send emails
+        $SysConfigObject->ConfigItemUpdate(
+            Valid => 1,
+            Key   => 'SendmailModule',
+            Value => 'Kernel::System::Email::Test',
+        );
+
         # create test user and login
         my $TestUserLogin = $Helper->TestUserCreate(
             Groups => [ 'admin', 'users' ],
@@ -87,15 +94,14 @@ $Selenium->RunTest(
         my $MasterTicketSubject = "Master Ticket";
         $Selenium->find_element( "#FromCustomer", 'css' )->send_keys($TestCustomerLoginPhone);
         $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("li.ui-menu-item:visible").length' );
-        $Selenium->find_element("//*[text()='$AutoCompleteStringPhone']")->click();
+        $Selenium->find_element("//*[text()='$AutoCompleteStringPhone']")->VerifiedClick();
         $Selenium->execute_script("\$('#Dest').val('2||Raw').trigger('redraw.InputField').trigger('change');");
         $Selenium->find_element( "#Subject",  'css' )->send_keys($MasterTicketSubject);
         $Selenium->find_element( "#RichText", 'css' )->send_keys('Selenium body test');
         $Selenium->execute_script(
             "\$('#DynamicField_MasterSlave').val('Master').trigger('redraw.InputField').trigger('change');"
         );
-        $Selenium->find_element( "#RichText", 'css' )->click();
-        $Selenium->find_element( "#Subject",  'css' )->VerifiedSubmit();
+        $Selenium->find_element( "#Subject", 'css' )->VerifiedSubmit();
 
         # get ticket object
         my $TicketObject = $Kernel::OM->Get('Kernel::System::Ticket');
@@ -131,14 +137,13 @@ $Selenium->RunTest(
         $Selenium->execute_script("\$('#Dest').val('2||Raw').trigger('redraw.InputField').trigger('change');");
         $Selenium->find_element( "#ToCustomer", 'css' )->send_keys($TestCustomerLoginsEmail);
         $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("li.ui-menu-item:visible").length' );
-        $Selenium->find_element("//*[text()='$AutoCompleteStringEmail']")->click();
+        $Selenium->find_element("//*[text()='$AutoCompleteStringEmail']")->VerifiedClick();
         $Selenium->find_element( "#Subject",  'css' )->send_keys('Slave Ticket');
         $Selenium->find_element( "#RichText", 'css' )->send_keys('Selenium body test');
         $Selenium->execute_script(
             "\$('#DynamicField_MasterSlave').val('SlaveOf:$MasterTicketNumber').trigger('redraw.InputField').trigger('change');"
         );
-        $Selenium->find_element( "#RichText", 'css' )->click();
-        $Selenium->find_element( "#Subject",  'css' )->VerifiedSubmit();
+        $Selenium->find_element( "#Subject", 'css' )->VerifiedSubmit();
 
         # get slave test email ticket data
         my ( $SlaveTicketID, $SlaveTicketNumber ) = $TicketObject->TicketSearch(

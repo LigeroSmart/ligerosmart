@@ -44,6 +44,13 @@ $Selenium->RunTest(
             Value => 1
         );
 
+        # do not send emails
+        $SysConfigObject->ConfigItemUpdate(
+            Valid => 1,
+            Key   => 'SendmailModule',
+            Value => 'Kernel::System::Email::Test',
+        );
+
         # create test user and login
         my $TestUserLogin = $Helper->TestUserCreate(
             Groups => [ 'admin', 'users' ],
@@ -102,15 +109,15 @@ $Selenium->RunTest(
 
         # search test created tickets by title
         $Selenium->execute_script("\$('#Attribute').val('Title').trigger('redraw.InputField').trigger('change');");
-        $Selenium->find_element( ".AddButton", 'css' )->click();
+        $Selenium->find_element( ".AddButton", 'css' )->VerifiedClick();
         $Selenium->find_element( "Title",      'name' )->send_keys($TicketTitle);
         $Selenium->find_element("//button[\@id='SearchFormSubmit'][\@value='Run search']")->VerifiedClick();
 
         # select first test created ticket
-        $Selenium->find_element("//input[\@value='$TicketIDs[0]']")->click();
+        $Selenium->find_element("//input[\@value='$TicketIDs[0]']")->VerifiedClick();
 
         # click on bulk and switch screen
-        $Selenium->find_element( "Bulk", 'link_text' )->click();
+        $Selenium->find_element( "Bulk", 'link_text' )->VerifiedClick();
 
         $Selenium->WaitFor( WindowCount => 2 );
         my $Handles = $Selenium->get_window_handles();
@@ -125,17 +132,17 @@ $Selenium->RunTest(
         $Selenium->execute_script(
             "\$('#DynamicField_MasterSlave').val('Master').trigger('redraw.InputField').trigger('change');"
         );
-        $Selenium->find_element("//button[\@id='submitRichText'][\@type='submit']")->click();
+        $Selenium->find_element( "#submitRichText", 'css' )->click();
 
         $Selenium->switch_to_window( $Handles->[0] );
         $Selenium->WaitFor( WindowCount => 1 );
 
         # select second and third test created ticket
-        $Selenium->find_element("//input[\@value='$TicketIDs[1]']")->click();
-        $Selenium->find_element("//input[\@value='$TicketIDs[2]']")->click();
+        $Selenium->find_element("//input[\@value='$TicketIDs[1]']")->VerifiedClick();
+        $Selenium->find_element("//input[\@value='$TicketIDs[2]']")->VerifiedClick();
 
         # click on bulk and switch screen
-        $Selenium->find_element( "Bulk", 'link_text' )->click();
+        $Selenium->find_element( "Bulk", 'link_text' )->VerifiedClick();
 
         $Selenium->WaitFor( WindowCount => 2 );
         $Handles = $Selenium->get_window_handles();
@@ -151,7 +158,7 @@ $Selenium->RunTest(
         $Selenium->execute_script(
             "\$('#DynamicField_MasterSlave').val('SlaveOf:$TicketNumbers[0]').trigger('redraw.InputField').trigger('change');"
         );
-        $Selenium->find_element("//button[\@id='submitRichText'][\@type='submit']")->click();
+        $Selenium->find_element( "#submitRichText", 'css' )->click();
 
         $Selenium->switch_to_window( $Handles->[0] );
         $Selenium->WaitFor( WindowCount => 1 );
