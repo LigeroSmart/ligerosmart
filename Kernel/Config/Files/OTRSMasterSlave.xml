@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_config version="1.0" init="Changes">
     <ConfigItem Name="MasterSlave::DynamicField" Required="0" Valid="1">
-        <Description Translatable="1">Define dynamic field name for master ticket feature.</Description>
+        <Description Translatable="1">Defines dynamic field name for master ticket feature.</Description>
         <Group>MasterSlave</Group>
         <SubGroup>Core::MasterSlave</SubGroup>
         <Setting>
@@ -9,79 +9,79 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="MasterSlave::AdvancedEnabled" Required="1" Valid="1">
-        <Description Translatable="1">Enable the advanced MasterSlave part of the feature.</Description>
+        <Description Translatable="1">Enables the advanced MasterSlave part of the feature.</Description>
         <Group>MasterSlave</Group>
         <SubGroup>Core::MasterSlave</SubGroup>
         <Setting>
             <Option SelectedID="0">
-                <Item Key="0">Disabled</Item>
-                <Item Key="1">Enabled</Item>
+                <Item Key="0" Translatable="1">Disabled</Item>
+                <Item Key="1" Translatable="1">Enabled</Item>
             </Option>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="MasterSlave::UnsetMasterSlave" Required="1" Valid="1">
-        <Description Translatable="1">Enable the feature to unset the MasterSlave state of a ticket in the advanced MasterSlave mode.</Description>
+        <Description Translatable="1">Enables the feature to unset the MasterSlave state of a ticket in the advanced MasterSlave mode.</Description>
         <Group>MasterSlave</Group>
         <SubGroup>Core::MasterSlave</SubGroup>
         <Setting>
             <Option SelectedID="0">
-                <Item Key="0">Disabled</Item>
-                <Item Key="1">Enabled</Item>
+                <Item Key="0" Translatable="1">Disabled</Item>
+                <Item Key="1" Translatable="1">Enabled</Item>
             </Option>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="MasterSlave::UpdateMasterSlave" Required="1" Valid="1">
-        <Description Translatable="1">Enable the feature to change the MasterSlave state of a ticket in the advanced MasterSlave mode.</Description>
+        <Description Translatable="1">Enables the feature to change the MasterSlave state of a ticket in the advanced MasterSlave mode.</Description>
         <Group>MasterSlave</Group>
         <SubGroup>Core::MasterSlave</SubGroup>
         <Setting>
             <Option SelectedID="0">
-                <Item Key="0">Disabled</Item>
-                <Item Key="1">Enabled</Item>
+                <Item Key="0" Translatable="1">Disabled</Item>
+                <Item Key="1" Translatable="1">Enabled</Item>
             </Option>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="MasterSlave::FollowUpdatedMaster" Required="1" Valid="1">
-        <Description Translatable="1">Enable the feature that slave tickets follow the master ticket to a new master in the advanced MasterSlave mode.</Description>
+        <Description Translatable="1">Enables the feature that slave tickets follow the master ticket to a new master in the advanced MasterSlave mode.</Description>
         <Group>MasterSlave</Group>
         <SubGroup>Core::MasterSlave</SubGroup>
         <Setting>
             <Option SelectedID="0">
-                <Item Key="0">Disabled</Item>
-                <Item Key="1">Enabled</Item>
+                <Item Key="0" Translatable="1">Disabled</Item>
+                <Item Key="1" Translatable="1">Enabled</Item>
             </Option>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="MasterSlave::ForwardSlaves" Required="1" Valid="1">
-        <Description Translatable="1">Enable the feature to forward articles from type 'forward' of a master ticket to the customers of the slave tickets. By default (disabled) it will not forward articles from type 'forward' to the slave tickets.</Description>
+        <Description Translatable="1">Enables the feature to forward articles from type 'forward' of a master ticket to the customers of the slave tickets. By default (disabled) it will not forward articles from type 'forward' to the slave tickets.</Description>
         <Group>MasterSlave</Group>
         <SubGroup>Core::MasterSlave</SubGroup>
         <Setting>
             <Option SelectedID="0">
-                <Item Key="0">Disabled</Item>
-                <Item Key="1">Enabled</Item>
+                <Item Key="0" Translatable="1">Disabled</Item>
+                <Item Key="1" Translatable="1">Enabled</Item>
             </Option>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="MasterSlave::KeepParentChildAfterUnset" Required="1" Valid="1">
-        <Description Translatable="1">Enable the feature to keep parent-child link after unset of the MasterSlave state in the advanced MasterSlave mode.</Description>
+        <Description Translatable="1">Enables the feature to keep parent-child link after unset of the MasterSlave state in the advanced MasterSlave mode.</Description>
         <Group>MasterSlave</Group>
         <SubGroup>Core::MasterSlave</SubGroup>
         <Setting>
             <Option SelectedID="0">
-                <Item Key="0">Disabled</Item>
-                <Item Key="1">Enabled</Item>
+                <Item Key="0" Translatable="1">Disabled</Item>
+                <Item Key="1" Translatable="1">Enabled</Item>
             </Option>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="MasterSlave::KeepParentChildAfterUpdate" Required="1" Valid="1">
-        <Description Translatable="1">Enable the feature to keep parent-child link after change of the MasterSlave state in the advanced MasterSlave mode.</Description>
+        <Description Translatable="1">Enables the feature to keep parent-child link after change of the MasterSlave state in the advanced MasterSlave mode.</Description>
         <Group>MasterSlave</Group>
         <SubGroup>Core::MasterSlave</SubGroup>
         <Setting>
             <Option SelectedID="0">
-                <Item Key="0">Disabled</Item>
-                <Item Key="1">Enabled</Item>
+                <Item Key="0" Translatable="1">Disabled</Item>
+                <Item Key="1" Translatable="1">Enabled</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -110,8 +110,8 @@
         <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
         <Setting>
             <FrontendModuleReg>
-                <Description>Ticket MasterSlave</Description>
-                <Title>MasterSlave</Title>
+                <Description Translatable="1">Ticket MasterSlave.</Description>
+                <Title Translatable="1">MasterSlave</Title>
                 <NavBarName>Ticket</NavBarName>
                 <Loader>
                     <JavaScript>Core.Agent.TicketAction.js</JavaScript>
@@ -126,7 +126,7 @@
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::TicketMenu::Generic</Item>
-                <Item Key="Name">MasterSlave</Item>
+                <Item Key="Name" Translatable="1">MasterSlave</Item>
                 <Item Key="Description" Translatable="1">Change the MasterSlave state of the ticket.</Item>
                 <Item Key="Action">AgentTicketMasterSlave</Item>
                 <Item Key="Link">Action=AgentTicketMasterSlave;TicketID=[% Data.TicketID | html %]</Item>
@@ -150,8 +150,8 @@
         <SubGroup>Frontend::Agent::Ticket::ViewMasterSlave</SubGroup>
         <Setting>
             <Option SelectedID="1">
-                <Item Key="0">No</Item>
-                <Item Key="1">Yes</Item>
+                <Item Key="0" Translatable="1">No</Item>
+                <Item Key="1" Translatable="1">Yes</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -161,8 +161,8 @@
         <SubGroup>Frontend::Agent::Ticket::ViewMasterSlave</SubGroup>
         <Setting>
             <Option SelectedID="0">
-                <Item Key="0">No</Item>
-                <Item Key="1">Yes</Item>
+                <Item Key="0" Translatable="1">No</Item>
+                <Item Key="1" Translatable="1">Yes</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -172,8 +172,8 @@
         <SubGroup>Frontend::Agent::Ticket::ViewMasterSlave</SubGroup>
         <Setting>
             <Option SelectedID="0">
-                <Item Key="0">No</Item>
-                <Item Key="1">Yes</Item>
+                <Item Key="0" Translatable="1">No</Item>
+                <Item Key="1" Translatable="1">Yes</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -183,8 +183,8 @@
         <SubGroup>Frontend::Agent::Ticket::ViewMasterSlave</SubGroup>
         <Setting>
             <Option SelectedID="0">
-                <Item Key="0">No</Item>
-                <Item Key="1">Yes</Item>
+                <Item Key="0" Translatable="1">No</Item>
+                <Item Key="1" Translatable="1">Yes</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -194,8 +194,8 @@
         <SubGroup>Frontend::Agent::Ticket::ViewMasterSlave</SubGroup>
         <Setting>
             <Option SelectedID="0">
-                <Item Key="0">No</Item>
-                <Item Key="1">Yes</Item>
+                <Item Key="0" Translatable="1">No</Item>
+                <Item Key="1" Translatable="1">Yes</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -205,8 +205,8 @@
         <SubGroup>Frontend::Agent::Ticket::ViewMasterSlave</SubGroup>
         <Setting>
             <Option SelectedID="0">
-                <Item Key="0">No</Item>
-                <Item Key="1">Yes</Item>
+                <Item Key="0" Translatable="1">No</Item>
+                <Item Key="1" Translatable="1">Yes</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -216,8 +216,8 @@
         <SubGroup>Frontend::Agent::Ticket::ViewMasterSlave</SubGroup>
         <Setting>
             <Option SelectedID="0">
-                <Item Key="0">No</Item>
-                <Item Key="1">Yes</Item>
+                <Item Key="0" Translatable="1">No</Item>
+                <Item Key="1" Translatable="1">Yes</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -249,8 +249,8 @@
         <SubGroup>Frontend::Agent::Ticket::ViewMasterSlave</SubGroup>
         <Setting>
             <Option SelectedID="1">
-                <Item Key="0">No</Item>
-                <Item Key="1">Yes</Item>
+                <Item Key="0" Translatable="1">No</Item>
+                <Item Key="1" Translatable="1">Yes</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -260,8 +260,8 @@
         <SubGroup>Frontend::Agent::Ticket::ViewMasterSlave</SubGroup>
         <Setting>
             <Option SelectedID="1">
-                <Item Key="0">No</Item>
-                <Item Key="1">Yes</Item>
+                <Item Key="0" Translatable="1">No</Item>
+                <Item Key="1" Translatable="1">Yes</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -287,8 +287,8 @@
         <SubGroup>Frontend::Agent::Ticket::ViewMasterSlave</SubGroup>
         <Setting>
             <Option SelectedID="0">
-                <Item Key="0">No</Item>
-                <Item Key="1">Yes</Item>
+                <Item Key="0" Translatable="1">No</Item>
+                <Item Key="1" Translatable="1">Yes</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -298,8 +298,8 @@
         <SubGroup>Frontend::Agent::Ticket::ViewMasterSlave</SubGroup>
         <Setting>
             <Option SelectedID="0">
-                <Item Key="0">No</Item>
-                <Item Key="1">Yes</Item>
+                <Item Key="0" Translatable="1">No</Item>
+                <Item Key="1" Translatable="1">Yes</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -329,8 +329,8 @@
         <SubGroup>Frontend::Agent::Ticket::ViewMasterSlave</SubGroup>
         <Setting>
             <Option SelectedID="0">
-                <Item Key="0">No</Item>
-                <Item Key="1">Yes</Item>
+                <Item Key="0" Translatable="1">No</Item>
+                <Item Key="1" Translatable="1">Yes</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -349,8 +349,8 @@
         <SubGroup>Frontend::Agent::Ticket::ViewMasterSlave</SubGroup>
         <Setting>
             <Option SelectedID="0">
-                <Item Key="0">No</Item>
-                <Item Key="1">Yes</Item>
+                <Item Key="0" Translatable="1">No</Item>
+                <Item Key="1" Translatable="1">Yes</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -377,8 +377,8 @@
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::Dashboard::TicketGeneric</Item>
-                <Item Key="Title">Master Tickets</Item>
-                <Item Key="Description">All master tickets</Item>
+                <Item Key="Title" Translatable="1">Master Tickets</Item>
+                <Item Key="Description" Translatable="1">All master tickets</Item>
                 <Item Key="Attributes">DynamicField_MasterSlave_Equals=Master;StateType=open;StateType=new;</Item>
                 <Item Key="Filter">All</Item>
                 <Item Key="Time">Age</Item>
@@ -423,8 +423,8 @@
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::Dashboard::TicketGeneric</Item>
-                <Item Key="Title">Slave Tickets</Item>
-                <Item Key="Description">All slave tickets</Item>
+                <Item Key="Title" Translatable="1">Slave Tickets</Item>
+                <Item Key="Description" Translatable="1">All slave tickets</Item>
                 <Item Key="Attributes">DynamicField_MasterSlave_Like=Slave*;StateType=open;StateType=new;</Item>
                 <Item Key="Filter">All</Item>
                 <Item Key="Time">Age</Item>

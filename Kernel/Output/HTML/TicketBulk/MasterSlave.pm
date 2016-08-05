@@ -11,6 +11,8 @@ package Kernel::Output::HTML::TicketBulk::MasterSlave;
 use strict;
 use warnings;
 
+use Kernel::Language qw(Translatable);
+
 our @ObjectDependencies = (
     'Kernel::Config',
     'Kernel::Output::HTML::Layout',
@@ -148,6 +150,7 @@ sub _GetMasterSlaveData {
 
     # get config object
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
     # get master slave config
     my $UnsetMasterSlave  = $ConfigObject->Get('MasterSlave::UnsetMasterSlave')  || 0;
@@ -155,17 +158,16 @@ sub _GetMasterSlaveData {
 
     my %Data = (
         ''     => '-',
-        Master => 'New Master Ticket',
+        Master => $LayoutObject->{LanguageObject}->Translate('New Master Ticket'),
     );
 
     if ($UnsetMasterSlave) {
-        $Data{UnsetMaster} = 'Unset Master Tickets';
-        $Data{UnsetSlave}  = 'Unset Slave Tickets';
+        $Data{UnsetMaster} = Translatable('Unset Master Tickets');
+        $Data{UnsetSlave}  = Translatable('Unset Slave Tickets');
     }
 
     # get needed objects
     my $TicketObject = $Kernel::OM->Get('Kernel::System::Ticket');
-    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
     if ($UpdateMasterSlave) {
 

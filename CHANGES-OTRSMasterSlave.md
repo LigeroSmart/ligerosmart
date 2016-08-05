@@ -1,4 +1,5 @@
 #5.0.3 2016-??-??
+ - 2016-08-05 Marked strings as translatable, thanks to Balázs Úr.
  - 2016-08-05 Added Chinese translation, thanks to all translators.
  - 2016-08-05 Added Thai translation, thanks to all translators.
  - 2016-08-05 Added Malay translation, thanks to all translators.
