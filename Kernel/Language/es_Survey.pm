@@ -65,12 +65,12 @@ sub Data {
     $Self->{Translation}->{'Question'} = 'Pregunta';
     $Self->{Translation}->{'Answer Required'} = 'Respuesta Requerida';
     $Self->{Translation}->{'When you finish to edit the survey questions just close this screen.'} =
-        '';
+        'Cuando termine de editar las preguntas de la encuesta, cierre esta pantalla.';
     $Self->{Translation}->{'Do you really want to delete this question? ALL associated data will be LOST!'} =
         '¿Realmente desea eliminar esta pregunta? TODOS los datos asociados de PERDERÁN!';
     $Self->{Translation}->{'Edit Question'} = 'Editar Pregunta';
     $Self->{Translation}->{'go back to questions'} = 'regresar a preguntas';
-    $Self->{Translation}->{'Question:'} = '';
+    $Self->{Translation}->{'Question:'} = 'Pregunta:';
     $Self->{Translation}->{'Possible Answers For'} = 'Posibles respuestas para';
     $Self->{Translation}->{'Add Answer'} = 'Agregar Respuesta';
     $Self->{Translation}->{'No answers saved for this question.'} = 'No hay respuestas almacenadas para esta pregunta.';
@@ -79,10 +79,10 @@ sub Data {
         'Esta pregunta no tiene varias respuestas, un area de texto será mostrada';
     $Self->{Translation}->{'Edit Answer'} = 'Editar Respuesta';
     $Self->{Translation}->{'go back to edit question'} = 'volver a editar pregunta';
-    $Self->{Translation}->{'Answer:'} = '';
+    $Self->{Translation}->{'Answer:'} = 'Respuesta:';
 
     # Template: AgentSurveyOverviewNavBar
-    $Self->{Translation}->{'Max. shown surveys per page'} = '';
+    $Self->{Translation}->{'Max. shown surveys per page'} = 'Encuestas mostradas por página';
 
     # Template: AgentSurveyOverviewSmall
     $Self->{Translation}->{'Notification Sender'} = 'Remitente de Notificacion';
@@ -167,7 +167,7 @@ sub Data {
         'Muestra un vínculo en el menú para ir hacia atrás en vista de detalle de una encuesta en la interface del agente.';
     $Self->{Translation}->{'Shows a link in the menu to zoom into the survey statistics details in its zoom view of the agent interface.'} =
         'Muestra un vínculo en el menú para ir detalle de las estadísticas de una encuesta en su vista de detalle en la interface del agente.';
-    $Self->{Translation}->{'Survey Add Module.'} = '';
+    $Self->{Translation}->{'Survey Add Module.'} = 'Agregar módulo de encuesta.';
     $Self->{Translation}->{'Survey Edit Module.'} = 'Módulo de Edición de Encuesta.';
     $Self->{Translation}->{'Survey Overview "Small" Limit'} = 'Limite de la vista de resumen pequeña.';
     $Self->{Translation}->{'Survey Stats Module.'} = 'Módulo de Stadísticas de Encuesta.';
@@ -178,7 +178,7 @@ sub Data {
         'El identificador para una encuesta, ejemplo Survey#, MySurvey#. Por defecto es Survey#.';
     $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket is closed.'} =
         'Módulo de evento de ticket que manda correos electrónicos de encuestas hacia los clientes si un ticket es cerrado.';
-    $Self->{Translation}->{'Trigger sending delayed survey requests.'} = '';
+    $Self->{Translation}->{'Trigger sending delayed survey requests.'} = 'Desencadenar el envío de solicitudes de encuesta con retraso.';
     $Self->{Translation}->{'Zoom Into Statistics Details'} = 'Ir a los detalles de la Estadística';
 
 }

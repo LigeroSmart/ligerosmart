@@ -16,14 +16,14 @@ sub Data {
     my $Self = shift;
 
     # Template: AAASurvey
-    $Self->{Translation}->{'- Change Status -'} = '- Zmień status -';
+    $Self->{Translation}->{'- Change Status -'} = '- Zmień stan -';
     $Self->{Translation}->{'Add New Survey'} = 'Dodaj nową ankietę';
     $Self->{Translation}->{'Survey Edit'} = 'Edycja ankiety';
     $Self->{Translation}->{'Survey Edit Questions'} = 'Edycja pytań ankiety';
     $Self->{Translation}->{'Question Edit'} = 'Edycja pytań';
     $Self->{Translation}->{'Answer Edit'} = 'Edycja odpowiedzi';
-    $Self->{Translation}->{'Can\'t set new status! No questions defined.'} = 'Nie można zmienić statusu! Brak zdefiniowanych pytań.';
-    $Self->{Translation}->{'Status changed.'} = 'Status zmieniony.';
+    $Self->{Translation}->{'Can\'t set new status! No questions defined.'} = 'Nie można zmienić stanu! Brak zdefiniowanych pytań.';
+    $Self->{Translation}->{'Status changed.'} = 'Zmieniono stan.';
     $Self->{Translation}->{'Thank you for your feedback.'} = 'Dziękujęmy za wypełnienie ankiety.';
     $Self->{Translation}->{'The survey is finished.'} = 'Ankieta zakończona.';
     $Self->{Translation}->{'Complete'} = 'Kompletne';
@@ -38,13 +38,13 @@ sub Data {
     $Self->{Translation}->{'YesNo'} = 'TakNie';
     $Self->{Translation}->{'answered'} = 'odpowiedziano';
     $Self->{Translation}->{'not answered'} = 'nie odpowiedziano';
-    $Self->{Translation}->{'Stats Detail'} = 'Szczegóły statusu';
+    $Self->{Translation}->{'Stats Detail'} = 'Szczegóły stanu';
     $Self->{Translation}->{'Stats Details'} = '';
     $Self->{Translation}->{'You have already answered the survey.'} = 'Już odpowiedziałeś na tę ankietę.';
     $Self->{Translation}->{'Survey#'} = 'Ankieta#';
     $Self->{Translation}->{'- No queue selected -'} = '';
     $Self->{Translation}->{'Master'} = '';
-    $Self->{Translation}->{'New Status'} = '';
+    $Self->{Translation}->{'New Status'} = 'Nowy stan';
     $Self->{Translation}->{'Question Type'} = '';
 
     # Template: AgentSurveyAdd

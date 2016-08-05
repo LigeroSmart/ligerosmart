@@ -19,13 +19,13 @@ sub Data {
     $Self->{Translation}->{'- Change Status -'} = '- Промени статус -';
     $Self->{Translation}->{'Add New Survey'} = 'Додај нову анкету';
     $Self->{Translation}->{'Survey Edit'} = 'Уреди анкету';
-    $Self->{Translation}->{'Survey Edit Questions'} = 'Уреди питања анкете';
+    $Self->{Translation}->{'Survey Edit Questions'} = 'Уреди анкетна питања';
     $Self->{Translation}->{'Question Edit'} = 'Уреди питање';
     $Self->{Translation}->{'Answer Edit'} = 'Уреди одговор';
     $Self->{Translation}->{'Can\'t set new status! No questions defined.'} = 'Не може се поставити нови статус! Нема дефинисаних питања.';
     $Self->{Translation}->{'Status changed.'} = 'Статус промењен.';
     $Self->{Translation}->{'Thank you for your feedback.'} = 'Хвала на вашим одговорима.';
-    $Self->{Translation}->{'The survey is finished.'} = 'Аанкета је завршена.';
+    $Self->{Translation}->{'The survey is finished.'} = 'Анкета је завршена.';
     $Self->{Translation}->{'Complete'} = 'Комплетно';
     $Self->{Translation}->{'Incomplete'} = 'Некомплетно';
     $Self->{Translation}->{'Checkbox (List)'} = 'Поље за потврду (Листа)';
@@ -65,7 +65,7 @@ sub Data {
     $Self->{Translation}->{'Question'} = 'Питање';
     $Self->{Translation}->{'Answer Required'} = 'Обавезан одговор';
     $Self->{Translation}->{'When you finish to edit the survey questions just close this screen.'} =
-        'Када завршите са уређивањем анкетних питања само затзворите овај прозор.';
+        'Када завршите са уређивањем анкетних питања само затворите овај прозор.';
     $Self->{Translation}->{'Do you really want to delete this question? ALL associated data will be LOST!'} =
         'Да ли заиста желите да обришете ово питање? СВИ повезани подаци ће бити ИЗГУБЉЕНИ!';
     $Self->{Translation}->{'Edit Question'} = 'Уреди питање';
@@ -109,7 +109,7 @@ sub Data {
     $Self->{Translation}->{'No stat results.'} = 'Нема статистике резултата.';
 
     # Template: PublicSurvey
-    $Self->{Translation}->{'Survey'} = 'Аанкета';
+    $Self->{Translation}->{'Survey'} = 'Анкета';
     $Self->{Translation}->{'Please answer these questions'} = 'Молимо да одговорите на ова питања';
     $Self->{Translation}->{'Show my answers'} = 'Покажи моје одговоре';
     $Self->{Translation}->{'These are your answers'} = 'Ово су ваши одговори';
@@ -121,7 +121,7 @@ sub Data {
     $Self->{Translation}->{'All parameters for the Survey object in the agent interface.'} =
         'Сви параметри Објекта анкете у интерфејсу оператера.';
     $Self->{Translation}->{'Amount of days after sending a survey mail in which no new survey requests are sent to the same customer. Selecting 0 will always send the survey mail.'} =
-        'Број дана после слања имејла о анкети у ком истом кориснику неће бити слани нови захтеви. Ако изаберете 0 имејл о анкети се увек шаље.';
+        'Број дана после слања имејла о анкети за које истом кориснику неће бити слани нови захтеви. Ако изаберете 0 имејл о анкети се увек шаље.';
     $Self->{Translation}->{'Default body for the notification email to customers about new survey.'} =
         'Подразумевани садржај имејла обавештења о новој анкети за кориснике.';
     $Self->{Translation}->{'Default sender for the notification email to customers about new survey.'} =
@@ -131,7 +131,7 @@ sub Data {
     $Self->{Translation}->{'Defines an overview module to show the small view of a survey list.'} =
         'Дефинише модул прегледа за мали приказ листе анкета. ';
     $Self->{Translation}->{'Defines maximum amount of surveys that get sent to a customer per 30 days. ( 0 means no maximum, all survey requests will be sent).'} =
-        'Дефинише максимални број анкета која ће бити послата кориснику током 30 дана. (0 значи да нема максимума, сви захтеви ће бити послати).';
+        'Дефинише максимални број анкета који ће бити послат кориснику током 30 дана. (0 значи да нема максимума, сви захтеви ће бити послати).';
     $Self->{Translation}->{'Defines the amount in hours a ticket has to be closed to trigger the sending of a survey, ( 0 means send immediately after close ).'} =
         'Дефинише број сати од затварања тикета за покретање слања анкете. (0 значи да се шаље одмах по затварању).';
     $Self->{Translation}->{'Defines the default height for Richtext views for SurveyZoom elements.'} =
@@ -178,8 +178,8 @@ sub Data {
         'Идентификатор за анкету, нпр Survey#, MySurvey#. Подразумевано је Survey#.';
     $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket is closed.'} =
         'Модул догађаја на тикету за аутоматско слање имејла о истраживању корисницима ако је тикет затворен.';
-    $Self->{Translation}->{'Trigger sending delayed survey requests.'} = 'Окидач одложеног слања захтева за акнету.';
-    $Self->{Translation}->{'Zoom Into Statistics Details'} = 'Детаљни приказ статистике';
+    $Self->{Translation}->{'Trigger sending delayed survey requests.'} = 'Окидач одложеног слања захтева за анкету.';
+    $Self->{Translation}->{'Zoom Into Statistics Details'} = 'Улаз у детаљни приказ статистике';
 
 }
 

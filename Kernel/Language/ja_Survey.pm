@@ -65,12 +65,12 @@ sub Data {
     $Self->{Translation}->{'Question'} = '質問';
     $Self->{Translation}->{'Answer Required'} = '回答が必須の項目です';
     $Self->{Translation}->{'When you finish to edit the survey questions just close this screen.'} =
-        '';
+        'このサーベイ設問の編集が完了したら、画面を閉じてください。';
     $Self->{Translation}->{'Do you really want to delete this question? ALL associated data will be LOST!'} =
         'この質問を本当に削除してもいいですか？　関連しているすべてのデーターが失われます!';
     $Self->{Translation}->{'Edit Question'} = '質問編集';
     $Self->{Translation}->{'go back to questions'} = '質問へ戻る';
-    $Self->{Translation}->{'Question:'} = '';
+    $Self->{Translation}->{'Question:'} = '設問:';
     $Self->{Translation}->{'Possible Answers For'} = '選択肢';
     $Self->{Translation}->{'Add Answer'} = '回答の追加';
     $Self->{Translation}->{'No answers saved for this question.'} = 'この質問への回答はまだありません';
@@ -79,10 +79,10 @@ sub Data {
         'この質問には選択肢がありません。テキストエリアが表示されます。';
     $Self->{Translation}->{'Edit Answer'} = '回答の編集';
     $Self->{Translation}->{'go back to edit question'} = '質問の編集に戻る';
-    $Self->{Translation}->{'Answer:'} = '';
+    $Self->{Translation}->{'Answer:'} = '回答:';
 
     # Template: AgentSurveyOverviewNavBar
-    $Self->{Translation}->{'Max. shown surveys per page'} = '';
+    $Self->{Translation}->{'Max. shown surveys per page'} = 'ページあたりの最大数';
 
     # Template: AgentSurveyOverviewSmall
     $Self->{Translation}->{'Notification Sender'} = '通知の送信者';
@@ -167,7 +167,7 @@ sub Data {
         '担当者インタフェースのズームビューで表示している統計の編集リンクをメニューを表示する。';
     $Self->{Translation}->{'Shows a link in the menu to zoom into the survey statistics details in its zoom view of the agent interface.'} =
         '担当者インタフェースのズームビューで表示している統計の編集リンクをメニューを表示する。';
-    $Self->{Translation}->{'Survey Add Module.'} = '';
+    $Self->{Translation}->{'Survey Add Module.'} = 'サーベイモジュール追加';
     $Self->{Translation}->{'Survey Edit Module.'} = '統計編集モジュール';
     $Self->{Translation}->{'Survey Overview "Small" Limit'} = '調査一覧(S)の表示数';
     $Self->{Translation}->{'Survey Stats Module.'} = '統計調査モジュール';
@@ -178,7 +178,7 @@ sub Data {
         '例えばSurvey#, MySurvey#などのチケットの識別子です。デフォルトはSurvey#です。';
     $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket is closed.'} =
         'チケットが完了した際に、顧客に自動的に調査メールを送信するチケットイベントモジュール。';
-    $Self->{Translation}->{'Trigger sending delayed survey requests.'} = '';
+    $Self->{Translation}->{'Trigger sending delayed survey requests.'} = '追ってのサーベイ要求を送信するトリガ。';
     $Self->{Translation}->{'Zoom Into Statistics Details'} = '統計調査の詳細にズームする';
 
 }

@@ -39,13 +39,13 @@ sub Data {
     $Self->{Translation}->{'answered'} = 'beantwoord';
     $Self->{Translation}->{'not answered'} = 'niet beantwoord';
     $Self->{Translation}->{'Stats Detail'} = 'Detail';
-    $Self->{Translation}->{'Stats Details'} = '';
+    $Self->{Translation}->{'Stats Details'} = 'Stats Details';
     $Self->{Translation}->{'You have already answered the survey.'} = 'U heeft deze enquête al beantwoord.';
-    $Self->{Translation}->{'Survey#'} = '';
-    $Self->{Translation}->{'- No queue selected -'} = '';
-    $Self->{Translation}->{'Master'} = '';
-    $Self->{Translation}->{'New Status'} = '';
-    $Self->{Translation}->{'Question Type'} = '';
+    $Self->{Translation}->{'Survey#'} = 'Survey#';
+    $Self->{Translation}->{'- No queue selected -'} = '- Geen rij geselecteerd -';
+    $Self->{Translation}->{'Master'} = 'Master';
+    $Self->{Translation}->{'New Status'} = 'Nieuwe Status';
+    $Self->{Translation}->{'Question Type'} = 'Vraagtype';
 
     # Template: AgentSurveyAdd
     $Self->{Translation}->{'Create New Survey'} = 'Nieuwe enquête aanmaken';
@@ -60,29 +60,29 @@ sub Data {
     $Self->{Translation}->{'Survey Questions'} = 'Vragen';
     $Self->{Translation}->{'Add Question'} = 'Vraag toevoegen';
     $Self->{Translation}->{'Type the question'} = 'Vraag';
-    $Self->{Translation}->{'Answer required'} = '';
+    $Self->{Translation}->{'Answer required'} = 'Verplicht antwoorden';
     $Self->{Translation}->{'No questions saved for this survey.'} = 'Er zijn geen vragen opgeslagen voor deze enquête';
     $Self->{Translation}->{'Question'} = 'Vraag';
-    $Self->{Translation}->{'Answer Required'} = '';
+    $Self->{Translation}->{'Answer Required'} = 'Verplicht Antwoorden';
     $Self->{Translation}->{'When you finish to edit the survey questions just close this screen.'} =
         '';
     $Self->{Translation}->{'Do you really want to delete this question? ALL associated data will be LOST!'} =
-        '';
+        'Weet u zeker dat u deze vraag wilt verwijderen? ALLE geassocieerde data zal verloren gaan!';
     $Self->{Translation}->{'Edit Question'} = 'Bewerk vraag';
     $Self->{Translation}->{'go back to questions'} = 'ga terug naar de vragen';
-    $Self->{Translation}->{'Question:'} = '';
+    $Self->{Translation}->{'Question:'} = 'Vraag:';
     $Self->{Translation}->{'Possible Answers For'} = 'Mogelijke antwoorden';
     $Self->{Translation}->{'Add Answer'} = 'Antwoord toevoegen';
-    $Self->{Translation}->{'No answers saved for this question.'} = '';
-    $Self->{Translation}->{'Do you really want to delete this answer?'} = '';
+    $Self->{Translation}->{'No answers saved for this question.'} = 'Geen antwoord opgeslagen voor deze vraag.';
+    $Self->{Translation}->{'Do you really want to delete this answer?'} = 'Weet u zeker dat u dit antwoord wilt verwijderen?';
     $Self->{Translation}->{'This doesn\'t have several answers, a textarea will be displayed.'} =
         'Deze heeft niet meerdere antwoorden. Er zal een tekstvak getoond worden.';
     $Self->{Translation}->{'Edit Answer'} = 'Antwoord bewerken';
     $Self->{Translation}->{'go back to edit question'} = 'ga terug naar de vraag';
-    $Self->{Translation}->{'Answer:'} = '';
+    $Self->{Translation}->{'Answer:'} = 'Antwoord:';
 
     # Template: AgentSurveyOverviewNavBar
-    $Self->{Translation}->{'Max. shown surveys per page'} = '';
+    $Self->{Translation}->{'Max. shown surveys per page'} = 'Max. getoonde onderzoeken per pagina';
 
     # Template: AgentSurveyOverviewSmall
     $Self->{Translation}->{'Notification Sender'} = 'Afzender notificatie';
@@ -95,7 +95,7 @@ sub Data {
     $Self->{Translation}->{'Requests Table'} = 'Verzoeken';
     $Self->{Translation}->{'Send Time'} = 'Verstuurd op';
     $Self->{Translation}->{'Vote Time'} = 'Ingevuld op';
-    $Self->{Translation}->{'See Details'} = '';
+    $Self->{Translation}->{'See Details'} = 'Zie Details';
     $Self->{Translation}->{'Survey Stat Details'} = 'Detailoverzicht statistieken';
     $Self->{Translation}->{'go back to stats overview'} = 'ga terug naar het overzicht';
 
@@ -104,7 +104,7 @@ sub Data {
     $Self->{Translation}->{'Sent requests'} = 'Verstuurde verzoeken';
     $Self->{Translation}->{'Received surveys'} = 'Ontvangen enquêtes';
     $Self->{Translation}->{'Survey Details'} = 'Details enquête';
-    $Self->{Translation}->{'Ticket Services'} = '';
+    $Self->{Translation}->{'Ticket Services'} = 'Ticket Services';
     $Self->{Translation}->{'Survey Results Graph'} = 'Resultaten (grafiek)';
     $Self->{Translation}->{'No stat results.'} = 'Geen resultaten.';
 

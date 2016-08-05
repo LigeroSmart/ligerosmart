@@ -42,10 +42,10 @@ sub Data {
     $Self->{Translation}->{'Stats Details'} = '';
     $Self->{Translation}->{'You have already answered the survey.'} = '你已經回答了調查。';
     $Self->{Translation}->{'Survey#'} = '調查#';
-    $Self->{Translation}->{'- No queue selected -'} = '';
+    $Self->{Translation}->{'- No queue selected -'} = '- 沒有選取佇列 -';
     $Self->{Translation}->{'Master'} = '';
-    $Self->{Translation}->{'New Status'} = '';
-    $Self->{Translation}->{'Question Type'} = '';
+    $Self->{Translation}->{'New Status'} = '新狀態';
+    $Self->{Translation}->{'Question Type'} = '問題類別';
 
     # Template: AgentSurveyAdd
     $Self->{Translation}->{'Create New Survey'} = '創建新的調查';
@@ -70,16 +70,16 @@ sub Data {
         '';
     $Self->{Translation}->{'Edit Question'} = '編輯問題';
     $Self->{Translation}->{'go back to questions'} = '返回問題';
-    $Self->{Translation}->{'Question:'} = '';
+    $Self->{Translation}->{'Question:'} = '問題：';
     $Self->{Translation}->{'Possible Answers For'} = '可選的回答';
     $Self->{Translation}->{'Add Answer'} = '添加回答';
     $Self->{Translation}->{'No answers saved for this question.'} = '';
-    $Self->{Translation}->{'Do you really want to delete this answer?'} = '';
+    $Self->{Translation}->{'Do you really want to delete this answer?'} = '您確定要刪除此答案？';
     $Self->{Translation}->{'This doesn\'t have several answers, a textarea will be displayed.'} =
         '';
     $Self->{Translation}->{'Edit Answer'} = '編輯回答';
     $Self->{Translation}->{'go back to edit question'} = '返回到編輯問題';
-    $Self->{Translation}->{'Answer:'} = '';
+    $Self->{Translation}->{'Answer:'} = '答：';
 
     # Template: AgentSurveyOverviewNavBar
     $Self->{Translation}->{'Max. shown surveys per page'} = '';
@@ -95,7 +95,7 @@ sub Data {
     $Self->{Translation}->{'Requests Table'} = '請求表';
     $Self->{Translation}->{'Send Time'} = '發送時間';
     $Self->{Translation}->{'Vote Time'} = '投票時間';
-    $Self->{Translation}->{'See Details'} = '';
+    $Self->{Translation}->{'See Details'} = '查看詳情';
     $Self->{Translation}->{'Survey Stat Details'} = '調查統計詳情';
     $Self->{Translation}->{'go back to stats overview'} = '返回統計概況';
 
@@ -104,7 +104,7 @@ sub Data {
     $Self->{Translation}->{'Sent requests'} = '已發送的請求';
     $Self->{Translation}->{'Received surveys'} = '已接收的調查';
     $Self->{Translation}->{'Survey Details'} = '調查詳情';
-    $Self->{Translation}->{'Ticket Services'} = '';
+    $Self->{Translation}->{'Ticket Services'} = '工單服務';
     $Self->{Translation}->{'Survey Results Graph'} = '調查結果圖';
     $Self->{Translation}->{'No stat results.'} = '沒有統計結果。';
 
@@ -116,7 +116,7 @@ sub Data {
     $Self->{Translation}->{'Survey Title'} = '調查標題';
 
     # SysConfig
-    $Self->{Translation}->{'A Survey Module.'} = '';
+    $Self->{Translation}->{'A Survey Module.'} = '調查模組';
     $Self->{Translation}->{'A module to edit survey questions.'} = '';
     $Self->{Translation}->{'All parameters for the Survey object in the agent interface.'} =
         '';
@@ -138,8 +138,8 @@ sub Data {
         '';
     $Self->{Translation}->{'Defines the shown columns in the survey overview. This option has no effect on the position of the columns.'} =
         '';
-    $Self->{Translation}->{'Edit Survey General Information'} = '';
-    $Self->{Translation}->{'Edit Survey Questions'} = '';
+    $Self->{Translation}->{'Edit Survey General Information'} = '編輯調查一般信息';
+    $Self->{Translation}->{'Edit Survey Questions'} = '編輯調查問題';
     $Self->{Translation}->{'Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time.'} =
         '';
     $Self->{Translation}->{'Enable or disable the send condition check for the service.'} = '';
@@ -158,7 +158,7 @@ sub Data {
     $Self->{Translation}->{'If this regex matches, no customer survey will be sent.'} = '';
     $Self->{Translation}->{'Parameters for the pages (in which the surveys are shown) of the small survey overview.'} =
         '';
-    $Self->{Translation}->{'Public Survey.'} = '';
+    $Self->{Translation}->{'Public Survey.'} = '公開的調查';
     $Self->{Translation}->{'Shows a link in the menu to edit a survey in its zoom view of the agent interface.'} =
         '';
     $Self->{Translation}->{'Shows a link in the menu to edit survey questions in its zoom view of the agent interface.'} =
@@ -167,8 +167,8 @@ sub Data {
         '';
     $Self->{Translation}->{'Shows a link in the menu to zoom into the survey statistics details in its zoom view of the agent interface.'} =
         '';
-    $Self->{Translation}->{'Survey Add Module.'} = '';
-    $Self->{Translation}->{'Survey Edit Module.'} = '';
+    $Self->{Translation}->{'Survey Add Module.'} = '調查添加模組';
+    $Self->{Translation}->{'Survey Edit Module.'} = '調查編輯模組';
     $Self->{Translation}->{'Survey Overview "Small" Limit'} = '';
     $Self->{Translation}->{'Survey Stats Module.'} = '';
     $Self->{Translation}->{'Survey Zoom Module.'} = 'Modul Umfrage-Detailansicht';

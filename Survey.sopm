@@ -19,7 +19,9 @@
         <File Permission="644" Location="Kernel/Language/fi_FI_Survey.pm"/>
         <File Permission="644" Location="Kernel/Language/fr_Survey.pm"/>
         <File Permission="644" Location="Kernel/Language/gl_Survey.pm"/>
+        <File Permission="644" Location="Kernel/Language/hr_Survey.pm"/>
         <File Permission="644" Location="Kernel/Language/hu_Survey.pm"/>
+        <File Permission="644" Location="Kernel/Language/id_Survey.pm"/>
         <File Permission="644" Location="Kernel/Language/it_Survey.pm"/>
         <File Permission="644" Location="Kernel/Language/ja_Survey.pm"/>
         <File Permission="644" Location="Kernel/Language/ms_Survey.pm"/>
@@ -31,6 +33,7 @@
         <File Permission="644" Location="Kernel/Language/ru_Survey.pm"/>
         <File Permission="644" Location="Kernel/Language/sr_Cyrl_Survey.pm"/>
         <File Permission="644" Location="Kernel/Language/sw_Survey.pm"/>
+        <File Permission="644" Location="Kernel/Language/th_TH_Survey.pm"/>
         <File Permission="644" Location="Kernel/Language/vi_VN_Survey.pm"/>
         <File Permission="644" Location="Kernel/Language/zh_TW_Survey.pm"/>
         <File Permission="644" Location="Kernel/Language/zh_CN_Survey.pm"/>

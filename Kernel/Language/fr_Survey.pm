@@ -16,13 +16,13 @@ sub Data {
     my $Self = shift;
 
     # Template: AAASurvey
-    $Self->{Translation}->{'- Change Status -'} = 'Changement du status';
+    $Self->{Translation}->{'- Change Status -'} = '- Changer le status -';
     $Self->{Translation}->{'Add New Survey'} = 'Ajouter un sondage';
-    $Self->{Translation}->{'Survey Edit'} = 'Modifier Sondage';
-    $Self->{Translation}->{'Survey Edit Questions'} = 'Modifier questionnaire du sondage';
-    $Self->{Translation}->{'Question Edit'} = 'Modifier Questions';
-    $Self->{Translation}->{'Answer Edit'} = 'Modifier Réponses';
-    $Self->{Translation}->{'Can\'t set new status! No questions defined.'} = 'Impossible de mettre à jour ! aucune question de définis';
+    $Self->{Translation}->{'Survey Edit'} = 'Modifier le sondage';
+    $Self->{Translation}->{'Survey Edit Questions'} = 'Modifier les questions du sondage';
+    $Self->{Translation}->{'Question Edit'} = 'Modifier la question';
+    $Self->{Translation}->{'Answer Edit'} = 'Modifier la réponse';
+    $Self->{Translation}->{'Can\'t set new status! No questions defined.'} = 'Impossible de mettre à jour ! aucune question n\'est definie';
     $Self->{Translation}->{'Status changed.'} = 'Le status a été changé.';
     $Self->{Translation}->{'Thank you for your feedback.'} = 'Merci pour votre retour.';
     $Self->{Translation}->{'The survey is finished.'} = 'Le sondage est terminé.';
@@ -31,7 +31,7 @@ sub Data {
     $Self->{Translation}->{'Checkbox (List)'} = 'Case à cocher (Liste)';
     $Self->{Translation}->{'Radio'} = 'Bouton Radio';
     $Self->{Translation}->{'Radio (List)'} = 'Bouton Radio (Liste)';
-    $Self->{Translation}->{'Stats Overview'} = 'Aperçu des stats';
+    $Self->{Translation}->{'Stats Overview'} = 'Aperçu des statistiques';
     $Self->{Translation}->{'Survey Description'} = 'Description du sondage';
     $Self->{Translation}->{'Survey Introduction'} = 'Présentation du sondage';
     $Self->{Translation}->{'Yes/No'} = 'Oui/Non';
@@ -65,12 +65,12 @@ sub Data {
     $Self->{Translation}->{'Question'} = 'Question';
     $Self->{Translation}->{'Answer Required'} = 'Réponse requise';
     $Self->{Translation}->{'When you finish to edit the survey questions just close this screen.'} =
-        '';
+        'Après avoir terminé l\'édition du sondage, vous pouvez fermer la fenêtre.';
     $Self->{Translation}->{'Do you really want to delete this question? ALL associated data will be LOST!'} =
         'Etes vous sur de vouloir supprimer cette question ? Toutes les données associées seront perdues.';
     $Self->{Translation}->{'Edit Question'} = 'Modifier Question';
     $Self->{Translation}->{'go back to questions'} = 'Retour aux Questions';
-    $Self->{Translation}->{'Question:'} = '';
+    $Self->{Translation}->{'Question:'} = 'Question:';
     $Self->{Translation}->{'Possible Answers For'} = 'Possible réponses pour';
     $Self->{Translation}->{'Add Answer'} = 'Ajouter Réponses';
     $Self->{Translation}->{'No answers saved for this question.'} = 'Pas de réponse trouvé pour cette question.';
@@ -79,10 +79,10 @@ sub Data {
         'il n\'y a pas de réponses possible, une zone de texte sera affiché.';
     $Self->{Translation}->{'Edit Answer'} = 'Modifier Réponse';
     $Self->{Translation}->{'go back to edit question'} = 'Retour à la modification des questions.';
-    $Self->{Translation}->{'Answer:'} = '';
+    $Self->{Translation}->{'Answer:'} = 'Réponse :';
 
     # Template: AgentSurveyOverviewNavBar
-    $Self->{Translation}->{'Max. shown surveys per page'} = '';
+    $Self->{Translation}->{'Max. shown surveys per page'} = 'Sondages maximum par page';
 
     # Template: AgentSurveyOverviewSmall
     $Self->{Translation}->{'Notification Sender'} = 'Expéditeur de la notification  ';
@@ -129,26 +129,26 @@ sub Data {
     $Self->{Translation}->{'Default subject for the notification email to customers about new survey.'} =
         'Sujet par défaut pour la notification Client par mail à propos d\'une nouvelle enquête.';
     $Self->{Translation}->{'Defines an overview module to show the small view of a survey list.'} =
-        '';
+        'Définir un module d’aperçu où montrer la liste des sondages';
     $Self->{Translation}->{'Defines maximum amount of surveys that get sent to a customer per 30 days. ( 0 means no maximum, all survey requests will be sent).'} =
         'Défini le nombre maximum d\'enquêtes qui seront envoyées a un Client par période de 30 jours. (0 signifie pas de maximum, toutes les enquêtes seront expédiées).';
     $Self->{Translation}->{'Defines the amount in hours a ticket has to be closed to trigger the sending of a survey, ( 0 means send immediately after close ).'} =
         'Défini le nombre d\'heure pour déclencher l\'envoi d\'une enquête après la clôture d\'un ticket (0 signifie un envoi immédiat après clôture).';
     $Self->{Translation}->{'Defines the default height for Richtext views for SurveyZoom elements.'} =
-        '';
+        'Définir la hauteur par défaut de la vue zoomée des éléments du sondage.';
     $Self->{Translation}->{'Defines the shown columns in the survey overview. This option has no effect on the position of the columns.'} =
-        '';
+        'Définir les colonnes visible de l’aperçu du sondage. cette option n\'a pas d\'effet sur la position des colonnes.';
     $Self->{Translation}->{'Edit Survey General Information'} = 'Editer les informations générales de l\'enquête';
     $Self->{Translation}->{'Edit Survey Questions'} = 'Editer les Questions d\'Enquêtes';
     $Self->{Translation}->{'Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time.'} =
-        '';
-    $Self->{Translation}->{'Enable or disable the send condition check for the service.'} = '';
+        'active ou désactive la vue des résultats d\'un sondage dans l\'interface publique lorsqu\'un client essaie de répondre une deuxième fois a un sondage.';
+    $Self->{Translation}->{'Enable or disable the send condition check for the service.'} = 'Active ou désactive la vérification de la condition d\'envoi pour le service.';
     $Self->{Translation}->{'Enable or disable the send condition check for the ticket type.'} =
-        '';
+        'Active ou désactive la vérification de la condition d\'envoi pour ce type de ticket.';
     $Self->{Translation}->{'Frontend module registration for survey add in the agent interface.'} =
-        '';
+        'Interface du module d\'enregistrement d\'un ajout de sondage dans l\'interface agent.';
     $Self->{Translation}->{'Frontend module registration for survey edit in the agent interface.'} =
-        '';
+        'Interface du module d\'enregistrement de l\'édition d\'un sondage dans l\'interface agent.';
     $Self->{Translation}->{'Frontend module registration for survey stats in the agent interface.'} =
         '';
     $Self->{Translation}->{'Frontend module registration for survey zoom in the agent interface.'} =

@@ -19,7 +19,7 @@ sub Data {
     $Self->{Translation}->{'- Change Status -'} = '- Alterar Estado -';
     $Self->{Translation}->{'Add New Survey'} = 'Adicionar Nova Pesquisa';
     $Self->{Translation}->{'Survey Edit'} = 'Editar Pesquisa';
-    $Self->{Translation}->{'Survey Edit Questions'} = 'Editar Preguntas da Pesquisa';
+    $Self->{Translation}->{'Survey Edit Questions'} = 'Editar Perguntas da Pesquisa';
     $Self->{Translation}->{'Question Edit'} = 'Edição de Pergunta';
     $Self->{Translation}->{'Answer Edit'} = 'Edição de Resposta';
     $Self->{Translation}->{'Can\'t set new status! No questions defined.'} = 'Não é possível configurar o novo estado. Nenhuma questão definida.';
@@ -56,21 +56,21 @@ sub Data {
     $Self->{Translation}->{'Edit General Info'} = 'Editar Informações Gerais';
 
     # Template: AgentSurveyEditQuestions
-    $Self->{Translation}->{'Edit Questions'} = 'Editar Preguntas';
+    $Self->{Translation}->{'Edit Questions'} = 'Editar Perguntas';
     $Self->{Translation}->{'Survey Questions'} = 'Perguntas da Pesquisa';
-    $Self->{Translation}->{'Add Question'} = 'Adicionar Pregunta';
+    $Self->{Translation}->{'Add Question'} = 'Adicionar Pergunta';
     $Self->{Translation}->{'Type the question'} = 'Escreva a pergunta';
     $Self->{Translation}->{'Answer required'} = 'Resposta requerida';
     $Self->{Translation}->{'No questions saved for this survey.'} = 'Nenhuma questão salva para esta pesquisa.';
-    $Self->{Translation}->{'Question'} = 'Pregunta';
+    $Self->{Translation}->{'Question'} = 'Pergunta';
     $Self->{Translation}->{'Answer Required'} = 'Resposta Requerida';
     $Self->{Translation}->{'When you finish to edit the survey questions just close this screen.'} =
-        '';
+        'Quando você terminar de editar as questões da pesquisa, apenas feche a tela.';
     $Self->{Translation}->{'Do you really want to delete this question? ALL associated data will be LOST!'} =
         'Você realmente deseja excluir essa questão? TODOS os dados associados serão PERDIDOS!';
-    $Self->{Translation}->{'Edit Question'} = 'Editar Pregunta';
-    $Self->{Translation}->{'go back to questions'} = 'voltar às preguntas';
-    $Self->{Translation}->{'Question:'} = '';
+    $Self->{Translation}->{'Edit Question'} = 'Editar Pergunta';
+    $Self->{Translation}->{'go back to questions'} = 'voltar às perguntas';
+    $Self->{Translation}->{'Question:'} = 'Questão:';
     $Self->{Translation}->{'Possible Answers For'} = 'Possíveis Respostas Para';
     $Self->{Translation}->{'Add Answer'} = 'Adicionar Resposta';
     $Self->{Translation}->{'No answers saved for this question.'} = 'Não há respostas salvas para esta questão';
@@ -79,10 +79,10 @@ sub Data {
         'Esta pergunta não possui várias respostas, uma área de texto será mostrada';
     $Self->{Translation}->{'Edit Answer'} = 'Editar Resposta';
     $Self->{Translation}->{'go back to edit question'} = 'voltar para editar pergunta';
-    $Self->{Translation}->{'Answer:'} = '';
+    $Self->{Translation}->{'Answer:'} = 'Resposta:';
 
     # Template: AgentSurveyOverviewNavBar
-    $Self->{Translation}->{'Max. shown surveys per page'} = '';
+    $Self->{Translation}->{'Max. shown surveys per page'} = 'Qtd. máx. de pesquisas exibidas por página';
 
     # Template: AgentSurveyOverviewSmall
     $Self->{Translation}->{'Notification Sender'} = 'Remetente da Notificação';
@@ -167,10 +167,10 @@ sub Data {
         'Exibe um link no menu para voltar da visão de detalhes de uma pesquisa na interface de atendente.';
     $Self->{Translation}->{'Shows a link in the menu to zoom into the survey statistics details in its zoom view of the agent interface.'} =
         'Exibe um link no menu para detalhar as estatísticas da pesquisa em sua visão de detalhes na interface de atendente.';
-    $Self->{Translation}->{'Survey Add Module.'} = '';
-    $Self->{Translation}->{'Survey Edit Module.'} = 'Editar Módulo de pesquisa';
+    $Self->{Translation}->{'Survey Add Module.'} = 'Módulo de adição de pesquisa.';
+    $Self->{Translation}->{'Survey Edit Module.'} = 'Módulo de edição de pesquisa';
     $Self->{Translation}->{'Survey Overview "Small" Limit'} = 'Limite da Visão Geral de Pesquisa "Pequena"';
-    $Self->{Translation}->{'Survey Stats Module.'} = 'Estatísticas do Módulo de Pesquisa';
+    $Self->{Translation}->{'Survey Stats Module.'} = 'Módulo de Estatísticas de Pesquisa';
     $Self->{Translation}->{'Survey Zoom Module.'} = 'Módulo de Detalhe de Pesquisa.';
     $Self->{Translation}->{'Survey limit per page for Survey Overview "Small"'} = 'Limite por página na visão geral de pesquisa "Pequena"';
     $Self->{Translation}->{'Surveys will not be sent to the configured email addresses.'} = 'As pesquisas não será enviadas para os endereços de e-mail configurados.';
@@ -178,7 +178,7 @@ sub Data {
         'O identificador de uma pesquisa, ex. Pesquisa#, MinhaPesquisa#. O padrão é Pesquisa#.';
     $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket is closed.'} =
         'Módulo de evento de chamado para enviar requisições de pesquisa via e-mail automaticamente para clientes se um chamado for fechado.';
-    $Self->{Translation}->{'Trigger sending delayed survey requests.'} = '';
+    $Self->{Translation}->{'Trigger sending delayed survey requests.'} = 'Disparar o envio de solicitações de pesquisa atrasadas.';
     $Self->{Translation}->{'Zoom Into Statistics Details'} = 'Detalhar as Estatísticas';
 
 }

@@ -40,7 +40,7 @@ sub Data {
     $Self->{Translation}->{'not answered'} = 'не ответили';
     $Self->{Translation}->{'Stats Detail'} = 'Подробный отчет';
     $Self->{Translation}->{'Stats Details'} = 'Подробности отчета';
-    $Self->{Translation}->{'You have already answered the survey.'} = 'Вы уже ответили на опрос.';
+    $Self->{Translation}->{'You have already answered the survey.'} = 'Вы уже прошли опрос.';
     $Self->{Translation}->{'Survey#'} = 'Опрос №';
     $Self->{Translation}->{'- No queue selected -'} = '- Ни одной очереди не выбрано -';
     $Self->{Translation}->{'Master'} = 'Главный';
