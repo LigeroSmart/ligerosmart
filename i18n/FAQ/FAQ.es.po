@@ -5,13 +5,14 @@
 # Deiry Arias <mailimarias@gmail.com>, 2015
 # Duilio Poggi Oneto <duiliopoggio@gmail.com>, 2015
 # Galo Izquierdo <gizquier@hotmail.com>, 2015
+# Luigy, 2016
 # Roberto Lugo <rlugo@cinetixgroup.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2016-05-10 11:49+0000\n"
-"PO-Revision-Date: 2016-05-10 16:53+0000\n"
-"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
+"PO-Revision-Date: 2016-06-07 10:52+0000\n"
+"Last-Translator: Luigy\n"
 "Language-Team: Spanish (http://www.transifex.com/otrs/OTRS/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1237,4 +1238,4 @@ msgstr "Asunto del ticket para aprobación de artículos FAQ."
 
 #. SysConfig
 msgid "Toolbar Item for a shortcut."
-msgstr ""
+msgstr "Artículo de la barra de herramientas para un acceso directo."

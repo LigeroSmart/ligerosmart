@@ -64,7 +64,7 @@ sub Data {
     $Self->{Translation}->{'Delete Category'} = 'Обриши категорију';
     $Self->{Translation}->{'Ok'} = 'У реду';
     $Self->{Translation}->{'Add Category'} = 'Додај категорију';
-    $Self->{Translation}->{'Edit Category'} = 'Измени категорију';
+    $Self->{Translation}->{'Edit Category'} = 'Уреди категорију';
     $Self->{Translation}->{'Please select at least one permission group.'} = 'Молимо да изаберете бар једну групу дозвола.';
     $Self->{Translation}->{'Agent groups that can access articles in this category.'} = 'Групе оператера које могу приступити чланцима у овој категорији.';
     $Self->{Translation}->{'Will be shown as comment in Explorer.'} = 'Биће приказано као коментар у Истраживачу.';

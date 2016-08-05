@@ -419,7 +419,7 @@ sub Data {
         'Este ajuste define que un objeto «FAQ» puede enlazarse con otros objetos «Ticket» utilizando el tipo de enlace «ParentChild».';
     $Self->{Translation}->{'Ticket body for approval of FAQ article.'} = 'Cuerpo del ticket para aprobación de artículos FAQ.';
     $Self->{Translation}->{'Ticket subject for approval of FAQ article.'} = 'Asunto del ticket para aprobación de artículos FAQ.';
-    $Self->{Translation}->{'Toolbar Item for a shortcut.'} = '';
+    $Self->{Translation}->{'Toolbar Item for a shortcut.'} = 'Artículo de la barra de herramientas para un acceso directo.';
 
 }
 

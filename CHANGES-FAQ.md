@@ -1,4 +1,8 @@
 #5.0.6 2016-??-??
+ - 2016-08-05 Added Chinese (Taiwan) translation, thanks to all translators.
+ - 2016-08-05 Added Thai translation, thanks to all translators.
+ - 2016-08-05 Added Indonesian translation, thanks to all translators.
+ - 2016-08-05 Updated translations, thanks to all translators.
 
 #5.0.5 2016-06-29
  - 2016-06-27 Fixed perl warning.

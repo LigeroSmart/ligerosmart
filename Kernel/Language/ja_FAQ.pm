@@ -312,7 +312,7 @@ sub Data {
     $Self->{Translation}->{'Interfaces where the quick search should be shown.'} = 'クイック検索が表示される画面';
     $Self->{Translation}->{'Journal'} = 'ジャーナル';
     $Self->{Translation}->{'Language Management'} = '言語管理';
-    $Self->{Translation}->{'Link another object to this FAQ item'} = 'この記事から他の記事へのリンク';
+    $Self->{Translation}->{'Link another object to this FAQ item'} = 'このFAQ記事に他オブジェクトを関連付ける';
     $Self->{Translation}->{'List of state types which can be used in the agent interface.'} =
         '担当者インターフェイスで利用可能なステートタイプリスト';
     $Self->{Translation}->{'List of state types which can be used in the customer interface.'} =

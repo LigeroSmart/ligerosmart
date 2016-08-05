@@ -2,7 +2,7 @@
 # Translators:
 # Felipe Braga <fbobraga@gmail.com>, 2015-2016
 # José Junior <joserribeiro26@gmail.com>, 2014
-# Leandro Guimarães Faria Corcete DUTRA <l@dutras.org>, 2015
+# Leandro “Lê Corſetti van Utrecht” Guimarães Faria Corcete DUTRA <l@dutras.org>, 2015
 # Marcos Aurélio Silvério <marcos.aurelio@infracerta.com.br>, 2014
 # Murilo Moreira de Oliveira <murilo.moreira@gmail.com>, 2014-2015
 # Samuel Diniz Casimiro <nedmaj@yahoo.com>, 2015

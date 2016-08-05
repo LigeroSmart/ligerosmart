@@ -419,7 +419,7 @@ sub Data {
         '该设置定义了一个能通过“父子（ParentChild）”的链接类型与其他工单对象连接的FAQ对象。';
     $Self->{Translation}->{'Ticket body for approval of FAQ article.'} = 'FAQ 文章审批请求的工单正文。';
     $Self->{Translation}->{'Ticket subject for approval of FAQ article.'} = 'FAQ 文章审批请求的工单标题。';
-    $Self->{Translation}->{'Toolbar Item for a shortcut.'} = '';
+    $Self->{Translation}->{'Toolbar Item for a shortcut.'} = '快捷键的工具栏条目。';
 
 }
 
