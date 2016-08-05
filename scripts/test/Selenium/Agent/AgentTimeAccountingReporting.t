@@ -163,8 +163,8 @@ $Selenium->RunTest(
         $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentTimeAccountingReporting");
 
         # select month and year that are used for testing
-        $Selenium->find_element( "#Month option[value='$MonthStart']", 'css' )->click();
-        $Selenium->find_element( "#Year option[value='$YearStart']",   'css' )->click();
+        $Selenium->find_element( "#Month option[value='$MonthStart']", 'css' )->VerifiedClick();
+        $Selenium->find_element( "#Year option[value='$YearStart']",   'css' )->VerifiedClick();
         $Selenium->find_element( "#NavigationSelect",                  'css' )->VerifiedClick();
 
         # check page layout
