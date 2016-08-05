@@ -1,11 +1,12 @@
 # 
 # Translators:
+# Volluta <volluta@tutanota.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-10-07 18:36+0000\n"
-"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
+"PO-Revision-Date: 2015-11-30 20:41+0000\n"
+"Last-Translator: Volluta <volluta@tutanota.com>\n"
 "Language-Team: Dutch (http://www.transifex.com/otrs/OTRS/language/nl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -107,7 +108,7 @@ msgstr "Detail"
 
 #. Template: AAASurvey
 msgid "Stats Details"
-msgstr ""
+msgstr "Stats Details"
 
 #. Template: AAASurvey
 msgid "You have already answered the survey."
@@ -115,23 +116,23 @@ msgstr "U heeft deze enquête al beantwoord."
 
 #. Template: AAASurvey
 msgid "Survey#"
-msgstr ""
+msgstr "Survey#"
 
 #. Template: AAASurvey
 msgid "- No queue selected -"
-msgstr ""
+msgstr "- Geen rij geselecteerd -"
 
 #. Template: AAASurvey
 msgid "Master"
-msgstr ""
+msgstr "Master"
 
 #. Template: AAASurvey
 msgid "New Status"
-msgstr ""
+msgstr "Nieuwe Status"
 
 #. Template: AAASurvey
 msgid "Question Type"
-msgstr ""
+msgstr "Vraagtype"
 
 #. Template: AgentSurveyAdd
 msgid "Create New Survey"
@@ -167,7 +168,7 @@ msgstr "Vraag"
 
 #. Template: AgentSurveyEditQuestions
 msgid "Answer required"
-msgstr ""
+msgstr "Verplicht antwoorden"
 
 #. Template: AgentSurveyEditQuestions
 msgid "No questions saved for this survey."
@@ -179,7 +180,7 @@ msgstr "Vraag"
 
 #. Template: AgentSurveyEditQuestions
 msgid "Answer Required"
-msgstr ""
+msgstr "Verplicht Antwoorden"
 
 #. Template: AgentSurveyEditQuestions
 msgid "When you finish to edit the survey questions just close this screen."
@@ -189,7 +190,7 @@ msgstr ""
 msgid ""
 "Do you really want to delete this question? ALL associated data will be "
 "LOST!"
-msgstr ""
+msgstr "Weet u zeker dat u deze vraag wilt verwijderen? ALLE geassocieerde data zal verloren gaan!"
 
 #. Template: AgentSurveyEditQuestions
 msgid "Edit Question"
@@ -201,7 +202,7 @@ msgstr "ga terug naar de vragen"
 
 #. Template: AgentSurveyEditQuestions
 msgid "Question:"
-msgstr ""
+msgstr "Vraag:"
 
 #. Template: AgentSurveyEditQuestions
 msgid "Possible Answers For"
@@ -213,11 +214,11 @@ msgstr "Antwoord toevoegen"
 
 #. Template: AgentSurveyEditQuestions
 msgid "No answers saved for this question."
-msgstr ""
+msgstr "Geen antwoord opgeslagen voor deze vraag."
 
 #. Template: AgentSurveyEditQuestions
 msgid "Do you really want to delete this answer?"
-msgstr ""
+msgstr "Weet u zeker dat u dit antwoord wilt verwijderen?"
 
 #. Template: AgentSurveyEditQuestions
 msgid "This doesn't have several answers, a textarea will be displayed."
@@ -233,11 +234,11 @@ msgstr "ga terug naar de vraag"
 
 #. Template: AgentSurveyEditQuestions
 msgid "Answer:"
-msgstr ""
+msgstr "Antwoord:"
 
 #. Template: AgentSurveyOverviewNavBar
 msgid "Max. shown surveys per page"
-msgstr ""
+msgstr "Max. getoonde onderzoeken per pagina"
 
 #. Template: AgentSurveyOverviewSmall
 msgid "Notification Sender"
@@ -273,7 +274,7 @@ msgstr "Ingevuld op"
 
 #. Template: AgentSurveyStats
 msgid "See Details"
-msgstr ""
+msgstr "Zie Details"
 
 #. Template: AgentSurveyStats
 msgid "Survey Stat Details"
@@ -301,7 +302,7 @@ msgstr "Details enquête"
 
 #. Template: AgentSurveyZoom
 msgid "Ticket Services"
-msgstr ""
+msgstr "Ticket Services"
 
 #. Template: AgentSurveyZoom
 msgid "Survey Results Graph"

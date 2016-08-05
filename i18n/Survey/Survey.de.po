@@ -2,13 +2,14 @@
 # Translators:
 # Ettore Atalan <atalanttore@googlemail.com>, 2014-2015
 # mathiasbraeunling <mathias.braeunling@otrs.com>, 2014
-# ru_otrs <robert.ullrich@otrs.com>, 2014
+# ru_otrs <robert.ullrich@otrs.com>, 2014-2015
+# Rudy R <rudy.rohde@googlemail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-10-07 18:36+0000\n"
-"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
+"PO-Revision-Date: 2015-12-30 17:57+0000\n"
+"Last-Translator: Rudy R <rudy.rohde@googlemail.com>\n"
 "Language-Team: German (http://www.transifex.com/otrs/OTRS/language/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -186,7 +187,7 @@ msgstr "Antwort erforderlich"
 
 #. Template: AgentSurveyEditQuestions
 msgid "When you finish to edit the survey questions just close this screen."
-msgstr ""
+msgstr "Nach dem Bearbeiten der Umfrage dieses Fenster einfach schliessen"
 
 #. Template: AgentSurveyEditQuestions
 msgid ""
@@ -204,7 +205,7 @@ msgstr "Zurück zu den Fragen"
 
 #. Template: AgentSurveyEditQuestions
 msgid "Question:"
-msgstr ""
+msgstr "Frage:"
 
 #. Template: AgentSurveyEditQuestions
 msgid "Possible Answers For"
@@ -236,11 +237,11 @@ msgstr "Zurück zum Bearbeiten der Frage"
 
 #. Template: AgentSurveyEditQuestions
 msgid "Answer:"
-msgstr ""
+msgstr "Antwort:"
 
 #. Template: AgentSurveyOverviewNavBar
 msgid "Max. shown surveys per page"
-msgstr ""
+msgstr "Maximale Anzahl angezeigter Umfragen pro Seite"
 
 #. Template: AgentSurveyOverviewSmall
 msgid "Notification Sender"
@@ -477,7 +478,7 @@ msgstr "Zeigt einen Link im Menü in Zoom-Ansicht der Agenten-Oberfläche an, mi
 
 #. SysConfig
 msgid "Survey Add Module."
-msgstr ""
+msgstr "Umfrage Modul hinzufügen"
 
 #. SysConfig
 msgid "Survey Edit Module."
@@ -517,7 +518,7 @@ msgstr "Ticket-Event-Modul, um automatisch Umfrage-E-Mails an Kunden zu senden, 
 
 #. SysConfig
 msgid "Trigger sending delayed survey requests."
-msgstr ""
+msgstr "Auslöser zum Senden von verzögerten Anfragen"
 
 #. SysConfig
 msgid "Zoom Into Statistics Details"

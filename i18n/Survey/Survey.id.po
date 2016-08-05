@@ -1,70 +1,71 @@
 # 
 # Translators:
-# Vincenzo Reale <vinx.reale@gmail.com>, 2015
+# OTRS SDN BHD <otrssdnbhd@gmail.com>, 2016
+# Sofyan Arifin <sofyanarifin39@gmail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-12-16 09:02+0000\n"
-"Last-Translator: Vincenzo Reale <vinx.reale@gmail.com>\n"
-"Language-Team: Italian (http://www.transifex.com/otrs/OTRS/language/it/)\n"
+"PO-Revision-Date: 2016-01-28 08:15+0000\n"
+"Last-Translator: OTRS SDN BHD <otrssdnbhd@gmail.com>\n"
+"Language-Team: Indonesian (http://www.transifex.com/otrs/OTRS/language/id/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: it\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: id\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
 #. Template: AAASurvey
 msgid "- Change Status -"
-msgstr "- Cambia stato -"
+msgstr "- Mengubah Status -"
 
 #. Template: AAASurvey
 msgid "Add New Survey"
-msgstr "Aggiungi nuovo sondaggio"
+msgstr "Tambahkan survey baru"
 
 #. Template: AAASurvey
 msgid "Survey Edit"
-msgstr "Modifica Sondaggio"
+msgstr "Ubah survey"
 
 #. Template: AAASurvey
 msgid "Survey Edit Questions"
-msgstr "Modifica le domande del sondaggio"
+msgstr "Ubah pertanyaan survey"
 
 #. Template: AAASurvey
 msgid "Question Edit"
-msgstr "Modifica domanda"
+msgstr "Ubah pertanyaan"
 
 #. Template: AAASurvey
 msgid "Answer Edit"
-msgstr "Modifica risposta"
+msgstr "Ubah jawaban"
 
 #. Template: AAASurvey
 msgid "Can't set new status! No questions defined."
-msgstr "Impossibile impostare il nuovo stato! Nessuna domanda definita."
+msgstr "Tidak dapat membuat status baru!  Tidak ada pertanyaan yang di definisikan."
 
 #. Template: AAASurvey
 msgid "Status changed."
-msgstr "Stato cambiato."
+msgstr "Status diubah"
 
 #. Template: AAASurvey
 msgid "Thank you for your feedback."
-msgstr "Grazie per il tuo riscontro."
+msgstr "Terima kasih atas tanggapan anda."
 
 #. Template: AAASurvey
 msgid "The survey is finished."
-msgstr "Il sondaggio è terminato."
+msgstr "Survey telah selesai."
 
 #. Template: AAASurvey
 msgid "Complete"
-msgstr "Sondaggi completi"
+msgstr "Lengkap."
 
 #. Template: AAASurvey
 msgid "Incomplete"
-msgstr "Sondaggi incompleti"
+msgstr "Tidak lengkap."
 
 #. Template: AAASurvey
 msgid "Checkbox (List)"
-msgstr "Casella di selezione (elenco)"
+msgstr "Kotak centang (daftar)"
 
 #. Template: AAASurvey
 msgid "Radio"
@@ -72,451 +73,451 @@ msgstr "Radio"
 
 #. Template: AAASurvey
 msgid "Radio (List)"
-msgstr "Radio (elenco)"
+msgstr "Radio (daftar)"
 
 #. Template: AAASurvey
 msgid "Stats Overview"
-msgstr "Risultati statistici"
+msgstr "Gambaran status."
 
 #. Template: AAASurvey
 msgid "Survey Description"
-msgstr "Descrizione del sondaggio"
+msgstr "Deskripsi survey."
 
 #. Template: AAASurvey
 msgid "Survey Introduction"
-msgstr "Introduzione del sondaggio"
+msgstr "Keta pengantar survey."
 
 #. Template: AAASurvey
 msgid "Yes/No"
-msgstr "Sì/No"
+msgstr "Ya/Tidak"
 
 #. Template: AAASurvey
 msgid "YesNo"
-msgstr "SìNo"
+msgstr "YaTidak"
 
 #. Template: AAASurvey
 msgid "answered"
-msgstr "risposta"
+msgstr "Terjawab"
 
 #. Template: AAASurvey
 msgid "not answered"
-msgstr "non risposta"
+msgstr "Belum dijawab"
 
 #. Template: AAASurvey
 msgid "Stats Detail"
-msgstr "Dettaglio statistiche"
+msgstr "Rincian Status"
 
 #. Template: AAASurvey
 msgid "Stats Details"
-msgstr "Dettagli statistiche"
+msgstr "Rincian Status"
 
 #. Template: AAASurvey
 msgid "You have already answered the survey."
-msgstr "Hai già risposto al sondaggio."
+msgstr "Anda telah menjawab survey ini."
 
 #. Template: AAASurvey
 msgid "Survey#"
-msgstr "Sondaggio#"
+msgstr "Survey#"
 
 #. Template: AAASurvey
 msgid "- No queue selected -"
-msgstr "- Nessuna coda selezionata -"
+msgstr "- Tidak ada antrian yang dipilih - "
 
 #. Template: AAASurvey
 msgid "Master"
-msgstr "Principale"
+msgstr "Induk"
 
 #. Template: AAASurvey
 msgid "New Status"
-msgstr "Nuovo stato"
+msgstr "Status baru"
 
 #. Template: AAASurvey
 msgid "Question Type"
-msgstr "Tipo di domanda"
+msgstr "Tipe pertanyaan"
 
 #. Template: AgentSurveyAdd
 msgid "Create New Survey"
-msgstr "Creazione nuovo sondaggio"
+msgstr "Buat survey baru"
 
 #. Template: AgentSurveyAdd
 msgid "Introduction"
-msgstr "Introduzione"
+msgstr "Pengantar"
 
 #. Template: AgentSurveyAdd
 msgid "Internal Description"
-msgstr "Descrizione ad uso interno"
+msgstr "Deskripsi internal"
 
 #. Template: AgentSurveyEdit
 msgid "Edit General Info"
-msgstr "Modifica le informazioni generali"
+msgstr "Ubah informasi umum"
 
 #. Template: AgentSurveyEditQuestions
 msgid "Edit Questions"
-msgstr "Modifica le domande"
+msgstr "Ubah pertanyaan"
 
 #. Template: AgentSurveyEditQuestions
 msgid "Survey Questions"
-msgstr "Voci del Sondaggio"
+msgstr "Pertanyaan survey"
 
 #. Template: AgentSurveyEditQuestions
 msgid "Add Question"
-msgstr "Aggiungi domanda"
+msgstr "Tambah pertanyaan."
 
 #. Template: AgentSurveyEditQuestions
 msgid "Type the question"
-msgstr "Inserisci la domanda"
+msgstr "Ketik pertanyaannya."
 
 #. Template: AgentSurveyEditQuestions
 msgid "Answer required"
-msgstr "Risposta richiesta"
+msgstr "Jawaban dibutuhkan."
 
 #. Template: AgentSurveyEditQuestions
 msgid "No questions saved for this survey."
-msgstr "Non ci sono voci per questo sondaggio"
+msgstr "Tidak ada pertanyaan yang di simpan untuk survey ini."
 
 #. Template: AgentSurveyEditQuestions
 msgid "Question"
-msgstr "Domanda"
+msgstr "Pertanyaan"
 
 #. Template: AgentSurveyEditQuestions
 msgid "Answer Required"
-msgstr "Risposta richiesta"
+msgstr "Jawaban dibutuhkan"
 
 #. Template: AgentSurveyEditQuestions
 msgid "When you finish to edit the survey questions just close this screen."
-msgstr "Quando completi la modifica delle domande del sondaggio, basta chiudere questa schermata."
+msgstr "Ketika anda selesai mengubah pertanyaan survey ini, silahkan tutup tampilan ini."
 
 #. Template: AgentSurveyEditQuestions
 msgid ""
 "Do you really want to delete this question? ALL associated data will be "
 "LOST!"
-msgstr "Vuoi davvero eliminare questa domanda? TUTTI i dati associati saranno PERSI!"
+msgstr "Apakah anda yakin ingin menghapus pertanyaan ini? SEMUA data yang berhubungan akan HILANG!"
 
 #. Template: AgentSurveyEditQuestions
 msgid "Edit Question"
-msgstr "Modifica domanda"
+msgstr "Ubah pertanyaan"
 
 #. Template: AgentSurveyEditQuestions
 msgid "go back to questions"
-msgstr "Ritorna alle domande"
+msgstr "Kembali ke pertanyaan."
 
 #. Template: AgentSurveyEditQuestions
 msgid "Question:"
-msgstr "Domanda:"
+msgstr "Pertanyaan: "
 
 #. Template: AgentSurveyEditQuestions
 msgid "Possible Answers For"
-msgstr "Possibili risposte"
+msgstr "Jawaban yang memungkinkan untuk"
 
 #. Template: AgentSurveyEditQuestions
 msgid "Add Answer"
-msgstr "Aggiungi risposta"
+msgstr "Tambah jawaban"
 
 #. Template: AgentSurveyEditQuestions
 msgid "No answers saved for this question."
-msgstr "Nessuna risposta salvata per questa domanda."
+msgstr "Tidak ada jawaban yang di simpan untuk pertanyaan ini"
 
 #. Template: AgentSurveyEditQuestions
 msgid "Do you really want to delete this answer?"
-msgstr "Vuoi davvero eliminare questa risposta?"
+msgstr "Apakah anda yakin ingin menghapus jawaban ini?"
 
 #. Template: AgentSurveyEditQuestions
 msgid "This doesn't have several answers, a textarea will be displayed."
-msgstr "Non sono previste risposte multiple, il destinatario inserisce del testo libero"
+msgstr "Tidak memiliki beberapa jawaban, bidangteks akan di tampilkan."
 
 #. Template: AgentSurveyEditQuestions
 msgid "Edit Answer"
-msgstr "Modifica risposta"
+msgstr "ubah jawaban"
 
 #. Template: AgentSurveyEditQuestions
 msgid "go back to edit question"
-msgstr "Ritorna a modificare le domande"
+msgstr "Kembali ke ubah pertanyaan"
 
 #. Template: AgentSurveyEditQuestions
 msgid "Answer:"
-msgstr "Risposta:"
+msgstr "Jawaban:"
 
 #. Template: AgentSurveyOverviewNavBar
 msgid "Max. shown surveys per page"
-msgstr "Numero massimo di sondaggi per pagina"
+msgstr "Jumlah maksimal survey yang di tampilkan per halaman."
 
 #. Template: AgentSurveyOverviewSmall
 msgid "Notification Sender"
-msgstr "Mittente del sondaggio"
+msgstr "Pengirim notifikasi."
 
 #. Template: AgentSurveyOverviewSmall
 msgid "Notification Subject"
-msgstr "Oggetto del sondaggio"
+msgstr "Subjek notifikasi"
 
 #. Template: AgentSurveyOverviewSmall
 msgid "Notification Body"
-msgstr "Corpo del sondaggio"
+msgstr "Isi notifikasi"
 
 #. Template: AgentSurveyOverviewSmall
 msgid "Changed By"
-msgstr "Modificato da"
+msgstr "diubah oleh"
 
 #. Template: AgentSurveyStats
 msgid "Stats Overview of"
-msgstr "Riepilogo statistiche di"
+msgstr "Gambaran status dari"
 
 #. Template: AgentSurveyStats
 msgid "Requests Table"
-msgstr "Tabella delle richieste"
+msgstr "Tabel permintaan."
 
 #. Template: AgentSurveyStats
 msgid "Send Time"
-msgstr "Data e Ora di invio"
+msgstr "Waktu pengiriman."
 
 #. Template: AgentSurveyStats
 msgid "Vote Time"
-msgstr "Data e Ora di compilazione"
+msgstr "Waktu pemilihan."
 
 #. Template: AgentSurveyStats
 msgid "See Details"
-msgstr "Vedi i dettagli"
+msgstr "Lihat rincian"
 
 #. Template: AgentSurveyStats
 msgid "Survey Stat Details"
-msgstr "Dettagli statistici sul Sondaggio"
+msgstr "Rincian status survey"
 
 #. Template: AgentSurveyStats
 msgid "go back to stats overview"
-msgstr "Ritorna alle statistiche"
+msgstr "Kembali ke gambaran status"
 
 #. Template: AgentSurveyZoom
 msgid "Survey Information"
-msgstr "Informazioni sul sondaggio"
+msgstr "Informasi survey"
 
 #. Template: AgentSurveyZoom
 msgid "Sent requests"
-msgstr "Sondaggi inviati"
+msgstr "Permintaan yang telah dikirim"
 
 #. Template: AgentSurveyZoom
 msgid "Received surveys"
-msgstr "Sondaggi ricevuti"
+msgstr "Survey yang diterima"
 
 #. Template: AgentSurveyZoom
 msgid "Survey Details"
-msgstr "Dettagli sul sondaggio"
+msgstr "Rincian survey"
 
 #. Template: AgentSurveyZoom
 msgid "Ticket Services"
-msgstr "Servizi ticket"
+msgstr "Layanan tiket"
 
 #. Template: AgentSurveyZoom
 msgid "Survey Results Graph"
-msgstr "Grafici sul sondaggio"
+msgstr "Grafik hasil survey"
 
 #. Template: AgentSurveyZoom
 msgid "No stat results."
-msgstr "Non ci sono risultati da mostrare"
+msgstr "Tidak ada hasil stat"
 
 #. Template: PublicSurvey
 msgid "Survey"
-msgstr "Sondaggio"
+msgstr "Survey"
 
 #. Template: PublicSurvey
 msgid "Please answer these questions"
-msgstr "Ti chiediamo, cortesemente, di rispondere a queste domande"
+msgstr "Mohon jawab pertanyaan berikut."
 
 #. Template: PublicSurvey
 msgid "Show my answers"
-msgstr "Mostra le mie risposte"
+msgstr "Tampilkan jawaban saya"
 
 #. Template: PublicSurvey
 msgid "These are your answers"
-msgstr "Queste sono le tue risposte"
+msgstr "Berikut ini adalah jawaban anda"
 
 #. Template: PublicSurvey
 msgid "Survey Title"
-msgstr "Titolo del sondaggio"
+msgstr "Judul survey"
 
 #. SysConfig
 msgid "A Survey Module."
-msgstr "Un modulo per i sondaggi."
+msgstr "Sebuah modul survey"
 
 #. SysConfig
 msgid "A module to edit survey questions."
-msgstr "Un modulo per modificare le domande dei sondaggi."
+msgstr "Sebuah modul untuk mengubah jawaban survey"
 
 #. SysConfig
 msgid "All parameters for the Survey object in the agent interface."
-msgstr "Tutti i parametri del sondaggio nell'interfaccia Agente."
+msgstr "Semua parameter untuk objek survey di antarmuka agen."
 
 #. SysConfig
 msgid ""
 "Amount of days after sending a survey mail in which no new survey requests "
 "are sent to the same customer. Selecting 0 will always send the survey mail."
-msgstr ""
+msgstr "Jumlah hari setelah mengirimkan surat survey dimana tidak ada pengiriman survey baru kepada pelanggan yang sama. Memilih 0 akan selalu mengirimkan surat survey."
 
 #. SysConfig
 msgid "Default body for the notification email to customers about new survey."
-msgstr "Corpo del testo di default per la notifica via email al cliente riguardo un nuovo sondaggio."
+msgstr "Isi default untuk email pemberitahuan tentang survey baru kepada pelanggan "
 
 #. SysConfig
 msgid ""
 "Default sender for the notification email to customers about new survey."
-msgstr "Mittente di default per la notifica via email al cliente riguardo un nuovo sondaggio."
+msgstr "Pengirim default untuk email pemberitahuan tentang survey baru kepada pelanggan."
 
 #. SysConfig
 msgid ""
 "Default subject for the notification email to customers about new survey."
-msgstr "Oggetto di default per la notifica via email al cliente riguardo un nuovo sondaggio."
+msgstr "Subject default untuk email pemberitahuan tentang survey baru kepada pelanggan."
 
 #. SysConfig
 msgid "Defines an overview module to show the small view of a survey list."
-msgstr "Definisce il modulo per mostrare la visualizzazione compatta di una lista di sondaggi."
+msgstr "Definisikan gambaran modul untuk menampilkan tampilan kecil daftar survey"
 
 #. SysConfig
 msgid ""
 "Defines maximum amount of surveys that get sent to a customer per 30 days. ("
 " 0 means no maximum, all survey requests will be sent)."
-msgstr ""
+msgstr "Definisikan Jumlah survey maksimum yang dikirimkan kepada pelanggan per 30 hari. ( 0 berarti tidak ada batas maksimum, semua permintaan survey akan dikirim)."
 
 #. SysConfig
 msgid ""
 "Defines the amount in hours a ticket has to be closed to trigger the sending"
 " of a survey, ( 0 means send immediately after close )."
-msgstr ""
+msgstr "Definisikan jumlah dalam satuan jam, sebuah tiket haris di tutup untuk memicu pengiriman survey, (0 berarti kirim segera setehal di tutup)."
 
 #. SysConfig
 msgid "Defines the default height for Richtext views for SurveyZoom elements."
-msgstr "Definisce l'altezza di default per la vista completa per gli elementi SurveyZoom."
+msgstr "Definisikan tinggi default untuk tampilan Richtext untuk elemen SurveyZoom"
 
 #. SysConfig
 msgid ""
 "Defines the shown columns in the survey overview. This option has no effect "
 "on the position of the columns."
-msgstr ""
+msgstr "Definisikan kolom yang di tampilkan pada gambaran survey. Pilihan ini tidak memiliki efek pada posisi kolom tersebut."
 
 #. SysConfig
 msgid "Edit Survey General Information"
-msgstr "Modifica informazioni generali del sondaggio"
+msgstr "Ubah informasi umum survey"
 
 #. SysConfig
 msgid "Edit Survey Questions"
-msgstr "Modifica domande del sondaggio"
+msgstr "Ubah pertanyaan survey"
 
 #. SysConfig
 msgid ""
 "Enable or disable the ShowVoteData screen in the public interface to show "
 "data of a specific survey result when the customer tries to answer a survey "
 "the second time."
-msgstr ""
+msgstr "aktif atau non-aktifkan layar ShowVoteData pada antarmuka umum untuk menampilkan data dari hasil survey spesifik ketika pelanggan mencuba untuk menjawab survey kedua kalinya."
 
 #. SysConfig
 msgid "Enable or disable the send condition check for the service."
-msgstr "Abilita o disabilita il controllo della condizione di invio per il servizio."
+msgstr "Aktif atau non-aktifkan pemeriksaan kondisi pengiriman untuk layanan tersebut."
 
 #. SysConfig
 msgid "Enable or disable the send condition check for the ticket type."
-msgstr "Abilita o disabilita il controllo della condizione di invio per il tipo di ticket."
+msgstr "Aktif atau non-aktifkan pemeriksaan kondisi pengiriman untuk tipe tiket."
 
 #. SysConfig
 msgid "Frontend module registration for survey add in the agent interface."
-msgstr ""
+msgstr "Pendaftaran modul frontend  untuk menambah survey di antarmuka agen"
 
 #. SysConfig
 msgid "Frontend module registration for survey edit in the agent interface."
-msgstr ""
+msgstr "Pendaftaran modul frontend  untuk mengubah survey di antarmuka agen"
 
 #. SysConfig
 msgid "Frontend module registration for survey stats in the agent interface."
-msgstr ""
+msgstr "Pendaftaran modul frontend  untuk stats survey di antarmuka agen"
 
 #. SysConfig
 msgid "Frontend module registration for survey zoom in the agent interface."
-msgstr "Modulo di registrazione per il sondaggio nell'area Agente."
+msgstr "Pendaftaran modul frontend  untuk zoom survey di antarmuka agen"
 
 #. SysConfig
 msgid ""
 "Frontend module registration for the PublicSurvey object in the public "
 "Survey area."
-msgstr "Modulo di registrazione per il sondaggio nell'area di Sondaggi Pubblici."
+msgstr "Pendaftaran modul frontend  untuk objek PublicSurvey di area survey."
 
 #. SysConfig
 msgid "If this regex matches, no customer survey will be sent."
-msgstr "Se questa sottostringa viene riconosciuta, il sondaggio non viene inviato."
+msgstr "Jika regex ini cocok, maka tidak ada survey pelanggan yang akan di kirim."
 
 #. SysConfig
 msgid ""
 "Parameters for the pages (in which the surveys are shown) of the small "
 "survey overview."
-msgstr "Parametri per la visualizzazione \"compatta\"."
+msgstr "Parameter untuk halaman (dimana survey tersebut di tampilkan) gambaran kecil survey."
 
 #. SysConfig
 msgid "Public Survey."
-msgstr "Sondaggio pubblico."
+msgstr "Survey umum"
 
 #. SysConfig
 msgid ""
 "Shows a link in the menu to edit a survey in its zoom view of the agent "
 "interface."
-msgstr ""
+msgstr "Tampilkan tautan pada menu untuk mengubah survey pada tampilan zoomnya di antar muka agen."
 
 #. SysConfig
 msgid ""
 "Shows a link in the menu to edit survey questions in its zoom view of the "
 "agent interface."
-msgstr ""
+msgstr "Tampilkan tautan pada menu untuk mengubah pertanyaan survey pada tampilan zoomnya di antar muka agen."
 
 #. SysConfig
 msgid ""
 "Shows a link in the menu to go back in the survey zoom view of the agent "
 "interface."
-msgstr ""
+msgstr "Tampilkan tautan pada menu untuk kembali pada tampilan zoom survey di antar muka agen."
 
 #. SysConfig
 msgid ""
 "Shows a link in the menu to zoom into the survey statistics details in its "
 "zoom view of the agent interface."
-msgstr ""
+msgstr "Tampilkan tautan pada menu untuk zoom ke rincian statistik survey pada tampilan zoomnya di antar muka agen."
 
 #. SysConfig
 msgid "Survey Add Module."
-msgstr "Modulo di aggiunta dei sondaggi."
+msgstr "Modul menambah survey"
 
 #. SysConfig
 msgid "Survey Edit Module."
-msgstr "Modulo di modifica dei sondaggi."
+msgstr "Modul mengubah survey"
 
 #. SysConfig
 msgid "Survey Overview \"Small\" Limit"
-msgstr "Limite per visualizzazione \"compatta\"."
+msgstr "Gambaran batas \"Kecil\" survey"
 
 #. SysConfig
 msgid "Survey Stats Module."
-msgstr "Modulo di statistiche dei sondaggi."
+msgstr "Modul statistik survey"
 
 #. SysConfig
 msgid "Survey Zoom Module."
-msgstr "Modulo di zoom per i sondaggi."
+msgstr "Modul zoom survey"
 
 #. SysConfig
 msgid "Survey limit per page for Survey Overview \"Small\""
-msgstr ""
+msgstr "Batas survey per halaman pada gambaran \"kecil\" survey"
 
 #. SysConfig
 msgid "Surveys will not be sent to the configured email addresses."
-msgstr "I sondaggi non saranno inviati agli indirizzi email configurati."
+msgstr "Survey tidak akan di kirim kepada alamat email yang telah di konfigurasi"
 
 #. SysConfig
 msgid ""
 "The identifier for a survey, e.g. Survey#, MySurvey#. The default is "
 "Survey#."
-msgstr "Identificativo per il sondaggio, per esempio Sondaggio#, Inchiesta#. Il default Sondaggio#."
+msgstr "Pengidentifikasi untuk survey, misalnya Survey#, MySurvey#. Secara defaultnya Survey#"
 
 #. SysConfig
 msgid ""
 "Ticket event module to send automatically survey email requests to customers"
 " if a ticket is closed."
-msgstr ""
+msgstr "Modul tiket peristiwa untuk secara otomatis mengirimkan permintaan email survey kepada pelanggan jika tiket telah ditutup."
 
 #. SysConfig
 msgid "Trigger sending delayed survey requests."
-msgstr ""
+msgstr "Mulai pengiriman permintaan survey yang yang ditunda"
 
 #. SysConfig
 msgid "Zoom Into Statistics Details"
-msgstr ""
+msgstr "Zoom ke rincian statisik."

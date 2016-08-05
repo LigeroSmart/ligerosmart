@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-10-07 18:36+0000\n"
-"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
+"PO-Revision-Date: 2015-10-18 22:53+0000\n"
+"Last-Translator: Balázs Úr <urbalazs@gmail.com>\n"
 "Language-Team: Hungarian (http://www.transifex.com/otrs/OTRS/language/hu/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -68,11 +68,11 @@ msgstr "Jelölőnégyzet (lista)"
 
 #. Template: AAASurvey
 msgid "Radio"
-msgstr "Rádió"
+msgstr "Választógomb"
 
 #. Template: AAASurvey
 msgid "Radio (List)"
-msgstr "Rádió (lista)"
+msgstr "Választógomb (lista)"
 
 #. Template: AAASurvey
 msgid "Stats Overview"
@@ -184,7 +184,7 @@ msgstr "Válasz kötelező"
 
 #. Template: AgentSurveyEditQuestions
 msgid "When you finish to edit the survey questions just close this screen."
-msgstr ""
+msgstr "Amikor befejezte a kérdőív kérdéseinek szerkesztését, akkor egyszerűen zárja be ezt a képernyőt."
 
 #. Template: AgentSurveyEditQuestions
 msgid ""
@@ -202,7 +202,7 @@ msgstr "vissza a kérdésekhez"
 
 #. Template: AgentSurveyEditQuestions
 msgid "Question:"
-msgstr ""
+msgstr "Kérdés:"
 
 #. Template: AgentSurveyEditQuestions
 msgid "Possible Answers For"
@@ -234,11 +234,11 @@ msgstr "vissza a kérdés szerkesztéséhez"
 
 #. Template: AgentSurveyEditQuestions
 msgid "Answer:"
-msgstr ""
+msgstr "Válasz:"
 
 #. Template: AgentSurveyOverviewNavBar
 msgid "Max. shown surveys per page"
-msgstr ""
+msgstr "Oldalanként megjelenített legtöbb kérdőív"
 
 #. Template: AgentSurveyOverviewSmall
 msgid "Notification Sender"
@@ -475,7 +475,7 @@ msgstr "Egy hivatkozást jelenít meg a menüben egy kérdőív statisztika rés
 
 #. SysConfig
 msgid "Survey Add Module."
-msgstr ""
+msgstr "Kérdőív hozzáadás modul."
 
 #. SysConfig
 msgid "Survey Edit Module."
@@ -515,7 +515,7 @@ msgstr "Jegy esemény modul automatikus kérdőív e-mail kérések küldéséhe
 
 #. SysConfig
 msgid "Trigger sending delayed survey requests."
-msgstr ""
+msgstr "Késleltetett kérdőívkérések küldésének aktiválása."
 
 #. SysConfig
 msgid "Zoom Into Statistics Details"

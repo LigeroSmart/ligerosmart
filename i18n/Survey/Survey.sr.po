@@ -1,11 +1,12 @@
 # 
 # Translators:
-# Милорад Јовановић <j.milorad@gmail.com>, 2014-2015
+# Dusan Vuckovic, 2015
+# Милорад Јовановић <j.milorad@gmail.com>, 2014-2016
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-10-08 07:53+0000\n"
+"PO-Revision-Date: 2016-06-01 10:31+0000\n"
 "Last-Translator: Милорад Јовановић <j.milorad@gmail.com>\n"
 "Language-Team: Serbian (http://www.transifex.com/otrs/OTRS/language/sr/)\n"
 "MIME-Version: 1.0\n"
@@ -28,7 +29,7 @@ msgstr "Уреди анкету"
 
 #. Template: AAASurvey
 msgid "Survey Edit Questions"
-msgstr "Уреди питања анкете"
+msgstr "Уреди анкетна питања"
 
 #. Template: AAASurvey
 msgid "Question Edit"
@@ -52,7 +53,7 @@ msgstr "Хвала на вашим одговорима."
 
 #. Template: AAASurvey
 msgid "The survey is finished."
-msgstr "Аанкета је завршена."
+msgstr "Анкета је завршена."
 
 #. Template: AAASurvey
 msgid "Complete"
@@ -184,7 +185,7 @@ msgstr "Обавезан одговор"
 
 #. Template: AgentSurveyEditQuestions
 msgid "When you finish to edit the survey questions just close this screen."
-msgstr "Када завршите са уређивањем анкетних питања само затзворите овај прозор."
+msgstr "Када завршите са уређивањем анкетних питања само затворите овај прозор."
 
 #. Template: AgentSurveyEditQuestions
 msgid ""
@@ -314,7 +315,7 @@ msgstr "Нема статистике резултата."
 
 #. Template: PublicSurvey
 msgid "Survey"
-msgstr "Аанкета"
+msgstr "Анкета"
 
 #. Template: PublicSurvey
 msgid "Please answer these questions"
@@ -348,7 +349,7 @@ msgstr "Сви параметри Објекта анкете у интерфе�
 msgid ""
 "Amount of days after sending a survey mail in which no new survey requests "
 "are sent to the same customer. Selecting 0 will always send the survey mail."
-msgstr "Број дана после слања имејла о анкети у ком истом кориснику неће бити слани нови захтеви. Ако изаберете 0 имејл о анкети се увек шаље."
+msgstr "Број дана после слања имејла о анкети за које истом кориснику неће бити слани нови захтеви. Ако изаберете 0 имејл о анкети се увек шаље."
 
 #. SysConfig
 msgid "Default body for the notification email to customers about new survey."
@@ -372,7 +373,7 @@ msgstr "Дефинише модул прегледа за мали приказ 
 msgid ""
 "Defines maximum amount of surveys that get sent to a customer per 30 days. ("
 " 0 means no maximum, all survey requests will be sent)."
-msgstr "Дефинише максимални број анкета која ће бити послата кориснику током 30 дана. (0 значи да нема максимума, сви захтеви ће бити послати)."
+msgstr "Дефинише максимални број анкета који ће бити послат кориснику током 30 дана. (0 значи да нема максимума, сви захтеви ће бити послати)."
 
 #. SysConfig
 msgid ""
@@ -515,8 +516,8 @@ msgstr "Модул догађаја на тикету за аутоматско 
 
 #. SysConfig
 msgid "Trigger sending delayed survey requests."
-msgstr "Окидач одложеног слања захтева за акнету."
+msgstr "Окидач одложеног слања захтева за анкету."
 
 #. SysConfig
 msgid "Zoom Into Statistics Details"
-msgstr "Детаљни приказ статистике"
+msgstr "Улаз у детаљни приказ статистике"

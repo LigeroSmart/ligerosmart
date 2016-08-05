@@ -1,11 +1,12 @@
 # 
 # Translators:
+# Ann Li <dn.annli@gmail.com>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-10-07 18:36+0000\n"
-"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
+"PO-Revision-Date: 2016-05-25 15:48+0000\n"
+"Last-Translator: Ann Li <dn.annli@gmail.com>\n"
 "Language-Team: Chinese (Taiwan) (http://www.transifex.com/otrs/OTRS/language/zh_TW/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -119,7 +120,7 @@ msgstr "調查#"
 
 #. Template: AAASurvey
 msgid "- No queue selected -"
-msgstr ""
+msgstr "- 沒有選取佇列 -"
 
 #. Template: AAASurvey
 msgid "Master"
@@ -127,11 +128,11 @@ msgstr ""
 
 #. Template: AAASurvey
 msgid "New Status"
-msgstr ""
+msgstr "新狀態"
 
 #. Template: AAASurvey
 msgid "Question Type"
-msgstr ""
+msgstr "問題類別"
 
 #. Template: AgentSurveyAdd
 msgid "Create New Survey"
@@ -201,7 +202,7 @@ msgstr "返回問題"
 
 #. Template: AgentSurveyEditQuestions
 msgid "Question:"
-msgstr ""
+msgstr "問題："
 
 #. Template: AgentSurveyEditQuestions
 msgid "Possible Answers For"
@@ -217,7 +218,7 @@ msgstr ""
 
 #. Template: AgentSurveyEditQuestions
 msgid "Do you really want to delete this answer?"
-msgstr ""
+msgstr "您確定要刪除此答案？"
 
 #. Template: AgentSurveyEditQuestions
 msgid "This doesn't have several answers, a textarea will be displayed."
@@ -233,7 +234,7 @@ msgstr "返回到編輯問題"
 
 #. Template: AgentSurveyEditQuestions
 msgid "Answer:"
-msgstr ""
+msgstr "答："
 
 #. Template: AgentSurveyOverviewNavBar
 msgid "Max. shown surveys per page"
@@ -273,7 +274,7 @@ msgstr "投票時間"
 
 #. Template: AgentSurveyStats
 msgid "See Details"
-msgstr ""
+msgstr "查看詳情"
 
 #. Template: AgentSurveyStats
 msgid "Survey Stat Details"
@@ -301,7 +302,7 @@ msgstr "調查詳情"
 
 #. Template: AgentSurveyZoom
 msgid "Ticket Services"
-msgstr ""
+msgstr "工單服務"
 
 #. Template: AgentSurveyZoom
 msgid "Survey Results Graph"
@@ -333,7 +334,7 @@ msgstr "調查標題"
 
 #. SysConfig
 msgid "A Survey Module."
-msgstr ""
+msgstr "調查模組"
 
 #. SysConfig
 msgid "A module to edit survey questions."
@@ -391,11 +392,11 @@ msgstr ""
 
 #. SysConfig
 msgid "Edit Survey General Information"
-msgstr ""
+msgstr "編輯調查一般信息"
 
 #. SysConfig
 msgid "Edit Survey Questions"
-msgstr ""
+msgstr "編輯調查問題"
 
 #. SysConfig
 msgid ""
@@ -446,7 +447,7 @@ msgstr ""
 
 #. SysConfig
 msgid "Public Survey."
-msgstr ""
+msgstr "公開的調查"
 
 #. SysConfig
 msgid ""
@@ -474,11 +475,11 @@ msgstr ""
 
 #. SysConfig
 msgid "Survey Add Module."
-msgstr ""
+msgstr "調查添加模組"
 
 #. SysConfig
 msgid "Survey Edit Module."
-msgstr ""
+msgstr "調查編輯模組"
 
 #. SysConfig
 msgid "Survey Overview \"Small\" Limit"

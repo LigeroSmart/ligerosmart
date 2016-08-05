@@ -1,13 +1,15 @@
 # 
 # Translators:
+# Felipe Braga <fbobraga@gmail.com>, 2015
 # José Junior <joserribeiro26@gmail.com>, 2014
-# Murilo Moreira de Oliveira <murilo.moreira@gmail.com>, 2014
+# Murilo Moreira de Oliveira <murilo.moreira@gmail.com>, 2014,2016
+# Ronaldo Richieri <ronaldo@complemento.net.br>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-10-07 18:36+0000\n"
-"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
+"PO-Revision-Date: 2016-05-19 14:06+0000\n"
+"Last-Translator: Ronaldo Richieri <ronaldo@complemento.net.br>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/otrs/OTRS/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -29,7 +31,7 @@ msgstr "Editar Pesquisa"
 
 #. Template: AAASurvey
 msgid "Survey Edit Questions"
-msgstr "Editar Preguntas da Pesquisa"
+msgstr "Editar Perguntas da Pesquisa"
 
 #. Template: AAASurvey
 msgid "Question Edit"
@@ -153,7 +155,7 @@ msgstr "Editar Informações Gerais"
 
 #. Template: AgentSurveyEditQuestions
 msgid "Edit Questions"
-msgstr "Editar Preguntas"
+msgstr "Editar Perguntas"
 
 #. Template: AgentSurveyEditQuestions
 msgid "Survey Questions"
@@ -161,7 +163,7 @@ msgstr "Perguntas da Pesquisa"
 
 #. Template: AgentSurveyEditQuestions
 msgid "Add Question"
-msgstr "Adicionar Pregunta"
+msgstr "Adicionar Pergunta"
 
 #. Template: AgentSurveyEditQuestions
 msgid "Type the question"
@@ -177,7 +179,7 @@ msgstr "Nenhuma questão salva para esta pesquisa."
 
 #. Template: AgentSurveyEditQuestions
 msgid "Question"
-msgstr "Pregunta"
+msgstr "Pergunta"
 
 #. Template: AgentSurveyEditQuestions
 msgid "Answer Required"
@@ -185,7 +187,7 @@ msgstr "Resposta Requerida"
 
 #. Template: AgentSurveyEditQuestions
 msgid "When you finish to edit the survey questions just close this screen."
-msgstr ""
+msgstr "Quando você terminar de editar as questões da pesquisa, apenas feche a tela."
 
 #. Template: AgentSurveyEditQuestions
 msgid ""
@@ -195,15 +197,15 @@ msgstr "Você realmente deseja excluir essa questão? TODOS os dados associados 
 
 #. Template: AgentSurveyEditQuestions
 msgid "Edit Question"
-msgstr "Editar Pregunta"
+msgstr "Editar Pergunta"
 
 #. Template: AgentSurveyEditQuestions
 msgid "go back to questions"
-msgstr "voltar às preguntas"
+msgstr "voltar às perguntas"
 
 #. Template: AgentSurveyEditQuestions
 msgid "Question:"
-msgstr ""
+msgstr "Questão:"
 
 #. Template: AgentSurveyEditQuestions
 msgid "Possible Answers For"
@@ -235,11 +237,11 @@ msgstr "voltar para editar pergunta"
 
 #. Template: AgentSurveyEditQuestions
 msgid "Answer:"
-msgstr ""
+msgstr "Resposta:"
 
 #. Template: AgentSurveyOverviewNavBar
 msgid "Max. shown surveys per page"
-msgstr ""
+msgstr "Qtd. máx. de pesquisas exibidas por página"
 
 #. Template: AgentSurveyOverviewSmall
 msgid "Notification Sender"
@@ -476,11 +478,11 @@ msgstr "Exibe um link no menu para detalhar as estatísticas da pesquisa em sua 
 
 #. SysConfig
 msgid "Survey Add Module."
-msgstr ""
+msgstr "Módulo de adição de pesquisa."
 
 #. SysConfig
 msgid "Survey Edit Module."
-msgstr "Editar Módulo de pesquisa"
+msgstr "Módulo de edição de pesquisa"
 
 #. SysConfig
 msgid "Survey Overview \"Small\" Limit"
@@ -488,7 +490,7 @@ msgstr "Limite da Visão Geral de Pesquisa \"Pequena\""
 
 #. SysConfig
 msgid "Survey Stats Module."
-msgstr "Estatísticas do Módulo de Pesquisa"
+msgstr "Módulo de Estatísticas de Pesquisa"
 
 #. SysConfig
 msgid "Survey Zoom Module."
@@ -516,7 +518,7 @@ msgstr "Módulo de evento de chamado para enviar requisições de pesquisa via e
 
 #. SysConfig
 msgid "Trigger sending delayed survey requests."
-msgstr ""
+msgstr "Disparar o envio de solicitações de pesquisa atrasadas."
 
 #. SysConfig
 msgid "Zoom Into Statistics Details"
