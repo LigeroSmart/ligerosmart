@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-08-05 13:19+0000\n"
-"PO-Revision-Date: 2016-08-05 18:20+0000\n"
+"POT-Creation-Date: 2016-08-05 16:35+0000\n"
+"PO-Revision-Date: 2016-08-05 21:40+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/otrs/OTRS/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
@@ -18,31 +18,31 @@ msgstr ""
 
 #. Template: AgentTicketMasterSlave
 msgid "Change Free Text of %s%s"
-msgstr ""
+msgstr "Alterar Texto Livre de %s%s"
 
 #. Template: AgentTicketMasterSlave
 msgid "Change Owner of %s%s"
-msgstr ""
+msgstr "Alterar Proprietário de %s%s"
 
 #. Template: AgentTicketMasterSlave
 msgid "Close %s%s"
-msgstr ""
+msgstr "Fechar %s%s"
 
 #. Template: AgentTicketMasterSlave
 msgid "Add Note to %s%s"
-msgstr ""
+msgstr "Adicionar nota para %s%s"
 
 #. Template: AgentTicketMasterSlave
 msgid "Set Pending Time for %s%s"
-msgstr ""
+msgstr "Configurar Horário de Pendência para %s%s"
 
 #. Template: AgentTicketMasterSlave
 msgid "Change Priority of %s%s"
-msgstr ""
+msgstr "Alterar Prioridade de %s%s"
 
 #. Template: AgentTicketMasterSlave
 msgid "Change Responsible of %s%s"
-msgstr ""
+msgstr "Alterar Responsável de %s%s"
 
 #. Template: AgentTicketMasterSlave
 msgid "Manage Master/Slave status for %s%s"
@@ -54,7 +54,7 @@ msgstr "Configurar Valor Mestre/Escravo"
 
 #. Template: AgentTicketMasterSlave
 msgid "Text will also be received by:"
-msgstr ""
+msgstr "O texto será também recebido por:"
 
 #. Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
 msgid "New Master Ticket"
@@ -72,6 +72,22 @@ msgstr "Desfazer Chamado Escravo"
 msgid "Slave of Ticket#"
 msgstr "Escravo do Chamado#"
 
+#. Perl Module: Kernel/Output/HTML/TicketBulk/MasterSlave.pm
+msgid "Unset Master Tickets"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/TicketBulk/MasterSlave.pm
+msgid "Unset Slave Tickets"
+msgstr ""
+
+#. SysConfig
+msgid "All master tickets"
+msgstr ""
+
+#. SysConfig
+msgid "All slave tickets"
+msgstr ""
+
 #. SysConfig
 msgid ""
 "Allows adding notes in the ticket MasterSlave screen of a zoomed ticket in "
@@ -83,8 +99,8 @@ msgid "Change the MasterSlave state of the ticket."
 msgstr "Altera o estado MasterSlave de um chamado."
 
 #. SysConfig
-msgid "Define dynamic field name for master ticket feature."
-msgstr "Defina um nome de campo dinâmico para o recurso MasterSlave do chamado."
+msgid "Defines dynamic field name for master ticket feature."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -131,45 +147,53 @@ msgid ""
 msgstr "Define o próximo estado de um ticket após uma nota ter sido adicionada, na tela MasterSlave de um ticket detalhado na interface de agente."
 
 #. SysConfig
-msgid "Enable the advanced MasterSlave part of the feature."
-msgstr "Ativa os recursos avançados de Master Slave."
+msgid "Disabled"
+msgstr ""
+
+#. SysConfig
+msgid "Enabled"
+msgstr ""
+
+#. SysConfig
+msgid "Enables the advanced MasterSlave part of the feature."
+msgstr ""
 
 #. SysConfig
 msgid ""
-"Enable the feature that slave tickets follow the master ticket to a new "
+"Enables the feature that slave tickets follow the master ticket to a new "
 "master in the advanced MasterSlave mode."
-msgstr "Ativa o recurso que faz com que tickets escravos sigam o ticket mestre para um novo mestre no modo avançado de MasterSlave."
+msgstr ""
 
 #. SysConfig
 msgid ""
-"Enable the feature to change the MasterSlave state of a ticket in the "
+"Enables the feature to change the MasterSlave state of a ticket in the "
 "advanced MasterSlave mode."
-msgstr "Habilita o recurso que permite alterar o estado de MasterSlave de um ticket no modo avançado de MasterSlave."
+msgstr ""
 
 #. SysConfig
 msgid ""
-"Enable the feature to forward articles from type 'forward' of a master "
+"Enables the feature to forward articles from type 'forward' of a master "
 "ticket to the customers of the slave tickets. By default (disabled) it will "
 "not forward articles from type 'forward' to the slave tickets."
-msgstr "Habilita a funcionalidade de encaminhar artigos do tipo 'forward' de um chamado mestre aos clientes dos chamados escravos. Por padrão (desabilitado), artigos do tipo 'forward' não serão encaminhados para os chamados escravos."
+msgstr ""
 
 #. SysConfig
 msgid ""
-"Enable the feature to keep parent-child link after change of the MasterSlave"
+"Enables the feature to keep parent-child link after change of the "
+"MasterSlave state in the advanced MasterSlave mode."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Enables the feature to keep parent-child link after unset of the MasterSlave"
 " state in the advanced MasterSlave mode."
-msgstr "Habilita a funcionalidade de manter a associação pai-filho após alterar o estado MestreEscravo no modo MestreEscravo avançado."
+msgstr ""
 
 #. SysConfig
 msgid ""
-"Enable the feature to keep parent-child link after unset of the MasterSlave "
-"state in the advanced MasterSlave mode."
-msgstr "Habilita a funcionalidade de manter a associação pai-filho após redefinir o estado MestreEscravo no modo MestreEscravo avançado."
-
-#. SysConfig
-msgid ""
-"Enable the feature to unset the MasterSlave state of a ticket in the "
+"Enables the feature to unset the MasterSlave state of a ticket in the "
 "advanced MasterSlave mode."
-msgstr "Habilita o recurso que permite retornar o estado de MasterSlave de um ticket no modo avançado de MasterSlave."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -180,6 +204,14 @@ msgstr "Se uma nota for adicionada por um agente, define o estado do ticket na t
 #. SysConfig
 msgid "Master / Slave"
 msgstr "Mestre / Escravo"
+
+#. SysConfig
+msgid "Master Tickets"
+msgstr ""
+
+#. SysConfig
+msgid "MasterSlave"
+msgstr ""
 
 #. SysConfig
 msgid "MasterSlave module for Ticket Bulk feature."
@@ -283,6 +315,10 @@ msgid ""
 msgstr "Exibe o campo de título na tela MasterSlave de ticket de um ticket detalhado na interface de agente."
 
 #. SysConfig
+msgid "Slave Tickets"
+msgstr ""
+
+#. SysConfig
 msgid ""
 "Specifies the different article types where the real name from Master ticket"
 " will be replaced with the one in the Slave ticket."
@@ -293,3 +329,7 @@ msgid ""
 "This module activates Master/Slave field in new email and phone ticket "
 "screens."
 msgstr "Este módulo ativa o campo Mestre/Escravo nas telas de novo chamado fone/e-mail."
+
+#. SysConfig
+msgid "Ticket MasterSlave."
+msgstr ""

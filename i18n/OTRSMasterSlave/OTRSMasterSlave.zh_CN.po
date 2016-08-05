@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-08-05 13:19+0000\n"
-"PO-Revision-Date: 2016-08-05 18:20+0000\n"
+"POT-Creation-Date: 2016-08-05 16:35+0000\n"
+"PO-Revision-Date: 2016-08-05 21:40+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/otrs/OTRS/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
@@ -16,31 +16,31 @@ msgstr ""
 
 #. Template: AgentTicketMasterSlave
 msgid "Change Free Text of %s%s"
-msgstr ""
+msgstr "修改工单%s%s的自由字段"
 
 #. Template: AgentTicketMasterSlave
 msgid "Change Owner of %s%s"
-msgstr ""
+msgstr "变更工单%s%s的所有者"
 
 #. Template: AgentTicketMasterSlave
 msgid "Close %s%s"
-msgstr ""
+msgstr "关闭%s%s"
 
 #. Template: AgentTicketMasterSlave
 msgid "Add Note to %s%s"
-msgstr ""
+msgstr "添加备注到工单%s%s"
 
 #. Template: AgentTicketMasterSlave
 msgid "Set Pending Time for %s%s"
-msgstr ""
+msgstr "设置工单%s%s的挂起时间"
 
 #. Template: AgentTicketMasterSlave
 msgid "Change Priority of %s%s"
-msgstr ""
+msgstr "变更工单%s%s的优先级"
 
 #. Template: AgentTicketMasterSlave
 msgid "Change Responsible of %s%s"
-msgstr ""
+msgstr "变更工单%s%s的负责人"
 
 #. Template: AgentTicketMasterSlave
 msgid "Manage Master/Slave status for %s%s"
@@ -52,7 +52,7 @@ msgstr "设置 主/从 值"
 
 #. Template: AgentTicketMasterSlave
 msgid "Text will also be received by:"
-msgstr ""
+msgstr "内容也将被以下人员接收到："
 
 #. Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
 msgid "New Master Ticket"
@@ -70,6 +70,22 @@ msgstr "从工单转为普通工单"
 msgid "Slave of Ticket#"
 msgstr "以下工单号的从工单"
 
+#. Perl Module: Kernel/Output/HTML/TicketBulk/MasterSlave.pm
+msgid "Unset Master Tickets"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/TicketBulk/MasterSlave.pm
+msgid "Unset Slave Tickets"
+msgstr ""
+
+#. SysConfig
+msgid "All master tickets"
+msgstr ""
+
+#. SysConfig
+msgid "All slave tickets"
+msgstr ""
+
 #. SysConfig
 msgid ""
 "Allows adding notes in the ticket MasterSlave screen of a zoomed ticket in "
@@ -81,8 +97,8 @@ msgid "Change the MasterSlave state of the ticket."
 msgstr "修改工单主/从状态。"
 
 #. SysConfig
-msgid "Define dynamic field name for master ticket feature."
-msgstr "定义主从工单功能的动态字段名"
+msgid "Defines dynamic field name for master ticket feature."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -129,45 +145,53 @@ msgid ""
 msgstr "定义服务人员界面在工单主从设置窗口添加备注后的下一个工单状态。"
 
 #. SysConfig
-msgid "Enable the advanced MasterSlave part of the feature."
-msgstr "启用主从工单的高级功能。"
+msgid "Disabled"
+msgstr ""
+
+#. SysConfig
+msgid "Enabled"
+msgstr ""
+
+#. SysConfig
+msgid "Enables the advanced MasterSlave part of the feature."
+msgstr ""
 
 #. SysConfig
 msgid ""
-"Enable the feature that slave tickets follow the master ticket to a new "
+"Enables the feature that slave tickets follow the master ticket to a new "
 "master in the advanced MasterSlave mode."
-msgstr "在高级主从模式中启用从工单跟随新的主工单的功能。"
+msgstr ""
 
 #. SysConfig
 msgid ""
-"Enable the feature to change the MasterSlave state of a ticket in the "
+"Enables the feature to change the MasterSlave state of a ticket in the "
 "advanced MasterSlave mode."
-msgstr "在高级主从模式中启用修改主从状态的功能。"
+msgstr ""
 
 #. SysConfig
 msgid ""
-"Enable the feature to forward articles from type 'forward' of a master "
+"Enables the feature to forward articles from type 'forward' of a master "
 "ticket to the customers of the slave tickets. By default (disabled) it will "
 "not forward articles from type 'forward' to the slave tickets."
-msgstr "在高级主从模式中启用将主工单的“转发”类型信件转发给从工单的客户，默认为禁用，不会将类型为“转发”的信件转发给从工单。"
+msgstr ""
 
 #. SysConfig
 msgid ""
-"Enable the feature to keep parent-child link after change of the MasterSlave"
+"Enables the feature to keep parent-child link after change of the "
+"MasterSlave state in the advanced MasterSlave mode."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Enables the feature to keep parent-child link after unset of the MasterSlave"
 " state in the advanced MasterSlave mode."
-msgstr "在高级主从模式中启用在修改主从状态后保持父子链接的功能。"
+msgstr ""
 
 #. SysConfig
 msgid ""
-"Enable the feature to keep parent-child link after unset of the MasterSlave "
-"state in the advanced MasterSlave mode."
-msgstr "在高级主从模式中启用在将主从工单转为普通工单后保持父子链接的功能。"
-
-#. SysConfig
-msgid ""
-"Enable the feature to unset the MasterSlave state of a ticket in the "
+"Enables the feature to unset the MasterSlave state of a ticket in the "
 "advanced MasterSlave mode."
-msgstr "在高级主从模式中启用将主从工单转为普通工单的功能。"
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -178,6 +202,14 @@ msgstr "服务人员界面主/从工单详情窗口，如果服务人员添加�
 #. SysConfig
 msgid "Master / Slave"
 msgstr "主/从"
+
+#. SysConfig
+msgid "Master Tickets"
+msgstr ""
+
+#. SysConfig
+msgid "MasterSlave"
+msgstr ""
 
 #. SysConfig
 msgid "MasterSlave module for Ticket Bulk feature."
@@ -281,6 +313,10 @@ msgid ""
 msgstr "在服务人员界面主从工单详情窗口显示工单标题字段。"
 
 #. SysConfig
+msgid "Slave Tickets"
+msgstr ""
+
+#. SysConfig
 msgid ""
 "Specifies the different article types where the real name from Master ticket"
 " will be replaced with the one in the Slave ticket."
@@ -291,3 +327,7 @@ msgid ""
 "This module activates Master/Slave field in new email and phone ticket "
 "screens."
 msgstr "这个模块用来激活新建邮件/电话工单窗口的主从字段。"
+
+#. SysConfig
+msgid "Ticket MasterSlave."
+msgstr ""

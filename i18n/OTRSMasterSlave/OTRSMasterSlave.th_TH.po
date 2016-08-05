@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-08-05 13:19+0000\n"
-"PO-Revision-Date: 2016-08-05 18:20+0000\n"
+"POT-Creation-Date: 2016-08-05 16:35+0000\n"
+"PO-Revision-Date: 2016-08-05 21:40+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Thai (Thailand) (http://www.transifex.com/otrs/OTRS/language/th_TH/)\n"
 "MIME-Version: 1.0\n"
@@ -16,31 +16,31 @@ msgstr ""
 
 #. Template: AgentTicketMasterSlave
 msgid "Change Free Text of %s%s"
-msgstr ""
+msgstr "เปลี่ยนข้อความฟรีของ"
 
 #. Template: AgentTicketMasterSlave
 msgid "Change Owner of %s%s"
-msgstr ""
+msgstr "เปลี่ยนเจ้าของของ %s%s"
 
 #. Template: AgentTicketMasterSlave
 msgid "Close %s%s"
-msgstr ""
+msgstr "ปิด %s%s"
 
 #. Template: AgentTicketMasterSlave
 msgid "Add Note to %s%s"
-msgstr ""
+msgstr "เพิ่มโน้ตไปยัง %s%s"
 
 #. Template: AgentTicketMasterSlave
 msgid "Set Pending Time for %s%s"
-msgstr ""
+msgstr "ระบุเวลาการรอดำเนินการสำหรับ %s%s"
 
 #. Template: AgentTicketMasterSlave
 msgid "Change Priority of %s%s"
-msgstr ""
+msgstr "เปลี่ยนลำดับความสำคัญของ %s%s"
 
 #. Template: AgentTicketMasterSlave
 msgid "Change Responsible of %s%s"
-msgstr ""
+msgstr "เปลี่ยนความรับผิดชอบของ %s%s"
 
 #. Template: AgentTicketMasterSlave
 msgid "Manage Master/Slave status for %s%s"
@@ -52,7 +52,7 @@ msgstr "ระบุค่าของ มาสเตอร์/Slave"
 
 #. Template: AgentTicketMasterSlave
 msgid "Text will also be received by:"
-msgstr ""
+msgstr "ข้อความก็จะได้รับโดย:"
 
 #. Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
 msgid "New Master Ticket"
@@ -70,6 +70,22 @@ msgstr "ยกเลิกการตั้งค่าตั๋วSlave"
 msgid "Slave of Ticket#"
 msgstr "Slave ของตั๋ว"
 
+#. Perl Module: Kernel/Output/HTML/TicketBulk/MasterSlave.pm
+msgid "Unset Master Tickets"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/TicketBulk/MasterSlave.pm
+msgid "Unset Slave Tickets"
+msgstr ""
+
+#. SysConfig
+msgid "All master tickets"
+msgstr ""
+
+#. SysConfig
+msgid "All slave tickets"
+msgstr ""
+
 #. SysConfig
 msgid ""
 "Allows adding notes in the ticket MasterSlave screen of a zoomed ticket in "
@@ -81,8 +97,8 @@ msgid "Change the MasterSlave state of the ticket."
 msgstr "เปลี่ยนสถานภาพของตั๋ว MasterSlave "
 
 #. SysConfig
-msgid "Define dynamic field name for master ticket feature."
-msgstr "กำหนดชื่อฟิลด์แบบไดนามิกสำหรับฟีเจอร์ตั๋วมาสเตอร์"
+msgid "Defines dynamic field name for master ticket feature."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -129,45 +145,53 @@ msgid ""
 msgstr "กำหนดสถานภาพถัดไปของตั๋วหลังจากเพิ่มโน้ตในหน้าจอตั๋วMasterSlave ของตั๋วซูมในอินเตอร์เฟซเอเย่นต์"
 
 #. SysConfig
-msgid "Enable the advanced MasterSlave part of the feature."
-msgstr "เปิดใช้งานส่วน MasterSlave ขั้นสูงของฟีเจอร์นั้นๆ"
+msgid "Disabled"
+msgstr ""
+
+#. SysConfig
+msgid "Enabled"
+msgstr ""
+
+#. SysConfig
+msgid "Enables the advanced MasterSlave part of the feature."
+msgstr ""
 
 #. SysConfig
 msgid ""
-"Enable the feature that slave tickets follow the master ticket to a new "
+"Enables the feature that slave tickets follow the master ticket to a new "
 "master in the advanced MasterSlave mode."
-msgstr "เปิดใช้งานคุณลักษณะที่ตั๋วslave ติดตามตั๋วมาสเตอร์ไปยังมาสเตอร์ใหม่ในโหมด MasterSlave ขั้นสูง"
+msgstr ""
 
 #. SysConfig
 msgid ""
-"Enable the feature to change the MasterSlave state of a ticket in the "
+"Enables the feature to change the MasterSlave state of a ticket in the "
 "advanced MasterSlave mode."
-msgstr "เปิดใช้งานคุณลักษณะการเปลี่ยนแปลงสถานภาพ masterslave ของตั๋วในโหมด advanced MasterSlave"
+msgstr ""
 
 #. SysConfig
 msgid ""
-"Enable the feature to forward articles from type 'forward' of a master "
+"Enables the feature to forward articles from type 'forward' of a master "
 "ticket to the customers of the slave tickets. By default (disabled) it will "
 "not forward articles from type 'forward' to the slave tickets."
-msgstr "เปิดใช้งานคุณลักษณะเพื่อส่งต่อบทความจากประเภท 'ส่งต่อ' ของตั๋วต้นมาสเตอร์ให้กับลูกค้าของตั๋ว slave โดยค่าเริ่มต้น (ปิดใช้งาน) จะไม่ส่งต่อบทความจากประเภท  'ส่งต่อ' ไปยังตั๋วslave"
+msgstr ""
 
 #. SysConfig
 msgid ""
-"Enable the feature to keep parent-child link after change of the MasterSlave"
+"Enables the feature to keep parent-child link after change of the "
+"MasterSlave state in the advanced MasterSlave mode."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Enables the feature to keep parent-child link after unset of the MasterSlave"
 " state in the advanced MasterSlave mode."
-msgstr "เปิดใช้งานคุณลักษณะเพื่อเก็บการเชื่อมโยงparent-child หลังจากการเปลี่ยนแปลงสถานะของ MasterSlave ในโหมด MasterSlave ขั้นสูง"
+msgstr ""
 
 #. SysConfig
 msgid ""
-"Enable the feature to keep parent-child link after unset of the MasterSlave "
-"state in the advanced MasterSlave mode."
-msgstr "เปิดใช้งานคุณลักษณะเพื่อเก็บการเชื่อมโยงparent-child หลังจากการยกเลิกการตั้งค่าสถานะของ MasterSlave ในโหมด MasterSlave ขั้นสูง"
-
-#. SysConfig
-msgid ""
-"Enable the feature to unset the MasterSlave state of a ticket in the "
+"Enables the feature to unset the MasterSlave state of a ticket in the "
 "advanced MasterSlave mode."
-msgstr "เปิดใช้งานคุณลักษณะการยกเลิกสถานภาพ masterslave ของตั๋วในโหมด advanced MasterSlave"
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -178,6 +202,14 @@ msgstr "เซตสถานภาพของตั๋วในหน้าจ
 #. SysConfig
 msgid "Master / Slave"
 msgstr "มาสเตอร์/Slave"
+
+#. SysConfig
+msgid "Master Tickets"
+msgstr ""
+
+#. SysConfig
+msgid "MasterSlave"
+msgstr ""
 
 #. SysConfig
 msgid "MasterSlave module for Ticket Bulk feature."
@@ -281,6 +313,10 @@ msgid ""
 msgstr "แสดงฟิลด์ชื่อเรื่องในหน้าจอตั๋ว MasterSlave ของตั๋วซูมในอินเตอร์เฟซเอเย่นต์"
 
 #. SysConfig
+msgid "Slave Tickets"
+msgstr ""
+
+#. SysConfig
 msgid ""
 "Specifies the different article types where the real name from Master ticket"
 " will be replaced with the one in the Slave ticket."
@@ -291,3 +327,7 @@ msgid ""
 "This module activates Master/Slave field in new email and phone ticket "
 "screens."
 msgstr "โมดูลนี้เปิดใช้งานฟิลด์ Master /Slave ในหน้าจออีเมลใหม่และตั๋วโทรศัพท์"
+
+#. SysConfig
+msgid "Ticket MasterSlave."
+msgstr ""

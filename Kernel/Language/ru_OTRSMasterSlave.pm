@@ -16,16 +16,16 @@ sub Data {
     my $Self = shift;
 
     # Template: AgentTicketMasterSlave
-    $Self->{Translation}->{'Change Free Text of %s%s'} = '';
-    $Self->{Translation}->{'Change Owner of %s%s'} = '';
-    $Self->{Translation}->{'Close %s%s'} = '';
-    $Self->{Translation}->{'Add Note to %s%s'} = '';
-    $Self->{Translation}->{'Set Pending Time for %s%s'} = '';
-    $Self->{Translation}->{'Change Priority of %s%s'} = '';
-    $Self->{Translation}->{'Change Responsible of %s%s'} = '';
+    $Self->{Translation}->{'Change Free Text of %s%s'} = 'Изменить Free Text для %s%s';
+    $Self->{Translation}->{'Change Owner of %s%s'} = 'Изменить владельца для %s%s';
+    $Self->{Translation}->{'Close %s%s'} = 'Закрыть %s%s';
+    $Self->{Translation}->{'Add Note to %s%s'} = 'Добавить заметку/сообщение к %s%s';
+    $Self->{Translation}->{'Set Pending Time for %s%s'} = 'Установить время ожидания до %s%s';
+    $Self->{Translation}->{'Change Priority of %s%s'} = 'Изменить приоритет для %s%s';
+    $Self->{Translation}->{'Change Responsible of %s%s'} = 'Изменить ответственного для %s%s';
     $Self->{Translation}->{'Manage Master/Slave status for %s%s'} = '';
     $Self->{Translation}->{'Set Master/Slave Value'} = 'Установить значение Master/Slave';
-    $Self->{Translation}->{'Text will also be received by:'} = '';
+    $Self->{Translation}->{'Text will also be received by:'} = 'Текст будет (также) получен:';
 
     # Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
     $Self->{Translation}->{'New Master Ticket'} = 'Новая Master заявка';
@@ -33,11 +33,17 @@ sub Data {
     $Self->{Translation}->{'Unset Slave Ticket'} = 'Снять значение Slave заявка';
     $Self->{Translation}->{'Slave of Ticket#'} = 'Slave от Заявки#';
 
+    # Perl Module: Kernel/Output/HTML/TicketBulk/MasterSlave.pm
+    $Self->{Translation}->{'Unset Master Tickets'} = '';
+    $Self->{Translation}->{'Unset Slave Tickets'} = '';
+
     # SysConfig
+    $Self->{Translation}->{'All master tickets'} = '';
+    $Self->{Translation}->{'All slave tickets'} = '';
     $Self->{Translation}->{'Allows adding notes in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Позволяет добавить сообщение на экране MasterSlave в интерфейсе агента.';
     $Self->{Translation}->{'Change the MasterSlave state of the ticket.'} = 'Изменить состояние MasterSlave для этой заявки.';
-    $Self->{Translation}->{'Define dynamic field name for master ticket feature.'} = 'Задает имя динамического поля для функции master/главной заявки.';
+    $Self->{Translation}->{'Defines dynamic field name for master ticket feature.'} = '';
     $Self->{Translation}->{'Defines if a ticket lock is required in the ticket MasterSlave screen of a zoomed ticket in the agent interface (if the ticket isn\'t locked yet, the ticket gets locked and the current agent will be set automatically as its owner).'} =
         'Требуется ли блокировка заявки при применении опции MasterSlave в интерфейсе агента (если заявка еще не заблокирована, она блокируется и текущий агент становится ее Владельцем).';
     $Self->{Translation}->{'Defines the default next state of a ticket after adding a note, in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
@@ -52,22 +58,26 @@ sub Data {
         'Задает тип записи истории при вызове MasterSlave экрана , в интерфейсе агента.';
     $Self->{Translation}->{'Defines the next state of a ticket after adding a note, in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Задает следующее состояние для заявки после добавления заметки на экране MasterSlave заявки при ее просмотре в интерфейсе агента.';
-    $Self->{Translation}->{'Enable the advanced MasterSlave part of the feature.'} = 'Включает расширенные возможности для MasterSlave.';
-    $Self->{Translation}->{'Enable the feature that slave tickets follow the master ticket to a new master in the advanced MasterSlave mode.'} =
-        'Включает возможность передачи подчиненных заявок главной заявки к новой главной  в расширенном режиме MasterSlave .';
-    $Self->{Translation}->{'Enable the feature to change the MasterSlave state of a ticket in the advanced MasterSlave mode.'} =
-        'Включает возможность изменения состояния MasterSlave заявки в расширенном режиме.';
-    $Self->{Translation}->{'Enable the feature to forward articles from type \'forward\' of a master ticket to the customers of the slave tickets. By default (disabled) it will not forward articles from type \'forward\' to the slave tickets.'} =
-        'Включает возможность пересылки сообщений/заметок при пересылке главной заявки  клиентам подчиненных заявок. По умолчанию (выключено) в подчиненные заявки ничего не пересылается.';
-    $Self->{Translation}->{'Enable the feature to keep parent-child link after change of the MasterSlave state in the advanced MasterSlave mode.'} =
-        'Включает возможность сохранить связь родитель-потомок для заявок, после изменения признака MasterSlave в расширенном режиме MasterSlave.';
-    $Self->{Translation}->{'Enable the feature to keep parent-child link after unset of the MasterSlave state in the advanced MasterSlave mode.'} =
-        'Включает возможность сохранить связь родитель-потомок для заявок, после снятия признака MasterSlave в расширенном режиме MasterSlave.';
-    $Self->{Translation}->{'Enable the feature to unset the MasterSlave state of a ticket in the advanced MasterSlave mode.'} =
-        'Задает возможность сбросить установленное состояние MasterSlave заявки в расширенном режиме.';
+    $Self->{Translation}->{'Disabled'} = '';
+    $Self->{Translation}->{'Enabled'} = '';
+    $Self->{Translation}->{'Enables the advanced MasterSlave part of the feature.'} = '';
+    $Self->{Translation}->{'Enables the feature that slave tickets follow the master ticket to a new master in the advanced MasterSlave mode.'} =
+        '';
+    $Self->{Translation}->{'Enables the feature to change the MasterSlave state of a ticket in the advanced MasterSlave mode.'} =
+        '';
+    $Self->{Translation}->{'Enables the feature to forward articles from type \'forward\' of a master ticket to the customers of the slave tickets. By default (disabled) it will not forward articles from type \'forward\' to the slave tickets.'} =
+        '';
+    $Self->{Translation}->{'Enables the feature to keep parent-child link after change of the MasterSlave state in the advanced MasterSlave mode.'} =
+        '';
+    $Self->{Translation}->{'Enables the feature to keep parent-child link after unset of the MasterSlave state in the advanced MasterSlave mode.'} =
+        '';
+    $Self->{Translation}->{'Enables the feature to unset the MasterSlave state of a ticket in the advanced MasterSlave mode.'} =
+        '';
     $Self->{Translation}->{'If a note is added by an agent, sets the state of the ticket in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Если сообщение/заметка добавлена агентом, задает состояние заявки на экране MasterSlave  в интерфейсе агента.';
     $Self->{Translation}->{'Master / Slave'} = 'Master / Slave';
+    $Self->{Translation}->{'Master Tickets'} = '';
+    $Self->{Translation}->{'MasterSlave'} = '';
     $Self->{Translation}->{'MasterSlave module for Ticket Bulk feature.'} = 'MasterSlave модуль для функции Массовое действие.';
     $Self->{Translation}->{'Parameters for the dashboard backend of the master tickets overview of the agent interface. "Limit" is the number of entries shown by default. "Group" is used to restrict the access to the plugin (e. g. Group: admin;group1;group2;). "Default" determines if the plugin is enabled by default or if the user needs to enable it manually. "CacheTTLLocal" is the cache time in minutes for the plugin.'} =
         'Параметры для раздела Дайджеста с информацией о master заявках в интерфейсе агента. "Group" используется для ограничения доступа к разделу (например, Group: admin;group1;group2;). "Default" - задает, будет ли раздел доступен по умолчанию или агент должен активировать его вручную. "CacheTTLLocal" - время обновления кэша в минутах для этого раздела.';
@@ -98,10 +108,12 @@ sub Data {
         'Дает возможность изменить приоритет на экране MasterSlave заявки в интерфейсе агента. ';
     $Self->{Translation}->{'Shows the title fields in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Дает возможность изменить тему заявки на экране MasterSlave заявки в интерфейсе агента. ';
+    $Self->{Translation}->{'Slave Tickets'} = '';
     $Self->{Translation}->{'Specifies the different article types where the real name from Master ticket will be replaced with the one in the Slave ticket.'} =
         'Задает различные типы сообщений/заметок для случая замены реального имени из главной заявки в таким же в подчиненной.';
     $Self->{Translation}->{'This module activates Master/Slave field in new email and phone ticket screens.'} =
         'Этот модуль включает возможность выбора master/slave опции на экране создания заявки, на основе телефонного звонка или письма клиента агентом.';
+    $Self->{Translation}->{'Ticket MasterSlave.'} = '';
 
 }
 

@@ -16,16 +16,16 @@ sub Data {
     my $Self = shift;
 
     # Template: AgentTicketMasterSlave
-    $Self->{Translation}->{'Change Free Text of %s%s'} = '';
-    $Self->{Translation}->{'Change Owner of %s%s'} = '';
-    $Self->{Translation}->{'Close %s%s'} = '';
-    $Self->{Translation}->{'Add Note to %s%s'} = '';
-    $Self->{Translation}->{'Set Pending Time for %s%s'} = '';
-    $Self->{Translation}->{'Change Priority of %s%s'} = '';
-    $Self->{Translation}->{'Change Responsible of %s%s'} = '';
+    $Self->{Translation}->{'Change Free Text of %s%s'} = 'เปลี่ยนข้อความฟรีของ';
+    $Self->{Translation}->{'Change Owner of %s%s'} = 'เปลี่ยนเจ้าของของ %s%s';
+    $Self->{Translation}->{'Close %s%s'} = 'ปิด %s%s';
+    $Self->{Translation}->{'Add Note to %s%s'} = 'เพิ่มโน้ตไปยัง %s%s';
+    $Self->{Translation}->{'Set Pending Time for %s%s'} = 'ระบุเวลาการรอดำเนินการสำหรับ %s%s';
+    $Self->{Translation}->{'Change Priority of %s%s'} = 'เปลี่ยนลำดับความสำคัญของ %s%s';
+    $Self->{Translation}->{'Change Responsible of %s%s'} = 'เปลี่ยนความรับผิดชอบของ %s%s';
     $Self->{Translation}->{'Manage Master/Slave status for %s%s'} = '';
     $Self->{Translation}->{'Set Master/Slave Value'} = 'ระบุค่าของ มาสเตอร์/Slave';
-    $Self->{Translation}->{'Text will also be received by:'} = '';
+    $Self->{Translation}->{'Text will also be received by:'} = 'ข้อความก็จะได้รับโดย:';
 
     # Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
     $Self->{Translation}->{'New Master Ticket'} = 'ตั๋วมาสเตอร์ใหม่';
@@ -33,11 +33,17 @@ sub Data {
     $Self->{Translation}->{'Unset Slave Ticket'} = 'ยกเลิกการตั้งค่าตั๋วSlave';
     $Self->{Translation}->{'Slave of Ticket#'} = 'Slave ของตั๋ว';
 
+    # Perl Module: Kernel/Output/HTML/TicketBulk/MasterSlave.pm
+    $Self->{Translation}->{'Unset Master Tickets'} = '';
+    $Self->{Translation}->{'Unset Slave Tickets'} = '';
+
     # SysConfig
+    $Self->{Translation}->{'All master tickets'} = '';
+    $Self->{Translation}->{'All slave tickets'} = '';
     $Self->{Translation}->{'Allows adding notes in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'อนุญาตให้เพิ่มโน้ตในหน้าจอตั๋วMasterSlave ของตั๋วซูมในอินเตอร์เฟซเอเย่นต์ ';
     $Self->{Translation}->{'Change the MasterSlave state of the ticket.'} = 'เปลี่ยนสถานภาพของตั๋ว MasterSlave ';
-    $Self->{Translation}->{'Define dynamic field name for master ticket feature.'} = 'กำหนดชื่อฟิลด์แบบไดนามิกสำหรับฟีเจอร์ตั๋วมาสเตอร์';
+    $Self->{Translation}->{'Defines dynamic field name for master ticket feature.'} = '';
     $Self->{Translation}->{'Defines if a ticket lock is required in the ticket MasterSlave screen of a zoomed ticket in the agent interface (if the ticket isn\'t locked yet, the ticket gets locked and the current agent will be set automatically as its owner).'} =
         'กำหนดค่าถ้าหากจำเป็นต้องใช้ตั๋วล็อคในหน้าจอตั๋วMasterSlaveของตั๋วซูมในอินเตอร์เฟซของเอเย่นต์ (ทำการล็อคตั๋วถ้าหากตั๋วยังไม่ได้ล็อคและระบุให้เอเย่นต์ปัจจุบันเป็นเจ้าของอัตโนมัติ)';
     $Self->{Translation}->{'Defines the default next state of a ticket after adding a note, in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
@@ -52,22 +58,26 @@ sub Data {
         'กำหนดประเภทประวัติสำหรับการกระทำสำหรับการกระทำหน้าจอตั๋วMasterSlave ของตั๋วซูม ซึ่งทำให้เกิดความคุ้นเคยในประวัติของตั๋วในอินเตอร์เฟซเอเย่นต์';
     $Self->{Translation}->{'Defines the next state of a ticket after adding a note, in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'กำหนดสถานภาพถัดไปของตั๋วหลังจากเพิ่มโน้ตในหน้าจอตั๋วMasterSlave ของตั๋วซูมในอินเตอร์เฟซเอเย่นต์';
-    $Self->{Translation}->{'Enable the advanced MasterSlave part of the feature.'} = 'เปิดใช้งานส่วน MasterSlave ขั้นสูงของฟีเจอร์นั้นๆ';
-    $Self->{Translation}->{'Enable the feature that slave tickets follow the master ticket to a new master in the advanced MasterSlave mode.'} =
-        'เปิดใช้งานคุณลักษณะที่ตั๋วslave ติดตามตั๋วมาสเตอร์ไปยังมาสเตอร์ใหม่ในโหมด MasterSlave ขั้นสูง';
-    $Self->{Translation}->{'Enable the feature to change the MasterSlave state of a ticket in the advanced MasterSlave mode.'} =
-        'เปิดใช้งานคุณลักษณะการเปลี่ยนแปลงสถานภาพ masterslave ของตั๋วในโหมด advanced MasterSlave';
-    $Self->{Translation}->{'Enable the feature to forward articles from type \'forward\' of a master ticket to the customers of the slave tickets. By default (disabled) it will not forward articles from type \'forward\' to the slave tickets.'} =
-        'เปิดใช้งานคุณลักษณะเพื่อส่งต่อบทความจากประเภท \'ส่งต่อ\' ของตั๋วต้นมาสเตอร์ให้กับลูกค้าของตั๋ว slave โดยค่าเริ่มต้น (ปิดใช้งาน) จะไม่ส่งต่อบทความจากประเภท  \'ส่งต่อ\' ไปยังตั๋วslave';
-    $Self->{Translation}->{'Enable the feature to keep parent-child link after change of the MasterSlave state in the advanced MasterSlave mode.'} =
-        'เปิดใช้งานคุณลักษณะเพื่อเก็บการเชื่อมโยงparent-child หลังจากการเปลี่ยนแปลงสถานะของ MasterSlave ในโหมด MasterSlave ขั้นสูง';
-    $Self->{Translation}->{'Enable the feature to keep parent-child link after unset of the MasterSlave state in the advanced MasterSlave mode.'} =
-        'เปิดใช้งานคุณลักษณะเพื่อเก็บการเชื่อมโยงparent-child หลังจากการยกเลิกการตั้งค่าสถานะของ MasterSlave ในโหมด MasterSlave ขั้นสูง';
-    $Self->{Translation}->{'Enable the feature to unset the MasterSlave state of a ticket in the advanced MasterSlave mode.'} =
-        'เปิดใช้งานคุณลักษณะการยกเลิกสถานภาพ masterslave ของตั๋วในโหมด advanced MasterSlave';
+    $Self->{Translation}->{'Disabled'} = '';
+    $Self->{Translation}->{'Enabled'} = '';
+    $Self->{Translation}->{'Enables the advanced MasterSlave part of the feature.'} = '';
+    $Self->{Translation}->{'Enables the feature that slave tickets follow the master ticket to a new master in the advanced MasterSlave mode.'} =
+        '';
+    $Self->{Translation}->{'Enables the feature to change the MasterSlave state of a ticket in the advanced MasterSlave mode.'} =
+        '';
+    $Self->{Translation}->{'Enables the feature to forward articles from type \'forward\' of a master ticket to the customers of the slave tickets. By default (disabled) it will not forward articles from type \'forward\' to the slave tickets.'} =
+        '';
+    $Self->{Translation}->{'Enables the feature to keep parent-child link after change of the MasterSlave state in the advanced MasterSlave mode.'} =
+        '';
+    $Self->{Translation}->{'Enables the feature to keep parent-child link after unset of the MasterSlave state in the advanced MasterSlave mode.'} =
+        '';
+    $Self->{Translation}->{'Enables the feature to unset the MasterSlave state of a ticket in the advanced MasterSlave mode.'} =
+        '';
     $Self->{Translation}->{'If a note is added by an agent, sets the state of the ticket in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'เซตสถานภาพของตั๋วในหน้าจอตั๋ว MasterSlave ของตั๋วซูมในอินเตอร์เฟซของเอเย่นต์หากเอเย่นต์ได้เพิ่มโน้ต';
     $Self->{Translation}->{'Master / Slave'} = 'มาสเตอร์/Slave';
+    $Self->{Translation}->{'Master Tickets'} = '';
+    $Self->{Translation}->{'MasterSlave'} = '';
     $Self->{Translation}->{'MasterSlave module for Ticket Bulk feature.'} = 'โมดูล มาสเตอร์/Slave สำหรับคุณลักษณะกลุ่มตั๋ว';
     $Self->{Translation}->{'Parameters for the dashboard backend of the master tickets overview of the agent interface. "Limit" is the number of entries shown by default. "Group" is used to restrict the access to the plugin (e. g. Group: admin;group1;group2;). "Default" determines if the plugin is enabled by default or if the user needs to enable it manually. "CacheTTLLocal" is the cache time in minutes for the plugin.'} =
         'พารามิเตอร์สำหรับแดชบอร์ดเบื้องหลังของภาพรวมตั๋วmaster ของอินเตอร์เฟสเอเย่นต์ "จำกัด" คือกำหนดจำนวนของรายการที่แสดงโดยค่าเริ่มต้น "กลุ่ม" จะถูกนำมาใช้เพื่อจำกัดการเข้าถึงปลั๊กอิน (เช่นกลุ่ม: ผู้ดูแลระบบ; กลุ่ม 1; กลุ่ม2;) "เริ่มต้น" ระบุว่าถ้าปลั๊กอินถูกเปิดใช้งานโดยค่าเริ่มต้นหรือหากผู้ใช้ต้องการเพื่อเปิดใช้งานได้ด้วยตนเอง';
@@ -98,10 +108,12 @@ sub Data {
         'แสดงตัวเลือกลำดับความสำคัญของตั๋วในหน้าจอตั๋ว MasterSlave ของตั๋วซูมในอินเตอร์เฟซเอเย่นต์';
     $Self->{Translation}->{'Shows the title fields in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'แสดงฟิลด์ชื่อเรื่องในหน้าจอตั๋ว MasterSlave ของตั๋วซูมในอินเตอร์เฟซเอเย่นต์';
+    $Self->{Translation}->{'Slave Tickets'} = '';
     $Self->{Translation}->{'Specifies the different article types where the real name from Master ticket will be replaced with the one in the Slave ticket.'} =
         'ระบุประเภทบทความที่แตกต่างกันซึ่งชื่อจริงจากตั๋วมาสเตอร์จะถูกแทนที่ด้วยหนึ่งในตั๋วSlave';
     $Self->{Translation}->{'This module activates Master/Slave field in new email and phone ticket screens.'} =
         'โมดูลนี้เปิดใช้งานฟิลด์ Master /Slave ในหน้าจออีเมลใหม่และตั๋วโทรศัพท์';
+    $Self->{Translation}->{'Ticket MasterSlave.'} = '';
 
 }
 

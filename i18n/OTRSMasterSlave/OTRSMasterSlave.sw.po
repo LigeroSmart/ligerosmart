@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-08-05 13:19+0000\n"
-"PO-Revision-Date: 2016-08-05 18:20+0000\n"
+"POT-Creation-Date: 2016-08-05 16:35+0000\n"
+"PO-Revision-Date: 2016-08-05 21:40+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Swahili (http://www.transifex.com/otrs/OTRS/language/sw/)\n"
 "MIME-Version: 1.0\n"
@@ -71,6 +71,22 @@ msgstr ""
 msgid "Slave of Ticket#"
 msgstr ""
 
+#. Perl Module: Kernel/Output/HTML/TicketBulk/MasterSlave.pm
+msgid "Unset Master Tickets"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/TicketBulk/MasterSlave.pm
+msgid "Unset Slave Tickets"
+msgstr ""
+
+#. SysConfig
+msgid "All master tickets"
+msgstr ""
+
+#. SysConfig
+msgid "All slave tickets"
+msgstr ""
+
 #. SysConfig
 msgid ""
 "Allows adding notes in the ticket MasterSlave screen of a zoomed ticket in "
@@ -82,8 +98,8 @@ msgid "Change the MasterSlave state of the ticket."
 msgstr "Badilisha hali ya Mkuu/mtumwa ya tiketi."
 
 #. SysConfig
-msgid "Define dynamic field name for master ticket feature."
-msgstr "Fafanua jina la uga wenye uwezo kwa kipengele cha tiketi kuu. "
+msgid "Defines dynamic field name for master ticket feature."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -130,45 +146,53 @@ msgid ""
 msgstr "Fafanua hali inayofuata ya tiketi baada ya kuongeza kidokezo, katika skrini ya mkuumtumwa ya tiketi ya tiketi iliyokuzwa katika kiolesura cha wakala."
 
 #. SysConfig
-msgid "Enable the advanced MasterSlave part of the feature."
-msgstr "Wezesha uwezo wa juu wa seheme ya mkuumtumwa wa kipengele."
+msgid "Disabled"
+msgstr ""
+
+#. SysConfig
+msgid "Enabled"
+msgstr ""
+
+#. SysConfig
+msgid "Enables the advanced MasterSlave part of the feature."
+msgstr ""
 
 #. SysConfig
 msgid ""
-"Enable the feature that slave tickets follow the master ticket to a new "
+"Enables the feature that slave tickets follow the master ticket to a new "
 "master in the advanced MasterSlave mode."
-msgstr "Wezesha kipengele ambacho tiketi mtwumwa zitafuata tiketi mkuu kwa mkuu mpya katika hali ya juu ya mkuumtumwa.  "
+msgstr ""
 
 #. SysConfig
 msgid ""
-"Enable the feature to change the MasterSlave state of a ticket in the "
+"Enables the feature to change the MasterSlave state of a ticket in the "
 "advanced MasterSlave mode."
-msgstr "Wezesha kipengele cha kubadilisha hali ya mkuumtumwa ya tiketi katika hali ya juu ya mkuumtumwa."
+msgstr ""
 
 #. SysConfig
 msgid ""
-"Enable the feature to forward articles from type 'forward' of a master "
+"Enables the feature to forward articles from type 'forward' of a master "
 "ticket to the customers of the slave tickets. By default (disabled) it will "
 "not forward articles from type 'forward' to the slave tickets."
 msgstr ""
 
 #. SysConfig
 msgid ""
-"Enable the feature to keep parent-child link after change of the MasterSlave"
+"Enables the feature to keep parent-child link after change of the "
+"MasterSlave state in the advanced MasterSlave mode."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Enables the feature to keep parent-child link after unset of the MasterSlave"
 " state in the advanced MasterSlave mode."
 msgstr ""
 
 #. SysConfig
 msgid ""
-"Enable the feature to keep parent-child link after unset of the MasterSlave "
-"state in the advanced MasterSlave mode."
-msgstr ""
-
-#. SysConfig
-msgid ""
-"Enable the feature to unset the MasterSlave state of a ticket in the "
+"Enables the feature to unset the MasterSlave state of a ticket in the "
 "advanced MasterSlave mode."
-msgstr "Wezesha kipengele ambacho hakitoweka hali ya mkuumtumwa ya tiketi katika hali ya juu ya mkuumtumwa."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -178,6 +202,14 @@ msgstr "Kama kidokezo kimeongezwa na wakala, inaweka hali ya tiketi katika skrin
 
 #. SysConfig
 msgid "Master / Slave"
+msgstr ""
+
+#. SysConfig
+msgid "Master Tickets"
+msgstr ""
+
+#. SysConfig
+msgid "MasterSlave"
 msgstr ""
 
 #. SysConfig
@@ -282,6 +314,10 @@ msgid ""
 msgstr "Inaonyesha kichwa cha habari katika skrini ya tiketi mkuumtumwa ya tiketi iliyokuzwa katika kiolesura cha wakala."
 
 #. SysConfig
+msgid "Slave Tickets"
+msgstr ""
+
+#. SysConfig
 msgid ""
 "Specifies the different article types where the real name from Master ticket"
 " will be replaced with the one in the Slave ticket."
@@ -291,4 +327,8 @@ msgstr "Inabainisha aina mbalimbali za makala ambazo majina yake ya ukweli kutok
 msgid ""
 "This module activates Master/Slave field in new email and phone ticket "
 "screens."
+msgstr ""
+
+#. SysConfig
+msgid "Ticket MasterSlave."
 msgstr ""

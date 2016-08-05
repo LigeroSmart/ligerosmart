@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRSMasterSlave\n"
-"POT-Creation-Date: 2016-08-05 13:21+0000\n"
+"POT-Creation-Date: 2016-08-05 16:41+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -66,6 +66,22 @@ msgstr ""
 msgid "Slave of Ticket#"
 msgstr ""
 
+#. Perl Module: Kernel/Output/HTML/TicketBulk/MasterSlave.pm
+msgid "Unset Master Tickets"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/TicketBulk/MasterSlave.pm
+msgid "Unset Slave Tickets"
+msgstr ""
+
+#. SysConfig
+msgid "All master tickets"
+msgstr ""
+
+#. SysConfig
+msgid "All slave tickets"
+msgstr ""
+
 #. SysConfig
 msgid "Allows adding notes in the ticket MasterSlave screen of a zoomed ticket in the agent interface."
 msgstr ""
@@ -75,7 +91,7 @@ msgid "Change the MasterSlave state of the ticket."
 msgstr ""
 
 #. SysConfig
-msgid "Define dynamic field name for master ticket feature."
+msgid "Defines dynamic field name for master ticket feature."
 msgstr ""
 
 #. SysConfig
@@ -107,31 +123,39 @@ msgid "Defines the next state of a ticket after adding a note, in the ticket Mas
 msgstr ""
 
 #. SysConfig
-msgid "Enable the advanced MasterSlave part of the feature."
+msgid "Disabled"
 msgstr ""
 
 #. SysConfig
-msgid "Enable the feature that slave tickets follow the master ticket to a new master in the advanced MasterSlave mode."
+msgid "Enabled"
 msgstr ""
 
 #. SysConfig
-msgid "Enable the feature to change the MasterSlave state of a ticket in the advanced MasterSlave mode."
+msgid "Enables the advanced MasterSlave part of the feature."
 msgstr ""
 
 #. SysConfig
-msgid "Enable the feature to forward articles from type 'forward' of a master ticket to the customers of the slave tickets. By default (disabled) it will not forward articles from type 'forward' to the slave tickets."
+msgid "Enables the feature that slave tickets follow the master ticket to a new master in the advanced MasterSlave mode."
 msgstr ""
 
 #. SysConfig
-msgid "Enable the feature to keep parent-child link after change of the MasterSlave state in the advanced MasterSlave mode."
+msgid "Enables the feature to change the MasterSlave state of a ticket in the advanced MasterSlave mode."
 msgstr ""
 
 #. SysConfig
-msgid "Enable the feature to keep parent-child link after unset of the MasterSlave state in the advanced MasterSlave mode."
+msgid "Enables the feature to forward articles from type 'forward' of a master ticket to the customers of the slave tickets. By default (disabled) it will not forward articles from type 'forward' to the slave tickets."
 msgstr ""
 
 #. SysConfig
-msgid "Enable the feature to unset the MasterSlave state of a ticket in the advanced MasterSlave mode."
+msgid "Enables the feature to keep parent-child link after change of the MasterSlave state in the advanced MasterSlave mode."
+msgstr ""
+
+#. SysConfig
+msgid "Enables the feature to keep parent-child link after unset of the MasterSlave state in the advanced MasterSlave mode."
+msgstr ""
+
+#. SysConfig
+msgid "Enables the feature to unset the MasterSlave state of a ticket in the advanced MasterSlave mode."
 msgstr ""
 
 #. SysConfig
@@ -140,6 +164,14 @@ msgstr ""
 
 #. SysConfig
 msgid "Master / Slave"
+msgstr ""
+
+#. SysConfig
+msgid "Master Tickets"
+msgstr ""
+
+#. SysConfig
+msgid "MasterSlave"
 msgstr ""
 
 #. SysConfig
@@ -207,10 +239,18 @@ msgid "Shows the title fields in the ticket MasterSlave screen of a zoomed ticke
 msgstr ""
 
 #. SysConfig
+msgid "Slave Tickets"
+msgstr ""
+
+#. SysConfig
 msgid "Specifies the different article types where the real name from Master ticket will be replaced with the one in the Slave ticket."
 msgstr ""
 
 #. SysConfig
 msgid "This module activates Master/Slave field in new email and phone ticket screens."
+msgstr ""
+
+#. SysConfig
+msgid "Ticket MasterSlave."
 msgstr ""
 

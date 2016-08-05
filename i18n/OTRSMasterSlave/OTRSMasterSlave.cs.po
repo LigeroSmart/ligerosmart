@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-08-05 13:19+0000\n"
-"PO-Revision-Date: 2016-08-05 18:20+0000\n"
+"POT-Creation-Date: 2016-08-05 16:35+0000\n"
+"PO-Revision-Date: 2016-08-05 21:40+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Czech (http://www.transifex.com/otrs/OTRS/language/cs/)\n"
 "MIME-Version: 1.0\n"
@@ -70,6 +70,22 @@ msgstr ""
 msgid "Slave of Ticket#"
 msgstr ""
 
+#. Perl Module: Kernel/Output/HTML/TicketBulk/MasterSlave.pm
+msgid "Unset Master Tickets"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/TicketBulk/MasterSlave.pm
+msgid "Unset Slave Tickets"
+msgstr ""
+
+#. SysConfig
+msgid "All master tickets"
+msgstr ""
+
+#. SysConfig
+msgid "All slave tickets"
+msgstr ""
+
 #. SysConfig
 msgid ""
 "Allows adding notes in the ticket MasterSlave screen of a zoomed ticket in "
@@ -81,8 +97,8 @@ msgid "Change the MasterSlave state of the ticket."
 msgstr "Změna stavu Nadřízený/Podřízený."
 
 #. SysConfig
-msgid "Define dynamic field name for master ticket feature."
-msgstr "Pojmenování dynamického pole zajišťujícího funkci Nadřízeného tiketu."
+msgid "Defines dynamic field name for master ticket feature."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -129,45 +145,53 @@ msgid ""
 msgstr "Určuje další stav tiketu po přidání poznámky v zobrazení Nadřízený / Podřízený v detailu tiketu v rozhraní agenta."
 
 #. SysConfig
-msgid "Enable the advanced MasterSlave part of the feature."
-msgstr "Povoluje pokročilou část  konceptu Nadřízený/Podřízený."
+msgid "Disabled"
+msgstr ""
+
+#. SysConfig
+msgid "Enabled"
+msgstr ""
+
+#. SysConfig
+msgid "Enables the advanced MasterSlave part of the feature."
+msgstr ""
 
 #. SysConfig
 msgid ""
-"Enable the feature that slave tickets follow the master ticket to a new "
+"Enables the feature that slave tickets follow the master ticket to a new "
 "master in the advanced MasterSlave mode."
-msgstr "Povoluje podřízeným tiketům následovat nadřízené tikety k novému nadřízenému tiketu - v pokročilém konceptu Nadřízený / Podřízený."
+msgstr ""
 
 #. SysConfig
 msgid ""
-"Enable the feature to change the MasterSlave state of a ticket in the "
+"Enables the feature to change the MasterSlave state of a ticket in the "
 "advanced MasterSlave mode."
-msgstr "Povoluje změnu stavu naddřízený / podřízený tiketu v pokročilém modu konceptu Nadřízený / Podřízený."
+msgstr ""
 
 #. SysConfig
 msgid ""
-"Enable the feature to forward articles from type 'forward' of a master "
+"Enables the feature to forward articles from type 'forward' of a master "
 "ticket to the customers of the slave tickets. By default (disabled) it will "
 "not forward articles from type 'forward' to the slave tickets."
 msgstr ""
 
 #. SysConfig
 msgid ""
-"Enable the feature to keep parent-child link after change of the MasterSlave"
+"Enables the feature to keep parent-child link after change of the "
+"MasterSlave state in the advanced MasterSlave mode."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Enables the feature to keep parent-child link after unset of the MasterSlave"
 " state in the advanced MasterSlave mode."
 msgstr ""
 
 #. SysConfig
 msgid ""
-"Enable the feature to keep parent-child link after unset of the MasterSlave "
-"state in the advanced MasterSlave mode."
-msgstr ""
-
-#. SysConfig
-msgid ""
-"Enable the feature to unset the MasterSlave state of a ticket in the "
+"Enables the feature to unset the MasterSlave state of a ticket in the "
 "advanced MasterSlave mode."
-msgstr "Povoluje zrušení stavu tiketu nadřízený / podřízený v pokročilém modu konceptu Nadřízený / Podřízený. "
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -177,6 +201,14 @@ msgstr "Pokud je přidána poznámka agentem, určí stav tiketu v zobrazení Na
 
 #. SysConfig
 msgid "Master / Slave"
+msgstr ""
+
+#. SysConfig
+msgid "Master Tickets"
+msgstr ""
+
+#. SysConfig
+msgid "MasterSlave"
 msgstr ""
 
 #. SysConfig
@@ -281,6 +313,10 @@ msgid ""
 msgstr ""
 
 #. SysConfig
+msgid "Slave Tickets"
+msgstr ""
+
+#. SysConfig
 msgid ""
 "Specifies the different article types where the real name from Master ticket"
 " will be replaced with the one in the Slave ticket."
@@ -290,4 +326,8 @@ msgstr ""
 msgid ""
 "This module activates Master/Slave field in new email and phone ticket "
 "screens."
+msgstr ""
+
+#. SysConfig
+msgid "Ticket MasterSlave."
 msgstr ""

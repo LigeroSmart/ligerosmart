@@ -16,16 +16,16 @@ sub Data {
     my $Self = shift;
 
     # Template: AgentTicketMasterSlave
-    $Self->{Translation}->{'Change Free Text of %s%s'} = '';
-    $Self->{Translation}->{'Change Owner of %s%s'} = '';
-    $Self->{Translation}->{'Close %s%s'} = '';
-    $Self->{Translation}->{'Add Note to %s%s'} = '';
-    $Self->{Translation}->{'Set Pending Time for %s%s'} = '';
-    $Self->{Translation}->{'Change Priority of %s%s'} = '';
-    $Self->{Translation}->{'Change Responsible of %s%s'} = '';
+    $Self->{Translation}->{'Change Free Text of %s%s'} = 'Tukar Teks Percuma %s%s';
+    $Self->{Translation}->{'Change Owner of %s%s'} = 'Mengubah pemilik %s%s';
+    $Self->{Translation}->{'Close %s%s'} = 'Tutup %s%s';
+    $Self->{Translation}->{'Add Note to %s%s'} = 'Tambah nota pada %s%s';
+    $Self->{Translation}->{'Set Pending Time for %s%s'} = 'Tetapkan masa menunggu untuk %s%s';
+    $Self->{Translation}->{'Change Priority of %s%s'} = 'Perubahan keutamaan %s%s';
+    $Self->{Translation}->{'Change Responsible of %s%s'} = 'Menukar tanggungjawab %s%s';
     $Self->{Translation}->{'Manage Master/Slave status for %s%s'} = '';
     $Self->{Translation}->{'Set Master/Slave Value'} = 'Set nilai Master/Slave';
-    $Self->{Translation}->{'Text will also be received by:'} = '';
+    $Self->{Translation}->{'Text will also be received by:'} = 'Nota juga akan diterima oleh:';
 
     # Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
     $Self->{Translation}->{'New Master Ticket'} = 'Tiket Master Baharu';
@@ -33,11 +33,17 @@ sub Data {
     $Self->{Translation}->{'Unset Slave Ticket'} = 'Tiket Slave Tidak Ditetapkan';
     $Self->{Translation}->{'Slave of Ticket#'} = 'Slave untuk Tiket#';
 
+    # Perl Module: Kernel/Output/HTML/TicketBulk/MasterSlave.pm
+    $Self->{Translation}->{'Unset Master Tickets'} = '';
+    $Self->{Translation}->{'Unset Slave Tickets'} = '';
+
     # SysConfig
+    $Self->{Translation}->{'All master tickets'} = '';
+    $Self->{Translation}->{'All slave tickets'} = '';
     $Self->{Translation}->{'Allows adding notes in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Membenarkan menambah nota dalam skrin MasterSlave tiket bagi tiket dizum dalam antara muka ejen.';
     $Self->{Translation}->{'Change the MasterSlave state of the ticket.'} = 'Ubah keadaan tiket MasterSlave.';
-    $Self->{Translation}->{'Define dynamic field name for master ticket feature.'} = 'Mentakrifkan nama medan dinamik untuk ciri tiket master.';
+    $Self->{Translation}->{'Defines dynamic field name for master ticket feature.'} = '';
     $Self->{Translation}->{'Defines if a ticket lock is required in the ticket MasterSlave screen of a zoomed ticket in the agent interface (if the ticket isn\'t locked yet, the ticket gets locked and the current agent will be set automatically as its owner).'} =
         'Mentakrifkan jika kunci tiket diperlukan dalam skrin MasterSlave tiket tiket dizum dalam antara muka ejen (jika tiket itu tidak dikunci lagi, tiket yang akan dikunci dan ejen semasa akan ditetapkan secara automatik sebagai pemiliknya).';
     $Self->{Translation}->{'Defines the default next state of a ticket after adding a note, in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
@@ -52,22 +58,26 @@ sub Data {
         'Mentakrifkan jenis sejarah bagi tindakan skrin tiket MasterSlave, yang akan digunakan untuk sejarah tiket dalam antara muka ejen.';
     $Self->{Translation}->{'Defines the next state of a ticket after adding a note, in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Mentakrifkan keadaan seterusnya bagi tiket selepas menambah nota, dalam skrin MasterSlave tiket tiket dizum dalam antara muka ejen.';
-    $Self->{Translation}->{'Enable the advanced MasterSlave part of the feature.'} = 'Membolehkan ciri maju bahagian MasterSlave tersebut.';
-    $Self->{Translation}->{'Enable the feature that slave tickets follow the master ticket to a new master in the advanced MasterSlave mode.'} =
-        'Membolehkan ciri yang tiket slave ikuti tiket master kepada master baru dalam mod MasterSlave maju.';
-    $Self->{Translation}->{'Enable the feature to change the MasterSlave state of a ticket in the advanced MasterSlave mode.'} =
-        'Membolehkan ciri ini untuk mengubah keadaan MasterSlave bagi tiket dalam mod MasterSlave maju.';
-    $Self->{Translation}->{'Enable the feature to forward articles from type \'forward\' of a master ticket to the customers of the slave tickets. By default (disabled) it will not forward articles from type \'forward\' to the slave tickets.'} =
-        'Membolehkan ciri untuk mengemukakan artikel dari jenis \'ke depan\' daripada tiket master kepada pelanggan tiket slave. Secara default (dilumpuhkan) ia tidak akan mengemukakan artikel dari jenis \'ke depan\' untuk tiket slave.';
-    $Self->{Translation}->{'Enable the feature to keep parent-child link after change of the MasterSlave state in the advanced MasterSlave mode.'} =
-        'Membolehkan ciri untuk menyimpan pautan ibu bapa dan anak selepas perubahan keadaan MasterSlave dalam mod MasterSlave maju.';
-    $Self->{Translation}->{'Enable the feature to keep parent-child link after unset of the MasterSlave state in the advanced MasterSlave mode.'} =
-        'Membolehkan ciri untuk menyimpan pautan ibu bapa dan anak selepas tanpa ditetapkan keadaan MasterSlave dalam mod MasterSlave maju.';
-    $Self->{Translation}->{'Enable the feature to unset the MasterSlave state of a ticket in the advanced MasterSlave mode.'} =
-        'Membolehkan ciri untuk tidak menetapkan keadaan MasterSlave bagi tiket dalam mod MasterSlave maju.';
+    $Self->{Translation}->{'Disabled'} = '';
+    $Self->{Translation}->{'Enabled'} = '';
+    $Self->{Translation}->{'Enables the advanced MasterSlave part of the feature.'} = '';
+    $Self->{Translation}->{'Enables the feature that slave tickets follow the master ticket to a new master in the advanced MasterSlave mode.'} =
+        '';
+    $Self->{Translation}->{'Enables the feature to change the MasterSlave state of a ticket in the advanced MasterSlave mode.'} =
+        '';
+    $Self->{Translation}->{'Enables the feature to forward articles from type \'forward\' of a master ticket to the customers of the slave tickets. By default (disabled) it will not forward articles from type \'forward\' to the slave tickets.'} =
+        '';
+    $Self->{Translation}->{'Enables the feature to keep parent-child link after change of the MasterSlave state in the advanced MasterSlave mode.'} =
+        '';
+    $Self->{Translation}->{'Enables the feature to keep parent-child link after unset of the MasterSlave state in the advanced MasterSlave mode.'} =
+        '';
+    $Self->{Translation}->{'Enables the feature to unset the MasterSlave state of a ticket in the advanced MasterSlave mode.'} =
+        '';
     $Self->{Translation}->{'If a note is added by an agent, sets the state of the ticket in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Jika nota ditambah oleh ejen, tetapkan keadaan tiket dalam skrin MasterSlave tiket tiket dizum dalam antara muka ejen.';
     $Self->{Translation}->{'Master / Slave'} = 'Master / Slave';
+    $Self->{Translation}->{'Master Tickets'} = '';
+    $Self->{Translation}->{'MasterSlave'} = '';
     $Self->{Translation}->{'MasterSlave module for Ticket Bulk feature.'} = 'Modul MasterSlave untuk ciri Bulk Tiket.';
     $Self->{Translation}->{'Parameters for the dashboard backend of the master tickets overview of the agent interface. "Limit" is the number of entries shown by default. "Group" is used to restrict the access to the plugin (e. g. Group: admin;group1;group2;). "Default" determines if the plugin is enabled by default or if the user needs to enable it manually. "CacheTTLLocal" is the cache time in minutes for the plugin.'} =
         'Parameter untuk bahagian belakang papan pemuka daripada gambaran keseluruhan tiket master antara muka ejen. "Had" adalah bilangan penyertaan ditunjukkan secara default. "Kumpulan" digunakan untuk menyekat akses kepada masuk (contoh: Kumpulan: admin; kumpulan1; kumpulan2;). "Default" menentukan jika plugin ini diaktifkan secara default atau jika pengguna perlu untuk membolehkan secara manual. "CacheTTLLocal" adalah masa cache dalam minit untuk plugin.';
@@ -98,10 +108,12 @@ sub Data {
         'Menunjukkan pilihan keutamaan tiket dalam skrin MasterSlave tiket tiket dizum dalam antara muka ejen.';
     $Self->{Translation}->{'Shows the title fields in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Menunjukkan bidang tajuk dalam skrin MasterSlave tiket tiket dizum dalam antara muka ejen.';
+    $Self->{Translation}->{'Slave Tickets'} = '';
     $Self->{Translation}->{'Specifies the different article types where the real name from Master ticket will be replaced with the one in the Slave ticket.'} =
         'Menentukan jenis artikel yang berbeza di mana nama sebenar dari tiket Master akan digantikan dengan yang dalam tiket Slave.';
     $Self->{Translation}->{'This module activates Master/Slave field in new email and phone ticket screens.'} =
         'Modul ini mengaktifkan medan Master/Slave di skrin emel dan tiket telefon baru.';
+    $Self->{Translation}->{'Ticket MasterSlave.'} = '';
 
 }
 

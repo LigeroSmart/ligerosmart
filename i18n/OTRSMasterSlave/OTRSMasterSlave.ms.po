@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-08-05 13:19+0000\n"
-"PO-Revision-Date: 2016-08-05 18:20+0000\n"
+"POT-Creation-Date: 2016-08-05 16:35+0000\n"
+"PO-Revision-Date: 2016-08-05 21:40+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Malay (http://www.transifex.com/otrs/OTRS/language/ms/)\n"
 "MIME-Version: 1.0\n"
@@ -16,31 +16,31 @@ msgstr ""
 
 #. Template: AgentTicketMasterSlave
 msgid "Change Free Text of %s%s"
-msgstr ""
+msgstr "Tukar Teks Percuma %s%s"
 
 #. Template: AgentTicketMasterSlave
 msgid "Change Owner of %s%s"
-msgstr ""
+msgstr "Mengubah pemilik %s%s"
 
 #. Template: AgentTicketMasterSlave
 msgid "Close %s%s"
-msgstr ""
+msgstr "Tutup %s%s"
 
 #. Template: AgentTicketMasterSlave
 msgid "Add Note to %s%s"
-msgstr ""
+msgstr "Tambah nota pada %s%s"
 
 #. Template: AgentTicketMasterSlave
 msgid "Set Pending Time for %s%s"
-msgstr ""
+msgstr "Tetapkan masa menunggu untuk %s%s"
 
 #. Template: AgentTicketMasterSlave
 msgid "Change Priority of %s%s"
-msgstr ""
+msgstr "Perubahan keutamaan %s%s"
 
 #. Template: AgentTicketMasterSlave
 msgid "Change Responsible of %s%s"
-msgstr ""
+msgstr "Menukar tanggungjawab %s%s"
 
 #. Template: AgentTicketMasterSlave
 msgid "Manage Master/Slave status for %s%s"
@@ -52,7 +52,7 @@ msgstr "Set nilai Master/Slave"
 
 #. Template: AgentTicketMasterSlave
 msgid "Text will also be received by:"
-msgstr ""
+msgstr "Nota juga akan diterima oleh:"
 
 #. Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
 msgid "New Master Ticket"
@@ -70,6 +70,22 @@ msgstr "Tiket Slave Tidak Ditetapkan"
 msgid "Slave of Ticket#"
 msgstr "Slave untuk Tiket#"
 
+#. Perl Module: Kernel/Output/HTML/TicketBulk/MasterSlave.pm
+msgid "Unset Master Tickets"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/TicketBulk/MasterSlave.pm
+msgid "Unset Slave Tickets"
+msgstr ""
+
+#. SysConfig
+msgid "All master tickets"
+msgstr ""
+
+#. SysConfig
+msgid "All slave tickets"
+msgstr ""
+
 #. SysConfig
 msgid ""
 "Allows adding notes in the ticket MasterSlave screen of a zoomed ticket in "
@@ -81,8 +97,8 @@ msgid "Change the MasterSlave state of the ticket."
 msgstr "Ubah keadaan tiket MasterSlave."
 
 #. SysConfig
-msgid "Define dynamic field name for master ticket feature."
-msgstr "Mentakrifkan nama medan dinamik untuk ciri tiket master."
+msgid "Defines dynamic field name for master ticket feature."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -129,45 +145,53 @@ msgid ""
 msgstr "Mentakrifkan keadaan seterusnya bagi tiket selepas menambah nota, dalam skrin MasterSlave tiket tiket dizum dalam antara muka ejen."
 
 #. SysConfig
-msgid "Enable the advanced MasterSlave part of the feature."
-msgstr "Membolehkan ciri maju bahagian MasterSlave tersebut."
+msgid "Disabled"
+msgstr ""
+
+#. SysConfig
+msgid "Enabled"
+msgstr ""
+
+#. SysConfig
+msgid "Enables the advanced MasterSlave part of the feature."
+msgstr ""
 
 #. SysConfig
 msgid ""
-"Enable the feature that slave tickets follow the master ticket to a new "
+"Enables the feature that slave tickets follow the master ticket to a new "
 "master in the advanced MasterSlave mode."
-msgstr "Membolehkan ciri yang tiket slave ikuti tiket master kepada master baru dalam mod MasterSlave maju."
+msgstr ""
 
 #. SysConfig
 msgid ""
-"Enable the feature to change the MasterSlave state of a ticket in the "
+"Enables the feature to change the MasterSlave state of a ticket in the "
 "advanced MasterSlave mode."
-msgstr "Membolehkan ciri ini untuk mengubah keadaan MasterSlave bagi tiket dalam mod MasterSlave maju."
+msgstr ""
 
 #. SysConfig
 msgid ""
-"Enable the feature to forward articles from type 'forward' of a master "
+"Enables the feature to forward articles from type 'forward' of a master "
 "ticket to the customers of the slave tickets. By default (disabled) it will "
 "not forward articles from type 'forward' to the slave tickets."
-msgstr "Membolehkan ciri untuk mengemukakan artikel dari jenis 'ke depan' daripada tiket master kepada pelanggan tiket slave. Secara default (dilumpuhkan) ia tidak akan mengemukakan artikel dari jenis 'ke depan' untuk tiket slave."
+msgstr ""
 
 #. SysConfig
 msgid ""
-"Enable the feature to keep parent-child link after change of the MasterSlave"
+"Enables the feature to keep parent-child link after change of the "
+"MasterSlave state in the advanced MasterSlave mode."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Enables the feature to keep parent-child link after unset of the MasterSlave"
 " state in the advanced MasterSlave mode."
-msgstr "Membolehkan ciri untuk menyimpan pautan ibu bapa dan anak selepas perubahan keadaan MasterSlave dalam mod MasterSlave maju."
+msgstr ""
 
 #. SysConfig
 msgid ""
-"Enable the feature to keep parent-child link after unset of the MasterSlave "
-"state in the advanced MasterSlave mode."
-msgstr "Membolehkan ciri untuk menyimpan pautan ibu bapa dan anak selepas tanpa ditetapkan keadaan MasterSlave dalam mod MasterSlave maju."
-
-#. SysConfig
-msgid ""
-"Enable the feature to unset the MasterSlave state of a ticket in the "
+"Enables the feature to unset the MasterSlave state of a ticket in the "
 "advanced MasterSlave mode."
-msgstr "Membolehkan ciri untuk tidak menetapkan keadaan MasterSlave bagi tiket dalam mod MasterSlave maju."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -178,6 +202,14 @@ msgstr "Jika nota ditambah oleh ejen, tetapkan keadaan tiket dalam skrin MasterS
 #. SysConfig
 msgid "Master / Slave"
 msgstr "Master / Slave"
+
+#. SysConfig
+msgid "Master Tickets"
+msgstr ""
+
+#. SysConfig
+msgid "MasterSlave"
+msgstr ""
 
 #. SysConfig
 msgid "MasterSlave module for Ticket Bulk feature."
@@ -281,6 +313,10 @@ msgid ""
 msgstr "Menunjukkan bidang tajuk dalam skrin MasterSlave tiket tiket dizum dalam antara muka ejen."
 
 #. SysConfig
+msgid "Slave Tickets"
+msgstr ""
+
+#. SysConfig
 msgid ""
 "Specifies the different article types where the real name from Master ticket"
 " will be replaced with the one in the Slave ticket."
@@ -291,3 +327,7 @@ msgid ""
 "This module activates Master/Slave field in new email and phone ticket "
 "screens."
 msgstr "Modul ini mengaktifkan medan Master/Slave di skrin emel dan tiket telefon baru."
+
+#. SysConfig
+msgid "Ticket MasterSlave."
+msgstr ""
