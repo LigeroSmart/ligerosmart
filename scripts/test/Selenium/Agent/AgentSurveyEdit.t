@@ -6,6 +6,7 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
+## no critic (Modules::RequireExplicitPackage)
 use strict;
 use warnings;
 use utf8;
@@ -26,7 +27,7 @@ $Selenium->RunTest(
         );
         my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 
-        # get sysconfig object
+        # get SysConfig object
         my $SysConfigObject = $Kernel::OM->Get('Kernel::System::SysConfig');
 
         # do not check RichText
@@ -77,7 +78,7 @@ $Selenium->RunTest(
         $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentSurveyZoom;SurveyID=$SurveyID");
 
         # click on 'Edit General Info' and switch screen
-        $Selenium->find_element( "#Menu010-EditGeneralInfo", 'css' )->click();
+        $Selenium->find_element( "#Menu010-EditGeneralInfo", 'css' )->VerifiedClick();
 
         $Selenium->WaitFor( WindowCount => 2 );
         my $Handles = $Selenium->get_window_handles();
@@ -140,7 +141,7 @@ $Selenium->RunTest(
         $Selenium->switch_to_window( $Handles->[0] );
 
         # click on 'Edit General Info' again and switch window
-        $Selenium->find_element( "#Menu010-EditGeneralInfo", 'css' )->click();
+        $Selenium->find_element( "#Menu010-EditGeneralInfo", 'css' )->VerifiedClick();
 
         $Selenium->WaitFor( WindowCount => 2 );
         $Handles = $Selenium->get_window_handles();

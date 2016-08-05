@@ -6,6 +6,7 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
+## no critic (Modules::RequireExplicitPackage)
 use strict;
 use warnings;
 use utf8;
@@ -56,7 +57,7 @@ $Selenium->RunTest(
         $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentSurveyZoom;SurveyID=$SurveyID");
 
         # click on 'Edit Questions' and switch screen
-        $Selenium->find_element( "#Menu020-EditQuestions", 'css' )->click();
+        $Selenium->find_element( "#Menu020-EditQuestions", 'css' )->VerifiedClick();
 
         $Selenium->WaitFor( WindowCount => 2 );
         my $Handles = $Selenium->get_window_handles();
@@ -110,7 +111,7 @@ $Selenium->RunTest(
             );
             $Selenium->find_element("//button[\@value='Add'][\@type='submit']")->VerifiedClick();
 
-            # add answers for radio and checkbox questions
+            # add answers for radio and check-box questions
             if (
                 $Questions->{Name} eq 'RadioQuestion'
                 || $Questions->{Name} eq 'CheckboxQuestion'
@@ -156,7 +157,7 @@ JAVASCRIPT
             $Selenium->execute_script($CheckConfirmJS);
 
             # delete test question
-            $Selenium->find_element( ".QuestionDelete", 'css' )->click();
+            $Selenium->find_element( ".QuestionDelete", 'css' )->VerifiedClick();
             $Selenium->WaitFor( JavaScript => 'return $(".Dialog:visible").length === 0;' );
 
             $Self->True(

@@ -6,6 +6,7 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
+## no critic (Modules::RequireExplicitPackage)
 use strict;
 use warnings;
 use utf8;
@@ -150,7 +151,7 @@ $Selenium->RunTest(
         $Selenium->VerifiedGet("${ScriptAlias}public.pl?Action=PublicSurvey;PublicSurveyKey=$PublicSurveyKey");
 
         # select yes as answer
-        $Selenium->find_element("//input[\@value='Yes'][\@type='radio']")->click();
+        $Selenium->find_element("//input[\@value='Yes'][\@type='radio']")->VerifiedClick();
         $Selenium->find_element("//button[\@value='Finish'][\@type='submit']")->VerifiedClick();
 
         # create test user and login
@@ -168,7 +169,7 @@ $Selenium->RunTest(
         $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentSurveyZoom;SurveyID=$SurveyID");
 
         # click on 'Stats Details' and switch window
-        $Selenium->find_element( "#Menu030-StatsDetails", 'css' )->click();
+        $Selenium->find_element( "#Menu030-StatsDetails", 'css' )->VerifiedClick();
 
         $Selenium->WaitFor( WindowCount => 2 );
         my $Handles = $Selenium->get_window_handles();
