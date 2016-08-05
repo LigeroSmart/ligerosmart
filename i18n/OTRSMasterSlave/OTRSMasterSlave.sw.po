@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2016-01-14 04:23+0000\n"
+"POT-Creation-Date: 2016-08-05 13:19+0000\n"
+"PO-Revision-Date: 2016-08-05 18:20+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Swahili (http://www.transifex.com/otrs/OTRS/language/sw/)\n"
 "MIME-Version: 1.0\n"
@@ -16,51 +16,43 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. Template: AgentTicketMasterSlave
-msgid "Change Free Text of Ticket"
-msgstr "Badili matini huru kwa ajili ya tiketi"
+msgid "Change Free Text of %s%s"
+msgstr ""
 
 #. Template: AgentTicketMasterSlave
-msgid "Change Owner of Ticket"
-msgstr "Badili mmiliki wa tiketi"
+msgid "Change Owner of %s%s"
+msgstr ""
 
 #. Template: AgentTicketMasterSlave
-msgid "Close Ticket"
-msgstr "Funga tiketi"
+msgid "Close %s%s"
+msgstr ""
 
 #. Template: AgentTicketMasterSlave
-msgid "Add Note to Ticket"
-msgstr "Ongeza kidokezo katika tiketi "
+msgid "Add Note to %s%s"
+msgstr ""
 
 #. Template: AgentTicketMasterSlave
-msgid "Set Pending"
-msgstr "Weka kusubiri"
+msgid "Set Pending Time for %s%s"
+msgstr ""
 
 #. Template: AgentTicketMasterSlave
-msgid "Change Priority of Ticket"
-msgstr "Badili kipaumbele cha tiketi."
+msgid "Change Priority of %s%s"
+msgstr ""
 
 #. Template: AgentTicketMasterSlave
-msgid "Change Responsible of Ticket"
-msgstr "Badili uhusika wa tiketi."
+msgid "Change Responsible of %s%s"
+msgstr ""
 
 #. Template: AgentTicketMasterSlave
-msgid "Manage Master/Slave"
-msgstr "Simamia Mkuu/mtumwa"
+msgid "Manage Master/Slave status for %s%s"
+msgstr ""
 
 #. Template: AgentTicketMasterSlave
 msgid "Set Master/Slave Value"
 msgstr ""
 
 #. Template: AgentTicketMasterSlave
-msgid "Optional"
-msgstr "Ya hiari"
-
-#. Template: AgentTicketMasterSlave
-msgid "Inform involved Agents"
-msgstr "Taarifu mawakala wanaohusika"
-
-#. Template: AgentTicketMasterSlave
-msgid "Note will be (also) received by:"
+msgid "Text will also be received by:"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm

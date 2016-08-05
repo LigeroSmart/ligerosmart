@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2016-01-14 04:23+0000\n"
+"POT-Creation-Date: 2016-08-05 13:19+0000\n"
+"PO-Revision-Date: 2016-08-05 18:20+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Hungarian (http://www.transifex.com/otrs/OTRS/language/hu/)\n"
 "MIME-Version: 1.0\n"
@@ -15,52 +15,44 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. Template: AgentTicketMasterSlave
-msgid "Change Free Text of Ticket"
-msgstr "Jegy szabad szövegének módosítása"
+msgid "Change Free Text of %s%s"
+msgstr ""
 
 #. Template: AgentTicketMasterSlave
-msgid "Change Owner of Ticket"
-msgstr "Jegy tulajdonosának módosítása"
+msgid "Change Owner of %s%s"
+msgstr ""
 
 #. Template: AgentTicketMasterSlave
-msgid "Close Ticket"
-msgstr "Jegy lezárása"
+msgid "Close %s%s"
+msgstr ""
 
 #. Template: AgentTicketMasterSlave
-msgid "Add Note to Ticket"
-msgstr "Jegyzet hozzáadása a jegyhez"
+msgid "Add Note to %s%s"
+msgstr ""
 
 #. Template: AgentTicketMasterSlave
-msgid "Set Pending"
-msgstr "Várakozás beállítása"
+msgid "Set Pending Time for %s%s"
+msgstr ""
 
 #. Template: AgentTicketMasterSlave
-msgid "Change Priority of Ticket"
-msgstr "Jegy prioritásának módosítása"
+msgid "Change Priority of %s%s"
+msgstr ""
 
 #. Template: AgentTicketMasterSlave
-msgid "Change Responsible of Ticket"
-msgstr "Jegy felelősének módosítása"
+msgid "Change Responsible of %s%s"
+msgstr ""
 
 #. Template: AgentTicketMasterSlave
-msgid "Manage Master/Slave"
-msgstr "Mester/alárendelt kezelése"
+msgid "Manage Master/Slave status for %s%s"
+msgstr ""
 
 #. Template: AgentTicketMasterSlave
 msgid "Set Master/Slave Value"
 msgstr "Mester/alárendelt érték beállítása"
 
 #. Template: AgentTicketMasterSlave
-msgid "Optional"
-msgstr "Opcionális"
-
-#. Template: AgentTicketMasterSlave
-msgid "Inform involved Agents"
-msgstr "Részt vevő ügyintézők értesítése"
-
-#. Template: AgentTicketMasterSlave
-msgid "Note will be (also) received by:"
-msgstr "Jegyzet (is) fogadásra kerül ettől:"
+msgid "Text will also be received by:"
+msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
 msgid "New Master Ticket"

@@ -16,18 +16,16 @@ sub Data {
     my $Self = shift;
 
     # Template: AgentTicketMasterSlave
-    $Self->{Translation}->{'Change Free Text of Ticket'} = 'Промени слободан текст тикета';
-    $Self->{Translation}->{'Change Owner of Ticket'} = 'Промени власника тикета';
-    $Self->{Translation}->{'Close Ticket'} = 'Затвори тикет';
-    $Self->{Translation}->{'Add Note to Ticket'} = 'Додај напомену уз тикет';
-    $Self->{Translation}->{'Set Pending'} = 'Стави на чекање';
-    $Self->{Translation}->{'Change Priority of Ticket'} = 'Промени приоритет тикета';
-    $Self->{Translation}->{'Change Responsible of Ticket'} = 'Промени одговорног за тикет';
-    $Self->{Translation}->{'Manage Master/Slave'} = 'Управљање Главни/Зависни';
-    $Self->{Translation}->{'Set Master/Slave Value'} = 'Подеси Главни/Зависни вредност';
-    $Self->{Translation}->{'Optional'} = 'Опциони';
-    $Self->{Translation}->{'Inform involved Agents'} = 'Обавести релевантне оператере';
-    $Self->{Translation}->{'Note will be (also) received by:'} = 'Напомену ће (такође) примити:';
+    $Self->{Translation}->{'Change Free Text of %s%s'} = '';
+    $Self->{Translation}->{'Change Owner of %s%s'} = '';
+    $Self->{Translation}->{'Close %s%s'} = '';
+    $Self->{Translation}->{'Add Note to %s%s'} = '';
+    $Self->{Translation}->{'Set Pending Time for %s%s'} = '';
+    $Self->{Translation}->{'Change Priority of %s%s'} = '';
+    $Self->{Translation}->{'Change Responsible of %s%s'} = '';
+    $Self->{Translation}->{'Manage Master/Slave status for %s%s'} = '';
+    $Self->{Translation}->{'Set Master/Slave Value'} = 'Подеси вредност Главни/Зависни ';
+    $Self->{Translation}->{'Text will also be received by:'} = '';
 
     # Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
     $Self->{Translation}->{'New Master Ticket'} = 'Нови главни тикет';
@@ -37,7 +35,7 @@ sub Data {
 
     # SysConfig
     $Self->{Translation}->{'Allows adding notes in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
-        'Дозволи додавање белешки на Главни/Зависни екрану детаљног приказа тикета оператерског интерфејса.';
+        'Дозвољава додавање белешки на Главни/Зависни екрану детаљног приказа тикета оператерског интерфејса.';
     $Self->{Translation}->{'Change the MasterSlave state of the ticket.'} = 'Промени Главни/Зависни статус тикета.';
     $Self->{Translation}->{'Define dynamic field name for master ticket feature.'} = 'Дефинише динамички назив поља за функцију Главног тикета.';
     $Self->{Translation}->{'Defines if a ticket lock is required in the ticket MasterSlave screen of a zoomed ticket in the agent interface (if the ticket isn\'t locked yet, the ticket gets locked and the current agent will be set automatically as its owner).'} =

@@ -16,18 +16,16 @@ sub Data {
     my $Self = shift;
 
     # Template: AgentTicketMasterSlave
-    $Self->{Translation}->{'Change Free Text of Ticket'} = 'Jegy szabad szövegének módosítása';
-    $Self->{Translation}->{'Change Owner of Ticket'} = 'Jegy tulajdonosának módosítása';
-    $Self->{Translation}->{'Close Ticket'} = 'Jegy lezárása';
-    $Self->{Translation}->{'Add Note to Ticket'} = 'Jegyzet hozzáadása a jegyhez';
-    $Self->{Translation}->{'Set Pending'} = 'Várakozás beállítása';
-    $Self->{Translation}->{'Change Priority of Ticket'} = 'Jegy prioritásának módosítása';
-    $Self->{Translation}->{'Change Responsible of Ticket'} = 'Jegy felelősének módosítása';
-    $Self->{Translation}->{'Manage Master/Slave'} = 'Mester/alárendelt kezelése';
+    $Self->{Translation}->{'Change Free Text of %s%s'} = '';
+    $Self->{Translation}->{'Change Owner of %s%s'} = '';
+    $Self->{Translation}->{'Close %s%s'} = '';
+    $Self->{Translation}->{'Add Note to %s%s'} = '';
+    $Self->{Translation}->{'Set Pending Time for %s%s'} = '';
+    $Self->{Translation}->{'Change Priority of %s%s'} = '';
+    $Self->{Translation}->{'Change Responsible of %s%s'} = '';
+    $Self->{Translation}->{'Manage Master/Slave status for %s%s'} = '';
     $Self->{Translation}->{'Set Master/Slave Value'} = 'Mester/alárendelt érték beállítása';
-    $Self->{Translation}->{'Optional'} = 'Opcionális';
-    $Self->{Translation}->{'Inform involved Agents'} = 'Részt vevő ügyintézők értesítése';
-    $Self->{Translation}->{'Note will be (also) received by:'} = 'Jegyzet (is) fogadásra kerül ettől:';
+    $Self->{Translation}->{'Text will also be received by:'} = '';
 
     # Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
     $Self->{Translation}->{'New Master Ticket'} = 'Új mesterjegy';

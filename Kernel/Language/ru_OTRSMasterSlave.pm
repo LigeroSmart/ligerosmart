@@ -16,18 +16,16 @@ sub Data {
     my $Self = shift;
 
     # Template: AgentTicketMasterSlave
-    $Self->{Translation}->{'Change Free Text of Ticket'} = 'Изменить свободный текст заявки';
-    $Self->{Translation}->{'Change Owner of Ticket'} = 'Изменить владельца заявки';
-    $Self->{Translation}->{'Close Ticket'} = 'Закрыть заявку';
-    $Self->{Translation}->{'Add Note to Ticket'} = 'Добавить заметку к заявке';
-    $Self->{Translation}->{'Set Pending'} = 'Поставить в ожидание';
-    $Self->{Translation}->{'Change Priority of Ticket'} = 'Изменить приоритет заявки';
-    $Self->{Translation}->{'Change Responsible of Ticket'} = 'Изменить ответственного заявки';
-    $Self->{Translation}->{'Manage Master/Slave'} = 'Управление Master/Slave';
+    $Self->{Translation}->{'Change Free Text of %s%s'} = '';
+    $Self->{Translation}->{'Change Owner of %s%s'} = '';
+    $Self->{Translation}->{'Close %s%s'} = '';
+    $Self->{Translation}->{'Add Note to %s%s'} = '';
+    $Self->{Translation}->{'Set Pending Time for %s%s'} = '';
+    $Self->{Translation}->{'Change Priority of %s%s'} = '';
+    $Self->{Translation}->{'Change Responsible of %s%s'} = '';
+    $Self->{Translation}->{'Manage Master/Slave status for %s%s'} = '';
     $Self->{Translation}->{'Set Master/Slave Value'} = 'Установить значение Master/Slave';
-    $Self->{Translation}->{'Optional'} = 'Необязательно';
-    $Self->{Translation}->{'Inform involved Agents'} = 'Уведомить участвующих агентов';
-    $Self->{Translation}->{'Note will be (also) received by:'} = 'Сообщение будет (также) получено:';
+    $Self->{Translation}->{'Text will also be received by:'} = '';
 
     # Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
     $Self->{Translation}->{'New Master Ticket'} = 'Новая Master заявка';

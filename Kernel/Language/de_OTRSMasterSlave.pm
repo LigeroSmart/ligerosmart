@@ -16,18 +16,16 @@ sub Data {
     my $Self = shift;
 
     # Template: AgentTicketMasterSlave
-    $Self->{Translation}->{'Change Free Text of Ticket'} = 'Den "freien" Text des Tickets ändern';
-    $Self->{Translation}->{'Change Owner of Ticket'} = 'Den Besitzer des Tickets ändern';
-    $Self->{Translation}->{'Close Ticket'} = 'Ticket schließen';
-    $Self->{Translation}->{'Add Note to Ticket'} = 'Bemerkung zum Ticket hinzufügen';
-    $Self->{Translation}->{'Set Pending'} = 'Setze wartend';
-    $Self->{Translation}->{'Change Priority of Ticket'} = 'Ändern der Ticket-Priorität';
-    $Self->{Translation}->{'Change Responsible of Ticket'} = 'Ändern der Ticket-Verantwortlichen';
-    $Self->{Translation}->{'Manage Master/Slave'} = 'Master/Slave verwalten';
+    $Self->{Translation}->{'Change Free Text of %s%s'} = '';
+    $Self->{Translation}->{'Change Owner of %s%s'} = '';
+    $Self->{Translation}->{'Close %s%s'} = '';
+    $Self->{Translation}->{'Add Note to %s%s'} = '';
+    $Self->{Translation}->{'Set Pending Time for %s%s'} = '';
+    $Self->{Translation}->{'Change Priority of %s%s'} = '';
+    $Self->{Translation}->{'Change Responsible of %s%s'} = '';
+    $Self->{Translation}->{'Manage Master/Slave status for %s%s'} = '';
     $Self->{Translation}->{'Set Master/Slave Value'} = 'Master/Slave Wert festlegen';
-    $Self->{Translation}->{'Optional'} = 'Optional';
-    $Self->{Translation}->{'Inform involved Agents'} = 'Involvierte Agenten informieren';
-    $Self->{Translation}->{'Note will be (also) received by:'} = 'Die Notiz wird (auch) gesendet an:';
+    $Self->{Translation}->{'Text will also be received by:'} = '';
 
     # Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
     $Self->{Translation}->{'New Master Ticket'} = 'Neues Master Ticket';

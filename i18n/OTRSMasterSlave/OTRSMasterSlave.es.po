@@ -2,11 +2,13 @@
 # Translators:
 # Camilo ochoa <ceochoa@misena.edu.co>, 2015
 # Duilio Poggi Oneto <duiliopoggio@gmail.com>, 2015
+# juanman <juanma@gnutn.org.ar>, 2016
+# Luigy, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2016-01-14 04:23+0000\n"
+"POT-Creation-Date: 2016-08-05 13:19+0000\n"
+"PO-Revision-Date: 2016-08-05 18:20+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/otrs/OTRS/language/es/)\n"
 "MIME-Version: 1.0\n"
@@ -16,68 +18,60 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. Template: AgentTicketMasterSlave
-msgid "Change Free Text of Ticket"
-msgstr "Cambiar el texto libre del ticket"
+msgid "Change Free Text of %s%s"
+msgstr ""
 
 #. Template: AgentTicketMasterSlave
-msgid "Change Owner of Ticket"
-msgstr "Cambiar el propietario del ticket"
+msgid "Change Owner of %s%s"
+msgstr ""
 
 #. Template: AgentTicketMasterSlave
-msgid "Close Ticket"
-msgstr "Cerrar el ticket"
+msgid "Close %s%s"
+msgstr ""
 
 #. Template: AgentTicketMasterSlave
-msgid "Add Note to Ticket"
-msgstr "Añadir una nota al ticket"
+msgid "Add Note to %s%s"
+msgstr ""
 
 #. Template: AgentTicketMasterSlave
-msgid "Set Pending"
-msgstr "Establecer como pendiente"
+msgid "Set Pending Time for %s%s"
+msgstr ""
 
 #. Template: AgentTicketMasterSlave
-msgid "Change Priority of Ticket"
-msgstr "Cambiar la prioridad del ticket"
+msgid "Change Priority of %s%s"
+msgstr ""
 
 #. Template: AgentTicketMasterSlave
-msgid "Change Responsible of Ticket"
-msgstr "Cambiar el responsable del ticket"
+msgid "Change Responsible of %s%s"
+msgstr ""
 
 #. Template: AgentTicketMasterSlave
-msgid "Manage Master/Slave"
-msgstr "Gestión Maestro/Escalvo"
+msgid "Manage Master/Slave status for %s%s"
+msgstr ""
 
 #. Template: AgentTicketMasterSlave
 msgid "Set Master/Slave Value"
+msgstr "Establecer valor Maestro/Esclavo"
+
+#. Template: AgentTicketMasterSlave
+msgid "Text will also be received by:"
 msgstr ""
-
-#. Template: AgentTicketMasterSlave
-msgid "Optional"
-msgstr "Opcional"
-
-#. Template: AgentTicketMasterSlave
-msgid "Inform involved Agents"
-msgstr "Informar a los agentes involucrados"
-
-#. Template: AgentTicketMasterSlave
-msgid "Note will be (also) received by:"
-msgstr "La nota será recibida (también) por:"
 
 #. Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
 msgid "New Master Ticket"
-msgstr ""
+msgstr "Nuevo ticket maestro"
 
 #. Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
 msgid "Unset Master Ticket"
-msgstr ""
+msgstr "Desactivar ticket maestro"
 
 #. Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
 msgid "Unset Slave Ticket"
-msgstr ""
+msgstr "Desactivar ticket esclavo"
 
 #. Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
 msgid "Slave of Ticket#"
-msgstr ""
+msgstr "Esclavo del Ticket#"
 
 #. SysConfig
 msgid ""
@@ -170,7 +164,7 @@ msgstr ""
 msgid ""
 "Enable the feature to keep parent-child link after unset of the MasterSlave "
 "state in the advanced MasterSlave mode."
-msgstr ""
+msgstr "Habilitar la funcion Maestro-Esclavo para mantener el vínculo padre-hijo después de desactivar la opcion de estado Maestro-Esclavo el las opciones avanzadas del modo Maestro-Esclavo"
 
 #. SysConfig
 msgid ""
@@ -186,11 +180,11 @@ msgstr "Si una nota es añadida por un agente, fija el estado del ticket en en l
 
 #. SysConfig
 msgid "Master / Slave"
-msgstr ""
+msgstr "Maestro / Esclavo"
 
 #. SysConfig
 msgid "MasterSlave module for Ticket Bulk feature."
-msgstr ""
+msgstr "Módulo Esclavo Maestro para mayor características de entradas."
 
 #. SysConfig
 msgid ""
@@ -299,4 +293,4 @@ msgstr "Especificar los diferentes tipos de artículos donde el verdadero nombre
 msgid ""
 "This module activates Master/Slave field in new email and phone ticket "
 "screens."
-msgstr ""
+msgstr "Este módulo activa el campo Maestro-Esclavo en la pantalla de un nuevo tique de email o de teléfono."

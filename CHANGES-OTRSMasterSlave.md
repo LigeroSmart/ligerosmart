@@ -1,4 +1,9 @@
 #5.0.3 2016-??-??
+ - 2016-08-05 Added Chinese translation, thanks to all translators.
+ - 2016-08-05 Added Thai translation, thanks to all translators.
+ - 2016-08-05 Added Malay translation, thanks to all translators.
+ - 2016-08-05 Added Japanese translation, thanks to all translators.
+ - 2016-08-05 Updated translations, thanks to all translators.
  - 2016-04-06 Updated to match OTRS 5.0.9.
 
 #5.0.2 2016-01-19

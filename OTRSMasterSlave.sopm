@@ -15,10 +15,14 @@
         <File Permission="644" Location="Kernel/Language/es_OTRSMasterSlave.pm"/>
         <File Permission="644" Location="Kernel/Language/es_MX_OTRSMasterSlave.pm"/>
         <File Permission="644" Location="Kernel/Language/hu_OTRSMasterSlave.pm"/>
+        <File Permission="644" Location="Kernel/Language/ja_OTRSMasterSlave.pm"/>
+        <File Permission="644" Location="Kernel/Language/ms_OTRSMasterSlave.pm"/>
         <File Permission="644" Location="Kernel/Language/pt_BR_OTRSMasterSlave.pm"/>
         <File Permission="644" Location="Kernel/Language/ru_OTRSMasterSlave.pm"/>
         <File Permission="644" Location="Kernel/Language/sr_Cyrl_OTRSMasterSlave.pm"/>
         <File Permission="644" Location="Kernel/Language/sw_OTRSMasterSlave.pm"/>
+        <File Permission="644" Location="Kernel/Language/th_TH_OTRSMasterSlave.pm"/>
+        <File Permission="644" Location="Kernel/Language/zh_CN_OTRSMasterSlave.pm"/>
         <File Permission="644" Location="Kernel/Modules/AdminDynamicFieldMasterSlave.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentPreMasterSlave.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentTicketMasterSlave.pm"/>

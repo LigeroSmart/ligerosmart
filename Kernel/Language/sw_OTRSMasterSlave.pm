@@ -16,18 +16,16 @@ sub Data {
     my $Self = shift;
 
     # Template: AgentTicketMasterSlave
-    $Self->{Translation}->{'Change Free Text of Ticket'} = 'Badili matini huru kwa ajili ya tiketi';
-    $Self->{Translation}->{'Change Owner of Ticket'} = 'Badili mmiliki wa tiketi';
-    $Self->{Translation}->{'Close Ticket'} = 'Funga tiketi';
-    $Self->{Translation}->{'Add Note to Ticket'} = 'Ongeza kidokezo katika tiketi ';
-    $Self->{Translation}->{'Set Pending'} = 'Weka kusubiri';
-    $Self->{Translation}->{'Change Priority of Ticket'} = 'Badili kipaumbele cha tiketi.';
-    $Self->{Translation}->{'Change Responsible of Ticket'} = 'Badili uhusika wa tiketi.';
-    $Self->{Translation}->{'Manage Master/Slave'} = 'Simamia Mkuu/mtumwa';
+    $Self->{Translation}->{'Change Free Text of %s%s'} = '';
+    $Self->{Translation}->{'Change Owner of %s%s'} = '';
+    $Self->{Translation}->{'Close %s%s'} = '';
+    $Self->{Translation}->{'Add Note to %s%s'} = '';
+    $Self->{Translation}->{'Set Pending Time for %s%s'} = '';
+    $Self->{Translation}->{'Change Priority of %s%s'} = '';
+    $Self->{Translation}->{'Change Responsible of %s%s'} = '';
+    $Self->{Translation}->{'Manage Master/Slave status for %s%s'} = '';
     $Self->{Translation}->{'Set Master/Slave Value'} = '';
-    $Self->{Translation}->{'Optional'} = 'Ya hiari';
-    $Self->{Translation}->{'Inform involved Agents'} = 'Taarifu mawakala wanaohusika';
-    $Self->{Translation}->{'Note will be (also) received by:'} = '';
+    $Self->{Translation}->{'Text will also be received by:'} = '';
 
     # Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
     $Self->{Translation}->{'New Master Ticket'} = '';

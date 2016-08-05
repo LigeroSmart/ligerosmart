@@ -1,11 +1,11 @@
 # 
 # Translators:
-# Милорад Јовановић <j.milorad@gmail.com>, 2014-2015
+# Милорад Јовановић <j.milorad@gmail.com>, 2014-2016
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2016-01-14 04:23+0000\n"
+"POT-Creation-Date: 2016-08-05 13:19+0000\n"
+"PO-Revision-Date: 2016-08-05 18:20+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Serbian (http://www.transifex.com/otrs/OTRS/language/sr/)\n"
 "MIME-Version: 1.0\n"
@@ -15,52 +15,44 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #. Template: AgentTicketMasterSlave
-msgid "Change Free Text of Ticket"
-msgstr "Промени слободан текст тикета"
+msgid "Change Free Text of %s%s"
+msgstr ""
 
 #. Template: AgentTicketMasterSlave
-msgid "Change Owner of Ticket"
-msgstr "Промени власника тикета"
+msgid "Change Owner of %s%s"
+msgstr ""
 
 #. Template: AgentTicketMasterSlave
-msgid "Close Ticket"
-msgstr "Затвори тикет"
+msgid "Close %s%s"
+msgstr ""
 
 #. Template: AgentTicketMasterSlave
-msgid "Add Note to Ticket"
-msgstr "Додај напомену уз тикет"
+msgid "Add Note to %s%s"
+msgstr ""
 
 #. Template: AgentTicketMasterSlave
-msgid "Set Pending"
-msgstr "Стави на чекање"
+msgid "Set Pending Time for %s%s"
+msgstr ""
 
 #. Template: AgentTicketMasterSlave
-msgid "Change Priority of Ticket"
-msgstr "Промени приоритет тикета"
+msgid "Change Priority of %s%s"
+msgstr ""
 
 #. Template: AgentTicketMasterSlave
-msgid "Change Responsible of Ticket"
-msgstr "Промени одговорног за тикет"
+msgid "Change Responsible of %s%s"
+msgstr ""
 
 #. Template: AgentTicketMasterSlave
-msgid "Manage Master/Slave"
-msgstr "Управљање Главни/Зависни"
+msgid "Manage Master/Slave status for %s%s"
+msgstr ""
 
 #. Template: AgentTicketMasterSlave
 msgid "Set Master/Slave Value"
-msgstr "Подеси Главни/Зависни вредност"
+msgstr "Подеси вредност Главни/Зависни "
 
 #. Template: AgentTicketMasterSlave
-msgid "Optional"
-msgstr "Опциони"
-
-#. Template: AgentTicketMasterSlave
-msgid "Inform involved Agents"
-msgstr "Обавести релевантне оператере"
-
-#. Template: AgentTicketMasterSlave
-msgid "Note will be (also) received by:"
-msgstr "Напомену ће (такође) примити:"
+msgid "Text will also be received by:"
+msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
 msgid "New Master Ticket"
@@ -82,7 +74,7 @@ msgstr "Зависни од Тикет#"
 msgid ""
 "Allows adding notes in the ticket MasterSlave screen of a zoomed ticket in "
 "the agent interface."
-msgstr "Дозволи додавање белешки на Главни/Зависни екрану детаљног приказа тикета оператерског интерфејса."
+msgstr "Дозвољава додавање белешки на Главни/Зависни екрану детаљног приказа тикета оператерског интерфејса."
 
 #. SysConfig
 msgid "Change the MasterSlave state of the ticket."
