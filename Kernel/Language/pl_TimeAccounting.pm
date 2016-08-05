@@ -196,7 +196,7 @@ sub Data {
     $Self->{Translation}->{'User updated!'} = '';
     $Self->{Translation}->{'User added!'} = '';
     $Self->{Translation}->{'New User'} = 'Nowy Użytkownik';
-    $Self->{Translation}->{'Period Status'} = 'Status cyklu';
+    $Self->{Translation}->{'Period Status'} = 'Stan cyklu';
 
     # Perl Module: Kernel/Modules/AgentTimeAccountingView.pm
     $Self->{Translation}->{'View: Need %s!'} = '';
@@ -215,9 +215,9 @@ sub Data {
     $Self->{Translation}->{'Default setting for leave days.'} = 'Domyślne konfiguracja urlopu.';
     $Self->{Translation}->{'Default setting for overtime.'} = 'Domyślne konfiguracja godzin nadliczbowych.';
     $Self->{Translation}->{'Default setting for the standard weekly hours.'} = 'Domyślna konfiguracja tygodniowego czasu pracy.';
-    $Self->{Translation}->{'Default status for new actions.'} = 'Domyślny status nowych czynności.';
-    $Self->{Translation}->{'Default status for new projects.'} = 'Domyślny status nowych projektów.';
-    $Self->{Translation}->{'Default status for new users.'} = 'Domyślny status nowych użytkowników.';
+    $Self->{Translation}->{'Default status for new actions.'} = 'Domyślny stan nowych czynności.';
+    $Self->{Translation}->{'Default status for new projects.'} = 'Domyślny stan nowych projektów.';
+    $Self->{Translation}->{'Default status for new users.'} = 'Domyślny stan nowych użytkowników.';
     $Self->{Translation}->{'Defines the projects for which a remark is required. If the RegExp matches on the project, you have to insert a remark too. The RegExp use the smx parameter.'} =
         'Określa projekty, które wymagają dodawania komentarzy. Jeżeli wyrażenie regularne pasuje do projektu, trzeba dodać komentarz. Wyrażenia regularne korzystają z parametrów serwera makr (SMX).';
     $Self->{Translation}->{'Determines if the statistics module may generate time accounting information.'} =

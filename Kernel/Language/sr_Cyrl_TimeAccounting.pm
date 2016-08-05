@@ -33,7 +33,7 @@ sub Data {
         'Молимо Вас изаберите разлог вашег одсуства за изабране дане';
     $Self->{Translation}->{'On vacation'} = 'На одмору';
     $Self->{Translation}->{'On sick leave'} = 'На боловању';
-    $Self->{Translation}->{'On overtime leave'} = 'Слободни дани';
+    $Self->{Translation}->{'On overtime leave'} = 'На слободним данима';
     $Self->{Translation}->{'Please choose at least one day!'} = 'Молимо Вас изаберите бар један дан!';
     $Self->{Translation}->{'Please choose a reason for absence!'} = 'Молимо Вас изаберите разлог вашег одсуства!';
     $Self->{Translation}->{'Mass Entry'} = 'Масовни унос';
@@ -54,7 +54,7 @@ sub Data {
     $Self->{Translation}->{'End time must be after start time.'} = 'Време завршетка мора бити након почетка.';
     $Self->{Translation}->{'Repeated hours are not allowed. End time matches another interval.'} =
         'Понављање сати није дозвољено. Време завршетка се поклапа са другим интервалом.';
-    $Self->{Translation}->{'Invalid period! A day has only 24 hours.'} = 'Неисправан период! Дан има само 24 сата!';
+    $Self->{Translation}->{'Invalid period! A day has only 24 hours.'} = 'Неисправан период! Дан има само 24 сата.';
     $Self->{Translation}->{'A valid period must be greater than zero.'} = 'Исправан период мора бити већи од нуле.';
     $Self->{Translation}->{'Invalid period! Negative periods are not allowed.'} = 'Неисправан период! Негативни периоди нису дозвољени.';
     $Self->{Translation}->{'Add one row'} = 'Додај један ред';
@@ -103,7 +103,7 @@ sub Data {
     $Self->{Translation}->{'Vacation'} = 'Одмор';
     $Self->{Translation}->{'Sick leave'} = 'Боловање';
     $Self->{Translation}->{'Vacation remaining'} = 'Преостао одмор';
-    $Self->{Translation}->{'Project reports'} = 'Извештај о пројектима';
+    $Self->{Translation}->{'Project reports'} = 'Извештаји о пројекту';
 
     # Template: AgentTimeAccountingReportingProject
     $Self->{Translation}->{'Project report'} = 'Извештај о пројекту';
@@ -172,7 +172,7 @@ sub Data {
     $Self->{Translation}->{'Successful insert!'} = 'Успешно додавање!';
     $Self->{Translation}->{'Error while inserting multiple dates!'} = 'Грешка при уносу више датума!';
     $Self->{Translation}->{'Successfully inserted entries for several dates!'} = 'Успешно убачени уноси за више датума!';
-    $Self->{Translation}->{'Entered date was invalid! Date was changed to today.'} = 'Унети датум је неважећи. Датум је промењен на данашњи!';
+    $Self->{Translation}->{'Entered date was invalid! Date was changed to today.'} = 'Унети датум је неважећи! Датум је промењен на данашњи.';
     $Self->{Translation}->{'No time period configured, or the specified date is outside of the defined time periods. Please contact the time accounting admin to update your time periods!'} =
         'Није конфигурисан временски период или је наведени датум ван дефинисаних временских периода. Молимо да контактирате администратора обрачуна времена за ажурирање временских периода!';
     $Self->{Translation}->{'Last Selected Projects'} = 'Последњи изабрани пројекти';
@@ -208,7 +208,7 @@ sub Data {
     $Self->{Translation}->{'Agent interface notification module to see the number of incomplete working days for the user.'} =
         'Модул за обавештавање у интерфејсу оператера који приказује број некомплетних радних дана за корисника.';
     $Self->{Translation}->{'Default name for new actions.'} = 'Подразумевано име нових акција.';
-    $Self->{Translation}->{'Default name for new projects.'} = 'Подразумевано име нових пројеката';
+    $Self->{Translation}->{'Default name for new projects.'} = 'Подразумевано име нових пројеката.';
     $Self->{Translation}->{'Default setting for date end.'} = 'Подразумевано подешавање за датум завршетка.';
     $Self->{Translation}->{'Default setting for date start.'} = 'Подразумевано подешавање за датум почетка.';
     $Self->{Translation}->{'Default setting for description.'} = 'Подразумевано подешавање за опис.';

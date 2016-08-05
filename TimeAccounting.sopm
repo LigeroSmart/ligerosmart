@@ -27,6 +27,7 @@
         <File Permission="644" Location="Kernel/Language/sr_Cyrl_TimeAccounting.pm"/>
         <File Permission="644" Location="Kernel/Language/sv_TimeAccounting.pm"/>
         <File Permission="644" Location="Kernel/Language/sw_TimeAccounting.pm"/>
+        <File Permission="644" Location="Kernel/Language/zh_CN_TimeAccounting.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentTimeAccountingEdit.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentTimeAccountingOverview.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentTimeAccountingReporting.pm"/>

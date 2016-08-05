@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-05-10 12:24+0000\n"
-"PO-Revision-Date: 2016-06-16 16:56+0000\n"
+"POT-Creation-Date: 2016-06-22 16:47+0000\n"
+"PO-Revision-Date: 2016-07-22 18:03+0000\n"
 "Last-Translator: Милорад Јовановић <j.milorad@gmail.com>\n"
 "Language-Team: Serbian (http://www.transifex.com/otrs/OTRS/language/sr/)\n"
 "MIME-Version: 1.0\n"
@@ -69,7 +69,7 @@ msgstr "На боловању"
 
 #. Template: AgentTimeAccountingEdit
 msgid "On overtime leave"
-msgstr "Слободни дани"
+msgstr "На слободним данима"
 
 #. Template: AgentTimeAccountingEdit
 msgid "Please choose at least one day!"
@@ -145,7 +145,7 @@ msgstr "Понављање сати није дозвољено. Време за
 
 #. Template: AgentTimeAccountingEdit
 msgid "Invalid period! A day has only 24 hours."
-msgstr "Неисправан период! Дан има само 24 сата!"
+msgstr "Неисправан период! Дан има само 24 сата."
 
 #. Template: AgentTimeAccountingEdit
 msgid "A valid period must be greater than zero."
@@ -321,7 +321,7 @@ msgstr "Преостао одмор"
 
 #. Template: AgentTimeAccountingReporting
 msgid "Project reports"
-msgstr "Извештај о пројектима"
+msgstr "Извештаји о пројекту"
 
 #. Template: AgentTimeAccountingReportingProject
 msgid "Project report"
@@ -553,7 +553,7 @@ msgstr "Успешно убачени уноси за више датума!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Entered date was invalid! Date was changed to today."
-msgstr "Унети датум је неважећи. Датум је промењен на данашњи!"
+msgstr "Унети датум је неважећи! Датум је промењен на данашњи."
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid ""
@@ -654,7 +654,7 @@ msgstr "Подразумевано име нових акција."
 
 #. SysConfig
 msgid "Default name for new projects."
-msgstr "Подразумевано име нових пројеката"
+msgstr "Подразумевано име нових пројеката."
 
 #. SysConfig
 msgid "Default setting for date end."
