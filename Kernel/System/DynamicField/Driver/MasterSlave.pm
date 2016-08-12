@@ -17,6 +17,7 @@ use base qw(Kernel::System::DynamicField::Driver::BaseSelect);
 
 our @ObjectDependencies = (
     'Kernel::Config',
+    'Kernel::Language',
     'Kernel::Output::HTML::Layout',
     'Kernel::System::DynamicFieldValue',
     'Kernel::System::LinkObject',
@@ -483,6 +484,119 @@ sub _HandleLinks {
     }
 
     return 1;
+}
+
+sub SearchFieldRender {
+    my ( $Self, %Param ) = @_;
+
+    # take config from field config
+    my $FieldConfig = $Param{DynamicFieldConfig}->{Config};
+    my $FieldName   = 'Search_DynamicField_' . $Param{DynamicFieldConfig}->{Name};
+    my $FieldLabel  = $Param{DynamicFieldConfig}->{Label};
+
+    my $Value;
+
+    my @DefaultValue;
+
+    if ( defined $Param{DefaultValue} ) {
+        @DefaultValue = split /;/, $Param{DefaultValue};
+    }
+
+    # set the field value
+    if (@DefaultValue) {
+        $Value = \@DefaultValue;
+    }
+
+    # get the field value, this function is always called after the profile is loaded
+    my $FieldValues = $Self->SearchFieldValueGet(
+        %Param,
+    );
+
+    if ( defined $FieldValues ) {
+        $Value = $FieldValues;
+    }
+
+    # check and set class if necessary
+    my $FieldClass = 'DynamicFieldMultiSelect Modernize';
+
+    # set TreeView class
+    if ( $FieldConfig->{TreeView} ) {
+        $FieldClass .= ' DynamicFieldWithTreeView';
+    }
+
+    my $LanguageObject = $Kernel::OM->Get('Kernel::Language');
+
+    # set PossibleValues (master should be always an option)
+    my $SelectionData = {
+        Master => $LanguageObject->Translate('Master Ticket'),
+    };
+
+    # get historical values from database
+    my $HistoricalValues = $Self->HistoricalValuesGet(%Param);
+
+    my $TicketObject = $Kernel::OM->Get('Kernel::System::Ticket');
+
+    if ( IsHashRefWithData($HistoricalValues) ) {
+
+        # Recreate the display value from the already set tickets.
+        VALUE:
+        for my $ValueKey ( sort keys %{$HistoricalValues} ) {
+
+            if ( $ValueKey =~ m{SlaveOf:(.*)}gmx ) {
+                my $TicketNumber = $1;
+
+                my $TicketID = $TicketObject->TicketIDLookup(
+                    TicketNumber => $TicketNumber,
+                    UserID       => 1,
+                );
+
+                my %Ticket = $TicketObject->TicketGet(
+                    TicketID => $TicketID
+                );
+
+                next VALUE if !%Ticket;
+
+                $HistoricalValues->{$ValueKey} = $LanguageObject->Translate('Slave of Ticket#')
+                    . "$Ticket{TicketNumber}: $Ticket{Title}";
+            }
+        }
+    }
+
+    # add historic values to current values (if they don't exist anymore)
+    if ( IsHashRefWithData($HistoricalValues) ) {
+        for my $Key ( sort keys %{$HistoricalValues} ) {
+            if ( !$SelectionData->{$Key} ) {
+                $SelectionData->{$Key} = $HistoricalValues->{$Key}
+            }
+        }
+    }
+
+    # use PossibleValuesFilter if defined
+    $SelectionData = $Param{PossibleValuesFilter} // $SelectionData;
+
+    my $HTMLString = $Param{LayoutObject}->BuildSelection(
+        Data         => $SelectionData,
+        Name         => $FieldName,
+        SelectedID   => $Value,
+        Translation  => 0,
+        PossibleNone => 0,
+        Class        => $FieldClass,
+        Multiple     => 1,
+        HTMLQuote    => 1,
+    );
+
+    # call EditLabelRender on the common Driver
+    my $LabelString = $Self->EditLabelRender(
+        %Param,
+        FieldName => $FieldName,
+    );
+
+    my $Data = {
+        Field => $HTMLString,
+        Label => $LabelString,
+    };
+
+    return $Data;
 }
 
 1;
