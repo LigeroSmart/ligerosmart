@@ -20,24 +20,16 @@ $Selenium->RunTest(
     sub {
 
         # get helper object
-        $Kernel::OM->ObjectParamAdd(
-            'Kernel::System::UnitTest::Helper' => {
-                RestoreSystemConfiguration => 1,
-            },
-        );
         my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 
-        # get config object
-        my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
-
         # set send period to always send survey
-        $ConfigObject->Set(
+        $Helper->ConfigSettingChange(
             Key   => 'Survey::SendPeriod',
             Value => 0,
         );
 
         # set no send condition check in normal tests
-        $ConfigObject->Set(
+        $Helper->ConfigSettingChange(
             Key   => 'Survey::CheckSendConditionTicketType',
             Value => 0,
         );
@@ -145,7 +137,7 @@ $Selenium->RunTest(
         }
 
         # get script alias
-        my $ScriptAlias = $ConfigObject->Get('ScriptAlias');
+        my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
         # navigate to PublicSurvey of created test survey
         $Selenium->VerifiedGet("${ScriptAlias}public.pl?Action=PublicSurvey;PublicSurveyKey=$PublicSurveyKey");
