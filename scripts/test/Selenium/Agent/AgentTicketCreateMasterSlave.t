@@ -20,50 +20,37 @@ $Selenium->RunTest(
     sub {
 
         # get helper object
-        $Kernel::OM->ObjectParamAdd(
-            'Kernel::System::UnitTest::Helper' => {
-                RestoreSystemConfiguration => 1,
-            },
-        );
         my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 
-        # get SysConfig object
-        my $SysConfigObject = $Kernel::OM->Get('Kernel::System::SysConfig');
-
         # enable the advanced MasterSlave
-        $SysConfigObject->ConfigItemUpdate(
-            Valid => 1,
+        $Helper->ConfigSettingChange(
             Key   => 'MasterSlave::AdvancedEnabled',
-            Value => 1
+            Value => 1,
         );
 
         # do not check RichText
-        $SysConfigObject->ConfigItemUpdate(
-            Valid => 1,
+        $Helper->ConfigSettingChange(
             Key   => 'Frontend::RichText',
-            Value => 0
+            Value => 0,
         );
 
         # do not check service and type
-        $SysConfigObject->ConfigItemUpdate(
-            Valid => 1,
+        $Helper->ConfigSettingChange(
             Key   => 'Ticket::Service',
             Value => 0
         );
-        $SysConfigObject->ConfigItemUpdate(
-            Valid => 1,
+        $Helper->ConfigSettingChange(
             Key   => 'Ticket::Type',
-            Value => 0
+            Value => 0,
         );
-        $SysConfigObject->ConfigItemUpdate(
+        $Helper->ConfigSettingChange(
             Valid => 1,
             Key   => 'CheckEmailAddresses',
-            Value => 0
+            Value => 0,
         );
 
         # do not send emails
-        $SysConfigObject->ConfigItemUpdate(
-            Valid => 1,
+        $Helper->ConfigSettingChange(
             Key   => 'SendmailModule',
             Value => 'Kernel::System::Email::Test',
         );

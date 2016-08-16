@@ -20,55 +20,41 @@ $Selenium->RunTest(
     sub {
 
         # get helper object
-        $Kernel::OM->ObjectParamAdd(
-            'Kernel::System::UnitTest::Helper' => {
-                RestoreSystemConfiguration => 1,
-            },
-        );
         my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 
-        # get SysConfig object
-        my $SysConfigObject = $Kernel::OM->Get('Kernel::System::SysConfig');
-
         # enable the advanced MasterSlave
-        $SysConfigObject->ConfigItemUpdate(
-            Valid => 1,
+        $Helper->ConfigSettingChange(
             Key   => 'MasterSlave::AdvancedEnabled',
             Value => 1,
         );
 
         # enable change the MasterSlave state of a ticket
-        $SysConfigObject->ConfigItemUpdate(
-            Valid => 1,
+        $Helper->ConfigSettingChange(
             Key   => 'MasterSlave::UpdateMasterSlave',
             Value => 1,
         );
 
         # do not check RichText
-        $SysConfigObject->ConfigItemUpdate(
-            Valid => 1,
+        $Helper->ConfigSettingChange(
             Key   => 'Frontend::RichText',
             Value => 0,
         );
 
         # do not send emails
-        $SysConfigObject->ConfigItemUpdate(
-            Valid => 1,
+        $Helper->ConfigSettingChange(
             Key   => 'SendmailModule',
             Value => 'Kernel::System::Email::Test',
         );
 
         # Make sure InvovedAgent and InformAgent are disabled, otherwise it uses part of the visible
         # screen making the submit button not visible and then not click-able
-        $SysConfigObject->ConfigItemUpdate(
-            Valid => 1,
+        $Helper->ConfigSettingChange(
             Key   => 'Ticket::Frontend::AgentTicketMasterSlave###InvolvedAgent',
-            Value => 0
+            Value => 0,
         );
-        $SysConfigObject->ConfigItemUpdate(
-            Valid => 1,
+        $Helper->ConfigSettingChange(
             Key   => 'Ticket::Frontend::AgentTicketMasterSlave###InformAgent',
-            Value => 0
+            Value => 0,
         );
 
         # create test user and login
