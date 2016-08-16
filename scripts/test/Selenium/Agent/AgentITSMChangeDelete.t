@@ -19,18 +19,10 @@ $Selenium->RunTest(
     sub {
 
         # get helper object
-        $Kernel::OM->ObjectParamAdd(
-            'Kernel::System::UnitTest::Helper' => {
-                RestoreSystemConfiguration => 1,
-            },
-        );
         my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 
-        # get sysconfig object
-        my $SysConfigObject = $Kernel::OM->Get('Kernel::System::SysConfig');
-
-        # get change delete menu module default sysconfig
-        my %ChangeDeleteMenu = $SysConfigObject->ConfigItemGet(
+        # get change delete menu module default config
+        my %ChangeDeleteMenu = $Kernel::OM->Get('Kernel::Config')->Get(
             Name    => 'ITSMChange::Frontend::MenuModule###100-ChangeDelete',
             Default => 1,
         );
@@ -39,8 +31,7 @@ $Selenium->RunTest(
         my %ChangeDeleteMenuUpdate = map { $_->{Key} => $_->{Content} }
             grep { defined $_->{Key} } @{ $ChangeDeleteMenu{Setting}->[1]->{Hash}->[1]->{Item} };
 
-        $SysConfigObject->ConfigItemUpdate(
-            Valid => 1,
+        $Helper->ConfigSettingChange(
             Key   => 'ITSMChange::Frontend::MenuModule###100-ChangeDelete',
             Value => \%ChangeDeleteMenuUpdate,
         );
@@ -56,8 +47,7 @@ $Selenium->RunTest(
         );
 
         # set AgentITSMChangeDelete frontend module on valid
-        $SysConfigObject->ConfigItemUpdate(
-            Valid => 1,
+        $Helper->ConfigSettingChange(
             Key   => 'Frontend::Module###AgentITSMChangeDelete',
             Value => \%ChangeDeleteFrontendUpdate,
         );
