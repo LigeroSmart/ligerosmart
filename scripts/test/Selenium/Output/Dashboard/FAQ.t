@@ -20,11 +20,6 @@ $Selenium->RunTest(
     sub {
 
         # get helper object
-        $Kernel::OM->ObjectParamAdd(
-            'Kernel::System::UnitTest::Helper' => {
-                RestoreSystemConfiguration => 1,
-            },
-        );
         my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 
         # set FAQ dashboard SysConfig param
@@ -37,12 +32,11 @@ $Selenium->RunTest(
             },
         );
 
-        # get SysConfig object
-        my $SysConfigObject = $Kernel::OM->Get('Kernel::System::SysConfig');
-
         # set FAQ dashboard modules on default settings
         for my $DefaultSysConfig (@FAQDashboard) {
-            $SysConfigObject->ConfigItemReset(
+
+            # $SysConfigObject->ConfigItem Reset(
+            $Helper->ConfigSettingChange(
                 Name => $DefaultSysConfig->{Name},
             );
         }
@@ -85,14 +79,15 @@ $Selenium->RunTest(
 
             # disable all dashboard plug-ins
             my $Config = $Kernel::OM->Get('Kernel::Config')->Get('DashboardBackend');
-            $SysConfigObject->ConfigItemUpdate(
+            $Helper->ConfigSettingChange(
                 Valid => 0,
                 Key   => 'DashboardBackend',
                 Value => \%$Config,
             );
 
             # enable FAQ dashboard
-            $SysConfigObject->ConfigItemReset(
+            # $SysConfig Object->ConfigItem Reset(
+            $Helper->ConfigSettingChange(
                 Name => $Test->{Name},
             );
 
