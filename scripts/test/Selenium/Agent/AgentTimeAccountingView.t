@@ -20,19 +20,13 @@ $Selenium->RunTest(
     sub {
 
         # get helper object
-        $Kernel::OM->ObjectParamAdd(
-            'Kernel::System::UnitTest::Helper' => {
-                RestoreSystemConfiguration => 1,
-            },
-        );
         my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 
         # get needed object
-        my $SysConfigObject = $Kernel::OM->Get('Kernel::System::SysConfig');
-        my $ConfigObject    = $Kernel::OM->Get('Kernel::Config');
+        my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
         # set MaxIntervalOfIncompleteDays SysConfig on 50 days for test purpose
-        $SysConfigObject->ConfigItemUpdate(
+        $Helper->ConfigSettingChange(
             Valid => 1,
             Key   => 'TimeAccounting::MaxIntervalOfIncompleteDays',
             Value => 50,
@@ -45,12 +39,13 @@ $Selenium->RunTest(
         for my $Day (@Days) {
             $Week{$Day} = [ 0 .. 23 ];
         }
-        $ConfigObject->Set(
+
+        $Helper->ConfigSettingChange(
             Key   => 'TimeWorkingHours',
             Value => \%Week,
         );
-        $SysConfigObject->ConfigItemUpdate(
-            Valid => 1,
+
+        $Helper->ConfigSettingChange(
             Key   => 'TimeWorkingHours',
             Value => \%Week,
         );

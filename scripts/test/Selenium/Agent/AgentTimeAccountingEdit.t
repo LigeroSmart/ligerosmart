@@ -20,15 +20,7 @@ $Selenium->RunTest(
     sub {
 
         # get helper object
-        $Kernel::OM->ObjectParamAdd(
-            'Kernel::System::UnitTest::Helper' => {
-                RestoreSystemConfiguration => 1,
-            },
-        );
         my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
-
-        # get config object
-        my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
         # use a calendar with the same business hours for every day so that the UT runs correctly
         # on every day of the week and outside usual business hours.
@@ -37,21 +29,18 @@ $Selenium->RunTest(
         for my $Day (@Days) {
             $Week{$Day} = [ 0 .. 23 ];
         }
-        $ConfigObject->Set(
+        $Helper->ConfigSettingChange(
             Key   => 'TimeWorkingHours',
             Value => \%Week,
         );
 
-        # get SysConfig object
-        my $SysConfigObject = $Kernel::OM->Get('Kernel::System::SysConfig');
-        $SysConfigObject->ConfigItemUpdate(
-            Valid => 1,
+        $Helper->ConfigSettingChange(
             Key   => 'TimeWorkingHours',
             Value => \%Week,
         );
 
         # disable MassEntry features
-        $SysConfigObject->ConfigItemUpdate(
+        $Helper->ConfigSettingChange(
             Valid => 1,
             Key   => 'TimeAccounting::AllowMassEntryForUser',
             Value => 0,
@@ -130,7 +119,7 @@ $Selenium->RunTest(
         );
 
         # get script alias
-        my $ScriptAlias = $ConfigObject->Get('ScriptAlias');
+        my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
         # navigate to AgentTimeAccountingEdit
         $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentTimeAccountingEdit");
