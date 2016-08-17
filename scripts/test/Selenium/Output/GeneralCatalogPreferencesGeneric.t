@@ -19,23 +19,37 @@ $Selenium->RunTest(
     sub {
 
         # get helper object
-        $Kernel::OM->ObjectParamAdd(
-            'Kernel::System::UnitTest::Helper' => {
-                RestoreSystemConfiguration => 1,
-            },
-        );
         my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 
         # get sysconfig object
         my $SysConfigObject = $Kernel::OM->Get('Kernel::System::SysConfig');
 
-        # reset sysconfig used in tests
-        my @ConfigList = (qw(Comment2 Permissions));
-        for my $ConfigItem (@ConfigList) {
-            $SysConfigObject->ConfigItemReset(
-                Name => 'GeneralCatalogPreferences###' . $ConfigItem,
-            );
-        }
+        $Helper->ConfigSettingChange(
+            Valid => 0,
+            Key   => 'GeneralCatalogPreferences###Comment2',
+            Value => {
+                Module  => 'Kernel::Output::HTML::GeneralCatalogPreferences::Generic',
+                Label   => 'Comment2',
+                Desc    => 'Define the general catalog comment 2.',
+                Block   => 'TextArea',
+                Cols    => '50',
+                Rows    => '5',
+                PrefKey => 'Comment2',
+            },
+        );
+
+        $Helper->ConfigSettingChange(
+            Valid => 0,
+            Key   => 'GeneralCatalogPreferences###Permissions',
+            Value => {
+                Module  => 'Kernel::Output::HTML::GeneralCatalogPreferences::Generic',
+                Label   => 'Permissions',
+                Desc    => 'Define the group with permissions.',
+                Block   => 'Permission',
+                Class   => 'ITSM::ConfigItem::Class',
+                PrefKey => 'Permissions',
+            }
+        );
 
         # create and log in test user
         my $TestUserLogin = $Helper->TestUserCreate(
@@ -77,7 +91,7 @@ $Selenium->RunTest(
         my %PreferenceComment2ConfigUpdate = map { $_->{Key} => $_->{Content} }
             grep { defined $_->{Key} } @{ $PreferenceComment2Config{Setting}->[1]->{Hash}->[1]->{Item} };
 
-        $SysConfigObject->ConfigItemUpdate(
+        $Helper->ConfigSettingChange(
             Valid => 1,
             Key   => 'GeneralCatalogPreferences###Comment2',
             Value => \%PreferenceComment2ConfigUpdate,
@@ -183,7 +197,7 @@ $Selenium->RunTest(
         my %PreferencePermissionsConfigUpdate = map { $_->{Key} => $_->{Content} }
             grep { defined $_->{Key} } @{ $PreferencePermissionsConfig{Setting}->[1]->{Hash}->[1]->{Item} };
 
-        $SysConfigObject->ConfigItemUpdate(
+        $Helper->ConfigSettingChange(
             Valid => 1,
             Key   => 'GeneralCatalogPreferences###Permissions',
             Value => \%PreferencePermissionsConfigUpdate,
