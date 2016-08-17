@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2016 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/4616595618dcb7cc05a474fe9d5b74c30d49b96e/scripts/test/Selenium/Output/Preferences/Agent/CustomService.t
+# $origin: https://github.com/OTRS/otrs/blob/924bf2c90514a1db91ca7a9f5a36252c3a5d97c6/scripts/test/Selenium/Output/Preferences/Agent/CustomService.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,23 +21,17 @@ $Selenium->RunTest(
     sub {
 
         # get helper object
-        $Kernel::OM->ObjectParamAdd(
-            'Kernel::System::UnitTest::Helper' => {
-                RestoreSystemConfiguration => 1,
-            },
-        );
-
         my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 
         # enable the services
-        $Kernel::OM->Get('Kernel::System::SysConfig')->ConfigItemUpdate(
+        $Helper->ConfigSettingChange(
             Valid => 1,
             Key   => 'Ticket::Service',
             Value => '1',
         );
 
         # don't keep children services
-        $Kernel::OM->Get('Kernel::System::SysConfig')->ConfigItemUpdate(
+        $Helper->ConfigSettingChange(
             Valid => 1,
             Key   => 'Ticket::Service::KeepChildren',
             Value => '0',
@@ -121,7 +115,7 @@ $Selenium->RunTest(
         );
 
         # turn on keep children setting
-        $Kernel::OM->Get('Kernel::System::SysConfig')->ConfigItemUpdate(
+        $Helper->ConfigSettingChange(
             Valid => 1,
             Key   => 'Ticket::Service::KeepChildren',
             Value => '1',
