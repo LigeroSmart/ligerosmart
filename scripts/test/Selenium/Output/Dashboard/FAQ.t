@@ -32,12 +32,26 @@ $Selenium->RunTest(
             },
         );
 
+        # Get SysConfig object.
+        my $SysConfigObject = $Kernel::OM->Get('Kernel::System::SysConfig');
+
         # set FAQ dashboard modules on default settings
         for my $DefaultSysConfig (@FAQDashboard) {
 
-            # $SysConfigObject->ConfigItem Reset(
+            my %Setting = $SysConfigObject->ConfigItemGet(
+                Name    => $DefaultSysConfig->{Name},
+                Default => 1,
+            );
+
+            my %Value = map { $_->{Key} => $_->{Content} }
+                grep { defined $_->{Key} } @{ $Setting{Setting}->[1]->{Hash}->[1]->{Item} };
+
+            $DefaultSysConfig->{Value} = \%Value;
+
             $Helper->ConfigSettingChange(
-                Name => $DefaultSysConfig->{Name},
+                Valid => 1,
+                Key   => $DefaultSysConfig->{Name},
+                Value => \%Value,
             );
         }
 
@@ -72,13 +86,16 @@ $Selenium->RunTest(
             Password => $TestUserLogin,
         );
 
+        # Get config object.
+        my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+
         # get script alias
-        my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
+        my $ScriptAlias = $ConfigObject->Get('ScriptAlias');
 
         for my $Test (@FAQDashboard) {
 
             # disable all dashboard plug-ins
-            my $Config = $Kernel::OM->Get('Kernel::Config')->Get('DashboardBackend');
+            my $Config = $ConfigObject->Get('DashboardBackend');
             $Helper->ConfigSettingChange(
                 Valid => 0,
                 Key   => 'DashboardBackend',
@@ -86,9 +103,10 @@ $Selenium->RunTest(
             );
 
             # enable FAQ dashboard
-            # $SysConfig Object->ConfigItem Reset(
             $Helper->ConfigSettingChange(
-                Name => $Test->{Name},
+                Valid => 1,
+                Key   => $Test->{Name},
+                Value => $Test->{Value},
             );
 
             # navigate to dashboard screen
