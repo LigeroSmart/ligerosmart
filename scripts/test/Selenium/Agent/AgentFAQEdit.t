@@ -134,6 +134,12 @@ $Selenium->RunTest(
         $Selenium->WaitFor( WindowCount => 1 );
         $Selenium->switch_to_window( $Handles->[0] );
 
+        # wait for reload to kick in
+        sleep 1;
+
+        # wait until page has loaded, if necessary
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#FAQBody").length' );
+
         # click on 'Edit' and switch window
         $Selenium->find_element("//a[contains(\@href, \'Action=AgentFAQEdit;ItemID=$FAQID' )]")->VerifiedClick();
 
