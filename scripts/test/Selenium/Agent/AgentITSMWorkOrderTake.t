@@ -22,7 +22,7 @@ $Selenium->RunTest(
         my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 
         # get work order empty agent default config
-        my %WorkOrderEmptyAgent = $Kernel::OM->Get('Kernel::Config')->Get(
+        my %WorkOrderEmptyAgent = $Kernel::OM->Get('Kernel::System::SysConfig')->ConfigItemGet(
             Name    => 'ITSMWorkOrder::TakePermission###10-EmptyAgent',
             Default => 1,
         );
@@ -34,10 +34,11 @@ $Selenium->RunTest(
         $Helper->ConfigSettingChange(
             Key   => 'ITSMWorkOrder::TakePermission###10-EmptyAgent',
             Value => \%WorkOrderEmptyAgentUpdate,
+            Valid => 1,
         );
 
         # get work order list agent default sysconfig
-        my %WorkOrderListAgent = $Kernel::OM->Get('Kernel::Config')->Get(
+        my %WorkOrderListAgent = $Kernel::OM->Get('Kernel::System::SysConfig')->ConfigItemGet(
             Name    => 'ITSMWorkOrder::TakePermission###20-ListAgent',
             Default => 1,
         );
@@ -49,6 +50,7 @@ $Selenium->RunTest(
         $Helper->ConfigSettingChange(
             Key   => 'ITSMWorkOrder::TakePermission###20-ListAgent',
             Value => \%WorkOrderListAgentUpdate,
+            Valid => 1,
         );
 
         # get change state data

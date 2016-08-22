@@ -22,7 +22,7 @@ $Selenium->RunTest(
         my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 
         # get change reset menu module default config
-        my %ChangeResetMenu = $Kernel::OM->Get('Kernel::Config')->Get(
+        my %ChangeResetMenu = $Kernel::OM->Get('Kernel::System::SysConfig')->ConfigItemGet(
             Name    => 'ITSMChange::Frontend::MenuModule###110-ChangeReset',
             Default => 1,
         );
@@ -34,6 +34,7 @@ $Selenium->RunTest(
         $Helper->ConfigSettingChange(
             Key   => 'ITSMChange::Frontend::MenuModule###110-ChangeReset',
             Value => \%ChangeResetMenuUpdate,
+            Valid => 1,
         );
 
         # get AgemtITSMChangeReset frontend module sysconfig
@@ -50,6 +51,7 @@ $Selenium->RunTest(
         $Helper->ConfigSettingChange(
             Key   => 'Frontend::Module###AgentITSMChangeReset',
             Value => \%ChangeResetFrontendUpdate,
+            Valid => 1,
         );
 
         # get general catalog object

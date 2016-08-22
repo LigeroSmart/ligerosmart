@@ -22,7 +22,7 @@ $Selenium->RunTest(
         my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 
         # get change delete menu module default config
-        my %ChangeDeleteMenu = $Kernel::OM->Get('Kernel::Config')->Get(
+        my %ChangeDeleteMenu = $Kernel::OM->Get('Kernel::System::SysConfig')->ConfigItemGet(
             Name    => 'ITSMChange::Frontend::MenuModule###100-ChangeDelete',
             Default => 1,
         );
@@ -34,6 +34,7 @@ $Selenium->RunTest(
         $Helper->ConfigSettingChange(
             Key   => 'ITSMChange::Frontend::MenuModule###100-ChangeDelete',
             Value => \%ChangeDeleteMenuUpdate,
+            Valid => 1,
         );
 
         # get AgentITSMChangeDelete frontend module sysconfig
@@ -50,6 +51,7 @@ $Selenium->RunTest(
         $Helper->ConfigSettingChange(
             Key   => 'Frontend::Module###AgentITSMChangeDelete',
             Value => \%ChangeDeleteFrontendUpdate,
+            Valid => 1,
         );
 
         # get general catalog object
