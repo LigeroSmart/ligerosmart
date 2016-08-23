@@ -179,7 +179,7 @@ $Selenium->RunTest(
 
         # click on 'History'
         $Selenium->find_element(
-            "//a[contains(\@href, \'/otrs/index.pl?Action=AgentITSMChangeHistory;ChangeID=$ChangeID' )]"
+            "//a[contains(\@href, \'Action=AgentITSMChangeHistory;ChangeID=$ChangeID' )]"
         )->click();
 
         $Selenium->WaitFor( WindowCount => 2 );
