@@ -48,7 +48,7 @@ $Selenium->RunTest(
                 Block   => 'Permission',
                 Class   => 'ITSM::ConfigItem::Class',
                 PrefKey => 'Permissions',
-            }
+            },
         );
 
         # create and log in test user
