@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2016 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/924bf2c90514a1db91ca7a9f5a36252c3a5d97c6/scripts/test/Selenium/Agent/AgentTicketPhone.t
+# $origin: https://github.com/OTRS/otrs/blob/5193a0e284bed28bf49c08b6b2146e47e4bda9f5/scripts/test/Selenium/Agent/AgentTicketPhone.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -249,22 +249,21 @@ $Selenium->RunTest(
         );
 
         # go to ticket zoom page of created test ticket
-        $Selenium->find_element("//a[contains(\@href, \'Action=AgentTicketZoom;TicketID=$TicketID' )]")
-            ->VerifiedClick();
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentTicketZoom;TicketID=$TicketID");
 
         # check if test ticket values are genuine
         $Self->True(
             index( $Selenium->get_page_source(), $TicketSubject ) > -1,
             "$TicketSubject found on page",
-        );
+        ) || die "$TicketSubject not found on page";
         $Self->True(
             index( $Selenium->get_page_source(), $TicketBody ) > -1,
             "$TicketBody found on page",
-        );
+        ) || die "$TicketBody not found on page";
         $Self->True(
             index( $Selenium->get_page_source(), $TestCustomer ) > -1,
             "$TestCustomer found on page",
-        );
+        ) || die "$TestCustomer not found on page";
 # ---
 # ITSM
 # ---
