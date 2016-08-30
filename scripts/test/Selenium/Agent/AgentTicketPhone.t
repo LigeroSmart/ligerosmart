@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2016 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/5193a0e284bed28bf49c08b6b2146e47e4bda9f5/scripts/test/Selenium/Agent/AgentTicketPhone.t
+# $origin: https://github.com/OTRS/otrs/blob/8e6156077ae26e77d5ccf811230c19a52227ec8f/scripts/test/Selenium/Agent/AgentTicketPhone.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -290,8 +290,18 @@ $Selenium->RunTest(
 # ---
 
         # Test bug #12229
-        my $QueueID = $Kernel::OM->Get('Kernel::System::Queue')->QueueAdd(
+        my $QueueID1 = $Kernel::OM->Get('Kernel::System::Queue')->QueueAdd(
             Name            => '<Queue>',
+            ValidID         => 1,
+            GroupID         => 1,
+            SystemAddressID => 1,
+            SalutationID    => 1,
+            SignatureID     => 1,
+            Comment         => 'Some comment',
+            UserID          => 1,
+        );
+        my $QueueID2 = $Kernel::OM->Get('Kernel::System::Queue')->QueueAdd(
+            Name            => 'Junk::SubQueue',
             ValidID         => 1,
             GroupID         => 1,
             SystemAddressID => 1,
@@ -302,8 +312,12 @@ $Selenium->RunTest(
         );
 
         $Self->True(
-            $QueueID,
-            "Queue created."
+            $QueueID1,
+            "Queue #1 created."
+        );
+        $Self->True(
+            $QueueID2,
+            "Queue #2 created."
         );
 
         # navigate to AgentTicketPhone screen
@@ -327,14 +341,23 @@ $Selenium->RunTest(
             'Make sure that <Queue> is displayed.',
         );
 
-        # delete Queue
+        # check SubQueue is displayed properly
+        $Self->True(
+            $Selenium->WaitFor(
+                JavaScript =>
+                    "return typeof(\$) === \"function\" && \$('option').filter(function () { return this.textContent == '\\u00A0\\u00A0SubQueue'; }).length;"
+            ),
+            'Make sure that <Queue> is displayed.',
+        );
+
+        # delete Queues
         my $Success = $Kernel::OM->Get('Kernel::System::DB')->Do(
-            SQL  => "DELETE FROM queue WHERE id = ?",
-            Bind => [ \$QueueID ],
+            SQL  => "DELETE FROM queue WHERE id IN (?, ?)",
+            Bind => [ \$QueueID1, \$QueueID2 ],
         );
         $Self->True(
             $Success,
-            "Queue deleted",
+            "Queues deleted",
         );
 
         # delete created test ticket
@@ -404,7 +427,7 @@ $Selenium->RunTest(
             );
         }
 
-    }
+        }
 );
 
 1;
