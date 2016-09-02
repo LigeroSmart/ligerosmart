@@ -97,8 +97,8 @@ sub Data {
 
     # Template: AgentFAQLanguage
     $Self->{Translation}->{'FAQ Language Management'} = '常見問題語言管理';
-    $Self->{Translation}->{'Use this feature if you want to work with multiple languges.'} =
-        '使用此功能以利用多種語言操作。';
+    $Self->{Translation}->{'Use this feature if you want to work with multiple languages.'} =
+        '';
     $Self->{Translation}->{'Add language'} = '添加語言';
     $Self->{Translation}->{'Delete Language %s'} = '刪除語言 %s';
     $Self->{Translation}->{'Add Language'} = '添加語言';
@@ -199,15 +199,31 @@ sub Data {
     # Perl Module: Kernel/Modules/AgentFAQSearch.pm
     $Self->{Translation}->{'No Result!'} = '沒有結果!';
 
+    # Perl Module: Kernel/Output/HTML/HeaderMeta/AgentFAQSearch.pm
+    $Self->{Translation}->{'%s (FAQFulltext)'} = '';
+
+    # Perl Module: Kernel/Output/HTML/HeaderMeta/CustomerFAQSearch.pm
+    $Self->{Translation}->{'%s - Customer (%s)'} = '';
+    $Self->{Translation}->{'%s - Customer (FAQFulltext)'} = '';
+
+    # Perl Module: Kernel/Output/HTML/HeaderMeta/PublicFAQSearch.pm
+    $Self->{Translation}->{'%s - Public (%s)'} = '';
+    $Self->{Translation}->{'%s - Public (FAQFulltext)'} = '';
+
     # Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
     $Self->{Translation}->{'This article is empty!'} = '此文章為空白!';
 
     # SysConfig
     $Self->{Translation}->{'A filter for HTML output to add links behind a defined string. The element Image allows two input kinds. First the name of an image (e.g. faq.png). In this case the OTRS image path will be used. The second possibility is to insert the link to the image.'} =
         '';
+    $Self->{Translation}->{'Add FAQ article'} = '';
     $Self->{Translation}->{'CSS color for the voting result.'} = '選票結果使用的CSS 顏色';
     $Self->{Translation}->{'Cache Time To Leave for FAQ items.'} = '離開常見問題項目的緩存時間';
     $Self->{Translation}->{'Category Management'} = '目錄分類管理';
+    $Self->{Translation}->{'Customer FAQ Print.'} = '';
+    $Self->{Translation}->{'Customer FAQ Zoom.'} = '';
+    $Self->{Translation}->{'Customer FAQ search.'} = '';
+    $Self->{Translation}->{'Customer FAQ.'} = '';
     $Self->{Translation}->{'Decimal places of the voting result.'} = '選票結果小數位';
     $Self->{Translation}->{'Default category name.'} = '默許目錄分類名稱';
     $Self->{Translation}->{'Default language for FAQ articles on single language mode.'} = '單一語言模式下的常見問題文章默許語言';
@@ -226,6 +242,8 @@ sub Data {
         '設定顯示常見問題日誌小檢閱模式的概況模組';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ list.'} =
         '設定顯示常見問題列表小檢閱模式的概況模組';
+    $Self->{Translation}->{'Defines if the enhanced mode should be used (enables use of table, replace, subscript, superscript, paste from word, etc.) in customer interface.'} =
+        '';
     $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in a FAQ search of the agent interface.'} =
         '';
     $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in a FAQ search of the customer interface.'} =
@@ -296,15 +314,22 @@ sub Data {
     $Self->{Translation}->{'Edit this FAQ'} = '編輯此常見問題';
     $Self->{Translation}->{'Enable multiple languages on FAQ module.'} = '啓用常見問題模組多種語言';
     $Self->{Translation}->{'Enable voting mechanism on FAQ module.'} = '啓用常見問題模組投票機制';
+    $Self->{Translation}->{'FAQ AJAX Responder'} = '';
+    $Self->{Translation}->{'FAQ AJAX Responder for Richtext.'} = '';
+    $Self->{Translation}->{'FAQ Area'} = '';
+    $Self->{Translation}->{'FAQ Area.'} = '';
+    $Self->{Translation}->{'FAQ Delete.'} = '';
+    $Self->{Translation}->{'FAQ Edit.'} = '';
     $Self->{Translation}->{'FAQ Journal Overview "Small" Limit'} = '常見問題日誌概況 "小" 模式限制';
     $Self->{Translation}->{'FAQ Overview "Small" Limit'} = '常見問題概況 "小"模式限制';
+    $Self->{Translation}->{'FAQ Print.'} = '';
     $Self->{Translation}->{'FAQ limit per page for FAQ Journal Overview "Small"'} = '常見問題日誌概況 "小" 模式每頁顯示常見問題數量';
     $Self->{Translation}->{'FAQ limit per page for FAQ Overview "Small"'} = '常見問題概況 "小"  模式每頁顯示常見問題數量';
     $Self->{Translation}->{'FAQ search backend router of the agent interface.'} = '';
-    $Self->{Translation}->{'FAQ-Area'} = '常見問題－地域';
     $Self->{Translation}->{'Field4'} = '欄位4';
     $Self->{Translation}->{'Field5'} = '欄位5';
     $Self->{Translation}->{'Frontend module registration for the public interface.'} = '公開介面的前台模組登記';
+    $Self->{Translation}->{'Full FAQ'} = '';
     $Self->{Translation}->{'Group for the approval of FAQ articles.'} = '常見問題文章審批用戶組';
     $Self->{Translation}->{'History of this FAQ'} = '此常見問題歷史';
     $Self->{Translation}->{'Include internal fields on a FAQ based Ticket.'} = '常見問題為本的工單包含的內部欄位';
@@ -371,8 +396,13 @@ sub Data {
     $Self->{Translation}->{'Parameters for the pages (in which the FAQ items are shown) of the small FAQ overview.'} =
         '';
     $Self->{Translation}->{'Print this FAQ'} = '列印此常見問題';
+    $Self->{Translation}->{'Public FAQ Print.'} = '';
+    $Self->{Translation}->{'Public FAQ Zoom.'} = '';
+    $Self->{Translation}->{'Public FAQ search.'} = '';
+    $Self->{Translation}->{'Public FAQ.'} = '';
     $Self->{Translation}->{'Queue for the approval of FAQ articles.'} = '常見問題文章審批佇列';
     $Self->{Translation}->{'Rates for voting. Key must be in percent.'} = '投票評分。數值必須為百分率。';
+    $Self->{Translation}->{'S'} = '';
     $Self->{Translation}->{'Search FAQ'} = '搜尋常見問題';
     $Self->{Translation}->{'Set the default height (in pixels) of inline HTML fields in AgentFAQZoom.'} =
         '設定在AgentFAQZoom中內嵌HTML欄位默許高度 (像素)';
@@ -407,6 +437,7 @@ sub Data {
         '';
     $Self->{Translation}->{'Shows a link in the menu to print a FAQ in the its zoom view of the agent interface.'} =
         '';
+    $Self->{Translation}->{'Text Only'} = '';
     $Self->{Translation}->{'The identifier for a FAQ, e.g. FAQ#, KB#, MyFAQ#. The default is FAQ#.'} =
         '';
     $Self->{Translation}->{'This setting defines that a \'FAQ\' object can be linked with other \'FAQ\' objects using the \'Normal\' link type.'} =
@@ -420,6 +451,11 @@ sub Data {
     $Self->{Translation}->{'Ticket body for approval of FAQ article.'} = '';
     $Self->{Translation}->{'Ticket subject for approval of FAQ article.'} = '';
     $Self->{Translation}->{'Toolbar Item for a shortcut.'} = '';
+    $Self->{Translation}->{'Your queue selection of your preferred queues. You also get notified about those queues via email if enabled.'} =
+        '';
+    $Self->{Translation}->{'Your service selection of your preferred services. You also get notified about those services via email if enabled.'} =
+        '';
+    $Self->{Translation}->{'public (public)'} = '';
 
 }
 

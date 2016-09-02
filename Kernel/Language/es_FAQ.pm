@@ -97,8 +97,8 @@ sub Data {
 
     # Template: AgentFAQLanguage
     $Self->{Translation}->{'FAQ Language Management'} = 'Gestión de Idiomas de FAQ';
-    $Self->{Translation}->{'Use this feature if you want to work with multiple languges.'} =
-        'Utilice esta funcionalidad si desea trabajar con múltiples idiomas.';
+    $Self->{Translation}->{'Use this feature if you want to work with multiple languages.'} =
+        '';
     $Self->{Translation}->{'Add language'} = 'Añadir Idioma';
     $Self->{Translation}->{'Delete Language %s'} = 'Borrar Idioma %s';
     $Self->{Translation}->{'Add Language'} = 'Añadir Idioma';
@@ -199,15 +199,31 @@ sub Data {
     # Perl Module: Kernel/Modules/AgentFAQSearch.pm
     $Self->{Translation}->{'No Result!'} = 'Sin Resultados!';
 
+    # Perl Module: Kernel/Output/HTML/HeaderMeta/AgentFAQSearch.pm
+    $Self->{Translation}->{'%s (FAQFulltext)'} = '';
+
+    # Perl Module: Kernel/Output/HTML/HeaderMeta/CustomerFAQSearch.pm
+    $Self->{Translation}->{'%s - Customer (%s)'} = '';
+    $Self->{Translation}->{'%s - Customer (FAQFulltext)'} = '';
+
+    # Perl Module: Kernel/Output/HTML/HeaderMeta/PublicFAQSearch.pm
+    $Self->{Translation}->{'%s - Public (%s)'} = '';
+    $Self->{Translation}->{'%s - Public (FAQFulltext)'} = '';
+
     # Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
     $Self->{Translation}->{'This article is empty!'} = 'Este artículo esta vacío!';
 
     # SysConfig
     $Self->{Translation}->{'A filter for HTML output to add links behind a defined string. The element Image allows two input kinds. First the name of an image (e.g. faq.png). In this case the OTRS image path will be used. The second possibility is to insert the link to the image.'} =
         'Filtro para el HTML resultante para añadir enlaces a una cadena determinada. El elemento Imagen contempla dos tipos de registros. El primero es el nombre de una imagen (por ejemplo faq.png). En este caso se utilizará la ruta de imágenes de OTRS. La segunda posibilidad es insertar el enlace a la imagen..';
+    $Self->{Translation}->{'Add FAQ article'} = '';
     $Self->{Translation}->{'CSS color for the voting result.'} = 'Color CSS para el resultado de la votación.';
     $Self->{Translation}->{'Cache Time To Leave for FAQ items.'} = 'Tiempo de vida de la caché para los elementos FAQ.';
     $Self->{Translation}->{'Category Management'} = 'Gestión de las Categorías';
+    $Self->{Translation}->{'Customer FAQ Print.'} = '';
+    $Self->{Translation}->{'Customer FAQ Zoom.'} = '';
+    $Self->{Translation}->{'Customer FAQ search.'} = '';
+    $Self->{Translation}->{'Customer FAQ.'} = '';
     $Self->{Translation}->{'Decimal places of the voting result.'} = 'Número de decimales para el resultado de la votación';
     $Self->{Translation}->{'Default category name.'} = 'Nombre predeterminado de la categoría';
     $Self->{Translation}->{'Default language for FAQ articles on single language mode.'} = 'Idioma por omisión para los artículos FAQ en modo idioma único';
@@ -226,6 +242,8 @@ sub Data {
         'Define un módulo de vista general para mostrar la vista pequeña de la bitácora de FAQ';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ list.'} =
         'Define un módulo de vista previa para mostrar la vista pequeña de un listado de FAQs';
+    $Self->{Translation}->{'Defines if the enhanced mode should be used (enables use of table, replace, subscript, superscript, paste from word, etc.) in customer interface.'} =
+        '';
     $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in a FAQ search of the agent interface.'} =
         'Define el atributo por omisión para ordenar los artículos FAQ en una búsqueda de FAQ en la interfaz del agente.';
     $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in a FAQ search of the customer interface.'} =
@@ -296,15 +314,22 @@ sub Data {
     $Self->{Translation}->{'Edit this FAQ'} = 'Editar este artículo FAQ';
     $Self->{Translation}->{'Enable multiple languages on FAQ module.'} = 'Habilitar múltiples idiomas en el módulo FAQ';
     $Self->{Translation}->{'Enable voting mechanism on FAQ module.'} = 'Habilitar el mecanismo de votación en el módulo FAQ';
+    $Self->{Translation}->{'FAQ AJAX Responder'} = '';
+    $Self->{Translation}->{'FAQ AJAX Responder for Richtext.'} = '';
+    $Self->{Translation}->{'FAQ Area'} = '';
+    $Self->{Translation}->{'FAQ Area.'} = '';
+    $Self->{Translation}->{'FAQ Delete.'} = '';
+    $Self->{Translation}->{'FAQ Edit.'} = '';
     $Self->{Translation}->{'FAQ Journal Overview "Small" Limit'} = 'Límite para la vista general «pequeña» de la Bitácora de FAQ';
     $Self->{Translation}->{'FAQ Overview "Small" Limit'} = 'Límite para la vista general «pequeña» de FAQ';
+    $Self->{Translation}->{'FAQ Print.'} = '';
     $Self->{Translation}->{'FAQ limit per page for FAQ Journal Overview "Small"'} = 'Límite de FAQ por página para la vista general «pequeña» de la Bitácora de FAQ';
     $Self->{Translation}->{'FAQ limit per page for FAQ Overview "Small"'} = 'Límite de FAQ por página para la vista general «pequeña» de FAQ';
     $Self->{Translation}->{'FAQ search backend router of the agent interface.'} = 'Encaminador para la búsqueda de FAQ en la interfaz del agente.';
-    $Self->{Translation}->{'FAQ-Area'} = 'Área-FAQ';
     $Self->{Translation}->{'Field4'} = 'Campo4';
     $Self->{Translation}->{'Field5'} = 'Campo5';
     $Self->{Translation}->{'Frontend module registration for the public interface.'} = 'Registro de módulo "Frontend" en la interfaz pública.';
+    $Self->{Translation}->{'Full FAQ'} = '';
     $Self->{Translation}->{'Group for the approval of FAQ articles.'} = 'Grupo para la aprobación de los artículos FAQ.';
     $Self->{Translation}->{'History of this FAQ'} = 'Historia de este artículo FAQ';
     $Self->{Translation}->{'Include internal fields on a FAQ based Ticket.'} = 'Incluir campos internos en los tickets basados en un artículo FAQ';
@@ -371,8 +396,13 @@ sub Data {
     $Self->{Translation}->{'Parameters for the pages (in which the FAQ items are shown) of the small FAQ overview.'} =
         'Parámetros de las páginas (en las que se muestran los elementos FAQ) de la vista general de FAQ pequeña.';
     $Self->{Translation}->{'Print this FAQ'} = 'Imprimir esta FAQ';
+    $Self->{Translation}->{'Public FAQ Print.'} = '';
+    $Self->{Translation}->{'Public FAQ Zoom.'} = '';
+    $Self->{Translation}->{'Public FAQ search.'} = '';
+    $Self->{Translation}->{'Public FAQ.'} = '';
     $Self->{Translation}->{'Queue for the approval of FAQ articles.'} = 'Fila para la aprobación de los artículos FAQ.';
     $Self->{Translation}->{'Rates for voting. Key must be in percent.'} = 'Ponderación para la votación. La clave debe expresarse en porcentaje.';
+    $Self->{Translation}->{'S'} = '';
     $Self->{Translation}->{'Search FAQ'} = 'Búsqueda de FAQ';
     $Self->{Translation}->{'Set the default height (in pixels) of inline HTML fields in AgentFAQZoom.'} =
         'Establecer la altura predeterminada (en píxeles) de los campos HTML «inline» de AgentFAQZoom';
@@ -407,6 +437,7 @@ sub Data {
         'Muestra un enlace en el menú para retroceder en la vista ampliada de FAQ en la interfaz del agente.';
     $Self->{Translation}->{'Shows a link in the menu to print a FAQ in the its zoom view of the agent interface.'} =
         'Muestra un enlace en el menú para imprimir un artículo FAQ en su vista ampliada en la interfaz del agente.';
+    $Self->{Translation}->{'Text Only'} = '';
     $Self->{Translation}->{'The identifier for a FAQ, e.g. FAQ#, KB#, MyFAQ#. The default is FAQ#.'} =
         'El identificador para una FAQ, por ejemplo FAQ#, KB#, MiFAQ#. FAQ# es la opción por omisión';
     $Self->{Translation}->{'This setting defines that a \'FAQ\' object can be linked with other \'FAQ\' objects using the \'Normal\' link type.'} =
@@ -420,6 +451,11 @@ sub Data {
     $Self->{Translation}->{'Ticket body for approval of FAQ article.'} = 'Cuerpo del ticket para aprobación de artículos FAQ.';
     $Self->{Translation}->{'Ticket subject for approval of FAQ article.'} = 'Asunto del ticket para aprobación de artículos FAQ.';
     $Self->{Translation}->{'Toolbar Item for a shortcut.'} = 'Artículo de la barra de herramientas para un acceso directo.';
+    $Self->{Translation}->{'Your queue selection of your preferred queues. You also get notified about those queues via email if enabled.'} =
+        '';
+    $Self->{Translation}->{'Your service selection of your preferred services. You also get notified about those services via email if enabled.'} =
+        '';
+    $Self->{Translation}->{'public (public)'} = '';
 
 }
 

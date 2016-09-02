@@ -8,9 +8,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-05-10 11:49+0000\n"
-"PO-Revision-Date: 2016-06-06 13:56+0000\n"
-"Last-Translator: 汇民 王 <whuim@163.com>\n"
+"POT-Creation-Date: 2016-09-02 15:34+0000\n"
+"PO-Revision-Date: 2016-09-02 20:37+0000\n"
+"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/otrs/OTRS/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -277,8 +277,8 @@ msgid "FAQ Language Management"
 msgstr "FAQ语言管理"
 
 #. Template: AgentFAQLanguage
-msgid "Use this feature if you want to work with multiple languges."
-msgstr "如果需要支持多种语言，请使用此功能."
+msgid "Use this feature if you want to work with multiple languages."
+msgstr ""
 
 #. Template: AgentFAQLanguage
 msgid "Add language"
@@ -550,6 +550,26 @@ msgstr "FAQ动态字段"
 msgid "No Result!"
 msgstr "无结果！"
 
+#. Perl Module: Kernel/Output/HTML/HeaderMeta/AgentFAQSearch.pm
+msgid "%s (FAQFulltext)"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/HeaderMeta/CustomerFAQSearch.pm
+msgid "%s - Customer (%s)"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/HeaderMeta/CustomerFAQSearch.pm
+msgid "%s - Customer (FAQFulltext)"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/HeaderMeta/PublicFAQSearch.pm
+msgid "%s - Public (%s)"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/HeaderMeta/PublicFAQSearch.pm
+msgid "%s - Public (FAQFulltext)"
+msgstr ""
+
 #. Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
 msgid "This article is empty!"
 msgstr "文章无内容！"
@@ -563,6 +583,10 @@ msgid ""
 msgstr "在HTML输出结果中为预定义字符串添加链接的过滤器。图像元素允许两种输入方式：第一种是用图像的名称（如faq.png），在这种情况下会使用OTRS的图像路径；第二种是插入图像的链接。"
 
 #. SysConfig
+msgid "Add FAQ article"
+msgstr ""
+
+#. SysConfig
 msgid "CSS color for the voting result."
 msgstr "投票结果的CSS颜色"
 
@@ -573,6 +597,22 @@ msgstr "FAQ文章不再显示的时间"
 #. SysConfig
 msgid "Category Management"
 msgstr "管理类别"
+
+#. SysConfig
+msgid "Customer FAQ Print."
+msgstr ""
+
+#. SysConfig
+msgid "Customer FAQ Zoom."
+msgstr ""
+
+#. SysConfig
+msgid "Customer FAQ search."
+msgstr ""
+
+#. SysConfig
+msgid "Customer FAQ."
+msgstr ""
 
 #. SysConfig
 msgid "Decimal places of the voting result."
@@ -623,6 +663,12 @@ msgstr "定义一个显示FAQ日志简洁视图的概述模块。"
 #. SysConfig
 msgid "Defines an overview module to show the small view of a FAQ list."
 msgstr "定义一个显示FAQ列表简洁视图的概述模块。"
+
+#. SysConfig
+msgid ""
+"Defines if the enhanced mode should be used (enables use of table, replace, "
+"subscript, superscript, paste from word, etc.) in customer interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -845,12 +891,40 @@ msgid "Enable voting mechanism on FAQ module."
 msgstr "在FAQ模块中启用投票机制。"
 
 #. SysConfig
+msgid "FAQ AJAX Responder"
+msgstr ""
+
+#. SysConfig
+msgid "FAQ AJAX Responder for Richtext."
+msgstr ""
+
+#. SysConfig
+msgid "FAQ Area"
+msgstr ""
+
+#. SysConfig
+msgid "FAQ Area."
+msgstr ""
+
+#. SysConfig
+msgid "FAQ Delete."
+msgstr ""
+
+#. SysConfig
+msgid "FAQ Edit."
+msgstr ""
+
+#. SysConfig
 msgid "FAQ Journal Overview \"Small\" Limit"
 msgstr "FAQ日志概览“简洁视图”限制"
 
 #. SysConfig
 msgid "FAQ Overview \"Small\" Limit"
 msgstr "FAQ概览“简洁视图”限制"
+
+#. SysConfig
+msgid "FAQ Print."
+msgstr ""
 
 #. SysConfig
 msgid "FAQ limit per page for FAQ Journal Overview \"Small\""
@@ -865,10 +939,6 @@ msgid "FAQ search backend router of the agent interface."
 msgstr "服务人员界面中，FAQ搜索的后台选项。"
 
 #. SysConfig
-msgid "FAQ-Area"
-msgstr "FAQ领域"
-
-#. SysConfig
 msgid "Field4"
 msgstr "字段4"
 
@@ -879,6 +949,10 @@ msgstr "字段5"
 #. SysConfig
 msgid "Frontend module registration for the public interface."
 msgstr "公共界面的前端模块注册"
+
+#. SysConfig
+msgid "Full FAQ"
+msgstr ""
 
 #. SysConfig
 msgid "Group for the approval of FAQ articles."
@@ -1085,12 +1159,32 @@ msgid "Print this FAQ"
 msgstr "打印这篇FAQ"
 
 #. SysConfig
+msgid "Public FAQ Print."
+msgstr ""
+
+#. SysConfig
+msgid "Public FAQ Zoom."
+msgstr ""
+
+#. SysConfig
+msgid "Public FAQ search."
+msgstr ""
+
+#. SysConfig
+msgid "Public FAQ."
+msgstr ""
+
+#. SysConfig
 msgid "Queue for the approval of FAQ articles."
 msgstr "审批 FAQ 文章的队列."
 
 #. SysConfig
 msgid "Rates for voting. Key must be in percent."
 msgstr "好评率, 键值必须以百分比表示."
+
+#. SysConfig
+msgid "S"
+msgstr ""
 
 #. SysConfig
 msgid "Search FAQ"
@@ -1199,6 +1293,10 @@ msgid ""
 msgstr "在服务人员界面的详情窗口菜单中，显示打印FAQ的链接。"
 
 #. SysConfig
+msgid "Text Only"
+msgstr ""
+
+#. SysConfig
 msgid "The identifier for a FAQ, e.g. FAQ#, KB#, MyFAQ#. The default is FAQ#."
 msgstr "FAQ 的标识符, 例如 (常见问题)FAQ#, (知识库)KB#, 默认为 FAQ#"
 
@@ -1237,3 +1335,19 @@ msgstr "FAQ 文章审批请求的工单标题。"
 #. SysConfig
 msgid "Toolbar Item for a shortcut."
 msgstr "快捷键的工具栏条目。"
+
+#. SysConfig
+msgid ""
+"Your queue selection of your preferred queues. You also get notified about "
+"those queues via email if enabled."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Your service selection of your preferred services. You also get notified "
+"about those services via email if enabled."
+msgstr ""
+
+#. SysConfig
+msgid "public (public)"
+msgstr ""

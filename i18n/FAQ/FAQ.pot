@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: FAQ\n"
-"POT-Creation-Date: 2016-08-05 13:08+0000\n"
+"POT-Creation-Date: 2016-09-02 15:38+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -267,7 +267,7 @@ msgid "FAQ Language Management"
 msgstr ""
 
 #. Template: AgentFAQLanguage
-msgid "Use this feature if you want to work with multiple languges."
+msgid "Use this feature if you want to work with multiple languages."
 msgstr ""
 
 #. Template: AgentFAQLanguage
@@ -534,12 +534,36 @@ msgstr ""
 msgid "No Result!"
 msgstr ""
 
+#. Perl Module: Kernel/Output/HTML/HeaderMeta/AgentFAQSearch.pm
+msgid "%s (FAQFulltext)"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/HeaderMeta/CustomerFAQSearch.pm
+msgid "%s - Customer (%s)"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/HeaderMeta/CustomerFAQSearch.pm
+msgid "%s - Customer (FAQFulltext)"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/HeaderMeta/PublicFAQSearch.pm
+msgid "%s - Public (%s)"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/HeaderMeta/PublicFAQSearch.pm
+msgid "%s - Public (FAQFulltext)"
+msgstr ""
+
 #. Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
 msgid "This article is empty!"
 msgstr ""
 
 #. SysConfig
 msgid "A filter for HTML output to add links behind a defined string. The element Image allows two input kinds. First the name of an image (e.g. faq.png). In this case the OTRS image path will be used. The second possibility is to insert the link to the image."
+msgstr ""
+
+#. SysConfig
+msgid "Add FAQ article"
 msgstr ""
 
 #. SysConfig
@@ -552,6 +576,22 @@ msgstr ""
 
 #. SysConfig
 msgid "Category Management"
+msgstr ""
+
+#. SysConfig
+msgid "Customer FAQ Print."
+msgstr ""
+
+#. SysConfig
+msgid "Customer FAQ Zoom."
+msgstr ""
+
+#. SysConfig
+msgid "Customer FAQ search."
+msgstr ""
+
+#. SysConfig
+msgid "Customer FAQ."
 msgstr ""
 
 #. SysConfig
@@ -600,6 +640,10 @@ msgstr ""
 
 #. SysConfig
 msgid "Defines an overview module to show the small view of a FAQ list."
+msgstr ""
+
+#. SysConfig
+msgid "Defines if the enhanced mode should be used (enables use of table, replace, subscript, superscript, paste from word, etc.) in customer interface."
 msgstr ""
 
 #. SysConfig
@@ -755,11 +799,39 @@ msgid "Enable voting mechanism on FAQ module."
 msgstr ""
 
 #. SysConfig
+msgid "FAQ AJAX Responder"
+msgstr ""
+
+#. SysConfig
+msgid "FAQ AJAX Responder for Richtext."
+msgstr ""
+
+#. SysConfig
+msgid "FAQ Area"
+msgstr ""
+
+#. SysConfig
+msgid "FAQ Area."
+msgstr ""
+
+#. SysConfig
+msgid "FAQ Delete."
+msgstr ""
+
+#. SysConfig
+msgid "FAQ Edit."
+msgstr ""
+
+#. SysConfig
 msgid "FAQ Journal Overview \"Small\" Limit"
 msgstr ""
 
 #. SysConfig
 msgid "FAQ Overview \"Small\" Limit"
+msgstr ""
+
+#. SysConfig
+msgid "FAQ Print."
 msgstr ""
 
 #. SysConfig
@@ -775,10 +847,6 @@ msgid "FAQ search backend router of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid "FAQ-Area"
-msgstr ""
-
-#. SysConfig
 msgid "Field4"
 msgstr ""
 
@@ -788,6 +856,10 @@ msgstr ""
 
 #. SysConfig
 msgid "Frontend module registration for the public interface."
+msgstr ""
+
+#. SysConfig
+msgid "Full FAQ"
 msgstr ""
 
 #. SysConfig
@@ -951,11 +1023,31 @@ msgid "Print this FAQ"
 msgstr ""
 
 #. SysConfig
+msgid "Public FAQ Print."
+msgstr ""
+
+#. SysConfig
+msgid "Public FAQ Zoom."
+msgstr ""
+
+#. SysConfig
+msgid "Public FAQ search."
+msgstr ""
+
+#. SysConfig
+msgid "Public FAQ."
+msgstr ""
+
+#. SysConfig
 msgid "Queue for the approval of FAQ articles."
 msgstr ""
 
 #. SysConfig
 msgid "Rates for voting. Key must be in percent."
+msgstr ""
+
+#. SysConfig
+msgid "S"
 msgstr ""
 
 #. SysConfig
@@ -1043,6 +1135,10 @@ msgid "Shows a link in the menu to print a FAQ in the its zoom view of the agent
 msgstr ""
 
 #. SysConfig
+msgid "Text Only"
+msgstr ""
+
+#. SysConfig
 msgid "The identifier for a FAQ, e.g. FAQ#, KB#, MyFAQ#. The default is FAQ#."
 msgstr ""
 
@@ -1072,5 +1168,17 @@ msgstr ""
 
 #. SysConfig
 msgid "Toolbar Item for a shortcut."
+msgstr ""
+
+#. SysConfig
+msgid "Your queue selection of your preferred queues. You also get notified about those queues via email if enabled."
+msgstr ""
+
+#. SysConfig
+msgid "Your service selection of your preferred services. You also get notified about those services via email if enabled."
+msgstr ""
+
+#. SysConfig
+msgid "public (public)"
 msgstr ""
 

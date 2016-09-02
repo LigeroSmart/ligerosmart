@@ -17,7 +17,7 @@ sub Data {
 
     # Template: AAAFAQ
     $Self->{Translation}->{'internal'} = 'interne';
-    $Self->{Translation}->{'public'} = 'publi';
+    $Self->{Translation}->{'public'} = 'public';
     $Self->{Translation}->{'external'} = 'externe';
     $Self->{Translation}->{'FAQ Number'} = 'Numéro de FAQ';
     $Self->{Translation}->{'Latest updated FAQ articles'} = 'Dernières questions modifiées';
@@ -97,8 +97,8 @@ sub Data {
 
     # Template: AgentFAQLanguage
     $Self->{Translation}->{'FAQ Language Management'} = 'Gestion Langue FAQ';
-    $Self->{Translation}->{'Use this feature if you want to work with multiple languges.'} =
-        'Utiliser cette fonction afin de travailler avec de multiples langues';
+    $Self->{Translation}->{'Use this feature if you want to work with multiple languages.'} =
+        '';
     $Self->{Translation}->{'Add language'} = 'Ajouter une langue';
     $Self->{Translation}->{'Delete Language %s'} = 'Effacer une langue %s';
     $Self->{Translation}->{'Add Language'} = 'Ajouter une langue';
@@ -121,10 +121,10 @@ sub Data {
     $Self->{Translation}->{'Rate (e. g. Equals 25% or GreaterThan 75%)'} = 'Note (ex. EgalA 25% ou SuperieurA 75%)';
     $Self->{Translation}->{'Approved'} = 'Approuvé';
     $Self->{Translation}->{'Last changed by'} = 'Dernière modification par';
-    $Self->{Translation}->{'FAQ Article Create Time (before/after)'} = '';
-    $Self->{Translation}->{'FAQ Article Create Time (between)'} = '';
-    $Self->{Translation}->{'FAQ Article Change Time (before/after)'} = '';
-    $Self->{Translation}->{'FAQ Article Change Time (between)'} = '';
+    $Self->{Translation}->{'FAQ Article Create Time (before/after)'} = 'Date Création Article (avant/après)';
+    $Self->{Translation}->{'FAQ Article Create Time (between)'} = 'Date Création Article (période)';
+    $Self->{Translation}->{'FAQ Article Change Time (before/after)'} = 'Date Modification Article (avant/après)';
+    $Self->{Translation}->{'FAQ Article Change Time (between)'} = 'Date Modification Article (période)';
 
     # Template: AgentFAQSearchOpenSearchDescriptionFulltext
     $Self->{Translation}->{'FAQFulltext'} = 'Texte Intégral FAQ';
@@ -135,11 +135,11 @@ sub Data {
     $Self->{Translation}->{'Vote'} = 'Vote';
     $Self->{Translation}->{'No vote settings'} = 'Pas de paramètres de vote';
     $Self->{Translation}->{'Specific votes'} = 'Vote spécifique';
-    $Self->{Translation}->{'e. g. Equals 10 or GreaterThan 60'} = '';
-    $Self->{Translation}->{'Rate'} = '';
-    $Self->{Translation}->{'No rate settings'} = '';
-    $Self->{Translation}->{'Specific rate'} = '';
-    $Self->{Translation}->{'e. g. Equals 25% or GreaterThan 75%'} = '';
+    $Self->{Translation}->{'e. g. Equals 10 or GreaterThan 60'} = 'p.ex. égal à 10 ou supérieur à 60';
+    $Self->{Translation}->{'Rate'} = 'Noter';
+    $Self->{Translation}->{'No rate settings'} = 'Pas de réglage de cote';
+    $Self->{Translation}->{'Specific rate'} = 'Cote spécifique';
+    $Self->{Translation}->{'e. g. Equals 25% or GreaterThan 75%'} = 'p.ex égal à 25% ou supérieur à 75%';
     $Self->{Translation}->{'FAQ Article Create Time'} = '';
     $Self->{Translation}->{'FAQ Article Change Time'} = '';
 
@@ -173,10 +173,10 @@ sub Data {
     $Self->{Translation}->{'Fulltext search in FAQ articles (e. g. "John*n" or "Will*")'} = 'Recherche texte intégrale dans les articles FAQ (ex. "Emilie*")';
     $Self->{Translation}->{'Vote restrictions'} = 'Restrictions de vote';
     $Self->{Translation}->{'Only FAQ articles with votes...'} = '';
-    $Self->{Translation}->{'Rate restrictions'} = '';
-    $Self->{Translation}->{'Only FAQ articles with rate...'} = '';
-    $Self->{Translation}->{'Only FAQ articles created'} = '';
-    $Self->{Translation}->{'Only FAQ articles created between'} = '';
+    $Self->{Translation}->{'Rate restrictions'} = 'Restrictions de cote';
+    $Self->{Translation}->{'Only FAQ articles with rate...'} = 'Uniquement les articles de FAQ avec cote ...';
+    $Self->{Translation}->{'Only FAQ articles created'} = 'Uniquement les nouveaux articles de FAQ';
+    $Self->{Translation}->{'Only FAQ articles created between'} = 'Uniquement les articles de FAQ créés entre';
     $Self->{Translation}->{'Search-Profile as Template?'} = '';
 
     # Template: CustomerFAQZoom
@@ -190,24 +190,40 @@ sub Data {
     $Self->{Translation}->{'Back to FAQ Explorer'} = 'Revenir au Navigateur FAQ';
 
     # Perl Module: Kernel/Modules/AgentFAQJournal.pm
-    $Self->{Translation}->{'FAQ Journal'} = '';
+    $Self->{Translation}->{'FAQ Journal'} = 'Journal de FAQ';
 
     # Perl Module: Kernel/Modules/AgentFAQPrint.pm
     $Self->{Translation}->{'Last update'} = 'Dernière mise à jour';
-    $Self->{Translation}->{'FAQ Dynamic Fields'} = '';
+    $Self->{Translation}->{'FAQ Dynamic Fields'} = 'Champs dynamiques de FAQ';
 
     # Perl Module: Kernel/Modules/AgentFAQSearch.pm
-    $Self->{Translation}->{'No Result!'} = '';
+    $Self->{Translation}->{'No Result!'} = 'Aucun résultat !';
+
+    # Perl Module: Kernel/Output/HTML/HeaderMeta/AgentFAQSearch.pm
+    $Self->{Translation}->{'%s (FAQFulltext)'} = '';
+
+    # Perl Module: Kernel/Output/HTML/HeaderMeta/CustomerFAQSearch.pm
+    $Self->{Translation}->{'%s - Customer (%s)'} = '';
+    $Self->{Translation}->{'%s - Customer (FAQFulltext)'} = '';
+
+    # Perl Module: Kernel/Output/HTML/HeaderMeta/PublicFAQSearch.pm
+    $Self->{Translation}->{'%s - Public (%s)'} = '';
+    $Self->{Translation}->{'%s - Public (FAQFulltext)'} = '';
 
     # Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
-    $Self->{Translation}->{'This article is empty!'} = '';
+    $Self->{Translation}->{'This article is empty!'} = 'Cet article est vide !';
 
     # SysConfig
     $Self->{Translation}->{'A filter for HTML output to add links behind a defined string. The element Image allows two input kinds. First the name of an image (e.g. faq.png). In this case the OTRS image path will be used. The second possibility is to insert the link to the image.'} =
         '';
+    $Self->{Translation}->{'Add FAQ article'} = '';
     $Self->{Translation}->{'CSS color for the voting result.'} = 'Couleur CSS pour le résultat du vote';
     $Self->{Translation}->{'Cache Time To Leave for FAQ items.'} = 'Durée de validité du Cache pour les éléments de la FAQ';
     $Self->{Translation}->{'Category Management'} = 'Gestion des catégories';
+    $Self->{Translation}->{'Customer FAQ Print.'} = '';
+    $Self->{Translation}->{'Customer FAQ Zoom.'} = '';
+    $Self->{Translation}->{'Customer FAQ search.'} = '';
+    $Self->{Translation}->{'Customer FAQ.'} = '';
     $Self->{Translation}->{'Decimal places of the voting result.'} = '';
     $Self->{Translation}->{'Default category name.'} = 'Nom de catégorie par défaut';
     $Self->{Translation}->{'Default language for FAQ articles on single language mode.'} = 'Langue par défaut pour les articles de la FAQ en mode langage unique.';
@@ -225,6 +241,8 @@ sub Data {
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ journal.'} =
         '';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ list.'} =
+        '';
+    $Self->{Translation}->{'Defines if the enhanced mode should be used (enables use of table, replace, subscript, superscript, paste from word, etc.) in customer interface.'} =
         '';
     $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in a FAQ search of the agent interface.'} =
         '';
@@ -296,15 +314,22 @@ sub Data {
     $Self->{Translation}->{'Edit this FAQ'} = 'Modifier cette FAQ';
     $Self->{Translation}->{'Enable multiple languages on FAQ module.'} = '';
     $Self->{Translation}->{'Enable voting mechanism on FAQ module.'} = '';
+    $Self->{Translation}->{'FAQ AJAX Responder'} = '';
+    $Self->{Translation}->{'FAQ AJAX Responder for Richtext.'} = '';
+    $Self->{Translation}->{'FAQ Area'} = '';
+    $Self->{Translation}->{'FAQ Area.'} = '';
+    $Self->{Translation}->{'FAQ Delete.'} = '';
+    $Self->{Translation}->{'FAQ Edit.'} = '';
     $Self->{Translation}->{'FAQ Journal Overview "Small" Limit'} = '';
     $Self->{Translation}->{'FAQ Overview "Small" Limit'} = '';
+    $Self->{Translation}->{'FAQ Print.'} = '';
     $Self->{Translation}->{'FAQ limit per page for FAQ Journal Overview "Small"'} = '';
     $Self->{Translation}->{'FAQ limit per page for FAQ Overview "Small"'} = '';
     $Self->{Translation}->{'FAQ search backend router of the agent interface.'} = '';
-    $Self->{Translation}->{'FAQ-Area'} = '';
     $Self->{Translation}->{'Field4'} = '';
     $Self->{Translation}->{'Field5'} = '';
     $Self->{Translation}->{'Frontend module registration for the public interface.'} = '';
+    $Self->{Translation}->{'Full FAQ'} = '';
     $Self->{Translation}->{'Group for the approval of FAQ articles.'} = '';
     $Self->{Translation}->{'History of this FAQ'} = 'Historique de cette FAQ';
     $Self->{Translation}->{'Include internal fields on a FAQ based Ticket.'} = '';
@@ -371,8 +396,13 @@ sub Data {
     $Self->{Translation}->{'Parameters for the pages (in which the FAQ items are shown) of the small FAQ overview.'} =
         '';
     $Self->{Translation}->{'Print this FAQ'} = 'Imprimer cette FAQ';
+    $Self->{Translation}->{'Public FAQ Print.'} = '';
+    $Self->{Translation}->{'Public FAQ Zoom.'} = '';
+    $Self->{Translation}->{'Public FAQ search.'} = '';
+    $Self->{Translation}->{'Public FAQ.'} = '';
     $Self->{Translation}->{'Queue for the approval of FAQ articles.'} = '';
     $Self->{Translation}->{'Rates for voting. Key must be in percent.'} = '';
+    $Self->{Translation}->{'S'} = '';
     $Self->{Translation}->{'Search FAQ'} = 'Recherche dans FAQ';
     $Self->{Translation}->{'Set the default height (in pixels) of inline HTML fields in AgentFAQZoom.'} =
         '';
@@ -407,6 +437,7 @@ sub Data {
         '';
     $Self->{Translation}->{'Shows a link in the menu to print a FAQ in the its zoom view of the agent interface.'} =
         '';
+    $Self->{Translation}->{'Text Only'} = '';
     $Self->{Translation}->{'The identifier for a FAQ, e.g. FAQ#, KB#, MyFAQ#. The default is FAQ#.'} =
         '';
     $Self->{Translation}->{'This setting defines that a \'FAQ\' object can be linked with other \'FAQ\' objects using the \'Normal\' link type.'} =
@@ -420,6 +451,11 @@ sub Data {
     $Self->{Translation}->{'Ticket body for approval of FAQ article.'} = '';
     $Self->{Translation}->{'Ticket subject for approval of FAQ article.'} = '';
     $Self->{Translation}->{'Toolbar Item for a shortcut.'} = '';
+    $Self->{Translation}->{'Your queue selection of your preferred queues. You also get notified about those queues via email if enabled.'} =
+        '';
+    $Self->{Translation}->{'Your service selection of your preferred services. You also get notified about those services via email if enabled.'} =
+        '';
+    $Self->{Translation}->{'public (public)'} = '';
 
 }
 

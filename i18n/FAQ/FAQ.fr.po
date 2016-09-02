@@ -1,12 +1,14 @@
 # 
 # Translators:
+# Marc De Spiegeleer <marcds@scarlet.be>, 2016
 # Matthieu HUTIN, 2015
 # Richard BARET <richardbaret@gmail.com>, 2015
+# ShevAbam, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-05-10 11:49+0000\n"
-"PO-Revision-Date: 2016-05-10 16:53+0000\n"
+"POT-Creation-Date: 2016-09-02 15:34+0000\n"
+"PO-Revision-Date: 2016-09-02 20:37+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: French (http://www.transifex.com/otrs/OTRS/language/fr/)\n"
 "MIME-Version: 1.0\n"
@@ -21,7 +23,7 @@ msgstr "interne"
 
 #. Template: AAAFAQ
 msgid "public"
-msgstr "publi"
+msgstr "public"
 
 #. Template: AAAFAQ
 msgid "external"
@@ -274,8 +276,8 @@ msgid "FAQ Language Management"
 msgstr "Gestion Langue FAQ"
 
 #. Template: AgentFAQLanguage
-msgid "Use this feature if you want to work with multiple languges."
-msgstr "Utiliser cette fonction afin de travailler avec de multiples langues"
+msgid "Use this feature if you want to work with multiple languages."
+msgstr ""
 
 #. Template: AgentFAQLanguage
 msgid "Add language"
@@ -340,19 +342,19 @@ msgstr "Dernière modification par"
 
 #. Template: AgentFAQSearch
 msgid "FAQ Article Create Time (before/after)"
-msgstr ""
+msgstr "Date Création Article (avant/après)"
 
 #. Template: AgentFAQSearch
 msgid "FAQ Article Create Time (between)"
-msgstr ""
+msgstr "Date Création Article (période)"
 
 #. Template: AgentFAQSearch
 msgid "FAQ Article Change Time (before/after)"
-msgstr ""
+msgstr "Date Modification Article (avant/après)"
 
 #. Template: AgentFAQSearch
 msgid "FAQ Article Change Time (between)"
-msgstr ""
+msgstr "Date Modification Article (période)"
 
 #. Template: AgentFAQSearchOpenSearchDescriptionFulltext
 msgid "FAQFulltext"
@@ -380,23 +382,23 @@ msgstr "Vote spécifique"
 
 #. Template: AgentFAQSearchSmall
 msgid "e. g. Equals 10 or GreaterThan 60"
-msgstr ""
+msgstr "p.ex. égal à 10 ou supérieur à 60"
 
 #. Template: AgentFAQSearchSmall
 msgid "Rate"
-msgstr ""
+msgstr "Noter"
 
 #. Template: AgentFAQSearchSmall
 msgid "No rate settings"
-msgstr ""
+msgstr "Pas de réglage de cote"
 
 #. Template: AgentFAQSearchSmall
 msgid "Specific rate"
-msgstr ""
+msgstr "Cote spécifique"
 
 #. Template: AgentFAQSearchSmall
 msgid "e. g. Equals 25% or GreaterThan 75%"
-msgstr ""
+msgstr "p.ex égal à 25% ou supérieur à 75%"
 
 #. Template: AgentFAQSearchSmall
 msgid "FAQ Article Create Time"
@@ -497,19 +499,19 @@ msgstr ""
 
 #. Template: CustomerFAQSearch
 msgid "Rate restrictions"
-msgstr ""
+msgstr "Restrictions de cote"
 
 #. Template: CustomerFAQSearch
 msgid "Only FAQ articles with rate..."
-msgstr ""
+msgstr "Uniquement les articles de FAQ avec cote ..."
 
 #. Template: CustomerFAQSearch
 msgid "Only FAQ articles created"
-msgstr ""
+msgstr "Uniquement les nouveaux articles de FAQ"
 
 #. Template: CustomerFAQSearch
 msgid "Only FAQ articles created between"
-msgstr ""
+msgstr "Uniquement les articles de FAQ créés entre"
 
 #. Template: CustomerFAQSearch
 msgid "Search-Profile as Template?"
@@ -533,7 +535,7 @@ msgstr "Revenir au Navigateur FAQ"
 
 #. Perl Module: Kernel/Modules/AgentFAQJournal.pm
 msgid "FAQ Journal"
-msgstr ""
+msgstr "Journal de FAQ"
 
 #. Perl Module: Kernel/Modules/AgentFAQPrint.pm
 msgid "Last update"
@@ -541,15 +543,35 @@ msgstr "Dernière mise à jour"
 
 #. Perl Module: Kernel/Modules/AgentFAQPrint.pm
 msgid "FAQ Dynamic Fields"
-msgstr ""
+msgstr "Champs dynamiques de FAQ"
 
 #. Perl Module: Kernel/Modules/AgentFAQSearch.pm
 msgid "No Result!"
+msgstr "Aucun résultat !"
+
+#. Perl Module: Kernel/Output/HTML/HeaderMeta/AgentFAQSearch.pm
+msgid "%s (FAQFulltext)"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/HeaderMeta/CustomerFAQSearch.pm
+msgid "%s - Customer (%s)"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/HeaderMeta/CustomerFAQSearch.pm
+msgid "%s - Customer (FAQFulltext)"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/HeaderMeta/PublicFAQSearch.pm
+msgid "%s - Public (%s)"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/HeaderMeta/PublicFAQSearch.pm
+msgid "%s - Public (FAQFulltext)"
 msgstr ""
 
 #. Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
 msgid "This article is empty!"
-msgstr ""
+msgstr "Cet article est vide !"
 
 #. SysConfig
 msgid ""
@@ -557,6 +579,10 @@ msgid ""
 "Image allows two input kinds. First the name of an image (e.g. faq.png). In "
 "this case the OTRS image path will be used. The second possibility is to "
 "insert the link to the image."
+msgstr ""
+
+#. SysConfig
+msgid "Add FAQ article"
 msgstr ""
 
 #. SysConfig
@@ -570,6 +596,22 @@ msgstr "Durée de validité du Cache pour les éléments de la FAQ"
 #. SysConfig
 msgid "Category Management"
 msgstr "Gestion des catégories"
+
+#. SysConfig
+msgid "Customer FAQ Print."
+msgstr ""
+
+#. SysConfig
+msgid "Customer FAQ Zoom."
+msgstr ""
+
+#. SysConfig
+msgid "Customer FAQ search."
+msgstr ""
+
+#. SysConfig
+msgid "Customer FAQ."
+msgstr ""
 
 #. SysConfig
 msgid "Decimal places of the voting result."
@@ -619,6 +661,12 @@ msgstr ""
 
 #. SysConfig
 msgid "Defines an overview module to show the small view of a FAQ list."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Defines if the enhanced mode should be used (enables use of table, replace, "
+"subscript, superscript, paste from word, etc.) in customer interface."
 msgstr ""
 
 #. SysConfig
@@ -842,11 +890,39 @@ msgid "Enable voting mechanism on FAQ module."
 msgstr ""
 
 #. SysConfig
+msgid "FAQ AJAX Responder"
+msgstr ""
+
+#. SysConfig
+msgid "FAQ AJAX Responder for Richtext."
+msgstr ""
+
+#. SysConfig
+msgid "FAQ Area"
+msgstr ""
+
+#. SysConfig
+msgid "FAQ Area."
+msgstr ""
+
+#. SysConfig
+msgid "FAQ Delete."
+msgstr ""
+
+#. SysConfig
+msgid "FAQ Edit."
+msgstr ""
+
+#. SysConfig
 msgid "FAQ Journal Overview \"Small\" Limit"
 msgstr ""
 
 #. SysConfig
 msgid "FAQ Overview \"Small\" Limit"
+msgstr ""
+
+#. SysConfig
+msgid "FAQ Print."
 msgstr ""
 
 #. SysConfig
@@ -862,10 +938,6 @@ msgid "FAQ search backend router of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid "FAQ-Area"
-msgstr ""
-
-#. SysConfig
 msgid "Field4"
 msgstr ""
 
@@ -875,6 +947,10 @@ msgstr ""
 
 #. SysConfig
 msgid "Frontend module registration for the public interface."
+msgstr ""
+
+#. SysConfig
+msgid "Full FAQ"
 msgstr ""
 
 #. SysConfig
@@ -1082,11 +1158,31 @@ msgid "Print this FAQ"
 msgstr "Imprimer cette FAQ"
 
 #. SysConfig
+msgid "Public FAQ Print."
+msgstr ""
+
+#. SysConfig
+msgid "Public FAQ Zoom."
+msgstr ""
+
+#. SysConfig
+msgid "Public FAQ search."
+msgstr ""
+
+#. SysConfig
+msgid "Public FAQ."
+msgstr ""
+
+#. SysConfig
 msgid "Queue for the approval of FAQ articles."
 msgstr ""
 
 #. SysConfig
 msgid "Rates for voting. Key must be in percent."
+msgstr ""
+
+#. SysConfig
+msgid "S"
 msgstr ""
 
 #. SysConfig
@@ -1196,6 +1292,10 @@ msgid ""
 msgstr ""
 
 #. SysConfig
+msgid "Text Only"
+msgstr ""
+
+#. SysConfig
 msgid "The identifier for a FAQ, e.g. FAQ#, KB#, MyFAQ#. The default is FAQ#."
 msgstr ""
 
@@ -1233,4 +1333,20 @@ msgstr ""
 
 #. SysConfig
 msgid "Toolbar Item for a shortcut."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Your queue selection of your preferred queues. You also get notified about "
+"those queues via email if enabled."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Your service selection of your preferred services. You also get notified "
+"about those services via email if enabled."
+msgstr ""
+
+#. SysConfig
+msgid "public (public)"
 msgstr ""

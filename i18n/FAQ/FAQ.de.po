@@ -12,8 +12,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-05-10 11:49+0000\n"
-"PO-Revision-Date: 2016-05-10 16:53+0000\n"
+"POT-Creation-Date: 2016-09-02 15:34+0000\n"
+"PO-Revision-Date: 2016-09-02 20:37+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: German (http://www.transifex.com/otrs/OTRS/language/de/)\n"
 "MIME-Version: 1.0\n"
@@ -281,8 +281,8 @@ msgid "FAQ Language Management"
 msgstr "FAQ-Sprachen-Verwaltung"
 
 #. Template: AgentFAQLanguage
-msgid "Use this feature if you want to work with multiple languges."
-msgstr "Verwenden Sie dieses Feature wenn Sie mit verschiedenen Sprachen arbeiten wollen."
+msgid "Use this feature if you want to work with multiple languages."
+msgstr ""
 
 #. Template: AgentFAQLanguage
 msgid "Add language"
@@ -554,6 +554,26 @@ msgstr "FAQ Dynamische Felder"
 msgid "No Result!"
 msgstr "Kein Ergebnis!"
 
+#. Perl Module: Kernel/Output/HTML/HeaderMeta/AgentFAQSearch.pm
+msgid "%s (FAQFulltext)"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/HeaderMeta/CustomerFAQSearch.pm
+msgid "%s - Customer (%s)"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/HeaderMeta/CustomerFAQSearch.pm
+msgid "%s - Customer (FAQFulltext)"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/HeaderMeta/PublicFAQSearch.pm
+msgid "%s - Public (%s)"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/HeaderMeta/PublicFAQSearch.pm
+msgid "%s - Public (FAQFulltext)"
+msgstr ""
+
 #. Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
 msgid "This article is empty!"
 msgstr "Dieser Artikel ist leer!"
@@ -567,6 +587,10 @@ msgid ""
 msgstr "Ein Filter zur automatischen Generierung von FAQ-Links, wenn ein Hinweis auf einen FAQ-Artikel identifiziert wird. Das Element Image erlaubt zwei Eingabeformen: Erstens der Name eines Icons (z. B. faq.png). In diesem Fall wird auf das Grafik-Verzeichnis des OTRS zugegriffen. Als zweite Möglichkeit kann man aber auch den direkten Link zur Grafik angeben (z. B. http://otrs.org/faq.png)."
 
 #. SysConfig
+msgid "Add FAQ article"
+msgstr ""
+
+#. SysConfig
 msgid "CSS color for the voting result."
 msgstr "CSS-Farbe für das Bewertungs-Ergebnis."
 
@@ -577,6 +601,22 @@ msgstr "Cachezeit für FAQ-Artikel."
 #. SysConfig
 msgid "Category Management"
 msgstr "Kategorien-Verwaltung"
+
+#. SysConfig
+msgid "Customer FAQ Print."
+msgstr ""
+
+#. SysConfig
+msgid "Customer FAQ Zoom."
+msgstr ""
+
+#. SysConfig
+msgid "Customer FAQ search."
+msgstr ""
+
+#. SysConfig
+msgid "Customer FAQ."
+msgstr ""
 
 #. SysConfig
 msgid "Decimal places of the voting result."
@@ -627,6 +667,12 @@ msgstr "Definiert ein Übersichts-Modul um die Small-Ansicht im FAQ-Journal anzu
 #. SysConfig
 msgid "Defines an overview module to show the small view of a FAQ list."
 msgstr "Definiert ein Übersichts-Modul um die Small-Ansicht einer FAQ-Liste anzuzeigen."
+
+#. SysConfig
+msgid ""
+"Defines if the enhanced mode should be used (enables use of table, replace, "
+"subscript, superscript, paste from word, etc.) in customer interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -849,12 +895,40 @@ msgid "Enable voting mechanism on FAQ module."
 msgstr "Bewertungs-Mechanismus im FAQ-Modul aktivieren."
 
 #. SysConfig
+msgid "FAQ AJAX Responder"
+msgstr ""
+
+#. SysConfig
+msgid "FAQ AJAX Responder for Richtext."
+msgstr ""
+
+#. SysConfig
+msgid "FAQ Area"
+msgstr ""
+
+#. SysConfig
+msgid "FAQ Area."
+msgstr ""
+
+#. SysConfig
+msgid "FAQ Delete."
+msgstr ""
+
+#. SysConfig
+msgid "FAQ Edit."
+msgstr ""
+
+#. SysConfig
 msgid "FAQ Journal Overview \"Small\" Limit"
 msgstr "FAQ-Journal Anzeige-Limit für die Small-Ansicht"
 
 #. SysConfig
 msgid "FAQ Overview \"Small\" Limit"
 msgstr "FAQ-Übersicht \"kleines\" Limit"
+
+#. SysConfig
+msgid "FAQ Print."
+msgstr ""
 
 #. SysConfig
 msgid "FAQ limit per page for FAQ Journal Overview \"Small\""
@@ -869,10 +943,6 @@ msgid "FAQ search backend router of the agent interface."
 msgstr "Such-Backend-Router für die FAQ-Suche im Agenten-Interface."
 
 #. SysConfig
-msgid "FAQ-Area"
-msgstr "FAQ-Bereich"
-
-#. SysConfig
 msgid "Field4"
 msgstr "Feld4"
 
@@ -883,6 +953,10 @@ msgstr "Feld5"
 #. SysConfig
 msgid "Frontend module registration for the public interface."
 msgstr "Frontend-Modul-Registrierung für das Public-Interface"
+
+#. SysConfig
+msgid "Full FAQ"
+msgstr ""
 
 #. SysConfig
 msgid "Group for the approval of FAQ articles."
@@ -1089,12 +1163,32 @@ msgid "Print this FAQ"
 msgstr "FAQ drucken"
 
 #. SysConfig
+msgid "Public FAQ Print."
+msgstr ""
+
+#. SysConfig
+msgid "Public FAQ Zoom."
+msgstr ""
+
+#. SysConfig
+msgid "Public FAQ search."
+msgstr ""
+
+#. SysConfig
+msgid "Public FAQ."
+msgstr ""
+
+#. SysConfig
 msgid "Queue for the approval of FAQ articles."
 msgstr "Queue für die Freigabe von FAQ-Artikeln."
 
 #. SysConfig
 msgid "Rates for voting. Key must be in percent."
 msgstr "Gewichtung für die Bewertung. Der Key muss in Prozent angegeben werden."
+
+#. SysConfig
+msgid "S"
+msgstr ""
 
 #. SysConfig
 msgid "Search FAQ"
@@ -1203,6 +1297,10 @@ msgid ""
 msgstr "Zeigt einen Link in der Menu-Leiste in der Zoom-Ansicht im Agenten-Interface an, der es ermöglicht einen FAQ-Artikel zu drucken."
 
 #. SysConfig
+msgid "Text Only"
+msgstr ""
+
+#. SysConfig
 msgid "The identifier for a FAQ, e.g. FAQ#, KB#, MyFAQ#. The default is FAQ#."
 msgstr "Der Identifikator für einen FAQ-Artikel, z. B. FAQ#, KB#, MyFAQ#. Der Standardwert ist FAQ#."
 
@@ -1241,3 +1339,19 @@ msgstr "Betreff des Tickets zur Freigabe eines FAQ-Artikels."
 #. SysConfig
 msgid "Toolbar Item for a shortcut."
 msgstr "Werkzeugleisteneintrag für den Schnellzugriff."
+
+#. SysConfig
+msgid ""
+"Your queue selection of your preferred queues. You also get notified about "
+"those queues via email if enabled."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Your service selection of your preferred services. You also get notified "
+"about those services via email if enabled."
+msgstr ""
+
+#. SysConfig
+msgid "public (public)"
+msgstr ""

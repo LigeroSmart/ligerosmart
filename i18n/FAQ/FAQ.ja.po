@@ -6,9 +6,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-05-10 11:49+0000\n"
-"PO-Revision-Date: 2016-06-22 09:12+0000\n"
-"Last-Translator: Hisatoshi Onishi <hisatoshi.onishi@gmail.com>\n"
+"POT-Creation-Date: 2016-09-02 15:34+0000\n"
+"PO-Revision-Date: 2016-09-02 20:37+0000\n"
+"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Japanese (http://www.transifex.com/otrs/OTRS/language/ja/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -275,8 +275,8 @@ msgid "FAQ Language Management"
 msgstr "FAQ 言語管理"
 
 #. Template: AgentFAQLanguage
-msgid "Use this feature if you want to work with multiple languges."
-msgstr "多言語で作業をしたい場合、この項目を設定してください。"
+msgid "Use this feature if you want to work with multiple languages."
+msgstr ""
 
 #. Template: AgentFAQLanguage
 msgid "Add language"
@@ -548,6 +548,26 @@ msgstr "FAQ ダイナミック・フィールド"
 msgid "No Result!"
 msgstr "結果がありません。"
 
+#. Perl Module: Kernel/Output/HTML/HeaderMeta/AgentFAQSearch.pm
+msgid "%s (FAQFulltext)"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/HeaderMeta/CustomerFAQSearch.pm
+msgid "%s - Customer (%s)"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/HeaderMeta/CustomerFAQSearch.pm
+msgid "%s - Customer (FAQFulltext)"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/HeaderMeta/PublicFAQSearch.pm
+msgid "%s - Public (%s)"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/HeaderMeta/PublicFAQSearch.pm
+msgid "%s - Public (FAQFulltext)"
+msgstr ""
+
 #. Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
 msgid "This article is empty!"
 msgstr "この記事は空です!"
@@ -561,6 +581,10 @@ msgid ""
 msgstr "フィルタ定義　-定義された文字列（string）にリンクを追加するhtmlアウトプット-  エレメント・イメージは、2種類のインプットが可能です。1つ目、イメージの名前です (例. faq.png)。この場合、OTRSイメージ・パスが使用されます。2つ目、イメージにリンクを挿入することが可能性です。"
 
 #. SysConfig
+msgid "Add FAQ article"
+msgstr ""
+
+#. SysConfig
 msgid "CSS color for the voting result."
 msgstr "評価の結果表示ようのカラー（スタイルシート）"
 
@@ -571,6 +595,22 @@ msgstr "FAQ項目から離脱するまでのキャッシュ時間"
 #. SysConfig
 msgid "Category Management"
 msgstr "カテゴリー管理"
+
+#. SysConfig
+msgid "Customer FAQ Print."
+msgstr ""
+
+#. SysConfig
+msgid "Customer FAQ Zoom."
+msgstr ""
+
+#. SysConfig
+msgid "Customer FAQ search."
+msgstr ""
+
+#. SysConfig
+msgid "Customer FAQ."
+msgstr ""
 
 #. SysConfig
 msgid "Decimal places of the voting result."
@@ -621,6 +661,12 @@ msgstr "簡易版FAQジャーナル表示用モジュールの概要を定義"
 #. SysConfig
 msgid "Defines an overview module to show the small view of a FAQ list."
 msgstr "簡易版FAQ一覧表示用モジュールの概要を定義"
+
+#. SysConfig
+msgid ""
+"Defines if the enhanced mode should be used (enables use of table, replace, "
+"subscript, superscript, paste from word, etc.) in customer interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -843,12 +889,40 @@ msgid "Enable voting mechanism on FAQ module."
 msgstr "評価の機能を有効にする"
 
 #. SysConfig
+msgid "FAQ AJAX Responder"
+msgstr ""
+
+#. SysConfig
+msgid "FAQ AJAX Responder for Richtext."
+msgstr ""
+
+#. SysConfig
+msgid "FAQ Area"
+msgstr ""
+
+#. SysConfig
+msgid "FAQ Area."
+msgstr ""
+
+#. SysConfig
+msgid "FAQ Delete."
+msgstr ""
+
+#. SysConfig
+msgid "FAQ Edit."
+msgstr ""
+
+#. SysConfig
 msgid "FAQ Journal Overview \"Small\" Limit"
 msgstr "FAQジャーナル一覧(S)の表示数"
 
 #. SysConfig
 msgid "FAQ Overview \"Small\" Limit"
 msgstr "FAQ一覧(S)の表示数"
+
+#. SysConfig
+msgid "FAQ Print."
+msgstr ""
 
 #. SysConfig
 msgid "FAQ limit per page for FAQ Journal Overview \"Small\""
@@ -863,10 +937,6 @@ msgid "FAQ search backend router of the agent interface."
 msgstr "担当者インターフェイスにおける、FAQ検索のバックエンドルータ"
 
 #. SysConfig
-msgid "FAQ-Area"
-msgstr " FAQ エリア"
-
-#. SysConfig
 msgid "Field4"
 msgstr "Field4"
 
@@ -877,6 +947,10 @@ msgstr "Field5"
 #. SysConfig
 msgid "Frontend module registration for the public interface."
 msgstr "公開画面のフロントエンドモジュールの定義"
+
+#. SysConfig
+msgid "Full FAQ"
+msgstr ""
 
 #. SysConfig
 msgid "Group for the approval of FAQ articles."
@@ -1083,12 +1157,32 @@ msgid "Print this FAQ"
 msgstr "この記事を印刷"
 
 #. SysConfig
+msgid "Public FAQ Print."
+msgstr ""
+
+#. SysConfig
+msgid "Public FAQ Zoom."
+msgstr ""
+
+#. SysConfig
+msgid "Public FAQ search."
+msgstr ""
+
+#. SysConfig
+msgid "Public FAQ."
+msgstr ""
+
+#. SysConfig
 msgid "Queue for the approval of FAQ articles."
 msgstr "記事承認キュー"
 
 #. SysConfig
 msgid "Rates for voting. Key must be in percent."
 msgstr "評価率。キーは、パーセントで指定する必要があります。"
+
+#. SysConfig
+msgid "S"
+msgstr ""
 
 #. SysConfig
 msgid "Search FAQ"
@@ -1197,6 +1291,10 @@ msgid ""
 msgstr "担当者インターフェイスのズームビューでFAQを印刷リンクを表示する。"
 
 #. SysConfig
+msgid "Text Only"
+msgstr ""
+
+#. SysConfig
 msgid "The identifier for a FAQ, e.g. FAQ#, KB#, MyFAQ#. The default is FAQ#."
 msgstr "FAQ用の識別子 例. FAQ#, KB#, MyFAQ#. デフォルトでは FAQ# となっています"
 
@@ -1235,3 +1333,19 @@ msgstr "FAQ承認チケット用　チケット件名 "
 #. SysConfig
 msgid "Toolbar Item for a shortcut."
 msgstr "ショートカットのためのツールバー・アイテムです。"
+
+#. SysConfig
+msgid ""
+"Your queue selection of your preferred queues. You also get notified about "
+"those queues via email if enabled."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Your service selection of your preferred services. You also get notified "
+"about those services via email if enabled."
+msgstr ""
+
+#. SysConfig
+msgid "public (public)"
+msgstr ""

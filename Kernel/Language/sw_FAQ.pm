@@ -97,8 +97,8 @@ sub Data {
 
     # Template: AgentFAQLanguage
     $Self->{Translation}->{'FAQ Language Management'} = 'Menejimenti ya lugha ya maswali';
-    $Self->{Translation}->{'Use this feature if you want to work with multiple languges.'} =
-        'Tumia kipengele hiki kama unataka kutumia lugha nyingi ';
+    $Self->{Translation}->{'Use this feature if you want to work with multiple languages.'} =
+        '';
     $Self->{Translation}->{'Add language'} = 'Ongeza lugha';
     $Self->{Translation}->{'Delete Language %s'} = 'Futa Lugha';
     $Self->{Translation}->{'Add Language'} = 'Ongeza Lugha';
@@ -199,15 +199,31 @@ sub Data {
     # Perl Module: Kernel/Modules/AgentFAQSearch.pm
     $Self->{Translation}->{'No Result!'} = '';
 
+    # Perl Module: Kernel/Output/HTML/HeaderMeta/AgentFAQSearch.pm
+    $Self->{Translation}->{'%s (FAQFulltext)'} = '';
+
+    # Perl Module: Kernel/Output/HTML/HeaderMeta/CustomerFAQSearch.pm
+    $Self->{Translation}->{'%s - Customer (%s)'} = '';
+    $Self->{Translation}->{'%s - Customer (FAQFulltext)'} = '';
+
+    # Perl Module: Kernel/Output/HTML/HeaderMeta/PublicFAQSearch.pm
+    $Self->{Translation}->{'%s - Public (%s)'} = '';
+    $Self->{Translation}->{'%s - Public (FAQFulltext)'} = '';
+
     # Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
     $Self->{Translation}->{'This article is empty!'} = '';
 
     # SysConfig
     $Self->{Translation}->{'A filter for HTML output to add links behind a defined string. The element Image allows two input kinds. First the name of an image (e.g. faq.png). In this case the OTRS image path will be used. The second possibility is to insert the link to the image.'} =
         'Kichujio cha matokeo ya HTML ili kuongeza viungo kwa tungo zilizo fafanuliwa. Sura ya elemnti hii inaruhusu maingizo ya aina mbili. Kwanza jinala sura (mf. faq.png). Kwa kesi hii sura ya njia ya OTRS itatumika. Njia ya pili ni kuingiza kiungo cha hiyo sura.';
+    $Self->{Translation}->{'Add FAQ article'} = '';
     $Self->{Translation}->{'CSS color for the voting result.'} = 'Rangi ya CSS kwa matokeo ya kura';
     $Self->{Translation}->{'Cache Time To Leave for FAQ items.'} = 'Muda wa maswali yaliyyoulizwa mara myingi kufutika kutoka kwenye kumbukumbu';
     $Self->{Translation}->{'Category Management'} = 'Usimamizi wa kategori';
+    $Self->{Translation}->{'Customer FAQ Print.'} = '';
+    $Self->{Translation}->{'Customer FAQ Zoom.'} = '';
+    $Self->{Translation}->{'Customer FAQ search.'} = '';
+    $Self->{Translation}->{'Customer FAQ.'} = '';
     $Self->{Translation}->{'Decimal places of the voting result.'} = 'Mwongo wa matokeo ya kura';
     $Self->{Translation}->{'Default category name.'} = 'Jina la chaguo-msingi la kategori';
     $Self->{Translation}->{'Default language for FAQ articles on single language mode.'} = 'Chaguo-msingi la lugha ya makala ya maswali yaliyoulizwa mara nyingi katika lugha moja.';
@@ -226,6 +242,8 @@ sub Data {
         'Inaeleza mapitio ya moduli kuonyesha  muonekano mdogo wa jarida la maswali yaliyoulizwa mara kwa mara.';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ list.'} =
         'Inaeleza mapitio ya moduli kuonyesha muonekano mdogo wa orodha ya maswali yaliyoulizwa mara kwa mara.';
+    $Self->{Translation}->{'Defines if the enhanced mode should be used (enables use of table, replace, subscript, superscript, paste from word, etc.) in customer interface.'} =
+        '';
     $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in a FAQ search of the agent interface.'} =
         'Inafafanua chaguo-msingi kiumbi cha maswali yanayoulizwa mara kwa mara kwa ajili ya upangaji wa maswali yanayoulizwa mara kwa mara katika maswali yanayoulizwa mara kwa mara tafuti ya kiolesura cha wakala.';
     $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in a FAQ search of the customer interface.'} =
@@ -296,15 +314,22 @@ sub Data {
     $Self->{Translation}->{'Edit this FAQ'} = 'Hariri makala hii';
     $Self->{Translation}->{'Enable multiple languages on FAQ module.'} = 'Wezesha Lugha nyingi nyingi katika maswali haya.';
     $Self->{Translation}->{'Enable voting mechanism on FAQ module.'} = 'Wezesha ';
+    $Self->{Translation}->{'FAQ AJAX Responder'} = '';
+    $Self->{Translation}->{'FAQ AJAX Responder for Richtext.'} = '';
+    $Self->{Translation}->{'FAQ Area'} = '';
+    $Self->{Translation}->{'FAQ Area.'} = '';
+    $Self->{Translation}->{'FAQ Delete.'} = '';
+    $Self->{Translation}->{'FAQ Edit.'} = '';
     $Self->{Translation}->{'FAQ Journal Overview "Small" Limit'} = ' Kikomo "kidogo" cha mapitio ya jarida la maswali yaliyoulizwa mara kwa mara';
     $Self->{Translation}->{'FAQ Overview "Small" Limit'} = 'Kikomo "kidogo" cha mapitio ya maswali yaliyoulizwa mara kwa mara.';
+    $Self->{Translation}->{'FAQ Print.'} = '';
     $Self->{Translation}->{'FAQ limit per page for FAQ Journal Overview "Small"'} = 'Upeo wa maswali yanayoulizwa mara kwa mara kwa ukurasa kwa mapitio ya jarida ya maswali yanayoulizwa mara kwa mara. \'\'Ndogo\'\'.';
     $Self->{Translation}->{'FAQ limit per page for FAQ Overview "Small"'} = 'Upeo wa maswali yanayoulizwa mara kwa mara kwa ukurasa kwa mapitio  ya maswali yanayoulizwa mara kwa mara. \'\'Ndogo\'\'.';
     $Self->{Translation}->{'FAQ search backend router of the agent interface.'} = 'Maswali yanayoulizwa mara kwa mara tafuta backend ruta ya kiolesura cha wakala.';
-    $Self->{Translation}->{'FAQ-Area'} = 'Sehemu ya maswali';
     $Self->{Translation}->{'Field4'} = 'Sehemu4';
     $Self->{Translation}->{'Field5'} = 'Sehemu5';
     $Self->{Translation}->{'Frontend module registration for the public interface.'} = 'Moduli ya usajili ya frontend kwa ajili ya kiolesura cha umma.';
+    $Self->{Translation}->{'Full FAQ'} = '';
     $Self->{Translation}->{'Group for the approval of FAQ articles.'} = 'Makundi ya idhini kwa maswali yaliyoulizwa mara kwa mara.';
     $Self->{Translation}->{'History of this FAQ'} = 'Historia ya maswali haya yaliyoulizwa mara kwa mara.';
     $Self->{Translation}->{'Include internal fields on a FAQ based Ticket.'} = 'Jumuisha sehemu za ndani za maswali yaliyoulizwa mara kwa mara kulingana na tiketi.';
@@ -371,8 +396,13 @@ sub Data {
     $Self->{Translation}->{'Parameters for the pages (in which the FAQ items are shown) of the small FAQ overview.'} =
         'Parameta za kurasa (ambazo vipengee vya maswali yanayoulizwa mara kwa mara zimeonyeshwa) za mapitio madogo ya  maswali yanayoulizwa mara kwa mara.';
     $Self->{Translation}->{'Print this FAQ'} = 'Chapisha maswali haya.';
+    $Self->{Translation}->{'Public FAQ Print.'} = '';
+    $Self->{Translation}->{'Public FAQ Zoom.'} = '';
+    $Self->{Translation}->{'Public FAQ search.'} = '';
+    $Self->{Translation}->{'Public FAQ.'} = '';
     $Self->{Translation}->{'Queue for the approval of FAQ articles.'} = 'Foleni ya idhini ya makala ya maswali yanayoulizwa mara akwa mara.';
     $Self->{Translation}->{'Rates for voting. Key must be in percent.'} = 'Thaminisho la kura. Funguo lazima iwe kwenye asilimia.';
+    $Self->{Translation}->{'S'} = '';
     $Self->{Translation}->{'Search FAQ'} = 'Tafuta maswali';
     $Self->{Translation}->{'Set the default height (in pixels) of inline HTML fields in AgentFAQZoom.'} =
         'Seti urefu wa chaguo-msingi (katika pikseli) ya ndani ya mstari wa ugo wa HTML katika ukuzaji wa maswali yanayoulizwa mara kwa mara ya wakala.';
@@ -407,6 +437,7 @@ sub Data {
         'Inaonyesha kiunganishi katika orodha cha kurudi nyuma katika mandhari kuzwa ya maswali yanayoulizwa mara kwa mara ya wakala wa kiolesura.';
     $Self->{Translation}->{'Shows a link in the menu to print a FAQ in the its zoom view of the agent interface.'} =
         'Inaonyesha kiunganishi katika orodha kuchapisha maswali yanayoulizwa mara kwa mara katika mandhari iliyokuzwa ya wakala wa kiolesura.';
+    $Self->{Translation}->{'Text Only'} = '';
     $Self->{Translation}->{'The identifier for a FAQ, e.g. FAQ#, KB#, MyFAQ#. The default is FAQ#.'} =
         'Kitambulishi cha maswali yanayoulizwa mara kwa mara, mfano maswali yanayoulizwa mara kwa mara#,KB#, MyFAQ#. Chaguo msingi ni maswali yanayoulizwa mara kwa mara#.';
     $Self->{Translation}->{'This setting defines that a \'FAQ\' object can be linked with other \'FAQ\' objects using the \'Normal\' link type.'} =
@@ -420,6 +451,11 @@ sub Data {
     $Self->{Translation}->{'Ticket body for approval of FAQ article.'} = 'Kiini cha tiketi kwa Idhini ya makala ya maswali yanayoulizwa mara kwa mara.';
     $Self->{Translation}->{'Ticket subject for approval of FAQ article.'} = 'Somo la tiketi kwa Idhini ya makala ya maswali yanayoulizwa mara kwa mara.';
     $Self->{Translation}->{'Toolbar Item for a shortcut.'} = 'Kipengele cha mwambaa zana kwa ajili ya mkato.';
+    $Self->{Translation}->{'Your queue selection of your preferred queues. You also get notified about those queues via email if enabled.'} =
+        '';
+    $Self->{Translation}->{'Your service selection of your preferred services. You also get notified about those services via email if enabled.'} =
+        '';
+    $Self->{Translation}->{'public (public)'} = '';
 
 }
 

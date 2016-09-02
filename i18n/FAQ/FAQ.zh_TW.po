@@ -5,9 +5,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-05-10 11:49+0000\n"
-"PO-Revision-Date: 2016-05-24 17:51+0000\n"
-"Last-Translator: Ann Li <dn.annli@gmail.com>\n"
+"POT-Creation-Date: 2016-09-02 15:34+0000\n"
+"PO-Revision-Date: 2016-09-02 20:37+0000\n"
+"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Chinese (Taiwan) (http://www.transifex.com/otrs/OTRS/language/zh_TW/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -274,8 +274,8 @@ msgid "FAQ Language Management"
 msgstr "常見問題語言管理"
 
 #. Template: AgentFAQLanguage
-msgid "Use this feature if you want to work with multiple languges."
-msgstr "使用此功能以利用多種語言操作。"
+msgid "Use this feature if you want to work with multiple languages."
+msgstr ""
 
 #. Template: AgentFAQLanguage
 msgid "Add language"
@@ -547,6 +547,26 @@ msgstr "常見問題動態欄位"
 msgid "No Result!"
 msgstr "沒有結果!"
 
+#. Perl Module: Kernel/Output/HTML/HeaderMeta/AgentFAQSearch.pm
+msgid "%s (FAQFulltext)"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/HeaderMeta/CustomerFAQSearch.pm
+msgid "%s - Customer (%s)"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/HeaderMeta/CustomerFAQSearch.pm
+msgid "%s - Customer (FAQFulltext)"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/HeaderMeta/PublicFAQSearch.pm
+msgid "%s - Public (%s)"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/HeaderMeta/PublicFAQSearch.pm
+msgid "%s - Public (FAQFulltext)"
+msgstr ""
+
 #. Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
 msgid "This article is empty!"
 msgstr "此文章為空白!"
@@ -560,6 +580,10 @@ msgid ""
 msgstr ""
 
 #. SysConfig
+msgid "Add FAQ article"
+msgstr ""
+
+#. SysConfig
 msgid "CSS color for the voting result."
 msgstr "選票結果使用的CSS 顏色"
 
@@ -570,6 +594,22 @@ msgstr "離開常見問題項目的緩存時間"
 #. SysConfig
 msgid "Category Management"
 msgstr "目錄分類管理"
+
+#. SysConfig
+msgid "Customer FAQ Print."
+msgstr ""
+
+#. SysConfig
+msgid "Customer FAQ Zoom."
+msgstr ""
+
+#. SysConfig
+msgid "Customer FAQ search."
+msgstr ""
+
+#. SysConfig
+msgid "Customer FAQ."
+msgstr ""
 
 #. SysConfig
 msgid "Decimal places of the voting result."
@@ -620,6 +660,12 @@ msgstr "設定顯示常見問題日誌小檢閱模式的概況模組"
 #. SysConfig
 msgid "Defines an overview module to show the small view of a FAQ list."
 msgstr "設定顯示常見問題列表小檢閱模式的概況模組"
+
+#. SysConfig
+msgid ""
+"Defines if the enhanced mode should be used (enables use of table, replace, "
+"subscript, superscript, paste from word, etc.) in customer interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -842,12 +888,40 @@ msgid "Enable voting mechanism on FAQ module."
 msgstr "啓用常見問題模組投票機制"
 
 #. SysConfig
+msgid "FAQ AJAX Responder"
+msgstr ""
+
+#. SysConfig
+msgid "FAQ AJAX Responder for Richtext."
+msgstr ""
+
+#. SysConfig
+msgid "FAQ Area"
+msgstr ""
+
+#. SysConfig
+msgid "FAQ Area."
+msgstr ""
+
+#. SysConfig
+msgid "FAQ Delete."
+msgstr ""
+
+#. SysConfig
+msgid "FAQ Edit."
+msgstr ""
+
+#. SysConfig
 msgid "FAQ Journal Overview \"Small\" Limit"
 msgstr "常見問題日誌概況 \"小\" 模式限制"
 
 #. SysConfig
 msgid "FAQ Overview \"Small\" Limit"
 msgstr "常見問題概況 \"小\"模式限制"
+
+#. SysConfig
+msgid "FAQ Print."
+msgstr ""
 
 #. SysConfig
 msgid "FAQ limit per page for FAQ Journal Overview \"Small\""
@@ -862,10 +936,6 @@ msgid "FAQ search backend router of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid "FAQ-Area"
-msgstr "常見問題－地域"
-
-#. SysConfig
 msgid "Field4"
 msgstr "欄位4"
 
@@ -876,6 +946,10 @@ msgstr "欄位5"
 #. SysConfig
 msgid "Frontend module registration for the public interface."
 msgstr "公開介面的前台模組登記"
+
+#. SysConfig
+msgid "Full FAQ"
+msgstr ""
 
 #. SysConfig
 msgid "Group for the approval of FAQ articles."
@@ -1082,12 +1156,32 @@ msgid "Print this FAQ"
 msgstr "列印此常見問題"
 
 #. SysConfig
+msgid "Public FAQ Print."
+msgstr ""
+
+#. SysConfig
+msgid "Public FAQ Zoom."
+msgstr ""
+
+#. SysConfig
+msgid "Public FAQ search."
+msgstr ""
+
+#. SysConfig
+msgid "Public FAQ."
+msgstr ""
+
+#. SysConfig
 msgid "Queue for the approval of FAQ articles."
 msgstr "常見問題文章審批佇列"
 
 #. SysConfig
 msgid "Rates for voting. Key must be in percent."
 msgstr "投票評分。數值必須為百分率。"
+
+#. SysConfig
+msgid "S"
+msgstr ""
 
 #. SysConfig
 msgid "Search FAQ"
@@ -1196,6 +1290,10 @@ msgid ""
 msgstr ""
 
 #. SysConfig
+msgid "Text Only"
+msgstr ""
+
+#. SysConfig
 msgid "The identifier for a FAQ, e.g. FAQ#, KB#, MyFAQ#. The default is FAQ#."
 msgstr ""
 
@@ -1233,4 +1331,20 @@ msgstr ""
 
 #. SysConfig
 msgid "Toolbar Item for a shortcut."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Your queue selection of your preferred queues. You also get notified about "
+"those queues via email if enabled."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Your service selection of your preferred services. You also get notified "
+"about those services via email if enabled."
+msgstr ""
+
+#. SysConfig
+msgid "public (public)"
 msgstr ""

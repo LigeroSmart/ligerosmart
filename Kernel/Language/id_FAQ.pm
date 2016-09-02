@@ -97,8 +97,8 @@ sub Data {
 
     # Template: AgentFAQLanguage
     $Self->{Translation}->{'FAQ Language Management'} = 'Manajemen Bahasa FAQ';
-    $Self->{Translation}->{'Use this feature if you want to work with multiple languges.'} =
-        'Gunakan fitur ini jika Anda bekerja dengan beberapa bahasa.';
+    $Self->{Translation}->{'Use this feature if you want to work with multiple languages.'} =
+        '';
     $Self->{Translation}->{'Add language'} = 'Tambah bahasa';
     $Self->{Translation}->{'Delete Language %s'} = 'Hapus Bahasa %s';
     $Self->{Translation}->{'Add Language'} = 'Tambah Bahasa';
@@ -199,15 +199,31 @@ sub Data {
     # Perl Module: Kernel/Modules/AgentFAQSearch.pm
     $Self->{Translation}->{'No Result!'} = 'Tidak ada hasil!';
 
+    # Perl Module: Kernel/Output/HTML/HeaderMeta/AgentFAQSearch.pm
+    $Self->{Translation}->{'%s (FAQFulltext)'} = '';
+
+    # Perl Module: Kernel/Output/HTML/HeaderMeta/CustomerFAQSearch.pm
+    $Self->{Translation}->{'%s - Customer (%s)'} = '';
+    $Self->{Translation}->{'%s - Customer (FAQFulltext)'} = '';
+
+    # Perl Module: Kernel/Output/HTML/HeaderMeta/PublicFAQSearch.pm
+    $Self->{Translation}->{'%s - Public (%s)'} = '';
+    $Self->{Translation}->{'%s - Public (FAQFulltext)'} = '';
+
     # Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
     $Self->{Translation}->{'This article is empty!'} = 'Artikel ini kosong!';
 
     # SysConfig
     $Self->{Translation}->{'A filter for HTML output to add links behind a defined string. The element Image allows two input kinds. First the name of an image (e.g. faq.png). In this case the OTRS image path will be used. The second possibility is to insert the link to the image.'} =
         'Sebuah filter untuk output HTML untuk menambahkan tautan terkait string yang ditentukan. Dua buah masukan diperkenankan untuk Elemen Gambar. Pertama nama dari gambar (contoh: faq.png). Pada kasus ini path gambar OTRS yang digunakan. Kemungkinan kedua adalah memasukkan tautan ke dalam gambar.';
+    $Self->{Translation}->{'Add FAQ article'} = '';
     $Self->{Translation}->{'CSS color for the voting result.'} = 'Warna CSS untuk hasil pemilihan.';
     $Self->{Translation}->{'Cache Time To Leave for FAQ items.'} = 'Waktu Cache Untuk Keluar dalam item FAQ';
     $Self->{Translation}->{'Category Management'} = 'Manajemen Kategori';
+    $Self->{Translation}->{'Customer FAQ Print.'} = '';
+    $Self->{Translation}->{'Customer FAQ Zoom.'} = '';
+    $Self->{Translation}->{'Customer FAQ search.'} = '';
+    $Self->{Translation}->{'Customer FAQ.'} = '';
     $Self->{Translation}->{'Decimal places of the voting result.'} = 'Posisi desimal pada hasil pemilihan.';
     $Self->{Translation}->{'Default category name.'} = 'Nama kategori default.';
     $Self->{Translation}->{'Default language for FAQ articles on single language mode.'} = 'Bahasa default untuk artikel FAQ pada mode satu bahasa.';
@@ -226,6 +242,8 @@ sub Data {
         'Tentukan sebuah gambaran modul untuk menampilkan tampilan kecil dari sebuah jurnal FAQ';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ list.'} =
         'Tentukan sebuah gambaran modul untuk menampilkan tampilan kecil dari sebuah daftar FAQ.';
+    $Self->{Translation}->{'Defines if the enhanced mode should be used (enables use of table, replace, subscript, superscript, paste from word, etc.) in customer interface.'} =
+        '';
     $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in a FAQ search of the agent interface.'} =
         'Tentukan atribut default FAQ untuk penyortiran FAQ dalam pencarian FAQ dari antarmuka agen';
     $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in a FAQ search of the customer interface.'} =
@@ -296,15 +314,22 @@ sub Data {
     $Self->{Translation}->{'Edit this FAQ'} = 'ubah FAQ ini.';
     $Self->{Translation}->{'Enable multiple languages on FAQ module.'} = 'Aktifkan multibahasa pada modul FAQ.';
     $Self->{Translation}->{'Enable voting mechanism on FAQ module.'} = 'Aktifkan mekanisme voting pada modul FA';
+    $Self->{Translation}->{'FAQ AJAX Responder'} = '';
+    $Self->{Translation}->{'FAQ AJAX Responder for Richtext.'} = '';
+    $Self->{Translation}->{'FAQ Area'} = '';
+    $Self->{Translation}->{'FAQ Area.'} = '';
+    $Self->{Translation}->{'FAQ Delete.'} = '';
+    $Self->{Translation}->{'FAQ Edit.'} = '';
     $Self->{Translation}->{'FAQ Journal Overview "Small" Limit'} = 'Jurnal gambaran batas "kecil"  FAQ';
     $Self->{Translation}->{'FAQ Overview "Small" Limit'} = 'Gambaran batas "Kecil"';
+    $Self->{Translation}->{'FAQ Print.'} = '';
     $Self->{Translation}->{'FAQ limit per page for FAQ Journal Overview "Small"'} = 'Batas per halaman FAQ untuk jurnal gambaran "kecil" FAQ';
     $Self->{Translation}->{'FAQ limit per page for FAQ Overview "Small"'} = 'Batas per halaman FAQ untuk gambaran "kecil" FAQ';
     $Self->{Translation}->{'FAQ search backend router of the agent interface.'} = 'Pencarian penerus backend FAQ pada antarmuka agen';
-    $Self->{Translation}->{'FAQ-Area'} = 'Area-FAQ';
     $Self->{Translation}->{'Field4'} = 'Field4';
     $Self->{Translation}->{'Field5'} = 'Field5';
     $Self->{Translation}->{'Frontend module registration for the public interface.'} = 'Pendaftaran modul Halamandepan untuk antarmuka umum.';
+    $Self->{Translation}->{'Full FAQ'} = '';
     $Self->{Translation}->{'Group for the approval of FAQ articles.'} = 'Grup untuk persetujuan artikel FAQ';
     $Self->{Translation}->{'History of this FAQ'} = 'Sejarah dari FAQ ini';
     $Self->{Translation}->{'Include internal fields on a FAQ based Ticket.'} = 'Masukan bidang internal pada Tiket berdasar FAQ.';
@@ -371,8 +396,13 @@ sub Data {
     $Self->{Translation}->{'Parameters for the pages (in which the FAQ items are shown) of the small FAQ overview.'} =
         'Parameter untuk halaman (dimana item FAQ di tampilkan) gambaran kecil FAQ.';
     $Self->{Translation}->{'Print this FAQ'} = 'Cetak FAQ ini.';
+    $Self->{Translation}->{'Public FAQ Print.'} = '';
+    $Self->{Translation}->{'Public FAQ Zoom.'} = '';
+    $Self->{Translation}->{'Public FAQ search.'} = '';
+    $Self->{Translation}->{'Public FAQ.'} = '';
     $Self->{Translation}->{'Queue for the approval of FAQ articles.'} = 'Antrian untuk disetujuinya artikel FAQ';
     $Self->{Translation}->{'Rates for voting. Key must be in percent.'} = 'Peringkatkan untuk memilih.  Kunci harus dalam persentase.';
+    $Self->{Translation}->{'S'} = '';
     $Self->{Translation}->{'Search FAQ'} = 'Cari FAQ';
     $Self->{Translation}->{'Set the default height (in pixels) of inline HTML fields in AgentFAQZoom.'} =
         'Tentukan tinggi default (dalam piksel)  pada bidang sebaris HTML pada AgentFAQZoom.';
@@ -407,6 +437,7 @@ sub Data {
         'Tampilkan tautan pada menu untuk kembali pada FAQ pada tampilan zoom di antarmuka agen.';
     $Self->{Translation}->{'Shows a link in the menu to print a FAQ in the its zoom view of the agent interface.'} =
         'Tampilkan tautan pada menu untuk mencetak FAQ pada tampilan zoomnya di antarmuka agen.';
+    $Self->{Translation}->{'Text Only'} = '';
     $Self->{Translation}->{'The identifier for a FAQ, e.g. FAQ#, KB#, MyFAQ#. The default is FAQ#.'} =
         'Pengidentifikasi untuk FAQ, Misalnya FAQ#, KB#, MyFAQ#. Standarnya adalah FAQ#.';
     $Self->{Translation}->{'This setting defines that a \'FAQ\' object can be linked with other \'FAQ\' objects using the \'Normal\' link type.'} =
@@ -420,6 +451,11 @@ sub Data {
     $Self->{Translation}->{'Ticket body for approval of FAQ article.'} = 'Isi tiket untuk persetujuan artikel FAQ.';
     $Self->{Translation}->{'Ticket subject for approval of FAQ article.'} = 'Subjek tiket untuk persetujuan artikel FAQ.';
     $Self->{Translation}->{'Toolbar Item for a shortcut.'} = 'Item toolbar untuk jalan pintas';
+    $Self->{Translation}->{'Your queue selection of your preferred queues. You also get notified about those queues via email if enabled.'} =
+        '';
+    $Self->{Translation}->{'Your service selection of your preferred services. You also get notified about those services via email if enabled.'} =
+        '';
+    $Self->{Translation}->{'public (public)'} = '';
 
 }
 

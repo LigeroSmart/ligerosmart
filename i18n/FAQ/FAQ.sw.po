@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-05-10 11:49+0000\n"
-"PO-Revision-Date: 2016-05-10 16:53+0000\n"
+"POT-Creation-Date: 2016-09-02 15:34+0000\n"
+"PO-Revision-Date: 2016-09-02 20:37+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Swahili (http://www.transifex.com/otrs/OTRS/language/sw/)\n"
 "MIME-Version: 1.0\n"
@@ -277,8 +277,8 @@ msgid "FAQ Language Management"
 msgstr "Menejimenti ya lugha ya maswali"
 
 #. Template: AgentFAQLanguage
-msgid "Use this feature if you want to work with multiple languges."
-msgstr "Tumia kipengele hiki kama unataka kutumia lugha nyingi "
+msgid "Use this feature if you want to work with multiple languages."
+msgstr ""
 
 #. Template: AgentFAQLanguage
 msgid "Add language"
@@ -550,6 +550,26 @@ msgstr ""
 msgid "No Result!"
 msgstr ""
 
+#. Perl Module: Kernel/Output/HTML/HeaderMeta/AgentFAQSearch.pm
+msgid "%s (FAQFulltext)"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/HeaderMeta/CustomerFAQSearch.pm
+msgid "%s - Customer (%s)"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/HeaderMeta/CustomerFAQSearch.pm
+msgid "%s - Customer (FAQFulltext)"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/HeaderMeta/PublicFAQSearch.pm
+msgid "%s - Public (%s)"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/HeaderMeta/PublicFAQSearch.pm
+msgid "%s - Public (FAQFulltext)"
+msgstr ""
+
 #. Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
 msgid "This article is empty!"
 msgstr ""
@@ -563,6 +583,10 @@ msgid ""
 msgstr "Kichujio cha matokeo ya HTML ili kuongeza viungo kwa tungo zilizo fafanuliwa. Sura ya elemnti hii inaruhusu maingizo ya aina mbili. Kwanza jinala sura (mf. faq.png). Kwa kesi hii sura ya njia ya OTRS itatumika. Njia ya pili ni kuingiza kiungo cha hiyo sura."
 
 #. SysConfig
+msgid "Add FAQ article"
+msgstr ""
+
+#. SysConfig
 msgid "CSS color for the voting result."
 msgstr "Rangi ya CSS kwa matokeo ya kura"
 
@@ -573,6 +597,22 @@ msgstr "Muda wa maswali yaliyyoulizwa mara myingi kufutika kutoka kwenye kumbuku
 #. SysConfig
 msgid "Category Management"
 msgstr "Usimamizi wa kategori"
+
+#. SysConfig
+msgid "Customer FAQ Print."
+msgstr ""
+
+#. SysConfig
+msgid "Customer FAQ Zoom."
+msgstr ""
+
+#. SysConfig
+msgid "Customer FAQ search."
+msgstr ""
+
+#. SysConfig
+msgid "Customer FAQ."
+msgstr ""
 
 #. SysConfig
 msgid "Decimal places of the voting result."
@@ -623,6 +663,12 @@ msgstr "Inaeleza mapitio ya moduli kuonyesha  muonekano mdogo wa jarida la maswa
 #. SysConfig
 msgid "Defines an overview module to show the small view of a FAQ list."
 msgstr "Inaeleza mapitio ya moduli kuonyesha muonekano mdogo wa orodha ya maswali yaliyoulizwa mara kwa mara."
+
+#. SysConfig
+msgid ""
+"Defines if the enhanced mode should be used (enables use of table, replace, "
+"subscript, superscript, paste from word, etc.) in customer interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -845,12 +891,40 @@ msgid "Enable voting mechanism on FAQ module."
 msgstr "Wezesha "
 
 #. SysConfig
+msgid "FAQ AJAX Responder"
+msgstr ""
+
+#. SysConfig
+msgid "FAQ AJAX Responder for Richtext."
+msgstr ""
+
+#. SysConfig
+msgid "FAQ Area"
+msgstr ""
+
+#. SysConfig
+msgid "FAQ Area."
+msgstr ""
+
+#. SysConfig
+msgid "FAQ Delete."
+msgstr ""
+
+#. SysConfig
+msgid "FAQ Edit."
+msgstr ""
+
+#. SysConfig
 msgid "FAQ Journal Overview \"Small\" Limit"
 msgstr " Kikomo \"kidogo\" cha mapitio ya jarida la maswali yaliyoulizwa mara kwa mara"
 
 #. SysConfig
 msgid "FAQ Overview \"Small\" Limit"
 msgstr "Kikomo \"kidogo\" cha mapitio ya maswali yaliyoulizwa mara kwa mara."
+
+#. SysConfig
+msgid "FAQ Print."
+msgstr ""
 
 #. SysConfig
 msgid "FAQ limit per page for FAQ Journal Overview \"Small\""
@@ -865,10 +939,6 @@ msgid "FAQ search backend router of the agent interface."
 msgstr "Maswali yanayoulizwa mara kwa mara tafuta backend ruta ya kiolesura cha wakala."
 
 #. SysConfig
-msgid "FAQ-Area"
-msgstr "Sehemu ya maswali"
-
-#. SysConfig
 msgid "Field4"
 msgstr "Sehemu4"
 
@@ -879,6 +949,10 @@ msgstr "Sehemu5"
 #. SysConfig
 msgid "Frontend module registration for the public interface."
 msgstr "Moduli ya usajili ya frontend kwa ajili ya kiolesura cha umma."
+
+#. SysConfig
+msgid "Full FAQ"
+msgstr ""
 
 #. SysConfig
 msgid "Group for the approval of FAQ articles."
@@ -1085,12 +1159,32 @@ msgid "Print this FAQ"
 msgstr "Chapisha maswali haya."
 
 #. SysConfig
+msgid "Public FAQ Print."
+msgstr ""
+
+#. SysConfig
+msgid "Public FAQ Zoom."
+msgstr ""
+
+#. SysConfig
+msgid "Public FAQ search."
+msgstr ""
+
+#. SysConfig
+msgid "Public FAQ."
+msgstr ""
+
+#. SysConfig
 msgid "Queue for the approval of FAQ articles."
 msgstr "Foleni ya idhini ya makala ya maswali yanayoulizwa mara akwa mara."
 
 #. SysConfig
 msgid "Rates for voting. Key must be in percent."
 msgstr "Thaminisho la kura. Funguo lazima iwe kwenye asilimia."
+
+#. SysConfig
+msgid "S"
+msgstr ""
 
 #. SysConfig
 msgid "Search FAQ"
@@ -1199,6 +1293,10 @@ msgid ""
 msgstr "Inaonyesha kiunganishi katika orodha kuchapisha maswali yanayoulizwa mara kwa mara katika mandhari iliyokuzwa ya wakala wa kiolesura."
 
 #. SysConfig
+msgid "Text Only"
+msgstr ""
+
+#. SysConfig
 msgid "The identifier for a FAQ, e.g. FAQ#, KB#, MyFAQ#. The default is FAQ#."
 msgstr "Kitambulishi cha maswali yanayoulizwa mara kwa mara, mfano maswali yanayoulizwa mara kwa mara#,KB#, MyFAQ#. Chaguo msingi ni maswali yanayoulizwa mara kwa mara#."
 
@@ -1237,3 +1335,19 @@ msgstr "Somo la tiketi kwa Idhini ya makala ya maswali yanayoulizwa mara kwa mar
 #. SysConfig
 msgid "Toolbar Item for a shortcut."
 msgstr "Kipengele cha mwambaa zana kwa ajili ya mkato."
+
+#. SysConfig
+msgid ""
+"Your queue selection of your preferred queues. You also get notified about "
+"those queues via email if enabled."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Your service selection of your preferred services. You also get notified "
+"about those services via email if enabled."
+msgstr ""
+
+#. SysConfig
+msgid "public (public)"
+msgstr ""

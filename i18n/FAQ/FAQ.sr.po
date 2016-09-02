@@ -5,9 +5,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-05-10 11:49+0000\n"
-"PO-Revision-Date: 2016-05-25 16:30+0000\n"
-"Last-Translator: Милорад Јовановић <j.milorad@gmail.com>\n"
+"POT-Creation-Date: 2016-09-02 15:34+0000\n"
+"PO-Revision-Date: 2016-09-02 20:37+0000\n"
+"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Serbian (http://www.transifex.com/otrs/OTRS/language/sr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -274,8 +274,8 @@ msgid "FAQ Language Management"
 msgstr "Управљање ЧПП језицима"
 
 #. Template: AgentFAQLanguage
-msgid "Use this feature if you want to work with multiple languges."
-msgstr "Употребите ову функцију ако желите да користите више језика."
+msgid "Use this feature if you want to work with multiple languages."
+msgstr ""
 
 #. Template: AgentFAQLanguage
 msgid "Add language"
@@ -547,6 +547,26 @@ msgstr "ЧПП динамичка поља"
 msgid "No Result!"
 msgstr "Нема резултата!"
 
+#. Perl Module: Kernel/Output/HTML/HeaderMeta/AgentFAQSearch.pm
+msgid "%s (FAQFulltext)"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/HeaderMeta/CustomerFAQSearch.pm
+msgid "%s - Customer (%s)"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/HeaderMeta/CustomerFAQSearch.pm
+msgid "%s - Customer (FAQFulltext)"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/HeaderMeta/PublicFAQSearch.pm
+msgid "%s - Public (%s)"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/HeaderMeta/PublicFAQSearch.pm
+msgid "%s - Public (FAQFulltext)"
+msgstr ""
+
 #. Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
 msgid "This article is empty!"
 msgstr "Чланак је празан!"
@@ -560,6 +580,10 @@ msgid ""
 msgstr "Филтер за „HTML” излаз за додавање везе иза дефинисаног низа знакова. Елемент слика дозвољава два начина уноса. Први је назив слике (нпр faq.png). у овом случају биће коришћена „OTRS” путања до слике.  Друга могућност је унос везе до слике."
 
 #. SysConfig
+msgid "Add FAQ article"
+msgstr ""
+
+#. SysConfig
 msgid "CSS color for the voting result."
 msgstr "CSS боја за резултат гласања."
 
@@ -570,6 +594,22 @@ msgstr "Време ослобађања кеша за ЧПП ставке."
 #. SysConfig
 msgid "Category Management"
 msgstr "Управљање категоријама"
+
+#. SysConfig
+msgid "Customer FAQ Print."
+msgstr ""
+
+#. SysConfig
+msgid "Customer FAQ Zoom."
+msgstr ""
+
+#. SysConfig
+msgid "Customer FAQ search."
+msgstr ""
+
+#. SysConfig
+msgid "Customer FAQ."
+msgstr ""
 
 #. SysConfig
 msgid "Decimal places of the voting result."
@@ -620,6 +660,12 @@ msgstr "Дефинише модул прегледа за мали приказ 
 #. SysConfig
 msgid "Defines an overview module to show the small view of a FAQ list."
 msgstr "Дефинише модул прегледа за мали приказ ЧПП листе. "
+
+#. SysConfig
+msgid ""
+"Defines if the enhanced mode should be used (enables use of table, replace, "
+"subscript, superscript, paste from word, etc.) in customer interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -842,12 +888,40 @@ msgid "Enable voting mechanism on FAQ module."
 msgstr "Активирање механизма за гласање на ЧПП модулу."
 
 #. SysConfig
+msgid "FAQ AJAX Responder"
+msgstr ""
+
+#. SysConfig
+msgid "FAQ AJAX Responder for Richtext."
+msgstr ""
+
+#. SysConfig
+msgid "FAQ Area"
+msgstr ""
+
+#. SysConfig
+msgid "FAQ Area."
+msgstr ""
+
+#. SysConfig
+msgid "FAQ Delete."
+msgstr ""
+
+#. SysConfig
+msgid "FAQ Edit."
+msgstr ""
+
+#. SysConfig
 msgid "FAQ Journal Overview \"Small\" Limit"
 msgstr "Ограничење прегледа ЧПП журнала - \"мало\""
 
 #. SysConfig
 msgid "FAQ Overview \"Small\" Limit"
 msgstr "Ограничење прегледа ЧПП - \"мало\""
+
+#. SysConfig
+msgid "FAQ Print."
+msgstr ""
 
 #. SysConfig
 msgid "FAQ limit per page for FAQ Journal Overview \"Small\""
@@ -862,10 +936,6 @@ msgid "FAQ search backend router of the agent interface."
 msgstr "ЧППпретрага позадинског рутера у интерфејсу оператера."
 
 #. SysConfig
-msgid "FAQ-Area"
-msgstr "ЧПП простор"
-
-#. SysConfig
 msgid "Field4"
 msgstr "Поље4"
 
@@ -876,6 +946,10 @@ msgstr "Поље5"
 #. SysConfig
 msgid "Frontend module registration for the public interface."
 msgstr "Регистрација приступног модула за јавни интерфејс."
+
+#. SysConfig
+msgid "Full FAQ"
+msgstr ""
 
 #. SysConfig
 msgid "Group for the approval of FAQ articles."
@@ -1082,12 +1156,32 @@ msgid "Print this FAQ"
 msgstr "Штампај ово ЧПП"
 
 #. SysConfig
+msgid "Public FAQ Print."
+msgstr ""
+
+#. SysConfig
+msgid "Public FAQ Zoom."
+msgstr ""
+
+#. SysConfig
+msgid "Public FAQ search."
+msgstr ""
+
+#. SysConfig
+msgid "Public FAQ."
+msgstr ""
+
+#. SysConfig
 msgid "Queue for the approval of FAQ articles."
 msgstr "Ред за одобравање ЧПП чланака."
 
 #. SysConfig
 msgid "Rates for voting. Key must be in percent."
 msgstr "Оцене за гласање. Кључ мора бити у процентима."
+
+#. SysConfig
+msgid "S"
+msgstr ""
 
 #. SysConfig
 msgid "Search FAQ"
@@ -1196,6 +1290,10 @@ msgid ""
 msgstr "У менију приказује везу за штампање ЧПП у детаљном приказу оператерског интерфејса."
 
 #. SysConfig
+msgid "Text Only"
+msgstr ""
+
+#. SysConfig
 msgid "The identifier for a FAQ, e.g. FAQ#, KB#, MyFAQ#. The default is FAQ#."
 msgstr "Идентификатор за ЧПП, нпр ЧПП#, БЗ#, МојЧПП#. Подразумевано је ЧПП#."
 
@@ -1234,3 +1332,19 @@ msgstr "Предмет тикета за одобравање ЧПП члана�
 #. SysConfig
 msgid "Toolbar Item for a shortcut."
 msgstr "Ставка алатне линије за скраћеницу."
+
+#. SysConfig
+msgid ""
+"Your queue selection of your preferred queues. You also get notified about "
+"those queues via email if enabled."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Your service selection of your preferred services. You also get notified "
+"about those services via email if enabled."
+msgstr ""
+
+#. SysConfig
+msgid "public (public)"
+msgstr ""

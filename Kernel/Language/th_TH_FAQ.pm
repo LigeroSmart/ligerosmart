@@ -97,8 +97,8 @@ sub Data {
 
     # Template: AgentFAQLanguage
     $Self->{Translation}->{'FAQ Language Management'} = 'การจัดการภาษา FAQ';
-    $Self->{Translation}->{'Use this feature if you want to work with multiple languges.'} =
-        'ใช้ฟีเจอร์นี้หากคุณต้องการใช้หลากหลายภาษา';
+    $Self->{Translation}->{'Use this feature if you want to work with multiple languages.'} =
+        '';
     $Self->{Translation}->{'Add language'} = 'เพิ่มภาษา';
     $Self->{Translation}->{'Delete Language %s'} = 'ลบภาษา %';
     $Self->{Translation}->{'Add Language'} = 'เพิ่มภาษา';
@@ -199,15 +199,31 @@ sub Data {
     # Perl Module: Kernel/Modules/AgentFAQSearch.pm
     $Self->{Translation}->{'No Result!'} = 'ไม่มีผลลัพธ์!';
 
+    # Perl Module: Kernel/Output/HTML/HeaderMeta/AgentFAQSearch.pm
+    $Self->{Translation}->{'%s (FAQFulltext)'} = '';
+
+    # Perl Module: Kernel/Output/HTML/HeaderMeta/CustomerFAQSearch.pm
+    $Self->{Translation}->{'%s - Customer (%s)'} = '';
+    $Self->{Translation}->{'%s - Customer (FAQFulltext)'} = '';
+
+    # Perl Module: Kernel/Output/HTML/HeaderMeta/PublicFAQSearch.pm
+    $Self->{Translation}->{'%s - Public (%s)'} = '';
+    $Self->{Translation}->{'%s - Public (FAQFulltext)'} = '';
+
     # Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
     $Self->{Translation}->{'This article is empty!'} = 'บทความนี้ว่างเปล่า';
 
     # SysConfig
     $Self->{Translation}->{'A filter for HTML output to add links behind a defined string. The element Image allows two input kinds. First the name of an image (e.g. faq.png). In this case the OTRS image path will be used. The second possibility is to insert the link to the image.'} =
         'ตัวกรองสำหรับการแสดงผล HTMLเพื่อเพิ่มการเชื่อมโยงที่อยู่เบื้องหลังของอักขระที่กำหนดไว้ องค์ประกอบของภาพที่จะช่วยให้สามารถป้อนข้อมูลสองชนิดได้ หนึ่งคือชื่อของภาพ (เช่น faq.png)ในกรณีนี้เส้นทางของภาพOTRS จะถูกนำมาใช้ สองคือการแทรกการเชื่อมโยงไปยังภาพ';
+    $Self->{Translation}->{'Add FAQ article'} = '';
     $Self->{Translation}->{'CSS color for the voting result.'} = 'สี CSS สำหรับผลการโหวต';
     $Self->{Translation}->{'Cache Time To Leave for FAQ items.'} = 'เวลาแคชที่จะปล่อยให้สำหรับรายการFAQ';
     $Self->{Translation}->{'Category Management'} = 'การจัดการหมวดหมู่';
+    $Self->{Translation}->{'Customer FAQ Print.'} = '';
+    $Self->{Translation}->{'Customer FAQ Zoom.'} = '';
+    $Self->{Translation}->{'Customer FAQ search.'} = '';
+    $Self->{Translation}->{'Customer FAQ.'} = '';
     $Self->{Translation}->{'Decimal places of the voting result.'} = 'ตำแหน่งทศนิยมของผลการนับคะแนน';
     $Self->{Translation}->{'Default category name.'} = 'ชื่อหมวดหมู่เริ่มต้น';
     $Self->{Translation}->{'Default language for FAQ articles on single language mode.'} = 'ภาษาเริ่มต้นสำหรับ FAQ ในโหมดภาษาเดียว';
@@ -226,6 +242,8 @@ sub Data {
         'กำหนดโมดูลภาพรวมที่จะแสดงมุมมองเล็ก ๆ ของวารสาร FAQ.';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ list.'} =
         'กำหนดโมดูลภาพรวมที่จะแสดงมุมมองเล็ก ๆ ของรายการ FAQ.';
+    $Self->{Translation}->{'Defines if the enhanced mode should be used (enables use of table, replace, subscript, superscript, paste from word, etc.) in customer interface.'} =
+        '';
     $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in a FAQ search of the agent interface.'} =
         'กำหนดคแอตทริบิวต์ FAQ เริ่มต้นสำหรับการเรียงลำดับFAQ ในการค้นหาของFAQ ในอินเตอร์เฟซเอเย่นต์';
     $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in a FAQ search of the customer interface.'} =
@@ -296,15 +314,22 @@ sub Data {
     $Self->{Translation}->{'Edit this FAQ'} = 'แก้ไข FAQ นี้';
     $Self->{Translation}->{'Enable multiple languages on FAQ module.'} = 'เปิดใช้งานหลากหลายภาษา ในโมดูล FAQ.';
     $Self->{Translation}->{'Enable voting mechanism on FAQ module.'} = 'เปิดใช้งานกลไกการโหวตในโมดูลFAQ.';
+    $Self->{Translation}->{'FAQ AJAX Responder'} = '';
+    $Self->{Translation}->{'FAQ AJAX Responder for Richtext.'} = '';
+    $Self->{Translation}->{'FAQ Area'} = '';
+    $Self->{Translation}->{'FAQ Area.'} = '';
+    $Self->{Translation}->{'FAQ Delete.'} = '';
+    $Self->{Translation}->{'FAQ Edit.'} = '';
     $Self->{Translation}->{'FAQ Journal Overview "Small" Limit'} = 'ภาพรวมของวารสารFAQ"ขนาดเล็ก"';
     $Self->{Translation}->{'FAQ Overview "Small" Limit'} = 'ภาพรวมของFAQ"ขนาดเล็ก"';
+    $Self->{Translation}->{'FAQ Print.'} = '';
     $Self->{Translation}->{'FAQ limit per page for FAQ Journal Overview "Small"'} = 'จำนวน FAQ ที่จำกัดในแต่ละหน้าสำหรับภาพรวมวารสาร FAQ "ขนาดเล็ก"';
     $Self->{Translation}->{'FAQ limit per page for FAQ Overview "Small"'} = 'จำกัด FAQ ในแต่ละหน้าของภาพรวม FAQ "ขนาดเล็ก"';
     $Self->{Translation}->{'FAQ search backend router of the agent interface.'} = 'backend router ค้นหา FAQ ของอินเตอร์เฟซเอเย่นต์';
-    $Self->{Translation}->{'FAQ-Area'} = 'พื้นที่ FAQ';
     $Self->{Translation}->{'Field4'} = 'ฟิลด์4';
     $Self->{Translation}->{'Field5'} = 'ฟิลด์5';
     $Self->{Translation}->{'Frontend module registration for the public interface.'} = 'การลงทะเบียนโมดูล Frontend สำหรับอินเตอร์เฟซสาธารณะ';
+    $Self->{Translation}->{'Full FAQ'} = '';
     $Self->{Translation}->{'Group for the approval of FAQ articles.'} = 'กลุ่มสำหรับการอนุมัติบทความ FAQ.';
     $Self->{Translation}->{'History of this FAQ'} = 'ประวัติของ FAQ นี้';
     $Self->{Translation}->{'Include internal fields on a FAQ based Ticket.'} = 'รวมเขตข้อมูลภายในเกี่ยวกับFAQ ตามตั๋ว';
@@ -371,8 +396,13 @@ sub Data {
     $Self->{Translation}->{'Parameters for the pages (in which the FAQ items are shown) of the small FAQ overview.'} =
         'พารามิเตอร์สำหรับหน้าในรายการ  (ซึ่งจะแสดงรายการ FAQ) ของ ภาพรวม FAQขนาดเล็ก';
     $Self->{Translation}->{'Print this FAQ'} = 'พิมพ์ FAQ นี้';
+    $Self->{Translation}->{'Public FAQ Print.'} = '';
+    $Self->{Translation}->{'Public FAQ Zoom.'} = '';
+    $Self->{Translation}->{'Public FAQ search.'} = '';
+    $Self->{Translation}->{'Public FAQ.'} = '';
     $Self->{Translation}->{'Queue for the approval of FAQ articles.'} = 'คิวในการอนุมัติบทความFAQ.';
     $Self->{Translation}->{'Rates for voting. Key must be in percent.'} = 'เรตสำหรับการโหวตต้องกำหนดเป็นร้อยละ';
+    $Self->{Translation}->{'S'} = '';
     $Self->{Translation}->{'Search FAQ'} = 'ค้นหา FAQ';
     $Self->{Translation}->{'Set the default height (in pixels) of inline HTML fields in AgentFAQZoom.'} =
         'เซตค่าความสูงเริ่มต้น(พิกเซล) ของฟิลด์HTML แบบอินไลน์ใน AgentFAQZoom.';
@@ -407,6 +437,7 @@ sub Data {
         'แสดงลิงค์ในเมนูเพื่อย้อนกลับ FAQ ในการซูมของอินเตอร์เฟซเอเย่นต์';
     $Self->{Translation}->{'Shows a link in the menu to print a FAQ in the its zoom view of the agent interface.'} =
         'แสดงลิงค์ในเมนูเพื่อพิมพ์ FAQ ในการซูมของอินเตอร์เฟซเอเย่นต์';
+    $Self->{Translation}->{'Text Only'} = '';
     $Self->{Translation}->{'The identifier for a FAQ, e.g. FAQ#, KB#, MyFAQ#. The default is FAQ#.'} =
         'ตัวบ่งชี้สำหรับ FAQ, เช่น FAQ#,  KB#, MyFAQ #. ค่าเริ่มต้นคือ FAQ#';
     $Self->{Translation}->{'This setting defines that a \'FAQ\' object can be linked with other \'FAQ\' objects using the \'Normal\' link type.'} =
@@ -420,6 +451,11 @@ sub Data {
     $Self->{Translation}->{'Ticket body for approval of FAQ article.'} = 'เนื้อเรื่องของตั๋วสำหรับการอนุมัติของบทความ FAQ.';
     $Self->{Translation}->{'Ticket subject for approval of FAQ article.'} = 'หัวข้อของตั๋วสำหรับการอนุมัติของบทความFAQ.';
     $Self->{Translation}->{'Toolbar Item for a shortcut.'} = '';
+    $Self->{Translation}->{'Your queue selection of your preferred queues. You also get notified about those queues via email if enabled.'} =
+        '';
+    $Self->{Translation}->{'Your service selection of your preferred services. You also get notified about those services via email if enabled.'} =
+        '';
+    $Self->{Translation}->{'public (public)'} = '';
 
 }
 

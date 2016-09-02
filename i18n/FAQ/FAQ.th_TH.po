@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-05-10 11:49+0000\n"
-"PO-Revision-Date: 2016-05-10 16:53+0000\n"
+"POT-Creation-Date: 2016-09-02 15:34+0000\n"
+"PO-Revision-Date: 2016-09-02 20:37+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Thai (Thailand) (http://www.transifex.com/otrs/OTRS/language/th_TH/)\n"
 "MIME-Version: 1.0\n"
@@ -273,8 +273,8 @@ msgid "FAQ Language Management"
 msgstr "การจัดการภาษา FAQ"
 
 #. Template: AgentFAQLanguage
-msgid "Use this feature if you want to work with multiple languges."
-msgstr "ใช้ฟีเจอร์นี้หากคุณต้องการใช้หลากหลายภาษา"
+msgid "Use this feature if you want to work with multiple languages."
+msgstr ""
 
 #. Template: AgentFAQLanguage
 msgid "Add language"
@@ -546,6 +546,26 @@ msgstr "ไดมานิคฟิลด์ของ FAQ"
 msgid "No Result!"
 msgstr "ไม่มีผลลัพธ์!"
 
+#. Perl Module: Kernel/Output/HTML/HeaderMeta/AgentFAQSearch.pm
+msgid "%s (FAQFulltext)"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/HeaderMeta/CustomerFAQSearch.pm
+msgid "%s - Customer (%s)"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/HeaderMeta/CustomerFAQSearch.pm
+msgid "%s - Customer (FAQFulltext)"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/HeaderMeta/PublicFAQSearch.pm
+msgid "%s - Public (%s)"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/HeaderMeta/PublicFAQSearch.pm
+msgid "%s - Public (FAQFulltext)"
+msgstr ""
+
 #. Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
 msgid "This article is empty!"
 msgstr "บทความนี้ว่างเปล่า"
@@ -559,6 +579,10 @@ msgid ""
 msgstr "ตัวกรองสำหรับการแสดงผล HTMLเพื่อเพิ่มการเชื่อมโยงที่อยู่เบื้องหลังของอักขระที่กำหนดไว้ องค์ประกอบของภาพที่จะช่วยให้สามารถป้อนข้อมูลสองชนิดได้ หนึ่งคือชื่อของภาพ (เช่น faq.png)ในกรณีนี้เส้นทางของภาพOTRS จะถูกนำมาใช้ สองคือการแทรกการเชื่อมโยงไปยังภาพ"
 
 #. SysConfig
+msgid "Add FAQ article"
+msgstr ""
+
+#. SysConfig
 msgid "CSS color for the voting result."
 msgstr "สี CSS สำหรับผลการโหวต"
 
@@ -569,6 +593,22 @@ msgstr "เวลาแคชที่จะปล่อยให้สำหร
 #. SysConfig
 msgid "Category Management"
 msgstr "การจัดการหมวดหมู่"
+
+#. SysConfig
+msgid "Customer FAQ Print."
+msgstr ""
+
+#. SysConfig
+msgid "Customer FAQ Zoom."
+msgstr ""
+
+#. SysConfig
+msgid "Customer FAQ search."
+msgstr ""
+
+#. SysConfig
+msgid "Customer FAQ."
+msgstr ""
 
 #. SysConfig
 msgid "Decimal places of the voting result."
@@ -619,6 +659,12 @@ msgstr "กำหนดโมดูลภาพรวมที่จะแสด
 #. SysConfig
 msgid "Defines an overview module to show the small view of a FAQ list."
 msgstr "กำหนดโมดูลภาพรวมที่จะแสดงมุมมองเล็ก ๆ ของรายการ FAQ."
+
+#. SysConfig
+msgid ""
+"Defines if the enhanced mode should be used (enables use of table, replace, "
+"subscript, superscript, paste from word, etc.) in customer interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -841,12 +887,40 @@ msgid "Enable voting mechanism on FAQ module."
 msgstr "เปิดใช้งานกลไกการโหวตในโมดูลFAQ."
 
 #. SysConfig
+msgid "FAQ AJAX Responder"
+msgstr ""
+
+#. SysConfig
+msgid "FAQ AJAX Responder for Richtext."
+msgstr ""
+
+#. SysConfig
+msgid "FAQ Area"
+msgstr ""
+
+#. SysConfig
+msgid "FAQ Area."
+msgstr ""
+
+#. SysConfig
+msgid "FAQ Delete."
+msgstr ""
+
+#. SysConfig
+msgid "FAQ Edit."
+msgstr ""
+
+#. SysConfig
 msgid "FAQ Journal Overview \"Small\" Limit"
 msgstr "ภาพรวมของวารสารFAQ\"ขนาดเล็ก\""
 
 #. SysConfig
 msgid "FAQ Overview \"Small\" Limit"
 msgstr "ภาพรวมของFAQ\"ขนาดเล็ก\""
+
+#. SysConfig
+msgid "FAQ Print."
+msgstr ""
 
 #. SysConfig
 msgid "FAQ limit per page for FAQ Journal Overview \"Small\""
@@ -861,10 +935,6 @@ msgid "FAQ search backend router of the agent interface."
 msgstr "backend router ค้นหา FAQ ของอินเตอร์เฟซเอเย่นต์"
 
 #. SysConfig
-msgid "FAQ-Area"
-msgstr "พื้นที่ FAQ"
-
-#. SysConfig
 msgid "Field4"
 msgstr "ฟิลด์4"
 
@@ -875,6 +945,10 @@ msgstr "ฟิลด์5"
 #. SysConfig
 msgid "Frontend module registration for the public interface."
 msgstr "การลงทะเบียนโมดูล Frontend สำหรับอินเตอร์เฟซสาธารณะ"
+
+#. SysConfig
+msgid "Full FAQ"
+msgstr ""
 
 #. SysConfig
 msgid "Group for the approval of FAQ articles."
@@ -1081,12 +1155,32 @@ msgid "Print this FAQ"
 msgstr "พิมพ์ FAQ นี้"
 
 #. SysConfig
+msgid "Public FAQ Print."
+msgstr ""
+
+#. SysConfig
+msgid "Public FAQ Zoom."
+msgstr ""
+
+#. SysConfig
+msgid "Public FAQ search."
+msgstr ""
+
+#. SysConfig
+msgid "Public FAQ."
+msgstr ""
+
+#. SysConfig
 msgid "Queue for the approval of FAQ articles."
 msgstr "คิวในการอนุมัติบทความFAQ."
 
 #. SysConfig
 msgid "Rates for voting. Key must be in percent."
 msgstr "เรตสำหรับการโหวตต้องกำหนดเป็นร้อยละ"
+
+#. SysConfig
+msgid "S"
+msgstr ""
 
 #. SysConfig
 msgid "Search FAQ"
@@ -1195,6 +1289,10 @@ msgid ""
 msgstr "แสดงลิงค์ในเมนูเพื่อพิมพ์ FAQ ในการซูมของอินเตอร์เฟซเอเย่นต์"
 
 #. SysConfig
+msgid "Text Only"
+msgstr ""
+
+#. SysConfig
 msgid "The identifier for a FAQ, e.g. FAQ#, KB#, MyFAQ#. The default is FAQ#."
 msgstr "ตัวบ่งชี้สำหรับ FAQ, เช่น FAQ#,  KB#, MyFAQ #. ค่าเริ่มต้นคือ FAQ#"
 
@@ -1232,4 +1330,20 @@ msgstr "หัวข้อของตั๋วสำหรับการอน
 
 #. SysConfig
 msgid "Toolbar Item for a shortcut."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Your queue selection of your preferred queues. You also get notified about "
+"those queues via email if enabled."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Your service selection of your preferred services. You also get notified "
+"about those services via email if enabled."
+msgstr ""
+
+#. SysConfig
+msgid "public (public)"
 msgstr ""
