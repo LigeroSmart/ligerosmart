@@ -42,9 +42,11 @@ sub Run {
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
     # build open search description for FAQ number
-    my $Title = $ConfigObject->Get('ProductName');
-
-    $Title .= ' - Public (' . $ConfigObject->Get('FAQ::FAQHook') . ')';
+    my $Title = $LayoutObject->{LanguageObject}->Translate(
+        '%s - Public (%s)',
+        $ConfigObject->Get('ProductName'),
+        $ConfigObject->Get('FAQ::FAQHook'),
+    );
     $LayoutObject->Block(
         Name => 'MetaLink',
         Data => {
@@ -59,9 +61,10 @@ sub Run {
     );
 
     # build open search description for FAQ full-text
-    my $Fulltext = $LayoutObject->{LanguageObject}->Translate('FAQFulltext');
-    $Title = $ConfigObject->Get('ProductName');
-    $Title .= ' - Public (' . $Fulltext . ')';
+    $Title = $LayoutObject->{LanguageObject}->Translate(
+        '%s - Public (FAQFulltext)',
+        $ConfigObject->Get('ProductName'),
+    );
     $LayoutObject->Block(
         Name => 'MetaLink',
         Data => {

@@ -27,7 +27,7 @@
                     <h3>[% Translate("This feature is disabled!") | html %]</h3>
                     <fieldset>
                         <p class="FieldExplanation">
-                            [% Translate("Use this feature if you want to work with multiple languges.") | html %]
+                            [% Translate("Use this feature if you want to work with multiple languages.") | html %]
                         </p>
                         <div class="Field SpacingTop">
                             <button class="CallForAction FullSize Center" type="submit" value="[% Translate("Enable it here!") | html %]">
