@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2016 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/3f03751f5c923e69fcc6911b64aed3a6829b4b52/Kernel/Modules/AgentTicketProcess.pm
+# $origin: https://github.com/OTRS/otrs/blob/4cb9487912ec1c6c26c62a4521798d523a1be07c/Kernel/Modules/AgentTicketProcess.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -4991,7 +4991,7 @@ sub _StoreActivityDialog {
 
             my $TicketID = $UpdateTicketID || $NewTicketID;
 
-            if ( $Param{GetParam}{Subject} && $Param{GetParam}{Body} ) {
+            if ( $Param{GetParam}->{Subject} && $Param{GetParam}->{Body} ) {
 
                 # add note
                 my $ArticleID = '';
@@ -5000,12 +5000,12 @@ sub _StoreActivityDialog {
                     $MimeType = 'text/html';
 
                     # verify html document
-                    $Param{GetParam}{Body} = $LayoutObject->RichTextDocumentComplete(
-                        String => $Param{GetParam}{Body},
+                    $Param{GetParam}->{Body} = $LayoutObject->RichTextDocumentComplete(
+                        String => $Param{GetParam}->{Body},
                     );
                 }
 
-                my $From = "$Self->{UserFirstname} $Self->{UserLastname} <$Self->{UserEmail}>";
+                my $From = "\"$Self->{UserFirstname} $Self->{UserLastname}\" <$Self->{UserEmail}>";
                 $ArticleID = $TicketObject->ArticleCreate(
                     TicketID                  => $TicketID,
                     SenderType                => 'agent',

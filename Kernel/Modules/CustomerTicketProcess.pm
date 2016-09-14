@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2016 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/abbd964f05dc16f8c303a03081a1859e9906dd46/Kernel/Modules/CustomerTicketProcess.pm
+# $origin: https://github.com/OTRS/otrs/blob/4cb9487912ec1c6c26c62a4521798d523a1be07c/Kernel/Modules/CustomerTicketProcess.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
