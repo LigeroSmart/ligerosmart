@@ -1,4 +1,6 @@
-#5.0.6 2016-??-??
+#5.0.7 2016-??-??
+
+#5.0.6 2016-09-20
  - 2016-09-14 Updated translations, thanks to all translators.
  - 2016-09-02 Updated translations, thanks to all translators.
  - 2016-09-02 Added missing translations, thanks to Ur Balazs.
