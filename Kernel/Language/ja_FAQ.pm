@@ -98,7 +98,7 @@ sub Data {
     # Template: AgentFAQLanguage
     $Self->{Translation}->{'FAQ Language Management'} = 'FAQ 言語管理';
     $Self->{Translation}->{'Use this feature if you want to work with multiple languages.'} =
-        '';
+        '多言語で作業をしたい場合、この項目を設定してください。';
     $Self->{Translation}->{'Add language'} = '言語を追加';
     $Self->{Translation}->{'Delete Language %s'} = '言語を削除 %s';
     $Self->{Translation}->{'Add Language'} = '言語を追加';
@@ -137,7 +137,7 @@ sub Data {
     $Self->{Translation}->{'Specific votes'} = '特定の投票';
     $Self->{Translation}->{'e. g. Equals 10 or GreaterThan 60'} = '例. 10 に等しい あるいは 60 より大きい';
     $Self->{Translation}->{'Rate'} = 'レート';
-    $Self->{Translation}->{'No rate settings'} = 'れーとの設定がありません';
+    $Self->{Translation}->{'No rate settings'} = 'レートの設定がありません';
     $Self->{Translation}->{'Specific rate'} = '特定のレート';
     $Self->{Translation}->{'e. g. Equals 25% or GreaterThan 75%'} = '例. 25%に等しい あるいは 75%以上';
     $Self->{Translation}->{'FAQ Article Create Time'} = 'FAQ項目作成時間';
@@ -147,7 +147,7 @@ sub Data {
     $Self->{Translation}->{'FAQ Information'} = 'FAQ情報';
     $Self->{Translation}->{'Rating'} = 'レーティング';
     $Self->{Translation}->{'out of 5'} = '5つ星のうち';
-    $Self->{Translation}->{'Votes'} = 'Votes';
+    $Self->{Translation}->{'Votes'} = '投票';
     $Self->{Translation}->{'No votes found!'} = '投票はありません。';
     $Self->{Translation}->{'No votes found! Be the first one to rate this FAQ article.'} = '投票はありません。この記事に最初の評価を投票しましょう。';
     $Self->{Translation}->{'Download Attachment'} = '添付ファイルをダウンロード';
@@ -194,21 +194,21 @@ sub Data {
 
     # Perl Module: Kernel/Modules/AgentFAQPrint.pm
     $Self->{Translation}->{'Last update'} = '最終更新日';
-    $Self->{Translation}->{'FAQ Dynamic Fields'} = 'FAQ ダイナミック・フィールド';
+    $Self->{Translation}->{'FAQ Dynamic Fields'} = 'FAQ 動的フィールド';
 
     # Perl Module: Kernel/Modules/AgentFAQSearch.pm
     $Self->{Translation}->{'No Result!'} = '結果がありません。';
 
     # Perl Module: Kernel/Output/HTML/HeaderMeta/AgentFAQSearch.pm
-    $Self->{Translation}->{'%s (FAQFulltext)'} = '';
+    $Self->{Translation}->{'%s (FAQFulltext)'} = '%s (FAQ全文)';
 
     # Perl Module: Kernel/Output/HTML/HeaderMeta/CustomerFAQSearch.pm
-    $Self->{Translation}->{'%s - Customer (%s)'} = '';
-    $Self->{Translation}->{'%s - Customer (FAQFulltext)'} = '';
+    $Self->{Translation}->{'%s - Customer (%s)'} = '%s - 顧客のみ (%s)';
+    $Self->{Translation}->{'%s - Customer (FAQFulltext)'} = '%s - 顧客のみ (FAQ全文)';
 
     # Perl Module: Kernel/Output/HTML/HeaderMeta/PublicFAQSearch.pm
-    $Self->{Translation}->{'%s - Public (%s)'} = '';
-    $Self->{Translation}->{'%s - Public (FAQFulltext)'} = '';
+    $Self->{Translation}->{'%s - Public (%s)'} = '%s - 公開 (%s)';
+    $Self->{Translation}->{'%s - Public (FAQFulltext)'} = '%s - 公開 (FAQ全文)';
 
     # Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
     $Self->{Translation}->{'This article is empty!'} = 'この記事は空です!';
@@ -216,14 +216,14 @@ sub Data {
     # SysConfig
     $Self->{Translation}->{'A filter for HTML output to add links behind a defined string. The element Image allows two input kinds. First the name of an image (e.g. faq.png). In this case the OTRS image path will be used. The second possibility is to insert the link to the image.'} =
         'フィルタ定義　-定義された文字列（string）にリンクを追加するhtmlアウトプット-  エレメント・イメージは、2種類のインプットが可能です。1つ目、イメージの名前です (例. faq.png)。この場合、OTRSイメージ・パスが使用されます。2つ目、イメージにリンクを挿入することが可能性です。';
-    $Self->{Translation}->{'Add FAQ article'} = '';
+    $Self->{Translation}->{'Add FAQ article'} = 'FAQ 記事を追加する';
     $Self->{Translation}->{'CSS color for the voting result.'} = '評価の結果表示ようのカラー（スタイルシート）';
     $Self->{Translation}->{'Cache Time To Leave for FAQ items.'} = 'FAQ項目から離脱するまでのキャッシュ時間';
     $Self->{Translation}->{'Category Management'} = 'カテゴリー管理';
-    $Self->{Translation}->{'Customer FAQ Print.'} = '';
-    $Self->{Translation}->{'Customer FAQ Zoom.'} = '';
-    $Self->{Translation}->{'Customer FAQ search.'} = '';
-    $Self->{Translation}->{'Customer FAQ.'} = '';
+    $Self->{Translation}->{'Customer FAQ Print.'} = '顧客用FAQの表示';
+    $Self->{Translation}->{'Customer FAQ Zoom.'} = '顧客用FAQの詳細表示';
+    $Self->{Translation}->{'Customer FAQ search.'} = '顧客用FAQの検索';
+    $Self->{Translation}->{'Customer FAQ.'} = '顧客用FAQ';
     $Self->{Translation}->{'Decimal places of the voting result.'} = '投票の結果の小数点以下の桁数';
     $Self->{Translation}->{'Default category name.'} = '既定のカテゴリ';
     $Self->{Translation}->{'Default language for FAQ articles on single language mode.'} = '規定の言語（単一言語モードで運用時）';
@@ -242,8 +242,6 @@ sub Data {
         '簡易版FAQジャーナル表示用モジュールの概要を定義';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ list.'} =
         '簡易版FAQ一覧表示用モジュールの概要を定義';
-    $Self->{Translation}->{'Defines if the enhanced mode should be used (enables use of table, replace, subscript, superscript, paste from word, etc.) in customer interface.'} =
-        '';
     $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in a FAQ search of the agent interface.'} =
         '担当者インターフェイスにおける、FAQ検索結果並び替えに利用する属性順の既定値を定義します。';
     $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in a FAQ search of the customer interface.'} =
@@ -284,33 +282,33 @@ sub Data {
     $Self->{Translation}->{'Definition of FAQ item free text field.'} = 'FAQのフリーテキストフィールドの定義。';
     $Self->{Translation}->{'Delete this FAQ'} = 'この記事を削除';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ add screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        '担当者インターフェイスのFAQ追加画面で表示される動的領域。 選択可能な設定値: 0 = 無効, 1 = 有効, 2 = 有効 さらに 必須';
+        '担当者インターフェイスのFAQ追加画面で表示される動的フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効, 2 = 有効かつ必須項目';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ edit screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        '担当者インターフェイスのFAQ編集画面で表示される動的領域。 選択可能な設定値: 0 = 無効, 1 = 有効, 2 = 有効 さらに 必須';
+        '担当者インターフェイスのFAQ編集画面で表示される動的フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効, 2 = 有効かつ必須項目';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ overview screen of the customer interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        '担当者インターフェイスのFAQオーバービュー画面で表示される動的領域。 選択可能な設定値: 0 = 無効, 1 = 有効, 2 = 有効 さらに 必須';
+        '担当者インターフェイスのFAQオーバービュー画面で表示される動的フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効, 2 = 有効かつ必須項目';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ overview screen of the public interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        '公開インターフェイスのFAQ追加画面で表示される動的領域。 選択可能な設定値: 0 = 無効, 1 = 有効, 2 = 有効 さらに 必須';
+        '公開インターフェイスのFAQ追加画面で表示される動的フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効, 2 = 有効かつ必須項目';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ print screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        '担当者インターフェイスのFAQ印刷画面で表示される動的領域。 選択可能な設定値: 0 = 無効, 1 = 有効';
+        '担当者インターフェイスのFAQ印刷画面で表示される動的フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ print screen of the customer interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        '顧客インターフェイスのFAQ印刷画面で表示される動的領域。 選択可能な設定値: 0 = 無効, 1 = 有効';
+        '顧客インターフェイスのFAQ印刷画面で表示される動的フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ print screen of the public interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        '公開インターフェイスのFAQ印刷画面で表示される動的領域。 選択可能な設定値: 0 = 無効, 1 = 有効';
+        '公開インターフェイスのFAQ印刷画面で表示される動的フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ search screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and shown by default.'} =
-        '担当者インターフェイスのFAQ検索画面で表示される動的領域。 選択可能な設定値: 0 = 無効, 1 = 有効, 2 = 有効 さらに デフォルトで表示する';
+        '担当者インターフェイスのFAQ検索画面で表示される動的フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効, 2 = 有効かつデフォルト表示対象';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ search screen of the customer interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and shown by default.'} =
-        '顧客インターフェイスのFAQ検索画面で表示される動的領域。 選択可能な設定値: 0 = 無効, 1 = 有効, 2 = 有効 さらに デフォルトで表示する';
+        '顧客インターフェイスのFAQ検索画面で表示される動的フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効, 2 = 有効かつデフォルト表示対象';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ search screen of the public interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and shown by default.'} =
-        '公開インターフェイスのFAQ検索画面で表示される動的領域。 選択可能な設定値: 0 = 無効, 1 = 有効, 2 = 有効 さらに デフォルトで表示する';
+        '公開インターフェイスのFAQ検索画面で表示される動的フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効, 2 = 有効かつデフォルト表示対象';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ small format overview screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        '担当者インターフェイスのFAQ オーバービュー「Sフォーマット」で表示される動的領域。 選択可能な設定値: 0 = 無効, 1 = 有効';
+        '担当者インターフェイスのFAQ オーバービュー「Sフォーマット」で表示される動的フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ zoom screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        '担当者インターフェイスのFAQ ズームスクリーンで表示される動的領域。 選択可能な設定値: 0 = 無効, 1 = 有効';
+        '担当者インターフェイスのFAQ ズームスクリーンで表示される動的フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ zoom screen of the customer interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        '顧客インターフェイスのFAQズーム画面に表示される動的領域。 選択可能な設定値: 0 = 無効, 1 = 有効';
+        '顧客インターフェイスのFAQズーム画面に表示される動的フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ zoom screen of the public interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        '公開インターフェイスのFAQズーム画面に表示される動的領域。 選択可能な設定値: 0 = 無効, 1 = 有効';
+        '公開インターフェイスのFAQズーム画面に表示される動的フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効';
     $Self->{Translation}->{'Edit this FAQ'} = 'この記事を編集';
     $Self->{Translation}->{'Enable multiple languages on FAQ module.'} = '多言語を有効にする';
     $Self->{Translation}->{'Enable voting mechanism on FAQ module.'} = '評価の機能を有効にする';
@@ -318,11 +316,11 @@ sub Data {
     $Self->{Translation}->{'FAQ AJAX Responder for Richtext.'} = '';
     $Self->{Translation}->{'FAQ Area'} = '';
     $Self->{Translation}->{'FAQ Area.'} = '';
-    $Self->{Translation}->{'FAQ Delete.'} = '';
-    $Self->{Translation}->{'FAQ Edit.'} = '';
+    $Self->{Translation}->{'FAQ Delete.'} = 'FAQ の削除';
+    $Self->{Translation}->{'FAQ Edit.'} = 'FAQ の編集';
     $Self->{Translation}->{'FAQ Journal Overview "Small" Limit'} = 'FAQジャーナル一覧(S)の表示数';
     $Self->{Translation}->{'FAQ Overview "Small" Limit'} = 'FAQ一覧(S)の表示数';
-    $Self->{Translation}->{'FAQ Print.'} = '';
+    $Self->{Translation}->{'FAQ Print.'} = 'FAQ の表示';
     $Self->{Translation}->{'FAQ limit per page for FAQ Journal Overview "Small"'} = 'FAQジャーナル一覧(S)の1ページ毎の表示数';
     $Self->{Translation}->{'FAQ limit per page for FAQ Overview "Small"'} = 'FAQ一覧(S)の1ページ毎の表示数';
     $Self->{Translation}->{'FAQ search backend router of the agent interface.'} = '担当者インターフェイスにおける、FAQ検索のバックエンドルータ';
@@ -396,10 +394,10 @@ sub Data {
     $Self->{Translation}->{'Parameters for the pages (in which the FAQ items are shown) of the small FAQ overview.'} =
         '簡易版FAQ概要のページ指定用のパラメータ';
     $Self->{Translation}->{'Print this FAQ'} = 'この記事を印刷';
-    $Self->{Translation}->{'Public FAQ Print.'} = '';
-    $Self->{Translation}->{'Public FAQ Zoom.'} = '';
-    $Self->{Translation}->{'Public FAQ search.'} = '';
-    $Self->{Translation}->{'Public FAQ.'} = '';
+    $Self->{Translation}->{'Public FAQ Print.'} = '公開FAQの表示';
+    $Self->{Translation}->{'Public FAQ Zoom.'} = '公開FAQの詳細を表示';
+    $Self->{Translation}->{'Public FAQ search.'} = '公開FAQの検索';
+    $Self->{Translation}->{'Public FAQ.'} = '公開FAQ';
     $Self->{Translation}->{'Queue for the approval of FAQ articles.'} = '記事承認キュー';
     $Self->{Translation}->{'Rates for voting. Key must be in percent.'} = '評価率。キーは、パーセントで指定する必要があります。';
     $Self->{Translation}->{'S'} = '';
@@ -437,7 +435,7 @@ sub Data {
         '担当者インターフェイスのズームビューで「戻る」のリンクを表示する。';
     $Self->{Translation}->{'Shows a link in the menu to print a FAQ in the its zoom view of the agent interface.'} =
         '担当者インターフェイスのズームビューでFAQを印刷リンクを表示する。';
-    $Self->{Translation}->{'Text Only'} = '';
+    $Self->{Translation}->{'Text Only'} = 'テキストのみ';
     $Self->{Translation}->{'The identifier for a FAQ, e.g. FAQ#, KB#, MyFAQ#. The default is FAQ#.'} =
         'FAQ用の識別子 例. FAQ#, KB#, MyFAQ#. デフォルトでは FAQ# となっています';
     $Self->{Translation}->{'This setting defines that a \'FAQ\' object can be linked with other \'FAQ\' objects using the \'Normal\' link type.'} =
@@ -451,10 +449,6 @@ sub Data {
     $Self->{Translation}->{'Ticket body for approval of FAQ article.'} = 'FAQ承認チケット用　チケット本文';
     $Self->{Translation}->{'Ticket subject for approval of FAQ article.'} = 'FAQ承認チケット用　チケット件名 ';
     $Self->{Translation}->{'Toolbar Item for a shortcut.'} = 'ショートカットのためのツールバー・アイテムです。';
-    $Self->{Translation}->{'Your queue selection of your preferred queues. You also get notified about those queues via email if enabled.'} =
-        '';
-    $Self->{Translation}->{'Your service selection of your preferred services. You also get notified about those services via email if enabled.'} =
-        '';
     $Self->{Translation}->{'public (public)'} = '';
 
 }

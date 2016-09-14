@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-09-02 15:34+0000\n"
-"PO-Revision-Date: 2016-09-02 20:37+0000\n"
+"POT-Creation-Date: 2016-09-14 18:28+0000\n"
+"PO-Revision-Date: 2016-09-14 23:30+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Serbian (http://www.transifex.com/otrs/OTRS/language/sr/)\n"
 "MIME-Version: 1.0\n"
@@ -275,7 +275,7 @@ msgstr "Управљање ЧПП језицима"
 
 #. Template: AgentFAQLanguage
 msgid "Use this feature if you want to work with multiple languages."
-msgstr ""
+msgstr "Употребите ову функцију ако желите да користите више језика."
 
 #. Template: AgentFAQLanguage
 msgid "Add language"
@@ -549,23 +549,23 @@ msgstr "Нема резултата!"
 
 #. Perl Module: Kernel/Output/HTML/HeaderMeta/AgentFAQSearch.pm
 msgid "%s (FAQFulltext)"
-msgstr ""
+msgstr "%s (ЧПП комплетан текст)"
 
 #. Perl Module: Kernel/Output/HTML/HeaderMeta/CustomerFAQSearch.pm
 msgid "%s - Customer (%s)"
-msgstr ""
+msgstr "%s - Клијент (%s)"
 
 #. Perl Module: Kernel/Output/HTML/HeaderMeta/CustomerFAQSearch.pm
 msgid "%s - Customer (FAQFulltext)"
-msgstr ""
+msgstr "%s - Клијент (ЧПП комплетан текст)"
 
 #. Perl Module: Kernel/Output/HTML/HeaderMeta/PublicFAQSearch.pm
 msgid "%s - Public (%s)"
-msgstr ""
+msgstr "%s - Јавно (%s)"
 
 #. Perl Module: Kernel/Output/HTML/HeaderMeta/PublicFAQSearch.pm
 msgid "%s - Public (FAQFulltext)"
-msgstr ""
+msgstr "%s - Јавно (ЧПП комплетан текст)"
 
 #. Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
 msgid "This article is empty!"
@@ -581,11 +581,11 @@ msgstr "Филтер за „HTML” излаз за додавање везе �
 
 #. SysConfig
 msgid "Add FAQ article"
-msgstr ""
+msgstr "Додај ЧПП чланак"
 
 #. SysConfig
 msgid "CSS color for the voting result."
-msgstr "CSS боја за резултат гласања."
+msgstr "„CSS” боја за резултат гласања."
 
 #. SysConfig
 msgid "Cache Time To Leave for FAQ items."
@@ -660,12 +660,6 @@ msgstr "Дефинише модул прегледа за мали приказ 
 #. SysConfig
 msgid "Defines an overview module to show the small view of a FAQ list."
 msgstr "Дефинише модул прегледа за мали приказ ЧПП листе. "
-
-#. SysConfig
-msgid ""
-"Defines if the enhanced mode should be used (enables use of table, replace, "
-"subscript, superscript, paste from word, etc.) in customer interface."
-msgstr ""
 
 #. SysConfig
 msgid ""
@@ -889,27 +883,27 @@ msgstr "Активирање механизма за гласање на ЧПП 
 
 #. SysConfig
 msgid "FAQ AJAX Responder"
-msgstr ""
+msgstr "ЧПП „AJAX” одговарач"
 
 #. SysConfig
 msgid "FAQ AJAX Responder for Richtext."
-msgstr ""
+msgstr "ЧПП „AJAX” одговарач за „Richtext”."
 
 #. SysConfig
 msgid "FAQ Area"
-msgstr ""
+msgstr "ЧПП простор"
 
 #. SysConfig
 msgid "FAQ Area."
-msgstr ""
+msgstr "ЧПП простор."
 
 #. SysConfig
 msgid "FAQ Delete."
-msgstr ""
+msgstr "Обриши ЧПП."
 
 #. SysConfig
 msgid "FAQ Edit."
-msgstr ""
+msgstr "Уреди ЧПП."
 
 #. SysConfig
 msgid "FAQ Journal Overview \"Small\" Limit"
@@ -921,7 +915,7 @@ msgstr "Ограничење прегледа ЧПП - \"мало\""
 
 #. SysConfig
 msgid "FAQ Print."
-msgstr ""
+msgstr "Штампај ЧПП."
 
 #. SysConfig
 msgid "FAQ limit per page for FAQ Journal Overview \"Small\""
@@ -1169,7 +1163,7 @@ msgstr ""
 
 #. SysConfig
 msgid "Public FAQ."
-msgstr ""
+msgstr "Јавно ЧПП."
 
 #. SysConfig
 msgid "Queue for the approval of FAQ articles."
@@ -1227,7 +1221,7 @@ msgstr "Прикажи \"Убаци ЧПП текст\" / \"Убаци Цео Ч
 
 #. SysConfig
 msgid "Show FAQ Article with HTML."
-msgstr "Приказ ЧПП чланци као „HTML”."
+msgstr "Приказ ЧПП чланка као „HTML”."
 
 #. SysConfig
 msgid "Show FAQ path yes/no."
@@ -1291,7 +1285,7 @@ msgstr "У менију приказује везу за штампање ЧПП
 
 #. SysConfig
 msgid "Text Only"
-msgstr ""
+msgstr "Само текст"
 
 #. SysConfig
 msgid "The identifier for a FAQ, e.g. FAQ#, KB#, MyFAQ#. The default is FAQ#."
@@ -1334,17 +1328,5 @@ msgid "Toolbar Item for a shortcut."
 msgstr "Ставка алатне линије за скраћеницу."
 
 #. SysConfig
-msgid ""
-"Your queue selection of your preferred queues. You also get notified about "
-"those queues via email if enabled."
-msgstr ""
-
-#. SysConfig
-msgid ""
-"Your service selection of your preferred services. You also get notified "
-"about those services via email if enabled."
-msgstr ""
-
-#. SysConfig
 msgid "public (public)"
-msgstr ""
+msgstr "јавно (јавно)"

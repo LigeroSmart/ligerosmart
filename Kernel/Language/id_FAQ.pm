@@ -242,8 +242,6 @@ sub Data {
         'Tentukan sebuah gambaran modul untuk menampilkan tampilan kecil dari sebuah jurnal FAQ';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ list.'} =
         'Tentukan sebuah gambaran modul untuk menampilkan tampilan kecil dari sebuah daftar FAQ.';
-    $Self->{Translation}->{'Defines if the enhanced mode should be used (enables use of table, replace, subscript, superscript, paste from word, etc.) in customer interface.'} =
-        '';
     $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in a FAQ search of the agent interface.'} =
         'Tentukan atribut default FAQ untuk penyortiran FAQ dalam pencarian FAQ dari antarmuka agen';
     $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in a FAQ search of the customer interface.'} =
@@ -451,10 +449,6 @@ sub Data {
     $Self->{Translation}->{'Ticket body for approval of FAQ article.'} = 'Isi tiket untuk persetujuan artikel FAQ.';
     $Self->{Translation}->{'Ticket subject for approval of FAQ article.'} = 'Subjek tiket untuk persetujuan artikel FAQ.';
     $Self->{Translation}->{'Toolbar Item for a shortcut.'} = 'Item toolbar untuk jalan pintas';
-    $Self->{Translation}->{'Your queue selection of your preferred queues. You also get notified about those queues via email if enabled.'} =
-        '';
-    $Self->{Translation}->{'Your service selection of your preferred services. You also get notified about those services via email if enabled.'} =
-        '';
     $Self->{Translation}->{'public (public)'} = '';
 
 }

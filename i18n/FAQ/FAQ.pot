@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: FAQ\n"
-"POT-Creation-Date: 2016-09-02 15:38+0000\n"
+"POT-Creation-Date: 2016-09-14 18:31+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -643,10 +643,6 @@ msgid "Defines an overview module to show the small view of a FAQ list."
 msgstr ""
 
 #. SysConfig
-msgid "Defines if the enhanced mode should be used (enables use of table, replace, subscript, superscript, paste from word, etc.) in customer interface."
-msgstr ""
-
-#. SysConfig
 msgid "Defines the default FAQ attribute for FAQ sorting in a FAQ search of the agent interface."
 msgstr ""
 
@@ -1168,14 +1164,6 @@ msgstr ""
 
 #. SysConfig
 msgid "Toolbar Item for a shortcut."
-msgstr ""
-
-#. SysConfig
-msgid "Your queue selection of your preferred queues. You also get notified about those queues via email if enabled."
-msgstr ""
-
-#. SysConfig
-msgid "Your service selection of your preferred services. You also get notified about those services via email if enabled."
 msgstr ""
 
 #. SysConfig

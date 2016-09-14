@@ -1,4 +1,5 @@
 #5.0.6 2016-??-??
+ - 2016-09-14 Updated translations, thanks to all translators.
  - 2016-09-02 Updated translations, thanks to all translators.
  - 2016-09-02 Added missing translations, thanks to Ur Balazs.
  - 2016-08-05 Added Chinese (Taiwan) translation, thanks to all translators.

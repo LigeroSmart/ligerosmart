@@ -242,8 +242,6 @@ sub Data {
         'Define un módulo de vista general para mostrar la vista pequeña de la bitácora de FAQ';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ list.'} =
         'Define un módulo de vista previa para mostrar la vista pequeña de un listado de FAQs';
-    $Self->{Translation}->{'Defines if the enhanced mode should be used (enables use of table, replace, subscript, superscript, paste from word, etc.) in customer interface.'} =
-        '';
     $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in a FAQ search of the agent interface.'} =
         'Define el atributo por omisión para ordenar los artículos FAQ en una búsqueda de FAQ en la interfaz del agente.';
     $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in a FAQ search of the customer interface.'} =
@@ -451,10 +449,6 @@ sub Data {
     $Self->{Translation}->{'Ticket body for approval of FAQ article.'} = 'Cuerpo del ticket para aprobación de artículos FAQ.';
     $Self->{Translation}->{'Ticket subject for approval of FAQ article.'} = 'Asunto del ticket para aprobación de artículos FAQ.';
     $Self->{Translation}->{'Toolbar Item for a shortcut.'} = 'Elemento de la barra de herramientas para un atajo (shortcut).';
-    $Self->{Translation}->{'Your queue selection of your preferred queues. You also get notified about those queues via email if enabled.'} =
-        '';
-    $Self->{Translation}->{'Your service selection of your preferred services. You also get notified about those services via email if enabled.'} =
-        '';
     $Self->{Translation}->{'public (public)'} = '';
 
 }

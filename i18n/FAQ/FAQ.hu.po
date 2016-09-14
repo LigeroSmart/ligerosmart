@@ -1,11 +1,11 @@
 # 
 # Translators:
-# Balázs Úr <urbalazs@gmail.com>, 2014-2015
+# Balázs Úr <urbalazs@gmail.com>, 2014-2016
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-09-02 15:34+0000\n"
-"PO-Revision-Date: 2016-09-02 20:37+0000\n"
+"POT-Creation-Date: 2016-09-14 18:28+0000\n"
+"PO-Revision-Date: 2016-09-14 23:30+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Hungarian (http://www.transifex.com/otrs/OTRS/language/hu/)\n"
 "MIME-Version: 1.0\n"
@@ -274,7 +274,7 @@ msgstr "GyIK nyelvkezelés"
 
 #. Template: AgentFAQLanguage
 msgid "Use this feature if you want to work with multiple languages."
-msgstr ""
+msgstr "Akkor használja ezt a szolgáltatást, ha több nyelvvel szeretne dolgozni."
 
 #. Template: AgentFAQLanguage
 msgid "Add language"
@@ -548,23 +548,23 @@ msgstr "Nincs találat!"
 
 #. Perl Module: Kernel/Output/HTML/HeaderMeta/AgentFAQSearch.pm
 msgid "%s (FAQFulltext)"
-msgstr ""
+msgstr "%s (GyIK szabad-szavas)"
 
 #. Perl Module: Kernel/Output/HTML/HeaderMeta/CustomerFAQSearch.pm
 msgid "%s - Customer (%s)"
-msgstr ""
+msgstr "%s - ügyfél (%s)"
 
 #. Perl Module: Kernel/Output/HTML/HeaderMeta/CustomerFAQSearch.pm
 msgid "%s - Customer (FAQFulltext)"
-msgstr ""
+msgstr "%s - ügyfél (GyIK szabad-szavas)"
 
 #. Perl Module: Kernel/Output/HTML/HeaderMeta/PublicFAQSearch.pm
 msgid "%s - Public (%s)"
-msgstr ""
+msgstr "%s - nyilvános (%s)"
 
 #. Perl Module: Kernel/Output/HTML/HeaderMeta/PublicFAQSearch.pm
 msgid "%s - Public (FAQFulltext)"
-msgstr ""
+msgstr "%s - nyilvános (GyIK szabad-szavas)"
 
 #. Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
 msgid "This article is empty!"
@@ -580,7 +580,7 @@ msgstr "Egy szűrő a HTML kimenethez, hogy hivatkozásokat adjon egy meghatáro
 
 #. SysConfig
 msgid "Add FAQ article"
-msgstr ""
+msgstr "GyIK bejegyzés hozzáadása"
 
 #. SysConfig
 msgid "CSS color for the voting result."
@@ -596,19 +596,19 @@ msgstr "Kategóriakezelés"
 
 #. SysConfig
 msgid "Customer FAQ Print."
-msgstr ""
+msgstr "Ügyfél GyIK nyomtatás."
 
 #. SysConfig
 msgid "Customer FAQ Zoom."
-msgstr ""
+msgstr "Ügyfél GyIK nagyítás."
 
 #. SysConfig
 msgid "Customer FAQ search."
-msgstr ""
+msgstr "Ügyfél GyIK keresés."
 
 #. SysConfig
 msgid "Customer FAQ."
-msgstr ""
+msgstr "Ügyfél GyIK."
 
 #. SysConfig
 msgid "Decimal places of the voting result."
@@ -659,12 +659,6 @@ msgstr "Egy áttekintő modult határoz meg egy GyIK napló kis nézetének megj
 #. SysConfig
 msgid "Defines an overview module to show the small view of a FAQ list."
 msgstr "Egy áttekintő modult határoz meg egy GyIK lista kis nézetének megjelenítéséhez."
-
-#. SysConfig
-msgid ""
-"Defines if the enhanced mode should be used (enables use of table, replace, "
-"subscript, superscript, paste from word, etc.) in customer interface."
-msgstr ""
 
 #. SysConfig
 msgid ""
@@ -888,27 +882,27 @@ msgstr "Szavazási mechanizmus engedélyezése a GyIK modulban."
 
 #. SysConfig
 msgid "FAQ AJAX Responder"
-msgstr ""
+msgstr "GyIK AJAX válaszadó"
 
 #. SysConfig
 msgid "FAQ AJAX Responder for Richtext."
-msgstr ""
+msgstr "GyIK AJAX válaszadó a Richtexthez."
 
 #. SysConfig
 msgid "FAQ Area"
-msgstr ""
+msgstr "GyIK terület"
 
 #. SysConfig
 msgid "FAQ Area."
-msgstr ""
+msgstr "GyIK terület."
 
 #. SysConfig
 msgid "FAQ Delete."
-msgstr ""
+msgstr "GyIK törlés."
 
 #. SysConfig
 msgid "FAQ Edit."
-msgstr ""
+msgstr "GyIK szerkesztés."
 
 #. SysConfig
 msgid "FAQ Journal Overview \"Small\" Limit"
@@ -920,7 +914,7 @@ msgstr "GyIK áttekintő „kis” korlát"
 
 #. SysConfig
 msgid "FAQ Print."
-msgstr ""
+msgstr "GyIK nyomtatás."
 
 #. SysConfig
 msgid "FAQ limit per page for FAQ Journal Overview \"Small\""
@@ -948,7 +942,7 @@ msgstr "Előtétprogram modul regisztráció a nyilvános felülethez."
 
 #. SysConfig
 msgid "Full FAQ"
-msgstr ""
+msgstr "Teljes GyIK"
 
 #. SysConfig
 msgid "Group for the approval of FAQ articles."
@@ -1156,19 +1150,19 @@ msgstr "A GyIK nyomtatása"
 
 #. SysConfig
 msgid "Public FAQ Print."
-msgstr ""
+msgstr "Nyilvános GyIK nyomtatás."
 
 #. SysConfig
 msgid "Public FAQ Zoom."
-msgstr ""
+msgstr "Nyilvános GyIK nagyítás."
 
 #. SysConfig
 msgid "Public FAQ search."
-msgstr ""
+msgstr "Nyilvános GyIK keresés."
 
 #. SysConfig
 msgid "Public FAQ."
-msgstr ""
+msgstr "Nyilvános GyIK."
 
 #. SysConfig
 msgid "Queue for the approval of FAQ articles."
@@ -1180,7 +1174,7 @@ msgstr "Értékelések a szavazáshoz. A kulcsnak százalékban kell lennie."
 
 #. SysConfig
 msgid "S"
-msgstr ""
+msgstr "S"
 
 #. SysConfig
 msgid "Search FAQ"
@@ -1290,7 +1284,7 @@ msgstr "Egy hivatkozást jelenít meg a menüben egy GyIK nyomtatásához az üg
 
 #. SysConfig
 msgid "Text Only"
-msgstr ""
+msgstr "Csak szöveg"
 
 #. SysConfig
 msgid "The identifier for a FAQ, e.g. FAQ#, KB#, MyFAQ#. The default is FAQ#."
@@ -1333,17 +1327,5 @@ msgid "Toolbar Item for a shortcut."
 msgstr "Eszköztárelem egy gyorsbillentyűhöz."
 
 #. SysConfig
-msgid ""
-"Your queue selection of your preferred queues. You also get notified about "
-"those queues via email if enabled."
-msgstr ""
-
-#. SysConfig
-msgid ""
-"Your service selection of your preferred services. You also get notified "
-"about those services via email if enabled."
-msgstr ""
-
-#. SysConfig
 msgid "public (public)"
-msgstr ""
+msgstr "nyilvános (nyilvános)"

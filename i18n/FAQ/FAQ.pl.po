@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-09-02 15:34+0000\n"
-"PO-Revision-Date: 2016-09-02 20:37+0000\n"
+"POT-Creation-Date: 2016-09-14 18:28+0000\n"
+"PO-Revision-Date: 2016-09-14 23:30+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Polish (http://www.transifex.com/otrs/OTRS/language/pl/)\n"
 "MIME-Version: 1.0\n"
@@ -658,12 +658,6 @@ msgstr ""
 
 #. SysConfig
 msgid "Defines an overview module to show the small view of a FAQ list."
-msgstr ""
-
-#. SysConfig
-msgid ""
-"Defines if the enhanced mode should be used (enables use of table, replace, "
-"subscript, superscript, paste from word, etc.) in customer interface."
 msgstr ""
 
 #. SysConfig
@@ -1331,18 +1325,6 @@ msgstr ""
 #. SysConfig
 msgid "Toolbar Item for a shortcut."
 msgstr "Pozycja paska narzędziowego dla skrótu."
-
-#. SysConfig
-msgid ""
-"Your queue selection of your preferred queues. You also get notified about "
-"those queues via email if enabled."
-msgstr ""
-
-#. SysConfig
-msgid ""
-"Your service selection of your preferred services. You also get notified "
-"about those services via email if enabled."
-msgstr ""
 
 #. SysConfig
 msgid "public (public)"

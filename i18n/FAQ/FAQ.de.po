@@ -1,6 +1,6 @@
 # 
 # Translators:
-# Ettore Atalan <atalanttore@googlemail.com>, 2014-2015
+# Ettore Atalan <atalanttore@googlemail.com>, 2014-2016
 # eliasp <mail@eliasprobst.eu>, 2015
 # Mainboarder, 2014
 # Mainboarder, 2014
@@ -12,8 +12,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-09-02 15:34+0000\n"
-"PO-Revision-Date: 2016-09-02 20:37+0000\n"
+"POT-Creation-Date: 2016-09-14 18:28+0000\n"
+"PO-Revision-Date: 2016-09-14 23:30+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: German (http://www.transifex.com/otrs/OTRS/language/de/)\n"
 "MIME-Version: 1.0\n"
@@ -282,7 +282,7 @@ msgstr "FAQ-Sprachen-Verwaltung"
 
 #. Template: AgentFAQLanguage
 msgid "Use this feature if you want to work with multiple languages."
-msgstr ""
+msgstr "Verwenden Sie diese Funktion, wenn Sie mit mehreren Sprachen arbeiten wollen."
 
 #. Template: AgentFAQLanguage
 msgid "Add language"
@@ -560,7 +560,7 @@ msgstr ""
 
 #. Perl Module: Kernel/Output/HTML/HeaderMeta/CustomerFAQSearch.pm
 msgid "%s - Customer (%s)"
-msgstr ""
+msgstr "%s - Kunde (%s)"
 
 #. Perl Module: Kernel/Output/HTML/HeaderMeta/CustomerFAQSearch.pm
 msgid "%s - Customer (FAQFulltext)"
@@ -568,7 +568,7 @@ msgstr ""
 
 #. Perl Module: Kernel/Output/HTML/HeaderMeta/PublicFAQSearch.pm
 msgid "%s - Public (%s)"
-msgstr ""
+msgstr "%s - Öffentlich (%s)"
 
 #. Perl Module: Kernel/Output/HTML/HeaderMeta/PublicFAQSearch.pm
 msgid "%s - Public (FAQFulltext)"
@@ -588,7 +588,7 @@ msgstr "Ein Filter zur automatischen Generierung von FAQ-Links, wenn ein Hinweis
 
 #. SysConfig
 msgid "Add FAQ article"
-msgstr ""
+msgstr "FAQ-Artikel hinzufügen"
 
 #. SysConfig
 msgid "CSS color for the voting result."
@@ -604,7 +604,7 @@ msgstr "Kategorien-Verwaltung"
 
 #. SysConfig
 msgid "Customer FAQ Print."
-msgstr ""
+msgstr "Kunden-FAQ Drucken."
 
 #. SysConfig
 msgid "Customer FAQ Zoom."
@@ -612,11 +612,11 @@ msgstr ""
 
 #. SysConfig
 msgid "Customer FAQ search."
-msgstr ""
+msgstr "Kunden-FAQ Suchen."
 
 #. SysConfig
 msgid "Customer FAQ."
-msgstr ""
+msgstr "Kunden-FAQ."
 
 #. SysConfig
 msgid "Decimal places of the voting result."
@@ -667,12 +667,6 @@ msgstr "Definiert ein Übersichts-Modul um die Small-Ansicht im FAQ-Journal anzu
 #. SysConfig
 msgid "Defines an overview module to show the small view of a FAQ list."
 msgstr "Definiert ein Übersichts-Modul um die Small-Ansicht einer FAQ-Liste anzuzeigen."
-
-#. SysConfig
-msgid ""
-"Defines if the enhanced mode should be used (enables use of table, replace, "
-"subscript, superscript, paste from word, etc.) in customer interface."
-msgstr ""
 
 #. SysConfig
 msgid ""
@@ -904,19 +898,19 @@ msgstr ""
 
 #. SysConfig
 msgid "FAQ Area"
-msgstr ""
+msgstr "FAQ-Bereich"
 
 #. SysConfig
 msgid "FAQ Area."
-msgstr ""
+msgstr "FAQ-Bereich."
 
 #. SysConfig
 msgid "FAQ Delete."
-msgstr ""
+msgstr "FAQ Löschen."
 
 #. SysConfig
 msgid "FAQ Edit."
-msgstr ""
+msgstr "FAQ Bearbeiten."
 
 #. SysConfig
 msgid "FAQ Journal Overview \"Small\" Limit"
@@ -928,7 +922,7 @@ msgstr "FAQ-Übersicht \"kleines\" Limit"
 
 #. SysConfig
 msgid "FAQ Print."
-msgstr ""
+msgstr "FAQ Drucken."
 
 #. SysConfig
 msgid "FAQ limit per page for FAQ Journal Overview \"Small\""
@@ -956,7 +950,7 @@ msgstr "Frontend-Modul-Registrierung für das Public-Interface"
 
 #. SysConfig
 msgid "Full FAQ"
-msgstr ""
+msgstr "Vollständiges FAQ"
 
 #. SysConfig
 msgid "Group for the approval of FAQ articles."
@@ -1164,7 +1158,7 @@ msgstr "FAQ drucken"
 
 #. SysConfig
 msgid "Public FAQ Print."
-msgstr ""
+msgstr "Öffentliches FAQ Drucken."
 
 #. SysConfig
 msgid "Public FAQ Zoom."
@@ -1172,11 +1166,11 @@ msgstr ""
 
 #. SysConfig
 msgid "Public FAQ search."
-msgstr ""
+msgstr "Öffentliches FAQ Suchen."
 
 #. SysConfig
 msgid "Public FAQ."
-msgstr ""
+msgstr "Öffentliches FAQ."
 
 #. SysConfig
 msgid "Queue for the approval of FAQ articles."
@@ -1188,7 +1182,7 @@ msgstr "Gewichtung für die Bewertung. Der Key muss in Prozent angegeben werden.
 
 #. SysConfig
 msgid "S"
-msgstr ""
+msgstr "S"
 
 #. SysConfig
 msgid "Search FAQ"
@@ -1298,7 +1292,7 @@ msgstr "Zeigt einen Link in der Menu-Leiste in der Zoom-Ansicht im Agenten-Inter
 
 #. SysConfig
 msgid "Text Only"
-msgstr ""
+msgstr "Nur Text"
 
 #. SysConfig
 msgid "The identifier for a FAQ, e.g. FAQ#, KB#, MyFAQ#. The default is FAQ#."
@@ -1341,17 +1335,5 @@ msgid "Toolbar Item for a shortcut."
 msgstr "Werkzeugleisteneintrag für den Schnellzugriff."
 
 #. SysConfig
-msgid ""
-"Your queue selection of your preferred queues. You also get notified about "
-"those queues via email if enabled."
-msgstr ""
-
-#. SysConfig
-msgid ""
-"Your service selection of your preferred services. You also get notified "
-"about those services via email if enabled."
-msgstr ""
-
-#. SysConfig
 msgid "public (public)"
-msgstr ""
+msgstr "öffentlich (öffentlich)"

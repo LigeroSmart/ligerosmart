@@ -242,8 +242,6 @@ sub Data {
         'Definisce un modulo panoramica per mostrare una vista abbreviata di una lista di FAQ.';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ list.'} =
         'Definisce un modulo panoramica per mostrare la vista piccola di una lista di FAQ.';
-    $Self->{Translation}->{'Defines if the enhanced mode should be used (enables use of table, replace, subscript, superscript, paste from word, etc.) in customer interface.'} =
-        '';
     $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in a FAQ search of the agent interface.'} =
         '';
     $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in a FAQ search of the customer interface.'} =
@@ -451,10 +449,6 @@ sub Data {
     $Self->{Translation}->{'Ticket body for approval of FAQ article.'} = 'Corpo del ticket per l\'approvazione dell\'articolo delle FAQ.';
     $Self->{Translation}->{'Ticket subject for approval of FAQ article.'} = 'Oggetto del ticket per l\'approvazione dell\'articolo delle FAQ.';
     $Self->{Translation}->{'Toolbar Item for a shortcut.'} = 'Elemento della barra degli strumenti per una scorciatoia.';
-    $Self->{Translation}->{'Your queue selection of your preferred queues. You also get notified about those queues via email if enabled.'} =
-        '';
-    $Self->{Translation}->{'Your service selection of your preferred services. You also get notified about those services via email if enabled.'} =
-        '';
     $Self->{Translation}->{'public (public)'} = '';
 
 }

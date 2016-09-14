@@ -70,7 +70,7 @@ sub Data {
     $Self->{Translation}->{'Will be shown as comment in Explorer.'} = '将作为注释在浏览时显示.';
     $Self->{Translation}->{'Do you really want to delete this category?'} = '你确定要删除这个类别吗?';
     $Self->{Translation}->{'You can not delete this category. It is used in at least one FAQ article and/or is parent of at least one other category'} =
-        '你不能删除这个类别. 该类别至少包含一篇FAQ文章，或者至少包含一个子类别。';
+        '你不能删除这个类别，该类别至少包含一篇FAQ文章，或者至少包含一个子类别。';
     $Self->{Translation}->{'This category is used in the following FAQ article(s)'} = '下列FAQ文章使用该类别';
     $Self->{Translation}->{'This category is parent of the following subcategories'} = '该类别是下列子类别的父类别';
 
@@ -93,31 +93,31 @@ sub Data {
     $Self->{Translation}->{'History of'} = '历史';
 
     # Template: AgentFAQJournalOverviewSmall
-    $Self->{Translation}->{'No FAQ Journal data found.'} = '没有找到FAQ日志数据.';
+    $Self->{Translation}->{'No FAQ Journal data found.'} = '没有找到FAQ日志数据。';
 
     # Template: AgentFAQLanguage
     $Self->{Translation}->{'FAQ Language Management'} = 'FAQ语言管理';
     $Self->{Translation}->{'Use this feature if you want to work with multiple languages.'} =
-        '';
+        '如果要使用多语言就使用本功能。';
     $Self->{Translation}->{'Add language'} = '添加语言';
     $Self->{Translation}->{'Delete Language %s'} = '删除语言 %s';
     $Self->{Translation}->{'Add Language'} = '添加语言';
     $Self->{Translation}->{'Edit Language'} = '编辑语言';
     $Self->{Translation}->{'Do you really want to delete this language?'} = '你确定要删除这个语言吗?';
     $Self->{Translation}->{'You can not delete this language. It is used in at least one FAQ article!'} =
-        '你不能删除这个语言. 至少有一篇FAQ文章使用该语言!';
+        '你不能删除这个语言，至少有一篇FAQ文章使用该语言!';
     $Self->{Translation}->{'This language is used in the following FAQ Article(s)'} = '下列FAQ文章使用该语言';
 
     # Template: AgentFAQOverviewNavBar
     $Self->{Translation}->{'Context Settings'} = '上下文设置';
-    $Self->{Translation}->{'FAQ articles per page'} = '每页显示的FAQ文章个数';
+    $Self->{Translation}->{'FAQ articles per page'} = '每页显示的FAQ文章数';
 
     # Template: AgentFAQOverviewSmall
-    $Self->{Translation}->{'No FAQ data found.'} = '没有找到FAQ数据.';
+    $Self->{Translation}->{'No FAQ data found.'} = '没有找到FAQ数据。';
 
     # Template: AgentFAQSearch
     $Self->{Translation}->{'Keyword'} = '关键字';
-    $Self->{Translation}->{'Vote (e. g. Equals 10 or GreaterThan 60)'} = '投票次数 (例如，= 10 或 >= 60)';
+    $Self->{Translation}->{'Vote (e. g. Equals 10 or GreaterThan 60)'} = '投票数 (例如，= 10 或 >= 60)';
     $Self->{Translation}->{'Rate (e. g. Equals 25% or GreaterThan 75%)'} = '评分 (例如，= 10% 或 >= 75%)';
     $Self->{Translation}->{'Approved'} = '通过审批';
     $Self->{Translation}->{'Last changed by'} = '上次修改人';
@@ -148,8 +148,8 @@ sub Data {
     $Self->{Translation}->{'Rating'} = '评分';
     $Self->{Translation}->{'out of 5'} = '(5分制)';
     $Self->{Translation}->{'Votes'} = '投票次数';
-    $Self->{Translation}->{'No votes found!'} = '没有找到投票!';
-    $Self->{Translation}->{'No votes found! Be the first one to rate this FAQ article.'} = '没有找到投票! 这将是该 FAQ 文章的第一个投票.';
+    $Self->{Translation}->{'No votes found!'} = '还没有投票!';
+    $Self->{Translation}->{'No votes found! Be the first one to rate this FAQ article.'} = '还没有投票! 这将是该 FAQ 文章的第一个投票。';
     $Self->{Translation}->{'Download Attachment'} = '下载附件';
     $Self->{Translation}->{'To open links in the following description blocks, you might need to press Ctrl or Cmd or Shift key while clicking the link (depending on your browser and OS).'} =
         '要打开下面描述中的链接，你可能需要在单击链接的同时按住 Ctrl 或 Cmd 或 Shift 键 （取决于您的浏览器和操作系统 ）。';
@@ -200,15 +200,15 @@ sub Data {
     $Self->{Translation}->{'No Result!'} = '无结果！';
 
     # Perl Module: Kernel/Output/HTML/HeaderMeta/AgentFAQSearch.pm
-    $Self->{Translation}->{'%s (FAQFulltext)'} = '';
+    $Self->{Translation}->{'%s (FAQFulltext)'} = '%s（FAQ全文）';
 
     # Perl Module: Kernel/Output/HTML/HeaderMeta/CustomerFAQSearch.pm
-    $Self->{Translation}->{'%s - Customer (%s)'} = '';
-    $Self->{Translation}->{'%s - Customer (FAQFulltext)'} = '';
+    $Self->{Translation}->{'%s - Customer (%s)'} = '%s - 客户（%s）';
+    $Self->{Translation}->{'%s - Customer (FAQFulltext)'} = '%s - 客户（FAQ全文）';
 
     # Perl Module: Kernel/Output/HTML/HeaderMeta/PublicFAQSearch.pm
-    $Self->{Translation}->{'%s - Public (%s)'} = '';
-    $Self->{Translation}->{'%s - Public (FAQFulltext)'} = '';
+    $Self->{Translation}->{'%s - Public (%s)'} = '%s - 公开（%s）';
+    $Self->{Translation}->{'%s - Public (FAQFulltext)'} = '%s - 公开（FAQ全文）';
 
     # Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
     $Self->{Translation}->{'This article is empty!'} = '文章无内容！';
@@ -216,34 +216,32 @@ sub Data {
     # SysConfig
     $Self->{Translation}->{'A filter for HTML output to add links behind a defined string. The element Image allows two input kinds. First the name of an image (e.g. faq.png). In this case the OTRS image path will be used. The second possibility is to insert the link to the image.'} =
         '在HTML输出结果中为预定义字符串添加链接的过滤器。图像元素允许两种输入方式：第一种是用图像的名称（如faq.png），在这种情况下会使用OTRS的图像路径；第二种是插入图像的链接。';
-    $Self->{Translation}->{'Add FAQ article'} = '';
-    $Self->{Translation}->{'CSS color for the voting result.'} = '投票结果的CSS颜色';
-    $Self->{Translation}->{'Cache Time To Leave for FAQ items.'} = 'FAQ文章不再显示的时间';
+    $Self->{Translation}->{'Add FAQ article'} = '添加FAQ文章';
+    $Self->{Translation}->{'CSS color for the voting result.'} = '投票结果的CSS颜色。';
+    $Self->{Translation}->{'Cache Time To Leave for FAQ items.'} = 'FAQ文章能显示的时间。';
     $Self->{Translation}->{'Category Management'} = '管理类别';
-    $Self->{Translation}->{'Customer FAQ Print.'} = '';
-    $Self->{Translation}->{'Customer FAQ Zoom.'} = '';
-    $Self->{Translation}->{'Customer FAQ search.'} = '';
-    $Self->{Translation}->{'Customer FAQ.'} = '';
+    $Self->{Translation}->{'Customer FAQ Print.'} = '客户FAQ打印。';
+    $Self->{Translation}->{'Customer FAQ Zoom.'} = '客户FAQ详情。';
+    $Self->{Translation}->{'Customer FAQ search.'} = '客户FAQ搜索';
+    $Self->{Translation}->{'Customer FAQ.'} = '客户FAQ。';
     $Self->{Translation}->{'Decimal places of the voting result.'} = '以十分制显示评分结果。';
-    $Self->{Translation}->{'Default category name.'} = '默认的目录名。';
+    $Self->{Translation}->{'Default category name.'} = '默认的目录名称。';
     $Self->{Translation}->{'Default language for FAQ articles on single language mode.'} = '单语言模式下FAQ文章的默认语言。';
     $Self->{Translation}->{'Default maximum size of the titles in a FAQ article to be shown.'} =
-        '显示FAQ文章的默认最大数量。';
+        'FAQ文章默认显示标题的最大字符数。';
     $Self->{Translation}->{'Default priority of tickets for the approval of FAQ articles.'} =
-        'FAQ 文章审批请求工单的优先级。';
+        'FAQ 文章审批请求工单的默认优先级。';
     $Self->{Translation}->{'Default state for FAQ entry.'} = 'FAQ文章的默认状态。';
-    $Self->{Translation}->{'Default state of tickets for the approval of FAQ articles.'} = 'FAQ 文章请求批准的工单的默认状态。';
-    $Self->{Translation}->{'Default type of tickets for the approval of FAQ articles.'} = 'FAQ 文章请求批准的工单的默认类型。';
+    $Self->{Translation}->{'Default state of tickets for the approval of FAQ articles.'} = 'FAQ 文章请求批准工单的默认状态。';
+    $Self->{Translation}->{'Default type of tickets for the approval of FAQ articles.'} = 'FAQ 文章请求批准工单的默认类型。';
     $Self->{Translation}->{'Default value for the Action parameter for the public frontend. The Action parameter is used in the scripts of the system.'} =
         '公共前端界面指令参数的默认值，指令参数用于系统脚本。';
     $Self->{Translation}->{'Define if the FAQ title should be concatenated to article subject.'} =
-        '定义FAQ标题是否要加上文章主题。';
+        '定义FAQ标题是否要加到文章主题中。';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ journal.'} =
-        '定义一个显示FAQ日志简洁视图的概述模块。';
+        '定义一个显示FAQ日志简洁视图的概览模块。';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ list.'} =
-        '定义一个显示FAQ列表简洁视图的概述模块。';
-    $Self->{Translation}->{'Defines if the enhanced mode should be used (enables use of table, replace, subscript, superscript, paste from word, etc.) in customer interface.'} =
-        '';
+        '定义一个显示FAQ列表简洁视图的概览模块。';
     $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in a FAQ search of the agent interface.'} =
         '定义在服务人员界面的FAQ搜索结果中排序的默认FAQ属性。';
     $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in a FAQ search of the customer interface.'} =
@@ -314,26 +312,26 @@ sub Data {
     $Self->{Translation}->{'Edit this FAQ'} = '编辑FAQ';
     $Self->{Translation}->{'Enable multiple languages on FAQ module.'} = '在FAQ模块中启用多种语言。';
     $Self->{Translation}->{'Enable voting mechanism on FAQ module.'} = '在FAQ模块中启用投票机制。';
-    $Self->{Translation}->{'FAQ AJAX Responder'} = '';
-    $Self->{Translation}->{'FAQ AJAX Responder for Richtext.'} = '';
-    $Self->{Translation}->{'FAQ Area'} = '';
-    $Self->{Translation}->{'FAQ Area.'} = '';
-    $Self->{Translation}->{'FAQ Delete.'} = '';
-    $Self->{Translation}->{'FAQ Edit.'} = '';
+    $Self->{Translation}->{'FAQ AJAX Responder'} = 'FAQ AJAX Responder';
+    $Self->{Translation}->{'FAQ AJAX Responder for Richtext.'} = '用于FAQ富文本的AJAX Responder。';
+    $Self->{Translation}->{'FAQ Area'} = 'FAQ区域';
+    $Self->{Translation}->{'FAQ Area.'} = 'FAQ区域。';
+    $Self->{Translation}->{'FAQ Delete.'} = 'FAQ删除。';
+    $Self->{Translation}->{'FAQ Edit.'} = 'FAQ编辑。';
     $Self->{Translation}->{'FAQ Journal Overview "Small" Limit'} = 'FAQ日志概览“简洁视图”限制';
     $Self->{Translation}->{'FAQ Overview "Small" Limit'} = 'FAQ概览“简洁视图”限制';
-    $Self->{Translation}->{'FAQ Print.'} = '';
+    $Self->{Translation}->{'FAQ Print.'} = 'FAQ打印。';
     $Self->{Translation}->{'FAQ limit per page for FAQ Journal Overview "Small"'} = 'FAQ日志概览“简洁视图”中每页显示的FAQ数量';
     $Self->{Translation}->{'FAQ limit per page for FAQ Overview "Small"'} = 'FAQ概览“简洁视图”中每页显示的FAQ数量';
     $Self->{Translation}->{'FAQ search backend router of the agent interface.'} = '服务人员界面中，FAQ搜索的后台选项。';
     $Self->{Translation}->{'Field4'} = '字段4';
     $Self->{Translation}->{'Field5'} = '字段5';
     $Self->{Translation}->{'Frontend module registration for the public interface.'} = '公共界面的前端模块注册';
-    $Self->{Translation}->{'Full FAQ'} = '';
-    $Self->{Translation}->{'Group for the approval of FAQ articles.'} = '批准 FAQ 文章请求的群组.';
+    $Self->{Translation}->{'Full FAQ'} = '完整FAQ';
+    $Self->{Translation}->{'Group for the approval of FAQ articles.'} = '批准 FAQ 文章请求的群组。';
     $Self->{Translation}->{'History of this FAQ'} = 'FAQ文章的历史信息';
-    $Self->{Translation}->{'Include internal fields on a FAQ based Ticket.'} = '在基于FAQ文章的工单中包含内部字段';
-    $Self->{Translation}->{'Include the name of each field in a FAQ based Ticket.'} = '在基于FAQ文章的工单中包含每个字段的名称';
+    $Self->{Translation}->{'Include internal fields on a FAQ based Ticket.'} = '在基于FAQ文章的工单中包含内部字段。';
+    $Self->{Translation}->{'Include the name of each field in a FAQ based Ticket.'} = '在基于FAQ文章的工单中包含每个字段的名称。';
     $Self->{Translation}->{'Interfaces where the quick search should be shown.'} = '快速搜索时显示的界面';
     $Self->{Translation}->{'Journal'} = '日志';
     $Self->{Translation}->{'Language Management'} = '管理语言';
@@ -388,42 +386,42 @@ sub Data {
         '在客户界面中，FAQ搜索结果每页显示的FAQ文章数量。';
     $Self->{Translation}->{'Number of FAQ articles to be displayed on each page of a search result in the public interface.'} =
         '在公共界面中，FAQ搜索结果每页显示的FAQ文章数量。';
-    $Self->{Translation}->{'Number of shown items in last changes.'} = '显示最近更改条目的数量.';
-    $Self->{Translation}->{'Number of shown items in last created.'} = '显示最新创建条目的数量.';
-    $Self->{Translation}->{'Number of shown items in the top 10 feature.'} = '按Top10格式显示的条目数.';
+    $Self->{Translation}->{'Number of shown items in last changes.'} = '显示最近更改条目的数量。';
+    $Self->{Translation}->{'Number of shown items in last created.'} = '显示最新创建条目的数量。';
+    $Self->{Translation}->{'Number of shown items in the top 10 feature.'} = '按Top10格式显示的条目数。';
     $Self->{Translation}->{'Parameters for the pages (in which the FAQ items are shown) of the small FAQ journal overview.'} =
         '显示FAQ条目的微型FAQ日志概览的页面参数。';
     $Self->{Translation}->{'Parameters for the pages (in which the FAQ items are shown) of the small FAQ overview.'} =
         '显示FAQ条目的FAQ概览简洁视图的页面参数。';
     $Self->{Translation}->{'Print this FAQ'} = '打印这篇FAQ';
-    $Self->{Translation}->{'Public FAQ Print.'} = '';
-    $Self->{Translation}->{'Public FAQ Zoom.'} = '';
-    $Self->{Translation}->{'Public FAQ search.'} = '';
-    $Self->{Translation}->{'Public FAQ.'} = '';
-    $Self->{Translation}->{'Queue for the approval of FAQ articles.'} = '审批 FAQ 文章的队列.';
-    $Self->{Translation}->{'Rates for voting. Key must be in percent.'} = '好评率, 键值必须以百分比表示.';
-    $Self->{Translation}->{'S'} = '';
+    $Self->{Translation}->{'Public FAQ Print.'} = '公开FAQ打印。';
+    $Self->{Translation}->{'Public FAQ Zoom.'} = '公开FAQ详情。';
+    $Self->{Translation}->{'Public FAQ search.'} = '公开FAQ搜索。';
+    $Self->{Translation}->{'Public FAQ.'} = '公开FAQ。';
+    $Self->{Translation}->{'Queue for the approval of FAQ articles.'} = '审批 FAQ 文章的队列。';
+    $Self->{Translation}->{'Rates for voting. Key must be in percent.'} = '好评率, 键值必须以百分比表示。';
+    $Self->{Translation}->{'S'} = '简洁';
     $Self->{Translation}->{'Search FAQ'} = '搜索FAQ';
     $Self->{Translation}->{'Set the default height (in pixels) of inline HTML fields in AgentFAQZoom.'} =
         '在”AgentFAQZoom“中，设置内置HTML字段的默认高度（单位：像素）。';
     $Self->{Translation}->{'Set the default height (in pixels) of inline HTML fields in CustomerFAQZoom (and PublicFAQZoom).'} =
-        '在”CustomerFAQZoom（和PublicFAQZoom）“中，设置内置HTML字段的默认高度（按像素）。';
+        '在客户FAQ详情和公开FAQ详情中，设置内置HTML字段的默认高度（按像素）。';
     $Self->{Translation}->{'Set the maximum height (in pixels) of inline HTML fields in AgentFAQZoom.'} =
-        '在”AgentFAQZoom“中，设置内置HTML字段的最大高度（按像素）。';
+        '在服务人员FAQ详情中，设置内置HTML字段的最大高度（按像素）。';
     $Self->{Translation}->{'Set the maximum height (in pixels) of inline HTML fields in CustomerFAQZoom (and PublicFAQZoom).'} =
-        '在”CustomerFAQZoom（和PublicFAQZoom）“中，设置内置HTML字段的最大高度（按像素）。';
+        '在客户FAQ详情和公开FAQ详情中，设置内置HTML字段的最大高度（按像素）。';
     $Self->{Translation}->{'Show "Insert FAQ Link" Button in AgentFAQZoomSmall for public FAQ Articles.'} =
-        '对于公开的FAQ文章，在“AgentFAQZoomSmall”中显示“插入FAQ链接"按钮。';
+        '对于公开的FAQ文章，在服务人员FAQ详情窗口中显示“插入FAQ链接”按钮。';
     $Self->{Translation}->{'Show "Insert FAQ Text & Link" / "Insert Full FAQ & Link" Button in AgentFAQZoomSmall for public FAQ Articles.'} =
-        '对于公开的FAQ文章，在“AgentFAQZoomSmall”中显示“插入FAQ文本和链接"/"插入完整FAQ和链接"按钮。';
+        '对于公开的FAQ文章，在服务人员FAQ详情窗口中显示“插入FAQ文本和链接”/“插入完整FAQ和链接”按钮。';
     $Self->{Translation}->{'Show "Insert FAQ Text" / "Insert Full FAQ" Button in AgentFAQZoomSmall.'} =
-        '在“AgentFAQZoomSmall”中显示“插入FAQ文本"/"插入完整FAQ"按钮。';
-    $Self->{Translation}->{'Show FAQ Article with HTML.'} = '以 HTML 格式显示 FAQ 文章';
-    $Self->{Translation}->{'Show FAQ path yes/no.'} = '是/否显示 FAQ 路径.';
-    $Self->{Translation}->{'Show items of subcategories.'} = '显示子目录的数量.';
-    $Self->{Translation}->{'Show last change items in defined interfaces.'} = '在定义的界面上显示最近更改的条目.';
-    $Self->{Translation}->{'Show last created items in defined interfaces.'} = '在定义的界面上显示最新创建的条目.';
-    $Self->{Translation}->{'Show top 10 items in defined interfaces.'} = '在定义的界面上显示点击量前十位.';
+        '在服务人员FAQ详情窗口中显示“插入FAQ文本”/“插入完整FAQ”按钮。';
+    $Self->{Translation}->{'Show FAQ Article with HTML.'} = '以 HTML 格式显示 FAQ 文章。';
+    $Self->{Translation}->{'Show FAQ path yes/no.'} = '是/否显示 FAQ 路径。';
+    $Self->{Translation}->{'Show items of subcategories.'} = '显示子目录的条目。';
+    $Self->{Translation}->{'Show last change items in defined interfaces.'} = '在定义的界面上显示最近更改的条目。';
+    $Self->{Translation}->{'Show last created items in defined interfaces.'} = '在定义的界面上显示最新创建的条目。';
+    $Self->{Translation}->{'Show top 10 items in defined interfaces.'} = '在定义的界面上显示点击量前十个条目。';
     $Self->{Translation}->{'Show voting in defined interfaces.'} = '在定义的界面上显示文章评分。';
     $Self->{Translation}->{'Shows a link in the menu that allows linking a FAQ with another object in the zoom view of such FAQ of the agent interface.'} =
         '在服务人员界面中，在该FAQ详情窗口菜单中显示允许将FAQ链接到另一个对象的链接。';
@@ -437,9 +435,9 @@ sub Data {
         '在服务人员界面中，在该FAQ的详情窗口菜单中显示后退的链接。';
     $Self->{Translation}->{'Shows a link in the menu to print a FAQ in the its zoom view of the agent interface.'} =
         '在服务人员界面的详情窗口菜单中，显示打印FAQ的链接。';
-    $Self->{Translation}->{'Text Only'} = '';
+    $Self->{Translation}->{'Text Only'} = '仅文本';
     $Self->{Translation}->{'The identifier for a FAQ, e.g. FAQ#, KB#, MyFAQ#. The default is FAQ#.'} =
-        'FAQ 的标识符, 例如 (常见问题)FAQ#, (知识库)KB#, 默认为 FAQ#';
+        'FAQ 的标识符, 例如 (常见问题解答)FAQ#, (知识库)KB#, 默认为 FAQ#。';
     $Self->{Translation}->{'This setting defines that a \'FAQ\' object can be linked with other \'FAQ\' objects using the \'Normal\' link type.'} =
         '该设置定义了一个能通过“普通（Normal）”的链接类型与其他FAQ对象连接的FAQ对象。';
     $Self->{Translation}->{'This setting defines that a \'FAQ\' object can be linked with other \'FAQ\' objects using the \'ParentChild\' link type.'} =
@@ -451,11 +449,7 @@ sub Data {
     $Self->{Translation}->{'Ticket body for approval of FAQ article.'} = 'FAQ 文章审批请求的工单正文。';
     $Self->{Translation}->{'Ticket subject for approval of FAQ article.'} = 'FAQ 文章审批请求的工单标题。';
     $Self->{Translation}->{'Toolbar Item for a shortcut.'} = '快捷键的工具栏条目。';
-    $Self->{Translation}->{'Your queue selection of your preferred queues. You also get notified about those queues via email if enabled.'} =
-        '';
-    $Self->{Translation}->{'Your service selection of your preferred services. You also get notified about those services via email if enabled.'} =
-        '';
-    $Self->{Translation}->{'public (public)'} = '';
+    $Self->{Translation}->{'public (public)'} = '公开（公开）';
 
 }
 

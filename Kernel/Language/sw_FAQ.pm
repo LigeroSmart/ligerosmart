@@ -242,8 +242,6 @@ sub Data {
         'Inaeleza mapitio ya moduli kuonyesha  muonekano mdogo wa jarida la maswali yaliyoulizwa mara kwa mara.';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ list.'} =
         'Inaeleza mapitio ya moduli kuonyesha muonekano mdogo wa orodha ya maswali yaliyoulizwa mara kwa mara.';
-    $Self->{Translation}->{'Defines if the enhanced mode should be used (enables use of table, replace, subscript, superscript, paste from word, etc.) in customer interface.'} =
-        '';
     $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in a FAQ search of the agent interface.'} =
         'Inafafanua chaguo-msingi kiumbi cha maswali yanayoulizwa mara kwa mara kwa ajili ya upangaji wa maswali yanayoulizwa mara kwa mara katika maswali yanayoulizwa mara kwa mara tafuti ya kiolesura cha wakala.';
     $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in a FAQ search of the customer interface.'} =
@@ -451,10 +449,6 @@ sub Data {
     $Self->{Translation}->{'Ticket body for approval of FAQ article.'} = 'Kiini cha tiketi kwa Idhini ya makala ya maswali yanayoulizwa mara kwa mara.';
     $Self->{Translation}->{'Ticket subject for approval of FAQ article.'} = 'Somo la tiketi kwa Idhini ya makala ya maswali yanayoulizwa mara kwa mara.';
     $Self->{Translation}->{'Toolbar Item for a shortcut.'} = 'Kipengele cha mwambaa zana kwa ajili ya mkato.';
-    $Self->{Translation}->{'Your queue selection of your preferred queues. You also get notified about those queues via email if enabled.'} =
-        '';
-    $Self->{Translation}->{'Your service selection of your preferred services. You also get notified about those services via email if enabled.'} =
-        '';
     $Self->{Translation}->{'public (public)'} = '';
 
 }

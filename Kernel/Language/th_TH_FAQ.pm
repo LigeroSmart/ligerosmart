@@ -242,8 +242,6 @@ sub Data {
         'กำหนดโมดูลภาพรวมที่จะแสดงมุมมองเล็ก ๆ ของวารสาร FAQ.';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ list.'} =
         'กำหนดโมดูลภาพรวมที่จะแสดงมุมมองเล็ก ๆ ของรายการ FAQ.';
-    $Self->{Translation}->{'Defines if the enhanced mode should be used (enables use of table, replace, subscript, superscript, paste from word, etc.) in customer interface.'} =
-        '';
     $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in a FAQ search of the agent interface.'} =
         'กำหนดคแอตทริบิวต์ FAQ เริ่มต้นสำหรับการเรียงลำดับFAQ ในการค้นหาของFAQ ในอินเตอร์เฟซเอเย่นต์';
     $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in a FAQ search of the customer interface.'} =
@@ -451,10 +449,6 @@ sub Data {
     $Self->{Translation}->{'Ticket body for approval of FAQ article.'} = 'เนื้อเรื่องของตั๋วสำหรับการอนุมัติของบทความ FAQ.';
     $Self->{Translation}->{'Ticket subject for approval of FAQ article.'} = 'หัวข้อของตั๋วสำหรับการอนุมัติของบทความFAQ.';
     $Self->{Translation}->{'Toolbar Item for a shortcut.'} = '';
-    $Self->{Translation}->{'Your queue selection of your preferred queues. You also get notified about those queues via email if enabled.'} =
-        '';
-    $Self->{Translation}->{'Your service selection of your preferred services. You also get notified about those services via email if enabled.'} =
-        '';
     $Self->{Translation}->{'public (public)'} = '';
 
 }
