@@ -132,8 +132,8 @@ sub Data {
         'Defniuje moduł przeglądu wyświetlania list ankiet.';
     $Self->{Translation}->{'Defines maximum amount of surveys that get sent to a customer per 30 days. ( 0 means no maximum, all survey requests will be sent).'} =
         'Definiuje maksymalną liczbę ankiet wysyłaniu do Klienta w ciągu 30 dni. (0 oznacza brak ograniczenia, wszystkie żądania będą wysyłane).';
-    $Self->{Translation}->{'Defines the amount in hours a ticket has to be closed to trigger the sending of a survey, ( 0 means send immediately after close ).'} =
-        'Ustala liczbę godzin które muszą minąć od zamknięcia zgłoszenia do wysłania ankiety (0 oznacza bezzwłoczną wysyłkę przy zamykaniu zgłoszenia).';
+    $Self->{Translation}->{'Defines the amount in hours a ticket has to be closed to trigger the sending of a survey, ( 0 means send immediately after close ). Note: delayed survey sending is done by the OTRS Daemon, prior activation of \'Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend\' setting.'} =
+        '';
     $Self->{Translation}->{'Defines the default height for Richtext views for SurveyZoom elements.'} =
         'Definiuje domyślną wysokość widoków Richtext dla elementów SurveyZoom.';
     $Self->{Translation}->{'Defines the shown columns in the survey overview. This option has no effect on the position of the columns.'} =

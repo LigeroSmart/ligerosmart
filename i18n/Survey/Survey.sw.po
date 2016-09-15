@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-10-07 18:36+0000\n"
+"POT-Creation-Date: 2016-09-14 19:23+0000\n"
+"PO-Revision-Date: 2016-09-15 00:25+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Swahili (http://www.transifex.com/otrs/OTRS/language/sw/)\n"
 "MIME-Version: 1.0\n"
@@ -377,8 +377,10 @@ msgstr "Inafafanua kikomo cha juu cha idadi ya savei zinazotumwa kwa mteja kwa s
 #. SysConfig
 msgid ""
 "Defines the amount in hours a ticket has to be closed to trigger the sending"
-" of a survey, ( 0 means send immediately after close )."
-msgstr "Inafafanua idadi ya masaa tiketi kufungwa ili kuwezesha kutumwa kwa utafiti, ( 0 inamaanisha tuma mara tu baada ya kufunga)."
+" of a survey, ( 0 means send immediately after close ). Note: delayed survey"
+" sending is done by the OTRS Daemon, prior activation of "
+"'Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend' setting."
+msgstr ""
 
 #. SysConfig
 msgid "Defines the default height for Richtext views for SurveyZoom elements."

@@ -5,9 +5,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2016-06-01 10:31+0000\n"
-"Last-Translator: Милорад Јовановић <j.milorad@gmail.com>\n"
+"POT-Creation-Date: 2016-09-14 19:23+0000\n"
+"PO-Revision-Date: 2016-09-15 00:25+0000\n"
+"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Serbian (http://www.transifex.com/otrs/OTRS/language/sr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -378,8 +378,10 @@ msgstr "Дефинише максимални број анкета који ћ�
 #. SysConfig
 msgid ""
 "Defines the amount in hours a ticket has to be closed to trigger the sending"
-" of a survey, ( 0 means send immediately after close )."
-msgstr "Дефинише број сати од затварања тикета за покретање слања анкете. (0 значи да се шаље одмах по затварању)."
+" of a survey, ( 0 means send immediately after close ). Note: delayed survey"
+" sending is done by the OTRS Daemon, prior activation of "
+"'Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend' setting."
+msgstr ""
 
 #. SysConfig
 msgid "Defines the default height for Richtext views for SurveyZoom elements."

@@ -132,8 +132,8 @@ sub Data {
         '定义一个显示调查列表简洁视图的概览模块。';
     $Self->{Translation}->{'Defines maximum amount of surveys that get sent to a customer per 30 days. ( 0 means no maximum, all survey requests will be sent).'} =
         '定义每30天发送给一个客户的最大调查数（ 0 代表没有最大数限制，将发送所有的调查请求）。';
-    $Self->{Translation}->{'Defines the amount in hours a ticket has to be closed to trigger the sending of a survey, ( 0 means send immediately after close ).'} =
-        '定义一个工单关闭后触发发送一个调查的小时数（ 0 代表在工单关闭后立即发送调查请求）。';
+    $Self->{Translation}->{'Defines the amount in hours a ticket has to be closed to trigger the sending of a survey, ( 0 means send immediately after close ). Note: delayed survey sending is done by the OTRS Daemon, prior activation of \'Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend\' setting.'} =
+        '';
     $Self->{Translation}->{'Defines the default height for Richtext views for SurveyZoom elements.'} =
         '调查详情窗口富文本查看的默认高度。';
     $Self->{Translation}->{'Defines the shown columns in the survey overview. This option has no effect on the position of the columns.'} =

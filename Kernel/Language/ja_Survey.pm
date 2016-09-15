@@ -132,8 +132,8 @@ sub Data {
         '調査一覧(S)を表示するための一覧モジュールの定義';
     $Self->{Translation}->{'Defines maximum amount of surveys that get sent to a customer per 30 days. ( 0 means no maximum, all survey requests will be sent).'} =
         '30日の間に顧客に送信する調査の最大数を定義します。(0は無制限を意味し、全ての調査要求が送信されます)';
-    $Self->{Translation}->{'Defines the amount in hours a ticket has to be closed to trigger the sending of a survey, ( 0 means send immediately after close ).'} =
-        '完了後調査を送信するトリガーが時間数を定義します。(0は完了後直ちに送信することを意味します)';
+    $Self->{Translation}->{'Defines the amount in hours a ticket has to be closed to trigger the sending of a survey, ( 0 means send immediately after close ). Note: delayed survey sending is done by the OTRS Daemon, prior activation of \'Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend\' setting.'} =
+        '';
     $Self->{Translation}->{'Defines the default height for Richtext views for SurveyZoom elements.'} =
         '調査拡大画面の要素に対してリッチテキストに対するデフォルトの高さを定義します。';
     $Self->{Translation}->{'Defines the shown columns in the survey overview. This option has no effect on the position of the columns.'} =

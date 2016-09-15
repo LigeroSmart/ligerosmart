@@ -1,4 +1,5 @@
 #5.0.2 2015-??-??
+ - 2016-09-14 Updated translations, thanks to all translators.
  - 2016-08-05 Added Thai translation, thanks to all translators.
  - 2016-08-05 Added Croatian translation, thanks to all translators.
  - 2016-08-05 Added Indonesian translation, thanks to all translators.

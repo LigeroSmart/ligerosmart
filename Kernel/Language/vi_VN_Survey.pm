@@ -132,8 +132,8 @@ sub Data {
         'Định nghĩa một mô-đun tổng quát để hiển thị một danh sách khảo sát.';
     $Self->{Translation}->{'Defines maximum amount of surveys that get sent to a customer per 30 days. ( 0 means no maximum, all survey requests will be sent).'} =
         'Định nghĩa số khảo sát tối đa mà được gửi đến khách hàng mỗi tháng. (0 nghĩa là không giới hạn, tất cả yêu cầu khảo sát sẽ được gửi).';
-    $Self->{Translation}->{'Defines the amount in hours a ticket has to be closed to trigger the sending of a survey, ( 0 means send immediately after close ).'} =
-        'Định nghĩa số giờ một phiếu yêu cầu phải được đóng để kích hoạt việc gửi khảo sát, (0 nghĩa là gửi ngay lập tức sau khi đóng).';
+    $Self->{Translation}->{'Defines the amount in hours a ticket has to be closed to trigger the sending of a survey, ( 0 means send immediately after close ). Note: delayed survey sending is done by the OTRS Daemon, prior activation of \'Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend\' setting.'} =
+        '';
     $Self->{Translation}->{'Defines the default height for Richtext views for SurveyZoom elements.'} =
         'Định nghĩa chiều cao ngầm định của khung Richtext cho đối tượng xem khảo sát.';
     $Self->{Translation}->{'Defines the shown columns in the survey overview. This option has no effect on the position of the columns.'} =

@@ -132,8 +132,8 @@ sub Data {
         'Egy áttekintő modult határoz meg egy kérdőívlista kis nézetének megjelenítéséhez.';
     $Self->{Translation}->{'Defines maximum amount of surveys that get sent to a customer per 30 days. ( 0 means no maximum, all survey requests will be sent).'} =
         'Meghatározza a kérdőívek legnagyobb mennyiségét, amelyet 30 naponta elküldhetnek egy ügyfélnek (a 0 azt jelenti, hogy nincs maximum, minden kérdőív kérés elküldésre kerül).';
-    $Self->{Translation}->{'Defines the amount in hours a ticket has to be closed to trigger the sending of a survey, ( 0 means send immediately after close ).'} =
-        'Azt a mennyiséget határozza meg órában, amelyben egy jegyet le kell zárni egy kérdőív küldésének aktiválásához (a 0 azt jelenti, hogy a lezárás után azonnal küldeni kell).';
+    $Self->{Translation}->{'Defines the amount in hours a ticket has to be closed to trigger the sending of a survey, ( 0 means send immediately after close ). Note: delayed survey sending is done by the OTRS Daemon, prior activation of \'Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend\' setting.'} =
+        '';
     $Self->{Translation}->{'Defines the default height for Richtext views for SurveyZoom elements.'} =
         'Meghatározza a Richtext nézetek alapértelmezett magasságát a SurveyZoom elemeknél.';
     $Self->{Translation}->{'Defines the shown columns in the survey overview. This option has no effect on the position of the columns.'} =

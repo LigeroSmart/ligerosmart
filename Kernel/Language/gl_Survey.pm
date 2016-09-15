@@ -132,8 +132,8 @@ sub Data {
         'Define un módulo de vista xeral para mostrar a vista pequena dunha lista de enquisas.';
     $Self->{Translation}->{'Defines maximum amount of surveys that get sent to a customer per 30 days. ( 0 means no maximum, all survey requests will be sent).'} =
         'Define a cantidade máxima de enquisas que envíanse aos clientes por 30 días. (0 significa no máximo, tódalas peticións de enquisa serán enviadas).';
-    $Self->{Translation}->{'Defines the amount in hours a ticket has to be closed to trigger the sending of a survey, ( 0 means send immediately after close ).'} =
-        'Define a cantidade en horas que un ticket debe estar pechado para disparar o envío dunha enquisa, (0 significa enviado inmediatamente despois do peche).';
+    $Self->{Translation}->{'Defines the amount in hours a ticket has to be closed to trigger the sending of a survey, ( 0 means send immediately after close ). Note: delayed survey sending is done by the OTRS Daemon, prior activation of \'Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend\' setting.'} =
+        '';
     $Self->{Translation}->{'Defines the default height for Richtext views for SurveyZoom elements.'} =
         'Define a altura por defecto para vistas texto enriquecido para elementos de ZoomEnquisa.';
     $Self->{Translation}->{'Defines the shown columns in the survey overview. This option has no effect on the position of the columns.'} =

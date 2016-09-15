@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Survey\n"
-"POT-Creation-Date: 2016-08-05 15:33+0000\n"
+"POT-Creation-Date: 2016-09-14 19:27+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -363,7 +363,7 @@ msgid "Defines maximum amount of surveys that get sent to a customer per 30 days
 msgstr ""
 
 #. SysConfig
-msgid "Defines the amount in hours a ticket has to be closed to trigger the sending of a survey, ( 0 means send immediately after close )."
+msgid "Defines the amount in hours a ticket has to be closed to trigger the sending of a survey, ( 0 means send immediately after close ). Note: delayed survey sending is done by the OTRS Daemon, prior activation of 'Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend' setting."
 msgstr ""
 
 #. SysConfig

@@ -132,8 +132,8 @@ sub Data {
         'Дефинише модул прегледа за мали приказ листе анкета. ';
     $Self->{Translation}->{'Defines maximum amount of surveys that get sent to a customer per 30 days. ( 0 means no maximum, all survey requests will be sent).'} =
         'Дефинише максимални број анкета који ће бити послат кориснику током 30 дана. (0 значи да нема максимума, сви захтеви ће бити послати).';
-    $Self->{Translation}->{'Defines the amount in hours a ticket has to be closed to trigger the sending of a survey, ( 0 means send immediately after close ).'} =
-        'Дефинише број сати од затварања тикета за покретање слања анкете. (0 значи да се шаље одмах по затварању).';
+    $Self->{Translation}->{'Defines the amount in hours a ticket has to be closed to trigger the sending of a survey, ( 0 means send immediately after close ). Note: delayed survey sending is done by the OTRS Daemon, prior activation of \'Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend\' setting.'} =
+        '';
     $Self->{Translation}->{'Defines the default height for Richtext views for SurveyZoom elements.'} =
         'Дефинише подразумевану висину оквира за приказ текста  за детаљни приказ елемената анкете.';
     $Self->{Translation}->{'Defines the shown columns in the survey overview. This option has no effect on the position of the columns.'} =

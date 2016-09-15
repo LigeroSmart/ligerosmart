@@ -5,9 +5,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-11-12 12:39+0000\n"
-"Last-Translator: Antonio Kless\n"
+"POT-Creation-Date: 2016-09-14 19:23+0000\n"
+"PO-Revision-Date: 2016-09-15 00:25+0000\n"
+"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Russian (http://www.transifex.com/otrs/OTRS/language/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -378,8 +378,10 @@ msgstr "Задает максимальное количество опросо�
 #. SysConfig
 msgid ""
 "Defines the amount in hours a ticket has to be closed to trigger the sending"
-" of a survey, ( 0 means send immediately after close )."
-msgstr "Задает число часов, после закрытия заявки, по истечении которых будет отправлено сообщение с опросом, (\"0\" означает немедленную отправку после закрытия). "
+" of a survey, ( 0 means send immediately after close ). Note: delayed survey"
+" sending is done by the OTRS Daemon, prior activation of "
+"'Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend' setting."
+msgstr ""
 
 #. SysConfig
 msgid "Defines the default height for Richtext views for SurveyZoom elements."

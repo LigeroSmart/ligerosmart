@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2014-08-08 19:10+0200\n"
-"PO-Revision-Date: 2015-10-07 18:36+0000\n"
+"POT-Creation-Date: 2016-09-14 19:23+0000\n"
+"PO-Revision-Date: 2016-09-15 00:25+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Galician (http://www.transifex.com/otrs/OTRS/language/gl/)\n"
 "MIME-Version: 1.0\n"
@@ -378,8 +378,10 @@ msgstr "Define a cantidade máxima de enquisas que envíanse aos clientes por 30
 #. SysConfig
 msgid ""
 "Defines the amount in hours a ticket has to be closed to trigger the sending"
-" of a survey, ( 0 means send immediately after close )."
-msgstr "Define a cantidade en horas que un ticket debe estar pechado para disparar o envío dunha enquisa, (0 significa enviado inmediatamente despois do peche)."
+" of a survey, ( 0 means send immediately after close ). Note: delayed survey"
+" sending is done by the OTRS Daemon, prior activation of "
+"'Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend' setting."
+msgstr ""
 
 #. SysConfig
 msgid "Defines the default height for Richtext views for SurveyZoom elements."

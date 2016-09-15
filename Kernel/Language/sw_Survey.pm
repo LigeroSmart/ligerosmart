@@ -132,8 +132,8 @@ sub Data {
         'Inafafanua mapitio ya moduli kuonyesha muonekano mdogo wa orodha ya savei.';
     $Self->{Translation}->{'Defines maximum amount of surveys that get sent to a customer per 30 days. ( 0 means no maximum, all survey requests will be sent).'} =
         'Inafafanua kikomo cha juu cha idadi ya savei zinazotumwa kwa mteja kwa siku 30. (0 inamaanisha hakuna kikomo, savei zote zitatumwa). ';
-    $Self->{Translation}->{'Defines the amount in hours a ticket has to be closed to trigger the sending of a survey, ( 0 means send immediately after close ).'} =
-        'Inafafanua idadi ya masaa tiketi kufungwa ili kuwezesha kutumwa kwa utafiti, ( 0 inamaanisha tuma mara tu baada ya kufunga).';
+    $Self->{Translation}->{'Defines the amount in hours a ticket has to be closed to trigger the sending of a survey, ( 0 means send immediately after close ). Note: delayed survey sending is done by the OTRS Daemon, prior activation of \'Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend\' setting.'} =
+        '';
     $Self->{Translation}->{'Defines the default height for Richtext views for SurveyZoom elements.'} =
         'Inafafanua chaguo-msingi la urefu wa muonekano wa Richtext kwa elementi za UtafitiKuzwa.';
     $Self->{Translation}->{'Defines the shown columns in the survey overview. This option has no effect on the position of the columns.'} =

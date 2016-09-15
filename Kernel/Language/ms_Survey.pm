@@ -132,8 +132,8 @@ sub Data {
         'Mentakrifkan modul gambaran untuk menunjukkan pandangan yang kecil senarai kaji selidik.';
     $Self->{Translation}->{'Defines maximum amount of surveys that get sent to a customer per 30 days. ( 0 means no maximum, all survey requests will be sent).'} =
         'Mentakrifkan jumlah maksimum kaji selidik yang mendapat dihantar kepada pelanggan setiap 30 hari. (0 bermakna tidak maksimum, semua permintaan kaji selidik akan dihantar).';
-    $Self->{Translation}->{'Defines the amount in hours a ticket has to be closed to trigger the sending of a survey, ( 0 means send immediately after close ).'} =
-        'Mentakrifkan jumlah jam tiket akan ditutup untuk mencetuskan penghantaran kaji selidik, (0 cara menghantar segera selepas penutupan).';
+    $Self->{Translation}->{'Defines the amount in hours a ticket has to be closed to trigger the sending of a survey, ( 0 means send immediately after close ). Note: delayed survey sending is done by the OTRS Daemon, prior activation of \'Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend\' setting.'} =
+        '';
     $Self->{Translation}->{'Defines the default height for Richtext views for SurveyZoom elements.'} =
         'Mentakrifkan ketinggian lalai untuk penonton Teks Kaya untuk elemen Zoom Ukur.';
     $Self->{Translation}->{'Defines the shown columns in the survey overview. This option has no effect on the position of the columns.'} =
