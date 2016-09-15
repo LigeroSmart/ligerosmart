@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2016 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/d29ce846afdfb52eebed219c0671bfcc0d75e5c9/Kernel/Output/HTML/Templates/Standard/AgentTicketActionCommon.tt
+# $origin: https://github.com/OTRS/otrs/blob/29a47d4e6b685fadae38bae885a478d321aa328a/Kernel/Output/HTML/Templates/Standard/AgentTicketActionCommon.tt
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -11,6 +11,7 @@
 # ---
 # MasterSlave
 # ---
+
 # This module uses AgentTicketActionCommon as a base, for easy update and framework compatibility
 # special markers has been set along the file to easy spot the differences introduced by
 # OTRSMasterSlave package
@@ -29,31 +30,31 @@
         <div class="Header">
             <h1>
 [% RenderBlockStart("HeaderAgentTicketFreeText") %]
-[% Translate("Change Free Text of %s%s", Config('Ticket::Hook'), Data.TicketNumber) | html %]
+[% Translate("Change Free Text of %s%s%s", Config('Ticket::Hook'), Config('Ticket::HookDivider'), Data.TicketNumber) | html %]
 [% RenderBlockEnd("HeaderAgentTicketFreeText") %]
 [% RenderBlockStart("HeaderAgentTicketOwner") %]
-[% Translate("Change Owner of %s%s", Config('Ticket::Hook'), Data.TicketNumber) | html %]
+[% Translate("Change Owner of %s%s%s", Config('Ticket::Hook'), Config('Ticket::HookDivider'), Data.TicketNumber) | html %]
 [% RenderBlockEnd("HeaderAgentTicketOwner") %]
 [% RenderBlockStart("HeaderAgentTicketClose") %]
-[% Translate("Close %s%s", Config('Ticket::Hook'), Data.TicketNumber) | html %]
+[% Translate("Close %s%s%s", Config('Ticket::Hook'), Config('Ticket::HookDivider'), Data.TicketNumber) | html %]
 [% RenderBlockEnd("HeaderAgentTicketClose") %]
 [% RenderBlockStart("HeaderAgentTicketNote") %]
-[% Translate("Add Note to %s%s", Config('Ticket::Hook'), Data.TicketNumber) | html %]
+[% Translate("Add Note to %s%s%s", Config('Ticket::Hook'), Config('Ticket::HookDivider'), Data.TicketNumber) | html %]
 [% RenderBlockEnd("HeaderAgentTicketNote") %]
 [% RenderBlockStart("HeaderAgentTicketPending") %]
-[% Translate("Set Pending Time for %s%s", Config('Ticket::Hook'), Data.TicketNumber) | html %]
+[% Translate("Set Pending Time for %s%s%s", Config('Ticket::Hook'), Config('Ticket::HookDivider'), Data.TicketNumber) | html %]
 [% RenderBlockEnd("HeaderAgentTicketPending") %]
 [% RenderBlockStart("HeaderAgentTicketPriority") %]
-[% Translate("Change Priority of %s%s", Config('Ticket::Hook'), Data.TicketNumber) | html %]
+[% Translate("Change Priority of %s%s%s", Config('Ticket::Hook'), Config('Ticket::HookDivider'), Data.TicketNumber) | html %]
 [% RenderBlockEnd("HeaderAgentTicketPriority") %]
 [% RenderBlockStart("HeaderAgentTicketResponsible") %]
-[% Translate("Change Responsible of %s%s", Config('Ticket::Hook'), Data.TicketNumber) | html %]
+[% Translate("Change Responsible of %s%s%s", Config('Ticket::Hook'), Config('Ticket::HookDivider'), Data.TicketNumber) | html %]
 [% RenderBlockEnd("HeaderAgentTicketResponsible") %]
 # ---
 # MasterSlave
 # ---
 [% RenderBlockStart("HeaderAgentTicketMasterSlave") %]
-[% Translate("Manage Master/Slave status for %s%s", Config('Ticket::Hook'), Data.TicketNumber) | html %]
+[% Translate("Manage Master/Slave status for %s%s%s", Config('Ticket::Hook'), Config('Ticket::HookDivider'), Data.TicketNumber) | html %]
 [% RenderBlockEnd("HeaderAgentTicketMasterSlave") %]
 # ---
                  &mdash; [% Data.Title | html %]
@@ -387,7 +388,7 @@ $('#TypeID').bind('change', function (Event) {
 [% RenderBlockEnd("InformAdditionalAgents") %]
 [% RenderBlockStart("InformAgentsWithoutSelection") %]
                         <fieldset class="TableLike FixedLabel">
-                            <label>[% Translate("Text will also be received by:") | html %]:</label>
+                            <label>[% Translate("Text will also be received by") | html %]:</label>
                             <div class="Field">
                                 <input type="hidden" name="UserListWithoutSelection" value="[% Data.UserListWithoutSelection  | html %]" />
 [% RenderBlockStart("InformAgentsWithoutSelectionSingleUser") %]

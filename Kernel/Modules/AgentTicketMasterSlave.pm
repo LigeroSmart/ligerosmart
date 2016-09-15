@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2016 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/6942d0a09e00d32e84dc49ca63c78483d01ba91f/Kernel/Modules/AgentTicketActionCommon.pm
+# $origin: https://github.com/OTRS/otrs/blob/74efccbc7821537134b520b508a116afdd489ad4/Kernel/Modules/AgentTicketActionCommon.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -11,10 +11,11 @@
 # ---
 # MasterSlave
 # ---
+#package Kernel::Modules::AgentTicketActionCommon;
+
 # This module uses AgentTicketActionCommon as a base, for easy update and framework compatibility
 # special markers has been set along the file to easy spot the differences introduced by
 # OTRSMasterSlave package
-# package Kernel::Modules::AgentTicketActionCommon;
 package Kernel::Modules::AgentTicketMasterSlave;
 # ---
 
@@ -239,6 +240,15 @@ sub Run {
         $GetParam{$Key} = $ParamObject->GetParam( Param => $Key );
     }
 
+    # ACL compatibility translation
+    my %ACLCompatGetParam = (
+        StateID       => $GetParam{StateID},
+        PriorityID    => $GetParam{NewPriorityID},
+        QueueID       => $GetParam{NewQueueID},
+        OwnerID       => $GetParam{NewOwnerID},
+        ResponsibleID => $GetParam{NewResponsibleID},
+    );
+
     # get dynamic field values form http request
     my %DynamicFieldValues;
 
@@ -261,7 +271,7 @@ sub Run {
         if ($MasterSlaveAdvancedEnabled) {
             $Config->{DynamicField}->{$MasterSlaveDynamicField} = 1;
         }
-#---
+# ---
     }
 
     # get the dynamic fields for this screen
@@ -667,6 +677,8 @@ sub Run {
         if ( $ConfigObject->Get('Ticket::Service') && $Config->{Service} ) {
             if ( defined $GetParam{ServiceID} ) {
                 $TicketObject->TicketServiceSet(
+                    %GetParam,
+                    %ACLCompatGetParam,
                     ServiceID      => $GetParam{ServiceID},
                     TicketID       => $Self->{TicketID},
                     CustomerUserID => $Ticket{CustomerUserID},
@@ -836,9 +848,51 @@ sub Run {
                 $GetParam{ArticleType} = $Config->{ArticleTypeDefault};
             }
 
+            # get pre loaded attachment
+            my @Attachments = $UploadCacheObject->FormIDGetAllFilesData(
+                FormID => $Self->{FormID},
+            );
+
+            # get submit attachment
+            my %UploadStuff = $ParamObject->GetUploadAll(
+                Param => 'FileUpload',
+            );
+            if (%UploadStuff) {
+                push @Attachments, \%UploadStuff;
+            }
+
             my $MimeType = 'text/plain';
             if ( $LayoutObject->{BrowserRichText} ) {
                 $MimeType = 'text/html';
+
+                # remove unused inline images
+                my @NewAttachmentData;
+                ATTACHMENT:
+                for my $Attachment (@Attachments) {
+                    my $ContentID = $Attachment->{ContentID};
+                    if (
+                        $ContentID
+                        && ( $Attachment->{ContentType} =~ /image/i )
+                        && ( $Attachment->{Disposition} eq 'inline' )
+                        )
+                    {
+                        my $ContentIDHTMLQuote = $LayoutObject->Ascii2Html(
+                            Text => $ContentID,
+                        );
+
+                        # workaround for link encode of rich text editor, see bug#5053
+                        my $ContentIDLinkEncode = $LayoutObject->LinkEncode($ContentID);
+                        $GetParam{Body} =~ s/(ContentID=)$ContentIDLinkEncode/$1$ContentID/g;
+
+                        # ignore attachment if not linked in body
+                        next ATTACHMENT
+                            if $GetParam{Body} !~ /(\Q$ContentIDHTMLQuote\E|\Q$ContentID\E)/i;
+                    }
+
+                    # remember inline images and normal attachments
+                    push @NewAttachmentData, \%{$Attachment};
+                }
+                @Attachments = @NewAttachmentData;
 
                 # verify html document
                 $GetParam{Body} = $LayoutObject->RichTextDocumentComplete(
@@ -883,6 +937,7 @@ sub Run {
                 ForceNotificationToUserID       => \@NotifyUserIDs,
                 ExcludeMuteNotificationToUserID => \@NotifyDone,
                 UnlockOnAway                    => $UnlockOnAway,
+                Attachment                      => \@Attachments,
                 %GetParam,
             );
             if ( !$ArticleID ) {
@@ -895,53 +950,6 @@ sub Run {
                     TicketID  => $Self->{TicketID},
                     ArticleID => $ArticleID,
                     TimeUnit  => $GetParam{TimeUnits},
-                    UserID    => $Self->{UserID},
-                );
-            }
-
-            # get pre loaded attachment
-            my @Attachments = $UploadCacheObject->FormIDGetAllFilesData(
-                FormID => $Self->{FormID},
-            );
-
-            # get submit attachment
-            my %UploadStuff = $ParamObject->GetUploadAll(
-                Param => 'FileUpload',
-            );
-            if (%UploadStuff) {
-                push @Attachments, \%UploadStuff;
-            }
-
-            # write attachments
-            ATTACHMENT:
-            for my $Attachment (@Attachments) {
-
-                # skip, deleted not used inline images
-                my $ContentID = $Attachment->{ContentID};
-                if (
-                    $ContentID
-                    && $LayoutObject->{BrowserRichText}
-                    && ( $Attachment->{ContentType} =~ /image/i )
-                    && ( $Attachment->{Disposition} eq 'inline' )
-                    )
-                {
-                    my $ContentIDHTMLQuote = $LayoutObject->Ascii2Html(
-                        Text => $ContentID,
-                    );
-
-                    # workaround for link encode of rich text editor, see bug#5053
-                    my $ContentIDLinkEncode = $LayoutObject->LinkEncode($ContentID);
-                    $GetParam{Body} =~ s/(ContentID=)$ContentIDLinkEncode/$1$ContentID/g;
-
-                    # ignore attachment if not linked in body
-                    next ATTACHMENT
-                        if $GetParam{Body} !~ /(\Q$ContentIDHTMLQuote\E|\Q$ContentID\E)/i;
-                }
-
-                # write existing file to backend
-                $TicketObject->ArticleWriteAttachment(
-                    %{$Attachment},
-                    ArticleID => $ArticleID,
                     UserID    => $Self->{UserID},
                 );
             }
@@ -1392,7 +1400,7 @@ sub Run {
             {
                 next DYNAMICFIELD;
             }
-#---
+# ---
 
             my $PossibleValuesFilter;
 
