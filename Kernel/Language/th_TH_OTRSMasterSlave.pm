@@ -16,16 +16,8 @@ sub Data {
     my $Self = shift;
 
     # Template: AgentTicketMasterSlave
-    $Self->{Translation}->{'Change Free Text of %s%s'} = 'เปลี่ยนข้อความฟรีของ';
-    $Self->{Translation}->{'Change Owner of %s%s'} = 'เปลี่ยนเจ้าของของ %s%s';
-    $Self->{Translation}->{'Close %s%s'} = 'ปิด %s%s';
-    $Self->{Translation}->{'Add Note to %s%s'} = 'เพิ่มโน้ตไปยัง %s%s';
-    $Self->{Translation}->{'Set Pending Time for %s%s'} = 'ระบุเวลาการรอดำเนินการสำหรับ %s%s';
-    $Self->{Translation}->{'Change Priority of %s%s'} = 'เปลี่ยนลำดับความสำคัญของ %s%s';
-    $Self->{Translation}->{'Change Responsible of %s%s'} = 'เปลี่ยนความรับผิดชอบของ %s%s';
-    $Self->{Translation}->{'Manage Master/Slave status for %s%s'} = '';
+    $Self->{Translation}->{'Manage Master/Slave status for %s%s%s'} = '';
     $Self->{Translation}->{'Set Master/Slave Value'} = 'ระบุค่าของ มาสเตอร์/Slave';
-    $Self->{Translation}->{'Text will also be received by:'} = 'ข้อความก็จะได้รับโดย:';
 
     # Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
     $Self->{Translation}->{'New Master Ticket'} = 'ตั๋วมาสเตอร์ใหม่';
@@ -36,6 +28,9 @@ sub Data {
     # Perl Module: Kernel/Output/HTML/TicketBulk/MasterSlave.pm
     $Self->{Translation}->{'Unset Master Tickets'} = '';
     $Self->{Translation}->{'Unset Slave Tickets'} = '';
+
+    # Perl Module: Kernel/System/DynamicField/Driver/MasterSlave.pm
+    $Self->{Translation}->{'Master Ticket'} = '';
 
     # SysConfig
     $Self->{Translation}->{'All master tickets'} = '';

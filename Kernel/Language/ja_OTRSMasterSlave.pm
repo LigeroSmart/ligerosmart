@@ -16,16 +16,8 @@ sub Data {
     my $Self = shift;
 
     # Template: AgentTicketMasterSlave
-    $Self->{Translation}->{'Change Free Text of %s%s'} = '';
-    $Self->{Translation}->{'Change Owner of %s%s'} = '';
-    $Self->{Translation}->{'Close %s%s'} = '';
-    $Self->{Translation}->{'Add Note to %s%s'} = '';
-    $Self->{Translation}->{'Set Pending Time for %s%s'} = '';
-    $Self->{Translation}->{'Change Priority of %s%s'} = '';
-    $Self->{Translation}->{'Change Responsible of %s%s'} = '';
-    $Self->{Translation}->{'Manage Master/Slave status for %s%s'} = '';
+    $Self->{Translation}->{'Manage Master/Slave status for %s%s%s'} = '';
     $Self->{Translation}->{'Set Master/Slave Value'} = 'マスター/スレーブを設定する';
-    $Self->{Translation}->{'Text will also be received by:'} = '';
 
     # Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
     $Self->{Translation}->{'New Master Ticket'} = '新しいマスターチケット';
@@ -37,13 +29,16 @@ sub Data {
     $Self->{Translation}->{'Unset Master Tickets'} = '';
     $Self->{Translation}->{'Unset Slave Tickets'} = '';
 
+    # Perl Module: Kernel/System/DynamicField/Driver/MasterSlave.pm
+    $Self->{Translation}->{'Master Ticket'} = '';
+
     # SysConfig
     $Self->{Translation}->{'All master tickets'} = '';
     $Self->{Translation}->{'All slave tickets'} = '';
     $Self->{Translation}->{'Allows adding notes in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'エージェントインタフェースのズームされたチケットのマスタースレイブ画面で、注釈の追加を許可します。';
     $Self->{Translation}->{'Change the MasterSlave state of the ticket.'} = 'チケットのマスター・スレーブ状況を変更する';
-    $Self->{Translation}->{'Defines dynamic field name for master ticket feature.'} = '';
+    $Self->{Translation}->{'Defines dynamic field name for master ticket feature.'} = 'マスター・スレーブ動的フィールド名を設定する';
     $Self->{Translation}->{'Defines if a ticket lock is required in the ticket MasterSlave screen of a zoomed ticket in the agent interface (if the ticket isn\'t locked yet, the ticket gets locked and the current agent will be set automatically as its owner).'} =
         '';
     $Self->{Translation}->{'Defines the default next state of a ticket after adding a note, in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =

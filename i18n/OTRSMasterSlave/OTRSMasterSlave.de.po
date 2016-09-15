@@ -1,15 +1,15 @@
 # 
 # Translators:
 # Carlos Javier García Cárdenas <carlos.garcia@otrs.com>, 2014
-# Ettore Atalan <atalanttore@googlemail.com>, 2014-2015
+# Ettore Atalan <atalanttore@googlemail.com>, 2014-2016
 # mathiasbraeunling <mathias.braeunling@otrs.com>, 2014
 # ru_otrs <robert.ullrich@otrs.com>, 2014-2015
 # Rudy R <rudy.rohde@googlemail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-08-05 16:35+0000\n"
-"PO-Revision-Date: 2016-08-05 21:40+0000\n"
+"POT-Creation-Date: 2016-09-14 19:08+0000\n"
+"PO-Revision-Date: 2016-09-15 00:09+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: German (http://www.transifex.com/otrs/OTRS/language/de/)\n"
 "MIME-Version: 1.0\n"
@@ -19,44 +19,12 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. Template: AgentTicketMasterSlave
-msgid "Change Free Text of %s%s"
-msgstr "Den Freitext von %s%s ändern"
-
-#. Template: AgentTicketMasterSlave
-msgid "Change Owner of %s%s"
-msgstr "Eigentümer von %s%s ändern"
-
-#. Template: AgentTicketMasterSlave
-msgid "Close %s%s"
-msgstr "%s%s schließen"
-
-#. Template: AgentTicketMasterSlave
-msgid "Add Note to %s%s"
-msgstr "Notiz zu %s%s hinzufügen"
-
-#. Template: AgentTicketMasterSlave
-msgid "Set Pending Time for %s%s"
-msgstr "Wartezeit setzen für %s%s"
-
-#. Template: AgentTicketMasterSlave
-msgid "Change Priority of %s%s"
-msgstr "Priorität von %s%s ändern"
-
-#. Template: AgentTicketMasterSlave
-msgid "Change Responsible of %s%s"
-msgstr "Verantwortlichen von %s%s ändern"
-
-#. Template: AgentTicketMasterSlave
-msgid "Manage Master/Slave status for %s%s"
+msgid "Manage Master/Slave status for %s%s%s"
 msgstr ""
 
 #. Template: AgentTicketMasterSlave
 msgid "Set Master/Slave Value"
 msgstr "Master/Slave Wert festlegen"
-
-#. Template: AgentTicketMasterSlave
-msgid "Text will also be received by:"
-msgstr "Text wird auch gesendet an:"
 
 #. Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
 msgid "New Master Ticket"
@@ -80,6 +48,10 @@ msgstr ""
 
 #. Perl Module: Kernel/Output/HTML/TicketBulk/MasterSlave.pm
 msgid "Unset Slave Tickets"
+msgstr ""
+
+#. Perl Module: Kernel/System/DynamicField/Driver/MasterSlave.pm
+msgid "Master Ticket"
 msgstr ""
 
 #. SysConfig
@@ -150,11 +122,11 @@ msgstr "Bestimmt den Folgestatus für Tickets, für die im MasterSlave Bildschir
 
 #. SysConfig
 msgid "Disabled"
-msgstr ""
+msgstr "Deaktiviert"
 
 #. SysConfig
 msgid "Enabled"
-msgstr ""
+msgstr "Aktiviert"
 
 #. SysConfig
 msgid "Enables the advanced MasterSlave part of the feature."

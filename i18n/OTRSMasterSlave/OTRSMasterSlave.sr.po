@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-08-05 16:35+0000\n"
-"PO-Revision-Date: 2016-08-05 21:40+0000\n"
+"POT-Creation-Date: 2016-09-14 19:08+0000\n"
+"PO-Revision-Date: 2016-09-15 00:09+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Serbian (http://www.transifex.com/otrs/OTRS/language/sr/)\n"
 "MIME-Version: 1.0\n"
@@ -15,44 +15,12 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #. Template: AgentTicketMasterSlave
-msgid "Change Free Text of %s%s"
-msgstr "Промени слободни текст за %s%s"
-
-#. Template: AgentTicketMasterSlave
-msgid "Change Owner of %s%s"
-msgstr "Промени власника за %s%s"
-
-#. Template: AgentTicketMasterSlave
-msgid "Close %s%s"
-msgstr "Затвори %s%s"
-
-#. Template: AgentTicketMasterSlave
-msgid "Add Note to %s%s"
-msgstr "Додај обавештење %s%s"
-
-#. Template: AgentTicketMasterSlave
-msgid "Set Pending Time for %s%s"
-msgstr "Постави време чекања за %s%s"
-
-#. Template: AgentTicketMasterSlave
-msgid "Change Priority of %s%s"
-msgstr "Промени приоритет за %s%s"
-
-#. Template: AgentTicketMasterSlave
-msgid "Change Responsible of %s%s"
-msgstr "Промени одговорног за %s%s"
-
-#. Template: AgentTicketMasterSlave
-msgid "Manage Master/Slave status for %s%s"
+msgid "Manage Master/Slave status for %s%s%s"
 msgstr ""
 
 #. Template: AgentTicketMasterSlave
 msgid "Set Master/Slave Value"
 msgstr "Подеси вредност Главни/Зависни "
-
-#. Template: AgentTicketMasterSlave
-msgid "Text will also be received by:"
-msgstr "Текст ће примити и:"
 
 #. Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
 msgid "New Master Ticket"
@@ -78,13 +46,17 @@ msgstr ""
 msgid "Unset Slave Tickets"
 msgstr ""
 
-#. SysConfig
-msgid "All master tickets"
+#. Perl Module: Kernel/System/DynamicField/Driver/MasterSlave.pm
+msgid "Master Ticket"
 msgstr ""
 
 #. SysConfig
+msgid "All master tickets"
+msgstr "Сви главни тикети."
+
+#. SysConfig
 msgid "All slave tickets"
-msgstr ""
+msgstr "Сви зависни тикети."
 
 #. SysConfig
 msgid ""
@@ -205,7 +177,7 @@ msgstr "Главни / Зависни"
 
 #. SysConfig
 msgid "Master Tickets"
-msgstr ""
+msgstr "Главни тикети"
 
 #. SysConfig
 msgid "MasterSlave"
@@ -314,7 +286,7 @@ msgstr "Приказује насловна поља на Главни/Зави�
 
 #. SysConfig
 msgid "Slave Tickets"
-msgstr ""
+msgstr "Зависни тикети"
 
 #. SysConfig
 msgid ""

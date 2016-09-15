@@ -16,16 +16,8 @@ sub Data {
     my $Self = shift;
 
     # Template: AgentTicketMasterSlave
-    $Self->{Translation}->{'Change Free Text of %s%s'} = '%s%s szabad szövegének módosítása';
-    $Self->{Translation}->{'Change Owner of %s%s'} = '%s%s tulajdonosának módosítása';
-    $Self->{Translation}->{'Close %s%s'} = '%s%s lezárása';
-    $Self->{Translation}->{'Add Note to %s%s'} = 'Jegyzet hozzáadása ehhez: %s%s';
-    $Self->{Translation}->{'Set Pending Time for %s%s'} = '%s%s várakozó idejének beállítása';
-    $Self->{Translation}->{'Change Priority of %s%s'} = '%s%s prioritásának módosítása';
-    $Self->{Translation}->{'Change Responsible of %s%s'} = '%s%s felelősének módosítása';
-    $Self->{Translation}->{'Manage Master/Slave status for %s%s'} = '%s%s mester/alárendelt állapotának kezelése';
+    $Self->{Translation}->{'Manage Master/Slave status for %s%s%s'} = '';
     $Self->{Translation}->{'Set Master/Slave Value'} = 'Mester/alárendelt érték beállítása';
-    $Self->{Translation}->{'Text will also be received by:'} = 'A szöveget meg fogja még kapni:';
 
     # Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
     $Self->{Translation}->{'New Master Ticket'} = 'Új mesterjegy';
@@ -34,16 +26,19 @@ sub Data {
     $Self->{Translation}->{'Slave of Ticket#'} = 'Jegy# alárendeltje';
 
     # Perl Module: Kernel/Output/HTML/TicketBulk/MasterSlave.pm
-    $Self->{Translation}->{'Unset Master Tickets'} = '';
-    $Self->{Translation}->{'Unset Slave Tickets'} = '';
+    $Self->{Translation}->{'Unset Master Tickets'} = 'Mesterjegyek törlése';
+    $Self->{Translation}->{'Unset Slave Tickets'} = 'Alárendelt jegyek törlése';
+
+    # Perl Module: Kernel/System/DynamicField/Driver/MasterSlave.pm
+    $Self->{Translation}->{'Master Ticket'} = '';
 
     # SysConfig
-    $Self->{Translation}->{'All master tickets'} = '';
-    $Self->{Translation}->{'All slave tickets'} = '';
+    $Self->{Translation}->{'All master tickets'} = 'Összes mesterjegy';
+    $Self->{Translation}->{'All slave tickets'} = 'Összes alárendelt jegy';
     $Self->{Translation}->{'Allows adding notes in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Lehetővé teszi jegyzetek hozzáadását egy nagyított jegynek a jegy mester-alárendelt képernyőjén az ügyintézői felületen.';
     $Self->{Translation}->{'Change the MasterSlave state of the ticket.'} = 'Változtassa meg a jegy mester-alárendelt állapotát.';
-    $Self->{Translation}->{'Defines dynamic field name for master ticket feature.'} = '';
+    $Self->{Translation}->{'Defines dynamic field name for master ticket feature.'} = 'Meghatározza a dinamikus mező nevét a mesterjegy funkciónál.';
     $Self->{Translation}->{'Defines if a ticket lock is required in the ticket MasterSlave screen of a zoomed ticket in the agent interface (if the ticket isn\'t locked yet, the ticket gets locked and the current agent will be set automatically as its owner).'} =
         'Meghatározza, hogy szükséges-e jegyzárolás egy nagyított jegynek a jegy mester-alárendelt képernyőjén az ügyintézői felületen (ha a jegy még nincs zárolva, akkor a jegy zárolva lesz, és az aktuális ügyintéző automatikusan annak tulajdonosaként lesz beállítva).';
     $Self->{Translation}->{'Defines the default next state of a ticket after adding a note, in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
@@ -58,27 +53,27 @@ sub Data {
         'Azt az előzmény típust határozza meg a jegy mester-alárendelt képernyő műveleténél, amelyet a jegy előzményeinél szoktak használni az ügyintézői felületen.';
     $Self->{Translation}->{'Defines the next state of a ticket after adding a note, in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Meghatározza egy jegy következő állapotát egy jegyzet hozzáadása után egy nagyított jegynek a jegy mester-alárendelt képernyőjén az ügyintézői felületen.';
-    $Self->{Translation}->{'Disabled'} = '';
-    $Self->{Translation}->{'Enabled'} = '';
-    $Self->{Translation}->{'Enables the advanced MasterSlave part of the feature.'} = '';
+    $Self->{Translation}->{'Disabled'} = 'Letiltva';
+    $Self->{Translation}->{'Enabled'} = 'Engedélyezve';
+    $Self->{Translation}->{'Enables the advanced MasterSlave part of the feature.'} = 'Engedélyezi a funkció speciális mester-alárendelt részét.';
     $Self->{Translation}->{'Enables the feature that slave tickets follow the master ticket to a new master in the advanced MasterSlave mode.'} =
-        '';
+        'Engedélyezi azt a funkciót, hogy az alárendelt jegyek a mesterjegyet kövessék egy új mesterhez a speciális mester-alárendelt módban.';
     $Self->{Translation}->{'Enables the feature to change the MasterSlave state of a ticket in the advanced MasterSlave mode.'} =
-        '';
+        'Engedélyezi a funkciót egy jegy mester-alárendelt állapotának megváltoztatásához a speciális mester-alárendelt módban.';
     $Self->{Translation}->{'Enables the feature to forward articles from type \'forward\' of a master ticket to the customers of the slave tickets. By default (disabled) it will not forward articles from type \'forward\' to the slave tickets.'} =
-        '';
+        'Engedélyezi a funkciót a bejegyzések továbbításához egy mesterjegy „továbbítás” típusából az alárendelt jegyek ügyfeleihez. Alapértelmezetten (letiltva) nem fog bejegyzéseket továbbítani a „továbbítás” típusból az alárendelt jegyekhez.';
     $Self->{Translation}->{'Enables the feature to keep parent-child link after change of the MasterSlave state in the advanced MasterSlave mode.'} =
-        '';
+        'Engedélyezi a funkciót a szülő-gyermek kapcsolat megtartásához a mester-alárendelt állapot megváltoztatása után a speciális mester-alárendelt módban.';
     $Self->{Translation}->{'Enables the feature to keep parent-child link after unset of the MasterSlave state in the advanced MasterSlave mode.'} =
-        '';
+        'Engedélyezi a funkciót a szülő-gyermek kapcsolat megtartásához a mester-alárendelt állapot törlése után a speciális mester-alárendelt módban.';
     $Self->{Translation}->{'Enables the feature to unset the MasterSlave state of a ticket in the advanced MasterSlave mode.'} =
-        '';
+        'Engedélyezi a funkciót egy jegy mester-alárendelt állapotának törléséhez a speciális mester-alárendelt módban.';
     $Self->{Translation}->{'If a note is added by an agent, sets the state of the ticket in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Ha egy ügyintéző hozzáadott egy megjegyzést, akkor beállítja a jegy állapotát egy nagyított jegynek a jegy mester-alárendelt képernyőjén az ügyintézői felületen.';
     $Self->{Translation}->{'Master / Slave'} = 'Mester / alárendelt';
-    $Self->{Translation}->{'Master Tickets'} = '';
-    $Self->{Translation}->{'MasterSlave'} = '';
-    $Self->{Translation}->{'MasterSlave module for Ticket Bulk feature.'} = 'Mester-alárendelt modul a jegy tömeges szolgáltatásához.';
+    $Self->{Translation}->{'Master Tickets'} = 'Mesterjegyek';
+    $Self->{Translation}->{'MasterSlave'} = 'Mester-alárendelt';
+    $Self->{Translation}->{'MasterSlave module for Ticket Bulk feature.'} = 'Mester-alárendelt modul a jegy tömeges funkciójához.';
     $Self->{Translation}->{'Parameters for the dashboard backend of the master tickets overview of the agent interface. "Limit" is the number of entries shown by default. "Group" is used to restrict the access to the plugin (e. g. Group: admin;group1;group2;). "Default" determines if the plugin is enabled by default or if the user needs to enable it manually. "CacheTTLLocal" is the cache time in minutes for the plugin.'} =
         'Paraméterek az ügyintézői felület mesterjegyei áttekintőjének vezérlőpult háttérprogramjához. A „Korlát” az alapértelmezetten megjelenített bejegyzések száma. A „Csoport” használható a hozzáférés korlátozásához a bővítményre (például Csoport: admin;csoport1;csoport2;). Az „Alapértelmezett” jelzi, ha a bővítmény alapértelmezetten engedélyezve van, vagy ha a felhasználónak kézzel kell engedélyeznie azt. A „CacheTTLLocal” a bővítmény gyorsítótár ideje percben.';
     $Self->{Translation}->{'Parameters for the dashboard backend of the slave tickets overview of the agent interface. "Limit" is the number of entries shown by default. "Group" is used to restrict the access to the plugin (e. g. Group: admin;group1;group2;). "Default" determines if the plugin is enabled by default or if the user needs to enable it manually. "CacheTTLLocal" is the cache time in minutes for the plugin.'} =
@@ -108,12 +103,12 @@ sub Data {
         'Megjeleníti a jegy prioritási lehetőségeket egy nagyított jegynek a jegy mester-alárendelt képernyőjén az ügyintézői felületen.';
     $Self->{Translation}->{'Shows the title fields in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Megjeleníti a címmezőket egy nagyított jegynek a jegy mester-alárendelt képernyőjén az ügyintézői felületen.';
-    $Self->{Translation}->{'Slave Tickets'} = '';
+    $Self->{Translation}->{'Slave Tickets'} = 'Alárendelt jegyek';
     $Self->{Translation}->{'Specifies the different article types where the real name from Master ticket will be replaced with the one in the Slave ticket.'} =
         'Megadja a különböző bejegyzéstípusokat, ahol a mesterjegyben lévő valódi név ki lesz cserélve az alárendelt jegyben lévővel.';
     $Self->{Translation}->{'This module activates Master/Slave field in new email and phone ticket screens.'} =
         'Ez a modul bekapcsolja a mester/alárendelt mezőt az új e-mail és telefonos jegy képernyőkön.';
-    $Self->{Translation}->{'Ticket MasterSlave.'} = '';
+    $Self->{Translation}->{'Ticket MasterSlave.'} = 'Jegy mester-alárendelt.';
 
 }
 

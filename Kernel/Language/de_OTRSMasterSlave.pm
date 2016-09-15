@@ -16,16 +16,8 @@ sub Data {
     my $Self = shift;
 
     # Template: AgentTicketMasterSlave
-    $Self->{Translation}->{'Change Free Text of %s%s'} = 'Den Freitext von %s%s ändern';
-    $Self->{Translation}->{'Change Owner of %s%s'} = 'Eigentümer von %s%s ändern';
-    $Self->{Translation}->{'Close %s%s'} = '%s%s schließen';
-    $Self->{Translation}->{'Add Note to %s%s'} = 'Notiz zu %s%s hinzufügen';
-    $Self->{Translation}->{'Set Pending Time for %s%s'} = 'Wartezeit setzen für %s%s';
-    $Self->{Translation}->{'Change Priority of %s%s'} = 'Priorität von %s%s ändern';
-    $Self->{Translation}->{'Change Responsible of %s%s'} = 'Verantwortlichen von %s%s ändern';
-    $Self->{Translation}->{'Manage Master/Slave status for %s%s'} = '';
+    $Self->{Translation}->{'Manage Master/Slave status for %s%s%s'} = '';
     $Self->{Translation}->{'Set Master/Slave Value'} = 'Master/Slave Wert festlegen';
-    $Self->{Translation}->{'Text will also be received by:'} = 'Text wird auch gesendet an:';
 
     # Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
     $Self->{Translation}->{'New Master Ticket'} = 'Neues Master Ticket';
@@ -36,6 +28,9 @@ sub Data {
     # Perl Module: Kernel/Output/HTML/TicketBulk/MasterSlave.pm
     $Self->{Translation}->{'Unset Master Tickets'} = '';
     $Self->{Translation}->{'Unset Slave Tickets'} = '';
+
+    # Perl Module: Kernel/System/DynamicField/Driver/MasterSlave.pm
+    $Self->{Translation}->{'Master Ticket'} = '';
 
     # SysConfig
     $Self->{Translation}->{'All master tickets'} = '';
@@ -58,8 +53,8 @@ sub Data {
         'Bestimmt den Historien Typ von Ticket Aktionen im MasterSlave Bildschirm, welcher für die Ticket Historie im Agenten Interface verwendet wird.';
     $Self->{Translation}->{'Defines the next state of a ticket after adding a note, in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Bestimmt den Folgestatus für Tickets, für die im MasterSlave Bildschirm des Agenten-Interface eine Notiz hinzugefügt wurde.';
-    $Self->{Translation}->{'Disabled'} = '';
-    $Self->{Translation}->{'Enabled'} = '';
+    $Self->{Translation}->{'Disabled'} = 'Deaktiviert';
+    $Self->{Translation}->{'Enabled'} = 'Aktiviert';
     $Self->{Translation}->{'Enables the advanced MasterSlave part of the feature.'} = '';
     $Self->{Translation}->{'Enables the feature that slave tickets follow the master ticket to a new master in the advanced MasterSlave mode.'} =
         '';

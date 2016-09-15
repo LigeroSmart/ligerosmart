@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-08-05 16:35+0000\n"
-"PO-Revision-Date: 2016-08-05 21:40+0000\n"
+"POT-Creation-Date: 2016-09-14 19:08+0000\n"
+"PO-Revision-Date: 2016-09-15 00:09+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Thai (Thailand) (http://www.transifex.com/otrs/OTRS/language/th_TH/)\n"
 "MIME-Version: 1.0\n"
@@ -15,44 +15,12 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #. Template: AgentTicketMasterSlave
-msgid "Change Free Text of %s%s"
-msgstr "เปลี่ยนข้อความฟรีของ"
-
-#. Template: AgentTicketMasterSlave
-msgid "Change Owner of %s%s"
-msgstr "เปลี่ยนเจ้าของของ %s%s"
-
-#. Template: AgentTicketMasterSlave
-msgid "Close %s%s"
-msgstr "ปิด %s%s"
-
-#. Template: AgentTicketMasterSlave
-msgid "Add Note to %s%s"
-msgstr "เพิ่มโน้ตไปยัง %s%s"
-
-#. Template: AgentTicketMasterSlave
-msgid "Set Pending Time for %s%s"
-msgstr "ระบุเวลาการรอดำเนินการสำหรับ %s%s"
-
-#. Template: AgentTicketMasterSlave
-msgid "Change Priority of %s%s"
-msgstr "เปลี่ยนลำดับความสำคัญของ %s%s"
-
-#. Template: AgentTicketMasterSlave
-msgid "Change Responsible of %s%s"
-msgstr "เปลี่ยนความรับผิดชอบของ %s%s"
-
-#. Template: AgentTicketMasterSlave
-msgid "Manage Master/Slave status for %s%s"
+msgid "Manage Master/Slave status for %s%s%s"
 msgstr ""
 
 #. Template: AgentTicketMasterSlave
 msgid "Set Master/Slave Value"
 msgstr "ระบุค่าของ มาสเตอร์/Slave"
-
-#. Template: AgentTicketMasterSlave
-msgid "Text will also be received by:"
-msgstr "ข้อความก็จะได้รับโดย:"
 
 #. Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
 msgid "New Master Ticket"
@@ -76,6 +44,10 @@ msgstr ""
 
 #. Perl Module: Kernel/Output/HTML/TicketBulk/MasterSlave.pm
 msgid "Unset Slave Tickets"
+msgstr ""
+
+#. Perl Module: Kernel/System/DynamicField/Driver/MasterSlave.pm
+msgid "Master Ticket"
 msgstr ""
 
 #. SysConfig

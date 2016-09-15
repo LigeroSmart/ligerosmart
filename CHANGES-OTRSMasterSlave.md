@@ -1,4 +1,5 @@
 #5.0.3 2016-??-??
+ - 2016-09-14 Updated translations, thanks to all translators.
  - 2016-09-14 Updated to latest framework version (OTRS 5.0.13).
  - 2016-08-12 Fixed bug#[12231](http://bugs.otrs.org/show_bug.cgi?id=12231) - No search field for MasterSlave in AgentTicketSearch.
  - 2016-08-05 Marked strings as translatable, thanks to Balázs Úr.

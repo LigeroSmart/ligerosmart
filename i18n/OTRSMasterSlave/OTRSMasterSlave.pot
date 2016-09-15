@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRSMasterSlave\n"
-"POT-Creation-Date: 2016-08-05 16:41+0000\n"
+"POT-Creation-Date: 2016-09-14 19:10+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -11,43 +11,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #. Template: AgentTicketMasterSlave
-msgid "Change Free Text of %s%s"
-msgstr ""
-
-#. Template: AgentTicketMasterSlave
-msgid "Change Owner of %s%s"
-msgstr ""
-
-#. Template: AgentTicketMasterSlave
-msgid "Close %s%s"
-msgstr ""
-
-#. Template: AgentTicketMasterSlave
-msgid "Add Note to %s%s"
-msgstr ""
-
-#. Template: AgentTicketMasterSlave
-msgid "Set Pending Time for %s%s"
-msgstr ""
-
-#. Template: AgentTicketMasterSlave
-msgid "Change Priority of %s%s"
-msgstr ""
-
-#. Template: AgentTicketMasterSlave
-msgid "Change Responsible of %s%s"
-msgstr ""
-
-#. Template: AgentTicketMasterSlave
-msgid "Manage Master/Slave status for %s%s"
+msgid "Manage Master/Slave status for %s%s%s"
 msgstr ""
 
 #. Template: AgentTicketMasterSlave
 msgid "Set Master/Slave Value"
-msgstr ""
-
-#. Template: AgentTicketMasterSlave
-msgid "Text will also be received by:"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
@@ -72,6 +40,10 @@ msgstr ""
 
 #. Perl Module: Kernel/Output/HTML/TicketBulk/MasterSlave.pm
 msgid "Unset Slave Tickets"
+msgstr ""
+
+#. Perl Module: Kernel/System/DynamicField/Driver/MasterSlave.pm
+msgid "Master Ticket"
 msgstr ""
 
 #. SysConfig
