@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2016-06-22 16:47+0000\n"
-"PO-Revision-Date: 2016-04-29 12:06+0000\n"
-"Last-Translator: Martin Gruner <martin.gruner@otrs.com>\n"
+"PO-Revision-Date: 2016-09-02 01:44+0000\n"
+"Last-Translator: 汇民 王 <whuim@163.com>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/otrs/OTRS/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -104,7 +104,7 @@ msgstr "备注"
 
 #. Template: AgentTimeAccountingEdit
 msgid "Please add a remark with more than 8 characters!"
-msgstr ""
+msgstr "请添加一个超过8个字符的备注！"
 
 #. Template: AgentTimeAccountingEdit
 msgid "Start Time"
@@ -510,25 +510,25 @@ msgstr "没有找到这一天的数据。"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Can't insert Working Units!"
-msgstr ""
+msgstr "无法插入工作单位！"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Last Projects"
-msgstr "最后的项目"
+msgstr "最近的项目"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Can't save settings, because a day has only 24 hours!"
-msgstr ""
+msgstr "无法保存设置，因为一天只有24小时！"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Can't delete Working Units!"
-msgstr ""
+msgstr "无法删除工作单位！"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid ""
 "This Date is out of limit, but you haven't insert this day yet, so you get "
 "one(!) chance to insert"
-msgstr ""
+msgstr "这个日期不受限制，但是你还没有插入这一天，所以你获得了一个（！）机会来插入"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Incomplete Working Days"
@@ -559,7 +559,7 @@ msgid ""
 "No time period configured, or the specified date is outside of the defined "
 "time periods. Please contact the time accounting admin to update your time "
 "periods!"
-msgstr ""
+msgstr "没有配置时间段或指定的日期超出了定义的时间段。请联系工时管理员更新你的时间段！"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Last Selected Projects"
@@ -571,11 +571,11 @@ msgstr "所有项目"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingReporting.pm
 msgid "ReportingProject: Need ProjectID"
-msgstr ""
+msgstr "项目报告：需要项目ID"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingReporting.pm
 msgid "Reporting Project"
-msgstr ""
+msgstr "项目报告"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingReporting.pm
 msgid "Reporting"
@@ -583,7 +583,7 @@ msgstr "报告"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "Unable to update user settings!"
-msgstr ""
+msgstr "无法更新用户设置！"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "Please contact your administrator."
@@ -591,39 +591,39 @@ msgstr "请联系系统管理员。"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "Project added!"
-msgstr ""
+msgstr "项目已添加！"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "Project updated!"
-msgstr ""
+msgstr "项目已更新！"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "Task added!"
-msgstr ""
+msgstr "任务已添加！"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "Task updated!"
-msgstr ""
+msgstr "任务已更新！"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "The UserID is not valid!"
-msgstr ""
+msgstr "UserID无效！"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "Can't insert user data!"
-msgstr ""
+msgstr "无法插入用户数据！"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "Unable to add time period!"
-msgstr ""
+msgstr "无法添加时间段！"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "User updated!"
-msgstr ""
+msgstr "用户已更新！"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "User added!"
-msgstr ""
+msgstr "用户已添加！"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "New User"
@@ -635,7 +635,7 @@ msgstr "时段状态"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingView.pm
 msgid "View: Need %s!"
-msgstr ""
+msgstr "视图：需要%s！"
 
 #. Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
 msgid "Incomplete working days"
@@ -645,7 +645,7 @@ msgstr "不完整的工作日"
 msgid ""
 "Agent interface notification module to see the number of incomplete working "
 "days for the user."
-msgstr "服务人员界面通知模块，显示用户不完整的工日数据。"
+msgstr "服务人员界面通知模块，显示用户不完整的工作日数据。"
 
 #. SysConfig
 msgid "Default name for new actions."
@@ -706,11 +706,11 @@ msgstr "确定统计模块是否要生成工时管理信息。"
 
 #. SysConfig
 msgid "Edit time accounting settings."
-msgstr ""
+msgstr "编辑工时管理设置。"
 
 #. SysConfig
 msgid "Edit time record."
-msgstr ""
+msgstr "编辑工时记录。"
 
 #. SysConfig
 msgid "For how many days ago you can insert working units."
@@ -762,11 +762,11 @@ msgstr "没有工作数据记录的工作日的最大数量（如果超过，则
 
 #. SysConfig
 msgid "Overview."
-msgstr ""
+msgstr "概览。"
 
 #. SysConfig
 msgid "Project time reporting."
-msgstr ""
+msgstr "项目工时报告。"
 
 #. SysConfig
 msgid ""

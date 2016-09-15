@@ -1,4 +1,5 @@
 #5.0.4 2016-??-??
+ - 2016-09-14 Updated translations, thanks to all translators.
  - 2016-08-05 Added Chinese translation, thanks to all translators.
  - 2016-08-05 Updated translations, thanks to all translators.
  - 2016-07-29 Fixed documentation typos, thanks to Balázs Úr.

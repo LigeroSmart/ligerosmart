@@ -20,7 +20,7 @@ sub Data {
         'Да ли заиста желите да обришете обрачун времена за овај дан?';
 
     # Template: AgentTimeAccountingEdit
-    $Self->{Translation}->{'Edit Time Record'} = 'Измени временски запис';
+    $Self->{Translation}->{'Edit Time Record'} = 'Уреди временски запис';
     $Self->{Translation}->{'Go to settings'} = 'Иди у подешавања';
     $Self->{Translation}->{'Date Navigation'} = 'Датумска навигација';
     $Self->{Translation}->{'Previous day'} = 'Претходни дан';
@@ -250,7 +250,7 @@ sub Data {
     $Self->{Translation}->{'This module forces inserts in TimeAccounting.'} = 'Овај модул намеће унос у обрачун времена.';
     $Self->{Translation}->{'This notification module gives a warning if there are too many incomplete working days.'} =
         'Овај модул за обавештавање даје упозорење ако има превише некомплетних радних дана.';
-    $Self->{Translation}->{'Time accounting edit.'} = 'Измене обрачунавања времена.';
+    $Self->{Translation}->{'Time accounting edit.'} = 'Уређивање обрачунавања времена.';
     $Self->{Translation}->{'Time accounting overview.'} = 'Преглед обрачунавања времена.';
     $Self->{Translation}->{'Time accounting reporting.'} = 'Извештаји обрачунавања времена.';
     $Self->{Translation}->{'Time accounting settings.'} = 'Подешавања обрачунавања времена.';

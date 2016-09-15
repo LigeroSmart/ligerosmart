@@ -42,7 +42,7 @@ sub Data {
     $Self->{Translation}->{'Project'} = '项目';
     $Self->{Translation}->{'Task'} = '任务';
     $Self->{Translation}->{'Remark'} = '备注';
-    $Self->{Translation}->{'Please add a remark with more than 8 characters!'} = '';
+    $Self->{Translation}->{'Please add a remark with more than 8 characters!'} = '请添加一个超过8个字符的备注！';
     $Self->{Translation}->{'Start Time'} = '开始时间';
     $Self->{Translation}->{'Negative times are not allowed.'} = '时间不允许为负。';
     $Self->{Translation}->{'Repeated hours are not allowed. Start time matches another interval.'} =
@@ -161,12 +161,12 @@ sub Data {
     $Self->{Translation}->{'No data found for this day.'} = '没有找到这一天的数据。';
 
     # Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
-    $Self->{Translation}->{'Can\'t insert Working Units!'} = '';
-    $Self->{Translation}->{'Last Projects'} = '最后的项目';
-    $Self->{Translation}->{'Can\'t save settings, because a day has only 24 hours!'} = '';
-    $Self->{Translation}->{'Can\'t delete Working Units!'} = '';
+    $Self->{Translation}->{'Can\'t insert Working Units!'} = '无法插入工作单位！';
+    $Self->{Translation}->{'Last Projects'} = '最近的项目';
+    $Self->{Translation}->{'Can\'t save settings, because a day has only 24 hours!'} = '无法保存设置，因为一天只有24小时！';
+    $Self->{Translation}->{'Can\'t delete Working Units!'} = '无法删除工作单位！';
     $Self->{Translation}->{'This Date is out of limit, but you haven\'t insert this day yet, so you get one(!) chance to insert'} =
-        '';
+        '这个日期不受限制，但是你还没有插入这一天，所以你获得了一个（！）机会来插入';
     $Self->{Translation}->{'Incomplete Working Days'} = '不完整的工作日';
     $Self->{Translation}->{'Please insert your working hours!'} = '请插入工作时间';
     $Self->{Translation}->{'Successful insert!'} = '插入成功！';
@@ -174,39 +174,39 @@ sub Data {
     $Self->{Translation}->{'Successfully inserted entries for several dates!'} = '成功插入记录。';
     $Self->{Translation}->{'Entered date was invalid! Date was changed to today.'} = '输入时间无效！日期改为当前日期。';
     $Self->{Translation}->{'No time period configured, or the specified date is outside of the defined time periods. Please contact the time accounting admin to update your time periods!'} =
-        '';
+        '没有配置时间段或指定的日期超出了定义的时间段。请联系工时管理员更新你的时间段！';
     $Self->{Translation}->{'Last Selected Projects'} = '最后被选中的项目';
     $Self->{Translation}->{'All Projects'} = '所有项目';
 
     # Perl Module: Kernel/Modules/AgentTimeAccountingReporting.pm
-    $Self->{Translation}->{'ReportingProject: Need ProjectID'} = '';
-    $Self->{Translation}->{'Reporting Project'} = '';
+    $Self->{Translation}->{'ReportingProject: Need ProjectID'} = '项目报告：需要项目ID';
+    $Self->{Translation}->{'Reporting Project'} = '项目报告';
     $Self->{Translation}->{'Reporting'} = '报告';
 
     # Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
-    $Self->{Translation}->{'Unable to update user settings!'} = '';
+    $Self->{Translation}->{'Unable to update user settings!'} = '无法更新用户设置！';
     $Self->{Translation}->{'Please contact your administrator.'} = '请联系系统管理员。';
-    $Self->{Translation}->{'Project added!'} = '';
-    $Self->{Translation}->{'Project updated!'} = '';
-    $Self->{Translation}->{'Task added!'} = '';
-    $Self->{Translation}->{'Task updated!'} = '';
-    $Self->{Translation}->{'The UserID is not valid!'} = '';
-    $Self->{Translation}->{'Can\'t insert user data!'} = '';
-    $Self->{Translation}->{'Unable to add time period!'} = '';
-    $Self->{Translation}->{'User updated!'} = '';
-    $Self->{Translation}->{'User added!'} = '';
+    $Self->{Translation}->{'Project added!'} = '项目已添加！';
+    $Self->{Translation}->{'Project updated!'} = '项目已更新！';
+    $Self->{Translation}->{'Task added!'} = '任务已添加！';
+    $Self->{Translation}->{'Task updated!'} = '任务已更新！';
+    $Self->{Translation}->{'The UserID is not valid!'} = 'UserID无效！';
+    $Self->{Translation}->{'Can\'t insert user data!'} = '无法插入用户数据！';
+    $Self->{Translation}->{'Unable to add time period!'} = '无法添加时间段！';
+    $Self->{Translation}->{'User updated!'} = '用户已更新！';
+    $Self->{Translation}->{'User added!'} = '用户已添加！';
     $Self->{Translation}->{'New User'} = '添加用户';
     $Self->{Translation}->{'Period Status'} = '时段状态';
 
     # Perl Module: Kernel/Modules/AgentTimeAccountingView.pm
-    $Self->{Translation}->{'View: Need %s!'} = '';
+    $Self->{Translation}->{'View: Need %s!'} = '视图：需要%s！';
 
     # Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
     $Self->{Translation}->{'Incomplete working days'} = '不完整的工作日';
 
     # SysConfig
     $Self->{Translation}->{'Agent interface notification module to see the number of incomplete working days for the user.'} =
-        '服务人员界面通知模块，显示用户不完整的工日数据。';
+        '服务人员界面通知模块，显示用户不完整的工作日数据。';
     $Self->{Translation}->{'Default name for new actions.'} = '新活动的默认名称。';
     $Self->{Translation}->{'Default name for new projects.'} = '新项目的默认名称。';
     $Self->{Translation}->{'Default setting for date end.'} = '结束日期的默认设置。';
@@ -222,8 +222,8 @@ sub Data {
         '指定备注必填的项目。如果RegExp匹配项目，你也需要添加备注。RegExp使用smx参数。';
     $Self->{Translation}->{'Determines if the statistics module may generate time accounting information.'} =
         '确定统计模块是否要生成工时管理信息。';
-    $Self->{Translation}->{'Edit time accounting settings.'} = '';
-    $Self->{Translation}->{'Edit time record.'} = '';
+    $Self->{Translation}->{'Edit time accounting settings.'} = '编辑工时管理设置。';
+    $Self->{Translation}->{'Edit time record.'} = '编辑工时记录。';
     $Self->{Translation}->{'For how many days ago you can insert working units.'} = '你可以插入多久以前的工作数据。';
     $Self->{Translation}->{'If enabled, only users that has added working time to the selected project are shown.'} =
         '如果启用，则仅显示在选定项目中有工时数据的用户。';
@@ -239,8 +239,8 @@ sub Data {
         '工作数据添加后允许的最大工日。';
     $Self->{Translation}->{'Maximum number of working days without working units entry after which a warning will be shown.'} =
         '没有工作数据记录的工作日的最大数量（如果超过，则会显示警告）。';
-    $Self->{Translation}->{'Overview.'} = '';
-    $Self->{Translation}->{'Project time reporting.'} = '';
+    $Self->{Translation}->{'Overview.'} = '概览。';
+    $Self->{Translation}->{'Project time reporting.'} = '项目工时报告。';
     $Self->{Translation}->{'Regular expressions for constraining action list according to selected project. Key contains regular expression for project(s), content contains regular expressions for action(s).'} =
         '选定项目的限制活动清单使用的正则表达式。键包含了项目（Projects）的正则表达式，值包含了活动（Action）的正则表达式。';
     $Self->{Translation}->{'Regular expressions for constraining project list according to user groups. Key contains regular expression for project(s), content contains comma separated list of groups.'} =
