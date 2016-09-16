@@ -13,8 +13,15 @@ use utf8;
 
 use vars (qw($Self));
 
+# get helper object
+$Kernel::OM->ObjectParamAdd(
+    'Kernel::System::UnitTest::Helper' => {
+        RestoreDatabase => 1,
+    },
+);
+my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
+
 my $CommandObject = $Kernel::OM->Get('Kernel::System::Console::Command::Admin::FAQ::Import');
-my $HelperObject  = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 
 # test command without source argument
 my $ExitCode = $CommandObject->Execute();
@@ -27,8 +34,6 @@ $Self->Is(
 
 my $SourcePath = $Kernel::OM->Get('Kernel::Config')->Get('Home') . "/scripts/test/sample/FAQ.csv";
 
-$HelperObject->BeginWork();
-
 # test command with source argument
 $ExitCode = $CommandObject->Execute( '--separator', ';', '--quote', '', $SourcePath );
 
@@ -37,7 +42,5 @@ $Self->Is(
     0,
     "Option - with source argument",
 );
-
-$HelperObject->Rollback();
 
 1;
