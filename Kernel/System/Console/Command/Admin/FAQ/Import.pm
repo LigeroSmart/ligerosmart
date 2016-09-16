@@ -35,7 +35,7 @@ sub Configure {
     );
     $Self->AddOption(
         Name        => 'quote',
-        Description => "Defines the quote for data in CSV file (default '').",
+        Description => "Defines the quote for data in CSV file (default '\"').",
         Required    => 0,
         HasValue    => 1,
         ValueRegex  => qr/.*/smx,
@@ -89,7 +89,7 @@ sub Run {
     }
 
     my $Separator = $Self->GetOption('separator') || ';';
-    my $Quote     = $Self->GetOption('quote')     || '';
+    my $Quote     = $Self->GetOption('quote')     || '"';
 
     # read CSV data
     my $DataRef = $Kernel::OM->Get('Kernel::System::CSV')->CSV2Array(
