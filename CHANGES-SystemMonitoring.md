@@ -1,4 +1,5 @@
 #5.0.2 2015-??-??
+ - 2016-09-20 Fixed bug#[11190](http://bugs.otrs.org/show_bug.cgi?id=11190) - When Installaling SM "ArticleFreeText1" field is created as Ticket DF.
  - 2015-11-17 Fixed bug#[9706](http://bugs.otrs.org/show_bug.cgi?id=9706) - ClosePending Time - not affected.
 
 #5.0.1 2015-10-20

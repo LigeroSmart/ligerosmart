@@ -162,7 +162,7 @@ sub GetDynamicFieldsDefinition {
         Default    => 1,
         Base       => $DynamicFieldArticleTextPrefix,
         Name       => 'StateName',
-        ObjectType => 'Ticket',
+        ObjectType => 'Article',
         );
 
     return 1;
