@@ -131,7 +131,7 @@ $Selenium->RunTest(
 
         # submit and switch back window
         $Selenium->find_element( "#FAQSubmit", 'css' )->VerifiedClick();
-        $Selenium->WaitFor( WindowCount => 1 ) || die "Popup window not closed.";;
+        $Selenium->WaitFor( WindowCount => 1 ) || die "Popup window not closed.";
         $Selenium->switch_to_window( $Handles->[0] );
 
         # wait for reload to kick in
@@ -143,7 +143,7 @@ $Selenium->RunTest(
         # click on 'Edit' and switch window
         $Selenium->find_element("//a[contains(\@href, \'Action=AgentFAQEdit;ItemID=$FAQID' )]")->VerifiedClick();
 
-        $Selenium->WaitFor( WindowCount => 2 ) || die "Popup window not created (second time).";;
+        $Selenium->WaitFor( WindowCount => 2 ) || die "Popup window not created (second time).";
         $Handles = $Selenium->get_window_handles();
         $Selenium->switch_to_window( $Handles->[1] );
 
