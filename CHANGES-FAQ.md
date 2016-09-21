@@ -1,5 +1,6 @@
 #5.0.7 2016-??-??
-- 2016-09-16 Updated Import console command for OTRS 5 patch level 14.
+ - 2016-09-21 Fixed bug#[10923](http://bugs.otrs.org/show_bug.cgi?id=10923)(PR#49)  - Keywords are not searchable, thanks to S7.
+ - 2016-09-16 Updated Import console command for OTRS 5 patch level 14.
 
 #5.0.6 2016-09-20
  - 2016-09-14 Updated translations, thanks to all translators.
