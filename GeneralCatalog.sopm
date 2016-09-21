@@ -46,10 +46,10 @@
         <File Permission="644" Location="scripts/test/GeneralCatalog.t"/>
         <File Permission="644" Location="scripts/test/Selenium/Output/GeneralCatalogPreferencesGeneric.t"/>
         <File Permission="644" Location="scripts/test/Selenium/Agent/Admin/AdminGeneralCatalog.t"/>
-        <File Permission="664" Location="var/httpd/htdocs/js/thirdparty/jscolor_1.4.1/arrow.gif"/>
-        <File Permission="664" Location="var/httpd/htdocs/js/thirdparty/jscolor_1.4.1/cross.gif"/>
-        <File Permission="664" Location="var/httpd/htdocs/js/thirdparty/jscolor_1.4.1/hs.png"/>
-        <File Permission="664" Location="var/httpd/htdocs/js/thirdparty/jscolor_1.4.1/hv.png"/>
+        <File Permission="644" Location="var/httpd/htdocs/js/thirdparty/jscolor_1.4.1/arrow.gif"/>
+        <File Permission="644" Location="var/httpd/htdocs/js/thirdparty/jscolor_1.4.1/cross.gif"/>
+        <File Permission="644" Location="var/httpd/htdocs/js/thirdparty/jscolor_1.4.1/hs.png"/>
+        <File Permission="644" Location="var/httpd/htdocs/js/thirdparty/jscolor_1.4.1/hv.png"/>
         <File Permission="644" Location="var/httpd/htdocs/js/thirdparty/jscolor_1.4.1/jscolor.js"/>
         <File Permission="644" Location="var/packagesetup/GeneralCatalog.pm"/>
     </Filelist>
