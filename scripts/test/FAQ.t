@@ -997,12 +997,11 @@ for my $Test (@Tests) {
     ItemID => $FAQItemID1,
     UserID => 1,
 );
-
 $FAQUpdate = $FAQObject->FAQUpdate(
     %FAQData,
-    ItemID => $FAQItemID1,
-    Valid  => 2,
-    UserID => 1,
+    ItemID  => $FAQItemID1,
+    ValidID => 2,
+    UserID  => 1,
 );
 $Self->True(
     $FAQUpdate,
